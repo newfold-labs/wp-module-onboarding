@@ -1,0 +1,16 @@
+{
+  "baseUrl": "http://localhost:8880",
+  "env": {
+    "wpUsername": "admin",
+    "wpPassword": "password"
+  },
+  "fixturesFolder": "tests/cypress/fixtures",
+  "integrationFolder": "tests/cypress/integration",
+  "pluginsFile": "tests/cypress/plugins/index.js",
+  "screenshotsFolder": "tests/cypress/screenshots",
+  "supportFile": "tests/cypress/support/index.js",
+  "video": false,
+  "videosFolder": "tests/cypress/videos",
+  "videoUploadOnPasses": false,
+  "chromeWebSecurity": false
+}

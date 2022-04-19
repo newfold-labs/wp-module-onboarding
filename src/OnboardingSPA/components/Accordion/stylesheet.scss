@@ -1,0 +1,34 @@
+.nfd-onboarding-accordion {
+    border: $border-width solid var(--nfd-onboarding-dark);
+    margin-bottom: $grid-unit-05;
+    margin-top: $grid-unit-05;
+    opacity: 0.8;
+    padding: $border-width;
+    transition: opacity 233ms ease;
+    @include reduce-motion("transition");
+
+    &:hover,
+    &:focus,
+    &[open] {
+        opacity: 1;
+    }
+
+    &__summary {
+        background-color: var(--nfd-onboarding-light);
+        color: var(--nfd-onboarding-dark);
+        cursor: pointer;
+        font-weight: 700;
+        padding: $grid-unit-05 $grid-unit-10;
+
+        p {
+            display: inline;
+        }
+    }
+
+    &__content {
+        margin: 0 $grid-unit-20;
+        padding: $grid-unit-10 0;
+        color: var(--nfd-onboarding-dark);
+    }
+
+}

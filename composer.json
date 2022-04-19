@@ -1,0 +1,24 @@
+{
+  "name": "newfold-labs/wp-module-onboarding",
+  "description": "Next-generation WordPress Onboarding for WordPress sites at Newfold Digital.",
+  "type": "library",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Dave Ryan",
+      "email": "dave@bluehost.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "NewfoldLabs\\WP\\Module\\Onboarding\\": "includes/"
+    },
+    "files": [
+      "bootstrap.php"
+    ]
+  },
+  "require-dev": {
+    "wp-phpunit/wp-phpunit": "^5.9",
+    "yoast/phpunit-polyfills": "^1.0"
+  }
+}

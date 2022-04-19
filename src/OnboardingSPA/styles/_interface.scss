@@ -1,0 +1,36 @@
+$header-height: 60px;
+
+html.wp-toolbar {
+    background: $white;
+}
+
+body {
+    &:not(.is-fullscreen-mode) {
+        opacity: 0;
+    }
+    &.is-fullscreen-mode {
+        opacity: 1;
+        transition: opacity ease-in 500ms;
+    }
+    &.dashboard_page_nfd-onboarding {
+        @include wp-admin-reset('.nfd-onboarding-container');
+    }
+}
+
+body {
+    --nfd-onboarding-icon: url('../../Brands/newfold/icon.svg');
+    --nfd-onboarding-logo: url('../../Brands/newfold/logo.svg');
+    --nfd-onboarding-primary: #dd5228;
+    --nfd-onboarding-dark: #1e2223;
+    --nfd-onboarding-light: #f2f2f2; 
+    --nfd-onboarding-header-bg: var(--nfd-onboarding-light);
+    --nfd-onboarding-header-fg: var(--nfd-onboarding-dark);
+    --nfd-onboarding-content-bg: var(--nfd-onboarding-light);
+    --nfd-onboarding-content-fg: var(--nfd-onboarding-dark);
+    --nfd-onboarding-drawer-bg: var(--nfd-onboarding-dark);
+    --nfd-onboarding-drawer-fg: var(--nfd-onboarding-light);
+    --nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-dark);
+    --nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
+    --nfd-onboarding-footer-fg: var(--nfd-onboarding-dark);
+    --nfd-onboarding-footer-bg: var(--nfd-onboarding-light);
+}

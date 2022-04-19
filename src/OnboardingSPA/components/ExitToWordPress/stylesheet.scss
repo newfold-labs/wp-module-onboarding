@@ -1,0 +1,9 @@
+.nfd-onboarding-etw__buttons {
+    display: flex;
+    margin-top: $grid-unit-30;
+    column-gap: $grid-unit-20;
+    .components-button {
+        width: 50%;
+        justify-content: center;
+    }
+}
