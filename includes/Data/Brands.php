@@ -1,6 +1,9 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
+/**
+ * Contains Brand information.
+ */
 final class Brands {
 
     protected static $brands = array(
@@ -38,9 +41,12 @@ final class Brands {
         )
     );
 
+    /**
+     * Get Brand information.
+     * 
+     * @return array
+     */
     public static function get_brands() {
         return self::$brands;
     }
 }
-
-?>
