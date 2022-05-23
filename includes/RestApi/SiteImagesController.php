@@ -88,8 +88,7 @@ class SiteImagesController extends BaseHiiveController {
 	 * @return boolean
 	 */
     public function check_permissions() {
-        return true;
-        // return Permissions::rest_is_authorized_admin();
+        return Permissions::rest_is_authorized_admin();
     }
 
     /**
