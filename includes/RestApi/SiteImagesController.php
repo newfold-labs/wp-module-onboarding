@@ -56,7 +56,7 @@ class SiteImagesController extends BaseHiiveController {
             'query'    => $request->get_param( 'siteType' ),
             'per_page' => $this->results_per_page
         );
-        $response_args = array( 'id', 'width', 'height', 'links', 'description', 'alt_description', 'tags', 'urls' );
+        $response_args = array( 'id', 'width', 'height', 'links', 'description', 'alt_description', 'urls' );
 
         //Request the Hiive Unsplash worker for images.
         $payload = $this->get( '/workers/unsplash/search/photos', $request_args );
