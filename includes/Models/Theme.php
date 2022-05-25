@@ -4,38 +4,38 @@ namespace NewfoldLabs\WP\Module\Onboarding\Models;
 
 class Theme {
 
-    public string $themeName;
-    public string $themeImage;
-    public bool $isNewfoldTheme;
+    public string $theme_name;
+    public string $theme_image;
+    public bool $is_newfold_theme;
 
     public function __construct() 
     {
-        $this->isNewfoldTheme = false;
+        $this->is_newfold_theme = false;
     }
 
     // The Theme Name i.e. twentytwentytwo
-    public function setThemeName($themeName) {
-        $this->themeName = $themeName;
+    public function set_theme_name($theme_name) {
+        $this->theme_name = $theme_name;
     }
-    public function getThemeName() {
-        return $this->themeName;
+    public function get_theme_name() {
+        return $this->theme_name;
     }
 
     // The Theme Image i.e. ScreenShot for the Theme
-    public function setThemeImage($themeImage) {
-        $this->themeImage = $themeImage;
+    public function set_theme_image($theme_image) {
+        $this->theme_image = $theme_image;
     }
 
-    public function getThemeImage() {
-        return $this->themeImage;
+    public function get_theme_image() {
+        return $this->theme_image;
     }
 
     // Determines if it's a Newfold Theme
-    public function setisNewfoldTheme($isNewfoldTheme) {
-        $this->isNewfoldTheme = $isNewfoldTheme;
+    public function set_is_newfold_theme($is_newfold_theme) {
+        $this->is_newfold_theme = $is_newfold_theme;
     }
 
-    public function getisNewfoldTheme() {
-        return $this->isNewfoldTheme;
+    public function get_is_newfold_theme() {
+        return $this->is_newfold_theme;
     }
 }

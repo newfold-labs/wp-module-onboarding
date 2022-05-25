@@ -64,22 +64,11 @@ class ApprovedThemeController extends \WP_REST_Controller {
 	 */
 	public function get_approved_theme_slugs() {
 		
-		// Key-Value array implementation of approved themes
-		$approved_themes = array("twentytwentytwo" => 1);
-		return $approved_themes;
+		// Key-Value array implementation of approved themes for faster lookup
+		return array("twentytwentytwo" => 1);
 
 		// TODO Implementation
-		// A Dynamic Version of Theme Management
-
-		// $response = wp_remote_get( 'https://hiive.cloud/workers/theme_slugs');
-		// if (200 === wp_remote_retrieve_response_code( $response )) {
-		// 	return json_decode( wp_remote_retrieve_body( $response ) );
-		// }else {
-		// 	return new \WP_Error(
-		// 		wp_remote_retrieve_response_code( $response ),
-		// 		'Error Found'
-		// 	);
-		// }
+		// A Dynamic Version of Theme Management with Hiive
 	}
 
 	/**
@@ -99,11 +88,11 @@ class ApprovedThemeController extends \WP_REST_Controller {
 
 			for($i = 0; $i < count($themes_data); $i++){
 				$themes[$i] = new Theme();
-				$themes[$i]->setThemeName($themes_data[$i]['template']);
-				$themes[$i]->setThemeImage($themes_data[$i]['screenshot']);
+				$themes[$i]->set_theme_name($themes_data[$i]['template']);
+				$themes[$i]->set_theme_image($themes_data[$i]['screenshot']);
 
 				if(str_contains($themes_data[$i]['author']['raw'], 'Newfold Digital'))
-					$themes[$i]->setisNewfoldTheme(true);
+					$themes[$i]->set_is_newfold_theme(true);
 			}
 			return $themes;
 		} else {
@@ -125,7 +114,7 @@ class ApprovedThemeController extends \WP_REST_Controller {
 
 		$approved_themes = array();
 		foreach ($installed_themes as $theme) {
-			if( $theme->getisNewfoldTheme() || array_key_exists($theme->getThemeName(), $approved_slugs)){
+			if( $theme->get_is_newfold_theme() || array_key_exists($theme->get_theme_name(), $approved_slugs)){
 				array_push($approved_themes, $theme);
 			}
 		}
