@@ -35,8 +35,8 @@ class SiteImagesController extends BaseHiiveController {
             array(
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
-                    'callback'            => array($this, 'get_images'),
-                    'permission_callback' => array($this, 'check_permissions'),
+                    'callback'            => array( $this, 'get_images' ),
+                    'permission_callback' => array( $this, 'check_permissions' ),
                     'args'                => $this->get_request_params()
                 )
             )
@@ -66,7 +66,7 @@ class SiteImagesController extends BaseHiiveController {
 
         //Filter out unnecessary keys from the results.
         $results = json_decode( $payload, true )['results'];
-        foreach($results as $index => $result) {
+        foreach( $results as $index => $result ) {
             $results[$index] = array_filter(
                 $result,
                 function ( $key ) use ( $response_args ) {
