@@ -1,6 +1,7 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use SebastianBergmann\CodeCoverage\Util\Percentage;
 
 /**
