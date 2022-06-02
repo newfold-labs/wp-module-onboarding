@@ -10,7 +10,16 @@ abstract class BaseHiiveController extends \WP_REST_Controller {
     /**
      * @var string
      */
-    protected $url = 'https://hiive.cloud';
+    protected $url;
+
+    public function __construct() {
+
+        if ( ! defined( 'NFD_HIIVE_BASE_URL' ) ) {
+            define( 'NFD_HIIVE_BASE_URL', 'https://hiive.cloud');
+        }
+
+        $this->url = NFD_HIIVE_BASE_URL;
+    }
 
     /**
      * @param string $endpoint
