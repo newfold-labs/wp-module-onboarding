@@ -29,7 +29,7 @@ export function isDrawerOpened(state) {
  * @returns string
  */
 export function getNewfoldBrand(state) {
-	return state.runtime.brand;
+	return state.runtime.currentBrand.brand;
 }
 
 /**
