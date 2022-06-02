@@ -35,8 +35,8 @@ class SiteImagesController extends BaseHiiveController {
             array(
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
-                    'callback'            => array($this, 'get_images'),
-                    'permission_callback' => array($this, 'check_permissions'),
+                    'callback'            => array( $this, 'get_images' ),
+                    'permission_callback' => array( $this, 'check_permissions' ),
                     'args'                => $this->get_request_params()
                 )
             )
@@ -56,7 +56,7 @@ class SiteImagesController extends BaseHiiveController {
             'query'    => $request->get_param( 'siteType' ),
             'per_page' => $this->results_per_page
         );
-        $response_args = array( 'id', 'width', 'height', 'links', 'description', 'alt_description', 'tags', 'urls' );
+        $response_args = array( 'id', 'width', 'height', 'links', 'description', 'alt_description', 'urls' );
 
         //Request the Hiive Unsplash worker for images.
         $payload = $this->get( '/workers/unsplash/search/photos', $request_args );
@@ -66,7 +66,7 @@ class SiteImagesController extends BaseHiiveController {
 
         //Filter out unnecessary keys from the results.
         $results = json_decode( $payload, true )['results'];
-        foreach($results as $index => $result) {
+        foreach( $results as $index => $result ) {
             $results[$index] = array_filter(
                 $result,
                 function ( $key ) use ( $response_args ) {
