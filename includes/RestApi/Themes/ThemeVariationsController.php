@@ -46,7 +46,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
                 )
             )
         );
-	}
+    }
 
     /**
      * Retrieves the themes variations.
@@ -69,7 +69,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
         array_push( $other_variations, $default_variation );
 
         return $other_variations;
-	}
+    }
 
     /**
      * Retrieves the default theme variation.
@@ -105,7 +105,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
      *
      * @return array|\WP_Error
      */
-	public function get_other_theme_variations( $theme ) {
+    public function get_other_theme_variations( $theme ) {
         $request = new \WP_REST_Request(
             'GET',
             '/wp/v2/global-styles/themes/' . $theme . '/variations'
@@ -136,7 +136,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
      *
      * @return string|\WP_Error
      */
-	public function get_theme_default_screenshot( $theme ) {
+    public function get_theme_default_screenshot( $theme ) {
         $request = new \WP_REST_Request(
             'GET',
             '/wp/v2/themes'
@@ -167,7 +167,6 @@ class ThemeVariationsController extends \WP_REST_Controller {
      * @return string|\WP_Error
      */
     public function get_theme_variation_screenshot( $theme, $variation_name ) {
-
         return 'dummy/' . $theme . '/' . $variation_name . '.png';
     }
 
