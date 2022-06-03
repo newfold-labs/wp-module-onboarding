@@ -1,5 +1,7 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding;
+
+use NewfoldLabs\WP\Module\Onboarding\RestApi\RestApi;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use function NewfoldLabs\WP\ModuleLoader\container;
 
@@ -34,7 +36,7 @@ final class Application {
 
         \do_action( 'nfd_module_onboarding_pre_init' );
 
-        new WP_API();
+        new RestAPI();
 
         if ( defined('\\WP_CLI') && \WP_CLI ) {
             new WP_CLI();
