@@ -1,6 +1,8 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
+use NewfoldLabs\WP\Module\Onboarding\Permissions;
+
 /**
  * CRUD methods for Onboarding config for use in API, CLI and runtime.
  */
@@ -10,10 +12,11 @@ final class Data {
      */
     public static function runtime() {
         return array(
-            'url'          => \NFD_ONBOARDING_BUILD_URL,
-            'admin'        => \admin_url(),
-            'currentBrand' => self::current_brand(),
-            'currentPlan'  => self::current_plan(),
+            'url'                => \NFD_ONBOARDING_BUILD_URL,
+            'admin'              => \admin_url(),
+            'currentBrand'       => self::current_brand(),
+            'currentPlan'        => self::current_plan(),
+            'pluginInstallHash'  => Permissions::rest_get_plugin_install_hash()
         );
     }
 

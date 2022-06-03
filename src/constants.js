@@ -1,7 +1,7 @@
 export const NFD_ONBOARDING_ELEMENT_ID = 'nfd-onboarding';
 export const runtimeDataExists =
 	'object' === typeof window?.nfdOnboarding && 'url' in window.nfdOnboarding;
-export const apiBase = '?rest_route=/newfold/onboarding/v1/';
+export const apiBase = '?rest_route=/newfold-onboarding/v1/';
 export const VIEW_NAV_PRIMARY = 'nav-primary';
 export const VIEW_NAV_DESIGN = 'nav-design';
 export const VIEW_NAV_PAGE = 'nav-page';

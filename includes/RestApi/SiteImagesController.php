@@ -48,7 +48,7 @@ class SiteImagesController extends BaseHiiveController {
 	 *
 	 * @param \WP_REST_Request $request Request model.
 	 *
-	 * @return array
+	 * @return \WP_REST_Response|\WP_Error
 	 */
     public function get_images( \WP_REST_Request $request ) {
         // Define the required request and response args.
