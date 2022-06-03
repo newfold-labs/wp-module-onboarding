@@ -191,55 +191,55 @@ class PluginsController {
 
         $result = $upgrader->install( $url );
         if ( \is_wp_error( $result ) ) {
-			$result->add_data( array( 'status' => 500 ) );
+            $result->add_data( array( 'status' => 500 ) );
 
-			return $result;
+            return $result;
 		}
         if ( \is_wp_error( $skin->result ) ) {
-			$skin->result->add_data( array( 'status' => 500 ) );
+            $skin->result->add_data( array( 'status' => 500 ) );
 
-			return $skin->result;
-		}
-		if ( $skin->get_errors()->has_errors() ) {
-			$error = $skin->get_errors();
-			$error->add_data( array( 'status' => 500 ) );
+            return $skin->result;
+        }
+        if ( $skin->get_errors()->has_errors() ) {
+            $error = $skin->get_errors();
+            $error->add_data( array( 'status' => 500 ) );
 
-			return $error;
-		}
+            return $error;
+        }
         if ( is_null( $result ) ) {
-			// Pass through the error from WP_Filesystem if one was raised.
-			if ( $wp_filesystem instanceof \WP_Filesystem_Base
-				&& \is_wp_error( $wp_filesystem->errors ) && $wp_filesystem->errors->has_errors()
-			) {
-				return new \WP_Error(
-					'unable_to_connect_to_filesystem',
-					$wp_filesystem->errors->get_error_message(),
-					array( 'status' => 500 )
-				);
-			}
+            // Pass through the error from WP_Filesystem if one was raised.
+            if ( $wp_filesystem instanceof \WP_Filesystem_Base
+                && \is_wp_error( $wp_filesystem->errors ) && $wp_filesystem->errors->has_errors()
+            ) {
+                return new \WP_Error(
+                    'unable_to_connect_to_filesystem',
+                    $wp_filesystem->errors->get_error_message(),
+                    array( 'status' => 500 )
+                );
+            }
 
-			return new \WP_Error(
-				'unable_to_connect_to_filesystem',
-				'Unable to connect to the filesystem.',
-				array( 'status' => 500 )
-			);
-		}
+            return new \WP_Error(
+                'unable_to_connect_to_filesystem',
+                'Unable to connect to the filesystem.',
+                array( 'status' => 500 )
+            );
+        }
 
         $plugin_file = $upgrader->plugin_info();
-		if ( ! $plugin_file ) {
-			return new \WP_Error(
-				'unable_to_determine_installed_plugin',
-				'Unable to determine what plugin was installed.',
-				array( 'status' => 500 )
-			);
-		}
+        if ( ! $plugin_file ) {
+            return new \WP_Error(
+                'unable_to_determine_installed_plugin',
+                'Unable to determine what plugin was installed.',
+                array( 'status' => 500 )
+            );
+        }
 
         $status = \activate_plugin( $plugin_file );
-		if ( \is_wp_error( $status ) ) {
-			$status->add_data( array( 'status' => 500 ) );
+        if ( \is_wp_error( $status ) ) {
+            $status->add_data( array( 'status' => 500 ) );
 
-			return $status;
-		}
+            return $status;
+        }
 
         return new \WP_REST_Response(
             null,
