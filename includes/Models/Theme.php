@@ -20,7 +20,6 @@ class Theme implements \JsonSerializable {
         $this->is_newfold_theme = false;
     }
 
-
     /**
      * @param string $theme_name
      * 
@@ -37,7 +36,6 @@ class Theme implements \JsonSerializable {
         return $this->theme_name;
     }
 
-
     /**
      * @param string $theme_image Path to theme screenshot image.
      * 
@@ -53,7 +51,6 @@ class Theme implements \JsonSerializable {
     public function get_theme_image() {
         return $this->theme_image;
     }
-
 
     /**
      * @param boolean $is_newfold_theme
