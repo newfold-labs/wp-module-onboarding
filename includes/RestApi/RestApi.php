@@ -7,9 +7,10 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
  */
 final class RestApi {
 
-    protected $controllers = array(
-        'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteImagesController'
-    );
+	protected $controllers = array(
+		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteImagesController',
+          'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeGeneratorController'
+	);
 
     public function __construct()
     {
