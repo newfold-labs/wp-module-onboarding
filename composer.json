@@ -17,8 +17,16 @@
       "bootstrap.php"
     ]
   },
+  "require": {
+     "mustache/mustache": "~2.5"
+  },
   "require-dev": {
     "wp-phpunit/wp-phpunit": "^5.9",
     "yoast/phpunit-polyfills": "^1.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }

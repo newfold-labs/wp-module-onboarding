@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi\Themes;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Flow;
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
+use NewfoldLabs\WP\Module\Onboarding\Mustache\Mustache;
 
 /**
  * Class ThemeGeneratorController
@@ -39,41 +40,48 @@ class ThemeGeneratorController {
       * @return \WP_REST_Respone|\WP_Error
       */
      public function generate_child_theme() {
-          // [TODO] Replace this to get data from wp_option
-          // Retrieve the flow data
-          $flow_data = Flow::get_flow_data()['data'];
-          if ( ! $flow_data ) {
+          // Connect to the wordpress file system.
+          if ( ! $this->connect_to_filesystem() ) {
                return new \WP_Error(
-                    'nfd_onboarding_flow_data_not_available',
-                    'Flow data not available to generate child theme',
+                    'nfd_onboarding_error',
+                    'Could not connect to the filesystem.',
                     array( 'status' => 500 )
                );
           }
 
-          // Ensure that we have suffcient data to generate a child theme.
+          // [TODO] Replace this to get data from wp_option
+          // Retrieve the flow data
+          // Ensure that we have sufficient data to generate a child theme.
+          $flow_data = Flow::get_flow_data()['data'];
           $valid_flow_data = $this->validate_flow_data( $flow_data );
           if ( ! $valid_flow_data ) {
                return new \WP_Error(
-                    'nfd_onboarding_flow_data_incomplete',
+                    'nfd_onboarding_error',
                     'Flow data is incomplete to generate a child theme.',
                     array( 'status' => 500 )
                );
           }
 
-          // Install and activate the parent theme if it does not exist.
+          // Check if the parent theme exists.
           $parent_theme_slug = $flow_data['theme']['template'];
           $parent_theme_exists = ( \wp_get_theme( $parent_theme_slug ) )->exists();
           if ( ! $parent_theme_exists ) {
-               $status = $this->install_theme_from_wordpress( $parent_theme_slug );
-               if ( \is_wp_error( $status ) ) {
-                    return $status;
-               }
+               return new \WP_Error(
+                    'nfd_onboarding_error',
+                    'Parent theme is missing to generate the child theme.',
+                    array( 'status' => 500 )
+               );
           }
 
-          $this->activate_theme( $parent_theme_slug );
+          /* Activate the parent theme if it is not active. 
+          This is necessary to register the parent theme's block patterns. */
+          $active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
+          if ( $active_theme !== $parent_theme_slug ) {
+               $this->activate_theme( $parent_theme_slug );
+          }
 
           // Generate the necessary slugs and paths.
-          $themes_dir = dirname( get_stylesheet_directory() );
+          $themes_dir = dirname( \get_stylesheet_directory() );
           $parent_theme_dir = $themes_dir . '/' . $parent_theme_slug;
           $child_theme_slug = $this->get_child_theme_slug( $flow_data );
           $child_theme_dir = $themes_dir . '/' . $child_theme_slug;
@@ -82,11 +90,12 @@ class ThemeGeneratorController {
           $theme_json_data = $this->generate_child_theme_json( $flow_data, $parent_theme_dir );
           if ( ! $theme_json_data ) {
                return new \WP_Error(
-                    'nfd_onboarding_theme_json_error',
+                    'nfd_onboarding_error',
                     'Could not generate theme.json',
                     array( 'status' => 500 )
                );
           }
+
           // Generate the pattern for a given header part to place it into the relevant HTML file.
           if ( $flow_data['partHeader'] ) {
                $part_patterns['header'] = $this->generate_theme_part_pattern( $flow_data['partHeader'] );
@@ -103,9 +112,10 @@ class ThemeGeneratorController {
                \wp_json_encode( $theme_json_data ),
                $part_patterns
           );
+
           if ( $child_theme_written !== true ) {
                return new \WP_Error(
-                    'nfd_onboarding_child_theme_error',
+                    'nfd_onboarding_error',
                     $child_theme_written,
                     array( 'status' => 500 )
                );
@@ -136,66 +146,13 @@ class ThemeGeneratorController {
      }
 
      /**
-      * @param string $theme wordpress slug for theme 
-      * 
-      * @return boolean|\WP_Error
-      */
-     public function install_theme_from_wordpress( $theme ) {
-          require_once ABSPATH . 'wp-admin/includes/file.php';
-          require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-          include_once ABSPATH . 'wp-admin/includes/theme.php';
-     
-          $api = \themes_api(
-               'theme_information',
-               array(
-                    'slug'   => $theme,
-                    'fields' => array( 'sections' => false ),
-               )
-          );
-     
-          if ( \is_wp_error( $api ) ) {
-               return $api;
-          }
-
-          \wp_cache_flush();
-          $skin     = new \WP_Ajax_Upgrader_Skin();
-          $upgrader = new \Theme_Upgrader( $skin );
-          $result   = $upgrader->install( $api->download_link );
-     
-          if ( \is_wp_error( $result ) ) {
-               return $result;
-          } elseif ( \is_wp_error( $skin->result ) ) {
-               return $skin->result;
-          } elseif ( $skin->get_errors()->has_errors() ) {
-               return $skin->get_errors();
-          } elseif ( is_null( $result ) ) {
-			if ( $wp_filesystem instanceof \WP_Filesystem_Base
-				&& \is_wp_error( $wp_filesystem->errors ) && $wp_filesystem->errors->has_errors()
-			) {
-				return new \WP_Error(
-					'unable_to_connect_to_filesystem',
-					$wp_filesystem->errors->get_error_message(),
-					array( 'status' => 500 )
-				);
-			}
-
-			return new \WP_Error(
-				'unable_to_connect_to_filesystem',
-				'Unable to connect to the filesystem.',
-				array( 'status' => 500 )
-			);
-          }
-          return true;
-     }
-
-     /**
       * Activates a given theme.
       * 
       * @param string $theme wordpress slug for theme
       * 
       * @return void
       */
-     public function activate_theme( $theme_slug ) {
+     protected function activate_theme( $theme_slug ) {
           \switch_theme( $theme_slug );
      }
 
@@ -207,18 +164,19 @@ class ThemeGeneratorController {
       * 
       * @return boolean|array
       */
-     public function generate_child_theme_json( $flow_data, $parent_theme_dir ) {
-          
+     protected function generate_child_theme_json( $flow_data, $parent_theme_dir ) {
+          global $wp_filesystem;
+
           if ( $flow_data['theme']['variation'] ) {
                $theme_json_file = $parent_theme_dir . '/styles/' . $flow_data['theme']['variation'] . '.json';
           } else {
                $theme_json_file = $parent_theme_dir . '/theme.json';
           }
-          if ( ! file_exists( $theme_json_file ) ) {
+          if ( ! $wp_filesystem->exists( $theme_json_file ) ) {
                return false;
           }
 
-          $theme_json = file_get_contents( $theme_json_file );
+          $theme_json = $wp_filesystem->get_contents( $theme_json_file );
           $theme_json_data = json_decode( $theme_json, true );
 
           if ( ! $flow_data['customDesign'] ) {
@@ -245,7 +203,7 @@ class ThemeGeneratorController {
       * 
       * @return string the pattern for the part.
       */
-     public function generate_theme_part_pattern( $pattern_slug ) {
+     protected function generate_theme_part_pattern( $pattern_slug ) {
           $pattern = \WP_Block_Patterns_Registry::get_instance()->get_registered( $pattern_slug );
           if ( ! $pattern ) {
                return new \WP_Error(
@@ -269,7 +227,7 @@ class ThemeGeneratorController {
       * 
       * @return string|boolean
       */
-     public function write_child_theme( $parent_theme_slug, $child_theme_slug, $child_theme_dir, $theme_json, $part_patterns ) {
+     protected function write_child_theme( $parent_theme_slug, $child_theme_slug, $child_theme_dir, $theme_json, $part_patterns ) {
 
           $child_directory_created = $this->create_directory( $child_theme_dir );
           if ( ! $child_directory_created ) {
@@ -306,10 +264,13 @@ class ThemeGeneratorController {
       * 
       * @return boolean
       */
-     public function create_directory( $dir ) {
-          if ( ! file_exists( $dir ) ) {
-               return mkdir( $dir );
+     protected function create_directory( $dir ) {
+          global $wp_filesystem;
+
+          if ( ! $wp_filesystem->exists( $dir ) ) {
+               return $wp_filesystem->mkdir( $dir );
           }
+
           return true;
      }
 
@@ -321,8 +282,8 @@ class ThemeGeneratorController {
       * 
       * @return boolean
       */
-     public function write_theme_json( $theme_dir, $theme_json ) {
-          return file_put_contents( $theme_dir . '/' . 'theme.json', $theme_json);
+     protected function write_theme_json( $theme_dir, $theme_json ) {
+          return $this->write_to_filesystem( $theme_dir . '/' . 'theme.json', $theme_json );
      }
 
      /**
@@ -333,15 +294,17 @@ class ThemeGeneratorController {
       * 
       * @return boolean
       */
-     public function write_template_parts( $theme_dir, $part_patterns ) {
-          if ( ! file_exists( $theme_dir . '/parts' ) ) {
+     protected function write_template_parts( $theme_dir, $part_patterns ) {
+          global $wp_filesystem;
+
+          if ( ! $wp_filesystem->exists( $theme_dir . '/parts' ) ) {
                $parts_directory_created = mkdir( $theme_dir . '/parts' );
                if ( ! $parts_directory_created ) {
                     return false;
                }
           }
           foreach ( $part_patterns as $part => $pattern ) {
-               $status = file_put_contents( $theme_dir . "/parts/{$part}.html", $pattern );
+               $status = $this->write_to_filesystem( $theme_dir . "/parts/{$part}.html", $pattern );
                if ( ! $status ) {
                     return false;
                }
@@ -359,27 +322,24 @@ class ThemeGeneratorController {
       * 
       * @return boolean
       */
-     public function write_child_stylesheet( $parent_theme_slug, $child_theme_slug, $theme_dir ) {
+     protected function write_child_stylesheet( $parent_theme_slug, $child_theme_slug, $theme_dir ) {
           $current_brand = Data::current_brand();
-          $brand = $current_brand['brand'];
-          $brand_name = $current_brand['name'] ? $current_brand['name'] : 'Newfold Digital';
-          $site_title = \get_bloginfo( 'name' );
-          $site_url = \site_url();
           $customer = \wp_get_current_user();
 
-          // Do not indent this since it results in an indented comment in style.css
-          $theme_style_comment = "/*
- Theme Name: {$site_title}
- Author: {$customer->user_firstname} {$customer->user_lastname} & {$brand_name}
- Author URI: {$site_url}
- Description: A Custom WordPress Theme built for $site_title by $brand_name 
- Requires PHP: 5.7
- Version: 1.0.0
- Template: {$parent_theme_slug}
- Text Domain: {$child_theme_slug}
- */";
+          $theme_style_data = array(
+               'current_brand'     => Data::current_brand(),
+               'brand'             => $current_brand['brand'],
+               'brand_name'        => $current_brand['name'] ? $current_brand['name'] : 'Newfold Digital',
+               'site_title'        => \get_bloginfo( 'name' ),
+               'site_url'          => \site_url(),
+               'author'            => $customer->user_firstname,
+               'parent_theme_slug' => $parent_theme_slug,
+               'child_theme_slug'  => $child_theme_slug
+          );
 
-          return file_put_contents( $theme_dir . '/style.css', $theme_style_comment );
+          $mustache = new Mustache();
+          $theme_style_comment = $mustache->render_template( 'themeStylesheet', $theme_style_data );
+          return $this->write_to_filesystem( $theme_dir . '/style.css', $theme_style_comment);
      }
 
      /**
@@ -391,7 +351,7 @@ class ThemeGeneratorController {
       */
      public function write_index_php( $theme_dir ) {
           $theme_index_php = '<?php';
-          return file_put_contents( $theme_dir . '/index.php', $theme_index_php  );
+          return $this->write_to_filesystem( $theme_dir . '/index.php', $theme_index_php);
      }
 
      /**
@@ -401,8 +361,8 @@ class ThemeGeneratorController {
       * 
       * @return boolean
       */
-     function validate_flow_data( $flow_data ) {
-          if (! $flow_data['theme']['template'] || ! $flow_data['theme']['stylesheet'] ) {
+     protected function validate_flow_data( $flow_data ) {
+          if (! $flow_data || ! $flow_data['theme']['template'] || ! $flow_data['theme']['stylesheet'] ) {
                return false;
           }
           if ( $flow_data['customDesign'] ) {
@@ -410,6 +370,34 @@ class ThemeGeneratorController {
                     return false;
                }
           }
+
+          return true;
+     }
+
+     protected function write_to_filesystem( $file, $content ) {
+          global $wp_filesystem;
+
+          return $wp_filesystem->put_contents(
+               $file,
+               $content,
+               FS_CHMOD_FILE // predefined mode settings for WP files
+          );
+     }
+
+     protected function connect_to_filesystem() {
+          require_once ABSPATH . 'wp-admin/includes/file.php';
+
+          $access_type = \get_filesystem_method();
+          if ( $access_type !== 'direct' ) {
+               return false;
+          }
+
+          $creds = \request_filesystem_credentials( site_url() . '/wp-admin', '', false, false, array() );
+
+          if ( ! \WP_Filesystem( $creds ) ) {
+               return false;
+          }
+
           return true;
      }
 }
