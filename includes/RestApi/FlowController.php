@@ -30,19 +30,6 @@ class FlowController
      */
     protected $nfd_onboarding_options_flow_key = 'nfd_module_onboarding_flow';
 
-    /*
-     * @var array
-     * This variable stores all the options for the flow
-     */
-    protected $options = array();
-
-    /*
-     * Initializing the data in the constructor 
-     */
-    public function __construct()
-    {
-    }
-
     /**
      * Registers rest routes for this controller class.
      * 
@@ -59,6 +46,12 @@ class FlowController
                     'callback'            => array($this, 'get_onboarding_flow_data'),
                     'permission_callback' => array($this, 'check_permissions'),
                     'args'                => array()
+                ),
+				array(
+                    'methods'             => \WP_REST_Server::EDITABLE,
+                    'callback'            => array($this, 'save_onboarding_flow_data'),
+                    'permission_callback' => array($this, 'check_permissions'),
+                    'args'                => array()
                 )
             )
         );
@@ -73,7 +66,6 @@ class FlowController
      */
     public function get_onboarding_flow_data(\WP_REST_Request $request)
     {
-
 	    // check if data is available in the database if not then fetch the default dataset
 	    if(!($result = $this->read_details_from_wp_options())) {
 	    	$result = Flow::get_flow_data();
@@ -85,6 +77,45 @@ class FlowController
             $result,
             200
         );
+    }
+
+	/**
+     * Save / Update onboarding flow details to database.
+     *
+     * @param \WP_REST_Request $request Request model.
+     *
+     * @return array
+     */
+    public function save_onboarding_flow_data(\WP_REST_Request $request)
+    {
+		$flow_data = array();	
+		$params = json_decode($request->get_body(), true);
+
+		if(is_null($params)) {
+			return new \WP_Error( 'no_post_data', 'No Data Provided', array( 'status' => 404 ) );
+		}
+
+		$flow_data = $this->read_details_from_wp_options();
+		foreach($params as $key => $param){
+			if($value = $this->array_search_key($key, $flow_data) === FALSE) {
+				return new \WP_Error( 'wrong_param_provided', "Wrong Parameter Provided : $key", array( 'status' => 404 ) );
+			}
+		}
+		
+		$flow_data = $this->array_merge_recursive2($flow_data, $params);
+
+		// update timestamp once data is updated
+		$flow_data['updatedAt'] = time();
+
+		// save data to database
+		if(!$this->update_wp_options_data_in_database($flow_data)) {
+			return new \WP_Error( 'database_update_failed', "There was an error saving the data", array( 'status' => 404 ) ); 
+		}
+	
+		return new \WP_REST_Response(
+			$flow_data,
+			200
+		);
     }
 
     /**
@@ -102,19 +133,53 @@ class FlowController
      */
     public function read_details_from_wp_options()
     {
-        $this->options = get_option($this->nfd_onboarding_options_flow_key);
-		if($this->options) {
-        	$this->options = unserialize($this->options);
-		}
-        return $this->options;
+        return unserialize(get_option($this->nfd_onboarding_options_flow_key));
     }
 
     /*
-     * update onboarding flow options
+     * add onboarding flow options
      */
     public function save_details_to_wp_options($data)
     {
-        $this->options = serialize($data);
-        return add_option($this->nfd_onboarding_options_flow_key, $this->options);
+        return add_option($this->nfd_onboarding_options_flow_key, serialize($data));
     }
+	
+    /*
+	 * update onboarding flow options
+	 */
+    public function update_wp_options_data_in_database($data) {
+		return update_option($this->nfd_onboarding_options_flow_key, serialize($data));
+    }
+
+    /*
+     * function to search for key in array recursively with case sensitive exact match
+     */
+	public function array_search_key( $needle_key, $array ) {
+		foreach($array as $key => $value){
+			if(strcmp($key, $needle_key) === 0 ) {
+				return $value;
+			}
+			if(is_array($value)){
+				if( ($result = $this->array_search_key($needle_key,$value)) !== false)
+					return $result;
+			}
+  		}
+  		return false;
+	} 
+
+    /*
+     * function to merge associative arrays recursively and overriding emoty values
+     */
+	public function array_merge_recursive2($a, $b) {
+	    // If one is not an array, give precedence to the other
+		if (!is_array($a)) return $b;
+		if (!is_array($b)) return $a;
+		$merged = [];
+		foreach(array_merge($a, $b) as $k => $v) {
+			$merged[$k] = !isset($a[$k]) ? $b[$k]
+						: (!isset($b[$k]) ? $a[$k]
+						: $this->array_merge_recursive2($a[$k], $b[$k]));
+		}
+		return $merged;
+	}
 }
