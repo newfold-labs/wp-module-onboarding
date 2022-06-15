@@ -13,14 +13,14 @@ class ThemeGeneratorController {
 	 /**
 	  * @var string
 	  */
-     protected $namespace = 'newfold-onboarding/v1';
+	 protected $namespace = 'newfold-onboarding/v1';
 
 	/**
 	 * @var string
 	 */
-	protected $rest_base = '/themes';
+	 protected $rest_base = '/themes';
 
-     protected $rest_extended_base = '/child/generate';
+	 protected $rest_extended_base = '/child/generate';
 
 	public function register_routes() {
 		\register_rest_route(
@@ -53,7 +53,7 @@ class ThemeGeneratorController {
 			);
 		}
 
-          // Connect to the WordPress file system.
+	     // Connect to the WordPress file system.
 		if ( ! $this->connect_to_filesystem() ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
@@ -118,11 +118,11 @@ class ThemeGeneratorController {
 
 		$child_theme_written = $this->write_child_theme( $child_theme_data );
 		if ( $child_theme_written !== true ) {
-               return new \WP_Error(
+		     return new \WP_Error(
 				'nfd_onboarding_error',
 				$child_theme_written,
 				array( 'status' => 500 )
-               );
+		     );
 		}
 
 		// Activate the child theme.
@@ -204,7 +204,7 @@ class ThemeGeneratorController {
 	 /**
 	  * Get the pattern for the theme part.
 	  *
-	  * @param string $part
+	  * @param string $pattern_slug
 	  *
 	  * @return string the pattern for the part.
 	  */
@@ -224,11 +224,13 @@ class ThemeGeneratorController {
 	 /**
 	  * Write the child theme to the themes directory.
 	  *
-	  * @param string $parent_theme_slug
-	  * @param string $child_theme_slug
-	  * @param string $child_theme_dir
-	  * @param array  $theme_json
-	  * @param array  $part_patterns
+	  * @param array child_theme_data
+	  * @var string  parent_theme_slug
+	  * @var string  child_theme_slug
+	  * @var string  parent_theme_dir
+	  * @var string  child_theme_dir
+	  * @var string  child_theme_json
+	  * @var string  part_patterns
 	  *
 	  * @return string|boolean
 	  */
