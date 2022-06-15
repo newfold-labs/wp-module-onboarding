@@ -2,7 +2,6 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi\Themes;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Onboarding\Data\Flow;
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Mustache\Mustache;
 
@@ -43,7 +42,7 @@ class ThemeGeneratorController {
 	  */
 	public function generate_child_theme() {
 		// Ensure that we have sufficient data to generate a child theme.
-		$flow_data       = unserialize( \get_option( 'nfd_module_onboarding_flow' ) )['data'];
+		$flow_data       = \get_option( 'nfd_module_onboarding_flow' )['data'];
 		$valid_flow_data = $this->validate_flow_data( $flow_data );
 		if ( ! $valid_flow_data ) {
 			return new \WP_Error(
@@ -242,7 +241,7 @@ class ThemeGeneratorController {
 
 		$theme_json_written = $this->write_theme_json(
 			$child_theme_data['child_theme_dir'],
-			$child_theme_data['theme_json']
+			$child_theme_data['child_theme_json']
 		);
 		if ( ! $theme_json_written ) {
 			return 'Error writing theme.json.';
