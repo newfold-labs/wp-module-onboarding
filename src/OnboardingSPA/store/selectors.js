@@ -33,12 +33,21 @@ export function getNewfoldBrand(state) {
 }
 
 /**
+ * Gets current Onboarding Flow
+ * @param {*} state
+ * @returns string
+ */
+export function getOnbardingFlow(state) {
+	return state.runtime.currentFlow;
+}
+
+/**
  * Gets steps to display in drawer.
  * @param {*} state
  * @returns
  */
 export function getTopSteps(state) {
-	return state.steps.topSteps;
+	return state.flow.steps.topSteps;
 }
 
 /**
@@ -47,7 +56,7 @@ export function getTopSteps(state) {
  * @returns
  */
 export function getDesignSteps(state) {
-	return state.steps.designSteps;
+	return state.flow.steps.designSteps;
 }
 
 /**
@@ -57,7 +66,27 @@ export function getDesignSteps(state) {
  * @returns
  */
 export function getCurrentStepPath(state) {
-	return state.steps.currentStep;
+	return state.flow.steps.currentStep;
+}
+
+/**
+ * Gets the First step object.
+ *
+ * @param {*} state
+ * @returns object
+ */
+export function getFirstStep(state) {
+	return state.flow.steps.allSteps[0];
+}
+
+/**
+ * Gets the Last step object.
+ *
+ * @param {*} state
+ * @returns object
+ */
+export function getLastStep(state) {
+	return state.flow.steps.allSteps[state.flow.steps.allSteps.length - 1];
 }
 
 /**
@@ -67,9 +96,9 @@ export function getCurrentStepPath(state) {
  * @returns object
  */
 export function getCurrentStep(state) {
-	const filtered = filter(state.steps.allSteps, [
+	const filtered = filter(state.flow.steps.allSteps, [
 		'path',
-		state.steps.currentStep,
+		state.flow.steps.currentStep,
 	]);
 	return filtered[0];
 }
@@ -81,8 +110,8 @@ export function getCurrentStep(state) {
  * @returns object|null|false
  */
 export function getPreviousStep(state) {
-	const currentStepIndex = findIndex(state.steps.allSteps, {
-		path: state.steps.currentStep,
+	const currentStepIndex = findIndex(state.flow.steps.allSteps, {
+		path: state.flow.steps.currentStep,
 	});
 	if (0 === currentStepIndex) {
 		return null; // current step is the first step
@@ -90,8 +119,7 @@ export function getPreviousStep(state) {
 	if (-1 === currentStepIndex) {
 		return false; // could not find index
 	}
-
-	return state.steps.allSteps[currentStepIndex - 1];
+	return state.flow.steps.allSteps[currentStepIndex - 1];
 }
 
 /**
@@ -101,9 +129,9 @@ export function getPreviousStep(state) {
  * @returns object|null|false
  */
 export function getNextStep(state) {
-	const totalIndexes = state.steps.allSteps.length - 1;
-	const currentStepIndex = findIndex(state.steps.allSteps, {
-		path: state.steps.currentStep,
+	const totalIndexes = state.flow.steps.allSteps.length - 1;
+	const currentStepIndex = findIndex(state.flow.steps.allSteps, {
+		path: state.flow.steps.currentStep,
 	});
 	if (totalIndexes === currentStepIndex) {
 		return null; // currentStep is the last step
@@ -111,6 +139,5 @@ export function getNextStep(state) {
 	if (-1 === currentStepIndex) {
 		return false; // could not find index
 	}
-
-	return state.steps.allSteps[currentStepIndex + 1];
+	return state.flow.steps.allSteps[currentStepIndex + 1];
 }

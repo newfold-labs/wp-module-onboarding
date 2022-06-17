@@ -13,7 +13,7 @@ import { store as noticesStore } from '@wordpress/notices';
  * @returns
  */
 export function setRuntime(runtime) {
-	window.nfdOnboarding = { url: runtime.url, migrated: true };
+	window.nfdOnboarding = { url: runtime.url, migrated: true, currentFlow: runtime.currentFlow };
 	return {
 		type: 'SET_RUNTIME',
 		runtime: runtime,
@@ -42,6 +42,21 @@ export function setIsDrawerOpened(isOpen) {
 	return {
 		type: 'SET_DRAWER_OPENED',
 		isOpen,
+	};
+}
+
+/**
+ * Accepts a string flow to set the active flow.
+ *
+ * NOTE: does not have any navigation side-effect.
+ *
+ * @param {*} path
+ * @returns
+ */
+export function setActiveFlow(flow) {
+	return {
+		type: 'SET_ACTIVE_FLOW',
+		flow,
 	};
 }
 

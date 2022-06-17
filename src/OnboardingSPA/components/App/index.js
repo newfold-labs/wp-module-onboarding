@@ -24,14 +24,15 @@ const App = () => {
 	const isLargeViewport = useViewportMatch('medium');
 	const pathname = kebabCase(location.pathname);
 
-	const { isDrawerOpen, newfoldBrand } = useSelect((select) => {
+	const { isDrawerOpen, newfoldBrand, onboardingFlow } = useSelect((select) => {
 		return {
 			isDrawerOpen: select(nfdOnboardingStore).isDrawerOpened(),
 			newfoldBrand: select(nfdOnboardingStore).getNewfoldBrand(),
+			onboardingFlow: select(nfdOnboardingStore).getOnbardingFlow(),
 		};
 	}, []);
 
-	const { setActiveStep } = useDispatch(nfdOnboardingStore);
+	const { setActiveStep, setActiveFlow } = useDispatch(nfdOnboardingStore);
 
 	useEffect(() => {
 		document.body.classList.add(`nfd-brand-${newfoldBrand}`);
@@ -39,9 +40,17 @@ const App = () => {
 
 	useEffect(() => {
 		if (location.pathname.includes('/step')) {
-			setActiveStep(location.pathname);
+			setActiveFlow(onboardingFlow);
+			
+			if (location.pathname.includes(onboardingFlow))
+				setActiveStep(location.pathname);
+			else {
+				console.log('else ran');
+				const [first, ...rest] = location.pathname.split('/');
+				setActiveStep(`/${onboardingFlow}/${rest.join('-')}`);
+			}
 		}
-	}, [location.pathname]);
+	}, [location.pathname, onboardingFlow]);
 
 	return (
 		<Fragment>

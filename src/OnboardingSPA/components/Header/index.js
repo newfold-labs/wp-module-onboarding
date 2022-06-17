@@ -14,6 +14,12 @@ import ExitToWordPress from '../ExitToWordPress';
  */
 const Header = () => {
 	const location = useLocation();
+
+	const { firstStep } = useSelect((select) => {
+		return {
+			firstStep: select(nfdOnboardingStore).getFirstStep(),
+		};
+	}, []);
 	const { previousStep, nextStep } = useSelect(
 		(select) => {
 			return {
@@ -23,7 +29,7 @@ const Header = () => {
 		},
 		[location.path]
 	);
-	const isGettingStarted = '/step/get-started' === location?.pathname;
+	const isGettingStarted = firstStep?.path === location?.pathname;
 	return (
 		<div className="nfd-onboarding-header">
 			<div className="nfd-onboarding-header__start">

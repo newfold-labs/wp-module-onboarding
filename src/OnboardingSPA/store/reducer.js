@@ -7,17 +7,18 @@ import {
 	steps as initialSteps,
 	initialDesignSteps,
 	initialTopSteps,
-} from '../data/routes';
+} from '../data/routes/index';
 
-import { filter } from 'lodash';
-
-export function steps(
+export function flow(
 	state = {
-		routes: initialRoutes,
-		allSteps: initialSteps,
-		topSteps: initialTopSteps(),
-		designSteps: initialDesignSteps(),
-		currentStep: '/step/get-started',
+		flow: 'wp-setup',
+		steps: {
+			routes: initialRoutes,
+			allSteps: initialSteps,
+			topSteps: initialTopSteps(),
+			designSteps: initialDesignSteps(),
+			currentStep: '/wp-setup/step/what-next',
+		}
 	},
 	action
 ) {
@@ -25,7 +26,15 @@ export function steps(
 		case 'SET_ACTIVE_STEP':
 			return {
 				...state,
-				currentStep: action.path,
+				steps: {
+					...state.steps,
+					currentStep: action.path
+				}
+			};
+		case 'SET_ACTIVE_FLOW':
+			return {
+				...state,
+				flow: action.flow,
 			};
 	}
 
@@ -80,5 +89,5 @@ export default combineReducers({
 	drawer,
 	runtime,
 	settings,
-	steps,
+	flow,
 });
