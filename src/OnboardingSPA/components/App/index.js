@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import { kebabCase } from 'lodash';
 import { store as nfdOnboardingStore } from '../../store';
 import { useEffect } from '@wordpress/element';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useViewportMatch } from '@wordpress/compose';
 
 /**
@@ -20,6 +20,7 @@ import { useViewportMatch } from '@wordpress/compose';
  * @returns WPComponent
  */
 const App = () => {
+	const navigate = useNavigate();
 	const location = useLocation();
 	const isLargeViewport = useViewportMatch('medium');
 	const pathname = kebabCase(location.pathname);
@@ -45,9 +46,9 @@ const App = () => {
 			if (location.pathname.includes(onboardingFlow))
 				setActiveStep(location.pathname);
 			else {
-				console.log('else ran');
-				const [first, ...rest] = location.pathname.split('/');
-				setActiveStep(`/${onboardingFlow}/${rest.join('-')}`);
+				const [first, ...rest] = location.pathname.substring(1, ).split('/');
+				setActiveStep(`/${onboardingFlow}/${rest.join('/')}`);
+				navigate(`/${onboardingFlow}/${rest.join('/')}`);
 			}
 		}
 	}, [location.pathname, onboardingFlow]);
