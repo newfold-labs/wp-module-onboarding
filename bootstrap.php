@@ -16,7 +16,7 @@ function nfd_wp_module_onboarding_register() {
 		define( 'NFD_ONBOARDING_DIR', __DIR__ );
 	}
 	define('NFD_ONBOARDING_BUILD_DIR', __DIR__ . '/build/' . NFD_ONBOARDING_VERSION );
-	define('NFD_ONBOARDING_BUILD_URL', BLUEHOST_PLUGIN_URL . '/vendor/newfold-labs/wp-module-onboarding/build/' . NFD_ONBOARDING_VERSION );
+	define('NFD_ONBOARDING_BUILD_URL', WEB_PLUGIN_URL . '/vendor/newfold-labs/wp-module-onboarding/build/' . NFD_ONBOARDING_VERSION );
 	// Instantiate Onboarding Module Application
 	$onboarding = new Application();
 	// register(
