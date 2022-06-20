@@ -11,11 +11,8 @@ import {
     initialTopSteps as ecomInitialTopSteps,
 } from './ecommerce-flow';
 
-var selectedRoute = 'wp-setup';
-
 function getSelectedRoute() {
-    selectedRoute = window.nfdOnboarding.currentFlow;
-    return selectedRoute;
+    return window.nfdOnboarding.currentFlow ?? 'wp-setup';
 }
 
 const routerMap = {
