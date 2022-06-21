@@ -63,7 +63,6 @@ class EventsController extends \WP_REST_Controller {
       * @return \WP_REST_Response|\WP_Error
       */
      public function send_event( \WP_REST_Request $request ) {
-          echo NFD_MODULE_DATA_EVENTS_API;
 	     $event = Events::get_event( $request->get_param( 'slug' ) );
 		if ( ! $event ) {
 		     return new \WP_Error(
