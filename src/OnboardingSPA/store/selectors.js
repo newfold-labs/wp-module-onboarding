@@ -38,7 +38,7 @@ export function getNewfoldBrand(state) {
  * @returns string
  */
 export function getOnbardingFlow(state) {
-	return state.runtime.currentFlow;
+	return state.runtime.currentFlow ?? 'wp-setup';
 }
 
 /**
