@@ -33,7 +33,7 @@ const StepTopPriority = (props) => {
 
 	return (
 		<CommonLayout isVerticallyCentered>
-			<HeadingWithSubHeading title="Tell us priority one" subtitle="We’ll prioritize getting you there." isColoredSubheading="false" />
+			<HeadingWithSubHeading title="Tell us your top priority" subtitle="We’ll prioritize getting you there." isColoredSubheading="false" />
 			<SelectableCards 
 				contents={priorities}
 				selected={selected}
