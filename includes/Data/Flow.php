@@ -45,7 +45,7 @@ final class Flow
             'blogdescription' => '',
 
             // This integer will map to the attachment ID for an uploaded image to the WordPress media library 
-            'site_logo' => 0,
+            'siteLogo' => 0,
 
             // key-value store for social media accounts
             'accounts' => array(),
@@ -84,7 +84,7 @@ final class Flow
             'sitePages' => array(),
 
             // will include plugin installs, module activation/deactivation and perhaps API calls to the hosting platform for Newfold-specific services
-            'SiteFeatures' => array()
+            'siteFeatures' => array()
         ),
 
         // we will store active flows (abandoned wp-setup, abandoned wp-commerce) with their identifier and use as a reference to access currentStep and data

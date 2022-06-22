@@ -133,7 +133,7 @@ class FlowController
      */
     public function read_details_from_wp_options()
     {
-        return unserialize(get_option($this->nfd_onboarding_options_flow_key));
+        return \maybe_unserialize(get_option($this->nfd_onboarding_options_flow_key));
     }
 
     /*
@@ -141,14 +141,14 @@ class FlowController
      */
     public function save_details_to_wp_options($data)
     {
-        return add_option($this->nfd_onboarding_options_flow_key, serialize($data));
+        return add_option($this->nfd_onboarding_options_flow_key, \maybe_serialize($data));
     }
 	
     /*
 	 * update onboarding flow options
 	 */
     public function update_wp_options_data_in_database($data) {
-		return update_option($this->nfd_onboarding_options_flow_key, serialize($data));
+		return update_option($this->nfd_onboarding_options_flow_key, \maybe_serialize($data));
     }
 
     /*
