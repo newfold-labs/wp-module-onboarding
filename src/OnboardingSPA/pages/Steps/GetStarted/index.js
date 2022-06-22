@@ -1,7 +1,7 @@
 import CommonLayout from '../../../components/Layouts/Common';
-import StepOverview from '../../../components/StepOverview';
 import { useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
+import StartSetup from '../../../components/StartSetup';
 
 const StepGetStarted = () => {
 	const location = useLocation();
@@ -10,7 +10,7 @@ const StepGetStarted = () => {
 
 	return (
 		<CommonLayout isBgPrimary isCentered>
-			<StepOverview />
+			<StartSetup/>
 		</CommonLayout>
 	);
 };
