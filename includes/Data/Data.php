@@ -16,6 +16,7 @@ final class Data {
 			'admin'             => \admin_url(),
 			'currentBrand'      => self::current_brand(),
 			'currentPlan'       => self::current_plan(),
+			'currentFlow'       => self::current_flow(),
 			'pluginInstallHash' => Permissions::rest_get_plugin_install_hash(),
 		);
 	}
@@ -50,5 +51,26 @@ final class Data {
 	 */
 	public static function current_plan() {
 		return 'shared';
+	}
+
+	/**
+	 * Get the current onboarding flow.
+	 *
+	 * @return string
+	 */
+	public static function current_flow() {
+		$flows = Flows::get_flows();
+
+		$current_flow_type = \sanitize_text_field( $_GET['flow'] );
+		if ( $current_flow_type !== '' && isset( $flows[ $current_flow_type ] ) ) {
+			return $current_flow_type;
+		}
+
+		$current_flow_type = \get_option( 'nfd_onboarding_flow_preset' );
+		if ( $current_flow_type && isset( $flows[ $current_flow_type ] ) ) {
+			return $current_flow_type;
+		}
+
+		return Flows::get_default_flow();
 	}
 } // END \NewfoldLabs\WP\Module\Onboarding\Data()
