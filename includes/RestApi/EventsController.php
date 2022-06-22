@@ -2,6 +2,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Events;
+use NewfoldLabs\WP\Module\Onboarding\Permissions;
 
 /**
  * [Class EventsController]
@@ -29,9 +30,10 @@ class EventsController extends \WP_REST_Controller {
                $this->rest_base,
                array(
                     array(
-                         'methods'  => \WP_REST_Server::CREATABLE,
-                         'callback' => array( $this, 'send_event' ),
-                         'args'     => $this->get_send_event_args(),
+                         'methods'             => \WP_REST_Server::CREATABLE,
+                         'callback'            => array( $this, 'send_event' ),
+                         'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+                         'args'                => $this->get_send_event_args(),
                     ),
                )
           );
