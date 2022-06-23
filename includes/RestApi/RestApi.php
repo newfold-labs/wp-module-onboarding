@@ -13,7 +13,8 @@ final class RestApi {
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeVariationsController',
 		'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ApprovedThemesController',
           'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\PatternsController',
-	);
+          'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\PagesController',
+		);
 
 	public function __construct() {
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
