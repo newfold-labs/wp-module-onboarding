@@ -1,0 +1,60 @@
+.nfd-input {
+
+    &__field {
+        padding: 12px;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 16px;
+        font-style: normal;
+        font-family: 'Roboto';
+        letter-spacing: 0.5px;
+
+        resize: none !important;
+        width: 432.14px !important;
+        overflow: hidden !important;
+        max-height: 150px !important;
+        border-radius: 6px !important;
+        background: #FFFFFF !important;
+        border: 1px solid #D6D6D6 !important;
+
+        &_error{
+            background-color: rgba(255, 0, 0, 0.26) !important;
+        }
+    }
+    
+    &__label{
+        display: flex;
+        padding: 0px 2px;
+        align-items: center;
+        justify-content: space-between;
+        &_title{
+            margin: 0px;
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 37px;
+            font-style: normal;
+            letter-spacing: 0.5px;
+            font-family: 'Roboto';
+        }
+        &_maxChar {
+            margin: 0px;
+            font-size: 10px;
+            font-weight: 400;
+            line-height: 37px;
+            font-style: normal;
+            letter-spacing: 0.5px;
+            font-family: 'Roboto';
+        }
+    }
+
+    &__hint{
+        margin: 0px;
+        padding: 0px 2px;
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 37px;
+        font-style: italic;
+        letter-spacing: 0.5px;
+        font-family: 'Roboto';
+    }
+}
