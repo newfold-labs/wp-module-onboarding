@@ -86,24 +86,29 @@ class FlowController {
 
 		if ( is_null( $params ) ) {
 			return new \WP_Error(
-                    'no_post_data',
-                    'No Data Provided',
-                    array( 'status' => 404 ) 
-               );
+				'no_post_data',
+				'No Data Provided',
+				array( 'status' => 404 )
+			);
 		}
 
-		$flow_data = $this->read_details_from_wp_options();
+		if ( ! ( $flow_data = $this->read_details_from_wp_options() ) ) {
+			  $flow_data              = Flow::get_flow_data();
+			  $flow_data['createdAt'] = time();
+			  $this->save_details_to_wp_options( $flow_data );
+		}
+
 		foreach ( $params as $key => $param ) {
 			if ( $value = $this->array_search_key( $key, $flow_data ) === false ) {
 				return new \WP_Error(
-                         'wrong_param_provided',
-                         "Wrong Parameter Provided : $key", 
-                         array( 'status' => 404 ) 
-                    );
+					'wrong_param_provided',
+					"Wrong Parameter Provided : $key",
+					array( 'status' => 404 )
+				);
 			}
 		}
 
-		$flow_data = $this->array_merge_recursive2( $flow_data, $params );
+		$flow_data = array_replace_recursive( $flow_data, $params );
 
 		// update timestamp once data is updated
 		$flow_data['updatedAt'] = time();
@@ -111,10 +116,10 @@ class FlowController {
 		// save data to database
 		if ( ! $this->update_wp_options_data_in_database( $flow_data ) ) {
 			return new \WP_Error(
-                    'database_update_failed',
-                    'There was an error saving the data',
-                    array( 'status' => 404 ) 
-               );
+				'database_update_failed',
+				'There was an error saving the data',
+				array( 'status' => 404 )
+			);
 		}
 
 		return new \WP_REST_Response(
@@ -150,7 +155,7 @@ class FlowController {
 	public function array_search_key( $needle_key, $array ) {
 		foreach ( $array as $key => $value ) {
 			if ( strcmp( $key, $needle_key ) === 0 ) {
-				return $value;
+				return true;
 			}
 			if ( is_array( $value ) ) {
 				if ( ( $result = $this->array_search_key( $needle_key, $value ) ) !== false ) {
@@ -159,23 +164,5 @@ class FlowController {
 			}
 		}
 		return false;
-	}
-
-	/*
-	 * function to merge associative arrays recursively and overriding emoty values
-	 */
-	public function array_merge_recursive2( $a, $b ) {
-		// If one is not an array, give precedence to the other
-		if ( ! is_array( $a ) ) { return $b;
-		}
-		if ( ! is_array( $b ) ) { return $a;
-		}
-		$merged = array();
-		foreach ( array_merge( $a, $b ) as $k => $v ) {
-			$merged[ $k ] = ! isset( $a[ $k ] ) ? $b[ $k ]
-						: ( ! isset( $b[ $k ] ) ? $a[ $k ]
-						: $this->array_merge_recursive2( $a[ $k ], $b[ $k ] ) );
-		}
-		return $merged;
 	}
 }

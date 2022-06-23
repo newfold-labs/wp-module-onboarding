@@ -93,10 +93,10 @@ class SettingsController {
 		foreach ( $params as $param_key => $param_value ) {
 			if ( ! array_key_exists( $param_key, $settings ) ) {
 				return new \WP_Error(
-                         'param_key_not_present',
-                         "The provided param key '{$param_key}' does not match",
-                         array( 'status' => 400 )
-                    );
+					'param_key_not_present',
+					"The provided param key '{$param_key}' does not match",
+					array( 'status' => 400 )
+				);
 			}
 
 			// check for proper url
@@ -108,10 +108,10 @@ class SettingsController {
 
 					if ( ! \wp_http_validate_url( $param_value ) ) {
 						return new \WP_Error(
-                                   'param_not_proper_url',
-                                   "The provided param '{$param_value}' is NOT a proper URL",
-                                   array( 'status' => 400 )
-                              );
+							'param_not_proper_url',
+							"The provided param '{$param_value}' is NOT a proper URL",
+							array( 'status' => 400 )
+						);
 					}
 				} else {
 					foreach ( $param_value as $param_url ) {
@@ -120,10 +120,10 @@ class SettingsController {
 
 						if ( ! \wp_http_validate_url( $param_url ) ) {
 							return new \WP_Error(
-                                        'param_not_proper_url',
-                                        "The provided param '{$param_url}' is NOT a proper URL",
-                                        array( 'status' => 400 ) 
-                                   );
+								'param_not_proper_url',
+								"The provided param '{$param_url}' is NOT a proper URL",
+								array( 'status' => 400 )
+							);
 						}
 					}
 				}
