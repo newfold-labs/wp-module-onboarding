@@ -2,6 +2,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
+use NewfoldLabs\WP\Module\Onboarding\Data\Flow;
 use SebastianBergmann\CodeCoverage\Util\Percentage;
 
 /**

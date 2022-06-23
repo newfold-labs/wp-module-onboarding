@@ -46,3 +46,4 @@ final class Permissions {
 	}
 
 } // END \NewfoldLabs\WP\Module\Onboarding\Permissions()
+
