@@ -4,12 +4,6 @@ import {
     initialDesignSteps as defaultInitialDesignSteps,
     initialTopSteps as defaultInitialTopSteps,
 } from './default-flow';
-import {
-    routes as ecomInitialRoutes,
-    steps as ecomInitialSteps,
-    initialDesignSteps as ecomInitialDesignSteps,
-    initialTopSteps as ecomInitialTopSteps,
-} from './ecommerce-flow';
 
 function getSelectedRoute() {
     return window.nfdOnboarding.currentFlow ?? 'wp-setup';
@@ -21,13 +15,7 @@ const routerMap = {
         'steps': defaultInitialSteps,
         'initialTopSteps': defaultInitialTopSteps,
         'initialDesignSteps': defaultInitialDesignSteps,
-    },
-    'ecommerce': {
-        'routes': ecomInitialRoutes,
-        'steps': ecomInitialSteps,
-        'initialTopSteps': ecomInitialTopSteps,
-        'initialDesignSteps': ecomInitialDesignSteps,
-    },
+    }
 }
 
 export const routes = [
