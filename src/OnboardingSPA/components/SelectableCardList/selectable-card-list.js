@@ -1,4 +1,4 @@
-import Card from '../Card';
+import Card from '../SelectableCard';
 
 const SelectableCardList = ({ contents, selected, onSelectedChange }) => {
 

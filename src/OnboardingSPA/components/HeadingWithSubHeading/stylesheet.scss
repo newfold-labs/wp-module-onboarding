@@ -1,35 +1,50 @@
 /*COLOR VARIABLES*/
-$primary-color: #3575D2;
-$white: #FFFFFF;
-$black: #000000;
+$black: var(--nfd-onboarding-black);
+$font: var(--nfd-onboarding-primary-font);
+$primary-color: var(--nfd-onboarding-primary);
 
-.heading-title{
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 48px;
-    line-height: 19px;
-    text-align: center;
-    color: $black;
-    margin: 35px !important;
-}
+.nfd-main-heading{
+    width: 100vw;
 
-.heading-subtitle {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 28px;
-    line-height: 19px;
-    text-align: center;
-    color: $black;
-}
+    &__title{
+        color: $black;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 28px;
+        text-align: center;
+        font-family: $font;
+        margin: 35px !important;
 
-.heading-mainsubtitle{
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 32px;
-    line-height: 19px;
-    text-align: center;
-    color: $primary-color;
+        @include break-medium() {
+            font-size: 55px;
+        }
+    }
+
+    &__subtitle{
+        color: $black;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 18px;
+        text-align: center;
+        font-family: $font;
+
+        @include break-medium() {
+            font-size: 25px;
+            font-weight: 700;
+        }
+    }
+
+    &__subtitle-color{
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 18px;
+        text-align: center;
+        font-family: $font;
+        color: $primary-color;
+
+        @include break-medium() {
+            font-size: 25px;
+            font-weight: 700;
+        }
+    }
 }

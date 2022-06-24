@@ -5,9 +5,9 @@
  */
 const HeadingWithSubHeading = ({ title, subtitle, isColoredSubheading }) => {
 	return (
-		<div>
-			<h2 className="heading-title">{title}</h2>
-			<h3 className={ isColoredSubheading == "false" ? "heading-subtitle" : "heading-mainsubtitle"}>{subtitle}</h3>
+		<div className="nfd-main-heading">
+			<h2 className="nfd-main-heading__title">{title}</h2>
+			<h3 className={isColoredSubheading == "false" ? "nfd-main-heading__subtitle" : "nfd-main-headin__subtitle-color"}>{subtitle}</h3>
 		</div>
 	);
 };

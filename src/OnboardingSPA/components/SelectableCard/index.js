@@ -2,11 +2,11 @@ import { check, Icon } from '@wordpress/icons';
 import { Card as WordPressCard } from '@wordpress/components';
 
 /**
- * Interface Cards with standard design.
+ * Interface a Card with standard design.
  *
  * @returns
  */
-const Card = ({ id, path, title, desc, isSelected, onSelectedChange }) => {
+const SelectableCard = ({ id, path, title, desc, isSelected, onSelectedChange }) => {
 	return (
 		<WordPressCard className={`nfd-card ${isSelected ? 'nfd-selected-card-box' : ''}`}
 			onClick={e => onSelectedChange(id)} >
@@ -30,4 +30,4 @@ const Card = ({ id, path, title, desc, isSelected, onSelectedChange }) => {
 	);
 };
 
-export default Card;
+export default SelectableCard;

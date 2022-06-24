@@ -5,7 +5,7 @@ import { useViewportMatch } from '@wordpress/compose';
 
 import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
-import SelectableCards from '../../../components/SelectableCards/selectable-card-list';
+import SelectableCardList from '../../../components/SelectableCardList/selectable-card-list';
 
 const StepTopPriority = (props) => {
 	var priorities = [{
@@ -34,12 +34,12 @@ const StepTopPriority = (props) => {
 	return (
 		<CommonLayout isVerticallyCentered>
 			<HeadingWithSubHeading title="Tell us your top priority" subtitle="We’ll prioritize getting you there." isColoredSubheading="false" />
-			<SelectableCards 
+			<SelectableCardList 
 				contents={priorities}
 				selected={selected}
 				onSelectedChange={setSelected}>
-			</SelectableCards>
-			<a>Skip this Step</a>
+			</SelectableCardList>
+			<a style={{padding: '15px'}}>Skip this Step</a>
 		</CommonLayout>
 	);
 };

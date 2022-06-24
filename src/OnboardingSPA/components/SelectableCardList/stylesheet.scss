@@ -1,0 +1,7 @@
+.selectable_cards {
+    gap: 1.5rem;
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, 280px);
+}

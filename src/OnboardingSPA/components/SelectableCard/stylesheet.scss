@@ -1,11 +1,11 @@
 /*COLOR VARIABLES*/
 
-$main-color: #7BB1FD35;
-$main-color-light: #FFFFFF;
-$main-border-main: #1C5CBA;
-$main-border-light: #DBDBDB;
-$main-color-dark: #182127;;
-$main-color-text-dark: #0D0D0D;
+$font: var(--nfd-onboarding-primary-font);
+$main-color-dark: var(--nfd-onboarding-dark);
+$main-color-light: var(--nfd-onboarding-white);
+$main-border-light: var(--nfd-onboarding-border);
+$main-border-main: var(--nfd-onboarding-primary-alt);
+$main-color: var(--nfd-onboarding-highlighted--rgb);
 
 /*BORDER RADIUS*/
 $radius: 0.2rem;
@@ -18,6 +18,7 @@ $radius: 0.2rem;
     flex-direction: column;
     justify-content: center;
     box-shadow: none !important;
+    background-color: transparent !important;
 
     &__top_row {
         width: 100%;
@@ -31,32 +32,34 @@ $radius: 0.2rem;
         height: 200px;
         padding: 8px;
         text-align: center;
-        border-radius: 3px;
         margin-top: 50px;
+        border-radius: 6px;
         margin-right: 15px;
         padding-top: 20px;
         border-radius: $radius;
-        border: 1px solid $main-border-light;
-        background-color: $main-color-light;
+        background-color: transparent;
+        border: 1px solid rgba($main-border-light, 0.6);
 
         &_title {
             font-size: 24px;
             font-weight: 700;
             margin-top: 30px;
             line-height: 19px;
+            font-family: $font;
             font-style: normal;
+            color: $main-color-dark;
             padding: 14px 0px 10px 0px;
-            color: $main-color-text-dark;
             transition: color 300ms ease-in;
         }
         
         &_description {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 300;
             font-style: normal;
             text-align: center;
-            font-family: 'Roboto';
-            color: $main-color-text-dark;
+            font-family: $font;
+            letter-spacing: 0.5px;
+            color: $main-color-dark;
         }
     }
     &__icon{
@@ -68,16 +71,16 @@ $radius: 0.2rem;
         justify-content: center;
 
         &_box {
-                width: 64px;
-                height: 64px;
-                border-radius: 50%;
-                text-align: center;
-                background-position: center;
-                background-repeat: no-repeat;
-                background-clip: padding-box;
-                background-color: $main-color-dark;
-                border: 4px solid rgba(152, 152, 152, 0.175544);
-            }
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            text-align: center;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-clip: padding-box;
+            background-color: $main-color-dark;
+            border: 4px solid rgba($main-color, 0.10544);
+        }
     }
 
     &__icon_selected{
@@ -89,23 +92,24 @@ $radius: 0.2rem;
         margin-top: 20px;
         justify-content: center;
         background-clip: padding-box;
-        background-color: $main-border-main;
+        background-color: rgb($main-color);
 
         &_path {
-                fill: $main-color-light;
-                transform: scale(0.7);
-            }
+            fill: $main-color-light;
+            transform: scale(0.7);
+        }
     }
 
     &__icon_unselected {
         width: 40px;
         height: 40px;
+        opacity: 0;
     }
 }
 
 .nfd-selected-card{
-    background-color: $main-color !important;
     transition: all .2s ease-in-out;
+    background-color: rgba($main-color, 0.18) !important;
 }
 
 .nfd-selected-card-box{
