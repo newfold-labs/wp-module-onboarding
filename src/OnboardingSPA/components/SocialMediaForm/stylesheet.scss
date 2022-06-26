@@ -1,0 +1,68 @@
+.social-form {
+    padding: 12px;
+    margin-top: 20px;
+    width: 95%;
+    border-radius: 6px;
+    border: 1px solid #CCCCCC;
+
+    &__top-row {
+        display: flex;
+        cursor: pointer;
+        align-items: center;
+        padding-bottom: 12px;
+        justify-content: space-between;
+
+        &_heading {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 16px;
+        }
+
+        &_icon {
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            padding-right: 10px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-clip: padding-box;
+            background-image: var(--chevron-down-icon);
+
+            &_opened {
+                background-image: var(--chevron-up-icon);
+            }
+        }
+    }
+
+    &__label{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        
+        &_icon {
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            padding-right: 10px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-clip: padding-box;
+        }
+
+        &_name {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+        }
+    }
+
+    &__box {
+        width: 100%;
+        border-radius: 2px;
+        border: 1px solid #757575;
+        margin: 6px 10px 16px 4px !important;
+    }
+}

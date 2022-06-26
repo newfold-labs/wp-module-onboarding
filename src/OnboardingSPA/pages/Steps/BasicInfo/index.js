@@ -17,6 +17,7 @@ const StepBasicInfo = () => {
 		<CommonLayout isVerticallyCentered>
 			<HeadingWithSubHeading title="Introduce us to this website" subtitle="So we can introduce it to the web" isColoredSubheading="false"/>
 			<BasicInfoForm/>
+			<a style={{padding: '10px'}}>Skip this step</a>
 		</CommonLayout>
 	);
 };

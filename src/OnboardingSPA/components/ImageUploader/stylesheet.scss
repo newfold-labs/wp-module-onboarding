@@ -1,0 +1,70 @@
+.image-uploader {
+
+    &_heading{
+        margin: 0px 0px 8px 0px;
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+    }
+
+    &_window{
+        width: 100%;
+        height: 23vh;
+        border-radius: 2px;
+        margin-bottom: 24px;
+        border: 1px dashed #D6D6D6;
+        background-color: #F9F9F9;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &-empty{
+            flex: 1;
+            height: 100%;
+        }
+
+        &-logo{
+            flex: 2;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &-icon{
+                width: 50%;
+                height: 80%;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-clip: content-box;
+            }
+        }
+
+        &-reset{
+            flex: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+
+            &-btn{
+                width: 80%;
+                height: 40px;
+                margin: 10px;
+                font-family: 'Open Sans';
+                font-style: italic;
+                font-weight: 300;
+                font-size: 14px;
+                text-align: center;
+                color: #3575D3;
+                border: 1px solid #3575D3;
+            }
+        }
+
+        &-select-btn{
+            display: none;
+        }
+
+    }
+}

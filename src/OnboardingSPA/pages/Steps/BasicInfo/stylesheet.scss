@@ -1,0 +1,18 @@
+.basic-info-form {
+    width: 80vw;
+
+    &__left{
+        flex: 1;
+        margin: 24px;
+    }
+    &__right {
+        flex: 1;
+        margin: 24px;
+    }
+
+    @include break-medium() {
+        width: 65vw;
+        display: flex;
+        justify-content: center;
+    }
+}
