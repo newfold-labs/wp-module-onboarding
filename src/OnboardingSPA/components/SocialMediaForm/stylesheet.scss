@@ -1,9 +1,12 @@
+$border: #D6D6D6;
+$font: var(--nfd-onboarding-primary-font);
+
 .social-form {
+    width: 95%;
     padding: 12px;
     margin-top: 20px;
-    width: 95%;
     border-radius: 6px;
-    border: 1px solid #CCCCCC;
+    border: 1px solid $border;
 
     &__top-row {
         display: flex;
@@ -13,18 +16,15 @@
         justify-content: space-between;
 
         &_heading {
-            font-family: 'Roboto';
-            font-style: normal;
-            font-weight: 600;
             font-size: 16px;
-            line-height: 16px;
+            font-weight: 500;
+            font-family: $font;
         }
 
         &_icon {
             width: 24px;
             height: 24px;
             text-align: center;
-            padding-right: 10px;
             background-position: center;
             background-repeat: no-repeat;
             background-clip: padding-box;
@@ -38,6 +38,8 @@
 
     &__label{
         display: flex;
+        padding-top: 12px;
+        padding-bottom: 6px;
         align-items: center;
         justify-content: flex-start;
         
@@ -52,17 +54,16 @@
         }
 
         &_name {
-            font-family: 'Roboto';
-            font-style: normal;
-            font-weight: 400;
             font-size: 16px;
+            font-weight: 400;
+            font-family: $font;
         }
     }
 
     &__box {
-        width: 100%;
+        width: 95%;
         border-radius: 2px;
-        border: 1px solid #757575;
-        margin: 6px 10px 16px 4px !important;
+        margin: 6px 12px 0px 8px;
+        border: 1px solid $border;
     }
 }

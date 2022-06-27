@@ -1,13 +1,13 @@
 .basic-info-form {
-    width: 80vw;
+    width: 90vw;
 
     &__left{
         flex: 1;
-        margin: 24px;
+        margin: 32px;
     }
     &__right {
         flex: 1;
-        margin: 24px;
+        margin: 32px;
     }
 
     @include break-medium() {
@@ -15,4 +15,5 @@
         display: flex;
         justify-content: center;
     }
+
 }

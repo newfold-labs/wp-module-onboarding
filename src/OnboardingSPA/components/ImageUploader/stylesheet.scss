@@ -1,24 +1,32 @@
-.image-uploader {
+$border: #D6D6D6;
+$white-shade: #F9F9F9;
+$font: var(--nfd-onboarding-primary-font);
+$primary-color: var(--nfd-onboarding-primary);
 
+.image-uploader {
+    
     &_heading{
-        margin: 0px 0px 8px 0px;
-        font-family: 'Open Sans';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 18px;
+        font-size: 16px;
+        font-weight: 500;
+        font-family: $font;
+        margin: 0px 0px 6px 0px;
     }
 
     &_window{
         width: 100%;
-        height: 23vh;
+        height: 18vh;
         border-radius: 2px;
         margin-bottom: 24px;
-        border: 1px dashed #D6D6D6;
-        background-color: #F9F9F9;
+        border: 1px dashed $border;
+        background-color: $white-shade;
 
         display: flex;
         align-items: center;
         justify-content: center;
+
+        @include break-medium() {
+            height: 21vh;
+        }
 
         &-empty{
             flex: 1;
@@ -33,11 +41,10 @@
             justify-content: center;
 
             &-icon{
-                width: 50%;
-                height: 80%;
+                object-fit: scale-down;
                 background-position: center;
                 background-repeat: no-repeat;
-                background-clip: content-box;
+                background-clip: padding-box;
             }
         }
 
@@ -49,16 +56,15 @@
             justify-content: flex-end;
 
             &-btn{
-                width: 80%;
-                height: 40px;
+                width: 78%;
+                height: 35px;
                 margin: 10px;
-                font-family: 'Open Sans';
-                font-style: italic;
-                font-weight: 300;
                 font-size: 14px;
-                text-align: center;
-                color: #3575D3;
-                border: 1px solid #3575D3;
+                font-weight: 300;
+                font-family: $font;
+                font-style: italic;
+                color: $primary-color;
+                border: 1px solid $primary-color;
             }
         }
 

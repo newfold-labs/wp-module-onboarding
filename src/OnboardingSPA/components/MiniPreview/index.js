@@ -7,7 +7,7 @@ const MiniPreview = ({ title, desc, icon, isImageSelected }) => {
 
     var iconPreview = icon == "" ? '--reload-icon' : icon;
     var titlePreview = title == "" ? 'Shop Name' : title.substring(0, 20);
-    var descPreview = desc == "" ? 'About your Shop' : desc.substring(0, 20);
+    var descPreview = desc == "" ? 'About your Shop' : desc;
     var urlPreview = title == "" ? 'https://yourshopname.com' : `https://${title.substring(0, 20).toLowerCase().replace(/\s/g, '').replace(/\W/g, '')}.com`;
     console.log('Boom', isImageSelected, iconPreview);
     return (

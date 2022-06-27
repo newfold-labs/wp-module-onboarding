@@ -1,6 +1,8 @@
+$font: var(--nfd-onboarding-primary-font);
+
 .mini-preview {
     margin: 0px 0px 10px 0px;
-    font-family: 'Roboto';
+    font-family: $font;
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -36,9 +38,11 @@
 
     &_top-row{
 
+        margin-top: 8px;
+
         &-name{
-            margin: 0px;
-            font-family: 'Roboto';
+            margin: 0px 0px 6px 0px;
+            font-family: $font;
             font-style: normal;
             font-weight: 600;
             font-size: 18px;
@@ -47,8 +51,8 @@
         }
 
         &-link {
-            margin: 6px 0px 0px 0px;
-            font-family: 'Roboto';
+            margin: 0px;
+            font-family: $font;
             font-style: normal;
             font-weight: 400;
             font-size: 16px;
@@ -57,8 +61,8 @@
         }
     }
     &_desc{
-        margin: 12px 0px 0px 0px;
-        font-family: 'Roboto';
+        margin: 16px 0px 0px 0px;
+        font-family: $font;
         font-style: normal;
         font-weight: 400;
         font-size: 14px;

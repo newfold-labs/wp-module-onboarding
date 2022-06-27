@@ -1,25 +1,29 @@
+$font: var(--nfd-onboarding-primary-font);
+$white: var(--nfd-onboarding-white);
+$error: rgba(255, 0, 0, 0.26);
+$border: #D6D6D6;
+$letter-spacing: 0.5px;
+
 .nfd-input {
+    margin-bottom: 25px;
     width: 100% !important;
 
     &__field {
-        padding: 12px;
-        font-size: 16px;
+        padding: 10px;
+        font-size: 14px;
         font-weight: 400;
-        line-height: 16px;
-        font-style: normal;
-        font-family: 'Roboto';
-        letter-spacing: 0.5px;
+        font-family: $font;
+        letter-spacing: $letter-spacing;
 
         width: 100%;
-        resize: none !important;
-        overflow: hidden !important;
-        max-height: 150px !important;
-        border-radius: 6px !important;
-        background: #FFFFFF !important;
-        border: 1px solid #D6D6D6 !important;
+        resize: none;
+        overflow: hidden;
+        border-radius: 6px;
+        max-height: 150px;
+        border: 1px solid $border;
 
         &_error{
-            background-color: rgba(255, 0, 0, 0.26) !important;
+            background-color: $error !important;
         }
     }
     
@@ -28,34 +32,31 @@
         padding: 0px 2px;
         align-items: center;
         justify-content: space-between;
+
         &_title{
             margin: 0px;
-            font-size: 18px;
-            font-weight: 400;
-            line-height: 37px;
-            font-style: normal;
-            letter-spacing: 0.5px;
-            font-family: 'Roboto';
+            font-size: 16px;
+            font-weight: 500;
+            font-family: $font;
+            letter-spacing: $letter-spacing;
         }
+
         &_maxChar {
             margin: 0px;
             font-size: 10px;
             font-weight: 400;
-            line-height: 37px;
-            font-style: normal;
-            letter-spacing: 0.5px;
-            font-family: 'Roboto';
+            font-family: $font;
+            letter-spacing: $letter-spacing;
         }
     }
 
     &__hint{
         margin: 0px;
-        padding: 0px 2px;
-        font-size: 12px;
+        padding: 0px 1px;
+        font-size: 10px;
         font-weight: 300;
-        line-height: 37px;
         font-style: italic;
-        letter-spacing: 0.5px;
-        font-family: 'Roboto';
+        font-family: $font;
+        letter-spacing: $letter-spacing;
     }
 }
