@@ -11,8 +11,8 @@ $primary-color: var(--nfd-onboarding-primary);
         font-weight: 700;
         text-align: center;
         font-family: $font;
-        margin: 50px !important;
-        font-size: clamp(2.2rem, 4.5vw, 4rem);
+        margin: 35px !important;
+        font-size: clamp(1.5rem, 4vw, 3.5rem);
     }
 
     &__subtitle{
@@ -20,7 +20,7 @@ $primary-color: var(--nfd-onboarding-primary);
         font-weight: 600;
         text-align: center;
         font-family: $font;
-        font-size: clamp(1.2rem, 3.5vw, 2rem);
+        font-size: clamp(0.85rem, 3.2vw, 1.8rem);
     }
 
     &__subtitle-color{
