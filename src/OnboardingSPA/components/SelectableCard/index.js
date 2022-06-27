@@ -12,7 +12,7 @@ const SelectableCard = ({ id, path, title, desc, isSelected, onSelectedChange })
 			onClick={e => onSelectedChange(id)} >
 			<div className="nfd-card__top_row">
 				<div className="nfd-card__icon">
-					<div className="nfd-card__icon_box" style={{ backgroundImage: `var(${path})`}}></div>
+					<div className={`${isSelected ? 'nfd-card__icon_box nfd-card__icon_box-selected' : 'nfd-card__icon_box'}`} style={{ backgroundImage: `var(${path})`}}></div>
 				</div>
 				<div className={`${isSelected ? 'nfd-card__icon_selected' : 'nfd-card__icon_unselected'}`}>
 					<Icon

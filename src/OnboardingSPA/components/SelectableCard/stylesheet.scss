@@ -1,5 +1,4 @@
 /*COLOR VARIABLES*/
-
 $font: var(--nfd-onboarding-primary-font);
 $main-color-dark: var(--nfd-onboarding-dark);
 $main-color-light: var(--nfd-onboarding-white);
@@ -41,25 +40,22 @@ $radius: 0.2rem;
         border: 1px solid rgba($main-border-light, 0.6);
 
         &_title {
-            font-size: 24px;
             font-weight: 700;
             margin-top: 30px;
-            line-height: 19px;
             font-family: $font;
-            font-style: normal;
             color: $main-color-dark;
             padding: 14px 0px 10px 0px;
             transition: color 300ms ease-in;
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
         }
         
         &_description {
-            font-size: 14px;
             font-weight: 300;
-            font-style: normal;
             text-align: center;
             font-family: $font;
             letter-spacing: 0.5px;
             color: $main-color-dark;
+            font-size: clamp(0.85rem, 2vw, 0.9rem);
         }
     }
     &__icon{
@@ -80,6 +76,10 @@ $radius: 0.2rem;
             background-clip: padding-box;
             background-color: $main-color-dark;
             border: 4px solid rgba($main-color, 0.10544);
+
+            &-selected{
+                background-color: $main-border-main !important;
+            }
         }
     }
 
@@ -92,7 +92,7 @@ $radius: 0.2rem;
         margin-top: 20px;
         justify-content: center;
         background-clip: padding-box;
-        background-color: rgb($main-color);
+        background-color: $main-border-main;
 
         &_path {
             fill: $main-color-light;

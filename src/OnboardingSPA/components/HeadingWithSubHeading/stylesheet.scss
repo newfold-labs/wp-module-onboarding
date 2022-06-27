@@ -8,43 +8,27 @@ $primary-color: var(--nfd-onboarding-primary);
 
     &__title{
         color: $black;
-        font-size: 28px;
         font-weight: 700;
-        line-height: 28px;
         text-align: center;
         font-family: $font;
-        margin: 35px !important;
-
-        @include break-medium() {
-            font-size: 55px;
-        }
+        margin: 50px !important;
+        font-size: clamp(2.2rem, 4.5vw, 4rem);
     }
 
     &__subtitle{
         color: $black;
-        font-size: 16px;
         font-weight: 600;
-        line-height: 18px;
         text-align: center;
         font-family: $font;
-
-        @include break-medium() {
-            font-size: 25px;
-            font-weight: 700;
-        }
+        font-size: clamp(1.2rem, 3.5vw, 2rem);
     }
 
     &__subtitle-color{
-        font-size: 16px;
         font-weight: 400;
-        line-height: 18px;
         text-align: center;
         font-family: $font;
         color: $primary-color;
+        font-size: clamp(1.2rem, 3.5vw, 2rem);
 
-        @include break-medium() {
-            font-size: 25px;
-            font-weight: 700;
-        }
     }
 }
