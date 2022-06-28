@@ -32,28 +32,18 @@ class PagesController
             $this->rest_base,
             array(
                 'methods' => \WP_REST_Server::EDITABLE,
-                'callback' => array($this, 'createPage'),
-                'permission_callback' => array($this, 'has_permission')
+                'callback' => array($this, 'create_page'),
+                'permission_callback' => array( Permissions::class, 'custom_post_authorized_admin' )
             )
         );
     }
 
     /**
-     * Undocumented function
-     *
-     * @return boolean
-     */
-    public function has_permission()
-    {
-        return \current_user_can('edit_posts') && \current_user_can(Permissions::ADMIN);
-    }
-
-    /**
-     * Endpoint createPage
+     * Endpoint create_page
      * 
      * @param $request WP_REST_Request
      */
-    public function createPage(\WP_REST_Request $request)
+    public function create_page( \WP_REST_Request $request )
     {
         $title = \sanitize_text_field($request->get_param('page'));
         // check for param 
@@ -62,7 +52,7 @@ class PagesController
         }
 
         // check if page already exists using title
-        $page = get_page_by_title($title, 'OBJECT', 'page');
+        $page = get_page_by_title($title);
         if (!empty($page)) {
             return new \WP_Error('page_already_exists', 'Provided page data already exists', array('status' => 400));
         }
@@ -124,7 +114,7 @@ class PagesController
                 <!-- /wp:paragraph -->
 
                 <!-- wp:paragraph -->
-                <p>We hope you enjoy our <span id="nf-10" class="nf-placeholder nf-highlight">products/servcies</span>. If you have any questions or comments, please contact us <span id="nf-11" class="nf-placeholder nf-highlight">phone number, email, or link to contact form</span>.</p>
+                <p>We hope you enjoy our <span id="nf-10" class="nf-placeholder nf-highlight">products/services</span>. If you have any questions or comments, please contact us <span id="nf-11" class="nf-placeholder nf-highlight">phone number, email, or link to contact form</span>.</p>
                 <!-- /wp:paragraph -->
             <?php
                 $content = ob_get_clean();
@@ -164,6 +154,5 @@ class PagesController
         } else {
             return new \WP_Error('error_saving_page', 'Error Saving Data Provided to Database', array('status' => 400));
         }
-        exit;
     }
 }
