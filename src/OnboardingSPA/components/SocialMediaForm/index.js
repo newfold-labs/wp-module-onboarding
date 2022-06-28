@@ -54,7 +54,7 @@ const SocialMediaForm = () => {
                 </label>
                 <input className="social-form__box" type="text" value={facebook} onChange={(e) => { handleChange(e, 'facebook') }} /><br />
                 <label className='social-form__label' >
-                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--facebook-icon)' }}/>
+                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--twitter-icon)' }}/>
                     <div className="social-form__label_name">Twitter</div>
                 </label>
                 <input className="social-form__box" type="text" value={twitter} onChange={(e) => { handleChange(e, 'twitter') }} /><br />

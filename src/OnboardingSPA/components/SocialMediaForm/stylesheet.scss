@@ -16,7 +16,7 @@ $font: var(--nfd-onboarding-primary-font);
         justify-content: space-between;
 
         &_heading {
-            font-size: 16px;
+            font-size: 1rem;
             font-weight: 500;
             font-family: $font;
         }
@@ -44,8 +44,8 @@ $font: var(--nfd-onboarding-primary-font);
         justify-content: flex-start;
         
         &_icon {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             text-align: center;
             padding-right: 10px;
             background-position: center;
@@ -54,8 +54,7 @@ $font: var(--nfd-onboarding-primary-font);
         }
 
         &_name {
-            font-size: 16px;
-            font-weight: 400;
+            font-size: 0.9rem;
             font-family: $font;
         }
     }

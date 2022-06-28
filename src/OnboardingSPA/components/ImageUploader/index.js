@@ -8,7 +8,6 @@ import { useState, useRef } from '@wordpress/element';
 const ImageUploader = ({ icon, iconSetter, setisImageSelected }) => {
 
     const inputRef = useRef(null);
-    var iconDisplay = icon == '' ? '--reload-icon' : icon;
     const [selectedImage, setSelectedImage] = useState();
 
     const handleClick = () => {
@@ -16,6 +15,7 @@ const ImageUploader = ({ icon, iconSetter, setisImageSelected }) => {
     };
 
     const imageChange = (e) => {
+        console.log('File: ', e.target.files);
         if (e.target.files && e.target.files.length > 0) {
             setSelectedImage(e.target.files[0]);
             iconSetter(e.target.files[0]);
@@ -24,9 +24,9 @@ const ImageUploader = ({ icon, iconSetter, setisImageSelected }) => {
     };
 
     const removeSelectedImage = () => {
-        setSelectedImage();
+        iconSetter(null);
+        setSelectedImage(null);
         setisImageSelected(false);
-        iconSetter("");
     };
 
     return (

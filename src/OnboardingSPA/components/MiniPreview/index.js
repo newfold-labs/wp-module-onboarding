@@ -9,7 +9,7 @@ const MiniPreview = ({ title, desc, icon, isImageSelected }) => {
     var titlePreview = title == "" ? 'Shop Name' : title.substring(0, 20);
     var descPreview = desc == "" ? 'About your Shop' : desc;
     var urlPreview = title == "" ? 'https://yourshopname.com' : `https://${title.substring(0, 20).toLowerCase().replace(/\s/g, '').replace(/\W/g, '')}.com`;
-    console.log('Boom', isImageSelected, iconPreview);
+
     return (
         <div>
             <h4 className="mini-preview">Preview</h4>
@@ -27,7 +27,7 @@ const MiniPreview = ({ title, desc, icon, isImageSelected }) => {
                             src={URL.createObjectURL(iconPreview)}
                             alt="Thumb"
                         />)}
-                        <div className="browser-row-title_bar-text">{titlePreview}</div>
+                        <div className="browser-row-title_bar-text">{titlePreview.substring(0, 18)}</div>
                     </div>
                 </div>
                 <div className="browser-row-search">
@@ -53,7 +53,7 @@ const MiniPreview = ({ title, desc, icon, isImageSelected }) => {
                     </h5>
                     <div className="browser-content_social">
                         <div className="browser-content_social_icon" style={{ backgroundImage: 'var(--facebook-icon)' }} />
-                        <div className="browser-content_social_icon" style={{ backgroundImage: 'var(--facebook-icon)' }} />
+                        <div className="browser-content_social_icon" style={{ backgroundImage: 'var(--twitter-icon)' }} />
                     </div>
                 </div>
             </div>

@@ -1,16 +1,21 @@
+$white: #FFFFFF;
+$black: #000000;
+$browser-dark: #CACACA;
+$browser-light: #F2F2F2;
+$link-browser-color: #007017;
+$title-browser-color: #3858E9;
 $font: var(--nfd-onboarding-primary-font);
 
 .mini-preview {
     margin: 0px 0px 10px 0px;
     font-family: $font;
-    font-style: normal;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .browser-container {
     width: 100%;
-    background-color: #CACACA;
+    background-color: $browser-dark;
 }
 
 .browser-icon{
@@ -26,48 +31,40 @@ $font: var(--nfd-onboarding-primary-font);
     width: 12px;
     height: 12px;
     margin: 4px;
-    margin-top: 4px;
     border-radius: 50%;
     display: inline-block;
-    background-color: #bbb;
 }
 
 .browser-content {
     padding: 10px;
-    background-color: white;
+    word-break: break-all;
+    background-color: $white;
 
     &_top-row{
 
         margin-top: 8px;
 
         &-name{
-            margin: 0px 0px 6px 0px;
-            font-family: $font;
-            font-style: normal;
             font-weight: 600;
-            font-size: 18px;
-            line-height: 21px;
-            color: #3858E9;
+            font-size: 1.2rem;
+            font-family: $font;
+            margin: 0px 0px 6px 0px;
+            color: $title-browser-color;
         }
 
         &-link {
             margin: 0px;
+            font-size: 1rem;
             font-family: $font;
-            font-style: normal;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 19px;
-            color: #007017;
+            color: $link-browser-color;
         }
     }
     &_desc{
-        margin: 16px 0px 0px 0px;
-        font-family: $font;
-        font-style: normal;
+        color: $black;
         font-weight: 400;
-        font-size: 14px;
-        line-height: 16px;
-        color: #000000;
+        font-size: 0.8rem;
+        font-family: $font;
+        margin: 16px 0px 0px 0px;
     }
     &_social{
         display: flex;
@@ -92,7 +89,7 @@ $font: var(--nfd-onboarding-primary-font);
         display: flex;
         align-items: flex-start;
         padding: 6px 4px 0px 4px;
-        background-color: #CACACA;
+        background-color: $browser-dark;
 
         &_buttons{
             padding: 2px 8px 0px 2px;
@@ -103,10 +100,10 @@ $font: var(--nfd-onboarding-primary-font);
             height: 28px;
             display: flex;
             padding-left: 12px;
-            border-radius: 10px 10px 0px 0px;
             flex-direction: row;
             align-items: center;
-            background-color: #F2F2F2;
+            border-radius: 12px 12px 0px 0px;
+            background-color: $browser-light;
             clip-path: polygon(5% 0, 95% 0, 100% 100%, 0% 100%);
 
             &-text{
@@ -119,7 +116,7 @@ $font: var(--nfd-onboarding-primary-font);
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #F2F2F2;
+        background-color: $browser-light;
 
         &__icons {
             flex: 1;
@@ -130,12 +127,13 @@ $font: var(--nfd-onboarding-primary-font);
 
         &__search-box {
             flex: 10;
-            padding: 4px;
+            padding: 5px;
 
             &_input {
                 width: 100%;
+                font-size: 0.8rem;
                 border: none !important;
-                background-color: white;
+                background-color: $white;
             }
         }
 
