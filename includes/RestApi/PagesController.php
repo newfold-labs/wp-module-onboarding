@@ -53,10 +53,10 @@ class PagesController
         }
 
         // check if page already exists using title
-        // $page = get_page_by_title($title);
-        // if (!empty($page)) {
-        //     return new \WP_Error('page_already_exists', 'Provided page data already exists', array('status' => 400));
-        // }
+        $page = get_page_by_title($title);
+        if (!empty($page)) {
+            return new \WP_Error('page_already_exists', 'Provided page data already exists', array('status' => 400));
+        }
 
         $mustache   = new Mustache();
         switch ($title) {
@@ -89,7 +89,6 @@ class PagesController
             'post_type'     => 'page'
         );
 
-        print_r($page_data);exit;
         // Insert the page into the database
         if(wp_insert_post($page_data) > 0) {
             return new \WP_REST_Response( "Page ".$page_data['post_title']. " saved successfully", 200);
