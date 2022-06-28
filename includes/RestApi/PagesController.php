@@ -32,9 +32,10 @@ class PagesController
             $this->namespace,
             $this->rest_base,
             array(
-                'methods' => \WP_REST_Server::EDITABLE,
-                'callback' => array($this, 'create_page'),
-                'permission_callback' => array( Permissions::class, 'custom_post_authorized_admin' )
+                'methods'               => \WP_REST_Server::EDITABLE,
+                'callback'              => array( $this, 'create_page' ),
+                'permission_callback'   => array( Permissions::class, 'custom_post_authorized_admin' ),
+                'args'                  => $this->get_request_params(),
             )
         );
     }
@@ -46,20 +47,15 @@ class PagesController
      */
     public function create_page( \WP_REST_Request $request )
     {
-        $title = \sanitize_text_field($request->get_param('page'));
-        // check for param 
-        if (is_null($title)) {
-            return new \WP_Error('no_page_data', 'No Page Data Provided', array('status' => 400));
-        }
-
+        $page = $request->get_param( 'page' );
         // check if page already exists using title
-        $page = get_page_by_title($title);
-        if (!empty($page)) {
+        $page_details = get_page_by_title( $page );
+        if (!empty( $page_details )) {
             return new \WP_Error('page_already_exists', 'Provided page data already exists', array('status' => 400));
         }
 
         $mustache   = new Mustache();
-        switch ($title) {
+        switch ( $page ) {
             case 'home':
                 $title      = 'Home';
                 $content    = $mustache->render_template( 'homePage', array() );
@@ -90,10 +86,27 @@ class PagesController
         );
 
         // Insert the page into the database
-        if(wp_insert_post($page_data) > 0) {
-            return new \WP_REST_Response( "Page ".$page_data['post_title']. " saved successfully", 200);
+        if (wp_insert_post($page_data) > 0) {
+            return new \WP_REST_Response("Page " . $page_data['post_title'] . " saved successfully", 200);
         } else {
             return new \WP_Error('error_saving_page', 'Error Saving Data Provided to Database', array('status' => 400));
         }
+    }
+
+    /**
+     * Get query params for the route.
+     *
+     * @return array
+     */
+    public function get_request_params()
+    {
+        return array(
+            'page' => array(
+                'type'              => 'string',
+                'required'          => true,
+                'sanitize_callback' => 'sanitize_text_field',
+                'description'       => 'Page name to be created.'
+            ),
+        );
     }
 }
