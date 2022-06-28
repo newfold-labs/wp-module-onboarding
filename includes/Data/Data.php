@@ -52,7 +52,7 @@ final class Data {
 	public static function current_plan() {
 		return 'shared';
 	}
-
+	
 	/**
 	 * Get the current onboarding flow.
 	 *

@@ -13,7 +13,7 @@ import { store as noticesStore } from '@wordpress/notices';
  * @returns
  */
 export function setRuntime(runtime) {
-	window.nfdOnboarding = { url: runtime.url, migrated: true, currentFlow: runtime.currentFlow };
+	window.nfdOnboarding = { url: runtime.url, migrated: true, currentFlow: runtime.currentFlow ?? 'wp-setup' };
 	return {
 		type: 'SET_RUNTIME',
 		runtime: runtime,
