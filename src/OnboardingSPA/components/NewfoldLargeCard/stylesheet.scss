@@ -1,0 +1,32 @@
+.nfd-onboarding-large-card {
+    display: flex;
+    width: 60vw;
+    height: 70vh;
+    background: var(--nfd-onboarding-light);
+    position: relative;
+    transform-style: preserve-3d;
+    @media (max-width: #{ ($break-medium - 1) })  {
+        justify-items: center;
+        align-items: center;
+        padding: 30px;
+    }
+
+    &::before {
+    content: "";
+    background: var(--nfd-onboarding-dark-icon) no-repeat;
+    width: 45vw;
+    height: 45vh;
+    transform: rotate(-14deg) translateZ(-1px);
+    position: absolute;
+    margin-left: -22vh;
+    @media (max-width: #{ ($break-medium - 1) })   {
+        display: none;
+    }   
+    @media (min-width: #{ ($break-medium) }) and (max-width: 925px) {
+        width: 27vw;
+        height: 27vh;
+        margin-left: -10vh;
+        margin-top: 5vh;
+    } 
+    }
+}
