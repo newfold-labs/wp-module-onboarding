@@ -68,9 +68,9 @@ class ApprovedThemesController extends \WP_REST_Controller {
 		$response = \rest_do_request( $request );
 
 		if ( 200 === $response->status ) {
-               $current_brand = $current_brand = Data::current_brand();
-               $current_brand_name = $current_brand['name'] ? $current_brand['name'] : 'Newfold Digital';
-			$themes_data = json_decode( \wp_json_encode( $response->data ), true );
+			   $current_brand      = $current_brand = Data::current_brand();
+			   $current_brand_name = $current_brand['name'] ? $current_brand['name'] : 'Newfold Digital';
+			$themes_data           = json_decode( \wp_json_encode( $response->data ), true );
 			foreach ( $themes_data as $theme_data ) {
 				$theme = new Theme( $theme_data['stylesheet'] );
 				$theme->set_theme_image( $theme_data['screenshot'] );

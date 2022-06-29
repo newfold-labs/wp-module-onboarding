@@ -52,7 +52,7 @@ final class Data {
 	public static function current_plan() {
 		return 'shared';
 	}
-	
+
 	/**
 	 * Get the current onboarding flow.
 	 *
@@ -62,8 +62,8 @@ final class Data {
 		$flows = Flows::get_flows();
 
 		if ( isset( $_GET['flow'] ) ) {
-               $current_flow_type = \sanitize_text_field( $_GET['flow'] );
-          }
+			   $current_flow_type = \sanitize_text_field( $_GET['flow'] );
+		}
 
 		if ( ! empty( $current_flow_type ) && isset( $flows[ $current_flow_type ] ) ) {
 			return $current_flow_type;
