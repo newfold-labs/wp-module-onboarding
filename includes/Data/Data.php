@@ -61,12 +61,15 @@ final class Data {
 	public static function current_flow() {
 		$flows = Flows::get_flows();
 
-		$current_flow_type = \sanitize_text_field( $_GET['flow'] );
-		if ( $current_flow_type !== '' && isset( $flows[ $current_flow_type ] ) ) {
+		if ( isset( $_GET['flow'] ) ) {
+               $current_flow_type = \sanitize_text_field( $_GET['flow'] );
+          }
+
+		if ( ! empty( $current_flow_type ) && isset( $flows[ $current_flow_type ] ) ) {
 			return $current_flow_type;
 		}
 
-		$current_flow_type = \get_option( 'nfd_onboarding_flow_preset' );
+		$current_flow_type = \get_option( 'nfd_onboarding_flow_preset', false );
 		if ( $current_flow_type && isset( $flows[ $current_flow_type ] ) ) {
 			return $current_flow_type;
 		}

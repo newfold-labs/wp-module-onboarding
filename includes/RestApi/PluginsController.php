@@ -121,8 +121,8 @@ class PluginsController {
 			}
 
 			return new \WP_REST_Response(
-				null,
-				200
+				array(),
+				201
 			);
 		}
 
@@ -142,8 +142,8 @@ class PluginsController {
 		}
 
 		return new \WP_REST_Response(
-			null,
-			200
+			array(),
+			201
 		);
 	}
 
