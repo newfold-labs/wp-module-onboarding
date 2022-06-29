@@ -6,10 +6,14 @@ import { useSelect } from '@wordpress/data';
 
 const IndexRoute = () => {
 	const navigate = useNavigate();
+	const { firstStep } = useSelect((select) => {
+		return {
+			firstStep: select(nfdOnboardingStore).getFirstStep(),
+		};
+	}, []);
 
-	/* [TODO]: Navigate to first step */
 	useEffect(() => {
-		navigate('/step/get-started', {
+		navigate(firstStep.path, {
 			replace: true,
 			state: { origin: 'index-redirect' },
 		});
