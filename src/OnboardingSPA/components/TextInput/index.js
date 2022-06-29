@@ -30,7 +30,7 @@ const TextInput = ({ title, hint, placeholder, height, maxCharacters, textValue,
             <label>
                 <div className='nfd-input__label'>
                     <p className='nfd-input__label_title'>{title}</p>
-                    <p className='nfd-input__label_maxChar'>{`(${maxCharacters - textValue.length} characters left)`}</p>
+                    <p className='nfd-input__label_maxChar'>{`(${maxCharacters - textValue?.length} characters left)`}</p>
                 </div>
                 <textarea
                     type="text"

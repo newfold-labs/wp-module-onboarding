@@ -5,10 +5,10 @@
  */
 const MiniPreview = ({ title, desc, icon, isImageSelected }) => {
 
-    var iconPreview = icon == "" ? '--reload-icon' : icon;
-    var titlePreview = title == "" ? 'Shop Name' : title.substring(0, 20);
+    var iconPreview = icon == "" ? '--default-logo-icon' : icon;
+    var titlePreview = title == "" ? 'Shop Name' : title?.substring(0, 20);
     var descPreview = desc == "" ? 'About your Shop' : desc;
-    var urlPreview = title == "" ? 'https://yourshopname.com' : `https://${title.substring(0, 20).toLowerCase().replace(/\s/g, '').replace(/\W/g, '')}.com`;
+    var urlPreview = title == "" ? 'https://yourshopname.com' : `https://${title?.substring(0, 20).toLowerCase().replace(/\s/g, '').replace(/\W/g, '')}.com`;
 
     return (
         <div>
@@ -21,13 +21,13 @@ const MiniPreview = ({ title, desc, icon, isImageSelected }) => {
                         <span className="browser-dot" style={{ background: '#5AC05A' }}></span>
                     </div>
                     <div className="browser-row-title_bar">
-                        {!isImageSelected && (<div className="browser-icon" style={{ backgroundImage: `var(${iconPreview})` }}></div>)}
+                        {!isImageSelected && (<div className="browser-icon" style={{ content: 'var(--default-logo-icon)'}}></div>)}
                         { isImageSelected && (<img
                             className="browser-icon"
                             src={URL.createObjectURL(iconPreview)}
                             alt="Thumb"
                         />)}
-                        <div className="browser-row-title_bar-text">{titlePreview.substring(0, 18)}</div>
+                        <div className="browser-row-title_bar-text">{titlePreview?.substring(0, 18)}</div>
                     </div>
                 </div>
                 <div className="browser-row-search">
@@ -54,6 +54,7 @@ const MiniPreview = ({ title, desc, icon, isImageSelected }) => {
                     <div className="browser-content_social">
                         <div className="browser-content_social_icon" style={{ backgroundImage: 'var(--facebook-icon)' }} />
                         <div className="browser-content_social_icon" style={{ backgroundImage: 'var(--twitter-icon)' }} />
+                        <div className="browser-content_social_icon" style={{ backgroundImage: 'var(--instagram-icon)' }} />
                     </div>
                 </div>
             </div>

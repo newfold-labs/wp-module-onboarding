@@ -1,8 +1,8 @@
 import { useState } from '@wordpress/element';
 
-const SocialMediaForm = () => {
+const SocialMediaForm = ({ setSocialData }) => {
     const [isActive, setIsActive] = useState(false);
-
+    
     const [facebook, setFacebook] = useState('');
     const [twitter, setTwitter] = useState('');
     const [instagram, setInstagram] = useState('');
@@ -10,6 +10,15 @@ const SocialMediaForm = () => {
     const [linkedin, setLinkedIn] = useState('');
     const [yelp, setYelp] = useState('');
     const [tiktok, setTikTok] = useState('');
+
+    var socialData = {
+        'facebook': facebook,
+        'twitter': twitter,
+        'instagram': instagram,
+        'youtube': youtube,
+        'linkedin': linkedin,
+        'tiktok': tiktok,
+    }
 
     const handleAccordion = (e) => {
         setIsActive(!isActive);
@@ -19,26 +28,34 @@ const SocialMediaForm = () => {
         switch(social){
             case 'facebook': 
                 setFacebook(e.target.value);
+                socialData.facebook = e.target.value;
                 break;
             case 'twitter':
                 setTwitter(e.target.value);
+                socialData.twitter = e.target.value;
                 break;
             case 'instagram':
                 setInstagram(e.target.value);
+                socialData.instagram = e.target.value;
                 break;
             case 'youtube':
                 setYouTube(e.target.value);
+                socialData.youtube = e.target.value;
                 break;
             case 'linkedin':
                 setLinkedIn(e.target.value);
+                socialData.linkedin = e.target.value;
                 break;
             case 'yelp':
                 setYelp(e.target.value);
+                socialData.yelp = e.target.value;
                 break;
             case 'tiktok':
                 setTikTok(e.target.value);
+                socialData.tiktok = e.target.value;
                 break;
         }
+        setSocialData(socialData);
     }
 
     return (
@@ -59,27 +76,27 @@ const SocialMediaForm = () => {
                 </label>
                 <input className="social-form__box" type="text" value={twitter} onChange={(e) => { handleChange(e, 'twitter') }} /><br />
                 <label className='social-form__label' >
-                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--facebook-icon)' }}/>
+                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--instagram-icon)' }}/>
                     <div className="social-form__label_name">Instagram</div>
                 </label>
                 <input className="social-form__box" type="text" value={instagram} onChange={(e) => { handleChange(e, 'instagram') }} /><br />
                 <label className='social-form__label' >
-                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--facebook-icon)' }}/>
+                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--youtube-icon)' }}/>
                     <div className="social-form__label_name">YouTube</div>
                 </label>
                 <input className="social-form__box" type="text" value={youtube} onChange={(e) => { handleChange(e, 'youtube') }} /><br />
                 <label className='social-form__label' >
-                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--facebook-icon)' }}/>
+                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--linkedin-icon)' }}/>
                     <div className="social-form__label_name">LinkedIn</div>
                 </label>
                 <input className="social-form__box" type="text" value={linkedin} onChange={(e) => { handleChange(e, 'linkedin') }} /><br />
                 <label className='social-form__label' >
-                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--facebook-icon)' }}/>
+                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--yelp-icon)' }}/>
                     <div className="social-form__label_name">Yelp</div>
                 </label>
                 <input className="social-form__box" type="text" value={yelp} onChange={(e) => { handleChange(e, 'yelp') }} /><br />
                 <label className='social-form__label' >
-                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--facebook-icon)' }}/>
+                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--tiktok-icon)' }}/>
                     <div className="social-form__label_name">TikTok</div>
                 </label>
                 <input className="social-form__box" type="text" value={tiktok} onChange={(e) => { handleChange(e, 'tiktok') }} /><br />

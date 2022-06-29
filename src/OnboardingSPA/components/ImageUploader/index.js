@@ -35,6 +35,9 @@ const ImageUploader = ({ icon, iconSetter, setisImageSelected }) => {
             <div className="image-uploader_window">
                 <div className="image-uploader_window-empty"></div>
                 <div className="image-uploader_window-logo">
+                    {!selectedImage && (
+                        <div className="image-uploader_window-logo-icon" style={{ content: 'var(--default-logo-icon)' }}></div>)
+                    }
                     { selectedImage && (
                         <img
                             className="image-uploader_window-logo-icon"
