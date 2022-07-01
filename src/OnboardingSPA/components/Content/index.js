@@ -1,7 +1,7 @@
 import { Fragment, Suspense } from '@wordpress/element';
 import { Route, Routes } from 'react-router-dom';
 
-import { routes as appRoutes } from '../../data/routes';
+import { routes as appRoutes } from '../../data/routes/index';
 
 /**
  * Primary content area within the <InterfaceSkeleton />.
