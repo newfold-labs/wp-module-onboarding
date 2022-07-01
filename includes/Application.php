@@ -2,6 +2,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding;
 use NewfoldLabs\WP\Module\Onboarding\RestApi\RestApi;
 use NewfoldLabs\WP\ModuleLoader\Container;
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
@@ -34,6 +35,10 @@ final class Application {
         }
 
         \do_action( 'nfd_module_onboarding_pre_init' );
+
+        \add_action( 'login_redirect', array( LoginRedirect::class, 'handle_redirect' ), 10, 3 );
+     //    \add_filter( Options::get_option_name( 'redirect' ) . '_disable', array( LoginRedirect::class, 'remove_redirect_action' ) );
+     //    \apply_filters( Options::get_option_name( 'redirect' ) . '_disable', null );
 
         new RestAPI();
 

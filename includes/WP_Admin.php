@@ -25,8 +25,9 @@ final class WP_Admin {
 	public function __construct() {
 		\add_action( 'admin_menu', array( __CLASS__, 'register_page' ) );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'register_assets' ) );
-		\add_action( 'admin_init', array( __CLASS__, 'handle_redirect' ) );
-		\add_filter( Options::get_option_name( 'redirect' ) . '_disable', array( __CLASS__, 'disable_redirect' ) );
+          \add_action( 'admin_init', array( LoginRedirect::class, 'enable_redirect' ) );
+		// \add_action( 'admin_init', array( __CLASS__, 'handle_redirect' ) );
+		// \add_filter( Options::get_option_name( 'redirect' ) . '_disable', array( __CLASS__, 'disable_redirect' ) );
 		// \add_action( 'wp_dashboard_setup', array( __CLASS__, 'register_widget' ) );
 	}
 
@@ -100,33 +101,6 @@ final class WP_Admin {
 			\wp_enqueue_script( self::$slug );
 			\wp_enqueue_style( self::$slug );
 		}
-	}
-
-	public static function handle_redirect() {
-          $redirect_option = Options::get_option_name( 'redirect' );
-
-		if ( $_GET['page'] === self::$slug
-		  || $_GET[ $redirect_option ] === 'false'
-		  || \get_option( Options::get_option_name( 'exited' ), false )
-		  || \get_option( Options::get_option_name( 'completed' ), false )
-		) {
-			return;
-		}
-
-		$redirect = \get_option( $redirect_option, null );
-		if ( $redirect === null ) {
-			 $redirect = \update_option( $redirect_option, true );
-		}
-
-		if ( ! $redirect || ! \get_option( Options::get_option_name( 'coming_soon', false ), true ) ) {
-			 return;
-		}
-
-		return \wp_safe_redirect( \admin_url( '/index.php?page=' . self::$slug ) );
-	}
-
-	public static function disable_redirect() {
-		return \remove_action( 'admin_init', array( __CLASS__, 'handle_redirect' ) );
 	}
 
 } // END \NewfoldLabs\WP\Module\Onboarding\Admin()

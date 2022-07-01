@@ -14,11 +14,12 @@ final class Options {
 	  * @var array List of all the options
 	  */
 	protected static array $options = array(
-		'redirect'    => 'redirect',
-		'exited'      => 'exited',
-		'completed'   => 'completed',
-		'coming_soon' => 'mm_coming_soon',
-		'brand'       => 'mm_brand',
+		'redirect'       => 'redirect',
+          'redirect_param' => 'redirect_param',
+		'exited'         => 'exited',
+		'completed'      => 'completed',
+		'coming_soon'    => 'mm_coming_soon',
+		'brand'          => 'mm_brand',
 	);
 
 	 /**
@@ -34,7 +35,7 @@ final class Options {
 				   ? ( $attach_prefix
 						? self::$prefix . self::$options[ $option_key ]
 						: self::$options[ $option_key ]
-					 )
+					)
 				   : false;
 	}
 
