@@ -1,32 +1,36 @@
-import { useState, useRef } from '@wordpress/element';
+import { useRef } from '@wordpress/element';
+import { uploadImage } from '../../utils/api/uploader';
 
-/**
+ /*
  * Image Uploader
  *
- * @returns
  */
-const ImageUploader = ({ icon, iconSetter, setisImageSelected }) => {
+const ImageUploader = ({ icon, iconSetter }) => {
 
     const inputRef = useRef(null);
-    const [selectedImage, setSelectedImage] = useState();
+    async function updateItem(fileData) {
+        const res = await uploadImage(fileData);
+        
+        const id = res.body.id;
+        const url = res.body.source_url;
+        iconSetter({
+            id,
+            url
+        });
+    }
 
     const handleClick = () => {
         inputRef.current.click();
     };
 
     const imageChange = (e) => {
-        console.log('File: ', e.target.files);
         if (e.target.files && e.target.files.length > 0) {
-            setSelectedImage(e.target.files[0]);
-            iconSetter(e.target.files[0]);
-            setisImageSelected(true);
+            updateItem(e.target.files[0]);
         }
     };
 
     const removeSelectedImage = () => {
-        iconSetter(null);
-        setSelectedImage(null);
-        setisImageSelected(false);
+        iconSetter(0);
     };
 
     return (
@@ -35,24 +39,24 @@ const ImageUploader = ({ icon, iconSetter, setisImageSelected }) => {
             <div className="image-uploader_window">
                 <div className="image-uploader_window-empty"></div>
                 <div className="image-uploader_window-logo">
-                    {!selectedImage && (
+                    {(icon == 0) && (
                         <div className="image-uploader_window-logo-icon" style={{ content: 'var(--default-logo-icon)' }}></div>)
                     }
-                    { selectedImage && (
+                    { icon != 0 && (
                         <img
                             className="image-uploader_window-logo-icon"
-                            src={URL.createObjectURL(selectedImage)}
+                            src={icon.url}
                             style={{width: '80%', height: '90%'}}
                             alt="Thumb"
                         />
                     )}
                 </div>
                 <div className="image-uploader_window-reset">
-                    { selectedImage && (<button className="image-uploader_window-reset-btn" 
+                    {icon != 0 && (<button className="image-uploader_window-reset-btn" 
                             onClick={removeSelectedImage}>
                                 RESET
                     </button>)}
-                    { !selectedImage && (<button className="image-uploader_window-reset-btn" 
+                    {(icon == 0) && (<button className="image-uploader_window-reset-btn" 
                             onClick={handleClick}>
                                 UPLOAD
                     </button>)}
@@ -63,6 +67,7 @@ const ImageUploader = ({ icon, iconSetter, setisImageSelected }) => {
                         ref={inputRef}
                         onChange={imageChange}
                     />
+                    
                 </div>
             </div>
         </div>

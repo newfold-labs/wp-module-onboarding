@@ -3,13 +3,12 @@
  *
  * @returns
  */
-const MiniPreview = ({ title, desc, icon, isImageSelected }) => {
+const MiniPreview = ({ title, desc, icon }) => {
 
     var iconPreview = icon == "" ? '--default-logo-icon' : icon;
     var titlePreview = title == "" ? 'Shop Name' : title?.substring(0, 20);
     var descPreview = desc == "" ? 'About your Shop' : desc;
     var urlPreview = title == "" ? 'https://yourshopname.com' : `https://${title?.substring(0, 20).toLowerCase().replace(/\s/g, '').replace(/\W/g, '')}.com`;
-
     return (
         <div>
             <h4 className="mini-preview">Preview</h4>
@@ -21,10 +20,10 @@ const MiniPreview = ({ title, desc, icon, isImageSelected }) => {
                         <span className="browser-dot" style={{ background: '#5AC05A' }}></span>
                     </div>
                     <div className="browser-row-title_bar">
-                        {!isImageSelected && (<div className="browser-icon" style={{ content: 'var(--default-logo-icon)'}}></div>)}
-                        { isImageSelected && (<img
+                        { icon == 0 && (<div className="browser-icon" style={{ content: 'var(--default-logo-icon)'}}></div>)}
+                        { icon != 0 && (<img
                             className="browser-icon"
-                            src={URL.createObjectURL(iconPreview)}
+                            src={iconPreview.url}
                             alt="Thumb"
                         />)}
                         <div className="browser-row-title_bar-text">{titlePreview?.substring(0, 18)}</div>
