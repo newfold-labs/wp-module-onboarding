@@ -6,9 +6,11 @@
     position: relative;
     transform-style: preserve-3d;
     @media (max-width: #{ ($break-medium - 1) })  {
+        width: 80vw;
+        height: 70vh;
         justify-items: center;
-        align-items: center;
-        padding: 30px;
+        align-items: start;
+        padding: 10px;
     }
 
     &::before {

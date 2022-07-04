@@ -55,6 +55,7 @@ const StepDesignHeaderMenu = lazy(() =>
 const StepSitePages = lazy(() => import('../../pages/Steps/SitePages'));
 const StepSiteFeatures = lazy(() => import('../../pages/Steps/SiteFeatures'));
 const StepWhatNext = lazy(() => import('../../pages/Steps/WhatNext'));
+const StepExperienceWithWPSetup = lazy(() => import('../../pages/Steps/ExperienceWithWPSetup'));
 
 /**
  * All information pages should be prefixed with `/page`.
@@ -106,6 +107,22 @@ export const steps = [
         Component: StepGetStarted,
         Icon: home,
         priority: 20,
+    },
+    {
+        path: '/wp-setup/step/start-setup-experience',
+        title: __('Start Setup Experience', 'wp-module-onboarding'),
+        heading: __('Start Setup Experience', 'wp-module-onboarding'),
+        subheading: __(
+            'Make your website dreams a reality!',
+            'wp-module-onboarding'
+        ),
+        description: __(
+            "We'll use this to personalize this onboarding and future recommendations",
+            'wp-module-onboarding'
+        ),
+        Component: StepExperienceWithWPSetup,
+        Icon: home,
+        priority: 30,
     },
     {
         path: '/wp-setup/step/top-priority',

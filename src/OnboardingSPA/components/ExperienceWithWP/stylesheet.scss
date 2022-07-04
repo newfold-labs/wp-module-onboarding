@@ -1,0 +1,104 @@
+/*COLOR VARIABLES*/
+$black: var(--nfd-onboarding-black);
+$font: var(--nfd-onboarding-primary-font);
+$sec-font: var(--nfd-onboarding-secondary-font);
+$primary-color: var(--nfd-onboarding-primary);
+$checkbox-color: var(--nfd-onboarding-checkbox-tab-color);
+$checkbox-border: #EFEFEF;
+$white: var(--nfd-onboarding-white);
+
+.nfd-onboarding-experience-step { 
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+
+    &__title{
+        color: $black;
+        font-weight: 700;
+        font-style: normal;
+        text-align: center;
+        // font-family: $font;
+        font-size: clamp(0.8rem, 1.5vw, 2.5rem);
+    }
+
+    &-tabs label {
+        width: 17vw;
+        height: 3vh;
+        border: 1px solid $checkbox-border;
+        display: flex;
+        justify-content:start;
+        padding: 6px 24px;
+        color: $black;
+        font-style: italic !important;
+        background: $checkbox-color;
+        // font-family: $font;
+        font-style: normal;
+        font-weight: 350;
+        font-size: clamp(0.7rem, 0.8vw, 2rem);
+        line-height: 3vh;
+        margin: 2% 0%;
+        white-space: nowrap;
+      }
+      
+      
+    // &-tabs label:hover {
+    //     color: var(--nfd-onboarding-light);
+    //     cursor: pointer;
+    //   }
+      
+    &-tabs input:checked + label {
+        color: $white;
+        background: var(--wp-admin-theme-color-darker-10);
+        border: none;
+    }
+}
+
+.components-radio-control__input input {
+    display: none;
+}
+
+.button-style {
+    background-color: var(--wp-admin-theme-color-darker-10);
+    width: 100%;
+    font-size: clamp(0.7rem, 1vw, 2rem);
+    color: $white;
+    padding: 2%;
+    text-align: center;
+    border: none;
+    bottom: 10%;
+    width: 50vw;
+    // font-family: $font;
+    margin: auto;
+}
+
+.bottom {
+    display: inline-block;
+    border: 1px;
+    // font-family: $font;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0px;
+    text-align: center;
+    font-size: clamp(0.7rem, 1vw, 1rem);
+    bottom: 3%;
+    &-link {
+        line-height: 19px;
+        letter-spacing: 0px;
+        text-align: center;
+        color: $primary-color;
+        text-decoration: none;
+    }      
+}
+      
+//  
+      
+//       .tabs #tab1:checked ~ #content1,
+//       .tabs #tab2:checked ~ #content2,
+//       .tabs #tab3:checked ~ #content3,
+//       .tabs #tab4:checked ~ #content4 {
+//         display: block;
+//       }      
+// }

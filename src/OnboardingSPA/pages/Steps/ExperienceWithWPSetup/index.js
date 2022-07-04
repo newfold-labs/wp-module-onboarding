@@ -1,19 +1,20 @@
 import CommonLayout from '../../../components/Layouts/Common';
+import ExperienceWithWP from '../../../components/ExperienceWithWP';
 import { useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import NewfoldLargeCard from '../../../components/NewfoldLargeCard';
-import ExperienceWithWPSetup from '../ExperienceWithWPSetup';
 
-const StepGetStarted = () => {
+
+const ExperienceWithWPSetup = () => {
 	const location = useLocation();
 
 	useEffect(() => {}, [location]);
 
 	return (
 		<CommonLayout isBgPrimary isCentered>
-			<NewfoldLargeCard/>
+			<NewfoldLargeCard children={<ExperienceWithWP/>}/>
 		</CommonLayout>
 	);
 };
 
-export default StepGetStarted;
+export default ExperienceWithWPSetup;
