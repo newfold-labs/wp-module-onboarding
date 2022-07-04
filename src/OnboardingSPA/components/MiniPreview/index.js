@@ -6,9 +6,9 @@
 const MiniPreview = ({ title, desc, icon }) => {
 
     var iconPreview = icon == "" ? '--default-logo-icon' : icon;
-    var titlePreview = title == "" ? 'Shop Name' : title?.substring(0, 20);
-    var descPreview = desc == "" ? 'About your Shop' : desc;
-    var urlPreview = title == "" ? 'https://yourshopname.com' : `https://${title?.substring(0, 20).toLowerCase().replace(/\s/g, '').replace(/\W/g, '')}.com`;
+    var titlePreview = title == "" ? 'Aurelia Shop' : title?.substring(0, 20);
+    var descPreview = desc == "" ? 'Aurelia Shop sells customized jewelry inspired to the beauty of the Sea.' : desc;
+    var urlPreview = title == "" ? 'https://aureliashop.com' : `https://${title?.substring(0, 20).toLowerCase().replace(/\s/g, '').replace(/\W/g, '')}.com`;
     return (
         <div>
             <h4 className="mini-preview">Preview</h4>
