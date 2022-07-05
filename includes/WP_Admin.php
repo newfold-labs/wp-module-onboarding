@@ -3,7 +3,6 @@ namespace NewfoldLabs\WP\Module\Onboarding;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use SebastianBergmann\CodeCoverage\Util\Percentage;
-use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 /**
  * Register Admin Page, Assets & Admin functionality with WordPress.
