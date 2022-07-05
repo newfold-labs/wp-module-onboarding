@@ -1,0 +1,10 @@
+{
+	"cardHeading": "Help us tailor this setup to your site",
+	"subHeading": "ABOUT YOUR SITE",
+	"question": "What is your experience with WordPress?",
+	"buttonText": "Continue Setup",
+	"needHelpText": "Need Help? <a href='https://www.bluehost.com/solutions/full-service' target='_blank' style='text-decoration:none'> Hire our Experts</a>",
+    "label1": "Never used it",
+    "label2": "Used it some",
+    "label3": "I'm an expert"
+}

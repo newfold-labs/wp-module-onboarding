@@ -2,6 +2,7 @@ import {
     routes as defaultInitialRoutes,
     steps as defaultInitialSteps,
     initialDesignSteps as defaultInitialDesignSteps,
+    initialSetupSteps as defaultInitialSetupSteps,
     initialTopSteps as defaultInitialTopSteps,
 } from './default-flow';
 
@@ -15,6 +16,7 @@ const routerMap = {
         'steps': defaultInitialSteps,
         'initialTopSteps': defaultInitialTopSteps,
         'initialDesignSteps': defaultInitialDesignSteps,
+        'initialSetupSteps': defaultInitialSetupSteps,
     }
 }
 
@@ -32,4 +34,8 @@ export const initialTopSteps = () => {
 
 export const initialDesignSteps = () => {
     return routerMap[getSelectedRoute()]['initialDesignSteps']();
+};
+
+export const initialSetupSteps = () => {
+    return routerMap[getSelectedRoute()]['initialSetupSteps']();
 };

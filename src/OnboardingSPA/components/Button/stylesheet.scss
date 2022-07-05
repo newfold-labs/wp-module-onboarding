@@ -3,14 +3,14 @@
 	background-color: var(--wp-admin-theme-color-darker-10);
 	height: 8vh;
 	width: 50vw;
-	margin: 10px auto 20px;
-	font-size: clamp(0.7rem, 1rem, 2em);
+	margin: 0vw auto;
+	font-size: clamp(1rem, 2vw, 1.3rem);
 	font-weight: 500;
 	border-radius: 4px;
 	border: none;
 	cursor: pointer;
 	outline: 1px solid transparent;
-
+	
 	&:disabled {
 		cursor: default;
 		opacity: 0.3;

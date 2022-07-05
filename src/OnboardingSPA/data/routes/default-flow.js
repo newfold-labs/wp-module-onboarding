@@ -55,8 +55,8 @@ const StepDesignHeaderMenu = lazy(() =>
 const StepSitePages = lazy(() => import('../../pages/Steps/SitePages'));
 const StepSiteFeatures = lazy(() => import('../../pages/Steps/SiteFeatures'));
 const StepWhatNext = lazy(() => import('../../pages/Steps/WhatNext'));
-const StepExperienceWithWPSetup = lazy(() => import('../../pages/Steps/ExperienceWithWPSetup'));
-
+const StepStartSetupExperience = lazy(() => import('../../pages/Steps/GetStarted/StartSetupExperience'));
+const StepPrimarySetup = lazy(() => import('../../pages/Steps/PrimaryStep'));
 /**
  * All information pages should be prefixed with `/page`.
  *
@@ -109,18 +109,9 @@ export const steps = [
         priority: 20,
     },
     {
-        path: '/wp-setup/step/start-setup-experience',
+        path: '/wp-setup/step/get-started/start-setup-experience',
         title: __('Start Setup Experience', 'wp-module-onboarding'),
-        heading: __('Start Setup Experience', 'wp-module-onboarding'),
-        subheading: __(
-            'Make your website dreams a reality!',
-            'wp-module-onboarding'
-        ),
-        description: __(
-            "We'll use this to personalize this onboarding and future recommendations",
-            'wp-module-onboarding'
-        ),
-        Component: StepExperienceWithWPSetup,
+        Component: StepStartSetupExperience,
         Icon: home,
         priority: 30,
     },
@@ -292,6 +283,22 @@ export const steps = [
         Icon: moveTo,
         priority: 220,
     },
+    {
+      path: '/wp-setup/step/start-setup',
+      title: __('Start Setup', 'wp-module-onboarding'),
+      heading: __('How else can we help?', 'wp-module-onboarding'),
+      subheading: __(
+          "We've got the basics setup, but we can help with any next steps.",
+          'wp-module-onboarding'
+      ),
+      description: __(
+          "Setup more of your site, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
+          'wp-module-onboarding'
+      ),
+      Component: StepPrimarySetup,
+      Icon: moveTo,
+      priority: 240,
+  },
 ];
 
 /**
@@ -333,4 +340,16 @@ export const initialDesignSteps = () => {
     });
 
     return designSteps;
+};
+
+/**
+ * Filter out all non-start-setup steps.
+ * @returns
+ */
+ export const initialSetupSteps = () => {
+    const setupSteps = filter(steps, (step) => {
+        return step.path.includes('/step/get-started/');
+    });
+
+    return setupSteps;
 };
