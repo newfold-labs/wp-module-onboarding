@@ -25,9 +25,6 @@ final class WP_Admin {
 	public function __construct() {
 		\add_action( 'admin_menu', array( __CLASS__, 'register_page' ) );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'register_assets' ) );
-          \add_action( 'admin_init', array( LoginRedirect::class, 'enable_redirect' ) );
-		// \add_action( 'admin_init', array( __CLASS__, 'handle_redirect' ) );
-		// \add_filter( Options::get_option_name( 'redirect' ) . '_disable', array( __CLASS__, 'disable_redirect' ) );
 		// \add_action( 'wp_dashboard_setup', array( __CLASS__, 'register_widget' ) );
 	}
 

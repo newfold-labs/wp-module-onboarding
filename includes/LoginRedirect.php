@@ -5,65 +5,34 @@ use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 class LoginRedirect {
-	public static function handle_redirect( $url, $request, $user ) {
-		  \do_action( 'qm/debug', $url );
-		  \do_action( 'qm/debug', $request );
-		  \do_action( 'qm/debug', $_GET['nfd_module_onboarding_redirect'] );
 
-		$redirect_option = Options::get_option_name( 'redirect' );
-		if ( $_GET[ $redirect_option ] === 'false' ) {
+	public static function handle_redirect( $redirect, $redirect_to, $user ) {
+		$redirect_option_name = Options::get_option_name( 'redirect' );
+		if ( $_GET[ $redirect_option_name ] === 'false' ) {
 			 self::disable_redirect();
 		}
 
-		if ( \get_option( Options::get_option_name( 'redirect_param' ), false )
+		if ( \get_transient( Options::get_option_name( 'redirect_param' ) ) === '1'
 		 || \get_option( Options::get_option_name( 'exited' ), false )
 		 || \get_option( Options::get_option_name( 'completed' ), false )
 		 ) {
-
-			return \admin_url();
+			return $redirect;
 		}
 
-		$redirect = \get_option( $redirect_option, null );
-		if ( $redirect === null ) {
-			$redirect = \update_option( $redirect_option, true );
+		$redirect_option = \get_option( $redirect_option_name, null );
+		if ( empty( $redirect_option ) ) {
+			$redirect_option = \update_option( $redirect_option_name, true );
 		}
 
-		if ( ! $redirect || ! \get_option( Options::get_option_name( 'coming_soon', false ), true ) ) {
-			  return \admin_url();
+		if ( ! ( $redirect_option && \get_option( Options::get_option_name( 'coming_soon', false ), true ) ) ) {
+			 return $redirect;
 		}
 
 		if ( self::is_administrator( $user ) ) {
 			 return \admin_url( '/index.php?page=' . 'nfd-onboarding' );
 		}
 
-		return \admin_url();
-	}
-
-	public static function handle_redirect2( $url, $request, $user ) {
-		 \do_action( 'qm/debug', $url );
-		 \do_action( 'qm/debug', $request );
-
-		if ( $_GET['nfd_module_onboarding_redirect'] === 'false'
-		|| \get_option( Options::get_option_name( 'exited' ), false )
-		|| \get_option( Options::get_option_name( 'completed' ), false )
-		) {
-			\do_action( 'qm/debug', $_GET['nfd_module_onboarding_redirect'] );
-			return \admin_url();
-		}
-
-		$redirect_option = Options::get_option_name( 'redirect' );
-		$redirect         = \get_option( $redirect_option, null );
-		if ( $redirect === null ) {
-			$redirect = \update_option( $redirect_option, true );
-		}
-
-		if ( ! $redirect || ! \get_option( Options::get_option_name( 'coming_soon', false ), true ) ) {
-			  return \admin_url();
-		}
-		if ( self::is_administrator( $user ) ) {
-			 return \admin_url( '/index.php?page=' . 'nfd-onboarding' );
-		}
-		 return \admin_url();
+		return $redirect;
 	}
 
 	 /**
@@ -85,22 +54,24 @@ class LoginRedirect {
 	 * @return bool
 	 */
 	public static function is_administrator( $user ) {
-		return self::is_user( $user ) && $user->has_cap( 'manage_options' );
+		return self::is_user( $user ) && $user->has_cap( Permissions::ADMIN );
 	}
 
-	public static function enable_redirect() {
-		if ( \get_option( Options::get_option_name( 'redirect_param' ), true ) ) {
-			\update_option( Options::get_option_name( 'redirect_param' ), false );
-		}
-	}
-
+	/**
+	 * Sets a transient that disables redirect to onboarding on login.
+	 *
+	 * @return void
+	 */
 	public static function disable_redirect() {
-		if ( ! \get_option( Options::get_option_name( 'redirect_param' ), false ) ) {
-			\update_option( Options::get_option_name( 'redirect_param' ), true );
-		}
+		  \set_transient( Options::get_option_name( 'redirect_param' ), '1', 30 );
 	}
 
-	public static function remove_redirect_action() {
+	/**
+	 * Removes the onboarding login redirect action.
+	 *
+	 * @return bool
+	 */
+	public static function remove_handle_redirect_action() {
 		 return \remove_action( 'login_redirect', array( __CLASS__, 'handle_redirect' ) );
 	}
 }

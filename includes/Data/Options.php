@@ -15,7 +15,7 @@ final class Options {
 	  */
 	protected static array $options = array(
 		'redirect'       => 'redirect',
-          'redirect_param' => 'redirect_param',
+		'redirect_param' => 'redirect_param',
 		'exited'         => 'exited',
 		'completed'      => 'completed',
 		'coming_soon'    => 'mm_coming_soon',
