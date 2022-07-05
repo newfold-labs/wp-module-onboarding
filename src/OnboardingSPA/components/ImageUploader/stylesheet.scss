@@ -1,6 +1,5 @@
 $border: #D6D6D6;
 $white-shade: #F9F9F9;
-$font: var(--nfd-onboarding-primary-font);
 $primary-color: var(--nfd-onboarding-primary);
 
 .image-uploader {
@@ -8,7 +7,6 @@ $primary-color: var(--nfd-onboarding-primary);
     &_heading{
         font-size: 16px;
         font-weight: 500;
-        font-family: $font;
         margin: 0px 0px 6px 0px;
     }
 
@@ -61,7 +59,6 @@ $primary-color: var(--nfd-onboarding-primary);
                 margin: 10px;
                 font-size: 14px;
                 font-weight: 300;
-                font-family: $font;
                 font-style: italic;
                 color: $primary-color;
                 border: 1px solid $primary-color;

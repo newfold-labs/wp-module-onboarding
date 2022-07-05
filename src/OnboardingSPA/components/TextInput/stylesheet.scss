@@ -1,4 +1,3 @@
-$font: var(--nfd-onboarding-primary-font);
 $white: var(--nfd-onboarding-white);
 $error: rgba(255, 0, 0, 0.26);
 $border: #D6D6D6;
@@ -11,7 +10,6 @@ $letter-spacing: 0.5px;
     &__field {
         padding: 10px;
         font-size: 0.9rem;
-        font-family: $font;
         letter-spacing: $letter-spacing;
 
         width: 100%;
@@ -36,14 +34,12 @@ $letter-spacing: 0.5px;
             margin: 0px;
             font-size: 1rem;
             font-weight: 500;
-            font-family: $font;
             letter-spacing: $letter-spacing;
         }
 
         &_maxChar {
             margin: 0px;
             font-size: 10px;
-            font-family: $font;
             letter-spacing: $letter-spacing;
         }
     }
@@ -51,10 +47,9 @@ $letter-spacing: 0.5px;
     &__hint{
         margin: 0px;
         font-weight: 300;
-        font-size: 0.6rem;
+        font-size: 0.7rem;
         padding: 0px 1.5px;
         font-style: italic;
-        font-family: $font;
         letter-spacing: $letter-spacing;
     }
 }

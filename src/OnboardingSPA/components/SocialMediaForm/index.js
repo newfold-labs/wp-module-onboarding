@@ -1,26 +1,44 @@
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 
 const SocialMediaForm = ({ socialData, setSocialData }) => {
     const [isActive, setIsActive] = useState(false);
-    
-    const [facebook, setFacebook] = useState(socialData?.facebook_site??'');
-    const [twitter, setTwitter] = useState(socialData?.twitter_site ??'');
-    const [instagram, setInstagram] = useState(socialData?.instagram_url ??'');
-    const [youtube, setYouTube] = useState(socialData?.youtube_url ??'');
-    const [linkedin, setLinkedIn] = useState(socialData?.linkedin_url ??'');
-    const [yelp, setYelp] = useState(socialData?.yelp_url ??'');
-    const [tiktok, setTikTok] = useState(socialData?.tiktok_url ??'');
+    const [facebook, setFacebook] = useState("");
+    const [twitter, setTwitter] = useState("");
+    const [instagram, setInstagram] = useState("");
+    const [youtube, setYouTube] = useState("");
+    const [linkedin, setLinkedIn] = useState("");
+    const [yelp, setYelp] = useState("");
+    const [tiktok, setTikTok] = useState("");
 
     var socialMediaData = {
-        'facebook_site': facebook,
-        'twitter_site': twitter,
-        'instagram_url': instagram,
-        'youtube_url': youtube,
-        'linkedin_url': linkedin,
-        'yelp_url': yelp,
-        'tiktok_url': tiktok,
-        'other_social_urls': []
+        "facebook_site": facebook,
+        "twitter_site": twitter,
+        "instagram_url": instagram,
+        "youtube_url": youtube,
+        "linkedin_url": linkedin,
+        "other_social_urls": {
+            "yelp_url": yelp,
+            "tiktok_url": tiktok,
+        }
     }
+
+    useEffect(() => {
+        setFacebook(socialData?.facebook_site ?? "");
+        setTwitter(socialData?.twitter_site ?? "");
+        setInstagram(socialData?.instagram_url ?? "");
+        setYouTube(socialData?.youtube_url ?? "");
+        setLinkedIn(socialData?.linkedin_url ?? "");
+        if (Object.keys(socialData).includes("other_social_urls"))
+        {
+            const otherURLS = socialData.other_social_urls;
+            if (Object.keys(otherURLS).includes("yelp_url"))
+                setYelp(otherURLS["yelp_url"] ?? "");
+
+            if (Object.keys(otherURLS).includes("tiktok_url"))
+                setTikTok(otherURLS["tiktok_url"] ?? "");
+        }
+
+    }, [socialData]);
 
     const handleAccordion = (e) => {
         setIsActive(!isActive);
@@ -50,11 +68,11 @@ const SocialMediaForm = ({ socialData, setSocialData }) => {
                 break;
             case 'yelp':
                 setYelp(e.target.value);
-                socialMediaData.yelp_url = e.target.value;
+                socialMediaData.other_social_urls["yelp_url"] = e.target.value;
                 break;
             case 'tiktok':
                 setTikTok(e.target.value);
-                socialMediaData.tiktok_url = e.target.value;
+                socialMediaData.other_social_urls["tiktok_url"] = e.target.value;
                 break;
         }
         setSocialData(socialMediaData);
@@ -71,7 +89,7 @@ const SocialMediaForm = ({ socialData, setSocialData }) => {
                     <div className="social-form__label_icon" style={{ backgroundImage: 'var(--facebook-icon)' }}/>
                     <div className="social-form__label_name">Facebook</div>
                 </label>
-                <input className="social-form__box" type="text" value={facebook} onChange={(e) => { handleChange(e, 'facebook') }} /><br />
+                <input className="social-form__box" type="text" placeholder="https://www.facebok.com/aurelia" value={facebook} onChange={(e) => { handleChange(e, 'facebook') }} /><br />
                 <label className='social-form__label' >
                     <div className="social-form__label_icon" style={{ backgroundImage: 'var(--twitter-icon)' }}/>
                     <div className="social-form__label_name">Twitter</div>

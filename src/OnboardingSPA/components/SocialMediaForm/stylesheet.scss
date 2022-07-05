@@ -1,5 +1,4 @@
 $border: #D6D6D6;
-$font: var(--nfd-onboarding-primary-font);
 
 .social-form {
     width: 95%;
@@ -18,7 +17,6 @@ $font: var(--nfd-onboarding-primary-font);
         &_heading {
             font-size: 1rem;
             font-weight: 500;
-            font-family: $font;
         }
 
         &_icon {
@@ -55,7 +53,6 @@ $font: var(--nfd-onboarding-primary-font);
 
         &_name {
             font-size: 0.9rem;
-            font-family: $font;
         }
     }
 

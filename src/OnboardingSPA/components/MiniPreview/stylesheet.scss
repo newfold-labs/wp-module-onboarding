@@ -4,11 +4,9 @@ $browser-dark: #CACACA;
 $browser-light: #F2F2F2;
 $link-browser-color: #007017;
 $title-browser-color: #3858E9;
-$font: var(--nfd-onboarding-primary-font);
 
 .mini-preview {
     margin: 0px 0px 10px 0px;
-    font-family: $font;
     font-weight: 500;
     font-size: 1rem;
 }
@@ -48,7 +46,6 @@ $font: var(--nfd-onboarding-primary-font);
             cursor: pointer;
             font-weight: 600;
             font-size: 1.2rem;
-            font-family: $font;
             margin: 0px 0px 6px 0px;
             color: $title-browser-color;
         }
@@ -57,7 +54,6 @@ $font: var(--nfd-onboarding-primary-font);
             margin: 0px;
             font-size: 1rem;
             cursor: pointer;
-            font-family: $font;
             color: $link-browser-color;
         }
     }
@@ -65,7 +61,6 @@ $font: var(--nfd-onboarding-primary-font);
         color: $black;
         font-weight: 400;
         font-size: 0.8rem;
-        font-family: $font;
         margin: 16px 0px 0px 0px;
     }
     &_social{

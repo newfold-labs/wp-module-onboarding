@@ -32,21 +32,6 @@ const BasicInfoForm = () => {
         }
     }
 
-    useEffect(() => {
-        async function getFlowData(){
-            const data = await getFlow();
-            const socialDataAPI = await getSettings();
-            setSocialData(socialDataAPI.body);
-            setFlowData(data);
-            setDebouncedFlowData(flowData);
-            setisLoaded(true);
-        }
-        if(!isLoaded) 
-            getFlowData();
-        setDefaultData();
-
-    }, [isLoaded]);
-
     function createSaveData() {
         const dataToSave = {
             "data": {
@@ -60,9 +45,24 @@ const BasicInfoForm = () => {
     }
 
     useEffect(() => {
+        async function getFlowData() {
+            const data = await getFlow();
+            const socialDataAPI = await getSettings();
+            setSocialData(socialDataAPI.body);
+            setFlowData(data);
+            setDebouncedFlowData(flowData);
+            setisLoaded(true);
+        }
+        if (!isLoaded)
+            getFlowData();
+        setDefaultData();
+
+    }, [isLoaded]);
+
+    useEffect(() => {
         const timerId = setTimeout(() => {
             setDebouncedFlowData(createSaveData());
-        }, 1000);
+        }, 600);
 
         return () => {
             clearTimeout(timerId);
@@ -72,7 +72,7 @@ const BasicInfoForm = () => {
     useEffect(() => {
         const saveData = async () => {
             const result = await setFlow(debouncedFlowData);
-            // const socialResult = await setSettings(socialData);
+            const socialResult = await setSettings(socialData);
             if (result.error != null)
                 setIsError(true);
             else {
