@@ -1,23 +1,25 @@
 import { useState } from '@wordpress/element';
 
-const SocialMediaForm = ({ setSocialData }) => {
+const SocialMediaForm = ({ socialData, setSocialData }) => {
     const [isActive, setIsActive] = useState(false);
     
-    const [facebook, setFacebook] = useState('');
-    const [twitter, setTwitter] = useState('');
-    const [instagram, setInstagram] = useState('');
-    const [youtube, setYouTube] = useState('');
-    const [linkedin, setLinkedIn] = useState('');
-    const [yelp, setYelp] = useState('');
-    const [tiktok, setTikTok] = useState('');
+    const [facebook, setFacebook] = useState(socialData?.facebook_site??'');
+    const [twitter, setTwitter] = useState(socialData?.twitter_site ??'');
+    const [instagram, setInstagram] = useState(socialData?.instagram_url ??'');
+    const [youtube, setYouTube] = useState(socialData?.youtube_url ??'');
+    const [linkedin, setLinkedIn] = useState(socialData?.linkedin_url ??'');
+    const [yelp, setYelp] = useState(socialData?.yelp_url ??'');
+    const [tiktok, setTikTok] = useState(socialData?.tiktok_url ??'');
 
-    var socialData = {
-        'facebook': facebook,
-        'twitter': twitter,
-        'instagram': instagram,
-        'youtube': youtube,
-        'linkedin': linkedin,
-        'tiktok': tiktok,
+    var socialMediaData = {
+        'facebook_site': facebook,
+        'twitter_site': twitter,
+        'instagram_url': instagram,
+        'youtube_url': youtube,
+        'linkedin_url': linkedin,
+        'yelp_url': yelp,
+        'tiktok_url': tiktok,
+        'other_social_urls': []
     }
 
     const handleAccordion = (e) => {
@@ -28,34 +30,34 @@ const SocialMediaForm = ({ setSocialData }) => {
         switch(social){
             case 'facebook': 
                 setFacebook(e.target.value);
-                socialData.facebook = e.target.value;
+                socialMediaData.facebook_site = e.target.value;
                 break;
             case 'twitter':
                 setTwitter(e.target.value);
-                socialData.twitter = e.target.value;
+                socialMediaData.twitter_site = e.target.value;
                 break;
             case 'instagram':
                 setInstagram(e.target.value);
-                socialData.instagram = e.target.value;
+                socialMediaData.instagram_url = e.target.value;
                 break;
             case 'youtube':
                 setYouTube(e.target.value);
-                socialData.youtube = e.target.value;
+                socialMediaData.youtube_url = e.target.value;
                 break;
             case 'linkedin':
                 setLinkedIn(e.target.value);
-                socialData.linkedin = e.target.value;
+                socialMediaData.linkedin_url = e.target.value;
                 break;
             case 'yelp':
                 setYelp(e.target.value);
-                socialData.yelp = e.target.value;
+                socialMediaData.yelp_url = e.target.value;
                 break;
             case 'tiktok':
                 setTikTok(e.target.value);
-                socialData.tiktok = e.target.value;
+                socialMediaData.tiktok_url = e.target.value;
                 break;
         }
-        setSocialData(socialData);
+        setSocialData(socialMediaData);
     }
 
     return (
