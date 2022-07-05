@@ -5,7 +5,7 @@
  * @returns Button
  */
 
-const Button = ({text, handleClick}) => {
+const Button = ({text, handleClick, disabled}) => {
 
     const handleBtnClick = () => {
         handleClick();
@@ -15,7 +15,9 @@ const Button = ({text, handleClick}) => {
     <button 
         type="button" 
         className="nfd-steps-card-large-button" 
-        onClick={handleBtnClick}>
+        onClick={handleBtnClick}
+        disabled={disabled}
+      >
       {text}
     </button>
 
