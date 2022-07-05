@@ -87,7 +87,7 @@ class SettingsController {
 	 */
 	public function update_item( \WP_REST_Request $request ) {
 		$settings = $this->get_current_settings();
-		$params   = $request->get_params();
+		$params   = $request->get_json_params();
 
 		// check if all the param keys are present in the yoast social keys
 		foreach ( $params as $param_key => $param_value ) {

@@ -1,5 +1,4 @@
 <?php
-
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 /**
