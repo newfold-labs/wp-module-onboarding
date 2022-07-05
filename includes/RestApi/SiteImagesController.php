@@ -36,7 +36,7 @@ class SiteImagesController extends BaseHiiveController {
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_images' ),
-					'permission_callback' => array( $this, 'check_permissions' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 					'args'                => $this->get_request_params(),
 				),
 			)
@@ -80,15 +80,6 @@ class SiteImagesController extends BaseHiiveController {
 			$results,
 			200
 		);
-	}
-
-	/**
-	 * Check if caller has enough permissions to use the route.
-	 *
-	 * @return boolean
-	 */
-	public function check_permissions() {
-		return Permissions::rest_is_authorized_admin();
 	}
 
 	/**

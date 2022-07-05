@@ -1,5 +1,6 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding;
+
 use NewfoldLabs\WP\Module\Onboarding\RestApi\RestApi;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
