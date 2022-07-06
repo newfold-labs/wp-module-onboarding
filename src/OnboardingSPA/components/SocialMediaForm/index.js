@@ -1,4 +1,5 @@
 import { useState, useEffect } from '@wordpress/element';
+import { TextControl } from '@wordpress/components';
 
 const SocialMediaForm = ({ socialData, setSocialData }) => {
     const [isActive, setIsActive] = useState(false);
@@ -44,35 +45,35 @@ const SocialMediaForm = ({ socialData, setSocialData }) => {
         setIsActive(!isActive);
     }
 
-    const handleChange = (e, social) => {
+    const handleChange = (value, social) => {
         switch(social){
             case 'facebook': 
-                setFacebook(e.target.value);
-                socialMediaData.facebook_site = e.target.value;
+                setFacebook(value);
+                socialMediaData.facebook_site = value;
                 break;
             case 'twitter':
-                setTwitter(e.target.value);
-                socialMediaData.twitter_site = e.target.value;
+                setTwitter(value);
+                socialMediaData.twitter_site = value;
                 break;
             case 'instagram':
-                setInstagram(e.target.value);
-                socialMediaData.instagram_url = e.target.value;
+                setInstagram(value);
+                socialMediaData.instagram_url = value;
                 break;
             case 'youtube':
-                setYouTube(e.target.value);
-                socialMediaData.youtube_url = e.target.value;
+                setYouTube(value);
+                socialMediaData.youtube_url = value;
                 break;
             case 'linkedin':
-                setLinkedIn(e.target.value);
-                socialMediaData.linkedin_url = e.target.value;
+                setLinkedIn(value);
+                socialMediaData.linkedin_url = value;
                 break;
             case 'yelp':
-                setYelp(e.target.value);
-                socialMediaData.other_social_urls["yelp_url"] = e.target.value;
+                setYelp(value);
+                socialMediaData.other_social_urls["yelp_url"] = value;
                 break;
             case 'tiktok':
-                setTikTok(e.target.value);
-                socialMediaData.other_social_urls["tiktok_url"] = e.target.value;
+                setTikTok(value);
+                socialMediaData.other_social_urls["tiktok_url"] = value;
                 break;
         }
         setSocialData(socialMediaData);
@@ -89,37 +90,37 @@ const SocialMediaForm = ({ socialData, setSocialData }) => {
                     <div className="social-form__label_icon" style={{ backgroundImage: 'var(--facebook-icon)' }}/>
                     <div className="social-form__label_name">Facebook</div>
                 </label>
-                <input className="social-form__box" type="text" placeholder="https://www.facebok.com/aurelia" value={facebook} onChange={(e) => { handleChange(e, 'facebook') }} /><br />
+                <TextControl className="social-form__box" type="text" placeholder="https://www.facebok.com/aurelia" value={facebook} onChange={(value) => { handleChange(value, 'facebook') }} />
                 <label className='social-form__label' >
                     <div className="social-form__label_icon" style={{ backgroundImage: 'var(--twitter-icon)' }}/>
                     <div className="social-form__label_name">Twitter</div>
                 </label>
-                <input className="social-form__box" type="text" value={twitter} onChange={(e) => { handleChange(e, 'twitter') }} /><br />
+                <TextControl className="social-form__box" type="text" value={twitter} onChange={(value) => { handleChange(value, 'twitter') }} />
                 <label className='social-form__label' >
                     <div className="social-form__label_icon" style={{ backgroundImage: 'var(--instagram-icon)' }}/>
                     <div className="social-form__label_name">Instagram</div>
                 </label>
-                <input className="social-form__box" type="text" value={instagram} onChange={(e) => { handleChange(e, 'instagram') }} /><br />
+                <TextControl className="social-form__box" type="text" value={instagram} onChange={(value) => { handleChange(value, 'instagram') }} />
                 <label className='social-form__label' >
                     <div className="social-form__label_icon" style={{ backgroundImage: 'var(--youtube-icon)' }}/>
                     <div className="social-form__label_name">YouTube</div>
                 </label>
-                <input className="social-form__box" type="text" value={youtube} onChange={(e) => { handleChange(e, 'youtube') }} /><br />
+                <TextControl className="social-form__box" type="text" value={youtube} onChange={(value) => { handleChange(value, 'youtube') }} />
                 <label className='social-form__label' >
                     <div className="social-form__label_icon" style={{ backgroundImage: 'var(--linkedin-icon)' }}/>
                     <div className="social-form__label_name">LinkedIn</div>
                 </label>
-                <input className="social-form__box" type="text" value={linkedin} onChange={(e) => { handleChange(e, 'linkedin') }} /><br />
+                <TextControl className="social-form__box" type="text" value={linkedin} onChange={(value) => { handleChange(value, 'linkedin') }} />
                 <label className='social-form__label' >
                     <div className="social-form__label_icon" style={{ backgroundImage: 'var(--yelp-icon)' }}/>
                     <div className="social-form__label_name">Yelp</div>
                 </label>
-                <input className="social-form__box" type="text" value={yelp} onChange={(e) => { handleChange(e, 'yelp') }} /><br />
+                <TextControl className="social-form__box" type="text" value={yelp} onChange={(value) => { handleChange(value, 'yelp') }} />
                 <label className='social-form__label' >
                     <div className="social-form__label_icon" style={{ backgroundImage: 'var(--tiktok-icon)' }}/>
                     <div className="social-form__label_name">TikTok</div>
                 </label>
-                <input className="social-form__box" type="text" value={tiktok} onChange={(e) => { handleChange(e, 'tiktok') }} /><br />
+                <TextControl className="social-form__box" type="text" value={tiktok} onChange={(value) => { handleChange(value, 'tiktok') }} />
             </form>
         </div>
     );
