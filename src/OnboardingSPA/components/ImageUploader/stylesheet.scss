@@ -39,6 +39,7 @@ $primary-color: var(--nfd-onboarding-primary);
             justify-content: center;
 
             &-icon{
+                height: 95%;
                 object-fit: scale-down;
                 background-position: center;
                 background-repeat: no-repeat;
