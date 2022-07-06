@@ -51,7 +51,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	/**
 	 * Retrieves the themes variations.
 	 *
-	 * @return \WP_REST_RESPONSE|\WP_Error
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function get_theme_variations( \WP_REST_Request $request ) {
 		$theme = $request->get_param( 'theme' );

@@ -19,6 +19,9 @@ class ThemeGeneratorController {
 	 */
 	 protected $rest_base = '/themes';
 
+	 /**
+	  * @var string
+	  */
 	 protected $rest_extended_base = '/child/generate';
 
 	public function register_routes() {
@@ -38,7 +41,7 @@ class ThemeGeneratorController {
 	 /**
 	  * Generates the child theme from an active parent theme.
 	  *
-	  * @return \WP_REST_Respone|\WP_Error
+	  * @return \WP_REST_Response|\WP_Error
 	  */
 	public function generate_child_theme() {
 		// Ensure that we have sufficient data to generate a child theme.
@@ -128,8 +131,8 @@ class ThemeGeneratorController {
 		$this->activate_theme( $child_theme_slug );
 
 		return new \WP_REST_Response(
-			null,
-			200
+			array(),
+			201
 		);
 	}
 
