@@ -17,7 +17,7 @@ function nfd_wp_module_onboarding_register() {
 	}
 	define( 'NFD_ONBOARDING_BUILD_DIR', __DIR__ . '/build/' . NFD_ONBOARDING_VERSION );
 	if ( ! defined( 'NFD_MODULE_DATA_EVENT_API' ) ) {
-		if ( defined( 'BLUEHOST_PLUGIN_URL' ) ) {
+		if ( defined( 'WEB_PLUGIN_URL' ) ) {
 			 define( 'NFD_MODULE_DATA_EVENTS_API', '/bluehost/v1/data/events' );
 		} else {
 			 define( 'NFD_MODULE_DATA_EVENTS_API', '/newfold-data/v1/events' );
