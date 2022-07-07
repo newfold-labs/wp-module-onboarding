@@ -12,7 +12,6 @@ export const VIEW_DESIGN_COLORS = 'design-colors';
 export const VIEW_DESIGN_TYPOGRAPHY = 'design-typography';
 export const VIEW_DESIGN_HEADER_MENU = 'design-header-menu';
 export const VIEW_NAV_GET_STARTED = 'nav-get-started';
-export const VIEW_START_SETUP_EXPERIENCE = 'start-setup-experience';
 
 /**
  * All views for the <Drawer /> component.
@@ -27,7 +26,6 @@ export const DRAWER_VIEWS = [
 	VIEW_DESIGN_COLORS,
 	VIEW_DESIGN_TYPOGRAPHY,
 	VIEW_DESIGN_HEADER_MENU,
-	VIEW_START_SETUP_EXPERIENCE,
 ];
 
 /**

@@ -9,7 +9,6 @@ import {
 	VIEW_NAV_PAGE,
 	VIEW_NAV_PRIMARY,
 	VIEW_NAV_GET_STARTED,
-	VIEW_START_SETUP_EXPERIENCE,
 } from '../../../../constants';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -22,14 +21,13 @@ import DesignThemes from './DesignThemes';
 import DesignTypography from './DesignTypography';
 import { ESCAPE } from '@wordpress/keycodes';
 import NavDesign from './NavDesign';
+import NavGetStarted from './NavGetStarted'
 import NavPage from './NavPage';
 import NavPrimary from './NavPrimary';
 import { __ } from '@wordpress/i18n';
 import { chevronLeft } from '@wordpress/icons';
 import classNames from 'classnames';
 import { store as nfdOnboardingStore } from '../../../store';
-import NavGetStarted from './NavGetStarted';
-import StartSetupExperience from './StartSetupExperience';
 
 const DrawerPanel = ({ isOpen }) => {
 	const [isNavView, setIsNavView] = useState(true); // menu-primary is default view
@@ -111,11 +109,6 @@ const DrawerPanel = ({ isOpen }) => {
 						{VIEW_NAV_DESIGN === drawerView && <NavDesign />}
 						{VIEW_NAV_GET_STARTED === drawerView && <NavGetStarted />}
 						{VIEW_NAV_PAGE === drawerView && <NavPage />}
-						{VIEW_START_SETUP_EXPERIENCE === drawerView && (
-							<WithGetStartedBack>
-								<StartSetupExperience />
-							</WithGetStartedBack>
-						)}
 						{VIEW_DESIGN_THEMES === drawerView && (
 							<WithDesignBack>
 								<DesignThemes />

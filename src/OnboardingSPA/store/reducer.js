@@ -6,8 +6,8 @@ import {
 	routes as initialRoutes,
 	steps as initialSteps,
 	initialDesignSteps,
-	initialSetupSteps,
 	initialTopSteps,
+    initialGetStartedSteps,
 } from '../data/routes/index';
 
 export function flow(
@@ -18,7 +18,7 @@ export function flow(
 			allSteps: initialSteps,
 			topSteps: initialTopSteps(),
 			designSteps: initialDesignSteps(),
-			setupSteps: initialSetupSteps(),
+            getStartedSteps: initialGetStartedSteps(),
 			currentStep: '/wp-setup/step/what-next',
 		}
 	},

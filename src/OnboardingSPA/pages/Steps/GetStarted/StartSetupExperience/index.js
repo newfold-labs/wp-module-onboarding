@@ -7,7 +7,7 @@ import content from './content.json';
 import { useNavigate } from 'react-router-dom';
 import { RadioControl } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
-import { VIEW_START_SETUP_EXPERIENCE } from '../../../../../constants';
+import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { useDispatch } from '@wordpress/data';
 import { getFlow, setFlow } from '../../../../utils/api/flow';
@@ -30,7 +30,7 @@ const StartSetupExperience = () => {
 
 	useEffect(() => {
 		setIsDrawerOpened(true);
-		setDrawerActiveView(VIEW_START_SETUP_EXPERIENCE);
+		setDrawerActiveView(VIEW_NAV_GET_STARTED);
 	}, []);
 
 	function setDefaultData() {

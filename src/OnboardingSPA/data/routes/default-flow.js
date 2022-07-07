@@ -23,7 +23,7 @@ import {
     VIEW_DESIGN_THEMES,
     VIEW_DESIGN_THEME_STYLES,
     VIEW_DESIGN_TYPOGRAPHY,
-    VIEW_START_SETUP_EXPERIENCE,
+    VIEW_NAV_GET_STARTED,
 } from '../../../constants';
 
 /**
@@ -94,20 +94,12 @@ export const pages = [
  */
 export const steps = [
     {
-        path: '/wp-setup/step/get-started',
-        title: __('Get Started', 'wp-module-onboarding'),
-        heading: __('Get Started', 'wp-module-onboarding'),
-        subheading: __(
-            'Make your website dreams a reality!',
-            'wp-module-onboarding'
-        ),
-        description: __(
-            "We'll use this to personalize this onboarding and future recommendations",
-            'wp-module-onboarding'
-        ),
+        path: '/wp-setup/step/get-started/first-step',
+        title: __('First Step', 'wp-module-onboarding'),
         Component: StepGetStarted,
         Icon: home,
         priority: 20,
+        VIEW: VIEW_NAV_GET_STARTED,
     },
     {
         path: '/wp-setup/step/get-started/start-setup-experience',
@@ -115,7 +107,7 @@ export const steps = [
         Component: StepStartSetupExperience,
         Icon: home,
         priority: 30,
-        VIEW: VIEW_START_SETUP_EXPERIENCE,
+        VIEW: VIEW_NAV_GET_STARTED,
     },
     {
         path: '/wp-setup/step/top-priority',
@@ -314,9 +306,13 @@ export const routes = [...pages, ...steps];
  * @returns
  */
 export const initialTopSteps = () => {
-    const topSteps = filter(steps, (step) => {
+    let topSteps = filter(steps, (step) => {
         return !step.path.includes('/step/design');
     });
+
+    topSteps = filter(topSteps, (step) => {
+     return !step.path.includes('/step/get-started');
+    })
 
     const designStep = {
         /* This is a fake step to stand-in for all Design steps and does not have a Component to render */
@@ -327,7 +323,24 @@ export const initialTopSteps = () => {
         priority: 80 /* matches priority for first design step */,
     };
 
+    const getStartedStep = {
+     path: '/wp-setup/step/get-started/first-step',
+     title: __('Get Started', 'wp-module-onboarding'),
+     heading: __('Get Started', 'wp-module-onboarding'),
+     subheading: __(
+         'Make your website dreams a reality!',
+         'wp-module-onboarding'
+     ),
+     description: __(
+         "We'll use this to personalize this onboarding and future recommendations",
+         'wp-module-onboarding'
+     ),
+     Icon: home,
+     priority: 20,
+ }
+
     topSteps.push(designStep);
+    topSteps.push(getStartedStep);
 
     return orderBy(topSteps, ['priority'], ['asc']);
 };
@@ -344,14 +357,10 @@ export const initialDesignSteps = () => {
     return designSteps;
 };
 
-/**
- * Filter out all non-start-setup steps.
- * @returns
- */
- export const initialSetupSteps = () => {
-    const setupSteps = filter(steps, (step) => {
-        return step.path.includes('/step/get-started/');
-    });
+export const initialGetStartedSteps = () => {
+     const getStartedSteps = filter(steps, (step) => {
+          return step.path.includes('/step/get-started');
+     });
 
-    return setupSteps;
-};
+     return getStartedSteps;
+}

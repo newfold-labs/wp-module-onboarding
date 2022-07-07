@@ -51,21 +51,21 @@ export function getTopSteps(state) {
 }
 
 /**
- * Gets setup steps to display in drawer submenu.
- * @param {*} state
- * @returns
- */
- export function getSetupSteps(state) {
-	return state.flow.steps.setupSteps;
-}
-
-/**
  * Gets design steps to display in drawer submenu.
  * @param {*} state
  * @returns
  */
 export function getDesignSteps(state) {
 	return state.flow.steps.designSteps;
+}
+
+/**
+ * Gets get-started setup steps to display in drawer submenu.
+ * @param {*} state
+ * @returns
+ */
+export function getGetStartedSteps(state) {
+	return state.flow.steps.getStartedSteps;
 }
 
 /**
