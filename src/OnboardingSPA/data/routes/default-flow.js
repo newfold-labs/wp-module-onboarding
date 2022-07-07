@@ -94,16 +94,16 @@ export const pages = [
  */
 export const steps = [
     {
-        path: '/wp-setup/step/get-started/first-step',
-        title: __('First Step', 'wp-module-onboarding'),
+        path: '/wp-setup/step/get-started/welcome',
+        title: __('Welcome', 'wp-module-onboarding'),
         Component: StepGetStarted,
         Icon: home,
         priority: 20,
         VIEW: VIEW_NAV_GET_STARTED,
     },
     {
-        path: '/wp-setup/step/get-started/start-setup-experience',
-        title: __('Start Setup Experience', 'wp-module-onboarding'),
+        path: '/wp-setup/step/get-started/experience',
+        title: __('WordPress Experience', 'wp-module-onboarding'),
         Component: StepStartSetupExperience,
         Icon: home,
         priority: 30,
@@ -324,7 +324,7 @@ export const initialTopSteps = () => {
     };
 
     const getStartedStep = {
-     path: '/wp-setup/step/get-started/first-step',
+     path: '/wp-setup/step/get-started/welcome',
      title: __('Get Started', 'wp-module-onboarding'),
      heading: __('Get Started', 'wp-module-onboarding'),
      subheading: __(

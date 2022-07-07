@@ -22,7 +22,7 @@ const StartSetupExperience = () => {
 	const navigate = useNavigate();
     const [flowData, setFlowData] = useState();
     const [isLoaded, setisLoaded] = useState(false);
-    const [debouncedFlowData, setDebouncedFlowData] = useState();
+    // const [debouncedFlowData, setDebouncedFlowData] = useState();
     const [wpComfortLevel, setWpComfortLevel] = useState(5);
 
 	const { setDrawerActiveView, setIsDrawerOpened } =
@@ -34,7 +34,10 @@ const StartSetupExperience = () => {
 	}, []);
 
 	function setDefaultData() {
+		console.log(flowData?.body);
         if(isLoaded) {
+			console.log('isLoaded');
+			console.log(flowData?.body?.data['wpComfortLevel']);
             setWpComfortLevel(flowData?.body?.data['wpComfortLevel']);
         }
     }
@@ -45,32 +48,24 @@ const StartSetupExperience = () => {
                 "wpComfortLevel": wpComfortLevel,
             }
         }
-		console.log(dataToSave);
+		// console.log(dataToSave);
         return dataToSave;
     }
 	
 	useEffect(() => {
 		async function getFlowData() {
 			const data = await getFlow();
+			// setWpComfortLevel();
 			setFlowData(data);
-			setDebouncedFlowData(flowData);
 			setisLoaded(true);
+			console.log(flowData?.body?.data);
 		}
 		if (!isLoaded) {
 			getFlowData();
 		setDefaultData();
 		}
-	}, [isLoaded]);
+	}, [wpComfortLevel]);
 
-	useEffect(() => {
-        const timerId = setTimeout(() => {
-            setDebouncedFlowData(createSaveData());
-        }, 600);
-
-        return () => {
-            clearTimeout(timerId);
-        };
-    }, [wpComfortLevel]);
 
     const handleClick = () => {
         navigate('/wp-setup/step/top-priority');
@@ -78,12 +73,16 @@ const StartSetupExperience = () => {
 
 	useEffect(() => {
         const saveData = async () => {
-            const result = await setFlow(debouncedFlowData);
+            const result = await setFlow(createSaveData());
             setFlowData(result);
+			setisLoaded(true);
+			console.log(result);
         };
-        if (debouncedFlowData) saveData();
-    }, [debouncedFlowData]);
+        if (isLoaded) saveData();
+    }, [wpComfortLevel]);
  
+	// console.log(wpComfortLevel);
+
     return (    
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard>
