@@ -30,7 +30,7 @@ final class Flows {
 				'referTo' => 'site',
 			),
 
-			'wpComfortLevel'  => 5,
+			'wpComfortLevel'  => 0,
 
 			// Enums: `publishing`, `designing`, `selling`, 'migrating', 'regenerate' and 'skip'
 			'topPriority'     => array(

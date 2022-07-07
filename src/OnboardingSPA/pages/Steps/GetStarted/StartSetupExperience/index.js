@@ -20,9 +20,7 @@ import { getFlow, setFlow } from '../../../../utils/api/flow';
 
 const StartSetupExperience = () => {
 	const navigate = useNavigate();
-    const [flowData, setFlowData] = useState();
     const [isLoaded, setisLoaded] = useState(false);
-    // const [debouncedFlowData, setDebouncedFlowData] = useState();
     const [wpComfortLevel, setWpComfortLevel] = useState(5);
 
 	const { setDrawerActiveView, setIsDrawerOpened } =
@@ -33,38 +31,25 @@ const StartSetupExperience = () => {
 		setDrawerActiveView(VIEW_NAV_GET_STARTED);
 	}, []);
 
-	function setDefaultData() {
-		console.log(flowData?.body);
-        if(isLoaded) {
-			console.log('isLoaded');
-			console.log(flowData?.body?.data['wpComfortLevel']);
-            setWpComfortLevel(flowData?.body?.data['wpComfortLevel']);
-        }
-    }
-
     function createSaveData() {
         const dataToSave = {
             "data": {
                 "wpComfortLevel": wpComfortLevel,
             }
         }
-		// console.log(dataToSave);
         return dataToSave;
     }
 	
 	useEffect(() => {
 		async function getFlowData() {
 			const data = await getFlow();
-			// setWpComfortLevel();
-			setFlowData(data);
+			setWpComfortLevel(data?.body?.data['wpComfortLevel']);
 			setisLoaded(true);
-			console.log(flowData?.body?.data);
 		}
 		if (!isLoaded) {
 			getFlowData();
-		setDefaultData();
 		}
-	}, [wpComfortLevel]);
+	}, [isLoaded]);
 
 
     const handleClick = () => {
@@ -74,15 +59,11 @@ const StartSetupExperience = () => {
 	useEffect(() => {
         const saveData = async () => {
             const result = await setFlow(createSaveData());
-            setFlowData(result);
-			setisLoaded(true);
-			console.log(result);
         };
-        if (isLoaded) saveData();
+		if(isLoaded)
+			saveData();
     }, [wpComfortLevel]);
  
-	// console.log(wpComfortLevel);
-
     return (    
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard>
@@ -104,7 +85,7 @@ const StartSetupExperience = () => {
 					onChange={ ( value ) => setWpComfortLevel( value ) }
 					/>
 					<div className="nfd-steps-card-large-button">
-						<Button text={content.buttonText} disabled={!wpComfortLevel} handleClick={handleClick}/>
+						<Button text={content.buttonText} disabled={wpComfortLevel =='0'} handleClick={handleClick}/>
 					</div>
 					<GenericHtml content={content.needHelpText}/> 
 				</div>
