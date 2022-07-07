@@ -21,15 +21,14 @@ $checkbox-border: #EFEFEF;
         justify-content:start;
         padding: 1% 10%;
         color: $label-color;
-        font-style: italic;
         background: $checkbox-color;
         font-weight: 350;
-        font-size: clamp(0.6rem, 1vw, 1.2rem);
+        font-size: clamp(0.8rem, 1.5vw, 1.2rem);
         line-height: 4vh;
         margin: 0.5vh;
         white-space: nowrap;
         @media (max-width: 650px) {
-            width: 32vw;
+            width: 25vw;
         }
       }
       

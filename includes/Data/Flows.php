@@ -90,8 +90,6 @@ final class Flows {
 
 		'isFirstNFDOnboarding' => true,
 
-		'wpComfortLevel'       => 3,
-
 		// This is the common label like 'personal blog', 'restaurant', 'dentist'
 		'siteType'             => 'blog',
 

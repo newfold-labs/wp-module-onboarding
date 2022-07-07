@@ -23,6 +23,7 @@ import {
     VIEW_DESIGN_THEMES,
     VIEW_DESIGN_THEME_STYLES,
     VIEW_DESIGN_TYPOGRAPHY,
+    VIEW_START_SETUP_EXPERIENCE,
 } from '../../../constants';
 
 /**
@@ -114,6 +115,7 @@ export const steps = [
         Component: StepStartSetupExperience,
         Icon: home,
         priority: 30,
+        VIEW: VIEW_START_SETUP_EXPERIENCE,
     },
     {
         path: '/wp-setup/step/top-priority',
