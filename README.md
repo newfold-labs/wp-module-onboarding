@@ -15,10 +15,10 @@ Next-generation WordPress Onboarding for WordPress sites at Newfold Digital.
  composer config repositories.bluehost composer https://bluehost.github.io/satis
  ```
 
-### 2. Require the `newfold/wp-module-onboarding` package.
+### 2. Require the `newfold-labs/wp-module-onboarding` package.
 
  ```bash
- composer require newfold/newfold-wp-module-wp-module-onboarding
+ composer require newfold-labs/wp-module-onboarding
  ```
 
 ## Usage
