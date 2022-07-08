@@ -91,7 +91,7 @@ final class WP_Admin {
             \wp_register_style(
                 self::$slug,
                 NFD_ONBOARDING_BUILD_URL . '/onboarding.css',
-                array('wp-components'),
+                array( 'wp-components', 'wp-editor' ),
                 $asset['version']
             );
 

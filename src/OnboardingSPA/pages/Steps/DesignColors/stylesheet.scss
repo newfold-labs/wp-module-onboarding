@@ -1,0 +1,11 @@
+.live-preview {
+     &__container {
+          &-custom {
+               width: 70%;
+               height: 70%;
+               max-width: 1200px;
+               max-height: 1200px;
+               overflow: auto;
+          }
+     }
+}
