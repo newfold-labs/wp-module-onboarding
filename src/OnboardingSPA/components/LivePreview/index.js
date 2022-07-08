@@ -19,10 +19,6 @@ import { store as nfdOnboardingStore } from '../../store';
  * Renders themed WordPress block grammer.
  * [Note] Please do not remove any commented code, this will be used later to update our preview
  *
- * @param             root0
- * @param             root0.blockGrammer
- * @param             root0.viewportWidth
- * @param             root0.styling
  * @property {string} blockGrammer        WordPress block grammer.
  * @property {number} viewportWidth       Set viewport width for the AutoHeightBlockPreview component.
  * @property {string} styling             The type of styling to be applied (small, large, custom).
