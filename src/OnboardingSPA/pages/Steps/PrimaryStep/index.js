@@ -27,16 +27,16 @@ const StepPrimarySetup = () => {
 			<NewfoldLargeCard>
           <div className="nfd-card-heading center">
             <CardHeader 
-              heading={__(content.cardHeading)} 
-              subHeading={__(content.subHeading)}
-              question={__(content.question)}
+              heading={__(content.cardHeading, 'wp-module-onboarding')} 
+              subHeading={__(content.subHeading, 'wp-module-onboarding')}
+              question={__(content.question, 'wp-module-onboarding')}
               />
           </div>
           <div className="nfd-card-button-wrapper">
-            <Button text={__(content.buttonText)} handleClick={handleClick}/>
+            <Button text={__(content.buttonText, 'wp-module-onboarding')} handleClick={handleClick}/>
           </div>
 
-          <GenericHtml content={__(content.needHelpText)}/>
+          <GenericHtml content={__(content.needHelpText, 'wp-module-onboarding')}/>
       </NewfoldLargeCard>
 		</CommonLayout>
 	);
