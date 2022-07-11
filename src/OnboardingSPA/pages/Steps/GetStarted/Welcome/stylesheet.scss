@@ -1,0 +1,90 @@
+.nfd-onboarding-overview {
+    width: 100%;
+    max-width: 960px;
+    background-color: var(--nfd-onboarding-light);
+    padding: 20px;
+    &__header {
+        display: flex;
+        align-items: center;
+        column-gap: 1rem;
+        &-icon {
+            display: flex;
+            place-items: center;
+            svg {
+                fill: var(--nfd-onboarding-primary);
+            }
+        }
+        &-heading {
+            margin: 0 0 6px 0;
+            color: var(--nfd-onboarding-dark);
+        }
+        &-subheading {
+            color: var(--nfd-onboarding-dark);
+        }
+    }
+
+    &__tab-panel {
+        width: 85%;
+        color: var(--nfd-onboarding-dark);
+    }
+}
+
+.nfd-step-card-subheading {
+    display: flex;
+    justify-content: space-around;
+}
+
+.components-tab-panel__tabs {
+    justify-content: space-around;
+}
+
+.components-tab-panel__tabs-item {
+    justify-content: space-around;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.tab-one, .tab-two, .tab-three{
+    width: 100%;
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-around;
+}
+
+.content-text{
+    padding: 10px;
+}
+
+.content-img{
+    background-image: url(../static/images/content.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 150px;
+    width: 350px;
+}
+
+.features-img{
+    background-image: url(../static/images/features.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 150px;
+    width: 350px;
+}
+
+.design-img{
+    background-image: url(../static/images/design.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 150px;
+    width: 350px;
+}
+
+.welcome-card {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+    width: 100%;
+}

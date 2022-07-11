@@ -59,6 +59,10 @@ export function getDesignSteps(state) {
 	return state.flow.steps.designSteps;
 }
 
+export function getGetStartedSteps(state) {
+	return state.flow.steps.getStartedSteps;
+}
+
 /**
  * Get the path to the current step.
  *
