@@ -278,21 +278,21 @@ export const steps = [
         priority: 220,
     },
     {
-        path: '/wp-setup/step/start-setup',
-        title: __('Start Setup', 'wp-module-onboarding'),
-        heading: __('How else can we help?', 'wp-module-onboarding'),
-        subheading: __(
-            "We've got the basics setup, but we can help with any next steps.",
-            'wp-module-onboarding'
-        ),
-        description: __(
-            "Setup more of your site, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
-            'wp-module-onboarding'
-        ),
-        Component: StepPrimarySetup,
-        Icon: moveTo,
-        priority: 240,
-    },
+      path: '/wp-setup/step/start-setup',
+      title: __('Start Setup', 'wp-module-onboarding'),
+      heading: __('How else can we help?', 'wp-module-onboarding'),
+      subheading: __(
+          "We've got the basics setup, but we can help with any next steps.",
+          'wp-module-onboarding'
+      ),
+      description: __(
+          "Setup more of your site, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
+          'wp-module-onboarding'
+      ),
+      Component: StepPrimarySetup,
+      Icon: moveTo,
+      priority: 240,
+  },
 ];
 
 /**

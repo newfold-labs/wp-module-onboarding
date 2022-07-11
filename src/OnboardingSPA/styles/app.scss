@@ -20,7 +20,6 @@
 @import "../pages/Steps/GetStarted/Welcome/stylesheet.scss";
 
 .nfd-onboarding-container {
-
 	display: flex;
 	background-color: $white;
 
@@ -36,5 +35,4 @@
 	@include break-medium {
 		min-height: calc(100vh - #{$admin-bar-height});
 	}
-
 }
