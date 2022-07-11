@@ -3,9 +3,9 @@
  * Pass any HTML which we want as is to display on the UI
  * Uses dangeroulsySetInnerHTML of React
  * @param content
- * @returns GenericText
+ * @returns GenericHtml
  */
-const GenericText = ({content}) => {
+const GenericHtml = ({content}) => {
 	return (
     <section class="nfd-card-generic-text">
       <div dangerouslySetInnerHTML={{ __html: content }} />
@@ -13,4 +13,4 @@ const GenericText = ({content}) => {
 	);
 };
 
-export default GenericText;
+export default GenericHtml;

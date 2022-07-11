@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n';
 import CommonLayout from '../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../components/NewfoldLargeCard';
 import { VIEW_NAV_PRIMARY } from '../../../../constants';
@@ -26,16 +27,16 @@ const StepPrimarySetup = () => {
 			<NewfoldLargeCard>
           <div className="nfd-card-heading center">
             <CardHeader 
-              heading={content.cardHeading} 
-              subHeading={content.subHeading}
-              question={content.question}
+              heading={__(content.cardHeading, 'wp-module-onboarding')} 
+              subHeading={__(content.subHeading, 'wp-module-onboarding')}
+              question={__(content.question, 'wp-module-onboarding')}
               />
           </div>
           <div className="nfd-card-button-wrapper">
-            <Button text={content.buttonText} handleClick={handleClick}/>
+            <Button text={__(content.buttonText, 'wp-module-onboarding')} handleClick={handleClick}/>
           </div>
 
-          <GenericHtml content={content.needHelpText}/>
+          <GenericHtml content={__(content.needHelpText, 'wp-module-onboarding')}/>
       </NewfoldLargeCard>
 		</CommonLayout>
 	);

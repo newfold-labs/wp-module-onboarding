@@ -16,7 +16,8 @@ const Button = ({text, handleClick, disabled}) => {
         type="button" 
         className="nfd-steps-card-large-button" 
         onClick={handleBtnClick}
-        disabled={disabled}>
+        disabled={disabled}
+      >
       {text}
     </button>
 
