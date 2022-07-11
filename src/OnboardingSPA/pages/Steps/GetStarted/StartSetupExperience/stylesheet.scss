@@ -18,7 +18,7 @@ $checkbox-border: #EFEFEF;
         height: 4vh;
         border: 1px solid $checkbox-border;
         display: flex;
-        justify-content:start;
+        justify-content: flex-start;
         padding: 1% 10%;
         color: $label-color;
         background: $checkbox-color;
