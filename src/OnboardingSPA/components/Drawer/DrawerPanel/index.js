@@ -21,7 +21,7 @@ import DesignThemes from './DesignThemes';
 import DesignTypography from './DesignTypography';
 import { ESCAPE } from '@wordpress/keycodes';
 import NavDesign from './NavDesign';
-import NavGetStarted from './NavGetStarted'
+import NavGetStarted from './NavGetStarted';
 import NavPage from './NavPage';
 import NavPrimary from './NavPrimary';
 import { __ } from '@wordpress/i18n';
@@ -40,8 +40,9 @@ const DrawerPanel = ({ isOpen }) => {
 		};
 	}, []);
 
-	const { setIsDrawerOpened, setDrawerActiveView } =
-		useDispatch(nfdOnboardingStore);
+	const { setIsDrawerOpened, setDrawerActiveView } = useDispatch(
+		nfdOnboardingStore
+	);
 
 	const closeOnEscape = (event) => {
 		if (event.keyCode === ESCAPE && !event.defaultPrevented) {
@@ -74,22 +75,6 @@ const DrawerPanel = ({ isOpen }) => {
 		);
 	};
 
-	const WithGetStartedBack = ({ children }) => {
-		return (
-			<div className="is-drawer-fade">
-				<Button
-					className="nfd-onboarding-drawer__panel-back"
-					variant="tertiary"
-					icon={chevronLeft}
-					onClick={() => setDrawerActiveView(VIEW_NAV_GET_STARTED)}
-				>
-					{__('Get Started', 'wp-module-onboarding')}
-				</Button>
-				{children}
-			</div>
-		);
-	};
-
 	return (
 		<div
 			className={classNames(`nfd-onboarding-drawer__panel`, {
@@ -107,7 +92,9 @@ const DrawerPanel = ({ isOpen }) => {
 					<div className="nfd-onboarding-drawer__panel-inside">
 						{VIEW_NAV_PRIMARY === drawerView && <NavPrimary />}
 						{VIEW_NAV_DESIGN === drawerView && <NavDesign />}
-						{VIEW_NAV_GET_STARTED === drawerView && <NavGetStarted />}
+						{VIEW_NAV_GET_STARTED === drawerView && (
+							<NavGetStarted />
+						)}
 						{VIEW_NAV_PAGE === drawerView && <NavPage />}
 						{VIEW_DESIGN_THEMES === drawerView && (
 							<WithDesignBack>
