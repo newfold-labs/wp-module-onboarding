@@ -30,7 +30,7 @@ final class Data {
 	 */
 	public static function current_brand() {
 
-		$brand = \get_option( 'mm_brand', 'newfold' );
+		$brand = \get_option( Options::get_option_name( 'brand', false ), 'newfold' );
 		// This case arises when the option mm_brand exists but has an empty string as it's value.
 		if ( empty( $brand ) ) {
 			$brand = 'newfold';
