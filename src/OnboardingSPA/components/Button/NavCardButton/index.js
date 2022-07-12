@@ -4,10 +4,9 @@ import { store as nfdOnboardingStore } from '../../../store';
 import Button from '../../Button';
 
 /**
- * Common Button Component
- * Different variants can be added later based on our requirements
+ * Navigation Button Component on Card
  *
- * @return Button
+ * @returns
  */
 
 const NavCardButton = ({ text, disabled }) => {
@@ -29,8 +28,8 @@ const NavCardButton = ({ text, disabled }) => {
 
 	return (
 		<Button
-            className='nfd-nav-card-button'
-            text={text}
+			className="nfd-nav-card-button"
+			text={text}
 			handleClick={handleBtnClick}
 			disabled={disabled}
 		/>

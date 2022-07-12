@@ -71,14 +71,12 @@ const StartSetupExperience = () => {
 					<RadioControl
 						className="nfd-onboarding-experience-step-tabs components-radio-control__input"
 						selected={wpComfortLevel}
-						options={					
-							content.options.map(( option ) => {
-								return {
-									label: __(option.content), 
-									value: __(option.value),
-								}
-							})
-						}
+						options={content.options.map((option) => {
+							return {
+								label: __(option.content),
+								value: __(option.value),
+							};
+						})}
 						onChange={(value) => setWpComfortLevel(value)}
 					/>
 					<NavCardButton
