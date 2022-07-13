@@ -7,13 +7,16 @@
 @import "../components/Header/stylesheet.scss";
 @import "../components/Content/stylesheet.scss";
 @import "../components/Layouts/stylesheet.scss";
-@import "../components//ExitToWordPress/stylesheet.scss";
+@import "../components/ExitToWordPress/stylesheet.scss";
 @import "../components/Accordion/stylesheet.scss";
 @import "../components/StepOverview/stylesheet.scss";
 @import "../components/NewfoldLargeCard/stylesheet.scss";
 @import "../components/Button/stylesheet.scss";
 @import "../components/CardHeader/stylesheet.scss";
 @import "../components/GenericHtml/stylesheet.scss";
+@import "../components/Sidebar/stylesheet.scss";
+
+@import "../components/Sidebar/components/LearnMore/stylesheet.scss";
 
 .nfd-onboarding-container {
 	display: flex;

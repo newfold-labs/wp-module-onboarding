@@ -1,9 +1,3 @@
-import { constrols, dispatch } from '@wordpress/data';
-
-import { STORE_NAME } from './constants';
-import { store as interfaceStore } from '@wordpress/interface';
-import { store as noticesStore } from '@wordpress/notices';
-
 /**
  * Receives `window.nfdOnboarding` and sets migrated: true.
  *
@@ -53,7 +47,7 @@ export function setIsDrawerOpened(isOpen) {
  * @param {*} path
  * @returns
  */
-export function setActiveFlow(flow) {
+export function setActiveFlow( flow ) {
 	return {
 		type: 'SET_ACTIVE_FLOW',
 		flow,
@@ -85,5 +79,19 @@ export function updateSettings(settings) {
 	return {
 		type: 'UPDATE_SETTINGS',
 		settings,
+	};
+}
+
+export function setIsSidebarOpened( isOpen ) {
+	return {
+		type: 'SET_SIDEBAR_OPENED',
+		isOpen,
+	};
+}
+
+export function setSidebarActiveView( view ) {
+	return {
+		type: 'SET_SIDEBAR_ACTIVE_VIEW',
+		view,
 	};
 }

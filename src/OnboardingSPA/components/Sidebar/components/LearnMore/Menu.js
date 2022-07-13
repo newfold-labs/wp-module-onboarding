@@ -1,0 +1,47 @@
+import { Fill, Button } from '@wordpress/components';
+import { info } from '@wordpress/icons';
+import { useDispatch, useSelect } from '@wordpress/data';
+
+import { store as nfdOnboardingStore } from '../../../../store';
+import {
+	SIDEBAR_LEARN_MORE,
+	SIDEBAR_MENU_SLOTFILL_PREFIX,
+} from '../../../../../constants';
+import classNames from 'classnames';
+
+const LearnMoreMenu = () => {
+	const { isSidebarOpened, sideBarView } = useSelect( ( select ) => {
+		return {
+			isSidebarOpened: select( nfdOnboardingStore ).isSidebarOpened(),
+			sideBarView: select( nfdOnboardingStore ).getSidebarView(),
+		};
+	} );
+
+	const { setIsSidebarOpened, setSidebarActiveView } =
+		useDispatch( nfdOnboardingStore );
+	const toggleSidebar = () => {
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
+		setIsSidebarOpened(
+			sideBarView === SIDEBAR_LEARN_MORE
+				? ! isSidebarOpened
+				: isSidebarOpened
+		);
+	};
+
+	return (
+		<Fill
+			name={ `${ SIDEBAR_MENU_SLOTFILL_PREFIX }/${ SIDEBAR_LEARN_MORE }` }
+		>
+			<Button
+				className={ classNames( 'nfd-onboarding-sidebar-learn-more__menu-button', {
+					'is-pressed':
+						isSidebarOpened && sideBarView === SIDEBAR_LEARN_MORE,
+				} ) }
+				onClick={ toggleSidebar }
+				icon={ info }
+			></Button>
+		</Fill>
+	);
+};
+
+export default LearnMoreMenu;
