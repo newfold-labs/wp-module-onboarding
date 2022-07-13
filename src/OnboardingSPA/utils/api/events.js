@@ -15,6 +15,8 @@ class Event {
                     slug: this.eventSlug,
                     data: this.eventData
                }
+          }).catch((error) => {
+               console.error(error)
           })
      }
 }

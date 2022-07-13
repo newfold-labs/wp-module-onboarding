@@ -45,5 +45,14 @@ final class Permissions {
 			   \current_user_can( Permissions::EDIT_THEMES );
 	}
 
+	/**
+	 * Confirm whether user has ADMIN user and edit_post capabilities for creating pages.
+	 *
+	 * @return boolean
+	 */
+	public static function custom_post_authorized_admin() {
+		return \current_user_can('edit_posts') && \current_user_can(Permissions::ADMIN);
+	}
+
 } // END \NewfoldLabs\WP\Module\Onboarding\Permissions()
 
