@@ -11,6 +11,7 @@ $border: #D6D6D6;
         display: flex;
         cursor: pointer;
         align-items: center;
+        padding-left: 6px;
         padding-bottom: 12px;
         justify-content: space-between;
 
@@ -36,8 +37,9 @@ $border: #D6D6D6;
 
     &__label{
         display: flex;
-        padding-top: 12px;
-        padding-bottom: 6px;
+        padding-top: 10px;
+        padding-left: 6px;
+        padding-bottom: 3px;
         align-items: center;
         justify-content: flex-start;
         
@@ -58,8 +60,12 @@ $border: #D6D6D6;
 
     &__box {
         width: 95%;
-        border-radius: 2px;
-        margin: 6px 12px 0px 8px;
-        border: 1px solid $border;
+        margin: 6px 12px 10px 8px;
+    }
+
+    &__box-error {
+        width: 95%;
+        margin: 6px 12px 10px 8px;
+        background-color: rgba(255, 0, 0, 0.18) !important;
     }
 }
