@@ -13,12 +13,12 @@ import { getFlow, setFlow } from '../../../../utils/api/flow';
 import { __ } from '@wordpress/i18n';
 
 /**
- * Start Setup: WordPress Experience Comfort Level.
+ * Get Started: WordPress Experience Comfort Level.
  *
  * @return
  */
 
-const StartSetupExperience = () => {
+const GetStartedExperience = () => {
 	const [isLoaded, setisLoaded] = useState(false);
 	const [wpComfortLevel, setWpComfortLevel] = useState();
 
@@ -90,4 +90,4 @@ const StartSetupExperience = () => {
 	);
 };
 
-export default StartSetupExperience;
+export default GetStartedExperience;

@@ -56,8 +56,8 @@ const StepDesignHeaderMenu = lazy(() =>
 const StepSitePages = lazy(() => import('../../pages/Steps/SitePages'));
 const StepSiteFeatures = lazy(() => import('../../pages/Steps/SiteFeatures'));
 const StepWhatNext = lazy(() => import('../../pages/Steps/WhatNext'));
-const StepStartSetupExperience = lazy(() =>
-	import('../../pages/Steps/GetStarted/StartSetupExperience')
+const StepGetStartedExperience = lazy(() =>
+	import('../../pages/Steps/GetStarted/GetStartedExperience')
 );
 const StepPrimarySetup = lazy(() => import('../../pages/Steps/PrimaryStep'));
 /**
@@ -106,7 +106,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/get-started/experience',
 		title: __('WordPress Experience', 'wp-module-onboarding'),
-		Component: StepStartSetupExperience,
+		Component: StepGetStartedExperience,
 		Icon: home,
 		priority: 30,
 		VIEW: VIEW_NAV_GET_STARTED,
