@@ -1,17 +1,21 @@
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
 .is-centered {
-    display: flex;
-    place-content: center;
-    place-items: center;
+	display: flex;
+	place-content: center;
+	place-items: center;
 }
 .is-bg-primary {
-    background-color: var(--nfd-onboarding-primary);
-    color: var(--nfd-onboarding-light);
+	background-color: var(--nfd-onboarding-primary);
+	color: var(--nfd-onboarding-light);
+}
+
+.center {
+	text-align: center;
 }

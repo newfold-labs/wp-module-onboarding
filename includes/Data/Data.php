@@ -30,7 +30,7 @@ final class Data {
 	 */
 	public static function current_brand() {
 
-		$brand = \get_option( 'mm_brand', 'newfold' );
+		$brand = \get_option( Options::get_option_name( 'brand', false ), 'newfold' );
 		// This case arises when the option mm_brand exists but has an empty string as it's value.
 		if ( empty( $brand ) ) {
 			$brand = 'newfold';
@@ -52,7 +52,7 @@ final class Data {
 	public static function current_plan() {
 		return 'shared';
 	}
-	
+
 	/**
 	 * Get the current onboarding flow.
 	 *
@@ -61,12 +61,15 @@ final class Data {
 	public static function current_flow() {
 		$flows = Flows::get_flows();
 
-		$current_flow_type = \sanitize_text_field( $_GET['flow'] );
-		if ( $current_flow_type !== '' && isset( $flows[ $current_flow_type ] ) ) {
+		if ( isset( $_GET['flow'] ) ) {
+			   $current_flow_type = \sanitize_text_field( $_GET['flow'] );
+		}
+
+		if ( ! empty( $current_flow_type ) && isset( $flows[ $current_flow_type ] ) ) {
 			return $current_flow_type;
 		}
 
-		$current_flow_type = \get_option( 'nfd_onboarding_flow_preset' );
+		$current_flow_type = \get_option( 'nfd_onboarding_flow_preset', false );
 		if ( $current_flow_type && isset( $flows[ $current_flow_type ] ) ) {
 			return $current_flow_type;
 		}

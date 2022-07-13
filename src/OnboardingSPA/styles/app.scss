@@ -1,6 +1,5 @@
 @import "wordpress";
 @import "interface";
-@import "icons";
 @import "branding";
 @import "utilities";
 
@@ -8,34 +7,28 @@
 @import "../components/Header/stylesheet.scss";
 @import "../components/Content/stylesheet.scss";
 @import "../components/Layouts/stylesheet.scss";
-@import "../components/MiniPreview/stylesheet.scss";
-@import "../components/Tooltip/stylesheet.scss";
-@import "../components/ImageUploader/stylesheet.scss";
-@import "../components/SocialMediaForm/stylesheet.scss";
-@import "../components/TextInput/stylesheet.scss";
 @import "../components//ExitToWordPress/stylesheet.scss";
 @import "../components/Accordion/stylesheet.scss";
 @import "../components/StepOverview/stylesheet.scss";
 @import "../components/NewfoldLargeCard/stylesheet.scss";
-
-@import "../pages/Steps/BasicInfo/stylesheet.scss";
+@import "../components/Button/stylesheet.scss";
+@import "../components/CardHeader/stylesheet.scss";
+@import "../components/GenericHtml/stylesheet.scss";
 
 .nfd-onboarding-container {
+	display: flex;
+	background-color: $white;
 
-    display: flex;
-    background-color: $white;
+	@include break-small {
+		bottom: 0;
+		left: 0;
+		min-height: calc(100vh - #{$admin-bar-height-big});
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
 
-    @include break-small {
-        bottom: 0;
-        left: 0;
-        min-height: calc(100vh - #{$admin-bar-height-big});
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-
-    @include break-medium {
-        min-height: calc(100vh - #{$admin-bar-height});
-    }
-
+	@include break-medium {
+		min-height: calc(100vh - #{$admin-bar-height});
+	}
 }
