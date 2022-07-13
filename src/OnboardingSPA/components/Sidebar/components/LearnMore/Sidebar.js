@@ -7,6 +7,7 @@ import {
 } from '@wordpress/components';
 import { Icon, closeSmall } from '@wordpress/icons';
 import { useDispatch, useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
 
 import { store as nfdOnboardingStore } from '../../../../store';
 import {
@@ -28,7 +29,7 @@ const LearnMoreSidebar = () => {
 	};
 	return (
 		<Fill name={ `${ SIDEBAR_SLOTFILL_PREFIX }/${ SIDEBAR_LEARN_MORE }` }>
-			<PanelHeader label="Learn More">
+			<PanelHeader label={ __( 'Learn More', 'wp-module-onboarding' ) }>
 				<Button onClick={ closeSideBar } icon={ closeSmall }></Button>
 			</PanelHeader>
 			<PanelBody initialOpen={ true }>
