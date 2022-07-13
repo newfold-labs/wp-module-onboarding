@@ -1,8 +1,11 @@
+import { useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
+
 import TextInput from '../../../components/TextInput';
 import SocialMediaForm from '../../../components/SocialMediaForm';
 import MiniPreview from '../../../components/MiniPreview';
 import ImageUploader from '../../../components/ImageUploader';
+import { store as nfdOnboardingStore } from '../../../store';
 
 import { getFlow, setFlow } from '../../../utils/api/flow';
 import { getSettings, setSettings } from '../../../utils/api/settings';
@@ -24,6 +27,8 @@ const BasicInfoForm = () => {
     const [siteLogo, setSiteLogo] = useState(0);
     const [isValidSocials, setIsValidSocials] = useState(false);
     const [socialData, setSocialData] = useState("");
+
+    const { setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
 
     function setDefaultData() {
         if(isLoaded) {
@@ -81,6 +86,7 @@ const BasicInfoForm = () => {
             else {
                 setFlowData(result);
                 setIsError(false);
+                setCurrentOnboardingData(result.body);
             }
         };
         if (debouncedFlowData) saveData();
