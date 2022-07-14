@@ -1,7 +1,11 @@
 .selectable_cards {
     gap: 1.5rem;
     width: 100%;
-    display: grid;
+    display: flex;
     justify-content: center;
-    grid-template-columns: repeat(auto-fit, 280px);
+
+    @media (max-width: #{ ($break-large) }) {
+        flex-direction: column;
+        align-items: center;
+    }
 }
