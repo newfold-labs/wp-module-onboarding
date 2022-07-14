@@ -7,6 +7,8 @@ import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import SelectableCardList from '../../../components/SelectableCardList/selectable-card-list';
 
+import { setFlow } from '../../../utils/api/flow';
+
 const StepTopPriority = (props) => {
 	var priorities = [{
 		icon: '--nfd-publish-icon', 
@@ -31,10 +33,26 @@ const StepTopPriority = (props) => {
 		}
 	}, []);
 
+	function createSaveData() {
+		const dataToSave = {
+			"data": {
+				"topPriority": {
+					"priority1": priorities[selected].title
+				}
+			}
+		}
+		return dataToSave;
+	}
+
+	useEffect(() => {
+		const saveData = async () => await setFlow(createSaveData());
+		if (selected) saveData();
+	}, [selected]);
+
 	return (
 		<CommonLayout isVerticallyCentered>
 			<HeadingWithSubHeading title="Tell us your top priority" subtitle="We’ll prioritize getting you there." isColoredSubheading="false" />
-			<SelectableCardList 
+			<SelectableCardList
 				contents={priorities}
 				selected={selected}
 				onSelectedChange={setSelected}>
