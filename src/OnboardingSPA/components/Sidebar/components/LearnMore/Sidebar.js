@@ -5,6 +5,7 @@ import {
 	PanelHeader,
 	Button,
 } from '@wordpress/components';
+import { Fragment, Suspense } from '@wordpress/element';
 import { Icon, closeSmall } from '@wordpress/icons';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
@@ -49,6 +50,21 @@ const LearnMoreSidebar = () => {
 					</div>
 				</PanelRow>
 			</PanelBody>
+			{ currentStep?.SidebarComponents?.LearnMore && (
+				<PanelBody initialOpen={ true }>
+					<Suspense fallback={ <Fragment /> }>
+						{ currentStep.SidebarComponents.LearnMore.map(
+							( SidebarComponent, index ) => {
+								return (
+									<Fragment key={ index }>
+										<SidebarComponent />
+									</Fragment>
+								);
+							}
+						) }
+					</Suspense>
+				</PanelBody>
+			) }
 		</Fill>
 	);
 };
