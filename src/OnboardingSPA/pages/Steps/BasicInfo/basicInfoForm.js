@@ -62,7 +62,18 @@ const BasicInfoForm = () => {
                 "socialData": "",
             }
         }
+        const socialSkippedData = {
+            "facebook_site": "",
+            "twitter_site": "",
+            "instagram_url": "",
+            "linkedin_url": "",
+            "twitter_site": "",
+            "youtube_url": "",
+            "other_social_urls": []
+        }
         const result = await setFlow(skippedData);
+        const socialResult = await setSettings(socialSkippedData);
+
         navigate('/wp-setup/step/design/themes');
     }
 
