@@ -8,7 +8,8 @@ class LoginRedirect {
 
 	public static function handle_redirect( $redirect, $redirect_to, $user ) {
 		$redirect_option_name = Options::get_option_name( 'redirect' );
-		if ( $_GET[ $redirect_option_name ] === 'false' ) {
+		if ( isset( $_GET[ $redirect_option_name ] )
+		  && $_GET[ $redirect_option_name ] === 'false' ) {
 			 self::disable_redirect();
 		}
 
