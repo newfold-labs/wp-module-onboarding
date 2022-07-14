@@ -11,11 +11,16 @@
 	place-content: center;
 	place-items: center;
 }
+.is-vertically-centered {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
 .is-bg-primary {
 	background-color: var(--nfd-onboarding-primary);
 	color: var(--nfd-onboarding-light);
 }
-
 .center {
 	text-align: center;
 }

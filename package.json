@@ -23,6 +23,8 @@
         "build": "wp-scripts build ./src/onboarding.js",
         "format": "wp-scripts format ./src",
         "start": "wp-scripts start ./src/onboarding.js",
+        "lint:js": "wp-scripts lint-js ./src",
+        "lint:js:fix": "wp-scripts lint-js ./src --fix",
         "test:e2e": "npx cypress run",
         "test:unit": "npx wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins//phpunit.xml --verbose'"
     },

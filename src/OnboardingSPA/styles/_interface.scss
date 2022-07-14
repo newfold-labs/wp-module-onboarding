@@ -21,8 +21,10 @@ body {
     --nfd-onboarding-icon: url('../../Brands/newfold/icon.svg');
     --nfd-onboarding-logo: url('../../Brands/newfold/logo.svg');
     --nfd-onboarding-primary: #dd5228;
-    --nfd-onboarding-dark: #1e2223;
     --nfd-onboarding-light: #f2f2f2; 
+    --nfd-onboarding-dark: #1e2223;
+    --nfd-onboarding-white: #ffffff;
+    --nfd-onboarding-black: #000000;
     --nfd-onboarding-header-bg: var(--nfd-onboarding-light);
     --nfd-onboarding-header-fg: var(--nfd-onboarding-dark);
     --nfd-onboarding-content-bg: var(--nfd-onboarding-light);

@@ -30,7 +30,7 @@ final class Flows {
 				'referTo' => 'site',
 			),
 
-			'wpComfortLevel'  => 5,
+			'wpComfortLevel'  => '0',
 
 			// Enums: `publishing`, `designing`, `selling`, 'migrating', 'regenerate' and 'skip'
 			'topPriority'     => array(
@@ -89,8 +89,6 @@ final class Flows {
 		'currentFlows'         => array(),
 
 		'isFirstNFDOnboarding' => true,
-
-		'wpComfortLevel'       => 3,
 
 		// This is the common label like 'personal blog', 'restaurant', 'dentist'
 		'siteType'             => 'blog',
