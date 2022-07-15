@@ -82,7 +82,6 @@ export function setActiveStep(path) {
  * @returns
  */
 export function setCurrentOnboardingData(currentData) {
-	console.log('Ran setCurrentOnboardingData: ', currentData);
 	return {
 		type: 'SET_CURRENT_DATA',
 		currentData,

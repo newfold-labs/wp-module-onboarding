@@ -29,7 +29,7 @@ const App = () => {
 		return {
 			isDrawerOpen: select(nfdOnboardingStore).isDrawerOpened(),
 			newfoldBrand: select(nfdOnboardingStore).getNewfoldBrand(),
-			onboardingFlow: select(nfdOnboardingStore).getOnbardingFlow(),
+			onboardingFlow: select(nfdOnboardingStore).getOnboardingFlow(),
 		};
 	}, []);
 

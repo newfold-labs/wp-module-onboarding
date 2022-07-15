@@ -1,5 +1,6 @@
 import './styles/app.scss';
 import { store as nfdOnboardingStore } from './store'; /* must import prior to App! */
+import { getFlow } from './utils/api/flow';
 
 import App from './components/App';
 import { HashRouter } from 'react-router-dom';
@@ -23,9 +24,12 @@ const NFDOnboarding = () => (
  * @param {string} id - Element ID to render into.
  * @param {object} runtime - Expects runtime data from window.nfdOnboarding.
  */
-export function initializeNFDOnboarding(id, runtime) {
+export async function initializeNFDOnboarding(id, runtime) {
 	const DOM_TARGET = document.getElementById(id);
 	dispatch(nfdOnboardingStore).setRuntime(runtime);
+	const currentData = await getFlow();
+	if(currentData.error == null)
+		dispatch(nfdOnboardingStore).setCurrentOnboardingData(currentData.body);
 
 	if (null !== DOM_TARGET && 'undefined' !== typeof render) {
 		render(<NFDOnboarding />, DOM_TARGET);
