@@ -1,4 +1,5 @@
 import { useDispatch } from '@wordpress/data';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from '@wordpress/element';
 
 import TextInput from '../../../components/TextInput';
@@ -16,6 +17,8 @@ import { getSettings, setSettings } from '../../../utils/api/settings';
  * @returns
  */
 const BasicInfoForm = () => {
+
+    const navigate = useNavigate();
 
     const [isError, setIsError] = useState(false);
     const [flowData, setFlowData] = useState();
@@ -49,6 +52,31 @@ const BasicInfoForm = () => {
         }
         return dataToSave;
     }
+
+    async function skipThisStep() {
+        const skippedData = {
+            "data": {
+                "siteLogo": 0,
+                "blogName": "",
+                "blogDescription": "",
+                "socialData": "",
+            }
+        }
+        const socialSkippedData = {
+            "facebook_site": "",
+            "twitter_site": "",
+            "instagram_url": "",
+            "linkedin_url": "",
+            "twitter_site": "",
+            "youtube_url": "",
+            "other_social_urls": []
+        }
+        const result = await setFlow(skippedData);
+        const socialResult = await setSettings(socialSkippedData);
+
+        navigate('/wp-setup/step/design/themes');
+    }
+
 
     useEffect(() => {
         async function getFlowData() {
@@ -108,6 +136,7 @@ const BasicInfoForm = () => {
                     <MiniPreview icon={siteLogo} title={siteTitle} desc={siteDesc} />
                 </div>
             </div>
+            <a onClick={(e) => skipThisStep()} style={{ padding: '10px', cursor: 'pointer' }}>Skip this step</a>
         </div>
     );
 };
