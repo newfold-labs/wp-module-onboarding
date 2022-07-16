@@ -1,4 +1,4 @@
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from '@wordpress/element';
 
@@ -8,7 +8,6 @@ import MiniPreview from '../../../components/MiniPreview';
 import ImageUploader from '../../../components/ImageUploader';
 import { store as nfdOnboardingStore } from '../../../store';
 
-import { getFlow, setFlow } from '../../../utils/api/flow';
 import { getSettings, setSettings } from '../../../utils/api/settings';
 
 /**
@@ -33,11 +32,18 @@ const BasicInfoForm = () => {
 
     const { setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
 
+    const { currentData } = useSelect((select) => {
+        return {
+            currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+        };
+    }, []);
+
     function setDefaultData() {
         if(isLoaded) {
-            setSiteLogo(flowData?.body?.data['siteLogo']);
-            setSiteTitle(flowData?.body?.data['blogName']);
-            setSiteDesc(flowData?.body?.data['blogDescription']);
+            console.log('flowData: ', flowData);
+            setSiteLogo(flowData?.data['siteLogo']);
+            setSiteTitle(flowData?.data['blogName']);
+            setSiteDesc(flowData?.data['blogDescription']);
         }
     }
 
@@ -54,36 +60,15 @@ const BasicInfoForm = () => {
     }
 
     async function skipThisStep() {
-        const skippedData = {
-            "data": {
-                "siteLogo": 0,
-                "blogName": "",
-                "blogDescription": "",
-                "socialData": "",
-            }
-        }
-        const socialSkippedData = {
-            "facebook_site": "",
-            "twitter_site": "",
-            "instagram_url": "",
-            "linkedin_url": "",
-            "twitter_site": "",
-            "youtube_url": "",
-            "other_social_urls": []
-        }
-        const result = await setFlow(skippedData);
-        const socialResult = await setSettings(socialSkippedData);
-
         navigate('/wp-setup/step/design/themes');
     }
 
 
     useEffect(() => {
         async function getFlowData() {
-            const data = await getFlow();
             const socialDataAPI = await getSettings();
             setSocialData(socialDataAPI.body);
-            setFlowData(data);
+            setFlowData(currentData);
             setDebouncedFlowData(flowData);
             setisLoaded(true);
         }
@@ -95,7 +80,8 @@ const BasicInfoForm = () => {
 
     useEffect(() => {
         const timerId = setTimeout(() => {
-            setDebouncedFlowData(createSaveData());
+            if (isLoaded)
+                setDebouncedFlowData(createSaveData());
         }, 600);
 
         return () => {
@@ -105,16 +91,13 @@ const BasicInfoForm = () => {
 
     useEffect(() => {
         const saveData = async () => {
-            const result = await setFlow(debouncedFlowData);
+            var currentDataCopy = currentData;
+            currentDataCopy.data['siteLogo'] = debouncedFlowData.data['siteLogo'] ?? currentDataCopy.data['siteLogo'];
+            currentDataCopy.data['blogName'] = debouncedFlowData.data['blogName'] ?? currentDataCopy.data['blogName'];
+            currentDataCopy.data['blogDescription'] = debouncedFlowData.data['blogDescription'] ?? currentDataCopy.data['blogDescription'];
+            setCurrentOnboardingData(currentDataCopy);
             if (isValidSocials) {
                 const socialResult = await setSettings(socialData);
-            }
-            if (result.error != null)
-                setIsError(true);
-            else {
-                setFlowData(result);
-                setIsError(false);
-                setCurrentOnboardingData(result.body);
             }
         };
         if (debouncedFlowData) saveData();
