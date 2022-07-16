@@ -4,7 +4,6 @@
  * @returns
  */
 const MiniPreview = ({ title, desc, icon }) => {
-    console.log('iconnn:', icon);
     var iconPreview = icon == "" || icon == undefined ? '--default-logo-icon' : icon;
     var titlePreview = title == "" ? 'Aurelia Shop' : title?.substring(0, 20);
     var descPreview = desc == "" ? 'Aurelia Shop sells customized jewelry inspired to the beauty of the Sea.' : desc;

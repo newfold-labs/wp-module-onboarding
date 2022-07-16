@@ -27,20 +27,19 @@ const BasicInfoForm = () => {
     const [siteTitle, setSiteTitle] = useState("");
     const [siteDesc, setSiteDesc] = useState("");
     const [siteLogo, setSiteLogo] = useState(0);
-    const [isValidSocials, setIsValidSocials] = useState(false);
     const [socialData, setSocialData] = useState("");
+    const [isValidSocials, setIsValidSocials] = useState(false);
 
     const { setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
 
     const { currentData } = useSelect((select) => {
         return {
-            currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+            currentData: select(nfdOnboardingStore).getCurrentOnboardingData()
         };
     }, []);
 
     function setDefaultData() {
         if(isLoaded) {
-            console.log('flowData: ', flowData);
             setSiteLogo(flowData?.data['siteLogo']);
             setSiteTitle(flowData?.data['blogName']);
             setSiteDesc(flowData?.data['blogDescription']);
@@ -59,7 +58,7 @@ const BasicInfoForm = () => {
         return dataToSave;
     }
 
-    async function skipThisStep() {
+    function skipThisStep() {
         navigate('/wp-setup/step/design/themes');
     }
 
@@ -95,7 +94,9 @@ const BasicInfoForm = () => {
             currentDataCopy.data['siteLogo'] = debouncedFlowData.data['siteLogo'] ?? currentDataCopy.data['siteLogo'];
             currentDataCopy.data['blogName'] = debouncedFlowData.data['blogName'] ?? currentDataCopy.data['blogName'];
             currentDataCopy.data['blogDescription'] = debouncedFlowData.data['blogDescription'] ?? currentDataCopy.data['blogDescription'];
+            currentDataCopy.data['socialData'] = debouncedFlowData.data['socialData'] ?? currentDataCopy.data['socialData'];
             setCurrentOnboardingData(currentDataCopy);
+
             if (isValidSocials) {
                 const socialResult = await setSettings(socialData);
             }
