@@ -1,16 +1,21 @@
-import { store as nfdOnboardingStore } from '../../../store';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 import { useViewportMatch } from '@wordpress/compose';
 
+import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import SelectableCardList from '../../../components/SelectableCardList/selectable-card-list';
 
-import { setFlow } from '../../../utils/api/flow';
-
 const StepTopPriority = (props) => {
-	var priorities = [{
+
+	const priorityTypes = {
+		"0": "publishing",
+		"1": "selling",
+		"2": "designing"
+	};
+
+	const priorities = [{
 		icon: '--nfd-publish-icon', 
 		title: "Publishing",
 		desc: "From blogs, to newsletters, to\npodcasts and videos, we help the web\nfind your content."
@@ -23,9 +28,27 @@ const StepTopPriority = (props) => {
 		title: "Designing",
 		desc: "With smart style presets and\npowerful options, we help your site\nlook and feel polished."
 	}];
+
 	const [selected, setSelected] = useState(0);
+	const [isLoaded, setisLoaded] = useState(false);
 	const isLargeViewport = useViewportMatch('medium');
+
 	const { setIsDrawerOpened } = useDispatch(nfdOnboardingStore);
+	const { setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
+
+	const { currentData } = useSelect((select) => {
+		return {
+			currentData: select(nfdOnboardingStore).getCurrentOnboardingData()
+		};
+	}, []);
+
+	Object.prototype.getKey = function (value) {
+		var object = this;
+		if(object)
+			return Object?.keys(object).find(key => object[key] === value);
+		else
+			return 0;
+	};
 
 	useEffect(() => {
 		if (isLargeViewport) {
@@ -33,20 +56,30 @@ const StepTopPriority = (props) => {
 		}
 	}, []);
 
-	function createSaveData() {
-		const dataToSave = {
-			"data": {
-				"topPriority": {
-					"priority1": priorities[selected].title
+	useEffect(() => {
+		async function getFlowData() {
+			if(currentData){
+				const val = await currentData?.data["topPriority"]["priority1"];
+				if (val != "")
+					setSelected(parseInt(priorityTypes.getKey(val)));
+				else{
+					currentData.data["topPriority"]["priority1"] = priorityTypes[selected];
+					setCurrentOnboardingData(currentData);
 				}
 			}
+			setisLoaded(true);
 		}
-		return dataToSave;
-	}
+		if (!isLoaded)
+			getFlowData();
+
+	}, [isLoaded]);
+
 
 	useEffect(() => {
-		const saveData = async () => await setFlow(createSaveData());
-		if (selected) saveData();
+		if (isLoaded){
+			currentData.data["topPriority"]["priority1"] = priorityTypes[selected];
+			setCurrentOnboardingData(currentData);
+		}
 	}, [selected]);
 
 	return (
