@@ -26,6 +26,8 @@
 
 // CSS for Pages
 @import "../pages/Steps/BasicInfo/stylesheet.scss";
+@import "../pages/Steps/GetStarted/PrimaryStep/stylesheet.scss";
+@import "../pages/Steps/GetStarted/SecondaryStep/stylesheet.scss";
 
 .nfd-onboarding-container {
 	display: flex;

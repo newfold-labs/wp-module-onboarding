@@ -59,7 +59,9 @@ const StepWhatNext = lazy(() => import('../../pages/Steps/WhatNext'));
 const StepGetStartedExperience = lazy(() =>
 	import('../../pages/Steps/GetStarted/GetStartedExperience')
 );
-const StepPrimarySetup = lazy(() => import('../../pages/Steps/PrimaryStep'));
+const StepPrimarySetup = lazy(() => import('../../pages/Steps/GetStarted/PrimaryStep'));
+const StepSecondarySetup = lazy(() => import('../../pages/Steps/GetStarted/SecondaryStep'));
+
 /**
  * All information pages should be prefixed with `/page`.
  *
@@ -278,6 +280,38 @@ export const steps = [
 		Component: StepWhatNext,
 		Icon: moveTo,
 		priority: 220,
+	},
+  {
+		path: '/wp-setup/step/get-started/site-primary',
+		title: __('What Next', 'wp-module-onboarding'),
+		heading: __('How else can we help?', 'wp-module-onboarding'),
+		subheading: __(
+			"We've got the basics setup, but we can help with any next steps.",
+			'wp-module-onboarding'
+		),
+		description: __(
+			"Setup more of your site, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
+			'wp-module-onboarding'
+		),
+		Component: StepPrimarySetup,
+		Icon: moveTo,
+		priority: 240,
+	},
+  {
+		path: '/wp-setup/step/get-started/site-secondary',
+		title: __('What Next', 'wp-module-onboarding'),
+		heading: __('How else can we help?', 'wp-module-onboarding'),
+		subheading: __(
+			"We've got the basics setup, but we can help with any next steps.",
+			'wp-module-onboarding'
+		),
+		description: __(
+			"Setup more of your site, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
+			'wp-module-onboarding'
+		),
+		Component: StepSecondarySetup,
+		Icon: moveTo,
+		priority: 260,
 	},
 ];
 

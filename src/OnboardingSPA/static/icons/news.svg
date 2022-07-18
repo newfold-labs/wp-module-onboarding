@@ -1,0 +1,12 @@
+<svg width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="news">
+<path id="Path" fill-rule="evenodd" clip-rule="evenodd" d="M17.9 17C18.7844 17 19.5 16.2844 19.5 15.4V1H5.1V15.4C5.1 16.2844 4.38444 17 3.5 17H17.9Z" stroke="#1D1D1B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Path_2" d="M3.5 7H1.5V15.3333C1.5 16.2546 1.94722 17 2.5 17" stroke="#1D1D1B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Path_3" d="M13.5 4.99995H15.5" stroke="#1D1D1B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Path_4" d="M15.5 11H11.5" stroke="#1D1D1B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Path_5" d="M9.5 11H7.5" stroke="#1D1D1B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Path_6" d="M15.5 13H7.5" stroke="#1D1D1B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect id="Rectangle" x="7.5" y="3" width="4" height="4" stroke="#1D1D1B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Path_7" d="M13.5 6.99995H15.5" stroke="#1D1D1B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>
