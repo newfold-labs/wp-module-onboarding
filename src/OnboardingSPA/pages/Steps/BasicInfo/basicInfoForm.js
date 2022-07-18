@@ -1,0 +1,144 @@
+import { useDispatch } from '@wordpress/data';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from '@wordpress/element';
+
+import TextInput from '../../../components/TextInput';
+import SocialMediaForm from '../../../components/SocialMediaForm';
+import MiniPreview from '../../../components/MiniPreview';
+import ImageUploader from '../../../components/ImageUploader';
+import { store as nfdOnboardingStore } from '../../../store';
+
+import { getFlow, setFlow } from '../../../utils/api/flow';
+import { getSettings, setSettings } from '../../../utils/api/settings';
+
+/**
+ * Basic Info Form.
+ *
+ * @returns
+ */
+const BasicInfoForm = () => {
+
+    const navigate = useNavigate();
+
+    const [isError, setIsError] = useState(false);
+    const [flowData, setFlowData] = useState();
+    const [isLoaded, setisLoaded] = useState(false);
+    const [debouncedFlowData, setDebouncedFlowData] = useState();
+
+    const [siteTitle, setSiteTitle] = useState("");
+    const [siteDesc, setSiteDesc] = useState("");
+    const [siteLogo, setSiteLogo] = useState(0);
+    const [isValidSocials, setIsValidSocials] = useState(false);
+    const [socialData, setSocialData] = useState("");
+
+    const { setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
+
+    function setDefaultData() {
+        if(isLoaded) {
+            setSiteLogo(flowData?.body?.data['siteLogo']);
+            setSiteTitle(flowData?.body?.data['blogName']);
+            setSiteDesc(flowData?.body?.data['blogDescription']);
+        }
+    }
+
+    function createSaveData() {
+        const dataToSave = {
+            "data": {
+                "siteLogo": siteLogo,
+                "blogName": siteTitle,
+                "blogDescription": siteDesc,
+                "socialData": socialData,
+            }
+        }
+        return dataToSave;
+    }
+
+    async function skipThisStep() {
+        const skippedData = {
+            "data": {
+                "siteLogo": 0,
+                "blogName": "",
+                "blogDescription": "",
+                "socialData": "",
+            }
+        }
+        const socialSkippedData = {
+            "facebook_site": "",
+            "twitter_site": "",
+            "instagram_url": "",
+            "linkedin_url": "",
+            "twitter_site": "",
+            "youtube_url": "",
+            "other_social_urls": []
+        }
+        const result = await setFlow(skippedData);
+        const socialResult = await setSettings(socialSkippedData);
+
+        navigate('/wp-setup/step/design/themes');
+    }
+
+
+    useEffect(() => {
+        async function getFlowData() {
+            const data = await getFlow();
+            const socialDataAPI = await getSettings();
+            setSocialData(socialDataAPI.body);
+            setFlowData(data);
+            setDebouncedFlowData(flowData);
+            setisLoaded(true);
+        }
+        if (!isLoaded)
+            getFlowData();
+        setDefaultData();
+
+    }, [isLoaded]);
+
+    useEffect(() => {
+        const timerId = setTimeout(() => {
+            setDebouncedFlowData(createSaveData());
+        }, 600);
+
+        return () => {
+            clearTimeout(timerId);
+        };
+    }, [siteTitle, siteDesc, siteLogo, socialData, isValidSocials]);
+
+    useEffect(() => {
+        const saveData = async () => {
+            const result = await setFlow(debouncedFlowData);
+            if (isValidSocials) {
+                const socialResult = await setSettings(socialData);
+            }
+            if (result.error != null)
+                setIsError(true);
+            else {
+                setFlowData(result);
+                setIsError(false);
+                setCurrentOnboardingData(result.body);
+            }
+        };
+        if (debouncedFlowData) saveData();
+    }, [debouncedFlowData]);
+
+    return (
+        <div className="basic-info">
+            <div className={`${isError ? 'error__show' : 'error__hide'}`}>
+                Error Saving Data, Try Again!
+            </div>
+            <div className="basic-info-form">
+                <div className="basic-info-form__left">
+                    <TextInput title="Site Title" hint="Shown to visitors, search engine and social media posts." placeholder="Aurelia Shop" maxCharacters="80" height="47px" textValue={siteTitle} textValueSetter={setSiteTitle} />
+                    <TextInput title="Site Description" hint="Tell people who you are, what you sell and why they should visit your store." placeholder="Aurelia Shop sell customized jewerly inspired to the beauty of the Sea" maxCharacters="160" height="100px" textValue={siteDesc} textValueSetter={setSiteDesc} />
+                    <SocialMediaForm socialData={socialData} setSocialData={setSocialData} setIsValidSocials={setIsValidSocials}/>
+                </div>
+                <div className="basic-info-form__right">
+                    <ImageUploader icon={siteLogo} iconSetter={setSiteLogo} />
+                    <MiniPreview icon={siteLogo} title={siteTitle} desc={siteDesc} />
+                </div>
+            </div>
+            <a onClick={(e) => skipThisStep()} style={{ padding: '10px', cursor: 'pointer' }}>Skip this step</a>
+        </div>
+    );
+};
+
+export default BasicInfoForm;

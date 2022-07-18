@@ -1,12 +1,19 @@
 @import "wordpress";
 @import "interface";
+@import "icons";
 @import "branding";
 @import "utilities";
 
+// CSS for Components
 @import "../components/Drawer/stylesheet.scss";
 @import "../components/Header/stylesheet.scss";
 @import "../components/Content/stylesheet.scss";
 @import "../components/Layouts/stylesheet.scss";
+@import "../components/MiniPreview/stylesheet.scss";
+@import "../components/Tooltip/stylesheet.scss";
+@import "../components/ImageUploader/stylesheet.scss";
+@import "../components/SocialMediaForm/stylesheet.scss";
+@import "../components/TextInput/stylesheet.scss";
 @import "../components//ExitToWordPress/stylesheet.scss";
 @import "../components/Accordion/stylesheet.scss";
 @import "../components/StepOverview/stylesheet.scss";
@@ -16,6 +23,9 @@
 @import "../components/CardHeader/stylesheet.scss";
 @import "../components/GenericHtml/stylesheet.scss";
 @import "../pages/Steps/GetStarted/GetStartedExperience/stylesheet.scss";
+
+// CSS for Pages
+@import "../pages/Steps/BasicInfo/stylesheet.scss";
 
 .nfd-onboarding-container {
 	display: flex;
