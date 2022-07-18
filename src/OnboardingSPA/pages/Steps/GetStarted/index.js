@@ -4,7 +4,7 @@ import { useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from '@wordpress/data';
 import NewfoldLargeCard from '../../../components/NewfoldLargeCard';
-import { VIEW_NAV_GET_STARTED } from '../../../../constants';
+import { VIEW_NAV_GET_STARTED, VIEW_NAV_PRIMARY } from '../../../../constants';
 
 const StepGetStarted = () => {
 	const location = useLocation();
@@ -15,7 +15,7 @@ const StepGetStarted = () => {
 		useDispatch(nfdOnboardingStore);
 
 	useEffect(() => {
-		setIsDrawerOpened(true);
+		setIsDrawerOpened(false);
 		setDrawerActiveView(VIEW_NAV_GET_STARTED);
 	}, []);
 
