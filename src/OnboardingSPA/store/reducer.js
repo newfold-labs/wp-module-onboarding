@@ -8,6 +8,7 @@ import {
 	initialDesignSteps,
 	initialTopSteps,
 } from '../data/routes/index';
+import { sidebars } from '../data/sidebars/index';
 
 export function flow(
 	state = {
@@ -61,6 +62,30 @@ export function drawer(
 	return state;
 }
 
+export function sidebar(
+	state = {
+		isOpen: false,
+		view: 'LearnMore',
+		sidebars,
+	},
+	action
+) {
+	switch ( action.type ) {
+		case 'SET_SIDEBAR_OPENED':
+			return {
+				...state,
+				isOpen: action.isOpen,
+			};
+		case 'SET_SIDEBAR_ACTIVE_VIEW':
+			return {
+				...state,
+				view: action.view,
+			};
+	}
+
+	return state;
+}
+
 export function runtime( state = {}, action ) {
 	switch ( action.type ) {
 		case 'SET_RUNTIME':
@@ -95,4 +120,5 @@ export default combineReducers( {
 	runtime,
 	settings,
 	flow,
+	sidebar,
 } );

@@ -7,7 +7,11 @@
  * @return
  */
 export function setRuntime( runtime ) {
-	window.nfdOnboarding = { url: runtime.url, migrated: true, currentFlow: runtime.currentFlow ?? 'wp-setup' };
+	window.nfdOnboarding = {
+		url: runtime.url,
+		migrated: true,
+		currentFlow: runtime.currentFlow ?? 'wp-setup',
+	};
 	return {
 		type: 'SET_RUNTIME',
 		runtime,
@@ -81,6 +85,20 @@ export function updateSettings( settings ) {
 	return {
 		type: 'UPDATE_SETTINGS',
 		settings,
+	};
+}
+
+export function setIsSidebarOpened( isOpen ) {
+	return {
+		type: 'SET_SIDEBAR_OPENED',
+		isOpen,
+	};
+}
+
+export function setSidebarActiveView( view ) {
+	return {
+		type: 'SET_SIDEBAR_ACTIVE_VIEW',
+		view,
 	};
 }
 

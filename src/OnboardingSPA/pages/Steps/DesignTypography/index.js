@@ -6,13 +6,14 @@ import { useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 
 const StepDesignTypography = () => {
-	const { setDrawerActiveView, setIsDrawerOpened } =
-		useDispatch(nfdOnboardingStore);
+	const { setDrawerActiveView, setIsDrawerOpened, setIsSidebarOpened } =
+		useDispatch( nfdOnboardingStore );
 
-	useEffect(() => {
-		setIsDrawerOpened(true);
-		setDrawerActiveView(VIEW_DESIGN_TYPOGRAPHY);
-	}, []);
+	useEffect( () => {
+		setIsSidebarOpened( false );
+		setIsDrawerOpened( true );
+		setDrawerActiveView( VIEW_DESIGN_TYPOGRAPHY );
+	}, [] );
 
 	return (
 		<CommonLayout isCentered>

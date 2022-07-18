@@ -148,6 +148,18 @@ export function getNextStep( state ) {
 	return state.flow.steps.allSteps[ currentStepIndex + 1 ];
 }
 
+export function isSidebarOpened( state ) {
+	return state.sidebar.isOpen;
+}
+
+export function getSidebarView( state ) {
+	return state.sidebar.view;
+}
+
+export function getSidebars( state ) {
+	return filter( state.sidebar.sidebars, [ 'enabled', true ] );
+}
+
 export function getPreviewSettings( state ) {
 	return state.runtime.previewSettings;
 }

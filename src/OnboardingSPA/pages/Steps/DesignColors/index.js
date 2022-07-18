@@ -6,8 +6,8 @@ import { useEffect } from '@wordpress/element';
 import LivePreview from '../../../components/LivePreview';
 
 const StepDesignColors = () => {
-	const { setDrawerActiveView, setIsDrawerOpened } =
-	     useDispatch( nfdOnboardingStore );
+	const { setDrawerActiveView, setIsDrawerOpened, setIsSidebarOpened } =
+		useDispatch( nfdOnboardingStore );
 
 	// [TODO] Once design is finalized replace this with block grammer from API's/files.
 	const blockGrammer = `<!-- wp:group {"align":"full","layout":{"inherit":true}} -->
@@ -26,12 +26,17 @@ const StepDesignColors = () => {
      <!-- /wp:group -->`;
 
 	useEffect( () => {
+		setIsSidebarOpened( false );
 		setIsDrawerOpened( true );
 		setDrawerActiveView( VIEW_DESIGN_COLORS );
 	}, [] );
 	return (
 		<CommonLayout>
-			<LivePreview blockGrammer={ blockGrammer } styling={ 'custom' } viewportWidth={ 1300 } />
+			<LivePreview
+				blockGrammer={ blockGrammer }
+				styling={ 'custom' }
+				viewportWidth={ 1300 }
+			/>
 		</CommonLayout>
 	);
 };

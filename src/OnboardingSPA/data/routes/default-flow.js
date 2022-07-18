@@ -56,6 +56,9 @@ const StepSitePages = lazy(() => import('../../pages/Steps/SitePages'));
 const StepSiteFeatures = lazy(() => import('../../pages/Steps/SiteFeatures'));
 const StepWhatNext = lazy(() => import('../../pages/Steps/WhatNext'));
 const StepPrimarySetup = lazy(() => import('../../pages/Steps/PrimaryStep'));
+
+const GetStartedLearnMoreHelp = lazy(() => import('../../pages/Steps/GetStarted/SidebarComponents/LearnMore/Help'));
+
 /**
  * All information pages should be prefixed with `/page`.
  *
@@ -106,6 +109,11 @@ export const steps = [
         Component: StepGetStarted,
         Icon: home,
         priority: 20,
+        SidebarComponents: {
+          LearnMore: [
+               GetStartedLearnMoreHelp
+          ]
+        }
     },
     {
         path: '/wp-setup/step/top-priority',
