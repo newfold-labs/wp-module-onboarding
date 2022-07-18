@@ -159,3 +159,7 @@ export function getSidebarView( state ) {
 export function getSidebars( state ) {
 	return filter( state.sidebar.sidebars, [ 'enabled', true ] );
 }
+
+export function getPreviewSettings( state ) {
+	return state.runtime.previewSettings;
+}
