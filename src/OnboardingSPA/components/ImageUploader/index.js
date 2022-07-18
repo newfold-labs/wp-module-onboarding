@@ -39,10 +39,10 @@ const ImageUploader = ({ icon, iconSetter }) => {
             <div className="image-uploader_window">
                 <div className="image-uploader_window-empty"></div>
                 <div className="image-uploader_window-logo">
-                    {(icon == 0) && (
+                    {(icon == 0 || icon == undefined) && (
                         <div className="image-uploader_window-logo-icon" style={{ content: 'var(--default-logo-icon)' }}></div>)
                     }
-                    { icon != 0 && (
+                    {(icon != 0 && icon != undefined) && (
                         <img
                             className="image-uploader_window-logo-icon"
                             src={icon.url}
@@ -52,11 +52,11 @@ const ImageUploader = ({ icon, iconSetter }) => {
                     )}
                 </div>
                 <div className="image-uploader_window-reset">
-                    {icon != 0 && (<button className="image-uploader_window-reset-btn" 
+                    {(icon != 0 && icon != undefined) && (<button className="image-uploader_window-reset-btn" 
                             onClick={removeSelectedImage}>
                                 RESET
                     </button>)}
-                    {(icon == 0) && (<button className="image-uploader_window-reset-btn" 
+                    {(icon == 0 || icon == undefined) && (<button className="image-uploader_window-reset-btn" 
                             onClick={handleClick}>
                                 UPLOAD
                     </button>)}

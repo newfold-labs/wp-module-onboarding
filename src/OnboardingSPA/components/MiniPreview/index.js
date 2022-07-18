@@ -4,8 +4,7 @@
  * @returns
  */
 const MiniPreview = ({ title, desc, icon }) => {
-
-    var iconPreview = icon == "" ? '--default-logo-icon' : icon;
+    var iconPreview = icon == "" || icon == undefined ? '--default-logo-icon' : icon;
     var titlePreview = title == "" ? 'Aurelia Shop' : title?.substring(0, 20);
     var descPreview = desc == "" ? 'Aurelia Shop sells customized jewelry inspired to the beauty of the Sea.' : desc;
     var urlPreview = title == "" ? 'https://aureliashop.com' : `https://${title?.substring(0, 20).toLowerCase().replace(/\s/g, '').replace(/\W/g, '')}.com`;
@@ -20,8 +19,8 @@ const MiniPreview = ({ title, desc, icon }) => {
                         <span className="browser-dot" style={{ background: '#5AC05A' }}></span>
                     </div>
                     <div className="browser-row-title_bar">
-                        { icon == 0 && (<div className="browser-icon" style={{ content: 'var(--default-logo-icon)'}}></div>)}
-                        { icon != 0 && (<img
+                        { (icon == 0 || icon == undefined) && (<div className="browser-icon" style={{ content: 'var(--default-logo-icon)'}}></div>)}
+                        { (icon != 0 && icon != undefined) && (<img
                             className="browser-icon"
                             src={iconPreview.url}
                             alt="Thumb"
