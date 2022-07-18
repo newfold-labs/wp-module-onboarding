@@ -33,11 +33,20 @@ export function getNewfoldBrand(state) {
 }
 
 /**
+ * Gets the current Onboarding Data
+ * @param {*} state
+ * @returns string
+ */
+ export function getCurrentOnboardingData(state) {
+	return state.currentData;
+}
+
+/**
  * Gets current Onboarding Flow
  * @param {*} state
  * @returns string
  */
-export function getOnbardingFlow(state) {
+export function getOnboardingFlow(state) {
 	return state.runtime.currentFlow ?? 'wp-setup';
 }
 

@@ -62,6 +62,17 @@ export function drawer(
 
 	return state;
 }
+export function currentData(state = {}, action) {
+	switch (action.type) {
+		case 'SET_CURRENT_DATA':
+			return {
+				...state,
+				...action.currentData,
+			};
+	}
+
+	return state;
+}
 
 export function runtime(state = {}, action) {
 	switch (action.type) {
@@ -90,6 +101,7 @@ export function settings(state = {}, action) {
 export default combineReducers({
 	drawer,
 	runtime,
+	currentData,
 	settings,
 	flow,
 });

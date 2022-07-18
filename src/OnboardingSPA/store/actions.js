@@ -76,6 +76,19 @@ export function setActiveStep(path) {
 }
 
 /**
+ * Accepts a JSON to set the current data.
+ *
+ * @param {*} currentData
+ * @returns
+ */
+ export function setCurrentOnboardingData(currentData) {
+	return {
+		type: 'SET_CURRENT_DATA',
+		currentData,
+	};
+}
+
+/**
  * Updates general settings.
  *
  * @param {*} settings
