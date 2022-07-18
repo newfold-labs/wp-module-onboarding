@@ -1,13 +1,11 @@
 .live-preview {
      &__container {
-          /* Overflow is present here as a fallback, the goal should be to eliminate this overflow
-             by setting the right viewportWidth for the component. */
+
           &-small {
                width: 70%;
                height: 70%;
                max-width: 320px;
                max-height: 320px;
-               overflow: auto;
           }
           
           &-large {
@@ -15,7 +13,6 @@
                height: 70%;
                max-width: 925px;
                max-height: 925px;
-               overflow: auto;
           }
      }
 }
