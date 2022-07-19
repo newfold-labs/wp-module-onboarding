@@ -6,15 +6,17 @@ import { useEffect } from '@wordpress/element';
 import { useViewportMatch } from '@wordpress/compose';
 
 const StepTopPriority = () => {
-	const isLargeViewport = useViewportMatch('medium');
+	const isLargeViewport = useViewportMatch( 'medium' );
 
-	const { setIsDrawerOpened } = useDispatch(nfdOnboardingStore);
+	const { setIsDrawerOpened, setIsSidebarOpened } =
+		useDispatch( nfdOnboardingStore );
 
-	useEffect(() => {
-		if (isLargeViewport) {
-			setIsDrawerOpened(true);
+	useEffect( () => {
+		if ( isLargeViewport ) {
+			setIsDrawerOpened( true );
 		}
-	}, []);
+		setIsSidebarOpened( false );
+	}, [] );
 
 	return (
 		<CommonLayout isCentered>

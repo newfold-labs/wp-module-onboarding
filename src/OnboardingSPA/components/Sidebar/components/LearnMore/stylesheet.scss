@@ -1,0 +1,25 @@
+.components-button:focus:not(:disabled),
+.components-button.is-pressed:focus:not(:disabled) {
+	box-shadow: none;
+}
+
+.nfd-onboarding-sidebar-learn-more__container {
+	display: flex;
+}
+
+.nfd-onboarding-sidebar-learn-more__text {
+	align-items: center;
+}
+
+.nfd-onboarding-sidebar-learn-more__icon {
+	margin-right: 5%;
+}
+
+.nfd-onboarding-sidebar-learn-more__text-heading,
+.nfd-onboarding-sidebar-learn-more__text-subheading {
+	margin-top: 2px;
+}
+
+.nfd-onboarding-sidebar-learn-more__menu-button {
+     margin: 0px 5px;
+}

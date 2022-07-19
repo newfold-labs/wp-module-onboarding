@@ -5,22 +5,26 @@
 @import "utilities";
 
 // CSS for Components
-@import "../components/Drawer/stylesheet.scss";
-@import "../components/Header/stylesheet.scss";
-@import "../components/Content/stylesheet.scss";
-@import "../components/Layouts/stylesheet.scss";
-@import "../components/MiniPreview/stylesheet.scss";
-@import "../components/Tooltip/stylesheet.scss";
-@import "../components/ImageUploader/stylesheet.scss";
-@import "../components/SocialMediaForm/stylesheet.scss";
-@import "../components/TextInput/stylesheet.scss";
-@import "../components//ExitToWordPress/stylesheet.scss";
-@import "../components/Accordion/stylesheet.scss";
-@import "../components/StepOverview/stylesheet.scss";
-@import "../components/NewfoldLargeCard/stylesheet.scss";
-@import "../components/Button/stylesheet.scss";
-@import "../components/CardHeader/stylesheet.scss";
-@import "../components/GenericHtml/stylesheet.scss";
+@import "../components/Drawer/stylesheet";
+@import "../components/Header/stylesheet";
+@import "../components/Content/stylesheet";
+@import "../components/Layouts/stylesheet";
+@import "../components/MiniPreview/stylesheet";
+@import "../components/Tooltip/stylesheet";
+@import "../components/ImageUploader/stylesheet";
+@import "../components/SocialMediaForm/stylesheet";
+@import "../components/TextInput/stylesheet";
+@import "../components/ExitToWordPress/stylesheet";
+@import "../components/Accordion/stylesheet";
+@import "../components/StepOverview/stylesheet";
+@import "../components/NewfoldLargeCard/stylesheet";
+@import "../components/Button/stylesheet";
+@import "../components/CardHeader/stylesheet";
+@import "../components/GenericHtml/stylesheet";
+@import "../components/Sidebar/stylesheet";
+@import "../components/Sidebar/components/LearnMore/stylesheet";
+@import "../components/LivePreview/stylesheet";
+@import "../pages/Steps/DesignColors/stylesheet";
 
 // CSS for Pages
 @import "../pages/Steps/BasicInfo/stylesheet.scss";
