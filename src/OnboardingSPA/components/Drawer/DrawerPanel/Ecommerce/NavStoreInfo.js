@@ -8,9 +8,9 @@ import { __ } from '@wordpress/i18n';
 import { store as nfdOnboardingStore } from '../../../../store';
 
 const NavStoreInfo = () => {
-	const { designSteps } = useSelect( ( select ) => {
+	const { storeInfoSteps } = useSelect( ( select ) => {
 		return {
-			designSteps: select( nfdOnboardingStore ).getStoreInfoSteps(),
+			storeInfoSteps: select( nfdOnboardingStore ).getStoreInfoSteps(),
 		};
 	}, [] );
 	const { setDrawerActiveView } = useDispatch( nfdOnboardingStore );
@@ -27,7 +27,7 @@ const NavStoreInfo = () => {
 			</Button>
 			<div className="nfd-onboarding-drawer__panel-menu">
 				<ul className="nfd-onboarding-drawer__panel-routes">
-					{ designSteps.map( ( step ) => {
+					{ storeInfoSteps.map( ( step ) => {
 						return (
 							<li
 								key={ step.path }
