@@ -7,17 +7,18 @@ import { useEffect } from '@wordpress/element';
 import { useViewportMatch } from '@wordpress/compose';
 
 const StepSitePages = () => {
-	const isLargeViewport = useViewportMatch('medium');
+	const isLargeViewport = useViewportMatch( 'medium' );
 
-	const { setDrawerActiveView, setIsDrawerOpened } =
-		useDispatch(nfdOnboardingStore);
+	const { setDrawerActiveView, setIsDrawerOpened, setIsSidebarOpened } =
+		useDispatch( nfdOnboardingStore );
 
-	useEffect(() => {
-		if (!isLargeViewport) {
-			setIsDrawerOpened(false);
+	useEffect( () => {
+		if ( ! isLargeViewport ) {
+			setIsDrawerOpened( false );
 		}
-		setDrawerActiveView(VIEW_NAV_PRIMARY);
-	}, []);
+		setIsSidebarOpened( false );
+		setDrawerActiveView( VIEW_NAV_PRIMARY );
+	}, [] );
 	return (
 		<CommonLayout isCentered>
 			<StepOverview />

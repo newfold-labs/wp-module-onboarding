@@ -83,7 +83,7 @@ class SettingsController {
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 *
-	 * @return \WP_REST_Response
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function update_item( \WP_REST_Request $request ) {
 		$settings = $this->get_current_settings();
@@ -106,7 +106,7 @@ class SettingsController {
 					// sanitize fields
 					$param[ $param_key ] = \sanitize_text_field( $param_value );
 
-					if ( ! \wp_http_validate_url( $param_value ) ) {
+					if ( !empty($param_value) && ! \wp_http_validate_url( $param_value ) ) {
 						return new \WP_Error(
 							'param_not_proper_url',
 							"The provided param '{$param_value}' is NOT a proper URL",
@@ -118,10 +118,10 @@ class SettingsController {
 						// sanitize fields
 						$param[ $param_url ] = \sanitize_text_field( $param_url );
 
-						if ( ! \wp_http_validate_url( $param_url ) ) {
+						if ( !empty($param_url) && ! \wp_http_validate_url( $param_url ) ) {
 							return new \WP_Error(
 								'param_not_proper_url',
-								"The provided param '{$param_url}' is NOT a proper URL",
+								"The provided param '{$param_url}' is NOT a proper URLL",
 								array( 'status' => 400 )
 							);
 						}
@@ -140,6 +140,19 @@ class SettingsController {
 	 * @return array $settings List of the settings and their values
 	 */
 	public function get_current_settings() {
-		return get_option( $this->yoast_wp_options_key );
-	}
+
+        // incase yoast plugin is not installed then we need to save the values in the yoast_wp_options_key
+        if( ( $social_data = \get_option( $this->yoast_wp_options_key ) ) === FALSE ){
+
+            // initialize an array with empty values
+            $social_data = array_fill_keys( $this->social_urls_to_validate , "");
+            $social_data['other_social_urls'] = array(); // only this key has to be an array
+
+            //update database
+            \add_option( $this->yoast_wp_options_key, $social_data );
+        }
+
+        return $social_data;
+
+    }
 }

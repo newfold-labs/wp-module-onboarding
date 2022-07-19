@@ -23,6 +23,7 @@ const CommonLayout = ({
 	children,
 	isBgPrimary = false,
 	isCentered = false,
+	isVerticallyCentered = false,
 	isContained = false,
 	isPadded = false,
 	isFadeIn = true,
@@ -36,6 +37,7 @@ const CommonLayout = ({
 				{ 'is-layout-fade-in': isFadeIn },
 				{ 'is-bg-primary': isBgPrimary },
 				{ 'is-centered': isCentered },
+				{ 'is-vertically-centered': isVerticallyCentered },
 				{ 'is-padded': isPadded }
 			)}
 		>

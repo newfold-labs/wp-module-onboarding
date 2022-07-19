@@ -1,74 +1,90 @@
 import { FullscreenMode, InterfaceSkeleton } from '@wordpress/interface';
 import { useDispatch, useSelect } from '@wordpress/data';
-
-import Content from '../Content';
-import Drawer from '../Drawer';
-import { Fragment } from '@wordpress/element';
-import Header from '../Header';
+import { useEffect, Fragment } from '@wordpress/element';
 import classNames from 'classnames';
 import { kebabCase } from 'lodash';
-import { store as nfdOnboardingStore } from '../../store';
-import { useEffect } from '@wordpress/element';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useViewportMatch } from '@wordpress/compose';
+import { SlotFillProvider } from '@wordpress/components';
+
+import { store as nfdOnboardingStore } from '../../store';
+import Header from '../Header';
+import Content from '../Content';
+import Drawer from '../Drawer';
+import Sidebar from '../Sidebar';
+import { setFlow } from '../../utils/api/flow'
 
 /**
  * Primary app that renders the <InterfaceSkeleton />.
  *
  * Is a child of the hash router and error boundary.
  *
- * @returns WPComponent
+ * @return WPComponent
  */
 const App = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const isLargeViewport = useViewportMatch('medium');
-	const pathname = kebabCase(location.pathname);
+	const isLargeViewport = useViewportMatch( 'medium' );
+	const pathname = kebabCase( location.pathname );
 
-	const { isDrawerOpen, newfoldBrand, onboardingFlow } = useSelect((select) => {
+	const { isDrawerOpen, newfoldBrand, onboardingFlow, currentData } = useSelect((select) => {
 		return {
 			isDrawerOpen: select(nfdOnboardingStore).isDrawerOpened(),
 			newfoldBrand: select(nfdOnboardingStore).getNewfoldBrand(),
-			onboardingFlow: select(nfdOnboardingStore).getOnbardingFlow(),
+			onboardingFlow: select(nfdOnboardingStore).getOnboardingFlow(),
+			currentData: select(nfdOnboardingStore).getCurrentOnboardingData()
 		};
 	}, []);
 
-	const { setActiveStep, setActiveFlow } = useDispatch(nfdOnboardingStore);
+	const { setActiveStep, setActiveFlow } = useDispatch( nfdOnboardingStore );
 
-	useEffect(() => {
-		document.body.classList.add(`nfd-brand-${newfoldBrand}`);
-	}, [newfoldBrand]);
+	async function syncStoreToDB() {
+		const result = await setFlow(currentData);
+		if(result.error != null){
+			console.error('Unable to Save data!');
+		}
+	}
 
-	useEffect(() => {
-		if (location.pathname.includes('/step')) {
-			setActiveFlow(onboardingFlow);
-			
-			if (location.pathname.includes(onboardingFlow))
-				setActiveStep(location.pathname);
+	useEffect( () => {
+		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
+	}, [ newfoldBrand ] );
+
+	useEffect( () => {
+		if ( location.pathname.includes( '/step' ) ) {
+			setActiveFlow( onboardingFlow );
+
+			if ( location.pathname.includes( onboardingFlow ) )
+				setActiveStep( location.pathname );
 			else {
-				const [first, ...rest] = location.pathname.substring(1, ).split('/');
-				setActiveStep(`/${onboardingFlow}/${rest.join('/')}`);
-				navigate(`/${onboardingFlow}/${rest.join('/')}`);
+				const [ first, ...rest ] = location.pathname
+					.substring( 1 )
+					.split( '/' );
+				setActiveStep( `/${ onboardingFlow }/${ rest.join( '/' ) }` );
+				navigate( `/${ onboardingFlow }/${ rest.join( '/' ) }` );
 			}
 		}
-	}, [location.pathname, onboardingFlow]);
+		syncStoreToDB();
+	}, [ location.pathname, onboardingFlow ] );
 
 	return (
 		<Fragment>
-			<FullscreenMode isActive={true} />
-			<InterfaceSkeleton
-				className={classNames(
-					'nfd-onboarding-skeleton',
-					`brand-${newfoldBrand}`,
-					`path-${pathname}`,
-					{ 'is-drawer-open': isDrawerOpen },
-					{ 'is-large-viewport': isLargeViewport },
-					{ 'is-small-viewport': !isLargeViewport }
-				)}
-				header={<Header />}
-				drawer={<Drawer />}
-				content={<Content />}
-			/>
+			<FullscreenMode isActive={ true } />\
+			<SlotFillProvider>
+				<InterfaceSkeleton
+					className={ classNames(
+						'nfd-onboarding-skeleton',
+						`brand-${ newfoldBrand }`,
+						`path-${ pathname }`,
+						{ 'is-drawer-open': isDrawerOpen },
+						{ 'is-large-viewport': isLargeViewport },
+						{ 'is-small-viewport': ! isLargeViewport }
+					) }
+					header={ <Header /> }
+					drawer={ <Drawer /> }
+					content={ <Content /> }
+					sidebar={ <Sidebar /> }
+				/>
+			</SlotFillProvider>
 		</Fragment>
 	);
 };

@@ -34,7 +34,7 @@ final class Flows {
 
 			// Enums: `publishing`, `designing`, `selling`, 'migrating', 'regenerate' and 'skip'
 			'topPriority'     => array(
-				'priority1' => '',
+				'priority1' => 'publishing',
 			),
 
 			// This data will map to WordPress default 'blogname'
