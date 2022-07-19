@@ -1,5 +1,4 @@
 /*COLOR VARIABLES*/
-$font: var(--nfd-onboarding-primary-font);
 $main-color-dark: var(--nfd-onboarding-dark);
 $main-color-light: var(--nfd-onboarding-white);
 $main-border-light: var(--nfd-onboarding-border);
@@ -42,7 +41,6 @@ $radius: 0.2rem;
         &_title {
             font-weight: 700;
             margin-top: 30px;
-            font-family: $font;
             color: $main-color-dark;
             padding: 14px 0px 10px 0px;
             transition: color 300ms ease-in;
@@ -50,12 +48,11 @@ $radius: 0.2rem;
         }
         
         &_description {
-            font-weight: 300;
+            font-weight: 400;
             text-align: center;
-            font-family: $font;
             letter-spacing: 0.5px;
             color: $main-color-dark;
-            font-size: clamp(0.85rem, 2vw, 0.9rem);
+            font-size: clamp(0.8rem, 2vw, 0.87rem);
         }
     }
     &__icon{

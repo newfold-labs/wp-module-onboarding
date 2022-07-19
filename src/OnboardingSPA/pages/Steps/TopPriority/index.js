@@ -1,6 +1,8 @@
-import { useDispatch, useSelect } from '@wordpress/data';
-import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { useNavigate } from 'react-router-dom';
 import { useViewportMatch } from '@wordpress/compose';
+import { useEffect, useState } from '@wordpress/element';
+import { useDispatch, useSelect } from '@wordpress/data';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
@@ -18,23 +20,24 @@ const StepTopPriority = (props) => {
 	const priorities = [{
 		icon: '--nfd-publish-icon', 
 		title: "Publishing",
-		desc: "From blogs, to newsletters, to\npodcasts and videos, we help the web\nfind your content."
+		desc: "From blogs, to newsletters, to podcasts and videos, we help the web find your content."
 	}, {
 		icon: '--nfd-selling-icon', 
 		title: "Selling",
-		desc: "Startup or seasoned business, \ndrop-shipping or downloads,\nwe've got ecommerce covered."
+		desc: "Startup or seasoned business, drop-shipping or downloads, we've got ecommerce covered."
 	}, {  
 		icon: '--nfd-design-icon', 
 		title: "Designing",
-		desc: "With smart style presets and\npowerful options, we help your site\nlook and feel polished."
+		desc: "With smart style presets and powerful options, we help your site look and feel polished."
 	}];
 
+	const navigate = useNavigate();
 	const [selected, setSelected] = useState(0);
 	const [isLoaded, setisLoaded] = useState(false);
 	const isLargeViewport = useViewportMatch('medium');
 
-	const { setIsDrawerOpened } = useDispatch(nfdOnboardingStore);
 	const { setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
+	const { setIsDrawerOpened, setIsSidebarOpened } = useDispatch(nfdOnboardingStore);
 
 	const { currentData } = useSelect((select) => {
 		return {
@@ -82,16 +85,34 @@ const StepTopPriority = (props) => {
 			setCurrentOnboardingData(currentData);
 		}
 	}, [selected]);
-
+	
 	return (
 		<CommonLayout isVerticallyCentered>
-			<HeadingWithSubHeading title="Tell us your top priority" subtitle="We’ll prioritize getting you there." isColoredSubheading="false" />
+			<HeadingWithSubHeading title={__(
+				"Tell us your top priority",
+				"wp-module-onboarding"
+			)} subtitle={__(
+				"We’ll prioritize getting you there.",
+				"wp-module-onboarding"
+			)}/>
 			<SelectableCardList
 				contents={priorities}
 				selected={selected}
 				onSelectedChange={setSelected}>
 			</SelectableCardList>
-			<a style={{padding: '15px'}}>Skip this Step</a>
+			<div style={{ textAlign: "center" }}>
+				<p style={{ margin: "16px", fontWeight: '500' }}>{__(
+					"Where would you like to start? We'll start ",
+					"wp-module-onboarding"
+				)}<br></br>{__(
+					"there and then move into next steps.",
+					"wp-module-onboarding"
+				)}</p>
+				<a onClick={(e) => navigate('/wp-setup/step/basic-info')} style={{ cursor: "pointer" }}>{__(
+					"Skip this Step",
+					"wp-module-onboarding"
+				)}</a>
+			</div>
 		</CommonLayout>
 	);
 };
