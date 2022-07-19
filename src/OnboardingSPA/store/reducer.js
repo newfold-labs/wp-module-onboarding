@@ -62,6 +62,18 @@ export function drawer(
 	return state;
 }
 
+export function currentData(state = {}, action) {
+	switch (action.type) {
+		case 'SET_CURRENT_DATA':
+			return {
+				...state,
+				...action.currentData,
+			};
+	}
+
+	return state;
+}
+
 export function sidebar(
 	state = {
 		isOpen: false,
@@ -118,6 +130,7 @@ export function settings( state = {}, action ) {
 export default combineReducers( {
 	drawer,
 	runtime,
+	currentData,
 	settings,
 	flow,
 	sidebar,

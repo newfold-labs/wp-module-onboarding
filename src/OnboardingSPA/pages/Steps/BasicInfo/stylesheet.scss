@@ -1,0 +1,42 @@
+.basic-info{
+    display: flex;
+    align-items:center;
+    flex-direction: column;
+    justify-content: center;
+
+    &-form {
+            width: 90vw;
+            display: flex;
+            padding-top: 20px;
+            flex-direction: column;
+    
+            &__left {
+                flex: 1;
+                margin: 3vw;
+            }
+    
+            &__right {
+                flex: 1;
+                margin: 3vw;
+            }
+    
+            @include break-xlarge() {
+                width: 70vw;
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+}
+
+.error{
+    &__show{
+        display: inline-block;
+        text-align: center;
+        border-radius: 6px;
+        padding: 20px;
+        background-color: rgba(255, 0, 0, 0.3);
+    }
+    &__hide{
+        display: none;
+    }
+}
