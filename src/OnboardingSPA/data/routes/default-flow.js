@@ -59,8 +59,8 @@ const StepWhatNext = lazy(() => import('../../pages/Steps/WhatNext'));
 const StepGetStartedExperience = lazy(() =>
 	import('../../pages/Steps/GetStarted/GetStartedExperience')
 );
-const StepPrimarySetup = lazy(() => import('../../pages/Steps/GetStarted/PrimaryStep'));
-const StepSecondarySetup = lazy(() => import('../../pages/Steps/GetStarted/SecondaryStep'));
+const StepPrimarySetup = lazy(() => import('../../pages/Steps/GetStarted/SiteTypeSetup/PrimarySite'));
+const StepSecondarySetup = lazy(() => import('../../pages/Steps/GetStarted/SiteTypeSetup/SecondarySite'));
 
 /**
  * All information pages should be prefixed with `/page`.

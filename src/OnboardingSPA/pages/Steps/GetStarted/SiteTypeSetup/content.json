@@ -1,0 +1,196 @@
+{
+	"cardHeading": "Help us tailor this setup to your site",
+	"subHeading": "ABOUT YOUR SITE",
+	"question": "What type of site is it?",
+	"buttonText": "Continue Setup",
+	"needHelpText": "Need Help? <a href='#'> Hire our Experts</a>",
+	"categories": [
+		{
+			"name": "Business",
+			"icon": "var(--business-icon)",
+			"iconWhite": "var(--business-white-icon)",
+			"subCategories": [
+				"Fashion, apparel and accessories",
+				"Electronics and computers",
+				"Food and drink",
+				"Jewelry",
+				"Motherhood & Baby",
+				"Furniture and decoration",
+				"Education and learning"
+			]
+		},
+		{
+			"name": "Group/Team",
+			"icon": "var(--group-icon)",
+			"iconWhite": "var(--group-white-icon)",
+			"subCategories": [
+				"Group blog 1",
+				"Group website 2",
+				"Group based wp blog",
+				"A group category",
+				"Another group category",
+				"Teamwork",
+				"Team category 2",
+				"Team Category 3",
+				"Team together"
+			]
+		},
+		{
+			"name": "Creative",
+			"icon": "var(--creative-icon)",
+			"iconWhite": "var(--creative-white-icon)",
+			"subCategories": [
+				"Artist",
+				"Actor",
+				"Fashion Designer",
+				"Newspaper",
+				"A News category",
+				"Another News Category",
+				"Breaking news blog",
+				"Weekly news blog",
+				"News that matter"
+			]
+		},
+		{
+			"name": "Education",
+			"icon": "var(--education-icon)",
+			"iconWhite": "var(--education-white-icon)",
+			"subCategories": [
+				"Artist",
+				"Actor",
+				"Fashion Designer",
+				"Newspaper",
+				"A News category",
+				"Another News Category",
+				"Breaking news blog",
+				"Weekly news blog",
+				"News that matter"
+			]
+		},
+		{
+			"name": "Food",
+			"icon": "var(--food-icon)",
+			"iconWhite": "var(--food-white-icon)",
+			"subCategories": [
+				"Fast food retail",
+				"Smoothies and shakes",
+				"Vegetable store",
+				"Meat store/shop",
+				"Vegan food",
+				"Eat to Live",
+				"Live to Eat",
+				"Fitness food",
+				"Baby food",
+				"Animal food"
+			]
+		},
+		{
+			"name": "Tech",
+			"icon": "var(--tech-icon)",
+			"iconWhite": "var(--tech-white-icon)",
+			"subCategories": [
+				"Artist",
+				"Actor",
+				"Fashion Designer",
+				"Newspaper",
+				"A News category",
+				"Another News Category",
+				"Breaking news blog",
+				"Weekly news blog",
+				"News that matter"
+			]
+		},
+		{
+			"name": "Non-profit",
+			"icon": "var(--heart-icon)",
+			"iconWhite": "var(--heart-white-icon)",
+			"subCategories": [
+				"Artist",
+				"Actor",
+				"Fashion Designer",
+				"Newspaper",
+				"A News category",
+				"Another News Category",
+				"Breaking news blog",
+				"Weekly news blog",
+				"News that matter"
+			]
+		},
+		{
+			"name": "Health",
+			"icon": "var(--health-icon)",
+			"iconWhite": "var(--health-white-icon)",
+			"subCategories": [
+				"Health blog",
+				"Another health blog",
+				"Health products",
+				"Healthy lifestyle",
+				"A health category",
+				"Another health Category",
+				"People in health industry",
+				"Health is wealth",
+				"Healthy lifestyle"
+			]
+		},
+		{
+			"name": "News",
+			"icon": "var(--news-icon)",
+			"iconWhite": "var(--news-white-icon)",
+			"subCategories": [
+				"News channel",
+				"News blog",
+				"Digital news",
+				"Newspaper",
+				"A News category",
+				"Another News Category",
+				"Breaking news blog",
+				"Weekly news blog",
+				"News that matter"
+			]
+		},
+		{
+			"name": "Politics",
+			"icon": "var(--politics-icon)",
+			"iconWhite": "var(--politics-white-icon)",
+			"subCategories": [
+				"Elections",
+				"Just a politics blog",
+				"Leaders of modern politics",
+				"Democrats & Republicans",
+				"A Politics category",
+				"Another Politics Category",
+				"Political exposes",
+				"Politics news"
+			]
+		},
+		{
+			"name": "Entertainment",
+			"icon": "var(--entertainment-icon)",
+			"iconWhite": "var(--entertainment-white-icon)",
+			"subCategories": [
+				"Movies",
+				"Web series",
+				"Movie Genres",
+				"Directors and production houses",
+				"Movie theaters",
+				"Entertainment Category",
+				"OTT",
+				"Hollywood"
+			]
+		},
+		{
+			"name": "Animals",
+			"icon": "var(--dog-icon)",
+			"iconWhite": "var(--dog-white-icon)",
+			"subCategories": [
+				"Dogs and cats",
+				"Animal Research",
+				"Adopt animals",
+				"Animal Category 2",
+				"Animal Categ 3",
+				"Animal Category 4",
+				"Another Animal"
+			]
+		}
+	]
+}

@@ -1,17 +1,8 @@
-.nfd-setup-categories {
+.nfd-setup-primary-categories {
 	width: 40vw;
 	text-align: center;
 
 	.nfd-card-category {
-		color: var(--nfd-onboarding-black);
-		padding: 1rem;
-		background-color: var(--nfd-onboarding-light-gray-3);
-		display: inline-block;
-		margin: auto 0rem 1rem 1rem;
-		border-radius: 2.5rem;
-		height: 10px;
-		cursor: pointer;
-
 		&.chosenPrimaryCategory {
 			background-color: var(--wp-admin-theme-color-darker-10);
 			color: var(--nfd-onboarding-light);
@@ -29,6 +20,17 @@
 		display: inline-block;
 		background-repeat: no-repeat;
 	}
+}
+
+.nfd-card-category {
+	color: var(--nfd-onboarding-black);
+	padding: 1rem;
+	background-color: var(--nfd-onboarding-light-gray-3);
+	display: inline-block;
+	margin: auto 0rem 1rem 1rem;
+	border-radius: 2.5rem;
+	height: 10px;
+	cursor: pointer;
 }
 
 .blackText {
