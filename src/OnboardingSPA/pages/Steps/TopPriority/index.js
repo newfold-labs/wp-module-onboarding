@@ -57,7 +57,7 @@ const StepTopPriority = (props) => {
 	}, []);
 
 	useEffect(() => {
-		async function getFlowData() {
+		async function setInitialData() {
 			if(currentData){
 				const val = await currentData?.data["topPriority"]["priority1"];
 				if (val != "")
@@ -70,7 +70,7 @@ const StepTopPriority = (props) => {
 			setisLoaded(true);
 		}
 		if (!isLoaded)
-			getFlowData();
+			setInitialData();
 
 	}, [isLoaded]);
 
