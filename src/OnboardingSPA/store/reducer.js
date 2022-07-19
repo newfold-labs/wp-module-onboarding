@@ -9,6 +9,7 @@ import {
 	initialTopSteps,
 	initialGetStartedSteps,
 } from '../data/routes/index';
+import { sidebars } from '../data/sidebars/index';
 
 export function flow(
 	state = {
@@ -24,7 +25,7 @@ export function flow(
 	},
 	action
 ) {
-	switch (action.type) {
+	switch ( action.type ) {
 		case 'SET_ACTIVE_STEP':
 			return {
 				...state,
@@ -47,7 +48,7 @@ export function drawer(
 	state = { isOpen: false, view: VIEW_NAV_PRIMARY },
 	action
 ) {
-	switch (action.type) {
+	switch ( action.type ) {
 		case 'SET_DRAWER_OPENED':
 			return {
 				...state,
@@ -74,20 +75,61 @@ export function currentData(state = {}, action) {
 	return state;
 }
 
-export function runtime(state = {}, action) {
+export function currentData(state = {}, action) {
 	switch (action.type) {
-		case 'SET_RUNTIME':
+		case 'SET_CURRENT_DATA':
 			return {
 				...state,
-				...action.runtime,
+				...action.currentData,
 			};
 	}
 
 	return state;
 }
 
-export function settings(state = {}, action) {
-	switch (action.type) {
+export function sidebar(
+	state = {
+		isOpen: false,
+		view: 'LearnMore',
+		sidebars,
+	},
+	action
+) {
+	switch ( action.type ) {
+		case 'SET_SIDEBAR_OPENED':
+			return {
+				...state,
+				isOpen: action.isOpen,
+			};
+		case 'SET_SIDEBAR_ACTIVE_VIEW':
+			return {
+				...state,
+				view: action.view,
+			};
+	}
+
+	return state;
+}
+
+export function runtime( state = {}, action ) {
+	switch ( action.type ) {
+		case 'SET_RUNTIME':
+			return {
+				...state,
+				...action.runtime,
+			};
+		case 'SET_PREVIEW_SETTINGS':
+			return {
+				...state,
+				previewSettings: action.previewSettings,
+			};
+	}
+
+	return state;
+}
+
+export function settings( state = {}, action ) {
+	switch ( action.type ) {
 		case 'UPDATE_SETTINGS':
 			return {
 				...state,
@@ -98,10 +140,11 @@ export function settings(state = {}, action) {
 	return state;
 }
 
-export default combineReducers({
+export default combineReducers( {
 	drawer,
 	runtime,
 	currentData,
 	settings,
 	flow,
-});
+	sidebar,
+} );

@@ -24,7 +24,7 @@ const NFDOnboarding = () => (
  * @param {string} id - Element ID to render into.
  * @param {object} runtime - Expects runtime data from window.nfdOnboarding.
  */
- export async function initializeNFDOnboarding(id, runtime) {
+export async function initializeNFDOnboarding(id, runtime) {
 	const DOM_TARGET = document.getElementById(id);
 	dispatch(nfdOnboardingStore).setRuntime(runtime);
 	const currentData = await getFlow();

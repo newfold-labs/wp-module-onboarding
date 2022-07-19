@@ -11,4 +11,4 @@ export async function resolve(promise) {
     }
 
     return resolved;
-} 
+}

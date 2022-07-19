@@ -5,11 +5,13 @@ import { useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 
 const StepWhatNext = () => {
-	const { setIsDrawerOpened } = useDispatch(nfdOnboardingStore);
+	const { setIsDrawerOpened, setIsSidebarOpened } =
+		useDispatch( nfdOnboardingStore );
 
-	useEffect(() => {
-		setIsDrawerOpened(false);
-	}, []);
+	useEffect( () => {
+		setIsDrawerOpened( false );
+		setIsSidebarOpened( false );
+	}, [] );
 
 	return (
 		<CommonLayout isCentered isBgPrimary>

@@ -12,6 +12,9 @@ export const VIEW_DESIGN_COLORS = 'design-colors';
 export const VIEW_DESIGN_TYPOGRAPHY = 'design-typography';
 export const VIEW_DESIGN_HEADER_MENU = 'design-header-menu';
 export const VIEW_NAV_GET_STARTED = 'nav-get-started';
+export const SIDEBAR_SLOTFILL_PREFIX = 'Sidebar';
+export const SIDEBAR_MENU_SLOTFILL_PREFIX = 'HeaderMenu';
+export const SIDEBAR_LEARN_MORE = 'LearnMore';
 
 /**
  * All views for the <Drawer /> component.

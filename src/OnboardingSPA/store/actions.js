@@ -1,22 +1,20 @@
-import { constrols, dispatch } from '@wordpress/data';
-
-import { STORE_NAME } from './constants';
-import { store as interfaceStore } from '@wordpress/interface';
-import { store as noticesStore } from '@wordpress/notices';
-
 /**
  * Receives `window.nfdOnboarding` and sets migrated: true.
  *
  * `url` is left to keep __webpack_public_path__ decoupled from store.
  *
  * @param {*} runtime
- * @returns
+ * @return
  */
-export function setRuntime(runtime) {
-	window.nfdOnboarding = { url: runtime.url, migrated: true, currentFlow: runtime.currentFlow ?? 'wp-setup' };
+export function setRuntime( runtime ) {
+	window.nfdOnboarding = {
+		url: runtime.url,
+		migrated: true,
+		currentFlow: runtime.currentFlow ?? 'wp-setup',
+	};
 	return {
 		type: 'SET_RUNTIME',
-		runtime: runtime,
+		runtime,
 	};
 }
 
@@ -24,9 +22,9 @@ export function setRuntime(runtime) {
  * Sets the active view within the Drawer render slot.
  *
  * @param {*} view
- * @returns
+ * @return
  */
-export function setDrawerActiveView(view) {
+export function setDrawerActiveView( view ) {
 	return {
 		type: 'SET_DRAWER_ACTIVE_VIEW',
 		view,
@@ -35,10 +33,11 @@ export function setDrawerActiveView(view) {
 
 /**
  * Opens the off-canvas drawer on left of viewport.
+ *
  * @param {*} isOpen
- * @returns
+ * @return
  */
-export function setIsDrawerOpened(isOpen) {
+export function setIsDrawerOpened( isOpen ) {
 	return {
 		type: 'SET_DRAWER_OPENED',
 		isOpen,
@@ -51,9 +50,10 @@ export function setIsDrawerOpened(isOpen) {
  * NOTE: does not have any navigation side-effect.
  *
  * @param {*} path
- * @returns
+ * @param     flow
+ * @return
  */
-export function setActiveFlow(flow) {
+export function setActiveFlow( flow ) {
 	return {
 		type: 'SET_ACTIVE_FLOW',
 		flow,
@@ -66,9 +66,9 @@ export function setActiveFlow(flow) {
  * NOTE: does not have any navigation side-effect.
  *
  * @param {*} path
- * @returns
+ * @return
  */
-export function setActiveStep(path) {
+export function setActiveStep( path ) {
 	return {
 		type: 'SET_ACTIVE_STEP',
 		path,
@@ -81,7 +81,7 @@ export function setActiveStep(path) {
  * @param {*} currentData
  * @returns
  */
- export function setCurrentOnboardingData(currentData) {
+export function setCurrentOnboardingData(currentData) {
 	return {
 		type: 'SET_CURRENT_DATA',
 		currentData,
@@ -92,11 +92,32 @@ export function setActiveStep(path) {
  * Updates general settings.
  *
  * @param {*} settings
- * @returns
+ * @return
  */
-export function updateSettings(settings) {
+export function updateSettings( settings ) {
 	return {
 		type: 'UPDATE_SETTINGS',
 		settings,
+	};
+}
+
+export function setIsSidebarOpened( isOpen ) {
+	return {
+		type: 'SET_SIDEBAR_OPENED',
+		isOpen,
+	};
+}
+
+export function setSidebarActiveView( view ) {
+	return {
+		type: 'SET_SIDEBAR_ACTIVE_VIEW',
+		view,
+	};
+}
+
+export function updatePreviewSettings( previewSettings ) {
+	return {
+		type: 'SET_PREVIEW_SETTINGS',
+		previewSettings,
 	};
 }

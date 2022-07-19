@@ -60,6 +60,9 @@ const StepGetStartedExperience = lazy(() =>
 	import('../../pages/Steps/GetStarted/GetStartedExperience')
 );
 const StepPrimarySetup = lazy(() => import('../../pages/Steps/PrimaryStep'));
+
+const GetStartedLearnMoreHelp = lazy(() => import('../../pages/Steps/GetStarted/SidebarComponents/LearnMore/Help'));
+
 /**
  * All information pages should be prefixed with `/page`.
  *
