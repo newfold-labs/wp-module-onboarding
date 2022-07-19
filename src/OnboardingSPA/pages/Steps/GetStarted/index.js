@@ -1,27 +1,25 @@
-import CommonLayout from '../../../components/Layouts/Common';
-import { store as nfdOnboardingStore } from '../../../store';
 import { useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from '@wordpress/data';
+
+import { store as nfdOnboardingStore } from '../../../store';
+import CommonLayout from '../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../components/NewfoldLargeCard';
-import { VIEW_NAV_GET_STARTED } from '../../../../constants';
 
 const StepGetStarted = () => {
 	const location = useLocation();
 
-	useEffect(() => {}, [location]);
+	const { setIsSidebarOpened } = useDispatch( nfdOnboardingStore );
 
-	const { setDrawerActiveView, setIsDrawerOpened } =
-		useDispatch(nfdOnboardingStore);
+	useEffect( () => {
+		setIsSidebarOpened( false );
+	}, [] );
 
-	useEffect(() => {
-		setIsDrawerOpened(true);
-		setDrawerActiveView(VIEW_NAV_GET_STARTED);
-	}, []);
+	useEffect( () => {}, [ location ] );
 
 	return (
 		<CommonLayout isBgPrimary isCentered>
-			<NewfoldLargeCard/>
+			<NewfoldLargeCard />
 		</CommonLayout>
 	);
 };
