@@ -5,8 +5,10 @@
  * @param content
  * @returns GenericHtml
  */
-const GenericHtml = ({content}) => {
-	return (
+
+
+ const GenericHtml = ({content}) => {
+  	return (
     <section class="nfd-card-generic-text">
       <div dangerouslySetInnerHTML={{ __html: content }} />
     </section>
