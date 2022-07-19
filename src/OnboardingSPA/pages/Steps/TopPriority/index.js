@@ -50,11 +50,12 @@ const StepTopPriority = (props) => {
 			return 0;
 	};
 
-	useEffect(() => {
-		if (isLargeViewport) {
-			setIsDrawerOpened(true);
+	useEffect( () => {
+		if ( isLargeViewport ) {
+			setIsDrawerOpened( true );
 		}
-	}, []);
+		setIsSidebarOpened( false );
+	}, [] );
 
 	useEffect(() => {
 		async function setInitialData() {

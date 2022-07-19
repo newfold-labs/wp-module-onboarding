@@ -18,6 +18,7 @@ final class Data {
 			'currentPlan'       => self::current_plan(),
 			'currentFlow'       => self::current_flow(),
 			'pluginInstallHash' => Permissions::rest_get_plugin_install_hash(),
+			'previewSettings'   => self::preview_settings(),
 		);
 	}
 
@@ -75,5 +76,17 @@ final class Data {
 		}
 
 		return Flows::get_default_flow();
+	}
+
+	public static function preview_settings() {
+		 $block_editor_context = new \WP_Block_Editor_Context( array( 'name' => 'core/edit-site' ) );
+		 $custom_settings      = array(
+			 'siteUrl' => \site_url(),
+		 );
+
+		 return array(
+			 'settings'     => \get_block_editor_settings( $custom_settings, $block_editor_context ),
+			 'globalStyles' => \wp_get_global_styles(),
+		 );
 	}
 } // END \NewfoldLabs\WP\Module\Onboarding\Data()

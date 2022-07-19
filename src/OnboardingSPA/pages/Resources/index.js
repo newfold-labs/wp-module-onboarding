@@ -6,15 +6,16 @@ import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 const PageResources = () => {
-	const { setIsDrawerOpened, setDrawerActiveView } =
-		useDispatch(nfdOnboardingStore);
+	const { setIsDrawerOpened, setDrawerActiveView, setIsSidebarOpened } =
+		useDispatch( nfdOnboardingStore );
 
-	useEffect(() => {
-		setIsDrawerOpened(true);
-		setDrawerActiveView(VIEW_NAV_PAGE);
-	}, []);
+	useEffect( () => {
+		setIsSidebarOpened( false );
+		setIsDrawerOpened( true );
+		setDrawerActiveView( VIEW_NAV_PAGE );
+	}, [] );
 
-	return <CommonLayout isPadded>{__('Resources Page.')}</CommonLayout>;
+	return <CommonLayout isPadded>{ __( 'Resources Page.' ) }</CommonLayout>;
 };
 
 export default PageResources;

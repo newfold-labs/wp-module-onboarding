@@ -5,13 +5,14 @@ import { useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 
 const PageWhatToExpect = () => {
-	const { setIsDrawerOpened, setDrawerActiveView } =
-		useDispatch(nfdOnboardingStore);
+	const { setIsDrawerOpened, setDrawerActiveView, setIsSidebarOpened } =
+		useDispatch( nfdOnboardingStore );
 
-	useEffect(() => {
-		setIsDrawerOpened(true);
-		setDrawerActiveView(VIEW_NAV_PAGE);
-	}, []);
+	useEffect( () => {
+		setIsSidebarOpened( false );
+		setIsDrawerOpened( true );
+		setDrawerActiveView( VIEW_NAV_PAGE );
+	}, [] );
 
 	return <CommonLayout isCentered>What To Expect</CommonLayout>;
 };

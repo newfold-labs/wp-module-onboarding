@@ -1,47 +1,46 @@
 import { useLocation } from 'react-router-dom';
-import { useMediaQuery } from '@wordpress/compose';
-import StepNavigation from './step-navigation';
 import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 
 import { store as nfdOnboardingStore } from '../../store';
 import ExitToWordPress from '../ExitToWordPress';
+import HeaderEnd from './components/HeaderEnd';
 
 /**
  * Interface header rendered into header render prop in <InterfaceSkeleton />.
  *
- * @returns
+ * @return Header
  */
 const Header = () => {
 	const location = useLocation();
 
-	const { firstStep } = useSelect((select) => {
+	const { firstStep } = useSelect( ( select ) => {
 		return {
-			firstStep: select(nfdOnboardingStore).getFirstStep(),
+			firstStep: select( nfdOnboardingStore ).getFirstStep(),
 		};
-	}, []);
+	}, [] );
 	const { previousStep, nextStep } = useSelect(
-		(select) => {
+		( select ) => {
 			return {
-				previousStep: select(nfdOnboardingStore).getPreviousStep(),
-				nextStep: select(nfdOnboardingStore).getNextStep(),
+				previousStep: select( nfdOnboardingStore ).getPreviousStep(),
+				nextStep: select( nfdOnboardingStore ).getNextStep(),
 			};
 		},
-		[location.path]
+		[ location.path ]
 	);
 	const isGettingStarted = firstStep?.path === location?.pathname;
 	return (
 		<div className="nfd-onboarding-header">
 			<div className="nfd-onboarding-header__start">
-				{isGettingStarted ? (
+				{ isGettingStarted ? (
 					<ExitToWordPress origin="header-first-step" />
-				) : null}
+				) : null }
 			</div>
 			<div className="nfd-onboarding-header__center">
-				{/* Centered Header Slot */}
+				{ /* Centered Header Slot */ }
 			</div>
 			<div className="nfd-onboarding-header__end">
-				<StepNavigation />
+				<HeaderEnd />
 			</div>
 		</div>
 	);

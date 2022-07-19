@@ -1,0 +1,35 @@
+.interface-interface-skeleton__sidebar {
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+}
+
+.nfd-onboarding-sidebar__panel {
+	height: 100%;
+	position: relative;
+	width: 0;
+	overflow: hidden;
+	transition: width 100ms linear;
+
+	@include reduce-motion("transition");
+
+	&-inner {
+		position: relative;
+		width: $nav-sidebar-width;
+		height: 100%;
+		overflow: hidden;
+		visibility: hidden;
+		transition: visibility 100ms linear;
+
+		@include reduce-motion("transition");
+	}
+}
+
+.nfd-onboarding-sidebar__panel.is-open {
+	width: $nav-sidebar-width;
+
+	.nfd-onboarding-sidebar__panel-inner,
+	.interface-interface-skeleton__sidebar {
+		visibility: visible;
+	}
+}
