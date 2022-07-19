@@ -76,6 +76,15 @@ export function getDesignSteps( state ) {
 }
 
 /**
+ * Gets get-started setup steps to display in drawer submenu.
+ * @param {*} state
+ * @returns
+ */
+export function getGetStartedSteps(state) {
+	return state.flow.steps.getStartedSteps;
+}
+
+/**
  * Get the path to the current step.
  *
  * @param {*} state
