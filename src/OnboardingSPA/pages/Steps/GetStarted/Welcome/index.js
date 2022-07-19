@@ -39,37 +39,40 @@ const StepWelcome = () => {
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard>
 				<div className='welcome-card'>
-					<CardHeader heading={currentStep.heading} subHeading={currentStep.subheading + brandName.replace(/\b(\w)/g, s => s.toUpperCase())} ></CardHeader>
+					<CardHeader
+						heading={ __(currentStep.heading, 'wp-module-onboarding') }
+						subHeading={ __(currentStep.subheading, 'wp-module-onboarding') + brandName.replace(/\b(\w)/g, s => s.toUpperCase())} >
+					</CardHeader>
 					<TabPanel
 						className="nfd-onboarding-overview__tab-panel"
 						tabs={[
 							{
-								name: tabContent.tab1.name,
-								title: tabContent.tab1.title,
+								name: __(tabContent.tab1.name, 'wp-module-onboarding'),
+								title: __(tabContent.tab1.title, 'wp-module-onboarding'),
 								className: tabContent.tab1.className,
 								content: <Tab
-									title={tabContent.tab1.title}
-									text={tabContent.tab1.text}
+									title={ __(tabContent.tab1.title, 'wp-module-onboarding')}
+									text={ __(tabContent.tab1.text, 'wp-module-onboarding')}
 									imgType={tabContent.tab1.imgType}
 									className={tabContent.tab1.className} />
 							},
 							{
-								name: tabContent.tab2.name,
-								title: tabContent.tab2.title,
+								name: __(tabContent.tab2.name, 'wp-module-onboarding'),
+								title: __(tabContent.tab2.title, 'wp-module-onboarding'),
 								className: tabContent.tab2.className,
 								content: <Tab
-									title={tabContent.tab2.title}
-									text={tabContent.tab2.text}
+									title={__(tabContent.tab2.title, 'wp-module-onboarding')}
+									text={ __(tabContent.tab2.text, 'wp-module-onboarding') }
 									imgType={tabContent.tab2.imgType}
 									className={tabContent.tab2.className} />
 							},
 							{
-								name: tabContent.tab3.name,
-								title: tabContent.tab3.title,
+								name: __(tabContent.tab3.name, 'wp-module-onboarding'),
+								title: __(tabContent.tab3.title, 'wp-module-onboarding'),
 								className: tabContent.tab3.className,
 								content: <Tab
-									title={tabContent.tab3.title}
-									text={tabContent.tab3.text}
+									title={ __(tabContent.tab3.title, 'wp-module-onboarding') }
+									text={ __(tabContent.tab3.text, 'wp-module-onboarding') }
 									imgType={tabContent.tab3.imgType}
 									className={tabContent.tab3.className} />
 							},
@@ -78,7 +81,7 @@ const StepWelcome = () => {
 						{( tab ) => <div>{tab.content}</div>}
 
 					</TabPanel>
-					<Button text={"Start Setup"} handleClick={handleClick}></Button>
+					<Button text={ __("Start Setup", 'wp-module-onboarding') } handleClick={handleClick}></Button>
 				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>
