@@ -5,7 +5,7 @@ import Sidebar from '../Sidebar';
 import { store as nfdOnboardingStore } from '../../store';
 import { setFlow } from '../../utils/api/flow';
 import { kebabCase } from 'lodash';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { useEffect, Fragment } from '@wordpress/element';
@@ -22,7 +22,6 @@ import { SlotFillProvider } from '@wordpress/components';
  * @return WPComponent
  */
 const App = () => {
-	const navigate = useNavigate();
 	const location = useLocation();
 	const isLargeViewport = useViewportMatch('medium');
 	const pathname = kebabCase(location.pathname);
@@ -54,22 +53,13 @@ const App = () => {
 		document.body.classList.add(`nfd-brand-${newfoldBrand}`);
 	}, [newfoldBrand]);
 
-	useEffect(() => {
-		if (location.pathname.includes('/step')) {
-			setActiveFlow(onboardingFlow);
-
-			if (location.pathname.includes(onboardingFlow))
-				setActiveStep(location.pathname);
-			else {
-				const [first, ...rest] = location.pathname
-					.substring(1)
-					.split('/');
-				setActiveStep(`/${onboardingFlow}/${rest.join('/')}`);
-				navigate(`/${onboardingFlow}/${rest.join('/')}`);
-			}
+	useEffect( () => {
+		if ( location.pathname.includes( '/step' ) ) {
+			setActiveFlow( onboardingFlow );
+			setActiveStep( location.pathname );
 		}
 		syncStoreToDB();
-	}, [location.pathname, onboardingFlow]);
+	}, [ location.pathname, onboardingFlow ] );
 
 	return (
 		<Fragment>

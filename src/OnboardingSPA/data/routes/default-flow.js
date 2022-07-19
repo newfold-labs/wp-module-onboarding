@@ -24,6 +24,7 @@ import {
 	VIEW_DESIGN_THEME_STYLES,
 	VIEW_DESIGN_TYPOGRAPHY,
 	VIEW_NAV_GET_STARTED,
+	VIEW_NAV_DESIGN,
 } from '../../../constants';
 
 /**
@@ -35,34 +36,42 @@ import {
  * Steps increment by 10, allowing ample room for new steps to insert between.
  */
 
-const PageResources = lazy(() => import('../../pages/Resources'));
-const PageWhatToExpect = lazy(() => import('../../pages/WhatToExpect'));
+const PageResources = lazy( () => import( '../../pages/Resources' ) );
+const PageWhatToExpect = lazy( () => import( '../../pages/WhatToExpect' ) );
 
-const StepIndex = lazy(() => import('../../pages/Steps/index'));
-const StepGetStarted = lazy(() => import('../../pages/Steps/GetStarted'));
-const StepTopPriority = lazy(() => import('../../pages/Steps/TopPriority'));
-const StepBasicInfo = lazy(() => import('../../pages/Steps/BasicInfo'));
-const StepDesignThemes = lazy(() => import('../../pages/Steps/DesignThemes'));
-const StepDesignThemeStyles = lazy(() =>
-	import('../../pages/Steps/DesignThemeStyles')
+const StepIndex = lazy( () => import( '../../pages/Steps/index' ) );
+const StepGetStarted = lazy( () => import( '../../pages/Steps/GetStarted' ) );
+const StepTopPriority = lazy( () => import( '../../pages/Steps/TopPriority' ) );
+const StepBasicInfo = lazy( () => import( '../../pages/Steps/BasicInfo' ) );
+const StepDesignThemes = lazy( () =>
+	import( '../../pages/Steps/DesignThemes' )
 );
-const StepDesignColors = lazy(() => import('../../pages/Steps/DesignColors'));
-const StepDesignTypography = lazy(() =>
-	import('../../pages/Steps/DesignTypography')
+const StepDesignThemeStyles = lazy( () =>
+	import( '../../pages/Steps/DesignThemeStyles' )
 );
-const StepDesignHeaderMenu = lazy(() =>
-	import('../../pages/Steps/DesignHeaderMenu')
+const StepDesignColors = lazy( () =>
+	import( '../../pages/Steps/DesignColors' )
 );
-const StepSitePages = lazy(() => import('../../pages/Steps/SitePages'));
-const StepSiteFeatures = lazy(() => import('../../pages/Steps/SiteFeatures'));
-const StepWhatNext = lazy(() => import('../../pages/Steps/WhatNext'));
-const StepGetStartedExperience = lazy(() =>
-	import('../../pages/Steps/GetStarted/GetStartedExperience')
+const StepDesignTypography = lazy( () =>
+	import( '../../pages/Steps/DesignTypography' )
 );
-const StepPrimarySetup = lazy(() => import('../../pages/Steps/PrimaryStep'));
+const StepDesignHeaderMenu = lazy( () =>
+	import( '../../pages/Steps/DesignHeaderMenu' )
+);
+const StepSitePages = lazy( () => import( '../../pages/Steps/SitePages' ) );
+const StepSiteFeatures = lazy( () =>
+	import( '../../pages/Steps/SiteFeatures' )
+);
+const StepWhatNext = lazy( () => import( '../../pages/Steps/WhatNext' ) );
+const StepGetStartedExperience = lazy( () =>
+	import( '../../pages/Steps/GetStarted/GetStartedExperience' )
+);
+const StepPrimarySetup = lazy( () =>
+	import( '../../pages/Steps/PrimaryStep' )
+);
 
-const GetStartedLearnMoreHelp = lazy(() =>
-	import('../../pages/Steps/GetStarted/SidebarComponents/LearnMore/Help')
+const GetStartedLearnMoreHelp = lazy( () =>
+	import( '../../pages/Steps/GetStarted/SidebarComponents/LearnMore/Help' )
 );
 
 /**
@@ -80,14 +89,14 @@ export const pages = [
 	},
 	{
 		path: '/page/resources',
-		title: __('Resources', 'wp-module-onboarding'),
+		title: __( 'Resources', 'wp-module-onboarding' ),
 		description: '',
 		Component: PageResources,
 		Icon: post,
 	},
 	{
 		path: '/page/what-to-expect',
-		title: __('What to Expect', 'wp-module-onboarding'),
+		title: __( 'What to Expect', 'wp-module-onboarding' ),
 		description: '',
 		Component: PageWhatToExpect,
 		Icon: redo,
@@ -102,8 +111,8 @@ export const pages = [
 export const steps = [
 	{
 		path: '/wp-setup/step/get-started/welcome',
-		title: __('Get Started', 'wp-module-onboarding'),
-		heading: __('Get Started', 'wp-module-onboarding'),
+		title: __( 'Get Started', 'wp-module-onboarding' ),
+		heading: __( 'Get Started', 'wp-module-onboarding' ),
 		subheading: __(
 			'Make your website dreams a reality!',
 			'wp-module-onboarding'
@@ -117,13 +126,13 @@ export const steps = [
 		priority: 20,
 		VIEW: VIEW_NAV_GET_STARTED,
 		SidebarComponents: {
-			LearnMore: [GetStartedLearnMoreHelp],
+			LearnMore: [ GetStartedLearnMoreHelp ],
 		},
 	},
 	{
 		path: '/wp-setup/step/get-started/experience',
-		title: __('WordPress Experience', 'wp-module-onboarding'),
-		heading: __('WordPress Experience', 'wp-module-onboarding'),
+		title: __( 'WordPress Experience', 'wp-module-onboarding' ),
+		heading: __( 'WordPress Experience', 'wp-module-onboarding' ),
 		subheading: __(
 			'Make your website dreams a reality!',
 			'wp-module-onboarding'
@@ -134,16 +143,16 @@ export const steps = [
 		),
 		Component: StepGetStartedExperience,
 		Icon: home,
-		priority: 30,
+		priority: 40,
 		VIEW: VIEW_NAV_GET_STARTED,
 		SidebarComponents: {
-			LearnMore: [GetStartedLearnMoreHelp],
+			LearnMore: [ GetStartedLearnMoreHelp ],
 		},
 	},
 	{
 		path: '/wp-setup/step/top-priority',
-		title: __('Top Priority', 'wp-module-onboarding'),
-		heading: __('Tell us priority one', 'wp-module-onboarding'),
+		title: __( 'Top Priority', 'wp-module-onboarding' ),
+		heading: __( 'Tell us priority one', 'wp-module-onboarding' ),
 		subheading: __(
 			"We'll prioritize getting you there.",
 			'wp-module-onboarding'
@@ -154,25 +163,25 @@ export const steps = [
 		),
 		Component: StepTopPriority,
 		Icon: navigation,
-		priority: 40,
+		priority: 60,
 	},
 	{
 		path: '/wp-setup/step/basic-info',
-		title: __('Basic Info', 'wp-module-onboarding'),
-		heading: __('Hello my site is _______.', 'wp-module-onboarding'),
-		subheading: __('Tell the web who you are.', 'wp-module-onboarding'),
+		title: __( 'Basic Info', 'wp-module-onboarding' ),
+		heading: __( 'Hello my site is _______.', 'wp-module-onboarding' ),
+		subheading: __( 'Tell the web who you are.', 'wp-module-onboarding' ),
 		description: __(
 			'Help visitors, search results and social media identify your site.',
 			'wp-module-onboarding'
 		),
 		Component: StepBasicInfo,
 		Icon: info,
-		priority: 60,
+		priority: 80,
 	},
 	{
 		path: '/wp-setup/step/design/themes',
-		title: __('Themes', 'wp-module-onboarding'),
-		heading: __("Let's make you look your best", 'wp-module-onboarding'),
+		title: __( 'Themes', 'wp-module-onboarding' ),
+		heading: __( "Let's make you look your best", 'wp-module-onboarding' ),
 		subheading: __(
 			'Find a WordPress Theme to present polished and compelling.',
 			'wp-module-onboarding'
@@ -183,12 +192,12 @@ export const steps = [
 		),
 		Component: StepDesignThemes,
 		Icon: brush,
-		priority: 80,
+		priority: 100,
 		VIEW: VIEW_DESIGN_THEMES,
 	},
 	{
 		path: '/wp-setup/step/design/theme-styles',
-		title: __('Theme Styles', 'wp-module-onboarding'),
+		title: __( 'Theme Styles', 'wp-module-onboarding' ),
 		heading: __(
 			'Lets tailor your theme for the perfect fit',
 			'wp-module-onboarding'
@@ -203,13 +212,13 @@ export const steps = [
 		),
 		Component: StepDesignThemeStyles,
 		Icon: styles,
-		priority: 100,
+		priority: 120,
 		VIEW: VIEW_DESIGN_THEME_STYLES,
 	},
 	{
 		path: '/wp-setup/step/design/colors',
-		title: __('Colors', 'wp-module-onboarding'),
-		heading: __("What's your color palette?", 'wp-module-onboarding'),
+		title: __( 'Colors', 'wp-module-onboarding' ),
+		heading: __( "What's your color palette?", 'wp-module-onboarding' ),
 		subheading: __(
 			"We'll paint everything with your colors for a fresh, crisp look.",
 			'wp-module-onboarding'
@@ -220,13 +229,13 @@ export const steps = [
 		),
 		Component: StepDesignColors,
 		Icon: color,
-		priority: 120,
+		priority: 140,
 		VIEW: VIEW_DESIGN_COLORS,
 	},
 	{
 		path: '/wp-setup/step/design/typography',
-		title: __('Typography', 'wp-module-onboarding'),
-		heading: __("What's your font style?", 'wp-module-onboarding'),
+		title: __( 'Typography', 'wp-module-onboarding' ),
+		heading: __( "What's your font style?", 'wp-module-onboarding' ),
 		subheading: __(
 			'Impress your visitors with strong branding and aesthetics.',
 			'wp-module-onboarding'
@@ -237,12 +246,12 @@ export const steps = [
 		),
 		Component: StepDesignTypography,
 		Icon: typography,
-		priority: 140,
+		priority: 160,
 		VIEW: VIEW_DESIGN_TYPOGRAPHY,
 	},
 	{
 		path: '/wp-setup/step/design/header-menu',
-		title: __('Header & Menu', 'wp-module-onboarding'),
+		title: __( 'Header & Menu', 'wp-module-onboarding' ),
 		heading: __(
 			"Let's make the right things visible",
 			'wp-module-onboarding'
@@ -257,13 +266,13 @@ export const steps = [
 		),
 		Component: StepDesignHeaderMenu,
 		Icon: header,
-		priority: 160,
+		priority: 180,
 		VIEW: VIEW_DESIGN_HEADER_MENU,
 	},
 	{
 		path: '/wp-setup/step/site-pages',
-		title: __('Pages', 'wp-module-onboarding'),
-		heading: __("We've got some page ideas", 'wp-module-onboarding'),
+		title: __( 'Pages', 'wp-module-onboarding' ),
+		heading: __( "We've got some page ideas", 'wp-module-onboarding' ),
 		subheading: __(
 			'Start closer to the finish line than a blank canvas.',
 			'wp-module-onboarding'
@@ -274,12 +283,12 @@ export const steps = [
 		),
 		Component: StepSitePages,
 		Icon: copy,
-		priority: 180,
+		priority: 200,
 	},
 	{
 		path: '/wp-setup/step/site-features',
-		title: __('Features', 'wp-module-onboarding'),
-		heading: __('Our toolbox is your toolbox', 'wp-module-onboarding'),
+		title: __( 'Features', 'wp-module-onboarding' ),
+		heading: __( 'Our toolbox is your toolbox', 'wp-module-onboarding' ),
 		subheading: __(
 			"We've learned a lot in 16 years of WordPress! Now that expertise is yours.",
 			'wp-module-onboarding'
@@ -290,12 +299,12 @@ export const steps = [
 		),
 		Component: StepSiteFeatures,
 		Icon: plugins,
-		priority: 200,
+		priority: 220,
 	},
 	{
 		path: '/wp-setup/step/what-next',
-		title: __('What Next', 'wp-module-onboarding'),
-		heading: __('How else can we help?', 'wp-module-onboarding'),
+		title: __( 'What Next', 'wp-module-onboarding' ),
+		heading: __( 'How else can we help?', 'wp-module-onboarding' ),
 		subheading: __(
 			"We've got the basics setup, but we can help with any next steps.",
 			'wp-module-onboarding'
@@ -306,41 +315,42 @@ export const steps = [
 		),
 		Component: StepWhatNext,
 		Icon: moveTo,
-		priority: 220,
+		priority: 240,
 	},
 ];
 
 /**
  * Top-level registration of all routes.
  */
-export const routes = [...pages, ...steps];
+export const routes = [ ...pages, ...steps ];
 
 /**
  * Filter-out the design steps and register a fake step in their place.
  *
- * @returns
+ * @return
  */
 export const initialTopSteps = () => {
-	const topSteps = filter(steps, (step) => {
+	const topSteps = filter( steps, ( step ) => {
 		return (
-			!step.path.includes('/step/get-started') &&
-			!step.path.includes('/step/design')
+			! step.path.includes( '/step/get-started' ) &&
+			! step.path.includes( '/step/design' )
 		);
-	});
+	} );
 
 	const designStep = {
 		/* This is a fake step to stand-in for all Design steps and does not have a Component to render */
 		path: '/wp-setup/step/design/themes',
-		title: __('Design', 'wp-module-onboarding'),
+		title: __( 'Design', 'wp-module-onboarding' ),
 		description: '',
 		Icon: brush,
-		priority: 80 /* matches priority for first design step */,
+		VIEW: VIEW_NAV_DESIGN,
+		priority: 100 /* matches priority for first design step */,
 	};
 
 	const getStartedStep = {
 		path: '/wp-setup/step/get-started/welcome',
-		title: __('Get Started', 'wp-module-onboarding'),
-		heading: __('Get Started', 'wp-module-onboarding'),
+		title: __( 'Get Started', 'wp-module-onboarding' ),
+		heading: __( 'Get Started', 'wp-module-onboarding' ),
 		subheading: __(
 			'Make your website dreams a reality!',
 			'wp-module-onboarding'
@@ -350,32 +360,33 @@ export const initialTopSteps = () => {
 			'wp-module-onboarding'
 		),
 		Icon: home,
+		VIEW: VIEW_NAV_GET_STARTED,
 		priority: 20,
 	};
 
-	topSteps.push(designStep);
-	topSteps.push(getStartedStep);
+	topSteps.push( designStep );
+	topSteps.push( getStartedStep );
 
-	return orderBy(topSteps, ['priority'], ['asc']);
+	return orderBy( topSteps, [ 'priority' ], [ 'asc' ] );
 };
 
 /**
  * Filter out all non-design steps.
  *
- * @returns
+ * @return
  */
 export const initialDesignSteps = () => {
-	const designSteps = filter(steps, (step) => {
-		return step.path.includes('/step/design/');
-	});
+	const designSteps = filter( steps, ( step ) => {
+		return step.path.includes( '/step/design/' );
+	} );
 
 	return designSteps;
 };
 
 export const initialGetStartedSteps = () => {
-	const getStartedSteps = filter(steps, (step) => {
-		return step.path.includes('/step/get-started');
-	});
+	const getStartedSteps = filter( steps, ( step ) => {
+		return step.path.includes( '/step/get-started' );
+	} );
 
 	return getStartedSteps;
 };
