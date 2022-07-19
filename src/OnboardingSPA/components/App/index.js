@@ -1,11 +1,8 @@
-import { kebabCase } from 'lodash';
-import { useEffect, Fragment } from '@wordpress/element';
-import { useViewportMatch } from '@wordpress/compose';
+import { FullscreenMode, InterfaceSkeleton } from '@wordpress/interface';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { Fragment } from '@wordpress/element';
+import { useEffect, Fragment } from '@wordpress/element';
 import classNames from 'classnames';
 import { kebabCase } from 'lodash';
-import { useEffect } from '@wordpress/element';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useViewportMatch } from '@wordpress/compose';
 import { SlotFillProvider } from '@wordpress/components';
@@ -15,6 +12,7 @@ import Header from '../Header';
 import Content from '../Content';
 import Drawer from '../Drawer';
 import Sidebar from '../Sidebar';
+import { setFlow } from '../../utils/api/flow'
 
 /**
  * Primary app that renders the <InterfaceSkeleton />.
@@ -29,18 +27,23 @@ const App = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const pathname = kebabCase( location.pathname );
 
-	const { isDrawerOpen, newfoldBrand, onboardingFlow } = useSelect(
-		( select ) => {
-			return {
-				isDrawerOpen: select( nfdOnboardingStore ).isDrawerOpened(),
-				newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
-				onboardingFlow: select( nfdOnboardingStore ).getOnbardingFlow(),
-			};
-		},
-		[]
-	);
+	const { isDrawerOpen, newfoldBrand, onboardingFlow, currentData } = useSelect((select) => {
+		return {
+			isDrawerOpen: select(nfdOnboardingStore).isDrawerOpened(),
+			newfoldBrand: select(nfdOnboardingStore).getNewfoldBrand(),
+			onboardingFlow: select(nfdOnboardingStore).getOnboardingFlow(),
+			currentData: select(nfdOnboardingStore).getCurrentOnboardingData()
+		};
+	}, []);
 
 	const { setActiveStep, setActiveFlow } = useDispatch( nfdOnboardingStore );
+
+	async function syncStoreToDB() {
+		const result = await setFlow(currentData);
+		if(result.error != null){
+			console.error('Unable to Save data!');
+		}
+	}
 
 	useEffect( () => {
 		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
@@ -60,6 +63,7 @@ const App = () => {
 				navigate( `/${ onboardingFlow }/${ rest.join( '/' ) }` );
 			}
 		}
+		syncStoreToDB();
 	}, [ location.pathname, onboardingFlow ] );
 
 	return (

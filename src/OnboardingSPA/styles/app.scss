@@ -1,21 +1,35 @@
 @import "wordpress";
 @import "interface";
+@import "icons";
 @import "branding";
 @import "utilities";
+
+// CSS for Components
 @import "../components/Drawer/stylesheet";
 @import "../components/Header/stylesheet";
 @import "../components/Content/stylesheet";
 @import "../components/Layouts/stylesheet";
+@import "../components/MiniPreview/stylesheet";
+@import "../components/Tooltip/stylesheet";
+@import "../components/ImageUploader/stylesheet";
+@import "../components/SocialMediaForm/stylesheet";
+@import "../components/TextInput/stylesheet";
 @import "../components/ExitToWordPress/stylesheet";
 @import "../components/Accordion/stylesheet";
 @import "../components/StepOverview/stylesheet";
 @import "../components/NewfoldLargeCard/stylesheet";
+@import "../components/SelectableCard/stylesheet";
+@import "../components/SelectableCardList/stylesheet";
+@import "../components/HeadingWithSubHeading/stylesheet";
 @import "../components/Button/stylesheet";
 @import "../components/CardHeader/stylesheet";
 @import "../components/GenericHtml/stylesheet";
 @import "../components/Sidebar/stylesheet";
 @import "../components/Sidebar/components/LearnMore/stylesheet";
 @import "../components/LivePreview/stylesheet";
+
+// CSS for Pages
+@import "../pages/Steps/BasicInfo/stylesheet.scss";
 @import "../pages/Steps/DesignColors/stylesheet";
 @import "../pages/Steps/GetStarted/SiteTypeSetup/PrimarySite/stylesheet.scss";
 @import "../pages/Steps/GetStarted/SiteTypeSetup/SecondarySite/stylesheet.scss";

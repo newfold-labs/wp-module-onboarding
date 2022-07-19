@@ -10,15 +10,15 @@ body {
 		--nfd-onboarding-icon: url("../../Brands/bluehost/icon.svg");
 		--nfd-onboarding-logo: url("../../Brands/bluehost/logo.svg");
 		--nfd-onboarding-primary: #3575d3;
+		--nfd-onboarding-highlighted--rgb: 123, 177, 253;
 		--nfd-onboarding-primary-alt: #2c76dc;
 		--nfd-onboarding-secondary: #495c77;
 		--nfd-onboarding-secondary-alt: #304663;
 		--nfd-onboarding-tertiary: #7bb1fd;
 		--nfd-onboarding-tertiary-alt: #84c0fc;
-		--nfd-onboarding-light: #ffffff;
-		--nfd-onboarding-light-gray: #f0f0f0;
-		--nfd-onboarding-light-gray-alt: #efefef;
 		--nfd-onboarding-light-gray-3: #f2f2f2;
+		--nfd-onboarding-light: #ffffff;
+		--nfd-onboarding-border: 219, 219, 219;
 		--nfd-onboarding-dark: #1d2a3b;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
 		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
@@ -34,15 +34,16 @@ body {
 		--nfd-onboarding-icon: url("../../Brands/hostgator/icon.svg");
 		--nfd-onboarding-logo: url("../../Brands/hostgator/logo.svg");
 		--nfd-onboarding-primary: #2e93ee;
+		--nfd-onboarding-highlighted--rgb: 30, 32, 68;
 		--nfd-onboarding-primary-alt: #3b97ff;
 		--nfd-onboarding-secondary: #cdd8df;
 		--nfd-onboarding-secondary-alt: #363636;
+		--nfd-onboarding-light-gray-3: #f2f2f2;
 		--nfd-onboarding-tertiary: #ffcf00;
 		--nfd-onboarding-tertiary-alt: #ff9144;
 		--nfd-onboarding-light: #f5f6f8;
-		--nfd-onboarding-light-gray: #f0f0f0;
-		--nfd-onboarding-light-gray-alt: #efefef;
 		--nfd-onboarding-dark: #1e2044;
+		--nfd-onboarding-border: 245, 246, 248;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
 		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
 	}
@@ -57,15 +58,16 @@ body {
 		--nfd-onboarding-icon: url("../../Brands/webcom/icon.svg");
 		--nfd-onboarding-logo: url("../../Brands/webcom/logo.svg");
 		--nfd-onboarding-primary: #4b75fc;
+		--nfd-onboarding-highlighted--rgb: 13, 71, 251;
 		--nfd-onboarding-primary-alt: #0d47fb;
 		--nfd-onboarding-secondary: #d4dce1;
 		--nfd-onboarding-secondary-alt: #171003;
 		--nfd-onboarding-tertiary: #fed96a;
 		--nfd-onboarding-tertiary-alt: #fec101;
+		--nfd-onboarding-light-gray-3: #f2f2f2;
 		--nfd-onboarding-light: #ffffff;
-		--nfd-onboarding-light-gray: #f0f0f0;
-		--nfd-onboarding-light-gray-alt: #efefef;
 		--nfd-onboarding-dark: #000000;
+		--nfd-onboarding-border: 219, 219, 219;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary-alt);
 		--nfd-onboarding-drawer-icon-active-fill: var(
 			--nfd-onboarding-tertiary-alt

@@ -1,4 +1,7 @@
 body {
+	--nfd-publish-icon: url("../static/icons/publish.svg");
+	--nfd-selling-icon: url("../static/icons/sell.svg");
+	--nfd-design-icon: url("../static/icons/design.svg");
 	--more-icon: url("../static/icons/more.svg");
 	--reload-icon: url("../static/icons/reload.svg");
 	--forward-icon: url("../static/icons/forward.svg");
@@ -15,6 +18,7 @@ body {
 	--yelp-icon: url("../static/icons/social/yelp.svg");
 	--youtube-icon: url("../static/icons/social/youtube.svg");
 	--tiktok-icon: url("../static/icons/social/tiktok.svg");
+
 	--business-icon: url("../static/icons/business.svg");
 	--business-white-icon: url("../static/icons/business-white.svg");
 
