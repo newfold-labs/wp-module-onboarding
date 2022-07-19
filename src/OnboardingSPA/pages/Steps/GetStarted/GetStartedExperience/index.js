@@ -3,12 +3,13 @@ import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import CardHeader from '../../../../components/CardHeader';
 import NavCardButton from '../../../../components/Button/NavCardButton';
 import GenericHtml from '../../../../components/GenericHtml';
-import content from './content.json';
-import { RadioControl } from '@wordpress/components';
-import { useState, useEffect } from '@wordpress/element';
 import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
-import { select, useDispatch, useSelect } from '@wordpress/data';
+import content from './content.json';
+
+import { RadioControl } from '@wordpress/components';
+import { useState, useEffect } from '@wordpress/element';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -23,24 +24,27 @@ const GetStartedExperience = () => {
 
 	const { setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
 
-    const { currentData } = useSelect((select) => {
-        return {
-            currentData: select(nfdOnboardingStore).getCurrentOnboardingData()
-        };
-    }, []);
+	const { currentData } = useSelect((select) => {
+		return {
+			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+		};
+	}, []);
 
-	const { setDrawerActiveView, setIsDrawerOpened } = useDispatch(
-		nfdOnboardingStore
-	);
+	const {
+		setDrawerActiveView,
+		setIsDrawerOpened,
+		setIsSidebarOpened,
+	} = useDispatch(nfdOnboardingStore);
 
 	useEffect(() => {
 		setIsDrawerOpened(false);
+		setIsSidebarOpened(false);
 		setDrawerActiveView(VIEW_NAV_GET_STARTED);
 	}, []);
 
 	useEffect(() => {
 		async function getFlowData() {
-			setWpComfortLevel(currentData.data['wpComfortLevel']);
+			setWpComfortLevel(currentData.data.wpComfortLevel);
 			setisLoaded(true);
 		}
 		if (!isLoaded) {
@@ -50,8 +54,8 @@ const GetStartedExperience = () => {
 
 	useEffect(() => {
 		const saveData = async () => {
-			var currentDataCopy = currentData;
-			currentDataCopy.data['wpComfortLevel'] = wpComfortLevel || '0';
+			const currentDataCopy = currentData;
+			currentDataCopy.data.wpComfortLevel = wpComfortLevel || '0';
 			setCurrentOnboardingData(currentDataCopy);
 		};
 		if (isLoaded) saveData();

@@ -10,16 +10,17 @@ import { VIEW_NAV_GET_STARTED } from '../../../../constants';
 const StepGetStarted = () => {
 	const location = useLocation();
 
-	const { setIsSidebarOpened } = useDispatch( nfdOnboardingStore );
+	const { setIsSidebarOpened } = useDispatch(nfdOnboardingStore);
 
-	useEffect( () => {
-		setIsSidebarOpened( false );
-	}, [] );
+	useEffect(() => {
+		setIsSidebarOpened(false);
+	}, []);
 
-	useEffect( () => {}, [ location ] );
+	useEffect(() => {}, [location]);
 
-	const { setDrawerActiveView, setIsDrawerOpened } =
-		useDispatch(nfdOnboardingStore);
+	const { setDrawerActiveView, setIsDrawerOpened } = useDispatch(
+		nfdOnboardingStore
+	);
 
 	useEffect(() => {
 		setIsDrawerOpened(false);

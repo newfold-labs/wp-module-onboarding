@@ -61,7 +61,9 @@ const StepGetStartedExperience = lazy(() =>
 );
 const StepPrimarySetup = lazy(() => import('../../pages/Steps/PrimaryStep'));
 
-const GetStartedLearnMoreHelp = lazy(() => import('../../pages/Steps/GetStarted/SidebarComponents/LearnMore/Help'));
+const GetStartedLearnMoreHelp = lazy(() =>
+	import('../../pages/Steps/GetStarted/SidebarComponents/LearnMore/Help')
+);
 
 /**
  * All information pages should be prefixed with `/page`.
@@ -100,19 +102,43 @@ export const pages = [
 export const steps = [
 	{
 		path: '/wp-setup/step/get-started/welcome',
-		title: __('Welcome', 'wp-module-onboarding'),
+		title: __('Get Started', 'wp-module-onboarding'),
+		heading: __('Get Started', 'wp-module-onboarding'),
+		subheading: __(
+			'Make your website dreams a reality!',
+			'wp-module-onboarding'
+		),
+		description: __(
+			"We'll use this to personalize this onboarding and future recommendations",
+			'wp-module-onboarding'
+		),
 		Component: StepGetStarted,
 		Icon: home,
 		priority: 20,
 		VIEW: VIEW_NAV_GET_STARTED,
+		SidebarComponents: {
+			LearnMore: [GetStartedLearnMoreHelp],
+		},
 	},
 	{
 		path: '/wp-setup/step/get-started/experience',
 		title: __('WordPress Experience', 'wp-module-onboarding'),
+		heading: __('WordPress Experience', 'wp-module-onboarding'),
+		subheading: __(
+			'Make your website dreams a reality!',
+			'wp-module-onboarding'
+		),
+		description: __(
+			"We'll use this to personalize this onboarding and future recommendations",
+			'wp-module-onboarding'
+		),
 		Component: StepGetStartedExperience,
 		Icon: home,
 		priority: 30,
 		VIEW: VIEW_NAV_GET_STARTED,
+		SidebarComponents: {
+			LearnMore: [GetStartedLearnMoreHelp],
+		},
 	},
 	{
 		path: '/wp-setup/step/top-priority',
