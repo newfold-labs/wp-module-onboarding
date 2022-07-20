@@ -57,7 +57,7 @@ class FlowController {
 	 *
 	 * @param \WP_REST_Request $request Request model.
 	 *
-	 * @return array
+	 * @return \WP_REST_Response
 	 */
 	public function get_onboarding_flow_data( \WP_REST_Request $request ) {
 		// check if data is available in the database if not then fetch the default dataset
@@ -78,7 +78,7 @@ class FlowController {
 	 *
 	 * @param \WP_REST_Request $request Request model.
 	 *
-	 * @return array
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function save_onboarding_flow_data( \WP_REST_Request $request ) {
 		$flow_data = array();
