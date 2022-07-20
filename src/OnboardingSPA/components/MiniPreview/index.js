@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n'; 
 /**
  * A Mini Preview Section.
  *
@@ -25,7 +26,10 @@ const MiniPreview = ({ title, desc, icon }) => {
                             src={iconPreview.url}
                             alt="Thumb"
                         />)}
-                        <div className="browser-row-title_bar-text">{titlePreview?.substring(0, 18)}</div>
+                        <div className="browser-row-title_bar-text">{__(
+                            titlePreview?.substring(0, 18),
+                            'wp-module-onboarding'
+                        )}</div>
                     </div>
                 </div>
                 <div className="browser-row-search">
@@ -35,7 +39,10 @@ const MiniPreview = ({ title, desc, icon }) => {
                         <div className="browser-icon" style={{ backgroundImage: 'var(--reload-icon)' }}></div>
                     </div>
                     <div className="browser-row-search__search-box">
-                        <input className="browser-row-search__search-box_input" type="text" value={urlPreview}></input>
+                        <input className="browser-row-search__search-box_input" type="text" value={__(
+                            urlPreview,
+                            'wp-module-onboarding'
+                        )}></input>
                     </div>
                     <div className="browser-row-search__more">
                         <div className="browser-icon" style={{ backgroundImage: 'var(--more-icon)' }}></div>
@@ -43,16 +50,24 @@ const MiniPreview = ({ title, desc, icon }) => {
                 </div>
                 <div className="browser-content">
                     <div className="browser-content_top-row">
-                        <h4 className="browser-content_top-row-name">{titlePreview}</h4>
-                        <a className="browser-content_top-row-link">{urlPreview}</a>
+                        <h4 className="browser-content_top-row-name">{__(
+                            titlePreview,
+                            'wp-module-onboarding'
+                        )}</h4>
+                        <a className="browser-content_top-row-link">{__(
+                            urlPreview,
+                            'wp-module-onboarding'
+                        )}</a>
                     </div>
                     <h5 className="browser-content_desc">
-                        {descPreview}
+                        {__(
+                            descPreview,
+                            'wp-module-onboarding'
+                        )}
                     </h5>
                     <div className="browser-content_social">
                         <div className="browser-content_social_icon" style={{ backgroundImage: 'var(--facebook-icon)' }} />
                         <div className="browser-content_social_icon" style={{ backgroundImage: 'var(--twitter-icon)' }} />
-                        <div className="browser-content_social_icon" style={{ backgroundImage: 'var(--instagram-icon)' }} />
                     </div>
                 </div>
             </div>
