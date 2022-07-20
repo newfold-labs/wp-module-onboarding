@@ -10,9 +10,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { kebabCase } from 'lodash';
 import { useViewportMatch } from '@wordpress/compose';
-import { useEffect, Fragment } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { SlotFillProvider } from '@wordpress/components';
+import { useEffect, Fragment, useState } from '@wordpress/element';
 import { FullscreenMode, InterfaceSkeleton } from '@wordpress/interface';
 
 /**
@@ -44,13 +44,15 @@ const App = () => {
 		};
 	}, []);
 
-	const { setActiveStep, setActiveFlow } = useDispatch(nfdOnboardingStore);
+	const [didVisitBasicInfo, setDidVisitBasicInfo] = useState(false);
+	const { setActiveStep, setActiveFlow, setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
 
 	async function syncSocialSettings() {
-		const result = await setSettings(currentData);
+		const result = await setSettings(currentData?.data?.socialData);
 		if (result?.error != null) {
 			console.error('Unable to Save Social Data!');
 		}
+		setDidVisitBasicInfo(false);
 	}
 
 	async function syncStoreToDB() {
@@ -60,9 +62,15 @@ const App = () => {
 			const result = await setFlow(currentData);
 			if (result?.error != null) {
 				console.error('Unable to Save data!');
+			}else{
+				setCurrentOnboardingData(result?.body);
 			}
-
+			if (didVisitBasicInfo) syncSocialSettings();
 		}
+
+		// Check if the Basic Info page was visited
+		if (location?.pathname.includes('basic-info'))
+			setDidVisitBasicInfo(true);
 	}
 
 	useEffect(() => {
