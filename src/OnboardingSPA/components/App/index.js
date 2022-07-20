@@ -44,9 +44,11 @@ const App = () => {
 	const { setActiveStep, setActiveFlow } = useDispatch(nfdOnboardingStore);
 
 	async function syncStoreToDB() {
-		const result = await setFlow(currentData);
-		if (result.error != null) {
-			console.error('Unable to Save data!');
+		if(currentData){
+			const result = await setFlow(currentData);
+			if (result.error != null) {
+				console.error('Unable to Save data!');
+			}
 		}
 	}
 
