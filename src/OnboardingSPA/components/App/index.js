@@ -2,17 +2,18 @@ import Header from '../Header';
 import Content from '../Content';
 import Drawer from '../Drawer';
 import Sidebar from '../Sidebar';
-import { store as nfdOnboardingStore } from '../../store';
-import { setFlow } from '../../utils/api/flow';
-import { kebabCase } from 'lodash';
-import { useLocation, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
+import { setFlow } from '../../utils/api/flow';
+import { setSettings } from '../../utils/api/settings';
+import { store as nfdOnboardingStore } from '../../store';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { useEffect, Fragment } from '@wordpress/element';
+import { kebabCase } from 'lodash';
 import { useViewportMatch } from '@wordpress/compose';
+import { useEffect, Fragment } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { FullscreenMode, InterfaceSkeleton } from '@wordpress/interface';
 import { SlotFillProvider } from '@wordpress/components';
+import { FullscreenMode, InterfaceSkeleton } from '@wordpress/interface';
 
 /**
  * Primary app that renders the <InterfaceSkeleton />.
@@ -32,23 +33,35 @@ const App = () => {
 		newfoldBrand,
 		onboardingFlow,
 		currentData,
+		firstStep
 	} = useSelect((select) => {
 		return {
 			isDrawerOpen: select(nfdOnboardingStore).isDrawerOpened(),
 			newfoldBrand: select(nfdOnboardingStore).getNewfoldBrand(),
 			onboardingFlow: select(nfdOnboardingStore).getOnboardingFlow(),
 			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+			firstStep: select(nfdOnboardingStore).getFirstStep(),
 		};
 	}, []);
 
 	const { setActiveStep, setActiveFlow } = useDispatch(nfdOnboardingStore);
 
+	async function syncSocialSettings() {
+		const result = await setSettings(currentData);
+		if (result?.error != null) {
+			console.error('Unable to Save Social Data!');
+		}
+	}
+
 	async function syncStoreToDB() {
-		if(currentData){
+		// The First Welcome Step doesn't have any Store changes
+		const isFirstStep = location?.pathname === firstStep?.path;
+		if (currentData && !isFirstStep){
 			const result = await setFlow(currentData);
-			if (result.error != null) {
+			if (result?.error != null) {
 				console.error('Unable to Save data!');
 			}
+
 		}
 	}
 
