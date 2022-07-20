@@ -20,10 +20,6 @@ const StepPrimarySetup = () => {
 
   const [clickedIndex, changeCategory] = useState(-1);
 
-    // const handleClick = (e) => {
-    //     console.log("Button Click to be handled here");
-    // }
-
   const handleCategoryClick = (idxOfElm) => {
     changeCategory(idxOfElm);
   }

@@ -10,10 +10,10 @@
 			"icon": "var(--business-icon)",
 			"iconWhite": "var(--business-white-icon)",
 			"subCategories": [
-				"Fashion, apparel and accessories",
-				"Electronics and computers",
-				"Food and drink",
 				"Jewelry",
+				"Food and drink",
+				"Fashion, apparel",
+				"Electronics and computers",
 				"Motherhood & Baby",
 				"Furniture and decoration",
 				"Education and learning"

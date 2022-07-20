@@ -18,6 +18,12 @@ const StepPrimarySetup = () => {
     setDrawerActiveView(VIEW_NAV_PRIMARY);
   }, []);
 
+  const [clickedIndex, changeCategory] = useState(-1);
+
+  const handleCategoryClick = (idxOfElm) => {
+    changeCategory(idxOfElm);
+  }
+
   const handleClick = (e) => {
       console.log("Button Click to be handled here");
   }
@@ -65,8 +71,12 @@ const StepPrimarySetup = () => {
 
             <div className='subCategoriesSection'>
             {
-              categoriesArray[currentElm]?.subCategories?.map(item => {
-                return <span className="nfd-card-category">{item}</span> 
+              categoriesArray[currentElm]?.subCategories?.map((item,idx) => {
+                return <span 
+                          onClick={(e) => handleCategoryClick(idx)} 
+                          className={`${(clickedIndex === idx) ? 'chosenPrimaryCategory ' : ''}nfd-card-category`}>
+                            {item}
+                        </span> 
               })
             }
             </div>

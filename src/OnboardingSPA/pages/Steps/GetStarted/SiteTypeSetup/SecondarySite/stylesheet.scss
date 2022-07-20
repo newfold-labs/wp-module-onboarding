@@ -43,33 +43,11 @@
 	}
 
 	.subCategoriesSection {
-		// color: black;
-		// padding: 1rem;
-		// background-color: var(--nfd-onboarding-light-gray-3);
-		// margin: auto 0rem 1rem 1rem;
-		// cursor: pointer;
+		.nfd-card-category {
+			&.chosenPrimaryCategory {
+				background-color: var(--wp-admin-theme-color-darker-10);
+				color: var(--nfd-onboarding-light);
+			}
+		}
 	}
 }
-
-// .nfd-card-category-label {
-// 	color: var(--nfd-onboarding-black);
-// 	padding: 1rem;
-// 	display: inline-block;
-// 	background-color: var(--nfd-onboarding-light-gray-3);
-// 	margin: auto 0rem 1rem 1rem;
-// 	border-radius: 2.5rem;
-// 	height: 10px;
-// }
-
-// .blackText {
-// 	color: var(--nfd-onboarding-black);
-// 	font-size: 1rem;
-// 	font-weight: 700;
-// 	margin-top: 2rem;
-// }
-
-// .tellUsInput {
-// 	width: 30vw;
-// 	margin: 0 1rem 1rem;
-// 	height: 4vh;
-// }
