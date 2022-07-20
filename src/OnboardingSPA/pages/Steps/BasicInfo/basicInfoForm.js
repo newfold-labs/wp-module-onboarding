@@ -1,14 +1,15 @@
-import { useDispatch, useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n'; 
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 
 import TextInput from '../../../components/TextInput';
-import SocialMediaForm from '../../../components/SocialMediaForm';
 import MiniPreview from '../../../components/MiniPreview';
-import ImageUploader from '../../../components/ImageUploader';
+import { getSettings } from '../../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../../store';
+import ImageUploader from '../../../components/ImageUploader';
+import SocialMediaForm from '../../../components/SocialMediaForm';
 
-import { getSettings, setSettings } from '../../../utils/api/settings';
 
 /**
  * Basic Info Form.
@@ -93,13 +94,9 @@ const BasicInfoForm = () => {
             var currentDataCopy = currentData;
             currentDataCopy.data['siteLogo'] = debouncedFlowData.data['siteLogo'] ?? currentDataCopy.data['siteLogo'];
             currentDataCopy.data['blogName'] = debouncedFlowData.data['blogName'] ?? currentDataCopy.data['blogName'];
-            currentDataCopy.data['blogDescription'] = debouncedFlowData.data['blogDescription'] ?? currentDataCopy.data['blogDescription'];
+            currentDataCopy.data['blogDescription'] = debouncedFlowData.data['blogDescription'] ?? currentDataCopy.data['blogDescription']; 
             currentDataCopy.data['socialData'] = debouncedFlowData.data['socialData'] ?? currentDataCopy.data['socialData'];
             setCurrentOnboardingData(currentDataCopy);
-
-            if (isValidSocials) {
-                const socialResult = await setSettings(socialData);
-            }
         };
         if (debouncedFlowData) saveData();
     }, [debouncedFlowData]);
@@ -107,7 +104,10 @@ const BasicInfoForm = () => {
     return (
         <div className="basic-info">
             <div className={`${isError ? 'error__show' : 'error__hide'}`}>
-                Error Saving Data, Try Again!
+                {__(
+                    "Error Saving Data, Try Again!",
+                    'wp-module-onboarding'
+                )}
             </div>
             <div className="basic-info-form">
                 <div className="basic-info-form__left">
