@@ -22,7 +22,7 @@ final class Brands {
 			'accountUrl'       => 'https://my.bluehost.com',
 			'domainsUrl'       => 'https://my.bluehost.com/hosting/app?lil=1#/domains',
 			'emailUrl'         => 'https://my.bluehost.com/hosting/app?lil=1#/email-office',
-			'hireExpertsUrl'   => array(
+			'hireExpertsInfo'   => array(
 				'defaultLink' 		=> 'https://www.bluehost.com/solutions/full-service', 
 				'utmParameters' 	=> array(
 						'utm_source' 	=> 'blog',
@@ -44,7 +44,7 @@ final class Brands {
 			'accountUrl'       => 'https://my.bluehost.in',
 			'domainsUrl'       => 'https://my.bluehost.in/hosting/app?lil=1#/domains',
 			'emailUrl'         => 'https://my.bluehost.in/hosting/app?lil=1#/email-office',
-			'hireExpertsUrl'   => array(
+			'hireExpertsInfo'   => array(
 				'defaultLink' 		=> 'https://www.bluehost.in/solutions/full-service', 
 				'utmParameters' 	=> array(
 						'utm_source' 	=> 'blog',

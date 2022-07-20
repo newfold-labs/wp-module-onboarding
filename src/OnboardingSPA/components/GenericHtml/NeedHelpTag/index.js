@@ -12,16 +12,17 @@ import { __ } from '@wordpress/i18n';
  * @returns NeedHelpTag
  */
 
-function needHelpUrl() {
-  const brand = select(nfdOnboardingStore).getHireExpertsUrl();
-  const helpLink = addQueryArgs(brand.defaultLink, brand.utmParameters);
-  return helpLink;
-}
+// function needHelpUrl() {
+//   const brand = select(nfdOnboardingStore).getHireExpertsUrl();
+//   const helpLink = addQueryArgs(brand.defaultLink, brand.utmParameters);
+//   return helpLink;
+// }
 
-const NeedHelpTag = ({question='Need Help?', urlLabel=' Hire our experts'}) => {
+const NeedHelpTag = ({question, urlLabel}) => {
+    const hireExpertsUrl = select(nfdOnboardingStore).getHireExpertsUrl();
 	return (
     <GenericHtml
-        content = {__(question) + "<a href=" + needHelpUrl() + " target={'_blank'}>" + __(urlLabel) + "</a>"}
+        content = {__(question) + "<a href=" + hireExpertsUrl + " target={'_blank'}>" + __(urlLabel) + "</a>"}
       />  
 	);
 };

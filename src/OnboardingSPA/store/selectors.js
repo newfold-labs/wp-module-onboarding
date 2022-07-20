@@ -1,5 +1,5 @@
 import { filter, findIndex } from 'lodash';
-
+import { addQueryArgs } from '@wordpress/url';
 import { coreDataStore } from '@wordpress/core-data';
 import { createRegistrySelector } from '@wordpress/data';
 import createSelector from 'rememo';
@@ -42,7 +42,7 @@ export function getNewfoldBrand( state ) {
  * @return string
  */
  export function getHireExpertsUrl( state ) {
-	return state.runtime.currentBrand.hireExpertsUrl;
+	return addQueryArgs(state.runtime.currentBrand.hireExpertsInfo.defaultLink, state.runtime.currentBrand.hireExpertsInfo.utmParameters) ;
 }
 
 /**
