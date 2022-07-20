@@ -27,10 +27,12 @@
 @import "../components/Sidebar/stylesheet";
 @import "../components/Sidebar/components/LearnMore/stylesheet";
 @import "../components/LivePreview/stylesheet";
+@import "../pages/Steps/DesignColors/stylesheet";
+@import "../pages/Steps/GetStarted/GetStartedExperience/stylesheet";
+@import "../components/Button/NavCardButton/stylesheet";
 
 // CSS for Pages
 @import "../pages/Steps/BasicInfo/stylesheet.scss";
-@import "../pages/Steps/DesignColors/stylesheet";
 @import "../pages/Steps/GetStarted/SiteTypeSetup/PrimarySite/stylesheet.scss";
 @import "../pages/Steps/GetStarted/SiteTypeSetup/SecondarySite/stylesheet.scss";
 

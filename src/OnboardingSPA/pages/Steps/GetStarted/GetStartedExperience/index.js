@@ -3,13 +3,13 @@ import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import CardHeader from '../../../../components/CardHeader';
 import NavCardButton from '../../../../components/Button/NavCardButton';
 import GenericHtml from '../../../../components/GenericHtml';
-import content from './content.json';
-import { RadioControl } from '@wordpress/components';
-import { useState, useEffect } from '@wordpress/element';
 import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
-import { useDispatch } from '@wordpress/data';
-import { getFlow, setFlow } from '../../../../utils/api/flow';
+import content from './content.json';
+
+import { RadioControl } from '@wordpress/components';
+import { useState, useEffect } from '@wordpress/element';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -20,29 +20,31 @@ import { __ } from '@wordpress/i18n';
 
 const GetStartedExperience = () => {
 	const [isLoaded, setisLoaded] = useState(false);
-	const [wpComfortLevel, setWpComfortLevel] = useState();
+	const [wpComfortLevel, setWpComfortLevel] = useState('0');
 
-	const { setDrawerActiveView, setIsDrawerOpened } = useDispatch(
-		nfdOnboardingStore
-	);
+	const { setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
+
+	const { currentData } = useSelect((select) => {
+		return {
+			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+		};
+	}, []);
+
+	const {
+		setDrawerActiveView,
+		setIsDrawerOpened,
+		setIsSidebarOpened,
+	} = useDispatch(nfdOnboardingStore);
 
 	useEffect(() => {
-		setIsDrawerOpened(true);
+		setIsDrawerOpened(false);
+		setIsSidebarOpened(false);
 		setDrawerActiveView(VIEW_NAV_GET_STARTED);
 	}, []);
 
-	function createSaveData() {
-		return {
-			data: {
-				wpComfortLevel,
-			},
-		};
-	}
-
 	useEffect(() => {
 		async function getFlowData() {
-			const data = await getFlow();
-			setWpComfortLevel(data?.body?.data.wpComfortLevel || '0');
+			setWpComfortLevel(currentData.data.wpComfortLevel);
 			setisLoaded(true);
 		}
 		if (!isLoaded) {
@@ -52,7 +54,9 @@ const GetStartedExperience = () => {
 
 	useEffect(() => {
 		const saveData = async () => {
-			const result = await setFlow(createSaveData());
+			const currentDataCopy = currentData;
+			currentDataCopy.data.wpComfortLevel = wpComfortLevel || '0';
+			setCurrentOnboardingData(currentDataCopy);
 		};
 		if (isLoaded) saveData();
 	}, [wpComfortLevel]);
