@@ -8,7 +8,7 @@ import { TabPanel } from '@wordpress/components';
 import CommonLayout from '../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import CardHeader from '../../../../components/CardHeader';
-import Button from '../../../../components/Button';
+import NavCardButton from '../../../../components/Button/NavCardButton';
 import Tab from '../../../../components/Tab';
 import tabContent from './tabContent.json';
 
@@ -41,7 +41,7 @@ const StepWelcome = () => {
 				<div className='welcome-card'>
 					<CardHeader
 						heading={ __(currentStep.heading, 'wp-module-onboarding') }
-						subHeading={ __(currentStep.subheading, 'wp-module-onboarding') + brandName.replace(/\b(\w)/g, s => s.toUpperCase())} >
+						subHeading={ __(currentStep.subheading, 'wp-module-onboarding') + brandName.replace(/\b(\w)/g, s => s.toUpperCase()) + '.'} >
 					</CardHeader>
 					<TabPanel
 						className="nfd-onboarding-overview__tab-panel"
@@ -81,7 +81,7 @@ const StepWelcome = () => {
 						{( tab ) => <div>{tab.content}</div>}
 
 					</TabPanel>
-					<Button text={ __("Start Setup", 'wp-module-onboarding') } handleClick={handleClick}></Button>
+					<NavCardButton text={ __("Start Setup", 'wp-module-onboarding') } handleClick={handleClick}></NavCardButton>
 				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>

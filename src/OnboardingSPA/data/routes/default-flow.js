@@ -104,16 +104,16 @@ export const steps = [
 	{
 		path: '/wp-setup/step/get-started/welcome',
 		title: __('Get Started', 'wp-module-onboarding'),
-		heading: __('Get Started', 'wp-module-onboarding'),
+		heading: __('Make your website dreams a reality!', 'wp-module-onboarding'),
 		subheading: __(
-			'Make your website dreams a reality!',
+			'with WordPress and ',
 			'wp-module-onboarding'
 		),
 		description: __(
 			"We'll use this to personalize this onboarding and future recommendations",
 			'wp-module-onboarding'
 		),
-		Component: StepGetStarted,
+		Component: StepWelcome,
 		Icon: home,
 		priority: 20,
 		VIEW: VIEW_NAV_GET_STARTED,
@@ -342,14 +342,6 @@ export const initialTopSteps = () => {
 		path: '/wp-setup/step/get-started/welcome',
 		title: __('Get Started', 'wp-module-onboarding'),
 		heading: __('Get Started', 'wp-module-onboarding'),
-		subheading: __(
-			'Make your website dreams a reality!',
-			'wp-module-onboarding'
-		),
-		description: __(
-			"We'll use this to personalize this onboarding and future recommendations",
-			'wp-module-onboarding'
-		),
 		Icon: home,
 		priority: 20,
 	};
