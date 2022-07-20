@@ -374,14 +374,6 @@ export const initialDesignSteps = () => {
 };
 
 export const initialGetStartedSteps = () => {
-	const getStartedSteps = filter(steps, (step) => {
-		return step.path.includes('/step/get-started');
-	});
-
-	return getStartedSteps;
-};
-
-export const initialGetStartedSteps = () => {
     const getStartedSteps = filter(steps, (step) => {
         return step.path.includes('/step/get-started');
     });

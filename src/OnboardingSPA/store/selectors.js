@@ -75,10 +75,6 @@ export function getDesignSteps( state ) {
 	return state.flow.steps.designSteps;
 }
 
-export function getGetStartedSteps(state) {
-	return state.flow.steps.getStartedSteps;
-}
-
 /**
  * Gets get-started setup steps to display in drawer submenu.
  * @param {*} state
