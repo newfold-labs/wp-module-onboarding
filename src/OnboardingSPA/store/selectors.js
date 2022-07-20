@@ -36,6 +36,16 @@ export function getNewfoldBrand( state ) {
 }
 
 /**
+ * Gets dynamic Hire Experts URL for Need Help Tag per brand
+ *
+ * @param {*} state
+ * @return string
+ */
+ export function getHireExpertsUrl( state ) {
+	return state.runtime.currentBrand.hireExpertsUrl;
+}
+
+/**
  * Gets the current Onboarding Data
  * @param {*} state
  * @returns string

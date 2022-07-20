@@ -2,7 +2,7 @@ import CommonLayout from '../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import CardHeader from '../../../../components/CardHeader';
 import NavCardButton from '../../../../components/Button/NavCardButton';
-import GenericHtml from '../../../../components/GenericHtml';
+import NeedHelpTag from '../../../../components/GenericHtml/NeedHelpTag';
 import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
 import content from './content.json';
@@ -87,7 +87,7 @@ const GetStartedExperience = () => {
 						text={__(content.buttonText)}
 						disabled={wpComfortLevel == '0'}
 					/>
-					<GenericHtml content={__(content.needHelpText)} />
+					<NeedHelpTag />
 				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>
