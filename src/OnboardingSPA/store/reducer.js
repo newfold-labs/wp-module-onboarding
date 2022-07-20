@@ -7,7 +7,7 @@ import {
 	steps as initialSteps,
 	initialDesignSteps,
 	initialTopSteps,
-     initialGetStartedSteps,
+	initialGetStartedSteps,
 } from '../data/routes/index';
 import { sidebars } from '../data/sidebars/index';
 
@@ -19,13 +19,13 @@ export function flow(
 			allSteps: initialSteps,
 			topSteps: initialTopSteps(),
 			designSteps: initialDesignSteps(),
-               getStartedSteps: initialGetStartedSteps(),
+			getStartedSteps: initialGetStartedSteps(),
 			currentStep: '/wp-setup/step/what-next',
 		},
 	},
 	action
 ) {
-	switch ( action.type ) {
+	switch (action.type) {
 		case 'SET_ACTIVE_STEP':
 			return {
 				...state,
@@ -48,7 +48,7 @@ export function drawer(
 	state = { isOpen: false, view: VIEW_NAV_PRIMARY },
 	action
 ) {
-	switch ( action.type ) {
+	switch (action.type) {
 		case 'SET_DRAWER_OPENED':
 			return {
 				...state,
@@ -63,7 +63,6 @@ export function drawer(
 
 	return state;
 }
-
 export function currentData(state = {}, action) {
 	switch (action.type) {
 		case 'SET_CURRENT_DATA':
@@ -84,7 +83,7 @@ export function sidebar(
 	},
 	action
 ) {
-	switch ( action.type ) {
+	switch (action.type) {
 		case 'SET_SIDEBAR_OPENED':
 			return {
 				...state,
@@ -100,8 +99,8 @@ export function sidebar(
 	return state;
 }
 
-export function runtime( state = {}, action ) {
-	switch ( action.type ) {
+export function runtime(state = {}, action) {
+	switch (action.type) {
 		case 'SET_RUNTIME':
 			return {
 				...state,
@@ -117,8 +116,8 @@ export function runtime( state = {}, action ) {
 	return state;
 }
 
-export function settings( state = {}, action ) {
-	switch ( action.type ) {
+export function settings(state = {}, action) {
+	switch (action.type) {
 		case 'UPDATE_SETTINGS':
 			return {
 				...state,
@@ -129,11 +128,11 @@ export function settings( state = {}, action ) {
 	return state;
 }
 
-export default combineReducers( {
+export default combineReducers({
 	drawer,
 	runtime,
 	currentData,
 	settings,
 	flow,
 	sidebar,
-} );
+});

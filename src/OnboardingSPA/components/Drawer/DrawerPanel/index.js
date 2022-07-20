@@ -8,6 +8,7 @@ import {
 	VIEW_NAV_DESIGN,
 	VIEW_NAV_PAGE,
 	VIEW_NAV_PRIMARY,
+	VIEW_NAV_GET_STARTED,
 } from '../../../../constants';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -20,7 +21,7 @@ import DesignThemes from './DesignThemes';
 import DesignTypography from './DesignTypography';
 import { ESCAPE } from '@wordpress/keycodes';
 import NavDesign from './NavDesign';
-import NavGetStarted from './NavGetStarted'
+import NavGetStarted from './NavGetStarted';
 import NavPage from './NavPage';
 import NavPrimary from './NavPrimary';
 import { __ } from '@wordpress/i18n';
@@ -39,8 +40,9 @@ const DrawerPanel = ({ isOpen }) => {
 		};
 	}, []);
 
-	const { setIsDrawerOpened, setDrawerActiveView } =
-		useDispatch(nfdOnboardingStore);
+	const { setIsDrawerOpened, setDrawerActiveView } = useDispatch(
+		nfdOnboardingStore
+	);
 
 	const closeOnEscape = (event) => {
 		if (event.keyCode === ESCAPE && !event.defaultPrevented) {
@@ -90,7 +92,9 @@ const DrawerPanel = ({ isOpen }) => {
 					<div className="nfd-onboarding-drawer__panel-inside">
 						{VIEW_NAV_PRIMARY === drawerView && <NavPrimary />}
 						{VIEW_NAV_DESIGN === drawerView && <NavDesign />}
-                              { 'nav-get-started' === drawerView && <NavGetStarted />}
+						{VIEW_NAV_GET_STARTED === drawerView && (
+							<NavGetStarted />
+						)}
 						{VIEW_NAV_PAGE === drawerView && <NavPage />}
 						{VIEW_DESIGN_THEMES === drawerView && (
 							<WithDesignBack>
