@@ -9,28 +9,36 @@ const ImageUploader = ({ icon, iconSetter }) => {
 
     const inputRef = useRef(null);
     async function updateItem(fileData) {
-        const res = await uploadImage(fileData);
-        
-        const id = res.body.id;
-        const url = res.body.source_url;
-        iconSetter({
-            id,
-            url
-        });
+        if(fileData){
+            const res = await uploadImage(fileData);
+            if (res) {
+                const id = res?.body?.id;
+                const url = res?.body?.source_url;
+                iconSetter({
+                    id,
+                    url
+                });
+            }
+            else console.error('Image Upload Failed');
+        }
+        else console.error('No File Attached');
     }
 
     const handleClick = () => {
-        inputRef.current.click();
+        inputRef?.current.click();
     };
 
     const imageChange = (e) => {
-        if (e.target.files && e.target.files.length > 0) {
-            updateItem(e.target.files[0]);
+        if (e?.target?.files && e?.target?.files.length > 0) {
+            updateItem(e?.target?.files[0]);
         }
     };
 
     const removeSelectedImage = () => {
         iconSetter(0);
+        if (inputRef?.current?.files.length > 0){
+            inputRef.current.value = "";
+        }
     };
 
     return (
