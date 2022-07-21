@@ -311,7 +311,7 @@ export const steps = [
 	},
 	{
 		path: '*',
-		title: __('Error', 'wp-module-onboarding'),
+		title: __('Error Page', 'wp-module-onboarding'),
 		Component: ErrorPage,
 		Icon: moveTo,
 		priority: 230,

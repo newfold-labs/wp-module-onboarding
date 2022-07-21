@@ -17,7 +17,7 @@ const ErrorPage = () => {
     
     return (
         <CommonLayout isVerticallyCentered>
-            <HeadingWithSubHeading title="Error" subtitle="Wups"/>
+            <HeadingWithSubHeading title="Error 404" subtitle="Please Check Again!"/>
         </CommonLayout>
     );
 };
