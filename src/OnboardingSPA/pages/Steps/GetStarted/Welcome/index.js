@@ -3,7 +3,6 @@ import { __ } from '@wordpress/i18n';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelect } from '@wordpress/data';
-import { TabPanel } from '@wordpress/components';
 
 import CommonLayout from '../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
@@ -11,6 +10,7 @@ import CardHeader from '../../../../components/CardHeader';
 import NavCardButton from '../../../../components/Button/NavCardButton';
 import Tab from '../../../../components/Tab';
 import tabContent from './tabContent.json';
+import TabPanelHover from '../../../../components/TabPanelHover';
 
 
 /**
@@ -43,7 +43,7 @@ const StepWelcome = () => {
 						heading={ __(currentStep.heading, 'wp-module-onboarding') }
 						subHeading={ __(currentStep.subheading, 'wp-module-onboarding') + brandName.replace(/\b(\w)/g, s => s.toUpperCase()) + '.'} >
 					</CardHeader>
-					<TabPanel
+					<TabPanelHover
 						className="nfd-onboarding-overview__tab-panel"
 						tabs={[
 							{
@@ -80,7 +80,7 @@ const StepWelcome = () => {
 					>
 						{( tab ) => <div>{tab.content}</div>}
 
-					</TabPanel>
+					</TabPanelHover>
 					<NavCardButton text={ __("Start Setup", 'wp-module-onboarding') } handleClick={handleClick}></NavCardButton>
 				</div>
 			</NewfoldLargeCard>
