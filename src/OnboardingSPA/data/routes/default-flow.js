@@ -56,6 +56,7 @@ const StepDesignHeaderMenu = lazy(() =>
 const StepSitePages = lazy(() => import('../../pages/Steps/SitePages'));
 const StepSiteFeatures = lazy(() => import('../../pages/Steps/SiteFeatures'));
 const StepWhatNext = lazy(() => import('../../pages/Steps/WhatNext'));
+const ErrorPage = lazy(() => import('../../pages/ErrorPage/index'));
 const StepGetStartedExperience = lazy(() =>
 	import('../../pages/Steps/GetStarted/GetStartedExperience')
 );
@@ -307,6 +308,13 @@ export const steps = [
 		Component: StepWhatNext,
 		Icon: moveTo,
 		priority: 220,
+	},
+	{
+		path: '*',
+		title: __('Error', 'wp-module-onboarding'),
+		Component: ErrorPage,
+		Icon: moveTo,
+		priority: 230,
 	},
 ];
 
