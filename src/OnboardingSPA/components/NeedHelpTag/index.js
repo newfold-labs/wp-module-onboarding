@@ -18,9 +18,8 @@ const NeedHelpTag = ( {
 	return (
 		<div className="nfd-card-need-help-tag">
 			{ __( question ) }
-			<a href={ hireExpertsUrl } target={ '_blank' } rel="noreferrer">
-				{ ' ' }
-				{ __( urlLabel ) }{ ' ' }
+			<a href={ hireExpertsUrl } target={ '_blank' }>
+				{ __( urlLabel ) }
 			</a>
 		</div>
 	);

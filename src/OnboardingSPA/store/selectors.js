@@ -42,7 +42,8 @@ export function getNewfoldBrand( state ) {
  * @return string
  */
  export function getHireExpertsUrl( state ) {
-	return addQueryArgs(state.runtime.currentBrand.hireExpertsInfo.defaultLink, state.runtime.currentBrand.hireExpertsInfo.utmParameters) ;
+	const hireExpertsInfo = state.runtime.currentBrand.hireExpertsInfo;
+	return addQueryArgs(hireExpertsInfo.defaultLink, hireExpertsInfo.utmParameters) ;
 }
 
 /**
