@@ -1,4 +1,5 @@
 import { filter, findIndex } from 'lodash';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Get the currently active drawer view
@@ -28,6 +29,17 @@ export function isDrawerOpened( state ) {
  */
 export function getNewfoldBrand( state ) {
 	return state.runtime.currentBrand.brand;
+}
+
+/**
+ * Gets dynamic Hire Experts URL for Need Help Tag per brand
+ *
+ * @param {*} state
+ * @return string
+ */
+ export function getHireExpertsUrl( state ) {
+	const hireExpertsInfo = state.runtime.currentBrand.hireExpertsInfo;
+	return addQueryArgs(hireExpertsInfo.defaultLink, hireExpertsInfo.utmParameters) ;
 }
 
 /**
