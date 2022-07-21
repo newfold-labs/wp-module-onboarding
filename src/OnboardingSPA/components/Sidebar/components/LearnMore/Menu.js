@@ -10,10 +10,11 @@ import {
 import classNames from 'classnames';
 
 const LearnMoreMenu = () => {
-	const { isSidebarOpened, sideBarView } = useSelect( ( select ) => {
+	const { isSidebarOpened, sideBarView, currentStep } = useSelect( ( select ) => {
 		return {
 			isSidebarOpened: select( nfdOnboardingStore ).isSidebarOpened(),
 			sideBarView: select( nfdOnboardingStore ).getSidebarView(),
+			currentStep: select(nfdOnboardingStore).getCurrentStep(),
 		};
 	} );
 
@@ -21,11 +22,14 @@ const LearnMoreMenu = () => {
 		useDispatch( nfdOnboardingStore );
 	const toggleSidebar = () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
-		setIsSidebarOpened(
-			sideBarView === SIDEBAR_LEARN_MORE
-				? ! isSidebarOpened
-				: isSidebarOpened
-		);
+		if(!currentStep)
+			setIsSidebarOpened(false);
+		else
+			setIsSidebarOpened(
+				sideBarView === SIDEBAR_LEARN_MORE
+					? ! isSidebarOpened
+					: isSidebarOpened
+			);
 	};
 
 	return (
@@ -37,6 +41,7 @@ const LearnMoreMenu = () => {
 					'is-pressed':
 						isSidebarOpened && sideBarView === SIDEBAR_LEARN_MORE,
 				} ) }
+				disabled={ !currentStep }
 				onClick={ toggleSidebar }
 				icon={ info }
 			></Button>
