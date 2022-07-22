@@ -1,28 +1,22 @@
 {
-    "tab1" : {
-        "name": "tab1",
-        "title": "YOUR CONTENT",
-        "text": "Build a beautiful store with WordPress Blocks and pre-built Block Patterns for common web content layouts.",
-        "className": "tab-one",
-        "imgType": "content-img"
-    },
-    "tab2" : {
-        "name": "tab2",
-        "title": "POWERFUL FEATURES",
-        "text": "Start a store, email newsletter, podcast, course and more using WordPress Plugins and Bluehost.",
-        "className": "tab-two",
-        "imgType": "features-img"
-    },
-    "tab3" : {
-        "name": "tab3",       
-        "title": "MODERN DESIGN",
-        "text": "Setup and refine your store’s design styles, header, footer and page layout templates in the WordPress Site Editor.",
-        "className": "tab-three",
-        "imgType": "design-img"
-    }
+    "tabs": [
+        {
+            "name": "tab1",
+            "title": "YOUR CONTENT",
+            "text": "Build a beautiful store with WordPress Blocks and pre-built Block Patterns for common web content layouts.",
+            "imgType": "content-img"
+        },
+        {
+            "name": "tab2",
+            "title": "POWERFUL FEATURES",
+            "text": "Start a store, email newsletter, podcast, course and more using WordPress Plugins and Bluehost.",
+            "imgType": "features-img"
+        },
+        {
+            "name": "tab3",
+            "title": "MODERN DESIGN",
+            "text": "Setup and refine your store’s design styles, header, footer and page layout templates in the WordPress Site Editor.",
+            "imgType": "design-img"
+        }
+    ]
 }
-
-
-
-
-

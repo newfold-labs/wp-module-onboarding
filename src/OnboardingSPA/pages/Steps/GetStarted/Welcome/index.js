@@ -45,35 +45,17 @@ const StepWelcome = () => {
 					</CardHeader>
 					<TabPanelHover
 						className="nfd-onboarding-overview__tab-panel"
-						tabs={[
-							{
-								name: __(tabContent.tab1.name, 'wp-module-onboarding'),
-								title: __(tabContent.tab1.title, 'wp-module-onboarding'),
+						tabs={tabContent.tabs.map( ( tab ) => {
+							return {
+								name: __( tab.name , 'wp-module-onboarding'),
+								title: __( tab.title , 'wp-module-onboarding'),
 								content: <Tab
-									title={ __(tabContent.tab1.title, 'wp-module-onboarding')}
-									text={ __(tabContent.tab1.text, 'wp-module-onboarding')}
-									imgType={tabContent.tab1.imgType}
-									className={tabContent.tab1.className} />
-							},
-							{
-								name: __(tabContent.tab2.name, 'wp-module-onboarding'),
-								title: __(tabContent.tab2.title, 'wp-module-onboarding'),
-								content: <Tab
-									title={__(tabContent.tab2.title, 'wp-module-onboarding')}
-									text={ __(tabContent.tab2.text, 'wp-module-onboarding') }
-									imgType={tabContent.tab2.imgType}
-									className={tabContent.tab2.className} />
-							},
-							{
-								name: __(tabContent.tab3.name, 'wp-module-onboarding'),
-								title: __(tabContent.tab3.title, 'wp-module-onboarding'),
-								content: <Tab
-									title={ __(tabContent.tab3.title, 'wp-module-onboarding') }
-									text={ __(tabContent.tab3.text, 'wp-module-onboarding') }
-									imgType={tabContent.tab3.imgType}
-									className={tabContent.tab3.className} />
-							},
-						]}
+									title={ __(tab.title, 'wp-module-onboarding')}
+									text={ __(tab.text, 'wp-module-onboarding')}
+									imgType={tab.imgType}
+									className="tab-data" />
+							};
+						} )}
 					>
 						{( tab ) => <div>{tab.content}</div>}
 
