@@ -49,7 +49,6 @@ const StepWelcome = () => {
 							{
 								name: __(tabContent.tab1.name, 'wp-module-onboarding'),
 								title: __(tabContent.tab1.title, 'wp-module-onboarding'),
-								className: tabContent.tab1.className,
 								content: <Tab
 									title={ __(tabContent.tab1.title, 'wp-module-onboarding')}
 									text={ __(tabContent.tab1.text, 'wp-module-onboarding')}
@@ -59,7 +58,6 @@ const StepWelcome = () => {
 							{
 								name: __(tabContent.tab2.name, 'wp-module-onboarding'),
 								title: __(tabContent.tab2.title, 'wp-module-onboarding'),
-								className: tabContent.tab2.className,
 								content: <Tab
 									title={__(tabContent.tab2.title, 'wp-module-onboarding')}
 									text={ __(tabContent.tab2.text, 'wp-module-onboarding') }
@@ -69,7 +67,6 @@ const StepWelcome = () => {
 							{
 								name: __(tabContent.tab3.name, 'wp-module-onboarding'),
 								title: __(tabContent.tab3.title, 'wp-module-onboarding'),
-								className: tabContent.tab3.className,
 								content: <Tab
 									title={ __(tabContent.tab3.title, 'wp-module-onboarding') }
 									text={ __(tabContent.tab3.text, 'wp-module-onboarding') }
