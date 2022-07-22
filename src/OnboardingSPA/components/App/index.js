@@ -44,6 +44,7 @@ const App = () => {
 		};
 	}, []);
 
+	const [isRequestPlaced, setIsRequestPlaced] = useState(false);
 	const [didVisitBasicInfo, setDidVisitBasicInfo] = useState(false);
 	const { setActiveStep, setActiveFlow, setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
 
@@ -59,15 +60,19 @@ const App = () => {
 		// The First Welcome Step doesn't have any Store changes
 		const isFirstStep = location?.pathname === firstStep?.path;
 		if (currentData && !isFirstStep){
-			const result = await setFlow(currentData);
-			if (result?.error != null) {
-				console.error('Unable to Save data!');
-			}else{
-				setCurrentOnboardingData(result?.body);
+			if(!isRequestPlaced){
+				setIsRequestPlaced(true);
+				const result = await setFlow(currentData);
+				if (result?.error != null) {
+					setIsRequestPlaced(false);
+					console.error('Unable to Save data!');
+				} else {
+					setCurrentOnboardingData(result?.body);
+					setIsRequestPlaced(false);
+				}
+				if (didVisitBasicInfo) syncSocialSettings();
 			}
-			if (didVisitBasicInfo) syncSocialSettings();
 		}
-
 		// Check if the Basic Info page was visited
 		if (location?.pathname.includes('basic-info'))
 			setDidVisitBasicInfo(true);
@@ -78,6 +83,7 @@ const App = () => {
 	}, [newfoldBrand]);
 
 	useEffect(() => {
+		syncStoreToDB();
 		if (location.pathname.includes('/step')) {
 			setActiveFlow(onboardingFlow);
 
@@ -91,7 +97,6 @@ const App = () => {
 				navigate(`/${onboardingFlow}/${rest.join('/')}`);
 			}
 		}
-		syncStoreToDB();
 	}, [location.pathname, onboardingFlow]);
 
 	return (
