@@ -13,7 +13,7 @@ const Button = ({ text, handleClick, disabled, className }) => {
 	return (
 		<button
 			type="button"
-			className={`${className} nfd-card-button nfd-steps-card-large-button`}
+			className={`${className} nfd-card-button`}
 			onClick={handleBtnClick}
 			disabled={disabled}
 		>

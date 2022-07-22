@@ -108,7 +108,7 @@ const StepTopPriority = ( props ) => {
 				selected={ selected }
 				onSelectedChange={ setSelected }
 			></SelectableCardList>
-			<div style={ { textAlign: 'center' } }>
+			<div className="center">
 				<p style={ { margin: '16px', fontWeight: '500' } }>
 					{ __(
 						"Where would you like to start? We'll start ",

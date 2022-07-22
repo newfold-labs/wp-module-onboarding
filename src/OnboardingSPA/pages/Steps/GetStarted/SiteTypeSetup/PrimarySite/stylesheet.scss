@@ -1,6 +1,7 @@
 .nfd-setup-primary-categories {
 	width: 40vw;
 	text-align: center;
+	margin-top: 2rem;
 
 	.nfd-card-category {
 		&.chosenPrimaryCategory {
@@ -44,4 +45,8 @@
 	width: 30vw;
 	margin: 0 1rem 1rem;
 	height: 4vh;
+
+	@media (max-width: #{($break-medium - 1)}) {
+		width: 40vw;
+	}
 }

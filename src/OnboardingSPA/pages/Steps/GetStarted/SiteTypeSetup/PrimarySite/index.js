@@ -7,7 +7,7 @@ import { useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 import CardHeader from '../../../../../components/CardHeader';
 import NavCardButton from '../../../../../components/Button/NavCardButton';
-import GenericHtml from "../../../../../components/GenericHtml";
+import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import content from '../content.json';
 
 
@@ -53,13 +53,13 @@ const StepPrimarySetup = () => {
           </div>
 
           <p className='blackText'>or tell us here:</p>
-          <input type="text" className='tellUsInput'/>
+          <input type="text" className='tellUsInput' placeholder='Enter to search your site type'/>
           
           <NavCardButton
             text={__(content.buttonText)}
           />
 
-          <GenericHtml content={__(content.needHelpText, 'wp-module-onboarding')}/>
+          <NeedHelpTag />
       </NewfoldLargeCard>
     </CommonLayout>
   );

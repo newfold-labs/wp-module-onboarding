@@ -7,7 +7,7 @@ import { useDispatch } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 import CardHeader from '../../../../../components/CardHeader';
 import NavCardButton from '../../../../../components/Button/NavCardButton';
-import GenericHtml from "../../../../../components/GenericHtml";
+import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import content from '../content.json';
 
 
@@ -89,7 +89,7 @@ const StepPrimarySetup = () => {
             text={__(content.buttonText)}
           />
 
-          <GenericHtml content={__(content.needHelpText, 'wp-module-onboarding')}/>
+          <NeedHelpTag />
       </NewfoldLargeCard>
     </CommonLayout>
   );

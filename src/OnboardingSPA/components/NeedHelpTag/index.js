@@ -11,7 +11,7 @@ import { __ } from '@wordpress/i18n';
  */
 
 const NeedHelpTag = ( {
-	question = 'Need Help?',
+	question = 'Need Help? ',
 	urlLabel = 'Hire our Experts',
 } ) => {
 	const hireExpertsUrl = select( nfdOnboardingStore ).getHireExpertsUrl();
