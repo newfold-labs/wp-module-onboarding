@@ -1,5 +1,5 @@
 import { filter, findIndex } from 'lodash';
-
+import { addQueryArgs } from '@wordpress/url';
 import { coreDataStore } from '@wordpress/core-data';
 import { createRegistrySelector } from '@wordpress/data';
 import createSelector from 'rememo';
@@ -41,8 +41,19 @@ export function getNewfoldBrand( state ) {
  * @param {*} state
  * @return string
  */
- export function getNewfoldBrandName( state ) {
+export function getNewfoldBrandName( state ) {
 	return state.runtime.currentBrand.name;
+}
+
+/**
+ * Gets dynamic Hire Experts URL for Need Help Tag per brand
+ *
+ * @param {*} state
+ * @return string
+ */
+export function getHireExpertsUrl( state ) {
+	const hireExpertsInfo = state.runtime.currentBrand.hireExpertsInfo;
+	return addQueryArgs(hireExpertsInfo.defaultLink, hireExpertsInfo.utmParameters) ;
 }
 
 /**
