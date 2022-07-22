@@ -68,7 +68,7 @@
 }
 
 .content-img{
-    background-image: url(../static/images/content.png);
+    background-image: var(--get-started-content-img);
     background-size: contain;
     background-repeat: no-repeat;
     height: 150px;
@@ -76,7 +76,7 @@
 }
 
 .features-img{
-    background-image: url(../static/images/features.png);
+    background-image: var(--get-started-features-img);
     background-size: contain;
     background-repeat: no-repeat;
     height: 150px;
@@ -84,7 +84,7 @@
 }
 
 .design-img{
-    background-image: url(../static/images/design.png);
+    background-image: var(--get-started-design-img);
     background-size: contain;
     background-repeat: no-repeat;
     height: 150px;
