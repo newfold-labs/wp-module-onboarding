@@ -8,7 +8,12 @@ const MiniPreview = ({ title, desc, icon }) => {
     var iconPreview = icon == "" || icon == undefined ? '--default-logo-icon' : icon;
     var titlePreview = title == "" ? 'Aurelia Shop' : title?.substring(0, 20);
     var descPreview = desc == "" ? 'Aurelia Shop sells customized jewelry inspired to the beauty of the Sea.' : desc;
-    var urlPreview = title == "" ? 'https://aureliashop.com' : `https://${title?.substring(0, 20).toLowerCase().replace(/\s/g, '').replace(/\W/g, '')}.com`;
+    var urlPreview = title == "" ? 'https://aureliashop.com' : titleToUrl(title);
+    
+    function titleToUrl(title) {
+        return `https://${title?.substring(0, 20).toLowerCase().replace(/\s/g, '').replace(/\W/g, '')}.com`;
+    }
+    
     return (
         <div>
             <h4 className="mini-preview">Preview</h4>
