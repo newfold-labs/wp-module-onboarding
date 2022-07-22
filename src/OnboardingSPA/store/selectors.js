@@ -36,6 +36,16 @@ export function getNewfoldBrand( state ) {
 }
 
 /**
+ * Gets current Newfold brand
+ *
+ * @param {*} state
+ * @return string
+ */
+ export function getNewfoldBrandName( state ) {
+	return state.runtime.currentBrand.name;
+}
+
+/**
  * Gets the current Onboarding Data
  * @param {*} state
  * @returns string

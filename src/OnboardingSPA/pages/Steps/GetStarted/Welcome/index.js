@@ -25,7 +25,7 @@ const StepWelcome = () => {
 			return {
 				currentStep: select(nfdOnboardingStore).getCurrentStep(),
 				nextStep: select(nfdOnboardingStore).getNextStep(),
-				brandName: select(nfdOnboardingStore).getNewfoldBrand(),
+				brandName: select(nfdOnboardingStore).getNewfoldBrandName(),
 			};
 		},
 		[location.pathname]
@@ -41,7 +41,7 @@ const StepWelcome = () => {
 				<div className='welcome-card'>
 					<CardHeader
 						heading={ __(currentStep.heading, 'wp-module-onboarding') }
-						subHeading={ __(currentStep.subheading, 'wp-module-onboarding') + brandName.replace(/\b(\w)/g, s => s.toUpperCase()) + '.'} >
+						subHeading={ __(currentStep.subheading, 'wp-module-onboarding') + brandName + '.'} >
 					</CardHeader>
 					<TabPanelHover
 						className="nfd-onboarding-overview__tab-panel"
