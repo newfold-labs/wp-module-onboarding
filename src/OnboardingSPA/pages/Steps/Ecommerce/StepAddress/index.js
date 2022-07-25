@@ -1,144 +1,24 @@
-import { useDispatch, useSelect } from "@wordpress/data";
-import { useEffect } from "@wordpress/element";
-import { VIEW_NAV_ECOMMERCE_STORE_INFO } from "../../../../../constants";
-import CommonLayout from "../../../../components/Layouts/Common";
-import NewfoldLargeCard from "../../../../components/NewfoldLargeCard";
-import { store as nfdOnboardingStore } from "../../../../store";
-import constants from "./constants.json";
+import CommonLayout from '../../../../components/Layouts/Common';
+import { useEffect } from '@wordpress/element';
+import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
+import { store as nfdOnboardingStore } from '../../../../store';
+import { useDispatch } from '@wordpress/data';
+
+import { VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../../../constants';
 
 const StepAddress = () => {
-	const {
-		setDrawerActiveView,
-		setIsDrawerOpened,
-		setIsSidebarOpened,
-		setCurrentOnboardingData,
-	} = useDispatch(nfdOnboardingStore);
+	const { setDrawerActiveView, setIsDrawerOpened, setIsSidebarOpened } =
+		useDispatch( nfdOnboardingStore );
 
-	let currentData = useSelect((select) =>
-		select(nfdOnboardingStore).getCurrentOnboardingData()
-	);
-
-	useEffect(() => {
-		setIsSidebarOpened(false);
-		setIsDrawerOpened(true);
-		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
-	}, []);
-
-	function handleFieldChange(event) {
-		setCurrentOnboardingData({
-			storeAddress: {
-				...currentData.storeAddress,
-				[event.target.name]: event.target.value,
-			},
-		});
-	}
+	useEffect( () => {
+		setIsSidebarOpened( false );
+		setIsDrawerOpened( true );
+		setDrawerActiveView( VIEW_NAV_ECOMMERCE_STORE_INFO );
+	}, [] );
 
 	return (
-		<CommonLayout isCentered>
-			<NewfoldLargeCard>
-				<form
-					style={{
-						color: "black",
-						display: "grid",
-						justifyItems: "center",
-						width: "800px",
-					}}
-				>
-					<h1 className="store-address-title">
-						Confirm your business or store address{" "}
-					</h1>
-					<p>
-						Use the same address you provided for your Bluehost account or
-						change it below:
-					</p>
-
-					<div className="store-address-form">
-						<div>
-							<label>Address line 1</label>
-							<input
-								name="address_line_1"
-								type="text"
-								required
-								defaultValue={currentData.storeAddress?.address_line_1}
-								onChange={handleFieldChange}
-								onBlur={handleFieldChange}
-							/>
-						</div>
-						<div>
-							<label>Address line 2</label>
-							<input
-								name="address_line_2"
-								type="text"
-								required
-								defaultValue={currentData.storeAddress?.address_line_2}
-								onChange={handleFieldChange}
-								onBlur={handleFieldChange}
-							/>
-						</div>
-						<div>
-							<label>City</label>
-							<input
-								name="city"
-								type="text"
-								required
-								defaultValue={currentData.storeAddress?.city}
-								onChange={handleFieldChange}
-								onBlur={handleFieldChange}
-							/>
-						</div>
-						<div>
-							<label>State</label>
-							<input
-								name="state"
-								type="text"
-								required
-								defaultValue={currentData.storeAddress?.state}
-								onChange={handleFieldChange}
-								onBlur={handleFieldChange}
-							/>
-						</div>
-						<div>
-							<label>Postal Code</label>
-							<input
-								name="postal_code"
-								type="zip"
-								required
-								defaultValue={currentData.storeAddress?.postal_code}
-								onChange={handleFieldChange}
-								onBlur={handleFieldChange}
-							/>
-						</div>
-						<div>
-							<label>Country</label>
-							<select
-								type="text"
-								name="country"
-								required
-								defaultValue={currentData.storeAddress?.country}
-								onChange={handleFieldChange}
-								onBlur={handleFieldChange}
-							>
-								{constants.countries.map((country) => (
-									<option
-										key={country.country_short}
-										value={country.country_short}
-									>
-										{country.country}
-									</option>
-								))}
-							</select>
-						</div>
-					</div>
-					<button className="nfd-nav-card-button nfd-card-button" type="submit">
-						Continue Setup
-					</button>
-					<p>
-						<em>
-							Need help? <a>Hire our experts</a>
-						</em>
-					</p>
-				</form>
-			</NewfoldLargeCard>
+		<CommonLayout isBgPrimary isCentered>
+			<NewfoldLargeCard />
 		</CommonLayout>
 	);
 };
