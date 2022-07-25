@@ -4,6 +4,7 @@ $primary-color: var(--nfd-onboarding-primary);
 
 .nfd-main-heading{
     width: 96%;
+    margin: 50px 0px 50px;
 
     &__title{
         color: $black;
@@ -11,13 +12,13 @@ $primary-color: var(--nfd-onboarding-primary);
         text-align: center;
         color: $primary-color;
         margin: 35px !important;
-        font-size: clamp(1.6rem, 4vw, 3.2rem);
+        font-size: clamp(1.6rem, 4vw, 3.6rem);
     }
 
     &__subtitle{
         color: $black;
         font-weight: 400;
         text-align: center;
-        font-size: clamp(0.85rem, 3.2vw, 1.4rem);
+        font-size: clamp(0.85rem, 3.2vw, 1.7rem);
     }
 }
