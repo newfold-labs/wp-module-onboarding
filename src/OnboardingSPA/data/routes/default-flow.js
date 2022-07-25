@@ -41,6 +41,7 @@ const PageWhatToExpect = lazy( () => import( '../../pages/WhatToExpect' ) );
 
 const StepIndex = lazy( () => import( '../../pages/Steps/index' ) );
 const StepGetStarted = lazy( () => import( '../../pages/Steps/GetStarted' ) );
+const StepWelcome = lazy(() => import('../../pages/Steps/GetStarted/Welcome'));
 const StepTopPriority = lazy( () => import( '../../pages/Steps/TopPriority' ) );
 const StepBasicInfo = lazy( () => import( '../../pages/Steps/BasicInfo' ) );
 const StepDesignThemes = lazy( () =>
@@ -111,17 +112,17 @@ export const pages = [
 export const steps = [
 	{
 		path: '/wp-setup/step/get-started/welcome',
-		title: __( 'Get Started', 'wp-module-onboarding' ),
-		heading: __( 'Get Started', 'wp-module-onboarding' ),
+		title: __('Get Started', 'wp-module-onboarding'),
+		heading: __('Make your website dreams a reality!', 'wp-module-onboarding'),
 		subheading: __(
-			'Make your website dreams a reality!',
+			'with WordPress and ',
 			'wp-module-onboarding'
 		),
 		description: __(
 			"We'll use this to personalize this onboarding and future recommendations",
 			'wp-module-onboarding'
 		),
-		Component: StepGetStarted,
+		Component: StepWelcome,
 		Icon: home,
 		priority: 20,
 		VIEW: VIEW_NAV_GET_STARTED,
@@ -349,16 +350,8 @@ export const initialTopSteps = () => {
 
 	const getStartedStep = {
 		path: '/wp-setup/step/get-started/welcome',
-		title: __( 'Get Started', 'wp-module-onboarding' ),
-		heading: __( 'Get Started', 'wp-module-onboarding' ),
-		subheading: __(
-			'Make your website dreams a reality!',
-			'wp-module-onboarding'
-		),
-		description: __(
-			"We'll use this to personalize this onboarding and future recommendations",
-			'wp-module-onboarding'
-		),
+		title: __('Get Started', 'wp-module-onboarding'),
+		heading: __('Get Started', 'wp-module-onboarding'),
 		Icon: home,
 		VIEW: VIEW_NAV_GET_STARTED,
 		priority: 20,
@@ -388,5 +381,5 @@ export const initialGetStartedSteps = () => {
 		return step.path.includes( '/step/get-started' );
 	} );
 
-	return getStartedSteps;
-};
+    return getStartedSteps;
+}
