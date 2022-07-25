@@ -71,8 +71,8 @@ const MiniPreview = ({ title, desc, icon }) => {
                         )}
                     </h5>
                     <div className="browser-content_social">
-                        <div className="browser-content_social_icon" style={{ backgroundImage: 'var(--facebook-icon)' }} />
-                        <div className="browser-content_social_icon" style={{ backgroundImage: 'var(--twitter-icon)' }} />
+                        <div className="browser-content_social_icon" style={{ fill: 'red', backgroundImage: 'var(--facebook-colored-icon)' }} />
+                        <div className="browser-content_social_icon" style={{ backgroundImage: 'var(--twitter-colored-icon)' }} />
                     </div>
                 </div>
             </div>
