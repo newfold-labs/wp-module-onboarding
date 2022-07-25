@@ -1,5 +1,6 @@
 import { Icon, chevronLeft } from '@wordpress/icons';
 import { useDispatch, useSelect } from '@wordpress/data';
+
 import { Button } from '@wordpress/components';
 import { NavLink } from 'react-router-dom';
 import { VIEW_NAV_PRIMARY } from '../../../../constants';

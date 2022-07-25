@@ -36,12 +36,22 @@ export function getNewfoldBrand( state ) {
 }
 
 /**
+ * Gets current Newfold brand
+ *
+ * @param {*} state
+ * @return string
+ */
+export function getNewfoldBrandName( state ) {
+	return state.runtime.currentBrand.name;
+}
+
+/**
  * Gets dynamic Hire Experts URL for Need Help Tag per brand
  *
  * @param {*} state
  * @return string
  */
- export function getHireExpertsUrl( state ) {
+export function getHireExpertsUrl( state ) {
 	const hireExpertsInfo = state.runtime.currentBrand.hireExpertsInfo;
 	return addQueryArgs(hireExpertsInfo.defaultLink, hireExpertsInfo.utmParameters) ;
 }
