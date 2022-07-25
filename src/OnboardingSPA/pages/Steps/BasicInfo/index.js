@@ -16,7 +16,7 @@ const StepBasicInfo = () => {
 	}, [] );
 	return (
 		<CommonLayout isVerticallyCentered>
-			<HeadingWithSubHeading title="Introduce us to this website" subtitle="So we can introduce it to the web" isColoredSubheading="false"/>
+			<HeadingWithSubHeading title="Introduce us to this website" subtitle="So we can introduce it to the web"/>
 			<BasicInfoForm/>
 		</CommonLayout>
 	);

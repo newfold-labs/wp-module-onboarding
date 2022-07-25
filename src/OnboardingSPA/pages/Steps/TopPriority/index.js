@@ -94,15 +94,7 @@ const StepTopPriority = ( props ) => {
 	return (
 		<CommonLayout isVerticallyCentered>
 			<HeadingWithSubHeading
-				title={ __(
-					'Tell us your top priority',
-					'wp-module-onboarding'
-				) }
-				subtitle={ __(
-					'We’ll prioritize getting you there.',
-					'wp-module-onboarding'
-				) }
-			/>
+				title='Tell us your top priority' subtitle='We’ll prioritize getting you there.'/>
 			<SelectableCardList
 				contents={ priorities }
 				selected={ selected }

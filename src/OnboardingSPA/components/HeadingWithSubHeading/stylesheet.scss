@@ -9,22 +9,15 @@ $primary-color: var(--nfd-onboarding-primary);
         color: $black;
         font-weight: 700;
         text-align: center;
+        color: $primary-color;
         margin: 35px !important;
         font-size: clamp(1.6rem, 4vw, 3.2rem);
     }
 
     &__subtitle{
         color: $black;
-        font-weight: 600;
-        text-align: center;
-        font-size: clamp(0.85rem, 3.2vw, 1.4rem);
-    }
-
-    &__subtitle-color{
         font-weight: 400;
         text-align: center;
-        color: $primary-color;
-        font-size: clamp(1.2rem, 3.5vw, 2rem);
-
+        font-size: clamp(0.85rem, 3.2vw, 1.4rem);
     }
 }
