@@ -189,7 +189,7 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
                 <div className="social-form__top-row_heading">Social Media</div>
                 <div className={`social-form__top-row_icon ${isActive ? 'social-form__top-row_icon_opened' : ''}`}></div>
             </div>
-            <form style={{ display: isActive ? '' : 'none'}} onSubmit={(e) => { handleSubmit(e) }}>
+            <form className={isActive ? 'social-form__main-active' : 'social-form__main-hidden'} onSubmit={(e) => { handleSubmit(e) }}>
                 {buildSocialBoxes()}
             </form>
         </div>

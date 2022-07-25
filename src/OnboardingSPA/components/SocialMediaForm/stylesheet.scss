@@ -24,14 +24,33 @@ $border: #D6D6D6;
             width: 24px;
             height: 24px;
             text-align: center;
+            transition: all 0.3s ease-in;
             background-position: center;
             background-repeat: no-repeat;
             background-clip: padding-box;
             background-image: var(--chevron-down-icon);
 
             &_opened {
-                background-image: var(--chevron-up-icon);
+                transform: rotateX(180deg);
             }
+        }
+    }
+
+    &__main{
+        &-active{
+            opacity: 1;
+            overflow: hidden;
+            max-height: 600px;
+            transition: all 0.45s ease-in-out;
+            transition-property: max-height, opacity;
+        }
+
+        &-hidden{
+            opacity: 0;
+            max-height: 0px;
+            overflow: hidden;
+            transition: all 0.45s ease-in-out;
+            transition-property: max-height, opacity;
         }
     }
 
