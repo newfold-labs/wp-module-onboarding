@@ -29,7 +29,7 @@ final class Options {
 		'auto_update_plugin'            => 'auto_update_plugin',
 		'auto_update_theme'             => 'auto_update_theme',
 		'permalink_structure'           => 'permalink_structure',
-          'settings_initialized'          => 'settings_initialized'
+		'settings_initialized'          => 'settings_initialized',
 	);
 
 	protected static array $initialization_options = array(
