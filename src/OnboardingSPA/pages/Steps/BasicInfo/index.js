@@ -1,6 +1,6 @@
 import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
-import BasicInfoForm from './BasicInfoForm';
+import BasicInfoForm from './basicInfoForm';
 import { VIEW_NAV_PRIMARY } from '../../../../constants';
 import { store as nfdOnboardingStore } from '../../../store';
 import { useDispatch } from '@wordpress/data';

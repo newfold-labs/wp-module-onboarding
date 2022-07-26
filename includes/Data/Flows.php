@@ -130,7 +130,7 @@ final class Flows {
 	public static function get_flows() {
 		return array(
 			'wp-setup'  => true,
-			'ecommerce' => null,
+			'ecommerce' => true,
 		);
 	}
 }

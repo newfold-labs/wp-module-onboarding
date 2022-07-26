@@ -37,11 +37,11 @@ const LearnMoreSidebar = () => {
 				<PanelRow>
 					<div className="nfd-onboarding-sidebar-learn-more__container">
 						<div className="nfd-onboarding-sidebar-learn-more__icon">
-							<Icon icon={ currentStep?.Icon } />
+                              { currentStep?.Icon && <Icon icon={ currentStep.Icon } /> }
 						</div>
 						<div className="nfd-onboarding-sidebar-learn-more__text">
 							<p className="nfd-onboarding-sidebar-learn-more__text-heading">
-								<strong>{ currentStep?.heading }</strong>
+                                   { currentStep?.heading && <strong>{ currentStep.heading }</strong> }
 							</p>
 							<p className="nfd-onboarding-sidebar-learn-more__text-subheading">
 								{ currentStep?.description }

@@ -24,7 +24,7 @@
 @import "../components/HeadingWithSubHeading/stylesheet";
 @import "../components/Button/stylesheet";
 @import "../components/CardHeader/stylesheet";
-@import "../components/GenericHtml/stylesheet";
+@import "../components/NeedHelpTag/stylesheet";
 @import "../components/Sidebar/stylesheet";
 @import "../components/Sidebar/components/LearnMore/stylesheet";
 @import "../components/LivePreview/stylesheet";
@@ -34,6 +34,7 @@
 
 // CSS for Pages
 @import "../pages/Steps/BasicInfo/stylesheet.scss";
+@import "../pages/Steps/GetStarted/Welcome/stylesheet.scss";
 
 .nfd-onboarding-container {
 	display: flex;

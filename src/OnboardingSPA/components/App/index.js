@@ -3,10 +3,10 @@ import Content from '../Content';
 import Drawer from '../Drawer';
 import Sidebar from '../Sidebar';
 import classNames from 'classnames';
+import { useLocation } from 'react-router-dom';
 import { setFlow } from '../../utils/api/flow';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../store';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 import { kebabCase } from 'lodash';
 import { useViewportMatch } from '@wordpress/compose';
@@ -23,7 +23,6 @@ import { FullscreenMode, InterfaceSkeleton } from '@wordpress/interface';
  * @return WPComponent
  */
 const App = () => {
-	const navigate = useNavigate();
 	const location = useLocation();
 	const isLargeViewport = useViewportMatch('medium');
 	const pathname = kebabCase(location.pathname);
@@ -79,7 +78,7 @@ const App = () => {
 				if (result?.error != null) {
 					setIsRequestPlaced(false);
 					console.error('Unable to Save data!');
-				} else {~
+				} else {
 					setCurrentOnboardingData(result?.body);
 					setIsRequestPlaced(false);
 				}
@@ -95,22 +94,13 @@ const App = () => {
 		document.body.classList.add(`nfd-brand-${newfoldBrand}`);
 	}, [newfoldBrand]);
 
-	useEffect(() => {
+	useEffect( () => {
 		syncStoreToDB();
-		if (location.pathname.includes('/step')) {
-			setActiveFlow(onboardingFlow);
-
-			if (location.pathname.includes(onboardingFlow))
-				setActiveStep(location.pathname);
-			else {
-				const [first, ...rest] = location.pathname
-					.substring(1)
-					.split('/');
-				setActiveStep(`/${onboardingFlow}/${rest.join('/')}`);
-				navigate(`/${onboardingFlow}/${rest.join('/')}`);
-			}
+		if ( location.pathname.includes( '/step' ) ) {
+			setActiveFlow( onboardingFlow );
+			setActiveStep( location.pathname );
 		}
-	}, [location.pathname, onboardingFlow]);
+	}, [ location.pathname, onboardingFlow ] );
 
 	return (
 		<Fragment>

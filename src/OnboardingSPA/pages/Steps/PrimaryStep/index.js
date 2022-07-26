@@ -7,12 +7,13 @@ import { useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import CardHeader from '../../../components/CardHeader';
 import Button from '../../../components/Button';
-import GenericHtml from '../../../components/GenericHtml';
+import NeedHelpTag from '../../../components/NeedHelpTag';
 import content from './content.json';
 
 const StepPrimarySetup = () => {
-	const { setDrawerActiveView, setIsSidebarOpened } =
-		useDispatch( nfdOnboardingStore );
+	const { setDrawerActiveView, setIsSidebarOpened } = useDispatch(
+		nfdOnboardingStore
+	);
 
 	useEffect( () => {
 		setIsSidebarOpened( false );
@@ -52,12 +53,7 @@ const StepPrimarySetup = () => {
 					/>
 				</div>
 
-				<GenericHtml
-					content={ __(
-						content.needHelpText,
-						'wp-module-onboarding'
-					) }
-				/>
+				<NeedHelpTag />
 			</NewfoldLargeCard>
 		</CommonLayout>
 	);
