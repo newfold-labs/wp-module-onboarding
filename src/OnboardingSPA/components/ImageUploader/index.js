@@ -89,7 +89,7 @@ const ImageUploader = ({ icon, iconSetter }) => {
             </div>
         </div>);
     }
-    console.log('Naya Waala', isUploading);
+
     return (
         <div className="image-uploader">
             <h4 className="image-uploader_heading">Logo</h4>
