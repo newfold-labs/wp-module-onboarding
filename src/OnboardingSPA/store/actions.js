@@ -44,6 +44,13 @@ export function setIsDrawerOpened( isOpen ) {
 	};
 }
 
+export function setIsDrawerSuppressed( isSuppressed ) {
+	return {
+		type: 'SET_DRAWER_SUPPRESSED',
+		isSuppressed,
+	};
+}
+
 /**
  * Accepts a string flow to set the active flow.
  *

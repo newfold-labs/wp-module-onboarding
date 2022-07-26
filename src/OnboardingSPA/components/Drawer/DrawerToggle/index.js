@@ -12,9 +12,10 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { wordpress } from '@wordpress/icons';
 
 const DrawerToggle = ({ isOpen }) => {
-	const { isDrawerOpen } = useSelect((select) => {
+	const { isDrawerOpen, isDrawerSuppressed } = useSelect((select) => {
 		return {
 			isDrawerOpen: select(nfdOnboardingStore).isDrawerOpened(),
+			isDrawerSuppressed: select(nfdOnboardingStore).isDrawerSuppressed(),
 		};
 	}, []);
 
@@ -28,7 +29,9 @@ const DrawerToggle = ({ isOpen }) => {
 		}
 	}, [isDrawerOpen]);
 
-	const toggleDrawer = () => setIsDrawerOpened(!isDrawerOpen);
+	const toggleDrawer = () => {
+		(isDrawerSuppressed)? null : setIsDrawerOpened(!isDrawerOpen)
+	}
 
 	return (
 		<motion.div

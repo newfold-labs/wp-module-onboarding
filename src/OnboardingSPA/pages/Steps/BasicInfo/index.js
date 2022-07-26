@@ -7,11 +7,12 @@ import { useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 
 const StepBasicInfo = () => {
-	const { setDrawerActiveView, setIsSidebarOpened } =
+	const { setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed } =
 		useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		setIsSidebarOpened( false );
+		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 	}, [] );
 	return (

@@ -47,7 +47,7 @@ export function flow(
 }
 
 export function drawer(
-	state = { isOpen: false, view: VIEW_NAV_PRIMARY },
+	state = { isOpen: false, isSuppressed: false, view: VIEW_NAV_PRIMARY },
 	action
 ) {
 	switch ( action.type ) {
@@ -60,6 +60,11 @@ export function drawer(
 			return {
 				...state,
 				view: action.view,
+			};
+		case 'SET_DRAWER_SUPPRESSED':
+			return {
+				...state,
+				isSuppressed: action.isSuppressed,
 			};
 	}
 

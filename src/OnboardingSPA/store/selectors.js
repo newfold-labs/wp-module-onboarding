@@ -22,6 +22,16 @@ export function isDrawerOpened( state ) {
 }
 
 /**
+ * Check if the drawer is opened
+ *
+ * @param {*} state
+ * @return boolean
+ */
+ export function isDrawerSuppressed( state ) {
+	return state.drawer.isSuppressed;
+}
+
+/**
  * Gets current Newfold brand
  *
  * @param {*} state
