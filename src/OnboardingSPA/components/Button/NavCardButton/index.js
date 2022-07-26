@@ -9,7 +9,7 @@ import Button from '../../Button';
  * @returns
  */
 
-const NavCardButton = ({ text, disabled }) => {
+const NavCardButton = ({ text, disabled, onClick }) => {
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -23,6 +23,7 @@ const NavCardButton = ({ text, disabled }) => {
 	);
 
 	const handleBtnClick = () => {
+		if(onClick) onClick();
 		navigate(nextStep.path);
 	};
 
