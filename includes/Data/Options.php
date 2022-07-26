@@ -14,12 +14,34 @@ final class Options {
 	  * @var array List of all the options
 	  */
 	protected static array $options = array(
-		'redirect'       => 'redirect',
-		'redirect_param' => 'redirect_param',
-		'exited'         => 'exited',
-		'completed'      => 'completed',
-		'coming_soon'    => 'mm_coming_soon',
-		'brand'          => 'mm_brand',
+		'redirect'                      => 'redirect',
+		'redirect_param'                => 'redirect_param',
+		'exited'                        => 'exited',
+		'completed'                     => 'completed',
+		'coming_soon'                   => 'mm_coming_soon',
+		'brand'                         => 'mm_brand',
+		'close_comments_for_old_posts'  => 'close_comments_for_old_posts',
+		'close_comments_days_old'       => 'close_comments_days_old',
+		'comments_per_page'             => 'comments_per_page',
+		'install_date'                  => 'mm_install_date',
+		'allow_major_auto_core_updates' => 'allow_major_auto_core_updates',
+		'allow_minor_auto_core_updates' => 'allow_minor_auto_core_updates',
+		'auto_update_plugin'            => 'auto_update_plugin',
+		'auto_update_theme'             => 'auto_update_theme',
+		'permalink_structure'           => 'permalink_structure',
+          'settings_initialized'          => 'settings_initialized'
+	);
+
+	protected static array $initialization_options = array(
+		'close_comments_for_old_posts'  => 1,
+		'close_comments_days_old'       => 28,
+		'comments_per_page'             => 20,
+		'coming_soon'                   => 'true',
+		'allow_major_auto_core_updates' => 'true',
+		'allow_minor_auto_core_updates' => 'true',
+		'auto_update_plugin'            => 'true',
+		'auto_update_theme'             => 'true',
+		'permalink_structure'           => '/%postname%/',
 	);
 
 	 /**
@@ -44,5 +66,9 @@ final class Options {
 	  */
 	public static function get_all_options() {
 		 return self::$options;
+	}
+
+	public static function get_initialization_options() {
+		 return self::$initialization_options;
 	}
 }
