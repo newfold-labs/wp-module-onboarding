@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 
+import content from './basicInfoFormData.json';
 import TextInput from '../../../components/TextInput';
 import MiniPreview from '../../../components/MiniPreview';
 import { getSettings } from '../../../utils/api/settings';
@@ -111,8 +112,8 @@ const BasicInfoForm = () => {
             </div>
             <div className="basic-info-form">
                 <div className="basic-info-form__left">
-                    <TextInput title="Site Title" hint="Shown to visitors, search engine and social media posts." placeholder="Aurelia Shop" maxCharacters="80" height="47px" textValue={siteTitle} textValueSetter={setSiteTitle} />
-                    <TextInput title="Site Description" hint="Tell people who you are, what you sell and why they should visit your store." placeholder="Aurelia Shop sell customized jewerly inspired to the beauty of the Sea" maxCharacters="160" height="100px" textValue={siteDesc} textValueSetter={setSiteDesc} />
+                    <TextInput title={content.siteTitle["title"]} hint={content.siteTitle["hint"]} placeholder={content.siteTitle["placeholder"]} maxCharacters={content.siteTitle["maxCharacters"] } height="47px" textValue={siteTitle} textValueSetter={setSiteTitle} />
+                    <TextInput title={content.siteDesc["title"]} hint={content.siteDesc["hint"]} placeholder={content.siteDesc["placeholder"]} maxCharacters={content.siteDesc["maxCharacters"]} height="100px" textValue={siteDesc} textValueSetter={setSiteDesc} />
                     <SocialMediaForm socialData={socialData} setSocialData={setSocialData} setIsValidSocials={setIsValidSocials}/>
                 </div>
                 <div className="basic-info-form__right">

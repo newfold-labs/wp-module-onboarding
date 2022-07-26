@@ -1,14 +1,16 @@
-import { __ } from '@wordpress/i18n'; 
+import { __ } from '@wordpress/i18n';
+
+import content from './miniPreview.json'; 
 /**
  * A Mini Preview Section.
  *
  * @returns
  */
 const MiniPreview = ({ title, desc, icon }) => {
-    var iconPreview = icon == "" || icon == undefined ? '--default-logo-icon' : icon;
-    var titlePreview = title == "" ? 'Aurelia Shop' : title?.substring(0, 20);
-    var descPreview = desc == "" ? 'Aurelia Shop sells customized jewelry inspired to the beauty of the Sea.' : desc;
-    var urlPreview = title == "" ? 'https://aureliashop.com' : titleToUrl(title);
+    var iconPreview = icon == "" || icon == undefined ? content.icon : icon;
+    var titlePreview = title == "" ? content.title : title?.substring(0, 20);
+    var descPreview = desc == "" ? content.desc : desc;
+    var urlPreview = title == "" ? content.url : titleToUrl(title);
     
     function titleToUrl(title) {
         return `https://${title?.substring(0, 20).toLowerCase().replace(/\s/g, '').replace(/\W/g, '')}.com`;
