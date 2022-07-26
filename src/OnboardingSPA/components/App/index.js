@@ -4,7 +4,7 @@ import Drawer from '../Drawer';
 import Sidebar from '../Sidebar';
 import classNames from 'classnames';
 import { setFlow } from '../../utils/api/flow';
-import { setSettings } from '../../utils/api/settings';
+import { getSettings, setSettings } from '../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../store';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -49,11 +49,14 @@ const App = () => {
 	const { setActiveStep, setActiveFlow, setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
 
 	async function syncSocialSettings() {
+		const initialData = await getSettings();
 		const result = await setSettings(currentData?.data?.socialData);
+		setDidVisitBasicInfo(false);
 		if (result?.error != null) {
 			console.error('Unable to Save Social Data!');
+			return initialData?.body;
 		}
-		setDidVisitBasicInfo(false);
+		return result?.body;
 	}
 
 	async function syncStoreToDB() {
@@ -62,15 +65,25 @@ const App = () => {
 		if (currentData && !isFirstStep){
 			if(!isRequestPlaced){
 				setIsRequestPlaced(true);
+
+				// If Social Data is changed then sync it
+				if (didVisitBasicInfo){
+					const socialData = await syncSocialSettings();
+					
+					// If Social Data is changed then Sync that also to the store
+					if (socialData && currentData?.data)
+						currentData.data.socialData = socialData;
+				} 
+
 				const result = await setFlow(currentData);
 				if (result?.error != null) {
 					setIsRequestPlaced(false);
 					console.error('Unable to Save data!');
-				} else {
+				} else {~
 					setCurrentOnboardingData(result?.body);
 					setIsRequestPlaced(false);
 				}
-				if (didVisitBasicInfo) syncSocialSettings();
+				
 			}
 		}
 		// Check if the Basic Info page was visited
