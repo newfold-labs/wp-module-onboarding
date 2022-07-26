@@ -30,7 +30,7 @@ const DrawerToggle = ({ isOpen }) => {
 	}, [isDrawerOpen]);
 
 	const toggleDrawer = () => {
-		(isDrawerSuppressed)? null : setIsDrawerOpened(!isDrawerOpen)
+		if (!isDrawerSuppressed) setIsDrawerOpened(!isDrawerOpen)
 	}
 
 	return (
