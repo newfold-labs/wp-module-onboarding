@@ -22,7 +22,7 @@ export function isDrawerOpened( state ) {
 }
 
 /**
- * Check if the drawer is opened
+ * Check if the drawer is suppressed
  *
  * @param {*} state
  * @return boolean

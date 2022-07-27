@@ -1,16 +1,22 @@
 import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import BasicInfoForm from './basicInfoForm';
+import { useViewportMatch } from '@wordpress/compose';
+
 import { VIEW_NAV_PRIMARY } from '../../../../constants';
 import { store as nfdOnboardingStore } from '../../../store';
 import { useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 
 const StepBasicInfo = () => {
-	const { setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed } =
+	const isLargeViewport = useViewportMatch( 'medium' );
+	const { setIsDrawerOpened, setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed } =
 		useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
+		if ( isLargeViewport ) {
+			setIsDrawerOpened( true );
+		}
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );

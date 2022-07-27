@@ -65,6 +65,7 @@ export function drawer(
 			return {
 				...state,
 				isSuppressed: action.isSuppressed,
+				isOpen: action.isSuppressed? false : state.isOpen,
 			};
 	}
 

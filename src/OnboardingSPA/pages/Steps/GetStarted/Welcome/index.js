@@ -35,13 +35,11 @@ const StepWelcome = () => {
 
 	const {
 		setDrawerActiveView,
-		setIsDrawerOpened,
 		setIsSidebarOpened,
 		setIsDrawerSuppressed,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		setIsDrawerOpened( false );
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
