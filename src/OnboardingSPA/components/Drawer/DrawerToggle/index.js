@@ -41,7 +41,7 @@ const DrawerToggle = ({ isOpen }) => {
 			whileHover="expand"
 		>
 			<Button
-				className="nfd-onboarding-drawer__toggle-button has-icon"
+				className={`nfd-onboarding-drawer__toggle-button has-icon ${(!isDrawerSuppressed) || 'is-suppressed'}`}
 				label={__('Toggle Navigation', 'wp-module-onboarding')}
 				ref={drawerToggleRef}
 				aria-pressed={isOpen}

@@ -24,6 +24,10 @@
                 color: var(--nfd-onboarding-drawer-fg);
             }
 
+            &.is-suppressed{
+                cursor: default;
+            }
+
             &:focus {
                 box-shadow: none;
             }
