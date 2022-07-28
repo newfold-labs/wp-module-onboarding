@@ -124,12 +124,10 @@ class PluginsController {
           \update_option( Options::get_option_name( 'plugins_init_status' ), 'installing' );
 
           $init_plugins = Plugins::get_init();
-          echo $init_plugins;
           foreach( $init_plugins as $init_plugin ) {
-               // if ( PluginInstaller::exists( $init_plugin['slug'], $init_plugin['activate'] ) ) {
-               //      continue;
-               // }
-               PluginInstaller::add_to_queue( $init_plugin['slug'], $init_plugin['activate'] );
+               if ( ! PluginInstaller::exists( $init_plugin['slug'], $init_plugin['activate'] ) ) {
+                    PluginInstaller::add_to_queue( $init_plugin['slug'], $init_plugin['activate'] );
+               }
           }
 
           return new \WP_REST_Response(
@@ -150,12 +148,12 @@ class PluginsController {
           $activate     = $request->get_param( 'activate' );
           $queue        = $request->get_param( 'queue' );
 
-          // if ( PluginInstaller::exists( $plugin, $activate ) ) {
-          //      return new \WP_REST_Response(
-          //           array(),
-          //           200
-          //      ); 
-          // }
+          if ( PluginInstaller::exists( $plugin, $activate ) ) {
+               return new \WP_REST_Response(
+                    array(),
+                    200
+               ); 
+          }
 
           if ( $queue ) {
                PluginInstaller::add_to_queue( $plugin, $activate );

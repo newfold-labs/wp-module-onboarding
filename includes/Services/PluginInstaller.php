@@ -36,6 +36,9 @@ class PluginInstaller {
 		// If it is not a zip URL then check if it is an approved slug.
 		$plugin = \sanitize_text_field( $plugin );
           if ( self::is_nfd_slug( $plugin ) ) {
+               if ( $plugin === 'nfd_slug_endurance_page_cache' ) {
+                    return self::install_endurance_page_cache();
+               }
                $plugin_path = $plugins_list['nfd_slugs'][ $plugin ]['path'];
                if ( ! self::is_plugin_installed( $plugin_path ) ) {
                     $status = self::install_from_zip( $plugins_list['nfd_slugs'][ $plugin ]['url'], $activate );
@@ -240,14 +243,14 @@ class PluginInstaller {
      public static function exists( $plugin, $activate ) {
           $plugin_type = self::get_plugin_type( $plugin );
           $plugin_path = self::get_plugin_path( $plugin, $plugin_type );
-          echo $plugin_path;
           if ( ! self::is_plugin_installed( $plugin_path ) ) {
-               return true;
+               return false;
           }
-          if ( $activate && ! \is_plugin_active( $$plugin_path ) ) {
-               return true;
+
+          if ( $activate && ! \is_plugin_active( $plugin_path ) ) {
+               return false;
           }
-          return false;
+          return true;
      }
 
      public static function add_to_queue( $plugin, $activate ) {
@@ -263,5 +266,62 @@ class PluginInstaller {
           ) );
           return \update_option( Options::get_option_name( 'plugin_install_queue' ), $plugins );
      }
+
+     public static function install_endurance_page_cache() {
+          if ( ! self::connect_to_filesystem() ) {
+			return new \WP_Error(
+				'nfd_onboarding_error',
+				'Could not connect to the filesystem.',
+				array( 'status' => 500 )
+			);
+		}
+
+          global $wp_filesystem;
+
+          $plugin_list = Plugins::get();
+          $plugin_url = $plugin_list['nfd_slugs']['nfd_slug_endurance_page_cache']['url'];
+          $plugin_path = $plugin_list['nfd_slugs']['nfd_slug_endurance_page_cache']['path'];
+
+          if ( $wp_filesystem->exists( $plugin_path ) ) {
+               return new \WP_REST_Response(
+                    array(),
+                    200
+               ); 
+          }
+
+          if ( ! $wp_filesystem->is_dir( WP_CONTENT_DIR . '/mu-plugins' ) ) {
+               $wp_filesystem->mkdir( WP_CONTENT_DIR . '/mu-plugins' );
+          }
+
+          $request = \wp_remote_get( $plugin_url );
+		if ( \is_wp_error( $request ) ) {
+               return $request;
+		}
+
+          $wp_filesystem->put_contents( $plugin_path, $request['body'], FS_CHMOD_FILE );
+
+          return new \WP_REST_Response(
+               array(),
+               200
+          ); 
+     }
+
+     protected static function connect_to_filesystem() {
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+
+		// We want to ensure that the user has direct access to the filesystem.
+		$access_type = \get_filesystem_method();
+		if ( $access_type !== 'direct' ) {
+			return false;
+		}
+
+		$creds = \request_filesystem_credentials( site_url() . '/wp-admin', '', false, false, array() );
+
+		if ( ! \WP_Filesystem( $creds ) ) {
+			return false;
+		}
+
+		return true;
+	}
 
 }

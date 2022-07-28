@@ -15,7 +15,7 @@ final class Plugins {
 	protected static $wp_slugs = array(
 		'jetpack'       => array(
                'approved' => true,
-               'path'     => ''
+               'path'     => 'jetpack/jetpack.php'
           ),
 		'woocommerce'   => array(
                'approved' => true,
@@ -23,19 +23,19 @@ final class Plugins {
           ),
 		'wordpress-seo' => array(
                'approved' => true,
-               'path'     => ''
+               'path'     => 'wordpress-seo/wp-seo.php'
           ),
 		'wpforms-lite'  => array(
                'approved' => true,
-               'path'     => ''
+               'path'     => 'wpforms-lite/wpforms.php'
           ),
           'google-analytics-for-wordpress' => array(
                'approved' => true,
-               'path'     => ''
+               'path'     => 'google-analytics-for-wordpress/googleanalytics.php'
           ),
           'optinmonster' => array(
                'approved' => true,
-               'path'     => ''
+               'path'     => 'optinmonster/optin-monster-wp-api.php'
           )
 	);
 
@@ -43,37 +43,37 @@ final class Plugins {
           'nfd_slug_endurance_page_cache' => array(
                'approved' => true,
                'url'      => 'https://raw.githubusercontent.com/bluehost/endurance-page-cache/production/endurance-page-cache.php',
-               'path'     => ''
+               'path'     => WP_CONTENT_DIR . '/mu-plugins/endurance-page-cache.php'
           ),
           'nfd_slug_yith_woocommerce_customize_myaccount_page' => array(
                'approved' => true,
                'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-woocommerce-customize-myaccount-page',
-               'path'     => ''
+               'path'     => 'yith-woocommerce-customize-myaccount-page-extended/init.php'
           ),
           'nfd_slug_yith_woocommerce_gift_cards' => array(
                'approved' => true,
                'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-woocommerce-gift-cards',
-               'path'     => ''
+               'path'     => 'yith-woocommerce-gift-cards-extended/init.php'
           ),
           'nfd_slug_ecomdash_wordpress_plugin' => array(
                'approved' => true,
                'url'      => 'https://hiive.cloud/workers/plugin-downloads/ecomdash-wordpress-plugin',
-               'path'     => ''
+               'path'     => '202207190850-ecomdash-wordpress-plugin-latest/ecomdash-plugin.php'
           ),
           'nfd_slug_yith_paypal_payments_for_woocommerce' => array(
                'approved' => true,
                'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-paypal-payments-for-woocommerce',
-               'path'     => ''
+               'path'     => 'yith-paypal-payments-for-woocommerce-extended/init.php'
           ),
           'nfd_slug_yith_shippo_shippings_for_woocommerce' => array(
                'approved' => true,
                'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-shippo-shippings-for-woocommerce',
-               'path'     => ''
+               'path'     => 'yith-shippo-shippings-for-woocommerce-extended/init.php'
           ),
           'nfd_slug_yith_woocommerce_ajax_product_filter' => array(
                'approved' => true,
-               'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-shippo-shippings-for-woocommerce',
-               'path'     => ''
+               'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-woocommerce-ajax-product-filter',
+               'path'     => 'yith-woocommerce-ajax-product-filter-extended/init.php'
           ),
           'nfd_slug_yith_woocommerce_booking' => array(
                'approved' => true,
