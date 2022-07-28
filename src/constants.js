@@ -17,6 +17,11 @@ export const SIDEBAR_SLOTFILL_PREFIX = 'Sidebar';
 export const SIDEBAR_MENU_SLOTFILL_PREFIX = 'HeaderMenu';
 export const SIDEBAR_LEARN_MORE = 'LearnMore';
 
+export const YITH_SHIPPO_PLUGIN = 'yith_shippo_shipping_for_woocommerce';
+export const YITH_BOOKING_PLUGIN = 'yith_wcbk_panel';
+export const YITH_SEARCH_PLUGIN = 'yith_wcas_panel';
+export const YITH_PRODUCT_FILTER_PLUGIN = 'yith_wcan_panel';
+
 /**
  * All views for the <Drawer /> component.
  */

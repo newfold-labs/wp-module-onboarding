@@ -4,7 +4,7 @@ import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { useDispatch, useSelect } from '@wordpress/data';
 
-import { VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../../../constants';
+import { VIEW_NAV_ECOMMERCE_STORE_INFO, YITH_BOOKING_PLUGIN, YITH_PRODUCT_FILTER_PLUGIN, YITH_SEARCH_PLUGIN, YITH_SHIPPO_PLUGIN } from '../../../../../constants';
 import CardHeader from '../../../../components/CardHeader';
 import NavCardButton from '../../../../components/Button/NavCardButton';
 import { __ } from '@wordpress/i18n';
@@ -49,8 +49,8 @@ const StepProducts = () => {
 
 	const getPluginName = (productType) => {
 		switch (productType) {
-			case "Physical products": return "yith_shippo_shipping_for_woocommerce";
-			case "Book rooms, houses or rent products": return "yith_wcbk_panel";
+			case "Physical products": return YITH_SHIPPO_PLUGIN;
+			case "Book rooms, houses or rent products": return YITH_BOOKING_PLUGIN;
 			default: return null;
 		}
 	}
@@ -63,7 +63,7 @@ const StepProducts = () => {
 			}
 		})
 		if (Number(currentData.productInfo?.productCount) >= 51) {
-			const yithPlugin = ["yith_wcas_panel", "yith_wcan_panel"];
+			const yithPlugin = [YITH_SEARCH_PLUGIN, YITH_PRODUCT_FILTER_PLUGIN];
 			yithPlugin.forEach(async val => await getPluginInstall({ plugin: val }))
 		}
 		const wcData = { completed: true, productType: currentData.productInfo?.productTypes, productCount: currentData.productInfo?.productCount }
