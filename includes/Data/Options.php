@@ -20,6 +20,8 @@ final class Options {
 		'completed'      => 'completed',
 		'coming_soon'    => 'mm_coming_soon',
 		'brand'          => 'mm_brand',
+          'plugins_init_status' => 'plugins_init_status',
+          'plugin_install_queue' => 'plugin_install_queue'
 	);
 
 	 /**
