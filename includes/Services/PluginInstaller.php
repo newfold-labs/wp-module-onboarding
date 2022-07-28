@@ -6,7 +6,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 class PluginInstaller {
 
-     public static function install( $plugin, $activate ) {
+	public static function install( $plugin, $activate ) {
 		$plugins_list = Plugins::get();
 
 		// Check if the plugin param contains a zip url.
@@ -35,30 +35,30 @@ class PluginInstaller {
 
 		// If it is not a zip URL then check if it is an approved slug.
 		$plugin = \sanitize_text_field( $plugin );
-          if ( self::is_nfd_slug( $plugin ) ) {
-               if ( $plugin === 'nfd_slug_endurance_page_cache' ) {
-                    return self::install_endurance_page_cache();
-               }
-               $plugin_path = $plugins_list['nfd_slugs'][ $plugin ]['path'];
-               if ( ! self::is_plugin_installed( $plugin_path ) ) {
-                    $status = self::install_from_zip( $plugins_list['nfd_slugs'][ $plugin ]['url'], $activate );
-                    if ( \is_wp_error( $status ) ) {
-                         return $status;
-                    }
-               }
-               if ( $activate && ! \is_plugin_active( $plugin_path ) ) {
-                    $status = \activate_plugin( $plugin_path );
-                    if ( \is_wp_error( $status ) ) {
-                         $status->add_data( array( 'status' => 500 ) );
-          
-                         return $status;
-                    }
-               }
-               return new \WP_REST_Response(
-                    array(),
-                    201
-               );
-          }
+		if ( self::is_nfd_slug( $plugin ) ) {
+			if ( $plugin === 'nfd_slug_endurance_page_cache' ) {
+				return self::install_endurance_page_cache();
+			}
+			 $plugin_path = $plugins_list['nfd_slugs'][ $plugin ]['path'];
+			if ( ! self::is_plugin_installed( $plugin_path ) ) {
+				 $status = self::install_from_zip( $plugins_list['nfd_slugs'][ $plugin ]['url'], $activate );
+				if ( \is_wp_error( $status ) ) {
+					return $status;
+				}
+			}
+			if ( $activate && ! \is_plugin_active( $plugin_path ) ) {
+				 $status = \activate_plugin( $plugin_path );
+				if ( \is_wp_error( $status ) ) {
+					 $status->add_data( array( 'status' => 500 ) );
+
+					 return $status;
+				}
+			}
+			return new \WP_REST_Response(
+				array(),
+				201
+			);
+		}
 
 		if ( ! isset( $plugins_list['wp_slugs'][ $plugin ] ) ) {
 			return new \WP_Error(
@@ -68,22 +68,22 @@ class PluginInstaller {
 			);
 		}
 
-          $plugin_path = $plugins_list['wp_slugs'][$plugin]['path'];
+		 $plugin_path = $plugins_list['wp_slugs'][ $plugin ]['path'];
 		if ( ! self::is_plugin_installed( $plugin_path ) ) {
-               $status = self::install_from_wordpress( $plugin, $activate );
-               if ( \is_wp_error( $status ) ) {
-                    return $status;
-               }
-          }
+			  $status = self::install_from_wordpress( $plugin, $activate );
+			if ( \is_wp_error( $status ) ) {
+				 return $status;
+			}
+		}
 
-          if ( $activate && ! \is_plugin_active( $plugin_path ) ) {
-               $status = \activate_plugin( $plugin_path );
-               if ( \is_wp_error( $status ) ) {
-                    $status->add_data( array( 'status' => 500 ) );
-     
-                    return $status;
-               }
-          }
+		if ( $activate && ! \is_plugin_active( $plugin_path ) ) {
+			 $status = \activate_plugin( $plugin_path );
+			if ( \is_wp_error( $status ) ) {
+				 $status->add_data( array( 'status' => 500 ) );
+
+				 return $status;
+			}
+		}
 
 		return new \WP_REST_Response(
 			array(),
@@ -97,9 +97,9 @@ class PluginInstaller {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public static function install_from_wordpress( $plugin, $activate ) {
-          require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+		  require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 
-          $api = \plugins_api(
+		$api = \plugins_api(
 			'plugin_information',
 			array(
 				'slug'   => $plugin,
@@ -120,10 +120,10 @@ class PluginInstaller {
 			return $api;
 		}
 
-          $status = self::install_from_zip( $api->download_link, $activate );
-          if ( \is_wp_error( $status ) ) {
-               return $status;
-          }
+		  $status = self::install_from_zip( $api->download_link, $activate );
+		if ( \is_wp_error( $status ) ) {
+			 return $status;
+		}
 
 		return new \WP_REST_Response(
 			array(),
@@ -190,14 +190,14 @@ class PluginInstaller {
 			);
 		}
 
-          if ( $activate && ! \is_plugin_active( $plugin_file ) ) {
-               $status = \activate_plugin( $plugin_file );
-               if ( \is_wp_error( $status ) ) {
-                    $status->add_data( array( 'status' => 500 ) );
-     
-                    return $status;
-               }
-          }
+		if ( $activate && ! \is_plugin_active( $plugin_file ) ) {
+			 $status = \activate_plugin( $plugin_file );
+			if ( \is_wp_error( $status ) ) {
+				  $status->add_data( array( 'status' => 500 ) );
+
+				  return $status;
+			}
+		}
 
 		return new \WP_REST_Response(
 			null,
@@ -205,15 +205,15 @@ class PluginInstaller {
 		);
 	}
 
-     public static function is_nfd_slug( $plugin ) {
-          $plugins_list = Plugins::get();
-          if ( isset( $plugins_list[ 'nfd_slugs' ][ $plugin ]['approved'] ) ) {
-               return true;
-          }
-          return false;
-     }
+	public static function is_nfd_slug( $plugin ) {
+		 $plugins_list = Plugins::get();
+		if ( isset( $plugins_list['nfd_slugs'][ $plugin ]['approved'] ) ) {
+			 return true;
+		}
+		 return false;
+	}
 
-     public static function is_plugin_installed( $plugin_path ) {
+	public static function is_plugin_installed( $plugin_path ) {
 		if ( ! function_exists( 'get_plugins' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
@@ -225,50 +225,53 @@ class PluginInstaller {
 		}
 	}
 
-     public static function get_plugin_type( $plugin ) {
-          if ( \wp_http_validate_url( $plugin ) ) {
-               return 'urls';
-          }
-          if ( self::is_nfd_slug( $plugin ) ) {
-               return 'nfd_slugs';
-          }
-          return 'wp_slugs';
-     }
+	public static function get_plugin_type( $plugin ) {
+		if ( \wp_http_validate_url( $plugin ) ) {
+			 return 'urls';
+		}
+		if ( self::is_nfd_slug( $plugin ) ) {
+			 return 'nfd_slugs';
+		}
+		 return 'wp_slugs';
+	}
 
-     public static function get_plugin_path( $plugin, $plugin_type ) {
-          $plugin_list = Plugins::get();
-          return $plugin_list[ $plugin_type ][ $plugin ]['path'];
-     }
+	public static function get_plugin_path( $plugin, $plugin_type ) {
+		 $plugin_list = Plugins::get();
+		 return $plugin_list[ $plugin_type ][ $plugin ]['path'];
+	}
 
-     public static function exists( $plugin, $activate ) {
-          $plugin_type = self::get_plugin_type( $plugin );
-          $plugin_path = self::get_plugin_path( $plugin, $plugin_type );
-          if ( ! self::is_plugin_installed( $plugin_path ) ) {
-               return false;
-          }
+	public static function exists( $plugin, $activate ) {
+		 $plugin_type = self::get_plugin_type( $plugin );
+		 $plugin_path = self::get_plugin_path( $plugin, $plugin_type );
+		if ( ! self::is_plugin_installed( $plugin_path ) ) {
+			 return false;
+		}
 
-          if ( $activate && ! \is_plugin_active( $plugin_path ) ) {
-               return false;
-          }
-          return true;
-     }
+		if ( $activate && ! \is_plugin_active( $plugin_path ) ) {
+			 return false;
+		}
+		 return true;
+	}
 
-     public static function add_to_queue( $plugin, $activate ) {
-          $plugins = \get_option( Options::get_option_name( 'plugin_install_queue' ), array() );
-          foreach ( $plugins as $queued_plugin ) {
-               if ( $queued_plugin['slug'] === $plugin && $queued_plugin['activate'] === $activate ) {
-                    return;
-               }
-          }
-          array_push( $plugins, array(
-               'slug' => $plugin,
-               'activate' => $activate
-          ) );
-          return \update_option( Options::get_option_name( 'plugin_install_queue' ), $plugins );
-     }
+	public static function add_to_queue( $plugin, $activate ) {
+		 $plugins = \get_option( Options::get_option_name( 'plugin_install_queue' ), array() );
+		foreach ( $plugins as $queued_plugin ) {
+			if ( $queued_plugin['slug'] === $plugin && $queued_plugin['activate'] === $activate ) {
+				return;
+			}
+		}
+		array_push(
+			$plugins,
+			array(
+				'slug'     => $plugin,
+				'activate' => $activate,
+			)
+		);
+		 return \update_option( Options::get_option_name( 'plugin_install_queue' ), $plugins );
+	}
 
-     public static function install_endurance_page_cache() {
-          if ( ! self::connect_to_filesystem() ) {
+	public static function install_endurance_page_cache() {
+		if ( ! self::connect_to_filesystem() ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
 				'Could not connect to the filesystem.',
@@ -276,37 +279,37 @@ class PluginInstaller {
 			);
 		}
 
-          global $wp_filesystem;
+		 global $wp_filesystem;
 
-          $plugin_list = Plugins::get();
-          $plugin_url = $plugin_list['nfd_slugs']['nfd_slug_endurance_page_cache']['url'];
-          $plugin_path = $plugin_list['nfd_slugs']['nfd_slug_endurance_page_cache']['path'];
+		 $plugin_list = Plugins::get();
+		 $plugin_url  = $plugin_list['nfd_slugs']['nfd_slug_endurance_page_cache']['url'];
+		 $plugin_path = $plugin_list['nfd_slugs']['nfd_slug_endurance_page_cache']['path'];
 
-          if ( $wp_filesystem->exists( $plugin_path ) ) {
-               return new \WP_REST_Response(
-                    array(),
-                    200
-               ); 
-          }
-
-          if ( ! $wp_filesystem->is_dir( WP_CONTENT_DIR . '/mu-plugins' ) ) {
-               $wp_filesystem->mkdir( WP_CONTENT_DIR . '/mu-plugins' );
-          }
-
-          $request = \wp_remote_get( $plugin_url );
-		if ( \is_wp_error( $request ) ) {
-               return $request;
+		if ( $wp_filesystem->exists( $plugin_path ) ) {
+			return new \WP_REST_Response(
+				array(),
+				200
+			);
 		}
 
-          $wp_filesystem->put_contents( $plugin_path, $request['body'], FS_CHMOD_FILE );
+		if ( ! $wp_filesystem->is_dir( WP_CONTENT_DIR . '/mu-plugins' ) ) {
+			 $wp_filesystem->mkdir( WP_CONTENT_DIR . '/mu-plugins' );
+		}
 
-          return new \WP_REST_Response(
-               array(),
-               200
-          ); 
-     }
+		 $request = \wp_remote_get( $plugin_url );
+		if ( \is_wp_error( $request ) ) {
+			  return $request;
+		}
 
-     protected static function connect_to_filesystem() {
+		 $wp_filesystem->put_contents( $plugin_path, $request['body'], FS_CHMOD_FILE );
+
+		return new \WP_REST_Response(
+			array(),
+			200
+		);
+	}
+
+	protected static function connect_to_filesystem() {
 		require_once ABSPATH . 'wp-admin/includes/file.php';
 
 		// We want to ensure that the user has direct access to the filesystem.

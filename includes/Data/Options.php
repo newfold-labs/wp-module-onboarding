@@ -14,14 +14,14 @@ final class Options {
 	  * @var array List of all the options
 	  */
 	protected static array $options = array(
-		'redirect'       => 'redirect',
-		'redirect_param' => 'redirect_param',
-		'exited'         => 'exited',
-		'completed'      => 'completed',
-		'coming_soon'    => 'mm_coming_soon',
-		'brand'          => 'mm_brand',
-          'plugins_init_status' => 'plugins_init_status',
-          'plugin_install_queue' => 'plugin_install_queue'
+		'redirect'             => 'redirect',
+		'redirect_param'       => 'redirect_param',
+		'exited'               => 'exited',
+		'completed'            => 'completed',
+		'coming_soon'          => 'mm_coming_soon',
+		'brand'                => 'mm_brand',
+		'plugins_init_status'  => 'plugins_init_status',
+		'plugin_install_queue' => 'plugin_install_queue',
 	);
 
 	 /**

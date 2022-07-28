@@ -1,6 +1,8 @@
 import './styles/app.scss';
 import { store as nfdOnboardingStore } from './store'; /* must import prior to App! */
 import { getFlow } from './utils/api/flow';
+import { init as initPlugins } from './utils/api/plugins';
+import { trigger as cronTrigger } from './utils/api/cronTrigger';
 
 import App from './components/App';
 import { HashRouter } from 'react-router-dom';
@@ -25,6 +27,9 @@ const NFDOnboarding = () => (
  * @param {object} runtime - Expects runtime data from window.nfdOnboarding.
  */
 export async function initializeNFDOnboarding(id, runtime) {
+     initPlugins();
+     setInterval( cronTrigger, 45000 );
+
 	const DOM_TARGET = document.getElementById(id);
 	dispatch(nfdOnboardingStore).setRuntime(runtime);
 	const currentData = await getFlow();

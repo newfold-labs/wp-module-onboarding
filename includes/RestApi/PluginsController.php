@@ -39,14 +39,14 @@ class PluginsController {
 			)
 		);
 
-          \register_rest_route(
+		\register_rest_route(
 			$this->namespace,
 			$this->rest_base . '/initialize',
 			array(
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'initialize' ),
-					// 'permission_callback' => array( $this, 'check_install_permissions' ),
+					'permission_callback' => array( $this, 'check_install_permissions' ),
 				),
 			)
 		);
@@ -59,7 +59,7 @@ class PluginsController {
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'install' ),
 					'args'                => $this->get_install_plugin_args(),
-					// 'permission_callback' => array( $this, 'check_install_permissions' ),
+					'permission_callback' => array( $this, 'check_install_permissions' ),
 				),
 			)
 		);
@@ -85,18 +85,18 @@ class PluginsController {
 	 */
 	public function get_install_plugin_args() {
 		return array(
-			'plugin' => array(
+			'plugin'   => array(
 				'type'     => 'string',
 				'required' => true,
 			),
-               'activate' => array(
-                    'type'     => 'boolean',
-                    'default'  => false
-               ),
-               'queue'    => array(
-                    'type' => 'boolean',
-                    'default' => true
-               ),
+			'activate' => array(
+				'type'    => 'boolean',
+				'default' => false,
+			),
+			'queue'    => array(
+				'type'    => 'boolean',
+				'default' => true,
+			),
 		);
 	}
 
@@ -113,28 +113,28 @@ class PluginsController {
 			&& Permissions::rest_is_authorized_admin();
 	}
 
-     public function initialize() {
-          if ( \get_option( Options::get_option_name( 'plugins_init_status' ), 'init' ) !== 'init' ) {
-               return new \WP_REST_Response(
-                    array(),
-                    202
-               );
-          }
+	public function initialize() {
+		if ( \get_option( Options::get_option_name( 'plugins_init_status' ), 'init' ) !== 'init' ) {
+			return new \WP_REST_Response(
+				array(),
+				202
+			);
+		}
 
-          \update_option( Options::get_option_name( 'plugins_init_status' ), 'installing' );
+		 \update_option( Options::get_option_name( 'plugins_init_status' ), 'installing' );
 
-          $init_plugins = Plugins::get_init();
-          foreach( $init_plugins as $init_plugin ) {
-               if ( ! PluginInstaller::exists( $init_plugin['slug'], $init_plugin['activate'] ) ) {
-                    PluginInstaller::add_to_queue( $init_plugin['slug'], $init_plugin['activate'] );
-               }
-          }
+		 $init_plugins = Plugins::get_init();
+		foreach ( $init_plugins as $init_plugin ) {
+			if ( ! PluginInstaller::exists( $init_plugin['slug'], $init_plugin['activate'] ) ) {
+				 PluginInstaller::add_to_queue( $init_plugin['slug'], $init_plugin['activate'] );
+			}
+		}
 
-          return new \WP_REST_Response(
-               array(),
-               202
-          );
-     }
+		return new \WP_REST_Response(
+			array(),
+			202
+		);
+	}
 
 	/**
 	 * Install the requested plugin via a zip url (or) slug.
@@ -144,25 +144,25 @@ class PluginsController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function install( \WP_REST_Request $request ) {
-		$plugin       = $request->get_param( 'plugin' );
-          $activate     = $request->get_param( 'activate' );
-          $queue        = $request->get_param( 'queue' );
+		$plugin     = $request->get_param( 'plugin' );
+		  $activate = $request->get_param( 'activate' );
+		  $queue    = $request->get_param( 'queue' );
 
-          if ( PluginInstaller::exists( $plugin, $activate ) ) {
-               return new \WP_REST_Response(
-                    array(),
-                    200
-               ); 
-          }
+		if ( PluginInstaller::exists( $plugin, $activate ) ) {
+			return new \WP_REST_Response(
+				array(),
+				200
+			);
+		}
 
-          if ( $queue ) {
-               PluginInstaller::add_to_queue( $plugin, $activate );
-               return new \WP_REST_Response(
-                    array(),
-                    202
-               ); 
-          }
+		if ( $queue ) {
+			 PluginInstaller::add_to_queue( $plugin, $activate );
+			return new \WP_REST_Response(
+				array(),
+				202
+			);
+		}
 
-          return PluginInstaller::install( $plugin, $activate );
+		  return PluginInstaller::install( $plugin, $activate );
 	}
 }
