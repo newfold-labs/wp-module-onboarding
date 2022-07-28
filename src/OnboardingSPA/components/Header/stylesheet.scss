@@ -73,3 +73,26 @@
         @include reduce-motion("transition");
     }
 }
+
+.navigation-buttons {
+    font-size: 14px;
+    line-height: 40px;
+    align-items: center;
+    letter-spacing: 0.8px;
+    display: flex !important;
+    justify-content: space-evenly;
+    border-radius: 2px !important;
+    padding: 20px 14px !important; 
+
+    &_back {
+        padding-right: 22px !important;
+    }
+
+    &_next {
+        padding-left: 22px !important;
+    }
+
+    &_finish {
+        padding-left: 22px !important;
+    }
+}

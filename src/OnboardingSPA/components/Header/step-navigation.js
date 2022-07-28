@@ -15,7 +15,10 @@ const Back = ({ path }) => {
 	const navigate = useNavigate();
 	const navigateBack = () => navigate(path, { state: { origin: 'header' } });
 	return (
-		<Button onClick={navigateBack} variant="secondary" icon={chevronLeft}>
+		<Button className= "navigation-buttons navigation-buttons_back" 
+				onClick={navigateBack} 
+				variant="secondary">
+			<Icon icon={chevronLeft} />
 			{__('Back', 'wp-module-onboarding')}
 		</Button>
 	);
@@ -34,11 +37,9 @@ const Next = ({ path }) => {
 		<Button
 			onClick={navigateNext}
 			variant="primary"
-			// disabled={true}
-			style={{ padding: '6px' }}
-		>
+			className="navigation-buttons navigation-buttons_next">
 			{__('Next', 'wp-module-onboarding')}
-			<Icon icon={chevronRight} style={{ marginLeft: '8px' }} />
+			<Icon icon={chevronRight} />
 		</Button>
 	);
 };
@@ -48,9 +49,9 @@ const Next = ({ path }) => {
  * @returns
  */
 const Finish = () => (
-	<Button variant="primary" disabled={true}>
+	<Button className="navigation-buttons navigation-buttons_finish" variant="primary" disabled={true}>
 		{__('Finish', 'wp-module-onboarding')}
-		<Icon icon={chevronRight} style={{ marginLeft: '8px' }} />
+		<Icon icon={chevronRight} />
 	</Button>
 );
 
