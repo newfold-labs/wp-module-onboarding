@@ -5,6 +5,9 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginInstaller;
 
 class PluginInstallerCron {
+
+	 private $retry_limit = 1;
+
 	function __construct() {
 		 // Ensure there is a minutely option in the cron schedules
 		add_filter( 'cron_schedules', array( $this, 'add_thirty_seconds_schedule' ) );
@@ -35,7 +38,10 @@ class PluginInstallerCron {
 		 \update_option( Options::get_option_name( 'plugins_init_status' ), $plugin_to_install['slug'] );
 		 $status = PluginInstaller::install( $plugin_to_install['slug'], $plugin_to_install['activate'] );
 		if ( \is_wp_error( $status ) ) {
-			 array_push( $plugins, $plugin_to_install );
+			   $plugin_to_install['retries']++;
+			if ( $plugin_to_install['retries'] <= $this->retry_limit ) {
+					array_push( $plugins, $plugin_to_install );
+			}
 		}
 		if ( empty( $plugins ) ) {
 			 \update_option( Options::get_option_name( 'plugins_init_status' ), 'completed' );

@@ -36,6 +36,7 @@ class PluginInstaller {
 		// If it is not a zip URL then check if it is an approved slug.
 		$plugin = \sanitize_text_field( $plugin );
 		if ( self::is_nfd_slug( $plugin ) ) {
+			   // [TODO] Better handle mu-plugins and direct file downloads.
 			if ( $plugin === 'nfd_slug_endurance_page_cache' ) {
 				return self::install_endurance_page_cache();
 			}
@@ -200,7 +201,7 @@ class PluginInstaller {
 		}
 
 		return new \WP_REST_Response(
-			null,
+			array(),
 			200
 		);
 	}
@@ -265,6 +266,7 @@ class PluginInstaller {
 			array(
 				'slug'     => $plugin,
 				'activate' => $activate,
+				'retries'  => 0,
 			)
 		);
 		 return \update_option( Options::get_option_name( 'plugin_install_queue' ), $plugins );

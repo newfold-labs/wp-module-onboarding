@@ -40,7 +40,7 @@ final class Plugins {
 	);
 
 	protected static $nfd_slugs = array(
-		'nfd_slug_endurance_page_cache' => array(
+		'nfd_slug_endurance_page_cache'                  => array(
 			'approved' => true,
 			'url'      => 'https://raw.githubusercontent.com/bluehost/endurance-page-cache/production/endurance-page-cache.php',
 			'path'     => WP_CONTENT_DIR . '/mu-plugins/endurance-page-cache.php',
@@ -142,6 +142,7 @@ final class Plugins {
 		),
 	);
 
+	 // [TODO] Think about deprecating this approach and move to nfd_slugs for url based installs.
 	protected static $urls = array(
 		'https://downloads.wordpress.org/plugin/google-analytics-for-wordpress.8.5.3.zip' => true,
 	);
@@ -193,10 +194,15 @@ final class Plugins {
 	 */
 	public static function get_approved() {
 		return array(
-			'wp_slugs' => array_keys( self::$wp_slugs, true ),
-			'urls'     => array_keys( self::$urls, true ),
-			'domains'  => array_keys( self::$domains, true ),
+			'wp_slugs'  => array_keys( array_filter( self::$wp_slugs, array( __CLASS__, 'check_approved' ), ARRAY_FILTER_USE_BOTH ) ),
+			'nfd_slugs' => array_keys( array_filter( self::$nfd_slugs, array( __CLASS__, 'check_approved' ), ARRAY_FILTER_USE_BOTH ) ),
+			'urls'      => array_keys( self::$urls, true ),
+			'domains'   => array_keys( self::$domains, true ),
 		);
+	}
+
+	private static function check_approved( $value, $key ) {
+		 return $value['approved'] === true;
 	}
 
 	public static function get_init() {
