@@ -49,7 +49,7 @@ const StepProducts = () => {
 
 	const getPluginName = (productType) => {
 		switch (productType) {
-			case "Physical products": return "yith_wcap_panel";
+			case "Physical products": return "yith_shippo_shipping_for_woocommerce";
 			case "Book rooms, houses or rent products": return "yith_wcbk_panel";
 			default: return null;
 		}
