@@ -3,18 +3,19 @@ import {
 	Icon,
 	__unstableMotion as motion,
 } from '@wordpress/components';
-import { useDispatch, useSelect } from '@wordpress/data';
-import { useEffect, useRef } from '@wordpress/element';
-
-import { __ } from '@wordpress/i18n';
 import classNames from 'classnames';
 import { store as nfdOnboardingStore } from '../../../store';
+
+import { useDispatch, useSelect } from '@wordpress/data';
+import { useEffect, useRef } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import { wordpress } from '@wordpress/icons';
 
 const DrawerToggle = ({ isOpen }) => {
-	const { isDrawerOpen } = useSelect((select) => {
+	const { isDrawerOpen, isDrawerSuppressed } = useSelect((select) => {
 		return {
 			isDrawerOpen: select(nfdOnboardingStore).isDrawerOpened(),
+			isDrawerSuppressed: select(nfdOnboardingStore).isDrawerSuppressed(),
 		};
 	}, []);
 
@@ -28,7 +29,9 @@ const DrawerToggle = ({ isOpen }) => {
 		}
 	}, [isDrawerOpen]);
 
-	const toggleDrawer = () => setIsDrawerOpened(!isDrawerOpen);
+	const toggleDrawer = () => {
+		isDrawerSuppressed || setIsDrawerOpened(!isDrawerOpen);
+	}
 
 	return (
 		<motion.div
@@ -38,7 +41,7 @@ const DrawerToggle = ({ isOpen }) => {
 			whileHover="expand"
 		>
 			<Button
-				className="nfd-onboarding-drawer__toggle-button has-icon"
+				className={`nfd-onboarding-drawer__toggle-button has-icon ${!isDrawerSuppressed || 'is-suppressed'}`}
 				label={__('Toggle Navigation', 'wp-module-onboarding')}
 				ref={drawerToggleRef}
 				aria-pressed={isOpen}
