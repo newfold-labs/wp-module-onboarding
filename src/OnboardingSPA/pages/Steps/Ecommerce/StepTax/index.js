@@ -10,20 +10,6 @@ import { __ } from "@wordpress/i18n";
 import { RadioControl } from "@wordpress/components";
 import CardHeader from "../../../../components/CardHeader";
 import apiFetch from "@wordpress/api-fetch";
-const taxManagementData = {
-	1: {
-		wc_connect_taxes_enabled: "yes",
-		woocommerce_calc_taxes: "yes",
-	},
-	2: {
-		wc_connect_taxes_enabled: "no",
-		woocommerce_calc_taxes: "yes",
-	},
-	5: {
-		woocommerce_no_sales_tax: true,
-		woocommerce_calc_taxes: "no",
-	},
-};
 
 const StepTax = () => {
 	const {
@@ -75,16 +61,15 @@ const StepTax = () => {
 			navigate("/ecommerce/step/address");
 			return;
 		}
-		await saveData(taxManagementData[currentData.taxInfo?.selectTaxOption]);
+		await saveData(content.stepTaxOptions.find(e => currentData.taxInfo?.selectTaxOption === e.value)?.data);
 		navigate("/ecommerce/step/products");
 	};
 
 	return (
 		<CommonLayout isCentered>
 			<NewfoldLargeCard>
-				<form
+				<div
 					className="nfd-onboarding-experience-step"
-					onSubmit={handleButtonClick}
 				>
 					<div className="nfd-card-heading center onboarding-ecommerce-step">
 						<CardHeader
@@ -94,7 +79,7 @@ const StepTax = () => {
 						/>
 					</div>
 					<RadioControl
-						className="nfd-onboarding-experience-step-tabs components-radio-control__input"
+						className="nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-tax-step"
 						selected={currentData.taxInfo?.selectTaxOption}
 						options={content.stepTaxOptions.map((option) => {
 							return {
@@ -108,7 +93,7 @@ const StepTax = () => {
 							})
 						}
 					/>
-					<button className="nfd-nav-card-button nfd-card-button">
+					<button className="nfd-nav-card-button nfd-card-button" onClick={handleButtonClick}>
 						Continue Setup
 					</button>
 					<p>
@@ -116,7 +101,7 @@ const StepTax = () => {
 							Need help? <a>Hire our experts</a>
 						</em>
 					</p>
-				</form>
+				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>
 	);
