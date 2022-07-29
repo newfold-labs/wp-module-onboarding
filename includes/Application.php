@@ -4,7 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding;
 use NewfoldLabs\WP\Module\Onboarding\RestApi\RestApi;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
-use NewfoldLabs\WP\Module\Onboarding\WPCrons\PluginInstallerCron;
+use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
 use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
@@ -46,9 +46,9 @@ final class Application {
 
 		new RestAPI();
 
-		if ( ! empty( get_option( Options::get_option_name( 'plugin_install_queue' ), array() ) ) ) {
-			 new PluginInstallerCron();
-		}
+		// if ( ! empty( get_option( Options::get_option_name( 'plugin_install_queue' ), array() ) ) ) {
+		// 	 new PluginInstallTaskManager();
+		// }
 
 		if ( defined( '\\WP_CLI' ) && \WP_CLI ) {
 			new WP_CLI();

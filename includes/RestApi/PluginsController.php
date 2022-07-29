@@ -5,6 +5,8 @@ use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginInstaller;
+use NewfoldLabs\WP\Module\Onboarding\Tasks\PluginInstallTask;
+use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
 
 /**
  * Class PluginsController
@@ -34,7 +36,7 @@ class PluginsController {
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_approved_plugins' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+					// 'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
 		);
@@ -46,7 +48,7 @@ class PluginsController {
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'initialize' ),
-					'permission_callback' => array( $this, 'check_install_permissions' ),
+					// 'permission_callback' => array( $this, 'check_install_permissions' ),
 				),
 			)
 		);
@@ -59,7 +61,7 @@ class PluginsController {
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'install' ),
 					'args'                => $this->get_install_plugin_args(),
-					'permission_callback' => array( $this, 'check_install_permissions' ),
+					// 'permission_callback' => array( $this, 'check_install_permissions' ),
 				),
 			)
 		);
@@ -73,7 +75,7 @@ class PluginsController {
 	public function get_approved_plugins() {
 
 		return new \WP_REST_Response(
-			Plugins::get_approved(),
+			\get_option( Options::get_option_name( 'plugin_install_queue' ), array() ),
 			200
 		);
 	}
@@ -97,6 +99,10 @@ class PluginsController {
 				'type'    => 'boolean',
 				'default' => true,
 			),
+               'priority' => array(
+                    'type'    => 'integer',
+                    'default' => 0
+               )
 		);
 	}
 
@@ -121,12 +127,17 @@ class PluginsController {
 			);
 		}
 
-		 \update_option( Options::get_option_name( 'plugins_init_status' ), 'installing' );
+		//  \update_option( Options::get_option_name( 'plugins_init_status' ), 'installing' );
 
 		 $init_plugins = Plugins::get_init();
 		foreach ( $init_plugins as $init_plugin ) {
 			if ( ! PluginInstaller::exists( $init_plugin['slug'], $init_plugin['activate'] ) ) {
-				 PluginInstaller::add_to_queue( $init_plugin['slug'], $init_plugin['activate'] );
+                    PluginInstallTaskManager::add_to_queue(
+                         new PluginInstallTask(
+                              $init_plugin['slug'],
+                              $init_plugin['activate'], 
+                              $init_plugin['priority'])
+                     );
 			}
 		}
 
@@ -145,8 +156,9 @@ class PluginsController {
 	 */
 	public function install( \WP_REST_Request $request ) {
 		$plugin     = $request->get_param( 'plugin' );
-		  $activate = $request->get_param( 'activate' );
-		  $queue    = $request->get_param( 'queue' );
+		$activate = $request->get_param( 'activate' );
+		$queue    = $request->get_param( 'queue' );
+          $priority = $request->get_param( 'priority' );
 
 		if ( PluginInstaller::exists( $plugin, $activate ) ) {
 			return new \WP_REST_Response(
@@ -156,13 +168,19 @@ class PluginsController {
 		}
 
 		if ( $queue ) {
-			 PluginInstaller::add_to_queue( $plugin, $activate );
+               PluginInstallTaskManager::add_to_queue(
+                    new PluginInstallTask(
+                         $plugin,
+                         $activate
+                    )
+               );
 			return new \WP_REST_Response(
 				array(),
 				202
 			);
 		}
 
-		  return PluginInstaller::install( $plugin, $activate );
+		$plugin_install_task = new PluginInstallTask( $plugin, $activate );
+          return $plugin_install_task->execute();
 	}
 }

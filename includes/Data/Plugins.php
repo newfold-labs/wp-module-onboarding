@@ -88,58 +88,79 @@ final class Plugins {
 	);
 
 	protected static $init_list = array(
-		array(
-			'slug'     => 'woocommerce',
-			'activate' => true,
-		),
-		array(
-			'slug'     => 'nfd_slug_endurance_page_cache',
-			'activate' => true,
-		),
-		array(
-			'slug'     => 'jetpack',
-			'activate' => true,
-		),
-		array(
-			'slug'     => 'wordpress-seo',
-			'activate' => true,
-		),
-		array(
-			'slug'     => 'wpforms-lite',
-			'activate' => true,
-		),
-		array(
-			'slug'     => 'google-analytics-for-wordpress',
-			'activate' => true,
-		),
-		array(
-			'slug'     => 'optinmonster',
-			'activate' => true,
-		),
-		array(
-			'slug'     => 'nfd_slug_yith_woocommerce_customize_myaccount_page',
-			'activate' => true,
-		),
-		array(
-			'slug'     => 'nfd_slug_yith_woocommerce_gift_cards',
-			'activate' => true,
-		),
-		array(
-			'slug'     => 'nfd_slug_yith_woocommerce_wishlist',
-			'activate' => true,
-		),
-		array(
-			'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
-			'activate' => true,
-		),
-		array(
-			'slug'     => 'nfd_slug_yith_paypal_payments_for_woocommerce',
-			'activate' => true,
-		),
-		array(
-			'slug'     => 'nfd_slug_ecomdash_wordpress_plugin',
-			'activate' => false,
-		),
+          'default' => array(
+               array(
+                    'slug'     => 'nfd_slug_endurance_page_cache',
+                    'activate' => true,
+                    'priority' => 240,
+               ),
+               array(
+                    'slug'     => 'jetpack',
+                    'activate' => true,
+                    'priority' => 220,
+               ),
+               array(
+                    'slug'     => 'wordpress-seo',
+                    'activate' => true,
+                    'priority' => 200,
+               ),
+               array(
+                    'slug'     => 'wpforms-lite',
+                    'activate' => true,
+                    'priority' => 180,
+               ),
+               array(
+                    'slug'     => 'google-analytics-for-wordpress',
+                    'activate' => true,
+                    'priority' => 160,
+               ),
+               array(
+                    'slug'     => 'optinmonster',
+                    'activate' => true,
+                    'priority' => 140,
+               ),
+          ),
+          'ecommerce' => array(
+               'default' => array(
+                    array(
+                         'slug'     => 'woocommerce',
+                         'activate' => true,
+                         'priority' => 260,
+                    ),
+                    array(
+                         'slug'     => 'nfd_slug_yith_woocommerce_customize_myaccount_page',
+                         'activate' => true,
+                         'priority' => 120,
+                    ),
+                    array(
+                         'slug'     => 'nfd_slug_yith_woocommerce_gift_cards',
+                         'activate' => true,
+                         'priority' => 100,
+                    ),
+                    array(
+                         'slug'     => 'nfd_slug_yith_woocommerce_wishlist',
+                         'activate' => true,
+                         'priority' => 80,
+                    ),
+                    array(
+                         'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
+                         'activate' => true,
+                         'priority' => 60,
+                    ),
+                    array(
+                         'slug'     => 'nfd_slug_yith_paypal_payments_for_woocommerce',
+                         'activate' => true,
+                         'priority' => 40,
+                    ),
+               ),
+               'wc_premium' => array(
+                    array(
+                         'slug'      => 'nfd_slug_ecomdash_wordpress_plugin',
+                         'activate'  => true,
+                         'priority'  => 20,
+                    ),
+               )
+          )
 	);
 
 	 // [TODO] Think about deprecating this approach and move to nfd_slugs for url based installs.
@@ -206,7 +227,19 @@ final class Plugins {
 	}
 
 	public static function get_init() {
-		 return self::$init_list;
+          $plan_type = Data::current_flow();
+          // $plan_subtype = 'wc_premium';
+          $init_list = self::$init_list['default'];
+          if ( $plan_type && isset( self::$init_list[$plan_type] ) ) {
+               if ( isset( self::$init_list[$plan_type]['default'] ) ) {
+                    $init_list = array_merge( $init_list, self::$init_list[$plan_type]['default'] );
+               }
+               if ( $plan_subtype !== 'default' && isset( self::$init_list[$plan_type][$plan_subtype] ) ) {
+                    $init_list = array_merge( $init_list, self::$init_list[$plan_type][$plan_subtype] );
+               }
+          }
+
+		return $init_list;
 	}
 
 }

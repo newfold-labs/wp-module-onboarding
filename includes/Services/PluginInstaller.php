@@ -254,24 +254,6 @@ class PluginInstaller {
 		 return true;
 	}
 
-	public static function add_to_queue( $plugin, $activate ) {
-		 $plugins = \get_option( Options::get_option_name( 'plugin_install_queue' ), array() );
-		foreach ( $plugins as $queued_plugin ) {
-			if ( $queued_plugin['slug'] === $plugin && $queued_plugin['activate'] === $activate ) {
-				return;
-			}
-		}
-		array_push(
-			$plugins,
-			array(
-				'slug'     => $plugin,
-				'activate' => $activate,
-				'retries'  => 0,
-			)
-		);
-		 return \update_option( Options::get_option_name( 'plugin_install_queue' ), $plugins );
-	}
-
 	public static function install_endurance_page_cache() {
 		if ( ! self::connect_to_filesystem() ) {
 			return new \WP_Error(
