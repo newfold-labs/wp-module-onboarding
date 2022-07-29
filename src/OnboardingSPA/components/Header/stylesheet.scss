@@ -96,3 +96,8 @@
         padding-left: 22px !important;
     }
 }
+
+// Removed Default Border that comes with WordPress for Headers
+.interface-interface-skeleton__header {
+    border: none;
+}
