@@ -112,7 +112,7 @@ export const pages = [
 export const steps = [
 	{
 		path: '/wp-setup/step/get-started/welcome',
-		title: __('Get Started', 'wp-module-onboarding'),
+		title: __('Welcome', 'wp-module-onboarding'),
 		heading: __('Make your website dreams a reality!', 'wp-module-onboarding'),
 		subheading: __(
 			'with WordPress and ',

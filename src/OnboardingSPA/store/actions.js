@@ -45,6 +45,19 @@ export function setIsDrawerOpened( isOpen ) {
 }
 
 /**
+ * Keeps the drawer on the left suppressed.
+ *
+ * @param {*} isSuppressed
+ * @return
+ */
+export function setIsDrawerSuppressed( isSuppressed ) {
+	return {
+		type: 'SET_DRAWER_SUPPRESSED',
+		isSuppressed,
+	};
+}
+
+/**
  * Accepts a string flow to set the active flow.
  *
  * NOTE: does not have any navigation side-effect.
