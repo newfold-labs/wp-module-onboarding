@@ -1,9 +1,5 @@
 import { filter, findIndex } from 'lodash';
 import { addQueryArgs } from '@wordpress/url';
-import { coreDataStore } from '@wordpress/core-data';
-import { createRegistrySelector } from '@wordpress/data';
-import createSelector from 'rememo';
-import { store as preferencesStore } from '@wordpress/preferences';
 
 /**
  * Get the currently active drawer view
@@ -26,6 +22,16 @@ export function isDrawerOpened( state ) {
 }
 
 /**
+ * Check if the drawer is suppressed
+ *
+ * @param {*} state
+ * @return boolean
+ */
+ export function isDrawerSuppressed( state ) {
+	return state.drawer.isSuppressed;
+}
+
+/**
  * Gets current Newfold brand
  *
  * @param {*} state
@@ -36,25 +42,35 @@ export function getNewfoldBrand( state ) {
 }
 
 /**
+ * Gets current Newfold brand
+ *
+ * @param {*} state
+ * @return string
+ */
+export function getNewfoldBrandName( state ) {
+	return state.runtime.currentBrand.name;
+}
+
+/**
  * Gets dynamic Hire Experts URL for Need Help Tag per brand
  *
  * @param {*} state
  * @return string
  */
- export function getHireExpertsUrl( state ) {
+export function getHireExpertsUrl( state ) {
 	const hireExpertsInfo = state.runtime.currentBrand.hireExpertsInfo;
 	return addQueryArgs(hireExpertsInfo.defaultLink, hireExpertsInfo.utmParameters) ;
 }
 
 /**
  * Gets the current Onboarding Data
+ *
  * @param {*} state
- * @returns string
+ * @return string
  */
-export function getCurrentOnboardingData(state) {
+export function getCurrentOnboardingData( state ) {
 	return state.currentData;
 }
-
 
 /**
  * Gets current Onboarding Flow
@@ -62,7 +78,7 @@ export function getCurrentOnboardingData(state) {
  * @param {*} state
  * @return string
  */
-export function getOnboardingFlow(state) {
+export function getOnboardingFlow( state ) {
 	return state.runtime.currentFlow ?? 'wp-setup';
 }
 
@@ -88,10 +104,11 @@ export function getDesignSteps( state ) {
 
 /**
  * Gets get-started setup steps to display in drawer submenu.
+ *
  * @param {*} state
- * @returns
+ * @return
  */
-export function getGetStartedSteps(state) {
+export function getGetStartedSteps( state ) {
 	return state.flow.steps.getStartedSteps;
 }
 
@@ -192,4 +209,8 @@ export function getSidebars( state ) {
 
 export function getPreviewSettings( state ) {
 	return state.runtime.previewSettings;
+}
+
+export function getStoreInfoSteps( state ) {
+	return state.flow.steps.storeInfoSteps;
 }

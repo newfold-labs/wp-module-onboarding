@@ -33,14 +33,12 @@
 }
 
 .nfd-step-card-heading {
-	font-weight: 700;
-	font-size: clamp(1rem, 3vw, 2rem);
+    font-weight: 700;
 }
 
 .nfd-step-card-subheading {
-	font-weight: 700;
-	color: var(--nfd-onboarding-primary);
-	font-size: clamp(0.5rem, 1.8vw, 1.2rem);
+    font-weight: 700;
+    color: var(--nfd-onboarding-primary);
 }
 
 .nfd-step-card-question {
