@@ -79,15 +79,15 @@ const GetStartedExperience = () => {
 						selected={ wpComfortLevel }
 						options={ content.options.map( ( option ) => {
 							return {
-								label: __( option.content ),
-								value: __( option.value ),
+								label: __(option.content, 'wp-module-onboarding' ),
+								value: __(option.value, 'wp-module-onboarding' ),
 							};
 						} ) }
 						onChange={ ( value ) => setWpComfortLevel( value ) }
 					/>
 					<div className="nfd-exp-continue-button">
 						<NavCardButton
-							text={__(content.buttonText)}
+							text={ __(content.buttonText, 'wp-module-onboarding') }
 							disabled={wpComfortLevel == '0'}
 						/>
 						<NeedHelpTag />

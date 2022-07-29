@@ -103,7 +103,7 @@ const StepTopPriority = ( props ) => {
 				onSelectedChange={ setSelected }
 			></SelectableCardList>
 			<div style={ { textAlign: 'center' } }>
-				<p style={{ margin: '16px', fontWeight: '500', fontStyle: 'italic' } }>
+				<p className="info-top-priority">
 					{ __(
 						"Where would you like to start? We'll start ",
 						'wp-module-onboarding'
@@ -115,8 +115,8 @@ const StepTopPriority = ( props ) => {
 					) }
 				</p>
 				<a
+					className="skip-button-top-priority "
 					onClick={ ( e ) => navigate( '/wp-setup/step/basic-info' ) }
-					style={ { cursor: 'pointer', fontWeight: '200', fontStyle: 'italic' } }
 				>
 					{ __( 'Skip this Step', 'wp-module-onboarding' ) }
 				</a>
