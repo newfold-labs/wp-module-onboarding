@@ -27,6 +27,7 @@ const StepProducts = () => {
 		setIsSidebarOpened(false);
 		setIsDrawerOpened(true);
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
+		setCurrentOnboardingData({productInfo: { product_types: [] }})
 	}, []);
 
 	const getPluginInstall = async (data) => {
@@ -37,11 +38,12 @@ const StepProducts = () => {
 		return await resolve(apiFetch({ path: `/wc-admin/onboarding/profile`, method: 'POST', data }).then());
 	}
 
-	const handleCheckbox = async (val) => {
+	const handleCheckbox = (value, checked) => {
 		setCurrentOnboardingData({
 			productInfo: {
 				...currentData.productInfo,
-				"productTypes": { ...currentData.productInfo?.productTypes, ...val }
+				product_types: checked ? [...currentData.productInfo?.product_types, value]
+					: currentData.productInfo.product_types.filter(product => product !== value)
 			}
 		})
 
@@ -49,24 +51,26 @@ const StepProducts = () => {
 
 	const getPluginName = (productType) => {
 		switch (productType) {
-			case "Physical products": return YITH_SHIPPO_PLUGIN;
-			case "Book rooms, houses or rent products": return YITH_BOOKING_PLUGIN;
+			case "physical": return YITH_SHIPPO_PLUGIN;
+			case "bookings": return YITH_BOOKING_PLUGIN;
 			default: return null;
 		}
 	}
 
 	const handleButtonClick = async () => {
-		Object.entries(currentData.productInfo?.productTypes).forEach(async ([key, val]) => {
-			if (val) {
-				const data = { plugin: getPluginName(key) };
-				data.plugin && await getPluginInstall(data);
-			}
+		currentData.productInfo?.product_types.forEach(async (product) => {
+			const data = { plugin: getPluginName(product) };
+			data.plugin && await getPluginInstall(data);
 		})
-		if (Number(currentData.productInfo?.productCount) >= 51) {
+		
+		if (currentData.productInfo?.product_count !== "0" && currentData.productInfo?.product_count !== "1-10") {
 			const yithPlugin = [YITH_SEARCH_PLUGIN, YITH_PRODUCT_FILTER_PLUGIN];
 			yithPlugin.forEach(async val => await getPluginInstall({ plugin: val }))
 		}
-		const wcData = { completed: true, productType: currentData.productInfo?.productTypes, productCount: currentData.productInfo?.productCount }
+		const wcData = { completed: true,
+			product_types: currentData.productInfo?.product_types,
+			product_count: currentData.productInfo?.product_count
+		}
 		await saveData(wcData);
 	}
 
@@ -83,16 +87,16 @@ const StepProducts = () => {
 					<div className='nfd-product-step-options'>
 						{content.productOptions.map(product =>
 							<CheckboxControl
-								checked={currentData.productInfo?.productTypes[product.content]}
+								checked={currentData.productInfo?.product_types.indexOf(product.value) !== -1}
 								label={product.content}
-								onChange={e => handleCheckbox({ [product.content]: e })}
+								onChange={e => handleCheckbox(product.value, e)}
 							/>)}
 					</div>
 					<div className='step-product-numbers'>
 						<span style={{ fontSize: "16px" }}>{__(content.stepProductsQuestion)}</span>
 						<RadioControl
 							className='components-radio-control__input'
-							selected={currentData.productInfo?.productCount}
+							selected={currentData.productInfo?.product_count}
 							options={content.stepProductNumbers.map((option) => {
 								return {
 									label: __(option.content),
@@ -102,7 +106,7 @@ const StepProducts = () => {
 							onChange={(value) => setCurrentOnboardingData({
 								productInfo: {
 									...currentData.productInfo,
-									"productCount": value
+									"product_count": value
 								},
 							})}
 						/>
