@@ -1,6 +1,7 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Data\Flows;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 
@@ -64,6 +65,8 @@ class FlowController {
 		if ( ! ( $result = $this->read_details_from_wp_options() ) ) {
 			$result              = Flows::get_data();
 			$result['createdAt'] = time();
+			// update default data if flow type is ecommerce
+			$result = $this->update_default_data_for_ecommerce( $result );
 			$this->save_details_to_wp_options( $result );
 		}
 
@@ -93,8 +96,10 @@ class FlowController {
 		}
 
 		if ( ! ( $flow_data = $this->read_details_from_wp_options() ) ) {
-			  $flow_data              = Flow::get_flow_data();
+			  $flow_data              = Flows::get_data();
 			  $flow_data['createdAt'] = time();
+			  // update default data if flow type is ecommerce
+			  $flow_data = $this->update_default_data_for_ecommerce( $flow_data );
 			  $this->save_details_to_wp_options( $flow_data );
 		}
 
@@ -126,6 +131,24 @@ class FlowController {
 			$flow_data,
 			200
 		);
+	}
+
+	/**
+	 * check the current flow type and update default data if flowtype is ecommerce.
+	 *
+	 * @param default flow data.
+	 *
+	 * @return array
+	 */
+	public function update_default_data_for_ecommerce( $data ) {
+		// get current flow type
+		$flow_type = Data::current_flow();
+		if($flow_type == 'ecommerce') {
+			// update default data with ecommerce data
+			$data['data']['topPriority']['priority1'] = 'selling';
+			$data['data']['siteType'] = array('label' => '', 'referTo' => 'business');
+		}
+		return $data;
 	}
 
 	/*
