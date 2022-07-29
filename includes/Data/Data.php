@@ -60,7 +60,6 @@ final class Data {
 	 * @return string
 	 */
 	public static function current_flow() {
-          return 'ecommerce';
 		$flows = Flows::get_flows();
 
 		if ( isset( $_GET['flow'] ) ) {

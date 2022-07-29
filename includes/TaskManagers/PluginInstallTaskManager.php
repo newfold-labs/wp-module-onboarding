@@ -34,16 +34,16 @@ class PluginInstallTaskManager {
 	}
 
 	public function install() {
-		 $plugins           = \get_option( Options::get_option_name( 'plugin_install_queue' ), array() );
-		 $plugin_to_install = array_shift( $plugins );
-           $plugin_install_task = new PluginInstallTask(
-               $plugin_to_install['slug'],
-               $plugin_to_install['activate'],
-               $plugin_to_install['priority'],
-               $plugin_to_install['retries'],
-           );
-		 \update_option( Options::get_option_name( 'plugins_init_status' ), $plugin_install_task->get_slug() );
-		 $status = $plugin_install_task->execute();
+		$plugins             = \get_option( Options::get_option_name( 'plugin_install_queue' ), array() );
+		$plugin_to_install   = array_shift( $plugins );
+		$plugin_install_task = new PluginInstallTask(
+			$plugin_to_install['slug'],
+			$plugin_to_install['activate'],
+			$plugin_to_install['priority'],
+			$plugin_to_install['retries'],
+		);
+		\update_option( Options::get_option_name( 'plugins_init_status' ), $plugin_install_task->get_slug() );
+		$status = $plugin_install_task->execute();
 		if ( \is_wp_error( $status ) ) {
 			   $plugin_install_task->increment_retries();
 			if ( $plugin_install_task->get_retries() <= $this->retry_limit ) {
@@ -51,25 +51,28 @@ class PluginInstallTaskManager {
 			}
 		}
 		if ( empty( $plugins ) ) {
-			 \update_option( Options::get_option_name( 'plugins_init_status' ), 'completed' );
+			\update_option( Options::get_option_name( 'plugins_init_status' ), 'completed' );
 		}
 		 return \update_option( Options::get_option_name( 'plugin_install_queue' ), $plugins );
 	}
 
-     public static function add_to_queue( PluginInstallTask $plugin_install_task ) {
-          $plugins = \get_option( Options::get_option_name( 'plugin_install_queue' ), array() );
-          $queue = new PriorityQueue();
-         foreach ( $plugins as $queued_plugin ) {
-              if ( $queued_plugin['slug'] === $plugin_install_task->get_slug() 
-                   && $queued_plugin['activate'] === $plugin_install_task->get_activate() ) {
-                   return;
-              }
-              $queue->insert( $queued_plugin, $queued_plugin['priority'] );
-         }
-         $queue->insert(
-              $plugin_install_task->to_array(),
-              $plugin_install_task->get_priority()
-         );
-          return \update_option( Options::get_option_name( 'plugin_install_queue' ), $queue->to_array() );
-    }
+	public static function add_to_queue( PluginInstallTask $plugin_install_task ) {
+		$plugins = \get_option( Options::get_option_name( 'plugin_install_queue' ), array() );
+
+		$queue = new PriorityQueue();
+		foreach ( $plugins as $queued_plugin ) {
+			if ( $queued_plugin['slug'] === $plugin_install_task->get_slug()
+				  && $queued_plugin['activate'] === $plugin_install_task->get_activate() ) {
+				 return;
+			}
+			 $queue->insert( $queued_plugin, $queued_plugin['priority'] );
+		}
+
+		$queue->insert(
+			$plugin_install_task->to_array(),
+			$plugin_install_task->get_priority()
+		);
+
+		 return \update_option( Options::get_option_name( 'plugin_install_queue' ), $queue->to_array() );
+	}
 }

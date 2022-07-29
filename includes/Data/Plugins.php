@@ -50,17 +50,17 @@ final class Plugins {
 			'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-woocommerce-customize-myaccount-page',
 			'path'     => 'yith-woocommerce-customize-myaccount-page-extended/init.php',
 		),
-		'nfd_slug_yith_woocommerce_gift_cards' => array(
+		'nfd_slug_yith_woocommerce_gift_cards'           => array(
 			'approved' => true,
 			'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-woocommerce-gift-cards',
 			'path'     => 'yith-woocommerce-gift-cards-extended/init.php',
 		),
-		'nfd_slug_ecomdash_wordpress_plugin' => array(
+		'nfd_slug_ecomdash_wordpress_plugin'             => array(
 			'approved' => true,
 			'url'      => 'https://hiive.cloud/workers/plugin-downloads/ecomdash-wordpress-plugin',
 			'path'     => '202207190850-ecomdash-wordpress-plugin-latest/ecomdash-plugin.php',
 		),
-		'nfd_slug_yith_paypal_payments_for_woocommerce' => array(
+		'nfd_slug_yith_paypal_payments_for_woocommerce'  => array(
 			'approved' => true,
 			'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-paypal-payments-for-woocommerce',
 			'path'     => 'yith-paypal-payments-for-woocommerce-extended/init.php',
@@ -70,17 +70,17 @@ final class Plugins {
 			'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-shippo-shippings-for-woocommerce',
 			'path'     => 'yith-shippo-shippings-for-woocommerce-extended/init.php',
 		),
-		'nfd_slug_yith_woocommerce_ajax_product_filter' => array(
+		'nfd_slug_yith_woocommerce_ajax_product_filter'  => array(
 			'approved' => true,
 			'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-woocommerce-ajax-product-filter',
 			'path'     => 'yith-woocommerce-ajax-product-filter-extended/init.php',
 		),
-		'nfd_slug_yith_woocommerce_booking' => array(
+		'nfd_slug_yith_woocommerce_booking'              => array(
 			'approved' => true,
 			'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-woocommerce-booking',
 			'path'     => '',
 		),
-		'nfd_slug_yith_woocommerce_wishlist' => array(
+		'nfd_slug_yith_woocommerce_wishlist'             => array(
 			'approved' => true,
 			'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-woocommerce-wishlist',
 			'path'     => 'yith-woocommerce-wishlist-extended/init.php',
@@ -88,79 +88,79 @@ final class Plugins {
 	);
 
 	protected static $init_list = array(
-          'default' => array(
-               array(
-                    'slug'     => 'nfd_slug_endurance_page_cache',
-                    'activate' => true,
-                    'priority' => 240,
-               ),
-               array(
-                    'slug'     => 'jetpack',
-                    'activate' => true,
-                    'priority' => 220,
-               ),
-               array(
-                    'slug'     => 'wordpress-seo',
-                    'activate' => true,
-                    'priority' => 200,
-               ),
-               array(
-                    'slug'     => 'wpforms-lite',
-                    'activate' => true,
-                    'priority' => 180,
-               ),
-               array(
-                    'slug'     => 'google-analytics-for-wordpress',
-                    'activate' => true,
-                    'priority' => 160,
-               ),
-               array(
-                    'slug'     => 'optinmonster',
-                    'activate' => true,
-                    'priority' => 140,
-               ),
-          ),
-          'ecommerce' => array(
-               'default' => array(
-                    array(
-                         'slug'     => 'woocommerce',
-                         'activate' => true,
-                         'priority' => 260,
-                    ),
-                    array(
-                         'slug'     => 'nfd_slug_yith_woocommerce_customize_myaccount_page',
-                         'activate' => true,
-                         'priority' => 120,
-                    ),
-                    array(
-                         'slug'     => 'nfd_slug_yith_woocommerce_gift_cards',
-                         'activate' => true,
-                         'priority' => 100,
-                    ),
-                    array(
-                         'slug'     => 'nfd_slug_yith_woocommerce_wishlist',
-                         'activate' => true,
-                         'priority' => 80,
-                    ),
-                    array(
-                         'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
-                         'activate' => true,
-                         'priority' => 60,
-                    ),
-                    array(
-                         'slug'     => 'nfd_slug_yith_paypal_payments_for_woocommerce',
-                         'activate' => true,
-                         'priority' => 40,
-                    ),
-               ),
-               'wc_premium' => array(
-                    array(
-                         'slug'      => 'nfd_slug_ecomdash_wordpress_plugin',
-                         'activate'  => true,
-                         'priority'  => 20,
-                    ),
-               )
-          )
+		'default'   => array(
+			array(
+				'slug'     => 'nfd_slug_endurance_page_cache',
+				'activate' => true,
+				'priority' => 240,
+			),
+			array(
+				'slug'     => 'jetpack',
+				'activate' => true,
+				'priority' => 220,
+			),
+			array(
+				'slug'     => 'wordpress-seo',
+				'activate' => true,
+				'priority' => 200,
+			),
+			array(
+				'slug'     => 'wpforms-lite',
+				'activate' => true,
+				'priority' => 180,
+			),
+			array(
+				'slug'     => 'google-analytics-for-wordpress',
+				'activate' => true,
+				'priority' => 160,
+			),
+			array(
+				'slug'     => 'optinmonster',
+				'activate' => true,
+				'priority' => 140,
+			),
+		),
+		'ecommerce' => array(
+			'default'    => array(
+				array(
+					'slug'     => 'woocommerce',
+					'activate' => true,
+					'priority' => 260,
+				),
+				array(
+					'slug'     => 'nfd_slug_yith_woocommerce_customize_myaccount_page',
+					'activate' => true,
+					'priority' => 120,
+				),
+				array(
+					'slug'     => 'nfd_slug_yith_woocommerce_gift_cards',
+					'activate' => true,
+					'priority' => 100,
+				),
+				array(
+					'slug'     => 'nfd_slug_yith_woocommerce_wishlist',
+					'activate' => true,
+					'priority' => 80,
+				),
+				array(
+					'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
+					'activate' => true,
+					'priority' => 60,
+				),
+				array(
+					'slug'     => 'nfd_slug_yith_paypal_payments_for_woocommerce',
+					'activate' => true,
+					'priority' => 40,
+				),
+			),
+			'wc_premium' => array(
+				array(
+					'slug'     => 'nfd_slug_ecomdash_wordpress_plugin',
+					'activate' => false,
+					'priority' => 20,
+				),
+			),
+		),
 	);
 
 	 // [TODO] Think about deprecating this approach and move to nfd_slugs for url based installs.
@@ -227,17 +227,17 @@ final class Plugins {
 	}
 
 	public static function get_init() {
-          $plan_type = Data::current_flow();
-          // $plan_subtype = 'wc_premium';
-          $init_list = self::$init_list['default'];
-          if ( $plan_type && isset( self::$init_list[$plan_type] ) ) {
-               if ( isset( self::$init_list[$plan_type]['default'] ) ) {
-                    $init_list = array_merge( $init_list, self::$init_list[$plan_type]['default'] );
-               }
-               if ( $plan_subtype !== 'default' && isset( self::$init_list[$plan_type][$plan_subtype] ) ) {
-                    $init_list = array_merge( $init_list, self::$init_list[$plan_type][$plan_subtype] );
-               }
-          }
+		  $plan_type = Data::current_flow();
+		  // $plan_subtype = 'wc_premium';
+		  $init_list = self::$init_list['default'];
+		if ( $plan_type && isset( self::$init_list[ $plan_type ] ) ) {
+			if ( isset( self::$init_list[ $plan_type ]['default'] ) ) {
+				  $init_list = array_merge( $init_list, self::$init_list[ $plan_type ]['default'] );
+			}
+			if ( $plan_subtype !== 'default' && isset( self::$init_list[ $plan_type ][ $plan_subtype ] ) ) {
+				   $init_list = array_merge( $init_list, self::$init_list[ $plan_type ][ $plan_subtype ] );
+			}
+		}
 
 		return $init_list;
 	}

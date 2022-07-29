@@ -46,9 +46,9 @@ final class Application {
 
 		new RestAPI();
 
-		// if ( ! empty( get_option( Options::get_option_name( 'plugin_install_queue' ), array() ) ) ) {
-		// 	 new PluginInstallTaskManager();
-		// }
+		if ( ! empty( get_option( Options::get_option_name( 'plugin_install_queue' ), array() ) ) ) {
+			 new PluginInstallTaskManager();
+		}
 
 		if ( defined( '\\WP_CLI' ) && \WP_CLI ) {
 			new WP_CLI();
