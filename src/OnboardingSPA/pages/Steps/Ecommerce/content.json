@@ -4,6 +4,8 @@
     "stepProductsQuestion": "How many products will you be selling?",
     "stepTaxHeading": "Configure your tax information",
     "stepTaxSubHeading": "Based on the address you provided, we can auto calculate your taxes",
+    "stepAddressHeading": "Confirm your business or store address",
+    "stepAddressSubHeading": "Use the same address you provided for your Bluehost account or\nchange it below",
     "stepTaxOptions": [
         {
             "content": "Yes, auto-calculate taxes",

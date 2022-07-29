@@ -30,8 +30,9 @@ const StepTax = () => {
 			path: "/wc-admin/onboarding/tasks?ids=setup",
 		}).then((onboardingResponse) => {
 			let onboardingTask = onboardingResponse ? onboardingResponse[0] : null;
-			const storeDetailsInfo = (
-				onboardingTask ? onboardingTask.tasks : []
+			const storeDetailsInfo = (onboardingTask
+				? onboardingTask.tasks
+				: []
 			).find((task) => task.id == "store_details");
 			setStoreDetailsFilled(storeDetailsInfo && storeDetailsInfo.isComplete);
 		});
@@ -61,16 +62,18 @@ const StepTax = () => {
 			navigate("/ecommerce/step/address");
 			return;
 		}
-		await saveData(content.stepTaxOptions.find(e => currentData.taxInfo?.selectTaxOption === e.value)?.data);
+		await saveData(
+			content.stepTaxOptions.find(
+				(e) => currentData.taxInfo?.selectTaxOption === e.value
+			)?.data
+		);
 		navigate("/ecommerce/step/products");
 	};
 
 	return (
 		<CommonLayout isCentered>
 			<NewfoldLargeCard>
-				<div
-					className="nfd-onboarding-experience-step"
-				>
+				<div className="nfd-onboarding-experience-step">
 					<div className="nfd-card-heading center onboarding-ecommerce-step">
 						<CardHeader
 							heading={__(content.stepTaxHeading)}
@@ -93,12 +96,18 @@ const StepTax = () => {
 							})
 						}
 					/>
-					<button className="nfd-nav-card-button nfd-card-button" onClick={handleButtonClick}>
+					<button
+						className="nfd-nav-card-button nfd-card-button"
+						onClick={handleButtonClick}
+					>
 						Continue Setup
 					</button>
 					<p>
 						<em>
-							Need help? <a>Hire our experts</a>
+							Need help?{" "}
+							<a href="admin.php?page=bluehost#/marketplace/services/blue-sky">
+								Hire our experts
+							</a>
 						</em>
 					</p>
 				</div>
