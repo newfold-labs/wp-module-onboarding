@@ -12,7 +12,7 @@ $primary-color: var(--nfd-onboarding-primary);
 
     &_window{
         width: 100%;
-        height: 18vh;
+        height: 15vh;
         border-radius: 2px;
         margin-bottom: 24px;
         border: 1px dashed $border;
@@ -23,7 +23,7 @@ $primary-color: var(--nfd-onboarding-primary);
         justify-content: center;
 
         @include break-medium() {
-            height: 21vh;
+            height: 18vh;
         }
 
         &-empty{

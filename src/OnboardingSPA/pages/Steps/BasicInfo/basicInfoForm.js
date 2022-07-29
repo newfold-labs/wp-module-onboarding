@@ -121,7 +121,7 @@ const BasicInfoForm = () => {
                     <MiniPreview icon={siteLogo} title={siteTitle} desc={siteDesc} />
                 </div>
             </div>
-            <a onClick={(e) => skipThisStep()} style={{ padding: '10px', cursor: 'pointer' }}>Skip this step</a>
+            <a onClick={(e) => skipThisStep()} style={{ padding: '10px', cursor: 'pointer', fontWeight: '200', fontStyle: 'italic' }}>Skip this step</a>
         </div>
     );
 };
