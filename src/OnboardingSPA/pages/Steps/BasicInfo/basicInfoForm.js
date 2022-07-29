@@ -121,7 +121,7 @@ const BasicInfoForm = () => {
                     <MiniPreview icon={siteLogo} title={siteTitle} desc={siteDesc} />
                 </div>
             </div>
-            <a classname="skip-button-basic-info" onClick={(e) => skipThisStep()} >Skip this step</a>
+            <a classname="skip-button-basic-info" onClick={(e) => skipThisStep()} >{__('Skip this Step', 'wp-module-onboarding')}</a>
         </div>
     );
 };
