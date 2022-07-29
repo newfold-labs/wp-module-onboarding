@@ -69,9 +69,9 @@ const GetStartedExperience = () => {
 				<div className="nfd-onboarding-experience-step">
 					<div className="nfd-card-heading center">
 						<CardHeader
-							heading={ __( content.cardHeading ) }
-							subHeading={ __( content.subHeading ) }
-							question={ __( content.question ) }
+							heading={__(content.cardHeading, 'wp-module-onboarding' ) }
+							subHeading={__(content.subHeading, 'wp-module-onboarding' ) }
+							question={__(content.question, 'wp-module-onboarding' ) }
 						/>
 					</div>
 					<RadioControl
@@ -85,13 +85,11 @@ const GetStartedExperience = () => {
 						} ) }
 						onChange={ ( value ) => setWpComfortLevel( value ) }
 					/>
-					<div className="nfd-exp-continue-button">
-						<NavCardButton
-							text={ __(content.buttonText, 'wp-module-onboarding') }
-							disabled={wpComfortLevel == '0'}
-						/>
-						<NeedHelpTag />
-					</div>
+					<NavCardButton
+						text={__(content.buttonText, 'wp-module-onboarding' ) }
+						disabled={ wpComfortLevel == '0' }
+					/>
+					<NeedHelpTag />
 				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>

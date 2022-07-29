@@ -15,7 +15,7 @@ const PageResources = () => {
 		setDrawerActiveView( VIEW_NAV_PAGE );
 	}, [] );
 
-	return <CommonLayout isPadded>{ __( 'Resources Page.' ) }</CommonLayout>;
+	return <CommonLayout isPadded>{__( 'Resources Page.', 'wp-module-onboarding' ) }</CommonLayout>;
 };
 
 export default PageResources;
