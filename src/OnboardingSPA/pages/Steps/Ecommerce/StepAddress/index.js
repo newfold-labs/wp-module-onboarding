@@ -1,13 +1,12 @@
+import apiFetch from "@wordpress/api-fetch";
 import { useDispatch, useSelect } from "@wordpress/data";
 import { useEffect } from "@wordpress/element";
-import apiFetch from "@wordpress/api-fetch";
+import { useNavigate } from "react-router-dom";
 import { VIEW_NAV_ECOMMERCE_STORE_INFO } from "../../../../../constants";
 import CommonLayout from "../../../../components/Layouts/Common";
 import NewfoldLargeCard from "../../../../components/NewfoldLargeCard";
 import { store as nfdOnboardingStore } from "../../../../store";
 import constants from "./constants.json";
-
-import { VIEW_NAV_ECOMMERCE_STORE_INFO } from "../../../../../constants";
 
 const StepAddress = () => {
 	const {
@@ -21,6 +20,21 @@ const StepAddress = () => {
 		setIsDrawerOpened(true);
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
 	}, []);
+
+	const navigate = useNavigate();
+
+	let currentData = useSelect((select) =>
+		select(nfdOnboardingStore).getCurrentOnboardingData()
+	);
+
+	function handleFieldChange(event) {
+		setCurrentOnboardingData({
+			storeAddress: {
+				...currentData.storeAddress,
+				[event.target.name]: event.target.value,
+			},
+		});
+	}
 
 	return (
 		<CommonLayout isCentered>
@@ -36,13 +50,17 @@ const StepAddress = () => {
 							data: {
 								...wcAddress,
 								woocommerce_default_country: `${country}:${state}`,
+								...(currentData.taxInfo?.saveTaxData && {
+									wc_connect_taxes_enabled: "yes",
+									woocommerce_calc_taxes: "yes",
+								}),
 							},
 						});
-						await apiFetch({
-							path: "/wc-admin/onboarding/profile",
-							method: "POST",
-							data: { completed: true },
-						});
+						navigate(
+							currentData.taxInfo?.saveTaxData
+								? "/ecommerce/step/products"
+								: "/ecommerce/step/tax"
+						);
 					}}
 					style={{
 						color: "black",
