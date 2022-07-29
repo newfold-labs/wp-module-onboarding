@@ -1,18 +1,20 @@
 .nfd-step-card-heading {
-	font-size: clamp(1.5rem, 1.85rem, 2.2rem);
+	font-size: clamp(1.5rem, 4vw, 2.2rem);
 	font-weight: 700;
 	text-align: center;
 	line-height: 1.25;
+	margin: 8px;
 
 	@media (max-width: #{ ($break-xlarge)}) {
-		font-size: clamp(1rem, 1.5rem, 2rem);
+		font-size: clamp(1rem, 3.5vw, 2rem);
 	}
 }
 
 .nfd-step-card-subheading {
 	color: var(--wp-admin-theme-color);
-	font-size: clamp(0.8rem, 1rem, 1.2rem);
+	font-size: clamp(0.8rem, 2.5vw, 1.2rem);
 	font-weight: 700;
+	margin: 5px;
 }
 
 .nfd-step-card-question {
