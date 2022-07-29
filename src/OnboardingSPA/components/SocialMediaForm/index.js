@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { __ } from '@wordpress/i18n'; 
 import { useState, useEffect } from '@wordpress/element';
 
 import Tooltip from './../Tooltip'
@@ -172,7 +173,7 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
                 <div>
                     <label className='social-form__label' >
                         <div className="social-form__label_icon" style={{ backgroundImage: `var(--${SocialMediaSites[social]}-icon)` }} />
-                        <div className="social-form__label_name">{toTitleCase(SocialMediaSites[social])}</div>
+                        <div className="social-form__label_name">{__(toTitleCase(SocialMediaSites[social]), 'wp-module-onboarding')}</div>
                     </label>
                     <Tooltip content={activeError.includes(SocialMediaSites[social]) ? `Please enter a valid ${SocialMediaSites[social]} URL` : 'hide'} direction="top">
                         <input className={`${activeError.includes(SocialMediaSites[social]) ? "social-form__box-error" : "social-form__box"}`} type="url" id={`${SocialMediaSites[social]}`} value={SocialMediaStates[social]} onChange={(value) => { handleChange(value) }} />
@@ -186,7 +187,12 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
     return (
         <div className="social-form">
             <div className="social-form__top-row" onClick={(e) => { handleAccordion(e)}}>
-                <div className="social-form__top-row_heading">Social Media</div>
+                <div className="social-form__top-row_heading">
+                    {__(
+                        "Social Media",
+                        'wp-module-onboarding'
+                    )}
+                </div>
                 <div className={`social-form__top-row_icon ${isActive ? 'social-form__top-row_icon_opened' : ''}`}></div>
             </div>
             <form className={isActive ? 'social-form__main-active' : 'social-form__main-hidden'} onSubmit={(e) => { handleSubmit(e) }}>

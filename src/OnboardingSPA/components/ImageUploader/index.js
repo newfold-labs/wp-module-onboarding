@@ -1,7 +1,8 @@
+import { __ } from '@wordpress/i18n'; 
 import { useRef, useState } from '@wordpress/element';
-import { uploadImage } from '../../utils/api/uploader';
 
 import Loader from '../Loader';
+import { uploadImage } from '../../utils/api/uploader';
 
  /*
  * Image Uploader
@@ -73,11 +74,17 @@ const ImageUploader = ({ icon, iconSetter }) => {
             <div className="image-uploader_window-reset">
                 {(icon != 0 && icon != undefined) && (<button className="image-uploader_window-reset-btn"
                     onClick={removeSelectedImage}>
-                    RESET
+                    {__(
+                        "RESET",
+                        'wp-module-onboarding'
+                    )}
                 </button>)}
                 {(icon == 0 || icon == undefined) && (<button className="image-uploader_window-reset-btn"
                     onClick={handleClick}>
-                    UPLOAD
+                    {__(
+                        "UPLOAD",
+                        'wp-module-onboarding'
+                    )}
                 </button>)}
                 <input
                     className="image-uploader_window-select-btn"
