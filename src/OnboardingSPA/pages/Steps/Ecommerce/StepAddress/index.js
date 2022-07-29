@@ -1,5 +1,6 @@
 import { useDispatch, useSelect } from "@wordpress/data";
 import { useEffect } from "@wordpress/element";
+import apiFetch from "@wordpress/api-fetch";
 import { VIEW_NAV_ECOMMERCE_STORE_INFO } from "../../../../../constants";
 import CommonLayout from "../../../../components/Layouts/Common";
 import NewfoldLargeCard from "../../../../components/NewfoldLargeCard";
@@ -37,6 +38,24 @@ const StepAddress = () => {
 		<CommonLayout isCentered>
 			<NewfoldLargeCard>
 				<form
+					onSubmit={async (event) => {
+						event.preventDefault();
+						event.stopPropagation();
+						let { country, state, ...wcAddress } = currentData.storeAddress;
+						await apiFetch({
+							path: "/wc-admin/options",
+							method: "POST",
+							data: {
+								...wcAddress,
+								woocommerce_default_country: `${country}:${state}`,
+							},
+						});
+						await apiFetch({
+							path: "/wc-admin/onboarding/profile",
+							method: "POST",
+							data: { completed: true },
+						});
+					}}
 					style={{
 						color: "black",
 						display: "grid",
@@ -56,10 +75,12 @@ const StepAddress = () => {
 						<div>
 							<label>Address line 1</label>
 							<input
-								name="address_line_1"
+								name="woocommerce_store_address"
 								type="text"
 								required
-								defaultValue={currentData.storeAddress?.address_line_1}
+								defaultValue={
+									currentData.storeAddress?.woocommerce_store_address
+								}
 								onChange={handleFieldChange}
 								onBlur={handleFieldChange}
 							/>
@@ -67,10 +88,11 @@ const StepAddress = () => {
 						<div>
 							<label>Address line 2</label>
 							<input
-								name="address_line_2"
+								name="woocommerce_store_address_2"
 								type="text"
-								required
-								defaultValue={currentData.storeAddress?.address_line_2}
+								defaultValue={
+									currentData.storeAddress?.woocommerce_store_address_2
+								}
 								onChange={handleFieldChange}
 								onBlur={handleFieldChange}
 							/>
@@ -78,10 +100,10 @@ const StepAddress = () => {
 						<div>
 							<label>City</label>
 							<input
-								name="city"
+								name="woocommerce_store_city"
 								type="text"
 								required
-								defaultValue={currentData.storeAddress?.city}
+								defaultValue={currentData.storeAddress?.woocommerce_store_city}
 								onChange={handleFieldChange}
 								onBlur={handleFieldChange}
 							/>
@@ -100,10 +122,12 @@ const StepAddress = () => {
 						<div>
 							<label>Postal Code</label>
 							<input
-								name="postal_code"
+								name="woocommerce_store_postcode"
 								type="zip"
 								required
-								defaultValue={currentData.storeAddress?.postal_code}
+								defaultValue={
+									currentData.storeAddress?.woocommerce_store_postcode
+								}
 								onChange={handleFieldChange}
 								onBlur={handleFieldChange}
 							/>
