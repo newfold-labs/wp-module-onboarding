@@ -42,17 +42,21 @@ class PluginInstallTaskManager {
 			$plugin_to_install['priority'],
 			$plugin_to_install['retries'],
 		);
+
 		\update_option( Options::get_option_name( 'plugins_init_status' ), $plugin_install_task->get_slug() );
+
 		$status = $plugin_install_task->execute();
 		if ( \is_wp_error( $status ) ) {
 			   $plugin_install_task->increment_retries();
 			if ( $plugin_install_task->get_retries() <= $this->retry_limit ) {
-					array_push( $plugins, $plugin_to_install->to_array() );
+					array_push( $plugins, $plugin_install_task->to_array() );
 			}
 		}
+
 		if ( empty( $plugins ) ) {
 			\update_option( Options::get_option_name( 'plugins_init_status' ), 'completed' );
 		}
+
 		 return \update_option( Options::get_option_name( 'plugin_install_queue' ), $plugins );
 	}
 

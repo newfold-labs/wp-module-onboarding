@@ -156,7 +156,7 @@ final class Plugins {
 			'wc_premium' => array(
 				array(
 					'slug'     => 'nfd_slug_ecomdash_wordpress_plugin',
-					'activate' => false,
+					'activate' => true,
 					'priority' => 20,
 				),
 			),
