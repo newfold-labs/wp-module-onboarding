@@ -85,11 +85,13 @@ const GetStartedExperience = () => {
 						} ) }
 						onChange={ ( value ) => setWpComfortLevel( value ) }
 					/>
-					<NavCardButton
-						text={ __( content.buttonText ) }
-						disabled={ wpComfortLevel == '0' }
-					/>
-					<NeedHelpTag />
+					<div className="nfd-exp-continue-button">
+						<NavCardButton
+							text={__(content.buttonText)}
+							disabled={wpComfortLevel == '0'}
+						/>
+						<NeedHelpTag />
+					</div>
 				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>
