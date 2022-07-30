@@ -10,25 +10,31 @@ use function NewfoldLabs\WP\ModuleLoader\container;
  * Primary instantiation of Onboarding Application.
  */
 final class Application {
+	
+	/**
+	 * @var Container
+	 */
+	protected $container;
+
 	/**
 	 * Setup module container and register functionality using WordPress Action Hooks.
 	 *
 	 * @param Container $container - Newfold Labs Module Container
 	 */
-	// public function __construct( Container $container ) {
-	public function __construct() {
-		// $this->container = $container;
+	public function __construct( Container $container ) {
+		$this->container = $container;
 
-		// $defaults = array(
-		// 'option_name'       => 'nfd_onboarding',
-		// 'admin_screen_id'   => container()->plugin()->id,
-		// 'admin_app_url'     => \admin_url( 'admin.php?page=nfd-onboarding' ),
-		// );
+		$defaults = array(
+			'option_name'       => 'nfd_onboarding',
+			'admin_screen_id'   => container()->plugin()->id,
+			'admin_app_url'     => \admin_url( 'admin.php?page=nfd-onboarding' ),
+		);
 
-		// $this->args = \wp_parse_args(
-		// $container->has('onboarding') ? $container['onboarding'] : array(),
-		// $defaults
-		// );
+		$this->args = \wp_parse_args(
+			$container->has('onboarding') ? $container['onboarding'] : array(),
+			$defaults
+		);
+		
 		if ( is_readable( NFD_ONBOARDING_DIR . '/vendor/autoload.php' ) ) {
 			require_once NFD_ONBOARDING_DIR . '/vendor/autoload.php';
 		} else {
@@ -55,4 +61,5 @@ final class Application {
 
 		\do_action( 'nfd_module_onboarding_post_init' );
 	}
-} // END \NewfoldLabs\WP\Module\Onboarding\Application
+} 
+// END \NewfoldLabs\WP\Module\Onboarding\Application
