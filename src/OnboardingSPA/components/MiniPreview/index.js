@@ -46,7 +46,7 @@ const MiniPreview = ({ title, desc, icon }) => {
                         <div className="browser-icon" style={{ backgroundImage: 'var(--reload-icon)' }}></div>
                     </div>
                     <div className="browser-row-search__search-box">
-                        <input className="browser-row-search__search-box_input" type="text" value={__(
+                        <input className="browser-row-search__search-box_input" type="text" defaultValue={__(
                             urlPreview,
                             'wp-module-onboarding'
                         )}></input>
