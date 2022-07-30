@@ -38,7 +38,7 @@ const TextInput = ({ title, hint, placeholder, height, maxCharacters, textValue,
                 </div>
                 <textarea
                     type="text"
-                    class={inputText}
+                    className={inputText}
                     ref={textareaRef}
                     style={{height: height}}
                     placeholder={placeholder}

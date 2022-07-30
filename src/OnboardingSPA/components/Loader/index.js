@@ -6,8 +6,8 @@
 const Loader = () => {
 
     return (
-        <div class="loading-box">
-            <div class="loading-box__loader"></div>
+        <div className="loading-box">
+            <div className="loading-box__loader"></div>
         </div>
     );
 };
