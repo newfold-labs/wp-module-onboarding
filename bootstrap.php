@@ -23,13 +23,13 @@ function nfd_wp_module_onboarding_register() {
 			if ( ! defined( 'NFD_ONBOARDING_DIR' ) ) {
 				define( 'NFD_ONBOARDING_DIR', __DIR__ );
 			}
-			if ( ! defined( 'NFD_ONBOARDING_BUILD_DIR' ) ) {
+			if ( ! defined( 'NFD_ONBOARDING_BUILD_DIR' ) && defined('NFD_ONBOARDING_VERSION') ) {
 				define( 'NFD_ONBOARDING_BUILD_DIR', __DIR__ . '/build/' . NFD_ONBOARDING_VERSION );
 			}
 			if ( ! defined( 'NFD_MdefODULE_DATA_EVENTS_API' ) ) {
 				define( 'NFD_MODULE_DATA_EVENTS_API', '/newfold-data/v1/events' );
 			}
-			if ( ! defined( 'NFD_ONBOARDING_BUILD_URL' ) ) {
+			if ( ! defined( 'NFD_ONBOARDING_BUILD_URL' && defined('NFD_ONBOARDING_VERSION') ) ) {
 				define( 'NFD_ONBOARDING_BUILD_URL', BLUEHOST_PLUGIN_URL . '/vendor/newfold-labs/wp-module-onboarding/build/' . NFD_ONBOARDING_VERSION );
 			}
 			// Instantiate Onboarding Module Application
