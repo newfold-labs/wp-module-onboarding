@@ -179,145 +179,145 @@ export const steps = [
 		Icon: info,
 		priority: 80,
 	},
-	{
-		path: '/wp-setup/step/design/themes',
-		title: __( 'Themes', 'wp-module-onboarding' ),
-		heading: __( "Let's make you look your best", 'wp-module-onboarding' ),
-		subheading: __(
-			'Find a WordPress Theme to present polished and compelling.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			'Your Theme is the starting place for layout and design, setting the tone for your site. Keep it for years or change and swap as you grow.',
-			'wp-module-onboarding'
-		),
-		Component: StepDesignThemes,
-		Icon: brush,
-		priority: 100,
-		VIEW: VIEW_DESIGN_THEMES,
-	},
-	{
-		path: '/wp-setup/step/design/theme-styles',
-		title: __( 'Theme Styles', 'wp-module-onboarding' ),
-		heading: __(
-			'Lets tailor your theme for the perfect fit',
-			'wp-module-onboarding'
-		),
-		subheading: __(
-			"Use these styles or bring your own. You're always free to remix them.",
-			'wp-module-onboarding'
-		),
-		description: __(
-			'All these styles -- plus the ability to customize them -- are available in the WordPress Site Editor',
-			'wp-module-onboarding'
-		),
-		Component: StepDesignThemeStyles,
-		Icon: styles,
-		priority: 120,
-		VIEW: VIEW_DESIGN_THEME_STYLES,
-	},
-	{
-		path: '/wp-setup/step/design/colors',
-		title: __( 'Colors', 'wp-module-onboarding' ),
-		heading: __( "What's your color palette?", 'wp-module-onboarding' ),
-		subheading: __(
-			"We'll paint everything with your colors for a fresh, crisp look.",
-			'wp-module-onboarding'
-		),
-		description: __(
-			'Strong contrast and clear readability help your words jump off the screen.',
-			'wp-module-onboarding'
-		),
-		Component: StepDesignColors,
-		Icon: color,
-		priority: 140,
-		VIEW: VIEW_DESIGN_COLORS,
-	},
-	{
-		path: '/wp-setup/step/design/typography',
-		title: __( 'Typography', 'wp-module-onboarding' ),
-		heading: __( "What's your font style?", 'wp-module-onboarding' ),
-		subheading: __(
-			'Impress your visitors with strong branding and aesthetics.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			"Good typography uses style and proportions to give your words identity and priority. What's your story? Your focus?",
-			'wp-module-onboarding'
-		),
-		Component: StepDesignTypography,
-		Icon: typography,
-		priority: 160,
-		VIEW: VIEW_DESIGN_TYPOGRAPHY,
-	},
-	{
-		path: '/wp-setup/step/design/header-menu',
-		title: __( 'Header & Menu', 'wp-module-onboarding' ),
-		heading: __(
-			"Let's make the right things visible",
-			'wp-module-onboarding'
-		),
-		subheading: __(
-			'Your site header helps organize your story for visitors.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			'A well-organized site makes visitors feel smart, helping you keep and convert them.',
-			'wp-module-onboarding'
-		),
-		Component: StepDesignHeaderMenu,
-		Icon: header,
-		priority: 180,
-		VIEW: VIEW_DESIGN_HEADER_MENU,
-	},
-	{
-		path: '/wp-setup/step/site-pages',
-		title: __( 'Pages', 'wp-module-onboarding' ),
-		heading: __( "We've got some page ideas", 'wp-module-onboarding' ),
-		subheading: __(
-			'Start closer to the finish line than a blank canvas.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			"Pick a page, pick a layout and we'll focus on the basics so you focus on what's important and unique.",
-			'wp-module-onboarding'
-		),
-		Component: StepSitePages,
-		Icon: copy,
-		priority: 200,
-	},
-	{
-		path: '/wp-setup/step/site-features',
-		title: __( 'Features', 'wp-module-onboarding' ),
-		heading: __( 'Our toolbox is your toolbox', 'wp-module-onboarding' ),
-		subheading: __(
-			"We've learned a lot in 16 years of WordPress! Now that expertise is yours.",
-			'wp-module-onboarding'
-		),
-		description: __(
-			"Through Plugins, partners and unique $BRAND WordPress features, you've got tons of capabilities with $SITE.",
-			'wp-module-onboarding'
-		),
-		Component: StepSiteFeatures,
-		Icon: plugins,
-		priority: 220,
-	},
-	{
-		path: '/wp-setup/step/what-next',
-		title: __( 'What Next', 'wp-module-onboarding' ),
-		heading: __( 'How else can we help?', 'wp-module-onboarding' ),
-		subheading: __(
-			"We've got the basics setup, but we can help with any next steps.",
-			'wp-module-onboarding'
-		),
-		description: __(
-			"Setup more of your site, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
-			'wp-module-onboarding'
-		),
-		Component: StepWhatNext,
-		Icon: moveTo,
-		priority: 240,
-	},
+	// {
+	// 	path: '/wp-setup/step/design/themes',
+	// 	title: __( 'Themes', 'wp-module-onboarding' ),
+	// 	heading: __( "Let's make you look your best", 'wp-module-onboarding' ),
+	// 	subheading: __(
+	// 		'Find a WordPress Theme to present polished and compelling.',
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	description: __(
+	// 		'Your Theme is the starting place for layout and design, setting the tone for your site. Keep it for years or change and swap as you grow.',
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	Component: StepDesignThemes,
+	// 	Icon: brush,
+	// 	priority: 100,
+	// 	VIEW: VIEW_DESIGN_THEMES,
+	// },
+	// {
+	// 	path: '/wp-setup/step/design/theme-styles',
+	// 	title: __( 'Theme Styles', 'wp-module-onboarding' ),
+	// 	heading: __(
+	// 		'Lets tailor your theme for the perfect fit',
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	subheading: __(
+	// 		"Use these styles or bring your own. You're always free to remix them.",
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	description: __(
+	// 		'All these styles -- plus the ability to customize them -- are available in the WordPress Site Editor',
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	Component: StepDesignThemeStyles,
+	// 	Icon: styles,
+	// 	priority: 120,
+	// 	VIEW: VIEW_DESIGN_THEME_STYLES,
+	// },
+	// {
+	// 	path: '/wp-setup/step/design/colors',
+	// 	title: __( 'Colors', 'wp-module-onboarding' ),
+	// 	heading: __( "What's your color palette?", 'wp-module-onboarding' ),
+	// 	subheading: __(
+	// 		"We'll paint everything with your colors for a fresh, crisp look.",
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	description: __(
+	// 		'Strong contrast and clear readability help your words jump off the screen.',
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	Component: StepDesignColors,
+	// 	Icon: color,
+	// 	priority: 140,
+	// 	VIEW: VIEW_DESIGN_COLORS,
+	// },
+	// {
+	// 	path: '/wp-setup/step/design/typography',
+	// 	title: __( 'Typography', 'wp-module-onboarding' ),
+	// 	heading: __( "What's your font style?", 'wp-module-onboarding' ),
+	// 	subheading: __(
+	// 		'Impress your visitors with strong branding and aesthetics.',
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	description: __(
+	// 		"Good typography uses style and proportions to give your words identity and priority. What's your story? Your focus?",
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	Component: StepDesignTypography,
+	// 	Icon: typography,
+	// 	priority: 160,
+	// 	VIEW: VIEW_DESIGN_TYPOGRAPHY,
+	// },
+	// {
+	// 	path: '/wp-setup/step/design/header-menu',
+	// 	title: __( 'Header & Menu', 'wp-module-onboarding' ),
+	// 	heading: __(
+	// 		"Let's make the right things visible",
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	subheading: __(
+	// 		'Your site header helps organize your story for visitors.',
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	description: __(
+	// 		'A well-organized site makes visitors feel smart, helping you keep and convert them.',
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	Component: StepDesignHeaderMenu,
+	// 	Icon: header,
+	// 	priority: 180,
+	// 	VIEW: VIEW_DESIGN_HEADER_MENU,
+	// },
+	// {
+	// 	path: '/wp-setup/step/site-pages',
+	// 	title: __( 'Pages', 'wp-module-onboarding' ),
+	// 	heading: __( "We've got some page ideas", 'wp-module-onboarding' ),
+	// 	subheading: __(
+	// 		'Start closer to the finish line than a blank canvas.',
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	description: __(
+	// 		"Pick a page, pick a layout and we'll focus on the basics so you focus on what's important and unique.",
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	Component: StepSitePages,
+	// 	Icon: copy,
+	// 	priority: 200,
+	// },
+	// {
+	// 	path: '/wp-setup/step/site-features',
+	// 	title: __( 'Features', 'wp-module-onboarding' ),
+	// 	heading: __( 'Our toolbox is your toolbox', 'wp-module-onboarding' ),
+	// 	subheading: __(
+	// 		"We've learned a lot in 16 years of WordPress! Now that expertise is yours.",
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	description: __(
+	// 		"Through Plugins, partners and unique $BRAND WordPress features, you've got tons of capabilities with $SITE.",
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	Component: StepSiteFeatures,
+	// 	Icon: plugins,
+	// 	priority: 220,
+	// },
+	// {
+	// 	path: '/wp-setup/step/what-next',
+	// 	title: __( 'What Next', 'wp-module-onboarding' ),
+	// 	heading: __( 'How else can we help?', 'wp-module-onboarding' ),
+	// 	subheading: __(
+	// 		"We've got the basics setup, but we can help with any next steps.",
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	description: __(
+	// 		"Setup more of your site, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	Component: StepWhatNext,
+	// 	Icon: moveTo,
+	// 	priority: 240,
+	// },
 ];
 
 /**
@@ -333,20 +333,21 @@ export const routes = [ ...pages, ...steps ];
 export const initialTopSteps = () => {
 	const topSteps = filter( steps, ( step ) => {
 		return (
-			! step.path.includes( '/step/get-started' ) &&
-			! step.path.includes( '/step/design' )
+			! step.path.includes( '/step/get-started' ) 
+			// &&
+			// ! step.path.includes( '/step/design' )
 		);
 	} );
 
-	const designStep = {
-		/* This is a fake step to stand-in for all Design steps and does not have a Component to render */
-		path: '/wp-setup/step/design/themes',
-		title: __( 'Design', 'wp-module-onboarding' ),
-		description: '',
-		Icon: brush,
-		VIEW: VIEW_NAV_DESIGN,
-		priority: 100 /* matches priority for first design step */,
-	};
+	// const designStep = {
+	// 	/* This is a fake step to stand-in for all Design steps and does not have a Component to render */
+	// 	path: '/wp-setup/step/design/themes',
+	// 	title: __( 'Design', 'wp-module-onboarding' ),
+	// 	description: '',
+	// 	Icon: brush,
+	// 	VIEW: VIEW_NAV_DESIGN,
+	// 	priority: 100 /* matches priority for first design step */,
+	// };
 
 	const getStartedStep = {
 		path: '/wp-setup/step/get-started/welcome',
@@ -357,7 +358,7 @@ export const initialTopSteps = () => {
 		priority: 20,
 	};
 
-	topSteps.push( designStep );
+	// topSteps.push( designStep );
 	topSteps.push( getStartedStep );
 
 	return orderBy( topSteps, [ 'priority' ], [ 'asc' ] );
