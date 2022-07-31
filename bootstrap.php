@@ -26,7 +26,7 @@ function nfd_wp_module_onboarding_register() {
 			if ( ! defined( 'NFD_ONBOARDING_BUILD_DIR' ) && defined('NFD_ONBOARDING_VERSION') ) {
 				define( 'NFD_ONBOARDING_BUILD_DIR', __DIR__ . '/build/' . NFD_ONBOARDING_VERSION );
 			}
-			if ( ! defined( 'NFD_MdefODULE_DATA_EVENTS_API' ) ) {
+			if ( ! defined( 'NFD_MODULE_DATA_EVENTS_API' ) ) {
 				define( 'NFD_MODULE_DATA_EVENTS_API', '/newfold-data/v1/events' );
 			}
 			if ( ! defined( 'NFD_ONBOARDING_BUILD_URL' && defined('NFD_ONBOARDING_VERSION') ) ) {
