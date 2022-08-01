@@ -39,6 +39,11 @@ final class Plugins {
 		),
 	);
 
+	 /**
+	  * Contains a list of zip url's with a unique "nfd_slug" for each.
+	  *
+	  * @var array
+	  */
 	protected static $nfd_slugs = array(
 		'nfd_slug_endurance_page_cache'                  => array(
 			'approved' => true,
@@ -87,6 +92,18 @@ final class Plugins {
 		),
 	);
 
+	 /**
+	  * @var array Initial plugins to be installed classified based on the hosting plan.
+	  *
+	  * Key 'default' contains a list of default plugins to be installed irrespective of the plan.
+	  * Key <flow> contains a Key 'default' and a list of Key <subtype>'s.
+	  * Key <flow> => 'default' contains a list of default plugin installs for <flow>.
+	  * Key <flow> => <subtype> contains a list of plugins to be installed for a particular <subtype>.
+	  *
+	  * The final queue of Plugins to be installed makes use of a max heap and hence the greater the number the earlier
+	  * a Plugin will be placed for install in the queue. This will also allow us to
+	  * prevent entering negative numbers when queueing a plugin for earlier installs.
+	  */
 	protected static $init_list = array(
 		'default'   => array(
 			array(
@@ -222,10 +239,23 @@ final class Plugins {
 		);
 	}
 
+	/**
+	 * @param array  $value
+	 * @param string $key
+	 *
+	 * Checks if $key has been approved.
+	 *
+	 * @return boolean
+	 */
 	private static function check_approved( $value, $key ) {
 		 return $value['approved'] === true;
 	}
 
+	/**
+	 * Get the list of initial plugins to be installed for a particular hosting plan.
+	 *
+	 * @return array
+	 */
 	public static function get_init() {
 		$plan_data    = Data::current_plan();
 		$plan_flow    = $plan_data['flow'];

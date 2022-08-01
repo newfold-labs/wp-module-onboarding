@@ -206,6 +206,13 @@ class PluginInstaller {
 		);
 	}
 
+	/**
+	 * @param string $plugin Slug of the plugin.
+	 *
+	 * Checks if a given slug is a valid nfd_slug. Ref: includes/Data/Plugins.php for nfd_slug.
+	 *
+	 * @return boolean
+	 */
 	public static function is_nfd_slug( $plugin ) {
 		 $plugins_list = Plugins::get();
 		if ( isset( $plugins_list['nfd_slugs'][ $plugin ]['approved'] ) ) {
@@ -214,6 +221,13 @@ class PluginInstaller {
 		 return false;
 	}
 
+	/**
+	 * @param string $plugin_path Path to the plugin's header file.
+	 *
+	 * Determines if a plugin has already been installed.
+	 *
+	 * @return boolean
+	 */
 	public static function is_plugin_installed( $plugin_path ) {
 		if ( ! function_exists( 'get_plugins' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -226,6 +240,11 @@ class PluginInstaller {
 		}
 	}
 
+	/**
+	 * @param string $plugin
+	 *
+	 * @return string Type of plugin. Ref: includes/Data/Plugins.php for the different types.
+	 */
 	public static function get_plugin_type( $plugin ) {
 		if ( \wp_http_validate_url( $plugin ) ) {
 			 return 'urls';
@@ -236,11 +255,25 @@ class PluginInstaller {
 		 return 'wp_slugs';
 	}
 
+	/**
+	 * @param string $plugin
+	 * @param string $plugin_type
+	 *
+	 * @return string Path to the Plugin's header file.
+	 */
 	public static function get_plugin_path( $plugin, $plugin_type ) {
 		 $plugin_list = Plugins::get();
 		 return $plugin_list[ $plugin_type ][ $plugin ]['path'];
 	}
 
+	/**
+	 * @param string $plugin
+	 * @param string $activate
+	 *
+	 * Checks if a plugin with the given slug and activation criteria already exists.
+	 *
+	 * @return boolean
+	 */
 	public static function exists( $plugin, $activate ) {
 		 $plugin_type = self::get_plugin_type( $plugin );
 		 $plugin_path = self::get_plugin_path( $plugin, $plugin_type );
@@ -254,6 +287,13 @@ class PluginInstaller {
 		 return true;
 	}
 
+	/**
+	 * Install the Endurance Page Cache Plugin
+	 *
+	 * [TODO] Make this generic for mu-plugins and direct file downloads.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
 	public static function install_endurance_page_cache() {
 		if ( ! self::connect_to_filesystem() ) {
 			return new \WP_Error(
@@ -293,6 +333,11 @@ class PluginInstaller {
 		);
 	}
 
+	/**
+	 * Establishes a connection to the wp_filesystem.
+	 *
+	 * @return boolean
+	 */
 	protected static function connect_to_filesystem() {
 		require_once ABSPATH . 'wp-admin/includes/file.php';
 

@@ -46,6 +46,7 @@ final class Application {
 
 		new RestAPI();
 
+		// The manager (WP_Cron) comes to life only when there are plugins to be installed.
 		if ( ! empty( get_option( Options::get_option_name( 'plugin_install_queue' ), array() ) ) ) {
 			 new PluginInstallTaskManager();
 		}
