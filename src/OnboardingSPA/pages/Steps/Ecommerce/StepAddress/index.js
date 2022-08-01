@@ -8,6 +8,10 @@ import CardHeader from "../../../../components/CardHeader";
 import CommonLayout from "../../../../components/Layouts/Common";
 import NewfoldLargeCard from "../../../../components/NewfoldLargeCard";
 import { store as nfdOnboardingStore } from "../../../../store";
+import {
+	updateWCOnboarding,
+	updateWCOptions
+} from "../../../../utils/api/ecommerce";
 import content from "../content.json";
 
 const StepAddress = () => {
@@ -43,6 +47,10 @@ const StepAddress = () => {
 			},
 		});
 	}
+	const eventHandlers = {
+		onChange: handleFieldChange,
+		onBlur: handleFieldChange,
+	};
 	let selectedCountry = currentData.storeAddress?.country ?? "US";
 	let states =
 		countries?.find((country) => country.code === selectedCountry)?.states ??
@@ -56,18 +64,15 @@ const StepAddress = () => {
 							event.preventDefault();
 							event.stopPropagation();
 							let { country, state, ...wcAddress } = currentData.storeAddress;
-							await apiFetch({
-								path: "/wc-admin/options",
-								method: "POST",
-								data: {
-									...wcAddress,
-									woocommerce_default_country: `${country}:${state}`,
-									...(currentData.taxInfo?.saveTaxData && {
-										wc_connect_taxes_enabled: "yes",
-										woocommerce_calc_taxes: "yes",
-									}),
-								},
+							await updateWCOptions({
+								...wcAddress,
+								woocommerce_default_country: `${country}:${state}`,
+								...(currentData.taxInfo?.saveTaxData && {
+									wc_connect_taxes_enabled: "yes",
+									woocommerce_calc_taxes: "yes",
+								}),
 							});
+							await updateWCOnboarding({ completed: true });
 							navigate(
 								currentData.taxInfo?.saveTaxData
 									? "/ecommerce/step/products"
@@ -92,8 +97,7 @@ const StepAddress = () => {
 									defaultValue={
 										currentData.storeAddress?.woocommerce_store_address
 									}
-									onChange={handleFieldChange}
-									onBlur={handleFieldChange}
+									{...eventHandlers}
 								/>
 							</div>
 							<div>
@@ -104,8 +108,7 @@ const StepAddress = () => {
 									defaultValue={
 										currentData.storeAddress?.woocommerce_store_address_2
 									}
-									onChange={handleFieldChange}
-									onBlur={handleFieldChange}
+									{...eventHandlers}
 								/>
 							</div>
 							<div>
@@ -117,28 +120,20 @@ const StepAddress = () => {
 									defaultValue={
 										currentData.storeAddress?.woocommerce_store_city
 									}
-									onChange={handleFieldChange}
-									onBlur={handleFieldChange}
+									{...eventHandlers}
 								/>
 							</div>
 							<div>
 								<label>State</label>
 								{states.length === 0 ? (
-									<input
-										type="text"
-										name="state"
-										required
-										onChange={handleFieldChange}
-										onBlur={handleFieldChange}
-									/>
+									<input type="text" name="state" required {...eventHandlers} />
 								) : (
 									<select
 										type="text"
 										name="state"
 										required
 										defaultValue={currentData.storeAddress?.state}
-										onChange={handleFieldChange}
-										onBlur={handleFieldChange}
+										{...eventHandlers}
 									>
 										{states.map((state) => (
 											<option key={state.code} value={state.code}>
@@ -157,8 +152,7 @@ const StepAddress = () => {
 									defaultValue={
 										currentData.storeAddress?.woocommerce_store_postcode
 									}
-									onChange={handleFieldChange}
-									onBlur={handleFieldChange}
+									{...eventHandlers}
 								/>
 							</div>
 							<div>
@@ -170,9 +164,8 @@ const StepAddress = () => {
 										type="text"
 										name="country"
 										required
-										defaultValue={currentData.storeAddress?.country ?? "US"}
-										onChange={handleFieldChange}
-										onBlur={handleFieldChange}
+										defaultValue={selectedCountry}
+										{...eventHandlers}
 									>
 										{countries.map((country) => (
 											<option key={country.code} value={country.code}>
