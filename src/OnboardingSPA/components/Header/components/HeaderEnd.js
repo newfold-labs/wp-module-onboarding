@@ -16,14 +16,14 @@ const HeaderEnd = () => {
 	return (
 		<Fragment>
 			<StepNavigation />
-			{/* { sidebars.map( ( sidebar ) => {
+			{ sidebars.map( ( sidebar ) => {
 				return (
 					<Slot
 						key={ sidebar.id }
 						name={ `${ SIDEBAR_MENU_SLOTFILL_PREFIX }/${ sidebar.id }` }
 					/>
 				);
-			} ) } */}
+			} ) }
 		</Fragment>
 	);
 };

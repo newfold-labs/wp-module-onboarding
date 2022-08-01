@@ -10,10 +10,10 @@ const LearnMoreSidebar = lazy( () =>
 );
 
 export const sidebars = [
-	{
-		id: SIDEBAR_LEARN_MORE,
-		menu: LearnMoreMenu,
-		sidebar: LearnMoreSidebar,
-		enabled: true,
-	},
+	// {
+	// 	id: SIDEBAR_LEARN_MORE,
+	// 	menu: LearnMoreMenu,
+	// 	sidebar: LearnMoreSidebar,
+	// 	enabled: true,
+	// },
 ];
