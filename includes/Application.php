@@ -16,6 +16,8 @@ final class Application {
 	 */
 	protected $container;
 
+	protected $args;
+
 	/**
 	 * Setup module container and register functionality using WordPress Action Hooks.
 	 *

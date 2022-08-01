@@ -9,11 +9,11 @@ use function NewfoldLabs\WP\ModuleLoader\register;
  * @return void
  */
 function nfd_wp_module_onboarding_register() {
-
+// wp-module-onboarding
 	register(
 		array(
 		'name'  => 'onboarding',
-		'label' => __('Onboarding', 'nfd_module_onboarding' ),
+		'label' => __('Onboarding', 'wp-module-onboarding' ),
 		'callback' => function ( Container $container ) {
 
 			// Set Global Constants
