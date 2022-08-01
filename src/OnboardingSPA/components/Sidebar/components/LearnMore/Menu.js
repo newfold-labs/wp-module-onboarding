@@ -22,14 +22,11 @@ const LearnMoreMenu = () => {
 		useDispatch( nfdOnboardingStore );
 	const toggleSidebar = () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
-		if(!currentStep)
-			setIsSidebarOpened(false);
-		else
-			setIsSidebarOpened(
-				sideBarView === SIDEBAR_LEARN_MORE
-					? ! isSidebarOpened
-					: isSidebarOpened
-			);
+		setIsSidebarOpened(
+			sideBarView === SIDEBAR_LEARN_MORE
+				? ! isSidebarOpened
+				: isSidebarOpened
+		);
 	};
 
 	return (
