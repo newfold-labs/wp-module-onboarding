@@ -169,8 +169,8 @@ export const steps = [
 	{
 		path: '/wp-setup/step/basic-info',
 		title: __( 'Basic Info', 'wp-module-onboarding' ),
-		heading: __( 'Hello my site is _______.', 'wp-module-onboarding' ),
-		subheading: __( 'Tell the web who you are.', 'wp-module-onboarding' ),
+		heading: __( 'Introduce us to this website', 'wp-module-onboarding' ),
+		subheading: __( 'So we can introduce it to the web', 'wp-module-onboarding' ),
 		description: __(
 			'Help visitors, search results and social media identify your site.',
 			'wp-module-onboarding'
