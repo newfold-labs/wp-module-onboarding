@@ -36,6 +36,7 @@ import {
  * Steps increment by 10, allowing ample room for new steps to insert between.
  */
 
+const ErrorPage = lazy(() => import( '../../pages/ErrorPage' ) );
 const PageResources = lazy( () => import( '../../pages/Resources' ) );
 const PageWhatToExpect = lazy( () => import( '../../pages/WhatToExpect' ) );
 
@@ -100,6 +101,13 @@ export const pages = [
 		title: __( 'What to Expect', 'wp-module-onboarding' ),
 		description: '',
 		Component: PageWhatToExpect,
+		Icon: redo,
+	},
+	{
+		path: '*',
+		title: __('Error 404', 'wp-module-onboarding'),
+		description: 'Please Check Again!',
+		Component: ErrorPage,
 		Icon: redo,
 	},
 ];

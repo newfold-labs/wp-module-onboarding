@@ -1,7 +1,6 @@
 import { Fragment, Suspense } from '@wordpress/element';
 import { Route, Routes } from 'react-router-dom';
 
-import ErrorPage from '../../pages/ErrorPage/index';
 import { routes as appRoutes } from '../../data/routes/index';
 
 /**
@@ -21,9 +20,6 @@ function getMappedPages() {
 				element={<appRoute.Component />}
 			/>
 		)
-	)
-	routes.push(
-		< Route key="*" path="*" end element={ <ErrorPage/> }/>
 	)
 	return routes;
 }
