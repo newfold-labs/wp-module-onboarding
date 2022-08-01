@@ -170,7 +170,7 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
         var socialBoxes = [];
         for (var social in SocialMediaSites){
             socialBoxes.push(
-                <div>
+                <div key={SocialMediaSites[social]}>
                     <label className='social-form__label' >
                         <div className="social-form__label_icon" style={{ backgroundImage: `var(--${SocialMediaSites[social]}-icon)` }} />
                         <div className="social-form__label_name">{__(toTitleCase(SocialMediaSites[social]), 'wp-module-onboarding')}</div>
