@@ -38,8 +38,17 @@ $primary-color: var(--nfd-onboarding-primary);
             align-items: center;
             justify-content: center;
 
-            &-icon{
+            &-icon-empty {
                 height: 95%;
+                content: var(--default-logo-icon);
+                object-fit: scale-down;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-clip: padding-box;
+            }
+            &-icon-selected {
+                width: 80%;
+                height: 90%;
                 object-fit: scale-down;
                 background-position: center;
                 background-repeat: no-repeat;

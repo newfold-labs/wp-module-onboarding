@@ -60,13 +60,12 @@ const ImageUploader = ({ icon, iconSetter }) => {
             <div className="image-uploader_window-empty"></div>
             <div className="image-uploader_window-logo">
                 {(icon == 0 || icon == undefined) && (
-                    <div className="image-uploader_window-logo-icon" style={{ content: 'var(--default-logo-icon)' }}></div>)
+                    <div className="image-uploader_window-logo-icon-empty"></div>)
                 }
                 {(icon != 0 && icon != undefined) && (
                     <img
-                        className="image-uploader_window-logo-icon"
+                        className="image-uploader_window-logo-icon-selected"
                         src={icon.url}
-                        style={{ width: '80%', height: '90%' }}
                         alt="Thumb"
                     />
                 )}
