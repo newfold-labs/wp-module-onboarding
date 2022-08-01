@@ -227,15 +227,16 @@ final class Plugins {
 	}
 
 	public static function get_init() {
-		  $plan_type = Data::current_flow();
-		  // $plan_subtype = 'wc_premium';
-		  $init_list = self::$init_list['default'];
-		if ( $plan_type && isset( self::$init_list[ $plan_type ] ) ) {
-			if ( isset( self::$init_list[ $plan_type ]['default'] ) ) {
-				  $init_list = array_merge( $init_list, self::$init_list[ $plan_type ]['default'] );
+		$plan_data    = Data::current_plan();
+		$plan_flow    = $plan_data['flow'];
+		$plan_subtype = $plan_data['subtype'];
+		$init_list    = self::$init_list['default'];
+		if ( $plan_flow && isset( self::$init_list[ $plan_flow ] ) ) {
+			if ( isset( self::$init_list[ $plan_flow ]['default'] ) ) {
+				  $init_list = array_merge( $init_list, self::$init_list[ $plan_flow ]['default'] );
 			}
-			if ( $plan_subtype !== 'default' && isset( self::$init_list[ $plan_type ][ $plan_subtype ] ) ) {
-				   $init_list = array_merge( $init_list, self::$init_list[ $plan_type ][ $plan_subtype ] );
+			if ( $plan_subtype !== 'default' && isset( self::$init_list[ $plan_flow ][ $plan_subtype ] ) ) {
+				   $init_list = array_merge( $init_list, self::$init_list[ $plan_flow ][ $plan_subtype ] );
 			}
 		}
 
