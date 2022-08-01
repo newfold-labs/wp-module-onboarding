@@ -31,7 +31,7 @@ const StepBasicInfo = () => {
 	}, [] );
 	return (
 		<CommonLayout isVerticallyCentered>
-			<HeadingWithSubHeading title={currentStep.heading} subtitle={currentStep.subheading} />
+			<HeadingWithSubHeading title={currentStep?.heading} subtitle={currentStep?.subheading} />
 			<BasicInfoForm/>
 		</CommonLayout>
 	);

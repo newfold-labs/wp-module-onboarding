@@ -47,10 +47,10 @@ const StepTopPriority = ( props ) => {
 		setIsDrawerSuppressed,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { currentData } = useSelect( ( select ) => {
+	const { currentStep, currentData } = useSelect( ( select ) => {
 		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			currentStep: select(nfdOnboardingStore).getCurrentStep(),
+			currentData: select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	}, [] );
 
@@ -96,7 +96,7 @@ const StepTopPriority = ( props ) => {
 	return (
 		<CommonLayout isVerticallyCentered>
 			<HeadingWithSubHeading
-				title='Tell us your top priority' subtitle='We’ll prioritize getting you there.'/>
+				title={currentStep?.heading} subtitle={currentStep?.subheading} />
 			<SelectableCardList
 				contents={ priorities }
 				selected={ selected }

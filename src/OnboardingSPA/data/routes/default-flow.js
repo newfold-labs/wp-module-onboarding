@@ -153,7 +153,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/top-priority',
 		title: __( 'Top Priority', 'wp-module-onboarding' ),
-		heading: __( 'Tell us priority one', 'wp-module-onboarding' ),
+		heading: __( 'Tell us your top priority', 'wp-module-onboarding' ),
 		subheading: __(
 			"We'll prioritize getting you there.",
 			'wp-module-onboarding'
