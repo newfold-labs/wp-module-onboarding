@@ -10,5 +10,8 @@
         "placeholder": "Just another WordPress site.",
         "hint": "Tell people who you are, what you sell and why they should visit your store.",
         "maxCharacters": "160"
+    },
+    "error": {
+        "title": "Error Saving Data, Try Again!"
     }
 }

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 
-import content from './basicInfoFormData.json';
+import content from './content.json';
 import TextInput from '../../../components/TextInput';
 import MiniPreview from '../../../components/MiniPreview';
 import { getSettings } from '../../../utils/api/settings';
@@ -106,7 +106,7 @@ const BasicInfoForm = () => {
         <div className="basic-info">
             <div className={`${isError ? 'error__show' : 'error__hide'}`}>
                 {__(
-                    "Error Saving Data, Try Again!",
+                    content.error["title"],
                     'wp-module-onboarding'
                 )}
             </div>
