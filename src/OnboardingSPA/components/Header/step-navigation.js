@@ -47,8 +47,8 @@ const Next = ({ path }) => {
  * Finish step navigation button.
  * @returns
  */
-const Finish = () => (
-	<Button variant="primary" disabled={true}>
+const Finish = ({ path }) => (
+	<Button variant="primary" href={path}>
 		{__('Finish', 'wp-module-onboarding')}
 		<Icon icon={chevronRight} style={{ marginLeft: '8px' }} />
 	</Button>
@@ -70,15 +70,26 @@ const StepNavigation = () => {
 		[location.pathname]
 	);
 	const isFirstStep = null === previousStep || false === previousStep;
-	const isLastStep = null === nextStep || false === nextStep;
+	const isLastStep = null === nextStep || false === nextStep || exitToWordpressForEcommerce();
+	const exitToWordpressLink = exitToWordpressForEcommerce() ? 'index.php?page=bluehost' : 'index.php';
 	return (
 		<div className="nfd-onboarding-header__step-navigation">
 			<ButtonGroup style={{ display: 'flex', columnGap: '0.5rem' }}>
 				{isFirstStep ? null : <Back path={previousStep.path} />}
-				{isLastStep ? <Finish /> : <Next path={nextStep.path} />}
+				{isLastStep ? <Finish path={exitToWordpressLink} /> : <Next path={nextStep.path} />}
 			</ButtonGroup>
 		</div>
 	);
 };
 
+/*
+ * check if this is the last step 
+ */
+const exitToWordpressForEcommerce = () => {
+	if( window.nfdOnboarding.currentFlow == 'ecommerce' && 
+		String(window.nfdOnboarding.previousStepID).includes('/step/basic-info') ) {
+		return true;
+	}
+	return false;
+}
 export default StepNavigation;
