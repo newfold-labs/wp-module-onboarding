@@ -6,11 +6,12 @@ import NeedHelpTag from '../../../../components/NeedHelpTag';
 import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
 import content from './content.json';
+import { translations } from '../../../../utils/translations';
 
 import { RadioControl } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Get Started: WordPress Experience Comfort Level.
@@ -24,11 +25,10 @@ const GetStartedExperience = () => {
 
 	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
 
-	const { currentData } = useSelect( ( select ) => {
+	const { currentData, flow } = useSelect( ( select ) => {
 		return {
-			currentData: select(
-				nfdOnboardingStore
-			).getCurrentOnboardingData(),
+			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+			flow: select(nfdOnboardingStore).getOnboardingFlow(),
 		};
 	}, [] );
 
@@ -69,9 +69,9 @@ const GetStartedExperience = () => {
 				<div className="nfd-onboarding-experience-step">
 					<div className="nfd-card-heading center">
 						<CardHeader
-							heading={ __( content.cardHeading ) }
-							subHeading={ __( content.subHeading ) }
-							question={ __( content.question ) }
+							heading={ sprintf( __(content.cardHeading, 'wp-module-onboarding'), translations(flow, 'site') ) }
+							subHeading={ __( content.subHeading, 'wp-module-onboarding' ) }
+							question={ __( content.question, 'wp-module-onboarding' ) }
 						/>
 					</div>
 					<RadioControl
@@ -79,14 +79,14 @@ const GetStartedExperience = () => {
 						selected={ wpComfortLevel }
 						options={ content.options.map( ( option ) => {
 							return {
-								label: __( option.content ),
-								value: __( option.value ),
+								label: __( option.content, 'wp-module-onboarding' ),
+								value: __( option.value, 'wp-module-onboarding' ),
 							};
 						} ) }
 						onChange={ ( value ) => setWpComfortLevel( value ) }
 					/>
 					<NavCardButton
-						text={ __( content.buttonText ) }
+						text={ __( content.buttonText, 'wp-module-onboarding' ) }
 						disabled={ wpComfortLevel == '0' }
 					/>
 					<NeedHelpTag />

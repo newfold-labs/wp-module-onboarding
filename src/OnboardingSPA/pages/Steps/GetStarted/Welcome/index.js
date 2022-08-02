@@ -1,9 +1,10 @@
 import { Icon } from '@wordpress/icons';
-import { __ } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
+import { translations } from '../../../../utils/translations';
 
 import CommonLayout from '../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
@@ -22,9 +23,10 @@ import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
  */
 const StepWelcome = () => {
 	const location = useLocation();
-	const { currentStep, nextStep, brandName } = useSelect(
+	const { currentStep, nextStep, brandName, flow } = useSelect(
 		(select) => {
 			return {
+				flow: select(nfdOnboardingStore).getOnboardingFlow(),
 				currentStep: select(nfdOnboardingStore).getCurrentStep(),
 				nextStep: select(nfdOnboardingStore).getNextStep(),
 				brandName: select(nfdOnboardingStore).getNewfoldBrandName(),
@@ -32,7 +34,6 @@ const StepWelcome = () => {
 		},
 		[location.pathname]
 	);
-
 	const {
 		setDrawerActiveView,
 		setIsSidebarOpened,
@@ -49,12 +50,13 @@ const StepWelcome = () => {
 	const handleClick = () => {
 		navigate(nextStep.path);
 	}
+
 	return (
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard>
 				<div className='welcome-card'>
 					<CardHeader
-						heading={ __(currentStep.heading, 'wp-module-onboarding') }
+						heading = { sprintf( __(currentStep.heading, 'wp-module-onboarding'), translations(flow, 'website') ) }
 						subHeading={ __(currentStep.subheading, 'wp-module-onboarding') + brandName + '.'} >
 					</CardHeader>
 					<TabPanelHover
