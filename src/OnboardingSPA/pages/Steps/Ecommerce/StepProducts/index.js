@@ -111,11 +111,9 @@ const StepProducts = () => {
 					<div className='nfd-product-step-options'>
 						{content.productOptions.map((product) => (
 							<CheckboxControl
-								checked={
-									currentData.productInfo?.product_types.indexOf(
-										product.value
-									) !== -1
-								}
+								checked={currentData.productInfo?.product_types.includes(
+									product.value
+								)}
 								label={product.content}
 								onChange={(e) => handleCheckbox(product.value, e)}
 							/>
@@ -144,10 +142,7 @@ const StepProducts = () => {
 							}
 						/>
 					</div>
-					<NavCardButton
-						text={__(content.buttonText)}
-						onClick={handleButtonClick}
-					/>
+					<NavCardButton text={__(content.buttonText)} />
 					<NeedHelpTag />
 				</div>
 			</NewfoldLargeCard>

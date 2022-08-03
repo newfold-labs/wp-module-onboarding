@@ -1,16 +1,16 @@
-import apiFetch from '@wordpress/api-fetch';
 import { RadioControl } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useNavigate } from 'react-router-dom';
 import { VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../../../constants';
+import NavCardButton from '../../../../components/Button/NavCardButton';
 import CardHeader from '../../../../components/CardHeader';
 import CommonLayout from '../../../../components/Layouts/Common';
 import NeedHelpTag from '../../../../components/NeedHelpTag';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import { store as nfdOnboardingStore } from '../../../../store';
-import { updateWCOptions } from '../../../../utils/api/ecommerce';
+import { fetchWCOnboarding, updateWCOptions } from '../../../../utils/api/ecommerce';
 import content from '../content.json';
 
 const StepTax = () => {
@@ -26,18 +26,14 @@ const StepTax = () => {
 		select(nfdOnboardingStore).getCurrentOnboardingData()
 	);
 
-	const [isStoreDetailsFilled, setStoreDetailsFilled] = useState(false);
+	const [isStoreDetailsFilled, setStoreDetailsFilled] = useState(undefined);
 	const getStoreDeatilsFilledInfo = async () => {
-		await apiFetch({
-			path: '/wc-admin/onboarding/tasks?ids=setup',
-		}).then((onboardingResponse) => {
-			let onboardingTask = onboardingResponse ? onboardingResponse[0] : null;
-			const storeDetailsInfo = (onboardingTask
-				? onboardingTask.tasks
-				: []
-			).find((task) => task.id == 'store_details');
-			setStoreDetailsFilled(storeDetailsInfo && storeDetailsInfo.isComplete);
-		});
+		const onboardingResponse = await fetchWCOnboarding();
+		let [onboardingTask] = onboardingResponse ?? [];
+		const storeDetailsInfo = (onboardingTask?.tasks ?? []).find(
+			(task) => task.id == 'store_details'
+		);
+		setStoreDetailsFilled(storeDetailsInfo?.isComplete);
 	};
 	useEffect(() => {
 		getStoreDeatilsFilledInfo();
@@ -85,18 +81,23 @@ const StepTax = () => {
 								value: __(option.value),
 							};
 						})}
-						onChange={(value) =>
+						onChange={(value) => {
 							setCurrentOnboardingData({
-								taxInfo: { ...currentData.taxInfo, selectTaxOption: value },
+								taxInfo: {
+									...currentData.taxInfo,
+									selectTaxOption: value,
+									saveTaxData: value == "1" && !isStoreDetailsFilled
+								},
 							})
+						}}
+					/>
+					<NavCardButton
+						text={ __( 'Continue Setup' ) }
+						disabled={
+							isStoreDetailsFilled === undefined ||
+							currentData.taxInfo?.selectTaxOption === undefined
 						}
 					/>
-					<button
-						className='nfd-nav-card-button nfd-card-button'
-						onClick={handleButtonClick}
-					>
-						Continue Setup
-					</button>
 					<NeedHelpTag/>
 				</div>
 			</NewfoldLargeCard>

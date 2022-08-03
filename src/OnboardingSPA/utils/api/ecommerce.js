@@ -4,6 +4,10 @@ export async function updateWCOptions(options) {
 	return apiFetch({ path: '/wp/v2/settings', method: 'POST', data: options });
 }
 
+export async function fetchWCOnboarding() {
+	return apiFetch({ path: "/wc-admin/onboarding/tasks?ids=setup" });
+}
+
 export async function updateWCOnboarding(profile) {
 	return apiFetch({
 		path: '/wc-admin/onboarding/profile',

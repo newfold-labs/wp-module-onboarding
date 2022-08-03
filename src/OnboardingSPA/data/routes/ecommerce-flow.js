@@ -77,7 +77,7 @@ export const steps = orderBy(
 	[
 		...filter(
 			defaultInitialSteps,
-			(step) => ! step.path.includes( '/step/top-priority' )
+			( step ) => ! step.path.includes( '/step/top-priority' )
 		),
 		...ecommerceSteps,
 	],
@@ -94,7 +94,7 @@ export const routes = orderBy(
 export const initialTopSteps = () => {
 	const topSteps = filter( ecommerceSteps, ( step ) => {
 		return ! step.path.includes( '/ecommerce/step' );
-	});
+	} );
 
 	const ecommerceStep = {
 		/* This is a pseudo step to stand-in for all StoreInfo steps and does not have a Component to render */
