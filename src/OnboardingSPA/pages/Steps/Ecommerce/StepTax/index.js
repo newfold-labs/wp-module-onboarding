@@ -1,15 +1,17 @@
-import CommonLayout from "../../../../components/Layouts/Common";
-import { useEffect, useState } from "@wordpress/element";
-import NewfoldLargeCard from "../../../../components/NewfoldLargeCard";
-import { store as nfdOnboardingStore } from "../../../../store";
-import { useDispatch, useSelect } from "@wordpress/data";
-import { VIEW_NAV_ECOMMERCE_STORE_INFO } from "../../../../../constants";
-import { useNavigate } from "react-router-dom";
-import content from "../content.json";
-import { __ } from "@wordpress/i18n";
-import { RadioControl } from "@wordpress/components";
-import CardHeader from "../../../../components/CardHeader";
-import apiFetch from "@wordpress/api-fetch";
+import apiFetch from '@wordpress/api-fetch';
+import { RadioControl } from '@wordpress/components';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { useNavigate } from 'react-router-dom';
+import { VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../../../constants';
+import CardHeader from '../../../../components/CardHeader';
+import CommonLayout from '../../../../components/Layouts/Common';
+import NeedHelpTag from '../../../../components/NeedHelpTag';
+import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
+import { store as nfdOnboardingStore } from '../../../../store';
+import { updateWCOptions } from '../../../../utils/api/ecommerce';
+import content from '../content.json';
 
 const StepTax = () => {
 	const {
@@ -27,13 +29,13 @@ const StepTax = () => {
 	const [isStoreDetailsFilled, setStoreDetailsFilled] = useState(false);
 	const getStoreDeatilsFilledInfo = async () => {
 		await apiFetch({
-			path: "/wc-admin/onboarding/tasks?ids=setup",
+			path: '/wc-admin/onboarding/tasks?ids=setup',
 		}).then((onboardingResponse) => {
 			let onboardingTask = onboardingResponse ? onboardingResponse[0] : null;
 			const storeDetailsInfo = (onboardingTask
 				? onboardingTask.tasks
 				: []
-			).find((task) => task.id == "store_details");
+			).find((task) => task.id == 'store_details');
 			setStoreDetailsFilled(storeDetailsInfo && storeDetailsInfo.isComplete);
 		});
 	};
@@ -44,13 +46,6 @@ const StepTax = () => {
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
 	}, []);
 
-	const saveData = async (data) => {
-		await apiFetch({
-			path: `/wc-admin/options`,
-			method: "POST",
-			data,
-		});
-	};
 	const handleButtonClick = async () => {
 		if (currentData.taxInfo?.selectTaxOption == 1 && !isStoreDetailsFilled) {
 			setCurrentOnboardingData({
@@ -59,22 +54,22 @@ const StepTax = () => {
 					saveTaxData: true,
 				},
 			});
-			navigate("/ecommerce/step/address");
+			navigate('/ecommerce/step/address');
 			return;
 		}
-		await saveData(
+		await updateWCOptions(
 			content.stepTaxOptions.find(
 				(e) => currentData.taxInfo?.selectTaxOption === e.value
 			)?.data
 		);
-		navigate("/ecommerce/step/products");
+		navigate('/ecommerce/step/products');
 	};
 
 	return (
-		<CommonLayout isCentered>
+		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard>
-				<div className="nfd-onboarding-experience-step">
-					<div className="nfd-card-heading center onboarding-ecommerce-step">
+				<div className='nfd-onboarding-experience-step'>
+					<div className='nfd-card-heading center onboarding-ecommerce-step'>
 						<CardHeader
 							heading={__(content.stepTaxHeading)}
 							subHeading={__(content.stepTaxSubHeading)}
@@ -82,7 +77,7 @@ const StepTax = () => {
 						/>
 					</div>
 					<RadioControl
-						className="nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-tax-step"
+						className='nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-tax-step'
 						selected={currentData.taxInfo?.selectTaxOption}
 						options={content.stepTaxOptions.map((option) => {
 							return {
@@ -97,19 +92,12 @@ const StepTax = () => {
 						}
 					/>
 					<button
-						className="nfd-nav-card-button nfd-card-button"
+						className='nfd-nav-card-button nfd-card-button'
 						onClick={handleButtonClick}
 					>
 						Continue Setup
 					</button>
-					<p>
-						<em>
-							Need help?{" "}
-							<a href="admin.php?page=bluehost#/marketplace/services/blue-sky">
-								Hire our experts
-							</a>
-						</em>
-					</p>
+					<NeedHelpTag/>
 				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>

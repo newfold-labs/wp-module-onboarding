@@ -1,24 +1,27 @@
-import { useDispatch, useSelect } from "@wordpress/data";
-import { useEffect } from "@wordpress/element";
-import CommonLayout from "../../../../components/Layouts/Common";
-import NewfoldLargeCard from "../../../../components/NewfoldLargeCard";
-import { store as nfdOnboardingStore } from "../../../../store";
-
-import apiFetch from "@wordpress/api-fetch";
-import { CheckboxControl, RadioControl } from "@wordpress/components";
-import { __ } from "@wordpress/i18n";
+import apiFetch from '@wordpress/api-fetch';
+import { CheckboxControl, RadioControl } from '@wordpress/components';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { useEffect } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import {
 	VIEW_NAV_ECOMMERCE_STORE_INFO,
 	YITH_BOOKING_PLUGIN,
 	YITH_PRODUCT_FILTER_PLUGIN,
 	YITH_SEARCH_PLUGIN,
 	YITH_SHIPPO_PLUGIN
-} from "../../../../../constants";
-import NavCardButton from "../../../../components/Button/NavCardButton";
-import CardHeader from "../../../../components/CardHeader";
-import { installYithPlugin, updateWCOnboarding } from "../../../../utils/api/ecommerce";
-import { resolve } from "../../../../utils/api/resolve";
-import content from "../content.json";
+} from '../../../../../constants';
+import NavCardButton from '../../../../components/Button/NavCardButton';
+import CardHeader from '../../../../components/CardHeader';
+import CommonLayout from '../../../../components/Layouts/Common';
+import NeedHelpTag from '../../../../components/NeedHelpTag';
+import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
+import { store as nfdOnboardingStore } from '../../../../store';
+import {
+	installYithPlugin,
+	updateWCOnboarding
+} from '../../../../utils/api/ecommerce';
+import { resolve } from '../../../../utils/api/resolve';
+import content from '../content.json';
 
 const StepProducts = () => {
 	const {
@@ -43,7 +46,7 @@ const StepProducts = () => {
 		return await resolve(
 			apiFetch({
 				path: `/newfold-ecommerce/v1/plugins/install`,
-				method: "POST",
+				method: 'POST',
 				data,
 			})
 		);
@@ -64,9 +67,9 @@ const StepProducts = () => {
 
 	const getPluginName = (productType) => {
 		switch (productType) {
-			case "physical":
+			case 'physical':
 				return YITH_SHIPPO_PLUGIN;
-			case "bookings":
+			case 'bookings':
 				return YITH_BOOKING_PLUGIN;
 			default:
 				return null;
@@ -79,9 +82,10 @@ const StepProducts = () => {
 			data.plugin && (await getPluginInstall(data));
 		});
 
+		// TODO: Put off install until onboarding is complete
 		if (
-			currentData.productInfo?.product_count !== "0" &&
-			currentData.productInfo?.product_count !== "1-10"
+			currentData.productInfo?.product_count !== '0' &&
+			currentData.productInfo?.product_count !== '1-10'
 		) {
 			await installYithPlugin(YITH_SEARCH_PLUGIN);
 			await installYithPlugin(YITH_PRODUCT_FILTER_PLUGIN);
@@ -95,16 +99,16 @@ const StepProducts = () => {
 	};
 
 	return (
-		<CommonLayout isCentered>
+		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard>
-				<div className="nfd-onboarding-experience-step onboarding-product-step onboarding-ecommerce-step">
-					<div className="nfd-card-heading center">
+				<div className='nfd-onboarding-experience-step onboarding-product-step onboarding-ecommerce-step'>
+					<div className='nfd-card-heading center'>
 						<CardHeader
 							heading={__(content.stepProductsHeading)}
 							subHeading={__(content.stepProductsSubHeading)}
 						/>
 					</div>
-					<div className="nfd-product-step-options">
+					<div className='nfd-product-step-options'>
 						{content.productOptions.map((product) => (
 							<CheckboxControl
 								checked={
@@ -117,12 +121,12 @@ const StepProducts = () => {
 							/>
 						))}
 					</div>
-					<div className="step-product-numbers">
-						<span style={{ fontSize: "16px" }}>
+					<div className='step-product-numbers'>
+						<span style={{ fontSize: '16px' }}>
 							{__(content.stepProductsQuestion)}
 						</span>
 						<RadioControl
-							className="components-radio-control__input"
+							className='components-radio-control__input'
 							selected={currentData.productInfo?.product_count}
 							options={content.stepProductNumbers.map((option) => {
 								return {
@@ -144,14 +148,7 @@ const StepProducts = () => {
 						text={__(content.buttonText)}
 						onClick={handleButtonClick}
 					/>
-					<p>
-						<em>
-							Need help?{" "}
-							<a href="admin.php?page=bluehost#/marketplace/services/blue-sky">
-								Hire our experts
-							</a>
-						</em>
-					</p>
+					<NeedHelpTag />
 				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>

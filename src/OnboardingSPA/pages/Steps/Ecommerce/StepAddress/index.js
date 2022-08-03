@@ -1,18 +1,19 @@
-import apiFetch from "@wordpress/api-fetch";
-import { useDispatch, useSelect } from "@wordpress/data";
-import { useEffect, useState } from "@wordpress/element";
-import { __ } from "@wordpress/i18n";
-import { useNavigate } from "react-router-dom";
-import { VIEW_NAV_ECOMMERCE_STORE_INFO } from "../../../../../constants";
-import CardHeader from "../../../../components/CardHeader";
-import CommonLayout from "../../../../components/Layouts/Common";
-import NewfoldLargeCard from "../../../../components/NewfoldLargeCard";
-import { store as nfdOnboardingStore } from "../../../../store";
+import apiFetch from '@wordpress/api-fetch';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { useNavigate } from 'react-router-dom';
+import { VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../../../constants';
+import CardHeader from '../../../../components/CardHeader';
+import CommonLayout from '../../../../components/Layouts/Common';
+import NeedHelpTag from '../../../../components/NeedHelpTag';
+import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
+import { store as nfdOnboardingStore } from '../../../../store';
 import {
 	updateWCOnboarding,
-	updateWCOptions
-} from "../../../../utils/api/ecommerce";
-import content from "../content.json";
+	updateWCOptions,
+} from '../../../../utils/api/ecommerce';
+import content from '../content.json';
 
 const StepAddress = () => {
 	const {
@@ -28,7 +29,7 @@ const StepAddress = () => {
 		setIsDrawerOpened(true);
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
 
-		apiFetch({ path: "/wc/v3/data/countries" }).then((countries) =>
+		apiFetch({ path: '/wc/v3/data/countries' }).then((countries) =>
 			setCountries(countries)
 		);
 	}, []);
@@ -51,14 +52,14 @@ const StepAddress = () => {
 		onChange: handleFieldChange,
 		onBlur: handleFieldChange,
 	};
-	let selectedCountry = currentData.storeAddress?.country ?? "US";
+	let selectedCountry = currentData.storeAddress?.country ?? 'US';
 	let states =
 		countries?.find((country) => country.code === selectedCountry)?.states ??
 		[];
 	return (
-		<CommonLayout isCentered>
+		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard>
-				<div className="nfd-onboarding-experience-step">
+				<div className='nfd-onboarding-experience-step'>
 					<form
 						onSubmit={async (event) => {
 							event.preventDefault();
@@ -68,31 +69,31 @@ const StepAddress = () => {
 								...wcAddress,
 								woocommerce_default_country: `${country}:${state}`,
 								...(currentData.taxInfo?.saveTaxData && {
-									wc_connect_taxes_enabled: "yes",
-									woocommerce_calc_taxes: "yes",
+									wc_connect_taxes_enabled: 'yes',
+									woocommerce_calc_taxes: 'yes',
 								}),
 							});
 							await updateWCOnboarding({ completed: true });
 							navigate(
 								currentData.taxInfo?.saveTaxData
-									? "/ecommerce/step/products"
-									: "/ecommerce/step/tax"
+									? '/ecommerce/step/products'
+									: '/ecommerce/step/tax'
 							);
 						}}
 					>
-						<div className="nfd-card-heading center onboarding-ecommerce-step">
+						<div className='nfd-card-heading center onboarding-ecommerce-step'>
 							<CardHeader
 								heading={__(content.stepAddressHeading)}
 								subHeading={__(content.stepAddressSubHeading)}
 							/>
-							{countries.length === 0 ? "Loading..." : null}
+							{countries.length === 0 ? 'Loading...' : null}
 						</div>
-						<div className="store-address-form">
+						<div className='store-address-form'>
 							<div>
 								<label>Address line 1</label>
 								<input
-									name="woocommerce_store_address"
-									type="text"
+									name='woocommerce_store_address'
+									type='text'
 									required
 									defaultValue={
 										currentData.storeAddress?.woocommerce_store_address
@@ -103,8 +104,8 @@ const StepAddress = () => {
 							<div>
 								<label>Address line 2</label>
 								<input
-									name="woocommerce_store_address_2"
-									type="text"
+									name='woocommerce_store_address_2'
+									type='text'
 									defaultValue={
 										currentData.storeAddress?.woocommerce_store_address_2
 									}
@@ -114,8 +115,8 @@ const StepAddress = () => {
 							<div>
 								<label>City</label>
 								<input
-									name="woocommerce_store_city"
-									type="text"
+									name='woocommerce_store_city'
+									type='text'
 									required
 									defaultValue={
 										currentData.storeAddress?.woocommerce_store_city
@@ -126,11 +127,11 @@ const StepAddress = () => {
 							<div>
 								<label>State</label>
 								{states.length === 0 ? (
-									<input type="text" name="state" required {...eventHandlers} />
+									<input type='text' name='state' required {...eventHandlers} />
 								) : (
 									<select
-										type="text"
-										name="state"
+										type='text'
+										name='state'
 										required
 										defaultValue={currentData.storeAddress?.state}
 										{...eventHandlers}
@@ -146,8 +147,8 @@ const StepAddress = () => {
 							<div>
 								<label>Postal Code</label>
 								<input
-									name="woocommerce_store_postcode"
-									type="zip"
+									name='woocommerce_store_postcode'
+									type='zip'
 									required
 									defaultValue={
 										currentData.storeAddress?.woocommerce_store_postcode
@@ -158,11 +159,11 @@ const StepAddress = () => {
 							<div>
 								<label>Country</label>
 								{countries.length === 0 ? (
-									<input type="text" disabled />
+									<input type='text' disabled />
 								) : (
 									<select
-										type="text"
-										name="country"
+										type='text'
+										name='country'
 										required
 										defaultValue={selectedCountry}
 										{...eventHandlers}
@@ -177,20 +178,13 @@ const StepAddress = () => {
 							</div>
 						</div>
 						<button
-							className="nfd-nav-card-button nfd-card-button"
-							type="submit"
+							className='nfd-nav-card-button nfd-card-button'
+							type='submit'
 						>
 							{__(content.buttonText)}
 						</button>
 					</form>
-					<p>
-						<em>
-							Need help?{" "}
-							<a href="admin.php?page=bluehost#/marketplace/services/blue-sky">
-								Hire our experts
-							</a>
-						</em>
-					</p>
+					<NeedHelpTag />
 				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>
