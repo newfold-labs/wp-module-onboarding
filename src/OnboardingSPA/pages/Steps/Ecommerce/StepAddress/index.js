@@ -59,7 +59,7 @@ const StepAddress = () => {
 	return (
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard>
-				<div className='nfd-onboarding-experience-step'>
+				<div className='nfd-onboarding-experience-step onboarding-ecommerce-step'>
 					<form
 						onSubmit={async (event) => {
 							event.preventDefault();
