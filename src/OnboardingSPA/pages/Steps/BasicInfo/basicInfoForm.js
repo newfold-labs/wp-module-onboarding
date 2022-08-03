@@ -1,14 +1,16 @@
-import { useDispatch, useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n'; 
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 
+import content from './content.json';
 import TextInput from '../../../components/TextInput';
-import SocialMediaForm from '../../../components/SocialMediaForm';
 import MiniPreview from '../../../components/MiniPreview';
-import ImageUploader from '../../../components/ImageUploader';
+import { getSettings } from '../../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../../store';
+import ImageUploader from '../../../components/ImageUploader';
+import SocialMediaForm from '../../../components/SocialMediaForm';
 
-import { getSettings, setSettings } from '../../../utils/api/settings';
 
 /**
  * Basic Info Form.
@@ -93,13 +95,9 @@ const BasicInfoForm = () => {
             var currentDataCopy = currentData;
             currentDataCopy.data['siteLogo'] = debouncedFlowData.data['siteLogo'] ?? currentDataCopy.data['siteLogo'];
             currentDataCopy.data['blogName'] = debouncedFlowData.data['blogName'] ?? currentDataCopy.data['blogName'];
-            currentDataCopy.data['blogDescription'] = debouncedFlowData.data['blogDescription'] ?? currentDataCopy.data['blogDescription'];
+            currentDataCopy.data['blogDescription'] = debouncedFlowData.data['blogDescription'] ?? currentDataCopy.data['blogDescription']; 
             currentDataCopy.data['socialData'] = debouncedFlowData.data['socialData'] ?? currentDataCopy.data['socialData'];
             setCurrentOnboardingData(currentDataCopy);
-
-            if (isValidSocials) {
-                const socialResult = await setSettings(socialData);
-            }
         };
         if (debouncedFlowData) saveData();
     }, [debouncedFlowData]);
@@ -107,12 +105,15 @@ const BasicInfoForm = () => {
     return (
         <div className="basic-info">
             <div className={`${isError ? 'error__show' : 'error__hide'}`}>
-                Error Saving Data, Try Again!
+                {__(
+                    content.error["title"],
+                    'wp-module-onboarding'
+                )}
             </div>
             <div className="basic-info-form">
                 <div className="basic-info-form__left">
-                    <TextInput title="Site Title" hint="Shown to visitors, search engine and social media posts." placeholder="Aurelia Shop" maxCharacters="80" height="47px" textValue={siteTitle} textValueSetter={setSiteTitle} />
-                    <TextInput title="Site Description" hint="Tell people who you are, what you sell and why they should visit your store." placeholder="Aurelia Shop sell customized jewerly inspired to the beauty of the Sea" maxCharacters="160" height="100px" textValue={siteDesc} textValueSetter={setSiteDesc} />
+                    <TextInput title={content.siteTitle["title"]} hint={content.siteTitle["hint"]} placeholder={content.siteTitle["placeholder"]} maxCharacters={content.siteTitle["maxCharacters"] } height="47px" textValue={siteTitle} textValueSetter={setSiteTitle} />
+                    <TextInput title={content.siteDesc["title"]} hint={content.siteDesc["hint"]} placeholder={content.siteDesc["placeholder"]} maxCharacters={content.siteDesc["maxCharacters"]} height="100px" textValue={siteDesc} textValueSetter={setSiteDesc} />
                     <SocialMediaForm socialData={socialData} setSocialData={setSocialData} setIsValidSocials={setIsValidSocials}/>
                 </div>
                 <div className="basic-info-form__right">
@@ -120,7 +121,7 @@ const BasicInfoForm = () => {
                     <MiniPreview icon={siteLogo} title={siteTitle} desc={siteDesc} />
                 </div>
             </div>
-            <a onClick={(e) => skipThisStep()} style={{ padding: '10px', cursor: 'pointer' }}>Skip this step</a>
+            <a className="skip-button-basic-info" onClick={(e) => skipThisStep()} >{__('Skip this Step', 'wp-module-onboarding')}</a>
         </div>
     );
 };

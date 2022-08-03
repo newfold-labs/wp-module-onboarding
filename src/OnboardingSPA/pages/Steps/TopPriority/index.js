@@ -47,10 +47,10 @@ const StepTopPriority = ( props ) => {
 		setIsDrawerSuppressed,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { currentData } = useSelect( ( select ) => {
+	const { currentStep, currentData } = useSelect( ( select ) => {
 		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			currentStep: select(nfdOnboardingStore).getCurrentStep(),
+			currentData: select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	}, [] );
 
@@ -96,22 +96,14 @@ const StepTopPriority = ( props ) => {
 	return (
 		<CommonLayout isVerticallyCentered>
 			<HeadingWithSubHeading
-				title={ __(
-					'Tell us your top priority',
-					'wp-module-onboarding'
-				) }
-				subtitle={ __(
-					'We’ll prioritize getting you there.',
-					'wp-module-onboarding'
-				) }
-			/>
+				title={currentStep?.heading} subtitle={currentStep?.subheading} />
 			<SelectableCardList
 				contents={ priorities }
 				selected={ selected }
 				onSelectedChange={ setSelected }
 			></SelectableCardList>
 			<div className="center">
-				<p style={ { margin: '16px', fontWeight: '500' } }>
+				<p className="info-top-priority">
 					{ __(
 						"Where would you like to start? We'll start ",
 						'wp-module-onboarding'
@@ -123,8 +115,8 @@ const StepTopPriority = ( props ) => {
 					) }
 				</p>
 				<a
+					className="skip-button-top-priority "
 					onClick={ ( e ) => navigate( '/wp-setup/step/basic-info' ) }
-					style={ { cursor: 'pointer' } }
 				>
 					{ __( 'Skip this Step', 'wp-module-onboarding' ) }
 				</a>

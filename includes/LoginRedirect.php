@@ -25,7 +25,8 @@ class LoginRedirect {
 			$redirect_option = \update_option( $redirect_option_name, true );
 		}
 
-		if ( ! ( $redirect_option && \get_option( Options::get_option_name( 'coming_soon', false ), true ) ) ) {
+		if ( ! ( $redirect_option
+			    && \get_option( Options::get_option_name( 'coming_soon', false ), 'true' ) ) === 'true' ) {
 			 return $redirect;
 		}
 

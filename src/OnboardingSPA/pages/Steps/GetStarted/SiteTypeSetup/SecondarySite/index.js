@@ -12,20 +12,20 @@ import content from '../content.json';
 
 
 const StepPrimarySetup = () => {
-  const { setDrawerActiveView } = useDispatch(nfdOnboardingStore);
+  const { setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed } = useDispatch(
+		nfdOnboardingStore
+	);
 
-  useEffect(() => {
-    setDrawerActiveView(VIEW_NAV_PRIMARY);
-  }, []);
+	useEffect( () => {
+		setIsSidebarOpened( false );
+		setIsDrawerSuppressed( false );
+		setDrawerActiveView( VIEW_NAV_PRIMARY );
+	}, [] );
 
   const [clickedIndex, changeCategory] = useState(-1);
 
   const handleCategoryClick = (idxOfElm) => {
     changeCategory(idxOfElm);
-  }
-
-  const handleClick = (e) => {
-      console.log("Button Click to be handled here");
   }
 
   var [currentElm, changeClickedElm] = useState(0);

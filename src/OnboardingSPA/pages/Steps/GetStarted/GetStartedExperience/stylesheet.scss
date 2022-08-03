@@ -32,13 +32,20 @@
 	}
 }
 
+.nfd-exp-continue-button {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+}
+
 .nfd-step-card-heading {
-    font-weight: 700;
+	font-weight: 700;
 }
 
 .nfd-step-card-subheading {
-    font-weight: 700;
-    color: var(--nfd-onboarding-primary);
+	font-weight: 700;
+	color: var(--nfd-onboarding-primary);
 }
 
 .nfd-step-card-question {
@@ -47,5 +54,5 @@
 }
 
 .components-radio-control__input input {
-	display: none;
+	display: none !important;
 }
