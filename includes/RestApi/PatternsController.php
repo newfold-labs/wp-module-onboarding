@@ -76,7 +76,7 @@ class PatternsController extends \WP_REST_Controller {
 	/**
 	 * Retrieves the patterns approved by the Onboarding Module.
 	 *
-	 * @return \WP_Rest_Response
+	 * @return \WP_Rest_Response|array
 	 */
 	public function get_header_patterns() {
 		$block_pattern_files = array();

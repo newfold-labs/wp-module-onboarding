@@ -208,7 +208,7 @@ class ThemeGeneratorController {
 	  *
 	  * @param string $pattern_slug
 	  *
-	  * @return string the pattern for the part.
+	  * @return string|\WP_Error the pattern for the part.
 	  */
 	protected function generate_theme_part_pattern( $pattern_slug ) {
 		$pattern = \WP_Block_Patterns_Registry::get_instance()->get_registered( $pattern_slug );

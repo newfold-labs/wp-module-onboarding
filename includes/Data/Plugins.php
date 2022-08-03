@@ -39,6 +39,11 @@ final class Plugins {
 		),
 	);
 
+	 /**
+	  * Contains a list of zip url's with a unique "nfd_slug" for each.
+	  *
+	  * @var array
+	  */
 	protected static $nfd_slugs = array(
 		'nfd_slug_endurance_page_cache'                  => array(
 			'approved' => true,
@@ -78,7 +83,7 @@ final class Plugins {
 		'nfd_slug_yith_woocommerce_booking'              => array(
 			'approved' => true,
 			'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-woocommerce-booking',
-			'path'     => '',
+			'path'     => 'yith-woocommerce-booking-extended/init.php',
 		),
 		'nfd_slug_yith_woocommerce_wishlist'             => array(
 			'approved' => true,
@@ -87,6 +92,18 @@ final class Plugins {
 		),
 	);
 
+	 /**
+	  * @var array Initial plugins to be installed classified based on the hosting plan.
+	  *
+	  * Key 'default' contains a list of default plugins to be installed irrespective of the plan.
+	  * Key <flow> contains a Key 'default' and a list of Key <subtype>'s.
+	  * Key <flow> => 'default' contains a list of default plugin installs for <flow>.
+	  * Key <flow> => <subtype> contains a list of plugins to be installed for a particular <subtype>.
+	  *
+	  * The final queue of Plugins to be installed makes use of a max heap and hence the greater the number the earlier
+	  * a Plugin will be placed for install in the queue. This will also allow us to
+	  * prevent entering negative numbers when queueing a plugin for earlier installs.
+	  */
 	protected static $init_list = array(
 		'default'   => array(
 			array(
@@ -215,27 +232,40 @@ final class Plugins {
 	 */
 	public static function get_approved() {
 		return array(
-			'wp_slugs'  => array_keys( array_filter( self::$wp_slugs, array( __CLASS__, 'check_approved' ), ARRAY_FILTER_USE_BOTH ) ),
-			'nfd_slugs' => array_keys( array_filter( self::$nfd_slugs, array( __CLASS__, 'check_approved' ), ARRAY_FILTER_USE_BOTH ) ),
+			'wp_slugs'  => array_keys( array_filter( self::$wp_slugs, array( __CLASS__, 'check_approved' ) ) ),
+			'nfd_slugs' => array_keys( array_filter( self::$nfd_slugs, array( __CLASS__, 'check_approved' ) ) ),
 			'urls'      => array_keys( self::$urls, true ),
 			'domains'   => array_keys( self::$domains, true ),
 		);
 	}
 
-	private static function check_approved( $value, $key ) {
+	/**
+	 * @param array  $value
+	 *
+	 * Checks if $value has been approved.
+	 *
+	 * @return boolean
+	 */
+	private static function check_approved( $value ) {
 		 return $value['approved'] === true;
 	}
 
+	/**
+	 * Get the list of initial plugins to be installed for a particular hosting plan.
+	 *
+	 * @return array
+	 */
 	public static function get_init() {
-		  $plan_type = Data::current_flow();
-		  // $plan_subtype = 'wc_premium';
-		  $init_list = self::$init_list['default'];
-		if ( $plan_type && isset( self::$init_list[ $plan_type ] ) ) {
-			if ( isset( self::$init_list[ $plan_type ]['default'] ) ) {
-				  $init_list = array_merge( $init_list, self::$init_list[ $plan_type ]['default'] );
+		$plan_data    = Data::current_plan();
+		$plan_flow    = $plan_data['flow'];
+		$plan_subtype = $plan_data['subtype'];
+		$init_list    = self::$init_list['default'];
+		if ( $plan_flow && isset( self::$init_list[ $plan_flow ] ) ) {
+			if ( isset( self::$init_list[ $plan_flow ]['default'] ) ) {
+				  $init_list = array_merge( $init_list, self::$init_list[ $plan_flow ]['default'] );
 			}
-			if ( $plan_subtype !== 'default' && isset( self::$init_list[ $plan_type ][ $plan_subtype ] ) ) {
-				   $init_list = array_merge( $init_list, self::$init_list[ $plan_type ][ $plan_subtype ] );
+			if ( $plan_subtype !== 'default' && isset( self::$init_list[ $plan_flow ][ $plan_subtype ] ) ) {
+				   $init_list = array_merge( $init_list, self::$init_list[ $plan_flow ][ $plan_subtype ] );
 			}
 		}
 

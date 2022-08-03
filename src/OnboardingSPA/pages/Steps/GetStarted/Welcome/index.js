@@ -54,8 +54,8 @@ const StepWelcome = () => {
 			<NewfoldLargeCard>
 				<div className='welcome-card'>
 					<CardHeader
-						heading={ __(currentStep.heading, 'wp-module-onboarding') }
-						subHeading={ __(currentStep.subheading, 'wp-module-onboarding') + brandName + '.'} >
+						heading={ __(currentStep?.heading, 'wp-module-onboarding') }
+						subHeading={ __(currentStep?.subheading, 'wp-module-onboarding') + brandName + '.'} >
 					</CardHeader>
 					<TabPanelHover
 						className="nfd-onboarding-overview__tab-panel"

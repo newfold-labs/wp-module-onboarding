@@ -1,8 +1,9 @@
 import './styles/app.scss';
 import { store as nfdOnboardingStore } from './store'; /* must import prior to App! */
 import { getFlow } from './utils/api/flow';
-import { init as initPlugins } from './utils/api/plugins';
+import { init as initializePlugins } from './utils/api/plugins';
 import { trigger as cronTrigger } from './utils/api/cronTrigger';
+import { initialize as initializeSettings } from './utils/api/settings';
 
 import App from './components/App';
 import { HashRouter } from 'react-router-dom';
@@ -27,7 +28,7 @@ const NFDOnboarding = () => (
  * @param {Object} runtime - Expects runtime data from window.nfdOnboarding.
  */
 export async function initializeNFDOnboarding( id, runtime ) {
-	initPlugins();
+	initializePlugins();
 	setInterval( cronTrigger, 45000 );
 
 	const DOM_TARGET = document.getElementById( id );
@@ -40,6 +41,7 @@ export async function initializeNFDOnboarding( id, runtime ) {
 
 	if ( null !== DOM_TARGET && 'undefined' !== typeof render ) {
 		render( <NFDOnboarding />, DOM_TARGET );
+		initializeSettings();
 	} else {
 		console.log( 'Could not find mount element or wp.element.render().' );
 	}

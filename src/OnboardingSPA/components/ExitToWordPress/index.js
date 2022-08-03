@@ -40,7 +40,7 @@ const ExitToWordPress = ({
 			</Button>
 			{isOpen && (
 				<Modal
-					title={__('Exit without finishing?')}
+					title={__('Exit without finishing?', 'wp-module-onboarding')}
 					onRequestClose={closeModal}
 				>
 					<p>{label}</p>

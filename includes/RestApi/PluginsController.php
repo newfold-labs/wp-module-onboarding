@@ -119,7 +119,14 @@ class PluginsController {
 			&& Permissions::rest_is_authorized_admin();
 	}
 
+	/**
+	 * Queue in the initial list of plugins to be installed.
+	 *
+	 * @return \WP_REST_Response
+	 */
 	public function initialize() {
+
+		// Checks if the init_list of plugins have already been queued.
 		if ( \get_option( Options::get_option_name( 'plugins_init_status' ), 'init' ) !== 'init' ) {
 			return new \WP_REST_Response(
 				array(),
@@ -127,11 +134,16 @@ class PluginsController {
 			);
 		}
 
+		// Set option to installing to prevent re-queueing the init_list again on page load.
 		 \update_option( Options::get_option_name( 'plugins_init_status' ), 'installing' );
 
+		// Get the initial list of plugins to be installed based on the plan.
 		$init_plugins = Plugins::get_init();
+
 		foreach ( $init_plugins as $init_plugin ) {
+			// Checks if a plugin with the given slug and activation criteria already exists.
 			if ( ! PluginInstaller::exists( $init_plugin['slug'], $init_plugin['activate'] ) ) {
+					// Add a new PluginInstallTask to the Plugin install queue.
 					PluginInstallTaskManager::add_to_queue(
 						new PluginInstallTask(
 							$init_plugin['slug'],
@@ -161,6 +173,7 @@ class PluginsController {
 		$queue    = $request->get_param( 'queue' );
 		$priority = $request->get_param( 'priority' );
 
+		// Checks if a plugin with the given slug and activation criteria already exists.
 		if ( PluginInstaller::exists( $plugin, $activate ) ) {
 			return new \WP_REST_Response(
 				array(),
@@ -168,7 +181,9 @@ class PluginsController {
 			);
 		}
 
+		// Queue the plugin install if specified in the request.
 		if ( $queue ) {
+			// Add a new PluginInstallTask to the Plugin install queue.
 			PluginInstallTaskManager::add_to_queue(
 				new PluginInstallTask(
 					$plugin,
@@ -176,13 +191,16 @@ class PluginsController {
 					$priority
 				)
 			);
+
 			return new \WP_REST_Response(
 				array(),
 				202
 			);
 		}
 
+		// Execute the task if it need not be queued.
 		$plugin_install_task = new PluginInstallTask( $plugin, $activate );
+
 		return $plugin_install_task->execute();
 	}
 }

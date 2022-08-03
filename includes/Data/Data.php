@@ -2,6 +2,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
+use Bluehost\WP\Data\Customer;
 
 /**
  * CRUD methods for Onboarding config for use in API, CLI and runtime.
@@ -43,15 +44,28 @@ final class Data {
 		return array_key_exists( $brand, $brands ) ? $brands[ $brand ] : array( 'brand' => $brand );
 	}
 
+
 	/**
-	 * Get current hosting plan.
+	 * Get the current hosting plan information.
 	 *
-	 * [TODO]: Pull the actual plan.
-	 *
-	 * @return string
+	 * @return array
 	 */
 	public static function current_plan() {
-		return 'shared';
+		$customer_data = self::customer_data();
+
+		if ( isset( $customer_data['plan_type'] ) && isset( $customer_data['plan_subtype'] ) ) {
+			 return array(
+				 'flow'    => Flows::get_flow_from_plan_subtype( $customer_data['plan_subtype'] ),
+				 'subtype' => $customer_data['plan_subtype'],
+				 'type'    => $customer_data['plan_type'],
+			 );
+		}
+
+		  return array(
+			  'flow'    => self::current_flow(),
+			  'subtype' => null,
+			  'type'    => null,
+		  );
 	}
 
 	/**
@@ -88,5 +102,17 @@ final class Data {
 			 'settings'     => \get_block_editor_settings( $custom_settings, $block_editor_context ),
 			 'globalStyles' => \wp_get_global_styles(),
 		 );
+	}
+
+	/**
+	 * Get the current customer data using the Bluehost customer data module.
+	 *
+	 * @return array
+	 */
+	public static function customer_data() {
+		if ( class_exists( 'Bluehost\WP\Data\Customer' ) ) {
+			 return Customer::collect();
+		}
+		 return array();
 	}
 } // END \NewfoldLabs\WP\Module\Onboarding\Data()
