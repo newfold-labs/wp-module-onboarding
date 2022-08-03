@@ -232,8 +232,8 @@ final class Plugins {
 	 */
 	public static function get_approved() {
 		return array(
-			'wp_slugs'  => array_keys( array_filter( self::$wp_slugs, array( __CLASS__, 'check_approved' ), ARRAY_FILTER_USE_BOTH ) ),
-			'nfd_slugs' => array_keys( array_filter( self::$nfd_slugs, array( __CLASS__, 'check_approved' ), ARRAY_FILTER_USE_BOTH ) ),
+			'wp_slugs'  => array_keys( array_filter( self::$wp_slugs, array( __CLASS__, 'check_approved' ) ) ),
+			'nfd_slugs' => array_keys( array_filter( self::$nfd_slugs, array( __CLASS__, 'check_approved' ) ) ),
 			'urls'      => array_keys( self::$urls, true ),
 			'domains'   => array_keys( self::$domains, true ),
 		);
@@ -241,13 +241,12 @@ final class Plugins {
 
 	/**
 	 * @param array  $value
-	 * @param string $key
 	 *
-	 * Checks if $key has been approved.
+	 * Checks if $value has been approved.
 	 *
 	 * @return boolean
 	 */
-	private static function check_approved( $value, $key ) {
+	private static function check_approved( $value ) {
 		 return $value['approved'] === true;
 	}
 

@@ -114,7 +114,7 @@ class PluginInstallTaskManager {
 			   for a given slug and activation criteria. */
 			if ( $queued_plugin['slug'] === $plugin_install_task->get_slug()
 				  && $queued_plugin['activate'] === $plugin_install_task->get_activate() ) {
-				 return;
+				 return false;
 			}
 			 $queue->insert( $queued_plugin, $queued_plugin['priority'] );
 		}
