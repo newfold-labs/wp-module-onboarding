@@ -1,4 +1,3 @@
-import apiFetch from '@wordpress/api-fetch';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -10,8 +9,9 @@ import NeedHelpTag from '../../../../components/NeedHelpTag';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import { store as nfdOnboardingStore } from '../../../../store';
 import {
+	fetchWCCountries,
 	updateWCOnboarding,
-	updateWCOptions,
+	updateWCOptions
 } from '../../../../utils/api/ecommerce';
 import content from '../content.json';
 
@@ -29,9 +29,7 @@ const StepAddress = () => {
 		setIsDrawerOpened(true);
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
 
-		apiFetch({ path: '/wc/v3/data/countries' }).then((countries) =>
-			setCountries(countries)
-		);
+		fetchWCCountries().then((countries) => setCountries(countries));
 	}, []);
 
 	const navigate = useNavigate();
