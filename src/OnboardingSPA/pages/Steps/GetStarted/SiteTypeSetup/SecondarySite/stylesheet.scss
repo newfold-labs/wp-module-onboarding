@@ -1,6 +1,7 @@
 .nfd-setup-secondary-categories {
-	width: 40vw;
+	width: 53vw;
 	text-align: center;
+	margin-top: 1rem;
 
 	.nfd-card-category-wrapper {
 		display: inline-flex;
@@ -25,6 +26,7 @@
 		font-weight: 400;
 		margin-top: 0;
 		text-transform: uppercase;
+		margin-bottom: 0.3rem;
 	}
 
 	.iconSiteType {
@@ -44,7 +46,7 @@
 
 	.subCategoriesSection {
 		.nfd-card-category {
-			&.chosenPrimaryCategory {
+			&.chosenSecondaryCategory {
 				background-color: var(--wp-admin-theme-color-darker-10);
 				color: var(--nfd-onboarding-light);
 			}

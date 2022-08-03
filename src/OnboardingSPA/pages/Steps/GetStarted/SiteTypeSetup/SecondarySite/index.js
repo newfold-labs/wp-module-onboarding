@@ -3,7 +3,7 @@ import CommonLayout from '../../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../../components/NewfoldLargeCard';
 import { VIEW_NAV_PRIMARY } from '../../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../../store';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 import CardHeader from '../../../../../components/CardHeader';
 import NavCardButton from '../../../../../components/Button/NavCardButton';
@@ -23,22 +23,36 @@ const StepPrimarySetup = () => {
 	}, [] );
 
   const [clickedIndex, changeCategory] = useState(-1);
+  const [inputCategVal, changeInputCateg] = useState('');
 
-  const handleCategoryClick = (idxOfElm) => {
-    changeCategory(idxOfElm);
-  }
 
-  var [currentElm, changeClickedElm] = useState(0);
+  const { setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
+
+  const { currentData } = useSelect((select) => {
+    return {
+        currentData: select(nfdOnboardingStore).getCurrentOnboardingData()
+    };
+  }, []);
+
+
   const categoriesArray = content.categories;
 
-  const leftBtnClick = () => {
-    if(currentElm === 0) changeClickedElm(categoriesArray.length - 1)
-    else changeClickedElm(currentElm - 1);
+  /** Function which saves data in redux when category name is put-in via input box */
+  const categoryInput = input => {
+    changeCategory(-1);
+    changeInputCateg(input?.target?.value);
+    const currentDataCopy = currentData;
+    currentDataCopy.data.siteType['secondary'] = inputCategVal;
+    setCurrentOnboardingData(currentDataCopy);
   }
 
-  const rightBtnClick = () => {
-    if(currentElm === categoriesArray.length-1) changeClickedElm(0)
-    else changeClickedElm(currentElm + 1);
+  /** Function which saves data in redux when category name is chosen via categories displayed */
+  const handleCategoryClick = (idxOfElm) => {
+    changeCategory(idxOfElm);
+    changeInputCateg('');
+    const currentDataCopy = currentData;
+    currentDataCopy.data.siteType['secondary'] = categoriesArray[0]?.subCategories[idxOfElm];
+    setCurrentOnboardingData(currentDataCopy);
   }
   
   return (
@@ -54,27 +68,18 @@ const StepPrimarySetup = () => {
 
           <div className='nfd-setup-secondary-categories'>
             <div className='nfd-card-category-wrapper'>
-              <span className='iconSiteType' 
-                    style={{ backgroundImage: 'var(--chevron-left-icon)' }} 
-                    onClick={()=> leftBtnClick()}
-              />
-
               <div className="category-scrolling-wrapper">
-                <span className="icon" style={{backgroundImage: categoriesArray[currentElm].icon}}/>
-                <p className="categName"> {categoriesArray[currentElm].name}</p>
+                <span className="icon" style={{backgroundImage: categoriesArray[0].icon}}/>
+                <p className="categName"> {categoriesArray[0].name}</p>
               </div>
-              <span className='iconSiteType' 
-                    style={{ backgroundImage: 'var(--chevron-right-icon)' }} 
-                    onClick={()=> rightBtnClick()}
-              />
             </div>
 
             <div className='subCategoriesSection'>
             {
-              categoriesArray[currentElm]?.subCategories?.map((item,idx) => {
+              categoriesArray[0]?.subCategories?.map((item,idx) => {
                 return <span 
                           onClick={(e) => handleCategoryClick(idx)} 
-                          className={`${(clickedIndex === idx) ? 'chosenPrimaryCategory ' : ''}nfd-card-category`}>
+                          className={`${(clickedIndex === idx) ? 'chosenSecondaryCategory ' : ''}nfd-card-category`}>
                             {item}
                         </span> 
               })
@@ -82,8 +87,14 @@ const StepPrimarySetup = () => {
             </div>
           </div>
 
-          <p className='blackText'>or tell us here:</p>
-          <input type="text" className='tellUsInput'/>
+          <p className='blackText'>{__(content.tellusHereText, 'wp-module-onboarding')}</p>
+          <input 
+            type="text" 
+            onChange={(e) => categoryInput(e)} 
+            className='tellUsInput' 
+            placeholder={__(content.placeholderSiteTypeInput, 'wp-module-onboarding')}
+            value={inputCategVal}
+          />
           
           <NavCardButton
             text={__(content.buttonText)}
