@@ -28,7 +28,7 @@ const BaseLayout = ({
 	};
 
 	useEffect(() => {
-		mainContainer.focus({ preventScroll: true });
+		mainContainer?.focus({ preventScroll: true });
 		speakRouteTitle(location, 'Override');
           new Event(`${NFD_ONBOARDING_EVENT_PREFIX}-pageview`, {
                stepID: location.pathname,

@@ -1,9 +1,8 @@
-import { resolve } from './resolve.js';
-import { apiBase, MAX_RETRIES_SETTINGS_INIT } from '../../../constants';
-
 import apiFetch from '@wordpress/api-fetch';
 
-const baseAPI = `${ window.location.protocol }//${ window.location.host }/index.php${ apiBase }`;
+import { baseAPI } from './commonAPI';
+import { resolve } from './resolve.js';
+import { MAX_RETRIES_SETTINGS_INIT } from '../../../constants';
 
 export async function getSettings() {
 	return await resolve( apiFetch( { url: `${ baseAPI }settings` } ).then() );
