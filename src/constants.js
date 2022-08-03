@@ -17,6 +17,8 @@ export const SIDEBAR_SLOTFILL_PREFIX = 'Sidebar';
 export const SIDEBAR_MENU_SLOTFILL_PREFIX = 'HeaderMenu';
 export const SIDEBAR_LEARN_MORE = 'LearnMore';
 
+export const MAX_RETRIES_SETTINGS_INIT = 2;
+
 /**
  * All views for the <Drawer /> component.
  */

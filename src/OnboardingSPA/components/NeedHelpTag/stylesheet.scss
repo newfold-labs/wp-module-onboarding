@@ -1,7 +1,9 @@
 .nfd-card-need-help-tag {
-	font-style: italic;
 	color: black;
-	font-size: clamp(0.6rem, 0.8rem, 0.9rem);
+	padding: 20px;
+	font-weight: 200;
+	font-style: italic;
+	font-size: clamp(0.6rem, 1.5vw, 0.9rem);
 	a {
 		text-decoration: none;
 		padding-left: 0.3rem;
