@@ -83,7 +83,7 @@ final class Plugins {
 		'nfd_slug_yith_woocommerce_booking'              => array(
 			'approved' => true,
 			'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-woocommerce-booking',
-			'path'     => '',
+			'path'     => 'yith-woocommerce-booking-extended/init.php',
 		),
 		'nfd_slug_yith_woocommerce_wishlist'             => array(
 			'approved' => true,
