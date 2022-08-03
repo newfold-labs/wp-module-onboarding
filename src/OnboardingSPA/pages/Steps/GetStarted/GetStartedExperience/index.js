@@ -6,7 +6,7 @@ import NeedHelpTag from '../../../../components/NeedHelpTag';
 import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
 import content from './content.json';
-import { translations } from '../../../../utils/translations';
+import { translations } from '../../../../utils/locales/translations';
 
 import { RadioControl } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
@@ -25,10 +25,10 @@ const GetStartedExperience = () => {
 
 	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
 
-	const { currentData, flow } = useSelect( ( select ) => {
+	const { currentData, currentStep } = useSelect( ( select ) => {
 		return {
 			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
-			flow: select(nfdOnboardingStore).getOnboardingFlow(),
+			currentStep: select(nfdOnboardingStore).getCurrentStep(),
 		};
 	}, [] );
 
@@ -69,9 +69,9 @@ const GetStartedExperience = () => {
 				<div className="nfd-onboarding-experience-step">
 					<div className="nfd-card-heading center">
 						<CardHeader
-							heading={ sprintf( __(content.cardHeading, 'wp-module-onboarding'), translations(flow, 'site') ) }
-							subHeading={ __( content.subHeading, 'wp-module-onboarding' ) }
-							question={ __( content.question, 'wp-module-onboarding' ) }
+							heading={ sprintf( currentStep.heading, translations('site') ) }
+							subHeading={ __(content.aboutYouTag, 'wp-module-onboarding') }
+							question={ currentStep.subheading }
 						/>
 					</div>
 					<RadioControl

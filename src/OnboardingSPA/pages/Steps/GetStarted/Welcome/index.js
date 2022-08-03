@@ -4,7 +4,7 @@ import { store as nfdOnboardingStore } from '../../../../store';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
-import { translations } from '../../../../utils/translations';
+import { translations } from '../../../../utils/locales/translations';
 
 import CommonLayout from '../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
@@ -23,12 +23,10 @@ import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
  */
 const StepWelcome = () => {
 	const location = useLocation();
-	const { currentStep, nextStep, brandName, flow } = useSelect(
+	const { currentStep, brandName } = useSelect(
 		(select) => {
 			return {
-				flow: select(nfdOnboardingStore).getOnboardingFlow(),
 				currentStep: select(nfdOnboardingStore).getCurrentStep(),
-				nextStep: select(nfdOnboardingStore).getNextStep(),
 				brandName: select(nfdOnboardingStore).getNewfoldBrandName(),
 			};
 		},
@@ -46,18 +44,13 @@ const StepWelcome = () => {
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
 	}, [] );
 
-	const navigate = useNavigate();
-	const handleClick = () => {
-		navigate(nextStep.path);
-	}
-
 	return (
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard>
 				<div className='welcome-card'>
 					<CardHeader
-						heading = { sprintf( __(currentStep.heading, 'wp-module-onboarding'), translations(flow, 'website') ) }
-						subHeading={ __(currentStep.subheading, 'wp-module-onboarding') + brandName + '.'} >
+						heading = { sprintf( currentStep.heading, translations('website') ) }
+						subHeading={ currentStep.subheading + brandName + '.'} >
 					</CardHeader>
 					<TabPanelHover
 						className="nfd-onboarding-overview__tab-panel"
@@ -76,7 +69,7 @@ const StepWelcome = () => {
 						{( tab ) => <div>{tab.content}</div>}
 
 					</TabPanelHover>
-					<NavCardButton text={ __("Start Setup", 'wp-module-onboarding') } handleClick={handleClick}></NavCardButton>
+					<NavCardButton text={ __("Start Setup", 'wp-module-onboarding') } ></NavCardButton>
 				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>

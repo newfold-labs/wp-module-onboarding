@@ -2,8 +2,6 @@ import { __ } from '@wordpress/i18n';
 import { lazy } from '@wordpress/element';
 import { filter, orderBy } from 'lodash';
 import IndexPage from '../../pages/index';
-import {store as nfdOnboardingStore} from '../../store';
-import { translations } from '../../utils/translations';
 import {
 	home,
 	copy,
@@ -135,9 +133,9 @@ export const steps = [
 	{
 		path: '/wp-setup/step/get-started/experience',
 		title: __( 'WordPress Experience', 'wp-module-onboarding' ),
-		heading: __( 'WordPress Experience', 'wp-module-onboarding' ),
+		heading: __( 'Help us tailor this setup to your %s', 'wp-module-onboarding' ),
 		subheading: __(
-			'Make your website dreams a reality!',
+			'What is your experience with WordPress?',
 			'wp-module-onboarding'
 		),
 		description: __(
