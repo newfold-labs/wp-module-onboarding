@@ -73,7 +73,6 @@ class PagesController
 
             default:
                 return new \WP_Error('no_page_data', 'No Page Data Provided', array('status' => 400));
-                break;
         }
 
         // Create page object

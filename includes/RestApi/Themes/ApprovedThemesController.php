@@ -92,7 +92,7 @@ class ApprovedThemesController extends \WP_REST_Controller {
 	/**
 	 * Retrieves the themes offered by the Onboarding Module.
 	 *
-	 * @return \WP_REST_Response|\WP_Error
+	 * @return array|\WP_Error
 	 */
 	public function get_approved_themes() {
 		$approved_theme_slugs = $this->get_approved_theme_slugs();

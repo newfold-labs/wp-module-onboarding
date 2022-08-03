@@ -24,7 +24,7 @@ abstract class BaseHiiveController extends \WP_REST_Controller {
 	 * @param string $endpoint
 	 * @param array  $args
 	 *
-	 * @return WP_Error|string containing the Hiive response.
+	 * @return \WP_Error|string containing the Hiive response.
 	 */
 	protected function get( $endpoint, $args = array() ) {
 		$request = $this->url . $endpoint . '?' . http_build_query( $args );

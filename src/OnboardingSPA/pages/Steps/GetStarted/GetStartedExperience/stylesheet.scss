@@ -32,6 +32,13 @@
     }
 }
 
+.nfd-exp-continue-button{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .nfd-step-card-heading {
     font-weight: 700;
 }
@@ -47,5 +54,5 @@
 }
 
 .components-radio-control__input input {
-    display: none;
+    display: none !important;
 }

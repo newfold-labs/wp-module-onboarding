@@ -1,7 +1,7 @@
 import { resolve } from './resolve.js';
-import apiFetch from '@wordpress/api-fetch';
+import { defaultAPI } from './commonAPI';
 
-const baseAPI = `${window.location.protocol}//${window.location.host}/index.php`;
+import apiFetch from '@wordpress/api-fetch';
 
 function readFileDataAsBase64(file) {
     return new Promise((resolve, reject) => {
@@ -26,7 +26,7 @@ export async function uploadImage(file) {
     headers['Content-Disposition'] = "attachment; filename=" + file.name;
 
     return await resolve(apiFetch({
-        url: `${baseAPI}?rest_route=/wp/v2/media`,
+        url: `${defaultAPI}?rest_route=/wp/v2/media`,
         method: 'POST',
         headers,
         body: data
