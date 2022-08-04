@@ -6,7 +6,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
  */
 final class Flows {
 
-     protected static $data = array(
+	protected static $data = array(
 		// Each time step is viewed, insert GMT timestamp to array.
 		'isViewed'             => array(),
 
@@ -74,7 +74,7 @@ final class Flows {
 
 			'typography'      => array(
 				'fontFamilies' => array(),
-				'fontSizes'  => array(),
+				'fontSizes'    => array(),
 			),
 
 			// This string will identify the Header Pattern
@@ -105,11 +105,11 @@ final class Flows {
 
 	);
 
-     /**
-	 * Get Onboarding Flow information.
-	 *
-	 * @return array
-	 */
+	 /**
+	  * Get Onboarding Flow information.
+	  *
+	  * @return array
+	  */
 	public static function get_data() {
 		return self::$data;
 	}
@@ -134,5 +134,19 @@ final class Flows {
 			'wp-setup'  => true,
 			'ecommerce' => true,
 		);
+	}
+
+	/**
+	 * @param string $plan_subtype
+	 *
+	 * Get the corresponding flow given a hosting plan_subtype.
+	 *
+	 * @return string
+	 */
+	public static function get_flow_from_plan_subtype( $plan_subtype ) {
+		if ( preg_match( '/^[wc_standard|wc_premium]/i', $plan_subtype ) ) {
+			 return isset( self::get_flows()['ecommerce'] ) ? 'ecommerce' : self::get_default_flow();
+		}
+		 return self::get_default_flow();
 	}
 }
