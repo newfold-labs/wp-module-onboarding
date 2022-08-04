@@ -49,7 +49,10 @@ const Next = ({ path }) => {
  * @returns
  */
 const Finish = () => (
-	<Button className="navigation-buttons navigation-buttons_finish" variant="primary" disabled={true}>
+	<Button 
+		href="index.php"
+		className="navigation-buttons navigation-buttons_finish" 
+		variant="primary">
 		{__('Finish', 'wp-module-onboarding')}
 		<Icon icon={chevronRight} />
 	</Button>
