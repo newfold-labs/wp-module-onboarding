@@ -107,6 +107,7 @@ const StepNavigation = () => {
 	);
 	const isFirstStep = null === previousStep || false === previousStep;
 	const isLastStep = null === nextStep || false === nextStep;
+	const exitToWordpressLink = exitToWordpressForEcommerce() ? 'index.php?page=bluehost' : 'index.php';
 	return (
 		<div className="nfd-onboarding-header__step-navigation">
 			<ButtonGroup style={{ display: 'flex', columnGap: '0.5rem' }}>
@@ -117,4 +118,13 @@ const StepNavigation = () => {
 	);
 };
 
+/*
+ * check if this is the last step 
+ */
+const exitToWordpressForEcommerce = () => {
+	if( window.nfdOnboarding.currentFlow == 'ecommerce' ) {
+		return true;
+	}
+	return false;
+}
 export default StepNavigation;
