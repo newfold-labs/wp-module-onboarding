@@ -29,6 +29,13 @@ body {
 	--business-icon: url("../static/icons/business.svg");
 	--business-white-icon: url("../static/icons/business-white.svg");
 
+	/*
+  * Below Icons are commented because they get added to the CSS bundle and 
+  * CSS bundle created exceeded the permissible size.
+  * Need to find a solution how do we deal with below icons or do we split page wise CSS bundles
+  * Or can using these icon paths in background-image in pages's CSS help?
+  */
+
 	// --dog-icon: url("../static/icons/dog.svg");
 	// --dog-white-icon: url("../static/icons/dog-white.svg");
 
