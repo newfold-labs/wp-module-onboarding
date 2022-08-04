@@ -2,12 +2,14 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\Data\Config;
+use NewfoldLabs\WP\Module\Onboarding\WP_Config;
 
 /**
  * Class SettingsController
  */
-class SettingsController {
+class SettingsController extends \WP_REST_Controller {
 
 	/**
 	 * The namespace of this controller's route.
@@ -67,6 +69,18 @@ class SettingsController {
 				),
 			)
 		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/initialize',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'initialize' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
 	}
 
 	/**
@@ -106,7 +120,7 @@ class SettingsController {
 					// sanitize fields
 					$param[ $param_key ] = \sanitize_text_field( $param_value );
 
-					if ( !empty($param_value) && ! \wp_http_validate_url( $param_value ) ) {
+					if ( ! empty( $param_value ) && ! \wp_http_validate_url( $param_value ) ) {
 						return new \WP_Error(
 							'param_not_proper_url',
 							"The provided param '{$param_value}' is NOT a proper URL",
@@ -118,7 +132,7 @@ class SettingsController {
 						// sanitize fields
 						$param[ $param_url ] = \sanitize_text_field( $param_url );
 
-						if ( !empty($param_url) && ! \wp_http_validate_url( $param_url ) ) {
+						if ( ! empty( $param_url ) && ! \wp_http_validate_url( $param_url ) ) {
 							return new \WP_Error(
 								'param_not_proper_url',
 								"The provided param '{$param_url}' is NOT a proper URLL",
@@ -141,18 +155,62 @@ class SettingsController {
 	 */
 	public function get_current_settings() {
 
-        // incase yoast plugin is not installed then we need to save the values in the yoast_wp_options_key
-        if( ( $social_data = \get_option( $this->yoast_wp_options_key ) ) === FALSE ){
+		// incase yoast plugin is not installed then we need to save the values in the yoast_wp_options_key
+		if ( ( $social_data = \get_option( $this->yoast_wp_options_key ) ) === false ) {
 
-            // initialize an array with empty values
-            $social_data = array_fill_keys( $this->social_urls_to_validate , "");
-            $social_data['other_social_urls'] = array(); // only this key has to be an array
+			// initialize an array with empty values
+			$social_data                      = array_fill_keys( $this->social_urls_to_validate, '' );
+			$social_data['other_social_urls'] = array(); // only this key has to be an array
 
-            //update database
-            \add_option( $this->yoast_wp_options_key, $social_data );
-        }
+			// update database
+			\add_option( $this->yoast_wp_options_key, $social_data );
+		}
 
-        return $social_data;
+		return $social_data;
 
-    }
+	}
+
+	/**
+	 * Initialize WordPress Options, Permalinks and Configuration.
+	 *
+	 * @return \WP_REST_Response
+	 */
+	public function initialize() {
+
+          if ( \get_option( Options::get_option_name( 'settings_initialized' ), false ) ) {
+               return new \WP_REST_Response(
+                    array(),
+                    200
+               );
+          }
+
+		  // Update wp_options
+		$init_options = Options::get_initialization_options();
+		foreach ( $init_options as $option_key => $option_value ) {
+			 \update_option( Options::get_option_name( $option_key, false ), $option_value );
+		}
+		  // Can't be part of initialization constants as they are static.
+		\update_option( Options::get_option_name( 'install_date', false ), gmdate( 'M d, Y' ) );
+
+		  // Flush permalinks
+		flush_rewrite_rules();
+
+		  // Add constants to the WordPress configuration (wp-config.php)
+		  $wp_config_constants = Config::get_wp_config_initialization_constants();
+		$wp_config             = new WP_Config();
+		foreach ( $wp_config_constants as $constant_key => $constant_value ) {
+			if ( $wp_config->constant_exists( $constant_key ) ) {
+				$wp_config->update_constant( $constant_key, $constant_value );
+				continue;
+			}
+			$wp_config->add_constant( $constant_key, $constant_value );
+		}
+
+          \update_option( Options::get_option_name( 'settings_initialized' ), true );
+
+		return new \WP_REST_Response(
+			array(),
+			201
+		);
+	}
 }

@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n'; 
 import { useRef, useEffect, useState } from '@wordpress/element';
 
 /**
@@ -29,12 +30,15 @@ const TextInput = ({ title, hint, placeholder, height, maxCharacters, textValue,
         <div className='nfd-input'>
             <label>
                 <div className='nfd-input__label'>
-                    <p className='nfd-input__label_title'>{title}</p>
+                    <p className='nfd-input__label_title'>{__(
+                        title,
+                        'wp-module-onboarding'
+                    )}</p>
                     <p className='nfd-input__label_maxChar'>{`(${maxCharacters - textValue?.length} characters left)`}</p>
                 </div>
                 <textarea
                     type="text"
-                    class={inputText}
+                    className={inputText}
                     ref={textareaRef}
                     style={{height: height}}
                     placeholder={placeholder}
@@ -42,7 +46,10 @@ const TextInput = ({ title, hint, placeholder, height, maxCharacters, textValue,
                     maxLength={maxCharacters}
                     onChange={(e) => onTextChange(e)}
                 />
-                <p className='nfd-input__hint'>{hint}</p>
+                <p className='nfd-input__hint'>{__(
+                    hint,
+                    'wp-module-onboarding'
+                )}</p>
             </label>
         </div>
     );

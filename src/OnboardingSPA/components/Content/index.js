@@ -8,19 +8,28 @@ import { routes as appRoutes } from '../../data/routes/index';
  *
  * @returns WPComponent
  */
+
+function getMappedPages() {
+	var routes = [];
+	appRoutes.map((appRoute) => 
+		routes.push(
+			<Route
+				key={appRoute.path}
+				path={appRoute.path}
+				end
+				element={<appRoute.Component />}
+			/>
+		)
+	)
+	return routes;
+}
+
 const Content = () => {
 	return (
 		<main className="nfd-onboard-content">
 			<Suspense fallback={<Fragment />}>
 				<Routes>
-					{appRoutes.map((appRoute) => (
-						<Route
-							key={appRoute.path}
-							path={appRoute.path}
-							end
-							element={<appRoute.Component />}
-						/>
-					))}
+					{getMappedPages()}
 				</Routes>
 			</Suspense>
 		</main>

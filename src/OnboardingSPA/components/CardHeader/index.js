@@ -9,12 +9,13 @@
 import React from 'react';
 
 const CardHeader = ({ heading, subHeading, question }) => {
+
 	return (
 		<div>
 			{heading && <h2 className="nfd-step-card-heading">{heading}</h2>}
 
 			{subHeading && (
-				<h3 className="nfd-step-card-subheading">{subHeading}</h3>
+				<h3 className={ question ? "nfd-step-card-subheading-other" : "nfd-step-card-subheading" }>{subHeading}</h3>
 			)}
 
 			{question && <h3 className="nfd-step-card-question">{question}</h3>}

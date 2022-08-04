@@ -42,7 +42,7 @@ const StepOverview = () => {
 				</div>
 			</div>
 			<br />
-			<Accordion summary={__('Learn More')}>
+			<Accordion summary={__('Learn More', 'wp-module-onboarding')}>
 				<p>{currentStep.description}</p>
 			</Accordion>
 		</div>
