@@ -34,7 +34,7 @@ export const ecommerceSteps = [
 		),
 		Component: StepAddress,
 		Icon: store,
-		priority: 41,
+		priority: 85,
 		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
 	},
 	{
@@ -51,7 +51,7 @@ export const ecommerceSteps = [
 		),
 		Component: StepTax,
 		Icon: institution,
-		priority: 46,
+		priority: 90,
 		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
 	},
 	{
@@ -68,7 +68,7 @@ export const ecommerceSteps = [
 		),
 		Component: StepProducts,
 		Icon: box,
-		priority: 51,
+		priority: 95,
 		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
 	},
 ];
