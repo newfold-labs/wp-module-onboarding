@@ -6,7 +6,7 @@ import { Icon, chevronLeft, chevronRight } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
-import { adminPage } from '../../utils/api/commonAPI';
+import { adminPage, bluehostDashboardPage } from '../../utils/api/commonAPI';
 import { getSettings, setSettings } from '../../utils/api/settings';
 
 /**
@@ -71,8 +71,10 @@ async function saveData(path, currentData) {
 		}
 		setFlow(currentData);
 	}
-	//Redirect to Admin Page
-	window.location.replace(adminPage);
+	//Redirect to Admin Page for normal customers 
+	// and Bluehost Dashboard for ecommerce customers
+	const exitLink = exitToWordpressForEcommerce() ? bluehostDashboardPage : adminPage;
+	window.location.replace(exitLink);
 }
 
 /**
@@ -107,7 +109,6 @@ const StepNavigation = () => {
 	);
 	const isFirstStep = null === previousStep || false === previousStep;
 	const isLastStep = null === nextStep || false === nextStep;
-	const exitToWordpressLink = exitToWordpressForEcommerce() ? 'index.php?page=bluehost' : 'index.php';
 	return (
 		<div className="nfd-onboarding-header__step-navigation">
 			<ButtonGroup style={{ display: 'flex', columnGap: '0.5rem' }}>
