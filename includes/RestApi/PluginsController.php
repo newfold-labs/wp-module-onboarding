@@ -3,6 +3,10 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\Services\PluginInstaller;
+use NewfoldLabs\WP\Module\Onboarding\Tasks\PluginInstallTask;
+use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
 
 /**
  * Class PluginsController
@@ -33,6 +37,18 @@ class PluginsController {
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_approved_plugins' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/initialize',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'initialize' ),
+					'permission_callback' => array( $this, 'check_install_permissions' ),
 				),
 			)
 		);
@@ -71,9 +87,21 @@ class PluginsController {
 	 */
 	public function get_install_plugin_args() {
 		return array(
-			'plugin' => array(
+			'plugin'   => array(
 				'type'     => 'string',
 				'required' => true,
+			),
+			'activate' => array(
+				'type'    => 'boolean',
+				'default' => false,
+			),
+			'queue'    => array(
+				'type'    => 'boolean',
+				'default' => true,
+			),
+			'priority' => array(
+				'type'    => 'integer',
+				'default' => 0,
 			),
 		);
 	}
@@ -92,6 +120,47 @@ class PluginsController {
 	}
 
 	/**
+	 * Queue in the initial list of plugins to be installed.
+	 *
+	 * @return \WP_REST_Response
+	 */
+	public function initialize() {
+
+		// Checks if the init_list of plugins have already been queued.
+		if ( \get_option( Options::get_option_name( 'plugins_init_status' ), 'init' ) !== 'init' ) {
+			return new \WP_REST_Response(
+				array(),
+				202
+			);
+		}
+
+		// Set option to installing to prevent re-queueing the init_list again on page load.
+		 \update_option( Options::get_option_name( 'plugins_init_status' ), 'installing' );
+
+		// Get the initial list of plugins to be installed based on the plan.
+		$init_plugins = Plugins::get_init();
+
+		foreach ( $init_plugins as $init_plugin ) {
+			// Checks if a plugin with the given slug and activation criteria already exists.
+			if ( ! PluginInstaller::exists( $init_plugin['slug'], $init_plugin['activate'] ) ) {
+					// Add a new PluginInstallTask to the Plugin install queue.
+					PluginInstallTaskManager::add_to_queue(
+						new PluginInstallTask(
+							$init_plugin['slug'],
+							$init_plugin['activate'],
+							$init_plugin['priority']
+						)
+					);
+			}
+		}
+
+		return new \WP_REST_Response(
+			array(),
+			202
+		);
+	}
+
+	/**
 	 * Install the requested plugin via a zip url (or) slug.
 	 *
 	 * @param \WP_REST_Request $request
@@ -99,151 +168,39 @@ class PluginsController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function install( \WP_REST_Request $request ) {
-		$plugin       = $request->get_param( 'plugin' );
-		$plugins_list = Plugins::get();
+		$plugin   = $request->get_param( 'plugin' );
+		$activate = $request->get_param( 'activate' );
+		$queue    = $request->get_param( 'queue' );
+		$priority = $request->get_param( 'priority' );
 
-		// Check if the plugin param contains a zip url.
-		if ( \wp_http_validate_url( $plugin ) ) {
-			$domain = \wp_parse_url( $plugin, PHP_URL_HOST );
-			// If the zip URL/domain is not approved.
-			if ( ! isset( $plugins_list['urls'][ $plugin ] )
-				&& ! isset( $plugins_list['domains'][ $domain ] ) ) {
-					return new \WP_Error(
-						'plugin-error',
-						"You do not have permission to install from {$plugin}.",
-						array( 'status' => 400 )
-					);
-			}
+		// Checks if a plugin with the given slug and activation criteria already exists.
+		if ( PluginInstaller::exists( $plugin, $activate ) ) {
+			return new \WP_REST_Response(
+				array(),
+				200
+			);
+		}
 
-			$status = $this->install_from_zip( $plugin );
-			if ( \is_wp_error( $status ) ) {
-				return $status;
-			}
+		// Queue the plugin install if specified in the request.
+		if ( $queue ) {
+			// Add a new PluginInstallTask to the Plugin install queue.
+			PluginInstallTaskManager::add_to_queue(
+				new PluginInstallTask(
+					$plugin,
+					$activate,
+					$priority
+				)
+			);
 
 			return new \WP_REST_Response(
 				array(),
-				201
+				202
 			);
 		}
 
-		// If it is not a zip URL then check if it is an approved slug.
-		$plugin = \sanitize_text_field( $plugin );
-		if ( ! isset( $plugins_list['wp_slugs'][ $plugin ] ) ) {
-			return new \WP_Error(
-				'plugin-error',
-				"You do not have permission to install {$plugin}.",
-				array( 'status' => 400 )
-			);
-		}
+		// Execute the task if it need not be queued.
+		$plugin_install_task = new PluginInstallTask( $plugin, $activate );
 
-		$status = $this->install_from_wordpress( $plugin );
-		if ( \is_wp_error( $status ) ) {
-			return $status;
-		}
-
-		return new \WP_REST_Response(
-			array(),
-			201
-		);
-	}
-
-	/**
-	 * @param string $slug Representing the wordpress.org slug.
-	 *
-	 * @return \WP_REST_Response|\WP_Error
-	 */
-	protected function install_from_wordpress( $slug ) {
-		$request = new \WP_REST_Request(
-			'POST',
-			'/wp/v2/plugins'
-		);
-		$request->set_body_params(
-			array(
-				'slug'   => $slug,
-				'status' => 'active',
-			)
-		);
-
-		$response = \rest_do_request( $request );
-		if ( $response->is_error() ) {
-			return $response->as_error();
-		}
-
-		return new \WP_REST_Response(
-			null,
-			200
-		);
-	}
-
-	/**
-	 * @param string $url URL to the zip for the plugin.
-	 *
-	 * @return \WP_REST_Response|\WP_Error
-	 */
-	protected function install_from_zip( $url ) {
-		require_once ABSPATH . 'wp-admin/includes/file.php';
-		require_once ABSPATH . 'wp-admin/includes/misc.php';
-		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-
-		\wp_cache_flush();
-		$skin     = new \WP_Ajax_Upgrader_Skin();
-		$upgrader = new \Plugin_Upgrader( $skin );
-
-		$result = $upgrader->install( $url );
-		if ( \is_wp_error( $result ) ) {
-			$result->add_data( array( 'status' => 500 ) );
-
-			return $result;
-		}
-		if ( \is_wp_error( $skin->result ) ) {
-			$skin->result->add_data( array( 'status' => 500 ) );
-
-			return $skin->result;
-		}
-		if ( $skin->get_errors()->has_errors() ) {
-			$error = $skin->get_errors();
-			$error->add_data( array( 'status' => 500 ) );
-
-			return $error;
-		}
-		if ( is_null( $result ) ) {
-			// Pass through the error from WP_Filesystem if one was raised.
-			if ( $wp_filesystem instanceof \WP_Filesystem_Base
-				&& \is_wp_error( $wp_filesystem->errors ) && $wp_filesystem->errors->has_errors()
-			) {
-				return new \WP_Error(
-					'unable_to_connect_to_filesystem',
-					$wp_filesystem->errors->get_error_message(),
-					array( 'status' => 500 )
-				);
-			}
-
-			return new \WP_Error(
-				'unable_to_connect_to_filesystem',
-				'Unable to connect to the filesystem.',
-				array( 'status' => 500 )
-			);
-		}
-
-		$plugin_file = $upgrader->plugin_info();
-		if ( ! $plugin_file ) {
-			return new \WP_Error(
-				'unable_to_determine_installed_plugin',
-				'Unable to determine what plugin was installed.',
-				array( 'status' => 500 )
-			);
-		}
-
-		$status = \activate_plugin( $plugin_file );
-		if ( \is_wp_error( $status ) ) {
-			$status->add_data( array( 'status' => 500 ) );
-
-			return $status;
-		}
-
-		return new \WP_REST_Response(
-			null,
-			200
-		);
+		return $plugin_install_task->execute();
 	}
 }

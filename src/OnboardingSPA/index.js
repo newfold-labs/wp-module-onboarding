@@ -1,6 +1,8 @@
 import './styles/app.scss';
 import { store as nfdOnboardingStore } from './store'; /* must import prior to App! */
 import { getFlow } from './utils/api/flow';
+import { init as initializePlugins } from './utils/api/plugins';
+import { trigger as cronTrigger } from './utils/api/cronTrigger';
 import { initialize as initializeSettings } from './utils/api/settings';
 
 import App from './components/App';
@@ -26,6 +28,9 @@ const NFDOnboarding = () => (
  * @param {Object} runtime - Expects runtime data from window.nfdOnboarding.
  */
 export async function initializeNFDOnboarding( id, runtime ) {
+	initializePlugins();
+	setInterval( cronTrigger, 45000 );
+
 	const DOM_TARGET = document.getElementById( id );
 	dispatch( nfdOnboardingStore ).setRuntime( runtime );
 	const currentData = await getFlow();

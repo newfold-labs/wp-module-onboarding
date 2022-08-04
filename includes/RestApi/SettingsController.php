@@ -9,7 +9,7 @@ use NewfoldLabs\WP\Module\Onboarding\WP_Config;
 /**
  * Class SettingsController
  */
-class SettingsController extends \WP_REST_Controller {
+class SettingsController {
 
 	/**
 	 * The namespace of this controller's route.
