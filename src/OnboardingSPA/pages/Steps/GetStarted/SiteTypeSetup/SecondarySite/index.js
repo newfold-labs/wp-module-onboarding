@@ -34,7 +34,7 @@ const StepPrimarySetup = () => {
     };
   }, []);
 
-
+  const selectedCategoryInStore = currentData?.data?.siteType?.secondary;
   const categoriesArray = content.categories;
 
   /** Function which saves data in redux when category name is put-in via input box */
@@ -57,7 +57,7 @@ const StepPrimarySetup = () => {
   
   return (
     <CommonLayout isBgPrimary isCentered>
-      <NewfoldLargeCard>
+      <NewfoldLargeCard className={'site-type-card'}>
           <div className="nfd-card-heading center">
             <CardHeader 
               heading={__(content.cardHeading, 'wp-module-onboarding')} 
@@ -79,7 +79,7 @@ const StepPrimarySetup = () => {
               categoriesArray[0]?.subCategories?.map((item,idx) => {
                 return <span 
                           onClick={(e) => handleCategoryClick(idx)} 
-                          className={`${(clickedIndex === idx) ? 'chosenSecondaryCategory ' : ''}nfd-card-category`}>
+                          className={`${(clickedIndex === idx || item === selectedCategoryInStore ) ? 'chosenSecondaryCategory ' : ''}nfd-card-category`}>
                             {item}
                         </span> 
               })
