@@ -6,12 +6,10 @@ import NeedHelpTag from '../../../../components/NeedHelpTag';
 import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
 import content from './content.json';
-import { translations } from '../../../../utils/locales/translations';
-
 import { RadioControl } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Get Started: WordPress Experience Comfort Level.
@@ -69,7 +67,7 @@ const GetStartedExperience = () => {
 				<div className="nfd-onboarding-experience-step">
 					<div className="nfd-card-heading center">
 						<CardHeader
-							heading={ sprintf( currentStep.heading, translations('site') ) }
+							heading={ currentStep.heading }
 							subHeading={ __(content.aboutYouTag, 'wp-module-onboarding') }
 							question={ currentStep.subheading }
 						/>

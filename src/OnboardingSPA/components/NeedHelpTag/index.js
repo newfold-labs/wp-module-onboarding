@@ -11,15 +11,15 @@ import { __ } from '@wordpress/i18n';
  */
 
 const NeedHelpTag = ( {
-	question = 'Need Help?',
-	urlLabel = 'Hire our Experts',
+	question = __('Need Help?', 'wp-module-onboarding'),
+	urlLabel = __('Hire our Experts', 'wp-module-onboarding'),
 } ) => {
 	const hireExpertsUrl = select( nfdOnboardingStore ).getHireExpertsUrl();
 	return (
 		<div className="nfd-card-need-help-tag">
-			{ __( question ) }
+			{  question  }
 			<a href={ hireExpertsUrl } target={ '_blank' }>
-				{ __( urlLabel ) }
+				{  urlLabel  }
 			</a>
 		</div>
 	);

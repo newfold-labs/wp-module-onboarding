@@ -3,7 +3,7 @@
         {
             "name": "tab1",
             "title": "YOUR CONTENT",
-            "text": "Build a beautiful store with WordPress Blocks and pre-built Block Patterns for common web content layouts.",
+            "text": "Build a beautiful %s with WordPress Blocks and pre-built Block Patterns for common web content layouts.",
             "imgType": "content-img"
         },
         {
@@ -15,7 +15,7 @@
         {
             "name": "tab3",
             "title": "MODERN DESIGN",
-            "text": "Setup and refine your store’s design styles, header, footer and page layout templates in the WordPress Site Editor.",
+            "text": "Setup and refine your %s's design styles, header, footer and page layout templates in the WordPress Site Editor.",
             "imgType": "design-img"
         }
     ]

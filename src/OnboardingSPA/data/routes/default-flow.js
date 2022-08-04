@@ -1,7 +1,8 @@
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { lazy } from '@wordpress/element';
 import { filter, orderBy } from 'lodash';
 import IndexPage from '../../pages/index';
+import {translations} from '../../utils/locales/translations';
 import {
 	home,
 	copy,
@@ -110,10 +111,10 @@ export const pages = [
  * Priorities should increment by 20 to leave ample space in-between for injection.
  */
 export const steps = [
-	{
+	{   
 		path: '/wp-setup/step/get-started/welcome',
 		title: __('Welcome', 'wp-module-onboarding'),
-		heading: __('Make your %s dreams a reality!', 'wp-module-onboarding'),
+		heading: sprintf( __('Make your %s dreams a reality!', 'wp-module-onboarding'), translations('website')),
 		subheading: __(
 			'with WordPress and ',
 			'wp-module-onboarding'
@@ -130,10 +131,10 @@ export const steps = [
 			LearnMore: [ GetStartedLearnMoreHelp ],
 		},
 	},
-	{
+	{		
 		path: '/wp-setup/step/get-started/experience',
 		title: __( 'WordPress Experience', 'wp-module-onboarding' ),
-		heading: __( 'Help us tailor this setup to your %s', 'wp-module-onboarding' ),
+		heading: sprintf(__( 'Help us tailor this setup to your %s', 'wp-module-onboarding' ), translations('site')),
 		subheading: __(
 			'What is your experience with WordPress?',
 			'wp-module-onboarding'

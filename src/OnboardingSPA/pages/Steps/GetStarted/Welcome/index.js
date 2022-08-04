@@ -1,10 +1,10 @@
 import { Icon } from '@wordpress/icons';
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
-import { translations } from '../../../../utils/locales/translations';
+import {translations} from '../../../../utils/locales/translations';
 
 import CommonLayout from '../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
@@ -49,7 +49,7 @@ const StepWelcome = () => {
 			<NewfoldLargeCard>
 				<div className='welcome-card'>
 					<CardHeader
-						heading = { sprintf( currentStep.heading, translations('website') ) }
+						heading = { currentStep.heading }
 						subHeading={ currentStep.subheading + brandName + '.'} >
 					</CardHeader>
 					<TabPanelHover
@@ -60,7 +60,7 @@ const StepWelcome = () => {
 								title: __( tab.title , 'wp-module-onboarding'),
 								content: <Tab
 									title={ __(tab.title, 'wp-module-onboarding')}
-									text={ __(tab.text, 'wp-module-onboarding')}
+									text={ sprintf( __(tab.text, 'wp-module-onboarding'), translations('site'))}
 									imgType={tab.imgType}
 									className="tab-data" />
 							};
