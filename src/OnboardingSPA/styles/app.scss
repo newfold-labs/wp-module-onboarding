@@ -9,6 +9,7 @@
 @import "../components/Header/stylesheet";
 @import "../components/Content/stylesheet";
 @import "../components/Layouts/stylesheet";
+@import "../components/Loader/stylesheet";
 @import "../components/MiniPreview/stylesheet";
 @import "../components/Tooltip/stylesheet";
 @import "../components/ImageUploader/stylesheet";
@@ -33,6 +34,7 @@
 
 // CSS for Pages
 @import "../pages/Steps/BasicInfo/stylesheet.scss";
+@import "../pages/Steps/TopPriority/stylesheet.scss";
 @import "../pages/Steps/GetStarted/Welcome/stylesheet.scss";
 
 .nfd-onboarding-container {

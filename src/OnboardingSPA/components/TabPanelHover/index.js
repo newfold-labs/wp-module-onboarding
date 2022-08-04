@@ -38,6 +38,7 @@ export default function TabPanelHover({
     initialTabName,
     orientation = 'horizontal',
     activeClass = 'is-active',
+    notActiveClass = 'is-not-active',
     onSelect = noop,
 }) {
     const instanceId = useInstanceId(TabPanelHover, 'tab-panel');
@@ -73,13 +74,9 @@ export default function TabPanelHover({
             >
                 {tabs.map((tab) => (
                     <TabButton
-                        className={classnames(
-                            'components-tab-panel__tabs-item',
-                            tab.className,
-                            {
-                                [activeClass]: tab.name === selected,
-                            }
-                        )}
+                        className={
+                            `components-tab-panel__tabs-item ${tab.name === selected && activeClass} ${ tab.name !== selected && notActiveClass }`
+                        }
                         tabId={`${instanceId}-${tab.name}`}
                         aria-controls={`${instanceId}-${tab.name}-view`}
                         selected={tab.name === selected}
@@ -96,8 +93,7 @@ export default function TabPanelHover({
                     aria-labelledby={selectedId}
                     role="tabpanel"
                     id={`${selectedId}-view`}
-                    className="components-tab-panel__tab-content"
-                >
+                    className="components-tab-panel__tab-content">
                     {children(selectedTab)}
                 </div>
             )}

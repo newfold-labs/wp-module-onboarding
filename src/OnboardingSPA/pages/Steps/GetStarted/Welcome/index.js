@@ -49,8 +49,8 @@ const StepWelcome = () => {
 			<NewfoldLargeCard>
 				<div className='welcome-card'>
 					<CardHeader
-						heading = { currentStep.heading }
-						subHeading={ currentStep.subheading + brandName + '.'} >
+						heading = { currentStep?.heading }
+						subHeading={ currentStep?.subheading + brandName + '.'} >
 					</CardHeader>
 					<TabPanelHover
 						className="nfd-onboarding-overview__tab-panel"

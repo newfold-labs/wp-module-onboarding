@@ -2,17 +2,18 @@ import Header from '../Header';
 import Content from '../Content';
 import Drawer from '../Drawer';
 import Sidebar from '../Sidebar';
-import { store as nfdOnboardingStore } from '../../store';
-import { setFlow } from '../../utils/api/flow';
-import { kebabCase } from 'lodash';
-import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
+import { useLocation } from 'react-router-dom';
+import { setFlow } from '../../utils/api/flow';
+import { getSettings, setSettings } from '../../utils/api/settings';
+import { store as nfdOnboardingStore } from '../../store';
 
-import { useEffect, Fragment } from '@wordpress/element';
+import { kebabCase } from 'lodash';
 import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { FullscreenMode, InterfaceSkeleton } from '@wordpress/interface';
 import { SlotFillProvider } from '@wordpress/components';
+import { useEffect, Fragment, useState } from '@wordpress/element';
+import { FullscreenMode, InterfaceSkeleton } from '@wordpress/interface';
 
 /**
  * Primary app that renders the <InterfaceSkeleton />.
@@ -31,22 +32,62 @@ const App = () => {
 		newfoldBrand,
 		onboardingFlow,
 		currentData,
+		firstStep
 	} = useSelect((select) => {
 		return {
 			isDrawerOpen: select(nfdOnboardingStore).isDrawerOpened(),
 			newfoldBrand: select(nfdOnboardingStore).getNewfoldBrand(),
 			onboardingFlow: select(nfdOnboardingStore).getOnboardingFlow(),
 			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+			firstStep: select(nfdOnboardingStore).getFirstStep(),
 		};
 	}, []);
 
-	const { setActiveStep, setActiveFlow } = useDispatch(nfdOnboardingStore);
+	const [isRequestPlaced, setIsRequestPlaced] = useState(false);
+	const [didVisitBasicInfo, setDidVisitBasicInfo] = useState(false);
+	const { setActiveStep, setActiveFlow, setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
+
+	async function syncSocialSettings() {
+		const initialData = await getSettings();
+		const result = await setSettings(currentData?.data?.socialData);
+		setDidVisitBasicInfo(false);
+		if (result?.error != null) {
+			console.error('Unable to Save Social Data!');
+			return initialData?.body;
+		}
+		return result?.body;
+	}
 
 	async function syncStoreToDB() {
-		const result = await setFlow(currentData);
-		if (result.error != null) {
-			console.error('Unable to Save data!');
+		// The First Welcome Step doesn't have any Store changes
+		const isFirstStep = location?.pathname === firstStep?.path;
+		if (currentData && !isFirstStep){
+			if(!isRequestPlaced){
+				setIsRequestPlaced(true);
+
+				// If Social Data is changed then sync it
+				if (didVisitBasicInfo){
+					const socialData = await syncSocialSettings();
+					
+					// If Social Data is changed then Sync that also to the store
+					if (socialData && currentData?.data)
+						currentData.data.socialData = socialData;
+				} 
+
+				const result = await setFlow(currentData);
+				if (result?.error != null) {
+					setIsRequestPlaced(false);
+					console.error('Unable to Save data!');
+				} else {
+					setCurrentOnboardingData(result?.body);
+					setIsRequestPlaced(false);
+				}
+				
+			}
 		}
+		// Check if the Basic Info page was visited
+		if (location?.pathname.includes('basic-info'))
+			setDidVisitBasicInfo(true);
 	}
 
 	useEffect(() => {
@@ -54,11 +95,11 @@ const App = () => {
 	}, [newfoldBrand]);
 
 	useEffect( () => {
+		syncStoreToDB();
 		if ( location.pathname.includes( '/step' ) ) {
 			setActiveFlow( onboardingFlow );
 			setActiveStep( location.pathname );
 		}
-		syncStoreToDB();
 	}, [ location.pathname, onboardingFlow ] );
 
 	return (

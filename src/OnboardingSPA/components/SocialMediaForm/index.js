@@ -1,6 +1,8 @@
-import Tooltip from './../Tooltip'
 import _ from 'lodash';
+import { __ } from '@wordpress/i18n'; 
 import { useState, useEffect } from '@wordpress/element';
+
+import Tooltip from './../Tooltip'
 
 const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
     const [isActive, setIsActive] = useState(false);
@@ -22,6 +24,16 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
         LINKEDIN: 'linkedin',
         YELP: 'yelp',
         TIKTOK: 'tiktok',
+    }
+
+    const SocialMediaStates = {
+        FACEBOOK: facebook,
+        TWITTER: twitter,
+        INSTAGRAM: instagram,
+        YOUTUBE: youtube,
+        LINKEDIN: linkedin,
+        YELP: yelp,
+        TIKTOK: tiktok,
     }
 
     var socialMediaDB = {
@@ -102,9 +114,10 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
         setIsActive(!isActive);
     }
 
-    const handleChange = (e, social) => {
+    const handleChange = (e) => {
         const value = e.target.value;
-        switch(social){
+        const triggerID = e.target.id;
+        switch (triggerID){
             case SocialMediaSites.FACEBOOK:
                 checkValidUrlDebounce(SocialMediaSites.FACEBOOK, value);
                 setFacebook(value);
@@ -144,62 +157,46 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
         setSocialData(socialMediaDB);
     }
 
+    function toTitleCase(str) {
+        return str.replace(
+            /\w\S*/g,
+            function (txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            }
+        );
+    }
+
+    function buildSocialBoxes() {
+        var socialBoxes = [];
+        for (var social in SocialMediaSites){
+            socialBoxes.push(
+                <div key={SocialMediaSites[social]}>
+                    <label className='social-form__label' >
+                        <div className="social-form__label_icon" style={{ backgroundImage: `var(--${SocialMediaSites[social]}-icon)` }} />
+                        <div className="social-form__label_name">{__(toTitleCase(SocialMediaSites[social]), 'wp-module-onboarding')}</div>
+                    </label>
+                    <Tooltip content={activeError.includes(SocialMediaSites[social]) ? `Please enter a valid ${SocialMediaSites[social]} URL` : 'hide'} direction="top">
+                        <input className={`${activeError.includes(SocialMediaSites[social]) ? "social-form__box-error" : "social-form__box"}`} type="url" id={`${SocialMediaSites[social]}`} value={SocialMediaStates[social]} onChange={(value) => { handleChange(value) }} />
+                    </Tooltip>
+                </div>
+            );
+        }
+        return socialBoxes;
+    }
+
     return (
         <div className="social-form">
             <div className="social-form__top-row" onClick={(e) => { handleAccordion(e)}}>
-                <div className="social-form__top-row_heading">Social Media</div>
+                <div className="social-form__top-row_heading">
+                    {__(
+                        "Social Media",
+                        'wp-module-onboarding'
+                    )}
+                </div>
                 <div className={`social-form__top-row_icon ${isActive ? 'social-form__top-row_icon_opened' : ''}`}></div>
             </div>
-            <form style={{ display: isActive ? '' : 'none'}} onSubmit={(e) => { handleSubmit(e) }}>
-                <label className='social-form__label' >
-                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--facebook-icon)' }}/>
-                    <div className="social-form__label_name">Facebook</div>
-                </label>
-                <Tooltip content={activeError.includes(SocialMediaSites.FACEBOOK) ? `Please enter a valid ${SocialMediaSites.FACEBOOK} URL` : 'hide'} direction="top">
-                    <input className={`${ activeError.includes(SocialMediaSites.FACEBOOK) ? "social-form__box-error": "social-form__box"}`} type="url" placeholder="https://www.facebook.com/aurelia" value={facebook} onChange={(value) => { handleChange(value, SocialMediaSites.FACEBOOK) }} />
-                </Tooltip>
-                <label className='social-form__label' >
-                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--twitter-icon)' }}/>
-                    <div className="social-form__label_name">Twitter</div>
-                </label>
-                <Tooltip content={activeError.includes(SocialMediaSites.TWITTER) ? `Please enter a valid ${SocialMediaSites.TWITTER} URL` : 'hide'} direction="top">
-                <input className={`${activeError.includes(SocialMediaSites.TWITTER) ? "social-form__box-error": "social-form__box"}`} type="url" value={twitter} onChange={(e) => { handleChange(e, SocialMediaSites.TWITTER) }} />
-                </Tooltip>
-                <label className='social-form__label' >
-                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--instagram-icon)' }}/>
-                    <div className="social-form__label_name">Instagram</div>
-                </label>
-                <Tooltip content={activeError.includes(SocialMediaSites.INSTAGRAM) ? `Please enter a valid ${SocialMediaSites.INSTAGRAM} URL` : 'hide'} direction="top">
-                    <input className={`${activeError.includes(SocialMediaSites.INSTAGRAM) ? "social-form__box-error" : "social-form__box"}`} type="url" value={instagram} onChange={(e) => { handleChange(e, SocialMediaSites.INSTAGRAM) }} />
-                </Tooltip>
-                <label className='social-form__label' >
-                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--youtube-icon)' }}/>
-                    <div className="social-form__label_name">YouTube</div>
-                </label>
-                <Tooltip content={activeError.includes(SocialMediaSites.YOUTUBE) ? `Please enter a valid ${SocialMediaSites.YOUTUBE} URL` : 'hide'} direction="top">
-                <input className={`${activeError.includes(SocialMediaSites.YOUTUBE) ? "social-form__box-error": "social-form__box"}`} type="url" value={youtube} onChange={(e) => { handleChange(e, SocialMediaSites.YOUTUBE) }} />
-                </Tooltip>
-                <label className='social-form__label' >
-                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--linkedin-icon)' }}/>
-                    <div className="social-form__label_name">LinkedIn</div>
-                </label>
-                <Tooltip content={activeError.includes(SocialMediaSites.LINKEDIN) ? `Please enter a valid ${SocialMediaSites.LINKEDIN} URL` : 'hide'} direction="top">
-                <input className={`${activeError.includes(SocialMediaSites.LINKEDIN) ? "social-form__box-error": "social-form__box"}`} type="url" value={linkedin} onChange={(e) => { handleChange(e, SocialMediaSites.LINKEDIN) }} />
-                </Tooltip>
-                <label className='social-form__label' >
-                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--yelp-icon)' }}/>
-                    <div className="social-form__label_name">Yelp</div>
-                </label>
-                <Tooltip content={activeError.includes(SocialMediaSites.YELP) ? `Please enter a valid ${SocialMediaSites.YELP} URL` : 'hide'} direction="top">
-                <input className={`${activeError.includes(SocialMediaSites.YELP) ? "social-form__box-error": "social-form__box"}`} type="url" value={yelp} onChange={(e) => { handleChange(e, SocialMediaSites.YELP) }} />
-                </Tooltip>
-                <label className='social-form__label' >
-                    <div className="social-form__label_icon" style={{ backgroundImage: 'var(--tiktok-icon)' }}/>
-                    <div className="social-form__label_name">TikTok</div>
-                </label>
-                <Tooltip content={activeError.includes(SocialMediaSites.TIKTOK) ? `Please enter a valid ${SocialMediaSites.TIKTOK} URL` : 'hide'} direction="top">
-                <input className={`${activeError.includes(SocialMediaSites.TIKTOK) ? "social-form__box-error": "social-form__box"}`} type="url" value={tiktok} onChange={(e) => { handleChange(e, SocialMediaSites.TIKTOK) }} />
-            </Tooltip>
+            <form className={isActive ? 'social-form__main-active' : 'social-form__main-hidden'} onSubmit={(e) => { handleSubmit(e) }}>
+                {buildSocialBoxes()}
             </form>
         </div>
     );

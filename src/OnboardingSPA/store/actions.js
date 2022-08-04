@@ -82,6 +82,9 @@ export function setActiveFlow( flow ) {
  * @return
  */
 export function setActiveStep( path ) {
+	// Remove Trailing Spaces from URL
+	path = path.replace(/\/$/, "");
+
 	return {
 		type: 'SET_ACTIVE_STEP',
 		path,
