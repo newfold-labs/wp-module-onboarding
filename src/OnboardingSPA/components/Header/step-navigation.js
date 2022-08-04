@@ -6,6 +6,7 @@ import { Icon, chevronLeft, chevronRight } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
+import { adminPage } from '../../utils/api/commonAPI';
 import { getSettings, setSettings } from '../../utils/api/settings';
 
 /**
@@ -70,6 +71,8 @@ async function saveData(path, currentData) {
 		}
 		setFlow(currentData);
 	}
+	//Redirect to Admin Page
+	window.location.replace(adminPage);
 }
 
 /**
@@ -78,7 +81,6 @@ async function saveData(path, currentData) {
  */
 const Finish = ({ path, currentData, saveData }) => (
 	<Button
-		// href="index.php"
 		onClick={(e) => saveData(path, currentData)}
 		className="navigation-buttons navigation-buttons_finish"
 		variant="primary">
