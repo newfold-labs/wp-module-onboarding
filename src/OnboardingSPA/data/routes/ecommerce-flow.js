@@ -7,6 +7,7 @@ import {
 	routes as defaultInitialRoutes,
 	steps as defaultInitialSteps,
 	initialTopSteps as defaultInitialTopSteps,
+	initialGetStartedSteps as defaultInitialGetStartedSteps
 } from './default-flow';
 
 const StepAddress = lazy( () =>
@@ -119,3 +120,11 @@ export const initialTopSteps = () => {
 		[ 'asc' ]
 	);
 };
+
+export const ecommerceGetStartedSteps = () => {
+	return filter(
+		defaultInitialGetStartedSteps(),
+		( step ) => ! step.path.includes( '/step/get-started/site-primary' )
+	);
+
+}
