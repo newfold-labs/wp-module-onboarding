@@ -44,6 +44,9 @@ const PageWhatToExpect = lazy( () => import( '../../pages/WhatToExpect' ) );
 const StepIndex = lazy( () => import( '../../pages/Steps/index' ) );
 const StepGetStarted = lazy( () => import( '../../pages/Steps/GetStarted' ) );
 const StepWelcome = lazy(() => import('../../pages/Steps/GetStarted/Welcome'));
+const StepGetStartedExperience = lazy( () =>
+	import( '../../pages/Steps/GetStarted/GetStartedExperience' )
+);
 const StepTopPriority = lazy( () => import( '../../pages/Steps/TopPriority' ) );
 const StepBasicInfo = lazy( () => import( '../../pages/Steps/BasicInfo' ) );
 const StepDesignThemes = lazy( () =>
@@ -66,9 +69,6 @@ const StepSiteFeatures = lazy( () =>
 	import( '../../pages/Steps/SiteFeatures' )
 );
 const StepWhatNext = lazy( () => import( '../../pages/Steps/WhatNext' ) );
-const StepGetStartedExperience = lazy( () =>
-	import( '../../pages/Steps/GetStarted/GetStartedExperience' )
-);
 const StepPrimarySetup = lazy( () =>
 	import( '../../pages/Steps/PrimaryStep' )
 );
