@@ -1,9 +1,8 @@
-import { Icon } from '@wordpress/icons';
 import { __, sprintf } from '@wordpress/i18n';
 import { store as nfdOnboardingStore } from '../../../../store';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useState, useEffect } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import {translations} from '../../../../utils/locales/translations';
 
 import CommonLayout from '../../../../components/Layouts/Common';
