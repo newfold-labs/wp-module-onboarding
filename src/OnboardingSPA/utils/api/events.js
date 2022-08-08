@@ -1,5 +1,5 @@
 import apiFetch from '@wordpress/api-fetch';
-import { apiBase } from '../../../constants';
+import { baseAPI } from './commonAPI';
 
 class Event {
      constructor(eventSlug, eventData = {}) {
@@ -9,7 +9,7 @@ class Event {
 
      send() {
           apiFetch({
-               url: `${window.location.protocol}//${window.location.host}/index.php${apiBase}events`,
+               url: `${baseAPI}events`,
                method: 'POST',
                data: {
                     slug: this.eventSlug,

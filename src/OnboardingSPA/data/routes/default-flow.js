@@ -36,6 +36,7 @@ import {
  * Steps increment by 10, allowing ample room for new steps to insert between.
  */
 
+const ErrorPage = lazy(() => import( '../../pages/ErrorPage' ) );
 const PageResources = lazy( () => import( '../../pages/Resources' ) );
 const PageWhatToExpect = lazy( () => import( '../../pages/WhatToExpect' ) );
 
@@ -102,6 +103,13 @@ export const pages = [
 		Component: PageWhatToExpect,
 		Icon: redo,
 	},
+	{
+		path: '*',
+		title: __('Error 404', 'wp-module-onboarding'),
+		description: 'Please Check Again!',
+		Component: ErrorPage,
+		Icon: redo,
+	},
 ];
 
 /**
@@ -112,8 +120,8 @@ export const pages = [
 export const steps = [
 	{
 		path: '/wp-setup/step/get-started/welcome',
-		title: __('Get Started', 'wp-module-onboarding'),
-		heading: __('Make your website dreams a reality!', 'wp-module-onboarding'),
+		title: __('Welcome', 'wp-module-onboarding'),
+		heading: __('Make your website dreams a reality', 'wp-module-onboarding'),
 		subheading: __(
 			'with WordPress and ',
 			'wp-module-onboarding'
@@ -135,7 +143,7 @@ export const steps = [
 		title: __( 'WordPress Experience', 'wp-module-onboarding' ),
 		heading: __( 'WordPress Experience', 'wp-module-onboarding' ),
 		subheading: __(
-			'Make your website dreams a reality!',
+			'Make your website dreams a reality',
 			'wp-module-onboarding'
 		),
 		description: __(
@@ -153,7 +161,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/top-priority',
 		title: __( 'Top Priority', 'wp-module-onboarding' ),
-		heading: __( 'Tell us priority one', 'wp-module-onboarding' ),
+		heading: __( 'Tell us your top priority', 'wp-module-onboarding' ),
 		subheading: __(
 			"We'll prioritize getting you there.",
 			'wp-module-onboarding'
@@ -169,8 +177,8 @@ export const steps = [
 	{
 		path: '/wp-setup/step/basic-info',
 		title: __( 'Basic Info', 'wp-module-onboarding' ),
-		heading: __( 'Hello my site is _______.', 'wp-module-onboarding' ),
-		subheading: __( 'Tell the web who you are.', 'wp-module-onboarding' ),
+		heading: __( 'Introduce us to this website', 'wp-module-onboarding' ),
+		subheading: __( 'So we can introduce it to the web', 'wp-module-onboarding' ),
 		description: __(
 			'Help visitors, search results and social media identify your site.',
 			'wp-module-onboarding'

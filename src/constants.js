@@ -22,6 +22,8 @@ export const YITH_BOOKING_PLUGIN = 'yith_wcbk_panel';
 export const YITH_SEARCH_PLUGIN = 'yith_wcas_panel';
 export const YITH_PRODUCT_FILTER_PLUGIN = 'yith_wcan_panel';
 
+export const MAX_RETRIES_SETTINGS_INIT = 2;
+
 /**
  * All views for the <Drawer /> component.
  */

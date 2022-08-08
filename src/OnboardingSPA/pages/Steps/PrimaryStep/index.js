@@ -11,12 +11,13 @@ import NeedHelpTag from '../../../components/NeedHelpTag';
 import content from './content.json';
 
 const StepPrimarySetup = () => {
-	const { setDrawerActiveView, setIsSidebarOpened } = useDispatch(
+	const { setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed } = useDispatch(
 		nfdOnboardingStore
 	);
 
 	useEffect( () => {
 		setIsSidebarOpened( false );
+		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 	}, [] );
 

@@ -2,7 +2,8 @@ import { Icon } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelect } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { useState, useEffect } from '@wordpress/element';
 
 import CommonLayout from '../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
@@ -11,6 +12,7 @@ import NavCardButton from '../../../../components/Button/NavCardButton';
 import Tab from '../../../../components/Tab';
 import tabContent from './tabContent.json';
 import TabPanelHover from '../../../../components/TabPanelHover';
+import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
 
 
 /**
@@ -31,6 +33,18 @@ const StepWelcome = () => {
 		[location.pathname]
 	);
 
+	const {
+		setDrawerActiveView,
+		setIsSidebarOpened,
+		setIsDrawerSuppressed,
+	} = useDispatch( nfdOnboardingStore );
+
+	useEffect( () => {
+		setIsSidebarOpened( false );
+		setIsDrawerSuppressed( true );
+		setDrawerActiveView( VIEW_NAV_GET_STARTED );
+	}, [] );
+
 	const navigate = useNavigate();
 	const handleClick = () => {
 		navigate(nextStep.path);
@@ -40,8 +54,8 @@ const StepWelcome = () => {
 			<NewfoldLargeCard>
 				<div className='welcome-card'>
 					<CardHeader
-						heading={ __(currentStep.heading, 'wp-module-onboarding') }
-						subHeading={ __(currentStep.subheading, 'wp-module-onboarding') + brandName + '.'} >
+						heading={ __(currentStep?.heading, 'wp-module-onboarding') }
+						subHeading={ __(currentStep?.subheading, 'wp-module-onboarding') + brandName + '.'} >
 					</CardHeader>
 					<TabPanelHover
 						className="nfd-onboarding-overview__tab-panel"

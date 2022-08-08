@@ -23,6 +23,7 @@ const ExitToWordPress = ({
 	const [isOpen, setIsOpen] = useState(false);
 	const openModal = () => setIsOpen(true);
 	const closeModal = () => setIsOpen(false);
+	const exitToWordpressLink = window.nfdOnboarding.currentFlow == 'ecommerce' ? 'index.php?page=bluehost' : 'index.php';
 	const label = __(
 		'You can restart onboarding from your Bluehost Settings page.',
 		'wp-module-onboarding'
@@ -40,7 +41,7 @@ const ExitToWordPress = ({
 			</Button>
 			{isOpen && (
 				<Modal
-					title={__('Exit without finishing?')}
+					title={__('Exit without finishing?', 'wp-module-onboarding')}
 					onRequestClose={closeModal}
 				>
 					<p>{label}</p>
@@ -48,7 +49,7 @@ const ExitToWordPress = ({
 						<Button variant="secondary" onClick={closeModal}>
 							{__('Continue', 'wp-module-onboarding')}
 						</Button>
-						<Button variant="primary" href="index.php">
+						<Button variant="primary" href={exitToWordpressLink}>
 							{__('Exit', 'wp-module-onboarding')}
 						</Button>
 					</ButtonGroup>

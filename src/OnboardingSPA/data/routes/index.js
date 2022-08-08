@@ -10,6 +10,7 @@ import {
 	routes as ecommerceRoutes,
 	steps as ecommerceSteps,
 	initialTopSteps as ecommerceInitialTopSteps,
+	ecommerceGetStartedSteps as ecommerceDefaultGetStartedSteps,
 	ecommerceSteps as ecommerceInitialStoreInfoSteps,
 } from './ecommerce-flow';
 
@@ -30,7 +31,7 @@ const routerMap = {
 		steps: ecommerceSteps,
 		initialTopSteps: ecommerceInitialTopSteps,
 		initialDesignSteps: defaultInitialDesignSteps,
-		initialGetStartedSteps: defaultInitialGetStartedSteps,
+		initialGetStartedSteps: ecommerceDefaultGetStartedSteps,
 		initialStoreInfoSteps: ecommerceInitialStoreInfoSteps,
 	},
 };

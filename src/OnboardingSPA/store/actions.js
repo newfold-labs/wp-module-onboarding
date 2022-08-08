@@ -45,6 +45,19 @@ export function setIsDrawerOpened( isOpen ) {
 }
 
 /**
+ * Keeps the drawer on the left suppressed.
+ *
+ * @param {*} isSuppressed
+ * @return
+ */
+export function setIsDrawerSuppressed( isSuppressed ) {
+	return {
+		type: 'SET_DRAWER_SUPPRESSED',
+		isSuppressed,
+	};
+}
+
+/**
  * Accepts a string flow to set the active flow.
  *
  * NOTE: does not have any navigation side-effect.
@@ -69,6 +82,9 @@ export function setActiveFlow( flow ) {
  * @return
  */
 export function setActiveStep( path ) {
+	// Remove Trailing Spaces from URL
+	path = path.replace(/\/$/, "");
+
 	return {
 		type: 'SET_ACTIVE_STEP',
 		path,

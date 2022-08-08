@@ -5,6 +5,7 @@ const SelectableCardList = ({ contents, selected, onSelectedChange }) => {
 		return (
 			<Card
 				id={idx}
+				key={idx}
 				path={content.icon}
 				title={content.title}
 				desc={content.desc}

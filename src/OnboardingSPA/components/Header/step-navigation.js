@@ -15,7 +15,10 @@ const Back = ({ path }) => {
 	const navigate = useNavigate();
 	const navigateBack = () => navigate(path, { state: { origin: 'header' } });
 	return (
-		<Button onClick={navigateBack} variant="secondary" icon={chevronLeft}>
+		<Button className= "navigation-buttons navigation-buttons_back" 
+				onClick={navigateBack} 
+				variant="secondary">
+			<Icon icon={chevronLeft} />
 			{__('Back', 'wp-module-onboarding')}
 		</Button>
 	);
@@ -34,11 +37,9 @@ const Next = ({ path }) => {
 		<Button
 			onClick={navigateNext}
 			variant="primary"
-			// disabled={true}
-			style={{ padding: '6px' }}
-		>
+			className="navigation-buttons navigation-buttons_next">
 			{__('Next', 'wp-module-onboarding')}
-			<Icon icon={chevronRight} style={{ marginLeft: '8px' }} />
+			<Icon icon={chevronRight} />
 		</Button>
 	);
 };
@@ -47,10 +48,10 @@ const Next = ({ path }) => {
  * Finish step navigation button.
  * @returns
  */
-const Finish = () => (
-	<Button variant="primary" disabled={true}>
+const Finish = ({ path }) => (
+	<Button className="navigation-buttons navigation-buttons_finish" variant="primary" href={path}>
 		{__('Finish', 'wp-module-onboarding')}
-		<Icon icon={chevronRight} style={{ marginLeft: '8px' }} />
+		<Icon icon={chevronRight} />
 	</Button>
 );
 
@@ -71,14 +72,24 @@ const StepNavigation = () => {
 	);
 	const isFirstStep = null === previousStep || false === previousStep;
 	const isLastStep = null === nextStep || false === nextStep;
+	const exitToWordpressLink = exitToWordpressForEcommerce() ? 'index.php?page=bluehost' : 'index.php';
 	return (
 		<div className="nfd-onboarding-header__step-navigation">
 			<ButtonGroup style={{ display: 'flex', columnGap: '0.5rem' }}>
 				{isFirstStep ? null : <Back path={previousStep.path} />}
-				{isLastStep ? <Finish /> : <Next path={nextStep.path} />}
+				{isLastStep ? <Finish path={exitToWordpressLink} /> : <Next path={nextStep.path} />}
 			</ButtonGroup>
 		</div>
 	);
 };
 
+/*
+ * check if this is the last step 
+ */
+const exitToWordpressForEcommerce = () => {
+	if( window.nfdOnboarding.currentFlow == 'ecommerce' ) {
+		return true;
+	}
+	return false;
+}
 export default StepNavigation;
