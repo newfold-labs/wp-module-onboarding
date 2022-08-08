@@ -110,8 +110,8 @@ const StepProducts = () => {
 				<div className='nfd-onboarding-experience-step onboarding-product-step onboarding-ecommerce-step'>
 					<div className='nfd-card-heading center'>
 						<CardHeader
-							heading={__(content.stepProductsHeading)}
-							subHeading={__(content.stepProductsSubHeading)}
+							heading={__(content.stepProductsHeading, 'wp-module-onboarding')}
+							subHeading={__(content.stepProductsSubHeading, 'wp-module-onboarding')}
 						/>
 					</div>
 					<div className='nfd-product-step-options'>
@@ -127,15 +127,15 @@ const StepProducts = () => {
 					</div>
 					<div className='step-product-numbers'>
 						<span style={{ fontSize: '16px' }}>
-							{__(content.stepProductsQuestion)}
+							{__(content.stepProductsQuestion, 'wp-module-onboarding')}
 						</span>
 						<RadioControl
 							className='components-radio-control__input'
 							selected={currentData.productInfo?.product_count}
 							options={content.stepProductNumbers.map((option) => {
 								return {
-									label: __(option.content),
-									value: __(option.value),
+									label: __(option.content, 'wp-module-onboarding'),
+									value: __(option.value, 'wp-module-onboarding'),
 								};
 							})}
 							onChange={(value) =>
@@ -148,7 +148,7 @@ const StepProducts = () => {
 							}
 						/>
 					</div>
-					<NavCardButton text={__(content.buttonText)} />
+					<NavCardButton text={__(content.buttonText, 'wp-module-onboarding')} />
 					<NeedHelpTag />
 				</div>
 			</NewfoldLargeCard>

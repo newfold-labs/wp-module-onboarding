@@ -66,9 +66,9 @@ const StepTax = () => {
 				<div className='nfd-onboarding-experience-step'>
 					<div className='nfd-card-heading center onboarding-ecommerce-step'>
 						<CardHeader
-							heading={__(content.stepTaxHeading)}
-							subHeading={__(content.stepTaxSubHeading)}
-							question={__(content.question)}
+							heading={__(content.stepTaxHeading, 'wp-module-onboarding')}
+							subHeading={__(content.stepTaxSubHeading, 'wp-module-onboarding')}
+							question={__(content.question, 'wp-module-onboarding')}
 						/>
 					</div>
 					<RadioControl
@@ -76,8 +76,8 @@ const StepTax = () => {
 						selected={currentData.taxInfo?.selectTaxOption}
 						options={content.stepTaxOptions.map((option) => {
 							return {
-								label: __(option.content),
-								value: __(option.value),
+								label: __(option.content, 'wp-module-onboarding'),
+								value: option.value,
 							};
 						})}
 						onChange={(value) => {
@@ -98,7 +98,7 @@ const StepTax = () => {
 						}
 						onClick={handleButtonClick}
 					>
-						{ __( 'Continue Setup' ) }
+						{ __( 'Continue Setup', 'wp-module-onboarding') }
 					</button>
 					<NeedHelpTag/>
 				</div>

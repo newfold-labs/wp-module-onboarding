@@ -87,14 +87,14 @@ const StepAddress = () => {
 					>
 						<div className='nfd-card-heading center onboarding-ecommerce-step'>
 							<CardHeader
-								heading={__(content.stepAddressHeading)}
-								subHeading={__(content.stepAddressSubHeading)}
+								heading={__(content.stepAddressHeading, 'wp-module-onboarding')}
+								subHeading={__(content.stepAddressSubHeading, 'wp-module-onboarding')}
 							/>
 							{countries.length === 0 ? 'Loading...' : null}
 						</div>
 						<div className='store-address-form'>
 							<div>
-								<label>Address line 1</label>
+								<label>{__('Address line 1', 'wp-module-onboarding')}</label>
 								<input
 									name='woocommerce_store_address'
 									type='text'
@@ -106,7 +106,7 @@ const StepAddress = () => {
 								/>
 							</div>
 							<div>
-								<label>Address line 2</label>
+								<label>{__('Address line 2', 'wp-module-onboarding')}</label>
 								<input
 									name='woocommerce_store_address_2'
 									type='text'
@@ -117,7 +117,7 @@ const StepAddress = () => {
 								/>
 							</div>
 							<div>
-								<label>City</label>
+								<label>{__('City', 'wp-module-onboarding')}</label>
 								<input
 									name='woocommerce_store_city'
 									type='text'
@@ -129,7 +129,7 @@ const StepAddress = () => {
 								/>
 							</div>
 							<div>
-								<label>State</label>
+								<label>{__('State', 'wp-module-onboarding')}</label>
 								{states.length === 0 ? (
 									<input type='text' name='state' required {...eventHandlers} />
 								) : (
@@ -149,7 +149,7 @@ const StepAddress = () => {
 								)}
 							</div>
 							<div>
-								<label>Postal Code</label>
+								<label>{__('Postal Code', 'wp-module-onboarding')}</label>
 								<input
 									name='woocommerce_store_postcode'
 									type='zip'
@@ -161,7 +161,7 @@ const StepAddress = () => {
 								/>
 							</div>
 							<div>
-								<label>Country</label>
+								<label>{__('Country', 'wp-module-onboarding')}</label>
 								{countries.length === 0 ? (
 									<input type='text' disabled />
 								) : (
@@ -185,7 +185,7 @@ const StepAddress = () => {
 							className='nfd-nav-card-button nfd-card-button'
 							type='submit'
 						>
-							{__(content.buttonText)}
+							{__(content.buttonText, 'wp-module-onboarding')}
 						</button>
 					</form>
 					<NeedHelpTag />
