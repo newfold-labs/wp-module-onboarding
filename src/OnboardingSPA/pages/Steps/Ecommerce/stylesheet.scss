@@ -45,12 +45,23 @@ div.onboarding-product-step {
 		display: grid;
 		grid-template-columns: calc((50vw - 15px) / 2) calc((50vw - 15px) / 2);
 		grid-gap: 15px;
+		@media (max-width: #{ ($break-mobile)}) {
+			  grid-template-columns: repeat(1, 1fr); 
+			  grid-gap: 2px;
+		  }
+		@media (max-height: #{ ($break-small)}) {
+			grid-template-columns: repeat(3, 1fr); 
+			grid-gap: 2px;
+		}
 	}
 
 	.components-checkbox-control {
 		padding: 16px;
 		background-color: #F0F0F0;
-
+		@media (max-width: #{ ($break-small)}), (max-height: #{ ($break-small)}) {
+			padding: 5px;
+		}
+		
 		.components-base-control__field {
 			margin-bottom: 0;
 		}
@@ -66,6 +77,9 @@ div.onboarding-product-step {
 
 			.components-base-control__field {
 				display: flex;
+				@media (max-width: #{ ($break-xlarge)}) {
+					flex-wrap: wrap;
+				}
 			}
 
 			label {
@@ -85,6 +99,6 @@ div.onboarding-product-step {
 
 .radio-control-tax-step {
 	label {
-		padding: 10px 130px 10px 15px;
+		padding: 10px 190px 10px 15px;
 	}
 }
