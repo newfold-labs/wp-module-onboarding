@@ -63,7 +63,7 @@ final class Plugins {
 		'nfd_slug_ecomdash_wordpress_plugin'             => array(
 			'approved' => true,
 			'url'      => 'https://hiive.cloud/workers/plugin-downloads/ecomdash-wordpress-plugin',
-			'path'     => '202207190850-ecomdash-wordpress-plugin-latest/ecomdash-plugin.php',
+			'path'     => 'ecomdash-wordpress-plugin/ecomdash-plugin.php',
 		),
 		'nfd_slug_yith_paypal_payments_for_woocommerce'  => array(
 			'approved' => true,
