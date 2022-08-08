@@ -10,7 +10,7 @@ import CommonLayout from '../../../../components/Layouts/Common';
 import NeedHelpTag from '../../../../components/NeedHelpTag';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import { store as nfdOnboardingStore } from '../../../../store';
-import { fetchWCOnboarding, updateWCOptions } from '../../../../utils/api/ecommerce';
+import { fetchWCOnboarding } from '../../../../utils/api/ecommerce';
 import content from '../content.json';
 
 const StepTax = () => {
@@ -43,21 +43,17 @@ const StepTax = () => {
 	}, []);
 
 	const handleButtonClick = async () => {
-		if (currentData.taxInfo?.selectTaxOption == 1 && !isStoreDetailsFilled) {
-			setCurrentOnboardingData({
-				taxInfo: {
-					...currentData.taxInfo,
-					saveTaxData: true,
-				},
-			});
+		if (currentData.taxInfo?.saveTaxData) {
 			navigate('/ecommerce/step/address');
 			return;
+		} else {
+			navigate('/ecommerce/step/products');
 		}
-		await updateWCOptions(
-			content.stepTaxOptions.find(
-				(e) => currentData.taxInfo?.selectTaxOption === e.value
-			)?.data
-		);
+		// await updateWCOptions(
+		// 	content.stepTaxOptions.find(
+		// 		(e) => currentData.taxInfo?.selectTaxOption === e.value
+		// 	)?.data
+		// );
 		navigate('/ecommerce/step/products');
 	};
 
@@ -91,13 +87,16 @@ const StepTax = () => {
 							})
 						}}
 					/>
-					<NavCardButton
-						text={ __( 'Continue Setup' ) }
+					<button
+						className='nfd-nav-card-button nfd-card-button'
 						disabled={
 							isStoreDetailsFilled === undefined ||
 							currentData.taxInfo?.selectTaxOption === undefined
 						}
-					/>
+						onClick={handleButtonClick}
+					>
+						{ __( 'Continue Setup' ) }
+					</button>
 					<NeedHelpTag/>
 				</div>
 			</NewfoldLargeCard>
