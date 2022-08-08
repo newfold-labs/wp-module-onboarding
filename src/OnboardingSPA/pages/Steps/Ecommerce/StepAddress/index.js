@@ -1,3 +1,4 @@
+import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -16,17 +17,22 @@ import {
 import content from '../content.json';
 
 const StepAddress = () => {
+	const isLargeViewport = useViewportMatch( 'medium' );
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
+		setIsDrawerSuppressed,
 		setIsSidebarOpened,
 		setCurrentOnboardingData,
 	} = useDispatch(nfdOnboardingStore);
 
 	let [countries, setCountries] = useState([]);
 	useEffect(() => {
+		if (isLargeViewport) {
+			setIsDrawerOpened(true);
+		}
 		setIsSidebarOpened(false);
-		setIsDrawerOpened(true);
+		setIsDrawerSuppressed(false);
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
 
 		fetchWCCountries().then((countries) => setCountries(countries));

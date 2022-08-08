@@ -1,4 +1,5 @@
 import { RadioControl } from '@wordpress/components';
+import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -14,9 +15,11 @@ import { fetchWCOnboarding } from '../../../../utils/api/ecommerce';
 import content from '../content.json';
 
 const StepTax = () => {
+	const isLargeViewport = useViewportMatch( 'medium' );
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
+		setIsDrawerSuppressed,
 		setIsSidebarOpened,
 		setCurrentOnboardingData,
 	} = useDispatch(nfdOnboardingStore);
@@ -27,7 +30,7 @@ const StepTax = () => {
 	);
 
 	const [isStoreDetailsFilled, setStoreDetailsFilled] = useState(undefined);
-	const getStoreDeatilsFilledInfo = async () => {
+	const getStoreDetailsFilledInfo = async () => {
 		const onboardingResponse = await fetchWCOnboarding();
 		let [onboardingTask] = onboardingResponse ?? [];
 		const storeDetailsInfo = (onboardingTask?.tasks ?? []).find(
@@ -36,25 +39,25 @@ const StepTax = () => {
 		setStoreDetailsFilled(storeDetailsInfo?.isComplete);
 	};
 	useEffect(() => {
-		getStoreDeatilsFilledInfo();
+		getStoreDetailsFilledInfo();
+		if (isLargeViewport) {
+			setIsDrawerOpened(true);
+		}
 		setIsSidebarOpened(false);
-		setIsDrawerOpened(true);
+		setIsDrawerSuppressed(false);
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
 	}, []);
 
 	const handleButtonClick = async () => {
-		if (currentData.taxInfo?.saveTaxData) {
-			navigate('/ecommerce/step/address');
-			return;
-		} else {
-			navigate('/ecommerce/step/products');
-		}
+		let nextStep = currentData?.taxInfo?.saveTaxData
+			? '/ecommerce/step/address'
+			: '/ecommerce/step/products';
+		navigate(nextStep);
 		// await updateWCOptions(
 		// 	content.stepTaxOptions.find(
 		// 		(e) => currentData.taxInfo?.selectTaxOption === e.value
 		// 	)?.data
 		// );
-		navigate('/ecommerce/step/products');
 	};
 
 	return (

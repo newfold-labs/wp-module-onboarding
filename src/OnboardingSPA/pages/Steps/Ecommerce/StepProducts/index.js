@@ -1,5 +1,6 @@
 import apiFetch from '@wordpress/api-fetch';
 import { CheckboxControl, RadioControl } from '@wordpress/components';
+import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -24,9 +25,11 @@ import { resolve } from '../../../../utils/api/resolve';
 import content from '../content.json';
 
 const StepProducts = () => {
+	const isLargeViewport = useViewportMatch( 'medium' );
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
+		setIsDrawerSuppressed,
 		setIsSidebarOpened,
 		setCurrentOnboardingData,
 	} = useDispatch(nfdOnboardingStore);
@@ -36,8 +39,11 @@ const StepProducts = () => {
 	);
 
 	useEffect(() => {
+		if (isLargeViewport) {
+			setIsDrawerOpened(true);
+		}
 		setIsSidebarOpened(false);
-		setIsDrawerOpened(true);
+		setIsDrawerSuppressed(false);
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
 		setCurrentOnboardingData({ productInfo: { product_types: [] } });
 	}, []);
