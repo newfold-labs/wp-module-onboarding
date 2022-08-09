@@ -1,55 +1,71 @@
-.nfd-setup-secondary-categories {
-	width: 47vw;
-	text-align: center;
-	margin-top: 1rem;
-
-	.nfd-card-category-wrapper {
-		display: inline-flex;
-		margin-bottom: 2rem;
-		border-bottom: 2px solid #00568c;
-
-		.category-scrolling-wrapper {
-			width: 15vw;
-			display: flex;
-			justify-content: center;
-		}
-	}
-
-	button {
-		display: inline-block;
-	}
-
-	.categName {
-		display: inline-block;
-		color: black;
-		font-size: 0.8rem;
-		font-weight: 400;
-		margin-top: 0;
-		text-transform: uppercase;
-		margin-bottom: 0.3rem;
-	}
-
-	.iconSiteType {
-		background-repeat: no-repeat;
-		display: inline-block;
-		width: 1vw;
-		height: 2vh;
-		cursor: pointer;
-	}
-
-	.icon {
-		width: 25px;
-		height: 24px;
-		display: inline-block;
-		background-repeat: no-repeat;
-	}
-
-	.subCategoriesSection {
-		.nfd-card-category {
-			&.chosenSecondaryCategory {
-				background-color: var(--wp-admin-theme-color-darker-10);
-				color: var(--nfd-onboarding-light);
+.nfd-setup-secondary {
+	&-categories {
+			width: 47vw;
+			text-align: center;
+			margin-top: 1rem;
+	
+			.nfd-card-category-wrapper {
+				display: inline-flex;
+				margin-bottom: 2rem;
+				border-bottom: 2px solid #00568c;
+	
+				.category-scrolling-wrapper {
+					width: 15vw;
+					display: flex;
+					justify-content: center;
+				}
 			}
+	
+			button {
+				display: inline-block;
+			}
+	
+			.categName {
+				display: inline-block;
+				color: black;
+				font-size: 0.8rem;
+				font-weight: 400;
+				margin-top: 0;
+				text-transform: uppercase;
+				margin-bottom: 0.3rem;
+			}
+	
+			.iconSiteType {
+				background-repeat: no-repeat;
+				display: inline-block;
+				width: 1vw;
+				height: 2vh;
+				cursor: pointer;
+			}
+	
+			.icon {
+				width: 25px;
+				height: 24px;
+				display: inline-block;
+				background-repeat: no-repeat;
+			}
+	
+			.subCategoriesSection {
+				.nfd-card-category {
+					&.chosenSecondaryCategory {
+						background-color: var(--wp-admin-theme-color-darker-10);
+						color: var(--nfd-onboarding-light);
+					}
+				}
+			}
+	}
+
+	&-second {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		justify-content: space-around;
+
+		&-top {
+		}
+
+		&-bottom {
+			margin-top: 20px;
 		}
 	}
 }

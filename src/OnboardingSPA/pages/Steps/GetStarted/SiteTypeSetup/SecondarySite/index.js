@@ -79,6 +79,7 @@ const StepPrimarySetup = () => {
 						{
 							categoriesArray[0]?.subCategories?.map((item, idx) => {
 								return <span
+									key={item}
 									onClick={(e) => handleCategoryClick(idx)}
 									className={`${(clickedIndex === idx || item === selectedCategoryInStore) ? 'chosenSecondaryCategory ' : ''}nfd-card-category`}>
 									{item}
@@ -88,20 +89,25 @@ const StepPrimarySetup = () => {
 					</div>
 				</div>
 
-				<p className='blackText'>{__(content.tellusHereText, 'wp-module-onboarding')}</p>
-				<input
-					type="text"
-					onChange={(e) => categoryInput(e)}
-					className='tellUsInput'
-					placeholder={__(content.placeholderSiteTypeInput, 'wp-module-onboarding')}
-					value={inputCategVal}
-				/>
-
-				<NavCardButton
-					text={__(content.buttonText)}
-				/>
-
-				<NeedHelpTag />
+				<div className='nfd-setup-primary-second'>
+					<div className='nfd-setup-primary-second-top'>
+						<p className='blackText'>{__(content.tellusHereText, 'wp-module-onboarding')}</p>
+						<input
+							type="text"
+							onChange={(e) => categoryInput(e)}
+							className='tellUsInput'
+							placeholder={__(content.placeholderSiteTypeInput, 'wp-module-onboarding')}
+							value={inputCategVal}
+						/>
+					</div>
+					<div className='nfd-setup-primary-second-bottom'>
+						<NavCardButton
+							text={__(content.buttonText)}
+						/>
+						<NeedHelpTag />
+					</div>
+				</div>
+				
 			</NewfoldLargeCard>
 		</CommonLayout>
 	);

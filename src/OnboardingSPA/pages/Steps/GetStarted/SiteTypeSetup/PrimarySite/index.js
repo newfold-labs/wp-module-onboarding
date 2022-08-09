@@ -53,27 +53,27 @@ const StepPrimarySetup = () => {
 					{
 						content.categories.map((item, idx) => {
 							return (
-								<>
-									<div className={`${(clickedIndex === idx) ? 'chosenPrimaryCategory ' : ''}nfd-card-category`} onClick={(e) => handleCategoryClick(idx)}>
-										<div className='nfd-card-category-wrapper'>
-											<span className="icon" style={{ backgroundImage: (clickedIndex !== idx) ? item.icon : item.iconWhite }}></span>
-											<span className="categName">{item.name}</span>
-										</div>
+								<div key={item?.name} className={`${(clickedIndex === idx) ? 'chosenPrimaryCategory ' : ''}nfd-card-category`} onClick={(e) => handleCategoryClick(idx)}>
+									<div className='nfd-card-category-wrapper'>
+										<span className="icon" style={{ backgroundImage: (clickedIndex !== idx) ? item?.icon : item?.iconWhite }}></span>
+										<span className="categName">{item?.name}</span>
 									</div>
-								</>
+								</div>
 							)
 						})
 					}
 				</div>
 
-				<p className='blackText'>or tell us here:</p>
-				<input type="text" className='tellUsInput' placeholder='Enter to search your site type' />
-
-				<NavCardButton
-					text={__(content.buttonText)}
-				/>
-
-				<NeedHelpTag />
+				<div className='nfd-setup-primary-second'>
+					<div className='nfd-setup-primary-second-top'>
+						<p className='blackText'>or tell us here:</p>
+						<input type="text" className='tellUsInput' placeholder='Enter to search your site type' />
+					</div>
+					<div className='nfd-setup-primary-second-bottom'>
+						<NavCardButton text={__(content.buttonText)} />
+						<NeedHelpTag />
+					</div>
+				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>
 	);
