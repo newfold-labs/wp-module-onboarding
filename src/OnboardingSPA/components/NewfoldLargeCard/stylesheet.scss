@@ -7,7 +7,6 @@
 	transform-style: preserve-3d;
 	align-items: center;
 	flex-direction: column;
-	justify-content: space-evenly;
 	padding: 1rem;
 
 	@media (max-width: #{($break-medium - 1)}) {
