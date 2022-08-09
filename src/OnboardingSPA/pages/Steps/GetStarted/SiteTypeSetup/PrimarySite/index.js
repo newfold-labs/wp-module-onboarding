@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import CommonLayout from '../../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../../components/NewfoldLargeCard';
-import { VIEW_NAV_PRIMARY } from '../../../../../../constants';
+import { VIEW_NAV_GET_STARTED } from '../../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../../store';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
@@ -28,8 +28,8 @@ const StepPrimarySetup = () => {
 
 	useEffect(() => {
 		setIsSidebarOpened(false);
-		setIsDrawerSuppressed(false);
-		setDrawerActiveView(VIEW_NAV_PRIMARY);
+		setIsDrawerSuppressed(true);
+		setDrawerActiveView(VIEW_NAV_GET_STARTED);
 	}, []);
 
 	const [clickedIndex, changeCategory] = useState(-1);
