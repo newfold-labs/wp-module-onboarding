@@ -35,14 +35,24 @@ const StepPrimarySetup = () => {
 
 	const [clickedIndex, changeCategory] = useState(-1);
 	const [inputCategVal, changeInputCateg] = useState('');
-	const selectedPrimaryCategoryInStore = currentData?.data?.siteType?.primary;
 	const { setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
+	
+	const categoriesArray = content.categories;
+	const selectedPrimaryCategoryInStore = currentData?.data?.siteType?.primary;
+
+	/**This condition fills the data in input box if the saved category isn't a subcategory from the content*/
+	if (selectedPrimaryCategoryInStore && !inputCategVal) {
+
+		var found = categoriesArray.find(e => e.name === selectedPrimaryCategoryInStore);
+		if (!found)
+			changeInputCateg(selectedPrimaryCategoryInStore);
+	}
 
 	const handleCategoryClick = (idxOfElm) => {
 		changeCategory(idxOfElm);
 		changeInputCateg('');
 		const currentDataCopy = currentData;
-		currentDataCopy.data.siteType['primary'] = content.categories[idxOfElm]?.name?.toLowerCase();
+		currentDataCopy.data.siteType['primary'] = content.categories[idxOfElm]?.name;
 		setCurrentOnboardingData(currentDataCopy);
 	}
 
@@ -72,7 +82,7 @@ const StepPrimarySetup = () => {
 							return (
 								<div 
 									key={item?.name} 
-									className={`${(clickedIndex === idx || item.name.toLowerCase() == selectedPrimaryCategoryInStore) ? 'chosenPrimaryCategory ' : ''}nfd-card-category`} 
+									className={`${(clickedIndex === idx || item.name == selectedPrimaryCategoryInStore) ? 'chosenPrimaryCategory ' : ''}nfd-card-category`} 
 									onClick={(e) => handleCategoryClick(idx)} >
 									<div className='nfd-card-category-wrapper'>
 										<span className="icon" style={{ backgroundImage: (clickedIndex !== idx) ? item?.icon : item?.iconWhite }}></span>
