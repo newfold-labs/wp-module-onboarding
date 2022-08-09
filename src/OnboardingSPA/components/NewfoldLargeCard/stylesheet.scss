@@ -6,7 +6,9 @@
 	position: relative;
 	transform-style: preserve-3d;
 	align-items: center;
-	flex-flow: column wrap;
+	flex-direction: column;
+	justify-content: space-evenly;
+	padding: 1rem;
 
 	@media (max-width: #{($break-medium - 1)}) {
 		justify-items: center;

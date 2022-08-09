@@ -1,7 +1,10 @@
 import { __ } from '@wordpress/i18n';
+import classNames from 'classnames';
 
-const NewfoldLargeCard = ({ children }) => {
-	return <div className="nfd-onboarding-large-card">{children}</div>;
+const NewfoldLargeCard = ({children, className}) => {
+	return <div className={classNames("nfd-onboarding-large-card", className)}>
+    {children}
+  </div>;
 };
 
 export default NewfoldLargeCard;
