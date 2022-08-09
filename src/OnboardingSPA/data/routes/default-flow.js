@@ -161,9 +161,9 @@ export const steps = [
      {
 		path: '/wp-setup/step/get-started/site-primary',
 		title: __('Primary Site Setup', 'wp-module-onboarding'),
-		heading: __('How else can we help?', 'wp-module-onboarding'),
+		heading: __('Help us tailor this setup to your site', 'wp-module-onboarding'),
 		subheading: __(
-			"We've got the basics setup, but we can help with any next steps.",
+			"What type of store is it?",
 			'wp-module-onboarding'
 		),
 		description: __(
@@ -177,9 +177,9 @@ export const steps = [
   {
 		path: '/wp-setup/step/get-started/site-secondary',
 		title: __('Secondary Site Setup', 'wp-module-onboarding'),
-		heading: __('How else can we help?', 'wp-module-onboarding'),
+	  	heading: __('Help us tailor this setup to your site', 'wp-module-onboarding'),
 		subheading: __(
-			"We've got the basics setup, but we can help with any next steps.",
+			"What type of store is it?",
 			'wp-module-onboarding'
 		),
 		description: __(

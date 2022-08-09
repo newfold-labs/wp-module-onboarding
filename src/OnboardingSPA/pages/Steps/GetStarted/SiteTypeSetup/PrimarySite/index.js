@@ -1,9 +1,9 @@
 import { __ } from '@wordpress/i18n';
 import CommonLayout from '../../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../../components/NewfoldLargeCard';
-import { VIEW_NAV_PRIMARY } from '../../../../../../constants';
+import { VIEW_NAV_GET_STARTED } from '../../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../../store';
-import { useDispatch } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 import CardHeader from '../../../../../components/CardHeader';
 import NavCardButton from '../../../../../components/Button/NavCardButton';
@@ -12,61 +12,71 @@ import content from '../content.json';
 
 
 const StepPrimarySetup = () => {
-  const { setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed } = useDispatch(
+
+	const { setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed } = useDispatch(
 		nfdOnboardingStore
 	);
 
-	useEffect( () => {
-		setIsSidebarOpened( false );
-		setIsDrawerSuppressed( false );
-		setDrawerActiveView( VIEW_NAV_PRIMARY );
-	}, [] );
-  
-  const [clickedIndex, changeCategory] = useState(-1);
+	const { currentStep } = useSelect(
+		(select) => {
+			return {
+				currentStep: select(nfdOnboardingStore).getCurrentStep()
+			};
+		},
+		[]
+	);
 
-  const handleCategoryClick = (idxOfElm) => {
-    changeCategory(idxOfElm);
-  }
+	useEffect(() => {
+		setIsSidebarOpened(false);
+		setIsDrawerSuppressed(true);
+		setDrawerActiveView(VIEW_NAV_GET_STARTED);
+	}, []);
 
-  return (
-    <CommonLayout isBgPrimary isCentered>
-      <NewfoldLargeCard>
-          <div className="nfd-card-heading center">
-            <CardHeader 
-              heading={__(content.cardHeading, 'wp-module-onboarding')} 
-              subHeading={__(content.subHeading, 'wp-module-onboarding')}
-              question={__(content.question, 'wp-module-onboarding')}
-              />
-          </div>
+	const [clickedIndex, changeCategory] = useState(-1);
 
-          <div className='nfd-setup-primary-categories'>
-            {
-              content.categories.map((item, idx) => {
-                return (
-                  <>
-                    <div className={`${(clickedIndex === idx) ? 'chosenPrimaryCategory ' : ''}nfd-card-category`} onClick={(e) => handleCategoryClick(idx)}>
-                      <div className='nfd-card-category-wrapper'>
-                        <span className="icon" style={{backgroundImage: (clickedIndex !== idx) ? item.icon : item.iconWhite}}></span>
-                        <span className="categName">{item.name}</span>
-                      </div>
-                    </div>
-                  </>
-                )
-              })
-            }
-          </div>
+	const handleCategoryClick = (idxOfElm) => {
+		changeCategory(idxOfElm);
+	}
 
-          <p className='blackText'>or tell us here:</p>
-          <input type="text" className='tellUsInput' placeholder='Enter to search your site type'/>
-          
-          <NavCardButton
-            text={__(content.buttonText)}
-          />
+	return (
+		<CommonLayout isBgPrimary isCentered>
+			<NewfoldLargeCard>
+				<div className="nfd-card-heading center">
+					<CardHeader
+						heading={__(currentStep?.heading, 'wp-module-onboarding')}
+						subHeading={__(content.subHeading, 'wp-module-onboarding')}
+						question={__(currentStep?.subheading, 'wp-module-onboarding')}
+					/>
+				</div>
 
-          <NeedHelpTag />
-      </NewfoldLargeCard>
-    </CommonLayout>
-  );
+				<div className='nfd-setup-primary-categories'>
+					{
+						content.categories.map((item, idx) => {
+							return (
+								<div key={item?.name} className={`${(clickedIndex === idx) ? 'chosenPrimaryCategory ' : ''}nfd-card-category`} onClick={(e) => handleCategoryClick(idx)}>
+									<div className='nfd-card-category-wrapper'>
+										<span className="icon" style={{ backgroundImage: (clickedIndex !== idx) ? item?.icon : item?.iconWhite }}></span>
+										<span className="categName">{item?.name}</span>
+									</div>
+								</div>
+							)
+						})
+					}
+				</div>
+
+				<div className='nfd-setup-primary-second'>
+					<div className='nfd-setup-primary-second-top'>
+						<p className='blackText'>or tell us here:</p>
+						<input type="text" className='tellUsInput' placeholder='Enter to search your site type' />
+					</div>
+					<div className='nfd-setup-primary-second-bottom'>
+						<NavCardButton text={__(content.buttonText)} />
+						<NeedHelpTag />
+					</div>
+				</div>
+			</NewfoldLargeCard>
+		</CommonLayout>
+	);
 };
 
 export default StepPrimarySetup;
