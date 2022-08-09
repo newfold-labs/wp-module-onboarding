@@ -6,8 +6,8 @@
 	position: relative;
 	transform-style: preserve-3d;
 	align-items: center;
+	flex-direction: column;
 	justify-content: space-evenly;
-	flex-flow: column wrap;
 	padding: 1rem;
 
 	@media (max-width: #{($break-medium - 1)}) {
