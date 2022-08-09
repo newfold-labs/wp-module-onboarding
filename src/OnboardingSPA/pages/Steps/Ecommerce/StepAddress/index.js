@@ -1,6 +1,6 @@
 import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useNavigate } from 'react-router-dom';
 import { VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../../../constants';
@@ -9,12 +9,9 @@ import CommonLayout from '../../../../components/Layouts/Common';
 import NeedHelpTag from '../../../../components/NeedHelpTag';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import { store as nfdOnboardingStore } from '../../../../store';
-import {
-	fetchWCCountries,
-	updateWCOnboarding,
-	updateWCOptions
-} from '../../../../utils/api/ecommerce';
+import { updateWCOptions } from '../../../../utils/api/ecommerce';
 import content from '../content.json';
+import countries from '../countries.json';
 
 const StepAddress = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -26,7 +23,6 @@ const StepAddress = () => {
 		setCurrentOnboardingData,
 	} = useDispatch(nfdOnboardingStore);
 
-	let [countries, setCountries] = useState([]);
 	useEffect(() => {
 		if (isLargeViewport) {
 			setIsDrawerOpened(true);
@@ -34,8 +30,6 @@ const StepAddress = () => {
 		setIsSidebarOpened(false);
 		setIsDrawerSuppressed(false);
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
-
-		fetchWCCountries().then((countries) => setCountries(countries));
 	}, []);
 
 	const navigate = useNavigate();
@@ -72,14 +66,13 @@ const StepAddress = () => {
 							await updateWCOptions({
 								...wcAddress,
 								woocommerce_default_country: `${country}:${state}`,
-								...(currentData.taxInfo?.saveTaxData && {
+								...(currentData.taxInfo?.isAddressNeeded && {
 									wc_connect_taxes_enabled: 'yes',
 									woocommerce_calc_taxes: 'yes',
 								}),
 							});
-							await updateWCOnboarding({ completed: true });
 							navigate(
-								currentData.taxInfo?.saveTaxData
+								currentData.taxInfo?.isAddressNeeded
 									? '/ecommerce/step/products'
 									: '/ecommerce/step/tax'
 							);
@@ -90,7 +83,6 @@ const StepAddress = () => {
 								heading={__(content.stepAddressHeading, 'wp-module-onboarding')}
 								subHeading={__(content.stepAddressSubHeading, 'wp-module-onboarding')}
 							/>
-							{countries.length === 0 ? 'Loading...' : null}
 						</div>
 						<div className='store-address-form'>
 							<div>

@@ -1,17 +1,16 @@
 import { RadioControl } from '@wordpress/components';
 import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useNavigate } from 'react-router-dom';
 import { VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../../../constants';
-import NavCardButton from '../../../../components/Button/NavCardButton';
 import CardHeader from '../../../../components/CardHeader';
 import CommonLayout from '../../../../components/Layouts/Common';
 import NeedHelpTag from '../../../../components/NeedHelpTag';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import { store as nfdOnboardingStore } from '../../../../store';
-import { fetchWCOnboarding } from '../../../../utils/api/ecommerce';
+import { updateWCOptions } from '../../../../utils/api/ecommerce';
 import content from '../content.json';
 
 const StepTax = () => {
@@ -29,17 +28,8 @@ const StepTax = () => {
 		select(nfdOnboardingStore).getCurrentOnboardingData()
 	);
 
-	const [isStoreDetailsFilled, setStoreDetailsFilled] = useState(undefined);
-	const getStoreDetailsFilledInfo = async () => {
-		const onboardingResponse = await fetchWCOnboarding();
-		let [onboardingTask] = onboardingResponse ?? [];
-		const storeDetailsInfo = (onboardingTask?.tasks ?? []).find(
-			(task) => task.id == 'store_details'
-		);
-		setStoreDetailsFilled(storeDetailsInfo?.isComplete);
-	};
+	const isStoreDetailsFilled = currentData?.storeAddress?.woocommerce_store_address !== undefined;
 	useEffect(() => {
-		getStoreDetailsFilledInfo();
 		if (isLargeViewport) {
 			setIsDrawerOpened(true);
 		}
@@ -49,15 +39,18 @@ const StepTax = () => {
 	}, []);
 
 	const handleButtonClick = async () => {
-		let nextStep = currentData?.taxInfo?.saveTaxData
+		let isAddressNeeded = currentData?.taxInfo?.isAddressNeeded;
+		if (!isAddressNeeded) {
+			await updateWCOptions(
+				content.stepTaxOptions.find(
+					(e) => currentData.taxInfo?.selectTaxOption === e.value
+				)?.data
+			);
+		}
+		let nextStep = isAddressNeeded
 			? '/ecommerce/step/address'
 			: '/ecommerce/step/products';
 		navigate(nextStep);
-		// await updateWCOptions(
-		// 	content.stepTaxOptions.find(
-		// 		(e) => currentData.taxInfo?.selectTaxOption === e.value
-		// 	)?.data
-		// );
 	};
 
 	return (
@@ -85,7 +78,7 @@ const StepTax = () => {
 								taxInfo: {
 									...currentData.taxInfo,
 									selectTaxOption: value,
-									saveTaxData: value == "1" && !isStoreDetailsFilled
+									isAddressNeeded: value == "1" && !isStoreDetailsFilled
 								},
 							})
 						}}
