@@ -17,10 +17,11 @@ const StepPrimarySetup = () => {
 		nfdOnboardingStore
 	);
 
-	const { currentStep } = useSelect(
+	const { currentStep, currentData } = useSelect(
 		(select) => {
 			return {
-				currentStep: select(nfdOnboardingStore).getCurrentStep()
+				currentStep: select(nfdOnboardingStore).getCurrentStep(),
+				currentData: select(nfdOnboardingStore).getCurrentOnboardingData()
 			};
 		},
 		[]
@@ -33,9 +34,25 @@ const StepPrimarySetup = () => {
 	}, []);
 
 	const [clickedIndex, changeCategory] = useState(-1);
+	const [inputCategVal, changeInputCateg] = useState('');
+	const selectedPrimaryCategoryInStore = currentData?.data?.siteType?.primary;
+	const { setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
 
 	const handleCategoryClick = (idxOfElm) => {
 		changeCategory(idxOfElm);
+		changeInputCateg('');
+		const currentDataCopy = currentData;
+		currentDataCopy.data.siteType['primary'] = content.categories[idxOfElm]?.name?.toLowerCase();
+		setCurrentOnboardingData(currentDataCopy);
+	}
+
+	/** Function which saves data in redux when category name is put-in via input box */
+	const categoryInput = input => {
+		changeCategory(-1);
+		changeInputCateg(input?.target?.value);
+		const currentDataCopy = currentData;
+		currentDataCopy.data.siteType['primary'] = input?.target?.value;
+		setCurrentOnboardingData(currentDataCopy);
 	}
 
 	return (
@@ -53,7 +70,10 @@ const StepPrimarySetup = () => {
 					{
 						content.categories.map((item, idx) => {
 							return (
-								<div key={item?.name} className={`${(clickedIndex === idx) ? 'chosenPrimaryCategory ' : ''}nfd-card-category`} onClick={(e) => handleCategoryClick(idx)}>
+								<div 
+									key={item?.name} 
+									className={`${(clickedIndex === idx || item.name.toLowerCase() == selectedPrimaryCategoryInStore) ? 'chosenPrimaryCategory ' : ''}nfd-card-category`} 
+									onClick={(e) => handleCategoryClick(idx)} >
 									<div className='nfd-card-category-wrapper'>
 										<span className="icon" style={{ backgroundImage: (clickedIndex !== idx) ? item?.icon : item?.iconWhite }}></span>
 										<span className="categName">{item?.name}</span>
@@ -67,7 +87,11 @@ const StepPrimarySetup = () => {
 				<div className='nfd-setup-primary-second'>
 					<div className='nfd-setup-primary-second-top'>
 						<p className='blackText'>or tell us here:</p>
-						<input type="text" className='tellUsInput' placeholder='Enter to search your site type' />
+						<input type="text" 
+							onChange={(e) => categoryInput(e)} 
+							className='tellUsInput' 
+							placeholder='Enter to search your site type'
+							value={inputCategVal} />
 					</div>
 					<div className='nfd-setup-primary-second-bottom'>
 						<NavCardButton text={__(content.buttonText)} />

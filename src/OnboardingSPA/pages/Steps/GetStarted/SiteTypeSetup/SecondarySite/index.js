@@ -43,7 +43,7 @@ const StepPrimarySetup = () => {
 		changeCategory(-1);
 		changeInputCateg(input?.target?.value);
 		const currentDataCopy = currentData;
-		currentDataCopy.data.siteType['secondary'] = inputCategVal;
+		currentDataCopy.data.siteType['secondary'] = input?.target?.value;
 		setCurrentOnboardingData(currentDataCopy);
 	}
 
