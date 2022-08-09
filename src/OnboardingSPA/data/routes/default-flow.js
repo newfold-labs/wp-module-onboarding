@@ -162,15 +162,15 @@ export const steps = [
      {
 		path: '/wp-setup/step/get-started/site-primary',
 		title: __('Primary Site Setup', 'wp-module-onboarding'),
-		heading: __('Help us tailor this setup to your site', 'wp-module-onboarding'),
-		subheading: __(
-			"What type of store is it?",
+		heading: sprintf(__('Help us tailor this setup to your %s', 'wp-module-onboarding'), translations('site')),
+		subheading: sprintf(__(
+			"What type of %s is it?",
 			'wp-module-onboarding'
-		),
-		description: __(
-			"Setup more of your site, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
+		), translations('site')),
+		description: sprintf(__(
+			"Setup more of your %s, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
 			'wp-module-onboarding'
-		),
+		), translations('site')),
 		Component: StepPrimarySetup,
 		Icon: moveTo,
 		priority: 60,
@@ -178,15 +178,15 @@ export const steps = [
   {
 		path: '/wp-setup/step/get-started/site-secondary',
 		title: __('Secondary Site Setup', 'wp-module-onboarding'),
-	  	heading: __('Help us tailor this setup to your site', 'wp-module-onboarding'),
-		subheading: __(
-			"What type of store is it?",
+	  	heading: sprintf(__('Help us tailor this setup to your %s', 'wp-module-onboarding'), translations('site')),
+		subheading: sprintf(__(
+			"What type of %s is it?",
 			'wp-module-onboarding'
-		),
-		description: __(
-			"Setup more of your site, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
+		), translations('site')),
+		description: sprintf(__(
+			"Setup more of your %s, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
 			'wp-module-onboarding'
-		),
+		), translations('site')),
 		Component: StepSecondarySetup,
 		Icon: moveTo,
 		priority: 80,
