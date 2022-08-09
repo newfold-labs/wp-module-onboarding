@@ -1,78 +1,85 @@
 body {
-    &.nfd-brand-bluehost {
-        --wp-admin-theme-color: #3575D3;
-        --wp-admin-theme-color--rgb: 53, 117, 211;
-        --wp-admin-theme-color-darker-10: #1C5CBA;
-        --wp-admin-theme-color-darker-10--rgb: 28, 92, 186;
-        --wp-admin-theme-color-darker-20: #0242A0;
-        --wp-admin-theme-color-darker-20--rgb: 2, 66, 160;
-        --nfd-onboarding-dark-icon: url('../../Brands/bluehost/dark.svg');
-        --nfd-onboarding-icon: url('../../Brands/bluehost/icon.svg');
-        --nfd-onboarding-logo: url('../../Brands/bluehost/logo.svg');
-        --nfd-onboarding-primary: #3575D3;
-        --nfd-onboarding-highlighted--rgb: 123, 177, 253;
-        --nfd-onboarding-primary-alt: #2C76DC;
-        --nfd-onboarding-secondary: #495C77;
-        --nfd-onboarding-secondary-alt: #304663;
-        --nfd-onboarding-tertiary: #7BB1FD;
-        --nfd-onboarding-tertiary-alt: #84C0FC;
-        --nfd-onboarding-light: #FFFFFF;
-        --nfd-onboarding-light-gray: #F0F0F0;
-        --nfd-onboarding-light-gray-alt: #EFEFEF;
-        --nfd-onboarding-dark: #1D2A3B;
-        --nfd-onboarding-border: 219, 219, 219;
-        --nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
-        --nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
-    }
-    &.nfd-brand-hostgator {
-        --wp-admin-theme-color: #2e93ee;
-        --wp-admin-theme-color--rgb: 46, 147, 238;
-        --wp-admin-theme-color-darker-10: #1485ec;
-        --wp-admin-theme-color-darker-10--rgb: 20, 133, 236;
-        --wp-admin-theme-color-darker-20: #1177d2;
-        --wp-admin-theme-color-darker-20--rgb: 17, 119, 210;
-        --nfd-onboarding-dark-icon: url('../../Brands/hostgator/dark.svg');
-        --nfd-onboarding-icon: url('../../Brands/hostgator/icon.svg');
-        --nfd-onboarding-logo: url('../../Brands/hostgator/logo.svg');
-        --nfd-onboarding-primary: #2e93ee;
-        --nfd-onboarding-highlighted--rgb: 30, 32, 68;
-        --nfd-onboarding-primary-alt: #3b97ff;
-        --nfd-onboarding-secondary: #cdd8df;
-        --nfd-onboarding-secondary-alt: #363636;
-        --nfd-onboarding-tertiary: #ffcf00;
-        --nfd-onboarding-tertiary-alt: #ff9144;
-        --nfd-onboarding-light: #f5f6f8;
-        --nfd-onboarding-light-gray: #F0F0F0;
-        --nfd-onboarding-light-gray-alt: #EFEFEF;
-        --nfd-onboarding-dark: #1e2044;
-        --nfd-onboarding-border: 245, 246, 248;
-        --nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
-        --nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
-
-    }
-    &.nfd-brand-webcom {
-        --wp-admin-theme-color: #4b75fc;
-        --wp-admin-theme-color--rgb: 75, 117, 252;
-        --wp-admin-theme-color-darker-10: #2b5cfb;
-        --wp-admin-theme-color-darker-10--rgb: 43, 92, 251;
-        --wp-admin-theme-color-darker-20: #0B44FB;
-        --wp-admin-theme-color-darker-20--rgb: 11, 68, 251;
-        --nfd-onboarding-dark-icon: url('../../Brands/webcom/dark.svg');
-        --nfd-onboarding-icon: url('../../Brands/webcom/icon.svg');
-        --nfd-onboarding-logo: url('../../Brands/webcom/logo.svg');
-        --nfd-onboarding-primary: #4b75fc;
-        --nfd-onboarding-highlighted--rgb: 13, 71, 251;
-        --nfd-onboarding-primary-alt: #0d47fb;
-        --nfd-onboarding-secondary: #D4DCE1;
-        --nfd-onboarding-secondary-alt: #171003;
-        --nfd-onboarding-tertiary: #fed96a;
-        --nfd-onboarding-tertiary-alt: #fec101;
-        --nfd-onboarding-light: #FFFFFF;
-        --nfd-onboarding-light-gray: #F0F0F0;
-        --nfd-onboarding-light-gray-alt: #EFEFEF;
-        --nfd-onboarding-dark: #000000;
-        --nfd-onboarding-border: 219, 219, 219;
-        --nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary-alt);
-        --nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-tertiary-alt);
-    }
+	&.nfd-brand-bluehost {
+		--wp-admin-theme-color: #3575d3;
+		--wp-admin-theme-color--rgb: 53, 117, 211;
+		--wp-admin-theme-color-darker-10: #1c5cba;
+		--wp-admin-theme-color-darker-10--rgb: 28, 92, 186;
+		--wp-admin-theme-color-darker-20: #0242a0;
+		--wp-admin-theme-color-darker-20--rgb: 2, 66, 160;
+		--nfd-onboarding-dark-icon: url("../../Brands/bluehost/dark.svg");
+		--nfd-onboarding-icon: url("../../Brands/bluehost/icon.svg");
+		--nfd-onboarding-logo: url("../../Brands/bluehost/logo.svg");
+		--nfd-onboarding-primary: #3575d3;
+		--nfd-onboarding-highlighted--rgb: 123, 177, 253;
+		--nfd-onboarding-primary-alt: #2c76dc;
+		--nfd-onboarding-secondary: #495c77;
+		--nfd-onboarding-secondary-alt: #304663;
+		--nfd-onboarding-tertiary: #7bb1fd;
+		--nfd-onboarding-tertiary-alt: #84c0fc;
+		--nfd-onboarding-light: #ffffff;
+		--nfd-onboarding-light-gray: #f0f0f0;
+		--nfd-onboarding-light-gray-2: #efefef;
+		--nfd-onboarding-light-gray-3: #f2f2f2;
+		--nfd-onboarding-light-gray-4: #a7a7a7;
+		--nfd-onboarding-dark: #1d2a3b;
+		--nfd-onboarding-border: 219, 219, 219;
+		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
+		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
+	}
+	&.nfd-brand-hostgator {
+		--wp-admin-theme-color: #2e93ee;
+		--wp-admin-theme-color--rgb: 46, 147, 238;
+		--wp-admin-theme-color-darker-10: #1485ec;
+		--wp-admin-theme-color-darker-10--rgb: 20, 133, 236;
+		--wp-admin-theme-color-darker-20: #1177d2;
+		--wp-admin-theme-color-darker-20--rgb: 17, 119, 210;
+		--nfd-onboarding-dark-icon: url("../../Brands/hostgator/dark.svg");
+		--nfd-onboarding-icon: url("../../Brands/hostgator/icon.svg");
+		--nfd-onboarding-logo: url("../../Brands/hostgator/logo.svg");
+		--nfd-onboarding-primary: #2e93ee;
+		--nfd-onboarding-highlighted--rgb: 30, 32, 68;
+		--nfd-onboarding-primary-alt: #3b97ff;
+		--nfd-onboarding-secondary: #cdd8df;
+		--nfd-onboarding-secondary-alt: #363636;
+		--nfd-onboarding-tertiary: #ffcf00;
+		--nfd-onboarding-tertiary-alt: #ff9144;
+		--nfd-onboarding-light: #f5f6f8;
+		--nfd-onboarding-light-gray: #f0f0f0;
+		--nfd-onboarding-light-gray-2: #efefef;
+		--nfd-onboarding-light-gray-3: #f2f2f2;
+		--nfd-onboarding-light-gray-4: #a7a7a7;
+		--nfd-onboarding-dark: #1e2044;
+		--nfd-onboarding-border: 245, 246, 248;
+		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
+		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
+	}
+	&.nfd-brand-webcom {
+		--wp-admin-theme-color: #4b75fc;
+		--wp-admin-theme-color--rgb: 75, 117, 252;
+		--wp-admin-theme-color-darker-10: #2b5cfb;
+		--wp-admin-theme-color-darker-10--rgb: 43, 92, 251;
+		--wp-admin-theme-color-darker-20: #0b44fb;
+		--wp-admin-theme-color-darker-20--rgb: 11, 68, 251;
+		--nfd-onboarding-dark-icon: url("../../Brands/webcom/dark.svg");
+		--nfd-onboarding-icon: url("../../Brands/webcom/icon.svg");
+		--nfd-onboarding-logo: url("../../Brands/webcom/logo.svg");
+		--nfd-onboarding-primary: #4b75fc;
+		--nfd-onboarding-highlighted--rgb: 13, 71, 251;
+		--nfd-onboarding-primary-alt: #0d47fb;
+		--nfd-onboarding-secondary: #d4dce1;
+		--nfd-onboarding-secondary-alt: #171003;
+		--nfd-onboarding-tertiary: #fed96a;
+		--nfd-onboarding-tertiary-alt: #fec101;
+		--nfd-onboarding-light: #ffffff;
+		--nfd-onboarding-light-gray: #f0f0f0;
+		--nfd-onboarding-light-gray-2: #efefef;
+		--nfd-onboarding-light-gray-3: #f2f2f2;
+		--nfd-onboarding-light-gray-4: #a7a7a7;
+		--nfd-onboarding-dark: #000000;
+		--nfd-onboarding-border: 219, 219, 219;
+		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary-alt);
+		--nfd-onboarding-drawer-icon-active-fill: var(
+			--nfd-onboarding-tertiary-alt
+		);
+	}
 }

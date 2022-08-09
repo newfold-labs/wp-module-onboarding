@@ -68,9 +68,9 @@ const StepWhatNext = lazy( () => import( '../../pages/Steps/WhatNext' ) );
 const StepGetStartedExperience = lazy( () =>
 	import( '../../pages/Steps/GetStarted/GetStartedExperience' )
 );
-const StepPrimarySetup = lazy( () =>
-	import( '../../pages/Steps/PrimaryStep' )
-);
+
+const StepPrimarySetup = lazy(() => import('../../pages/Steps/GetStarted/SiteTypeSetup/PrimarySite'));
+const StepSecondarySetup = lazy(() => import('../../pages/Steps/GetStarted/SiteTypeSetup/SecondarySite'));
 
 const GetStartedLearnMoreHelp = lazy( () =>
 	import( '../../pages/Steps/GetStarted/SidebarComponents/LearnMore/Help' )
@@ -158,6 +158,38 @@ export const steps = [
 			LearnMore: [ GetStartedLearnMoreHelp ],
 		},
 	},
+     {
+		path: '/wp-setup/step/get-started/site-primary',
+		title: __('Primary Site Setup', 'wp-module-onboarding'),
+		heading: __('Help us tailor this setup to your site', 'wp-module-onboarding'),
+		subheading: __(
+			"What type of store is it?",
+			'wp-module-onboarding'
+		),
+		description: __(
+			"Setup more of your site, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
+			'wp-module-onboarding'
+		),
+		Component: StepPrimarySetup,
+		Icon: moveTo,
+		priority: 60,
+	},
+  {
+		path: '/wp-setup/step/get-started/site-secondary',
+		title: __('Secondary Site Setup', 'wp-module-onboarding'),
+	  	heading: __('Help us tailor this setup to your site', 'wp-module-onboarding'),
+		subheading: __(
+			"What type of store is it?",
+			'wp-module-onboarding'
+		),
+		description: __(
+			"Setup more of your site, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
+			'wp-module-onboarding'
+		),
+		Component: StepSecondarySetup,
+		Icon: moveTo,
+		priority: 80,
+	},
 	{
 		path: '/wp-setup/step/top-priority',
 		title: __( 'Top Priority', 'wp-module-onboarding' ),
@@ -172,7 +204,7 @@ export const steps = [
 		),
 		Component: StepTopPriority,
 		Icon: navigation,
-		priority: 60,
+		priority: 100,
 	},
 	{
 		path: '/wp-setup/step/basic-info',
@@ -185,7 +217,7 @@ export const steps = [
 		),
 		Component: StepBasicInfo,
 		Icon: info,
-		priority: 80,
+		priority: 120,
 	},
 	// {
 	// 	path: '/wp-setup/step/design/themes',
@@ -201,7 +233,7 @@ export const steps = [
 	// 	),
 	// 	Component: StepDesignThemes,
 	// 	Icon: brush,
-	// 	priority: 100,
+	// 	priority: 140,
 	// 	VIEW: VIEW_DESIGN_THEMES,
 	// },
 	// {
@@ -221,7 +253,7 @@ export const steps = [
 	// 	),
 	// 	Component: StepDesignThemeStyles,
 	// 	Icon: styles,
-	// 	priority: 120,
+	// 	priority: 160,
 	// 	VIEW: VIEW_DESIGN_THEME_STYLES,
 	// },
 	// {
@@ -238,7 +270,7 @@ export const steps = [
 	// 	),
 	// 	Component: StepDesignColors,
 	// 	Icon: color,
-	// 	priority: 140,
+	// 	priority: 180,
 	// 	VIEW: VIEW_DESIGN_COLORS,
 	// },
 	// {
@@ -255,7 +287,7 @@ export const steps = [
 	// 	),
 	// 	Component: StepDesignTypography,
 	// 	Icon: typography,
-	// 	priority: 160,
+	// 	priority: 200,
 	// 	VIEW: VIEW_DESIGN_TYPOGRAPHY,
 	// },
 	// {
@@ -275,7 +307,7 @@ export const steps = [
 	// 	),
 	// 	Component: StepDesignHeaderMenu,
 	// 	Icon: header,
-	// 	priority: 180,
+	// 	priority: 220,
 	// 	VIEW: VIEW_DESIGN_HEADER_MENU,
 	// },
 	// {
@@ -292,7 +324,7 @@ export const steps = [
 	// 	),
 	// 	Component: StepSitePages,
 	// 	Icon: copy,
-	// 	priority: 200,
+	// 	priority: 240,
 	// },
 	// {
 	// 	path: '/wp-setup/step/site-features',
@@ -308,7 +340,7 @@ export const steps = [
 	// 	),
 	// 	Component: StepSiteFeatures,
 	// 	Icon: plugins,
-	// 	priority: 220,
+	// 	priority: 260,
 	// },
 	// {
 	// 	path: '/wp-setup/step/what-next',
@@ -324,8 +356,9 @@ export const steps = [
 	// 	),
 	// 	Component: StepWhatNext,
 	// 	Icon: moveTo,
-	// 	priority: 240,
+	// 	priority: 280,
 	// },
+
 ];
 
 /**
