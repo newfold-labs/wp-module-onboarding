@@ -5,28 +5,29 @@
 }
 .nfd-setup-primary {
 	&-categories {
-			width: 40vw;
-			text-align: center;
-	
-			.nfd-card-category {
-				&.chosenPrimaryCategory {
-					background-color: var(--wp-admin-theme-color-darker-10);
-					color: var(--nfd-onboarding-light);
-				}
-	
-				.nfd-card-category-wrapper {
-					display: inline-flex;
-					align-items: center;
-				}
+		width: 40vw;
+		text-align: center;
+		margin-top: 2rem;
+
+		.nfd-card-category {
+			&.chosenPrimaryCategory {
+				background-color: var(--wp-admin-theme-color-darker-10);
+				color: var(--nfd-onboarding-light);
 			}
-	
-			.icon {
-				width: 25px;
-				height: 24px;
-				display: inline-block;
-				background-repeat: no-repeat;
-				background-position: center;
+
+			.nfd-card-category-wrapper {
+				display: inline-flex;
+				align-items: center;
 			}
+		}
+
+		.icon {
+			width: 25px;
+			height: 24px;
+			display: inline-block;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
 	}
 
 	&-second {
