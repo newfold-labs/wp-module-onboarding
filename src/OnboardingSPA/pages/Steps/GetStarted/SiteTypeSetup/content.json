@@ -1,0 +1,27 @@
+{
+	"cardHeading": "Help us tailor this setup to your site",
+	"subHeading": "ABOUT YOUR STORE",
+	"question": "What type of store is it?",
+	"buttonText": "Continue Setup",
+	"placeholderSiteTypeInput": "Enter your site type",
+	"tellusHereText": "or tell us here:",
+	"categories": [
+		{
+			"name": "Business",
+			"icon": "var(--business-icon)",
+			"iconWhite": "var(--business-white-icon)",
+			"subCategories": [
+				"Fashion, apparel and accessories",
+				"Health and beauty",
+				"Electronics and computers",
+				"Food and drink",
+				"CBD and other hemp-derived products",
+				"Jewelry",
+				"Pets",
+				"Motherhood & Baby",
+				"Furniture & Home Decoration",
+				"Education & Learning"
+			]
+		}
+	]
+}
