@@ -6,7 +6,7 @@ import { runtimeDataExists } from './constants';
 
 const webpackPublicPath = () => {
 	if (runtimeDataExists) {
-		__webpack_public_path__ = window.nfdOnboarding.url;
+		__webpack_public_path__ = window.nfdOnboarding.buildUrl;
 	}
 };
 

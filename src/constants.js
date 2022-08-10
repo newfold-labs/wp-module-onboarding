@@ -1,7 +1,11 @@
 export const NFD_ONBOARDING_ELEMENT_ID = 'nfd-onboarding';
 export const runtimeDataExists =
-	'object' === typeof window?.nfdOnboarding && 'url' in window.nfdOnboarding;
-export const apiBase = '?rest_route=/newfold-onboarding/v1/';
+	'object' === typeof window?.nfdOnboarding &&
+	'buildUrl' in window.nfdOnboarding;
+export const wpSiteUrl = window.nfdOnboarding.siteUrl;
+export const wpRestBase = `${ wpSiteUrl }/index.php?rest_route=`;
+export const onboardingRestRoute = 'newfold-onboarding/v1';
+export const onboardingRestBase = `${ wpRestBase }/${ onboardingRestRoute }`;
 export const NFD_ONBOARDING_EVENT_PREFIX = 'nfd-module-onboarding-event';
 export const VIEW_NAV_PRIMARY = 'nav-primary';
 export const VIEW_NAV_DESIGN = 'nav-design';
