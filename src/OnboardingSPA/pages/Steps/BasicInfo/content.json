@@ -1,14 +1,14 @@
 {
     "siteTitle": {
-        "title": "Site Title",
+        "title": "%s Title",
         "placeholder": "WordPress Site",
         "hint": "Shown to visitors, search engine and social media posts.",
         "maxCharacters": "80"
     },
     "siteDesc": {
-        "title": "Site Description",
+        "title": "%s Description",
         "placeholder": "Just another WordPress site.",
-        "hint": "Tell people who you are, what you sell and why they should visit your store.",
+        "hint": "Tell people who you are, what you sell and why they should visit your %s.",
         "maxCharacters": "160"
     },
     "error": {

@@ -210,12 +210,12 @@ export const steps = [
 	{
 		path: '/wp-setup/step/basic-info',
 		title: __( 'Basic Info', 'wp-module-onboarding' ),
-		heading: __( 'Introduce us to this website', 'wp-module-onboarding' ),
+		heading: sprintf(__( 'Introduce us to this %s', 'wp-module-onboarding' ), translations('website')),
 		subheading: __( 'So we can introduce it to the web', 'wp-module-onboarding' ),
-		description: __(
-			'Help visitors, search results and social media identify your site.',
+		description: sprintf(__(
+			'Help visitors, search results and social media identify your %s.',
 			'wp-module-onboarding'
-		),
+		), translations('site')),
 		Component: StepBasicInfo,
 		Icon: info,
 		priority: 120,
