@@ -8,5 +8,6 @@ import { translationMap } from '../../data/translations';
  */
 export const translations = ( word, context='noun' ) => {
      const flow = window?.nfdOnboarding?.currentFlow || 'wp-setup';
-     return translationMap[flow][word][context];
+     const translated_word =  translationMap[flow][word.toLowerCase()][context];
+     return (word[0] === word[0].toUpperCase())? translated_word[0].toUpperCase()+translated_word.substring(1) : translated_word;   
 }

@@ -114,14 +114,14 @@ const BasicInfoForm = () => {
             <div className="basic-info-form">
                 <div className="basic-info-form__left">
                     <TextInput 
-                        title={sprintf(__(content.siteTitle["title"], 'wp-module-onboarding'), translations('site', 'proper_noun'))} 
+                        title={sprintf(__(content.siteTitle["title"], 'wp-module-onboarding'), translations('Site'))} 
                         hint={__(content.siteTitle["hint"], 'wp-module-onboarding')} 
                         placeholder={__(content.siteTitle["placeholder"], 'wp-module-onboarding')} 
                         maxCharacters={__(content.siteTitle["maxCharacters"], 'wp-module-onboarding')} 
                         height="47px" textValue={siteTitle} textValueSetter={setSiteTitle} />
 
                     <TextInput 
-                        title={sprintf(__(content.siteDesc["title"], 'wp-module-onboarding'), translations('site', 'proper_noun'))} 
+                        title={sprintf(__(content.siteDesc["title"], 'wp-module-onboarding'), translations('Site'))} 
                         hint={sprintf(__(content.siteDesc["hint"], 'wp-module-onboarding'), translations('site'))} 
                         placeholder={__(content.siteDesc["placeholder"], 'wp-module-onboarding')} 
                         maxCharacters={__(content.siteDesc["maxCharacters"], 'wp-module-onboarding')} 

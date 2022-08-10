@@ -162,7 +162,7 @@ export const steps = [
 	},
      {
 		path: '/wp-setup/step/get-started/site-primary',
-		title: __('Primary Site Setup', 'wp-module-onboarding'),
+		title: sprintf(__('Primary %s Setup', 'wp-module-onboarding'), translations('Site')),
 		 /* translators: %s: website or store */
 		heading: sprintf(__('Help us tailor this setup to your %s', 'wp-module-onboarding'), translations('site')),
 		 /* translators: %s: website or store */
@@ -180,7 +180,7 @@ export const steps = [
 	},
   {
 		path: '/wp-setup/step/get-started/site-secondary',
-		title: __('Secondary Site Setup', 'wp-module-onboarding'),
+		title: sprintf(__('Secondary %s Setup', 'wp-module-onboarding'), translations('Site')),
 		 /* translators: %s: website or store */
 	  	heading: sprintf(__('Help us tailor this setup to your %s', 'wp-module-onboarding'), translations('site')),
 		subheading: sprintf(__(
