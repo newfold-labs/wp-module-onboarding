@@ -1,0 +1,743 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2022-08-10T13:45:30+02:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.6.0\n"
+"X-Domain: wp-module-onboarding\n"
+
+#: bootstrap.php:16
+#: includes/WP_Admin.php:41
+#: includes/WP_Admin.php:42
+msgid "Onboarding"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2544
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/DesignColors.js:6
+#: build/1.0.0/onboarding.js:1682
+msgid "Pick Color Palette"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2544
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/DesignColors.js:8
+#: build/1.0.0/onboarding.js:1684
+msgid "If user has opted for custom design, panel will show color palettes to affect preview pane."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2571
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/DesignHeaderMenu.js:6
+#: build/1.0.0/onboarding.js:1700
+msgid "Pick a Header & Menu Style"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2571
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/DesignHeaderMenu.js:8
+#: build/1.0.0/onboarding.js:1702
+msgid "Panel will show a few Header Patterns to affect preview pane."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2598
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/DesignThemeStyles.js:6
+#: build/1.0.0/onboarding.js:1718
+msgid "Pick a Theme Style"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2598
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/DesignThemeStyles.js:7
+#: build/1.0.0/onboarding.js:1719
+msgid "No Style Selected"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2598
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/DesignThemeStyles.js:8
+#: build/1.0.0/onboarding.js:1720
+msgid "Panel will show Theme details"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2598
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/DesignThemeStyles.js:9
+#: build/1.0.0/onboarding.js:1721
+msgid "With Style Selected"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2598
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/DesignThemeStyles.js:11
+#: build/1.0.0/onboarding.js:1723
+msgid "Panel will show single-column of other Styles."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2625
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/DesignThemes.js:6
+#: build/1.0.0/onboarding.js:1739
+msgid "Pick a Theme"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2625
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/DesignThemes.js:7
+#: build/1.0.0/onboarding.js:1740
+msgid "No Theme Selected"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2625
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/DesignThemes.js:9
+#: build/1.0.0/onboarding.js:1742
+msgid "Panel will show contextual help"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2625
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/DesignThemes.js:11
+#: build/1.0.0/onboarding.js:1744
+msgid "With Theme Selected"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2625
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/DesignThemes.js:13
+#: build/1.0.0/onboarding.js:1746
+msgid "Panel will show single-column of other Themes."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2652
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/DesignTypography.js:6
+#: build/1.0.0/onboarding.js:1762
+msgid "Pick Fonts & Text Sizes"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2652
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/DesignTypography.js:8
+#: build/1.0.0/onboarding.js:1764
+msgid "If user has opted for custom design, panel will show type treatments to affect preview pane."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2707
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/Ecommerce/NavStoreInfo.js:26
+#: build/1.0.0/onboarding.js:1800
+msgid "Site Setup"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2781
+#: build/1.0.0/onboarding.js:2854
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/NavDesign.js:27
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/NavGetStarted.js:26
+#: build/1.0.0/onboarding.js:1858
+#: build/1.0.0/onboarding.js:1915
+msgid "Main Menu"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:2917
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/NavPage.js:20
+#: build/1.0.0/onboarding.js:1966
+msgid "Resume Onboarding"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3109
+#: build/1.0.0/onboarding.js:3929
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/index.js:72
+#: src/OnboardingSPA/data/routes/default-flow.js:389
+#: build/1.0.0/onboarding.js:2114
+#: build/1.0.0/onboarding.js:2949
+msgid "Design"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3123
+#: src/OnboardingSPA/components/Drawer/DrawerPanel/index.js:89
+#: build/1.0.0/onboarding.js:2131
+msgid "WordPress Onboarding"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3196
+#: src/OnboardingSPA/components/Drawer/DrawerToggle/index.js:45
+#: build/1.0.0/onboarding.js:2223
+msgid "Toggle Navigation"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3294
+#: src/OnboardingSPA/components/ExitToWordPress/index.js:15
+#: build/1.0.0/onboarding.js:2288
+msgid "Exit to WordPress"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3310
+#: src/OnboardingSPA/components/ExitToWordPress/index.js:27
+#: build/1.0.0/onboarding.js:2300
+msgid "You can restart onboarding from your Bluehost Settings page."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3318
+#: src/OnboardingSPA/components/ExitToWordPress/index.js:44
+#: build/1.0.0/onboarding.js:2317
+msgid "Exit without finishing?"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3325
+#: src/OnboardingSPA/components/ExitToWordPress/index.js:50
+#: build/1.0.0/onboarding.js:2323
+msgid "Continue"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3328
+#: src/OnboardingSPA/components/ExitToWordPress/index.js:53
+#: build/1.0.0/onboarding.js:2326
+msgid "Exit"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3499
+#: src/OnboardingSPA/components/Header/step-navigation.js:22
+#: build/1.0.0/onboarding.js:2440
+msgid "Back"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3526
+#: src/OnboardingSPA/components/Header/step-navigation.js:41
+#: build/1.0.0/onboarding.js:2459
+msgid "Next"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3544
+#: src/OnboardingSPA/components/Header/step-navigation.js:53
+#: build/1.0.0/onboarding.js:2471
+msgid "Finish"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3748
+#: src/OnboardingSPA/data/routes/default-flow.js:95
+#: build/1.0.0/onboarding.js:2659
+msgid "Resources"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3754
+#: src/OnboardingSPA/data/routes/default-flow.js:102
+#: build/1.0.0/onboarding.js:2666
+msgid "What to Expect"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3760
+#: src/OnboardingSPA/data/routes/default-flow.js:109
+#: build/1.0.0/onboarding.js:2673
+msgid "Error 404"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3773
+#: src/OnboardingSPA/data/routes/default-flow.js:124
+#: build/1.0.0/onboarding.js:2688
+msgid "Welcome"
+msgstr ""
+
+#. translators: %s: website or store
+#: build/1.0.0/onboarding.js:3774
+#: src/OnboardingSPA/data/routes/default-flow.js:126
+#: build/1.0.0/onboarding.js:2689
+msgid "Make your %s dreams a reality!"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3775
+#: src/OnboardingSPA/data/routes/default-flow.js:127
+#: build/1.0.0/onboarding.js:2690
+msgid "with WordPress and "
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3776
+#: build/1.0.0/onboarding.js:3789
+#: src/OnboardingSPA/data/routes/default-flow.js:131
+#: src/OnboardingSPA/data/routes/default-flow.js:151
+#: build/1.0.0/onboarding.js:2694
+#: build/1.0.0/onboarding.js:2714
+msgid "We'll use this to personalize this onboarding and future recommendations"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3786
+#: src/OnboardingSPA/data/routes/default-flow.js:145
+#: build/1.0.0/onboarding.js:2708
+msgid "WordPress Experience"
+msgstr ""
+
+#. translators: %s: website or store
+#: build/1.0.0/onboarding.js:3787
+#: build/1.0.0/onboarding.js:3800
+#: build/1.0.0/onboarding.js:3809
+#: src/OnboardingSPA/data/routes/default-flow.js:146
+#: src/OnboardingSPA/data/routes/default-flow.js:167
+#: src/OnboardingSPA/data/routes/default-flow.js:185
+#: build/1.0.0/onboarding.js:2709
+#: build/1.0.0/onboarding.js:2729
+#: build/1.0.0/onboarding.js:2745
+msgid "Help us tailor this setup to your %s"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3788
+#: src/OnboardingSPA/data/routes/default-flow.js:147
+#: build/1.0.0/onboarding.js:2710
+msgid "What is your experience with WordPress?"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3799
+#: src/OnboardingSPA/data/routes/default-flow.js:165
+#: build/1.0.0/onboarding.js:2728
+msgid "Primary Site Setup"
+msgstr ""
+
+#. translators: %s: website or store
+#: build/1.0.0/onboarding.js:3801
+#: build/1.0.0/onboarding.js:3810
+#: src/OnboardingSPA/data/routes/default-flow.js:169
+#: src/OnboardingSPA/data/routes/default-flow.js:186
+#: build/1.0.0/onboarding.js:2730
+#: build/1.0.0/onboarding.js:2746
+msgid "What type of %s is it?"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3802
+#: build/1.0.0/onboarding.js:3811
+#: src/OnboardingSPA/data/routes/default-flow.js:173
+#: src/OnboardingSPA/data/routes/default-flow.js:190
+#: build/1.0.0/onboarding.js:2734
+#: build/1.0.0/onboarding.js:2750
+msgid "Setup more of your %s, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3808
+#: src/OnboardingSPA/data/routes/default-flow.js:183
+#: build/1.0.0/onboarding.js:2744
+msgid "Secondary Site Setup"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3817
+#: src/OnboardingSPA/data/routes/default-flow.js:200
+#: build/1.0.0/onboarding.js:2760
+msgid "Top Priority"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3818
+#: src/OnboardingSPA/data/routes/default-flow.js:201
+#: build/1.0.0/onboarding.js:2761
+msgid "Tell us your top priority"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3819
+#: src/OnboardingSPA/data/routes/default-flow.js:202
+#: build/1.0.0/onboarding.js:2762
+msgid "We'll prioritize getting you there."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3820
+#: src/OnboardingSPA/data/routes/default-flow.js:206
+#: build/1.0.0/onboarding.js:2766
+msgid "We'll recommend design choices, site options and products and features we have to offer."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3826
+#: src/OnboardingSPA/data/routes/default-flow.js:216
+#: build/1.0.0/onboarding.js:2776
+msgid "Basic Info"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3827
+#: src/OnboardingSPA/data/routes/default-flow.js:217
+#: build/1.0.0/onboarding.js:2777
+msgid "Introduce us to this %s"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3828
+#: src/OnboardingSPA/data/routes/default-flow.js:218
+#: build/1.0.0/onboarding.js:2778
+msgid "So we can introduce it to the web"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3829
+#: src/OnboardingSPA/data/routes/default-flow.js:219
+#: build/1.0.0/onboarding.js:2779
+msgid "Help visitors, search results and social media identify your %s."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3835
+#: src/OnboardingSPA/data/routes/default-flow.js:229
+#: build/1.0.0/onboarding.js:2789
+msgid "Themes"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3836
+#: src/OnboardingSPA/data/routes/default-flow.js:230
+#: build/1.0.0/onboarding.js:2790
+msgid "Let's make you look your best"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3837
+#: src/OnboardingSPA/data/routes/default-flow.js:231
+#: build/1.0.0/onboarding.js:2791
+msgid "Find a WordPress Theme to present polished and compelling."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3838
+#: src/OnboardingSPA/data/routes/default-flow.js:235
+#: build/1.0.0/onboarding.js:2795
+msgid "Your Theme is the starting place for layout and design, setting the tone for your site. Keep it for years or change and swap as you grow."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3845
+#: src/OnboardingSPA/data/routes/default-flow.js:246
+#: build/1.0.0/onboarding.js:2806
+msgid "Theme Styles"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3846
+#: src/OnboardingSPA/data/routes/default-flow.js:247
+#: build/1.0.0/onboarding.js:2807
+msgid "Lets tailor your theme for the perfect fit"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3847
+#: src/OnboardingSPA/data/routes/default-flow.js:251
+#: build/1.0.0/onboarding.js:2811
+msgid "Use these styles or bring your own. You're always free to remix them."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3848
+#: src/OnboardingSPA/data/routes/default-flow.js:255
+#: build/1.0.0/onboarding.js:2815
+msgid "All these styles -- plus the ability to customize them -- are available in the WordPress Site Editor"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3855
+#: src/OnboardingSPA/data/routes/default-flow.js:266
+#: build/1.0.0/onboarding.js:2826
+msgid "Colors"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3856
+#: src/OnboardingSPA/data/routes/default-flow.js:267
+#: build/1.0.0/onboarding.js:2827
+msgid "What's your color palette?"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3857
+#: src/OnboardingSPA/data/routes/default-flow.js:268
+#: build/1.0.0/onboarding.js:2828
+msgid "We'll paint everything with your colors for a fresh, crisp look."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3858
+#: src/OnboardingSPA/data/routes/default-flow.js:272
+#: build/1.0.0/onboarding.js:2832
+msgid "Strong contrast and clear readability help your words jump off the screen."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3865
+#: src/OnboardingSPA/data/routes/default-flow.js:283
+#: build/1.0.0/onboarding.js:2843
+msgid "Typography"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3866
+#: src/OnboardingSPA/data/routes/default-flow.js:284
+#: build/1.0.0/onboarding.js:2844
+msgid "What's your font style?"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3867
+#: src/OnboardingSPA/data/routes/default-flow.js:285
+#: build/1.0.0/onboarding.js:2845
+msgid "Impress your visitors with strong branding and aesthetics."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3868
+#: src/OnboardingSPA/data/routes/default-flow.js:289
+#: build/1.0.0/onboarding.js:2849
+msgid "Good typography uses style and proportions to give your words identity and priority. What's your story? Your focus?"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3875
+#: src/OnboardingSPA/data/routes/default-flow.js:300
+#: build/1.0.0/onboarding.js:2860
+msgid "Header & Menu"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3876
+#: src/OnboardingSPA/data/routes/default-flow.js:301
+#: build/1.0.0/onboarding.js:2861
+msgid "Let's make the right things visible"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3877
+#: src/OnboardingSPA/data/routes/default-flow.js:305
+#: build/1.0.0/onboarding.js:2865
+msgid "Your site header helps organize your story for visitors."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3878
+#: src/OnboardingSPA/data/routes/default-flow.js:309
+#: build/1.0.0/onboarding.js:2869
+msgid "A well-organized site makes visitors feel smart, helping you keep and convert them."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3885
+#: src/OnboardingSPA/data/routes/default-flow.js:320
+#: build/1.0.0/onboarding.js:2880
+msgid "Pages"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3886
+#: src/OnboardingSPA/data/routes/default-flow.js:321
+#: build/1.0.0/onboarding.js:2881
+msgid "We've got some page ideas"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3887
+#: src/OnboardingSPA/data/routes/default-flow.js:322
+#: build/1.0.0/onboarding.js:2882
+msgid "Start closer to the finish line than a blank canvas."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3888
+#: src/OnboardingSPA/data/routes/default-flow.js:326
+#: build/1.0.0/onboarding.js:2886
+msgid "Pick a page, pick a layout and we'll focus on the basics so you focus on what's important and unique."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3894
+#: src/OnboardingSPA/data/routes/default-flow.js:336
+#: build/1.0.0/onboarding.js:2896
+msgid "Features"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3895
+#: src/OnboardingSPA/data/routes/default-flow.js:337
+#: build/1.0.0/onboarding.js:2897
+msgid "Our toolbox is your toolbox"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3896
+#: src/OnboardingSPA/data/routes/default-flow.js:338
+#: build/1.0.0/onboarding.js:2898
+msgid "We've learned a lot in 16 years of WordPress! Now that expertise is yours."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3897
+#: src/OnboardingSPA/data/routes/default-flow.js:342
+#: build/1.0.0/onboarding.js:2902
+msgid "Through Plugins, partners and unique $BRAND WordPress features, you've got tons of capabilities with $SITE."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3903
+#: src/OnboardingSPA/data/routes/default-flow.js:352
+#: build/1.0.0/onboarding.js:2912
+msgid "What Next"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3904
+#: src/OnboardingSPA/data/routes/default-flow.js:353
+#: build/1.0.0/onboarding.js:2913
+msgid "How else can we help?"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3905
+#: src/OnboardingSPA/data/routes/default-flow.js:354
+#: build/1.0.0/onboarding.js:2914
+msgid "We've got the basics setup, but we can help with any next steps."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3906
+#: src/OnboardingSPA/data/routes/default-flow.js:358
+#: build/1.0.0/onboarding.js:2918
+msgid "Setup more of your site, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:3939
+#: build/1.0.0/onboarding.js:3940
+#: src/OnboardingSPA/data/routes/default-flow.js:398
+#: src/OnboardingSPA/data/routes/default-flow.js:399
+#: build/1.0.0/onboarding.js:2958
+#: build/1.0.0/onboarding.js:2959
+msgid "Get Started"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:4007
+#: build/1.0.0/onboarding.js:4008
+#: src/OnboardingSPA/data/routes/ecommerce-flow.js:26
+#: src/OnboardingSPA/data/routes/ecommerce-flow.js:27
+#: build/1.0.0/onboarding.js:3017
+#: build/1.0.0/onboarding.js:3018
+msgid "Street Address"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:4009
+#: build/1.0.0/onboarding.js:4019
+#: build/1.0.0/onboarding.js:4029
+#: src/OnboardingSPA/data/routes/ecommerce-flow.js:28
+#: src/OnboardingSPA/data/routes/ecommerce-flow.js:45
+#: src/OnboardingSPA/data/routes/ecommerce-flow.js:62
+#: build/1.0.0/onboarding.js:3019
+#: build/1.0.0/onboarding.js:3036
+#: build/1.0.0/onboarding.js:3053
+msgid "Hello, add a subheading for the learn more sidebar."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:4010
+#: build/1.0.0/onboarding.js:4020
+#: build/1.0.0/onboarding.js:4030
+#: src/OnboardingSPA/data/routes/ecommerce-flow.js:32
+#: src/OnboardingSPA/data/routes/ecommerce-flow.js:49
+#: src/OnboardingSPA/data/routes/ecommerce-flow.js:66
+#: build/1.0.0/onboarding.js:3023
+#: build/1.0.0/onboarding.js:3040
+#: build/1.0.0/onboarding.js:3057
+msgid "Hello, add a description for the learn more sidebar."
+msgstr ""
+
+#: build/1.0.0/onboarding.js:4017
+#: build/1.0.0/onboarding.js:4018
+#: src/OnboardingSPA/data/routes/ecommerce-flow.js:43
+#: src/OnboardingSPA/data/routes/ecommerce-flow.js:44
+#: build/1.0.0/onboarding.js:3034
+#: build/1.0.0/onboarding.js:3035
+msgid "Tax Info"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:4027
+#: build/1.0.0/onboarding.js:4028
+#: src/OnboardingSPA/data/routes/ecommerce-flow.js:60
+#: src/OnboardingSPA/data/routes/ecommerce-flow.js:61
+#: build/1.0.0/onboarding.js:3051
+#: build/1.0.0/onboarding.js:3052
+msgid "Product Info"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:4045
+#: src/OnboardingSPA/data/routes/ecommerce-flow.js:103
+#: build/1.0.0/onboarding.js:3094
+msgid "Store Info"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:4168
+#: src/OnboardingSPA/data/translations/index.js:6
+#: build/1.0.0/onboarding.js:3207
+msgctxt "noun"
+msgid "site"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:4169
+#: src/OnboardingSPA/data/translations/index.js:7
+#: build/1.0.0/onboarding.js:3208
+msgctxt "proper_noun"
+msgid "Site"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:4172
+#: src/OnboardingSPA/data/translations/index.js:10
+#: build/1.0.0/onboarding.js:3211
+msgctxt "noun"
+msgid "website"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:4177
+#: build/1.0.0/onboarding.js:4181
+#: src/OnboardingSPA/data/translations/index.js:15
+#: src/OnboardingSPA/data/translations/index.js:19
+#: build/1.0.0/onboarding.js:3216
+#: build/1.0.0/onboarding.js:3220
+msgctxt "noun"
+msgid "store"
+msgstr ""
+
+#: build/1.0.0/onboarding.js:4178
+#: src/OnboardingSPA/data/translations/index.js:16
+#: build/1.0.0/onboarding.js:3217
+msgctxt "proper_noun"
+msgid "Store"
+msgstr ""
+
+#: build/1.0.0/src_OnboardingSPA_components_Sidebar_components_LearnMore_Sidebar_js.js:53
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_DesignHeaderMenu_index_js.js:244
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_DesignThemeStyles_index_js.js:244
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_DesignThemes_index_js.js:244
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_DesignTypography_index_js.js:244
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_SiteFeatures_index_js.js:244
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_SitePages_index_js.js:244
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_WhatNext_index_js.js:244
+#: src/OnboardingSPA/components/Sidebar/components/LearnMore/Sidebar.js:33
+#: src/OnboardingSPA/components/StepOverview/index.js:45
+#: build/1.0.0/src_OnboardingSPA_components_Sidebar_components_LearnMore_Sidebar_js.js:33
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_DesignHeaderMenu_index_js.js:171
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_DesignThemeStyles_index_js.js:171
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_DesignThemes_index_js.js:171
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_DesignTypography_index_js.js:171
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_SiteFeatures_index_js.js:171
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_SitePages_index_js.js:171
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_WhatNext_index_js.js:171
+msgid "Learn More"
+msgstr ""
+
+#: build/1.0.0/src_OnboardingSPA_pages_Resources_index_js.js:177
+#: src/OnboardingSPA/pages/Resources/index.js:18
+#: build/1.0.0/src_OnboardingSPA_pages_Resources_index_js.js:116
+msgid "Resources Page."
+msgstr ""
+
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_BasicInfo_index_js.js:140
+#: src/OnboardingSPA/components/ImageUploader/index.js:76
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_BasicInfo_index_js.js:101
+msgid "RESET"
+msgstr ""
+
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_BasicInfo_index_js.js:143
+#: src/OnboardingSPA/components/ImageUploader/index.js:83
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_BasicInfo_index_js.js:108
+msgid "UPLOAD"
+msgstr ""
+
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_BasicInfo_index_js.js:680
+#: src/OnboardingSPA/components/SocialMediaForm/index.js:191
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_BasicInfo_index_js.js:524
+msgid "Social Media"
+msgstr ""
+
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_BasicInfo_index_js.js:971
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_TopPriority_index_js.js:404
+#: src/OnboardingSPA/pages/Steps/BasicInfo/basicInfoForm.js:137
+#: src/OnboardingSPA/pages/Steps/TopPriority/index.js:121
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_BasicInfo_index_js.js:775
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_TopPriority_index_js.js:307
+msgid "Skip this Step"
+msgstr ""
+
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_GetStarted_GetStartedExperience_index_js.js:306
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_GetStarted_SiteTypeSetup_PrimarySite_index_js.js:306
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_GetStarted_SiteTypeSetup_SecondarySite_index_js.js:306
+#: src/OnboardingSPA/components/NeedHelpTag/index.js:14
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_GetStarted_GetStartedExperience_index_js.js:205
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_GetStarted_SiteTypeSetup_PrimarySite_index_js.js:205
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_GetStarted_SiteTypeSetup_SecondarySite_index_js.js:205
+msgid "Need Help?"
+msgstr ""
+
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_GetStarted_GetStartedExperience_index_js.js:307
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_GetStarted_SiteTypeSetup_PrimarySite_index_js.js:307
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_GetStarted_SiteTypeSetup_SecondarySite_index_js.js:307
+#: src/OnboardingSPA/components/NeedHelpTag/index.js:15
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_GetStarted_GetStartedExperience_index_js.js:206
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_GetStarted_SiteTypeSetup_PrimarySite_index_js.js:206
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_GetStarted_SiteTypeSetup_SecondarySite_index_js.js:206
+msgid "Hire our Experts"
+msgstr ""
+
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_GetStarted_Welcome_index_js.js:925
+#: src/OnboardingSPA/pages/Steps/GetStarted/Welcome/index.js:71
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_GetStarted_Welcome_index_js.js:671
+msgid "Start Setup"
+msgstr ""
+
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_TopPriority_index_js.js:401
+#: src/OnboardingSPA/pages/Steps/TopPriority/index.js:107
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_TopPriority_index_js.js:293
+msgid "Where would you like to start? We'll start "
+msgstr ""
+
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_TopPriority_index_js.js:401
+#: src/OnboardingSPA/pages/Steps/TopPriority/index.js:112
+#: build/1.0.0/src_OnboardingSPA_pages_Steps_TopPriority_index_js.js:298
+msgid "there and then move into next steps."
+msgstr ""
