@@ -1,5 +1,5 @@
-import { resolve } from './resolve.js';
-import { onboardingRestBase } from '../../../constants.js';
+import { resolve } from './resolve';
+import { onboardingRestBase } from '../../../constants';
 
 import apiFetch from '@wordpress/api-fetch';
 
