@@ -27,13 +27,13 @@
 	select {
 		font-size: 1em;
 		padding-left: 17px;
-		width: 400px;
+		width: 300px;
 		min-height: 32px;
 		border: 1px solid #d6d6d6;
 		border-radius: 2px;
 	}
 
-	@media (min-width: #{($break-medium)}) {
+	@media (min-width: #{($break-medium)} ) {
 		form.onboarding-ecommerce-step {
 			height: unset;
 		}
@@ -53,6 +53,15 @@
 		select {
 			font-size: 16px;
 			min-height: 48px;
+			width:200px;
+		}
+	}
+	@media (min-width: #{($break-huge)}) {
+		input,
+		select {
+			font-size: 16px;
+			min-height: 48px;
+			width:400px;
 		}
 	}
 }
