@@ -3,11 +3,20 @@ namespace NewfoldLabs\WP\Module\Onboarding\Tasks;
 
 use NewfoldLabs\WP\Module\Onboarding\Services\ThemeInstaller;
 
+/**
+ * Task for installing a Theme.
+ */
 class ThemeInstallTask extends Task {
 	 private $slug, $activate, $priority, $retries;
 
+	 /**
+	  * @param string  $slug The slug for the Theme. Ref: includes/Data/Themes.php for the slugs.
+	  * @param boolean $activate A value of true activates the theme.
+	  * @param int     $priority Priority of the task, higher the number higher the priority.
+	  * @param int     $retries The number of times the Task has been retried
+	  */
 	function __construct( $slug, $activate, $priority = 0, $retries = 0 ) {
-		$this->slug    = $slug;
+		$this->slug     = $slug;
 		$this->activate = $activate;
 		$this->priority = $priority;
 		$this->retries  = $retries;
@@ -33,6 +42,11 @@ class ThemeInstallTask extends Task {
 		$this->retries++;
 	}
 
+	 /**
+	  * Installs the Theme using the ThemeInstaller Service.
+	  *
+	  * @return \WP_REST_Response|WP_Error
+	  */
 	public function execute() {
 		return ThemeInstaller::install(
 			$this->get_slug(),
@@ -40,6 +54,11 @@ class ThemeInstallTask extends Task {
 		);
 	}
 
+	 /**
+	  * Convert the ThemeInstallTask into an associative array.
+	  *
+	  * @return array
+	  */
 	public function to_array() {
 		return array(
 			'slug'     => $this->slug,

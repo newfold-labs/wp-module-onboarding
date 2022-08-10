@@ -6,12 +6,12 @@ use NewfoldLabs\WP\Module\Onboarding\Tasks\ThemeInstallTask;
 use NewfoldLabs\WP\Module\Onboarding\Models\PriorityQueue;
 
 /**
- * Manages the execution of PluginInstallTasks.
+ * Manages the execution of ThemeInstallTasks.
  */
 class ThemeInstallTaskManager {
 
 	 /**
-	  * The number of times a PluginInstallTask can be retried.
+	  * The number of times a ThemeInstallTask can be retried.
 	  *
 	  * @var int
 	  */
@@ -20,10 +20,10 @@ class ThemeInstallTaskManager {
 	private static $queue_name = 'theme_install_queue';
 
 	function __construct() {
-		// Ensure there is a thirty second option in the cron schedules
+		// Ensure there is a ten second option in the cron schedules
 		add_filter( 'cron_schedules', array( $this, 'add_ten_seconds_schedule' ) );
 
-		// Thirty second cron hook
+		// Ten second cron hook
 		add_action( 'nfd_module_onboarding_theme_install_cron', array( $this, 'install' ) );
 
 		// Register the cron task
@@ -48,22 +48,22 @@ class ThemeInstallTaskManager {
 	}
 
 	/**
-	 * Queue out a PluginInstallTask with the highest priority in the plugin install queue and execute it.
+	 * Queue out a ThemeInstallTask with the highest priority in the theme install queue and execute it.
 	 *
 	 * @return array|false
 	 */
 	public function install() {
 		/*
-		   Get the plugins queued up to be installed, the PluginInstall task gets
+		   Get the theme install tasks queued up to be installed, the ThemeInstallTask gets
 		  converted to an associative array before storing it in the option. */
 		$themes = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
 		/*
-		   Conversion of the max heap to an array will always place the PluginInstallTask with the highest
+		   Conversion of the max heap to an array will always place the ThemeInstallTask with the highest
 		  priority at the beginning of the array */
 		$theme_to_install = array_shift( $themes );
 
-		// Recreate the PluginInstall task from the associative array.
+		// Recreate the ThemeInstallTask from the associative array.
 		$theme_install_task = new ThemeInstallTask(
 			$theme_to_install['slug'],
 			$theme_to_install['activate'],
@@ -74,7 +74,7 @@ class ThemeInstallTaskManager {
 		// Update status to the current slug being installed.
 		\update_option( Options::get_option_name( 'theme_init_status' ), $theme_install_task->get_slug() );
 
-		// Execute the PluginInstall Task.
+		// Execute the ThemeInstallTask.
 		$status = $theme_install_task->execute();
 		if ( \is_wp_error( $status ) ) {
 
@@ -89,26 +89,26 @@ class ThemeInstallTaskManager {
 			}
 		}
 
-		// If there are no more plugins to be installed then change the status to completed.
+		// If there are no more themes to be installed then change the status to completed.
 		if ( empty( $themes ) ) {
 			\update_option( Options::get_option_name( 'theme_init_status' ), 'completed' );
 		}
 
-		// Update the plugin install queue.
+		// Update the theme install queue.
 		 return \update_option( Options::get_option_name( self::$queue_name ), $themes );
 	}
 
 	/**
-	 * @param PluginInstallTask $plugin_install_task
+	 * @param ThemeInstallTask $theme_install_task
 	 *
-	 * Adds a new PluginInstallTask to the Plugin Install queue.
+	 * Adds a new ThemeInstallTask to the Theme Install queue.
 	 * The Task will be inserted at an appropriate position in the queue based on it's priority.
 	 *
 	 * @return array|false
 	 */
 	public static function add_to_queue( ThemeInstallTask $theme_install_task ) {
 		/*
-		   Get the plugins queued up to be installed, the PluginInstall task gets
+		   Get the ThemeInstallTasks queued up to be installed, the ThemeInstallTask gets
 		   converted to an associative array before storing it in the option. */
 		$themes = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
@@ -116,7 +116,7 @@ class ThemeInstallTaskManager {
 		foreach ( $themes as $queued_theme ) {
 
 			/*
-			   Check if there is an already existing PluginInstallTask in the queue
+			   Check if there is an already existing ThemeInstallTask in the queue
 			   for a given slug and activation criteria. */
 			if ( $queued_theme['slug'] === $theme_install_task->get_slug()
 				  && $queued_theme['activate'] === $theme_install_task->get_activate() ) {
@@ -125,7 +125,7 @@ class ThemeInstallTaskManager {
 			 $queue->insert( $queued_theme, $queued_theme['priority'] );
 		}
 
-		// Insert a new PluginInstallTask at the appropriate position in the queue.
+		// Insert a new ThemeInstallTask at the appropriate position in the queue.
 		$queue->insert(
 			$theme_install_task->to_array(),
 			$theme_install_task->get_priority()

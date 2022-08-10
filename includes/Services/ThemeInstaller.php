@@ -7,8 +7,11 @@ class ThemeInstaller {
 	public static function install( $theme, $activate ) {
 		 $theme_list = Themes::get();
 
+		  // Checks if the theme slug is an nfd slug.
 		if ( self::is_nfd_slug( $theme ) ) {
+			   // Retrieve the theme stylesheet to determine if it has been already installed.
 			 $stylesheet = $theme_list['nfd_slugs'][ $theme ]['stylesheet'];
+				// Check if the theme already exists.
 			if ( ! ( \wp_get_theme( $stylesheet ) )->exists() ) {
 				$status = self::install_from_zip(
 					$theme_list['nfd_slugs'][ $theme ]['url'],
@@ -25,6 +28,7 @@ class ThemeInstaller {
 				);
 			}
 
+			   // If specified then activate the theme even if it already installed.
 			if ( $activate && ( ( \wp_get_theme() )->get( 'TextDomain' ) !== $stylesheet ) ) {
 				 $status = \switch_theme( $stylesheet );
 			}
@@ -80,6 +84,7 @@ class ThemeInstaller {
 			);
 		}
 
+		  // Activate the theme if specified.
 		if ( $activate && ( ( \wp_get_theme() )->get( 'TextDomain' ) !== $stylesheet ) ) {
 			 \switch_theme( $stylesheet );
 		}
@@ -91,6 +96,13 @@ class ThemeInstaller {
 
 	}
 
+	 /**
+	  * @param string $theme Slug of the theme.
+	  *
+	  * Checks if a given slug is a valid nfd_slug. Ref: includes/Data/Themes.php for nfd_slug.
+	  *
+	  * @return boolean
+	  */
 	public static function is_nfd_slug( $theme ) {
 		$theme_list = Themes::get();
 		if ( isset( $theme_list['nfd_slugs'][ $theme ]['approved'] ) ) {
@@ -99,11 +111,22 @@ class ThemeInstaller {
 		 return false;
 	}
 
+	/**
+	 * @param mixed $theme Slug of the theme present under includes/Data/Themes.php.
+	 * @param mixed $theme_type Type of theme Ref: includes/Data/Themes.php for types of theme slugs.
+	 *
+	 * @return string The theme stylesheet name.
+	 */
 	public static function get_theme_stylesheet( $theme, $theme_type ) {
 		 $theme_list = Themes::get();
 		 return $theme_list[ $theme_type ][ $theme ]['stylesheet'];
 	}
 
+	 /**
+	  * @param string $theme
+	  *
+	  * @return string Type of theme. Ref: includes/Data/Themes.php for the different types.
+	  */
 	public static function get_theme_type( $theme ) {
 		if ( self::is_nfd_slug( $theme ) ) {
 			 return 'nfd_slugs';
@@ -111,14 +134,36 @@ class ThemeInstaller {
 		return 'wp_slugs';
 	}
 
+	 /**
+	  * @param string $stylesheet The stylesheet of the theme.
+	  *
+	  * Determines if a theme has already been installed.
+	  *
+	  * @return boolean
+	  */
 	public static function is_theme_installed( $stylesheet ) {
 		 return ( \wp_get_theme( $stylesheet ) )->exists();
 	}
 
+	 /**
+	  * @param string $stylesheet The stylesheet of the theme.
+	  *
+	  * Determines if a theme is already active.
+	  *
+	  * @return boolean
+	  */
 	public static function is_theme_active( $stylesheet ) {
 		 return ( ( \wp_get_theme() )->get( 'TextDomain' ) ) === $stylesheet;
 	}
 
+	 /**
+	  * @param string $theme
+	  * @param string $activate
+	  *
+	  * Checks if a theme with the given slug and activation criteria already exists.
+	  *
+	  * @return boolean
+	  */
 	public static function exists( $theme, $activate ) {
 		 $theme_type       = self::get_theme_type( $theme );
 		 $theme_stylesheet = self::get_theme_stylesheet( $theme, $theme_type );
