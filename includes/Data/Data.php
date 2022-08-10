@@ -13,8 +13,9 @@ final class Data {
 	 */
 	public static function runtime() {
 		return array(
-			'url'               => \NFD_ONBOARDING_BUILD_URL,
-			'admin'             => \admin_url(),
+			'buildUrl'          => \NFD_ONBOARDING_BUILD_URL,
+			'siteUrl'           => \get_site_url(),
+			'adminUrl'          => \admin_url(),
 			'currentBrand'      => self::current_brand(),
 			'currentPlan'       => self::current_plan(),
 			'currentFlow'       => self::current_flow(),
