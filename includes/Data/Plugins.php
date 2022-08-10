@@ -37,10 +37,6 @@ final class Plugins {
 			'approved' => true,
 			'path'     => 'optinmonster/optin-monster-wp-api.php',
 		),
-          'wp-file-manager' => array(
-               'approved' => true,
-               'path'     => 'wp-file-manager/file_folder_manager'
-          )
 	);
 
 	 /**
@@ -110,41 +106,36 @@ final class Plugins {
 	  */
 	protected static $init_list = array(
 		'default'   => array(
-			// array(
-			// 	'slug'     => 'nfd_slug_endurance_page_cache',
-			// 	'activate' => true,
-			// 	'priority' => 240,
-			// ),
+			array(
+				'slug'     => 'nfd_slug_endurance_page_cache',
+				'activate' => true,
+				'priority' => 240,
+			),
 			array(
 				'slug'     => 'jetpack',
 				'activate' => true,
 				'priority' => 220,
 			),
-               array(
-                    'slug' => 'wp-file-manager',
-                    'activate' => true,
-                    'priority' => 200,
-               )
-			// array(
-			// 	'slug'     => 'wordpress-seo',
-			// 	'activate' => true,
-			// 	'priority' => 200,
-			// ),
-			// array(
-			// 	'slug'     => 'wpforms-lite',
-			// 	'activate' => true,
-			// 	'priority' => 180,
-			// ),
-			// array(
-			// 	'slug'     => 'google-analytics-for-wordpress',
-			// 	'activate' => true,
-			// 	'priority' => 160,
-			// ),
-			// array(
-			// 	'slug'     => 'optinmonster',
-			// 	'activate' => true,
-			// 	'priority' => 140,
-			// ),
+			array(
+				'slug'     => 'wordpress-seo',
+				'activate' => true,
+				'priority' => 200,
+			),
+			array(
+				'slug'     => 'wpforms-lite',
+				'activate' => true,
+				'priority' => 180,
+			),
+			array(
+				'slug'     => 'google-analytics-for-wordpress',
+				'activate' => true,
+				'priority' => 160,
+			),
+			array(
+				'slug'     => 'optinmonster',
+				'activate' => true,
+				'priority' => 140,
+			),
 		),
 		'ecommerce' => array(
 			'default'    => array(
@@ -249,7 +240,7 @@ final class Plugins {
 	}
 
 	/**
-	 * @param array  $value
+	 * @param array $value
 	 *
 	 * Checks if $value has been approved.
 	 *

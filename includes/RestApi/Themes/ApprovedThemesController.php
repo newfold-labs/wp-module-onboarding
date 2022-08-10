@@ -37,7 +37,7 @@ class ApprovedThemesController extends \WP_REST_Controller {
 					'callback'            => array( $this, 'get_approved_themes' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
-			),
+			)
 		);
 	}
 

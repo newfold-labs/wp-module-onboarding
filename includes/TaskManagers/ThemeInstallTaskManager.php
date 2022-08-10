@@ -15,9 +15,9 @@ class ThemeInstallTaskManager {
 	  *
 	  * @var int
 	  */
-	 private static $retry_limit = 1;
+	private static $retry_limit = 1;
 
-      private static $queue_name = 'theme_install_queue';
+	private static $queue_name = 'theme_install_queue';
 
 	function __construct() {
 		// Ensure there is a thirty second option in the cron schedules
@@ -32,9 +32,9 @@ class ThemeInstallTaskManager {
 		}
 	}
 
-     public static function get_queue_name() {
-          return self::$queue_name;
-     }
+	public static function get_queue_name() {
+		 return self::$queue_name;
+	}
 
 	public function add_ten_seconds_schedule( $schedules ) {
 		if ( ! array_key_exists( 'ten_seconds', $schedules ) || 10 !== $schedules['ten_seconds']['interval'] ) {

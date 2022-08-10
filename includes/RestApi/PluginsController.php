@@ -48,7 +48,7 @@ class PluginsController {
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'initialize' ),
-					// 'permission_callback' => array( $this, 'check_install_permissions' ),
+					'permission_callback' => array( $this, 'check_install_permissions' ),
 				),
 			)
 		);
