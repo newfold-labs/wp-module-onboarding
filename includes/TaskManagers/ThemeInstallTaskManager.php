@@ -15,7 +15,9 @@ class ThemeInstallTaskManager {
 	  *
 	  * @var int
 	  */
-	 private $retry_limit = 1;
+	 private static $retry_limit = 1;
+
+      private static $queue_name = 'theme_install_queue';
 
 	function __construct() {
 		// Ensure there is a thirty second option in the cron schedules
@@ -29,6 +31,10 @@ class ThemeInstallTaskManager {
 			wp_schedule_event( time(), 'ten_seconds', 'nfd_module_onboarding_theme_install_cron' );
 		}
 	}
+
+     public static function get_queue_name() {
+          return self::$queue_name;
+     }
 
 	public function add_ten_seconds_schedule( $schedules ) {
 		if ( ! array_key_exists( 'ten_seconds', $schedules ) || 10 !== $schedules['ten_seconds']['interval'] ) {
@@ -50,7 +56,7 @@ class ThemeInstallTaskManager {
 		/*
 		   Get the plugins queued up to be installed, the PluginInstall task gets
 		  converted to an associative array before storing it in the option. */
-		$themes = \get_option( Options::get_option_name( 'theme_install_queue' ), array() );
+		$themes = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
 		/*
 		   Conversion of the max heap to an array will always place the PluginInstallTask with the highest
@@ -78,7 +84,7 @@ class ThemeInstallTaskManager {
 			   /*
 				If the number of retries have not exceeded the limit
 				then re-queue the task at the end of the queue to be retried. */
-			if ( $theme_install_task->get_retries() <= $this->retry_limit ) {
+			if ( $theme_install_task->get_retries() <= self::$retry_limit ) {
 					array_push( $themes, $theme_install_task->to_array() );
 			}
 		}
@@ -89,7 +95,7 @@ class ThemeInstallTaskManager {
 		}
 
 		// Update the plugin install queue.
-		 return \update_option( Options::get_option_name( 'theme_install_queue' ), $themes );
+		 return \update_option( Options::get_option_name( self::$queue_name ), $themes );
 	}
 
 	/**
@@ -104,7 +110,7 @@ class ThemeInstallTaskManager {
 		/*
 		   Get the plugins queued up to be installed, the PluginInstall task gets
 		   converted to an associative array before storing it in the option. */
-		$themes = \get_option( Options::get_option_name( 'theme_install_queue' ), array() );
+		$themes = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
 		$queue = new PriorityQueue();
 		foreach ( $themes as $queued_theme ) {
@@ -125,6 +131,6 @@ class ThemeInstallTaskManager {
 			$theme_install_task->get_priority()
 		);
 
-		 return \update_option( Options::get_option_name( 'theme_install_queue' ), $queue->to_array() );
+		 return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
 	}
 }

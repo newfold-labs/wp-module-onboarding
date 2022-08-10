@@ -18,6 +18,7 @@ final class RestApi {
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SettingsController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\EventsController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\PagesController',
+          'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeInstallerController'
 	);
 
 	public function __construct() {

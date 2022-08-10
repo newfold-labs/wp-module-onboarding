@@ -84,7 +84,10 @@ class ThemeInstaller {
                \switch_theme( $stylesheet );
           }
 
-          return true;
+          return new \WP_REST_Response(
+               array(),
+               201
+          );;
      }
 
      public static function is_nfd_slug( $theme ) {
