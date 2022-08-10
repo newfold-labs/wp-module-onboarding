@@ -10,60 +10,6 @@
     "states": []
   },
   {
-    "code": "AL",
-    "name": "Albania",
-    "states": [
-      {
-        "code": "AL-01",
-        "name": "Berat"
-      },
-      {
-        "code": "AL-09",
-        "name": "Dibër"
-      },
-      {
-        "code": "AL-02",
-        "name": "Durrës"
-      },
-      {
-        "code": "AL-03",
-        "name": "Elbasan"
-      },
-      {
-        "code": "AL-04",
-        "name": "Fier"
-      },
-      {
-        "code": "AL-05",
-        "name": "Gjirokastër"
-      },
-      {
-        "code": "AL-06",
-        "name": "Korçë"
-      },
-      {
-        "code": "AL-07",
-        "name": "Kukës"
-      },
-      {
-        "code": "AL-08",
-        "name": "Lezhë"
-      },
-      {
-        "code": "AL-10",
-        "name": "Shkodër"
-      },
-      {
-        "code": "AL-11",
-        "name": "Tirana"
-      },
-      {
-        "code": "AL-12",
-        "name": "Vlorë"
-      }
-    ]
-  },
-  {
     "code": "DZ",
     "name": "Algeria",
     "states": [
@@ -802,11 +748,6 @@
     "states": []
   },
   {
-    "code": "BY",
-    "name": "Belarus",
-    "states": []
-  },
-  {
     "code": "PW",
     "name": "Belau",
     "states": []
@@ -930,11 +871,6 @@
   {
     "code": "BQ",
     "name": "Bonaire, Saint Eustatius and Saba",
-    "states": []
-  },
-  {
-    "code": "BA",
-    "name": "Bosnia and Herzegovina",
     "states": []
   },
   {
@@ -1072,124 +1008,6 @@
     "states": []
   },
   {
-    "code": "BG",
-    "name": "Bulgaria",
-    "states": [
-      {
-        "code": "BG-01",
-        "name": "Blagoevgrad"
-      },
-      {
-        "code": "BG-02",
-        "name": "Burgas"
-      },
-      {
-        "code": "BG-08",
-        "name": "Dobrich"
-      },
-      {
-        "code": "BG-07",
-        "name": "Gabrovo"
-      },
-      {
-        "code": "BG-26",
-        "name": "Haskovo"
-      },
-      {
-        "code": "BG-09",
-        "name": "Kardzhali"
-      },
-      {
-        "code": "BG-10",
-        "name": "Kyustendil"
-      },
-      {
-        "code": "BG-11",
-        "name": "Lovech"
-      },
-      {
-        "code": "BG-12",
-        "name": "Montana"
-      },
-      {
-        "code": "BG-13",
-        "name": "Pazardzhik"
-      },
-      {
-        "code": "BG-14",
-        "name": "Pernik"
-      },
-      {
-        "code": "BG-15",
-        "name": "Pleven"
-      },
-      {
-        "code": "BG-16",
-        "name": "Plovdiv"
-      },
-      {
-        "code": "BG-17",
-        "name": "Razgrad"
-      },
-      {
-        "code": "BG-18",
-        "name": "Ruse"
-      },
-      {
-        "code": "BG-27",
-        "name": "Shumen"
-      },
-      {
-        "code": "BG-19",
-        "name": "Silistra"
-      },
-      {
-        "code": "BG-20",
-        "name": "Sliven"
-      },
-      {
-        "code": "BG-21",
-        "name": "Smolyan"
-      },
-      {
-        "code": "BG-23",
-        "name": "Sofia"
-      },
-      {
-        "code": "BG-22",
-        "name": "Sofia-Grad"
-      },
-      {
-        "code": "BG-24",
-        "name": "Stara Zagora"
-      },
-      {
-        "code": "BG-25",
-        "name": "Targovishte"
-      },
-      {
-        "code": "BG-03",
-        "name": "Varna"
-      },
-      {
-        "code": "BG-04",
-        "name": "Veliko Tarnovo"
-      },
-      {
-        "code": "BG-05",
-        "name": "Vidin"
-      },
-      {
-        "code": "BG-06",
-        "name": "Vratsa"
-      },
-      {
-        "code": "BG-28",
-        "name": "Yambol"
-      }
-    ]
-  },
-  {
     "code": "BF",
     "name": "Burkina Faso",
     "states": []
@@ -1275,11 +1093,6 @@
   {
     "code": "KY",
     "name": "Cayman Islands",
-    "states": []
-  },
-  {
-    "code": "CF",
-    "name": "Central African Republic",
     "states": []
   },
   {
@@ -1645,16 +1458,6 @@
     "states": []
   },
   {
-    "code": "CG",
-    "name": "Congo (Brazzaville)",
-    "states": []
-  },
-  {
-    "code": "CD",
-    "name": "Congo (Kinshasa)",
-    "states": []
-  },
-  {
     "code": "CK",
     "name": "Cook Islands",
     "states": []
@@ -1699,13 +1502,8 @@
     "states": []
   },
   {
-    "code": "CU",
-    "name": "Cuba",
-    "states": []
-  },
-  {
     "code": "CW",
-    "name": "Cura&ccedil;ao",
+    "name": "Curaçao",
     "states": []
   },
   {
@@ -2206,11 +2004,6 @@
     "states": []
   },
   {
-    "code": "ET",
-    "name": "Ethiopia",
-    "states": []
-  },
-  {
     "code": "FK",
     "name": "Falkland Islands",
     "states": []
@@ -2607,11 +2400,6 @@
     "states": []
   },
   {
-    "code": "HT",
-    "name": "Haiti",
-    "states": []
-  },
-  {
     "code": "HM",
     "name": "Heard Island and McDonald Islands",
     "states": []
@@ -2691,24 +2479,6 @@
       {
         "code": "HN-YO",
         "name": "Yoro"
-      }
-    ]
-  },
-  {
-    "code": "HK",
-    "name": "Hong Kong",
-    "states": [
-      {
-        "code": "HONG KONG",
-        "name": "Hong Kong Island"
-      },
-      {
-        "code": "KOWLOON",
-        "name": "Kowloon"
-      },
-      {
-        "code": "NEW TERRITORIES",
-        "name": "New Territories"
       }
     ]
   },
@@ -3098,141 +2868,6 @@
         "name": "Papua Barat"
       }
     ]
-  },
-  {
-    "code": "IR",
-    "name": "Iran",
-    "states": [
-      {
-        "code": "KHZ",
-        "name": "Khuzestan (خوزستان)"
-      },
-      {
-        "code": "THR",
-        "name": "Tehran (تهران)"
-      },
-      {
-        "code": "ILM",
-        "name": "Ilaam (ایلام)"
-      },
-      {
-        "code": "BHR",
-        "name": "Bushehr (بوشهر)"
-      },
-      {
-        "code": "ADL",
-        "name": "Ardabil (اردبیل)"
-      },
-      {
-        "code": "ESF",
-        "name": "Isfahan (اصفهان)"
-      },
-      {
-        "code": "YZD",
-        "name": "Yazd (یزد)"
-      },
-      {
-        "code": "KRH",
-        "name": "Kermanshah (کرمانشاه)"
-      },
-      {
-        "code": "KRN",
-        "name": "Kerman (کرمان)"
-      },
-      {
-        "code": "HDN",
-        "name": "Hamadan (همدان)"
-      },
-      {
-        "code": "GZN",
-        "name": "Ghazvin (قزوین)"
-      },
-      {
-        "code": "ZJN",
-        "name": "Zanjan (زنجان)"
-      },
-      {
-        "code": "LRS",
-        "name": "Luristan (لرستان)"
-      },
-      {
-        "code": "ABZ",
-        "name": "Alborz (البرز)"
-      },
-      {
-        "code": "EAZ",
-        "name": "East Azarbaijan (آذربایجان شرقی)"
-      },
-      {
-        "code": "WAZ",
-        "name": "West Azarbaijan (آذربایجان غربی)"
-      },
-      {
-        "code": "CHB",
-        "name": "Chaharmahal and Bakhtiari (چهارمحال و بختیاری)"
-      },
-      {
-        "code": "SKH",
-        "name": "South Khorasan (خراسان جنوبی)"
-      },
-      {
-        "code": "RKH",
-        "name": "Razavi Khorasan (خراسان رضوی)"
-      },
-      {
-        "code": "NKH",
-        "name": "North Khorasan (خراسان شمالی)"
-      },
-      {
-        "code": "SMN",
-        "name": "Semnan (سمنان)"
-      },
-      {
-        "code": "FRS",
-        "name": "Fars (فارس)"
-      },
-      {
-        "code": "QHM",
-        "name": "Qom (قم)"
-      },
-      {
-        "code": "KRD",
-        "name": "Kurdistan / کردستان)"
-      },
-      {
-        "code": "KBD",
-        "name": "Kohgiluyeh and BoyerAhmad (کهگیلوییه و بویراحمد)"
-      },
-      {
-        "code": "GLS",
-        "name": "Golestan (گلستان)"
-      },
-      {
-        "code": "GIL",
-        "name": "Gilan (گیلان)"
-      },
-      {
-        "code": "MZN",
-        "name": "Mazandaran (مازندران)"
-      },
-      {
-        "code": "MKZ",
-        "name": "Markazi (مرکزی)"
-      },
-      {
-        "code": "HRZ",
-        "name": "Hormozgan (هرمزگان)"
-      },
-      {
-        "code": "SBN",
-        "name": "Sistan and Baluchestan (سیستان و بلوچستان)"
-      }
-    ]
-  },
-  {
-    "code": "IQ",
-    "name": "Iraq",
-    "states": []
   },
   {
     "code": "IE",
@@ -4357,11 +3992,6 @@
     "states": []
   },
   {
-    "code": "LB",
-    "name": "Lebanon",
-    "states": []
-  },
-  {
     "code": "LS",
     "name": "Lesotho",
     "states": []
@@ -4431,11 +4061,6 @@
         "name": "Sinoe"
       }
     ]
-  },
-  {
-    "code": "LY",
-    "name": "Libya",
-    "states": []
   },
   {
     "code": "LI",
@@ -4873,11 +4498,6 @@
     "states": []
   },
   {
-    "code": "ME",
-    "name": "Montenegro",
-    "states": []
-  },
-  {
     "code": "MS",
     "name": "Montserrat",
     "states": []
@@ -4936,11 +4556,6 @@
         "name": "Zambézia"
       }
     ]
-  },
-  {
-    "code": "MM",
-    "name": "Myanmar",
-    "states": []
   },
   {
     "code": "NA",
@@ -5392,16 +5007,6 @@
   {
     "code": "NF",
     "name": "Norfolk Island",
-    "states": []
-  },
-  {
-    "code": "KP",
-    "name": "North Korea",
-    "states": []
-  },
-  {
-    "code": "MK",
-    "name": "North Macedonia",
     "states": []
   },
   {
@@ -6263,7 +5868,7 @@
   },
   {
     "code": "BL",
-    "name": "Saint Barth&eacute;lemy",
+    "name": "Saint Barthélemy",
     "states": []
   },
   {
@@ -6313,7 +5918,7 @@
   },
   {
     "code": "ST",
-    "name": "S&atilde;o Tom&eacute; and Pr&iacute;ncipe",
+    "name": "São Tomé and Príncipe",
     "states": []
   },
   {
@@ -6325,140 +5930,6 @@
     "code": "SN",
     "name": "Senegal",
     "states": []
-  },
-  {
-    "code": "RS",
-    "name": "Serbia",
-    "states": [
-      {
-        "code": "RS00",
-        "name": "Belgrade"
-      },
-      {
-        "code": "RS14",
-        "name": "Bor"
-      },
-      {
-        "code": "RS11",
-        "name": "Braničevo"
-      },
-      {
-        "code": "RS02",
-        "name": "Central Banat"
-      },
-      {
-        "code": "RS10",
-        "name": "Danube"
-      },
-      {
-        "code": "RS23",
-        "name": "Jablanica"
-      },
-      {
-        "code": "RS09",
-        "name": "Kolubara"
-      },
-      {
-        "code": "RS08",
-        "name": "Mačva"
-      },
-      {
-        "code": "RS17",
-        "name": "Morava"
-      },
-      {
-        "code": "RS20",
-        "name": "Nišava"
-      },
-      {
-        "code": "RS01",
-        "name": "North Bačka"
-      },
-      {
-        "code": "RS03",
-        "name": "North Banat"
-      },
-      {
-        "code": "RS24",
-        "name": "Pčinja"
-      },
-      {
-        "code": "RS22",
-        "name": "Pirot"
-      },
-      {
-        "code": "RS13",
-        "name": "Pomoravlje"
-      },
-      {
-        "code": "RS19",
-        "name": "Rasina"
-      },
-      {
-        "code": "RS18",
-        "name": "Raška"
-      },
-      {
-        "code": "RS06",
-        "name": "South Bačka"
-      },
-      {
-        "code": "RS04",
-        "name": "South Banat"
-      },
-      {
-        "code": "RS07",
-        "name": "Srem"
-      },
-      {
-        "code": "RS12",
-        "name": "Šumadija"
-      },
-      {
-        "code": "RS21",
-        "name": "Toplica"
-      },
-      {
-        "code": "RS05",
-        "name": "West Bačka"
-      },
-      {
-        "code": "RS15",
-        "name": "Zaječar"
-      },
-      {
-        "code": "RS16",
-        "name": "Zlatibor"
-      },
-      {
-        "code": "RS25",
-        "name": "Kosovo"
-      },
-      {
-        "code": "RS26",
-        "name": "Peć"
-      },
-      {
-        "code": "RS27",
-        "name": "Prizren"
-      },
-      {
-        "code": "RS28",
-        "name": "Kosovska Mitrovica"
-      },
-      {
-        "code": "RS29",
-        "name": "Kosovo-Pomoravlje"
-      },
-      {
-        "code": "RSKM",
-        "name": "Kosovo-Metohija"
-      },
-      {
-        "code": "RSVO",
-        "name": "Vojvodina"
-      }
-    ]
   },
   {
     "code": "SC",
@@ -6545,11 +6016,6 @@
   {
     "code": "KR",
     "name": "South Korea",
-    "states": []
-  },
-  {
-    "code": "SS",
-    "name": "South Sudan",
     "states": []
   },
   {
@@ -6769,11 +6235,6 @@
   {
     "code": "LK",
     "name": "Sri Lanka",
-    "states": []
-  },
-  {
-    "code": "SD",
-    "name": "Sudan",
     "states": []
   },
   {
@@ -8723,112 +8184,6 @@
     "states": []
   },
   {
-    "code": "VE",
-    "name": "Venezuela",
-    "states": [
-      {
-        "code": "VE-A",
-        "name": "Capital"
-      },
-      {
-        "code": "VE-B",
-        "name": "Anzoátegui"
-      },
-      {
-        "code": "VE-C",
-        "name": "Apure"
-      },
-      {
-        "code": "VE-D",
-        "name": "Aragua"
-      },
-      {
-        "code": "VE-E",
-        "name": "Barinas"
-      },
-      {
-        "code": "VE-F",
-        "name": "Bolívar"
-      },
-      {
-        "code": "VE-G",
-        "name": "Carabobo"
-      },
-      {
-        "code": "VE-H",
-        "name": "Cojedes"
-      },
-      {
-        "code": "VE-I",
-        "name": "Falcón"
-      },
-      {
-        "code": "VE-J",
-        "name": "Guárico"
-      },
-      {
-        "code": "VE-K",
-        "name": "Lara"
-      },
-      {
-        "code": "VE-L",
-        "name": "Mérida"
-      },
-      {
-        "code": "VE-M",
-        "name": "Miranda"
-      },
-      {
-        "code": "VE-N",
-        "name": "Monagas"
-      },
-      {
-        "code": "VE-O",
-        "name": "Nueva Esparta"
-      },
-      {
-        "code": "VE-P",
-        "name": "Portuguesa"
-      },
-      {
-        "code": "VE-R",
-        "name": "Sucre"
-      },
-      {
-        "code": "VE-S",
-        "name": "Táchira"
-      },
-      {
-        "code": "VE-T",
-        "name": "Trujillo"
-      },
-      {
-        "code": "VE-U",
-        "name": "Yaracuy"
-      },
-      {
-        "code": "VE-V",
-        "name": "Zulia"
-      },
-      {
-        "code": "VE-W",
-        "name": "Federal Dependencies"
-      },
-      {
-        "code": "VE-X",
-        "name": "La Guaira (Vargas)"
-      },
-      {
-        "code": "VE-Y",
-        "name": "Delta Amacuro"
-      },
-      {
-        "code": "VE-Z",
-        "name": "Amazonas"
-      }
-    ]
-  },
-  {
     "code": "VN",
     "name": "Vietnam",
     "states": []
@@ -8851,11 +8206,6 @@
   {
     "code": "EH",
     "name": "Western Sahara",
-    "states": []
-  },
-  {
-    "code": "YE",
-    "name": "Yemen",
     "states": []
   },
   {
@@ -8903,10 +8253,5 @@
         "name": "Muchinga"
       }
     ]
-  },
-  {
-    "code": "ZW",
-    "name": "Zimbabwe",
-    "states": []
   }
 ]
