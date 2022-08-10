@@ -23,11 +23,11 @@ final class Brands {
 			'domainsUrl'       => 'https://my.bluehost.com/hosting/app?lil=1#/domains',
 			'emailUrl'         => 'https://my.bluehost.com/hosting/app?lil=1#/email-office',
 			'hireExpertsInfo'   => array(
-				'defaultLink' 		=> 'https://www.bluehost.com/solutions/full-service', 
+				'defaultLink' 		=> 'admin.php?page=bluehost#/marketplace/services/blue-sky', 
 				'utmParameters' 	=> array(
-						'utm_source' 	=> 'blog',
-						'utm_medium' 	=> 'socialmedia',
-						'utm_campaign' 	=> 'blogpost')),
+						'utm_source' 	=> 'onboarding',
+						'utm_medium' 	=> 'wp_admin',
+						'utm_campaign' 	=> 'wp-setup')),
 		),
 		'bluehost-india' => array(
 			'brand'            => 'bluehost-india',
