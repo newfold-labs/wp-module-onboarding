@@ -4,6 +4,11 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi\Themes;
 use NewfoldLabs\WP\Module\Onboarding\Models\Theme;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
+use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\Services\ThemeInstaller;
+use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ThemeInstallTaskManager;
+use NewfoldLabs\WP\Module\Onboarding\Tasks\ThemeInstallTask;
 
 /**
  * Class ApprovedThemeController
@@ -37,9 +42,43 @@ class ApprovedThemesController extends \WP_REST_Controller {
 					'callback'            => array( $this, 'get_approved_themes' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
+                    array(
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'initialize' ),
+					// 'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
 			)
 		);
 	}
+
+     public static function initialize() {
+          if ( \get_option( Options::get_option_name( 'theme_init_status' ), 'init' ) !== 'init' ) {
+			return new \WP_REST_Response(
+				array(),
+				202
+			);
+		}
+
+          \update_option( Options::get_option_name( 'theme_init_status' ), 'installing' );
+
+          $init_themes = Themes::get_init();
+          foreach( $init_themes as $init_theme ) {
+               if ( ! ThemeInstaller::exists( $init_theme['slug'], $init_theme['activate'] ) ) {
+                    ThemeInstallTaskManager::add_to_queue(
+                         new ThemeInstallTask(
+                              $init_theme['slug'],
+                              $init_theme['activate'],
+                              $init_theme['priority']
+                         )
+                    );
+               }
+          }
+
+          return new \WP_REST_Response(
+               array(),
+               202
+          );
+     }
 
 	/**
 	 * Get a list of approved themes.
