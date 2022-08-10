@@ -31,9 +31,6 @@
 		flex-direction: column;
 		justify-content: space-around;
 
-		&-top {
-		}
-
 		&-bottom {
 			margin-top: 20px;
 		}
@@ -57,7 +54,7 @@
 	color: var(--nfd-onboarding-black);
 	font-size: 1rem;
 	font-weight: 700;
-	margin-top: 2rem;
+	margin-top: 0rem;
 	text-align: center;
 }
 
@@ -69,4 +66,13 @@
 	@media (max-width: #{($break-medium - 1)}) {
 		width: 40vw;
 	}
+}
+
+.nfd-step-card-heading {
+	font-weight: 700;
+}
+
+.nfd-step-card-subheading {
+	font-weight: 700;
+	color: var(--nfd-onboarding-primary);
 }

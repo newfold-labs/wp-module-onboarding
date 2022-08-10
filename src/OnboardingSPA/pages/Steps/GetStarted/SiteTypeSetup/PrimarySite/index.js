@@ -68,6 +68,7 @@ const StepPrimarySetup = () => {
 	return (
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard>
+			<div className="nfd-onboarding-experience-step">
 				<div className="nfd-card-heading center">
 					<CardHeader
 						heading={__(currentStep?.heading, 'wp-module-onboarding')}
@@ -109,6 +110,7 @@ const StepPrimarySetup = () => {
 						<NeedHelpTag />
 					</div>
 				</div>
+			</div>
 			</NewfoldLargeCard>
 		</CommonLayout>
 	);
