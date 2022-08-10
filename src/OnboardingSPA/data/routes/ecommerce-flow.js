@@ -47,7 +47,7 @@ export const ecommerceSteps = [
 			'wp-module-onboarding'
 		),
 		description: __(
-			'In this section, you can provide more information about your products and business, which will help us tailor your store setup experience and identify possible extensions you\'ll need for your online store.',
+			'By using your store address we can automatically calculate how much sales tax should be collected by your customers. Taxes can be configure at anytime in the WooCommerce Settings tab.',
 			'wp-module-onboarding'
 		),
 		Component: StepTax,
