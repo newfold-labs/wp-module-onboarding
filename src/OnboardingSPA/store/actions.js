@@ -9,7 +9,7 @@
 export function setRuntime( runtime ) {
 	window.nfdOnboarding = {
 		buildUrl: runtime.buildUrl,
-          siteUrl: runtime.siteUrl,
+		siteUrl: runtime.siteUrl,
 		migrated: true,
 		currentFlow: runtime.currentFlow ?? 'wp-setup',
 	};
