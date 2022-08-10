@@ -67,7 +67,7 @@ const StepPrimarySetup = () => {
 
 	return (
 		<CommonLayout isBgPrimary isCentered>
-			<NewfoldLargeCard className={'site-type-card'}>
+			<NewfoldLargeCard>
 				<div className="nfd-card-heading center">
 					<CardHeader
 						heading={__(currentStep?.heading, 'wp-module-onboarding')}
