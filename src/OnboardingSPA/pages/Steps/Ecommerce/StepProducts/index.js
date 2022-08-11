@@ -33,18 +33,20 @@ const StepProducts = () => {
 		setIsSidebarOpened(false);
 		setIsDrawerSuppressed(false);
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
-		setCurrentOnboardingData({ productInfo: { product_types: [] } });
 	}, []);
 
 	const handleCheckbox = (value, checked) => {
 		setCurrentOnboardingData({
-			productInfo: {
-				...currentData.productInfo,
-				product_types: checked
-					? [...currentData.productInfo?.product_types, value]
-					: currentData.productInfo.product_types.filter(
-							(product) => product !== value
-					  ),
+			storeDetails: {
+				...currentData.storeDetails,
+				productInfo: {
+					...currentData.storeDetails.productInfo,
+					product_types: checked
+						? [...currentData.storeDetails.productInfo?.product_types, value]
+						: currentData.storeDetails.productInfo.product_types.filter(
+								(product) => product !== value
+						  ),
+				},
 			},
 		});
 	};

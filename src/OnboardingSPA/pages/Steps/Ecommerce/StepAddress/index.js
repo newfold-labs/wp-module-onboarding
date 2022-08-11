@@ -52,7 +52,7 @@ const StepAddress = () => {
 				storeDetails: {
 					...currentData.storeDetails,
 					address: {
-						...currentData.storeDetails.address,
+						...(currentData.storeDetails.address ?? {}),
 						...addressKeys.reduce(
 							(address, key) => ({ ...address, [key]: settings[key] }),
 							{}
@@ -63,23 +63,12 @@ const StepAddress = () => {
 		}
 	}, [settings]);
 
-	function handleFieldChange(event) {
-		setCurrentOnboardingData({
-			storeDetails: {
-				...currentData.storeDetails,
-				address: {
-					...currentData.storeDetails.address,
-					[event.target.name]: event.target.value
-				},
-			},
-		});
-	}
+	let { address } = currentData.storeDetails;
 	const fieldProps = {
 		disabled: settings === null,
 		onChange: handleFieldChange,
 		onBlur: handleFieldChange,
 	};
-	let { address, tax } = currentData.storeDetails;
 	let defaultPlace =
 		address?.woocommerce_default_country ??
 		settings?.woocommerce_default_country ??
@@ -89,6 +78,30 @@ const StepAddress = () => {
 	let states =
 		countries?.find((country) => country.code === selectedCountry)?.states ??
 		[];
+	function handleFieldChange(event) {
+		let fieldName = event.target.name;
+		let newValue = event.target.value;
+		let { country = selectedCountry, state = defaultState } = address;
+		let place = "";
+		if (["country", "state"].includes(fieldName)) {
+			place =
+				fieldName === "country"
+					? `${newValue}:${state}`
+					: `${country}:${newValue}`;
+		}
+		setCurrentOnboardingData({
+			storeDetails: {
+				...currentData.storeDetails,
+				address: {
+					...currentData.storeDetails.address,
+					[fieldName]: newValue,
+					...(place !== "" && {
+						woocommerce_default_country: place,
+					}),
+				},
+			},
+		});
+	}
 	return (
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard className='nfd-ecommerce-address-step'>
@@ -101,7 +114,7 @@ const StepAddress = () => {
 							let selectedTaxOption = content.stepTaxOptions.find((option) =>
 								Object.entries(option.data).every(
 									([optionName, requiredValue]) =>
-										tax?.[optionName] === requiredValue
+										settings?.[optionName] === requiredValue
 								)
 							);
 							navigate(

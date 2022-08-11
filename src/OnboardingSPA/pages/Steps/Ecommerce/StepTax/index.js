@@ -53,8 +53,9 @@ const StepTax = () => {
 				storeDetails: {
 					...currentData.storeDetails,
 					tax: {
-						...currentData.storeDetails.tax,
+						...(currentData.storeDetails.tax ?? {}),
 						...tax,
+						option: selectedTaxOption?.value
 					},
 				},
 			});
@@ -98,7 +99,10 @@ const StepTax = () => {
 							setCurrentOnboardingData({
 								storeDetails: {
 									...currentData.storeDetails,
-									tax: selectedOption.data,
+									tax: {
+										...selectedOption.data,
+										option: selectedOption.value,
+									},
 								},
 							});
 						}}

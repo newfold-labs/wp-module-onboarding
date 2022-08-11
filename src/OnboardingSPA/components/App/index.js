@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { setFlow } from '../../utils/api/flow';
 import { getSettings, setSettings } from '../../utils/api/settings';
+import { isEmpty, updateWPSettings } from '../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../store';
 
 import { kebabCase } from 'lodash';
@@ -45,6 +46,7 @@ const App = () => {
 
 	const [isRequestPlaced, setIsRequestPlaced] = useState(false);
 	const [didVisitBasicInfo, setDidVisitBasicInfo] = useState(false);
+	const [didVisitEcommerce, setDidVisitEcommerce] = useState(false);
 	const { setActiveStep, setActiveFlow, setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
 
 	async function syncSocialSettings() {
@@ -57,6 +59,31 @@ const App = () => {
 		}
 		return result?.body;
 	}
+	
+	async function syncStoreDetails() {
+		let { address, tax } = currentData.storeDetails;
+		let payload = {};
+		if (address !== undefined) {
+			delete address.country;
+			delete address.state;
+			payload = address;
+		}
+		if (tax !== undefined) {
+			let option = tax.option;
+			delete tax.option;
+			if (option !== "1") {
+				payload = { ...payload, ...tax };
+			} else if (address !== undefined) {
+				payload = { ...payload, ...tax };
+			}
+		}
+		if (!isEmpty(payload)) {
+			await updateWPSettings(payload);
+		}
+		delete currentData.storeDetails.address;
+		delete currentData.storeDetails.tax;
+		setDidVisitEcommerce(false);
+	}
 
 	async function syncStoreToDB() {
 		// The First Welcome Step doesn't have any Store changes
@@ -64,6 +91,10 @@ const App = () => {
 		if (currentData && !isFirstStep){
 			if(!isRequestPlaced){
 				setIsRequestPlaced(true);
+
+				if (didVisitEcommerce) {
+					await syncStoreDetails();
+				}
 
 				// If Social Data is changed then sync it
 				if (didVisitBasicInfo){
@@ -88,6 +119,9 @@ const App = () => {
 		// Check if the Basic Info page was visited
 		if (location?.pathname.includes('basic-info'))
 			setDidVisitBasicInfo(true);
+		if (location?.pathname.includes('ecommerce')) {
+			setDidVisitEcommerce(true);
+		}
 	}
 
 	useEffect(() => {
