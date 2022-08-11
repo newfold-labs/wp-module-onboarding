@@ -44,7 +44,7 @@ const StepTax = () => {
 
 	const settings = useWPSettings();
 	useEffect(() => {
-		if (settings !== null) {
+		if (settings !== null && currentData.storeDetails.tax === undefined) {
 			let selectedTaxOption = content.stepTaxOptions.find(
 				createReverseLookup(settings)
 			);
@@ -61,9 +61,8 @@ const StepTax = () => {
 				},
 			});
 		}
-	}, [settings]);
+	}, [settings, currentData.storeDetails]);
 	let { tax } = currentData.storeDetails;
-	let selected = content.stepTaxOptions.find(createReverseLookup(tax));
 	const handleButtonClick = () => {
 		let isAddressNeeded = tax?.option === "1" && !tax.isStoreDetailsFilled;
 		navigate(
@@ -85,7 +84,7 @@ const StepTax = () => {
 					</div>
 					<RadioControl
 						className='nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-tax-step'
-						selected={selected?.value}
+						selected={tax?.option}
 						options={content.stepTaxOptions.map((option) => {
 							return {
 								label: __(option.content, 'wp-module-onboarding'),
@@ -102,7 +101,7 @@ const StepTax = () => {
 									tax: {
 										...selectedOption.data,
 										option: selectedOption.value,
-										isStoreDetailsFilled: tax.isStoreDetailsFilled
+										isStoreDetailsFilled: tax?.isStoreDetailsFilled
 									},
 								},
 							});
@@ -110,7 +109,7 @@ const StepTax = () => {
 					/>
 					<button
 						className='nfd-nav-card-button nfd-card-button'
-						disabled={settings === null || selected === undefined}
+						disabled={settings === null || tax?.option === undefined}
 						onClick={handleButtonClick}
 					>
 						{ __( 'Continue Setup', 'wp-module-onboarding') }

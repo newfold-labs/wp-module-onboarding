@@ -47,7 +47,7 @@ const StepAddress = () => {
 			'woocommerce_store_postcode',
 			'woocommerce_default_country'
 		];
-		if (settings !== null) {
+		if (settings !== null && currentData.storeDetails.address === undefined) {
 			setCurrentOnboardingData({
 				storeDetails: {
 					...currentData.storeDetails,
@@ -61,7 +61,7 @@ const StepAddress = () => {
 				},
 			});
 		}
-	}, [settings]);
+	}, [settings, currentData.storeDetails]);
 
 	let { address } = currentData.storeDetails;
 	const fieldProps = {
