@@ -1,3 +1,16 @@
+.nfd-onboarding-large-card {
+	margin: 1vh 1vh;
+	@media (max-width: #{ ($break-medium - 1) })  {
+		padding: 20px;
+		margin: 5vh;
+	}
+	
+	@media (max-width: 1710px) {
+		&.site-type-card {
+			height: fit-content;
+		}
+	}
+}
 .nfd-setup-secondary {
 	&-categories {
 			width: 47vw;
