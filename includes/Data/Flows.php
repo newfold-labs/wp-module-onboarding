@@ -102,8 +102,6 @@ final class Flows {
 		'doesCommerce'         => false,
 
 		'storeDetails'         => array(
-			'address'         => array(),
-			'tax'             => array(),
 			'productInfo'     => array(
 				'product_count' => '',
 				'product_types' => array()
