@@ -23,8 +23,10 @@ final class Brands {
 			'domainsUrl'       => 'https://my.bluehost.com/hosting/app?lil=1#/domains',
 			'emailUrl'         => 'https://my.bluehost.com/hosting/app?lil=1#/email-office',
 			'hireExpertsInfo'   => array(
-				'defaultLink' 		=> 'admin.php?page=bluehost#/marketplace/services/blue-sky', 
-				'utmParameters' 	=> array(
+				'defaultLink' 		=> 'admin.php?',
+				'fragment'			=> '#/marketplace/services/blue-sky', 
+				'queryParameters' 	=> array(
+						'page' 			=> 'bluehost',
 						'utm_source' 	=> 'onboarding',
 						'utm_medium' 	=> 'wp_admin',
 						'utm_campaign' 	=> 'wp-setup')),
