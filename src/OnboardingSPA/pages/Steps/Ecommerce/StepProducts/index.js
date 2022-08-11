@@ -25,7 +25,7 @@ const StepProducts = () => {
 	let currentData = useSelect((select) =>
 		select(nfdOnboardingStore).getCurrentOnboardingData()
 	);
-
+	let productInfo = currentData.storeDetails.productInfo;
 	useEffect(() => {
 		if (isLargeViewport) {
 			setIsDrawerOpened(true);
@@ -35,21 +35,27 @@ const StepProducts = () => {
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
 	}, []);
 
-	const handleCheckbox = (value, checked) => {
+	const handleCheckbox = (value, checked) =>
 		setCurrentOnboardingData({
 			storeDetails: {
 				...currentData.storeDetails,
 				productInfo: {
-					...currentData.storeDetails.productInfo,
+					...productInfo,
 					product_types: checked
-						? [...currentData.storeDetails.productInfo?.product_types, value]
-						: currentData.storeDetails.productInfo.product_types.filter(
-								(product) => product !== value
-						  ),
+						? [...productInfo?.product_types, value]
+						: productInfo?.product_types.filter((product) => product !== value),
 				},
 			},
 		});
-	};
+
+	const handleProductCount = (count) =>
+		setCurrentOnboardingData({
+			storeDetails: {
+				...currentData.storeDetails,
+				productInfo: { ...productInfo, product_count: count },
+			},
+		});
+
 
 	return (
 		<CommonLayout isBgPrimary isCentered>
@@ -64,7 +70,7 @@ const StepProducts = () => {
 					<div className='nfd-product-step-options'>
 						{content.productOptions.map((product) => (
 							<CheckboxControl
-								checked={currentData.productInfo?.product_types.includes(
+								checked={productInfo.product_types.includes(
 									product.value
 								)}
 								label={product.content}
@@ -78,21 +84,14 @@ const StepProducts = () => {
 						</span>
 						<RadioControl
 							className='components-radio-control__input'
-							selected={currentData.productInfo?.product_count}
+							selected={productInfo?.product_count}
 							options={content.stepProductNumbers.map((option) => {
 								return {
 									label: __(option.content, 'wp-module-onboarding'),
 									value: __(option.value, 'wp-module-onboarding'),
 								};
 							})}
-							onChange={(value) =>
-								setCurrentOnboardingData({
-									productInfo: {
-										...currentData.productInfo,
-										product_count: value,
-									},
-								})
-							}
+							onChange={handleProductCount}
 						/>
 					</div>
 					<NavCardButton text={__(content.buttonText, 'wp-module-onboarding')} />
