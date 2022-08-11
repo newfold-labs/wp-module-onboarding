@@ -70,10 +70,14 @@ const App = () => {
 		}
 		if (tax !== undefined) {
 			let option = tax.option;
+			let isStoreDetailsFilled = tax.isStoreDetailsFilled;
 			delete tax.option;
-			if (option !== "1") {
-				payload = { ...payload, ...tax };
-			} else if (address !== undefined) {
+			delete tax.isStoreDetailsFilled;
+			if (option === "1") {
+				if (isStoreDetailsFilled) {
+					payload = { ...payload, ...tax };
+				}
+			} else {
 				payload = { ...payload, ...tax };
 			}
 		}

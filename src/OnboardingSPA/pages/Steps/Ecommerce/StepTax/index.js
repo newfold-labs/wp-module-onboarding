@@ -55,17 +55,17 @@ const StepTax = () => {
 					tax: {
 						...(currentData.storeDetails.tax ?? {}),
 						...tax,
-						option: selectedTaxOption?.value
+						option: selectedTaxOption?.value,
+						isStoreDetailsFilled: settings.woocommerce_store_postcode !== null,
 					},
 				},
 			});
 		}
 	}, [settings]);
-	let { address, tax } = currentData.storeDetails;
+	let { tax } = currentData.storeDetails;
 	let selected = content.stepTaxOptions.find(createReverseLookup(tax));
-	const isStoreDetailsFilled = address?.woocommerce_store_postcode !== null;
 	const handleButtonClick = () => {
-		let isAddressNeeded = selected?.value === "1" && !isStoreDetailsFilled;
+		let isAddressNeeded = tax?.option === "1" && !tax.isStoreDetailsFilled;
 		navigate(
 			isAddressNeeded ? '/ecommerce/step/address' : '/ecommerce/step/products'
 		);
@@ -102,6 +102,7 @@ const StepTax = () => {
 									tax: {
 										...selectedOption.data,
 										option: selectedOption.value,
+										isStoreDetailsFilled: tax.isStoreDetailsFilled
 									},
 								},
 							});
