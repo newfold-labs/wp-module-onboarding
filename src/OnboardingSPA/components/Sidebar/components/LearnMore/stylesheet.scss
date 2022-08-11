@@ -1,6 +1,8 @@
 .components-button:focus:not(:disabled),
 .components-button.is-pressed:focus:not(:disabled) {
 	box-shadow: none;
+	min-height: 8vh;
+	min-width: 2.5vw;
 }
 
 .nfd-onboarding-sidebar-learn-more__container {

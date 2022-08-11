@@ -1,6 +1,7 @@
 .nfd-onboarding-header {
     align-items: center;
     background-color: var(--nfd-onboarding-header-bg);
+    border-bottom: 1px solid #e0e0e0;
     color: var(--nfd-onboarding-header-fg);
     h2, h3, h4 {
         color: var(--nfd-onboarding-header-fg);
@@ -97,3 +98,10 @@
     }
 }
 
+.interface-interface-skeleton__header {
+    flex-shrink: 0;
+    height: auto;
+    border-bottom: 1px solid #e0e0e0;
+    z-index: 30;
+    color: #1e1e1e;
+}
