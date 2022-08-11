@@ -34,11 +34,14 @@ final class Themes {
 	  * prevent entering negative numbers when queueing a theme for earlier installs.
 	  */
 	protected static $init_list = array(
-		'default' => array(
-			array(
-				'slug'     => 'nfd_slug_yith_wonder',
-				'activate' => true,
-				'priority' => 20,
+		'default'   => array(),
+		'ecommerce' => array(
+			'default' => array(
+				array(
+					'slug'     => 'nfd_slug_yith_wonder',
+					'activate' => true,
+					'priority' => 20,
+				),
 			),
 		),
 	);
@@ -76,6 +79,19 @@ final class Themes {
 	  * @return array
 	  */
 	public static function get_init() {
-		 return self::$init_list['default'];
+		$plan_data    = Data::current_plan();
+		$plan_flow    = $plan_data['flow'];
+		$plan_subtype = $plan_data['subtype'];
+		$init_list    = self::$init_list['default'];
+		if ( $plan_flow && isset( self::$init_list[ $plan_flow ] ) ) {
+			if ( isset( self::$init_list[ $plan_flow ]['default'] ) ) {
+				  $init_list = array_merge( $init_list, self::$init_list[ $plan_flow ]['default'] );
+			}
+			if ( $plan_subtype !== 'default' && isset( self::$init_list[ $plan_flow ][ $plan_subtype ] ) ) {
+				   $init_list = array_merge( $init_list, self::$init_list[ $plan_flow ][ $plan_subtype ] );
+			}
+		}
+
+		return $init_list;
 	}
 }
