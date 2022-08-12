@@ -73,13 +73,16 @@ class ModuleController {
         \do_action('qm/debug', 'Ran is_ecom_customer');
 
 		// August 18 at 10AM Mountain Time
-		$newCustDate = '2022-08-18T17:00:00.000Z';
+		$newCustDate = date("Y-m-d H:i:s", strtotime('2022-08-18T17:00:00.000Z'));
 		$commerce_plans = ["wc_standard", "wc_premium"];
 
 		if ( isset( $customer_data['plan_subtype'] ) && isset( $customer_data['signup_date'] ) ) {
 
+			// Convert the Customer Signup Date to a Php known format
+			$cust_signup_date = date("Y-m-d H:i:s", strtotime( $customer_data['signup_date'] ));
+
 			// If the Customer has a ecommerce plan and is a New Customer to the Company
-			if( in_array( $customer_data['plan_subtype'], $commerce_plans ) && $customer_data['signup_date'] == $newCustDate ){
+			if( in_array( $customer_data['plan_subtype'], $commerce_plans ) && $cust_signup_date >= $newCustDate ){
         		\do_action('qm/debug', 'Returned True');
 				return true;
 			}
