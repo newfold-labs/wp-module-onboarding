@@ -164,7 +164,7 @@ const StepAddress = () => {
 							<div>
 								<label>{__('State', 'wp-module-onboarding')}</label>
 								{states.length === 0 || settings === null ? (
-									<input type='text' name='state' disabled={settings === null} required {...fieldProps} />
+									<input type='text' name='state' disabled={settings === null} {...fieldProps} />
 								) : (
 									<select
 										type='text'
