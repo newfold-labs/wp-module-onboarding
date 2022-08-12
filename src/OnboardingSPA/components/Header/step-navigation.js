@@ -60,7 +60,6 @@ async function syncSocialSettingsFinish( currentData ) {
 async function saveData(path, currentData) {
 
 	if (currentData) {
-
 		// If Social Data is changed then sync it
 		if (path?.includes('basic-info')) {
 			const socialData = await syncSocialSettingsFinish(currentData);
