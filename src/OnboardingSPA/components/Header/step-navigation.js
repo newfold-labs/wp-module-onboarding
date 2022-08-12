@@ -7,7 +7,7 @@ import { __ } from '@wordpress/i18n';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
-import { adminPage, bluehostDashboardPage } from '../../../constants';
+import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
 
 /**
  * Back step Navigation button.
@@ -73,7 +73,7 @@ async function saveData(path, currentData) {
 	}
 	//Redirect to Admin Page for normal customers 
 	// and Bluehost Dashboard for ecommerce customers
-	const exitLink = exitToWordpressForEcommerce() ? bluehostDashboardPage : adminPage;
+	const exitLink = exitToWordpressForEcommerce() ? bluehostDashboardPage : wpAdminPage;
 	window.location.replace(exitLink);
 }
 
