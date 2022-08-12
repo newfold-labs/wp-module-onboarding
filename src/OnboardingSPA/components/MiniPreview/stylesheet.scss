@@ -106,9 +106,8 @@ $title-browser-color: #3858E9;
             padding-left: 12px;
             flex-direction: row;
             align-items: center;
-            border-radius: 20px 20px 0px 0px;
+            border-radius: 8px 8px 0px 0px;
             background-color: $browser-light;
-            clip-path: polygon(5% 0, 95% 0, 100% 100%, 0% 100%);
 
             &-text{
                 padding-left: 6px;
