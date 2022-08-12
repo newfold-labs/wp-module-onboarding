@@ -29,8 +29,10 @@ class ModuleController {
 
 		$moudle_name = 'onboarding';
         $customer_data = self::customer_data();
-        $customer_data['plan_subtype'] = 'wc_premium';
-        $customer_data['signup_date']  = '2022-08-18T17:00:00.000Z';
+
+		// Sample data for Testing
+        // $customer_data['plan_subtype'] = 'wc_standard';
+        // $customer_data['signup_date']  = '2022-08-18T17:00:00.000Z';
 
 		// Check if he is a Non-Ecom Cust and Disable Redirect and Module
 		if( !self::is_ecom_customer( $customer_data ) ){
