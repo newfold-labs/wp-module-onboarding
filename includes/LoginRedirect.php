@@ -69,6 +69,15 @@ class LoginRedirect {
 	}
 
 	/**
+	 * Sets a transient that enables redirect to onboarding on login.
+	 *
+	 * @return void
+	 */
+	public static function enable_redirect() {
+		  \set_transient( Options::get_option_name( 'redirect_param' ), '0', 30 );
+	}
+
+	/**
 	 * Removes the onboarding login redirect action.
 	 *
 	 * @return bool
