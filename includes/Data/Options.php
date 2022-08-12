@@ -16,8 +16,6 @@ final class Options {
 	protected static array $options = array(
 		'redirect'                      => 'redirect',
 		'redirect_param'                => 'redirect_param',
-		'exited'                        => 'exited',
-		'completed'                     => 'completed',
 		'coming_soon'                   => 'mm_coming_soon',
 		'brand'                         => 'mm_brand',
 		'close_comments_for_old_posts'  => 'close_comments_for_old_posts',
@@ -32,6 +30,7 @@ final class Options {
 		'settings_initialized'          => 'settings_initialized',
 		'plugins_init_status'           => 'plugins_init_status',
 		'plugin_install_queue'          => 'plugin_install_queue',
+		'flow'                          => 'flow',
 	);
 
 	protected static array $initialization_options = array(

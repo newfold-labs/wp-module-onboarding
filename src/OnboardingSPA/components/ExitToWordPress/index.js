@@ -58,6 +58,7 @@ const ExitToWordPress = ({
 	async function saveData(path, currentData) {
 
 		if (currentData) {
+               currentData.hasExited = new Date().getTime();
 
 			// If Social Data is changed then sync it
 			if (path?.includes('basic-info')) {

@@ -13,9 +13,17 @@ class LoginRedirect {
 			 self::disable_redirect();
 		}
 
+		$flow_exited    = false;
+		$flow_completed = false;
+		$flow_data      = \get_option( Options::get_option_name( 'flow' ), false );
+		if ( ! empty( $flow_data ) ) {
+			$flow_exited    = ( ! empty( $flow_data['hasExited'] ) );
+			$flow_completed = ( ! empty( $flow_data['isComplete'] ) );
+		}
+
 		if ( \get_transient( Options::get_option_name( 'redirect_param' ) ) === '1'
-		 || \get_option( Options::get_option_name( 'exited' ), false )
-		 || \get_option( Options::get_option_name( 'completed' ), false )
+		 || $flow_exited
+		 || $flow_completed
 		 ) {
 			return $redirect;
 		}
@@ -26,7 +34,7 @@ class LoginRedirect {
 		}
 
 		if ( ! ( $redirect_option
-			    && \get_option( Options::get_option_name( 'coming_soon', false ), 'true' ) ) === 'true' ) {
+				&& \get_option( Options::get_option_name( 'coming_soon', false ), 'true' ) ) === 'true' ) {
 			 return $redirect;
 		}
 

@@ -11,7 +11,9 @@ final class Flows {
 		'isViewed'             => array(),
 
 		// The first time required criteria met (if any), mark GMT timestamp.
-		'isComplete'           => '',
+		'isComplete'           => false,
+
+		'hasExited'            => false,
 
 		// If user navigates to another step, mark GMT timestamp.
 		'isSkipped'            => array(),
@@ -26,10 +28,10 @@ final class Flows {
 		// to populate the step fields if a user is resuming a flow.
 		'data'                 => array(
 			'siteType'        => array(
-				'label'   => '',
-				'referTo' => 'site',
-        'primary' => 'primaryCategory',
-        'secondary' => 'secondaryCategory',
+				'label'     => '',
+				'referTo'   => 'site',
+				'primary'   => 'primaryCategory',
+				'secondary' => 'secondaryCategory',
 			),
 
 			'wpComfortLevel'  => '0',

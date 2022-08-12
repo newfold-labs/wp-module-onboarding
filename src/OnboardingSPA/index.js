@@ -21,6 +21,12 @@ const NFDOnboarding = () => (
 	</HashRouter>
 );
 
+const initializeFlowData = ( currentData ) => {
+	currentData.hasExited = false;
+	currentData.isComplete = false;
+	return currentData;
+};
+
 /**
  * Method to initialize Onboarding interface inside WordPress Admin.
  *
@@ -34,10 +40,12 @@ export async function initializeNFDOnboarding( id, runtime ) {
 	const DOM_TARGET = document.getElementById( id );
 	dispatch( nfdOnboardingStore ).setRuntime( runtime );
 	const currentData = await getFlow();
-	if ( currentData.error == null )
+	if ( currentData.error == null ) {
+		currentData.body = initializeFlowData( currentData.body );
 		dispatch( nfdOnboardingStore ).setCurrentOnboardingData(
 			currentData.body
 		);
+	}
 
 	if ( null !== DOM_TARGET && 'undefined' !== typeof render ) {
 		render( <NFDOnboarding />, DOM_TARGET );
