@@ -26,36 +26,27 @@ class ModuleController {
 	 * Check if the user is a valid Ecommerce and subsequently enable/disable modules
 	 */
 	public static function module_switcher() {
-        // \do_action('qm/debug', 'Ran Moudle Switcher');
 
 		$moudle_name = 'onboarding';
         $customer_data = self::customer_data();
         $customer_data['plan_subtype'] = 'wc_premium';
         $customer_data['signup_date']  = '2022-08-18T17:00:00.000Z';
-        \do_action('qm/debug', isActive( $moudle_name ));
 
+		// Check if he is a Non-Ecom Cust and Disable Redirect and Module
 		if( !self::is_ecom_customer( $customer_data ) ){
-        	\do_action('qm/debug', 'Inside If Loop');
-        	\do_action('qm/debug', ModuleRegistry::getActive());
-        	\do_action('qm/debug', ModuleRegistry::get( $moudle_name ));
-        	\do_action('qm/debug', isActive( $moudle_name ));
-			
-			if( ModuleRegistry::get( $moudle_name ) ){
 
-        		\do_action('qm/debug', 'Activated and Running');
-				\do_action('qm/debug', isActive( $moudle_name ));
+			// Check if the Module Does Exist
+			if( ModuleRegistry::get( $moudle_name ) ){
 
 				// Disable the Redirect for Onboarding SPA
         		LoginRedirect::disable_redirect();
 
 				// Deactivate the Module
 				deactivate( $moudle_name );
-				\do_action('qm/debug', isActive( $moudle_name ));
-        		\do_action('qm/debug', ModuleRegistry::getActive());
-        		\do_action('qm/debug', ModuleRegistry::get( $moudle_name ));
 			}
 		}
 		else {
+			// Check if the Module Does Exist
 			if( ModuleRegistry::get( $moudle_name ) ){
 				
 				// Enable the Redirect for Onboarding SPA
@@ -74,7 +65,7 @@ class ModuleController {
 	 * @return mixed
 	 */
 	public static function customer_data() {
-        // \do_action('qm/debug', 'Ran customer_data');
+
 		if ( class_exists( 'Bluehost\WP\Data\Customer' ) ) {
 			 return Customer::collect();
 		}
@@ -103,7 +94,6 @@ class ModuleController {
 			$has_ecom_plan = Flows::get_flow_from_plan_subtype( $customer_data['plan_subtype'] ) == "ecommerce";
 
 			if( $has_ecom_plan  &&  $is_new_cust ){
-        	 	\do_action('qm/debug', 'Returned True');
 				return true;
 			}
 		}
