@@ -1,19 +1,80 @@
 import { __ } from '@wordpress/i18n';
-
 import content from './miniPreview.json'; 
+import { useState, useEffect } from '@wordpress/element';
+
 /**
  * A Mini Preview Section.
  *
  * @returns
  */
-const MiniPreview = ({ title, desc, icon }) => {
+const MiniPreview = ({ title, desc, icon, socialData }) => {
     var iconPreview = icon == "" || icon == undefined ? content.icon : icon;
     var titlePreview = title == "" ? content.title : title?.substring(0, 20);
     var descPreview = desc == "" ? content.desc : desc;
     var urlPreview = title == "" ? content.url : titleToUrl(title);
+
+    const [facebook, setFacebook] = useState("");
+    const [twitter, setTwitter] = useState("");
+    const [instagram, setInstagram] = useState("");
+    const [youtube, setYouTube] = useState("");
+    const [linkedin, setLinkedIn] = useState("");
+    const [yelp, setYelp] = useState("");
+    const [tiktok, setTikTok] = useState("");
+
+    useEffect(() => {
+        setFacebook((socialData?.facebook_site) ?? "");
+        setTwitter(socialData?.twitter_site ?? "");
+        setInstagram(socialData?.instagram_url ?? "");
+        setYouTube(socialData?.youtube_url ?? "");
+        setLinkedIn(socialData?.linkedin_url ?? "");
+        if (Object.keys(socialData).includes("other_social_urls"))
+        {
+            const otherURLS = socialData.other_social_urls;
+            if (Object.keys(otherURLS).includes("yelp_url"))
+                setYelp(otherURLS["yelp_url"] ?? "");
+
+            if (Object.keys(otherURLS).includes("tiktok_url"))
+                setTikTok(otherURLS["tiktok_url"] ?? "");
+        }
+    }, [socialData]);
+
+    const isValidUrl = (urlString) => {
+        let url;
+        try {
+            url = new URL(urlString);
+        }
+        catch (e) {
+            return false;
+        }
+
+        if (url.protocol !== "http:" && url.protocol !== "https:")
+            return false;
+        return true;
+    }
+
+    var socialIcons = {
+        facebook : !facebook || [facebook, 'var(--facebook-colored-icon)'],
+        twitter : !twitter || 'var(--twitter-colored-icon)',
+        instagram: !instagram || 'var(--instagram-colored-icon)',
+        linkedin: !linkedin || 'var(--linkedin-colored-icon)',
+        youtube: !youtube || 'var(--youtube-colored-icon)',
+        yelp: !yelp || 'var(--yelp-colored-icon)',
+        tiktok: !tiktok ||'var(--tiktok-colored-icon)',
+    }    
     
     function titleToUrl(title) {
         return `https://${title?.substring(0, 20).toLowerCase().replace(/\s/g, '').replace(/\W/g, '')}.com`;
+    }
+
+    function socialIconList() {
+        var socialIconList = []
+        for (var icon in socialIcons) {
+            (socialIcons[icon]==true ) ||
+            socialIconList.push( 
+                <div className={`browser-content_social_icon ${isValidUrl(icon) || 'invalid-url'}`} style={{ backgroundImage: socialIcons[icon] }} />
+            )
+        }
+        return socialIconList;
     }
     
     return (
@@ -73,8 +134,7 @@ const MiniPreview = ({ title, desc, icon }) => {
                         )}
                     </h5>
                     <div className="browser-content_social">
-                        <div className="browser-content_social_icon" style={{ fill: 'red', backgroundImage: 'var(--facebook-colored-icon)' }} />
-                        <div className="browser-content_social_icon" style={{ backgroundImage: 'var(--twitter-colored-icon)' }} />
+                        {socialIconList()}
                     </div>
                 </div>
             </div>

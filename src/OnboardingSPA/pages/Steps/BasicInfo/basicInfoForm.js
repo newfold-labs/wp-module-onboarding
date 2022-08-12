@@ -31,7 +31,6 @@ const BasicInfoForm = () => {
     const [siteLogo, setSiteLogo] = useState(0);
     const [socialData, setSocialData] = useState("");
     const [isValidSocials, setIsValidSocials] = useState(false);
-
     const { setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
 
     const { currentData } = useSelect((select) => {
@@ -118,7 +117,7 @@ const BasicInfoForm = () => {
                 </div>
                 <div className="basic-info-form__right">
                     <ImageUploader icon={siteLogo} iconSetter={setSiteLogo} />
-                    <MiniPreview icon={siteLogo} title={siteTitle} desc={siteDesc} />
+                    <MiniPreview icon={siteLogo} title={siteTitle} desc={siteDesc} socialData={socialData} />
                 </div>
             </div>
             <a className="skip-button-basic-info" onClick={(e) => skipThisStep()} >{__('Skip this Step', 'wp-module-onboarding')}</a>

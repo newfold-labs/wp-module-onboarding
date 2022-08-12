@@ -83,6 +83,10 @@ $title-browser-color: #3858E9;
             background-position: center;
             background-repeat: no-repeat;
             background-clip: padding-box;
+
+            &.invalid-url {
+                opacity: 0.8;
+            }
         }
     }
 }
