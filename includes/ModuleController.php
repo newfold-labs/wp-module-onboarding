@@ -15,7 +15,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Flows;
 class ModuleController {
 
     /**
-	 * Initialize the Ecommerce Validator functionality.
+	 * Initialize the Module Controller functionality.
 	 */
 	public static function init() {
 		// Check the conditions after the step_theme loads as only after that the moudle had been registered prior
