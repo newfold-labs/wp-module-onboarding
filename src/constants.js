@@ -2,6 +2,8 @@ export const NFD_ONBOARDING_ELEMENT_ID = 'nfd-onboarding';
 export const runtimeDataExists =
 	'object' === typeof window?.nfdOnboarding && 'url' in window.nfdOnboarding;
 export const apiBase = '?rest_route=/newfold-onboarding/v1/';
+export const adminPage = `${window.location.protocol}//${window.location.host}/wp-admin/index.php`;
+export const bluehostDashboardPage = `${window.location.protocol}//${window.location.host}/wp-admin/index.php?page=bluehost`;
 export const NFD_ONBOARDING_EVENT_PREFIX = 'nfd-module-onboarding-event';
 export const VIEW_NAV_PRIMARY = 'nav-primary';
 export const VIEW_NAV_DESIGN = 'nav-design';

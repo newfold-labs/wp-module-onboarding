@@ -6,8 +6,8 @@ import { Icon, chevronLeft, chevronRight } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
-import { adminPage, bluehostDashboardPage } from '../../utils/api/commonAPI';
 import { getSettings, setSettings } from '../../utils/api/settings';
+import { adminPage, bluehostDashboardPage } from '../../../constants';
 
 /**
  * Back step Navigation button.
