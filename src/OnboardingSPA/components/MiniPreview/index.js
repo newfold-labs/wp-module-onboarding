@@ -56,21 +56,11 @@ const MiniPreview = ({ title, desc, icon, socialData }) => {
         {url: facebook, image: 'var(--facebook-colored-icon)'},
         {url: twitter, image: 'var(--twitter-colored-icon)'},
         {url: instagram, image: 'var(--instagram-colored-icon)'},
-        {url: linkedin, image: 'var(--linkedin-colored-icon)'},
         {url: youtube, image: 'var(--youtube-colored-icon)'},
+        {url: linkedin, image: 'var(--linkedin-colored-icon)'},
         {url: yelp, image: 'var(--yelp-colored-icon)'},
         {url: tiktok, image: 'var(--tiktok-colored-icon)'},
     ]
-
-    var socialIcons = {
-        facebook : !facebook || [facebook, 'var(--facebook-colored-icon)'],
-        twitter : !twitter || 'var(--twitter-colored-icon)',
-        instagram: !instagram || 'var(--instagram-colored-icon)',
-        linkedin: !linkedin || 'var(--linkedin-colored-icon)',
-        youtube: !youtube || 'var(--youtube-colored-icon)',
-        yelp: !yelp || 'var(--yelp-colored-icon)',
-        tiktok: !tiktok ||'var(--tiktok-colored-icon)',
-    } 
     
     function titleToUrl(title) {
         return `https://${title?.substring(0, 20).toLowerCase().replace(/\s/g, '').replace(/\W/g, '')}.com`;
@@ -81,15 +71,8 @@ const MiniPreview = ({ title, desc, icon, socialData }) => {
         socialDataset.map( (socialInfo) => {
                 !socialInfo.url ||
                 socialIconList.push(
-                <div className={`browser-content_social_icon ${isValidUrl(socialInfo.url) || 'invalid-url'}`} style={{ backgroundImage: socialInfo.image }} />)
+                <div className={`browser-content_social_icon ${isValidUrl(socialInfo.url) || 'invalid-url' }`} style={{ backgroundImage: socialInfo.image }} />)
         })
-
-        // for (var icon in socialIcons) {
-        //     (socialIcons[icon]==true ) ||
-        //     socialIconList.push( 
-        //         <div className={`browser-content_social_icon ${isValidUrl(icon) || 'invalid-url'}`} style={{ backgroundImage: socialIcons[icon] }} />
-        //     )
-        // }
         return socialIconList;
     }
     
