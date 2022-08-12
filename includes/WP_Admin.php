@@ -94,18 +94,6 @@ final class WP_Admin {
 				$asset['version']
 			);
 
-			\wp_set_script_translations(
-				self::$slug,
-				'wp-module-onboarding',
-				plugin_dir_path(__FILE__) . '/languages'
-		   	);
-
-		   	\load_plugin_textdomain(
-				'wp-module-onboarding',
-				false,
-				dirname( plugin_basename(__FILE__) ) . '/languages'
-		   	);
-
 			\wp_enqueue_script( self::$slug );
 			\wp_enqueue_style( self::$slug );
 		}
