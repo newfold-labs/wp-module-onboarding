@@ -1,11 +1,12 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding;
 
-use Bluehost\WP\Data\Customer;
+use NewfoldLabs\WP\Module\Onboarding\Data\Data;
+use NewfoldLabs\WP\Module\Onboarding\Data\Flows;
+
 use NewfoldLabs\WP\ModuleLoader\ModuleRegistry;
 use function NewfoldLabs\WP\ModuleLoader\activate;
 use function NewfoldLabs\WP\ModuleLoader\deactivate;
-use NewfoldLabs\WP\Module\Onboarding\Data\Flows;
 
 /**
  * Class ModuleController
@@ -27,7 +28,7 @@ class ModuleController {
 	public static function module_switcher() {
 
 		$module_name = 'onboarding';
-        $customer_data = self::customer_data();
+        $customer_data = Data::customer_data();
 
 		// Sample data for Testing
         // $customer_data['plan_subtype'] = 'wc_standard';
@@ -59,19 +60,6 @@ class ModuleController {
 			}
 		}
         
-	}
-
-    /**
-	 * Get the current customer data using the Bluehost customer data module.
-	 *
-	 * @return mixed
-	 */
-	public static function customer_data() {
-
-		if ( class_exists( 'Bluehost\WP\Data\Customer' ) ) {
-			 return Customer::collect();
-		}
-		 return array();
 	}
 
 	/**
