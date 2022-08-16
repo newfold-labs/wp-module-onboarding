@@ -81,22 +81,32 @@ const MiniPreview = ({ title, desc, icon, socialData }) => {
             <h4 className="mini-preview">Preview</h4>
             <div className="browser-container">
                 <div className="browser-row-title">
-                    <div className="browser-row-title_buttons">
-                        <span className="browser-dot" style={{ background: '#ED594A' }}></span>
-                        <span className="browser-dot" style={{ background: '#FDD800' }}></span>
-                        <span className="browser-dot" style={{ background: '#5AC05A' }}></span>
+                    <div className="browser-row-title_main">
+                        <div className="browser-row-title_buttons">
+                            <span className="browser-dot" style={{ background: '#ED594A' }}></span>
+                            <span className="browser-dot" style={{ background: '#FDD800' }}></span>
+                            <span className="browser-dot" style={{ background: '#5AC05A' }}></span>
+                        </div>
                     </div>
                     <div className="browser-row-title_bar">
-                        { (icon == 0 || icon == undefined) && (<div className="browser-icon" style={{ content: 'var(--default-logo-icon)'}}></div>)}
-                        { (icon != 0 && icon != undefined) && (<img
-                            className="browser-icon"
-                            src={iconPreview.url}
-                            alt="Thumb"
-                        />)}
-                        <div className="browser-row-title_bar-text">{__(
-                            titlePreview?.substring(0, 18),
-                            'wp-module-onboarding'
-                        )}</div>
+                        <div className="browser-row-title_bar_before">
+                            <div className="browser-row-title_bar_before-curve"></div>
+                        </div>
+                        <div className="browser-row-title_bar_main">
+                            {(icon == 0 || icon == undefined) && (<div className="browser-icon-title" style={{ content: 'var(--default-logo-icon)' }}></div>)}
+                            {(icon != 0 && icon != undefined) && (<img
+                                className="browser-icon-title"
+                                src={iconPreview.url}
+                                alt="Thumb"
+                            />)}
+                            <div className="browser-row-title_bar_main-text">{__(
+                                titlePreview?.substring(0, 18),
+                                'wp-module-onboarding'
+                            )}</div>
+                        </div>
+                        <div className="browser-row-title_bar_after">
+                            <div className="browser-row-title_bar_after-curve"></div>
+                        </div>
                     </div>
                 </div>
                 <div className="browser-row-search">
