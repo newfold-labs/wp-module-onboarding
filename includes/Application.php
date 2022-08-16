@@ -11,7 +11,7 @@ use function NewfoldLabs\WP\ModuleLoader\container;
  * Primary instantiation of Onboarding Application.
  */
 final class Application {
-	
+
 	/**
 	 * @var Container
 	 */
@@ -37,11 +37,9 @@ final class Application {
 			$container->has('onboarding') ? $container['onboarding'] : array(),
 			$defaults
 		);
-		
+
 		if ( is_readable( NFD_ONBOARDING_DIR . '/vendor/autoload.php' ) ) {
 			require_once NFD_ONBOARDING_DIR . '/vendor/autoload.php';
-		} else {
-			return;
 		}
 
 		\do_action( 'nfd_module_onboarding_pre_init' );
@@ -69,5 +67,5 @@ final class Application {
 
 		\do_action( 'nfd_module_onboarding_post_init' );
 	}
-} 
+}
 // END \NewfoldLabs\WP\Module\Onboarding\Application
