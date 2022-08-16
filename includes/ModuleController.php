@@ -3,7 +3,6 @@ namespace NewfoldLabs\WP\Module\Onboarding;
 
 use Bluehost\WP\Data\Customer;
 use NewfoldLabs\WP\ModuleLoader\ModuleRegistry;
-use function NewfoldLabs\WP\ModuleLoader\isActive;
 use function NewfoldLabs\WP\ModuleLoader\activate;
 use function NewfoldLabs\WP\ModuleLoader\deactivate;
 use NewfoldLabs\WP\Module\Onboarding\Data\Flows;
@@ -27,7 +26,7 @@ class ModuleController {
 	 */
 	public static function module_switcher() {
 
-		$moudle_name = 'onboarding';
+		$module_name = 'onboarding';
         $customer_data = self::customer_data();
 
 		// Sample data for Testing
@@ -38,24 +37,25 @@ class ModuleController {
 		if( !self::is_ecom_customer( $customer_data ) ){
 
 			// Check if the Module Does Exist
-			if( ModuleRegistry::get( $moudle_name ) ){
+			if( ModuleRegistry::get( $module_name ) ){
 
 				// Disable the Redirect for Onboarding SPA
         		LoginRedirect::disable_redirect();
 
 				// Deactivate the Module
-				deactivate( $moudle_name );
+				deactivate( $module_name );
 			}
 		}
 		else {
+
 			// Check if the Module Does Exist
-			if( ModuleRegistry::get( $moudle_name ) ){
+			if( ModuleRegistry::get( $module_name ) ){
 				
 				// Enable the Redirect for Onboarding SPA
         		LoginRedirect::enable_redirect();
 
 				// Activate the Module
-				activate( $moudle_name );
+				activate( $module_name );
 			}
 		}
         
@@ -82,7 +82,7 @@ class ModuleController {
 	public static function is_ecom_customer( $customer_data ) {
 		
 		// August 18 at 10AM Mountain Time
-		$newCustDate = date("Y-m-d H:i:s", strtotime('2022-08-18T17:00:00.000Z'));
+		$new_cust_date = date("Y-m-d H:i:s", strtotime('2022-08-18T17:00:00.000Z'));
 		
 		if ( isset( $customer_data['plan_subtype'] ) && isset( $customer_data['signup_date'] ) ) {
 			
@@ -90,10 +90,10 @@ class ModuleController {
 			$cust_signup_date = date("Y-m-d H:i:s", strtotime( $customer_data['signup_date'] ));
 
 			// Check if the Customer is a new Customer
-			$is_new_cust = $cust_signup_date >= $newCustDate;
+			$is_new_cust = $cust_signup_date >= $new_cust_date;
 			
 			// Check if the Customer has an Ecom Plan
-			$has_ecom_plan = Flows::get_flow_from_plan_subtype( $customer_data['plan_subtype'] ) == "ecommerce";
+			$has_ecom_plan = Flows::get_flow_from_plan_subtype( $customer_data['plan_subtype'] ) === "ecommerce";
 
 			if( $has_ecom_plan  &&  $is_new_cust ){
 				return true;
