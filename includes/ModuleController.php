@@ -32,7 +32,7 @@ class ModuleController {
 
 		// Sample data for Testing
         // $customer_data['plan_subtype'] = 'wc_standard';
-        // $customer_data['signup_date']  = '2022-08-18T17:00:00.000Z';
+        // $customer_data['signup_date']  = '2022-08-18T15:30:00.000Z';
 
 		// Check if he is a Non-Ecom Cust and Disable Redirect and Module
 		if( !self::is_ecom_customer( $customer_data ) ){
@@ -70,7 +70,7 @@ class ModuleController {
 	public static function is_ecom_customer( $customer_data ) {
 		
 		// August 18 at 10AM Mountain Time
-		$new_cust_date = date("Y-m-d H:i:s", strtotime('2022-08-18T17:00:00.000Z'));
+		$new_cust_date = date("Y-m-d H:i:s", strtotime('2022-08-18T15:30:00.000Z'));
 		
 		if ( isset( $customer_data['plan_subtype'] ) && isset( $customer_data['signup_date'] ) ) {
 			
