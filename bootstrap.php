@@ -2,6 +2,7 @@
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Onboarding\Application;
 use function NewfoldLabs\WP\ModuleLoader\register;
+use NewfoldLabs\WP\Module\Onboarding\ModuleController;
 
 /**
  * Register Onboarding with Newfold Module Loader
@@ -51,3 +52,6 @@ if ( is_callable( 'add_action' ) ) {
 		'nfd_wp_module_onboarding_register'
 	);
 }
+
+// Handle Module Disable if Non-Ecommerce
+ModuleController::init();

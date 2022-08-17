@@ -26,11 +26,11 @@ export const ecommerceSteps = [
 		title: __( 'Street Address', 'wp-module-onboarding' ),
 		heading: __( 'Street Address', 'wp-module-onboarding' ),
 		subheading: __(
-			'Hello, add a subheading for the learn more sidebar.',
+			'In this step you confirm the business address of your store. Simply confirm the one you provided during your initial  Bluehost account setup or provide a new one.',
 			'wp-module-onboarding'
 		),
 		description: __(
-			"Hello, add a description for the learn more sidebar.",
+			'In this step you confirm the business address of your store. Simply confirm the one you provided during your initial  Bluehost account setup or provide a new one.',
 			'wp-module-onboarding'
 		),
 		Component: StepAddress,
@@ -43,11 +43,11 @@ export const ecommerceSteps = [
 		title: __( 'Tax Info', 'wp-module-onboarding' ),
 		heading: __( 'Tax Info', 'wp-module-onboarding' ),
 		subheading: __(
-			'Hello, add a subheading for the learn more sidebar.',
+			'Taxes can be configure at anytime in the WooCommerce Settings tab.',
 			'wp-module-onboarding'
 		),
 		description: __(
-			"Hello, add a description for the learn more sidebar.",
+			'Taxes can be configured at anytime in the WooCommerce Settings tab.',
 			'wp-module-onboarding'
 		),
 		Component: StepTax,
@@ -64,7 +64,7 @@ export const ecommerceSteps = [
 			'wp-module-onboarding'
 		),
 		description: __(
-			"Hello, add a description for the learn more sidebar.",
+			'In this section, you can provide more information about your products and business, which will help us tailor your store setup experience and identify possible extensions you\'ll need for your online store.',
 			'wp-module-onboarding'
 		),
 		Component: StepProducts,

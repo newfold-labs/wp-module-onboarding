@@ -2,6 +2,7 @@ import './styles/app.scss';
 import { store as nfdOnboardingStore } from './store'; /* must import prior to App! */
 import { getFlow } from './utils/api/flow';
 import { init as initializePlugins } from './utils/api/plugins';
+import { init as initializeThemes } from './utils/api/themes';
 import { trigger as cronTrigger } from './utils/api/cronTrigger';
 import { initialize as initializeSettings } from './utils/api/settings';
 
@@ -35,6 +36,7 @@ const initializeFlowData = ( currentData ) => {
  */
 export async function initializeNFDOnboarding( id, runtime ) {
 	initializePlugins();
+	initializeThemes();
 	setInterval( cronTrigger, 45000 );
 
 	const DOM_TARGET = document.getElementById( id );

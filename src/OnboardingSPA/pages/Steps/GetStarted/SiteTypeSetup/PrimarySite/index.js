@@ -9,6 +9,7 @@ import CardHeader from '../../../../../components/CardHeader';
 import NavCardButton from '../../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import content from '../content.json';
+import { translations } from '../../../../../utils/locales/translations';
 
 
 const StepPrimarySetup = () => {
@@ -71,7 +72,7 @@ const StepPrimarySetup = () => {
 				<div className="nfd-card-heading center">
 					<CardHeader
 						heading={__(currentStep?.heading, 'wp-module-onboarding')}
-						subHeading={__(content.subHeading, 'wp-module-onboarding')}
+						subHeading={sprintf(__(content.subHeading, 'wp-module-onboarding'), translations('SITE'))}
 						question={__(currentStep?.subheading, 'wp-module-onboarding')}
 					/>
 				</div>
@@ -82,10 +83,11 @@ const StepPrimarySetup = () => {
 							return (
 								<div 
 									key={item?.name} 
-									className={`${(clickedIndex === idx || item.name == selectedPrimaryCategoryInStore) ? 'chosenPrimaryCategory ' : ''}nfd-card-category`} 
+									className={`${(clickedIndex === idx || item.name === selectedPrimaryCategoryInStore) ? 'chosenPrimaryCategory ' : ''}nfd-card-category`} 
 									onClick={(e) => handleCategoryClick(idx)} >
 									<div className='nfd-card-category-wrapper'>
-										<span className="icon" style={{ backgroundImage: (clickedIndex !== idx) ? item?.icon : item?.iconWhite }}></span>
+									<span className="icon" style={{ backgroundImage: (clickedIndex !== idx && item.name !== selectedPrimaryCategoryInStore) ? 
+                      					item?.icon : item?.iconWhite }}></span>
 										<span className="categName">{item?.name}</span>
 									</div>
 								</div>
@@ -100,7 +102,7 @@ const StepPrimarySetup = () => {
 						<input type="text" 
 							onChange={(e) => categoryInput(e)} 
 							className='tellUsInput' 
-							placeholder='Enter to search your site type'
+							placeholder={sprintf(__(content.placeholderSiteTypeInput, 'wp-module-onboarding'), translations('site'))}
 							value={inputCategVal} />
 					</div>
 					<div className='nfd-setup-primary-second-bottom'>

@@ -1,7 +1,8 @@
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { lazy } from '@wordpress/element';
 import { filter, orderBy } from 'lodash';
 import IndexPage from '../../pages/index';
+import {translations} from '../../utils/locales/translations';
 import {
 	home,
 	copy,
@@ -43,6 +44,9 @@ const PageWhatToExpect = lazy( () => import( '../../pages/WhatToExpect' ) );
 const StepIndex = lazy( () => import( '../../pages/Steps/index' ) );
 const StepGetStarted = lazy( () => import( '../../pages/Steps/GetStarted' ) );
 const StepWelcome = lazy(() => import('../../pages/Steps/GetStarted/Welcome'));
+const StepGetStartedExperience = lazy( () =>
+	import( '../../pages/Steps/GetStarted/GetStartedExperience' )
+);
 const StepTopPriority = lazy( () => import( '../../pages/Steps/TopPriority' ) );
 const StepBasicInfo = lazy( () => import( '../../pages/Steps/BasicInfo' ) );
 const StepDesignThemes = lazy( () =>
@@ -65,9 +69,6 @@ const StepSiteFeatures = lazy( () =>
 	import( '../../pages/Steps/SiteFeatures' )
 );
 const StepWhatNext = lazy( () => import( '../../pages/Steps/WhatNext' ) );
-const StepGetStartedExperience = lazy( () =>
-	import( '../../pages/Steps/GetStarted/GetStartedExperience' )
-);
 
 const StepPrimarySetup = lazy(() => import('../../pages/Steps/GetStarted/SiteTypeSetup/PrimarySite'));
 const StepSecondarySetup = lazy(() => import('../../pages/Steps/GetStarted/SiteTypeSetup/SecondarySite'));
@@ -118,10 +119,11 @@ export const pages = [
  * Priorities should increment by 20 to leave ample space in-between for injection.
  */
 export const steps = [
-	{
+	{   
 		path: '/wp-setup/step/get-started/welcome',
 		title: __('Welcome', 'wp-module-onboarding'),
-		heading: __('Make your website dreams a reality', 'wp-module-onboarding'),
+		/* translators: %s: website or store */
+		heading: sprintf( __('Make your %s dreams a reality!', 'wp-module-onboarding'), translations('website')),
 		subheading: __(
 			'with WordPress and ',
 			'wp-module-onboarding'
@@ -138,12 +140,13 @@ export const steps = [
 			LearnMore: [ GetStartedLearnMoreHelp ],
 		},
 	},
-	{
+	{		
 		path: '/wp-setup/step/get-started/experience',
 		title: __( 'WordPress Experience', 'wp-module-onboarding' ),
-		heading: __( 'WordPress Experience', 'wp-module-onboarding' ),
+		/* translators: %s: website or store */
+		heading: sprintf(__( 'Help us tailor this setup to your %s', 'wp-module-onboarding' ), translations('site')),
 		subheading: __(
-			'Make your website dreams a reality',
+			'What is your experience with WordPress?',
 			'wp-module-onboarding'
 		),
 		description: __(
@@ -160,32 +163,40 @@ export const steps = [
 	},
      {
 		path: '/wp-setup/step/get-started/site-primary',
-		title: __('Primary Site Setup', 'wp-module-onboarding'),
-		heading: __('Help us tailor this setup to your site', 'wp-module-onboarding'),
-		subheading: __(
-			"What type of store is it?",
+		/* translators: %s: website or store */
+		title: sprintf(__('Primary %s Setup', 'wp-module-onboarding'), translations('Site')),
+		/* translators: %s: website or store */
+		heading: sprintf(__('Help us tailor this setup to your %s', 'wp-module-onboarding'), translations('site')),
+		/* translators: %s: website or store */
+		subheading: sprintf(__(
+			"What type of %s is it?",
 			'wp-module-onboarding'
-		),
-		description: __(
-			"Setup more of your site, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
+		), translations('site')),
+		/* translators: %s: website or store */
+		description: sprintf(__(
+			"Setup more of your %s, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
 			'wp-module-onboarding'
-		),
+		), translations('site')),
 		Component: StepPrimarySetup,
 		Icon: moveTo,
 		priority: 60,
 	},
   {
 		path: '/wp-setup/step/get-started/site-secondary',
-		title: __('Secondary Site Setup', 'wp-module-onboarding'),
-	  	heading: __('Help us tailor this setup to your site', 'wp-module-onboarding'),
-		subheading: __(
-			"What type of store is it?",
+		/* translators: %s: website or store */
+		title: sprintf(__('Secondary %s Setup', 'wp-module-onboarding'), translations('Site')),
+		/* translators: %s: website or store */
+	  	heading: sprintf(__('Help us tailor this setup to your %s', 'wp-module-onboarding'), translations('site')),
+		/* translators: %s: website or store */
+		subheading: sprintf(__(
+			"What type of %s is it?",
 			'wp-module-onboarding'
-		),
-		description: __(
-			"Setup more of your site, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
+		), translations('site')),
+		/* translators: %s: website or store */
+		description: sprintf(__(
+			"Setup more of your %s, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
 			'wp-module-onboarding'
-		),
+		), translations('site')),
 		Component: StepSecondarySetup,
 		Icon: moveTo,
 		priority: 80,
@@ -209,12 +220,14 @@ export const steps = [
 	{
 		path: '/wp-setup/step/basic-info',
 		title: __( 'Basic Info', 'wp-module-onboarding' ),
-		heading: __( 'Introduce us to this website', 'wp-module-onboarding' ),
+		/* translators: %s: website or store */
+		heading: sprintf(__( 'Introduce us to this %s', 'wp-module-onboarding' ), translations('website')),
 		subheading: __( 'So we can introduce it to the web', 'wp-module-onboarding' ),
-		description: __(
-			'Help visitors, search results and social media identify your site.',
+		/* translators: %s: website or store */
+		description: sprintf(__(
+			'Help visitors, search results and social media identify your %s.',
 			'wp-module-onboarding'
-		),
+		), translations('site')),
 		Component: StepBasicInfo,
 		Icon: info,
 		priority: 120,
@@ -387,7 +400,7 @@ export const initialTopSteps = () => {
 	// 	description: '',
 	// 	Icon: brush,
 	// 	VIEW: VIEW_NAV_DESIGN,
-	// 	priority: 100 /* matches priority for first design step */,
+	// 	priority: 140 /* matches priority for first design step */,
 	// };
 
 	const getStartedStep = {

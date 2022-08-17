@@ -17,9 +17,9 @@ const NeedHelpTag = ( {
 	const hireExpertsUrl = select( nfdOnboardingStore ).getHireExpertsUrl();
 	return (
 		<div className="nfd-card-need-help-tag">
-			{__(question, 'wp-module-onboarding' ) }
+			{  question  }
 			<a href={ hireExpertsUrl } target={ '_blank' }>
-				{__( urlLabel, 'wp-module-onboarding' ) }
+				{  urlLabel  }
 			</a>
 		</div>
 	);
