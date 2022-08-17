@@ -73,13 +73,15 @@ const App = () => {
 			let isStoreDetailsFilled = tax.isStoreDetailsFilled;
 			delete tax.option;
 			delete tax.isStoreDetailsFilled;
-			if (option === "1") {
-				if (isStoreDetailsFilled) {
-					payload = { ...payload, ...tax };
-				}
-			} else {
-				payload = { ...payload, ...tax };
-			}
+			// No Auto-calculate taxes for MMP
+			// if (option === "1") {
+			// 	if (isStoreDetailsFilled) {
+			// 		payload = { ...payload, ...tax };
+			// 	}
+			// } else {
+			// 	payload = { ...payload, ...tax };
+			// }
+			payload = { ...payload, ...tax };
 		}
 		if (!isEmpty(payload)) {
 			await updateWPSettings(payload);
