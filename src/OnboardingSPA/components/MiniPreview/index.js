@@ -71,7 +71,7 @@ const MiniPreview = ({ title, desc, icon, socialData }) => {
         socialDataset.map( (socialInfo) => {
                 !socialInfo.url ||
                 socialIconList.push(
-                <div className={`browser-content_social_icon ${isValidUrl(socialInfo.url) || 'invalid-url' }`} style={{ backgroundImage: socialInfo.image }} />)
+                <div key={socialInfo.url} className={`browser-content_social_icon ${isValidUrl(socialInfo.url) || 'invalid-url' }`} style={{ backgroundImage: socialInfo.image }} />)
         })
         return socialIconList;
     }
