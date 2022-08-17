@@ -111,17 +111,20 @@ const StepAddress = () => {
 						onSubmit={(event) => {
 							event.preventDefault();
 							event.stopPropagation();
-							let selectedTaxOption = content.stepTaxOptions.find((option) =>
-								Object.entries(option.data).every(
-									([optionName, requiredValue]) =>
-										settings?.[optionName] === requiredValue
-								)
-							);
-							navigate(
-								selectedTaxOption === undefined
-									? '/ecommerce/step/tax'
-									: '/ecommerce/step/products'
-							);
+							//Commented as auto-calculate tax option is removed for MMP
+
+							// let selectedTaxOption = content.stepTaxOptions.find((option) =>
+							// 	Object.entries(option.data).every(
+							// 		([optionName, requiredValue]) =>
+							// 			settings?.[optionName] === requiredValue
+							// 	)
+							// );
+							// navigate(
+							// 	selectedTaxOption === undefined
+							// 		? '/ecommerce/step/tax'
+							// 		: '/ecommerce/step/products'
+							// );
+							navigate('/ecommerce/step/tax');
 						}}
 					>
 						<div className='nfd-card-heading center onboarding-ecommerce-step'>

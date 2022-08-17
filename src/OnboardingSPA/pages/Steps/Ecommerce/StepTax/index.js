@@ -64,10 +64,13 @@ const StepTax = () => {
 	}, [settings, currentData.storeDetails]);
 	let { tax } = currentData.storeDetails;
 	const handleButtonClick = () => {
-		let isAddressNeeded = tax?.option === "1" && !tax.isStoreDetailsFilled;
-		navigate(
-			isAddressNeeded ? '/ecommerce/step/address' : '/ecommerce/step/products'
-		);
+		//Commented as auto-calculate tax option is removed for MMP
+		// let isAddressNeeded = tax?.option === "1" && !tax.isStoreDetailsFilled;
+		// navigate(
+		// 	isAddressNeeded ? '/ecommerce/step/address' : '/ecommerce/step/products'
+		// );
+
+		navigate('/ecommerce/step/products');
 	};
 
 	return (
