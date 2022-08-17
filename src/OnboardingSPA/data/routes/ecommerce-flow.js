@@ -43,11 +43,11 @@ export const ecommerceSteps = [
 		title: __( 'Tax Info', 'wp-module-onboarding' ),
 		heading: __( 'Tax Info', 'wp-module-onboarding' ),
 		subheading: __(
-			'By using your store address we can automatically calculate how much sales tax should be collected by your customers. Taxes can be configure at anytime in the WooCommerce Settings tab.',
+			'Taxes can be configure at anytime in the WooCommerce Settings tab.',
 			'wp-module-onboarding'
 		),
 		description: __(
-			'By using your store address we can automatically calculate how much sales tax should be collected by your customers. Taxes can be configure at anytime in the WooCommerce Settings tab.',
+			'Taxes can be configured at anytime in the WooCommerce Settings tab.',
 			'wp-module-onboarding'
 		),
 		Component: StepTax,

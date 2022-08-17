@@ -3,15 +3,15 @@
     "stepProductsSubHeading": "What type of products will you be selling?",
     "stepProductsQuestion": "How many products will you be selling?",
     "stepTaxHeading": "Configure your tax information",
-    "stepTaxSubHeading": "Based on the address you provided, we can auto calculate your taxes",
+    "stepTaxSubHeading": "Do you want to enable tax rates and calculations?",
     "stepAddressHeading": "Confirm your business or store address",
     "stepAddressSubHeading": "Use the same address you provided for your Bluehost account or\nchange it below",
     "stepTaxOptions": [
         {
-            "content": "Yes, auto-calculate taxes",
+            "content": "Yes, enable tax rates and calculations",
             "value": "1",
             "data": {
-                "wc_connect_taxes_enabled": "yes",
+                "wc_connect_taxes_enabled": "no",
                 "woocommerce_calc_taxes": "yes"
             }
         },
@@ -20,11 +20,11 @@
             "value": "3",
             "data": {
                 "wc_connect_taxes_enabled": "no",
-                "woocommerce_calc_taxes": "yes"
+                "woocommerce_calc_taxes": "no"
             }
         },
         {
-            "content": "I don't change sales tax",
+            "content": "I don't charge sales tax",
             "value": "5",
             "data": {
                 "woocommerce_no_sales_tax": true,
