@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Data\Flows;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 
 /**
@@ -24,12 +25,6 @@ class FlowController {
 	protected $rest_base = '/flow';
 
 	/**
-	 * @var string
-	 * This is the key used to save the flow data into the wp_options table in the database
-	 */
-	protected $nfd_onboarding_options_flow_key = 'nfd_module_onboarding_flow';
-
-	/**
 	 * Registers rest routes for this controller class.
 	 *
 	 * @return void
@@ -40,9 +35,9 @@ class FlowController {
 			$this->rest_base,
 			array(
 				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_onboarding_flow_data' ),
-					// 'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+					'methods'  => \WP_REST_Server::READABLE,
+					'callback' => array( $this, 'get_onboarding_flow_data' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
@@ -118,6 +113,21 @@ class FlowController {
 		// update timestamp once data is updated
 		$flow_data['updatedAt'] = time();
 
+		  // Update Blog Information from Basic Info
+		if ( ( ! empty( $flow_data['data']['blogName'] ) ) ) {
+			 \update_option( Options::get_option_name( 'blog_name', false ), $flow_data['data']['blogName'] );
+		}
+
+		if ( ( ! empty( $flow_data['data']['blogDescription'] ) ) ) {
+			 \update_option( Options::get_option_name( 'blog_description', false ), $flow_data['data']['blogDescription'] );
+		}
+
+		if ( ( ! empty( $flow_data['data']['siteLogo'] ) ) && ! empty( $flow_data['data']['siteLogo']['id'] ) ) {
+				  \update_option( Options::get_option_name( 'site_icon', false ), $flow_data['data']['siteLogo']['id'] );
+		} else {
+			 \update_option( Options::get_option_name( 'site_icon', false ), 0 );
+		}
+
 		// save data to database
 		if ( ! $this->update_wp_options_data_in_database( $flow_data ) ) {
 			return new \WP_Error(
@@ -155,21 +165,21 @@ class FlowController {
 	 * Read onboarding flow options from database
 	 */
 	public function read_details_from_wp_options() {
-		return \get_option( $this->nfd_onboarding_options_flow_key );
+		return \get_option( Options::get_option_name( 'flow' ) );
 	}
 
 	/*
 	 * add onboarding flow options
 	 */
 	public function save_details_to_wp_options( $data ) {
-		return \add_option( $this->nfd_onboarding_options_flow_key, $data );
+		return \add_option( Options::get_option_name( 'flow' ), $data );
 	}
 
 	/*
 	 * update onboarding flow options
 	 */
 	public function update_wp_options_data_in_database( $data ) {
-		return \update_option( $this->nfd_onboarding_options_flow_key, $data );
+		return \update_option( Options::get_option_name( 'flow' ), $data );
 	}
 
 	/*
