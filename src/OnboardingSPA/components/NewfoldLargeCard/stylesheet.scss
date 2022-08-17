@@ -6,7 +6,9 @@
 	position: relative;
 	transform-style: preserve-3d;
 	align-items: center;
-	flex-flow: column wrap;
+	flex-direction: column;
+	justify-content: space-evenly;
+	padding: 1rem;
 
 	@media (max-width: #{($break-medium - 1)}) {
 		justify-items: center;
@@ -22,14 +24,15 @@
 		height: 45vh;
 		transform: rotate(-14deg) translateZ(-1px);
 		position: absolute;
-		left: -12rem;
+		left: -10rem;
+		top: 0rem;
 		@media (max-width: #{ ($break-medium - 1) }) {
 			display: none;
 		}
 		@media (min-width: #{ ($break-medium) }) and (max-width: 925px) {
 			width: 27vw;
 			height: 27vh;
-			left: -9rem;
+			left: -7rem;
 			margin-top: 5vh;
 		}
 	}

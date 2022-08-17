@@ -28,6 +28,8 @@ final class Flows {
 			'siteType'        => array(
 				'label'   => '',
 				'referTo' => 'site',
+        'primary' => 'primaryCategory',
+        'secondary' => 'secondaryCategory',
 			),
 
 			'wpComfortLevel'  => '0',
@@ -148,7 +150,7 @@ final class Flows {
 	 * @return string
 	 */
 	public static function get_flow_from_plan_subtype( $plan_subtype ) {
-		if ( preg_match( '/^[wc_standard|wc_premium]/i', $plan_subtype ) ) {
+		if ( preg_match( '/^(wc_standard|wc_premium)$/i', $plan_subtype ) ) {
 			 return isset( self::get_flows()['ecommerce'] ) ? 'ecommerce' : self::get_default_flow();
 		}
 		 return self::get_default_flow();

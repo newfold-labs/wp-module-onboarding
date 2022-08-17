@@ -6,7 +6,6 @@ import NeedHelpTag from '../../../../components/NeedHelpTag';
 import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
 import content from './content.json';
-
 import { RadioControl } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -24,11 +23,10 @@ const GetStartedExperience = () => {
 
 	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
 
-	const { currentData } = useSelect( ( select ) => {
+	const { currentData, currentStep } = useSelect( ( select ) => {
 		return {
-			currentData: select(
-				nfdOnboardingStore
-			).getCurrentOnboardingData(),
+			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+			currentStep: select(nfdOnboardingStore).getCurrentStep(),
 		};
 	}, [] );
 
@@ -69,9 +67,9 @@ const GetStartedExperience = () => {
 				<div className="nfd-onboarding-experience-step">
 					<div className="nfd-card-heading center">
 						<CardHeader
-							heading={__(content.cardHeading, 'wp-module-onboarding' ) }
-							subHeading={__(content.subHeading, 'wp-module-onboarding' ) }
-							question={__(content.question, 'wp-module-onboarding' ) }
+							heading={ currentStep.heading }
+							subHeading={ __(content.aboutYouTag, 'wp-module-onboarding') }
+							question={ currentStep.subheading }
 						/>
 					</div>
 					<RadioControl
@@ -85,11 +83,13 @@ const GetStartedExperience = () => {
 						} ) }
 						onChange={ ( value ) => setWpComfortLevel( value ) }
 					/>
-					<NavCardButton
-						text={__(content.buttonText, 'wp-module-onboarding' ) }
-						disabled={ wpComfortLevel == '0' }
-					/>
-					<NeedHelpTag />
+					<div>
+						<NavCardButton
+							text={__(content.buttonText, 'wp-module-onboarding')}
+							disabled={wpComfortLevel == '0'}
+						/>
+						<NeedHelpTag />
+					</div>
 				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>

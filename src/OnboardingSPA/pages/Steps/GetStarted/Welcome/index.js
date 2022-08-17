@@ -1,9 +1,9 @@
-import { Icon } from '@wordpress/icons';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { store as nfdOnboardingStore } from '../../../../store';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useState, useEffect } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
+import {translations} from '../../../../utils/locales/translations';
 
 import CommonLayout from '../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
@@ -22,17 +22,15 @@ import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
  */
 const StepWelcome = () => {
 	const location = useLocation();
-	const { currentStep, nextStep, brandName } = useSelect(
+	const { currentStep, brandName } = useSelect(
 		(select) => {
 			return {
 				currentStep: select(nfdOnboardingStore).getCurrentStep(),
-				nextStep: select(nfdOnboardingStore).getNextStep(),
 				brandName: select(nfdOnboardingStore).getNewfoldBrandName(),
 			};
 		},
 		[location.pathname]
 	);
-
 	const {
 		setDrawerActiveView,
 		setIsSidebarOpened,
@@ -45,17 +43,13 @@ const StepWelcome = () => {
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
 	}, [] );
 
-	const navigate = useNavigate();
-	const handleClick = () => {
-		navigate(nextStep.path);
-	}
 	return (
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard>
 				<div className='welcome-card'>
 					<CardHeader
-						heading={ __(currentStep?.heading, 'wp-module-onboarding') }
-						subHeading={ __(currentStep?.subheading, 'wp-module-onboarding') + brandName + '.'} >
+						heading = { currentStep?.heading }
+						subHeading={ currentStep?.subheading + brandName + '.'} >
 					</CardHeader>
 					<TabPanelHover
 						className="nfd-onboarding-overview__tab-panel"
@@ -65,7 +59,7 @@ const StepWelcome = () => {
 								title: __( tab.title , 'wp-module-onboarding'),
 								content: <Tab
 									title={ __(tab.title, 'wp-module-onboarding')}
-									text={ __(tab.text, 'wp-module-onboarding')}
+									text={ sprintf( __(tab.text, 'wp-module-onboarding'), translations('site'))}
 									imgType={tab.imgType}
 									className="tab-data" />
 							};
@@ -74,7 +68,7 @@ const StepWelcome = () => {
 						{( tab ) => <div>{tab.content}</div>}
 
 					</TabPanelHover>
-					<NavCardButton text={ __("Start Setup", 'wp-module-onboarding') } handleClick={handleClick}></NavCardButton>
+					<NavCardButton text={ __("Start Setup", 'wp-module-onboarding') } ></NavCardButton>
 				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>

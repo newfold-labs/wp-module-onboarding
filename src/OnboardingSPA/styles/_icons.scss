@@ -1,25 +1,76 @@
 body {
-    --nfd-publish-icon: url('../static/icons/publish.svg');
-    --nfd-selling-icon: url('../static/icons/sell.svg');
-    --nfd-design-icon: url('../static/icons/design.svg');
-    --more-icon: url('../static/icons/more.svg');
-    --reload-icon: url('../static/icons/reload.svg');
-    --forward-icon: url('../static/icons/forward.svg');
-    --back-icon: url('../static/icons/back.svg');
-    --chevron-up-icon: url('../static/icons/chevron-up.svg');
-    --chevron-down-icon: url('../static/icons/chevron-down.svg');
-    --default-logo-icon: url('../static/icons/default-logo.svg');
-    --facebook-icon: url('../static/icons/social/facebook.svg');
-    --facebook-colored-icon: url('../static/icons/social/facebook-colored.svg');
-    --twitter-icon: url('../static/icons/social/twitter.svg');
-    --twitter-colored-icon: url('../static/icons/social/twitter-colored.svg');
-    --instagram-icon: url('../static/icons/social/instagram.svg');
-    --linkedin-icon: url('../static/icons/social/linkedin.svg');
-    --yelp-icon: url('../static/icons/social/yelp.svg');
-    --youtube-icon: url('../static/icons/social/youtube.svg');
-    --tiktok-icon: url('../static/icons/social/tiktok.svg');
+	--nfd-publish-icon: url("../static/icons/publish.svg");
+	--nfd-selling-icon: url("../static/icons/sell.svg");
+	--nfd-design-icon: url("../static/icons/design.svg");
+	--more-icon: url("../static/icons/more.svg");
+	--reload-icon: url("../static/icons/reload.svg");
+	--forward-icon: url("../static/icons/forward.svg");
+	--back-icon: url("../static/icons/back.svg");
+	--chevron-up-icon: url("../static/icons/chevron-up.svg");
+	--chevron-down-icon: url("../static/icons/chevron-down.svg");
+	--default-logo-icon: url("../static/icons/default-logo.svg");
+	--facebook-icon: url("../static/icons/social/facebook.svg");
+	--facebook-colored-icon: url("../static/icons/social/facebook-colored.svg");
+	--twitter-icon: url("../static/icons/social/twitter.svg");
+	--twitter-colored-icon: url("../static/icons/social/twitter-colored.svg");
+	--instagram-icon: url("../static/icons/social/instagram.svg");
+	--instagram-colored-icon: url("../static/icons/social/instagram-colored.svg");
+	--linkedin-icon: url("../static/icons/social/linkedin.svg");
+	--linkedin-colored-icon: url("../static/icons/social/linkedin-colored.svg");
+	--yelp-icon: url("../static/icons/social/yelp.svg");
+	--yelp-colored-icon: url("../static/icons/social/yelp-colored.svg");
+	--youtube-icon: url("../static/icons/social/youtube.svg");
+	--youtube-colored-icon: url("../static/icons/social/youtube-colored.svg");
+	--tiktok-icon: url("../static/icons/social/tiktok.svg");
+	--tiktok-colored-icon: url("../static/icons/social/tiktok-colored.svg");
 
-    --get-started-content-img: url('../static/images/content.png');
-    --get-started-design-img: url('../static/images/design.png');
-    --get-started-features-img: url('../static/images/features.png');
+	--get-started-content-img: url("../static/images/content.png");
+	--get-started-design-img: url("../static/images/design.png");
+	--get-started-features-img: url("../static/images/features.png");
+
+	--chevron-left-icon: url("../static/icons/chevron-left.svg");
+	--chevron-right-icon: url("../static/icons/chevron-right.svg");
+
+	--business-icon: url("../static/icons/business.svg");
+	--business-white-icon: url("../static/icons/business-white.svg");
+
+	/*
+  * Below Icons are commented because they get added to the CSS bundle and 
+  * CSS bundle created exceeded the permissible size.
+  * Need to find a solution how do we deal with below icons or do we split page wise CSS bundles
+  * Or can using these icon paths in background-image in pages's CSS help?
+  */
+
+	// --dog-icon: url("../static/icons/dog.svg");
+	// --dog-white-icon: url("../static/icons/dog-white.svg");
+
+	// --education-icon: url("../static/icons/education.svg");
+	// --education-white-icon: url("../static/icons/education-white.svg");
+
+	// --entertainment-icon: url("../static/icons/entertainment.svg");
+	// --entertainment-white-icon: url("../static/icons/entertainment-white.svg");
+
+	// --food-icon: url("../static/icons/food.svg");
+	// --food-white-icon: url("../static/icons/food-white.svg");
+
+	// --group-icon: url("../static/icons/group-team.svg");
+	// --group-white-icon: url("../static/icons/group-team-white.svg");
+
+	// --health-icon: url("../static/icons/health.svg");
+	// --health-white-icon: url("../static/icons/health-white.svg");
+
+	// --news-icon: url("../static/icons/news.svg");
+	// --news-white-icon: url("../static/icons/news-white.svg");
+
+	// --creative-icon: url("../static/icons/creative.svg");
+	// --creative-white-icon: url("../static/icons/creative-white.svg");
+
+	// --heart-icon: url("../static/icons/heart.svg");
+	// --heart-white-icon: url("../static/icons/heart-white.svg");
+
+	// --tech-icon: url("../static/icons/tech.svg");
+	// --tech-white-icon: url("../static/icons/tech-white.svg");
+
+	// --politics-icon: url("../static/icons/politics.svg");
+	// --politics-white-icon: url("../static/icons/politics-white.svg");
 }

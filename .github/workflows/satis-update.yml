@@ -25,8 +25,8 @@ jobs:
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.WEBHOOK_TOKEN }}
-          repository: newfold/satis
-          event-type: 'Trigger Satis Build'
+          repository: newfold-labs/satis
+          event-type: 'satis-build'
           client-payload: >-
             {
               "vendor": "${{ github.repository_owner }}",
