@@ -37,6 +37,10 @@ final class Plugins {
 			'approved' => true,
 			'path'     => 'optinmonster/optin-monster-wp-api.php',
 		),
+		'yith-woocommerce-ajax-search'   => array(
+			'approved' => true,
+			'path'     => 'yith-woocommerce-ajax-search/init.php',
+		),
 	);
 
 	 /**
