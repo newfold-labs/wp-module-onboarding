@@ -110,7 +110,7 @@ class PluginInstallTaskManager {
 		/*
 		   Get the plugins queued up to be installed, the PluginInstall task gets
 		   converted to an associative array before storing it in the option. */
-		$plugins = \get_option( Options::get_option_name( 'plugin_install_queue' ), array() );
+		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
 		$queue = new PriorityQueue();
 		foreach ( $plugins as $queued_plugin ) {
@@ -131,6 +131,6 @@ class PluginInstallTaskManager {
 			$plugin_install_task->get_priority()
 		);
 
-		 return \update_option( Options::get_option_name( 'plugin_install_queue' ), $queue->to_array() );
+		 return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
 	}
 }
