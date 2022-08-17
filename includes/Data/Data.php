@@ -38,7 +38,7 @@ final class Data {
 		if ( empty( $brand ) ) {
 			$brand = 'newfold';
 		}
-		\apply_filters( 'nfd_module_onboarding_brand', $brand );
+		\apply_filters( 'nfd_module_onboarding_brand', strtolower( $brand ) );
 
 		$brands = Brands::get_brands();
 
