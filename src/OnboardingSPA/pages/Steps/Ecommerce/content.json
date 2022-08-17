@@ -5,7 +5,7 @@
     "stepTaxHeading": "Configure your tax information",
     "stepTaxSubHeading": "Do you want to enable tax rates and calculations?",
     "stepAddressHeading": "Confirm your business or store address",
-    "stepAddressSubHeading": "We\\’ll use this information to help you setup your online store",
+    "stepAddressSubHeading": "We’ll use this information to help you setup your online store",
     "stepTaxOptions": [
         {
             "content": "Yes, enable tax rates and calculations",
