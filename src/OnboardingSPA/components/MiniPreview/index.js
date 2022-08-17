@@ -9,7 +9,7 @@ import { useState, useEffect } from '@wordpress/element';
  */
 const MiniPreview = ({ title, desc, icon, socialData }) => {
     var iconPreview = icon == "" || icon == undefined ? content.icon : icon;
-    var titlePreview = title == "" ? content.title : title?.substring(0, 20);
+    var titlePreview = title == "" ? content.title : title;
     var descPreview = desc == "" ? content.desc : desc;
     var urlPreview = title == "" ? content.url : titleToUrl(title);
 
@@ -63,7 +63,7 @@ const MiniPreview = ({ title, desc, icon, socialData }) => {
     ]
     
     function titleToUrl(title) {
-        return `https://${title?.substring(0, 20).toLowerCase().replace(/\s/g, '').replace(/\W/g, '')}.com`;
+        return `https://${title?.toLowerCase().replace(/\s/g, '').replace(/\W/g, '')}.com`;
     }
 
     function socialIconList() {
@@ -73,7 +73,6 @@ const MiniPreview = ({ title, desc, icon, socialData }) => {
                 socialIconList.push(
                     <div key={socialInfo.image} className={`browser-content_social_icon ${isValidUrl(socialInfo.url) || 'invalid-url' }`} style={{ backgroundImage: socialInfo.image }} />)
         })
-        console.log(socialIconList);
         return socialIconList;
     }
     
@@ -101,9 +100,10 @@ const MiniPreview = ({ title, desc, icon, socialData }) => {
                                 alt="Thumb"
                             />)}
                             <div className="browser-row-title_bar_main-text">{__(
-                                titlePreview?.substring(0, 18),
+                                titlePreview?.substring(0, 20),
                                 'wp-module-onboarding'
                             )}</div>
+                            <div className="browser-row-title_bar_main-cross">x</div>
                         </div>
                         <div className="browser-row-title_bar_after">
                             <div className="browser-row-title_bar_after-curve"></div>
@@ -117,7 +117,7 @@ const MiniPreview = ({ title, desc, icon, socialData }) => {
                         <div className="browser-icon" style={{ backgroundImage: 'var(--reload-icon)' }}></div>
                     </div>
                     <div className="browser-row-search__search-box">
-                        <input className="browser-row-search__search-box_input" type="text" defaultValue={__(
+                        <input className="browser-row-search__search-box_input" type="text" onChange={(e)=> {}} value={__(
                             urlPreview,
                             'wp-module-onboarding'
                         )}></input>
