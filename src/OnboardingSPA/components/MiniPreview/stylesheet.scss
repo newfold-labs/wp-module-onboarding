@@ -92,6 +92,7 @@ $title-browser-color: #3858E9;
             background-position: center;
             background-repeat: no-repeat;
             background-clip: padding-box;
+            transition: opacity 0.4s ease-in-out;
 
             &.invalid-url {
                 opacity: 0.8;
