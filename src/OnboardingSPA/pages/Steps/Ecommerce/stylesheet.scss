@@ -90,16 +90,16 @@ div.onboarding-product-step {
 	div.nfd-product-step-options {
 		display: grid;
 		grid-template-columns: calc((50vw - 15px) / 2) calc((50vw - 15px) / 2);
-		grid-gap: 15px;
+		gap: 15px;
 
 		@media (max-width: #{ ($break-mobile)}) {
 			grid-template-columns: repeat(1, 1fr);
-			grid-gap: 2px;
+			gap: 2px;
 		}
 
 		@media (max-height: #{ ($break-small)}) {
 			grid-template-columns: repeat(3, 1fr);
-			grid-gap: 2px;
+			gap: 2px;
 		}
 	}
 
