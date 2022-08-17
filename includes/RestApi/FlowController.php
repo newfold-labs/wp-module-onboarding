@@ -35,9 +35,9 @@ class FlowController {
 			$this->rest_base,
 			array(
 				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_onboarding_flow_data' ),
-					// 'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+					'methods'  => \WP_REST_Server::READABLE,
+					'callback' => array( $this, 'get_onboarding_flow_data' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
@@ -113,20 +113,20 @@ class FlowController {
 		// update timestamp once data is updated
 		$flow_data['updatedAt'] = time();
 
-          // Update Blog Information from Basic Info
-          if ( ( ! empty( $flow_data['data']['blogName'] ) ) ) {
-               \update_option( Options::get_option_name( 'blog_name', false), $flow_data['data']['blogName']);
-          }
+		  // Update Blog Information from Basic Info
+		if ( ( ! empty( $flow_data['data']['blogName'] ) ) ) {
+			 \update_option( Options::get_option_name( 'blog_name', false ), $flow_data['data']['blogName'] );
+		}
 
-          if ( ( ! empty( $flow_data['data']['blogDescription'] ) ) ) {
-               \update_option( Options::get_option_name( 'blog_description', false), $flow_data['data']['blogDescription']);
-          }
+		if ( ( ! empty( $flow_data['data']['blogDescription'] ) ) ) {
+			 \update_option( Options::get_option_name( 'blog_description', false ), $flow_data['data']['blogDescription'] );
+		}
 
-          if ( ( ! empty( $flow_data['data']['siteLogo'] ) ) && ! empty( $flow_data['data']['siteLogo']['id'] ) ) {
-                    \update_option( Options::get_option_name( 'site_icon', false), $flow_data['data']['siteLogo']['id'] );
-          } else {
-               \update_option( Options::get_option_name( 'site_icon', false), 0 );
-          }
+		if ( ( ! empty( $flow_data['data']['siteLogo'] ) ) && ! empty( $flow_data['data']['siteLogo']['id'] ) ) {
+				  \update_option( Options::get_option_name( 'site_icon', false ), $flow_data['data']['siteLogo']['id'] );
+		} else {
+			 \update_option( Options::get_option_name( 'site_icon', false ), 0 );
+		}
 
 		// save data to database
 		if ( ! $this->update_wp_options_data_in_database( $flow_data ) ) {
