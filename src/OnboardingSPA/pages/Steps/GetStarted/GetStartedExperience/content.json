@@ -1,7 +1,5 @@
 {
-	"cardHeading": "Help us tailor this setup to your site",
-	"subHeading": "ABOUT YOU",
-	"question": "What is your experience with WordPress?",
+	"aboutYouTag": "ABOUT YOU",
 	"buttonText": "Continue Setup",
 	"options": [{ "content":"Never used it" , "value" : "1"}, 
 				{ "content": "Used it some", "value" : "3"}, 

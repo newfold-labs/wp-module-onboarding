@@ -1,7 +1,9 @@
-import { __ } from '@wordpress/i18n';
-import content from './miniPreview.json'; 
+
+import { __, sprintf } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 
+import content from './miniPreview.json';
+import { translations } from '../../utils/locales/translations';
 /**
  * A Mini Preview Section.
  *
@@ -9,8 +11,8 @@ import { useState, useEffect } from '@wordpress/element';
  */
 const MiniPreview = ({ title, desc, icon, socialData }) => {
     var iconPreview = icon == "" || icon == undefined ? content.icon : icon;
-    var titlePreview = title == "" ? content.title : title;
-    var descPreview = desc == "" ? content.desc : desc;
+    var titlePreview = title == "" ? sprintf(__(content.title, 'wp-module-onboarding'), translations('Site')) : title?.substring(0, 20);
+    var descPreview = desc == "" ? sprintf(__(content.desc, 'wp-module-onboarding'), translations('Site')) : desc;
     var urlPreview = title == "" ? content.url : titleToUrl(title);
 
     const [facebook, setFacebook] = useState("");
