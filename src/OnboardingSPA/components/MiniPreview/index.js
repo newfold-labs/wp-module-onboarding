@@ -1,6 +1,7 @@
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
-import content from './miniPreview.json'; 
+import content from './miniPreview.json';
+import { translations } from '../../utils/locales/translations';
 /**
  * A Mini Preview Section.
  *
@@ -8,8 +9,8 @@ import content from './miniPreview.json';
  */
 const MiniPreview = ({ title, desc, icon }) => {
     var iconPreview = icon == "" || icon == undefined ? content.icon : icon;
-    var titlePreview = title == "" ? content.title : title?.substring(0, 20);
-    var descPreview = desc == "" ? content.desc : desc;
+    var titlePreview = title == "" ? sprintf(__(content.title, 'wp-module-onboarding'), translations('Site')) : title?.substring(0, 20);
+    var descPreview = desc == "" ? sprintf(__(content.desc, 'wp-module-onboarding'), translations('Site')) : desc;
     var urlPreview = title == "" ? content.url : titleToUrl(title);
     
     function titleToUrl(title) {

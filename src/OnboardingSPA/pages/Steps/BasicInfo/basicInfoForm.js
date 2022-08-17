@@ -1,4 +1,4 @@
-import { __ } from '@wordpress/i18n'; 
+import { __, sprintf } from '@wordpress/i18n'; 
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
@@ -10,6 +10,7 @@ import { getSettings } from '../../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../../store';
 import ImageUploader from '../../../components/ImageUploader';
 import SocialMediaForm from '../../../components/SocialMediaForm';
+import { translations } from '../../../utils/locales/translations';
 
 
 /**
@@ -112,8 +113,20 @@ const BasicInfoForm = () => {
             </div>
             <div className="basic-info-form">
                 <div className="basic-info-form__left">
-                    <TextInput title={content.siteTitle["title"]} hint={content.siteTitle["hint"]} placeholder={content.siteTitle["placeholder"]} maxCharacters={content.siteTitle["maxCharacters"] } height="47px" textValue={siteTitle} textValueSetter={setSiteTitle} />
-                    <TextInput title={content.siteDesc["title"]} hint={content.siteDesc["hint"]} placeholder={content.siteDesc["placeholder"]} maxCharacters={content.siteDesc["maxCharacters"]} height="100px" textValue={siteDesc} textValueSetter={setSiteDesc} />
+                    <TextInput 
+                        title={sprintf(__(content.siteTitle["title"], 'wp-module-onboarding'), translations('Site'))} 
+                        hint={__(content.siteTitle["hint"], 'wp-module-onboarding')}
+                        placeholder={sprintf(__(content.siteTitle["placeholder"], 'wp-module-onboarding'), translations('Site'))} 
+                        maxCharacters={__(content.siteTitle["maxCharacters"], 'wp-module-onboarding')} 
+                        height="47px" textValue={siteTitle} textValueSetter={setSiteTitle} />
+
+                    <TextInput 
+                        title={sprintf(__(content.siteDesc["title"], 'wp-module-onboarding'), translations('Site'))} 
+                        hint={sprintf(__(content.siteDesc["hint"], 'wp-module-onboarding'), translations('site'))}
+                        placeholder={sprintf(__(content.siteDesc["placeholder"], 'wp-module-onboarding'), translations('Site'))} 
+                        maxCharacters={__(content.siteDesc["maxCharacters"], 'wp-module-onboarding')} 
+                        height="100px" textValue={siteDesc} textValueSetter={setSiteDesc} />
+
                     <SocialMediaForm socialData={socialData} setSocialData={setSocialData} setIsValidSocials={setIsValidSocials}/>
                 </div>
                 <div className="basic-info-form__right">
