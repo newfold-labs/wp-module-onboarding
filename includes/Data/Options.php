@@ -8,12 +8,12 @@ final class Options {
 	 /**
 	  * @var string Prefix for options in the module.
 	  */
-	protected static string $prefix = 'nfd_module_onboarding_';
+	protected static $prefix = 'nfd_module_onboarding_';
 
 	 /**
 	  * @var array List of all the options
 	  */
-	protected static array $options = array(
+	protected static $options = array(
 		'redirect'                      => 'redirect',
 		'redirect_param'                => 'redirect_param',
 		'coming_soon'                   => 'mm_coming_soon',
@@ -38,7 +38,7 @@ final class Options {
 		'site_icon'                     => 'site_icon',
 	);
 
-	protected static array $initialization_options = array(
+	protected static $initialization_options = array(
 		'close_comments_for_old_posts'  => 1,
 		'close_comments_days_old'       => 28,
 		'comments_per_page'             => 20,
