@@ -23,6 +23,15 @@ $title-browser-color: #3858E9;
     background-position: center;
     background-repeat: no-repeat;
     background-clip: padding-box;
+
+    &-title{
+        width: 18px;
+        height: 18px;
+        padding: 5px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-clip: padding-box;
+    }
 }
 
 .browser-dot {
@@ -83,6 +92,11 @@ $title-browser-color: #3858E9;
             background-position: center;
             background-repeat: no-repeat;
             background-clip: padding-box;
+            transition: opacity 0.4s ease-in-out;
+
+            &.invalid-url {
+                opacity: 0.8;
+            }
         }
     }
 }
@@ -91,29 +105,87 @@ $title-browser-color: #3858E9;
 
     &-title {
         display: flex;
-        align-items: flex-start;
-        padding: 6px 4px 0px 4px;
+        align-items: flex-end;
         background-color: $browser-dark;
 
+        &_main{
+            height: 100%;
+            margin-left: 6px;
+        }
+
         &_buttons{
-            padding: 2px 8px 0px 2px;
+            padding: 2px 8px 3px 2px;
         }
 
         &_bar {
-            width: 180px;
-            height: 30px;
             display: flex;
-            padding-left: 12px;
-            flex-direction: row;
-            align-items: center;
-            border-radius: 12px 12px 0px 0px;
-            background-color: $browser-light;
-            clip-path: polygon(5% 0, 95% 0, 100% 100%, 0% 100%);
+            align-items: flex-end;
 
-            &-text{
-                padding-left: 6px;
+            &_before {
+                background-color: $browser-light;
+        
+                &-curve {
+                    opacity: 1;
+                    width: 10px;
+                    height: 10px;
+                    content: " ";
+                    display: flex;
+                    align-items: center;
+                    pointer-events: none;
+                    justify-content: center;
+                    border-radius: 0 0 8px 0;
+                    background-color: $browser-dark;
+                }
+            }
+            
+            &_after {
+                background-color: $browser-light;
+        
+                &-curve {
+                    opacity: 1;
+                    width: 10px;
+                    height: 10px;
+                    content: " ";
+                    display: flex;
+                    align-items: center;
+                    pointer-events: none;
+                    justify-content: center;
+                    border-radius: 0 0 0 8px;
+                    background-color: $browser-dark;
+                }
+            }
+            
+            &_main {
+                z-index: 4;
+                height: 30px;
+                display: flex;
+                margin-top: 5px;
+                min-width: 150px;
+                padding-left: 5px;
+                padding-right: 10px;
+                align-items: center;
+                border-radius: 8px 8px 0px 0px;
+                background-color: $browser-light;
+        
+                &-text {
+                    flex: 1;
+                    margin-left: 2px;
+                    font-size: 0.8rem;
+                    overflow: hidden;
+                    max-width: 140px;
+                    text-overflow: ellipsis;
+                    content: " ";
+                    background: -webkit-linear-gradient(left, #000 50%, #fff);
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+                &-cross {
+
+                }
             }
         }
+
+        
     }
 
     &-search {
