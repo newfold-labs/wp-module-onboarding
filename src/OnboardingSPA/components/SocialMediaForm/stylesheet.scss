@@ -40,7 +40,7 @@ $border: #D6D6D6;
         &-active{
             opacity: 1;
             overflow: hidden;
-            max-height: 600px;
+            max-height: 650px;
             transition: all 0.45s ease-in-out;
             transition-property: max-height, opacity;
         }

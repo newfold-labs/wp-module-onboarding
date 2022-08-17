@@ -398,7 +398,7 @@ export const initialTopSteps = () => {
 		description: '',
 		Icon: brush,
 		VIEW: VIEW_NAV_DESIGN,
-		priority: 100 /* matches priority for first design step */,
+		priority: 140 /* matches priority for first design step */,
 	};
 
 	const getStartedStep = {

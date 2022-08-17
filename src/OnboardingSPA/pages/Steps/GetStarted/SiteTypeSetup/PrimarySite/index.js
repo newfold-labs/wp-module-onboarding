@@ -83,10 +83,11 @@ const StepPrimarySetup = () => {
 							return (
 								<div 
 									key={item?.name} 
-									className={`${(clickedIndex === idx || item.name == selectedPrimaryCategoryInStore) ? 'chosenPrimaryCategory ' : ''}nfd-card-category`} 
+									className={`${(clickedIndex === idx || item.name === selectedPrimaryCategoryInStore) ? 'chosenPrimaryCategory ' : ''}nfd-card-category`} 
 									onClick={(e) => handleCategoryClick(idx)} >
 									<div className='nfd-card-category-wrapper'>
-										<span className="icon" style={{ backgroundImage: (clickedIndex !== idx) ? item?.icon : item?.iconWhite }}></span>
+									<span className="icon" style={{ backgroundImage: (clickedIndex !== idx && item.name !== selectedPrimaryCategoryInStore) ? 
+                      					item?.icon : item?.iconWhite }}></span>
 										<span className="categName">{item?.name}</span>
 									</div>
 								</div>
