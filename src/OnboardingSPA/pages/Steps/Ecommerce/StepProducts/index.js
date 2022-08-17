@@ -70,6 +70,7 @@ const StepProducts = () => {
 					<div className='nfd-product-step-options'>
 						{content.productOptions.map((product) => (
 							<CheckboxControl
+								key={product.value}
 								checked={productInfo.product_types.includes(
 									product.value
 								)}
