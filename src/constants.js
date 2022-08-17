@@ -4,7 +4,7 @@ export const runtimeDataExists =
 	'buildUrl' in window.nfdOnboarding;
 export const wpAdminUrl = window.nfdOnboarding.adminUrl;
 export const wpSiteUrl = window.nfdOnboarding.siteUrl;
-export const wpRestBase = `${ wpSiteUrl }/index.php?rest_route=`;
+export const wpRestBase = window.nfdOnboarding.restUrl;
 export const onboardingRestRoute = 'newfold-onboarding/v1';
 export const onboardingRestBase = `${ wpRestBase }/${ onboardingRestRoute }`;
 export const wpAdminPage = `${wpAdminUrl}index.php`;
