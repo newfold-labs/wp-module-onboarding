@@ -132,7 +132,7 @@ $title-browser-color: #3858E9;
                     align-items: center;
                     pointer-events: none;
                     justify-content: center;
-                    border-radius: 0 0 6px 0;
+                    border-radius: 0 0 8px 0;
                     background-color: $browser-dark;
                 }
             }
@@ -149,7 +149,7 @@ $title-browser-color: #3858E9;
                     align-items: center;
                     pointer-events: none;
                     justify-content: center;
-                    border-radius: 0 0 0 6px;
+                    border-radius: 0 0 0 8px;
                     background-color: $browser-dark;
                 }
             }
@@ -163,7 +163,7 @@ $title-browser-color: #3858E9;
                 padding-left: 5px;
                 padding-right: 16px;
                 align-items: center;
-                border-radius: 6px 6px 0px 0px;
+                border-radius: 8px 8px 0px 0px;
                 background-color: $browser-light;
         
                 &-text {
