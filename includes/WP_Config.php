@@ -7,7 +7,7 @@ namespace NewfoldLabs\WP\Module\Onboarding;
 class WP_Config {
 
 	 /**
-	  * @var \WP_Config_Transformer
+	  * @var \WPConfigTransformer
 	  */
 	 protected $wp_config;
 

@@ -42,7 +42,7 @@ class FlowController {
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_onboarding_flow_data' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+					// 'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
