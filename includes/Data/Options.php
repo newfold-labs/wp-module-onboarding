@@ -33,6 +33,9 @@ final class Options {
 		'flow'                          => 'flow',
 		'theme_init_status'             => 'theme_init_status',
 		'theme_install_queue'           => 'theme_install_queue',
+          'blog_name'                     => 'blogname',
+          'blog_description'              => 'blogdescription',
+          'site_icon'                     => 'site_icon'  
 	);
 
 	protected static array $initialization_options = array(
