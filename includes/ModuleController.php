@@ -69,7 +69,11 @@ class ModuleController {
 	 */
 	public static function is_ecom_customer( $customer_data ) {
 		
-		// August 18 at 10AM Mountain Time
+		if ( isset( $_GET['flow'] ) && 'ecommerce' === \sanitize_text_field( $_GET['flow'] ) ) {
+			return true; 
+		}
+
+		// August 18
 		$new_cust_date = date("Y-m-d H:i:s", strtotime('2022-08-18T15:30:00.000Z'));
 		
 		if ( isset( $customer_data['plan_subtype'] ) && isset( $customer_data['signup_date'] ) ) {
