@@ -151,7 +151,7 @@ final class Plugins {
 				array(
 					'slug'     => 'nfd_slug_yith_woocommerce_customize_myaccount_page',
 					'activate' => true,
-					'priority' => 120,
+					'priority' => 257,
 				),
 				array(
 					'slug'     => 'nfd_slug_yith_woocommerce_gift_cards',
@@ -166,12 +166,12 @@ final class Plugins {
 				array(
 					'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
 					'activate' => true,
-					'priority' => 60,
+					'priority' => 259,
 				),
 				array(
 					'slug'     => 'nfd_slug_yith_paypal_payments_for_woocommerce',
 					'activate' => true,
-					'priority' => 40,
+					'priority' => 258,
 				),
 			),
 			'wc_premium' => array(
