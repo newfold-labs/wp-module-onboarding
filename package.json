@@ -1,6 +1,6 @@
 {
     "name": "wp-module-onboarding",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "Next-generation WordPress Onboarding for WordPress sites at Newfold Digital.",
     "license": "GPL-2.0-or-later",
     "private": true,
