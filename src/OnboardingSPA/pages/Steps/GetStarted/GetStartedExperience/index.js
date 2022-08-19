@@ -6,6 +6,8 @@ import NeedHelpTag from '../../../../components/NeedHelpTag';
 import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
 import content from './content.json';
+import { FLOW_SYNC } from '../../../../utils/api-queuer/constants';
+
 import { RadioControl } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -21,7 +23,7 @@ const GetStartedExperience = () => {
 	const [ isLoaded, setisLoaded ] = useState( false );
 	const [ wpComfortLevel, setWpComfortLevel ] = useState( '0' );
 
-	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
+	const { enqueueRequest, flushQueue, setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
 
 	const { currentData, currentStep } = useSelect( ( select ) => {
 		return {
@@ -37,6 +39,8 @@ const GetStartedExperience = () => {
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
+		flushQueue(currentData);
+		enqueueRequest(FLOW_SYNC);
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
