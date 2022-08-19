@@ -8,6 +8,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import SelectableCardList from '../../../components/SelectableCardList/selectable-card-list';
+import { FLOW_SYNC } from '../../../utils/api-queuer/constants'; 
 
 const StepTopPriority = ( props ) => {
 	const priorityTypes = {
@@ -40,6 +41,8 @@ const StepTopPriority = ( props ) => {
 	const isLargeViewport = useViewportMatch( 'medium' );
 
 	const {
+		enqueueRequest, 
+		flushQueue,
 		setDrawerActiveView,
 		setIsDrawerOpened,
 		setIsSidebarOpened,
@@ -61,6 +64,8 @@ const StepTopPriority = ( props ) => {
 	};
 
 	useEffect( () => {
+		flushQueue(currentData);
+		enqueueRequest(FLOW_SYNC);
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );
 		}
