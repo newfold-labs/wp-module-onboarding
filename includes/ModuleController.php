@@ -68,31 +68,6 @@ class ModuleController {
 	 * @return bool
 	 */
 	public static function is_ecom_customer( $customer_data ) {
-		
-		if ( isset( $_GET['flow'] ) && 'ecommerce' === \sanitize_text_field( $_GET['flow'] ) ) {
-			return true; 
-		}
-
-		// August 18
-		$new_cust_date = date("Y-m-d H:i:s", strtotime('2022-08-18T15:30:00.000Z'));
-		
-		if ( isset( $customer_data['plan_subtype'] ) && isset( $customer_data['signup_date'] ) ) {
-			
-			// Convert the Customer Signup Date to a Php known format
-			$cust_signup_date = date("Y-m-d H:i:s", strtotime( $customer_data['signup_date'] ));
-
-			// Check if the Customer is a new Customer
-			$is_new_cust = $cust_signup_date >= $new_cust_date;
-			
-			// Check if the Customer has an Ecom Plan
-			$has_ecom_plan = Flows::get_flow_from_plan_subtype( $customer_data['plan_subtype'] ) === "ecommerce";
-
-			if( $has_ecom_plan  &&  $is_new_cust ){
-				return true;
-			}
-		}
-
-		// If the Customer is not a Ecommerce Customer or is an Old Customer
-		return false;
+          return true;
 	}
 }
