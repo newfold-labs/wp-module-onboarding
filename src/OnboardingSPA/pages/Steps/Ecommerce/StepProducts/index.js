@@ -37,6 +37,7 @@ const StepProducts = () => {
 
 	const handleCheckbox = (value, checked) =>
 		setCurrentOnboardingFLowData({
+			...flowData,
 			storeDetails: {
 				...flowData.storeDetails,
 				productInfo: {
@@ -50,6 +51,7 @@ const StepProducts = () => {
 
 	const handleProductCount = (count) =>
 		setCurrentOnboardingFLowData({
+			...flowData,
 			storeDetails: {
 				...flowData.storeDetails,
 				productInfo: { ...productInfo, product_count: count },

@@ -50,6 +50,7 @@ const StepTax = () => {
 			);
 			let tax = selectedTaxOption?.data ?? {};
 			setCurrentOnboardingFlowData({
+				...flowData,
 				storeDetails: {
 					...flowData.storeDetails,
 					tax: {
@@ -99,6 +100,7 @@ const StepTax = () => {
 								(option) => option.value === value
 							);
 							setCurrentOnboardingFlowData({
+								...flowData,
 								storeDetails: {
 									...flowData.storeDetails,
 									tax: {

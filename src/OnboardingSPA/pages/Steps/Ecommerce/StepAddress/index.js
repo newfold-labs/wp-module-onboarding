@@ -49,6 +49,7 @@ const StepAddress = () => {
 		];
 		if (settings !== null && flowData.storeDetails.address === undefined) {
 			setCurrentOnboardingFlowData({
+				...flowData,
 				storeDetails: {
 					...flowData.storeDetails,
 					address: {
@@ -90,6 +91,7 @@ const StepAddress = () => {
 					: `${country}:${newValue}`;
 		}
 		setCurrentOnboardingFlowData({
+			...flowData,
 			storeDetails: {
 				...flowData.storeDetails,
 				address: {
