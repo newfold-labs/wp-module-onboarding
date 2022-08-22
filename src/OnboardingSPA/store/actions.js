@@ -95,20 +95,20 @@ export function setActiveStep( path ) {
 /**
  * Accepts a JSON to set the current data.
  *
- * @param {*} currentData
+ * @param {*} flowData
  * @returns
  */
-export function setCurrentOnboardingFlowData(currentData) {
+export function setCurrentOnboardingFlowData(flowData) {
 	return {
 		type: 'SET_CURRENT_FLOW_DATA',
-		currentData,
+		flowData,
 	};
 }
 
 /**
  * Accepts a JSON to set the social data.
  *
- * @param {*} currentData
+ * @param {*} socialData
  * @returns
  */
 export function setCurrentOnboardingSocialData(socialData) {

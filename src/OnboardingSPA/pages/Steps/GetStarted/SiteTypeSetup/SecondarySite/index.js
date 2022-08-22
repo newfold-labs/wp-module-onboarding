@@ -29,14 +29,14 @@ const StepPrimarySetup = () => {
 
 	const { setCurrentOnboardingFlowData } = useDispatch(nfdOnboardingStore);
 
-	const { currentStep, currentData } = useSelect((select) => {
+	const { currentStep, flowData } = useSelect((select) => {
 		return {
 			currentStep: select(nfdOnboardingStore).getCurrentStep(),
-			currentData: select(nfdOnboardingStore).getCurrentOnboardingFlowData()
+			flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData()
 		};
 	}, []);
 
-	const selectedCategoryInStore = currentData?.data?.siteType?.secondary;
+	const selectedCategoryInStore = flowData?.data?.siteType?.secondary;
 	const categoriesArray = content.categories;
 	const subCategories = categoriesArray[0]?.subCategories;
 
@@ -49,7 +49,7 @@ const StepPrimarySetup = () => {
 	const categoryInput = input => {
 		changeCategory(-1);
 		changeInputCateg(input?.target?.value);
-		const currentDataCopy = currentData;
+		const currentDataCopy = flowData;
 		currentDataCopy.data.siteType['secondary'] = input?.target?.value;
 		setCurrentOnboardingFlowData(currentDataCopy);
 	}
@@ -58,7 +58,7 @@ const StepPrimarySetup = () => {
 	const handleCategoryClick = (idxOfElm) => {
 		changeCategory(idxOfElm);
 		changeInputCateg('');
-		const currentDataCopy = currentData;
+		const currentDataCopy = flowData;
 		currentDataCopy.data.siteType['secondary'] = categoriesArray[0]?.subCategories[idxOfElm];
 		setCurrentOnboardingFlowData(currentDataCopy);
 	}

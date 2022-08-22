@@ -23,9 +23,9 @@ const GetStartedExperience = () => {
 
 	const { setCurrentOnboardingFlowData } = useDispatch( nfdOnboardingStore );
 
-	const { currentData, currentStep } = useSelect( ( select ) => {
+	const { flowData, currentStep } = useSelect( ( select ) => {
 		return {
-			currentData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
+			flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
 			currentStep: select(nfdOnboardingStore).getCurrentStep(),
 		};
 	}, [] );
@@ -44,7 +44,7 @@ const GetStartedExperience = () => {
 
 	useEffect( () => {
 		async function getFlowData() {
-			setWpComfortLevel( currentData.data.wpComfortLevel );
+			setWpComfortLevel( flowData.data.wpComfortLevel );
 			setisLoaded( true );
 		}
 		if ( ! isLoaded ) {
@@ -54,7 +54,7 @@ const GetStartedExperience = () => {
 
 	useEffect( () => {
 		const saveData = async () => {
-			const currentDataCopy = currentData;
+			const currentDataCopy = flowData;
 			currentDataCopy.data.wpComfortLevel = wpComfortLevel || '0';
 			setCurrentOnboardingFlowData( currentDataCopy );
 		};

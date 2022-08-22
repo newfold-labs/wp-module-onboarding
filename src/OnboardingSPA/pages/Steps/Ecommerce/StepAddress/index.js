@@ -34,7 +34,7 @@ const StepAddress = () => {
 
 	const navigate = useNavigate();
 
-	let currentData = useSelect((select) =>
+	let flowData = useSelect((select) =>
 		select(nfdOnboardingStore).getCurrentOnboardingFlowData()
 	);
 
@@ -47,12 +47,12 @@ const StepAddress = () => {
 			'woocommerce_store_postcode',
 			'woocommerce_default_country'
 		];
-		if (settings !== null && currentData.storeDetails.address === undefined) {
+		if (settings !== null && flowData.storeDetails.address === undefined) {
 			setCurrentOnboardingFlowData({
 				storeDetails: {
-					...currentData.storeDetails,
+					...flowData.storeDetails,
 					address: {
-						...(currentData.storeDetails.address ?? {}),
+						...(flowData.storeDetails.address ?? {}),
 						...addressKeys.reduce(
 							(address, key) => ({ ...address, [key]: settings[key] }),
 							{}
@@ -61,9 +61,9 @@ const StepAddress = () => {
 				},
 			});
 		}
-	}, [settings, currentData.storeDetails]);
+	}, [settings, flowData.storeDetails]);
 
-	let { address } = currentData.storeDetails;
+	let { address } = flowData.storeDetails;
 	const fieldProps = {
 		disabled: settings === null,
 		onChange: handleFieldChange,
@@ -91,9 +91,9 @@ const StepAddress = () => {
 		}
 		setCurrentOnboardingFlowData({
 			storeDetails: {
-				...currentData.storeDetails,
+				...flowData.storeDetails,
 				address: {
-					...currentData.storeDetails.address,
+					...flowData.storeDetails.address,
 					[fieldName]: newValue,
 					...(place !== "" && {
 						woocommerce_default_country: place,

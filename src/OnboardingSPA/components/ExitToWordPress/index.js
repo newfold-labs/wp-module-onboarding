@@ -31,10 +31,10 @@ const ExitToWordPress = ({
 	const closeModal = () => setIsOpen(false);
 
 	const location = useLocation();
-	const { currentData } = useSelect(
+	const { flowData } = useSelect(
 		(select) => {
 			return {
-				currentData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
+				flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
 			};
 		},
 		[location.pathname]
@@ -45,9 +45,9 @@ const ExitToWordPress = ({
 		'wp-module-onboarding'
 	);
 
-	async function syncSocialSettingsFinish(currentData) {
+	async function syncSocialSettingsFinish(flowData) {
 		const initialData = await getSettings();
-		const result = await setSettings(currentData?.data?.socialData);
+		const result = await setSettings(flowData?.data?.socialData);
 		if (result?.error != null) {
 			console.error('Unable to Save Social Data!');
 			return initialData?.body;
@@ -55,20 +55,20 @@ const ExitToWordPress = ({
 		return result?.body;
 	}
 
-	async function saveData(path, currentData) {
+	async function saveData(path, flowData) {
 
-		if (currentData) {
-               currentData.hasExited = new Date().getTime();
+		if (flowData) {
+               flowData.hasExited = new Date().getTime();
 
 			// If Social Data is changed then sync it
 			if (path?.includes('basic-info')) {
-				const socialData = await syncSocialSettingsFinish(currentData);
+				const socialData = await syncSocialSettingsFinish(flowData);
 
 				// If Social Data is changed then Sync that also to the store
-				if (socialData && currentData?.data)
-					currentData.data.socialData = socialData;
+				if (socialData && flowData?.data)
+					flowData.data.socialData = socialData;
 			}
-			setFlow(currentData);
+			setFlow(flowData);
 		}
 		//Redirect to Admin Page for normal customers 
 		// and Bluehost Dashboard for ecommerce customers
@@ -98,7 +98,7 @@ const ExitToWordPress = ({
 						</Button>
 						<Button
 							variant="primary"
-							onClick={(e) => saveData(location.pathname, currentData)} >
+							onClick={(e) => saveData(location.pathname, flowData)} >
 							{__('Exit', 'wp-module-onboarding')}
 						</Button>
 					</ButtonGroup>

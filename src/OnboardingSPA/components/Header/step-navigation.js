@@ -47,9 +47,9 @@ const Next = ({ path }) => {
 	);
 };
 
-async function syncSocialSettingsFinish( currentData ) {
+async function syncSocialSettingsFinish( flowData ) {
 	const initialData = await getSettings();
-	const result = await setSettings(currentData?.data?.socialData);
+	const result = await setSettings(flowData?.data?.socialData);
 	if (result?.error != null) {
 		console.error('Unable to Save Social Data!');
 		return initialData?.body;
@@ -57,19 +57,19 @@ async function syncSocialSettingsFinish( currentData ) {
 	return result?.body;
 }
 
-async function saveData(path, currentData) {
+async function saveData(path, flowData) {
 
-	if (currentData) {
-          currentData.isComplete = new Date().getTime();
+	if (flowData) {
+          flowData.isComplete = new Date().getTime();
 		// If Social Data is changed then sync it
 		if (path?.includes('basic-info')) {
-			const socialData = await syncSocialSettingsFinish(currentData);
+			const socialData = await syncSocialSettingsFinish(flowData);
 
 			// If Social Data is changed then Sync that also to the store
-			if (socialData && currentData?.data)
-				currentData.data.socialData = socialData;
+			if (socialData && flowData?.data)
+				flowData.data.socialData = socialData;
 		}
-		setFlow(currentData);
+		setFlow(flowData);
 	}
 	//Redirect to Admin Page for normal customers 
 	// and Bluehost Dashboard for ecommerce customers
@@ -81,9 +81,9 @@ async function saveData(path, currentData) {
  * Finish step navigation button.
  * @returns
  */
-const Finish = ({ path, currentData, saveData }) => (
+const Finish = ({ path, flowData, saveData }) => (
 	<Button
-		onClick={(e) => saveData(path, currentData)}
+		onClick={(e) => saveData(path, flowData)}
 		className="navigation-buttons navigation-buttons_finish"
 		variant="primary">
 		{__('Finish', 'wp-module-onboarding')}
@@ -97,12 +97,12 @@ const Finish = ({ path, currentData, saveData }) => (
  */
 const StepNavigation = () => {
 	const location = useLocation();
-	const { previousStep, nextStep, currentData } = useSelect(
+	const { previousStep, nextStep, flowData } = useSelect(
 		(select) => {
 			return {
 				nextStep: select(nfdOnboardingStore).getNextStep(),
 				previousStep: select(nfdOnboardingStore).getPreviousStep(),
-				currentData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
+				flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
 			};
 		},
 		[location.pathname]
@@ -113,7 +113,7 @@ const StepNavigation = () => {
 		<div className="nfd-onboarding-header__step-navigation">
 			<ButtonGroup style={{ display: 'flex', columnGap: '0.5rem' }}>
 				{isFirstStep ? null : <Back path={previousStep.path} />}
-				{isLastStep ? <Finish path={location.pathname} currentData={currentData} saveData={saveData}/> : <Next path={nextStep.path} />}
+				{isLastStep ? <Finish path={location.pathname} flowData={flowData} saveData={saveData}/> : <Next path={nextStep.path} />}
 			</ButtonGroup>
 		</div>
 	);

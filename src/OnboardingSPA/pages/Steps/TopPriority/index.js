@@ -49,10 +49,10 @@ const StepTopPriority = ( props ) => {
 		setIsDrawerSuppressed,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { currentStep, currentData } = useSelect( ( select ) => {
+	const { currentStep, flowData } = useSelect( ( select ) => {
 		return {
 			currentStep: select(nfdOnboardingStore).getCurrentStep(),
-			currentData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
+			flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
 		};
 	}, [] );
 
@@ -73,14 +73,14 @@ const StepTopPriority = ( props ) => {
 
 	useEffect( () => {
 		async function setInitialData() {
-			if ( currentData ) {
-				const val = await currentData?.data.topPriority.priority1;
+			if ( flowData ) {
+				const val = await flowData?.data.topPriority.priority1;
 				if ( val != '' )
 					setSelected( parseInt( getKey( priorityTypes, val ) ) );
 				else {
-					currentData.data.topPriority.priority1 =
+					flowData.data.topPriority.priority1 =
 						priorityTypes[ selected ];
-					setCurrentOnboardingFlowData( currentData );
+					setCurrentOnboardingFlowData( flowData );
 				}
 			}
 			setisLoaded( true );
@@ -90,8 +90,8 @@ const StepTopPriority = ( props ) => {
 
 	useEffect( () => {
 		if ( isLoaded ) {
-			currentData.data.topPriority.priority1 = priorityTypes[ selected ];
-			setCurrentOnboardingFlowData( currentData );
+			flowData.data.topPriority.priority1 = priorityTypes[ selected ];
+			setCurrentOnboardingFlowData( flowData );
 		}
 	}, [ selected ] );
 

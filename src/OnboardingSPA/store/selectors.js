@@ -70,7 +70,7 @@ export function getHireExpertsUrl( state ) {
  * @return string
  */
 export function getCurrentOnboardingFlowData( state ) {
-	return state.data.currentData;
+	return state.data.flowData;
 }
 
 /**

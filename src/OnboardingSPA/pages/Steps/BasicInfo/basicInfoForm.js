@@ -24,7 +24,7 @@ const BasicInfoForm = () => {
     const navigate = useNavigate();
 
     const [isError, setIsError] = useState(false);
-    const [flowData, setFlowData] = useState();
+    const [localFlowData, setFlowData] = useState();
     const [isLoaded, setisLoaded] = useState(false);
     const [debouncedFlowData, setDebouncedFlowData] = useState();
 
@@ -35,18 +35,18 @@ const BasicInfoForm = () => {
     const [isValidSocials, setIsValidSocials] = useState(false);
     const { setCurrentOnboardingFlowData, setCurrentOnboardingSocialData } = useDispatch(nfdOnboardingStore);
 
-    const { currentData, socialData } = useSelect((select) => {
+    const { flowData, socialData } = useSelect((select) => {
         return {
-            currentData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
+            flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
             socialData: select(nfdOnboardingStore).getCurrentOnboardingSocialData()
         };
     }, []);
 
     function setDefaultData() {
         if(isLoaded) {
-            setSiteLogo(flowData?.data['siteLogo']);
-            setSiteTitle(flowData?.data['blogName']);
-            setSiteDesc(flowData?.data['blogDescription']);
+            setSiteLogo(localFlowData?.data['siteLogo']);
+            setSiteTitle(localFlowData?.data['blogName']);
+            setSiteDesc(localFlowData?.data['blogDescription']);
         }
     }
 
@@ -65,8 +65,8 @@ const BasicInfoForm = () => {
     useEffect(() => {
         async function getFlowData() {
             setLocalSocialData(socialData);
-            setFlowData(currentData);
-            setDebouncedFlowData(flowData);
+            setFlowData(flowData);
+            setDebouncedFlowData(localFlowData);
             setisLoaded(true);
         }
         if (!isLoaded)
@@ -88,7 +88,7 @@ const BasicInfoForm = () => {
 
     useEffect(() => {
         const saveData = async () => {
-            var currentDataCopy = currentData;
+            var currentDataCopy = flowData;
             currentDataCopy.data['siteLogo'] = debouncedFlowData.data['siteLogo'] ?? currentDataCopy.data['siteLogo'];
             currentDataCopy.data['blogName'] = debouncedFlowData.data['blogName'] ?? currentDataCopy.data['blogName'];
             currentDataCopy.data['blogDescription'] = debouncedFlowData.data['blogDescription'] ?? currentDataCopy.data['blogDescription']; 

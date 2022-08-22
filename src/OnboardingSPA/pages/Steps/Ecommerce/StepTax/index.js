@@ -29,7 +29,7 @@ const StepTax = () => {
 	} = useDispatch(nfdOnboardingStore);
 	const navigate = useNavigate();
 
-	let currentData = useSelect((select) =>
+	let flowData = useSelect((select) =>
 		select(nfdOnboardingStore).getCurrentOnboardingFlowData()
 	);
 
@@ -44,16 +44,16 @@ const StepTax = () => {
 
 	const settings = useWPSettings();
 	useEffect(() => {
-		if (settings !== null && currentData.storeDetails.tax === undefined) {
+		if (settings !== null && flowData.storeDetails.tax === undefined) {
 			let selectedTaxOption = content.stepTaxOptions.find(
 				createReverseLookup(settings)
 			);
 			let tax = selectedTaxOption?.data ?? {};
 			setCurrentOnboardingFlowData({
 				storeDetails: {
-					...currentData.storeDetails,
+					...flowData.storeDetails,
 					tax: {
-						...(currentData.storeDetails.tax ?? {}),
+						...(flowData.storeDetails.tax ?? {}),
 						...tax,
 						option: selectedTaxOption?.value,
 						isStoreDetailsFilled: settings.woocommerce_store_postcode !== null,
@@ -61,8 +61,8 @@ const StepTax = () => {
 				},
 			});
 		}
-	}, [settings, currentData.storeDetails]);
-	let { tax } = currentData.storeDetails;
+	}, [settings, flowData.storeDetails]);
+	let { tax } = flowData.storeDetails;
 	const handleButtonClick = () => {
 		//Commented as auto-calculate tax option is removed for MMP
 		// let isAddressNeeded = tax?.option === "1" && !tax.isStoreDetailsFilled;
@@ -100,7 +100,7 @@ const StepTax = () => {
 							);
 							setCurrentOnboardingFlowData({
 								storeDetails: {
-									...currentData.storeDetails,
+									...flowData.storeDetails,
 									tax: {
 										...selectedOption.data,
 										option: selectedOption.value,

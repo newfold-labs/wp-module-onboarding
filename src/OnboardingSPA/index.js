@@ -23,10 +23,10 @@ const NFDOnboarding = () => (
 	</HashRouter>
 );
 
-const initializeFlowData = ( currentData ) => {
-	currentData.hasExited = false;
-	currentData.isComplete = false;
-	return currentData;
+const initializeFlowData = ( flowData ) => {
+	flowData.hasExited = false;
+	flowData.isComplete = false;
+	return flowData;
 };
 
 /**

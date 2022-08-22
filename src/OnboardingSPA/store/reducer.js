@@ -73,15 +73,15 @@ export function drawer(
 }
 
 export function data( state = {
-	currentData: null,
+	flowData: null,
 	socialData: null
 }, action ) {
 	switch ( action.type ) {
 		case 'SET_CURRENT_FLOW_DATA':
 			return {
 				...state,
-				currentData: {
-					...action.currentData
+				flowData: {
+					...action.flowData
 				},
 			};
 		case 'SET_CURRENT_SOCIAL_DATA':

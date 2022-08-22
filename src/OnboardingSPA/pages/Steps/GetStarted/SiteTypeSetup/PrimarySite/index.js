@@ -18,11 +18,11 @@ const StepPrimarySetup = () => {
 		nfdOnboardingStore
 	);
 
-	const { currentStep, currentData } = useSelect(
+	const { currentStep, flowData } = useSelect(
 		(select) => {
 			return {
 				currentStep: select(nfdOnboardingStore).getCurrentStep(),
-				currentData: select(nfdOnboardingStore).getCurrentOnboardingFlowData()
+				flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData()
 			};
 		},
 		[]
@@ -39,7 +39,7 @@ const StepPrimarySetup = () => {
 	const { setCurrentOnboardingFlowData } = useDispatch(nfdOnboardingStore);
 	
 	const categoriesArray = content.categories;
-	const selectedPrimaryCategoryInStore = currentData?.data?.siteType?.primary;
+	const selectedPrimaryCategoryInStore = flowData?.data?.siteType?.primary;
 
 	/**This condition fills the data in input box if the saved category isn't a subcategory from the content*/
 	if (selectedPrimaryCategoryInStore && !inputCategVal) {
@@ -52,7 +52,7 @@ const StepPrimarySetup = () => {
 	const handleCategoryClick = (idxOfElm) => {
 		changeCategory(idxOfElm);
 		changeInputCateg('');
-		const currentDataCopy = currentData;
+		const currentDataCopy = flowData;
 		currentDataCopy.data.siteType['primary'] = content.categories[idxOfElm]?.name;
 		setCurrentOnboardingFlowData(currentDataCopy);
 	}
@@ -61,7 +61,7 @@ const StepPrimarySetup = () => {
 	const categoryInput = input => {
 		changeCategory(-1);
 		changeInputCateg(input?.target?.value);
-		const currentDataCopy = currentData;
+		const currentDataCopy = flowData;
 		currentDataCopy.data.siteType['primary'] = input?.target?.value;
 		setCurrentOnboardingFlowData(currentDataCopy);
 	}

@@ -32,7 +32,7 @@ const App = () => {
 		isDrawerOpen,
 		newfoldBrand,
 		onboardingFlow,
-		currentData,
+		flowData,
 		socialData,
 		firstStep
 	} = useSelect((select) => {
@@ -40,7 +40,7 @@ const App = () => {
 			isDrawerOpen: select(nfdOnboardingStore).isDrawerOpened(),
 			newfoldBrand: select(nfdOnboardingStore).getNewfoldBrand(),
 			onboardingFlow: select(nfdOnboardingStore).getOnboardingFlow(),
-			currentData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
+			flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
 			socialData: select(nfdOnboardingStore).getCurrentOnboardingSocialData(),
 			firstStep: select(nfdOnboardingStore).getFirstStep(),
 		};
@@ -68,7 +68,7 @@ const App = () => {
 	}
 	
 	async function syncStoreDetails() {
-		let { address, tax } = currentData?.storeDetails;
+		let { address, tax } = flowData?.storeDetails;
 		let payload = {};
 		if (address !== undefined) {
 			delete address.country;
@@ -93,15 +93,15 @@ const App = () => {
 		if (!isEmpty(payload)) {
 			await updateWPSettings(payload);
 		}
-		delete currentData?.storeDetails?.address;
-		delete currentData?.storeDetails?.tax;
+		delete flowData?.storeDetails?.address;
+		delete flowData?.storeDetails?.tax;
 		setDidVisitEcommerce(false);
 	}
 
 	async function syncStoreToDB() {
 		// The First Welcome Step doesn't have any Store changes
 		const isFirstStep = location?.pathname === firstStep?.path;
-		if (currentData && !isFirstStep){
+		if (flowData && !isFirstStep){
 			if(!isRequestPlaced){
 				setIsRequestPlaced(true);
 
@@ -114,11 +114,11 @@ const App = () => {
 					const socialDataToBeSaved = await syncSocialSettings();
 					
 					// If Social Data is changed then Sync that also to the store
-					if (socialDataToBeSaved && currentData?.data)
+					if (socialDataToBeSaved && flowData?.data)
 						setCurrentOnboardingSocialData(socialDataToBeSaved);
 				} 
 
-				const result = await setFlow(currentData);
+				const result = await setFlow(flowData);
 				if (result?.error != null) {
 					setIsRequestPlaced(false);
 					console.error('Unable to Save data!');
