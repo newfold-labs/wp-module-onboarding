@@ -1,6 +1,7 @@
 import './styles/app.scss';
 import { store as nfdOnboardingStore } from './store'; /* must import prior to App! */
 import { getFlow } from './utils/api/flow';
+import { getSettings } from './utils/api/settings';
 import { init as initializePlugins } from './utils/api/plugins';
 import { init as initializeThemes } from './utils/api/themes';
 import { trigger as cronTrigger } from './utils/api/cronTrigger';
@@ -41,11 +42,18 @@ export async function initializeNFDOnboarding( id, runtime ) {
 
 	const DOM_TARGET = document.getElementById( id );
 	dispatch( nfdOnboardingStore ).setRuntime( runtime );
-	const currentData = await getFlow();
-	if ( currentData.error == null ) {
-		currentData.body = initializeFlowData( currentData.body );
-		dispatch( nfdOnboardingStore ).setCurrentOnboardingData(
-			currentData.body
+	const currentFlowData = await getFlow();
+	if ( currentFlowData.error == null ) {
+		currentFlowData.body = initializeFlowData( currentFlowData.body );
+		dispatch( nfdOnboardingStore ).setCurrentOnboardingFlowData(
+			currentFlowData.body
+		);
+	}
+
+	const socialData = await getSettings();
+	if (socialData.error == null) {
+		dispatch(nfdOnboardingStore).setCurrentOnboardingSocialData(
+			socialData.body
 		);
 	}
 

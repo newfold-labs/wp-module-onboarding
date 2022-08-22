@@ -24,19 +24,20 @@ const MiniPreview = ({ title, desc, icon, socialData }) => {
     const [tiktok, setTikTok] = useState("");
 
     useEffect(() => {
-        setFacebook((socialData?.facebook_site) ?? "");
-        setTwitter(socialData?.twitter_site ?? "");
-        setInstagram(socialData?.instagram_url ?? "");
-        setYouTube(socialData?.youtube_url ?? "");
-        setLinkedIn(socialData?.linkedin_url ?? "");
-        if (Object.keys(socialData).includes("other_social_urls"))
-        {
-            const otherURLS = socialData.other_social_urls;
-            if (Object.keys(otherURLS).includes("yelp_url"))
-                setYelp(otherURLS["yelp_url"] ?? "");
+        if( socialData ) {
+            setFacebook((socialData?.facebook_site) ?? "");
+            setTwitter(socialData?.twitter_site ?? "");
+            setInstagram(socialData?.instagram_url ?? "");
+            setYouTube(socialData?.youtube_url ?? "");
+            setLinkedIn(socialData?.linkedin_url ?? "");
+            if (Object.keys(socialData).includes("other_social_urls")) {
+                const otherURLS = socialData.other_social_urls;
+                if (Object.keys(otherURLS).includes("yelp_url"))
+                    setYelp(otherURLS["yelp_url"] ?? "");
 
-            if (Object.keys(otherURLS).includes("tiktok_url"))
-                setTikTok(otherURLS["tiktok_url"] ?? "");
+                if (Object.keys(otherURLS).includes("tiktok_url"))
+                    setTikTok(otherURLS["tiktok_url"] ?? "");
+            }
         }
     }, [socialData]);
 
@@ -70,11 +71,13 @@ const MiniPreview = ({ title, desc, icon, socialData }) => {
 
     function socialIconList() {
         var socialIconList = []
-        socialDataset.map( (socialInfo) => {
+        if (socialDataset) {
+            socialDataset.map( (socialInfo) => {
                 !socialInfo.url ||
                 socialIconList.push(
                     <div key={socialInfo.image} className={`browser-content_social_icon ${isValidUrl(socialInfo.url) || 'invalid-url' }`} style={{ backgroundImage: socialInfo.image }} />)
-        })
+            })
+        }
         return socialIconList;
     }
     

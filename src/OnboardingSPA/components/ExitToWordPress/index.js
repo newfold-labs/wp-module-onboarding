@@ -34,7 +34,7 @@ const ExitToWordPress = ({
 	const { currentData } = useSelect(
 		(select) => {
 			return {
-				currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+				currentData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
 			};
 		},
 		[location.pathname]

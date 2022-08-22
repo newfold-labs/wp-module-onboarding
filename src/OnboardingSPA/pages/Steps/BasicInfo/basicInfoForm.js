@@ -31,13 +31,14 @@ const BasicInfoForm = () => {
     const [siteTitle, setSiteTitle] = useState("");
     const [siteDesc, setSiteDesc] = useState("");
     const [siteLogo, setSiteLogo] = useState(0);
-    const [socialData, setSocialData] = useState("");
+    const [localSocialData, setLocalSocialData] = useState(null);
     const [isValidSocials, setIsValidSocials] = useState(false);
-    const { setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
+    const { setCurrentOnboardingFlowData, setCurrentOnboardingSocialData } = useDispatch(nfdOnboardingStore);
 
-    const { currentData } = useSelect((select) => {
+    const { currentData, socialData } = useSelect((select) => {
         return {
-            currentData: select(nfdOnboardingStore).getCurrentOnboardingData()
+            currentData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
+            socialData: select(nfdOnboardingStore).getCurrentOnboardingSocialData()
         };
     }, []);
 
@@ -55,7 +56,7 @@ const BasicInfoForm = () => {
                 "siteLogo": siteLogo,
                 "blogName": siteTitle,
                 "blogDescription": siteDesc,
-                "socialData": socialData,
+                "socialData": localSocialData,
             }
         }
         return dataToSave;
@@ -63,8 +64,7 @@ const BasicInfoForm = () => {
 
     useEffect(() => {
         async function getFlowData() {
-            const socialDataAPI = await getSettings();
-            setSocialData(socialDataAPI.body);
+            setLocalSocialData(socialData);
             setFlowData(currentData);
             setDebouncedFlowData(flowData);
             setisLoaded(true);
@@ -84,7 +84,7 @@ const BasicInfoForm = () => {
         return () => {
             clearTimeout(timerId);
         };
-    }, [siteTitle, siteDesc, siteLogo, socialData, isValidSocials]);
+    }, [siteTitle, siteDesc, siteLogo, localSocialData, isValidSocials]);
 
     useEffect(() => {
         const saveData = async () => {
@@ -92,8 +92,8 @@ const BasicInfoForm = () => {
             currentDataCopy.data['siteLogo'] = debouncedFlowData.data['siteLogo'] ?? currentDataCopy.data['siteLogo'];
             currentDataCopy.data['blogName'] = debouncedFlowData.data['blogName'] ?? currentDataCopy.data['blogName'];
             currentDataCopy.data['blogDescription'] = debouncedFlowData.data['blogDescription'] ?? currentDataCopy.data['blogDescription']; 
-            currentDataCopy.data['socialData'] = debouncedFlowData.data['socialData'] ?? currentDataCopy.data['socialData'];
-            setCurrentOnboardingData(currentDataCopy);
+            setCurrentOnboardingFlowData(currentDataCopy);
+            setCurrentOnboardingSocialData(debouncedFlowData.data['socialData'] ?? currentDataCopy.data['socialData']);
         };
         if (debouncedFlowData) saveData();
     }, [debouncedFlowData]);
@@ -122,11 +122,11 @@ const BasicInfoForm = () => {
                         maxCharacters={__(content.siteDesc["maxCharacters"], 'wp-module-onboarding')} 
                         height="100px" textValue={siteDesc} textValueSetter={setSiteDesc} />
 
-                    <SocialMediaForm socialData={socialData} setSocialData={setSocialData} setIsValidSocials={setIsValidSocials}/>
+                    <SocialMediaForm socialData={localSocialData} setSocialData={setLocalSocialData} setIsValidSocials={setIsValidSocials}/>
                 </div>
                 <div className="basic-info-form__right">
                     <ImageUploader icon={siteLogo} iconSetter={setSiteLogo} />
-                    <MiniPreview icon={siteLogo} title={siteTitle} desc={siteDesc} socialData={socialData} />
+                    <MiniPreview icon={siteLogo} title={siteTitle} desc={siteDesc} socialData={localSocialData} />
                 </div>
             </div>
             <SkipButton/>

@@ -33,13 +33,15 @@ const App = () => {
 		newfoldBrand,
 		onboardingFlow,
 		currentData,
+		socialData,
 		firstStep
 	} = useSelect((select) => {
 		return {
 			isDrawerOpen: select(nfdOnboardingStore).isDrawerOpened(),
 			newfoldBrand: select(nfdOnboardingStore).getNewfoldBrand(),
 			onboardingFlow: select(nfdOnboardingStore).getOnboardingFlow(),
-			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+			currentData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
+			socialData: select(nfdOnboardingStore).getCurrentOnboardingSocialData(),
 			firstStep: select(nfdOnboardingStore).getFirstStep(),
 		};
 	}, []);
@@ -47,11 +49,16 @@ const App = () => {
 	const [isRequestPlaced, setIsRequestPlaced] = useState(false);
 	const [didVisitBasicInfo, setDidVisitBasicInfo] = useState(false);
 	const [didVisitEcommerce, setDidVisitEcommerce] = useState(false);
-	const { setActiveStep, setActiveFlow, setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
+	const { 
+		setActiveStep, 
+		setActiveFlow, 
+		setCurrentOnboardingFlowData, 
+		setCurrentOnboardingSocialData 
+	} = useDispatch(nfdOnboardingStore);
 
 	async function syncSocialSettings() {
 		const initialData = await getSettings();
-		const result = await setSettings(currentData?.data?.socialData);
+		const result = await setSettings(socialData);
 		setDidVisitBasicInfo(false);
 		if (result?.error != null) {
 			console.error('Unable to Save Social Data!');
@@ -61,7 +68,7 @@ const App = () => {
 	}
 	
 	async function syncStoreDetails() {
-		let { address, tax } = currentData.storeDetails;
+		let { address, tax } = currentData?.storeDetails;
 		let payload = {};
 		if (address !== undefined) {
 			delete address.country;
@@ -86,8 +93,8 @@ const App = () => {
 		if (!isEmpty(payload)) {
 			await updateWPSettings(payload);
 		}
-		delete currentData.storeDetails.address;
-		delete currentData.storeDetails.tax;
+		delete currentData?.storeDetails?.address;
+		delete currentData?.storeDetails?.tax;
 		setDidVisitEcommerce(false);
 	}
 
@@ -104,11 +111,11 @@ const App = () => {
 
 				// If Social Data is changed then sync it
 				if (didVisitBasicInfo){
-					const socialData = await syncSocialSettings();
+					const socialDataToBeSaved = await syncSocialSettings();
 					
 					// If Social Data is changed then Sync that also to the store
-					if (socialData && currentData?.data)
-						currentData.data.socialData = socialData;
+					if (socialDataToBeSaved && currentData?.data)
+						setCurrentOnboardingSocialData(socialDataToBeSaved);
 				} 
 
 				const result = await setFlow(currentData);
@@ -116,7 +123,7 @@ const App = () => {
 					setIsRequestPlaced(false);
 					console.error('Unable to Save data!');
 				} else {
-					setCurrentOnboardingData(result?.body);
+					setCurrentOnboardingFlowData(result?.body);
 					setIsRequestPlaced(false);
 				}
 				

@@ -20,7 +20,7 @@ const StepAddress = () => {
 		setIsDrawerOpened,
 		setIsDrawerSuppressed,
 		setIsSidebarOpened,
-		setCurrentOnboardingData,
+		setCurrentOnboardingFlowData,
 	} = useDispatch(nfdOnboardingStore);
 
 	useEffect(() => {
@@ -35,7 +35,7 @@ const StepAddress = () => {
 	const navigate = useNavigate();
 
 	let currentData = useSelect((select) =>
-		select(nfdOnboardingStore).getCurrentOnboardingData()
+		select(nfdOnboardingStore).getCurrentOnboardingFlowData()
 	);
 
 	const settings = useWPSettings();
@@ -48,7 +48,7 @@ const StepAddress = () => {
 			'woocommerce_default_country'
 		];
 		if (settings !== null && currentData.storeDetails.address === undefined) {
-			setCurrentOnboardingData({
+			setCurrentOnboardingFlowData({
 				storeDetails: {
 					...currentData.storeDetails,
 					address: {
@@ -89,7 +89,7 @@ const StepAddress = () => {
 					? `${newValue}:${state}`
 					: `${country}:${newValue}`;
 		}
-		setCurrentOnboardingData({
+		setCurrentOnboardingFlowData({
 			storeDetails: {
 				...currentData.storeDetails,
 				address: {

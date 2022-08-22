@@ -27,12 +27,12 @@ const StepPrimarySetup = () => {
 	const [inputCategVal, changeInputCateg] = useState('');
 
 
-	const { setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
+	const { setCurrentOnboardingFlowData } = useDispatch(nfdOnboardingStore);
 
 	const { currentStep, currentData } = useSelect((select) => {
 		return {
 			currentStep: select(nfdOnboardingStore).getCurrentStep(),
-			currentData: select(nfdOnboardingStore).getCurrentOnboardingData()
+			currentData: select(nfdOnboardingStore).getCurrentOnboardingFlowData()
 		};
 	}, []);
 
@@ -51,7 +51,7 @@ const StepPrimarySetup = () => {
 		changeInputCateg(input?.target?.value);
 		const currentDataCopy = currentData;
 		currentDataCopy.data.siteType['secondary'] = input?.target?.value;
-		setCurrentOnboardingData(currentDataCopy);
+		setCurrentOnboardingFlowData(currentDataCopy);
 	}
 
 	/** Function which saves data in redux when category name is chosen via categories displayed */
@@ -60,7 +60,7 @@ const StepPrimarySetup = () => {
 		changeInputCateg('');
 		const currentDataCopy = currentData;
 		currentDataCopy.data.siteType['secondary'] = categoriesArray[0]?.subCategories[idxOfElm];
-		setCurrentOnboardingData(currentDataCopy);
+		setCurrentOnboardingFlowData(currentDataCopy);
 	}
 
 	return (

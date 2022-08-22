@@ -49,21 +49,21 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
     }
 
     useEffect(() => {
-        setFacebook(socialData?.facebook_site ?? "");
-        setTwitter(socialData?.twitter_site ?? "");
-        setInstagram(socialData?.instagram_url ?? "");
-        setYouTube(socialData?.youtube_url ?? "");
-        setLinkedIn(socialData?.linkedin_url ?? "");
-        if (Object.keys(socialData).includes("other_social_urls"))
-        {
-            const otherURLS = socialData.other_social_urls;
-            if (Object.keys(otherURLS).includes("yelp_url"))
-                setYelp(otherURLS["yelp_url"] ?? "");
+        if( socialData ) {
+            setFacebook(socialData?.facebook_site ?? "");
+            setTwitter(socialData?.twitter_site ?? "");
+            setInstagram(socialData?.instagram_url ?? "");
+            setYouTube(socialData?.youtube_url ?? "");
+            setLinkedIn(socialData?.linkedin_url ?? "");
+            if (Object.keys(socialData).includes("other_social_urls")) {
+                const otherURLS = socialData.other_social_urls;
+                if (Object.keys(otherURLS).includes("yelp_url"))
+                    setYelp(otherURLS["yelp_url"] ?? "");
 
-            if (Object.keys(otherURLS).includes("tiktok_url"))
-                setTikTok(otherURLS["tiktok_url"] ?? "");
+                if (Object.keys(otherURLS).includes("tiktok_url"))
+                    setTikTok(otherURLS["tiktok_url"] ?? "");
+            }
         }
-
     }, [socialData]);
 
     const isValidUrl = (urlString) => {

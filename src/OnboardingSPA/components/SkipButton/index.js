@@ -22,7 +22,7 @@ const SkipButton = () => {
             return {
                 previousStep: select(nfdOnboardingStore).getPreviousStep(),
                 nextStep: select(nfdOnboardingStore).getNextStep(),
-                currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+                currentData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
             };
         },
         []

@@ -45,14 +45,14 @@ const StepTopPriority = ( props ) => {
 		setDrawerActiveView,
 		setIsDrawerOpened,
 		setIsSidebarOpened,
-		setCurrentOnboardingData,
+		setCurrentOnboardingFlowData,
 		setIsDrawerSuppressed,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentStep, currentData } = useSelect( ( select ) => {
 		return {
 			currentStep: select(nfdOnboardingStore).getCurrentStep(),
-			currentData: select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			currentData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
 		};
 	}, [] );
 
@@ -80,7 +80,7 @@ const StepTopPriority = ( props ) => {
 				else {
 					currentData.data.topPriority.priority1 =
 						priorityTypes[ selected ];
-					setCurrentOnboardingData( currentData );
+					setCurrentOnboardingFlowData( currentData );
 				}
 			}
 			setisLoaded( true );
@@ -91,7 +91,7 @@ const StepTopPriority = ( props ) => {
 	useEffect( () => {
 		if ( isLoaded ) {
 			currentData.data.topPriority.priority1 = priorityTypes[ selected ];
-			setCurrentOnboardingData( currentData );
+			setCurrentOnboardingFlowData( currentData );
 		}
 	}, [ selected ] );
 

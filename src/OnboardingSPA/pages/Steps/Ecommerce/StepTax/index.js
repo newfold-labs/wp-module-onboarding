@@ -25,12 +25,12 @@ const StepTax = () => {
 		setIsDrawerOpened,
 		setIsDrawerSuppressed,
 		setIsSidebarOpened,
-		setCurrentOnboardingData,
+		setCurrentOnboardingFlowData,
 	} = useDispatch(nfdOnboardingStore);
 	const navigate = useNavigate();
 
 	let currentData = useSelect((select) =>
-		select(nfdOnboardingStore).getCurrentOnboardingData()
+		select(nfdOnboardingStore).getCurrentOnboardingFlowData()
 	);
 
 	useEffect(() => {
@@ -49,7 +49,7 @@ const StepTax = () => {
 				createReverseLookup(settings)
 			);
 			let tax = selectedTaxOption?.data ?? {};
-			setCurrentOnboardingData({
+			setCurrentOnboardingFlowData({
 				storeDetails: {
 					...currentData.storeDetails,
 					tax: {
@@ -98,7 +98,7 @@ const StepTax = () => {
 							let selectedOption = content.stepTaxOptions.find(
 								(option) => option.value === value
 							);
-							setCurrentOnboardingData({
+							setCurrentOnboardingFlowData({
 								storeDetails: {
 									...currentData.storeDetails,
 									tax: {

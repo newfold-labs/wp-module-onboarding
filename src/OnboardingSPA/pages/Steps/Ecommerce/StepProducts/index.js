@@ -19,11 +19,11 @@ const StepProducts = () => {
 		setIsDrawerOpened,
 		setIsDrawerSuppressed,
 		setIsSidebarOpened,
-		setCurrentOnboardingData,
+		setCurrentOnboardingFLowData,
 	} = useDispatch(nfdOnboardingStore);
 
 	let currentData = useSelect((select) =>
-		select(nfdOnboardingStore).getCurrentOnboardingData()
+		select(nfdOnboardingStore).getCurrentOnboardingFlowData()
 	);
 	let productInfo = currentData.storeDetails.productInfo;
 	useEffect(() => {
@@ -36,7 +36,7 @@ const StepProducts = () => {
 	}, []);
 
 	const handleCheckbox = (value, checked) =>
-		setCurrentOnboardingData({
+		setCurrentOnboardingFLowData({
 			storeDetails: {
 				...currentData.storeDetails,
 				productInfo: {
@@ -49,7 +49,7 @@ const StepProducts = () => {
 		});
 
 	const handleProductCount = (count) =>
-		setCurrentOnboardingData({
+		setCurrentOnboardingFLowData({
 			storeDetails: {
 				...currentData.storeDetails,
 				productInfo: { ...productInfo, product_count: count },
