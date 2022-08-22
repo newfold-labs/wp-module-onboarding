@@ -19,7 +19,7 @@ const StepProducts = () => {
 		setIsDrawerOpened,
 		setIsDrawerSuppressed,
 		setIsSidebarOpened,
-		setCurrentOnboardingFLowData,
+		setCurrentOnboardingFlowData,
 	} = useDispatch(nfdOnboardingStore);
 
 	let flowData = useSelect((select) =>
@@ -36,7 +36,7 @@ const StepProducts = () => {
 	}, []);
 
 	const handleCheckbox = (value, checked) =>
-		setCurrentOnboardingFLowData({
+		setCurrentOnboardingFlowData({
 			...flowData,
 			storeDetails: {
 				...flowData.storeDetails,
@@ -50,7 +50,7 @@ const StepProducts = () => {
 		});
 
 	const handleProductCount = (count) =>
-		setCurrentOnboardingFLowData({
+		setCurrentOnboardingFlowData({
 			...flowData,
 			storeDetails: {
 				...flowData.storeDetails,
