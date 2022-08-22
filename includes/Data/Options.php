@@ -8,16 +8,14 @@ final class Options {
 	 /**
 	  * @var string Prefix for options in the module.
 	  */
-	protected static string $prefix = 'nfd_module_onboarding_';
+	protected static $prefix = 'nfd_module_onboarding_';
 
 	 /**
 	  * @var array List of all the options
 	  */
-	protected static array $options = array(
+	protected static $options = array(
 		'redirect'                      => 'redirect',
 		'redirect_param'                => 'redirect_param',
-		'exited'                        => 'exited',
-		'completed'                     => 'completed',
 		'coming_soon'                   => 'mm_coming_soon',
 		'brand'                         => 'mm_brand',
 		'close_comments_for_old_posts'  => 'close_comments_for_old_posts',
@@ -32,11 +30,15 @@ final class Options {
 		'settings_initialized'          => 'settings_initialized',
 		'plugins_init_status'           => 'plugins_init_status',
 		'plugin_install_queue'          => 'plugin_install_queue',
+		'flow'                          => 'flow',
 		'theme_init_status'             => 'theme_init_status',
 		'theme_install_queue'           => 'theme_install_queue',
+		'blog_name'                     => 'blogname',
+		'blog_description'              => 'blogdescription',
+		'site_icon'                     => 'site_icon',
 	);
 
-	protected static array $initialization_options = array(
+	protected static $initialization_options = array(
 		'close_comments_for_old_posts'  => 1,
 		'close_comments_days_old'       => 28,
 		'comments_per_page'             => 20,

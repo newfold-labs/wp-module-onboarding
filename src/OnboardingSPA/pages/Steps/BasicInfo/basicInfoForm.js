@@ -5,6 +5,7 @@ import { useState, useEffect } from '@wordpress/element';
 
 import content from './content.json';
 import TextInput from '../../../components/TextInput';
+import SkipButton from '../../../components/SkipButton';
 import MiniPreview from '../../../components/MiniPreview';
 import { getSettings } from '../../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../../store';
@@ -59,11 +60,6 @@ const BasicInfoForm = () => {
         }
         return dataToSave;
     }
-
-    function skipThisStep() {
-        navigate('/wp-setup/step/design/themes');
-    }
-
 
     useEffect(() => {
         async function getFlowData() {
@@ -133,7 +129,7 @@ const BasicInfoForm = () => {
                     <MiniPreview icon={siteLogo} title={siteTitle} desc={siteDesc} socialData={socialData} />
                 </div>
             </div>
-            <a className="skip-button-basic-info" onClick={(e) => skipThisStep()} >{__('Skip this Step', 'wp-module-onboarding')}</a>
+            <SkipButton/>
         </div>
     );
 };

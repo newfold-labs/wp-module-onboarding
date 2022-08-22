@@ -371,6 +371,7 @@ export const steps = [
 		Icon: moveTo,
 		priority: 280,
 	},
+
 ];
 
 /**
@@ -386,7 +387,8 @@ export const routes = [ ...pages, ...steps ];
 export const initialTopSteps = () => {
 	const topSteps = filter( steps, ( step ) => {
 		return (
-			! step.path.includes( '/step/get-started' ) &&
+			! step.path.includes( '/step/get-started' ) 
+			&&
 			! step.path.includes( '/step/design' )
 		);
 	} );

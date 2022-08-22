@@ -2,6 +2,7 @@
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Onboarding\Application;
 use function NewfoldLabs\WP\ModuleLoader\register;
+use NewfoldLabs\WP\Module\Onboarding\ModuleController;
 
 /**
  * Register Onboarding with Newfold Module Loader
@@ -18,7 +19,7 @@ function nfd_wp_module_onboarding_register() {
 
 			// Set Global Constants
 			if ( ! defined( 'NFD_ONBOARDING_VERSION' ) ) {
-				define( 'NFD_ONBOARDING_VERSION', '1.0.0' );
+				define( 'NFD_ONBOARDING_VERSION', '0.0.9' );
 			}
 			if ( ! defined( 'NFD_ONBOARDING_DIR' ) ) {
 				define( 'NFD_ONBOARDING_DIR', __DIR__ );
@@ -51,3 +52,6 @@ if ( is_callable( 'add_action' ) ) {
 		'nfd_wp_module_onboarding_register'
 	);
 }
+
+// Handle Module Disable if Non-Ecommerce
+ModuleController::init();

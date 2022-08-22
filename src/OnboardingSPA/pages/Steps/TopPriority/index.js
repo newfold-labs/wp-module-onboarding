@@ -4,6 +4,8 @@ import { useViewportMatch } from '@wordpress/compose';
 import { useEffect, useState } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { VIEW_NAV_PRIMARY } from '../../../../constants';
+
+import SkipButton from '../../../components/SkipButton';
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
@@ -119,12 +121,7 @@ const StepTopPriority = ( props ) => {
 						'wp-module-onboarding'
 					) }
 				</p>
-				<a
-					className="skip-button-top-priority "
-					onClick={ ( e ) => navigate( '/wp-setup/step/basic-info' ) }
-				>
-					{ __( 'Skip this Step', 'wp-module-onboarding' ) }
-				</a>
+				<SkipButton />
 			</div>
 		</CommonLayout>
 	);

@@ -107,7 +107,7 @@ const StepPrimarySetup = () => {
 							type="text"
 							onChange={(e) => categoryInput(e)}
 							className='tellUsInput'
-							placeholder={sprintf(__(content.placeholderSiteTypeInput, 'wp-module-onboarding'), translations('site'))}
+							placeholder={''}
 							value={inputCategVal}
 						/>
 					</div>

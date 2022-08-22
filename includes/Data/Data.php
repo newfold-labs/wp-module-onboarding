@@ -15,6 +15,7 @@ final class Data {
 		return array(
 			'buildUrl'          => \NFD_ONBOARDING_BUILD_URL,
 			'siteUrl'           => \get_site_url(),
+			'restUrl'			=> \get_home_url() . '/index.php?rest_route=',
 			'adminUrl'          => \admin_url(),
 			'currentBrand'      => self::current_brand(),
 			'currentPlan'       => self::current_plan(),
@@ -38,7 +39,7 @@ final class Data {
 		if ( empty( $brand ) ) {
 			$brand = 'newfold';
 		}
-		\apply_filters( 'nfd_module_onboarding_brand', $brand );
+		$brand = \apply_filters( 'nfd_module_onboarding_brand', strtolower( $brand ) );
 
 		$brands = Brands::get_brands();
 

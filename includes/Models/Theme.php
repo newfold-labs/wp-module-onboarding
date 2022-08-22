@@ -7,9 +7,9 @@ namespace NewfoldLabs\WP\Module\Onboarding\Models;
  */
 class Theme implements \JsonSerializable {
 
-	private string $theme_name;
-	private string $theme_image;
-	private bool $is_newfold_theme;
+	private $theme_name;
+	private $theme_image;
+	private $is_newfold_theme;
 
 	/**
 	 * @param string $theme_name

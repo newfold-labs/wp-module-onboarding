@@ -6,7 +6,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
  */
 final class Config {
 	 // The values need to be a string, this can later be converted to raw values.
-	protected static array $wp_config_initialization_constants = array(
+	protected static $wp_config_initialization_constants = array(
 		'AUTOSAVE_INTERVAL'    => '300',
 		'WP_POST_REVISIONS'    => '20',
 		'EMPTY_TRASH_DAYS'     => '7',
