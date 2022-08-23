@@ -42,7 +42,8 @@ const StepPrimarySetup = () => {
 
 	/**This condition fills the data in input box if the saved category isn't a subcategory from the content*/
 	if (selectedCategoryInStore && !inputCategVal && subCategories.indexOf(selectedCategoryInStore) === -1) {
-		changeInputCateg(selectedCategoryInStore);
+		if (selectedCategoryInStore !== 'secondaryCategory')
+		 changeInputCateg(selectedCategoryInStore);
 	}
 
 	/** Function which saves data in redux when category name is put-in via input box */
@@ -103,7 +104,7 @@ const StepPrimarySetup = () => {
 							type="text"
 							onChange={(e) => categoryInput(e)}
 							className='tellUsInput'
-							placeholder={''}
+							placeholder={sprintf(__(content.placeholderSiteTypeInput, 'wp-module-onboarding'), translations('site'))}
 							value={inputCategVal}
 						/>
 					</div>
