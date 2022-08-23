@@ -55,7 +55,7 @@ const StepTopPriority = ( props ) => {
 	const { currentStep, flowData } = useSelect( ( select ) => {
 		return {
 			currentStep: select(nfdOnboardingStore).getCurrentStep(),
-			flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
+			flowData: select(nfdOnboardingStore).getOnboardingFlowData(),
 		};
 	}, [] );
 

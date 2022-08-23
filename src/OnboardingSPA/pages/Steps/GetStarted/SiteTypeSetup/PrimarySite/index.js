@@ -23,7 +23,7 @@ const StepPrimarySetup = () => {
 		(select) => {
 			return {
 				currentStep: select(nfdOnboardingStore).getCurrentStep(),
-				flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData()
+				flowData: select(nfdOnboardingStore).getOnboardingFlowData()
 			};
 		},
 		[]

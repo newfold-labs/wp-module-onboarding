@@ -37,8 +37,8 @@ const BasicInfoForm = () => {
 
     const { flowData, socialData } = useSelect((select) => {
         return {
-            flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
-            socialData: select(nfdOnboardingStore).getCurrentOnboardingSocialData()
+            flowData: select(nfdOnboardingStore).getOnboardingFlowData(),
+            socialData: select(nfdOnboardingStore).getOnboardingSocialData()
         };
     }, []);
 

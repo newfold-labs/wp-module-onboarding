@@ -24,7 +24,7 @@ const StepProducts = () => {
 	} = useDispatch(nfdOnboardingStore);
 
 	let flowData = useSelect((select) =>
-		select(nfdOnboardingStore).getCurrentOnboardingFlowData()
+		select(nfdOnboardingStore).getOnboardingFlowData()
 	);
 	let productInfo = flowData.storeDetails.productInfo;
 	useEffect(() => {

@@ -26,7 +26,7 @@ const StepWelcome = () => {
 		(select) => {
 			return {
 				currentStep: select(nfdOnboardingStore).getCurrentStep(),
-				flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
+				flowData: select(nfdOnboardingStore).getOnboardingFlowData(),
 				brandName: select(nfdOnboardingStore).getNewfoldBrandName(),
 			};
 		},

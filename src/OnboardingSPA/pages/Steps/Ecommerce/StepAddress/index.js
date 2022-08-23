@@ -37,7 +37,7 @@ const StepAddress = () => {
 	const navigate = useNavigate();
 
 	let flowData = useSelect((select) =>
-		select(nfdOnboardingStore).getCurrentOnboardingFlowData()
+		select(nfdOnboardingStore).getOnboardingFlowData()
 	);
 
 	const settings = useWPSettings();

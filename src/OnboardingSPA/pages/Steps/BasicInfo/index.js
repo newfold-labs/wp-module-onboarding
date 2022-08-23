@@ -17,7 +17,7 @@ const StepBasicInfo = () => {
 		(select) => {
 			return {
 				currentStep: select(nfdOnboardingStore).getCurrentStep(),
-				flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData()
+				flowData: select(nfdOnboardingStore).getOnboardingFlowData()
 			};
 		},
 		[]
