@@ -25,7 +25,7 @@ const StepAddress = () => {
 	} = useDispatch(nfdOnboardingStore);
 
 	useEffect(() => {
-		flushQueue(currentData);
+		flushQueue(flowData);
 		if (isLargeViewport) {
 			setIsDrawerOpened(true);
 		}

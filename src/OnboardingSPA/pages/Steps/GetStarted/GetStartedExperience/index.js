@@ -38,7 +38,7 @@ const GetStartedExperience = () => {
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		flushQueue(currentData);
+		flushQueue(flowData);
 		enqueueRequest(FLOW_SYNC);
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( true );

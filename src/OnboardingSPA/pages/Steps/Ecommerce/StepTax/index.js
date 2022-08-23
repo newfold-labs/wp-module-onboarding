@@ -35,7 +35,7 @@ const StepTax = () => {
 	);
 
 	useEffect(() => {
-		flushQueue(currentData);
+		flushQueue(flowData);
 		if (isLargeViewport) {
 			setIsDrawerOpened(true);
 		}

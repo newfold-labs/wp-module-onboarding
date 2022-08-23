@@ -66,7 +66,7 @@ const StepTopPriority = ( props ) => {
 	};
 
 	useEffect( () => {
-		flushQueue(currentData);
+		flushQueue(flowData);
 		enqueueRequest(FLOW_SYNC);
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );

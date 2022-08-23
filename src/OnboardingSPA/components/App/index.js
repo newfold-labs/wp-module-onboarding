@@ -79,7 +79,7 @@ const App = () => {
 	}
 
 	async function syncStoreToDB() {
-		if ( currentData ){
+		if ( flowData ){
 			if (didVisitEcommerce) {
 				await syncStoreDetails();
 			}

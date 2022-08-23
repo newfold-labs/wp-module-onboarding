@@ -30,7 +30,7 @@ const StepPrimarySetup = () => {
 	);
 
 	useEffect(() => {
-		flushQueue(currentData);
+		flushQueue(flowData);
 		enqueueRequest(FLOW_SYNC);
 		setIsSidebarOpened(false);
 		setIsDrawerSuppressed(true);
