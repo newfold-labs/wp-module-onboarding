@@ -68,7 +68,7 @@ class ThemeInstallTaskManager {
 			$theme_to_install['slug'],
 			$theme_to_install['activate'],
 			$theme_to_install['priority'],
-			$theme_to_install['retries'],
+			$theme_to_install['retries']
 		);
 
 		// Update status to the current slug being installed.
