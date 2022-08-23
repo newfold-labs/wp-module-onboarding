@@ -151,3 +151,23 @@ export function updatePreviewSettings( previewSettings ) {
 		previewSettings,
 	};
 }
+
+export function enqueueRequest( request ) {
+	return {
+		type: 'ENQUEUE_REQUEST',
+		request,
+	};
+}
+
+export function dequeueRequest() {
+	return {
+		type: 'DEQUEUE_REQUEST'
+	};
+}
+
+export function flushQueue( storeData ) {
+	return {
+		type: 'FLUSH_QUEUE',
+		storeData,
+	};
+}

@@ -4,8 +4,6 @@ import Drawer from '../Drawer';
 import Sidebar from '../Sidebar';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
-import { setFlow } from '../../utils/api/flow';
-import { getSettings, setSettings } from '../../utils/api/settings';
 import { isEmpty, updateWPSettings } from '../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../store';
 
@@ -46,26 +44,8 @@ const App = () => {
 		};
 	}, []);
 
-	const [isRequestPlaced, setIsRequestPlaced] = useState(false);
-	const [didVisitBasicInfo, setDidVisitBasicInfo] = useState(false);
 	const [didVisitEcommerce, setDidVisitEcommerce] = useState(false);
-	const { 
-		setActiveStep, 
-		setActiveFlow, 
-		setCurrentOnboardingFlowData, 
-		setCurrentOnboardingSocialData 
-	} = useDispatch(nfdOnboardingStore);
-
-	async function syncSocialSettings() {
-		const initialData = await getSettings();
-		const result = await setSettings(socialData);
-		setDidVisitBasicInfo(false);
-		if (result?.error != null) {
-			console.error('Unable to Save Social Data!');
-			return initialData?.body;
-		}
-		return result?.body;
-	}
+	const { setActiveStep, setActiveFlow } = useDispatch(nfdOnboardingStore);
 	
 	async function syncStoreDetails() {
 		let { address, tax } = flowData?.storeDetails;
@@ -99,39 +79,12 @@ const App = () => {
 	}
 
 	async function syncStoreToDB() {
-		// The First Welcome Step doesn't have any Store changes
-		const isFirstStep = location?.pathname === firstStep?.path;
-		if (flowData && !isFirstStep){
-			if(!isRequestPlaced){
-				setIsRequestPlaced(true);
-
-				if (didVisitEcommerce) {
-					await syncStoreDetails();
-				}
-
-				// If Social Data is changed then sync it
-				if (didVisitBasicInfo){
-					const socialDataToBeSaved = await syncSocialSettings();
-					
-					// If Social Data is changed then Sync that also to the store
-					if (socialDataToBeSaved && flowData?.data)
-						setCurrentOnboardingSocialData(socialDataToBeSaved);
-				} 
-
-				const result = await setFlow(flowData);
-				if (result?.error != null) {
-					setIsRequestPlaced(false);
-					console.error('Unable to Save data!');
-				} else {
-					setCurrentOnboardingFlowData(result?.body);
-					setIsRequestPlaced(false);
-				}
-				
+		if ( currentData ){
+			if (didVisitEcommerce) {
+				await syncStoreDetails();
 			}
 		}
-		// Check if the Basic Info page was visited
-		if (location?.pathname.includes('basic-info'))
-			setDidVisitBasicInfo(true);
+
 		if (location?.pathname.includes('ecommerce')) {
 			setDidVisitEcommerce(true);
 		}

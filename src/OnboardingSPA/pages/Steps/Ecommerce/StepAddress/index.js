@@ -16,6 +16,7 @@ import { useWPSettings } from '../useWPSettings';
 const StepAddress = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const {
+		flushQueue, 
 		setDrawerActiveView,
 		setIsDrawerOpened,
 		setIsDrawerSuppressed,
@@ -24,6 +25,7 @@ const StepAddress = () => {
 	} = useDispatch(nfdOnboardingStore);
 
 	useEffect(() => {
+		flushQueue(currentData);
 		if (isLargeViewport) {
 			setIsDrawerOpened(true);
 		}

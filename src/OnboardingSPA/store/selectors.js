@@ -95,6 +95,16 @@ export function getOnboardingFlow( state ) {
 }
 
 /**
+ * Gets the Queue Element on top
+ *
+ * @param {*} state
+ * @return string
+ */
+export function getQueuePeek(state) {
+	return state?.queue[0] ?? null;
+}
+
+/**
  * Gets steps to display in drawer.
  *
  * @param {*} state

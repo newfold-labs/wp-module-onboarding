@@ -15,6 +15,7 @@ import content from '../content.json';
 const StepProducts = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const {
+		flushQueue,
 		setDrawerActiveView,
 		setIsDrawerOpened,
 		setIsDrawerSuppressed,
@@ -27,6 +28,7 @@ const StepProducts = () => {
 	);
 	let productInfo = flowData.storeDetails.productInfo;
 	useEffect(() => {
+		flushQueue(currentData);
 		if (isLargeViewport) {
 			setIsDrawerOpened(true);
 		}
