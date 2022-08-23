@@ -24,10 +24,11 @@ const GetStartedExperience = () => {
 	const [ wpComfortLevel, setWpComfortLevel ] = useState( '0' );
 
 	const { enqueueRequest, flushQueue, setCurrentOnboardingFlowData } = useDispatch( nfdOnboardingStore );
-	const { flowData, currentStep } = useSelect( ( select ) => {
+	const { flowData, currentStep, onboardingData } = useSelect( ( select ) => {
 		return {
 			flowData: select(nfdOnboardingStore).getOnboardingFlowData(),
 			currentStep: select(nfdOnboardingStore).getCurrentStep(),
+			onboardingData: select(nfdOnboardingStore).getOnboardingData()
 		};
 	}, [] );
 
@@ -38,7 +39,7 @@ const GetStartedExperience = () => {
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		flushQueue(flowData);
+		flushQueue(onboardingData);
 		enqueueRequest(FLOW_SYNC);
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( true );

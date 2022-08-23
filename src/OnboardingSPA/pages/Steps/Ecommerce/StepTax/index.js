@@ -30,12 +30,18 @@ const StepTax = () => {
 	} = useDispatch(nfdOnboardingStore);
 	const navigate = useNavigate();
 
-	let flowData = useSelect((select) =>
-		select(nfdOnboardingStore).getOnboardingFlowData()
+	const { flowData, onboardingData } = useSelect(
+		(select) => {
+			return {
+				flowData: select(nfdOnboardingStore).getOnboardingFlowData(),
+				onboardingData: select(nfdOnboardingStore).getOnboardingData()
+			};
+		},
+		[]
 	);
 
 	useEffect(() => {
-		flushQueue(flowData);
+		flushQueue(onboardingData);
 		if (isLargeViewport) {
 			setIsDrawerOpened(true);
 		}
