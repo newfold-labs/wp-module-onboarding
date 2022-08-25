@@ -1,5 +1,6 @@
 import apiFetch from '@wordpress/api-fetch';
-import { onboardingRestBase } from '../../../constants';
+
+import { onboardingRestURL } from './common';
 
 class Event {
 	constructor( eventSlug, eventData = {} ) {
@@ -9,7 +10,7 @@ class Event {
 
 	send() {
 		apiFetch( {
-			url: `${ onboardingRestBase }/events`,
+			url: onboardingRestURL( 'events' ),
 			method: 'POST',
 			data: {
 				slug: this.eventSlug,
