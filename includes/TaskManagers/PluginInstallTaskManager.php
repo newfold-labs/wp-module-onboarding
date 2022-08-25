@@ -68,7 +68,7 @@ class PluginInstallTaskManager {
 			$plugin_to_install['slug'],
 			$plugin_to_install['activate'],
 			$plugin_to_install['priority'],
-			$plugin_to_install['retries'],
+			$plugin_to_install['retries']
 		);
 
 		// Update status to the current slug being installed.
