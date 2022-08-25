@@ -1,10 +1,10 @@
-import { onboardingRestBase } from '../../../constants';
-
 import apiFetch from '@wordpress/api-fetch';
+
+import { onboardingRestURL } from './common';
 
 export const init = () => {
 	apiFetch( {
-		url: `${ onboardingRestBase }/themes/initialize&flow=${ window.nfdOnboarding.currentFlow }`,
+		url: onboardingRestURL( 'themes/initialize' ),
 		method: 'POST',
 	} ).catch( ( error ) => {
 		console.error( error );
