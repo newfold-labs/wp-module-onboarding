@@ -39,6 +39,7 @@ final class Data {
 		if ( empty( $brand ) ) {
 			$brand = 'newfold';
 		}
+		$brand = preg_replace('/(?|([a-z\d])([A-Z])|([^\^])([A-Z][a-z]))/', '$1_$2', $brand);
 		$brand = \apply_filters( 'nfd_module_onboarding_brand', strtolower( $brand ) );
 
 		$brands = Brands::get_brands();
