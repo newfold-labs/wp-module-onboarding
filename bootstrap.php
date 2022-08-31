@@ -51,7 +51,6 @@ if ( is_callable( 'add_action' ) ) {
 		'plugins_loaded',
 		'nfd_wp_module_onboarding_register'
 	);
+	// Handle Module Disable if Non-Ecommerce
+	ModuleController::init();
 }
-
-// Handle Module Disable if Non-Ecommerce
-ModuleController::init();
