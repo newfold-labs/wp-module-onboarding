@@ -169,12 +169,14 @@ $title-browser-color: #3858E9;
         
                 &-text {
                     flex: 1;
+                    content: " ";
                     margin-left: 2px;
-                    font-size: 0.8rem;
                     overflow: hidden;
                     max-width: 140px;
+                    font-size: 0.8rem;
+                    display: -webkit-box;
+                    --webkit-line-clamp: 1;
                     text-overflow: ellipsis;
-                    content: " ";
                     background: -webkit-linear-gradient(left, #000 50%, #fff);
                     background-clip: text;
                     -webkit-text-fill-color: transparent;
