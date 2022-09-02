@@ -1,18 +1,18 @@
 $border: #D6D6D6;
 
 .social-form {
-    width: 95%;
+    width: 100%;
     padding: 12px;
     margin-top: 20px;
     border-radius: 6px;
+    box-sizing: border-box;
     border: 1px solid $border;
 
     &__top-row {
         display: flex;
         cursor: pointer;
-        align-items: center;
         padding-left: 6px;
-        padding-bottom: 8px;
+        align-items: center;
         justify-content: space-between;
 
         &_heading {
@@ -24,8 +24,8 @@ $border: #D6D6D6;
             width: 24px;
             height: 24px;
             text-align: center;
-            transition: all 0.3s ease-in;
             background-position: center;
+            transition: all 0.3s ease-in;
             background-repeat: no-repeat;
             background-clip: padding-box;
             background-image: var(--chevron-down-icon);
@@ -36,16 +36,17 @@ $border: #D6D6D6;
         }
     }
 
-    &__main{
-        &-active{
+    &__main {
+        &-active {
             opacity: 1;
+            padding-top: 8px;
             overflow: hidden;
             max-height: 650px;
             transition: all 0.45s ease-in-out;
             transition-property: max-height, opacity;
         }
 
-        &-hidden{
+        &-hidden {
             opacity: 0;
             max-height: 0px;
             overflow: hidden;
@@ -54,7 +55,7 @@ $border: #D6D6D6;
         }
     }
 
-    &__label{
+    &__label {
         display: flex;
         padding-top: 10px;
         padding-left: 6px;
@@ -79,11 +80,13 @@ $border: #D6D6D6;
 
     &__box {
         width: 95%;
+        font-size: 0.88rem;
         margin: 6px 12px 10px 8px;
     }
 
     &__box-error {
         width: 95%;
+        font-size: 0.88rem;
         margin: 6px 12px 10px 8px;
         background-color: rgba(255, 0, 0, 0.18) !important;
     }
