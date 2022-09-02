@@ -144,6 +144,18 @@ class SettingsController {
 			}
 		}
 		$settings = array_merge( $settings, $params );
+
+		// check for twitter handle
+		if( isset($settings['twitter_site']) && !empty($settings['twitter_site'])) {
+			if( ( $twitter_id = $this->validate_twitter_id($settings['twitter_site']) ) === false ) {
+				return new \WP_Error(
+					'invalid_twitter_handle',
+					"The provided twitter handle '{$twitter_id}' is NOT valid.",
+					array( 'status' => 400 )
+				);
+			}
+			$settings['twitter_site'] = $twitter_id;
+		}
 		\update_option( $this->yoast_wp_options_key, $settings );
 		return $this->get_item();
 	}
@@ -164,6 +176,11 @@ class SettingsController {
 
 			// update database
 			\add_option( $this->yoast_wp_options_key, $social_data );
+		}
+		// add the full url for twitter cause only the handle is saved in the database
+		if( (!empty($social_data['twitter_site'])) &&
+			($twitter_handle = $this->validate_twitter_id($social_data['twitter_site'])) !== false ) {
+			$social_data['twitter_site'] = 'https://www.twitter.com/' . $twitter_handle;
 		}
 
 		return $social_data;
@@ -213,4 +230,35 @@ class SettingsController {
 			201
 		);
 	}
+
+
+	/**
+	 * Validates a twitter id.
+	 *
+	 * @param string $twitter_id    The twitter id to be validated.
+	 * @param bool   $strip_at_sign Whether or not to strip the `@` sign.
+	 *
+	 * @return string|false The validated twitter id or false if it is not valid.
+	 */
+	private function validate_twitter_id( $twitter_id, $strip_at_sign = true ) {
+		$twitter_id = ( $strip_at_sign ) ? sanitize_text_field( ltrim( $twitter_id, '@' ) ) : sanitize_text_field( $twitter_id );
+
+		/*
+		 * From the Twitter documentation about twitter screen names:
+		 * Typically a maximum of 15 characters long, but some historical accounts may exist with longer names.
+		 * A username can only contain alphanumeric characters (letters A-Z, numbers 0-9) with the exception of underscores.
+		 *
+		 * @link https://support.twitter.com/articles/101299-why-can-t-i-register-certain-usernames
+		 */
+		if ( preg_match( '`^[A-Za-z0-9_]{1,25}$`', $twitter_id ) ) {
+			return $twitter_id;
+		}
+
+		if ( preg_match( '`^http(?:s)?://(?:www\.)?twitter\.com/(?P<handle>[A-Za-z0-9_]{1,25})/?$`', $twitter_id, $matches ) ) {
+			return $matches['handle'];
+		}
+
+		return false;
+	}
+
 }
