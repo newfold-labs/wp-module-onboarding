@@ -30,8 +30,8 @@ final class Flows {
 			'siteType'        => array(
 				'label'     => '',
 				'referTo'   => 'site',
-				'primary'   => 'primaryCategory',
-				'secondary' => 'secondaryCategory',
+				'primary'   => '',
+				'secondary' => '',
 			),
 
 			'wpComfortLevel'  => '0',

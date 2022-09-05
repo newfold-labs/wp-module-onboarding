@@ -19,7 +19,7 @@ function nfd_wp_module_onboarding_register() {
 
 			// Set Global Constants
 			if ( ! defined( 'NFD_ONBOARDING_VERSION' ) ) {
-				define( 'NFD_ONBOARDING_VERSION', '0.0.9' );
+				define( 'NFD_ONBOARDING_VERSION', '0.0.10' );
 			}
 			if ( ! defined( 'NFD_ONBOARDING_DIR' ) ) {
 				define( 'NFD_ONBOARDING_DIR', __DIR__ );
@@ -51,7 +51,6 @@ if ( is_callable( 'add_action' ) ) {
 		'plugins_loaded',
 		'nfd_wp_module_onboarding_register'
 	);
+	// Handle Module Disable if Non-Ecommerce
+	ModuleController::init();
 }
-
-// Handle Module Disable if Non-Ecommerce
-ModuleController::init();

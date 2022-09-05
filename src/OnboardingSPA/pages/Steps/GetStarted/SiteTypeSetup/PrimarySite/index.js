@@ -45,7 +45,7 @@ const StepPrimarySetup = () => {
 	if (selectedPrimaryCategoryInStore && !inputCategVal) {
 
 		var found = categoriesArray.find(e => e.name === selectedPrimaryCategoryInStore);
-		if (!found)
+		if (!found && selectedPrimaryCategoryInStore !== 'primaryCategory')
 			changeInputCateg(selectedPrimaryCategoryInStore);
 	}
 
