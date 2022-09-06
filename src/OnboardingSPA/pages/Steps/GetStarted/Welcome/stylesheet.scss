@@ -24,7 +24,7 @@
     }
 
     &__tab-panel {
-        width: 85%;
+        width: 90%;
         padding-bottom: 40px;
         color: var(--nfd-onboarding-dark);
     }
@@ -37,6 +37,9 @@
 
 .components-tab-panel__tabs {
     justify-content: space-around;
+	@media screen and ( max-width: 480px ) {
+        width: 100%;
+    }
 }
 
 .components-tab-panel__tabs > .components-button:focus:not(:disabled),
@@ -48,7 +51,7 @@
     justify-content: center;
     border-bottom: 1px solid #CCCCCC;
     width: 100%;
-    font-size: clamp(0.5rem, 1vw, 1rem);
+    font-size: clamp(0.6rem, 1vw, 1rem);
 
     &.is-active {
         color: var(--wp-admin-theme-color);
@@ -62,23 +65,26 @@
 
 .tab-data{
     width: 100%;
-    margin-top: 20px;
+    padding-top: 40px;
     display: flex;
     flex-direction: row;
     align-items: stretch;
     justify-content: space-around;
+    
 }
 
 .content-text{
     padding-right: 10px;
-    font-size: clamp(0.7rem, 1vw, 1rem);
+    font-size:  clamp(0.88rem, 0.45rem + 0.76vw, 1.13rem);
+    line-height: 1.6;
+    width: 390px;
 }
 
 .content-img{
     background-image: var(--get-started-content-img);
     background-size: contain;
     background-repeat: no-repeat;
-    height: 150px;
+    height: 200px;
     width: 350px;
 }
 
@@ -86,7 +92,7 @@
     background-image: var(--get-started-features-img);
     background-size: contain;
     background-repeat: no-repeat;
-    height: 150px;
+    height: 200px;
     width: 350px;
 }
 
@@ -94,7 +100,7 @@
     background-image: var(--get-started-design-img);
     background-size: contain;
     background-repeat: no-repeat;
-    height: 150px;
+    height: 200px;
     width: 350px;
 }
 
@@ -106,4 +112,23 @@
     height: 100%;
     width: 100%;
     padding-bottom: 10px;
+}
+
+
+@media screen and ( max-width: #{ ($break-medium)} ) {
+    .tab-data {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    .content-text {
+        text-align: center;
+        width: 100%;
+        min-height: 10px;
+    }
+
+    .content-img, .design-img, .features-img {
+        max-height: 100px;
+        max-width: 180px;
+    }
 }
