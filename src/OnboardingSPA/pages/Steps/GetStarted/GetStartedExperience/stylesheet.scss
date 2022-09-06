@@ -8,20 +8,24 @@
 
 	&-tabs label {
 		width: 14vw;
-		height: 4vh;
 		border: 1px solid var(--nfd-onboarding-light-gray-2);
 		display: flex;
 		justify-content: flex-start;
-		padding: 1% 10%;
+		padding: 2px 10px;
 		color: var(--nfd-onboarding-black);
 		background: var(--nfd-onboarding-light-gray);
 		font-weight: 350;
 		font-size: clamp(0.8rem, 1.5vw, 1.2rem);
-		line-height: 4vh;
-		margin: 0.5vh;
+		line-height: 1.5;
+		margin: 5px;
 		white-space: nowrap;
 		@media (max-width: 650px) {
 			width: 25vw;
+		}
+		@media (min-width: 3700px) {
+			font-size: clamp(3.7rem, -0.27vw + 3.5rem, 3rem);
+			margin: 25px;
+			font-weight: 360;
 		}
 	}
 
@@ -32,12 +36,12 @@
 	}
 }
 
-.nfd-exp-continue-button {
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	justify-content: center;
-}
+// .nfd-exp-continue-button {
+// 	display: flex;
+// 	align-items: center;
+// 	flex-direction: column;
+// 	justify-content: center;
+// }
 
 .components-radio-control__input input {
 	display: none !important;
