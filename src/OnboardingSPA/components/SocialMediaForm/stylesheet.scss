@@ -39,7 +39,6 @@ $border: #D6D6D6;
     &__main {
         &-active {
             opacity: 1;
-            padding-top: 8px;
             overflow: hidden;
             max-height: 650px;
             transition: all 0.45s ease-in-out;
@@ -63,6 +62,10 @@ $border: #D6D6D6;
         align-items: center;
         justify-content: flex-start;
         
+        &-facebook {
+            padding-top: 18px;
+        }
+
         &_icon {
             width: 20px;
             height: 20px;
