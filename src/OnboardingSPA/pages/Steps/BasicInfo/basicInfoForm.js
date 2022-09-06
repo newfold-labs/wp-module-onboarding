@@ -121,8 +121,9 @@ const BasicInfoForm = () => {
                         placeholder={sprintf(__(content.siteDesc["placeholder"], 'wp-module-onboarding'), translations('Site'))} 
                         maxCharacters={__(content.siteDesc["maxCharacters"], 'wp-module-onboarding')} 
                         height="100px" textValue={siteDesc} textValueSetter={setSiteDesc} />
-
-                    <SocialMediaForm socialData={socialData} setSocialData={setSocialData} setIsValidSocials={setIsValidSocials}/>
+                    <div>
+                        <SocialMediaForm socialData={socialData} setSocialData={setSocialData} setIsValidSocials={setIsValidSocials} />
+                    </div>
                 </div>
                 <div className="basic-info-form__right">
                     <ImageUploader icon={siteLogo} iconSetter={setSiteLogo} />

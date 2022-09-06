@@ -40,7 +40,7 @@ $letter-spacing: 0.5px;
 
         &_maxChar {
             margin: 0px;
-            font-size: 10px;
+            font-size: 0.81rem;
             letter-spacing: $letter-spacing;
         }
     }
@@ -48,7 +48,7 @@ $letter-spacing: 0.5px;
     &__hint{
         margin: 0px;
         font-weight: 300;
-        font-size: 0.7rem;
+        font-size: 0.87rem;
         padding: 0px 1.5px;
         font-style: italic;
         letter-spacing: $letter-spacing;
