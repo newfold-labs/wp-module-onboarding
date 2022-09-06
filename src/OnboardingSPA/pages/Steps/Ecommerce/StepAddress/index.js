@@ -42,7 +42,6 @@ const StepAddress = () => {
 	useEffect(() => {
 		let addressKeys = [
 			'woocommerce_store_address',
-			'woocommerce_store_address_2',
 			'woocommerce_store_city',
 			'woocommerce_store_postcode',
 			'woocommerce_default_country'
@@ -72,8 +71,8 @@ const StepAddress = () => {
 	let defaultPlace =
 		address?.woocommerce_default_country ??
 		settings?.woocommerce_default_country ??
-		"US:AZ";
-	let [defaultCountry, defaultState] = defaultPlace.split(":");
+		'US:AZ';
+	let [defaultCountry, defaultState] = defaultPlace.split(':');
 	let selectedCountry = address?.country ?? defaultCountry;
 	let states =
 		countries?.find((country) => country.code === selectedCountry)?.states ??
@@ -82,10 +81,10 @@ const StepAddress = () => {
 		let fieldName = event.target.name;
 		let newValue = event.target.value;
 		let { country = selectedCountry, state = defaultState } = address;
-		let place = "";
-		if (["country", "state"].includes(fieldName)) {
+		let place = '';
+		if (['country', 'state'].includes(fieldName)) {
 			place =
-				fieldName === "country"
+				fieldName === 'country'
 					? `${newValue}:${state}`
 					: `${country}:${newValue}`;
 		}
@@ -95,7 +94,7 @@ const StepAddress = () => {
 				address: {
 					...currentData.storeDetails.address,
 					[fieldName]: newValue,
-					...(place !== "" && {
+					...(place !== '' && {
 						woocommerce_default_country: place,
 					}),
 				},
@@ -105,7 +104,7 @@ const StepAddress = () => {
 	return (
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard className='nfd-ecommerce-address-step'>
-				<div className='nfd-onboarding-experience-step onboarding-ecommerce-step'>
+				<div className='onboarding-ecommerce-step'>
 					<form
 						className='onboarding-ecommerce-step'
 						onSubmit={(event) => {
@@ -130,72 +129,18 @@ const StepAddress = () => {
 						<div className='nfd-card-heading center onboarding-ecommerce-step'>
 							<CardHeader
 								heading={__(content.stepAddressHeading, 'wp-module-onboarding')}
-								subHeading={__(content.stepAddressSubHeading, 'wp-module-onboarding')}
+								subHeading={__(
+									content.stepAddressSubHeading,
+									'wp-module-onboarding'
+								)}
 							/>
 							{settings === null && <p>Loading your details...</p>}
 						</div>
 						<div className='store-address-form'>
 							<div>
-								<label>{__('Address line 1', 'wp-module-onboarding')}</label>
-								<input
-									name='woocommerce_store_address'
-									type='text'
-									required
-									defaultValue={address?.woocommerce_store_address}
-									{...fieldProps}
-								/>
-							</div>
-							<div>
-								<label>{__('Address line 2', 'wp-module-onboarding')}</label>
-								<input
-									name='woocommerce_store_address_2'
-									type='text'
-									defaultValue={address?.woocommerce_store_address_2}
-									{...fieldProps}
-								/>
-							</div>
-							<div>
-								<label>{__('City', 'wp-module-onboarding')}</label>
-								<input
-									name='woocommerce_store_city'
-									type='text'
-									required
-									defaultValue={address?.woocommerce_store_city}
-									{...fieldProps}
-								/>
-							</div>
-							<div>
-								<label>{__('State', 'wp-module-onboarding')}</label>
-								{states.length === 0 || settings === null ? (
-									<input type='text' name='state' disabled={settings === null} {...fieldProps} />
-								) : (
-									<select
-										type='text'
-										name='state'
-										required
-										defaultValue={defaultState}
-										{...fieldProps}
-									>
-										{states.map((state) => (
-											<option key={state.code} value={state.code}>
-												{state.name}
-											</option>
-										))}
-									</select>
-								)}
-							</div>
-							<div>
-								<label>{__('Postal Code', 'wp-module-onboarding')}</label>
-								<input
-									name='woocommerce_store_postcode'
-									type='text'
-									required
-									defaultValue={address?.woocommerce_store_postcode}
-									{...fieldProps}
-								/>
-							</div>
-							<div>
-								<label>{__('Country', 'wp-module-onboarding')}</label>
+								<label data-required>
+									{__('Where is your store based?', 'wp-module-onboarding')}
+								</label>
 								{settings === null ? (
 									<input type='text' disabled />
 								) : (
@@ -214,6 +159,72 @@ const StepAddress = () => {
 									</select>
 								)}
 							</div>
+							<div>
+								<label data-required>
+									{__('Address', 'wp-module-onboarding')}
+								</label>
+								<input
+									name='woocommerce_store_address'
+									type='text'
+									required
+									defaultValue={address?.woocommerce_store_address}
+									{...fieldProps}
+								/>
+							</div>
+							<div className='sm:col-layout md:row-layout full-address-fields'>
+								<div>
+									<label data-required>
+										{__('City', 'wp-module-onboarding')}
+									</label>
+									<input
+										name='woocommerce_store_city'
+										type='text'
+										required
+										defaultValue={address?.woocommerce_store_city}
+										{...fieldProps}
+									/>
+								</div>
+								<div>
+									<label data-required>
+										{__('State', 'wp-module-onboarding')}
+									</label>
+									{states.length === 0 || settings === null ? (
+										<input
+											type='text'
+											name='state'
+											disabled={settings === null}
+											{...fieldProps}
+										/>
+									) : (
+										<select
+											type='text'
+											name='state'
+											required
+											defaultValue={defaultState}
+											{...fieldProps}
+										>
+											{states.map((state) => (
+												<option key={state.code} value={state.code}>
+													{state.name}
+												</option>
+											))}
+										</select>
+									)}
+								</div>
+								<div>
+									<label data-required>
+										{__('Postal Code', 'wp-module-onboarding')}
+									</label>
+									<input
+										name='woocommerce_store_postcode'
+										type='text'
+										required
+										defaultValue={address?.woocommerce_store_postcode}
+										{...fieldProps}
+									/>
+								</div>
+							</div>
+							<em style={{ display: 'inline' }}>* required</em>
 						</div>
 						<button
 							className='nfd-nav-card-button nfd-card-button'

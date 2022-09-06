@@ -1,48 +1,59 @@
+@media (max-width: #{ ($break-medium - 1) }) {
+	.sm\:col-layout {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: min(1.5em, 24px);
+	}
+}
+
+@media (min-width: #{ ($break-medium) }) {
+	.md\:row-layout {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+}
+
+.onboarding-ecommerce-step {
+	.nfd-nav-card-button {
+		min-height: 4vh;
+	}
+}
+
 .nfd-ecommerce-address-step {
-	@media (max-width: #{($break-medium - 1)}) {
-		width: 70vw;
-		// height: 80vh;
-	}
-
-	.store-address-form {
-		display: grid;
-		gap: 1.5em;
-		grid-template-columns: auto;
-		padding: 1em 0;
-	}
-
-	form.onboarding-ecommerce-step {
-		height: 75%;
-		font-size: 1em;
-	}
+	padding: 1rem 0;
 
 	label {
 		display: block;
-		font-size: 1em;
+		font-size: 16px;
+		font-weight: 500;
 		line-height: 1;
 		padding-bottom: 5px;
+	}
+
+	label[data-required="true"]::after {
+		content: " *";
 	}
 
 	input,
 	select {
 		font-size: 1em;
-		padding-left: 17px;
-		width: 300px;
-		min-height: 32px;
+		padding-left: 1.3em;
 		border: 1px solid #d6d6d6;
 		border-radius: 2px;
 	}
 
-	@media (min-width: #{($break-medium)} ) {
-		form.onboarding-ecommerce-step {
-			height: unset;
-		}
+	@media (max-width: #{ ($break-medium - 1) }) {
 
-		.store-address-form {
-			gap: 24px;
-			grid-template-columns: repeat(2, auto);
-			padding: 48px 0 56px;
+		input,
+		select {
+			min-height: 32px;
+			width: 100%;
 		}
+	}
+
+	@media (min-width: #{ ($break-medium) }) {
 
 		label {
 			font-size: 18px;
@@ -53,15 +64,69 @@
 		select {
 			font-size: 16px;
 			min-height: 48px;
-			width:200px;
+			width: 400px;
 		}
 	}
-	@media (min-width: #{($break-huge)}) {
-		input,
-		select {
-			font-size: 16px;
-			min-height: 48px;
-			width:400px;
+
+	@media (max-width: #{($break-medium - 1)}) {
+		width: 70vw;
+	}
+
+	.store-address-form {
+		display: grid;
+		gap: min(1.5em, 24px);
+		grid-template-columns: auto;
+		padding: 1em 0;
+
+		@media (max-width: #{ ($break-medium - 1) }) {
+			.full-address-fields {
+				width: 100%;
+
+				input,
+				select {
+					width: 100%;
+				}
+			}
+		}
+
+		@media (min-width: #{ ($break-medium) }) {
+			.full-address-fields {
+				width: 80%;
+
+				input,
+				select {
+					width: 150px;
+				}
+			}
+		}
+
+	}
+
+	form.onboarding-ecommerce-step {
+		height: 75%;
+		font-size: 1em;
+
+		.nfd-nav-card-button {
+			width: 80%;
+			margin: 0 10%;
+		}
+	}
+
+	@media (min-width: #{($break-medium)}) {
+		.onboarding-ecommerce-step {
+			width: inherit;
+		}
+
+		div.onboarding-ecommerce-step {
+			justify-content: space-around;
+		}
+
+		form.onboarding-ecommerce-step {
+			height: unset;
+		}
+
+		.store-address-form {
+			padding: 2em 10%;
 		}
 	}
 }
@@ -72,6 +137,10 @@ h1.store-address-title {
 
 div.onboarding-ecommerce-step {
 	color: var(--nfd-onboarding-black);
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: space-between;
 
 	h2.nfd-step-card-heading {
 		color: var(--wp-admin-theme-color-darker-10);
@@ -84,9 +153,12 @@ div.onboarding-ecommerce-step {
 }
 
 div.onboarding-product-step {
-	color: var(--nfd-onboarding-black);
 	width: 50vw;
 
+	.nfd-card-need-help-tag {
+		padding: 0;
+	}
+	
 	div.nfd-product-step-options {
 		display: grid;
 		grid-template-columns: calc((50vw - 15px) / 2) calc((50vw - 15px) / 2);
@@ -118,12 +190,21 @@ div.onboarding-product-step {
 	}
 
 	.step-product-numbers {
-		display: flex;
-		width: 100%;
+		display: grid;
 		align-items: center;
+		grid-auto-flow: row;
+		gap: 1em;
+		width: 100%;
+		margin: 0.5em 0;
+
+		@media (min-width: #{ ($break-xlarge + 100)}) {
+			grid-auto-flow: column;
+			.components-radio-control {
+				margin-left: auto;
+			}
+		}
 
 		.components-radio-control {
-			margin-left: auto;
 
 			.components-base-control__field {
 				display: flex;
@@ -133,9 +214,17 @@ div.onboarding-product-step {
 				}
 			}
 
+			.components-radio-control__option {
+				margin: 1em 1em 1em 0;
+
+				@media (min-width: #{ ($break-xlarge + 100)}) {
+					margin: 0 1em 0 0;
+				}
+			}
+
+
 			label {
 				padding: 10px;
-				margin: 10px;
 				border: 1px solid #DBDBDB;
 				cursor: pointer;
 			}
