@@ -3,6 +3,8 @@ namespace NewfoldLabs\WP\Module\Onboarding;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use SebastianBergmann\CodeCoverage\Util\Percentage;
+use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
+use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ThemeInstallTaskManager;
 
 /**
  * Register Admin Page, Assets & Admin functionality with WordPress.
@@ -23,7 +25,7 @@ final class WP_Admin {
 	 */
 	public function __construct() {
 		\add_action( 'admin_menu', array( __CLASS__, 'register_page' ) );
-		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'register_assets' ) );
+		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'initialize' ) );
 		// \add_action( 'wp_dashboard_setup', array( __CLASS__, 'register_widget' ) );
 	}
 
@@ -97,6 +99,18 @@ final class WP_Admin {
 			\wp_enqueue_script( self::$slug );
 			\wp_enqueue_style( self::$slug );
 		}
+	}
+
+	public static function initialize() {
+		if ( isset( $_GET['nfd_plugins'] ) && $_GET['nfd_plugins'] === 'true' ) {
+			PluginInstallTaskManager::queue_initial_installs();
+		}
+
+		if ( isset( $_GET['nfd_themes'] ) && $_GET['nfd_themes'] === 'true' ) {
+			ThemeInstallTaskManager::queue_initial_installs();
+		}
+
+		self::register_assets();
 	}
 
 } // END \NewfoldLabs\WP\Module\Onboarding\Admin()
