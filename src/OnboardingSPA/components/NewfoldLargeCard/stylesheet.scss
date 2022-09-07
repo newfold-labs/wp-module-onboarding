@@ -21,20 +21,14 @@
 	&::before {
 		content: "";
 		background: var(--nfd-onboarding-dark-icon) no-repeat;
-		width: 45vw;
-		min-height: 45vh;
+		width: 860px;
+		min-height: 420px;
 		transform: rotate(-14deg) translateZ(-1px);
 		position: absolute;
 		left: -13rem;
 		top: 0rem;
 		@media (max-width: #{ ($break-medium - 1) }) {
 			display: none;
-		}
-		@media (min-width: #{ ($break-medium) }) and (max-width: 925px) {
-			width: 27vw;
-			min-height: 27vh;
-			left: -7rem;
-			margin-top: 5vh;
 		}
 	}
 

@@ -95,5 +95,10 @@
     &_finish {
         padding-left: 22px !important;
     }
+
+    @media screen and (max-width: #{ ($break-medium) }) {
+        font-size: 13px;
+        padding: 15px 10px !important; 
+    }
 }
 
