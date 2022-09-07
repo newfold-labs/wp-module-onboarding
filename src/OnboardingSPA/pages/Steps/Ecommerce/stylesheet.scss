@@ -15,6 +15,12 @@
 	}
 }
 
+.ecommerce-step {
+	@media (max-width: 2200px) {
+		height: fit-content;
+	}
+}
+
 .onboarding-ecommerce-step {
 	.nfd-nav-card-button {
 		min-height: 4vh;
@@ -156,9 +162,9 @@ div.onboarding-product-step {
 	width: 50vw;
 
 	.nfd-card-need-help-tag {
-		padding: 0;
+		padding: 20px 0 0;
 	}
-	
+
 	div.nfd-product-step-options {
 		display: grid;
 		grid-template-columns: calc((50vw - 15px) / 2) calc((50vw - 15px) / 2);
@@ -199,6 +205,7 @@ div.onboarding-product-step {
 
 		@media (min-width: #{ ($break-xlarge + 100)}) {
 			grid-auto-flow: column;
+
 			.components-radio-control {
 				margin-left: auto;
 			}
@@ -238,7 +245,20 @@ div.onboarding-product-step {
 }
 
 .radio-control-tax-step {
+	.components-radio-control__option {
+		margin-bottom: 1em;
+	}
+
 	label {
 		padding: 10px 190px 10px 15px;
+	}
+
+	@media (max-width: 480px) {
+		label {
+			padding: 1.5vh 5% 5%;
+			width: unset;
+			line-height: 1.5;
+			white-space: normal;
+		}
 	}
 }

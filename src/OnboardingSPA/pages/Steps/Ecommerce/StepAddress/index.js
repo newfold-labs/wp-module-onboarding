@@ -103,7 +103,7 @@ const StepAddress = () => {
 	}
 	return (
 		<CommonLayout isBgPrimary isCentered>
-			<NewfoldLargeCard className='nfd-ecommerce-address-step'>
+			<NewfoldLargeCard className='ecommerce-step nfd-ecommerce-address-step'>
 				<div className='onboarding-ecommerce-step'>
 					<form
 						className='onboarding-ecommerce-step'
