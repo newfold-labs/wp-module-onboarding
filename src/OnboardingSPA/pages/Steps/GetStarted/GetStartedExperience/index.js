@@ -83,13 +83,11 @@ const GetStartedExperience = () => {
 						} ) }
 						onChange={ ( value ) => setWpComfortLevel( value ) }
 					/>
-					<div>
-						<NavCardButton
-							text={__(content.buttonText, 'wp-module-onboarding')}
-							disabled={wpComfortLevel == '0'}
-						/>
-						<NeedHelpTag />
-					</div>
+					<NavCardButton
+								text={__(content.buttonText, 'wp-module-onboarding')}
+								disabled={wpComfortLevel == '0'}
+							/>
+					<NeedHelpTag />
 				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>

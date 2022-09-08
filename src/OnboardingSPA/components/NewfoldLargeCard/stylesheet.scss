@@ -1,20 +1,28 @@
 .nfd-onboarding-large-card {
 	display: flex;
-	width: 60vw;
-	height: 70vh;
+	width: 960px;
+	min-height: 60vh;
 	background: var(--nfd-onboarding-light);
 	position: relative;
 	transform-style: preserve-3d;
 	align-items: center;
 	flex-direction: column;
 	justify-content: space-evenly;
-	padding: 1rem;
+	padding: 24px 32px;
+	margin: 1vh 1vh;
 
 	@media (max-width: #{($break-medium - 1)}) {
 		justify-items: center;
 		align-items: center;
-		padding: 30px;
 		transform-style: flat;
+		padding: 20px;
+		margin: 5vh;
+	}
+
+	@media (max-width: 2200px) {
+		&.site-type-card {
+			height: fit-content;
+		}
 	}
 
 	&::before {
@@ -24,7 +32,7 @@
 		height: 45vh;
 		transform: rotate(-14deg) translateZ(-1px);
 		position: absolute;
-		left: -10rem;
+		left: -9rem;
 		top: 0rem;
 		@media (max-width: #{ ($break-medium - 1) }) {
 			display: none;
@@ -34,6 +42,13 @@
 			height: 27vh;
 			left: -7rem;
 			margin-top: 5vh;
+		}
+	}
+
+	@media (min-width: 2600px) {
+		width: 2000px;
+		&::before {
+			left:-30rem;
 		}
 	}
 

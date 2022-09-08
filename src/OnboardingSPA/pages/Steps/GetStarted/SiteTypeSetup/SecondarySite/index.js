@@ -108,14 +108,11 @@ const StepPrimarySetup = () => {
 							value={inputCategVal}
 						/>
 					</div>
-					<div className='nfd-setup-primary-second-bottom'>
-						<NavCardButton
+				</div>
+				<NavCardButton
 							text={__(content.buttonText)}
 						/>
-						<NeedHelpTag />
-					</div>
-				</div>
-				
+				<NeedHelpTag />
 			</NewfoldLargeCard>
 		</CommonLayout>
 	);

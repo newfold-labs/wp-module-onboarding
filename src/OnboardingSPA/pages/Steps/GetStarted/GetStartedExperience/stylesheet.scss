@@ -2,9 +2,7 @@
 	display: flex;
 	align-items: center;
 	width: 100%;
-	height: 100%;
 	flex-direction: column;
-	justify-content: space-around;
 
 	&-tabs label {
 		width: 14vw;
@@ -36,13 +34,9 @@
 	}
 }
 
-// .nfd-exp-continue-button {
-// 	display: flex;
-// 	align-items: center;
-// 	flex-direction: column;
-// 	justify-content: center;
-// }
-
-.components-radio-control__input input {
+.components-radio-control {
+	&__input input {
 	display: none !important;
+	}
+	margin: 20px;
 }

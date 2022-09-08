@@ -1,5 +1,5 @@
 .nfd-step-card-heading {
-	margin: 8px;
+	margin: 5px;
 	font-weight: 700;
 	line-height: 1.25;
 	text-align: center;
@@ -20,12 +20,16 @@
 	margin: 5px;
 	font-weight: 700;
 	color: var(--wp-admin-theme-color);
-	font-size: clamp(0.8rem, 2.5vw, 1.2rem);
+	font-size: clamp(1rem, 0.91vw + 0.77rem, 1.5rem);
+	text-align: center;
+	@media (min-width: #{ ($break-medium)}) {
+		padding-bottom: 30px;
+	}
 }
 
 .nfd-step-card-subheading-other {
 	font-weight: 700;
-	margin-top: 30px;
+	margin-top: 35px;
 	color: var(--wp-admin-theme-color);
 	font-size: clamp(0.8rem, 2.5vw, 1.2rem);
 	@media (max-width: #{($break-medium)}) {
@@ -40,7 +44,7 @@
 }
 
 .nfd-step-card-question {
-	margin: 8px;
+	margin: 18px;
 	font-size: clamp(1rem, 2vw, 1.8rem);
 
 	@media (min-width: 3700px) {
