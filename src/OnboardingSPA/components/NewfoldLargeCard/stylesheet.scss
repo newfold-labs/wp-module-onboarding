@@ -9,46 +9,41 @@
 	flex-direction: column;
 	justify-content: space-evenly;
 	padding: 24px 32px;
-	margin: 1vh 1vh;
-
-	@media (max-width: #{($break-medium - 1)}) {
-		justify-items: center;
-		align-items: center;
-		transform-style: flat;
-		padding: 20px;
-		margin: 5vh;
-	}
-
-	@media (max-width: 2200px) {
-		&.site-type-card {
-			height: fit-content;
-		}
-	}
+	margin: 50px 80px;
 
 	&::before {
 		content: "";
 		background: var(--nfd-onboarding-dark-icon) no-repeat;
-		width: 45vw;
-		height: 45vh;
+		width: 50%;
+		height: 50%;
 		transform: rotate(-14deg) translateZ(-1px);
 		position: absolute;
-		left: -9rem;
+		left: -8rem;
 		top: 0rem;
-		@media (max-width: #{ ($break-medium - 1) }) {
+	}
+
+	@media (max-width: #{ ($break-medium - 1) }) {
+		justify-items: center;
+		align-items: center;
+		transform-style: flat;
+		padding: 20px;
+		margin: 30px;
+		&::before {
 			display: none;
 		}
-		@media (min-width: #{ ($break-medium) }) and (max-width: 925px) {
-			width: 27vw;
-			height: 27vh;
-			left: -7rem;
-			margin-top: 5vh;
+	}
+
+	@media (min-width: #{ ($break-medium) }) and (max-width: 1300px) {
+		margin: 78px 100px;
+		&::before {
+			left:-6rem;
 		}
 	}
 
 	@media (min-width: 2600px) {
-		width: 2000px;
+		width: 50%;
 		&::before {
-			left:-30rem;
+			left:-20rem;
 		}
 	}
 

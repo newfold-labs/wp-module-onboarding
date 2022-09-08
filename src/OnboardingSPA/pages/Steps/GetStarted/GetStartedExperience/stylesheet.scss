@@ -5,11 +5,10 @@
 	flex-direction: column;
 
 	&-tabs label {
-		width: 14vw;
 		border: 1px solid var(--nfd-onboarding-light-gray-2);
 		display: flex;
 		justify-content: flex-start;
-		padding: 2px 10px;
+		padding: 10px 190px 10px 15px;
 		color: var(--nfd-onboarding-black);
 		background: var(--nfd-onboarding-light-gray);
 		font-weight: 350;
@@ -17,8 +16,8 @@
 		line-height: 1.5;
 		margin: 5px;
 		white-space: nowrap;
-		@media (max-width: 650px) {
-			width: 25vw;
+		@media (max-width: #{ ($break-medium) - 1 }) {
+			padding-right: 100px;
 		}
 		@media (min-width: 3700px) {
 			font-size: clamp(3.7rem, -0.27vw + 3.5rem, 3rem);
@@ -39,4 +38,6 @@
 	display: none !important;
 	}
 	margin: 20px;
+	width: 100%;
+	align-items: center;
 }
