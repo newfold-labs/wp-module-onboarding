@@ -80,12 +80,17 @@ const StepAddress = () => {
 	function handleFieldChange(event) {
 		let fieldName = event.target.name;
 		let newValue = event.target.value;
-		let { country = selectedCountry, state = defaultState } = address;
+		let { country = selectedCountry, state } = address;
+		if (country === defaultCountry && state === undefined) {
+			state = defaultState;
+		}
 		let place = '';
 		if (['country', 'state'].includes(fieldName)) {
 			place =
 				fieldName === 'country'
-					? `${newValue}:${state}`
+					? state
+						? `${newValue}:${state}`
+						: newValue
 					: `${country}:${newValue}`;
 		}
 		setCurrentOnboardingData({
