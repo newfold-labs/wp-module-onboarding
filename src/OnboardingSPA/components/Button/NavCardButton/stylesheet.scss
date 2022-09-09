@@ -1,12 +1,15 @@
 .nfd-nav-card-button {
 	color: var(--nfd-onboarding-white);
 	background-color: var(--wp-admin-theme-color-darker-10);
-	height: 8vh;
-	width: 50vw;
-	margin: 0vw auto;
+	padding: 16px;
+	width: 90%;
 	font-size: clamp(0.7rem, 1.2vw, 1.4em);
 	font-weight: 500;
 	border-radius: 4px;
 	border: none;
 	outline: 1px solid transparent;
+
+	@media screen and ( max-width: #{ ($break-medium)} ) {
+		padding: 24px 32px;
+	}
 }
