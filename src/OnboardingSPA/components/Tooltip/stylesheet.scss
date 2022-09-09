@@ -41,6 +41,10 @@ $tooltip-arrow-size: 6px;
 .Tooltip-Tip.top {
     top: calc($tooltip-margin * -1);
     transform: translateX(2%);
+
+    @media (max-width: #{ ($break-mobile)}) {
+        left: 10%;
+    }
 }
 
 /* CSS border triangles */
