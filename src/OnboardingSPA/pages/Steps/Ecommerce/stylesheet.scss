@@ -50,15 +50,6 @@
 		border-radius: 2px;
 	}
 
-	@media (max-width: #{ ($break-medium - 1) }) {
-
-		input,
-		select {
-			min-height: 32px;
-			width: 100%;
-		}
-	}
-
 	@media (min-width: #{ ($break-medium) }) {
 
 		label {
@@ -71,6 +62,25 @@
 			font-size: 16px;
 			min-height: 48px;
 			width: 400px;
+		}
+	}
+
+	@media (max-width: #{ ($break-medium - 1) }) and (min-width: #{ ($break-mobile + 1) }) {
+
+		input,
+		select {
+			min-height: 32px;
+			min-width: 100%;
+		}
+	}
+
+	@media (max-width: #{ ($break-mobile) }) {
+
+		input,
+		select {
+			min-height: 32px;
+			max-width: 70vw;
+			min-width: 70vw;
 		}
 	}
 
@@ -101,7 +111,7 @@
 
 				input,
 				select {
-					width: 150px;
+					width: 140px;
 				}
 			}
 		}
@@ -132,13 +142,9 @@
 		}
 
 		.store-address-form {
-			padding: 2em 10%;
+			padding: 2em 5%;
 		}
 	}
-}
-
-h1.store-address-title {
-	color: var(--wp-admin-theme-color-darker-10);
 }
 
 div.onboarding-ecommerce-step {
@@ -147,6 +153,7 @@ div.onboarding-ecommerce-step {
 	align-items: center;
 	flex-direction: column;
 	justify-content: space-between;
+	gap: 1em;
 
 	h2.nfd-step-card-heading {
 		color: var(--wp-admin-theme-color-darker-10);
@@ -171,14 +178,10 @@ div.onboarding-product-step {
 		gap: 15px;
 
 		@media (max-width: #{ ($break-mobile)}) {
-			grid-template-columns: repeat(1, 1fr);
+			grid-template-columns: 1fr;
 			gap: 2px;
 		}
 
-		@media (max-height: #{ ($break-small)}) {
-			grid-template-columns: repeat(3, 1fr);
-			gap: 2px;
-		}
 	}
 
 	.components-checkbox-control {
@@ -245,10 +248,6 @@ div.onboarding-product-step {
 }
 
 .radio-control-tax-step {
-	.components-radio-control__option {
-		margin-bottom: 1em;
-	}
-
 	label {
 		padding: 10px 190px 10px 15px;
 	}
@@ -257,6 +256,7 @@ div.onboarding-product-step {
 		label {
 			padding: 1.5vh 5% 5%;
 			width: unset;
+			height: fit-content;
 			line-height: 1.5;
 			white-space: normal;
 		}
