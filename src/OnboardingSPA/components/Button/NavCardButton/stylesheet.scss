@@ -8,14 +8,12 @@
 	border-radius: 4px;
 	border: none;
 	outline: 1px solid transparent;
-	margin-top: 50px;
 
 	@media (max-width: #{($break-medium)}) {
-		margin: 9px auto;
 		padding: 24px 32px;
 	}
 
-	@media (min-width: 3700px) {
+	@media (min-width: 2600px) {
 		font-size: clamp(2.81rem, -0.48vw + 2.93rem, 1.78rem);
 	}
 }

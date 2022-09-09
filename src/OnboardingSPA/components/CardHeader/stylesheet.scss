@@ -3,14 +3,14 @@
 	font-weight: 700;
 	line-height: 1.25;
 	text-align: center;
-	font-size: clamp(1.5rem, 4vw, 2.2rem);
+	font-size: clamp(1.5rem, 1.82vw + 1.05rem, 2.5rem);
 
 	@media (max-width: #{($break-medium)}) {
 		font-size: clamp(1rem, 3.5vw, 1.2rem);
 		margin: 10px;
 	}
 
-	@media (min-width: 3700px) {
+	@media (min-width: 2600px) {
 		font-size: clamp(1rem, 2.44vw + 0.39rem, 6.25rem);
 		margin: 40px;
 	}
@@ -25,6 +25,10 @@
 	@media (min-width: #{ ($break-medium)}) {
 		padding-bottom: 30px;
 	}
+	@media (min-width: 2600px) {
+		font-size: clamp(3.38rem, -0.47vw + 3.49rem, 2.37rem);
+		margin: 80px;
+	}
 }
 
 .nfd-step-card-subheading-other {
@@ -37,7 +41,7 @@
 		font-size: clamp(0.7rem, 2.2vw, 1.2rem);
 	}
 
-	@media (min-width: 3700px) {
+	@media (min-width: 2600px) {
 		font-size: clamp(3.38rem, -0.47vw + 3.49rem, 2.37rem);
 		margin: 80px;
 	}
@@ -47,7 +51,7 @@
 	margin: 18px;
 	font-size: clamp(1rem, 2vw, 1.8rem);
 
-	@media (min-width: 3700px) {
+	@media (min-width: 2600px) {
 		font-size: clamp(3.38rem, -0.47vw + 3.49rem, 2.37rem);
 		font-weight: 700;
 		margin: 60px;
