@@ -86,7 +86,7 @@ const StepTax = () => {
 						{settings === null && <p>Loading...</p>}
 					</div>
 					<RadioControl
-						className='nfd-onboarding-experience-step-tabs components-radio-control__input'
+						className='nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-tax-step'
 						selected={tax?.option}
 						options={content.stepTaxOptions.map((option) => {
 							return {
