@@ -30,8 +30,14 @@
 		align-items: center;
 		flex-direction: column;
 		justify-content: space-around;
+		width: 100%;
 
-		&-top {
+		&-bottom {
+			margin-top: 20px;
+			width: 100%;
+			display: flex;
+			flex-flow: column;
+			align-items: center;
 		}
 	}
 }
@@ -44,7 +50,6 @@
 	display: inline-flex;
 	margin: auto 0rem 1rem 1rem;
 	border-radius: 2.5rem;
-	height: 10px;
 	cursor: pointer;
 	align-items: center;
 }
@@ -53,8 +58,8 @@
 	color: var(--nfd-onboarding-black);
 	font-size: 1rem;
 	font-weight: 700;
-	margin-top: 1.3rem;
 	text-align: center;
+	padding: 10px;
 }
 
 .tellUsInput {

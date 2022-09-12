@@ -99,7 +99,7 @@ const StepPrimarySetup = () => {
 
 				<div className='nfd-setup-primary-second'>
 					<div className='nfd-setup-primary-second-top'>
-						<p className='blackText'>{__(content.tellusHereText, 'wp-module-onboarding')}</p>
+						<div className='blackText'>{__(content.tellusHereText, 'wp-module-onboarding')}</div>
 						<input
 							type="text"
 							onChange={(e) => categoryInput(e)}
