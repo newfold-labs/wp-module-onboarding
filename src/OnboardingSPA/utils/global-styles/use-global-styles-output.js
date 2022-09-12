@@ -469,13 +469,13 @@ const getBlockSelectors = ( blockTypes ) => {
 export function useGlobalStylesOutput( previewSettings ) {
 	const hasBlockGapSupport = false;
 
-	if ( ! previewSettings?.globalStyles || ! previewSettings?.settings?.__experimentalFeatures ) {
+	if ( ! previewSettings?.styles || ! previewSettings?.settings ) {
 		return;
 	}
 
 	const requiredSettings = {
-		settings: previewSettings.settings.__experimentalFeatures,
-		styles: previewSettings.globalStyles,
+		settings: previewSettings.settings,
+		styles: previewSettings.styles,
 	};
 
 	const blockSelectors = getBlockSelectors( getBlockTypes() );
@@ -501,9 +501,7 @@ export function useGlobalStylesOutput( previewSettings ) {
 		},
 	];
 
-	previewSettings.settings.styles = previewSettings.settings.styles
-		.filter( ( style ) => style.isGlobalStyles === false )
-		.concat( stylesheets );
+	previewSettings.settings.styles = stylesheets
 
 	return previewSettings;
 }

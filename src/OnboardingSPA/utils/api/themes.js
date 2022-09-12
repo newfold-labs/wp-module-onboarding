@@ -1,8 +1,9 @@
 import apiFetch from '@wordpress/api-fetch';
 
 import { onboardingRestURL } from './common';
+import { resolve } from './resolve';
 
-export const init = () => {
+const init = () => {
 	apiFetch( {
 		url: onboardingRestURL( 'themes/initialize' ),
 		method: 'POST',
@@ -10,3 +11,11 @@ export const init = () => {
 		console.error( error );
 	} );
 };
+
+const getGlobalStyles = async () => {
+    return await resolve(
+        apiFetch({ url: onboardingRestURL('themes/variations') }).then()
+    );
+}
+
+export { init, getGlobalStyles }
