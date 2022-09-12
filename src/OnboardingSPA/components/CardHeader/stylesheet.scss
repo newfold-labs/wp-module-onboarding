@@ -25,6 +25,7 @@
 	@media (min-width: #{ ($break-medium)}) {
 		padding-bottom: 30px;
 	}
+  
 	@media (min-width: 2600px) {
 		font-size: clamp(3.38rem, -0.47vw + 3.49rem, 2.37rem);
 		margin: 80px;
