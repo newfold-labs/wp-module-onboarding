@@ -66,7 +66,7 @@ const StepPrimarySetup = () => {
 
 	return (
 		<CommonLayout isBgPrimary isCentered>
-			<NewfoldLargeCard className={'site-type-card'}>
+			<NewfoldLargeCard>
 				<div className="nfd-card-heading center">
 					<CardHeader
 						heading={__(currentStep?.heading, 'wp-module-onboarding')}
@@ -108,14 +108,11 @@ const StepPrimarySetup = () => {
 							value={inputCategVal}
 						/>
 					</div>
-					<div className='nfd-setup-primary-second-bottom'>
-						<NavCardButton
-							text={__(content.buttonText)}
-						/>
-						<NeedHelpTag />
-					</div>
 				</div>
-				
+				<NavCardButton
+					text={__(content.buttonText)}
+				/>
+				<NeedHelpTag />
 			</NewfoldLargeCard>
 		</CommonLayout>
 	);

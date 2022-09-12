@@ -9,7 +9,11 @@
 	border: none;
 	outline: 1px solid transparent;
 
-	@media screen and ( max-width: #{ ($break-medium)} ) {
+	@media (max-width: #{($break-medium)}) {
 		padding: 24px 32px;
+	}
+
+	@media (min-width: 2600px) {
+		font-size: clamp(2.81rem, -0.48vw + 2.93rem, 1.78rem);
 	}
 }
