@@ -68,9 +68,9 @@ final class WP_Admin {
 	 * @return void
 	 */
 	public static function register_assets() {
-        global $current_screen;
+		global $current_screen;
 
-        $current_screen->is_block_editor( true );
+		$current_screen->is_block_editor( true );
 
 		$asset_file = NFD_ONBOARDING_BUILD_DIR . '/onboarding.asset.php';
 
@@ -94,7 +94,7 @@ final class WP_Admin {
 			\wp_register_style(
 				self::$slug,
 				NFD_ONBOARDING_BUILD_URL . '/onboarding.css',
-				array( 'wp-components', 'wp-editor', 'wp-edit-blocks'),
+				array( 'wp-components', 'wp-editor', 'wp-edit-blocks' ),
 				$asset['version']
 			);
 

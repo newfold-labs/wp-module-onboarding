@@ -8,7 +8,7 @@ import { __unstablePresetDuotoneFilter as PresetDuotoneFilter } from "@wordpress
 // This is used to avoid rendering the block list if the sizes change.
 let MemoizedBlockList;
 
-const MAX_HEIGHT = 2000;
+const MAX_HEIGHT = 6000;
 
 function AutoBlockPreview({
 	viewportWidth,

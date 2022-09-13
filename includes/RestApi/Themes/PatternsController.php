@@ -34,54 +34,76 @@ class PatternsController extends \WP_REST_Controller {
 			$this->rest_base,
 			array(
 				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_step_patterns' ),
-                    'args'                => $this->get_step_patterns_args(),
-					// 'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+					'methods'  => \WP_REST_Server::READABLE,
+					'callback' => array( $this, 'get_pattern' ),
+					'args'     => $this->get_pattern_args(),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
 		);
 
 	}
 
-    public function get_step_patterns_args() {
-        return array(
-            'slug'   => array(
-                'type' => 'string',
-            ),
+	public function get_pattern_args() {
+		return array(
+			'slug'   => array(
+				'type' => 'string',
+			),
 			'step'   => array(
-				'type'     => 'string',
+				'type' => 'string',
 			),
 			'squash' => array(
 				'type'    => 'boolean',
 				'default' => false,
 			),
 		);
-    }
+	}
 
 	/**
 	 * Retrieves the patterns approved by the Onboarding Module.
 	 *
 	 * @return \WP_Rest_Response|array
 	 */
-	public function get_step_patterns( \WP_REST_Request $request ) {
-        $step = $request->get_param( 'step' );
-        $squash = $request->get_param( 'squash' );
-        $slug = $request->get_param( 'slug' );
-        if ( $step ) {
-            $step_patterns = Patterns::get_theme_step_patterns_from_step( $step, $squash );
-            if ( ! $step_patterns ) {
-                return new \WP_Error(
-                    'no_patterns_found',
-                    __('No Patterns Found for given step.'),
-                    array( 'status' => 404 )
-                );
-            }
-            return new \WP_REST_Response(
-                $step_patterns
-            );
-        }
-        // TODO HANDLE IF STEP NOT PRESENT TO GET FROM SLUG
+	public function get_pattern( \WP_REST_Request $request ) {
+		$step   = $request->get_param( 'step' );
+		$squash = $request->get_param( 'squash' );
+		$slug   = $request->get_param( 'slug' );
+
+		if ( ! $step && ! $slug ) {
+			return new \WP_Error(
+				'missing_params',
+				__( 'Pattern identifier (slug) or step name (step) required.' ),
+				array( 'status' => 400 )
+			);
+		}
+
+		if ( $step ) {
+			$step_patterns = Patterns::get_theme_step_patterns_from_step( $step, $squash );
+			if ( ! $step_patterns ) {
+				return new \WP_Error(
+					'no_patterns_found',
+					__( 'No Patterns Found.' ),
+					array( 'status' => 404 )
+				);
+			}
+
+			return new \WP_REST_Response(
+				$step_patterns
+			);
+		}
+
+		$pattern = Patterns::get_pattern_from_slug( $slug );
+		if ( ! $pattern ) {
+			return new \WP_Error(
+				'no_pattern_found',
+				__( 'No Pattern Found.' ),
+				array( 'status' => 404 )
+			);
+		}
+
+		return new \WP_REST_Response(
+			$pattern
+		);
 	}
 
 }

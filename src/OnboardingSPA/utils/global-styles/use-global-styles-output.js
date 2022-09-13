@@ -469,13 +469,19 @@ const getBlockSelectors = ( blockTypes ) => {
 export function useGlobalStylesOutput( previewSettings ) {
 	const hasBlockGapSupport = false;
 
-	if ( ! previewSettings?.styles || ! previewSettings?.settings ) {
+	if (
+		! previewSettings?.styles &&
+		! previewSettings?.settings &&
+		! previewSettings?.globalStyles
+	) {
 		return;
 	}
 
 	const requiredSettings = {
 		settings: previewSettings.settings,
-		styles: previewSettings.styles,
+		styles: previewSettings?.globalStyles
+			? previewSettings.globalStyles
+			: previewSettings.styles,
 	};
 
 	const blockSelectors = getBlockSelectors( getBlockTypes() );
@@ -501,7 +507,7 @@ export function useGlobalStylesOutput( previewSettings ) {
 		},
 	];
 
-	previewSettings.settings.styles = stylesheets
+	previewSettings.settings.styles = stylesheets;
 
 	return previewSettings;
 }

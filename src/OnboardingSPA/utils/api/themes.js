@@ -13,9 +13,9 @@ const init = () => {
 };
 
 const getGlobalStyles = async () => {
-    return await resolve(
-        apiFetch({ url: onboardingRestURL('themes/variations') }).then()
-    );
-}
+	return await resolve(
+		apiFetch( { url: onboardingRestURL( 'themes/variations' ) } ).then()
+	);
+};
 
-export { init, getGlobalStyles }
+export { init, getGlobalStyles };
