@@ -79,8 +79,8 @@
 		input,
 		select {
 			min-height: 32px;
-			max-width: 70vw;
-			min-width: 70vw;
+			max-width: 60vw;
+			min-width: 60vw;
 		}
 	}
 
@@ -125,6 +125,12 @@
 		.nfd-nav-card-button {
 			width: 80%;
 			margin: 0 10%;
+		}
+	}
+
+	@media (max-width: #{($break-medium)}) {
+		div.onboarding-ecommerce-step {
+			width: 90%;
 		}
 	}
 
@@ -250,6 +256,12 @@ div.onboarding-product-step {
 .radio-control-tax-step {
 	label {
 		padding: 10px 190px 10px 15px;
+	}
+
+	@media (max-width: #{ ($break-medium - 1) }) {
+		label {
+			padding-right: 15px;
+		}
 	}
 
 	@media (max-width: 480px) {
