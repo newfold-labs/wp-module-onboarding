@@ -206,14 +206,20 @@ div.onboarding-product-step {
 
 	.step-product-numbers {
 		display: grid;
-		align-items: center;
-		grid-auto-flow: row;
-		gap: 1em;
 		width: 100%;
 		margin: 0.5em 0;
 
+		&>* {
+			align-self: center;
+		}
+
 		@media (min-width: #{ ($break-xlarge + 100)}) {
-			grid-auto-flow: column;
+			gap: 1em;
+			grid-template-columns: auto max-content;
+
+			&>* {
+				align-self: baseline;
+			}
 
 			.components-radio-control {
 				margin-left: auto;
@@ -221,6 +227,7 @@ div.onboarding-product-step {
 		}
 
 		.components-radio-control {
+			align-items: normal;
 
 			.components-base-control__field {
 				display: flex;
@@ -266,7 +273,7 @@ div.onboarding-product-step {
 
 	@media (max-width: 480px) {
 		label {
-			padding: 1.5vh 5% 5%;
+			padding: clamp(10px, 1.5vh, 15px) clamp(10px, 5%, 13px) clamp(10px, 5%, 13px);
 			width: unset;
 			height: fit-content;
 			line-height: 1.5;
