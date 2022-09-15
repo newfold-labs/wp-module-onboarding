@@ -39,15 +39,15 @@ class HomepagePatternsController extends \WP_REST_Controller {
 	 */
 	protected $homepage_pattern_slugs = array(
 		'yith-wonder'  => array(
-			array (
+			'homepage-1' => array (
 				// 'site-header-left-logo-navigation-inline',  // Header
 				'homepage-1'  // HomePage
 			),
-			array (
+			'homepage-2' => array (
 				// 'site-header-centered',  // Header
 				'homepage-2'  // HomePage
 			),
-			array (
+			'homepage-3' => array (
 				// 'site-header-left-logo-navigation-below',  // Header
 				'homepage-3'  // HomePage
 			),
@@ -77,6 +77,11 @@ class HomepagePatternsController extends \WP_REST_Controller {
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_homepage_patterns' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'set_homepage_patterns' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -141,10 +146,10 @@ class HomepagePatternsController extends \WP_REST_Controller {
 		foreach ( $this->block_namespace_slugs as $block_namespace ) {
 
 			// Fetch all the Patterns specific to a selected theme
-			foreach ( $this->homepage_pattern_slugs[$block_namespace] as $block_patterns ) {
+			foreach ( $this->homepage_pattern_slugs[$block_namespace] as $pattern_name=>$block_patterns ) {
 
+				$pattern_content['title'] = $pattern_name;
 				$pattern_content['content'] = '';
-
 				foreach ( $block_patterns as $block_pattern ) {
 
 					// Fetch the Block Pattern specified from a specific theme
@@ -162,4 +167,16 @@ class HomepagePatternsController extends \WP_REST_Controller {
 		return $block_pattern_files;
 	}
 
+	/**
+	 * Sets the Homepage selected by the user.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function set_homepage_patterns() {
+
+		return new \WP_REST_Response(
+               'Test POST a Homepage',
+               200
+          );
+	}
 }
