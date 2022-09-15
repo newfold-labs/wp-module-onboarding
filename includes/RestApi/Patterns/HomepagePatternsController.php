@@ -39,16 +39,18 @@ class HomepagePatternsController extends \WP_REST_Controller {
 	 */
 	protected $homepage_pattern_slugs = array(
 		'yith-wonder'  => array(
-			// 'header'   => array(
-			// 	'site-header-left-logo-navigation-inline',
-			// 	'site-header-centered',	
-			// 	'site-header-left-logo-navigation-below'	
-			// ),
-			'homepage' => array(
-				'homepage-1',
-				'homepage-2',
-				'homepage-3',
-			)
+			array (
+				// 'site-header-left-logo-navigation-inline',  // Header
+				'homepage-1'  // HomePage
+			),
+			array (
+				// 'site-header-centered',  // Header
+				'homepage-2'  // HomePage
+			),
+			array (
+				// 'site-header-left-logo-navigation-below',  // Header
+				'homepage-3'  // HomePage
+			),
 		)	
 	);
 
@@ -128,42 +130,6 @@ class HomepagePatternsController extends \WP_REST_Controller {
 	}
 
 	/**
-	 * Add Header to HomePages
-	 *
-	 * @return array
-	 */
-	public function add_header_patterns( $block_namespace, $block_pattern_files ) {
-
-		// If there doesn't exist Header slugs
-		if(!isset($this->homepage_pattern_slugs[$block_namespace]['header'])){
-			return $block_pattern_files;
-		}
-		
-		// If there doesn't exist a Header for every single Homepage
-		if(count($this->homepage_pattern_slugs[$block_namespace]['header']) 
-			!= count($this->homepage_pattern_slugs[$block_namespace]['homepage'])){
-			return $block_pattern_files;
-		}
-
-		for ( $i=0; $i<count($block_pattern_files); $i++ ) {
-
-			if (isset( $this->homepage_pattern_slugs[$block_namespace]['header'][$i])) {
-				$block_pattern = $this->homepage_pattern_slugs[$block_namespace]['header'][$i];
-
-				// Fetch the Block Pattern specified from a specific theme
-				$pattern_data = $this->get_patterns($block_namespace, $block_pattern);
-				// Check if Pattern data exists then concatenate it
-				if(array_key_exists('content', $pattern_data)){
-					$pattern_data['content'] = $pattern_data['content'] . $block_pattern_files[$i]['content'];
-					$block_pattern_files[$i]['content'] = $pattern_data['content'];
-				}
-			}
-		}
-
-		return $block_pattern_files;
-	}
-
-	/**
 	 * Retrieves the Homepage patterns approved by the Onboarding Module.
 	 *
 	 * @return array|\WP_Error
@@ -174,26 +140,23 @@ class HomepagePatternsController extends \WP_REST_Controller {
 		// Iterate through all the themes that are approved
 		foreach ( $this->block_namespace_slugs as $block_namespace ) {
 
-			if(!isset($this->homepage_pattern_slugs[$block_namespace]['homepage']))
-				return new \WP_Error(
-					'Homepage Styles does not Exist',
-					'The selected theme '. $block_namespace.' does not have any Homepage styles',
-					array( 'status' => 404 )
-				);
-
 			// Fetch all the Patterns specific to a selected theme
-			foreach ( $this->homepage_pattern_slugs[$block_namespace]['homepage'] as $block_pattern ) {
+			foreach ( $this->homepage_pattern_slugs[$block_namespace] as $block_patterns ) {
 
-				// Fetch the Block Pattern specified from a specific theme
-				$pattern_data = $this->get_patterns($block_namespace, $block_pattern);
+				$pattern_content['content'] = '';
 
-				// Check if Pattern data is not NULL|Error and has data
-				if(array_key_exists('content', $pattern_data))
-					$block_pattern_files[] = $pattern_data;
+				foreach ( $block_patterns as $block_pattern ) {
 
+					// Fetch the Block Pattern specified from a specific theme
+					$pattern_data = $this->get_patterns($block_namespace, $block_pattern);
+
+					// Check if Pattern data is not NULL|Error and has data
+					if(array_key_exists('content', $pattern_data))
+						$pattern_content['content'] = $pattern_content['content'] . $pattern_data['content'];
+				}
+
+				$block_pattern_files[] = $pattern_content;
 			}
-
-			$block_pattern_files = $this->add_header_patterns($block_namespace, $block_pattern_files);
 		}
 
 		return $block_pattern_files;
