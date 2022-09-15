@@ -21,6 +21,7 @@ import {
 import {
 	VIEW_DESIGN_COLORS,
 	VIEW_DESIGN_HEADER_MENU,
+	VIEW_DESIGN_HOMEPAGE_MENU,
 	VIEW_DESIGN_THEMES,
 	VIEW_DESIGN_THEME_STYLES,
 	VIEW_DESIGN_TYPOGRAPHY,
@@ -63,6 +64,9 @@ const StepDesignTypography = lazy( () =>
 );
 const StepDesignHeaderMenu = lazy( () =>
 	import( '../../pages/Steps/DesignHeaderMenu' )
+);
+const StepDesignHomepageMenu = lazy(() =>
+	import('../../pages/Steps/DesignHomepageMenu')
 );
 const StepSitePages = lazy( () => import( '../../pages/Steps/SitePages' ) );
 const StepSiteFeatures = lazy( () =>
@@ -324,6 +328,26 @@ export const steps = [
 		VIEW: VIEW_DESIGN_HEADER_MENU,
 	},
 	{
+		path: '/wp-setup/step/design/homepage-menu',
+		title: __('HomePages Wizard', 'wp-module-onboarding'),
+		heading: __(
+			"There’s no place like a great home page",
+			'wp-module-onboarding'
+		),
+		subheading: __(
+			'Pick a starter layout you can refine and remix with your content',
+			'wp-module-onboarding'
+		),
+		description: __(
+			'A well-organized homepage makes visitors feel smart.',
+			'wp-module-onboarding'
+		),
+		Component: StepDesignHomepageMenu,
+		Icon: header,
+		priority: 240,
+		VIEW: VIEW_DESIGN_HOMEPAGE_MENU,
+	},
+	{
 		path: '/wp-setup/step/site-pages',
 		title: __( 'Pages', 'wp-module-onboarding' ),
 		heading: __( "We've got some page ideas", 'wp-module-onboarding' ),
@@ -337,7 +361,7 @@ export const steps = [
 		),
 		Component: StepSitePages,
 		Icon: copy,
-		priority: 240,
+		priority: 260,
 	},
 	{
 		path: '/wp-setup/step/site-features',
@@ -353,7 +377,7 @@ export const steps = [
 		),
 		Component: StepSiteFeatures,
 		Icon: plugins,
-		priority: 260,
+		priority: 280,
 	},
 	{
 		path: '/wp-setup/step/what-next',
@@ -369,7 +393,7 @@ export const steps = [
 		),
 		Component: StepWhatNext,
 		Icon: moveTo,
-		priority: 280,
+		priority: 300,
 	},
 
 ];

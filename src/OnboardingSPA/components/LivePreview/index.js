@@ -27,6 +27,7 @@ const LivePreview = ( {
 	blockGrammer,
 	viewportWidth = 1300,
 	styling = 'large',
+	className = ''
 } ) => {
 	const [ blocks, setBlocks ] = useState();
 	const previewSettings = useSelect(
@@ -45,7 +46,7 @@ const LivePreview = ( {
 	}, [] );
 
 	return (
-		<div className={ `live-preview__container-${ styling }` }>
+		<div className={`live-preview__container-${styling} ${className}`}>
 			<BlockPreview viewportWidth={ viewportWidth } blocks={ blocks } />
 		</div>
 	);
