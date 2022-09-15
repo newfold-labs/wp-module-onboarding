@@ -198,9 +198,10 @@ class HomepagePatternsController extends \WP_REST_Controller {
 
 		$request->set_body_params(
 			array(
-				'title'   => 'Homepage',
-				'status'  => 'publish',
-				'content' =>  $params['content'],
+				'title'    => 'Homepage',
+				'status'   => 'publish',
+				'template' => 'no-title',
+				'content'  =>  $params['content'],
 			)
 		);
 			
