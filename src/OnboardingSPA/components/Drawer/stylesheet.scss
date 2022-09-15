@@ -107,6 +107,10 @@
         overflow-x: hidden;
         overflow-y: auto;
         height: calc(100% - #{$header-height});
+        background-color: var(--nfd-onboarding-drawer-bg);
+        &::-webkit-scrollbar {
+            display: none;
+          }
     }
 
     &-inside {
@@ -243,7 +247,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
                     height: 15px;
                     display: flex;
                     align-items: center;
-                    background-color: #e4e4e4;
+                    background-color: #cccccc;
                     justify-content: space-between;
                     border: 1px solid transparent;
     
@@ -297,7 +301,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
                             &-custom {
                                 width: 100%;
                                 overflow: hidden;
-                                height: 300px;
+                                height: 250px;
 
                                 &:hover {
                                     cursor: pointer;

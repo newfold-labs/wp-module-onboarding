@@ -5,8 +5,7 @@ import { useSelect, useDispatch } from "@wordpress/data";
 import { useState, useEffect } from "@wordpress/element";
 import LivePreview from "../../../../components/LivePreview";
 
-import { check, search, Icon } from "@wordpress/icons";
-import { useNavigate } from "react-router-dom";
+import { CheckboxControl } from '@wordpress/components';
 import { useViewportMatch } from "@wordpress/compose";
 import { getPatterns } from "../../../../utils/api/patterns";
 import { getGlobalStyles } from "../../../../utils/api/themes";
@@ -54,6 +53,18 @@ const StepDesignThemeStylesPreview = () => {
 
 	return (
 		<CommonLayout className='theme-styles-preview'>
+            <div className="theme-styles-preview__checkbox">
+            <CheckboxControl label={
+                <div className="theme-styles-preview__checkbox__label">
+                    <span className="theme-styles-preview__checkbox__label__question">
+                        Customize Colors &amp; Fonts?
+                        <span className="theme-styles-preview__checkbox__label__hint">Check to customize in the next few steps (or leave empty and use the site editor later.)</span>
+                        </span>
+                    <div className="theme-styles-preview__checkbox__label__hint"></div>
+                </div>
+            }/>
+            
+            </div>
 				<div className="theme-styles-preview__title-bar">
 					<div className="theme-styles-preview__title-bar__browser">
 						<span

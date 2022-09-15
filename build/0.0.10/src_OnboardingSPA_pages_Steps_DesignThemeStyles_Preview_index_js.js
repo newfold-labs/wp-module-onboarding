@@ -152,11 +152,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _components_LivePreview__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../components/LivePreview */ "./src/OnboardingSPA/components/LivePreview/index.js");
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _utils_api_patterns__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../utils/api/patterns */ "./src/OnboardingSPA/utils/api/patterns.js");
-/* harmony import */ var _utils_api_themes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../utils/api/themes */ "./src/OnboardingSPA/utils/api/themes.js");
-
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _utils_api_patterns__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../utils/api/patterns */ "./src/OnboardingSPA/utils/api/patterns.js");
+/* harmony import */ var _utils_api_themes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../utils/api/themes */ "./src/OnboardingSPA/utils/api/themes.js");
 
 
 
@@ -173,7 +174,7 @@ const StepDesignThemeStylesPreview = () => {
   const [isLoaded, setIsLoaded] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [pattern, setPattern] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
   const [selectedStyle, setSelectedStyle] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
-  const isLargeViewport = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_6__.useViewportMatch)("medium");
+  const isLargeViewport = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_7__.useViewportMatch)("medium");
   const {
     currentStep,
     nextStep
@@ -200,8 +201,8 @@ const StepDesignThemeStylesPreview = () => {
   }, []);
 
   const getStylesAndPatterns = async () => {
-    const pattern = await (0,_utils_api_patterns__WEBPACK_IMPORTED_MODULE_7__.getPatterns)(currentStep.patternId, true);
-    const globalStyles = await (0,_utils_api_themes__WEBPACK_IMPORTED_MODULE_8__.getGlobalStyles)();
+    const pattern = await (0,_utils_api_patterns__WEBPACK_IMPORTED_MODULE_8__.getPatterns)(currentStep.patternId, true);
+    const globalStyles = await (0,_utils_api_themes__WEBPACK_IMPORTED_MODULE_9__.getGlobalStyles)();
     setPattern(pattern === null || pattern === void 0 ? void 0 : pattern.body);
     setGlobalStyles(globalStyles === null || globalStyles === void 0 ? void 0 : globalStyles.body);
     setIsLoaded(true);
@@ -213,6 +214,18 @@ const StepDesignThemeStylesPreview = () => {
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Layouts_Common__WEBPACK_IMPORTED_MODULE_1__["default"], {
     className: "theme-styles-preview"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "theme-styles-preview__checkbox"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.CheckboxControl, {
+    label: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "theme-styles-preview__checkbox__label"
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+      className: "theme-styles-preview__checkbox__label__question"
+    }, "Customize Colors & Fonts?", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+      className: "theme-styles-preview__checkbox__label__hint"
+    }, "Check to customize in the next few steps (or leave empty and use the site editor later.)")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      className: "theme-styles-preview__checkbox__label__hint"
+    }))
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "theme-styles-preview__title-bar"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "theme-styles-preview__title-bar__browser"

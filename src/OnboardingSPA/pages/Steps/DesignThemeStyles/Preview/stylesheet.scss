@@ -7,12 +7,27 @@
     justify-content: center;
     background-color: #EEEEEE;
 
+    &__checkbox {
+        margin: 20px 0px;
+        width: 70%;
+
+        &__label {
+            display: inline;
+
+            &__hint {
+                color: #757575;
+                display: block;
+            }
+        }
+
+    }
+
     &__title-bar {
         width: 70%;
         height: 15px;
         display: flex;
         align-items: center;
-        background-color: #e4e4e4;
+        background-color: #cccccc;
         justify-content: space-between;
         border: 1px solid transparent;
 
