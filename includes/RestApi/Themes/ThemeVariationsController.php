@@ -41,7 +41,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 				array(
 					'methods'  => \WP_REST_Server::READABLE,
 					'callback' => array( $this, 'get_theme_variations' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+					// 'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
 		);

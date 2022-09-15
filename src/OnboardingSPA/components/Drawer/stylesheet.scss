@@ -61,7 +61,7 @@
     height: 100%;
     position: relative;
     width: 0;
-    overflow: hidden;
+    overflow: auto;
     background: var(--nfd-onboarding-drawer-bg);
     color: var(--nfd-onboarding-drawer-fg);
     transition: width 100ms linear;
@@ -77,7 +77,7 @@
         position: relative;
         width: $nav-sidebar-width;
         height: 100%;
-        overflow: hidden;
+        overflow: auto;
         visibility: hidden;
         transition: visibility 100ms linear;
         @include reduce-motion("transition");
@@ -207,4 +207,11 @@
     animation-name: fadeIn;
     animation-duration: 100ms;
     animation-timing-function: ease-in;
+}
+
+.theme-styles-preview__list--drawer {
+    width: $nav-sidebar-width -30px;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
 }

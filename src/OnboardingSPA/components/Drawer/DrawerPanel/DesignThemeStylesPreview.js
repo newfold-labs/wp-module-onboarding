@@ -1,5 +1,4 @@
-import CommonLayout from '../../../components/Layouts/Common';
-import { VIEW_DESIGN_THEME_STYLES } from '../../../../constants';
+import { VIEW_DESIGN_THEME_STYLES_MENU } from '../../../../constants';
 import { store as nfdOnboardingStore } from '../../../store';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
@@ -11,10 +10,10 @@ import { useViewportMatch } from '@wordpress/compose';
 import { getPatterns } from '../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../utils/api/themes';
 
-import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
+import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
-const StepDesignThemeStyle = () => {
-	const MAX_PREVIEWS_PER_ROW = 3;
+const DesignThemeStylesPreview = () => {
+    const MAX_PREVIEWS_PER_ROW = 3;
 
 	const navigate = useNavigate();
 	const [ isLoaded, setIsLoaded ] = useState( false );
@@ -22,7 +21,6 @@ const StepDesignThemeStyle = () => {
 	const [ globalStyles, setGlobalStyles ] = useState();
 	const [ selectedStyle, setSelectedStyle ] = useState( 0 );
 
-	const isLargeViewport = useViewportMatch( 'medium' );
 	const { currentStep, nextStep } = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
@@ -30,24 +28,16 @@ const StepDesignThemeStyle = () => {
 		};
 	}, [] );
 
-	const {
+    const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
 		setIsSidebarOpened,
 		setIsDrawerSuppressed,
+        updatePreviewSettings
 	} = useDispatch( nfdOnboardingStore );
 
-	useEffect( () => {
-		if ( isLargeViewport ) {
-			setIsDrawerOpened( true );
-		}
-		setIsSidebarOpened( false );
-		setIsDrawerSuppressed( false );
-		setDrawerActiveView( VIEW_DESIGN_THEME_STYLES );
-	}, [] );
-
 	const getStylesAndPatterns = async () => {
-		const pattern = await getPatterns( 'theme-styles', true );
+		const pattern = await getPatterns( currentStep.patternId, true );
 		const globalStyles = await getGlobalStyles();
 		setPattern( pattern?.body );
 		setGlobalStyles( globalStyles?.body );
@@ -57,13 +47,15 @@ const StepDesignThemeStyle = () => {
 	useEffect( () => {
 		if ( ! isLoaded ) getStylesAndPatterns();
 	}, [ isLoaded ] );
+    
 
 	const handleClick = ( idx ) => {
+        const previewSettings = globalStyles[idx];
+        const updatedPreviewSettings = useGlobalStylesOutput( previewSettings );
+        updatePreviewSettings(updatedPreviewSettings);
 		setSelectedStyle( idx );
-		navigate( nextStep.path );
 	};
-
-	const buildPreviews = ( start ) => {
+    const buildPreviews = ( start ) => {
 		const previews = [];
 		globalStyles?.forEach( ( globalStyle, idx ) => {
 			previews.push(
@@ -121,25 +113,20 @@ const StepDesignThemeStyle = () => {
 
 		return previews;
 	};
+    
 
-	return (
-		<CommonLayout>
+    return (
 			<div className="theme-styles-preview">
-				<HeadingWithSubHeading
-					title={ currentStep?.heading }
-					subtitle={ currentStep?.subheading }
-				/>
-				<div className="theme-styles-preview__list">
+				<div className="theme-styles-preview__list--drawer">
 					{ globalStyles ? buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW ) : '' }
 				</div>
-				<div className="theme-styles-preview__list">
+				<div className="theme-styles-preview__list--drawer">
 					{ globalStyles
 						? buildPreviews().slice( MAX_PREVIEWS_PER_ROW, globalStyles.length )
 						: '' }
 				</div>
 			</div>
-		</CommonLayout>
 	);
-};
+}
 
-export default StepDesignThemeStyle;
+export default DesignThemeStylesPreview;

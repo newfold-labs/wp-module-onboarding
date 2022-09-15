@@ -22,7 +22,8 @@ import {
 	VIEW_DESIGN_COLORS,
 	VIEW_DESIGN_HEADER_MENU,
 	VIEW_DESIGN_THEMES,
-	VIEW_DESIGN_THEME_STYLES,
+	VIEW_DESIGN_THEME_STYLES_MENU,
+    VIEW_DESIGN_THEME_STYLES_PREVIEW,
 	VIEW_DESIGN_TYPOGRAPHY,
 	VIEW_NAV_GET_STARTED,
 	VIEW_NAV_DESIGN,
@@ -49,12 +50,13 @@ const StepGetStartedExperience = lazy( () =>
 );
 const StepTopPriority = lazy( () => import( '../../pages/Steps/TopPriority' ) );
 const StepBasicInfo = lazy( () => import( '../../pages/Steps/BasicInfo' ) );
+
 const StepDesignThemes = lazy( () =>
 	import( '../../pages/Steps/DesignThemes' )
 );
-const StepDesignThemeStyles = lazy( () =>
-	import( '../../pages/Steps/DesignThemeStyles' )
-);
+const StepDesignThemeStylesMenu = lazy( () => import( '../../pages/Steps/DesignThemeStyles/Menu' ) );
+const StepDesignThemeStylesPreview = lazy( () => import( '../../pages/Steps/DesignThemeStyles/Preview' ) );
+
 const StepDesignColors = lazy( () =>
 	import( '../../pages/Steps/DesignColors' )
 );
@@ -250,7 +252,7 @@ export const steps = [
 		VIEW: VIEW_DESIGN_THEMES,
 	},
 	{
-		path: '/wp-setup/step/design/theme-styles',
+		path: '/wp-setup/step/design/theme-styles/menu',
 		title: __( 'Theme Styles', 'wp-module-onboarding' ),
 		heading: __(
 			'Lets tailor your theme for the perfect fit',
@@ -264,10 +266,33 @@ export const steps = [
 			'All these styles -- plus the ability to customize them -- are available in the WordPress Site Editor',
 			'wp-module-onboarding'
 		),
-		Component: StepDesignThemeStyles,
+		Component: StepDesignThemeStylesMenu,
 		Icon: styles,
 		priority: 160,
-		VIEW: VIEW_DESIGN_THEME_STYLES,
+		VIEW: VIEW_DESIGN_THEME_STYLES_MENU,
+        patternId: 'theme-styles',
+	},
+    {
+        id: 'theme-styles',
+		path: '/wp-setup/step/design/theme-styles/preview',
+		title: __( 'Theme Styles', 'wp-module-onboarding' ),
+		heading: __(
+			'Lets tailor your theme for the perfect fit',
+			'wp-module-onboarding'
+		),
+		subheading: __(
+			"Use these styles or bring your own. You're always free to remix them.",
+			'wp-module-onboarding'
+		),
+		description: __(
+			'All these styles -- plus the ability to customize them -- are available in the WordPress Site Editor',
+			'wp-module-onboarding'
+		),
+		Component: StepDesignThemeStylesPreview,
+		Icon: styles,
+		priority: 170,
+		VIEW: VIEW_DESIGN_THEME_STYLES_PREVIEW,
+        patternId: 'theme-styles',
 	},
 	{
 		path: '/wp-setup/step/design/colors',

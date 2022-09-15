@@ -3,7 +3,8 @@ import {
 	VIEW_DESIGN_COLORS,
 	VIEW_DESIGN_HEADER_MENU,
 	VIEW_DESIGN_THEMES,
-	VIEW_DESIGN_THEME_STYLES,
+	VIEW_DESIGN_THEME_STYLES_MENU,
+    VIEW_DESIGN_THEME_STYLES_PREVIEW,
 	VIEW_DESIGN_TYPOGRAPHY,
 	VIEW_NAV_DESIGN,
 	VIEW_NAV_PAGE,
@@ -17,7 +18,8 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { Button } from '@wordpress/components';
 import DesignColors from './DesignColors';
 import DesignHeaderMenu from './DesignHeaderMenu';
-import DesignThemeStyles from './DesignThemeStyles';
+import DesignThemeStylesMenu from './DesignThemeStylesMenu';
+import DesignThemeStylesPreview from './DesignThemeStylesPreview';
 import DesignThemes from './DesignThemes';
 import DesignTypography from './DesignTypography';
 import { ESCAPE } from '@wordpress/keycodes';
@@ -105,9 +107,14 @@ const DrawerPanel = ( { isOpen } ) => {
 								<DesignThemes />
 							</WithDesignBack>
 						) }
-						{ VIEW_DESIGN_THEME_STYLES === drawerView && (
+						{ VIEW_DESIGN_THEME_STYLES_MENU === drawerView && (
 							<WithDesignBack>
-								<DesignThemeStyles />
+								<DesignThemeStylesMenu />
+							</WithDesignBack>
+						) }
+                        { VIEW_DESIGN_THEME_STYLES_PREVIEW === drawerView && (
+							<WithDesignBack>
+								<DesignThemeStylesPreview />
 							</WithDesignBack>
 						) }
 						{ VIEW_DESIGN_COLORS === drawerView && (

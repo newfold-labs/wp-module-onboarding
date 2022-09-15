@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 
-const DesignThemeStyles = () => {
+const DesignThemeStylesMenu = () => {
 	return (
 		<div style={{ padding: '0 16px' }}>
 			<h2>{__('Pick a Theme Style', 'wp-module-onboarding')}</h2>
@@ -17,4 +17,4 @@ const DesignThemeStyles = () => {
 	);
 };
 
-export default DesignThemeStyles;
+export default DesignThemeStylesMenu;

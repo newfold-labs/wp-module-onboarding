@@ -31,32 +31,47 @@ const LivePreview = ({
     previewSettings = false
 }) => {
 	const [blocks, setBlocks] = useState();
+    const [settings, setSettings] = useState();
+    var storedPreviewSettings
+
     if ( ! previewSettings ) {
-        previewSettings = useSelect(
+        storedPreviewSettings = useSelect(
             (select) => select(nfdOnboardingStore).getPreviewSettings(),
             []
         );
     }
+
 	const { updateSettings } = useDispatch(blockEditorStore);
 	// const { updatePreviewSettings } = useDispatch(nfdOnboardingStore);
 
 	useEffect(() => {
-		const updatedPreviewSettings = useGlobalStylesOutput( previewSettings );
-		// BlockPreview reads settings from the core/block-editor store
-		updateSettings(updatedPreviewSettings.settings);
+        if ( previewSettings ) {
+            setSettings( useGlobalStylesOutput( previewSettings ) );
+        } else {
+            setSettings( storedPreviewSettings );
+        }
+		// // BlockPreview reads settings from the core/block-editor store
+		// updateSettings(updatedPreviewSettings.settings);
 		// updatePreviewSettings(updatedPreviewSettings.settings)
 		setBlocks(parse(blockGrammer));
 	}, []);
 
+    useEffect(() => {
+        if ( ! previewSettings ) {
+            setSettings( storedPreviewSettings );
+        }
+    }, [storedPreviewSettings])
+
+
 	return (
-		<div className={`live-preview__container-${styling}`}>
-			<BlockEditorProvider value={blocks} settings={previewSettings.settings}>
-				<AutoHeightBlockPreview
-					viewportWidth={viewportWidth}
-					settings={previewSettings.settings}
-				/>
-			</BlockEditorProvider>
-		</div>
+        <div className={`live-preview__container-${styling}`}>
+            { settings && <BlockEditorProvider value={blocks} settings={settings.settings}>
+            <AutoHeightBlockPreview
+                viewportWidth={viewportWidth}
+                settings={settings.settings}
+            />
+        </BlockEditorProvider> }
+    </div>
 	);
 };
 
