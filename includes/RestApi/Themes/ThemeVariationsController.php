@@ -55,6 +55,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	public function get_theme_variations( \WP_REST_Request $request ) {
 		$active_variation              = \WP_Theme_JSON_Resolver::get_merged_data( 'theme' )->get_raw_data();
 		$active_variation_global_style = array(
+            'title'    => 'Default',
 			'version'  => $active_variation['version'],
 			'settings' => $active_variation['settings'],
 			'styles'   => $active_variation['styles'],

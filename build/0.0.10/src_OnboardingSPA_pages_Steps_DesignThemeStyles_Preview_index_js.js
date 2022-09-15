@@ -173,7 +173,7 @@ const StepDesignThemeStylesPreview = () => {
   const [isLoaded, setIsLoaded] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [pattern, setPattern] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
   const [selectedStyle, setSelectedStyle] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
-  const isLargeViewport = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_6__.useViewportMatch)('medium');
+  const isLargeViewport = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_6__.useViewportMatch)("medium");
   const {
     currentStep,
     nextStep
@@ -211,12 +211,33 @@ const StepDesignThemeStylesPreview = () => {
     if (!isLoaded) getStylesAndPatterns();
   }, [isLoaded]);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Layouts_Common__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    isCentered: true
+    className: "theme-styles-preview"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "theme-styles-preview__title-bar"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "theme-styles-preview__title-bar__browser"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "theme-styles-preview__title-bar__browser__dot",
+    style: {
+      background: "#989EA7"
+    }
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "theme-styles-preview__title-bar__browser__dot",
+    style: {
+      background: "#989EA7"
+    }
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "theme-styles-preview__title-bar__browser__dot",
+    style: {
+      background: "#989EA7"
+    }
+  }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    class: "theme-styles-preview__live-preview-container"
   }, pattern && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_LivePreview__WEBPACK_IMPORTED_MODULE_5__["default"], {
     blockGrammer: pattern,
-    styling: 'custom',
+    styling: "custom",
     viewportWidth: 1300
-  }));
+  })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (StepDesignThemeStylesPreview);
