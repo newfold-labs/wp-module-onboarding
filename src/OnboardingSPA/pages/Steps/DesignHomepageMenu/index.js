@@ -1,4 +1,4 @@
-import { check, Icon } from '@wordpress/icons';
+import { check, home, Icon } from '@wordpress/icons';
 import { useViewportMatch } from '@wordpress/compose';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
@@ -15,19 +15,21 @@ const StepDesignHomepageMenu = () => {
     const [isLoaded, setisLoaded] = useState(false);
     const [homepagePattern, setHomepagePattern] = useState();
     const [selectedHomepage, setSelectedHomepage] = useState(0);
+    const [homepagePatternList, sethomepagePatternList] = useState();
 
     const isLargeViewport = useViewportMatch('medium');
 
-    const { currentStep } = useSelect(
+    const { currentStep, currentData } = useSelect(
         (select) => {
             return {
-                currentStep: select(nfdOnboardingStore).getCurrentStep()
+                currentStep: select(nfdOnboardingStore).getCurrentStep(),
+                currentData: select(nfdOnboardingStore).getCurrentOnboardingData()
             };
         },
         []
     );
 
-    const { setDrawerActiveView, setIsDrawerOpened, setIsSidebarOpened, setIsDrawerSuppressed } =
+    const { setDrawerActiveView, setIsDrawerOpened, setIsSidebarOpened, setIsDrawerSuppressed, setCurrentOnboardingData } =
         useDispatch(nfdOnboardingStore);
 
     useEffect(() => {
@@ -43,6 +45,32 @@ const StepDesignHomepageMenu = () => {
         var homepagePatternData = await getPatterns('homepage');
         setHomepagePattern(homepagePatternData?.body);
         setisLoaded(true);
+
+        var homepagePatternTempList = [];
+        await homepagePatternData?.body?.forEach((homepage) => {
+            homepagePatternTempList.push(homepage?.title);
+        })
+        
+        sethomepagePatternList(homepagePatternTempList);
+
+        if(currentData?.data['sitePages'].length !== 0)
+            setSelectedHomepage(homepagePatternTempList?.indexOf(currentData?.data['sitePages']['homepage']));
+        else{
+            currentData.data['sitePages'] = {
+                ...currentData.data['sitePages'],
+                'homepage': homepagePatternTempList[0]
+            };
+            setCurrentOnboardingData(currentData);
+        }
+    }
+
+    function saveDataForHomepage(idx) {
+        setSelectedHomepage(idx);
+        currentData.data['sitePages'] = {
+            ...currentData.data['sitePages'],
+            'homepage': homepagePatternList[idx]
+        };
+        setCurrentOnboardingData(currentData);
     }
 
     useEffect(() => {
@@ -57,7 +85,7 @@ const StepDesignHomepageMenu = () => {
                 homepageList.push(
                     <div
                         className='homepage_preview_list__item'
-                        onClick={() => setSelectedHomepage(idx)}>
+                        onClick={() => saveDataForHomepage(idx)}>
                         <div className='homepage_preview_list__title_bar'>
                             <div className="homepage_preview_list__title_bar_browser">
                                 <span className="homepage_preview_list__title_bar_browser-dot" style={{ background: '#989EA7' }}></span>
@@ -82,7 +110,6 @@ const StepDesignHomepageMenu = () => {
                 );
             });
         }
-
         return homepageList;
     }
 
