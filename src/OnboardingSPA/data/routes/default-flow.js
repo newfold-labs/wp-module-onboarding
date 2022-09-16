@@ -273,7 +273,6 @@ export const steps = [
         patternId: 'theme-styles',
 	},
     {
-        id: 'theme-styles',
 		path: '/wp-setup/step/design/theme-styles/preview',
 		title: __( 'Theme Styles', 'wp-module-onboarding' ),
 		heading: __(
