@@ -59,7 +59,7 @@ const StepProducts = () => {
 
 	return (
 		<CommonLayout isBgPrimary isCentered>
-			<NewfoldLargeCard>
+			<NewfoldLargeCard className='ecommerce-step' >
 				<div className='nfd-onboarding-experience-step onboarding-product-step onboarding-ecommerce-step'>
 					<div className='nfd-card-heading center'>
 						<CardHeader
