@@ -1,10 +1,10 @@
-import { check, home, Icon } from '@wordpress/icons';
+import { check, Icon } from '@wordpress/icons';
 import { useViewportMatch } from '@wordpress/compose';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
-import { getPatterns } from '../../../utils/api/patterns';
 import LivePreview from '../../../components/LivePreview';
+import { getHomepagePatterns } from '../../../utils/api/patterns';
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import { VIEW_DESIGN_HOMEPAGE_MENU } from '../../../../constants';
@@ -41,8 +41,8 @@ const StepDesignHomepageMenu = () => {
         setDrawerActiveView(VIEW_DESIGN_HOMEPAGE_MENU);
     }, []);
 
-    async function getHomepagePatterns() {
-        var homepagePatternData = await getPatterns('homepage');
+    async function getHomepagePatternsData() {
+        var homepagePatternData = await getHomepagePatterns('homepage');
         setHomepagePattern(homepagePatternData?.body);
         setisLoaded(true);
 
@@ -75,7 +75,7 @@ const StepDesignHomepageMenu = () => {
 
     useEffect(() => {
         if (!isLoaded)
-            getHomepagePatterns();
+            getHomepagePatternsData();
     }, [isLoaded]);
 
     function buildHomepagePreviews() {
