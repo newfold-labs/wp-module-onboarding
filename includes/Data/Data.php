@@ -39,7 +39,7 @@ final class Data {
 		if ( empty( $brand ) ) {
 			$brand = 'newfold';
 		}
-		$brand = \apply_filters( 'nfd_module_onboarding_brand', strtolower( $brand ) );
+		$brand = \apply_filters( 'nfd_module_onboarding_brand', sanitize_title_with_dashes( str_replace('_', '-', $brand) ) );
 
 		$brands = Brands::get_brands();
 
