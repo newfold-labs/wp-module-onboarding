@@ -75,8 +75,8 @@ const StepTax = () => {
 
 	return (
 		<CommonLayout isBgPrimary isCentered>
-			<NewfoldLargeCard>
-				<div className='nfd-onboarding-experience-step'>
+			<NewfoldLargeCard className='ecommerce-step' >
+				<div className='nfd-onboarding-experience-step onboarding-ecommerce-step'>
 					<div className='nfd-card-heading center onboarding-ecommerce-step'>
 						<CardHeader
 							heading={__(content.stepTaxHeading, 'wp-module-onboarding')}

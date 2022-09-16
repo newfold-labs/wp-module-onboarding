@@ -10,8 +10,9 @@ import { translations } from '../../utils/locales/translations';
  * @returns
  */
 const MiniPreview = ({ title, desc, icon, socialData }) => {
+    
     var iconPreview = icon == "" || icon == undefined ? content.icon : icon;
-    var titlePreview = title == "" ? sprintf(__(content.title, 'wp-module-onboarding'), translations('Site')) : title?.substring(0, 20);
+    var titlePreview = title == "" ? sprintf(__(content.title, 'wp-module-onboarding'), translations('Site')) : title;
     var descPreview = desc == "" ? sprintf(__(content.desc, 'wp-module-onboarding'), translations('Site')) : desc;
     var urlPreview = title == "" ? content.url : titleToUrl(title);
 
