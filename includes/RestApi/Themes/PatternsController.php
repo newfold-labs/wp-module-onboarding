@@ -37,7 +37,7 @@ class PatternsController extends \WP_REST_Controller {
 					'methods'  => \WP_REST_Server::READABLE,
 					'callback' => array( $this, 'get_pattern' ),
 					'args'     => $this->get_pattern_args(),
-					// 'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
 		);

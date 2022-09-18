@@ -466,7 +466,10 @@ const getBlockSelectors = ( blockTypes ) => {
 	return result;
 };
 
-export function useGlobalStylesOutput( previewSettings ) {
+export function useGlobalStylesOutput(
+	previewSettings,
+	storedPreviewSettings
+) {
 	const hasBlockGapSupport = false;
 
 	if (
@@ -497,6 +500,7 @@ export function useGlobalStylesOutput( previewSettings ) {
 	);
 
 	const stylesheets = [
+		...storedPreviewSettings.settings.styles,
 		{
 			css: customProperties,
 			isGlobalStyles: true,
@@ -508,6 +512,8 @@ export function useGlobalStylesOutput( previewSettings ) {
 	];
 
 	previewSettings.settings.styles = stylesheets;
+	previewSettings.settings.__unstableResolvedAssets =
+		storedPreviewSettings.settings.__unstableResolvedAssets;
 
 	return previewSettings;
 }

@@ -21,23 +21,27 @@ const StepDesignThemeStylesMenu = () => {
 	const [ globalStyles, setGlobalStyles ] = useState();
 	const [ selectedStyle, setSelectedStyle ] = useState();
 
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 	const isLargeViewport = useViewportMatch( 'medium' );
-	const { currentStep, nextStep, currentData } = useSelect( ( select ) => {
-		return {
-			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
-			nextStep: select( nfdOnboardingStore ).getNextStep(),
-            currentData: select(nfdOnboardingStore).getCurrentOnboardingData()
-		};
-	}, [] );
+	const { currentStep, nextStep, currentData, storedPreviewSettings } =
+		useSelect( ( select ) => {
+			return {
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+				nextStep: select( nfdOnboardingStore ).getNextStep(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				storedPreviewSettings:
+					select( nfdOnboardingStore ).getPreviewSettings(),
+			};
+		}, [] );
 
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
 		setIsSidebarOpened,
 		setIsDrawerSuppressed,
-        updatePreviewSettings,
-        setCurrentOnboardingData
+		updatePreviewSettings,
+		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -54,7 +58,7 @@ const StepDesignThemeStylesMenu = () => {
 		const globalStyles = await getGlobalStyles();
 		setPattern( pattern?.body );
 		setGlobalStyles( globalStyles?.body );
-        setSelectedStyle(currentData.data['theme']['variation'])
+		setSelectedStyle( currentData.data.theme.variation );
 		setIsLoaded( true );
 	};
 
@@ -63,11 +67,13 @@ const StepDesignThemeStylesMenu = () => {
 	}, [ isLoaded ] );
 
 	const handleClick = ( idx ) => {
-        const selectedGlobalStyle = globalStyles[idx];
-        updatePreviewSettings( useGlobalStylesOutput( selectedGlobalStyle ) );
-		setSelectedStyle( selectedGlobalStyle['title'] );
-        currentData.data['theme']['variation'] = selectedGlobalStyle['title']
-        setCurrentOnboardingData( currentData );
+		const selectedGlobalStyle = globalStyles[ idx ];
+		updatePreviewSettings(
+			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
+		);
+		setSelectedStyle( selectedGlobalStyle.title );
+		currentData.data.theme.variation = selectedGlobalStyle.title;
+		setCurrentOnboardingData( currentData );
 		navigate( nextStep.path );
 	};
 
@@ -95,7 +101,7 @@ const StepDesignThemeStylesMenu = () => {
 						</div>
 						<div
 							className={ `${
-								globalStyles[idx]['title'] == selectedStyle
+								globalStyles[ idx ].title == selectedStyle
 									? 'theme-styles-menu__list__item__title-bar--selected'
 									: 'theme-styles-menu__list__item__title-bar--unselected'
 							}` }
@@ -135,11 +141,16 @@ const StepDesignThemeStylesMenu = () => {
 					subtitle={ currentStep?.subheading }
 				/>
 				<div className="theme-styles-menu__list">
-					{ globalStyles ? buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW ) : '' }
+					{ globalStyles
+						? buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW )
+						: '' }
 				</div>
 				<div className="theme-styles-menu__list">
 					{ globalStyles
-						? buildPreviews().slice( MAX_PREVIEWS_PER_ROW, globalStyles.length )
+						? buildPreviews().slice(
+								MAX_PREVIEWS_PER_ROW,
+								globalStyles.length
+						  )
 						: '' }
 				</div>
 			</div>
