@@ -42,10 +42,10 @@ $title-browser-color: #3858E9;
     display: inline-block;
 
     @media (max-width: 400px) {
-        width: 10px;
-        margin: 3px;
-        height: 10px;
-        margin-top: 5px;
+        width: 8px;
+        margin: 2.8px;
+        height: 8px;
+        margin-top: 3px;
     }
 }
 
@@ -75,8 +75,11 @@ $title-browser-color: #3858E9;
     }
     &_desc{
         color: $black;
+        text-align: left;
+        max-width: 450px;
         font-weight: 400;
-        font-size: 0.8rem;
+        line-height: 1.58;
+        font-size: 0.88rem;
         margin: 16px 0px 0px 0px;
     }
     &_social{
@@ -169,12 +172,13 @@ $title-browser-color: #3858E9;
         
                 &-text {
                     flex: 1;
-                    margin-left: 2px;
-                    font-size: 0.8rem;
-                    overflow: hidden;
-                    max-width: 140px;
-                    text-overflow: ellipsis;
                     content: " ";
+                    margin-left: 2px;
+                    max-width: 140px;
+                    font-size: 0.8rem;
+                    line-clamp: 1;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
                     background: -webkit-linear-gradient(left, #000 50%, #fff);
                     background-clip: text;
                     -webkit-text-fill-color: transparent;

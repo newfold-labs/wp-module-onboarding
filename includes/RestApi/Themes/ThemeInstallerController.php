@@ -2,7 +2,6 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi\Themes;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Services\ThemeInstaller;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ThemeInstallTaskManager;
@@ -85,36 +84,16 @@ class ThemeInstallerController extends \WP_REST_Controller {
 	  * @return \WP_REST_Response
 	  */
 	public static function initialize() {
-		  // Checks if the init_list of themes have already been queued.
-		if ( \get_option( Options::get_option_name( 'theme_init_status' ), 'init' ) !== 'init' ) {
+		if ( ThemeInstallTaskManager::queue_initial_installs() ) {
 			return new \WP_REST_Response(
 				array(),
 				202
 			);
 		}
 
-		  // Set option to installing to prevent re-queueing the init_list again on page load.
-		 \update_option( Options::get_option_name( 'theme_init_status' ), 'installing' );
-
-		  // Get the initial list of themes to be installed based on the plan.
-		 $init_themes = Themes::get_init();
-		foreach ( $init_themes as $init_theme ) {
-			   // Checks if a theme with the given slug and activation criteria already exists.
-			if ( ! ThemeInstaller::exists( $init_theme['slug'], $init_theme['activate'] ) ) {
-					// Add a new ThemeInstallTask to the theme install queue.
-				ThemeInstallTaskManager::add_to_queue(
-					new ThemeInstallTask(
-						$init_theme['slug'],
-						$init_theme['activate'],
-						$init_theme['priority']
-					)
-				);
-			}
-		}
-
 		return new \WP_REST_Response(
 			array(),
-			202
+			500
 		);
 	}
 

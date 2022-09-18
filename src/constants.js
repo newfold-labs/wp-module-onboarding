@@ -26,6 +26,8 @@ export const SIDEBAR_MENU_SLOTFILL_PREFIX = 'HeaderMenu';
 export const SIDEBAR_LEARN_MORE = 'LearnMore';
 
 export const MAX_RETRIES_SETTINGS_INIT = 2;
+export const NFD_PLUGINS_QUERY_PARAM = 'nfd_plugins';
+export const NFD_THEMES_QUERY_PARAM = 'nfd_themes';
 
 /**
  * All views for the <Drawer /> component.
