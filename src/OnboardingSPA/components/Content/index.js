@@ -1,36 +1,37 @@
 import { Fragment, Suspense } from '@wordpress/element';
 import { Route, Routes } from 'react-router-dom';
 
-import { routes as appRoutes } from '../../data/routes/index';
+import { store as nfdOnboardingStore } from '../../store';
+import { useSelect } from '@wordpress/data';
 
 /**
  * Primary content area within the <InterfaceSkeleton />.
  *
- * @returns WPComponent
+ * @return WPComponent
  */
 
-function getMappedPages() {
-	var routes = [];
-	appRoutes.map((appRoute) => 
-		routes.push(
-			<Route
-				key={appRoute.path}
-				path={appRoute.path}
-				end
-				element={<appRoute.Component />}
-			/>
-		)
-	)
-	return routes;
-}
-
 const Content = () => {
+	const { routes } = useSelect( ( select ) => {
+		return {
+			routes: select( nfdOnboardingStore ).getRoutes(),
+		};
+	} );
+
+	const getMappedPages = ( routes ) => {
+		return routes?.map( ( route ) => (
+			<Route
+				key={ route.path }
+				path={ route.path }
+				end
+				element={ <route.Component /> }
+			/>
+		) );
+	};
+
 	return (
 		<main className="nfd-onboard-content">
-			<Suspense fallback={<Fragment />}>
-				<Routes>
-					{getMappedPages()}
-				</Routes>
+			<Suspense fallback={ <Fragment /> }>
+				<Routes>{ getMappedPages( routes ) }</Routes>
 			</Suspense>
 		</main>
 	);
