@@ -43,7 +43,6 @@ class SettingsController {
 		'linkedin_url',
 		'myspace_url',
 		'pinterest_url',
-		'twitter_site',
 		'youtube_url',
 		'wikipedia_url',
 		'other_social_urls',
@@ -150,7 +149,7 @@ class SettingsController {
 			if( ( $twitter_id = $this->validate_twitter_id($settings['twitter_site']) ) === false ) {
 				return new \WP_Error(
 					'invalid_twitter_handle',
-					"The provided twitter handle '{$twitter_id}' is NOT valid.",
+					"The provided twitter handle / URL is NOT valid.",
 					array( 'status' => 400 )
 				);
 			}
