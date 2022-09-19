@@ -108,9 +108,11 @@
         overflow-y: auto;
         height: calc(100% - #{$header-height});
         background-color: var(--nfd-onboarding-drawer-bg);
+        -ms-overflow-style: none;
+        scrollbar-width: none; 
         &::-webkit-scrollbar {
             display: none;
-          }
+        }
     }
 
     &-inside {
@@ -223,25 +225,28 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 
     &--drawer {
         overflow-y: auto;
+        overflow-x: hidden;
+        width: 100%;
         &__list {
-            width: 90%;
+            width: 100%;
             height: 100%;
 
             @media (max-width: #{ ($break-large) }) {
-                width: 95vw;
+                width: 100%;
                 align-items: center;
+                justify-content: center;
                 flex-direction: column;
             }
     
             &__item {
                 flex: 1;
                 width: 100%;
-                margin: 24px;
+                margin: 24px 0px;
                 display: flex;
                 align-items: center;
                 flex-direction: column;
                 justify-content: center;
-    
+
                 &__title-bar {
                     width: 90%;
                     height: 15px;
@@ -255,8 +260,10 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        margin-left: 3px;
     
                         &__dot {
+                            background-color: #989EA7;
                             width: 8px;
                             margin: 3px;
                             height: 8px;
@@ -292,7 +299,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
                     position: relative;
                     width: 90%;
                     align-items: center;
-                    border: 1px solid #e3dfdf;
+                    border: 1px solid #B7B7B7;
     
                     .live-preview {
     

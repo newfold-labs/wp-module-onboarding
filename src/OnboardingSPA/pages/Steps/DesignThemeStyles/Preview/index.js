@@ -3,6 +3,7 @@ import { useState, useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { CheckboxControl } from '@wordpress/components';
 import { useViewportMatch } from '@wordpress/compose';
+import { __ } from '@wordpress/i18n';
 
 import { LivePreview } from '../../../../components/LivePreview';
 import CommonLayout from '../../../../components/Layouts/Common';
@@ -16,6 +17,7 @@ const StepDesignThemeStylesPreview = () => {
 	const location = useLocation();
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
+    const [ customize, setCustomize ] = useState( false );
 
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const { currentStep, currentData, storedPreviewSettings } = useSelect(
@@ -53,10 +55,15 @@ const StepDesignThemeStylesPreview = () => {
 	const getStylesAndPatterns = async () => {
 		const pattern = await getPatterns( currentStep.patternId, true );
 		const globalStyles = await getGlobalStyles();
-		const selectedGlobalStyle = globalStyles.body.filter(
-			( globalStyle ) =>
-				globalStyle.title == currentData.data.theme.variation
-		)[ 0 ];
+		let selectedGlobalStyle;
+        if ( currentData.data.theme.variation ) {
+            selectedGlobalStyle = globalStyles.body.filter(
+                ( globalStyle ) =>
+                    globalStyle.title === currentData.data.theme.variation
+            )[ 0 ];
+        } else {
+            selectedGlobalStyle = globalStyles.body[0];
+        }
 		updatePreviewSettings(
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
@@ -75,30 +82,27 @@ const StepDesignThemeStylesPreview = () => {
 					label={
 						<div className="theme-styles-preview__checkbox__label">
 							<span className="theme-styles-preview__checkbox__label__question">
-								Customize Colors &amp; Fonts?
+								{ __('Customize Colors & Fonts?', 'wp-module-onboarding') }
 								<span className="theme-styles-preview__checkbox__label__hint">
-									Check to customize in the next few steps (or
-									leave empty and use the site editor later.)
+                                    { __( 'Check to customize in the next few steps (or leave empty and use the Site Editor later)', 'wp-module-onboarding' ) }
 								</span>
 							</span>
-							<div className="theme-styles-preview__checkbox__label__hint"></div>
 						</div>
 					}
+                    checked = { customize }
+                    onChange = { () => setCustomize( ! customize ) }
 				/>
 			</div>
 			<div className="theme-styles-preview__title-bar">
 				<div className="theme-styles-preview__title-bar__browser">
 					<span
 						className="theme-styles-preview__title-bar__browser__dot"
-						style={ { background: '#989EA7' } }
 					></span>
 					<span
 						className="theme-styles-preview__title-bar__browser__dot"
-						style={ { background: '#989EA7' } }
 					></span>
 					<span
 						className="theme-styles-preview__title-bar__browser__dot"
-						style={ { background: '#989EA7' } }
 					></span>
 				</div>
 			</div>
