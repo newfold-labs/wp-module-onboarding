@@ -100,6 +100,11 @@ final class WP_Admin {
 				$asset['version']
 			);
 
+            wp_add_inline_script(
+                'wp-blocks',
+                'wp.blocks.unstable__bootstrapServerSideBlockDefinitions(' . wp_json_encode( get_block_editor_server_block_settings() ) . ');'
+            );
+
 			\wp_enqueue_script( self::$slug );
 			\wp_enqueue_style( self::$slug );
 		}
