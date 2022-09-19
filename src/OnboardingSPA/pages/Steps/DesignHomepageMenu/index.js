@@ -3,27 +3,31 @@ import { useViewportMatch } from '@wordpress/compose';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
-import LivePreview from '../../../components/LivePreview';
-import { getHomepagePatterns } from '../../../utils/api/patterns';
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
+import { getGlobalStyles } from '../../../utils/api/themes';
+import { getHomepagePatterns } from '../../../utils/api/patterns';
 import { VIEW_DESIGN_HOMEPAGE_MENU } from '../../../../constants';
+import { LivePreviewSelectableCard } from '../../../components/LivePreview';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 
 const StepDesignHomepageMenu = () => {
+    const MAX_PREVIEWS_PER_ROW = 3;
 
     const [isLoaded, setisLoaded] = useState(false);
     const [homepagePattern, setHomepagePattern] = useState();
+    const [globalStyle, setGlobalStyle] = useState();
     const [selectedHomepage, setSelectedHomepage] = useState(0);
     const [homepagePatternList, sethomepagePatternList] = useState();
 
     const isLargeViewport = useViewportMatch('medium');
 
-    const { currentStep, currentData } = useSelect(
+    const { currentStep, currentData, storedPreviewSettings } = useSelect(
         (select) => {
             return {
                 currentStep: select(nfdOnboardingStore).getCurrentStep(),
-                currentData: select(nfdOnboardingStore).getCurrentOnboardingData()
+                currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+                storedPreviewSettings: select(nfdOnboardingStore).getPreviewSettings()
             };
         },
         []
@@ -43,6 +47,11 @@ const StepDesignHomepageMenu = () => {
 
     async function getHomepagePatternsData() {
         var homepagePatternData = await getHomepagePatterns('homepage');
+        const globalStyleTemp = await getGlobalStyles();
+        if (storedPreviewSettings)
+            setGlobalStyle(storedPreviewSettings);
+        else
+            setGlobalStyle(globalStyleTemp?.body[0]);
         setHomepagePattern(homepagePatternData?.body);
         setisLoaded(true);
 
@@ -79,32 +88,23 @@ const StepDesignHomepageMenu = () => {
     }, [isLoaded]);
 
     function buildHomepagePreviews() {
+
         var homepageList = [];
         if (homepagePattern) {
             homepagePattern?.forEach((homepage, idx) => {
                 homepageList.push(
                     <div
-                        className='homepage_preview_list__item'
-                        onClick={() => saveDataForHomepage(idx)}>
-                        <div className='homepage_preview_list__title_bar'>
-                            <div className="homepage_preview_list__title_bar_browser">
-                                <span className="homepage_preview_list__title_bar_browser-dot" style={{ background: '#989EA7' }}></span>
-                                <span className="homepage_preview_list__title_bar_browser-dot" style={{ background: '#989EA7' }}></span>
-                                <span className="homepage_preview_list__title_bar_browser-dot" style={{ background: '#989EA7' }}></span>
-                            </div>
-                            <div className={`${idx == selectedHomepage ? 'homepage_preview_list__title_bar_selected' : 'homepage_preview_list__title_bar_unselected'}`}>
-                                <Icon
-                                    className="homepage_preview_list__title_bar_selected_path"
-                                    icon={check}
-                                    size={64}
-                                />
-                            </div>
-                        </div>
-                        <LivePreview
-                            className='homepage_preview_list__main'
+                        className='homepage_preview__list'
+                    >
+                        <LivePreviewSelectableCard
+                            className={'homepage_preview__list__item'}
+                            selected={idx == selectedHomepage}
                             blockGrammer={homepage?.content}
                             viewportWidth={1200}
                             styling={'custom'}
+                            previewSettings={globalStyle}
+                            overlay={false}
+                            onClick={() => saveDataForHomepage(idx)}
                         />
                     </div>
                 );
@@ -117,8 +117,9 @@ const StepDesignHomepageMenu = () => {
         <CommonLayout >
             <div className='homepage_preview'>
                 <HeadingWithSubHeading title={currentStep?.heading} subtitle={currentStep?.subheading} />
-                <div className='homepage_preview_list'>
-                    {buildHomepagePreviews()}
+                <div className="theme-styles-menu__list">
+                    {globalStyle &&
+                        buildHomepagePreviews().slice(0, MAX_PREVIEWS_PER_ROW)}
                 </div>
             </div>
         </CommonLayout>
