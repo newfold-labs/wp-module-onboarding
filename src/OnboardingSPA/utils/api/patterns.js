@@ -8,3 +8,14 @@ export async function getHomepagePatterns(data = '') {
         apiFetch({ url: onboardingRestURL(`patterns/${data}`) }).then()
     );
 }
+
+export async function getPatterns( step = false, squash = false ) {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL(
+				`patterns` +
+					( step ? `&step=${ step }&squash=${ squash }` : '' )
+			),
+		} ).then()
+	);
+}
