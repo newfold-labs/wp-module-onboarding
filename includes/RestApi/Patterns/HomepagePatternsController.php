@@ -26,15 +26,6 @@ class HomepagePatternsController extends \WP_REST_Controller {
 	protected $rest_base = 'patterns';
 
 	/**
-	  * The block namespace slugs for different themes
-	  *
-	  * @var array
-	  */
-	 protected $block_namespace_slugs = array (
-		'yith-wonder'
-	 );
-
-	/**
 	 * The approved list of homepage patterns
 	 *
 	 * @var array
@@ -115,8 +106,9 @@ class HomepagePatternsController extends \WP_REST_Controller {
 	 *
 	 * @return array|\WP_Error
 	 */
-	public function get_patterns($block_namespace, $block_pattern) {
+	public function get_patterns( $block_pattern ) {
 		
+		$block_namespace = ( \wp_get_theme() )->get( 'TextDomain' );
 		$pattern_name = $block_namespace . '/' . $block_pattern;
 		if ( $this->patterns_registry_instance->is_registered( $pattern_name ) ) {
 			$pattern = $this->patterns_registry_instance->get_registered( $pattern_name );
@@ -145,25 +137,24 @@ class HomepagePatternsController extends \WP_REST_Controller {
 		$block_pattern_files = array();
 
 		// Iterate through all the themes that are approved
-		foreach ( $this->block_namespace_slugs as $block_namespace ) {
+		$block_namespace = ( \wp_get_theme() )->get( 'TextDomain' );
 
-			// Fetch all the Patterns specific to a selected theme
-			foreach ( $this->homepage_pattern_slugs[$block_namespace] as $pattern_name=>$block_patterns ) {
+		// Fetch all the Patterns specific to a selected theme
+		foreach ( $this->homepage_pattern_slugs[$block_namespace] as $pattern_name=>$block_patterns ) {
 
-				$pattern_content['title'] = $pattern_name;
-				$pattern_content['content'] = '';
-				foreach ( $block_patterns as $block_pattern ) {
+			$pattern_content['title'] = $pattern_name;
+			$pattern_content['content'] = '';
+			foreach ( $block_patterns as $block_pattern ) {
 
-					// Fetch the Block Pattern specified from a specific theme
-					$pattern_data = $this->get_patterns($block_namespace, $block_pattern);
+				// Fetch the Block Pattern specified from a specific theme
+				$pattern_data = $this->get_patterns($block_pattern);
 
-					// Check if Pattern data is not NULL|Error and has data
-					if(array_key_exists('content', $pattern_data))
-						$pattern_content['content'] = $pattern_content['content'] . $pattern_data['content'];
-				}
-
-				$block_pattern_files[] = $pattern_content;
+				// Check if Pattern data is not NULL|Error and has data
+				if(array_key_exists('content', $pattern_data))
+					$pattern_content['content'] = $pattern_content['content'] . $pattern_data['content'];
 			}
+
+			$block_pattern_files[] = $pattern_content;
 		}
 
 		return $block_pattern_files;
@@ -177,12 +168,16 @@ class HomepagePatternsController extends \WP_REST_Controller {
 	public function set_homepage_patterns( \WP_REST_Request $request ) {
 
 		$params = json_decode( $request->get_body(), true );
-		if( !isset($params) || !array_key_exists('content', $params) )
+		if( !isset($params) || !array_key_exists('slug', $params) )
 			return new \WP_Error(
 				'Homepage not specified',
 				'The WordPress Grammar for homepage was not provided',
 				array( 'status' => 404 )
 			);
+
+		$pattern_data = $this->get_patterns($params['slug']);
+		if( is_wp_error( $pattern_data ) )
+			return $pattern_data;
 
 		$show_pages_on_front =  \get_option( Options::get_option_name( 'show_on_front', false ) );
 
@@ -190,7 +185,6 @@ class HomepagePatternsController extends \WP_REST_Controller {
 		if( $show_pages_on_front == 'posts' )
 			\update_option( Options::get_option_name( 'show_on_front', false ), 'page' );
 
-		
 		$request = new \WP_REST_Request(
 			'POST',
 			'/wp/v2/pages'
@@ -201,7 +195,7 @@ class HomepagePatternsController extends \WP_REST_Controller {
 				'title'    => 'Homepage',
 				'status'   => 'publish',
 				'template' => 'no-title',
-				'content'  =>  $params['content'],
+				'content'  =>  $pattern_data['content'],
 			)
 		);
 			
