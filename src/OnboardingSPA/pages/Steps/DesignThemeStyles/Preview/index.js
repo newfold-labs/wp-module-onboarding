@@ -1,17 +1,19 @@
+import { useSelect, useDispatch } from '@wordpress/data';
+import { useState, useEffect } from '@wordpress/element';
+import { useLocation } from 'react-router-dom';
+import { CheckboxControl } from '@wordpress/components';
+import { useViewportMatch } from '@wordpress/compose';
+
+import { LivePreview } from '../../../../components/LivePreview';
 import CommonLayout from '../../../../components/Layouts/Common';
 import { VIEW_DESIGN_THEME_STYLES_PREVIEW } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
-import { useSelect, useDispatch } from '@wordpress/data';
-import { useState, useEffect } from '@wordpress/element';
-import LivePreview from '../../../../components/LivePreview';
-
-import { CheckboxControl } from '@wordpress/components';
-import { useViewportMatch } from '@wordpress/compose';
 import { getPatterns } from '../../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../../utils/global-styles/use-global-styles-output';
 
 const StepDesignThemeStylesPreview = () => {
+	const location = useLocation();
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
 
@@ -19,7 +21,9 @@ const StepDesignThemeStylesPreview = () => {
 	const { currentStep, currentData, storedPreviewSettings } = useSelect(
 		( select ) => {
 			return {
-				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+				currentStep: select( nfdOnboardingStore ).getStepFromPath(
+					location.pathname
+				),
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				storedPreviewSettings:

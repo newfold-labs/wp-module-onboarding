@@ -1,0 +1,19 @@
+.live-preview {
+
+	&__container {
+
+		&-small {
+			width: 70%;
+			height: 70%;
+			max-width: 320px;
+			max-height: 320px;
+		}
+
+		&-large {
+			width: 70%;
+			height: 70%;
+			max-width: 925px;
+			max-height: 925px;
+		}
+	}
+}

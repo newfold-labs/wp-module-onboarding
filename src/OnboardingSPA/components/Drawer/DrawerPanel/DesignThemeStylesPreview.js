@@ -1,9 +1,8 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
-import { check, Icon } from '@wordpress/icons';
 
+import { LivePreviewSelectableCard } from '../../LivePreview';
 import { store as nfdOnboardingStore } from '../../../store';
-import LivePreview from '../../../components/LivePreview';
 import { getPatterns } from '../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
@@ -38,14 +37,14 @@ const DesignThemeStylesPreview = () => {
 		setGlobalStyles( globalStyles?.body );
 		setSelectedStyle( currentData.data.theme.variation );
 		if (
-			document.getElementById(
+			document.getElementsByClassName(
 				'theme-styles-preview--drawer__list__item__title-bar--selected'
 			)
 		) {
 			document
-				.getElementById(
+				.getElementsByClassName(
 					'theme-styles-preview--drawer__list__item__title-bar--selected'
-				)
+				)[ 0 ]
 				.scrollIntoView( {
 					behavior: 'smooth',
 					block: 'center',
@@ -71,52 +70,16 @@ const DesignThemeStylesPreview = () => {
 	const buildPreviews = () => {
 		return globalStyles?.map( ( globalStyle, idx ) => {
 			return (
-				<div
-					className="theme-styles-preview--drawer__list__item"
+				<LivePreviewSelectableCard
+					className={ 'theme-styles-preview--drawer__list__item' }
+					selected={ globalStyle.title === selectedStyle }
+					blockGrammer={ pattern }
+					viewportWidth={ 900 }
+					styling={ 'custom' }
+					previewSettings={ globalStyle }
+					overlay={ false }
 					onClick={ () => handleClick( idx ) }
-				>
-					<div className="theme-styles-preview--drawer__list__item__title-bar">
-						<div className="theme-styles-preview--drawer__list__title-bar__browser">
-							<span
-								className="theme-styles-preview--drawer__list__item__title-bar__browser__dot"
-								style={ { background: '#989EA7' } }
-							></span>
-							<span
-								className="theme-styles-preview--drawer__list__item__title-bar__browser__dot"
-								style={ { background: '#989EA7' } }
-							></span>
-							<span
-								className="theme-styles-preview--drawer__list__item__title-bar__browser__dot"
-								style={ { background: '#989EA7' } }
-							></span>
-						</div>
-						<div
-							className={ `${
-								globalStyles[ idx ].title == selectedStyle
-									? 'theme-styles-preview--drawer__list__item__title-bar--selected'
-									: 'theme-styles-preview--drawer__list__item__title-bar--unselected'
-							}` }
-							id={
-								globalStyles[ idx ].title == selectedStyle &&
-								'theme-styles-preview--drawer__list__item__title-bar--selected'
-							}
-						>
-							<Icon
-								className="theme-styles-preview--drawer__list__item__title-bar--selected__path"
-								icon={ check }
-								size={ 64 }
-							/>
-						</div>
-					</div>
-					<div className="theme-styles-preview--drawer__list__item__live-preview-container">
-						<LivePreview
-							blockGrammer={ pattern }
-							viewportWidth={ 900 }
-							styling={ 'custom' }
-							previewSettings={ globalStyle }
-						/>
-					</div>
-				</div>
+				/>
 			);
 		} );
 	};

@@ -1,12 +1,11 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
-import { check, search, Icon } from '@wordpress/icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useViewportMatch } from '@wordpress/compose';
 
 import { store as nfdOnboardingStore } from '../../../../store';
 import CommonLayout from '../../../../components/Layouts/Common';
-import LivePreview from '../../../../components/LivePreview';
+import { LivePreviewSelectableCard } from '../../../../components/LivePreview';
 import HeadingWithSubHeading from '../../../../components/HeadingWithSubHeading';
 import { useGlobalStylesOutput } from '../../../../utils/global-styles/use-global-styles-output';
 import { getPatterns } from '../../../../utils/api/patterns';
@@ -16,6 +15,7 @@ import { VIEW_DESIGN_THEME_STYLES_MENU } from '../../../../../constants';
 const StepDesignThemeStylesMenu = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;
 
+	const location = useLocation();
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState();
@@ -26,7 +26,9 @@ const StepDesignThemeStylesMenu = () => {
 	const { currentStep, nextStep, currentData, storedPreviewSettings } =
 		useSelect( ( select ) => {
 			return {
-				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+				currentStep: select( nfdOnboardingStore ).getStepFromPath(
+					location.pathname
+				),
 				nextStep: select( nfdOnboardingStore ).getNextStep(),
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
@@ -80,55 +82,16 @@ const StepDesignThemeStylesMenu = () => {
 	const buildPreviews = () => {
 		return globalStyles?.map( ( globalStyle, idx ) => {
 			return (
-				<div
-					className="theme-styles-menu__list__item"
+				<LivePreviewSelectableCard
+					className={ 'theme-styles-menu__list__item' }
+					selected={ globalStyle.title === selectedStyle }
+					blockGrammer={ pattern }
+					viewportWidth={ 900 }
+					styling={ 'custom' }
+					previewSettings={ globalStyle }
+					overlay={ true }
 					onClick={ () => handleClick( idx ) }
-				>
-					<div className="theme-styles-menu__list__item__title-bar">
-						<div className="theme-styles-menu__list__title-bar__browser">
-							<span
-								className="theme-styles-menu__list__item__title-bar__browser__dot"
-								style={ { background: '#989EA7' } }
-							></span>
-							<span
-								className="theme-styles-menu__list__item__title-bar__browser__dot"
-								style={ { background: '#989EA7' } }
-							></span>
-							<span
-								className="theme-styles-menu__list__item__title-bar__browser__dot"
-								style={ { background: '#989EA7' } }
-							></span>
-						</div>
-						<div
-							className={ `${
-								globalStyles[ idx ].title == selectedStyle
-									? 'theme-styles-menu__list__item__title-bar--selected'
-									: 'theme-styles-menu__list__item__title-bar--unselected'
-							}` }
-						>
-							<Icon
-								className="theme-styles-menu__list__item__title-bar--selected__path"
-								icon={ check }
-								size={ 64 }
-							/>
-						</div>
-					</div>
-					<div className="theme-styles-menu__list__item__live-preview-container">
-						<LivePreview
-							blockGrammer={ pattern }
-							viewportWidth={ 900 }
-							styling={ 'custom' }
-							previewSettings={ globalStyle }
-						/>
-						<div className="theme-styles-menu__list__item__live-preview-container__overlay">
-							<Icon
-								className="theme-styles-menu__list__item__live-preview-container__overlay__icon"
-								size={ 64 }
-								icon={ search }
-							/>
-						</div>
-					</div>
-				</div>
+				/>
 			);
 		} );
 	};
@@ -141,17 +104,15 @@ const StepDesignThemeStylesMenu = () => {
 					subtitle={ currentStep?.subheading }
 				/>
 				<div className="theme-styles-menu__list">
-					{ globalStyles
-						? buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW )
-						: '' }
+					{ globalStyles &&
+						buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW ) }
 				</div>
 				<div className="theme-styles-menu__list">
-					{ globalStyles
-						? buildPreviews().slice(
-								MAX_PREVIEWS_PER_ROW,
-								globalStyles.length
-						  )
-						: '' }
+					{ globalStyles &&
+						buildPreviews().slice(
+							MAX_PREVIEWS_PER_ROW,
+							globalStyles.length
+						) }
 				</div>
 			</div>
 		</CommonLayout>
