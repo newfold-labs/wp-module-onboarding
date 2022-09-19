@@ -21,15 +21,12 @@ const SelectableCard = ( {
 				<div className={ `${ className }__title-bar__browser` }>
 					<span
 						className={ `${ className }__title-bar__browser__dot` }
-						style={ { background: '#989EA7' } }
 					></span>
 					<span
 						className={ `${ className }__title-bar__browser__dot` }
-						style={ { background: '#989EA7' } }
 					></span>
 					<span
 						className={ `${ className }__title-bar__browser__dot` }
-						style={ { background: '#989EA7' } }
 					></span>
 				</div>
 				<div

@@ -10,13 +10,47 @@
     &__checkbox {
         margin: 20px 0px;
         width: 70%;
+        display: inline;
+
+        .components-checkbox-control {
+            &__checked {
+                height: 32px;
+                width: 32px;
+                left: 0px;
+                top: 0px;
+            }
+
+            &__input-container {
+                height: 32px;
+                width: 32px;
+            }
+
+            &__input[type=checkbox] {
+                height: 32px;
+                width: 32px;
+
+                &:focus {
+                    box-shadow: none;
+                }
+            }
+        }
+
+        .components-base-control {
+            &__field {
+                display: flex;
+                flex-direction: row;
+            }
+        }
 
         &__label {
-            display: inline;
+
+            margin-left: 15px;
 
             &__hint {
                 color: #757575;
                 display: block;
+                font-style: italic;
+                margin-top: 5px;
             }
         }
 
@@ -37,6 +71,7 @@
             justify-content: center;
 
             &__dot {
+                background-color: #989EA7;
                 width: 8px;
                 margin: 3px;
                 height: 8px;

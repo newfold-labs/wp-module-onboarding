@@ -35,7 +35,15 @@ const DesignThemeStylesPreview = () => {
 		const globalStyles = await getGlobalStyles();
 		setPattern( pattern?.body );
 		setGlobalStyles( globalStyles?.body );
-		setSelectedStyle( currentData.data.theme.variation );
+		let selectedStyle;
+		if ( currentData.data.theme.variation ) {
+			selectedStyle = currentData.data.theme.variation;
+		} else {
+			selectedStyle = globalStyles.body[ 0 ].title;
+			currentData.data.theme.variation = selectedStyle;
+			setCurrentOnboardingData( currentData );
+		}
+		setSelectedStyle( selectedStyle );
 		if (
 			document.getElementsByClassName(
 				'theme-styles-preview--drawer__list__item__title-bar--selected'
