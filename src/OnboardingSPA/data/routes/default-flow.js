@@ -496,7 +496,10 @@ export const initialTopSteps = () => {
  */
 export const initialDesignSteps = () => {
 	const designSteps = filter( steps, ( step ) => {
-		return step.path.includes( '/step/design/' );
+		return (
+			step.path.includes( '/step/design/' ) &&
+			! step.path.includes( '/theme-styles/preview' )
+		);
 	} );
 
 	return designSteps;
