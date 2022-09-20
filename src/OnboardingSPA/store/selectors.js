@@ -87,6 +87,14 @@ export function getOnboardingFlow( state ) {
 	return state.runtime.currentFlow ?? 'wp-setup';
 }
 
+export function getRoutes( state ) {
+	return state.flow.steps.routes;
+}
+
+export function getAllSteps( state ) {
+	return state.flow.steps.allSteps;
+}
+
 /**
  * Gets steps to display in drawer.
  *

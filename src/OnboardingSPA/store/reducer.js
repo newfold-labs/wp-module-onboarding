@@ -41,6 +41,30 @@ export function flow(
 				...state,
 				flow: action.flow,
 			};
+		case 'UPDATE_ROUTES':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					routes: action.routes,
+				},
+			};
+		case 'UPDATE_ALL_STEPS':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					allSteps: action.allSteps,
+				},
+			};
+		case 'UPDATE_DESIGN_STEPS':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					designSteps: action.designSteps,
+				},
+			};
 	}
 
 	return state;
@@ -65,7 +89,7 @@ export function drawer(
 			return {
 				...state,
 				isSuppressed: action.isSuppressed,
-				isOpen: action.isSuppressed? false : state.isOpen,
+				isOpen: action.isSuppressed ? false : state.isOpen,
 			};
 	}
 

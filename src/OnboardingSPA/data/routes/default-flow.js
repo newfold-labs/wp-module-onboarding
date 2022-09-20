@@ -347,40 +347,6 @@ export const steps = [
 		patternId: 'theme-styles',
 	},
 	{
-		path: '/wp-setup/step/design/colors',
-		title: __( 'Colors', 'wp-module-onboarding' ),
-		heading: __( "What's your color palette?", 'wp-module-onboarding' ),
-		subheading: __(
-			"We'll paint everything with your colors for a fresh, crisp look.",
-			'wp-module-onboarding'
-		),
-		description: __(
-			'Strong contrast and clear readability help your words jump off the screen.',
-			'wp-module-onboarding'
-		),
-		Component: StepDesignColors,
-		Icon: color,
-		priority: 180,
-		VIEW: VIEW_DESIGN_COLORS,
-	},
-	{
-		path: '/wp-setup/step/design/typography',
-		title: __( 'Typography', 'wp-module-onboarding' ),
-		heading: __( "What's your font style?", 'wp-module-onboarding' ),
-		subheading: __(
-			'Impress your visitors with strong branding and aesthetics.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			"Good typography uses style and proportions to give your words identity and priority. What's your story? Your focus?",
-			'wp-module-onboarding'
-		),
-		Component: StepDesignTypography,
-		Icon: typography,
-		priority: 200,
-		VIEW: VIEW_DESIGN_TYPOGRAPHY,
-	},
-	{
 		path: '/wp-setup/step/design/header-menu',
 		title: __( 'Header & Menu', 'wp-module-onboarding' ),
 		heading: __(
@@ -469,6 +435,43 @@ export const steps = [
 		priority: 300,
 	},
 ];
+
+export const conditionalSteps = {
+	designColors: {
+		path: '/wp-setup/step/design/colors',
+		title: __( 'Colors', 'wp-module-onboarding' ),
+		heading: __( "What's your color palette?", 'wp-module-onboarding' ),
+		subheading: __(
+			"We'll paint everything with your colors for a fresh, crisp look.",
+			'wp-module-onboarding'
+		),
+		description: __(
+			'Strong contrast and clear readability help your words jump off the screen.',
+			'wp-module-onboarding'
+		),
+		Component: StepDesignColors,
+		Icon: color,
+		priority: 180,
+		VIEW: VIEW_DESIGN_COLORS,
+	},
+	designTypography: {
+		path: '/wp-setup/step/design/typography',
+		title: __( 'Typography', 'wp-module-onboarding' ),
+		heading: __( "What's your font style?", 'wp-module-onboarding' ),
+		subheading: __(
+			'Impress your visitors with strong branding and aesthetics.',
+			'wp-module-onboarding'
+		),
+		description: __(
+			"Good typography uses style and proportions to give your words identity and priority. What's your story? Your focus?",
+			'wp-module-onboarding'
+		),
+		Component: StepDesignTypography,
+		Icon: typography,
+		priority: 200,
+		VIEW: VIEW_DESIGN_TYPOGRAPHY,
+	},
+};
 
 /**
  * Top-level registration of all routes.

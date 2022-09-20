@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { CheckboxControl } from '@wordpress/components';
 import { useViewportMatch } from '@wordpress/compose';
 import { __ } from '@wordpress/i18n';
+import { orderBy, filter } from 'lodash';
 
 import { LivePreview } from '../../../../components/LivePreview';
 import CommonLayout from '../../../../components/Layouts/Common';
@@ -12,28 +13,36 @@ import { store as nfdOnboardingStore } from '../../../../store';
 import { getPatterns } from '../../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../../utils/global-styles/use-global-styles-output';
+import { conditionalSteps } from '../../../../data/routes/';
 
 const StepDesignThemeStylesPreview = () => {
 	const location = useLocation();
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
-    const [ customize, setCustomize ] = useState( false );
+	const [ customize, setCustomize ] = useState( false );
 
 	const isLargeViewport = useViewportMatch( 'medium' );
-	const { currentStep, currentData, storedPreviewSettings } = useSelect(
-		( select ) => {
-			return {
-				currentStep: select( nfdOnboardingStore ).getStepFromPath(
-					location.pathname
-				),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				storedPreviewSettings:
-					select( nfdOnboardingStore ).getPreviewSettings(),
-			};
-		},
-		[]
-	);
+	const {
+		currentStep,
+		currentData,
+		storedPreviewSettings,
+		routes,
+		designSteps,
+		allSteps,
+	} = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getStepFromPath(
+				location.pathname
+			),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			storedPreviewSettings:
+				select( nfdOnboardingStore ).getPreviewSettings(),
+			routes: select( nfdOnboardingStore ).getRoutes(),
+			allSteps: select( nfdOnboardingStore ).getAllSteps(),
+			designSteps: select( nfdOnboardingStore ).getDesignSteps(),
+		};
+	}, [] );
 
 	const {
 		setDrawerActiveView,
@@ -41,6 +50,9 @@ const StepDesignThemeStylesPreview = () => {
 		setIsSidebarOpened,
 		setIsDrawerSuppressed,
 		updatePreviewSettings,
+		updateRoutes,
+		updateDesignSteps,
+		updateAllSteps,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -56,20 +68,92 @@ const StepDesignThemeStylesPreview = () => {
 		const pattern = await getPatterns( currentStep.patternId, true );
 		const globalStyles = await getGlobalStyles();
 		let selectedGlobalStyle;
-        if ( currentData.data.theme.variation ) {
-            selectedGlobalStyle = globalStyles.body.filter(
-                ( globalStyle ) =>
-                    globalStyle.title === currentData.data.theme.variation
-            )[ 0 ];
-        } else {
-            selectedGlobalStyle = globalStyles.body[0];
-        }
+		if ( currentData.data.theme.variation ) {
+			selectedGlobalStyle = globalStyles.body.filter(
+				( globalStyle ) =>
+					globalStyle.title === currentData.data.theme.variation
+			)[ 0 ];
+		} else {
+			selectedGlobalStyle = globalStyles.body[ 0 ];
+		}
 		updatePreviewSettings(
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
 		setPattern( pattern?.body );
 		setIsLoaded( true );
 	};
+
+	const addColorAndTypographyRoutes = () => {
+		const steps = [
+			conditionalSteps.designColors,
+			conditionalSteps.designTypography,
+		];
+		return {
+			routes: orderBy(
+				routes.concat( steps ),
+				[ 'priority' ],
+				[ 'asc' ]
+			),
+			allSteps: orderBy(
+				allSteps.concat( steps ),
+				[ 'priority' ],
+				[ 'asc' ]
+			),
+			designSteps: orderBy(
+				designSteps.concat( steps ),
+				[ 'priority' ],
+				[ 'asc' ]
+			),
+		};
+	};
+
+	const removeColorAndTypographyRoutes = () => {
+		return {
+			routes: filter(
+				routes,
+				( route ) =>
+					! route.path.includes(
+						conditionalSteps.designColors.path
+					) &&
+					! route.path.includes(
+						conditionalSteps.designTypography.path
+					)
+			),
+			allSteps: filter(
+				allSteps,
+				( allStep ) =>
+					! allStep.path.includes(
+						conditionalSteps.designColors.path
+					) &&
+					! allStep.path.includes(
+						conditionalSteps.designTypography.path
+					)
+			),
+			designSteps: filter(
+				designSteps,
+				( designStep ) =>
+					! designStep.path.includes(
+						conditionalSteps.designColors.path
+					) &&
+					! designStep.path.includes(
+						conditionalSteps.designTypography.path
+					)
+			),
+		};
+	};
+
+	useEffect( () => {
+		let updates;
+		if ( customize ) {
+			updates = addColorAndTypographyRoutes();
+		} else {
+			updates = removeColorAndTypographyRoutes();
+		}
+
+		updateRoutes( updates.routes );
+		updateDesignSteps( updates.designSteps );
+		updateAllSteps( updates.allSteps );
+	}, [ customize ] );
 
 	useEffect( () => {
 		if ( ! isLoaded ) getStylesAndPatterns();
@@ -82,28 +166,28 @@ const StepDesignThemeStylesPreview = () => {
 					label={
 						<div className="theme-styles-preview__checkbox__label">
 							<span className="theme-styles-preview__checkbox__label__question">
-								{ __('Customize Colors & Fonts?', 'wp-module-onboarding') }
+								{ __(
+									'Customize Colors & Fonts?',
+									'wp-module-onboarding'
+								) }
 								<span className="theme-styles-preview__checkbox__label__hint">
-                                    { __( 'Check to customize in the next few steps (or leave empty and use the Site Editor later)', 'wp-module-onboarding' ) }
+									{ __(
+										'Check to customize in the next few steps (or leave empty and use the Site Editor later)',
+										'wp-module-onboarding'
+									) }
 								</span>
 							</span>
 						</div>
 					}
-                    checked = { customize }
-                    onChange = { () => setCustomize( ! customize ) }
+					checked={ customize }
+					onChange={ () => setCustomize( ! customize ) }
 				/>
 			</div>
 			<div className="theme-styles-preview__title-bar">
 				<div className="theme-styles-preview__title-bar__browser">
-					<span
-						className="theme-styles-preview__title-bar__browser__dot"
-					></span>
-					<span
-						className="theme-styles-preview__title-bar__browser__dot"
-					></span>
-					<span
-						className="theme-styles-preview__title-bar__browser__dot"
-					></span>
+					<span className="theme-styles-preview__title-bar__browser__dot"></span>
+					<span className="theme-styles-preview__title-bar__browser__dot"></span>
+					<span className="theme-styles-preview__title-bar__browser__dot"></span>
 				</div>
 			</div>
 			<div className="theme-styles-preview__live-preview-container">
