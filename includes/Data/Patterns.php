@@ -11,21 +11,11 @@ final class Patterns {
 				'site-footer',
 			),
 			'homepage-styles' => array(
-				'homepage-1' => array(
-					'site-header-left-logo-navigation-inline',
-					'homepage-1',
-					'site-footer',
-				),
-				'homepage-2' => array(
-					'site-header-left-logo-navigation-inline',
-					'homepage-2',
-					'site-footer',
-				),
-				'homepage-3' => array(
-					'site-header-left-logo-navigation-inline',
-					'homepage-3',
-					'site-footer',
-				),
+				'site-header-left-logo-navigation-inline',
+				'homepage-1',
+				'homepage-2',
+				'homepage-3',
+				'site-footer',
 			),
 		),
 	);
@@ -73,40 +63,19 @@ final class Patterns {
 		$block_patterns          = array();
 		$block_patterns_squashed = '';
 		foreach ( $pattern_slugs as $name=>$pattern_slug ) {
-			if(is_array($pattern_slug)){
-				$pattern_data = '';
-
-				foreach ( $pattern_slug as $pattern_slug_single ) {
-					$pattern_name = $active_theme . '/' . $pattern_slug_single;
-					if ( $block_patterns_registry->is_registered( $pattern_name ) ) {
-						$pattern = $block_patterns_registry->get_registered( $pattern_name );
-						$pattern_data .= self::cleanup_wp_grammar( $pattern['content'] );
-					}
-				}
-
+			$pattern_name = $active_theme . '/' . $pattern_slug;
+			if ( $block_patterns_registry->is_registered( $pattern_name ) ) {
+				$pattern = $block_patterns_registry->get_registered( $pattern_name );
 				if ( ! $squash ) {
 					$block_patterns[] = array(
-						'title'   => $name,
-						'content' => $pattern_data,
+						'slug'    => $pattern_slug,
+						'title'   => $pattern['title'],
+						'content' => self::cleanup_wp_grammar( $pattern['content'] ),
+						'name'    => $pattern['name'],
 					);
 					continue;
 				}
-				$block_patterns_squashed .= $pattern_data;
-			}
-			else {
-				$pattern_name = $active_theme . '/' . $pattern_slug;
-				if ( $block_patterns_registry->is_registered( $pattern_name ) ) {
-					$pattern = $block_patterns_registry->get_registered( $pattern_name );
-					if ( ! $squash ) {
-						$block_patterns[] = array(
-							'title'   => $pattern['title'],
-							'content' => self::cleanup_wp_grammar( $pattern['content'] ),
-							'name'    => $pattern['name'],
-						);
-						continue;
-					}
-					$block_patterns_squashed .= self::cleanup_wp_grammar( $pattern['content'] );
-				}
+				$block_patterns_squashed .= self::cleanup_wp_grammar( $pattern['content'] );
 			}
 		}
 

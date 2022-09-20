@@ -14,11 +14,34 @@ import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 const StepDesignHomepageMenu = () => {
     const MAX_PREVIEWS_PER_ROW = 3;
 
+    const homepagePatternList = [
+        'homepage-1',
+        'homepage-2',
+        'homepage-3'
+    ];
+
+    const homepages_list = {
+        'homepage-1' : [
+            "site-header-left-logo-navigation-inline",
+            "homepage-1",
+            "site-footer"
+        ],
+        'homepage-2' : [
+            "site-header-left-logo-navigation-inline",
+            "homepage-2",
+            "site-footer"
+        ],
+        'homepage-3' : [
+            "site-header-left-logo-navigation-inline",
+            "homepage-3",
+            "site-footer"
+        ],
+    };
+
     const [isLoaded, setisLoaded] = useState(false);
-    const [homepagePattern, setHomepagePattern] = useState();
     const [globalStyle, setGlobalStyle] = useState();
+    const [homepagePattern, setHomepagePattern] = useState();
     const [selectedHomepage, setSelectedHomepage] = useState(0);
-    const [homepagePatternList, sethomepagePatternList] = useState();
 
     const isLargeViewport = useViewportMatch('medium');
 
@@ -52,25 +75,31 @@ const StepDesignHomepageMenu = () => {
             setGlobalStyle(storedPreviewSettings);
         else
             setGlobalStyle(globalStyleTemp?.body[0]);
-        setHomepagePattern(homepagePatternData?.body);
-        setisLoaded(true);
+        var makeHomepagePattern = [];
 
-        var homepagePatternTempList = [];
-        await homepagePatternData?.body?.forEach((homepage) => {
-            homepagePatternTempList.push(homepage?.title);
-        })
-        
-        sethomepagePatternList(homepagePatternTempList);
+        for (let key in homepages_list) {
+            var homepage_pattern_array = homepages_list[key];
+            var patternData = '';
+            homepage_pattern_array.forEach((pattern_name) => {
+                homepagePatternData?.body.forEach((homepage_pattern_data) => {
+                    if (homepage_pattern_data.slug === pattern_name)
+                        patternData += homepage_pattern_data.content
+                })
+            })
+            makeHomepagePattern.push(patternData);
+        }
+        setHomepagePattern(makeHomepagePattern);
 
         if(currentData?.data['sitePages'].length !== 0)
-            setSelectedHomepage(homepagePatternTempList?.indexOf(currentData?.data['sitePages']['homepage']));
+            setSelectedHomepage(homepagePatternList?.indexOf(currentData?.data['sitePages']['homepage']));
         else{
             currentData.data['sitePages'] = {
                 ...currentData.data['sitePages'],
-                'homepage': homepagePatternTempList[0]
+                'homepage': homepagePatternList[0]
             };
             setCurrentOnboardingData(currentData);
         }
+        setisLoaded(true);
     }
 
     function saveDataForHomepage(idx) {
@@ -92,22 +121,23 @@ const StepDesignHomepageMenu = () => {
         var homepageList = [];
         if (homepagePattern) {
             homepagePattern?.forEach((homepage, idx) => {
-                homepageList.push(
-                    <div
-                        className='homepage_preview__list'
-                    >
-                        <LivePreviewSelectableCard
-                            className={'homepage_preview__list__item'}
-                            selected={idx == selectedHomepage}
-                            blockGrammer={homepage?.content}
-                            viewportWidth={1200}
-                            styling={'custom'}
-                            previewSettings={globalStyle}
-                            overlay={false}
-                            onClick={() => saveDataForHomepage(idx)}
-                        />
-                    </div>
-                );
+                if(homepage)
+                    homepageList.push(
+                        <div
+                            className='homepage_preview__list'
+                        >
+                            <LivePreviewSelectableCard
+                                className={'homepage_preview__list__item'}
+                                selected={idx == selectedHomepage}
+                                blockGrammer={homepage}
+                                viewportWidth={1200}
+                                styling={'custom'}
+                                previewSettings={globalStyle}
+                                overlay={false}
+                                onClick={() => saveDataForHomepage(idx)}
+                            />
+                        </div>
+                    );
             });
         }
         return homepageList;
