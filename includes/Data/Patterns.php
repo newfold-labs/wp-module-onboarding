@@ -1,6 +1,8 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+
 final class Patterns {
 
 	protected static $theme_step_patterns = array(
@@ -80,5 +82,85 @@ final class Patterns {
 		}
 
 		return $squash ? $block_patterns_squashed : $block_patterns;
+	}
+
+
+	/**
+	 * Sets the Homepage selected by the user.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function set_homepage_patterns( $slug ) {
+
+		if(!isset($slug))
+			return new \WP_Error(
+				'Slug not Provided',
+				'The WordPress Grammar Slug for homepage was not provided',
+				array( 'status' => 404 )
+			);
+
+		$pattern_data = self::get_pattern_from_slug($slug);
+		if( !$pattern_data )
+			return new \WP_Error(
+				400,
+				'Failed to save Homepage, Pattern not found'
+			);
+
+		$show_pages_on_front =  \get_option( Options::get_option_name( 'show_on_front', false ) );
+
+		// Check if default homepage is posts
+		if( $show_pages_on_front == 'posts' )
+			\update_option( Options::get_option_name( 'show_on_front', false ), 'page' );
+
+		$request = new \WP_REST_Request(
+			'POST',
+			'/wp/v2/pages'
+		);
+
+		$request->set_body_params(
+			array(
+				'title'    => 'Homepage',
+				'status'   => 'publish',
+				'template' => 'no-title',
+				'content'  =>  $pattern_data['content'],
+			)
+		);
+			
+		$response = \rest_do_request( $request );
+		
+		if ( 201 === $response->status ) {
+			$page_data = json_decode( wp_json_encode( $response->data ), true );
+
+			// Set the newly added page as Homepage
+			if( array_key_exists('id', $page_data) )
+				\update_option( Options::get_option_name( 'page_on_front', false ), $page_data['id'] );
+
+			return new \WP_REST_Response(
+               array(
+					'message' => 'Successfully set the Homepage',
+					'response' => $page_data,
+			   ),
+               201
+        	);
+		}
+
+		return new \WP_Error(
+			$response->status,
+			'Failed to save Homepage.'.$response
+		);
+	}
+
+	public static function set_theme_step_patterns( $step, $slug ) {
+		
+		switch ($step) {
+			case 'homepage-styles':
+				if(isset($slug))
+					return self::set_homepage_patterns($slug);
+			default:
+				return  new \WP_Error(
+					404,
+					'No Step Found with given params'
+				);
+		}
 	}
 }
