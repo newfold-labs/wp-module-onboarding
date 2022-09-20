@@ -108,33 +108,26 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
             setIsValidSocials(false);
     }
 
+    const isValidHandle = (handle) => {
+        return handle.match(`^[A-Za-z0-9_]{1,25}$`) ? true : false;
+    }
+
+    const isValidTwitterUrl = (url) => {
+        return url.match(`^http(?:s)?://(?:www\.)?twitter\.com/([A-Za-z0-9_]{1,25})/?$`) ? true : false;
+    }
+
     const checkValidTwitterUrl = function(socialInput, data) {
-        if(data[0] === '@') { // check for @handle
-            var handle = data.substring(data.indexOf('@') + 1);
-            if( handle ) { // if non empty string
-                var matchedHandle = handle.match(`^[A-Za-z0-9_]{1,25}$`);
-                if(!matchedHandle) { // handle entered does meet the criteria of a valid handle
-                    if (!activeError.includes(socialInput))
-                        setActiveError([...activeError, socialInput]);
-                } else {
-                    var activeErrorFiltered = activeError.filter(function (item) {
-                        return item !== socialInput
-                    })
-                    setActiveError(activeErrorFiltered);
-                }
-            }
-        } else {
-            if (!isValidUrl(data))
-            {
-                if (!activeError.includes(socialInput))
-                    setActiveError([...activeError, socialInput]);
-            }
-            else {
+        data = data.substring(data.indexOf('@') + 1);
+
+        if( !isValidHandle(data) && !isValidTwitterUrl(data)) { // check for @handle and twitter url
+            if (!activeError.includes(socialInput)) {
+                setActiveError([...activeError, socialInput]);
+            } else {
                 var activeErrorFiltered = activeError.filter(function (item) {
                     return item !== socialInput
                 })
                 setActiveError(activeErrorFiltered);
-            }    
+            }
         }
 
         if (!data) {
