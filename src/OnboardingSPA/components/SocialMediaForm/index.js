@@ -108,7 +108,47 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
             setIsValidSocials(false);
     }
 
+    const checkValidTwitterUrl = function(socialInput, data) {
+        if(data[0] === '@') { // check for @handle
+            var handle = data.substring(data.indexOf('@') + 1);
+            if( handle ) { // if non empty string
+                var matchedHandle = handle.match(`^[A-Za-z0-9_]{1,25}$`);
+                if(!matchedHandle) { // handle entered does meet the criteria of a valid handle
+                    if (!activeError.includes(socialInput))
+                        setActiveError([...activeError, socialInput]);
+                } else {
+                    var activeErrorFiltered = activeError.filter(function (item) {
+                        return item !== socialInput
+                    })
+                    setActiveError(activeErrorFiltered);
+                }
+            }
+        } else {
+            if (!isValidUrl(data))
+            {
+                if (!activeError.includes(socialInput))
+                    setActiveError([...activeError, socialInput]);
+            }
+            else {
+                var activeErrorFiltered = activeError.filter(function (item) {
+                    return item !== socialInput
+                })
+                setActiveError(activeErrorFiltered);
+            }    
+        }
+
+        if (!data) {
+            var activeErrorFiltered = activeError.filter(function (item) {
+                return item !== socialInput
+            })
+            setActiveError(activeErrorFiltered);
+        }
+
+        (activeError.length == 0) ? setIsValidSocials(true) : setIsValidSocials(false);
+    };
+
     const checkValidUrlDebounce = _.debounce(checkValidUrl, 1000);
+    const checkValidTwitterUrlDebounce = _.debounce(checkValidTwitterUrl, 1000);
 
     const handleAccordion = (e) => {
         setIsActive(!isActive);
@@ -124,7 +164,7 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
                 socialMediaDB.facebook_site = value;
                 break;
             case SocialMediaSites.TWITTER:
-                checkValidUrlDebounce(SocialMediaSites.TWITTER, value);
+                checkValidTwitterUrlDebounce(SocialMediaSites.TWITTER, value);
                 setTwitter(value);
                 socialMediaDB.twitter_site = value;
                 break;
