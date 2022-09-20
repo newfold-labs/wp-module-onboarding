@@ -62,7 +62,7 @@ class PatternsController extends \WP_REST_Controller {
 	/**
 	 * Retrieves the patterns approved by the Onboarding Module.
 	 *
-	 * @return \WP_Rest_Response|array
+	 * @return \WP_Rest_Response|\WP_Error
 	 */
 	public function get_pattern( \WP_REST_Request $request ) {
 		$step   = $request->get_param( 'step' );

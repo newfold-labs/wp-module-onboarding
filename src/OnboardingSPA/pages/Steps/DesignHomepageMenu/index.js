@@ -3,10 +3,10 @@ import { useViewportMatch } from '@wordpress/compose';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
+import { getPatterns } from '../../../utils/api/patterns';
+import { getGlobalStyles } from '../../../utils/api/themes';
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
-import { getGlobalStyles } from '../../../utils/api/themes';
-import { getHomepagePatterns } from '../../../utils/api/patterns';
 import { VIEW_DESIGN_HOMEPAGE_MENU } from '../../../../constants';
 import { LivePreviewSelectableCard } from '../../../components/LivePreview';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
@@ -46,7 +46,7 @@ const StepDesignHomepageMenu = () => {
     }, []);
 
     async function getHomepagePatternsData() {
-        var homepagePatternData = await getHomepagePatterns('homepage');
+        var homepagePatternData = await getPatterns('homepage-styles');
         const globalStyleTemp = await getGlobalStyles();
         if (storedPreviewSettings)
             setGlobalStyle(storedPreviewSettings);
