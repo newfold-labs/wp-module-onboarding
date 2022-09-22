@@ -152,11 +152,9 @@ class SettingsController {
 					$param[ $param_key ] = \sanitize_text_field( $param_value );
 
 					if ( ! empty( $param_value ) && ! \wp_http_validate_url( $param_value ) ) {
-						return new \WP_Error(
-							'param_not_proper_url',
-							"The provided param '{$param_value}' is NOT a proper URL",
-							array( 'status' => 400 )
-						);
+						$this->invalid_urls[] = $param_key;
+						unset($params[$param_key]);
+						continue;
 					}
 				} else {
 					foreach ( $param_value as $param_url ) {
@@ -164,11 +162,9 @@ class SettingsController {
 						$param[ $param_url ] = \sanitize_text_field( $param_url );
 
 						if ( ! empty( $param_url ) && ! \wp_http_validate_url( $param_url ) ) {
-							return new \WP_Error(
-								'param_not_proper_url',
-								"The provided param '{$param_url}' is NOT a proper URL",
-								array( 'status' => 400 )
-							);
+							$this->invalid_urls[] = $param_key;
+							unset($params[$param_key]);
+							continue;
 						}
 					}
 				}
@@ -179,13 +175,11 @@ class SettingsController {
 		// check for twitter handle
 		if( isset($settings['twitter_site']) && !empty($settings['twitter_site'])) {
 			if( ( $twitter_id = $this->validate_twitter_id($settings['twitter_site']) ) === false ) {
-				return new \WP_Error(
-					'invalid_twitter_handle',
-					"The provided twitter handle / URL is NOT valid.",
-					array( 'status' => 400 )
-				);
+				$this->invalid_urls[] = 'twitter_site';
+				$settings['twitter_site'] = '';
+			} else {
+				$settings['twitter_site'] = $twitter_id;
 			}
-			$settings['twitter_site'] = $twitter_id;
 		}
 		\update_option( $this->yoast_wp_options_key, $settings );
 
