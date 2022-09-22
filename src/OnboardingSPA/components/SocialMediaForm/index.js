@@ -120,7 +120,6 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
         data = data.substring(data.indexOf('@') + 1);
 
         if( !isValidHandle(data) && !isValidTwitterUrl(data)) { // check for @handle and twitter url
-            console.log('whatthehell');
             if (!activeError.includes(socialInput)) {
                 setActiveError([...activeError, socialInput]);
             } 
