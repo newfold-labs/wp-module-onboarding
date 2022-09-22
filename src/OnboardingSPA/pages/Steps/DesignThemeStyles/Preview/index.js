@@ -53,6 +53,7 @@ const StepDesignThemeStylesPreview = () => {
 		updateRoutes,
 		updateDesignSteps,
 		updateAllSteps,
+		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -62,6 +63,7 @@ const StepDesignThemeStylesPreview = () => {
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_THEME_STYLES_PREVIEW );
+		handleCheckbox( currentData.data.customDesign, false );
 	}, [] );
 
 	const getStylesAndPatterns = async () => {
@@ -142,8 +144,9 @@ const StepDesignThemeStylesPreview = () => {
 		};
 	};
 
-	useEffect( () => {
+	const handleCheckbox = ( customize, updateOnboardingData = true ) => {
 		let updates;
+
 		if ( customize ) {
 			updates = addColorAndTypographyRoutes();
 		} else {
@@ -153,7 +156,13 @@ const StepDesignThemeStylesPreview = () => {
 		updateRoutes( updates.routes );
 		updateDesignSteps( updates.designSteps );
 		updateAllSteps( updates.allSteps );
-	}, [ customize ] );
+		setCustomize( customize );
+
+		if ( updateOnboardingData ) {
+			currentData.data.customDesign = customize;
+			setCurrentOnboardingData( currentData );
+		}
+	};
 
 	useEffect( () => {
 		if ( ! isLoaded ) getStylesAndPatterns();
@@ -180,7 +189,7 @@ const StepDesignThemeStylesPreview = () => {
 						</div>
 					}
 					checked={ customize }
-					onChange={ () => setCustomize( ! customize ) }
+					onChange={ () => handleCheckbox( ! customize ) }
 				/>
 			</div>
 			<div className="theme-styles-preview__title-bar">
