@@ -65,6 +65,11 @@ class FlowController {
 			$this->save_details_to_wp_options( $result );
 		}
 
+		if ( ! ( $result == Flows::get_data() ) ) {
+				$result = array_replace_recursive( Flows::get_data(), $result);
+				$this->save_details_to_wp_options( $result );
+		}
+
 		return new \WP_REST_Response(
 			$result,
 			200
@@ -99,7 +104,7 @@ class FlowController {
 		}
 
 		foreach ( $params as $key => $param ) {
-			if ( $value = $this->array_search_key( $key, $flow_data ) === false ) {
+			if ( $value = $this->array_search_key( $key, Flows::get_data() ) === false ) {
 				return new \WP_Error(
 					'wrong_param_provided',
 					"Wrong Parameter Provided : $key",
