@@ -113,21 +113,22 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
     }
 
     const isValidTwitterUrl = (url) => {
-        return url.match(`^http(?:s)?://(?:www\.)?twitter\.com/([A-Za-z0-9_]{1,25})/?$`) ? true : false;
+        return url.match(`^http(?:s)?:\/\/(?:www\.)?twitter\.com\/([A-Za-z0-9_]{1,25})\/?$`) ? true : false;
     }
 
     const checkValidTwitterUrl = function(socialInput, data) {
         data = data.substring(data.indexOf('@') + 1);
 
         if( !isValidHandle(data) && !isValidTwitterUrl(data)) { // check for @handle and twitter url
+            console.log('whatthehell');
             if (!activeError.includes(socialInput)) {
                 setActiveError([...activeError, socialInput]);
-            } else {
-                var activeErrorFiltered = activeError.filter(function (item) {
-                    return item !== socialInput
-                })
-                setActiveError(activeErrorFiltered);
-            }
+            } 
+        } else {
+            var activeErrorFiltered = activeError.filter(function (item) {
+                return item !== socialInput
+            })
+            setActiveError(activeErrorFiltered);
         }
 
         if (!data) {
