@@ -40,7 +40,6 @@ $tooltip-arrow-size: 6px;
 /* Absolute positioning */
 .Tooltip-Tip.top {
     top: calc($tooltip-margin * -1);
-    transform: translateX(2%);
 }
 
 /* CSS border triangles */

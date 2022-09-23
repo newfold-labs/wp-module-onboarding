@@ -208,7 +208,7 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
                         <div className="social-form__label_icon" style={{ backgroundImage: `var(--${SocialMediaSites[social]}-icon)` }} />
                         <div className="social-form__label_name">{__(toTitleCase(SocialMediaSites[social]), 'wp-module-onboarding')}</div>
                     </label>
-                    <Tooltip content={activeError.includes(SocialMediaSites[social]) ? `Please enter a valid ${SocialMediaSites[social]} URL` : 'hide'} direction="top">
+                    <Tooltip content={activeError.includes(SocialMediaSites[social]) ? ( (social == 'TWITTER') ? `Please enter a valid ${SocialMediaSites[social]} URL / username` : `Please enter a valid ${SocialMediaSites[social]} URL` ): 'hide'} direction="top">
                         <input className={`${activeError.includes(SocialMediaSites[social]) ? "social-form__box-error" : "social-form__box"}`} type="url" id={`${SocialMediaSites[social]}`} value={SocialMediaStates[social]} onChange={(value) => { handleChange(value) }} />
                     </Tooltip>
                 </div>
