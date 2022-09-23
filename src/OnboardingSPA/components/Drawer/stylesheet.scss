@@ -61,7 +61,7 @@
     height: 100%;
     position: relative;
     width: 0;
-    overflow: hidden;
+    overflow: auto;
     background: var(--nfd-onboarding-drawer-bg);
     color: var(--nfd-onboarding-drawer-fg);
     transition: width 100ms linear;
@@ -77,7 +77,7 @@
         position: relative;
         width: $nav-sidebar-width;
         height: 100%;
-        overflow: hidden;
+        overflow: auto;
         visibility: hidden;
         transition: visibility 100ms linear;
         @include reduce-motion("transition");
@@ -107,6 +107,12 @@
         overflow-x: hidden;
         overflow-y: auto;
         height: calc(100% - #{$header-height});
+        background-color: var(--nfd-onboarding-drawer-bg);
+        -ms-overflow-style: none;
+        scrollbar-width: none; 
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
 
     &-inside {
@@ -207,4 +213,112 @@
     animation-name: fadeIn;
     animation-duration: 100ms;
     animation-timing-function: ease-in;
+}
+
+/*COLOR VARIABLES*/
+$main-color-dark: var(--nfd-onboarding-dark);
+$main-color-light: var(--nfd-onboarding-white);
+$main-border-light: var(--nfd-onboarding-border);
+$main-border-main: var(--nfd-onboarding-primary-alt);
+
+.theme-styles-preview {
+
+    &--drawer {
+        overflow-y: auto;
+        overflow-x: hidden;
+        width: 100%;
+        &__list {
+            width: 100%;
+            height: 100%;
+
+            @media (max-width: #{ ($break-large) }) {
+                width: 100%;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+    
+            &__item {
+                flex: 1;
+                width: 100%;
+                margin: 24px 0px;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                justify-content: center;
+
+                &__title-bar {
+                    width: 90%;
+                    height: 15px;
+                    display: flex;
+                    align-items: center;
+                    background-color: #cccccc;
+                    justify-content: space-between;
+                    border: 1px solid transparent;
+    
+                    &__browser {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-left: 3px;
+    
+                        &__dot {
+                            background-color: #989EA7;
+                            width: 8px;
+                            margin: 3px;
+                            height: 8px;
+                            border-radius: 50%;
+                            display: inline-block;
+                        }
+                    }
+    
+                    &--selected {
+                        z-index: 1;
+                        width: 40px;
+                        height: 40px;
+                        display: flex;
+                        margin-right: -15px;
+                        border-radius: 50%;
+                        align-items: center;
+                        justify-content: center;
+                        background-clip: padding-box;
+                        background-color: $main-border-main;
+    
+                        &__path {
+                            fill: $main-color-light;
+                            transform: scale(0.7);
+                        }
+                    }
+    
+                    &--unselected {
+                        display: none;
+                    }
+                }
+    
+                &__live-preview-container {
+                    position: relative;
+                    width: 90%;
+                    align-items: center;
+                    border: 1px solid #B7B7B7;
+    
+                    .live-preview {
+    
+                        &__container {
+    
+                            &-custom {
+                                width: 100%;
+                                overflow: hidden;
+                                height: 250px;
+
+                                &:hover {
+                                    cursor: pointer;
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

@@ -70,6 +70,10 @@ final class WP_Admin {
 	 * @return void
 	 */
 	public static function register_assets() {
+		global $current_screen;
+
+		$current_screen->is_block_editor( true );
+
 		$asset_file = NFD_ONBOARDING_BUILD_DIR . '/onboarding.asset.php';
 
 		if ( is_readable( $asset_file ) ) {
@@ -92,9 +96,14 @@ final class WP_Admin {
 			\wp_register_style(
 				self::$slug,
 				NFD_ONBOARDING_BUILD_URL . '/onboarding.css',
-				array( 'wp-components', 'wp-editor' ),
+				array( 'wp-components', 'wp-editor', 'wp-edit-blocks' ),
 				$asset['version']
 			);
+
+            wp_add_inline_script(
+                'wp-blocks',
+                'wp.blocks.unstable__bootstrapServerSideBlockDefinitions(' . wp_json_encode( get_block_editor_server_block_settings() ) . ');'
+            );
 
 			\wp_enqueue_script( self::$slug );
 			\wp_enqueue_style( self::$slug );

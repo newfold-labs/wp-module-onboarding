@@ -7,14 +7,15 @@ export const wpSiteUrl = window.nfdOnboarding.siteUrl;
 export const wpRestBase = window.nfdOnboarding.restUrl;
 export const onboardingRestRoute = 'newfold-onboarding/v1';
 export const onboardingRestBase = `${ wpRestBase }/${ onboardingRestRoute }`;
-export const wpAdminPage = `${wpAdminUrl}index.php`;
-export const bluehostDashboardPage = `${wpAdminPage}?page=bluehost`;
+export const wpAdminPage = `${ wpAdminUrl }index.php`;
+export const bluehostDashboardPage = `${ wpAdminPage }?page=bluehost`;
 export const NFD_ONBOARDING_EVENT_PREFIX = 'nfd-module-onboarding-event';
 export const VIEW_NAV_PRIMARY = 'nav-primary';
 export const VIEW_NAV_DESIGN = 'nav-design';
 export const VIEW_NAV_PAGE = 'nav-page';
 export const VIEW_DESIGN_THEMES = 'design-themes';
-export const VIEW_DESIGN_THEME_STYLES = 'design-theme-styles';
+export const VIEW_DESIGN_THEME_STYLES_MENU = 'design-theme-styles-menu';
+export const VIEW_DESIGN_THEME_STYLES_PREVIEW = 'design-theme-styles-preview';
 export const VIEW_DESIGN_COLORS = 'design-colors';
 export const VIEW_DESIGN_TYPOGRAPHY = 'design-typography';
 export const VIEW_DESIGN_HEADER_MENU = 'design-header-menu';
@@ -38,7 +39,8 @@ export const DRAWER_VIEWS = [
 	VIEW_NAV_PAGE,
 	VIEW_NAV_ECOMMERCE_STORE_INFO,
 	VIEW_DESIGN_THEMES,
-	VIEW_DESIGN_THEME_STYLES,
+	VIEW_DESIGN_THEME_STYLES_MENU,
+	VIEW_DESIGN_THEME_STYLES_PREVIEW,
 	VIEW_DESIGN_COLORS,
 	VIEW_DESIGN_TYPOGRAPHY,
 	VIEW_DESIGN_HEADER_MENU,

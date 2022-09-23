@@ -3,7 +3,8 @@ import {
 	VIEW_DESIGN_COLORS,
 	VIEW_DESIGN_HEADER_MENU,
 	VIEW_DESIGN_THEMES,
-	VIEW_DESIGN_THEME_STYLES,
+	VIEW_DESIGN_THEME_STYLES_MENU,
+	VIEW_DESIGN_THEME_STYLES_PREVIEW,
 	VIEW_DESIGN_TYPOGRAPHY,
 	VIEW_NAV_DESIGN,
 	VIEW_NAV_PAGE,
@@ -14,10 +15,10 @@ import {
 import { useEffect, useState } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 
-import { Button } from '@wordpress/components';
 import DesignColors from './DesignColors';
 import DesignHeaderMenu from './DesignHeaderMenu';
-import DesignThemeStyles from './DesignThemeStyles';
+import DesignThemeStylesMenu from './DesignThemeStylesMenu';
+import DesignThemeStylesPreview from './DesignThemeStylesPreview';
 import DesignThemes from './DesignThemes';
 import DesignTypography from './DesignTypography';
 import { ESCAPE } from '@wordpress/keycodes';
@@ -27,9 +28,9 @@ import NavPage from './NavPage';
 import NavPrimary from './NavPrimary';
 import NavStoreInfo from './Ecommerce/NavStoreInfo';
 import { __ } from '@wordpress/i18n';
-import { chevronLeft } from '@wordpress/icons';
 import classNames from 'classnames';
 import { store as nfdOnboardingStore } from '../../../store';
+import WithDesignBack from './WithDesignBack';
 
 const DrawerPanel = ( { isOpen } ) => {
 	const [ isNavView, setIsNavView ] = useState( true ); // menu-primary is default view
@@ -60,22 +61,6 @@ const DrawerPanel = ( { isOpen } ) => {
 		}
 	}, [ drawerView ] );
 
-	const WithDesignBack = ( { children } ) => {
-		return (
-			<div className="is-drawer-fade">
-				<Button
-					className="nfd-onboarding-drawer__panel-back"
-					variant="tertiary"
-					icon={ chevronLeft }
-					onClick={ () => setDrawerActiveView( VIEW_NAV_DESIGN ) }
-				>
-					{ __( 'Design', 'wp-module-onboarding' ) }
-				</Button>
-				{ children }
-			</div>
-		);
-	};
-
 	return (
 		<div
 			className={ classNames( `nfd-onboarding-drawer__panel`, {
@@ -105,9 +90,14 @@ const DrawerPanel = ( { isOpen } ) => {
 								<DesignThemes />
 							</WithDesignBack>
 						) }
-						{ VIEW_DESIGN_THEME_STYLES === drawerView && (
+						{ VIEW_DESIGN_THEME_STYLES_MENU === drawerView && (
 							<WithDesignBack>
-								<DesignThemeStyles />
+								<DesignThemeStylesMenu />
+							</WithDesignBack>
+						) }
+						{ VIEW_DESIGN_THEME_STYLES_PREVIEW === drawerView && (
+							<WithDesignBack>
+								<DesignThemeStylesPreview />
 							</WithDesignBack>
 						) }
 						{ VIEW_DESIGN_COLORS === drawerView && (

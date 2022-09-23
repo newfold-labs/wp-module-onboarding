@@ -4,10 +4,10 @@ import { lazy } from '@wordpress/element';
 import { orderBy, filter } from 'lodash';
 
 import {
-	routes as defaultInitialRoutes,
+	pages as defaultInitialPages,
 	steps as defaultInitialSteps,
 	initialTopSteps as defaultInitialTopSteps,
-	initialGetStartedSteps as defaultInitialGetStartedSteps
+	initialGetStartedSteps as defaultInitialGetStartedSteps,
 } from './default-flow';
 
 const StepAddress = lazy( () =>
@@ -64,7 +64,7 @@ export const ecommerceSteps = [
 			'wp-module-onboarding'
 		),
 		description: __(
-			'In this section, you can provide more information about your products and business, which will help us tailor your store setup experience and identify possible extensions you\'ll need for your online store.',
+			"In this section, you can provide more information about your products and business, which will help us tailor your store setup experience and identify possible extensions you'll need for your online store.",
 			'wp-module-onboarding'
 		),
 		Component: StepProducts,
@@ -78,7 +78,9 @@ export const steps = orderBy(
 	[
 		...filter(
 			defaultInitialSteps,
-			( step ) => ! step.path.includes( '/step/top-priority' ) && ! step.path.includes( '/step/get-started/site-primary' )
+			( step ) =>
+				! step.path.includes( '/step/top-priority' ) &&
+				! step.path.includes( '/step/get-started/site-primary' )
 		),
 		...ecommerceSteps,
 	],
@@ -87,7 +89,7 @@ export const steps = orderBy(
 );
 
 export const routes = orderBy(
-	[ ...steps, ...defaultInitialRoutes ],
+	[ ...steps, ...defaultInitialPages ],
 	[ 'priority' ],
 	[ 'asc' ]
 );
@@ -126,5 +128,4 @@ export const ecommerceGetStartedSteps = () => {
 		defaultInitialGetStartedSteps(),
 		( step ) => ! step.path.includes( '/step/get-started/site-primary' )
 	);
-
-}
+};

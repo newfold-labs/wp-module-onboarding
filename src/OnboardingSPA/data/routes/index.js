@@ -1,6 +1,7 @@
 import {
 	routes as defaultInitialRoutes,
 	steps as defaultInitialSteps,
+	conditionalSteps as defaultInitialConditionalSteps,
 	initialDesignSteps as defaultInitialDesignSteps,
 	initialTopSteps as defaultInitialTopSteps,
 	initialGetStartedSteps as defaultInitialGetStartedSteps,
@@ -22,6 +23,7 @@ const routerMap = {
 	'wp-setup': {
 		routes: defaultInitialRoutes,
 		steps: defaultInitialSteps,
+		conditionalSteps: defaultInitialConditionalSteps,
 		initialTopSteps: defaultInitialTopSteps,
 		initialDesignSteps: defaultInitialDesignSteps,
 		initialGetStartedSteps: defaultInitialGetStartedSteps,
@@ -29,6 +31,7 @@ const routerMap = {
 	ecommerce: {
 		routes: ecommerceRoutes,
 		steps: ecommerceSteps,
+		conditionalSteps: defaultInitialConditionalSteps,
 		initialTopSteps: ecommerceInitialTopSteps,
 		initialDesignSteps: defaultInitialDesignSteps,
 		initialGetStartedSteps: ecommerceDefaultGetStartedSteps,
@@ -39,6 +42,9 @@ const routerMap = {
 export const routes = [ ...routerMap[ getSelectedRoute() ].routes ];
 
 export const steps = [ ...routerMap[ getSelectedRoute() ].steps ];
+
+export const conditionalSteps =
+	routerMap[ getSelectedRoute() ].conditionalSteps;
 
 export const initialTopSteps = () => {
 	return routerMap[ getSelectedRoute() ].initialTopSteps();
