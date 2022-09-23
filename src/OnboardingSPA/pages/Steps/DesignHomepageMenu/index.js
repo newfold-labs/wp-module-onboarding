@@ -1,4 +1,3 @@
-import { check, Icon } from '@wordpress/icons';
 import { useViewportMatch } from '@wordpress/compose';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
@@ -10,6 +9,7 @@ import CommonLayout from '../../../components/Layouts/Common';
 import { VIEW_DESIGN_HOMEPAGE_MENU } from '../../../../constants';
 import { LivePreviewSelectableCard } from '../../../components/LivePreview';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
+import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
 const StepDesignHomepageMenu = () => {
     const MAX_PREVIEWS_PER_ROW = 3;
@@ -56,7 +56,12 @@ const StepDesignHomepageMenu = () => {
         []
     );
 
-    const { setDrawerActiveView, setIsDrawerOpened, setIsSidebarOpened, setIsDrawerSuppressed, setCurrentOnboardingData } =
+    const { setDrawerActiveView, 
+            setIsDrawerOpened, 
+            setIsSidebarOpened, 
+            updatePreviewSettings,
+            setIsDrawerSuppressed, 
+            setCurrentOnboardingData } =
         useDispatch(nfdOnboardingStore);
 
     useEffect(() => {
@@ -70,11 +75,22 @@ const StepDesignHomepageMenu = () => {
 
     async function getHomepagePatternsData() {
         var homepagePatternData = await getPatterns('homepage-styles');
-        const globalStyleTemp = await getGlobalStyles();
-        if (storedPreviewSettings)
-            setGlobalStyle(storedPreviewSettings);
-        else
-            setGlobalStyle(globalStyleTemp?.body[0]);
+        const globalStyles = await getGlobalStyles();
+        let selectedGlobalStyle;
+        if (currentData.data.theme.variation) {
+            selectedGlobalStyle = globalStyles.body.filter(
+                (globalStyle) =>
+                    globalStyle.title === currentData.data.theme.variation
+            )[0];
+        } else {
+            selectedGlobalStyle = globalStyles.body[0];
+        }
+        updatePreviewSettings(
+            useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
+        );
+        if (selectedGlobalStyle)
+            setGlobalStyle(selectedGlobalStyle);
+
         var makeHomepagePattern = [];
 
         for (let key in homepages_list) {
