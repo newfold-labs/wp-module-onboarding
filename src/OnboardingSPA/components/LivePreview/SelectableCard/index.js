@@ -1,4 +1,5 @@
 import { check, search, Icon } from '@wordpress/icons';
+import { useState, useEffect } from '@wordpress/element';
 
 import { LivePreview } from '..';
 
@@ -11,7 +12,18 @@ const SelectableCard = ( {
 	previewSettings,
 	overlay = false,
 	onClick = false,
+	animationDuration = 2500,
 } ) => {
+
+	const [isShown, setIsShown] = useState(false);
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setIsShown(true);
+		}, animationDuration);
+		return () => clearTimeout(timer);
+	}, [animationDuration]);
+
 	return (
 		<div
 			className={ `${ className }` }
@@ -44,12 +56,15 @@ const SelectableCard = ( {
 				</div>
 			</div>
 			<div className={ `${ className }__live-preview-container` }>
-				<LivePreview
+				{ isShown ? <LivePreview
+					styling={ styling }
 					blockGrammer={ blockGrammer }
 					viewportWidth={ viewportWidth }
-					styling={ styling }
 					previewSettings={ previewSettings }
-				/>
+				/> : 
+				<div className = "is-skeleton">
+					</div>
+				}
 				{ overlay && (
 					<div
 						className={ `${ className }__live-preview-container__overlay` }

@@ -7,6 +7,14 @@
 	}
 }
 
+@keyframes shine {
+	to {
+		background-position: 100% 0,
+			/* move highlight to right */
+			0 0;
+	}
+}
+
 .is-centered {
 	display: flex;
 	place-content: center;
