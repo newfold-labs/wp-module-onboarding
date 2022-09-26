@@ -385,6 +385,7 @@ export const steps = [
 		Icon: header,
 		priority: 240,
 		VIEW: VIEW_DESIGN_HOMEPAGE_MENU,
+		patternId: 'homepage-styles',
 	},
 	{
 		path: '/wp-setup/step/site-pages',

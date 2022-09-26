@@ -114,14 +114,6 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
                             height: 400px;
                             // Enable Scrolling in Live Preview
                             overflow-y: scroll;
-
-                            div {
-                                div iframe {
-                                    // Override the Block Preview max-height attribute 
-                                    // to show the complete Preview
-                                    max-height: 6500px !important;
-                                }
-                            }
                         }
 
                     }

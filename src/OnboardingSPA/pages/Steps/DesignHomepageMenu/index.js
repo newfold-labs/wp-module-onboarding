@@ -12,7 +12,6 @@ import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
 const StepDesignHomepageMenu = () => {
-    const MAX_PREVIEWS_PER_ROW = 3;
 
     const homepagePatternList = [
         'homepage-1',
@@ -73,8 +72,27 @@ const StepDesignHomepageMenu = () => {
         setDrawerActiveView(VIEW_DESIGN_HOMEPAGE_MENU);
     }, []);
 
+    function refactorPatterns( homepagePatternData ) {
+
+        var makeHomepagePattern = [];
+
+        for (let key in homepages_list) {
+            var homepage_pattern_array = homepages_list[key];
+            var patternData = '';
+            homepage_pattern_array.forEach((pattern_name) => {
+                homepagePatternData?.body.forEach((homepage_pattern_data) => {
+                    if (homepage_pattern_data.slug === pattern_name)
+                        patternData += homepage_pattern_data.content
+                })
+            })
+            makeHomepagePattern.push(patternData);
+        }
+
+        return makeHomepagePattern;
+    }
+
     async function getHomepagePatternsData() {
-        var homepagePatternData = await getPatterns('homepage-styles');
+        var homepagePatternData = await getPatterns(currentStep.patternId );
         const globalStyles = await getGlobalStyles();
         let selectedGlobalStyle;
         if (currentData.data.theme.variation) {
@@ -91,20 +109,8 @@ const StepDesignHomepageMenu = () => {
         if (selectedGlobalStyle)
             setGlobalStyle(selectedGlobalStyle);
 
-        var makeHomepagePattern = [];
-
-        for (let key in homepages_list) {
-            var homepage_pattern_array = homepages_list[key];
-            var patternData = '';
-            homepage_pattern_array.forEach((pattern_name) => {
-                homepagePatternData?.body.forEach((homepage_pattern_data) => {
-                    if (homepage_pattern_data.slug === pattern_name)
-                        patternData += homepage_pattern_data.content
-                })
-            })
-            makeHomepagePattern.push(patternData);
-        }
-        setHomepagePattern(makeHomepagePattern);
+        
+        setHomepagePattern(refactorPatterns(homepagePatternData));
 
         if(currentData?.data['sitePages'].length !== 0)
             setSelectedHomepage(homepagePatternList?.indexOf(currentData?.data['sitePages']['homepage']));
@@ -133,30 +139,24 @@ const StepDesignHomepageMenu = () => {
     }, [isLoaded]);
 
     function buildHomepagePreviews() {
-
-        var homepageList = [];
-        if (homepagePattern) {
-            homepagePattern?.forEach((homepage, idx) => {
-                if(homepage)
-                    homepageList.push(
-                        <div
-                            className='homepage_preview__list'
-                        >
-                            <LivePreviewSelectableCard
-                                className={'homepage_preview__list__item'}
-                                selected={idx == selectedHomepage}
-                                blockGrammer={homepage}
-                                viewportWidth={1200}
-                                styling={'custom'}
-                                previewSettings={globalStyle}
-                                overlay={false}
-                                onClick={() => saveDataForHomepage(idx)}
-                            />
-                        </div>
-                    );
-            });
-        }
-        return homepageList;
+        return homepagePattern?.map((homepage, idx) => {
+            if (homepage)
+                return(
+                    <div
+                        className='homepage_preview__list'>
+                        <LivePreviewSelectableCard
+                            className={'homepage_preview__list__item'}
+                            selected={idx == selectedHomepage}
+                            blockGrammer={homepage}
+                            viewportWidth={1200}
+                            styling={'custom'}
+                            previewSettings={globalStyle}
+                            overlay={false}
+                            onClick={() => saveDataForHomepage(idx)}
+                        />
+                    </div>
+                );
+        });
     }
 
     return (
@@ -165,7 +165,7 @@ const StepDesignHomepageMenu = () => {
                 <HeadingWithSubHeading title={currentStep?.heading} subtitle={currentStep?.subheading} />
                 <div className="theme-styles-menu__list">
                     {globalStyle &&
-                        buildHomepagePreviews().slice(0, MAX_PREVIEWS_PER_ROW)}
+                        buildHomepagePreviews()}
                 </div>
             </div>
         </CommonLayout>
