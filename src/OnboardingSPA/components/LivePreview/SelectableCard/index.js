@@ -24,6 +24,7 @@ const SelectableCard = ( {
 		return () => clearTimeout(timer);
 	}, [animationDuration]);
 
+	console.log(isShown);
 	return (
 		<div
 			className={ `${ className }` }
@@ -41,30 +42,28 @@ const SelectableCard = ( {
 						className={ `${ className }__title-bar__browser__dot` }
 					></span>
 				</div>
-				<div
-					className={ `${
-						selected
-							? `${ className }__title-bar--selected`
-							: `${ className }__title-bar--unselected`
-					}` }
-				>
-					<Icon
-						className={ `${ className }__title-bar--selected__path` }
-						icon={ check }
-						size={ 64 }
-					/>
-				</div>
+				{ isShown ? 
+					<div
+						className={`${selected
+								? `${className}__title-bar--selected`
+								: `${className}__title-bar--unselected`
+							}`}
+					>
+						<Icon
+							className={`${className}__title-bar--selected__path`}
+							icon={check}
+							size={64}
+						/>
+					</div> : <></> }
 			</div>
 			<div className={ `${ className }__live-preview-container` }>
-				{ isShown ? <LivePreview
+				{ isShown ? null : <div div className={ `is-skeleton` }/> }
+				<LivePreview
 					styling={ styling }
 					blockGrammer={ blockGrammer }
 					viewportWidth={ viewportWidth }
 					previewSettings={ previewSettings }
-				/> : 
-				<div className = "is-skeleton">
-					</div>
-				}
+				/> 
 				{ overlay && (
 					<div
 						className={ `${ className }__live-preview-container__overlay` }
