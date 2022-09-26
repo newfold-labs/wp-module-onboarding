@@ -70,6 +70,7 @@ class SettingsController {
 		'facebook_site',
 		'instagram_url',
 		'linkedin_url',
+		'twitter_site',
 		'myspace_url',
 		'pinterest_url',
 		'youtube_url',
@@ -146,47 +147,46 @@ class SettingsController {
 
 			// check for proper url
 			if ( in_array( $param_key, $this->social_urls_to_validate ) ) {
-				// check for the other URL's array
-				if ( ! is_array( $param_value ) ) {
-					// sanitize fields
-					$param[ $param_key ] = \sanitize_text_field( $param_value );
-
-					if ( ! empty( $param_value ) && ! \wp_http_validate_url( $param_value ) ) {
-						$this->invalid_urls[] = $param_key;
-						unset($params[$param_key]);
-						continue;
-					}
-				} else {
-					foreach ( $param_value as $param_url ) {
-						// sanitize fields
-						$param[ $param_url ] = \sanitize_text_field( $param_url );
-
-						if ( ! empty( $param_url ) && ! \wp_http_validate_url( $param_url ) ) {
+				switch($param_key) {
+					case 'twitter_site':
+						if( !empty($params['twitter_site'])) {
+							if( ( $twitter_id = $this->validate_twitter_id($params['twitter_site']) ) === false ) {
+								$this->invalid_urls[] = 'twitter_site';
+							} else {
+								$params['twitter_site'] = $twitter_id;
+							}
+						}
+						break;
+					case 'other_social_urls':
+						foreach ( $param_value as $param_key_osu => $param_url ) {
+							$param_value[ $param_key_osu ] = \sanitize_text_field( $param_url );	
+							if ( ! empty( $param_url ) && ! \wp_http_validate_url( $param_url ) ) {
+								$this->invalid_urls[] = $param_key_osu;
+								unset($params[$param_key_osu]);
+								continue;
+							}
+						}
+						break;
+					default:
+						$param[ $param_key ] = \sanitize_text_field( $param_value );
+						if ( ! empty( $param_value ) && ! \wp_http_validate_url( $param_value ) ) {
 							$this->invalid_urls[] = $param_key;
 							unset($params[$param_key]);
 							continue;
 						}
-					}
+						break;
 				}
 			}
 		}
 		$settings = array_merge( $settings, $params );
 
-		// check for twitter handle
-		if( isset($settings['twitter_site']) && !empty($settings['twitter_site'])) {
-			if( ( $twitter_id = $this->validate_twitter_id($settings['twitter_site']) ) === false ) {
-				$this->invalid_urls[] = 'twitter_site';
-			} else {
-				$settings['twitter_site'] = $twitter_id;
-			}
-		}
 		\update_option( $this->yoast_wp_options_key, $settings );
 
 		if(!empty($this->invalid_urls)) {
-			$error_keys = implode( ",", $this->invalid_urls );
+			$error_keys = implode( ", ", $this->invalid_urls );
 			return new \WP_Error(
 				'invalid_urls',
-				"The provided url(s) {$error_keys} were invalid.",
+				"Invalid url(s) provided for {$error_keys}.",
 				array( 'status' => 400 )
 			);
 		}
