@@ -1,4 +1,5 @@
 import { useViewportMatch } from '@wordpress/compose';
+import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
@@ -37,6 +38,7 @@ const StepDesignHomepageMenu = () => {
         ],
     };
 
+    const location = useLocation();
     const [isLoaded, setisLoaded] = useState(false);
     const [globalStyle, setGlobalStyle] = useState();
     const [homepagePattern, setHomepagePattern] = useState();
@@ -47,7 +49,9 @@ const StepDesignHomepageMenu = () => {
     const { currentStep, currentData, storedPreviewSettings } = useSelect(
         (select) => {
             return {
-                currentStep: select(nfdOnboardingStore).getCurrentStep(),
+                currentStep: select(nfdOnboardingStore).getStepFromPath(
+                    location.pathname
+                ),
                 currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
                 storedPreviewSettings: select(nfdOnboardingStore).getPreviewSettings()
             };
