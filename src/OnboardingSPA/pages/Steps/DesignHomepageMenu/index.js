@@ -82,8 +82,9 @@ const StepDesignHomepageMenu = () => {
 			let patternData = '';
 			homepagePatterns.forEach( ( patternName ) => {
 				homepagePatternData?.body.forEach( ( homepagePatternData ) => {
-					if ( homepagePatternData.slug === patternName )
+					if ( homepagePatternData.slug === patternName ) {
 						patternData += homepagePatternData.content;
+					}
 				} );
 			} );
 			makeHomepagePattern.push( patternData );
@@ -107,17 +108,19 @@ const StepDesignHomepageMenu = () => {
 		updatePreviewSettings(
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
-		if ( selectedGlobalStyle ) setGlobalStyle( selectedGlobalStyle );
+		if ( selectedGlobalStyle ) {
+			setGlobalStyle( selectedGlobalStyle );
+		}
 
 		setHomepagePattern( refactorPatterns( homepagePatternData ) );
 
-		if ( currentData?.data.sitePages.length !== 0 )
+		if ( currentData?.data.sitePages.length !== 0 ) {
 			setSelectedHomepage(
 				homepagePatternList?.indexOf(
 					currentData?.data.sitePages.homepage
 				)
 			);
-		else {
+		} else {
 			currentData.data.sitePages = {
 				...currentData.data.sitePages,
 				homepage: homepagePatternList[ 0 ],
@@ -137,12 +140,14 @@ const StepDesignHomepageMenu = () => {
 	}
 
 	useEffect( () => {
-		if ( ! isLoaded ) getHomepagePatternsData();
+		if ( ! isLoaded ) {
+			getHomepagePatternsData();
+		}
 	}, [ isLoaded ] );
 
 	function buildHomepagePreviews() {
 		return homepagePattern?.map( ( homepage, idx ) => {
-			if ( homepage )
+			if ( homepage ) {
 				return (
 					<div className="homepage_preview__list">
 						<LivePreviewSelectableCard
@@ -157,6 +162,7 @@ const StepDesignHomepageMenu = () => {
 						/>
 					</div>
 				);
+			}
 		} );
 	}
 
