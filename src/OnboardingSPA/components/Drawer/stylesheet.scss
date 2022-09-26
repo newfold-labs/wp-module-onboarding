@@ -273,7 +273,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
                     }
     
                     &--selected {
-                        z-index: 1;
+                        z-index: 2;
                         width: 40px;
                         height: 40px;
                         display: flex;
