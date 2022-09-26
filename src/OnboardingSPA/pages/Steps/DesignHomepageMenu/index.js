@@ -81,12 +81,12 @@ const StepDesignHomepageMenu = () => {
         var makeHomepagePattern = [];
 
         for (let key in homepages_list) {
-            var homepage_pattern_array = homepages_list[key];
+            var homepagePatterns = homepages_list[key];
             var patternData = '';
-            homepage_pattern_array.forEach((pattern_name) => {
-                homepagePatternData?.body.forEach((homepage_pattern_data) => {
-                    if (homepage_pattern_data.slug === pattern_name)
-                        patternData += homepage_pattern_data.content
+            homepagePatterns.forEach((pattern_name) => {
+                homepagePatternData?.body.forEach((homepagePatternData) => {
+                    if (homepagePatternData.slug === pattern_name)
+                        patternData += homepagePatternData.content
                 })
             })
             makeHomepagePattern.push(patternData);
