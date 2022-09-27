@@ -12,7 +12,7 @@ const SelectableCard = ( {
 	previewSettings,
 	overlay = false,
 	onClick = false,
-	animationDuration = 2500,
+	animationDuration = 2000,
 } ) => {
 
 	const [isShown, setIsShown] = useState(false);
