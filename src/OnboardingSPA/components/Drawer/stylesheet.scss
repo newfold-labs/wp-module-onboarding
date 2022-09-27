@@ -273,7 +273,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
                     }
     
                     &--selected {
-                        z-index: 2;
+                        z-index: 1;
                         width: 40px;
                         height: 40px;
                         display: flex;
@@ -298,7 +298,6 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
                 &__live-preview-container {
                     position: relative;
                     width: 90%;
-                    overflow: hidden;
                     align-items: center;
                     border: 1px solid #B7B7B7;
     
