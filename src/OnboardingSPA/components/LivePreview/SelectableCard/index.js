@@ -43,7 +43,7 @@ const SelectableCard = ( {
 				</div>
 				<div
 					className={`${selected
-						? `${className}__title-bar--selected `
+						? `${className}__title-bar--selected live-preview-selected-check`
 							: `${className}__title-bar--unselected`
 						}`}
 				>
