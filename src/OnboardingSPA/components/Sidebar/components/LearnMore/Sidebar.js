@@ -15,6 +15,7 @@ import {
 	SIDEBAR_LEARN_MORE,
 	SIDEBAR_SLOTFILL_PREFIX,
 } from '../../../../../constants';
+import SidebarSkeleton from './Skeleton/SidebarSkeleton';
 
 const LearnMoreSidebar = () => {
 	const { currentStep } = useSelect( ( select ) => {
@@ -35,7 +36,8 @@ const LearnMoreSidebar = () => {
 			</PanelHeader>
 			<PanelBody initialOpen={ true }>
 				<PanelRow>
-					<div className="nfd-onboarding-sidebar-learn-more__container">
+					<SidebarSkeleton />
+					{/* <div className="nfd-onboarding-sidebar-learn-more__container">
 						<div className="nfd-onboarding-sidebar-learn-more__icon">
                               { currentStep?.Icon && <Icon icon={ currentStep.Icon } /> }
 						</div>
@@ -47,7 +49,7 @@ const LearnMoreSidebar = () => {
 								{ currentStep?.description }
 							</p>
 						</div>
-					</div>
+					</div> */}
 				</PanelRow>
 			</PanelBody>
 			{ currentStep?.SidebarComponents?.LearnMore && (
