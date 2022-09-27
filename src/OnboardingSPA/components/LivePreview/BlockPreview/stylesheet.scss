@@ -1,4 +1,5 @@
 $main-color-grey: var(--nfd-onboarding-light-gray);
+$main-color-grey-other: #e2e2e2;
 $main-color-light-rgb: var(--nfd-onboarding-white-rgb);
 
 .live-preview {
@@ -34,7 +35,7 @@ $main-color-light-rgb: var(--nfd-onboarding-white-rgb);
 	&--box {
 		width: 90%;
 		margin: 12px;
-		background: #e2e2e2;
+		background: $main-color-grey-other;
 
 		&-header {
 			height: 10%;
