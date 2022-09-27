@@ -11,12 +11,14 @@ import {
 	VIEW_NAV_PRIMARY,
 	VIEW_NAV_GET_STARTED,
 	VIEW_NAV_ECOMMERCE_STORE_INFO,
+	VIEW_DESIGN_HOMEPAGE_MENU,
 } from '../../../../constants';
 import { useEffect, useState } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 
 import DesignColors from './DesignColors';
 import DesignHeaderMenu from './DesignHeaderMenu';
+import DesignHomepageMenu from './DesignHomepageMenu';
 import DesignThemeStylesMenu from './DesignThemeStylesMenu';
 import DesignThemeStylesPreview from './DesignThemeStylesPreview';
 import DesignThemes from './DesignThemes';
@@ -115,6 +117,11 @@ const DrawerPanel = ( { isOpen } ) => {
 								<DesignHeaderMenu />
 							</WithDesignBack>
 						) }
+						{ VIEW_DESIGN_HOMEPAGE_MENU === drawerView && (
+							<WithDesignBack>
+								<DesignHomepageMenu />
+							</WithDesignBack>
+						)}
 					</div>
 				</div>
 			</div>

@@ -36,6 +36,8 @@ final class Options {
 		'blog_name'                     => 'blogname',
 		'blog_description'              => 'blogdescription',
 		'site_icon'                     => 'site_icon',
+		'show_on_front'                 => 'show_on_front',
+		'page_on_front'                 => 'page_on_front',
 	);
 
 	protected static $initialization_options = array(
