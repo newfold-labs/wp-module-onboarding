@@ -15,15 +15,6 @@ const SelectableCard = ( {
 	animationDuration = 2500,
 } ) => {
 
-	const [isShown, setIsShown] = useState(false);
-
-	useEffect(() => {
-		const timer = setTimeout(() => {
-			setIsShown(true);
-		}, animationDuration);
-		return () => clearTimeout(timer);
-	}, [animationDuration]);
-
 	return (
 		<div
 			className={ `${ className }` }
@@ -55,20 +46,12 @@ const SelectableCard = ( {
 				</div>
 			</div>
 			<div className={`${className }__live-preview-container live-preview-container` }>
-				{isShown ? null : 
-					<div className='is-skeleton'>
-						<div className='is-skeleton--box is-skeleton--box-header'>
-							<div className={`is-skeleton--shimmer`} />
-						</div>
-						<div className='is-skeleton--box is-skeleton--box-body-1'/>
-						<div className='is-skeleton--box is-skeleton--box-body-2'/>
-						<div className='is-skeleton--box is-skeleton--box-footer'/>
-					</div>}
 				<LivePreview
 					styling={styling}
 					blockGrammer={blockGrammer}
 					viewportWidth={viewportWidth}
 					previewSettings={previewSettings}
+					animationDuration={animationDuration}
 				/> 
 				{ overlay && (
 					<div

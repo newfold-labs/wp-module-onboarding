@@ -1,8 +1,6 @@
 /*COLOR VARIABLES*/
 $main-color-dark: var(--nfd-onboarding-dark);
 $main-color-light: var(--nfd-onboarding-white);
-$main-color-grey: var(--nfd-onboarding-light-gray);
-$main-color-light-rgb: var(--nfd-onboarding-white-rgb);
 $main-border-light: var(--nfd-onboarding-border);
 $main-border-main: var(--nfd-onboarding-primary-alt);
 
@@ -123,42 +121,3 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 	}
 }
 
-.is-skeleton {
-	width: 100%;
-	height: 100%;
-	z-index: 1;
-	position: absolute;
-	background-color: $main-color-grey;
-
-	&--box {
-		width: 90%;
-		margin: 12px;
-		background: #e2e2e2;
-
-		&-header {
-			height: 10%;
-		}
-		&-body-1 {
-			height: 40%;
-		}
-		&-body-2 {
-			height: 15%;
-		}
-		&-footer {
-			height: 5%;
-		}
-	}	
-
-	&--shimmer {
-		z-index: 2;
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		background-image: linear-gradient(90deg,
-				rgba($main-color-light-rgb, 0) 0,
-				rgba($main-color-light-rgb, 0.4) 20%,
-				rgba($main-color-light-rgb, 0.7) 60%,
-				$main-color-grey);
-		animation: shine 0.5s linear infinite;
-	}
-}

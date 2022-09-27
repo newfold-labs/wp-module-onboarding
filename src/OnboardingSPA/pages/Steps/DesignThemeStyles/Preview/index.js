@@ -199,7 +199,7 @@ const StepDesignThemeStylesPreview = () => {
 					<span className="theme-styles-preview__title-bar__browser__dot"></span>
 				</div>
 			</div>
-			<div className="theme-styles-preview__live-preview-container">
+			<div className="theme-styles-preview__live-preview-container live-preview-container">
 				{ pattern && (
 					<LivePreview
 						blockGrammer={ pattern }

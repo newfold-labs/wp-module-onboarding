@@ -25,9 +25,18 @@ const BlockPreview = ( {
 	viewportWidth = 1300,
 	styling = 'large',
 	previewSettings = false,
+	animationDuration = 2500,
 } ) => {
 	const [ blocks, setBlocks ] = useState();
 	const [ settings, setSettings ] = useState();
+	const [ isShown, setIsShown ] = useState(false);
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setIsShown(true);
+		}, animationDuration);
+		return () => clearTimeout(timer);
+	}, [animationDuration]);
 
 	const storedPreviewSettings = useSelect(
 		( select ) => select( nfdOnboardingStore ).getPreviewSettings(),
@@ -53,7 +62,16 @@ const BlockPreview = ( {
 	}, [ storedPreviewSettings ] );
 
 	return (
-		<div className={ `live-preview__container-${ styling }` }>
+		<div className={`live-preview__container-${styling }  live-preview-container` }>
+			{isShown ? null :
+				<div className='is-skeleton'>
+					<div className='is-skeleton--box is-skeleton--box-header'>
+						<div className={`is-skeleton--shimmer`} />
+					</div>
+					<div className='is-skeleton--box is-skeleton--box-body-1' />
+					<div className='is-skeleton--box is-skeleton--box-body-2' />
+					<div className='is-skeleton--box is-skeleton--box-footer' />
+				</div> }
 			{ settings && (
 				<BlockEditorProvider
 					value={ blocks }
