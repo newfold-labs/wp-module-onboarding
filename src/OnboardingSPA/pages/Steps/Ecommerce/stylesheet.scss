@@ -107,7 +107,7 @@
 
 		@media (min-width: #{ ($break-medium) }) {
 			.full-address-fields {
-				width: 80%;
+				width: calc(var(--fields)*27%);
 
 				input,
 				select {
