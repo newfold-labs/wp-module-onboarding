@@ -83,6 +83,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 			&__live-preview-container {
 				position: relative;
 				width: 90%;
+				overflow: hidden;
 				align-items: center;
 				border: 1px solid #e3dfdf;
 

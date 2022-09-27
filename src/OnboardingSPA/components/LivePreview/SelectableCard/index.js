@@ -12,7 +12,7 @@ const SelectableCard = ( {
 	previewSettings,
 	overlay = false,
 	onClick = false,
-	animationDuration = 3000,
+	animationDuration = 2500,
 } ) => {
 
 	const [isShown, setIsShown] = useState(false);
@@ -55,12 +55,15 @@ const SelectableCard = ( {
 				</div>
 			</div>
 			<div className={ `${ className }__live-preview-container` }>
-				{ isShown ? null : <div div className={ `is-skeleton` }/> }
+				{isShown ? null : 
+					<div className='is-skeleton'>
+						<div className={`is-skeleton--shimmer`} />
+					</div>}
 				<LivePreview
-					styling={ styling }
-					blockGrammer={ blockGrammer }
-					viewportWidth={ viewportWidth }
-					previewSettings={ previewSettings }
+					styling={styling}
+					blockGrammer={blockGrammer}
+					viewportWidth={viewportWidth}
+					previewSettings={previewSettings}
 				/> 
 				{ overlay && (
 					<div

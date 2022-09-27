@@ -6,13 +6,13 @@
 		opacity: 1;
 	}
 }
-
 @keyframes shine {
-	to {
-		background-position: 100% 0,
-			/* move highlight to right */
-			0 0;
-	}
+	0% {
+			transform: translateX(-100%);
+		}
+	100% {
+			transform: translateX(100%);
+		}
 }
 
 .is-centered {
