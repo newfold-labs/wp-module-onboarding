@@ -19,6 +19,7 @@ export const VIEW_DESIGN_THEME_STYLES_PREVIEW = 'design-theme-styles-preview';
 export const VIEW_DESIGN_COLORS = 'design-colors';
 export const VIEW_DESIGN_TYPOGRAPHY = 'design-typography';
 export const VIEW_DESIGN_HEADER_MENU = 'design-header-menu';
+export const VIEW_DESIGN_HOMEPAGE_MENU = 'design-homepage-menu';
 export const VIEW_NAV_GET_STARTED = 'nav-get-started';
 export const VIEW_NAV_ECOMMERCE_STORE_INFO = 'nav-ecommerce-store-info';
 export const SIDEBAR_SLOTFILL_PREFIX = 'Sidebar';
