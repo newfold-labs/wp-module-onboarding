@@ -1,0 +1,8 @@
+.step-loader {
+
+	&__logo {
+		width: 256px;
+		height: 256px;
+		background-image: var(--nfd-onboarding-step-loader-icon);
+	}
+}
