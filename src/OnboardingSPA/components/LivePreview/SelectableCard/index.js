@@ -12,7 +12,7 @@ const SelectableCard = ( {
 	previewSettings,
 	overlay = false,
 	onClick = false,
-	animationDuration = 3500,
+	animationDuration = 2500,
 } ) => {
 
 	const [isShown, setIsShown] = useState(false);
@@ -43,7 +43,7 @@ const SelectableCard = ( {
 				</div>
 				<div
 					className={`${selected
-						? `${className}__title-bar--selected live-preview-selected-check`
+						? `${className}__title-bar--selected `
 							: `${className}__title-bar--unselected`
 						}`}
 				>
