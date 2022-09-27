@@ -121,19 +121,21 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 	background-color: $main-color-grey;
 
 	&--box {
-		z-index: 0;
 		width: 90%;
 		margin: 12px;
-		background-color: red;
+		background: #e2e2e2;
 
 		&-header {
-			height: 30px;
+			height: 10%;
 		}
-		&-body {
-			height: 80px;
+		&-body-1 {
+			height: 40%;
+		}
+		&-body-2 {
+			height: 15%;
 		}
 		&-footer {
-			height: 50px;
+			height: 5%;
 		}
 	}	
 

@@ -60,7 +60,8 @@ const SelectableCard = ( {
 						<div className='is-skeleton--box is-skeleton--box-header'>
 							<div className={`is-skeleton--shimmer`} />
 						</div>
-						<div className='is-skeleton--box is-skeleton--box-body'/>
+						<div className='is-skeleton--box is-skeleton--box-body-1'/>
+						<div className='is-skeleton--box is-skeleton--box-body-2'/>
 						<div className='is-skeleton--box is-skeleton--box-footer'/>
 					</div>}
 				<LivePreview
