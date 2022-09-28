@@ -590,7 +590,7 @@ class SettingsController {
 
     public function get_preview_settings() {
         $preview_settings = Data::preview_settings();
-        $preview_settings['settings']['__unstableResolvedAssets'] = $this->wp_theme_json_webfonts_handler();
+        $preview_settings['settings']['__unstableResolvedAssets']['styles'] .= '<style>' . $this->wp_theme_json_webfonts_handler() . '</style>';
         return new \WP_REST_Response(
             $preview_settings,
             200

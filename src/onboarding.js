@@ -7,7 +7,6 @@ import { registerCoreBlocks } from '@wordpress/block-library';
 import initializeNFDOnboarding from './OnboardingSPA';
 
 if ( runtimeDataExists ) {
-    console.log(window.nfdOnboarding.previewSettings)
 	domReady( () => {
 		initializeNFDOnboarding(
 			NFD_ONBOARDING_ELEMENT_ID,

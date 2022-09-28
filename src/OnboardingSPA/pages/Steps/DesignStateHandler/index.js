@@ -25,8 +25,6 @@ const DesignStateHandler = ( { children } ) => {
 
     const loadPreviewSettings = async () => {
         const previewSettings = await getPreviewSettings();
-        console.log(previewSettings.body);
-        // const settings = useGlobalStylesOutput( previewSettings.body, previewSettings.body );
         updatePreviewSettings( previewSettings.body )
     }
 
