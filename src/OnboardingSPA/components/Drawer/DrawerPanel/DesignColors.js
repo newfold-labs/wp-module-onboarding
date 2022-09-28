@@ -1,5 +1,5 @@
-import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+
 const DesignColors = () => {
 
 	const colorPalettes = {
@@ -40,15 +40,33 @@ const DesignColors = () => {
 		],
 	}
 
+	function buildPalettes () {
+		let paletteRenderedList = [];
+		for (const colorName in colorPalettes) {
+			paletteRenderedList.push(
+				<div className='color-palette'>
+					<div className='color-palette-colors'>
+						<div className='color-palette-colors-tert'
+							style={{ backgroundColor: `${colorPalettes[colorName][0]}` }}/>
+						<div className='color-palette-colors-scnd'
+							style={{ backgroundColor: `${colorPalettes[colorName][1]}` }}/>
+						<div className='color-palette-colors-prim'
+							style={{ backgroundColor: `${colorPalettes[colorName][2]}` }} />
+					</div>
+					<div className='color-palette-name'>
+						{colorName?.charAt(0).toUpperCase() + colorName?.slice(1) }
+					</div>
+				</div>
+			);
+		}
+
+		return paletteRenderedList;
+	}
+
 	return (
-		<div style={{ padding: '0 16px' }}>
+		<div style={{ padding: '0 4px' }}>
 			<h2>{__('Color Palettes', 'wp-module-onboarding')}</h2>
-			<p>
-				{__(
-					'If user has opted for custom design, panel will show color palettes to affect preview pane.',
-					'wp-module-onboarding'
-				)}
-			</p>
+			{buildPalettes()}
 		</div>
 	);
 };

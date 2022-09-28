@@ -1,0 +1,53 @@
+
+
+.color-palette {
+
+    width: 88%;
+    height: 30px;
+    display: flex;
+    margin: 8px 4px;
+    padding: 10px 16px;
+    align-items: center;
+    background-color: white;
+    justify-content: space-between;
+
+    &-colors {
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &-tert {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            position: absolute;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+        }
+
+        &-scnd {
+            left: 60px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            position: absolute;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+        }
+
+        &-prim {
+            left: 80px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            position: absolute;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+        }
+    }
+
+    &-name{
+        color: black;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px;
+    }
+}
