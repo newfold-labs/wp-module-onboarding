@@ -118,6 +118,13 @@ export function updateSettings( settings ) {
 	};
 }
 
+export function updateThemeStatus( themeStatus ) {
+    return {
+        type: 'UPDATE_THEME_STATUS',
+        themeStatus
+    }
+}
+
 export function setIsSidebarOpened( isOpen ) {
 	return {
 		type: 'SET_SIDEBAR_OPENED',

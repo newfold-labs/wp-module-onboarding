@@ -4,46 +4,52 @@ import { StepLoader } from '../../../components/Loaders';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import { getThemeStatus } from '../../../utils/api/themes';
+import { THEME_STATUS_INIT, THEME_STATUS_INSTALLING, THEME_STATUS_NOT_ACTIVE, THEME_STATUS_ACTIVE, DESIGN_STEPS_THEME, THEME_INSTALL_WAIT_TIMEOUT  } from '../../../../constants';
 
 const DesignStateHandler = ( { children } ) => {
-    const [ state, setState ] = useState( 'installing' );
 
-    const { settings } = useSelect(( select ) => {
+    const { storedThemeStatus } = useSelect(( select ) => {
         return {
-            settings: select(nfdOnboardingStore).getSettings()
+            storedThemeStatus: select(nfdOnboardingStore).getThemeStatus()
         };
     }, []);
 
-    const { updateSettings } = useDispatch( nfdOnboardingStore );
+    const { updateThemeStatus } = useDispatch( nfdOnboardingStore );
 
     const checkThemeStatus = async () => {
-        const themeStatus = await getThemeStatus( 'nfd_slug_yith_wonder' );
+        const themeStatus = await getThemeStatus( DESIGN_STEPS_THEME );
         return themeStatus.body.status;
+    }
+
+    const waitForInstall = () => {
+        setTimeout( async () => {
+            const themeStatus = await checkThemeStatus();
+            if ( themeStatus !== THEME_STATUS_ACTIVE) {
+                updateThemeStatus( THEME_STATUS_NOT_ACTIVE )
+            }
+        }, THEME_INSTALL_WAIT_TIMEOUT )
     }
 
 
     useEffect(async () => {
-        if ( settings.themeStatus === 'unknown' ) {
+        if ( storedThemeStatus === THEME_STATUS_INIT ) {
             const themeStatus = await checkThemeStatus();
             switch( themeStatus ) {
-                case 'installing':
-                    setTimeout( () => {
-                        updateSettings( settings ); 
-                    }, 30000 )
+                case THEME_STATUS_INSTALLING:
+                    waitForInstall();
                     break;
                 default:
-                    settings.themeStatus = themeStatus;
-                    updateSettings( settings );
+                    updateThemeStatus( themeStatus )
             }
         }
-        setState( settings.themeStatus );
-    }, [settings] )
+
+    }, [storedThemeStatus] )
 
     const handleRender = ( children ) => {
-        switch( state ) {
-            case 'not_active':
+        switch( storedThemeStatus ) {
+            case THEME_STATUS_NOT_ACTIVE :
                 return <p>Error</p>
-            case 'activated':
+            case  THEME_STATUS_ACTIVE:
                 return children
             default:
                 return <StepLoader />

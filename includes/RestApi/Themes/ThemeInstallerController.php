@@ -181,7 +181,8 @@ class ThemeInstallerController extends \WP_REST_Controller {
         }
 
         $position_in_queue = ThemeInstallTaskManager::status( $theme );
-        if ( $position_in_queue ) {
+
+        if ( $position_in_queue !== false) {
             return new \WP_REST_Response(
                 array(
                     'status' => 'installing',

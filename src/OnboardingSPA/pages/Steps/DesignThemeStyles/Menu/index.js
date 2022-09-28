@@ -10,7 +10,7 @@ import HeadingWithSubHeading from '../../../../components/HeadingWithSubHeading'
 import { useGlobalStylesOutput } from '../../../../utils/global-styles/use-global-styles-output';
 import { getPatterns } from '../../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../../utils/api/themes';
-import { VIEW_DESIGN_THEME_STYLES_MENU } from '../../../../../constants';
+import { VIEW_DESIGN_THEME_STYLES_MENU, THEME_STATUS_ACTIVE } from '../../../../../constants';
 import DesignStateHandler from '../../DesignStateHandler';
 
 const StepDesignThemeStylesMenu = () => {
@@ -24,7 +24,7 @@ const StepDesignThemeStylesMenu = () => {
 
 	const navigate = useNavigate();
 	const isLargeViewport = useViewportMatch( 'medium' );
-	const { currentStep, nextStep, currentData, storedPreviewSettings, settings } =
+	const { currentStep, nextStep, currentData, storedPreviewSettings, themeStatus } =
 		useSelect( ( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getStepFromPath(
@@ -35,7 +35,7 @@ const StepDesignThemeStylesMenu = () => {
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				storedPreviewSettings:
 					select( nfdOnboardingStore ).getPreviewSettings(),
-                settings: select( nfdOnboardingStore ).getSettings(),
+                themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 			};
 		}, [] );
 
@@ -67,8 +67,8 @@ const StepDesignThemeStylesMenu = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && settings.themeStatus === 'activated' ) getStylesAndPatterns();
-	}, [ isLoaded, settings ] );
+		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE ) getStylesAndPatterns();
+	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = ( idx ) => {
 		const selectedGlobalStyle = globalStyles[ idx ];

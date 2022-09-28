@@ -148,13 +148,18 @@ export function runtime( state = {}, action ) {
 	return state;
 }
 
-export function settings( state = { themeStatus: 'unknown' }, action ) {
+export function settings( state = { themeStatus: 'init' }, action ) {
 	switch ( action.type ) {
 		case 'UPDATE_SETTINGS':
 			return {
 				...state,
 				...action.settings,
 			};
+        case 'UPDATE_THEME_STATUS':
+            return {
+                ...state,
+                themeStatus: action.themeStatus
+            };
 	}
 
 	return state;
