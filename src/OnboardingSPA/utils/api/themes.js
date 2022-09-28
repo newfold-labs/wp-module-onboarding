@@ -24,4 +24,10 @@ const getGlobalStyles = async () => {
 	);
 };
 
-export { init, getGlobalStyles };
+const getThemeStatus = async ( theme ) => {
+    return await resolve(
+        apiFetch( { url: onboardingRestURL( 'themes/install/status' + ( theme ? `&theme=${theme}` : '' ) ) } )
+    )
+}
+
+export { init, getGlobalStyles, getThemeStatus };

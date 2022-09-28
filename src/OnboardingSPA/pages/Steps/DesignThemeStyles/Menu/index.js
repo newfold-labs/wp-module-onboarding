@@ -11,6 +11,7 @@ import { useGlobalStylesOutput } from '../../../../utils/global-styles/use-globa
 import { getPatterns } from '../../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../../utils/api/themes';
 import { VIEW_DESIGN_THEME_STYLES_MENU } from '../../../../../constants';
+import DesignStateHandler from '../../DesignStateHandler';
 
 const StepDesignThemeStylesMenu = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;
@@ -23,7 +24,7 @@ const StepDesignThemeStylesMenu = () => {
 
 	const navigate = useNavigate();
 	const isLargeViewport = useViewportMatch( 'medium' );
-	const { currentStep, nextStep, currentData, storedPreviewSettings } =
+	const { currentStep, nextStep, currentData, storedPreviewSettings, settings } =
 		useSelect( ( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getStepFromPath(
@@ -34,6 +35,7 @@ const StepDesignThemeStylesMenu = () => {
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				storedPreviewSettings:
 					select( nfdOnboardingStore ).getPreviewSettings(),
+                settings: select( nfdOnboardingStore ).getSettings(),
 			};
 		}, [] );
 
@@ -65,8 +67,8 @@ const StepDesignThemeStylesMenu = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded ) getStylesAndPatterns();
-	}, [ isLoaded ] );
+		if ( ! isLoaded && settings.themeStatus === 'activated' ) getStylesAndPatterns();
+	}, [ isLoaded, settings ] );
 
 	const handleClick = ( idx ) => {
 		const selectedGlobalStyle = globalStyles[ idx ];
@@ -97,6 +99,7 @@ const StepDesignThemeStylesMenu = () => {
 	};
 
 	return (
+        <DesignStateHandler>
 		<CommonLayout>
 			<div className="theme-styles-menu">
 				<HeadingWithSubHeading
@@ -116,6 +119,7 @@ const StepDesignThemeStylesMenu = () => {
 				</div>
 			</div>
 		</CommonLayout>
+        </DesignStateHandler>
 	);
 };
 

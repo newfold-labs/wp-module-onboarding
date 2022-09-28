@@ -119,7 +119,7 @@ class ThemeInstaller {
 	 */
 	public static function get_theme_stylesheet( $theme, $theme_type ) {
 		 $theme_list = Themes::get();
-		 return $theme_list[ $theme_type ][ $theme ]['stylesheet'];
+		 return isset( $theme_list[ $theme_type ][ $theme ]['stylesheet'] ) ? $theme_list[ $theme_type ][ $theme ]['stylesheet'] : false;
 	}
 
 	 /**

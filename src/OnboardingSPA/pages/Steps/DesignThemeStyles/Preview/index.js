@@ -14,6 +14,7 @@ import { getPatterns } from '../../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../../utils/global-styles/use-global-styles-output';
 import { conditionalSteps } from '../../../../data/routes/';
+import DesignStateHandler from '../../DesignStateHandler';
 
 const StepDesignThemeStylesPreview = () => {
 	const location = useLocation();
@@ -169,6 +170,7 @@ const StepDesignThemeStylesPreview = () => {
 	}, [ isLoaded ] );
 
 	return (
+        <DesignStateHandler>
 		<CommonLayout className="theme-styles-preview">
 			<div className="theme-styles-preview__checkbox">
 				<CheckboxControl
@@ -209,6 +211,7 @@ const StepDesignThemeStylesPreview = () => {
 				) }
 			</div>
 		</CommonLayout>
+        </DesignStateHandler>
 	);
 };
 

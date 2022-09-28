@@ -148,7 +148,7 @@ export function runtime( state = {}, action ) {
 	return state;
 }
 
-export function settings( state = {}, action ) {
+export function settings( state = { themeStatus: 'unknown' }, action ) {
 	switch ( action.type ) {
 		case 'UPDATE_SETTINGS':
 			return {

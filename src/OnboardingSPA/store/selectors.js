@@ -229,6 +229,10 @@ export function getPreviewSettings( state ) {
 	return state.runtime.previewSettings;
 }
 
+export function getSettings ( state ) {
+    return state.settings;
+}
+
 export function getStoreInfoSteps( state ) {
 	return state.flow.steps.storeInfoSteps;
 }
