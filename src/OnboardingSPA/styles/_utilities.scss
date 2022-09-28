@@ -7,6 +7,16 @@
 	}
 }
 
+@keyframes shine-placeholder {
+	0% {
+		background-position: -468px 0;
+	}
+
+	100% {
+		background-position: 468px 0;
+	}
+}
+
 .is-centered {
 	display: flex;
 	place-content: center;

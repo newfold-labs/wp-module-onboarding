@@ -1,8 +1,17 @@
-$grey-color: #EFEFEF;
+$grey-color: #f6f7f8;
+$main-color: var(--wp-admin-theme-color--rgb);
+$main-color-grey: var(--nfd-onboarding-light-gray);
+$main-color-light-rgb: var(--nfd-onboarding-white-rgb);
 
 .sidebar-skeleton {
     width: 100%;
     
+    &-divider {
+        width: 100%;
+        margin: 40px 0px;
+        border-top: 1px solid #bbb;
+    }
+
     &-header {
         width: 100%;
 
@@ -16,13 +25,11 @@ $grey-color: #EFEFEF;
                 width: 25px;
                 height: 25px;
                 margin-right: 15px;
-                background: $grey-color;
             }
 
             &-header {
                 width: 40%;
                 height: 15px;
-                background: $grey-color;
             }
         }
 
@@ -35,14 +42,12 @@ $grey-color: #EFEFEF;
                 width: 70%;
                 margin: 4px;
                 height: 15px;
-                background: $grey-color;
             }
 
             &-subheading-2 {
                 margin: 4px;
                 width: 50%;
                 height: 15px;
-                background: $grey-color;
             }
         }
     }
@@ -58,8 +63,7 @@ $grey-color: #EFEFEF;
 
         &-image{
             width: 95%;
-            height: 100%;
-            background: $grey-color;
+            height: 100%
         }
     }
 
@@ -70,42 +74,85 @@ $grey-color: #EFEFEF;
         &-line-1 {
             width: 45%;
             height: 15px;
-            margin-bottom: 15px;
-            background: $grey-color;
+            margin-bottom: 15px
         }
 
         &-line-2 {
             width: 70%;
             height: 15px;
-            margin-bottom: 5px;
-            background: $grey-color;
+            margin-bottom: 5px
         }
 
         &-line-3 {
             width: 90%;
             height: 15px;
-            margin-bottom: 5px;
-            background: $grey-color;
+            margin-bottom: 5px
         }
 
         &-line-4 {
             width: 80%;
             height: 15px;
-            margin-bottom: 5px;
-            background: $grey-color;
+            margin-bottom: 5px
         }
 
         &-line-5 {
             width: 30%;
             height: 15px;
-            margin-bottom: 5px;
-            background: $grey-color;
+            margin-bottom: 5px
         }
 
         &-buttons {
+            width: 100%;
+            display: flex;
+            margin-top: 50px;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
 
-            &-button-1 {}
-            &-button-2 {}
+            &-button-1 {
+                width: 100%;
+                margin: 8px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+                justify-content: center;
+                border: 1px solid rgba($main-color, 0.4) !important;
+            }
+
+            &-button-2 {
+                width: 70%;
+                height: 15px;
+                background-color: rgba($main-color, 0.4) !important;
+            }
+
+            &-button-3 {
+                width: 30%;
+                height: 15px;
+                background-color: rgba($main-color, 0.4) !important;
+            }
         }
     }
+}
+
+.shimmer {
+    background: $grey-color;
+    background-repeat: no-repeat;
+    animation: shine-placeholder 1.5s linear infinite;
+    background-image: linear-gradient(to right, 
+                    $grey-color 0%, 
+                    $main-color-grey 20%, 
+                    $grey-color 40%, 
+                    $grey-color 100%);
+}
+
+.shimmer-1 {
+    background: rgba($main-color, 0.4);
+    background-repeat: no-repeat;
+    animation: shine-placeholder 1.5s linear infinite;
+    background-image: linear-gradient(to right,
+            rgba($main-color, 0.4) 0%,
+            rgba($main-color, 0.6) 20%,
+            rgba($main-color, 0.4) 40%,
+            rgba($main-color, 0.4) 100%);
 }
