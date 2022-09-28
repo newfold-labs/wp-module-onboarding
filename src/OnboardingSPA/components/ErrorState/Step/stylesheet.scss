@@ -1,0 +1,9 @@
+.step-error-state {
+    &__logo {
+        background-image: var(--nfd-onboarding-step-error-icon);
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 400px;
+        width: 500px;
+    }
+}

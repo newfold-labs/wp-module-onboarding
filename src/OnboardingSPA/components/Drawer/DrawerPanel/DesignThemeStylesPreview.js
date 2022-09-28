@@ -6,6 +6,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
+import { THEME_STATUS_ACTIVE } from '../../../../constants';
 
 const DesignThemeStylesPreview = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;
@@ -14,18 +15,17 @@ const DesignThemeStylesPreview = () => {
 	const [ globalStyles, setGlobalStyles ] = useState();
 	const [ selectedStyle, setSelectedStyle ] = useState( '' );
 
-	const { currentStep, currentData, storedPreviewSettings } = useSelect(
-		( select ) => {
+	const { currentStep, currentData, storedPreviewSettings, themeStatus } =
+		useSelect( ( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				storedPreviewSettings:
 					select( nfdOnboardingStore ).getPreviewSettings(),
+				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 			};
-		},
-		[]
-	);
+		}, [] );
 
 	const { updatePreviewSettings, setCurrentOnboardingData } =
 		useDispatch( nfdOnboardingStore );
@@ -62,8 +62,9 @@ const DesignThemeStylesPreview = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded ) getStylesAndPatterns();
-	}, [ isLoaded ] );
+		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
+			getStylesAndPatterns();
+	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = ( idx ) => {
 		const selectedGlobalStyle = globalStyles[ idx ];

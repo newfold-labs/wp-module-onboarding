@@ -10,8 +10,11 @@ import HeadingWithSubHeading from '../../../../components/HeadingWithSubHeading'
 import { useGlobalStylesOutput } from '../../../../utils/global-styles/use-global-styles-output';
 import { getPatterns } from '../../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../../utils/api/themes';
-import { VIEW_DESIGN_THEME_STYLES_MENU, THEME_STATUS_ACTIVE } from '../../../../../constants';
-import DesignStateHandler from '../../DesignStateHandler';
+import {
+	VIEW_DESIGN_THEME_STYLES_MENU,
+	THEME_STATUS_ACTIVE,
+} from '../../../../../constants';
+import { DesignStateHandler } from '../../../../components/StateHandlers';
 
 const StepDesignThemeStylesMenu = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;
@@ -24,20 +27,25 @@ const StepDesignThemeStylesMenu = () => {
 
 	const navigate = useNavigate();
 	const isLargeViewport = useViewportMatch( 'medium' );
-	const { currentStep, nextStep, currentData, storedPreviewSettings, themeStatus } =
-		useSelect( ( select ) => {
-			return {
-				currentStep: select( nfdOnboardingStore ).getStepFromPath(
-					location.pathname
-				),
-				nextStep: select( nfdOnboardingStore ).getNextStep(),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				storedPreviewSettings:
-					select( nfdOnboardingStore ).getPreviewSettings(),
-                themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-			};
-		}, [] );
+	const {
+		currentStep,
+		nextStep,
+		currentData,
+		storedPreviewSettings,
+		themeStatus,
+	} = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getStepFromPath(
+				location.pathname
+			),
+			nextStep: select( nfdOnboardingStore ).getNextStep(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			storedPreviewSettings:
+				select( nfdOnboardingStore ).getPreviewSettings(),
+			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+		};
+	}, [] );
 
 	const {
 		setDrawerActiveView,
@@ -67,7 +75,8 @@ const StepDesignThemeStylesMenu = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE ) getStylesAndPatterns();
+		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
+			getStylesAndPatterns();
 	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = ( idx ) => {
@@ -99,27 +108,27 @@ const StepDesignThemeStylesMenu = () => {
 	};
 
 	return (
-        <DesignStateHandler>
-		<CommonLayout>
-			<div className="theme-styles-menu">
-				<HeadingWithSubHeading
-					title={ currentStep?.heading }
-					subtitle={ currentStep?.subheading }
-				/>
-				<div className="theme-styles-menu__list">
-					{ globalStyles &&
-						buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW ) }
+		<DesignStateHandler>
+			<CommonLayout>
+				<div className="theme-styles-menu">
+					<HeadingWithSubHeading
+						title={ currentStep?.heading }
+						subtitle={ currentStep?.subheading }
+					/>
+					<div className="theme-styles-menu__list">
+						{ globalStyles &&
+							buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW ) }
+					</div>
+					<div className="theme-styles-menu__list">
+						{ globalStyles &&
+							buildPreviews().slice(
+								MAX_PREVIEWS_PER_ROW,
+								globalStyles.length
+							) }
+					</div>
 				</div>
-				<div className="theme-styles-menu__list">
-					{ globalStyles &&
-						buildPreviews().slice(
-							MAX_PREVIEWS_PER_ROW,
-							globalStyles.length
-						) }
-				</div>
-			</div>
-		</CommonLayout>
-        </DesignStateHandler>
+			</CommonLayout>
+		</DesignStateHandler>
 	);
 };
 
