@@ -26,7 +26,7 @@ const SidebarSkeleton = () => {
                 <div className='shimmer sidebar-skeleton-footer-line-5' />
 
                 <div className='sidebar-skeleton-footer-buttons'>
-                    <div className='shimmer sidebar-skeleton-footer-buttons-button-1'>
+                    <div className='sidebar-skeleton-footer-buttons-button-1'>
                         <div className='shimmer-1 sidebar-skeleton-footer-buttons-button-2' />
                     </div>
                     <div className='shimmer-1 sidebar-skeleton-footer-buttons-button-3' />
