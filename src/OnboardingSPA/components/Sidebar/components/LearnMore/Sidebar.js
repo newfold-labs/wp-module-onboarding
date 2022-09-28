@@ -36,8 +36,7 @@ const LearnMoreSidebar = () => {
 			</PanelHeader>
 			<PanelBody initialOpen={ true }>
 				<PanelRow>
-					<SidebarSkeleton />
-					{/* <div className="nfd-onboarding-sidebar-learn-more__container">
+					<div className="nfd-onboarding-sidebar-learn-more__container">
 						<div className="nfd-onboarding-sidebar-learn-more__icon">
                               { currentStep?.Icon && <Icon icon={ currentStep.Icon } /> }
 						</div>
@@ -49,12 +48,12 @@ const LearnMoreSidebar = () => {
 								{ currentStep?.description }
 							</p>
 						</div>
-					</div> */}
+					</div>
 				</PanelRow>
 			</PanelBody>
 			{ currentStep?.SidebarComponents?.LearnMore && (
 				<PanelBody initialOpen={ true }>
-					<Suspense fallback={ <Fragment /> }>
+					<Suspense fallback={ <SidebarSkeleton /> }>
 						{ currentStep.SidebarComponents.LearnMore.map(
 							( SidebarComponent, index ) => {
 								return (
