@@ -1,53 +1,56 @@
 
 
-.color-palette {
-
-    width: 88%;
-    height: 30px;
+.theme-colors-preview {
+    flex: 1;
+    width: 100%;
+    margin: 16px;
     display: flex;
-    margin: 8px 4px;
-    padding: 10px 16px;
     align-items: center;
-    background-color: white;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
 
-    &-colors {
-
+    &__title-bar {
+        width: 70%;
+        height: 15px;
         display: flex;
         align-items: center;
+        background-color: #ccc;
         justify-content: space-between;
+        border: 1px solid transparent;
 
-        &-tert {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            position: absolute;
-            border: 1px solid rgba(0, 0, 0, 0.3);
-        }
+        &__browser {
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-        &-scnd {
-            left: 60px;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            position: absolute;
-            border: 1px solid rgba(0, 0, 0, 0.3);
-        }
-
-        &-prim {
-            left: 80px;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            position: absolute;
-            border: 1px solid rgba(0, 0, 0, 0.3);
+            &__dot {
+                background-color: #989ea7;
+                width: 8px;
+                margin: 3px;
+                height: 8px;
+                border-radius: 50%;
+                display: inline-block;
+            }
         }
     }
 
-    &-name{
-        color: black;
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 16px;
+    &__live-preview-container {
+        width: 70%;
+        min-height: 90%;
+        overflow: hidden;
+        position: relative;
+        align-items: center;
+        border: 1px solid #e3dfdf;
+        margin-bottom: 30px;
+
+        .live-preview {
+
+            &__container {
+
+                &-custom {
+                    width: 100%;
+                }
+            }
+        }
     }
 }
