@@ -7,7 +7,7 @@ const StepErrorState = ( { title, subtitle, error } ) => {
 		<CommonLayout className="step-error-state" isVerticallyCentered>
 			<HeadingWithSubHeading title={ title } subtitle={ subtitle } />
 			<div className="step-error-state__logo"></div>
-			<h3 className="nfd-main-heading__subtitle">{ error }</h3>
+			<h3 className="step-error-state__error">{ error }</h3>
 			<NeedHelpTag />
 		</CommonLayout>
 	);

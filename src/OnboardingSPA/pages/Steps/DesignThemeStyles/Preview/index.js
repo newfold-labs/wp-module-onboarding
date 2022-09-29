@@ -11,6 +11,7 @@ import CommonLayout from '../../../../components/Layouts/Common';
 import {
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
 	THEME_STATUS_ACTIVE,
+	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { getPatterns } from '../../../../utils/api/patterns';
@@ -60,6 +61,7 @@ const StepDesignThemeStylesPreview = () => {
 		updateDesignSteps,
 		updateAllSteps,
 		setCurrentOnboardingData,
+		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -74,7 +76,13 @@ const StepDesignThemeStylesPreview = () => {
 
 	const getStylesAndPatterns = async () => {
 		const pattern = await getPatterns( currentStep.patternId, true );
+		if ( pattern?.error ) {
+			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+		}
 		const globalStyles = await getGlobalStyles();
+		if ( globalStyles?.error ) {
+			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+		}
 		let selectedGlobalStyle;
 		if ( currentData.data.theme.variation ) {
 			selectedGlobalStyle = globalStyles.body.filter(

@@ -13,6 +13,7 @@ import { getGlobalStyles } from '../../../../utils/api/themes';
 import {
 	VIEW_DESIGN_THEME_STYLES_MENU,
 	THEME_STATUS_ACTIVE,
+	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../../constants';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
 
@@ -54,6 +55,7 @@ const StepDesignThemeStylesMenu = () => {
 		setIsDrawerSuppressed,
 		updatePreviewSettings,
 		setCurrentOnboardingData,
+		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -67,7 +69,13 @@ const StepDesignThemeStylesMenu = () => {
 
 	const getStylesAndPatterns = async () => {
 		const pattern = await getPatterns( currentStep.patternId, true );
+		if ( pattern?.error ) {
+			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+		}
 		const globalStyles = await getGlobalStyles();
+		if ( globalStyles?.error ) {
+			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+		}
 		setPattern( pattern?.body );
 		setGlobalStyles( globalStyles?.body );
 		setSelectedStyle( currentData.data.theme.variation );

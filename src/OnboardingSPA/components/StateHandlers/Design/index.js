@@ -55,7 +55,8 @@ const DesignStateHandler = ( { children } ) => {
 					break;
 				case THEME_STATUS_ACTIVE:
 					await loadPreviewSettings();
-                    break;
+					updateThemeStatus( themeStatus );
+					break;
 				default:
 					updateThemeStatus( themeStatus );
 			}
