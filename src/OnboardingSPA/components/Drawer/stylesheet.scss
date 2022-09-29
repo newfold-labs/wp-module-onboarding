@@ -338,7 +338,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
     justify-content: space-between;
 
     &-selected {
-        background-color: wheat;
+        background-color: $main-border-main;
     }
 
     &-colors {
