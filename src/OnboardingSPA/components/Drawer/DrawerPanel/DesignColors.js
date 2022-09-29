@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
+import { Popover, ColorPicker } from '@wordpress/components';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles } from '../../../utils/api/themes';
@@ -11,6 +12,12 @@ const DesignColors = () => {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [globalStyles, setGlobalStyles] = useState();
 	const [selectedColors, setSelectedColors] = useState();
+
+	const [showColorPicker, setShowColorPicker] = useState(false);
+	const [tertiaryColor, setTertiaryColor] = useState();
+	const [secondaryColor, setSecondaryColor] = useState();
+	const [backgroundColor, setBackgroundColor] = useState();
+	const [colorPickerCalledBy, setColorPickerCalledBy] = useState('');
 
 	const { currentStep, currentData, storedPreviewSettings } = useSelect(
 		(select) => {
@@ -146,6 +153,32 @@ const DesignColors = () => {
 		setThemeColorPalette(colorStyle, globalStyles);
 	};
 
+	const changeCustomPickerColor = (color) => {
+		console.log('Rannnn', colorPickerCalledBy);
+		
+		switch (colorPickerCalledBy) {
+			case 'background':
+				setBackgroundColor(color);
+				break;
+			case 'secondary':
+				setSecondaryColor(color);
+				break;
+			case 'tertiary':
+				setTertiaryColor(color);
+				break;
+		}
+	}
+
+	const selectCustomColor = (colorType) => {
+		const showColorPickerTemp = showColorPicker;
+		setShowColorPicker(!showColorPickerTemp);
+
+		if (!showColorPickerTemp)
+			setColorPickerCalledBy(colorType);
+		else
+			setColorPickerCalledBy('');
+	}
+
 	function buildPalettes () {
 		let paletteRenderedList = [];
 		for (const colorStyle in colorPalettes) {
@@ -171,6 +204,7 @@ const DesignColors = () => {
 	}
 
 	function buildCustomPalette () {
+		console.log(backgroundColor);
 		return (
 			<div className='custom-palette'>
 				<div className='custom-palette-top'>
@@ -178,19 +212,39 @@ const DesignColors = () => {
 					<div className='custom-palette-top-icon'>-</div>
 				</div>
 				<div className='custom-palette-below'>
-					<div className='custom-palette-below-row'>
-						<div className='custom-palette-below-row-icon'></div>
+					<div className='custom-palette-below-row'
+						onClick={(e) => selectCustomColor('background')}>
+						<div className='custom-palette-below-row-icon'
+							style={{ backgroundColor: `${backgroundColor ?? '#000'}` }}>
+							{backgroundColor ? <div className='custom-palette-below-row-icon-selected'>?</div> : null}
+							</div>
 						<div className='custom-palette-below-row-text'>Background</div>
 					</div>
-					<div className='custom-palette-below-row'>
-						<div className='custom-palette-below-row-icon'></div>
+					<div className='custom-palette-below-row'
+						onClick={(e) => selectCustomColor('secondary')}>
+						<div className='custom-palette-below-row-icon'
+							style={{ backgroundColor: `${secondaryColor ?? '#fff'}` }}>
+							{secondaryColor ? <div className='custom-palette-below-row-icon-selected'>?</div> : null}
+							</div>
 						<div className='custom-palette-below-row-text'>Secondary</div>
 					</div>
-					<div className='custom-palette-below-row'>
-						<div className='custom-palette-below-row-icon'></div>
+					<div className='custom-palette-below-row'
+						onClick={(e) => selectCustomColor('tertiary')}>
+						<div className='custom-palette-below-row-icon'
+							style={{ backgroundColor: `${tertiaryColor ?? '#0000ff'}` }}>
+							{tertiaryColor ? <div className='custom-palette-below-row-icon-selected'>?</div> : null}
+							</div>
 						<div className='custom-palette-below-row-text'>Tertiary</div>
 					</div>
 				</div>
+				{showColorPicker && (
+					<Popover>
+						<ColorPicker
+							onChange={changeCustomPickerColor}
+							defaultValue="#fff"
+						/>
+					</Popover>
+				)}
 			</div>
 		);
 	}

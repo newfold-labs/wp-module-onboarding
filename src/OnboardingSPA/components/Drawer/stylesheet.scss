@@ -332,6 +332,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
     height: 30px;
     display: flex;
     margin: 8px 4px;
+    cursor: pointer;
     padding: 10px 16px;
     align-items: center;
     background-color: white;
@@ -401,6 +402,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
             height: 50px;
             color: black;
             display: flex;
+            cursor: pointer;
             align-items: center;
             background-color: white;
             justify-content: start;
@@ -411,8 +413,11 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
                 height: 22px;
                 margin: 2px 12px;
                 border-radius: 50%;
-                background-color: red;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 border: 1px solid rgba(0, 0, 0, 0.3);
+
             }
         }
     }
