@@ -28,21 +28,21 @@ const DesignColors = () => {
 	const { updatePreviewSettings, setCurrentOnboardingData } =
 		useDispatch(nfdOnboardingStore);
 
-	function setThemeColorPalette(colorStyle) {
-		let selectedGlobalStyle = globalStyles;
+	async function setThemeColorPalette(colorStyle, globalStylesTemp) {
+		let selectedGlobalStyle = globalStylesTemp;
 		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
 
 		if (colorStyle && selectedThemeColorPalette) {
 			for (let idx = 0; idx < selectedThemeColorPalette.length; idx++) {
 				switch (selectedThemeColorPalette[idx]?.slug) {
 					case 'primary':
-						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][2];
+						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][0];
 						break;
 					case 'secondary':
 						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][1];
 						break;
 					case 'tertiary':
-						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][0];
+						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][2];
 						break;
 					default:
 						break;
@@ -50,9 +50,8 @@ const DesignColors = () => {
 			}
 
 			selectedGlobalStyle.settings.color.palette.theme = selectedThemeColorPalette;
-
-			setGlobalStyles(selectedGlobalStyle);
-			updatePreviewSettings(
+			await setGlobalStyles(selectedGlobalStyle);
+			await updatePreviewSettings(
 				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
 			);
 		}
@@ -86,8 +85,8 @@ const DesignColors = () => {
 			selectedColors = currentData.data.palette[0];
 		} 
 		setSelectedColors(selectedColors);
+		setThemeColorPalette(currentData.data.palette[0]['slug'], selectedGlobalStyle);
 		setIsLoaded(true);
-		setThemeColorPalette(currentData.data.palette[0]['slug']);
 
 	};
 
@@ -137,14 +136,14 @@ const DesignColors = () => {
 		const selectedColorsTemp = {
 			"slug": colorStyle,
 			"name": colorStyle?.charAt(0).toUpperCase() + colorStyle?.slice(1),
-			"color": colorPalettes[colorStyle],
+			"color": colorPalettes[colorStyle].reverse(),
 			"supports": ["yith-wonder"]
 		};
 		setSelectedColors(selectedColorsTemp);
 		currentData.data.palette[0] = selectedColorsTemp;
 		setCurrentOnboardingData(currentData);
 
-		setThemeColorPalette(colorStyle);
+		setThemeColorPalette(colorStyle, globalStyles);
 	};
 
 	function buildPalettes () {
