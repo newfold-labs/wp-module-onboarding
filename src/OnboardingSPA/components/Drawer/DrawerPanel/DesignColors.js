@@ -159,12 +159,15 @@ const DesignColors = () => {
 		switch (colorPickerCalledBy) {
 			case 'background':
 				setBackgroundColor(color);
+				setShowColorPicker(false);
 				break;
 			case 'secondary':
 				setSecondaryColor(color);
+				setShowColorPicker(false);
 				break;
 			case 'tertiary':
 				setTertiaryColor(color);
+				setShowColorPicker(false);
 				break;
 		}
 	}
@@ -216,7 +219,7 @@ const DesignColors = () => {
 						onClick={(e) => selectCustomColor('background')}>
 						<div className='custom-palette-below-row-icon'
 							style={{ backgroundColor: `${backgroundColor ?? '#000'}` }}>
-							{backgroundColor ? <div className='custom-palette-below-row-icon-selected'>?</div> : null}
+							{backgroundColor ? <div className='custom-palette-below-row-icon-selected'>&#10003;</div> : null}
 							</div>
 						<div className='custom-palette-below-row-text'>Background</div>
 					</div>
@@ -224,7 +227,7 @@ const DesignColors = () => {
 						onClick={(e) => selectCustomColor('secondary')}>
 						<div className='custom-palette-below-row-icon'
 							style={{ backgroundColor: `${secondaryColor ?? '#fff'}` }}>
-							{secondaryColor ? <div className='custom-palette-below-row-icon-selected'>?</div> : null}
+							{secondaryColor ? <div className='custom-palette-below-row-icon-selected'>&#10003;</div> : null}
 							</div>
 						<div className='custom-palette-below-row-text'>Secondary</div>
 					</div>
@@ -232,7 +235,7 @@ const DesignColors = () => {
 						onClick={(e) => selectCustomColor('tertiary')}>
 						<div className='custom-palette-below-row-icon'
 							style={{ backgroundColor: `${tertiaryColor ?? '#0000ff'}` }}>
-							{tertiaryColor ? <div className='custom-palette-below-row-icon-selected'>?</div> : null}
+							{tertiaryColor ? <div className='custom-palette-below-row-icon-selected'>&#10003;</div> : null}
 							</div>
 						<div className='custom-palette-below-row-text'>Tertiary</div>
 					</div>
