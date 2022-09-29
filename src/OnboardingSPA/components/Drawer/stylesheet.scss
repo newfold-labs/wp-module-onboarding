@@ -381,3 +381,39 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
         line-height: 16px;
     }
 }
+
+.custom-palette {
+    width: 88%;
+    margin: 30px 2px;
+    padding: 20px 16px;
+    background: $main-border-main;
+
+    &-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &-below {
+        margin-top: 16px;
+
+        &-row {
+            height: 50px;
+            color: black;
+            display: flex;
+            align-items: center;
+            background-color: white;
+            justify-content: start;
+            border: 0.5px solid rgba(0, 0, 0, 0.3);
+
+            &-icon {
+                width: 22px;
+                height: 22px;
+                margin: 2px 12px;
+                border-radius: 50%;
+                background-color: red;
+                border: 1px solid rgba(0, 0, 0, 0.3);
+            }
+        }
+    }
+}

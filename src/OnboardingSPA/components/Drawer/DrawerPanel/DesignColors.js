@@ -170,10 +170,36 @@ const DesignColors = () => {
 		return paletteRenderedList;
 	}
 
+	function buildCustomPalette () {
+		return (
+			<div className='custom-palette'>
+				<div className='custom-palette-top'>
+					<div className='custom-palette-top-text'>SELECT CUSTOM COLORS</div>
+					<div className='custom-palette-top-icon'>-</div>
+				</div>
+				<div className='custom-palette-below'>
+					<div className='custom-palette-below-row'>
+						<div className='custom-palette-below-row-icon'></div>
+						<div className='custom-palette-below-row-text'>Background</div>
+					</div>
+					<div className='custom-palette-below-row'>
+						<div className='custom-palette-below-row-icon'></div>
+						<div className='custom-palette-below-row-text'>Secondary</div>
+					</div>
+					<div className='custom-palette-below-row'>
+						<div className='custom-palette-below-row-icon'></div>
+						<div className='custom-palette-below-row-text'>Tertiary</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div style={{ padding: '0 4px' }}>
 			<h2>{__('Color Palettes', 'wp-module-onboarding')}</h2>
 			{buildPalettes()}
+			{buildCustomPalette()}
 		</div>
 	);
 };
