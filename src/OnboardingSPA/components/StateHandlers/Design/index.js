@@ -1,5 +1,6 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import { StepLoader } from '../../Loaders';
 
 import { store as nfdOnboardingStore } from '../../../store';
@@ -68,12 +69,12 @@ const DesignStateHandler = ( { children } ) => {
 			case THEME_STATUS_NOT_ACTIVE:
 				return (
 					<StepErrorState
-						title={ 'Preparing your Bluehost design studio' }
+						title={ __( 'Preparing your Bluehost design studio', 'wp-module-onboarding' ) }
 						subtitle={
-							'Hang tight while we show you some of the best WordPress has to offer!'
+							__( 'Hang tight while we show you some of the best WordPress has to offer!', 'wp-module-onboarding' )
 						}
 						error={
-							'Uh-oh, something went wrong. Please contact support.'
+							__( 'Uh-oh, something went wrong. Please contact support.', 'wp-module-onboarding' )
 						}
 					/>
 				);
@@ -82,9 +83,9 @@ const DesignStateHandler = ( { children } ) => {
 			default:
 				return (
 					<StepLoader
-						title={ 'Preparing your Bluehost design studio' }
+						title={ __( 'Preparing your Bluehost design studio', 'wp-module-onboarding' ) }
 						subtitle={
-							'Hang tight while we show you some of the best WordPress has to offer!'
+							__( 'Hang tight while we show you some of the best WordPress has to offer!', 'wp-module-onboarding' )
 						}
 					/>
 				);

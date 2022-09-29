@@ -54,12 +54,12 @@ class ThemeInstallerController extends \WP_REST_Controller {
 
 		\register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/install/status',
+			$this->rest_base . '/status',
 			array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_install_status' ),
-					'args'                => $this->get_install_status_args(),
+					'callback'            => array( $this, 'get_status' ),
+					'args'                => $this->get_status_args(),
 					// 'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -92,7 +92,7 @@ class ThemeInstallerController extends \WP_REST_Controller {
 		 );
 	}
 
-    public function get_install_status_args() {
+    public function get_status_args() {
         return array(
             'theme' => array(
                 'type' => 'string',
@@ -167,7 +167,7 @@ class ThemeInstallerController extends \WP_REST_Controller {
 		 return $theme_install_task->execute();
 	}
 
-    public function get_install_status( \WP_REST_Request $request ) {
+    public function get_status( \WP_REST_Request $request ) {
         $theme = $request->get_param( 'theme' );
         $activated = $request->get_param( 'activated' );
 
@@ -186,7 +186,7 @@ class ThemeInstallerController extends \WP_REST_Controller {
             return new \WP_REST_Response(
                 array(
                     'status' => 'installing',
-                    'estimate' => ( ( $position_in_queue + 1 ) * 30 )
+                    'estimate' => ( ( $position_in_queue + 1 ) * 10 )
                 ),
                 200
             );

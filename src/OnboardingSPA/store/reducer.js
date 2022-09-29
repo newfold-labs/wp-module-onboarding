@@ -1,6 +1,6 @@
 import { combineReducers } from '@wordpress/data';
 
-import { VIEW_NAV_PRIMARY } from '../../constants';
+import { VIEW_NAV_PRIMARY, THEME_STATUS_INIT, PLUGIN_STATUS_INIT } from '../../constants';
 
 import {
 	routes as initialRoutes,
@@ -148,7 +148,7 @@ export function runtime( state = {}, action ) {
 	return state;
 }
 
-export function settings( state = { themeStatus: 'init' }, action ) {
+export function settings( state = { themeStatus: THEME_STATUS_INIT, pluginStatus: PLUGIN_STATUS_INIT  }, action ) {
 	switch ( action.type ) {
 		case 'UPDATE_SETTINGS':
 			return {
@@ -160,6 +160,11 @@ export function settings( state = { themeStatus: 'init' }, action ) {
                 ...state,
                 themeStatus: action.themeStatus
             };
+        case 'UPDATE_PLUGIN_STATUS':
+                return {
+                    ...state,
+                    pluginStatus: action.pluginStatus
+                };
 	}
 
 	return state;

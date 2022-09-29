@@ -125,6 +125,13 @@ export function updateThemeStatus( themeStatus ) {
     }
 }
 
+export function updatePluginStatus( pluginStatus ) {
+    return {
+        type: 'UPDATE_PLUGIN_STATUS',
+        pluginStatus
+    }
+}
+
 export function setIsSidebarOpened( isOpen ) {
 	return {
 		type: 'SET_SIDEBAR_OPENED',

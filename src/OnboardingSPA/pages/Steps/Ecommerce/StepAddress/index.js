@@ -12,6 +12,7 @@ import { store as nfdOnboardingStore } from '../../../../store';
 import content from '../content.json';
 import countries from '../countries.json';
 import { useWPSettings } from '../useWPSettings';
+import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 
 const StepAddress = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -107,6 +108,7 @@ const StepAddress = () => {
 		});
 	}
 	return (
+        <EcommerceStateHandler>
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard className='ecommerce-step nfd-ecommerce-address-step'>
 				<div className='onboarding-ecommerce-step'>
@@ -243,6 +245,7 @@ const StepAddress = () => {
 				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>
+        </EcommerceStateHandler>
 	);
 };
 

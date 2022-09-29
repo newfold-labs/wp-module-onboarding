@@ -65,6 +65,19 @@ class PluginsController {
 				),
 			)
 		);
+
+        \register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/status',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_status' ),
+					'args'                => $this->get_status_args(),
+					// 'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
 	}
 
 	/**
@@ -105,6 +118,19 @@ class PluginsController {
 			),
 		);
 	}
+
+    public function get_status_args() {
+        return array(
+            'plugin' => array(
+                'type' => 'string',
+                'required' => true,
+            ),
+            'activated' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+        );
+    }
 
 	/**
 	 * Verify caller has permissions to install plugins.
@@ -182,4 +208,38 @@ class PluginsController {
 
 		return $plugin_install_task->execute();
 	}
+
+    public function get_status( \WP_REST_Request $request ) {
+        $plugin = $request->get_param( 'plugin' );
+        $activated = $request->get_param( 'activated' );
+
+        if ( PluginInstaller::exists( $plugin, $activated ) ) {
+            return new \WP_REST_Response(
+                array(
+                    'status' => $activated ? 'activated' : 'installed'
+                ),
+                200
+            );
+        }
+
+        $position_in_queue = PluginInstallTaskManager::status( $plugin );
+
+        if ( $position_in_queue !== false) {
+            return new \WP_REST_Response(
+                array(
+                    'status' => 'installing',
+                    'estimate' => ( ( $position_in_queue + 1 ) * 30 )
+                ),
+                200
+            );
+        }
+
+        return new \WP_REST_Response(
+            array(
+                'status' => 'not_active'
+            ),
+            200
+        );
+
+    }
 }

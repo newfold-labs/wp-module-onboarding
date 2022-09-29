@@ -165,4 +165,9 @@ class PluginInstallTaskManager {
 
 		 return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
 	}
+
+    public static function status( $plugin ) {
+        $plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
+        return array_search( $plugin, array_column( $plugins, 'slug' ) );
+    }
 }

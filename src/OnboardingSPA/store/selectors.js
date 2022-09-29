@@ -237,6 +237,10 @@ export function getThemeStatus ( state ) {
     return state.settings.themeStatus;
 }
 
+export function getPluginStatus ( state ) {
+    return state.settings.pluginStatus;
+}
+
 export function getStoreInfoSteps( state ) {
 	return state.flow.steps.storeInfoSteps;
 }
