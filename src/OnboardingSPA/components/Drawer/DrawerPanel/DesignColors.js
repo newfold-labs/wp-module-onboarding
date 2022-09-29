@@ -30,10 +30,19 @@ const DesignColors = () => {
 
 	const getStylesAndPatterns = async () => {
 		const globalStyles = await getGlobalStyles();
-		setGlobalStyles(globalStyles?.body);
+		let selectedGlobalStyle;
+		if (currentData.data.theme.variation) {
+			selectedGlobalStyle = globalStyles.body.filter(
+				(globalStyle) =>
+					globalStyle.title === currentData.data.theme.variation
+			)[0];
+		} else {
+			selectedGlobalStyle = globalStyles.body[0];
+		}
+		setGlobalStyles(selectedGlobalStyle);
 
 		let selectedColors;
-		if (currentData?.data?.palette[0]?.slug === "") {
+		if (!currentData?.data?.palette?.hasOwnProperty('colorStyle')) {
 			currentData.data.palette = {
 				'colorStyle': '',
 				'colors': []
@@ -42,7 +51,10 @@ const DesignColors = () => {
 			setCurrentOnboardingData(currentData);
 		}
 		else {
-			selectedColors = currentData.data.palette;
+			selectedColors = {
+				'colorStyle': currentData.data.palette['colorStyle'],
+				'colors': currentData.data.palette['colors']
+			};
 		} 
 		setSelectedColors(selectedColors);
 		setIsLoaded(true);
@@ -98,6 +110,35 @@ const DesignColors = () => {
 		setSelectedColors(selectedColorsTemp);
 		currentData.data.palette = selectedColorsTemp;
 		setCurrentOnboardingData(currentData);
+
+		let selectedGlobalStyle = globalStyles;
+		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
+
+		if(selectedThemeColorPalette) {
+			for (let idx = 0; idx < selectedThemeColorPalette.length; idx++) {
+				switch (selectedThemeColorPalette[idx]?.slug) {
+					case 'primary':
+						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][2];
+						break;
+					case 'secondary':
+						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][1];
+						break;
+					case 'tertiary':
+						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][0];
+						break;
+					default:
+						break;
+				}
+			}
+
+			selectedGlobalStyle.settings.color.palette.theme = selectedThemeColorPalette;
+
+			setGlobalStyles(selectedGlobalStyle);
+			updatePreviewSettings(
+				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
+			);
+		}
+
 	};
 
 	function buildPalettes () {
