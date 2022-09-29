@@ -28,6 +28,36 @@ const DesignColors = () => {
 	const { updatePreviewSettings, setCurrentOnboardingData } =
 		useDispatch(nfdOnboardingStore);
 
+	function setThemeColorPalette(colorStyle) {
+		let selectedGlobalStyle = globalStyles;
+		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
+
+		if (colorStyle && selectedThemeColorPalette) {
+			for (let idx = 0; idx < selectedThemeColorPalette.length; idx++) {
+				switch (selectedThemeColorPalette[idx]?.slug) {
+					case 'primary':
+						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][2];
+						break;
+					case 'secondary':
+						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][1];
+						break;
+					case 'tertiary':
+						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][0];
+						break;
+					default:
+						break;
+				}
+			}
+
+			selectedGlobalStyle.settings.color.palette.theme = selectedThemeColorPalette;
+
+			setGlobalStyles(selectedGlobalStyle);
+			updatePreviewSettings(
+				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
+			);
+		}
+	}
+
 	const getStylesAndPatterns = async () => {
 		const globalStyles = await getGlobalStyles();
 		let selectedGlobalStyle;
@@ -42,22 +72,23 @@ const DesignColors = () => {
 		setGlobalStyles(selectedGlobalStyle);
 
 		let selectedColors;
-		if (!currentData?.data?.palette?.hasOwnProperty('colorStyle')) {
-			currentData.data.palette = {
-				'colorStyle': '',
-				'colors': []
+		if (!currentData?.data?.palette[0]?.hasOwnProperty('supports')) {
+			currentData.data.palette[0] = {
+				"slug": "",
+       			"name": "",
+       			"color": [],
+				"supports": ["yith-wonder"]
 			};
-			selectedColors = currentData.data.palette;
+			selectedColors = currentData.data.palette[0];
 			setCurrentOnboardingData(currentData);
 		}
 		else {
-			selectedColors = {
-				'colorStyle': currentData.data.palette['colorStyle'],
-				'colors': currentData.data.palette['colors']
-			};
+			selectedColors = currentData.data.palette[0];
 		} 
 		setSelectedColors(selectedColors);
 		setIsLoaded(true);
+		setThemeColorPalette(currentData.data.palette[0]['slug']);
+
 	};
 
 	useEffect(() => {
@@ -104,48 +135,23 @@ const DesignColors = () => {
 
 	const handleClick = (colorStyle) => {
 		const selectedColorsTemp = {
-			'colorStyle': colorStyle,
-			'colors': colorPalettes[colorStyle]
+			"slug": colorStyle,
+			"name": colorStyle?.charAt(0).toUpperCase() + colorStyle?.slice(1),
+			"color": colorPalettes[colorStyle],
+			"supports": ["yith-wonder"]
 		};
 		setSelectedColors(selectedColorsTemp);
-		currentData.data.palette = selectedColorsTemp;
+		currentData.data.palette[0] = selectedColorsTemp;
 		setCurrentOnboardingData(currentData);
 
-		let selectedGlobalStyle = globalStyles;
-		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
-
-		if(selectedThemeColorPalette) {
-			for (let idx = 0; idx < selectedThemeColorPalette.length; idx++) {
-				switch (selectedThemeColorPalette[idx]?.slug) {
-					case 'primary':
-						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][2];
-						break;
-					case 'secondary':
-						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][1];
-						break;
-					case 'tertiary':
-						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][0];
-						break;
-					default:
-						break;
-				}
-			}
-
-			selectedGlobalStyle.settings.color.palette.theme = selectedThemeColorPalette;
-
-			setGlobalStyles(selectedGlobalStyle);
-			updatePreviewSettings(
-				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
-			);
-		}
-
+		setThemeColorPalette(colorStyle);
 	};
 
 	function buildPalettes () {
 		let paletteRenderedList = [];
 		for (const colorStyle in colorPalettes) {
 			paletteRenderedList.push(
-				<div className={`color-palette ${colorStyle == selectedColors?.colorStyle ? 'color-palette-selected' : ''} `}
+				<div className={`color-palette ${colorStyle == selectedColors?.slug ? 'color-palette-selected' : ''} `}
 					onClick={(e) => handleClick(colorStyle)}>
 					<div className='color-palette-colors'>
 						<div className='color-palette-colors-tert'
