@@ -31,19 +31,22 @@ const DesignThemeStylesPreview = () => {
 		useDispatch( nfdOnboardingStore );
 
 	const getStylesAndPatterns = async () => {
-		const pattern = await getPatterns( currentStep.patternId, true );
-		const globalStyles = await getGlobalStyles();
-		setPattern( pattern?.body );
-		setGlobalStyles( globalStyles?.body );
-		let selectedStyle;
+		const patternResponse = await getPatterns(
+			currentStep.patternId,
+			true
+		);
+		const globalStylesResponse = await getGlobalStyles();
+		setPattern( patternResponse?.body );
+		setGlobalStyles( globalStylesResponse?.body );
+		let selectedGlobalStyle;
 		if ( currentData.data.theme.variation ) {
-			selectedStyle = currentData.data.theme.variation;
+			selectedGlobalStyle = currentData.data.theme.variation;
 		} else {
-			selectedStyle = globalStyles.body[ 0 ].title;
-			currentData.data.theme.variation = selectedStyle;
+			selectedGlobalStyle = globalStylesResponse.body[ 0 ].title;
+			currentData.data.theme.variation = selectedGlobalStyle;
 			setCurrentOnboardingData( currentData );
 		}
-		setSelectedStyle( selectedStyle );
+		setSelectedStyle( selectedGlobalStyle );
 		if (
 			document.getElementsByClassName(
 				'theme-styles-preview--drawer__list__item__title-bar--selected'
@@ -80,6 +83,7 @@ const DesignThemeStylesPreview = () => {
 		return globalStyles?.map( ( globalStyle, idx ) => {
 			return (
 				<LivePreviewSelectableCard
+					key={ idx }
 					className={ 'theme-styles-preview--drawer__list__item' }
 					selected={ globalStyle.title === selectedStyle }
 					blockGrammer={ pattern }

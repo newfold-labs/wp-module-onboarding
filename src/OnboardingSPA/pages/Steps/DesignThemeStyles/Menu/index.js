@@ -68,16 +68,19 @@ const StepDesignThemeStylesMenu = () => {
 	}, [] );
 
 	const getStylesAndPatterns = async () => {
-		const pattern = await getPatterns( currentStep.patternId, true );
-		if ( pattern?.error ) {
+		const patternsResponse = await getPatterns(
+			currentStep.patternId,
+			true
+		);
+		if ( patternsResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
-		const globalStyles = await getGlobalStyles();
-		if ( globalStyles?.error ) {
+		const globalStylesResponse = await getGlobalStyles();
+		if ( globalStylesResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
-		setPattern( pattern?.body );
-		setGlobalStyles( globalStyles?.body );
+		setPattern( patternsResponse?.body );
+		setGlobalStyles( globalStylesResponse?.body );
 		setSelectedStyle( currentData.data.theme.variation );
 		setIsLoaded( true );
 	};
@@ -102,6 +105,7 @@ const StepDesignThemeStylesMenu = () => {
 		return globalStyles?.map( ( globalStyle, idx ) => {
 			return (
 				<LivePreviewSelectableCard
+					key={ idx }
 					className={ 'theme-styles-menu__list__item' }
 					selected={ globalStyle.title === selectedStyle }
 					blockGrammer={ pattern }

@@ -164,8 +164,8 @@ class ThemeInstallTaskManager {
 		 return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
 	}
 
-    public static function status( $theme ) {
-        $themes = \get_option( Options::get_option_name( self::$queue_name ), array() );
-        return array_search( $theme, array_column( $themes, 'slug' ) );
-    }
+	public static function status( $theme ) {
+		$themes = \get_option( Options::get_option_name( self::$queue_name ), array() );
+		return array_search( $theme, array_column( $themes, 'slug' ) );
+	}
 }

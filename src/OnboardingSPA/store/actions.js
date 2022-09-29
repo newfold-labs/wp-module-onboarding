@@ -119,17 +119,17 @@ export function updateSettings( settings ) {
 }
 
 export function updateThemeStatus( themeStatus ) {
-    return {
-        type: 'UPDATE_THEME_STATUS',
-        themeStatus
-    }
+	return {
+		type: 'UPDATE_THEME_STATUS',
+		themeStatus,
+	};
 }
 
-export function updatePluginStatus( pluginStatus ) {
-    return {
-        type: 'UPDATE_PLUGIN_STATUS',
-        pluginStatus
-    }
+export function updatePluginsStatus( pluginsStatus ) {
+	return {
+		type: 'UPDATE_PLUGINS_STATUS',
+		pluginsStatus,
+	};
 }
 
 export function setIsSidebarOpened( isOpen ) {

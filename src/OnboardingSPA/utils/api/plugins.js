@@ -22,7 +22,11 @@ export const init = () => {
 };
 
 export const getPluginStatus = async ( plugin ) => {
-    return await resolve(
-        apiFetch( { url: onboardingRestURL( 'plugins/status' + ( plugin ? `&plugin=${plugin}` : '' ) ) } )
-    )
-}
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL(
+				'plugins/status' + ( plugin ? `&plugin=${ plugin }` : '' )
+			),
+		} )
+	);
+};

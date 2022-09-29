@@ -37,6 +37,6 @@ export const getPreviewSettings = async () => {
     return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'settings/preview' ),
-		} ).then()
+		} )
 	);
 }

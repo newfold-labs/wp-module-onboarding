@@ -75,48 +75,52 @@ const StepDesignThemeStylesPreview = () => {
 	}, [] );
 
 	const getStylesAndPatterns = async () => {
-		const pattern = await getPatterns( currentStep.patternId, true );
-		if ( pattern?.error ) {
+		const patternsResponse = await getPatterns(
+			currentStep.patternId,
+			true
+		);
+		if ( patternsResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
-		const globalStyles = await getGlobalStyles();
-		if ( globalStyles?.error ) {
+		const globalStylesResponse = await getGlobalStyles();
+		if ( globalStylesResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
 		let selectedGlobalStyle;
 		if ( currentData.data.theme.variation ) {
-			selectedGlobalStyle = globalStyles.body.filter(
+			selectedGlobalStyle = globalStylesResponse.body.filter(
 				( globalStyle ) =>
 					globalStyle.title === currentData.data.theme.variation
 			)[ 0 ];
 		} else {
-			selectedGlobalStyle = globalStyles.body[ 0 ];
+			selectedGlobalStyle = globalStylesResponse.body[ 0 ];
 		}
 		updatePreviewSettings(
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
-		setPattern( pattern?.body );
+		setPattern( patternsResponse?.body );
 		setIsLoaded( true );
 	};
 
 	const addColorAndTypographyRoutes = () => {
+		const updates = removeColorAndTypographyRoutes();
 		const steps = [
 			conditionalSteps.designColors,
 			conditionalSteps.designTypography,
 		];
 		return {
 			routes: orderBy(
-				routes.concat( steps ),
+				updates.routes.concat( steps ),
 				[ 'priority' ],
 				[ 'asc' ]
 			),
 			allSteps: orderBy(
-				allSteps.concat( steps ),
+				updates.allSteps.concat( steps ),
 				[ 'priority' ],
 				[ 'asc' ]
 			),
 			designSteps: orderBy(
-				designSteps.concat( steps ),
+				updates.designSteps.concat( steps ),
 				[ 'priority' ],
 				[ 'asc' ]
 			),

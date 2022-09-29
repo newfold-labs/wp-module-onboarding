@@ -1,8 +1,8 @@
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useEffect } from '@wordpress/element';
+import { Fragment, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { StepLoader } from '../../Loaders';
 
+import { StepLoader } from '../../Loaders';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getThemeStatus } from '../../../utils/api/themes';
 import {
@@ -28,12 +28,17 @@ const DesignStateHandler = ( { children } ) => {
 
 	const checkThemeStatus = async () => {
 		const themeStatus = await getThemeStatus( DESIGN_STEPS_THEME );
+		if ( themeStatus?.error ) {
+			return THEME_STATUS_NOT_ACTIVE;
+		}
 		return themeStatus.body.status;
 	};
 
 	const loadPreviewSettings = async () => {
 		const previewSettings = await getPreviewSettings();
-		updatePreviewSettings( previewSettings.body );
+		if ( previewSettings?.body ) {
+			updatePreviewSettings( previewSettings.body );
+		}
 	};
 
 	const waitForInstall = () => {
@@ -69,13 +74,18 @@ const DesignStateHandler = ( { children } ) => {
 			case THEME_STATUS_NOT_ACTIVE:
 				return (
 					<StepErrorState
-						title={ __( 'Preparing your Bluehost design studio', 'wp-module-onboarding' ) }
-						subtitle={
-							__( 'Hang tight while we show you some of the best WordPress has to offer!', 'wp-module-onboarding' )
-						}
-						error={
-							__( 'Uh-oh, something went wrong. Please contact support.', 'wp-module-onboarding' )
-						}
+						title={ __(
+							'Preparing your Bluehost design studio',
+							'wp-module-onboarding'
+						) }
+						subtitle={ __(
+							'Hang tight while we show you some of the best WordPress has to offer!',
+							'wp-module-onboarding'
+						) }
+						error={ __(
+							'Uh-oh, something went wrong. Please contact support.',
+							'wp-module-onboarding'
+						) }
 					/>
 				);
 			case THEME_STATUS_ACTIVE:
@@ -83,16 +93,20 @@ const DesignStateHandler = ( { children } ) => {
 			default:
 				return (
 					<StepLoader
-						title={ __( 'Preparing your Bluehost design studio', 'wp-module-onboarding' ) }
-						subtitle={
-							__( 'Hang tight while we show you some of the best WordPress has to offer!', 'wp-module-onboarding' )
-						}
+						title={ __(
+							'Preparing your Bluehost design studio',
+							'wp-module-onboarding'
+						) }
+						subtitle={ __(
+							'Hang tight while we show you some of the best WordPress has to offer!',
+							'wp-module-onboarding'
+						) }
 					/>
 				);
 		}
 	};
 
-	return <>{ handleRender() }</>;
+	return <Fragment>{ handleRender() }</Fragment>;
 };
 
 export default DesignStateHandler;
