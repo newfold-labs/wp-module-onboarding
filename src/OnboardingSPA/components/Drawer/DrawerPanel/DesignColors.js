@@ -35,8 +35,8 @@ const DesignColors = () => {
 	const { updatePreviewSettings, setCurrentOnboardingData } =
 		useDispatch(nfdOnboardingStore);
 
-	async function setThemeColorPalette(colorStyle, globalStylesTemp) {
-		let selectedGlobalStyle = globalStylesTemp;
+	async function setThemeColorPalette(colorStyle) {
+		let selectedGlobalStyle = globalStyles;
 		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
 
 		if (colorStyle && selectedThemeColorPalette) {
@@ -51,14 +51,12 @@ const DesignColors = () => {
 					case 'tertiary':
 						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][2];
 						break;
-					default:
-						break;
 				}
 			}
 
 			selectedGlobalStyle.settings.color.palette.theme = selectedThemeColorPalette;
-			await setGlobalStyles(selectedGlobalStyle);
-			await updatePreviewSettings(
+			setGlobalStyles(selectedGlobalStyle);
+			updatePreviewSettings(
 				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
 			);
 		}
@@ -92,7 +90,7 @@ const DesignColors = () => {
 			selectedColors = currentData.data.palette[0];
 		} 
 		setSelectedColors(selectedColors);
-		setThemeColorPalette(currentData.data.palette[0]['slug'], selectedGlobalStyle);
+		setThemeColorPalette(currentData.data.palette[0]['slug']);
 		setIsLoaded(true);
 
 	};
@@ -150,26 +148,51 @@ const DesignColors = () => {
 		currentData.data.palette[0] = selectedColorsTemp;
 		setCurrentOnboardingData(currentData);
 
-		setThemeColorPalette(colorStyle, globalStyles);
+		setThemeColorPalette(colorStyle);
 	};
 
-	const changeCustomPickerColor = (color) => {
-		console.log('Rannnn', colorPickerCalledBy);
+	const changeCustomPickerColor = async (color) => {
+		let selectedGlobalStyle = globalStyles;
+		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
 		
 		switch (colorPickerCalledBy) {
 			case 'background':
-				setBackgroundColor(color);
-				setShowColorPicker(false);
+				await setBackgroundColor(color);
 				break;
 			case 'secondary':
-				setSecondaryColor(color);
-				setShowColorPicker(false);
+				await setSecondaryColor(color);
 				break;
 			case 'tertiary':
-				setTertiaryColor(color);
-				setShowColorPicker(false);
+				await setTertiaryColor(color);
 				break;
 		}
+
+		if (selectedThemeColorPalette) {
+			for (let idx = 0; idx < selectedThemeColorPalette.length; idx++) {
+				switch (selectedThemeColorPalette[idx]?.slug) {
+					case 'background':
+						if (colorPickerCalledBy == 'background')
+							selectedThemeColorPalette[idx].color = color;
+						break;
+					case 'secondary':
+						if (colorPickerCalledBy == 'secondary')
+							selectedThemeColorPalette[idx].color = color;
+						break;
+					case 'tertiary':
+						if (colorPickerCalledBy == 'tertiary')
+							selectedThemeColorPalette[idx].color = color;
+						break;
+				}
+			}
+
+			selectedGlobalStyle.settings.color.palette.theme = selectedThemeColorPalette;
+			setGlobalStyles(selectedGlobalStyle);
+			updatePreviewSettings(
+				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
+			);
+		}
+
+		setShowColorPicker(false);
 	}
 
 	const selectCustomColor = (colorType) => {
@@ -207,7 +230,6 @@ const DesignColors = () => {
 	}
 
 	function buildCustomPalette () {
-		console.log(backgroundColor);
 		return (
 			<div className='custom-palette'>
 				<div className='custom-palette-top'>
