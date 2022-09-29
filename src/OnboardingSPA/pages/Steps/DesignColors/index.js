@@ -64,6 +64,33 @@ const StepDesignColors = () => {
 		} else {
 			selectedGlobalStyle = globalStyles.body[0];
 		}
+		
+		selectedGlobalStyle.settings.color.palette.theme[2] = {
+			color: "#FF0000",
+			name: "Primary",
+			slug: "primary"
+		};
+		selectedGlobalStyle.settings.color.palette.theme[3] = {
+			color: "#00FF00",
+			name: "Secondary",
+			slug: "secondary"
+		};
+		selectedGlobalStyle.settings.color.palette.theme[4] = {
+			color: "#0000FF",
+			name: "Tertiary",
+			slug: "tertiary"
+		};
+		// selectedGlobalStyle.settings.color.palette.theme[5] = {
+		// 	color: "#FF0000",
+		// 	name: "Header Background",
+		// 	slug: "header-background"
+		// };
+		// selectedGlobalStyle.settings.color.palette.theme[6] = {
+		// 	color: "#000000",
+		// 	name: "Header Foreground",
+		// 	slug: "header-foreground"
+		// };
+
 		updatePreviewSettings(
 			useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
 		);

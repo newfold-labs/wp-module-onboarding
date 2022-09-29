@@ -1,6 +1,56 @@
 import { __ } from '@wordpress/i18n';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { useState, useEffect } from '@wordpress/element';
+
+import { store as nfdOnboardingStore } from '../../../store';
+import { getGlobalStyles } from '../../../utils/api/themes';
+import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
 const DesignColors = () => {
+
+	const [isLoaded, setIsLoaded] = useState(false);
+	const [globalStyles, setGlobalStyles] = useState();
+	const [selectedColors, setSelectedColors] = useState();
+
+	const { currentStep, currentData, storedPreviewSettings } = useSelect(
+		(select) => {
+			return {
+				currentStep: select(nfdOnboardingStore).getCurrentStep(),
+				currentData:
+					select(nfdOnboardingStore).getCurrentOnboardingData(),
+				storedPreviewSettings:
+					select(nfdOnboardingStore).getPreviewSettings(),
+			};
+		},
+		[]
+	);
+
+	const { updatePreviewSettings, setCurrentOnboardingData } =
+		useDispatch(nfdOnboardingStore);
+
+	const getStylesAndPatterns = async () => {
+		const globalStyles = await getGlobalStyles();
+		setGlobalStyles(globalStyles?.body);
+
+		let selectedColors;
+		if (currentData?.data?.palette[0]?.slug === "") {
+			currentData.data.palette = {
+				'colorStyle': '',
+				'colors': []
+			};
+			selectedColors = currentData.data.palette;
+			setCurrentOnboardingData(currentData);
+		}
+		else {
+			selectedColors = currentData.data.palette;
+		} 
+		setSelectedColors(selectedColors);
+		setIsLoaded(true);
+	};
+
+	useEffect(() => {
+		if (!isLoaded) getStylesAndPatterns();
+	}, [isLoaded]);
 
 	const colorPalettes = {
 		'calm': [
@@ -40,21 +90,32 @@ const DesignColors = () => {
 		],
 	}
 
+	const handleClick = (colorStyle) => {
+		const selectedColorsTemp = {
+			'colorStyle': colorStyle,
+			'colors': colorPalettes[colorStyle]
+		};
+		setSelectedColors(selectedColorsTemp);
+		currentData.data.palette = selectedColorsTemp;
+		setCurrentOnboardingData(currentData);
+	};
+
 	function buildPalettes () {
 		let paletteRenderedList = [];
-		for (const colorName in colorPalettes) {
+		for (const colorStyle in colorPalettes) {
 			paletteRenderedList.push(
-				<div className='color-palette'>
+				<div className={`color-palette ${colorStyle == selectedColors?.colorStyle ? 'color-palette-selected' : ''} `}
+					onClick={(e) => handleClick(colorStyle)}>
 					<div className='color-palette-colors'>
 						<div className='color-palette-colors-tert'
-							style={{ backgroundColor: `${colorPalettes[colorName][0]}` }}/>
+							style={{ backgroundColor: `${colorPalettes[colorStyle][0]}` }}/>
 						<div className='color-palette-colors-scnd'
-							style={{ backgroundColor: `${colorPalettes[colorName][1]}` }}/>
+							style={{ backgroundColor: `${colorPalettes[colorStyle][1]}` }}/>
 						<div className='color-palette-colors-prim'
-							style={{ backgroundColor: `${colorPalettes[colorName][2]}` }} />
+							style={{ backgroundColor: `${colorPalettes[colorStyle][2]}` }} />
 					</div>
 					<div className='color-palette-name'>
-						{colorName?.charAt(0).toUpperCase() + colorName?.slice(1) }
+						{colorStyle?.charAt(0).toUpperCase() + colorStyle?.slice(1) }
 					</div>
 				</div>
 			);
