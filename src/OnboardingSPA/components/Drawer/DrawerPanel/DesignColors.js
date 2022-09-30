@@ -179,6 +179,9 @@ const DesignColors = () => {
 		currentData.data.palette[0] = selectedColorsTemp;
 		setCurrentOnboardingData(currentData);
 
+		// setBackgroundColor('');
+		setSecondaryColor();
+		setTertiaryColor();
 		setThemeColorPalette(colorStyle);
 	};
 
@@ -210,7 +213,6 @@ const DesignColors = () => {
 		setSelectedColors(selectedColorsTemp);
 		currentData.data.palette[0] = selectedColorsTemp;
 		setCurrentOnboardingData(currentData);		
-		setShowColorPicker(false);
 	}
 
 	const selectCustomColor = (colorType) => {
