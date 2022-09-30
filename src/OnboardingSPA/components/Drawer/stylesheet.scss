@@ -392,12 +392,30 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 
     &-top {
         display: flex;
+        cursor: pointer;
         align-items: center;
         justify-content: space-between;
+
+        &-icon {
+            font-size: 18px;
+            font-weight: 500;
+        }
     }
 
     &-below {
         margin-top: 16px;
+        animation-name: fadeIn;
+        animation-duration: 300ms;
+        animation-timing-function: linear;
+        animation-timing-function: ease-in-out;
+
+        &-opened {
+            display: block;
+        }
+
+        &-closed {
+            display: none;
+        }
 
         &-row {
             height: 50px;

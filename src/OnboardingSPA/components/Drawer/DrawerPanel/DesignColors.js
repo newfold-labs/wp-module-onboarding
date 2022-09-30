@@ -12,8 +12,9 @@ const DesignColors = () => {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [globalStyles, setGlobalStyles] = useState();
 	const [selectedColors, setSelectedColors] = useState();
-
 	const [showColorPicker, setShowColorPicker] = useState(false);
+	const [isAccordionClosed, setIsAccordionClosed] = useState(true);
+
 	const [tertiaryColor, setTertiaryColor] = useState();
 	const [secondaryColor, setSecondaryColor] = useState();
 	const [backgroundColor, setBackgroundColor] = useState();
@@ -252,11 +253,13 @@ const DesignColors = () => {
 	function buildCustomPalette () {
 		return (
 			<div className='custom-palette'>
-				<div className='custom-palette-top'>
+				<div className='custom-palette-top'
+					onClick={(e) => setIsAccordionClosed(!isAccordionClosed)}>
 					<div className='custom-palette-top-text'>SELECT CUSTOM COLORS</div>
-					<div className='custom-palette-top-icon'>-</div>
+					{isAccordionClosed && <div className='custom-palette-top-icon'>+</div> }
+					{!isAccordionClosed && <div className='custom-palette-top-icon'>-</div> }
 				</div>
-				<div className='custom-palette-below'>
+				<div className={`custom-palette-below ${isAccordionClosed ? 'custom-palette-below-closed' : 'custom-palette-below-opened' }`}>
 					<div className='custom-palette-below-row'
 						onClick={(e) => selectCustomColor('background')}>
 						<div className='custom-palette-below-row-icon'
