@@ -422,4 +422,18 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
             }
         }
     }
+
+    &-close {
+        width: 25px;
+        height: 25px;
+        display: flex;
+        color: black;
+        cursor: pointer;
+        font-weight: 900;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid black;
+        background-color: white;
+    }
 }

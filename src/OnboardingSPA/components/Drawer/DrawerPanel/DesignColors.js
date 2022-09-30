@@ -282,9 +282,11 @@ const DesignColors = () => {
 				</div>
 				{showColorPicker && (
 					<Popover>
+						<div className='custom-palette-close'
+							onClick={() => setShowColorPicker(false)}>X</div>
 						<ColorPicker
 							onChange={changeCustomPickerColor}
-							defaultValue="#fff"
+							defaultValue="#874141"
 						/>
 					</Popover>
 				)}
