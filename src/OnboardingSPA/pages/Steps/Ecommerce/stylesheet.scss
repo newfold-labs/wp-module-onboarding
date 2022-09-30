@@ -172,7 +172,7 @@ div.onboarding-ecommerce-step {
 }
 
 div.onboarding-product-step {
-	width: 50vw;
+	width: 35vw;
 
 	.nfd-card-need-help-tag {
 		padding: 20px 0 0;
@@ -180,7 +180,7 @@ div.onboarding-product-step {
 
 	div.nfd-product-step-options {
 		display: grid;
-		grid-template-columns: calc((50vw - 15px) / 2) calc((50vw - 15px) / 2);
+		grid-template-columns: calc((35vw - 15px) / 2) calc((35vw - 15px) / 2);
 		gap: 15px;
 
 		@media (max-width: #{ ($break-mobile)}) {
