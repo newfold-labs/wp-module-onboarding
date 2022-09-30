@@ -25,18 +25,18 @@ const BlockPreview = ( {
 	viewportWidth = 1300,
 	styling = 'large',
 	previewSettings = false,
-	animationDuration = 2500,
+	skeletonLoadingTime = 2500,
 } ) => {
 	const [ blocks, setBlocks ] = useState();
 	const [ settings, setSettings ] = useState();
-	const [ isShown, setIsShown ] = useState(false);
+	const [ loading, setIsLoading ] = useState(true);
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
-			setIsShown(true);
-		}, animationDuration);
+			setIsLoading(false);
+		}, skeletonLoadingTime);
 		return () => clearTimeout(timer);
-	}, [animationDuration]);
+	}, [skeletonLoadingTime]);
 
 	const storedPreviewSettings = useSelect(
 		( select ) => select( nfdOnboardingStore ).getPreviewSettings(),
@@ -62,15 +62,15 @@ const BlockPreview = ( {
 	}, [ storedPreviewSettings ] );
 
 	return (
-		<div className={`live-preview__container-${styling }  live-preview-container` }>
-			{isShown ? null :
-				<div className='is-skeleton'>
-					<div className='is-skeleton--box is-skeleton--box-header'>
-						<div className={`is-skeleton--shimmer`} />
+		<div className={`live-preview__container-${styling}  live-preview-container` }>
+			{ loading &&
+				<div className='live-preview__container--is-skeleton'>
+					<div className='live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-header'>
+						<div className={`live-preview__container--is-skeleton--shimmer`} />
 					</div>
-					<div className='is-skeleton--box is-skeleton--box-body-1' />
-					<div className='is-skeleton--box is-skeleton--box-body-2' />
-					<div className='is-skeleton--box is-skeleton--box-footer' />
+					<div className='live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-1' />
+					<div className='live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-2' />
+					<div className='live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-footer' />
 				</div> }
 			{ settings && (
 				<BlockEditorProvider

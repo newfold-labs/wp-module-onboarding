@@ -12,7 +12,7 @@ const SelectableCard = ( {
 	previewSettings,
 	overlay = false,
 	onClick = false,
-	animationDuration = 2500,
+	skeletonLoadingTime = 2500,
 } ) => {
 
 	return (
@@ -51,7 +51,7 @@ const SelectableCard = ( {
 					blockGrammer={blockGrammer}
 					viewportWidth={viewportWidth}
 					previewSettings={previewSettings}
-					animationDuration={animationDuration}
+					skeletonLoadingTime={skeletonLoadingTime}
 				/> 
 				{ overlay && (
 					<div
