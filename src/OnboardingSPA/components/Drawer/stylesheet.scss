@@ -406,7 +406,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
             cursor: pointer;
             align-items: center;
             background-color: white;
-            justify-content: start;
+            justify-content: flex-start;
             border: 0.5px solid rgba(0, 0, 0, 0.3);
 
             &-icon {

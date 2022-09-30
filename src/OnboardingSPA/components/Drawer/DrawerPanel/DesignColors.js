@@ -99,6 +99,37 @@ const DesignColors = () => {
 		if (!isLoaded) getStylesAndPatterns();
 	}, [isLoaded]);
 
+	useEffect(() => {
+		let selectedGlobalStyle = globalStyles;
+		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
+
+		if (selectedThemeColorPalette) {
+			for (let idx = 0; idx < selectedThemeColorPalette.length; idx++) {
+				switch (selectedThemeColorPalette[idx]?.slug) {
+					case 'background':
+						if (colorPickerCalledBy == 'background' && backgroundColor)
+							selectedThemeColorPalette[idx].color = backgroundColor;
+						break;
+					case 'secondary':
+						if (colorPickerCalledBy == 'secondary' && secondaryColor)
+							selectedThemeColorPalette[idx].color = secondaryColor;
+						break;
+					case 'tertiary':
+						if (colorPickerCalledBy == 'tertiary' && tertiaryColor)
+							selectedThemeColorPalette[idx].color = tertiaryColor;
+						break;
+				}
+			}
+
+			selectedGlobalStyle.settings.color.palette.theme = selectedThemeColorPalette;
+			console.log(selectedGlobalStyle);
+			setGlobalStyles(selectedGlobalStyle);
+			updatePreviewSettings(
+				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
+			);
+		}
+	}, [backgroundColor, secondaryColor, tertiaryColor])
+
 	const colorPalettes = {
 		'calm': [
 			'#C7DBFF',
@@ -152,46 +183,33 @@ const DesignColors = () => {
 	};
 
 	const changeCustomPickerColor = async (color) => {
-		let selectedGlobalStyle = globalStyles;
-		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
+
+		let selectedColorsTemp = {
+			"slug": 'custom',
+			"name": 'Custom',
+			"color": ['', secondaryColor ?? '', tertiaryColor ?? ''],
+			"background": backgroundColor ?? '',
+			"supports": ["yith-wonder"]
+		};
 		
 		switch (colorPickerCalledBy) {
 			case 'background':
-				await setBackgroundColor(color);
-				break;
+					setBackgroundColor(color);
+					selectedColorsTemp["background"] = color;
+					break;
 			case 'secondary':
-				await setSecondaryColor(color);
-				break;
+					setSecondaryColor(color);
+					selectedColorsTemp.color[1] = color;
+ 					break;
 			case 'tertiary':
-				await setTertiaryColor(color);
-				break;
+					setTertiaryColor(color);
+					selectedColorsTemp.color[2] = color;
+					break;
 		}
 
-		if (selectedThemeColorPalette) {
-			for (let idx = 0; idx < selectedThemeColorPalette.length; idx++) {
-				switch (selectedThemeColorPalette[idx]?.slug) {
-					case 'background':
-						if (colorPickerCalledBy == 'background')
-							selectedThemeColorPalette[idx].color = color;
-						break;
-					case 'secondary':
-						if (colorPickerCalledBy == 'secondary')
-							selectedThemeColorPalette[idx].color = color;
-						break;
-					case 'tertiary':
-						if (colorPickerCalledBy == 'tertiary')
-							selectedThemeColorPalette[idx].color = color;
-						break;
-				}
-			}
-
-			selectedGlobalStyle.settings.color.palette.theme = selectedThemeColorPalette;
-			setGlobalStyles(selectedGlobalStyle);
-			updatePreviewSettings(
-				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
-			);
-		}
-
+		setSelectedColors(selectedColorsTemp);
+		currentData.data.palette[0] = selectedColorsTemp;
+		setCurrentOnboardingData(currentData);		
 		setShowColorPicker(false);
 	}
 
