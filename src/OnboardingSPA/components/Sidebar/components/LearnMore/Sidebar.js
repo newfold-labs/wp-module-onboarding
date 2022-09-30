@@ -31,29 +31,31 @@ const LearnMoreSidebar = () => {
 	};
 	return (
 		<Fill name={ `${ SIDEBAR_SLOTFILL_PREFIX }/${ SIDEBAR_LEARN_MORE }` }>
-			<PanelHeader label={ __( 'Learn More', 'wp-module-onboarding' ) }>
-				<Button onClick={ closeSideBar } icon={ closeSmall }></Button>
-			</PanelHeader>
-			<PanelBody initialOpen={ true }>
-				<PanelRow>
-					<div className="nfd-onboarding-sidebar-learn-more__container">
-						<div className="nfd-onboarding-sidebar-learn-more__icon">
-                              { currentStep?.Icon && <Icon icon={ currentStep.Icon } /> }
-						</div>
-						<div className="nfd-onboarding-sidebar-learn-more__text">
-							<p className="nfd-onboarding-sidebar-learn-more__text-heading">
-                                   { currentStep?.heading && <strong>{ currentStep.heading }</strong> }
-							</p>
-							<p className="nfd-onboarding-sidebar-learn-more__text-subheading">
-								{ currentStep?.description }
-							</p>
-						</div>
-					</div>
-				</PanelRow>
-			</PanelBody>
 			{ currentStep?.SidebarComponents?.LearnMore && (
 				<PanelBody initialOpen={ true }>
 					<Suspense fallback={ <SidebarSkeleton /> }>
+						<PanelHeader label={__('Learn More', 'wp-module-onboarding')}>
+							<div className="nfd-onboarding-sidebar-learn-more__header" >
+								<Button onClick={closeSideBar} icon={closeSmall}></Button>
+							</div>
+						</PanelHeader>
+						<PanelBody initialOpen={true}>
+							<PanelRow>
+								<div className="nfd-onboarding-sidebar-learn-more__container">
+									<div className="nfd-onboarding-sidebar-learn-more__icon">
+										{currentStep?.Icon && <Icon icon={currentStep.Icon} />}
+									</div>
+									<div className="nfd-onboarding-sidebar-learn-more__text">
+										<p className="nfd-onboarding-sidebar-learn-more__text-heading">
+											{currentStep?.heading && <strong>{currentStep.heading}</strong>}
+										</p>
+										<p className="nfd-onboarding-sidebar-learn-more__text-subheading">
+											{currentStep?.description}
+										</p>
+									</div>
+								</div>
+							</PanelRow>
+						</PanelBody>
 						{ currentStep.SidebarComponents.LearnMore.map(
 							( SidebarComponent, index ) => {
 								return (
