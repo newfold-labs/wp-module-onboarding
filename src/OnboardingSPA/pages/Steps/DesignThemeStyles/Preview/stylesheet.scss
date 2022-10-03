@@ -86,6 +86,7 @@
 	&__live-preview-container {
 		width: 70%;
 		min-height: 80vh;
+		overflow: hidden;
 		position: relative;
 		align-items: center;
 		border: 1px solid #e3dfdf;

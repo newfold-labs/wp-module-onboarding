@@ -111,13 +111,4 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 	}
 }
 
-.live-preview {
-	&-selected-check {
-		z-index: 2 !important;
-	}
-
-	&-container {
-		overflow: hidden;
-	}
-}
 

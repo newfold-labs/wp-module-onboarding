@@ -45,7 +45,7 @@ const SelectableCard = ( {
 					/>
 				</div>
 			</div>
-			<div className={`${className }__live-preview-container live-preview-container` }>
+			<div className={`${className }__live-preview-container` }>
 				<LivePreview
 					styling={styling}
 					blockGrammer={blockGrammer}

@@ -9,13 +9,15 @@ $main-color-light-rgb: var(--nfd-onboarding-white-rgb);
 		&-small {
 			width: 70%;
 			height: 70%;
+			overflow: hidden;
 			max-width: 320px;
 			max-height: 320px;
 		}
-
+		
 		&-large {
 			width: 70%;
 			height: 70%;
+			overflow: hidden;
 			max-width: 925px;
 			max-height: 925px;
 		}

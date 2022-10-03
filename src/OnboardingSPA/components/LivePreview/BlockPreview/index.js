@@ -62,7 +62,7 @@ const BlockPreview = ( {
 	}, [ storedPreviewSettings ] );
 
 	return (
-		<div className={`live-preview__container-${styling}  live-preview-container` }>
+		<div className={`live-preview__container-${styling}` }>
 			{ loading &&
 				<div className='live-preview__container--is-skeleton'>
 					<div className='live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-header'>
