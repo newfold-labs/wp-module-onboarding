@@ -198,7 +198,7 @@ const StepAddress = () => {
 											type='text'
 											name='state'
 											required
-											defaultValue=""
+											defaultValue={selectedCountry==defaultCountry?defaultState:""}
 											{...fieldProps}
 										>
 											<option key={""} value={""} selected />
