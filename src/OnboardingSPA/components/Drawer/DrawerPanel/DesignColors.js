@@ -44,13 +44,13 @@ const DesignColors = () => {
 			for (let idx = 0; idx < selectedThemeColorPalette.length; idx++) {
 				switch (selectedThemeColorPalette[idx]?.slug) {
 					case 'primary':
-						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][0];
+						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][2];
 						break;
 					case 'secondary':
 						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][1];
 						break;
 					case 'tertiary':
-						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][2];
+						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][0];
 						break;
 				}
 			}
@@ -199,14 +199,16 @@ const DesignColors = () => {
 	const changeCustomPickerColor = async (color) => {
 
 		let primaryColorTemp = selectedColors?.color[0].color ?? '';
+		let secondaryColorTemp = selectedColors?.color[1].color ?? '';
+		let tertiaryColorTemp = selectedColors?.color[2].color ?? '';
 
 		let selectedColorsTemp = {
 			"slug": 'custom',
 			"name": 'Custom',
 			"color": [
 				{ "slug": "primary", "name": "Primary", "color": primaryColorTemp },
-				{ "slug": "secondary", "name": "Secondary", "color": secondaryColor ?? '' },
-				{ "slug": "tertiary", "name": "Tertiary", "color": tertiaryColor ?? '' },
+				{ "slug": "secondary", "name": "Secondary", "color": secondaryColor ?? secondaryColorTemp },
+				{ "slug": "tertiary", "name": "Tertiary", "color": tertiaryColor ?? tertiaryColorTemp },
 				{ "slug": "background", "name": "Background", "color": backgroundColor ?? '' },
 			],
 			"supports": ["yith-wonder"]
@@ -215,15 +217,15 @@ const DesignColors = () => {
 		switch (colorPickerCalledBy) {
 			case 'background':
 					setBackgroundColor(color);
-					selectedColorsTemp["background"] = color;
+					selectedColorsTemp.color[3].color = color;
 					break;
 			case 'secondary':
 					setSecondaryColor(color);
-					selectedColorsTemp.color[1] = color;
+					selectedColorsTemp.color[1].color = color;
  					break;
 			case 'tertiary':
 					setTertiaryColor(color);
-					selectedColorsTemp.color[2] = color;
+					selectedColorsTemp.color[2].color = color;
 					break;
 		}
 
@@ -283,7 +285,7 @@ const DesignColors = () => {
 				<div className={`custom-palette-below ${isAccordionClosed ? 'custom-palette-below-closed' : 'custom-palette-below-opened' }`}>
 					<div className='custom-palette-below-row'
 						onClick={(e) => selectCustomColor('background')}>
-						<div className='custom-palette-below-row-icon'
+						<div className={`custom-palette-below-row-icon ${backgroundColor && 'custom-palette-below-row-icon-selected-border'}`}
 							style={{ backgroundColor: `${backgroundColor ?? '#000'}` }}>
 							{backgroundColor ? <div className='custom-palette-below-row-icon-selected'>&#10003;</div> : null}
 							</div>
@@ -291,7 +293,7 @@ const DesignColors = () => {
 					</div>
 					<div className='custom-palette-below-row'
 						onClick={(e) => selectCustomColor('secondary')}>
-						<div className='custom-palette-below-row-icon'
+						<div className={`custom-palette-below-row-icon ${secondaryColor && 'custom-palette-below-row-icon-selected-border'}`}
 							style={{ backgroundColor: `${secondaryColor ?? secondaryColorTemp}` }}>
 							{secondaryColor ? <div className='custom-palette-below-row-icon-selected'>&#10003;</div> : null}
 							</div>
@@ -299,7 +301,7 @@ const DesignColors = () => {
 					</div>
 					<div className='custom-palette-below-row'
 						onClick={(e) => selectCustomColor('tertiary')}>
-						<div className='custom-palette-below-row-icon'
+						<div className={`custom-palette-below-row-icon ${tertiaryColor && 'custom-palette-below-row-icon-selected-border'}`}
 							style={{ backgroundColor: `${tertiaryColor ?? tertiaryColorTemp}` }}>
 							{tertiaryColor ? <div className='custom-palette-below-row-icon-selected'>&#10003;</div> : null}
 							</div>
