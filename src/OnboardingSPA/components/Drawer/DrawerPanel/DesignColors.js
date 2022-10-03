@@ -36,7 +36,50 @@ const DesignColors = () => {
 	const { updatePreviewSettings, setCurrentOnboardingData } =
 		useDispatch(nfdOnboardingStore);
 
+	const colorPalettes = {
+		'calm': [
+			'#C7DBFF',
+			'#E6EBEE',
+			'#1A4733',
+		],
+		'cool': [
+			'#C7DBFF',
+			'#EDF7FE',
+			'#21447B',
+		],
+		'warm': [
+			'#FFEDED',
+			'#FEF7E8',
+			'#7A3921',
+		],
+		'radiant': [
+			'#C7F0FF',
+			'#FEF4FB',
+			'#63156A',
+		],
+		'bold': [
+			'#F2A3D6',
+			'#FFFBF5',
+			'#09857C',
+		],
+		'retro': [
+			'#F2E6A2',
+			'#F5FFFF',
+			'#096385',
+		],
+		'professional': [
+			'#A2C1F2',
+			'#F5FAFF',
+			'#669933',
+		],
+	}
+
 	async function setThemeColorPalette(colorStyle) {
+		const isCustomStyle = colorStyle === 'custom';
+		let secondaryColorTemp = selectedColors?.color[1].color ?? null;
+		let tertiaryColorTemp = selectedColors?.color[2].color ?? null;
+		let backgroundColorTemp = selectedColors?.color[3].color ?? null;
+
 		let selectedGlobalStyle = globalStyles;
 		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
 
@@ -44,13 +87,25 @@ const DesignColors = () => {
 			for (let idx = 0; idx < selectedThemeColorPalette.length; idx++) {
 				switch (selectedThemeColorPalette[idx]?.slug) {
 					case 'primary':
-						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][2];
+						if (!isCustomStyle)
+							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][2];
 						break;
 					case 'secondary':
-						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][1];
+						if (isCustomStyle && secondaryColorTemp)
+							selectedThemeColorPalette[idx].color = secondaryColorTemp;
+						else{
+							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][1];
+						}
 						break;
 					case 'tertiary':
-						selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][0];
+						if (isCustomStyle && tertiaryColorTemp)
+							selectedThemeColorPalette[idx].color = tertiaryColorTemp;
+						else
+							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][0];
+						break;
+					case 'background':
+						if (isCustomStyle && backgroundColorTemp)
+							selectedThemeColorPalette[idx].color = backgroundColorTemp;
 						break;
 				}
 			}
@@ -136,44 +191,6 @@ const DesignColors = () => {
 		}
 	}
 
-	const colorPalettes = {
-		'calm': [
-			'#C7DBFF',
-			'#E6EBEE',
-			'#1A4733',
-		],
-		'cool': [
-			'#C7DBFF',
-			'#EDF7FE',
-			'#21447B',
-		],
-		'warm': [
-			'#FFEDED',
-			'#FEF7E8',
-			'#7A3921',
-		],
-		'radiant': [
-			'#C7F0FF',
-			'#FEF4FB',
-			'#63156A',
-		],
-		'bold': [
-			'#F2A3D6',
-			'#FFFBF5',
-			'#09857C',
-		],
-		'retro': [
-			'#F2E6A2',
-			'#F5FFFF',
-			'#096385',
-		],
-		'professional': [
-			'#A2C1F2',
-			'#F5FAFF',
-			'#669933',
-		],
-	}
-
 	const handleClick = (colorStyle) => {
 		const selectedColorsTemp = {
 			"slug": colorStyle,
@@ -190,7 +207,6 @@ const DesignColors = () => {
 		currentData.data.palette[0] = selectedColorsTemp;
 		setCurrentOnboardingData(currentData);
 
-		// setBackgroundColor('');
 		setSecondaryColor();
 		setTertiaryColor();
 		setThemeColorPalette(colorStyle);
