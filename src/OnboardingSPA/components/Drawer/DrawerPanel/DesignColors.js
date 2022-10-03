@@ -81,7 +81,12 @@ const DesignColors = () => {
 			currentData.data.palette[0] = {
 				"slug": "",
        			"name": "",
-       			"color": [],
+       			"color": [
+					{"slug": "primary", "name": "Primary", "color": ""},
+					{ "slug": "secondary", "name": "Secondary", "color": ""},
+					{ "slug": "tertiary", "name": "Tertiary", "color": ""},
+					{ "slug": "background", "name": "Background", "color": ""},
+				],
 				"supports": ["yith-wonder"]
 			};
 			selectedColors = currentData.data.palette[0];
@@ -100,7 +105,7 @@ const DesignColors = () => {
 		if (!isLoaded) getStylesAndPatterns();
 	}, [isLoaded]);
 
-	useEffect(() => {
+	function setCustomColors() {
 		let selectedGlobalStyle = globalStyles;
 		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
 
@@ -129,7 +134,7 @@ const DesignColors = () => {
 				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
 			);
 		}
-	}, [backgroundColor, secondaryColor, tertiaryColor])
+	}
 
 	const colorPalettes = {
 		'calm': [
@@ -173,7 +178,12 @@ const DesignColors = () => {
 		const selectedColorsTemp = {
 			"slug": colorStyle,
 			"name": colorStyle?.charAt(0).toUpperCase() + colorStyle?.slice(1),
-			"color": colorPalettes[colorStyle].reverse(),
+			"color": [
+					{ "slug": "primary", "name": "Primary", "color": colorPalettes[colorStyle][2] },
+					{ "slug": "secondary", "name": "Secondary", "color": colorPalettes[colorStyle][1] },
+					{ "slug": "tertiary", "name": "Tertiary", "color": colorPalettes[colorStyle][0] },
+					{ "slug": "background", "name": "Background", "color": "" },
+				],
 			"supports": ["yith-wonder"]
 		};
 		setSelectedColors(selectedColorsTemp);
@@ -188,11 +198,17 @@ const DesignColors = () => {
 
 	const changeCustomPickerColor = async (color) => {
 
+		let primaryColorTemp = selectedColors?.color[0].color ?? '';
+
 		let selectedColorsTemp = {
 			"slug": 'custom',
 			"name": 'Custom',
-			"color": ['', secondaryColor ?? '', tertiaryColor ?? ''],
-			"background": backgroundColor ?? '',
+			"color": [
+				{ "slug": "primary", "name": "Primary", "color": primaryColorTemp },
+				{ "slug": "secondary", "name": "Secondary", "color": secondaryColor ?? '' },
+				{ "slug": "tertiary", "name": "Tertiary", "color": tertiaryColor ?? '' },
+				{ "slug": "background", "name": "Background", "color": backgroundColor ?? '' },
+			],
 			"supports": ["yith-wonder"]
 		};
 		
@@ -214,6 +230,7 @@ const DesignColors = () => {
 		setSelectedColors(selectedColorsTemp);
 		currentData.data.palette[0] = selectedColorsTemp;
 		setCurrentOnboardingData(currentData);		
+		setCustomColors();
 	}
 
 	const selectCustomColor = (colorType) => {
@@ -251,6 +268,10 @@ const DesignColors = () => {
 	}
 
 	function buildCustomPalette () {
+
+		let secondaryColorTemp = selectedColors?.color[1].color ?? '#fff';
+		let tertiaryColorTemp = selectedColors?.color[2].color ?? '#fff';
+
 		return (
 			<div className='custom-palette'>
 				<div className='custom-palette-top'
@@ -271,7 +292,7 @@ const DesignColors = () => {
 					<div className='custom-palette-below-row'
 						onClick={(e) => selectCustomColor('secondary')}>
 						<div className='custom-palette-below-row-icon'
-							style={{ backgroundColor: `${secondaryColor ?? '#fff'}` }}>
+							style={{ backgroundColor: `${secondaryColor ?? secondaryColorTemp}` }}>
 							{secondaryColor ? <div className='custom-palette-below-row-icon-selected'>&#10003;</div> : null}
 							</div>
 						<div className='custom-palette-below-row-text'>Secondary</div>
@@ -279,7 +300,7 @@ const DesignColors = () => {
 					<div className='custom-palette-below-row'
 						onClick={(e) => selectCustomColor('tertiary')}>
 						<div className='custom-palette-below-row-icon'
-							style={{ backgroundColor: `${tertiaryColor ?? '#0000ff'}` }}>
+							style={{ backgroundColor: `${tertiaryColor ?? tertiaryColorTemp}` }}>
 							{tertiaryColor ? <div className='custom-palette-below-row-icon-selected'>&#10003;</div> : null}
 							</div>
 						<div className='custom-palette-below-row-text'>Tertiary</div>
