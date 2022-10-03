@@ -6,7 +6,10 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import { THEME_STATUS_ACTIVE } from '../../../../constants';
+import {
+	THEME_STATUS_ACTIVE,
+	THEME_STATUS_NOT_ACTIVE,
+} from '../../../../constants';
 
 const DesignThemeStylesPreview = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;
@@ -27,15 +30,24 @@ const DesignThemeStylesPreview = () => {
 			};
 		}, [] );
 
-	const { updatePreviewSettings, setCurrentOnboardingData } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		updatePreviewSettings,
+		setCurrentOnboardingData,
+		updateThemeStatus,
+	} = useDispatch( nfdOnboardingStore );
 
 	const getStylesAndPatterns = async () => {
 		const patternResponse = await getPatterns(
 			currentStep.patternId,
 			true
 		);
+		if ( patternResponse?.error ) {
+			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+		}
 		const globalStylesResponse = await getGlobalStyles();
+		if ( globalStylesResponse?.error ) {
+			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+		}
 		setPattern( patternResponse?.body );
 		setGlobalStyles( globalStylesResponse?.body );
 		let selectedGlobalStyle;
