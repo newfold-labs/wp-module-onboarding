@@ -3,13 +3,23 @@
 	box-shadow: none;
 }
 
+.nfd-onboarding-sidebar-learn-more {
+	padding: 0px !important;
+}
+
 .nfd-onboarding-sidebar-learn-more__header {
-	margin: 8px -16px !important;
+
+	&--icon {
+		width: 24px;
+		height: 24px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 }
 
 .nfd-onboarding-sidebar-learn-more__container {
 	display: flex;
-	margin: 8px -16px !important;
 }
 
 .nfd-onboarding-sidebar-learn-more__text {
@@ -26,6 +36,6 @@
 }
 
 .nfd-onboarding-sidebar-learn-more__menu-button {
-     margin: 0px 5px;
-	  min-height: 40px;
+	margin: 0px 5px;
+	min-height: 40px;
 }

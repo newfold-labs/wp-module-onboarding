@@ -32,14 +32,15 @@ const LearnMoreSidebar = () => {
 	return (
 		<Fill name={ `${ SIDEBAR_SLOTFILL_PREFIX }/${ SIDEBAR_LEARN_MORE }` }>
 			{ currentStep?.SidebarComponents?.LearnMore && (
-				<PanelBody initialOpen={ true }>
+				<PanelBody className='nfd-onboarding-sidebar-learn-more' initialOpen={ true }>
 					<Suspense fallback={ <SidebarSkeleton /> }>
 						<PanelHeader label={__('Learn More', 'wp-module-onboarding')}>
 							<div className="nfd-onboarding-sidebar-learn-more__header" >
-								<Button onClick={closeSideBar} icon={closeSmall}></Button>
+								<Button className="nfd-onboarding-sidebar-learn-more__header--icon"
+									 onClick={closeSideBar} icon={closeSmall}></Button>
 							</div>
 						</PanelHeader>
-						<PanelBody initialOpen={true}>
+						<PanelBody>
 							<PanelRow>
 								<div className="nfd-onboarding-sidebar-learn-more__container">
 									<div className="nfd-onboarding-sidebar-learn-more__icon">
@@ -60,6 +61,7 @@ const LearnMoreSidebar = () => {
 							( SidebarComponent, index ) => {
 								return (
 									<Fragment key={ index }>
+										
 										<SidebarComponent />
 									</Fragment>
 								);

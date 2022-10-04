@@ -13,7 +13,8 @@ $main-color-light-rgb: var(--nfd-onboarding-white-rgb);
     }
 
     &-header {
-        width: 100%;
+        width: 95%;
+        padding: 16px;
 
         &-top {
             width: 80%;
@@ -53,9 +54,10 @@ $main-color-light-rgb: var(--nfd-onboarding-white-rgb);
     }
 
     &-body {
-        width: 100%;
+        width: 90%;
         height: 250px;
         display: flex;
+        padding: 16px;
         margin-top: 20px;
         margin-bottom: 20px;
         align-items: center;
@@ -68,8 +70,9 @@ $main-color-light-rgb: var(--nfd-onboarding-white-rgb);
     }
 
     &-footer {
+        width: 85%;
         margin: 8px;
-        width: 100%;
+        padding: 16px;
 
         &-line-1 {
             width: 45%;
