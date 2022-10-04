@@ -24,6 +24,7 @@ const BlockPreview = ( {
 	blockGrammer,
 	viewportWidth = 1300,
 	styling = 'large',
+	setIsLoadingParent = false,
 	previewSettings = false,
 	skeletonLoadingTime = 2500,
 } ) => {
@@ -32,10 +33,18 @@ const BlockPreview = ( {
 	const [ loading, setIsLoading ] = useState(true);
 
 	useEffect(() => {
-		const timer = setTimeout(() => {
+		if(skeletonLoadingTime){
+			const timer = setTimeout(() => {
+				setIsLoading(false);
+				if (setIsLoadingParent)
+					setIsLoadingParent(false);
+			}, skeletonLoadingTime);
+			return () => clearTimeout(timer);
+		}else{
 			setIsLoading(false);
-		}, skeletonLoadingTime);
-		return () => clearTimeout(timer);
+			if (setIsLoadingParent)
+				setIsLoadingParent(false);
+		}
 	}, [skeletonLoadingTime]);
 
 	const storedPreviewSettings = useSelect(

@@ -15,10 +15,15 @@ const SelectableCard = ( {
 	skeletonLoadingTime = 2500,
 } ) => {
 
+	const [loadingParent, setIsLoadingParent] = useState(true);
+	
 	return (
 		<div
 			className={ `${ className }` }
-			onClick={ typeof onClick === 'function' && ( () => onClick() ) }
+			onClick={ typeof onClick === 'function' && ( () => {
+				if (!loadingParent)
+					onClick();
+			} ) }
 		>
 			<div className={ `${ className }__title-bar` }>
 				<div className={ `${ className }__title-bar__browser` }>
@@ -51,6 +56,7 @@ const SelectableCard = ( {
 					blockGrammer={blockGrammer}
 					viewportWidth={viewportWidth}
 					previewSettings={previewSettings}
+					setIsLoadingParent={setIsLoadingParent}
 					skeletonLoadingTime={skeletonLoadingTime}
 				/> 
 				{ overlay && (
