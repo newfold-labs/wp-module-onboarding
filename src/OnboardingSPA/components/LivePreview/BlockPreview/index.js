@@ -16,9 +16,11 @@ import { store as nfdOnboardingStore } from '../../../store';
  * @param             root0.viewportWidth
  * @param             root0.styling
  * @param             root0.previewSettings
- * @property {string} blockGrammer          WordPress block grammer.
- * @property {number} viewportWidth         Set viewport width for the AutoHeightBlockPreview component.
- * @property {string} styling               The type of styling to be applied (small, large, custom).
+ * @param             root0.setIsLoadingParent
+ * @param             root0.skeletonLoadingTime
+ * @property {string} blockGrammer              WordPress block grammer.
+ * @property {number} viewportWidth             Set viewport width for the AutoHeightBlockPreview component.
+ * @property {string} styling                   The type of styling to be applied (small, large, custom).
  */
 const BlockPreview = ( {
 	blockGrammer,
@@ -30,22 +32,23 @@ const BlockPreview = ( {
 } ) => {
 	const [ blocks, setBlocks ] = useState();
 	const [ settings, setSettings ] = useState();
-	const [ loading, setIsLoading ] = useState(true);
+	const [ loading, setIsLoading ] = useState( true );
 
-	useEffect(() => {
-		if(skeletonLoadingTime){
-			const timer = setTimeout(() => {
-				setIsLoading(false);
-				if (setIsLoadingParent)
-					setIsLoadingParent(false);
-			}, skeletonLoadingTime);
-			return () => clearTimeout(timer);
-		}else{
-			setIsLoading(false);
-			if (setIsLoadingParent)
-				setIsLoadingParent(false);
+	useEffect( () => {
+		if ( skeletonLoadingTime ) {
+			const timer = setTimeout( () => {
+				setIsLoading( false );
+				if ( setIsLoadingParent ) {
+					setIsLoadingParent( false );
+				}
+			}, skeletonLoadingTime );
+			return () => clearTimeout( timer );
 		}
-	}, [skeletonLoadingTime]);
+		setIsLoading( false );
+		if ( setIsLoadingParent ) {
+			setIsLoadingParent( false );
+		}
+	}, [ skeletonLoadingTime ] );
 
 	const storedPreviewSettings = useSelect(
 		( select ) => select( nfdOnboardingStore ).getPreviewSettings(),
@@ -71,15 +74,15 @@ const BlockPreview = ( {
 	}, [ storedPreviewSettings ] );
 
 	return (
-		<div className={`live-preview__container-${styling}` }>
+		<div className={ `live-preview__container-${ styling }` }>
 			{ loading &&
-				<div className='live-preview__container--is-skeleton'>
-					<div className='live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-header'>
-						<div className={`live-preview__container--is-skeleton--shimmer`} />
+				<div className="live-preview__container--is-skeleton">
+					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-header">
+						<div className={ `live-preview__container--is-skeleton--shimmer` } />
 					</div>
-					<div className='live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-1' />
-					<div className='live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-2' />
-					<div className='live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-footer' />
+					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-1" />
+					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-2" />
+					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-footer" />
 				</div> }
 			{ settings && (
 				<BlockEditorProvider
