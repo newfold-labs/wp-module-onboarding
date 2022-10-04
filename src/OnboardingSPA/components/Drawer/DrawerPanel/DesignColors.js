@@ -20,14 +20,13 @@ const DesignColors = () => {
 	const [backgroundColor, setBackgroundColor] = useState();
 	const [colorPickerCalledBy, setColorPickerCalledBy] = useState('');
 
-	const { currentStep, currentData, storedPreviewSettings } = useSelect(
+	const { storedPreviewSettings, currentData } = useSelect(
 		(select) => {
 			return {
-				currentStep: select(nfdOnboardingStore).getCurrentStep(),
-				currentData:
-					select(nfdOnboardingStore).getCurrentOnboardingData(),
 				storedPreviewSettings:
 					select(nfdOnboardingStore).getPreviewSettings(),
+				currentData:
+					select(nfdOnboardingStore).getCurrentOnboardingData(),
 			};
 		},
 		[]
@@ -74,13 +73,13 @@ const DesignColors = () => {
 		],
 	}
 
-	async function setThemeColorPalette(colorStyle) {
+	function setThemeColorPalette(colorStyle, globalStylesTemp = globalStyles) {
 		const isCustomStyle = colorStyle === 'custom';
 		let secondaryColorTemp = selectedColors?.color[1].color ?? null;
 		let tertiaryColorTemp = selectedColors?.color[2].color ?? null;
 		let backgroundColorTemp = selectedColors?.color[3].color ?? null;
 
-		let selectedGlobalStyle = globalStyles;
+		let selectedGlobalStyle = globalStylesTemp;
 		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
 
 		if (colorStyle && selectedThemeColorPalette) {
@@ -115,13 +114,15 @@ const DesignColors = () => {
 			updatePreviewSettings(
 				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
 			);
+
+			return selectedGlobalStyle;
 		}
 	}
 
-	const getStylesAndPatterns = async () => {
+	const getColorStylesAndPatterns = async () => {
 		const globalStyles = await getGlobalStyles();
 		let selectedGlobalStyle;
-		if (currentData.data.theme.variation) {
+		if (currentData?.data?.theme?.variation) {
 			selectedGlobalStyle = globalStyles.body.filter(
 				(globalStyle) =>
 					globalStyle.title === currentData.data.theme.variation
@@ -149,15 +150,21 @@ const DesignColors = () => {
 		}
 		else {
 			selectedColors = currentData.data.palette[0];
+
+			if(selectedColors.slug === 'custom') {
+				setBackgroundColor(selectedColors?.color[3].color ?? null);
+				setSecondaryColor(selectedColors?.color[1].color ?? null);
+				setTertiaryColor(selectedColors?.color[2].color ?? null);
+			}
 		} 
 		setSelectedColors(selectedColors);
-		setThemeColorPalette(currentData.data.palette[0]['slug']);
+		setThemeColorPalette(currentData?.data?.palette[0]['slug'], selectedGlobalStyle);
 		setIsLoaded(true);
 
 	};
 
 	useEffect(() => {
-		if (!isLoaded) getStylesAndPatterns();
+		if (!isLoaded) getColorStylesAndPatterns();
 	}, [isLoaded]);
 
 	function setCustomColors() {
@@ -207,6 +214,7 @@ const DesignColors = () => {
 		currentData.data.palette[0] = selectedColorsTemp;
 		setCurrentOnboardingData(currentData);
 
+		setBackgroundColor();
 		setSecondaryColor();
 		setTertiaryColor();
 		setThemeColorPalette(colorStyle);

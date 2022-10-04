@@ -40,7 +40,6 @@ const StepDesignColors = () => {
 		setIsSidebarOpened,
 		setIsDrawerSuppressed,
 		updatePreviewSettings,
-		setCurrentOnboardingData,
 	} = useDispatch(nfdOnboardingStore);
 
 	useEffect(() => {
@@ -64,10 +63,6 @@ const StepDesignColors = () => {
 		} else {
 			selectedGlobalStyle = globalStyles.body[0];
 		}
-	
-		updatePreviewSettings(
-			useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
-		);
 		setPattern(pattern?.body);
 		setIsLoaded(true);
 	};
