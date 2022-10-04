@@ -15,6 +15,7 @@ const DesignColors = () => {
 	const [showColorPicker, setShowColorPicker] = useState(false);
 	const [isAccordionClosed, setIsAccordionClosed] = useState(true);
 
+	const [primaryColor, setPrimaryColor] = useState();
 	const [tertiaryColor, setTertiaryColor] = useState();
 	const [secondaryColor, setSecondaryColor] = useState();
 	const [backgroundColor, setBackgroundColor] = useState();
@@ -73,11 +74,12 @@ const DesignColors = () => {
 		],
 	}
 
-	function setThemeColorPalette(colorStyle, globalStylesTemp = globalStyles) {
+	function setThemeColorPalette(colorStyle, selectedColorsTemp = selectedColors, globalStylesTemp = globalStyles) {
 		const isCustomStyle = colorStyle === 'custom';
-		let secondaryColorTemp = selectedColors?.color[1].color ?? null;
-		let tertiaryColorTemp = selectedColors?.color[2].color ?? null;
-		let backgroundColorTemp = selectedColors?.color[3].color ?? null;
+		let primaryColorTemp = selectedColorsTemp?.color[0].color ?? null;
+		let secondaryColorTemp = selectedColorsTemp?.color[1].color ?? null;
+		let tertiaryColorTemp = selectedColorsTemp?.color[2].color ?? null;
+		let backgroundColorTemp = selectedColorsTemp?.color[3].color ?? null;
 
 		let selectedGlobalStyle = globalStylesTemp;
 		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
@@ -86,15 +88,16 @@ const DesignColors = () => {
 			for (let idx = 0; idx < selectedThemeColorPalette.length; idx++) {
 				switch (selectedThemeColorPalette[idx]?.slug) {
 					case 'primary':
-						if (!isCustomStyle)
+						if (isCustomStyle && primaryColorTemp)
+							selectedThemeColorPalette[idx].color = primaryColorTemp;
+						else
 							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][2];
 						break;
 					case 'secondary':
 						if (isCustomStyle && secondaryColorTemp)
 							selectedThemeColorPalette[idx].color = secondaryColorTemp;
-						else{
+						else
 							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][1];
-						}
 						break;
 					case 'tertiary':
 						if (isCustomStyle && tertiaryColorTemp)
@@ -105,6 +108,8 @@ const DesignColors = () => {
 					case 'background':
 						if (isCustomStyle && backgroundColorTemp)
 							selectedThemeColorPalette[idx].color = backgroundColorTemp;
+						else
+							selectedThemeColorPalette[idx].color = '#ffffff';
 						break;
 				}
 			}
@@ -153,12 +158,13 @@ const DesignColors = () => {
 
 			if(selectedColors.slug === 'custom') {
 				setBackgroundColor(selectedColors?.color[3].color ?? null);
+				setPrimaryColor(selectedColors?.color[0].color ?? null);
 				setSecondaryColor(selectedColors?.color[1].color ?? null);
 				setTertiaryColor(selectedColors?.color[2].color ?? null);
 			}
 		} 
 		setSelectedColors(selectedColors);
-		setThemeColorPalette(currentData?.data?.palette[0]['slug'], selectedGlobalStyle);
+		setThemeColorPalette(currentData?.data?.palette[0]['slug'], selectedColors, selectedGlobalStyle);
 		setIsLoaded(true);
 
 	};
@@ -177,6 +183,10 @@ const DesignColors = () => {
 					case 'background':
 						if (colorPickerCalledBy == 'background' && backgroundColor)
 							selectedThemeColorPalette[idx].color = backgroundColor;
+						break;
+					case 'primary':
+						if (colorPickerCalledBy == 'primary' && primaryColor)
+							selectedThemeColorPalette[idx].color = primaryColor;
 						break;
 					case 'secondary':
 						if (colorPickerCalledBy == 'secondary' && secondaryColor)
@@ -215,6 +225,7 @@ const DesignColors = () => {
 		setCurrentOnboardingData(currentData);
 
 		setBackgroundColor();
+		setPrimaryColor();
 		setSecondaryColor();
 		setTertiaryColor();
 		setThemeColorPalette(colorStyle);
@@ -230,7 +241,7 @@ const DesignColors = () => {
 			"slug": 'custom',
 			"name": 'Custom',
 			"color": [
-				{ "slug": "primary", "name": "Primary", "color": primaryColorTemp },
+				{ "slug": "primary", "name": "Primary", "color": primaryColor ?? primaryColorTemp },
 				{ "slug": "secondary", "name": "Secondary", "color": secondaryColor ?? secondaryColorTemp },
 				{ "slug": "tertiary", "name": "Tertiary", "color": tertiaryColor ?? tertiaryColorTemp },
 				{ "slug": "background", "name": "Background", "color": backgroundColor ?? '' },
@@ -242,6 +253,10 @@ const DesignColors = () => {
 			case 'background':
 					setBackgroundColor(color);
 					selectedColorsTemp.color[3].color = color;
+					break;
+			case 'primary':
+					setPrimaryColor(color);
+					selectedColorsTemp.color[0].color = color;
 					break;
 			case 'secondary':
 					setSecondaryColor(color);
@@ -295,6 +310,7 @@ const DesignColors = () => {
 
 	function buildCustomPalette () {
 
+		let primaryColorTemp = selectedColors?.color[0].color ?? '#fff';
 		let secondaryColorTemp = selectedColors?.color[1].color ?? '#fff';
 		let tertiaryColorTemp = selectedColors?.color[2].color ?? '#fff';
 
@@ -310,10 +326,18 @@ const DesignColors = () => {
 					<div className='custom-palette-below-row'
 						onClick={(e) => selectCustomColor('background')}>
 						<div className={`custom-palette-below-row-icon ${backgroundColor && 'custom-palette-below-row-icon-selected-border'}`}
-							style={{ backgroundColor: `${backgroundColor ?? '#000'}` }}>
+							style={{ backgroundColor: `${backgroundColor ?? '#FFF'}` }}>
 							{backgroundColor ? <div className='custom-palette-below-row-icon-selected'>&#10003;</div> : null}
 							</div>
 						<div className='custom-palette-below-row-text'>Background</div>
+					</div>
+					<div className='custom-palette-below-row'
+						onClick={(e) => selectCustomColor('primary')}>
+						<div className={`custom-palette-below-row-icon ${primaryColor && 'custom-palette-below-row-icon-selected-border'}`}
+							style={{ backgroundColor: `${primaryColor ?? primaryColorTemp}` }}>
+							{primaryColor ? <div className='custom-palette-below-row-icon-selected'>&#10003;</div> : null}
+						</div>
+						<div className='custom-palette-below-row-text'>Primary</div>
 					</div>
 					<div className='custom-palette-below-row'
 						onClick={(e) => selectCustomColor('secondary')}>
