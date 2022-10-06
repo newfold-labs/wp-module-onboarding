@@ -74,7 +74,7 @@ const DesignColors = () => {
 		],
 	}
 
-	function setThemeColorPalette(colorStyle, selectedColorsTemp = selectedColors, globalStylesTemp = globalStyles) {
+	async function setThemeColorPalette(colorStyle, selectedColorsTemp = selectedColors, globalStylesTemp = globalStyles) {
 		const isCustomStyle = colorStyle === 'custom';
 		let primaryColorTemp = selectedColorsTemp?.color[0].color ?? null;
 		let secondaryColorTemp = selectedColorsTemp?.color[1].color ?? null;
@@ -173,7 +173,7 @@ const DesignColors = () => {
 		if (!isLoaded) getColorStylesAndPatterns();
 	}, [isLoaded]);
 
-	function setCustomColors() {
+	async function setCustomColors() {
 		let selectedGlobalStyle = globalStyles;
 		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
 
@@ -219,19 +219,18 @@ const DesignColors = () => {
 				],
 			"supports": ["yith-wonder"]
 		};
-		setSelectedColors(selectedColorsTemp);
-		currentData.data.palette[0] = selectedColorsTemp;
-		setCurrentOnboardingData(currentData);
-
 		setBackgroundColor();
 		setPrimaryColor();
 		setSecondaryColor();
 		setTertiaryColor();
 		setThemeColorPalette(colorStyle);
+
+		setSelectedColors(selectedColorsTemp);
+		currentData.data.palette[0] = selectedColorsTemp;
+		setCurrentOnboardingData(currentData);
 	};
 
 	const changeCustomPickerColor = async (color) => {
-
 		let primaryColorTemp = selectedColors?.color[0].color ?? '';
 		let secondaryColorTemp = selectedColors?.color[1].color ?? '';
 		let tertiaryColorTemp = selectedColors?.color[2].color ?? '';
