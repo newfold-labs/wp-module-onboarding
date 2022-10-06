@@ -266,11 +266,11 @@ const DesignColors = () => {
 					selectedColorsTemp.color[2].color = color;
 					break;
 		}
-
+		
+		setCustomColors();
 		setSelectedColors(selectedColorsTemp);
 		currentData.data.palette[0] = selectedColorsTemp;
 		setCurrentOnboardingData(currentData);		
-		setCustomColors();
 	}
 
 	const selectCustomColor = (colorType) => {
