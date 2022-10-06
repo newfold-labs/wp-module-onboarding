@@ -1,5 +1,5 @@
 {
-    "name": "wp-module-onboarding",
+    "name": "@newfold-labs/wp-module-onboarding",
     "version": "0.2.2",
     "description": "Next-generation WordPress Onboarding for WordPress sites at Newfold Digital.",
     "license": "GPL-2.0-or-later",

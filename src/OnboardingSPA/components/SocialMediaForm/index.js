@@ -75,25 +75,40 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
             return false;
         }
 
-        if (url.protocol !== "http:" && url.protocol !== "https:")
-            return false;
-
-        return true;
+        return (url.protocol !== "http:" && url.protocol !== "https:") ? false : true;
     }
 
     const checkValidUrl = function(socialInput, data) {
-
-        if (!isValidUrl(data))
-        {
-            if (!activeError.includes(socialInput))
-                setActiveError([...activeError, socialInput]);
+        let errorResolved = false;
+        switch(socialInput) {
+            case SocialMediaSites.TWITTER:
+                data = data.substring(data.indexOf('@') + 1);
+                if( isValidTwitterHandle(data) || isValidTwitterUrl(data)) { // check for @handle and twitter url
+                    errorResolved = true;
+                }
+                break;
+            default:
+                if (isValidUrl(data)) {
+                    errorResolved = true;
+                }
+                break;
         }
-        else {
+
+        if(errorResolved){
             var activeErrorFiltered = activeError.filter(function (item) {
                 return item !== socialInput
             })
             setActiveError(activeErrorFiltered);
+        } else {
+            if (!activeError.includes(socialInput)) {
+                setActiveError([...activeError, socialInput]);
+            }
         }
+
+        setDataAndActiveErrorState( data, activeError);        
+    }
+
+    const setDataAndActiveErrorState = (data, activeError) => {
 
         if (!data){
             var activeErrorFiltered = activeError.filter(function (item) {
@@ -102,10 +117,15 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
             setActiveError(activeErrorFiltered);
         }
 
-        if (activeError.length == 0)
-            setIsValidSocials(true);
-        else
-            setIsValidSocials(false);
+        (activeError.length == 0) ? setIsValidSocials(true) : setIsValidSocials(false);
+    }
+
+    const isValidTwitterHandle = (handle) => {
+        return handle.match(`^[A-Za-z0-9_]{1,25}$`) ? true : false;
+    }
+
+    const isValidTwitterUrl = (url) => {
+        return url.match(`^http(?:s)?:\/\/(?:www\.)?twitter\.com\/([A-Za-z0-9_]{1,25})\/?$`) ? true : false;
     }
 
     const checkValidUrlDebounce = _.debounce(checkValidUrl, 1000);
@@ -157,6 +177,15 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
         setSocialData(socialMediaDB);
     }
 
+    const showErrorMessage = (socialMediaSite) => {
+        switch (socialMediaSite) {
+            case SocialMediaSites.TWITTER :
+                return `Please enter a valid ${socialMediaSite} URL / username`;
+            default :
+                return `Please enter a valid ${socialMediaSite} URL`;
+        }
+    }
+
     function toTitleCase(str) {
         return str.replace(
             /\w\S*/g,
@@ -175,7 +204,7 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
                         <div className="social-form__label_icon" style={{ backgroundImage: `var(--${SocialMediaSites[social]}-icon)` }} />
                         <div className="social-form__label_name">{__(toTitleCase(SocialMediaSites[social]), 'wp-module-onboarding')}</div>
                     </label>
-                    <Tooltip content={activeError.includes(SocialMediaSites[social]) ? `Please enter a valid ${SocialMediaSites[social]} URL` : 'hide'} direction="top">
+                    <Tooltip content={activeError.includes(SocialMediaSites[social]) ? showErrorMessage(SocialMediaSites[social]) : 'hide'} direction="top">
                         <input className={`${activeError.includes(SocialMediaSites[social]) ? "social-form__box-error" : "social-form__box"}`} type="url" id={`${SocialMediaSites[social]}`} value={SocialMediaStates[social]} onChange={(value) => { handleChange(value) }} />
                     </Tooltip>
                 </div>

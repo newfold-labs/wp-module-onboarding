@@ -33,6 +33,35 @@ class SettingsController {
 	protected $yoast_wp_options_key = 'wpseo_social';
 
 	/**
+	 * Array of defaults for the option.
+	 *
+	 * Shouldn't be requested directly, use $this->get_defaults();
+	 *
+	 * @var array
+	 */
+	protected $defaults = array(
+		'facebook_site'         => '', // Text field.
+		'instagram_url'         => '',
+		'linkedin_url'          => '',
+		'myspace_url'           => '',
+		'og_default_image'      => '', // Text field.
+		'og_default_image_id'   => '',
+		'og_frontpage_title'    => '', // Text field.
+		'og_frontpage_desc'     => '', // Text field.
+		'og_frontpage_image'    => '', // Text field.
+		'og_frontpage_image_id' => '',
+		'opengraph'             => true,
+		'pinterest_url'         => '',
+		'pinterestverify'       => '',
+		'twitter'               => true,
+		'twitter_site'          => '', // Text field.
+		'twitter_card_type'     => 'summary_large_image',
+		'youtube_url'           => '',
+		'wikipedia_url'         => '',
+		'other_social_urls'     => array(),
+	);
+
+	/**
 	 * Validate these URL keys in the data provided
 	 *
 	 * @var array
@@ -41,13 +70,18 @@ class SettingsController {
 		'facebook_site',
 		'instagram_url',
 		'linkedin_url',
+		'twitter_site',
 		'myspace_url',
 		'pinterest_url',
-		'twitter_site',
 		'youtube_url',
 		'wikipedia_url',
 		'other_social_urls',
 	);
+
+	/**
+	 * Store for invalid urls
+	 */
+	protected $invalid_urls = array();
 
 	/**
 	 * Registers the settings route
@@ -105,46 +139,57 @@ class SettingsController {
 
 		// check if all the param keys are present in the yoast social keys
 		foreach ( $params as $param_key => $param_value ) {
-			if ( ! array_key_exists( $param_key, $settings ) ) {
-				return new \WP_Error(
-					'param_key_not_present',
-					"The provided param key '{$param_key}' does not match",
-					array( 'status' => 400 )
-				);
+			if ( ! array_key_exists( $param_key, $this->defaults ) ) {
+				$this->invalid_urls[] = $param_key;
+				unset($params[$param_key]);
+				continue;
 			}
 
 			// check for proper url
 			if ( in_array( $param_key, $this->social_urls_to_validate ) ) {
-				// check for the other URL's array
-				if ( ! is_array( $param_value ) ) {
-					// sanitize fields
-					$param[ $param_key ] = \sanitize_text_field( $param_value );
-
-					if ( ! empty( $param_value ) && ! \wp_http_validate_url( $param_value ) ) {
-						return new \WP_Error(
-							'param_not_proper_url',
-							"The provided param '{$param_value}' is NOT a proper URL",
-							array( 'status' => 400 )
-						);
-					}
-				} else {
-					foreach ( $param_value as $param_url ) {
-						// sanitize fields
-						$param[ $param_url ] = \sanitize_text_field( $param_url );
-
-						if ( ! empty( $param_url ) && ! \wp_http_validate_url( $param_url ) ) {
-							return new \WP_Error(
-								'param_not_proper_url',
-								"The provided param '{$param_url}' is NOT a proper URLL",
-								array( 'status' => 400 )
-							);
+				switch($param_key) {
+					case 'twitter_site':
+						if( !empty($params['twitter_site'])) {
+							if( ( $twitter_id = $this->validate_twitter_id($params['twitter_site']) ) === false ) {
+								$this->invalid_urls[] = 'twitter_site';
+							} else {
+								$params['twitter_site'] = $twitter_id;
+							}
 						}
-					}
+						break;
+					case 'other_social_urls':
+						foreach ( $param_value as $param_key_osu => $param_url ) {
+							$param_value[ $param_key_osu ] = \sanitize_text_field( $param_url );	
+							if ( ! empty( $param_url ) && ! \wp_http_validate_url( $param_url ) ) {
+								$this->invalid_urls[] = $param_key_osu;
+								unset($params[$param_key_osu]);
+								continue;
+							}
+						}
+						break;
+					default:
+						$param[ $param_key ] = \sanitize_text_field( $param_value );
+						if ( ! empty( $param_value ) && ! \wp_http_validate_url( $param_value ) ) {
+							$this->invalid_urls[] = $param_key;
+							unset($params[$param_key]);
+							continue;
+						}
+						break;
 				}
 			}
 		}
 		$settings = array_merge( $settings, $params );
+
 		\update_option( $this->yoast_wp_options_key, $settings );
+
+		if(!empty($this->invalid_urls)) {
+			$error_keys = implode( ", ", $this->invalid_urls );
+			return new \WP_Error(
+				'invalid_urls',
+				"Invalid url(s) provided for {$error_keys}.",
+				array( 'status' => 400 )
+			);
+		}
 		return $this->get_item();
 	}
 
@@ -158,12 +203,16 @@ class SettingsController {
 		// incase yoast plugin is not installed then we need to save the values in the yoast_wp_options_key
 		if ( ( $social_data = \get_option( $this->yoast_wp_options_key ) ) === false ) {
 
-			// initialize an array with empty values
-			$social_data                      = array_fill_keys( $this->social_urls_to_validate, '' );
-			$social_data['other_social_urls'] = array(); // only this key has to be an array
+			// initialize an array with default values
+			$social_data = $this->defaults;
 
 			// update database
 			\add_option( $this->yoast_wp_options_key, $social_data );
+		}
+		// add the full url for twitter cause only the handle is saved in the database
+		if( (!empty($social_data['twitter_site'])) &&
+			($twitter_handle = $this->validate_twitter_id($social_data['twitter_site'])) !== false ) {
+			$social_data['twitter_site'] = 'https://www.twitter.com/' . $twitter_handle;
 		}
 
 		return $social_data;
@@ -213,4 +262,35 @@ class SettingsController {
 			201
 		);
 	}
+
+
+	/**
+	 * Validates a twitter id.
+	 *
+	 * @param string $twitter_id    The twitter id to be validated.
+	 * @param bool   $strip_at_sign Whether or not to strip the `@` sign.
+	 *
+	 * @return string|false The validated twitter id or false if it is not valid.
+	 */
+	private function validate_twitter_id( $twitter_id, $strip_at_sign = true ) {
+		$twitter_id = ( $strip_at_sign ) ? sanitize_text_field( ltrim( $twitter_id, '@' ) ) : sanitize_text_field( $twitter_id );
+
+		/*
+		 * From the Twitter documentation about twitter screen names:
+		 * Typically a maximum of 15 characters long, but some historical accounts may exist with longer names.
+		 * A username can only contain alphanumeric characters (letters A-Z, numbers 0-9) with the exception of underscores.
+		 *
+		 * @link https://support.twitter.com/articles/101299-why-can-t-i-register-certain-usernames
+		 */
+		if ( preg_match( '`^[A-Za-z0-9_]{1,25}$`', $twitter_id ) ) {
+			return $twitter_id;
+		}
+
+		if ( preg_match( '`^http(?:s)?://(?:www\.)?twitter\.com/(?P<handle>[A-Za-z0-9_]{1,25})/?$`', $twitter_id, $matches ) ) {
+			return $matches['handle'];
+		}
+
+		return false;
+	}
+
 }
