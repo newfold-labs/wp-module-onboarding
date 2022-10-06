@@ -327,7 +327,7 @@ const DesignColors = () => {
 						onClick={(e) => selectCustomColor('background')}>
 						<div className={`custom-palette__below-row-icon ${backgroundColor && 'custom-palette__below-row-icon_selected_border'}`}
 							style={{ backgroundColor: `${backgroundColor ?? '#FFF'}` }}>
-							{backgroundColor ? <div className='custom-palette__below-row-icon_selected'>&#10003;</div> : null}
+							{backgroundColor ? <div>&#10003;</div> : null}
 							</div>
 						<div className='custom-palette__below-row-text'>Background</div>
 					</div>
@@ -335,7 +335,7 @@ const DesignColors = () => {
 						onClick={(e) => selectCustomColor('primary')}>
 						<div className={`custom-palette__below-row-icon ${primaryColor && 'custom-palette__below-row-icon_selected_border'}`}
 							style={{ backgroundColor: `${primaryColor ?? primaryColorTemp}` }}>
-							{primaryColor ? <div className='custom-palette__below-row-icon_selected'>&#10003;</div> : null}
+							{primaryColor ? <>&#10003;</> : null}
 						</div>
 						<div className='custom-palette__below-row-text'>Primary</div>
 					</div>
@@ -343,7 +343,7 @@ const DesignColors = () => {
 						onClick={(e) => selectCustomColor('secondary')}>
 						<div className={`custom-palette__below-row-icon ${secondaryColor && 'custom-palette__below-row-icon_selected_border'}`}
 							style={{ backgroundColor: `${secondaryColor ?? secondaryColorTemp}` }}>
-							{secondaryColor ? <div className='custom-palette__below-row-icon_selected'>&#10003;</div> : null}
+							{secondaryColor ? <>&#10003;</> : null}
 							</div>
 						<div className='custom-palette__below-row-text'>Secondary</div>
 					</div>
@@ -351,7 +351,7 @@ const DesignColors = () => {
 						onClick={(e) => selectCustomColor('tertiary')}>
 						<div className={`custom-palette__below-row-icon ${tertiaryColor && 'custom-palette__below-row-icon_selected_border'}`}
 							style={{ backgroundColor: `${tertiaryColor ?? tertiaryColorTemp}` }}>
-							{tertiaryColor ? <div className='custom-palette__below-row-icon_selected'>&#10003;</div> : null}
+							{tertiaryColor ? <>&#10003;</> : null}
 							</div>
 						<div className='custom-palette__below-row-text'>Tertiary</div>
 					</div>
