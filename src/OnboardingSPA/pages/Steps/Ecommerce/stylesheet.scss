@@ -171,16 +171,25 @@ div.onboarding-ecommerce-step {
 	}
 }
 
+div.step-product-numbers:nth-child(3) .components-v-stack {
+	@media (min-width: #{ ($break-mobile)}) {
+		flex-direction: row !important;
+	}
+}
+
 div.onboarding-product-step {
 	width: 50vw;
 
+	@media only screen and (min-width: 1921px) {
+		width: 35vw;
+	}
 	.nfd-card-need-help-tag {
 		padding: 20px 0 0;
 	}
 
 	div.nfd-product-step-options {
 		display: grid;
-		grid-template-columns: calc((50vw - 15px) / 2) calc((50vw - 15px) / 2);
+		grid-template-columns: calc((50vw - 15px) / 2) calc((50vw - 15px) / 2);	
 		gap: 15px;
 
 		@media (max-width: #{ ($break-mobile)}) {
@@ -188,6 +197,9 @@ div.onboarding-product-step {
 			gap: 2px;
 		}
 
+		@media only screen and (min-width: 1921px) {
+			grid-template-columns: calc((35vw - 15px) / 2) calc((35vw - 15px) / 2);
+		}
 	}
 
 	.components-checkbox-control {
