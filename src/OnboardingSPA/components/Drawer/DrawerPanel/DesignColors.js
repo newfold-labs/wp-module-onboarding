@@ -290,15 +290,15 @@ const DesignColors = () => {
 			paletteRenderedList.push(
 				<div className={`color-palette ${colorStyle == selectedColors?.slug ? 'color-palette-selected' : ''} `}
 					onClick={(e) => handleClick(colorStyle)}>
-					<div className='color-palette-colors'>
-						<div className='color-palette-colors-tert'
+					<div className='color-palette__colors'>
+						<div className='color-palette__colors-tert'
 							style={{ backgroundColor: `${colorPalettes[colorStyle][0]}` }}/>
-						<div className='color-palette-colors-scnd'
+						<div className='color-palette__colors-scnd'
 							style={{ backgroundColor: `${colorPalettes[colorStyle][1]}` }}/>
-						<div className='color-palette-colors-prim'
+						<div className='color-palette__colors-prim'
 							style={{ backgroundColor: `${colorPalettes[colorStyle][2]}` }} />
 					</div>
-					<div className='color-palette-name'>
+					<div className='color-palette__name'>
 						{colorStyle?.charAt(0).toUpperCase() + colorStyle?.slice(1) }
 					</div>
 				</div>
@@ -316,49 +316,49 @@ const DesignColors = () => {
 
 		return (
 			<div className='custom-palette'>
-				<div className='custom-palette-top'
+				<div className='custom-palette__top'
 					onClick={(e) => setIsAccordionClosed(!isAccordionClosed)}>
-					<div className='custom-palette-top-text'>SELECT CUSTOM COLORS</div>
-					{isAccordionClosed && <div className='custom-palette-top-icon'>+</div> }
-					{!isAccordionClosed && <div className='custom-palette-top-icon'>-</div> }
+					<div className='custom-palette__top-text'>SELECT CUSTOM COLORS</div>
+					{isAccordionClosed && <div className='custom-palette__top-icon'>+</div> }
+					{!isAccordionClosed && <div className='custom-palette__top-icon'>-</div> }
 				</div>
-				<div className={`custom-palette-below ${isAccordionClosed ? 'custom-palette-below-closed' : 'custom-palette-below-opened' }`}>
-					<div className='custom-palette-below-row'
+				<div className={`custom-palette__below ${isAccordionClosed ? 'custom-palette_acc_closed' : 'custom-palette_acc_opened' }`}>
+					<div className='custom-palette__below-row'
 						onClick={(e) => selectCustomColor('background')}>
-						<div className={`custom-palette-below-row-icon ${backgroundColor && 'custom-palette-below-row-icon-selected-border'}`}
+						<div className={`custom-palette__below-row-icon ${backgroundColor && 'custom-palette__below-row-icon_selected_border'}`}
 							style={{ backgroundColor: `${backgroundColor ?? '#FFF'}` }}>
-							{backgroundColor ? <div className='custom-palette-below-row-icon-selected'>&#10003;</div> : null}
+							{backgroundColor ? <div className='custom-palette__below-row-icon_selected'>&#10003;</div> : null}
 							</div>
-						<div className='custom-palette-below-row-text'>Background</div>
+						<div className='custom-palette__below-row-text'>Background</div>
 					</div>
-					<div className='custom-palette-below-row'
+					<div className='custom-palette__below-row'
 						onClick={(e) => selectCustomColor('primary')}>
-						<div className={`custom-palette-below-row-icon ${primaryColor && 'custom-palette-below-row-icon-selected-border'}`}
+						<div className={`custom-palette__below-row-icon ${primaryColor && 'custom-palette__below-row-icon_selected_border'}`}
 							style={{ backgroundColor: `${primaryColor ?? primaryColorTemp}` }}>
-							{primaryColor ? <div className='custom-palette-below-row-icon-selected'>&#10003;</div> : null}
+							{primaryColor ? <div className='custom-palette__below-row-icon_selected'>&#10003;</div> : null}
 						</div>
-						<div className='custom-palette-below-row-text'>Primary</div>
+						<div className='custom-palette__below-row-text'>Primary</div>
 					</div>
-					<div className='custom-palette-below-row'
+					<div className='custom-palette__below-row'
 						onClick={(e) => selectCustomColor('secondary')}>
-						<div className={`custom-palette-below-row-icon ${secondaryColor && 'custom-palette-below-row-icon-selected-border'}`}
+						<div className={`custom-palette__below-row-icon ${secondaryColor && 'custom-palette__below-row-icon_selected_border'}`}
 							style={{ backgroundColor: `${secondaryColor ?? secondaryColorTemp}` }}>
-							{secondaryColor ? <div className='custom-palette-below-row-icon-selected'>&#10003;</div> : null}
+							{secondaryColor ? <div className='custom-palette__below-row-icon_selected'>&#10003;</div> : null}
 							</div>
-						<div className='custom-palette-below-row-text'>Secondary</div>
+						<div className='custom-palette__below-row-text'>Secondary</div>
 					</div>
-					<div className='custom-palette-below-row'
+					<div className='custom-palette__below-row'
 						onClick={(e) => selectCustomColor('tertiary')}>
-						<div className={`custom-palette-below-row-icon ${tertiaryColor && 'custom-palette-below-row-icon-selected-border'}`}
+						<div className={`custom-palette__below-row-icon ${tertiaryColor && 'custom-palette__below-row-icon_selected_border'}`}
 							style={{ backgroundColor: `${tertiaryColor ?? tertiaryColorTemp}` }}>
-							{tertiaryColor ? <div className='custom-palette-below-row-icon-selected'>&#10003;</div> : null}
+							{tertiaryColor ? <div className='custom-palette__below-row-icon_selected'>&#10003;</div> : null}
 							</div>
-						<div className='custom-palette-below-row-text'>Tertiary</div>
+						<div className='custom-palette__below-row-text'>Tertiary</div>
 					</div>
 				</div>
 				{showColorPicker && (
 					<Popover>
-						<div className='custom-palette-close'
+						<div className='custom-palette__picker-close-icon'
 							onClick={() => setShowColorPicker(false)}>X</div>
 						<ColorPicker
 							onChange={changeCustomPickerColor}

@@ -344,7 +344,7 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
         background-color: $main-border-main;
     }
 
-    &-colors {
+    &__colors {
 
         display: flex;
         align-items: center;
@@ -377,7 +377,7 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
         }
     }
 
-    &-name {
+    &__name {
         color: black;
         font-size: 12px;
         font-weight: 700;
@@ -391,7 +391,7 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
     padding: 20px 16px;
     background: $main-border-main;
 
-    &-top {
+    &__top {
         display: flex;
         cursor: pointer;
         align-items: center;
@@ -403,20 +403,20 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
         }
     }
 
-    &-below {
+    &_acc_opened {
+        display: block;
+    }
+
+    &_acc_closed {
+        display: none;
+    }
+
+    &__below {
         margin-top: 16px;
         animation-name: fadeIn;
         animation-duration: 300ms;
         animation-timing-function: linear;
         animation-timing-function: ease-in-out;
-
-        &-opened {
-            display: block;
-        }
-
-        &-closed {
-            display: none;
-        }
 
         &-row {
             height: 50px;
@@ -438,14 +438,14 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
                 justify-content: center;
                 border: 1px solid rgba(0, 0, 0, 0.3);
 
-                &-selected-border {
+                &_selected_border {
                     box-shadow: 0px 0px 5px 3px rgba($main-border-main--rgb, 0.5);
                 }
             }
         }
     }
 
-    &-close {
+    &__picker-close-icon {
         width: 25px;
         height: 25px;
         display: flex;
