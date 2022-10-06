@@ -200,7 +200,6 @@ const DesignColors = () => {
 			}
 
 			selectedGlobalStyle.settings.color.palette.theme = selectedThemeColorPalette;
-			console.log(selectedGlobalStyle);
 			setGlobalStyles(selectedGlobalStyle);
 			updatePreviewSettings(
 				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
