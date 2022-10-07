@@ -22,6 +22,8 @@
 	color: var(--wp-admin-theme-color);
 	font-size: clamp(1rem, 0.91vw + 0.77rem, 1.5rem);
 	text-align: center;
+	line-height: 1;
+
 	@media (min-width: #{ ($break-medium)}) {
 		padding-bottom: 30px;
 	}
