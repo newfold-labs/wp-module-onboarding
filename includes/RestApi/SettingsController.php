@@ -5,6 +5,8 @@ use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Config;
 use NewfoldLabs\WP\Module\Onboarding\WP_Config;
+use NewfoldLabs\WP\Module\Onboarding\Data\Data;
+use NewfoldLabs\WP\Module\Onboarding\Services\Webfonts;
 
 /**
  * Class SettingsController
@@ -77,6 +79,18 @@ class SettingsController {
 				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => array( $this, 'initialize' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/preview',
+			array(
+				array(
+					'methods'  => \WP_REST_Server::READABLE,
+					'callback' => array( $this, 'get_preview_settings' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -177,12 +191,12 @@ class SettingsController {
 	 */
 	public function initialize() {
 
-          if ( \get_option( Options::get_option_name( 'settings_initialized' ), false ) ) {
-               return new \WP_REST_Response(
-                    array(),
-                    200
-               );
-          }
+		if ( \get_option( Options::get_option_name( 'settings_initialized' ), false ) ) {
+			return new \WP_REST_Response(
+				array(),
+				200
+			);
+		}
 
 		  // Update wp_options
 		$init_options = Options::get_initialization_options();
@@ -206,11 +220,25 @@ class SettingsController {
 			$wp_config->add_constant( $constant_key, $constant_value );
 		}
 
-          \update_option( Options::get_option_name( 'settings_initialized' ), true );
+		  \update_option( Options::get_option_name( 'settings_initialized' ), true );
 
 		return new \WP_REST_Response(
 			array(),
 			201
+		);
+	}
+
+	public function get_preview_settings() {
+		$preview_settings = Data::preview_settings();
+
+		$webfonts_css = Webfonts::get_wp_theme_json_webfonts_css();
+		if ( $webfonts_css !== false ) {
+			 $preview_settings['settings']['__unstableResolvedAssets']['styles'] .= '<style>' . $webfonts_css . '</style>';
+		}
+
+		return new \WP_REST_Response(
+			$preview_settings,
+			200
 		);
 	}
 }

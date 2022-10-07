@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n'; 
 import { useRef, useState } from '@wordpress/element';
 
-import Loader from '../Loader';
+import { ImageUploadLoader } from '../Loaders';
 import { uploadImage } from '../../utils/api/uploader';
 
  /*
@@ -51,7 +51,7 @@ const ImageUploader = ({ icon, iconSetter }) => {
     function loader(){
         return (
         <div className="image-uploader_window">
-                <Loader/>
+                <ImageUploadLoader />
         </div>);
     }
     function getImageUploadWindow() {
