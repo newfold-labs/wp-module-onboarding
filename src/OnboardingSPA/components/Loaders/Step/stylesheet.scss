@@ -1,8 +1,25 @@
 .step-loader {
 
+	justify-content: space-evenly;
+
+	@media (max-width: #{($break-medium)}) {
+		justify-content: center;
+	}
+
 	&__logo {
-		width: 256px;
+		max-width: 256px;
 		height: 256px;
+		width: 50vw;
 		background-image: var(--nfd-onboarding-step-loader-icon);
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
+
+		@media (max-width: #{($break-medium)}) {
+			max-width: 256px;
+			max-height: 256px;
+			height: 30vh;
+			width: 100vw;
+		}
 	}
 }

@@ -2,23 +2,23 @@
 $black: var(--nfd-onboarding-black);
 $primary-color: var(--nfd-onboarding-primary);
 
-.nfd-main-heading{
-    width: 96%;
-    margin: 50px 0px 50px;
+.nfd-main-heading {
+	width: 96%;
+	margin: 50px 0 50px;
+	line-height: 1;
 
-    &__title{
-        color: $black;
-        font-weight: 700;
-        text-align: center;
-        color: $primary-color;
-        margin: 35px !important;
-        font-size: clamp(1.6rem, 4vw, 3.6rem);
-    }
+	&__title {
+		font-weight: 700;
+		text-align: center;
+		color: $primary-color;
+		margin: 35px !important;
+		font-size: clamp(1.6rem, 4vw, 3.6rem);
+	}
 
-    &__subtitle{
-        color: $black;
-        font-weight: 400;
-        text-align: center;
-        font-size: clamp(0.85rem, 3.2vw, 1.7rem);
-    }
+	&__subtitle {
+		color: $black;
+		font-weight: 400;
+		text-align: center;
+		font-size: clamp(0.85rem, 3.2vw, 1.7rem);
+	}
 }
