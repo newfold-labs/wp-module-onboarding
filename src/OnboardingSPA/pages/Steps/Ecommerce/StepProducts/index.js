@@ -9,6 +9,7 @@ import CardHeader from '../../../../components/CardHeader';
 import CommonLayout from '../../../../components/Layouts/Common';
 import NeedHelpTag from '../../../../components/NeedHelpTag';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
+import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 import { store as nfdOnboardingStore } from '../../../../store';
 import content from '../content.json';
 
@@ -58,6 +59,7 @@ const StepProducts = () => {
 
 
 	return (
+        <EcommerceStateHandler>
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard className='ecommerce-step' >
 				<div className='nfd-onboarding-experience-step onboarding-product-step onboarding-ecommerce-step'>
@@ -100,6 +102,7 @@ const StepProducts = () => {
 				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>
+        </EcommerceStateHandler>
 	);
 };
 
