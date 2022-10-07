@@ -172,7 +172,6 @@ class SettingsController {
 						if ( ! empty( $param_value ) && ! \wp_http_validate_url( $param_value ) ) {
 							$this->invalid_urls[] = $param_key;
 							unset($params[$param_key]);
-							continue;
 						}
 						break;
 				}
