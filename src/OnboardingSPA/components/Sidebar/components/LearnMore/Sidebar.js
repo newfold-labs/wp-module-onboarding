@@ -31,7 +31,6 @@ const LearnMoreSidebar = () => {
 	};
 	return (
 		<Fill name={ `${ SIDEBAR_SLOTFILL_PREFIX }/${ SIDEBAR_LEARN_MORE }` }>
-			{ currentStep?.SidebarComponents?.LearnMore && (
 				<PanelBody className="nfd-onboarding-sidebar-learn-more" initialOpen={ true }>
 					<Suspense fallback={ <SidebarSkeleton /> }>
 						<PanelHeader label={ __( 'Learn More', 'wp-module-onboarding' ) }>
@@ -57,7 +56,8 @@ const LearnMoreSidebar = () => {
 								</div>
 							</PanelRow>
 						</PanelBody>
-						{ currentStep.SidebarComponents.LearnMore.map(
+					{currentStep?.SidebarComponents?.LearnMore && (
+						currentStep.SidebarComponents.LearnMore.map(
 							( SidebarComponent, index ) => {
 								return (
 									<Fragment key={ index }>
@@ -66,10 +66,10 @@ const LearnMoreSidebar = () => {
 									</Fragment>
 								);
 							}
-						) }
+						)
+					)}
 					</Suspense>
 				</PanelBody>
-			) }
 		</Fill>
 	);
 };
