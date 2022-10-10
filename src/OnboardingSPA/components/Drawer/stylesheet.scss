@@ -323,3 +323,65 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
         }
     }
 }
+
+// Design Color Palette Step
+
+.font-palette {
+
+    width: 88%;
+    height: 30px;
+    display: flex;
+    margin: 8px 4px;
+    cursor: pointer;
+    position: relative;
+    padding: 10px 16px;
+    align-items: center;
+    background-color: white;
+
+    &-selected {
+        background-color: $main-border-main;
+    }
+
+    &__icon {
+        color: black;
+        font-weight: 700;
+        margin-right: 16px;
+    }
+
+    &__name {
+        color: black;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px;
+    }
+}
+
+.custom-palette {
+    width: 88%;
+    margin: 30px 2px;
+    padding: 20px 16px;
+    background: $main-border-main;
+
+    &__top {
+        display: flex;
+        cursor: pointer;
+        align-items: center;
+        justify-content: space-between;
+
+        &-text {
+            font-size: 14px;
+        }
+        &-icon {
+            font-size: 14px;
+        }
+    }
+
+    &_acc_opened {
+        display: block;
+    }
+
+    &_acc_closed {
+        display: none;
+    }
+   
+}
