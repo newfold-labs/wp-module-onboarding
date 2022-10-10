@@ -31,8 +31,8 @@ class ThemeInstallerController extends \WP_REST_Controller {
 			$this->rest_base . '/initialize',
 			array(
 				array(
-					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'initialize' ),
+					'methods'  => \WP_REST_Server::CREATABLE,
+					'callback' => array( $this, 'initialize' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -46,6 +46,19 @@ class ThemeInstallerController extends \WP_REST_Controller {
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'install' ),
 					'args'                => $this->get_install_theme_args(),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/status',
+			array(
+				array(
+					'methods'  => \WP_REST_Server::READABLE,
+					'callback' => array( $this, 'get_status' ),
+					'args'     => $this->get_status_args(),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -76,6 +89,19 @@ class ThemeInstallerController extends \WP_REST_Controller {
 				 'default' => 0,
 			 ),
 		 );
+	}
+
+	public function get_status_args() {
+		return array(
+			'theme'     => array(
+				'type'     => 'string',
+				'required' => true,
+			),
+			'activated' => array(
+				'type'    => 'boolean',
+				'default' => true,
+			),
+		);
 	}
 
 	 /**
@@ -138,5 +164,39 @@ class ThemeInstallerController extends \WP_REST_Controller {
 		 $theme_install_task = new ThemeInstallTask( $theme, $activate );
 
 		 return $theme_install_task->execute();
+	}
+
+	public function get_status( \WP_REST_Request $request ) {
+		$theme     = $request->get_param( 'theme' );
+		$activated = $request->get_param( 'activated' );
+
+		if ( ThemeInstaller::exists( $theme, $activated ) ) {
+			return new \WP_REST_Response(
+				array(
+					'status' => $activated ? 'activated' : 'installed',
+				),
+				200
+			);
+		}
+
+		$position_in_queue = ThemeInstallTaskManager::status( $theme );
+
+		if ( $position_in_queue !== false ) {
+			return new \WP_REST_Response(
+				array(
+					'status'   => 'installing',
+					'estimate' => ( ( $position_in_queue + 1 ) * 10 ),
+				),
+				200
+			);
+		}
+
+		return new \WP_REST_Response(
+			array(
+				'status' => 'inactive',
+			),
+			200
+		);
+
 	}
 }

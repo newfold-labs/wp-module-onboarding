@@ -84,7 +84,7 @@ export function setActiveFlow( flow ) {
  */
 export function setActiveStep( path ) {
 	// Remove Trailing Spaces from URL
-	path = path.replace(/\/$/, "");
+	path = path.replace( /\/$/, '' );
 
 	return {
 		type: 'SET_ACTIVE_STEP',
@@ -96,9 +96,9 @@ export function setActiveStep( path ) {
  * Accepts a JSON to set the current data.
  *
  * @param {*} currentData
- * @returns
+ * @return
  */
-export function setCurrentOnboardingData(currentData) {
+export function setCurrentOnboardingData( currentData ) {
 	return {
 		type: 'SET_CURRENT_DATA',
 		currentData,
@@ -115,6 +115,20 @@ export function updateSettings( settings ) {
 	return {
 		type: 'UPDATE_SETTINGS',
 		settings,
+	};
+}
+
+export function updateThemeStatus( themeStatus ) {
+	return {
+		type: 'UPDATE_THEME_STATUS',
+		themeStatus,
+	};
+}
+
+export function updatePluginsStatus( pluginsStatus ) {
+	return {
+		type: 'UPDATE_PLUGINS_STATUS',
+		pluginsStatus,
 	};
 }
 
@@ -136,5 +150,26 @@ export function updatePreviewSettings( previewSettings ) {
 	return {
 		type: 'SET_PREVIEW_SETTINGS',
 		previewSettings,
+	};
+}
+
+export function updateRoutes( routes ) {
+	return {
+		type: 'UPDATE_ROUTES',
+		routes,
+	};
+}
+
+export function updateAllSteps( allSteps ) {
+	return {
+		type: 'UPDATE_ALL_STEPS',
+		allSteps,
+	};
+}
+
+export function updateDesignSteps( designSteps ) {
+	return {
+		type: 'UPDATE_DESIGN_STEPS',
+		designSteps,
 	};
 }

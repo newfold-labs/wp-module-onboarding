@@ -1,0 +1,25 @@
+.step-error-state {
+	justify-content: center;
+
+	&__logo {
+		background-image: var(--nfd-onboarding-step-error-icon);
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
+		width: 50vw;
+		height: 400px;
+
+		@media (max-width: #{($break-medium)}) {
+			width: 100vw;
+			height: 30vh;
+		}
+	}
+
+	&__error {
+		padding: 0;
+		margin-bottom: 20px;
+		font-weight: 400;
+		text-align: center;
+		font-size: clamp(0.85rem, 3.2vw, 1.7rem);
+	}
+}

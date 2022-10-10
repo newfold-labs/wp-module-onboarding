@@ -12,6 +12,7 @@ import { store as nfdOnboardingStore } from '../../../../store';
 import content from '../content.json';
 import countries from '../countries.json';
 import { useWPSettings } from '../useWPSettings';
+import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 
 const StepAddress = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -107,6 +108,7 @@ const StepAddress = () => {
 		});
 	}
 	return (
+        <EcommerceStateHandler>
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard className='ecommerce-step nfd-ecommerce-address-step'>
 				<div className='onboarding-ecommerce-step'>
@@ -176,7 +178,7 @@ const StepAddress = () => {
 									{...fieldProps}
 								/>
 							</div>
-							<div className='sm:col-layout md:row-layout full-address-fields'>
+							<div className='sm:col-layout md:row-layout full-address-fields' style={{"--fields":`${states.length === 0 || settings === null  ? 2 : 3}`}}>
 								<div>
 									<label data-required>
 										{__('City', 'wp-module-onboarding')}
@@ -189,33 +191,27 @@ const StepAddress = () => {
 										{...fieldProps}
 									/>
 								</div>
+								{states.length === 0 || settings === null ? null : (
 								<div>
 									<label data-required>
 										{__('State', 'wp-module-onboarding')}
 									</label>
-									{states.length === 0 || settings === null ? (
-										<input
-											type='text'
-											name='state'
-											disabled={settings === null}
-											{...fieldProps}
-										/>
-									) : (
 										<select
 											type='text'
 											name='state'
 											required
-											defaultValue={defaultState}
+											defaultValue={selectedCountry==defaultCountry?defaultState:""}
 											{...fieldProps}
 										>
+											<option key={""} value={""} selected />
 											{states.map((state) => (
 												<option key={state.code} value={state.code}>
 													{state.name}
 												</option>
 											))}
 										</select>
-									)}
 								</div>
+								)}
 								<div>
 									<label data-required>
 										{__('Postal Code', 'wp-module-onboarding')}
@@ -243,6 +239,7 @@ const StepAddress = () => {
 				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>
+        </EcommerceStateHandler>
 	);
 };
 

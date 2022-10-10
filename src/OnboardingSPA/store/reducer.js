@@ -1,6 +1,11 @@
 import { combineReducers } from '@wordpress/data';
 
-import { VIEW_NAV_PRIMARY } from '../../constants';
+import {
+	VIEW_NAV_PRIMARY,
+	THEME_STATUS_INIT,
+	PLUGIN_STATUS_INIT,
+	ECOMMERCE_STEPS_PLUGIN,
+} from '../../constants';
 
 import {
 	routes as initialRoutes,
@@ -41,6 +46,30 @@ export function flow(
 				...state,
 				flow: action.flow,
 			};
+		case 'UPDATE_ROUTES':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					routes: action.routes,
+				},
+			};
+		case 'UPDATE_ALL_STEPS':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					allSteps: action.allSteps,
+				},
+			};
+		case 'UPDATE_DESIGN_STEPS':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					designSteps: action.designSteps,
+				},
+			};
 	}
 
 	return state;
@@ -65,7 +94,7 @@ export function drawer(
 			return {
 				...state,
 				isSuppressed: action.isSuppressed,
-				isOpen: action.isSuppressed? false : state.isOpen,
+				isOpen: action.isSuppressed ? false : state.isOpen,
 			};
 	}
 
@@ -124,12 +153,28 @@ export function runtime( state = {}, action ) {
 	return state;
 }
 
-export function settings( state = {}, action ) {
+export function settings(
+	state = {
+		themeStatus: THEME_STATUS_INIT,
+		pluginsStatus: { [ ECOMMERCE_STEPS_PLUGIN ]: PLUGIN_STATUS_INIT },
+	},
+	action
+) {
 	switch ( action.type ) {
 		case 'UPDATE_SETTINGS':
 			return {
 				...state,
 				...action.settings,
+			};
+		case 'UPDATE_THEME_STATUS':
+			return {
+				...state,
+				themeStatus: action.themeStatus,
+			};
+		case 'UPDATE_PLUGINS_STATUS':
+			return {
+				...state,
+				pluginsStatus: action.pluginsStatus,
 			};
 	}
 

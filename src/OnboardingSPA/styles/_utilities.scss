@@ -6,6 +6,24 @@
 		opacity: 1;
 	}
 }
+@keyframes shine {
+	0% {
+			transform: translateX(-100%);
+		}
+	100% {
+			transform: translateX(100%);
+		}
+}
+
+@keyframes shine-placeholder {
+	0% {
+		background-position: -468px 0;
+	}
+
+	100% {
+		background-position: 468px 0;
+	}
+}
 
 .is-centered {
 	display: flex;

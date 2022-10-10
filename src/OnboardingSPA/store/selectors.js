@@ -27,7 +27,7 @@ export function isDrawerOpened( state ) {
  * @param {*} state
  * @return boolean
  */
- export function isDrawerSuppressed( state ) {
+export function isDrawerSuppressed( state ) {
 	return state.drawer.isSuppressed;
 }
 
@@ -59,7 +59,11 @@ export function getNewfoldBrandName( state ) {
  */
 export function getHireExpertsUrl( state ) {
 	const hireExpertsInfo = state.runtime.currentBrand.hireExpertsInfo;
-	const hireExpertsUrl = addQueryArgs(hireExpertsInfo?.defaultLink, hireExpertsInfo?.queryParameters) + (hireExpertsInfo?.fragment || '') ;
+	const hireExpertsUrl =
+		addQueryArgs(
+			hireExpertsInfo?.defaultLink,
+			hireExpertsInfo?.queryParameters
+		) + ( hireExpertsInfo?.fragment || '' );
 	return hireExpertsUrl;
 }
 
@@ -81,6 +85,14 @@ export function getCurrentOnboardingData( state ) {
  */
 export function getOnboardingFlow( state ) {
 	return state.runtime.currentFlow ?? 'wp-setup';
+}
+
+export function getRoutes( state ) {
+	return state.flow.steps.routes;
+}
+
+export function getAllSteps( state ) {
+	return state.flow.steps.allSteps;
 }
 
 /**
@@ -157,6 +169,11 @@ export function getCurrentStep( state ) {
 	return filtered[ 0 ];
 }
 
+export function getStepFromPath( state, path ) {
+	const filtered = filter( state.flow.steps.allSteps, [ 'path', path ] );
+	return filtered[ 0 ];
+}
+
 /**
  * Get's the previous step's object.
  *
@@ -210,6 +227,18 @@ export function getSidebars( state ) {
 
 export function getPreviewSettings( state ) {
 	return state.runtime.previewSettings;
+}
+
+export function getSettings ( state ) {
+    return state.settings;
+}
+
+export function getThemeStatus ( state ) {
+    return state.settings.themeStatus;
+}
+
+export function getPluginsStatus ( state ) {
+    return state.settings.pluginsStatus;
 }
 
 export function getStoreInfoSteps( state ) {

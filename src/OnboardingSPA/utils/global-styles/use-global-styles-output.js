@@ -466,16 +466,25 @@ const getBlockSelectors = ( blockTypes ) => {
 	return result;
 };
 
-export function useGlobalStylesOutput( previewSettings ) {
+export function useGlobalStylesOutput(
+	previewSettings,
+	storedPreviewSettings
+) {
 	const hasBlockGapSupport = false;
 
-	if ( ! previewSettings?.globalStyles || ! previewSettings?.settings?.__experimentalFeatures ) {
+	if (
+		! previewSettings?.styles &&
+		! previewSettings?.settings &&
+		! previewSettings?.globalStyles
+	) {
 		return;
 	}
 
 	const requiredSettings = {
-		settings: previewSettings.settings.__experimentalFeatures,
-		styles: previewSettings.globalStyles,
+		settings: previewSettings.settings,
+		styles: previewSettings?.globalStyles
+			? previewSettings.globalStyles
+			: previewSettings.styles,
 	};
 
 	const blockSelectors = getBlockSelectors( getBlockTypes() );
@@ -491,6 +500,7 @@ export function useGlobalStylesOutput( previewSettings ) {
 	);
 
 	const stylesheets = [
+		...storedPreviewSettings.settings.styles,
 		{
 			css: customProperties,
 			isGlobalStyles: true,
@@ -501,9 +511,9 @@ export function useGlobalStylesOutput( previewSettings ) {
 		},
 	];
 
-	previewSettings.settings.styles = previewSettings.settings.styles
-		.filter( ( style ) => style.isGlobalStyles === false )
-		.concat( stylesheets );
+	previewSettings.settings.styles = stylesheets;
+	previewSettings.settings.__unstableResolvedAssets =
+		storedPreviewSettings.settings.__unstableResolvedAssets;
 
 	return previewSettings;
 }
