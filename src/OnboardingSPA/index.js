@@ -5,6 +5,7 @@ import { init as initializePlugins } from './utils/api/plugins';
 import { init as initializeThemes } from './utils/api/themes';
 import { trigger as cronTrigger } from './utils/api/cronTrigger';
 import { initialize as initializeSettings } from './utils/api/settings';
+import { DESIGN_STEPS_THEME } from '../constants';
 
 import App from './components/App';
 import { HashRouter } from 'react-router-dom';
@@ -41,6 +42,12 @@ export async function initializeNFDOnboarding( id, runtime ) {
 
 	const DOM_TARGET = document.getElementById( id );
 	dispatch( nfdOnboardingStore ).setRuntime( runtime );
+	dispatch( nfdOnboardingStore ).updateThemeStatus(
+		runtime.previewSettings.preRequisites.themes[ DESIGN_STEPS_THEME ]
+	);
+	dispatch( nfdOnboardingStore ).updatePluginsStatus(
+		runtime.previewSettings.preRequisites.plugins
+	);
 	const currentData = await getFlow();
 	if ( currentData.error == null ) {
 		currentData.body = initializeFlowData( currentData.body );
