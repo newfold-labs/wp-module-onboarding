@@ -203,14 +203,10 @@ const App = () => {
 		};
 	};
 
-	function handleInjectedSteps() {
+	function handleColorsAndTypographyRoutes() {
 		if (location?.pathname.includes('colors') || location?.pathname.includes('typography')){
 			let updates;
-
-			if (currentData?.data?.customDesign)
-				updates = addColorAndTypographyRoutes();
-			else
-				updates = removeColorAndTypographyRoutes();
+			updates = currentData?.data?.customDesign ? addColorAndTypographyRoutes() : removeColorAndTypographyRoutes();
 			
 			updateRoutes(updates.routes);
 			updateDesignSteps(updates.designSteps);
@@ -224,7 +220,7 @@ const App = () => {
 
 	useEffect( () => {
 		syncStoreToDB();
-		handleInjectedSteps();
+		handleColorsAndTypographyRoutes();
 		if ( location.pathname.includes( '/step' ) ) {
 			setActiveFlow( onboardingFlow );
 			setActiveStep( location.pathname );

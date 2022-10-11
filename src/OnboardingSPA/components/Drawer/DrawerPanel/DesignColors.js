@@ -37,41 +37,41 @@ const DesignColors = () => {
 		useDispatch(nfdOnboardingStore);
 
 	const colorPalettes = {
-		'calm': [
-			'#C7DBFF',
-			'#E6EBEE',
-			'#1A4733',
-		],
-		'cool': [
-			'#C7DBFF',
-			'#EDF7FE',
-			'#21447B',
-		],
-		'warm': [
-			'#FFEDED',
-			'#FEF7E8',
-			'#7A3921',
-		],
-		'radiant': [
-			'#C7F0FF',
-			'#FEF4FB',
-			'#63156A',
-		],
-		'bold': [
-			'#F2A3D6',
-			'#FFFBF5',
-			'#09857C',
-		],
-		'retro': [
-			'#F2E6A2',
-			'#F5FFFF',
-			'#096385',
-		],
-		'professional': [
-			'#A2C1F2',
-			'#F5FAFF',
-			'#669933',
-		],
+		'calm': {
+			'tertiary': '#C7DBFF',
+			'secondary': '#E6EBEE',
+			'primary': '#1A4733',
+		},
+		'cool': {
+			'tertiary': '#C7DBFF',
+			'secondary': '#EDF7FE',
+			'primary': '#21447B',
+		},
+		'warm': {
+			'tertiary': '#FFEDED',
+			'secondary': '#FEF7E8',
+			'primary': '#7A3921',
+		},
+		'radiant': {
+			'tertiary': '#C7F0FF',
+			'secondary': '#FEF4FB',
+			'primary': '#63156A',
+		},
+		'bold': {
+			'tertiary': '#F2A3D6',
+			'secondary': '#FFFBF5',
+			'primary': '#09857C',
+		},
+		'retro': {
+			'tertiary': '#F2E6A2',
+			'secondary': '#F5FFFF',
+			'primary': '#096385',
+		},
+		'professional': {
+			'tertiary': '#A2C1F2',
+			'secondary': '#F5FAFF',
+			'primary': '#669933',
+		},
 	}
 
 	async function setThemeColorPalette(colorStyle, selectedColorsTemp = selectedColors, globalStylesTemp = globalStyles) {
@@ -91,19 +91,19 @@ const DesignColors = () => {
 						if (isCustomStyle && primaryColorTemp)
 							selectedThemeColorPalette[idx].color = primaryColorTemp;
 						else
-							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][2];
+							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle].primary;
 						break;
 					case 'secondary':
 						if (isCustomStyle && secondaryColorTemp)
 							selectedThemeColorPalette[idx].color = secondaryColorTemp;
 						else
-							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][1];
+							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle].secondary;
 						break;
 					case 'tertiary':
 						if (isCustomStyle && tertiaryColorTemp)
 							selectedThemeColorPalette[idx].color = tertiaryColorTemp;
 						else
-							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][0];
+							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle].tertiary;
 						break;
 					case 'background':
 						if (isCustomStyle && backgroundColorTemp)
@@ -212,9 +212,9 @@ const DesignColors = () => {
 			"slug": colorStyle,
 			"name": colorStyle?.charAt(0).toUpperCase() + colorStyle?.slice(1),
 			"color": [
-					{ "slug": "primary", "name": "Primary", "color": colorPalettes[colorStyle][2] },
-					{ "slug": "secondary", "name": "Secondary", "color": colorPalettes[colorStyle][1] },
-					{ "slug": "tertiary", "name": "Tertiary", "color": colorPalettes[colorStyle][0] },
+					{ "slug": "primary", "name": "Primary", "color": colorPalettes[colorStyle].primary },
+					{ "slug": "secondary", "name": "Secondary", "color": colorPalettes[colorStyle].secondary },
+					{ "slug": "tertiary", "name": "Tertiary", "color": colorPalettes[colorStyle].tertiary },
 					{ "slug": "background", "name": "Background", "color": "" },
 				],
 			"supports": ["yith-wonder"]
@@ -273,10 +273,9 @@ const DesignColors = () => {
 	}
 
 	const selectCustomColor = (colorType) => {
-		const showColorPickerTemp = showColorPicker;
-		setShowColorPicker(!showColorPickerTemp);
+		setShowColorPicker(!showColorPicker);
 
-		if (!showColorPickerTemp)
+		if (!showColorPicker)
 			setColorPickerCalledBy(colorType);
 		else
 			setColorPickerCalledBy('');
@@ -289,12 +288,12 @@ const DesignColors = () => {
 				<div className={`color-palette ${colorStyle == selectedColors?.slug ? 'color-palette-selected' : ''} `}
 					onClick={(e) => handleClick(colorStyle)}>
 					<div className='color-palette__colors'>
-						<div className='color-palette__colors-tert'
-							style={{ backgroundColor: `${colorPalettes[colorStyle][0]}` }}/>
-						<div className='color-palette__colors-scnd'
-							style={{ backgroundColor: `${colorPalettes[colorStyle][1]}` }}/>
-						<div className='color-palette__colors-prim'
-							style={{ backgroundColor: `${colorPalettes[colorStyle][2]}` }} />
+						<div className='color-palette__colors--tertiary'
+							style={{ backgroundColor: `${colorPalettes[colorStyle].tertiary}` }}/>
+						<div className='color-palette__colors--secondary'
+							style={{ backgroundColor: `${colorPalettes[colorStyle].secondary}` }}/>
+						<div className='color-palette__colors--primary'
+							style={{ backgroundColor: `${colorPalettes[colorStyle].primary}` }} />
 					</div>
 					<div className='color-palette__name'>
 						{colorStyle?.charAt(0).toUpperCase() + colorStyle?.slice(1) }
