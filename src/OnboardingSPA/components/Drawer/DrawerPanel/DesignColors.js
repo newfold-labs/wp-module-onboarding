@@ -136,25 +136,13 @@ const DesignColors = () => {
 			selectedGlobalStyle = globalStyles.body[0];
 		}
 		setGlobalStyles(selectedGlobalStyle);
-
 		let selectedColors;
-		if (!currentData?.data?.palette[0]?.hasOwnProperty('supports')) {
-			currentData.data.palette[0] = {
-				"slug": "",
-       			"name": "",
-       			"color": [
-					{"slug": "primary", "name": "Primary", "color": ""},
-					{ "slug": "secondary", "name": "Secondary", "color": ""},
-					{ "slug": "tertiary", "name": "Tertiary", "color": ""},
-					{ "slug": "background", "name": "Background", "color": ""},
-				],
-				"supports": ["yith-wonder"]
-			};
-			selectedColors = currentData.data.palette[0];
+		if (!currentData?.data?.palette?.slug === '') {
+			selectedColors = currentData.data.palette;
 			setCurrentOnboardingData(currentData);
 		}
 		else {
-			selectedColors = currentData.data.palette[0];
+			selectedColors = currentData.data.palette;
 
 			if(selectedColors.slug === 'custom') {
 				setBackgroundColor(selectedColors?.color[3].color ?? null);
@@ -164,7 +152,7 @@ const DesignColors = () => {
 			}
 		} 
 		setSelectedColors(selectedColors);
-		setThemeColorPalette(currentData?.data?.palette[0]['slug'], selectedColors, selectedGlobalStyle);
+		setThemeColorPalette(currentData?.data?.palette['slug'], selectedColors, selectedGlobalStyle);
 		setIsLoaded(true);
 
 	};
@@ -226,7 +214,7 @@ const DesignColors = () => {
 		setThemeColorPalette(colorStyle);
 
 		setSelectedColors(selectedColorsTemp);
-		currentData.data.palette[0] = selectedColorsTemp;
+		currentData.data.palette = selectedColorsTemp;
 		setCurrentOnboardingData(currentData);
 	};
 
@@ -268,7 +256,7 @@ const DesignColors = () => {
 		
 		setCustomColors();
 		setSelectedColors(selectedColorsTemp);
-		currentData.data.palette[0] = selectedColorsTemp;
+		currentData.data.palette = selectedColorsTemp;
 		setCurrentOnboardingData(currentData);		
 	}
 
