@@ -3444,7 +3444,6 @@ const DesignColors = () => {
     } else {
       selectedColors = currentData.data.palette;
       selectedColorsLocal = stateToLocal(selectedColors);
-      setCustomColors(selectedColorsLocal);
 
       if (selectedColors.slug === 'custom') {
         setCustomColors(selectedColorsLocal);
@@ -3475,9 +3474,10 @@ const DesignColors = () => {
 
   const changeCustomPickerColor = async color => {
     let selectedColorsLocalTemp = selectedColorsLocal;
-    selectedColorsLocalTemp = customColors;
-    customColors[colorPickerCalledBy] = color;
+    selectedColorsLocalTemp[colorPickerCalledBy] = color;
     saveCustomColors();
+    setSelectedColorsLocal(selectedColorsLocalTemp);
+    setCustomColors(selectedColorsLocalTemp);
     LocalToState(selectedColorsLocalTemp, 'custom');
   };
 
@@ -3519,11 +3519,11 @@ const DesignColors = () => {
   }
 
   function buildCustomPalette() {
-    var _selectedColors$color, _selectedColors$color2, _selectedColors$color3, _customColors$backgro, _customColors$primary, _customColors$seconda, _customColors$tertiar;
+    var _selectedColorsLocal$, _selectedColorsLocal$2, _selectedColorsLocal$3, _customColors$backgro;
 
-    let primaryColorTemp = (_selectedColors$color = selectedColors === null || selectedColors === void 0 ? void 0 : selectedColors.color[0].color) !== null && _selectedColors$color !== void 0 ? _selectedColors$color : '#fff';
-    let secondaryColorTemp = (_selectedColors$color2 = selectedColors === null || selectedColors === void 0 ? void 0 : selectedColors.color[1].color) !== null && _selectedColors$color2 !== void 0 ? _selectedColors$color2 : '#fff';
-    let tertiaryColorTemp = (_selectedColors$color3 = selectedColors === null || selectedColors === void 0 ? void 0 : selectedColors.color[2].color) !== null && _selectedColors$color3 !== void 0 ? _selectedColors$color3 : '#fff';
+    let primaryColorTemp = customColors && (customColors === null || customColors === void 0 ? void 0 : customColors.primary) != '' ? customColors === null || customColors === void 0 ? void 0 : customColors.primary : (_selectedColorsLocal$ = selectedColorsLocal === null || selectedColorsLocal === void 0 ? void 0 : selectedColorsLocal.primary) !== null && _selectedColorsLocal$ !== void 0 ? _selectedColorsLocal$ : '#fff';
+    let secondaryColorTemp = customColors && (customColors === null || customColors === void 0 ? void 0 : customColors.secondary) != '' ? customColors === null || customColors === void 0 ? void 0 : customColors.secondary : (_selectedColorsLocal$2 = selectedColorsLocal === null || selectedColorsLocal === void 0 ? void 0 : selectedColorsLocal.secondary) !== null && _selectedColorsLocal$2 !== void 0 ? _selectedColorsLocal$2 : '#fff';
+    let tertiaryColorTemp = customColors && (customColors === null || customColors === void 0 ? void 0 : customColors.tertiary) != '' ? customColors === null || customColors === void 0 ? void 0 : customColors.tertiary : (_selectedColorsLocal$3 = selectedColorsLocal === null || selectedColorsLocal === void 0 ? void 0 : selectedColorsLocal.tertiary) !== null && _selectedColorsLocal$3 !== void 0 ? _selectedColorsLocal$3 : '#fff';
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "custom-palette"
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -3553,7 +3553,7 @@ const DesignColors = () => {
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: `custom-palette__below-row-icon ${(customColors === null || customColors === void 0 ? void 0 : customColors.primary) && 'custom-palette__below-row-icon_selected_border'}`,
       style: {
-        backgroundColor: `${(_customColors$primary = customColors === null || customColors === void 0 ? void 0 : customColors.primary) !== null && _customColors$primary !== void 0 ? _customColors$primary : primaryColorTemp}`
+        backgroundColor: `${primaryColorTemp}`
       }
     }, customColors !== null && customColors !== void 0 && customColors.primary ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, "\u2713") : null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "custom-palette__below-row-text"
@@ -3563,7 +3563,7 @@ const DesignColors = () => {
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: `custom-palette__below-row-icon ${(customColors === null || customColors === void 0 ? void 0 : customColors.secondary) && 'custom-palette__below-row-icon_selected_border'}`,
       style: {
-        backgroundColor: `${(_customColors$seconda = customColors === null || customColors === void 0 ? void 0 : customColors.secondary) !== null && _customColors$seconda !== void 0 ? _customColors$seconda : secondaryColorTemp}`
+        backgroundColor: `${secondaryColorTemp}`
       }
     }, customColors !== null && customColors !== void 0 && customColors.secondary ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, "\u2713") : null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "custom-palette__below-row-text"
@@ -3573,7 +3573,7 @@ const DesignColors = () => {
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: `custom-palette__below-row-icon ${(customColors === null || customColors === void 0 ? void 0 : customColors.tertiary) && 'custom-palette__below-row-icon_selected_border'}`,
       style: {
-        backgroundColor: `${(_customColors$tertiar = customColors === null || customColors === void 0 ? void 0 : customColors.tertiary) !== null && _customColors$tertiar !== void 0 ? _customColors$tertiar : tertiaryColorTemp}`
+        backgroundColor: `${tertiaryColorTemp}`
       }
     }, customColors !== null && customColors !== void 0 && customColors.tertiary ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, "\u2713") : null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "custom-palette__below-row-text"

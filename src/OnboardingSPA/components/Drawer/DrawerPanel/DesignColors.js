@@ -216,7 +216,6 @@ const DesignColors = () => {
 		else {
 			selectedColors = currentData.data.palette;
 			selectedColorsLocal = stateToLocal(selectedColors);
-			setCustomColors(selectedColorsLocal);
 
 			if(selectedColors.slug === 'custom') {
 				setCustomColors(selectedColorsLocal);
@@ -249,10 +248,11 @@ const DesignColors = () => {
 	const changeCustomPickerColor = async (color) => {
 
 		let selectedColorsLocalTemp = selectedColorsLocal;
-		selectedColorsLocalTemp = customColors;
-		customColors[colorPickerCalledBy] = color;
+		selectedColorsLocalTemp[colorPickerCalledBy] = color;
 		
 		saveCustomColors();
+		setSelectedColorsLocal(selectedColorsLocalTemp);
+		setCustomColors(selectedColorsLocalTemp);
 		LocalToState(selectedColorsLocalTemp, 'custom');
 	}
 
@@ -291,9 +291,9 @@ const DesignColors = () => {
 
 	function buildCustomPalette () {
 
-		let primaryColorTemp = selectedColors?.color[0].color ?? '#fff';
-		let secondaryColorTemp = selectedColors?.color[1].color ?? '#fff';
-		let tertiaryColorTemp = selectedColors?.color[2].color ?? '#fff';
+		let primaryColorTemp = customColors && customColors?.primary != '' ? customColors?.primary : selectedColorsLocal?.primary ?? '#fff';
+		let secondaryColorTemp = customColors && customColors?.secondary != '' ? customColors?.secondary : selectedColorsLocal?.secondary ?? '#fff';
+		let tertiaryColorTemp = customColors && customColors?.tertiary != '' ? customColors?.tertiary : selectedColorsLocal?.tertiary ?? '#fff';
 
 		return (
 			<div className='custom-palette'>
@@ -315,7 +315,7 @@ const DesignColors = () => {
 					<div className='custom-palette__below-row'
 						onClick={(e) => selectCustomColor('primary')}>
 						<div className={`custom-palette__below-row-icon ${customColors?.primary && 'custom-palette__below-row-icon_selected_border'}`}
-							style={{ backgroundColor: `${customColors?.primary ?? primaryColorTemp}` }}>
+							style={{ backgroundColor: `${primaryColorTemp}` }}>
 							{customColors?.primary ? <>&#10003;</> : null}
 						</div>
 						<div className='custom-palette__below-row-text'>Primary</div>
@@ -323,7 +323,7 @@ const DesignColors = () => {
 					<div className='custom-palette__below-row'
 						onClick={(e) => selectCustomColor('secondary')}>
 						<div className={`custom-palette__below-row-icon ${customColors?.secondary && 'custom-palette__below-row-icon_selected_border'}`}
-							style={{ backgroundColor: `${customColors?.secondary ?? secondaryColorTemp}` }}>
+							style={{ backgroundColor: `${secondaryColorTemp}` }}>
 							{customColors?.secondary ? <>&#10003;</> : null}
 							</div>
 						<div className='custom-palette__below-row-text'>Secondary</div>
@@ -331,7 +331,7 @@ const DesignColors = () => {
 					<div className='custom-palette__below-row'
 						onClick={(e) => selectCustomColor('tertiary')}>
 						<div className={`custom-palette__below-row-icon ${customColors?.tertiary && 'custom-palette__below-row-icon_selected_border'}`}
-							style={{ backgroundColor: `${customColors?.tertiary ?? tertiaryColorTemp}` }}>
+							style={{ backgroundColor: `${tertiaryColorTemp}` }}>
 							{customColors?.tertiary ? <>&#10003;</> : null}
 							</div>
 						<div className='custom-palette__below-row-text'>Tertiary</div>
