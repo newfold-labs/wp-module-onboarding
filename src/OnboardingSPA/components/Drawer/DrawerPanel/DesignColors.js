@@ -12,15 +12,11 @@ const DesignColors = () => {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [globalStyles, setGlobalStyles] = useState();
 	const [selectedColors, setSelectedColors] = useState();
-	const [selectedColorsLocal, setSelectedColorsLocal] = useState();
 	const [showColorPicker, setShowColorPicker] = useState(false);
 	const [isAccordionClosed, setIsAccordionClosed] = useState(true);
+	const [selectedColorsLocal, setSelectedColorsLocal] = useState();
 
 	const [customColors, setCustomColors] = useState();
-	const [primaryColor, setPrimaryColor] = useState();
-	const [tertiaryColor, setTertiaryColor] = useState();
-	const [secondaryColor, setSecondaryColor] = useState();
-	const [backgroundColor, setBackgroundColor] = useState();
 	const [colorPickerCalledBy, setColorPickerCalledBy] = useState('');
 
 	const { storedPreviewSettings, currentData } = useSelect(
@@ -163,6 +159,40 @@ const DesignColors = () => {
 		}
 	}
 
+	async function saveCustomColors() {
+		let selectedGlobalStyle = globalStyles;
+		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
+
+		if (selectedThemeColorPalette) {
+			for (let idx = 0; idx < selectedThemeColorPalette.length; idx++) {
+				switch (selectedThemeColorPalette[idx]?.slug) {
+					case 'background':
+						if (colorPickerCalledBy == 'background' && customColors?.background)
+							selectedThemeColorPalette[idx].color = customColors?.background;
+						break;
+					case 'primary':
+						if (colorPickerCalledBy == 'primary' && customColors?.primary)
+							selectedThemeColorPalette[idx].color = customColors?.primary;
+						break;
+					case 'secondary':
+						if (colorPickerCalledBy == 'secondary' && customColors?.secondary)
+							selectedThemeColorPalette[idx].color = customColors?.secondary;
+						break;
+					case 'tertiary':
+						if (colorPickerCalledBy == 'tertiary' && customColors?.tertiary)
+							selectedThemeColorPalette[idx].color = customColors?.tertiary;
+						break;
+				}
+			}
+
+			selectedGlobalStyle.settings.color.palette.theme = selectedThemeColorPalette;
+			setGlobalStyles(selectedGlobalStyle);
+			updatePreviewSettings(
+				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
+			);
+		}
+	}
+
 	const getColorStylesAndPatterns = async () => {
 		const globalStyles = await getGlobalStyles();
 		let selectedGlobalStyle;
@@ -202,40 +232,6 @@ const DesignColors = () => {
 		if (!isLoaded) getColorStylesAndPatterns();
 	}, [isLoaded]);
 
-	async function saveCustomColors() {
-		let selectedGlobalStyle = globalStyles;
-		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
-
-		if (selectedThemeColorPalette) {
-			for (let idx = 0; idx < selectedThemeColorPalette.length; idx++) {
-				switch (selectedThemeColorPalette[idx]?.slug) {
-					case 'background':
-						if (colorPickerCalledBy == 'background' && customColors?.background)
-							selectedThemeColorPalette[idx].color = customColors?.background;
-						break;
-					case 'primary':
-						if (colorPickerCalledBy == 'primary' && customColors?.primary)
-							selectedThemeColorPalette[idx].color = customColors?.primary;
-						break;
-					case 'secondary':
-						if (colorPickerCalledBy == 'secondary' && customColors?.secondary)
-							selectedThemeColorPalette[idx].color = customColors?.secondary;
-						break;
-					case 'tertiary':
-						if (colorPickerCalledBy == 'tertiary' && customColors?.tertiary)
-							selectedThemeColorPalette[idx].color = customColors?.tertiary;
-						break;
-				}
-			}
-
-			selectedGlobalStyle.settings.color.palette.theme = selectedThemeColorPalette;
-			setGlobalStyles(selectedGlobalStyle);
-			updatePreviewSettings(
-				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
-			);
-		}
-	}
-
 	const handleClick = (colorStyle) => {
 		let selectedColorsLocalTemp = selectedColorsLocal;
 		selectedColorsLocalTemp = colorPalettes[colorStyle];
@@ -244,6 +240,7 @@ const DesignColors = () => {
 		for(let custom in customColorsTemp)
 			customColorsTemp[custom] = '';
 		
+		setCustomColors(customColorsTemp);
 		saveThemeColorPalette(colorStyle);
 		setSelectedColorsLocal(selectedColorsLocalTemp);
 		LocalToState(selectedColorsLocalTemp, colorStyle);
