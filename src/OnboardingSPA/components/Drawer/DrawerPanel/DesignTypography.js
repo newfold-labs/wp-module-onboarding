@@ -10,7 +10,6 @@ const DesignTypography = () => {
 
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [globalStyles, setGlobalStyles] = useState();
-	const [selectedFonts, setSelectedFonts] = useState();
 	const [isAccordionClosed, setIsAccordionClosed] = useState(true);
 
 	const { storedPreviewSettings, currentData } = useSelect(
@@ -229,56 +228,6 @@ const DesignTypography = () => {
 		}
 	}
 
-	async function setThemeColorPalette(colorStyle, selectedColorsTemp = selectedFonts, globalStylesTemp = globalStyles) {
-		const isCustomStyle = colorStyle === 'custom';
-		let primaryColorTemp = selectedColorsTemp?.color[0].color ?? null;
-		let secondaryColorTemp = selectedColorsTemp?.color[1].color ?? null;
-		let tertiaryColorTemp = selectedColorsTemp?.color[2].color ?? null;
-		let backgroundColorTemp = selectedColorsTemp?.color[3].color ?? null;
-
-		let selectedGlobalStyle = globalStylesTemp;
-		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
-
-		if (colorStyle && selectedThemeColorPalette) {
-			for (let idx = 0; idx < selectedThemeColorPalette.length; idx++) {
-				switch (selectedThemeColorPalette[idx]?.slug) {
-					case 'primary':
-						if (isCustomStyle && primaryColorTemp)
-							selectedThemeColorPalette[idx].color = primaryColorTemp;
-						else
-							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][2];
-						break;
-					case 'secondary':
-						if (isCustomStyle && secondaryColorTemp)
-							selectedThemeColorPalette[idx].color = secondaryColorTemp;
-						else
-							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][1];
-						break;
-					case 'tertiary':
-						if (isCustomStyle && tertiaryColorTemp)
-							selectedThemeColorPalette[idx].color = tertiaryColorTemp;
-						else
-							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle][0];
-						break;
-					case 'background':
-						if (isCustomStyle && backgroundColorTemp)
-							selectedThemeColorPalette[idx].color = backgroundColorTemp;
-						else
-							selectedThemeColorPalette[idx].color = '#ffffff';
-						break;
-				}
-			}
-
-			selectedGlobalStyle.settings.color.palette.theme = selectedThemeColorPalette;
-			setGlobalStyles(selectedGlobalStyle);
-			updatePreviewSettings(
-				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
-			);
-
-			return selectedGlobalStyle;
-		}
-	}
-
 	const getColorStylesAndPatterns = async () => {
 		const globalStyles = await getGlobalStyles();
 		let selectedGlobalStyle;
@@ -291,59 +240,24 @@ const DesignTypography = () => {
 			selectedGlobalStyle = globalStyles.body[0];
 		}
 		setGlobalStyles(selectedGlobalStyle);
-
-		let selectedColors;
-		if (!currentData?.data?.palette[0]?.hasOwnProperty('supports')) {
-			currentData.data.palette[0] = {
-				"slug": "",
-				"name": "",
-				"color": [
-					{ "slug": "primary", "name": "Primary", "color": "" },
-					{ "slug": "secondary", "name": "Secondary", "color": "" },
-					{ "slug": "tertiary", "name": "Tertiary", "color": "" },
-					{ "slug": "background", "name": "Background", "color": "" },
-				],
-				"supports": ["yith-wonder"]
-			};
-			selectedColors = currentData.data.palette[0];
-			setCurrentOnboardingData(currentData);
-		}
-		else {
-			selectedColors = currentData.data.palette[0];
-		}
-		setSelectedFonts(selectedColors);
-		setThemeColorPalette(currentData?.data?.palette[0]['slug'], selectedColors, selectedGlobalStyle);
+		updatePreviewSettings(
+			useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
+		);
 		setIsLoaded(true);
-
 	};
 
 	useEffect(() => {
 		if (!isLoaded) getColorStylesAndPatterns();
 	}, [isLoaded]);
 
-	const handleClick = (colorStyle) => {
-		const selectedColorsTemp = {
-			"slug": colorStyle,
-			"name": colorStyle?.charAt(0).toUpperCase() + colorStyle?.slice(1),
-			"color": [
-				{ "slug": "primary", "name": "Primary", "color": colorPalettes[colorStyle][2] },
-				{ "slug": "secondary", "name": "Secondary", "color": colorPalettes[colorStyle][1] },
-				{ "slug": "tertiary", "name": "Tertiary", "color": colorPalettes[colorStyle][0] },
-				{ "slug": "background", "name": "Background", "color": "" },
-			],
-			"supports": ["yith-wonder"]
-		};
-
-		setSelectedFonts(selectedColorsTemp);
-		currentData.data.palette[0] = selectedColorsTemp;
-		setCurrentOnboardingData(currentData);
+	const handleClick = (fontStyle) => {
 	};
 
 	function buildPalettes() {
 		let paletteRenderedList = [];
 		for (const fontStyle in fontPalettes) {
 			paletteRenderedList.push(
-				<div className={`font-palette ${fontStyle == selectedFonts?.label ? 'font-palette-selected' : ''} `}
+				<div className={`font-palette ${ false ? 'font-palette-selected' : ''} `}
 					onClick={(e) => handleClick(fontStyle)}>
 					<div className='font-palette__icon'> Aa </div>
 					<div className='font-palette__name'>
@@ -357,8 +271,6 @@ const DesignTypography = () => {
 	}
 
 	function buildCustomPalette() {
-
-
 		return (
 			<div className='custom-palette'>
 				<div className='custom-palette__top'
