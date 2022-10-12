@@ -10,6 +10,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { LivePreview } from '../../../components/LivePreview';
 import CommonLayout from '../../../components/Layouts/Common';
 import { VIEW_DESIGN_COLORS } from '../../../../constants';
+import { DesignStateHandler } from '../../../components/StateHandlers';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
 const StepDesignColors = () => {
@@ -73,24 +74,26 @@ const StepDesignColors = () => {
 	}, [isLoaded]);
 
 	return (
-		<CommonLayout className="theme-colors-preview">
-			<div className="theme-colors-preview__title-bar">
-				<div className="theme-colors-preview__title-bar__browser">
-					<span className="theme-colors-preview__title-bar__browser__dot"></span>
-					<span className="theme-colors-preview__title-bar__browser__dot"></span>
-					<span className="theme-colors-preview__title-bar__browser__dot"></span>
+		<DesignStateHandler>
+			<CommonLayout className="theme-colors-preview">
+				<div className="theme-colors-preview__title-bar">
+					<div className="theme-colors-preview__title-bar__browser">
+						<span className="theme-colors-preview__title-bar__browser__dot"></span>
+						<span className="theme-colors-preview__title-bar__browser__dot"></span>
+						<span className="theme-colors-preview__title-bar__browser__dot"></span>
+					</div>
 				</div>
-			</div>
-			<div className="theme-colors-preview__live-preview-container">
-				{pattern && (
-					<LivePreview
-						blockGrammer={pattern}
-						styling={'custom'}
-						viewportWidth={1300}
-					/>
-				)}
-			</div>
-		</CommonLayout>
+				<div className="theme-colors-preview__live-preview-container">
+					{pattern && (
+						<LivePreview
+							blockGrammer={pattern}
+							styling={'custom'}
+							viewportWidth={1300}
+						/>
+					)}
+				</div>
+			</CommonLayout>
+		</DesignStateHandler>
 	);
 };
 
