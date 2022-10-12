@@ -4,7 +4,7 @@ import { useState, useEffect } from '@wordpress/element';
 import { Popover, ColorPicker } from '@wordpress/components';
 
 import { store as nfdOnboardingStore } from '../../../store';
-import { getGlobalStyles } from '../../../utils/api/themes';
+import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
 const DesignColors = () => {
@@ -16,6 +16,7 @@ const DesignColors = () => {
 	const [isAccordionClosed, setIsAccordionClosed] = useState(true);
 	const [selectedColorsLocal, setSelectedColorsLocal] = useState();
 
+	const [colorPalettes, setColorPalettes] = useState();
 	const [customColors, setCustomColors] = useState();
 	const [colorPickerCalledBy, setColorPickerCalledBy] = useState('');
 
@@ -33,51 +34,6 @@ const DesignColors = () => {
 
 	const { updatePreviewSettings, setCurrentOnboardingData } =
 		useDispatch(nfdOnboardingStore);
-
-	const colorPalettes = {
-		'calm': {
-			'tertiary': '#C7DBFF',
-			'secondary': '#E6EBEE',
-			'primary': '#1A4733',
-			'background': ''
-		},
-		'cool': {
-			'tertiary': '#C7DBFF',
-			'secondary': '#EDF7FE',
-			'primary': '#21447B',
-			'background': ''
-		},
-		'warm': {
-			'tertiary': '#FFEDED',
-			'secondary': '#FEF7E8',
-			'primary': '#7A3921',
-			'background': ''
-		},
-		'radiant': {
-			'tertiary': '#C7F0FF',
-			'secondary': '#FEF4FB',
-			'primary': '#63156A',
-			'background': ''
-		},
-		'bold': {
-			'tertiary': '#F2A3D6',
-			'secondary': '#FFFBF5',
-			'primary': '#09857C',
-			'background': ''
-		},
-		'retro': {
-			'tertiary': '#F2E6A2',
-			'secondary': '#F5FFFF',
-			'primary': '#096385',
-			'background': ''
-		},
-		'professional': {
-			'tertiary': '#A2C1F2',
-			'secondary': '#F5FAFF',
-			'primary': '#669933',
-			'background': ''
-		},
-	}
 
 	function stateToLocal(selectedColors) {
 		if (selectedColors) {
@@ -114,31 +70,30 @@ const DesignColors = () => {
 		}
 	}
 
-	async function saveThemeColorPalette(colorStyle, selectedColorsLocalTemp = selectedColors, globalStylesTemp = globalStyles) {
+	async function saveThemeColorPalette(colorPalettesTemp = colorPalettes, colorStyle, selectedColorsLocalTemp = selectedColors, globalStylesTemp = globalStyles) {
 		const isCustomStyle = colorStyle === 'custom';
 		let selectedGlobalStyle = globalStylesTemp;
 		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
-
-		if (colorStyle && selectedThemeColorPalette) {
+		if (colorPalettesTemp && colorStyle && selectedThemeColorPalette) {
 			for (let idx = 0; idx < selectedThemeColorPalette.length; idx++) {
 				switch (selectedThemeColorPalette[idx]?.slug) {
 					case 'primary':
 						if (isCustomStyle && selectedColorsLocalTemp?.primary != '')
 							selectedThemeColorPalette[idx].color = selectedColorsLocalTemp.primary;
 						else if (!isCustomStyle)
-							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle].primary;
+							selectedThemeColorPalette[idx].color = colorPalettesTemp[colorStyle].primary;
 						break;
 					case 'secondary':
 						if (isCustomStyle && selectedColorsLocalTemp?.secondary != '')
 							selectedThemeColorPalette[idx].color = selectedColorsLocalTemp.secondary;
 						else if (!isCustomStyle)
-							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle].secondary;
+							selectedThemeColorPalette[idx].color = colorPalettesTemp[colorStyle].secondary;
 						break;
 					case 'tertiary':
 						if (isCustomStyle && selectedColorsLocalTemp?.tertiary != '')
 							selectedThemeColorPalette[idx].color = selectedColorsLocalTemp.tertiary;
 						else if (!isCustomStyle)
-							selectedThemeColorPalette[idx].color = colorPalettes[colorStyle].tertiary;
+							selectedThemeColorPalette[idx].color = colorPalettesTemp[colorStyle].tertiary;
 						break;
 					case 'background':
 						if (isCustomStyle && selectedColorsLocalTemp?.background != '')
@@ -194,7 +149,9 @@ const DesignColors = () => {
 	}
 
 	const getColorStylesAndPatterns = async () => {
+		const colorPalettes = await getThemeColors();
 		const globalStyles = await getGlobalStyles();
+		setColorPalettes(colorPalettes?.body);
 		let selectedGlobalStyle;
 		if (currentData?.data?.theme?.variation) {
 			selectedGlobalStyle = globalStyles.body.filter(
@@ -222,7 +179,7 @@ const DesignColors = () => {
 			}
 		} 
 		setSelectedColors(selectedColors);
-		saveThemeColorPalette(currentData?.data?.palette['slug'], selectedColorsLocal, selectedGlobalStyle);
+		saveThemeColorPalette(colorPalettes?.body, currentData?.data?.palette['slug'], selectedColorsLocal, selectedGlobalStyle);
 		setIsLoaded(true);
 
 	};
@@ -354,7 +311,7 @@ const DesignColors = () => {
 	return (
 		<div style={{ padding: '0 4px' }}>
 			<h2>{__('Color Palettes', 'wp-module-onboarding')}</h2>
-			{buildPalettes()}
+			{ colorPalettes && buildPalettes()}
 			{buildCustomPalette()}
 		</div>
 	);

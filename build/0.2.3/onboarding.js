@@ -3256,6 +3256,7 @@ const DesignColors = () => {
   const [showColorPicker, setShowColorPicker] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [isAccordionClosed, setIsAccordionClosed] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [selectedColorsLocal, setSelectedColorsLocal] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
+  const [colorPalettes, setColorPalettes] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
   const [customColors, setCustomColors] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
   const [colorPickerCalledBy, setColorPickerCalledBy] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const {
@@ -3271,50 +3272,6 @@ const DesignColors = () => {
     updatePreviewSettings,
     setCurrentOnboardingData
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)(_store__WEBPACK_IMPORTED_MODULE_4__.store);
-  const colorPalettes = {
-    'calm': {
-      'tertiary': '#C7DBFF',
-      'secondary': '#E6EBEE',
-      'primary': '#1A4733',
-      'background': ''
-    },
-    'cool': {
-      'tertiary': '#C7DBFF',
-      'secondary': '#EDF7FE',
-      'primary': '#21447B',
-      'background': ''
-    },
-    'warm': {
-      'tertiary': '#FFEDED',
-      'secondary': '#FEF7E8',
-      'primary': '#7A3921',
-      'background': ''
-    },
-    'radiant': {
-      'tertiary': '#C7F0FF',
-      'secondary': '#FEF4FB',
-      'primary': '#63156A',
-      'background': ''
-    },
-    'bold': {
-      'tertiary': '#F2A3D6',
-      'secondary': '#FFFBF5',
-      'primary': '#09857C',
-      'background': ''
-    },
-    'retro': {
-      'tertiary': '#F2E6A2',
-      'secondary': '#F5FFFF',
-      'primary': '#096385',
-      'background': ''
-    },
-    'professional': {
-      'tertiary': '#A2C1F2',
-      'secondary': '#F5FAFF',
-      'primary': '#669933',
-      'background': ''
-    }
-  };
 
   function stateToLocal(selectedColors) {
     if (selectedColors) {
@@ -3350,28 +3307,30 @@ const DesignColors = () => {
     }
   }
 
-  async function saveThemeColorPalette(colorStyle) {
+  async function saveThemeColorPalette() {
     var _selectedGlobalStyle$, _selectedGlobalStyle$2, _selectedGlobalStyle$3, _selectedThemeColorPa;
 
-    let selectedColorsLocalTemp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : selectedColors;
-    let globalStylesTemp = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : globalStyles;
+    let colorPalettesTemp = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : colorPalettes;
+    let colorStyle = arguments.length > 1 ? arguments[1] : undefined;
+    let selectedColorsLocalTemp = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : selectedColors;
+    let globalStylesTemp = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : globalStyles;
     const isCustomStyle = colorStyle === 'custom';
     let selectedGlobalStyle = globalStylesTemp;
     let selectedThemeColorPalette = selectedGlobalStyle === null || selectedGlobalStyle === void 0 ? void 0 : (_selectedGlobalStyle$ = selectedGlobalStyle.settings) === null || _selectedGlobalStyle$ === void 0 ? void 0 : (_selectedGlobalStyle$2 = _selectedGlobalStyle$.color) === null || _selectedGlobalStyle$2 === void 0 ? void 0 : (_selectedGlobalStyle$3 = _selectedGlobalStyle$2.palette) === null || _selectedGlobalStyle$3 === void 0 ? void 0 : _selectedGlobalStyle$3.theme;
 
-    if (colorStyle && selectedThemeColorPalette) {
+    if (colorPalettesTemp && colorStyle && selectedThemeColorPalette) {
       for (let idx = 0; idx < selectedThemeColorPalette.length; idx++) {
         switch ((_selectedThemeColorPa = selectedThemeColorPalette[idx]) === null || _selectedThemeColorPa === void 0 ? void 0 : _selectedThemeColorPa.slug) {
           case 'primary':
-            if (isCustomStyle && (selectedColorsLocalTemp === null || selectedColorsLocalTemp === void 0 ? void 0 : selectedColorsLocalTemp.primary) != '') selectedThemeColorPalette[idx].color = selectedColorsLocalTemp.primary;else if (!isCustomStyle) selectedThemeColorPalette[idx].color = colorPalettes[colorStyle].primary;
+            if (isCustomStyle && (selectedColorsLocalTemp === null || selectedColorsLocalTemp === void 0 ? void 0 : selectedColorsLocalTemp.primary) != '') selectedThemeColorPalette[idx].color = selectedColorsLocalTemp.primary;else if (!isCustomStyle) selectedThemeColorPalette[idx].color = colorPalettesTemp[colorStyle].primary;
             break;
 
           case 'secondary':
-            if (isCustomStyle && (selectedColorsLocalTemp === null || selectedColorsLocalTemp === void 0 ? void 0 : selectedColorsLocalTemp.secondary) != '') selectedThemeColorPalette[idx].color = selectedColorsLocalTemp.secondary;else if (!isCustomStyle) selectedThemeColorPalette[idx].color = colorPalettes[colorStyle].secondary;
+            if (isCustomStyle && (selectedColorsLocalTemp === null || selectedColorsLocalTemp === void 0 ? void 0 : selectedColorsLocalTemp.secondary) != '') selectedThemeColorPalette[idx].color = selectedColorsLocalTemp.secondary;else if (!isCustomStyle) selectedThemeColorPalette[idx].color = colorPalettesTemp[colorStyle].secondary;
             break;
 
           case 'tertiary':
-            if (isCustomStyle && (selectedColorsLocalTemp === null || selectedColorsLocalTemp === void 0 ? void 0 : selectedColorsLocalTemp.tertiary) != '') selectedThemeColorPalette[idx].color = selectedColorsLocalTemp.tertiary;else if (!isCustomStyle) selectedThemeColorPalette[idx].color = colorPalettes[colorStyle].tertiary;
+            if (isCustomStyle && (selectedColorsLocalTemp === null || selectedColorsLocalTemp === void 0 ? void 0 : selectedColorsLocalTemp.tertiary) != '') selectedThemeColorPalette[idx].color = selectedColorsLocalTemp.tertiary;else if (!isCustomStyle) selectedThemeColorPalette[idx].color = colorPalettesTemp[colorStyle].tertiary;
             break;
 
           case 'background':
@@ -3423,7 +3382,9 @@ const DesignColors = () => {
   const getColorStylesAndPatterns = async () => {
     var _currentData$data, _currentData$data$the, _currentData$data2, _currentData$data2$pa, _currentData$data3;
 
+    const colorPalettes = await (0,_utils_api_themes__WEBPACK_IMPORTED_MODULE_5__.getThemeColors)();
     const globalStyles = await (0,_utils_api_themes__WEBPACK_IMPORTED_MODULE_5__.getGlobalStyles)();
+    setColorPalettes(colorPalettes === null || colorPalettes === void 0 ? void 0 : colorPalettes.body);
     let selectedGlobalStyle;
 
     if (currentData !== null && currentData !== void 0 && (_currentData$data = currentData.data) !== null && _currentData$data !== void 0 && (_currentData$data$the = _currentData$data.theme) !== null && _currentData$data$the !== void 0 && _currentData$data$the.variation) {
@@ -3451,7 +3412,7 @@ const DesignColors = () => {
     }
 
     setSelectedColors(selectedColors);
-    saveThemeColorPalette(currentData === null || currentData === void 0 ? void 0 : (_currentData$data3 = currentData.data) === null || _currentData$data3 === void 0 ? void 0 : _currentData$data3.palette['slug'], selectedColorsLocal, selectedGlobalStyle);
+    saveThemeColorPalette(colorPalettes === null || colorPalettes === void 0 ? void 0 : colorPalettes.body, currentData === null || currentData === void 0 ? void 0 : (_currentData$data3 = currentData.data) === null || _currentData$data3 === void 0 ? void 0 : _currentData$data3.palette['slug'], selectedColorsLocal, selectedGlobalStyle);
     setIsLoaded(true);
   };
 
@@ -3590,7 +3551,7 @@ const DesignColors = () => {
     style: {
       padding: '0 4px'
     }
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Color Palettes', 'wp-module-onboarding')), buildPalettes(), buildCustomPalette());
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Color Palettes', 'wp-module-onboarding')), colorPalettes && buildPalettes(), buildCustomPalette());
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (DesignColors);
@@ -7072,6 +7033,7 @@ const getPreviewSettings = async () => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "getGlobalStyles": function() { return /* binding */ getGlobalStyles; },
+/* harmony export */   "getThemeColors": function() { return /* binding */ getThemeColors; },
 /* harmony export */   "getThemeStatus": function() { return /* binding */ getThemeStatus; },
 /* harmony export */   "init": function() { return /* binding */ init; }
 /* harmony export */ });
@@ -7110,6 +7072,12 @@ const getGlobalStyles = async () => {
 const getThemeStatus = async theme => {
   return await (0,_resolve__WEBPACK_IMPORTED_MODULE_2__.resolve)(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
     url: (0,_common__WEBPACK_IMPORTED_MODULE_1__.onboardingRestURL)('themes/status' + (theme ? `&theme=${theme}` : ''))
+  }));
+};
+
+const getThemeColors = async theme => {
+  return await (0,_resolve__WEBPACK_IMPORTED_MODULE_2__.resolve)(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+    url: (0,_common__WEBPACK_IMPORTED_MODULE_1__.onboardingRestURL)('themes/colors')
   }));
 };
 
