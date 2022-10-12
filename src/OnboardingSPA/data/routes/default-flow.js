@@ -43,11 +43,20 @@ const ErrorPage = lazy( () => import( '../../pages/ErrorPage' ) );
 const PageResources = lazy( () => import( '../../pages/Resources' ) );
 const PageWhatToExpect = lazy( () => import( '../../pages/WhatToExpect' ) );
 
-const StepIndex = lazy( () => import( '../../pages/Steps/index' ) );
-const StepGetStarted = lazy( () => import( '../../pages/Steps/GetStarted' ) );
-const StepWelcome = lazy( () =>
+const StepGetStartedWelcome = lazy( () =>
 	import( '../../pages/Steps/GetStarted/Welcome' )
 );
+const GetStartedWelcomeLearnMoreSidebarIllustration = lazy( () =>
+	import(
+		'../../pages/Steps/GetStarted/Welcome/Sidebars/LearnMore/components/illustration'
+	)
+);
+const GetStartedWelcomeLearnMoreSidebarContent = lazy( () =>
+	import(
+		'../../pages/Steps/GetStarted/Welcome/Sidebars/LearnMore/components/content'
+	)
+);
+
 const StepGetStartedExperience = lazy( () =>
 	import( '../../pages/Steps/GetStarted/GetStartedExperience' )
 );
@@ -73,8 +82,8 @@ const StepDesignTypography = lazy( () =>
 const StepDesignHeaderMenu = lazy( () =>
 	import( '../../pages/Steps/DesignHeaderMenu' )
 );
-const StepDesignHomepageMenu = lazy(() =>
-	import('../../pages/Steps/DesignHomepageMenu')
+const StepDesignHomepageMenu = lazy( () =>
+	import( '../../pages/Steps/DesignHomepageMenu' )
 );
 const StepSitePages = lazy( () => import( '../../pages/Steps/SitePages' ) );
 const StepSiteFeatures = lazy( () =>
@@ -87,10 +96,6 @@ const StepPrimarySetup = lazy( () =>
 );
 const StepSecondarySetup = lazy( () =>
 	import( '../../pages/Steps/GetStarted/SiteTypeSetup/SecondarySite' )
-);
-
-const GetStartedLearnMoreHelp = lazy( () =>
-	import( '../../pages/Steps/GetStarted/SidebarComponents/LearnMore/Help' )
 );
 
 /**
@@ -148,12 +153,26 @@ export const steps = [
 			"We'll use this to personalize this onboarding and future recommendations",
 			'wp-module-onboarding'
 		),
-		Component: StepWelcome,
+		Component: StepGetStartedWelcome,
 		Icon: home,
 		priority: 20,
 		VIEW: VIEW_NAV_GET_STARTED,
-		SidebarComponents: {
-			LearnMore: [ GetStartedLearnMoreHelp ],
+		sidebars: {
+			LearnMore: {
+				heading: 'Start Setup',
+				description: sprintf(
+					__(
+						'Lay the foundation for a successful Bluehost %s. Use our premade designs and feature bundles to start connecting with your visitors.',
+						'wp-module-onboarding'
+					),
+					translations( 'site' )
+				),
+				Icon: home,
+				SidebarComponents: [
+					GetStartedWelcomeLearnMoreSidebarIllustration,
+					GetStartedWelcomeLearnMoreSidebarContent,
+				],
+			},
 		},
 	},
 	{
@@ -179,9 +198,6 @@ export const steps = [
 		Icon: home,
 		priority: 40,
 		VIEW: VIEW_NAV_GET_STARTED,
-		SidebarComponents: {
-			LearnMore: [ GetStartedLearnMoreHelp ],
-		},
 	},
 	{
 		path: '/wp-setup/step/get-started/site-primary',
@@ -368,9 +384,9 @@ export const steps = [
 	},
 	{
 		path: '/wp-setup/step/design/homepage-menu',
-		title: __('HomePages Wizard', 'wp-module-onboarding'),
+		title: __( 'HomePages Wizard', 'wp-module-onboarding' ),
 		heading: __(
-			"There’s no place like a great home page",
+			'There’s no place like a great home page',
 			'wp-module-onboarding'
 		),
 		subheading: __(
