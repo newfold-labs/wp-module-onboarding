@@ -16,8 +16,8 @@ const DesignColors = () => {
 	const [isAccordionClosed, setIsAccordionClosed] = useState(true);
 	const [selectedColorsLocal, setSelectedColorsLocal] = useState();
 
-	const [colorPalettes, setColorPalettes] = useState();
 	const [customColors, setCustomColors] = useState();
+	const [colorPalettes, setColorPalettes] = useState();
 	const [colorPickerCalledBy, setColorPickerCalledBy] = useState('');
 
 	const { storedPreviewSettings, currentData } = useSelect(
@@ -70,7 +70,7 @@ const DesignColors = () => {
 		}
 	}
 
-	async function saveThemeColorPalette(colorPalettesTemp = colorPalettes, colorStyle, selectedColorsLocalTemp = selectedColors, globalStylesTemp = globalStyles) {
+	async function saveThemeColorPalette(colorStyle, colorPalettesTemp = colorPalettes, selectedColorsLocalTemp = selectedColors, globalStylesTemp = globalStyles) {
 		const isCustomStyle = colorStyle === 'custom';
 		let selectedGlobalStyle = globalStylesTemp;
 		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
@@ -179,7 +179,7 @@ const DesignColors = () => {
 			}
 		} 
 		setSelectedColors(selectedColors);
-		saveThemeColorPalette(colorPalettes?.body, currentData?.data?.palette['slug'], selectedColorsLocal, selectedGlobalStyle);
+		saveThemeColorPalette(currentData?.data?.palette['slug'], colorPalettes?.body, selectedColorsLocal, selectedGlobalStyle);
 		setIsLoaded(true);
 
 	};

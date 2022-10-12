@@ -3256,8 +3256,8 @@ const DesignColors = () => {
   const [showColorPicker, setShowColorPicker] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [isAccordionClosed, setIsAccordionClosed] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [selectedColorsLocal, setSelectedColorsLocal] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
-  const [colorPalettes, setColorPalettes] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
   const [customColors, setCustomColors] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
+  const [colorPalettes, setColorPalettes] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)();
   const [colorPickerCalledBy, setColorPickerCalledBy] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const {
     storedPreviewSettings,
@@ -3307,11 +3307,10 @@ const DesignColors = () => {
     }
   }
 
-  async function saveThemeColorPalette() {
+  async function saveThemeColorPalette(colorStyle) {
     var _selectedGlobalStyle$, _selectedGlobalStyle$2, _selectedGlobalStyle$3, _selectedThemeColorPa;
 
-    let colorPalettesTemp = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : colorPalettes;
-    let colorStyle = arguments.length > 1 ? arguments[1] : undefined;
+    let colorPalettesTemp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : colorPalettes;
     let selectedColorsLocalTemp = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : selectedColors;
     let globalStylesTemp = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : globalStyles;
     const isCustomStyle = colorStyle === 'custom';
@@ -3412,7 +3411,7 @@ const DesignColors = () => {
     }
 
     setSelectedColors(selectedColors);
-    saveThemeColorPalette(colorPalettes === null || colorPalettes === void 0 ? void 0 : colorPalettes.body, currentData === null || currentData === void 0 ? void 0 : (_currentData$data3 = currentData.data) === null || _currentData$data3 === void 0 ? void 0 : _currentData$data3.palette['slug'], selectedColorsLocal, selectedGlobalStyle);
+    saveThemeColorPalette(currentData === null || currentData === void 0 ? void 0 : (_currentData$data3 = currentData.data) === null || _currentData$data3 === void 0 ? void 0 : _currentData$data3.palette['slug'], colorPalettes === null || colorPalettes === void 0 ? void 0 : colorPalettes.body, selectedColorsLocal, selectedGlobalStyle);
     setIsLoaded(true);
   };
 
