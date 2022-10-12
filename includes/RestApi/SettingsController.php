@@ -152,6 +152,7 @@ class SettingsController {
 						if( !empty($params['twitter_site'])) {
 							if( ( $twitter_id = $this->validate_twitter_id($params['twitter_site']) ) === false ) {
 								$this->invalid_urls[] = 'twitter_site';
+								unset($params['twitter_site']);
 							} else {
 								$params['twitter_site'] = $twitter_id;
 							}
