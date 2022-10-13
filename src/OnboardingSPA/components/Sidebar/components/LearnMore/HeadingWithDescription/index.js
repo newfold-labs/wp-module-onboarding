@@ -1,16 +1,17 @@
+import { Fragment } from '@wordpress/element';
+
 const HeadingWithDescription = ( {
-	headingWithDescription,
-	baseClassName = 'nfd-onboarding-sidebar-learn-more',
+	heading,
+	description,
+	baseClassName = 'nfd-onboarding-sidebar-learn-more--heading-with-description',
 } ) => {
 	return (
-		<>
-			<p className={ `${ baseClassName }__heading` }>
-				{ headingWithDescription.heading }
-			</p>
+		<Fragment>
+			<h3 className={ `${ baseClassName }__heading` }>{ heading }</h3>
 			<p className={ `${ baseClassName }__description` }>
-				{ headingWithDescription.description }
+				{ description }
 			</p>
-		</>
+		</Fragment>
 	);
 };
 

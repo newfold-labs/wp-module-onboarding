@@ -1,9 +1,21 @@
 import { __, sprintf } from '@wordpress/i18n';
 
 import { translations } from '../../../../../../utils/locales/translations';
+import { home } from '@wordpress/icons';
 
 const contents = ( brandName ) => {
 	return {
+		heading: __( 'Start Setup', 'wp-module-onboarding' ),
+		/* translators: 1: Website 2: Brand */
+		subheading: sprintf(
+			__(
+				`Lay the foundation for a successful %s %s. Use our premade designs and feature bundles to start connecting with your visitors.`,
+				'wp-module-onboarding'
+			),
+			brandName,
+			translations( 'website' )
+		),
+		icon: home,
 		headingWithDescriptions: [
 			{
 				heading: sprintf(

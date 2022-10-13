@@ -1,3 +1,7 @@
+@import "./HeadingWithDescription/stylesheet";
+@import "./HeadingWithSubHeadingAndIcon/stylesheet";
+@import "./Illustration/stylesheet";
+
 .components-button:focus:not(:disabled),
 .components-button.is-pressed:focus:not(:disabled) {
 	box-shadow: none;
@@ -19,25 +23,6 @@
 			align-items: center;
 			justify-content: center;
 		}
-	}
-
-	&__container {
-		display: flex;
-
-		&__text {
-			align-items: center;
-		}
-
-		&__icon {
-			margin-right: 5%;
-		}
-
-		&__text-heading,
-		&__text-subheading {
-			margin-top: 2px;
-			line-height: 16px;
-		}
-
 	}
 
 	&__menu-button {

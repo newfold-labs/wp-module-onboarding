@@ -1,12 +1,6 @@
-import {
-	Fill,
-	PanelBody,
-	PanelRow,
-	PanelHeader,
-	Button,
-} from '@wordpress/components';
+import { Fill, PanelBody, PanelHeader, Button } from '@wordpress/components';
 import { Fragment, Suspense } from '@wordpress/element';
-import { Icon, closeSmall } from '@wordpress/icons';
+import { closeSmall } from '@wordpress/icons';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
@@ -47,48 +41,6 @@ const LearnMoreSidebar = () => {
 							></Button>
 						</div>
 					</PanelHeader>
-					<PanelBody>
-						<PanelRow>
-							<div className="nfd-onboarding-sidebar-learn-more__container">
-								<div className="nfd-onboarding-sidebar-learn-more__container__icon">
-									{
-										<Icon
-											icon={
-												currentStep?.sidebars?.LearnMore
-													?.Icon
-													? currentStep.sidebars
-															.LearnMore.Icon
-													: currentStep?.Icon &&
-													  currentStep.Icon
-											}
-										/>
-									}
-								</div>
-								<div className="nfd-onboarding-sidebar-learn-more__container__text">
-									<p className="nfd-onboarding-sidebar-learn-more__container__text-heading">
-										{ currentStep?.heading && (
-											<strong>
-												{ currentStep?.sidebars
-													?.LearnMore?.heading
-													? currentStep.sidebars
-															.LearnMore.heading
-													: currentStep?.heading &&
-													  currentStep.heading }
-											</strong>
-										) }
-									</p>
-									<p className="nfd-onboarding-sidebar-learn-more__container__text-subheading">
-										{ currentStep?.sidebars?.LearnMore
-											?.description
-											? currentStep.sidebars.LearnMore
-													.description
-											: currentStep?.description &&
-											  currentStep.description }
-									</p>
-								</div>
-							</div>
-						</PanelRow>
-					</PanelBody>
 					{ currentStep?.sidebars?.LearnMore &&
 						currentStep?.sidebars?.LearnMore.SidebarComponents.map(
 							( SidebarComponent, index ) => {

@@ -1,14 +1,17 @@
 .nfd-onboarding-sidebar-learn-more {
 
-	&__heading {
-		font-size: 14px;
-		font-weight: 600;
-		color: #1e1e1e;
-		line-height: 20px;
-	}
+	&--heading-with-description {
 
-	&__description {
-		line-height: 16px;
-		font-size: 12px;
+		&__heading {
+			font-size: 14px;
+			font-weight: 600;
+			color: #1e1e1e;
+			line-height: 20px;
+		}
+
+		&__description {
+			line-height: 16px;
+			font-size: 12px;
+		}
 	}
 }

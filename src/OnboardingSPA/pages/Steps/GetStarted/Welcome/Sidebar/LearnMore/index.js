@@ -1,9 +1,11 @@
 import { Button, PanelBody } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
+
 import { store as nfdOnboardingStore } from '../../../../../../store';
 import HeadingWithDescription from '../../../../../../components/Sidebar/components/LearnMore/HeadingWithDescription';
 import Illustration from '../../../../../../components/Sidebar/components/LearnMore/Illustration';
 import contents from './contents';
+import HeadingWithSubHeadingAndIcon from '../../../../../../components/Sidebar/components/LearnMore/HeadingWithSubHeadingAndIcon';
 
 const LearnMore = () => {
 	const { brandName } = useSelect( ( select ) => {
@@ -15,10 +17,12 @@ const LearnMore = () => {
 
 	return (
 		<div className="nfd-onboarding-sidebar-learn-more__get-started-welcome">
-			<Illustration
-				baseClassName="nfd-onboarding-sidebar-learn-more__get-started-welcome"
-				cssIcon="nfd-onboarding-sidebar-learn-more-get-started-welcome-illustration"
+			<HeadingWithSubHeadingAndIcon
+				heading={ content.heading }
+				subheading={ content.subheading }
+				icon={ content.icon }
 			/>
+			<Illustration cssIcon="nfd-onboarding-sidebar-learn-more-get-started-welcome-illustration" />
 			<PanelBody
 				className="nfd-onboarding-sidebar-learn-more__get-started-welcome--content"
 				initialOpen={ true }
@@ -28,9 +32,9 @@ const LearnMore = () => {
 						return (
 							<HeadingWithDescription
 								key={ idx }
-								baseClassName="nfd-onboarding-sidebar-learn-more__get-started-welcome--content"
-								headingWithDescription={
-									headingWithDescription
+								heading={ headingWithDescription.heading }
+								description={
+									headingWithDescription.description
 								}
 							/>
 						);
