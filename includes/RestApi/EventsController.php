@@ -76,6 +76,10 @@ class EventsController extends \WP_REST_Controller {
 
           $event['data'] = $request->get_param( 'data' );
 
+          if ( ! empty( $event['data'] ) && ! empty( $event['data']['stepID'] ) ) {
+               $event['data']['page'] = \admin_url( '/index.php?page=nfd-onboarding#' . $event['data']['stepID'] );
+          }
+
           $event_data_request = new \WP_REST_Request(
                \WP_REST_Server::CREATABLE,
                NFD_MODULE_DATA_EVENTS_API

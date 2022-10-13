@@ -3,7 +3,9 @@ import { Fragment } from '@wordpress/element';
 const Help = () => {
 	return (
 		<Fragment>
-			<p>Help text content.</p>
+			<p style={{ margin: '16px' }}>
+				Help text content.
+			</p>
 		</Fragment>
 	);
 };

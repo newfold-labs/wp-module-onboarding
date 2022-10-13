@@ -8,12 +8,17 @@ import { orderBy, filter } from 'lodash';
 
 import { LivePreview } from '../../../../components/LivePreview';
 import CommonLayout from '../../../../components/Layouts/Common';
-import { VIEW_DESIGN_THEME_STYLES_PREVIEW } from '../../../../../constants';
+import {
+	VIEW_DESIGN_THEME_STYLES_PREVIEW,
+	THEME_STATUS_ACTIVE,
+	THEME_STATUS_NOT_ACTIVE,
+} from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { getPatterns } from '../../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../../utils/global-styles/use-global-styles-output';
 import { conditionalSteps } from '../../../../data/routes/';
+import { DesignStateHandler } from '../../../../components/StateHandlers';
 
 const StepDesignThemeStylesPreview = () => {
 	const location = useLocation();
@@ -29,6 +34,7 @@ const StepDesignThemeStylesPreview = () => {
 		routes,
 		designSteps,
 		allSteps,
+		themeStatus,
 	} = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
@@ -41,6 +47,7 @@ const StepDesignThemeStylesPreview = () => {
 			routes: select( nfdOnboardingStore ).getRoutes(),
 			allSteps: select( nfdOnboardingStore ).getAllSteps(),
 			designSteps: select( nfdOnboardingStore ).getDesignSteps(),
+			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 		};
 	}, [] );
 
@@ -54,6 +61,7 @@ const StepDesignThemeStylesPreview = () => {
 		updateDesignSteps,
 		updateAllSteps,
 		setCurrentOnboardingData,
+		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -67,42 +75,52 @@ const StepDesignThemeStylesPreview = () => {
 	}, [] );
 
 	const getStylesAndPatterns = async () => {
-		const pattern = await getPatterns( currentStep.patternId, true );
-		const globalStyles = await getGlobalStyles();
+		const patternsResponse = await getPatterns(
+			currentStep.patternId,
+			true
+		);
+		if ( patternsResponse?.error ) {
+			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+		}
+		const globalStylesResponse = await getGlobalStyles();
+		if ( globalStylesResponse?.error ) {
+			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+		}
 		let selectedGlobalStyle;
 		if ( currentData.data.theme.variation ) {
-			selectedGlobalStyle = globalStyles.body.filter(
+			selectedGlobalStyle = globalStylesResponse.body.filter(
 				( globalStyle ) =>
 					globalStyle.title === currentData.data.theme.variation
 			)[ 0 ];
 		} else {
-			selectedGlobalStyle = globalStyles.body[ 0 ];
+			selectedGlobalStyle = globalStylesResponse.body[ 0 ];
 		}
 		updatePreviewSettings(
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
-		setPattern( pattern?.body );
+		setPattern( patternsResponse?.body );
 		setIsLoaded( true );
 	};
 
 	const addColorAndTypographyRoutes = () => {
+		const updates = removeColorAndTypographyRoutes();
 		const steps = [
 			conditionalSteps.designColors,
 			conditionalSteps.designTypography,
 		];
 		return {
 			routes: orderBy(
-				routes.concat( steps ),
+				updates.routes.concat( steps ),
 				[ 'priority' ],
 				[ 'asc' ]
 			),
 			allSteps: orderBy(
-				allSteps.concat( steps ),
+				updates.allSteps.concat( steps ),
 				[ 'priority' ],
 				[ 'asc' ]
 			),
 			designSteps: orderBy(
-				designSteps.concat( steps ),
+				updates.designSteps.concat( steps ),
 				[ 'priority' ],
 				[ 'asc' ]
 			),
@@ -165,50 +183,53 @@ const StepDesignThemeStylesPreview = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded ) getStylesAndPatterns();
-	}, [ isLoaded ] );
+		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
+			getStylesAndPatterns();
+	}, [ isLoaded, themeStatus ] );
 
 	return (
-		<CommonLayout className="theme-styles-preview">
-			<div className="theme-styles-preview__checkbox">
-				<CheckboxControl
-					label={
-						<div className="theme-styles-preview__checkbox__label">
-							<span className="theme-styles-preview__checkbox__label__question">
-								{ __(
-									'Customize Colors & Fonts?',
-									'wp-module-onboarding'
-								) }
-								<span className="theme-styles-preview__checkbox__label__hint">
+		<DesignStateHandler>
+			<CommonLayout className="theme-styles-preview">
+				<div className="theme-styles-preview__checkbox">
+					<CheckboxControl
+						label={
+							<div className="theme-styles-preview__checkbox__label">
+								<span className="theme-styles-preview__checkbox__label__question">
 									{ __(
-										'Check to customize in the next few steps (or leave empty and use the Site Editor later)',
+										'Customize Colors & Fonts?',
 										'wp-module-onboarding'
 									) }
+									<span className="theme-styles-preview__checkbox__label__hint">
+										{ __(
+											'Check to customize in the next few steps (or leave empty and use the Site Editor later)',
+											'wp-module-onboarding'
+										) }
+									</span>
 								</span>
-							</span>
-						</div>
-					}
-					checked={ customize }
-					onChange={ () => handleCheckbox( ! customize ) }
-				/>
-			</div>
-			<div className="theme-styles-preview__title-bar">
-				<div className="theme-styles-preview__title-bar__browser">
-					<span className="theme-styles-preview__title-bar__browser__dot"></span>
-					<span className="theme-styles-preview__title-bar__browser__dot"></span>
-					<span className="theme-styles-preview__title-bar__browser__dot"></span>
-				</div>
-			</div>
-			<div className="theme-styles-preview__live-preview-container">
-				{ pattern && (
-					<LivePreview
-						blockGrammer={ pattern }
-						styling={ 'custom' }
-						viewportWidth={ 1300 }
+							</div>
+						}
+						checked={ customize }
+						onChange={ () => handleCheckbox( ! customize ) }
 					/>
-				) }
-			</div>
-		</CommonLayout>
+				</div>
+				<div className="theme-styles-preview__title-bar">
+					<div className="theme-styles-preview__title-bar__browser">
+						<span className="theme-styles-preview__title-bar__browser__dot"></span>
+						<span className="theme-styles-preview__title-bar__browser__dot"></span>
+						<span className="theme-styles-preview__title-bar__browser__dot"></span>
+					</div>
+				</div>
+				<div className="theme-styles-preview__live-preview-container">
+					{ pattern && (
+						<LivePreview
+							blockGrammer={ pattern }
+							styling={ 'custom' }
+							viewportWidth={ 1300 }
+						/>
+					) }
+				</div>
+			</CommonLayout>
+		</DesignStateHandler>
 	);
 };
 
