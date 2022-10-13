@@ -4,6 +4,7 @@ import { useViewportMatch } from '@wordpress/compose';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
+import { getPatterns } from '../../../utils/api/patterns';
 import { store as nfdOnboardingStore } from '../../../store';
 import { LivePreview } from '../../../components/LivePreview';
 import CommonLayout from '../../../components/Layouts/Common';
@@ -30,7 +31,6 @@ const StepDesignTypography = () => {
 		setIsDrawerOpened,
 		setIsSidebarOpened,
 		setIsDrawerSuppressed,
-		updatePreviewSettings,
 	} = useDispatch(nfdOnboardingStore);
 
 	useEffect(() => {
@@ -42,15 +42,16 @@ const StepDesignTypography = () => {
 		setDrawerActiveView(VIEW_DESIGN_TYPOGRAPHY);
 	}, []);
 
-	const getPatterns = async () => {
-		const pattern = await getPatterns(currentStep.patternId, true);
+	const getFontPatterns = () => {
+		console.log('Rann Once');
+		const pattern = getPatterns(currentStep.patternId, true);
 		setPattern(pattern?.body);
 		setIsLoaded(true);
 	};
 
 
 	useEffect(() => {
-		if (!isLoaded) getPatterns();
+		if (!isLoaded) getFontPatterns();
 	}, [isLoaded]);
 
 	return (
