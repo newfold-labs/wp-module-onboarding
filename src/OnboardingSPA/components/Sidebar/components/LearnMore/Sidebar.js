@@ -41,7 +41,7 @@ const LearnMoreSidebar = () => {
 					>
 						<div className="nfd-onboarding-sidebar-learn-more__header">
 							<Button
-								className="nfd-onboarding-sidebar-learn-more__header--icon"
+								className="nfd-onboarding-sidebar-learn-more__header__icon"
 								onClick={ closeSideBar }
 								icon={ closeSmall }
 							></Button>
@@ -50,7 +50,7 @@ const LearnMoreSidebar = () => {
 					<PanelBody>
 						<PanelRow>
 							<div className="nfd-onboarding-sidebar-learn-more__container">
-								<div className="nfd-onboarding-sidebar-learn-more__icon">
+								<div className="nfd-onboarding-sidebar-learn-more__container__icon">
 									{
 										<Icon
 											icon={
@@ -64,8 +64,8 @@ const LearnMoreSidebar = () => {
 										/>
 									}
 								</div>
-								<div className="nfd-onboarding-sidebar-learn-more__text">
-									<p className="nfd-onboarding-sidebar-learn-more__text-heading">
+								<div className="nfd-onboarding-sidebar-learn-more__container__text">
+									<p className="nfd-onboarding-sidebar-learn-more__container__text-heading">
 										{ currentStep?.heading && (
 											<strong>
 												{ currentStep?.sidebars
@@ -77,7 +77,7 @@ const LearnMoreSidebar = () => {
 											</strong>
 										) }
 									</p>
-									<p className="nfd-onboarding-sidebar-learn-more__text-subheading">
+									<p className="nfd-onboarding-sidebar-learn-more__container__text-subheading">
 										{ currentStep?.sidebars?.LearnMore
 											?.description
 											? currentStep.sidebars.LearnMore

@@ -46,15 +46,8 @@ const PageWhatToExpect = lazy( () => import( '../../pages/WhatToExpect' ) );
 const StepGetStartedWelcome = lazy( () =>
 	import( '../../pages/Steps/GetStarted/Welcome' )
 );
-const GetStartedWelcomeLearnMoreSidebarIllustration = lazy( () =>
-	import(
-		'../../pages/Steps/GetStarted/Welcome/Sidebars/LearnMore/components/illustration'
-	)
-);
-const GetStartedWelcomeLearnMoreSidebarContent = lazy( () =>
-	import(
-		'../../pages/Steps/GetStarted/Welcome/Sidebars/LearnMore/components/content'
-	)
+const StepGetStartedWelcomeLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/GetStarted/Welcome/Sidebar/LearnMore' )
 );
 
 const StepGetStartedExperience = lazy( () =>
@@ -168,10 +161,7 @@ export const steps = [
 					translations( 'site' )
 				),
 				Icon: home,
-				SidebarComponents: [
-					GetStartedWelcomeLearnMoreSidebarIllustration,
-					GetStartedWelcomeLearnMoreSidebarContent,
-				],
+				SidebarComponents: [ StepGetStartedWelcomeLearnMoreSidebar ],
 			},
 		},
 	},

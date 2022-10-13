@@ -1,0 +1,71 @@
+.nfd-onboarding-sidebar-learn-more__get-started-welcome {
+
+	&--illustration {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 200px;
+
+		&__image {
+			width: 100%;
+			height: 100%;
+			background-image: var(--nfd-onboarding-sidebar-learn-more-get-started-welcome-illustration);
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+	}
+
+	&--content {
+		border-bottom: none;
+
+		&__heading {
+			font-size: 14px;
+			font-weight: 600;
+			color: #1e1e1e;
+			line-height: 20px;
+		}
+
+		&__description {
+			line-height: 16px;
+			font-size: 12px;
+		}
+
+		&__links {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+			&__experts {
+				justify-content: center;
+				align-items: center;
+				width: 100%;
+				background: #3575d2;
+				color: white;
+				height: 36px;
+				border: none;
+				margin: 10px 0;
+			}
+
+			&__full-service {
+				justify-content: center;
+				align-items: center;
+				width: 100%;
+				background: white;
+				color: #3575d2;
+				border: 1px solid #3575d2;
+				height: 36px;
+				border-radius: 2px;
+				margin: 10px 0;
+			}
+
+			&__support {
+				border-radius: 2px;
+				text-decoration: none;
+				color: #3575d2;
+				margin: 10px 0;
+			}
+		}
+	}
+}
