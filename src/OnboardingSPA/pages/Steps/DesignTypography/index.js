@@ -4,8 +4,6 @@ import { useViewportMatch } from '@wordpress/compose';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
-import { getPatterns } from '../../../utils/api/patterns';
-import { getGlobalStyles } from '../../../utils/api/themes';
 import { store as nfdOnboardingStore } from '../../../store';
 import { LivePreview } from '../../../components/LivePreview';
 import CommonLayout from '../../../components/Layouts/Common';
@@ -19,17 +17,11 @@ const StepDesignTypography = () => {
 	const isLargeViewport = useViewportMatch('medium');
 	const {
 		currentStep,
-		currentData,
-		storedPreviewSettings,
 	} = useSelect((select) => {
 		return {
 			currentStep: select(nfdOnboardingStore).getStepFromPath(
 				location.pathname
-			),
-			currentData:
-				select(nfdOnboardingStore).getCurrentOnboardingData(),
-			storedPreviewSettings:
-				select(nfdOnboardingStore).getPreviewSettings(),
+			)
 		};
 	}, []);
 
@@ -50,25 +42,15 @@ const StepDesignTypography = () => {
 		setDrawerActiveView(VIEW_DESIGN_TYPOGRAPHY);
 	}, []);
 
-	const getStylesAndPatterns = async () => {
+	const getPatterns = async () => {
 		const pattern = await getPatterns(currentStep.patternId, true);
-		const globalStyles = await getGlobalStyles();
-		let selectedGlobalStyle;
-		if (currentData.data.theme.variation) {
-			selectedGlobalStyle = globalStyles.body.filter(
-				(globalStyle) =>
-					globalStyle.title === currentData.data.theme.variation
-			)[0];
-		} else {
-			selectedGlobalStyle = globalStyles.body[0];
-		}
 		setPattern(pattern?.body);
 		setIsLoaded(true);
 	};
 
 
 	useEffect(() => {
-		if (!isLoaded) getStylesAndPatterns();
+		if (!isLoaded) getPatterns();
 	}, [isLoaded]);
 
 	return (
@@ -86,6 +68,7 @@ const StepDesignTypography = () => {
 						blockGrammer={pattern}
 						styling={'custom'}
 						viewportWidth={1300}
+						skeletonLoadingTime={false}
 					/>
 				)}
 			</div>

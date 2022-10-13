@@ -338,6 +338,10 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
     align-items: center;
     background-color: white;
 
+    &:hover {
+        background-color: var(--nfd-onboarding-drawer-icon-fill);
+    }
+
     &-selected {
         background-color: $main-border-main;
     }

@@ -9,6 +9,7 @@ import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-s
 const DesignTypography = () => {
 
 	const [isLoaded, setIsLoaded] = useState(false);
+	const [selectedFont, setSelectedFont] = useState();
 	const [globalStyles, setGlobalStyles] = useState();
 	const [isAccordionClosed, setIsAccordionClosed] = useState(true);
 
@@ -175,28 +176,23 @@ const DesignTypography = () => {
 		},
 		"clear-crisp": {
 			"label": "Clear & Crisp",
-			"matches": "newfold/onboarding",
-			"wip-font": "Inter",
-			"sleek-sophisticated": {
-				"label": "Sleek & Sophisticated",
-				"matches": "newfold/onboarding-03",
-				"styles": {
-					"typography": {
-						"fontFamily": "var(--wp--preset--font-family--inter)"
-					},
-					"blocks": {
-						"core/heading": {
-							"typography": {
-								"fontFamily": "var(--wp--preset--font-family--inter)"
-							}
+			"matches": "newfold/onboarding-04",
+			"styles": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--inter)"
+				},
+				"blocks": {
+					"core/heading": {
+						"typography": {
+							"fontFamily": "var(--wp--preset--font-family--inter)"
 						}
 					}
-				}
+			}
 			}
 		},
 		"retro-classy": {
 			"label": "Retro & Classy",
-			"matches": "newfold/onboarding",
+			"matches": "newfold/onboarding-05",
 			"styles": {
 				"typography": {
 					"fontFamily": "var(--wp--preset--font-family--league-spartan)"
@@ -212,7 +208,7 @@ const DesignTypography = () => {
 		},
 		"defined-solid": {
 			"label": "Defined & Solid",
-			"matches": "newfold/onboarding",
+			"matches": "newfold/onboarding-06",
 			"styles": {
 				"typography": {
 					"fontFamily": "var(--wp--preset--font-family--roboto-slab)"
@@ -228,7 +224,7 @@ const DesignTypography = () => {
 		}
 	}
 
-	const getColorStylesAndPatterns = async () => {
+	const getFontStylesAndPatterns = async () => {
 		const globalStyles = await getGlobalStyles();
 		let selectedGlobalStyle;
 		if (currentData?.data?.theme?.variation) {
@@ -247,17 +243,28 @@ const DesignTypography = () => {
 	};
 
 	useEffect(() => {
-		if (!isLoaded) getColorStylesAndPatterns();
+		if (!isLoaded) getFontStylesAndPatterns();
 	}, [isLoaded]);
+	
+	const handleClick = async (fontStyle) => {
 
-	const handleClick = (fontStyle) => {
+		setSelectedFont(fontStyle);
+
+		let globalStylesCopy = globalStyles;
+		globalStylesCopy.styles = {
+			...fontPalettes[fontStyle].styles
+		}
+		
+		setGlobalStyles(globalStylesCopy);
+		const prevUpdate = await useGlobalStylesOutput(globalStylesCopy, storedPreviewSettings);
+		updatePreviewSettings(prevUpdate);
 	};
 
 	function buildPalettes() {
 		let paletteRenderedList = [];
 		for (const fontStyle in fontPalettes) {
 			paletteRenderedList.push(
-				<div className={`font-palette ${ false ? 'font-palette-selected' : ''} `}
+				<div className={`font-palette ${selectedFont == fontStyle ? 'font-palette-selected' : ''} `}
 					onClick={(e) => handleClick(fontStyle)}>
 					<div className='font-palette__icon'> Aa </div>
 					<div className='font-palette__name'>
