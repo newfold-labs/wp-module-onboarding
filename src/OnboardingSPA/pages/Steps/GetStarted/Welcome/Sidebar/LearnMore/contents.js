@@ -3,7 +3,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { translations } from '../../../../../../utils/locales/translations';
 import { home } from '@wordpress/icons';
 
-const contents = ( brandName ) => {
+const getContents = ( brandName ) => {
 	return {
 		heading: __( 'Start Setup', 'wp-module-onboarding' ),
 		/* translators: 1: Website 2: Brand */
@@ -79,4 +79,4 @@ const contents = ( brandName ) => {
 	};
 };
 
-export default contents;
+export default getContents;

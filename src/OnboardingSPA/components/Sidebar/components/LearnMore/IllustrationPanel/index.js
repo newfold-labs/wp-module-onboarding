@@ -1,8 +1,8 @@
 import { PanelBody } from '@wordpress/components';
 
-const Illustration = ( {
+const IllustrationPanel = ( {
 	cssIcon = 'nfd-onboarding-sidebar-learn-more-get-started-welcome-illustration',
-	baseClassName = 'nfd-onboarding-sidebar-learn-more--illustration',
+	baseClassName = 'nfd-onboarding-sidebar-learn-more--illustration-panel',
 } ) => {
 	return (
 		<PanelBody
@@ -24,4 +24,4 @@ const Illustration = ( {
 	);
 };
 
-export default Illustration;
+export default IllustrationPanel;

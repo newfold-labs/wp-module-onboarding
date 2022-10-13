@@ -1,11 +1,40 @@
-import { Button, PanelBody } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
+import { lazy } from '@wordpress/element';
 
 import { store as nfdOnboardingStore } from '../../../../../../store';
-import HeadingWithDescription from '../../../../../../components/Sidebar/components/LearnMore/HeadingWithDescription';
-import Illustration from '../../../../../../components/Sidebar/components/LearnMore/Illustration';
-import contents from './contents';
-import HeadingWithSubHeadingAndIcon from '../../../../../../components/Sidebar/components/LearnMore/HeadingWithSubHeadingAndIcon';
+import getContents from './contents';
+
+const IllustrationPanel = lazy( () =>
+	import(
+		'../../../../../../components/Sidebar/components/LearnMore/IllustrationPanel'
+	)
+);
+const InfoPanel = lazy( () =>
+	import(
+		'../../../../../../components/Sidebar/components/LearnMore/InfoPanel'
+	)
+);
+const HelpPanel = lazy( () =>
+	import(
+		'../../../../../../components/Sidebar/components/LearnMore/HelpPanel'
+	)
+);
+const ButtonBlue = lazy( () =>
+	import( '../../../../../../components/Button/ButtonBlue' )
+);
+const ButtonWhite = lazy( () =>
+	import( '../../../../../../components/Button/ButtonWhite' )
+);
+const SupportLink = lazy( () =>
+	import(
+		'../../../../../../components/Sidebar/components/LearnMore/SupportLink'
+	)
+);
+const StepIntroPanel = lazy( () =>
+	import(
+		'../../../../../../components/Sidebar/components/LearnMore/StepIntroPanel'
+	)
+);
 
 const LearnMore = () => {
 	const { brandName } = useSelect( ( select ) => {
@@ -13,51 +42,25 @@ const LearnMore = () => {
 			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
 		};
 	} );
-	const content = contents( brandName );
+
+	const content = getContents( brandName );
 
 	return (
 		<div className="nfd-onboarding-sidebar-learn-more__get-started-welcome">
-			<HeadingWithSubHeadingAndIcon
+			<StepIntroPanel
 				heading={ content.heading }
 				subheading={ content.subheading }
 				icon={ content.icon }
 			/>
-			<Illustration cssIcon="nfd-onboarding-sidebar-learn-more-get-started-welcome-illustration" />
-			<PanelBody
-				className="nfd-onboarding-sidebar-learn-more__get-started-welcome--content"
-				initialOpen={ true }
-			>
-				{ content.headingWithDescriptions.map(
-					( headingWithDescription, idx ) => {
-						return (
-							<HeadingWithDescription
-								key={ idx }
-								heading={ headingWithDescription.heading }
-								description={
-									headingWithDescription.description
-								}
-							/>
-						);
-					}
-				) }
-				<div className="nfd-onboarding-sidebar-learn-more__get-started-welcome--content__links">
-					<Button
-						variant="primary"
-						className="nfd-onboarding-sidebar-learn-more__get-started-welcome--content__links__experts"
-					>
-						{ content.experts.text }
-					</Button>
-					<Button className="nfd-onboarding-sidebar-learn-more__get-started-welcome--content__links__full-service">
-						{ content.fullService.text }
-					</Button>
-					<a
-						href="#"
-						className="nfd-onboarding-sidebar-learn-more__get-started-welcome--content__links__support"
-					>
-						{ content.support.text }
-					</a>
-				</div>
-			</PanelBody>
+			<IllustrationPanel cssIcon="nfd-onboarding-sidebar-learn-more-get-started-welcome-illustration" />
+			<InfoPanel
+				headingWithDescriptions={ content.headingWithDescriptions }
+			/>
+			<HelpPanel>
+				<ButtonBlue text={ content.experts.text }/>
+				<ButtonWhite text={ content.fullService.text }/>
+				<SupportLink text={ content.support.text }/>
+			</HelpPanel>
 		</div>
 	);
 };

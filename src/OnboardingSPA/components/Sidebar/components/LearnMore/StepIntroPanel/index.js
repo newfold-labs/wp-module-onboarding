@@ -2,8 +2,8 @@ import { PanelBody, PanelRow } from '@wordpress/components';
 
 import { Icon } from '@wordpress/icons';
 
-const HeadingWithSubHeadingAndIcon = ( {
-	baseClassName = 'nfd-onboarding-sidebar-learn-more--heading-with-subheading-and-icon',
+const StepIntroPanel = ( {
+	baseClassName = 'nfd-onboarding-sidebar-learn-more--step-intro-panel',
 	heading,
 	subheading,
 	icon,
@@ -33,4 +33,4 @@ const HeadingWithSubHeadingAndIcon = ( {
 	);
 };
 
-export default HeadingWithSubHeadingAndIcon;
+export default StepIntroPanel;

@@ -1,6 +1,9 @@
 @import "./HeadingWithDescription/stylesheet";
-@import "./HeadingWithSubHeadingAndIcon/stylesheet";
-@import "./Illustration/stylesheet";
+@import "./StepIntroPanel/stylesheet";
+@import "./IllustrationPanel/stylesheet";
+@import "./InfoPanel/stylesheet";
+@import "./HelpPanel/stylesheet";
+@import "./SupportLink/stylesheet";
 
 .components-button:focus:not(:disabled),
 .components-button.is-pressed:focus:not(:disabled) {

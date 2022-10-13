@@ -152,15 +152,6 @@ export const steps = [
 		VIEW: VIEW_NAV_GET_STARTED,
 		sidebars: {
 			LearnMore: {
-				heading: 'Start Setup',
-				description: sprintf(
-					__(
-						'Lay the foundation for a successful Bluehost %s. Use our premade designs and feature bundles to start connecting with your visitors.',
-						'wp-module-onboarding'
-					),
-					translations( 'site' )
-				),
-				Icon: home,
 				SidebarComponents: [ StepGetStartedWelcomeLearnMoreSidebar ],
 			},
 		},
