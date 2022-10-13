@@ -5,32 +5,43 @@ import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
 import { getPatterns } from '../../../utils/api/patterns';
+import { getGlobalStyles } from '../../../utils/api/themes';
 import { store as nfdOnboardingStore } from '../../../store';
 import { LivePreview } from '../../../components/LivePreview';
 import CommonLayout from '../../../components/Layouts/Common';
 import { VIEW_DESIGN_TYPOGRAPHY } from '../../../../constants';
+import { DesignStateHandler } from '../../../components/StateHandlers';
+import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
 const StepDesignTypography = () => {
 	const location = useLocation();
-	const [isLoaded, setIsLoaded] = useState(false);
 	const [pattern, setPattern] = useState();
+	const [isLoaded, setIsLoaded] = useState(false);
 
 	const isLargeViewport = useViewportMatch('medium');
 	const {
 		currentStep,
+		currentData,
+		storedPreviewSettings,
 	} = useSelect((select) => {
 		return {
 			currentStep: select(nfdOnboardingStore).getStepFromPath(
 				location.pathname
-			)
+			),
+			currentData:
+				select(nfdOnboardingStore).getCurrentOnboardingData(),
+			storedPreviewSettings:
+				select(nfdOnboardingStore).getPreviewSettings(),
 		};
 	}, []);
 
 	const {
+		updateThemeStatus,
 		setDrawerActiveView,
 		setIsDrawerOpened,
 		setIsSidebarOpened,
 		setIsDrawerSuppressed,
+		updatePreviewSettings,
 	} = useDispatch(nfdOnboardingStore);
 
 	useEffect(() => {
@@ -42,10 +53,28 @@ const StepDesignTypography = () => {
 		setDrawerActiveView(VIEW_DESIGN_TYPOGRAPHY);
 	}, []);
 
-	const getFontPatterns = () => {
-		console.log('Rann Once');
-		const pattern = getPatterns(currentStep.patternId, true);
-		setPattern(pattern?.body);
+	const getFontPatterns = async () =>  {
+		const patternsResponse = await getPatterns(currentStep.patternId, true);
+		if (patternsResponse?.error) {
+			return updateThemeStatus(THEME_STATUS_NOT_ACTIVE);
+		}
+		const globalStylesResponse = await getGlobalStyles();
+		if (globalStylesResponse?.error) {
+			return updateThemeStatus(THEME_STATUS_NOT_ACTIVE);
+		}
+		let selectedGlobalStyle;
+		if (currentData.data.theme.variation) {
+			selectedGlobalStyle = globalStylesResponse.body.filter(
+				(globalStyle) =>
+					globalStyle.title === currentData.data.theme.variation
+			)[0];
+		} else {
+			selectedGlobalStyle = globalStylesResponse.body[0];
+		}
+		updatePreviewSettings(
+			useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
+		);
+		setPattern(patternsResponse?.body);
 		setIsLoaded(true);
 	};
 
