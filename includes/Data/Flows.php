@@ -75,8 +75,8 @@ final class Flows {
 			),
 
 			'typography'      => array(
-				'fontFamilies' => array(),
-				'fontSizes'    => array(),
+				'slug' => '',
+				'data' => array()
 			),
 
 			// This string will identify the Header Pattern

@@ -34,4 +34,12 @@ const getThemeStatus = async ( theme ) => {
 	);
 };
 
-export { init, getGlobalStyles, getThemeStatus };
+const getThemeFonts = async () => {
+	return await resolve(
+		apiFetch({
+			url: onboardingRestURL('themes/fonts'),
+		})
+	);
+};
+
+export { init, getGlobalStyles, getThemeStatus, getThemeFonts };

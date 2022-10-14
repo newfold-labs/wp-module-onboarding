@@ -3,15 +3,17 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 
 import { store as nfdOnboardingStore } from '../../../store';
-import { getGlobalStyles } from '../../../utils/api/themes';
+import { getGlobalStyles, getThemeFonts } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import { FontFamilyEdit } from './font-family';
+import { G } from '@wordpress/components';
 
 const DesignTypography = () => {
 
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [selectedFont, setSelectedFont] = useState();
 	const [globalStyles, setGlobalStyles] = useState();
+	const [fontPalettes, setFontPalettes] = useState();
 	const [isAccordionClosed, setIsAccordionClosed] = useState(true);
 
 	const { storedPreviewSettings, currentData } = useSelect(
@@ -29,204 +31,11 @@ const DesignTypography = () => {
 	const { updatePreviewSettings, setCurrentOnboardingData } =
 		useDispatch(nfdOnboardingStore);
 
-	const fontPalettes = 
-	{
-		"modern-approachable": {
-			"label": "Modern & approachable",
-			"matches": "yith-wonder/theme-json",
-			"styles": {
-				"typography": {
-					"fontFamily": "var(--wp--preset--font-family--mulish)"
-				},
-				"blocks": {
-					"core/heading": {
-						"typography": {
-							"fontFamily": "var(--wp--preset--font-family--poppins)"
-						}
-					}
-				}
-			}
-		},
-		"strong-sleek": {
-			"label": "Strong & sleek",
-			"matches": "yith-wonder/styles/01-blue-shades",
-			"styles": {
-				"typography": {
-					"fontFamily": "var(--wp--preset--font-family--raleway)"
-				},
-				"blocks": {
-					"core/heading": {
-						"typography": {
-							"fontFamily": "var(--wp--preset--font-family--oswald)"
-						}
-					}
-				}
-			}
-		},
-		"stately-elevated": {
-			"label": "Stately & elevated",
-			"matches": "yith-wonder/styles/02-pink-shades",
-			"styles": {
-				"typography": {
-					"fontFamily": "var(--wp--preset--font-family--source-sans-pro)"
-				},
-				"blocks": {
-					"core/heading": {
-						"typography": {
-							"fontFamily": "var(--wp--preset--font-family--playfair)"
-						}
-					}
-				}
-			}
-		},
-		"typewriter-crisp-midcentury": {
-			"label": "Typewriter & crisp midcentury",
-			"matches": "yith-wonder/styles/03-orange-shades",
-			"styles": {
-				"typography": {
-					"fontFamily": "var(--wp--preset--font-family--jost)"
-				},
-				"blocks": {
-					"core/heading": {
-						"typography": {
-							"fontFamily": "var(--wp--preset--font-family--solway)"
-						}
-					}
-				}
-			}
-		},
-		"refined-traditional-newsletter": {
-			"label": "Refined traditional newsletter",
-			"matches": "yith-wonder/styles/04-black-shades",
-			"styles": {
-				"typography": {
-					"fontFamily": "var(--wp--preset--font-family--jost)"
-				},
-				"blocks": {
-					"core/heading": {
-						"typography": {
-							"fontFamily": "var(--wp--preset--font-family--merriweather)"
-						}
-					}
-				}
-			}
-		},
-		"bold-stamp-slab": {
-			"label": "Bold stamp & slab",
-			"matches": "yith-wonder/styles/05-red-shades",
-			"styles": {
-				"typography": {
-					"fontFamily": "var(--wp--preset--font-family--roboto-slab)"
-				},
-				"blocks": {
-					"core/heading": {
-						"typography": {
-							"fontFamily": "var(--wp--preset--font-family--changa-one)"
-						}
-					}
-				}
-			}
-		},
-		"fast-simple": {
-			"label": "Fast & Simple",
-			"matches": "newfold/onboarding-01",
-			"styles": {
-				"typography": {
-					"fontFamily": "var(--wp--preset--font-family--system)"
-				},
-				"blocks": {
-					"core/heading": {
-						"typography": {
-							"fontFamily": "var(--wp--preset--font-family--system)"
-						}
-					}
-				}
-			}
-		},
-		"timeless-traditional": {
-			"label": "Timeless & Traditional",
-			"matches": "newfold/onboarding-02",
-			"styles": {
-				"typography": {
-					"fontFamily": "var(--wp--preset--font-family--serif)"
-				},
-				"blocks": {
-					"core/heading": {
-						"typography": {
-							"fontFamily": "var(--wp--preset--font-family--serif)"
-						}
-					}
-				}
-			}
-		},
-		"sleek-sophisticated": {
-			"label": "Sleek & Sophisticated",
-			"matches": "newfold/onboarding-03",
-			"styles": {
-				"typography": {
-					"fontFamily": "var(--wp--preset--font-family--dm-sans)"
-				},
-				"blocks": {
-					"core/heading": {
-						"typography": {
-							"fontFamily": "var(--wp--preset--font-family--dm-sans)"
-						}
-					}
-				}
-			}
-		},
-		"clear-crisp": {
-			"label": "Clear & Crisp",
-			"matches": "newfold/onboarding-04",
-			"styles": {
-				"typography": {
-					"fontFamily": "var(--wp--preset--font-family--inter)"
-				},
-				"blocks": {
-					"core/heading": {
-						"typography": {
-							"fontFamily": "var(--wp--preset--font-family--inter)"
-						}
-					}
-			}
-			}
-		},
-		"retro-classy": {
-			"label": "Retro & Classy",
-			"matches": "newfold/onboarding-05",
-			"styles": {
-				"typography": {
-					"fontFamily": "var(--wp--preset--font-family--league-spartan)"
-				},
-				"blocks": {
-					"core/heading": {
-						"typography": {
-							"fontFamily": "var(--wp--preset--font-family--league-spartan)"
-						}
-					}
-				}
-			}
-		},
-		"defined-solid": {
-			"label": "Defined & Solid",
-			"matches": "newfold/onboarding-06",
-			"styles": {
-				"typography": {
-					"fontFamily": "var(--wp--preset--font-family--roboto-slab)"
-				},
-				"blocks": {
-					"core/heading": {
-						"typography": {
-							"fontFamily": "var(--wp--preset--font-family--roboto-slab)"
-						}
-					}
-				}
-			}
-		}
-	}
-
 	const getFontStylesAndPatterns = async () => {
+		const fontPalettes = await getThemeFonts();
 		const globalStyles = await getGlobalStyles();
+		setFontPalettes(fontPalettes?.body);
+
 		let selectedGlobalStyle;
 		if (currentData?.data?.theme?.variation) {
 			selectedGlobalStyle = globalStyles.body.filter(
@@ -237,9 +46,14 @@ const DesignTypography = () => {
 			selectedGlobalStyle = globalStyles.body[0];
 		}
 		setGlobalStyles(selectedGlobalStyle);
-		updatePreviewSettings(
-			useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
-		);
+
+		if(currentData?.data?.typography?.slug !== ''){
+			handleClick(currentData?.data?.typography?.slug, selectedGlobalStyle, fontPalettes?.body);
+		}else{
+			updatePreviewSettings(
+				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
+			);
+		}
 		setIsLoaded(true);
 	};
 
@@ -247,16 +61,19 @@ const DesignTypography = () => {
 		if (!isLoaded) getFontStylesAndPatterns();
 	}, [isLoaded]);
 	
-	const handleClick = async (fontStyle) => {
-
+	const handleClick = async (fontStyle, selectedGlobalStyle = globalStyles, fontPalettesCopy = fontPalettes) => {
 		setSelectedFont(fontStyle);
 
-		let globalStylesCopy = globalStyles;
-		globalStylesCopy.styles.typography.fontFamily = fontPalettes[fontStyle].styles.typography.fontFamily;
+		let globalStylesCopy = selectedGlobalStyle;
+		globalStylesCopy.styles.typography.fontFamily = fontPalettesCopy[fontStyle]?.styles?.typography?.fontFamily;
 		globalStylesCopy.styles.blocks['core/heading'].typography.fontFamily = 
-			fontPalettes[fontStyle].styles.blocks['core/heading'].typography.fontFamily;
+			fontPalettesCopy[fontStyle]?.styles.blocks['core/heading'].typography.fontFamily;
 		
 		setGlobalStyles(globalStylesCopy);
+		currentData.data.typography.slug = fontStyle;
+		currentData.data.typography.data = fontPalettesCopy[fontStyle];
+		setCurrentOnboardingData(currentData);
+
 		updatePreviewSettings(
 			useGlobalStylesOutput(globalStylesCopy, storedPreviewSettings)
 		);
