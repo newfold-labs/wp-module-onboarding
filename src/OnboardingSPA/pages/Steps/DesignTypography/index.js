@@ -71,9 +71,6 @@ const StepDesignTypography = () => {
 		} else {
 			selectedGlobalStyle = globalStylesResponse.body[0];
 		}
-		updatePreviewSettings(
-			useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
-		);
 		setPattern(patternsResponse?.body);
 		setIsLoaded(true);
 	};
@@ -84,15 +81,15 @@ const StepDesignTypography = () => {
 	}, [isLoaded]);
 
 	return (
-		<CommonLayout className="theme-colors-preview">
-			<div className="theme-colors-preview__title-bar">
-				<div className="theme-colors-preview__title-bar__browser">
-					<span className="theme-colors-preview__title-bar__browser__dot"></span>
-					<span className="theme-colors-preview__title-bar__browser__dot"></span>
-					<span className="theme-colors-preview__title-bar__browser__dot"></span>
+		<CommonLayout className="theme-fonts-preview">
+			<div className="theme-fonts-preview__title-bar">
+				<div className="theme-fonts-preview__title-bar__browser">
+					<span className="theme-fonts-preview__title-bar__browser__dot"></span>
+					<span className="theme-fonts-preview__title-bar__browser__dot"></span>
+					<span className="theme-fonts-preview__title-bar__browser__dot"></span>
 				</div>
 			</div>
-			<div className="theme-colors-preview__live-preview-container">
+			<div className="theme-fonts-preview__live-preview-container">
 				{pattern && (
 					<LivePreview
 						blockGrammer={pattern}

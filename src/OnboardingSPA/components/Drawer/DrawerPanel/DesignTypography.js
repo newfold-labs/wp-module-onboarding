@@ -5,6 +5,7 @@ import { useState, useEffect } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
+import { FontFamilyEdit } from './font-family';
 
 const DesignTypography = () => {
 
@@ -250,14 +251,13 @@ const DesignTypography = () => {
 
 		setSelectedFont(fontStyle);
 
-		let globalStylesCopy = globalStyles;
-		globalStylesCopy.styles = {
-			...fontPalettes[fontStyle].styles
-		}
+		// let globalStylesCopy = globalStyles;
+		// globalStylesCopy.styles.typography.fontFamily = fontPalettes[fontStyle].styles.typography.fontFamily;
 		
-		setGlobalStyles(globalStylesCopy);
-		const prevUpdate = await useGlobalStylesOutput(globalStylesCopy, storedPreviewSettings);
-		updatePreviewSettings(prevUpdate);
+		// setGlobalStyles(globalStylesCopy);
+		// updatePreviewSettings(
+		// 	useGlobalStylesOutput(globalStylesCopy, storedPreviewSettings)
+		// );
 	};
 
 	function buildPalettes() {
@@ -293,6 +293,9 @@ const DesignTypography = () => {
 	return (
 		<div style={{ padding: '0 4px' }}>
 			<h2>{__('Color Palettes', 'wp-module-onboarding')}</h2>
+			{/* <FontFamilyEdit
+				fontFamily={'monospace'}>
+			</FontFamilyEdit> */}
 			{buildPalettes()}
 			{buildCustomPalette()}
 		</div>
