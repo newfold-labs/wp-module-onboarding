@@ -17,6 +17,8 @@ const StepDesignTypography = () => {
 	const location = useLocation();
 	const [pattern, setPattern] = useState();
 	const [isLoaded, setIsLoaded] = useState(false);
+	const [time, setTime] = useState(Date.now());
+
 
 	const isLargeViewport = useViewportMatch('medium');
 	const {
@@ -43,6 +45,13 @@ const StepDesignTypography = () => {
 		setIsDrawerSuppressed,
 		updatePreviewSettings,
 	} = useDispatch(nfdOnboardingStore);
+
+	useEffect(() => {
+		const interval = setInterval(() => setTime(Date.now()), 1000);
+		return () => {
+			clearInterval(interval);
+		};
+	}, []);
 
 	useEffect(() => {
 		if (isLargeViewport) {
@@ -98,6 +107,9 @@ const StepDesignTypography = () => {
 						skeletonLoadingTime={false}
 					/>
 				)}
+			</div>
+			<div className='theme-fonts-preview-hidden'>
+				{time}
 			</div>
 		</CommonLayout>
 	);

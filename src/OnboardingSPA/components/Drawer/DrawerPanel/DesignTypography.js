@@ -251,13 +251,15 @@ const DesignTypography = () => {
 
 		setSelectedFont(fontStyle);
 
-		// let globalStylesCopy = globalStyles;
-		// globalStylesCopy.styles.typography.fontFamily = fontPalettes[fontStyle].styles.typography.fontFamily;
+		let globalStylesCopy = globalStyles;
+		globalStylesCopy.styles.typography.fontFamily = fontPalettes[fontStyle].styles.typography.fontFamily;
+		globalStylesCopy.styles.blocks['core/heading'].typography.fontFamily = 
+			fontPalettes[fontStyle].styles.blocks['core/heading'].typography.fontFamily;
 		
-		// setGlobalStyles(globalStylesCopy);
-		// updatePreviewSettings(
-		// 	useGlobalStylesOutput(globalStylesCopy, storedPreviewSettings)
-		// );
+		setGlobalStyles(globalStylesCopy);
+		updatePreviewSettings(
+			useGlobalStylesOutput(globalStylesCopy, storedPreviewSettings)
+		);
 	};
 
 	function buildPalettes() {
