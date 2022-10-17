@@ -52,7 +52,7 @@ const LearnMore = () => {
 				subheading={ content.subheading }
 				icon={ content.icon }
 			/>
-			<IllustrationPanel cssIcon="nfd-onboarding-sidebar-learn-more-get-started-welcome-illustration" />
+			<IllustrationPanel cssIcon={content.illustration.icon} />
 			<InfoPanel
 				headingWithDescriptions={ content.headingWithDescriptions }
 			/>

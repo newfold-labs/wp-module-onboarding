@@ -16,6 +16,9 @@ const getContents = ( brandName ) => {
 			translations( 'website' )
 		),
 		icon: home,
+		illustration: {
+			icon: 'nfd-onboarding-sidebar-learn-more-get-started-welcome-illustration'
+		},
 		headingWithDescriptions: [
 			{
 				heading: sprintf(
