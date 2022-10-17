@@ -52,14 +52,14 @@ const LearnMore = () => {
 				subheading={ content.subheading }
 				icon={ content.icon }
 			/>
-			<IllustrationPanel cssIcon={content.illustration.icon} />
+			<IllustrationPanel cssIcon={ content.illustration.icon } />
 			<InfoPanel
 				headingWithDescriptions={ content.headingWithDescriptions }
 			/>
 			<HelpPanel>
-				<ButtonBlue text={ content.experts.text }/>
-				<ButtonWhite text={ content.fullService.text }/>
-				<SupportLink text={ content.support.text }/>
+				<ButtonBlue text={ content.experts.text } />
+				<ButtonWhite text={ content.fullService.text } />
+				<SupportLink text={ content.support.text } />
 			</HelpPanel>
 		</div>
 	);

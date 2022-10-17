@@ -6,8 +6,8 @@ import { home } from '@wordpress/icons';
 const getContents = ( brandName ) => {
 	return {
 		heading: __( 'Start Setup', 'wp-module-onboarding' ),
-		/* translators: 1: Brand 2: Website */
 		subheading: sprintf(
+			/* translators: 1: Brand 2: Website */
 			__(
 				`Lay the foundation for a successful %s %s. Use our premade designs and feature bundles to start connecting with your visitors.`,
 				'wp-module-onboarding'
@@ -17,7 +17,7 @@ const getContents = ( brandName ) => {
 		),
 		icon: home,
 		illustration: {
-			icon: 'nfd-onboarding-sidebar-learn-more-get-started-welcome-illustration'
+			icon: 'nfd-onboarding-sidebar-learn-more-get-started-welcome-illustration',
 		},
 		headingWithDescriptions: [
 			{
