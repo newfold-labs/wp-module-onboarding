@@ -9,15 +9,12 @@ import { getGlobalStyles } from '../../../utils/api/themes';
 import { store as nfdOnboardingStore } from '../../../store';
 import { LivePreview } from '../../../components/LivePreview';
 import CommonLayout from '../../../components/Layouts/Common';
-import { VIEW_DESIGN_TYPOGRAPHY } from '../../../../constants';
-import { DesignStateHandler } from '../../../components/StateHandlers';
-import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
+import { THEME_STATUS_NOT_ACTIVE, VIEW_DESIGN_TYPOGRAPHY } from '../../../../constants';
 
 const StepDesignTypography = () => {
 	const location = useLocation();
 	const [pattern, setPattern] = useState();
 	const [isLoaded, setIsLoaded] = useState(false);
-	const [time, setTime] = useState(Date.now());
 
 
 	const isLargeViewport = useViewportMatch('medium');
@@ -45,13 +42,6 @@ const StepDesignTypography = () => {
 		setIsDrawerSuppressed,
 		updatePreviewSettings,
 	} = useDispatch(nfdOnboardingStore);
-
-	useEffect(() => {
-		const interval = setInterval(() => setTime(Date.now()), 1000);
-		return () => {
-			clearInterval(interval);
-		};
-	}, []);
 
 	useEffect(() => {
 		if (isLargeViewport) {
@@ -107,9 +97,6 @@ const StepDesignTypography = () => {
 						skeletonLoadingTime={false}
 					/>
 				)}
-			</div>
-			<div className='theme-fonts-preview-hidden'>
-				{time}
 			</div>
 		</CommonLayout>
 	);

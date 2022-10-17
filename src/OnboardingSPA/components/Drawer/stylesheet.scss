@@ -360,11 +360,15 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
     }
 }
 
-.custom-palette {
+.custom-font-palette {
     width: 88%;
     margin: 30px 2px;
     padding: 20px 16px;
     background: $main-border-main;
+
+    &--hidden {
+        display: none;
+    }
 
     &__top {
         display: flex;

@@ -471,6 +471,7 @@ export const conditionalSteps = {
 		Icon: typography,
 		priority: 200,
 		VIEW: VIEW_DESIGN_TYPOGRAPHY,
+		patternId: 'theme-styles',
 	},
 };
 

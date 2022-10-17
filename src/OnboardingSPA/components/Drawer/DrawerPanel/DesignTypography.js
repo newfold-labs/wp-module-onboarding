@@ -5,11 +5,10 @@ import { useState, useEffect } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeFonts } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import { FontFamilyEdit } from './font-family';
-import { G } from '@wordpress/components';
 
 const DesignTypography = () => {
 
+	const [rerender, doRerender] = useState(0);
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [selectedFont, setSelectedFont] = useState();
 	const [globalStyles, setGlobalStyles] = useState();
@@ -27,6 +26,13 @@ const DesignTypography = () => {
 		},
 		[]
 	);
+
+	// useEffect(() => {
+	// 	const interval = setInterval(() => setTime(Date.now()), 1000);
+	// 	return () => {
+	// 		clearInterval(interval);
+	// 	};
+	// }, []);
 
 	const { updatePreviewSettings, setCurrentOnboardingData } =
 		useDispatch(nfdOnboardingStore);
@@ -77,6 +83,7 @@ const DesignTypography = () => {
 		updatePreviewSettings(
 			useGlobalStylesOutput(globalStylesCopy, storedPreviewSettings)
 		);
+		doRerender(1);
 	};
 
 	function buildPalettes() {
@@ -98,12 +105,12 @@ const DesignTypography = () => {
 
 	function buildCustomPalette() {
 		return (
-			<div className='custom-palette'>
-				<div className='custom-palette__top'
+			<div className='custom-font-palette'>
+				<div className='custom-font-palette__top'
 					onClick={(e) => setIsAccordionClosed(!isAccordionClosed)}>
-					<div className='custom-palette__top-text'>SELECT CUSTOM FONTS</div>
-					{isAccordionClosed && <div className='custom-palette__top-icon'>+</div>}
-					{!isAccordionClosed && <div className='custom-palette__top-icon'>-</div>}
+					<div className='custom-font-palette__top-text'>SELECT CUSTOM FONTS</div>
+					{isAccordionClosed && <div className='custom-font-palette__top-icon'>+</div>}
+					{!isAccordionClosed && <div className='custom-font-palette__top-icon'>-</div>}
 				</div>
 			</div>
 		);
@@ -112,11 +119,11 @@ const DesignTypography = () => {
 	return (
 		<div style={{ padding: '0 4px' }}>
 			<h2>{__('Color Palettes', 'wp-module-onboarding')}</h2>
-			{/* <FontFamilyEdit
-				fontFamily={'monospace'}>
-			</FontFamilyEdit> */}
 			{buildPalettes()}
 			{buildCustomPalette()}
+			<div className='custom-font-palette--hidden'>
+				{rerender}
+			</div>
 		</div>
 	);
 };
