@@ -327,7 +327,9 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 
 
 // Design Color Palette Step
-
+.theme-colors--drawer {
+    padding: 0 4px;
+}
 .color-palette {
 
     width: 88%;

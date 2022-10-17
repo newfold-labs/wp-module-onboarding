@@ -61,7 +61,6 @@ const DesignColors = () => {
 					'color': selectedColorsLocalTemp[colorName]
 				});
 			}
-
 			selectedColorsTemp.color = colorsArray;
 			setSelectedColors(selectedColorsTemp);
 			currentData.data.palette = selectedColorsTemp;
@@ -309,7 +308,7 @@ const DesignColors = () => {
 	}
 
 	return (
-		<div style={{ padding: '0 4px' }}>
+		<div className='theme-colors--drawer'>
 			<h2>{__('Color Palettes', 'wp-module-onboarding')}</h2>
 			{ colorPalettes && buildPalettes() }
 			{ colorPalettes && buildCustomPalette() }
