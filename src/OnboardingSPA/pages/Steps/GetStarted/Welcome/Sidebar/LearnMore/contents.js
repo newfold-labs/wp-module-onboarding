@@ -42,7 +42,7 @@ const getContents = ( brandName ) => {
 			},
 			{
 				heading: sprintf(
-					/* translators: 1: Website 2: Brand */
+					/* translators: 1: Brand 2: Website */
 					__( '%s is your %s partner', 'wp-module-onboarding' ),
 					brandName,
 					translations( 'website' )
