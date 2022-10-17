@@ -38,7 +38,7 @@ const DesignColors = () => {
 	function stateToLocal(selectedColors) {
 		if (selectedColors) {
 			let selectedColorsLocalTemp = {};
-			selectedColors?.color.forEach(color => {
+			selectedColors?.color?.forEach(color => {
 				selectedColorsLocalTemp[color.slug] = color.color;
 			});
 
@@ -311,8 +311,8 @@ const DesignColors = () => {
 	return (
 		<div style={{ padding: '0 4px' }}>
 			<h2>{__('Color Palettes', 'wp-module-onboarding')}</h2>
-			{ colorPalettes && buildPalettes()}
-			{buildCustomPalette()}
+			{ colorPalettes && buildPalettes() }
+			{ colorPalettes && buildCustomPalette() }
 		</div>
 	);
 };
