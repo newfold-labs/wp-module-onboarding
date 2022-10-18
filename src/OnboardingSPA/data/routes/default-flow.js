@@ -78,7 +78,11 @@ const StepGetStartedSecondarySetupLearnMoreSidebar = lazy( () =>
 );
 
 const StepTopPriority = lazy( () => import( '../../pages/Steps/TopPriority' ) );
+
 const StepBasicInfo = lazy( () => import( '../../pages/Steps/BasicInfo' ) );
+const StepBasicInfoLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/BasicInfo/Sidebar/LearnMore' )
+);
 
 const StepDesignThemes = lazy( () =>
 	import( '../../pages/Steps/DesignThemes' )
@@ -319,6 +323,11 @@ export const steps = [
 		Component: StepBasicInfo,
 		Icon: info,
 		priority: 120,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepBasicInfoLearnMoreSidebar ],
+			},
+		},
 	},
 	{
 		path: '/wp-setup/step/design/themes',
