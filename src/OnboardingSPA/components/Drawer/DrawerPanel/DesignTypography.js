@@ -1,9 +1,11 @@
 import { __ } from '@wordpress/i18n';
+import { FlexItem } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeFonts } from '../../../utils/api/themes';
+import { toStyles } from '../../../utils/global-styles/use-global-styles-output';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
 const DesignTypography = () => {
@@ -26,13 +28,6 @@ const DesignTypography = () => {
 		},
 		[]
 	);
-
-	// useEffect(() => {
-	// 	const interval = setInterval(() => setTime(Date.now()), 1000);
-	// 	return () => {
-	// 		clearInterval(interval);
-	// 	};
-	// }, []);
 
 	const { updatePreviewSettings, setCurrentOnboardingData } =
 		useDispatch(nfdOnboardingStore);
@@ -117,10 +112,14 @@ const DesignTypography = () => {
 	}
 
 	return (
-		<div style={{ padding: '0 4px' }}>
-			<h2>{__('Color Palettes', 'wp-module-onboarding')}</h2>
-			{buildPalettes()}
-			{buildCustomPalette()}
+		<div className='theme-fonts--drawer'>
+			<h2>{__('Font Palettes', 'wp-module-onboarding')}</h2>
+			<FlexItem
+				className="edit-site-global-styles-screen-typography__indicator"
+				style={{ fontFamily: 'Mulish' ?? 'serif' }}
+			>{__('Aac')}</FlexItem>
+			{fontPalettes && buildPalettes()}
+			{fontPalettes && buildCustomPalette()}
 			<div className='custom-font-palette--hidden'>
 				{rerender}
 			</div>
