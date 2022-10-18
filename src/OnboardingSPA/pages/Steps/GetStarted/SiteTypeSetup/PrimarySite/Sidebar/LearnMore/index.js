@@ -37,17 +37,27 @@ const LearnMore = () => {
 	return (
 		<div className="nfd-onboarding-sidebar-learn-more__get-started-site-secondary">
 			<StepIntroPanel
-				heading={ content.heading }
-				subheading={ content.subheading }
-				icon={ content.icon }
+				heading={ content.introduction.heading }
+				subheading={ content.introduction.subheading }
+				icon={ content.introduction.icon }
 			/>
 			<IllustrationPanel cssIcon={ content.illustration.icon } />
 			<InfoPanel
-				headingWithDescriptions={ content.headingWithDescriptions }
+				headingWithDescriptions={
+					content.information.headingWithDescriptions
+				}
 			/>
 			<HelpPanel>
-				<ButtonWhite text={ content.fullService.text } />
-				<SupportLink text={ content.support.text } />
+				<ButtonWhite
+					text={ content.help.fullService.text }
+					onClick={ () =>
+						( window.location.href = content.help.fullService.link )
+					}
+				/>
+				<SupportLink
+					text={ content.help.support.text }
+					link={ content.help.support.link }
+				/>
 			</HelpPanel>
 		</div>
 	);
