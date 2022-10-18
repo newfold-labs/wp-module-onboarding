@@ -1,0 +1,17 @@
+$button-white-background-color : #fff;
+$button-white-text-color : #3575d2;
+
+.nfd-onboarding-button {
+
+	&--white {
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		background: $button-white-background-color;
+		color: $button-white-text-color;
+		border: 1px solid #3575d2;
+		height: 36px;
+		border-radius: 2px;
+		margin: 10px 0;
+	}
+}
