@@ -89,7 +89,8 @@ const DesignTypography = () => {
 		let paletteRenderedList = [];
 		for (const fontStyle in fontPalettes) {
 			const splitLabel = fontPalettes[fontStyle]?.label.split("&", 2);
-
+			if(splitLabel.length == 0)
+				continue;
 			paletteRenderedList.push(
 				<div className={`font-palette ${selectedFont == fontStyle ? 'font-palette-selected' : ''} `}
 					onClick={(e) => handleClick(fontStyle)}>
