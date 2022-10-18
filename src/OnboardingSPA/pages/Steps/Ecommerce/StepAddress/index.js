@@ -84,6 +84,9 @@ const StepAddress = () => {
 		if (country === defaultCountry && state === undefined) {
 			state = defaultState;
 		}
+		if ( states.length == 0 ) {
+			state = ""   // edge case to handle when the user goes back to onboarding and changes from a country with state to no state
+		}
 		let place = '';
 		if (['country', 'state'].includes(fieldName)) {
 			place =
