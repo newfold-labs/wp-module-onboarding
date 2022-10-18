@@ -53,6 +53,30 @@ const StepGetStartedWelcomeLearnMoreSidebar = lazy( () =>
 const StepGetStartedExperience = lazy( () =>
 	import( '../../pages/Steps/GetStarted/GetStartedExperience' )
 );
+const StepGetStartedExperienceLearnMoreSidebar = lazy( () =>
+	import(
+		'../../pages/Steps/GetStarted/GetStartedExperience/Sidebar/LearnMore'
+	)
+);
+
+const StepGetStartedPrimarySetup = lazy( () =>
+	import( '../../pages/Steps/GetStarted/SiteTypeSetup/PrimarySite' )
+);
+const StepGetStartedPrimarySetupLearnMoreSidebar = lazy( () =>
+	import(
+		'../../pages/Steps/GetStarted/SiteTypeSetup/PrimarySite/Sidebar/LearnMore/index'
+	)
+);
+
+const StepGetStartedSecondarySetup = lazy( () =>
+	import( '../../pages/Steps/GetStarted/SiteTypeSetup/SecondarySite' )
+);
+const StepGetStartedSecondarySetupLearnMoreSidebar = lazy( () =>
+	import(
+		'../../pages/Steps/GetStarted/SiteTypeSetup/SecondarySite/Sidebar/LearnMore/index'
+	)
+);
+
 const StepTopPriority = lazy( () => import( '../../pages/Steps/TopPriority' ) );
 const StepBasicInfo = lazy( () => import( '../../pages/Steps/BasicInfo' ) );
 
@@ -83,13 +107,6 @@ const StepSiteFeatures = lazy( () =>
 	import( '../../pages/Steps/SiteFeatures' )
 );
 const StepWhatNext = lazy( () => import( '../../pages/Steps/WhatNext' ) );
-
-const StepPrimarySetup = lazy( () =>
-	import( '../../pages/Steps/GetStarted/SiteTypeSetup/PrimarySite' )
-);
-const StepSecondarySetup = lazy( () =>
-	import( '../../pages/Steps/GetStarted/SiteTypeSetup/SecondarySite' )
-);
 
 /**
  * All information pages should be prefixed with `/page`.
@@ -179,6 +196,11 @@ export const steps = [
 		Icon: home,
 		priority: 40,
 		VIEW: VIEW_NAV_GET_STARTED,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepGetStartedExperienceLearnMoreSidebar ],
+			},
+		},
 	},
 	{
 		path: '/wp-setup/step/get-started/site-primary',
@@ -208,9 +230,16 @@ export const steps = [
 			),
 			translations( 'site' )
 		),
-		Component: StepPrimarySetup,
+		Component: StepGetStartedPrimarySetup,
 		Icon: moveTo,
 		priority: 60,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [
+					StepGetStartedPrimarySetupLearnMoreSidebar,
+				],
+			},
+		},
 	},
 	{
 		path: '/wp-setup/step/get-started/site-secondary',
@@ -240,9 +269,16 @@ export const steps = [
 			),
 			translations( 'site' )
 		),
-		Component: StepSecondarySetup,
+		Component: StepGetStartedSecondarySetup,
 		Icon: moveTo,
 		priority: 80,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [
+					StepGetStartedSecondarySetupLearnMoreSidebar,
+				],
+			},
+		},
 	},
 	{
 		path: '/wp-setup/step/top-priority',
