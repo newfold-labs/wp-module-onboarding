@@ -3,7 +3,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { translations } from '../../../../../utils/locales/translations';
 import { info } from '@wordpress/icons';
 
-const getContents = () => {
+const getContents = ( brandName ) => {
 	return {
 		introduction: {
 			heading: __( 'Basic Info', 'wp-module-onboarding' ),
@@ -27,9 +27,14 @@ const getContents = () => {
 						'Present in tip-top shape to web browsers and search engine results',
 						'wp-module-onboarding'
 					),
-					description: __(
-						`Enter the best way for WordPress, web browsers and search engines to identify your Bluehost store by entering your Title, Description and Logo.`,
-						'wp-module-onboarding'
+					description: sprintf(
+						/* translators: 1: Brand 2: Site */
+						__(
+							`Enter the best way for WordPress, web browsers and search engines to identify your %s %s by entering your Title, Description and Logo.`,
+							'wp-module-onboarding'
+						),
+						brandName,
+						translations( 'Site' )
 					),
 				},
 				{
