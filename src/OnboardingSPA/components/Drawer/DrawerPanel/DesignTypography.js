@@ -1,15 +1,15 @@
 import { __ } from '@wordpress/i18n';
 import { FlexItem } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useRef } from '@wordpress/element';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeFonts } from '../../../utils/api/themes';
-import { toStyles } from '../../../utils/global-styles/use-global-styles-output';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
 const DesignTypography = () => {
 
+	const drawerFontOptions = useRef();
 	const [rerender, doRerender] = useState(0);
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [selectedFont, setSelectedFont] = useState();
@@ -55,6 +55,11 @@ const DesignTypography = () => {
 				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
 			);
 		}
+		let stylesCustom = selectedGlobalStyle?.settings?.styles[0]?.css;
+		if (stylesCustom) {
+			const regex = /--wp--preset--font-family.*;/;
+			drawerFontOptions.current.setAttribute('style', stylesCustom.match(regex));
+		}
 		setIsLoaded(true);
 	};
 
@@ -64,7 +69,6 @@ const DesignTypography = () => {
 	
 	const handleClick = async (fontStyle, selectedGlobalStyle = globalStyles, fontPalettesCopy = fontPalettes) => {
 		setSelectedFont(fontStyle);
-
 		let globalStylesCopy = selectedGlobalStyle;
 		globalStylesCopy.styles.typography.fontFamily = fontPalettesCopy[fontStyle]?.styles?.typography?.fontFamily;
 		globalStylesCopy.styles.blocks['core/heading'].typography.fontFamily = 
@@ -84,12 +88,25 @@ const DesignTypography = () => {
 	function buildPalettes() {
 		let paletteRenderedList = [];
 		for (const fontStyle in fontPalettes) {
+			const splitLabel = fontPalettes[fontStyle]?.label.split("&", 2);
+
 			paletteRenderedList.push(
 				<div className={`font-palette ${selectedFont == fontStyle ? 'font-palette-selected' : ''} `}
 					onClick={(e) => handleClick(fontStyle)}>
-					<div className='font-palette__icon'> Aa </div>
+					<div className='font-palette__icon'
+						style={{ fontFamily: fontPalettes[fontStyle]?.styles?.typography?.fontFamily }}>
+						Aa 
+					</div>
 					<div className='font-palette__name'>
-						{fontPalettes[fontStyle]?.label}
+						<span
+							style={{ fontFamily: fontPalettes[fontStyle]?.styles.blocks['core/heading'].typography.fontFamily }}>
+							{splitLabel[0]}
+						</span>
+						{splitLabel[1] ? '&' : ''}
+						<span
+							style={{ fontFamily: fontPalettes[fontStyle]?.styles?.typography?.fontFamily }}>
+							{splitLabel[1] ?? ''}
+						</span>
 					</div>
 				</div>
 			);
@@ -112,12 +129,8 @@ const DesignTypography = () => {
 	}
 
 	return (
-		<div className='theme-fonts--drawer'>
+		<div ref={drawerFontOptions} className='theme-fonts--drawer'>
 			<h2>{__('Font Palettes', 'wp-module-onboarding')}</h2>
-			<FlexItem
-				className="edit-site-global-styles-screen-typography__indicator"
-				style={{ fontFamily: 'Mulish' ?? 'serif' }}
-			>{__('Aac')}</FlexItem>
 			{fontPalettes && buildPalettes()}
 			{fontPalettes && buildCustomPalette()}
 			<div className='custom-font-palette--hidden'>

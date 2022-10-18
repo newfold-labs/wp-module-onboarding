@@ -326,8 +326,9 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 
 // Design Font Palette Step
 
-.theme-colors--drawer {
+.theme-fonts--drawer {
     padding: 0 4px;
+    border: none !important;
 }
 
 .font-palette {
