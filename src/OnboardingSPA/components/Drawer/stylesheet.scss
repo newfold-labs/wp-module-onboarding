@@ -342,6 +342,10 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
     align-items: center;
     background-color: white;
     justify-content: space-between;
+    
+    &:hover {
+        background-color: var(--nfd-onboarding-drawer-icon-fill);
+    }
 
     &-selected {
         background-color: $main-border-main;
