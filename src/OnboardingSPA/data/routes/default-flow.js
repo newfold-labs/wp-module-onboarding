@@ -43,14 +43,40 @@ const ErrorPage = lazy( () => import( '../../pages/ErrorPage' ) );
 const PageResources = lazy( () => import( '../../pages/Resources' ) );
 const PageWhatToExpect = lazy( () => import( '../../pages/WhatToExpect' ) );
 
-const StepIndex = lazy( () => import( '../../pages/Steps/index' ) );
-const StepGetStarted = lazy( () => import( '../../pages/Steps/GetStarted' ) );
-const StepWelcome = lazy( () =>
+const StepGetStartedWelcome = lazy( () =>
 	import( '../../pages/Steps/GetStarted/Welcome' )
 );
+const StepGetStartedWelcomeLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/GetStarted/Welcome/Sidebar/LearnMore' )
+);
+
 const StepGetStartedExperience = lazy( () =>
 	import( '../../pages/Steps/GetStarted/GetStartedExperience' )
 );
+const StepGetStartedExperienceLearnMoreSidebar = lazy( () =>
+	import(
+		'../../pages/Steps/GetStarted/GetStartedExperience/Sidebar/LearnMore'
+	)
+);
+
+const StepGetStartedPrimarySetup = lazy( () =>
+	import( '../../pages/Steps/GetStarted/SiteTypeSetup/PrimarySite' )
+);
+const StepGetStartedPrimarySetupLearnMoreSidebar = lazy( () =>
+	import(
+		'../../pages/Steps/GetStarted/SiteTypeSetup/PrimarySite/Sidebar/LearnMore/index'
+	)
+);
+
+const StepGetStartedSecondarySetup = lazy( () =>
+	import( '../../pages/Steps/GetStarted/SiteTypeSetup/SecondarySite' )
+);
+const StepGetStartedSecondarySetupLearnMoreSidebar = lazy( () =>
+	import(
+		'../../pages/Steps/GetStarted/SiteTypeSetup/SecondarySite/Sidebar/LearnMore/index'
+	)
+);
+
 const StepTopPriority = lazy( () => import( '../../pages/Steps/TopPriority' ) );
 const StepBasicInfo = lazy( () => import( '../../pages/Steps/BasicInfo' ) );
 
@@ -73,25 +99,14 @@ const StepDesignTypography = lazy( () =>
 const StepDesignHeaderMenu = lazy( () =>
 	import( '../../pages/Steps/DesignHeaderMenu' )
 );
-const StepDesignHomepageMenu = lazy(() =>
-	import('../../pages/Steps/DesignHomepageMenu')
+const StepDesignHomepageMenu = lazy( () =>
+	import( '../../pages/Steps/DesignHomepageMenu' )
 );
 const StepSitePages = lazy( () => import( '../../pages/Steps/SitePages' ) );
 const StepSiteFeatures = lazy( () =>
 	import( '../../pages/Steps/SiteFeatures' )
 );
 const StepWhatNext = lazy( () => import( '../../pages/Steps/WhatNext' ) );
-
-const StepPrimarySetup = lazy( () =>
-	import( '../../pages/Steps/GetStarted/SiteTypeSetup/PrimarySite' )
-);
-const StepSecondarySetup = lazy( () =>
-	import( '../../pages/Steps/GetStarted/SiteTypeSetup/SecondarySite' )
-);
-
-const GetStartedLearnMoreHelp = lazy( () =>
-	import( '../../pages/Steps/GetStarted/SidebarComponents/LearnMore/Help' )
-);
 
 /**
  * All information pages should be prefixed with `/page`.
@@ -148,12 +163,14 @@ export const steps = [
 			"We'll use this to personalize this onboarding and future recommendations",
 			'wp-module-onboarding'
 		),
-		Component: StepWelcome,
+		Component: StepGetStartedWelcome,
 		Icon: home,
 		priority: 20,
 		VIEW: VIEW_NAV_GET_STARTED,
-		SidebarComponents: {
-			LearnMore: [ GetStartedLearnMoreHelp ],
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepGetStartedWelcomeLearnMoreSidebar ],
+			},
 		},
 	},
 	{
@@ -179,8 +196,10 @@ export const steps = [
 		Icon: home,
 		priority: 40,
 		VIEW: VIEW_NAV_GET_STARTED,
-		SidebarComponents: {
-			LearnMore: [ GetStartedLearnMoreHelp ],
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepGetStartedExperienceLearnMoreSidebar ],
+			},
 		},
 	},
 	{
@@ -211,9 +230,16 @@ export const steps = [
 			),
 			translations( 'site' )
 		),
-		Component: StepPrimarySetup,
+		Component: StepGetStartedPrimarySetup,
 		Icon: moveTo,
 		priority: 60,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [
+					StepGetStartedPrimarySetupLearnMoreSidebar,
+				],
+			},
+		},
 	},
 	{
 		path: '/wp-setup/step/get-started/site-secondary',
@@ -243,9 +269,16 @@ export const steps = [
 			),
 			translations( 'site' )
 		),
-		Component: StepSecondarySetup,
+		Component: StepGetStartedSecondarySetup,
 		Icon: moveTo,
 		priority: 80,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [
+					StepGetStartedSecondarySetupLearnMoreSidebar,
+				],
+			},
+		},
 	},
 	{
 		path: '/wp-setup/step/top-priority',
@@ -368,9 +401,9 @@ export const steps = [
 	},
 	{
 		path: '/wp-setup/step/design/homepage-menu',
-		title: __('HomePages Wizard', 'wp-module-onboarding'),
+		title: __( 'HomePages Wizard', 'wp-module-onboarding' ),
 		heading: __(
-			"There’s no place like a great home page",
+			'There’s no place like a great home page',
 			'wp-module-onboarding'
 		),
 		subheading: __(
