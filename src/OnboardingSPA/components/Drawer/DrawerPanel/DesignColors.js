@@ -49,9 +49,8 @@ const DesignColors = () => {
 
 	function LocalToState(selectedColorsLocalTemp, colorStyle) {
 		if (selectedColorsLocalTemp && colorStyle) {
-			let selectedColorsTemp = selectedColors;
-			selectedColorsTemp.slug = colorStyle;
-			selectedColorsTemp.name = colorStyle?.charAt(0).toUpperCase() + colorStyle?.slice(1);
+			selectedColors.slug = colorStyle;
+			selectedColors.name = colorStyle?.charAt(0).toUpperCase() + colorStyle?.slice(1);
 
 			let colorsArray = [];
 			for (let colorName in selectedColorsLocalTemp) {
@@ -61,11 +60,12 @@ const DesignColors = () => {
 					'color': selectedColorsLocalTemp[colorName]
 				});
 			}
-			selectedColorsTemp.color = colorsArray;
-			setSelectedColors(selectedColorsTemp);
-			currentData.data.palette = selectedColorsTemp;
+			
+			selectedColors.color = colorsArray;
+			setSelectedColors(selectedColors);
+			currentData.data.palette = selectedColors;
 			setCurrentOnboardingData(currentData);
-			return selectedColorsTemp;
+			return selectedColors;
 		}
 	}
 
@@ -188,8 +188,6 @@ const DesignColors = () => {
 	}, [isLoaded]);
 
 	const handleClick = (colorStyle) => {
-		let selectedColorsLocalTemp = selectedColorsLocal;
-		selectedColorsLocalTemp = colorPalettes[colorStyle];
 
 		let customColorsTemp = customColors;
 		for(let custom in customColorsTemp)
@@ -197,19 +195,18 @@ const DesignColors = () => {
 		
 		setCustomColors(customColorsTemp);
 		saveThemeColorPalette(colorStyle);
-		setSelectedColorsLocal(selectedColorsLocalTemp);
-		LocalToState(selectedColorsLocalTemp, colorStyle);
+		setSelectedColorsLocal(colorPalettes[colorStyle]);
+		LocalToState(colorPalettes[colorStyle], colorStyle);
 	};
 
 	const changeCustomPickerColor = async (color) => {
 
-		let selectedColorsLocalTemp = selectedColorsLocal;
-		selectedColorsLocalTemp[colorPickerCalledBy] = color;
+		selectedColorsLocal[colorPickerCalledBy] = color;
 		
 		saveCustomColors();
-		setSelectedColorsLocal(selectedColorsLocalTemp);
-		setCustomColors(selectedColorsLocalTemp);
-		LocalToState(selectedColorsLocalTemp, 'custom');
+		setSelectedColorsLocal(selectedColorsLocal);
+		setCustomColors(selectedColorsLocal);
+		LocalToState(selectedColorsLocal, 'custom');
 	}
 
 	const selectCustomColor = (colorType) => {
