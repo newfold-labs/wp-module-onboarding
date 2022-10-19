@@ -90,8 +90,14 @@ const StepDesignThemes = lazy( () =>
 const StepDesignThemeStylesMenu = lazy( () =>
 	import( '../../pages/Steps/DesignThemeStyles/Menu' )
 );
+const StepDesignThemeStylesMenuLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/DesignThemeStyles/Menu/Sidebar/LearnMore' )
+);
 const StepDesignThemeStylesPreview = lazy( () =>
 	import( '../../pages/Steps/DesignThemeStyles/Preview' )
+);
+const StepDesignThemeStylesPreviewLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/DesignThemeStyles/Preview/Sidebar/LearnMore' )
 );
 
 const StepDesignColors = lazy( () =>
@@ -366,6 +372,13 @@ export const steps = [
 		priority: 160,
 		VIEW: VIEW_DESIGN_THEME_STYLES_MENU,
 		patternId: 'theme-styles',
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [
+					StepDesignThemeStylesMenuLearnMoreSidebar,
+				],
+			},
+		},
 	},
 	{
 		path: '/wp-setup/step/design/theme-styles/preview',
@@ -387,6 +400,13 @@ export const steps = [
 		priority: 170,
 		VIEW: VIEW_DESIGN_THEME_STYLES_PREVIEW,
 		patternId: 'theme-styles',
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [
+					StepDesignThemeStylesPreviewLearnMoreSidebar,
+				],
+			},
+		},
 	},
 	{
 		path: '/wp-setup/step/design/header-menu',
