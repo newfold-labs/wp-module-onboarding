@@ -65,7 +65,7 @@ class FlowController {
 			$this->save_details_to_wp_options( $result );
 		}
 
-		if ( ! ( $result == Flows::get_data() ) ) {
+		if ( array_diff($this->flatten_array(Flows::get_data()), $this->flatten_array($result)) ) {
 				$result = array_replace_recursive( Flows::get_data(), $result);
 				$this->save_details_to_wp_options( $result );
 		}
@@ -74,6 +74,17 @@ class FlowController {
 			$result,
 			200
 		);
+	}
+
+	public function flatten_array( $array ) {
+		$keys = array();
+		foreach ($array as $key => $value) {
+			$keys[] = $key;
+			if (is_array($value)) {
+				$keys = array_merge($keys, $this->flatten_array($value));
+			}
+		}
+		return $keys;
 	}
 
 	/**
@@ -103,22 +114,51 @@ class FlowController {
 			  $this->save_details_to_wp_options( $flow_data );
 		}
 
+		if ( array_diff($this->flatten_array(Flows::get_data()), $this->flatten_array($flow_data)) ) {
+			$flow_data = array_replace_recursive( Flows::get_data(), $flow_data);
+			$this->save_details_to_wp_options( $flow_data );
+		}
+
+		$delete_flow_item = array_diff($this->flatten_array($flow_data), $this->flatten_array(Flows::get_data()));
+
+		if ($delete_flow_item) {
+			foreach ( $delete_flow_item as $key => $val ) {
+				if (in_array($val, array_keys($flow_data), true) ) {
+					unset($flow_data[$val]);
+				}
+				else {
+					$this->delete_wp_options_data_in_database($val, $flow_data);
+				}
+		}}
+
+
 		foreach ( $params as $key => $param ) {
-			if ( $value = $this->array_search_key( $key, Flows::get_data() ) === false ) {
+			if ( ! (in_array( $key, array_keys(Flows::get_data()), true ) )) {
+				$mismatch_key = $key;
+				$value = false;
+			}
+			else {
+				$mismatch_key = $this->check_key_in_nested_array( $param, Flows::get_data()[$key] );
+				if ($mismatch_key) {
+					$value = false;
+				}
+			}
+			if ( $value === false)  {
 				return new \WP_Error(
 					'wrong_param_provided',
-					"Wrong Parameter Provided : $key",
+					"Wrong Parameter Provided : $mismatch_key",
 					array( 'status' => 404 )
 				);
 			}
 		}
+
 
 		$flow_data = array_replace_recursive( $flow_data, $params );
 
 		// update timestamp once data is updated
 		$flow_data['updatedAt'] = time();
 
-		  // Update Blog Information from Basic Info
+		// Update Blog Information from Basic Info
 		if ( ( ! empty( $flow_data['data']['blogName'] ) ) ) {
 			 \update_option( Options::get_option_name( 'blog_name', false ), $flow_data['data']['blogName'] );
 		}
@@ -168,7 +208,7 @@ class FlowController {
 
 	/*
 	 * Read onboarding flow options from database
-	 */
+	*/
 	public function read_details_from_wp_options() {
 		return \get_option( Options::get_option_name( 'flow' ) );
 	}
@@ -188,19 +228,37 @@ class FlowController {
 	}
 
 	/*
+	 * function to delete a key in array recursively which does not exist in Flows::get_data()
+	 */
+	public function delete_wp_options_data_in_database( $data, &$array ) {
+		foreach ( $array as $key => $value) {
+				if (is_array($value)) {
+					if (in_array($data, array_keys($value), true) ) {
+						unset($array[$key][$data]);
+					}
+					else {
+						$array[$key] = $this->delete_wp_options_data_in_database( $data, $value );
+					}
+				}
+			}
+			return $array;
+	}
+
+	/*
 	 * function to search for key in array recursively with case sensitive exact match
 	 */
-	public function array_search_key( $needle_key, $array ) {
-		foreach ( $array as $key => $value ) {
-			if ( strcmp( $key, $needle_key ) === 0 ) {
-				return true;
-			}
-			if ( is_array( $value ) ) {
-				if ( ( $result = $this->array_search_key( $needle_key, $value ) ) !== false ) {
-					return $result;
+	public function check_key_in_nested_array( $arrayParam, $arrayFlow)  {
+		$mismatch_key = array_diff(array_keys($arrayParam), array_keys($arrayFlow));
+		// print_r($mismatch_key);
+		foreach ( $arrayFlow as $key => $value) {
+			if (is_array($value)) {
+				if ($mismatch_key) {
+					return $mismatch_key;
+				}
+				else {
+					return $this->check_key_in_nested_array( $arrayParam[$key], $value );
 				}
 			}
 		}
-		return false;
 	}
 }
