@@ -1,0 +1,12 @@
+.nfd-onboarding-sidebar-learn-more {
+    &__what-next {
+        &__container {
+            display: flex;
+			align-items: flex-end;
+            justify-content: right;
+			height: 200px;
+            padding-bottom: 0px;
+            padding-right: 0px;
+        }
+    }
+}
