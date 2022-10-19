@@ -12,8 +12,8 @@ const InfoPanel = ( {
 				return (
 					<HeadingWithDescription
 						key={ idx }
-						heading={ headingWithDescription.heading }
-						description={ headingWithDescription.description }
+						heading={ headingWithDescription?.heading }
+						description={ headingWithDescription?.description }
 					/>
 				);
 			} ) }
