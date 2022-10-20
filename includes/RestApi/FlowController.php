@@ -24,6 +24,13 @@ class FlowController {
 	 */
 	protected $rest_base = '/flow';
 
+
+	/**
+	 * @var array
+	 * This is the key if a user tries to add a param externally
+	 */
+	protected $mismatch_key = [];
+
 	/**
 	 * Registers rest routes for this controller class.
 	 *
@@ -77,14 +84,14 @@ class FlowController {
 	}
 
 	public function flatten_array( $array ) {
-		$keys = array();
+		$all_keys = array();
 		foreach ($array as $key => $value) {
-			$keys[] = $key;
+			$all_keys[] = $key;
 			if (is_array($value)) {
-				$keys = array_merge($keys, $this->flatten_array($value));
+				$all_keys = array_merge($all_keys, $this->flatten_array($value));
 			}
 		}
-		return $keys;
+		return $all_keys;
 	}
 
 	/**
@@ -122,34 +129,22 @@ class FlowController {
 		$delete_flow_item = array_diff($this->flatten_array($flow_data), $this->flatten_array(Flows::get_data()));
 
 		if ($delete_flow_item) {
-			foreach ( $delete_flow_item as $key => $val ) {
-				if (in_array($val, array_keys($flow_data), true) ) {
-					unset($flow_data[$val]);
+			foreach ( $delete_flow_item as $key => $value ) {
+				if (in_array($value, array_keys($flow_data), true) ) {
+					unset($flow_data[$value]);
 				}
 				else {
-					$this->delete_wp_options_data_in_database($val, $flow_data);
+					$this->delete_wp_options_data_in_database($value, $flow_data);
 				}
 		}}
 
-
-		foreach ( $params as $key => $param ) {
-			if ( ! (in_array( $key, array_keys(Flows::get_data()), true ) )) {
-				$mismatch_key = $key;
-				$value = false;
-			}
-			else {
-				$mismatch_key = $this->check_key_in_nested_array( $param, Flows::get_data()[$key] );
-				if ($mismatch_key) {
-					$value = false;
-				}
-			}
-			if ( $value === false)  {
-				return new \WP_Error(
-					'wrong_param_provided',
-					"Wrong Parameter Provided : $mismatch_key",
-					array( 'status' => 404 )
-				);
-			}
+		$mismatch_key = $this->check_key_in_nested_array($params, Flows::get_data());
+		if ( !empty($mismatch_key) )  {
+			return new \WP_Error(
+				'wrong_param_provided',
+				"Wrong Parameter Provided : $mismatch_key",
+				array( 'status' => 404 )
+			);
 		}
 
 
@@ -230,35 +225,34 @@ class FlowController {
 	/*
 	 * function to delete a key in array recursively which does not exist in Flows::get_data()
 	 */
-	public function delete_wp_options_data_in_database( $data, &$array ) {
-		foreach ( $array as $key => $value) {
+	public function delete_wp_options_data_in_database( $data, &$arrFlow ) {
+		foreach ( $arrFlow as $key => $value) {
 				if (is_array($value)) {
 					if (in_array($data, array_keys($value), true) ) {
-						unset($array[$key][$data]);
+						unset($arrFlow[$key][$data]);
 					}
 					else {
-						$array[$key] = $this->delete_wp_options_data_in_database( $data, $value );
+						$arrFlow[$key] = $this->delete_wp_options_data_in_database( $data, $value );
 					}
 				}
 			}
-			return $array;
+			return $arrFlow;
 	}
 
 	/*
 	 * function to search for key in array recursively with case sensitive exact match
 	 */
-	public function check_key_in_nested_array( $arrayParam, $arrayFlow)  {
-		$mismatch_key = array_diff(array_keys($arrayParam), array_keys($arrayFlow));
-		// print_r($mismatch_key);
-		foreach ( $arrayFlow as $key => $value) {
-			if (is_array($value)) {
-				if ($mismatch_key) {
-					return $mismatch_key;
-				}
-				else {
-					return $this->check_key_in_nested_array( $arrayParam[$key], $value );
+	public function check_key_in_nested_array( $arrParam, $arrFlow ) {
+		foreach ( $arrParam as $key => $value ) {
+			if(!array_key_exists($key, $arrFlow)) {
+				$this->mismatch_key[] = $key;
+			}
+			elseif ( is_array( $value ) && !empty($value) ) {
+				if($this->check_key_in_nested_array($value, $arrFlow[$key])) {
+					$this->mismatch_key[] = $key;
 				}
 			}
 		}
+		return $this->mismatch_key[0];
 	}
 }
