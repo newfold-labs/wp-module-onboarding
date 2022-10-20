@@ -42,9 +42,11 @@ export async function initializeNFDOnboarding( id, runtime ) {
 
 	const DOM_TARGET = document.getElementById( id );
 	dispatch( nfdOnboardingStore ).setRuntime( runtime );
-	dispatch( nfdOnboardingStore ).updateThemeStatus(
-		runtime.previewSettings.preRequisites?.themes[ DESIGN_STEPS_THEME ]
-	);
+	if ( runtime.previewSettings.preRequisites?.themes ) {
+		dispatch( nfdOnboardingStore ).updateThemeStatus(
+			runtime.previewSettings.preRequisites?.themes[ DESIGN_STEPS_THEME ]
+		);
+	}
 	dispatch( nfdOnboardingStore ).updatePluginsStatus(
 		runtime.previewSettings.preRequisites?.plugins
 	);
