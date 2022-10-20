@@ -37,13 +37,13 @@
 @import "../components/Sidebar/components/LearnMore/Skeleton/stylesheet";
 
 // CSS for Pages
-@import "../pages/Steps/BasicInfo/stylesheet.scss";
-@import "../pages/Steps/TopPriority/stylesheet.scss";
-@import "../pages/Steps/DesignHomepageMenu/stylesheet.scss";
-@import "../pages/Steps/GetStarted/Welcome/stylesheet.scss";
-@import "../pages/Steps/GetStarted/SiteTypeSetup/PrimarySite/stylesheet.scss";
-@import "../pages/Steps/GetStarted/SiteTypeSetup/SecondarySite/stylesheet.scss";
-@import "../pages/Steps/DesignThemeStyles/stylesheet.scss";
+@import "../pages/Steps/BasicInfo/stylesheet";
+@import "../pages/Steps/TopPriority/stylesheet";
+@import "../pages/Steps/DesignHomepageMenu/stylesheet";
+@import "../pages/Steps/GetStarted/Welcome/stylesheet";
+@import "../pages/Steps/GetStarted/SiteTypeSetup/PrimarySite/stylesheet";
+@import "../pages/Steps/GetStarted/SiteTypeSetup/SecondarySite/stylesheet";
+@import "../pages/Steps/DesignThemeStyles/stylesheet";
 
 .nfd-onboarding-container {
 	display: flex;
