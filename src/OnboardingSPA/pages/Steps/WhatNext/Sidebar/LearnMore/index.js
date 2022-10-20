@@ -48,6 +48,7 @@ const LearnMore = () => {
 			<IllustrationPanel
 				cssIcon={ content.illustration.icon }
 				baseClassName={ 'nfd-onboarding-sidebar-learn-more__what-next' }
+				backgroundPosition = { 'right bottom' }
 			/>
 			<InfoPanel
 				headingWithDescriptions={
