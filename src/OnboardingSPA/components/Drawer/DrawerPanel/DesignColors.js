@@ -147,16 +147,10 @@ const DesignColors = () => {
 		}
 	}
 
-	const colorPalettesMemo = React.useMemo( () => {
-		return getThemeColors().then((res) => {
-			setColorPalettes(res?.body);
-			return res?.body
-		});
-	}, []); 
-
 	const getColorStylesAndPatterns = async () => {
+		const colorPalettes = await getThemeColors();
 		const globalStyles = await getGlobalStyles();
-		
+		setColorPalettes(colorPalettes?.body);
 		let selectedGlobalStyle;
 		if (currentData?.data?.theme?.variation) {
 			selectedGlobalStyle = globalStyles.body.filter(
@@ -224,29 +218,19 @@ const DesignColors = () => {
 			setColorPickerCalledBy('');
 	}
 
-	async function getColorData() {
-		await colorPalettesMemo.then((res) => {
-			return res;
-		});
-	}
-
 	function buildPalettes () {
-		let colorPalettesCopy = colorPalettes
 		let paletteRenderedList = [];
-		for (const colorStyle in colorPalettesCopy) {
-			if (!colorPalettesCopy[colorStyle]?.tertiary) {
-				colorPalettesCopy = getColorData();
-			}
+		for (const colorStyle in colorPalettes) {
 			paletteRenderedList.push(
-				<div key={colorStyle} className={`color-palette ${colorStyle == selectedColors?.slug ? 'color-palette-selected' : ''} `}
+				<div className={`color-palette ${colorStyle == selectedColors?.slug ? 'color-palette-selected' : ''} `}
 					onClick={(e) => handleClick(colorStyle)}>
 					<div className='color-palette__colors'>
 						<div className='color-palette__colors--tertiary'
-							style={{ backgroundColor: `${colorPalettesCopy[colorStyle]?.tertiary}` }}/>
+							style={{ backgroundColor: `${colorPalettes[colorStyle].tertiary}` }}/>
 						<div className='color-palette__colors--secondary'
-							style={{ backgroundColor: `${colorPalettesCopy[colorStyle]?.secondary}` }}/>
+							style={{ backgroundColor: `${colorPalettes[colorStyle].secondary}` }}/>
 						<div className='color-palette__colors--primary'
-							style={{ backgroundColor: `${colorPalettesCopy[colorStyle]?.primary}` }} />
+							style={{ backgroundColor: `${colorPalettes[colorStyle].primary}` }} />
 					</div>
 					<div className='color-palette__name'>
 						{colorStyle?.charAt(0).toUpperCase() + colorStyle?.slice(1) }
