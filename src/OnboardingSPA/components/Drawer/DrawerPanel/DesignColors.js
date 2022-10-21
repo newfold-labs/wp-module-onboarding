@@ -147,12 +147,6 @@ const DesignColors = () => {
 		}
 	}
 
-	const colorPalettesMemo = React.useMemo( () => {
-		return getThemeColors().then((res) => {
-			return res?.body
-		});
-	}, []); 
-
 	const getColorStylesAndPatterns = async () => {
 		const colorPalettes = await getThemeColors();
 		const globalStyles = await getGlobalStyles();
@@ -224,10 +218,30 @@ const DesignColors = () => {
 			setColorPickerCalledBy('');
 	}
 
-	async function getColorData() {
-		await colorPalettesMemo.then((res) => {
-			return res;
-		});
+	async function resetColors() {
+		const globalStyles = await getGlobalStyles();
+		let selectedGlobalStyle;
+		if (currentData?.data?.theme?.variation) {
+			selectedGlobalStyle = globalStyles.body.filter(
+				(globalStyle) =>
+					globalStyle.title === currentData.data.theme.variation
+			)[0];
+		} else {
+			selectedGlobalStyle = globalStyles.body[0];
+		}
+		setGlobalStyles(selectedGlobalStyle);
+		updatePreviewSettings(
+			useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
+		);
+		selectedColors.slug = '';
+		selectedColors.name = '';
+		for (let colorVal in selectedColors?.color)
+			selectedColors.color[colorVal].color = '';
+		setCustomColors(stateToLocal(selectedColors));
+		currentData.data.palette = selectedColors;
+
+		setSelectedColors(selectedColors)
+		setCurrentOnboardingData(currentData);
 	}
 
 	function buildPalettes () {
@@ -319,6 +333,11 @@ const DesignColors = () => {
 	return (
 		<div className='theme-colors--drawer'>
 			<h2>{__('Color Palettes', 'wp-module-onboarding')}</h2>
+			{/* {selectedColors?.slug && 
+				<div className='theme-colors--drawer--reset' onClick={resetColors}>
+					<div>Reset Button</div>
+				</div>
+			} */}
 			{ colorPalettes && buildPalettes() }
 			{ colorPalettes && buildCustomPalette() }
 		</div>
