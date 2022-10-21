@@ -1,5 +1,4 @@
 import { __ } from '@wordpress/i18n';
-import { FlexItem } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 
@@ -57,6 +56,7 @@ const DesignTypography = () => {
 		}
 		let stylesCustom = selectedGlobalStyle?.settings?.styles[0]?.css;
 		if (stylesCustom) {
+			// Loads in all CSS variables related to fontFamily
 			const regex = /--wp--preset--font-family.*;/;
 			drawerFontOptions.current.setAttribute('style', stylesCustom.match(regex));
 		}
@@ -69,12 +69,14 @@ const DesignTypography = () => {
 	
 	const handleClick = async (fontStyle, selectedGlobalStyle = globalStyles, fontPalettesCopy = fontPalettes) => {
 		setSelectedFont(fontStyle);
+		// Changes the Global Styles to Recompute css properties
 		let globalStylesCopy = selectedGlobalStyle;
 		globalStylesCopy.styles.typography.fontFamily = fontPalettesCopy[fontStyle]?.styles?.typography?.fontFamily;
 		globalStylesCopy.styles.blocks['core/heading'].typography.fontFamily = 
 			fontPalettesCopy[fontStyle]?.styles.blocks['core/heading'].typography.fontFamily;
-		
 		setGlobalStyles(globalStylesCopy);
+
+		// Saves the data to the Store
 		currentData.data.typography.slug = fontStyle;
 		currentData.data.typography.data = fontPalettesCopy[fontStyle];
 		setCurrentOnboardingData(currentData);
