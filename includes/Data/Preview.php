@@ -11,16 +11,23 @@ final class Preview {
 	}
 
 	private static function pre_requisites() {
-		 return array(
-			 'ecommerce' => array(
-				 'themes'  => array(
-					 'nfd_slug_yith_wonder' => self::boolean_to_status( ThemeInstaller::is_theme_active( 'yith-wonder' ) ),
-				 ),
-				 'plugins' => array(
-					 'woocommerce' => self::boolean_to_status( PluginInstaller::exists( 'woocommerce', true ) ),
-				 ),
-			 ),
-		 );
+		$theme_map = Themes::get();
+		return array(
+			'wp-setup'  => array(
+				'themes'  => array(
+					'nfd_slug_yith_wonder' => self::boolean_to_status( ThemeInstaller::is_theme_active( $theme_map['nfd_slugs']['nfd_slug_yith_wonder']['stylesheet'] ) ),
+				),
+				'plugins' => array(),
+			),
+			'ecommerce' => array(
+				'themes'  => array(
+					'nfd_slug_yith_wonder' => self::boolean_to_status( ThemeInstaller::is_theme_active( $theme_map['nfd_slugs']['nfd_slug_yith_wonder']['stylesheet'] ) ),
+				),
+				'plugins' => array(
+					'woocommerce' => self::boolean_to_status( PluginInstaller::exists( 'woocommerce', true ) ),
+				),
+			),
+		);
 	}
 
 	public static function get_pre_requisites() {
