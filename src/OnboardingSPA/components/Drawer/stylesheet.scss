@@ -329,6 +329,23 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 .theme-fonts--drawer {
     padding: 0 4px;
     border: none !important;
+
+    &--reset {
+        width: 40%;
+        height: 30px;
+        display: flex;
+        color: black;
+        cursor: pointer;
+        margin-left: 4px;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+
+        &:hover {
+            background-color: var(--nfd-onboarding-drawer-icon-fill);
+        }
+    }
 }
 
 .font-palette {

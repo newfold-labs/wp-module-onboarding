@@ -85,6 +85,30 @@ const DesignTypography = () => {
 		doRerender(1);
 	};
 
+
+	async function resetFonts() {
+		setSelectedFont('');
+		const globalStyles = await getGlobalStyles();
+		let selectedGlobalStyle;
+		if (currentData?.data?.theme?.variation) {
+			selectedGlobalStyle = globalStyles.body.filter(
+				(globalStyle) =>
+					globalStyle.title === currentData.data.theme.variation
+			)[0];
+		} else {
+			selectedGlobalStyle = globalStyles.body[0];
+		}
+		setGlobalStyles(selectedGlobalStyle);
+		updatePreviewSettings(
+			useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
+		);
+
+		currentData.data.typography.slug = '';
+		currentData.data.typography.data = [];
+		setCurrentOnboardingData(currentData);
+		doRerender(1);
+	}
+
 	function buildPalettes() {
 		let paletteRenderedList = [];
 		for (const fontStyle in fontPalettes) {
@@ -132,6 +156,11 @@ const DesignTypography = () => {
 	return (
 		<div ref={drawerFontOptions} className='theme-fonts--drawer'>
 			<h2>{__('Font Palettes', 'wp-module-onboarding')}</h2>
+			{/* { selectedFont && 
+				<div className='theme-fonts--drawer--reset' onClick={resetFonts}>
+					<div>Reset Button</div>
+				</div>
+			} */}
 			{fontPalettes && buildPalettes()}
 			{fontPalettes && buildCustomPalette()}
 			<div className='custom-font-palette--hidden'>
