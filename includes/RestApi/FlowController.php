@@ -77,6 +77,18 @@ class FlowController {
 				$this->save_details_to_wp_options( $result );
 		}
 
+		$delete_flow_item = array_diff($this->flatten_array($result), $this->flatten_array(Flows::get_data()));
+
+		if ($delete_flow_item) {
+			foreach ( $delete_flow_item as $key => $value ) {
+				if (in_array($value, array_keys($result), true) ) {
+					unset($result[$value]);
+				}
+				else {
+					$this->delete_wp_options_data_in_database($value, $result);
+				}
+		}}
+
 		return new \WP_REST_Response(
 			$result,
 			200
@@ -139,7 +151,7 @@ class FlowController {
 		}}
 
 		$mismatch_key = $this->check_key_in_nested_array($params, Flows::get_data());
-		if ( !empty($mismatch_key) )  {
+		if ( isset($mismatch_key) )  {
 			return new \WP_Error(
 				'wrong_param_provided',
 				"Wrong Parameter Provided : $mismatch_key",
