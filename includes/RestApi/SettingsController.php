@@ -154,6 +154,7 @@ class SettingsController {
 						if( !empty($params['twitter_site'])) {
 							if( ( $twitter_id = $this->validate_twitter_id($params['twitter_site']) ) === false ) {
 								$this->invalid_urls[] = 'twitter_site';
+								unset($params['twitter_site']);
 							} else {
 								$params['twitter_site'] = $twitter_id;
 							}
@@ -174,7 +175,6 @@ class SettingsController {
 						if ( ! empty( $param_value ) && ! \wp_http_validate_url( $param_value ) ) {
 							$this->invalid_urls[] = $param_key;
 							unset($params[$param_key]);
-							continue;
 						}
 						break;
 				}
