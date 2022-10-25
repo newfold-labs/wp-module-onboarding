@@ -126,7 +126,7 @@ const BasicInfoForm = () => {
                     </div>
                 </div>
                 <div className="basic-info-form__right">
-                    <ImageUploader icon={siteLogo} iconSetter={setSiteLogo} />
+                    <ImageUploader icon={siteLogo} iconSetter={setSiteLogo} accept={ content.imageUploader.allowedImageExtensions } />
                     <MiniPreview icon={siteLogo} title={siteTitle} desc={siteDesc} socialData={socialData} />
                 </div>
             </div>

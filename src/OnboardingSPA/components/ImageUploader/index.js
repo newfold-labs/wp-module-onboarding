@@ -8,7 +8,7 @@ import { uploadImage } from '../../utils/api/uploader';
  * Image Uploader
  *
  */
-const ImageUploader = ({ icon, iconSetter }) => {
+const ImageUploader = ({ icon, iconSetter, accept }) => {
 
     const inputRef = useRef(null);
     const [isUploading, setIsUploading] = useState(false);
@@ -87,7 +87,7 @@ const ImageUploader = ({ icon, iconSetter }) => {
                 </button>)}
                 <input
                     className="image-uploader_window-select-btn"
-                    accept="image/*"
+                    accept={accept}
                     type="file"
                     ref={inputRef}
                     onChange={imageChange}
