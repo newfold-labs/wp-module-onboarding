@@ -496,6 +496,7 @@ export const conditionalSteps = {
 		Icon: color,
 		priority: 180,
 		VIEW: VIEW_DESIGN_COLORS,
+		patternId: 'theme-styles',
 	},
 	designTypography: {
 		path: '/wp-setup/step/design/typography',
