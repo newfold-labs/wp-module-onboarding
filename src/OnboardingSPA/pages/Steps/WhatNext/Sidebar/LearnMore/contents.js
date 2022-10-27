@@ -6,7 +6,7 @@ import { moveTo } from '@wordpress/icons';
 const getContents = ( brandName ) => {
 	return {
 		introduction: {
-			heading: __( 'Basic Info', 'wp-module-onboarding' ),
+			heading: __( 'What’s Next', 'wp-module-onboarding' ),
 			subheading: sprintf(
 				/* translators: 1: website 2: website */
 				__(
