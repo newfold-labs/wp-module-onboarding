@@ -60,8 +60,10 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	 */
 	public function get_theme_variations( \WP_REST_Request $request ) {
 
+		$default = $request->get_param('defaultValue');
+
 		// If there exists an old Custom Theme then return that
-		if( false !== \get_option(Options::get_option_name('custom_theme_styles')) )
+		if( !$default && false !== \get_option(Options::get_option_name('custom_theme_styles')) )
 			return array(
 				\get_option(Options::get_option_name('custom_theme_styles'))
 			);
