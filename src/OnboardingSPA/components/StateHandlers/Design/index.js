@@ -13,7 +13,6 @@ import {
 	DESIGN_STEPS_THEME,
 	THEME_INSTALL_WAIT_TIMEOUT,
 } from '../../../../constants';
-import { getPreviewSettings } from '../../../utils/api/settings';
 import { StepErrorState } from '../../ErrorState';
 
 const DesignStateHandler = ( { children } ) => {
@@ -23,8 +22,7 @@ const DesignStateHandler = ( { children } ) => {
 		};
 	}, [] );
 
-	const { updateThemeStatus, updatePreviewSettings } =
-		useDispatch( nfdOnboardingStore );
+	const { updateThemeStatus } = useDispatch( nfdOnboardingStore );
 
 	const checkThemeStatus = async () => {
 		const themeStatus = await getThemeStatus( DESIGN_STEPS_THEME );
@@ -34,21 +32,13 @@ const DesignStateHandler = ( { children } ) => {
 		return themeStatus.body.status;
 	};
 
-	const loadPreviewSettings = async () => {
-		const previewSettings = await getPreviewSettings();
-		if ( previewSettings?.body ) {
-			updatePreviewSettings( previewSettings.body );
-		}
-	};
-
 	const waitForInstall = () => {
 		setTimeout( async () => {
 			const themeStatus = await checkThemeStatus();
 			if ( themeStatus !== THEME_STATUS_ACTIVE ) {
 				return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 			}
-			updateThemeStatus( themeStatus );
-			await loadPreviewSettings();
+			window.location.reload();
 		}, THEME_INSTALL_WAIT_TIMEOUT );
 	};
 
@@ -60,8 +50,7 @@ const DesignStateHandler = ( { children } ) => {
 					waitForInstall();
 					break;
 				case THEME_STATUS_ACTIVE:
-					await loadPreviewSettings();
-					updateThemeStatus( themeStatus );
+					window.location.reload();
 					break;
 				default:
 					updateThemeStatus( themeStatus );

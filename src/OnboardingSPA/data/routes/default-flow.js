@@ -568,6 +568,7 @@ export const conditionalSteps = {
 		Icon: color,
 		priority: 180,
 		VIEW: VIEW_DESIGN_COLORS,
+		patternId: 'theme-styles',
 		sidebars: {
 			LearnMore: {
 				SidebarComponents: [ StepDesignColorsLearnMoreSidebar ],

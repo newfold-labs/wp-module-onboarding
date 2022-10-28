@@ -13,7 +13,6 @@ import {
 	ECOMMERCE_STEPS_PLUGIN,
 	PLUGIN_INSTALL_WAIT_TIMEOUT,
 } from '../../../../constants';
-import { getPreviewSettings } from '../../../utils/api/settings';
 import { StepErrorState } from '../../ErrorState';
 
 const EcommerceStateHandler = ( { children } ) => {
@@ -28,8 +27,7 @@ const EcommerceStateHandler = ( { children } ) => {
 		};
 	}, [] );
 
-	const { updatePluginsStatus, updatePreviewSettings } =
-		useDispatch( nfdOnboardingStore );
+	const { updatePluginsStatus } = useDispatch( nfdOnboardingStore );
 
 	const checkPluginStatus = async () => {
 		const pluginStatus = await getPluginStatus( ECOMMERCE_STEPS_PLUGIN );
@@ -39,26 +37,13 @@ const EcommerceStateHandler = ( { children } ) => {
 		return pluginStatus.body.status;
 	};
 
-	const loadPreviewSettings = async () => {
-		const previewSettings = await getPreviewSettings();
-		if ( previewSettings?.body ) {
-			updatePreviewSettings( previewSettings.body );
-		}
-	};
-
 	const waitForInstall = () => {
 		setTimeout( async () => {
 			const pluginStatus = await checkPluginStatus();
 			if ( pluginStatus !== PLUGIN_STATUS_ACTIVE ) {
-				storedPluginsStatus[ ECOMMERCE_STEPS_PLUGIN ] =
-					PLUGIN_STATUS_NOT_ACTIVE;
-				setWoocommerceStatus( PLUGIN_STATUS_NOT_ACTIVE );
-				return updatePluginsStatus( storedPluginsStatus );
+				return setWoocommerceStatus( PLUGIN_STATUS_NOT_ACTIVE );
 			}
-			storedPluginsStatus[ ECOMMERCE_STEPS_PLUGIN ] = pluginStatus;
-			setWoocommerceStatus( pluginStatus );
-			updatePluginsStatus( storedPluginsStatus );
-			await loadPreviewSettings();
+			window.location.reload();
 		}, PLUGIN_INSTALL_WAIT_TIMEOUT );
 	};
 
@@ -73,11 +58,7 @@ const EcommerceStateHandler = ( { children } ) => {
 					waitForInstall();
 					break;
 				case PLUGIN_STATUS_ACTIVE:
-					await loadPreviewSettings();
-					storedPluginsStatus[ ECOMMERCE_STEPS_PLUGIN ] =
-						pluginStatus;
-					setWoocommerceStatus( pluginStatus );
-					updatePluginsStatus( storedPluginsStatus );
+					window.location.reload();
 					break;
 				default:
 					storedPluginsStatus[ ECOMMERCE_STEPS_PLUGIN ] =

@@ -32,11 +32,3 @@ export const initialize = ( retries = 0 ) => {
 		initialize( retries );
 	} );
 };
-
-export const getPreviewSettings = async () => {
-    return await resolve(
-		apiFetch( {
-			url: onboardingRestURL( 'settings/preview' ),
-		} )
-	);
-}

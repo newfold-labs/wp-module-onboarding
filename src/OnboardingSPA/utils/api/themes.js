@@ -34,4 +34,12 @@ const getThemeStatus = async ( theme ) => {
 	);
 };
 
-export { init, getGlobalStyles, getThemeStatus };
+const getThemeColors = async (theme) => {
+	return await resolve(
+		apiFetch({
+			url: onboardingRestURL( 'themes/colors' ),
+		})
+	);
+};
+
+export { init, getGlobalStyles, getThemeStatus, getThemeColors };
