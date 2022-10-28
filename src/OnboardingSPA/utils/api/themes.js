@@ -24,6 +24,16 @@ const getGlobalStyles = async () => {
 	);
 };
 
+const setGlobalStyles = async ( data ) => {
+	return await resolve(
+		apiFetch({
+			url: onboardingRestURL('themes/variations'),
+			method: 'POST',
+			data
+		}).then()
+	);
+};
+
 const getThemeStatus = async ( theme ) => {
 	return await resolve(
 		apiFetch( {

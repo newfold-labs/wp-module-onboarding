@@ -2,6 +2,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi\Themes;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 /**
  * Class ThemeVariationsController
@@ -43,6 +44,11 @@ class ThemeVariationsController extends \WP_REST_Controller {
 					'callback' => array( $this, 'get_theme_variations' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
+				array(
+					'methods'  => \WP_REST_Server::EDITABLE,
+					'callback' => array($this, 'set_theme_variation'),
+					'permission_callback' => array(Permissions::class, 'rest_is_authorized_admin'),
+				),
 			)
 		);
 	}
@@ -50,9 +56,14 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	/**
 	 * Retrieves the active themes variations.
 	 *
-	 * @return \WP_REST_Response|\WP_Error
+	 * @return \array|\WP_Error
 	 */
 	public function get_theme_variations( \WP_REST_Request $request ) {
+
+		// If there exists an old Custom Theme then return that
+		if( false !== \get_option(Options::get_option_name('custom_theme_styles')) )
+			return \get_option(Options::get_option_name('custom_theme_styles'));
+
 		$active_variation              = \WP_Theme_JSON_Resolver::get_merged_data( 'theme' )->get_raw_data();
 		$active_variation_global_style = array(
             'title'    => 'Default',
@@ -64,6 +75,27 @@ class ThemeVariationsController extends \WP_REST_Controller {
 		return array_merge(
 			array( $active_variation_global_style ),
 			\WP_Theme_JSON_Resolver::get_style_variations(),
+		);
+	}
+
+	/**
+	 * Saves the custom active theme variations.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function set_theme_variation(\WP_REST_Request $request)
+	{
+		// The theme data with the new Colors and Fonts
+		$theme_data = json_decode($request->get_body());
+		
+		if($theme_data){
+			// Save the new Theme style into the db
+			\update_option(Options::get_option_name('custom_theme_styles'), $theme_data);
+		}
+
+		return new \WP_REST_Response(
+			$theme_data,
+			200
 		);
 	}
 
