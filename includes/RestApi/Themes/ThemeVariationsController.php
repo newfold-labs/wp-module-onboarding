@@ -62,7 +62,9 @@ class ThemeVariationsController extends \WP_REST_Controller {
 
 		// If there exists an old Custom Theme then return that
 		if( false !== \get_option(Options::get_option_name('custom_theme_styles')) )
-			return \get_option(Options::get_option_name('custom_theme_styles'));
+			return array(
+				\get_option(Options::get_option_name('custom_theme_styles'))
+			);
 
 		$active_variation              = \WP_Theme_JSON_Resolver::get_merged_data( 'theme' )->get_raw_data();
 		$active_variation_global_style = array(

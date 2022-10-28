@@ -152,7 +152,9 @@ const DesignColors = () => {
 		const globalStyles = await getGlobalStyles();
 		setColorPalettes(colorPalettes?.body);
 		let selectedGlobalStyle;
-		if (currentData?.data?.theme?.variation) {
+		if (storedPreviewSettings?.title)
+			selectedGlobalStyle = storedPreviewSettings;
+		else if (currentData?.data?.theme?.variation) {
 			selectedGlobalStyle = globalStyles.body.filter(
 				(globalStyle) =>
 					globalStyle.title === currentData.data.theme.variation

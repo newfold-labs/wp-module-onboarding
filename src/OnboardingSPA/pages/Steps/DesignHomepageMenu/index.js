@@ -4,9 +4,9 @@ import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
 import { getPatterns } from '../../../utils/api/patterns';
-import { getGlobalStyles } from '../../../utils/api/themes';
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
+import { getGlobalStyles, setGlobalStyles } from '../../../utils/api/themes';
 import {
 	VIEW_DESIGN_HOMEPAGE_MENU,
 	THEME_STATUS_ACTIVE,
@@ -108,7 +108,9 @@ const StepDesignHomepageMenu = () => {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
 		let selectedGlobalStyle;
-		if ( currentData.data.theme.variation ) {
+		if (storedPreviewSettings?.title)
+			selectedGlobalStyle = storedPreviewSettings;
+		else if ( currentData.data.theme.variation ) {
 			selectedGlobalStyle = globalStyles.body.filter(
 				( globalStyle ) =>
 					globalStyle.title === currentData.data.theme.variation
@@ -116,6 +118,7 @@ const StepDesignHomepageMenu = () => {
 		} else {
 			selectedGlobalStyle = globalStyles.body[ 0 ];
 		}
+		setGlobalStyles(selectedGlobalStyle);
 		updatePreviewSettings(
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
