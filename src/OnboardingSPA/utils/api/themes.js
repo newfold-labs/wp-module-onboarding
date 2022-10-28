@@ -52,4 +52,4 @@ const getThemeColors = async (theme) => {
 	);
 };
 
-export { init, getGlobalStyles, getThemeStatus, getThemeColors };
+export { init, getGlobalStyles, setGlobalStyles, getThemeStatus, getThemeColors };
