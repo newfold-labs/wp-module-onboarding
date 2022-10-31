@@ -42,4 +42,12 @@ const getThemeFonts = async () => {
 	);
 };
 
-export { init, getGlobalStyles, getThemeStatus, getThemeFonts };
+const getThemeColors = async (theme) => {
+	return await resolve(
+		apiFetch({
+			url: onboardingRestURL( 'themes/colors' ),
+		})
+	);
+};
+
+export { init, getGlobalStyles, getThemeStatus, getThemeColors, getThemeFonts };

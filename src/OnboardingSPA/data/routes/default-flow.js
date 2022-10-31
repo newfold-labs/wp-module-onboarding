@@ -78,7 +78,11 @@ const StepGetStartedSecondarySetupLearnMoreSidebar = lazy( () =>
 );
 
 const StepTopPriority = lazy( () => import( '../../pages/Steps/TopPriority' ) );
+
 const StepBasicInfo = lazy( () => import( '../../pages/Steps/BasicInfo' ) );
+const StepBasicInfoLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/BasicInfo/Sidebar/LearnMore' )
+);
 
 const StepDesignThemes = lazy( () =>
 	import( '../../pages/Steps/DesignThemes' )
@@ -86,27 +90,60 @@ const StepDesignThemes = lazy( () =>
 const StepDesignThemeStylesMenu = lazy( () =>
 	import( '../../pages/Steps/DesignThemeStyles/Menu' )
 );
+const StepDesignThemeStylesMenuLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/DesignThemeStyles/Menu/Sidebar/LearnMore' )
+);
 const StepDesignThemeStylesPreview = lazy( () =>
 	import( '../../pages/Steps/DesignThemeStyles/Preview' )
+);
+const StepDesignThemeStylesPreviewLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/DesignThemeStyles/Preview/Sidebar/LearnMore' )
 );
 
 const StepDesignColors = lazy( () =>
 	import( '../../pages/Steps/DesignColors' )
 );
+const StepDesignColorsLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/DesignColors/Sidebar/LearnMore' )
+);
+
 const StepDesignTypography = lazy( () =>
 	import( '../../pages/Steps/DesignTypography' )
 );
+const StepDesignTypographyLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/DesignTypography/Sidebar/LearnMore' )
+);
+
 const StepDesignHeaderMenu = lazy( () =>
 	import( '../../pages/Steps/DesignHeaderMenu' )
 );
+const StepDesignHeaderMenuLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/DesignHeaderMenu/Sidebar/LearnMore' )
+);
+
 const StepDesignHomepageMenu = lazy( () =>
 	import( '../../pages/Steps/DesignHomepageMenu' )
 );
+const StepDesignHomepageMenuLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/DesignHomepageMenu/Sidebar/LearnMore' )
+);
+
 const StepSitePages = lazy( () => import( '../../pages/Steps/SitePages' ) );
+const StepSitePagesLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/SitePages/Sidebar/LearnMore' )
+);
+
 const StepSiteFeatures = lazy( () =>
 	import( '../../pages/Steps/SiteFeatures' )
 );
+const StepSiteFeaturesLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/SiteFeatures/Sidebar/LearnMore' )
+);
+
 const StepWhatNext = lazy( () => import( '../../pages/Steps/WhatNext' ) );
+const StepWhatNextLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/WhatNext/Sidebar/LearnMore' )
+);
 
 /**
  * All information pages should be prefixed with `/page`.
@@ -319,6 +356,11 @@ export const steps = [
 		Component: StepBasicInfo,
 		Icon: info,
 		priority: 120,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepBasicInfoLearnMoreSidebar ],
+			},
+		},
 	},
 	{
 		path: '/wp-setup/step/design/themes',
@@ -357,6 +399,13 @@ export const steps = [
 		priority: 160,
 		VIEW: VIEW_DESIGN_THEME_STYLES_MENU,
 		patternId: 'theme-styles',
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [
+					StepDesignThemeStylesMenuLearnMoreSidebar,
+				],
+			},
+		},
 	},
 	{
 		path: '/wp-setup/step/design/theme-styles/preview',
@@ -378,6 +427,13 @@ export const steps = [
 		priority: 170,
 		VIEW: VIEW_DESIGN_THEME_STYLES_PREVIEW,
 		patternId: 'theme-styles',
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [
+					StepDesignThemeStylesPreviewLearnMoreSidebar,
+				],
+			},
+		},
 	},
 	{
 		path: '/wp-setup/step/design/header-menu',
@@ -398,6 +454,11 @@ export const steps = [
 		Icon: header,
 		priority: 220,
 		VIEW: VIEW_DESIGN_HEADER_MENU,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepDesignHeaderMenuLearnMoreSidebar ],
+			},
+		},
 	},
 	{
 		path: '/wp-setup/step/design/homepage-menu',
@@ -419,6 +480,11 @@ export const steps = [
 		priority: 240,
 		VIEW: VIEW_DESIGN_HOMEPAGE_MENU,
 		patternId: 'homepage-styles',
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepDesignHomepageMenuLearnMoreSidebar ],
+			},
+		},
 	},
 	{
 		path: '/wp-setup/step/site-pages',
@@ -435,6 +501,11 @@ export const steps = [
 		Component: StepSitePages,
 		Icon: copy,
 		priority: 260,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepSitePagesLearnMoreSidebar ],
+			},
+		},
 	},
 	{
 		path: '/wp-setup/step/site-features',
@@ -451,6 +522,11 @@ export const steps = [
 		Component: StepSiteFeatures,
 		Icon: plugins,
 		priority: 280,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepSiteFeaturesLearnMoreSidebar ],
+			},
+		},
 	},
 	{
 		path: '/wp-setup/step/what-next',
@@ -467,6 +543,11 @@ export const steps = [
 		Component: StepWhatNext,
 		Icon: moveTo,
 		priority: 300,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepWhatNextLearnMoreSidebar ],
+			},
+		},
 	},
 ];
 
@@ -487,6 +568,12 @@ export const conditionalSteps = {
 		Icon: color,
 		priority: 180,
 		VIEW: VIEW_DESIGN_COLORS,
+		patternId: 'theme-styles',
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepDesignColorsLearnMoreSidebar ],
+			},
+		},
 	},
 	designTypography: {
 		path: '/wp-setup/step/design/typography',
@@ -505,6 +592,11 @@ export const conditionalSteps = {
 		priority: 200,
 		VIEW: VIEW_DESIGN_TYPOGRAPHY,
 		patternId: 'theme-styles',
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepDesignTypographyLearnMoreSidebar ],
+			},
+		},
 	},
 };
 

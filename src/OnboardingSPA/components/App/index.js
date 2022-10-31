@@ -8,8 +8,9 @@ import { setFlow } from '../../utils/api/flow';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { isEmpty, updateWPSettings } from '../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../store';
+import { conditionalSteps } from '../../data/routes/';
 
-import { kebabCase } from 'lodash';
+import { kebabCase, orderBy, filter } from 'lodash';
 import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { SlotFillProvider } from '@wordpress/components';
@@ -33,7 +34,10 @@ const App = () => {
 		newfoldBrand,
 		onboardingFlow,
 		currentData,
-		firstStep
+		firstStep,
+		routes,
+		designSteps,
+		allSteps,
 	} = useSelect((select) => {
 		return {
 			isDrawerOpen: select(nfdOnboardingStore).isDrawerOpened(),
@@ -41,13 +45,22 @@ const App = () => {
 			onboardingFlow: select(nfdOnboardingStore).getOnboardingFlow(),
 			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
 			firstStep: select(nfdOnboardingStore).getFirstStep(),
+			routes: select(nfdOnboardingStore).getRoutes(),
+			allSteps: select(nfdOnboardingStore).getAllSteps(),
+			designSteps: select(nfdOnboardingStore).getDesignSteps(),
 		};
 	}, []);
 
 	const [isRequestPlaced, setIsRequestPlaced] = useState(false);
 	const [didVisitBasicInfo, setDidVisitBasicInfo] = useState(false);
 	const [didVisitEcommerce, setDidVisitEcommerce] = useState(false);
-	const { setActiveStep, setActiveFlow, setCurrentOnboardingData } = useDispatch(nfdOnboardingStore);
+	const { setActiveStep, 
+			setActiveFlow, 
+			updateRoutes,
+			updateDesignSteps,
+			updateAllSteps,
+			setCurrentOnboardingData,
+		} = useDispatch(nfdOnboardingStore);
 
 	async function syncSocialSettings() {
 		const initialData = await getSettings();
@@ -130,12 +143,84 @@ const App = () => {
 		}
 	}
 
+	const addColorAndTypographyRoutes = () => {
+		const updates = removeColorAndTypographyRoutes();
+		const steps = [
+			conditionalSteps.designColors,
+			conditionalSteps.designTypography,
+		];
+		return {
+			routes: orderBy(
+				updates.routes.concat(steps),
+				['priority'],
+				['asc']
+			),
+			allSteps: orderBy(
+				updates.allSteps.concat(steps),
+				['priority'],
+				['asc']
+			),
+			designSteps: orderBy(
+				updates.designSteps.concat(steps),
+				['priority'],
+				['asc']
+			),
+		};
+	};
+
+	const removeColorAndTypographyRoutes = () => {
+		return {
+			routes: filter(
+				routes,
+				(route) =>
+					!route.path.includes(
+						conditionalSteps.designColors.path
+					) &&
+					!route.path.includes(
+						conditionalSteps.designTypography.path
+					)
+			),
+			allSteps: filter(
+				allSteps,
+				(allStep) =>
+					!allStep.path.includes(
+						conditionalSteps.designColors.path
+					) &&
+					!allStep.path.includes(
+						conditionalSteps.designTypography.path
+					)
+			),
+			designSteps: filter(
+				designSteps,
+				(designStep) =>
+					!designStep.path.includes(
+						conditionalSteps.designColors.path
+					) &&
+					!designStep.path.includes(
+						conditionalSteps.designTypography.path
+					)
+			),
+		};
+	};
+
+	function handleColorsAndTypographyRoutes() {
+		if (location?.pathname.includes('colors') || location?.pathname.includes('typography')){
+			let updates;
+			updates = currentData?.data?.customDesign ? addColorAndTypographyRoutes() : removeColorAndTypographyRoutes();
+			
+			updateRoutes(updates.routes);
+			updateDesignSteps(updates.designSteps);
+			updateAllSteps(updates.allSteps);
+		}
+	}
+
 	useEffect(() => {
 		document.body.classList.add(`nfd-brand-${newfoldBrand}`);
 	}, [newfoldBrand]);
 
 	useEffect( () => {
 		syncStoreToDB();
+		handleColorsAndTypographyRoutes();
 		if ( location.pathname.includes( '/step' ) ) {
 			setActiveFlow( onboardingFlow );
 			setActiveStep( location.pathname );

@@ -1,0 +1,12 @@
+.nfd-onboarding-sidebar-learn-more {
+    &__what-next {
+        &__container {
+            height: 232px;
+
+            &.is-opened {
+                padding: 0px;
+            }
+
+        }
+    }
+}

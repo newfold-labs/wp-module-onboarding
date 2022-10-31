@@ -13,9 +13,20 @@ import {
 const StepAddress = lazy( () =>
 	import( '../../pages/Steps/Ecommerce/StepAddress' )
 );
+const StepAddressLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/Ecommerce/StepAddress/Sidebar/LearnMore/' )
+);
+
 const StepTax = lazy( () => import( '../../pages/Steps/Ecommerce/StepTax' ) );
+const StepTaxLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/Ecommerce/StepTax/Sidebar/LearnMore/' )
+);
+
 const StepProducts = lazy( () =>
 	import( '../../pages/Steps/Ecommerce/StepProducts' )
+);
+const StepProductsLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/Ecommerce/StepProducts/Sidebar/LearnMore' )
 );
 
 import { VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../constants';
@@ -37,6 +48,11 @@ export const ecommerceSteps = [
 		Icon: store,
 		priority: 85,
 		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepAddressLearnMoreSidebar ],
+			},
+		},
 	},
 	{
 		path: '/ecommerce/step/tax',
@@ -54,6 +70,11 @@ export const ecommerceSteps = [
 		Icon: institution,
 		priority: 90,
 		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepTaxLearnMoreSidebar ],
+			},
+		},
 	},
 	{
 		path: '/ecommerce/step/products',
@@ -71,6 +92,11 @@ export const ecommerceSteps = [
 		Icon: box,
 		priority: 95,
 		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepProductsLearnMoreSidebar ],
+			},
+		},
 	},
 ];
 
