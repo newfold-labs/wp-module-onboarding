@@ -16,7 +16,7 @@ final class Options {
 	protected static $options = array(
 		'redirect'                      => 'redirect',
 		'redirect_param'                => 'redirect_param',
-		'coming_soon'                   => 'mm_coming_soon',
+		'coming_soon'                   => 'nfd_coming_soon',
 		'brand'                         => 'mm_brand',
 		'close_comments_for_old_posts'  => 'close_comments_for_old_posts',
 		'close_comments_days_old'       => 'close_comments_days_old',
