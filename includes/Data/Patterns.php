@@ -21,6 +21,12 @@ final class Patterns
                     'homepage-3',
                     'site-footer',
                ),
+               'site-pages'     => array(
+                    'company-page',
+                    'contact-us',
+                    'testimonials-page',
+                    'blog-page'
+               ),
           ),
      );
 
