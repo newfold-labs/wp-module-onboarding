@@ -148,19 +148,15 @@ const StepDesignThemeStylesMenu = () => {
 					/>
 					<div className="theme-styles-menu__list">
 						{!globalStyles && buildDummyPreviews().slice(0, MAX_PREVIEWS_PER_ROW)}
-					</div>
-					<div className="theme-styles-menu__list">
 						{ globalStyles &&
 							buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW )}
 					</div>
 					<div className="theme-styles-menu__list">
-						{!globalStyles && 
+						{!globalStyles &&
 							buildDummyPreviews().slice(
 								MAX_PREVIEWS_PER_ROW,
 								THEME_VARIATIONS
 							)}
-					</div>
-					<div className="theme-styles-menu__list">
 						{ globalStyles &&
 							buildPreviews().slice(
 								MAX_PREVIEWS_PER_ROW,

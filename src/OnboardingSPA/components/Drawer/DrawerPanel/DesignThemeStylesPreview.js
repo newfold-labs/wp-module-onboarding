@@ -13,6 +13,8 @@ import {
 
 const DesignThemeStylesPreview = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;
+	const THEME_VARIATIONS = window.nfdOnboarding.currentThemeVariations;
+
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState();
@@ -91,6 +93,25 @@ const DesignThemeStylesPreview = () => {
 		setCurrentOnboardingData( currentData );
 	};
 
+	const buildDummyPreviews = () => {
+		let dummyPreview = [];
+
+		for (let i = 0; i < THEME_VARIATIONS; i++) {
+			dummyPreview.push(
+				<LivePreviewSelectableCard
+					key={i}
+					className={'theme-styles-preview--drawer__list__item'}
+					blockGrammer={''}
+					viewportWidth={900}
+					styling={'custom'}
+					skeletonLoadingTime={3000}
+				/>
+			);
+		}
+
+		return dummyPreview;
+	};
+
 	const buildPreviews = () => {
 		return globalStyles?.map( ( globalStyle, idx ) => {
 			return (
@@ -112,17 +133,26 @@ const DesignThemeStylesPreview = () => {
 	return (
 		<div className="theme-styles-preview--drawer">
 			<div className="theme-styles-preview--drawer__list">
-				{ globalStyles
-					? buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW )
-					: '' }
+				{!globalStyles
+					&& buildDummyPreviews().slice(0, MAX_PREVIEWS_PER_ROW)}
+			</div>
+			<div className="theme-styles-preview--drawer__list">
+				{!globalStyles
+					&& buildDummyPreviews().slice(
+						MAX_PREVIEWS_PER_ROW,
+						THEME_VARIATIONS
+					)}
 			</div>
 			<div className="theme-styles-preview--drawer__list">
 				{ globalStyles
-					? buildPreviews().slice(
+					&& buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW ) }
+			</div>
+			<div className="theme-styles-preview--drawer__list">
+				{ globalStyles
+					&& buildPreviews().slice(
 							MAX_PREVIEWS_PER_ROW,
 							globalStyles.length
-					  )
-					: '' }
+					  ) }
 			</div>
 		</div>
 	);

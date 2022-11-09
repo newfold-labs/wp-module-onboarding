@@ -220,6 +220,13 @@ const StepDesignThemeStylesPreview = () => {
 					</div>
 				</div>
 				<div className="theme-styles-preview__live-preview-container">
+					{ !pattern && (
+						<LivePreview
+							blockGrammer={''}
+							styling={'custom'}
+							viewportWidth={1300}
+						/>
+					)}
 					{ pattern && (
 						<LivePreview
 							blockGrammer={ pattern }
