@@ -104,7 +104,7 @@ const DesignThemeStylesPreview = () => {
 					blockGrammer={''}
 					viewportWidth={900}
 					styling={'custom'}
-					skeletonLoadingTime={3000}
+					skeletonLoadingTime={4000}
 				/>
 			);
 		}
@@ -135,6 +135,8 @@ const DesignThemeStylesPreview = () => {
 			<div className="theme-styles-preview--drawer__list">
 				{!globalStyles
 					&& buildDummyPreviews().slice(0, MAX_PREVIEWS_PER_ROW)}
+				{ globalStyles
+					&& buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW ) }
 			</div>
 			<div className="theme-styles-preview--drawer__list">
 				{!globalStyles
@@ -142,12 +144,6 @@ const DesignThemeStylesPreview = () => {
 						MAX_PREVIEWS_PER_ROW,
 						THEME_VARIATIONS
 					)}
-			</div>
-			<div className="theme-styles-preview--drawer__list">
-				{ globalStyles
-					&& buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW ) }
-			</div>
-			<div className="theme-styles-preview--drawer__list">
 				{ globalStyles
 					&& buildPreviews().slice(
 							MAX_PREVIEWS_PER_ROW,

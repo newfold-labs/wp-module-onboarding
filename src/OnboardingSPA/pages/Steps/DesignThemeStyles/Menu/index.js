@@ -113,6 +113,7 @@ const StepDesignThemeStylesMenu = () => {
 					blockGrammer={''}
 					viewportWidth={900}
 					styling={'custom'}
+					skeletonLoadingTime={3000}
 				/>
 			);
 		}
