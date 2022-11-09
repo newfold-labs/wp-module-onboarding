@@ -19,6 +19,7 @@ import { DesignStateHandler } from '../../../../components/StateHandlers';
 
 const StepDesignThemeStylesMenu = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;
+	const THEME_VARIATIONS = window.nfdOnboarding.currentThemeVariations;
 
 	const location = useLocation();
 	const [ isLoaded, setIsLoaded ] = useState( false );
@@ -101,6 +102,24 @@ const StepDesignThemeStylesMenu = () => {
 		navigate( nextStep.path );
 	};
 
+	const buildDummyPreviews = () => {
+		let dummyPreview = [];
+
+		for (let i = 0; i < THEME_VARIATIONS; i++) {
+			dummyPreview.push(
+				<LivePreviewSelectableCard
+					key={i}
+					className={'theme-styles-menu__list__item'}
+					blockGrammer={''}
+					viewportWidth={900}
+					styling={'custom'}
+				/>
+			);
+		}
+
+		return dummyPreview;
+	};
+
 	const buildPreviews = () => {
 		return globalStyles?.map( ( globalStyle, idx ) => {
 			return (
@@ -118,7 +137,7 @@ const StepDesignThemeStylesMenu = () => {
 			);
 		} );
 	};
-
+	
 	return (
 		<DesignStateHandler>
 			<CommonLayout>
@@ -128,15 +147,25 @@ const StepDesignThemeStylesMenu = () => {
 						subtitle={ currentStep?.subheading }
 					/>
 					<div className="theme-styles-menu__list">
+						{!globalStyles && buildDummyPreviews().slice(0, MAX_PREVIEWS_PER_ROW)}
+					</div>
+					<div className="theme-styles-menu__list">
 						{ globalStyles &&
-							buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW ) }
+							buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW )}
+					</div>
+					<div className="theme-styles-menu__list">
+						{!globalStyles && 
+							buildDummyPreviews().slice(
+								MAX_PREVIEWS_PER_ROW,
+								THEME_VARIATIONS
+							)}
 					</div>
 					<div className="theme-styles-menu__list">
 						{ globalStyles &&
 							buildPreviews().slice(
 								MAX_PREVIEWS_PER_ROW,
 								globalStyles.length
-							) }
+							)}
 					</div>
 				</div>
 			</CommonLayout>
