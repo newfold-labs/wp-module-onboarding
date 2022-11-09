@@ -59,6 +59,14 @@ class ThemeFontsController extends \WP_REST_Controller
      public function get_theme_fonts()
      {
           $theme_font_palettes = Fonts::get_fonts_from_theme();
+
+          if(!$theme_font_palettes)
+               return new \WP_Error(
+                    'Theme Fonts not found',
+                    'No WordPress Fonts are available for this theme.',
+                    array('status' => 404)
+               );
+
           return $theme_font_palettes;
      }
 }

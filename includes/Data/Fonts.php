@@ -214,16 +214,6 @@ final class Fonts
      public static function get_fonts_from_theme()
      {
           $active_theme = (\wp_get_theme())->get('TextDomain');
-          $pattern_slugs = self::$theme_fonts[$active_theme];
-
-          if (!isset($pattern_slugs)) {
-               return new \WP_Error(
-                    'Theme Fonts not found',
-                    'No WordPress Fonts are available for this theme.',
-                    array('status' => 404)
-               );
-          }
-
-          return $pattern_slugs;
+          return isset(self::$theme_fonts[$active_theme]) ? self::$theme_fonts[$active_theme] : false;
      }
 }
