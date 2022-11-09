@@ -255,13 +255,23 @@ class FlowController {
 	 * function to search for key in array recursively with case sensitive exact match
 	 */
 	public function check_key_in_nested_array( $arrParam, $arrFlow ) {
-		foreach ( $arrParam as $key => $value ) {
-			if(!array_key_exists($key, $arrFlow)) {
-				$this->mismatch_key[] = $key;
+		foreach($arrParam as $key => $value){
+			if(!array_key_exists($key, $arrFlow))
+			{
+				if (count(array_filter(array_keys($arrParam), 'is_string')) === 0) {
+					$this->mismatch_key[] = implode(", ", array_keys($value));
+				}
+				$this->mismatch_key[]  = $key;
+				break;
 			}
-			elseif ( is_array( $value ) && !empty($value) ) {
-				if($this->check_key_in_nested_array($value, $arrFlow[$key])) {
-					$this->mismatch_key[] = $key;
+			elseif ( is_array( $value ) && !empty($value) )
+			{
+				$new_diff = $this->check_key_in_nested_array($value, $arrFlow[$key]);
+				if($new_diff)
+				{
+					$difference[$key] = $value;
+					$this->mismatch_key[] = $value;
+					break;
 				}
 			}
 		}
