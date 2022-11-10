@@ -5,7 +5,6 @@ import { useViewportMatch } from '@wordpress/compose';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
-import { LivePreview, LivePreviewSelectableCard } from '../../../components/LivePreview';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import { getPatterns } from '../../../utils/api/patterns';
@@ -16,7 +15,7 @@ import {
 	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
 import { DesignStateHandler } from '../../../components/StateHandlers';
-import SelectableCardWithTitleAndDescription from '../../../components/LivePreview/SelectableCardWithTitleAndDescription';
+import { LivePreviewSelectableCardWithInfo } from '../../../components/LivePreview';
 
 const StepSitePages = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -26,7 +25,7 @@ const StepSitePages = () => {
 	const location = useLocation();
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ sitePages, setSitePages ] = useState();
-	const [ globalStyle, setGlobalStyle ] = useState();
+	const [ checkedPages, setCheckedPages ] = useState( [] );
 
 	const {
 		currentStep,
@@ -61,7 +60,7 @@ const StepSitePages = () => {
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 	}, [] );
 
-	const getStylesAndPatterns = async () => {
+	const getStyleAndPages = async () => {
 		const sitePagesResponse = await getPatterns(
 			currentStep.patternId,
 		);
@@ -85,35 +84,35 @@ const StepSitePages = () => {
 		updatePreviewSettings(
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
-		if ( selectedGlobalStyle ) {
-			setGlobalStyle( selectedGlobalStyle );
-		}
 		setIsLoaded( true );
 	};
 
 	const buildPreviews = () => {
 		return sitePages?.map((sitePage, idx) => {
 			return (
-				<SelectableCardWithTitleAndDescription
+				<LivePreviewSelectableCardWithInfo
 				key={ idx }
 				className={ 'site-pages__list__item' }
 				blockGrammer={ sitePage.content }
 				viewportWidth={ 1200 }
 				styling={ 'custom' }
-				overlay={ true } />
+				overlay={ true } 
+				title={sitePage?.title}
+				selected={sitePage?.selected === true}
+				description={sitePage?.description}/>
 			)
 		})
 	}
 
 	useEffect( () => {
 		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
-			getStylesAndPatterns();
+		getStyleAndPages();
 	}, [ isLoaded, themeStatus ] );
 
 	return (
 		<DesignStateHandler>
 			<CommonLayout>
-				<div className='site-pages'>
+			    <div className='site-pages'>
 					<HeadingWithSubHeading
 					title={currentStep?.heading}
 					subtitle={currentStep?.subheading}

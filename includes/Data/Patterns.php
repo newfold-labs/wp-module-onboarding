@@ -7,25 +7,66 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 final class Patterns
 {
 
+
      protected static $theme_step_patterns = array(
           'yith-wonder' => array(
                'theme-styles' => array(
-                    'site-header-left-logo-navigation-inline',
-                    'homepage-1',
-                    'site-footer',
+                    'site-header-left-logo-navigation-inline'=> array(
+                         'active' => true,
+                    ),
+                    'homepage-1'=> array(
+                         'active' => true,
+                    ),
+                    'site-footer'=> array(
+                         'active' => true,
+                    ),
                ),
                'homepage-styles' => array(
-                    'site-header-left-logo-navigation-inline',
-                    'homepage-1',
-                    'homepage-2',
-                    'homepage-3',
-                    'site-footer',
+                    'site-header-left-logo-navigation-inline' => array(
+                         'active' => true,
+                    ),
+                    'homepage-1'=> array(
+                         'active' => true,
+                    ),
+                    'homepage-2'=> array(
+                         'active' => true,
+                    ),
+                    'homepage-3'=> array(
+                         'active' => true,
+                    ),
+                    'site-footer'=> array(
+                         'active' => true,
+                    ),
                ),
                'site-pages'     => array(
-                    'company-page',
-                    'contact-us',
-                    'testimonials-page',
-                    'blog-page'
+                    'company-page' => array(
+                         'active' => true,
+                         'title' => 'About',
+                         'selected' => true,
+                         'description' => 'A corporate page to explain your Company values
+                         or the history behind your brand'
+                    ),
+                    'contact-us'=> array(
+                         'active' => true,
+                         'selected' => true,
+                         'title'    => 'Contact',
+                         'description' => 'A corporate page to explain your Company values
+                         or the history behind your brand'
+                    ),
+                    'testimonials-page'=> array(
+                                                  'active' => true,
+                                                  'title'    => 'Testimonials',
+                         'selected' => false,
+                         'description' => 'A corporate page to explain your Company values
+                         or the history behind your brand'
+                    ),
+                    'blog-page'=> array(
+                                                  'active' => true,
+                         'selected' => true,
+                         'title'    => 'Blog',
+                         'description' => 'A corporate page to explain your Company values
+                         or the history behind your brand'
+                    ),
                ),
           ),
      );
@@ -75,20 +116,22 @@ final class Patterns
           $block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
           $block_patterns          = array();
           $block_patterns_squashed = '';
-          foreach ($pattern_slugs as $pattern_slug) {
-               $pattern_name = $active_theme . '/' . $pattern_slug;
-               if ($block_patterns_registry->is_registered($pattern_name)) {
-                    $pattern = $block_patterns_registry->get_registered($pattern_name);
-                    if (!$squash) {
-                         $block_patterns[] = array(
-                              'slug'    => $pattern_slug,
-                              'title'   => $pattern['title'],
-                              'content' => self::cleanup_wp_grammar($pattern['content']),
-                              'name'    => $pattern['name'],
-                         );
-                         continue;
+          foreach (array_keys($pattern_slugs) as $pattern_slug) {
+               if ( $pattern_slugs[$pattern_slug]['active'] === true ) {
+                    $pattern_name = $active_theme . '/' . $pattern_slug;
+                    if ($block_patterns_registry->is_registered($pattern_name)) {
+                         $pattern = $block_patterns_registry->get_registered($pattern_name);
+                         if (!$squash) {
+                              $block_patterns[] = array_merge(array(
+                                   'slug'    => $pattern_slug,
+                                   'title'   => $pattern['title'],
+                                   'content' => self::cleanup_wp_grammar($pattern['content']),
+                                   'name'    => $pattern['name'],
+                              ), $pattern_slugs[$pattern_slug]);
+                              continue;
+                         }
+                         $block_patterns_squashed .= self::cleanup_wp_grammar($pattern['content']);
                     }
-                    $block_patterns_squashed .= self::cleanup_wp_grammar($pattern['content']);
                }
           }
 

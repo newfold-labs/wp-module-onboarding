@@ -25,6 +25,18 @@
 	}
 }
 
+@keyframes dropdown {
+    0% {
+        transform: rotateX(-90deg)
+    }
+    70% {
+        transform: rotateX(20deg) 
+    }
+    100% {
+        transform: rotateX(0deg) 
+    }
+}
+
 .is-centered {
 	display: flex;
 	place-content: center;
