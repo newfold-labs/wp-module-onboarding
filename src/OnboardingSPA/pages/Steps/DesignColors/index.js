@@ -84,6 +84,13 @@ const StepDesignColors = () => {
 					</div>
 				</div>
 				<div className="theme-colors-preview__live-preview-container">
+					{!pattern && (
+						<LivePreview
+							blockGrammer={''}
+							styling={'custom'}
+							viewportWidth={1300}
+						/>
+					)}
 					{pattern && (
 						<LivePreview
 							blockGrammer={pattern}

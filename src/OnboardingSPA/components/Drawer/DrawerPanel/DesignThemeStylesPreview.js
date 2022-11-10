@@ -13,7 +13,6 @@ import {
 
 const DesignThemeStylesPreview = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;
-	const THEME_VARIATIONS = window.nfdOnboarding.currentThemeVariations;
 
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
@@ -38,6 +37,10 @@ const DesignThemeStylesPreview = () => {
 		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
 
+	const THEME_VARIATIONS
+		= window.nfdOnboarding.themeStepData[currentStep.patternId].styles
+		* window.nfdOnboarding.themeStepData[currentStep.patternId].patterns;
+		
 	const getStylesAndPatterns = async () => {
 		const patternResponse = await getPatterns(
 			currentStep.patternId,

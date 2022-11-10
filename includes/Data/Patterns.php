@@ -27,7 +27,7 @@ final class Patterns
                'homepage-styles' => array(
                     'site-header-left-logo-navigation-inline' => array(
                          'active',
-                         'selected',
+                         'selected'
                     ),
                     'homepage-1' => array(
                          'active',
@@ -46,7 +46,7 @@ final class Patterns
                     ),
                     'site-footer' => array(
                          'active',
-                         'selected',
+                         'selected'
                     ),
                ),
           ),
@@ -97,7 +97,7 @@ final class Patterns
           $block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
           $block_patterns          = array();
           $block_patterns_squashed = '';
-          foreach ($pattern_slugs as $pattern_slug) {
+          foreach ($pattern_slugs as $pattern_slug=>$i) {
                $pattern_name = $active_theme . '/' . $pattern_slug;
                if ($block_patterns_registry->is_registered($pattern_name)) {
                     $pattern = $block_patterns_registry->get_registered($pattern_name);

@@ -19,7 +19,6 @@ import { DesignStateHandler } from '../../../../components/StateHandlers';
 
 const StepDesignThemeStylesMenu = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;
-	const THEME_VARIATIONS = window.nfdOnboarding.currentThemeVariations;
 
 	const location = useLocation();
 	const [ isLoaded, setIsLoaded ] = useState( false );
@@ -49,6 +48,10 @@ const StepDesignThemeStylesMenu = () => {
 		};
 	}, [] );
 
+	const THEME_VARIATIONS 
+			= window.nfdOnboarding.themeStepData[currentStep.patternId].styles 
+				* window.nfdOnboarding.themeStepData[currentStep.patternId].patterns;
+				
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,

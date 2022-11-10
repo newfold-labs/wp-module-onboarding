@@ -70,6 +70,10 @@ const StepDesignHomepageMenu = () => {
 		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
 
+	const THEME_VARIATIONS
+		= window.nfdOnboarding.themeStepData[currentStep.patternId].styles
+			* window.nfdOnboarding.themeStepData[currentStep.patternId].patterns;
+
 	useEffect( () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );
@@ -156,6 +160,25 @@ const StepDesignHomepageMenu = () => {
 		}
 	}, [ isLoaded, themeStatus ] );
 
+	const buildDummyPreviews = () => {
+		let dummyPreview = [];
+
+		for (let i = 0; i < THEME_VARIATIONS; i++) {
+			dummyPreview.push(
+				<LivePreviewSelectableCard
+					key={i}
+					className={'homepage_preview__list__item'}
+					blockGrammer={''}
+					viewportWidth={900}
+					styling={'custom'}
+					skeletonLoadingTime={4000}
+				/>
+			);
+		}
+
+		return dummyPreview;
+	};
+
 	function buildHomepagePreviews() {
 		return homepagePattern?.map( ( homepage, idx ) => {
 			if ( homepage ) {
@@ -186,6 +209,7 @@ const StepDesignHomepageMenu = () => {
 						subtitle={ currentStep?.subheading }
 					/>
 					<div className="theme-styles-menu__list">
+						{ !globalStyle && buildDummyPreviews() }
 						{ globalStyle && buildHomepagePreviews() }
 					</div>
 				</div>
