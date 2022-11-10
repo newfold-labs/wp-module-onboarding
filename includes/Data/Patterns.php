@@ -10,16 +10,44 @@ final class Patterns
      protected static $theme_step_patterns = array(
           'yith-wonder' => array(
                'theme-styles' => array(
-                    'site-header-left-logo-navigation-inline',
-                    'homepage-1',
-                    'site-footer',
+                    'site-header-left-logo-navigation-inline' => array(
+                         'active',
+                         'selected'
+                    ),
+                    'homepage-1' => array(
+                         'active',
+                         'selected',
+                         'shown'
+                    ),
+                    'site-footer' => array(
+                         'active',
+                         'selected'
+                    ),
                ),
                'homepage-styles' => array(
-                    'site-header-left-logo-navigation-inline',
-                    'homepage-1',
-                    'homepage-2',
-                    'homepage-3',
-                    'site-footer',
+                    'site-header-left-logo-navigation-inline' => array(
+                         'active',
+                         'selected',
+                    ),
+                    'homepage-1' => array(
+                         'active',
+                         'selected',
+                         'shown'
+                    ),
+                    'homepage-2' => array(
+                         'active',
+                         'selected',
+                         'shown'
+                    ),
+                    'homepage-3' => array(
+                         'active',
+                         'selected',
+                         'shown'
+                    ),
+                    'site-footer' => array(
+                         'active',
+                         'selected',
+                    ),
                ),
           ),
      );
@@ -174,5 +202,27 @@ final class Patterns
                          'No Step Found with given params'
                     );
           }
+     }
+
+     public static function get_count_of_patterns() {
+
+          $active_theme  = (\wp_get_theme())->get('TextDomain');
+          $theme_steps   = self::$theme_step_patterns[$active_theme];
+
+          $theme_pattern_count = array();
+          foreach ($theme_steps as $theme_step => $patterns) {
+               $theme_step_count = 0;
+               foreach ($patterns as $pattern => $pattern_data) {
+                    foreach ($pattern_data as $property) {
+                         if($property === 'shown')
+                              $theme_step_count += 1;
+                    }
+               }
+               $theme_pattern_count[$theme_step] = array(
+                    'styles'    => 1,
+                    'patterns' => $theme_step_count
+               );
+          }
+          return $theme_pattern_count;
      }
 }
