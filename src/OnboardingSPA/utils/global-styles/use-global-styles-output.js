@@ -499,13 +499,20 @@ export function useGlobalStylesOutput(
 		hasBlockGapSupport
 	);
 
+	const result = storedPreviewSettings.settings.styles.filter((style) => {
+		if (!(style.hasOwnProperty('id') && (style.id === 'customProperty' || style.id === 'globalStyle')))
+			return style;
+	});
+	
 	const stylesheets = [
-		...storedPreviewSettings.settings.styles,
+		...result,
 		{
+			id: 'customProperty',
 			css: customProperties,
 			isGlobalStyles: true,
 		},
 		{
+			id: 'globalStyle',
 			css: globalStyles,
 			isGlobalStyles: true,
 		},
