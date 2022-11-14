@@ -41,7 +41,7 @@
 						&-custom {
 							width: 100%;
 							overflow: hidden;
-							height: 300px;
+							height: 270px;
 							overflow-y: auto;
 						}
 					}
@@ -58,7 +58,7 @@
                 border-right: 1px solid #e3dfdf;
                 border-bottom: none;
                 border-top: 1px solid #e3dfdf;
-                height: 48px;
+                height: 60px;
 
                 &__title-question {
                     display: flex;
@@ -69,6 +69,8 @@
 
                     &__question {
                         &__icon {
+                            width: 30px;
+                            height: 30px;
                             &:hover {
                                 cursor: pointer;
                                 fill: var(--wp-admin-theme-color-darker-20);

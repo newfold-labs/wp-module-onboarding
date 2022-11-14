@@ -8,7 +8,8 @@ final class Patterns {
 
 
 
-	protected static $theme_step_patterns = array(
+	protected static function get_theme_step_patterns() { 
+		return array(
 		'yith-wonder' => array(
 			'theme-styles'    => array(
 				'site-header-left-logo-navigation-inline' => array(
@@ -43,33 +44,30 @@ final class Patterns {
 					'active'      => true,
 					'title'       => 'About',
 					'selected'    => true,
-					'description' => 'A corporate page to explain your Company values
-                         or the history behind your brand',
+					'description' => __('Explain your company values or the history behind your brand.', 'wp-module-onboarding'),
 				),
 				'contact-us'        => array(
 					'active'      => true,
 					'selected'    => true,
 					'title'       => 'Contact',
-					'description' => 'A corporate page to explain your Company values
-                         or the history behind your brand',
+					'description' => __('Offer visitors a single page with a contact form, your street address and social media.', 'wp-module-onboarding'),
 				),
 				'testimonials-page' => array(
 					'active'      => true,
 					'title'       => 'Testimonials',
 					'selected'    => false,
-					'description' => 'A corporate page to explain your Company values
-                         or the history behind your brand',
+					'description' => __('Highlight your success with testimonials from your fans.', 'wp-module-onboarding'),
 				),
 				'blog-page'         => array(
 					'active'      => true,
 					'selected'    => true,
 					'title'       => 'Blog',
-					'description' => 'A corporate page to explain your Company values
-                         or the history behind your brand',
+					'description' => __('A page for periodic news, announcements and ideas.', 'wp-module-onboarding'),
 				),
 			),
 		),
 	);
+}
 
 	public static function cleanup_wp_grammar( $content ) {
 
@@ -105,11 +103,11 @@ final class Patterns {
 	public static function get_theme_step_patterns_from_step( $step, $squash = false ) {
 		 $active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
 
-		if ( ! isset( self::$theme_step_patterns[ $active_theme ][ $step ] ) ) {
+		if ( ! isset( self::get_theme_step_patterns()[ $active_theme ][ $step ] ) ) {
 			 return false;
 		}
 
-		 $pattern_slugs           = self::$theme_step_patterns[ $active_theme ][ $step ];
+		 $pattern_slugs           = self::get_theme_step_patterns()[ $active_theme ][ $step ];
 		 $block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
 		 $block_patterns          = array();
 		 $block_patterns_squashed = '';

@@ -57,10 +57,9 @@ const SelectableCardWithInfo = ( {
 						checked={selected} />
 					</div>
 					<div className={`${ className }__information__title-question__question`}>
-						<Icon className={`${ className }__information__title-question__question__icon`} icon={help} 
+						<Icon className={`${ className }__information__title-question__question__icon`} icon={help} style={{ fill: showDescription && 'var(--wp-admin-theme-color-darker-10)' }} 
 						onClick={() => setShowDescription( ! showDescription )}/>
 					</div>
-
 				</div>
 			</div>
 			{ showDescription &&  <div className={`${ className }__description--container`}>
