@@ -15,15 +15,14 @@ const SelectableCardWithInfo = ( {
 	skeletonLoadingTime = 2500,
 	title = false,
 	description = false,
+	slug,
 } ) => {
 	const [ loadingParent, setIsLoadingParent ] = useState( true );
-	const [ isChecked, setIsChecked ] = useState( selected );
 	const [ showDescription, setShowDescription ] = useState(false);
 
 	const handleCheck = ( isChecked ) => {
-		setIsChecked( isChecked );
 		if ( typeof onClick === 'function' ) {
-			onClick( isChecked );
+			onClick( isChecked, slug );
 		}
 	}
 
@@ -54,8 +53,8 @@ const SelectableCardWithInfo = ( {
 					<div className={`${ className }__information__title-question__checkbox`}>
 						<CheckboxControl
 						label = {<b>{title}</b>}
-						onChange={() => handleCheck( ! isChecked )}
-						checked={isChecked} />
+						onChange={() => handleCheck( ! selected )}
+						checked={selected} />
 					</div>
 					<div className={`${ className }__information__title-question__question`}>
 						<Icon className={`${ className }__information__title-question__question__icon`} icon={help} 

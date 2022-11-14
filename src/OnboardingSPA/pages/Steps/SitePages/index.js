@@ -49,7 +49,8 @@ const StepSitePages = () => {
 		setIsDrawerOpened,
 		setIsSidebarOpened,
 		updateThemeStatus,
-		updatePreviewSettings
+		updatePreviewSettings,
+		setCurrentOnboardingData
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -67,7 +68,19 @@ const StepSitePages = () => {
 		if ( sitePagesResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
-		setSitePages( sitePagesResponse?.body );
+		if ( sitePagesResponse?.body ) {
+			setSitePages( sitePagesResponse.body );
+			if ( currentData.data?.sitePages && currentData.data.sitePages.length !== 0 ) {
+				setCheckedPages( currentData.data.sitePages )
+			} else {
+				const checkedPages = sitePagesResponse.body.filter((sitePage) => {
+					return sitePage?.selected ? sitePage.selected : false
+				}).map(( checkedPage ) => {
+					return checkedPage.slug
+				})
+				setCheckedPages( checkedPages )
+			}
+		}
 		const globalStylesResponse = await getGlobalStyles();
 		if ( globalStylesResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
@@ -87,8 +100,25 @@ const StepSitePages = () => {
 		setIsLoaded( true );
 	};
 
+	const handleCheckedPages = ( selectedPages ) => {
+		setCheckedPages( selectedPages )
+		currentData.data.sitePages = selectedPages
+		setCurrentOnboardingData( currentData )
+	}
+
+	const handleClick = ( isChecked, slug ) => {
+		if ( isChecked === true && ! checkedPages.includes( slug )) {
+			return handleCheckedPages( checkedPages.concat( slug ) );
+			
+		}
+		handleCheckedPages( checkedPages.filter(( selectedPage ) => {
+			return selectedPage !== slug
+		}) )
+
+	}
+
 	const buildPreviews = () => {
-		return sitePages?.map((sitePage, idx) => {
+		return checkedPages && sitePages?.map((sitePage, idx) => {
 			return (
 				<LivePreviewSelectableCardWithInfo
 				key={ idx }
@@ -98,7 +128,9 @@ const StepSitePages = () => {
 				styling={ 'custom' }
 				overlay={ true } 
 				title={sitePage?.title}
-				selected={sitePage?.selected === true}
+				slug = { sitePage.slug }
+				selected={ checkedPages.includes( sitePage.slug ) }
+				onClick={handleClick}
 				description={sitePage?.description}/>
 			)
 		})
