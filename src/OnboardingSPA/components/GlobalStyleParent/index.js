@@ -29,11 +29,14 @@ const GlobalStyleParent = ({ children }) => {
         };
     }, []);
 
-    const { updatePreviewSettings } =
+    const { updateThemeStatus, updatePreviewSettings } =
         useDispatch(nfdOnboardingStore);
 
     const getStylesAndPatterns = async () => {
         const globalStyles = await getGlobalStyles();
+        if (globalStyles?.error) {
+            return updateThemeStatus(THEME_STATUS_NOT_ACTIVE);
+        }
         let selectedGlobalStyle;
         if (storedPreviewSettings?.title)
             selectedGlobalStyle = storedPreviewSettings;
