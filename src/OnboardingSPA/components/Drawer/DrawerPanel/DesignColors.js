@@ -4,13 +4,13 @@ import { useState, useEffect } from '@wordpress/element';
 import { Popover, ColorPicker } from '@wordpress/components';
 
 import { store as nfdOnboardingStore } from '../../../store';
-import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
+import { getGlobalStyles, getThemeColors, setGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
+import GlobalStyleParent from '../../GlobalStyleParent';
 
 const DesignColors = () => {
 
 	const [isLoaded, setIsLoaded] = useState(false);
-	const [globalStyles, setGlobalStyles] = useState();
 	const [selectedColors, setSelectedColors] = useState();
 	const [showColorPicker, setShowColorPicker] = useState(false);
 	const [isAccordionClosed, setIsAccordionClosed] = useState(true);
@@ -69,7 +69,7 @@ const DesignColors = () => {
 		}
 	}
 
-	async function saveThemeColorPalette(colorStyle, colorPalettesTemp = colorPalettes, selectedColorsLocalTemp = selectedColors, globalStylesTemp = globalStyles) {
+	async function saveThemeColorPalette(colorStyle, colorPalettesTemp = colorPalettes, selectedColorsLocalTemp = selectedColors, globalStylesTemp = storedPreviewSettings) {
 		const isCustomStyle = colorStyle === 'custom';
 		let selectedGlobalStyle = globalStylesTemp;
 		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
@@ -104,7 +104,6 @@ const DesignColors = () => {
 			}
 
 			selectedGlobalStyle.settings.color.palette.theme = selectedThemeColorPalette;
-			setGlobalStyles(selectedGlobalStyle);
 			updatePreviewSettings(
 				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
 			);
@@ -114,7 +113,7 @@ const DesignColors = () => {
 	}
 
 	async function saveCustomColors() {
-		let selectedGlobalStyle = globalStyles;
+		let selectedGlobalStyle = storedPreviewSettings;
 		let selectedThemeColorPalette = selectedGlobalStyle?.settings?.color?.palette?.theme;
 
 		if (selectedThemeColorPalette) {
@@ -140,7 +139,6 @@ const DesignColors = () => {
 			}
 
 			selectedGlobalStyle.settings.color.palette.theme = selectedThemeColorPalette;
-			setGlobalStyles(selectedGlobalStyle);
 			updatePreviewSettings(
 				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
 			);
@@ -149,20 +147,7 @@ const DesignColors = () => {
 
 	const getColorStylesAndPatterns = async () => {
 		const colorPalettes = await getThemeColors();
-		const globalStyles = await getGlobalStyles();
 		setColorPalettes(colorPalettes?.body);
-		let selectedGlobalStyle;
-		if (storedPreviewSettings?.title)
-			selectedGlobalStyle = storedPreviewSettings;
-		else if (currentData?.data?.theme?.variation) {
-			selectedGlobalStyle = globalStyles.body.filter(
-				(globalStyle) =>
-					globalStyle.title === currentData.data.theme.variation
-			)[0];
-		} else {
-			selectedGlobalStyle = globalStyles.body[0];
-		}
-		setGlobalStyles(selectedGlobalStyle);
 		let selectedColors;
 		let selectedColorsLocal;
 		if (!currentData?.data?.palette?.slug === '') {
@@ -180,7 +165,7 @@ const DesignColors = () => {
 			}
 		} 
 		setSelectedColors(selectedColors);
-		saveThemeColorPalette(currentData?.data?.palette['slug'], colorPalettes?.body, selectedColorsLocal, selectedGlobalStyle);
+		saveThemeColorPalette(currentData?.data?.palette['slug'], colorPalettes?.body, selectedColorsLocal, storedPreviewSettings);
 		setIsLoaded(true);
 
 	};
@@ -231,7 +216,6 @@ const DesignColors = () => {
 		} else {
 			selectedGlobalStyle = globalStyles.body[0];
 		}
-		setGlobalStyles(selectedGlobalStyle);
 		updatePreviewSettings(
 			useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
 		);
@@ -333,16 +317,18 @@ const DesignColors = () => {
 	}
 
 	return (
-		<div className='theme-colors--drawer'>
-			<h2>{__('Color Palettes', 'wp-module-onboarding')}</h2>
-			{/* {selectedColors?.slug && 
-				<div className='theme-colors--drawer--reset' onClick={resetColors}>
-					<div>Reset Button</div>
-				</div>
-			} */}
-			{ colorPalettes && buildPalettes() }
-			{ colorPalettes && buildCustomPalette() }
-		</div>
+		<GlobalStyleParent>
+			<div className='theme-colors--drawer'>
+				<h2>{__('Color Palettes', 'wp-module-onboarding')}</h2>
+				{/* {selectedColors?.slug && 
+					<div className='theme-colors--drawer--reset' onClick={resetColors}>
+						<div>Reset Button</div>
+					</div>
+				} */}
+				{ colorPalettes && buildPalettes() }
+				{ colorPalettes && buildCustomPalette() }
+			</div>
+		</GlobalStyleParent>
 	);
 };
 

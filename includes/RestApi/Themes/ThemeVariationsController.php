@@ -63,10 +63,12 @@ class ThemeVariationsController extends \WP_REST_Controller {
 		$default = $request->get_param('defaultValue');
 
 		// If there exists an old Custom Theme then return that
-		if( !$default && false !== \get_option(Options::get_option_name('custom_theme_styles')) )
+		if( 'false' === $default && false !== \get_option(Options::get_option_name('custom_theme_styles')) )
+		{
 			return array(
 				\get_option(Options::get_option_name('custom_theme_styles'))
 			);
+		}
 
 		$active_variation              = \WP_Theme_JSON_Resolver::get_merged_data( 'theme' )->get_raw_data();
 		$active_variation_global_style = array(
@@ -90,7 +92,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	public function set_theme_variation(\WP_REST_Request $request)
 	{
 		// The theme data with the new Colors and Fonts
-		$theme_data = json_decode($request->get_body());
+		$theme_data = json_decode($request->get_body(), true);
 		
 		if($theme_data){
 			// Save the new Theme style into the db

@@ -9,6 +9,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { LivePreview } from '../../../components/LivePreview';
 import CommonLayout from '../../../components/Layouts/Common';
 import { VIEW_DESIGN_COLORS } from '../../../../constants';
+import GlobalStyleParent from '../../../components/GlobalStyleParent';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 import { getGlobalStyles, setGlobalStyles } from '../../../utils/api/themes';
 
@@ -20,17 +21,11 @@ const StepDesignColors = () => {
 	const isLargeViewport = useViewportMatch('medium');
 	const {
 		currentStep,
-		currentData,
-		storedPreviewSettings,
 	} = useSelect((select) => {
 		return {
 			currentStep: select(nfdOnboardingStore).getStepFromPath(
 				location.pathname
-			),
-			currentData:
-				select(nfdOnboardingStore).getCurrentOnboardingData(),
-			storedPreviewSettings:
-				select(nfdOnboardingStore).getPreviewSettings(),
+			)
 		};
 	}, []);
 
@@ -39,7 +34,6 @@ const StepDesignColors = () => {
 		setIsDrawerOpened,
 		setIsSidebarOpened,
 		setIsDrawerSuppressed,
-		updatePreviewSettings,
 	} = useDispatch(nfdOnboardingStore);
 
 	useEffect(() => {
@@ -53,48 +47,36 @@ const StepDesignColors = () => {
 
 	const getStylesAndPatterns = async () => {
 		const pattern = await getPatterns(currentStep.patternId, true);
-		const globalStyles = await getGlobalStyles();
-		let selectedGlobalStyle;
-		if (storedPreviewSettings?.title)
-			selectedGlobalStyle = storedPreviewSettings;
-		else if (currentData.data.theme.variation) {
-			selectedGlobalStyle = globalStyles.body.filter(
-				(globalStyle) =>
-					globalStyle.title === currentData.data.theme.variation
-			)[0];
-		} else {
-			selectedGlobalStyle = globalStyles.body[0];
-		}
-		setGlobalStyles(selectedGlobalStyle);
 		setPattern(pattern?.body);
 		setIsLoaded(true);
 	};
 
-	
 	useEffect(() => {
 		if (!isLoaded) getStylesAndPatterns();
 	}, [isLoaded]);
 
 	return (
 		<DesignStateHandler>
-			<CommonLayout className="theme-colors-preview">
-				<div className="theme-colors-preview__title-bar">
-					<div className="theme-colors-preview__title-bar__browser">
-						<span className="theme-colors-preview__title-bar__browser__dot"></span>
-						<span className="theme-colors-preview__title-bar__browser__dot"></span>
-						<span className="theme-colors-preview__title-bar__browser__dot"></span>
+			<GlobalStyleParent>
+				<CommonLayout className="theme-colors-preview">
+					<div className="theme-colors-preview__title-bar">
+						<div className="theme-colors-preview__title-bar__browser">
+							<span className="theme-colors-preview__title-bar__browser__dot"></span>
+							<span className="theme-colors-preview__title-bar__browser__dot"></span>
+							<span className="theme-colors-preview__title-bar__browser__dot"></span>
+						</div>
 					</div>
-				</div>
-				<div className="theme-colors-preview__live-preview-container">
-					{pattern && (
-						<LivePreview
-							blockGrammer={pattern}
-							styling={'custom'}
-							viewportWidth={1300}
-						/>
-					)}
-				</div>
-			</CommonLayout>
+					<div className="theme-colors-preview__live-preview-container">
+						{pattern && (
+							<LivePreview
+								blockGrammer={pattern}
+								styling={'custom'}
+								viewportWidth={1300}
+							/>
+						)}
+					</div>
+				</CommonLayout>
+			</GlobalStyleParent>
 		</DesignStateHandler>
 	);
 };
