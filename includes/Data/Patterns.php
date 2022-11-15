@@ -6,68 +6,66 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 final class Patterns {
 
-
-
-	protected static function get_theme_step_patterns() { 
+	protected static function get_theme_step_patterns() {
 		return array(
-		'yith-wonder' => array(
-			'theme-styles'    => array(
-				'site-header-left-logo-navigation-inline' => array(
-					'active' => true,
+			'yith-wonder' => array(
+				'theme-styles'    => array(
+					'site-header-left-logo-navigation-inline' => array(
+						'active' => true,
+					),
+					'homepage-1'  => array(
+						'active' => true,
+					),
+					'site-footer' => array(
+						'active' => true,
+					),
 				),
-				'homepage-1'                              => array(
-					'active' => true,
+				'homepage-styles' => array(
+					'site-header-left-logo-navigation-inline' => array(
+						'active' => true,
+					),
+					'homepage-1'  => array(
+						'active' => true,
+					),
+					'homepage-2'  => array(
+						'active' => true,
+					),
+					'homepage-3'  => array(
+						'active' => true,
+					),
+					'site-footer' => array(
+						'active' => true,
+					),
 				),
-				'site-footer'                             => array(
-					'active' => true,
+				'site-pages'      => array(
+					'company-page'      => array(
+						'active'      => true,
+						'title'       => 'About',
+						'selected'    => true,
+						'description' => __( 'Explain your company values or the history behind your brand.', 'wp-module-onboarding' ),
+					),
+					'contact-us'        => array(
+						'active'      => true,
+						'selected'    => true,
+						'title'       => 'Contact',
+						'description' => __( 'Offer visitors a single page with a contact form, your street address and social media.', 'wp-module-onboarding' ),
+					),
+					'testimonials-page' => array(
+						'active'      => true,
+						'title'       => 'Testimonials',
+						'selected'    => false,
+						'description' => __( 'Highlight your success with testimonials from your fans.', 'wp-module-onboarding' ),
+					),
+					'blog-page'         => array(
+						'active'      => true,
+						'selected'    => true,
+						'title'       => 'Blog',
+						'description' => __( 'A page for periodic news, announcements and ideas.', 'wp-module-onboarding' ),
+					),
 				),
 			),
-			'homepage-styles' => array(
-				'site-header-left-logo-navigation-inline' => array(
-					'active' => true,
-				),
-				'homepage-1'                              => array(
-					'active' => true,
-				),
-				'homepage-2'                              => array(
-					'active' => true,
-				),
-				'homepage-3'                              => array(
-					'active' => true,
-				),
-				'site-footer'                             => array(
-					'active' => true,
-				),
-			),
-			'site-pages'      => array(
-				'company-page'      => array(
-					'active'      => true,
-					'title'       => 'About',
-					'selected'    => true,
-					'description' => __('Explain your company values or the history behind your brand.', 'wp-module-onboarding'),
-				),
-				'contact-us'        => array(
-					'active'      => true,
-					'selected'    => true,
-					'title'       => 'Contact',
-					'description' => __('Offer visitors a single page with a contact form, your street address and social media.', 'wp-module-onboarding'),
-				),
-				'testimonials-page' => array(
-					'active'      => true,
-					'title'       => 'Testimonials',
-					'selected'    => false,
-					'description' => __('Highlight your success with testimonials from your fans.', 'wp-module-onboarding'),
-				),
-				'blog-page'         => array(
-					'active'      => true,
-					'selected'    => true,
-					'title'       => 'Blog',
-					'description' => __('A page for periodic news, announcements and ideas.', 'wp-module-onboarding'),
-				),
-			),
-		),
-	);
-}
+		);
+	}
 
 	public static function cleanup_wp_grammar( $content ) {
 

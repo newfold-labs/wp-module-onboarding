@@ -1,6 +1,6 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useViewportMatch } from '@wordpress/compose';
 
 import { store as nfdOnboardingStore } from '../../../store';
@@ -27,22 +27,19 @@ const StepSitePages = () => {
 	const [ sitePages, setSitePages ] = useState();
 	const [ checkedPages, setCheckedPages ] = useState( [] );
 
-	const {
-		currentStep,
-		currentData,
-		themeStatus,
-		storedPreviewSettings
-	} = useSelect( ( select ) => {
-		return {
-			storedPreviewSettings: select( nfdOnboardingStore ).getPreviewSettings(),
-			currentStep: select( nfdOnboardingStore ).getStepFromPath(
-				location.pathname
-			),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-		};
-	}, [] );
+	const { currentStep, currentData, themeStatus, storedPreviewSettings } =
+		useSelect( ( select ) => {
+			return {
+				storedPreviewSettings:
+					select( nfdOnboardingStore ).getPreviewSettings(),
+				currentStep: select( nfdOnboardingStore ).getStepFromPath(
+					location.pathname
+				),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			};
+		}, [] );
 
 	const {
 		setDrawerActiveView,
@@ -50,7 +47,7 @@ const StepSitePages = () => {
 		setIsSidebarOpened,
 		updateThemeStatus,
 		updatePreviewSettings,
-		setCurrentOnboardingData
+		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -62,23 +59,26 @@ const StepSitePages = () => {
 	}, [] );
 
 	const getStyleAndPages = async () => {
-		const sitePagesResponse = await getPatterns(
-			currentStep.patternId,
-		);
+		const sitePagesResponse = await getPatterns( currentStep.patternId );
 		if ( sitePagesResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
 		if ( sitePagesResponse?.body ) {
 			setSitePages( sitePagesResponse.body );
-			if ( currentData.data?.sitePages && currentData.data.sitePages.length !== 0 ) {
-				setCheckedPages( currentData.data.sitePages )
+			if (
+				currentData.data?.sitePages &&
+				currentData.data.sitePages.length !== 0
+			) {
+				setCheckedPages( currentData.data.sitePages );
 			} else {
-				const checkedPages = sitePagesResponse.body.filter((sitePage) => {
-					return sitePage?.selected ? sitePage.selected : false
-				}).map(( checkedPage ) => {
-					return checkedPage.slug
-				})
-				setCheckedPages( checkedPages )
+				const checkedPages = sitePagesResponse.body
+					.filter( ( sitePage ) => {
+						return sitePage?.selected ? sitePage.selected : false;
+					} )
+					.map( ( checkedPage ) => {
+						return checkedPage.slug;
+					} );
+				setCheckedPages( checkedPages );
 			}
 		}
 		const globalStylesResponse = await getGlobalStyles();
@@ -101,60 +101,69 @@ const StepSitePages = () => {
 	};
 
 	const handleCheckedPages = ( selectedPages ) => {
-		setCheckedPages( selectedPages )
-		currentData.data.sitePages = selectedPages
-		setCurrentOnboardingData( currentData )
-	}
+		setCheckedPages( selectedPages );
+		currentData.data.sitePages = selectedPages;
+		setCurrentOnboardingData( currentData );
+	};
 
 	const handleClick = ( isChecked, slug ) => {
-		if ( isChecked === true && ! checkedPages.includes( slug )) {
+		if ( isChecked === true && ! checkedPages.includes( slug ) ) {
 			return handleCheckedPages( checkedPages.concat( slug ) );
-			
 		}
-		handleCheckedPages( checkedPages.filter(( selectedPage ) => {
-			return selectedPage !== slug
-		}) )
-
-	}
+		handleCheckedPages(
+			checkedPages.filter( ( selectedPage ) => {
+				return selectedPage !== slug;
+			} )
+		);
+	};
 
 	const buildPreviews = () => {
-		return checkedPages && sitePages?.map((sitePage, idx) => {
-			return (
-				<LivePreviewSelectableCardWithInfo
-				key={ idx }
-				className={ 'site-pages__list__item' }
-				blockGrammer={ sitePage.content }
-				viewportWidth={ 1200 }
-				styling={ 'custom' }
-				overlay={ true } 
-				title={sitePage?.title}
-				slug = { sitePage.slug }
-				selected={ checkedPages.includes( sitePage.slug ) }
-				onClick={handleClick}
-				description={sitePage?.description}/>
-			)
-		})
-	}
+		return (
+			checkedPages &&
+			sitePages?.map( ( sitePage, idx ) => {
+				return (
+					<LivePreviewSelectableCardWithInfo
+						key={ idx }
+						className={ 'site-pages__list__item' }
+						blockGrammer={ sitePage.content }
+						viewportWidth={ 1200 }
+						styling={ 'custom' }
+						overlay={ true }
+						title={ sitePage?.title }
+						slug={ sitePage.slug }
+						selected={ checkedPages.includes( sitePage.slug ) }
+						onClick={ handleClick }
+						description={ sitePage?.description }
+					/>
+				);
+			} )
+		);
+	};
 
 	useEffect( () => {
 		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
-		getStyleAndPages();
+			getStyleAndPages();
 	}, [ isLoaded, themeStatus ] );
 
 	return (
 		<DesignStateHandler>
 			<CommonLayout>
-			    <div className='site-pages'>
+				<div className="site-pages">
 					<HeadingWithSubHeading
-					title={currentStep?.heading}
-					subtitle={currentStep?.subheading}
+						title={ currentStep?.heading }
+						subtitle={ currentStep?.subheading }
 					/>
-				<div className='site-pages__list'>
-					{ sitePages && buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW ) }
-				</div>
-				<div className='site-pages__list'>
-				{ sitePages && buildPreviews().slice( MAX_PREVIEWS_PER_ROW, sitePages.length ) }
-				</div>
+					<div className="site-pages__list">
+						{ sitePages &&
+							buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW ) }
+					</div>
+					<div className="site-pages__list">
+						{ sitePages &&
+							buildPreviews().slice(
+								MAX_PREVIEWS_PER_ROW,
+								sitePages.length
+							) }
+					</div>
 				</div>
 			</CommonLayout>
 		</DesignStateHandler>

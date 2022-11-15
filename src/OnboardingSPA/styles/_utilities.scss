@@ -1,21 +1,27 @@
 @keyframes fadeIn {
+
 	from {
 		opacity: 0;
 	}
+
 	to {
 		opacity: 1;
 	}
 }
+
 @keyframes shine {
+
 	0% {
-			transform: translateX(-100%);
-		}
+		transform: translateX(-100%);
+	}
+
 	100% {
-			transform: translateX(100%);
-		}
+		transform: translateX(100%);
+	}
 }
 
 @keyframes shine-placeholder {
+
 	0% {
 		background-position: -468px 0;
 	}
@@ -26,15 +32,18 @@
 }
 
 @keyframes dropdown {
-    0% {
-        transform: rotateX(-90deg)
-    }
-    70% {
-        transform: rotateX(20deg) 
-    }
-    100% {
-        transform: rotateX(0deg) 
-    }
+
+	0% {
+		transform: rotateX(-90deg);
+	}
+
+	70% {
+		transform: rotateX(20deg);
+	}
+
+	100% {
+		transform: rotateX(0deg);
+	}
 }
 
 .is-centered {

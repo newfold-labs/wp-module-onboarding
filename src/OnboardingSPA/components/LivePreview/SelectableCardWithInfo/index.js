@@ -18,13 +18,13 @@ const SelectableCardWithInfo = ( {
 	slug,
 } ) => {
 	const [ loadingParent, setIsLoadingParent ] = useState( true );
-	const [ showDescription, setShowDescription ] = useState(false);
+	const [ showDescription, setShowDescription ] = useState( false );
 
 	const handleCheck = ( isChecked ) => {
 		if ( typeof onClick === 'function' ) {
 			onClick( isChecked, slug );
 		}
-	}
+	};
 
 	return (
 		<div
@@ -48,24 +48,58 @@ const SelectableCardWithInfo = ( {
 					skeletonLoadingTime={ skeletonLoadingTime }
 				/>
 			</div>
-			<div className={`${ className }__information`}>
-				<div className={`${ className }__information__title-question`}>
-					<div className={`${ className }__information__title-question__checkbox`}>
+			<div
+				className={ `${ className }__information` }
+				style={ {
+					backgroundColor: showDescription
+						? 'var(--nfd-onboarding-light-gray-highlighted)'
+						: 'var(--nfd-onboarding-light-gray-3)',
+				} }
+			>
+				<div
+					className={ `${ className }__information__title-question` }
+				>
+					<div
+						className={ `${ className }__information__title-question__checkbox` }
+					>
 						<CheckboxControl
-						label = {<b>{title}</b>}
-						onChange={() => handleCheck( ! selected )}
-						checked={selected} />
+							label={ <b>{ title }</b> }
+							onChange={ () => handleCheck( ! selected ) }
+							checked={ selected }
+						/>
 					</div>
-					<div className={`${ className }__information__title-question__question`}>
-						<Icon className={`${ className }__information__title-question__question__icon`} icon={help} style={{ fill: showDescription && 'var(--wp-admin-theme-color-darker-10)' }} 
-						onClick={() => setShowDescription( ! showDescription )}/>
+					<div
+						className={ `${ className }__information__title-question__question` }
+					>
+						<Icon
+							className={ `${ className }__information__title-question__question__icon` }
+							icon={ help }
+							style={ {
+								fill:
+									showDescription &&
+									'var(--wp-admin-theme-color-darker-10)',
+							} }
+							onClick={ () =>
+								setShowDescription( ! showDescription )
+							}
+						/>
 					</div>
 				</div>
 			</div>
-			{ showDescription &&  <div className={`${ className }__description--container`}>
-			<p className={`${ className }__description--text`}>{description}</p>
-			</div>}
-
+			{ showDescription && (
+				<div
+					className={ `${ className }__description--container` }
+					style={ {
+						backgroundColor: showDescription
+							? 'var(--nfd-onboarding-light-gray-highlighted)'
+							: 'var(--nfd-onboarding-light-gray-3)',
+					} }
+				>
+					<p className={ `${ className }__description--text` }>
+						{ description }
+					</p>
+				</div>
+			) }
 		</div>
 	);
 };
