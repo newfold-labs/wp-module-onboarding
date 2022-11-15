@@ -1,4 +1,3 @@
-import { __ } from '@wordpress/i18n';
 import { useLocation } from 'react-router-dom';
 import { useViewportMatch } from '@wordpress/compose';
 import { useState, useEffect } from '@wordpress/element';
@@ -9,30 +8,24 @@ import { getGlobalStyles } from '../../../utils/api/themes';
 import { store as nfdOnboardingStore } from '../../../store';
 import { LivePreview } from '../../../components/LivePreview';
 import CommonLayout from '../../../components/Layouts/Common';
-import { THEME_STATUS_NOT_ACTIVE, VIEW_DESIGN_TYPOGRAPHY } from '../../../../constants';
+import {
+	THEME_STATUS_NOT_ACTIVE,
+	VIEW_DESIGN_TYPOGRAPHY,
+} from '../../../../constants';
 
 const StepDesignTypography = () => {
 	const location = useLocation();
-	const [pattern, setPattern] = useState();
-	const [isLoaded, setIsLoaded] = useState(false);
+	const [ pattern, setPattern ] = useState();
+	const [ isLoaded, setIsLoaded ] = useState( false );
 
-
-	const isLargeViewport = useViewportMatch('medium');
-	const {
-		currentStep,
-		currentData,
-		storedPreviewSettings,
-	} = useSelect((select) => {
+	const isLargeViewport = useViewportMatch( 'medium' );
+	const { currentStep } = useSelect( ( select ) => {
 		return {
-			currentStep: select(nfdOnboardingStore).getStepFromPath(
+			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
 			),
-			currentData:
-				select(nfdOnboardingStore).getCurrentOnboardingData(),
-			storedPreviewSettings:
-				select(nfdOnboardingStore).getPreviewSettings(),
 		};
-	}, []);
+	}, [] );
 
 	const {
 		updateThemeStatus,
@@ -40,44 +33,36 @@ const StepDesignTypography = () => {
 		setIsDrawerOpened,
 		setIsSidebarOpened,
 		setIsDrawerSuppressed,
-		updatePreviewSettings,
-	} = useDispatch(nfdOnboardingStore);
+	} = useDispatch( nfdOnboardingStore );
 
-	useEffect(() => {
-		if (isLargeViewport) {
-			setIsDrawerOpened(true);
+	useEffect( () => {
+		if ( isLargeViewport ) {
+			setIsDrawerOpened( true );
 		}
-		setIsSidebarOpened(false);
-		setIsDrawerSuppressed(false);
-		setDrawerActiveView(VIEW_DESIGN_TYPOGRAPHY);
-	}, []);
+		setIsSidebarOpened( false );
+		setIsDrawerSuppressed( false );
+		setDrawerActiveView( VIEW_DESIGN_TYPOGRAPHY );
+	}, [] );
 
-	const getFontPatterns = async () =>  {
-		const patternsResponse = await getPatterns(currentStep.patternId, true);
-		if (patternsResponse?.error) {
-			return updateThemeStatus(THEME_STATUS_NOT_ACTIVE);
+	const getFontPatterns = async () => {
+		const patternsResponse = await getPatterns(
+			currentStep.patternId,
+			true
+		);
+		if ( patternsResponse?.error ) {
+			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
 		const globalStylesResponse = await getGlobalStyles();
-		if (globalStylesResponse?.error) {
-			return updateThemeStatus(THEME_STATUS_NOT_ACTIVE);
+		if ( globalStylesResponse?.error ) {
+			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
-		let selectedGlobalStyle;
-		if (currentData.data.theme.variation) {
-			selectedGlobalStyle = globalStylesResponse.body.filter(
-				(globalStyle) =>
-					globalStyle.title === currentData.data.theme.variation
-			)[0];
-		} else {
-			selectedGlobalStyle = globalStylesResponse.body[0];
-		}
-		setPattern(patternsResponse?.body);
-		setIsLoaded(true);
+		setPattern( patternsResponse?.body );
+		setIsLoaded( true );
 	};
 
-
-	useEffect(() => {
-		if (!isLoaded) getFontPatterns();
-	}, [isLoaded]);
+	useEffect( () => {
+		if ( ! isLoaded ) getFontPatterns();
+	}, [ isLoaded ] );
 
 	return (
 		<CommonLayout className="theme-fonts-preview">
@@ -89,18 +74,17 @@ const StepDesignTypography = () => {
 				</div>
 			</div>
 			<div className="theme-fonts-preview__live-preview-container">
-				{pattern && (
+				{ pattern && (
 					<LivePreview
-						blockGrammer={pattern}
-						styling={'custom'}
-						viewportWidth={1300}
-						skeletonLoadingTime={false}
+						blockGrammer={ pattern }
+						styling={ 'custom' }
+						viewportWidth={ 1300 }
+						skeletonLoadingTime={ false }
 					/>
-				)}
+				) }
 			</div>
 		</CommonLayout>
 	);
 };
-
 
 export default StepDesignTypography;

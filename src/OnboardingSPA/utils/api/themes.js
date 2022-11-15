@@ -36,17 +36,17 @@ const getThemeStatus = async ( theme ) => {
 
 const getThemeFonts = async () => {
 	return await resolve(
-		apiFetch({
-			url: onboardingRestURL('themes/fonts'),
-		})
+		apiFetch( {
+			url: onboardingRestURL( 'themes/fonts' ),
+		} )
 	);
 };
 
-const getThemeColors = async (theme) => {
+const getThemeColors = async ( theme ) => {
 	return await resolve(
-		apiFetch({
+		apiFetch( {
 			url: onboardingRestURL( 'themes/colors' ),
-		})
+		} )
 	);
 };
 
