@@ -16,6 +16,7 @@ import {
 	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../../constants';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
+import LivePreviewSkeleton from '../../../../components/LivePreviewSkeleton';
 
 const StepDesignThemeStylesMenu = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;
@@ -105,25 +106,6 @@ const StepDesignThemeStylesMenu = () => {
 		navigate( nextStep.path );
 	};
 
-	const buildDummyPreviews = () => {
-		let dummyPreview = [];
-
-		for (let i = 0; i < THEME_VARIATIONS; i++) {
-			dummyPreview.push(
-				<LivePreviewSelectableCard
-					key={i}
-					className={'theme-styles-menu__list__item'}
-					blockGrammer={''}
-					viewportWidth={900}
-					styling={'custom'}
-					skeletonLoadingTime={3000}
-				/>
-			);
-		}
-
-		return dummyPreview;
-	};
-
 	const buildPreviews = () => {
 		return globalStyles?.map( ( globalStyle, idx ) => {
 			return (
@@ -151,16 +133,16 @@ const StepDesignThemeStylesMenu = () => {
 						subtitle={ currentStep?.subheading }
 					/>
 					<div className="theme-styles-menu__list">
-						{!globalStyles && buildDummyPreviews().slice(0, MAX_PREVIEWS_PER_ROW)}
+						{!globalStyles && 
+							<LivePreviewSkeleton count={Math.floor(THEME_VARIATIONS/2)}
+							className={'theme-styles-menu__list__item'} viewportWidth={900}/>}
 						{ globalStyles &&
 							buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW )}
 					</div>
 					<div className="theme-styles-menu__list">
 						{!globalStyles &&
-							buildDummyPreviews().slice(
-								MAX_PREVIEWS_PER_ROW,
-								THEME_VARIATIONS
-							)}
+							<LivePreviewSkeleton count={Math.floor(THEME_VARIATIONS/2)}
+								className={'theme-styles-menu__list__item'} viewportWidth={900} />}
 						{ globalStyles &&
 							buildPreviews().slice(
 								MAX_PREVIEWS_PER_ROW,

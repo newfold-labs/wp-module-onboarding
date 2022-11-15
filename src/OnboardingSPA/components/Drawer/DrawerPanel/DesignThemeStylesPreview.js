@@ -10,6 +10,7 @@ import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
+import LivePreviewSkeleton from '../../LivePreviewSkeleton';
 
 const DesignThemeStylesPreview = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;
@@ -137,16 +138,15 @@ const DesignThemeStylesPreview = () => {
 		<div className="theme-styles-preview--drawer">
 			<div className="theme-styles-preview--drawer__list">
 				{!globalStyles
-					&& buildDummyPreviews().slice(0, MAX_PREVIEWS_PER_ROW)}
+					&& <LivePreviewSkeleton count={Math.floor(THEME_VARIATIONS)}
+						className={'theme-styles-preview--drawer__list__item'} viewportWidth={900} />}
 				{ globalStyles
 					&& buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW ) }
 			</div>
 			<div className="theme-styles-preview--drawer__list">
 				{!globalStyles
-					&& buildDummyPreviews().slice(
-						MAX_PREVIEWS_PER_ROW,
-						THEME_VARIATIONS
-					)}
+					&& <LivePreviewSkeleton count={Math.floor(THEME_VARIATIONS)}
+						className={'theme-styles-preview--drawer__list__item'} viewportWidth={900} />}
 				{ globalStyles
 					&& buildPreviews().slice(
 							MAX_PREVIEWS_PER_ROW,

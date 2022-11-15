@@ -16,6 +16,7 @@ import { LivePreviewSelectableCard } from '../../../components/LivePreview';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
+import LivePreviewSkeleton from '../../../components/LivePreviewSkeleton';
 
 const StepDesignHomepageMenu = () => {
 	const homepagePatternList = [ 'homepage-1', 'homepage-2', 'homepage-3' ];
@@ -160,25 +161,6 @@ const StepDesignHomepageMenu = () => {
 		}
 	}, [ isLoaded, themeStatus ] );
 
-	const buildDummyPreviews = () => {
-		let dummyPreview = [];
-
-		for (let i = 0; i < THEME_VARIATIONS; i++) {
-			dummyPreview.push(
-				<LivePreviewSelectableCard
-					key={i}
-					className={'homepage_preview__list__item'}
-					blockGrammer={''}
-					viewportWidth={900}
-					styling={'custom'}
-					skeletonLoadingTime={4000}
-				/>
-			);
-		}
-
-		return dummyPreview;
-	};
-
 	function buildHomepagePreviews() {
 		return homepagePattern?.map( ( homepage, idx ) => {
 			if ( homepage ) {
@@ -209,7 +191,9 @@ const StepDesignHomepageMenu = () => {
 						subtitle={ currentStep?.subheading }
 					/>
 					<div className="theme-styles-menu__list">
-						{ !globalStyle && buildDummyPreviews() }
+						{!globalStyle && 
+							<LivePreviewSkeleton count={Math.floor(THEME_VARIATIONS)}
+							className={'homepage_preview__list__item'} viewportWidth={1200} /> }
 						{ globalStyle && buildHomepagePreviews() }
 					</div>
 				</div>
