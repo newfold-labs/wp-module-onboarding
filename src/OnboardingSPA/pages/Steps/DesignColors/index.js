@@ -8,10 +8,9 @@ import { getPatterns } from '../../../utils/api/patterns';
 import { store as nfdOnboardingStore } from '../../../store';
 import { LivePreview } from '../../../components/LivePreview';
 import CommonLayout from '../../../components/Layouts/Common';
-import { VIEW_DESIGN_COLORS } from '../../../../constants';
 import GlobalStyleParent from '../../../components/GlobalStyleParent';
 import { DesignStateHandler } from '../../../components/StateHandlers';
-import { getGlobalStyles, setGlobalStyles } from '../../../utils/api/themes';
+import { THEME_STATUS_NOT_ACTIVE, VIEW_DESIGN_COLORS } from '../../../../constants';
 
 const StepDesignColors = () => {
 	const location = useLocation();
@@ -47,6 +46,9 @@ const StepDesignColors = () => {
 
 	const getStylesAndPatterns = async () => {
 		const pattern = await getPatterns(currentStep.patternId, true);
+		if (pattern?.error) {
+			return updateThemeStatus(THEME_STATUS_NOT_ACTIVE);
+		}
 		setPattern(pattern?.body);
 		setIsLoaded(true);
 	};
