@@ -34,12 +34,20 @@ const getThemeStatus = async ( theme ) => {
 	);
 };
 
-const getThemeColors = async (theme) => {
+const getThemeFonts = async () => {
 	return await resolve(
-		apiFetch({
-			url: onboardingRestURL( 'themes/colors' ),
-		})
+		apiFetch( {
+			url: onboardingRestURL( 'themes/fonts' ),
+		} )
 	);
 };
 
-export { init, getGlobalStyles, getThemeStatus, getThemeColors };
+const getThemeColors = async ( theme ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'themes/colors' ),
+		} )
+	);
+};
+
+export { init, getGlobalStyles, getThemeStatus, getThemeColors, getThemeFonts };
