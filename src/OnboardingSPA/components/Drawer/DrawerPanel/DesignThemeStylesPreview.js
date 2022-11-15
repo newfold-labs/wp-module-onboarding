@@ -39,8 +39,8 @@ const DesignThemeStylesPreview = () => {
 	} = useDispatch( nfdOnboardingStore );
 
 	const THEME_VARIATIONS
-		= window.nfdOnboarding.themeStepData[currentStep.patternId].styles
-		* window.nfdOnboarding.themeStepData[currentStep.patternId].patterns;
+		= window.nfdOnboarding?.themeStepData[currentStep?.patternId]?.styles
+		* window.nfdOnboarding?.themeStepData[currentStep?.patternId]?.patterns;
 		
 	const getStylesAndPatterns = async () => {
 		const patternResponse = await getPatterns(
@@ -97,25 +97,6 @@ const DesignThemeStylesPreview = () => {
 		setCurrentOnboardingData( currentData );
 	};
 
-	const buildDummyPreviews = () => {
-		let dummyPreview = [];
-
-		for (let i = 0; i < THEME_VARIATIONS; i++) {
-			dummyPreview.push(
-				<LivePreviewSelectableCard
-					key={i}
-					className={'theme-styles-preview--drawer__list__item'}
-					blockGrammer={''}
-					viewportWidth={900}
-					styling={'custom'}
-					skeletonLoadingTime={4000}
-				/>
-			);
-		}
-
-		return dummyPreview;
-	};
-
 	const buildPreviews = () => {
 		return globalStyles?.map( ( globalStyle, idx ) => {
 			return (
@@ -139,14 +120,16 @@ const DesignThemeStylesPreview = () => {
 			<div className="theme-styles-preview--drawer__list">
 				{!globalStyles
 					&& <LivePreviewSkeleton count={Math.floor(THEME_VARIATIONS)}
-						className={'theme-styles-preview--drawer__list__item'} viewportWidth={900} />}
+						className={'theme-styles-preview--drawer__list__item'} 
+						viewportWidth={900} skeletonLoadingTime={4000}/>}
 				{ globalStyles
 					&& buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW ) }
 			</div>
 			<div className="theme-styles-preview--drawer__list">
 				{!globalStyles
 					&& <LivePreviewSkeleton count={Math.floor(THEME_VARIATIONS)}
-						className={'theme-styles-preview--drawer__list__item'} viewportWidth={900} />}
+						className={'theme-styles-preview--drawer__list__item'} 
+						viewportWidth={900} skeletonLoadingTime={4000}/>}
 				{ globalStyles
 					&& buildPreviews().slice(
 							MAX_PREVIEWS_PER_ROW,
