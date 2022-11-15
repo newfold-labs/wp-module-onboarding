@@ -5,6 +5,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use SebastianBergmann\CodeCoverage\Util\Percentage;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ThemeInstallTaskManager;
+use NewfoldLabs\WP\Module\Onboarding\Services\FlowService; 
 
 /**
  * Register Admin Page, Assets & Admin functionality with WordPress.
@@ -118,6 +119,8 @@ final class WP_Admin {
 		if ( isset( $_GET['nfd_themes'] ) && $_GET['nfd_themes'] === 'true' ) {
 			ThemeInstallTaskManager::queue_initial_installs();
 		}
+
+		FlowService::initalise_onboarding_flow_data();
 
 		self::register_assets();
 	}
