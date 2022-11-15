@@ -67,16 +67,20 @@ final class Flows {
 			'customDesign'    => false,
 
 			'palette'         => array(
-				array(
-					'slug'  => '',
-					'color' => '',
-					'name'  => '',
+				'slug'=> '',
+       			'name'=> '',
+       			'color'=> array(
+					array('slug'=> 'primary', 'name'=> 'Primary', 'color'=> ''),
+					array( 'slug'=> 'secondary', 'name'=> 'Secondary', 'color'=> ''),
+					array( 'slug'=> 'tertiary', 'name'=> 'Tertiary', 'color'=> ''),
+					array( 'slug'=> 'background', 'name'=> 'Background', 'color'=> '')
 				),
+				'supports' => array('yith-wonder')
 			),
 
 			'typography'      => array(
-				'fontFamilies' => array(),
-				'fontSizes'    => array(),
+				'slug' => '',
+				'data' => array()
 			),
 
 			// This string will identify the Header Pattern

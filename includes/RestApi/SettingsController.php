@@ -166,6 +166,7 @@ class SettingsController {
 						if( !empty($params['twitter_site'])) {
 							if( ( $twitter_id = $this->validate_twitter_id($params['twitter_site']) ) === false ) {
 								$this->invalid_urls[] = 'twitter_site';
+								unset($params['twitter_site']);
 							} else {
 								$params['twitter_site'] = $twitter_id;
 							}
@@ -186,7 +187,6 @@ class SettingsController {
 						if ( ! empty( $param_value ) && ! \wp_http_validate_url( $param_value ) ) {
 							$this->invalid_urls[] = $param_key;
 							unset($params[$param_key]);
-							continue;
 						}
 						break;
 				}
@@ -274,20 +274,6 @@ class SettingsController {
 		return new \WP_REST_Response(
 			array(),
 			201
-		);
-	}
-
-	public function get_preview_settings() {
-		$preview_settings = Data::preview_settings();
-
-		$webfonts_css = Webfonts::get_wp_theme_json_webfonts_css();
-		if ( $webfonts_css !== false ) {
-			 $preview_settings['settings']['__unstableResolvedAssets']['styles'] .= '<style>' . $webfonts_css . '</style>';
-		}
-
-		return new \WP_REST_Response(
-			$preview_settings,
-			200
 		);
 	}
 

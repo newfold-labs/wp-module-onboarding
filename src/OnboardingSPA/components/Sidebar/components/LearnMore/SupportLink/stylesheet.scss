@@ -3,7 +3,11 @@
 	&--support-link {
 		border-radius: 2px;
 		text-decoration: none;
-		color: #3575d2;
+		color: var(--wp-admin-theme-color);
 		margin: 10px 0;
+
+		&:hover {
+			color: var(--wp-admin-theme-color-darker-20);
+		}
 	}
 }

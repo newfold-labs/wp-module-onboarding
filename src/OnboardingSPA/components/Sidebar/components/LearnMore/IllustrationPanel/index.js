@@ -3,6 +3,7 @@ import { PanelBody } from '@wordpress/components';
 const IllustrationPanel = ( {
 	cssIcon = 'nfd-onboarding-sidebar-learn-more-get-started-welcome-illustration',
 	baseClassName = 'nfd-onboarding-sidebar-learn-more--illustration-panel',
+	backgroundPosition = 'center'
 } ) => {
 	return (
 		<PanelBody
@@ -17,7 +18,7 @@ const IllustrationPanel = ( {
 					height: '100%',
 					backgroundSize: 'contain',
 					backgroundRepeat: 'no-repeat',
-					backgroundPosition: 'center',
+					backgroundPosition: backgroundPosition,
 				} }
 			></div>
 		</PanelBody>
