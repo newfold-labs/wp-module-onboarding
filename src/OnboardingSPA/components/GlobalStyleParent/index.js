@@ -49,11 +49,13 @@ const GlobalStyleParent = ({ children }) => {
             selectedGlobalStyle = globalStyles.body[0];
         }
         
-        setGlobalStyles({
-            ...selectedGlobalStyle,
-            'title': currentData.data.theme.variation,
-            'version': 2
-        });
+        if(selectedGlobalStyle)
+            setGlobalStyles({
+                ...selectedGlobalStyle,
+                'title': currentData.data.theme.variation,
+                'version': 2
+            });
+
         updatePreviewSettings(
             useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
         );
