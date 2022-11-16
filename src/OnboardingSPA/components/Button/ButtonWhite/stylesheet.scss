@@ -1,0 +1,21 @@
+$button-white-background-color : #fff;
+
+.nfd-onboarding-button {
+
+	&--white {
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		background: $button-white-background-color;
+		color: var(--wp-admin-theme-color);
+		border: 1px solid var(--wp-admin-theme-color);
+		height: 36px;
+		border-radius: 2px;
+		margin: 10px 0;
+
+		&:hover {
+			color: var(--wp-admin-theme-color-darker-20);
+			border: 1px solid var(--wp-admin-theme-color-darker-20);
+		}
+	}
+}
