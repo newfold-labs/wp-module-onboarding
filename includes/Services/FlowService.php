@@ -18,9 +18,11 @@ class FlowService {
             $result = self::default_onboarding_data();
         }
 		$result = self::diff_onboarding_data($result);
-		if ( ! is_null(self::delete_diff_onboarding_data($result)) ) {
-			$result = self::delete_diff_onboarding_data($result);
+		$del_element = self::delete_diff_onboarding_data($result);
+		if ( ! is_null($del_element) ) {
+			$result = $del_element;
 		}
+		$result = array_replace_recursive( $result, Flows::get_data() );
 		self::update_wp_options_data_in_database($result);
         return $result;
     }
