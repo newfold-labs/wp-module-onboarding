@@ -41,6 +41,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 			array(
 				array(
 					'methods'  => \WP_REST_Server::READABLE,
+					'args'     => $this->get_pattern_args(),
 					'callback' => array( $this, 'get_theme_variations' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
@@ -52,6 +53,18 @@ class ThemeVariationsController extends \WP_REST_Controller {
 			)
 		);
 	}
+
+	public function get_pattern_args()
+     {
+		// These variable return the orginal numerous variations if true
+		// Else sends the recently saved theme settings in db
+          return array(
+               'variations'   => array(
+                    'type' => 'boolean',
+					'default' => false,
+               )
+          );
+     }
 
 	/**
 	 * Retrieves the active themes variations.
@@ -95,14 +108,21 @@ class ThemeVariationsController extends \WP_REST_Controller {
 		// The theme data with the new Colors and Fonts
 		$theme_data = json_decode($request->get_body(), true);
 		
-		if($theme_data){
+		if($theme_data && isset($theme_data['settings'])){
+			
 			// Save the new Theme style into the db
 			\update_option(Options::get_option_name('theme_settings'), $theme_data);
+			
+			return new \WP_REST_Response(
+				$theme_data,
+				200
+			);
 		}
 
-		return new \WP_REST_Response(
-			$theme_data,
-			200
+		return new \WP_Error(
+			500,
+			'Missing important parameters',
+			'Settings parameter is found to be missing'
 		);
 	}
 
