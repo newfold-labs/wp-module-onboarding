@@ -116,12 +116,11 @@ const DesignThemeStylesPreview = () => {
 	return (
 		<div className="theme-styles-preview--drawer">
 			<div className="theme-styles-preview--drawer__list">
-				{!globalStyles
-					&& <LivePreviewSkeleton count={Math.floor(THEME_VARIATIONS)}
+				{!globalStyles ? 
+					<LivePreviewSkeleton count={THEME_VARIATIONS}
 						className={'theme-styles-preview--drawer__list__item'} 
-						viewportWidth={900} skeletonLoadingTime={4000}/>}
-				{ globalStyles
-					&& buildPreviews() }
+						viewportWidth={900} skeletonLoadingTime={4000}/> 
+					: buildPreviews() }
 			</div>
 		</div>
 	);

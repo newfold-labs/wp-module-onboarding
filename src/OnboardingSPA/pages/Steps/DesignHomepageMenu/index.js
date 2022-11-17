@@ -106,7 +106,6 @@ const StepDesignHomepageMenu = () => {
 		if ( homepagePatternData?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
-		console.log(homepagePatternData.body);
 		const globalStyles = await getGlobalStyles();
 		if ( globalStyles?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
@@ -190,10 +189,10 @@ const StepDesignHomepageMenu = () => {
 						subtitle={ currentStep?.subheading }
 					/>
 					<div className="theme-styles-menu__list">
-						{!globalStyle && 
-							<LivePreviewSkeleton count={Math.floor(THEME_VARIATIONS)}
-							className={'homepage_preview__list__item'} viewportWidth={1200} /> }
-						{ globalStyle && buildHomepagePreviews() }
+						{!globalStyle ? 
+							<LivePreviewSkeleton count={THEME_VARIATIONS}
+							className={'homepage_preview__list__item'} viewportWidth={1200} />
+						: buildHomepagePreviews() }
 					</div>
 				</div>
 			</CommonLayout>

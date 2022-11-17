@@ -131,18 +131,16 @@ const StepDesignThemeStylesMenu = () => {
 						subtitle={ currentStep?.subheading }
 					/>
 					<div className="theme-styles-menu__list">
-						{!globalStyles && 
+						{!globalStyles ? 
 							<LivePreviewSkeleton count={Math.floor(THEME_VARIATIONS/2)}
-							className={'theme-styles-menu__list__item'} viewportWidth={900}/>}
-						{ globalStyles &&
-							buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW )}
+							className={'theme-styles-menu__list__item'} viewportWidth={900}/>
+						: buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW )}
 					</div>
 					<div className="theme-styles-menu__list">
-						{!globalStyles &&
+						{!globalStyles ?
 							<LivePreviewSkeleton count={Math.floor(THEME_VARIATIONS/2)}
-								className={'theme-styles-menu__list__item'} viewportWidth={900} />}
-						{ globalStyles &&
-							buildPreviews().slice(
+								className={'theme-styles-menu__list__item'} viewportWidth={900} />
+						: buildPreviews().slice(
 								MAX_PREVIEWS_PER_ROW,
 								globalStyles.length
 							)}
