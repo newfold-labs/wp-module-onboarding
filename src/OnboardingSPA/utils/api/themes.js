@@ -20,7 +20,7 @@ const init = () => {
 
 const getGlobalStyles = async ( defaultValue = false ) => {
 	return await resolve(
-		apiFetch({ url: onboardingRestURL('themes/variations&defaultValue=' + defaultValue ) } ).then()
+		apiFetch({ url: onboardingRestURL('themes/variations&variations=' + defaultValue ) } ).then()
 	);
 };
 

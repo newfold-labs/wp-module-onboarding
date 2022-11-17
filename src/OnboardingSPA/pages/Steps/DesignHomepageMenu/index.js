@@ -12,10 +12,9 @@ import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
-import { LivePreviewSelectableCard } from '../../../components/LivePreview';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { DesignStateHandler } from '../../../components/StateHandlers';
-import GlobalStyleProvider from '../../../components/GlobalStyleProvider';
+import { LivePreviewSelectableCard, GlobalStylesProvider } from '../../../components/LivePreview';
 
 const StepDesignHomepageMenu = () => {
 	const homepagePatternList = [ 'homepage-1', 'homepage-2', 'homepage-3' ];
@@ -159,7 +158,7 @@ const StepDesignHomepageMenu = () => {
 
 	return (
 		<DesignStateHandler>
-			<GlobalStyleProvider>
+			<GlobalStylesProvider>
 				<CommonLayout>
 					<div className="homepage_preview">
 						<HeadingWithSubHeading
@@ -171,7 +170,7 @@ const StepDesignHomepageMenu = () => {
 						</div>
 					</div>
 				</CommonLayout>
-			</GlobalStyleProvider>
+			</GlobalStylesProvider>
 		</DesignStateHandler>
 	);
 };

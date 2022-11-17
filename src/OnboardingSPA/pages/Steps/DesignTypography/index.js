@@ -5,14 +5,13 @@ import { useSelect, useDispatch } from '@wordpress/data';
 
 import { getPatterns } from '../../../utils/api/patterns';
 import { store as nfdOnboardingStore } from '../../../store';
-import { LivePreview } from '../../../components/LivePreview';
 import CommonLayout from '../../../components/Layouts/Common';
 import {
 	THEME_STATUS_NOT_ACTIVE,
 	VIEW_DESIGN_TYPOGRAPHY,
 } from '../../../../constants';
 import { DesignStateHandler } from '../../../components/StateHandlers';
-import GlobalStyleProvider from '../../../components/GlobalStyleProvider';
+import { LivePreview, GlobalStylesProvider } from '../../../components/LivePreview';
 
 const StepDesignTypography = () => {
 	const location = useLocation();
@@ -63,7 +62,7 @@ const StepDesignTypography = () => {
 
 	return (
 		<DesignStateHandler>
-			<GlobalStyleProvider>
+			<GlobalStylesProvider>
 				<CommonLayout className="theme-fonts-preview">
 					<div className="theme-fonts-preview__title-bar">
 						<div className="theme-fonts-preview__title-bar__browser">
@@ -83,7 +82,7 @@ const StepDesignTypography = () => {
 						)}
 					</div>
 				</CommonLayout>
-			</GlobalStyleProvider>
+			</GlobalStylesProvider>
 		</DesignStateHandler>
 	);
 };

@@ -6,10 +6,9 @@ import { useSelect, useDispatch } from '@wordpress/data';
 
 import { getPatterns } from '../../../utils/api/patterns';
 import { store as nfdOnboardingStore } from '../../../store';
-import { LivePreview } from '../../../components/LivePreview';
 import CommonLayout from '../../../components/Layouts/Common';
-import GlobalStyleProvider from '../../../components/GlobalStyleProvider';
 import { DesignStateHandler } from '../../../components/StateHandlers';
+import { LivePreview, GlobalStylesProvider } from '../../../components/LivePreview';
 import { THEME_STATUS_NOT_ACTIVE, VIEW_DESIGN_COLORS } from '../../../../constants';
 
 const StepDesignColors = () => {
@@ -59,7 +58,7 @@ const StepDesignColors = () => {
 
 	return (
 		<DesignStateHandler>
-			<GlobalStyleProvider>
+			<GlobalStylesProvider>
 				<CommonLayout className="theme-colors-preview">
 					<div className="theme-colors-preview__title-bar">
 						<div className="theme-colors-preview__title-bar__browser">
@@ -78,7 +77,7 @@ const StepDesignColors = () => {
 						)}
 					</div>
 				</CommonLayout>
-			</GlobalStyleProvider>
+			</GlobalStylesProvider>
 		</DesignStateHandler>
 	);
 };

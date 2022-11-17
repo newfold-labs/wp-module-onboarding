@@ -1,9 +1,9 @@
 import { useSelect, useDispatch } from '@wordpress/data'; 
 import { useState, useEffect } from '@wordpress/element'; 
 
-import { store as nfdOnboardingStore } from '../../store';
-import { getGlobalStyles, setGlobalStyles } from '../../utils/api/themes';
-import { useGlobalStylesOutput } from '../../utils/global-styles/use-global-styles-output';
+import { store as nfdOnboardingStore } from '../../../store';
+import { getGlobalStyles, setGlobalStyles } from '../../../utils/api/themes';
+import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
 /**
  * Global Style Parent Component
@@ -13,7 +13,7 @@ import { useGlobalStylesOutput } from '../../utils/global-styles/use-global-styl
  * @returns Global Style Parent
  */
 
-const GlobalStyleProvider = ({ children }) => {
+const GlobalStylesProvider = ({ children }) => {
 
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -45,7 +45,7 @@ const GlobalStyleProvider = ({ children }) => {
                 (globalStyle) =>
                     globalStyle.title === currentData.data.theme.variation
             )[0];
-        } else {
+        } else if (globalStyles.body[0]?.id === 0) {
             selectedGlobalStyle = globalStyles.body[0];
         }
         
@@ -71,4 +71,4 @@ const GlobalStyleProvider = ({ children }) => {
     );
 };
 
-export default GlobalStyleProvider;
+export default GlobalStylesProvider;

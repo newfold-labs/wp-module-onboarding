@@ -60,7 +60,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	 */
 	public function get_theme_variations( \WP_REST_Request $request ) {
 
-		$default = $request->get_param('defaultValue');
+		$default = $request->get_param('variations');
 
 		// If there exists an old Custom Theme then return that
 		if( 'false' === $default && false !== \get_option(Options::get_option_name('theme_settings')) )
@@ -72,6 +72,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 
 		$active_variation              = \WP_Theme_JSON_Resolver::get_merged_data( 'theme' )->get_raw_data();
 		$active_variation_global_style = array(
+			'id'       => 0,
             'title'    => 'Default',
 			'version'  => $active_variation['version'],
 			'settings' => $active_variation['settings'],

@@ -16,8 +16,8 @@ import {
 import { store as nfdOnboardingStore } from '../../../../store';
 import { getPatterns } from '../../../../utils/api/patterns';
 import { conditionalSteps } from '../../../../data/routes/';
+import { GlobalStylesProvider } from '../../../../components/LivePreview';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
-import GlobalStyleProvider from '../../../../components/GlobalStyleProvider';
 
 const StepDesignThemeStylesPreview = () => {
 	const location = useLocation();
@@ -172,7 +172,7 @@ const StepDesignThemeStylesPreview = () => {
 
 	return (
 		<DesignStateHandler>
-			<GlobalStyleProvider>
+			<GlobalStylesProvider>
 				<CommonLayout className="theme-styles-preview">
 					<div className="theme-styles-preview__checkbox">
 						<CheckboxControl
@@ -213,7 +213,7 @@ const StepDesignThemeStylesPreview = () => {
 						)}
 					</div>
 				</CommonLayout>
-			</GlobalStyleProvider>
+			</GlobalStylesProvider>
 		</DesignStateHandler>
 	);
 };

@@ -2,8 +2,8 @@ import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 
-import GlobalStyleProvider from '../../GlobalStyleProvider';
 import { store as nfdOnboardingStore } from '../../../store';
+import { GlobalStylesProvider } from '../../../components/LivePreview';
 import { getGlobalStyles, getThemeFonts } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
@@ -114,7 +114,7 @@ const DesignTypography = () => {
 				( globalStyle ) =>
 					globalStyle.title === currentData.data.theme.variation
 			)[ 0 ];
-		} else {
+		} else if (globalStyles.body[0]?.id === 0) {
 			selectedGlobalStyle = globalStyles.body[ 0 ];
 		}
 		updatePreviewSettings(
@@ -202,7 +202,7 @@ const DesignTypography = () => {
 	}
 
 	return (
-		<GlobalStyleProvider>
+		<GlobalStylesProvider>
 			<div ref={drawerFontOptions} className="theme-fonts--drawer">
 				<h2>{__('Font Palettes', 'wp-module-onboarding')}</h2>
 				{ /* { selectedFont && 
@@ -214,7 +214,7 @@ const DesignTypography = () => {
 				{fontPalettes && buildCustomPalette()}
 				<div className="custom-font-palette--hidden">{rerender}</div>
 			</div>
-		</GlobalStyleProvider>
+		</GlobalStylesProvider>
 	);
 };
 export default DesignTypography;
