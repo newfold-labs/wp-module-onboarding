@@ -22,7 +22,7 @@ final class Data {
 			'currentFlow'         => self::current_flow(),
 			'pluginInstallHash'   => Permissions::rest_get_plugin_install_hash(),
 			'previewSettings'     => Preview::get_settings(),
-			'themeStepData'       => self::theme_data(),
+			'themeStepData'       => Themes::theme_data(),
 		);
 	}
 
@@ -105,18 +105,6 @@ final class Data {
 			 return Customer::collect();
 		}
 		 return array();
-	}
-
-	/**
-	 * Get the current theme data like the theme variations and previews per step
-	 *
-	 * @return array
-	 */
-	public static function theme_data()
-	{
-		$theme_step_data = Patterns::get_count_of_patterns();
-		$theme_step_data["theme-styles"]["styles"] = count(\WP_Theme_JSON_Resolver::get_style_variations()) + 1;
-		return $theme_step_data;
 	}
 
 } // END \NewfoldLabs\WP\Module\Onboarding\Data()

@@ -74,6 +74,18 @@ final class Themes {
 	}
 
 	 /**
+	  * Get the current theme data like the theme variations and previews per step
+	  *
+	  * @return array
+	  */
+	public static function theme_data()
+	{
+		$theme_step_data = Patterns::get_count_of_patterns();
+		$theme_step_data["theme-styles"]["styles"] = count(\WP_Theme_JSON_Resolver::get_style_variations()) + 1;
+		return $theme_step_data;
+	}
+
+	 /**
 	  * Get the list of initial themes to be installed for a particular hosting plan.
 	  *
 	  * @return array
