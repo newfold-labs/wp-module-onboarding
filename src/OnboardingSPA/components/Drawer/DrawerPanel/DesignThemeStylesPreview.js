@@ -121,18 +121,7 @@ const DesignThemeStylesPreview = () => {
 						className={'theme-styles-preview--drawer__list__item'} 
 						viewportWidth={900} skeletonLoadingTime={4000}/>}
 				{ globalStyles
-					&& buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW ) }
-			</div>
-			<div className="theme-styles-preview--drawer__list">
-				{!globalStyles
-					&& <LivePreviewSkeleton count={Math.floor(THEME_VARIATIONS)}
-						className={'theme-styles-preview--drawer__list__item'} 
-						viewportWidth={900} skeletonLoadingTime={4000}/>}
-				{ globalStyles
-					&& buildPreviews().slice(
-							MAX_PREVIEWS_PER_ROW,
-							globalStyles.length
-					  ) }
+					&& buildPreviews() }
 			</div>
 		</div>
 	);
