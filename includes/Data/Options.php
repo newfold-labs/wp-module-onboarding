@@ -38,7 +38,7 @@ final class Options {
 		'site_icon'                     => 'site_icon',
 		'show_on_front'                 => 'show_on_front',
 		'page_on_front'                 => 'page_on_front',
-		'custom_theme_styles'           => 'custom_theme_styles',
+		'theme_settings'                => 'theme_settings',
 	);
 
 	protected static $initialization_options = array(

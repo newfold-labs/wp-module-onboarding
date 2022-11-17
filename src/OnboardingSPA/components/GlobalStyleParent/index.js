@@ -13,7 +13,7 @@ import { useGlobalStylesOutput } from '../../utils/global-styles/use-global-styl
  * @returns Global Style Parent
  */
 
-const GlobalStyleParent = ({ children }) => {
+const GlobalStyleProvider = ({ children }) => {
 
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -38,7 +38,7 @@ const GlobalStyleParent = ({ children }) => {
             return updateThemeStatus(THEME_STATUS_NOT_ACTIVE);
         }
         let selectedGlobalStyle;
-        if (storedPreviewSettings?.title)
+        if (storedPreviewSettings?.title && storedPreviewSettings?.settings)
             selectedGlobalStyle = storedPreviewSettings;
         else if (currentData.data.theme.variation) {
             selectedGlobalStyle = globalStyles.body.filter(
@@ -71,4 +71,4 @@ const GlobalStyleParent = ({ children }) => {
     );
 };
 
-export default GlobalStyleParent;
+export default GlobalStyleProvider;

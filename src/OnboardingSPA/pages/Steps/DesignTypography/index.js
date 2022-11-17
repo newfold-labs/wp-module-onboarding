@@ -12,7 +12,7 @@ import {
 	VIEW_DESIGN_TYPOGRAPHY,
 } from '../../../../constants';
 import { DesignStateHandler } from '../../../components/StateHandlers';
-import GlobalStyleParent from '../../../components/GlobalStyleParent';
+import GlobalStyleProvider from '../../../components/GlobalStyleProvider';
 
 const StepDesignTypography = () => {
 	const location = useLocation();
@@ -63,7 +63,7 @@ const StepDesignTypography = () => {
 
 	return (
 		<DesignStateHandler>
-			<GlobalStyleParent>
+			<GlobalStyleProvider>
 				<CommonLayout className="theme-fonts-preview">
 					<div className="theme-fonts-preview__title-bar">
 						<div className="theme-fonts-preview__title-bar__browser">
@@ -83,7 +83,7 @@ const StepDesignTypography = () => {
 						)}
 					</div>
 				</CommonLayout>
-			</GlobalStyleParent>
+			</GlobalStyleProvider>
 		</DesignStateHandler>
 	);
 };

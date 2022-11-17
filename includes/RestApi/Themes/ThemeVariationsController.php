@@ -63,10 +63,10 @@ class ThemeVariationsController extends \WP_REST_Controller {
 		$default = $request->get_param('defaultValue');
 
 		// If there exists an old Custom Theme then return that
-		if( 'false' === $default && false !== \get_option(Options::get_option_name('custom_theme_styles')) )
+		if( 'false' === $default && false !== \get_option(Options::get_option_name('theme_settings')) )
 		{
 			return array(
-				\get_option(Options::get_option_name('custom_theme_styles'))
+				\get_option(Options::get_option_name('theme_settings'))
 			);
 		}
 
@@ -96,7 +96,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 		
 		if($theme_data){
 			// Save the new Theme style into the db
-			\update_option(Options::get_option_name('custom_theme_styles'), $theme_data);
+			\update_option(Options::get_option_name('theme_settings'), $theme_data);
 		}
 
 		return new \WP_REST_Response(

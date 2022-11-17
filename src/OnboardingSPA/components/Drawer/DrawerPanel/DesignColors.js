@@ -6,7 +6,7 @@ import { Popover, ColorPicker } from '@wordpress/components';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors, setGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import GlobalStyleParent from '../../GlobalStyleParent';
+import GlobalStyleProvider from '../../GlobalStyleProvider';
 
 const DesignColors = () => {
 
@@ -317,7 +317,7 @@ const DesignColors = () => {
 	}
 
 	return (
-		<GlobalStyleParent>
+		<GlobalStyleProvider>
 			<div className='theme-colors--drawer'>
 				<h2>{__('Color Palettes', 'wp-module-onboarding')}</h2>
 				{/* {selectedColors?.slug && 
@@ -328,7 +328,7 @@ const DesignColors = () => {
 				{ colorPalettes && buildPalettes() }
 				{ colorPalettes && buildCustomPalette() }
 			</div>
-		</GlobalStyleParent>
+		</GlobalStyleProvider>
 	);
 };
 

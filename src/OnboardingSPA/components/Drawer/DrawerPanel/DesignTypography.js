@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 
-import GlobalStyleParent from '../../GlobalStyleParent';
+import GlobalStyleProvider from '../../GlobalStyleProvider';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeFonts } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
@@ -202,7 +202,7 @@ const DesignTypography = () => {
 	}
 
 	return (
-		<GlobalStyleParent>
+		<GlobalStyleProvider>
 			<div ref={drawerFontOptions} className="theme-fonts--drawer">
 				<h2>{__('Font Palettes', 'wp-module-onboarding')}</h2>
 				{ /* { selectedFont && 
@@ -214,7 +214,7 @@ const DesignTypography = () => {
 				{fontPalettes && buildCustomPalette()}
 				<div className="custom-font-palette--hidden">{rerender}</div>
 			</div>
-		</GlobalStyleParent>
+		</GlobalStyleProvider>
 	);
 };
 export default DesignTypography;

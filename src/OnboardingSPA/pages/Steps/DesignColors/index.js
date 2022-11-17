@@ -8,7 +8,7 @@ import { getPatterns } from '../../../utils/api/patterns';
 import { store as nfdOnboardingStore } from '../../../store';
 import { LivePreview } from '../../../components/LivePreview';
 import CommonLayout from '../../../components/Layouts/Common';
-import GlobalStyleParent from '../../../components/GlobalStyleParent';
+import GlobalStyleProvider from '../../../components/GlobalStyleProvider';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 import { THEME_STATUS_NOT_ACTIVE, VIEW_DESIGN_COLORS } from '../../../../constants';
 
@@ -59,7 +59,7 @@ const StepDesignColors = () => {
 
 	return (
 		<DesignStateHandler>
-			<GlobalStyleParent>
+			<GlobalStyleProvider>
 				<CommonLayout className="theme-colors-preview">
 					<div className="theme-colors-preview__title-bar">
 						<div className="theme-colors-preview__title-bar__browser">
@@ -78,7 +78,7 @@ const StepDesignColors = () => {
 						)}
 					</div>
 				</CommonLayout>
-			</GlobalStyleParent>
+			</GlobalStyleProvider>
 		</DesignStateHandler>
 	);
 };
