@@ -1,5 +1,5 @@
 import { useSelect } from '@wordpress/data';
-import { LivePreviewSelectableCard } from '../LivePreview';
+import { LivePreviewSelectableCard } from '..';
 
 /**
  * Renders Skeletons for Live Previews.

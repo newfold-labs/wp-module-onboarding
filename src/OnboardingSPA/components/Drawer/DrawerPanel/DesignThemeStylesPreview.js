@@ -1,7 +1,6 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 
-import { LivePreviewSelectableCard } from '../../LivePreview';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../utils/api/themes';
@@ -10,7 +9,7 @@ import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
-import LivePreviewSkeleton from '../../LivePreviewSkeleton';
+import { LivePreviewSelectableCard, LivePreviewSkeleton } from '../../LivePreview';
 
 const DesignThemeStylesPreview = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;

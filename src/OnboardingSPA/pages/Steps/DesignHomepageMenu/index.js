@@ -12,11 +12,10 @@ import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
-import { LivePreviewSelectableCard } from '../../../components/LivePreview';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import LivePreviewSkeleton from '../../../components/LivePreviewSkeleton';
+import { LivePreviewSelectableCard, LivePreviewSkeleton } from '../../../components/LivePreview';
 
 const StepDesignHomepageMenu = () => {
 	const homepagePatternList = [ 'homepage-1', 'homepage-2', 'homepage-3' ];

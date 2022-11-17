@@ -5,7 +5,6 @@ import { useViewportMatch } from '@wordpress/compose';
 
 import { store as nfdOnboardingStore } from '../../../../store';
 import CommonLayout from '../../../../components/Layouts/Common';
-import { LivePreviewSelectableCard } from '../../../../components/LivePreview';
 import HeadingWithSubHeading from '../../../../components/HeadingWithSubHeading';
 import { useGlobalStylesOutput } from '../../../../utils/global-styles/use-global-styles-output';
 import { getPatterns } from '../../../../utils/api/patterns';
@@ -16,7 +15,7 @@ import {
 	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../../constants';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
-import LivePreviewSkeleton from '../../../../components/LivePreviewSkeleton';
+import { LivePreviewSelectableCard, LivePreviewSkeleton } from '../../../../components/LivePreview';
 
 const StepDesignThemeStylesMenu = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;
