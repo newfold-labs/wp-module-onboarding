@@ -15,7 +15,7 @@ final class Patterns {
 					),
 					'homepage-1'  => array(
 						'active' => true,
-                              'shown'  => true,
+						'shown'  => true,
 					),
 					'site-footer' => array(
 						'active' => true,
@@ -27,15 +27,15 @@ final class Patterns {
 					),
 					'homepage-1'  => array(
 						'active' => true,
-                              'shown'  => true,
+						'shown'  => true,
 					),
 					'homepage-2'  => array(
 						'active' => true,
-                              'shown'  => true,
+						'shown'  => true,
 					),
 					'homepage-3'  => array(
 						'active' => true,
-                              'shown'  => true,
+						'shown'  => true,
 					),
 					'site-footer' => array(
 						'active' => true,
@@ -46,28 +46,28 @@ final class Patterns {
 						'active'      => true,
 						'title'       => 'About',
 						'selected'    => true,
-                              'shown'       => true,
+						'shown'       => true,
 						'description' => __( 'Explain your company values or the history behind your brand.', 'wp-module-onboarding' ),
 					),
 					'contact-us'        => array(
 						'active'      => true,
 						'selected'    => true,
 						'title'       => 'Contact',
-                              'shown'       => true,
+						'shown'       => true,
 						'description' => __( 'Offer visitors a single page with a contact form, your street address and social media.', 'wp-module-onboarding' ),
 					),
 					'testimonials-page' => array(
 						'active'      => true,
 						'title'       => 'Testimonials',
 						'selected'    => false,
-                              'shown'       => true,
+						'shown'       => true,
 						'description' => __( 'Highlight your success with testimonials from your fans.', 'wp-module-onboarding' ),
 					),
 					'blog-page'         => array(
 						'active'      => true,
 						'selected'    => true,
 						'title'       => 'Blog',
-                              'shown'       => true,
+						'shown'       => true,
 						'description' => __( 'A page for periodic news, announcements and ideas.', 'wp-module-onboarding' ),
 					),
 				),
@@ -243,8 +243,7 @@ final class Patterns {
 				}
 			}
 			 $theme_pattern_count[ $theme_step ] = array(
-				 'styles'   => 1,
-				 'patterns' => $theme_step_count,
+				 'previewCount'   => 1 * $theme_step_count,
 			 );
 		}
 		 return $theme_pattern_count;

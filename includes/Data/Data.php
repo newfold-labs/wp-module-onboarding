@@ -22,7 +22,7 @@ final class Data {
 			'currentFlow'         => self::current_flow(),
 			'pluginInstallHash'   => Permissions::rest_get_plugin_install_hash(),
 			'previewSettings'     => Preview::get_settings(),
-			'themeStepData'       => Themes::theme_data(),
+			'themeStepData'       => Themes::step_preview_data(),
 		);
 	}
 

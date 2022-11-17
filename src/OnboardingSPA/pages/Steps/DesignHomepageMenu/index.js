@@ -71,8 +71,7 @@ const StepDesignHomepageMenu = () => {
 	} = useDispatch( nfdOnboardingStore );
 
 	const THEME_VARIATIONS
-		= window.nfdOnboarding?.themeStepData[currentStep?.patternId]?.styles
-			* window.nfdOnboarding?.themeStepData[currentStep?.patternId]?.patterns;
+		= window.nfdOnboarding?.themeStepData[currentStep?.patternId]?.previewCount;
 
 	useEffect( () => {
 		if ( isLargeViewport ) {
