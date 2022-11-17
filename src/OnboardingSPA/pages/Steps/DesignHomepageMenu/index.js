@@ -22,19 +22,19 @@ const StepDesignHomepageMenu = () => {
 
 	const homepagesList = {
 		'homepage-1': [
-			'site-header-left-logo-navigation-inline',
-			'homepage-1',
-			'site-footer',
+			'yith-wonder/site-header-left-logo-navigation-inline',
+			'yith-wonder/homepage-1',
+			'yith-wonder/site-footer',
 		],
 		'homepage-2': [
-			'site-header-left-logo-navigation-inline',
-			'homepage-2',
-			'site-footer',
+			'yith-wonder/site-header-left-logo-navigation-inline',
+			'yith-wonder/homepage-2',
+			'yith-wonder/site-footer',
 		],
 		'homepage-3': [
-			'site-header-left-logo-navigation-inline',
-			'homepage-3',
-			'site-footer',
+			'yith-wonder/site-header-left-logo-navigation-inline',
+			'yith-wonder/homepage-3',
+			'yith-wonder/site-footer',
 		],
 	};
 
@@ -106,6 +106,7 @@ const StepDesignHomepageMenu = () => {
 		if ( homepagePatternData?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
+		console.log(homepagePatternData.body);
 		const globalStyles = await getGlobalStyles();
 		if ( globalStyles?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
