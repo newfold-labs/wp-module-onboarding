@@ -47,6 +47,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 				),
 				array(
 					'methods'  => \WP_REST_Server::EDITABLE,
+					'args'     => $this->set_pattern_args(),
 					'callback' => array($this, 'set_theme_variation'),
 					'permission_callback' => array(Permissions::class, 'rest_is_authorized_admin'),
 				),
@@ -62,6 +63,21 @@ class ThemeVariationsController extends \WP_REST_Controller {
                'variations'   => array(
                     'type' => 'boolean',
 					'default' => false,
+               )
+          );
+     }
+
+	 public function set_pattern_args()
+     {
+		// This is the latest modified Global Style to be saved in the db
+          return array(
+               'title'   => array(
+                    'type'     => 'string',
+					'required' => true,
+ 			   ),
+			   'settings'   => array(
+                    'type'     => 'array',
+					'required' => true,
                )
           );
      }
@@ -108,7 +124,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 		// The theme data with the new Colors and Fonts
 		$theme_data = json_decode($request->get_body(), true);
 		
-		if($theme_data && isset($theme_data['settings'])){
+		if($theme_data){
 			
 			// Save the new Theme style into the db
 			\update_option(Options::get_option_name('theme_settings'), $theme_data);
