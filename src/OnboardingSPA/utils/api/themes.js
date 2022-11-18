@@ -18,9 +18,9 @@ const init = () => {
 	} );
 };
 
-const getGlobalStyles = async ( defaultValue = false ) => {
+const getGlobalStyles = async ( variations = false ) => {
 	return await resolve(
-		apiFetch({ url: onboardingRestURL('themes/variations&variations=' + defaultValue ) } ).then()
+		apiFetch({ url: onboardingRestURL('themes/variations&variations=' + variations ) } ).then()
 	);
 };
 
