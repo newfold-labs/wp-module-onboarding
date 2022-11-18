@@ -11,7 +11,10 @@ import {
 	VIEW_DESIGN_TYPOGRAPHY,
 } from '../../../../constants';
 import { DesignStateHandler } from '../../../components/StateHandlers';
-import { LivePreview, GlobalStylesProvider } from '../../../components/LivePreview';
+import {
+	LivePreview,
+	GlobalStylesProvider,
+} from '../../../components/LivePreview';
 
 const StepDesignTypography = () => {
 	const location = useLocation();
@@ -72,14 +75,14 @@ const StepDesignTypography = () => {
 						</div>
 					</div>
 					<div className="theme-fonts-preview__live-preview-container">
-						{pattern && (
+						{ pattern && (
 							<LivePreview
-								blockGrammer={pattern}
-								styling={'custom'}
-								viewportWidth={1300}
-								skeletonLoadingTime={false}
+								blockGrammer={ pattern }
+								styling={ 'custom' }
+								viewportWidth={ 1300 }
+								skeletonLoadingTime={ false }
 							/>
-						)}
+						) }
 					</div>
 				</CommonLayout>
 			</GlobalStylesProvider>

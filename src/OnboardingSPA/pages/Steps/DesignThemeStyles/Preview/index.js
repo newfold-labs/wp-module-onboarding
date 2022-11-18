@@ -179,21 +179,21 @@ const StepDesignThemeStylesPreview = () => {
 							label={
 								<div className="theme-styles-preview__checkbox__label">
 									<span className="theme-styles-preview__checkbox__label__question">
-										{__(
+										{ __(
 											'Customize Colors & Fonts?',
 											'wp-module-onboarding'
-										)}
+										) }
 										<span className="theme-styles-preview__checkbox__label__hint">
-											{__(
+											{ __(
 												'Check to customize in the next few steps (or leave empty and use the Site Editor later)',
 												'wp-module-onboarding'
-											)}
+											) }
 										</span>
 									</span>
 								</div>
 							}
-							checked={customize}
-							onChange={() => handleCheckbox(!customize)}
+							checked={ customize }
+							onChange={ () => handleCheckbox( ! customize ) }
 						/>
 					</div>
 					<div className="theme-styles-preview__title-bar">
@@ -204,13 +204,13 @@ const StepDesignThemeStylesPreview = () => {
 						</div>
 					</div>
 					<div className="theme-styles-preview__live-preview-container">
-						{pattern && storedPreviewSettings && (
+						{ pattern && storedPreviewSettings && (
 							<LivePreview
-								blockGrammer={pattern}
-								styling={'custom'}
-								viewportWidth={1300}
+								blockGrammer={ pattern }
+								styling={ 'custom' }
+								viewportWidth={ 1300 }
 							/>
-						)}
+						) }
 					</div>
 				</CommonLayout>
 			</GlobalStylesProvider>

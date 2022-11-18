@@ -14,7 +14,10 @@ import {
 } from '../../../../constants';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { DesignStateHandler } from '../../../components/StateHandlers';
-import { LivePreviewSelectableCard, GlobalStylesProvider } from '../../../components/LivePreview';
+import {
+	LivePreviewSelectableCard,
+	GlobalStylesProvider,
+} from '../../../components/LivePreview';
 
 const StepDesignHomepageMenu = () => {
 	const homepagePatternList = [ 'homepage-1', 'homepage-2', 'homepage-3' ];
@@ -162,11 +165,11 @@ const StepDesignHomepageMenu = () => {
 				<CommonLayout>
 					<div className="homepage_preview">
 						<HeadingWithSubHeading
-							title={currentStep?.heading}
-							subtitle={currentStep?.subheading}
+							title={ currentStep?.heading }
+							subtitle={ currentStep?.subheading }
 						/>
 						<div className="theme-styles-menu__list">
-							{storedPreviewSettings && buildHomepagePreviews()}
+							{ storedPreviewSettings && buildHomepagePreviews() }
 						</div>
 					</div>
 				</CommonLayout>

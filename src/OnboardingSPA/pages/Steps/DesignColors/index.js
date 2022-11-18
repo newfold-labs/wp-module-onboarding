@@ -8,53 +8,57 @@ import { getPatterns } from '../../../utils/api/patterns';
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import { DesignStateHandler } from '../../../components/StateHandlers';
-import { LivePreview, GlobalStylesProvider } from '../../../components/LivePreview';
-import { THEME_STATUS_NOT_ACTIVE, VIEW_DESIGN_COLORS } from '../../../../constants';
+import {
+	LivePreview,
+	GlobalStylesProvider,
+} from '../../../components/LivePreview';
+import {
+	THEME_STATUS_NOT_ACTIVE,
+	VIEW_DESIGN_COLORS,
+} from '../../../../constants';
 
 const StepDesignColors = () => {
 	const location = useLocation();
-	const [isLoaded, setIsLoaded] = useState(false);
-	const [pattern, setPattern] = useState();
+	const [ isLoaded, setIsLoaded ] = useState( false );
+	const [ pattern, setPattern ] = useState();
 
-	const isLargeViewport = useViewportMatch('medium');
-	const {
-		currentStep,
-	} = useSelect((select) => {
+	const isLargeViewport = useViewportMatch( 'medium' );
+	const { currentStep } = useSelect( ( select ) => {
 		return {
-			currentStep: select(nfdOnboardingStore).getStepFromPath(
+			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
-			)
+			),
 		};
-	}, []);
+	}, [] );
 
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
 		setIsSidebarOpened,
 		setIsDrawerSuppressed,
-	} = useDispatch(nfdOnboardingStore);
+	} = useDispatch( nfdOnboardingStore );
 
-	useEffect(() => {
-		if (isLargeViewport) {
-			setIsDrawerOpened(true);
+	useEffect( () => {
+		if ( isLargeViewport ) {
+			setIsDrawerOpened( true );
 		}
-		setIsSidebarOpened(false);
-		setIsDrawerSuppressed(false);
-		setDrawerActiveView(VIEW_DESIGN_COLORS);
-	}, []);
+		setIsSidebarOpened( false );
+		setIsDrawerSuppressed( false );
+		setDrawerActiveView( VIEW_DESIGN_COLORS );
+	}, [] );
 
 	const getStylesAndPatterns = async () => {
-		const pattern = await getPatterns(currentStep.patternId, true);
-		if (pattern?.error) {
-			return updateThemeStatus(THEME_STATUS_NOT_ACTIVE);
+		const pattern = await getPatterns( currentStep.patternId, true );
+		if ( pattern?.error ) {
+			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
-		setPattern(pattern?.body);
-		setIsLoaded(true);
+		setPattern( pattern?.body );
+		setIsLoaded( true );
 	};
 
-	useEffect(() => {
-		if (!isLoaded) getStylesAndPatterns();
-	}, [isLoaded]);
+	useEffect( () => {
+		if ( ! isLoaded ) getStylesAndPatterns();
+	}, [ isLoaded ] );
 
 	return (
 		<DesignStateHandler>
@@ -68,13 +72,13 @@ const StepDesignColors = () => {
 						</div>
 					</div>
 					<div className="theme-colors-preview__live-preview-container">
-						{pattern && (
+						{ pattern && (
 							<LivePreview
-								blockGrammer={pattern}
-								styling={'custom'}
-								viewportWidth={1300}
+								blockGrammer={ pattern }
+								styling={ 'custom' }
+								viewportWidth={ 1300 }
 							/>
-						)}
+						) }
 					</div>
 				</CommonLayout>
 			</GlobalStylesProvider>

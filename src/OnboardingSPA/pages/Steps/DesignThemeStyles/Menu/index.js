@@ -75,7 +75,7 @@ const StepDesignThemeStylesMenu = () => {
 		if ( patternsResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
-		const globalStylesResponse = await getGlobalStyles(true);
+		const globalStylesResponse = await getGlobalStyles( true );
 		if ( globalStylesResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}

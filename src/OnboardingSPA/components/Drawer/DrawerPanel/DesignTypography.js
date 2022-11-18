@@ -114,7 +114,7 @@ const DesignTypography = () => {
 				( globalStyle ) =>
 					globalStyle.title === currentData.data.theme.variation
 			)[ 0 ];
-		} else if (globalStyles.body[0]?.id === 0) {
+		} else if ( globalStyles.body[ 0 ]?.id === 0 ) {
 			selectedGlobalStyle = globalStyles.body[ 0 ];
 		}
 		updatePreviewSettings(
@@ -203,16 +203,16 @@ const DesignTypography = () => {
 
 	return (
 		<GlobalStylesProvider>
-			<div ref={drawerFontOptions} className="theme-fonts--drawer">
-				<h2>{__('Font Palettes', 'wp-module-onboarding')}</h2>
+			<div ref={ drawerFontOptions } className="theme-fonts--drawer">
+				<h2>{ __( 'Font Palettes', 'wp-module-onboarding' ) }</h2>
 				{ /* { selectedFont && 
 				<div className='theme-fonts--drawer--reset' onClick={resetFonts}>
 					<div>Reset Button</div>
 				</div>
 			} */ }
-				{fontPalettes && buildPalettes()}
-				{fontPalettes && buildCustomPalette()}
-				<div className="custom-font-palette--hidden">{rerender}</div>
+				{ fontPalettes && buildPalettes() }
+				{ fontPalettes && buildCustomPalette() }
+				<div className="custom-font-palette--hidden">{ rerender }</div>
 			</div>
 		</GlobalStylesProvider>
 	);
