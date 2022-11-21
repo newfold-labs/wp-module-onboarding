@@ -231,19 +231,19 @@ final class Patterns {
 
 		 $active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
 		 $theme_steps  = self::get_theme_step_patterns()[ $active_theme ];
-           
+
 		 $theme_pattern_count = array();
 		foreach ( $theme_steps as $theme_step => $patterns ) {
 			 $theme_step_count = 0;
 			foreach ( $patterns as $pattern => $pattern_data ) {
 				foreach ( $pattern_data as $property => $value ) {
-					if ( $property === 'shown' && $value == true) {
+					if ( $property === 'shown' && $value == true ) {
 						 $theme_step_count += 1;
 					}
 				}
 			}
 			 $theme_pattern_count[ $theme_step ] = array(
-				 'previewCount'   => 1 * $theme_step_count,
+				 'previewCount' => 1 * $theme_step_count,
 			 );
 		}
 		 return $theme_pattern_count;

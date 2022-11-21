@@ -13,16 +13,18 @@ final class Data {
 	 */
 	public static function runtime() {
 		return array(
-			'buildUrl'            => \NFD_ONBOARDING_BUILD_URL,
-			'siteUrl'             => \get_site_url(),
-			'restUrl'             => \get_home_url() . '/index.php?rest_route=',
-			'adminUrl'            => \admin_url(),
-			'currentBrand'        => self::current_brand(),
-			'currentPlan'         => self::current_plan(),
-			'currentFlow'         => self::current_flow(),
-			'pluginInstallHash'   => Permissions::rest_get_plugin_install_hash(),
-			'previewSettings'     => array('settings' => Preview::get_settings(), 
-					'stepPreviewData' =>  Themes::step_preview_data()),
+			'buildUrl'          => \NFD_ONBOARDING_BUILD_URL,
+			'siteUrl'           => \get_site_url(),
+			'restUrl'           => \get_home_url() . '/index.php?rest_route=',
+			'adminUrl'          => \admin_url(),
+			'currentBrand'      => self::current_brand(),
+			'currentPlan'       => self::current_plan(),
+			'currentFlow'       => self::current_flow(),
+			'pluginInstallHash' => Permissions::rest_get_plugin_install_hash(),
+			'previewSettings'   => array(
+				'settings'        => Preview::get_settings(),
+				'stepPreviewData' => Themes::step_preview_data(),
+			),
 		);
 	}
 
