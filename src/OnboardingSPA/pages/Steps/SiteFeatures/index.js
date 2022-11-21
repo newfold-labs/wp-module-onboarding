@@ -24,7 +24,7 @@ const StepSiteFeatures = () => {
 
 	useEffect(() => {
 		if (isLargeViewport) {
-			setIsDrawerOpened(true);
+			setIsDrawerOpened(false);
 		}
 		setIsSidebarOpened(false);
 		setIsDrawerSuppressed(false);
@@ -33,51 +33,61 @@ const StepSiteFeatures = () => {
 
 	const data = [
 		{
+			'icon': 'icon-name',
 			'title': 'Security, Speed & Growth',
 			'subtitle': 'Powered by Jetpack',
 			'desc': 'Jetpack'
 		},
 		{
+			'icon': 'icon-name',
 			'title': 'Forms',
 			'subtitle': 'Powered by WP Forms',
 			'desc': 'WP Forms'
 		},
 		{
+			'icon': 'icon-name',
 			'title': 'Site Traffic',
 			'subtitle': 'Powered by MonsterInsights',
 			'desc': 'MonsterInsights'
 		},
 		{
+			'icon': 'icon-name',
 			'title': 'Search Engine Optimization',
 			'subtitle': 'Powered by Yoast',
 			'desc': 'Yoast'
 		},
 		{
+			'icon': 'icon-name',
 			'title': 'Email Newsletters',
 			'subtitle': 'Powered by Creative Email',
 			'desc': 'Creative Email'
 		},
 		{
+			'icon': 'icon-name',
 			'title': 'Enhanced Product Search',
 			'subtitle': 'Powered by YITH',
 			'desc': 'YITH'
 		},
 		{
+			'icon': 'icon-name',
 			'title': 'Enhanced Product Filters',
 			'subtitle': 'Powered by YITH',
 			'desc': 'YITH'
 		},
 		{
+			'icon': 'icon-name',
 			'title': 'Bookings & Appointments',
 			'subtitle': 'Powered by YITH',
 			'desc': 'YITH'
 		},
 		{
+			'icon': 'icon-name',
 			'title': 'Product Wishlists',
 			'subtitle': 'Powered by YITH',
 			'desc': 'YITH'
 		},
 		{
+			'icon': 'icon-name',
 			'title': 'Lead Generation',
 			'subtitle': 'Powered by Optin Monster',
 			'desc': 'Optin Monster'
