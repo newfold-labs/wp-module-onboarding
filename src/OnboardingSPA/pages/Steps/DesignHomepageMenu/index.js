@@ -15,7 +15,10 @@ import {
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import { LivePreviewSelectableCard, LivePreviewSkeleton } from '../../../components/LivePreview';
+import {
+	LivePreviewSelectableCard,
+	LivePreviewSkeleton,
+} from '../../../components/LivePreview';
 
 const StepDesignHomepageMenu = () => {
 	const homepagePatternList = [ 'homepage-1', 'homepage-2', 'homepage-3' ];
@@ -70,8 +73,9 @@ const StepDesignHomepageMenu = () => {
 		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
 
-	const THEME_VARIATIONS
-		= window.nfdOnboarding?.stepPreviewData[currentStep?.patternId]?.previewCount;
+	const THEME_VARIATIONS =
+		window.nfdOnboarding?.stepPreviewData[ currentStep?.patternId ]
+			?.previewCount;
 
 	useEffect( () => {
 		if ( isLargeViewport ) {
@@ -189,10 +193,15 @@ const StepDesignHomepageMenu = () => {
 						subtitle={ currentStep?.subheading }
 					/>
 					<div className="theme-styles-menu__list">
-						{!globalStyle ? 
-							<LivePreviewSkeleton count={THEME_VARIATIONS}
-							className={'homepage_preview__list__item'} viewportWidth={1200} />
-						: buildHomepagePreviews() }
+						{ ! globalStyle ? (
+							<LivePreviewSkeleton
+								count={ THEME_VARIATIONS }
+								className={ 'homepage_preview__list__item' }
+								viewportWidth={ 1200 }
+							/>
+						) : (
+							buildHomepagePreviews()
+						) }
 					</div>
 				</div>
 			</CommonLayout>

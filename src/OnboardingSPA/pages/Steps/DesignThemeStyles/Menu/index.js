@@ -15,7 +15,10 @@ import {
 	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../../constants';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
-import { LivePreviewSelectableCard, LivePreviewSkeleton } from '../../../../components/LivePreview';
+import {
+	LivePreviewSelectableCard,
+	LivePreviewSkeleton,
+} from '../../../../components/LivePreview';
 
 const StepDesignThemeStylesMenu = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;
@@ -48,9 +51,10 @@ const StepDesignThemeStylesMenu = () => {
 		};
 	}, [] );
 
-	const THEME_VARIATIONS 
-		= window.nfdOnboarding?.stepPreviewData[currentStep?.patternId]?.previewCount;
-				
+	const THEME_VARIATIONS =
+		window.nfdOnboarding?.stepPreviewData[ currentStep?.patternId ]
+			?.previewCount;
+
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
@@ -121,7 +125,7 @@ const StepDesignThemeStylesMenu = () => {
 			);
 		} );
 	};
-	
+
 	return (
 		<DesignStateHandler>
 			<CommonLayout>
@@ -131,19 +135,29 @@ const StepDesignThemeStylesMenu = () => {
 						subtitle={ currentStep?.subheading }
 					/>
 					<div className="theme-styles-menu__list">
-						{!globalStyles ? 
-							<LivePreviewSkeleton count={Math.floor(THEME_VARIATIONS/2)}
-							className={'theme-styles-menu__list__item'} viewportWidth={900}/>
-						: buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW )}
+						{ ! globalStyles ? (
+							<LivePreviewSkeleton
+								count={ Math.floor( THEME_VARIATIONS / 2 ) }
+								className={ 'theme-styles-menu__list__item' }
+								viewportWidth={ 900 }
+							/>
+						) : (
+							buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW )
+						) }
 					</div>
 					<div className="theme-styles-menu__list">
-						{!globalStyles ?
-							<LivePreviewSkeleton count={Math.floor(THEME_VARIATIONS/2)}
-								className={'theme-styles-menu__list__item'} viewportWidth={900} />
-						: buildPreviews().slice(
+						{ ! globalStyles ? (
+							<LivePreviewSkeleton
+								count={ Math.floor( THEME_VARIATIONS / 2 ) }
+								className={ 'theme-styles-menu__list__item' }
+								viewportWidth={ 900 }
+							/>
+						) : (
+							buildPreviews().slice(
 								MAX_PREVIEWS_PER_ROW,
 								globalStyles.length
-							)}
+							)
+						) }
 					</div>
 				</div>
 			</CommonLayout>

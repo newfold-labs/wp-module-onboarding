@@ -9,7 +9,10 @@ import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
-import { LivePreviewSelectableCard, LivePreviewSkeleton } from '../../LivePreview';
+import {
+	LivePreviewSelectableCard,
+	LivePreviewSkeleton,
+} from '../../LivePreview';
 
 const DesignThemeStylesPreview = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;
@@ -37,9 +40,10 @@ const DesignThemeStylesPreview = () => {
 		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
 
-	const THEME_VARIATIONS
-		= window.nfdOnboarding?.stepPreviewData[currentStep?.patternId]?.previewCount;
-		
+	const THEME_VARIATIONS =
+		window.nfdOnboarding?.stepPreviewData[ currentStep?.patternId ]
+			?.previewCount;
+
 	const getStylesAndPatterns = async () => {
 		const patternResponse = await getPatterns(
 			currentStep.patternId,
@@ -116,11 +120,16 @@ const DesignThemeStylesPreview = () => {
 	return (
 		<div className="theme-styles-preview--drawer">
 			<div className="theme-styles-preview--drawer__list">
-				{!globalStyles ? 
-					<LivePreviewSkeleton count={THEME_VARIATIONS}
-						className={'theme-styles-preview--drawer__list__item'} 
-						viewportWidth={900} skeletonLoadingTime={4000}/> 
-					: buildPreviews() }
+				{ ! globalStyles ? (
+					<LivePreviewSkeleton
+						count={ THEME_VARIATIONS }
+						className={ 'theme-styles-preview--drawer__list__item' }
+						viewportWidth={ 900 }
+						skeletonLoadingTime={ 4000 }
+					/>
+				) : (
+					buildPreviews()
+				) }
 			</div>
 		</div>
 	);
