@@ -120,7 +120,7 @@ final class WP_Admin {
 			ThemeInstallTaskManager::queue_initial_installs();
 		}
 
-		FlowService::initalise_onboarding_flow_data();
+		FlowService::initalize_flow_data();
 
 		self::register_assets();
 	}

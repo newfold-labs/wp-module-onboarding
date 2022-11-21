@@ -71,7 +71,7 @@ class FlowController {
 	}
 
 	public function get_wp_options_flow_data() {
-		return FlowService::read_details_from_wp_options();
+		return FlowService::read_flow_data_from_wp_option();
 	}
 
 	/**
@@ -95,11 +95,11 @@ class FlowController {
 		$flow_data = $this->get_wp_options_flow_data();
 		
 		$mismatch_key = FlowService::check_key_in_nested_array($params, Flows::get_data());
-		if ( isset($mismatch_key) )  {
+		if ( ! empty($mismatch_key) )  {
 			return new \WP_Error(
 				'wrong_param_provided',
-				"Wrong Parameter Provided : $mismatch_key",
-				array( 'status' => 404 )
+				"Wrong Parameter Provided",
+				array( 'status' => 404 , 'Mismatched Parameter(s)' => $mismatch_key)
 			);
 		}
 
