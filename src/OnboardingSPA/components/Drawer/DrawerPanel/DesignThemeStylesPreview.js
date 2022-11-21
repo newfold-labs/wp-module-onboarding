@@ -38,7 +38,7 @@ const DesignThemeStylesPreview = () => {
 	} = useDispatch( nfdOnboardingStore );
 
 	const THEME_VARIATIONS
-		= window.nfdOnboarding?.themeStepData[currentStep?.patternId]?.previewCount;
+		= window.nfdOnboarding?.stepPreviewData[currentStep?.patternId]?.previewCount;
 		
 	const getStylesAndPatterns = async () => {
 		const patternResponse = await getPatterns(

@@ -226,7 +226,7 @@ export function getSidebars( state ) {
 }
 
 export function getPreviewSettings( state ) {
-	return state.runtime.previewSettings;
+	return state.runtime.previewSettings.settings;
 }
 
 export function getSettings ( state ) {

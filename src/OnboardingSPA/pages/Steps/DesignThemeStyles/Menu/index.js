@@ -49,7 +49,7 @@ const StepDesignThemeStylesMenu = () => {
 	}, [] );
 
 	const THEME_VARIATIONS 
-		= window.nfdOnboarding?.themeStepData[currentStep?.patternId]?.previewCount;
+		= window.nfdOnboarding?.stepPreviewData[currentStep?.patternId]?.previewCount;
 				
 	const {
 		setDrawerActiveView,

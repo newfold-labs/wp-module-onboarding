@@ -12,7 +12,7 @@ export function setRuntime( runtime ) {
 		siteUrl: runtime.siteUrl,
 		migrated: true,
 		currentFlow: runtime.currentFlow ?? 'wp-setup',
-		themeStepData: runtime.themeStepData,
+		stepPreviewData: runtime.previewSettings.stepPreviewData,
 	};
 	return {
 		type: 'SET_RUNTIME',

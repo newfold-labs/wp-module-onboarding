@@ -42,13 +42,13 @@ export async function initializeNFDOnboarding( id, runtime ) {
 
 	const DOM_TARGET = document.getElementById( id );
 	dispatch( nfdOnboardingStore ).setRuntime( runtime );
-	if ( runtime.previewSettings.preRequisites?.themes ) {
+	if ( runtime.previewSettings.settings.preRequisites?.themes ) {
 		dispatch( nfdOnboardingStore ).updateThemeStatus(
-			runtime.previewSettings.preRequisites?.themes[ DESIGN_STEPS_THEME ]
+			runtime.previewSettings.settings.preRequisites?.themes[ DESIGN_STEPS_THEME ]
 		);
 	}
 	dispatch( nfdOnboardingStore ).updatePluginsStatus(
-		runtime.previewSettings.preRequisites?.plugins
+		runtime.previewSettings.settings.preRequisites?.plugins
 	);
 	const currentData = await getFlow();
 	if ( currentData.error == null ) {

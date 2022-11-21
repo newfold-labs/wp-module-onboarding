@@ -21,8 +21,8 @@ final class Data {
 			'currentPlan'         => self::current_plan(),
 			'currentFlow'         => self::current_flow(),
 			'pluginInstallHash'   => Permissions::rest_get_plugin_install_hash(),
-			'previewSettings'     => Preview::get_settings(),
-			'themeStepData'       => Themes::step_preview_data(),
+			'previewSettings'     => array('settings' => Preview::get_settings(), 
+					'stepPreviewData' =>  Themes::step_preview_data()),
 		);
 	}
 
