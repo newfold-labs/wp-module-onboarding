@@ -16,6 +16,9 @@ const LivePreviewSkeleton = ( {
 	viewportWidth,
 	skeletonLoadingTime,
 } ) => {
+
+	const MAX_INTEGER_VALUE = 600000;
+
 	const buildDummyPreviews = () => {
 		const dummyPreviews = [];
 
@@ -26,7 +29,7 @@ const LivePreviewSkeleton = ( {
 					blockGrammer={ '' }
 					styling={ 'custom' }
 					className={ className }
-					skeletonLoadingTime={ skeletonLoadingTime ?? 3500 }
+					skeletonLoadingTime={ skeletonLoadingTime ?? MAX_INTEGER_VALUE }
 					viewportWidth={ viewportWidth }
 				/>
 			);
