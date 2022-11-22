@@ -68,7 +68,7 @@ class FlowService {
 				if (array_key_exists('new_value', $flow_data_fixes)) {
 					if(! array_key_exists('new_key', $flow_data_fixes)) 
 						$input[$key] = $flow_data_fixes['new_value'];
-					{
+					else {
 						$key = $flow_data_fixes['new_key'];	
 						unset($input[$flow_data_fixes['old_key']]);
 						$input[$key] = $flow_data_fixes['new_value'];
