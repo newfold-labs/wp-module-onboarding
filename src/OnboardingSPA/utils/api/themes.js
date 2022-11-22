@@ -18,9 +18,23 @@ const init = () => {
 	} );
 };
 
-const getGlobalStyles = async () => {
+const getGlobalStyles = async ( variations = false ) => {
 	return await resolve(
-		apiFetch( { url: onboardingRestURL( 'themes/variations' ) } ).then()
+		apiFetch( {
+			url: onboardingRestURL(
+				'themes/variations&variations=' + variations
+			),
+		} ).then()
+	);
+};
+
+const setGlobalStyles = async ( data ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'themes/variations' ),
+			method: 'POST',
+			data,
+		} ).then()
 	);
 };
 
@@ -50,4 +64,11 @@ const getThemeColors = async ( theme ) => {
 	);
 };
 
-export { init, getGlobalStyles, getThemeStatus, getThemeColors, getThemeFonts };
+export {
+	init,
+	getGlobalStyles,
+	setGlobalStyles,
+	getThemeStatus,
+	getThemeColors,
+	getThemeFonts,
+};
