@@ -55,7 +55,7 @@ const StepSitePages = () => {
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 	}, [] );
 
-	const getStyleAndPages = async () => {
+	const getSitePages = async () => {
 		const sitePagesResponse = await getPatterns( currentStep.patternId );
 		if ( sitePagesResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
@@ -122,8 +122,7 @@ const StepSitePages = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
-			getStyleAndPages();
+		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE ) getSitePages();
 	}, [ isLoaded, themeStatus ] );
 
 	return (
