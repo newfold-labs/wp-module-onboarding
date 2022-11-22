@@ -15,9 +15,8 @@ import {
 } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { getPatterns } from '../../../../utils/api/patterns';
-import { getGlobalStyles } from '../../../../utils/api/themes';
-import { useGlobalStylesOutput } from '../../../../utils/global-styles/use-global-styles-output';
 import { conditionalSteps } from '../../../../data/routes/';
+import { GlobalStylesProvider } from '../../../../components/LivePreview';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
 
 const StepDesignThemeStylesPreview = () => {
@@ -82,22 +81,6 @@ const StepDesignThemeStylesPreview = () => {
 		if ( patternsResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
-		const globalStylesResponse = await getGlobalStyles();
-		if ( globalStylesResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
-		}
-		let selectedGlobalStyle;
-		if ( currentData.data.theme.variation ) {
-			selectedGlobalStyle = globalStylesResponse.body.filter(
-				( globalStyle ) =>
-					globalStyle.title === currentData.data.theme.variation
-			)[ 0 ];
-		} else {
-			selectedGlobalStyle = globalStylesResponse.body[ 0 ];
-		}
-		updatePreviewSettings(
-			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
-		);
 		setPattern( patternsResponse?.body );
 		setIsLoaded( true );
 	};
@@ -189,53 +172,71 @@ const StepDesignThemeStylesPreview = () => {
 
 	return (
 		<DesignStateHandler>
-			<CommonLayout className="theme-styles-preview">
-				<div className="theme-styles-preview__checkbox">
-					<CheckboxControl
-						label={
-							<div className="theme-styles-preview__checkbox__label">
-								<span className="theme-styles-preview__checkbox__label__question">
-									{ __(
-										'Customize Colors & Fonts?',
-										'wp-module-onboarding'
-									) }
-									<span className="theme-styles-preview__checkbox__label__hint">
+			<GlobalStylesProvider>
+				<CommonLayout className="theme-styles-preview">
+					<div className="theme-styles-preview__checkbox">
+						<CheckboxControl
+							label={
+								<div className="theme-styles-preview__checkbox__label">
+									<span className="theme-styles-preview__checkbox__label__question">
 										{ __(
-											'Check to customize in the next few steps (or leave empty and use the Site Editor later)',
+											'Customize Colors & Fonts?',
 											'wp-module-onboarding'
 										) }
+										<span className="theme-styles-preview__checkbox__label__hint">
+											{ __(
+												'Check to customize in the next few steps (or leave empty and use the Site Editor later)',
+												'wp-module-onboarding'
+											) }
+										</span>
 									</span>
-								</span>
 							</div>
 						}
 						checked={ customize }
 						onChange={ () => handleCheckbox( ! customize ) }
 					/>
-				</div>
-				<div className="theme-styles-preview__title-bar">
-					<div className="theme-styles-preview__title-bar__browser">
-						<span className="theme-styles-preview__title-bar__browser__dot"></span>
-						<span className="theme-styles-preview__title-bar__browser__dot"></span>
-						<span className="theme-styles-preview__title-bar__browser__dot"></span>
 					</div>
-				</div>
-				<div className="theme-styles-preview__live-preview-container">
-					{ ! pattern && (
-						<LivePreview
-							blockGrammer={ '' }
-							styling={ 'custom' }
-							viewportWidth={ 1300 }
-						/>
-					) }
-					{ pattern && (
-						<LivePreview
-							blockGrammer={ pattern }
-							styling={ 'custom' }
-							viewportWidth={ 1300 }
-						/>
-					) }
-				</div>
-			</CommonLayout>
+					<div className="theme-styles-preview__title-bar">
+						<div className="theme-styles-preview__title-bar__browser">
+							<span className="theme-styles-preview__title-bar__browser__dot"></span>
+							<span className="theme-styles-preview__title-bar__browser__dot"></span>
+							<span className="theme-styles-preview__title-bar__browser__dot"></span>
+						</div>
+					</div>
+					<div className="theme-styles-preview__live-preview-container">
+						{ ! pattern && (
+							<LivePreview
+								blockGrammer={ '' }
+								styling={ 'custom' }
+								viewportWidth={ 1300 }
+							/>) 
+						}
+						{ pattern && (
+							<LivePreview
+								blockGrammer={ pattern }
+								styling={ 'custom' }
+								viewportWidth={ 1300 }
+							/> ) 
+						}
+					</div>
+					<div className="theme-styles-preview__title-bar">
+						<div className="theme-styles-preview__title-bar__browser">
+							<span className="theme-styles-preview__title-bar__browser__dot"></span>
+							<span className="theme-styles-preview__title-bar__browser__dot"></span>
+							<span className="theme-styles-preview__title-bar__browser__dot"></span>
+						</div>
+					</div>
+					<div className="theme-styles-preview__live-preview-container">
+						{ pattern && storedPreviewSettings && (
+							<LivePreview
+								blockGrammer={ pattern }
+								styling={ 'custom' }
+								viewportWidth={ 1300 }
+							/>
+						) }
+					</div>
+				</CommonLayout>
+			</GlobalStylesProvider>
 		</DesignStateHandler>
 	);
 };

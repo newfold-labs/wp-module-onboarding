@@ -4,9 +4,9 @@ import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
 import { getPatterns } from '../../../utils/api/patterns';
-import { getGlobalStyles } from '../../../utils/api/themes';
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
+import { getGlobalStyles, setGlobalStyles } from '../../../utils/api/themes';
 import {
 	VIEW_DESIGN_HOMEPAGE_MENU,
 	THEME_STATUS_ACTIVE,
@@ -14,10 +14,10 @@ import {
 } from '../../../../constants';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { DesignStateHandler } from '../../../components/StateHandlers';
-import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import {
 	LivePreviewSelectableCard,
 	LivePreviewSkeleton,
+	GlobalStylesProvider,
 } from '../../../components/LivePreview';
 
 const StepDesignHomepageMenu = () => {
@@ -43,7 +43,6 @@ const StepDesignHomepageMenu = () => {
 
 	const location = useLocation();
 	const [ isLoaded, setisLoaded ] = useState( false );
-	const [ globalStyle, setGlobalStyle ] = useState();
 	const [ homepagePattern, setHomepagePattern ] = useState();
 	const [ selectedHomepage, setSelectedHomepage ] = useState( 0 );
 
@@ -110,25 +109,6 @@ const StepDesignHomepageMenu = () => {
 		if ( homepagePatternData?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
-		const globalStyles = await getGlobalStyles();
-		if ( globalStyles?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
-		}
-		let selectedGlobalStyle;
-		if ( currentData.data.theme.variation ) {
-			selectedGlobalStyle = globalStyles.body.filter(
-				( globalStyle ) =>
-					globalStyle.title === currentData.data.theme.variation
-			)[ 0 ];
-		} else {
-			selectedGlobalStyle = globalStyles.body[ 0 ];
-		}
-		updatePreviewSettings(
-			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
-		);
-		if ( selectedGlobalStyle ) {
-			setGlobalStyle( selectedGlobalStyle );
-		}
 
 		setHomepagePattern( refactorPatterns( homepagePatternData ) );
 
@@ -174,7 +154,7 @@ const StepDesignHomepageMenu = () => {
 							blockGrammer={ homepage }
 							viewportWidth={ 1200 }
 							styling={ 'custom' }
-							previewSettings={ globalStyle }
+							previewSettings={ storedPreviewSettings }
 							overlay={ false }
 							onClick={ () => saveDataForHomepage( idx ) }
 						/>
@@ -186,25 +166,27 @@ const StepDesignHomepageMenu = () => {
 
 	return (
 		<DesignStateHandler>
-			<CommonLayout>
-				<div className="homepage_preview">
-					<HeadingWithSubHeading
-						title={ currentStep?.heading }
-						subtitle={ currentStep?.subheading }
-					/>
-					<div className="theme-styles-menu__list">
-						{ ! globalStyle ? (
-							<LivePreviewSkeleton
-								count={ THEME_VARIATIONS }
-								className={ 'homepage_preview__list__item' }
-								viewportWidth={ 1200 }
-							/>
-						) : (
-							buildHomepagePreviews()
-						) }
+			<GlobalStylesProvider>
+				<CommonLayout>
+					<div className="homepage_preview">
+						<HeadingWithSubHeading
+							title={ currentStep?.heading }
+							subtitle={ currentStep?.subheading }
+						/>
+						<div className="theme-styles-menu__list">
+							{ ! globalStyle ? (
+								<LivePreviewSkeleton
+									count={ THEME_VARIATIONS }
+									className={ 'homepage_preview__list__item' }
+									viewportWidth={ 1200 }
+								/>
+							) : (
+								buildHomepagePreviews()
+							) }
+						</div>
 					</div>
-				</div>
-			</CommonLayout>
+				</CommonLayout>
+			</GlobalStylesProvider>
 		</DesignStateHandler>
 	);
 };

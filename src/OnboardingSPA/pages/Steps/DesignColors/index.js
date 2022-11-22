@@ -5,13 +5,17 @@ import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
 import { getPatterns } from '../../../utils/api/patterns';
-import { getGlobalStyles } from '../../../utils/api/themes';
 import { store as nfdOnboardingStore } from '../../../store';
-import { LivePreview } from '../../../components/LivePreview';
 import CommonLayout from '../../../components/Layouts/Common';
-import { VIEW_DESIGN_COLORS } from '../../../../constants';
 import { DesignStateHandler } from '../../../components/StateHandlers';
-import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
+import {
+	LivePreview,
+	GlobalStylesProvider,
+} from '../../../components/LivePreview';
+import {
+	THEME_STATUS_NOT_ACTIVE,
+	VIEW_DESIGN_COLORS,
+} from '../../../../constants';
 
 const StepDesignColors = () => {
 	const location = useLocation();
@@ -19,7 +23,7 @@ const StepDesignColors = () => {
 	const [ pattern, setPattern ] = useState();
 
 	const isLargeViewport = useViewportMatch( 'medium' );
-	const { currentStep, currentData, storedPreviewSettings } = useSelect(
+	const { currentStep, currentData } = useSelect(
 		( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getStepFromPath(
@@ -27,8 +31,6 @@ const StepDesignColors = () => {
 				),
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				storedPreviewSettings:
-					select( nfdOnboardingStore ).getPreviewSettings(),
 			};
 		},
 		[]
@@ -39,7 +41,7 @@ const StepDesignColors = () => {
 		setIsDrawerOpened,
 		setIsSidebarOpened,
 		setIsDrawerSuppressed,
-		updatePreviewSettings,
+
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -53,15 +55,8 @@ const StepDesignColors = () => {
 
 	const getStylesAndPatterns = async () => {
 		const pattern = await getPatterns( currentStep.patternId, true );
-		const globalStyles = await getGlobalStyles();
-		let selectedGlobalStyle;
-		if ( currentData.data.theme.variation ) {
-			selectedGlobalStyle = globalStyles.body.filter(
-				( globalStyle ) =>
-					globalStyle.title === currentData.data.theme.variation
-			)[ 0 ];
-		} else {
-			selectedGlobalStyle = globalStyles.body[ 0 ];
+		if ( pattern?.error ) {
+			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
 		setPattern( pattern?.body );
 		setIsLoaded( true );
@@ -73,31 +68,33 @@ const StepDesignColors = () => {
 
 	return (
 		<DesignStateHandler>
-			<CommonLayout className="theme-colors-preview">
-				<div className="theme-colors-preview__title-bar">
-					<div className="theme-colors-preview__title-bar__browser">
-						<span className="theme-colors-preview__title-bar__browser__dot"></span>
-						<span className="theme-colors-preview__title-bar__browser__dot"></span>
-						<span className="theme-colors-preview__title-bar__browser__dot"></span>
+			<GlobalStylesProvider>
+				<CommonLayout className="theme-colors-preview">
+					<div className="theme-colors-preview__title-bar">
+						<div className="theme-colors-preview__title-bar__browser">
+							<span className="theme-colors-preview__title-bar__browser__dot"></span>
+							<span className="theme-colors-preview__title-bar__browser__dot"></span>
+							<span className="theme-colors-preview__title-bar__browser__dot"></span>
+						</div>
 					</div>
-				</div>
-				<div className="theme-colors-preview__live-preview-container">
-					{ ! pattern && (
-						<LivePreview
-							blockGrammer={ '' }
-							styling={ 'custom' }
-							viewportWidth={ 1300 }
-						/>
-					) }
-					{ pattern && (
-						<LivePreview
-							blockGrammer={ pattern }
-							styling={ 'custom' }
-							viewportWidth={ 1300 }
-						/>
-					) }
-				</div>
-			</CommonLayout>
+					<div className="theme-colors-preview__live-preview-container">
+						{ ! pattern && (
+							<LivePreview
+								blockGrammer={ '' }
+								styling={ 'custom' }
+								viewportWidth={ 1300 }
+							/>
+						) }
+						{ pattern && (
+							<LivePreview
+								blockGrammer={ pattern }
+								styling={ 'custom' }
+								viewportWidth={ 1300 }
+							/>
+						) }
+					</div>
+				</CommonLayout>
+			</GlobalStylesProvider>
 		</DesignStateHandler>
 	);
 };
