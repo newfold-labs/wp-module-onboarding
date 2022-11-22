@@ -17,7 +17,7 @@ const LivePreviewSkeleton = ( {
 	skeletonLoadingTime,
 } ) => {
 
-	const MAX_INTEGER_VALUE = 600000;
+	const MAX_ANIMATION_TIME = 600000;
 
 	const buildDummyPreviews = () => {
 		const dummyPreviews = [];
