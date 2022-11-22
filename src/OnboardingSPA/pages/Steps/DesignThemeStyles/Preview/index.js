@@ -219,22 +219,6 @@ const StepDesignThemeStylesPreview = () => {
 							/> ) 
 						}
 					</div>
-					<div className="theme-styles-preview__title-bar">
-						<div className="theme-styles-preview__title-bar__browser">
-							<span className="theme-styles-preview__title-bar__browser__dot"></span>
-							<span className="theme-styles-preview__title-bar__browser__dot"></span>
-							<span className="theme-styles-preview__title-bar__browser__dot"></span>
-						</div>
-					</div>
-					<div className="theme-styles-preview__live-preview-container">
-						{ pattern && storedPreviewSettings && (
-							<LivePreview
-								blockGrammer={ pattern }
-								styling={ 'custom' }
-								viewportWidth={ 1300 }
-							/>
-						) }
-					</div>
 				</CommonLayout>
 			</GlobalStylesProvider>
 		</DesignStateHandler>

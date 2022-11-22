@@ -135,7 +135,7 @@ const StepDesignThemeStylesMenu = () => {
 						subtitle={ currentStep?.subheading }
 					/>
 					<div className="theme-styles-menu__list">
-						{ ! globalStyles ? (
+						{ !pattern || !globalStyles ? (
 							<LivePreviewSkeleton
 								count={ Math.floor( THEME_VARIATIONS / 2 ) }
 								className={ 'theme-styles-menu__list__item' }
@@ -146,7 +146,7 @@ const StepDesignThemeStylesMenu = () => {
 						) }
 					</div>
 					<div className="theme-styles-menu__list">
-						{ ! globalStyles ? (
+						{ !pattern || !globalStyles ? (
 							<LivePreviewSkeleton
 								count={ Math.floor( THEME_VARIATIONS / 2 ) }
 								className={ 'theme-styles-menu__list__item' }
