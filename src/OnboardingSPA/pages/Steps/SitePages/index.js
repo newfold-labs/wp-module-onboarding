@@ -63,10 +63,10 @@ const StepSitePages = () => {
 		if ( sitePagesResponse?.body ) {
 			setSitePages( sitePagesResponse.body );
 			if (
-				currentData.data?.sitePages &&
-				currentData.data.sitePages.length !== 0
+				currentData.data.sitePages?.other &&
+				currentData.data.sitePages.other.length !== 0
 			) {
-				setCheckedPages( currentData.data.sitePages );
+				setCheckedPages( currentData.data.sitePages.other );
 			} else {
 				const checkedPages = sitePagesResponse.body
 					.filter( ( sitePage ) => {
@@ -75,7 +75,7 @@ const StepSitePages = () => {
 					.map( ( checkedPage ) => {
 						return checkedPage.slug;
 					} );
-				setCheckedPages( checkedPages );
+				handleCheckedPages( checkedPages );
 			}
 		}
 		setIsLoaded( true );
@@ -83,7 +83,7 @@ const StepSitePages = () => {
 
 	const handleCheckedPages = ( selectedPages ) => {
 		setCheckedPages( selectedPages );
-		currentData.data.sitePages = selectedPages;
+		currentData.data.sitePages.other = selectedPages;
 		setCurrentOnboardingData( currentData );
 	};
 

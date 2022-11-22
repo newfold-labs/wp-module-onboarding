@@ -6,7 +6,6 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { getPatterns } from '../../../utils/api/patterns';
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
-import { getGlobalStyles, setGlobalStyles } from '../../../utils/api/themes';
 import {
 	VIEW_DESIGN_HOMEPAGE_MENU,
 	THEME_STATUS_ACTIVE,
