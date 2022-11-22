@@ -1,3 +1,5 @@
+import { Icon, help, search } from '@wordpress/icons'; 
+
 import { CheckboxControl } from '@wordpress/components';
 
 /**
@@ -17,10 +19,29 @@ const CheckboxItem = ({ icon, title, subtitle, desc }) => {
     return (
         <div className="checkbox-item">
             <CheckboxControl 
+                className="checkbox-item-checkbox"
                 label={
-                    <div>
-                        {title}
-                        {subtitle}
+                    <div className="checkbox-item__contents">
+                        <div className="checkbox-item__contents-icon">
+                            <Icon
+                                icon={search}
+                                style={{
+                                    fill: 'var(--wp-admin-theme-color-darker-10)',
+                                }}
+                            />
+                        </div>
+                        <div className="checkbox-item__contents-text">
+                            <p className="checkbox-item__contents-text-title">{title}</p>
+                            <p className="checkbox-item__contents-text-subtitle">{subtitle}</p>
+                        </div>
+                        <div className="checkbox-item__contents-help">
+                            <Icon
+                                icon={help}
+                                style={{
+                                    fill: 'var(--wp-admin-theme-color-darker-10)',
+                                }}
+                            />
+                        </div>
                     </div>
                 }/>
         </div>
