@@ -74,7 +74,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 				 'required' => true,
 			 ),
 			 'settings' => array(
-				 'type'     => 'array',
+				 'type'     => 'object',
 				 'required' => true,
 			 ),
 		 );
