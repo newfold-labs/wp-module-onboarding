@@ -29,14 +29,6 @@ const SelectableCardWithInfo = ( {
 	return (
 		<div
 			className={ `${ className }` }
-			onClick={
-				typeof onClick === 'function' &&
-				( () => {
-					if ( ! loadingParent ) {
-						onClick();
-					}
-				} )
-			}
 		>
 			<div className={ `${ className }__live-preview-container` }>
 				<LivePreview

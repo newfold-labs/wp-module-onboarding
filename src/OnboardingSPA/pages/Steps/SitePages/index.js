@@ -25,7 +25,7 @@ const StepSitePages = () => {
 
 	const location = useLocation();
 	const [ isLoaded, setIsLoaded ] = useState( false );
-	const [ sitePages, setSitePages ] = useState();
+	const [ sitePages, setSitePages ] = useState( [] );
 	const [ checkedPages, setCheckedPages ] = useState( [] );
 
 	const { currentStep, currentData, themeStatus } = useSelect( ( select ) => {
@@ -62,20 +62,25 @@ const StepSitePages = () => {
 		}
 		if ( sitePagesResponse?.body ) {
 			setSitePages( sitePagesResponse.body );
-			if (
-				currentData.data.sitePages?.other &&
-				currentData.data.sitePages.other.length !== 0
-			) {
-				setCheckedPages( currentData.data.sitePages.other );
-			} else {
-				const checkedPages = sitePagesResponse.body
-					.filter( ( sitePage ) => {
-						return sitePage?.selected ? sitePage.selected : false;
-					} )
-					.map( ( checkedPage ) => {
-						return checkedPage.slug;
-					} );
-				handleCheckedPages( checkedPages );
+			if ( currentData.data.sitePages?.other ) {
+				if ( currentData.data.sitePages.other === false ) {
+					setCheckedPages( [] );
+				} else if (
+					currentData.data.sitePages.other.length !== 0
+				) {
+					setCheckedPages( currentData.data.sitePages.other );
+				} else {
+					const checkedPages = sitePagesResponse.body
+						.filter( ( sitePage ) => {
+							return sitePage?.selected
+								? sitePage.selected
+								: false;
+						} )
+						.map( ( checkedPage ) => {
+							return checkedPage.slug;
+						} );
+					handleCheckedPages( checkedPages );
+				}
 			}
 		}
 		setIsLoaded( true );
@@ -83,19 +88,21 @@ const StepSitePages = () => {
 
 	const handleCheckedPages = ( selectedPages ) => {
 		setCheckedPages( selectedPages );
-		currentData.data.sitePages.other = selectedPages;
+		currentData.data.sitePages.other =
+			selectedPages.length !== 0 ? selectedPages : false;
 		setCurrentOnboardingData( currentData );
 	};
 
 	const handleClick = ( isChecked, slug ) => {
 		if ( isChecked === true && ! checkedPages.includes( slug ) ) {
-			return handleCheckedPages( checkedPages.concat( slug ) );
+			handleCheckedPages( checkedPages.concat( slug ) );
+		} else if ( isChecked === false ) {
+			handleCheckedPages(
+				checkedPages.filter( ( selectedPage ) => {
+					return selectedPage !== slug;
+				} )
+			);
 		}
-		handleCheckedPages(
-			checkedPages.filter( ( selectedPage ) => {
-				return selectedPage !== slug;
-			} )
-		);
 	};
 
 	const buildPreviews = () => {
