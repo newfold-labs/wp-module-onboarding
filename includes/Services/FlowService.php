@@ -8,61 +8,58 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 class FlowService {
 
     public static function initalize_flow_data() { 
-		$flow_data = Flows::get_data();
 		$flow_data_fixes = Flows::get_fixes();
-        if ( ! ( $result = self::read_flow_data_from_wp_option() ) )
-            $result = self::get_default_flow_data();
+        if ( ! ( $flow_data = self::read_flow_data_from_wp_option() ) )
+            $flow_data = self::get_default_flow_data();
 		if ($flow_data_fixes) {
-			\do_action('qm/debug', $flow_data_fixes);
 			foreach($flow_data_fixes as $key=>$value) {
-				$result = self::rename_keys($value, $flow_data, $result);
-				self::update_wp_options_data_in_database($result);
+				$flow_data = self::rename_keys($value, Flows::get_data(), $flow_data);
+				self::update_wp_options_data_in_database($flow_data);
 			}
 		}
-		$result = self::update_flow_data($result);
-		self::update_wp_options_data_in_database($result);
-		\do_action('qm/debug', $result);
-        return $result;
+		$flow_data = self::update_flow_data($flow_data);
+		self::update_wp_options_data_in_database($flow_data);
+        return $flow_data;
     }
 
     private static function get_default_flow_data() {
 		// check if data is available in the database if not then fetch the default dataset
-		$result              = Flows::get_data();
-		$result['createdAt'] = time();
+		$flow_data              = Flows::get_data();
+		$flow_data['createdAt'] = time();
 		// get current flow type
 		$flow_type = Data::current_flow();
 		// update default data if flow type is ecommerce
 		if($flow_type == 'ecommerce') 
-			$result = self::update_default_data_for_ecommerce( $result );
-		self::update_wp_options_data_in_database( $result );
-		return $result;
+			$flow_data = self::update_default_data_for_ecommerce( $flow_data );
+		self::update_wp_options_data_in_database( $flow_data );
+		return $flow_data;
 	}
 
 	/*
 	 * function to compare and add Flows::get_data() items to database
 	 */
-	private static function update_flow_data($result) {
-		if ( array_diff(self::flatten_array(Flows::get_data()), self::flatten_array($result)) ) {
-			$result = array_replace_recursive( Flows::get_data(), $result);
-			self::update_wp_options_data_in_database( $result );
+	private static function update_flow_data($flow_data) {
+		if ( array_diff(self::flatten_array(Flows::get_data()), self::flatten_array($flow_data)) ) {
+			$flow_data = array_replace_recursive( Flows::get_data(), $flow_data);
+			self::update_wp_options_data_in_database( $flow_data );
 		}
-		$delete_flow_data = self::delete_wp_options_data_in_database(Flows::get_data(), $result);
+		$delete_flow_data = self::delete_wp_options_data_in_database(Flows::get_data(), $flow_data);
 		if ( ! is_null($delete_flow_data) )
-			$result = $delete_flow_data;
-		return $result;
+			$flow_data = $delete_flow_data;
+		return $flow_data;
 	}
 
 	/*
 	 * function to delete a key in array recursively which does not exist in Flows::get_data()
 	 */
-	private static function delete_wp_options_data_in_database( $flow_data, &$result ) {
-		foreach($result as $key => $value) {
-			if(!array_key_exists($key, $flow_data)) 
-				unset($result[$key]);
+	private static function delete_wp_options_data_in_database( $default_flow_data, &$flow_data ) {
+		foreach($flow_data as $key => $value) {
+			if(!array_key_exists($key, $default_flow_data)) 
+				unset($flow_data[$key]);
 			elseif ( is_array( $value ) && !empty($value) )
-				$result[$key] = self::delete_wp_options_data_in_database($flow_data[$key], $value);
+				$flow_data[$key] = self::delete_wp_options_data_in_database($default_flow_data[$key], $value);
 		}
-		return $result;
+		return $flow_data;
 	}
 
 	public static function rename_keys($flow_data_fixes, &$data, &$input){
@@ -71,7 +68,7 @@ class FlowService {
 				if (array_key_exists('new_value', $flow_data_fixes)) {
 					if(! array_key_exists('new_key', $flow_data_fixes)) 
 						$input[$key] = $flow_data_fixes['new_value'];
-					else{
+					{
 						$key = $flow_data_fixes['new_key'];	
 						unset($input[$flow_data_fixes['old_key']]);
 						$input[$key] = $flow_data_fixes['new_value'];
@@ -145,7 +142,7 @@ class FlowService {
 						self::check_key_in_nested_array($value, $flow_data[$key], $key);
 					$mismatch_key[] = $header_key. " => " . $value;
 				}
-				else $mismatch_key[]  = $header_key. " =>  " . $key;
+				else $mismatch_key[]  = $header_key. " => " . $key;
 			}
 			elseif ( is_array( $value ) && !empty($value) ) {
 				self::check_key_in_nested_array($value, $flow_data, $key);
