@@ -146,18 +146,16 @@ const StepDesignHomepageMenu = () => {
 		return homepagePattern?.map( ( homepage, idx ) => {
 			if ( homepage ) {
 				return (
-					<div className="homepage_preview__list">
-						<LivePreviewSelectableCard
-							className={ 'homepage_preview__list__item' }
-							selected={ idx === selectedHomepage }
-							blockGrammer={ homepage }
-							viewportWidth={ 1200 }
-							styling={ 'custom' }
-							previewSettings={ storedPreviewSettings }
-							overlay={ false }
-							onClick={ () => saveDataForHomepage( idx ) }
-						/>
-					</div>
+					<LivePreviewSelectableCard
+						className={ 'homepage_preview__list__item' }
+						selected={ idx === selectedHomepage }
+						blockGrammer={ homepage }
+						viewportWidth={ 1200 }
+						styling={ 'custom' }
+						previewSettings={ storedPreviewSettings }
+						overlay={ false }
+						onClick={ () => saveDataForHomepage( idx ) }
+					/>
 				);
 			}
 		} );
@@ -172,16 +170,14 @@ const StepDesignHomepageMenu = () => {
 							title={ currentStep?.heading }
 							subtitle={ currentStep?.subheading }
 						/>
-						<div className="theme-styles-menu__list">
-							{ ! homepagePattern ? (
-								<LivePreviewSkeleton
-									count={ THEME_VARIATIONS }
-									className={ 'homepage_preview__list__item' }
-									viewportWidth={ 1200 }
-								/>
-							) : (
-								buildHomepagePreviews()
-							) }
+						<div className="homepage_preview__list">
+							<LivePreviewSkeleton
+								watch={ homepagePattern }
+								count={ THEME_VARIATIONS }
+								callback={ buildHomepagePreviews }
+								className={ 'homepage_preview__list__item' }
+								viewportWidth={ 1200 }
+							/>
 						</div>
 					</div>
 				</CommonLayout>

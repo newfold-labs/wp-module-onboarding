@@ -135,29 +135,13 @@ const StepDesignThemeStylesMenu = () => {
 						subtitle={ currentStep?.subheading }
 					/>
 					<div className="theme-styles-menu__list">
-						{ !pattern || !globalStyles ? (
-							<LivePreviewSkeleton
-								count={ Math.floor( THEME_VARIATIONS / 2 ) }
-								className={ 'theme-styles-menu__list__item' }
-								viewportWidth={ 900 }
-							/>
-						) : (
-							buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW )
-						) }
-					</div>
-					<div className="theme-styles-menu__list">
-						{ !pattern || !globalStyles ? (
-							<LivePreviewSkeleton
-								count={ Math.floor( THEME_VARIATIONS / 2 ) }
-								className={ 'theme-styles-menu__list__item' }
-								viewportWidth={ 900 }
-							/>
-						) : (
-							buildPreviews().slice(
-								MAX_PREVIEWS_PER_ROW,
-								globalStyles.length
-							)
-						) }
+						<LivePreviewSkeleton
+							className={ 'theme-styles-menu__list__item' }
+							count={ Math.floor( THEME_VARIATIONS ) }
+							watch={ pattern && globalStyles }
+							callback={ buildPreviews }
+							viewportWidth={ 900 }
+						/>
 					</div>
 				</div>
 			</CommonLayout>

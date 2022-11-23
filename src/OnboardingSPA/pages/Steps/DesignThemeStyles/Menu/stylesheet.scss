@@ -14,24 +14,24 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 	&__list {
 		width: 60vw;
 		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		column-count: 3;
+		vertical-align: auto;
 
-		@media (max-width: #{ ($break-large) }) {
+		@media (max-width: #{ ($break-xlarge) }) {
 			width: 95vw;
-			align-items: center;
-			flex-direction: column;
+			column-count: 2;
+		}
+
+		@media (max-width: #{ ($break-small) }) {
+			width: 95vw;
+			column-count: 1;
 		}
 
 		&__item {
 			flex: 1;
 			width: 100%;
 			margin: 24px;
-			display: flex;
-			align-items: center;
-			flex-direction: column;
-			justify-content: center;
+			display: inline-block;
 
 			&__title-bar {
 				width: 90%;
@@ -94,7 +94,8 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 						&-custom {
 							width: 100%;
 							overflow: hidden;
-							height: 300px;
+							height: 35vh;
+							min-height: 350px;
 						}
 					}
 				}

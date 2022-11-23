@@ -1,23 +1,29 @@
-import { useSelect } from '@wordpress/data';
+import { useState, useEffect } from '@wordpress/element';
+
 import { LivePreviewSelectableCard } from '..';
 
 /**
  * Renders Skeletons for Live Previews.
  *
  * @property {number} count                     The number of Live Previews to be shown
+ * @property {number} watch                     The variable to be awaited for
+ * @property {string} callback                  The Render function in parent to be called
  * @property {string} className                 The class name for the Live Preview
  * @property {number} viewportWidth             Viewport Width for the Live Preview
- * @property {number} skeletonLoadingTime       Change the Animation time for the Skeleton
  * 
  */
 const LivePreviewSkeleton = ( {
 	count,
+	watch,
+	callback,
 	className,
 	viewportWidth,
-	skeletonLoadingTime,
 } ) => {
 
 	const MAX_ANIMATION_TIME = 600000;
+	const [rerender, doRerender] = useState(0);
+
+	useEffect(() => doRerender(1), [watch]);
 
 	const buildDummyPreviews = () => {
 		const dummyPreviews = [];
@@ -29,7 +35,7 @@ const LivePreviewSkeleton = ( {
 					blockGrammer={ '' }
 					styling={ 'custom' }
 					className={ className }
-					skeletonLoadingTime={ skeletonLoadingTime ?? MAX_INTEGER_VALUE }
+					skeletonLoadingTime={ MAX_ANIMATION_TIME }
 					viewportWidth={ viewportWidth }
 				/>
 			);
@@ -38,7 +44,11 @@ const LivePreviewSkeleton = ( {
 		return dummyPreviews;
 	};
 
-	return buildDummyPreviews();
+	return !watch ? buildDummyPreviews() : 
+			<>
+				{watch ? <div style={{ display: 'none' }}>{rerender}</div> : null}
+				{callback()}
+			</>;
 };
 
 export default LivePreviewSkeleton;
