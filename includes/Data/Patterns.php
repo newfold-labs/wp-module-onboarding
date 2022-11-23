@@ -21,6 +21,12 @@ final class Patterns
                     'homepage-3',
                     'site-footer',
                ),
+               'header' => array(
+                    'site-header-centered-logo-split-menu',
+                    'site-header-centered',
+                    'site-header-left-logo-navigation-below',
+                    'site-header-left-logo-navigation-inline'
+               )
           ),
      );
 
@@ -89,6 +95,22 @@ final class Patterns
           return $squash ? $block_patterns_squashed : $block_patterns;
      }
 
+     public static function get_all_patterns_for_slug($slug_keyword)
+     {
+          $active_theme = (\wp_get_theme())->get('TextDomain');
+
+          $block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
+          $all_patterns = $block_patterns_registry->get_all_registered();
+
+          $filtered_patterns = array();
+          foreach($all_patterns as $pattern_info) {
+               if( strpos($pattern_info['slug'], $active_theme) === 0 // making sure the slug name starts with the theme name
+                   && strpos($pattern_info['slug'], $slug_keyword) !== FALSE ) {
+                    $filtered_patterns[] = $pattern_info;
+               }
+          }
+          return $filtered_patterns;
+     }
 
      /**
       * Sets the Homepage selected by the user.
