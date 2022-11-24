@@ -822,7 +822,9 @@ export function useGlobalStylesOutput(
 	previewSettings,
 	storedPreviewSettings
 ) {
-	const hasBlockGapSupport = storedPreviewSettings.settings.spacing.blockGap;
+	console.log( storedPreviewSettings );
+	const hasBlockGapSupport =
+		storedPreviewSettings.settings.__experimentalFeatures.spacing.blockGap;
 	const hasFallbackGapSupport = ! hasBlockGapSupport;
 	const disableLayoutStyles =
 		storedPreviewSettings.settings.disableLayoutStyles;
@@ -882,6 +884,8 @@ export function useGlobalStylesOutput(
 	previewSettings.settings.styles = stylesheets;
 	previewSettings.settings.__unstableResolvedAssets =
 		storedPreviewSettings.settings.__unstableResolvedAssets;
+	previewSettings.settings.__experimentalFeatures =
+		storedPreviewSettings.settings.__experimentalFeatures;
 
 	return previewSettings;
 }
