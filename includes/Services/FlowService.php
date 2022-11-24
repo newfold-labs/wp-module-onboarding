@@ -12,7 +12,6 @@ class FlowService {
             $flow_data = self::get_default_flow_data();
 		$flow_data = self::update_flow_data(Flows::get_data(), $flow_data);
 		self::update_wp_options_data_in_database($flow_data);
-		\do_action('qm/debug', $flow_data);
         return $flow_data;
     }
 
@@ -46,9 +45,8 @@ class FlowService {
 		$flow_data = array_replace_recursive( $default_flow_data, $flow_data);
 
 		// delete_wp_options_data_in_database
-		$delete_flow_data = self::delete_wp_options_data_in_database($default_flow_data, $flow_data);
-		if ( ! is_null($delete_flow_data) )
-			$flow_data = $delete_flow_data;
+		$flow_data = self::delete_wp_options_data_in_database($default_flow_data, $flow_data);
+
 		self::update_wp_options_data_in_database( $flow_data );
 		return $flow_data;
 	}
@@ -66,7 +64,7 @@ class FlowService {
 		return $flow_data;
 	}
 
-	public static function rename_keys($flow_data_fixes, &$default_flow_data, &$flow_data){
+	private static function rename_keys($flow_data_fixes, &$default_flow_data, &$flow_data){
 		foreach ($flow_data as $key => $value) {
 			if (strcmp($key, $flow_data_fixes['old_key']) == 0) {
 				$key = $flow_data_fixes['new_key'];

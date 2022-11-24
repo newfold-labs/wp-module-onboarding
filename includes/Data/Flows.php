@@ -121,7 +121,7 @@ final class Flows {
 	  * Has all the Flow Key and/or Value parameters to be updated for the user.
 	  *
 	  * - old_key (mandatory) is the existing key in $data
-	  * - new_key (optional) is the key to be replaced in the database and also to be manually 
+	  * - new_key (mandatory) is the key to be replaced in the database and also to be manually 
 	  *   entered by the programmer in $data instead of 'old_key' 
 	  * - new_value (optional) is the value to be modified in the database and also to be manually 
 	  *   entered by the programmer in $data instead of the existing value against the old/new key 
