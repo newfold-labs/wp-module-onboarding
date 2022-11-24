@@ -1,6 +1,6 @@
 import { useState, useEffect } from '@wordpress/element';
 
-import { LivePreviewSelectableCard } from '..';
+import { LivePreviewSelectableCard, LivePreviewSelectableCardWithInfo } from '..';
 
 /**
  * Renders Skeletons for Live Previews.
@@ -18,6 +18,7 @@ const LivePreviewSkeleton = ( {
 	callback,
 	className,
 	viewportWidth,
+	isWithCard = false,
 } ) => {
 
 	const MAX_ANIMATION_TIME = 600000;
@@ -40,11 +41,30 @@ const LivePreviewSkeleton = ( {
 				/>
 			);
 		}
-
 		return dummyPreviews;
 	};
 
-	return !watch ? buildDummyPreviews() : 
+	const buildDummyPreviewsWithInfo = () => {
+		const dummyPreviews = [];
+
+		for (let i = 0; i < count; i++) {
+			dummyPreviews.push(
+				<LivePreviewSelectableCardWithInfo
+						key={ i }
+						className={ className }
+						blockGrammer={ '' }
+						viewportWidth={ 1200 }
+						styling={ 'custom' }
+						title={ 'Loading...' }
+						description={'Loading...'}
+					/>
+			);
+		}
+		console.log(dummyPreviews);
+		return dummyPreviews;
+	};
+
+	return !watch ? (isWithCard ? buildDummyPreviewsWithInfo() : buildDummyPreviews()) : 
 			<>
 				{watch ? <div style={{ display: 'none' }}>{rerender}</div> : null}
 				{callback()}

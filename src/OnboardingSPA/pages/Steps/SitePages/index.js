@@ -17,6 +17,7 @@ import {
 	GlobalStylesProvider,
 	LivePreviewSelectableCardWithInfo,
 } from '../../../components/LivePreview';
+import LivePreviewSkeleton from '../../../components/LivePreview/LivePreviewSkeleton';
 
 const StepSitePages = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -25,7 +26,7 @@ const StepSitePages = () => {
 
 	const location = useLocation();
 	const [ isLoaded, setIsLoaded ] = useState( false );
-	const [ sitePages, setSitePages ] = useState( [] );
+	const [ sitePages, setSitePages ] = useState( );
 	const [ checkedPages, setCheckedPages ] = useState( [] );
 
 	const { currentStep, currentData, themeStatus } = useSelect( ( select ) => {
@@ -54,6 +55,10 @@ const StepSitePages = () => {
 		setIsSidebarOpened( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 	}, [] );
+
+	const THEME_VARIATIONS =
+		window.nfdOnboarding?.stepPreviewData[currentStep?.patternId]
+			?.previewCount;
 
 	const getSitePages = async () => {
 		const sitePagesResponse = await getPatterns( currentStep.patternId );
@@ -142,18 +147,14 @@ const StepSitePages = () => {
 							subtitle={ currentStep?.subheading }
 						/>
 						<div className="site-pages__list">
-							{ sitePages &&
-								buildPreviews().slice(
-									0,
-									MAX_PREVIEWS_PER_ROW
-								) }
-						</div>
-						<div className="site-pages__list">
-							{ sitePages &&
-								buildPreviews().slice(
-									MAX_PREVIEWS_PER_ROW,
-									sitePages.length
-								) }
+							<LivePreviewSkeleton
+								className={'site-pages__list__item'}
+								count={THEME_VARIATIONS}
+								watch={sitePages}
+								isWithCard={true}
+								callback={buildPreviews}
+								viewportWidth={1200}
+							/>
 						</div>
 					</div>
 				</CommonLayout>
