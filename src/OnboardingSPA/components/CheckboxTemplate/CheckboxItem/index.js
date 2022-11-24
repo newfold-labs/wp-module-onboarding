@@ -29,14 +29,14 @@ const CheckboxItem = ({ key, icon, title, subtitle, desc, callback }) => {
     };
 
     return (
-        <div className={`checkbox-item ${showDescription && 'checkbox-item--active'}`}>
+        <div className={`checkbox-item ${isSelected && 'checkbox-item--selected'} ${showDescription && 'checkbox-item--shown'}`} >
             <div className="checkbox-item-container" >
                 <CheckboxControl
                     checked={isSelected}
                     onChange={handleCheck}
                     className="checkbox-item-checkbox" />
                 <div className='checkbox-item__contents'>
-                    <div className={`checkbox-item__contents-icon ${showDescription && 'checkbox-item__contents-icon--active'}`}>
+                    <div className={`checkbox-item__contents-icon ${showDescription && 'checkbox-item__contents-icon--shown'}`}>
                         <Icon
                             icon={search}
                             style={{

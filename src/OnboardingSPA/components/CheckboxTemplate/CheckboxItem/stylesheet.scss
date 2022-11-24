@@ -4,8 +4,8 @@
     padding: 16px;
     min-width: 300px;
     border-radius: 2px;
-    border: 1px solid #97C8FA;
-    background: rgba(132, 192, 252, 0.2);
+    background: #FFFFFF;
+    border: 1px solid #E0E0E0;
     box-shadow: 0px 2px 8px 2px rgba(204, 204, 204, 0.175295);
 
     &-container{
@@ -37,7 +37,7 @@
             background: #1C5CBA;
             justify-content: center;
 
-            &--active {
+            &--shown {
                 background: #F0F0F0;
             }
         }
@@ -69,7 +69,13 @@
         
     }
 
-    &--active {
+    &--selected {
+        border: 1px solid #97C8FA;
+        background: rgba(132, 192, 252, 0.2);
+        box-shadow: 0px 2px 8px 2px rgba(204, 204, 204, 0.175295);
+    }
+
+    &--shown {
         z-index: 9999;
         border-radius: 2px;
         background: #E2E9F4;
