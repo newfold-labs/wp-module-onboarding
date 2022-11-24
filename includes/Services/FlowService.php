@@ -64,16 +64,16 @@ class FlowService {
 		return $flow_data;
 	}
 
-	private static function rename_keys($flow_data_fixes, &$default_flow_data, &$flow_data){
+	private static function rename_keys($fixes_data, &$default_flow_data, &$flow_data){
 		foreach ($flow_data as $key => $value) {
-			if (strcmp($key, $flow_data_fixes['old_key']) == 0) {
-				$key = $flow_data_fixes['new_key'];
-				if (array_key_exists('new_value', $flow_data_fixes))
-					$flow_data[$key] = $flow_data_fixes['new_value'];
-				unset($flow_data[$flow_data_fixes['old_key']]);
+			if (strcmp($key, $fixes_data['old_key']) == 0) {
+				$key = $fixes_data['new_key'];
+				if (array_key_exists('new_value', $fixes_data))
+					$flow_data[$key] = $fixes_data['new_value'];
+				unset($flow_data[$fixes_data['old_key']]);
 			}
 			if (is_array($value)) 
-				$flow_data[$key] = self::rename_keys( $flow_data_fixes, $default_flow_data[$key], $value);
+				$flow_data[$key] = self::rename_keys( $fixes_data, $default_flow_data[$key], $value);
 		}
 		return $flow_data; 
 	}
