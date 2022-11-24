@@ -1,15 +1,24 @@
 .checkbox-item {
-    width: 25vw;
-    margin: 10px;
-    padding: 10px;
+    width: 23vw;
+    margin: 12px;
+    padding: 16px;
     min-width: 300px;
     border-radius: 2px;
     border: 1px solid #97C8FA;
     background: rgba(132, 192, 252, 0.2);
     box-shadow: 0px 2px 8px 2px rgba(204, 204, 204, 0.175295);
 
+    &-container{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;    
+    }
+
     &-checkbox{
-        width: 100%;
+        padding: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     &__contents{
@@ -21,8 +30,8 @@
         &-icon{
             width: 45px;
             height: 45px;
-            margin: 16px;
             display: flex;
+            margin-right: 16px;
             border-radius: 50%;
             align-items: center;
             background: #1C5CBA;
@@ -62,8 +71,6 @@
 
     &--active {
         z-index: 9999;
-        position: absolute;
-        transform: translateX(0%);
         border-radius: 2px;
         background: #E2E9F4;
         border: 1px solid #CADFE7;
@@ -72,6 +79,7 @@
 
     &__desc {
         font-size: 14px;
+        margin-top: 20px;
         font-style: italic;
     }
 }

@@ -15,9 +15,14 @@ import { CheckboxControl } from '@wordpress/components';
  * @returns CheckboxItem
  */
 
-const CheckboxItem = ({ icon, title, subtitle, desc }) => {
+const CheckboxItem = ({ key, icon, title, subtitle, desc, callback }) => {
    
+    const [isSelected, setIsSelected] = useState(false);
     const [showDescription, setShowDescription] = useState(false);
+
+    const handleCheck = () => {
+        setIsSelected(!isSelected);
+    };
 
     const handleShowDesc = () => {
         setShowDescription(!showDescription);
@@ -25,40 +30,40 @@ const CheckboxItem = ({ icon, title, subtitle, desc }) => {
 
     return (
         <div className={`checkbox-item ${showDescription && 'checkbox-item--active'}`}>
-            <CheckboxControl 
-                className="checkbox-item-checkbox"
-                label={
-                   <>
-                        <div className='checkbox-item__contents'>
-                            <div className={`checkbox-item__contents-icon ${showDescription && 'checkbox-item__contents-icon--active'}`}>
-                                <Icon
-                                    icon={search}
-                                    style={{
-                                        width: '35px',
-                                        height: '35px',
-                                        fill: `${showDescription ? '#000000' : '#FFFFFF'}`,
-                                    }}
-                                />
-                            </div>
-                            <div className="checkbox-item__contents-text">
-                                <div className="checkbox-item__contents-text-title">{title}</div>
-                                <div className="checkbox-item__contents-text-subtitle">{subtitle}</div>
-                            </div>
-                            <div className='checkbox-item__contents-help'
-                                onClick={handleShowDesc}>
-                                <Icon
-                                    icon={help}
-                                    style={{
-                                        width: '33px',
-                                        height: '33px',
-                                        fill: `${showDescription ? '#2E3A59' : '#666666'}`,
-                                    }}
-                                />
-                            </div>
-                        </div>
-                        {showDescription && <div className="checkbox-item__desc">{desc}</div>}
-                   </>
-                }/>
+            <div className="checkbox-item-container" >
+                <CheckboxControl
+                    checked={isSelected}
+                    onChange={handleCheck}
+                    className="checkbox-item-checkbox" />
+                <div className='checkbox-item__contents'>
+                    <div className={`checkbox-item__contents-icon ${showDescription && 'checkbox-item__contents-icon--active'}`}>
+                        <Icon
+                            icon={search}
+                            style={{
+                                width: '35px',
+                                height: '35px',
+                                fill: `${showDescription ? '#000000' : '#FFFFFF'}`,
+                            }}
+                        />
+                    </div>
+                    <div className="checkbox-item__contents-text">
+                        <div className="checkbox-item__contents-text-title">{title}</div>
+                        <div className="checkbox-item__contents-text-subtitle">{subtitle}</div>
+                    </div>
+                    <div className='checkbox-item__contents-help'
+                        onClick={handleShowDesc}>
+                        <Icon
+                            icon={help}
+                            style={{
+                                width: '33px',
+                                height: '33px',
+                                fill: `${showDescription ? '#1C5CBA' : '#666666'}`,
+                            }}
+                        />
+                    </div>
+                </div>
+            </div>
+            {showDescription && <div className="checkbox-item__desc">{desc}</div>}
         </div>
     );
 };
