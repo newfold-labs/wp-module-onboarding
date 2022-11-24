@@ -8,17 +8,11 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 class FlowService {
 
     public static function initalize_flow_data() { 
-		$flow_data_fixes = Flows::get_fixes();
         if ( ! ( $flow_data = self::read_flow_data_from_wp_option() ) )
             $flow_data = self::get_default_flow_data();
-		if ($flow_data_fixes) {
-			foreach($flow_data_fixes as $key=>$fixes_data) {
-				$flow_data = self::rename_keys($fixes_data, Flows::get_data(), $flow_data);
-				self::update_wp_options_data_in_database($flow_data);
-			}
-		}
-		$flow_data = self::update_flow_data($flow_data);
+		$flow_data = self::update_flow_data(Flows::get_data(), $flow_data);
 		self::update_wp_options_data_in_database($flow_data);
+		\do_action('qm/debug', $flow_data);
         return $flow_data;
     }
 
@@ -38,12 +32,24 @@ class FlowService {
 	/*
 	 * function to compare and add Flows::get_data() items to database
 	 */
-	private static function update_flow_data($flow_data) {
-		$flow_data = array_replace_recursive( Flows::get_data(), $flow_data);
-		self::update_wp_options_data_in_database( $flow_data );
-		$delete_flow_data = self::delete_wp_options_data_in_database(Flows::get_data(), $flow_data);
+	private static function update_flow_data($default_flow_data, $flow_data) {
+		$flow_data_fixes = Flows::get_fixes();
+
+		//Update with the modified key/values
+		if ($flow_data_fixes) {
+			foreach($flow_data_fixes as $key=>$fixes_data) {
+				$flow_data = self::rename_keys($fixes_data, $default_flow_data, $flow_data);
+			}
+		}
+
+		// compare and add Blueprint flow data items to database
+		$flow_data = array_replace_recursive( $default_flow_data, $flow_data);
+
+		// delete_wp_options_data_in_database
+		$delete_flow_data = self::delete_wp_options_data_in_database($default_flow_data, $flow_data);
 		if ( ! is_null($delete_flow_data) )
 			$flow_data = $delete_flow_data;
+		self::update_wp_options_data_in_database( $flow_data );
 		return $flow_data;
 	}
 
@@ -64,9 +70,9 @@ class FlowService {
 		foreach ($flow_data as $key => $value) {
 			if (strcmp($key, $flow_data_fixes['old_key']) == 0) {
 				$key = $flow_data_fixes['new_key'];
-				unset($flow_data[$flow_data_fixes['old_key']]);
 				if (array_key_exists('new_value', $flow_data_fixes))
 					$flow_data[$key] = $flow_data_fixes['new_value'];
+				unset($flow_data[$flow_data_fixes['old_key']]);
 			}
 			if (is_array($value)) 
 				$flow_data[$key] = self::rename_keys( $flow_data_fixes, $default_flow_data[$key], $value);
