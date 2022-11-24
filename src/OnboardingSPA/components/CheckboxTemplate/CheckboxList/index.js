@@ -5,14 +5,14 @@ import { CheckboxItem } from "../index";
  * Checkbox List Component
  * This returns a List of Checkbox Items to be placed dynamically on screen
  * 
- * @param {Object} data - The List to be shown with a Title, Subtitle and a Description
+ * @param {Object} customPluginsList - The List to be shown with a Title, Subtitle and a Description
  * 
  * @returns CheckboxList
  */
-const CheckboxList = ({ data }) => {
+const CheckboxList = ({ customPluginsList }) => {
 
     const buildCheckboxItems = () => {
-        return data.map((item, idx) => {
+        return customPluginsList.map((item, idx) => {
             return (
                 <CheckboxItem
                     icon={item.icon}
@@ -26,10 +26,10 @@ const CheckboxList = ({ data }) => {
     return (
         <div className="checkbox-list">
             <div className="checkbox-list-col">
-                {buildCheckboxItems().slice(0, Math.floor(data.length/2))}
+                {buildCheckboxItems().slice(0, Math.floor(customPluginsList.length/2))}
             </div>
             <div className="checkbox-list-col">
-                {buildCheckboxItems().slice(Math.floor(data.length / 2), data.length)}
+                {buildCheckboxItems().slice(Math.floor(customPluginsList.length / 2), customPluginsList.length)}
             </div>
         </div>
     );
