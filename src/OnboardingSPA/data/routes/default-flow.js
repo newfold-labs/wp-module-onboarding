@@ -489,9 +489,9 @@ export const steps = [
 	{
 		path: '/wp-setup/step/site-pages',
 		title: __( 'Pages', 'wp-module-onboarding' ),
-		heading: __( "We've got some page ideas", 'wp-module-onboarding' ),
+		heading: __( "You have ideas, we have page templates", 'wp-module-onboarding' ),
 		subheading: __(
-			'Start closer to the finish line than a blank canvas.',
+			'Begin closer to the finish line than a blank canvas.',
 			'wp-module-onboarding'
 		),
 		description: __(
@@ -501,6 +501,7 @@ export const steps = [
 		Component: StepSitePages,
 		Icon: copy,
 		priority: 260,
+		patternId: 'site-pages',
 		sidebars: {
 			LearnMore: {
 				SidebarComponents: [ StepSitePagesLearnMoreSidebar ],

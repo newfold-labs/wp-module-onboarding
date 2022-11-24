@@ -6,7 +6,6 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { getPatterns } from '../../../utils/api/patterns';
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
-import { getGlobalStyles, setGlobalStyles } from '../../../utils/api/themes';
 import {
 	VIEW_DESIGN_HOMEPAGE_MENU,
 	THEME_STATUS_ACTIVE,
@@ -24,19 +23,19 @@ const StepDesignHomepageMenu = () => {
 
 	const homepagesList = {
 		'homepage-1': [
-			'site-header-left-logo-navigation-inline',
-			'homepage-1',
-			'site-footer',
+			'yith-wonder/site-header-left-logo-navigation-inline',
+			'yith-wonder/homepage-1',
+			'yith-wonder/site-footer',
 		],
 		'homepage-2': [
-			'site-header-left-logo-navigation-inline',
-			'homepage-2',
-			'site-footer',
+			'yith-wonder/site-header-left-logo-navigation-inline',
+			'yith-wonder/homepage-2',
+			'yith-wonder/site-footer',
 		],
 		'homepage-3': [
-			'site-header-left-logo-navigation-inline',
-			'homepage-3',
-			'site-footer',
+			'yith-wonder/site-header-left-logo-navigation-inline',
+			'yith-wonder/homepage-3',
+			'yith-wonder/site-footer',
 		],
 	};
 
@@ -142,7 +141,7 @@ const StepDesignHomepageMenu = () => {
 		return homepagePattern?.map( ( homepage, idx ) => {
 			if ( homepage ) {
 				return (
-					<div className="homepage_preview__list">
+					<div className="homepage_preview__list" key={ idx }>
 						<LivePreviewSelectableCard
 							className={ 'homepage_preview__list__item' }
 							selected={ idx === selectedHomepage }
@@ -156,6 +155,7 @@ const StepDesignHomepageMenu = () => {
 					</div>
 				);
 			}
+			return null;
 		} );
 	}
 
