@@ -158,6 +158,7 @@ const StepDesignHomepageMenu = () => {
 					/>
 				);
 			}
+			return null;
 		} );
 	}
 
