@@ -1,3 +1,4 @@
+import { useState } from '@wordpress/element';
 import { Icon, help, search } from '@wordpress/icons'; 
 
 import { CheckboxControl } from '@wordpress/components';
@@ -16,33 +17,47 @@ import { CheckboxControl } from '@wordpress/components';
 
 const CheckboxItem = ({ icon, title, subtitle, desc }) => {
    
+    const [showDescription, setShowDescription] = useState(false);
+
+    const handleShowDesc = () => {
+        setShowDescription(!showDescription);
+    };
+
     return (
-        <div className="checkbox-item">
+        <div className={`checkbox-item ${showDescription && 'checkbox-item--active'}`}>
             <CheckboxControl 
                 className="checkbox-item-checkbox"
                 label={
-                    <div className="checkbox-item__contents">
-                        <div className="checkbox-item__contents-icon">
-                            <Icon
-                                icon={search}
-                                style={{
-                                    fill: 'var(--wp-admin-theme-color-darker-10)',
-                                }}
-                            />
+                   <>
+                        <div className='checkbox-item__contents'>
+                            <div className={`checkbox-item__contents-icon ${showDescription && 'checkbox-item__contents-icon--active'}`}>
+                                <Icon
+                                    icon={search}
+                                    style={{
+                                        width: '35px',
+                                        height: '35px',
+                                        fill: `${showDescription ? '#000000' : '#FFFFFF'}`,
+                                    }}
+                                />
+                            </div>
+                            <div className="checkbox-item__contents-text">
+                                <div className="checkbox-item__contents-text-title">{title}</div>
+                                <div className="checkbox-item__contents-text-subtitle">{subtitle}</div>
+                            </div>
+                            <div className='checkbox-item__contents-help'
+                                onClick={handleShowDesc}>
+                                <Icon
+                                    icon={help}
+                                    style={{
+                                        width: '33px',
+                                        height: '33px',
+                                        fill: `${showDescription ? '#2E3A59' : '#666666'}`,
+                                    }}
+                                />
+                            </div>
                         </div>
-                        <div className="checkbox-item__contents-text">
-                            <p className="checkbox-item__contents-text-title">{title}</p>
-                            <p className="checkbox-item__contents-text-subtitle">{subtitle}</p>
-                        </div>
-                        <div className="checkbox-item__contents-help">
-                            <Icon
-                                icon={help}
-                                style={{
-                                    fill: 'var(--wp-admin-theme-color-darker-10)',
-                                }}
-                            />
-                        </div>
-                    </div>
+                        {showDescription && <div className="checkbox-item__desc">{desc}</div>}
+                   </>
                 }/>
         </div>
     );
