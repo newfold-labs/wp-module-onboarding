@@ -33,9 +33,9 @@ const StepSiteFeatures = () => {
 	async function selectPlugin(slug, choice) {
 		let selectedPluginsCopy = {...selectedPlugins};
 		if(choice)
-			selectedPluginsCopy[slug] = 1;
+			selectedPluginsCopy[slug] = true;
 		else
-			delete selectedPluginsCopy[slug];
+			selectedPluginsCopy[slug] = false;
 
 		currentData.data.siteFeatures = {...selectedPluginsCopy};
 		setCurrentOnboardingData(currentData);
@@ -46,8 +46,7 @@ const StepSiteFeatures = () => {
 		let selectedPlugins = {};
 
 		customPluginsList.forEach(plugin => {
-			if (plugin.selected === true)
-				selectedPlugins[plugin.slug] = 1;
+			selectedPlugins[plugin.slug] = plugin.selected;
 		});
 		setSelectedPlugins(selectedPlugins);
 
