@@ -624,19 +624,16 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 
 				&__title-bar {
 					width: 90%;
-					height: 15px;
+					height: 20px;
 					display: flex;
-					align-items: center;
-					background-color: #ccc;
 					justify-content: space-between;
-					border: 1px solid transparent;
 
 					&--selected {
 						z-index: 2;
 						width: 40px;
 						height: 40px;
 						display: flex;
-						margin-right: -15px;
+						margin-right: -12px;
 						border-radius: 50%;
 						align-items: center;
 						justify-content: center;
@@ -645,7 +642,7 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 
 						&__path {
 							fill: $main-color-light;
-							// transform: scale(0.7);
+							transform: scale(0.7);
 						}
 					}
 
@@ -656,7 +653,7 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 
 				&__live-preview-container {
 					position: relative;
-					width: 100%;
+					width: 95%;
 					overflow: hidden;
 					align-items: center;
 

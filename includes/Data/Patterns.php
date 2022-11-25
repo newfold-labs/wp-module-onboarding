@@ -21,11 +21,10 @@ final class Patterns
                     'homepage-3',
                     'site-footer',
                ),
-               'header' => array(
-                    'site-header-centered-logo-split-menu',
-                    'site-header-centered',
-                    'site-header-left-logo-navigation-below',
-                    'site-header-left-logo-navigation-inline'
+               'header-menu' => array(
+                    'site-header-left-logo-navigation-inline',
+                    'homepage-1',
+                    'site-footer',
                )
           ),
      );
@@ -110,6 +109,16 @@ final class Patterns
                }
           }
           return $filtered_patterns;
+     }
+
+     public static function get_default_header()
+     {
+          $active_theme = (\wp_get_theme())->get('TextDomain');
+
+          $header_menu_page_pattern = self::$theme_step_patterns[$active_theme]['header-menu'];
+          $header_menu_pattern = preg_grep("/header/", $header_menu_page_pattern);
+
+          return ($header_menu_pattern !== FALSE) ? $active_theme.'/'.$header_menu_pattern[0] : FALSE;
      }
 
      /**

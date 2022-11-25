@@ -454,6 +454,7 @@ export const steps = [
 		Icon: header,
 		priority: 220,
 		VIEW: VIEW_DESIGN_HEADER_MENU,
+		patternId: 'header-menu',
 		sidebars: {
 			LearnMore: {
 				SidebarComponents: [ StepDesignHeaderMenuLearnMoreSidebar ],

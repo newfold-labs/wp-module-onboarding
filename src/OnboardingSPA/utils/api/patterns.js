@@ -18,7 +18,17 @@ export async function getHeaderMenuPatterns() {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL(
-				`patterns/header`
+				`patterns/headers`
+			),
+		} ).then()
+	);
+}
+
+export async function getDefaultHeaderMenu() {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL(
+				`patterns/header/default`
 			),
 		} ).then()
 	);

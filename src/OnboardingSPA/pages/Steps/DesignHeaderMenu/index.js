@@ -14,11 +14,17 @@ import {
 	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
 import { store as nfdOnboardingStore } from '../../../store';
+import { getPatterns } from '../../../utils/api/patterns';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
 const StepDesignHeaderMenu = () => {
 	const location = useLocation();
-	const { currentStep, currentData, storedPreviewSettings } = useSelect(
+	const { 
+		currentStep,
+		currentData,
+		storedPreviewSettings,
+		themeStatus,
+	 } = useSelect(
 		( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getStepFromPath(
@@ -26,15 +32,15 @@ const StepDesignHeaderMenu = () => {
 				),
 				currentData: select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				storedPreviewSettings: select( nfdOnboardingStore ).getPreviewSettings(),
+				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 			};
 		},
 		[]
 	);
-	
-	const isLargeViewport = useViewportMatch( 'medium' );
+	const [ isLoaded, setIsLoaded ] = useState( false );
+	const [ pattern, setPattern ] = useState();
 
-	console.log(currentData);
-	const pattern = '<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"15px","bottom":"15px"}}},"backgroundColor":"secondary-background","textColor":"secondary-foreground","layout":{"inherit":true}} --><div class="wp-block-group alignfull has-secondary-foreground-color has-secondary-background-background-color has-text-color has-background" style="padding-top:15px;padding-bottom:15px">        <!-- wp:group {"style":{"spacing":{"blockGap":"30px"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"right"}} -->        <div class="wp-block-group">          </div>        <!-- /wp:group -->       <!-- wp:group {"layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->      <div class="wp-block-group">           <!-- wp:site-logo {"width":250} /-->          <!-- wp:navigation {"style":{"typography":{"textTransform":"uppercase"}},"fontSize":"x-small"} /-->      </div>        <!-- /wp:group --></div><!-- /wp:group -->';
+	const isLargeViewport = useViewportMatch( 'medium' );
 
 	const { 
 		setDrawerActiveView, 
@@ -42,6 +48,35 @@ const StepDesignHeaderMenu = () => {
 		setIsDrawerSuppressed,
 		setIsSidebarOpened 
 	} = useDispatch( nfdOnboardingStore );
+
+	const getCurrentPattern = async () => {
+		const patternsResponse = await getPatterns(
+			currentStep.patternId,
+			true
+		);
+
+		// if ( patternsResponse?.error ) {
+		// 	return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+		// }
+		// const globalStylesResponse = await getGlobalStyles();
+		// if ( globalStylesResponse?.error ) {
+		// 	return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+		// }
+		// let selectedGlobalStyle;
+		// if ( currentData.data.theme.variation ) {
+		// 	selectedGlobalStyle = globalStylesResponse.body.filter(
+		// 		( globalStyle ) =>
+		// 			globalStyle.title === currentData.data.theme.variation
+		// 	)[ 0 ];
+		// } else {
+		// 	selectedGlobalStyle = globalStylesResponse.body[ 0 ];
+		// }
+		// updatePreviewSettings(
+		// 	useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
+		// );
+		setPattern( patternsResponse?.body );
+		setIsLoaded( true );
+	};
 
 	useEffect( () => {
 		if ( isLargeViewport ) {
@@ -51,6 +86,11 @@ const StepDesignHeaderMenu = () => {
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_HEADER_MENU );
 	}, [] );
+
+	useEffect( () => {
+		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
+		getCurrentPattern();
+	}, [ isLoaded, themeStatus ] );
 
 	return (
 		<DesignStateHandler>
@@ -68,7 +108,6 @@ const StepDesignHeaderMenu = () => {
 							blockGrammer={ pattern }
 							styling={ 'custom' }
 							viewportWidth={ 1300 }
-							skeletonLoadingTime={ false }
 						/>
 					) }
 				</div>
