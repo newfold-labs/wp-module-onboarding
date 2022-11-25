@@ -15,13 +15,14 @@ import { CheckboxControl } from '@wordpress/components';
  * @returns CheckboxItem
  */
 
-const CheckboxItem = ({ key, icon, title, subtitle, desc, callback }) => {
+const CheckboxItem = ({ slug, icon, title, subtitle, desc, isSelectedDefault, callback }) => {
    
-    const [isSelected, setIsSelected] = useState(false);
     const [showDescription, setShowDescription] = useState(false);
+    const [isSelected, setIsSelected] = useState(isSelectedDefault);
 
     const handleCheck = () => {
         setIsSelected(!isSelected);
+        callback(slug, !isSelected);
     };
 
     const handleShowDesc = () => {

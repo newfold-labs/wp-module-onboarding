@@ -13,6 +13,7 @@ final class SiteFeatures {
 			'title'    => 'Security, Speed & Growth',
 			'subtitle' => 'Powered by Jetpack',
 			'desc'     => 'Jetpack',
+			'selected' => false,
 		),
 		array(
 			'slug'     => '2',
@@ -20,6 +21,7 @@ final class SiteFeatures {
 			'title'    => 'Forms',
 			'subtitle' => 'Powered by WP Forms',
 			'desc'     => 'WP Forms',
+			'selected' => true,
 		),
 		array(
 			'slug'     => '3',
@@ -27,6 +29,7 @@ final class SiteFeatures {
 			'title'    => 'Site Traffic',
 			'subtitle' => 'Powered by MonsterInsights',
 			'desc'     => 'MonsterInsights',
+			'selected' => true,
 		),
 		array(
 			'slug'     => '4',
@@ -34,6 +37,7 @@ final class SiteFeatures {
 			'title'    => 'Search Engine Optimization',
 			'subtitle' => 'Powered by Yoast',
 			'desc'     => 'Yoast',
+			'selected' => false,
 		),
 		array(
 			'slug'     => '5',
@@ -41,6 +45,7 @@ final class SiteFeatures {
 			'title'    => 'Email Newsletters',
 			'subtitle' => 'Powered by Creative Email',
 			'desc'     => 'Creative Email',
+			'selected' => false,
 		),
 		array(
 			'slug'     => '6',
@@ -48,6 +53,7 @@ final class SiteFeatures {
 			'title'    => 'Enhanced Product Search',
 			'subtitle' => 'Powered by YITH',
 			'desc'     => 'YITH',
+			'selected' => true,
 		),
 		array(
 			'slug'     => '7',
@@ -55,6 +61,7 @@ final class SiteFeatures {
 			'title'    => 'Enhanced Product Filters',
 			'subtitle' => 'Powered by YITH',
 			'desc'     => 'YITH',
+			'selected' => true,
 		),
 		array(
 			'slug'     => '8',
@@ -62,6 +69,7 @@ final class SiteFeatures {
 			'title'    => 'Bookings & Appointments',
 			'subtitle' => 'Powered by YITH',
 			'desc'     => 'YITH',
+			'selected' => false,
 		),
 		array(
 			'slug'     => '9',
@@ -69,6 +77,7 @@ final class SiteFeatures {
 			'title'    => 'Product Wishlists',
 			'subtitle' => 'Powered by YITH',
 			'desc'     => 'YITH',
+			'selected' => false,
 		),
 		array(
 			'slug'     => '10',
@@ -76,6 +85,7 @@ final class SiteFeatures {
 			'title'    => 'Lead Generation',
 			'subtitle' => 'Powered by Optin Monster',
 			'desc'     => 'Optin Monster',
+			'selected' => true,
 		),
 	);
 

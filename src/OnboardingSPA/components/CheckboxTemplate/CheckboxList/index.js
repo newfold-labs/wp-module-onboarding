@@ -9,16 +9,20 @@ import { CheckboxItem } from "../index";
  * 
  * @returns CheckboxList
  */
-const CheckboxList = ({ customPluginsList }) => {
+const CheckboxList = ({ callback, selectedPlugins, customPluginsList }) => {
 
     const buildCheckboxItems = () => {
         return customPluginsList.map((item, idx) => {
+            let isSelectedDefault = selectedPlugins[item.slug];
             return (
                 <CheckboxItem
+                    slug={item.slug}
                     icon={item.icon}
                     title={item.title}
                     subtitle={item.subtitle}
-                    desc={item.desc} />
+                    desc={item.desc} 
+                    callback={callback}
+                    isSelectedDefault={isSelectedDefault ?? false} />
                 )
         });
     }

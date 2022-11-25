@@ -13,6 +13,7 @@ const StepSiteFeatures = () => {
 	const isLargeViewport = useViewportMatch('medium');
 
 	const [isLoaded, setisLoaded] = useState(false);
+	const [selectedPlugins, setSelectedPlugins] = useState();
 	const [customPluginsList, setCustomPluginsList] = useState();
 
 	const { setIsDrawerOpened, setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed } =
@@ -27,10 +28,28 @@ const StepSiteFeatures = () => {
 		[]
 	);
 
+	async function selectPlugin(slug, choice) {
+		let selectedPluginsCopy = {...selectedPlugins};
+		if(choice)
+			selectedPluginsCopy[slug] = 1;
+		else
+			delete selectedPluginsCopy[slug];
+		setSelectedPlugins(selectedPluginsCopy);
+	}
+
+	async function changeToStoreSchema( customPluginsList ) {
+		let selectedPlugins = {};
+		customPluginsList.forEach(plugin => {
+			if (plugin.selected === true)
+				selectedPlugins[plugin.slug] = 1;
+		});
+		setSelectedPlugins(selectedPlugins);
+	}
+
 	async function getCustomPlugins() {
 		const customPluginsList = await getCustomPluginsList();
+		changeToStoreSchema(customPluginsList.body);
 		setCustomPluginsList(customPluginsList.body);
-
 		setisLoaded(true);
 	}
 
@@ -52,7 +71,11 @@ const StepSiteFeatures = () => {
 	return (
 		<CommonLayout isVerticallyCentered>
 			<HeadingWithSubHeading title={currentStep?.heading} subtitle={currentStep?.subheading} />
-			{ customPluginsList && <CheckboxList customPluginsList={customPluginsList} />}
+			{customPluginsList && 
+				<CheckboxList 
+					callback={selectPlugin}
+					selectedPlugins={selectedPlugins} 
+					customPluginsList={customPluginsList} />}
 		</CommonLayout>
 	);
 };
