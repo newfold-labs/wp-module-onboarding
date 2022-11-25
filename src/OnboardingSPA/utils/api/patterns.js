@@ -33,3 +33,14 @@ export async function getDefaultHeaderMenu() {
 		} ).then()
 	);
 }
+
+export async function getHeaderMenuPreview( slug ) {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL(
+				`patterns/header/preview` +
+					( slug ? `&slug=${ slug }` : '' )
+			),
+		} ).then()
+	);
+}

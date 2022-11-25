@@ -71,6 +71,17 @@ class PatternsController extends \WP_REST_Controller
 				),
 			)
 		);
+          register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/header/preview',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_header_pattern_preview' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
      }
 
      public function get_pattern_args()
@@ -214,4 +225,28 @@ class PatternsController extends \WP_REST_Controller
                 $header_pattern
            );
       }
+
+     /**
+      * Retrieves pattern for specific header pattern.
+      *
+      * @return \WP_Rest_Response|\WP_Error
+      */
+     public function get_header_pattern_preview(\WP_REST_Request $request)
+     {
+          $slug   = $request->get_param('slug');
+
+          $header_pattern_preview = Patterns::get_header_pattern_preview($slug);
+          if (!$header_pattern_preview) {
+               return new \WP_Error(
+                    'no_header_preview',
+                    __('Preview for the provided header pattern could not be generated.'),
+                    array('status' => 404)
+               );
+          }
+
+          return new \WP_REST_Response(
+               $header_pattern_preview
+          );
+     }
+
 }

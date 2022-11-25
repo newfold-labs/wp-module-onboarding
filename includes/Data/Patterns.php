@@ -25,7 +25,11 @@ final class Patterns
                     'site-header-left-logo-navigation-inline',
                     'homepage-1',
                     'site-footer',
-               )
+               ),
+               'header-menu-body' => array(
+                    'homepage-1',
+                    'site-footer',
+               ),
           ),
      );
 
@@ -53,6 +57,7 @@ final class Patterns
           if ($block_patterns_registry->is_registered($pattern_name)) {
                $pattern = $block_patterns_registry->get_registered($pattern_name);
                return array(
+                    'slug'    => $pattern['slug'],
                     'title'   => $pattern['title'],
                     'content' => self::cleanup_wp_grammar($pattern['content']),
                     'name'    => $pattern['name'],
@@ -119,6 +124,37 @@ final class Patterns
           $header_menu_pattern = preg_grep("/header/", $header_menu_page_pattern);
 
           return ($header_menu_pattern !== FALSE) ? $active_theme.'/'.$header_menu_pattern[0] : FALSE;
+     }
+
+
+     public static function get_header_pattern_preview($slug, $squash = true) 
+     {
+          $active_theme = (\wp_get_theme())->get('TextDomain');
+
+          $pattern_slugs           = self::$theme_step_patterns[$active_theme]['header-menu-body'];
+          $pattern_slugs           = array_merge(array($slug), $pattern_slugs);
+
+          $block_patterns          = array();
+          $block_patterns_squashed = '';
+          $block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
+
+          foreach($pattern_slugs as $pattern_slug) {
+               $pattern_name = (strpos($pattern_slug, $active_theme) === 0) ? $pattern_slug : $active_theme . '/' . $pattern_slug;
+               if ($block_patterns_registry->is_registered($pattern_name)) {
+                    $pattern = $block_patterns_registry->get_registered($pattern_name);
+                    if (!$squash) {
+                         $block_patterns[] = array(
+                              'slug'    => $slug,
+                              'title'   => $pattern['title'],
+                              'content' => self::cleanup_wp_grammar($pattern['content']),
+                              'name'    => $pattern['name'],
+                         );
+                         continue;
+                    }
+                    $block_patterns_squashed .= self::cleanup_wp_grammar($pattern['content']);
+               }
+          }
+          return $squash ? $block_patterns_squashed : $block_patterns;
      }
 
      /**
