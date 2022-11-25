@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import { useViewportMatch } from '@wordpress/compose';
 import { useEffect, useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
@@ -16,13 +17,14 @@ const StepSiteFeatures = () => {
 	const [selectedPlugins, setSelectedPlugins] = useState();
 	const [customPluginsList, setCustomPluginsList] = useState();
 
-	const { setIsDrawerOpened, setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed } =
+	const { setIsDrawerOpened, setDrawerActiveView, setIsSidebarOpened, setCurrentOnboardingData, setIsDrawerSuppressed } =
 		useDispatch(nfdOnboardingStore);
 
-	const { currentStep } = useSelect(
+	const { currentStep, currentData } = useSelect(
 		(select) => {
 			return {
-				currentStep: select(nfdOnboardingStore).getCurrentStep()
+				currentStep: select(nfdOnboardingStore).getCurrentStep(),
+				currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
 			};
 		},
 		[]
@@ -34,21 +36,34 @@ const StepSiteFeatures = () => {
 			selectedPluginsCopy[slug] = 1;
 		else
 			delete selectedPluginsCopy[slug];
+
+		currentData.data.siteFeatures = {...selectedPluginsCopy};
+		setCurrentOnboardingData(currentData);
 		setSelectedPlugins(selectedPluginsCopy);
 	}
 
-	async function changeToStoreSchema( customPluginsList ) {
+	async function changeToStoreSchema( customPluginsList, saveToStore = false ) {
 		let selectedPlugins = {};
+
 		customPluginsList.forEach(plugin => {
 			if (plugin.selected === true)
 				selectedPlugins[plugin.slug] = 1;
 		});
 		setSelectedPlugins(selectedPlugins);
+
+		if (saveToStore) {
+			currentData.data.siteFeatures = { ...selectedPlugins };
+			setCurrentOnboardingData(currentData);
+		}
 	}
 
 	async function getCustomPlugins() {
 		const customPluginsList = await getCustomPluginsList();
-		changeToStoreSchema(customPluginsList.body);
+		if (isEmpty(currentData?.data?.siteFeatures))
+			changeToStoreSchema(customPluginsList.body, true);
+		else
+			setSelectedPlugins({ ...currentData?.data?.siteFeatures });
+		
 		setCustomPluginsList(customPluginsList.body);
 		setisLoaded(true);
 	}
