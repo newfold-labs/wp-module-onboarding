@@ -51,12 +51,12 @@ class PluginUninstallTaskManager {
 	public static function queue_initial_uninstalls( $un_init_plugins ) {
 
 		// Checks if the init_list of plugins have already been queued.
-		if ( \get_option( Options::get_option_name( 'plugins_un_init_status' ), 'init' ) !== 'init' ) {
+		if ( \get_option( Options::get_option_name( 'plugins_uninit_status' ), 'init' ) !== 'init' ) {
 			return true;
 		}
 
 		// Set option to uninstalling to prevent re-queueing the uninstall init_list again on page load.
-		 \update_option( Options::get_option_name( 'plugins_un_init_status' ), 'uninstalling' );
+		 \update_option( Options::get_option_name( 'plugins_uninit_status' ), 'uninstalling' );
 
 		// Get the initial list of plugins to be uninstalled based on the plan.
 		
@@ -101,7 +101,7 @@ class PluginUninstallTaskManager {
 		);
 
 		// Update status to the current slug being installed.
-		\update_option( Options::get_option_name( 'plugins_un_init_status' ), $plugin_uninstall_task->get_slug() );
+		\update_option( Options::get_option_name( 'plugins_uninit_status' ), $plugin_uninstall_task->get_slug() );
 
 		// Execute the PluginUninstall Task.
 		$status = $plugin_uninstall_task->execute();
@@ -120,7 +120,7 @@ class PluginUninstallTaskManager {
 
 		// If there are no more plugins to be installed then change the status to completed.
 		if ( empty( $plugins ) ) {
-			\update_option( Options::get_option_name( 'plugins_un_init_status' ), 'completed' );
+			\update_option( Options::get_option_name( 'plugins_uninit_status' ), 'completed' );
 		}
 
 		// Update the plugin uninstall queue.
