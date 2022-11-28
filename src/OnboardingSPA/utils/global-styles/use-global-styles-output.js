@@ -740,7 +740,7 @@ export const toStyles = (
 		ruleset +
 		'.wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }';
 
-	if ( hasBlockGapSupport ) {
+	if ( ! disableLayoutStyles && hasBlockGapSupport ) {
 		// Use fallback of `0.5em` just in case, however if there is blockGap support, there should nearly always be a real value.
 		const gapValue =
 			getGapCSSValue( tree?.styles?.spacing?.blockGap ) || '0.5em';
@@ -822,12 +822,13 @@ export function useGlobalStylesOutput(
 	previewSettings,
 	storedPreviewSettings
 ) {
-	console.log( storedPreviewSettings );
 	const hasBlockGapSupport =
 		storedPreviewSettings.settings.__experimentalFeatures.spacing.blockGap;
 	const hasFallbackGapSupport = ! hasBlockGapSupport;
-	const disableLayoutStyles =
-		storedPreviewSettings.settings.disableLayoutStyles;
+	const disableLayoutStyles = storedPreviewSettings.settings
+		?.disableLayoutStyles
+		? storedPreviewSettings.settings.disableLayoutStyles
+		: true;
 
 	if (
 		! previewSettings?.styles &&
