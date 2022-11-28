@@ -43,11 +43,14 @@ const DesignHomepageMenu = () => {
 		}
         setPatterns( patternsResponse?.body );
 		
-        const defaultHeaderMenu = await getDefaultHeaderMenu();
-		if ( defaultHeaderMenu?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+		if(!currentData.data.partHeader) {
+			const defaultHeaderMenu = await getDefaultHeaderMenu();
+			if ( defaultHeaderMenu?.error ) {
+				return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			}
+			currentData.data.partHeader = defaultHeaderMenu.body;
 		}
-		setSelectedPattern(defaultHeaderMenu.body);
+		setSelectedPattern(currentData.data.partHeader);
 		
         if (
 			document.getElementsByClassName(
@@ -72,11 +75,8 @@ const DesignHomepageMenu = () => {
 
 	const handleClick = ( idx ) => {
 		const selectedPattern = patterns[ idx ];
-		// updatePreviewSettings(
-		// 	useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
-		// );
 		setSelectedPattern( selectedPattern.slug );
-		currentData.data.partHeader = selectedPattern.title;
+		currentData.data.partHeader = selectedPattern.slug;
 		setCurrentOnboardingData( currentData );
 	};
 
