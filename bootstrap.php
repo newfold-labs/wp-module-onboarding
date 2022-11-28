@@ -19,7 +19,7 @@ function nfd_wp_module_onboarding_register() {
 
 			// Set Global Constants
 			if ( ! defined( 'NFD_ONBOARDING_VERSION' ) ) {
-				define( 'NFD_ONBOARDING_VERSION', '0.2.6' );
+				define( 'NFD_ONBOARDING_VERSION', '0.2.7' );
 			}
 			if ( ! defined( 'NFD_ONBOARDING_DIR' ) ) {
 				define( 'NFD_ONBOARDING_DIR', __DIR__ );
