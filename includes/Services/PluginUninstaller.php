@@ -6,18 +6,40 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 class PluginUninstaller {
 
 	public static function uninstall( $plugin ) {
-		
-        // if ( ! self::is_plugin_installed( $plugin_path ) ) {
-		// 	 return false;
-		// }
 
-		// if ( $activate && ! \is_plugin_active( $plugin_path ) ) {
-		// 	 return false;
-		// }
-        $installed_plugins = \get_plugins();
+		$plugin_path = $plugin . '/' . $plugin . '.php';
+
+		if ( self::is_plugin_installed( $plugin_path ) ) {
+
+			if ( \is_plugin_active( $plugin_path ) ) {
+				\deactivate_plugins( $plugin_path );
+			}
+
+			if ( ! self::connect_to_filesystem() ) {
+				return new \WP_Error(
+					'nfd_onboarding_error',
+					'Could not connect to the filesystem.',
+					array( 'status' => 500 )
+				);
+			}
+
+			if ( ! \delete_plugins( array( $plugin_path ) ) ) {
+				return new \WP_Error(
+					'nfd_onboarding_error',
+					'Unable to Delete the Plugin',
+					array( 'status' => 500 )
+				);
+			}
+		} else {
+			return new \WP_Error(
+				'nfd_onboarding_error',
+				'The Plugin is not installed',
+				array( 'status' => 500 )
+			);
+		}
 
 		return new \WP_REST_Response(
-			$installed_plugins,
+			array(),
 			201
 		);
 	}
@@ -30,13 +52,8 @@ class PluginUninstaller {
 	 * @return boolean
 	 */
 	public static function exists( $plugin ) {
-		 $plugin_type = self::get_plugin_type( $plugin );
-		 $plugin_path = self::get_plugin_path( $plugin, $plugin_type );
+		 $plugin_path = $plugin . '/' . $plugin . '.php';
 		if ( ! self::is_plugin_installed( $plugin_path ) ) {
-			 return false;
-		}
-
-		if ( ! \is_plugin_active( $plugin_path ) ) {
 			 return false;
 		}
 		 return true;

@@ -90,11 +90,11 @@ final class SiteFeatures {
 	);
 
 	public static function convert_to_hash() {
-		$idx = 0;
+		$idx                  = 0;
 		$default_plugins_hash = array();
 
-		foreach(self::$default_plugins as $default_plugin){
-			$default_plugins_hash[$default_plugin["slug"]] = $idx;
+		foreach ( self::$default_plugins as $default_plugin ) {
+			$default_plugins_hash[ $default_plugin['slug'] ] = $idx;
 			$idx += 1;
 		}
 
@@ -107,9 +107,10 @@ final class SiteFeatures {
 		// Make an Hash Map for faster updation
 		$default_plugins_hash = self::convert_to_hash();
 
-		foreach($installed_plugins as $installed_plugin){
-			if(isset($default_plugins_hash[$installed_plugin["slug"]]))
-				self::$default_plugins[$default_plugins_hash[$installed_plugin["slug"]]]["selected"] = true;
+		foreach ( $installed_plugins as $installed_plugin ) {
+			if ( isset( $default_plugins_hash[ $installed_plugin['slug'] ] ) ) {
+				self::$default_plugins[ $default_plugins_hash[ $installed_plugin['slug'] ] ]['selected'] = true;
+			}
 		}
 
 	}

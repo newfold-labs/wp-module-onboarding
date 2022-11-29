@@ -187,7 +187,7 @@ class PluginsController {
 	 */
 	public function uninstall( \WP_REST_Request $request ) {
 	
-		return PluginUninstaller::uninstall('woocomerce');
+		return PluginUninstaller::uninstall('gutenberg');
 	}
 
 	/**
