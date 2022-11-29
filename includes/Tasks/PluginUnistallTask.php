@@ -38,7 +38,7 @@ class PluginUninstallTask extends Task {
 	}
 
 	/**
-	 * Installs the Plugin using the PluginUninstaller Service.
+	 * Uninstalls the Plugin using the PluginUninstaller Service.
 	 *
 	 * @return \WP_REST_Response|WP_Error
 	 */

@@ -48,27 +48,25 @@ class PluginUninstallTaskManager {
 		 return $schedules;
 	}
 
-	public static function queue_initial_uninstalls( $un_init_plugins ) {
+	public static function queue_initial_uninstalls( $uninit_plugins ) {
 
-		// Checks if the init_list of plugins have already been queued.
+		// Checks if the uninit_list of plugins have already been queued.
 		if ( \get_option( Options::get_option_name( 'plugins_uninit_status' ), 'init' ) !== 'init' ) {
 			return true;
 		}
 
-		// Set option to uninstalling to prevent re-queueing the uninstall init_list again on page load.
+		// Set option to uninstalling to prevent re-queueing the uninstall on page load.
 		 \update_option( Options::get_option_name( 'plugins_uninit_status' ), 'uninstalling' );
 
-		// Get the initial list of plugins to be uninstalled based on the plan.
-		
 
-		foreach ( $un_init_plugins as $un_init_plugin ) {
+		foreach ( $uninit_plugins as $uninit_plugin ) {
 			// Checks if a plugin with the given slug and activation criteria already exists.
-			if ( ! PluginUninstaller::exists( $un_init_plugin['slug'] ) ) {
+			if ( ! PluginUninstaller::exists( $uninit_plugin['slug'] ) ) {
 					// Add a new PluginUninstallTask to the Plugin uninstall queue.
 					self::add_to_queue(
 						new PluginUninstallTask(
-							$un_init_plugin['slug'],
-							$un_init_plugin['priority']
+							$uninit_plugin['slug'],
+							$uninit_plugin['priority']
 						)
 					);
 			}

@@ -14,10 +14,10 @@ class PluginUninstaller {
 		// if ( $activate && ! \is_plugin_active( $plugin_path ) ) {
 		// 	 return false;
 		// }
-
+        $installed_plugins = \get_plugins();
 
 		return new \WP_REST_Response(
-			array(),
+			$installed_plugins,
 			201
 		);
 	}

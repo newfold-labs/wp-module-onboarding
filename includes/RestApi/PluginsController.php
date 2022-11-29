@@ -5,6 +5,7 @@ use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginInstaller;
+use NewfoldLabs\WP\Module\Onboarding\Services\PluginUninstaller;
 use NewfoldLabs\WP\Module\Onboarding\Tasks\PluginInstallTask;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
 
@@ -74,6 +75,18 @@ class PluginsController {
 					'methods'  => \WP_REST_Server::READABLE,
 					'callback' => array( $this, 'get_status' ),
 					'args'     => $this->get_status_args(),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/uninstall',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'uninstall' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -172,6 +185,18 @@ class PluginsController {
 	 *
 	 * @return \WP_REST_Response|\WP_Error
 	 */
+	public function uninstall( \WP_REST_Request $request ) {
+	
+		return PluginUninstaller::uninstall('woocomerce');
+	}
+
+	/**
+	 * Uninstalls the requested plugin.
+	 *
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
 	public function install( \WP_REST_Request $request ) {
 		$plugin   = $request->get_param( 'plugin' );
 		$activate = $request->get_param( 'activate' );
@@ -208,6 +233,7 @@ class PluginsController {
 
 		return $plugin_install_task->execute();
 	}
+
 
 	public function get_status( \WP_REST_Request $request ) {
 		$plugin    = $request->get_param( 'plugin' );
