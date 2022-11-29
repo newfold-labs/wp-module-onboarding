@@ -34,8 +34,12 @@
             margin-right: 16px;
             border-radius: 50%;
             align-items: center;
-            background: #1C5CBA;
+            background: #F0F0F0;
             justify-content: center;
+            
+            &--selected {
+                background: #1C5CBA;
+            }
 
             &--shown {
                 background: #F0F0F0;
@@ -51,9 +55,13 @@
 
             &-title{
                 font-size: 16px;
-                color: #1C5CBA;
+                color: #0D0D0D;
                 line-height: 18px;
                 margin-bottom: 6px;
+                
+                &--selected {
+                    color: #1C5CBA;
+                }
             }
 
             &-subtitle {

@@ -37,18 +37,20 @@ const CheckboxItem = ({ slug, icon, title, subtitle, desc, isSelectedDefault, ca
                     onChange={handleCheck}
                     className="checkbox-item-checkbox" />
                 <div className='checkbox-item__contents'>
-                    <div className={`checkbox-item__contents-icon ${showDescription && 'checkbox-item__contents-icon--shown'}`}>
+                    <div className={`checkbox-item__contents-icon
+                                     ${isSelected && 'checkbox-item__contents-icon--selected'}
+                                     ${showDescription && 'checkbox-item__contents-icon--shown'}`}>
                         <Icon
                             icon={search}
                             style={{
                                 width: '35px',
                                 height: '35px',
-                                fill: `${showDescription ? '#000000' : '#FFFFFF'}`,
+                                fill: `${!isSelected || showDescription ? '#000000' : '#FFFFFF'}`,
                             }}
                         />
                     </div>
                     <div className="checkbox-item__contents-text">
-                        <div className="checkbox-item__contents-text-title">{title}</div>
+                        <div className={`checkbox-item__contents-text-title ${isSelected && 'checkbox-item__contents-text-title--selected'}`}>{title}</div>
                         <div className="checkbox-item__contents-text-subtitle">{subtitle}</div>
                     </div>
                     <div className='checkbox-item__contents-help'
@@ -56,8 +58,8 @@ const CheckboxItem = ({ slug, icon, title, subtitle, desc, isSelectedDefault, ca
                         <Icon
                             icon={help}
                             style={{
-                                width: '33px',
-                                height: '33px',
+                                width: '30px',
+                                height: '30px',
                                 fill: `${showDescription ? '#1C5CBA' : '#666666'}`,
                             }}
                         />
