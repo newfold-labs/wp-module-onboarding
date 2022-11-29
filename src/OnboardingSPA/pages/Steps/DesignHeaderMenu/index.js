@@ -7,7 +7,6 @@ import { LivePreview } from '../../../components/LivePreview';
 import CommonLayout from '../../../components/Layouts/Common';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 
-
 import {
 	VIEW_DESIGN_HEADER_MENU,
 	THEME_STATUS_ACTIVE,
@@ -19,34 +18,29 @@ import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-s
 
 const StepDesignHeaderMenu = () => {
 	const location = useLocation();
-	const { 
-		currentStep,
-		currentData,
-		storedPreviewSettings,
-		themeStatus,
-	 } = useSelect(
-		( select ) => {
+	const { currentStep, currentData, storedPreviewSettings, themeStatus } =
+		useSelect( ( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getStepFromPath(
 					location.pathname
 				),
-				currentData: select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				storedPreviewSettings: select( nfdOnboardingStore ).getPreviewSettings(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				storedPreviewSettings:
+					select( nfdOnboardingStore ).getPreviewSettings(),
 				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 			};
-		},
-		[]
-	);
+		}, [] );
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
 
 	const isLargeViewport = useViewportMatch( 'medium' );
 
-	const { 
-		setDrawerActiveView, 
-		setIsDrawerOpened, 
+	const {
+		setDrawerActiveView,
+		setIsDrawerOpened,
 		setIsDrawerSuppressed,
-		setIsSidebarOpened 
+		setIsSidebarOpened,
 	} = useDispatch( nfdOnboardingStore );
 
 	const getCurrentPattern = async () => {
@@ -79,6 +73,10 @@ const StepDesignHeaderMenu = () => {
 	};
 
 	useEffect( () => {
+		setPattern( currentData.data.partHeader );
+	}, [ currentData.data.partHeader ] );
+
+	useEffect( () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );
 		}
@@ -89,7 +87,7 @@ const StepDesignHeaderMenu = () => {
 
 	useEffect( () => {
 		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
-		getCurrentPattern();
+			getCurrentPattern();
 	}, [ isLoaded, themeStatus ] );
 
 	return (

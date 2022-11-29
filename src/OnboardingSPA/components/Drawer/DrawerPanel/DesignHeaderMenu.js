@@ -1,10 +1,12 @@
-
 import { useSelect, useDispatch, select } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 
 import HeaderMenuPreview from '../../HeaderMenuPreview';
 import { store as nfdOnboardingStore } from '../../../store';
-import { getHeaderMenuPatterns, getDefaultHeaderMenu } from '../../../utils/api/patterns';
+import {
+	getHeaderMenuPatterns,
+	getDefaultHeaderMenu,
+} from '../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import {
@@ -41,23 +43,25 @@ const DesignHomepageMenu = () => {
 		if ( patternsResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
-        setPatterns( patternsResponse?.body );
-		
-		if(!currentData.data.partHeader) {
+		setPatterns( patternsResponse?.body );
+
+		if ( ! currentData.data.partHeader ) {
 			const defaultHeaderMenu = await getDefaultHeaderMenu();
 			if ( defaultHeaderMenu?.error ) {
 				return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 			}
 			currentData.data.partHeader = defaultHeaderMenu.body;
+			setCurrentOnboardingData( currentData );
 		}
-		setSelectedPattern(currentData.data.partHeader);
-		
-        if (
+		setSelectedPattern( currentData.data.partHeader );
+
+		if (
 			document.getElementsByClassName(
 				'theme-header-menu-preview--drawer__list__item__title-bar--selected'
 			)
 		) {
-			document.getElementsByClassName(
+			document
+				.getElementsByClassName(
 					'theme-header-menu-preview--drawer__list__item__title-bar--selected'
 				)[ 0 ]
 				.scrollIntoView( {
@@ -69,14 +73,13 @@ const DesignHomepageMenu = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
-			getPatterns();
+		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE ) getPatterns();
 	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = ( idx ) => {
 		const selectedPattern = patterns[ idx ];
 		setSelectedPattern( selectedPattern.slug );
-		currentData.data.partHeader = selectedPattern.slug;
+		currentData.data.partHeader = selectedPattern.content;
 		setCurrentOnboardingData( currentData );
 	};
 
@@ -85,7 +88,9 @@ const DesignHomepageMenu = () => {
 			return (
 				<HeaderMenuPreview
 					key={ idx }
-					className={ 'theme-header-menu-preview--drawer__list__item' }
+					className={
+						'theme-header-menu-preview--drawer__list__item'
+					}
 					selected={ pattern.slug === selectedPattern }
 					blockGrammer={ pattern.content }
 					viewportWidth={ 900 }
@@ -100,7 +105,7 @@ const DesignHomepageMenu = () => {
 	return (
 		<div className="theme-header-menu-preview--drawer">
 			<div className="theme-header-menu-preview--drawer__list">
-				{ patterns ? buildPreviews(): '' }
+				{ patterns ? buildPreviews() : '' }
 			</div>
 		</div>
 	);
