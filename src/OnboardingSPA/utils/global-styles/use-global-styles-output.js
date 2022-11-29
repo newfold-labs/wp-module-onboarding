@@ -840,7 +840,7 @@ export function useGlobalStylesOutput(
 
 	const requiredSettings = {
 		settings: previewSettings.settings,
-		styles: previewSettings.globalStyles
+		styles: previewSettings?.globalStyles
 			? previewSettings.globalStyles
 			: previewSettings.styles,
 	};
