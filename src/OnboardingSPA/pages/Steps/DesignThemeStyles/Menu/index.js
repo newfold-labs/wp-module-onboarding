@@ -37,6 +37,7 @@ const StepDesignThemeStylesMenu = () => {
 		currentData,
 		storedPreviewSettings,
 		themeStatus,
+		themeVariations,
 	} = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
@@ -48,12 +49,9 @@ const StepDesignThemeStylesMenu = () => {
 			storedPreviewSettings:
 				select( nfdOnboardingStore ).getPreviewSettings(),
 			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			themeVariations: select(nfdOnboardingStore).getStepPreviewData(),
 		};
 	}, [] );
-
-	const THEME_VARIATIONS =
-		window.nfdOnboarding?.stepPreviewData[ currentStep?.patternId ]
-			?.previewCount;
 
 	const {
 		setDrawerActiveView,
@@ -137,7 +135,7 @@ const StepDesignThemeStylesMenu = () => {
 					<div className="theme-styles-menu__list">
 						<LivePreviewSkeleton
 							className={ 'theme-styles-menu__list__item' }
-							count={ Math.floor( THEME_VARIATIONS ) }
+							count={ themeVariations[currentStep?.patternId]?.previewCount }
 							watch={ pattern && globalStyles }
 							callback={ buildPreviews }
 							viewportWidth={ 900 }

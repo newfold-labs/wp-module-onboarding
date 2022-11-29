@@ -22,7 +22,7 @@ const DesignThemeStylesPreview = () => {
 	const [ globalStyles, setGlobalStyles ] = useState();
 	const [ selectedStyle, setSelectedStyle ] = useState( '' );
 
-	const { currentStep, currentData, storedPreviewSettings, themeStatus } =
+	const { currentStep, currentData, storedPreviewSettings, themeStatus, themeVariations, } =
 		useSelect( ( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
@@ -31,6 +31,7 @@ const DesignThemeStylesPreview = () => {
 				storedPreviewSettings:
 					select( nfdOnboardingStore ).getPreviewSettings(),
 				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				themeVariations: select(nfdOnboardingStore).getStepPreviewData(),
 			};
 		}, [] );
 
@@ -39,10 +40,6 @@ const DesignThemeStylesPreview = () => {
 		setCurrentOnboardingData,
 		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
-
-	const THEME_VARIATIONS =
-		window.nfdOnboarding?.stepPreviewData[ currentStep?.patternId ]
-			?.previewCount;
 
 	const getStylesAndPatterns = async () => {
 		const patternResponse = await getPatterns(
@@ -123,7 +120,7 @@ const DesignThemeStylesPreview = () => {
 				<LivePreviewSkeleton
 					className={ 'theme-styles-preview--drawer__list__item' }
 					watch={ globalStyles && pattern }
-					count={ THEME_VARIATIONS }
+					count={ themeVariations[currentStep?.patternId]?.previewCount }
 					callback={ buildPreviews }
 					viewportWidth={ 900 }/>
 			</div>

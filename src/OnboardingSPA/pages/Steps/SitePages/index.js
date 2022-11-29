@@ -29,7 +29,7 @@ const StepSitePages = () => {
 	const [ sitePages, setSitePages ] = useState( );
 	const [ checkedPages, setCheckedPages ] = useState( [] );
 
-	const { currentStep, currentData, themeStatus } = useSelect( ( select ) => {
+	const { currentStep, currentData, themeStatus, themeVariations, } = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
@@ -37,6 +37,7 @@ const StepSitePages = () => {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			themeVariations: select(nfdOnboardingStore).getStepPreviewData(),
 		};
 	}, [] );
 
@@ -55,10 +56,6 @@ const StepSitePages = () => {
 		setIsSidebarOpened( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 	}, [] );
-
-	const THEME_VARIATIONS =
-		window.nfdOnboarding?.stepPreviewData[currentStep?.patternId]
-			?.previewCount;
 
 	const getSitePages = async () => {
 		const sitePagesResponse = await getPatterns( currentStep.patternId );
@@ -149,7 +146,7 @@ const StepSitePages = () => {
 						<div className="site-pages__list">
 							<LivePreviewSkeleton
 								className={'site-pages__list__item'}
-								count={THEME_VARIATIONS}
+								count={ themeVariations[currentStep?.patternId]?.previewCount }
 								watch={sitePages}
 								isWithCard={true}
 								callback={buildPreviews}

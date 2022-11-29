@@ -244,3 +244,7 @@ export function getPluginsStatus( state ) {
 export function getStoreInfoSteps( state ) {
 	return state.flow.steps.storeInfoSteps;
 }
+
+export function getStepPreviewData(state) {
+	return state.runtime.previewSettings.stepPreviewData;
+}

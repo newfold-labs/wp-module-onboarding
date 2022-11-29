@@ -47,7 +47,7 @@ const StepDesignHomepageMenu = () => {
 
 	const isLargeViewport = useViewportMatch( 'medium' );
 
-	const { currentStep, currentData, storedPreviewSettings, themeStatus } =
+	const { currentStep, currentData, storedPreviewSettings, themeStatus, themeVariations } =
 		useSelect( ( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getStepFromPath(
@@ -58,6 +58,7 @@ const StepDesignHomepageMenu = () => {
 				storedPreviewSettings:
 					select( nfdOnboardingStore ).getPreviewSettings(),
 				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				themeVariations: select(nfdOnboardingStore).getStepPreviewData(),
 			};
 		}, [] );
 
@@ -70,10 +71,6 @@ const StepDesignHomepageMenu = () => {
 		setCurrentOnboardingData,
 		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
-
-	const THEME_VARIATIONS =
-		window.nfdOnboarding?.stepPreviewData[ currentStep?.patternId ]
-			?.previewCount;
 
 	useEffect( () => {
 		if ( isLargeViewport ) {
@@ -174,7 +171,7 @@ const StepDesignHomepageMenu = () => {
 						<div className="homepage_preview__list">
 							<LivePreviewSkeleton
 								watch={ homepagePattern }
-								count={ THEME_VARIATIONS }
+								count={ themeVariations[currentStep?.patternId]?.previewCount }
 								callback={ buildHomepagePreviews }
 								className={ 'homepage_preview__list__item' }
 								viewportWidth={ 1200 }

@@ -235,7 +235,7 @@ final class Patterns {
 
 		 $theme_pattern_count = array();
 		foreach ( $active_theme_patterns as $theme_step => $patterns ) {
-				 $theme_step_count = 0;
+				$theme_step_count  = 0;
 				$combine_styles    = 1;
 			foreach ( $patterns as $pattern => $pattern_data ) {
 				if ( isset( $pattern_data['shown'] ) && $pattern_data['shown'] === true ) {
