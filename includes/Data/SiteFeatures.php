@@ -9,7 +9,7 @@ final class SiteFeatures {
 	protected static $default_plugins = array(
 		array(
 			'slug'     => 'jetpack',
-			'icon'     => 'icon-name',
+			'icon'     => '--site-features-security',
 			'title'    => 'Security, Speed & Growth',
 			'subtitle' => 'Powered by Jetpack',
 			'desc'     => 'Jetpack',
@@ -17,7 +17,7 @@ final class SiteFeatures {
 		),
 		array(
 			'slug'     => 'wpforms-lite',
-			'icon'     => 'icon-name',
+			'icon'     => '--site-features-form',
 			'title'    => 'Forms',
 			'subtitle' => 'Powered by WP Forms',
 			'desc'     => 'WP Forms',
@@ -25,7 +25,7 @@ final class SiteFeatures {
 		),
 		array(
 			'slug'     => '3',
-			'icon'     => 'icon-name',
+			'icon'     => '--site-features-analytics',
 			'title'    => 'Site Traffic',
 			'subtitle' => 'Powered by MonsterInsights',
 			'desc'     => 'MonsterInsights',
@@ -33,7 +33,7 @@ final class SiteFeatures {
 		),
 		array(
 			'slug'     => '4',
-			'icon'     => 'icon-name',
+			'icon'     => '--site-features-share',
 			'title'    => 'Search Engine Optimization',
 			'subtitle' => 'Powered by Yoast',
 			'desc'     => 'Yoast',
@@ -41,7 +41,7 @@ final class SiteFeatures {
 		),
 		array(
 			'slug'     => '5',
-			'icon'     => 'icon-name',
+			'icon'     => '--site-features-email',
 			'title'    => 'Email Newsletters',
 			'subtitle' => 'Powered by Creative Email',
 			'desc'     => 'Creative Email',
@@ -49,7 +49,7 @@ final class SiteFeatures {
 		),
 		array(
 			'slug'     => '6',
-			'icon'     => 'icon-name',
+			'icon'     => '--site-features-search',
 			'title'    => 'Enhanced Product Search',
 			'subtitle' => 'Powered by YITH',
 			'desc'     => 'YITH',
@@ -57,7 +57,7 @@ final class SiteFeatures {
 		),
 		array(
 			'slug'     => '7',
-			'icon'     => 'icon-name',
+			'icon'     => '--site-features-filter',
 			'title'    => 'Enhanced Product Filters',
 			'subtitle' => 'Powered by YITH',
 			'desc'     => 'YITH',
@@ -65,7 +65,7 @@ final class SiteFeatures {
 		),
 		array(
 			'slug'     => '8',
-			'icon'     => 'icon-name',
+			'icon'     => '--site-features-bookingcalendar',
 			'title'    => 'Bookings & Appointments',
 			'subtitle' => 'Powered by YITH',
 			'desc'     => 'YITH',
@@ -73,7 +73,7 @@ final class SiteFeatures {
 		),
 		array(
 			'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
-			'icon'     => 'icon-name',
+			'icon'     => '--site-features-wishlist',
 			'title'    => 'Product Wishlists',
 			'subtitle' => 'Powered by YITH',
 			'desc'     => 'YITH',
@@ -81,7 +81,7 @@ final class SiteFeatures {
 		),
 		array(
 			'slug'     => 'optinmonster',
-			'icon'     => 'icon-name',
+			'icon'     => '--site-features-lead',
 			'title'    => 'Lead Generation',
 			'subtitle' => 'Powered by Optin Monster',
 			'desc'     => 'Optin Monster',

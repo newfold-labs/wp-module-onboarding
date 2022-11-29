@@ -1,5 +1,5 @@
 import { useState } from '@wordpress/element';
-import { Icon, help, search } from '@wordpress/icons'; 
+import { Icon, help, box } from '@wordpress/icons'; 
 
 import { CheckboxControl } from '@wordpress/components';
 
@@ -40,12 +40,14 @@ const CheckboxItem = ({ slug, icon, title, subtitle, desc, isSelectedDefault, ca
                     <div className={`checkbox-item__contents-icon
                                      ${isSelected && 'checkbox-item__contents-icon--selected'}
                                      ${showDescription && 'checkbox-item__contents-icon--shown'}`}>
-                        <Icon
-                            icon={search}
+                        <div
                             style={{
                                 width: '35px',
                                 height: '35px',
-                                fill: `${!isSelected || showDescription ? '#000000' : '#FFFFFF'}`,
+                                stroke: 'red',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat',
+                                backgroundImage: `var(${icon}${isSelected ? '--light' : ''})`,
                             }}
                         />
                     </div>
