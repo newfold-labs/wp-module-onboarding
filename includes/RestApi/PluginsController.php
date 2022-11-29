@@ -1,13 +1,16 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
+use Composer\Installers\Plugin;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginInstaller;
-use NewfoldLabs\WP\Module\Onboarding\Services\PluginUninstaller;
 use NewfoldLabs\WP\Module\Onboarding\Tasks\PluginInstallTask;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
+use NewfoldLabs\WP\Module\Onboarding\Tasks\PluginUninstallTask;
+use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginUninstallTaskManager;
+use phpDocumentor\Reflection\Types\Object_;
 
 /**
  * Class PluginsController
@@ -72,9 +75,9 @@ class PluginsController {
 			$this->rest_base . '/status',
 			array(
 				array(
-					'methods'  => \WP_REST_Server::READABLE,
-					'callback' => array( $this, 'get_status' ),
-					'args'     => $this->get_status_args(),
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_status' ),
+					'args'                => $this->get_status_args(),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -85,8 +88,9 @@ class PluginsController {
 			$this->rest_base . '/uninstall',
 			array(
 				array(
-					'methods'             => \WP_REST_Server::READABLE,
+					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'uninstall' ),
+					'args'                => $this->get_uninstall_plugin_args(),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -145,6 +149,15 @@ class PluginsController {
 		);
 	}
 
+	public function get_uninstall_plugin_args() {
+		return array(
+			'plugins' => array(
+				'type'     => 'object',
+				'required' => true,
+			),
+		);
+	}
+
 	/**
 	 * Verify caller has permissions to install plugins.
 	 *
@@ -186,8 +199,41 @@ class PluginsController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function uninstall( \WP_REST_Request $request ) {
-	
-		return PluginUninstaller::uninstall('gutenberg');
+
+		  $plugin_body = json_decode( $request->get_body(), true );
+		  $plugins     = isset( $plugin_body['plugins'] ) ? $plugin_body['plugins'] : false;
+
+		if ( $plugins ) {
+			foreach ( $plugins as $plugin => $decision ) {
+				  echo $decision;
+				if ( $decision ) {
+					PluginInstallTaskManager::add_to_queue(
+						new PluginInstallTask(
+							$plugin,
+							true,
+						)
+					);
+				} else {
+					$position_in_queue = PluginInstallTaskManager::status( $plugin );
+					if ( $position_in_queue === false ) {
+						PluginUninstallTaskManager::add_to_queue(
+							new PluginUninstallTask(
+								$plugin,
+							)
+						);
+					} else {
+						PluginInstallTaskManager::remove_from_queue(
+							$plugin,
+						);
+					}
+				}
+			}
+		}
+
+		return new \WP_REST_Response(
+			array(),
+			202
+		);
 	}
 
 	/**

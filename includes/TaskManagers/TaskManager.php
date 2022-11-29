@@ -7,6 +7,7 @@ final class TaskManager {
 
 	 protected $task_managers = array(
 		 'NewfoldLabs\\WP\Module\\Onboarding\\TaskManagers\\PluginInstallTaskManager',
+		 'NewfoldLabs\\WP\Module\\Onboarding\\TaskManagers\\PluginUninstallTaskManager',
 		 'NewfoldLabs\\WP\Module\\Onboarding\\TaskManagers\\ThemeInstallTaskManager',
 	 );
 

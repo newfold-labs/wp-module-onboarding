@@ -166,6 +166,24 @@ class PluginInstallTaskManager {
 		 return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
 	}
 
+	public static function remove_from_queue( $plugin ) {
+		/*
+		   Get the plugins queued up to be installed, the PluginInstall task gets
+		   converted to an associative array before storing it in the option. */
+		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
+
+		$queue = new PriorityQueue();
+		foreach ( $plugins as $queued_plugin ) {
+			/*
+			   If the Plugin slug does not match add it back to the queue. */
+			if ( $queued_plugin['slug'] !== $plugin ) {
+				 $queue->insert( $queued_plugin, $queued_plugin['priority'] );
+			}
+		}
+
+		 return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
+	}
+
 	public static function status( $plugin ) {
 		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
 		return array_search( $plugin, array_column( $plugins, 'slug' ) );

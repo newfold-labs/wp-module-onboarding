@@ -4,7 +4,6 @@ namespace NewfoldLabs\WP\Module\Onboarding\TaskManagers;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Models\PriorityQueue;
 use NewfoldLabs\WP\Module\Onboarding\Tasks\PluginUninstallTask;
-use NewfoldLabs\WP\Module\Onboarding\Services\PluginUninstaller;
 
 /**
  * Manages the execution of PluginUninstallTasks.
@@ -48,34 +47,8 @@ class PluginUninstallTaskManager {
 		 return $schedules;
 	}
 
-	public static function queue_initial_uninstalls( $uninit_plugins ) {
-
-		// Checks if the uninit_list of plugins have already been queued.
-		if ( \get_option( Options::get_option_name( 'plugins_uninit_status' ), 'init' ) !== 'init' ) {
-			return true;
-		}
-
-		// Set option to uninstalling to prevent re-queueing the uninstall on page load.
-		 \update_option( Options::get_option_name( 'plugins_uninit_status' ), 'uninstalling' );
-
-
-		foreach ( $uninit_plugins as $uninit_plugin ) {
-			// Checks if a plugin with the given slug and activation criteria already exists.
-			if ( ! PluginUninstaller::exists( $uninit_plugin['slug'] ) ) {
-					// Add a new PluginUninstallTask to the Plugin uninstall queue.
-					self::add_to_queue(
-						new PluginUninstallTask(
-							$uninit_plugin['slug'],
-							$uninit_plugin['priority']
-						)
-					);
-			}
-		}
-
-		return true;
-	}
-
 	/**
+
 	 * Queue out a PluginUninstallTask with the highest priority in the plugin uninstall queue and execute it.
 	 *
 	 * @return array|false

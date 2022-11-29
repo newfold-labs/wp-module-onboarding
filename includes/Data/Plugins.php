@@ -230,6 +230,18 @@ final class Plugins {
 	}
 
 	/**
+	 * Use this for finding the path for installed plugins.
+	 *
+	 * @return array
+	 */
+	public static function get_squashed() {
+		return array_merge(
+			self::$wp_slugs,
+			self::$nfd_slugs,
+		);
+	}
+
+	/**
 	 * Get approved slugs/urls/domains
 	 *
 	 * @return array

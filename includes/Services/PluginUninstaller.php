@@ -7,9 +7,10 @@ class PluginUninstaller {
 
 	public static function uninstall( $plugin ) {
 
-		$plugin_path = $plugin . '/' . $plugin . '.php';
+		$plugin_list = Plugins::get_squashed();
+		$plugin_path = $plugin_list[ $plugin ]['path'];
 
-		if ( self::is_plugin_installed( $plugin_path ) ) {
+		if ( isset( $plugin_path ) && self::is_plugin_installed( $plugin_path ) ) {
 
 			if ( \is_plugin_active( $plugin_path ) ) {
 				\deactivate_plugins( $plugin_path );

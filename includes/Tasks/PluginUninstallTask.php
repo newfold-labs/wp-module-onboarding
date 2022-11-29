@@ -11,9 +11,9 @@ class PluginUninstallTask extends Task {
 	private $slug, $priority, $retries;
 
 	/**
-	 * @param string  $slug The slug for the Plugin. Ref: includes/Data/Plugins.php for the slugs.
-	 * @param int     $priority Priority of the task, higher the number higher the priority.
-	 * @param int     $retries The number of times the Task has been retried
+	 * @param string $slug The slug for the Plugin. Ref: includes/Data/Plugins.php for the slugs.
+	 * @param int    $priority Priority of the task, higher the number higher the priority.
+	 * @param int    $retries The number of times the Task has been retried
 	 */
 	function __construct( $slug, $priority = 0, $retries = 0 ) {
 		$this->slug     = $slug;
