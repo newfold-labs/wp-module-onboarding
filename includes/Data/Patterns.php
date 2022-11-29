@@ -14,8 +14,9 @@ final class Patterns {
 						'active' => true,
 					),
 					'homepage-1'  => array(
-						'active' => true,
-						'shown'  => true,
+						'active'  => true,
+						'shown'   => true,
+						'combine' => true,
 					),
 					'site-footer' => array(
 						'active' => true,
@@ -228,23 +229,26 @@ final class Patterns {
 	}
 
 	public static function get_count_of_patterns() {
-
-		 $active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
-		 $theme_steps  = self::get_theme_step_patterns()[ $active_theme ];
+		 $active_theme          = ( \wp_get_theme() )->get( 'TextDomain' );
+		 $theme_step_patterns   = self::get_theme_step_patterns();
+		 $active_theme_patterns = isset( $theme_step_patterns[ $active_theme ] ) ? $theme_step_patterns[ $active_theme ] : array();
 
 		 $theme_pattern_count = array();
-		foreach ( $theme_steps as $theme_step => $patterns ) {
-			 $theme_step_count = 0;
+		foreach ( $active_theme_patterns as $theme_step => $patterns ) {
+				 $theme_step_count = 0;
+				$combine_styles    = 1;
 			foreach ( $patterns as $pattern => $pattern_data ) {
-				foreach ( $pattern_data as $property => $value ) {
-					if ( $property === 'shown' && $value == true ) {
-						 $theme_step_count += 1;
-					}
+				if ( isset( $pattern_data['shown'] ) && $pattern_data['shown'] === true ) {
+						  $theme_step_count += 1;
+				}
+				if ( isset( $pattern_data['combine'] ) && $pattern_data['combine'] === true ) {
+					 $combine_styles = count( \WP_Theme_JSON_Resolver::get_style_variations() ) + 1;
 				}
 			}
-			 $theme_pattern_count[ $theme_step ] = array(
-				 'previewCount' => 1 * $theme_step_count,
-			 );
+
+			   $theme_pattern_count[ $theme_step ] = array(
+				   'previewCount' => $combine_styles * $theme_step_count,
+			   );
 		}
 		 return $theme_pattern_count;
 	}

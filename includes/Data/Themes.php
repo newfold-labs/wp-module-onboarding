@@ -79,9 +79,7 @@ final class Themes {
 	  * @return array
 	  */
 	public static function step_preview_data() {
-		$theme_step_data                                 = Patterns::get_count_of_patterns();
-		$theme_step_data['theme-styles']['previewCount'] = $theme_step_data['theme-styles']['previewCount'] *
-															 count( \WP_Theme_JSON_Resolver::get_style_variations() ) + 1;
+		$theme_step_data   = Patterns::get_count_of_patterns();
 		return $theme_step_data;
 	}
 

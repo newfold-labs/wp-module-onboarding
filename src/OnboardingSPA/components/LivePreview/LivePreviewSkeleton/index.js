@@ -60,7 +60,6 @@ const LivePreviewSkeleton = ( {
 					/>
 			);
 		}
-		console.log(dummyPreviews);
 		return dummyPreviews;
 	};
 
