@@ -8,7 +8,7 @@ final class SiteFeatures {
 
 	protected static $default_plugins = array(
 		array(
-			'slug'     => '1',
+			'slug'     => 'jetpack',
 			'icon'     => 'icon-name',
 			'title'    => 'Security, Speed & Growth',
 			'subtitle' => 'Powered by Jetpack',
@@ -16,12 +16,12 @@ final class SiteFeatures {
 			'selected' => false,
 		),
 		array(
-			'slug'     => '2',
+			'slug'     => 'wpforms-lite',
 			'icon'     => 'icon-name',
 			'title'    => 'Forms',
 			'subtitle' => 'Powered by WP Forms',
 			'desc'     => 'WP Forms',
-			'selected' => true,
+			'selected' => false,
 		),
 		array(
 			'slug'     => '3',
@@ -29,7 +29,7 @@ final class SiteFeatures {
 			'title'    => 'Site Traffic',
 			'subtitle' => 'Powered by MonsterInsights',
 			'desc'     => 'MonsterInsights',
-			'selected' => true,
+			'selected' => false,
 		),
 		array(
 			'slug'     => '4',
@@ -53,7 +53,7 @@ final class SiteFeatures {
 			'title'    => 'Enhanced Product Search',
 			'subtitle' => 'Powered by YITH',
 			'desc'     => 'YITH',
-			'selected' => true,
+			'selected' => false,
 		),
 		array(
 			'slug'     => '7',
@@ -61,7 +61,7 @@ final class SiteFeatures {
 			'title'    => 'Enhanced Product Filters',
 			'subtitle' => 'Powered by YITH',
 			'desc'     => 'YITH',
-			'selected' => true,
+			'selected' => false,
 		),
 		array(
 			'slug'     => '8',
@@ -72,7 +72,7 @@ final class SiteFeatures {
 			'selected' => false,
 		),
 		array(
-			'slug'     => '9',
+			'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
 			'icon'     => 'icon-name',
 			'title'    => 'Product Wishlists',
 			'subtitle' => 'Powered by YITH',
@@ -80,18 +80,43 @@ final class SiteFeatures {
 			'selected' => false,
 		),
 		array(
-			'slug'     => '10',
+			'slug'     => 'optinmonster',
 			'icon'     => 'icon-name',
 			'title'    => 'Lead Generation',
 			'subtitle' => 'Powered by Optin Monster',
 			'desc'     => 'Optin Monster',
-			'selected' => true,
+			'selected' => false,
 		),
 	);
 
+	public static function convert_to_hash() {
+		$idx = 0;
+		$default_plugins_hash = array();
+
+		foreach(self::$default_plugins as $default_plugin){
+			$default_plugins_hash[$default_plugin["slug"]] = $idx;
+			$idx += 1;
+		}
+
+		return $default_plugins_hash;
+	}
+
+	public static function mark_installed_plugins() {
+		$installed_plugins = Plugins::get_init();
+
+		// Make an Hash Map for faster updation
+		$default_plugins_hash = self::convert_to_hash();
+
+		foreach($installed_plugins as $installed_plugin){
+			if(isset($default_plugins_hash[$installed_plugin["slug"]]))
+				self::$default_plugins[$default_plugins_hash[$installed_plugin["slug"]]]["selected"] = true;
+		}
+
+	}
 
 
 	public static function get_default_plugins_list() {
+		self::mark_installed_plugins();
 		return self::$default_plugins;
 	}
 
