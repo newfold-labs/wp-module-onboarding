@@ -1,6 +1,7 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi\Themes;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Patterns;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
@@ -90,7 +91,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 		$default = $request->get_param( 'variations' );
 
 		// If there exists an old Custom Theme then return that
-		if ( 'false' === $default && false !== \get_option( Options::get_option_name( 'theme_settings' ) ) ) {
+		if ( false === $default && false !== \get_option( Options::get_option_name( 'theme_settings' ) ) ) {
 			return array(
 				\get_option( Options::get_option_name( 'theme_settings' ) ),
 			);

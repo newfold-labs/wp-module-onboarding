@@ -111,7 +111,8 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 
                         &-custom {
                             width: 100%;
-                            height: 400px;
+                            height: 45vh;
+                            min-height: 400px;
                             // Enable Scrolling in Live Preview
                             overflow-y: scroll;
                         }

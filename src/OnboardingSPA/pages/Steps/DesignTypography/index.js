@@ -75,12 +75,18 @@ const StepDesignTypography = () => {
 						</div>
 					</div>
 					<div className="theme-fonts-preview__live-preview-container">
+						{ !pattern && (
+							<LivePreview
+								blockGrammer={''}
+								styling={'custom'}
+								viewportWidth={1300}
+							/>
+						) }
 						{ pattern && (
 							<LivePreview
 								blockGrammer={ pattern }
 								styling={ 'custom' }
 								viewportWidth={ 1300 }
-								skeletonLoadingTime={ false }
 							/>
 						) }
 					</div>
