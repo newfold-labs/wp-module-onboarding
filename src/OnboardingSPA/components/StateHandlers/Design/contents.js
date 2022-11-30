@@ -5,7 +5,7 @@ const getContents = ( brandName ) => {
 		loader: {
 			title: sprintf(
 				/* translators: %s: Brand */
-				__( `Preparing your %s design studio`, 'wp-module-onboarding' ),
+				__( 'Preparing your %s design studio', 'wp-module-onboarding' ),
 				brandName
 			),
 			subtitle: __(
@@ -16,7 +16,7 @@ const getContents = ( brandName ) => {
 		errorState: {
 			title: sprintf(
 				/* translators: %s: Brand */
-				__( `Preparing your %s design studio`, 'wp-module-onboarding' ),
+				__( 'Preparing your %s design studio', 'wp-module-onboarding' ),
 				brandName
 			),
 			subtitle: __(

@@ -9,17 +9,19 @@ import { useViewportMatch } from '@wordpress/compose';
 
 const StepBasicInfo = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
-	const { setIsDrawerOpened, setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed, setIsHeaderNavigationEnabled } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		setIsDrawerOpened,
+		setDrawerActiveView,
+		setIsSidebarOpened,
+		setIsDrawerSuppressed,
+		setIsHeaderNavigationEnabled,
+	} = useDispatch( nfdOnboardingStore );
 
-	const { currentStep } = useSelect(
-		(select) => {
-			return {
-				currentStep: select(nfdOnboardingStore).getCurrentStep()
-			};
-		},
-		[]
-	);
+	const { currentStep } = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+		};
+	}, [] );
 
 	useEffect( () => {
 		if ( isLargeViewport ) {
@@ -32,8 +34,11 @@ const StepBasicInfo = () => {
 	}, [] );
 	return (
 		<CommonLayout isVerticallyCentered>
-			<HeadingWithSubHeading title={currentStep?.heading} subtitle={currentStep?.subheading} />
-			<BasicInfoForm/>
+			<HeadingWithSubHeading
+				title={ currentStep?.heading }
+				subtitle={ currentStep?.subheading }
+			/>
+			<BasicInfoForm />
 		</CommonLayout>
 	);
 };

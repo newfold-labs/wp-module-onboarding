@@ -142,7 +142,7 @@ const StepSiteFeaturesLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/SiteFeatures/Sidebar/LearnMore' )
 );
 
-const StepChildTheme = lazy( () => import( '../../pages/Steps/ChildTheme' ) );
+const StepComplete = lazy( () => import( '../../pages/Steps/Complete' ) );
 
 const StepWhatNext = lazy( () => import( '../../pages/Steps/WhatNext' ) );
 const StepWhatNextLearnMoreSidebar = lazy( () =>
@@ -493,7 +493,10 @@ export const steps = [
 	{
 		path: '/wp-setup/step/site-pages',
 		title: __( 'Pages', 'wp-module-onboarding' ),
-		heading: __( "You have ideas, we have page templates", 'wp-module-onboarding' ),
+		heading: __(
+			'You have ideas, we have page templates',
+			'wp-module-onboarding'
+		),
 		subheading: __(
 			'Begin closer to the finish line than a blank canvas.',
 			'wp-module-onboarding'
@@ -534,9 +537,8 @@ export const steps = [
 		},
 	},
 	{
-		path: '/wp-setup/step/child-theme',
-		Component: StepChildTheme,
-		Icon: moveTo,
+		path: '/wp-setup/step/complete',
+		Component: StepComplete,
 		priority: 285,
 	},
 	{
@@ -625,7 +627,8 @@ export const initialTopSteps = () => {
 	const topSteps = filter( steps, ( step ) => {
 		return (
 			! step.path.includes( '/step/get-started' ) &&
-			! step.path.includes( '/step/design' )
+			! step.path.includes( '/step/design' ) &&
+			! step.path.includes( '/step/complete' )
 		);
 	} );
 

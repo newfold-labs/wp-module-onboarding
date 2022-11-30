@@ -147,11 +147,11 @@ export function setSidebarActiveView( view ) {
 	};
 }
 
-export function setIsHeaderNavigationEnabled ( isNavigationEnabled ) {
+export function setIsHeaderNavigationEnabled( isNavigationEnabled ) {
 	return {
 		type: 'SET_HEADER_NAVIGATION_ENABLED',
-		isNavigationEnabled
-	}
+		isNavigationEnabled,
+	};
 }
 
 export function updatePreviewSettings( previewSettings ) {

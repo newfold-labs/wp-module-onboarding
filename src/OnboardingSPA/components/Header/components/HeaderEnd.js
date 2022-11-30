@@ -7,11 +7,11 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { SIDEBAR_MENU_SLOTFILL_PREFIX } from '../../../../constants';
 
 const HeaderEnd = () => {
-	const { sidebars, currentStep, isHeaderNavigationEnabled } = useSelect( ( select ) => {
+	const { sidebars, isHeaderNavigationEnabled } = useSelect( ( select ) => {
 		return {
 			sidebars: select( nfdOnboardingStore ).getSidebars(),
-			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
-			isHeaderNavigationEnabled: select( nfdOnboardingStore ).isHeaderNavigationEnabled(),
+			isHeaderNavigationEnabled:
+				select( nfdOnboardingStore ).isHeaderNavigationEnabled(),
 		};
 	} );
 

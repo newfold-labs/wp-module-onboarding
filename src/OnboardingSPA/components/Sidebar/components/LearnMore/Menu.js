@@ -10,13 +10,15 @@ import {
 import classNames from 'classnames';
 
 const LearnMoreMenu = () => {
-	const { isSidebarOpened, sideBarView, currentStep } = useSelect( ( select ) => {
-		return {
-			isSidebarOpened: select( nfdOnboardingStore ).isSidebarOpened(),
-			sideBarView: select( nfdOnboardingStore ).getSidebarView(),
-			currentStep: select(nfdOnboardingStore).getCurrentStep(),
-		};
-	} );
+	const { isSidebarOpened, sideBarView, currentStep } = useSelect(
+		( select ) => {
+			return {
+				isSidebarOpened: select( nfdOnboardingStore ).isSidebarOpened(),
+				sideBarView: select( nfdOnboardingStore ).getSidebarView(),
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+			};
+		}
+	);
 
 	const { setIsSidebarOpened, setSidebarActiveView } =
 		useDispatch( nfdOnboardingStore );
@@ -31,19 +33,25 @@ const LearnMoreMenu = () => {
 
 	return (
 		<>
-		{currentStep?.sidebars?.LearnMore && 		<Fill
-			name={ `${ SIDEBAR_MENU_SLOTFILL_PREFIX }/${ SIDEBAR_LEARN_MORE }` }
-		>
-			<Button
-				className={ classNames( 'nfd-onboarding-sidebar-learn-more__menu-button', {
-					'is-pressed':
-						isSidebarOpened && sideBarView === SIDEBAR_LEARN_MORE,
-				} ) }
-				disabled={ !currentStep }
-				onClick={ toggleSidebar }
-				icon={ info }
-			></Button>
-		</Fill>}
+			{ currentStep?.sidebars?.LearnMore && (
+				<Fill
+					name={ `${ SIDEBAR_MENU_SLOTFILL_PREFIX }/${ SIDEBAR_LEARN_MORE }` }
+				>
+					<Button
+						className={ classNames(
+							'nfd-onboarding-sidebar-learn-more__menu-button',
+							{
+								'is-pressed':
+									isSidebarOpened &&
+									sideBarView === SIDEBAR_LEARN_MORE,
+							}
+						) }
+						disabled={ ! currentStep }
+						onClick={ toggleSidebar }
+						icon={ info }
+					></Button>
+				</Fill>
+			) }
 		</>
 	);
 };

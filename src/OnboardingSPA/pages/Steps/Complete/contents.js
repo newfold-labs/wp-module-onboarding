@@ -1,35 +1,36 @@
 import { __, sprintf } from '@wordpress/i18n';
+
 import { translations } from '../../../utils/locales/translations';
 
 const getContents = ( brandName ) => {
 	return {
 		loader: {
 			title: sprintf(
-				/* translators: 1: Brand 2: Site */
+				/* translators: 1: Brand 2: site */
 				__(
-					'Making the keys to your %s Online %s',
+					'Hang tight, we’re building your %s %s',
 					'wp-module-onboarding'
 				),
 				brandName,
-				translations( 'Site' )
+				translations( 'site' )
 			),
 			subtitle: __(
-				'We’re installing WooCommerce for you to fill with your amazing products & services!',
+				'We’re assembling your unique design and installing useful tools',
 				'wp-module-onboarding'
 			),
 		},
 		errorState: {
 			title: sprintf(
-				/* translators: 1: Brand 2: Site */
+				/* translators: 1: Brand 2: site */
 				__(
-					'Making the keys to your %s Online %s',
+					'Hang tight, we’re building your %s %s',
 					'wp-module-onboarding'
 				),
 				brandName,
-				translations( 'Site' )
+				translations( 'site' )
 			),
 			subtitle: __(
-				'We’re installing WooCommerce for you to fill with your amazing products & services!',
+				'We’re assembling your unique design and installing useful tools',
 				'wp-module-onboarding'
 			),
 			error: __(
