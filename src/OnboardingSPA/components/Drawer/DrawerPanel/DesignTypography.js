@@ -3,6 +3,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 
 import { store as nfdOnboardingStore } from '../../../store';
+import { GlobalStylesProvider } from '../../../components/LivePreview';
 import { getGlobalStyles, getThemeFonts } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
@@ -11,7 +12,6 @@ const DesignTypography = () => {
 	const [ rerender, doRerender ] = useState( 0 );
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ selectedFont, setSelectedFont ] = useState();
-	const [ globalStyles, setGlobalStyles ] = useState();
 	const [ fontPalettes, setFontPalettes ] = useState();
 	const [ isAccordionClosed, setIsAccordionClosed ] = useState( true );
 
@@ -29,35 +29,16 @@ const DesignTypography = () => {
 
 	const getFontStylesAndPatterns = async () => {
 		const fontPalettes = await getThemeFonts();
-		const globalStyles = await getGlobalStyles();
 		setFontPalettes( fontPalettes?.body );
-
-		let selectedGlobalStyle;
-		if ( currentData?.data?.theme?.variation ) {
-			selectedGlobalStyle = globalStyles.body.filter(
-				( globalStyle ) =>
-					globalStyle.title === currentData.data.theme.variation
-			)[ 0 ];
-		} else {
-			selectedGlobalStyle = globalStyles.body[ 0 ];
-		}
-		setGlobalStyles( selectedGlobalStyle );
 
 		if ( currentData?.data?.typography?.slug !== '' ) {
 			handleClick(
 				currentData?.data?.typography?.slug,
-				selectedGlobalStyle,
+				storedPreviewSettings,
 				fontPalettes?.body
 			);
-		} else {
-			updatePreviewSettings(
-				useGlobalStylesOutput(
-					selectedGlobalStyle,
-					storedPreviewSettings
-				)
-			);
 		}
-		const stylesCustom = selectedGlobalStyle?.settings?.styles[ 0 ]?.css;
+		const stylesCustom = storedPreviewSettings?.settings?.styles[ 0 ]?.css;
 		if ( stylesCustom ) {
 			// Loads in all CSS variables related to fontFamily
 			const regex = /--wp--preset--font-family.*;/;
@@ -75,7 +56,7 @@ const DesignTypography = () => {
 
 	const handleClick = async (
 		fontStyle,
-		selectedGlobalStyle = globalStyles,
+		selectedGlobalStyle = storedPreviewSettings,
 		fontPalettesCopy = fontPalettes
 	) => {
 		setSelectedFont( fontStyle );
@@ -88,34 +69,10 @@ const DesignTypography = () => {
 			fontPalettesCopy[ fontStyle ]?.styles.blocks[
 				'core/heading'
 			].typography.fontFamily;
-		setGlobalStyles( globalStylesCopy );
 
 		// Saves the data to the Store
 		currentData.data.typography.slug = fontStyle;
 		currentData.data.typography.data = fontPalettesCopy[ fontStyle ];
-
-		// Remove Existing Custom Font CSS
-		const result = storedPreviewSettings.settings.styles.filter(
-			( style ) => {
-				if (
-					! (
-						style.hasOwnProperty( 'id' ) &&
-						style.id === 'customFontProperty'
-					)
-				)
-					return style;
-			}
-		);
-
-		// Add the font CSS changes to Preview Settings
-		storedPreviewSettings.settings.styles = [
-			...result,
-			{
-				id: 'customFontProperty',
-				css: `body {font-family: ${ fontPalettesCopy[ fontStyle ]?.styles?.typography?.fontFamily } !important; }
-						h6 { font-family: ${ fontPalettesCopy[ fontStyle ]?.styles?.blocks[ 'core/heading' ]?.typography?.fontFamily } !important; }`,
-			},
-		];
 
 		updatePreviewSettings(
 			useGlobalStylesOutput( globalStylesCopy, storedPreviewSettings )
@@ -133,10 +90,9 @@ const DesignTypography = () => {
 				( globalStyle ) =>
 					globalStyle.title === currentData.data.theme.variation
 			)[ 0 ];
-		} else {
+		} else if ( globalStyles.body[ 0 ]?.id === 0 ) {
 			selectedGlobalStyle = globalStyles.body[ 0 ];
 		}
-		setGlobalStyles( selectedGlobalStyle );
 		updatePreviewSettings(
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
@@ -222,17 +178,19 @@ const DesignTypography = () => {
 	}
 
 	return (
-		<div ref={ drawerFontOptions } className="theme-fonts--drawer">
-			<h2>{ __( 'Font Palettes', 'wp-module-onboarding' ) }</h2>
-			{ /* { selectedFont && 
+		<GlobalStylesProvider>
+			<div ref={ drawerFontOptions } className="theme-fonts--drawer">
+				<h2>{ __( 'Font Palettes', 'wp-module-onboarding' ) }</h2>
+				{ /* { selectedFont && 
 				<div className='theme-fonts--drawer--reset' onClick={resetFonts}>
 					<div>Reset Button</div>
 				</div>
 			} */ }
-			{ fontPalettes && buildPalettes() }
-			{ fontPalettes && buildCustomPalette() }
-			<div className="custom-font-palette--hidden">{ rerender }</div>
-		</div>
+				{ fontPalettes && buildPalettes() }
+				{ fontPalettes && buildCustomPalette() }
+				<div className="custom-font-palette--hidden">{ rerender }</div>
+			</div>
+		</GlobalStylesProvider>
 	);
 };
 export default DesignTypography;

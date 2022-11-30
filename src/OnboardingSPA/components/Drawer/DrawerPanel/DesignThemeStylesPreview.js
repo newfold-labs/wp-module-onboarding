@@ -1,7 +1,6 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 
-import { LivePreviewSelectableCard } from '../../LivePreview';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../utils/api/themes';
@@ -10,15 +9,20 @@ import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
+import {
+	LivePreviewSelectableCard,
+	LivePreviewSkeleton,
+} from '../../LivePreview';
 
 const DesignThemeStylesPreview = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;
+
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState();
 	const [ selectedStyle, setSelectedStyle ] = useState( '' );
 
-	const { currentStep, currentData, storedPreviewSettings, themeStatus } =
+	const { currentStep, currentData, storedPreviewSettings, themeStatus, themeVariations, } =
 		useSelect( ( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
@@ -27,6 +31,7 @@ const DesignThemeStylesPreview = () => {
 				storedPreviewSettings:
 					select( nfdOnboardingStore ).getPreviewSettings(),
 				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				themeVariations: select(nfdOnboardingStore).getStepPreviewData(),
 			};
 		}, [] );
 
@@ -44,7 +49,7 @@ const DesignThemeStylesPreview = () => {
 		if ( patternResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
-		const globalStylesResponse = await getGlobalStyles();
+		const globalStylesResponse = await getGlobalStyles( true );
 		if ( globalStylesResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
@@ -112,17 +117,12 @@ const DesignThemeStylesPreview = () => {
 	return (
 		<div className="theme-styles-preview--drawer">
 			<div className="theme-styles-preview--drawer__list">
-				{ globalStyles
-					? buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW )
-					: '' }
-			</div>
-			<div className="theme-styles-preview--drawer__list">
-				{ globalStyles
-					? buildPreviews().slice(
-							MAX_PREVIEWS_PER_ROW,
-							globalStyles.length
-					  )
-					: '' }
+				<LivePreviewSkeleton
+					className={ 'theme-styles-preview--drawer__list__item' }
+					watch={ globalStyles && pattern }
+					count={ themeVariations[currentStep?.patternId]?.previewCount }
+					callback={ buildPreviews }
+					viewportWidth={ 900 }/>
 			</div>
 		</div>
 	);

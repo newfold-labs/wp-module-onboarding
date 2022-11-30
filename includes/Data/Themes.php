@@ -74,6 +74,16 @@ final class Themes {
 	}
 
 	 /**
+	  * Get the current theme data like the theme variations and previews per step
+	  *
+	  * @return array
+	  */
+	public static function step_preview_data() {
+		$theme_step_data   = Patterns::get_count_of_patterns();
+		return $theme_step_data;
+	}
+
+	 /**
 	  * Get the list of initial themes to be installed for a particular hosting plan.
 	  *
 	  * @return array

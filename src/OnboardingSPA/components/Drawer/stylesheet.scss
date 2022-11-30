@@ -595,6 +595,235 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 
 }
 
+.color-palette {
+
+	width: 88%;
+	height: 30px;
+	display: flex;
+	margin: 8px 4px;
+	cursor: pointer;
+	position: relative;
+	padding: 10px 16px;
+	align-items: center;
+	background-color: white;
+	justify-content: space-between;
+
+	&:hover {
+		background-color: var(--nfd-onboarding-drawer-icon-fill);
+	}
+
+	&-selected {
+		background-color: $main-border-main;
+	}
+
+	&__colors {
+
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		&--tertiary {
+			width: 22px;
+			height: 22px;
+			border-radius: 50%;
+			position: absolute;
+			border: 1px solid rgba(0, 0, 0, 0.3);
+		}
+
+		&--secondary {
+			left: 35px;
+			width: 22px;
+			height: 22px;
+			border-radius: 50%;
+			position: absolute;
+			border: 1px solid rgba(0, 0, 0, 0.3);
+		}
+
+		&--primary {
+			left: 55px;
+			width: 22px;
+			height: 22px;
+			border-radius: 50%;
+			position: absolute;
+			border: 1px solid rgba(0, 0, 0, 0.3);
+		}
+	}
+
+	&__name {
+		color: black;
+		font-size: 12px;
+		font-weight: 700;
+		line-height: 16px;
+	}
+}
+
+.custom-palette {
+	width: 88%;
+	margin: 30px 2px;
+	padding: 20px 16px;
+	background: $main-border-main;
+
+	&__top {
+		display: flex;
+		cursor: pointer;
+		align-items: center;
+		justify-content: space-between;
+
+		&-icon {
+			font-size: 18px;
+			font-weight: 500;
+		}
+	}
+
+	&_acc_opened {
+		display: block;
+	}
+
+	&_acc_closed {
+		display: none;
+	}
+
+	&__below {
+		margin-top: 16px;
+		animation-name: fadeIn;
+		animation-duration: 300ms;
+		animation-timing-function: linear;
+		animation-timing-function: ease-in-out;
+
+		&-row {
+			height: 50px;
+			color: black;
+			display: flex;
+			cursor: pointer;
+			align-items: center;
+			background-color: white;
+			justify-content: flex-start;
+			border: 0.5px solid rgba(0, 0, 0, 0.3);
+
+			&-icon {
+				width: 22px;
+				height: 22px;
+				margin: 2px 12px;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border: 1px solid rgba(0, 0, 0, 0.3);
+
+				&_selected_border {
+					box-shadow: 0 0 5px 3px rgba($main-border-main--rgb, 0.5);
+				}
+			}
+		}
+	}
+
+	&__picker-close-icon {
+		width: 25px;
+		height: 25px;
+		display: flex;
+		color: black;
+		cursor: pointer;
+		font-weight: 900;
+		border-radius: 50%;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid black;
+		background-color: white;
+	}
+}
+
+// Design Font Palette Step
+.theme-fonts--drawer {
+	padding: 0 4px;
+	border: none !important;
+
+	&--reset {
+		width: 40%;
+		height: 30px;
+		display: flex;
+		color: black;
+		cursor: pointer;
+		margin-left: 4px;
+		text-align: center;
+		align-items: center;
+		justify-content: center;
+		background-color: white;
+
+		&:hover {
+			background-color: var(--nfd-onboarding-drawer-icon-fill);
+		}
+	}
+}
+
+.font-palette {
+
+	width: 88%;
+	height: 30px;
+	display: flex;
+	margin: 8px 4px;
+	cursor: pointer;
+	position: relative;
+	padding: 10px 16px;
+	align-items: center;
+	background-color: white;
+
+	&:hover {
+		background-color: var(--nfd-onboarding-drawer-icon-fill);
+	}
+
+	&-selected {
+		background-color: $main-border-main;
+	}
+
+	&__icon {
+		color: black;
+		font-weight: 700;
+		margin-right: 16px;
+	}
+
+	&__name {
+		color: black;
+		font-size: 12px;
+		font-weight: 700;
+		line-height: 16px;
+	}
+}
+
+.custom-font-palette {
+	width: 88%;
+	margin: 30px 2px;
+	padding: 20px 16px;
+	background: $main-border-main;
+
+	&--hidden {
+		display: none;
+	}
+
+	&__top {
+		display: flex;
+		cursor: pointer;
+		align-items: center;
+		justify-content: space-between;
+
+		&-text {
+			font-size: 14px;
+		}
+
+		&-icon {
+			font-size: 14px;
+		}
+	}
+
+	&_acc_opened {
+		display: block;
+	}
+
+	&_acc_closed {
+		display: none;
+	}
+
+}
+
 .theme-header-menu-preview {
 
 	&--drawer {

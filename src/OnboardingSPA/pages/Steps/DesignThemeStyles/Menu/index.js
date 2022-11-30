@@ -5,7 +5,6 @@ import { useViewportMatch } from '@wordpress/compose';
 
 import { store as nfdOnboardingStore } from '../../../../store';
 import CommonLayout from '../../../../components/Layouts/Common';
-import { LivePreviewSelectableCard } from '../../../../components/LivePreview';
 import HeadingWithSubHeading from '../../../../components/HeadingWithSubHeading';
 import { useGlobalStylesOutput } from '../../../../utils/global-styles/use-global-styles-output';
 import { getPatterns } from '../../../../utils/api/patterns';
@@ -16,6 +15,10 @@ import {
 	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../../constants';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
+import {
+	LivePreviewSelectableCard,
+	LivePreviewSkeleton,
+} from '../../../../components/LivePreview';
 
 const StepDesignThemeStylesMenu = () => {
 	const MAX_PREVIEWS_PER_ROW = 3;
@@ -34,6 +37,7 @@ const StepDesignThemeStylesMenu = () => {
 		currentData,
 		storedPreviewSettings,
 		themeStatus,
+		themeVariations,
 	} = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
@@ -45,6 +49,7 @@ const StepDesignThemeStylesMenu = () => {
 			storedPreviewSettings:
 				select( nfdOnboardingStore ).getPreviewSettings(),
 			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			themeVariations: select(nfdOnboardingStore).getStepPreviewData(),
 		};
 	}, [] );
 
@@ -75,7 +80,7 @@ const StepDesignThemeStylesMenu = () => {
 		if ( patternsResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
-		const globalStylesResponse = await getGlobalStyles();
+		const globalStylesResponse = await getGlobalStyles( true );
 		if ( globalStylesResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
@@ -128,15 +133,13 @@ const StepDesignThemeStylesMenu = () => {
 						subtitle={ currentStep?.subheading }
 					/>
 					<div className="theme-styles-menu__list">
-						{ globalStyles &&
-							buildPreviews().slice( 0, MAX_PREVIEWS_PER_ROW ) }
-					</div>
-					<div className="theme-styles-menu__list">
-						{ globalStyles &&
-							buildPreviews().slice(
-								MAX_PREVIEWS_PER_ROW,
-								globalStyles.length
-							) }
+						<LivePreviewSkeleton
+							className={ 'theme-styles-menu__list__item' }
+							count={ themeVariations[currentStep?.patternId]?.previewCount }
+							watch={ pattern && globalStyles }
+							callback={ buildPreviews }
+							viewportWidth={ 900 }
+						/>
 					</div>
 				</div>
 			</CommonLayout>

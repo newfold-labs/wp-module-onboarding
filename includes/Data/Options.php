@@ -16,7 +16,7 @@ final class Options {
 	protected static $options = array(
 		'redirect'                      => 'redirect',
 		'redirect_param'                => 'redirect_param',
-		'coming_soon'                   => 'mm_coming_soon',
+		'coming_soon'                   => 'nfd_coming_soon',
 		'brand'                         => 'mm_brand',
 		'close_comments_for_old_posts'  => 'close_comments_for_old_posts',
 		'close_comments_days_old'       => 'close_comments_days_old',
@@ -38,6 +38,7 @@ final class Options {
 		'site_icon'                     => 'site_icon',
 		'show_on_front'                 => 'show_on_front',
 		'page_on_front'                 => 'page_on_front',
+		'theme_settings'                => 'theme_settings',
 	);
 
 	protected static $initialization_options = array(

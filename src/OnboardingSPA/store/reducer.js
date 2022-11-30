@@ -146,7 +146,10 @@ export function runtime( state = {}, action ) {
 		case 'SET_PREVIEW_SETTINGS':
 			return {
 				...state,
-				previewSettings: action.previewSettings,
+				previewSettings: {
+					...state.previewSettings,
+					settings: action.previewSettings,
+				},
 			};
 	}
 
