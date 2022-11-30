@@ -31,12 +31,7 @@ class PluginUninstaller {
 					array( 'status' => 500 )
 				);
 			}
-			
-		} else {
-			return new \WP_REST_Response(
-				array(),
-				201
-			);
+
 		}
 
 		return new \WP_REST_Response(
