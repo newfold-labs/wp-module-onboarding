@@ -181,6 +181,18 @@ export function settings(
 	return state;
 }
 
+export function header( state = { menu : "" }, action ) {
+	switch ( action.type ) {
+		case 'UPDATE_HEADER_MENU_DATA':
+			return {
+				...state,
+				menu:action.menu,
+			};
+	}
+
+	return state;
+}
+
 export default combineReducers( {
 	drawer,
 	runtime,
@@ -188,4 +200,5 @@ export default combineReducers( {
 	settings,
 	flow,
 	sidebar,
+	header,
 } );

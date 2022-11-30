@@ -18,7 +18,7 @@ import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-s
 
 const StepDesignHeaderMenu = () => {
 	const location = useLocation();
-	const { currentStep, currentData, storedPreviewSettings, themeStatus } =
+	const { currentStep, currentData, storedPreviewSettings, themeStatus, headerMenu } =
 		useSelect( ( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getStepFromPath(
@@ -29,6 +29,7 @@ const StepDesignHeaderMenu = () => {
 				storedPreviewSettings:
 					select( nfdOnboardingStore ).getPreviewSettings(),
 				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				headerMenu: select( nfdOnboardingStore ).getHeaderMenuData(),
 			};
 		}, [] );
 	const [ isLoaded, setIsLoaded ] = useState( false );
@@ -73,8 +74,9 @@ const StepDesignHeaderMenu = () => {
 	};
 
 	useEffect( () => {
-		setPattern( currentData.data.partHeader );
-	}, [ currentData.data.partHeader ] );
+		console.log(headerMenu);
+		setPattern( headerMenu );
+	}, [ headerMenu ] );
 
 	useEffect( () => {
 		if ( isLargeViewport ) {

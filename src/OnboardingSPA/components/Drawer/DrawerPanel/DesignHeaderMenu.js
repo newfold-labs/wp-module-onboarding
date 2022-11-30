@@ -4,6 +4,7 @@ import { useState, useEffect } from '@wordpress/element';
 import HeaderMenuPreview from '../../HeaderMenuPreview';
 import { store as nfdOnboardingStore } from '../../../store';
 import {
+	getPatterns,
 	getHeaderMenuPatterns,
 	getDefaultHeaderMenu,
 } from '../../../utils/api/patterns';
@@ -15,12 +16,21 @@ import {
 } from '../../../../constants';
 
 const DesignHomepageMenu = () => {
+	const headerMenuSlugs = [ 
+		'site-header-left-logo-navigation-inline', 
+		'site-header-left-logo-navigation-below',
+		'site-header-centered',
+		'site-header-centered-logo-split-menu'
+	];
+	const headerMenuBodySlugs = [ 'homepage-1', 'site-footer'];
+
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ patterns, setPatterns ] = useState();
+	const [ headerMenuPreviewData, setHeaderMenuPreviewData ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState();
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
 
-	const { currentStep, currentData, storedPreviewSettings, themeStatus } =
+	const { currentStep, currentData, storedPreviewSettings, themeStatus, headerMenu } =
 		useSelect( ( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
@@ -29,6 +39,7 @@ const DesignHomepageMenu = () => {
 				storedPreviewSettings:
 					select( nfdOnboardingStore ).getPreviewSettings(),
 				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				headerMenu:  select( nfdOnboardingStore ).getHeaderMenuData(),
 			};
 		}, [] );
 
@@ -36,16 +47,32 @@ const DesignHomepageMenu = () => {
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
+		setHeaderMenuData,
 	} = useDispatch( nfdOnboardingStore );
 
-	const getPatterns = async () => {
+	const getPatternsData = async () => {
+		const headerMenuPreviewResponse = await getPatterns( currentStep.patternId );
+		if ( headerMenuPreviewResponse?.error ) {
+			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+		}
+		setHeaderMenuPreviewData(headerMenuPreviewResponse.body);
+
+		// let headerMenuPatterns = [];
+		// headerMenuPreviewResponse.body.forEach( ( pageParts ) => {
+		// 	if(headerMenuSlugs.includes(pageParts.slug)){
+		// 		console.log(pageParts.content);
+		// 		headerMenuPatterns.push(pageParts.content);
+		// 	}
+		// });
+		// console.log(headerMenuPatterns);
+
 		const patternsResponse = await getHeaderMenuPatterns();
 		if ( patternsResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
 		setPatterns( patternsResponse?.body );
 
-		if ( ! currentData.data.partHeader ) {
+		if ( ! currentData.data.partHeader || currentData.data.partHeader == "" ) {
 			const defaultHeaderMenu = await getDefaultHeaderMenu();
 			if ( defaultHeaderMenu?.error ) {
 				return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
@@ -54,33 +81,26 @@ const DesignHomepageMenu = () => {
 			setCurrentOnboardingData( currentData );
 		}
 		setSelectedPattern( currentData.data.partHeader );
-
-		if (
-			document.getElementsByClassName(
-				'theme-header-menu-preview--drawer__list__item__title-bar--selected'
-			)
-		) {
-			document
-				.getElementsByClassName(
-					'theme-header-menu-preview--drawer__list__item__title-bar--selected'
-				)[ 0 ]
-				.scrollIntoView( {
-					behavior: 'smooth',
-					block: 'center',
-				} );
-		}
 		setIsLoaded( true );
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE ) getPatterns();
+		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE ) getPatternsData();
 	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = ( idx ) => {
 		const selectedPattern = patterns[ idx ];
 		setSelectedPattern( selectedPattern.slug );
-		currentData.data.partHeader = selectedPattern.content;
+		currentData.data.partHeader = selectedPattern.slug;
 		setCurrentOnboardingData( currentData );
+
+		let newPagePattern = selectedPattern.content;
+		headerMenuPreviewData.forEach( ( pageParts ) => {
+			if(headerMenuBodySlugs.includes(pageParts.slug)){
+				newPagePattern += pageParts.content;
+			}
+		});
+		setHeaderMenuData( newPagePattern );
 	};
 
 	const buildPreviews = () => {

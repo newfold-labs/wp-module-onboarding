@@ -77,6 +77,17 @@ export function getCurrentOnboardingData( state ) {
 	return state.currentData;
 }
 
+
+/**
+ * Gets the current header menu Data
+ *
+ * @param {*} state
+ * @return string
+ */
+ export function getHeaderMenuData( state ) {
+	return state.menu;
+}
+
 /**
  * Gets current Onboarding Flow
  *
