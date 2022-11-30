@@ -252,18 +252,6 @@ export function getPluginsStatus( state ) {
 	return state.settings.pluginsStatus;
 }
 
-export function getSettings ( state ) {
-    return state.settings;
-}
-
-export function getThemeStatus ( state ) {
-    return state.settings.themeStatus;
-}
-
-export function getPluginsStatus ( state ) {
-    return state.settings.pluginsStatus;
-}
-
 export function getStoreInfoSteps( state ) {
 	return state.flow.steps.storeInfoSteps;
 }

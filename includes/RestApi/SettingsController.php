@@ -180,7 +180,6 @@ class SettingsController {
 								unset($params[$param_key_osu]);
 								continue;
 							}
-<<<<<<< HEAD
 						}
 						break;
 					default:
@@ -190,17 +189,6 @@ class SettingsController {
 							unset($params[$param_key]);
 						}
 						break;
-=======
-						}
-						break;
-					default:
-						$param[ $param_key ] = \sanitize_text_field( $param_value );
-						if ( ! empty( $param_value ) && ! \wp_http_validate_url( $param_value ) ) {
-							$this->invalid_urls[] = $param_key;
-							unset($params[$param_key]);
-						}
-						break;
->>>>>>> release/v1.0.0
 				}
 			}
 		}
