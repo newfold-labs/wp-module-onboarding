@@ -31,11 +31,11 @@ class PluginUninstaller {
 					array( 'status' => 500 )
 				);
 			}
+			
 		} else {
-			return new \WP_Error(
-				'nfd_onboarding_error',
-				'The Plugin is not installed',
-				array( 'status' => 500 )
+			return new \WP_REST_Response(
+				array(),
+				201
 			);
 		}
 
