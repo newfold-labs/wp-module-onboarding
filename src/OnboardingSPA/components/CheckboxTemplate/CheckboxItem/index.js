@@ -44,7 +44,6 @@ const CheckboxItem = ({ slug, icon, title, subtitle, desc, isSelectedDefault, ca
                             style={{
                                 width: '35px',
                                 height: '35px',
-                                stroke: 'red',
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundImage: `var(${icon}${isSelected ? '--light' : ''})`,
