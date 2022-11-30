@@ -24,7 +24,7 @@ final class SiteFeatures {
 			'selected' => false,
 		),
 		array(
-			'slug'     => '3',
+			'slug'     => 'google-analytics-for-wordpress',
 			'icon'     => '--site-features-analytics',
 			'title'    => 'Site Traffic',
 			'subtitle' => 'Powered by MonsterInsights',
@@ -32,7 +32,7 @@ final class SiteFeatures {
 			'selected' => false,
 		),
 		array(
-			'slug'     => '4',
+			'slug'     => 'wordpress-seo',
 			'icon'     => '--site-features-share',
 			'title'    => 'Search Engine Optimization',
 			'subtitle' => 'Powered by Yoast',
@@ -40,7 +40,7 @@ final class SiteFeatures {
 			'selected' => false,
 		),
 		array(
-			'slug'     => '5',
+			'slug'     => 'creative-mail-by-constant-contact',
 			'icon'     => '--site-features-email',
 			'title'    => 'Email Newsletters',
 			'subtitle' => 'Powered by Creative Email',
@@ -48,7 +48,7 @@ final class SiteFeatures {
 			'selected' => false,
 		),
 		array(
-			'slug'     => '6',
+			'slug'     => 'yith-woocommerce-ajax-search',
 			'icon'     => '--site-features-search',
 			'title'    => 'Enhanced Product Search',
 			'subtitle' => 'Powered by YITH',
@@ -56,7 +56,7 @@ final class SiteFeatures {
 			'selected' => false,
 		),
 		array(
-			'slug'     => '7',
+			'slug'     => 'nfd_slug_yith_woocommerce_ajax_product_filter',
 			'icon'     => '--site-features-filter',
 			'title'    => 'Enhanced Product Filters',
 			'subtitle' => 'Powered by YITH',
@@ -64,7 +64,7 @@ final class SiteFeatures {
 			'selected' => false,
 		),
 		array(
-			'slug'     => '8',
+			'slug'     => 'nfd_slug_yith_woocommerce_booking',
 			'icon'     => '--site-features-bookingcalendar',
 			'title'    => 'Bookings & Appointments',
 			'subtitle' => 'Powered by YITH',
@@ -72,7 +72,7 @@ final class SiteFeatures {
 			'selected' => false,
 		),
 		array(
-			'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
+			'slug'     => 'nfd_slug_yith_woocommerce_wishlist',
 			'icon'     => '--site-features-wishlist',
 			'title'    => 'Product Wishlists',
 			'subtitle' => 'Powered by YITH',

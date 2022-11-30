@@ -41,6 +41,10 @@ final class Plugins {
 			'approved' => true,
 			'path'     => 'yith-woocommerce-ajax-search/init.php',
 		),
+		'creative-mail-by-constant-contact'   => array(
+			'approved' => true,
+			'path'     => 'creative-mail-by-constant-contact/creative-mail-plugin.php',
+		),
 	);
 
 	 /**

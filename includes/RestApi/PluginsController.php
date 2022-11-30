@@ -283,7 +283,6 @@ class PluginsController {
 
 		if ( $plugins ) {
 			foreach ( $plugins as $plugin => $decision ) {
-				  echo $decision;
 				if ( $decision ) {
 					PluginInstallTaskManager::add_to_queue(
 						new PluginInstallTask(
