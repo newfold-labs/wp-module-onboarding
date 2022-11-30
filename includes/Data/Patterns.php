@@ -73,9 +73,15 @@ final class Patterns {
 					),
 				),
 				'header-menu' => array(
-                    'site-header-left-logo-navigation-inline',
-                    'homepage-1',
-                    'site-footer',
+                    'site-header-left-logo-navigation-inline' => array(
+						'active'      => true,
+					),
+                    'homepage-1' => array(
+						'active'      => true,
+					),
+                    'site-footer' => array(
+						'active'      => true,
+					),
                ),
                'header-menu-body' => array(
                     'homepage-1',
@@ -283,7 +289,7 @@ final class Patterns {
 	{
 		$active_theme = (\wp_get_theme())->get('TextDomain');
 
-		$header_menu_page_pattern = self::$theme_step_patterns[$active_theme]['header-menu'];
+		$header_menu_page_pattern = array_keys(self::get_theme_step_patterns()[$active_theme]['header-menu']);
 		$header_menu_pattern = preg_grep("/header/", $header_menu_page_pattern);
 
 		return ($header_menu_pattern !== FALSE) ? $active_theme.'/'.$header_menu_pattern[0] : FALSE;
@@ -294,7 +300,7 @@ final class Patterns {
 	{
 		$active_theme = (\wp_get_theme())->get('TextDomain');
 
-		$pattern_slugs           = self::$theme_step_patterns[$active_theme]['header-menu-body'];
+		$pattern_slugs           = self::get_theme_step_patterns()[$active_theme]['header-menu-body'];
 		$pattern_slugs           = array_merge(array($slug), $pattern_slugs);
 
 		$block_patterns          = array();

@@ -17,12 +17,12 @@ import {
 
 const DesignHomepageMenu = () => {
 	const headerMenuSlugs = [ 
-		'site-header-left-logo-navigation-inline', 
-		'site-header-left-logo-navigation-below',
-		'site-header-centered',
-		'site-header-centered-logo-split-menu'
+		'yith-wonder/site-header-left-logo-navigation-inline', 
+		'yith-wonder/site-header-left-logo-navigation-below',
+		'yith-wonder/site-header-centered',
+		'yith-wonder/site-header-centered-logo-split-menu'
 	];
-	const headerMenuBodySlugs = [ 'homepage-1', 'site-footer'];
+	const headerMenuBodySlugs = [ 'yith-wonder/homepage-1', 'yith-wonder/site-footer'];
 
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ patterns, setPatterns ] = useState();

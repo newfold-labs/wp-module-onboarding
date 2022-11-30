@@ -85,7 +85,7 @@ export function getCurrentOnboardingData( state ) {
  * @return string
  */
  export function getHeaderMenuData( state ) {
-	return state.menu;
+	return state.header.menu;
 }
 
 /**

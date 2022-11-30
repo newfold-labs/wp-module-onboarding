@@ -74,7 +74,6 @@ const StepDesignHeaderMenu = () => {
 	};
 
 	useEffect( () => {
-		console.log(headerMenu);
 		setPattern( headerMenu );
 	}, [ headerMenu ] );
 
