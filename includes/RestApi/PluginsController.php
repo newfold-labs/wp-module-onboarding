@@ -192,52 +192,7 @@ class PluginsController {
 	}
 
 	/**
-	 * Install the requested plugin via a zip url (or) slug.
-	 *
-	 * @param \WP_REST_Request $request
-	 *
-	 * @return \WP_REST_Response|\WP_Error
-	 */
-	public function uninstall( \WP_REST_Request $request ) {
-
-		  $plugin_body = json_decode( $request->get_body(), true );
-		  $plugins     = isset( $plugin_body['plugins'] ) ? $plugin_body['plugins'] : false;
-
-		if ( $plugins ) {
-			foreach ( $plugins as $plugin => $decision ) {
-				  echo $decision;
-				if ( $decision ) {
-					PluginInstallTaskManager::add_to_queue(
-						new PluginInstallTask(
-							$plugin,
-							true,
-						)
-					);
-				} else {
-					$position_in_queue = PluginInstallTaskManager::status( $plugin );
-					if ( $position_in_queue === false ) {
-						PluginUninstallTaskManager::add_to_queue(
-							new PluginUninstallTask(
-								$plugin,
-							)
-						);
-					} else {
-						PluginInstallTaskManager::remove_from_queue(
-							$plugin,
-						);
-					}
-				}
-			}
-		}
-
-		return new \WP_REST_Response(
-			array(),
-			202
-		);
-	}
-
-	/**
-	 * Uninstalls the requested plugin.
+	 * Installs the requested plugin.
 	 *
 	 * @param \WP_REST_Request $request
 	 *
@@ -280,7 +235,6 @@ class PluginsController {
 		return $plugin_install_task->execute();
 	}
 
-
 	public function get_status( \WP_REST_Request $request ) {
 		$plugin    = $request->get_param( 'plugin' );
 		$activated = $request->get_param( 'activated' );
@@ -314,4 +268,50 @@ class PluginsController {
 		);
 
 	}
+
+	/**
+	 * Installs/Uninstalls the requested plugins.
+	 *
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function uninstall( \WP_REST_Request $request ) {
+
+		  $plugin_body = json_decode( $request->get_body(), true );
+		  $plugins     = isset( $plugin_body['plugins'] ) ? $plugin_body['plugins'] : false;
+
+		if ( $plugins ) {
+			foreach ( $plugins as $plugin => $decision ) {
+				  echo $decision;
+				if ( $decision ) {
+					PluginInstallTaskManager::add_to_queue(
+						new PluginInstallTask(
+							$plugin,
+							true,
+						)
+					);
+				} else {
+					$position_in_queue = PluginInstallTaskManager::status( $plugin );
+					if ( $position_in_queue === false ) {
+						PluginUninstallTaskManager::add_to_queue(
+							new PluginUninstallTask(
+								$plugin,
+							)
+						);
+					} else {
+						PluginInstallTaskManager::remove_from_queue(
+							$plugin,
+						);
+					}
+				}
+			}
+		}
+
+		return new \WP_REST_Response(
+			array(),
+			202
+		);
+	}
 }
+
