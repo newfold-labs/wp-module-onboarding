@@ -140,6 +140,8 @@ const StepSiteFeaturesLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/SiteFeatures/Sidebar/LearnMore' )
 );
 
+const StepChildTheme = lazy( () => import( '../../pages/Steps/ChildTheme' ) );
+
 const StepWhatNext = lazy( () => import( '../../pages/Steps/WhatNext' ) );
 const StepWhatNextLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/WhatNext/Sidebar/LearnMore' )
@@ -528,6 +530,12 @@ export const steps = [
 				SidebarComponents: [ StepSiteFeaturesLearnMoreSidebar ],
 			},
 		},
+	},
+	{
+		path: '/wp-setup/step/child-theme',
+		Component: StepChildTheme,
+		Icon: moveTo,
+		priority: 285,
 	},
 	{
 		path: '/wp-setup/step/what-next',

@@ -21,6 +21,11 @@ final class Themes {
 		),
 	);
 
+	protected static $flow_default_theme_slugs = array(
+		'default'   => 'twentytwentythree',
+		'ecommerce' => 'yith-wonder'
+	);
+
 	 /**
 	  * @var array Initial themes to be installed classified based on the hosting plan.
 	  *
@@ -103,5 +108,9 @@ final class Themes {
 		}
 
 		return $init_list;
+	}
+
+	public static function get_flow_default_theme_slug( $flow ) {
+		return isset( self::$flow_default_theme_slugs[$flow] ) ? self::$flow_default_theme_slugs[$flow] : false;
 	}
 }

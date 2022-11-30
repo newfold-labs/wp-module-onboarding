@@ -64,6 +64,13 @@ const getThemeColors = async ( theme ) => {
 	);
 };
 
+const generateChildTheme = async() => {
+	return await resolve( apiFetch( {
+		url: onboardingRestURL( 'themes/child/generate' ),
+		method: 'POST',
+	} ).then() )
+}
+
 export {
 	init,
 	getGlobalStyles,
@@ -71,4 +78,5 @@ export {
 	getThemeStatus,
 	getThemeColors,
 	getThemeFonts,
+	generateChildTheme
 };

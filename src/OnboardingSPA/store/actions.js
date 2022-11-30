@@ -147,6 +147,20 @@ export function setSidebarActiveView( view ) {
 	};
 }
 
+export function setIsHeaderNavigationEnabled ( isNavigationEnabled ) {
+	return {
+		type: 'SET_HEADER_NAVIGATION_ENABLED',
+		isNavigationEnabled
+	}
+}
+
+export function setHeaderSidebarMenus ( sidebarMenus ) {
+	return {
+		type: 'SET_HEADER_SIDEBAR_MENUS',
+		sidebarMenus
+	}
+}
+
 export function updatePreviewSettings( previewSettings ) {
 	return {
 		type: 'SET_PREVIEW_SETTINGS',

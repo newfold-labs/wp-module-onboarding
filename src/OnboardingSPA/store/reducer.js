@@ -5,6 +5,7 @@ import {
 	THEME_STATUS_INIT,
 	PLUGIN_STATUS_INIT,
 	ECOMMERCE_STEPS_PLUGIN,
+	SIDEBAR_LEARN_MORE
 } from '../../constants';
 
 import {
@@ -136,6 +137,23 @@ export function sidebar(
 	return state;
 }
 
+export function header(state = { isNavigationEnabled: true, sidebarMenus: [SIDEBAR_LEARN_MORE] }, action) {
+	switch (action.type) {
+		case 'SET_HEADER_NAVIGATION_ENABLED':
+			return {
+				...state,
+				isNavigationEnabled: action.isNavigationEnabled
+			};
+		case 'SET_HEADER_SIDEBAR_MENUS':
+			return {
+				...state,
+				sidebarMenus: action.sidebarMenus
+			};
+	}
+
+	return state;
+}
+
 export function runtime( state = {}, action ) {
 	switch ( action.type ) {
 		case 'SET_RUNTIME':
@@ -191,4 +209,5 @@ export default combineReducers( {
 	settings,
 	flow,
 	sidebar,
+	header
 } );

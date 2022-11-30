@@ -4,6 +4,8 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi\Themes;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Mustache\Mustache;
+use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 /**
  * Class ThemeGeneratorController
@@ -32,7 +34,7 @@ class ThemeGeneratorController {
 				array(
 					'methods'             => \WP_Rest_Server::CREATABLE,
 					'callback'            => array( $this, 'generate_child_theme' ),
-					'permission_callback' => array( Permissions::class, 'rest_can_manage_themes' ),
+					// 'permission_callback' => array( Permissions::class, 'rest_can_manage_themes' ),
 				),
 			)
 		);
@@ -45,9 +47,17 @@ class ThemeGeneratorController {
 	  */
 	public function generate_child_theme() {
 		// Ensure that we have sufficient data to generate a child theme.
-		$flow_data       = \get_option( 'nfd_module_onboarding_flow' )['data'];
-		$valid_flow_data = $this->validate_flow_data( $flow_data );
-		if ( ! $valid_flow_data ) {
+		$flow_data_option       = \get_option( 'nfd_module_onboarding_flow', false );
+		if ( $flow_data_option === false || ! isset( $flow_data_option['data'] ) ) {
+			return new \WP_Error(
+				'nfd_onboarding_error',
+				'Flow data does not exist to generate a child theme.',
+				array( 'status' => 500 )
+			);
+		}
+
+		$flow_data = $this->validate_and_sanitize_flow_data( $flow_data_option['data'] );
+		if ( $flow_data === false ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
 				'Flow data is incomplete to generate a child theme.',
@@ -174,30 +184,23 @@ class ThemeGeneratorController {
 	protected function generate_child_theme_json( $flow_data, $parent_theme_dir ) {
 		global $wp_filesystem;
 
-		if ( $flow_data['theme']['variation'] ) {
-			$theme_json_file = $parent_theme_dir . '/styles/' . $flow_data['theme']['variation'] . '.json';
+		$theme_data = \get_option( Options::get_option_name( 'theme_settings' ), false );
+
+		if ( $theme_data !== false ) {
+			unset( $theme_data['settings']['styles'] );
+			unset( $theme_data['settings']['__unstableResolvedAssets'] );
+			unset( $theme_data['settings']['__experimentalFeatures'] );
+			if ( is_array( $theme_data['settings']['color']['palette']['theme'] ) ) {
+				$theme_data['settings']['color']['palette'] = $theme_data['settings']['color']['palette']['theme'];
+			}
+			$theme_json_data = $theme_data;
 		} else {
 			$theme_json_file = $parent_theme_dir . '/theme.json';
-		}
-		if ( ! $wp_filesystem->exists( $theme_json_file ) ) {
-			return false;
-		}
-
-		$theme_json      = $wp_filesystem->get_contents( $theme_json_file );
-		$theme_json_data = json_decode( $theme_json, true );
-
-		if ( ! $flow_data['customDesign'] ) {
-			return $theme_json_data;
-		}
-
-		if ( $flow_data['palette'] ) {
-			$theme_json_data['settings']['color']['palette'] = $flow_data['palette'];
-		}
-		if ( $flow_data['typography']['fontFamilies'] ) {
-			$theme_json_data['settings']['typography']['fontFamilies'] = $flow_data['typography']['fontFamilies'];
-		}
-		if ( $flow_data['typography']['fontSizes'] ) {
-			$theme_json_data['settings']['typography']['fontSizes'] = $flow_data['typography']['fontSizes'];
+			if ( ! $wp_filesystem->exists( $theme_json_file ) ) {
+				return false;
+			}
+			$theme_json      = $wp_filesystem->get_contents( $theme_json_file );
+			$theme_json_data = json_decode( $theme_json, true );
 		}
 
 		return $theme_json_data;
@@ -372,17 +375,21 @@ class ThemeGeneratorController {
 	  *
 	  * @return boolean
 	  */
-	protected function validate_flow_data( $flow_data ) {
-		if ( ! $flow_data || ! $flow_data['theme']['template'] ) {
-			return false;
+	protected function validate_and_sanitize_flow_data( $flow_data ) {
+		$current_flow = Data::current_flow();
+		if ( ! $flow_data['theme']['template'] ) {
+			$current_flow = Data::current_flow();
+			
+			$flow_data['theme']['template'] = Themes::get_flow_default_theme_slug( $current_flow );
 		}
+
 		if ( $flow_data['customDesign'] ) {
-			if ( ! $flow_data['palette'] && ! $flow_data['typography'] ) {
+			if ( ! $flow_data['palette'] && ! $flow_data['typography']['slug'] ) {
 				return false;
 			}
 		}
 
-		return true;
+		return $flow_data;
 	}
 
 	 /**
@@ -398,9 +405,14 @@ class ThemeGeneratorController {
 	protected function generate_screenshot( $parent_theme_dir, $child_theme_dir ) {
 		global $wp_filesystem;
 
-		$screenshot_file              = '/screenshot.png';
-		$child_theme_screenshot_file  = $child_theme_dir . $screenshot_file;
-		$parent_theme_screenshot_file = $parent_theme_dir . $screenshot_file;
+		$screenshot_files              = array('/screenshot.png', '/screenshot.jpg');
+		foreach ( $screenshot_files as $key => $screenshot_file ) {
+			$child_theme_screenshot_file  = $child_theme_dir . $screenshot_file;
+			$parent_theme_screenshot_file = $parent_theme_dir . $screenshot_file;
+			if ( $wp_filesystem->exists( $parent_theme_screenshot_file ) ) {
+				break;
+			}
+		}
 
 		if ( $wp_filesystem->exists( $child_theme_screenshot_file ) ) {
 			$wp_filesystem->delete( $child_theme_screenshot_file );
