@@ -87,12 +87,14 @@ const StepBasicInfoLearnMoreSidebar = lazy( () =>
 const StepDesignThemes = lazy( () =>
 	import( '../../pages/Steps/DesignThemes' )
 );
+
 const StepDesignThemeStylesMenu = lazy( () =>
 	import( '../../pages/Steps/DesignThemeStyles/Menu' )
 );
 const StepDesignThemeStylesMenuLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/DesignThemeStyles/Menu/Sidebar/LearnMore' )
 );
+
 const StepDesignThemeStylesPreview = lazy( () =>
 	import( '../../pages/Steps/DesignThemeStyles/Preview' )
 );

@@ -154,13 +154,6 @@ export function setIsHeaderNavigationEnabled ( isNavigationEnabled ) {
 	}
 }
 
-export function setHeaderSidebarMenus ( sidebarMenus ) {
-	return {
-		type: 'SET_HEADER_SIDEBAR_MENUS',
-		sidebarMenus
-	}
-}
-
 export function updatePreviewSettings( previewSettings ) {
 	return {
 		type: 'SET_PREVIEW_SETTINGS',

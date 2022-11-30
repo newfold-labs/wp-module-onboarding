@@ -35,10 +35,6 @@ export function isHeaderNavigationEnabled( state ) {
 	return state.header.isNavigationEnabled;
 }
 
-export function getHeaderSidebarMenus( state ) {
-	return state.header.sidebarMenus;
-}
-
 /**
  * Gets current Newfold brand
  *

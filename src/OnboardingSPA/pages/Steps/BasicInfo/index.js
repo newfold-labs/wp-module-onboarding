@@ -9,7 +9,7 @@ import { useViewportMatch } from '@wordpress/compose';
 
 const StepBasicInfo = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
-	const { setIsDrawerOpened, setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed } =
+	const { setIsDrawerOpened, setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed, setIsHeaderNavigationEnabled } =
 		useDispatch( nfdOnboardingStore );
 
 	const { currentStep } = useSelect(
@@ -28,6 +28,7 @@ const StepBasicInfo = () => {
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 	return (
 		<CommonLayout isVerticallyCentered>

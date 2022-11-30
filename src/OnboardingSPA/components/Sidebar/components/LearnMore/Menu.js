@@ -10,12 +10,11 @@ import {
 import classNames from 'classnames';
 
 const LearnMoreMenu = () => {
-	const { isSidebarOpened, sideBarView, currentStep, sidebarMenus } = useSelect( ( select ) => {
+	const { isSidebarOpened, sideBarView, currentStep } = useSelect( ( select ) => {
 		return {
 			isSidebarOpened: select( nfdOnboardingStore ).isSidebarOpened(),
 			sideBarView: select( nfdOnboardingStore ).getSidebarView(),
 			currentStep: select(nfdOnboardingStore).getCurrentStep(),
-			sidebarMenus: select( nfdOnboardingStore ).getHeaderSidebarMenus()
 		};
 	} );
 
@@ -32,7 +31,7 @@ const LearnMoreMenu = () => {
 
 	return (
 		<>
-		{sidebarMenus.includes( SIDEBAR_LEARN_MORE ) && 		<Fill
+		{currentStep?.sidebars?.LearnMore && 		<Fill
 			name={ `${ SIDEBAR_MENU_SLOTFILL_PREFIX }/${ SIDEBAR_LEARN_MORE }` }
 		>
 			<Button

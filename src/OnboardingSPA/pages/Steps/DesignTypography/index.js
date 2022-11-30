@@ -36,6 +36,7 @@ const StepDesignTypography = () => {
 		setIsDrawerOpened,
 		setIsSidebarOpened,
 		setIsDrawerSuppressed,
+		setIsHeaderNavigationEnabled
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -45,6 +46,7 @@ const StepDesignTypography = () => {
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_TYPOGRAPHY );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	const getFontPatterns = async () => {

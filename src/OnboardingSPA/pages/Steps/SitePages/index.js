@@ -47,6 +47,7 @@ const StepSitePages = () => {
 		setIsSidebarOpened,
 		updateThemeStatus,
 		setCurrentOnboardingData,
+		setIsHeaderNavigationEnabled
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -55,6 +56,7 @@ const StepSitePages = () => {
 		}
 		setIsSidebarOpened( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	const getSitePages = async () => {

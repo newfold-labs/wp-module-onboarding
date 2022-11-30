@@ -6,13 +6,14 @@ import { useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 
 const StepDesignHeaderMenu = () => {
-	const { setDrawerActiveView, setIsDrawerOpened, setIsSidebarOpened } =
+	const { setDrawerActiveView, setIsDrawerOpened, setIsSidebarOpened, setIsHeaderNavigationEnabled } =
 		useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		setIsSidebarOpened( false );
 		setIsDrawerOpened( true );
 		setDrawerActiveView( VIEW_DESIGN_HEADER_MENU );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 	return (
 		<CommonLayout isCentered>

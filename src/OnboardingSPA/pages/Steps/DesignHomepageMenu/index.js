@@ -70,6 +70,7 @@ const StepDesignHomepageMenu = () => {
 		setIsDrawerSuppressed,
 		setCurrentOnboardingData,
 		updateThemeStatus,
+		setIsHeaderNavigationEnabled
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -79,6 +80,7 @@ const StepDesignHomepageMenu = () => {
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_HOMEPAGE_MENU );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	function refactorPatterns( homepagePatternData ) {

@@ -31,7 +31,7 @@ const StepChildTheme = () => {
 	useEffect( async () => {
 		setIsDrawerOpened( false );
 		setIsSidebarOpened( false );
-		setHeaderSidebarMenus( [] );
+		setIsHeaderNavigationEnabled( false );
 		setIsDrawerSuppressed( true );
 		setIsHeaderNavigationEnabled( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );

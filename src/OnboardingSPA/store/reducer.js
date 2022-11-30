@@ -137,17 +137,12 @@ export function sidebar(
 	return state;
 }
 
-export function header(state = { isNavigationEnabled: true, sidebarMenus: [SIDEBAR_LEARN_MORE] }, action) {
+export function header(state = { isNavigationEnabled: true }, action) {
 	switch (action.type) {
 		case 'SET_HEADER_NAVIGATION_ENABLED':
 			return {
 				...state,
 				isNavigationEnabled: action.isNavigationEnabled
-			};
-		case 'SET_HEADER_SIDEBAR_MENUS':
-			return {
-				...state,
-				sidebarMenus: action.sidebarMenus
 			};
 	}
 

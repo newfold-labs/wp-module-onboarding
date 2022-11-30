@@ -41,6 +41,7 @@ const StepDesignColors = () => {
 		setIsDrawerOpened,
 		setIsSidebarOpened,
 		setIsDrawerSuppressed,
+		setIsHeaderNavigationEnabled
 
 	} = useDispatch( nfdOnboardingStore );
 
@@ -51,6 +52,7 @@ const StepDesignColors = () => {
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_COLORS );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	const getStylesAndPatterns = async () => {

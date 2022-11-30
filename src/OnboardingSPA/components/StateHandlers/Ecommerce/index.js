@@ -1,6 +1,5 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
 
 import { StepLoader } from '../../Loaders';
 import { store as nfdOnboardingStore } from '../../../store';
@@ -14,18 +13,22 @@ import {
 	PLUGIN_INSTALL_WAIT_TIMEOUT,
 } from '../../../../constants';
 import { StepErrorState } from '../../ErrorState';
+import getContents from './contents';
 
 const EcommerceStateHandler = ( { children } ) => {
 	const [ woocommerceStatus, setWoocommerceStatus ] = useState(
 		PLUGIN_STATUS_INSTALLING
 	);
 
-	const { storedPluginsStatus } = useSelect( ( select ) => {
+	const { storedPluginsStatus, brandName } = useSelect( ( select ) => {
 		return {
 			storedPluginsStatus:
 				select( nfdOnboardingStore ).getPluginsStatus(),
+			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
 		};
 	}, [] );
+
+	const contents = getContents( brandName );
 
 	const { updatePluginsStatus } = useDispatch( nfdOnboardingStore );
 
@@ -74,18 +77,9 @@ const EcommerceStateHandler = ( { children } ) => {
 			case PLUGIN_STATUS_NOT_ACTIVE:
 				return (
 					<StepErrorState
-						title={ __(
-							'Making the keys to your Bluehost Online Store',
-							'wp-module-onboarding'
-						) }
-						subtitle={ __(
-							'We’re installing WooCommerce for you to fill with your amazing products & services!',
-							'wp-module-onboarding'
-						) }
-						error={ __(
-							'Uh-oh, something went wrong. Please contact support.',
-							'wp-module-onboarding'
-						) }
+						title={ contents.errorState.title }
+						subtitle={ contents.errorState.subtitle }
+						error={ contents.errorState.error }
 					/>
 				);
 			case PLUGIN_STATUS_ACTIVE:
@@ -93,14 +87,8 @@ const EcommerceStateHandler = ( { children } ) => {
 			default:
 				return (
 					<StepLoader
-						title={ __(
-							'Making the keys to your Bluehost Online Store',
-							'wp-module-onboarding'
-						) }
-						subtitle={ __(
-							'We’re installing WooCommerce for you to fill with your amazing products & services!',
-							'wp-module-onboarding'
-						) }
+						title={ contents.loader.title }
+						subtitle={ contents.loader.subtitle }
 					/>
 				);
 		}
