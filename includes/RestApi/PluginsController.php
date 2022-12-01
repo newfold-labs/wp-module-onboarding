@@ -1,16 +1,14 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
-use Composer\Installers\Plugin;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
-use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\Data\SiteFeatures;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Onboarding\Tasks\PluginInstallTask;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
 use NewfoldLabs\WP\Module\Onboarding\Tasks\PluginUninstallTask;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginUninstallTaskManager;
-use phpDocumentor\Reflection\Types\Object_;
 
 /**
  * Class PluginsController
@@ -78,6 +76,18 @@ class PluginsController {
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_status' ),
 					'args'                => $this->get_status_args(),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/features',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_custom_plugins' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -267,6 +277,16 @@ class PluginsController {
 			200
 		);
 
+	}
+
+	/**
+	  * Retrieves the Customized list of Plugins for the user.
+	  *
+	  * @return array|\WP_Error
+	  */
+	public function get_custom_plugins() {
+		 $custom_plugins = SiteFeatures::get_custom_plugins_list();
+		 return $custom_plugins;
 	}
 
 	/**
