@@ -5,6 +5,7 @@ import { useViewportMatch } from '@wordpress/compose';
 
 import { LivePreview } from '../../../components/LivePreview';
 import CommonLayout from '../../../components/Layouts/Common';
+import { GlobalStylesProvider } from '../../../components/LivePreview';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 
 
@@ -52,10 +53,10 @@ const StepDesignHeaderMenu = () => {
 	} = useDispatch( nfdOnboardingStore );
 
 	const getCurrentPattern = async () => {
-		const patternsResponse = await getPatterns(
-			currentStep.patternId,
-			true
-		);
+		// const patternsResponse = await getPatterns(
+		// 	currentStep.patternId,
+		// 	true
+		// );
 
 		// if ( patternsResponse?.error ) {
 		// 	return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
@@ -76,7 +77,7 @@ const StepDesignHeaderMenu = () => {
 		// updatePreviewSettings(
 		// 	useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		// );
-		setPattern( patternsResponse?.body );
+		// setPattern( patternsResponse?.body );
 		setIsLoaded( true );
 	};
 
@@ -100,24 +101,26 @@ const StepDesignHeaderMenu = () => {
 
 	return (
 		<DesignStateHandler>
-			<CommonLayout className="theme-header-menu-preview">
-				<div className="theme-header-menu-preview__title-bar">
-					<div className="theme-header-menu-preview__title-bar__browser">
-						<span className="theme-header-menu-preview__title-bar__browser__dot"></span>
-						<span className="theme-header-menu-preview__title-bar__browser__dot"></span>
-						<span className="theme-header-menu-preview__title-bar__browser__dot"></span>
+			<GlobalStylesProvider>
+				<CommonLayout className="theme-header-menu-preview">
+					<div className="theme-header-menu-preview__title-bar">
+						<div className="theme-header-menu-preview__title-bar__browser">
+							<span className="theme-header-menu-preview__title-bar__browser__dot"></span>
+							<span className="theme-header-menu-preview__title-bar__browser__dot"></span>
+							<span className="theme-header-menu-preview__title-bar__browser__dot"></span>
+						</div>
 					</div>
-				</div>
-				<div className="theme-header-menu-preview__live-preview-container">
-					{ pattern && (
-						<LivePreview
-							blockGrammer={ pattern }
-							styling={ 'custom' }
-							viewportWidth={ 1300 }
-						/>
-					) }
-				</div>
-			</CommonLayout>
+					<div className="theme-header-menu-preview__live-preview-container">
+						{ pattern && (
+							<LivePreview
+								blockGrammer={ pattern }
+								styling={ 'custom' }
+								viewportWidth={ 1300 }
+							/>
+						) }
+					</div>
+				</CommonLayout>
+			</GlobalStylesProvider>
 		</DesignStateHandler>
 	);
 };

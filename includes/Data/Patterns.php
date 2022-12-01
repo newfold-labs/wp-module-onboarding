@@ -82,6 +82,15 @@ final class Patterns {
                     'site-footer' => array(
 						'active'      => true,
 					),
+					'site-header-left-logo-navigation-below' => array(
+						'active'      => true,	
+					),
+					'site-header-centered' => array(
+						'active'      => true,	
+					),
+					'site-header-centered-logo-split-menu' => array(
+						'active'      => true,	
+					)
                 ),
 				'header-menu-body' => array(
                     'homepage-1',

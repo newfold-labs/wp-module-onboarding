@@ -4,6 +4,7 @@ import { useState, useEffect } from '@wordpress/element';
 import HeaderMenuPreview from '../../HeaderMenuPreview';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns, getHeaderMenuPatterns, getDefaultHeaderMenu } from '../../../utils/api/patterns';
+import { GlobalStylesProvider } from '../../../components/LivePreview';
 import { getGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import {
@@ -77,6 +78,18 @@ const DesignHomepageMenu = () => {
 			setCurrentOnboardingData( currentData );
 		}
 		setSelectedPattern(currentData.data.partHeader);
+
+		let [pageContent, headerContent, pagePreview] = ["", "", ""];
+		headerMenuPreviewResponse.body.forEach( ( pageParts ) => {
+			if(headerMenuBodySlugs.includes(pageParts.slug)){
+				pageContent += pageParts.content;
+			}
+			if(pageParts.slug === currentData.data.partHeader){
+				headerContent += pageParts.content;
+			}
+		});
+		pagePreview = headerContent + pageContent;
+		setHeaderMenuData( pagePreview );
 		setIsLoaded( true );
 	};
 
@@ -87,9 +100,7 @@ const DesignHomepageMenu = () => {
 
 	const handleClick = ( idx ) => {
 		const selectedPattern = patterns[ idx ];
-		// updatePreviewSettings(
-		// 	useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
-		// );
+
 		setSelectedPattern( selectedPattern.slug );
 		currentData.data.partHeader = selectedPattern.slug;
 		setCurrentOnboardingData( currentData );
@@ -121,11 +132,13 @@ const DesignHomepageMenu = () => {
 	};
 
 	return (
-		<div className="theme-header-menu-preview--drawer">
-			<div className="theme-header-menu-preview--drawer__list">
-				{ patterns ? buildPreviews(): '' }
+		<GlobalStylesProvider>
+			<div className="theme-header-menu-preview--drawer">
+				<div className="theme-header-menu-preview--drawer__list">
+					{ patterns ? buildPreviews(): '' }
+				</div>
 			</div>
-		</div>
+		</GlobalStylesProvider>
 	);
 };
 
