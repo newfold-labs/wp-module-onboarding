@@ -50,7 +50,7 @@ class PatternsController extends \WP_REST_Controller {
 		);
 		register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/headers',
+			$this->rest_base . '/header',
 			array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,

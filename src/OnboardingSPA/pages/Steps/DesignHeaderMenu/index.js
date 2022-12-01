@@ -121,3 +121,5 @@ const StepDesignHeaderMenu = () => {
 		</DesignStateHandler>
 	);
 };
+
+export default StepDesignHeaderMenu;

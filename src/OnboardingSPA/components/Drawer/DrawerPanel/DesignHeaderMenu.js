@@ -104,7 +104,6 @@ const DesignHomepageMenu = () => {
 	};
 
 	const buildPreviews = () => {
-		console.log(selectedPattern);
 		return patterns?.map( ( pattern, idx ) => {
 			return (
 				<HeaderMenuPreview
