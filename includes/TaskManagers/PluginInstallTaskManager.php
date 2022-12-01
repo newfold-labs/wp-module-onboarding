@@ -95,6 +95,9 @@ class PluginInstallTaskManager {
 		  priority at the beginning of the array */
 		$plugin_to_install = array_shift( $plugins );
 
+		// Update the plugin install queue.
+		 \update_option( Options::get_option_name( self::$queue_name ), $plugins );
+
 		// Recreate the PluginInstall task from the associative array.
 		$plugin_install_task = new PluginInstallTask(
 			$plugin_to_install['slug'],
@@ -113,21 +116,26 @@ class PluginInstallTaskManager {
 			   // If there is an error, then increase the retry count for the task.
 			   $plugin_install_task->increment_retries();
 
+			   // Get Latest Value of the install queue
+			   $plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
+
 			   /*
 				If the number of retries have not exceeded the limit
 				then re-queue the task at the end of the queue to be retried. */
 			if ( $plugin_install_task->get_retries() <= self::$retry_limit ) {
 					array_push( $plugins, $plugin_install_task->to_array() );
+
+					// Update the plugin install queue.
+					 \update_option( Options::get_option_name( self::$queue_name ), $plugins );
 			}
 		}
 
 		// If there are no more plugins to be installed then change the status to completed.
 		if ( empty( $plugins ) ) {
-			\update_option( Options::get_option_name( 'plugins_init_status' ), 'completed' );
+			return \update_option( Options::get_option_name( 'plugins_init_status' ), 'completed' );
 		}
 
-		// Update the plugin install queue.
-		 return \update_option( Options::get_option_name( self::$queue_name ), $plugins );
+		return true;
 	}
 
 	/**

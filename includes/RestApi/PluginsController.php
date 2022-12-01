@@ -312,7 +312,7 @@ class PluginsController {
 					);
 				} else {
 					$position_in_queue = PluginInstallTaskManager::status( $plugin );
-					if ( $position_in_queue === false ) {
+					if ( $position_in_queue === false || $position_in_queue === 0 ) {
 						PluginUninstallTaskManager::add_to_queue(
 							new PluginUninstallTask(
 								$plugin,
