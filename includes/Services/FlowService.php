@@ -15,6 +15,7 @@ class FlowService {
             return self::get_default_flow_data();
 		$updated_flow_data = self::update_flow_data_recursive(Flows::get_data(), $flow_data, $updated_flow_data);
 		self::update_wp_options_data_in_database($updated_flow_data);
+		\do_action('qm/debug', $updated_flow_data);
         return $updated_flow_data;
     }
 
@@ -41,7 +42,7 @@ class FlowService {
 			foreach ($default_flow_data as $key => $value)
 			{ 
 				// To update an existing value if the key exists in the blueprint and database
-				if (array_key_exists($key, $flow_data) && !is_array($flow_data[$key])) {
+				if (array_key_exists($key, $flow_data)) {
 					// Updates any default value added to the blueprint into the database
 					if(!empty($value) && empty($flow_data[$key])) {
 						$updated_flow_data[$key] = $value;
@@ -67,6 +68,8 @@ class FlowService {
 				}
 												
 				if ( is_array( $value ) ) {
+					if (empty($flow_data))
+						$updated_flow_data[$key] = $flow_data[$key];
 					if (count(array_filter(array_keys($flow_data[$key]), 'is_string')) === 0 && !empty($flow_data[$key]) && !is_array($flow_data[$key])) {
 						$updated_flow_data[$key] = $flow_data[$key];
 					}
