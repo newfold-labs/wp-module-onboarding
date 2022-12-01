@@ -25,17 +25,20 @@ const HeaderMenuPreview = ( {
 				}
 			} ) }
 		>
-			<div
-				className={ `${ selected
-					? `${ className }__title-bar--selected live-preview-selected-check`
-					: `${ className }__title-bar--unselected`
-				}` }
-			>
-				<Icon
-					className={ `${ className }__title-bar--selected__path` }
-					icon={ check }
-					size={ 64 }
-				/>
+			<div className={ `${ className }__title-bar` }>
+				<div className={ `${ className }__title-bar__browser` }></div>
+				<div
+					className={ `${ selected
+						? `${ className }__title-bar--selected live-preview-selected-check`
+						: `${ className }__title-bar--unselected`
+					}` }
+				>
+					<Icon
+						className={ `${ className }__title-bar--selected__path` }
+						icon={ check }
+						size={ 64 }
+					/>
+				</div>
 			</div>
 			<div className={ `${ className }__live-preview-container` }>
 				<LivePreview

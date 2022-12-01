@@ -50,11 +50,22 @@ class PatternsController extends \WP_REST_Controller {
 		);
 		register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/header',
+			$this->rest_base . '/headers',
 			array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_all_header_patterns' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
+		register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/header/default',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_default_header_pattern' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -178,4 +189,24 @@ class PatternsController extends \WP_REST_Controller {
 		   );
 	  }
 	  
+	/**
+      * Retrieves deafult the header pattern.
+      *
+      * @return \WP_Rest_Response|\WP_Error
+      */
+      public function get_default_header_pattern()
+      {
+           $header_pattern = Patterns::get_default_header();
+           if (!$header_pattern) {
+                return new \WP_Error(
+                     'no_default_pattern_found',
+                     __('No Default Pattern Found.'),
+                     array('status' => 404)
+                );
+           }
+
+           return new \WP_REST_Response(
+                $header_pattern
+           );
+      }
 }

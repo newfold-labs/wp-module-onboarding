@@ -3,7 +3,7 @@ import { useState, useEffect } from '@wordpress/element';
 
 import HeaderMenuPreview from '../../HeaderMenuPreview';
 import { store as nfdOnboardingStore } from '../../../store';
-import { getHeaderMenuPatterns } from '../../../utils/api/patterns';
+import { getHeaderMenuPatterns, getDefaultHeaderMenu } from '../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import {
@@ -42,32 +42,25 @@ const DesignHomepageMenu = () => {
 		}
         setPatterns( patternsResponse?.body );
 
-        // const globalStylesResponse = await getGlobalStyles();
-		// if ( globalStylesResponse?.error ) {
-		// 	return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
-		// }
-
-		// setGlobalStyles( globalStylesResponse?.body );
-		// let selectedGlobalStyle;
-		if ( !currentData.data.partHeader ) {
-			// currentData.data.partHeader = patterns[0].slug;
-			currentData.data.partHeader = 'site-header-left-logo-navigation-inline';
-			setCurrentOnboardingData( currentData );
+		const defaultHeaderMenu = await getDefaultHeaderMenu();
+		if ( defaultHeaderMenu?.error ) {
+			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
+		setSelectedPattern(defaultHeaderMenu.body);
 
-        // if (
-		// 	document.getElementsByClassName(
-		// 		'theme-header-menu-preview--drawer__list__item__title-bar--selected'
-		// 	)
-		// ) {
-		// 	document.getElementsByClassName(
-		// 			'theme-header-menu-preview--drawer__list__item__title-bar--selected'
-		// 		)[ 0 ]
-		// 		.scrollIntoView( {
-		// 			behavior: 'smooth',
-		// 			block: 'center',
-		// 		} );
-		// }
+        if (
+			document.getElementsByClassName(
+				'theme-header-menu-preview--drawer__list__item__title-bar--selected'
+			)
+		) {
+			document.getElementsByClassName(
+					'theme-header-menu-preview--drawer__list__item__title-bar--selected'
+				)[ 0 ]
+				.scrollIntoView( {
+					behavior: 'smooth',
+					block: 'center',
+				} );
+		}
 		setIsLoaded( true );
 	};
 
@@ -93,7 +86,7 @@ const DesignHomepageMenu = () => {
 				<HeaderMenuPreview
 					key={ idx }
 					className={ 'theme-header-menu-preview--drawer__list__item' }
-					selected={ pattern.title === selectedPattern }
+					selected={ pattern.slug === selectedPattern }
 					blockGrammer={ pattern.content }
 					viewportWidth={ 900 }
 					styling={ 'custom' }

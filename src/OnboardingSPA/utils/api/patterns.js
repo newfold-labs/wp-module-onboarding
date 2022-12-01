@@ -23,3 +23,13 @@ export async function getHeaderMenuPatterns() {
 		} ).then()
 	);
 }
+
+export async function getDefaultHeaderMenu() {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL(
+				`patterns/header/default`
+			),
+		} ).then()
+	);
+}
