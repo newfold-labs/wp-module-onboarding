@@ -137,17 +137,15 @@ final class Flows {
 	);
 
 	/**
-	  * Has all the Flow Key and/or Value parameters to be updated for the user.
+	  * Has all the Flow Key parameters to be updated for the user in Key-Value pair.
 	  *
+	  * - OldKey is the existing key in $data which is to be renamed
 	  * - NewKey (mandatory) is the key to be replaced in the database and also to be manually 
-	  *   entered in $data instead of the value of 'old_key' 
-	  * - old_key (mandatory) is the existing key in $data which is to be renamed
-	  * - new_value (optional) is the value to be modified in the database and also to be manually 
-	  *   entered in $data instead of the existing value against the new key 
+	  *   entered in $data instead of the value of 'OldKey' 
 	  * @return array
 	  */
-	protected static $fixes = array(
-		// 'NewKey' => array('old_key' => '', 'new_value' => ''),
+	  protected static $fixes = array(
+		// 'OldKey' => 'NewKey',
 	);
 
 

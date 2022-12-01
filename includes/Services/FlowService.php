@@ -33,7 +33,7 @@ class FlowService {
 	}
 
 	/*
-	 * function to update the Flow Data in an array recursively in comparison to Flows::get_data()
+	 * function to update the Flow Data (Blueprint) in an array recursively in comparison to Flows::get_data() (Database)
 	 */	
 	private static function update_flow_data_recursive(&$default_flow_data, &$flow_data, &$updated_flow_data) {
 		{
@@ -41,10 +41,21 @@ class FlowService {
 
 			foreach ($default_flow_data as $key => $value)
 			{ 
-				// To update an existing value if the key exists in the blueprint and database
-				if (array_key_exists($key, $flow_data)) {
+
+				// Any Key renamed is updated in the database with NewKey and the value from the OldKey is retained
+				if($flow_data_fixes) {
+					foreach ($flow_data_fixes as $old_key=>$new_key) {
+						if (array_key_exists($old_key, $flow_data)) 
+							$flow_data[$new_key] = $flow_data[$old_key];
+						unset($flow_data[$old_key]);
+					}
+				}
+
+				// To update an existing value if the key exists in both, the blueprint and database
+				// All keys in the database and not in blueprint are not included
+				if (array_key_exists($key, $flow_data) && !is_array($value) ) {
 					// Updates any default value added to the blueprint into the database
-					if(!empty($value) && empty($flow_data[$key])) {
+					if(isset($value) && empty($flow_data[$key])) {
 						$updated_flow_data[$key] = $value;
 					}
 					// Retains the user updated value at the time of onboarding
@@ -53,24 +64,11 @@ class FlowService {
 				}
 
 				// Adds new key-value pair added to the blueprint into the database
-				elseif(!array_key_exists($key, $flow_data)) 
+				else
 					$updated_flow_data[$key] = $value;
 
-				// Any Key Renamed and/or New Value added is updated in the database
-				if($flow_data_fixes) {
-					if (array_key_exists($key, $flow_data_fixes)) {
-						if (array_key_exists('new_value', $flow_data_fixes[$key])) 
-							$updated_flow_data[$key] = $value;
-						else 
-							$updated_flow_data[$key] = $flow_data[$flow_data_fixes[$key]['old_key']];
-						unset($flow_data[$flow_data_fixes[$key]['old_key']]);
-					}
-				}
-												
 				if ( is_array( $value ) ) {
-					if (empty($flow_data))
-						$updated_flow_data[$key] = $flow_data[$key];
-					if (count(array_filter(array_keys($flow_data[$key]), 'is_string')) === 0 && !empty($flow_data[$key]) && !is_array($flow_data[$key])) {
+					if (count(array_filter(array_keys($flow_data[$key]), 'is_string')) === 0 && !empty($flow_data[$key])) {
 						$updated_flow_data[$key] = $flow_data[$key];
 					}
 					else
@@ -92,7 +90,7 @@ class FlowService {
 				else $flow_data[$key] = $value;
 								
 				if ( is_array( $value ) ) {
-					if (count(array_filter(array_keys($params[$key]), 'is_string')) === 0 && (!empty($params[$key]))) {
+					if (count(array_filter(array_keys($params[$key]), 'is_string')) === 0 && !empty($params[$key])) {
 						$flow_data[$key] = $params[$key];
 					}
 					else
