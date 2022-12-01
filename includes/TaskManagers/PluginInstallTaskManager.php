@@ -123,10 +123,10 @@ class PluginInstallTaskManager {
 				If the number of retries have not exceeded the limit
 				then re-queue the task at the end of the queue to be retried. */
 			if ( $plugin_install_task->get_retries() <= self::$retry_limit ) {
-					array_push( $plugins, $plugin_install_task->to_array() );
+				array_push( $plugins, $plugin_install_task->to_array() );
 
-					// Update the plugin install queue.
-					 \update_option( Options::get_option_name( self::$queue_name ), $plugins );
+				// Update the plugin install queue.
+				\update_option( Options::get_option_name( self::$queue_name ), $plugins );
 			}
 		}
 
