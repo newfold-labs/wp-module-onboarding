@@ -15,6 +15,7 @@ import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 import {
 	LivePreviewSelectableCard,
+	LivePreviewSkeleton,
 	GlobalStylesProvider,
 } from '../../../components/LivePreview';
 
@@ -46,7 +47,7 @@ const StepDesignHomepageMenu = () => {
 
 	const isLargeViewport = useViewportMatch( 'medium' );
 
-	const { currentStep, currentData, storedPreviewSettings, themeStatus } =
+	const { currentStep, currentData, storedPreviewSettings, themeStatus, themeVariations } =
 		useSelect( ( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getStepFromPath(
@@ -57,6 +58,7 @@ const StepDesignHomepageMenu = () => {
 				storedPreviewSettings:
 					select( nfdOnboardingStore ).getPreviewSettings(),
 				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				themeVariations: select(nfdOnboardingStore).getStepPreviewData(),
 			};
 		}, [] );
 
@@ -141,18 +143,16 @@ const StepDesignHomepageMenu = () => {
 		return homepagePattern?.map( ( homepage, idx ) => {
 			if ( homepage ) {
 				return (
-					<div className="homepage_preview__list" key={ idx }>
-						<LivePreviewSelectableCard
-							className={ 'homepage_preview__list__item' }
-							selected={ idx === selectedHomepage }
-							blockGrammer={ homepage }
-							viewportWidth={ 1200 }
-							styling={ 'custom' }
-							previewSettings={ storedPreviewSettings }
-							overlay={ false }
-							onClick={ () => saveDataForHomepage( idx ) }
-						/>
-					</div>
+					<LivePreviewSelectableCard
+						className={ 'homepage_preview__list__item' }
+						selected={ idx === selectedHomepage }
+						blockGrammer={ homepage }
+						viewportWidth={ 1200 }
+						styling={ 'custom' }
+						previewSettings={ storedPreviewSettings }
+						overlay={ false }
+						onClick={ () => saveDataForHomepage( idx ) }
+					/>
 				);
 			}
 			return null;
@@ -168,8 +168,14 @@ const StepDesignHomepageMenu = () => {
 							title={ currentStep?.heading }
 							subtitle={ currentStep?.subheading }
 						/>
-						<div className="theme-styles-menu__list">
-							{ storedPreviewSettings && buildHomepagePreviews() }
+						<div className="homepage_preview__list">
+							<LivePreviewSkeleton
+								watch={ homepagePattern }
+								count={ themeVariations[currentStep?.patternId]?.previewCount }
+								callback={ buildHomepagePreviews }
+								className={ 'homepage_preview__list__item' }
+								viewportWidth={ 1200 }
+							/>
 						</div>
 					</div>
 				</CommonLayout>

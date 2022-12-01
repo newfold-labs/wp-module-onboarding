@@ -74,7 +74,7 @@ class ApprovedThemesController extends \WP_REST_Controller {
 			foreach ( $themes_data as $theme_data ) {
 				$theme = new Theme( $theme_data['stylesheet'] );
 				$theme->set_theme_image( $theme_data['screenshot'] );
-				if ( str_contains( $theme_data['author']['raw'], $current_brand_name ) ) {
+				if ( false !== strpos( $theme_data['author']['raw'], $current_brand_name ) ) {
 					$theme->set_is_newfold_theme( true );
 				}
 				$installed_themes[] = $theme;

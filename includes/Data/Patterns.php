@@ -14,7 +14,9 @@ final class Patterns {
 						'active' => true,
 					),
 					'homepage-1'  => array(
-						'active' => true,
+						'active'  => true,
+						'shown'   => true,
+						'combine' => true,
 					),
 					'site-footer' => array(
 						'active' => true,
@@ -26,12 +28,15 @@ final class Patterns {
 					),
 					'homepage-1'  => array(
 						'active' => true,
+						'shown'  => true,
 					),
 					'homepage-2'  => array(
 						'active' => true,
+						'shown'  => true,
 					),
 					'homepage-3'  => array(
 						'active' => true,
+						'shown'  => true,
 					),
 					'site-footer' => array(
 						'active' => true,
@@ -42,24 +47,28 @@ final class Patterns {
 						'active'      => true,
 						'title'       => 'About',
 						'selected'    => true,
+						'shown'       => true,
 						'description' => __( 'Explain your company values or the history behind your brand.', 'wp-module-onboarding' ),
 					),
 					'contact-us'        => array(
 						'active'      => true,
 						'selected'    => true,
 						'title'       => 'Contact',
+						'shown'       => true,
 						'description' => __( 'Offer visitors a single page with a contact form, your street address and social media.', 'wp-module-onboarding' ),
 					),
 					'testimonials-page' => array(
 						'active'      => true,
 						'title'       => 'Testimonials',
 						'selected'    => false,
+						'shown'       => true,
 						'description' => __( 'Highlight your success with testimonials from your fans.', 'wp-module-onboarding' ),
 					),
 					'blog-page'         => array(
 						'active'      => true,
 						'selected'    => true,
 						'title'       => 'Blog',
+						'shown'       => true,
 						'description' => __( 'A page for periodic news, announcements and ideas.', 'wp-module-onboarding' ),
 					),
 				),
@@ -140,7 +149,7 @@ final class Patterns {
 	  *
 	  * @return \WP_REST_Response|\WP_Error
 	  */
-	public function set_homepage_patterns( $slug ) {
+	public static function set_homepage_patterns( $slug ) {
 
 		if ( ! isset( $slug ) ) {
 			return new \WP_Error(
@@ -217,5 +226,30 @@ final class Patterns {
 					'No Step Found with given params'
 				);
 		}
+	}
+
+	public static function get_count_of_patterns() {
+		 $active_theme          = ( \wp_get_theme() )->get( 'TextDomain' );
+		 $theme_step_patterns   = self::get_theme_step_patterns();
+		 $active_theme_patterns = isset( $theme_step_patterns[ $active_theme ] ) ? $theme_step_patterns[ $active_theme ] : array();
+
+		 $theme_pattern_count = array();
+		foreach ( $active_theme_patterns as $theme_step => $patterns ) {
+				$theme_step_count  = 0;
+				$combine_styles    = 1;
+			foreach ( $patterns as $pattern => $pattern_data ) {
+				if ( isset( $pattern_data['shown'] ) && $pattern_data['shown'] === true ) {
+						  $theme_step_count += 1;
+				}
+				if ( isset( $pattern_data['combine'] ) && $pattern_data['combine'] === true ) {
+					 $combine_styles = count( \WP_Theme_JSON_Resolver::get_style_variations() ) + 1;
+				}
+			}
+
+			   $theme_pattern_count[ $theme_step ] = array(
+				   'previewCount' => $combine_styles * $theme_step_count,
+			   );
+		}
+		 return $theme_pattern_count;
 	}
 }
