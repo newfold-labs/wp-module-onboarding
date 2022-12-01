@@ -11,85 +11,93 @@ import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import CheckboxList from '../../../components/CheckboxTemplate/CheckboxList';
 
 const StepSiteFeatures = () => {
-	const isLargeViewport = useViewportMatch('medium');
+	const isLargeViewport = useViewportMatch( 'medium' );
 
-	const [isLoaded, setisLoaded] = useState(false);
-	const [selectedPlugins, setSelectedPlugins] = useState();
-	const [customPluginsList, setCustomPluginsList] = useState();
+	const [ isLoaded, setisLoaded ] = useState( false );
+	const [ selectedPlugins, setSelectedPlugins ] = useState();
+	const [ customPluginsList, setCustomPluginsList ] = useState();
 
-	const { setIsDrawerOpened, setDrawerActiveView, setIsSidebarOpened, setCurrentOnboardingData, setIsDrawerSuppressed } =
-		useDispatch(nfdOnboardingStore);
+	const {
+		setIsDrawerOpened,
+		setDrawerActiveView,
+		setIsSidebarOpened,
+		setCurrentOnboardingData,
+		setIsDrawerSuppressed,
+	} = useDispatch( nfdOnboardingStore );
 
-	const { currentStep, currentData } = useSelect(
-		(select) => {
-			return {
-				currentStep: select(nfdOnboardingStore).getCurrentStep(),
-				currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
-			};
-		},
-		[]
-	);
+	const { currentStep, currentData } = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+		};
+	}, [] );
 
-	async function selectPlugin(slug, choice) {
-		let selectedPluginsCopy = {...selectedPlugins};
-		if(choice)
-			selectedPluginsCopy[slug] = true;
-		else
-			selectedPluginsCopy[slug] = false;
+	async function selectPlugin( slug, choice ) {
+		const selectedPluginsCopy = { ...selectedPlugins };
+		if ( choice ) selectedPluginsCopy[ slug ] = true;
+		else selectedPluginsCopy[ slug ] = false;
 
-		currentData.data.siteFeatures = {...selectedPluginsCopy};
-		setCurrentOnboardingData(currentData);
-		setSelectedPlugins(selectedPluginsCopy);
+		currentData.data.siteFeatures = { ...selectedPluginsCopy };
+		setCurrentOnboardingData( currentData );
+		setSelectedPlugins( selectedPluginsCopy );
 	}
 
-	async function changeToStoreSchema( customPluginsList, saveToStore = false ) {
-		let selectedPlugins = {};
+	async function changeToStoreSchema(
+		customPluginsList,
+		saveToStore = false
+	) {
+		const selectedPlugins = {};
 
-		customPluginsList.forEach(plugin => {
-			selectedPlugins[plugin.slug] = plugin.selected;
-		});
-		setSelectedPlugins(selectedPlugins);
+		customPluginsList.forEach( ( plugin ) => {
+			selectedPlugins[ plugin.slug ] = plugin.selected;
+		} );
+		setSelectedPlugins( selectedPlugins );
 
-		if (saveToStore) {
+		if ( saveToStore ) {
 			currentData.data.siteFeatures = { ...selectedPlugins };
-			setCurrentOnboardingData(currentData);
+			setCurrentOnboardingData( currentData );
 		}
 	}
 
 	async function getCustomPlugins() {
 		const customPluginsList = await getCustomPluginsList();
-		if (isEmpty(currentData?.data?.siteFeatures))
-			changeToStoreSchema(customPluginsList.body, true);
-		else
-			setSelectedPlugins({ ...currentData?.data?.siteFeatures });
-		
-		setCustomPluginsList(customPluginsList.body);
-		setisLoaded(true);
+		if ( isEmpty( currentData?.data?.siteFeatures ) )
+			changeToStoreSchema( customPluginsList.body, true );
+		else setSelectedPlugins( { ...currentData?.data?.siteFeatures } );
+
+		setCustomPluginsList( customPluginsList.body );
+		setisLoaded( true );
 	}
 
-	useEffect(() => {
-		if (!isLoaded) {
+	useEffect( () => {
+		if ( ! isLoaded ) {
 			getCustomPlugins();
 		}
-	}, [isLoaded]);
+	}, [ isLoaded ] );
 
-	useEffect(() => {
-		if (isLargeViewport) {
-			setIsDrawerOpened(false);
+	useEffect( () => {
+		if ( isLargeViewport ) {
+			setIsDrawerOpened( false );
 		}
-		setIsSidebarOpened(false);
-		setIsDrawerSuppressed(false);
-		setDrawerActiveView(VIEW_NAV_PRIMARY);
-	}, []);
+		setIsSidebarOpened( false );
+		setIsDrawerSuppressed( false );
+		setDrawerActiveView( VIEW_NAV_PRIMARY );
+	}, [] );
 
 	return (
 		<CommonLayout isVerticallyCentered>
-			<HeadingWithSubHeading title={currentStep?.heading} subtitle={currentStep?.subheading} />
-			{customPluginsList && 
-				<CheckboxList 
-					callback={selectPlugin}
-					selectedPlugins={selectedPlugins} 
-					customPluginsList={customPluginsList} />}
+			<HeadingWithSubHeading
+				title={ currentStep?.heading }
+				subtitle={ currentStep?.subheading }
+			/>
+			{ customPluginsList && (
+				<CheckboxList
+					callback={ selectPlugin }
+					selectedPlugins={ selectedPlugins }
+					customPluginsList={ customPluginsList }
+				/>
+			) }
 		</CommonLayout>
 	);
 };

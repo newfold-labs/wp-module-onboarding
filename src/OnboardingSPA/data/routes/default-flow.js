@@ -489,7 +489,10 @@ export const steps = [
 	{
 		path: '/wp-setup/step/site-pages',
 		title: __( 'Pages', 'wp-module-onboarding' ),
-		heading: __( "You have ideas, we have page templates", 'wp-module-onboarding' ),
+		heading: __(
+			'You have ideas, we have page templates',
+			'wp-module-onboarding'
+		),
 		subheading: __(
 			'Begin closer to the finish line than a blank canvas.',
 			'wp-module-onboarding'
@@ -511,9 +514,12 @@ export const steps = [
 	{
 		path: '/wp-setup/step/site-features',
 		title: __( 'Features', 'wp-module-onboarding' ),
-		heading: __( 'Key features to supercharge your site', 'wp-module-onboarding' ),
+		heading: __(
+			'Key features to supercharge your site',
+			'wp-module-onboarding'
+		),
 		subheading: __(
-			"Our toolbox of Plugins & Services is your toolbox.",
+			'Our toolbox of Plugins & Services is your toolbox.',
 			'wp-module-onboarding'
 		),
 		description: __(
