@@ -11,6 +11,7 @@ import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import { store as nfdOnboardingStore } from '../../../../store';
 import content from '../content.json';
 import countries from '../countries.json';
+import currencies from '../currencies.json';
 import { useWPSettings } from '../useWPSettings';
 
 const StepAddress = () => {
@@ -193,10 +194,10 @@ const StepAddress = () => {
 									/>
 								</div>
 								{states.length === 0 || settings === null ? null : (
-								<div>
-									<label data-required>
-										{__('State', 'wp-module-onboarding')}
-									</label>
+									<div>
+										<label data-required>
+											{__('State', 'wp-module-onboarding')}
+										</label>
 										<select
 											type='text'
 											name='state'
@@ -211,7 +212,7 @@ const StepAddress = () => {
 												</option>
 											))}
 										</select>
-								</div>
+									</div>
 								)}
 								<div>
 									<label data-required>
@@ -225,6 +226,27 @@ const StepAddress = () => {
 										{...fieldProps}
 									/>
 								</div>
+							</div>
+							<div>
+								<label data-required>
+									{__('Email', 'wp-module-onboarding')}
+								</label>
+								<input
+									name='woocommerce_email_from_address'
+									type='email'
+									required
+									{...fieldProps}
+								/>
+							</div>
+							<div>
+								<label>
+									{__('What currency do you want to display in your store?', 'wp-module-onboarding')}
+								</label>
+								<select name='woocommerce_currency' {...fieldProps}>
+									{Object.entries(currencies).map(([code, currency]) => (
+										<option key={code} value={code} dangerouslySetInnerHTML={{ __html: currency }} />
+									))}
+								</select>
 							</div>
 							<em style={{ display: 'inline' }}>* required</em>
 						</div>
