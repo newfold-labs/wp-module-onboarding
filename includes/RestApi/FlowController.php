@@ -59,8 +59,15 @@ class FlowController {
 	public function get_onboarding_flow_data( \WP_REST_Request $request ) {
 		$result = $this->get_wp_options_flow_data();
 		if( ! ($result) ) {
+			$result = FlowService::initalize_flow_data();
+			if ($result) {
+				return new \WP_REST_Response(
+					$result,
+					200
+				);
+			}
 			return new \WP_Error(
-				'Get Data Not Provided',
+				'Flow Data does not Exist',
 				array( 'status' => 404 )
 			);
 		}
@@ -103,7 +110,7 @@ class FlowController {
 			);
 		}
 
-		$flow_data = array_replace_recursive( $flow_data, $params );
+		$flow_data = FlowService::update_post_call_data_recursive( Flows::get_data(), $params );
 
 		// update timestamp once data is updated
 		$flow_data['updatedAt'] = time();

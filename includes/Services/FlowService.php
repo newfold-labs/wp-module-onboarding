@@ -7,12 +7,15 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 
 class FlowService {
 
+	// An array to keep the Flow Data updated in the database
+	protected $updated_flow_data = array();
+
     public static function initalize_flow_data() { 
         if ( ! ( $flow_data = self::read_flow_data_from_wp_option() ) )
-            $flow_data = self::get_default_flow_data();
-		$flow_data = self::update_flow_data(Flows::get_data(), $flow_data);
-		self::update_wp_options_data_in_database($flow_data);
-        return $flow_data;
+            return self::get_default_flow_data();
+		$updated_flow_data = self::update_flow_data_recursive(Flows::get_data(), $flow_data, $updated_flow_data);
+		self::update_wp_options_data_in_database($updated_flow_data);
+        return $updated_flow_data;
     }
 
     private static function get_default_flow_data() {
@@ -29,53 +32,72 @@ class FlowService {
 	}
 
 	/*
-	 * function to compare and add Flows::get_data() items to database
-	 */
-	private static function update_flow_data($default_flow_data, $flow_data) {
-		$flow_data_fixes = Flows::get_fixes();
+	 * function to update the Flow Data in an array recursively in comparison to Flows::get_data()
+	 */	
+	private static function update_flow_data_recursive(&$default_flow_data, &$flow_data, &$updated_flow_data) {
+		{
+			$flow_data_fixes = Flows::get_fixes();
 
-		//Update with the modified key/values
-		if ($flow_data_fixes) {
-			foreach($flow_data_fixes as $key=>$fixes_data) {
-				$flow_data = self::rename_keys($fixes_data, $default_flow_data, $flow_data);
+			foreach ($default_flow_data as $key => $value)
+			{ 
+				// To update an existing value if the key exists in the blueprint and database
+				if (array_key_exists($key, $flow_data) && !is_array($flow_data[$key])) {
+					// Updates any default value added to the blueprint into the database
+					if(!empty($value) && empty($flow_data[$key])) {
+						$updated_flow_data[$key] = $value;
+					}
+					// Retains the user updated value at the time of onboarding
+					else
+						$updated_flow_data[$key] = $flow_data[$key];
+				}
+
+				// Adds new key-value pair added to the blueprint into the database
+				elseif(!array_key_exists($key, $flow_data)) 
+					$updated_flow_data[$key] = $value;
+
+				// Any Key Renamed and/or New Value added is changed in the database
+				if($flow_data_fixes) {
+					if (array_key_exists($key, $flow_data_fixes)) {
+						if (array_key_exists('new_value', $flow_data_fixes[$key])) 
+							$updated_flow_data[$key] = $value;
+						else 
+							$updated_flow_data[$key] = $flow_data[$flow_data_fixes[$key]['old_key']];
+						unset($flow_data[$flow_data_fixes[$key]['old_key']]);
+					}
+				}
+												
+				if ( is_array( $value ) ) {
+					if (count(array_filter(array_keys($flow_data[$key]), 'is_string')) === 0 && !empty($flow_data[$key]) && !is_array($flow_data[$key])) {
+						$updated_flow_data[$key] = $flow_data[$key];
+					}
+					else
+						$updated_flow_data[$key] = self::update_flow_data_recursive($value, $flow_data[$key], $updated_flow_data[$key]);
+				}
 			}
-		}
-
-		// compare and add Blueprint flow data items to database
-		$flow_data = array_replace_recursive( $default_flow_data, $flow_data);
-
-		// delete_wp_options_data_in_database
-		$flow_data = self::delete_wp_options_data_in_database($default_flow_data, $flow_data);
-
-		self::update_wp_options_data_in_database( $flow_data );
-		return $flow_data;
+			return $updated_flow_data;
+		  }
 	}
 
-	/*
-	 * function to delete a key in array recursively which does not exist in Flows::get_data()
-	 */
-	private static function delete_wp_options_data_in_database( $default_flow_data, &$flow_data ) {
-		foreach($flow_data as $key => $value) {
-			if(!array_key_exists($key, $default_flow_data)) 
-				unset($flow_data[$key]);
-			elseif ( is_array( $value ) && !empty($value) )
-				$flow_data[$key] = self::delete_wp_options_data_in_database($default_flow_data[$key], $value);
-		}
-		return $flow_data;
-	}
+	public static function update_post_call_data_recursive(&$flow_data, &$params) {
+		{
+			foreach ($flow_data as $key => $value)
+			{ 
+				if (array_key_exists($key, $params) && !is_array($value)) {
+					$flow_data[$key] = $params[$key];
+				}
 
-	private static function rename_keys($fixes_data, &$default_flow_data, &$flow_data){
-		foreach ($flow_data as $key => $value) {
-			if (strcmp($key, $fixes_data['old_key']) == 0) {
-				$key = $fixes_data['new_key'];
-				if (array_key_exists('new_value', $fixes_data))
-					$flow_data[$key] = $fixes_data['new_value'];
-				unset($flow_data[$fixes_data['old_key']]);
+				else $flow_data[$key] = $value;
+								
+				if ( is_array( $value ) ) {
+					if (count(array_filter(array_keys($params[$key]), 'is_string')) === 0 && (!empty($params[$key]))) {
+						$flow_data[$key] = $params[$key];
+					}
+					else
+						$flow_data[$key] = self::update_post_call_data_recursive($value, $params[$key]);
+				}
 			}
-			if (is_array($value)) 
-				$flow_data[$key] = self::rename_keys( $fixes_data, $default_flow_data[$key], $value);
-		}
-		return $flow_data; 
+			return $flow_data;
+		  }
 	}
 
     /*
@@ -122,11 +144,9 @@ class FlowService {
 			if(!array_key_exists($key, $flow_data))
 			{
 				if (count(array_filter(array_keys($params), 'is_string')) === 0) {
-					if ( is_array($value) && !empty($value) ) 
-						self::check_key_in_nested_array($value, $flow_data[$key], $key);
-					else $mismatch_key[] = $header_key. " => " . $value;
+					continue;
 				}
-				else $mismatch_key[]  = $header_key. " => " . $key;
+				$mismatch_key[]  = $header_key. " => " . $key;
 			}
 			elseif ( is_array( $value ) && !empty($value) ) {
 				self::check_key_in_nested_array($value, $flow_data[$key], $key);
