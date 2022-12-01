@@ -4,7 +4,7 @@ import { useEffect, useState } from '@wordpress/element';
 import { useNavigate } from 'react-router-dom';
 
 import { StepLoader } from '../../../components/Loaders';
-import { generateChildTheme } from '../../../utils/api/themes';
+import { completeFlow } from '../../../utils/api/flow';
 import { StepErrorState } from '../../../components/ErrorState';
 import getContents from './contents';
 
@@ -28,8 +28,8 @@ const StepComplete = () => {
 		setIsHeaderNavigationEnabled( false );
 		setIsDrawerSuppressed( true );
 
-		const childThemeGeneratorResponse = await generateChildTheme();
-		if ( childThemeGeneratorResponse?.error ) {
+		const flowCompletionResponse = await completeFlow();
+		if ( flowCompletionResponse?.error ) {
 			return setIsCompleted( false );
 		}
 		navigate( nextStep.path );

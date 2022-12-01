@@ -22,7 +22,7 @@ const SelectableCardWithInfo = ( {
 
 	const handleCheck = ( isChecked ) => {
 		if ( typeof onClick === 'function' ) {
-			onClick( isChecked, slug );
+			onClick( isChecked, slug, title );
 		}
 	};
 

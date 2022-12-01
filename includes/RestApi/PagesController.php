@@ -4,108 +4,138 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Mustache\Mustache;
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\Data\Patterns;
 
 /**
  * class PagesController
  */
-class PagesController
-{
+class PagesController {
 
-    /**
-     * @var string
-     */
-    protected $namespace = 'newfold-onboarding/v1';
 
-    /**
-     * @var string
-     */
-    protected $rest_base = '/pages';
+	/**
+	 * @var string
+	 */
+	protected $namespace = 'newfold-onboarding/v1';
 
-    /**
-     * Registers rest routes for PagesController class.
-     *
-     * @return void
-     */
-    public function register_routes()
-    {
-        \register_rest_route(
-            $this->namespace,
-            $this->rest_base,
-            array(
-                'methods'               => \WP_REST_Server::EDITABLE,
-                'callback'              => array( $this, 'create_page' ),
-                'permission_callback'   => array( Permissions::class, 'custom_post_authorized_admin' ),
-                'args'                  => $this->get_request_params(),
-            )
-        );
-    }
+	/**
+	 * @var string
+	 */
+	protected $rest_base = '/site-pages';
 
-    /**
-     * Endpoint create_page
-     * 
-     * @param $request WP_REST_Request
-     */
-    public function create_page( \WP_REST_Request $request )
-    {
-        $page = $request->get_param( 'page' );
-        // check if page already exists using title
-        $page_details = get_page_by_title( $page );
-        if (!empty( $page_details )) {
-            return new \WP_Error('page_already_exists', 'Provided page data already exists', array('status' => 400));
-        }
+	/**
+	 * Registers rest routes for PagesController class.
+	 *
+	 * @return void
+	 */
+	public function register_routes() {
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/publish',
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'publish_site_pages' ),
+				'permission_callback' => array( Permissions::class, 'custom_post_authorized_admin' ),
+			)
+		);
+	}
 
-        $mustache   = new Mustache();
-        switch ( $page ) {
-            case 'home':
-                $title      = 'Home';
-                $content    = $mustache->render_template( 'homePage', array() );
-                break;
+	/**
+	 * Endpoint create_page
+	 *
+	 * @param $request WP_REST_Request
+	 */
+	public function publish_site_pages() {
+		$flow_data_option = \get_option( Options::get_option_name( 'flow' ), false );
+		if ( $flow_data_option === false || ! isset( $flow_data_option['data'] ) ) {
+			return new \WP_Error(
+				'nfd_onboarding_error',
+				'Flow data does not exist to generate a child theme.',
+				array( 'status' => 500 )
+			);
+		}
 
-            case 'about':
-                $title      = 'About';
-                $content    = $mustache->render_template( 'aboutPage', array() );
-                break;
+		$flow_data = $flow_data_option['data'];
 
-            case 'contact':
-                $title      = 'Contact';
-		        $content    = $mustache->render_template( 'contactPage', array() );
-                break;
+		$homepage_set = $this->set_homepage( $flow_data['sitePages']['homepage'] );
+		if ( is_wp_error( $homepage_set ) ) {
+			return $homepage_set;
+		}
 
-            default:
-                return new \WP_Error('no_page_data', 'No Page Data Provided', array('status' => 400));
-        }
+		$site_pages_set = $this->set_site_pages( $flow_data['sitePages']['other'] );
+		if ( is_wp_error( $site_pages_set ) ) {
+			return $site_pages_set;
+		}
 
-        // Create page object
-        $page_data = array(
-            'post_title'    => $title,
-            'post_content'  => $content,
-            'post_status'   => 'publish',
-            'post_author'   => \wp_get_current_user()->ID,
-            'post_type'     => 'page'
-        );
+		return new \WP_REST_Response(
+			array(),
+			201
+		);
+	}
 
-        // Insert the page into the database
-        if (wp_insert_post($page_data) > 0) {
-            return new \WP_REST_Response("Page " . $page_data['post_title'] . " saved successfully", 200);
-        } else {
-            return new \WP_Error('error_saving_page', 'Error Saving Data Provided to Database', array('status' => 400));
-        }
-    }
+	private function set_homepage( $homepage_pattern_slug ) {
+		if ( empty( $homepage_pattern_slug ) ) {
+			return true;
+		}
 
-    /**
-     * Get query params for the route.
-     *
-     * @return array
-     */
-    public function get_request_params()
-    {
-        return array(
-            'page' => array(
-                'type'              => 'string',
-                'required'          => true,
-                'sanitize_callback' => 'sanitize_text_field',
-                'description'       => 'Page name to be created.'
-            ),
-        );
-    }
+		 $pattern_data = Patterns::get_pattern_from_slug( $homepage_pattern_slug );
+		if ( ! $pattern_data ) {
+			return new \WP_Error(
+				'nfd_onboarding_error',
+				"Page Pattern for $homepage_pattern_slug not found.",
+				array( 'status' => 500 )
+			);
+		}
+
+		 $show_pages_on_front = \get_option( Options::get_option_name( 'show_on_front', false ) );
+
+		 // Check if default homepage is posts
+		if ( $show_pages_on_front == 'posts' ) {
+			 \update_option( Options::get_option_name( 'show_on_front', false ), 'page' );
+		}
+
+		$post_id = $this->publish_page( 'Homepage', $pattern_data['content'] );
+		if ( is_wp_error( $post_id ) ) {
+			return $post_id;
+		}
+
+		\update_option( Options::get_option_name( 'page_on_front', false ), $post_id );
+
+		return true;
+
+	}
+
+	private function set_site_pages( $site_pages_pattern_slugs ) {
+		if ( empty( $site_pages_pattern_slugs ) ) {
+			return true;
+		}
+
+		foreach ( $site_pages_pattern_slugs as $key => $site_page ) {
+			$pattern_data = Patterns::get_pattern_from_slug( $site_page['slug'] );
+			if ( ! $pattern_data ) {
+				return new \WP_Error(
+					'nfd_onboarding_error',
+					"Page Pattern for $site_page[slug] not found.",
+					array( 'status' => 500 )
+				);
+			}
+			$page_data = $this->publish_page( $site_page['title'], $pattern_data['content'] );
+			if ( is_wp_error( $page_data ) ) {
+				return $page_data;
+			}
+		}
+		return true;
+	}
+
+	public function publish_page( $title, $content ) {
+
+		return \wp_insert_post(
+			array(
+				'post_title'   => $title,
+				'post_status'  => 'publish',
+				'post_content' => $content,
+				'post_type'    => 'page',
+			)
+		);
+	}
 }

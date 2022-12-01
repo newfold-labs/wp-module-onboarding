@@ -34,7 +34,7 @@ class ThemeGeneratorController {
 				array(
 					'methods'             => \WP_Rest_Server::CREATABLE,
 					'callback'            => array( $this, 'generate_child_theme' ),
-					// 'permission_callback' => array( Permissions::class, 'rest_can_manage_themes' ),
+					'permission_callback' => array( Permissions::class, 'rest_can_manage_themes' ),
 				),
 			)
 		);
@@ -47,7 +47,7 @@ class ThemeGeneratorController {
 	  */
 	public function generate_child_theme() {
 		// Ensure that we have sufficient data to generate a child theme.
-		$flow_data_option       = \get_option( 'nfd_module_onboarding_flow', false );
+		$flow_data_option = \get_option( Options::get_option_name( 'flow' ), false );
 		if ( $flow_data_option === false || ! isset( $flow_data_option['data'] ) ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
@@ -65,7 +65,7 @@ class ThemeGeneratorController {
 			);
 		}
 
-	     // Connect to the WordPress file system.
+		 // Connect to the WordPress file system.
 		if ( ! $this->connect_to_filesystem() ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
@@ -118,27 +118,40 @@ class ThemeGeneratorController {
 			}
 		}
 
+		$child_theme_stylesheet_comment = $this->generate_child_theme_stylesheet_comment( $parent_theme_slug, $child_theme_slug );
+
 		// Write the child theme to the filesystem under themes.
 		$child_theme_data = array(
-			'parent_theme_slug' => $parent_theme_slug,
-			'child_theme_slug'  => $child_theme_slug,
-			'parent_theme_dir'  => $parent_theme_dir,
-			'child_theme_dir'   => $child_theme_dir,
-			'child_theme_json'  => \wp_json_encode( $theme_json_data ),
-			'part_patterns'     => $part_patterns,
+			'parent_theme_slug'              => $parent_theme_slug,
+			'child_theme_slug'               => $child_theme_slug,
+			'parent_theme_dir'               => $parent_theme_dir,
+			'child_theme_dir'                => $child_theme_dir,
+			'child_theme_json'               => \wp_json_encode( $theme_json_data ),
+			'child_theme_stylesheet_comment' => $child_theme_stylesheet_comment,
+			'part_patterns'                  => $part_patterns,
 		);
 
 		$child_theme_written = $this->write_child_theme( $child_theme_data );
 		if ( $child_theme_written !== true ) {
-		     return new \WP_Error(
+			return new \WP_Error(
 				'nfd_onboarding_error',
 				$child_theme_written,
 				array( 'status' => 500 )
-		     );
+			);
 		}
 
 		// Activate the child theme.
 		$this->activate_theme( $child_theme_slug );
+
+		$child_theme_verified = $this->verify_child_theme( $child_theme_data );
+
+		if ( ! $child_theme_verified ) {
+			return new \WP_Error(
+				'nfd_onboarding_error',
+				'Error generating child theme.',
+				array( 'status' => 500 )
+			);
+		}
 
 		return new \WP_REST_Response(
 			array(),
@@ -206,6 +219,25 @@ class ThemeGeneratorController {
 		return $theme_json_data;
 	}
 
+	public function generate_child_theme_stylesheet_comment( $parent_theme_slug, $child_theme_slug ) {
+		$current_brand = Data::current_brand();
+		$customer      = \wp_get_current_user();
+
+		$theme_style_data = array(
+			'current_brand'     => Data::current_brand(),
+			'brand'             => $current_brand['brand'],
+			'brand_name'        => $current_brand['name'] ? $current_brand['name'] : 'Newfold Digital',
+			'site_title'        => \get_bloginfo( 'name' ),
+			'site_url'          => \site_url(),
+			'author'            => $customer->user_firstname,
+			'parent_theme_slug' => $parent_theme_slug,
+			'child_theme_slug'  => $child_theme_slug,
+		);
+
+		$mustache = new Mustache();
+		return $mustache->render_template( 'themeStylesheet', $theme_style_data );
+	}
+
 	 /**
 	  * Get the pattern for the theme part.
 	  *
@@ -264,8 +296,7 @@ class ThemeGeneratorController {
 		}
 
 		$child_stylesheet_written = $this->write_child_stylesheet(
-			$child_theme_data['parent_theme_slug'],
-			$child_theme_data['child_theme_slug'],
+			$child_theme_data['child_theme_stylesheet_comment'],
 			$child_theme_data['child_theme_dir']
 		);
 		if ( ! $child_stylesheet_written ) {
@@ -344,28 +375,12 @@ class ThemeGeneratorController {
 	  *
 	  * @param string $parent_theme_slug
 	  * @param string $child_theme_slug
-	  * @param string $theme_dir
+	  * @param string $child_theme_dir
 	  *
 	  * @return boolean
 	  */
-	protected function write_child_stylesheet( $parent_theme_slug, $child_theme_slug, $theme_dir ) {
-		$current_brand = Data::current_brand();
-		$customer      = \wp_get_current_user();
-
-		$theme_style_data = array(
-			'current_brand'     => Data::current_brand(),
-			'brand'             => $current_brand['brand'],
-			'brand_name'        => $current_brand['name'] ? $current_brand['name'] : 'Newfold Digital',
-			'site_title'        => \get_bloginfo( 'name' ),
-			'site_url'          => \site_url(),
-			'author'            => $customer->user_firstname,
-			'parent_theme_slug' => $parent_theme_slug,
-			'child_theme_slug'  => $child_theme_slug,
-		);
-
-		$mustache            = new Mustache();
-		$theme_style_comment = $mustache->render_template( 'themeStylesheet', $theme_style_data );
-		return $this->write_to_filesystem( $theme_dir . '/style.css', $theme_style_comment );
+	protected function write_child_stylesheet( $child_theme_stylesheet_comment, $child_theme_dir ) {
+		return $this->write_to_filesystem( $child_theme_dir . '/style.css', $child_theme_stylesheet_comment );
 	}
 
 	 /**
@@ -379,7 +394,7 @@ class ThemeGeneratorController {
 		$current_flow = Data::current_flow();
 		if ( ! $flow_data['theme']['template'] ) {
 			$current_flow = Data::current_flow();
-			
+
 			$flow_data['theme']['template'] = Themes::get_flow_default_theme_slug( $current_flow );
 		}
 
@@ -405,7 +420,7 @@ class ThemeGeneratorController {
 	protected function generate_screenshot( $parent_theme_dir, $child_theme_dir ) {
 		global $wp_filesystem;
 
-		$screenshot_files              = array('/screenshot.png', '/screenshot.jpg');
+		$screenshot_files = array( '/screenshot.png', '/screenshot.jpg' );
 		foreach ( $screenshot_files as $key => $screenshot_file ) {
 			$child_theme_screenshot_file  = $child_theme_dir . $screenshot_file;
 			$parent_theme_screenshot_file = $parent_theme_dir . $screenshot_file;
@@ -459,6 +474,62 @@ class ThemeGeneratorController {
 		$creds = \request_filesystem_credentials( site_url() . '/wp-admin', '', false, false, array() );
 
 		if ( ! \WP_Filesystem( $creds ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public function verify_child_theme( $child_theme_data ) {
+		$child_theme_directory_exists = $this->verify_child_theme_directory( $child_theme_data['child_theme_dir'] );
+		if ( ! $child_theme_directory_exists ) {
+			return false;
+		}
+		$theme_json_valid = $this->verify_theme_json( $child_theme_data['child_theme_json'], $child_theme_data['child_theme_dir'] );
+		if ( ! $theme_json_valid ) {
+			return false;
+		}
+
+		$stylesheet_valid = $this->verify_stylesheet( $child_theme_data['child_theme_stylesheet_comment'], $child_theme_data['child_theme_dir'] );
+		if ( ! $stylesheet_valid ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public function verify_child_theme_directory( $child_theme_dir ) {
+		global $wp_filesystem;
+
+		return $wp_filesystem->exists( $child_theme_dir );
+	}
+
+	public function verify_theme_json( $child_theme_json, $child_theme_dir ) {
+		global $wp_filesystem;
+
+		$theme_json_path = $child_theme_dir . '/theme.json';
+		if ( ! $wp_filesystem->exists( $theme_json_path ) ) {
+			return false;
+		}
+
+		$theme_json_written = $wp_filesystem->get_contents( $theme_json_path );
+		if ( $child_theme_json !== $theme_json_written ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public function verify_stylesheet( $child_theme_stylesheet_comment, $child_theme_dir ) {
+		global $wp_filesystem;
+
+		$stylesheet_path = $child_theme_dir . '/style.css';
+		if ( ! $wp_filesystem->exists( $stylesheet_path ) ) {
+			return false;
+		}
+
+		$written_stylesheet = $wp_filesystem->get_contents( $stylesheet_path );
+		if ( $child_theme_stylesheet_comment !== $written_stylesheet ) {
 			return false;
 		}
 

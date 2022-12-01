@@ -20,7 +20,11 @@ import {
 } from '../../../components/LivePreview';
 
 const StepDesignHomepageMenu = () => {
-	const homepagePatternList = [ 'homepage-1', 'homepage-2', 'homepage-3' ];
+	const homepagePatternList = [
+		'yith-wonder/homepage-1',
+		'yith-wonder/homepage-2',
+		'yith-wonder/homepage-3',
+	];
 
 	const homepagesList = {
 		'homepage-1': [
@@ -47,30 +51,34 @@ const StepDesignHomepageMenu = () => {
 
 	const isLargeViewport = useViewportMatch( 'medium' );
 
-	const { currentStep, currentData, storedPreviewSettings, themeStatus, themeVariations } =
-		useSelect( ( select ) => {
-			return {
-				currentStep: select( nfdOnboardingStore ).getStepFromPath(
-					location.pathname
-				),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				storedPreviewSettings:
-					select( nfdOnboardingStore ).getPreviewSettings(),
-				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-				themeVariations: select(nfdOnboardingStore).getStepPreviewData(),
-			};
-		}, [] );
+	const {
+		currentStep,
+		currentData,
+		storedPreviewSettings,
+		themeStatus,
+		themeVariations,
+	} = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getStepFromPath(
+				location.pathname
+			),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			storedPreviewSettings:
+				select( nfdOnboardingStore ).getPreviewSettings(),
+			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			themeVariations: select( nfdOnboardingStore ).getStepPreviewData(),
+		};
+	}, [] );
 
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
 		setIsSidebarOpened,
-		updatePreviewSettings,
 		setIsDrawerSuppressed,
 		setCurrentOnboardingData,
 		updateThemeStatus,
-		setIsHeaderNavigationEnabled
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -146,6 +154,7 @@ const StepDesignHomepageMenu = () => {
 			if ( homepage ) {
 				return (
 					<LivePreviewSelectableCard
+						key={ idx }
 						className={ 'homepage_preview__list__item' }
 						selected={ idx === selectedHomepage }
 						blockGrammer={ homepage }
@@ -173,7 +182,10 @@ const StepDesignHomepageMenu = () => {
 						<div className="homepage_preview__list">
 							<LivePreviewSkeleton
 								watch={ homepagePattern }
-								count={ themeVariations[currentStep?.patternId]?.previewCount }
+								count={
+									themeVariations[ currentStep?.patternId ]
+										?.previewCount
+								}
 								callback={ buildHomepagePreviews }
 								className={ 'homepage_preview__list__item' }
 								viewportWidth={ 1200 }

@@ -44,7 +44,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 					'methods'             => \WP_REST_Server::READABLE,
 					'args'                => $this->get_pattern_args(),
 					'callback'            => array( $this, 'get_theme_variations' ),
-					// 'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
@@ -97,7 +97,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 			);
 		}
 
-		$active_variation              = \WP_Theme_JSON_Resolver::get_merged_data( 'theme' )->get_raw_data();
+		$active_variation              = \WP_Theme_JSON_Resolver::get_theme_data()->get_data();
 		$active_variation_global_style = array(
 			'id'       => 0,
 			'title'    => 'Default',

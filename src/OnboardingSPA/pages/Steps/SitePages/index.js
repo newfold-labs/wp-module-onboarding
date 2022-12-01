@@ -22,24 +22,24 @@ import LivePreviewSkeleton from '../../../components/LivePreview/LivePreviewSkel
 const StepSitePages = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
 
-	const MAX_PREVIEWS_PER_ROW = 2;
-
 	const location = useLocation();
 	const [ isLoaded, setIsLoaded ] = useState( false );
-	const [ sitePages, setSitePages ] = useState( );
+	const [ sitePages, setSitePages ] = useState();
 	const [ checkedPages, setCheckedPages ] = useState( [] );
 
-	const { currentStep, currentData, themeStatus, themeVariations, } = useSelect( ( select ) => {
-		return {
-			currentStep: select( nfdOnboardingStore ).getStepFromPath(
-				location.pathname
-			),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-			themeVariations: select(nfdOnboardingStore).getStepPreviewData(),
-		};
-	}, [] );
+	const { currentStep, currentData, themeStatus, themeVariations } =
+		useSelect( ( select ) => {
+			return {
+				currentStep: select( nfdOnboardingStore ).getStepFromPath(
+					location.pathname
+				),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				themeVariations:
+					select( nfdOnboardingStore ).getStepPreviewData(),
+			};
+		}, [] );
 
 	const {
 		setDrawerActiveView,
@@ -47,7 +47,7 @@ const StepSitePages = () => {
 		setIsSidebarOpened,
 		updateThemeStatus,
 		setCurrentOnboardingData,
-		setIsHeaderNavigationEnabled
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -69,10 +69,10 @@ const StepSitePages = () => {
 			if ( currentData.data.sitePages?.other ) {
 				if ( currentData.data.sitePages.other === false ) {
 					setCheckedPages( [] );
-				} else if (
-					currentData.data.sitePages.other.length !== 0
-				) {
-					setCheckedPages( currentData.data.sitePages.other );
+				} else if ( currentData.data.sitePages.other.length !== 0 ) {
+					setCheckedPages(
+						flowDataToState( currentData.data.sitePages.other )
+					);
 				} else {
 					const checkedPages = sitePagesResponse.body
 						.filter( ( sitePage ) => {
@@ -90,10 +90,28 @@ const StepSitePages = () => {
 		setIsLoaded( true );
 	};
 
+	const stateToFlowData = ( selectedPages ) => {
+		return sitePages
+			?.filter( ( sitePage ) => {
+				return selectedPages.includes( sitePage.slug );
+			} )
+			.map( ( selectedPage ) => {
+				return { slug: selectedPage.slug, title: selectedPage.title };
+			} );
+	};
+
+	const flowDataToState = ( selectedPages ) => {
+		return selectedPages.map( ( selectedPage ) => {
+			return selectedPage.slug;
+		} );
+	};
+
 	const handleCheckedPages = ( selectedPages ) => {
 		setCheckedPages( selectedPages );
 		currentData.data.sitePages.other =
-			selectedPages.length !== 0 ? selectedPages : false;
+			selectedPages.length !== 0
+				? stateToFlowData( selectedPages )
+				: false;
 		setCurrentOnboardingData( currentData );
 	};
 
@@ -147,12 +165,15 @@ const StepSitePages = () => {
 						/>
 						<div className="site-pages__list">
 							<LivePreviewSkeleton
-								className={'site-pages__list__item'}
-								count={ themeVariations[currentStep?.patternId]?.previewCount }
-								watch={sitePages}
-								isWithCard={true}
-								callback={buildPreviews}
-								viewportWidth={1200}
+								className={ 'site-pages__list__item' }
+								count={
+									themeVariations[ currentStep?.patternId ]
+										?.previewCount
+								}
+								watch={ sitePages }
+								isWithCard={ true }
+								callback={ buildPreviews }
+								viewportWidth={ 1200 }
 							/>
 						</div>
 					</div>
