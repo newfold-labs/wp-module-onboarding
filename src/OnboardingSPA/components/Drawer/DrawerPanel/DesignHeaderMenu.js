@@ -1,12 +1,11 @@
-import { useSelect, useDispatch, select } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 
 import HeaderMenuPreview from '../../HeaderMenuPreview';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns, getHeaderMenuPatterns, getDefaultHeaderMenu } from '../../../utils/api/patterns';
 import { GlobalStylesProvider } from '../../../components/LivePreview';
-import { getGlobalStyles } from '../../../utils/api/themes';
-import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
+
 import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
@@ -24,24 +23,19 @@ const DesignHomepageMenu = () => {
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ patterns, setPatterns ] = useState();
 	const [ headerMenuPreviewData, setHeaderMenuPreviewData ] = useState();
-	const [ globalStyles, setGlobalStyles ] = useState();
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
 
-	const { currentStep, currentData, storedPreviewSettings, themeStatus, headerMenu } =
+	const { currentStep, currentData, themeStatus } =
 		useSelect( ( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				storedPreviewSettings:
-					select( nfdOnboardingStore ).getPreviewSettings(),
 				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-				headerMenu: select( nfdOnboardingStore ).getHeaderMenuData(),
 			};
 		}, [] );
 
 	const {
-		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
 		setHeaderMenuData,

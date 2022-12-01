@@ -1,6 +1,5 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
-import { useLocation } from 'react-router-dom';
 import { useViewportMatch } from '@wordpress/compose';
 
 import { LivePreview } from '../../../components/LivePreview';
@@ -12,28 +11,16 @@ import { DesignStateHandler } from '../../../components/StateHandlers';
 import {
 	VIEW_DESIGN_HEADER_MENU,
 	THEME_STATUS_ACTIVE,
-	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
 import { store as nfdOnboardingStore } from '../../../store';
-import { getPatterns } from '../../../utils/api/patterns';
-import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
 const StepDesignHeaderMenu = () => {
-	const location = useLocation();
 	const { 
-		currentStep,
-		currentData,
-		storedPreviewSettings,
 		themeStatus,
 		headerMenu,
 	 } = useSelect(
 		( select ) => {
 			return {
-				currentStep: select( nfdOnboardingStore ).getStepFromPath(
-					location.pathname
-				),
-				currentData: select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				storedPreviewSettings: select( nfdOnboardingStore ).getPreviewSettings(),
 				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 				headerMenu: select( nfdOnboardingStore ).getHeaderMenuData(),
 			};
@@ -53,31 +40,6 @@ const StepDesignHeaderMenu = () => {
 	} = useDispatch( nfdOnboardingStore );
 
 	const getCurrentPattern = async () => {
-		// const patternsResponse = await getPatterns(
-		// 	currentStep.patternId,
-		// 	true
-		// );
-
-		// if ( patternsResponse?.error ) {
-		// 	return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
-		// }
-		// const globalStylesResponse = await getGlobalStyles();
-		// if ( globalStylesResponse?.error ) {
-		// 	return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
-		// }
-		// let selectedGlobalStyle;
-		// if ( currentData.data.theme.variation ) {
-		// 	selectedGlobalStyle = globalStylesResponse.body.filter(
-		// 		( globalStyle ) =>
-		// 			globalStyle.title === currentData.data.theme.variation
-		// 	)[ 0 ];
-		// } else {
-		// 	selectedGlobalStyle = globalStylesResponse.body[ 0 ];
-		// }
-		// updatePreviewSettings(
-		// 	useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
-		// );
-		// setPattern( patternsResponse?.body );
 		setIsLoaded( true );
 	};
 
