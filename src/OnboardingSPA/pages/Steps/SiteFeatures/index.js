@@ -35,12 +35,11 @@ const StepSiteFeatures = () => {
 
 	async function selectPlugin( slug, choice ) {
 		const selectedPluginsCopy = { ...selectedPlugins };
-		if ( choice ) selectedPluginsCopy[ slug ] = true;
-		else selectedPluginsCopy[ slug ] = false;
-
+		selectedPluginsCopy[ slug ] = choice;
+		setSelectedPlugins( selectedPluginsCopy );
+		
 		currentData.data.siteFeatures = { ...selectedPluginsCopy };
 		setCurrentOnboardingData( currentData );
-		setSelectedPlugins( selectedPluginsCopy );
 	}
 
 	async function changeToStoreSchema(
