@@ -46,7 +46,7 @@ const StepDesignHeaderMenu = () => {
 		setDrawerActiveView, 
 		setIsDrawerOpened, 
 		setIsDrawerSuppressed,
-		setIsSidebarOpened 
+		setIsSidebarOpened,
 	} = useDispatch( nfdOnboardingStore );
 
 	const getCurrentPattern = async () => {
@@ -79,6 +79,10 @@ const StepDesignHeaderMenu = () => {
 	};
 
 	useEffect( () => {
+		setPattern( currentData.data.partHeader );
+	}, [ currentData.data.partHeader ] );
+
+	useEffect( () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );
 		}
@@ -89,7 +93,7 @@ const StepDesignHeaderMenu = () => {
 
 	useEffect( () => {
 		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
-		getCurrentPattern();
+			getCurrentPattern();
 	}, [ isLoaded, themeStatus ] );
 
 	return (

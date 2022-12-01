@@ -48,6 +48,7 @@ const DesignHomepageMenu = () => {
 				return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 			}
 			currentData.data.partHeader = defaultHeaderMenu.body;
+			setCurrentOnboardingData( currentData );
 		}
 		setSelectedPattern(currentData.data.partHeader);
 
@@ -78,7 +79,7 @@ const DesignHomepageMenu = () => {
 		// 	useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		// );
 		setSelectedPattern( selectedPattern.slug );
-		currentData.data.partHeader = selectedPattern.slug;
+		currentData.data.partHeader = selectedPattern.content;
 		setCurrentOnboardingData( currentData );
 	};
 
