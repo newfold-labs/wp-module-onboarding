@@ -91,7 +91,7 @@ class PluginsController {
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'uninstall' ),
 					'args'                => $this->get_uninstall_plugin_args(),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+					'permission_callback' => array( $this, 'check_install_permissions' ),
 				),
 			)
 		);
@@ -192,7 +192,7 @@ class PluginsController {
 	}
 
 	/**
-	 * Installs the requested plugin.
+	 * Install the requested plugin via a zip url (or) slug.
 	 *
 	 * @param \WP_REST_Request $request
 	 *
