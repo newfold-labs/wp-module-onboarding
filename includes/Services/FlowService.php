@@ -59,7 +59,7 @@ class FlowService {
 						$updated_flow_data[$key] = $value;
 					}
 
-					// Retains the user updated value at the time of onboarding
+					// Retains the user entered value at the time of onboarding
 					else
 						$updated_flow_data[$key] = $flow_data[$key];
 				}
@@ -69,6 +69,7 @@ class FlowService {
 					$updated_flow_data[$key] = $value;
 
 				if ( is_array( $value ) ) {
+					// To handle Indexed Arrays gracefully
 					if (count(array_filter(array_keys($flow_data[$key]), 'is_string')) === 0 && !empty($flow_data[$key])) {
 						$updated_flow_data[$key] = $flow_data[$key];
 					}
@@ -80,17 +81,23 @@ class FlowService {
 		  }
 	}
 
+	/*
+	 * function to update the Database recursively based on Values opted or entered by the User
+	 */	
 	public static function update_post_call_data_recursive(&$flow_data, &$params) {
 		{
 			foreach ($flow_data as $key => $value)
 			{ 
+				// Updates value entered by the user
 				if (array_key_exists($key, $params) && !is_array($value)) {
 					$flow_data[$key] = $params[$key];
 				}
 
+				// Retains the Blueprint Value if no input from the User
 				else $flow_data[$key] = $value;
 								
 				if ( is_array( $value ) ) {
+					// To handle Indexed Arrays gracefully
 					if (count(array_filter(array_keys($params[$key]), 'is_string')) === 0 && !empty($params[$key])) {
 						$flow_data[$key] = $params[$key];
 					}
