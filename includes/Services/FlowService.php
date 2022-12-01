@@ -55,7 +55,7 @@ class FlowService {
 				elseif(!array_key_exists($key, $flow_data)) 
 					$updated_flow_data[$key] = $value;
 
-				// Any Key Renamed and/or New Value added is changed in the database
+				// Any Key Renamed and/or New Value added is updated in the database
 				if($flow_data_fixes) {
 					if (array_key_exists($key, $flow_data_fixes)) {
 						if (array_key_exists('new_value', $flow_data_fixes[$key])) 
