@@ -48,6 +48,17 @@ class PatternsController extends \WP_REST_Controller {
 				),
 			)
 		);
+		register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/header',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_all_header_patterns' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
 	}
 
 	public function get_pattern_args() {
@@ -143,4 +154,28 @@ class PatternsController extends \WP_REST_Controller {
 
 		 return Patterns::set_theme_step_patterns( $step, $slug );
 	}
+
+	/**
+      * Retrieves all the header patterns.
+      *
+      * @return \WP_Rest_Response|\WP_Error
+      */
+	  public function get_all_header_patterns()
+	  {
+		   $slug_keyword = 'header';
+ 
+		   $header_patterns = Patterns::get_all_patterns_for_slug($slug_keyword);
+		   if (!$header_patterns) {
+				return new \WP_Error(
+					 'no_patterns_found',
+					 __('No Patterns Found.'),
+					 array('status' => 404)
+				);
+		   }
+ 
+		   return new \WP_REST_Response(
+				$header_patterns
+		   );
+	  }
+	  
 }

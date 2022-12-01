@@ -13,3 +13,13 @@ export async function getPatterns( step = false, squash = false ) {
 		} ).then()
 	);
 }
+
+export async function getHeaderMenuPatterns() {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL(
+				`patterns/header`
+			),
+		} ).then()
+	);
+}
