@@ -55,7 +55,7 @@ class PluginUninstallTaskManager {
 	 */
 	public function uninstall() {
 		/*
-		   Get the plugins queued up to be installed, the PluginInstall task gets
+		   Get the plugins queued up to be uninstalled, the PluginUninstall task gets
 		  converted to an associative array before storing it in the option. */
 		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
@@ -108,7 +108,7 @@ class PluginUninstallTaskManager {
 	 */
 	public static function add_to_queue( PluginUninstallTask $plugin_uninstall_task ) {
 		/*
-		   Get the plugins queued up to be installed, the PluginInstall task gets
+		   Get the plugins queued up to be uninstalled, the PluginUninstall task gets
 		   converted to an associative array before storing it in the option. */
 		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
@@ -117,7 +117,7 @@ class PluginUninstallTaskManager {
 
 			/*
 			   Check if there is an already existing PluginUninstallTask in the queue
-			   for a given slug and activation criteria. */
+			   for a given slug. */
 			if ( $queued_plugin['slug'] === $plugin_uninstall_task->get_slug() ) {
 				 return false;
 			}

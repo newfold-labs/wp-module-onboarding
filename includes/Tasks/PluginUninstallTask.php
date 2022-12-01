@@ -4,7 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\Tasks;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginUninstaller;
 
 /**
- * Task for uninstalling a Plugin.
+ * Task for Uninstalling a Plugin.
  */
 class PluginUninstallTask extends Task {
 
@@ -40,7 +40,7 @@ class PluginUninstallTask extends Task {
 	/**
 	 * Uninstalls the Plugin using the PluginUninstaller Service.
 	 *
-	 * @return \WP_REST_Response|WP_Error
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function execute() {
 		return PluginUninstaller::uninstall( $this->get_slug() );
