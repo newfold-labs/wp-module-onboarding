@@ -24,6 +24,7 @@ const StepDesignHeaderMenu = () => {
 		currentData,
 		storedPreviewSettings,
 		themeStatus,
+		headerMenu,
 	 } = useSelect(
 		( select ) => {
 			return {
@@ -33,6 +34,7 @@ const StepDesignHeaderMenu = () => {
 				currentData: select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				storedPreviewSettings: select( nfdOnboardingStore ).getPreviewSettings(),
 				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				headerMenu: select( nfdOnboardingStore ).getHeaderMenuData(),
 			};
 		},
 		[]
@@ -79,8 +81,8 @@ const StepDesignHeaderMenu = () => {
 	};
 
 	useEffect( () => {
-		setPattern( currentData.data.partHeader );
-	}, [ currentData.data.partHeader ] );
+		setPattern( headerMenu );
+	}, [ headerMenu ] );
 
 	useEffect( () => {
 		if ( isLargeViewport ) {
