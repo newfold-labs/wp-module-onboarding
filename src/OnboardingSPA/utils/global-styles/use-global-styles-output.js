@@ -59,28 +59,23 @@ function getPresetsDeclarations( blockPresets = {}, mergedSettings ) {
 		PRESET_METADATA,
 		( declarations, { path, valueKey, valueFunc, cssVarInfix } ) => {
 			const presetByOrigin = get( blockPresets, path, [] );
-			[ 'default', 'theme', 'custom' ].forEach( ( origin ) => {
-				if ( presetByOrigin[ origin ] ) {
-					presetByOrigin[ origin ].forEach( ( value ) => {
-						if ( valueKey && ! valueFunc ) {
-							declarations.push(
-								`--wp--preset--${ cssVarInfix }--${ kebabCase(
-									value.slug
-								) }: ${ value[ valueKey ] }`
-							);
-						} else if (
-							valueFunc &&
-							typeof valueFunc === 'function'
-						) {
-							declarations.push(
-								`--wp--preset--${ cssVarInfix }--${ kebabCase(
-									value.slug
-								) }: ${ valueFunc( value, mergedSettings ) }`
-							);
-						}
-					} );
-				}
-			} );
+			if ( presetByOrigin ) {
+				presetByOrigin.forEach( ( value ) => {
+					if ( valueKey && ! valueFunc ) {
+						declarations.push(
+							`--wp--preset--${ cssVarInfix }--${ kebabCase(
+								value.slug
+							) }: ${ value[ valueKey ] }`
+						);
+					} else if ( valueFunc && typeof valueFunc === 'function' ) {
+						declarations.push(
+							`--wp--preset--${ cssVarInfix }--${ kebabCase(
+								value.slug
+							) }: ${ valueFunc( value, mergedSettings ) }`
+						);
+					}
+				} );
+			}
 
 			return declarations;
 		},
@@ -104,28 +99,26 @@ function getPresetsClasses( blockSelector, blockPresets = {} ) {
 			}
 
 			const presetByOrigin = get( blockPresets, path, [] );
-			[ 'default', 'theme', 'custom' ].forEach( ( origin ) => {
-				if ( presetByOrigin[ origin ] ) {
-					presetByOrigin[ origin ].forEach( ( { slug } ) => {
-						classes.forEach( ( { classSuffix, propertyName } ) => {
-							const classSelectorToUse = `.has-${ kebabCase(
-								slug
-							) }-${ classSuffix }`;
-							const selectorToUse = blockSelector
-								.split( ',' ) // Selector can be "h1, h2, h3"
-								.map(
-									( selector ) =>
-										`${ selector }${ classSelectorToUse }`
-								)
-								.join( ',' );
-							const value = `var(--wp--preset--${ cssVarInfix }--${ kebabCase(
-								slug
-							) })`;
-							declarations += `${ selectorToUse }{${ propertyName }: ${ value } !important;}`;
-						} );
+			if ( presetByOrigin ) {
+				presetByOrigin.forEach( ( { slug } ) => {
+					classes.forEach( ( { classSuffix, propertyName } ) => {
+						const classSelectorToUse = `.has-${ kebabCase(
+							slug
+						) }-${ classSuffix }`;
+						const selectorToUse = blockSelector
+							.split( ',' ) // Selector can be "h1, h2, h3"
+							.map(
+								( selector ) =>
+									`${ selector }${ classSelectorToUse }`
+							)
+							.join( ',' );
+						const value = `var(--wp--preset--${ cssVarInfix }--${ kebabCase(
+							slug
+						) })`;
+						declarations += `${ selectorToUse }{${ propertyName }: ${ value } !important;}`;
 					} );
-				}
-			} );
+				} );
+			}
 			return declarations;
 		},
 		''

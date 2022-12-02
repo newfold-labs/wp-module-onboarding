@@ -495,6 +495,11 @@ class ThemeGeneratorController {
 			return false;
 		}
 
+		$child_theme_active = $this->verify_child_theme_is_active( $child_theme_data['child_theme_slug'] );
+		if ( ! $child_theme_active ) {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -533,6 +538,14 @@ class ThemeGeneratorController {
 			return false;
 		}
 
+		return true;
+	}
+
+	public function verify_child_theme_is_active( $child_theme_slug ) {
+		$active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
+		if ( $active_theme !== $child_theme_slug ) {
+			return false;
+		}
 		return true;
 	}
 }

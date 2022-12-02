@@ -4,11 +4,7 @@ import { useState, useEffect } from '@wordpress/element';
 import { Popover, ColorPicker } from '@wordpress/components';
 
 import { store as nfdOnboardingStore } from '../../../store';
-import {
-	getGlobalStyles,
-	getThemeColors,
-	setGlobalStyles,
-} from '../../../utils/api/themes';
+import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import { GlobalStylesProvider } from '../../LivePreview';
 
@@ -81,7 +77,7 @@ const DesignColors = () => {
 		const isCustomStyle = colorStyle === 'custom';
 		const selectedGlobalStyle = globalStylesTemp;
 		const selectedThemeColorPalette =
-			selectedGlobalStyle?.settings?.color?.palette?.theme;
+			selectedGlobalStyle?.settings?.color?.palette;
 		if ( colorPalettesTemp && colorStyle && selectedThemeColorPalette ) {
 			for ( let idx = 0; idx < selectedThemeColorPalette.length; idx++ ) {
 				switch ( selectedThemeColorPalette[ idx ]?.slug ) {
@@ -131,7 +127,7 @@ const DesignColors = () => {
 				}
 			}
 
-			selectedGlobalStyle.settings.color.palette.theme =
+			selectedGlobalStyle.settings.color.palette =
 				selectedThemeColorPalette;
 			updatePreviewSettings(
 				useGlobalStylesOutput(
@@ -147,7 +143,7 @@ const DesignColors = () => {
 	async function saveCustomColors() {
 		const selectedGlobalStyle = storedPreviewSettings;
 		const selectedThemeColorPalette =
-			selectedGlobalStyle?.settings?.color?.palette?.theme;
+			selectedGlobalStyle?.settings?.color?.palette;
 
 		if ( selectedThemeColorPalette ) {
 			for ( let idx = 0; idx < selectedThemeColorPalette.length; idx++ ) {
@@ -187,7 +183,7 @@ const DesignColors = () => {
 				}
 			}
 
-			selectedGlobalStyle.settings.color.palette.theme =
+			selectedGlobalStyle.settings.color.palette =
 				selectedThemeColorPalette;
 			updatePreviewSettings(
 				useGlobalStylesOutput(
