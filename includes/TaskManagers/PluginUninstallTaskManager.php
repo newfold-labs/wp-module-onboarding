@@ -64,6 +64,9 @@ class PluginUninstallTaskManager {
 		  priority at the beginning of the array */
 		$plugin_to_uninstall = array_shift( $plugins );
 
+		// Update the plugin uninstall queue.
+		 \update_option( Options::get_option_name( self::$queue_name ), $plugins );
+
 		// Recreate the PluginInstall task from the associative array.
 		$plugin_uninstall_task = new PluginUninstallTask(
 			$plugin_to_uninstall['slug'],
@@ -85,17 +88,19 @@ class PluginUninstallTaskManager {
 				If the number of retries have not exceeded the limit
 				then re-queue the task at the end of the queue to be retried. */
 			if ( $plugin_uninstall_task->get_retries() <= self::$retry_limit ) {
-					array_push( $plugins, $plugin_uninstall_task->to_array() );
+				array_push( $plugins, $plugin_uninstall_task->to_array() );
+
+				// Update the plugin install queue.
+				\update_option( Options::get_option_name( self::$queue_name ), $plugins );
 			}
 		}
 
 		// If there are no more plugins to be installed then change the status to completed.
 		if ( empty( $plugins ) ) {
-			\update_option( Options::get_option_name( 'plugins_uninit_status' ), 'completed' );
+			return \update_option( Options::get_option_name( 'plugins_uninit_status' ), 'completed' );
 		}
 
-		// Update the plugin uninstall queue.
-		 return \update_option( Options::get_option_name( self::$queue_name ), $plugins );
+		return true;
 	}
 
 	/**
