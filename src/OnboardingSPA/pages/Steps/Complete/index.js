@@ -7,13 +7,14 @@ import { StepLoader } from '../../../components/Loaders';
 import { completeFlow } from '../../../utils/api/flow';
 import { StepErrorState } from '../../../components/ErrorState';
 import getContents from './contents';
+import { DesignStateHandler } from '../../../components/StateHandlers';
 
 const StepComplete = () => {
 	const { setIsDrawerSuppressed, setIsHeaderNavigationEnabled } =
 		useDispatch( nfdOnboardingStore );
 
 	const navigate = useNavigate();
-	const [ isCompleted, setIsCompleted ] = useState( false );
+	const [ isError, setIsError ] = useState( false );
 
 	const { nextStep, brandName } = useSelect( ( select ) => {
 		return {
@@ -30,13 +31,14 @@ const StepComplete = () => {
 
 		const flowCompletionResponse = await completeFlow();
 		if ( flowCompletionResponse?.error ) {
-			return setIsCompleted( false );
+			setIsHeaderNavigationEnabled( true );
+			return setIsError( true );
 		}
 		navigate( nextStep.path );
 	}, [] );
 	return (
-		<>
-			{ isCompleted ? (
+		<DesignStateHandler>
+			{ isError ? (
 				<StepErrorState
 					title={ contents.errorState.title }
 					subtitle={ contents.errorState.subtitle }
@@ -48,7 +50,7 @@ const StepComplete = () => {
 					subtitle={ contents.loader.subtitle }
 				/>
 			) }
-		</>
+		</DesignStateHandler>
 	);
 };
 

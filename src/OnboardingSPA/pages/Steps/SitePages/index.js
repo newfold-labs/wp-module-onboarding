@@ -83,21 +83,26 @@ const StepSitePages = () => {
 						.map( ( checkedPage ) => {
 							return checkedPage.slug;
 						} );
-					handleCheckedPages( checkedPages );
+					handleCheckedPages( checkedPages, sitePagesResponse.body );
 				}
 			}
 		}
 		setIsLoaded( true );
 	};
 
-	const stateToFlowData = ( selectedPages ) => {
-		return sitePages
-			?.filter( ( sitePage ) => {
-				return selectedPages.includes( sitePage.slug );
-			} )
-			.map( ( selectedPage ) => {
-				return { slug: selectedPage.slug, title: selectedPage.title };
-			} );
+	const stateToFlowData = ( selectedPages, sitePages ) => {
+		return sitePages !== false
+			? sitePages
+					?.filter( ( sitePage ) => {
+						return selectedPages.includes( sitePage.slug );
+					} )
+					.map( ( selectedPage ) => {
+						return {
+							slug: selectedPage.slug,
+							title: selectedPage.title,
+						};
+					} )
+			: undefined;
 	};
 
 	const flowDataToState = ( selectedPages ) => {
@@ -106,23 +111,24 @@ const StepSitePages = () => {
 		} );
 	};
 
-	const handleCheckedPages = ( selectedPages ) => {
+	const handleCheckedPages = ( selectedPages, sitePages = false ) => {
 		setCheckedPages( selectedPages );
 		currentData.data.sitePages.other =
 			selectedPages.length !== 0
-				? stateToFlowData( selectedPages )
+				? stateToFlowData( selectedPages, sitePages )
 				: false;
 		setCurrentOnboardingData( currentData );
 	};
 
 	const handleClick = ( isChecked, slug ) => {
 		if ( isChecked === true && ! checkedPages.includes( slug ) ) {
-			handleCheckedPages( checkedPages.concat( slug ) );
+			handleCheckedPages( checkedPages.concat( slug ), sitePages );
 		} else if ( isChecked === false ) {
 			handleCheckedPages(
 				checkedPages.filter( ( selectedPage ) => {
 					return selectedPage !== slug;
-				} )
+				} ),
+				sitePages
 			);
 		}
 	};
