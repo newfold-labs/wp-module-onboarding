@@ -116,7 +116,7 @@ class FlowService {
 			foreach ($flow_data as $key => $value)
 			{ 
 				// Updates value entered by the user
-				if (array_key_exists($key, $params) && !is_array($value))
+				if (isset($params) && array_key_exists($key, $params) && !is_array($value))
 					$flow_data[$key] = $params[$key];
 
 				// Retains the Blueprint Value if no input from the User
@@ -124,7 +124,7 @@ class FlowService {
 								
 				if ( is_array( $value ) ) {
 					// To handle Indexed Arrays gracefully
-					if (count(array_filter(array_keys($params[$key]), 'is_string')) === 0 && !empty($params[$key])) 
+					if (isset($params[$key]) && count(array_filter(array_keys($params[$key]), 'is_string')) === 0 && !empty($params[$key])) 
 						$flow_data[$key] = $params[$key];
 					else
 						$flow_data[$key] = self::update_post_call_data_recursive($value, $params[$key]);

@@ -89,6 +89,7 @@ class FlowController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function save_onboarding_flow_data( \WP_REST_Request $request ) {
+		$default_flow_data = Flows::get_data();
 		$params    = json_decode( $request->get_body(), true );
 
 		if ( is_null( $params ) ) {
@@ -101,7 +102,7 @@ class FlowController {
 
 		$flow_data = $this->get_wp_options_flow_data();
 		
-		$mismatch_key = FlowService::check_key_in_nested_array($params, Flows::get_data());
+		$mismatch_key = FlowService::check_key_in_nested_array($params, $default_flow_data);
 		if ( ! empty($mismatch_key) )  {
 			return new \WP_Error(
 				'wrong_param_provided',
@@ -110,7 +111,7 @@ class FlowController {
 			);
 		}
 
-		$flow_data = FlowService::update_post_call_data_recursive( Flows::get_data(), $params );
+		$flow_data = FlowService::update_post_call_data_recursive( $default_flow_data, $params );
 
 		// update timestamp once data is updated
 		$flow_data['updatedAt'] = time();
