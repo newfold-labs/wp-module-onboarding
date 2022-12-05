@@ -48,39 +48,6 @@ class PatternsController extends \WP_REST_Controller {
 				),
 			)
 		);
-		register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/header',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_all_header_patterns' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				),
-			)
-		);
-		register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/header/default',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_default_header_pattern' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				),
-			)
-		);
-		register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/header/preview',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_header_pattern_preview' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				),
-			)
-		);
 	}
 
 	public function get_pattern_args() {
@@ -177,70 +144,4 @@ class PatternsController extends \WP_REST_Controller {
 		 return Patterns::set_theme_step_patterns( $step, $slug );
 	}
 
-	/**
-      * Retrieves all the header patterns.
-      *
-      * @return \WP_Rest_Response|\WP_Error
-      */
-	  public function get_all_header_patterns()
-	  {
-		   $slug_keyword = 'header';
- 
-		   $header_patterns = Patterns::get_all_patterns_for_slug($slug_keyword);
-		   if (!$header_patterns) {
-				return new \WP_Error(
-					 'no_patterns_found',
-					 __('No Patterns Found.'),
-					 array('status' => 404)
-				);
-		   }
- 
-		   return new \WP_REST_Response(
-				$header_patterns
-		   );
-	  }
-	  
-	/**
-      * Retrieves deafult the header pattern.
-      *
-      * @return \WP_Rest_Response|\WP_Error
-      */
-      public function get_default_header_pattern()
-      {
-           $header_pattern = Patterns::get_default_header();
-           if (!$header_pattern) {
-                return new \WP_Error(
-                     'no_default_pattern_found',
-                     __('No Default Pattern Found.'),
-                     array('status' => 404)
-                );
-           }
-
-           return new \WP_REST_Response(
-                $header_pattern
-           );
-      }
-
-	  /**
-      * Retrieves pattern for specific header pattern.
-      *
-      * @return \WP_Rest_Response|\WP_Error
-      */
-	  public function get_header_pattern_preview(\WP_REST_Request $request)
-	  {
-		   $slug   = $request->get_param('slug');
- 
-		   $header_pattern_preview = Patterns::get_header_pattern_preview($slug);
-		   if (!$header_pattern_preview) {
-				return new \WP_Error(
-					 'no_header_preview',
-					 __('Preview for the provided header pattern could not be generated.'),
-					 array('status' => 404)
-				);
-		   }
- 
-		   return new \WP_REST_Response(
-				$header_pattern_preview
-		   );
-	  }
 }

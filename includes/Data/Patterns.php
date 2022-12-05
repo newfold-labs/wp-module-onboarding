@@ -88,7 +88,7 @@ final class Patterns {
 					'site-header-centered' => array(
 						'active'      => true,	
 					),
-					'site-header-centered-logo-split-menu' => array(
+					'site-header-splitted-menu' => array(
 						'active'      => true,	
 					)
                 ),
@@ -122,7 +122,6 @@ final class Patterns {
 		if ( $block_patterns_registry->is_registered( $pattern_name ) ) {
 			 $pattern = $block_patterns_registry->get_registered( $pattern_name );
 			 return array(
-				 'slug'    => $pattern['slug'],
 				 'title'   => $pattern['title'],
 				 'content' => self::cleanup_wp_grammar( $pattern['content'] ),
 				 'name'    => $pattern['name'],
@@ -278,60 +277,4 @@ final class Patterns {
 		 return $theme_pattern_count;
 	}
 
-	public static function get_all_patterns_for_slug($slug_keyword)
-     {
-          $active_theme = (\wp_get_theme())->get('TextDomain');
-
-          $block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
-          $all_patterns = $block_patterns_registry->get_all_registered();
-
-          $filtered_patterns = array();
-          foreach($all_patterns as $pattern_info) {
-               if( strpos($pattern_info['slug'], $active_theme) === 0 // making sure the slug name starts with the theme name
-                   && strpos($pattern_info['slug'], $slug_keyword) !== FALSE ) {
-                    $filtered_patterns[] = $pattern_info;
-               }
-          }
-          return $filtered_patterns;
-     }
-
-	 public static function get_default_header()
-     {
-          $active_theme = (\wp_get_theme())->get('TextDomain');
-
-          $header_menu_page_pattern = array_keys(self::get_theme_step_patterns()[$active_theme]['header-menu']);
-          $header_menu_pattern = preg_grep("/header/", $header_menu_page_pattern);
-
-          return ($header_menu_pattern !== FALSE) ? $active_theme.'/'.$header_menu_pattern[0] : FALSE;
-     }
-
-	 public static function get_header_pattern_preview($slug, $squash = true) 
-     {
-          $active_theme = (\wp_get_theme())->get('TextDomain');
-
-          $pattern_slugs           = self::get_theme_step_patterns()[$active_theme]['header-menu-body'];
-          $pattern_slugs           = array_merge(array($slug), $pattern_slugs);
-
-          $block_patterns          = array();
-          $block_patterns_squashed = '';
-          $block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
-
-          foreach($pattern_slugs as $pattern_slug) {
-               $pattern_name = (strpos($pattern_slug, $active_theme) === 0) ? $pattern_slug : $active_theme . '/' . $pattern_slug;
-               if ($block_patterns_registry->is_registered($pattern_name)) {
-                    $pattern = $block_patterns_registry->get_registered($pattern_name);
-                    if (!$squash) {
-                         $block_patterns[] = array(
-                              'slug'    => $slug,
-                              'title'   => $pattern['title'],
-                              'content' => self::cleanup_wp_grammar($pattern['content']),
-                              'name'    => $pattern['name'],
-                         );
-                         continue;
-                    }
-                    $block_patterns_squashed .= self::cleanup_wp_grammar($pattern['content']);
-               }
-          }
-          return $squash ? $block_patterns_squashed : $block_patterns;
-     }
 }

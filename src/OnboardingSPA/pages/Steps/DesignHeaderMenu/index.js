@@ -8,27 +8,21 @@ import { GlobalStylesProvider } from '../../../components/LivePreview';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 
 
-import {
-	VIEW_DESIGN_HEADER_MENU,
-	THEME_STATUS_ACTIVE,
-} from '../../../../constants';
+import { VIEW_DESIGN_HEADER_MENU } from '../../../../constants';
 import { store as nfdOnboardingStore } from '../../../store';
 
 const StepDesignHeaderMenu = () => {
 	const { 
-		themeStatus,
 		headerMenu,
 	 } = useSelect(
 		( select ) => {
 			return {
-				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 				headerMenu: select( nfdOnboardingStore ).getHeaderMenuData(),
 			};
 		},
 		[]
 	);
 
-	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
 	const isLargeViewport = useViewportMatch( 'medium' );
 
@@ -38,10 +32,6 @@ const StepDesignHeaderMenu = () => {
 		setIsDrawerSuppressed,
 		setIsSidebarOpened,
 	} = useDispatch( nfdOnboardingStore );
-
-	const getCurrentPattern = async () => {
-		setIsLoaded( true );
-	};
 
 	useEffect( () => {
 		setPattern( headerMenu );
@@ -55,11 +45,6 @@ const StepDesignHeaderMenu = () => {
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_HEADER_MENU );
 	}, [] );
-
-	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
-			getCurrentPattern();
-	}, [ isLoaded, themeStatus ] );
 
 	return (
 		<DesignStateHandler>

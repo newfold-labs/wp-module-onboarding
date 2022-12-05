@@ -3,7 +3,7 @@ import { useState, useEffect } from '@wordpress/element';
 
 import HeaderMenuPreview from '../../HeaderMenuPreview';
 import { store as nfdOnboardingStore } from '../../../store';
-import { getPatterns, getHeaderMenuPatterns, getDefaultHeaderMenu } from '../../../utils/api/patterns';
+import { getPatterns } from '../../../utils/api/patterns';
 import { GlobalStylesProvider } from '../../../components/LivePreview';
 
 import {
@@ -11,12 +11,12 @@ import {
 	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
 
-const DesignHomepageMenu = () => {
+const DesignHeaderMenu = () => {
 	const headerMenuSlugs = [ 
 		'yith-wonder/site-header-left-logo-navigation-inline', 
 		'yith-wonder/site-header-left-logo-navigation-below',
 		'yith-wonder/site-header-centered',
-		'yith-wonder/site-header-centered-logo-split-menu'
+		'yith-wonder/site-header-splitted-menu'
 	];
 	const headerMenuBodySlugs = [ 'yith-wonder/homepage-1', 'yith-wonder/site-footer'];
 
@@ -48,27 +48,16 @@ const DesignHomepageMenu = () => {
 		}
 		setHeaderMenuPreviewData(headerMenuPreviewResponse.body);
 
-		// let headerMenuPatterns = [];
-		// headerMenuPreviewResponse.body.forEach( ( pageParts ) => {
-		// 	if(headerMenuSlugs.includes(pageParts.slug)){
-		// 		console.log(pageParts.content);
-		// 		headerMenuPatterns.push(pageParts.content);
-		// 	}
-		// });
-		// console.log(headerMenuPatterns);
-
-		const patternsResponse = await getHeaderMenuPatterns();
-		if ( patternsResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
-		}
-        setPatterns( patternsResponse?.body );
+		let headerMenuPatterns = [];
+		headerMenuPreviewResponse.body.forEach( ( pageParts ) => {
+			if(headerMenuSlugs.includes(pageParts.slug)){
+				headerMenuPatterns.push(pageParts);
+			}
+		});
+		setPatterns( headerMenuPatterns );
 
 		if(!currentData.data.partHeader || currentData.data.partHeader == "") {
-			const defaultHeaderMenu = await getDefaultHeaderMenu();
-			if ( defaultHeaderMenu?.error ) {
-				return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
-			}
-			currentData.data.partHeader = defaultHeaderMenu.body;
+			currentData.data.partHeader = headerMenuSlugs[0];
 			setCurrentOnboardingData( currentData );
 		}
 		setSelectedPattern(currentData.data.partHeader);
@@ -136,4 +125,4 @@ const DesignHomepageMenu = () => {
 	);
 };
 
-export default DesignHomepageMenu;
+export default DesignHeaderMenu;
