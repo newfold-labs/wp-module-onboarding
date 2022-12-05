@@ -30,7 +30,6 @@ final class Options {
 		'settings_initialized'          => 'settings_initialized',
 		'plugins_init_status'           => 'plugins_init_status',
 		'plugin_install_queue'          => 'plugin_install_queue',
-		'plugins_uninit_status'         => 'plugins_uninit_status',
 		'plugin_uninstall_queue'        => 'plugin_uninstall_queue',
 		'flow'                          => 'flow',
 		'theme_init_status'             => 'theme_init_status',

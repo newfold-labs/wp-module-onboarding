@@ -74,9 +74,6 @@ class PluginUninstallTaskManager {
 			$plugin_to_uninstall['retries']
 		);
 
-		// Update status to the current slug being installed.
-		\update_option( Options::get_option_name( 'plugins_uninit_status' ), $plugin_uninstall_task->get_slug() );
-
 		// Execute the PluginUninstall Task.
 		$status = $plugin_uninstall_task->execute();
 		if ( \is_wp_error( $status ) ) {
@@ -93,11 +90,6 @@ class PluginUninstallTaskManager {
 				// Update the plugin install queue.
 				\update_option( Options::get_option_name( self::$queue_name ), $plugins );
 			}
-		}
-
-		// If there are no more plugins to be installed then change the status to completed.
-		if ( empty( $plugins ) ) {
-			return \update_option( Options::get_option_name( 'plugins_uninit_status' ), 'completed' );
 		}
 
 		return true;
