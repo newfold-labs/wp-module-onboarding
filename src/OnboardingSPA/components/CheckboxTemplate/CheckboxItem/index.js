@@ -21,9 +21,9 @@ const CheckboxItem = ( {
 	title,
 	desc,
 	subtitle,
-	className,
-	isSelectedDefault,
 	callback,
+	isSelectedDefault,
+	className = 'checkbox-item',
 } ) => {
 	const [ showDescription, setShowDescription ] = useState( false );
 	const [ isSelected, setIsSelected ] = useState( isSelectedDefault );
@@ -40,23 +40,23 @@ const CheckboxItem = ( {
 	return (
 		<div>
 			<div
-				className={`${ className } checkbox-item ${isSelected && 'checkbox-item--selected'
-					} ${showDescription && 'checkbox-item--shown'}`}
+				className={`${ className } ${isSelected && `${ className }--selected`
+					} ${showDescription && `${ className }--shown`}`}
 			>
-				<div className="checkbox-item-container">
+				<div className={`${ className }-container`}>
 					<CheckboxControl
 						checked={isSelected}
 						onChange={handleCheck}
-						className="checkbox-item-checkbox"
+						className={`${ className }-checkbox`}
 					/>
-					<div className="checkbox-item__contents">
+					<div className={`${ className }__contents`}>
 						<div
-							className={`checkbox-item__contents-icon
+							className={`${ className }__contents-icon
                                      ${isSelected &&
-								'checkbox-item__contents-icon--selected'
+								`${ className }__contents-icon--selected`
 								}
                                      ${showDescription &&
-								'checkbox-item__contents-icon--shown'
+								`${ className }__contents-icon--shown`
 								}`}
 						>
 							<div
@@ -70,20 +70,20 @@ const CheckboxItem = ( {
 								}}
 							/>
 						</div>
-						<div className="checkbox-item__contents-text">
+						<div className={`${className }__contents-text`}>
 							<div
-								className={`checkbox-item__contents-text-title ${isSelected &&
-									'checkbox-item__contents-text-title--selected'
+								className={`${ className }__contents-text-title ${isSelected &&
+									`${ className }__contents-text-title--selected`
 									}`}
 							>
 								{title}
 							</div>
-							<div className="checkbox-item__contents-text-subtitle">
+							<div className={`${ className }__contents-text-subtitle`}>
 								{subtitle}
 							</div>
 						</div>
 						<div
-							className="checkbox-item__contents-help"
+							className={`${ className }__contents-help`}
 							onClick={handleShowDesc}
 						>
 							<Icon
@@ -101,7 +101,7 @@ const CheckboxItem = ( {
 			</div>
 			{
 				showDescription && (
-					<div className="checkbox-item__desc">{desc}</div>
+					<div className={`${ className }__desc`}>{desc}</div>
 				)
 			}
 		</div>
