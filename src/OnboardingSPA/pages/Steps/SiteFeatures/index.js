@@ -6,7 +6,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 
 import { VIEW_NAV_PRIMARY } from '../../../../constants';
 import CommonLayout from '../../../components/Layouts/Common';
-import { getCustomPluginsList } from '../../../utils/api/plugins';
+import { getSiteFeatures } from '../../../utils/api/plugins';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import CheckboxList from '../../../components/CheckboxTemplate/CheckboxList';
 
@@ -48,9 +48,10 @@ const StepSiteFeatures = () => {
 	) {
 		const selectedPlugins = {};
 
-		customPluginsList.forEach( ( plugin ) => {
-			selectedPlugins[ plugin.slug ] = plugin.selected;
-		} );
+		for (const key in customPluginsList) {
+			var plugin = customPluginsList[key];
+			selectedPlugins[plugin.slug] = plugin.selected;
+		}
 		setSelectedPlugins( selectedPlugins );
 
 		if ( saveToStore ) {
@@ -60,7 +61,7 @@ const StepSiteFeatures = () => {
 	}
 
 	async function getCustomPlugins() {
-		const customPluginsList = await getCustomPluginsList();
+		const customPluginsList = await getSiteFeatures();
 		if ( isEmpty( currentData?.data?.siteFeatures ) )
 			changeToStoreSchema( customPluginsList.body, true );
 		else setSelectedPlugins( { ...currentData?.data?.siteFeatures } );
@@ -93,8 +94,8 @@ const StepSiteFeatures = () => {
 			{ customPluginsList && (
 				<CheckboxList
 					callback={ selectPlugin }
-					selectedPlugins={ selectedPlugins }
-					customPluginsList={ customPluginsList }
+					selectedItems={ selectedPlugins }
+					customItemsList={ customPluginsList }
 				/>
 			) }
 		</CommonLayout>

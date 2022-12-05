@@ -31,10 +31,10 @@ export const getPluginStatus = async ( plugin ) => {
 	);
 };
 
-export const getCustomPluginsList = async () => {
+export const getSiteFeatures = async () => {
 	return await resolve(
 		apiFetch( {
-			url: onboardingRestURL( 'plugins/features' ),
+			url: onboardingRestURL( 'plugins/site-features' ),
 		} )
 	);
 };

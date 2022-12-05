@@ -83,11 +83,11 @@ class PluginsController {
 
 		\register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/features',
+			$this->rest_base . '/site-features',
 			array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_custom_plugins' ),
+					'callback'            => array( $this, 'get_site_features' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -284,9 +284,8 @@ class PluginsController {
 	  *
 	  * @return array|\WP_Error
 	  */
-	public function get_custom_plugins() {
-		 $custom_plugins = SiteFeatures::get_custom_plugins_list();
-		 return $custom_plugins;
+	public function get_site_features() {
+		 return SiteFeatures::get();
 	}
 
 	/**

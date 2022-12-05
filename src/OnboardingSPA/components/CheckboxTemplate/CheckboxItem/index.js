@@ -16,11 +16,12 @@ import { CheckboxControl } from '@wordpress/components';
  */
 
 const CheckboxItem = ( {
-	slug,
+	key,
 	icon,
 	title,
-	subtitle,
 	desc,
+	subtitle,
+	className,
 	isSelectedDefault,
 	callback,
 } ) => {
@@ -29,7 +30,7 @@ const CheckboxItem = ( {
 
 	const handleCheck = () => {
 		setIsSelected( ! isSelected );
-		callback( slug, ! isSelected );
+		callback( key, ! isSelected );
 	};
 
 	const handleShowDesc = () => {
@@ -39,7 +40,7 @@ const CheckboxItem = ( {
 	return (
 		<div>
 			<div
-				className={`checkbox-item ${isSelected && 'checkbox-item--selected'
+				className={`${ className } checkbox-item ${isSelected && 'checkbox-item--selected'
 					} ${showDescription && 'checkbox-item--shown'}`}
 			>
 				<div className="checkbox-item-container">

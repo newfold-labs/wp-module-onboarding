@@ -19,11 +19,11 @@ class PluginUninstaller {
 		if ( isset( $plugin_path ) && self::is_plugin_installed( $plugin_path ) ) {
 
 			self::deactivate_plugin_if_active( $plugin_path );
-			$res = self::delete_plugin( $plugin_path );
+			$deleted = self::delete_plugin( $plugin_path );
 
 			// If Deletion is not successful throw an error for a retry.
-			if ( is_wp_error( $res ) ) {
-				return $res;
+			if ( is_wp_error( $deleted ) ) {
+				return $deleted;
 			}
 		}
 
