@@ -45,7 +45,7 @@ class FlowService {
 				// Any Key renamed is updated in the database with NewKey and the value from the OldKey is retained
 				if($flow_data_fixes) {
 					foreach ($flow_data_fixes as $old_key=>$new_key) {
-						if (array_key_exists($old_key, $flow_data)) 
+						if (isset($flow_data) && array_key_exists($old_key, $flow_data)) 
 							$flow_data[$new_key] = $flow_data[$old_key];
 						unset($flow_data[$old_key]);
 					}
@@ -80,21 +80,25 @@ class FlowService {
 					// To handle Indexed Arrays gracefully
 					if (count(array_filter(array_keys($value), 'is_string')) === 0) {
 
-							// To check if an Indexed Array is further Nested or Not
-							foreach($value as $index_key => $index_value) {
+						// To check if an Indexed Array is further Nested or Not
+						foreach($value as $index_key => $index_value) {
 
-								// For Indexed Arrays having values as an Array: Indexed/Associative
-								if(is_array($index_value))
-									$updated_flow_data[$key][$index_key] = self::update_flow_data_recursive($index_value, $flow_data[$key][$index_key], $updated_flow_data[$key][$index_key]);
-
-								// For Indexed Arrays having values as a String/Boolean
-								else {
-									if(empty($flow_data[$key]))
-										$updated_flow_data[$key] = $value;
-									else
-										$updated_flow_data[$key] = $flow_data[$key];
-								}
+							// For Indexed Arrays having values as an Array: Indexed/Associative
+							if(is_array($index_value)) {
+								if(empty($flow_data[$key][$index_key]))
+									$updated_flow_data[$key][$index_key] = $index_value;
+								else
+									$updated_flow_data[$key][$index_key] = $flow_data[$key][$index_key];
 							}
+
+							// For Indexed Arrays having values as a String/Boolean
+							else {
+								if(empty($flow_data[$key]))
+									$updated_flow_data[$key] = $value;
+								else
+									$updated_flow_data[$key] = $flow_data[$key];
+							}
+						}
 					}
 					else
 						$updated_flow_data[$key] = self::update_flow_data_recursive($value, $flow_data[$key], $updated_flow_data[$key]);
