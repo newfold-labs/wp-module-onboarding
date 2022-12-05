@@ -118,7 +118,7 @@ const DesignHeaderMenu = () => {
 		<GlobalStylesProvider>
 			<div className="theme-header-menu-preview--drawer">
 				<div className="theme-header-menu-preview--drawer__list">
-					{ patterns ? buildPreviews(): '' }
+					{ buildPreviews() }
 				</div>
 			</div>
 		</GlobalStylesProvider>
