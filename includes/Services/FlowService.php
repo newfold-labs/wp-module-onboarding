@@ -53,7 +53,7 @@ class FlowService {
 
 				// To update an existing value if the key exists in both, the blueprint and database
 				// All keys in the database and not in blueprint are not included
-				if (array_key_exists($key, $flow_data) && !is_array($value)) {
+				if (isset($flow_data) && array_key_exists($key, $flow_data) && !is_array($value)) {
 					// Updates any default value added to an Existing Key in the blueprint into the database
 					if(isset($value) && empty($flow_data[$key])) 
 						$updated_flow_data[$key] = $value;
@@ -127,7 +127,7 @@ class FlowService {
 				}
 			}
 			return $flow_data;
-		  }
+		}
 	}
 
     /*
