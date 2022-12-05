@@ -92,10 +92,6 @@ final class Patterns {
 						'active'      => true,	
 					)
                 ),
-				'header-menu-body' => array(
-                    'homepage-1',
-                    'site-footer',
-                ),
 			),
 		);
 	}
