@@ -55,13 +55,12 @@ class FlowService {
 				// All keys in the database and not in blueprint are not included
 				if (array_key_exists($key, $flow_data) && !is_array($value)) {
 					// Updates any default value added to an Existing Key in the blueprint into the database
-						if(isset($value) && empty($flow_data[$key])) {
-							$updated_flow_data[$key] = $value;
-						}
+					if(isset($value) && empty($flow_data[$key])) 
+						$updated_flow_data[$key] = $value;
 
-						// Retains the user entered value at the time of onboarding
-						else
-							$updated_flow_data[$key] = $flow_data[$key];
+					// Retains the user entered value at the time of onboarding
+					else
+						$updated_flow_data[$key] = $flow_data[$key];
 				}
 
 				// Adds new key-value pair added to the blueprint into the database
@@ -69,28 +68,37 @@ class FlowService {
 					$updated_flow_data[$key] = $value;
 
 				if ( is_array( $value ) ) {
-					if(empty($value) && array_key_exists($key, $flow_data)) {
-						if(!empty($flow_data[$key]))
-							$updated_flow_data[$key] = $flow_data[$key];
-						else
+
+					// For Keys having Empty Arrays. Eg: isViewed, other
+					if(empty($value)) {
+						if(empty($flow_data[$key]))
 							$updated_flow_data[$key] = $value;
+						else
+							$updated_flow_data[$key] = $flow_data[$key];
 					}
-					else {
+
 					// To handle Indexed Arrays gracefully
-						if (count(array_filter(array_keys($value), 'is_string')) === 0) {
+					if (count(array_filter(array_keys($value), 'is_string')) === 0) {
+
+							// To check if an Indexed Array is further Nested or Not
 							foreach($value as $index_key => $index_value) {
-								if(is_array($index_value) && count(array_filter(array_keys($index_value), 'is_string')) === 0) {
-									if(!empty($flow_data[$key][$index_key]))
-										$updated_flow_data[$key][$index_key] = $flow_data[$key][$index_key];
+
+								// For Indexed Arrays having values as an Array: Indexed/Associative
+								if(is_array($index_value))
+									$updated_flow_data[$key][$index_key] = self::update_flow_data_recursive($index_value, $flow_data[$key][$index_key], $updated_flow_data[$key][$index_key]);
+
+								// For Indexed Arrays having values as a String/Boolean
+								else {
+									if(empty($flow_data[$key]))
+										$updated_flow_data[$key] = $value;
 									else
-										$updated_flow_data[$key][$index_key] = $index_value;
+										$updated_flow_data[$key] = $flow_data[$key];
 								}
 							}
-						}
-						else
-							$updated_flow_data[$key] = self::update_flow_data_recursive($value, $flow_data[$key], $updated_flow_data[$key]);
 					}
-					}
+					else
+						$updated_flow_data[$key] = self::update_flow_data_recursive($value, $flow_data[$key], $updated_flow_data[$key]);
+				}
 			}
 			return $updated_flow_data;
 		  }
@@ -104,18 +112,16 @@ class FlowService {
 			foreach ($flow_data as $key => $value)
 			{ 
 				// Updates value entered by the user
-				if (array_key_exists($key, $params) && !is_array($value)) {
+				if (array_key_exists($key, $params) && !is_array($value))
 					$flow_data[$key] = $params[$key];
-				}
 
 				// Retains the Blueprint Value if no input from the User
 				else $flow_data[$key] = $value;
 								
 				if ( is_array( $value ) ) {
 					// To handle Indexed Arrays gracefully
-					if (count(array_filter(array_keys($params[$key]), 'is_string')) === 0 && !empty($params[$key])) {
+					if (count(array_filter(array_keys($params[$key]), 'is_string')) === 0 && !empty($params[$key])) 
 						$flow_data[$key] = $params[$key];
-					}
 					else
 						$flow_data[$key] = self::update_post_call_data_recursive($value, $params[$key]);
 				}
