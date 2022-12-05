@@ -10,10 +10,11 @@ class FlowService {
 	// An array to keep the Flow Data updated in the database
 	protected $updated_flow_data = array();
 
-    public static function initalize_flow_data() { 
+	public static function initalize_flow_data() { 
+		$default_flow_data = Flows::get_data();
         if ( ! ( $flow_data = self::read_flow_data_from_wp_option() ) )
             return self::get_default_flow_data();
-		$updated_flow_data = self::update_flow_data_recursive(Flows::get_data(), $flow_data, $updated_flow_data);
+		$updated_flow_data = self::update_flow_data_recursive($default_flow_data, $flow_data, $updated_flow_data);
 		self::update_wp_options_data_in_database($updated_flow_data);
         return $updated_flow_data;
     }
@@ -52,16 +53,15 @@ class FlowService {
 
 				// To update an existing value if the key exists in both, the blueprint and database
 				// All keys in the database and not in blueprint are not included
-				if (array_key_exists($key, $flow_data) && !is_array($value) ) {
-
+				if (array_key_exists($key, $flow_data) && !is_array($value)) {
 					// Updates any default value added to an Existing Key in the blueprint into the database
-					if(isset($value) && empty($flow_data[$key])) {
-						$updated_flow_data[$key] = $value;
-					}
+						if(isset($value) && empty($flow_data[$key])) {
+							$updated_flow_data[$key] = $value;
+						}
 
-					// Retains the user entered value at the time of onboarding
-					else
-						$updated_flow_data[$key] = $flow_data[$key];
+						// Retains the user entered value at the time of onboarding
+						else
+							$updated_flow_data[$key] = $flow_data[$key];
 				}
 
 				// Adds new key-value pair added to the blueprint into the database
@@ -69,13 +69,28 @@ class FlowService {
 					$updated_flow_data[$key] = $value;
 
 				if ( is_array( $value ) ) {
-					// To handle Indexed Arrays gracefully
-					if (count(array_filter(array_keys($flow_data[$key]), 'is_string')) === 0 && !empty($flow_data[$key])) {
-						$updated_flow_data[$key] = $flow_data[$key];
+					if(empty($value) && array_key_exists($key, $flow_data)) {
+						if(!empty($flow_data[$key]))
+							$updated_flow_data[$key] = $flow_data[$key];
+						else
+							$updated_flow_data[$key] = $value;
 					}
-					else
-						$updated_flow_data[$key] = self::update_flow_data_recursive($value, $flow_data[$key], $updated_flow_data[$key]);
-				}
+					else {
+					// To handle Indexed Arrays gracefully
+						if (count(array_filter(array_keys($value), 'is_string')) === 0) {
+							foreach($value as $index_key => $index_value) {
+								if(is_array($index_value) && count(array_filter(array_keys($index_value), 'is_string')) === 0) {
+									if(!empty($flow_data[$key][$index_key]))
+										$updated_flow_data[$key][$index_key] = $flow_data[$key][$index_key];
+									else
+										$updated_flow_data[$key][$index_key] = $index_value;
+								}
+							}
+						}
+						else
+							$updated_flow_data[$key] = self::update_flow_data_recursive($value, $flow_data[$key], $updated_flow_data[$key]);
+					}
+					}
 			}
 			return $updated_flow_data;
 		  }
