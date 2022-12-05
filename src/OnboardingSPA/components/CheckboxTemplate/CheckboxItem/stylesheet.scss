@@ -1,11 +1,17 @@
+/*COLOR VARIABLES*/
+$white-offset: rgb(224, 224, 224);
+$main-color-dark: var(--wp-admin-theme-color);
+$main-color-light: var(--nfd-onboarding-white);
+$main-color: var(--nfd-onboarding-highlighted--rgb);
+$main-border-main: var(--nfd-onboarding-primary-alt);
+
 .checkbox-item {
-    width: 23vw;
     margin: 12px;
     padding: 16px;
-    min-width: 300px;
     border-radius: 2px;
-    background: #FFFFFF;
-    border: 1px solid #E0E0E0;
+    background: $main-color-light;
+    border: 1px solid $white-offset;
+    width: clamp(15rem, 25vw, 35rem);
     box-shadow: 0px 2px 8px 2px rgba(204, 204, 204, 0.175295);
 
     &-container{
@@ -38,7 +44,7 @@
             justify-content: center;
             
             &--selected {
-                background: #1C5CBA;
+                background: $main-color-dark !important;
             }
 
             &--shown {
@@ -54,21 +60,21 @@
             justify-content: center;
 
             &-title{
-                font-size: 16px;
                 color: #0D0D0D;
                 line-height: 18px;
                 margin-bottom: 6px;
+                font-size: clamp(0.9rem, 2vw, 1rem);
                 
                 &--selected {
-                    color: #1C5CBA;
+                    color: $main-color-dark;
                 }
             }
 
             &-subtitle {
-                font-size: 14px;
+                color: #343434;
                 font-weight: 200;
                 line-height: 18px;
-                color: #343434;
+                font-size: clamp(0.82rem, 2vw, 0.9rem);
             }
         }
 
@@ -79,22 +85,21 @@
     }
 
     &--selected {
-        border: 1px solid #97C8FA;
-        background: rgba(132, 192, 252, 0.2);
-        box-shadow: 0px 2px 8px 2px rgba(204, 204, 204, 0.175295);
+        background: rgba($main-color, 0.2);
+        border: 1px solid rgba($main-color, 0.6);
+        box-shadow: 0px 2px 8px 2px rgba($white-offset, 0.8);
     }
 
     &--shown {
-        z-index: 9999;
         border-radius: 2px;
-        background: #E2E9F4;
-        border: 1px solid #CADFE7;
-        box-shadow: 0px 11px 8px -3px rgba(88, 124, 175, 0.37);
+        background: rgba($white-offset, 0.2);
+        border: 1px solid rgba($main-color, 0.1);
+        box-shadow: 0px 11px 8px -3px rgba($main-color, 0.20);
     }
 
     &__desc {
-        font-size: 14px;
         margin-top: 20px;
         font-style: italic;
+        font-size: clamp(0.82rem, 2vw, 0.9rem);
     }
 }
