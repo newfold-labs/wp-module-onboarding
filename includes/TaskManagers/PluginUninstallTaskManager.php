@@ -20,15 +20,15 @@ class PluginUninstallTaskManager {
 	private static $queue_name = 'plugin_uninstall_queue';
 
 	function __construct() {
-		// Ensure there is a thirty second option in the cron schedules
-		add_filter( 'cron_schedules', array( $this, 'add_thirty_seconds_schedule' ) );
+		// Ensure there is a Ten second option in the cron schedules
+		add_filter( 'cron_schedules', array( $this, 'add_ten_seconds_schedule' ) );
 
-		// Thirty second cron hook
+		// Ten second cron hook
 		add_action( 'nfd_module_onboarding_plugin_uninstall_cron', array( $this, 'uninstall' ) );
 
 		// Register the cron task
 		if ( ! wp_next_scheduled( 'nfd_module_onboarding_plugin_uninstall_cron' ) ) {
-			wp_schedule_event( time(), 'thirty_seconds', 'nfd_module_onboarding_plugin_uninstall_cron' );
+			wp_schedule_event( time(), 'ten_seconds', 'nfd_module_onboarding_plugin_uninstall_cron' );
 		}
 	}
 
@@ -36,11 +36,11 @@ class PluginUninstallTaskManager {
 		 return self::$queue_name;
 	}
 
-	public function add_thirty_seconds_schedule( $schedules ) {
-		if ( ! array_key_exists( 'thirty_seconds', $schedules ) || 30 !== $schedules['thirty_seconds']['interval'] ) {
-			$schedules['thirty_seconds'] = array(
-				'interval' => 30,
-				'display'  => __( 'Once Every Thirty Seconds' ),
+	public function add_ten_seconds_schedule( $schedules ) {
+		if ( ! array_key_exists( 'ten_seconds', $schedules ) || 10 !== $schedules['ten_seconds']['interval'] ) {
+			$schedules['ten_seconds'] = array(
+				'interval' => 10,
+				'display'  => __( 'Once Every Ten Seconds' ),
 			);
 		}
 
