@@ -300,31 +300,37 @@ class PluginsController {
 		  $plugin_body = json_decode( $request->get_body(), true );
 		  $plugins     = isset( $plugin_body['plugins'] ) ? $plugin_body['plugins'] : false;
 
-		if ( $plugins ) {
-			foreach ( $plugins as $plugin => $decision ) {
-				if ( $decision ) {
-					PluginInstallTaskManager::add_to_queue(
-						new PluginInstallTask(
-							$plugin,
-							true,
-						)
-					);
-				} else {
-					$position_in_queue = PluginInstallTaskManager::status( $plugin );
-					if ( $position_in_queue === false || $position_in_queue === 0 ) {
-						PluginUninstallTaskManager::add_to_queue(
-							new PluginUninstallTask(
-								$plugin,
-							)
-						);
-					} else {
-						PluginInstallTaskManager::remove_from_queue(
-							$plugin,
-						);
-					}
-				}
-			}
+		if ( ! $plugins ) {
+			return new \WP_Error(
+                    "plugin_list_not_provided",
+                    "Plugins List Not Provided",
+                    array( 'status' => 404 )
+               );
 		}
+
+          foreach ( $plugins as $plugin => $decision ) {
+               if ( $decision ) {
+                    PluginInstallTaskManager::add_to_queue(
+                         new PluginInstallTask(
+                              $plugin,
+                              true,
+                         )
+                    );
+               } else {
+                    $position_in_queue = PluginInstallTaskManager::status( $plugin );
+                    if ( $position_in_queue === false || $position_in_queue === 0 ) {
+                         PluginUninstallTaskManager::add_to_queue(
+                              new PluginUninstallTask(
+                                   $plugin,
+                              )
+                         );
+                    } else {
+                         PluginInstallTaskManager::remove_from_queue(
+                              $plugin,
+                         );
+                    }
+               }
+          }
 
 		return new \WP_REST_Response(
 			array(),
