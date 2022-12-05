@@ -25,16 +25,19 @@ const StepComplete = () => {
 
 	const contents = getContents( brandName );
 
-	useEffect( async () => {
-		setIsHeaderNavigationEnabled( false );
-		setIsDrawerSuppressed( true );
-
+	const checkFlowComplete = async () => {
 		const flowCompletionResponse = await completeFlow();
 		if ( flowCompletionResponse?.error ) {
 			setIsHeaderNavigationEnabled( true );
 			return setIsError( true );
 		}
 		navigate( nextStep.path );
+	};
+
+	useEffect( () => {
+		setIsHeaderNavigationEnabled( false );
+		setIsDrawerSuppressed( true );
+		checkFlowComplete();
 	}, [] );
 	return (
 		<DesignStateHandler>

@@ -71,7 +71,7 @@ final class Themes {
 
 	public static function get_approved() {
 		 return array(
-			 'nfd_slugs' => array_keys( array_filter( self::$wp_slugs, array( __CLASS__, 'check_approved' ) ) ),
+			 'nfd_slugs' => array_keys( array_filter( self::$nfd_slugs, array( __CLASS__, 'check_approved' ) ) ),
 		 );
 	}
 

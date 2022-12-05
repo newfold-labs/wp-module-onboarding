@@ -59,7 +59,7 @@ function getPresetsDeclarations( blockPresets = {}, mergedSettings ) {
 		PRESET_METADATA,
 		( declarations, { path, valueKey, valueFunc, cssVarInfix } ) => {
 			const presetByOrigin = get( blockPresets, path, [] );
-			if ( presetByOrigin ) {
+			if ( presetByOrigin && Array.isArray( presetByOrigin ) ) {
 				presetByOrigin.forEach( ( value ) => {
 					if ( valueKey && ! valueFunc ) {
 						declarations.push(
@@ -99,7 +99,7 @@ function getPresetsClasses( blockSelector, blockPresets = {} ) {
 			}
 
 			const presetByOrigin = get( blockPresets, path, [] );
-			if ( presetByOrigin ) {
+			if ( presetByOrigin && Array.isArray( presetByOrigin ) ) {
 				presetByOrigin.forEach( ( { slug } ) => {
 					classes.forEach( ( { classSuffix, propertyName } ) => {
 						const classSelectorToUse = `.has-${ kebabCase(

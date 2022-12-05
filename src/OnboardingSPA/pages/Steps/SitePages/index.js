@@ -74,15 +74,14 @@ const StepSitePages = () => {
 						flowDataToState( currentData.data.sitePages.other )
 					);
 				} else {
-					const checkedPages = sitePagesResponse.body
-						.filter( ( sitePage ) => {
-							return sitePage?.selected
-								? sitePage.selected
-								: false;
-						} )
-						.map( ( checkedPage ) => {
-							return checkedPage.slug;
-						} );
+					const checkedPages = sitePagesResponse.body.reduce(
+						( checkedPages, sitePage ) => {
+							return sitePage?.selected && sitePage.selected
+								? checkedPages.concat( sitePage.slug )
+								: checkedPages;
+						},
+						[]
+					);
 					handleCheckedPages( checkedPages, sitePagesResponse.body );
 				}
 			}
@@ -92,16 +91,14 @@ const StepSitePages = () => {
 
 	const stateToFlowData = ( selectedPages, sitePages ) => {
 		return sitePages !== false
-			? sitePages
-					?.filter( ( sitePage ) => {
-						return selectedPages.includes( sitePage.slug );
-					} )
-					.map( ( selectedPage ) => {
-						return {
-							slug: selectedPage.slug,
-							title: selectedPage.title,
-						};
-					} )
+			? sitePages?.reduce( ( newSitePages, sitePage ) => {
+					return selectedPages.includes( sitePage.slug )
+						? newSitePages.concat( {
+								slug: sitePage.slug,
+								title: sitePage.title,
+						  } )
+						: newSitePages;
+			  }, [] )
 			: undefined;
 	};
 
