@@ -37,74 +37,72 @@ const CheckboxItem = ( {
 	};
 
 	return (
-		<div
-			className={ `checkbox-item ${
-				isSelected && 'checkbox-item--selected'
-			} ${ showDescription && 'checkbox-item--shown' }` }
-		>
-			<div className="checkbox-item-container">
-				<CheckboxControl
-					checked={ isSelected }
-					onChange={ handleCheck }
-					className="checkbox-item-checkbox"
-				/>
-				<div className="checkbox-item__contents">
-					<div
-						className={ `checkbox-item__contents-icon
-                                     ${
-											isSelected &&
-											'checkbox-item__contents-icon--selected'
-										}
-                                     ${
-											showDescription &&
-											'checkbox-item__contents-icon--shown'
-										}` }
-					>
+		<div>
+			<div
+				className={`checkbox-item ${isSelected && 'checkbox-item--selected'
+					} ${showDescription && 'checkbox-item--shown'}`}
+			>
+				<div className="checkbox-item-container">
+					<CheckboxControl
+						checked={isSelected}
+						onChange={handleCheck}
+						className="checkbox-item-checkbox"
+					/>
+					<div className="checkbox-item__contents">
 						<div
-							style={ {
-								width: '35px',
-								height: '35px',
-								backgroundPosition: 'center',
-								backgroundRepeat: 'no-repeat',
-								backgroundImage: `var(${ icon }${
-									isSelected ? '--light' : ''
-								})`,
-							} }
-						/>
-					</div>
-					<div className="checkbox-item__contents-text">
-						<div
-							className={ `checkbox-item__contents-text-title ${
-								isSelected &&
-								'checkbox-item__contents-text-title--selected'
-							}` }
+							className={`checkbox-item__contents-icon
+                                     ${isSelected &&
+								'checkbox-item__contents-icon--selected'
+								}
+                                     ${showDescription &&
+								'checkbox-item__contents-icon--shown'
+								}`}
 						>
-							{ title }
+							<div
+								style={{
+									width: '35px',
+									height: '35px',
+									backgroundPosition: 'center',
+									backgroundRepeat: 'no-repeat',
+									backgroundImage: `var(${icon}${isSelected ? '--light' : ''
+										})`,
+								}}
+							/>
 						</div>
-						<div className="checkbox-item__contents-text-subtitle">
-							{ subtitle }
+						<div className="checkbox-item__contents-text">
+							<div
+								className={`checkbox-item__contents-text-title ${isSelected &&
+									'checkbox-item__contents-text-title--selected'
+									}`}
+							>
+								{title}
+							</div>
+							<div className="checkbox-item__contents-text-subtitle">
+								{subtitle}
+							</div>
 						</div>
-					</div>
-					<div
-						className="checkbox-item__contents-help"
-						onClick={ handleShowDesc }
-					>
-						<Icon
-							icon={ help }
-							style={ {
-								width: '30px',
-								height: '30px',
-								fill: `${
-									showDescription ? '#1C5CBA' : '#666666'
-								}`,
-							} }
-						/>
+						<div
+							className="checkbox-item__contents-help"
+							onClick={handleShowDesc}
+						>
+							<Icon
+								icon={help}
+								style={{
+									width: '30px',
+									height: '30px',
+									fill: `${showDescription ? '#1C5CBA' : '#666666'
+										}`,
+								}}
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
-			{ showDescription && (
-				<div className="checkbox-item__desc">{ desc }</div>
-			) }
+			{
+				showDescription && (
+					<div className="checkbox-item__desc">{desc}</div>
+				)
+			}
 		</div>
 	);
 };
