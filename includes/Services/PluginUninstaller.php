@@ -135,7 +135,8 @@ class PluginUninstaller {
 		}
 
 		// Removes directory and files of a plugin
-		if ( ! \delete_plugins( array( $plugin_path ) ) ) {
+		$deleted = \delete_plugins( array( $plugin_path ) );
+		if ( ! $deleted || is_wp_error( $deleted ) ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
 				'Unable to Delete the Plugin',
