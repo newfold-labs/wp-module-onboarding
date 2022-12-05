@@ -95,12 +95,12 @@ class PluginsController {
 
 		\register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/uninstall',
+			$this->rest_base . '/site-features',
 			array(
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'uninstall' ),
-					'args'                => $this->get_uninstall_plugin_args(),
+					'callback'            => array( $this, 'set_site_features' ),
+					'args'                => $this->set_site_features_args(),
 					'permission_callback' => array( $this, 'check_install_permissions' ),
 				),
 			)
@@ -159,7 +159,7 @@ class PluginsController {
 		);
 	}
 
-	public function get_uninstall_plugin_args() {
+	public function set_site_features_args() {
 		return array(
 			'plugins' => array(
 				'type'     => 'object',
@@ -280,10 +280,10 @@ class PluginsController {
 	}
 
 	/**
-	  * Retrieves the Customized list of Plugins for the user.
-	  *
-	  * @return array|\WP_Error
-	  */
+	 * Retrieves the Customized list of Plugins for the user.
+	 *
+	 * @return array|\WP_Error
+	 */
 	public function get_site_features() {
 		 return SiteFeatures::get();
 	}
@@ -295,42 +295,35 @@ class PluginsController {
 	 *
 	 * @return \WP_REST_Response|\WP_Error
 	 */
-	public function uninstall( \WP_REST_Request $request ) {
+	public function set_site_features( \WP_REST_Request $request ) {
 
 		  $plugin_body = json_decode( $request->get_body(), true );
 		  $plugins     = isset( $plugin_body['plugins'] ) ? $plugin_body['plugins'] : false;
 
 		if ( ! $plugins ) {
 			return new \WP_Error(
-                    "plugin_list_not_provided",
-                    "Plugins List Not Provided",
-                    array( 'status' => 404 )
-               );
+				'plugin_list_not_provided',
+				'Plugins List Not Provided',
+				array( 'status' => 404 )
+			);
 		}
 
-          foreach ( $plugins as $plugin => $decision ) {
-               if ( $decision ) {
-                    PluginInstallTaskManager::add_to_queue(
-                         new PluginInstallTask(
-                              $plugin,
-                              true,
-                         )
-                    );
-               } else {
-                    $position_in_queue = PluginInstallTaskManager::status( $plugin );
-                    if ( $position_in_queue === false || $position_in_queue === 0 ) {
-                         PluginUninstallTaskManager::add_to_queue(
-                              new PluginUninstallTask(
-                                   $plugin,
-                              )
-                         );
-                    } else {
-                         PluginInstallTaskManager::remove_from_queue(
-                              $plugin,
-                         );
-                    }
-               }
-          }
+		foreach ( $plugins as $plugin => $decision ) {
+			if ( $decision ) {
+				PluginInstallTaskManager::add_to_queue(
+					new PluginInstallTask(
+						$plugin,
+						true,
+					)
+				);
+			} else {
+				PluginUninstallTaskManager::add_to_queue(
+					new PluginUninstallTask(
+						$plugin,
+					)
+				);
+			}
+		}
 
 		return new \WP_REST_Response(
 			array(),
