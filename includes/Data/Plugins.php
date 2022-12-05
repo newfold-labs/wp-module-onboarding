@@ -240,8 +240,8 @@ final class Plugins {
 	 */
 	public static function get_squashed() {
 		return array_merge(
-			array_keys( array_filter( self::$wp_slugs, array( __CLASS__, 'check_approved' ) ) ),
-			array_keys( array_filter( self::$nfd_slugs, array( __CLASS__, 'check_approved' ) ) ),
+			array_filter( self::$wp_slugs, array( __CLASS__, 'check_approved' ) ) ,
+			array_filter( self::$nfd_slugs, array( __CLASS__, 'check_approved' ) ) ,
 		);
 	}
 
