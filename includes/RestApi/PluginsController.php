@@ -90,13 +90,6 @@ class PluginsController {
 					'callback'            => array( $this, 'get_site_features' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
-			)
-		);
-
-		\register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/site-features',
-			array(
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'set_site_features' ),
