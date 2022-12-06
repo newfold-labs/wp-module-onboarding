@@ -13,8 +13,8 @@ class FlowService {
 		$default_flow_data = Flows::get_data();
 		$updated_flow_data = array();
 		$updated_flow_data = self::update_flow_data_recursive($default_flow_data, $flow_data, $updated_flow_data);
-		self::update_wp_options_data_in_database($updated_flow_data);
-        return $updated_flow_data;
+		$update_status = self::update_wp_options_data_in_database($updated_flow_data);
+		return ($update_status)? $updated_flow_data : self::get_default_flow_data();
     }
 
     public static function get_default_flow_data() {
@@ -156,13 +156,6 @@ class FlowService {
 	*/
 	public static function read_flow_data_from_wp_option() {
 		return \get_option( Options::get_option_name( 'flow' ), false );
-	}
-
-    /*
-	 * add onboarding flow options
-	 */
-	private static function save_details_to_wp_options( $data ) {
-		return \add_option( Options::get_option_name( 'flow' ), $data );
 	}
 
 	/*
