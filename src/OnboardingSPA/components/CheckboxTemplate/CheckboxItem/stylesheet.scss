@@ -4,6 +4,7 @@ $main-color-dark: var(--wp-admin-theme-color);
 $main-color-light: var(--nfd-onboarding-white);
 $main-color: var(--nfd-onboarding-highlighted--rgb);
 $main-border-main: var(--nfd-onboarding-primary-alt);
+$box-shadow: var(--nfd-onboarding-light-gray-highlighted);
 
 .checkbox-item {
     margin: 12px;
@@ -92,8 +93,8 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 
     &--shown {
         border-bottom: none;
+        background: $box-shadow;
         border-radius: 2px 2px 0px 0px;
-        background: rgba($white-offset, 1);
         border-top: 1px solid rgba($main-color, 0.1);
         border-left: 1px solid rgba($main-color, 0.1);
         border-right: 1px solid rgba($main-color, 0.1);
@@ -107,10 +108,10 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
         margin-top: -12px;
         position: absolute;
         font-style: italic;
+        background: $box-shadow;
         border-radius: 0px 0px 2px 2px;
         transform-origin: top center;
         width: clamp(15rem, 25vw, 35rem);
-        background: rgba($white-offset, 1);
         font-size: clamp(0.82rem, 2vw, 0.9rem);
         border-left: 1px solid rgba($main-color, 0.1);
         border-right: 1px solid rgba($main-color, 0.1);
