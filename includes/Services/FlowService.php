@@ -11,8 +11,6 @@ class FlowService {
         if ( ! ( $flow_data = self::read_flow_data_from_wp_option() ) )
             return self::get_default_flow_data();
 		$default_flow_data = Flows::get_data();
-
-		// An array to keep the Flow Data updated in the database
 		$updated_flow_data = array();
 		$updated_flow_data = self::update_flow_data_recursive($default_flow_data, $flow_data, $updated_flow_data);
 		self::update_wp_options_data_in_database($updated_flow_data);
@@ -121,10 +119,10 @@ class FlowService {
 			{ 
 				// Updates value entered by the user
 				if (isset($params) && array_key_exists($key, $params)) {
-					if(gettype($value)===gettype($params[$key])) 
+					if(strcmp(gettype($value), gettype($params[$key])) === 0) 
 						$flow_data[$key] = $params[$key];
-					else 
-						$flag = $key. ' => '. gettype($params[$key]);
+					else
+						$flag = $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value);
 				}
 
 				// Retains the Blueprint Value if no input from the User
@@ -133,12 +131,12 @@ class FlowService {
 				if ( is_array( $value )) {
 					// To handle Indexed Arrays gracefully
 					if (isset($params[$key]) && count(array_filter(array_keys($params[$key]), 'is_string')) === 0 && !empty($params[$key]))
-							$flow_data[$key] = $params[$key];
+						$flow_data[$key] = $params[$key];
 					else
 						$flow_data[$key] = self::update_post_call_data_recursive($value, $params[$key], $flag);
 				}							
 			}
-			return $flow_data;
+			return (!empty($flag))? $flag : $flow_data;
 		}
 	}
 

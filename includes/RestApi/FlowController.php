@@ -96,10 +96,10 @@ class FlowController {
 		}
 
 		$flow_data = FlowService::update_post_call_data_recursive( $default_flow_data, $params );
-		if(!empty($flag)) {
+		if(!is_array($flow_data)) {
 			return new \WP_Error(
 				'wrong_param_type_provided',
-				"Wrong Parameter Type Provided : ". $flag,
+				"Wrong Parameter Type Provided : ". $flow_data,
 				array( 'status' => 404 )
 			);
 		}
