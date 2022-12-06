@@ -1,11 +1,12 @@
 import apiFetch from '@wordpress/api-fetch';
+import { wpRestURL } from './common';
 
-export const isEmpty = (object) => Object.keys(object).length === 0;
+export const isEmpty = ( object ) => Object.keys( object ).length === 0;
 
 export async function fetchWPSettings() {
-	return apiFetch({ path: '/wp/v2/settings' });
+	return apiFetch( { url: wpRestURL( 'settings' ) } );
 }
 
-export async function updateWPSettings(data) {
-	return apiFetch({ path: '/wp/v2/settings', method: 'POST', data });
+export async function updateWPSettings( data ) {
+	return apiFetch( { url: wpRestURL( 'settings' ), method: 'POST', data } );
 }
