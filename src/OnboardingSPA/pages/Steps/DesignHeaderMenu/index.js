@@ -31,6 +31,7 @@ const StepDesignHeaderMenu = () => {
 		setIsDrawerOpened, 
 		setIsDrawerSuppressed,
 		setIsSidebarOpened,
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {

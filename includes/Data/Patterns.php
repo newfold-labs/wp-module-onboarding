@@ -75,6 +75,7 @@ final class Patterns {
 				'header-menu' => array(
                     'site-header-left-logo-navigation-inline' => array(
 						'active'      => true,
+						'shown'       => true,
 					),
                     'homepage-1' => array(
 						'active'      => true,
@@ -83,13 +84,16 @@ final class Patterns {
 						'active'      => true,
 					),
 					'site-header-left-logo-navigation-below' => array(
-						'active'      => true,	
+						'active'      => true,
+						'shown'       => true,
 					),
 					'site-header-centered' => array(
-						'active'      => true,	
+						'active'      => true,
+						'shown'       => true,
 					),
 					'site-header-splitted-menu' => array(
-						'active'      => true,	
+						'active'      => true,
+						'shown'       => true,
 					)
                 ),
 			),

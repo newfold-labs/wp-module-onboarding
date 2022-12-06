@@ -49,17 +49,6 @@ const HeaderMenuPreview = ( {
 					setIsLoadingParent={ setIsLoadingParent }
 					skeletonLoadingTime={ skeletonLoadingTime }
 				/>
-				{ overlay && (
-					<div
-						className={ `${ className }__live-preview-container__overlay` }
-					>
-						<Icon
-							className={ `${ className }__live-preview-container__overlay__icon` }
-							size={ 64 }
-							icon={ search }
-						/>
-					</div>
-				) }
 			</div>
 		</div>
 	);

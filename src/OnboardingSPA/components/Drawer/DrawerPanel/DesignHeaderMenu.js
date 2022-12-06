@@ -1,10 +1,10 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
-
+import { useNavigate, useLocation } from 'react-router-dom';
 import HeaderMenuPreview from '../../HeaderMenuPreview';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
-import { GlobalStylesProvider } from '../../../components/LivePreview';
+import { GlobalStylesProvider, LivePreviewSkeleton } from '../../../components/LivePreview';
 
 import {
 	THEME_STATUS_ACTIVE,
@@ -24,11 +24,12 @@ const DesignHeaderMenu = () => {
 	const [ patterns, setPatterns ] = useState();
 	const [ headerMenuPreviewData, setHeaderMenuPreviewData ] = useState();
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
+	const location = useLocation();
 
 	const { currentStep, currentData, themeStatus } =
 		useSelect( ( select ) => {
 			return {
-				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+				currentStep: select( nfdOnboardingStore ).getStepFromPath( location.pathname ),
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
@@ -119,6 +120,13 @@ const DesignHeaderMenu = () => {
 			<div className="theme-header-menu-preview--drawer">
 				<div className="theme-header-menu-preview--drawer__list">
 					{ buildPreviews() }
+					{/* <LivePreviewSkeleton 
+						className={ 'theme-styles-preview--drawer__list__item' }
+						watch={patterns}
+						count = {4}
+						callback = {buildPreviews}
+						viewportWidth={ 900 }
+					/> */}
 				</div>
 			</div>
 		</GlobalStylesProvider>
