@@ -23,6 +23,7 @@ const StepSiteFeatures = () => {
 		setIsSidebarOpened,
 		setCurrentOnboardingData,
 		setIsDrawerSuppressed,
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentStep, currentData } = useSelect( ( select ) => {
