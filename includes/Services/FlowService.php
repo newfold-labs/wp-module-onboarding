@@ -117,12 +117,19 @@ class FlowService {
 		{
 			foreach ($flow_data as $key => $value)
 			{ 
+				if(is_array($params[$key]) && !is_array($value)) {
+					$flag = $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value);
+					break;
+				}
+
 				// Updates value entered by the user
-				if (isset($params) && array_key_exists($key, $params)) {
+				if (isset($params[$key]) && array_key_exists($key, $params)) {
 					if(strcmp(gettype($value), gettype($params[$key])) === 0) 
 						$flow_data[$key] = $params[$key];
-					else
+					else {
 						$flag = $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value);
+						break;
+					}
 				}
 
 				// Retains the Blueprint Value if no input from the User
@@ -182,13 +189,10 @@ class FlowService {
 		static $mismatch_key = [];
 		foreach($params as $key => $value){
 			if(!array_key_exists($key, $flow_data))
-			{
-				if (count(array_filter(array_keys($params), 'is_string')) === 0) {
-					continue;
-				}
 				$mismatch_key[]  = $header_key. " => " . $key;
-			}
-			elseif ( is_array( $value ) && !empty($value) ) {
+			elseif ( is_array( $value ) && !empty($value)) {
+				if (count(array_filter(array_keys($value), 'is_string')) === 0)
+					continue;
 				self::check_key_in_nested_array($value, $flow_data[$key], $key);
 			}
 		}
