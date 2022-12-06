@@ -35,14 +35,13 @@
 
 	div.store-address-form {
 		display: grid;
-		gap: 24px 0;
-		padding: 0 0 76px;
+		gap: min(1.5em, 24px);
+		padding: 1em 0 4em;
 		label {
 			display: block;
 			font-weight: 500;
 			font-size: 16px;
 			line-height: 1;
-			padding-bottom: 5px;
 			padding-bottom: 13px;
 			&[aria-required="true"]::after {
 				content: " *";
@@ -61,8 +60,18 @@
 		}
 
 		div[data-name="full-address"] {
+			select,
+			input {
+				min-width: 180px;
+			}
 			&[data-state-empty="false"] {
 				grid-template-columns: repeat(3, auto);
+				@media (max-width: #{ ($break-xlarge) }) {
+					input,
+					select {
+						min-width: 100px;
+					}
+				}
 			}
 			&[data-state-empty="true"] {
 				grid-template-columns: repeat(2, auto);
@@ -72,10 +81,7 @@
 			div[data-name="state"] {
 				grid-column: 2;
 			}
-			select,
-			input {
-				min-width: 180px;
-			}
+
 			@media (max-width: #{ ($break-large) }) {
 				&[data-state-empty] {
 					grid-template-columns: auto;
@@ -93,9 +99,6 @@
 				min-width: 100%;
 				width: 100%;
 			}
-		}
-		@media ( max-width: #{ ($break-medium)} ) {
-			padding: 0 24px 76px;
 		}
 	}
 }
