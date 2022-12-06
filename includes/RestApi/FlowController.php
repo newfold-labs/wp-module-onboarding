@@ -57,28 +57,14 @@ class FlowController {
 	 * @return \WP_REST_Response
 	 */
 	public function get_onboarding_flow_data( \WP_REST_Request $request ) {
-		$result = $this->get_wp_options_flow_data();
-		if( ! ($result) ) {
-			$result = FlowService::initalize_flow_data();
-			if ($result) {
-				return new \WP_REST_Response(
-					$result,
-					200
-				);
-			}
-			return new \WP_Error(
-				'Flow Data does not Exist',
-				array( 'status' => 404 )
-			);
-		}
+		$result = FlowService::read_flow_data_from_wp_option();
+		if( ! $result )
+			$result = FlowService::get_default_flow_data();
+
 		return new \WP_REST_Response(
 			$result,
 			200
 		);
-	}
-
-	public function get_wp_options_flow_data() {
-		return FlowService::read_flow_data_from_wp_option();
 	}
 
 	/**
@@ -89,7 +75,7 @@ class FlowController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function save_onboarding_flow_data( \WP_REST_Request $request ) {
-		$default_flow_data = Flows::get_data();
+		$default_flow_data = FlowService::get_default_flow_data();
 		$params    = json_decode( $request->get_body(), true );
 
 		if ( is_null( $params ) ) {
@@ -99,8 +85,6 @@ class FlowController {
 				array( 'status' => 404 )
 			);
 		}
-
-		$flow_data = $this->get_wp_options_flow_data();
 		
 		$mismatch_key = FlowService::check_key_in_nested_array($params, $default_flow_data);
 		if ( ! empty($mismatch_key) )  {
@@ -112,6 +96,13 @@ class FlowController {
 		}
 
 		$flow_data = FlowService::update_post_call_data_recursive( $default_flow_data, $params );
+		if(!empty($flag)) {
+			return new \WP_Error(
+				'wrong_param_type_provided',
+				"Wrong Parameter Type Provided : ". $flag,
+				array( 'status' => 404 )
+			);
+		}
 
 		// update timestamp once data is updated
 		$flow_data['updatedAt'] = time();

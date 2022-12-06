@@ -7,19 +7,19 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 
 class FlowService {
 
-	// An array to keep the Flow Data updated in the database
-	protected $updated_flow_data = array();
-
 	public static function initalize_flow_data() { 
-		$default_flow_data = Flows::get_data();
         if ( ! ( $flow_data = self::read_flow_data_from_wp_option() ) )
             return self::get_default_flow_data();
+		$default_flow_data = Flows::get_data();
+
+		// An array to keep the Flow Data updated in the database
+		$updated_flow_data = array();
 		$updated_flow_data = self::update_flow_data_recursive($default_flow_data, $flow_data, $updated_flow_data);
 		self::update_wp_options_data_in_database($updated_flow_data);
         return $updated_flow_data;
     }
 
-    private static function get_default_flow_data() {
+    public static function get_default_flow_data() {
 		// check if data is available in the database if not then fetch the default dataset
 		$flow_data              = Flows::get_data();
 		$flow_data['createdAt'] = time();
@@ -44,9 +44,13 @@ class FlowService {
 
 				// Any Key renamed is updated in the database with NewKey and the value from the OldKey is retained
 				if($flow_data_fixes) {
-					foreach ($flow_data_fixes as $old_key=>$new_key) {
-						if (isset($flow_data) && array_key_exists($old_key, $flow_data)) 
-							$flow_data[$new_key] = $flow_data[$old_key];
+					foreach ($flow_data_fixes as $old_key=>$new_val) {
+						if (isset($flow_data) && array_key_exists($old_key, $flow_data)) {
+							if($new_val['retain_existing_value'])
+								$flow_data[$new_val['new_key']] = $flow_data[$old_key];
+							else
+								$flow_data[$new_val['new_key']] = $default_flow_data[$new_val['new_key']];
+						} 
 						unset($flow_data[$old_key]);
 					}
 				}
@@ -111,24 +115,28 @@ class FlowService {
 	/*
 	 * function to update the Database recursively based on Values opted or entered by the User
 	 */	
-	public static function update_post_call_data_recursive(&$flow_data, &$params) {
+	public static function update_post_call_data_recursive(&$flow_data, &$params, &$flag = '') {
 		{
 			foreach ($flow_data as $key => $value)
 			{ 
 				// Updates value entered by the user
-				if (isset($params) && array_key_exists($key, $params) && !is_array($value))
-					$flow_data[$key] = $params[$key];
+				if (isset($params) && array_key_exists($key, $params)) {
+					if(gettype($value)===gettype($params[$key])) 
+						$flow_data[$key] = $params[$key];
+					else 
+						$flag = $key. ' => '. gettype($params[$key]);
+				}
 
 				// Retains the Blueprint Value if no input from the User
 				else $flow_data[$key] = $value;
-								
-				if ( is_array( $value ) ) {
+
+				if ( is_array( $value )) {
 					// To handle Indexed Arrays gracefully
-					if (isset($params[$key]) && count(array_filter(array_keys($params[$key]), 'is_string')) === 0 && !empty($params[$key])) 
-						$flow_data[$key] = $params[$key];
+					if (isset($params[$key]) && count(array_filter(array_keys($params[$key]), 'is_string')) === 0 && !empty($params[$key]))
+							$flow_data[$key] = $params[$key];
 					else
-						$flow_data[$key] = self::update_post_call_data_recursive($value, $params[$key]);
-				}
+						$flow_data[$key] = self::update_post_call_data_recursive($value, $params[$key], $flag);
+				}							
 			}
 			return $flow_data;
 		}
@@ -165,7 +173,7 @@ class FlowService {
 	private static function update_default_data_for_ecommerce( $data ) {
 		// update default data with ecommerce data
 		$data['data']['topPriority']['priority1'] = 'selling';
-		$data['data']['siteType'] = array('label' => '', 'referTo' => 'business');
+		$data['data']['siteType'] = array('label' => '', 'referTo' => 'business', 'primary' => '',  'secondary' => '' );
 		return $data;
 	}
 
