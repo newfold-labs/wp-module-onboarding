@@ -16,7 +16,7 @@ import { CheckboxControl } from '@wordpress/components';
  */
 
 const CheckboxItem = ( {
-	key,
+	name,
 	icon,
 	title,
 	desc,
@@ -30,7 +30,7 @@ const CheckboxItem = ( {
 
 	const handleCheck = () => {
 		setIsSelected( ! isSelected );
-		callback( key, ! isSelected );
+		callback( name, ! isSelected );
 	};
 
 	const handleShowDesc = () => {

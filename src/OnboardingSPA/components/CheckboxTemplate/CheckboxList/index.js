@@ -23,7 +23,7 @@ const CheckboxList = ( { callback, selectedItems, customItemsList } ) => {
 			const isSelectedDefault = selectedItems[item.slug];
 			customItems.push(
 				<CheckboxItem
-					slug={item.slug}
+					name={item.slug}
 					icon={item.icon}
 					title={item.title}
 					subtitle={item.subtitle}
