@@ -7,7 +7,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 final class SiteFeatures {
 
 	protected static $site_features = array(
-		'default'   => array(),
+		'wp-setup'   => array(),
 		'ecommerce' => array(
 			'jetpack'                            => array(
 				'slug'     => 'jetpack',
