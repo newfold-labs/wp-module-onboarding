@@ -44,6 +44,7 @@ const StepDesignHeaderMenu = () => {
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_HEADER_MENU );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	return (

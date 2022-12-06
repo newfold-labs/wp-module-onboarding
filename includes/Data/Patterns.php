@@ -98,25 +98,23 @@ final class Patterns {
 
 	public static function cleanup_wp_grammar( $content ) {
 
-		 // Remove template-part if that exists
-		 $content = preg_replace( '/^<!-- wp:template-part .* \/-->$/m', '', $content );
+		// Remove template-part if that exists
+		$content = preg_replace( '/^<!-- wp:template-part .* \/-->$/m', '', $content );
 
-		 // Create an array with the values you want to replace
-		 $searches = array( "\n", "\t" );
+		// Create an array with the values you want to replace
+		$searches = array( "\n", "\t" );
 
-		 // Replace the line breaks and tabs with a empty string
-		 $content = str_replace( $searches, '', $content );
+		// Replace the line breaks and tabs with a empty string
+		$content = str_replace( $searches, '', $content );
 
-		 return $content;
+		return $content;
 	}
 
 	public static function get_pattern_from_slug( $pattern_slug ) {
-		 $active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
-		 $pattern_name = $active_theme . '/' . $pattern_slug;
 
-		 $block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
-		if ( $block_patterns_registry->is_registered( $pattern_name ) ) {
-			 $pattern = $block_patterns_registry->get_registered( $pattern_name );
+		$block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
+		if ( $block_patterns_registry->is_registered( $pattern_slug ) ) {
+			$pattern = $block_patterns_registry->get_registered( $pattern_slug );
 			 return array(
 				 'title'   => $pattern['title'],
 				 'content' => self::cleanup_wp_grammar( $pattern['content'] ),
@@ -124,23 +122,23 @@ final class Patterns {
 			 );
 		}
 
-		 return false;
+		return false;
 	}
 
 	public static function get_theme_step_patterns_from_step( $step, $squash = false ) {
-		 $active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
+		$active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
 
 		if ( ! isset( self::get_theme_step_patterns()[ $active_theme ][ $step ] ) ) {
-			 return false;
+			return false;
 		}
 
-		 $pattern_slugs           = self::get_theme_step_patterns()[ $active_theme ][ $step ];
-		 $block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
-		 $block_patterns          = array();
-		 $block_patterns_squashed = '';
+		$pattern_slugs           = self::get_theme_step_patterns()[ $active_theme ][ $step ];
+		$block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
+		$block_patterns          = array();
+		$block_patterns_squashed = '';
 		foreach ( array_keys( $pattern_slugs ) as $pattern_slug ) {
 			if ( $pattern_slugs[ $pattern_slug ]['active'] === true ) {
-				 $pattern_name = $active_theme . '/' . $pattern_slug;
+				$pattern_name = $active_theme . '/' . $pattern_slug;
 				if ( $block_patterns_registry->is_registered( $pattern_name ) ) {
 					$pattern = $block_patterns_registry->get_registered( $pattern_name );
 					if ( ! $squash ) {
@@ -153,124 +151,39 @@ final class Patterns {
 							),
 							$pattern_slugs[ $pattern_slug ]
 						);
-						  continue;
+						continue;
 					}
 					$block_patterns_squashed .= self::cleanup_wp_grammar( $pattern['content'] );
 				}
 			}
 		}
 
-		 return $squash ? $block_patterns_squashed : $block_patterns;
-	}
-
-
-	 /**
-	  * Sets the Homepage selected by the user.
-	  *
-	  * @return \WP_REST_Response|\WP_Error
-	  */
-	public static function set_homepage_patterns( $slug ) {
-
-		if ( ! isset( $slug ) ) {
-			return new \WP_Error(
-				'Slug not Provided',
-				'The WordPress Grammar Slug for homepage was not provided',
-				array( 'status' => 404 )
-			);
-		}
-
-		 $pattern_data = self::get_pattern_from_slug( $slug );
-		if ( ! $pattern_data ) {
-			return new \WP_Error(
-				400,
-				'Failed to save Homepage, Pattern not found'
-			);
-		}
-
-		 $show_pages_on_front = \get_option( Options::get_option_name( 'show_on_front', false ) );
-
-		 // Check if default homepage is posts
-		if ( $show_pages_on_front == 'posts' ) {
-			 \update_option( Options::get_option_name( 'show_on_front', false ), 'page' );
-		}
-
-		$request = new \WP_REST_Request(
-			'POST',
-			'/wp/v2/pages'
-		);
-
-		$request->set_body_params(
-			array(
-				'title'    => 'Homepage',
-				'status'   => 'publish',
-				'template' => 'no-title',
-				'content'  => $pattern_data['content'],
-			)
-		);
-
-		 $response = \rest_do_request( $request );
-
-		if ( 201 === $response->status ) {
-			 $page_data = json_decode( wp_json_encode( $response->data ), true );
-
-			 // Set the newly added page as Homepage
-			if ( array_key_exists( 'id', $page_data ) ) {
-				\update_option( Options::get_option_name( 'page_on_front', false ), $page_data['id'] );
-			}
-
-			return new \WP_REST_Response(
-				array(
-					'message'  => 'Successfully set the Homepage',
-					'response' => $page_data,
-				),
-				201
-			);
-		}
-
-		return new \WP_Error(
-			$response->status,
-			'Failed to save Homepage.' . $response
-		);
-	}
-
-	public static function set_theme_step_patterns( $step, $slug ) {
-
-		switch ( $step ) {
-			case 'homepage-styles':
-				if ( isset( $slug ) ) {
-					 return self::set_homepage_patterns( $slug );
-				}
-			default:
-				return new \WP_Error(
-					404,
-					'No Step Found with given params'
-				);
-		}
+		return $squash ? $block_patterns_squashed : $block_patterns;
 	}
 
 	public static function get_count_of_patterns() {
-		 $active_theme          = ( \wp_get_theme() )->get( 'TextDomain' );
-		 $theme_step_patterns   = self::get_theme_step_patterns();
-		 $active_theme_patterns = isset( $theme_step_patterns[ $active_theme ] ) ? $theme_step_patterns[ $active_theme ] : array();
+		$active_theme          = ( \wp_get_theme() )->get( 'TextDomain' );
+		$theme_step_patterns   = self::get_theme_step_patterns();
+		$active_theme_patterns = isset( $theme_step_patterns[ $active_theme ] ) ? $theme_step_patterns[ $active_theme ] : array();
 
-		 $theme_pattern_count = array();
+		$theme_pattern_count = array();
 		foreach ( $active_theme_patterns as $theme_step => $patterns ) {
-				$theme_step_count  = 0;
-				$combine_styles    = 1;
+			$theme_step_count = 0;
+			$combine_styles   = 1;
 			foreach ( $patterns as $pattern => $pattern_data ) {
 				if ( isset( $pattern_data['shown'] ) && $pattern_data['shown'] === true ) {
-						  $theme_step_count += 1;
+					$theme_step_count += 1;
 				}
 				if ( isset( $pattern_data['combine'] ) && $pattern_data['combine'] === true ) {
-					 $combine_styles = count( \WP_Theme_JSON_Resolver::get_style_variations() ) + 1;
+					$combine_styles = count( \WP_Theme_JSON_Resolver::get_style_variations() ) + 1;
 				}
 			}
 
-			   $theme_pattern_count[ $theme_step ] = array(
-				   'previewCount' => $combine_styles * $theme_step_count,
-			   );
+			$theme_pattern_count[ $theme_step ] = array(
+				'previewCount' => $combine_styles * $theme_step_count,
+			);
 		}
-		 return $theme_pattern_count;
+		return $theme_pattern_count;
 	}
 
 }

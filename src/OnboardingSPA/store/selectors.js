@@ -31,6 +31,10 @@ export function isDrawerSuppressed( state ) {
 	return state.drawer.isSuppressed;
 }
 
+export function isHeaderNavigationEnabled( state ) {
+	return state.header.isNavigationEnabled;
+}
+
 /**
  * Gets current Newfold brand
  *
@@ -245,7 +249,7 @@ export function getStoreInfoSteps( state ) {
 	return state.flow.steps.storeInfoSteps;
 }
 
-export function getStepPreviewData(state) {
+export function getStepPreviewData( state ) {
 	return state.runtime.previewSettings.stepPreviewData;
 }
 

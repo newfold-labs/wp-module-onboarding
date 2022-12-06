@@ -40,12 +40,6 @@ class PatternsController extends \WP_REST_Controller {
 					'args'                => $this->get_pattern_args(),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
-				array(
-					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => array( $this, 'set_pattern' ),
-					'args'                => $this->set_pattern_args(),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				),
 			)
 		);
 	}
@@ -61,17 +55,6 @@ class PatternsController extends \WP_REST_Controller {
 			 'squash' => array(
 				 'type'    => 'boolean',
 				 'default' => false,
-			 ),
-		 );
-	}
-
-	public function set_pattern_args() {
-		 return array(
-			 'slug' => array(
-				 'type' => 'string',
-			 ),
-			 'step' => array(
-				 'type' => 'string',
 			 ),
 		 );
 	}
@@ -122,26 +105,4 @@ class PatternsController extends \WP_REST_Controller {
 			$pattern
 		);
 	}
-
-
-	 /**
-	  * Sets the patterns according to the specific step.
-	  *
-	  * @return \WP_Rest_Response|\WP_Error
-	  */
-	public function set_pattern( \WP_REST_Request $request ) {
-		 $step = $request->get_param( 'step' );
-		 $slug = $request->get_param( 'slug' );
-
-		if ( ! $step ) {
-			return new \WP_Error(
-				'missing_params',
-				__( 'Pattern identifier (slug) or step name (step) required.' ),
-				array( 'status' => 400 )
-			);
-		}
-
-		 return Patterns::set_theme_step_patterns( $step, $slug );
-	}
-
 }

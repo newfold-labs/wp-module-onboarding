@@ -34,12 +34,14 @@ const GetStartedExperience = () => {
 		setDrawerActiveView,
 		setIsSidebarOpened,
 		setIsDrawerSuppressed,
+		setIsHeaderNavigationEnabled
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	useEffect( () => {
