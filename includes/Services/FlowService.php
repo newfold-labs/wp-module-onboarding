@@ -113,7 +113,7 @@ class FlowService {
 	/*
 	 * function to update the Database recursively based on Values opted or entered by the User
 	 */	
-	public static function update_post_call_data_recursive(&$flow_data, &$params, &$flag = '') {
+	public static function update_post_call_data_recursive(&$flow_data, &$updated_flow_data, &$params, &$flag = '') {
 		{
 			foreach ($flow_data as $key => $value)
 			{ 
@@ -125,25 +125,29 @@ class FlowService {
 				// Updates value entered by the user
 				if (isset($params[$key]) && array_key_exists($key, $params)) {
 					if(strcmp(gettype($value), gettype($params[$key])) === 0) 
-						$flow_data[$key] = $params[$key];
+						$updated_flow_data[$key] = $params[$key];
 					else {
 						$flag = $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value);
 						break;
 					}
 				}
 
+				elseif(isset($params) && !array_key_exists($key, $params)) {
+					$updated_flow_data[$key] = $flow_data[$key];
+				}
+
 				// Retains the Blueprint Value if no input from the User
-				else $flow_data[$key] = $value;
+				else $updated_flow_data[$key] = $value;
 
 				if ( is_array( $value )) {
 					// To handle Indexed Arrays gracefully
 					if (isset($params[$key]) && count(array_filter(array_keys($params[$key]), 'is_string')) === 0 && !empty($params[$key]))
-						$flow_data[$key] = $params[$key];
+						$updated_flow_data[$key] = $params[$key];
 					else
-						$flow_data[$key] = self::update_post_call_data_recursive($value, $params[$key], $flag);
+						$updated_flow_data[$key] = self::update_post_call_data_recursive($value, $updated_flow_data[$key], $params[$key], $flag);
 				}							
 			}
-			return (!empty($flag))? $flag : $flow_data;
+			return (!empty($flag))? $flag : $updated_flow_data;
 		}
 	}
 
