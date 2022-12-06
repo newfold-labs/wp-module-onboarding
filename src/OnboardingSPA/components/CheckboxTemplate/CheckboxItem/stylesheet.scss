@@ -93,7 +93,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
     &--shown {
         border-bottom: none;
         border-radius: 2px 2px 0px 0px;
-        background: rgba($white-offset, 0.8);
+        background: rgba($white-offset, 1);
         border-top: 1px solid rgba($main-color, 0.1);
         border-left: 1px solid rgba($main-color, 0.1);
         border-right: 1px solid rgba($main-color, 0.1);
@@ -110,7 +110,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
         border-radius: 0px 0px 2px 2px;
         transform-origin: top center;
         width: clamp(15rem, 25vw, 35rem);
-        background: rgba($white-offset, 0.8);
+        background: rgba($white-offset, 1);
         font-size: clamp(0.82rem, 2vw, 0.9rem);
         border-left: 1px solid rgba($main-color, 0.1);
         border-right: 1px solid rgba($main-color, 0.1);
