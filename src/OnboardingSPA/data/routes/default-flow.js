@@ -87,12 +87,14 @@ const StepBasicInfoLearnMoreSidebar = lazy( () =>
 const StepDesignThemes = lazy( () =>
 	import( '../../pages/Steps/DesignThemes' )
 );
+
 const StepDesignThemeStylesMenu = lazy( () =>
 	import( '../../pages/Steps/DesignThemeStyles/Menu' )
 );
 const StepDesignThemeStylesMenuLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/DesignThemeStyles/Menu/Sidebar/LearnMore' )
 );
+
 const StepDesignThemeStylesPreview = lazy( () =>
 	import( '../../pages/Steps/DesignThemeStyles/Preview' )
 );
@@ -139,6 +141,8 @@ const StepSiteFeatures = lazy( () =>
 const StepSiteFeaturesLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/SiteFeatures/Sidebar/LearnMore' )
 );
+
+const StepComplete = lazy( () => import( '../../pages/Steps/Complete' ) );
 
 const StepWhatNext = lazy( () => import( '../../pages/Steps/WhatNext' ) );
 const StepWhatNextLearnMoreSidebar = lazy( () =>
@@ -536,6 +540,11 @@ export const steps = [
 		},
 	},
 	{
+		path: '/wp-setup/step/complete',
+		Component: StepComplete,
+		priority: 285,
+	},
+	{
 		path: '/wp-setup/step/what-next',
 		title: __( 'What Next', 'wp-module-onboarding' ),
 		heading: __( 'How else can we help?', 'wp-module-onboarding' ),
@@ -621,7 +630,8 @@ export const initialTopSteps = () => {
 	const topSteps = filter( steps, ( step ) => {
 		return (
 			! step.path.includes( '/step/get-started' ) &&
-			! step.path.includes( '/step/design' )
+			! step.path.includes( '/step/design' ) &&
+			! step.path.includes( '/step/complete' )
 		);
 	} );
 

@@ -83,6 +83,7 @@ const StepSiteFeatures = () => {
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	return (

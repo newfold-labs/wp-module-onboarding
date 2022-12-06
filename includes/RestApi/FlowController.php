@@ -35,13 +35,24 @@ class FlowController {
 			$this->rest_base,
 			array(
 				array(
-					'methods'  => \WP_REST_Server::READABLE,
-					'callback' => array( $this, 'get_onboarding_flow_data' ),
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_onboarding_flow_data' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => array( $this, 'save_onboarding_flow_data' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/complete',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'complete' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -153,10 +164,13 @@ class FlowController {
 	public function update_default_data_for_ecommerce( $data ) {
 		// get current flow type
 		$flow_type = Data::current_flow();
-		if($flow_type == 'ecommerce') {
+		if ( $flow_type == 'ecommerce' ) {
 			// update default data with ecommerce data
 			$data['data']['topPriority']['priority1'] = 'selling';
-			$data['data']['siteType'] = array('label' => '', 'referTo' => 'business');
+			$data['data']['siteType']                 = array(
+				'label'   => '',
+				'referTo' => 'business',
+			);
 		}
 		return $data;
 	}
@@ -197,5 +211,29 @@ class FlowController {
 			}
 		}
 		return false;
+	}
+
+	public function complete() {
+		$site_pages_publish_request  = new \WP_REST_Request(
+			'POST',
+			'/newfold-onboarding/v1/site-pages/publish'
+		);
+		$site_pages_publish_response = \rest_do_request( $site_pages_publish_request );
+		if ( $site_pages_publish_response->is_error() ) {
+			return $site_pages_publish_response->as_error();
+		}
+		$child_theme_generation_request  = new \WP_REST_Request(
+			'POST',
+			'/newfold-onboarding/v1/themes/child/generate'
+		);
+		$child_theme_generation_response = \rest_do_request( $child_theme_generation_request );
+		if ( $child_theme_generation_response->is_error() ) {
+			return $child_theme_generation_response->as_error();
+		}
+
+		return new \WP_REST_Response(
+			array(),
+			201
+		);
 	}
 }

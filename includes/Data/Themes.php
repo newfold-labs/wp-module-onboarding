@@ -21,6 +21,12 @@ final class Themes {
 		),
 	);
 
+	// This is temporary, as we implement theme selections we can remove this.
+	protected static $flow_default_theme_slugs = array(
+		'wp-setup'   => 'twentytwentythree',
+		'ecommerce'  => 'yith-wonder',
+	);
+
 	 /**
 	  * @var array Initial themes to be installed classified based on the hosting plan.
 	  *
@@ -65,7 +71,7 @@ final class Themes {
 
 	public static function get_approved() {
 		 return array(
-			 'nfd_slugs' => array_keys( array_filter( self::$wp_slugs, array( __CLASS__, 'check_approved' ) ) ),
+			 'nfd_slugs' => array_keys( array_filter( self::$nfd_slugs, array( __CLASS__, 'check_approved' ) ) ),
 		 );
 	}
 
@@ -79,7 +85,7 @@ final class Themes {
 	  * @return array
 	  */
 	public static function step_preview_data() {
-		$theme_step_data   = Patterns::get_count_of_patterns();
+		$theme_step_data = Patterns::get_count_of_patterns();
 		return $theme_step_data;
 	}
 
@@ -103,5 +109,10 @@ final class Themes {
 		}
 
 		return $init_list;
+	}
+
+	// This is temporary, as we implement theme selections we can remove this.
+	public static function get_flow_default_theme_slug( $flow ) {
+		return isset( self::$flow_default_theme_slugs[ $flow ] ) ? self::$flow_default_theme_slugs[ $flow ] : false;
 	}
 }
