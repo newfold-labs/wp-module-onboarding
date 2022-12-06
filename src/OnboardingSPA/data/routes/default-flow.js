@@ -518,9 +518,12 @@ export const steps = [
 	{
 		path: '/wp-setup/step/site-features',
 		title: __( 'Features', 'wp-module-onboarding' ),
-		heading: __( 'Our toolbox is your toolbox', 'wp-module-onboarding' ),
+		heading: __(
+			'Key features to supercharge your site',
+			'wp-module-onboarding'
+		),
 		subheading: __(
-			"We've learned a lot in 16 years of WordPress! Now that expertise is yours.",
+			'Our toolbox of Plugins & Services is your toolbox.',
 			'wp-module-onboarding'
 		),
 		description: __(
