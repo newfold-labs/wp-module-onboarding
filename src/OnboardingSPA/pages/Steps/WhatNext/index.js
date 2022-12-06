@@ -5,12 +5,13 @@ import { useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 
 const StepWhatNext = () => {
-	const { setIsDrawerOpened, setIsSidebarOpened } =
+	const { setIsDrawerOpened, setIsSidebarOpened, setIsHeaderNavigationEnabled } =
 		useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		setIsDrawerOpened( false );
 		setIsSidebarOpened( false );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	return (

@@ -6,10 +6,11 @@ import CommonLayout from '../../../components/Layouts/Common';
 import StepOverview from '../../../components/StepOverview';
 
 const StepSiteFeatures = () => {
-	const { setIsSidebarOpened } = useDispatch( nfdOnboardingStore );
+	const { setIsSidebarOpened, setIsHeaderNavigationEnabled } = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		setIsSidebarOpened( false );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	return (

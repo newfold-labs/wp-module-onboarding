@@ -136,6 +136,18 @@ export function sidebar(
 	return state;
 }
 
+export function header( state = { isNavigationEnabled: true }, action ) {
+	switch ( action.type ) {
+		case 'SET_HEADER_NAVIGATION_ENABLED':
+			return {
+				...state,
+				isNavigationEnabled: action.isNavigationEnabled,
+			};
+	}
+
+	return state;
+}
+
 export function runtime( state = {}, action ) {
 	switch ( action.type ) {
 		case 'SET_RUNTIME':
@@ -191,4 +203,5 @@ export default combineReducers( {
 	settings,
 	flow,
 	sidebar,
+	header,
 } );

@@ -47,6 +47,7 @@ const StepTopPriority = ( props ) => {
 		setIsSidebarOpened,
 		setCurrentOnboardingData,
 		setIsDrawerSuppressed,
+		setIsHeaderNavigationEnabled
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentStep, currentData } = useSelect( ( select ) => {
@@ -69,6 +70,7 @@ const StepTopPriority = ( props ) => {
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( false ); 
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	useEffect( () => {
