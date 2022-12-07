@@ -366,23 +366,23 @@ export const steps = [
 			},
 		},
 	},
-	{
-		path: '/wp-setup/step/design/themes',
-		title: __( 'Themes', 'wp-module-onboarding' ),
-		heading: __( "Let's make you look your best", 'wp-module-onboarding' ),
-		subheading: __(
-			'Find a WordPress Theme to present polished and compelling.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			'Your Theme is the starting place for layout and design, setting the tone for your site. Keep it for years or change and swap as you grow.',
-			'wp-module-onboarding'
-		),
-		Component: StepDesignThemes,
-		Icon: brush,
-		priority: 140,
-		VIEW: VIEW_DESIGN_THEMES,
-	},
+	// {
+	// 	path: '/wp-setup/step/design/themes',
+	// 	title: __( 'Themes', 'wp-module-onboarding' ),
+	// 	heading: __( "Let's make you look your best", 'wp-module-onboarding' ),
+	// 	subheading: __(
+	// 		'Find a WordPress Theme to present polished and compelling.',
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	description: __(
+	// 		'Your Theme is the starting place for layout and design, setting the tone for your site. Keep it for years or change and swap as you grow.',
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	Component: StepDesignThemes,
+	// 	Icon: brush,
+	// 	priority: 140,
+	// 	VIEW: VIEW_DESIGN_THEMES,
+	// },
 	{
 		path: '/wp-setup/step/design/theme-styles/menu',
 		title: __( 'Theme Styles', 'wp-module-onboarding' ),
@@ -637,7 +637,7 @@ export const initialTopSteps = () => {
 
 	const designStep = {
 		/* This is a fake step to stand-in for all Design steps and does not have a Component to render */
-		path: '/wp-setup/step/design/themes',
+		path: '/wp-setup/step/design/theme-styles/menu',
 		title: __( 'Design', 'wp-module-onboarding' ),
 		description: '',
 		Icon: brush,
