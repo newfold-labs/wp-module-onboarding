@@ -58,8 +58,10 @@ class FlowController {
 	 */
 	public function get_onboarding_flow_data() {
 		$result = FlowService::read_flow_data_from_wp_option();
-		if( ! $result )
+		if( ! $result ) {
 			$result = FlowService::get_default_flow_data();
+			FlowService::update_wp_options_data_in_database($result);
+		}
 
 		return new \WP_REST_Response(
 			$result,

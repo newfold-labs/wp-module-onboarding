@@ -8,13 +8,14 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 class FlowService {
 
 	public static function initalize_flow_data() { 
-        if ( ! ( $flow_data = self::read_flow_data_from_wp_option() ) )
-            return self::get_default_flow_data();
+        if ( ! ( $flow_data = self::read_flow_data_from_wp_option() ) ) {
+            $flow_data =  self::get_default_flow_data();
+			return self::update_wp_options_data_in_database( $flow_data );
+		}
 		$default_flow_data = Flows::get_data();
 		$updated_flow_data = array();
 		$updated_flow_data = self::update_flow_data_recursive($default_flow_data, $flow_data, $updated_flow_data);
-		$update_status = self::update_wp_options_data_in_database($updated_flow_data);
-		return ($update_status)? $updated_flow_data : self::get_default_flow_data();
+		return self::update_wp_options_data_in_database($updated_flow_data);
     }
 
     public static function get_default_flow_data() {
@@ -43,13 +44,13 @@ class FlowService {
 				// Any Key renamed is updated in the database with NewKey and the value from the OldKey is retained
 				if($flow_data_fixes) {
 					foreach ($flow_data_fixes as $old_key=>$new_val) {
-						if (isset($flow_data) && array_key_exists($old_key, $flow_data)) {
+						if (isset($flow_data[$old_key]) && array_key_exists($new_val['new_key'], $default_flow_data)) {
 							if($new_val['retain_existing_value'])
 								$flow_data[$new_val['new_key']] = $flow_data[$old_key];
 							else
 								$flow_data[$new_val['new_key']] = $default_flow_data[$new_val['new_key']];
-						} 
-						unset($flow_data[$old_key]);
+							unset($flow_data[$old_key]);
+						}	
 					}
 				}
 
@@ -141,7 +142,7 @@ class FlowService {
 
 				if ( is_array( $value )) {
 					// To handle Indexed Arrays gracefully
-					if (isset($params[$key]) && count(array_filter(array_keys($params[$key]), 'is_string')) === 0 && !empty($params[$key]))
+					if (isset($params[$key]) && count(array_filter(array_keys($params[$key]), 'is_string')) === 0 ) 
 						$updated_flow_data[$key] = $params[$key];
 					else
 						$updated_flow_data[$key] = self::update_post_call_data_recursive($value, $updated_flow_data[$key], $params[$key], $flag);
