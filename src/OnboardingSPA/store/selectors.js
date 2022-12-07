@@ -259,6 +259,6 @@ export function getStepPreviewData( state ) {
  * @param {*} state
  * @return string
  */
- export function getHeaderMenuData( state ) {
+export function getHeaderMenuData( state ) {
 	return state.header.menu;
 }

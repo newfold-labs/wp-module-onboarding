@@ -1,5 +1,5 @@
-import { check, search, Icon } from '@wordpress/icons';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
+import { check, Icon } from '@wordpress/icons';
 
 import { LivePreview } from '../LivePreview';
 
@@ -10,7 +10,6 @@ const HeaderMenuPreview = ( {
 	viewportWidth = 1500,
 	styling = 'large',
 	previewSettings,
-	overlay = false,
 	onClick = false,
 	skeletonLoadingTime = 2500,
 } ) => {
@@ -19,18 +18,22 @@ const HeaderMenuPreview = ( {
 	return (
 		<div
 			className={ `${ className }` }
-			onClick={ typeof onClick === 'function' && ( () => {
-				if ( ! loadingParent ) {
-					onClick();
-				}
-			} ) }
+			onClick={
+				typeof onClick === 'function' &&
+				( () => {
+					if ( ! loadingParent ) {
+						onClick();
+					}
+				} )
+			}
 		>
 			<div className={ `${ className }__title-bar` }>
 				<div className={ `${ className }__title-bar__browser` }></div>
 				<div
-					className={ `${ selected
-						? `${ className }__title-bar--selected live-preview-selected-check`
-						: `${ className }__title-bar--unselected`
+					className={ `${
+						selected
+							? `${ className }__title-bar--selected live-preview-selected-check`
+							: `${ className }__title-bar--unselected`
 					}` }
 				>
 					<Icon

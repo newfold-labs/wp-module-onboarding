@@ -1,10 +1,10 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import HeaderMenuPreview from '../../HeaderMenuPreview';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
-import { GlobalStylesProvider, LivePreviewSkeleton } from '../../../components/LivePreview';
+import { GlobalStylesProvider } from '../../../components/LivePreview';
 
 import {
 	THEME_STATUS_ACTIVE,
@@ -12,13 +12,16 @@ import {
 } from '../../../../constants';
 
 const DesignHeaderMenu = () => {
-	const headerMenuSlugs = [ 
-		'yith-wonder/site-header-left-logo-navigation-inline', 
+	const headerMenuSlugs = [
+		'yith-wonder/site-header-left-logo-navigation-inline',
 		'yith-wonder/site-header-left-logo-navigation-below',
 		'yith-wonder/site-header-centered',
-		'yith-wonder/site-header-splitted-menu'
+		'yith-wonder/site-header-splitted-menu',
 	];
-	const headerMenuBodySlugs = [ 'yith-wonder/homepage-1', 'yith-wonder/site-footer'];
+	const headerMenuBodySlugs = [
+		'yith-wonder/homepage-1',
+		'yith-wonder/site-footer',
+	];
 
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ patterns, setPatterns ] = useState();
@@ -26,52 +29,55 @@ const DesignHeaderMenu = () => {
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
 	const location = useLocation();
 
-	const { currentStep, currentData, themeStatus } =
-		useSelect( ( select ) => {
-			return {
-				currentStep: select( nfdOnboardingStore ).getStepFromPath( location.pathname ),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-			};
-		}, [] );
+	const { currentStep, currentData, themeStatus } = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getStepFromPath(
+				location.pathname
+			),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+		};
+	}, [] );
 
-	const {
-		setCurrentOnboardingData,
-		updateThemeStatus,
-		setHeaderMenuData,
-	} = useDispatch( nfdOnboardingStore );
+	const { setCurrentOnboardingData, updateThemeStatus, setHeaderMenuData } =
+		useDispatch( nfdOnboardingStore );
 
 	const getPatternsData = async () => {
-		const headerMenuPreviewResponse = await getPatterns( currentStep.patternId );
+		const headerMenuPreviewResponse = await getPatterns(
+			currentStep.patternId
+		);
 		if ( headerMenuPreviewResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 		}
-		setHeaderMenuPreviewData(headerMenuPreviewResponse.body);
+		setHeaderMenuPreviewData( headerMenuPreviewResponse.body );
 
-		let headerMenuPatterns = [];
+		const headerMenuPatterns = [];
 		headerMenuPreviewResponse.body.forEach( ( pageParts ) => {
-			if(headerMenuSlugs.includes(pageParts.slug)){
-				headerMenuPatterns.push(pageParts);
+			if ( headerMenuSlugs.includes( pageParts.slug ) ) {
+				headerMenuPatterns.push( pageParts );
 			}
-		});
+		} );
 		setPatterns( headerMenuPatterns );
 
-		if(!currentData.data.partHeader || currentData.data.partHeader == "") {
-			currentData.data.partHeader = headerMenuSlugs[0];
+		if (
+			! currentData.data.partHeader ||
+			currentData.data.partHeader === ''
+		) {
+			currentData.data.partHeader = headerMenuSlugs[ 0 ];
 			setCurrentOnboardingData( currentData );
 		}
-		setSelectedPattern(currentData.data.partHeader);
+		setSelectedPattern( currentData.data.partHeader );
 
-		let [pageContent, headerContent, pagePreview] = ["", "", ""];
+		let [ pageContent, headerContent, pagePreview ] = [ '', '', '' ];
 		headerMenuPreviewResponse.body.forEach( ( pageParts ) => {
-			if(headerMenuBodySlugs.includes(pageParts.slug)){
+			if ( headerMenuBodySlugs.includes( pageParts.slug ) ) {
 				pageContent += pageParts.content;
 			}
-			if(pageParts.slug === currentData.data.partHeader){
+			if ( pageParts.slug === currentData.data.partHeader ) {
 				headerContent += pageParts.content;
 			}
-		});
+		} );
 		pagePreview = headerContent + pageContent;
 		setHeaderMenuData( pagePreview );
 		setIsLoaded( true );
@@ -91,10 +97,10 @@ const DesignHeaderMenu = () => {
 
 		let newPagePattern = selectedPattern.content;
 		headerMenuPreviewData.forEach( ( pageParts ) => {
-			if(headerMenuBodySlugs.includes(pageParts.slug)){
+			if ( headerMenuBodySlugs.includes( pageParts.slug ) ) {
 				newPagePattern += pageParts.content;
 			}
-		});
+		} );
 		setHeaderMenuData( newPagePattern );
 	};
 
@@ -103,7 +109,9 @@ const DesignHeaderMenu = () => {
 			return (
 				<HeaderMenuPreview
 					key={ idx }
-					className={ 'theme-header-menu-preview--drawer__list__item' }
+					className={
+						'theme-header-menu-preview--drawer__list__item'
+					}
 					selected={ pattern.slug === selectedPattern }
 					blockGrammer={ pattern.content }
 					viewportWidth={ 900 }
@@ -120,13 +128,13 @@ const DesignHeaderMenu = () => {
 			<div className="theme-header-menu-preview--drawer">
 				<div className="theme-header-menu-preview--drawer__list">
 					{ buildPreviews() }
-					{/* <LivePreviewSkeleton 
+					{ /* <LivePreviewSkeleton 
 						className={ 'theme-styles-preview--drawer__list__item' }
 						watch={patterns}
 						count = {4}
 						callback = {buildPreviews}
 						viewportWidth={ 900 }
-					/> */}
+					/> */ }
 				</div>
 			</div>
 		</GlobalStylesProvider>

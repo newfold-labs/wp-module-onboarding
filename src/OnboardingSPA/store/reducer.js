@@ -136,7 +136,10 @@ export function sidebar(
 	return state;
 }
 
-export function header( state = { isNavigationEnabled: true, menu : ""  }, action ) {
+export function header(
+	state = { isNavigationEnabled: true, menu: '' },
+	action
+) {
 	switch ( action.type ) {
 		case 'SET_HEADER_NAVIGATION_ENABLED':
 			return {
@@ -146,7 +149,7 @@ export function header( state = { isNavigationEnabled: true, menu : ""  }, actio
 		case 'UPDATE_HEADER_MENU_DATA':
 			return {
 				...state,
-				menu:action.menu,
+				menu: action.menu,
 			};
 	}
 	return state;
