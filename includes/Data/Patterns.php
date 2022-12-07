@@ -72,30 +72,30 @@ final class Patterns {
 						'description' => __( 'A page for periodic news, announcements and ideas.', 'wp-module-onboarding' ),
 					),
 				),
-				'header-menu' => array(
-                    'site-header-left-logo-navigation-inline' => array(
-						'active'      => true,
-						'shown'       => true,
+				'header-menu'     => array(
+					'site-header-left-logo-navigation-inline' => array(
+						'active' => true,
+						'shown'  => true,
 					),
-                    'homepage-1' => array(
-						'active'      => true,
+					'homepage-1'                => array(
+						'active' => true,
 					),
-                    'site-footer' => array(
-						'active'      => true,
+					'site-footer'               => array(
+						'active' => true,
 					),
 					'site-header-left-logo-navigation-below' => array(
-						'active'      => true,
-						'shown'       => true,
+						'active' => true,
+						'shown'  => true,
 					),
-					'site-header-centered' => array(
-						'active'      => true,
-						'shown'       => true,
+					'site-header-centered'      => array(
+						'active' => true,
+						'shown'  => true,
 					),
 					'site-header-splitted-menu' => array(
-						'active'      => true,
-						'shown'       => true,
-					)
-                ),
+						'active' => true,
+						'shown'  => true,
+					),
+				),
 			),
 		);
 	}
