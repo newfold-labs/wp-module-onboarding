@@ -252,3 +252,13 @@ export function getStoreInfoSteps( state ) {
 export function getStepPreviewData( state ) {
 	return state.runtime.previewSettings.stepPreviewData;
 }
+
+/**
+ * Gets the current header menu Data
+ *
+ * @param {*} state
+ * @return string
+ */
+export function getHeaderMenuData( state ) {
+	return state.header.menu;
+}

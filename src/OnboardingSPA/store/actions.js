@@ -181,3 +181,10 @@ export function updateDesignSteps( designSteps ) {
 		designSteps,
 	};
 }
+
+export function setHeaderMenuData( menu ) {
+	return {
+		type: 'UPDATE_HEADER_MENU_DATA',
+		menu,
+	};
+}
