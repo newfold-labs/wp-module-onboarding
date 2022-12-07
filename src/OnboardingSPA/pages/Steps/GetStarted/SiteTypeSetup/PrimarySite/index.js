@@ -14,7 +14,7 @@ import { translations } from '../../../../../utils/locales/translations';
 
 const StepPrimarySetup = () => {
 
-	const { setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed } = useDispatch(
+	const { setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed, setIsHeaderNavigationEnabled } = useDispatch(
 		nfdOnboardingStore
 	);
 
@@ -32,6 +32,7 @@ const StepPrimarySetup = () => {
 		setIsSidebarOpened(false);
 		setIsDrawerSuppressed(true);
 		setDrawerActiveView(VIEW_NAV_GET_STARTED);
+		setIsHeaderNavigationEnabled( true );
 	}, []);
 
 	const [clickedIndex, changeCategory] = useState(-1);

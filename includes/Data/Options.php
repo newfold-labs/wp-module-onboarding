@@ -16,7 +16,7 @@ final class Options {
 	protected static $options = array(
 		'redirect'                      => 'redirect',
 		'redirect_param'                => 'redirect_param',
-		'coming_soon'                   => 'mm_coming_soon',
+		'coming_soon'                   => 'nfd_coming_soon',
 		'brand'                         => 'mm_brand',
 		'close_comments_for_old_posts'  => 'close_comments_for_old_posts',
 		'close_comments_days_old'       => 'close_comments_days_old',
@@ -30,6 +30,7 @@ final class Options {
 		'settings_initialized'          => 'settings_initialized',
 		'plugins_init_status'           => 'plugins_init_status',
 		'plugin_install_queue'          => 'plugin_install_queue',
+		'plugin_uninstall_queue'        => 'plugin_uninstall_queue',
 		'flow'                          => 'flow',
 		'theme_init_status'             => 'theme_init_status',
 		'theme_install_queue'           => 'theme_install_queue',

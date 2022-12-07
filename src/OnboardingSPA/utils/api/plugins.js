@@ -30,3 +30,11 @@ export const getPluginStatus = async ( plugin ) => {
 		} )
 	);
 };
+
+export const getSiteFeatures = async () => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'plugins/site-features' ),
+		} )
+	);
+};

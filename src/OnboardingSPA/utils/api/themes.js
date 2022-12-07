@@ -56,7 +56,7 @@ const getThemeFonts = async () => {
 	);
 };
 
-const getThemeColors = async ( theme ) => {
+const getThemeColors = async () => {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'themes/colors' ),

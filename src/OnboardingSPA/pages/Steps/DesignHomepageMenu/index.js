@@ -15,11 +15,16 @@ import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 import {
 	LivePreviewSelectableCard,
+	LivePreviewSkeleton,
 	GlobalStylesProvider,
 } from '../../../components/LivePreview';
 
 const StepDesignHomepageMenu = () => {
-	const homepagePatternList = [ 'homepage-1', 'homepage-2', 'homepage-3' ];
+	const homepagePatternList = [
+		'yith-wonder/homepage-1',
+		'yith-wonder/homepage-2',
+		'yith-wonder/homepage-3',
+	];
 
 	const homepagesList = {
 		'homepage-1': [
@@ -46,28 +51,34 @@ const StepDesignHomepageMenu = () => {
 
 	const isLargeViewport = useViewportMatch( 'medium' );
 
-	const { currentStep, currentData, storedPreviewSettings, themeStatus } =
-		useSelect( ( select ) => {
-			return {
-				currentStep: select( nfdOnboardingStore ).getStepFromPath(
-					location.pathname
-				),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				storedPreviewSettings:
-					select( nfdOnboardingStore ).getPreviewSettings(),
-				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-			};
-		}, [] );
+	const {
+		currentStep,
+		currentData,
+		storedPreviewSettings,
+		themeStatus,
+		themeVariations,
+	} = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getStepFromPath(
+				location.pathname
+			),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			storedPreviewSettings:
+				select( nfdOnboardingStore ).getPreviewSettings(),
+			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			themeVariations: select( nfdOnboardingStore ).getStepPreviewData(),
+		};
+	}, [] );
 
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
 		setIsSidebarOpened,
-		updatePreviewSettings,
 		setIsDrawerSuppressed,
 		setCurrentOnboardingData,
 		updateThemeStatus,
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -77,6 +88,7 @@ const StepDesignHomepageMenu = () => {
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_HOMEPAGE_MENU );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	function refactorPatterns( homepagePatternData ) {
@@ -141,18 +153,17 @@ const StepDesignHomepageMenu = () => {
 		return homepagePattern?.map( ( homepage, idx ) => {
 			if ( homepage ) {
 				return (
-					<div className="homepage_preview__list" key={ idx }>
-						<LivePreviewSelectableCard
-							className={ 'homepage_preview__list__item' }
-							selected={ idx === selectedHomepage }
-							blockGrammer={ homepage }
-							viewportWidth={ 1200 }
-							styling={ 'custom' }
-							previewSettings={ storedPreviewSettings }
-							overlay={ false }
-							onClick={ () => saveDataForHomepage( idx ) }
-						/>
-					</div>
+					<LivePreviewSelectableCard
+						key={ idx }
+						className={ 'homepage_preview__list__item' }
+						selected={ idx === selectedHomepage }
+						blockGrammer={ homepage }
+						viewportWidth={ 1200 }
+						styling={ 'custom' }
+						previewSettings={ storedPreviewSettings }
+						overlay={ false }
+						onClick={ () => saveDataForHomepage( idx ) }
+					/>
 				);
 			}
 			return null;
@@ -168,8 +179,17 @@ const StepDesignHomepageMenu = () => {
 							title={ currentStep?.heading }
 							subtitle={ currentStep?.subheading }
 						/>
-						<div className="theme-styles-menu__list">
-							{ storedPreviewSettings && buildHomepagePreviews() }
+						<div className="homepage_preview__list">
+							<LivePreviewSkeleton
+								watch={ homepagePattern }
+								count={
+									themeVariations[ currentStep?.patternId ]
+										?.previewCount
+								}
+								callback={ buildHomepagePreviews }
+								className={ 'homepage_preview__list__item' }
+								viewportWidth={ 1200 }
+							/>
 						</div>
 					</div>
 				</CommonLayout>

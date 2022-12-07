@@ -23,19 +23,26 @@ const StepDesignColors = () => {
 	const [ pattern, setPattern ] = useState();
 
 	const isLargeViewport = useViewportMatch( 'medium' );
-	const { currentStep } = useSelect( ( select ) => {
-		return {
-			currentStep: select( nfdOnboardingStore ).getStepFromPath(
-				location.pathname
-			),
-		};
-	}, [] );
+	const { currentStep, currentData } = useSelect(
+		( select ) => {
+			return {
+				currentStep: select( nfdOnboardingStore ).getStepFromPath(
+					location.pathname
+				),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			};
+		},
+		[]
+	);
 
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
 		setIsSidebarOpened,
 		setIsDrawerSuppressed,
+		setIsHeaderNavigationEnabled
+
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -45,6 +52,7 @@ const StepDesignColors = () => {
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_COLORS );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	const getStylesAndPatterns = async () => {
@@ -72,6 +80,13 @@ const StepDesignColors = () => {
 						</div>
 					</div>
 					<div className="theme-colors-preview__live-preview-container">
+						{ ! pattern && (
+							<LivePreview
+								blockGrammer={ '' }
+								styling={ 'custom' }
+								viewportWidth={ 1300 }
+							/>
+						) }
 						{ pattern && (
 							<LivePreview
 								blockGrammer={ pattern }

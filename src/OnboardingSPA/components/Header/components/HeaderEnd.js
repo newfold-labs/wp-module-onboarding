@@ -7,15 +7,17 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { SIDEBAR_MENU_SLOTFILL_PREFIX } from '../../../../constants';
 
 const HeaderEnd = () => {
-	const { sidebars } = useSelect( ( select ) => {
+	const { sidebars, isHeaderNavigationEnabled } = useSelect( ( select ) => {
 		return {
 			sidebars: select( nfdOnboardingStore ).getSidebars(),
+			isHeaderNavigationEnabled:
+				select( nfdOnboardingStore ).isHeaderNavigationEnabled(),
 		};
 	} );
 
 	return (
 		<Fragment>
-			<StepNavigation />
+			{ isHeaderNavigationEnabled && <StepNavigation /> }
 			{ sidebars.map( ( sidebar ) => {
 				return (
 					<Slot

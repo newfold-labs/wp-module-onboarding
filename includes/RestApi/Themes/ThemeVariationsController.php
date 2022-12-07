@@ -1,6 +1,7 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi\Themes;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Patterns;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
@@ -80,6 +81,34 @@ class ThemeVariationsController extends \WP_REST_Controller {
 		 );
 	}
 
+	private static function translate( $theme_json, $domain = 'default' ) {
+			$i18n_schema = wp_json_file_decode( __DIR__ . '/theme-i18n.json' );
+
+		return translate_settings_using_i18n_schema( $i18n_schema, $theme_json, $domain );
+	}
+
+	private static function get_style_variations() {
+		$variations     = array();
+		$base_directory = get_stylesheet_directory() . '/styles';
+		if ( is_dir( $base_directory ) ) {
+			$nested_files      = new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator( $base_directory ) );
+			$nested_html_files = iterator_to_array( new \RegexIterator( $nested_files, '/^.+\.json$/i', \RecursiveRegexIterator::GET_MATCH ) );
+			ksort( $nested_html_files );
+			foreach ( $nested_html_files as $path => $file ) {
+				$decoded_file = wp_json_file_decode( $path, array( 'associative' => true ) );
+				if ( is_array( $decoded_file ) ) {
+					$translated = self::translate( $decoded_file, wp_get_theme()->get( 'TextDomain' ) );
+					$variation  = ( new \WP_Theme_JSON( $translated ) )->get_data();
+					if ( empty( $variation['title'] ) ) {
+						$variation['title'] = basename( $path, '.json' );
+					}
+					$variations[] = $variation;
+				}
+			}
+		}
+		return $variations;
+	}
+
 	/**
 	 * Retrieves the active themes variations.
 	 *
@@ -90,13 +119,13 @@ class ThemeVariationsController extends \WP_REST_Controller {
 		$default = $request->get_param( 'variations' );
 
 		// If there exists an old Custom Theme then return that
-		if ( 'false' === $default && false !== \get_option( Options::get_option_name( 'theme_settings' ) ) ) {
+		if ( false === $default && false !== \get_option( Options::get_option_name( 'theme_settings' ) ) ) {
 			return array(
 				\get_option( Options::get_option_name( 'theme_settings' ) ),
 			);
 		}
 
-		$active_variation              = \WP_Theme_JSON_Resolver::get_merged_data( 'theme' )->get_raw_data();
+		$active_variation              = \WP_Theme_JSON_Resolver::get_theme_data()->get_data();
 		$active_variation_global_style = array(
 			'id'       => 0,
 			'title'    => 'Default',
@@ -107,7 +136,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 
 		return array_merge(
 			array( $active_variation_global_style ),
-			\WP_Theme_JSON_Resolver::get_style_variations(),
+			self::get_style_variations(),
 		);
 	}
 

@@ -61,6 +61,7 @@ const StepDesignThemeStylesPreview = () => {
 		updateAllSteps,
 		setCurrentOnboardingData,
 		updateThemeStatus,
+		setIsHeaderNavigationEnabled
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -71,6 +72,7 @@ const StepDesignThemeStylesPreview = () => {
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_THEME_STYLES_PREVIEW );
 		handleCheckbox( currentData.data.customDesign, false );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	const getStylesAndPatterns = async () => {
@@ -190,11 +192,11 @@ const StepDesignThemeStylesPreview = () => {
 											) }
 										</span>
 									</span>
-								</div>
-							}
-							checked={ customize }
-							onChange={ () => handleCheckbox( ! customize ) }
-						/>
+							</div>
+						}
+						checked={ customize }
+						onChange={ () => handleCheckbox( ! customize ) }
+					/>
 					</div>
 					<div className="theme-styles-preview__title-bar">
 						<div className="theme-styles-preview__title-bar__browser">
@@ -204,13 +206,20 @@ const StepDesignThemeStylesPreview = () => {
 						</div>
 					</div>
 					<div className="theme-styles-preview__live-preview-container">
-						{ pattern && storedPreviewSettings && (
+						{ ! pattern && (
+							<LivePreview
+								blockGrammer={ '' }
+								styling={ 'custom' }
+								viewportWidth={ 1300 }
+							/>) 
+						}
+						{ pattern && (
 							<LivePreview
 								blockGrammer={ pattern }
 								styling={ 'custom' }
 								viewportWidth={ 1300 }
-							/>
-						) }
+							/> ) 
+						}
 					</div>
 				</CommonLayout>
 			</GlobalStylesProvider>

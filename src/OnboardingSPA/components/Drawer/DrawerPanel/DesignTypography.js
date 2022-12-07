@@ -64,39 +64,16 @@ const DesignTypography = () => {
 		// Changes the Global Styles to Recompute css properties
 		const globalStylesCopy = selectedGlobalStyle;
 
-		// globalStylesCopy.styles.typography.fontFamily =
-		// 	fontPalettesCopy[ fontStyle ]?.styles?.typography?.fontFamily;
-		// globalStylesCopy.styles.blocks[ 'core/heading' ].typography.fontFamily =
-		// 	fontPalettesCopy[ fontStyle ]?.styles.blocks[
-		// 		'core/heading'
-		// 	].typography.fontFamily;
+		globalStylesCopy.styles.typography.fontFamily =
+			fontPalettesCopy[ fontStyle ]?.styles?.typography?.fontFamily;
+		globalStylesCopy.styles.blocks[ 'core/heading' ].typography.fontFamily =
+			fontPalettesCopy[ fontStyle ]?.styles.blocks[
+				'core/heading'
+			].typography.fontFamily;
 
 		// Saves the data to the Store
 		currentData.data.typography.slug = fontStyle;
 		currentData.data.typography.data = fontPalettesCopy[ fontStyle ];
-
-		// Remove Existing Custom Font CSS
-		const result = storedPreviewSettings.settings.styles.filter(
-			( style ) => {
-				if (
-					! (
-						style.hasOwnProperty( 'id' ) &&
-						style.id === 'customFontProperty'
-					)
-				)
-					return style;
-			}
-		);
-
-		// Add the font CSS changes to Preview Settings
-		storedPreviewSettings.settings.styles = [
-			...result,
-			{
-				id: 'customFontProperty',
-				css: `body {font-family: ${ fontPalettesCopy[ fontStyle ]?.styles?.typography?.fontFamily } !important; }
-						h6 { font-family: ${ fontPalettesCopy[ fontStyle ]?.styles?.blocks[ 'core/heading' ]?.typography?.fontFamily } !important; }`,
-			},
-		];
 
 		updatePreviewSettings(
 			useGlobalStylesOutput( globalStylesCopy, storedPreviewSettings )
