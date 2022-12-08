@@ -127,7 +127,7 @@ class FlowService {
 				// Updates value entered by the user
 				if (isset($params) && array_key_exists($key, $params)) {
 					if(strcmp(gettype($value), gettype($params[$key])) === 0) {
-						if(!is_bool($params[$key]) && empty($params[$key]) && !empty($default_flow_data[$key])) {
+						if(!is_bool($params[$key]) && empty($params[$key]) && isset($default_flow_data[$key])) {
 							$updated_flow_data[$key] = $default_flow_data[$key];
 						}
 						else
