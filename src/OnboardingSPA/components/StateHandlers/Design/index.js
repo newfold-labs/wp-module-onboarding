@@ -1,6 +1,5 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Fragment, useEffect } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
 
 import { StepLoader } from '../../Loaders';
 import { store as nfdOnboardingStore } from '../../../store';
@@ -14,13 +13,17 @@ import {
 	THEME_INSTALL_WAIT_TIMEOUT,
 } from '../../../../constants';
 import { StepErrorState } from '../../ErrorState';
+import getContents from './contents';
 
 const DesignStateHandler = ( { children } ) => {
-	const { storedThemeStatus } = useSelect( ( select ) => {
+	const { storedThemeStatus, brandName } = useSelect( ( select ) => {
 		return {
 			storedThemeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
 		};
 	}, [] );
+
+	const contents = getContents( brandName );
 
 	const { updateThemeStatus } = useDispatch( nfdOnboardingStore );
 
@@ -63,18 +66,9 @@ const DesignStateHandler = ( { children } ) => {
 			case THEME_STATUS_NOT_ACTIVE:
 				return (
 					<StepErrorState
-						title={ __(
-							'Preparing your Bluehost design studio',
-							'wp-module-onboarding'
-						) }
-						subtitle={ __(
-							'Hang tight while we show you some of the best WordPress has to offer!',
-							'wp-module-onboarding'
-						) }
-						error={ __(
-							'Uh-oh, something went wrong. Please contact support.',
-							'wp-module-onboarding'
-						) }
+						title={ contents.errorState.title }
+						subtitle={ contents.errorState.subtitle }
+						error={ contents.errorState.error }
 					/>
 				);
 			case THEME_STATUS_ACTIVE:
@@ -82,14 +76,8 @@ const DesignStateHandler = ( { children } ) => {
 			default:
 				return (
 					<StepLoader
-						title={ __(
-							'Preparing your Bluehost design studio',
-							'wp-module-onboarding'
-						) }
-						subtitle={ __(
-							'Hang tight while we show you some of the best WordPress has to offer!',
-							'wp-module-onboarding'
-						) }
+						title={ contents.loader.title }
+						subtitle={ contents.loader.subtitle }
 					/>
 				);
 		}

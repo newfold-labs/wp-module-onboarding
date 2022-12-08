@@ -147,6 +147,13 @@ export function setSidebarActiveView( view ) {
 	};
 }
 
+export function setIsHeaderNavigationEnabled( isNavigationEnabled ) {
+	return {
+		type: 'SET_HEADER_NAVIGATION_ENABLED',
+		isNavigationEnabled,
+	};
+}
+
 export function updatePreviewSettings( previewSettings ) {
 	return {
 		type: 'SET_PREVIEW_SETTINGS',
@@ -172,5 +179,12 @@ export function updateDesignSteps( designSteps ) {
 	return {
 		type: 'UPDATE_DESIGN_STEPS',
 		designSteps,
+	};
+}
+
+export function setHeaderMenuData( menu ) {
+	return {
+		type: 'UPDATE_HEADER_MENU_DATA',
+		menu,
 	};
 }

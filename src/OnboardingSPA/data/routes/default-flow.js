@@ -87,12 +87,14 @@ const StepBasicInfoLearnMoreSidebar = lazy( () =>
 const StepDesignThemes = lazy( () =>
 	import( '../../pages/Steps/DesignThemes' )
 );
+
 const StepDesignThemeStylesMenu = lazy( () =>
 	import( '../../pages/Steps/DesignThemeStyles/Menu' )
 );
 const StepDesignThemeStylesMenuLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/DesignThemeStyles/Menu/Sidebar/LearnMore' )
 );
+
 const StepDesignThemeStylesPreview = lazy( () =>
 	import( '../../pages/Steps/DesignThemeStyles/Preview' )
 );
@@ -139,6 +141,8 @@ const StepSiteFeatures = lazy( () =>
 const StepSiteFeaturesLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/SiteFeatures/Sidebar/LearnMore' )
 );
+
+const StepComplete = lazy( () => import( '../../pages/Steps/Complete' ) );
 
 const StepWhatNext = lazy( () => import( '../../pages/Steps/WhatNext' ) );
 const StepWhatNextLearnMoreSidebar = lazy( () =>
@@ -362,23 +366,23 @@ export const steps = [
 			},
 		},
 	},
-	{
-		path: '/wp-setup/step/design/themes',
-		title: __( 'Themes', 'wp-module-onboarding' ),
-		heading: __( "Let's make you look your best", 'wp-module-onboarding' ),
-		subheading: __(
-			'Find a WordPress Theme to present polished and compelling.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			'Your Theme is the starting place for layout and design, setting the tone for your site. Keep it for years or change and swap as you grow.',
-			'wp-module-onboarding'
-		),
-		Component: StepDesignThemes,
-		Icon: brush,
-		priority: 140,
-		VIEW: VIEW_DESIGN_THEMES,
-	},
+	// {
+	// 	path: '/wp-setup/step/design/themes',
+	// 	title: __( 'Themes', 'wp-module-onboarding' ),
+	// 	heading: __( "Let's make you look your best", 'wp-module-onboarding' ),
+	// 	subheading: __(
+	// 		'Find a WordPress Theme to present polished and compelling.',
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	description: __(
+	// 		'Your Theme is the starting place for layout and design, setting the tone for your site. Keep it for years or change and swap as you grow.',
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	Component: StepDesignThemes,
+	// 	Icon: brush,
+	// 	priority: 140,
+	// 	VIEW: VIEW_DESIGN_THEMES,
+	// },
 	{
 		path: '/wp-setup/step/design/theme-styles/menu',
 		title: __( 'Theme Styles', 'wp-module-onboarding' ),
@@ -454,6 +458,7 @@ export const steps = [
 		Icon: header,
 		priority: 220,
 		VIEW: VIEW_DESIGN_HEADER_MENU,
+		patternId: 'header-menu',
 		sidebars: {
 			LearnMore: {
 				SidebarComponents: [ StepDesignHeaderMenuLearnMoreSidebar ],
@@ -489,7 +494,10 @@ export const steps = [
 	{
 		path: '/wp-setup/step/site-pages',
 		title: __( 'Pages', 'wp-module-onboarding' ),
-		heading: __( "You have ideas, we have page templates", 'wp-module-onboarding' ),
+		heading: __(
+			'You have ideas, we have page templates',
+			'wp-module-onboarding'
+		),
 		subheading: __(
 			'Begin closer to the finish line than a blank canvas.',
 			'wp-module-onboarding'
@@ -511,9 +519,12 @@ export const steps = [
 	{
 		path: '/wp-setup/step/site-features',
 		title: __( 'Features', 'wp-module-onboarding' ),
-		heading: __( 'Our toolbox is your toolbox', 'wp-module-onboarding' ),
+		heading: __(
+			'Key features to supercharge your site',
+			'wp-module-onboarding'
+		),
 		subheading: __(
-			"We've learned a lot in 16 years of WordPress! Now that expertise is yours.",
+			'Our toolbox of Plugins & Services is your toolbox.',
 			'wp-module-onboarding'
 		),
 		description: __(
@@ -528,6 +539,11 @@ export const steps = [
 				SidebarComponents: [ StepSiteFeaturesLearnMoreSidebar ],
 			},
 		},
+	},
+	{
+		path: '/wp-setup/step/complete',
+		Component: StepComplete,
+		priority: 285,
 	},
 	{
 		path: '/wp-setup/step/what-next',
@@ -615,13 +631,14 @@ export const initialTopSteps = () => {
 	const topSteps = filter( steps, ( step ) => {
 		return (
 			! step.path.includes( '/step/get-started' ) &&
-			! step.path.includes( '/step/design' )
+			! step.path.includes( '/step/design' ) &&
+			! step.path.includes( '/step/complete' )
 		);
 	} );
 
 	const designStep = {
 		/* This is a fake step to stand-in for all Design steps and does not have a Component to render */
-		path: '/wp-setup/step/design/themes',
+		path: '/wp-setup/step/design/theme-styles/menu',
 		title: __( 'Design', 'wp-module-onboarding' ),
 		description: '',
 		Icon: brush,

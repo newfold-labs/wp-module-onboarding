@@ -41,6 +41,10 @@ final class Plugins {
 			'approved' => true,
 			'path'     => 'yith-woocommerce-ajax-search/init.php',
 		),
+		'creative-mail-by-constant-contact'   => array(
+			'approved' => true,
+			'path'     => 'creative-mail-by-constant-contact/creative-mail-plugin.php',
+		),
 	);
 
 	 /**
@@ -226,6 +230,18 @@ final class Plugins {
 			'nfd_slugs' => self::$nfd_slugs,
 			'urls'      => self::$urls,
 			'domains'   => self::$domains,
+		);
+	}
+
+	/**
+	 * Use this for finding the path for installed plugins.
+	 *
+	 * @return array
+	 */
+	public static function get_squashed() {
+		return array_merge(
+			array_filter( self::$wp_slugs, array( __CLASS__, 'check_approved' ) ) ,
+			array_filter( self::$nfd_slugs, array( __CLASS__, 'check_approved' ) ) ,
 		);
 	}
 

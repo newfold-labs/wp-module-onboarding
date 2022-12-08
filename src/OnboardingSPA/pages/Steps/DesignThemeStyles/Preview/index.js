@@ -61,6 +61,7 @@ const StepDesignThemeStylesPreview = () => {
 		updateAllSteps,
 		setCurrentOnboardingData,
 		updateThemeStatus,
+		setIsHeaderNavigationEnabled
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -71,6 +72,7 @@ const StepDesignThemeStylesPreview = () => {
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_THEME_STYLES_PREVIEW );
 		handleCheckbox( currentData.data.customDesign, false );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	const getStylesAndPatterns = async () => {

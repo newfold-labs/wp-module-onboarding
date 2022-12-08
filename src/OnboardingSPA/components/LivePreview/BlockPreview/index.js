@@ -63,9 +63,11 @@ const BlockPreview = ( {
 		} else {
 			setSettings( storedPreviewSettings );
 		}
-
-		setBlocks( parse( blockGrammer ) );
 	}, [] );
+
+	useEffect( () => {
+		setBlocks( parse( blockGrammer ) );
+	}, [ blockGrammer ] );
 
 	useEffect( () => {
 		if ( ! previewSettings ) {
@@ -75,7 +77,7 @@ const BlockPreview = ( {
 
 	return (
 		<div className={ `live-preview__container-${ styling }` }>
-			{ loading &&
+			{ loading && (
 				<div className="live-preview__container--is-skeleton">
 					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-header">
 						<div className={ `live-preview__container--is-skeleton--shimmer` } />
@@ -83,7 +85,8 @@ const BlockPreview = ( {
 					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-1" />
 					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-2" />
 					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-footer" />
-				</div> }
+				</div> 
+			)}
 			{ settings && (
 				<BlockEditorProvider
 					value={ blocks }
