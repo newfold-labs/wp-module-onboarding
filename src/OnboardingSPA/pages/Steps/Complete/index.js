@@ -34,26 +34,36 @@ const StepComplete = () => {
 	const contents = getContents( brandName );
 
 	const checkFlowComplete = async () => {
-		const flowCompletionResponse = await completeFlow();
+		Promise.all( [ completeFlowRequest(), setSiteFeaturesRequest() ] ).then(
+			( values ) =>
+				values.forEach( ( value ) => {
+					// If any Request returns False then Show Error
+					if ( ! value ) {
+						setIsHeaderNavigationEnabled( true );
+						return setIsError( true );
+					}
+				} )
+		);
 
-		// Executing the second API Call before we check for Error
-		if (pluginInstallHash && !Array.isArray(currentData?.data?.siteFeatures) ) {
-			const siteFeaturesResponse = await setSiteFeatures(
-				pluginInstallHash,
-				{ plugins: currentData?.data?.siteFeatures }
-			);
-			if ( siteFeaturesResponse?.error ) {
-				setIsHeaderNavigationEnabled( true );
-				return setIsError( true );
-			}
-		}
-
-		if ( flowCompletionResponse?.error ) {
-			setIsHeaderNavigationEnabled( true );
-			return setIsError( true );
-		}
 		navigate( nextStep.path );
 	};
+
+	async function completeFlowRequest() {
+		const flowCompletionResponse = await completeFlow();
+		if ( flowCompletionResponse?.error ) return false;
+		return true;
+	}
+
+	async function setSiteFeaturesRequest() {
+		if ( Array.isArray( currentData?.data?.siteFeatures ) ) return true;
+
+		const siteFeaturesResponse = await setSiteFeatures( pluginInstallHash, {
+			plugins: currentData?.data?.siteFeatures,
+		} );
+		if ( siteFeaturesResponse?.error ) return false;
+
+		return true;
+	}
 
 	useEffect( () => {
 		setIsHeaderNavigationEnabled( false );
