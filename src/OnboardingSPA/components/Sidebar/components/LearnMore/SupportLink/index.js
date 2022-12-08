@@ -4,7 +4,7 @@ const SupportLink = ( {
 	text,
 } ) => {
 	return (
-		<a href={ link } className={ baseClassName }>
+		<a href={ link } className={ baseClassName } target={ '_blank' }>
 			{ text }
 		</a>
 	);

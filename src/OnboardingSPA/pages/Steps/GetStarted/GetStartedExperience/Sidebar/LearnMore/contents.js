@@ -3,7 +3,14 @@ import { __, sprintf } from '@wordpress/i18n';
 import { translations } from '../../../../../../utils/locales/translations';
 import { home } from '@wordpress/icons';
 
+import { store as nfdOnboardingStore } from '../../../../../../store';
+import { select } from '@wordpress/data';
+
 const getContents = () => {
+
+	const techSupportLink = select( nfdOnboardingStore ).getTechSupportUrl();
+	const fullServiceCreativeTeamLink = select( nfdOnboardingStore ).getfullServiceCreativeTeamUrl();
+	
 	return {
 		introduction: {
 			heading: __( 'WordPress Experience', 'wp-module-onboarding' ),
@@ -40,11 +47,11 @@ const getContents = () => {
 					'Hire Our Full-Service Creative Studio',
 					'wp-module-onboarding'
 				),
-				link: '#',
+				link: fullServiceCreativeTeamLink,
 			},
 			support: {
 				text: __( 'Technical Support', 'wp-module-onboarding' ),
-				link: '#',
+				link: techSupportLink,
 			},
 		},
 	};

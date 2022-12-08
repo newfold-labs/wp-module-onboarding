@@ -248,3 +248,52 @@ export function getStoreInfoSteps( state ) {
 export function getStepPreviewData(state) {
 	return state.runtime.previewSettings.stepPreviewData;
 }
+
+
+/**
+ * Gets 1-1 Experts URL for Help Section in the Sidebars
+ *
+ * @param {*} state
+ * @return string
+ */
+ export function getExpertsUrl( state ) {
+	const expertsInfo = state.runtime.currentBrand.expertsInfo;
+	const expertsUrl =
+		addQueryArgs(
+			expertsInfo?.defaultLink,
+			expertsInfo?.queryParams
+		) + ( expertsInfo?.fragment || '' );
+	return expertsUrl;
+}
+
+/**
+ * Gets Full Service Creative Team URL for Help Section in the Sidebars
+ *
+ * @param {*} state
+ * @return string
+ */
+ export function getfullServiceCreativeTeamUrl( state ) {
+	const fullServiceCreativeTeamInfo = state.runtime.currentBrand.fullServiceCreativeTeamInfo;
+	const fullServiceCreativeTeamUrl =
+		addQueryArgs(
+			fullServiceCreativeTeamInfo?.defaultLink,
+			fullServiceCreativeTeamInfo?.queryParams
+		) + ( fullServiceCreativeTeamInfo?.fragment || '' );
+	return fullServiceCreativeTeamUrl;
+}
+
+/**
+ * Gets Technical Support URL for Help Section in the Sidebars
+ *
+ * @param {*} state
+ * @return string
+ */
+ export function getTechSupportUrl( state ) {
+	const techSupportInfo = state.runtime.currentBrand.techSupportInfo;
+	const techSupportUrl =
+		addQueryArgs(
+			techSupportInfo?.defaultLink,
+			techSupportInfo?.queryParams
+		) + ( techSupportInfo?.fragment || '' );
+	return techSupportUrl;
+}
