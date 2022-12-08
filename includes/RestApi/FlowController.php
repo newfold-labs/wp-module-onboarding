@@ -98,17 +98,6 @@ class FlowController {
 			);
 		}
 		
-		$flow_data = FlowService::read_flow_data_from_wp_option();
-		$updated_flow_data = array();
-		$flow_data = FlowService::update_post_call_data_recursive( $flow_data, $updated_flow_data, $params );
-		if(!is_array($flow_data)) {
-			return new \WP_Error(
-				'wrong_param_type_provided',
-				"Wrong Parameter Type Provided : ". $flow_data,
-				array( 'status' => 404 )
-			);
-		}
-
 		$default_flow_data = FlowService::get_default_flow_data();
 		$mismatch_key = FlowService::check_key_in_nested_array($params, $default_flow_data);
 		if ( ! empty($mismatch_key) )  {
@@ -116,6 +105,17 @@ class FlowController {
 				'wrong_param_provided',
 				"Wrong Parameter Provided",
 				array( 'status' => 404 , 'Mismatched Parameter(s)' => $mismatch_key)
+			);
+		}
+
+		$flow_data = FlowService::read_flow_data_from_wp_option();
+		$updated_flow_data = array();
+		$flow_data = FlowService::update_post_call_data_recursive($default_flow_data, $flow_data, $updated_flow_data, $params );
+		if(!is_array($flow_data)) {
+			return new \WP_Error(
+				'wrong_param_type_provided',
+				"Wrong Parameter Type Provided : ". $flow_data,
+				array( 'status' => 404 )
 			);
 		}
 

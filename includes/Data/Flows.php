@@ -147,7 +147,7 @@ final class Flows {
 	  * @return array
 	  */
 	  protected static $fixes = array(
-		// 'OldKey' => array( 'new_key' => 'NewKey', 'retain_existing_value' => 'RetainKey' )
+		// 'OldKey' => array( 'new_key' => 'NewKey', 'retain_existing_value' => true/false )
 	);
 
 
