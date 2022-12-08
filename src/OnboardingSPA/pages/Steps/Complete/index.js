@@ -37,7 +37,7 @@ const StepComplete = () => {
 		const flowCompletionResponse = await completeFlow();
 
 		// Executing the second API Call before we check for Error
-		if ( pluginInstallHash && currentData?.data?.siteFeatures ) {
+		if (pluginInstallHash && !Array.isArray(currentData?.data?.siteFeatures) ) {
 			const siteFeaturesResponse = await setSiteFeatures(
 				pluginInstallHash,
 				{ plugins: currentData?.data?.siteFeatures }
@@ -47,6 +47,7 @@ const StepComplete = () => {
 				return setIsError( true );
 			}
 		}
+
 		if ( flowCompletionResponse?.error ) {
 			setIsHeaderNavigationEnabled( true );
 			return setIsError( true );
