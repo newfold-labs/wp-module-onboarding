@@ -34,8 +34,8 @@ const StepComplete = () => {
 			setIsHeaderNavigationEnabled( true );
 			return setIsError( true );
 		}
-		if ( currentData?.data.siteFeatures ){
-			const siteFeaturesResponse = await setSiteFeatures(pluginInstallHash, { 'plugins': currentData?.data.siteFeatures });
+		if ( currentData?.data?.siteFeatures ){
+			const siteFeaturesResponse = await setSiteFeatures(pluginInstallHash, { 'plugins': currentData?.data?.siteFeatures });
 			if (siteFeaturesResponse?.error) {
 				setIsHeaderNavigationEnabled( true );
 				return setIsError( true );
