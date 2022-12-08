@@ -35,10 +35,8 @@ const StepComplete = () => {
 
 	const checkFlowComplete = async () => {
 		const flowCompletionResponse = await completeFlow();
-		if ( flowCompletionResponse?.error ) {
-			setIsHeaderNavigationEnabled( true );
-			return setIsError( true );
-		}
+
+		// Executing the second API Call before we check for Error
 		if ( pluginInstallHash && currentData?.data?.siteFeatures ) {
 			const siteFeaturesResponse = await setSiteFeatures(
 				pluginInstallHash,
@@ -48,6 +46,10 @@ const StepComplete = () => {
 				setIsHeaderNavigationEnabled( true );
 				return setIsError( true );
 			}
+		}
+		if ( flowCompletionResponse?.error ) {
+			setIsHeaderNavigationEnabled( true );
+			return setIsError( true );
 		}
 		navigate( nextStep.path );
 	};
