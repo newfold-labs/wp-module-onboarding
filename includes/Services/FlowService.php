@@ -72,7 +72,7 @@ class FlowService {
 				if ( is_array( $value ) ) {
 
 					// For Keys having Empty Arrays. Eg: isViewed, other
-					if(empty($value)) 
+					if(empty($value) && !empty($flow_data[$key])) 
 						$updated_flow_data[$key] = $flow_data[$key];
 
 					// To handle Indexed Arrays gracefully
@@ -102,6 +102,12 @@ class FlowService {
 						$updated_flow_data[$key] = self::update_flow_data_recursive($value, $flow_data[$key], $updated_flow_data[$key]);
 				}
 			}
+
+			if(is_int($updated_flow_data['updatedAt'])) 
+				$updated_flow_data['updatedAt'] = strval($updated_flow_data['updatedAt']);
+			if(is_int($updated_flow_data['createdAt'])) 
+				$updated_flow_data['createdAt'] = strval($updated_flow_data['createdAt']);
+			
 			return $updated_flow_data;
 		  }
 	}
