@@ -3,10 +3,11 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 import { useNavigate } from 'react-router-dom';
 
-import { StepLoader } from '../../../components/Loaders';
-import { completeFlow } from '../../../utils/api/flow';
-import { StepErrorState } from '../../../components/ErrorState';
 import getContents from './contents';
+import { completeFlow } from '../../../utils/api/flow';
+import { StepLoader } from '../../../components/Loaders';
+import { setSiteFeatures } from '../../../utils/api/plugins';
+import { StepErrorState } from '../../../components/ErrorState';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 
 const StepComplete = () => {
@@ -16,10 +17,12 @@ const StepComplete = () => {
 	const navigate = useNavigate();
 	const [ isError, setIsError ] = useState( false );
 
-	const { nextStep, brandName } = useSelect( ( select ) => {
+	const { nextStep, brandName, currentData, pluginInstallHash } = useSelect( ( select ) => {
 		return {
 			nextStep: select( nfdOnboardingStore ).getNextStep(),
 			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+			pluginInstallHash: select(nfdOnboardingStore).getPluginInstallHash(),
 		};
 	}, [] );
 
@@ -30,6 +33,13 @@ const StepComplete = () => {
 		if ( flowCompletionResponse?.error ) {
 			setIsHeaderNavigationEnabled( true );
 			return setIsError( true );
+		}
+		if ( currentData?.data.siteFeatures ){
+			const siteFeaturesResponse = await setSiteFeatures(pluginInstallHash, { 'plugins': currentData?.data.siteFeatures });
+			if (siteFeaturesResponse?.error) {
+				setIsHeaderNavigationEnabled( true );
+				return setIsError( true );
+			}
 		}
 		navigate( nextStep.path );
 	};

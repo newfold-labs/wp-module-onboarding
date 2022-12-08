@@ -262,3 +262,13 @@ export function getStepPreviewData( state ) {
 export function getHeaderMenuData( state ) {
 	return state.header.menu;
 }
+
+/**
+ * Gets the Plugin Install Hash for security
+ *
+ * @param {*} state
+ * @return string
+ */
+export function getPluginInstallHash(state) {
+	return state.runtime.pluginInstallHash;
+}
