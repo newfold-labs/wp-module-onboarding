@@ -17,14 +17,19 @@ const StepComplete = () => {
 	const navigate = useNavigate();
 	const [ isError, setIsError ] = useState( false );
 
-	const { nextStep, brandName, currentData, pluginInstallHash } = useSelect( ( select ) => {
-		return {
-			nextStep: select( nfdOnboardingStore ).getNextStep(),
-			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
-			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
-			pluginInstallHash: select(nfdOnboardingStore).getPluginInstallHash(),
-		};
-	}, [] );
+	const { nextStep, brandName, currentData, pluginInstallHash } = useSelect(
+		( select ) => {
+			return {
+				nextStep: select( nfdOnboardingStore ).getNextStep(),
+				brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				pluginInstallHash:
+					select( nfdOnboardingStore ).getPluginInstallHash(),
+			};
+		},
+		[]
+	);
 
 	const contents = getContents( brandName );
 
@@ -34,9 +39,12 @@ const StepComplete = () => {
 			setIsHeaderNavigationEnabled( true );
 			return setIsError( true );
 		}
-		if ( currentData?.data?.siteFeatures ){
-			const siteFeaturesResponse = await setSiteFeatures(pluginInstallHash, { 'plugins': currentData?.data?.siteFeatures });
-			if (siteFeaturesResponse?.error) {
+		if ( currentData?.data?.siteFeatures ) {
+			const siteFeaturesResponse = await setSiteFeatures(
+				pluginInstallHash,
+				{ plugins: currentData?.data?.siteFeatures }
+			);
+			if ( siteFeaturesResponse?.error ) {
 				setIsHeaderNavigationEnabled( true );
 				return setIsError( true );
 			}

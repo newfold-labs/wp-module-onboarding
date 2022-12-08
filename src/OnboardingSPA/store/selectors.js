@@ -269,6 +269,6 @@ export function getHeaderMenuData( state ) {
  * @param {*} state
  * @return string
  */
-export function getPluginInstallHash(state) {
+export function getPluginInstallHash( state ) {
 	return state.runtime.pluginInstallHash;
 }
