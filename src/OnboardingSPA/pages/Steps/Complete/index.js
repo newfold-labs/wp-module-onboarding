@@ -39,7 +39,7 @@ const StepComplete = () => {
 			setIsHeaderNavigationEnabled( true );
 			return setIsError( true );
 		}
-		if ( currentData?.data?.siteFeatures ) {
+		if ( pluginInstallHash && currentData?.data?.siteFeatures ) {
 			const siteFeaturesResponse = await setSiteFeatures(
 				pluginInstallHash,
 				{ plugins: currentData?.data?.siteFeatures }
