@@ -13,7 +13,7 @@ const CheckboxListSkeleton = ({ count }) => {
 
         for (let idx = 0; idx < count; idx++) {
             customItems.push(
-                <div className="checkbox-skeleton-item shimmer-light">
+                <div className="checkbox-skeleton-item shimmer">
                 </div>
             );
         }

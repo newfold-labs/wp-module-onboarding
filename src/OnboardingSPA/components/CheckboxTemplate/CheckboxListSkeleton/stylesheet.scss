@@ -1,5 +1,6 @@
-// Color Variables
-$main-color: var(--wp-admin-theme-color--rgb);
+/*COLOR VARIABLES*/
+$white-offset: rgb(224, 224, 224);
+$main-color-light: var(--nfd-onboarding-white);
 
 .checkbox-skeleton-item {
     height: 45px;
@@ -10,15 +11,4 @@ $main-color: var(--wp-admin-theme-color--rgb);
     border: 0.5px solid $white-offset;
     width: clamp(15rem, 25vw, 35rem);
     box-shadow: 0px 2px 8px 2px rgba(204, 204, 204, 0.175295);
-}
-
-.shimmer-light {
-    background: rgba($main-color, 0.1);
-    background-repeat: no-repeat;
-    animation: shine-placeholder 1.2s linear infinite;
-    background-image: linear-gradient(to right,
-            rgba($main-color, 0.1) 0%,
-            rgba($main-color, 0.2) 20%,
-            rgba($main-color, 0.1) 40%,
-            rgba($main-color, 0.1) 100%);
 }
