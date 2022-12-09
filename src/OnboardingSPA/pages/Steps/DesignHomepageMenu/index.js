@@ -10,6 +10,7 @@ import {
 	VIEW_DESIGN_HOMEPAGE_MENU,
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
+	SIDEBAR_LEARN_MORE,
 } from '../../../../constants';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { DesignStateHandler } from '../../../components/StateHandlers';
@@ -74,7 +75,7 @@ const StepDesignHomepageMenu = () => {
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
-		setIsSidebarOpened,
+		setSidebarActiveView,
 		setIsDrawerSuppressed,
 		setCurrentOnboardingData,
 		updateThemeStatus,
@@ -85,7 +86,7 @@ const StepDesignHomepageMenu = () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );
 		}
-		setIsSidebarOpened( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_HOMEPAGE_MENU );
 		setIsHeaderNavigationEnabled( true );

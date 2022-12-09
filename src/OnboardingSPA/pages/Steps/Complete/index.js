@@ -10,7 +10,7 @@ import getContents from './contents';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 
 const StepComplete = () => {
-	const { setIsDrawerSuppressed, setIsHeaderNavigationEnabled } =
+	const { setIsDrawerSuppressed, setIsHeaderNavigationEnabled, setSidebarActiveView } =
 		useDispatch( nfdOnboardingStore );
 
 	const navigate = useNavigate();
@@ -37,6 +37,7 @@ const StepComplete = () => {
 	useEffect( () => {
 		setIsHeaderNavigationEnabled( false );
 		setIsDrawerSuppressed( true );
+		setSidebarActiveView( false );
 		checkFlowComplete();
 	}, [] );
 	return (

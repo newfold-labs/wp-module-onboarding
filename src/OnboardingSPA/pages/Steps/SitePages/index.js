@@ -11,6 +11,7 @@ import {
 	VIEW_NAV_PRIMARY,
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
+	SIDEBAR_LEARN_MORE,
 } from '../../../../constants';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 import {
@@ -44,7 +45,7 @@ const StepSitePages = () => {
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
-		setIsSidebarOpened,
+		setSidebarActiveView,
 		updateThemeStatus,
 		setCurrentOnboardingData,
 		setIsHeaderNavigationEnabled,
@@ -54,7 +55,7 @@ const StepSitePages = () => {
 		if ( ! isLargeViewport ) {
 			setIsDrawerOpened( false );
 		}
-		setIsSidebarOpened( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 		setIsHeaderNavigationEnabled( true );
 	}, [] );

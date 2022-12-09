@@ -3,7 +3,7 @@ import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import CardHeader from '../../../../components/CardHeader';
 import NavCardButton from '../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../components/NeedHelpTag';
-import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
+import { SIDEBAR_LEARN_MORE, VIEW_NAV_GET_STARTED } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
 import content from './content.json';
 import { RadioControl } from '@wordpress/components';
@@ -21,7 +21,7 @@ const GetStartedExperience = () => {
 	const [ isLoaded, setisLoaded ] = useState( false );
 	const [ wpComfortLevel, setWpComfortLevel ] = useState( '0' );
 
-	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
+	const { setCurrentOnboardingData, setSidebarActiveView } = useDispatch( nfdOnboardingStore );
 
 	const { currentData, currentStep } = useSelect( ( select ) => {
 		return {
@@ -38,7 +38,7 @@ const GetStartedExperience = () => {
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		setIsSidebarOpened( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
 		setIsHeaderNavigationEnabled( true );

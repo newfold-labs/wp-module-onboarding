@@ -13,6 +13,7 @@ import {
 	GlobalStylesProvider,
 } from '../../../components/LivePreview';
 import {
+	SIDEBAR_LEARN_MORE,
 	THEME_STATUS_NOT_ACTIVE,
 	VIEW_DESIGN_COLORS,
 } from '../../../../constants';
@@ -39,7 +40,7 @@ const StepDesignColors = () => {
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
-		setIsSidebarOpened,
+		setSidebarActiveView,
 		setIsDrawerSuppressed,
 		setIsHeaderNavigationEnabled
 
@@ -49,7 +50,7 @@ const StepDesignColors = () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );
 		}
-		setIsSidebarOpened( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_COLORS );
 		setIsHeaderNavigationEnabled( true );

@@ -5,15 +5,15 @@ import { useDispatch } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../components/NewfoldLargeCard';
-import { VIEW_NAV_GET_STARTED } from '../../../../constants';
+import { SIDEBAR_LEARN_MORE, VIEW_NAV_GET_STARTED } from '../../../../constants';
 
 const StepGetStarted = () => {
 	const location = useLocation();
 
-	const { setIsSidebarOpened } = useDispatch(nfdOnboardingStore);
+	const { setSidebarActiveView } = useDispatch(nfdOnboardingStore);
 
 	useEffect(() => {
-		setIsSidebarOpened(false);
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 	}, []);
 
 	useEffect(() => {}, [location]);

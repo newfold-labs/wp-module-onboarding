@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import CommonLayout from '../../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../../components/NewfoldLargeCard';
-import { VIEW_NAV_GET_STARTED } from '../../../../../../constants';
+import { SIDEBAR_LEARN_MORE, VIEW_NAV_GET_STARTED } from '../../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../../store';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
@@ -14,7 +14,7 @@ import { translations } from '../../../../../utils/locales/translations';
 
 const StepPrimarySetup = () => {
 
-	const { setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed, setIsHeaderNavigationEnabled } = useDispatch(
+	const { setDrawerActiveView, setIsDrawerSuppressed, setIsHeaderNavigationEnabled, setSidebarActiveView } = useDispatch(
 		nfdOnboardingStore
 	);
 
@@ -29,7 +29,7 @@ const StepPrimarySetup = () => {
 	);
 
 	useEffect(() => {
-		setIsSidebarOpened(false);
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsDrawerSuppressed(true);
 		setDrawerActiveView(VIEW_NAV_GET_STARTED);
 		setIsHeaderNavigationEnabled( true );

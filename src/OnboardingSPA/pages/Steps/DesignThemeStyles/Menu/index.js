@@ -13,6 +13,7 @@ import {
 	VIEW_DESIGN_THEME_STYLES_MENU,
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
+	SIDEBAR_LEARN_MORE,
 } from '../../../../../constants';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
 import {
@@ -56,7 +57,7 @@ const StepDesignThemeStylesMenu = () => {
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
-		setIsSidebarOpened,
+		setSidebarActiveView,
 		setIsDrawerSuppressed,
 		updatePreviewSettings,
 		setCurrentOnboardingData,
@@ -68,7 +69,7 @@ const StepDesignThemeStylesMenu = () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );
 		}
-		setIsSidebarOpened( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_THEME_STYLES_MENU );
 		setIsHeaderNavigationEnabled( true );
