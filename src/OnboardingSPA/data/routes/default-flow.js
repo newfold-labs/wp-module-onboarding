@@ -22,7 +22,6 @@ import {
 	VIEW_DESIGN_COLORS,
 	VIEW_DESIGN_HEADER_MENU,
 	VIEW_DESIGN_HOMEPAGE_MENU,
-	VIEW_DESIGN_THEMES,
 	VIEW_DESIGN_THEME_STYLES_MENU,
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
 	VIEW_DESIGN_TYPOGRAPHY,
@@ -401,6 +400,7 @@ export const steps = [
 		Component: StepDesignThemeStylesMenu,
 		Icon: styles,
 		priority: 160,
+		designDrawerActiveLinkIncludes: '/wp-setup/step/design/theme-styles/',
 		VIEW: VIEW_DESIGN_THEME_STYLES_MENU,
 		patternId: 'theme-styles',
 		sidebars: {
@@ -430,6 +430,7 @@ export const steps = [
 		Icon: styles,
 		priority: 170,
 		VIEW: VIEW_DESIGN_THEME_STYLES_PREVIEW,
+		designDrawerActiveLinkIncludes: '/wp-setup/step/design/theme-styles/',
 		patternId: 'theme-styles',
 		sidebars: {
 			LearnMore: {
@@ -643,6 +644,7 @@ export const initialTopSteps = () => {
 		description: '',
 		Icon: brush,
 		VIEW: VIEW_NAV_DESIGN,
+		primaryDrawerActiveLinkIncludes: '/wp-setup/step/design/',
 		priority: 140 /* matches priority for first design step */,
 	};
 

@@ -4,9 +4,9 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import ExitToWordPress from '../../ExitToWordPress';
 
 import { Icon } from '@wordpress/icons';
-import { __ } from '@wordpress/i18n';
 import { store as nfdOnboardingStore } from '../../../store';
 import { useSelect, useDispatch } from '@wordpress/data';
+import classNames from 'classnames';
 
 const NavPrimary = () => {
 	const navigate = useNavigate();
@@ -44,8 +44,25 @@ const NavPrimary = () => {
 							<Tooltip key={ step.path } text={ step.heading }>
 								<li className="nfd-onboarding-drawer__panel-menu-item">
 									<NavLink
-										to={ step.path }
-										className="nfd-onboarding-drawer__panel-menu-link"
+										to={
+											location.pathname === step.path ||
+											location.pathname.includes(
+												step?.primaryDrawerActiveLinkIncludes
+											)
+												? location.pathname
+												: step.path
+										}
+										className={ classNames(
+											'nfd-onboarding-drawer__panel-menu-link',
+											{
+												active:
+													location.pathname ===
+														step.path ||
+													location.pathname.includes(
+														step?.primaryDrawerActiveLinkIncludes
+													),
+											}
+										) }
 										state={ { origin: 'drawer-nav' } }
 										onClick={ () =>
 											step?.VIEW &&
