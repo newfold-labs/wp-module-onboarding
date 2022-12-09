@@ -11,13 +11,9 @@ const CheckboxListSkeleton = ({ count }) => {
     const buildCheckboxSkeletonItems = () => {
         var customItems = [];
 
-        for (let idx = 0; idx < count; idx++) {
-            customItems.push(
-                <div className="checkbox-skeleton-item shimmer">
-                </div>
-            );
-        }
-
+        for (let idx = 0; idx < count; idx++) 
+            customItems.push(  <div className="checkbox-skeleton-item shimmer"/>);
+        
         return customItems;
     };
 
