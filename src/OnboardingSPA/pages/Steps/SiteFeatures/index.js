@@ -9,6 +9,7 @@ import CommonLayout from '../../../components/Layouts/Common';
 import { getSiteFeatures } from '../../../utils/api/plugins';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import CheckboxList from '../../../components/CheckboxTemplate/CheckboxList';
+import { CheckboxListSkeleton } from '../../../components/CheckboxTemplate';
 
 const StepSiteFeatures = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -88,11 +89,14 @@ const StepSiteFeatures = () => {
 	}, [] );
 
 	return (
-		<CommonLayout isVerticallyCentered>
-			<HeadingWithSubHeading
-				title={ currentStep?.heading }
-				subtitle={ currentStep?.subheading }
-			/>
+		<CommonLayout>
+			<div style={{margin: '100px'}}>
+				<HeadingWithSubHeading
+					title={currentStep?.heading}
+					subtitle={currentStep?.subheading}
+				/>
+			</div>
+			{ !customPluginsList && <CheckboxListSkeleton count={10}/>}
 			{ customPluginsList && (
 				<CheckboxList
 					callback={ selectPlugin }
