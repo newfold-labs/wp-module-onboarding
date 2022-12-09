@@ -116,55 +116,53 @@ class FlowService {
 	 * function to update the Database recursively based on Values opted or entered by the User
 	 */	
 	public static function update_post_call_data_recursive(&$default_flow_data, &$flow_data, &$updated_flow_data, &$params, &$flag = '') {
-		{
-			foreach ($flow_data as $key => $value)
-			{ 
-				if(is_array($params[$key]) && !is_array($value)) {
+		foreach ($flow_data as $key => $value)
+		{ 
+			if(is_array($params[$key]) && !is_array($value)) {
+				$flag = $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value);
+				break;
+			}
+
+			// Updates value entered by the user
+			if (isset($params) && array_key_exists($key, $params)) {
+				if(strcmp(gettype($value), gettype($params[$key])) === 0) {
+					if(!is_bool($params[$key]) && empty($params[$key]) && isset($default_flow_data[$key])) {
+						$updated_flow_data[$key] = $default_flow_data[$key];
+					}
+					else
+						$updated_flow_data[$key] = $params[$key];
+				}
+				else {
 					$flag = $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value);
 					break;
 				}
+			}
 
-				// Updates value entered by the user
-				if (isset($params) && array_key_exists($key, $params)) {
-					if(strcmp(gettype($value), gettype($params[$key])) === 0) {
-						if(!is_bool($params[$key]) && empty($params[$key]) && isset($default_flow_data[$key])) {
-							$updated_flow_data[$key] = $default_flow_data[$key];
-						}
-						else
-							$updated_flow_data[$key] = $params[$key];
-					}
-					else {
-						$flag = $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value);
-						break;
+			// Retains the DB Value if no input from the User
+			else $updated_flow_data[$key] = $value;
+
+			if ( is_array( $value )) {
+
+				// if there is an empty value in the DB or any key is not sent, the default value (if any) or the existing DB value is retained
+				if(empty($params[$key])) {
+					if(!empty($value) && !empty($default_flow_data[$key]))
+						$updated_flow_data[$key] = $value;
+					else
+						$updated_flow_data[$key] = $default_flow_data[$key];
+				}
+				
+				// To handle Indexed Arrays gracefully
+				if (isset($params[$key]) && count(array_filter(array_keys($params[$key]), 'is_string')) === 0 ) {
+					foreach($params[$key] as $index_key=>$index_value) {
+						if(is_array($index_value))
+							$updated_flow_data[$key][$index_key] = self::update_post_call_data_recursive($default_flow_data[$key][$index_key], $value[$index_key], $updated_flow_data[$key][$index_key], $index_value, $flag);
 					}
 				}
-
-				// Retains the DB Value if no input from the User
-				else $updated_flow_data[$key] = $value;
-
-				if ( is_array( $value )) {
-
-					// if there is an empty value in the DB or any key is not sent, the default value (if any) or the existing DB value is retained
-					if(empty($params[$key])) {
-						if(!empty($value) && !empty($default_flow_data[$key]))
-							$updated_flow_data[$key] = $value;
-						else
-							$updated_flow_data[$key] = $default_flow_data[$key];
-					}
-					
-					// To handle Indexed Arrays gracefully
-					if (isset($params[$key]) && count(array_filter(array_keys($params[$key]), 'is_string')) === 0 ) {
-						foreach($params[$key] as $index_key=>$index_value) {
-							if(is_array($index_value))
-								$updated_flow_data[$key][$index_key] = self::update_post_call_data_recursive($default_flow_data[$key][$index_key], $value[$index_key], $updated_flow_data[$key][$index_key], $index_value, $flag);
-						}
-					}
-					else
-						$updated_flow_data[$key] = self::update_post_call_data_recursive($default_flow_data[$key], $value, $updated_flow_data[$key], $params[$key], $flag);
-				}							
-			}
-			return (!empty($flag))? $flag : $updated_flow_data;
+				else
+					$updated_flow_data[$key] = self::update_post_call_data_recursive($default_flow_data[$key], $value, $updated_flow_data[$key], $params[$key], $flag);
+			}							
 		}
+		return (!empty($flag))? $flag : $updated_flow_data;
 	}
 
     /*
