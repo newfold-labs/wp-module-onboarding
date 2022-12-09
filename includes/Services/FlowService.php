@@ -34,83 +34,81 @@ class FlowService {
 	 * function to update the Flow Data (Blueprint) in an array recursively in comparison to Flows::get_data() (Database)
 	 */	
 	private static function update_flow_data_recursive(&$default_flow_data, &$flow_data, &$updated_flow_data) {
-		{
-			$flow_data_fixes = Flows::get_fixes();
+		$flow_data_fixes = Flows::get_fixes();
 
-			foreach ($default_flow_data as $key => $value)
-			{ 
+		foreach ($default_flow_data as $key => $value)
+		{ 
 
-				// Any Key renamed is updated in the database with NewKey and the value from the OldKey is retained
-				if($flow_data_fixes) {
-					foreach ($flow_data_fixes as $old_key=>$new_val) {
-						if (isset($flow_data) && array_key_exists($old_key, $flow_data) && array_key_exists($new_val['new_key'], $default_flow_data)) {
-							if($new_val['retain_existing_value'])
-								$flow_data[$new_val['new_key']] = $flow_data[$old_key];
-							else
-								$flow_data[$new_val['new_key']] = $default_flow_data[$new_val['new_key']];
-							unset($flow_data[$old_key]);
-						}	
-					}
-				}
-
-				// To update an existing value if the key exists in both, the blueprint and database
-				// All keys in the database and not in blueprint are not included
-				if (isset($flow_data) && array_key_exists($key, $flow_data) && !is_array($value)) {					
-					// Retains the user entered value at the time of onboarding
-					if(isset($flow_data[$key])) 
-						$updated_flow_data[$key] = $flow_data[$key];
-
-					// Updates any default value added to an Existing Key in the blueprint into the database
-					else
-						$updated_flow_data[$key] = $value;
-				}
-
-				// Adds new key-value pair added to the blueprint into the database
-				else
-					$updated_flow_data[$key] = $value;
-
-				if ( is_array( $value ) ) {
-
-					// For Keys having Empty Arrays. Eg: isViewed, other
-					if(empty($value) && !empty($flow_data[$key])) 
-						$updated_flow_data[$key] = $flow_data[$key];
-
-					// To handle Indexed Arrays gracefully
-					if (count(array_filter(array_keys($value), 'is_string')) === 0) {
-
-						// To check if an Indexed Array is further Nested or Not
-						foreach($value as $index_key => $index_value) {
-
-							// For Indexed Arrays having values as an Array: Indexed/Associative
-							if(is_array($index_value)) {
-								if(empty($flow_data[$key][$index_key]))
-									$updated_flow_data[$key][$index_key] = $index_value;
-								else
-									$updated_flow_data[$key][$index_key] = $flow_data[$key][$index_key];
-							}
-
-							// For Indexed Arrays having values as a String/Boolean
-							else {
-								if(empty($flow_data[$key]))
-									$updated_flow_data[$key] = $value;
-								else
-									$updated_flow_data[$key] = $flow_data[$key];
-							}
-						}
-					}
-					else
-						$updated_flow_data[$key] = self::update_flow_data_recursive($value, $flow_data[$key], $updated_flow_data[$key]);
+			// Any Key renamed is updated in the database with NewKey and the value from the OldKey is retained
+			if($flow_data_fixes) {
+				foreach ($flow_data_fixes as $old_key=>$new_val) {
+					if (isset($flow_data) && array_key_exists($old_key, $flow_data) && array_key_exists($new_val['new_key'], $default_flow_data)) {
+						if($new_val['retain_existing_value'])
+							$flow_data[$new_val['new_key']] = $flow_data[$old_key];
+						else
+							$flow_data[$new_val['new_key']] = $default_flow_data[$new_val['new_key']];
+						unset($flow_data[$old_key]);
+					}	
 				}
 			}
 
-			if(is_int($updated_flow_data['updatedAt'])) 
-				$updated_flow_data['updatedAt'] = strval($updated_flow_data['updatedAt']);
-			if(is_int($updated_flow_data['createdAt'])) 
-				$updated_flow_data['createdAt'] = strval($updated_flow_data['createdAt']);
-			
-			return $updated_flow_data;
-		  }
-	}
+			// To update an existing value if the key exists in both, the blueprint and database
+			// All keys in the database and not in blueprint are not included
+			if (isset($flow_data) && array_key_exists($key, $flow_data) && !is_array($value)) {					
+				// Retains the user entered value at the time of onboarding
+				if(isset($flow_data[$key])) 
+					$updated_flow_data[$key] = $flow_data[$key];
+
+				// Updates any default value added to an Existing Key in the blueprint into the database
+				else
+					$updated_flow_data[$key] = $value;
+			}
+
+			// Adds new key-value pair added to the blueprint into the database
+			else
+				$updated_flow_data[$key] = $value;
+
+			if ( is_array( $value ) ) {
+
+				// For Keys having Empty Arrays. Eg: isViewed, other
+				if(empty($value) && !empty($flow_data[$key])) 
+					$updated_flow_data[$key] = $flow_data[$key];
+
+				// To handle Indexed Arrays gracefully
+				if (count(array_filter(array_keys($value), 'is_string')) === 0) {
+
+					// To check if an Indexed Array is further Nested or Not
+					foreach($value as $index_key => $index_value) {
+
+						// For Indexed Arrays having values as an Array: Indexed/Associative
+						if(is_array($index_value)) {
+							if(empty($flow_data[$key][$index_key]))
+								$updated_flow_data[$key][$index_key] = $index_value;
+							else
+								$updated_flow_data[$key][$index_key] = $flow_data[$key][$index_key];
+						}
+
+						// For Indexed Arrays having values as a String/Boolean
+						else {
+							if(empty($flow_data[$key]))
+								$updated_flow_data[$key] = $value;
+							else
+								$updated_flow_data[$key] = $flow_data[$key];
+						}
+					}
+				}
+				else
+					$updated_flow_data[$key] = self::update_flow_data_recursive($value, $flow_data[$key], $updated_flow_data[$key]);
+			}
+		}
+
+		if(is_int($updated_flow_data['updatedAt'])) 
+			$updated_flow_data['updatedAt'] = strval($updated_flow_data['updatedAt']);
+		if(is_int($updated_flow_data['createdAt'])) 
+			$updated_flow_data['createdAt'] = strval($updated_flow_data['createdAt']);
+		
+		return $updated_flow_data;
+		}
 
 	/*
 	 * function to update the Database recursively based on Values opted or entered by the User
