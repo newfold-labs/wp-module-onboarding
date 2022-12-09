@@ -4,11 +4,13 @@ export const runtimeDataExists =
 	'buildUrl' in window.nfdOnboarding;
 export const wpAdminUrl = window.nfdOnboarding.adminUrl;
 export const wpSiteUrl = window.nfdOnboarding.siteUrl;
-export const wpRestBase = window.nfdOnboarding.restUrl;
+export const wpRestURL = window.nfdOnboarding.restUrl;
+export const wpRestRoute = 'wp/v2';
 export const onboardingRestRoute = 'newfold-onboarding/v1';
-export const onboardingRestBase = `${ wpRestBase }/${ onboardingRestRoute }`;
-export const wpAdminPage = `${wpAdminUrl}index.php`;
-export const bluehostDashboardPage = `${wpAdminPage}?page=bluehost`;
+export const wpRestBase = `${ wpRestURL }/${ wpRestRoute }`;
+export const onboardingRestBase = `${ wpRestURL }/${ onboardingRestRoute }`;
+export const wpAdminPage = `${ wpAdminUrl }index.php`;
+export const bluehostDashboardPage = `${ wpAdminPage }?page=bluehost`;
 export const NFD_ONBOARDING_EVENT_PREFIX = 'nfd-module-onboarding-event';
 export const VIEW_NAV_PRIMARY = 'nav-primary';
 export const VIEW_NAV_DESIGN = 'nav-design';
