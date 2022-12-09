@@ -108,7 +108,7 @@ class FlowService {
 			$updated_flow_data['createdAt'] = strval($updated_flow_data['createdAt']);
 		
 		return $updated_flow_data;
-		}
+	}
 
 	/*
 	 * function to update the Database recursively based on Values opted or entered by the User
