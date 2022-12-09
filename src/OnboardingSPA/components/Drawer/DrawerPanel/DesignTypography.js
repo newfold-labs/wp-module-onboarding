@@ -188,7 +188,7 @@ const DesignTypography = () => {
 				</div>
 			} */ }
 				{ fontPalettes && buildPalettes() }
-				{ fontPalettes && buildCustomPalette() }
+				{/* { fontPalettes && buildCustomPalette() } */}
 				<div className="custom-font-palette--hidden">{ rerender }</div>
 			</div>
 		</GlobalStylesProvider>
