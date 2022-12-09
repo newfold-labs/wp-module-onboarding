@@ -34,7 +34,7 @@ const StepComplete = () => {
 	const contents = getContents( brandName );
 
 	const checkFlowComplete = async () => {
-		Promise.all( [ completeFlowRequest(), setSiteFeaturesRequest() ] ).then(
+		await Promise.all( [ completeFlowRequest(), setSiteFeaturesRequest() ] ).then(
 			( values ) =>
 				values.forEach( ( value ) => {
 					// If any Request returns False then Show Error
