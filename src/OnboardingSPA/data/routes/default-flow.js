@@ -22,7 +22,6 @@ import {
 	VIEW_DESIGN_COLORS,
 	VIEW_DESIGN_HEADER_MENU,
 	VIEW_DESIGN_HOMEPAGE_MENU,
-	VIEW_DESIGN_THEMES,
 	VIEW_DESIGN_THEME_STYLES_MENU,
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
 	VIEW_DESIGN_TYPOGRAPHY,
@@ -401,7 +400,7 @@ export const steps = [
 		Component: StepDesignThemeStylesMenu,
 		Icon: styles,
 		priority: 160,
-		VIEW: VIEW_DESIGN_THEME_STYLES_MENU,
+		VIEW: VIEW_NAV_DESIGN,
 		patternId: 'theme-styles',
 		sidebars: {
 			LearnMore: {
@@ -483,7 +482,7 @@ export const steps = [
 		Component: StepDesignHomepageMenu,
 		Icon: header,
 		priority: 240,
-		VIEW: VIEW_DESIGN_HOMEPAGE_MENU,
+		VIEW: VIEW_NAV_DESIGN,
 		patternId: 'homepage-styles',
 		sidebars: {
 			LearnMore: {
