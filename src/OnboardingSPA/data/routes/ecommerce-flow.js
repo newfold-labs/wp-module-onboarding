@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { store, institution, box } from '@wordpress/icons';
+import { store, institution, shipping } from '@wordpress/icons';
 import { lazy } from '@wordpress/element';
 import { orderBy, filter } from 'lodash';
 
@@ -89,7 +89,7 @@ export const ecommerceSteps = [
 			'wp-module-onboarding'
 		),
 		Component: StepProducts,
-		Icon: box,
+		Icon: shipping,
 		priority: 95,
 		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
 		sidebars: {
