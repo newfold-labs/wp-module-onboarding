@@ -129,6 +129,23 @@ class SitePagesController {
 
 	public function publish_page( $title, $content ) {
 
+		$is_template_no_title = false;
+
+		if ( 'Homepage' === $title ) {
+			$is_template_no_title = true;
+		}
+
+		$post = array(
+			'post_title'   => $title,
+			'post_status'  => 'publish',
+			'post_content' => $content,
+			'post_type'    => 'page',
+		);
+
+		if ( $is_template_no_title ) {
+			$post['page_template'] = 'no-title';
+		}
+
 		return \wp_insert_post(
 			array(
 				'post_title'   => $title,
