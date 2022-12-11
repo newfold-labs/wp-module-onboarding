@@ -95,7 +95,7 @@ const DesignColors = () => {
 						const slug = selectedThemeColorPalette[ idx ]?.slug;
 						if (
 							isCustomStyle &&
-							selectCustomColor?.[slug] != ''
+							selectedColorsLocalTemp?.[slug] != ''
 						)
 							selectedThemeColorPalette[ idx ].color = selectedColorsLocalTemp[slug];
 						/**
