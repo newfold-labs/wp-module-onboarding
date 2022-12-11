@@ -70,47 +70,56 @@
     display: flex;
     flex-direction: row;
     align-items: stretch;
-    justify-content: space-around;
-    
+    justify-content: space-between;
 }
 
-.content-text{
+.tab-text{
     padding-right: 10px;
     font-size:  clamp(0.88rem, 0.45rem + 0.76vw, 1.13rem);
     line-height: 1.6;
     width: 390px;
 }
-
-.content-img{
-    background-image: var(--get-started-content-img);
+.tab-img {
+    background-color: var(--nfd-onboarding-tertiary);
+    overflow: hidden;
+}
+.tab-img-base {
     background-size: contain;
     background-repeat: no-repeat;
-    height: 200px;
-    width: 350px;
+    width: 400px;
+    height: 228px;
+    animation-duration: 360ms;
+    animation-timing-function: ease-out;
+    @media (prefers-reduced-motion) {
+        animation: none !important;
+        translation: none !important;
+    }
+}
+
+.content-img{
+    @extend .tab-img-base;
+    background-image: var(--get-started-content-img);
+    animation-name: fadeInRight;
 }
 
 .features-img{
+    @extend .tab-img-base;
     background-image: var(--get-started-features-img);
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 200px;
-    width: 350px;
+    animation-name: fadeInUp;
 }
 
 .design-img{
+    @extend .tab-img-base;
     background-image: var(--get-started-design-img);
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 200px;
-    width: 350px;
+    animation-name: fadeInLeft;
 }
 
 .welcome-card {
 	display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
-    height: 100%;
+    justify-content: space-around;
+    height: clamp(520px, 59vh, 800px);
     width: 100%;
     padding-bottom: 10px;
 }
