@@ -2,14 +2,15 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 
-final class Colors {
+final class Colors
+{
 
 
-	 /**
-	  * This contains the different color variations for the theme.
-	  *
-	  * @var string
-	  */
+	/**
+	 * This contains the different color variations for the theme.
+	 *
+	 * @var string
+	 */
 	protected static $theme_colors = array(
 		'yith-wonder' => array(
 			'calm'         => array(
@@ -134,23 +135,24 @@ final class Colors {
 		),
 	);
 
-	 /**
-	  * Retrieves the active theme color variations.
-	  *
-	  * @return array|\WP_Error
-	  */
-	public static function get_colors_from_theme() {
-		 $active_theme  = ( \wp_get_theme() )->get( 'TextDomain' );
-		 $pattern_slugs = self::$theme_colors[ $active_theme ];
+	/**
+	 * Retrieves the active theme color variations.
+	 *
+	 * @return array|\WP_Error
+	 */
+	public static function get_colors_from_theme()
+	{
+		$active_theme  = (\wp_get_theme())->get('TextDomain');
+		$pattern_slugs = self::$theme_colors[$active_theme];
 
-		if ( ! isset( $pattern_slugs ) ) {
+		if (!isset($pattern_slugs)) {
 			return new \WP_Error(
 				'Theme Colors not found',
 				'No WordPress Colors are available for this theme.',
-				array( 'status' => 404 )
+				array('status' => 404)
 			);
 		}
 
-		 return $pattern_slugs;
+		return $pattern_slugs;
 	}
 }
