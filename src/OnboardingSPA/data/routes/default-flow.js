@@ -654,6 +654,7 @@ export const initialTopSteps = () => {
 		heading: __( 'Get Started', 'wp-module-onboarding' ),
 		Icon: home,
 		VIEW: VIEW_NAV_GET_STARTED,
+		primaryDrawerActiveLinkIncludes: '/wp-setup/step/get-started/',
 		priority: 20,
 	};
 
