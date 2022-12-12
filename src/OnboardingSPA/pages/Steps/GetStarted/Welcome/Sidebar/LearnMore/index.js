@@ -37,13 +37,16 @@ const StepIntroPanel = lazy( () =>
 );
 
 const LearnMore = () => {
-	const { brandName } = useSelect( ( select ) => {
+	const { brandName, expertsLink, techSupportLink, fullServiceCreativeTeamLink } = useSelect( ( select ) => {
 		return {
 			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+			expertsLink: select( nfdOnboardingStore ).getExpertsUrl(),
+			techSupportLink: select( nfdOnboardingStore ).getTechSupportUrl(),
+			fullServiceCreativeTeamLink: select( nfdOnboardingStore ).getfullServiceCreativeTeamUrl(),
 		};
 	} );
 
-	const content = getContents( brandName );
+	const content = getContents( brandName, expertsLink, techSupportLink, fullServiceCreativeTeamLink );
 
 	return (
 		<div className="nfd-onboarding-sidebar-learn-more__get-started-welcome">
