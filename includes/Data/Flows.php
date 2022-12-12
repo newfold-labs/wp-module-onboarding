@@ -21,12 +21,13 @@ final class Flows {
 		// path identifier for the current step within a flow
 		'currentStep'          => '/step/wp-setup/get-started',
 
-		'createdAt'            => '',
+		'createdAt'            => 0,
 
-		'updatedAt'            => '',
+		'updatedAt'            => 0,
 
 		// to populate the step fields if a user is resuming a flow.
 		'data'                 => array(
+			// Any manual fixes or modification made to siteType shall also be made in FlowServices::update_default_data_for_ecommerce()
 			'siteType'        => array(
 				'label'     => '',
 				'referTo'   => 'site',
@@ -36,6 +37,7 @@ final class Flows {
 
 			'wpComfortLevel'  => '0',
 
+			// Any manual fixes or modification made to topPriority shall also be made in FlowServices::update_default_data_for_ecommerce()
 			// Enums: `publishing`, `designing`, `selling`, 'migrating', 'regenerate' and 'skip'
 			'topPriority'     => array(
 				'priority1' => 'publishing',
