@@ -11,7 +11,8 @@ final class Brands {
 
 	public static function get_brands() {
 		$container_headers = new Fluent( container()->plugin()->headers );
-		$brand_plugin_name = $container_headers->get( 'attributes' )[ 'TextDomain' ];
+		$brand_plugin_name = $container_headers->getAttributes()[ 'attributes' ][ 'TextDomain' ] ? 
+								$container_headers->getAttributes()[ 'attributes' ][ 'TextDomain' ] : '';
 
 		return array(
 			'bluehost'       => array(
