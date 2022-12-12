@@ -71,8 +71,7 @@ class FlowController {
 		$result = FlowService::read_flow_data_from_wp_option();
 		if( ! $result ) {
 			$result = FlowService::get_default_flow_data();
-			FlowService::update_wp_options_data_in_database($result);
-		}
+			\update_option( Options::get_option_name( 'flow' ), $result );		}
 
 		return new \WP_REST_Response(
 			$result,
@@ -110,7 +109,7 @@ class FlowController {
 
 		$flow_data = FlowService::read_flow_data_from_wp_option();
 		$updated_flow_data = array();
-		$flow_data = FlowService::update_post_call_data_recursive($default_flow_data, $flow_data, $updated_flow_data, $params );
+		$flow_data = FlowService::update_post_call_data_recursive($flow_data, $updated_flow_data, $params);
 		if(!is_array($flow_data)) {
 			return new \WP_Error(
 				'wrong_param_type_provided',
@@ -119,8 +118,7 @@ class FlowController {
 			);
 		}
 
-		// update timestamp once data is updated
-		$flow_data['updatedAt'] = strval(time());
+		$flow_data['updatedAt'] = time();
 
 		// Update Blog Information from Basic Info
 		if ( ( ! empty( $flow_data['data']['blogName'] ) ) ) {
@@ -138,7 +136,7 @@ class FlowController {
 		}
 
 		// save data to database
-		if ( ! FlowService::update_wp_options_data_in_database( $flow_data ) ) {
+		if ( ! \update_option( Options::get_option_name( 'flow' ), $flow_data )) {
 			return new \WP_Error(
 				'database_update_failed',
 				'There was an error saving the data',
