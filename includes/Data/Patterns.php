@@ -96,6 +96,7 @@ final class Patterns {
 						'shown'  => true,
 					),
 				),
+				'site-features'     => array()
 			),
 		);
 	}
