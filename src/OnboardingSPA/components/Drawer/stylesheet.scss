@@ -385,6 +385,9 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 
 	&-selected {
 		background-color: $main-border-main;
+		.color-palette__name {
+			color: var(--nfd-onboarding-light);
+		}
 	}
 
 	&__colors {
