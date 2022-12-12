@@ -94,7 +94,7 @@ class SitePagesController {
 			 \update_option( Options::get_option_name( 'show_on_front', false ), 'page' );
 		}
 
-		$post_id = $this->publish_page( 'Homepage', $pattern_data['content'] );
+		$post_id = $this->publish_page( 'Homepage', $pattern_data['content'], true );
 		if ( is_wp_error( $post_id ) ) {
 			return $post_id;
 		}
@@ -127,13 +127,7 @@ class SitePagesController {
 		return true;
 	}
 
-	public function publish_page( $title, $content ) {
-
-		$is_template_no_title = false;
-
-		if ( 'Homepage' === $title ) {
-			$is_template_no_title = true;
-		}
+	public function publish_page( $title, $content, $is_template_no_title = false ) {
 
 		$post = array(
 			'post_title'   => $title,
@@ -146,13 +140,6 @@ class SitePagesController {
 			$post['page_template'] = 'no-title';
 		}
 
-		return \wp_insert_post(
-			array(
-				'post_title'   => $title,
-				'post_status'  => 'publish',
-				'post_content' => $content,
-				'post_type'    => 'page',
-			)
-		);
+		return \wp_insert_post( $post );
 	}
 }
