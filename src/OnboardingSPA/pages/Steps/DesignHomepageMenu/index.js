@@ -7,7 +7,7 @@ import { getPatterns } from '../../../utils/api/patterns';
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import {
-	VIEW_DESIGN_HOMEPAGE_MENU,
+	VIEW_NAV_DESIGN,
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
@@ -87,7 +87,7 @@ const StepDesignHomepageMenu = () => {
 		}
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( false );
-		setDrawerActiveView( VIEW_DESIGN_HOMEPAGE_MENU );
+		setDrawerActiveView( VIEW_NAV_DESIGN );
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
