@@ -17,6 +17,7 @@ import {
 	moveTo,
 	redo,
 	post,
+	pages as pagesIcon,
 } from '@wordpress/icons';
 import {
 	VIEW_DESIGN_COLORS,
@@ -468,7 +469,7 @@ export const steps = [
 	},
 	{
 		path: '/wp-setup/step/design/homepage-menu',
-		title: __( 'HomePages Wizard', 'wp-module-onboarding' ),
+		title: __( 'Homepage Layouts', 'wp-module-onboarding' ),
 		heading: __(
 			'There’s no place like a great home page',
 			'wp-module-onboarding'
@@ -482,7 +483,7 @@ export const steps = [
 			'wp-module-onboarding'
 		),
 		Component: StepDesignHomepageMenu,
-		Icon: header,
+		Icon: pagesIcon,
 		priority: 240,
 		VIEW: VIEW_NAV_DESIGN,
 		patternId: 'homepage-styles',
@@ -493,8 +494,8 @@ export const steps = [
 		},
 	},
 	{
-		path: '/wp-setup/step/site-pages',
-		title: __( 'Pages', 'wp-module-onboarding' ),
+		path: '/wp-setup/step/design/site-pages',
+		title: __( 'Page Layouts', 'wp-module-onboarding' ),
 		heading: __(
 			'You have ideas, we have page templates',
 			'wp-module-onboarding'
