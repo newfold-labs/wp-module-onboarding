@@ -3,14 +3,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { translations } from '../../../../../utils/locales/translations';
 import { copy } from '@wordpress/icons';
 
-import { store as nfdOnboardingStore } from '../../../../../store';
-import { select } from '@wordpress/data';
-
-const getContents = () => {
-	
-	const techSupportLink = select( nfdOnboardingStore ).getTechSupportUrl();
-	const fullServiceCreativeTeamLink = select( nfdOnboardingStore ).getfullServiceCreativeTeamUrl();
-
+const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 	return {
 		introduction: {
 			heading: __( 'Pages', 'wp-module-onboarding' ),

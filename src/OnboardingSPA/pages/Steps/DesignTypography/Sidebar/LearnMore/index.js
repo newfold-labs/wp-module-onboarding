@@ -32,7 +32,6 @@ const StepIntroPanel = lazy( () =>
 const LearnMore = () => {
 	const { techSupportLink, fullServiceCreativeTeamLink } = useSelect( ( select ) => {
 		return {
-			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
 			techSupportLink: select( nfdOnboardingStore ).getTechSupportUrl(),
 			fullServiceCreativeTeamLink: select( nfdOnboardingStore ).getfullServiceCreativeTeamUrl(),
 		};
