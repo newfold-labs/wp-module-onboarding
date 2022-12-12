@@ -401,7 +401,7 @@ export const steps = [
 		Icon: styles,
 		priority: 160,
 		designDrawerActiveLinkIncludes: '/wp-setup/step/design/theme-styles/',
-		VIEW: VIEW_DESIGN_THEME_STYLES_MENU,
+		VIEW: VIEW_NAV_DESIGN,
 		patternId: 'theme-styles',
 		sidebars: {
 			LearnMore: {
@@ -484,7 +484,7 @@ export const steps = [
 		Component: StepDesignHomepageMenu,
 		Icon: header,
 		priority: 240,
-		VIEW: VIEW_DESIGN_HOMEPAGE_MENU,
+		VIEW: VIEW_NAV_DESIGN,
 		patternId: 'homepage-styles',
 		sidebars: {
 			LearnMore: {
