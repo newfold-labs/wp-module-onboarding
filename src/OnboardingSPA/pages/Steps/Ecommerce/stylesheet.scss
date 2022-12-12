@@ -29,126 +29,77 @@
 
 .nfd-ecommerce-address-step {
 	padding: 1rem 0;
-
-	label {
-		display: block;
-		font-size: 16px;
-		font-weight: 500;
-		line-height: 1;
-		padding-bottom: 5px;
-	}
-
 	label[data-required="true"]::after {
 		content: " *";
 	}
 
-	input,
-	select {
-		font-size: 1em;
-		padding-left: 1.3em;
-		border: 1px solid #d6d6d6;
-		border-radius: 2px;
-	}
-
-	@media (min-width: #{ ($break-medium) }) {
-
-		label {
-			font-size: 18px;
-			padding-bottom: 13px;
-		}
-
-		input,
-		select {
-			font-size: 16px;
-			min-height: 48px;
-			width: 400px;
-		}
-	}
-
-	@media (max-width: #{ ($break-medium - 1) }) and (min-width: #{ ($break-mobile + 1) }) {
-
-		input,
-		select {
-			min-height: 32px;
-			min-width: 100%;
-		}
-	}
-
-	@media (max-width: #{ ($break-mobile) }) {
-
-		input,
-		select {
-			min-height: 32px;
-			max-width: 60vw;
-			min-width: 60vw;
-		}
-	}
-
-	@media (max-width: #{($break-medium - 1)}) {
-		width: 70vw;
-	}
-
-	.store-address-form {
+	div.store-address-form {
 		display: grid;
 		gap: min(1.5em, 24px);
-		grid-template-columns: auto;
-		padding: 1em 0;
-
-		@media (max-width: #{ ($break-medium - 1) }) {
-			.full-address-fields {
-				width: 100%;
-
-				input,
-				select {
-					width: 100%;
-				}
+		padding: 1em 0 4em;
+		margin: 0 1em 0 1em;
+		label {
+			display: block;
+			font-weight: 500;
+			font-size: 16px;
+			line-height: 1;
+			padding-bottom: 13px;
+			&[aria-required="true"]::after {
+				content: " *";
 			}
 		}
-
-		@media (min-width: #{ ($break-medium) }) {
-			.full-address-fields {
-				width: calc(var(--fields)*27%);
-
-				input,
-				select {
-					width: 140px;
-				}
-			}
-		}
-
-	}
-
-	form.onboarding-ecommerce-step {
-		height: 75%;
-		font-size: 1em;
-
-		.nfd-nav-card-button {
-			width: 80%;
-			margin: 0 10%;
-		}
-	}
-
-	@media (max-width: #{($break-medium)}) {
-		div.onboarding-ecommerce-step {
-			width: 90%;
-		}
-	}
-
-	@media (min-width: #{($break-medium)}) {
-		.onboarding-ecommerce-step {
+		input,
+		select {
+			padding-left: 17px;
+			min-width: 400px;
+			max-width: 100%;
 			width: 100%;
+			height: 48px;
+			border: 1px solid #d6d6d6;
+			border-radius: 2px;
+			font-size: 13px;
 		}
 
-		div.onboarding-ecommerce-step {
-			justify-content: space-around;
+		div[data-name="full-address"] {
+			select,
+			input {
+				min-width: 180px;
+			}
+			&[data-state-empty="false"] {
+				grid-template-columns: repeat(3, auto);
+				@media (max-width: #{ ($break-xlarge) }) {
+					input,
+					select {
+						min-width: 100px;
+					}
+				}
+			}
+			&[data-state-empty="true"] {
+				grid-template-columns: repeat(2, auto);
+			}
+			display: grid;
+			gap: 24px 32px;
+			div[data-name="state"] {
+				grid-column: 2;
+			}
+
+			@media (max-width: #{ ($break-large) }) {
+				&[data-state-empty] {
+					grid-template-columns: auto;
+				}
+				div[data-name="state"] {
+					grid-column: 1;
+				}
+			}
 		}
 
-		form.onboarding-ecommerce-step {
-			height: unset;
-		}
-
-		.store-address-form {
-			padding: 2em 5%;
+		@media (max-width: #{ ($break-large) }) {
+			grid-template-columns: auto;
+			input,
+			select {
+				min-width: 100%;
+				width: 100%;
+			}
 		}
 	}
 }
@@ -189,7 +140,7 @@ div.onboarding-product-step {
 
 	div.nfd-product-step-options {
 		display: grid;
-		grid-template-columns: calc((50vw - 15px) / 2) calc((50vw - 15px) / 2);	
+		grid-template-columns: calc((50vw - 15px) / 2) calc((50vw - 15px) / 2);
 		gap: 15px;
 
 		@media (max-width: #{ ($break-mobile)}) {
@@ -204,7 +155,7 @@ div.onboarding-product-step {
 
 	.components-checkbox-control {
 		padding: 16px;
-		background-color: #F0F0F0;
+		background-color: #f0f0f0;
 
 		@media (max-width: #{ ($break-small)}),
 		(max-height: #{ ($break-small)}) {
@@ -221,7 +172,7 @@ div.onboarding-product-step {
 		width: 100%;
 		margin: 0.5em 0;
 
-		&>* {
+		& > * {
 			align-self: center;
 		}
 
@@ -229,7 +180,7 @@ div.onboarding-product-step {
 			gap: 1em;
 			grid-template-columns: auto max-content;
 
-			&>* {
+			& > * {
 				align-self: baseline;
 			}
 
@@ -257,14 +208,13 @@ div.onboarding-product-step {
 				}
 			}
 
-
 			label {
 				padding: 10px;
-				border: 1px solid #DBDBDB;
+				border: 1px solid #dbdbdb;
 				cursor: pointer;
 			}
 
-			input:checked+label {
+			input:checked + label {
 				color: var(--nfd-onboarding-white);
 				background: var(--wp-admin-theme-color-darker-10);
 			}
@@ -285,7 +235,8 @@ div.onboarding-product-step {
 
 	@media (max-width: 480px) {
 		label {
-			padding: clamp(10px, 1.5vh, 15px) clamp(10px, 5%, 13px) clamp(10px, 5%, 13px);
+			padding: clamp(10px, 1.5vh, 15px) clamp(10px, 5%, 13px)
+				clamp(10px, 5%, 13px);
 			width: unset;
 			height: fit-content;
 			line-height: 1.5;

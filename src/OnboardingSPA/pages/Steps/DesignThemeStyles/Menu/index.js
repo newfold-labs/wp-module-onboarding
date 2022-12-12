@@ -10,7 +10,7 @@ import { useGlobalStylesOutput } from '../../../../utils/global-styles/use-globa
 import { getPatterns } from '../../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../../utils/api/themes';
 import {
-	VIEW_DESIGN_THEME_STYLES_MENU,
+	VIEW_NAV_DESIGN,
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
 	SIDEBAR_LEARN_MORE,
@@ -22,8 +22,6 @@ import {
 } from '../../../../components/LivePreview';
 
 const StepDesignThemeStylesMenu = () => {
-	const MAX_PREVIEWS_PER_ROW = 3;
-
 	const location = useLocation();
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
@@ -50,7 +48,7 @@ const StepDesignThemeStylesMenu = () => {
 			storedPreviewSettings:
 				select( nfdOnboardingStore ).getPreviewSettings(),
 			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-			themeVariations: select(nfdOnboardingStore).getStepPreviewData(),
+			themeVariations: select( nfdOnboardingStore ).getStepPreviewData(),
 		};
 	}, [] );
 
@@ -62,7 +60,7 @@ const StepDesignThemeStylesMenu = () => {
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
-		setIsHeaderNavigationEnabled
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -71,7 +69,7 @@ const StepDesignThemeStylesMenu = () => {
 		}
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsDrawerSuppressed( false );
-		setDrawerActiveView( VIEW_DESIGN_THEME_STYLES_MENU );
+		setDrawerActiveView( VIEW_NAV_DESIGN );
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
@@ -138,7 +136,10 @@ const StepDesignThemeStylesMenu = () => {
 					<div className="theme-styles-menu__list">
 						<LivePreviewSkeleton
 							className={ 'theme-styles-menu__list__item' }
-							count={ themeVariations[currentStep?.patternId]?.previewCount }
+							count={
+								themeVariations[ currentStep?.patternId ]
+									?.previewCount
+							}
 							watch={ pattern && globalStyles }
 							callback={ buildPreviews }
 							viewportWidth={ 900 }

@@ -11,11 +11,12 @@ import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import { store as nfdOnboardingStore } from '../../../../store';
 import content from '../content.json';
 import countries from '../countries.json';
+import currencies from '../currencies.json';
 import { useWPSettings } from '../useWPSettings';
 import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 
 const StepAddress = () => {
-	const isLargeViewport = useViewportMatch( 'medium' );
+	const isLargeViewport = useViewportMatch('medium');
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
@@ -45,7 +46,9 @@ const StepAddress = () => {
 			'woocommerce_store_address',
 			'woocommerce_store_city',
 			'woocommerce_store_postcode',
-			'woocommerce_default_country'
+			'woocommerce_default_country',
+			'woocommerce_currency',
+			'woocommerce_email_from_address',
 		];
 		if (settings !== null && currentData.storeDetails.address === undefined) {
 			setCurrentOnboardingData({
@@ -85,8 +88,8 @@ const StepAddress = () => {
 		if (country === defaultCountry && state === undefined) {
 			state = defaultState;
 		}
-		if ( states.length == 0 ) {
-			state = ""   // edge case to handle when the user goes back to onboarding and changes from a country with state to no state
+		if (states.length == 0) {
+			state = ''; // edge case to handle when the user goes back to onboarding and changes from a country with state to no state
 		}
 		let place = '';
 		if (['country', 'state'].includes(fieldName)) {
@@ -135,6 +138,7 @@ const StepAddress = () => {
 							// );
 							navigate('/ecommerce/step/tax');
 						}}
+						style={{ display: 'grid', justifyItems: 'center' }}
 					>
 						<div className='nfd-card-heading center onboarding-ecommerce-step'>
 							<CardHeader
@@ -147,8 +151,8 @@ const StepAddress = () => {
 							{settings === null && <p>Loading your details...</p>}
 						</div>
 						<div className='store-address-form'>
-							<div>
-								<label data-required>
+							<div data-name='country'>
+								<label aria-required>
 									{__('Where is your store based?', 'wp-module-onboarding')}
 								</label>
 								{settings === null ? (
@@ -169,8 +173,8 @@ const StepAddress = () => {
 									</select>
 								)}
 							</div>
-							<div>
-								<label data-required>
+							<div data-name='woocommerce_store_address'>
+								<label aria-required>
 									{__('Address', 'wp-module-onboarding')}
 								</label>
 								<input
@@ -181,9 +185,12 @@ const StepAddress = () => {
 									{...fieldProps}
 								/>
 							</div>
-							<div className='sm:col-layout md:row-layout full-address-fields' style={{"--fields":`${states.length === 0 || settings === null  ? 2 : 3}`}}>
-								<div>
-									<label data-required>
+							<div
+								data-name='full-address'
+								data-state-empty={states.length === 0}
+							>
+								<div data-name='woocommerce_store_city'>
+									<label aria-required>
 										{__('City', 'wp-module-onboarding')}
 									</label>
 									<input
@@ -195,28 +202,30 @@ const StepAddress = () => {
 									/>
 								</div>
 								{states.length === 0 || settings === null ? null : (
-								<div>
-									<label data-required>
-										{__('State', 'wp-module-onboarding')}
-									</label>
+									<div data-name='state'>
+										<label aria-required>
+											{__('State', 'wp-module-onboarding')}
+										</label>
 										<select
 											type='text'
 											name='state'
 											required
-											defaultValue={selectedCountry==defaultCountry?defaultState:""}
+											defaultValue={
+												selectedCountry == defaultCountry ? defaultState : ''
+											}
 											{...fieldProps}
 										>
-											<option key={""} value={""} selected />
+											<option key={''} value={''} selected />
 											{states.map((state) => (
 												<option key={state.code} value={state.code}>
 													{state.name}
 												</option>
 											))}
 										</select>
-								</div>
+									</div>
 								)}
-								<div>
-									<label data-required>
+								<div data-name='woocommerce_store_postcode'>
+									<label aria-required>
 										{__('Postal Code', 'wp-module-onboarding')}
 									</label>
 									<input
@@ -227,6 +236,40 @@ const StepAddress = () => {
 										{...fieldProps}
 									/>
 								</div>
+							</div>
+							<div>
+								<label aria-required>
+									{__('Email', 'wp-module-onboarding')}
+								</label>
+								<input
+									name='woocommerce_email_from_address'
+									type='email'
+									required
+									defaultValue={address?.woocommerce_email_from_address}
+									{...fieldProps}
+								/>
+							</div>
+							<div>
+								<label>
+									{__(
+										'What currency do you want to display in your store?',
+										'wp-module-onboarding'
+									)}
+								</label>
+								<select
+									type='text'
+									name='woocommerce_currency'
+									value={address?.woocommerce_currency}
+									{...fieldProps}
+								>
+									{Object.entries(currencies).map(([code, currency]) => (
+										<option
+											key={code}
+											value={code}
+											dangerouslySetInnerHTML={{ __html: currency }}
+										/>
+									))}
+								</select>
 							</div>
 							<em style={{ display: 'inline' }}>* required</em>
 						</div>

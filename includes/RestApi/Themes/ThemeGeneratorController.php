@@ -159,6 +159,14 @@ class ThemeGeneratorController {
 		);
 	}
 
+	private function get_site_url_hash( $length = 8 ) {
+		return substr( hash( 'sha256', site_url() ), 0, $length );
+	}
+
+	private function get_dashed_site_title_defaults() {
+		return array( 'welcome', 'wordpress-site' );
+	}
+
 	 /**
 	  * Get the child theme stylesheet from flow data.
 	  *
@@ -169,8 +177,13 @@ class ThemeGeneratorController {
 	protected function get_child_theme_slug( $flow_data ) {
 		if ( ! $flow_data['theme']['stylesheet'] ||
 				   ( $flow_data['theme']['template'] === $flow_data['theme']['stylesheet'] ) ) {
-			$current_brand = Data::current_brand();
-			return $current_brand['brand'] . '-' . \sanitize_title_with_dashes( \get_bloginfo( 'name' ) );
+			$current_brand              = Data::current_brand()['brand'];
+			$default_site_titles_dashed = $this->get_dashed_site_title_defaults();
+			$site_title_dashed          = \sanitize_title_with_dashes( \get_bloginfo( 'name' ) );
+			if ( empty( $site_title_dashed ) || in_array( $site_title_dashed, $default_site_titles_dashed ) ) {
+				$site_title_dashed = $this->get_site_url_hash();
+			}
+			return $current_brand . '-' . $site_title_dashed;
 		}
 		return $flow_data['theme']['stylesheet'];
 	}
@@ -203,9 +216,6 @@ class ThemeGeneratorController {
 			unset( $theme_data['settings']['styles'] );
 			unset( $theme_data['settings']['__unstableResolvedAssets'] );
 			unset( $theme_data['settings']['__experimentalFeatures'] );
-			if ( is_array( $theme_data['settings']['color']['palette']['theme'] ) ) {
-				$theme_data['settings']['color']['palette'] = $theme_data['settings']['color']['palette']['theme'];
-			}
 			$theme_json_data = $theme_data;
 		} else {
 			$theme_json_file = $parent_theme_dir . '/theme.json';
@@ -223,11 +233,18 @@ class ThemeGeneratorController {
 		$current_brand = Data::current_brand();
 		$customer      = \wp_get_current_user();
 
+		$default_site_titles_dashed = $this->get_dashed_site_title_defaults();
+		$site_title                 = \get_bloginfo( 'name' );
+		$site_title_dashed          = \sanitize_title_with_dashes( $site_title );
+		if ( empty( $site_title ) || in_array( $site_title_dashed, $default_site_titles_dashed ) ) {
+			$site_title = $current_brand['brand'] . '-' . $this->get_site_url_hash();
+		}
+
 		$theme_style_data = array(
 			'current_brand'     => Data::current_brand(),
 			'brand'             => $current_brand['brand'],
 			'brand_name'        => $current_brand['name'] ? $current_brand['name'] : 'Newfold Digital',
-			'site_title'        => \get_bloginfo( 'name' ),
+			'site_title'        => $site_title,
 			'site_url'          => \site_url(),
 			'author'            => $customer->user_firstname,
 			'parent_theme_slug' => $parent_theme_slug,

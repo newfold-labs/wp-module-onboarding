@@ -58,7 +58,7 @@ const StepWelcome = () => {
 						tabs={tabContent.tabs.map( ( tab ) => {
 							return {
 								name: __( tab.name , 'wp-module-onboarding'),
-								title: __( tab.title , 'wp-module-onboarding'),
+								title: __( tab.subtitle , 'wp-module-onboarding'),
 								content: <Tab
 									title={ __(tab.title, 'wp-module-onboarding')}
 									text={ sprintf( __(tab.text, 'wp-module-onboarding'), translations('site'))}
