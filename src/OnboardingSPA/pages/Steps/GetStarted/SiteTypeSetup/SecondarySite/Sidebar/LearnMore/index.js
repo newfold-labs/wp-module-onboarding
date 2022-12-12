@@ -1,7 +1,7 @@
 import { useSelect } from '@wordpress/data';
 import { lazy } from '@wordpress/element';
 
-import { store as nfdOnboardingStore } from '../../../../../../store';
+import { store as nfdOnboardingStore } from '../../../../../../../store';
 import getContents from './contents';
 
 const IllustrationPanel = lazy( () =>

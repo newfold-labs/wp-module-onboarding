@@ -1,5 +1,7 @@
+import { useSelect } from '@wordpress/data';
 import { lazy } from '@wordpress/element';
 
+import { store as nfdOnboardingStore } from '../../../../../store';
 import getContents from './contents';
 
 const IllustrationPanel = lazy( () =>
@@ -28,8 +30,15 @@ const StepIntroPanel = lazy( () =>
 );
 
 const LearnMore = () => {
-	const content = getContents();
+	const { techSupportLink, fullServiceCreativeTeamLink } = useSelect( ( select ) => {
+		return {
+			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+			techSupportLink: select( nfdOnboardingStore ).getTechSupportUrl(),
+			fullServiceCreativeTeamLink: select( nfdOnboardingStore ).getfullServiceCreativeTeamUrl(),
+		};
+	} );
 
+	const content = getContents( techSupportLink, fullServiceCreativeTeamLink );
 	return (
 		<div className="nfd-onboarding-sidebar-learn-more__design-typography">
 			<StepIntroPanel
