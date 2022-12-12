@@ -21,9 +21,9 @@ final class Flows {
 		// path identifier for the current step within a flow
 		'currentStep'          => '/step/wp-setup/get-started',
 
-		'createdAt'            => 0,
+		'createdAt'            => '',
 
-		'updatedAt'            => 0,
+		'updatedAt'            => '',
 
 		// to populate the step fields if a user is resuming a flow.
 		'data'                 => array(
