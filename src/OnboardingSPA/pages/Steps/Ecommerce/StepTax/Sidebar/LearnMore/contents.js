@@ -10,7 +10,7 @@ const getContents = ( brandName ) => {
 			subheading: sprintf(
 				/* translators: 1: Site 2: Brand 3: Site */
 				__(
-					'A %s that does taxes in one click. That’s pretty novel. That’s a %s Online %s.'
+					'A %s that does taxes in one click. That’s pretty novel.'
 				),
 				translations( 'site' ),
 				brandName,

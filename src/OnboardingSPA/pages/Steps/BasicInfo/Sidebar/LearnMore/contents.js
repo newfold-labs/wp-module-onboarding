@@ -10,7 +10,7 @@ const getContents = ( brandName ) => {
 			subheading: sprintf(
 				/* translators: %s: site */
 				__(
-					`Setup how your %s will present to the public, search engines and visitors’ web browsers.`,
+					`Setup how your %s will present in visitors' browsers and search results.`,
 					'wp-module-onboarding'
 				),
 				translations( 'site' )
@@ -30,21 +30,11 @@ const getContents = ( brandName ) => {
 					description: sprintf(
 						/* translators: 1: Brand 2: Site */
 						__(
-							`Enter the best way for WordPress, web browsers and search engines to identify your %s %s by entering your Title, Description and Logo.`,
+							`Loading your site details, logo and social graph helps not just launch your site but have it found looking great in feeds.`,
 							'wp-module-onboarding'
 						),
 						brandName,
 						translations( 'Site' )
-					),
-				},
-				{
-					description: sprintf(
-						/* translators: %s: website */
-						__(
-							'Tell us your social media accounts, and we’ll make sure visitors can find them and tell search engines these accounts are related to this %s.',
-							'wp-module-onboarding'
-						),
-						translations( 'website' )
 					),
 				},
 			],

@@ -14,7 +14,7 @@ const getContents = () => {
 			subheading: sprintf(
 				/* translators: %s: site */
 				__(
-					`Help us give you the best experience by telling us a little about your %s and your needs.`,
+					`We can provide better suggestions if we know what kind of %s this is`,
 					'wp-module-onboarding'
 				),
 				translations( 'site' )
@@ -30,7 +30,7 @@ const getContents = () => {
 					heading: sprintf(
 						/* translators: %s: site */
 						__(
-							'Why we ask what type of %s',
+							'Why we ask',
 							'wp-module-onboarding'
 						),
 						translations( 'site' )
@@ -38,7 +38,7 @@ const getContents = () => {
 					description: sprintf(
 						/* translators: %s: site */
 						__(
-							`We use this to chose the templates, features and best configuration. You’re always in full control of your WordPress %s and we try to understand your needs so we can help you be successful.`,
+							`We chose the templates, features and best configuration we can for sites. You’re always in full control of your WordPress %s and we ask so we can be a good website partner.`,
 							'wp-module-onboarding'
 						),
 						translations( 'site' )
