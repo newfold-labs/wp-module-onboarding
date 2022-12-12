@@ -109,6 +109,15 @@ class PluginUninstallTaskManager {
 		   converted to an associative array before storing it in the option. */
 		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
+		$position_in_queue = PluginInstallTaskManager::status( $plugin_uninstall_task->get_slug() );
+		if ( $position_in_queue !== false && $position_in_queue !== 0 ) {
+			PluginInstallTaskManager::remove_from_queue(
+				$plugin_uninstall_task->get_slug(),
+			);
+			
+			return true;
+		}
+
 		$queue = new PriorityQueue();
 		foreach ( $plugins as $queued_plugin ) {
 
