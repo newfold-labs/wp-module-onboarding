@@ -1,12 +1,18 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
+use function NewfoldLabs\WP\ModuleLoader\container;
+use WP_Forge\Fluent\Fluent;
+
 /**
  * Contains Brand information.
  */
 final class Brands {
 
-	protected static function brands_info() { 
+	public static function get_brands() {
+		$container_headers = new Fluent( container()->plugin()->headers );
+		$brand_plugin_name = $container_headers->get( 'attributes' )[ 'TextDomain' ];
+
 		return array(
 			'bluehost'       => array(
 				'brand'            => 'bluehost',
@@ -37,7 +43,7 @@ final class Brands {
 					'defaultLink'		=> 'https://my.bluehost.com/cgi/app/#/marketplace/product/i/bluesky',
 					'queryParams'		=> array(
 						'utm_source'	=> 'wp-onboarding',
-						'utm_medium'	=> reset(explode('/', str_replace(WP_PLUGIN_DIR . '/', '', __DIR__))),
+						'utm_medium'	=> $brand_plugin_name,
 					),
 				),
 				'fullServiceCreativeTeamInfo' => array(
@@ -45,14 +51,14 @@ final class Brands {
 					'fragment'			=> '#full-service',
 					'queryParams'		=> array(
 						'utm_source'	=> 'wp-onboarding',
-						'utm_medium'	=> reset(explode('/', str_replace(WP_PLUGIN_DIR . '/', '', __DIR__))),
+						'utm_medium'	=> $brand_plugin_name,
 					),
 				),
 				'techSupportInfo' => array(
 					'defaultLink'		=> 'https://helpchat.bluehost.com/',
 					'queryParams'		=> array(
 						'utm_source'	=> 'wp-onboarding',
-						'utm_medium'	=> reset(explode('/', str_replace(WP_PLUGIN_DIR . '/', '', __DIR__))),
+						'utm_medium'	=> $brand_plugin_name,
 					),
 				),
 			),
@@ -83,7 +89,7 @@ final class Brands {
 					'defaultLink'		=> 'https://my.bluehost.in/cgi/app/#/marketplace/product/i/bluesky',
 					'queryParams'		=> array(
 						'utm_source'	=> 'wp-onboarding',
-						'utm_medium'	=> reset(explode('/', str_replace(WP_PLUGIN_DIR . '/', '', __DIR__))),
+						'utm_medium'	=> $brand_plugin_name,
 					),
 				),
 				'fullServiceCreativeTeamInfo' => array(
@@ -91,25 +97,17 @@ final class Brands {
 					'fragment'			=> '#full-service',
 					'queryParams'		=> array(
 						'utm_source'	=> 'wp-onboarding',
-						'utm_medium'	=> reset(explode('/', str_replace(WP_PLUGIN_DIR . '/', '', __DIR__))),
+						'utm_medium'	=> $brand_plugin_name,
 					),
 				),
 				'techSupportInfo' => array(
 					'defaultLink'		=> 'https://helpchat.bluehost.in/',
 					'queryParams'		=> array(
 						'utm_source'	=> 'wp-onboarding',
-						'utm_medium'	=> reset(explode('/', str_replace(WP_PLUGIN_DIR . '/', '', __DIR__))),
+						'utm_medium'	=> $brand_plugin_name,
 					),
 				),
 			),
 		);
-	}
-	/**
-	 * Get Brand information.
-	 *
-	 * @return array
-	 */
-	public static function get_brands() {
-		return self::brands_info();
 	}
 }
