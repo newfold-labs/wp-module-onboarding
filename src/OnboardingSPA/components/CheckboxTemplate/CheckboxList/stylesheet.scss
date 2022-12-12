@@ -1,7 +1,7 @@
 .checkbox-list {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: flex-start;
 
     @media (max-width: #{ ($break-xlarge) }) {
         flex-direction: column;

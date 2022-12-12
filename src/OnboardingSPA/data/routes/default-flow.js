@@ -535,6 +535,7 @@ export const steps = [
 		Component: StepSiteFeatures,
 		Icon: plugins,
 		priority: 280,
+		patternId: 'site-features',
 		sidebars: {
 			LearnMore: {
 				SidebarComponents: [ StepSiteFeaturesLearnMoreSidebar ],
