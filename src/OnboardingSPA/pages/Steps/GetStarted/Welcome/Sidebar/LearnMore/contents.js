@@ -10,7 +10,7 @@ const getContents = ( brandName ) => {
 			subheading: sprintf(
 				/* translators: 1: Brand 2: Website */
 				__(
-					`Lay the foundation for a successful %s %s. Use our premade designs and feature bundles to start connecting with your visitors.`,
+					`Lay the foundation for a successful %s %s. Our tools help you build beautiful, modern websites using WordPress.`,
 					'wp-module-onboarding'
 				),
 				brandName,
@@ -36,9 +36,9 @@ const getContents = ( brandName ) => {
 						/* translators: 1: Website 2: Website 3: Website */
 						__(
 							`When you set up this new WordPress %s, you’re joining
-						millions of other %s owners who publish their %s’s pages
+						millions of other site owners who publish their %s’s pages
 						and features using the community-built, free, open-source
-						software.`,
+						software we’re proud to support`,
 							'wp-module-onboarding'
 						),
 						translations( 'website' ),
