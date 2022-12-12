@@ -159,6 +159,10 @@ class ThemeGeneratorController {
 		);
 	}
 
+	private function get_site_url_hash( $length = 8 ) {
+		return substr( hash( 'sha256', site_url() ), 0, $length );
+	}
+
 	 /**
 	  * Get the child theme stylesheet from flow data.
 	  *
@@ -169,8 +173,13 @@ class ThemeGeneratorController {
 	protected function get_child_theme_slug( $flow_data ) {
 		if ( ! $flow_data['theme']['stylesheet'] ||
 				   ( $flow_data['theme']['template'] === $flow_data['theme']['stylesheet'] ) ) {
-			$current_brand = Data::current_brand();
-			return $current_brand['brand'] . '-' . \sanitize_title_with_dashes( \get_bloginfo( 'name' ) );
+			$current_brand              = Data::current_brand()['brand'];
+			$default_site_titles_dashed = array( 'welcome', 'wordpress-site' );
+			$site_title_dashed          = \sanitize_title_with_dashes( \get_bloginfo( 'name' ) );
+			if ( empty( $site_title_dashed ) || in_array( $site_title_dashed, $default_site_titles_dashed ) ) {
+				$site_title_dashed = $this->get_site_url_hash();
+			}
+			return $current_brand . '-' . $site_title_dashed;
 		}
 		return $flow_data['theme']['stylesheet'];
 	}
@@ -203,9 +212,6 @@ class ThemeGeneratorController {
 			unset( $theme_data['settings']['styles'] );
 			unset( $theme_data['settings']['__unstableResolvedAssets'] );
 			unset( $theme_data['settings']['__experimentalFeatures'] );
-			if ( is_array( $theme_data['settings']['color']['palette']['theme'] ) ) {
-				$theme_data['settings']['color']['palette'] = $theme_data['settings']['color']['palette']['theme'];
-			}
 			$theme_json_data = $theme_data;
 		} else {
 			$theme_json_file = $parent_theme_dir . '/theme.json';
