@@ -1,7 +1,7 @@
 <?php
 
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
-
+use \__;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 final class SiteFeatures {
@@ -14,7 +14,7 @@ final class SiteFeatures {
 				'icon'     => '--site-features-security',
 				'title'    => 'Security, Speed & Growth',
 				'subtitle' => 'Powered by Jetpack',
-				'desc'     => 'Jetpack',
+				'desc'     => 'Jetpack includes dozens of powerful, unique capabilities for your WordPress sites from Automattic.',
 				'selected' => false,
 			),
 			'wpforms-lite'                       => array(
@@ -22,7 +22,7 @@ final class SiteFeatures {
 				'icon'     => '--site-features-form',
 				'title'    => 'Forms',
 				'subtitle' => 'Powered by WP Forms',
-				'desc'     => 'WP Forms',
+				'desc'     => 'Five million people build smarter forms and surveys with WPForms from Awesome Motive.',
 				'selected' => false,
 			),
 			'google-analytics-for-wordpress'     => array(
@@ -30,7 +30,7 @@ final class SiteFeatures {
 				'icon'     => '--site-features-analytics',
 				'title'    => 'Site Traffic',
 				'subtitle' => 'Powered by MonsterInsights',
-				'desc'     => 'MonsterInsights',
+				'desc'     => 'See the opportunities in your website analytics traffic data using MonsterInsights from Awesome Motive.',
 				'selected' => false,
 			),
 			'wordpress-seo'                      => array(
@@ -38,7 +38,7 @@ final class SiteFeatures {
 				'icon'     => '--site-features-share',
 				'title'    => 'Search Engine Optimization',
 				'subtitle' => 'Powered by Yoast',
-				'desc'     => 'Yoast',
+				'desc'     => 'Get more traffic to your WordPress site with powerful analysis and tools from our colleagues at Yoast.',
 				'selected' => false,
 			),
 			'creative-mail-by-constant-contact'  => array(
@@ -46,7 +46,7 @@ final class SiteFeatures {
 				'icon'     => '--site-features-email',
 				'title'    => 'Email Newsletters',
 				'subtitle' => 'Powered by Creative Email',
-				'desc'     => 'Creative Email',
+				'desc'     => 'A professional logo builder, marketing automations with WooCommerce and social management -- CreativeMail is a whole lot more than mail from Constant Contact.',
 				'selected' => false,
 			),
 			'yith-woocommerce-ajax-search'       => array(
@@ -54,7 +54,7 @@ final class SiteFeatures {
 				'icon'     => '--site-features-search',
 				'title'    => 'Enhanced Product Search',
 				'subtitle' => 'Powered by YITH',
-				'desc'     => 'YITH',
+				'desc'     => 'Give your visitors great search experiences with this exclusive offering from our colleagues at YITH.',
 				'selected' => false,
 			),
 			'nfd_slug_yith_woocommerce_ajax_product_filter' => array(
@@ -62,7 +62,7 @@ final class SiteFeatures {
 				'icon'     => '--site-features-filter',
 				'title'    => 'Enhanced Product Filters',
 				'subtitle' => 'Powered by YITH',
-				'desc'     => 'YITH',
+				'desc'     => 'Give your visitors powerful tools to discover your great products with this exclusive offering from our colleagues at YITH.',
 				'selected' => false,
 			),
 			'nfd_slug_yith_woocommerce_booking'  => array(
@@ -70,7 +70,7 @@ final class SiteFeatures {
 				'icon'     => '--site-features-bookingcalendar',
 				'title'    => 'Bookings & Appointments',
 				'subtitle' => 'Powered by YITH',
-				'desc'     => 'YITH',
+				'desc'     => 'Have visitors book meetings and services with you, accepting payment and more using this exclusive offering from our colleagues at YITH.',
 				'selected' => false,
 			),
 			'nfd_slug_yith_woocommerce_wishlist' => array(
@@ -78,7 +78,7 @@ final class SiteFeatures {
 				'icon'     => '--site-features-wishlist',
 				'title'    => 'Product Wishlists',
 				'subtitle' => 'Powered by YITH',
-				'desc'     => 'YITH',
+				'desc'     => 'Let discerning shoppers curate their selections with a system of favorites using this exclusive offering from our colleagues at YITH.',
 				'selected' => false,
 			),
 			'optinmonster'                       => array(
@@ -86,7 +86,7 @@ final class SiteFeatures {
 				'icon'     => '--site-features-lead',
 				'title'    => 'Lead Generation',
 				'subtitle' => 'Powered by Optin Monster',
-				'desc'     => 'Optin Monster',
+				'desc'     => 'Connect with website visitors using a proven kit of tools for growth using this offering from Awesome Motive.',
 				'selected' => false,
 			),
 		),
