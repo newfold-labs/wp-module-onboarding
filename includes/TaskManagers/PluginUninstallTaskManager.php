@@ -1,9 +1,11 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\TaskManagers;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Models\PriorityQueue;
 use NewfoldLabs\WP\Module\Onboarding\Tasks\PluginUninstallTask;
+use NewfoldLabs\WP\Module\Onboarding\Services\PluginUninstaller;
 
 /**
  * Manages the execution of PluginUninstallTasks.
@@ -117,6 +119,13 @@ class PluginUninstallTaskManager {
 			
 			return true;
 		}
+
+		$plugin_list = Plugins::get_squashed();
+		// Gets the specified path for the Plugin from the predefined list
+		$plugin_path = $plugin_list[ $plugin_uninstall_task->get_slug() ]['path'];
+
+		if (!PluginUninstaller::is_plugin_installed($plugin_path))
+			return true;
 
 		$queue = new PriorityQueue();
 		foreach ( $plugins as $queued_plugin ) {
