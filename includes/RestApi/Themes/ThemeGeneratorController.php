@@ -163,6 +163,10 @@ class ThemeGeneratorController {
 		return substr( hash( 'sha256', site_url() ), 0, $length );
 	}
 
+	private function get_dashed_site_title_defaults() {
+		return array( 'welcome', 'wordpress-site' );
+	}
+
 	 /**
 	  * Get the child theme stylesheet from flow data.
 	  *
@@ -174,7 +178,7 @@ class ThemeGeneratorController {
 		if ( ! $flow_data['theme']['stylesheet'] ||
 				   ( $flow_data['theme']['template'] === $flow_data['theme']['stylesheet'] ) ) {
 			$current_brand              = Data::current_brand()['brand'];
-			$default_site_titles_dashed = array( 'welcome', 'wordpress-site' );
+			$default_site_titles_dashed = $this->get_dashed_site_title_defaults();
 			$site_title_dashed          = \sanitize_title_with_dashes( \get_bloginfo( 'name' ) );
 			if ( empty( $site_title_dashed ) || in_array( $site_title_dashed, $default_site_titles_dashed ) ) {
 				$site_title_dashed = $this->get_site_url_hash();
@@ -229,11 +233,18 @@ class ThemeGeneratorController {
 		$current_brand = Data::current_brand();
 		$customer      = \wp_get_current_user();
 
+		$default_site_titles_dashed = $this->get_dashed_site_title_defaults();
+		$site_title                 = \get_bloginfo( 'name' );
+		$site_title_dashed          = \sanitize_title_with_dashes( $site_title );
+		if ( empty( $site_title ) || in_array( $site_title_dashed, $default_site_titles_dashed ) ) {
+			$site_title = $current_brand['brand'] . '-' . $this->get_site_url_hash();
+		}
+
 		$theme_style_data = array(
 			'current_brand'     => Data::current_brand(),
 			'brand'             => $current_brand['brand'],
 			'brand_name'        => $current_brand['name'] ? $current_brand['name'] : 'Newfold Digital',
-			'site_title'        => \get_bloginfo( 'name' ),
+			'site_title'        => $site_title,
 			'site_url'          => \site_url(),
 			'author'            => $customer->user_firstname,
 			'parent_theme_slug' => $parent_theme_slug,
