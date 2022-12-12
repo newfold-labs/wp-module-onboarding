@@ -107,9 +107,7 @@ class FlowController {
 			);
 		}
 
-		$flow_data = FlowService::read_flow_data_from_wp_option();
-		$updated_flow_data = array();
-		$flow_data = FlowService::update_post_call_data_recursive($flow_data, $updated_flow_data, $params);
+		$flow_data = FlowService::update_flow_data($params);
 		if(!is_array($flow_data)) {
 			return new \WP_Error(
 				'wrong_param_type_provided',
@@ -118,7 +116,7 @@ class FlowController {
 			);
 		}
 
-		$flow_data['updatedAt'] = time();
+		$flow_data['updatedAt'] = strval(time());
 
 		// Update Blog Information from Basic Info
 		if ( ( ! empty( $flow_data['data']['blogName'] ) ) ) {

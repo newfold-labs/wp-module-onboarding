@@ -21,13 +21,19 @@ class FlowService {
     public static function get_default_flow_data() {
 		// check if data is available in the database if not then fetch the default dataset
 		$flow_data              = Flows::get_data();
-		$flow_data['createdAt'] = time();
+		$flow_data['createdAt'] = strval(time());
 		// get current flow type
 		$flow_type = Data::current_flow();
 		// update default data if flow type is ecommerce
 		if($flow_type == 'ecommerce') 
 			$flow_data = self::update_default_data_for_ecommerce( $flow_data );
 		return $flow_data;
+	}
+
+	public static function update_flow_data($params) {
+		$flow_data = FlowService::read_flow_data_from_wp_option();
+		$updated_flow_data = array();
+		return self::update_post_call_data_recursive($flow_data, $updated_flow_data, $params);
 	}
 
 	/*
@@ -41,7 +47,7 @@ class FlowService {
 			// Any Key renamed is updated in the database with NewKey and the value from the OldKey is retained or not based on retain_existing_value
 			if($flow_data_fixes) {
 				foreach ($flow_data_fixes as $old_key=>$new_val) {
-					if (isset($flow_data) && array_key_exists($old_key, $flow_data) && array_key_exists($new_val['new_key'], $default_flow_data)) {
+					if (is_array($flow_data) && array_key_exists($old_key, $flow_data) && array_key_exists($new_val['new_key'], $default_flow_data)) {
 						if($new_val['retain_existing_value'])
 							$flow_data[$new_val['new_key']] = $flow_data[$old_key];
 						else
@@ -51,7 +57,7 @@ class FlowService {
 				}
 			}
 
-			if(isset($flow_data) && array_key_exists($key, $flow_data)) {
+			if(is_array($flow_data) && array_key_exists($key, $flow_data)) {
 				if(!is_array($value)) 
 					$updated_flow_data[$key] = $flow_data[$key];
 
@@ -78,19 +84,25 @@ class FlowService {
 				$updated_flow_data[$key] = $value;
 			
 		}
-		
+
+		// To align the datatype of the respective values with the one set in the blueprint
+		if(is_int($updated_flow_data['updatedAt'])) 
+				$updated_flow_data['updatedAt'] = strval($updated_flow_data['updatedAt']);
+		if(is_int($updated_flow_data['createdAt'])) 
+			$updated_flow_data['createdAt'] = strval($updated_flow_data['createdAt']);
+
 		return $updated_flow_data;
 	}
 
 	/*
 	 * function to update the Database recursively based on Values opted or entered by the User
 	 */	
-	public static function update_post_call_data_recursive(&$flow_data, &$updated_flow_data, &$params) {
+	private static function update_post_call_data_recursive(&$flow_data, &$updated_flow_data, &$params) {
 		static $flag = '';
 		foreach ($flow_data as $key => $value)
 		{ 
 			// Updates value entered by the user
-			if (isset($params[$key]) && array_key_exists($key, $params)){
+			if (is_array($params) && array_key_exists($key, $params)){
 
 				// Error thrown if the datatype of the parameter does not match
 				if(strcmp(gettype($value), gettype($params[$key])) != 0) {
@@ -147,7 +159,7 @@ class FlowService {
 	private static function update_default_data_for_ecommerce( $data ) {
 		// update default data with ecommerce data
 		$data['data']['topPriority']['priority1'] = 'selling';
-		$data['data']['siteType'] = array('label' => '', 'referTo' => 'business', 'primary' => '',  'secondary' => '' );
+		$data['data']['siteType']['referTo'] = 'business';
 		return $data;
 	}
 
