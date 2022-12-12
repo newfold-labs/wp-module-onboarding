@@ -86,11 +86,6 @@ final class Themes {
 	  */
 	public static function step_preview_data() {
 		$theme_step_data = Patterns::get_count_of_patterns();
-
-		// Count the number of Site Features available Plugins
-		$theme_step_data['site-features'] = array(
-			'previewCount' => count(SiteFeatures::get())
-		);
 		return $theme_step_data;
 	}
 
