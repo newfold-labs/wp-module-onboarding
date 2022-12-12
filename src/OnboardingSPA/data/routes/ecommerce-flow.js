@@ -131,6 +131,7 @@ export const initialTopSteps = () => {
 		title: __( 'Store Info', 'wp-module-onboarding' ),
 		description: '',
 		Icon: store,
+		primaryDrawerActiveLinkIncludes: '/ecommerce/step/',
 		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
 		priority: 41 /* matches priority for first store info step */,
 	};

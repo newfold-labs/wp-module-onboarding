@@ -2,52 +2,64 @@ import { Icon, chevronLeft } from '@wordpress/icons';
 import { useDispatch, useSelect } from '@wordpress/data';
 
 import { Button } from '@wordpress/components';
-import { Fragment } from '@wordpress/element';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { VIEW_NAV_PRIMARY } from '../../../../constants';
 import { __ } from '@wordpress/i18n';
 import { store as nfdOnboardingStore } from '../../../store';
+import classNames from 'classnames';
 
 const NavDesign = () => {
-	const { designSteps } = useSelect((select) => {
+	const { designSteps } = useSelect( ( select ) => {
 		return {
-			designSteps: select(nfdOnboardingStore).getDesignSteps(),
+			designSteps: select( nfdOnboardingStore ).getDesignSteps(),
 		};
-	}, []);
-	const { setDrawerActiveView } = useDispatch(nfdOnboardingStore);
+	}, [] );
+	const { setDrawerActiveView } = useDispatch( nfdOnboardingStore );
+
+	const location = useLocation();
 
 	return (
 		<div className="is-drawer-fade">
 			<Button
 				className="nfd-onboarding-drawer__panel-back"
 				variant="tertiary"
-				icon={chevronLeft}
-				onClick={() => setDrawerActiveView(VIEW_NAV_PRIMARY)}
+				icon={ chevronLeft }
+				onClick={ () => setDrawerActiveView( VIEW_NAV_PRIMARY ) }
 			>
 				{__('Onboarding Menu', 'wp-module-onboarding')}
 			</Button>
 			<div className="nfd-onboarding-drawer__panel-menu">
 				<ul className="nfd-onboarding-drawer__panel-routes">
-					{designSteps.map((step) => {
+					{ designSteps.map( ( step ) => {
 						return (
 							<li
-								key={step.path}
+								key={ step.path }
 								className="nfd-onboarding-drawer__panel-menu-item"
 							>
 								<NavLink
-									to={step.path}
-									className="nfd-onboarding-drawer__panel-menu-link"
-									state={{ origin: 'drawer-nav' }}
-									onClick={() =>
-										setDrawerActiveView(step.VIEW)
+									to={ step.path }
+									className={ classNames(
+										'nfd-onboarding-drawer__panel-menu-link',
+										{
+											active:
+												location.pathname ===
+													step.path ||
+												location.pathname.includes(
+													step?.designDrawerActiveLinkIncludes
+												),
+										}
+									) }
+									state={ { origin: 'drawer-nav' } }
+									onClick={ () =>
+										setDrawerActiveView( step.VIEW )
 									}
 								>
-									<Icon icon={step.Icon} />
-									<span>{step.title}</span>
+									<Icon icon={ step.Icon } />
+									<span>{ step.title }</span>
 								</NavLink>
 							</li>
 						);
-					})}
+					} ) }
 				</ul>
 			</div>
 		</div>
