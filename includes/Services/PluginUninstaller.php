@@ -13,13 +13,6 @@ class PluginUninstaller {
 
 	public static function uninstall( $plugin ) {
 
-		$position_in_queue = PluginInstallTaskManager::status( $plugin );
-		if ( $position_in_queue !== false && $position_in_queue !== 0 ) {
-			PluginInstallTaskManager::remove_from_queue(
-				$plugin,
-			);
-		}
-
 		$plugin_list = Plugins::get_squashed();
 		// Gets the specified path for the Plugin from the predefined list
 		$plugin_path = $plugin_list[ $plugin ]['path'];
