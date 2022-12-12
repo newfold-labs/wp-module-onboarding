@@ -57,7 +57,7 @@ const getContents = ( brandName ) => {
 						/* translators: 1: Website 2: Brand */
 						__(
 							`A WordPress %s hosted by %s has tons of exclusive, easy
-						and powerful solutions and addons to help you get farther,
+						and powerful solutions to help you get farther,
 						faster with your WordPress -- we put our expertise, partnerships
 						and solutions to work for you.`,
 							'wp-module-onboarding'
