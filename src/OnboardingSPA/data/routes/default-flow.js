@@ -400,6 +400,7 @@ export const steps = [
 		Component: StepDesignThemeStylesMenu,
 		Icon: styles,
 		priority: 160,
+		designDrawerActiveLinkIncludes: '/wp-setup/step/design/theme-styles/',
 		VIEW: VIEW_NAV_DESIGN,
 		patternId: 'theme-styles',
 		sidebars: {
@@ -429,6 +430,7 @@ export const steps = [
 		Icon: styles,
 		priority: 170,
 		VIEW: VIEW_DESIGN_THEME_STYLES_PREVIEW,
+		designDrawerActiveLinkIncludes: '/wp-setup/step/design/theme-styles/',
 		patternId: 'theme-styles',
 		sidebars: {
 			LearnMore: {
@@ -642,6 +644,7 @@ export const initialTopSteps = () => {
 		description: '',
 		Icon: brush,
 		VIEW: VIEW_NAV_DESIGN,
+		primaryDrawerActiveLinkIncludes: '/wp-setup/step/design/',
 		priority: 140 /* matches priority for first design step */,
 	};
 
@@ -651,6 +654,7 @@ export const initialTopSteps = () => {
 		heading: __( 'Get Started', 'wp-module-onboarding' ),
 		Icon: home,
 		VIEW: VIEW_NAV_GET_STARTED,
+		primaryDrawerActiveLinkIncludes: '/wp-setup/step/get-started/',
 		priority: 20,
 	};
 
