@@ -22,7 +22,7 @@ final class Colors
 				'tertiary'   				=> '#C7DBFF',
 				'secondary'  				=> '#E6EBEE',
 				'primary'    				=> '#1A4733',
-				'background' 				=> '',
+				'background' 				=> '#FFFFFF',
 			),
 			'cool'         => array(
 				'header-background' 		=> '#C7DBFF',
@@ -33,7 +33,7 @@ final class Colors
 				'tertiary'   				=> '#C7DBFF',
 				'secondary'  				=> '#EDF7FE',
 				'primary'    				=> '#21447B',
-				'background' 				=> '',
+				'background' 				=> '#FFFFFF',
 			),
 			'warm'         => array(
 				'header-background' 		=> '#FDE5D0',
@@ -44,7 +44,7 @@ final class Colors
 				'tertiary'   				=> '#FFEDED',
 				'secondary'  				=> '#FEF7E8',
 				'primary'    				=> '#7A3921',
-				'background' 				=> '',
+				'background' 				=> '#FFFFFF',
 			),
 			'radiant'      => array(
 				'header-background' 		=> '#63156A',
@@ -55,7 +55,7 @@ final class Colors
 				'tertiary'   				=> '#C7F0FF',
 				'secondary'  				=> '#FEF4FB',
 				'primary'    				=> '#63156A',
-				'background' 				=> '',
+				'background' 				=> '#FFFFFF',
 			),
 			'bold'         => array(
 				'header-background' 		=> '#FFD7F1',
@@ -66,7 +66,7 @@ final class Colors
 				'tertiary'   				=> '#F2A3D6',
 				'secondary'  				=> '#FFFBF5',
 				'primary'    				=> '#09857C',
-				'background' 				=> '',
+				'background' 				=> '#FFFFFF',
 			),
 			'retro'        => array(
 				'header-background' 		=> '#096385',
@@ -77,7 +77,7 @@ final class Colors
 				'tertiary'   				=> '#F2E6A2',
 				'secondary'  				=> '#F5FFFF',
 				'primary'    				=> '#096385',
-				'background' 				=> '',
+				'background' 				=> '#FFFFFF',
 			),
 			'professional' => array(
 				'header-background' 		=> '#6D8258',
@@ -88,7 +88,7 @@ final class Colors
 				'tertiary'   				=> '#A2C1F2',
 				'secondary'  				=> '#F5FAFF',
 				'primary'    				=> '#669933',
-				'background' 				=> '',
+				'background' 				=> '#FFFFFF',
 			),
 			'crisp' => array(
 				'header-background' 		=> '#ccc',
@@ -99,7 +99,7 @@ final class Colors
 				'tertiary' 					=> '#777',
 				'secondary' 				=> '#efefef',
 				'primary' 					=> '#234',
-				'background' 				=> '',
+				'background' 				=> '#FFFFFF',
 			),
 			'polished' => array(
 				'header-background' 		=> '#313131',
@@ -110,7 +110,7 @@ final class Colors
 				'tertiary' 					=> '#313131',
 				'secondary' 				=> '#fff',
 				'primary' 					=> '#5100FA',
-				'background' 				=> '',
+				'background' 				=> '#FFFFFF',
 			),
 			'nightowl' => array(
 				'header-background' 		=> '#06080A',
@@ -121,6 +121,7 @@ final class Colors
 				'tertiary' 					=> '#FFDFA3',
 				'secondary'					=> '#fff',
 				'primary'	 				=> '#B97900',
+				'background' 				=> '#FFFFFF',
 			),
 			'subtle' => array(
 				'header-background' 		=> '#C7ADBB',
@@ -131,6 +132,7 @@ final class Colors
 				'tertiary' 					=> '#D4C9CF',
 				'secondary' 				=> '#fff',
 				'primary' 					=> '#5A3C4B',
+				'background' 				=> '#FFFFFF',
 			),
 		),
 	);
