@@ -15,8 +15,8 @@ final class Colors
 		'yith-wonder' => array(
 			'calm'         => array(
 				'header-background' 		=> '#1A4733',
-				'background' 				=> '#FFFFFF',
-				'background' 				=> '#FFFFFF',
+				'header-foreground' 				=> '#FFFFFF',
+				'header-title' 				=> '#FFFFFF',
 				'secondary-background' 		=> '#1A4733',
 				'secondary-foreground' 		=> '#FFF',
 				'tertiary'   				=> '#C7DBFF',
