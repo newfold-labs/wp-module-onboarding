@@ -4,7 +4,7 @@ import { useEffect, useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
 
-import { VIEW_NAV_PRIMARY } from '../../../../constants';
+import { SIDEBAR_LEARN_MORE, VIEW_NAV_PRIMARY } from '../../../../constants';
 import CommonLayout from '../../../components/Layouts/Common';
 import { getSiteFeatures } from '../../../utils/api/plugins';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
@@ -21,7 +21,7 @@ const StepSiteFeatures = () => {
 	const {
 		setIsDrawerOpened,
 		setDrawerActiveView,
-		setIsSidebarOpened,
+		setSidebarActiveView,
 		setCurrentOnboardingData,
 		setIsDrawerSuppressed,
 		setIsHeaderNavigationEnabled,
@@ -87,7 +87,7 @@ const StepSiteFeatures = () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( false );
 		}
-		setIsSidebarOpened( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 		setIsHeaderNavigationEnabled( true );
