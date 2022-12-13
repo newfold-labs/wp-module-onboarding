@@ -99,6 +99,8 @@ class FlowService {
 				$updated_flow_data['updatedAt'] = strval($updated_flow_data['updatedAt']);
 		if(is_int($updated_flow_data['createdAt'])) 
 			$updated_flow_data['createdAt'] = strval($updated_flow_data['createdAt']);
+		if(is_int($updated_flow_data['siteLogo'])) 
+			$updated_flow_data['siteLogo'] = array($updated_flow_data['siteLogo']);
 
 		return $updated_flow_data;
 	}
@@ -114,7 +116,7 @@ class FlowService {
 		{ 
 			// Accepts the value of Exception List keys as is from the database
 			if($exception_list && isset($exception_list[$key])) {
-				if(array_key_exists($key, $params) && is_array($params[$key]))
+				if(array_key_exists($key, $params))
 					$updated_flow_data[$key] = $params[$key];
 				else
 					$updated_flow_data[$key] = $value;
@@ -190,7 +192,7 @@ class FlowService {
 		static $mismatch_key = [];
 		$exception_list = Flows::get_exception_list();
 		foreach($params as $key => $value){
-			if(!isset($exception_list[$key])) {
+			if(!isset($exception_list[$key]) && is_array($flow_data)) {
 				if(!array_key_exists($key, $flow_data))
 					$mismatch_key[]  = $header_key. " => " . $key;
 				elseif ( is_array( $value ) && !empty($value)) {

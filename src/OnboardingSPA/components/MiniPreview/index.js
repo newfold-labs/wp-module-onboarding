@@ -11,7 +11,7 @@ import { translations } from '../../utils/locales/translations';
  */
 const MiniPreview = ({ title, desc, icon, socialData }) => {
     
-    var iconPreview = icon == "" || icon == undefined ? content.icon : icon;
+    var iconPreview = icon.id === 0 ? content.icon : icon;
     var titlePreview = title == "" ? sprintf(__(content.title, 'wp-module-onboarding'), translations('Site')) : title;
     var descPreview = desc == "" ? sprintf(__(content.desc, 'wp-module-onboarding'), translations('Site')) : desc;
     var urlPreview = title == "" ? content.url : titleToUrl(title);
@@ -96,8 +96,8 @@ const MiniPreview = ({ title, desc, icon, socialData }) => {
                             <div className="browser-row-title_bar_before-curve"></div>
                         </div>
                         <div className="browser-row-title_bar_main">
-                            {(icon == 0 || icon == undefined) && (<div className="browser-icon-title" style={{ content: 'var(--default-logo-icon)' }}></div>)}
-                            {(icon != 0 && icon != undefined) && (<img
+                            {(icon.id === 0) && (<div className="browser-icon-title" style={{ content: 'var(--default-logo-icon)' }}></div>)}
+                            {(icon.id !== 0 && icon.url !== '') && (<img
                                 className="browser-icon-title"
                                 src={iconPreview.url}
                                 alt="Thumb"

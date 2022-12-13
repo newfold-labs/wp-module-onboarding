@@ -50,7 +50,10 @@ final class Flows {
 			'blogDescription' => '',
 
 			// This integer will map to the attachment ID for an uploaded image to the WordPress media library
-			'siteLogo'        => 0,
+			'siteLogo'        => array(
+				'id' => 0,
+				'url' => '',
+			),
 
 			// key-value store for social media accounts
 			'accounts'        => array(),
@@ -112,6 +115,8 @@ final class Flows {
 
 			// will include plugin installs, module activation/deactivation and perhaps API calls to the hosting platform for Newfold-specific services
 			'siteFeatures'    => array(),
+
+			'socialData'	  => array(), 
 		),
 
 		// we will store active flows (abandoned wp-setup, abandoned wp-commerce) with their identifier and use as a reference to access currentStep and data
@@ -157,7 +162,7 @@ final class Flows {
 	  *
 	  * @return array
 	  */
-	protected static $exception_list = array("color" => 1, "typography" => 1);
+	protected static $exception_list = array("color" => 1, "typography" => 1, "other" => 1, "siteFeatures" => 1, "socialData" => 1);
 
 	/**
 	  * Update Flow Key and/or Value.
