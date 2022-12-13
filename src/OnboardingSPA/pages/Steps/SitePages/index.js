@@ -8,9 +8,9 @@ import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { getPatterns } from '../../../utils/api/patterns';
 import {
-	VIEW_NAV_PRIMARY,
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
+	VIEW_NAV_DESIGN,
 } from '../../../../constants';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 import {
@@ -55,7 +55,7 @@ const StepSitePages = () => {
 			setIsDrawerOpened( false );
 		}
 		setIsSidebarOpened( false );
-		setDrawerActiveView( VIEW_NAV_PRIMARY );
+		setDrawerActiveView( VIEW_NAV_DESIGN );
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
 

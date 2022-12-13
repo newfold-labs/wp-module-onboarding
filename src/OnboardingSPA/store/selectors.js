@@ -309,4 +309,14 @@ export function getHeaderMenuData( state ) {
 			techSupportInfo?.queryParams
 		) + ( techSupportInfo?.fragment || '' );
 	return techSupportUrl;
+ }
+
+/**
+ * Gets the Plugin Install Hash for security
+ *
+ * @param {*} state
+ * @return string
+ */
+export function getPluginInstallHash( state ) {
+	return state.runtime.pluginInstallHash;
 }

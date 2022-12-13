@@ -8,7 +8,7 @@ const getContents = ( brandName, techSupportLink, fullServiceCreativeTeamLink ) 
 		introduction: {
 			heading: __( 'Products Info', 'wp-module-onboarding' ),
 			subheading: __(
-				'Whether you call it a menu, catalog, portfolio or project, we’d love to hear more about your offerings.'
+				'We can offer free, exclusive solutions and apply our expert experience if we know how you sell.'
 			),
 			icon: box,
 		},
