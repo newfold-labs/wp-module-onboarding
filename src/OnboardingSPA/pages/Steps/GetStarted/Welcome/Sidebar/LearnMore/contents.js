@@ -3,7 +3,8 @@ import { __, sprintf } from '@wordpress/i18n';
 import { translations } from '../../../../../../utils/locales/translations';
 import { home } from '@wordpress/icons';
 
-const getContents = ( brandName ) => {
+const getContents = ( brandName, expertsLink, techSupportLink, fullServiceCreativeTeamLink ) => {
+
 	return {
 		introduction: {
 			heading: __( 'Start Setup', 'wp-module-onboarding' ),
@@ -74,18 +75,18 @@ const getContents = ( brandName ) => {
 					'1-1 Expert Solutions & Coaching',
 					'wp-module-onboarding'
 				),
-				link: '#',
+				link: expertsLink,
 			},
 			fullService: {
 				text: __(
 					'Hire Our Full-Service Creative Team',
 					'wp-module-onboarding'
 				),
-				link: '#',
+				link: fullServiceCreativeTeamLink,
 			},
 			support: {
 				text: __( 'Technical Support', 'wp-module-onboarding' ),
-				link: '#',
+				link: techSupportLink,
 			},
 		},
 	};
