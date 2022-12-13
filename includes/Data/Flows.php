@@ -152,6 +152,12 @@ final class Flows {
 		// 'OldKey' => array( 'new_key' => 'NewKey', 'retain_existing_value' => true/false )
 	);
 
+	/**
+	  * Array with Key Names as Key, and '1'as value to set the key as an exception
+	  *
+	  * @return array
+	  */
+	protected static $exception_list = array("color" => 1, "typography" => 1);
 
 	/**
 	  * Update Flow Key and/or Value.
@@ -160,6 +166,15 @@ final class Flows {
 	  */
 	public static function get_fixes() {
 		return self::$fixes;
+	}
+
+	/**
+	  * Update Exception Key(s).
+	  *
+	  * @return array
+	  */
+	  public static function get_exception_list() {
+		return self::$exception_list;
 	}
 
 	 /**

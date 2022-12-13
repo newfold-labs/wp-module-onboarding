@@ -41,6 +41,7 @@ class FlowService {
 	 */	
 	private static function update_flow_data_recursive(&$default_flow_data, &$flow_data, &$updated_flow_data) {
 		$flow_data_fixes = Flows::get_fixes();
+		$exception_list = Flows::get_exception_list();
 
 		foreach ($default_flow_data as $key => $value)
 		{ 
@@ -57,7 +58,15 @@ class FlowService {
 				}
 			}
 
-			if(is_array($flow_data) && array_key_exists($key, $flow_data)) {
+			// Accepts the value of Exception List keys as is from the database
+			if($exception_list && isset($exception_list[$key])) {
+				if(array_key_exists($key, $flow_data))
+					$updated_flow_data[$key] = $flow_data[$key];
+				else
+					$updated_flow_data[$key] = $value;
+			}
+
+			elseif(is_array($flow_data) && array_key_exists($key, $flow_data)) {
 				if(!is_array($value)) 
 					$updated_flow_data[$key] = $flow_data[$key];
 
@@ -99,10 +108,20 @@ class FlowService {
 	 */	
 	private static function update_post_call_data_recursive(&$flow_data, &$updated_flow_data, &$params) {
 		static $flag = '';
+		$exception_list = Flows::get_exception_list();
+
 		foreach ($flow_data as $key => $value)
 		{ 
+			// Accepts the value of Exception List keys as is from the database
+			if($exception_list && isset($exception_list[$key])) {
+				if(array_key_exists($key, $params) && is_array($params[$key]))
+					$updated_flow_data[$key] = $params[$key];
+				else
+					$updated_flow_data[$key] = $value;
+			}
+			
 			// Updates value entered by the user
-			if (is_array($params) && array_key_exists($key, $params)){
+			elseif (is_array($params) && array_key_exists($key, $params)){
 
 				// Error thrown if the datatype of the parameter does not match
 				if(strcmp(gettype($value), gettype($params[$key])) != 0) {
@@ -113,7 +132,7 @@ class FlowService {
 				elseif(!is_array($value)) 
 					$updated_flow_data[$key] = $params[$key];
 
-				else {	
+				else {
 					// To handle Indexed Arrays gracefully
 					if (count(array_filter(array_keys($params[$key]), 'is_string')) === 0 ) {
 						// If the Database value is empty ot an indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
@@ -124,21 +143,22 @@ class FlowService {
 						
 						// For Indexed Arrays having mested Associative Arrays
 						foreach($params[$key] as $index_key=>$index_value) {
-							if(is_array($index_value))
+							if(is_array($index_value)) 
 								$updated_flow_data[$key][$index_key] = self::update_post_call_data_recursive($value[$index_key], $updated_flow_data[$key][$index_key], $index_value);
 						}
 					}
 
 					// To handle Associative Arrays gracefully
-					else
+					else 
 						$updated_flow_data[$key] = self::update_post_call_data_recursive($value, $updated_flow_data[$key], $params[$key]);
 				}	
 			}
 
 			// if there is an empty value in the DB or any key is not sent by user, the default value (if any) or the existing DB value is retained
 			else
-				$updated_flow_data[$key] = $value;							
+				$updated_flow_data[$key] = $value;						
 		}
+
 		return (!empty($flag))? $flag : $updated_flow_data;
 	}
 
@@ -168,20 +188,23 @@ class FlowService {
 	 */
 	public static function check_key_in_nested_array( $params, $flow_data, $header_key = 'Base Level' ) {
 		static $mismatch_key = [];
+		$exception_list = Flows::get_exception_list();
 		foreach($params as $key => $value){
-			if(!array_key_exists($key, $flow_data))
-				$mismatch_key[]  = $header_key. " => " . $key;
-			elseif ( is_array( $value ) && !empty($value)) {
-				if (count(array_filter(array_keys($value), 'is_string')) === 0) {
-					foreach($value as $index_key=>$index_value) {
-						if(is_array($index_value))
-							self::check_key_in_nested_array($value[$index_key], $flow_data[$key][$index_key], $key. " : " . $index_key);
-						else
-							continue;
+			if(!isset($exception_list[$key])) {
+				if(!array_key_exists($key, $flow_data))
+					$mismatch_key[]  = $header_key. " => " . $key;
+				elseif ( is_array( $value ) && !empty($value)) {
+					if (count(array_filter(array_keys($value), 'is_string')) === 0) {
+						foreach($value as $index_key=>$index_value) {
+							if(is_array($index_value))
+								self::check_key_in_nested_array($value[$index_key], $flow_data[$key][$index_key], $key. " : " . $index_key);
+							else
+								continue;
+						}
 					}
+					else
+						self::check_key_in_nested_array($value, $flow_data[$key], $key);
 				}
-				else
-					self::check_key_in_nested_array($value, $flow_data[$key], $key);
 			}
 		}
 		return implode(", ", $mismatch_key);
