@@ -12,7 +12,9 @@ const Tab = ({ title, text, imgType, className }) => {
                 {text}
             </div>
             <div className="tab-image">
-                <div className={imgType}></div>
+                <div class="tab-img">
+                    <div className={imgType}></div>
+                </div>
             </div>
         </div>
 
