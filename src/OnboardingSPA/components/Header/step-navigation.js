@@ -6,126 +6,131 @@ import { Icon, chevronLeft, chevronRight } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
-import { getSettings, setSettings } from '../../utils/api/settings';
 import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
 
 /**
  * Back step Navigation button.
+ *
  * @param {*} param0
- * @returns
+ * @return
  */
-const Back = ({ path }) => {
+const Back = ( { path } ) => {
 	const navigate = useNavigate();
-	const navigateBack = () => navigate(path, { state: { origin: 'header' } });
+	const navigateBack = () =>
+		navigate( path, { state: { origin: 'header' } } );
 	return (
-		<Button className= "navigation-buttons navigation-buttons_back" 
-				onClick={navigateBack} 
-				variant="secondary">
-			<Icon icon={chevronLeft} />
-			{__('Back', 'wp-module-onboarding')}
+		<Button
+			className="navigation-buttons navigation-buttons_back"
+			onClick={ navigateBack }
+			variant="secondary"
+		>
+			<Icon icon={ chevronLeft } />
+			{ __( 'Back', 'wp-module-onboarding' ) }
 		</Button>
 	);
 };
 
 /**
  * Next step naigation button
+ *
  * @param {*} param0
- * @returns
+ * @return
  */
-const Next = ({ path }) => {
+const Next = ( { path } ) => {
 	/* [TODO]: some sense of isStepComplete to enable/disable */
 	const navigate = useNavigate();
-	const navigateNext = () => navigate(path, { state: { origin: 'header' } });
+	const navigateNext = () =>
+		navigate( path, { state: { origin: 'header' } } );
 	return (
 		<Button
-			onClick={navigateNext}
+			onClick={ navigateNext }
 			variant="primary"
-			className="navigation-buttons navigation-buttons_next">
-			{__('Next', 'wp-module-onboarding')}
-			<Icon icon={chevronRight} />
+			className="navigation-buttons navigation-buttons_next"
+		>
+			{ __( 'Next', 'wp-module-onboarding' ) }
+			<Icon icon={ chevronRight } />
 		</Button>
 	);
 };
 
-async function syncSocialSettingsFinish( currentData ) {
-	const initialData = await getSettings();
-	const result = await setSettings(currentData?.data?.socialData);
-	if (result?.error != null) {
-		console.error('Unable to Save Social Data!');
-		return initialData?.body;
+async function saveDataAndExit( currentData ) {
+	if ( currentData ) {
+		currentData.isComplete = new Date().getTime();
+		setFlow( currentData );
 	}
-	return result?.body;
-}
-
-async function saveData(path, currentData) {
-
-	if (currentData) {
-          currentData.isComplete = new Date().getTime();
-		// If Social Data is changed then sync it
-		if (path?.includes('basic-info')) {
-			const socialData = await syncSocialSettingsFinish(currentData);
-
-			// If Social Data is changed then Sync that also to the store
-			if (socialData && currentData?.data)
-				currentData.data.socialData = socialData;
-		}
-		setFlow(currentData);
-	}
-	//Redirect to Admin Page for normal customers 
+	//Redirect to Admin Page for normal customers
 	// and Bluehost Dashboard for ecommerce customers
-	const exitLink = exitToWordpressForEcommerce() ? bluehostDashboardPage : wpAdminPage;
-	window.location.replace(exitLink);
+	const exitLink = exitToWordpressForEcommerce()
+		? bluehostDashboardPage
+		: wpAdminPage;
+	window.location.replace( exitLink );
 }
 
 /**
  * Finish step navigation button.
- * @returns
+ *
+ * @param  root0
+ * @param  root0.currentData
+ * @param  root0.saveDataAndExit
+ * @return
  */
-const Finish = ({ path, currentData, saveData }) => (
+const Finish = ( { currentData, saveDataAndExit } ) => (
 	<Button
-		onClick={(e) => saveData(path, currentData)}
+		onClick={ ( e ) => saveDataAndExit( currentData ) }
 		className="navigation-buttons navigation-buttons_finish"
-		variant="primary">
-		{__('Finish', 'wp-module-onboarding')}
-		<Icon icon={chevronRight} />
+		variant="primary"
+	>
+		{ __( 'Finish', 'wp-module-onboarding' ) }
+		<Icon icon={ chevronRight } />
 	</Button>
 );
 
 /**
  * Step buttons presented in Header.
- * @returns
+ *
+ * @return
  */
 const StepNavigation = () => {
 	const location = useLocation();
 	const { previousStep, nextStep, currentData } = useSelect(
-		(select) => {
+		( select ) => {
 			return {
-				nextStep: select(nfdOnboardingStore).getNextStep(),
-				previousStep: select(nfdOnboardingStore).getPreviousStep(),
-				currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+				nextStep: select( nfdOnboardingStore ).getNextStep(),
+				previousStep: select( nfdOnboardingStore ).getPreviousStep(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			};
 		},
-		[location.pathname]
+		[ location.pathname ]
 	);
 	const isFirstStep = null === previousStep || false === previousStep;
 	const isLastStep = null === nextStep || false === nextStep;
 	return (
 		<div className="nfd-onboarding-header__step-navigation">
-			<ButtonGroup style={{ display: 'flex', columnGap: '0.5rem' }}>
-				{isFirstStep ? null : <Back path={previousStep.path} />}
-				{isLastStep ? <Finish path={location.pathname} currentData={currentData} saveData={saveData}/> : <Next path={nextStep.path} />}
+			<ButtonGroup style={ { display: 'flex', columnGap: '0.5rem' } }>
+				{ isFirstStep || isLastStep ? null : (
+					<Back path={ previousStep.path } />
+				) }
+				{ isLastStep ? (
+					<Finish
+						currentData={ currentData }
+						saveDataAndExit={ saveDataAndExit }
+					/>
+				) : (
+					<Next path={ nextStep.path } />
+				) }
 			</ButtonGroup>
 		</div>
 	);
 };
 
 /*
- * check if this is the last step 
+ * check if this is the last step
  */
 const exitToWordpressForEcommerce = () => {
-	if( window.nfdOnboarding.currentFlow == 'ecommerce' ) {
+	if ( window.nfdOnboarding.currentFlow === 'ecommerce' ) {
 		return true;
 	}
 	return false;
-}
+};
 export default StepNavigation;
