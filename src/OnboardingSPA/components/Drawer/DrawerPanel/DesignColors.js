@@ -82,47 +82,33 @@ const DesignColors = () => {
 			for ( let idx = 0; idx < selectedThemeColorPalette.length; idx++ ) {
 				switch ( selectedThemeColorPalette[ idx ]?.slug ) {
 					case 'primary':
-						if (
-							isCustomStyle &&
-							selectedColorsLocalTemp?.primary != ''
-						)
-							selectedThemeColorPalette[ idx ].color =
-								selectedColorsLocalTemp.primary;
-						else if ( ! isCustomStyle )
-							selectedThemeColorPalette[ idx ].color =
-								colorPalettesTemp[ colorStyle ].primary;
-						break;
 					case 'secondary':
-						if (
-							isCustomStyle &&
-							selectedColorsLocalTemp?.secondary != ''
-						)
-							selectedThemeColorPalette[ idx ].color =
-								selectedColorsLocalTemp.secondary;
-						else if ( ! isCustomStyle )
-							selectedThemeColorPalette[ idx ].color =
-								colorPalettesTemp[ colorStyle ].secondary;
-						break;
 					case 'tertiary':
-						if (
-							isCustomStyle &&
-							selectedColorsLocalTemp?.tertiary != ''
-						)
-							selectedThemeColorPalette[ idx ].color =
-								selectedColorsLocalTemp.tertiary;
-						else if ( ! isCustomStyle )
-							selectedThemeColorPalette[ idx ].color =
-								colorPalettesTemp[ colorStyle ].tertiary;
-						break;
 					case 'background':
+					case 'foreground':
+					/* YITH WONDER */
+					case 'header-background':
+					case 'header-foreground':
+					case 'header-titles':
+					case 'secondary-background':
+					case 'secondary-foreground':
+						const slug = selectedThemeColorPalette[ idx ]?.slug;
 						if (
 							isCustomStyle &&
-							selectedColorsLocalTemp?.background != ''
+							selectedColorsLocalTemp?.[slug] != ''
 						)
+							selectedThemeColorPalette[ idx ].color = selectedColorsLocalTemp[slug];
+						/**
+						 * Add Exception for Background.
+						 * (perhaps scope to yith-wonder in future)
+						 */
+						else if ( colorPalettesTemp?.[colorStyle]?.[slug] && 'background' === slug ) {
+							selectedThemeColorPalette[ idx ].color = '#FFFFFF';
+						}
+						else if ( ! isCustomStyle  && colorPalettesTemp?.[colorStyle]?.[slug] ) {
 							selectedThemeColorPalette[ idx ].color =
-								selectedColorsLocalTemp.background;
-						else if ( ! isCustomStyle )
-							selectedThemeColorPalette[ idx ].color = '#ffffff';
+								colorPalettesTemp[ colorStyle ][slug];
+						}
 						break;
 				}
 			}
