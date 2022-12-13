@@ -1,18 +1,12 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
-use function NewfoldLabs\WP\ModuleLoader\container;
-use WP_Forge\Fluent\Fluent;
-
 /**
  * Contains Brand information.
  */
 final class Brands {
 
 	public static function get_brands() {
-		$container_headers = new Fluent( container()->plugin()->headers );
-		$brand_plugin_name = $container_headers->getAttributes()[ 'attributes' ][ 'TextDomain' ] ? 
-								$container_headers->getAttributes()[ 'attributes' ][ 'TextDomain' ] : '';
 
 		return array(
 			'bluehost'       => array(
@@ -44,7 +38,7 @@ final class Brands {
 					'defaultLink'		=> 'https://my.bluehost.com/cgi/app/#/marketplace/product/i/bluesky',
 					'queryParams'		=> array(
 						'utm_source'	=> 'wp-onboarding',
-						'utm_medium'	=> $brand_plugin_name,
+						'utm_medium'	=> 'brand-plugin',
 					),
 				),
 				'fullServiceCreativeTeamInfo' => array(
@@ -52,14 +46,14 @@ final class Brands {
 					'fragment'			=> '#full-service',
 					'queryParams'		=> array(
 						'utm_source'	=> 'wp-onboarding',
-						'utm_medium'	=> $brand_plugin_name,
+						'utm_medium'	=> 'brand-plugin',
 					),
 				),
 				'techSupportInfo' => array(
 					'defaultLink'		=> 'https://helpchat.bluehost.com/',
 					'queryParams'		=> array(
 						'utm_source'	=> 'wp-onboarding',
-						'utm_medium'	=> $brand_plugin_name,
+						'utm_medium'	=> 'brand-plugin',
 					),
 				),
 			),
@@ -90,7 +84,7 @@ final class Brands {
 					'defaultLink'		=> 'https://my.bluehost.in/cgi/app/#/marketplace/product/i/bluesky',
 					'queryParams'		=> array(
 						'utm_source'	=> 'wp-onboarding',
-						'utm_medium'	=> $brand_plugin_name,
+						'utm_medium'	=> 'brand-plugin',
 					),
 				),
 				'fullServiceCreativeTeamInfo' => array(
@@ -98,14 +92,14 @@ final class Brands {
 					'fragment'			=> '#full-service',
 					'queryParams'		=> array(
 						'utm_source'	=> 'wp-onboarding',
-						'utm_medium'	=> $brand_plugin_name,
+						'utm_medium'	=> 'brand-plugin',
 					),
 				),
 				'techSupportInfo' => array(
 					'defaultLink'		=> 'https://helpchat.bluehost.in/',
 					'queryParams'		=> array(
 						'utm_source'	=> 'wp-onboarding',
-						'utm_medium'	=> $brand_plugin_name,
+						'utm_medium'	=> 'brand-plugin',
 					),
 				),
 			),
