@@ -1,7 +1,7 @@
 import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import BasicInfoForm from './basicInfoForm';
-import { VIEW_NAV_PRIMARY } from '../../../../constants';
+import { SIDEBAR_LEARN_MORE, VIEW_NAV_PRIMARY } from '../../../../constants';
 import { store as nfdOnboardingStore } from '../../../store';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
@@ -12,7 +12,7 @@ const StepBasicInfo = () => {
 	const {
 		setIsDrawerOpened,
 		setDrawerActiveView,
-		setIsSidebarOpened,
+		setSidebarActiveView,
 		setIsDrawerSuppressed,
 		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
@@ -27,7 +27,7 @@ const StepBasicInfo = () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );
 		}
-		setIsSidebarOpened( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 		setIsHeaderNavigationEnabled( true );

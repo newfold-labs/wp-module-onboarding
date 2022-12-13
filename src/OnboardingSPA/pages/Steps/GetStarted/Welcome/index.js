@@ -12,7 +12,7 @@ import NavCardButton from '../../../../components/Button/NavCardButton';
 import Tab from '../../../../components/Tab';
 import tabContent from './tabContent.json';
 import TabPanelHover from '../../../../components/TabPanelHover';
-import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
+import { VIEW_NAV_GET_STARTED, SIDEBAR_LEARN_MORE } from '../../../../../constants';
 
 
 /**
@@ -33,13 +33,13 @@ const StepWelcome = () => {
 	);
 	const {
 		setDrawerActiveView,
-		setIsSidebarOpened,
+		setSidebarActiveView,
 		setIsDrawerSuppressed,
 		setIsHeaderNavigationEnabled
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		setIsSidebarOpened( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsHeaderNavigationEnabled( true );
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
@@ -58,7 +58,7 @@ const StepWelcome = () => {
 						tabs={tabContent.tabs.map( ( tab ) => {
 							return {
 								name: __( tab.name , 'wp-module-onboarding'),
-								title: __( tab.title , 'wp-module-onboarding'),
+								title: __( tab.subtitle , 'wp-module-onboarding'),
 								content: <Tab
 									title={ __(tab.title, 'wp-module-onboarding')}
 									text={ sprintf( __(tab.text, 'wp-module-onboarding'), translations('site'))}

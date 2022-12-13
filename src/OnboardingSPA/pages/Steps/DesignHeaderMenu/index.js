@@ -9,7 +9,7 @@ import {
 	GlobalStylesProvider,
 } from '../../../components/LivePreview';
 
-import { VIEW_DESIGN_HEADER_MENU } from '../../../../constants';
+import { SIDEBAR_LEARN_MORE, VIEW_DESIGN_HEADER_MENU } from '../../../../constants';
 import { store as nfdOnboardingStore } from '../../../store';
 
 const StepDesignHeaderMenu = () => {
@@ -26,7 +26,7 @@ const StepDesignHeaderMenu = () => {
 		setDrawerActiveView,
 		setIsDrawerOpened,
 		setIsDrawerSuppressed,
-		setIsSidebarOpened,
+		setSidebarActiveView,
 		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
@@ -38,7 +38,7 @@ const StepDesignHeaderMenu = () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );
 		}
-		setIsSidebarOpened( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_HEADER_MENU );
 		setIsHeaderNavigationEnabled( true );

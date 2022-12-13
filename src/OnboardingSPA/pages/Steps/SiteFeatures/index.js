@@ -4,11 +4,12 @@ import { useEffect, useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
 
-import { VIEW_NAV_PRIMARY } from '../../../../constants';
+import { SIDEBAR_LEARN_MORE, VIEW_NAV_PRIMARY } from '../../../../constants';
 import CommonLayout from '../../../components/Layouts/Common';
 import { getSiteFeatures } from '../../../utils/api/plugins';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import CheckboxList from '../../../components/CheckboxTemplate/CheckboxList';
+import { CheckboxListSkeleton } from '../../../components/CheckboxTemplate';
 
 const StepSiteFeatures = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -20,25 +21,30 @@ const StepSiteFeatures = () => {
 	const {
 		setIsDrawerOpened,
 		setDrawerActiveView,
-		setIsSidebarOpened,
+		setSidebarActiveView,
 		setCurrentOnboardingData,
 		setIsDrawerSuppressed,
 		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { currentStep, currentData } = useSelect( ( select ) => {
-		return {
-			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-		};
-	}, [] );
+	const { currentStep, currentData, themeVariations } = useSelect(
+		( select ) => {
+			return {
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				themeVariations:
+					select( nfdOnboardingStore ).getStepPreviewData(),
+			};
+		},
+		[]
+	);
 
 	async function selectPlugin( slug, choice ) {
 		const selectedPluginsCopy = { ...selectedPlugins };
 		selectedPluginsCopy[ slug ] = choice;
 		setSelectedPlugins( selectedPluginsCopy );
-		
+
 		currentData.data.siteFeatures = { ...selectedPluginsCopy };
 		setCurrentOnboardingData( currentData );
 	}
@@ -49,9 +55,9 @@ const StepSiteFeatures = () => {
 	) {
 		const selectedPlugins = {};
 
-		for (const key in customPluginsList) {
-			var plugin = customPluginsList[key];
-			selectedPlugins[plugin.slug] = plugin.selected;
+		for ( const key in customPluginsList ) {
+			const plugin = customPluginsList[ key ];
+			selectedPlugins[ plugin.slug ] = plugin.selected;
 		}
 		setSelectedPlugins( selectedPlugins );
 
@@ -81,18 +87,27 @@ const StepSiteFeatures = () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( false );
 		}
-		setIsSidebarOpened( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	return (
-		<CommonLayout isVerticallyCentered>
-			<HeadingWithSubHeading
-				title={ currentStep?.heading }
-				subtitle={ currentStep?.subheading }
-			/>
+		<CommonLayout>
+			<div style={ { margin: '100px' } }>
+				<HeadingWithSubHeading
+					title={ currentStep?.heading }
+					subtitle={ currentStep?.subheading }
+				/>
+			</div>
+			{ ! customPluginsList && (
+				<CheckboxListSkeleton
+					count={
+						themeVariations[ currentStep?.patternId ]?.previewCount
+					}
+				/>
+			) }
 			{ customPluginsList && (
 				<CheckboxList
 					callback={ selectPlugin }

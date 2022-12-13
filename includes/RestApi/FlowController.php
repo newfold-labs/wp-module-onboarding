@@ -135,8 +135,10 @@ class FlowController {
 
 		if ( ( ! empty( $flow_data['data']['siteLogo'] ) ) && ! empty( $flow_data['data']['siteLogo']['id'] ) ) {
 				  \update_option( Options::get_option_name( 'site_icon', false ), $flow_data['data']['siteLogo']['id'] );
+				  \update_option( Options::get_option_name( 'site_logo', false ), $flow_data['data']['siteLogo']['id'] );
 		} else {
 			 \update_option( Options::get_option_name( 'site_icon', false ), 0 );
+			 \delete_option( Options::get_option_name( 'site_logo', false ) );
 		}
 
 		// save data to database

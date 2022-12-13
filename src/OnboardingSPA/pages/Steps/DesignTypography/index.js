@@ -7,6 +7,7 @@ import { getPatterns } from '../../../utils/api/patterns';
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import {
+	SIDEBAR_LEARN_MORE,
 	THEME_STATUS_NOT_ACTIVE,
 	VIEW_DESIGN_TYPOGRAPHY,
 } from '../../../../constants';
@@ -34,7 +35,7 @@ const StepDesignTypography = () => {
 		updateThemeStatus,
 		setDrawerActiveView,
 		setIsDrawerOpened,
-		setIsSidebarOpened,
+		setSidebarActiveView,
 		setIsDrawerSuppressed,
 		setIsHeaderNavigationEnabled
 	} = useDispatch( nfdOnboardingStore );
@@ -43,7 +44,7 @@ const StepDesignTypography = () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );
 		}
-		setIsSidebarOpened( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_TYPOGRAPHY );
 		setIsHeaderNavigationEnabled( true );
