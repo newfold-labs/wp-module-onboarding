@@ -37,6 +37,7 @@ final class Options {
 		'blog_name'                     => 'blogname',
 		'blog_description'              => 'blogdescription',
 		'site_icon'                     => 'site_icon',
+		'site_logo'                     => 'site_logo',
 		'show_on_front'                 => 'show_on_front',
 		'page_on_front'                 => 'page_on_front',
 		'theme_settings'                => 'theme_settings',

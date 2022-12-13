@@ -17,12 +17,12 @@ import {
 	moveTo,
 	redo,
 	post,
+	pages as pagesIcon,
 } from '@wordpress/icons';
 import {
 	VIEW_DESIGN_COLORS,
 	VIEW_DESIGN_HEADER_MENU,
 	VIEW_DESIGN_HOMEPAGE_MENU,
-	VIEW_DESIGN_THEMES,
 	VIEW_DESIGN_THEME_STYLES_MENU,
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
 	VIEW_DESIGN_TYPOGRAPHY,
@@ -366,23 +366,23 @@ export const steps = [
 			},
 		},
 	},
-	{
-		path: '/wp-setup/step/design/themes',
-		title: __( 'Themes', 'wp-module-onboarding' ),
-		heading: __( "Let's make you look your best", 'wp-module-onboarding' ),
-		subheading: __(
-			'Find a WordPress Theme to present polished and compelling.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			'Your Theme is the starting place for layout and design, setting the tone for your site. Keep it for years or change and swap as you grow.',
-			'wp-module-onboarding'
-		),
-		Component: StepDesignThemes,
-		Icon: brush,
-		priority: 140,
-		VIEW: VIEW_DESIGN_THEMES,
-	},
+	// {
+	// 	path: '/wp-setup/step/design/themes',
+	// 	title: __( 'Themes', 'wp-module-onboarding' ),
+	// 	heading: __( "Let's make you look your best", 'wp-module-onboarding' ),
+	// 	subheading: __(
+	// 		'Find a WordPress Theme to present polished and compelling.',
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	description: __(
+	// 		'Your Theme is the starting place for layout and design, setting the tone for your site. Keep it for years or change and swap as you grow.',
+	// 		'wp-module-onboarding'
+	// 	),
+	// 	Component: StepDesignThemes,
+	// 	Icon: brush,
+	// 	priority: 140,
+	// 	VIEW: VIEW_DESIGN_THEMES,
+	// },
 	{
 		path: '/wp-setup/step/design/theme-styles/menu',
 		title: __( 'Theme Styles', 'wp-module-onboarding' ),
@@ -401,7 +401,8 @@ export const steps = [
 		Component: StepDesignThemeStylesMenu,
 		Icon: styles,
 		priority: 160,
-		VIEW: VIEW_DESIGN_THEME_STYLES_MENU,
+		designDrawerActiveLinkIncludes: '/wp-setup/step/design/theme-styles/',
+		VIEW: VIEW_NAV_DESIGN,
 		patternId: 'theme-styles',
 		sidebars: {
 			LearnMore: {
@@ -430,6 +431,7 @@ export const steps = [
 		Icon: styles,
 		priority: 170,
 		VIEW: VIEW_DESIGN_THEME_STYLES_PREVIEW,
+		designDrawerActiveLinkIncludes: '/wp-setup/step/design/theme-styles/',
 		patternId: 'theme-styles',
 		sidebars: {
 			LearnMore: {
@@ -467,7 +469,7 @@ export const steps = [
 	},
 	{
 		path: '/wp-setup/step/design/homepage-menu',
-		title: __( 'HomePages Wizard', 'wp-module-onboarding' ),
+		title: __( 'Homepage Layouts', 'wp-module-onboarding' ),
 		heading: __(
 			'There’s no place like a great home page',
 			'wp-module-onboarding'
@@ -481,9 +483,9 @@ export const steps = [
 			'wp-module-onboarding'
 		),
 		Component: StepDesignHomepageMenu,
-		Icon: header,
+		Icon: pagesIcon,
 		priority: 240,
-		VIEW: VIEW_DESIGN_HOMEPAGE_MENU,
+		VIEW: VIEW_NAV_DESIGN,
 		patternId: 'homepage-styles',
 		sidebars: {
 			LearnMore: {
@@ -492,8 +494,8 @@ export const steps = [
 		},
 	},
 	{
-		path: '/wp-setup/step/site-pages',
-		title: __( 'Pages', 'wp-module-onboarding' ),
+		path: '/wp-setup/step/design/site-pages',
+		title: __( 'Page Layouts', 'wp-module-onboarding' ),
 		heading: __(
 			'You have ideas, we have page templates',
 			'wp-module-onboarding'
@@ -534,6 +536,7 @@ export const steps = [
 		Component: StepSiteFeatures,
 		Icon: plugins,
 		priority: 280,
+		patternId: 'site-features',
 		sidebars: {
 			LearnMore: {
 				SidebarComponents: [ StepSiteFeaturesLearnMoreSidebar ],
@@ -638,11 +641,12 @@ export const initialTopSteps = () => {
 
 	const designStep = {
 		/* This is a fake step to stand-in for all Design steps and does not have a Component to render */
-		path: '/wp-setup/step/design/themes',
+		path: '/wp-setup/step/design/theme-styles/menu',
 		title: __( 'Design', 'wp-module-onboarding' ),
 		description: '',
 		Icon: brush,
 		VIEW: VIEW_NAV_DESIGN,
+		primaryDrawerActiveLinkIncludes: '/wp-setup/step/design/',
 		priority: 140 /* matches priority for first design step */,
 	};
 
@@ -652,6 +656,7 @@ export const initialTopSteps = () => {
 		heading: __( 'Get Started', 'wp-module-onboarding' ),
 		Icon: home,
 		VIEW: VIEW_NAV_GET_STARTED,
+		primaryDrawerActiveLinkIncludes: '/wp-setup/step/get-started/',
 		priority: 20,
 	};
 

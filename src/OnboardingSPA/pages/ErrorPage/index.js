@@ -3,20 +3,20 @@ import { useEffect } from '@wordpress/element';
 
 import CommonLayout from '../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../components/HeadingWithSubHeading';
-import { VIEW_NAV_PAGE } from '../../../constants';
+import { SIDEBAR_LEARN_MORE, VIEW_NAV_PAGE } from '../../../constants';
 import { store as nfdOnboardingStore } from '../../store';
 import { useViewportMatch } from '@wordpress/compose';
 
 const ErrorPage = () => {
     const isLargeViewport = useViewportMatch('medium');
-    const { setIsDrawerOpened, setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed } =
+    const { setIsDrawerOpened, setDrawerActiveView, setSidebarActiveView, setIsDrawerSuppressed } =
         useDispatch(nfdOnboardingStore);
     
     useEffect(() => {
         if (isLargeViewport) {
             setIsDrawerOpened(true);
         }
-        setIsSidebarOpened(false);
+        setSidebarActiveView( SIDEBAR_LEARN_MORE );
         setIsDrawerSuppressed(false);
         setDrawerActiveView(VIEW_NAV_PAGE);
     }, []);

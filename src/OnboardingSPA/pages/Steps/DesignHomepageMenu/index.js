@@ -7,9 +7,10 @@ import { getPatterns } from '../../../utils/api/patterns';
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import {
-	VIEW_DESIGN_HOMEPAGE_MENU,
+	VIEW_NAV_DESIGN,
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
+	SIDEBAR_LEARN_MORE,
 } from '../../../../constants';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { DesignStateHandler } from '../../../components/StateHandlers';
@@ -74,7 +75,7 @@ const StepDesignHomepageMenu = () => {
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
-		setIsSidebarOpened,
+		setSidebarActiveView,
 		setIsDrawerSuppressed,
 		setCurrentOnboardingData,
 		updateThemeStatus,
@@ -85,9 +86,9 @@ const StepDesignHomepageMenu = () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );
 		}
-		setIsSidebarOpened( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsDrawerSuppressed( false );
-		setDrawerActiveView( VIEW_DESIGN_HOMEPAGE_MENU );
+		setDrawerActiveView( VIEW_NAV_DESIGN );
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
 

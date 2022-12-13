@@ -8,9 +8,10 @@ import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { getPatterns } from '../../../utils/api/patterns';
 import {
-	VIEW_NAV_PRIMARY,
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
+	SIDEBAR_LEARN_MORE,
+	VIEW_NAV_DESIGN,
 } from '../../../../constants';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 import {
@@ -44,7 +45,7 @@ const StepSitePages = () => {
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
-		setIsSidebarOpened,
+		setSidebarActiveView,
 		updateThemeStatus,
 		setCurrentOnboardingData,
 		setIsHeaderNavigationEnabled,
@@ -54,8 +55,8 @@ const StepSitePages = () => {
 		if ( ! isLargeViewport ) {
 			setIsDrawerOpened( false );
 		}
-		setIsSidebarOpened( false );
-		setDrawerActiveView( VIEW_NAV_PRIMARY );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
+		setDrawerActiveView( VIEW_NAV_DESIGN );
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
 

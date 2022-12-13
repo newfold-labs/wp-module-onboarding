@@ -10,7 +10,7 @@ const getContents = () => {
 			subheading: sprintf(
 				/* translators: %s: site */
 				__(
-					`Help us give you the best experience by telling us a little about your %s and your needs.`,
+					`We can provide the best experience if you tell us a little about your %s and your needs.`,
 					'wp-module-onboarding'
 				),
 				translations( 'site' )
@@ -24,11 +24,11 @@ const getContents = () => {
 			headingWithDescriptions: [
 				{
 					heading: __(
-						'Why we ask about your experience',
+						'Why we ask',
 						'wp-module-onboarding'
 					),
 					description: __(
-						`We use this to help offer the best WordPress configuration, streamline this setup and to suggest the best choices for you.`,
+						`We use this to help offer the best WordPress setup, features and suggestions for your site.`,
 						'wp-module-onboarding'
 					),
 				},

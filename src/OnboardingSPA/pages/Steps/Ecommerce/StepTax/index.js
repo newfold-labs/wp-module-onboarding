@@ -4,7 +4,7 @@ import { useDispatch,useSelect } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useNavigate } from 'react-router-dom';
-import { VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../../../constants';
+import { SIDEBAR_LEARN_MORE, VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../../../constants';
 import CardHeader from '../../../../components/CardHeader';
 import CommonLayout from '../../../../components/Layouts/Common';
 import NeedHelpTag from '../../../../components/NeedHelpTag';
@@ -25,7 +25,7 @@ const StepTax = () => {
 		setDrawerActiveView,
 		setIsDrawerOpened,
 		setIsDrawerSuppressed,
-		setIsSidebarOpened,
+		setSidebarActiveView,
 		setCurrentOnboardingData,
 	} = useDispatch(nfdOnboardingStore);
 	const navigate = useNavigate();
@@ -38,7 +38,7 @@ const StepTax = () => {
 		if (isLargeViewport) {
 			setIsDrawerOpened(true);
 		}
-		setIsSidebarOpened(false);
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsDrawerSuppressed(false);
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
 	}, []);

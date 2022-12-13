@@ -12,6 +12,7 @@ import {
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
+	SIDEBAR_LEARN_MORE,
 } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { getPatterns } from '../../../../utils/api/patterns';
@@ -53,9 +54,8 @@ const StepDesignThemeStylesPreview = () => {
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
-		setIsSidebarOpened,
+		setSidebarActiveView,
 		setIsDrawerSuppressed,
-		updatePreviewSettings,
 		updateRoutes,
 		updateDesignSteps,
 		updateAllSteps,
@@ -68,7 +68,7 @@ const StepDesignThemeStylesPreview = () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );
 		}
-		setIsSidebarOpened( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_THEME_STYLES_PREVIEW );
 		handleCheckbox( currentData.data.customDesign, false );
