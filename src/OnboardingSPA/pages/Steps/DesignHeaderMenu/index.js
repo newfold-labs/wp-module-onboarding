@@ -1,5 +1,5 @@
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useLayoutEffect } from '@wordpress/element';
 import { useViewportMatch } from '@wordpress/compose';
 
 import CommonLayout from '../../../components/Layouts/Common';
@@ -30,7 +30,7 @@ const StepDesignHeaderMenu = () => {
 		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
-	useEffect( () => {
+	useLayoutEffect( () => {
 		setPattern( headerMenu );
 	}, [ headerMenu ] );
 

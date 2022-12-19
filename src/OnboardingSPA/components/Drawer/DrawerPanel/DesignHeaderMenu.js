@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import HeaderMenuPreview from '../../HeaderMenuPreview';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
-import { GlobalStylesProvider } from '../../../components/LivePreview';
+import { GlobalStylesProvider, LivePreviewSkeleton } from '../../../components/LivePreview';
 
 import {
 	THEME_STATUS_ACTIVE,
@@ -89,6 +89,14 @@ const DesignHeaderMenu = () => {
 	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = ( idx ) => {
+
+		if ( document.getElementsByClassName( 'nfd-onboard-content' ) ) {
+			document.getElementsByClassName( 'nfd-onboard-content' )[0]
+				.scrollIntoView( {
+					behavior: 'smooth',
+				} );
+		}
+
 		const selectedPattern = patterns[ idx ];
 
 		setSelectedPattern( selectedPattern.slug );
@@ -105,13 +113,13 @@ const DesignHeaderMenu = () => {
 	};
 
 	const buildPreviews = () => {
-		return patterns?.map( ( pattern, idx ) => {
-			return (
+		const headerMenuPreviews = [];
+
+		patterns?.map( ( pattern, idx ) => {
+			headerMenuPreviews.push(
 				<HeaderMenuPreview
 					key={ idx }
-					className={
-						'theme-header-menu-preview--drawer__list__item'
-					}
+					className={ 'theme-header-menu-preview--drawer__list__item' }
 					selected={ pattern.slug === selectedPattern }
 					blockGrammer={ pattern.content }
 					viewportWidth={ 900 }
@@ -121,6 +129,8 @@ const DesignHeaderMenu = () => {
 				/>
 			);
 		} );
+
+		return headerMenuPreviews;
 	};
 
 	return (
@@ -128,13 +138,13 @@ const DesignHeaderMenu = () => {
 			<div className="theme-header-menu-preview--drawer">
 				<div className="theme-header-menu-preview--drawer__list">
 					{ buildPreviews() }
-					{ /* <LivePreviewSkeleton 
+					{/* { <LivePreviewSkeleton 
 						className={ 'theme-styles-preview--drawer__list__item' }
 						watch={patterns}
 						count = {4}
 						callback = {buildPreviews}
 						viewportWidth={ 900 }
-					/> */ }
+					/> } */}
 				</div>
 			</div>
 		</GlobalStylesProvider>
