@@ -27,7 +27,18 @@ const RadioControlWithSkeleton = ({
     useEffect(() => doRerender(1), [watch, selected]);
 
     const buildDummyPreviews = () => {
-        return <div>Boooom</div>;
+        const dataDummy = [1, 2, 3];
+        return (
+            <RadioControl
+                className={className}
+                options={dataDummy.map((option) => {
+                    return {
+                        label: ' Vroom ',
+                        value: ' Vroom ',
+                    };
+                })}
+            />
+        );
     };
 
     const buildRealPreview = () => {
