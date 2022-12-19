@@ -13,6 +13,7 @@ import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 import { store as nfdOnboardingStore } from '../../../../store';
 import content from '../content.json';
 import { useWPSettings } from '../useWPSettings';
+import RadioControlWithSkeleton from '../../../../components/RadioControlWithSkeleton';
 
 function createReverseLookup(state) {
 	return (option) =>
@@ -74,6 +75,22 @@ const StepTax = () => {
 		navigate('/ecommerce/step/products');
 	};
 
+	const selectOption = (value) => {
+		let selectedOption = content.stepTaxOptions.find(
+			(option) => option.value === value
+		);
+		setCurrentOnboardingData({
+			storeDetails: {
+				...currentData.storeDetails,
+				tax: {
+					...selectedOption.data,
+					option: selectedOption.value,
+					isStoreDetailsFilled: tax?.isStoreDetailsFilled
+				},
+			},
+		});
+	}
+
 	return (
         <EcommerceStateHandler>
 		<CommonLayout isBgPrimary isCentered>
@@ -85,33 +102,14 @@ const StepTax = () => {
 							subHeading={__(content.stepTaxSubHeading, 'wp-module-onboarding')}
 							question={__(content.question, 'wp-module-onboarding')}
 						/>
-						{settings === null && <p>Loading...</p>}
 					</div>
-					<RadioControl
-						className='nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-tax-step'
+					<RadioControlWithSkeleton
+						className={"nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-tax-step"}
+						count={3}
+						watch={settings}
 						selected={tax?.option}
-						options={content.stepTaxOptions.map((option) => {
-							return {
-								label: __(option.content, 'wp-module-onboarding'),
-								value: option.value,
-							};
-						})}
-						onChange={(value) => {
-							let selectedOption = content.stepTaxOptions.find(
-								(option) => option.value === value
-							);
-							setCurrentOnboardingData({
-								storeDetails: {
-									...currentData.storeDetails,
-									tax: {
-										...selectedOption.data,
-										option: selectedOption.value,
-										isStoreDetailsFilled: tax?.isStoreDetailsFilled
-									},
-								},
-							});
-						}}
-					/>
+						data={content.stepTaxOptions}
+						callback={(value) => selectOption(value)} />
 					<button
 						className='nfd-nav-card-button nfd-card-button'
 						disabled={settings === null || tax?.option === undefined}
