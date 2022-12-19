@@ -15,6 +15,14 @@ class FlowService {
 		$default_flow_data = self::get_default_flow_data();
 		$updated_flow_data = array();
 		$updated_flow_data = self::update_flow_data_recursive($default_flow_data, $flow_data, $updated_flow_data);
+		\do_action('qm/debug', $updated_flow_data);
+		// To align the datatype of the respective values with the one set in the blueprint
+		if(is_int($updated_flow_data['updatedAt'])) 
+				$updated_flow_data['updatedAt'] = strval($updated_flow_data['updatedAt']);
+		if(is_int($updated_flow_data['createdAt'])) 
+			$updated_flow_data['createdAt'] = strval($updated_flow_data['createdAt']);
+		if(is_int($updated_flow_data['data']['siteLogo'])) 
+			$updated_flow_data['data']['siteLogo'] = array($updated_flow_data['data']['siteLogo']);
 		return \update_option( Options::get_option_name( 'flow' ), $updated_flow_data );
     }
 
@@ -48,7 +56,7 @@ class FlowService {
 			// Any Key renamed is updated in the database with NewKey and the value from the OldKey is retained or not based on retain_existing_value
 			if($flow_data_fixes) {
 				foreach ($flow_data_fixes as $old_key=>$new_val) {
-					if (is_array($flow_data) && array_key_exists($old_key, $flow_data) && array_key_exists($new_val['new_key'], $default_flow_data)) {
+					if (array_key_exists($old_key, $flow_data) && array_key_exists($new_val['new_key'], $default_flow_data)) {
 						if($new_val['retain_existing_value'])
 							$flow_data[$new_val['new_key']] = $flow_data[$old_key];
 						else
@@ -66,7 +74,7 @@ class FlowService {
 					$updated_flow_data[$key] = $value;
 			}
 
-			elseif(is_array($flow_data) && array_key_exists($key, $flow_data)) {
+			elseif(array_key_exists($key, $flow_data)) {
 				if(!is_array($value)) 
 					$updated_flow_data[$key] = $flow_data[$key];
 
@@ -90,17 +98,8 @@ class FlowService {
 
 			// Adds or deletes key-value pairs in DB based on the modification in the blueprint
 			else
-				$updated_flow_data[$key] = $value;
-			
+				$updated_flow_data[$key] = $value;	
 		}
-
-		// To align the datatype of the respective values with the one set in the blueprint
-		if(is_int($updated_flow_data['updatedAt'])) 
-				$updated_flow_data['updatedAt'] = strval($updated_flow_data['updatedAt']);
-		if(is_int($updated_flow_data['createdAt'])) 
-			$updated_flow_data['createdAt'] = strval($updated_flow_data['createdAt']);
-		if(is_int($updated_flow_data['siteLogo'])) 
-			$updated_flow_data['siteLogo'] = array($updated_flow_data['siteLogo']);
 
 		return $updated_flow_data;
 	}
@@ -123,7 +122,7 @@ class FlowService {
 			}
 			
 			// Updates value entered by the user
-			elseif (is_array($params) && array_key_exists($key, $params)){
+			elseif (array_key_exists($key, $params)){
 
 				// Error thrown if the datatype of the parameter does not match
 				if(strcmp(gettype($value), gettype($params[$key])) != 0) {
@@ -137,13 +136,13 @@ class FlowService {
 				else {
 					// To handle Indexed Arrays gracefully
 					if (count(array_filter(array_keys($params[$key]), 'is_string')) === 0 ) {
-						// If the Database value is empty ot an indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
+						// If the Database value is empty or an indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
 						if(empty($value) || (count(array_filter(array_keys($value), 'is_string')) === 0))
 							$updated_flow_data[$key] = $params[$key];
 						else
 							$updated_flow_data[$key] = $value;
 						
-						// For Indexed Arrays having mested Associative Arrays
+						// For Indexed Arrays having nested Associative Arrays
 						foreach($params[$key] as $index_key=>$index_value) {
 							if(is_array($index_value)) 
 								$updated_flow_data[$key][$index_key] = self::update_post_call_data_recursive($value[$index_key], $updated_flow_data[$key][$index_key], $index_value);
