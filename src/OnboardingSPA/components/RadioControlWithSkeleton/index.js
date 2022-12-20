@@ -41,7 +41,7 @@ const RadioControlWithSkeleton = ({
     const buildRealPreview = () => {
         return (
             <RadioControl
-                className={className}
+                className={`${className} radio-control-main`}
                 selected={selected}
                 options={data.map((option) => {
                     return {

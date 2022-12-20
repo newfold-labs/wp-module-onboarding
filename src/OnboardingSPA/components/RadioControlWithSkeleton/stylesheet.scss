@@ -2,23 +2,28 @@
 $white-offset: rgb(224, 224, 224);
 $main-color-light: var(--nfd-onboarding-white);
 
-.radio-control-skeleton {
+.radio-control {
 
-    margin: 30px;
+    &-main {
+        animation: fadeIn 300ms ease-in;
+    }
 
-    &-item {
-        height: 32px;
-        margin: 12px;
-        padding: 10px;
-        background: transparent;
-        width: clamp(15rem, 25vw, 35rem);
-
-        @media (max-width: #{($break-small)}) {
-            width: 200px;
-        }
-
-        @media (max-width: #{($break-mobile)}) {
-            width: 150px;
+    &-skeleton {
+        margin: 30px;
+        &-item {
+            height: 32px;
+            margin: 12px;
+            padding: 10px;
+            background: transparent;
+            width: clamp(15rem, 25vw, 35rem);
+    
+            @media (max-width: #{($break-small)}) {
+                width: 200px;
+            }
+    
+            @media (max-width: #{($break-mobile)}) {
+                width: 150px;
+            }
         }
     }
     
