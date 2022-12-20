@@ -29,7 +29,7 @@ const RadioControlWithSkeleton = ({
         var customItems = [];
 
         for (let idx = 0; idx < count; idx++)
-            customItems.push(<div className="radio-control-skeleton-item shimmer" />);
+            customItems.push(<div className="radio-control-skeleton-item" />);
             
         return (
             <div className='radio-control-skeleton'>
