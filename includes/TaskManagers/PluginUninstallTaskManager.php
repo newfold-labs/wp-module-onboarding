@@ -17,7 +17,7 @@ class PluginUninstallTaskManager {
 	  *
 	  * @var int
 	  */
-	private static $retry_limit = 1;
+	private static $retry_limit = 2;
 
 	private static $queue_name = 'plugin_uninstall_queue';
 
