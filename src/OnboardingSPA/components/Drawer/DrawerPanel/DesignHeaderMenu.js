@@ -5,6 +5,7 @@ import HeaderMenuPreview from '../../HeaderMenuPreview';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
 import { GlobalStylesProvider, LivePreviewSkeleton } from '../../../components/LivePreview';
+import { store as coreStore } from '@wordpress/core-data';
 
 import {
 	THEME_STATUS_ACTIVE,
@@ -23,11 +24,18 @@ const DesignHeaderMenu = () => {
 		'yith-wonder/site-footer',
 	];
 
+	const defaultMenuItems = [ 'Home', 'About', 'Contact', 'News', 'Privacy', 'Careers' ];
+	const { editEntityRecord } = useDispatch( coreStore );
+
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ patterns, setPatterns ] = useState();
 	const [ headerMenuPreviewData, setHeaderMenuPreviewData ] = useState();
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
 	const location = useLocation();
+
+	const { getEditedEntityRecord } = useSelect( ( select ) => {
+		return select( coreStore );
+	}, [] );
 
 	const { currentStep, currentData, themeStatus } = useSelect( ( select ) => {
 		return {
@@ -86,9 +94,25 @@ const DesignHeaderMenu = () => {
 	useEffect( () => {
 		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
 			getPatternsData();
+		getEditedEntityRecord( 'root', 'menuItem' );
 	}, [ isLoaded, themeStatus ] );
 
+	const updateCoreData = ( ) => {
+		defaultMenuItems.map( ( item, idx ) => {
+			editEntityRecord( 'root', 'menuItem', {
+				id: idx + 1,
+				title: { "rendered": item },
+				status: 'publish',
+				url: '#',
+				parent: 0,
+				menu_order: idx + 1,
+			} );
+		});
+	};
+
 	const handleClick = ( idx ) => {
+
+		updateCoreData();
 
 		if ( document.getElementsByClassName( 'nfd-onboard-content' ) ) {
 			document.getElementsByClassName( 'nfd-onboard-content' )[0]
