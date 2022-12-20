@@ -21,23 +21,20 @@ const RadioControlWithSkeleton = ({
     className,
 }) => {
 
-    const MAX_ANIMATION_TIME = 600000;
     const [rerender, doRerender] = useState(0);
 
     useEffect(() => doRerender(1), [watch, selected]);
 
     const buildDummyPreviews = () => {
-        const dataDummy = [1, 2, 3];
+        var customItems = [];
+
+        for (let idx = 0; idx < count; idx++)
+            customItems.push(<div className="radio-control-skeleton-item shimmer" />);
+            
         return (
-            <RadioControl
-                className={className}
-                options={dataDummy.map((option) => {
-                    return {
-                        label: ' Vroom ',
-                        value: ' Vroom ',
-                    };
-                })}
-            />
+            <div className='radio-control-skeleton'>
+                {customItems}
+           </div>
         );
     };
 
