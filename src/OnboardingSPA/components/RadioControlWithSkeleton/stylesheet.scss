@@ -10,20 +10,12 @@ $main-color-light: var(--nfd-onboarding-white);
 
     &-skeleton {
         margin: 30px;
+        
         &-item {
             height: 32px;
             margin: 12px;
             padding: 10px;
             background: transparent;
-            width: clamp(15rem, 25vw, 35rem);
-    
-            @media (max-width: #{($break-small)}) {
-                width: 200px;
-            }
-    
-            @media (max-width: #{($break-mobile)}) {
-                width: 150px;
-            }
         }
     }
     
