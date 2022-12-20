@@ -13,9 +13,7 @@ class FlowService {
 			return \update_option( Options::get_option_name( 'flow' ), $flow_data );;
 		}
 		$default_flow_data = self::get_default_flow_data();
-		$updated_flow_data = array();
-		$updated_flow_data = self::update_flow_data_recursive($default_flow_data, $flow_data, $updated_flow_data);
-		\do_action('qm/debug', $updated_flow_data);
+		$updated_flow_data = self::update_flow_data_recursive($default_flow_data, $flow_data);
 		// To align the datatype of the respective values with the one set in the blueprint
 		if(is_int($updated_flow_data['updatedAt'])) 
 				$updated_flow_data['updatedAt'] = strval($updated_flow_data['updatedAt']);
@@ -40,14 +38,13 @@ class FlowService {
 
 	public static function update_flow_data($params) {
 		$flow_data = FlowService::read_flow_data_from_wp_option();
-		$updated_flow_data = array();
-		return self::update_post_call_data_recursive($flow_data, $updated_flow_data, $params);
+		return self::update_post_call_data_recursive($flow_data, $params);
 	}
 
 	/*
 	 * function to update the Flow Data (Blueprint) in an array recursively in comparison to Flows::get_data() (Database)
 	 */	
-	private static function update_flow_data_recursive(&$default_flow_data, &$flow_data, &$updated_flow_data) {
+	private static function update_flow_data_recursive($default_flow_data, &$flow_data, &$updated_flow_data = array()) {
 		$flow_data_fixes = Flows::get_fixes();
 		$exception_list = Flows::get_exception_list();
 
@@ -64,35 +61,37 @@ class FlowService {
 						unset($flow_data[$old_key]);
 					}	
 				}
-			}
+			}			
 
-			// Accepts the value of Exception List keys as is from the database
-			if($exception_list && isset($exception_list[$key])) {
-				if(array_key_exists($key, $flow_data))
+			if(array_key_exists($key, $flow_data)) {
+
+				// Accepts the value of Exception List keys as is from the database
+				if($exception_list && isset($exception_list[$key])) {
 					$updated_flow_data[$key] = $flow_data[$key];
-				else
-					$updated_flow_data[$key] = $value;
-			}
+					continue;
+				}
 
-			elseif(array_key_exists($key, $flow_data)) {
-				if(!is_array($value)) 
+				elseif(!is_array($value)) 
 					$updated_flow_data[$key] = $flow_data[$key];
 
 				else {
 					// To handle Indexed Arrays gracefully
 					if (count(array_filter(array_keys($value), 'is_string')) === 0) {
-						if(isset($flow_data[$key])) 
-							$updated_flow_data[$key] = $flow_data[$key];
 
 						// To check if an Indexed Array is further Nested or Not
 						foreach($value as $index_key => $index_value) {
 							// For Indexed Arrays having values as an Associative Array
 							if(is_array($index_value)) 
-								$updated_flow_data[$key][$index_key] = self::update_flow_data_recursive($value[$index_key], $flow_data[$key][$index_key], $updated_flow_data[$key][$index_key]);
+								$updated_flow_data[$key][$index_key] = self::update_flow_data_recursive($value[$index_key], $flow_data[$key][$index_key]);
 						}
+
+						if(isset($flow_data[$key])) 
+							$updated_flow_data[$key] = $flow_data[$key];
+						else
+							$updated_flow_data[$key] = $value;
 					}
 					else
-						$updated_flow_data[$key] = self::update_flow_data_recursive($value, $flow_data[$key], $updated_flow_data[$key]);
+						$updated_flow_data[$key] = self::update_flow_data_recursive($value, $flow_data[$key]);
 				}
 			}
 
@@ -107,22 +106,20 @@ class FlowService {
 	/*
 	 * function to update the Database recursively based on Values opted or entered by the User
 	 */	
-	private static function update_post_call_data_recursive(&$flow_data, &$updated_flow_data, &$params) {
+	private static function update_post_call_data_recursive(&$flow_data, &$params) {
 		static $flag = '';
 		$exception_list = Flows::get_exception_list();
 
 		foreach ($flow_data as $key => $value)
-		{ 
-			// Accepts the value of Exception List keys as is from the database
-			if($exception_list && isset($exception_list[$key])) {
-				if(array_key_exists($key, $params))
-					$updated_flow_data[$key] = $params[$key];
-				else
-					$updated_flow_data[$key] = $value;
-			}
-			
+		{ 		
 			// Updates value entered by the user
-			elseif (array_key_exists($key, $params)){
+			if (array_key_exists($key, $params)){
+
+				// Accepts the value of Exception List keys as is from the database
+				if($exception_list && isset($exception_list[$key])) {
+					$flow_data[$key] = $params[$key];
+					continue;
+				}
 
 				// Error thrown if the datatype of the parameter does not match
 				if(strcmp(gettype($value), gettype($params[$key])) != 0) {
@@ -131,36 +128,36 @@ class FlowService {
 				}
 
 				elseif(!is_array($value)) 
-					$updated_flow_data[$key] = $params[$key];
+					$flow_data[$key] = $params[$key];
 
 				else {
 					// To handle Indexed Arrays gracefully
 					if (count(array_filter(array_keys($params[$key]), 'is_string')) === 0 ) {
 						// If the Database value is empty or an indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
 						if(empty($value) || (count(array_filter(array_keys($value), 'is_string')) === 0))
-							$updated_flow_data[$key] = $params[$key];
+							$flow_data[$key] = $params[$key];
 						else
-							$updated_flow_data[$key] = $value;
+							$flow_data[$key] = $value;
 						
 						// For Indexed Arrays having nested Associative Arrays
 						foreach($params[$key] as $index_key=>$index_value) {
 							if(is_array($index_value)) 
-								$updated_flow_data[$key][$index_key] = self::update_post_call_data_recursive($value[$index_key], $updated_flow_data[$key][$index_key], $index_value);
+								$flow_data[$key][$index_key] = self::update_post_call_data_recursive($value[$index_key], $index_value);
 						}
 					}
 
 					// To handle Associative Arrays gracefully
 					else 
-						$updated_flow_data[$key] = self::update_post_call_data_recursive($value, $updated_flow_data[$key], $params[$key]);
+						$flow_data[$key] = self::update_post_call_data_recursive($value, $params[$key]);
 				}	
 			}
 
 			// if there is an empty value in the DB or any key is not sent by user, the default value (if any) or the existing DB value is retained
 			else
-				$updated_flow_data[$key] = $value;						
+				$flow_data[$key] = $value;						
 		}
 
-		return (!empty($flag))? $flag : $updated_flow_data;
+		return (!empty($flag))? $flag : $flow_data;
 	}
 
     /*
