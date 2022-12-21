@@ -29,6 +29,7 @@ const BasicInfoForm = () => {
 	const [ siteLogo, setSiteLogo ] = useState( 0 );
 	const [ socialData, setSocialData ] = useState( '' );
 	const [ isValidSocials, setIsValidSocials ] = useState( false );
+	const [ isSocialFormOpen, setIsSocialFormOpen ] = useState( false );
 
 	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
 	const { editEntityRecord } = useDispatch( coreStore );
@@ -187,7 +188,9 @@ const BasicInfoForm = () => {
 						<SocialMediaForm
 							socialData={ socialData }
 							setSocialData={ setSocialData }
+							isSocialFormOpen={ isSocialFormOpen }
 							setIsValidSocials={ setIsValidSocials }
+							setIsSocialFormOpen={ setIsSocialFormOpen }
 						/>
 					</div>
 				</div>
@@ -201,6 +204,8 @@ const BasicInfoForm = () => {
 						title={ siteTitle }
 						desc={ siteDesc }
 						socialData={ socialData }
+						isSocialFormOpen={ isSocialFormOpen } 
+						setIsSocialFormOpen={ setIsSocialFormOpen }
 					/>
 				</div>
 			</div>
