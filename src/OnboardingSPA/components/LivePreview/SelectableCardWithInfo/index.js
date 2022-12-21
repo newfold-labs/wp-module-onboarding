@@ -27,10 +27,11 @@ const SelectableCardWithInfo = ( {
 	};
 
 	return (
-		<div
-			className={ `${ className }` }
-		>
-			<div className={ `${ className }__live-preview-container` }>
+		<div className={ `${ className }` }>
+			<div
+				className={ `${ className }__live-preview-container` }
+				onClick={ () => handleCheck( ! selected ) }
+			>
 				<LivePreview
 					styling={ styling }
 					blockGrammer={ blockGrammer }
