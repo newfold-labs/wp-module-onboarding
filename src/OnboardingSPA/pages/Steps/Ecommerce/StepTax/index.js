@@ -105,7 +105,6 @@ const StepTax = () => {
 					</div>
 					<RadioControlWithSkeleton
 						className={"nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-tax-step"}
-						count={3}
 						watch={settings}
 						selected={tax?.option}
 						data={content.stepTaxOptions}

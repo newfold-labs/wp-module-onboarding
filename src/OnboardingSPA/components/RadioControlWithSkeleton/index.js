@@ -6,7 +6,6 @@ import { useState, useEffect } from '@wordpress/element';
  * Renders Skeletons for Radio Control.
  *
  * @property {number} data                      The options to be renedered
- * @property {number} count                     The number of Live Previews to be shown
  * @property {number} watch                     The variable to be awaited for
  * @property {string} callback                  The Render function in parent to be called
  * @property {string} className                 The class name for the Live Preview
@@ -14,7 +13,6 @@ import { useState, useEffect } from '@wordpress/element';
  */
 const RadioControlWithSkeleton = ({
     data,
-    count,
     watch,
     selected,
     callback,
@@ -28,7 +26,7 @@ const RadioControlWithSkeleton = ({
     const buildDummyPreviews = () => {
         var customItems = [];
 
-        for (let idx = 0; idx < count; idx++)
+        for (let idx = 0; idx < data.length; idx++)
             customItems.push(<div className="radio-control-skeleton-item" />);
             
         return (

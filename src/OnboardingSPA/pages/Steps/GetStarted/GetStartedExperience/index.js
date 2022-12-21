@@ -83,7 +83,6 @@ const GetStartedExperience = () => {
 					</div>
 					<RadioControlWithSkeleton 
 						className={"nfd-onboarding-experience-step-tabs components-radio-control__input"}
-						count={3}
 						data={content.options}
 						watch={wpComfortLevel}
 						selected={wpComfortLevel}
