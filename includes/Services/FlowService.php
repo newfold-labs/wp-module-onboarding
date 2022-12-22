@@ -14,13 +14,7 @@ class FlowService {
 		}
 		$default_flow_data = self::get_default_flow_data();
 		$updated_flow_data = self::update_flow_data_recursive($default_flow_data, $flow_data);
-		// To align the datatype of the respective values with the one set in the blueprint
-		if(is_int($updated_flow_data['updatedAt'])) 
-				$updated_flow_data['updatedAt'] = strval($updated_flow_data['updatedAt']);
-		if(is_int($updated_flow_data['createdAt'])) 
-			$updated_flow_data['createdAt'] = strval($updated_flow_data['createdAt']);
-		if(is_int($updated_flow_data['data']['siteLogo'])) 
-			$updated_flow_data['data']['siteLogo'] = array($updated_flow_data['data']['siteLogo']);
+		$updated_flow_data = self::update_data_type($updated_flow_data);
 		return \update_option( Options::get_option_name( 'flow' ), $updated_flow_data );
     }
 
@@ -39,6 +33,17 @@ class FlowService {
 	public static function update_flow_data($params) {
 		$flow_data = FlowService::read_flow_data_from_wp_option();
 		return self::update_post_call_data_recursive($flow_data, $params);
+	}
+
+	private static function update_data_type($updated_flow_data) {
+		// To align the datatype of the respective values with the one set in the blueprint
+		if(is_int($updated_flow_data['updatedAt'])) 
+				$updated_flow_data['updatedAt'] = strval($updated_flow_data['updatedAt']);
+		if(is_int($updated_flow_data['createdAt'])) 
+			$updated_flow_data['createdAt'] = strval($updated_flow_data['createdAt']);
+		if(is_int($updated_flow_data['data']['siteLogo'])) 
+			$updated_flow_data['data']['siteLogo'] = array($updated_flow_data['data']['siteLogo']);
+		return $updated_flow_data;
 	}
 
 	/*
