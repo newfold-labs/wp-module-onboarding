@@ -13,8 +13,7 @@ class FlowService {
 			return \update_option( Options::get_option_name( 'flow' ), $flow_data );;
 		}
 		$default_flow_data = self::get_default_flow_data();
-		$updated_flow_data = array();
-		$updated_flow_data = self::update_flow_data_recursive($default_flow_data, $flow_data, $updated_flow_data);
+		$updated_flow_data = self::update_flow_data_recursive($default_flow_data, $flow_data);
 		// To align the datatype of the respective values with the one set in the blueprint
 		if(is_int($updated_flow_data['updatedAt'])) 
 				$updated_flow_data['updatedAt'] = strval($updated_flow_data['updatedAt']);
@@ -45,9 +44,10 @@ class FlowService {
 	/*
 	 * function to update the Flow Data (Blueprint) in an array recursively in comparison to Flows::get_data() (Database)
 	 */	
-	private static function update_flow_data_recursive($default_flow_data, $flow_data, &$updated_flow_data) {
+	private static function update_flow_data_recursive($default_flow_data, $flow_data) {
 		$flow_data_fixes = Flows::get_fixes();
 		$exception_list = Flows::get_exception_list();
+		$updated_flow_data = array();
 		foreach ($default_flow_data as $key => $value)
 		{ 
 			// Any Key renamed is updated in the database with NewKey and the value from the OldKey is retained or not based on retain_existing_value
@@ -65,8 +65,8 @@ class FlowService {
 
 			if(array_key_exists($key, $flow_data)) {
 
-				// Accepts the value of Exception List keys as is from the database or non array or empty array values
-				if(($exception_list && isset($exception_list[$key])) || !is_array($value) || (is_array($value) && sizeof($value) === 0)) 
+				// Accepts the value of Exception List keys as is from the database OR non array OR empty array values
+				if(($exception_list && isset($exception_list[$key])) || !is_array($value) || (is_array($value) && sizeof($value) === 0))
 					$updated_flow_data[$key] = $flow_data[$key];
 
 				else {
@@ -74,25 +74,24 @@ class FlowService {
 					if (count(array_filter(array_keys($value), 'is_string')) === 0) {
 						// To check if an Indexed Array is further Nested or Not
 						foreach($value as $index_key => $index_value) {
-							// For Indexed Arrays having values as an Associative Array
+							// For Indexed Arrays having values as Non Associative Array
 							if(!is_array($index_value)) { 
 								if(isset($flow_data[$key]))
-									$updated_flow_data[$key] = $flow_data[$key];
+									$updated_flow_data[$key] = $flow_data[$key]; 
 								else
 									$updated_flow_data[$key] = $value;
 							}
+							// For Indexed Arrays having values as an Associative Array
 							else {
 								if(!isset($flow_data[$key][$index_key]))
-									$flow_data[$key][$index_key] = $value;
-								$updated_flow_data[$key][$index_key] = array();
-								$updated_flow_data[$key][$index_key] = self::update_flow_data_recursive($index_value, $flow_data[$key][$index_key], $updated_flow_data[$key][$index_key]);
+									$updated_flow_data[$key][$index_key] = $index_value;
+								else
+									$updated_flow_data[$key][$index_key] = self::update_flow_data_recursive($index_value, $flow_data[$key][$index_key]);
 							}
 						}
 					}
-					else {
-						$updated_flow_data[$key] = array();
-						$updated_flow_data[$key] = self::update_flow_data_recursive($value, $flow_data[$key], $updated_flow_data[$key]);
-					}
+					else 
+						$updated_flow_data[$key] = self::update_flow_data_recursive($value, $flow_data[$key]);
 				}
 			}
 
@@ -106,20 +105,14 @@ class FlowService {
 	/*
 	 * function to update the Database recursively based on Values opted or entered by the User
 	 */	
-	private static function update_post_call_data_recursive(&$flow_data, &$params) {
+	private static function update_post_call_data_recursive(&$flow_data, $params) {
 		static $flag = '';
 		$exception_list = Flows::get_exception_list();
 
 		foreach ($flow_data as $key => $value)
 		{ 		
 			// Updates value entered by the user
-			if (array_key_exists($key, $params)){
-
-				// Accepts the value of Exception List keys as is from the database
-				if($exception_list && isset($exception_list[$key])) {
-					$flow_data[$key] = $params[$key];
-					continue;
-				}
+			if (array_key_exists($key, $params)){			
 
 				// Error thrown if the datatype of the parameter does not match
 				if(strcmp(gettype($value), gettype($params[$key])) != 0) {
@@ -127,7 +120,8 @@ class FlowService {
 					break;
 				}
 
-				elseif(!is_array($value)) 
+				// Accepts the value of Exception List keys as is from the database or has non-Array Values
+				if(($exception_list && isset($exception_list[$key])) || !is_array($value))
 					$flow_data[$key] = $params[$key];
 
 				else {
