@@ -41,8 +41,6 @@ class FlowService {
 				$updated_flow_data['updatedAt'] = strval($updated_flow_data['updatedAt']);
 		if(is_int($updated_flow_data['createdAt'])) 
 			$updated_flow_data['createdAt'] = strval($updated_flow_data['createdAt']);
-		if(is_int($updated_flow_data['data']['siteLogo'])) 
-			$updated_flow_data['data']['siteLogo'] = array($updated_flow_data['data']['siteLogo']);
 		return $updated_flow_data;
 	}
 
@@ -66,7 +64,7 @@ class FlowService {
 						unset($flow_data[$old_key]);
 					}	
 				}
-			}			
+			}
 
 			if(array_key_exists($key, $flow_data)) {
 
@@ -119,21 +117,27 @@ class FlowService {
 			// Updates value entered by the user
 			if (array_key_exists($key, $params)){			
 
+				// Accepts the value of Exception List keys as is from the database
+				if($exception_list && isset($exception_list[$key])) {
+					$flow_data[$key] = $params[$key];
+					continue;
+				}
+
 				// Error thrown if the datatype of the parameter does not match
 				if(strcmp(gettype($value), gettype($params[$key])) != 0) {
 					$flag = $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value);
 					break;
 				}
 
-				// Accepts the value of Exception List keys as is from the database or has non-Array Values
-				if(($exception_list && isset($exception_list[$key])) || !is_array($value))
+				// Accepts non-Array Values entered by the user
+				elseif(!is_array($value))
 					$flow_data[$key] = $params[$key];
 
 				else {
 					// To handle Indexed Arrays gracefully
 					if (count(array_filter(array_keys($params[$key]), 'is_string')) === 0 ) {
 						// If the Database value is empty or an indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
-						if(empty($value) || (count(array_filter(array_keys($value), 'is_string')) === 0))
+						if((sizeof($value) === 0) || (count(array_filter(array_keys($value), 'is_string')) === 0))
 							$flow_data[$key] = $params[$key];
 						else
 							$flow_data[$key] = $value;
