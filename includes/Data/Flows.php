@@ -11,9 +11,9 @@ final class Flows {
 		'isViewed'             => array(),
 
 		// The first time required criteria met (if any), mark GMT timestamp.
-		'isComplete'           => false,
+		'isComplete'           => 0,
 
-		'hasExited'            => false,
+		'hasExited'            => 0,
 
 		// If user navigates to another step, mark GMT timestamp.
 		'isSkipped'            => array(),
@@ -21,9 +21,9 @@ final class Flows {
 		// path identifier for the current step within a flow
 		'currentStep'          => '/step/wp-setup/get-started',
 
-		'createdAt'            => '',
+		'createdAt'            => 0,
 
-		'updatedAt'            => '',
+		'updatedAt'            => 0,
 
 		// to populate the step fields if a user is resuming a flow.
 		'data'                 => array(

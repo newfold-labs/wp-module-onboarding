@@ -116,7 +116,7 @@ class FlowController {
 			);
 		}
 
-		$flow_data['updatedAt'] = strval(time());
+		$flow_data['updatedAt'] = time();
 
 		// Update Blog Information from Basic Info
 		if ( ( ! empty( $flow_data['data']['blogName'] ) ) ) {

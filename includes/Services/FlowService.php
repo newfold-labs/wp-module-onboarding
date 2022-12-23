@@ -14,14 +14,13 @@ class FlowService {
 		}
 		$default_flow_data = self::get_default_flow_data();
 		$updated_flow_data = self::update_flow_data_recursive($default_flow_data, $flow_data);
-		$updated_flow_data = self::update_data_type($updated_flow_data);
 		return \update_option( Options::get_option_name( 'flow' ), $updated_flow_data );
     }
 
     public static function get_default_flow_data() {
 		// check if data is available in the database if not then fetch the default dataset
 		$flow_data              = Flows::get_data();
-		$flow_data['createdAt'] = strval(time());
+		$flow_data['createdAt'] = time();
 		// get current flow type
 		$flow_type = Data::current_flow();
 		// update default data if flow type is ecommerce
@@ -35,15 +34,6 @@ class FlowService {
 		return self::update_post_call_data_recursive($flow_data, $params);
 	}
 
-	private static function update_data_type($updated_flow_data) {
-		// To align the datatype of the respective values with the one set in the blueprint
-		if(is_int($updated_flow_data['updatedAt'])) 
-				$updated_flow_data['updatedAt'] = strval($updated_flow_data['updatedAt']);
-		if(is_int($updated_flow_data['createdAt'])) 
-			$updated_flow_data['createdAt'] = strval($updated_flow_data['createdAt']);
-		return $updated_flow_data;
-	}
-
 	/*
 	 * function to update the Flow Data (Blueprint) in an array recursively in comparison to Flows::get_data() (Database)
 	 */	
@@ -53,6 +43,12 @@ class FlowService {
 		$updated_flow_data = array();
 		foreach ($default_flow_data as $key => $value)
 		{ 
+			// To align the datatype of the respective values with the one set in the blueprint
+			if(strcmp(gettype($value), gettype($flow_data[$key])) != 0) {
+				$updated_flow_data[$key] = $value;
+				continue;
+			}
+
 			// Any Key renamed is updated in the database with NewKey and the value from the OldKey is retained or not based on retain_existing_value
 			if($flow_data_fixes) {
 				foreach ($flow_data_fixes as $old_key=>$new_val) {
