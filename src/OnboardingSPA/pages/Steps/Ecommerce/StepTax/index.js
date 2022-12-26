@@ -13,7 +13,7 @@ import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 import { store as nfdOnboardingStore } from '../../../../store';
 import content from '../content.json';
 import { useWPSettings } from '../useWPSettings';
-import RadioControlWithSkeleton from '../../../../components/RadioControlWithSkeleton';
+import { RadioCtrlStateHandler } from '../../../../components/RadioControl';
 
 function createReverseLookup(state) {
 	return (option) =>
@@ -103,12 +103,32 @@ const StepTax = () => {
 							question={__(content.question, 'wp-module-onboarding')}
 						/>
 					</div>
-					<RadioControlWithSkeleton
-						className={"nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-tax-step"}
-						watch={settings}
-						selected={tax?.option}
-						data={content.stepTaxOptions}
-						callback={(value) => selectOption(value)} />
+					<RadioCtrlStateHandler
+						watch={ settings }
+						data={ content.stepTaxOptions }
+					>
+						<RadioControl
+							className={
+								'nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-tax-step radio-control-main'
+							}
+							selected={ tax?.option }
+							options={ content.stepTaxOptions.map(
+								( option ) => {
+									return {
+										label: __(
+											option.content,
+											'wp-module-onboarding'
+										),
+										value: __(
+											option.value,
+											'wp-module-onboarding'
+										),
+									};
+								}
+							)}
+							onChange={( value ) => selectOption( value )}
+						/>
+					</RadioCtrlStateHandler>
 					<button
 						className='nfd-nav-card-button nfd-card-button'
 						disabled={settings === null || tax?.option === undefined}
