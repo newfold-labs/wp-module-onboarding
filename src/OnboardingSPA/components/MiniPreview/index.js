@@ -79,7 +79,6 @@ const MiniPreview = ({ title, desc, icon, socialData, isSocialFormOpen, setIsSoc
                     style={{ backgroundImage: socialInfo.image }} />
             )
         })
-        console.log(socialIconList);
         return socialIconList;
     }
     

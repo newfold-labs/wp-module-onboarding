@@ -1,7 +1,7 @@
 import { __, sprintf } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
+import { useState, useEffect, useRef } from '@wordpress/element';
 
 import content from './content.json';
 import TextInput from '../../../components/TextInput';
@@ -19,6 +19,7 @@ import { translations } from '../../../utils/locales/translations';
  * @return
  */
 const BasicInfoForm = () => {
+	const socialMediaRef = useRef(null);
 	const [ isError, setIsError ] = useState( false );
 	const [ flowData, setFlowData ] = useState();
 	const [ isLoaded, setisLoaded ] = useState( false );
@@ -64,6 +65,11 @@ const BasicInfoForm = () => {
 		};
 		return dataToSave;
 	}
+
+	useEffect(() => {
+		if(isSocialFormOpen) 
+			socialMediaRef.current.scrollIntoView();
+	}, [isSocialFormOpen]);
 
 	useEffect( () => {
 		async function getFlowData() {
@@ -184,7 +190,7 @@ const BasicInfoForm = () => {
 						textValue={ siteDesc }
 						textValueSetter={ setSiteDesc }
 					/>
-					<div>
+					<div ref={socialMediaRef}>
 						<SocialMediaForm
 							socialData={ socialData }
 							setSocialData={ setSocialData }
