@@ -34,18 +34,13 @@ const StepIntroPanel = lazy( () =>
 );
 
 const LearnMore = () => {
-	const { techSupportLink, fullServiceCreativeTeamLink } = useSelect(
-		( select ) => {
-			return {
-				techSupportLink:
-					select( nfdOnboardingStore ).getTechSupportUrl(),
-				fullServiceCreativeTeamLink:
-					select(
-						nfdOnboardingStore
-					).getfullServiceCreativeTeamUrl(),
-			};
-		}
-	);
+
+	const { techSupportLink, fullServiceCreativeTeamLink } = useSelect( ( select ) => {
+		return {
+			techSupportLink: select( nfdOnboardingStore ).getTechSupportUrl(),
+			fullServiceCreativeTeamLink: select( nfdOnboardingStore ).getfullServiceCreativeTeamUrl(),
+		};
+	} );
 
 	const content = getContents( techSupportLink, fullServiceCreativeTeamLink );
 
@@ -66,7 +61,7 @@ const LearnMore = () => {
 				<ButtonWhite
 					text={ content.help.fullService.text }
 					onClick={ () =>
-						window.open( content.help.fullService.link, '_blank' )
+						( window.open( content.help.fullService.link, '_blank') )
 					}
 				/>
 				<SupportLink

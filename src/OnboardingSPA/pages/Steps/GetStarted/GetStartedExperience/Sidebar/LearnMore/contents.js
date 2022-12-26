@@ -4,6 +4,7 @@ import { translations } from '../../../../../../utils/locales/translations';
 import { home } from '@wordpress/icons';
 
 const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
+
 	return {
 		introduction: {
 			heading: __( 'WordPress Experience', 'wp-module-onboarding' ),
@@ -23,7 +24,10 @@ const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 		information: {
 			headingWithDescriptions: [
 				{
-					heading: __( 'Why we ask', 'wp-module-onboarding' ),
+					heading: __(
+						'Why we ask',
+						'wp-module-onboarding'
+					),
 					description: __(
 						`We use this to help offer the best WordPress setup, features and suggestions for your site.`,
 						'wp-module-onboarding'
