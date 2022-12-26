@@ -1,8 +1,6 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
-use NewfoldLabs\WP\Module\Onboarding\Data\Data;
-use NewfoldLabs\WP\Module\Onboarding\Data\Flows;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;

@@ -81,12 +81,13 @@ class FlowService {
 									$updated_flow_data[$key] = $value;
 							}
 							// For Indexed Arrays having values as an Associative Array
-							else {
-								if(!isset($flow_data[$key][$index_key]))
-									$updated_flow_data[$key][$index_key] = $index_value;
-								else
-									$updated_flow_data[$key][$index_key] = self::update_flow_data_recursive($index_value, $flow_data[$key][$index_key]);
-							}
+							// Currently Blueprint has no such check, hence commenting the below condition check
+							// else {
+							// 	if(!isset($flow_data[$key][$index_key]))
+							// 		$updated_flow_data[$key][$index_key] = $index_value;
+							// 	else
+							// 		$updated_flow_data[$key][$index_key] = self::update_flow_data_recursive($index_value, $flow_data[$key][$index_key]);
+							// }
 						}
 					}
 					else 
@@ -105,7 +106,7 @@ class FlowService {
 	 * function to update the Database recursively based on Values opted or entered by the User
 	 */	
 	private static function update_post_call_data_recursive(&$flow_data, $params) {
-		static $flag = '';
+		static $mismatch_data_type = '';
 		$exception_list = Flows::get_exception_list();
 
 		foreach ($flow_data as $key => $value)
@@ -121,7 +122,7 @@ class FlowService {
 
 				// Error thrown if the datatype of the parameter does not match
 				if(strcmp(gettype($value), gettype($params[$key])) != 0) {
-					$flag = $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value);
+					$mismatch_data_type = $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value);
 					break;
 				}
 
@@ -139,10 +140,11 @@ class FlowService {
 							$flow_data[$key] = $value;
 						
 						// For Indexed Arrays having nested Associative Arrays
-						foreach($params[$key] as $index_key=>$index_value) {
-							if(is_array($index_value)) 
-								$flow_data[$key][$index_key] = self::update_post_call_data_recursive($value[$index_key], $index_value);
-						}
+						// Currently Database has no such check, hence commenting the below condition check
+						// foreach($params[$key] as $index_key=>$index_value) {
+						// 	if(is_array($index_value)) 
+						// 		$flow_data[$key][$index_key] = self::update_post_call_data_recursive($value[$index_key], $index_value);
+						// }
 					}
 
 					// To handle Associative Arrays gracefully
@@ -156,7 +158,7 @@ class FlowService {
 				$flow_data[$key] = $value;						
 		}
 
-		return (!empty($flag))? $flag : $flow_data;
+		return (!empty($mismatch_data_type))? $mismatch_data_type : $flow_data;
 	}
 
     /*
