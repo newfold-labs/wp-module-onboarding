@@ -70,16 +70,14 @@ const MiniPreview = ({ title, desc, icon, socialData, isSocialFormOpen, setIsSoc
     }
 
     function socialIconList() {
-        var socialIconList = []
-        socialDataset.map( (socialInfo) => {
-            socialIconList.push(
+        return socialDataset.map( (socialInfo) => {
+            return (
                 <div key={socialInfo.image} 
                     onClick={(e) => setIsSocialFormOpen(!isSocialFormOpen)}
                     className={`browser-content_social_icon ${socialInfo.url ? isValidUrl(socialInfo.url) || '--invalid-url' : '--no-url' }`} 
                     style={{ backgroundImage: socialInfo.image }} />
-            )
-        })
-        return socialIconList;
+                )
+            })
     }
     
     return (
