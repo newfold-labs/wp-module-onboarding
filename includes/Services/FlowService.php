@@ -174,13 +174,24 @@ class FlowService {
 			if(!isset($exception_list[$key]) && is_array($flow_data)) {
 
 				// Error if the key added by the user is not present in the database
-				if(!array_key_exists($key, $flow_data)) {
+				if(!array_key_exists($key, $flow_data))
 					$mismatch_key[]  = $header_key. " => " . $key;
-					continue;
-				}
+				
+				// To check sub-Arrays
+				elseif ( is_array( $value ) && !empty($value)) {
+					// For Indexed Arrays
+					if (count(array_filter(array_keys($value), 'is_string')) === 0) {
+						foreach($value as $index_key=>$index_value) {
+							// For Indexed Arrays having Associative Arrays as Values
+							if(is_array($index_value))
+								self::check_key_in_nested_array($value[$index_key], $flow_data[$key][$index_key], $key. " : " . $index_key);
+						}
+						continue;
+					}
 
-				// For Associative Arrays
-				self::check_key_in_nested_array($value, $flow_data[$key], $key);
+					// For Associative Arrays
+					self::check_key_in_nested_array($value, $flow_data[$key], $key);
+				}
 			}
 		}
 		return $mismatch_key;
