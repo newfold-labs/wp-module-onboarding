@@ -51,12 +51,11 @@ class FlowService {
 
 			// Any Key renamed is updated in the database with NewKey and the value from the OldKey is retained or not based on retain_existing_value
 			if($flow_data_fixes) {
-				foreach ($flow_data_fixes as $old_key=>$new_val) {
-					if (array_key_exists($old_key, $flow_data) && array_key_exists($new_val['new_key'], $default_flow_data)) {
-						if($new_val['retain_existing_value'])
-							$flow_data[$new_val['new_key']] = $flow_data[$old_key];
-						else
-							$flow_data[$new_val['new_key']] = $default_flow_data[$new_val['new_key']];
+				foreach ($flow_data_fixes as $old_key=>$replace_key) {
+					if (array_key_exists($old_key, $flow_data) && array_key_exists($replace_key['new_key'], $default_flow_data)) {
+						($replace_key['retain_existing_value'])?
+							$flow_data[$replace_key['new_key']] = $flow_data[$old_key]
+							: $flow_data[$replace_key['new_key']] = $default_flow_data[$replace_key['new_key']];
 						unset($flow_data[$old_key]);
 					}	
 				}
@@ -73,25 +72,16 @@ class FlowService {
 					if (count(array_filter(array_keys($value), 'is_string')) === 0) {
 						// To check if an Indexed Array is further Nested or Not
 						foreach($value as $index_key => $index_value) {
-							// For Indexed Arrays having values as Non Associative Array
-							if(!is_array($index_value)) { 
-								if(isset($flow_data[$key]))
-									$updated_flow_data[$key] = $flow_data[$key]; 
-								else
-									$updated_flow_data[$key] = $value;
-							}
-							// For Indexed Arrays having values as an Associative Array
-							// Currently Blueprint has no such check, hence commenting the below condition check
-							// else {
-							// 	if(!isset($flow_data[$key][$index_key]))
-							// 		$updated_flow_data[$key][$index_key] = $index_value;
-							// 	else
-							// 		$updated_flow_data[$key][$index_key] = self::update_flow_data_recursive($index_value, $flow_data[$key][$index_key]);
-							// }
+							// For Indexed Arrays having Non Associative Array Values
+							(!is_array($index_value) && isset($flow_data[$key]))? 
+								$updated_flow_data[$key] = $flow_data[$key] 
+								: $updated_flow_data[$key] = $value;
 						}
-					}
-					else 
-						$updated_flow_data[$key] = self::update_flow_data_recursive($value, $flow_data[$key]);
+						continue;
+					} 
+
+					// To handle Associative Arrays gracefully
+					$updated_flow_data[$key] = self::update_flow_data_recursive($value, $flow_data[$key]);
 				}
 			}
 
@@ -134,22 +124,14 @@ class FlowService {
 					// To handle Indexed Arrays gracefully
 					if (count(array_filter(array_keys($params[$key]), 'is_string')) === 0 ) {
 						// If the Database value is empty or an indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
-						if((sizeof($value) === 0) || (count(array_filter(array_keys($value), 'is_string')) === 0))
-							$flow_data[$key] = $params[$key];
-						else
-							$flow_data[$key] = $value;
-						
-						// For Indexed Arrays having nested Associative Arrays
-						// Currently Database has no such check, hence commenting the below condition check
-						// foreach($params[$key] as $index_key=>$index_value) {
-						// 	if(is_array($index_value)) 
-						// 		$flow_data[$key][$index_key] = self::update_post_call_data_recursive($value[$index_key], $index_value);
-						// }
+						((sizeof($value) === 0) || (count(array_filter(array_keys($value), 'is_string')) === 0))?
+							$flow_data[$key] = $params[$key]
+							: $flow_data[$key] = $value;
+						continue;
 					}
 
 					// To handle Associative Arrays gracefully
-					else 
-						$flow_data[$key] = self::update_post_call_data_recursive($value, $params[$key]);
+					$flow_data[$key] = self::update_post_call_data_recursive($value, $params[$key]);
 				}	
 			}
 
@@ -190,22 +172,17 @@ class FlowService {
 		$exception_list = Flows::get_exception_list();
 		foreach($params as $key => $value){
 			if(!isset($exception_list[$key]) && is_array($flow_data)) {
-				if(!array_key_exists($key, $flow_data))
+
+				// Error if the key added by the user is not present in the database
+				if(!array_key_exists($key, $flow_data)) {
 					$mismatch_key[]  = $header_key. " => " . $key;
-				elseif ( is_array( $value ) && !empty($value)) {
-					if (count(array_filter(array_keys($value), 'is_string')) === 0) {
-						foreach($value as $index_key=>$index_value) {
-							if(is_array($index_value))
-								self::check_key_in_nested_array($value[$index_key], $flow_data[$key][$index_key], $key. " : " . $index_key);
-							else
-								continue;
-						}
-					}
-					else
-						self::check_key_in_nested_array($value, $flow_data[$key], $key);
+					continue;
 				}
+
+				// For Associative Arrays
+				self::check_key_in_nested_array($value, $flow_data[$key], $key);
 			}
 		}
-		return implode(", ", $mismatch_key);
+		return $mismatch_key;
 	}
 }
