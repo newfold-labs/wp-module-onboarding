@@ -104,11 +104,10 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials, isSocia
             }
         }
 
-        setDataAndActiveErrorState( data, activeError);        
+        setDataAndActiveErrorState(data, socialInput, activeError);        
     }
 
-    const setDataAndActiveErrorState = (data, activeError) => {
-
+    const setDataAndActiveErrorState = (data, socialInput, activeError) => {
         if (!data){
             var activeErrorFiltered = activeError.filter(function (item) {
                 return item !== socialInput
