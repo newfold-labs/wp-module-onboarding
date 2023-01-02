@@ -13,7 +13,7 @@ import { RadioControl } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-import { RadioCtrlStateHandler } from '../../../../components/RadioControl';
+import { RadioControlStateHandler } from '../../../../components/RadioControl';
 
 /**
  * Get Started: WordPress Experience Comfort Level.
@@ -81,9 +81,9 @@ const GetStartedExperience = () => {
 							question={ currentStep.subheading }
 						/>
 					</div>
-					<RadioCtrlStateHandler
+					<RadioControlStateHandler
 						watch={ wpComfortLevel }
-						data={ content.options }
+						options={ content.options }
 					>
 						<RadioControl
 							className={
@@ -106,7 +106,7 @@ const GetStartedExperience = () => {
 							)}
 							onChange={( value ) => setWpComfortLevel( value )}
 						/>
-					</RadioCtrlStateHandler>
+					</RadioControlStateHandler>
 					<NavCardButton
 						text={ __(
 							content.buttonText,

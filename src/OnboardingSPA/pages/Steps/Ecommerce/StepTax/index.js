@@ -13,7 +13,7 @@ import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 import { store as nfdOnboardingStore } from '../../../../store';
 import content from '../content.json';
 import { useWPSettings } from '../useWPSettings';
-import { RadioCtrlStateHandler } from '../../../../components/RadioControl';
+import { RadioControlStateHandler } from '../../../../components/RadioControl';
 
 function createReverseLookup(state) {
 	return (option) =>
@@ -103,9 +103,9 @@ const StepTax = () => {
 							question={__(content.question, 'wp-module-onboarding')}
 						/>
 					</div>
-					<RadioCtrlStateHandler
+					<RadioControlStateHandler
 						watch={ settings }
-						data={ content.stepTaxOptions }
+						options={ content.stepTaxOptions }
 					>
 						<RadioControl
 							className={
@@ -128,7 +128,7 @@ const StepTax = () => {
 							)}
 							onChange={( value ) => selectOption( value )}
 						/>
-					</RadioCtrlStateHandler>
+					</RadioControlStateHandler>
 					<button
 						className='nfd-nav-card-button nfd-card-button'
 						disabled={settings === null || tax?.option === undefined}
