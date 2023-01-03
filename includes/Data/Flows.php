@@ -146,15 +146,15 @@ final class Flows {
 	/**
 	  * Has all the Flow Key parameters to be updated for the user in Key-Value pair.
 	  *
-	  * - OldKey is the existing key in $data which is to be renamed
-	  * - new_key is the key of $fixes Array having the value NewKey, which is the key to be replaced in the database 
-	  *   and also to be manually entered in the blueprint ,$data, instead of the OldKey 
-	  * - retain_existing_value (Boolean): true if the value in the DB for the old_key is to be retained,
-	  *   false if the new_key is to have the new_value and discard the value set in the DB for old_key 
+	  * - the value of old_key i.e OldKey is the key name in the option that has been modified to NewKey in the blueprint
+	  * - the value of new_key i.e NewKey is the key name that is be replaced in the option
+	  * - OldKey should also be manually updated to the NewKey in the blueprint
+	  * - retain_existing_value (Boolean): true if the value in the option for the OldKey is to be retained,
+	  *   false if the NewKey is to have the default value that is set in the blueprint and discard the value set in the option for OldKey 
 	  * @return array
 	  */
-	  protected static $fixes = array(
-		// 'OldKey' => array( 'new_key' => 'NewKey', 'retain_existing_value' => true/false )
+	protected static $fixes = array(
+		// array( 'old_key' => 'OldKey', 'new_key' => 'NewKey', 'retain_existing_value' => true/false ),
 	);
 
 	/**
@@ -179,7 +179,7 @@ final class Flows {
 	  *
 	  * @return array
 	  */
-	  public static function get_exception_list() {
+	public static function get_exception_list() {
 		return self::$exception_list;
 	}
 
