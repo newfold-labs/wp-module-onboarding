@@ -9,7 +9,7 @@ import { translations } from '../../utils/locales/translations';
  *
  * @returns
  */
-const MiniPreview = ({ title, desc, icon, socialData }) => {
+const MiniPreview = ({ title, desc, icon, socialData, isSocialFormOpen, setIsSocialFormOpen }) => {
     
     var iconPreview = icon == "" || icon == undefined ? content.icon : icon;
     var titlePreview = title == "" ? sprintf(__(content.title, 'wp-module-onboarding'), translations('Site')) : title;
@@ -70,13 +70,14 @@ const MiniPreview = ({ title, desc, icon, socialData }) => {
     }
 
     function socialIconList() {
-        var socialIconList = []
-        socialDataset.map( (socialInfo) => {
-                !socialInfo.url ||
-                socialIconList.push(
-                    <div key={socialInfo.image} className={`browser-content_social_icon ${isValidUrl(socialInfo.url) || 'invalid-url' }`} style={{ backgroundImage: socialInfo.image }} />)
-        })
-        return socialIconList;
+        return socialDataset.map( (socialInfo) => {
+            return (
+                <div key={socialInfo.image} 
+                    onClick={(e) => setIsSocialFormOpen(!isSocialFormOpen)}
+                    className={`browser-content_social_icon ${socialInfo.url ? isValidUrl(socialInfo.url) || '--invalid-url' : '--no-url' }`} 
+                    style={{ backgroundImage: socialInfo.image }} />
+                )
+            })
     }
     
     return (
