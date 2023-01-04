@@ -148,9 +148,8 @@ const StepAddress = () => {
 									'wp-module-onboarding'
 								)}
 							/>
-							{settings === null && <p>Loading your details...</p>}
 						</div>
-						<div className='store-address-form'>
+							<div className={`store-address-form ${settings ? 'store-address-form--visible' : 'store-address-form--blank'}`}>
 							<div data-name='country'>
 								<label aria-required>
 									{__('Where is your store based?', 'wp-module-onboarding')}

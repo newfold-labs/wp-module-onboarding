@@ -101,6 +101,14 @@
 				width: 100%;
 			}
 		}
+
+		&--visible {
+			animation: fadeIn 500ms ease-in;
+		}
+
+		&--blank {
+			opacity: 0;
+		}
 	}
 }
 
