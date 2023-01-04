@@ -48,7 +48,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 					justify-content: center;
 
 					&__dot {
-                        background-color: #989EA7;
+						background-color: #989ea7;
 						width: 8px;
 						margin: 3px;
 						height: 8px;
@@ -125,7 +125,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 					}
 
 					&:hover {
-						cursor: pointer;
+						cursor: zoom-in;
 						opacity: 0.74;
 					}
 				}
