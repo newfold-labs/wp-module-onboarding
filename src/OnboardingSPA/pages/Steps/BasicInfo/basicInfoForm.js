@@ -13,6 +13,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import ImageUploader from '../../../components/ImageUploader';
 import SocialMediaForm from '../../../components/SocialMediaForm';
 import { translations } from '../../../utils/locales/translations';
+import { isArray } from 'lodash';
 
 /**
  * Basic Info Form.
@@ -124,9 +125,15 @@ const BasicInfoForm = () => {
 	}, [ debouncedFlowData ] );
 
 	return (
-		<StepStateHandler watch={isLoaded}>
+		<StepStateHandler
+			watch={
+				typeof flowData === 'object' && typeof socialData === 'object'
+			}
+		>
 			<div className={ 'basic-info' }>
-				<div className={ `${ isError ? 'error__show' : 'error__hide' }` }>
+				<div
+					className={ `${ isError ? 'error__show' : 'error__hide' }` }
+				>
 					{ __( content.error.title, 'wp-module-onboarding' ) }
 				</div>
 				<div className="basic-info-form">
@@ -168,7 +175,10 @@ const BasicInfoForm = () => {
 								translations( 'Site' )
 							) }
 							hint={ sprintf(
-								__( content.siteDesc.hint, 'wp-module-onboarding' ),
+								__(
+									content.siteDesc.hint,
+									'wp-module-onboarding'
+								),
 								translations( 'site' )
 							) }
 							placeholder={ sprintf(
