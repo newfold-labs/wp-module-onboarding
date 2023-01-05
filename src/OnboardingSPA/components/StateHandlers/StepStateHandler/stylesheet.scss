@@ -1,0 +1,12 @@
+.step-state-handler {
+    
+    &--blank {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    &--visible {
+       animation: fadeInWithDisabledClicks 500ms ease-in;
+    }
+    
+}
