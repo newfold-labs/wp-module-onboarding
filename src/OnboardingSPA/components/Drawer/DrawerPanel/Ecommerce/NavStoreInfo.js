@@ -23,7 +23,7 @@ const NavStoreInfo = () => {
 				icon={ chevronLeft }
 				onClick={ () => setDrawerActiveView( VIEW_NAV_PRIMARY ) }
 			>
-				{ __( 'Site Setup', 'wp-module-onboarding' ) }
+				{ __( 'Onboarding Menu', 'wp-module-onboarding' ) }
 			</Button>
 			<div className="nfd-onboarding-drawer__panel-menu">
 				<ul className="nfd-onboarding-drawer__panel-routes">

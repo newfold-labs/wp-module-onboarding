@@ -13,12 +13,14 @@ final class RestApi {
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\PluginsController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeVariationsController',
 		'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ApprovedThemesController',
-		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\PatternsController',
+		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\Themes\\PatternsController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\FlowController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SettingsController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\EventsController',
-		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\PagesController',
+		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SitePagesController',
 		'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeInstallerController',
+		'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeFontsController',
+		'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeColorsController'
 	);
 
 	public function __construct() {

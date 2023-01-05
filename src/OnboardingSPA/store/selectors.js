@@ -27,8 +27,12 @@ export function isDrawerOpened( state ) {
  * @param {*} state
  * @return boolean
  */
- export function isDrawerSuppressed( state ) {
+export function isDrawerSuppressed( state ) {
 	return state.drawer.isSuppressed;
+}
+
+export function isHeaderNavigationEnabled( state ) {
+	return state.header.isNavigationEnabled;
 }
 
 /**
@@ -59,7 +63,11 @@ export function getNewfoldBrandName( state ) {
  */
 export function getHireExpertsUrl( state ) {
 	const hireExpertsInfo = state.runtime.currentBrand.hireExpertsInfo;
-	const hireExpertsUrl = addQueryArgs(hireExpertsInfo?.defaultLink, hireExpertsInfo?.queryParameters) + (hireExpertsInfo?.fragment || '') ;
+	const hireExpertsUrl =
+		addQueryArgs(
+			hireExpertsInfo?.defaultLink,
+			hireExpertsInfo?.queryParameters
+		) + ( hireExpertsInfo?.fragment || '' );
 	return hireExpertsUrl;
 }
 
@@ -81,6 +89,14 @@ export function getCurrentOnboardingData( state ) {
  */
 export function getOnboardingFlow( state ) {
 	return state.runtime.currentFlow ?? 'wp-setup';
+}
+
+export function getRoutes( state ) {
+	return state.flow.steps.routes;
+}
+
+export function getAllSteps( state ) {
+	return state.flow.steps.allSteps;
 }
 
 /**
@@ -157,6 +173,11 @@ export function getCurrentStep( state ) {
 	return filtered[ 0 ];
 }
 
+export function getStepFromPath( state, path ) {
+	const filtered = filter( state.flow.steps.allSteps, [ 'path', path ] );
+	return filtered[ 0 ];
+}
+
 /**
  * Get's the previous step's object.
  *
@@ -209,9 +230,93 @@ export function getSidebars( state ) {
 }
 
 export function getPreviewSettings( state ) {
-	return state.runtime.previewSettings;
+	return state.runtime.previewSettings.settings;
+}
+
+export function getSettings( state ) {
+	return state.settings;
+}
+
+export function getThemeStatus( state ) {
+	return state.settings.themeStatus;
+}
+
+export function getPluginsStatus( state ) {
+	return state.settings.pluginsStatus;
 }
 
 export function getStoreInfoSteps( state ) {
 	return state.flow.steps.storeInfoSteps;
+}
+
+export function getStepPreviewData( state ) {
+	return state.runtime.previewSettings.stepPreviewData;
+}
+
+/**
+ * Gets the current header menu Data
+ *
+ * @param {*} state
+ * @return string
+ */
+export function getHeaderMenuData( state ) {
+	return state.header.menu;
+}
+
+/**
+ * Gets 1-1 Experts URL for Help Section in the Sidebars
+ *
+ * @param {*} state
+ * @return string
+ */
+ export function getExpertsUrl( state ) {
+	const expertsInfo = state.runtime.currentBrand.expertsInfo;
+	const expertsUrl =
+		addQueryArgs(
+			expertsInfo?.defaultLink,
+			expertsInfo?.queryParams
+		) + ( expertsInfo?.fragment || '' );
+	return expertsUrl;
+}
+
+/**
+ * Gets Full Service Creative Team URL for Help Section in the Sidebars
+ *
+ * @param {*} state
+ * @return string
+ */
+ export function getfullServiceCreativeTeamUrl( state ) {
+	const fullServiceCreativeTeamInfo = state.runtime.currentBrand.fullServiceCreativeTeamInfo;
+	const fullServiceCreativeTeamUrl =
+		addQueryArgs(
+			fullServiceCreativeTeamInfo?.defaultLink,
+			fullServiceCreativeTeamInfo?.queryParams
+		) + ( fullServiceCreativeTeamInfo?.fragment || '' );
+	return fullServiceCreativeTeamUrl;
+}
+
+/**
+ * Gets Technical Support URL for Help Section in the Sidebars
+ *
+ * @param {*} state
+ * @return string
+ */
+ export function getTechSupportUrl( state ) {
+	const techSupportInfo = state.runtime.currentBrand.techSupportInfo;
+	const techSupportUrl =
+		addQueryArgs(
+			techSupportInfo?.defaultLink,
+			techSupportInfo?.queryParams
+		) + ( techSupportInfo?.fragment || '' );
+	return techSupportUrl;
+ }
+
+/**
+ * Gets the Plugin Install Hash for security
+ *
+ * @param {*} state
+ * @return string
+ */
+export function getPluginInstallHash( state ) {
+	return state.runtime.pluginInstallHash;
 }

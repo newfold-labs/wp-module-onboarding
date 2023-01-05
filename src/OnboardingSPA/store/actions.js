@@ -12,6 +12,7 @@ export function setRuntime( runtime ) {
 		siteUrl: runtime.siteUrl,
 		migrated: true,
 		currentFlow: runtime.currentFlow ?? 'wp-setup',
+		stepPreviewData: runtime.previewSettings.stepPreviewData,
 	};
 	return {
 		type: 'SET_RUNTIME',
@@ -84,7 +85,7 @@ export function setActiveFlow( flow ) {
  */
 export function setActiveStep( path ) {
 	// Remove Trailing Spaces from URL
-	path = path.replace(/\/$/, "");
+	path = path.replace( /\/$/, '' );
 
 	return {
 		type: 'SET_ACTIVE_STEP',
@@ -96,9 +97,9 @@ export function setActiveStep( path ) {
  * Accepts a JSON to set the current data.
  *
  * @param {*} currentData
- * @returns
+ * @return
  */
-export function setCurrentOnboardingData(currentData) {
+export function setCurrentOnboardingData( currentData ) {
 	return {
 		type: 'SET_CURRENT_DATA',
 		currentData,
@@ -118,6 +119,20 @@ export function updateSettings( settings ) {
 	};
 }
 
+export function updateThemeStatus( themeStatus ) {
+	return {
+		type: 'UPDATE_THEME_STATUS',
+		themeStatus,
+	};
+}
+
+export function updatePluginsStatus( pluginsStatus ) {
+	return {
+		type: 'UPDATE_PLUGINS_STATUS',
+		pluginsStatus,
+	};
+}
+
 export function setIsSidebarOpened( isOpen ) {
 	return {
 		type: 'SET_SIDEBAR_OPENED',
@@ -132,9 +147,44 @@ export function setSidebarActiveView( view ) {
 	};
 }
 
+export function setIsHeaderNavigationEnabled( isNavigationEnabled ) {
+	return {
+		type: 'SET_HEADER_NAVIGATION_ENABLED',
+		isNavigationEnabled,
+	};
+}
+
 export function updatePreviewSettings( previewSettings ) {
 	return {
 		type: 'SET_PREVIEW_SETTINGS',
 		previewSettings,
+	};
+}
+
+export function updateRoutes( routes ) {
+	return {
+		type: 'UPDATE_ROUTES',
+		routes,
+	};
+}
+
+export function updateAllSteps( allSteps ) {
+	return {
+		type: 'UPDATE_ALL_STEPS',
+		allSteps,
+	};
+}
+
+export function updateDesignSteps( designSteps ) {
+	return {
+		type: 'UPDATE_DESIGN_STEPS',
+		designSteps,
+	};
+}
+
+export function setHeaderMenuData( menu ) {
+	return {
+		type: 'UPDATE_HEADER_MENU_DATA',
+		menu,
 	};
 }

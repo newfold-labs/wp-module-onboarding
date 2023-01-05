@@ -1,43 +1,98 @@
-import CommonLayout from '../../../components/Layouts/Common';
-import { VIEW_DESIGN_COLORS } from '../../../../constants';
+import { useLocation } from 'react-router-dom';
+import { useViewportMatch } from '@wordpress/compose';
+import { useState, useEffect } from '@wordpress/element';
+import { useSelect, useDispatch } from '@wordpress/data';
+
+import { getPatterns } from '../../../utils/api/patterns';
 import { store as nfdOnboardingStore } from '../../../store';
-import { useDispatch } from '@wordpress/data';
-import { useEffect } from '@wordpress/element';
-import LivePreview from '../../../components/LivePreview';
+import CommonLayout from '../../../components/Layouts/Common';
+import { DesignStateHandler } from '../../../components/StateHandlers';
+import {
+	LivePreview,
+	GlobalStylesProvider,
+} from '../../../components/LivePreview';
+import {
+	SIDEBAR_LEARN_MORE,
+	THEME_STATUS_NOT_ACTIVE,
+	VIEW_DESIGN_COLORS,
+} from '../../../../constants';
 
 const StepDesignColors = () => {
-	const { setDrawerActiveView, setIsDrawerOpened, setIsSidebarOpened } =
-		useDispatch( nfdOnboardingStore );
+	const location = useLocation();
+	const [ isLoaded, setIsLoaded ] = useState( false );
+	const [ pattern, setPattern ] = useState();
 
-	// [TODO] Once design is finalized replace this with block grammer from API's/files.
-	const blockGrammer = `<!-- wp:group {"align":"full","layout":{"inherit":true}} -->
-     <div class="wp-block-group alignfull"><!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"bottom":"var(--wp--custom--spacing--large, 8rem)","top":"var(--wp--custom--spacing--small, 1.25rem)"}}},"layout":{"type":"flex","justifyContent":"space-between"}} -->
-     <div class="wp-block-group alignwide" style="padding-top:var(--wp--custom--spacing--small, 1.25rem);padding-bottom:var(--wp--custom--spacing--large, 8rem)"><!-- wp:group {"layout":{"type":"flex"}} -->
-     <div class="wp-block-group">
-     <!-- wp:site-logo {"width":64} /-->
+	const isLargeViewport = useViewportMatch( 'medium' );
+	const { currentStep } = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getStepFromPath(
+				location.pathname
+			),
+		};
+	}, [] );
 
-     <!-- wp:site-title {"style":{"typography":{"fontStyle":"italic","fontWeight":"400"}}} /--></div>
-     <!-- /wp:group -->
-
-     <!-- wp:navigation {"layout":{"type":"flex","setCascadingProperties":true,"justifyContent":"right"}} -->
-     <!-- wp:page-list {"isNavigationChild":true,"showSubmenuIcon":true,"openSubmenusOnClick":false} /-->
-     <!-- /wp:navigation --></div>
-     <!-- /wp:group --></div>
-     <!-- /wp:group -->`;
+	const {
+		setDrawerActiveView,
+		setIsDrawerOpened,
+		setSidebarActiveView,
+		setIsDrawerSuppressed,
+		setIsHeaderNavigationEnabled,
+		updateThemeStatus,
+	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		setIsSidebarOpened( false );
-		setIsDrawerOpened( true );
+		if ( isLargeViewport ) {
+			setIsDrawerOpened( true );
+		}
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
+		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_COLORS );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
+
+	const getStylesAndPatterns = async () => {
+		const pattern = await getPatterns( currentStep.patternId, true );
+		if ( pattern?.error ) {
+			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+		}
+		setPattern( pattern?.body );
+		setIsLoaded( true );
+	};
+
+	useEffect( () => {
+		if ( ! isLoaded ) getStylesAndPatterns();
+	}, [ isLoaded ] );
+
 	return (
-		<CommonLayout>
-			<LivePreview
-				blockGrammer={ blockGrammer }
-				styling={ 'custom' }
-				viewportWidth={ 1300 }
-			/>
-		</CommonLayout>
+		<DesignStateHandler>
+			<GlobalStylesProvider>
+				<CommonLayout className="theme-colors-preview">
+					<div className="theme-colors-preview__title-bar">
+						<div className="theme-colors-preview__title-bar__browser">
+							<span className="theme-colors-preview__title-bar__browser__dot"></span>
+							<span className="theme-colors-preview__title-bar__browser__dot"></span>
+							<span className="theme-colors-preview__title-bar__browser__dot"></span>
+						</div>
+					</div>
+					<div className="theme-colors-preview__live-preview-container">
+						{ ! pattern && (
+							<LivePreview
+								blockGrammer={ '' }
+								styling={ 'custom' }
+								viewportWidth={ 1300 }
+							/>
+						) }
+						{ pattern && (
+							<LivePreview
+								blockGrammer={ pattern }
+								styling={ 'custom' }
+								viewportWidth={ 1300 }
+							/>
+						) }
+					</div>
+				</CommonLayout>
+			</GlobalStylesProvider>
+		</DesignStateHandler>
 	);
 };
 

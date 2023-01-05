@@ -1,7 +1,9 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi\Themes;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Patterns;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 /**
  * Class ThemeVariationsController
@@ -20,7 +22,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	 *
 	 * @var string
 	 */
-	protected $rest_base = 'themes';
+	protected $rest_base = '/themes';
 
 
 	/**
@@ -28,7 +30,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	 *
 	 * @var string
 	 */
-	protected $rest_extended_base = 'variations';
+	protected $rest_extended_base = '/variations';
 
 	/**
 	 * Registers routes for ThemeVariationsController
@@ -36,152 +38,133 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	public function register_routes() {
 		\register_rest_route(
 			$this->namespace,
-			'/' . $this->rest_base . '/' . $this->rest_extended_base,
+			$this->rest_base . $this->rest_extended_base,
 			array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
+					'args'                => $this->get_pattern_args(),
 					'callback'            => array( $this, 'get_theme_variations' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-					'args'                => $this->get_request_params(),
+				),
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'args'                => $this->set_pattern_args(),
+					'callback'            => array( $this, 'set_theme_variation' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
 		);
 	}
 
+	public function get_pattern_args() {
+		// These variable return the orginal numerous variations if true
+		// Else sends the recently saved theme settings in db
+		  return array(
+			  'variations' => array(
+				  'type'    => 'boolean',
+				  'default' => false,
+			  ),
+		  );
+	}
+
+	public function set_pattern_args() {
+		// This is the latest modified Global Style to be saved in the db
+		 return array(
+			 'title'    => array(
+				 'type'     => 'string',
+				 'required' => true,
+			 ),
+			 'settings' => array(
+				 'type'     => 'object',
+				 'required' => true,
+			 ),
+		 );
+	}
+
+	private static function translate( $theme_json, $domain = 'default' ) {
+			$i18n_schema = wp_json_file_decode( __DIR__ . '/theme-i18n.json' );
+
+		return translate_settings_using_i18n_schema( $i18n_schema, $theme_json, $domain );
+	}
+
+	private static function get_style_variations() {
+		$variations     = array();
+		$base_directory = get_stylesheet_directory() . '/styles';
+		if ( is_dir( $base_directory ) ) {
+			$nested_files      = new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator( $base_directory ) );
+			$nested_html_files = iterator_to_array( new \RegexIterator( $nested_files, '/^.+\.json$/i', \RecursiveRegexIterator::GET_MATCH ) );
+			ksort( $nested_html_files );
+			foreach ( $nested_html_files as $path => $file ) {
+				$decoded_file = wp_json_file_decode( $path, array( 'associative' => true ) );
+				if ( is_array( $decoded_file ) ) {
+					$translated = self::translate( $decoded_file, wp_get_theme()->get( 'TextDomain' ) );
+					$variation  = ( new \WP_Theme_JSON( $translated ) )->get_data();
+					if ( empty( $variation['title'] ) ) {
+						$variation['title'] = basename( $path, '.json' );
+					}
+					$variations[] = $variation;
+				}
+			}
+		}
+		return $variations;
+	}
+
 	/**
-	 * Retrieves the themes variations.
+	 * Retrieves the active themes variations.
+	 *
+	 * @return \array|\WP_Error
+	 */
+	public function get_theme_variations( \WP_REST_Request $request ) {
+
+		$default = $request->get_param( 'variations' );
+
+		// If there exists an old Custom Theme then return that
+		if ( false === $default && false !== \get_option( Options::get_option_name( 'theme_settings' ) ) ) {
+			return array(
+				\get_option( Options::get_option_name( 'theme_settings' ) ),
+			);
+		}
+
+		$active_variation              = \WP_Theme_JSON_Resolver::get_theme_data()->get_data();
+		$active_variation_global_style = array(
+			'id'       => 0,
+			'title'    => 'Default',
+			'version'  => $active_variation['version'],
+			'settings' => $active_variation['settings'],
+			'styles'   => $active_variation['styles'],
+		);
+
+		return array_merge(
+			array( $active_variation_global_style ),
+			self::get_style_variations(),
+		);
+	}
+
+	/**
+	 * Saves the custom active theme variations.
 	 *
 	 * @return \WP_REST_Response|\WP_Error
 	 */
-	public function get_theme_variations( \WP_REST_Request $request ) {
-		$theme = $request->get_param( 'theme' );
+	public function set_theme_variation( \WP_REST_Request $request ) {
+		// The theme data with the new Colors and Fonts
+		$theme_data = json_decode( $request->get_body(), true );
 
-		$default_variation = $this->get_default_theme_variation( $theme );
-		if ( is_wp_error( $default_variation ) ) {
-			return $default_variation;
-		}
+		if ( $theme_data ) {
 
-		$other_variations = $this->get_other_theme_variations( $theme );
-		if ( is_wp_error( $other_variations ) ) {
-			return $other_variations;
-		}
+			// Save the new Theme style into the db
+			\update_option( Options::get_option_name( 'theme_settings' ), $theme_data );
 
-		array_push( $other_variations, $default_variation );
-
-		return $other_variations;
-	}
-
-	/**
-	 * Retrieves the default theme variation.
-	 *
-	 * @return array|\WP_Error
-	 */
-	public function get_default_theme_variation( $theme ) {
-		$request = new \WP_REST_Request(
-			'GET',
-			'/wp/v2/global-styles/themes/' . $theme
-		);
-
-		$response = \rest_do_request( $request );
-		if ( 200 === $response->status ) {
-			$themes_data       = json_decode( wp_json_encode( $response->data ), true );
-			$default_variation = array(
-				'title'      => 'default',
-				'palette'    => $themes_data['settings']['color']['palette']['theme'],
-				'screenshot' => $this->get_theme_default_screenshot( $theme ),
+			return new \WP_REST_Response(
+				$theme_data,
+				200
 			);
-
-			return $default_variation;
 		}
 
 		return new \WP_Error(
-			$response->status,
-			'Failed to fetch theme data.'
+			500,
+			'Missing important parameters',
+			'Settings parameter is found to be missing'
 		);
 	}
 
-	/**
-	 * Retrieves the non default theme variations.
-	 *
-	 * @return array|\WP_Error
-	 */
-	public function get_other_theme_variations( $theme ) {
-		$request = new \WP_REST_Request(
-			'GET',
-			'/wp/v2/global-styles/themes/' . $theme . '/variations'
-		);
-
-		$response = \rest_do_request( $request );
-		if ( 200 === $response->status ) {
-			$themes_data = json_decode( wp_json_encode( $response->data ), true );
-			foreach ( $themes_data as $theme_data ) {
-				$theme_variations[] = array(
-					'title'      => $theme_data['title'],
-					'palette'    => $theme_data['settings']['color']['palette']['theme'],
-					'screenshot' => $this->get_theme_variation_screenshot( $theme, $theme_data['title'] ),
-				);
-			}
-
-			return $theme_variations ? $theme_variations : array();
-		}
-
-		return new \WP_Error(
-			$response->status,
-			'Failed to fetch theme variations'
-		);
-	}
-
-	/**
-	 * Retrieves default screenshot path for the specified theme.
-	 *
-	 * @return string|\WP_Error
-	 */
-	public function get_theme_default_screenshot( $theme ) {
-		$request = new \WP_REST_Request(
-			'GET',
-			'/wp/v2/themes'
-		);
-
-		$response = \rest_do_request( $request );
-		if ( 200 === $response->status ) {
-			$themes_data = json_decode( wp_json_encode( $response->data ), true );
-			foreach ( $themes_data as $theme_data ) {
-				if ( $theme === $theme_data['template'] ) {
-					return $theme_data['screenshot'] ? $theme_data['screenshot'] : '';
-				}
-			}
-			return '';
-		}
-
-		return new \WP_Error(
-			$response->status,
-			'Failed to fetch installed themes.'
-		);
-	}
-
-	/**
-	 * Retrieves the variation screenshot for the specified Theme.
-	 *
-	 * [TODO] Get the actual theme variation screenshot paths.
-	 *
-	 * @return string|\WP_Error
-	 */
-	public function get_theme_variation_screenshot( $theme, $variation_name ) {
-		return 'dummy/' . $theme . '/' . $variation_name . '.png';
-	}
-
-	/**
-	 * Get query params for the route.
-	 *
-	 * @return array
-	 */
-	public function get_request_params() {
-		return array(
-			'theme' => array(
-				'type'              => 'string',
-				'required'          => true,
-				'sanitize_callback' => 'sanitize_text_field',
-			),
-		);
-	}
 }

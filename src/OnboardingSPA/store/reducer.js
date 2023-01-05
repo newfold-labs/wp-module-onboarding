@@ -1,6 +1,11 @@
 import { combineReducers } from '@wordpress/data';
 
-import { VIEW_NAV_PRIMARY } from '../../constants';
+import {
+	VIEW_NAV_PRIMARY,
+	THEME_STATUS_INIT,
+	PLUGIN_STATUS_INIT,
+	ECOMMERCE_STEPS_PLUGIN,
+} from '../../constants';
 
 import {
 	routes as initialRoutes,
@@ -41,6 +46,30 @@ export function flow(
 				...state,
 				flow: action.flow,
 			};
+		case 'UPDATE_ROUTES':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					routes: action.routes,
+				},
+			};
+		case 'UPDATE_ALL_STEPS':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					allSteps: action.allSteps,
+				},
+			};
+		case 'UPDATE_DESIGN_STEPS':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					designSteps: action.designSteps,
+				},
+			};
 	}
 
 	return state;
@@ -65,7 +94,7 @@ export function drawer(
 			return {
 				...state,
 				isSuppressed: action.isSuppressed,
-				isOpen: action.isSuppressed? false : state.isOpen,
+				isOpen: action.isSuppressed ? false : state.isOpen,
 			};
 	}
 
@@ -107,6 +136,25 @@ export function sidebar(
 	return state;
 }
 
+export function header(
+	state = { isNavigationEnabled: true, menu: '' },
+	action
+) {
+	switch ( action.type ) {
+		case 'SET_HEADER_NAVIGATION_ENABLED':
+			return {
+				...state,
+				isNavigationEnabled: action.isNavigationEnabled,
+			};
+		case 'UPDATE_HEADER_MENU_DATA':
+			return {
+				...state,
+				menu: action.menu,
+			};
+	}
+	return state;
+}
+
 export function runtime( state = {}, action ) {
 	switch ( action.type ) {
 		case 'SET_RUNTIME':
@@ -117,19 +165,38 @@ export function runtime( state = {}, action ) {
 		case 'SET_PREVIEW_SETTINGS':
 			return {
 				...state,
-				previewSettings: action.previewSettings,
+				previewSettings: {
+					...state.previewSettings,
+					settings: action.previewSettings,
+				},
 			};
 	}
 
 	return state;
 }
 
-export function settings( state = {}, action ) {
+export function settings(
+	state = {
+		themeStatus: THEME_STATUS_INIT,
+		pluginsStatus: { [ ECOMMERCE_STEPS_PLUGIN ]: PLUGIN_STATUS_INIT },
+	},
+	action
+) {
 	switch ( action.type ) {
 		case 'UPDATE_SETTINGS':
 			return {
 				...state,
 				...action.settings,
+			};
+		case 'UPDATE_THEME_STATUS':
+			return {
+				...state,
+				themeStatus: action.themeStatus,
+			};
+		case 'UPDATE_PLUGINS_STATUS':
+			return {
+				...state,
+				pluginsStatus: action.pluginsStatus,
 			};
 	}
 
@@ -143,4 +210,5 @@ export default combineReducers( {
 	settings,
 	flow,
 	sidebar,
+	header,
 } );

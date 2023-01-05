@@ -1,5 +1,9 @@
+@import "./ButtonBlue/stylesheet";
+@import "./ButtonWhite/stylesheet";
+
 .nfd-card-button {
 	cursor: pointer;
+
 	&:disabled {
 		cursor: default;
 		opacity: 0.3;

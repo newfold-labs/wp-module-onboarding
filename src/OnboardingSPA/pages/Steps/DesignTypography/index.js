@@ -1,24 +1,101 @@
-import CommonLayout from '../../../components/Layouts/Common';
-import StepOverview from '../../../components/StepOverview';
-import { VIEW_DESIGN_TYPOGRAPHY } from '../../../../constants';
+import { useLocation } from 'react-router-dom';
+import { useViewportMatch } from '@wordpress/compose';
+import { useState, useEffect } from '@wordpress/element';
+import { useSelect, useDispatch } from '@wordpress/data';
+
+import { getPatterns } from '../../../utils/api/patterns';
 import { store as nfdOnboardingStore } from '../../../store';
-import { useDispatch } from '@wordpress/data';
-import { useEffect } from '@wordpress/element';
+import CommonLayout from '../../../components/Layouts/Common';
+import {
+	SIDEBAR_LEARN_MORE,
+	THEME_STATUS_NOT_ACTIVE,
+	VIEW_DESIGN_TYPOGRAPHY,
+} from '../../../../constants';
+import { DesignStateHandler } from '../../../components/StateHandlers';
+import {
+	LivePreview,
+	GlobalStylesProvider,
+} from '../../../components/LivePreview';
 
 const StepDesignTypography = () => {
-	const { setDrawerActiveView, setIsDrawerOpened, setIsSidebarOpened } =
-		useDispatch( nfdOnboardingStore );
+	const location = useLocation();
+	const [ pattern, setPattern ] = useState();
+	const [ isLoaded, setIsLoaded ] = useState( false );
 
-	useEffect( () => {
-		setIsSidebarOpened( false );
-		setIsDrawerOpened( true );
-		setDrawerActiveView( VIEW_DESIGN_TYPOGRAPHY );
+	const isLargeViewport = useViewportMatch( 'medium' );
+	const { currentStep } = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getStepFromPath(
+				location.pathname
+			),
+		};
 	}, [] );
 
+	const {
+		updateThemeStatus,
+		setDrawerActiveView,
+		setIsDrawerOpened,
+		setSidebarActiveView,
+		setIsDrawerSuppressed,
+		setIsHeaderNavigationEnabled
+	} = useDispatch( nfdOnboardingStore );
+
+	useEffect( () => {
+		if ( isLargeViewport ) {
+			setIsDrawerOpened( true );
+		}
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
+		setIsDrawerSuppressed( false );
+		setDrawerActiveView( VIEW_DESIGN_TYPOGRAPHY );
+		setIsHeaderNavigationEnabled( true );
+	}, [] );
+
+	const getFontPatterns = async () => {
+		const patternsResponse = await getPatterns(
+			currentStep.patternId,
+			true
+		);
+		if ( patternsResponse?.error ) {
+			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+		}
+		setPattern( patternsResponse?.body );
+		setIsLoaded( true );
+	};
+
+	useEffect( () => {
+		if ( ! isLoaded ) getFontPatterns();
+	}, [ isLoaded ] );
+
 	return (
-		<CommonLayout isCentered>
-			<StepOverview />
-		</CommonLayout>
+		<DesignStateHandler>
+			<GlobalStylesProvider>
+				<CommonLayout className="theme-fonts-preview">
+					<div className="theme-fonts-preview__title-bar">
+						<div className="theme-fonts-preview__title-bar__browser">
+							<span className="theme-fonts-preview__title-bar__browser__dot"></span>
+							<span className="theme-fonts-preview__title-bar__browser__dot"></span>
+							<span className="theme-fonts-preview__title-bar__browser__dot"></span>
+						</div>
+					</div>
+					<div className="theme-fonts-preview__live-preview-container">
+						{ !pattern && (
+							<LivePreview
+								blockGrammer={''}
+								styling={'custom'}
+								viewportWidth={1300}
+							/>
+						) }
+						{ pattern && (
+							<LivePreview
+								blockGrammer={ pattern }
+								styling={ 'custom' }
+								viewportWidth={ 1300 }
+							/>
+						) }
+					</div>
+				</CommonLayout>
+			</GlobalStylesProvider>
+		</DesignStateHandler>
 	);
 };
 

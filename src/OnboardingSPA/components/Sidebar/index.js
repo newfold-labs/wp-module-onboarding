@@ -31,7 +31,7 @@ const Sidebar = () => {
 			</Suspense>
 			<div
 				className={ classNames( 'nfd-onboarding-sidebar__panel', {
-					'is-open': isSidebarOpened,
+					'is-open': isSidebarOpened && sideBarView,
 				} ) }
 			>
 				<div className="nfd-onboarding-sidebar__panel-inner">

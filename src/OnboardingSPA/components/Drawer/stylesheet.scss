@@ -1,210 +1,681 @@
 .nfd-onboarding-drawer__toggle {
-    align-items: center;
-    background: var(--nfd-onboarding-drawer-bg);
-    border-radius: 0;
-    display: flex;
-    position: absolute;
-    z-index: z-index(".edit-site-navigation-toggle");
-    height: $header-height;
-    width: $header-height;
-    &-button {
-        align-items: center;
-        background: var(--nfd-onboarding-drawer-bg);
-        border-radius: 0;
-        color: var(--nfd-onboarding-drawer-fg);
-        height: $header-height + $border-width;
-        width: $header-height;
-        z-index: 1;
-        margin-bottom: - $border-width;
-        &.has-icon {
-            min-width: $header-height;
+	align-items: center;
+	background: var(--nfd-onboarding-drawer-bg);
+	border-radius: 0;
+	display: flex;
+	position: absolute;
+	z-index: z-index(".edit-site-navigation-toggle");
+	height: $header-height;
+	width: $header-height;
 
-            &:hover,
-            &:active {
-                color: var(--nfd-onboarding-drawer-fg);
-            }
+	&-button {
+		align-items: center;
+		background: var(--nfd-onboarding-drawer-bg);
+		border-radius: 0;
+		color: var(--nfd-onboarding-drawer-fg);
+		height: $header-height + $border-width;
+		width: $header-height;
+		z-index: 1;
+		margin-bottom: - $border-width;
 
-            &.is-suppressed{
-                cursor: default;
-            }
+		&.has-icon {
+			min-width: $header-height;
 
-            &:focus {
-                box-shadow: none;
-            }
+			&:hover,
+			&:active {
+				color: var(--nfd-onboarding-drawer-fg);
+			}
 
-            &::before {
-                transition: box-shadow 100ms ease;
-                @include reduce-motion("transition");
-                content: "";
-                display: block;
-                position: absolute;
-                top: 9px;
-                right: 9px;
-                bottom: 9px;
-                left: 9px;
-                border-radius: $radius-block-ui + $border-width + $border-width;
-                box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--nfd-onboarding-drawer-bg);
-            }
+			&.is-suppressed {
+				cursor: default;
+			}
 
-            &:hover::before {
-                box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) $gray-700;
-            }
+			&:focus {
+				box-shadow: none;
+			}
 
-            &:focus::before {
-                box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) rgba(var(--nfd-onboarding-drawer-fg), 0.1);
-            }
-        }
-    }
+			&::before {
+				transition: box-shadow 100ms ease;
+
+				@include reduce-motion("transition");
+				content: "";
+				display: block;
+				position: absolute;
+				top: 9px;
+				right: 9px;
+				bottom: 9px;
+				left: 9px;
+				border-radius: $radius-block-ui + $border-width + $border-width;
+				box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--nfd-onboarding-drawer-bg);
+			}
+
+			&:hover::before {
+				box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) $gray-700;
+			}
+
+			&:focus::before {
+				box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) rgba(var(--nfd-onboarding-drawer-fg), 0.1);
+			}
+		}
+	}
 }
 
 .nfd-onboarding-drawer__panel {
-    height: 100%;
-    position: relative;
-    width: 0;
-    overflow: hidden;
-    background: var(--nfd-onboarding-drawer-bg);
-    color: var(--nfd-onboarding-drawer-fg);
-    transition: width 100ms linear;
-    @include reduce-motion("transition");
+	height: 100%;
+	position: relative;
+	width: 0;
+	overflow: auto;
+	background: var(--nfd-onboarding-drawer-bg);
+	color: var(--nfd-onboarding-drawer-fg);
+	transition: width 100ms linear;
 
-    .interface-interface-skeleton.has-footer & {
-        @include break-medium() {
-            height: calc(100% - #{$button-size-small + $border-width});
-        }
-    }
+	@include reduce-motion("transition");
 
-    &-inner {
-        position: relative;
-        width: $nav-sidebar-width;
-        height: 100%;
-        overflow: hidden;
-        visibility: hidden;
-        transition: visibility 100ms linear;
-        @include reduce-motion("transition");
-    }
+	.interface-interface-skeleton.has-footer & {
 
-    &-site-title-container {
-        height: $header-height;
-        padding-left: $header-height;
-        margin: 0 $grid-unit-20 0 $grid-unit-10;
-        display: flex;
-        align-items: center;
-    }
+		@include break-medium() {
+			height: calc(100% - #{$button-size-small + $border-width});
+		}
+	}
 
-    &-site-title {
-        font-weight: 600;
-        font-size: 14px;
-        line-height: 20px;
-        color: $gray-300;
+	&-inner {
+		position: relative;
+		width: $nav-sidebar-width;
+		height: 100%;
+		overflow: auto;
+		visibility: hidden;
+		transition: visibility 100ms linear;
 
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
+		@include reduce-motion("transition");
+	}
 
-    &-scroll-container {
-        overflow-x: hidden;
-        overflow-y: auto;
-        height: calc(100% - #{$header-height});
-    }
+	&-site-title-container {
+		height: $header-height;
+		padding-left: $header-height;
+		margin: 0 $grid-unit-20 0 $grid-unit-10;
+		display: flex;
+		align-items: center;
+	}
 
-    &-inside {
-        padding: 0 $grid-unit-20;
-        color: var(--nfd-onboarding-drawer-fg);
-        h2 {
-            color: var(--nfd-onboarding-drawer-fg);
-        }
-    }
+	&-site-title {
+		font-weight: 600;
+		font-size: 14px;
+		line-height: 20px;
+		color: $gray-300;
 
-    .components-button.nfd-onboarding-drawer__panel-back.is-tertiary {
-        color: var(--nfd-onboarding-drawer-fg);
-        opacity: 0.7;
-        height: $button-size;
-        margin-top: $grid-unit-30;
-        padding: $grid-unit $grid-unit-20 $grid-unit $grid-unit;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
 
-        svg {
-            margin-right: 0;
-        }
+	&-scroll-container {
+		overflow-x: hidden;
+		overflow-y: auto;
+		height: calc(100% - #{$header-height});
+		background-color: var(--nfd-onboarding-drawer-bg);
+		-ms-overflow-style: none;
+		scrollbar-width: none;
 
-        &:hover:not(:disabled),
-        &:focus:not(:disabled) {
-            opacity: 1;
-            box-shadow: none;
-        }
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
 
-        &:active {
-            background-color: transparent;
-        }
-    }
+	&-inside {
+		padding: 0 $grid-unit-20;
+		color: var(--nfd-onboarding-drawer-fg);
 
-    &-menu {
-        margin: $grid-unit-30 0;
-        h3 {
-            color: var(--nfd-onboarding-drawer-fg);
-            font-size: 20.28px;
-            line-height: 1.2;
-            padding: $grid-unit-05 $grid-unit-10 $grid-unit-05 $grid-unit-20;
-            margin-top: 0;
-            height: $grid-unit-50;
-            max-height: $grid-unit-60;
-            display: flex;
-            align-items: center;
-            margin-bottom: $grid-unit-10;
-        }
-    }
+		h2 {
+			color: var(--nfd-onboarding-drawer-fg);
+		}
+	}
 
-    &-menu-item {
-        display: block;
-        width: 100%;
-        color: var(--nfd-onboarding-drawer-fg);
-        font-size: 14px;
-        line-height: 20px;
-    }
+	.components-button.nfd-onboarding-drawer__panel-back.is-tertiary {
+		color: var(--nfd-onboarding-drawer-fg);
+		opacity: 0.7;
+		height: $button-size;
+		margin-top: $grid-unit-30;
+		padding: $grid-unit $grid-unit-20 $grid-unit $grid-unit;
 
-    &-menu-link {
-        display: flex;
-        padding: $grid-unit-10 $grid-unit-20;
-        text-decoration: none;
-        color: var(--nfd-onboarding-light);
-        align-items: center;
-        border-radius: 2px;
-        transition: background-color 100ms linear;
-        @include reduce-motion("transition");
-        svg {
-            fill: var(--nfd-onboarding-drawer-icon-fill);
-            transition: fill 100ms linear;
-            @include reduce-motion("transition");
-            margin-right: $grid-unit-10;
-        }
-        &:focus {
-            box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
-            outline: 3px solid transparent;
-            color: var(--nfd-onboarding-drawer-fg);
-        }
-        &:hover {
-            color: var(--nfd-onboarding-drawer-fg);
-        }
-        &.active {
-            background-color: var(--nfd-onboarding-primary);
-            color: var(--nfd-onboarding-light);
-            svg {
-                fill: var(--nfd-onboarding-drawer-icon-active-fill);
-            }
-        }
-    }
+		svg {
+			margin-right: 0;
+		}
+
+		&:hover:not(:disabled),
+		&:focus:not(:disabled) {
+			opacity: 1;
+			box-shadow: none;
+		}
+
+		&:active {
+			background-color: transparent;
+		}
+	}
+
+	&-menu {
+		margin: $grid-unit-30 0;
+
+		h3 {
+			color: var(--nfd-onboarding-drawer-fg);
+			font-size: 20.28px;
+			line-height: 1.2;
+			padding: $grid-unit-05 $grid-unit-10 $grid-unit-05 $grid-unit-20;
+			margin-top: 0;
+			height: $grid-unit-50;
+			max-height: $grid-unit-60;
+			display: flex;
+			align-items: center;
+			margin-bottom: $grid-unit-10;
+		}
+	}
+
+	&-menu-item {
+		display: block;
+		width: 100%;
+		color: var(--nfd-onboarding-drawer-fg);
+		font-size: 14px;
+		line-height: 20px;
+	}
+
+	&-menu-link {
+		display: flex;
+		padding: $grid-unit-10 $grid-unit-20;
+		text-decoration: none;
+		color: var(--nfd-onboarding-light);
+		align-items: center;
+		border-radius: 2px;
+		transition: background-color 100ms linear;
+
+		@include reduce-motion("transition");
+
+		svg {
+			fill: var(--nfd-onboarding-drawer-icon-fill);
+			transition: fill 100ms linear;
+
+			@include reduce-motion("transition");
+			margin-right: $grid-unit-10;
+		}
+
+		&:focus {
+			box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
+			outline: 3px solid transparent;
+			color: var(--nfd-onboarding-drawer-fg);
+		}
+
+		&:hover {
+			color: var(--nfd-onboarding-drawer-fg);
+		}
+
+		&.active {
+			background-color: var(--nfd-onboarding-primary);
+			color: var(--nfd-onboarding-light);
+
+			svg {
+				fill: var(--nfd-onboarding-drawer-icon-active-fill);
+			}
+		}
+	}
 }
 
 .nfd-onboarding-drawer__panel.is-open {
-    width: $nav-sidebar-width;
-    .nfd-onboarding-drawer__panel-inner {
-        visibility: visible;
-    }
+	width: $nav-sidebar-width;
+
+	.nfd-onboarding-drawer__panel-inner {
+		visibility: visible;
+	}
 }
 
 .is-drawer-fade {
-    animation-name: fadeIn;
-    animation-duration: 100ms;
-    animation-timing-function: ease-in;
+	animation-name: fadeIn;
+	animation-duration: 100ms;
+	animation-timing-function: ease-in;
+}
+
+/*COLOR VARIABLES*/
+$main-color-dark: var(--nfd-onboarding-dark);
+$main-color-light: var(--nfd-onboarding-white);
+$main-border-light: var(--nfd-onboarding-border);
+$main-border-main: var(--nfd-onboarding-primary-alt);
+$main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
+
+.theme-styles-preview {
+
+	&--drawer {
+		overflow-y: auto;
+		overflow-x: hidden;
+		width: 100%;
+
+		&__list {
+			width: 100%;
+			height: 100%;
+
+			@media (max-width: #{ ($break-large) }) {
+				width: 100%;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+			}
+
+			&__item {
+				flex: 1;
+				width: 100%;
+				margin: 24px 0;
+				display: flex;
+				align-items: center;
+				flex-direction: column;
+				justify-content: center;
+
+				&__title-bar {
+					width: 90%;
+					height: 15px;
+					display: flex;
+					align-items: center;
+					background-color: #ccc;
+					justify-content: space-between;
+					border: 1px solid transparent;
+
+					&__browser {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						margin-left: 3px;
+
+						&__dot {
+							background-color: #989ea7;
+							width: 8px;
+							margin: 3px;
+							height: 8px;
+							border-radius: 50%;
+							display: inline-block;
+						}
+					}
+
+					&--selected {
+						z-index: 2;
+						width: 40px;
+						height: 40px;
+						display: flex;
+						margin-right: -15px;
+						border-radius: 50%;
+						align-items: center;
+						justify-content: center;
+						background-clip: padding-box;
+						background-color: $main-border-main;
+
+						&__path {
+							fill: $main-color-light;
+							transform: scale(0.7);
+						}
+					}
+
+					&--unselected {
+						display: none;
+					}
+				}
+
+				&__live-preview-container {
+					position: relative;
+					width: 90%;
+					overflow: hidden;
+					align-items: center;
+					border: 1px solid #b7b7b7;
+
+					.live-preview {
+
+						&__container {
+
+							&-custom {
+								width: 100%;
+								overflow: hidden;
+								height: 250px;
+
+								&:hover {
+									cursor: pointer;
+								}
+							}
+
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
+// Design Color Palette Step
+.theme-colors--drawer {
+	padding: 0 4px;
+
+	&--reset {
+		width: 40%;
+		height: 30px;
+		display: flex;
+		color: black;
+		cursor: pointer;
+		margin-left: 4px;
+		text-align: center;
+		align-items: center;
+		justify-content: center;
+		background-color: white;
+
+		&:hover {
+			background-color: var(--nfd-onboarding-drawer-icon-fill);
+		}
+	}
+}
+
+.color-palette {
+
+	width: 88%;
+	height: 30px;
+	display: flex;
+	margin: 8px 4px;
+	cursor: pointer;
+	position: relative;
+	padding: 10px 16px;
+	align-items: center;
+	background-color: white;
+	justify-content: space-between;
+
+	&:hover {
+		background-color: var(--nfd-onboarding-drawer-icon-fill);
+	}
+
+	&-selected {
+		background-color: $main-border-main;
+		.color-palette__name {
+			color: var(--nfd-onboarding-light);
+		}
+	}
+
+	&__colors {
+
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		&--tertiary {
+			width: 22px;
+			height: 22px;
+			border-radius: 50%;
+			position: absolute;
+			border: 1px solid rgba(0, 0, 0, 0.3);
+		}
+
+		&--secondary {
+			left: 35px;
+			width: 22px;
+			height: 22px;
+			border-radius: 50%;
+			position: absolute;
+			border: 1px solid rgba(0, 0, 0, 0.3);
+		}
+
+		&--primary {
+			left: 55px;
+			width: 22px;
+			height: 22px;
+			border-radius: 50%;
+			position: absolute;
+			border: 1px solid rgba(0, 0, 0, 0.3);
+		}
+	}
+
+	&__name {
+		color: black;
+		font-size: 12px;
+		font-weight: 700;
+		line-height: 16px;
+	}
+}
+
+.custom-palette {
+	width: 88%;
+	margin: 30px 2px;
+	padding: 20px 16px;
+	background: $main-border-main;
+
+	&__top {
+		display: flex;
+		cursor: pointer;
+		align-items: center;
+		justify-content: space-between;
+
+		&-icon {
+			font-size: 18px;
+			font-weight: 500;
+		}
+	}
+
+	&_acc_opened {
+		display: block;
+	}
+
+	&_acc_closed {
+		display: none;
+	}
+
+	&__below {
+		margin-top: 16px;
+		animation-name: fadeIn;
+		animation-duration: 300ms;
+		animation-timing-function: linear;
+		animation-timing-function: ease-in-out;
+
+		&-row {
+			height: 50px;
+			color: black;
+			display: flex;
+			cursor: pointer;
+			align-items: center;
+			background-color: white;
+			justify-content: flex-start;
+			border: 0.5px solid rgba(0, 0, 0, 0.3);
+
+			&-icon {
+				width: 22px;
+				height: 22px;
+				margin: 2px 12px;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border: 1px solid rgba(0, 0, 0, 0.3);
+
+				&_selected_border {
+					box-shadow: 0 0 5px 3px rgba($main-border-main--rgb, 0.5);
+				}
+			}
+		}
+	}
+
+	&__picker-close-icon {
+		width: 25px;
+		height: 25px;
+		display: flex;
+		color: black;
+		cursor: pointer;
+		font-weight: 900;
+		border-radius: 50%;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid black;
+		background-color: white;
+	}
+}
+
+// Design Font Palette Step
+.theme-fonts--drawer {
+	padding: 0 4px;
+	border: none !important;
+
+	&--reset {
+		width: 40%;
+		height: 30px;
+		display: flex;
+		color: black;
+		cursor: pointer;
+		margin-left: 4px;
+		text-align: center;
+		align-items: center;
+		justify-content: center;
+		background-color: white;
+
+		&:hover {
+			background-color: var(--nfd-onboarding-drawer-icon-fill);
+		}
+	}
+}
+
+.font-palette {
+
+	width: 88%;
+	height: 30px;
+	display: flex;
+	margin: 8px 4px;
+	cursor: pointer;
+	position: relative;
+	padding: 10px 16px;
+	align-items: center;
+	background-color: white;
+
+	&:hover {
+		background-color: var(--nfd-onboarding-drawer-icon-fill);
+	}
+
+	&-selected {
+		background-color: $main-border-main;
+	}
+
+	&__icon {
+		color: black;
+		font-weight: 700;
+		margin-right: 16px;
+	}
+
+	&__name {
+		color: black;
+		font-size: 12px;
+		font-weight: 700;
+		line-height: 16px;
+	}
+}
+
+.custom-font-palette {
+	width: 88%;
+	margin: 30px 2px;
+	padding: 20px 16px;
+	background: $main-border-main;
+
+	&--hidden {
+		display: none;
+	}
+
+	&__top {
+		display: flex;
+		cursor: pointer;
+		align-items: center;
+		justify-content: space-between;
+
+		&-text {
+			font-size: 14px;
+		}
+
+		&-icon {
+			font-size: 14px;
+		}
+	}
+
+	&_acc_opened {
+		display: block;
+	}
+
+	&_acc_closed {
+		display: none;
+	}
+
+}
+
+.theme-header-menu-preview {
+
+	&--drawer {
+		overflow-y: auto;
+		overflow-x: hidden;
+		width: 100%;
+
+		&__list {
+			width: 100%;
+			height: 100%;
+
+			@media (max-width: #{ ($break-large) }) {
+				width: 100%;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+			}
+
+			&__item {
+				flex: 1;
+				width: 100%;
+				margin: 24px 0;
+				display: flex;
+				align-items: center;
+				flex-direction: column;
+				justify-content: center;
+
+				&__title-bar {
+					width: 90%;
+					height: 20px;
+					display: flex;
+					justify-content: space-between;
+
+					&--selected {
+						z-index: 2;
+						width: 40px;
+						height: 40px;
+						display: flex;
+						margin-right: -12px;
+						border-radius: 50%;
+						align-items: center;
+						justify-content: center;
+						background-clip: padding-box;
+						background-color: $main-border-main;
+
+						&__path {
+							fill: $main-color-light;
+							transform: scale(0.7);
+						}
+					}
+
+					&--unselected {
+						display: none;
+					}
+				}
+
+				&__live-preview-container {
+					position: relative;
+					width: 95%;
+					overflow: hidden;
+					align-items: center;
+
+					.live-preview {
+
+						&__container {
+
+							&-custom {
+								overflow: hidden;
+
+								&:hover {
+									cursor: pointer;
+								}
+							}
+
+						}
+					}
+				}
+			}
+		}
+	}
 }

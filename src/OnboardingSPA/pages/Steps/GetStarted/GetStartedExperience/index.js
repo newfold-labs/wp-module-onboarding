@@ -3,7 +3,10 @@ import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import CardHeader from '../../../../components/CardHeader';
 import NavCardButton from '../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../components/NeedHelpTag';
-import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
+import {
+	SIDEBAR_LEARN_MORE,
+	VIEW_NAV_GET_STARTED,
+} from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
 import content from './content.json';
 import { RadioControl } from '@wordpress/components';
@@ -21,25 +24,27 @@ const GetStartedExperience = () => {
 	const [ isLoaded, setisLoaded ] = useState( false );
 	const [ wpComfortLevel, setWpComfortLevel ] = useState( '0' );
 
-	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
-
 	const { currentData, currentStep } = useSelect( ( select ) => {
 		return {
-			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
-			currentStep: select(nfdOnboardingStore).getCurrentStep(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 		};
 	}, [] );
 
 	const {
 		setDrawerActiveView,
-		setIsSidebarOpened,
+		setCurrentOnboardingData,
+		setSidebarActiveView,
 		setIsDrawerSuppressed,
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		setIsSidebarOpened( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
+		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	useEffect( () => {
@@ -68,7 +73,10 @@ const GetStartedExperience = () => {
 					<div className="nfd-card-heading center">
 						<CardHeader
 							heading={ currentStep.heading }
-							subHeading={ __(content.aboutYouTag, 'wp-module-onboarding') }
+							subHeading={ __(
+								content.aboutYouTag,
+								'wp-module-onboarding'
+							) }
 							question={ currentStep.subheading }
 						/>
 					</div>
@@ -77,16 +85,25 @@ const GetStartedExperience = () => {
 						selected={ wpComfortLevel }
 						options={ content.options.map( ( option ) => {
 							return {
-								label: __(option.content, 'wp-module-onboarding' ),
-								value: __(option.value, 'wp-module-onboarding' ),
+								label: __(
+									option.content,
+									'wp-module-onboarding'
+								),
+								value: __(
+									option.value,
+									'wp-module-onboarding'
+								),
 							};
 						} ) }
 						onChange={ ( value ) => setWpComfortLevel( value ) }
 					/>
 					<NavCardButton
-								text={__(content.buttonText, 'wp-module-onboarding')}
-								disabled={wpComfortLevel == '0'}
-							/>
+						text={ __(
+							content.buttonText,
+							'wp-module-onboarding'
+						) }
+						disabled={ wpComfortLevel == '0' }
+					/>
 					<NeedHelpTag />
 				</div>
 			</NewfoldLargeCard>

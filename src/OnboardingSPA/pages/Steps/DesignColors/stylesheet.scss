@@ -1,10 +1,55 @@
-.live-preview {
-     &__container {
-          &-custom {
-               width: 70%;
-               height: 70%;
-               max-width: 1200px;
-               max-height: 1200px;
-          }
-     }
+
+
+.theme-colors-preview {
+    flex: 1;
+    margin: 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    &__title-bar {
+        width: 70%;
+        height: 15px;
+        display: flex;
+        align-items: center;
+        background-color: #ccc;
+        justify-content: space-between;
+        border: 1px solid transparent;
+
+        &__browser {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &__dot {
+                background-color: #989ea7;
+                width: 8px;
+                margin: 3px;
+                height: 8px;
+                border-radius: 50%;
+                display: inline-block;
+            }
+        }
+    }
+
+    &__live-preview-container {
+        width: 70%;
+        min-height: 90vh;
+        overflow: hidden;
+        position: relative;
+        align-items: center;
+        border: 1px solid #e3dfdf;
+        margin-bottom: 30px;
+
+        .live-preview {
+
+            &__container {
+
+                &-custom {
+                    width: 100%;
+                }
+            }
+        }
+    }
 }

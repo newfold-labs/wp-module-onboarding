@@ -27,15 +27,57 @@ body {
 	--get-started-content-img: url("../static/images/content.png");
 	--get-started-design-img: url("../static/images/design.png");
 	--get-started-features-img: url("../static/images/features.png");
+	--what-next-bluesky-img: url("../static/images/bluesky.png");
+	--what-next-wp-admin-img: url("../static/images/wp-admin.png");
+	--what-next-help-img: url("../static/images/help.png");
+
 
 	--chevron-left-icon: url("../static/icons/chevron-left.svg");
 	--chevron-right-icon: url("../static/icons/chevron-right.svg");
 
 	--business-icon: url("../static/icons/business.svg");
 	--business-white-icon: url("../static/icons/business-white.svg");
+	--nfd-onboarding-step-error-icon: url("../../Brands/bluehost/step-error-logo.svg");
+
+	--nfd-onboarding-sidebar-learn-more-get-started-welcome-illustration: url("../static/icons/learn-more-get-started-welcome.svg");
+	--nfd-onboarding-sidebar-learn-more-get-started-wp-experience-illustration: url("../static/icons/learn-more-get-started-wp-experience.svg");
+	--nfd-onboarding-sidebar-learn-more-get-started-site-type-illustration: url("../static/icons/learn-more-get-started-site-type.svg");
+	--nfd-onboarding-sidebar-learn-more-ecommerce-address-illustration: url("../static/icons/learn-more-ecommerce-address.svg");
+	--nfd-onboarding-sidebar-learn-more-ecommerce-tax-info-illustration: url("../static/icons/learn-more-ecommerce-tax-info.svg");
+	--nfd-onboarding-sidebar-learn-more-ecommerce-products-illustration: url("../static/icons/learn-more-ecommerce-products.svg");
+	--nfd-onboarding-sidebar-learn-more-basic-info-illustration: url("../static/icons/learn-more-basic-info.svg");
+	--nfd-onboarding-sidebar-learn-more-design-theme-styles-illustration: url("../static/icons/learn-more-design-theme-styles.svg");
+	--nfd-onboarding-sidebar-learn-more-design-colors-illustration: url("../static/icons/learn-more-design-colors.svg");
+	--nfd-onboarding-sidebar-learn-more-design-typography-illustration: url("../static/icons/learn-more-design-typography.svg");
+	--nfd-onboarding-sidebar-learn-more-design-header-menu-illustration: url("../static/icons/learn-more-design-header-menu.svg");
+	--nfd-onboarding-sidebar-learn-more-design-homepage-illustration: url("../static/icons/learn-more-design-homepage.svg");
+	--nfd-onboarding-sidebar-learn-more-pages-illustration: url("../static/icons/learn-more-pages.svg");
+	--nfd-onboarding-sidebar-learn-more-site-features-illustration: url("../static/icons/learn-more-site-features.svg");
+	--nfd-onboarding-sidebar-learn-more-what-next-illustration: url("../static/icons/learn-more-what-next.svg");
+	
+	--site-features-analytics: url("../static/icons/site-features/analytics.svg");
+	--site-features-analytics--light: url("../static/icons/site-features/analytics_light.svg");
+	--site-features-bookingcalendar: url("../static/icons/site-features/bookingcalendar.svg");
+	--site-features-bookingcalendar--light: url("../static/icons/site-features/bookingcalendar_light.svg");
+	--site-features-email: url("../static/icons/site-features/email.svg");
+	--site-features-email--light: url("../static/icons/site-features/email_light.svg");
+	--site-features-filter: url("../static/icons/site-features/filter.svg");
+	--site-features-filter--light: url("../static/icons/site-features/filter_light.svg");
+	--site-features-form: url("../static/icons/site-features/form.svg");
+	--site-features-form--light: url("../static/icons/site-features/form_light.svg");
+	--site-features-lead: url("../static/icons/site-features/lead.svg");
+	--site-features-lead--light: url("../static/icons/site-features/lead_light.svg");
+	--site-features-search: url("../static/icons/site-features/search.svg");
+	--site-features-search--light: url("../static/icons/site-features/search_light.svg");
+	--site-features-security: url("../static/icons/site-features/security.svg");
+	--site-features-security--light: url("../static/icons/site-features/security_light.svg");
+	--site-features-share: url("../static/icons/site-features/share.svg");
+	--site-features-share--light: url("../static/icons/site-features/share_light.svg");
+	--site-features-wishlist: url("../static/icons/site-features/wishlist.svg");
+	--site-features-wishlist--light: url("../static/icons/site-features/wishlist_light.svg");
 
 	/*
-  * Below Icons are commented because they get added to the CSS bundle and 
+  * Below Icons are commented because they get added to the CSS bundle and
   * CSS bundle created exceeded the permissible size.
   * Need to find a solution how do we deal with below icons or do we split page wise CSS bundles
   * Or can using these icon paths in background-image in pages's CSS help?

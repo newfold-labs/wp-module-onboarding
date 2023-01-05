@@ -67,23 +67,46 @@ final class Flows {
 			'customDesign'    => false,
 
 			'palette'         => array(
-				array(
-					'slug'  => '',
-					'color' => '',
-					'name'  => '',
+				'slug'     => '',
+				'name'     => '',
+				'color'    => array(
+					array(
+						'slug'  => 'primary',
+						'name'  => 'Primary',
+						'color' => '',
+					),
+					array(
+						'slug'  => 'secondary',
+						'name'  => 'Secondary',
+						'color' => '',
+					),
+					array(
+						'slug'  => 'tertiary',
+						'name'  => 'Tertiary',
+						'color' => '',
+					),
+					array(
+						'slug'  => 'background',
+						'name'  => 'Background',
+						'color' => '',
+					),
 				),
+				'supports' => array( 'yith-wonder' ),
 			),
 
 			'typography'      => array(
-				'fontFamilies' => array(),
-				'fontSizes'    => array(),
+				'slug' => '',
+				'data' => array(),
 			),
 
 			// This string will identify the Header Pattern
 			'partHeader'      => '',
 
 			// for eg. Home, About, Contact, Blog|News, Resume, Portfolio, Staff and Link in Bio
-			'sitePages'       => array(),
+			'sitePages'       => array(
+				'homepage' => '',
+				'other'    => array(),
+			),
 
 			// will include plugin installs, module activation/deactivation and perhaps API calls to the hosting platform for Newfold-specific services
 			'siteFeatures'    => array(),
@@ -106,10 +129,10 @@ final class Flows {
 		'doesCommerce'         => false,
 
 		'storeDetails'         => array(
-			'productInfo'     => array(
+			'productInfo' => array(
 				'product_count' => '',
-				'product_types' => array()
-			)
+				'product_types' => array(),
+			),
 		),
 	);
 

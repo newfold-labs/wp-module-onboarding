@@ -1,21 +1,32 @@
 import { __ } from '@wordpress/i18n';
-import { store, institution, box } from '@wordpress/icons';
+import { store, institution, shipping } from '@wordpress/icons';
 import { lazy } from '@wordpress/element';
 import { orderBy, filter } from 'lodash';
 
 import {
-	routes as defaultInitialRoutes,
+	pages as defaultInitialPages,
 	steps as defaultInitialSteps,
 	initialTopSteps as defaultInitialTopSteps,
-	initialGetStartedSteps as defaultInitialGetStartedSteps
+	initialGetStartedSteps as defaultInitialGetStartedSteps,
 } from './default-flow';
 
 const StepAddress = lazy( () =>
 	import( '../../pages/Steps/Ecommerce/StepAddress' )
 );
+const StepAddressLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/Ecommerce/StepAddress/Sidebar/LearnMore/' )
+);
+
 const StepTax = lazy( () => import( '../../pages/Steps/Ecommerce/StepTax' ) );
+const StepTaxLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/Ecommerce/StepTax/Sidebar/LearnMore/' )
+);
+
 const StepProducts = lazy( () =>
 	import( '../../pages/Steps/Ecommerce/StepProducts' )
+);
+const StepProductsLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/Ecommerce/StepProducts/Sidebar/LearnMore' )
 );
 
 import { VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../constants';
@@ -37,6 +48,11 @@ export const ecommerceSteps = [
 		Icon: store,
 		priority: 85,
 		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepAddressLearnMoreSidebar ],
+			},
+		},
 	},
 	{
 		path: '/ecommerce/step/tax',
@@ -54,6 +70,11 @@ export const ecommerceSteps = [
 		Icon: institution,
 		priority: 90,
 		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepTaxLearnMoreSidebar ],
+			},
+		},
 	},
 	{
 		path: '/ecommerce/step/products',
@@ -64,13 +85,18 @@ export const ecommerceSteps = [
 			'wp-module-onboarding'
 		),
 		description: __(
-			'In this section, you can provide more information about your products and business, which will help us tailor your store setup experience and identify possible extensions you\'ll need for your online store.',
+			"In this section, you can provide more information about your products and business, which will help us tailor your store setup experience and identify possible extensions you'll need for your online store.",
 			'wp-module-onboarding'
 		),
 		Component: StepProducts,
-		Icon: box,
+		Icon: shipping,
 		priority: 95,
 		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepProductsLearnMoreSidebar ],
+			},
+		},
 	},
 ];
 
@@ -78,7 +104,9 @@ export const steps = orderBy(
 	[
 		...filter(
 			defaultInitialSteps,
-			( step ) => ! step.path.includes( '/step/top-priority' ) && ! step.path.includes( '/step/get-started/site-primary' )
+			( step ) =>
+				! step.path.includes( '/step/top-priority' ) &&
+				! step.path.includes( '/step/get-started/site-primary' )
 		),
 		...ecommerceSteps,
 	],
@@ -87,7 +115,7 @@ export const steps = orderBy(
 );
 
 export const routes = orderBy(
-	[ ...steps, ...defaultInitialRoutes ],
+	[ ...steps, ...defaultInitialPages ],
 	[ 'priority' ],
 	[ 'asc' ]
 );
@@ -103,6 +131,7 @@ export const initialTopSteps = () => {
 		title: __( 'Store Info', 'wp-module-onboarding' ),
 		description: '',
 		Icon: store,
+		primaryDrawerActiveLinkIncludes: '/ecommerce/step/',
 		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
 		priority: 41 /* matches priority for first store info step */,
 	};
@@ -126,5 +155,4 @@ export const ecommerceGetStartedSteps = () => {
 		defaultInitialGetStartedSteps(),
 		( step ) => ! step.path.includes( '/step/get-started/site-primary' )
 	);
-
-}
+};

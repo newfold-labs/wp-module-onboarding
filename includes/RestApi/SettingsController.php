@@ -5,6 +5,8 @@ use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Config;
 use NewfoldLabs\WP\Module\Onboarding\WP_Config;
+use NewfoldLabs\WP\Module\Onboarding\Data\Data;
+use NewfoldLabs\WP\Module\Onboarding\Services\Webfonts;
 
 /**
  * Class SettingsController
@@ -226,12 +228,12 @@ class SettingsController {
 	 */
 	public function initialize() {
 
-          if ( \get_option( Options::get_option_name( 'settings_initialized' ), false ) ) {
-               return new \WP_REST_Response(
-                    array(),
-                    200
-               );
-          }
+		if ( \get_option( Options::get_option_name( 'settings_initialized' ), false ) ) {
+			return new \WP_REST_Response(
+				array(),
+				200
+			);
+		}
 
 		  // Update wp_options
 		$init_options = Options::get_initialization_options();
@@ -255,14 +257,13 @@ class SettingsController {
 			$wp_config->add_constant( $constant_key, $constant_value );
 		}
 
-          \update_option( Options::get_option_name( 'settings_initialized' ), true );
+		  \update_option( Options::get_option_name( 'settings_initialized' ), true );
 
 		return new \WP_REST_Response(
 			array(),
 			201
 		);
 	}
-
 
 	/**
 	 * Validates a twitter id.

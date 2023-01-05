@@ -95,6 +95,9 @@ class PluginInstallTaskManager {
 		  priority at the beginning of the array */
 		$plugin_to_install = array_shift( $plugins );
 
+		// Update the plugin install queue.
+		 \update_option( Options::get_option_name( self::$queue_name ), $plugins );
+
 		// Recreate the PluginInstall task from the associative array.
 		$plugin_install_task = new PluginInstallTask(
 			$plugin_to_install['slug'],
@@ -113,21 +116,26 @@ class PluginInstallTaskManager {
 			   // If there is an error, then increase the retry count for the task.
 			   $plugin_install_task->increment_retries();
 
+			   // Get Latest Value of the install queue
+			   $plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
+
 			   /*
 				If the number of retries have not exceeded the limit
 				then re-queue the task at the end of the queue to be retried. */
 			if ( $plugin_install_task->get_retries() <= self::$retry_limit ) {
-					array_push( $plugins, $plugin_install_task->to_array() );
+				array_push( $plugins, $plugin_install_task->to_array() );
+
+				// Update the plugin install queue.
+				\update_option( Options::get_option_name( self::$queue_name ), $plugins );
 			}
 		}
 
 		// If there are no more plugins to be installed then change the status to completed.
 		if ( empty( $plugins ) ) {
-			\update_option( Options::get_option_name( 'plugins_init_status' ), 'completed' );
+			return \update_option( Options::get_option_name( 'plugins_init_status' ), 'completed' );
 		}
 
-		// Update the plugin install queue.
-		 return \update_option( Options::get_option_name( self::$queue_name ), $plugins );
+		return true;
 	}
 
 	/**
@@ -164,5 +172,28 @@ class PluginInstallTaskManager {
 		);
 
 		 return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
+	}
+
+	public static function remove_from_queue( $plugin ) {
+		/*
+		   Get the plugins queued up to be installed, the PluginInstall task gets
+		   converted to an associative array before storing it in the option. */
+		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
+
+		$queue = new PriorityQueue();
+		foreach ( $plugins as $queued_plugin ) {
+			/*
+			   If the Plugin slug does not match add it back to the queue. */
+			if ( $queued_plugin['slug'] !== $plugin ) {
+				 $queue->insert( $queued_plugin, $queued_plugin['priority'] );
+			}
+		}
+
+		 return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
+	}
+
+	public static function status( $plugin ) {
+		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
+		return array_search( $plugin, array_column( $plugins, 'slug' ) );
 	}
 }

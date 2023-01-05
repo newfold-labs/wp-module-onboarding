@@ -1,0 +1,26 @@
+.nfd-onboarding-sidebar-learn-more {
+
+	&--step-intro-panel {
+		border: none;
+
+		&__container {
+			display: flex;
+
+			&__text {
+				align-items: center;
+
+				&__heading,
+				&__subheading {
+					margin-top: 2px;
+					line-height: 16px;
+				}
+			}
+
+			&__icon {
+				margin-right: 5%;
+			}
+
+		}
+	}
+
+}

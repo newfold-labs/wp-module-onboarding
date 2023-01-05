@@ -15,13 +15,16 @@ final class Data {
 		return array(
 			'buildUrl'          => \NFD_ONBOARDING_BUILD_URL,
 			'siteUrl'           => \get_site_url(),
-			'restUrl'			=> \get_home_url() . '/index.php?rest_route=',
+			'restUrl'           => \get_home_url() . '/index.php?rest_route=',
 			'adminUrl'          => \admin_url(),
 			'currentBrand'      => self::current_brand(),
 			'currentPlan'       => self::current_plan(),
 			'currentFlow'       => self::current_flow(),
 			'pluginInstallHash' => Permissions::rest_get_plugin_install_hash(),
-			'previewSettings'   => self::preview_settings(),
+			'previewSettings'   => array(
+				'settings'        => Preview::get_settings(),
+				'stepPreviewData' => Themes::step_preview_data(),
+			),
 		);
 	}
 
@@ -39,7 +42,7 @@ final class Data {
 		if ( empty( $brand ) ) {
 			$brand = 'newfold';
 		}
-		$brand = \apply_filters( 'nfd_module_onboarding_brand', sanitize_title_with_dashes( str_replace('_', '-', $brand) ) );
+		$brand = \apply_filters( 'nfd_module_onboarding_brand', sanitize_title_with_dashes( str_replace( '_', '-', $brand ) ) );
 
 		$brands = Brands::get_brands();
 
@@ -94,18 +97,6 @@ final class Data {
 		return Flows::get_default_flow();
 	}
 
-	public static function preview_settings() {
-		 $block_editor_context = new \WP_Block_Editor_Context( array( 'name' => 'core/edit-site' ) );
-		 $custom_settings      = array(
-			 'siteUrl' => \site_url(),
-		 );
-
-		 return array(
-			 'settings'     => \get_block_editor_settings( $custom_settings, $block_editor_context ),
-			 'globalStyles' => \wp_get_global_styles(),
-		 );
-	}
-
 	/**
 	 * Get the current customer data using the Bluehost customer data module.
 	 *
@@ -117,4 +108,5 @@ final class Data {
 		}
 		 return array();
 	}
+
 } // END \NewfoldLabs\WP\Module\Onboarding\Data()
