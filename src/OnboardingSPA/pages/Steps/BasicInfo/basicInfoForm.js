@@ -23,7 +23,6 @@ const BasicInfoForm = () => {
 	const [ flowData, setFlowData ] = useState();
 	const [ isLoaded, setisLoaded ] = useState( false );
 	const [ debouncedFlowData, setDebouncedFlowData ] = useState();
-	const [ basicInfoState, setBasicInfoState ] = useState("basic-info__loadState");
 
 	const [ siteTitle, setSiteTitle ] = useState( '' );
 	const [ siteDesc, setSiteDesc ] = useState( '' );
@@ -40,8 +39,9 @@ const BasicInfoForm = () => {
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			currentData: select(
+				nfdOnboardingStore
+			).getCurrentOnboardingData(),
 		};
 	}, [] );
 
@@ -50,7 +50,6 @@ const BasicInfoForm = () => {
 			setSiteLogo( flowData?.data.siteLogo );
 			setSiteTitle( flowData?.data.blogName );
 			setSiteDesc( flowData?.data.blogDescription );
-			setBasicInfoState("basic-info");
 		}
 	}
 
@@ -94,7 +93,7 @@ const BasicInfoForm = () => {
 		editEntityRecord( 'root', 'site', undefined, {
 			site_logo: siteLogo?.id ? siteLogo.id : null,
 			description: siteDesc,
-			title: siteTitle
+			title: siteTitle,
 		} );
 	};
 
@@ -124,7 +123,11 @@ const BasicInfoForm = () => {
 	}, [ debouncedFlowData ] );
 
 	return (
-		<div className={basicInfoState}>
+		<div
+			className={ `${
+				isLoaded ? 'basic-info' : 'basic-info__loadState'
+			}` }
+		>
 			<div className={ `${ isError ? 'error__show' : 'error__hide' }` }>
 				{ __( content.error.title, 'wp-module-onboarding' ) }
 			</div>
