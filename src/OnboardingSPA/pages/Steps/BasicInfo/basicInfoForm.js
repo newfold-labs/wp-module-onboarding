@@ -226,6 +226,7 @@ const BasicInfoForm = () => {
 					/>
 				</div>
 			</div>
+			<SkipButton/>
 		</div>
 		</StepStateHandler>
 	);
