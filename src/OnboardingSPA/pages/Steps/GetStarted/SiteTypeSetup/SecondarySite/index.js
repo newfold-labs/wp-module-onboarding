@@ -13,6 +13,7 @@ import NavCardButton from '../../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import content from '../content.json';
 import { translations } from '../../../../../utils/locales/translations';
+import StepStateHandler from '../../../../../components/StateHandlers/StepStateHandler';
 
 const StepPrimarySetup = () => {
 	const {
@@ -101,71 +102,75 @@ const StepPrimarySetup = () => {
 						) }
 					/>
 				</div>
-
-				<div className="nfd-setup-secondary-categories">
-					<div className="nfd-card-category-wrapper">
-						<div className="category-scrolling-wrapper">
-							<span
-								className="icon"
-								style={ {
-									backgroundImage: categoriesArray[ 0 ].icon,
-								} }
-							/>
-							<p className="categName">
-								{ ' ' }
-								{ categoriesArray[ 0 ].name }
-							</p>
+				<StepStateHandler watch={ categoriesArray[ 0 ]?.subCategories }>
+					<div className="nfd-setup-secondary-categories">
+						<div className="nfd-card-category-wrapper">
+							<div className="category-scrolling-wrapper">
+								<span
+									className="icon"
+									style={ {
+										backgroundImage: categoriesArray[ 0 ].icon,
+									} }
+								/>
+								<p className="categName">
+									{ ' ' }
+									{ categoriesArray[ 0 ].name }
+								</p>
+							</div>
 						</div>
-					</div>
 
-					<div className="subCategoriesSection">
-						{ categoriesArray[ 0 ]?.subCategories?.map(
-							( item, idx ) => {
-								return (
-									<span
-										key={ item }
-										onClick={ ( e ) =>
-											handleCategoryClick( idx )
-										}
-										className={ `${
-											clickedIndex === idx ||
-											item === selectedCategoryInStore
-												? 'chosenSecondaryCategory '
-												: ''
-										}nfd-card-category` }
-									>
-										{ item }
-									</span>
-								);
-							}
-						) }
-					</div>
-				</div>
-
-				<div className="nfd-setup-primary-second">
-					<div className="nfd-setup-primary-second-top">
-						<div className="blackText">
-							{ __(
-								content.tellusHereText,
-								'wp-module-onboarding'
+						<div className="subCategoriesSection">
+							{ categoriesArray[ 0 ]?.subCategories?.map(
+								( item, idx ) => {
+									return (
+										<span
+											key={ item }
+											onClick={ ( e ) =>
+												handleCategoryClick( idx )
+											}
+											className={ `${
+												clickedIndex === idx ||
+												item === selectedCategoryInStore
+													? 'chosenSecondaryCategory '
+													: ''
+											}nfd-card-category` }
+										>
+											{ item }
+										</span>
+									);
+								}
 							) }
 						</div>
-						<input
-							type="text"
-							onChange={ ( e ) => categoryInput( e ) }
-							className="tellUsInput"
-							placeholder={ sprintf(
-								__(
-									content.placeholderSiteTypeInput,
+					</div>
+
+					<div className="nfd-setup-primary-second">
+						<div className="nfd-setup-primary-second-top">
+							<div className="blackText">
+								{ __(
+									content.tellusHereText,
 									'wp-module-onboarding'
-								),
-								translations( 'site' )
-							) }
-							value={ inputCategVal }
-						/>
+								) }
+							</div>
+							<input
+								type="text"
+								onChange={ ( e ) => categoryInput( e ) }
+								className="tellUsInput"
+								placeholder={ sprintf(
+									__(
+										content.placeholderSiteTypeInput,
+										'wp-module-onboarding'
+									),
+									translations( 'site' )
+								) }
+								value={ inputCategVal }
+							/>
+						</div>
 					</div>
-				</div>
-				<NavCardButton text={ __( content.buttonText ) } />
+				</StepStateHandler>
+				<NavCardButton
+					text={ __( content.buttonText ) }
+					disabled={ categoriesArray[ 0 ]?.subCategories === null }
+				/>
 				<NeedHelpTag />
 			</NewfoldLargeCard>
 		</CommonLayout>
