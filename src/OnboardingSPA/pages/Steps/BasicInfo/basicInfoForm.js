@@ -1,12 +1,13 @@
 import { __, sprintf } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
+import { useState, useEffect } from '@wordpress/element';
 
 import content from './content.json';
 import TextInput from '../../../components/TextInput';
 import SkipButton from '../../../components/SkipButton';
 import MiniPreview from '../../../components/MiniPreview';
+import StepStateHandler from '../../../components/StateHandlers/StepStateHandler';
 import { getSettings } from '../../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../../store';
 import ImageUploader from '../../../components/ImageUploader';
@@ -123,94 +124,92 @@ const BasicInfoForm = () => {
 	}, [ debouncedFlowData ] );
 
 	return (
-		<div
-			className={ `${
-				isLoaded ? 'basic-info' : 'basic-info__loadState'
-			}` }
-		>
-			<div className={ `${ isError ? 'error__show' : 'error__hide' }` }>
-				{ __( content.error.title, 'wp-module-onboarding' ) }
-			</div>
-			<div className="basic-info-form">
-				<div className="basic-info-form__left">
-					<TextInput
-						title={ sprintf(
-							__(
-								content.siteTitle.title,
+		<StepStateHandler watch={isLoaded}>
+			<div className={ 'basic-info' }>
+				<div className={ `${ isError ? 'error__show' : 'error__hide' }` }>
+					{ __( content.error.title, 'wp-module-onboarding' ) }
+				</div>
+				<div className="basic-info-form">
+					<div className="basic-info-form__left">
+						<TextInput
+							title={ sprintf(
+								__(
+									content.siteTitle.title,
+									'wp-module-onboarding'
+								),
+								translations( 'Site' )
+							) }
+							hint={ __(
+								content.siteTitle.hint,
 								'wp-module-onboarding'
-							),
-							translations( 'Site' )
-						) }
-						hint={ __(
-							content.siteTitle.hint,
-							'wp-module-onboarding'
-						) }
-						placeholder={ sprintf(
-							__(
-								content.siteTitle.placeholder,
+							) }
+							placeholder={ sprintf(
+								__(
+									content.siteTitle.placeholder,
+									'wp-module-onboarding'
+								),
+								translations( 'Site' )
+							) }
+							maxCharacters={ __(
+								content.siteTitle.maxCharacters,
 								'wp-module-onboarding'
-							),
-							translations( 'Site' )
-						) }
-						maxCharacters={ __(
-							content.siteTitle.maxCharacters,
-							'wp-module-onboarding'
-						) }
-						height="47px"
-						textValue={ siteTitle }
-						textValueSetter={ setSiteTitle }
-					/>
+							) }
+							height="47px"
+							textValue={ siteTitle }
+							textValueSetter={ setSiteTitle }
+						/>
 
-					<TextInput
-						title={ sprintf(
-							__(
-								content.siteDesc.title,
+						<TextInput
+							title={ sprintf(
+								__(
+									content.siteDesc.title,
+									'wp-module-onboarding'
+								),
+								translations( 'Site' )
+							) }
+							hint={ sprintf(
+								__( content.siteDesc.hint, 'wp-module-onboarding' ),
+								translations( 'site' )
+							) }
+							placeholder={ sprintf(
+								__(
+									content.siteDesc.placeholder,
+									'wp-module-onboarding'
+								),
+								translations( 'Site' )
+							) }
+							maxCharacters={ __(
+								content.siteDesc.maxCharacters,
 								'wp-module-onboarding'
-							),
-							translations( 'Site' )
-						) }
-						hint={ sprintf(
-							__( content.siteDesc.hint, 'wp-module-onboarding' ),
-							translations( 'site' )
-						) }
-						placeholder={ sprintf(
-							__(
-								content.siteDesc.placeholder,
-								'wp-module-onboarding'
-							),
-							translations( 'Site' )
-						) }
-						maxCharacters={ __(
-							content.siteDesc.maxCharacters,
-							'wp-module-onboarding'
-						) }
-						height="100px"
-						textValue={ siteDesc }
-						textValueSetter={ setSiteDesc }
-					/>
-					<div>
-						<SocialMediaForm
+							) }
+							height="100px"
+							textValue={ siteDesc }
+							textValueSetter={ setSiteDesc }
+						/>
+						<div>
+							<SocialMediaForm
+								socialData={ socialData }
+								setSocialData={ setSocialData }
+								setIsValidSocials={ setIsValidSocials }
+							/>
+						</div>
+					</div>
+					<div className="basic-info-form__right">
+						<ImageUploader
+							icon={ siteLogo }
+							iconSetter={ setSiteLogo }
+						/>
+						<MiniPreview
+							icon={ siteLogo }
+							title={ siteTitle }
+							desc={ siteDesc }
 							socialData={ socialData }
-							setSocialData={ setSocialData }
-							setIsValidSocials={ setIsValidSocials }
 						/>
 					</div>
 				</div>
-				<div className="basic-info-form__right">
-					<ImageUploader
-						icon={ siteLogo }
-						iconSetter={ setSiteLogo }
-					/>
-					<MiniPreview
-						icon={ siteLogo }
-						title={ siteTitle }
-						desc={ siteDesc }
-						socialData={ socialData }
-					/>
-				</div>
+				<SkipButton />
 			</div>
-			<SkipButton />
-		</div>
+		</StepStateHandler>
 	);
 };
 
