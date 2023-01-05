@@ -13,7 +13,6 @@ import { store as nfdOnboardingStore } from '../../../store';
 import ImageUploader from '../../../components/ImageUploader';
 import SocialMediaForm from '../../../components/SocialMediaForm';
 import { translations } from '../../../utils/locales/translations';
-import { isArray } from 'lodash';
 
 /**
  * Basic Info Form.
