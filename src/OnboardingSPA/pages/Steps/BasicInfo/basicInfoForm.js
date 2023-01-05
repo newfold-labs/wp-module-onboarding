@@ -23,6 +23,7 @@ const BasicInfoForm = () => {
 	const [ flowData, setFlowData ] = useState();
 	const [ isLoaded, setisLoaded ] = useState( false );
 	const [ debouncedFlowData, setDebouncedFlowData ] = useState();
+	const [ basicInfoState, setBasicInfoState ] = useState("basic-info__loadState");
 
 	const [ siteTitle, setSiteTitle ] = useState( '' );
 	const [ siteDesc, setSiteDesc ] = useState( '' );
@@ -49,6 +50,7 @@ const BasicInfoForm = () => {
 			setSiteLogo( flowData?.data.siteLogo );
 			setSiteTitle( flowData?.data.blogName );
 			setSiteDesc( flowData?.data.blogDescription );
+			setBasicInfoState("basic-info");
 		}
 	}
 
@@ -122,7 +124,7 @@ const BasicInfoForm = () => {
 	}, [ debouncedFlowData ] );
 
 	return (
-		<div className="basic-info">
+		<div className={basicInfoState}>
 			<div className={ `${ isError ? 'error__show' : 'error__hide' }` }>
 				{ __( content.error.title, 'wp-module-onboarding' ) }
 			</div>
