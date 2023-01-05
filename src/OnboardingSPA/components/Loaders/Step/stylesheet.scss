@@ -1,5 +1,6 @@
 .step-loader {
 
+	cursor: wait;
 	justify-content: space-evenly;
 
 	@media (max-width: #{($break-medium)}) {

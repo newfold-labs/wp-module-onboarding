@@ -9,6 +9,7 @@ $main-color-light: var(--nfd-onboarding-white);
     margin-top: 16px;
     background: $main-color-light;
     border: 0.5px solid $white-offset;
+    cursor: not-allowed;
     width: clamp(15rem, 25vw, 35rem);
     box-shadow: 0px 2px 8px 2px rgba(204, 204, 204, 0.175295);
 }
