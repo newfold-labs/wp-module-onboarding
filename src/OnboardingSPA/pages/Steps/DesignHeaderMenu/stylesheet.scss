@@ -66,7 +66,7 @@
 		background-color: #ccc;
 		justify-content: space-between;
 		border: 1px solid transparent;
-        margin-top: 20px;
+		margin-top: 20px;
 
 		&__browser {
 			display: flex;
@@ -92,6 +92,11 @@
 		align-items: center;
 		border: 1px solid #e3dfdf;
 		margin-bottom: 30px;
+
+
+		&:hover {
+			cursor: not-allowed;
+		}
 
 		.live-preview {
 

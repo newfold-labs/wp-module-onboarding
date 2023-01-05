@@ -4,8 +4,7 @@ import { useState, useEffect } from '@wordpress/element';
 
 import Tooltip from './../Tooltip'
 
-const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
-    const [isActive, setIsActive] = useState(false);
+const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials, isSocialFormOpen, setIsSocialFormOpen }) => {
     const [facebook, setFacebook] = useState("");
     const [twitter, setTwitter] = useState("");
     const [instagram, setInstagram] = useState("");
@@ -105,11 +104,10 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
             }
         }
 
-        setDataAndActiveErrorState( data, activeError);        
+        setDataAndActiveErrorState(data, socialInput, activeError);        
     }
 
-    const setDataAndActiveErrorState = (data, activeError) => {
-
+    const setDataAndActiveErrorState = (data, socialInput, activeError) => {
         if (!data){
             var activeErrorFiltered = activeError.filter(function (item) {
                 return item !== socialInput
@@ -131,7 +129,7 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
     const checkValidUrlDebounce = _.debounce(checkValidUrl, 1000);
 
     const handleAccordion = (e) => {
-        setIsActive(!isActive);
+        setIsSocialFormOpen(!isSocialFormOpen);
     }
 
     const handleChange = (e) => {
@@ -222,9 +220,9 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials }) => {
                         'wp-module-onboarding'
                     )}
                 </div>
-                <div className={`social-form__top-row_icon ${isActive ? 'social-form__top-row_icon_opened' : ''}`}></div>
+                <div className={`social-form__top-row_icon ${isSocialFormOpen ? 'social-form__top-row_icon_opened' : ''}`}></div>
             </div>
-            <form className={isActive ? 'social-form__main-active' : 'social-form__main-hidden'} onSubmit={(e) => { handleSubmit(e) }}>
+            <form className={isSocialFormOpen ? 'social-form__main-active' : 'social-form__main-hidden'} onSubmit={(e) => { handleSubmit(e) }}>
                 {buildSocialBoxes()}
             </form>
         </div>

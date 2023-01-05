@@ -3,15 +3,17 @@ import { __, sprintf } from '@wordpress/i18n';
 import { translations } from '../../../../../../utils/locales/translations';
 import { institution } from '@wordpress/icons';
 
-const getContents = ( brandName,  techSupportLink, fullServiceCreativeTeamLink ) => {
+const getContents = (
+	brandName,
+	techSupportLink,
+	fullServiceCreativeTeamLink
+) => {
 	return {
 		introduction: {
 			heading: __( 'Tax Info', 'wp-module-onboarding' ),
 			subheading: sprintf(
 				/* translators: 1: Site 2: Brand 3: Site */
-				__(
-					'A %s that does taxes in one click. That’s pretty novel.'
-				),
+				__( 'A %s that does taxes in one click. That’s pretty novel.' ),
 				translations( 'site' ),
 				brandName,
 				translations( 'Site' )

@@ -13,6 +13,7 @@ import { RadioControl } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+import { RadioControlStateHandler } from '../../../../components/RadioControl';
 
 /**
  * Get Started: WordPress Experience Comfort Level.
@@ -80,23 +81,32 @@ const GetStartedExperience = () => {
 							question={ currentStep.subheading }
 						/>
 					</div>
-					<RadioControl
-						className="nfd-onboarding-experience-step-tabs components-radio-control__input"
-						selected={ wpComfortLevel }
-						options={ content.options.map( ( option ) => {
-							return {
-								label: __(
-									option.content,
-									'wp-module-onboarding'
-								),
-								value: __(
-									option.value,
-									'wp-module-onboarding'
-								),
-							};
-						} ) }
-						onChange={ ( value ) => setWpComfortLevel( value ) }
-					/>
+					<RadioControlStateHandler
+						watch={ wpComfortLevel }
+						options={ content.options }
+					>
+						<RadioControl
+							className={
+								'nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-main'
+							}
+							selected={ wpComfortLevel }
+							options={ content.options.map(
+								( option ) => {
+									return {
+										label: __(
+											option.content,
+											'wp-module-onboarding'
+										),
+										value: __(
+											option.value,
+											'wp-module-onboarding'
+										),
+									};
+								}
+							)}
+							onChange={( value ) => setWpComfortLevel( value )}
+						/>
+					</RadioControlStateHandler>
 					<NavCardButton
 						text={ __(
 							content.buttonText,

@@ -22,9 +22,14 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 		align-items: center;
 		border: 1px solid #e3dfdf;
 
+		&:hover {
+			cursor: pointer;
+		}
+
 		.live-preview {
 
 			&__container {
+
 				&-custom {
 					width: 100%;
 					overflow: hidden;
@@ -35,5 +40,4 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 
 	}
 }
-
 
