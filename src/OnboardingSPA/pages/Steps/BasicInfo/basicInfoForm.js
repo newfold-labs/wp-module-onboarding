@@ -19,7 +19,7 @@ import { translations } from '../../../utils/locales/translations';
  * @return
  */
 const BasicInfoForm = () => {
-	const socialMediaRef = useRef(null);
+	const socialMediaRef = useRef( null );
 	const [ isError, setIsError ] = useState( false );
 	const [ flowData, setFlowData ] = useState();
 	const [ isLoaded, setisLoaded ] = useState( false );
@@ -28,7 +28,7 @@ const BasicInfoForm = () => {
 	const [ siteTitle, setSiteTitle ] = useState( '' );
 	const [ siteDesc, setSiteDesc ] = useState( '' );
 	const [ siteLogo, setSiteLogo ] = useState( 0 );
-	const [ socialData, setSocialData ] = useState( '' );
+	const [ socialData, setSocialData ] = useState();
 	const [ isValidSocials, setIsValidSocials ] = useState( false );
 	const [ isSocialFormOpen, setIsSocialFormOpen ] = useState( false );
 
@@ -67,10 +67,9 @@ const BasicInfoForm = () => {
 		return dataToSave;
 	}
 
-	useEffect(() => {
-		if(isSocialFormOpen) 
-			socialMediaRef.current.scrollIntoView();
-	}, [isSocialFormOpen]);
+	useEffect( () => {
+		if ( isSocialFormOpen ) socialMediaRef.current.scrollIntoView();
+	}, [ isSocialFormOpen ] );
 
 	useEffect( () => {
 		async function getFlowData() {
@@ -197,37 +196,37 @@ const BasicInfoForm = () => {
 								content.siteTitle.maxCharacters,
 								'wp-module-onboarding'
 							) }
-						height="100px"
-						textValue={ siteDesc }
-						textValueSetter={ setSiteDesc }
-					/>
-					<div ref={socialMediaRef}>
-						<SocialMediaForm
+							height="100px"
+							textValue={ siteDesc }
+							textValueSetter={ setSiteDesc }
+						/>
+						<div ref={ socialMediaRef }>
+							<SocialMediaForm
+								socialData={ socialData }
+								setSocialData={ setSocialData }
+								isSocialFormOpen={ isSocialFormOpen }
+								setIsValidSocials={ setIsValidSocials }
+								setIsSocialFormOpen={ setIsSocialFormOpen }
+							/>
+						</div>
+					</div>
+					<div className="basic-info-form__right">
+						<ImageUploader
+							icon={ siteLogo }
+							iconSetter={ setSiteLogo }
+						/>
+						<MiniPreview
+							icon={ siteLogo }
+							title={ siteTitle }
+							desc={ siteDesc }
 							socialData={ socialData }
-							setSocialData={ setSocialData }
 							isSocialFormOpen={ isSocialFormOpen }
-							setIsValidSocials={ setIsValidSocials }
 							setIsSocialFormOpen={ setIsSocialFormOpen }
 						/>
 					</div>
 				</div>
-				<div className="basic-info-form__right">
-					<ImageUploader
-						icon={ siteLogo }
-						iconSetter={ setSiteLogo }
-					/>
-					<MiniPreview
-						icon={ siteLogo }
-						title={ siteTitle }
-						desc={ siteDesc }
-						socialData={ socialData }
-						isSocialFormOpen={ isSocialFormOpen } 
-						setIsSocialFormOpen={ setIsSocialFormOpen }
-					/>
-				</div>
+				<SkipButton />
 			</div>
-			<SkipButton/>
-		</div>
 		</StepStateHandler>
 	);
 };
