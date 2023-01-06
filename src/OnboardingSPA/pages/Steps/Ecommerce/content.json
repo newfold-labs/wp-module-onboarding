@@ -11,7 +11,7 @@
             "content": "Yes, enable tax rates and calculations",
             "value": "1",
             "data": {
-                "wc_connect_taxes_enabled": "no",
+                "wc_connect_taxes_enabled": "yes",
                 "woocommerce_calc_taxes": "yes"
             }
         },
@@ -20,7 +20,7 @@
             "value": "3",
             "data": {
                 "wc_connect_taxes_enabled": "no",
-                "woocommerce_calc_taxes": "no"
+                "woocommerce_calc_taxes": "yes"
             }
         },
         {
@@ -28,7 +28,8 @@
             "value": "5",
             "data": {
                 "woocommerce_no_sales_tax": true,
-                "woocommerce_calc_taxes": "no"
+                "woocommerce_calc_taxes": "no",
+                "wc_connect_taxes_enabled": "no"
             }
         }
     ],

@@ -1,4 +1,3 @@
-import { __ } from '@wordpress/i18n';
 import { useLocation } from 'react-router-dom';
 import { useViewportMatch } from '@wordpress/compose';
 import { useState, useEffect } from '@wordpress/element';
@@ -24,26 +23,21 @@ const StepDesignColors = () => {
 	const [ pattern, setPattern ] = useState();
 
 	const isLargeViewport = useViewportMatch( 'medium' );
-	const { currentStep, currentData } = useSelect(
-		( select ) => {
-			return {
-				currentStep: select( nfdOnboardingStore ).getStepFromPath(
-					location.pathname
-				),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			};
-		},
-		[]
-	);
+	const { currentStep } = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getStepFromPath(
+				location.pathname
+			),
+		};
+	}, [] );
 
 	const {
 		setDrawerActiveView,
 		setIsDrawerOpened,
 		setSidebarActiveView,
 		setIsDrawerSuppressed,
-		setIsHeaderNavigationEnabled
-
+		setIsHeaderNavigationEnabled,
+		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
