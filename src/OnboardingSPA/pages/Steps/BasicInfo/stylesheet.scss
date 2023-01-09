@@ -4,11 +4,6 @@
     flex-direction: column;
     justify-content: center;
 
-    &__loadState {
-        opacity: 0;
-        pointer-events: none;
-    }
-
     &-form {
             width: 90vw;
             display: flex;
