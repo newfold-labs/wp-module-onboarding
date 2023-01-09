@@ -93,7 +93,7 @@ class FlowService {
 	 * function to update the Database recursively based on Values opted or entered by the User
 	 */	
 	private static function update_post_call_data_recursive(&$flow_data, $params) {
-		static $mismatch_data_type = '';
+		$mismatch_data_type = '';
 		$exception_list = Flows::get_exception_list();
 
 		foreach ($flow_data as $key => $value)
@@ -111,8 +111,7 @@ class FlowService {
 
 			// Error thrown if the datatype of the parameter does not match
 			if(strcmp(gettype($value), gettype($params[$key])) != 0) {
-				$mismatch_data_type = $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value);
-				break;
+				return $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value);
 			}
 
 			// Accepts non-Array Values entered by the user
@@ -132,7 +131,10 @@ class FlowService {
 
 			// To handle Associative Arrays gracefully
 			$flow_data[$key] = self::update_post_call_data_recursive($value, $params[$key]);
-			}					
+			if(!is_array($flow_data[$key])) {
+				$mismatch_data_type = $flow_data[$key];
+			}
+		}					
 		return (!empty($mismatch_data_type))? $mismatch_data_type : $flow_data;
 	}
 
@@ -161,13 +163,13 @@ class FlowService {
 	 * function to search for key in array recursively with case sensitive exact match
 	 */
 	public static function check_key_in_nested_array( $params, $flow_data, $header_key = 'Base Level' ) {
-		static $mismatch_key = [];
+		$mismatch_key = [];
 		$exception_list = Flows::get_exception_list();
 		foreach($params as $key => $value){
 			if(!isset($exception_list[$key]) && is_array($flow_data)) {
 				// Error if the key added by the user is not present in the database
 				if(!array_key_exists($key, $flow_data)) {
-					$mismatch_key[]  = $header_key. " => " . $key;
+					return $header_key. " => " . $key;
 				}
 					
 				// To check sub-Arrays
@@ -186,7 +188,10 @@ class FlowService {
 				}
 
 				// For Associative Arrays
-				self::check_key_in_nested_array($value, $flow_data[$key], $key);
+				$verify_key = self::check_key_in_nested_array($value, $flow_data[$key], $key);
+				if(!is_array($verify_key)) {
+					$mismatch_key = $verify_key;
+				}
 			}
 		}
 		return $mismatch_key;
