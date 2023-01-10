@@ -112,7 +112,7 @@ final class Themes {
 	}
 
 	// This is temporary, as we implement theme selections we can remove this.
-	public static function get_flow_default_theme_slug( $flow ) {
+	protected static function get_flow_default_theme_slug( $flow ) {
 		return isset( self::$flow_default_theme_slugs[ $flow ] ) ? self::$flow_default_theme_slugs[ $flow ] : false;
 	}
 }

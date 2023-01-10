@@ -105,7 +105,7 @@ final class SiteFeatures {
 		);
 	}
 
-	public static function mark_initial_plugins() {
+	private static function mark_initial_plugins() {
 		$flow              = Data::current_flow();
 		$installed_plugins = Plugins::get_init();
 

@@ -229,7 +229,7 @@ class ThemeGeneratorController {
 		return $theme_json_data;
 	}
 
-	public function generate_child_theme_stylesheet_comment( $parent_theme_slug, $child_theme_slug ) {
+	protected function generate_child_theme_stylesheet_comment( $parent_theme_slug, $child_theme_slug ) {
 		$current_brand = Data::current_brand();
 		$customer      = \wp_get_current_user();
 

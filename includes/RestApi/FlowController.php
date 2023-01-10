@@ -163,7 +163,7 @@ class FlowController {
 	 *
 	 * @return array
 	 */
-	public function update_default_data_for_ecommerce( $data ) {
+	protected function update_default_data_for_ecommerce( $data ) {
 		// get current flow type
 		$flow_type = Data::current_flow();
 		if ( $flow_type == 'ecommerce' ) {
@@ -187,21 +187,21 @@ class FlowController {
 	/*
 	 * add onboarding flow options
 	 */
-	public function save_details_to_wp_options( $data ) {
+	private function save_details_to_wp_options( $data ) {
 		return \add_option( Options::get_option_name( 'flow' ), $data );
 	}
 
 	/*
 	 * update onboarding flow options
 	 */
-	public function update_wp_options_data_in_database( $data ) {
+	private function update_wp_options_data_in_database( $data ) {
 		return \update_option( Options::get_option_name( 'flow' ), $data );
 	}
 
 	/*
 	 * function to search for key in array recursively with case sensitive exact match
 	 */
-	public function array_search_key( $needle_key, $array ) {
+	private function array_search_key( $needle_key, $array ) {
 		foreach ( $array as $key => $value ) {
 			if ( strcmp( $key, $needle_key ) === 0 ) {
 				return true;

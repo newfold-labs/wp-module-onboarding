@@ -174,7 +174,7 @@ class PluginInstallTaskManager {
 		 return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
 	}
 
-	public static function remove_from_queue( $plugin ) {
+	protected static function remove_from_queue( $plugin ) {
 		/*
 		   Get the plugins queued up to be installed, the PluginInstall task gets
 		   converted to an associative array before storing it in the option. */
