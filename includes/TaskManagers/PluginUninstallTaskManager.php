@@ -116,7 +116,7 @@ class PluginUninstallTaskManager {
 			PluginInstallTaskManager::remove_from_queue(
 				$plugin_uninstall_task->get_slug(),
 			);
-			
+
 			return true;
 		}
 
@@ -124,8 +124,9 @@ class PluginUninstallTaskManager {
 		// Gets the specified path for the Plugin from the predefined list
 		$plugin_path = $plugin_list[ $plugin_uninstall_task->get_slug() ]['path'];
 
-		if (!PluginUninstaller::is_plugin_installed($plugin_path))
+		if ( ! PluginUninstaller::is_plugin_installed( $plugin_path ) ) {
 			return true;
+		}
 
 		$queue = new PriorityQueue();
 		foreach ( $plugins as $queued_plugin ) {

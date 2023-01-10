@@ -31,8 +31,8 @@ class ThemeInstallerController extends \WP_REST_Controller {
 			$this->rest_base . '/initialize',
 			array(
 				array(
-					'methods'  => \WP_REST_Server::CREATABLE,
-					'callback' => array( $this, 'initialize' ),
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'initialize' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -56,9 +56,9 @@ class ThemeInstallerController extends \WP_REST_Controller {
 			$this->rest_base . '/status',
 			array(
 				array(
-					'methods'  => \WP_REST_Server::READABLE,
-					'callback' => array( $this, 'get_status' ),
-					'args'     => $this->get_status_args(),
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_status' ),
+					'args'                => $this->get_status_args(),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)

@@ -23,8 +23,8 @@ final class Themes {
 
 	// This is temporary, as we implement theme selections we can remove this.
 	protected static $flow_default_theme_slugs = array(
-		'wp-setup'   => 'twentytwentythree',
-		'ecommerce'  => 'yith-wonder',
+		'wp-setup'  => 'twentytwentythree',
+		'ecommerce' => 'yith-wonder',
 	);
 
 	 /**

@@ -1,15 +1,15 @@
 <?php
 
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
+
 use \__;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 final class SiteFeatures {
-	
-	public static function get_site_features()
-	{
+
+	public static function get_site_features() {
 		return array(
-			'wp-setup'   => array(),
+			'wp-setup'  => array(),
 			'ecommerce' => array(
 				'jetpack'                            => array(
 					'slug'     => 'jetpack',

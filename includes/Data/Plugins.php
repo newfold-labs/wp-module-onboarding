@@ -13,35 +13,35 @@ final class Plugins {
 	*/
 
 	protected static $wp_slugs = array(
-		'jetpack'                        => array(
+		'jetpack'                           => array(
 			'approved' => true,
 			'path'     => 'jetpack/jetpack.php',
 		),
-		'woocommerce'                    => array(
+		'woocommerce'                       => array(
 			'approved' => true,
 			'path'     => 'woocommerce/woocommerce.php',
 		),
-		'wordpress-seo'                  => array(
+		'wordpress-seo'                     => array(
 			'approved' => true,
 			'path'     => 'wordpress-seo/wp-seo.php',
 		),
-		'wpforms-lite'                   => array(
+		'wpforms-lite'                      => array(
 			'approved' => true,
 			'path'     => 'wpforms-lite/wpforms.php',
 		),
-		'google-analytics-for-wordpress' => array(
+		'google-analytics-for-wordpress'    => array(
 			'approved' => true,
 			'path'     => 'google-analytics-for-wordpress/googleanalytics.php',
 		),
-		'optinmonster'                   => array(
+		'optinmonster'                      => array(
 			'approved' => true,
 			'path'     => 'optinmonster/optin-monster-wp-api.php',
 		),
-		'yith-woocommerce-ajax-search'   => array(
+		'yith-woocommerce-ajax-search'      => array(
 			'approved' => true,
 			'path'     => 'yith-woocommerce-ajax-search/init.php',
 		),
-		'creative-mail-by-constant-contact'   => array(
+		'creative-mail-by-constant-contact' => array(
 			'approved' => true,
 			'path'     => 'creative-mail-by-constant-contact/creative-mail-plugin.php',
 		),
@@ -240,8 +240,8 @@ final class Plugins {
 	 */
 	public static function get_squashed() {
 		return array_merge(
-			array_filter( self::$wp_slugs, array( __CLASS__, 'check_approved' ) ) ,
-			array_filter( self::$nfd_slugs, array( __CLASS__, 'check_approved' ) ) ,
+			array_filter( self::$wp_slugs, array( __CLASS__, 'check_approved' ) ),
+			array_filter( self::$nfd_slugs, array( __CLASS__, 'check_approved' ) ),
 		);
 	}
 

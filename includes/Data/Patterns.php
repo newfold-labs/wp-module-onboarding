@@ -96,7 +96,7 @@ final class Patterns {
 						'shown'  => true,
 					),
 				),
-				'site-features'     => SiteFeatures::get_site_features()[Data::current_flow()]
+				'site-features'   => SiteFeatures::get_site_features()[ Data::current_flow() ],
 			),
 		);
 	}
