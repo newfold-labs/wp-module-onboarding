@@ -1,28 +1,51 @@
 {
-  "name": "newfold-labs/wp-module-onboarding",
-  "description": "Next-generation WordPress Onboarding for WordPress sites at Newfold Digital.",
-  "type": "library",
-  "license": "GPL-2.0-or-later",
-  "authors": [
-    {
-      "name": "Dave Ryan",
-      "email": "dave@bluehost.com"
-    }
-  ],
-  "autoload": {
-    "psr-4": {
-      "NewfoldLabs\\WP\\Module\\Onboarding\\": "includes/"
-    },
-    "files": [
-      "bootstrap.php"
-    ]
-  },
-  "require": {
-     "mustache/mustache": "~2.5",
-     "wp-cli/wp-config-transformer": "~1.3.0"
-  },
-  "require-dev": {
-    "wp-phpunit/wp-phpunit": "^5.9",
-    "yoast/phpunit-polyfills": "^1.0"
-  }
+	"name": "newfold-labs/wp-module-onboarding",
+	"description": "Next-generation WordPress Onboarding for WordPress sites at Newfold Digital.",
+	"type": "library",
+	"license": "GPL-2.0-or-later",
+	"authors": [
+		{
+			"name": "Dave Ryan",
+			"email": "dave@bluehost.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"NewfoldLabs\\WP\\Module\\Onboarding\\": "includes/"
+		},
+		"files": [
+			"bootstrap.php"
+		]
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://newfold-labs.github.io/satis/",
+			"only": [
+				"newfold-labs/*"
+			]
+		}
+	],
+	"require": {
+		"mustache/mustache": "~2.5",
+		"wp-cli/wp-config-transformer": "~1.3.0"
+	},
+	"require-dev": {
+		"wp-phpunit/wp-phpunit": "^5.9",
+		"yoast/phpunit-polyfills": "^1.0",
+		"newfold-labs/wp-php-standards": "^1.2"
+	},
+	"scripts": {
+		"lint": [
+			"vendor/bin/phpcs . --standard=Newfold"
+		],
+		"clean": [
+			"vendor/bin/phpcbf . --standard=Newfold"
+		]
+	}
 }
