@@ -2,7 +2,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use Bluehost\WP\Data\Customer;
+use NewfoldLabs\WP\Module\CustomerBluehost\CustomerBluehost;
 
 /**
  * CRUD methods for Onboarding config for use in API, CLI and runtime.
@@ -103,8 +103,8 @@ final class Data {
 	 * @return array
 	 */
 	public static function customer_data() {
-		if ( class_exists( 'Bluehost\WP\Data\Customer' ) ) {
-			 return Customer::collect();
+		if ( class_exists( 'NewfoldLabs\WP\Module\CustomerBluehost\CustomerBluehost' ) ) {
+			 return CustomerBluehost::collect();
 		}
 		 return array();
 	}
