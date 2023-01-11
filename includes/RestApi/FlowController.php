@@ -97,21 +97,13 @@ class FlowController {
 		
 		$default_flow_data = FlowService::get_default_flow_data();
 		$mismatch_key = FlowService::check_key_in_nested_array($params, $default_flow_data);
-		if ( ! empty($mismatch_key) )  {
-			return new \WP_Error(
-				'wrong_param_provided',
-				"Wrong Parameter Provided",
-				array( 'status' => 404 , 'Mismatched Parameter(s)' => $mismatch_key)
-			);
+		if ( \is_wp_error($mismatch_key) )  {
+			return $mismatch_key;
 		}
 
 		$flow_data = FlowService::update_flow_data($params);
-		if(!is_array($flow_data)) {
-			return new \WP_Error(
-				'wrong_param_type_provided',
-				"Wrong Parameter Type Provided : ". $flow_data,
-				array( 'status' => 404 )
-			);
+		if( \is_wp_error($flow_data) ) {
+			return $flow_data;
 		}
 
 		$flow_data['updatedAt'] = time();

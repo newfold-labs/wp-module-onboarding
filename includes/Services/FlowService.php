@@ -93,7 +93,6 @@ class FlowService {
 	 * function to update the Database recursively based on Values opted or entered by the User
 	 */	
 	private static function update_post_call_data_recursive(&$flow_data, $params) {
-		$mismatch_data_type = '';
 		$exception_list = Flows::get_exception_list();
 
 		foreach ($flow_data as $key => $value)
@@ -111,7 +110,11 @@ class FlowService {
 
 			// Error thrown if the datatype of the parameter does not match
 			if(strcmp(gettype($value), gettype($params[$key])) != 0) {
-				return $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value);
+				return new \WP_Error(
+					'wrong_param_type_provided',
+					"Wrong Parameter Type Provided : ". $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value),
+					array( 'status' => 404 )
+				);
 			}
 
 			// Accepts non-Array Values entered by the user
@@ -131,11 +134,11 @@ class FlowService {
 
 			// To handle Associative Arrays gracefully
 			$flow_data[$key] = self::update_post_call_data_recursive($value, $params[$key]);
-			if(!is_array($flow_data[$key])) {
-				$mismatch_data_type = $flow_data[$key];
+			if( \is_wp_error($flow_data[$key]) ) {
+				return $flow_data[$key];
 			}
 		}					
-		return (!empty($mismatch_data_type))? $mismatch_data_type : $flow_data;
+		return $flow_data;
 	}
 
     /*
@@ -163,13 +166,16 @@ class FlowService {
 	 * function to search for key in array recursively with case sensitive exact match
 	 */
 	public static function check_key_in_nested_array( $params, $flow_data, $header_key = 'Base Level' ) {
-		$mismatch_key = [];
 		$exception_list = Flows::get_exception_list();
 		foreach($params as $key => $value){
 			if(!isset($exception_list[$key]) && is_array($flow_data)) {
 				// Error if the key added by the user is not present in the database
 				if(!array_key_exists($key, $flow_data)) {
-					return $header_key. " => " . $key;
+					return new \WP_Error(
+						'wrong_param_provided',
+						"Wrong Parameter Provided",
+						array( 'status' => 404 , 'Mismatched Parameter(s)' => $header_key. " => " . $key)
+					);
 				}
 					
 				// To check sub-Arrays
@@ -188,12 +194,10 @@ class FlowService {
 				}
 
 				// For Associative Arrays
-				$verify_key = self::check_key_in_nested_array($value, $flow_data[$key], $key);
-				if(!is_array($verify_key)) {
-					$mismatch_key = $verify_key;
+				if( \is_wp_error(self::check_key_in_nested_array($value, $flow_data[$key], $key) )) {
+					return self::check_key_in_nested_array($value, $flow_data[$key], $key);
 				}
 			}
 		}
-		return $mismatch_key;
 	}
 }
