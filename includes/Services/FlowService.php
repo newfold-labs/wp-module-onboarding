@@ -28,7 +28,7 @@ class FlowService {
 		return $flow_data;
 	}
 
-	public static function update_flow_data($params) {
+	public static function get_updated_flow_data($params) {
 		$flow_data = FlowService::read_flow_data_from_wp_option();
 		return self::update_post_call_data_recursive($flow_data, $params);
 	}
@@ -72,7 +72,7 @@ class FlowService {
 			}
 
 			// To handle Indexed Arrays gracefully
-			if (count(array_filter(array_keys($value), 'is_string')) === 0) {
+			if (self::is_array_indexed($value)) {
 				// To check if an Indexed Array is further Nested or Not
 				foreach($value as $index_key => $index_value) {
 					// For Indexed Arrays having Non Associative Array Values
@@ -113,7 +113,7 @@ class FlowService {
 				return new \WP_Error(
 					'wrong_param_type_provided',
 					"Wrong Parameter Type Provided : ". $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value),
-					array( 'status' => 404 )
+					array( 'status' => 400 )
 				);
 			}
 
@@ -124,7 +124,7 @@ class FlowService {
 			}
 
 			// To handle Indexed Arrays gracefully
-			if (count(array_filter(array_keys($params[$key]), 'is_string')) === 0 ) {
+			if ( self::is_array_indexed($params[$key]) ) {
 				// If the Database value is empty or an Indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
 				((sizeof($value) === 0) || (count(array_filter(array_keys($value), 'is_string')) === 0))?
 					$flow_data[$key] = $params[$key]
@@ -133,12 +133,20 @@ class FlowService {
 			}
 
 			// To handle Associative Arrays gracefully
-			$flow_data[$key] = self::update_post_call_data_recursive($value, $params[$key]);
-			if( \is_wp_error($flow_data[$key]) ) {
-				return $flow_data[$key];
+			$flow_data_check = self::update_post_call_data_recursive($value, $params[$key]);
+			if( \is_wp_error($verify_key) ) {
+				return $verify_key;
 			}
+			$flow_data[$key] = $flow_data_check;
 		}					
 		return $flow_data;
+	}
+
+	/*
+	 * Logic to check for an Indexed Array
+	*/
+	private static function is_array_indexed( $array ) {
+		return count(array_filter(array_keys($array), 'is_string')) === 0;
 	}
 
     /*
@@ -165,7 +173,7 @@ class FlowService {
     /*
 	 * function to search for key in array recursively with case sensitive exact match
 	 */
-	public static function check_key_in_nested_array( $params, $flow_data, $header_key = 'Base Level' ) {
+	public static function find_mismatch_key( $params, $flow_data, $header_key = 'Base Level' ) {
 		$exception_list = Flows::get_exception_list();
 		foreach($params as $key => $value){
 			if(!isset($exception_list[$key]) && is_array($flow_data)) {
@@ -174,7 +182,7 @@ class FlowService {
 					return new \WP_Error(
 						'wrong_param_provided',
 						"Wrong Parameter Provided",
-						array( 'status' => 404 , 'Mismatched Parameter(s)' => $header_key. " => " . $key)
+						array( 'status' => 400 , 'Mismatched Parameter(s)' => $header_key. " => " . $key)
 					);
 				}
 					
@@ -188,14 +196,15 @@ class FlowService {
 					foreach($value as $index_key=>$index_value) {
 						// For Indexed Arrays having Associative Arrays as Values
 						if(is_array($index_value))
-							self::check_key_in_nested_array($value[$index_key], $flow_data[$key][$index_key], $key. " : " . $index_key);
+							self::find_mismatch_key($value[$index_key], $flow_data[$key][$index_key], $key. " : " . $index_key);
 					}
 					continue;
 				}
 
 				// For Associative Arrays
-				if( \is_wp_error(self::check_key_in_nested_array($value, $flow_data[$key], $key) )) {
-					return self::check_key_in_nested_array($value, $flow_data[$key], $key);
+				$verify_key = self::find_mismatch_key($value, $flow_data[$key], $key);
+				if( \is_wp_error($verify_key) ) {
+					return $verify_key;
 				}
 			}
 		}

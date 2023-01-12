@@ -96,12 +96,12 @@ class FlowController {
 		}
 		
 		$default_flow_data = FlowService::get_default_flow_data();
-		$mismatch_key = FlowService::check_key_in_nested_array($params, $default_flow_data);
+		$mismatch_key = FlowService::find_mismatch_key($params, $default_flow_data);
 		if ( \is_wp_error($mismatch_key) )  {
 			return $mismatch_key;
 		}
 
-		$flow_data = FlowService::update_flow_data($params);
+		$flow_data = FlowService::get_updated_flow_data($params);
 		if( \is_wp_error($flow_data) ) {
 			return $flow_data;
 		}
