@@ -88,8 +88,6 @@ const BlockPreview = ( {
 		);
 	});
 
-	console.count('Rendered');
-	
 	return (
 		<div className={ `live-preview__container-${ styling }` }>
 			{ loading && <SkeletonLivePreview/> }

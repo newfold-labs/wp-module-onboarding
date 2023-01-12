@@ -1,3 +1,4 @@
+import { memo } from '@wordpress/element';
 
 /**
  * Checkbox List Skeleton Component
@@ -35,4 +36,4 @@ const CheckboxListSkeleton = ({ count }) => {
     );
 };
 
-export default CheckboxListSkeleton;
+export default memo(CheckboxListSkeleton);
