@@ -1,7 +1,7 @@
 import { useSelect } from '@wordpress/data';
 import { BlockEditorProvider } from '@wordpress/block-editor';
 import { parse } from '@wordpress/blocks';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useState, memo } from '@wordpress/element';
 
 import AutoHeightBlockPreview from './auto';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
@@ -75,18 +75,24 @@ const BlockPreview = ( {
 		}
 	}, [ storedPreviewSettings ] );
 
+	const SkeletonLivePreview = memo(() => {
+		return (
+			<div className="live-preview__container--is-skeleton">
+				<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-header">
+					<div className={`live-preview__container--is-skeleton--shimmer`} />
+				</div>
+				<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-1" />
+				<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-2" />
+				<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-footer" />
+			</div>
+		);
+	});
+
+	console.count('Rendered');
+	
 	return (
 		<div className={ `live-preview__container-${ styling }` }>
-			{ loading && (
-				<div className="live-preview__container--is-skeleton">
-					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-header">
-						<div className={ `live-preview__container--is-skeleton--shimmer` } />
-					</div>
-					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-1" />
-					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-2" />
-					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-footer" />
-				</div> 
-			)}
+			{ loading && <SkeletonLivePreview/> }
 			{ settings && (
 				<BlockEditorProvider
 					value={ blocks }
