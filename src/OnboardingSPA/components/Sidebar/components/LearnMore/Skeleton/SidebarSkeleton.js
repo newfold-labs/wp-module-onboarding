@@ -1,5 +1,3 @@
-import { memo } from '@wordpress/element';
-
 /** Skeleton Structure for the SideBar */
 const SidebarSkeleton = () => {
 	return (
@@ -37,4 +35,4 @@ const SidebarSkeleton = () => {
 	);
 };
 
-export default memo(SidebarSkeleton);
+export default SidebarSkeleton;
