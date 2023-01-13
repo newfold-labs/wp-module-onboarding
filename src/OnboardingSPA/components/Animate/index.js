@@ -9,7 +9,7 @@ const Animate = ( { type, after = true, children } ) => {
 	const prefix = 'animate';
 
 	/**
-	 * Returns the appropriate classNames
+	 * Returns the appropriate className
 	 *
 	 * @return {string | void} ClassName that applies the animations
 	 */
