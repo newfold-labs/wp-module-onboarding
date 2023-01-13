@@ -150,7 +150,7 @@ const StepAddress = () => {
 								)}
 							/>
 						</div>
-						<Animate type={"fade-in"} after={ settings }>
+						<Animate type="fade-in" after={ settings }>
 							<div className={'store-address-form'}>
 								<div data-name='country'>
 									<label aria-required>

@@ -1,43 +1,37 @@
 /**
  * A Animator to show animation
  *
- * @param {string} type              The Animation to be shown.
- * @param {string} children          The children to be rendered out.
- * @param {number} after             The variable to look after for before showing the animation, by default true to show the children right away.
+ * @param {string}             type  The name of Animation to be shown.
+ * @param { object | boolean } after The variable to look after for before showing the animation, by default true to show the children right away.
  *
  */
-const Animate = ({ type, after = true, children }) => {
+const Animate = ( { type, after = true, children } ) => {
+	const prefix = 'animate';
 
-    /**
-     * @param {GetAnimateOptions} options
-     *
-     * @return {string | void} ClassName that applies the animations
-    */
-    function getAnimateClassName() {
+	/**
+	 * Returns the appropriate classNames
+	 *
+	 * @return {string | void} ClassName that applies the animations
+	 */
+	function getAnimateClassName() {
+		if ( type ) {
+			let classname = '';
 
-        let classname = '';
-        const prefix = 'animate';
+			switch ( type ) {
+				// Add animation types and appropriate CSS
+				case 'fade-in':
+					classname = prefix.concat( '__fade-in' );
+					break;
+			}
+			return classname;
+		}
+	}
 
-        switch ( type ) {
-
-            // Add animation types and appropriate CSS
-            case 'fade-in':
-                classname = prefix.concat('__fade-in');
-                break;
-        }
-
-        return classname;
-    }
-
-    return !after ? (
-        <div className='animate__blank'>
-            {children}
-        </div>
-    ) : (
-        <div className={getAnimateClassName()}>
-            {children}
-        </div>
-    );
+	return ! after ? (
+		<div className={ `${ prefix }__blank` }>{ children }</div>
+	) : (
+		<div className={ getAnimateClassName() }>{ children }</div>
+	);
 };
 
 export default Animate;
