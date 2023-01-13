@@ -87,8 +87,6 @@ const BlockPreview = ( {
 			</div>
 		);
 	});
-
-	console.count('Rendered');
 	
 	return (
 		<div className={ `live-preview__container-${ styling }` }>
