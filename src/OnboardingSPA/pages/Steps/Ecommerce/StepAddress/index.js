@@ -13,8 +13,8 @@ import content from '../content.json';
 import countries from '../countries.json';
 import currencies from '../currencies.json';
 import { useWPSettings } from '../useWPSettings';
+import Animate from '../../../../components/Animate';
 import { EcommerceStateHandler } from '../../../../components/StateHandlers';
-import StepStateHandler from '../../../../components/StateHandlers/StepStateHandler';
 
 const StepAddress = () => {
 	const isLargeViewport = useViewportMatch('medium');
@@ -150,7 +150,7 @@ const StepAddress = () => {
 								)}
 							/>
 						</div>
-						<StepStateHandler watch={ settings }>
+						<Animate type={"fade-in"} after={ settings }>
 							<div className={'store-address-form'}>
 								<div data-name='country'>
 									<label aria-required>
@@ -274,7 +274,7 @@ const StepAddress = () => {
 								</div>
 								<em style={{ display: 'inline' }}>* required</em>
 							</div>
-						</StepStateHandler>
+						</Animate>
 						<button
 							className='nfd-nav-card-button nfd-card-button'
 							disabled={settings === null}
