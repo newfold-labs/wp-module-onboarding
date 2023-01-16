@@ -6,7 +6,7 @@ import content from './content.json';
 import TextInput from '../../../components/TextInput';
 import SkipButton from '../../../components/SkipButton';
 import MiniPreview from '../../../components/MiniPreview';
-import StepStateHandler from '../../../components/StateHandlers/StepStateHandler';
+import Animate from '../../../components/Animate';
 import { getSettings } from '../../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../../store';
 import ImageUploader from '../../../components/ImageUploader';
@@ -129,8 +129,9 @@ const BasicInfoForm = () => {
 	}, [ debouncedFlowData ] );
 
 	return (
-		<StepStateHandler
-			watch={
+		<Animate
+			type={"fade-in"}
+			after={
 				typeof flowData === 'object' && typeof socialData === 'object'
 			}
 		>
@@ -227,7 +228,7 @@ const BasicInfoForm = () => {
 				</div>
 				<SkipButton />
 			</div>
-		</StepStateHandler>
+		</Animate>
 	);
 };
 
