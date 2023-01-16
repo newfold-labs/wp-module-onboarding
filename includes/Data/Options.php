@@ -41,6 +41,7 @@ final class Options {
 		'show_on_front'                 => 'show_on_front',
 		'page_on_front'                 => 'page_on_front',
 		'theme_settings'                => 'theme_settings',
+		'flow_preset'                   => 'flow_preset',
 	);
 
 	protected static $initialization_options = array(
