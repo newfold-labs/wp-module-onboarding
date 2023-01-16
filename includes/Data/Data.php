@@ -59,7 +59,7 @@ final class Data {
 		$customer_data = self::customer_data();
 
 		$current_flow = Flows::get_flow_from_customer_data( $customer_data );
-		if ( $current_flow !== false ) {
+		if ( false !== $current_flow ) {
 			 return array(
 				 'flow'    => $current_flow,
 				 'subtype' => $customer_data['plan_subtype'],
@@ -69,7 +69,7 @@ final class Data {
 
 		$current_flow = Flows::get_flow_from_params();
 		return array(
-			'flow'    => ( $current_flow !== false ) ? $current_flow : Flows::get_default_flow(),
+			'flow'    => ( false !== $current_flow ) ? $current_flow : Flows::get_default_flow(),
 			'subtype' => null,
 			'type'    => null,
 		);
@@ -83,13 +83,13 @@ final class Data {
 	public static function current_flow() {
 
 		$current_flow = Flows::get_flow_from_params();
-		if ( $current_flow !== false ) {
+		if ( false !== $current_flow ) {
 			return $current_flow;
 		}
 
 		$customer_data = self::customer_data();
 		$current_flow  = Flows::get_flow_from_customer_data( $customer_data );
-		if ( $current_flow !== false ) {
+		if ( false !== $current_flow ) {
 			return $current_flow;
 		}
 

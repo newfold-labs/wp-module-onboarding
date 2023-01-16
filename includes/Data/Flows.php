@@ -5,7 +5,11 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
  * Contains Onboarding Flow information.
  */
 final class Flows {
-
+	/**
+	 * Flow data blueprint.
+	 *
+	 * @var array
+	 */
 	protected static $data = array(
 		// Each time step is viewed, insert GMT timestamp to array.
 		'isViewed'             => array(),
@@ -167,6 +171,12 @@ final class Flows {
 		);
 	}
 
+	/**
+	 * Check if a plan is of flow type ecommerce.
+	 *
+	 * @param string $plan The hosting plan.
+	 * @return boolean
+	 */
 	public static function is_ecommerce_plan( $plan ) {
 		if ( preg_match( '/^(wc_standard|wc_premium)$/i', $plan ) ) {
 			return true;
@@ -174,6 +184,11 @@ final class Flows {
 		return false;
 	}
 
+	/**
+	 * Get the type of flow from the flow query param or the flow preset option.
+	 *
+	 * @return string|boolean
+	 */
 	public static function get_flow_from_params() {
 		$flows = self::get_flows();
 
@@ -193,7 +208,13 @@ final class Flows {
 		return false;
 	}
 
-	public static function get_flow_from_customer_data( $customer_data ) {
+	/**
+	 * Get the flow type given customer data in a particular shape.
+	 *
+	 * @param array $customer_data The customer data to parse.
+	 * @return string|boolean
+	 */
+	public static function get_flow_from_customer_data( $customer_data = array() ) {
 		if ( isset( $customer_data['plan_type'] ) && isset( $customer_data['plan_subtype'] ) ) {
 			return self::get_flow_from_plan_subtype( $customer_data['plan_subtype'] );
 		}
@@ -201,11 +222,10 @@ final class Flows {
 	}
 
 	/**
-	 * @param string $plan_subtype
+	 * Get the corresponding flow type given a hosting plan_subtype.
 	 *
-	 * Get the corresponding flow given a hosting plan_subtype.
-	 *
-	 * @return string/boolean
+	 * @param string $plan_subtype The hosting plan_subtype.
+	 * @return string|boolean
 	 */
 	public static function get_flow_from_plan_subtype( $plan_subtype ) {
 		if ( self::is_ecommerce_plan( $plan_subtype ) ) {
