@@ -58,19 +58,21 @@ final class Data {
 	public static function current_plan() {
 		$customer_data = self::customer_data();
 
-		if ( isset( $customer_data['plan_type'] ) && isset( $customer_data['plan_subtype'] ) ) {
+		$current_flow = Flows::get_flow_from_customer_data( $customer_data );
+		if ( false !== $current_flow ) {
 			 return array(
-				 'flow'    => Flows::get_flow_from_plan_subtype( $customer_data['plan_subtype'] ),
+				 'flow'    => $current_flow,
 				 'subtype' => $customer_data['plan_subtype'],
 				 'type'    => $customer_data['plan_type'],
 			 );
 		}
 
-		  return array(
-			  'flow'    => self::current_flow(),
-			  'subtype' => null,
-			  'type'    => null,
-		  );
+		$current_flow = Flows::get_flow_from_params();
+		return array(
+			'flow'    => ( false !== $current_flow ) ? $current_flow : Flows::get_default_flow(),
+			'subtype' => null,
+			'type'    => null,
+		);
 	}
 
 	/**
@@ -79,19 +81,16 @@ final class Data {
 	 * @return string
 	 */
 	public static function current_flow() {
-		$flows = Flows::get_flows();
 
-		if ( isset( $_GET['flow'] ) ) {
-			   $current_flow_type = \sanitize_text_field( $_GET['flow'] );
+		$current_flow = Flows::get_flow_from_params();
+		if ( false !== $current_flow ) {
+			return $current_flow;
 		}
 
-		if ( ! empty( $current_flow_type ) && isset( $flows[ $current_flow_type ] ) ) {
-			return $current_flow_type;
-		}
-
-		$current_flow_type = \get_option( 'nfd_onboarding_flow_preset', false );
-		if ( $current_flow_type && isset( $flows[ $current_flow_type ] ) ) {
-			return $current_flow_type;
+		$customer_data = self::customer_data();
+		$current_flow  = Flows::get_flow_from_customer_data( $customer_data );
+		if ( false !== $current_flow ) {
+			return $current_flow;
 		}
 
 		return Flows::get_default_flow();
