@@ -2,11 +2,13 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { CheckboxControl } from '@wordpress/components';
-import { useViewportMatch } from '@wordpress/compose';
 import { __ } from '@wordpress/i18n';
 import { orderBy, filter } from 'lodash';
 
-import { LivePreview } from '../../../../components/LivePreview';
+import {
+	LivePreview,
+	GlobalStylesProvider,
+} from '../../../../components/LivePreview';
 import CommonLayout from '../../../../components/Layouts/Common';
 import {
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
@@ -17,7 +19,6 @@ import {
 import { store as nfdOnboardingStore } from '../../../../store';
 import { getPatterns } from '../../../../utils/api/patterns';
 import { conditionalSteps } from '../../../../data/routes/';
-import { GlobalStylesProvider } from '../../../../components/LivePreview';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
 
 const StepDesignThemeStylesPreview = () => {
@@ -26,11 +27,9 @@ const StepDesignThemeStylesPreview = () => {
 	const [ pattern, setPattern ] = useState();
 	const [ customize, setCustomize ] = useState( false );
 
-	const isLargeViewport = useViewportMatch( 'medium' );
 	const {
 		currentStep,
 		currentData,
-		storedPreviewSettings,
 		routes,
 		designSteps,
 		allSteps,
@@ -42,8 +41,6 @@ const StepDesignThemeStylesPreview = () => {
 			),
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			storedPreviewSettings:
-				select( nfdOnboardingStore ).getPreviewSettings(),
 			routes: select( nfdOnboardingStore ).getRoutes(),
 			allSteps: select( nfdOnboardingStore ).getAllSteps(),
 			designSteps: select( nfdOnboardingStore ).getDesignSteps(),
@@ -53,26 +50,18 @@ const StepDesignThemeStylesPreview = () => {
 
 	const {
 		setDrawerActiveView,
-		setIsDrawerOpened,
 		setSidebarActiveView,
-		setIsDrawerSuppressed,
 		updateRoutes,
 		updateDesignSteps,
 		updateAllSteps,
 		setCurrentOnboardingData,
 		updateThemeStatus,
-		setIsHeaderNavigationEnabled
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		if ( isLargeViewport ) {
-			setIsDrawerOpened( true );
-		}
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
-		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_THEME_STYLES_PREVIEW );
 		handleCheckbox( currentData.data.customDesign, false );
-		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	const getStylesAndPatterns = async () => {
@@ -192,11 +181,11 @@ const StepDesignThemeStylesPreview = () => {
 											) }
 										</span>
 									</span>
-							</div>
-						}
-						checked={ customize }
-						onChange={ () => handleCheckbox( ! customize ) }
-					/>
+								</div>
+							}
+							checked={ customize }
+							onChange={ () => handleCheckbox( ! customize ) }
+						/>
 					</div>
 					<div className="theme-styles-preview__title-bar">
 						<div className="theme-styles-preview__title-bar__browser">
@@ -211,15 +200,15 @@ const StepDesignThemeStylesPreview = () => {
 								blockGrammer={ '' }
 								styling={ 'custom' }
 								viewportWidth={ 1300 }
-							/>) 
-						}
+							/>
+						) }
 						{ pattern && (
 							<LivePreview
 								blockGrammer={ pattern }
 								styling={ 'custom' }
 								viewportWidth={ 1300 }
-							/> ) 
-						}
+							/>
+						) }
 					</div>
 				</CommonLayout>
 			</GlobalStylesProvider>

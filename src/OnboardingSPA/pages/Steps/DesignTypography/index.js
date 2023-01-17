@@ -1,5 +1,4 @@
 import { useLocation } from 'react-router-dom';
-import { useViewportMatch } from '@wordpress/compose';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
@@ -22,7 +21,6 @@ const StepDesignTypography = () => {
 	const [ pattern, setPattern ] = useState();
 	const [ isLoaded, setIsLoaded ] = useState( false );
 
-	const isLargeViewport = useViewportMatch( 'medium' );
 	const { currentStep } = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
@@ -31,23 +29,12 @@ const StepDesignTypography = () => {
 		};
 	}, [] );
 
-	const {
-		updateThemeStatus,
-		setDrawerActiveView,
-		setIsDrawerOpened,
-		setSidebarActiveView,
-		setIsDrawerSuppressed,
-		setIsHeaderNavigationEnabled
-	} = useDispatch( nfdOnboardingStore );
+	const { updateThemeStatus, setDrawerActiveView, setSidebarActiveView } =
+		useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		if ( isLargeViewport ) {
-			setIsDrawerOpened( true );
-		}
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
-		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_DESIGN_TYPOGRAPHY );
-		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	const getFontPatterns = async () => {
@@ -78,11 +65,11 @@ const StepDesignTypography = () => {
 						</div>
 					</div>
 					<div className="theme-fonts-preview__live-preview-container">
-						{ !pattern && (
+						{ ! pattern && (
 							<LivePreview
-								blockGrammer={''}
-								styling={'custom'}
-								viewportWidth={1300}
+								blockGrammer={ '' }
+								styling={ 'custom' }
+								viewportWidth={ 1300 }
 							/>
 						) }
 						{ pattern && (

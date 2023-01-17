@@ -114,9 +114,9 @@ class PluginUninstallTaskManager {
 		$position_in_queue = PluginInstallTaskManager::status( $plugin_uninstall_task->get_slug() );
 		if ( $position_in_queue !== false && $position_in_queue !== 0 ) {
 			PluginInstallTaskManager::remove_from_queue(
-				$plugin_uninstall_task->get_slug(),
+				$plugin_uninstall_task->get_slug()
 			);
-			
+
 			return true;
 		}
 

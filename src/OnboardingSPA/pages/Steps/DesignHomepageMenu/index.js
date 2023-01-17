@@ -1,4 +1,3 @@
-import { useViewportMatch } from '@wordpress/compose';
 import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
@@ -50,8 +49,6 @@ const StepDesignHomepageMenu = () => {
 	const [ homepagePattern, setHomepagePattern ] = useState();
 	const [ selectedHomepage, setSelectedHomepage ] = useState( 0 );
 
-	const isLargeViewport = useViewportMatch( 'medium' );
-
 	const {
 		currentStep,
 		currentData,
@@ -74,22 +71,14 @@ const StepDesignHomepageMenu = () => {
 
 	const {
 		setDrawerActiveView,
-		setIsDrawerOpened,
 		setSidebarActiveView,
-		setIsDrawerSuppressed,
 		setCurrentOnboardingData,
 		updateThemeStatus,
-		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		if ( isLargeViewport ) {
-			setIsDrawerOpened( true );
-		}
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
-		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_NAV_DESIGN );
-		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	function refactorPatterns( homepagePatternData ) {

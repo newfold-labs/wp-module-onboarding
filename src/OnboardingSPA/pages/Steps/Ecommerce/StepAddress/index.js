@@ -24,14 +24,19 @@ const StepAddress = () => {
 		setIsDrawerSuppressed,
 		setSidebarActiveView,
 		setCurrentOnboardingData,
+		setIsHeaderNavigationEnabled
 	} = useDispatch(nfdOnboardingStore);
 
-	useEffect(() => {
-		if (isLargeViewport) {
-			setIsDrawerOpened(true);
+	const setNavigationState = () => {
+		if ( isLargeViewport ) {
+			setIsDrawerOpened( true );
 		}
+		setIsDrawerSuppressed( false );
+		setIsHeaderNavigationEnabled( true );
+	}
+
+	useEffect(() => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
-		setIsDrawerSuppressed(false);
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
 	}, []);
 
@@ -115,7 +120,7 @@ const StepAddress = () => {
 		});
 	}
 	return (
-        <EcommerceStateHandler>
+        <EcommerceStateHandler navigationStateCallback={ setNavigationState }>
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard className='ecommerce-step nfd-ecommerce-address-step'>
 				<div className='onboarding-ecommerce-step'>
