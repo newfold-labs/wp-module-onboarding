@@ -72,7 +72,7 @@ const DesignTypography = () => {
 			].typography.fontFamily;
 		if (
 			globalStylesCopy.styles?.blocks[ 'core/site-title' ]?.typography
-				.fontFamily
+				?.fontFamily
 		) {
 			globalStylesCopy.styles.blocks[
 				'core/site-title'
@@ -84,7 +84,7 @@ const DesignTypography = () => {
 
 		if (
 			globalStylesCopy.styles?.blocks[ 'core/site-tagline' ]?.typography
-				.fontFamily
+				?.fontFamily
 		) {
 			globalStylesCopy.styles.blocks[
 				'core/site-tagline'
