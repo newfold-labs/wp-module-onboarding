@@ -5,7 +5,11 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
  * Contains Onboarding Flow information.
  */
 final class Flows {
-
+	/**
+	 * Flow data blueprint.
+	 *
+	 * @var array
+	 */
 	protected static $data = array(
 		// Each time step is viewed, insert GMT timestamp to array.
 		'isViewed'             => array(),
@@ -86,8 +90,8 @@ final class Flows {
 						'color' => '',
 					),
 					array(
-						'slug'  => 'background',
-						'name'  => 'Background',
+						'slug'  => 'base',
+						'name'  => 'Base',
 						'color' => '',
 					),
 				),
@@ -168,10 +172,9 @@ final class Flows {
 	}
 
 	/**
-	 * @param string $plan_subtype
+	 * Get the corresponding flow type given a hosting plan_subtype.
 	 *
-	 * Get the corresponding flow given a hosting plan_subtype.
-	 *
+	 * @param string $plan_subtype The hosting plan_subtype.
 	 * @return string
 	 */
 	public static function get_flow_from_plan_subtype( $plan_subtype ) {
