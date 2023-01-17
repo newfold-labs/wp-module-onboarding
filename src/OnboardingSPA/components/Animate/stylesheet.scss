@@ -1,0 +1,11 @@
+.animate {
+    
+    &__blank {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    &__fade-in {
+        animation: fadeInWithDisabledClicks 500ms ease-in;
+    }
+}

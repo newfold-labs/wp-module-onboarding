@@ -13,8 +13,8 @@ import content from '../content.json';
 import countries from '../countries.json';
 import currencies from '../currencies.json';
 import { useWPSettings } from '../useWPSettings';
+import Animate from '../../../../components/Animate';
 import { EcommerceStateHandler } from '../../../../components/StateHandlers';
-import StepStateHandler from '../../../../components/StateHandlers/StepStateHandler';
 
 const StepAddress = () => {
 	const isLargeViewport = useViewportMatch('medium');
@@ -24,14 +24,19 @@ const StepAddress = () => {
 		setIsDrawerSuppressed,
 		setSidebarActiveView,
 		setCurrentOnboardingData,
+		setIsHeaderNavigationEnabled
 	} = useDispatch(nfdOnboardingStore);
 
-	useEffect(() => {
-		if (isLargeViewport) {
-			setIsDrawerOpened(true);
+	const setNavigationState = () => {
+		if ( isLargeViewport ) {
+			setIsDrawerOpened( true );
 		}
+		setIsDrawerSuppressed( false );
+		setIsHeaderNavigationEnabled( true );
+	}
+
+	useEffect(() => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
-		setIsDrawerSuppressed(false);
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
 	}, []);
 
@@ -115,7 +120,7 @@ const StepAddress = () => {
 		});
 	}
 	return (
-        <EcommerceStateHandler>
+        <EcommerceStateHandler navigationStateCallback={ setNavigationState }>
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard className='ecommerce-step nfd-ecommerce-address-step'>
 				<div className='onboarding-ecommerce-step'>
@@ -150,7 +155,7 @@ const StepAddress = () => {
 								)}
 							/>
 						</div>
-						<StepStateHandler watch={ settings }>
+						<Animate type="fade-in" after={ settings }>
 							<div className={'store-address-form'}>
 								<div data-name='country'>
 									<label aria-required>
@@ -274,7 +279,7 @@ const StepAddress = () => {
 								</div>
 								<em style={{ display: 'inline' }}>* required</em>
 							</div>
-						</StepStateHandler>
+						</Animate>
 						<button
 							className='nfd-nav-card-button nfd-card-button'
 							disabled={settings === null}

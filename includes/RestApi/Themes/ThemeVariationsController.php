@@ -136,7 +136,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 
 		return array_merge(
 			array( $active_variation_global_style ),
-			self::get_style_variations(),
+			self::get_style_variations()
 		);
 	}
 
