@@ -207,7 +207,7 @@ class ThemeGeneratorController {
 	  *
 	  * @return boolean|array
 	  */
-	protected function generate_child_theme_json( $flow_data, $parent_theme_dir ) {
+	private function generate_child_theme_json( $flow_data, $parent_theme_dir ) {
 		global $wp_filesystem;
 
 		$theme_data = \get_option( Options::get_option_name( 'theme_settings' ), false );
@@ -229,7 +229,7 @@ class ThemeGeneratorController {
 		return $theme_json_data;
 	}
 
-	protected function generate_child_theme_stylesheet_comment( $parent_theme_slug, $child_theme_slug ) {
+	private function generate_child_theme_stylesheet_comment( $parent_theme_slug, $child_theme_slug ) {
 		$current_brand = Data::current_brand();
 		$customer      = \wp_get_current_user();
 
@@ -262,7 +262,7 @@ class ThemeGeneratorController {
 	  *
 	  * @return string|\WP_Error the pattern for the part.
 	  */
-	protected function generate_theme_part_pattern( $pattern_slug ) {
+	private function generate_theme_part_pattern( $pattern_slug ) {
 		$pattern = \WP_Block_Patterns_Registry::get_instance()->get_registered( $pattern_slug );
 		if ( ! $pattern ) {
 			return new \WP_Error(
@@ -288,7 +288,7 @@ class ThemeGeneratorController {
 	  *
 	  * @return string|boolean
 	  */
-	protected function write_child_theme( $child_theme_data ) {
+	private function write_child_theme( $child_theme_data ) {
 		$child_directory_created = $this->create_directory( $child_theme_data['child_theme_dir'] );
 		if ( ! $child_directory_created ) {
 			return 'Error creating child directory.';
@@ -338,7 +338,7 @@ class ThemeGeneratorController {
 	  *
 	  * @return boolean
 	  */
-	protected function create_directory( $dir ) {
+	private function create_directory( $dir ) {
 		global $wp_filesystem;
 
 		if ( ! $wp_filesystem->exists( $dir ) ) {
@@ -356,7 +356,7 @@ class ThemeGeneratorController {
 	  *
 	  * @return boolean
 	  */
-	protected function write_theme_json( $theme_dir, $theme_json ) {
+	private function write_theme_json( $theme_dir, $theme_json ) {
 		return $this->write_to_filesystem( $theme_dir . '/' . 'theme.json', $theme_json );
 	}
 
@@ -368,7 +368,7 @@ class ThemeGeneratorController {
 	  *
 	  * @return boolean
 	  */
-	protected function write_template_parts( $theme_dir, $part_patterns ) {
+	private function write_template_parts( $theme_dir, $part_patterns ) {
 		global $wp_filesystem;
 
 		if ( ! $wp_filesystem->exists( $theme_dir . '/parts' ) ) {
@@ -396,7 +396,7 @@ class ThemeGeneratorController {
 	  *
 	  * @return boolean
 	  */
-	protected function write_child_stylesheet( $child_theme_stylesheet_comment, $child_theme_dir ) {
+	private function write_child_stylesheet( $child_theme_stylesheet_comment, $child_theme_dir ) {
 		return $this->write_to_filesystem( $child_theme_dir . '/style.css', $child_theme_stylesheet_comment );
 	}
 
@@ -407,7 +407,7 @@ class ThemeGeneratorController {
 	  *
 	  * @return boolean
 	  */
-	protected function validate_and_sanitize_flow_data( $flow_data ) {
+	private function validate_and_sanitize_flow_data( $flow_data ) {
 		$current_flow = Data::current_flow();
 		if ( ! $flow_data['theme']['template'] ) {
 			$current_flow = Data::current_flow();
@@ -434,7 +434,7 @@ class ThemeGeneratorController {
 	  *
 	  * @return boolean
 	  */
-	protected function generate_screenshot( $parent_theme_dir, $child_theme_dir ) {
+	private function generate_screenshot( $parent_theme_dir, $child_theme_dir ) {
 		global $wp_filesystem;
 
 		$screenshot_files = array( '/screenshot.png', '/screenshot.jpg' );
@@ -464,7 +464,7 @@ class ThemeGeneratorController {
 	  *
 	  * @return boolean
 	  */
-	protected function write_to_filesystem( $file, $content ) {
+	private function write_to_filesystem( $file, $content ) {
 		global $wp_filesystem;
 
 		return $wp_filesystem->put_contents(
@@ -520,13 +520,13 @@ class ThemeGeneratorController {
 		return true;
 	}
 
-	public function verify_child_theme_directory( $child_theme_dir ) {
+	private function verify_child_theme_directory( $child_theme_dir ) {
 		global $wp_filesystem;
 
 		return $wp_filesystem->exists( $child_theme_dir );
 	}
 
-	public function verify_theme_json( $child_theme_json, $child_theme_dir ) {
+	private function verify_theme_json( $child_theme_json, $child_theme_dir ) {
 		global $wp_filesystem;
 
 		$theme_json_path = $child_theme_dir . '/theme.json';
@@ -542,7 +542,7 @@ class ThemeGeneratorController {
 		return true;
 	}
 
-	public function verify_stylesheet( $child_theme_stylesheet_comment, $child_theme_dir ) {
+	private function verify_stylesheet( $child_theme_stylesheet_comment, $child_theme_dir ) {
 		global $wp_filesystem;
 
 		$stylesheet_path = $child_theme_dir . '/style.css';
@@ -558,7 +558,7 @@ class ThemeGeneratorController {
 		return true;
 	}
 
-	public function verify_child_theme_is_active( $child_theme_slug ) {
+	private function verify_child_theme_is_active( $child_theme_slug ) {
 		$active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
 		if ( $active_theme !== $child_theme_slug ) {
 			return false;

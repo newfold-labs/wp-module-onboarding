@@ -163,7 +163,7 @@ class FlowController {
 	 *
 	 * @return array
 	 */
-	protected function update_default_data_for_ecommerce( $data ) {
+	private function update_default_data_for_ecommerce( $data ) {
 		// get current flow type
 		$flow_type = Data::current_flow();
 		if ( $flow_type == 'ecommerce' ) {

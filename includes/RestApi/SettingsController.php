@@ -5,8 +5,6 @@ use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Config;
 use NewfoldLabs\WP\Module\Onboarding\WP_Config;
-// use NewfoldLabs\WP\Module\Onboarding\Data\Data;
-// use NewfoldLabs\WP\Module\Onboarding\Services\Webfonts;
 
 /**
  * Class SettingsController

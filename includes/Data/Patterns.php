@@ -115,7 +115,7 @@ final class Patterns {
 		return $content;
 	}
 
-	protected static function get_pattern_from_slug( $pattern_slug ) {
+	public static function get_pattern_from_slug( $pattern_slug ) {
 
 		$block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
 		if ( $block_patterns_registry->is_registered( $pattern_slug ) ) {
@@ -130,7 +130,7 @@ final class Patterns {
 		return false;
 	}
 
-	protected static function get_theme_step_patterns_from_step( $step, $squash = false ) {
+	public static function get_theme_step_patterns_from_step( $step, $squash = false ) {
 		$active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
 
 		if ( ! isset( self::get_theme_step_patterns()[ $active_theme ][ $step ] ) ) {

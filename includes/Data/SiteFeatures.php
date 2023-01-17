@@ -1,8 +1,6 @@
 <?php
 
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
-use \__;
-use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 final class SiteFeatures {
 	

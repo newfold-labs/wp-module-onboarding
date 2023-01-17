@@ -127,7 +127,7 @@ class SitePagesController {
 		return true;
 	}
 
-	protected function publish_page( $title, $content, $is_template_no_title = false ) {
+	private function publish_page( $title, $content, $is_template_no_title = false ) {
 
 		$post = array(
 			'post_title'   => $title,
