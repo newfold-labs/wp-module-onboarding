@@ -70,6 +70,29 @@ const DesignTypography = () => {
 			fontPalettesCopy[ fontStyle ]?.styles.blocks[
 				'core/heading'
 			].typography.fontFamily;
+		if (
+			globalStylesCopy.styles?.blocks[ 'core/site-title' ]?.typography
+				.fontFamily
+		) {
+			globalStylesCopy.styles.blocks[
+				'core/site-title'
+			].typography.fontFamily =
+				fontPalettesCopy[ fontStyle ]?.styles.blocks[
+					'core/heading'
+				].typography.fontFamily;
+		}
+
+		if (
+			globalStylesCopy.styles?.blocks[ 'core/site-tagline' ]?.typography
+				.fontFamily
+		) {
+			globalStylesCopy.styles.blocks[
+				'core/site-tagline'
+			].typography.fontFamily =
+				fontPalettesCopy[ fontStyle ]?.styles.blocks[
+					'core/heading'
+				].typography.fontFamily;
+		}
 
 		// Saves the data to the Store
 		currentData.data.typography.slug = fontStyle;
@@ -188,7 +211,7 @@ const DesignTypography = () => {
 				</div>
 			} */ }
 				{ fontPalettes && buildPalettes() }
-				{/* { fontPalettes && buildCustomPalette() } */}
+				{ /* { fontPalettes && buildCustomPalette() } */ }
 				<div className="custom-font-palette--hidden">{ rerender }</div>
 			</div>
 		</GlobalStylesProvider>
