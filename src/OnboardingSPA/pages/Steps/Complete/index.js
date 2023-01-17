@@ -65,14 +65,17 @@ const StepComplete = () => {
 		return true;
 	}
 
-	useEffect( () => {
+	const setNavigationState = () => {
 		setIsHeaderNavigationEnabled( false );
 		setIsDrawerSuppressed( true );
 		setSidebarActiveView( false );
+	}
+
+	useEffect( () => {
 		checkFlowComplete();
 	}, [] );
 	return (
-		<DesignStateHandler>
+		<DesignStateHandler navigationStateCallback={setNavigationState}>
 			{ isError ? (
 				<StepErrorState
 					title={ contents.errorState.title }
