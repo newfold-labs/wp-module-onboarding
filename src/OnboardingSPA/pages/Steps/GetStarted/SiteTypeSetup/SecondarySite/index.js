@@ -13,7 +13,7 @@ import NavCardButton from '../../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import content from '../content.json';
 import { translations } from '../../../../../utils/locales/translations';
-import StepStateHandler from '../../../../../components/StateHandlers/StepStateHandler';
+import Animate from '../../../../../components/Animate';
 
 const StepPrimarySetup = () => {
 	const {
@@ -102,7 +102,7 @@ const StepPrimarySetup = () => {
 						) }
 					/>
 				</div>
-				<StepStateHandler watch={ categoriesArray[ 0 ]?.subCategories }>
+				<Animate type="fade-in" after={ categoriesArray[ 0 ]?.subCategories && selectedCategoryInStore }>
 					<div className="nfd-setup-secondary-categories">
 						<div className="nfd-card-category-wrapper">
 							<div className="category-scrolling-wrapper">
@@ -166,7 +166,7 @@ const StepPrimarySetup = () => {
 							/>
 						</div>
 					</div>
-				</StepStateHandler>
+				</Animate>
 				<NavCardButton
 					text={ __( content.buttonText ) }
 					disabled={ categoriesArray[ 0 ]?.subCategories === null }

@@ -13,7 +13,7 @@ import NavCardButton from '../../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import content from '../content.json';
 import { translations } from '../../../../../utils/locales/translations';
-import StepStateHandler from '../../../../../components/StateHandlers/StepStateHandler';
+import Animate from '../../../../../components/Animate';
 
 const StepPrimarySetup = () => {
 	const {
@@ -95,7 +95,7 @@ const StepPrimarySetup = () => {
 						) }
 					/>
 				</div>
-				<StepStateHandler watch={ content.categories }>
+				<Animate type="fade-in" after={ content.categories && selectedPrimaryCategoryInStore }>
 					<div className="nfd-setup-primary-categories">
 						{ content.categories.map( ( item, idx ) => {
 							return (
@@ -148,7 +148,7 @@ const StepPrimarySetup = () => {
 							/>
 						</div>
 					</div>
-				</StepStateHandler>
+				</Animate>
 				<NavCardButton
 					text={ __( content.buttonText ) }
 					disabled={ content.categories === null}
