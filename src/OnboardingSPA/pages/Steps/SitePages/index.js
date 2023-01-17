@@ -1,7 +1,6 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
-import { useViewportMatch } from '@wordpress/compose';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
@@ -21,8 +20,6 @@ import {
 import LivePreviewSkeleton from '../../../components/LivePreview/LivePreviewSkeleton';
 
 const StepSitePages = () => {
-	const isLargeViewport = useViewportMatch( 'medium' );
-
 	const location = useLocation();
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ sitePages, setSitePages ] = useState();
@@ -44,20 +41,14 @@ const StepSitePages = () => {
 
 	const {
 		setDrawerActiveView,
-		setIsDrawerOpened,
 		setSidebarActiveView,
 		updateThemeStatus,
 		setCurrentOnboardingData,
-		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		if ( ! isLargeViewport ) {
-			setIsDrawerOpened( false );
-		}
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView( VIEW_NAV_DESIGN );
-		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	const getSitePages = async () => {

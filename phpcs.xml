@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ruleset name="Project Rules">
+	<rule ref="Newfold"/>
+	<config name="testVersion" value="7.0-"/>
+	<config name="minimum_supported_wp_version" value="5.8"/>
+</ruleset>

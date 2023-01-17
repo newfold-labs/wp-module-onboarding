@@ -306,13 +306,13 @@ class PluginsController {
 				PluginInstallTaskManager::add_to_queue(
 					new PluginInstallTask(
 						$plugin,
-						true,
+						true
 					)
 				);
 			} else {
 				PluginUninstallTaskManager::add_to_queue(
 					new PluginUninstallTask(
-						$plugin,
+						$plugin
 					)
 				);
 			}

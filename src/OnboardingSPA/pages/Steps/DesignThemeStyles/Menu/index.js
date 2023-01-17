@@ -1,7 +1,6 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useViewportMatch } from '@wordpress/compose';
 
 import { store as nfdOnboardingStore } from '../../../../store';
 import CommonLayout from '../../../../components/Layouts/Common';
@@ -29,7 +28,6 @@ const StepDesignThemeStylesMenu = () => {
 	const [ selectedStyle, setSelectedStyle ] = useState();
 
 	const navigate = useNavigate();
-	const isLargeViewport = useViewportMatch( 'medium' );
 	const {
 		currentStep,
 		nextStep,
@@ -54,23 +52,15 @@ const StepDesignThemeStylesMenu = () => {
 
 	const {
 		setDrawerActiveView,
-		setIsDrawerOpened,
 		setSidebarActiveView,
-		setIsDrawerSuppressed,
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
-		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		if ( isLargeViewport ) {
-			setIsDrawerOpened( true );
-		}
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
-		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_NAV_DESIGN );
-		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	const getStylesAndPatterns = async () => {
