@@ -172,15 +172,65 @@ final class Flows {
 	}
 
 	/**
+	 * Check if a plan is of flow type ecommerce.
+	 *
+	 * @param string $plan The hosting plan.
+	 * @return boolean
+	 */
+	public static function is_ecommerce_plan( $plan ) {
+		if ( preg_match( '/^(wc_standard|wc_premium)$/i', $plan ) ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Get the type of flow from the flow query param or the flow preset option.
+	 *
+	 * @return string|boolean
+	 */
+	public static function get_flow_from_params() {
+		$flows = self::get_flows();
+
+		if ( isset( $_GET['flow'] ) ) {
+			   $current_flow_type = \sanitize_text_field( $_GET['flow'] );
+		}
+
+		if ( ! empty( $current_flow_type ) && isset( $flows[ $current_flow_type ] ) ) {
+			return $current_flow_type;
+		}
+
+		$current_flow_type = \get_option( Options::get_option_name( 'flow_preset' ), false );
+		if ( $current_flow_type && isset( $flows[ $current_flow_type ] ) ) {
+			return $current_flow_type;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get the flow type given customer data in a particular shape.
+	 *
+	 * @param array $customer_data The customer data to parse.
+	 * @return string|boolean
+	 */
+	public static function get_flow_from_customer_data( $customer_data = array() ) {
+		if ( isset( $customer_data['plan_type'] ) && isset( $customer_data['plan_subtype'] ) ) {
+			return self::get_flow_from_plan_subtype( $customer_data['plan_subtype'] );
+		}
+		return false;
+	}
+
+	/**
 	 * Get the corresponding flow type given a hosting plan_subtype.
 	 *
 	 * @param string $plan_subtype The hosting plan_subtype.
-	 * @return string
+	 * @return string|boolean
 	 */
 	public static function get_flow_from_plan_subtype( $plan_subtype ) {
-		if ( preg_match( '/^(wc_standard|wc_premium)$/i', $plan_subtype ) ) {
-			 return isset( self::get_flows()['ecommerce'] ) ? 'ecommerce' : self::get_default_flow();
+		if ( self::is_ecommerce_plan( $plan_subtype ) ) {
+			 return isset( self::get_flows()['ecommerce'] ) ? 'ecommerce' : false;
 		}
-		 return self::get_default_flow();
+		 return false;
 	}
 }
