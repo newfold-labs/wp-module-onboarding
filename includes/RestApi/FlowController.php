@@ -1,5 +1,4 @@
 <?php
-
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
@@ -10,8 +9,7 @@ use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
 /**
  * Class FlowController
  */
-class FlowController
-{
+class FlowController {
 
 	/**
 	 * @var string
@@ -30,21 +28,20 @@ class FlowController
 	 *
 	 * @return void
 	 */
-	public function register_routes()
-	{
+	public function register_routes() {
 		\register_rest_route(
 			$this->namespace,
 			$this->rest_base,
 			array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array($this, 'get_onboarding_flow_data'),
-					'permission_callback' => array(Permissions::class, 'rest_is_authorized_admin'),
+					'callback'            => array( $this, 'get_onboarding_flow_data' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => array($this, 'save_onboarding_flow_data'),
-					'permission_callback' => array(Permissions::class, 'rest_is_authorized_admin'),
+					'callback'            => array( $this, 'save_onboarding_flow_data' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
 		);
@@ -54,8 +51,8 @@ class FlowController
 			array(
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => array($this, 'complete'),
-					'permission_callback' => array(Permissions::class, 'rest_is_authorized_admin'),
+					'callback'            => array( $this, 'complete' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
 		);
@@ -68,13 +65,11 @@ class FlowController
 	 *
 	 * @return \WP_REST_Response
 	 */
-	public function get_onboarding_flow_data()
-	{
+	public function get_onboarding_flow_data() {
 		$result = FlowService::read_flow_data_from_wp_option();
-		if (!$result) {
+		if( ! $result ) {
 			$result = FlowService::get_default_flow_data();
-			\update_option(Options::get_option_name('flow'), $result);
-		}
+			\update_option( Options::get_option_name( 'flow' ), $result );		}
 
 		return new \WP_REST_Response(
 			$result,
@@ -89,54 +84,53 @@ class FlowController
 	 *
 	 * @return \WP_REST_Response|\WP_Error
 	 */
-	public function save_onboarding_flow_data(\WP_REST_Request $request)
-	{
-		$params    = json_decode($request->get_body(), true);
+	public function save_onboarding_flow_data( \WP_REST_Request $request ) {
+		$params    = json_decode( $request->get_body(), true );
 
-		if (is_null($params)) {
+		if ( is_null( $params ) ) {
 			return new \WP_Error(
 				'no_post_data',
 				'No Data Provided',
-				array('status' => 404)
+				array( 'status' => 404 )
 			);
 		}
-
+		
 		$default_flow_data = FlowService::get_default_flow_data();
 		$mismatch_key = FlowService::find_mismatch_key($params, $default_flow_data);
-		if (\is_wp_error($mismatch_key)) {
+		if ( \is_wp_error($mismatch_key) )  {
 			return $mismatch_key;
 		}
 
 		$flow_data = FlowService::get_updated_flow_data($params);
-		if (\is_wp_error($flow_data)) {
+		if( \is_wp_error($flow_data) ) {
 			return $flow_data;
 		}
 
 		$flow_data['updatedAt'] = time();
 
 		// Update Blog Information from Basic Info
-		if ((!empty($flow_data['data']['blogName']))) {
-			\update_option(Options::get_option_name('blog_name', false), $flow_data['data']['blogName']);
+		if ( ( ! empty( $flow_data['data']['blogName'] ) ) ) {
+			 \update_option( Options::get_option_name( 'blog_name', false ), $flow_data['data']['blogName'] );
 		}
 
-		if ((!empty($flow_data['data']['blogDescription']))) {
-			\update_option(Options::get_option_name('blog_description', false), $flow_data['data']['blogDescription']);
+		if ( ( ! empty( $flow_data['data']['blogDescription'] ) ) ) {
+			 \update_option( Options::get_option_name( 'blog_description', false ), $flow_data['data']['blogDescription'] );
 		}
 
-		if ((!empty($flow_data['data']['siteLogo'])) && !empty($flow_data['data']['siteLogo']['id'])) {
-			\update_option(Options::get_option_name('site_icon', false), $flow_data['data']['siteLogo']['id']);
-			\update_option(Options::get_option_name('site_logo', false), $flow_data['data']['siteLogo']['id']);
+		if ( ( ! empty( $flow_data['data']['siteLogo'] ) ) && ! empty( $flow_data['data']['siteLogo']['id'] ) ) {
+				  \update_option( Options::get_option_name( 'site_icon', false ), $flow_data['data']['siteLogo']['id'] );
+				  \update_option( Options::get_option_name( 'site_logo', false ), $flow_data['data']['siteLogo']['id'] );
 		} else {
-			\update_option(Options::get_option_name('site_icon', false), 0);
-			\delete_option(Options::get_option_name('site_logo', false));
+			 \update_option( Options::get_option_name( 'site_icon', false ), 0 );
+			 \delete_option( Options::get_option_name( 'site_logo', false ) );
 		}
 
 		// save data to database
-		if (!\update_option(Options::get_option_name('flow'), $flow_data)) {
+		if ( ! \update_option( Options::get_option_name( 'flow' ), $flow_data )) {
 			return new \WP_Error(
 				'database_update_failed',
 				'There was an error saving the data',
-				array('status' => 404)
+				array( 'status' => 404 )
 			);
 		}
 
@@ -145,23 +139,22 @@ class FlowController
 			200
 		);
 	}
-
-	public function complete()
-	{
+	
+	public function complete() {
 		$site_pages_publish_request  = new \WP_REST_Request(
 			'POST',
 			'/newfold-onboarding/v1/site-pages/publish'
 		);
-		$site_pages_publish_response = \rest_do_request($site_pages_publish_request);
-		if ($site_pages_publish_response->is_error()) {
+		$site_pages_publish_response = \rest_do_request( $site_pages_publish_request );
+		if ( $site_pages_publish_response->is_error() ) {
 			return $site_pages_publish_response->as_error();
 		}
 		$child_theme_generation_request  = new \WP_REST_Request(
 			'POST',
 			'/newfold-onboarding/v1/themes/child/generate'
 		);
-		$child_theme_generation_response = \rest_do_request($child_theme_generation_request);
-		if ($child_theme_generation_response->is_error()) {
+		$child_theme_generation_response = \rest_do_request( $child_theme_generation_request );
+		if ( $child_theme_generation_response->is_error() ) {
 			return $child_theme_generation_response->as_error();
 		}
 

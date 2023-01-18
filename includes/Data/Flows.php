@@ -1,12 +1,10 @@
 <?php
-
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
 /**
  * Contains Onboarding Flow information.
  */
-final class Flows
-{
+final class Flows {
 	/**
 	 * Flow data blueprint.
 	 *
@@ -102,7 +100,7 @@ final class Flows
 						'color' => '',
 					),
 				),
-				'supports' => array('yith-wonder'),
+				'supports' => array( 'yith-wonder' ),
 			),
 
 			'typography'      => array(
@@ -122,7 +120,7 @@ final class Flows
 			// will include plugin installs, module activation/deactivation and perhaps API calls to the hosting platform for Newfold-specific services
 			'siteFeatures'    => array(),
 
-			'socialData'	  => array(),
+			'socialData'	  => array(), 
 		),
 
 		// we will store active flows (abandoned wp-setup, abandoned wp-commerce) with their identifier and use as a reference to access currentStep and data
@@ -150,54 +148,51 @@ final class Flows
 	);
 
 	/**
-	 * Has all the Flow Key parameters to be updated for the user in Key-Value pair.
-	 *
-	 * - the value of old_key i.e OldKey is the key name in the option that has been modified to NewKey in the blueprint
-	 * - the value of new_key i.e NewKey is the key name that is be replaced in the option
-	 * - OldKey should also be manually updated to the NewKey in the blueprint
-	 * - retain_existing_value (Boolean): true if the value in the option for the OldKey is to be retained,
-	 *   false if the NewKey is to have the default value that is set in the blueprint and discard the value set in the option for OldKey 
-	 * @return array
-	 */
+	  * Has all the Flow Key parameters to be updated for the user in Key-Value pair.
+	  *
+	  * - the value of old_key i.e OldKey is the key name in the option that has been modified to NewKey in the blueprint
+	  * - the value of new_key i.e NewKey is the key name that is be replaced in the option
+	  * - OldKey should also be manually updated to the NewKey in the blueprint
+	  * - retain_existing_value (Boolean): true if the value in the option for the OldKey is to be retained,
+	  *   false if the NewKey is to have the default value that is set in the blueprint and discard the value set in the option for OldKey 
+	  * @return array
+	  */
 	protected static $fixes = array(
 		// array( 'old_key' => 'OldKey', 'new_key' => 'NewKey', 'retain_existing_value' => true/false ),
 	);
 
 	/**
-	 * Array with Key Names as Key, and '1' as value to set the key as an exception
-	 *
-	 * This shall be used temporarily as the respective keys having varied patterns of values cannot be handled by the scope of current functionality
-	 * @return array
-	 */
+	  * Array with Key Names as Key, and '1' as value to set the key as an exception
+	  *
+	  * This shall be used temporarily as the respective keys having varied patterns of values cannot be handled by the scope of current functionality
+	  * @return array
+	  */
 	protected static $exception_list = array("color" => 1, "typography" => 1, "other" => 1, "siteFeatures" => 1, "socialData" => 1);
 
 	/**
-	 * Update Flow Key and/or Value.
-	 *
-	 * @return array
-	 */
-	public static function get_fixes()
-	{
+	  * Update Flow Key and/or Value.
+	  *
+	  * @return array
+	  */
+	public static function get_fixes() {
 		return self::$fixes;
 	}
 
 	/**
-	 * Update Exception Key(s).
-	 *
-	 * @return array
-	 */
-	public static function get_exception_list()
-	{
+	  * Update Exception Key(s).
+	  *
+	  * @return array
+	  */
+	public static function get_exception_list() {
 		return self::$exception_list;
 	}
 
-	/**
-	 * Get Onboarding Flow information.
-	 *
-	 * @return array
-	 */
-	public static function get_data()
-	{
+	 /**
+	  * Get Onboarding Flow information.
+	  *
+	  * @return array
+	  */
+	public static function get_data() {
 		return self::$data;
 	}
 
@@ -206,9 +201,8 @@ final class Flows
 	 *
 	 * @return string
 	 */
-	public static function get_default_flow()
-	{
-		return 'wp-setup';
+	public static function get_default_flow() {
+		  return 'wp-setup';
 	}
 
 	/**
@@ -217,8 +211,7 @@ final class Flows
 	 * @return array A value of true for each key indicates that the flow has been approved
 	 * and a value of null indicates the flow has not been approved (or) has been temporarily disabled.
 	 */
-	public static function get_flows()
-	{
+	public static function get_flows() {
 		return array(
 			'wp-setup'  => true,
 			'ecommerce' => true,
@@ -231,9 +224,8 @@ final class Flows
 	 * @param string $plan The hosting plan.
 	 * @return boolean
 	 */
-	public static function is_ecommerce_plan($plan)
-	{
-		if (preg_match('/^(wc_standard|wc_premium)$/i', $plan)) {
+	public static function is_ecommerce_plan( $plan ) {
+		if ( preg_match( '/^(wc_standard|wc_premium)$/i', $plan ) ) {
 			return true;
 		}
 		return false;
@@ -244,20 +236,19 @@ final class Flows
 	 *
 	 * @return string|boolean
 	 */
-	public static function get_flow_from_params()
-	{
+	public static function get_flow_from_params() {
 		$flows = self::get_flows();
 
-		if (isset($_GET['flow'])) {
-			$current_flow_type = \sanitize_text_field($_GET['flow']);
+		if ( isset( $_GET['flow'] ) ) {
+			   $current_flow_type = \sanitize_text_field( $_GET['flow'] );
 		}
 
-		if (!empty($current_flow_type) && isset($flows[$current_flow_type])) {
+		if ( ! empty( $current_flow_type ) && isset( $flows[ $current_flow_type ] ) ) {
 			return $current_flow_type;
 		}
 
-		$current_flow_type = \get_option(Options::get_option_name('flow_preset'), false);
-		if ($current_flow_type && isset($flows[$current_flow_type])) {
+		$current_flow_type = \get_option( Options::get_option_name( 'flow_preset' ), false );
+		if ( $current_flow_type && isset( $flows[ $current_flow_type ] ) ) {
 			return $current_flow_type;
 		}
 
@@ -270,10 +261,9 @@ final class Flows
 	 * @param array $customer_data The customer data to parse.
 	 * @return string|boolean
 	 */
-	public static function get_flow_from_customer_data($customer_data = array())
-	{
-		if (isset($customer_data['plan_type']) && isset($customer_data['plan_subtype'])) {
-			return self::get_flow_from_plan_subtype($customer_data['plan_subtype']);
+	public static function get_flow_from_customer_data( $customer_data = array() ) {
+		if ( isset( $customer_data['plan_type'] ) && isset( $customer_data['plan_subtype'] ) ) {
+			return self::get_flow_from_plan_subtype( $customer_data['plan_subtype'] );
 		}
 		return false;
 	}
@@ -284,11 +274,10 @@ final class Flows
 	 * @param string $plan_subtype The hosting plan_subtype.
 	 * @return string|boolean
 	 */
-	public static function get_flow_from_plan_subtype($plan_subtype)
-	{
-		if (self::is_ecommerce_plan($plan_subtype)) {
-			return isset(self::get_flows()['ecommerce']) ? 'ecommerce' : false;
+	public static function get_flow_from_plan_subtype( $plan_subtype ) {
+		if ( self::is_ecommerce_plan( $plan_subtype ) ) {
+			 return isset( self::get_flows()['ecommerce'] ) ? 'ecommerce' : false;
 		}
-		return false;
+		 return false;
 	}
 }
