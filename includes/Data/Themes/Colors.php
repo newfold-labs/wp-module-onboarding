@@ -2,9 +2,10 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 
+/**
+ * Contains custom color palettes for a given theme.
+ */
 final class Colors {
-
-
 
 	/**
 	 * This contains the different color variations for the theme.
@@ -22,7 +23,7 @@ final class Colors {
 				'tertiary'             => '#C7DBFF',
 				'secondary'            => '#344A77',
 				'primary'              => '#1A4733',
-				'background'           => '#FFFFFF',
+				'base'                 => '#FFFFFF',
 			),
 			'cool'         => array(
 				'header-background'    => '#C7DBFF',
@@ -33,7 +34,7 @@ final class Colors {
 				'tertiary'             => '#C7DBFF',
 				'secondary'            => '#3764B4',
 				'primary'              => '#21447B',
-				'background'           => '#FFFFFF',
+				'base'                 => '#FFFFFF',
 			),
 			'warm'         => array(
 				'header-background'    => '#FDE5D0',
@@ -44,7 +45,7 @@ final class Colors {
 				'tertiary'             => '#FFEDED',
 				'secondary'            => '#B97040',
 				'primary'              => '#7A3921',
-				'background'           => '#FFFFFF',
+				'base'                 => '#FFFFFF',
 			),
 			'radiant'      => array(
 				'header-background'    => '#63156A',
@@ -55,7 +56,7 @@ final class Colors {
 				'tertiary'             => '#C7F0FF',
 				'secondary'            => '#64288C',
 				'primary'              => '#63156A',
-				'background'           => '#FFFFFF',
+				'base'                 => '#FFFFFF',
 			),
 			'bold'         => array(
 				'header-background'    => '#FFD7F1',
@@ -66,7 +67,7 @@ final class Colors {
 				'tertiary'             => '#F2A3D6',
 				'secondary'            => '#076D66',
 				'primary'              => '#09857C',
-				'background'           => '#FFFFFF',
+				'base'                 => '#FFFFFF',
 			),
 			'retro'        => array(
 				'header-background'    => '#096385',
@@ -77,7 +78,7 @@ final class Colors {
 				'tertiary'             => '#F2E6A2',
 				'secondary'            => '#BE9E00',
 				'primary'              => '#096385',
-				'background'           => '#FFFFFF',
+				'base'                 => '#FFFFFF',
 			),
 			'professional' => array(
 				'header-background'    => '#6D8258',
@@ -88,7 +89,7 @@ final class Colors {
 				'tertiary'             => '#d6e4f9',
 				'secondary'            => '#405F1C',
 				'primary'              => '#558320',
-				'background'           => '#FFFFFF',
+				'base'                 => '#FFFFFF',
 			),
 			'crisp'        => array(
 				'header-background'    => '#ccc',
@@ -99,7 +100,7 @@ final class Colors {
 				'tertiary'             => '#777',
 				'secondary'            => '#17222E',
 				'primary'              => '#223344',
-				'background'           => '#FFFFFF',
+				'base'                 => '#FFFFFF',
 			),
 			'polished'     => array(
 				'header-background'    => '#313131',
@@ -110,7 +111,7 @@ final class Colors {
 				'tertiary'             => '#313131',
 				'secondary'            => '#6B69EA',
 				'primary'              => '#5100FA',
-				'background'           => '#FFFFFF',
+				'base'                 => '#FFFFFF',
 			),
 			'nightowl'     => array(
 				'header-background'    => '#06080A',
@@ -121,7 +122,7 @@ final class Colors {
 				'tertiary'             => '#FFDFA3',
 				'secondary'            => '#06080A',
 				'primary'              => '#B97900',
-				'background'           => '#FFFFFF',
+				'base'                 => '#FFFFFF',
 			),
 			'subtle'       => array(
 				'header-background'    => '#C7ADBB',
@@ -132,7 +133,7 @@ final class Colors {
 				'tertiary'             => '#D4C9CF',
 				'secondary'            => '#57203c',
 				'primary'              => '#5A3C4B',
-				'background'           => '#FFFFFF',
+				'base'                 => '#FFFFFF',
 			),
 		),
 	);
