@@ -1,5 +1,4 @@
 import { CheckboxControl, RadioControl } from '@wordpress/components';
-import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -14,11 +13,8 @@ import { store as nfdOnboardingStore } from '../../../../store';
 import content from '../content.json';
 
 const StepProducts = () => {
-	const isLargeViewport = useViewportMatch( 'medium' );
 	const {
 		setDrawerActiveView,
-		setIsDrawerOpened,
-		setIsDrawerSuppressed,
 		setSidebarActiveView,
 		setCurrentOnboardingData,
 	} = useDispatch(nfdOnboardingStore);
@@ -28,11 +24,7 @@ const StepProducts = () => {
 	);
 	let productInfo = currentData.storeDetails.productInfo;
 	useEffect(() => {
-		if (isLargeViewport) {
-			setIsDrawerOpened(true);
-		}
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
-		setIsDrawerSuppressed(false);
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
 	}, []);
 

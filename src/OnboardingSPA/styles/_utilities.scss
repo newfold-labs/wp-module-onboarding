@@ -9,6 +9,18 @@
 	}
 }
 
+@keyframes fadeInWithDisabledClicks {
+
+	from {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
 @keyframes fadeInRight {
 	from {
 		opacity: 0;
