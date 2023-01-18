@@ -1,9 +1,9 @@
-
 import { __, sprintf } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 
 import content from './miniPreview.json';
 import { translations } from '../../utils/locales/translations';
+
 /**
  * A Mini Preview Section.
  *
@@ -30,7 +30,10 @@ const MiniPreview = ({ title, desc, icon, socialData, isSocialFormOpen, setIsSoc
         setInstagram(socialData?.instagram_url ?? "");
         setYouTube(socialData?.youtube_url ?? "");
         setLinkedIn(socialData?.linkedin_url ?? "");
-        if (Object.keys(socialData).includes("other_social_urls"))
+        if (
+			socialData &&
+			Object.keys( socialData ).includes( 'other_social_urls' )
+		)
         {
             const otherURLS = socialData.other_social_urls;
             if (Object.keys(otherURLS).includes("yelp_url"))
