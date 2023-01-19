@@ -95,7 +95,7 @@ const StepPrimarySetup = () => {
 						) }
 					/>
 				</div>
-				<Animate type="fade-in" after={ content.categories }>
+				<Animate type="fade-in" after={ content.categories && ( selectedPrimaryCategoryInStore !== null ) }>
 					<div className="nfd-setup-primary-categories">
 						{ content.categories.map( ( item, idx ) => {
 							return (

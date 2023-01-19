@@ -102,7 +102,7 @@ const StepPrimarySetup = () => {
 						) }
 					/>
 				</div>
-				<Animate type="fade-in" after={ categoriesArray[ 0 ]?.subCategories }>
+				<Animate type="fade-in" after={ categoriesArray[ 0 ]?.subCategories && ( selectedCategoryInStore !== null ) }>
 					<div className="nfd-setup-secondary-categories">
 						<div className="nfd-card-category-wrapper">
 							<div className="category-scrolling-wrapper">
