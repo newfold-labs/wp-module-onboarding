@@ -12,14 +12,16 @@ use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
 class FlowController {
 
 	/**
-	 * @var string
 	 * This is the REST API namespace that will be used for our custom API
+	 * 
+	 * @var string
 	 */
 	protected $namespace = 'newfold-onboarding/v1';
 
 	/**
-	 * @var string
 	 * This is the REST endpoint
+	 * 
+	 * @var string
 	 */
 	protected $rest_base = '/flow';
 
@@ -59,10 +61,10 @@ class FlowController {
 	}
 
 	/**
-	 * Fetch onboarding flow details from database.
-	 *
 	 * @param \WP_REST_Request $request Request model.
 	 *
+	 * Fetch onboarding flow details from database.
+	 * 
 	 * @return \WP_REST_Response
 	 */
 	public function get_onboarding_flow_data() {
@@ -141,10 +143,10 @@ class FlowController {
 	}
 
 	/**
-	 *  Request and Complete Site Pages and Child Theme Generation.
-	 *
 	 * @param \WP_REST_Request $request Request model.
 	 *
+	 * Request and Complete Site Pages and Child Theme Generation.
+	 * 
 	 * @return \WP_REST_Response
 	 */
 	public function complete() {

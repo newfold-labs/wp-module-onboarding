@@ -111,12 +111,17 @@ final class WP_Admin {
 		}
 	}
 
+	/**
+	 * Initialize and Register Assets on page refresh.
+	 *
+	 * @return void
+	 */
 	public static function initialize() {
-		if ( isset( $_GET['nfd_plugins'] ) && $_GET['nfd_plugins'] === 'true' ) {
+		if ( isset( $_GET['nfd_plugins'] ) && 'true' === $_GET['nfd_plugins'] ) {
 			PluginInstallTaskManager::queue_initial_installs();
 		}
 
-		if ( isset( $_GET['nfd_themes'] ) && $_GET['nfd_themes'] === 'true' ) {
+		if ( isset( $_GET['nfd_themes'] ) && 'true' === $_GET['nfd_themes'] ) {
 			ThemeInstallTaskManager::queue_initial_installs();
 		}
 

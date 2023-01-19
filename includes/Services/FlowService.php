@@ -16,8 +16,9 @@ class FlowService {
 	 * @return boolean
 	 */
 	public static function initalize_flow_data() { 
-		$default_flow_data =  self::get_default_flow_data();
-         if ( ! ( $flow_data = self::read_flow_data_from_wp_option() ) ) {
+		$default_flow_data = self::get_default_flow_data();
+		$flow_data = self::read_flow_data_from_wp_option();
+        if ( ! ( $flow_data ) ) {
 			return \update_option( Options::get_option_name( 'flow' ), $default_flow_data );
 		}
 		$updated_flow_data = self::update_flow_data_recursive($default_flow_data, $flow_data);
@@ -36,30 +37,36 @@ class FlowService {
 		// get current flow type
 		$flow_type = Data::current_flow();
 		// update default data if flow type is ecommerce
-		if($flow_type === 'ecommerce') 
+		if('ecommerce' === $flow_type) 
 			$flow_data = self::update_default_data_for_ecommerce( $flow_data );
 		return $flow_data;
 	}
 
+	/**
+	 * Function to encapsulate the private function post call made to update $flow_data
+	 *
+	 * @return array
+	 */
 	public static function get_updated_flow_data($params) {
-		$flow_data = FlowService::read_flow_data_from_wp_option();
+		$flow_data = self::read_flow_data_from_wp_option();
 		return self::update_post_call_data_recursive($flow_data, $params);
 	}
 
-	/*
+	/**
 	 * function to update the Flow Data (Blueprint) in an array recursively in comparison to Flows::get_data() (Database)
+	 * 
+	 * @return array
 	 */	
 	private static function update_flow_data_recursive($default_flow_data, $flow_data) {
 		$flow_data_fixes = Flows::get_fixes();
 		$exception_list = Flows::get_exception_list();
 		$updated_flow_data = array();
-		foreach ($default_flow_data as $key => $value)
-		{ 
+		foreach ($default_flow_data as $key => $value) { 
 			// Any Key renamed is updated in the database with NewKey and the value from the OldKey is retained or not based on retain_existing_value
 			if(count($flow_data_fixes) > 0) {
 				foreach ($flow_data_fixes as $index=>$fix) {
 					if (array_key_exists($fix['old_key'], $flow_data) && strcmp($key, $fix['new_key']) === 0) {
-						($fix['retain_existing_value'])?
+						($fix['retain_existing_value']) ?
 							$updated_flow_data[$fix['new_key']] = $flow_data[$fix['old_key']]
 							: $updated_flow_data[$fix['new_key']] = $default_flow_data[$fix['new_key']];
 						unset($flow_data[$fix['old_key']]);
@@ -90,7 +97,7 @@ class FlowService {
 				// To check if an Indexed Array is further Nested or Not
 				foreach($value as $index_key => $index_value) {
 					// For Indexed Arrays having Non Associative Array Values
-					(!is_array($index_value) && isset($flow_data[$key]))? 
+					( ! is_array( $index_value ) && isset( $flow_data[$key] ) ) ? 
 						$updated_flow_data[$key] = $flow_data[$key] 
 						: $updated_flow_data[$key] = $value;
 				}
@@ -103,15 +110,17 @@ class FlowService {
 		return $updated_flow_data;
 	}
 
-	/*
+	/**
 	 * function to update the Database recursively based on Values opted or entered by the User
+	 * 
+	 * @return array
 	 */	
 	private static function update_post_call_data_recursive(&$flow_data, $params) {
 		$exception_list = Flows::get_exception_list();
 
 		foreach ($flow_data as $key => $value)
 		{ 		
-			if (! array_key_exists($key, $params)) {
+			if ( ! array_key_exists($key, $params)) {
 				$flow_data[$key] = $value;	
 				continue;
 			}
@@ -123,7 +132,7 @@ class FlowService {
 			}
 
 			// Error thrown if the datatype of the parameter does not match
-			if(strcmp(gettype($value), gettype($params[$key])) != 0) {
+			if(strcmp(gettype($value), gettype($params[$key])) !== 0) {
 				return new \WP_Error(
 					'wrong_param_type_provided',
 					'Wrong Parameter Type Provided : '. $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value),
@@ -132,7 +141,7 @@ class FlowService {
 			}
 
 			// Accepts non-Array Values entered by the user
-			if(!is_array($value)) {
+			if( ! is_array($value)) {
 				$flow_data[$key] = $params[$key];
 				continue;
 			}
@@ -140,7 +149,7 @@ class FlowService {
 			// To handle Indexed Arrays gracefully
 			if ( self::is_array_indexed($params[$key]) ) {
 				// If the Database value is empty or an Indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
-				((count($value) === 0) || (count(array_filter(array_keys($value), 'is_string')) === 0))?
+				((count($value) === 0) || (count(array_filter(array_keys($value), 'is_string')) === 0)) ?
 					$flow_data[$key] = $params[$key]
 					: $flow_data[$key] = $value;
 				continue;
@@ -156,24 +165,28 @@ class FlowService {
 		return $flow_data;
 	}
 
-	/*
+	/**
 	 * Logic to check for an Indexed Array
+	 * 
+	 * @return boolean
 	*/
 	private static function is_array_indexed( $array ) {
 		return count(array_filter(array_keys($array), 'is_string')) === 0;
 	}
 
-    /*
+    /**
 	 * Read onboarding flow options from database
+	 * 
+	 * @return array|false
 	*/
 	public static function read_flow_data_from_wp_option() {
 		return \get_option( Options::get_option_name( 'flow' ), false );
 	}
 
     /**
-	 * check the current flow type and update default data if flowtype is ecommerce.
+	 * Check the current flow type and update default data if flowtype is ecommerce.
 	 *
-	 * @param default flow data.
+	 * @param array $data default flow data.
 	 *
 	 * @return array
 	 */
@@ -184,19 +197,25 @@ class FlowService {
 		return $data;
 	}
 
-    /*
-	 * function to search for key in array recursively with case sensitive exact match
+    /**
+	 * Function to search for key in array recursively with case sensitive exact match
+	 * 
+	 * @param array $params Param Data
+	 * @param array $flow_data Options Data
+	 * @param string $header_key Array Level in Recursion
+	 * 
+	 * @return string
 	 */
 	public static function find_mismatch_key( $params, $flow_data, $header_key = 'Base Level' ) {
 		$exception_list = Flows::get_exception_list();
 		foreach($params as $key => $value){
-			if(!isset($exception_list[$key]) && is_array($flow_data)) {
+			if( ! isset($exception_list[$key]) && is_array($flow_data)) {
 				// Error if the key added by the user is not present in the database
-				if(!array_key_exists($key, $flow_data)) {
+				if( ! array_key_exists($key, $flow_data)) {
 					return new \WP_Error(
 						'wrong_param_provided',
 						'Wrong Parameter Provided',
-						array( 'status' => 400 , 'Mismatched Parameter(s)' => $header_key. " => " . $key)
+						array( 'status' => 400 , 'Mismatched Parameter(s)' => $header_key. ' => '. $key)
 					);
 				}
 					
@@ -210,7 +229,7 @@ class FlowService {
 					foreach($value as $index_key=>$index_value) {
 						// For Indexed Arrays having Associative Arrays as Values
 						if(is_array($index_value))
-							self::find_mismatch_key($value[$index_key], $flow_data[$key][$index_key], $key. " : " . $index_key);
+							self::find_mismatch_key($value[$index_key], $flow_data[$key][$index_key], $key. ' : ' . $index_key);
 					}
 					continue;
 				}

@@ -155,7 +155,8 @@ final class Flows {
 	  * - OldKey should also be manually updated to the NewKey in the blueprint
 	  * - retain_existing_value (Boolean): true if the value in the option for the OldKey is to be retained,
 	  *   false if the NewKey is to have the default value that is set in the blueprint and discard the value set in the option for OldKey 
-	  * @return array
+	  *
+	  * @var array
 	  */
 	protected static $fixes = array(
 		// array( 'old_key' => 'OldKey', 'new_key' => 'NewKey', 'retain_existing_value' => true/false ),
@@ -165,7 +166,8 @@ final class Flows {
 	  * Array with Key Names as Key, and '1' as value to set the key as an exception
 	  *
 	  * This shall be used temporarily as the respective keys having varied patterns of values cannot be handled by the scope of current functionality
-	  * @return array
+	  *
+	  * @var array
 	  */
 	protected static $exception_list = array('color' => 1, 'typography' => 1, 'other' => 1, 'siteFeatures' => 1, 'socialData' => 1);
 
