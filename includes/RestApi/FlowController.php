@@ -139,7 +139,14 @@ class FlowController {
 			200
 		);
 	}
-	
+
+	/**
+	 *  Request and Complete Site Pages and Child Theme Generation.
+	 *
+	 * @param \WP_REST_Request $request Request model.
+	 *
+	 * @return \WP_REST_Response
+	 */
 	public function complete() {
 		$site_pages_publish_request  = new \WP_REST_Request(
 			'POST',

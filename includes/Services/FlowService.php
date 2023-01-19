@@ -5,8 +5,16 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Flows;
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 
+/**
+ * Class FlowService
+ */
 class FlowService {
 
+	/**
+	 * Initialize Flow Data on refresh.
+	 *
+	 * @return boolean
+	 */
 	public static function initalize_flow_data() { 
 		$default_flow_data =  self::get_default_flow_data();
          if ( ! ( $flow_data = self::read_flow_data_from_wp_option() ) ) {
@@ -16,6 +24,11 @@ class FlowService {
 		return \update_option( Options::get_option_name( 'flow' ), $updated_flow_data );
     }
 
+	/**
+	 * Default Blueprint Data set based on the flow type.
+	 *
+	 * @return array
+	 */
     public static function get_default_flow_data() {
 		// check if data is available in the database if not then fetch the default dataset
 		$flow_data              = Flows::get_data();
@@ -23,7 +36,7 @@ class FlowService {
 		// get current flow type
 		$flow_type = Data::current_flow();
 		// update default data if flow type is ecommerce
-		if($flow_type == 'ecommerce') 
+		if($flow_type === 'ecommerce') 
 			$flow_data = self::update_default_data_for_ecommerce( $flow_data );
 		return $flow_data;
 	}
@@ -43,7 +56,7 @@ class FlowService {
 		foreach ($default_flow_data as $key => $value)
 		{ 
 			// Any Key renamed is updated in the database with NewKey and the value from the OldKey is retained or not based on retain_existing_value
-			if(sizeof($flow_data_fixes) > 0) {
+			if(count($flow_data_fixes) > 0) {
 				foreach ($flow_data_fixes as $index=>$fix) {
 					if (array_key_exists($fix['old_key'], $flow_data) && strcmp($key, $fix['new_key']) === 0) {
 						($fix['retain_existing_value'])?
@@ -56,7 +69,7 @@ class FlowService {
 			}
 
 			// To align the datatype of the respective values with the one set in the blueprint
-			if(strcmp(gettype($value), gettype($flow_data[$key])) != 0) {
+			if(strcmp(gettype($value), gettype($flow_data[$key])) !== 0) {
 				$updated_flow_data[$key] = $value;
 				continue;
 			}
@@ -67,7 +80,7 @@ class FlowService {
 			}
 
 			// Accepts the value of Exception List keys as is from the database OR non array OR empty array values
-			if(isset($exception_list[$key]) || ! is_array($value) || (is_array($value) && sizeof($value) === 0)) {
+			if(isset($exception_list[$key]) || ! is_array($value) || (is_array($value) && count($value) === 0)) {
 				$updated_flow_data[$key] = $flow_data[$key];
 				continue;
 			}
@@ -113,7 +126,7 @@ class FlowService {
 			if(strcmp(gettype($value), gettype($params[$key])) != 0) {
 				return new \WP_Error(
 					'wrong_param_type_provided',
-					"Wrong Parameter Type Provided : ". $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value),
+					'Wrong Parameter Type Provided : '. $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value),
 					array( 'status' => 400 )
 				);
 			}
@@ -127,7 +140,7 @@ class FlowService {
 			// To handle Indexed Arrays gracefully
 			if ( self::is_array_indexed($params[$key]) ) {
 				// If the Database value is empty or an Indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
-				((sizeof($value) === 0) || (count(array_filter(array_keys($value), 'is_string')) === 0))?
+				((count($value) === 0) || (count(array_filter(array_keys($value), 'is_string')) === 0))?
 					$flow_data[$key] = $params[$key]
 					: $flow_data[$key] = $value;
 				continue;
@@ -182,7 +195,7 @@ class FlowService {
 				if(!array_key_exists($key, $flow_data)) {
 					return new \WP_Error(
 						'wrong_param_provided',
-						"Wrong Parameter Provided",
+						'Wrong Parameter Provided',
 						array( 'status' => 400 , 'Mismatched Parameter(s)' => $header_key. " => " . $key)
 					);
 				}

@@ -55,7 +55,7 @@ final class Flows {
 
 			// This integer will map to the attachment ID for an uploaded image to the WordPress media library
 			'siteLogo'        => array(
-				'id' => 0,
+				'id'  => 0,
 				'url' => '',
 			),
 
@@ -167,7 +167,7 @@ final class Flows {
 	  * This shall be used temporarily as the respective keys having varied patterns of values cannot be handled by the scope of current functionality
 	  * @return array
 	  */
-	protected static $exception_list = array("color" => 1, "typography" => 1, "other" => 1, "siteFeatures" => 1, "socialData" => 1);
+	protected static $exception_list = array('color' => 1, 'typography' => 1, 'other' => 1, 'siteFeatures' => 1, 'socialData' => 1);
 
 	/**
 	  * Update Flow Key and/or Value.
