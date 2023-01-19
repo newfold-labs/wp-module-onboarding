@@ -45,6 +45,8 @@ class FlowService {
 	/**
 	 * Function to encapsulate the private function post call made to update $flow_data
 	 *
+	 * @param array $params Param Data
+	 * 
 	 * @return array
 	 */
 	public static function get_updated_flow_data($params) {
@@ -53,7 +55,10 @@ class FlowService {
 	}
 
 	/**
-	 * function to update the Flow Data (Blueprint) in an array recursively in comparison to Flows::get_data() (Database)
+	 * Function to update the Flow Data (Blueprint) in an array recursively in comparison to Flows::get_data() (Database)
+	 * 
+	 * @param array $default_flow_data Blueprint Data
+	 * @param array $flow_data WP Options Data
 	 * 
 	 * @return array
 	 */	
@@ -111,7 +116,10 @@ class FlowService {
 	}
 
 	/**
-	 * function to update the Database recursively based on Values opted or entered by the User
+	 * Function to update the Database recursively based on Values opted or entered by the User
+	 * 
+	 * @param array $flow_data WP Options Data
+	 * @param array $params Params Data
 	 * 
 	 * @return array
 	 */	
@@ -135,7 +143,7 @@ class FlowService {
 			if(strcmp(gettype($value), gettype($params[$key])) !== 0) {
 				return new \WP_Error(
 					'wrong_param_type_provided',
-					'Wrong Parameter Type Provided : '. $key. ' => '. gettype($params[$key]) . '. Expected: ' . gettype($value),
+					'Wrong Parameter Type Provided : ' . $key . ' => ' . gettype($params[$key]) . '. Expected: ' . gettype($value),
 					array( 'status' => 400 )
 				);
 			}
@@ -167,6 +175,8 @@ class FlowService {
 
 	/**
 	 * Logic to check for an Indexed Array
+	 * 
+	 * @param array $array To verify for an Indexed Array
 	 * 
 	 * @return boolean
 	*/
@@ -215,7 +225,7 @@ class FlowService {
 					return new \WP_Error(
 						'wrong_param_provided',
 						'Wrong Parameter Provided',
-						array( 'status' => 400 , 'Mismatched Parameter(s)' => $header_key. ' => '. $key)
+						array( 'status' =>400, 'Mismatched Parameter(s)' => $header_key . ' => ' . $key)
 					);
 				}
 					

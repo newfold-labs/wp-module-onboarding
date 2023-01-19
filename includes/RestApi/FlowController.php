@@ -61,8 +61,6 @@ class FlowController {
 	}
 
 	/**
-	 * @param \WP_REST_Request $request Request model.
-	 *
 	 * Fetch onboarding flow details from database.
 	 * 
 	 * @return \WP_REST_Response
@@ -143,8 +141,6 @@ class FlowController {
 	}
 
 	/**
-	 * @param \WP_REST_Request $request Request model.
-	 *
 	 * Request and Complete Site Pages and Child Theme Generation.
 	 * 
 	 * @return \WP_REST_Response
