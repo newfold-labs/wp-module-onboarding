@@ -205,7 +205,7 @@ class SettingsController {
 
 		$social_data = \get_option( $this->yoast_wp_options_key );
 		// incase yoast plugin is not installed then we need to save the values in the yoast_wp_options_key
-		if ( $social_data === false ) {
+		if ( false === $social_data ) {
 
 			// initialize an array with default values
 			$social_data = $this->defaults;
@@ -216,7 +216,7 @@ class SettingsController {
 		$twitter_handle = $this->validate_twitter_id($social_data['twitter_site']);
 		// add the full url for twitter cause only the handle is saved in the database
 		if( ! empty($social_data['twitter_site']) &&
-			($twitter_handle !== false )) {
+			(false !== $twitter_handle )) {
 			$social_data['twitter_site'] = 'https://www.twitter.com/' . $twitter_handle;
 		}
 

@@ -98,7 +98,8 @@ class ThemeGeneratorController {
 
 		/*
 		 Activate the parent theme if it is not active.
-		 This is necessary to register the parent theme's block patterns. */
+		 This is necessary to register the parent theme's block patterns. 
+		 */
 		$active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
 		if ( $active_theme !== $parent_theme_slug ) {
 			$this->activate_theme( $parent_theme_slug );
@@ -309,7 +310,7 @@ class ThemeGeneratorController {
 	 /**
 	  * Write the child theme to the themes directory.
 	  *
-	  * @param array child_theme_data Child Theme Data
+	  * @param array $child_theme_data Child Theme Data
 	  * @var string  parent_theme_slug
 	  * @var string  child_theme_slug
 	  * @var string  parent_theme_dir

@@ -115,7 +115,7 @@ class FlowController {
 
 		foreach ( $params as $key => $param ) {
 			$value = $this->array_search_key( $key, $flow_data );
-			if ( $value ===  false ) {
+			if ( false === $value ) {
 				return new \WP_Error(
 					'wrong_param_provided',
 					"Wrong Parameter Provided : $key",
@@ -228,7 +228,7 @@ class FlowController {
 			}
 			if ( is_array( $value ) ) {
 				$result = $this->array_search_key( $needle_key, $value );
-				if ( $result !== false ) {
+				if ( false !== $result ) {
 					return $result;
 				}
 			}
