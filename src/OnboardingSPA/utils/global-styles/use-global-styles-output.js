@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { get, isEmpty, kebabCase, pickBy, reduce, set } from 'lodash';
+import { get, isEmpty, kebabCase, pickBy, reduce, set, memoize } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -811,38 +811,29 @@ export const getBlockSelectors = ( blockTypes ) => {
 	return result;
 };
 
-export function useGlobalStylesOutput(
-	previewSettings,
-	storedPreviewSettings
-) {
+const generateStylesheets = ( previewSettings, storedPreviewSettings ) => {
+
 	const hasBlockGapSupport =
-		storedPreviewSettings.settings.__experimentalFeatures.spacing.blockGap;
-	const hasFallbackGapSupport = ! hasBlockGapSupport;
-	const disableLayoutStyles = storedPreviewSettings.settings
+		storedPreviewSettings?.settings?.__experimentalFeatures.spacing.blockGap;
+	const hasFallbackGapSupport = !hasBlockGapSupport;
+	const disableLayoutStyles = storedPreviewSettings?.settings
 		?.disableLayoutStyles
-		? storedPreviewSettings.settings.disableLayoutStyles
+		? storedPreviewSettings?.settings?.disableLayoutStyles
 		: true;
 
-	if (
-		! previewSettings?.styles &&
-		! previewSettings?.settings &&
-		! previewSettings?.globalStyles
-	) {
-		return;
-	}
-
 	const requiredSettings = {
-		settings: previewSettings.settings,
+		settings: previewSettings?.settings,
 		styles: previewSettings?.globalStyles
-			? previewSettings.globalStyles
-			: previewSettings.styles,
+			? previewSettings?.globalStyles
+			: previewSettings?.styles,
 	};
-	const blockSelectors = getBlockSelectors( getBlockTypes() );
 
+	const blockSelectors = getBlockSelectors(getBlockTypes());
 	const customProperties = toCustomProperties(
 		requiredSettings,
 		blockSelectors
 	);
+
 	const globalStyles = toStyles(
 		requiredSettings,
 		blockSelectors,
@@ -851,15 +842,15 @@ export function useGlobalStylesOutput(
 		disableLayoutStyles
 	);
 
-	const result = storedPreviewSettings.settings.styles.filter( ( style ) => {
+	const result = storedPreviewSettings?.settings?.styles.filter((style) => {
 		if (
-			! (
-				style.hasOwnProperty( 'id' ) &&
-				( style.id === 'customProperty' || style.id === 'globalStyle' )
+			!(
+				style.hasOwnProperty('id') &&
+				(style.id === 'customProperty' || style.id === 'globalStyle')
 			)
 		)
 			return style;
-	} );
+	});
 
 	const stylesheets = [
 		...result,
@@ -874,6 +865,31 @@ export function useGlobalStylesOutput(
 			isGlobalStyles: true,
 		},
 	];
+
+	return stylesheets;
+}
+
+// This function serializes those objects into JSON strings to determine the cache key.
+const resolver = (arg1, arg2) => JSON.stringify([arg1, arg2]);
+
+// Make a Memoized function that runs when the input changes
+const generateStylesheetsMemo = memoize(generateStylesheets, resolver);
+
+export function useGlobalStylesOutput(
+	previewSettings,
+	storedPreviewSettings
+) {
+	
+	if (
+		!previewSettings &&
+		!previewSettings?.styles &&
+		!previewSettings?.settings &&
+		!previewSettings?.globalStyles
+	) {
+		return;
+	}
+
+	let stylesheets = generateStylesheetsMemo( previewSettings, storedPreviewSettings );
 
 	previewSettings.settings.styles = stylesheets;
 	previewSettings.settings.__unstableResolvedAssets =
