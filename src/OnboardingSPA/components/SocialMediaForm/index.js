@@ -53,7 +53,10 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials, isSocia
         setInstagram(socialData?.instagram_url ?? "");
         setYouTube(socialData?.youtube_url ?? "");
         setLinkedIn(socialData?.linkedin_url ?? "");
-        if (Object.keys(socialData).includes("other_social_urls"))
+        if (
+			socialData &&
+			Object.keys( socialData ).includes( 'other_social_urls' )
+		)
         {
             const otherURLS = socialData.other_social_urls;
             if (Object.keys(otherURLS).includes("yelp_url"))
