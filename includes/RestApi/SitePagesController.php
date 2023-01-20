@@ -8,17 +8,21 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Patterns;
 
 /**
- * class SitePagesController
+ * Class SitePagesController
  */
 class SitePagesController {
 
 
 	/**
+	 * The namespace of this controller's route.
+	 * 
 	 * @var string
 	 */
 	protected $namespace = 'newfold-onboarding/v1';
 
 	/**
+	 * The endpoint base
+	 * 
 	 * @var string
 	 */
 	protected $rest_base = '/site-pages';
@@ -43,11 +47,11 @@ class SitePagesController {
 	/**
 	 * Endpoint create_page
 	 *
-	 * @param $request WP_REST_Request
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function publish_site_pages() {
 		$flow_data_option = \get_option( Options::get_option_name( 'flow' ), false );
-		if ( $flow_data_option === false || ! isset( $flow_data_option['data'] ) ) {
+		if ( false === $flow_data_option || ! isset( $flow_data_option['data'] ) ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
 				'Flow data does not exist to generate a child theme.',
@@ -73,6 +77,13 @@ class SitePagesController {
 		);
 	}
 
+	/**
+	 * Set the homepage pattern chosen
+	 *
+	 * @param string $homepage_pattern_slug Homepage Pattern
+	 * 
+	 * @return boolean|\WP_Error
+	 */
 	private function set_homepage( $homepage_pattern_slug ) {
 		if ( empty( $homepage_pattern_slug ) ) {
 			return true;
@@ -90,7 +101,7 @@ class SitePagesController {
 		 $show_pages_on_front = \get_option( Options::get_option_name( 'show_on_front', false ) );
 
 		 // Check if default homepage is posts
-		if ( $show_pages_on_front == 'posts' ) {
+		if ( 'posts' === $show_pages_on_front ) {
 			 \update_option( Options::get_option_name( 'show_on_front', false ), 'page' );
 		}
 
@@ -105,6 +116,13 @@ class SitePagesController {
 
 	}
 
+	/**
+	 * Set the site page chosen
+	 *
+	 * @param array $site_pages_pattern_slugs Homepage Pattern
+	 * 
+	 * @return boolean|\WP_Error
+	 */
 	private function set_site_pages( $site_pages_pattern_slugs ) {
 		if ( empty( $site_pages_pattern_slugs ) ) {
 			return true;
@@ -127,6 +145,15 @@ class SitePagesController {
 		return true;
 	}
 
+	/**
+	 * Set the Publish Page
+	 *
+	 * @param string $title Site Page Title
+	 * @param string $content Pattern Content
+	 * @param boolean $is_template_no_title Check for Title
+	 * 
+	 * @return int|\WP_Error
+	 */
 	private function publish_page( $title, $content, $is_template_no_title = false ) {
 
 		$post = array(

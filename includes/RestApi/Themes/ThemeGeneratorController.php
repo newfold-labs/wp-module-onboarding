@@ -12,20 +12,31 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
  */
 class ThemeGeneratorController {
 	 /**
+	  * The REST API namespace of this controller's route.
+	  *
 	  * @var string
 	  */
 	 protected $namespace = 'newfold-onboarding/v1';
 
 	/**
+	 * The REST endpoint base
+	 * 
 	 * @var string
 	 */
 	 protected $rest_base = '/themes';
 
 	 /**
+	  * The REST endpoint base
+	  *
 	  * @var string
 	  */
 	 protected $rest_extended_base = '/child/generate';
 
+	 /**
+	 * Registers rest routes for this controller class.
+	 *
+	 * @return void
+	 */
 	public function register_routes() {
 		\register_rest_route(
 			$this->namespace,
@@ -48,7 +59,7 @@ class ThemeGeneratorController {
 	public function generate_child_theme() {
 		// Ensure that we have sufficient data to generate a child theme.
 		$flow_data_option = \get_option( Options::get_option_name( 'flow' ), false );
-		if ( $flow_data_option === false || ! isset( $flow_data_option['data'] ) ) {
+		if ( false === $flow_data_option || ! isset( $flow_data_option['data'] ) ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
 				'Flow data does not exist to generate a child theme.',
@@ -57,7 +68,7 @@ class ThemeGeneratorController {
 		}
 
 		$flow_data = $this->validate_and_sanitize_flow_data( $flow_data_option['data'] );
-		if ( $flow_data === false ) {
+		if ( false === $flow_data ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
 				'Flow data is incomplete to generate a child theme.',
@@ -132,7 +143,7 @@ class ThemeGeneratorController {
 		);
 
 		$child_theme_written = $this->write_child_theme( $child_theme_data );
-		if ( $child_theme_written !== true ) {
+		if ( true !== $child_theme_written ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
 				$child_theme_written,
@@ -159,10 +170,22 @@ class ThemeGeneratorController {
 		);
 	}
 
+	/**
+	 * Retrieve Site Url Hash Value
+	 *
+	 * @param integer $length hash length
+	 * 
+	 * @return string
+	 */
 	private function get_site_url_hash( $length = 8 ) {
 		return substr( hash( 'sha256', site_url() ), 0, $length );
 	}
 
+	/**
+	 * Retrieve Default Dashed Site Title
+	 *
+	 * @return array
+	 */
 	private function get_dashed_site_title_defaults() {
 		return array( 'welcome', 'wordpress-site' );
 	}
@@ -170,7 +193,7 @@ class ThemeGeneratorController {
 	 /**
 	  * Get the child theme stylesheet from flow data.
 	  *
-	  * @param array $flow_data
+	  * @param array $flow_data Flow Data
 	  *
 	  * @return string
 	  */
@@ -191,7 +214,7 @@ class ThemeGeneratorController {
 	 /**
 	  * Activates a given theme.
 	  *
-	  * @param string $theme WordPress slug for theme
+	  * @param string $theme_slug WordPress slug for theme
 	  *
 	  * @return void
 	  */
@@ -202,8 +225,8 @@ class ThemeGeneratorController {
 	 /**
 	  * Generates the child theme.json from the relevant parent theme.json
 	  *
-	  * @param array  $flow_data
-	  * @param string $parent_theme_dir
+	  * @param array  $flow_data Flow Data
+	  * @param string $parent_theme_dir Parent Theme Directory
 	  *
 	  * @return boolean|array
 	  */
@@ -212,7 +235,7 @@ class ThemeGeneratorController {
 
 		$theme_data = \get_option( Options::get_option_name( 'theme_settings' ), false );
 
-		if ( $theme_data !== false ) {
+		if ( false !== $theme_data ) {
 			unset( $theme_data['settings']['styles'] );
 			unset( $theme_data['settings']['__unstableResolvedAssets'] );
 			unset( $theme_data['settings']['__experimentalFeatures'] );
@@ -229,6 +252,14 @@ class ThemeGeneratorController {
 		return $theme_json_data;
 	}
 
+	/**
+	  * Generates the child theme.json style.css comment from the relevant parent theme slug
+	  *
+	  * @param array  $parent_theme_slug Parent Theme Slug
+	  * @param string $child_theme_slug Child Theme Slug
+	  *
+	  * @return string
+	  */
 	private function generate_child_theme_stylesheet_comment( $parent_theme_slug, $child_theme_slug ) {
 		$current_brand = Data::current_brand();
 		$customer      = \wp_get_current_user();
@@ -258,7 +289,7 @@ class ThemeGeneratorController {
 	 /**
 	  * Get the pattern for the theme part.
 	  *
-	  * @param string $pattern_slug
+	  * @param string $pattern_slug Patten Slug
 	  *
 	  * @return string|\WP_Error the pattern for the part.
 	  */
@@ -278,7 +309,7 @@ class ThemeGeneratorController {
 	 /**
 	  * Write the child theme to the themes directory.
 	  *
-	  * @param array child_theme_data
+	  * @param array child_theme_data Child Theme Data
 	  * @var string  parent_theme_slug
 	  * @var string  child_theme_slug
 	  * @var string  parent_theme_dir
@@ -334,7 +365,7 @@ class ThemeGeneratorController {
 	 /**
 	  * Creates a directory if necessary.
 	  *
-	  * @param string $dir
+	  * @param string $dir Directory
 	  *
 	  * @return boolean
 	  */
@@ -351,20 +382,20 @@ class ThemeGeneratorController {
 	 /**
 	  * Writes $theme_json to a theme's theme.json file.
 	  *
-	  * @param string $theme_dir
-	  * @param string $theme_json
+	  * @param string $theme_dir Theme Directory
+	  * @param string $theme_json Theme json content
 	  *
 	  * @return boolean
 	  */
 	private function write_theme_json( $theme_dir, $theme_json ) {
-		return $this->write_to_filesystem( $theme_dir . '/' . 'theme.json', $theme_json );
+		return $this->write_to_filesystem( $theme_dir . '/theme.json', $theme_json );
 	}
 
 	 /**
 	  * Writes HTML template parts to the theme's parts directory.
 	  *
-	  * @param string $theme_dir
-	  * @param array  $part_patterns
+	  * @param string $theme_dir Theme Directory
+	  * @param array  $part_patterns HTML Template Part
 	  *
 	  * @return boolean
 	  */
@@ -390,9 +421,8 @@ class ThemeGeneratorController {
 	 /**
 	  * Writes style.css for the child theme.
 	  *
-	  * @param string $parent_theme_slug
-	  * @param string $child_theme_slug
-	  * @param string $child_theme_dir
+	  * @param string $child_theme_stylesheet_comment Stylesheet comment of Child Theme
+	  * @param string $child_theme_dir Child Theme Directory
 	  *
 	  * @return boolean
 	  */
@@ -403,7 +433,7 @@ class ThemeGeneratorController {
 	 /**
 	  * Checks if $flow_data has all the necessary data to generate a child theme.
 	  *
-	  * @param array $flow_data
+	  * @param array $flow_data Flow Data
 	  *
 	  * @return boolean
 	  */
@@ -429,8 +459,8 @@ class ThemeGeneratorController {
 	  *
 	  * [TODO] Generate the actual child theme screenshot.
 	  *
-	  * @param string $parent_theme_dir
-	  * @param string $child_theme_dir
+	  * @param string $parent_theme_dir Parent Theme Directory
+	  * @param string $child_theme_dir Child Theme Directory
 	  *
 	  * @return boolean
 	  */
@@ -459,8 +489,8 @@ class ThemeGeneratorController {
 	 /**
 	  * Writes content to the specified file.
 	  *
-	  * @param string $file
-	  * @param string $content
+	  * @param string $file Specific File where $content is to be written
+	  * @param string $content Content to write to the $file
 	  *
 	  * @return boolean
 	  */
@@ -484,7 +514,7 @@ class ThemeGeneratorController {
 
 		// We want to ensure that the user has direct access to the filesystem.
 		$access_type = \get_filesystem_method();
-		if ( $access_type !== 'direct' ) {
+		if ( 'direct' !== $access_type ) {
 			return false;
 		}
 
@@ -497,6 +527,13 @@ class ThemeGeneratorController {
 		return true;
 	}
 
+	/**
+	  * To verify the valid child theme.
+	  *
+	  * @param array $child_theme_data Child Theme Data
+	  *
+	  * @return boolean
+	  */
 	public function verify_child_theme( $child_theme_data ) {
 		$child_theme_directory_exists = $this->verify_child_theme_directory( $child_theme_data['child_theme_dir'] );
 		if ( ! $child_theme_directory_exists ) {
@@ -520,12 +557,27 @@ class ThemeGeneratorController {
 		return true;
 	}
 
+	/**
+	  * To verify the valid child theme directory.
+	  *
+	  * @param string $child_theme_dir Child Theme Directory
+	  *
+	  * @return boolean
+	  */
 	private function verify_child_theme_directory( $child_theme_dir ) {
 		global $wp_filesystem;
 
 		return $wp_filesystem->exists( $child_theme_dir );
 	}
 
+	/**
+	  * To verify the valid child theme.json.
+	  *
+	  * @param string $child_theme_json Child Theme json
+	  * @param string $child_theme_dir Child Theme Directory
+	  *
+	  * @return boolean
+	  */
 	private function verify_theme_json( $child_theme_json, $child_theme_dir ) {
 		global $wp_filesystem;
 
@@ -542,6 +594,14 @@ class ThemeGeneratorController {
 		return true;
 	}
 
+	/**
+	  * To verify the valid style.css of the respective child theme
+	  *
+	  * @param string $child_theme_stylesheet_comment Child Theme stylesheet comment
+	  * @param string $child_theme_dir Child Theme Directory
+	  *
+	  * @return boolean
+	  */
 	private function verify_stylesheet( $child_theme_stylesheet_comment, $child_theme_dir ) {
 		global $wp_filesystem;
 
@@ -558,6 +618,13 @@ class ThemeGeneratorController {
 		return true;
 	}
 
+	/**
+	  * To verify the valid child theme is active.
+	  *
+	  * @param string $child_theme_slug Child Theme Slug
+	  *
+	  * @return boolean
+	  */
 	private function verify_child_theme_is_active( $child_theme_slug ) {
 		$active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
 		if ( $active_theme !== $child_theme_slug ) {

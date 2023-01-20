@@ -80,6 +80,8 @@ class SettingsController {
 
 	/**
 	 * Store for invalid urls
+	 * 
+	 * @var array
 	 */
 	protected $invalid_urls = array();
 
@@ -149,8 +151,9 @@ class SettingsController {
 			if ( in_array( $param_key, $this->social_urls_to_validate ) ) {
 				switch($param_key) {
 					case 'twitter_site':
-						if( !empty($params['twitter_site'])) {
-							if( ( $twitter_id = $this->validate_twitter_id($params['twitter_site']) ) === false ) {
+						if( ! empty($params['twitter_site'])) {
+							$twitter_id = $this->validate_twitter_id($params['twitter_site']);
+							if( ( $twitter_id ) === false ) {
 								$this->invalid_urls[] = 'twitter_site';
 								unset($params['twitter_site']);
 							} else {
@@ -182,8 +185,8 @@ class SettingsController {
 
 		\update_option( $this->yoast_wp_options_key, $settings );
 
-		if(!empty($this->invalid_urls)) {
-			$error_keys = implode( ", ", $this->invalid_urls );
+		if( ! empty($this->invalid_urls)) {
+			$error_keys = implode( ', ', $this->invalid_urls );
 			return new \WP_Error(
 				'invalid_urls',
 				"Invalid url(s) provided for {$error_keys}.",
@@ -200,8 +203,9 @@ class SettingsController {
 	 */
 	public function get_current_settings() {
 
+		$social_data = \get_option( $this->yoast_wp_options_key );
 		// incase yoast plugin is not installed then we need to save the values in the yoast_wp_options_key
-		if ( ( $social_data = \get_option( $this->yoast_wp_options_key ) ) === false ) {
+		if ( $social_data === false ) {
 
 			// initialize an array with default values
 			$social_data = $this->defaults;
@@ -209,9 +213,10 @@ class SettingsController {
 			// update database
 			\add_option( $this->yoast_wp_options_key, $social_data );
 		}
+		$twitter_handle = $this->validate_twitter_id($social_data['twitter_site']);
 		// add the full url for twitter cause only the handle is saved in the database
-		if( (!empty($social_data['twitter_site'])) &&
-			($twitter_handle = $this->validate_twitter_id($social_data['twitter_site'])) !== false ) {
+		if( ! empty($social_data['twitter_site']) &&
+			($twitter_handle !== false )) {
 			$social_data['twitter_site'] = 'https://www.twitter.com/' . $twitter_handle;
 		}
 
