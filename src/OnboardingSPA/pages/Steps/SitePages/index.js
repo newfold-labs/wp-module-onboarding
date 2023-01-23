@@ -11,6 +11,7 @@ import {
 	THEME_STATUS_FAILURE,
 	SIDEBAR_LEARN_MORE,
 	VIEW_NAV_DESIGN,
+	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 import {
@@ -51,10 +52,20 @@ const StepSitePages = () => {
 		setDrawerActiveView( VIEW_NAV_DESIGN );
 	}, [] );
 
+	const handleAPIError = ( error ) => {
+		if ( error?.data?.status ) {
+			switch ( error.data.status ) {
+				case 404:
+					return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			}
+		}
+		return updateThemeStatus( THEME_STATUS_FAILURE );
+	};
+
 	const getSitePages = async () => {
 		const sitePagesResponse = await getPatterns( currentStep.patternId );
 		if ( sitePagesResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_FAILURE );
+			handleAPIError( sitePagesResponse.error );
 		}
 		if ( sitePagesResponse?.body ) {
 			setSitePages( sitePagesResponse.body );

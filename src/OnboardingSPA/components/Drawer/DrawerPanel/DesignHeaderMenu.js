@@ -9,6 +9,7 @@ import { GlobalStylesProvider } from '../../../components/LivePreview';
 import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_FAILURE,
+	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
 
 const DesignHeaderMenu = () => {
@@ -43,12 +44,22 @@ const DesignHeaderMenu = () => {
 	const { setCurrentOnboardingData, updateThemeStatus, setHeaderMenuData } =
 		useDispatch( nfdOnboardingStore );
 
+	const handleAPIError = ( error ) => {
+		if ( error?.data?.status ) {
+			switch ( error.data.status ) {
+				case 404:
+					return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			}
+		}
+		return updateThemeStatus( THEME_STATUS_FAILURE );
+	};
+
 	const getPatternsData = async () => {
 		const headerMenuPreviewResponse = await getPatterns(
 			currentStep.patternId
 		);
 		if ( headerMenuPreviewResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_FAILURE );
+			return handleAPIError( headerMenuPreviewResponse.error );
 		}
 		setHeaderMenuPreviewData( headerMenuPreviewResponse.body );
 

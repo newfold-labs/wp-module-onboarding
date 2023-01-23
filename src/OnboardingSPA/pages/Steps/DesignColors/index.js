@@ -13,6 +13,7 @@ import {
 import {
 	SIDEBAR_LEARN_MORE,
 	THEME_STATUS_FAILURE,
+	THEME_STATUS_NOT_ACTIVE,
 	VIEW_DESIGN_COLORS,
 } from '../../../../constants';
 
@@ -37,10 +38,20 @@ const StepDesignColors = () => {
 		setDrawerActiveView( VIEW_DESIGN_COLORS );
 	}, [] );
 
+	const handleAPIError = ( error ) => {
+		if ( error?.data?.status ) {
+			switch ( error.data.status ) {
+				case 404:
+					return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			}
+		}
+		return updateThemeStatus( THEME_STATUS_FAILURE );
+	};
+
 	const getStylesAndPatterns = async () => {
 		const pattern = await getPatterns( currentStep.patternId, true );
 		if ( pattern?.error ) {
-			return updateThemeStatus( THEME_STATUS_FAILURE );
+			handleAPIError( pattern.error );
 		}
 		setPattern( pattern?.body );
 		setIsLoaded( true );

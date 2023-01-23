@@ -4,6 +4,10 @@ import { useState, useEffect } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, setGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
+import {
+	THEME_STATUS_FAILURE,
+	THEME_STATUS_NOT_ACTIVE,
+} from '../../../../constants';
 
 /**
  * Global Style Parent Component
@@ -28,10 +32,20 @@ const GlobalStylesProvider = ( { children } ) => {
 	const { updateThemeStatus, updatePreviewSettings } =
 		useDispatch( nfdOnboardingStore );
 
+	const handleAPIError = ( error ) => {
+		if ( error?.data?.status ) {
+			switch ( error.data.status ) {
+				case 404:
+					return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			}
+		}
+		return updateThemeStatus( THEME_STATUS_FAILURE );
+	};
+
 	const getStylesAndPatterns = async () => {
 		const globalStyles = await getGlobalStyles();
 		if ( globalStyles?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return handleAPIError( globalStyles.error );
 		}
 		let selectedGlobalStyle;
 		if ( storedPreviewSettings?.title && storedPreviewSettings?.settings )
