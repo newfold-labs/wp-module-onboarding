@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import { memo } from '@wordpress/element'
 
 const CardHeader = ({ heading, subHeading, question }) => {
 
@@ -23,4 +24,4 @@ const CardHeader = ({ heading, subHeading, question }) => {
 	);
 };
 
-export default CardHeader;
+export default memo(CardHeader);
