@@ -8,7 +8,7 @@ import { GlobalStylesProvider } from '../../../components/LivePreview';
 
 import {
 	THEME_STATUS_ACTIVE,
-	THEME_STATUS_NOT_ACTIVE,
+	THEME_STATUS_FAILURE,
 } from '../../../../constants';
 
 const DesignHeaderMenu = () => {
@@ -48,7 +48,7 @@ const DesignHeaderMenu = () => {
 			currentStep.patternId
 		);
 		if ( headerMenuPreviewResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return updateThemeStatus( THEME_STATUS_FAILURE );
 		}
 		setHeaderMenuPreviewData( headerMenuPreviewResponse.body );
 

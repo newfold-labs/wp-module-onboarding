@@ -32,8 +32,8 @@ const NavPrimary = () => {
 				</Button>
 			) ) || (
 				<ExitToWordPress
-					className="nfd-onboarding-drawer__panel-back"
-					variant="tertiary"
+					buttonClassName="nfd-onboarding-drawer__panel-back"
+					buttonVariant="tertiary"
 					origin="drawer-panel"
 				/>
 			) }

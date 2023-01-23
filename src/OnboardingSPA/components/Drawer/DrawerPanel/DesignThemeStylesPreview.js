@@ -7,7 +7,7 @@ import { getGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import {
 	THEME_STATUS_ACTIVE,
-	THEME_STATUS_NOT_ACTIVE,
+	THEME_STATUS_FAILURE,
 } from '../../../../constants';
 import {
 	LivePreviewSelectableCard,
@@ -47,11 +47,11 @@ const DesignThemeStylesPreview = () => {
 			true
 		);
 		if ( patternResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return updateThemeStatus( THEME_STATUS_FAILURE );
 		}
 		const globalStylesResponse = await getGlobalStyles( true );
 		if ( globalStylesResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return updateThemeStatus( THEME_STATUS_FAILURE );
 		}
 		setPattern( patternResponse?.body );
 		setGlobalStyles( globalStylesResponse?.body );

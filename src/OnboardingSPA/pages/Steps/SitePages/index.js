@@ -8,7 +8,7 @@ import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { getPatterns } from '../../../utils/api/patterns';
 import {
 	THEME_STATUS_ACTIVE,
-	THEME_STATUS_NOT_ACTIVE,
+	THEME_STATUS_FAILURE,
 	SIDEBAR_LEARN_MORE,
 	VIEW_NAV_DESIGN,
 } from '../../../../constants';
@@ -54,7 +54,7 @@ const StepSitePages = () => {
 	const getSitePages = async () => {
 		const sitePagesResponse = await getPatterns( currentStep.patternId );
 		if ( sitePagesResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return updateThemeStatus( THEME_STATUS_FAILURE );
 		}
 		if ( sitePagesResponse?.body ) {
 			setSitePages( sitePagesResponse.body );

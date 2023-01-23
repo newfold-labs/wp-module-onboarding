@@ -1,10 +1,10 @@
 import { useSelect } from '@wordpress/data';
-import { useLocation } from 'react-router-dom'; 
+import { useLocation } from 'react-router-dom';
 import { chevronLeft } from '@wordpress/icons';
 import { Fragment, useState } from '@wordpress/element';
-import { Button, ButtonGroup, Modal, Tooltip } from '@wordpress/components';
+import { Button, ButtonGroup, Modal } from '@wordpress/components';
 
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import classNames from 'classnames';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
@@ -15,106 +15,148 @@ import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
  * Self-contained button and confirmation modal for exiting Onboarding page.
  *
  * @param {*} param0
- * @returns
+ * @return
  */
-const ExitToWordPress = ({
-	text = __('Exit to WordPress', 'wp-module-onboarding'),
-	showIcon = true,
+const ExitToWordPress = ( {
+	buttonText = __( 'Exit to WordPress', 'wp-module-onboarding' ),
+	showButtonIcon = true,
 	showButton = true,
-	variant = 'secondary',
-	className = false,
-	origin,
-	...props
-}) => {
-	const [isOpen, setIsOpen] = useState(false);
-	const openModal = () => setIsOpen(true);
-	const closeModal = () => setIsOpen(false);
+	buttonVariant = 'secondary',
+	buttonClassName = false,
+	isModalOpen = false,
+	modalTitle = __( 'Exit without finishing?', 'wp-module-onboarding' ),
+	modalText = false,
+	modalPrimaryCloseButtonText = __( 'Continue', 'wp-module-onboarding' ),
+	modalPrimaryCloseButtonOnClick = false,
+	onRequestClose = false,
+	modalExitButtonText = __( 'Exit', 'wp-module-onboarding' ),
+} ) => {
+	const [ isOpen, setIsOpen ] = useState( isModalOpen );
+	const openModal = () => setIsOpen( true );
+	const closeModal = ( context ) => {
+		switch ( context ) {
+			case 'on-request-close':
+				if ( typeof onRequestClose === 'function' ) {
+					onRequestClose();
+				}
+				break;
+			case 'primary-close-button':
+				if ( typeof modalPrimaryCloseButtonOnClick === 'function' ) {
+					modalPrimaryCloseButtonOnClick();
+				}
+				break;
+		}
+		setIsOpen( false );
+	};
 
 	const location = useLocation();
-	const { currentData } = useSelect(
-		(select) => {
+	const { currentData, brandName } = useSelect(
+		( select ) => {
 			return {
-				currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
 			};
 		},
-		[location.pathname]
+		[ location.pathname ]
 	);
 
-	const label = __(
-		'You can restart onboarding from your Bluehost Settings page.',
-		'wp-module-onboarding'
-	);
+	if ( ! modalText ) {
+		modalText = sprintf(
+			/* translators: %s: Brand */
+			__(
+				'You can restart onboarding from your %s Settings page.',
+				'wp-module-onboarding'
+			),
+			brandName
+		);
+	}
 
-	async function syncSocialSettingsFinish(currentData) {
+	async function syncSocialSettingsFinish( currentData ) {
 		const initialData = await getSettings();
-		const result = await setSettings(currentData?.data?.socialData);
-		if (result?.error != null) {
-			console.error('Unable to Save Social Data!');
+		const result = await setSettings( currentData?.data?.socialData );
+		if ( result?.error !== null ) {
 			return initialData?.body;
 		}
 		return result?.body;
 	}
 
-	async function saveData(path, currentData) {
-
-		if (currentData) {
-               currentData.hasExited = new Date().getTime();
+	async function saveData( path, currentData ) {
+		if ( currentData ) {
+			currentData.hasExited = new Date().getTime();
 
 			// If Social Data is changed then sync it
-			if (path?.includes('basic-info')) {
-				const socialData = await syncSocialSettingsFinish(currentData);
+			if ( path?.includes( 'basic-info' ) ) {
+				const socialData = await syncSocialSettingsFinish(
+					currentData
+				);
 
 				// If Social Data is changed then Sync that also to the store
-				if (socialData && currentData?.data)
+				if ( socialData && currentData?.data )
 					currentData.data.socialData = socialData;
 			}
-			setFlow(currentData);
+			setFlow( currentData );
 		}
-		//Redirect to Admin Page for normal customers 
+		//Redirect to Admin Page for normal customers
 		// and Bluehost Dashboard for ecommerce customers
-		const exitLink = exitToWordpressForEcommerce() ? bluehostDashboardPage : wpAdminPage;
-		window.location.replace(exitLink);
+		const exitLink = exitToWordpressForEcommerce()
+			? bluehostDashboardPage
+			: wpAdminPage;
+		window.location.replace( exitLink );
 	}
 
 	return (
 		<Fragment>
-			<Button
-				icon={showIcon ? chevronLeft : false}
-				variant={variant}
-				onClick={openModal}
-				className={classNames(`nfd-onboarding-etw__trigger`, className)}
-			>
-				{text}
-			</Button>
-			{isOpen && (
-				<Modal
-					title={__('Exit without finishing?', 'wp-module-onboarding')}
-					onRequestClose={closeModal}
+			{ showButton && (
+				<Button
+					icon={ showButtonIcon ? chevronLeft : false }
+					variant={ buttonVariant }
+					onClick={ openModal }
+					className={ classNames(
+						`nfd-onboarding-etw__trigger`,
+						buttonClassName
+					) }
 				>
-					<p>{label}</p>
+					{ buttonText }
+				</Button>
+			) }
+			{ isOpen && (
+				<Modal
+					title={ modalTitle }
+					onRequestClose={ () => closeModal( 'on-request-close' ) }
+				>
+					<p>{ modalText }</p>
 					<ButtonGroup className="nfd-onboarding-etw__buttons">
-						<Button variant="secondary" onClick={closeModal}>
-							{__('Continue', 'wp-module-onboarding')}
+						<Button
+							variant="secondary"
+							onClick={ () =>
+								closeModal( 'primary-close-button' )
+							}
+						>
+							{ modalPrimaryCloseButtonText }
 						</Button>
 						<Button
 							variant="primary"
-							onClick={(e) => saveData(location.pathname, currentData)} >
-							{__('Exit', 'wp-module-onboarding')}
+							onClick={ ( e ) =>
+								saveData( location.pathname, currentData )
+							}
+						>
+							{ modalExitButtonText }
 						</Button>
 					</ButtonGroup>
 				</Modal>
-			)}
+			) }
 		</Fragment>
 	);
 };
 
 /*
- * check if this is the last step 
+ * check if this is the last step
  */
 const exitToWordpressForEcommerce = () => {
-	if (window.nfdOnboarding.currentFlow == 'ecommerce') {
+	if ( window.nfdOnboarding.currentFlow === 'ecommerce' ) {
 		return true;
 	}
 	return false;
-}
+};
 export default ExitToWordPress;

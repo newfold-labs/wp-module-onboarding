@@ -18,6 +18,24 @@ const init = () => {
 	} );
 };
 
+const install = async ( theme, activate = true, queue = true ) => {
+	if ( typeof theme !== 'string' ) {
+		return false;
+	}
+
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'themes/install' ),
+			method: 'POST',
+			data: {
+				theme,
+				activate,
+				queue,
+			},
+		} )
+	);
+};
+
 const getGlobalStyles = async ( variations = false ) => {
 	return await resolve(
 		apiFetch( {
@@ -71,4 +89,5 @@ export {
 	getThemeStatus,
 	getThemeColors,
 	getThemeFonts,
+	install,
 };

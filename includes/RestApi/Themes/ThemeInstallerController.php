@@ -2,7 +2,6 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi\Themes;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Services\ThemeInstaller;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ThemeInstallTaskManager;
 use NewfoldLabs\WP\Module\Onboarding\Tasks\ThemeInstallTask;
