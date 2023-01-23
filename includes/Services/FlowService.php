@@ -81,13 +81,8 @@ class FlowService {
 				}
 			}
 
-			// To align the datatype of the respective values with the one set in the blueprint
-			if ( strcmp( gettype( $value ), gettype( $flow_data[ $key ] ) ) !== 0 ) {
-				$updated_flow_data[ $key ] = $value;
-				continue;
-			}
-
-			if ( ! array_key_exists( $key, $flow_data ) ) {
+			// To align the new data OR datatype of the respective values with the one set in the blueprint
+			if ( ! array_key_exists( $key, $flow_data ) || ( gettype( $value ) !== gettype( $flow_data[ $key ] ) ) ) {
 				$updated_flow_data[ $key ] = $value;
 				continue;
 			}
@@ -140,7 +135,7 @@ class FlowService {
 			}
 
 			// Error thrown if the datatype of the parameter does not match
-			if ( strcmp( gettype( $value ), gettype( $params[ $key ] ) ) !== 0 ) {
+			if ( gettype( $value ) !== gettype( $params[ $key ] ) ) {
 				return new \WP_Error(
 					'wrong_param_type_provided',
 					'Wrong Parameter Type Provided : ' . $key . ' => ' . gettype( $params[ $key ] ) . '. Expected: ' . gettype( $value ),
