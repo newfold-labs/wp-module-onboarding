@@ -39,8 +39,6 @@ final class Flows {
 				'secondary' => '',
 			),
 
-
-			
 			'wpComfortLevel'  => '0',
 
 			// Any manual fixes or modification made to topPriority shall also be made in FlowServices::update_default_data_for_ecommerce()
