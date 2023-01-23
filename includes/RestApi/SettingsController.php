@@ -26,13 +26,6 @@ class SettingsController {
 	protected $rest_base = '/settings';
 
 	/**
-	 * Yoast wp_options key
-	 *
-	 * @var string
-	 */
-	protected $yoast_wp_options_key = 'wpseo_social';
-
-	/**
 	 * Array of defaults for the option.
 	 *
 	 * Shouldn't be requested directly, use $this->get_defaults();
@@ -183,7 +176,7 @@ class SettingsController {
 		}
 		$settings = array_merge( $settings, $params );
 
-		\update_option( $this->yoast_wp_options_key, $settings );
+		\update_option( Options::get_option_name( 'wpseo_social', false ), $settings );
 
 		if ( ! empty( $this->invalid_urls ) ) {
 			$error_keys = implode( ', ', $this->invalid_urls );
@@ -203,7 +196,7 @@ class SettingsController {
 	 */
 	public function get_current_settings() {
 
-		$social_data = \get_option( $this->yoast_wp_options_key );
+		$social_data = \get_option( Options::get_option_name( 'wpseo_social', false ), false );
 		// incase yoast plugin is not installed then we need to save the values in the yoast_wp_options_key
 		if ( false === $social_data ) {
 
@@ -211,7 +204,7 @@ class SettingsController {
 			$social_data = $this->defaults;
 
 			// update database
-			\add_option( $this->yoast_wp_options_key, $social_data );
+			\add_option( Options::get_option_name( 'wpseo_social', false ), $social_data );
 		}
 		$twitter_handle = $this->validate_twitter_id( $social_data['twitter_site'] );
 		// add the full url for twitter cause only the handle is saved in the database
