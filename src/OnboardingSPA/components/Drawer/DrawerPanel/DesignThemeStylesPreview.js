@@ -8,6 +8,7 @@ import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-s
 import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_FAILURE,
+	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
 import {
 	LivePreviewSelectableCard,
@@ -15,25 +16,28 @@ import {
 } from '../../LivePreview';
 
 const DesignThemeStylesPreview = () => {
-	const MAX_PREVIEWS_PER_ROW = 3;
-
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState();
 	const [ selectedStyle, setSelectedStyle ] = useState( '' );
 
-	const { currentStep, currentData, storedPreviewSettings, themeStatus, themeVariations, } =
-		useSelect( ( select ) => {
-			return {
-				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				storedPreviewSettings:
-					select( nfdOnboardingStore ).getPreviewSettings(),
-				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-				themeVariations: select(nfdOnboardingStore).getStepPreviewData(),
-			};
-		}, [] );
+	const {
+		currentStep,
+		currentData,
+		storedPreviewSettings,
+		themeStatus,
+		themeVariations,
+	} = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			storedPreviewSettings:
+				select( nfdOnboardingStore ).getPreviewSettings(),
+			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			themeVariations: select( nfdOnboardingStore ).getStepPreviewData(),
+		};
+	}, [] );
 
 	const {
 		updatePreviewSettings,
@@ -41,17 +45,27 @@ const DesignThemeStylesPreview = () => {
 		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
 
+	const handleAPIError = ( error ) => {
+		if ( error?.data?.status ) {
+			switch ( error.data.status ) {
+				case 404:
+					return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			}
+		}
+		return updateThemeStatus( THEME_STATUS_FAILURE );
+	};
+
 	const getStylesAndPatterns = async () => {
 		const patternResponse = await getPatterns(
 			currentStep.patternId,
 			true
 		);
 		if ( patternResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_FAILURE );
+			return handleAPIError( patternResponse.error );
 		}
 		const globalStylesResponse = await getGlobalStyles( true );
 		if ( globalStylesResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_FAILURE );
+			return handleAPIError( globalStylesResponse.error );
 		}
 		setPattern( patternResponse?.body );
 		setGlobalStyles( globalStylesResponse?.body );
@@ -120,9 +134,12 @@ const DesignThemeStylesPreview = () => {
 				<LivePreviewSkeleton
 					className={ 'theme-styles-preview--drawer__list__item' }
 					watch={ globalStyles && pattern }
-					count={ themeVariations[currentStep?.patternId]?.previewCount }
+					count={
+						themeVariations[ currentStep?.patternId ]?.previewCount
+					}
 					callback={ buildPreviews }
-					viewportWidth={ 900 }/>
+					viewportWidth={ 900 }
+				/>
 			</div>
 		</div>
 	);
