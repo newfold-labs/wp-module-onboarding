@@ -48,7 +48,7 @@ final class Options {
 		'page_on_front'                 => 'page_on_front',
 		'theme_settings'                => 'theme_settings',
 		'flow_preset'                   => 'flow_preset',
-		'wpseo_social'                 => 'wpseo_social',
+		'wpseo_social'                  => 'wpseo_social',
 	);
 
 	/**
