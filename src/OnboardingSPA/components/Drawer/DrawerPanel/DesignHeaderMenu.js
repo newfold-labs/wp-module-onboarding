@@ -6,6 +6,8 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
 import { GlobalStylesProvider, LivePreviewSkeleton } from '../../../components/LivePreview';
 import { store as coreStore } from '@wordpress/core-data';
+import { wpSiteUrl } from '../../../../constants';
+import { filter } from 'lodash';
 
 import {
 	THEME_STATUS_ACTIVE,
@@ -25,7 +27,7 @@ const DesignHeaderMenu = () => {
 	];
 
 	const defaultMenuItems = [ 'Home', 'About', 'Contact', 'News', 'Privacy', 'Careers' ];
-	const { editEntityRecord } = useDispatch( coreStore );
+	let pageList = [];
 
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ patterns, setPatterns ] = useState();
@@ -33,7 +35,7 @@ const DesignHeaderMenu = () => {
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
 	const location = useLocation();
 
-	const { getEditedEntityRecord } = useSelect( ( select ) => {
+	const { editEntityRecord, getEntityRecords } = useSelect( ( select ) => {
 		return select( coreStore );
 	}, [] );
 
@@ -48,10 +50,19 @@ const DesignHeaderMenu = () => {
 		};
 	}, [] );
 
-	const { setCurrentOnboardingData, updateThemeStatus, setHeaderMenuData } =
-		useDispatch( nfdOnboardingStore );
+	const { setCurrentOnboardingData, updateThemeStatus, setHeaderMenuData } = useDispatch( nfdOnboardingStore );
+
+	const filteredPageList = () => {
+		return filter(
+			getEntityRecords( 'postType', 'page' ),
+			( page, idx ) => idx < 6
+		);
+	};
 
 	const getPatternsData = async () => {
+		pageList = filteredPageList();
+		console.log('pagelist = ' + pageList.length);
+
 		const headerMenuPreviewResponse = await getPatterns(
 			currentStep.patternId
 		);
@@ -63,6 +74,7 @@ const DesignHeaderMenu = () => {
 		const headerMenuPatterns = [];
 		headerMenuPreviewResponse.body.forEach( ( pageParts ) => {
 			if ( headerMenuSlugs.includes( pageParts.slug ) ) {
+				pageParts.content = replaceNavigationGrammar( pageParts.content, pageParts.slug );
 				headerMenuPatterns.push( pageParts );
 			}
 		} );
@@ -93,26 +105,34 @@ const DesignHeaderMenu = () => {
 
 	useEffect( () => {
 		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
+			// pageList = getEntityRecords( 'postType', 'page' );
 			getPatternsData();
-		getEditedEntityRecord( 'root', 'menuItem' );
-	}, [ isLoaded, themeStatus ] );
+		}, [ isLoaded, themeStatus ] );
 
-	const updateCoreData = ( ) => {
-		defaultMenuItems.map( ( item, idx ) => {
-			editEntityRecord( 'root', 'menuItem', {
-				id: idx + 1,
-				title: { "rendered": item },
-				status: 'publish',
-				url: '#',
-				parent: 0,
-				menu_order: idx + 1,
-			} );
+	const updatePageEntityData = ( ) => {
+		pageList.map( ( page, idx ) => {
+			editEntityRecord( 'postType', 'page',
+				page.id,
+				{ title: defaultMenuItems[idx] }
+			);
 		});
 	};
 
+	const replaceNavigationGrammar = ( pageGrammar, headerSlug ) => {
+		if( headerSlug.includes('split') ) {
+			let menuGrammarDummy = '',
+				menuNavigationGrammar = '<!-- wp:navigation-link {"isTopLevelLink":true} /-->';
+			defaultMenuItems.map( ( item, idx ) => {
+				menuGrammarDummy = '<!-- wp:navigation-link {"isTopLevelLink":true, "label":"' + item + '", "title":"' + item + '", "url":"' + wpSiteUrl + '"} /-->';
+				pageGrammar = pageGrammar.replace( menuNavigationGrammar, menuGrammarDummy);
+			});
+		}
+		return pageGrammar;
+	}
+
 	const handleClick = ( idx ) => {
 
-		updateCoreData();
+		updatePageEntityData();
 
 		if ( document.getElementsByClassName( 'nfd-onboard-content' ) ) {
 			document.getElementsByClassName( 'nfd-onboard-content' )[0]
