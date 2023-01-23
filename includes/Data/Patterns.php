@@ -104,7 +104,7 @@ final class Patterns {
 						'shown'  => true,
 					),
 				),
-				'site-features'     => SiteFeatures::get_site_features()[Data::current_flow()]
+				'site-features'   => SiteFeatures::get_site_features()[ Data::current_flow() ],
 			),
 		);
 	}
@@ -113,7 +113,7 @@ final class Patterns {
 	 * Sanitize the content by cleaning wp_grammar.
 	 *
 	 * @param string $content Data to clean
-	 * 
+	 *
 	 * @return string
 	 */
 	private static function cleanup_wp_grammar( $content ) {
@@ -134,7 +134,7 @@ final class Patterns {
 	 * Retrieve pattern from slug.
 	 *
 	 * @param array $pattern_slug Pattern Slug Data
-	 * 
+	 *
 	 * @return array|boolean
 	 */
 	public static function get_pattern_from_slug( $pattern_slug ) {
@@ -155,9 +155,9 @@ final class Patterns {
 	/**
 	 * Retrieve Theme Step Patterns from chosen Theme in Previous Step
 	 *
-	 * @param string $step Step from which Theme Step Pattern is required
+	 * @param string  $step Step from which Theme Step Pattern is required
 	 * @param boolean $squash Flag set to retrieve the block pattern
-	 * 
+	 *
 	 * @return array|string
 	 */
 	public static function get_theme_step_patterns_from_step( $step, $squash = false ) {
@@ -198,7 +198,7 @@ final class Patterns {
 
 	/**
 	 * Retrieve Pattern Count.
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function get_count_of_patterns() {

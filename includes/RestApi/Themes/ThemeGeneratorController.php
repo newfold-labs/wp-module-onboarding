@@ -20,7 +20,7 @@ class ThemeGeneratorController {
 
 	/**
 	 * The REST endpoint base
-	 * 
+	 *
 	 * @var string
 	 */
 	 protected $rest_base = '/themes';
@@ -33,10 +33,10 @@ class ThemeGeneratorController {
 	 protected $rest_extended_base = '/child/generate';
 
 	 /**
-	 * Registers rest routes for this controller class.
-	 *
-	 * @return void
-	 */
+	  * Registers rest routes for this controller class.
+	  *
+	  * @return void
+	  */
 	public function register_routes() {
 		\register_rest_route(
 			$this->namespace,
@@ -98,7 +98,7 @@ class ThemeGeneratorController {
 
 		/*
 		 Activate the parent theme if it is not active.
-		 This is necessary to register the parent theme's block patterns. 
+		 This is necessary to register the parent theme's block patterns.
 		 */
 		$active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
 		if ( $active_theme !== $parent_theme_slug ) {
@@ -175,7 +175,7 @@ class ThemeGeneratorController {
 	 * Retrieve Site Url Hash Value
 	 *
 	 * @param integer $length hash length
-	 * 
+	 *
 	 * @return string
 	 */
 	private function get_site_url_hash( $length = 8 ) {
@@ -254,13 +254,13 @@ class ThemeGeneratorController {
 	}
 
 	/**
-	  * Generates the child theme.json style.css comment from the relevant parent theme slug
-	  *
-	  * @param array  $parent_theme_slug Parent Theme Slug
-	  * @param string $child_theme_slug Child Theme Slug
-	  *
-	  * @return string
-	  */
+	 * Generates the child theme.json style.css comment from the relevant parent theme slug
+	 *
+	 * @param array  $parent_theme_slug Parent Theme Slug
+	 * @param string $child_theme_slug Child Theme Slug
+	 *
+	 * @return string
+	 */
 	private function generate_child_theme_stylesheet_comment( $parent_theme_slug, $child_theme_slug ) {
 		$current_brand = Data::current_brand();
 		$customer      = \wp_get_current_user();
@@ -529,12 +529,12 @@ class ThemeGeneratorController {
 	}
 
 	/**
-	  * To verify the valid child theme.
-	  *
-	  * @param array $child_theme_data Child Theme Data
-	  *
-	  * @return boolean
-	  */
+	 * To verify the valid child theme.
+	 *
+	 * @param array $child_theme_data Child Theme Data
+	 *
+	 * @return boolean
+	 */
 	public function verify_child_theme( $child_theme_data ) {
 		$child_theme_directory_exists = $this->verify_child_theme_directory( $child_theme_data['child_theme_dir'] );
 		if ( ! $child_theme_directory_exists ) {
@@ -559,12 +559,12 @@ class ThemeGeneratorController {
 	}
 
 	/**
-	  * To verify the valid child theme directory.
-	  *
-	  * @param string $child_theme_dir Child Theme Directory
-	  *
-	  * @return boolean
-	  */
+	 * To verify the valid child theme directory.
+	 *
+	 * @param string $child_theme_dir Child Theme Directory
+	 *
+	 * @return boolean
+	 */
 	private function verify_child_theme_directory( $child_theme_dir ) {
 		global $wp_filesystem;
 
@@ -572,13 +572,13 @@ class ThemeGeneratorController {
 	}
 
 	/**
-	  * To verify the valid child theme.json.
-	  *
-	  * @param string $child_theme_json Child Theme json
-	  * @param string $child_theme_dir Child Theme Directory
-	  *
-	  * @return boolean
-	  */
+	 * To verify the valid child theme.json.
+	 *
+	 * @param string $child_theme_json Child Theme json
+	 * @param string $child_theme_dir Child Theme Directory
+	 *
+	 * @return boolean
+	 */
 	private function verify_theme_json( $child_theme_json, $child_theme_dir ) {
 		global $wp_filesystem;
 
@@ -596,13 +596,13 @@ class ThemeGeneratorController {
 	}
 
 	/**
-	  * To verify the valid style.css of the respective child theme
-	  *
-	  * @param string $child_theme_stylesheet_comment Child Theme stylesheet comment
-	  * @param string $child_theme_dir Child Theme Directory
-	  *
-	  * @return boolean
-	  */
+	 * To verify the valid style.css of the respective child theme
+	 *
+	 * @param string $child_theme_stylesheet_comment Child Theme stylesheet comment
+	 * @param string $child_theme_dir Child Theme Directory
+	 *
+	 * @return boolean
+	 */
 	private function verify_stylesheet( $child_theme_stylesheet_comment, $child_theme_dir ) {
 		global $wp_filesystem;
 
@@ -620,12 +620,12 @@ class ThemeGeneratorController {
 	}
 
 	/**
-	  * To verify the valid child theme is active.
-	  *
-	  * @param string $child_theme_slug Child Theme Slug
-	  *
-	  * @return boolean
-	  */
+	 * To verify the valid child theme is active.
+	 *
+	 * @param string $child_theme_slug Child Theme Slug
+	 *
+	 * @return boolean
+	 */
 	private function verify_child_theme_is_active( $child_theme_slug ) {
 		$active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
 		if ( $active_theme !== $child_theme_slug ) {

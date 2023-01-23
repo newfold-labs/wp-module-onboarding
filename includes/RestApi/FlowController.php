@@ -14,14 +14,14 @@ class FlowController {
 
 	/**
 	 * This is the REST API namespace that will be used for our custom API
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $namespace = 'newfold-onboarding/v1';
 
 	/**
 	 * This is the REST endpoint
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $rest_base = '/flow';
@@ -171,7 +171,7 @@ class FlowController {
 	private function update_default_data_for_ecommerce( $data ) {
 		// get current flow type
 		$flow_type = Data::current_flow();
-		if ( 'ecommerce' === $flow_type  ) {
+		if ( 'ecommerce' === $flow_type ) {
 			// update default data with ecommerce data
 			$data['data']['topPriority']['priority1'] = 'selling';
 			$data['data']['siteType']                 = array(
@@ -184,7 +184,7 @@ class FlowController {
 
 	/**
 	 * Read onboarding flow options from database
-	 * 
+	 *
 	 * @return array
 	 */
 	public function read_details_from_wp_options() {
@@ -193,9 +193,9 @@ class FlowController {
 
 	/**
 	 * Add onboarding flow options
-	 * 
+	 *
 	 * @param array $data default blueprint flow data.
-	 * 
+	 *
 	 * @return array
 	 */
 	private function save_details_to_wp_options( $data ) {
@@ -204,9 +204,9 @@ class FlowController {
 
 	/**
 	 * Update onboarding flow options
-	 * 
+	 *
 	 * @param array $data default blueprint flow data.
-	 * 
+	 *
 	 * @return array
 	 */
 	private function update_wp_options_data_in_database( $data ) {
@@ -215,10 +215,10 @@ class FlowController {
 
 	/**
 	 * Function to search for key in array recursively with case sensitive exact match
-	 * 
+	 *
 	 * @param array $needle_key specific key in flow data.
 	 * @param array $array WP Options Data.
-	 * 
+	 *
 	 * @return boolean
 	 */
 	private function array_search_key( $needle_key, $array ) {

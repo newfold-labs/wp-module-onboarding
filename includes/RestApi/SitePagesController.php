@@ -15,14 +15,14 @@ class SitePagesController {
 
 	/**
 	 * The namespace of this controller's route.
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $namespace = 'newfold-onboarding/v1';
 
 	/**
 	 * The endpoint base
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $rest_base = '/site-pages';
@@ -81,7 +81,7 @@ class SitePagesController {
 	 * Set the homepage pattern chosen
 	 *
 	 * @param string $homepage_pattern_slug Homepage Pattern
-	 * 
+	 *
 	 * @return boolean|\WP_Error
 	 */
 	private function set_homepage( $homepage_pattern_slug ) {
@@ -120,7 +120,7 @@ class SitePagesController {
 	 * Set the site page chosen
 	 *
 	 * @param array $site_pages_pattern_slugs Homepage Pattern
-	 * 
+	 *
 	 * @return boolean|\WP_Error
 	 */
 	private function set_site_pages( $site_pages_pattern_slugs ) {
@@ -148,10 +148,10 @@ class SitePagesController {
 	/**
 	 * Set the Publish Page
 	 *
-	 * @param string $title Site Page Title
-	 * @param string $content Pattern Content
+	 * @param string  $title Site Page Title
+	 * @param string  $content Pattern Content
 	 * @param boolean $is_template_no_title Check for Title
-	 * 
+	 *
 	 * @return int|\WP_Error
 	 */
 	private function publish_page( $title, $content, $is_template_no_title = false ) {

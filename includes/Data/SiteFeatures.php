@@ -6,15 +6,15 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
  * Class SiteFeatures
  */
 final class SiteFeatures {
-	
+
 	/**
 	 * Retrieve Site Features.
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function get_site_features() {
 		return array(
-			'wp-setup'   => array(),
+			'wp-setup'  => array(),
 			'ecommerce' => array(
 				'jetpack'                            => array(
 					'slug'     => 'jetpack',
@@ -112,7 +112,7 @@ final class SiteFeatures {
 
 	/**
 	 * Based on the flow type initial site features are marked.
-	 * 
+	 *
 	 * @return array
 	 */
 	private static function mark_initial_plugins() {
@@ -133,7 +133,7 @@ final class SiteFeatures {
 
 	/**
 	 * Retrieve marked site features
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function get() {

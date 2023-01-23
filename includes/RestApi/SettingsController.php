@@ -80,7 +80,7 @@ class SettingsController {
 
 	/**
 	 * Store for invalid urls
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $invalid_urls = array();
@@ -143,19 +143,19 @@ class SettingsController {
 		foreach ( $params as $param_key => $param_value ) {
 			if ( ! array_key_exists( $param_key, $this->defaults ) ) {
 				$this->invalid_urls[] = $param_key;
-				unset($params[$param_key]);
+				unset( $params[ $param_key ] );
 				continue;
 			}
 
 			// check for proper url
 			if ( in_array( $param_key, $this->social_urls_to_validate ) ) {
-				switch($param_key) {
+				switch ( $param_key ) {
 					case 'twitter_site':
-						if( ! empty($params['twitter_site'])) {
-							$twitter_id = $this->validate_twitter_id($params['twitter_site']);
-							if( ( $twitter_id ) === false ) {
+						if ( ! empty( $params['twitter_site'] ) ) {
+							$twitter_id = $this->validate_twitter_id( $params['twitter_site'] );
+							if ( ( $twitter_id ) === false ) {
 								$this->invalid_urls[] = 'twitter_site';
-								unset($params['twitter_site']);
+								unset( $params['twitter_site'] );
 							} else {
 								$params['twitter_site'] = $twitter_id;
 							}
@@ -163,10 +163,10 @@ class SettingsController {
 						break;
 					case 'other_social_urls':
 						foreach ( $param_value as $param_key_osu => $param_url ) {
-							$param_value[ $param_key_osu ] = \sanitize_text_field( $param_url );	
+							$param_value[ $param_key_osu ] = \sanitize_text_field( $param_url );
 							if ( ! empty( $param_url ) && ! \wp_http_validate_url( $param_url ) ) {
 								$this->invalid_urls[] = $param_key_osu;
-								unset($params[$param_key_osu]);
+								unset( $params[ $param_key_osu ] );
 								continue;
 							}
 						}
@@ -175,7 +175,7 @@ class SettingsController {
 						$param[ $param_key ] = \sanitize_text_field( $param_value );
 						if ( ! empty( $param_value ) && ! \wp_http_validate_url( $param_value ) ) {
 							$this->invalid_urls[] = $param_key;
-							unset($params[$param_key]);
+							unset( $params[ $param_key ] );
 						}
 						break;
 				}
@@ -185,7 +185,7 @@ class SettingsController {
 
 		\update_option( $this->yoast_wp_options_key, $settings );
 
-		if( ! empty($this->invalid_urls)) {
+		if ( ! empty( $this->invalid_urls ) ) {
 			$error_keys = implode( ', ', $this->invalid_urls );
 			return new \WP_Error(
 				'invalid_urls',
@@ -213,10 +213,10 @@ class SettingsController {
 			// update database
 			\add_option( $this->yoast_wp_options_key, $social_data );
 		}
-		$twitter_handle = $this->validate_twitter_id($social_data['twitter_site']);
+		$twitter_handle = $this->validate_twitter_id( $social_data['twitter_site'] );
 		// add the full url for twitter cause only the handle is saved in the database
-		if( ! empty($social_data['twitter_site']) &&
-			(false !== $twitter_handle )) {
+		if ( ! empty( $social_data['twitter_site'] ) &&
+			( false !== $twitter_handle ) ) {
 			$social_data['twitter_site'] = 'https://www.twitter.com/' . $twitter_handle;
 		}
 
