@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n'; 
-import { useRef, useState } from '@wordpress/element';
+import { memo, useRef, useState } from '@wordpress/element';
 
 import { ImageUploadLoader } from '../Loaders';
 import { uploadImage } from '../../utils/api/uploader';
@@ -104,4 +104,4 @@ const ImageUploader = ({ icon, iconSetter }) => {
     );
 };
 
-export default ImageUploader;
+export default memo(ImageUploader);

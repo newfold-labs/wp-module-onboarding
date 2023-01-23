@@ -1,5 +1,5 @@
 import { __, sprintf } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
+import { memo, useState, useEffect } from '@wordpress/element';
 
 import content from './miniPreview.json';
 import { translations } from '../../utils/locales/translations';
@@ -159,4 +159,4 @@ const MiniPreview = ({ title, desc, icon, socialData, isSocialFormOpen, setIsSoc
     );
 };
 
-export default MiniPreview;
+export default memo(MiniPreview);
