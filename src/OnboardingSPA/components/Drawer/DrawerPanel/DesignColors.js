@@ -84,8 +84,8 @@ const DesignColors = () => {
 					case 'primary':
 					case 'secondary':
 					case 'tertiary':
-					case 'background':
-					case 'foreground':
+					case 'base':
+					case 'contrast':
 					/* YITH WONDER */
 					case 'header-background':
 					case 'header-foreground':
@@ -95,19 +95,24 @@ const DesignColors = () => {
 						const slug = selectedThemeColorPalette[ idx ]?.slug;
 						if (
 							isCustomStyle &&
-							selectedColorsLocalTemp?.[slug] != ''
+							selectedColorsLocalTemp?.[ slug ] != ''
 						)
-							selectedThemeColorPalette[ idx ].color = selectedColorsLocalTemp[slug];
+							selectedThemeColorPalette[ idx ].color =
+								selectedColorsLocalTemp[ slug ];
 						/**
 						 * Add Exception for Background.
 						 * (perhaps scope to yith-wonder in future)
-						 */
-						else if ( colorPalettesTemp?.[colorStyle]?.[slug] && 'background' === slug ) {
+						 */ else if (
+							colorPalettesTemp?.[ colorStyle ]?.[ slug ] &&
+							'base' === slug
+						) {
 							selectedThemeColorPalette[ idx ].color = '#FFFFFF';
-						}
-						else if ( ! isCustomStyle  && colorPalettesTemp?.[colorStyle]?.[slug] ) {
+						} else if (
+							! isCustomStyle &&
+							colorPalettesTemp?.[ colorStyle ]?.[ slug ]
+						) {
 							selectedThemeColorPalette[ idx ].color =
-								colorPalettesTemp[ colorStyle ][slug];
+								colorPalettesTemp[ colorStyle ][ slug ];
 						}
 						break;
 				}
@@ -134,13 +139,13 @@ const DesignColors = () => {
 		if ( selectedThemeColorPalette ) {
 			for ( let idx = 0; idx < selectedThemeColorPalette.length; idx++ ) {
 				switch ( selectedThemeColorPalette[ idx ]?.slug ) {
-					case 'background':
+					case 'base':
 						if (
-							colorPickerCalledBy == 'background' &&
-							customColors?.background
+							colorPickerCalledBy == 'base' &&
+							customColors?.base
 						)
 							selectedThemeColorPalette[ idx ].color =
-								customColors?.background;
+								customColors?.base;
 						break;
 					case 'primary':
 						if (
@@ -350,22 +355,20 @@ const DesignColors = () => {
 				>
 					<div
 						className="custom-palette__below-row"
-						onClick={ ( e ) => selectCustomColor( 'background' ) }
+						onClick={ ( e ) => selectCustomColor( 'base' ) }
 					>
 						<div
 							className={ `custom-palette__below-row-icon ${
-								customColors?.background &&
+								customColors?.base &&
 								'custom-palette__below-row-icon_selected_border'
 							}` }
 							style={ {
 								backgroundColor: `${
-									customColors?.background ?? '#FFF'
+									customColors?.base ?? '#FFF'
 								}`,
 							} }
 						>
-							{ customColors?.background ? (
-								<div>&#10003;</div>
-							) : null }
+							{ customColors?.base ? <div>&#10003;</div> : null }
 						</div>
 						<div className="custom-palette__below-row-text">
 							Background

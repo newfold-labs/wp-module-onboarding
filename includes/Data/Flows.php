@@ -95,8 +95,8 @@ final class Flows {
 						'color' => '',
 					),
 					array(
-						'slug'  => 'background',
-						'name'  => 'Background',
+						'slug'  => 'base',
+						'name'  => 'Base',
 						'color' => '',
 					),
 				),
