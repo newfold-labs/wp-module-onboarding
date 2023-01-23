@@ -120,7 +120,7 @@ final class Flows {
 			// will include plugin installs, module activation/deactivation and perhaps API calls to the hosting platform for Newfold-specific services
 			'siteFeatures'    => array(),
 
-			'socialData'	  => array(), 
+			'socialData'      => array(),
 		),
 
 		// we will store active flows (abandoned wp-setup, abandoned wp-commerce) with their identifier and use as a reference to access currentStep and data
@@ -148,43 +148,49 @@ final class Flows {
 	);
 
 	/**
-	  * Has all the Flow Key parameters to be updated for the user in Key-Value pair.
-	  *
-	  * - the value of old_key i.e OldKey is the key name in the option that has been modified to NewKey in the blueprint
-	  * - the value of new_key i.e NewKey is the key name that is be replaced in the option
-	  * - OldKey should also be manually updated to the NewKey in the blueprint
-	  * - retain_existing_value (Boolean): true if the value in the option for the OldKey is to be retained,
-	  *   false if the NewKey is to have the default value that is set in the blueprint and discard the value set in the option for OldKey 
-	  *
-	  * @var array
-	  */
+	 * Has all the Flow Key parameters to be updated for the user in Key-Value pair.
+	 *
+	 * - the value of old_key i.e OldKey is the key name in the option that has been modified to NewKey in the blueprint
+	 * - the value of new_key i.e NewKey is the key name that is be replaced in the option
+	 * - OldKey should also be manually updated to the NewKey in the blueprint
+	 * - retain_existing_value (Boolean): true if the value in the option for the OldKey is to be retained,
+	 *   false if the NewKey is to have the default value that is set in the blueprint and discard the value set in the option for OldKey
+	 *
+	 * @var array
+	 */
 	protected static $fixes = array(
 		// array( 'old_key' => 'OldKey', 'new_key' => 'NewKey', 'retain_existing_value' => true/false ),
 	);
 
 	/**
-	  * Array with Key Names as Key, and '1' as value to set the key as an exception
-	  *
-	  * This shall be used temporarily as the respective keys having varied patterns of values cannot be handled by the scope of current functionality
-	  *
-	  * @var array
-	  */
-	protected static $exception_list = array('color' => 1, 'typography' => 1, 'other' => 1, 'siteFeatures' => 1, 'socialData' => 1);
+	 * Array with Key Names as Key, and '1' as value to set the key as an exception
+	 *
+	 * This shall be used temporarily as the respective keys having varied patterns of values cannot be handled by the scope of current functionality
+	 *
+	 * @var array
+	 */
+	protected static $exception_list = array(
+		'color'        => 1,
+		'typography'   => 1,
+		'other'        => 1,
+		'siteFeatures' => 1,
+		'socialData'   => 1,
+	);
 
 	/**
-	  * Update Flow Key and/or Value.
-	  *
-	  * @return array
-	  */
+	 * Update Flow Key and/or Value.
+	 *
+	 * @return array
+	 */
 	public static function get_fixes() {
 		return self::$fixes;
 	}
 
 	/**
-	  * Update Exception Key(s).
-	  *
-	  * @return array
-	  */
+	 * Update Exception Key(s).
+	 *
+	 * @return array
+	 */
 	public static function get_exception_list() {
 		return self::$exception_list;
 	}

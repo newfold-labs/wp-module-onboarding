@@ -13,14 +13,14 @@ class FlowController {
 
 	/**
 	 * This is the REST API namespace that will be used for our custom API
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $namespace = 'newfold-onboarding/v1';
 
 	/**
 	 * This is the REST endpoint
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $rest_base = '/flow';
@@ -62,14 +62,14 @@ class FlowController {
 
 	/**
 	 * Fetch onboarding flow details from database.
-	 * 
+	 *
 	 * @return \WP_REST_Response
 	 */
 	public function get_onboarding_flow_data() {
 		$result = FlowService::read_flow_data_from_wp_option();
-		if( ! $result ) {
+		if ( ! $result ) {
 			$result = FlowService::get_default_flow_data();
-			\update_option( Options::get_option_name( 'flow' ), $result );		}
+			\update_option( Options::get_option_name( 'flow' ), $result );      }
 
 		return new \WP_REST_Response(
 			$result,
@@ -85,7 +85,7 @@ class FlowController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function save_onboarding_flow_data( \WP_REST_Request $request ) {
-		$params    = json_decode( $request->get_body(), true );
+		$params = json_decode( $request->get_body(), true );
 
 		if ( is_null( $params ) ) {
 			return new \WP_Error(
@@ -94,15 +94,15 @@ class FlowController {
 				array( 'status' => 404 )
 			);
 		}
-		
+
 		$default_flow_data = FlowService::get_default_flow_data();
-		$mismatch_key = FlowService::find_mismatch_key($params, $default_flow_data);
-		if ( \is_wp_error($mismatch_key) )  {
+		$mismatch_key      = FlowService::find_mismatch_key( $params, $default_flow_data );
+		if ( \is_wp_error( $mismatch_key ) ) {
 			return $mismatch_key;
 		}
 
-		$flow_data = FlowService::get_updated_flow_data($params);
-		if( \is_wp_error($flow_data) ) {
+		$flow_data = FlowService::get_updated_flow_data( $params );
+		if ( \is_wp_error( $flow_data ) ) {
 			return $flow_data;
 		}
 
@@ -126,7 +126,7 @@ class FlowController {
 		}
 
 		// save data to database
-		if ( ! \update_option( Options::get_option_name( 'flow' ), $flow_data )) {
+		if ( ! \update_option( Options::get_option_name( 'flow' ), $flow_data ) ) {
 			return new \WP_Error(
 				'database_update_failed',
 				'There was an error saving the data',
@@ -142,7 +142,7 @@ class FlowController {
 
 	/**
 	 * Request and Complete Site Pages and Child Theme Generation.
-	 * 
+	 *
 	 * @return \WP_REST_Response
 	 */
 	public function complete() {
