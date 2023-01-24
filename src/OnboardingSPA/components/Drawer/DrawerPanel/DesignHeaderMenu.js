@@ -35,7 +35,8 @@ const DesignHeaderMenu = () => {
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
 	const location = useLocation();
 
-	const { editEntityRecord, getEntityRecords } = useSelect( ( select ) => {
+	const { editEntityRecord } = useDispatch( coreStore );
+	const { getEntityRecords, getEditedEntityRecord } = useSelect( ( select ) => {
 		return select( coreStore );
 	}, [] );
 
@@ -60,8 +61,6 @@ const DesignHeaderMenu = () => {
 	};
 
 	const getPatternsData = async () => {
-		pageList = filteredPageList();
-		console.log('pagelist = ' + pageList.length);
 
 		const headerMenuPreviewResponse = await getPatterns(
 			currentStep.patternId
@@ -104,10 +103,16 @@ const DesignHeaderMenu = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
-			// pageList = getEntityRecords( 'postType', 'page' );
+		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE ) {
 			getPatternsData();
-		}, [ isLoaded, themeStatus ] );
+		}
+	}, [ isLoaded, themeStatus ] );
+
+	useEffect( () => {
+		pageList = filteredPageList();
+		updatePageEntityData();
+		getEditedEntityRecord( 'postType', 'page' );
+	}, [] );
 
 	const updatePageEntityData = ( ) => {
 		pageList.map( ( page, idx ) => {
@@ -122,16 +127,27 @@ const DesignHeaderMenu = () => {
 		if( headerSlug.includes('split') ) {
 			let menuGrammarDummy = '',
 				menuNavigationGrammar = '<!-- wp:navigation-link {"isTopLevelLink":true} /-->';
-			defaultMenuItems.map( ( item, idx ) => {
+			defaultMenuItems.map( ( item ) => {
 				menuGrammarDummy = '<!-- wp:navigation-link {"isTopLevelLink":true, "label":"' + item + '", "title":"' + item + '", "url":"' + wpSiteUrl + '"} /-->';
 				pageGrammar = pageGrammar.replace( menuNavigationGrammar, menuGrammarDummy);
 			});
+		} else {
+			let menuNavigationRegex = /<!-- wp:navigation (.*?)(\/)-->/ig,
+				menuNavigationGrammar = "<!-- wp:navigation $1-->",
+				menuDummyLinks = '';
+			defaultMenuItems.map( ( item ) => {
+				menuDummyLinks = '<!-- wp:navigation-link {"isTopLevelLink":true, "label":"' + item + '", "title":"' + item + '", "url":"' + wpSiteUrl + '"} /-->';
+				menuNavigationGrammar += menuDummyLinks;
+			});
+			menuNavigationGrammar += '<!-- /wp:navigation -->';
+			pageGrammar = pageGrammar.replace( menuNavigationRegex, menuNavigationGrammar);
 		}
 		return pageGrammar;
 	}
 
 	const handleClick = ( idx ) => {
 
+		pageList = filteredPageList();
 		updatePageEntityData();
 
 		if ( document.getElementsByClassName( 'nfd-onboard-content' ) ) {
