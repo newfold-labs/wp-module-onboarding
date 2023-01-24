@@ -1,12 +1,12 @@
 import { __, sprintf } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
-
+import { useState, useEffect, useRef } from '@wordpress/element';
 import content from './content.json';
 import TextInput from '../../../components/TextInput';
 import SkipButton from '../../../components/SkipButton';
 import MiniPreview from '../../../components/MiniPreview';
+import Animate from '../../../components/Animate';
 import { getSettings } from '../../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../../store';
 import ImageUploader from '../../../components/ImageUploader';
@@ -19,6 +19,7 @@ import { translations } from '../../../utils/locales/translations';
  * @return
  */
 const BasicInfoForm = () => {
+	const socialMediaRef = useRef( null );
 	const [ isError, setIsError ] = useState( false );
 	const [ flowData, setFlowData ] = useState();
 	const [ isLoaded, setisLoaded ] = useState( false );
@@ -27,8 +28,9 @@ const BasicInfoForm = () => {
 	const [ siteTitle, setSiteTitle ] = useState( '' );
 	const [ siteDesc, setSiteDesc ] = useState( '' );
 	const [ siteLogo, setSiteLogo ] = useState( 0 );
-	const [ socialData, setSocialData ] = useState( '' );
+	const [ socialData, setSocialData ] = useState();
 	const [ isValidSocials, setIsValidSocials ] = useState( false );
+	const [ isSocialFormOpen, setIsSocialFormOpen ] = useState( false );
 
 	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
 	const { editEntityRecord } = useDispatch( coreStore );
@@ -39,16 +41,17 @@ const BasicInfoForm = () => {
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			currentData: select(
+				nfdOnboardingStore
+			).getCurrentOnboardingData(),
 		};
 	}, [] );
 
 	function setDefaultData() {
 		if ( isLoaded ) {
-			setSiteLogo( flowData?.data.siteLogo );
-			setSiteTitle( flowData?.data.blogName );
-			setSiteDesc( flowData?.data.blogDescription );
+			setSiteLogo( flowData?.data?.siteLogo ?? 0);
+			setSiteTitle( flowData?.data?.blogName ?? '');
+			setSiteDesc( flowData?.data?.blogDescription ?? '' );
 		}
 	}
 
@@ -63,6 +66,10 @@ const BasicInfoForm = () => {
 		};
 		return dataToSave;
 	}
+
+	useEffect( () => {
+		if ( isSocialFormOpen ) socialMediaRef.current.scrollIntoView();
+	}, [ isSocialFormOpen ] );
 
 	useEffect( () => {
 		async function getFlowData() {
@@ -92,7 +99,7 @@ const BasicInfoForm = () => {
 		editEntityRecord( 'root', 'site', undefined, {
 			site_logo: siteLogo?.id ? siteLogo.id : null,
 			description: siteDesc,
-			title: siteTitle
+			title: siteTitle,
 		} );
 	};
 
@@ -122,90 +129,106 @@ const BasicInfoForm = () => {
 	}, [ debouncedFlowData ] );
 
 	return (
-		<div className="basic-info">
-			<div className={ `${ isError ? 'error__show' : 'error__hide' }` }>
-				{ __( content.error.title, 'wp-module-onboarding' ) }
-			</div>
-			<div className="basic-info-form">
-				<div className="basic-info-form__left">
-					<TextInput
-						title={ sprintf(
-							__(
-								content.siteTitle.title,
+		<Animate
+			type="fade-in"
+			after={
+				typeof flowData === "object" && typeof socialData === "object"
+			}
+		>
+			<div className={ 'basic-info' }>
+				<div
+					className={ `${ isError ? 'error__show' : 'error__hide' }` }
+				>
+					{ __( content.error.title, 'wp-module-onboarding' ) }
+				</div>
+				<div className="basic-info-form">
+					<div className="basic-info-form__left">
+						<TextInput
+							title={ sprintf(
+								__(
+									content.siteTitle.title,
+									'wp-module-onboarding'
+								),
+								translations( 'Site' )
+							) }
+							hint={ __(
+								content.siteTitle.hint,
 								'wp-module-onboarding'
-							),
-							translations( 'Site' )
-						) }
-						hint={ __(
-							content.siteTitle.hint,
-							'wp-module-onboarding'
-						) }
-						placeholder={ sprintf(
-							__(
-								content.siteTitle.placeholder,
+							) }
+							placeholder={ sprintf(
+								__(
+									content.siteTitle.placeholder,
+									'wp-module-onboarding'
+								),
+								translations( 'Site' )
+							) }
+							maxCharacters={ __(
+								content.siteTitle.maxCharacters,
 								'wp-module-onboarding'
-							),
-							translations( 'Site' )
-						) }
-						maxCharacters={ __(
-							content.siteTitle.maxCharacters,
-							'wp-module-onboarding'
-						) }
-						height="47px"
-						textValue={ siteTitle }
-						textValueSetter={ setSiteTitle }
-					/>
+							) }
+							height="47px"
+							textValue={ siteTitle }
+							textValueSetter={ setSiteTitle }
+						/>
 
-					<TextInput
-						title={ sprintf(
-							__(
-								content.siteDesc.title,
+						<TextInput
+							title={ sprintf(
+								__(
+									content.siteDesc.title,
+									'wp-module-onboarding'
+								),
+								translations( 'Site' )
+							) }
+							hint={ sprintf(
+								__(
+									content.siteDesc.hint,
+									'wp-module-onboarding'
+								),
+								translations( 'site' )
+							) }
+							placeholder={ sprintf(
+								__(
+									content.siteDesc.placeholder,
+									'wp-module-onboarding'
+								),
+								translations( 'Site' )
+							) }
+							maxCharacters={ __(
+								content.siteTitle.maxCharacters,
 								'wp-module-onboarding'
-							),
-							translations( 'Site' )
-						) }
-						hint={ sprintf(
-							__( content.siteDesc.hint, 'wp-module-onboarding' ),
-							translations( 'site' )
-						) }
-						placeholder={ sprintf(
-							__(
-								content.siteDesc.placeholder,
-								'wp-module-onboarding'
-							),
-							translations( 'Site' )
-						) }
-						maxCharacters={ __(
-							content.siteDesc.maxCharacters,
-							'wp-module-onboarding'
-						) }
-						height="100px"
-						textValue={ siteDesc }
-						textValueSetter={ setSiteDesc }
-					/>
-					<div>
-						<SocialMediaForm
+							) }
+							height="100px"
+							textValue={ siteDesc }
+							textValueSetter={ setSiteDesc }
+						/>
+						<div ref={ socialMediaRef }>
+							<SocialMediaForm
+								socialData={ socialData }
+								setSocialData={ setSocialData }
+								isSocialFormOpen={ isSocialFormOpen }
+								setIsValidSocials={ setIsValidSocials }
+								setIsSocialFormOpen={ setIsSocialFormOpen }
+							/>
+						</div>
+					</div>
+					<div className="basic-info-form__right">
+						<ImageUploader
+							icon={ siteLogo }
+							iconSetter={ setSiteLogo }
+						/>
+						<MiniPreview
+							icon={ siteLogo }
+							title={ siteTitle }
+							desc={ siteDesc }
 							socialData={ socialData }
-							setSocialData={ setSocialData }
-							setIsValidSocials={ setIsValidSocials }
+							isSocialFormOpen={ isSocialFormOpen }
+							setIsSocialFormOpen={ setIsSocialFormOpen }
 						/>
 					</div>
 				</div>
-				<div className="basic-info-form__right">
-					<ImageUploader
-						icon={ siteLogo }
-						iconSetter={ setSiteLogo }
-					/>
-					<MiniPreview
-						icon={ siteLogo }
-						title={ siteTitle }
-						desc={ siteDesc }
-						socialData={ socialData }
-					/>
-				</div>
+				<SkipButton />
 			</div>
-			<SkipButton />
-		</div>
+		</Animate>
 	);
 };
 

@@ -1,10 +1,9 @@
 import { RadioControl } from '@wordpress/components';
-import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch,useSelect } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useNavigate } from 'react-router-dom';
-import { VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../../../constants';
+import { SIDEBAR_LEARN_MORE, VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../../../constants';
 import CardHeader from '../../../../components/CardHeader';
 import CommonLayout from '../../../../components/Layouts/Common';
 import NeedHelpTag from '../../../../components/NeedHelpTag';
@@ -13,6 +12,7 @@ import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 import { store as nfdOnboardingStore } from '../../../../store';
 import content from '../content.json';
 import { useWPSettings } from '../useWPSettings';
+import { RadioControlStateHandler } from '../../../../components/RadioControl';
 
 function createReverseLookup(state) {
 	return (option) =>
@@ -20,12 +20,9 @@ function createReverseLookup(state) {
 }
 
 const StepTax = () => {
-	const isLargeViewport = useViewportMatch( 'medium' );
 	const {
 		setDrawerActiveView,
-		setIsDrawerOpened,
-		setIsDrawerSuppressed,
-		setIsSidebarOpened,
+		setSidebarActiveView,
 		setCurrentOnboardingData,
 	} = useDispatch(nfdOnboardingStore);
 	const navigate = useNavigate();
@@ -35,11 +32,7 @@ const StepTax = () => {
 	);
 
 	useEffect(() => {
-		if (isLargeViewport) {
-			setIsDrawerOpened(true);
-		}
-		setIsSidebarOpened(false);
-		setIsDrawerSuppressed(false);
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
 	}, []);
 
@@ -74,6 +67,22 @@ const StepTax = () => {
 		navigate('/ecommerce/step/products');
 	};
 
+	const selectOption = (value) => {
+		let selectedOption = content.stepTaxOptions.find(
+			(option) => option.value === value
+		);
+		setCurrentOnboardingData({
+			storeDetails: {
+				...currentData.storeDetails,
+				tax: {
+					...selectedOption.data,
+					option: selectedOption.value,
+					isStoreDetailsFilled: tax?.isStoreDetailsFilled
+				},
+			},
+		});
+	}
+
 	return (
         <EcommerceStateHandler>
 		<CommonLayout isBgPrimary isCentered>
@@ -85,33 +94,33 @@ const StepTax = () => {
 							subHeading={__(content.stepTaxSubHeading, 'wp-module-onboarding')}
 							question={__(content.question, 'wp-module-onboarding')}
 						/>
-						{settings === null && <p>Loading...</p>}
 					</div>
-					<RadioControl
-						className='nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-tax-step'
-						selected={tax?.option}
-						options={content.stepTaxOptions.map((option) => {
-							return {
-								label: __(option.content, 'wp-module-onboarding'),
-								value: option.value,
-							};
-						})}
-						onChange={(value) => {
-							let selectedOption = content.stepTaxOptions.find(
-								(option) => option.value === value
-							);
-							setCurrentOnboardingData({
-								storeDetails: {
-									...currentData.storeDetails,
-									tax: {
-										...selectedOption.data,
-										option: selectedOption.value,
-										isStoreDetailsFilled: tax?.isStoreDetailsFilled
-									},
-								},
-							});
-						}}
-					/>
+					<RadioControlStateHandler
+						watch={ settings }
+						options={ content.stepTaxOptions }
+					>
+						<RadioControl
+							className={
+								'nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-tax-step radio-control-main'
+							}
+							selected={ tax?.option }
+							options={ content.stepTaxOptions.map(
+								( option ) => {
+									return {
+										label: __(
+											option.content,
+											'wp-module-onboarding'
+										),
+										value: __(
+											option.value,
+											'wp-module-onboarding'
+										),
+									};
+								}
+							)}
+							onChange={( value ) => selectOption( value )}
+						/>
+					</RadioControlStateHandler>
 					<button
 						className='nfd-nav-card-button nfd-card-button'
 						disabled={settings === null || tax?.option === undefined}

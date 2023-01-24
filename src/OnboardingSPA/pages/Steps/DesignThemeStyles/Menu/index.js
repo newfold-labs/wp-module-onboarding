@@ -1,7 +1,6 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useViewportMatch } from '@wordpress/compose';
 
 import { store as nfdOnboardingStore } from '../../../../store';
 import CommonLayout from '../../../../components/Layouts/Common';
@@ -13,6 +12,7 @@ import {
 	VIEW_NAV_DESIGN,
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_NOT_ACTIVE,
+	SIDEBAR_LEARN_MORE,
 } from '../../../../../constants';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
 import {
@@ -28,7 +28,6 @@ const StepDesignThemeStylesMenu = () => {
 	const [ selectedStyle, setSelectedStyle ] = useState();
 
 	const navigate = useNavigate();
-	const isLargeViewport = useViewportMatch( 'medium' );
 	const {
 		currentStep,
 		nextStep,
@@ -53,23 +52,15 @@ const StepDesignThemeStylesMenu = () => {
 
 	const {
 		setDrawerActiveView,
-		setIsDrawerOpened,
-		setIsSidebarOpened,
-		setIsDrawerSuppressed,
+		setSidebarActiveView,
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
-		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		if ( isLargeViewport ) {
-			setIsDrawerOpened( true );
-		}
-		setIsSidebarOpened( false );
-		setIsDrawerSuppressed( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView( VIEW_NAV_DESIGN );
-		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	const getStylesAndPatterns = async () => {

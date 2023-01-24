@@ -34,13 +34,24 @@ const StepIntroPanel = lazy( () =>
 );
 
 const LearnMore = () => {
-	const { brandName } = useSelect( ( select ) => {
-		return {
-			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
-		};
-	} );
+	const { brandName, techSupportLink, fullServiceCreativeTeamLink } =
+		useSelect( ( select ) => {
+			return {
+				brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+				techSupportLink:
+					select( nfdOnboardingStore ).getTechSupportUrl(),
+				fullServiceCreativeTeamLink:
+					select(
+						nfdOnboardingStore
+					).getfullServiceCreativeTeamUrl(),
+			};
+		} );
 
-	const content = getContents( brandName );
+	const content = getContents(
+		brandName,
+		techSupportLink,
+		fullServiceCreativeTeamLink
+	);
 
 	return (
 		<div className="nfd-onboarding-sidebar-learn-more__ecommerce-tax-info">
@@ -59,7 +70,7 @@ const LearnMore = () => {
 				<ButtonWhite
 					text={ content.help.fullService.text }
 					onClick={ () =>
-						( window.location.href = content.help.fullService.link )
+						window.open( content.help.fullService.link, '_blank' )
 					}
 				/>
 				<SupportLink

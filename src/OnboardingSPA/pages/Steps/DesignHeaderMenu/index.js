@@ -1,6 +1,5 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect, useLayoutEffect } from '@wordpress/element';
-import { useViewportMatch } from '@wordpress/compose';
 
 import CommonLayout from '../../../components/Layouts/Common';
 import { DesignStateHandler } from '../../../components/StateHandlers';
@@ -9,7 +8,10 @@ import {
 	GlobalStylesProvider,
 } from '../../../components/LivePreview';
 
-import { VIEW_DESIGN_HEADER_MENU } from '../../../../constants';
+import {
+	SIDEBAR_LEARN_MORE,
+	VIEW_DESIGN_HEADER_MENU,
+} from '../../../../constants';
 import { store as nfdOnboardingStore } from '../../../store';
 
 const StepDesignHeaderMenu = () => {
@@ -20,28 +22,17 @@ const StepDesignHeaderMenu = () => {
 	}, [] );
 
 	const [ pattern, setPattern ] = useState();
-	const isLargeViewport = useViewportMatch( 'medium' );
 
-	const {
-		setDrawerActiveView,
-		setIsDrawerOpened,
-		setIsDrawerSuppressed,
-		setIsSidebarOpened,
-		setIsHeaderNavigationEnabled,
-	} = useDispatch( nfdOnboardingStore );
+	const { setDrawerActiveView, setSidebarActiveView } =
+		useDispatch( nfdOnboardingStore );
 
 	useLayoutEffect( () => {
 		setPattern( headerMenu );
 	}, [ headerMenu ] );
 
 	useEffect( () => {
-		if ( isLargeViewport ) {
-			setIsDrawerOpened( true );
-		}
-		setIsSidebarOpened( false );
-		setIsDrawerSuppressed( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView( VIEW_DESIGN_HEADER_MENU );
-		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	return (

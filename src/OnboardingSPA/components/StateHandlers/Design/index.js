@@ -1,5 +1,6 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Fragment, useEffect } from '@wordpress/element';
+import { useViewportMatch } from '@wordpress/compose';
 
 import { StepLoader } from '../../Loaders';
 import { store as nfdOnboardingStore } from '../../../store';
@@ -15,7 +16,12 @@ import {
 import { StepErrorState } from '../../ErrorState';
 import getContents from './contents';
 
-const DesignStateHandler = ( { children } ) => {
+const DesignStateHandler = ( {
+	children,
+	navigationStateCallback = false,
+} ) => {
+	const isLargeViewport = useViewportMatch( 'medium' );
+
 	const { storedThemeStatus, brandName } = useSelect( ( select ) => {
 		return {
 			storedThemeStatus: select( nfdOnboardingStore ).getThemeStatus(),
@@ -25,7 +31,12 @@ const DesignStateHandler = ( { children } ) => {
 
 	const contents = getContents( brandName );
 
-	const { updateThemeStatus } = useDispatch( nfdOnboardingStore );
+	const {
+		updateThemeStatus,
+		setIsDrawerOpened,
+		setIsDrawerSuppressed,
+		setIsHeaderNavigationEnabled,
+	} = useDispatch( nfdOnboardingStore );
 
 	const checkThemeStatus = async () => {
 		const themeStatus = await getThemeStatus( DESIGN_STEPS_THEME );
@@ -45,7 +56,41 @@ const DesignStateHandler = ( { children } ) => {
 		}, THEME_INSTALL_WAIT_TIMEOUT );
 	};
 
+	const enableNavigation = () => {
+		if ( isLargeViewport ) {
+			setIsDrawerOpened( true );
+		}
+		setIsDrawerSuppressed( false );
+		setIsHeaderNavigationEnabled( true );
+	};
+
+	const disableNavigation = () => {
+		setIsDrawerOpened( false );
+		setIsDrawerSuppressed( true );
+		setIsHeaderNavigationEnabled( false );
+	};
+
+	const handleNavigationStateCallback = () => {
+		if ( typeof navigationStateCallback === 'function' ) {
+			return navigationStateCallback();
+		}
+		enableNavigation();
+	};
+
+	const handleNavigationState = ( themeStatus ) => {
+		switch ( themeStatus ) {
+			case THEME_STATUS_NOT_ACTIVE:
+				return handleNavigationStateCallback();
+			case THEME_STATUS_ACTIVE:
+				return handleNavigationStateCallback();
+			default:
+				disableNavigation();
+		}
+	};
+
 	useEffect( async () => {
+		handleNavigationState( storedThemeStatus );
+
 		if ( storedThemeStatus === THEME_STATUS_INIT ) {
 			const themeStatus = await checkThemeStatus();
 			switch ( themeStatus ) {

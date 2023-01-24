@@ -40,6 +40,11 @@
 		border: 1px solid #e3dfdf;
 		margin-bottom: 30px;
 
+
+		&:hover {
+			cursor: not-allowed;
+		}
+
 		.live-preview {
 
 			&__container {

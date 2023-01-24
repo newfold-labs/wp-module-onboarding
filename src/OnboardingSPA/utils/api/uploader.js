@@ -1,5 +1,5 @@
 import { resolve } from './resolve';
-import { wpRestBase } from '../../../constants';
+import { wpRestURL } from './common';
 
 import apiFetch from '@wordpress/api-fetch';
 
@@ -28,7 +28,7 @@ export async function uploadImage( file ) {
 
 	return await resolve(
 		apiFetch( {
-			url: `${ wpRestBase }/wp/v2/media`,
+			url: wpRestURL( 'media' ),
 			method: 'POST',
 			headers,
 			body: data,

@@ -1,6 +1,4 @@
-import { __ } from '@wordpress/i18n';
 import { useLocation } from 'react-router-dom';
-import { useViewportMatch } from '@wordpress/compose';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
@@ -13,6 +11,7 @@ import {
 	GlobalStylesProvider,
 } from '../../../components/LivePreview';
 import {
+	SIDEBAR_LEARN_MORE,
 	THEME_STATUS_NOT_ACTIVE,
 	VIEW_DESIGN_COLORS,
 } from '../../../../constants';
@@ -22,37 +21,20 @@ const StepDesignColors = () => {
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
 
-	const isLargeViewport = useViewportMatch( 'medium' );
-	const { currentStep, currentData } = useSelect(
-		( select ) => {
-			return {
-				currentStep: select( nfdOnboardingStore ).getStepFromPath(
-					location.pathname
-				),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			};
-		},
-		[]
-	);
+	const { currentStep } = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getStepFromPath(
+				location.pathname
+			),
+		};
+	}, [] );
 
-	const {
-		setDrawerActiveView,
-		setIsDrawerOpened,
-		setIsSidebarOpened,
-		setIsDrawerSuppressed,
-		setIsHeaderNavigationEnabled
-
-	} = useDispatch( nfdOnboardingStore );
+	const { setDrawerActiveView, setSidebarActiveView, updateThemeStatus } =
+		useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		if ( isLargeViewport ) {
-			setIsDrawerOpened( true );
-		}
-		setIsSidebarOpened( false );
-		setIsDrawerSuppressed( false );
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView( VIEW_DESIGN_COLORS );
-		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
 	const getStylesAndPatterns = async () => {

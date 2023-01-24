@@ -88,8 +88,11 @@ $title-browser-color: #3858E9;
         justify-content: flex-start;
 
         &_icon{
+            opacity: 1;
             width: 24px;
             height: 24px;
+            filter: none;
+            cursor: pointer;
             text-align: center;
             padding-right: 6px;
             background-position: center;
@@ -97,8 +100,14 @@ $title-browser-color: #3858E9;
             background-clip: padding-box;
             transition: opacity 0.4s ease-in-out;
 
-            &.invalid-url {
-                opacity: 0.8;
+            &.--no-url {
+                opacity: 0.5;
+                filter: grayscale(1);
+            }
+
+            &.--invalid-url {
+                opacity: 0.75;
+                filter: none;
             }
         }
     }

@@ -1,9 +1,11 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\TaskManagers;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Models\PriorityQueue;
 use NewfoldLabs\WP\Module\Onboarding\Tasks\PluginUninstallTask;
+use NewfoldLabs\WP\Module\Onboarding\Services\PluginUninstaller;
 
 /**
  * Manages the execution of PluginUninstallTasks.
@@ -15,7 +17,7 @@ class PluginUninstallTaskManager {
 	  *
 	  * @var int
 	  */
-	private static $retry_limit = 1;
+	private static $retry_limit = 2;
 
 	private static $queue_name = 'plugin_uninstall_queue';
 
@@ -108,6 +110,22 @@ class PluginUninstallTaskManager {
 		   Get the plugins queued up to be uninstalled, the PluginUninstall task gets
 		   converted to an associative array before storing it in the option. */
 		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
+
+		$position_in_queue = PluginInstallTaskManager::status( $plugin_uninstall_task->get_slug() );
+		if ( $position_in_queue !== false && $position_in_queue !== 0 ) {
+			PluginInstallTaskManager::remove_from_queue(
+				$plugin_uninstall_task->get_slug()
+			);
+
+			return true;
+		}
+
+		$plugin_list = Plugins::get_squashed();
+		// Gets the specified path for the Plugin from the predefined list
+		$plugin_path = $plugin_list[ $plugin_uninstall_task->get_slug() ]['path'];
+
+		if (!PluginUninstaller::is_plugin_installed($plugin_path))
+			return true;
 
 		$queue = new PriorityQueue();
 		foreach ( $plugins as $queued_plugin ) {

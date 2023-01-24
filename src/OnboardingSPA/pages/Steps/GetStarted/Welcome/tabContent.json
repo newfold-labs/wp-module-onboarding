@@ -3,19 +3,22 @@
         {
             "name": "tab1",
             "title": "YOUR CONTENT",
-            "text": "Build a beautiful %s with WordPress Blocks and pre-built Block Patterns for common web content layouts.",
+            "subtitle": "Publish boldly with WordPress Blocks.",
+            "text": "Build a beautiful %s using a visual builder. Block Patterns accelerate layout assembly and storytelling with premade designs.",
             "imgType": "content-img"
         },
         {
             "name": "tab2",
             "title": "POWERFUL FEATURES",
-            "text": "Start a %s, email newsletter, podcast, course, and more using WordPress Plugins and Bluehost.",
+            "subtitle": "Proven, easy-to-use solutions.",
+            "text": "WordPress make it easy to grow your %s. Send a newsletter, host a podcast or create courses. Your site grows for your next big idea.",
             "imgType": "features-img"
         },
         {
             "name": "tab3",
             "title": "MODERN DESIGN",
-            "text": "Setup and refine your %s's design styles, header, footer, and page layout templates in the WordPress Site Editor.",
+            "subtitle": "Paint trim. Move walls. No sweat.",
+            "text": "Pick your %s's unique design now and refine by customing your block templates, colors and fonts in the WordPress Site Editor.",
             "imgType": "design-img"
         }
     ]
