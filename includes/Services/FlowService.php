@@ -117,7 +117,7 @@ class FlowService {
 	 * @param array $flow_data WP Options Data
 	 * @param array $params Params Data
 	 *
-	 * @return array
+	 * @return \WP_Error|array
 	 */
 	private static function update_post_call_data_recursive( &$flow_data, $params ) {
 		$exception_list = Flows::get_exception_list();
@@ -152,7 +152,7 @@ class FlowService {
 			// To handle Indexed Arrays gracefully
 			if ( self::is_array_indexed( $params[ $key ] ) ) {
 				// If the Database value is empty or an Indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
-				( ( count( $value ) === 0 ) || ( count( array_filter( array_keys( $value ), 'is_string' ) ) === 0 ) ) ?
+				( ( count( $value ) === 0 ) || self::is_array_indexed( $value ) ) ?
 					$flow_data[ $key ]   = $params[ $key ]
 					: $flow_data[ $key ] = $value;
 				continue;
@@ -209,7 +209,7 @@ class FlowService {
 	 * @param array  $flow_data Options Data
 	 * @param string $header_key Array Level in Recursion
 	 *
-	 * @return string
+	 * @return \WP_error|boolean
 	 */
 	public static function find_mismatch_key( $params, $flow_data, $header_key = 'Base Level' ) {
 		$exception_list = Flows::get_exception_list();
@@ -233,11 +233,14 @@ class FlowService {
 				}
 
 				// For Indexed Arrays
-				if ( count( array_filter( array_keys( $value ), 'is_string' ) ) === 0 ) {
+				if ( self::is_array_indexed( $value ) ) {
 					foreach ( $value as $index_key => $index_value ) {
 						// For Indexed Arrays having Associative Arrays as Values
 						if ( is_array( $index_value ) ) {
-							self::find_mismatch_key( $value[ $index_key ], $flow_data[ $key ][ $index_key ], $key . ' : ' . $index_key );
+							$verify_key = self::find_mismatch_key( $value[ $index_key ], $flow_data[ $key ][ $index_key ], $key . ' : ' . $index_key );
+							if( \is_wp_error( $verify_key ) ) {
+								return $verify_key;
+							}						
 						}
 					}
 					continue;
@@ -245,10 +248,11 @@ class FlowService {
 
 				// For Associative Arrays
 				$verify_key = self::find_mismatch_key( $value, $flow_data[ $key ], $key );
-				if ( \is_wp_error( $verify_key ) ) {
-					return self::find_mismatch_key( $value, $flow_data[ $key ], $key );
+				if( \is_wp_error( $verify_key ) ) {
+					return $verify_key;
 				}
 			}
 		}
+		return true;
 	}
 }
