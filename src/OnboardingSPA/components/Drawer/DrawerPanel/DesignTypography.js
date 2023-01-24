@@ -202,19 +202,17 @@ const DesignTypography = () => {
 	}
 
 	return (
-		<GlobalStylesProvider>
-			<div ref={ drawerFontOptions } className="theme-fonts--drawer">
-				<h2>{ __( 'Font Palettes', 'wp-module-onboarding' ) }</h2>
-				{ /* { selectedFont && 
-				<div className='theme-fonts--drawer--reset' onClick={resetFonts}>
-					<div>Reset Button</div>
-				</div>
-			} */ }
-				{ fontPalettes && buildPalettes() }
-				{ /* { fontPalettes && buildCustomPalette() } */ }
-				<div className="custom-font-palette--hidden">{ rerender }</div>
+		<div ref={ drawerFontOptions } className="theme-fonts--drawer">
+			<h2>{ __( 'Font Palettes', 'wp-module-onboarding' ) }</h2>
+			{ /* { selectedFont && 
+			<div className='theme-fonts--drawer--reset' onClick={resetFonts}>
+				<div>Reset Button</div>
 			</div>
-		</GlobalStylesProvider>
+		} */ }
+			{ fontPalettes && buildPalettes() }
+			{ /* { fontPalettes && buildCustomPalette() } */ }
+			<div className="custom-font-palette--hidden">{ rerender }</div>
+		</div>
 	);
 };
 export default DesignTypography;

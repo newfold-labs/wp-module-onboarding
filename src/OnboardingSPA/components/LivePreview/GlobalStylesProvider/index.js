@@ -29,20 +29,22 @@ const GlobalStylesProvider = ( { children } ) => {
 		useDispatch( nfdOnboardingStore );
 
 	const getStylesAndPatterns = async () => {
-		const globalStyles = await getGlobalStyles();
-		if ( globalStyles?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
-		}
 		let selectedGlobalStyle;
 		if ( storedPreviewSettings?.title && storedPreviewSettings?.settings )
 			selectedGlobalStyle = storedPreviewSettings;
-		else if ( currentData.data.theme.variation ) {
-			selectedGlobalStyle = globalStyles.body.filter(
-				( globalStyle ) =>
-					globalStyle.title === currentData.data.theme.variation
-			)[ 0 ];
-		} else if ( globalStyles.body[ 0 ]?.id === 0 ) {
-			selectedGlobalStyle = globalStyles.body[ 0 ];
+		else{ 
+			const globalStyles = await getGlobalStyles();
+			if (globalStyles?.error) {
+				return updateThemeStatus(THEME_STATUS_NOT_ACTIVE);
+			}
+			if ( currentData.data.theme.variation ) {
+				selectedGlobalStyle = globalStyles.body.filter(
+					( globalStyle ) =>
+						globalStyle.title === currentData.data.theme.variation
+				)[ 0 ];
+			} else if ( globalStyles.body[ 0 ]?.id === 0 ) {
+				selectedGlobalStyle = globalStyles.body[ 0 ];
+			}
 		}
 
 		if ( selectedGlobalStyle )

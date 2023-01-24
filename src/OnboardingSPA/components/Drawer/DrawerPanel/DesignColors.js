@@ -451,18 +451,16 @@ const DesignColors = () => {
 	}
 
 	return (
-		<GlobalStylesProvider>
-			<div className="theme-colors--drawer">
-				<h2>{ __( 'Color Palettes', 'wp-module-onboarding' ) }</h2>
-				{ /* {selectedColors?.slug && 
-					<div className='theme-colors--drawer--reset' onClick={resetColors}>
-						<div>Reset Button</div>
-					</div>
-				} */ }
-				{ colorPalettes && buildPalettes() }
-				{ colorPalettes && buildCustomPalette() }
-			</div>
-		</GlobalStylesProvider>
+		<div className="theme-colors--drawer">
+			<h2>{ __( 'Color Palettes', 'wp-module-onboarding' ) }</h2>
+			{ /* {selectedColors?.slug && 
+				<div className='theme-colors--drawer--reset' onClick={resetColors}>
+					<div>Reset Button</div>
+				</div>
+			} */ }
+			{ colorPalettes && buildPalettes() }
+			{ colorPalettes && buildCustomPalette() }
+		</div>
 	);
 };
 
