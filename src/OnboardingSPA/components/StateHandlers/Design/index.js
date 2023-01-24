@@ -140,10 +140,7 @@ const DesignStateHandler = ( {
 							'Going through this setup will change your active theme, WordPress settings, add content – would you like to continue?',
 							'wp-module-onboarding'
 						) }
-						modalPrimaryCloseButtonOnClick={ installThemeManually }
-						onRequestClose={ () =>
-							updateThemeStatus( THEME_STATUS_FAILURE )
-						}
+						modalOnClose={ installThemeManually }
 						modalExitButtonText={ __(
 							'Exit to WordPress',
 							'wp-module-onboarding'

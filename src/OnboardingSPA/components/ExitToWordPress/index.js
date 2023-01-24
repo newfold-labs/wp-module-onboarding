@@ -27,24 +27,14 @@ const ExitToWordPress = ( {
 	modalTitle = __( 'Exit without finishing?', 'wp-module-onboarding' ),
 	modalText = false,
 	modalPrimaryCloseButtonText = __( 'Continue', 'wp-module-onboarding' ),
-	modalPrimaryCloseButtonOnClick = false,
-	onRequestClose = false,
+	modalOnClose = false,
 	modalExitButtonText = __( 'Exit', 'wp-module-onboarding' ),
 } ) => {
 	const [ isOpen, setIsOpen ] = useState( isModalOpen );
 	const openModal = () => setIsOpen( true );
-	const closeModal = ( context ) => {
-		switch ( context ) {
-			case 'on-request-close':
-				if ( typeof onRequestClose === 'function' ) {
-					onRequestClose();
-				}
-				break;
-			case 'primary-close-button':
-				if ( typeof modalPrimaryCloseButtonOnClick === 'function' ) {
-					modalPrimaryCloseButtonOnClick();
-				}
-				break;
+	const closeModal = () => {
+		if ( typeof modalOnClose === 'function' ) {
+			modalOnClose();
 		}
 		setIsOpen( false );
 	};
@@ -123,15 +113,13 @@ const ExitToWordPress = ( {
 			{ isOpen && (
 				<Modal
 					title={ modalTitle }
-					onRequestClose={ () => closeModal( 'on-request-close' ) }
+					onRequestClose={ () => closeModal() }
 				>
 					<p>{ modalText }</p>
 					<ButtonGroup className="nfd-onboarding-etw__buttons">
 						<Button
 							variant="secondary"
-							onClick={ () =>
-								closeModal( 'primary-close-button' )
-							}
+							onClick={ () => closeModal() }
 						>
 							{ modalPrimaryCloseButtonText }
 						</Button>
