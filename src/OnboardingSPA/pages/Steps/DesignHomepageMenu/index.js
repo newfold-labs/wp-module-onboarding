@@ -10,7 +10,6 @@ import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_FAILURE,
 	SIDEBAR_LEARN_MORE,
-	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { DesignStateHandler } from '../../../components/StateHandlers';
@@ -101,20 +100,10 @@ const StepDesignHomepageMenu = () => {
 		return makeHomepagePattern;
 	}
 
-	const handleAPIError = ( error ) => {
-		if ( error?.data?.status ) {
-			switch ( error.data.status ) {
-				case 404:
-					return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
-			}
-		}
-		return updateThemeStatus( THEME_STATUS_FAILURE );
-	};
-
 	async function getHomepagePatternsData() {
 		const homepagePatternData = await getPatterns( currentStep.patternId );
 		if ( homepagePatternData?.error ) {
-			return handleAPIError( homepagePatternData.error );
+			return updateThemeStatus( THEME_STATUS_FAILURE );
 		}
 
 		setHomepagePattern( refactorPatterns( homepagePatternData ) );

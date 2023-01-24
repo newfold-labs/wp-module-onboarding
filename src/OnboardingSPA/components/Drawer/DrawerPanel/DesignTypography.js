@@ -6,6 +6,10 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { GlobalStylesProvider } from '../../../components/LivePreview';
 import { getGlobalStyles, getThemeFonts } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
+import {
+	THEME_STATUS_ACTIVE,
+	THEME_STATUS_FAILURE,
+} from '../../../../constants';
 
 const DesignTypography = () => {
 	const drawerFontOptions = useRef();
@@ -15,20 +19,30 @@ const DesignTypography = () => {
 	const [ fontPalettes, setFontPalettes ] = useState();
 	const [ isAccordionClosed, setIsAccordionClosed ] = useState( true );
 
-	const { storedPreviewSettings, currentData } = useSelect( ( select ) => {
-		return {
-			storedPreviewSettings:
-				select( nfdOnboardingStore ).getPreviewSettings(),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-		};
-	}, [] );
+	const { storedPreviewSettings, currentData, themeStatus } = useSelect(
+		( select ) => {
+			return {
+				storedPreviewSettings:
+					select( nfdOnboardingStore ).getPreviewSettings(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			};
+		},
+		[]
+	);
 
-	const { updatePreviewSettings, setCurrentOnboardingData } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		updatePreviewSettings,
+		setCurrentOnboardingData,
+		updateThemeStatus,
+	} = useDispatch( nfdOnboardingStore );
 
 	const getFontStylesAndPatterns = async () => {
 		const fontPalettes = await getThemeFonts();
+		if ( fontPalettes?.error ) {
+			return updateThemeStatus( THEME_STATUS_FAILURE );
+		}
 		setFontPalettes( fontPalettes?.body );
 
 		if ( currentData?.data?.typography?.slug !== '' ) {
@@ -51,8 +65,9 @@ const DesignTypography = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded ) getFontStylesAndPatterns();
-	}, [ isLoaded ] );
+		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
+			getFontStylesAndPatterns();
+	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = async (
 		fontStyle,

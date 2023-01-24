@@ -13,7 +13,6 @@ import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_FAILURE,
 	SIDEBAR_LEARN_MORE,
-	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../../constants';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
 import {
@@ -64,27 +63,17 @@ const StepDesignThemeStylesMenu = () => {
 		setDrawerActiveView( VIEW_NAV_DESIGN );
 	}, [] );
 
-	const handleAPIError = ( error ) => {
-		if ( error?.data?.status ) {
-			switch ( error.data.status ) {
-				case 404:
-					return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
-			}
-		}
-		return updateThemeStatus( THEME_STATUS_FAILURE );
-	};
-
 	const getStylesAndPatterns = async () => {
 		const patternsResponse = await getPatterns(
 			currentStep.patternId,
 			true
 		);
 		if ( patternsResponse?.error ) {
-			return handleAPIError( patternsResponse.error );
+			return updateThemeStatus( THEME_STATUS_FAILURE );
 		}
 		const globalStylesResponse = await getGlobalStyles( true );
 		if ( globalStylesResponse?.error ) {
-			return handleAPIError( globalStylesResponse.error );
+			return updateThemeStatus( THEME_STATUS_FAILURE );
 		}
 		setPattern( patternsResponse?.body );
 		setGlobalStyles( globalStylesResponse?.body );

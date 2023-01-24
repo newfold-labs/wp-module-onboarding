@@ -8,7 +8,6 @@ import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-s
 import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_FAILURE,
-	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
 import {
 	LivePreviewSelectableCard,
@@ -45,27 +44,17 @@ const DesignThemeStylesPreview = () => {
 		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
 
-	const handleAPIError = ( error ) => {
-		if ( error?.data?.status ) {
-			switch ( error.data.status ) {
-				case 404:
-					return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
-			}
-		}
-		return updateThemeStatus( THEME_STATUS_FAILURE );
-	};
-
 	const getStylesAndPatterns = async () => {
 		const patternResponse = await getPatterns(
 			currentStep.patternId,
 			true
 		);
 		if ( patternResponse?.error ) {
-			return handleAPIError( patternResponse.error );
+			return updateThemeStatus( THEME_STATUS_FAILURE );
 		}
 		const globalStylesResponse = await getGlobalStyles( true );
 		if ( globalStylesResponse?.error ) {
-			return handleAPIError( globalStylesResponse.error );
+			return updateThemeStatus( THEME_STATUS_FAILURE );
 		}
 		setPattern( patternResponse?.body );
 		setGlobalStyles( globalStylesResponse?.body );

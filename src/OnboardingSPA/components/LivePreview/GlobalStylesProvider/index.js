@@ -5,8 +5,8 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, setGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import {
+	THEME_STATUS_ACTIVE,
 	THEME_STATUS_FAILURE,
-	THEME_STATUS_NOT_ACTIVE,
 } from '../../../../constants';
 
 /**
@@ -20,32 +20,26 @@ import {
 const GlobalStylesProvider = ( { children } ) => {
 	const [ isLoaded, setIsLoaded ] = useState( false );
 
-	const { currentData, storedPreviewSettings } = useSelect( ( select ) => {
-		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			storedPreviewSettings:
-				select( nfdOnboardingStore ).getPreviewSettings(),
-		};
-	}, [] );
+	const { currentData, storedPreviewSettings, themeStatus } = useSelect(
+		( select ) => {
+			return {
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				storedPreviewSettings:
+					select( nfdOnboardingStore ).getPreviewSettings(),
+				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			};
+		},
+		[]
+	);
 
 	const { updateThemeStatus, updatePreviewSettings } =
 		useDispatch( nfdOnboardingStore );
 
-	const handleAPIError = ( error ) => {
-		if ( error?.data?.status ) {
-			switch ( error.data.status ) {
-				case 404:
-					return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
-			}
-		}
-		return updateThemeStatus( THEME_STATUS_FAILURE );
-	};
-
 	const getStylesAndPatterns = async () => {
 		const globalStyles = await getGlobalStyles();
 		if ( globalStyles?.error ) {
-			return handleAPIError( globalStyles.error );
+			return updateThemeStatus( THEME_STATUS_FAILURE );
 		}
 		let selectedGlobalStyle;
 		if ( storedPreviewSettings?.title && storedPreviewSettings?.settings )
@@ -73,8 +67,9 @@ const GlobalStylesProvider = ( { children } ) => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded ) getStylesAndPatterns();
-	}, [ isLoaded ] );
+		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
+			getStylesAndPatterns();
+	}, [ isLoaded, themeStatus ] );
 
 	return children;
 };

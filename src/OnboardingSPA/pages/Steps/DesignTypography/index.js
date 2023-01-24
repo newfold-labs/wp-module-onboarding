@@ -9,7 +9,7 @@ import {
 	SIDEBAR_LEARN_MORE,
 	THEME_STATUS_FAILURE,
 	VIEW_DESIGN_TYPOGRAPHY,
-	THEME_STATUS_NOT_ACTIVE,
+	THEME_STATUS_ACTIVE,
 } from '../../../../constants';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 import {
@@ -22,11 +22,12 @@ const StepDesignTypography = () => {
 	const [ pattern, setPattern ] = useState();
 	const [ isLoaded, setIsLoaded ] = useState( false );
 
-	const { currentStep } = useSelect( ( select ) => {
+	const { currentStep, themeStatus } = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
 			),
+			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 		};
 	}, [] );
 
@@ -38,30 +39,21 @@ const StepDesignTypography = () => {
 		setDrawerActiveView( VIEW_DESIGN_TYPOGRAPHY );
 	}, [] );
 
-	const handleAPIError = ( error ) => {
-		if ( error?.data?.status ) {
-			switch ( error.data.status ) {
-				case 404:
-					return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
-			}
-		}
-		return updateThemeStatus( THEME_STATUS_FAILURE );
-	};
-
 	const getFontPatterns = async () => {
 		const patternsResponse = await getPatterns(
 			currentStep.patternId,
 			true
 		);
 		if ( patternsResponse?.error ) {
-			return handleAPIError( patternsResponse.error );
+			return updateThemeStatus( THEME_STATUS_FAILURE );
 		}
 		setPattern( patternsResponse?.body );
 		setIsLoaded( true );
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded ) getFontPatterns();
+		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
+			getFontPatterns();
 	}, [ isLoaded ] );
 
 	return (
