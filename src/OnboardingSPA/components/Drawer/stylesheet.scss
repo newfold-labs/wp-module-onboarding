@@ -226,12 +226,6 @@
 	}
 }
 
-.is-drawer-fade {
-	animation-name: fadeIn;
-	animation-duration: 100ms;
-	animation-timing-function: ease-in;
-}
-
 /*COLOR VARIABLES*/
 $main-color-dark: var(--nfd-onboarding-dark);
 $main-color-light: var(--nfd-onboarding-white);

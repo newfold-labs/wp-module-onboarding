@@ -7,6 +7,7 @@ import { VIEW_NAV_PRIMARY } from '../../../../constants';
 import { __ } from '@wordpress/i18n';
 import { store as nfdOnboardingStore } from '../../../store';
 import classNames from 'classnames';
+import Animate from '../../Animate';
 
 const NavDesign = () => {
 	const { designSteps } = useSelect( ( select ) => {
@@ -19,14 +20,14 @@ const NavDesign = () => {
 	const location = useLocation();
 
 	return (
-		<div className="is-drawer-fade">
+		<Animate type={ 'fade-in' } duration="100ms" timingFunction="ease-in">
 			<Button
 				className="nfd-onboarding-drawer__panel-back"
 				variant="tertiary"
 				icon={ chevronLeft }
 				onClick={ () => setDrawerActiveView( VIEW_NAV_PRIMARY ) }
 			>
-				{__('Onboarding Menu', 'wp-module-onboarding')}
+				{ __( 'Onboarding Menu', 'wp-module-onboarding' ) }
 			</Button>
 			<div className="nfd-onboarding-drawer__panel-menu">
 				<ul className="nfd-onboarding-drawer__panel-routes">
@@ -62,7 +63,7 @@ const NavDesign = () => {
 					} ) }
 				</ul>
 			</div>
-		</div>
+		</Animate>
 	);
 };
 

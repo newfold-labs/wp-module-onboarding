@@ -1,7 +1,8 @@
 import { useState } from '@wordpress/element';
-import { Icon, help, box } from '@wordpress/icons';
+import { Icon, help } from '@wordpress/icons';
 
 import { CheckboxControl } from '@wordpress/components';
+import Animate from '../../Animate';
 
 /**
  * Checkbox Item Component
@@ -40,70 +41,78 @@ const CheckboxItem = ( {
 	return (
 		<div>
 			<div
-				className={`${ className } ${isSelected && `${ className }--selected`
-					} ${showDescription && `${ className }--shown`}`}
+				className={ `${ className } ${
+					isSelected && `${ className }--selected`
+				} ${ showDescription && `${ className }--shown` }` }
 			>
-				<div className={`${ className }-container`}>
+				<div className={ `${ className }-container` }>
 					<CheckboxControl
-						checked={isSelected}
-						onChange={handleCheck}
-						className={`${ className }-checkbox`}
+						checked={ isSelected }
+						onChange={ handleCheck }
+						className={ `${ className }-checkbox` }
 					/>
-					<div className={`${ className }__contents`}>
+					<div className={ `${ className }__contents` }>
 						<div
-							className={`${ className }__contents-icon
-                                     ${isSelected &&
-								`${ className }__contents-icon--selected`
-								}
-                                     ${showDescription &&
-								`${ className }__contents-icon--shown`
-								}`}
+							className={ `${ className }__contents-icon
+                                     ${
+											isSelected &&
+											`${ className }__contents-icon--selected`
+										}
+                                     ${
+											showDescription &&
+											`${ className }__contents-icon--shown`
+										}` }
 						>
 							<div
-								style={{
+								style={ {
 									width: '35px',
 									height: '35px',
 									backgroundPosition: 'center',
 									backgroundRepeat: 'no-repeat',
-									backgroundImage: `var(${icon}${isSelected ? '--light' : ''
-										})`,
-								}}
+									backgroundImage: `var(${ icon }${
+										isSelected ? '--light' : ''
+									})`,
+								} }
 							/>
 						</div>
-						<div className={`${className }__contents-text`}>
+						<div className={ `${ className }__contents-text` }>
 							<div
-								className={`${ className }__contents-text-title ${isSelected &&
+								className={ `${ className }__contents-text-title ${
+									isSelected &&
 									`${ className }__contents-text-title--selected`
-									}`}
+								}` }
 							>
-								{title}
+								{ title }
 							</div>
-							<div className={`${ className }__contents-text-subtitle`}>
-								{subtitle}
+							<div
+								className={ `${ className }__contents-text-subtitle` }
+							>
+								{ subtitle }
 							</div>
 						</div>
 						<div
-							className={`${ className }__contents-help`}
-							onClick={handleShowDesc}
+							className={ `${ className }__contents-help` }
+							onClick={ handleShowDesc }
 						>
 							<Icon
-								icon={help}
-								style={{
+								icon={ help }
+								style={ {
 									width: '30px',
 									height: '30px',
-									fill: `${showDescription ? '#1C5CBA' : '#666666'
-										}`,
-								}}
+									fill: `${
+										showDescription ? '#1C5CBA' : '#666666'
+									}`,
+								} }
 							/>
 						</div>
 					</div>
 				</div>
 			</div>
-			{
-				showDescription && (
-					<div className={`${ className }__desc`}>{desc}</div>
-				)
-			}
+			{ showDescription && (
+				<Animate type={ 'dropdown' }>
+					<div className={ `${ className }__desc` }>{ desc }</div>
+				</Animate>
+			) }
 		</div>
 	);
 };

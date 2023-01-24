@@ -6,6 +6,7 @@ import { useEffect, useState } from '@wordpress/element';
 import AutoHeightBlockPreview from './auto';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import { store as nfdOnboardingStore } from '../../../store';
+import Animate from '../../Animate';
 
 /**
  * Renders themed WordPress block grammer.
@@ -80,13 +81,16 @@ const BlockPreview = ( {
 			{ loading && (
 				<div className="live-preview__container--is-skeleton">
 					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-header">
-						<div className={ `live-preview__container--is-skeleton--shimmer` } />
+						<Animate
+							type={ 'shine' }
+							className="live-preview__container--is-skeleton--shimmer"
+						></Animate>
 					</div>
 					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-1" />
 					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-2" />
 					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-footer" />
-				</div> 
-			)}
+				</div>
+			) }
 			{ settings && (
 				<BlockEditorProvider
 					value={ blocks }
