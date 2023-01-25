@@ -89,11 +89,7 @@ class FlowService {
 
 			// Verifies the value of Exception List keys from the database and options
 			if ( isset( $exception_list[ $key ] ) ) {
-				if( empty( $exception_list[ $key ][ 'remove_key' ] ) && empty( $exception_list[ $key ][ 'add_key' ]) ) {
-					$updated_flow_data[ $key ] = $flow_data[ $key ];
-					continue;
-				}
-				$updated_flow_data[$key] = self::handle_exception_list($exception_list[$key], $value, $flow_data[$key]);
+				$updated_flow_data[$key] = self::resolve_exception_key($exception_list[$key], $value, $flow_data[$key]);
 				continue;
 			}
 
@@ -140,11 +136,7 @@ class FlowService {
 
 			// Verifies the value of Exception List keys from the database and options
 			if ( isset( $exception_list[ $key ] ) ) {
-				if( empty( $exception_list[ $key ][ 'remove_key' ] ) && empty( $exception_list[ $key ][ 'add_key' ]) ) {
-					$flow_data[ $key ] = $params[ $key ];
-					continue;
-				}
-				$flow_data[$key] = self::handle_exception_list($exception_list[$key], $flow_data[$key], $params[$key]);
+				$flow_data[$key] = self::resolve_exception_key($exception_list[$key], $flow_data[$key], $params[$key]);
 				continue;
 			}
 
@@ -191,6 +183,22 @@ class FlowService {
 	 */
 	private static function is_array_indexed( $array ) {
 		return count( array_filter( array_keys( $array ), 'is_string' ) ) === 0;
+	}
+
+	/**
+	 * Function to handle the Exception List Gracefully if blueprint structure has unforseen changes
+	 *
+	 * @param array $exception_key To check if any key is to be added or removed
+	 * @param array $default_flow_data the Data as Source of Truth
+	 * @param array $flow_data the options data
+	 *
+	 * @return array
+	 */
+	private static function resolve_exception_key($exception_key, $default_flow_data, $flow_data) {
+		if( empty( $exception_key[ 'remove_key' ] ) && empty( $exception_key[ 'add_key' ]) ) {
+			return $flow_data;
+		}
+		return self::handle_exception_list($exception_key, $default_flow_data, $flow_data);
 	}
 
 	/**
