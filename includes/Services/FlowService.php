@@ -87,8 +87,18 @@ class FlowService {
 				continue;
 			}
 
-			// Accepts the value of Exception List keys as is from the database OR non array OR empty array values
-			if ( isset( $exception_list[ $key ] ) || ! is_array( $value ) || ( is_array( $value ) && count( $value ) === 0 ) ) {
+			// Verifies the value of Exception List keys from the database and options
+			if ( isset( $exception_list[ $key ] ) ) {
+				if( empty( $exception_list[ $key ][ 'remove_key' ] ) && empty( $exception_list[ $key ][ 'add_key' ]) ) {
+					$updated_flow_data[ $key ] = $flow_data[ $key ];
+					continue;
+				}
+				$updated_flow_data[$key] = self::handle_exception_list($exception_list[$key], $value, $flow_data[$key]);
+				continue;
+			}
+
+			// Accepts the value of non array OR empty array values from options
+			if ( ! is_array( $value ) || ( is_array( $value ) && count( $value ) === 0 ) ) {
 				$updated_flow_data[ $key ] = $flow_data[ $key ];
 				continue;
 			}
@@ -128,9 +138,13 @@ class FlowService {
 				continue;
 			}
 
-			// Accepts the value of Exception List keys as is from the database
-			if ( $exception_list && isset( $exception_list[ $key ] ) ) {
-				$flow_data[ $key ] = $params[ $key ];
+			// Verifies the value of Exception List keys from the database and options
+			if ( isset( $exception_list[ $key ] ) ) {
+				if( empty( $exception_list[ $key ][ 'remove_key' ] ) && empty( $exception_list[ $key ][ 'add_key' ]) ) {
+					$flow_data[ $key ] = $params[ $key ];
+					continue;
+				}
+				$flow_data[$key] = self::handle_exception_list($exception_list[$key], $flow_data[$key], $params[$key]);
 				continue;
 			}
 
@@ -177,6 +191,52 @@ class FlowService {
 	 */
 	private static function is_array_indexed( $array ) {
 		return count( array_filter( array_keys( $array ), 'is_string' ) ) === 0;
+	}
+
+	/**
+	 * Function to handle the Exception List Gracefully if blueprint structure has unforseen changes
+	 *
+	 * @param array $exception_key To check if any key is to be added or removed
+	 * @param array $default_flow_data the Data as Source of Truth
+	 * @param array $flow_data the options data
+	 *
+	 * @return array
+	 */
+	private static function handle_exception_list( $exception_key, $default_flow_data, $flow_data ) {
+		// To remove any specific key at the expected level of nesting
+		if(count($exception_key['remove_key']) > 0) {
+			foreach($exception_key['remove_key'] as $index_key => $unset_key) {
+				if(array_key_exists($unset_key, $flow_data)) {
+					unset($flow_data[$unset_key]);
+				}
+			}
+		}
+
+		foreach ( $default_flow_data as $key => $value ) {
+			// Add a specific key at the expected level of nesting
+			if(count($exception_key['add_key']) > 0) {
+				foreach($exception_key['add_key'] as $index_key => $add_key) {
+					if(strcmp($add_key, $key) === 0 && !array_key_exists($add_key, $flow_data)) {
+						$flow_data[$key] = $default_flow_data[$add_key];
+					}
+				}
+			}
+
+			if( is_array($value) ) {
+				if( self::is_array_indexed($value) ) {
+					foreach ( $value as $index_key => $index_value ) {
+						// For Indexed Arrays having Associative Arrays as Values
+						if ( is_array( $index_value ) ) {
+							$flow_data[$key][$index_key] = self::handle_exception_list($exception_key, $index_value, $flow_data[$key][$index_key]);
+						}
+					}
+				}
+
+				// For nested associative arrays
+				$flow_data[$key] = self::handle_exception_list($exception_key, $value, $flow_data[$key]);
+			}
+		}
+		return $flow_data;
 	}
 
 	/**

@@ -170,11 +170,11 @@ final class Flows {
 	 * @var array
 	 */
 	protected static $exception_list = array(
-		'color'        => 1,
-		'typography'   => 1,
-		'other'        => 1,
-		'siteFeatures' => 1,
-		'socialData'   => 1,
+		'color'		   => array('remove_key' => array(), 'add_key' => array()),
+		'typography'   => array('remove_key' => array(), 'add_key' => array()),
+		'other'        => array('remove_key' => array(), 'add_key' => array()),
+		'siteFeatures' => array('remove_key' => array(), 'add_key' => array()),
+		'socialData'   => array('remove_key' => array(), 'add_key' => array()),
 	);
 
 	/**
