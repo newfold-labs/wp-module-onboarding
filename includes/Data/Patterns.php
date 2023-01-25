@@ -4,8 +4,16 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
+/**
+ * Class Patterns
+ */
 final class Patterns {
 
+	/**
+	 * Retrieve Patterns for Theme Step.
+	 *
+	 * @return array
+	 */
 	protected static function get_theme_step_patterns() {
 		return array(
 			'yith-wonder' => array(
@@ -96,12 +104,19 @@ final class Patterns {
 						'shown'  => true,
 					),
 				),
-				'site-features'     => SiteFeatures::get_site_features()[Data::current_flow()]
+				'site-features'   => SiteFeatures::get_site_features()[ Data::current_flow() ],
 			),
 		);
 	}
 
-	public static function cleanup_wp_grammar( $content ) {
+	/**
+	 * Sanitize the content by cleaning wp_grammar.
+	 *
+	 * @param string $content Data to clean
+	 *
+	 * @return string
+	 */
+	private static function cleanup_wp_grammar( $content ) {
 
 		// Remove template-part if that exists
 		$content = preg_replace( '/^<!-- wp:template-part .* \/-->$/m', '', $content );
@@ -115,6 +130,13 @@ final class Patterns {
 		return $content;
 	}
 
+	/**
+	 * Retrieve pattern from slug.
+	 *
+	 * @param array $pattern_slug Pattern Slug Data
+	 *
+	 * @return array|boolean
+	 */
 	public static function get_pattern_from_slug( $pattern_slug ) {
 
 		$block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
@@ -130,6 +152,14 @@ final class Patterns {
 		return false;
 	}
 
+	/**
+	 * Retrieve Theme Step Patterns from chosen Theme in Previous Step
+	 *
+	 * @param string  $step Step from which Theme Step Pattern is required
+	 * @param boolean $squash Flag set to retrieve the block pattern
+	 *
+	 * @return array|string
+	 */
 	public static function get_theme_step_patterns_from_step( $step, $squash = false ) {
 		$active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
 
@@ -142,7 +172,7 @@ final class Patterns {
 		$block_patterns          = array();
 		$block_patterns_squashed = '';
 		foreach ( array_keys( $pattern_slugs ) as $pattern_slug ) {
-			if ( $pattern_slugs[ $pattern_slug ]['active'] === true ) {
+			if ( true === $pattern_slugs[ $pattern_slug ]['active'] ) {
 				$pattern_name = $active_theme . '/' . $pattern_slug;
 				if ( $block_patterns_registry->is_registered( $pattern_name ) ) {
 					$pattern = $block_patterns_registry->get_registered( $pattern_name );
@@ -166,6 +196,11 @@ final class Patterns {
 		return $squash ? $block_patterns_squashed : $block_patterns;
 	}
 
+	/**
+	 * Retrieve Pattern Count.
+	 *
+	 * @return array
+	 */
 	public static function get_count_of_patterns() {
 		$active_theme          = ( \wp_get_theme() )->get( 'TextDomain' );
 		$theme_step_patterns   = self::get_theme_step_patterns();
@@ -176,10 +211,10 @@ final class Patterns {
 			$theme_step_count = 0;
 			$combine_styles   = 1;
 			foreach ( $patterns as $pattern => $pattern_data ) {
-				if ( isset( $pattern_data['shown'] ) && $pattern_data['shown'] === true ) {
-					$theme_step_count += 1;
+				if ( isset( $pattern_data['shown'] ) && true === $pattern_data['shown'] ) {
+					++$theme_step_count;
 				}
-				if ( isset( $pattern_data['combine'] ) && $pattern_data['combine'] === true ) {
+				if ( isset( $pattern_data['combine'] ) && true === $pattern_data['combine'] ) {
 					$combine_styles = count( \WP_Theme_JSON_Resolver::get_style_variations() ) + 1;
 				}
 			}
