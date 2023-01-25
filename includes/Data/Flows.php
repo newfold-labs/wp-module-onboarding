@@ -170,11 +170,26 @@ final class Flows {
 	 * @var array
 	 */
 	protected static $exception_list = array(
-		'color'		   => array('remove_key' => array(), 'add_key' => array()),
-		'typography'   => array('remove_key' => array(), 'add_key' => array()),
-		'other'        => array('remove_key' => array(), 'add_key' => array()),
-		'siteFeatures' => array('remove_key' => array(), 'add_key' => array()),
-		'socialData'   => array('remove_key' => array(), 'add_key' => array()),
+		'color'        => array(
+			'remove_key' => array(),
+			'add_key'    => array(),
+		),
+		'typography'   => array(
+			'remove_key' => array(),
+			'add_key'    => array(),
+		),
+		'other'        => array(
+			'remove_key' => array(),
+			'add_key'    => array(),
+		),
+		'siteFeatures' => array(
+			'remove_key' => array(),
+			'add_key'    => array(),
+		),
+		'socialData'   => array(
+			'remove_key' => array(),
+			'add_key'    => array(),
+		),
 	);
 
 	/**

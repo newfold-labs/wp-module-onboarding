@@ -89,7 +89,7 @@ class FlowService {
 
 			// Verifies the value of Exception List keys from the database and options
 			if ( isset( $exception_list[ $key ] ) ) {
-				$updated_flow_data[$key] = self::resolve_exception_key($exception_list[$key], $value, $flow_data[$key]);
+				$updated_flow_data[ $key ] = self::resolve_exception_key( $exception_list[ $key ], $value, $flow_data[ $key ] );
 				continue;
 			}
 
@@ -136,7 +136,7 @@ class FlowService {
 
 			// Verifies the value of Exception List keys from the database and options
 			if ( isset( $exception_list[ $key ] ) ) {
-				$flow_data[$key] = self::resolve_exception_key($exception_list[$key], $flow_data[$key], $params[$key]);
+				$flow_data[ $key ] = self::resolve_exception_key( $exception_list[ $key ], $flow_data[ $key ], $params[ $key ] );
 				continue;
 			}
 
@@ -194,11 +194,11 @@ class FlowService {
 	 *
 	 * @return array
 	 */
-	private static function resolve_exception_key($exception_key, $default_flow_data, $flow_data) {
-		if( empty( $exception_key[ 'remove_key' ] ) && empty( $exception_key[ 'add_key' ]) ) {
+	private static function resolve_exception_key( $exception_key, $default_flow_data, $flow_data ) {
+		if ( empty( $exception_key['remove_key'] ) && empty( $exception_key['add_key'] ) ) {
 			return $flow_data;
 		}
-		return self::handle_exception_list($exception_key, $default_flow_data, $flow_data);
+		return self::handle_exception_list( $exception_key, $default_flow_data, $flow_data );
 	}
 
 	/**
@@ -212,36 +212,36 @@ class FlowService {
 	 */
 	private static function handle_exception_list( $exception_key, $default_flow_data, $flow_data ) {
 		// To remove any specific key at the expected level of nesting
-		if(count($exception_key['remove_key']) > 0) {
-			foreach($exception_key['remove_key'] as $index_key => $unset_key) {
-				if(array_key_exists($unset_key, $flow_data)) {
-					unset($flow_data[$unset_key]);
+		if ( count( $exception_key['remove_key'] ) > 0 ) {
+			foreach ( $exception_key['remove_key'] as $index_key => $unset_key ) {
+				if ( array_key_exists( $unset_key, $flow_data ) ) {
+					unset( $flow_data[ $unset_key ] );
 				}
 			}
 		}
 
 		foreach ( $default_flow_data as $key => $value ) {
 			// Add a specific key at the expected level of nesting
-			if(count($exception_key['add_key']) > 0) {
-				foreach($exception_key['add_key'] as $index_key => $add_key) {
-					if(strcmp($add_key, $key) === 0 && !array_key_exists($add_key, $flow_data)) {
-						$flow_data[$key] = $default_flow_data[$add_key];
+			if ( count( $exception_key['add_key'] ) > 0 ) {
+				foreach ( $exception_key['add_key'] as $index_key => $add_key ) {
+					if ( strcmp( $add_key, $key ) === 0 && ! array_key_exists( $add_key, $flow_data ) ) {
+						$flow_data[ $key ] = $default_flow_data[ $add_key ];
 					}
 				}
 			}
 
-			if( is_array($value) ) {
-				if( self::is_array_indexed($value) ) {
+			if ( is_array( $value ) ) {
+				if ( self::is_array_indexed( $value ) ) {
 					foreach ( $value as $index_key => $index_value ) {
 						// For Indexed Arrays having Associative Arrays as Values
 						if ( is_array( $index_value ) ) {
-							$flow_data[$key][$index_key] = self::handle_exception_list($exception_key, $index_value, $flow_data[$key][$index_key]);
+							$flow_data[ $key ][ $index_key ] = self::handle_exception_list( $exception_key, $index_value, $flow_data[ $key ][ $index_key ] );
 						}
 					}
 				}
 
 				// For nested associative arrays
-				$flow_data[$key] = self::handle_exception_list($exception_key, $value, $flow_data[$key]);
+				$flow_data[ $key ] = self::handle_exception_list( $exception_key, $value, $flow_data[ $key ] );
 			}
 		}
 		return $flow_data;
@@ -306,9 +306,9 @@ class FlowService {
 						// For Indexed Arrays having Associative Arrays as Values
 						if ( is_array( $index_value ) ) {
 							$verify_key = self::find_mismatch_key( $value[ $index_key ], $flow_data[ $key ][ $index_key ], $key . ' : ' . $index_key );
-							if( \is_wp_error( $verify_key ) ) {
+							if ( \is_wp_error( $verify_key ) ) {
 								return $verify_key;
-							}						
+							}
 						}
 					}
 					continue;
@@ -316,7 +316,7 @@ class FlowService {
 
 				// For Associative Arrays
 				$verify_key = self::find_mismatch_key( $value, $flow_data[ $key ], $key );
-				if( \is_wp_error( $verify_key ) ) {
+				if ( \is_wp_error( $verify_key ) ) {
 					return $verify_key;
 				}
 			}
