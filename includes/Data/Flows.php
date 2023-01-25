@@ -163,7 +163,7 @@ final class Flows {
 	);
 
 	/**
-	 * Array with Key Names as Key, and '1' as value to set the key as an exception
+	 * Array with Key Names as Key, and array to specify Key from Exception Key Array to remove/add as Value
 	 *
 	 * This shall be used temporarily as the respective keys having varied patterns of values cannot be handled by the scope of current functionality
 	 *
