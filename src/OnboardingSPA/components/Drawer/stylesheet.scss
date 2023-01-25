@@ -453,10 +453,6 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 
 	&__below {
 		margin-top: 16px;
-		animation-name: fadeIn;
-		animation-duration: 300ms;
-		animation-timing-function: linear;
-		animation-timing-function: ease-in-out;
 
 		&-row {
 			height: 50px;
