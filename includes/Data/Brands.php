@@ -126,7 +126,7 @@ final class Brands {
 				'phoneNumbers'	   => array(
 					'sales' 	=> '866-923-8821',
 					'support' 	=> '866-923-8821',
-					'intl'		=> '+1 904-680-6617',
+					'intl'		=> '+1-904-680-6617',
 				),
 				'hireExpertsInfo'   => array(
 					'defaultLink' 		=> 'https://www.web.com/websites/pro-website-services', 
