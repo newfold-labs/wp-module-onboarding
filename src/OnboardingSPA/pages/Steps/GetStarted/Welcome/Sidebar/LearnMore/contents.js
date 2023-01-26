@@ -11,7 +11,7 @@ const getContents = ( brandName, expertsLink, techSupportLink, fullServiceCreati
 			subheading: sprintf(
 				/* translators: 1: Brand 2: Website */
 				__(
-					`Lay the foundation for a successful %s %s. Our tools help you build beautiful, modern websites using WordPress.`,
+					`Lay the foundation for a successful %s %s using our WordPress Onboarding. `,
 					'wp-module-onboarding'
 				),
 				brandName,
@@ -37,9 +37,8 @@ const getContents = ( brandName, expertsLink, techSupportLink, fullServiceCreati
 						/* translators: 1: Website 2: Website 3: Website */
 						__(
 							`When you set up this new WordPress %s, you’re joining
-						millions of other site owners who publish their %s’s pages
-						and features using the community-built, free, open-source
-						software we’re proud to support`,
+						millions of website owners who publish their %s using the free, community-built
+						software project we’re proud to support.`,
 							'wp-module-onboarding'
 						),
 						translations( 'website' ),
@@ -55,16 +54,17 @@ const getContents = ( brandName, expertsLink, techSupportLink, fullServiceCreati
 						translations( 'website' )
 					),
 					description: sprintf(
-						/* translators: 1: Website 2: Brand */
+						/* translators: 1: Website 2: Brand 3. Site */
 						__(
-							`A WordPress %s hosted by %s has tons of exclusive, easy
-						and powerful solutions to help you get farther,
-						faster with your WordPress -- we put our expertise, partnerships
-						and solutions to work for you.`,
+							`A WordPress %s hosted by %s has tons of unique and proven
+						solutions to help you get farther,
+						faster with your WordPress. We put our expertise, partnerships
+						and solutions to work on your %s.`,
 							'wp-module-onboarding'
 						),
 						translations( 'website' ),
-						brandName
+						brandName,
+						translations('website')
 					),
 				},
 			],

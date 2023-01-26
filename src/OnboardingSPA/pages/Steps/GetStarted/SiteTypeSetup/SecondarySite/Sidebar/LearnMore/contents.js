@@ -14,7 +14,7 @@ const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 			subheading: sprintf(
 				/* translators: %s: site */
 				__(
-					`We can provide better suggestions if we know what kind of %s this is`,
+					`We'll use this to provide our best-matching designs and features for %s like yours.`,
 					'wp-module-onboarding'
 				),
 				translations( 'site' )
