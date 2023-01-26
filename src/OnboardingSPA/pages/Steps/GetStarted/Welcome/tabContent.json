@@ -4,21 +4,23 @@
             "name": "tab1",
             "title": "YOUR CONTENT",
             "subtitle": "Publish boldly with WordPress Blocks.",
-            "text": "Build a beautiful %s using a visual builder. Block Patterns accelerate layout assembly and storytelling with premade designs.",
+            "text": "Build a beautiful %s using a visual builder. Block Patterns accelerate telling your story or tending your store with professional designs.",
+            "buttonText": "Try",
+            "buttonUrl": "",
             "imgType": "content-img"
         },
         {
             "name": "tab2",
             "title": "POWERFUL FEATURES",
             "subtitle": "Proven, easy-to-use solutions.",
-            "text": "WordPress make it easy to grow your %s. Send a newsletter, host a podcast or create courses. Your site grows for your next big idea.",
+            "text": "Reach for your %s goals using proven WordPress Plugins & %s solutions. Send a newsletter, host a podcast, book clients, take payments and more.",
             "imgType": "features-img"
         },
         {
             "name": "tab3",
             "title": "MODERN DESIGN",
             "subtitle": "Paint trim. Move walls. No sweat.",
-            "text": "Pick your %s's unique design now and refine by customing your block templates, colors and fonts in the WordPress Site Editor.",
+            "text": "Establish your %s's unique design. Use the WordPress Editor to refine over time with professionally-designed patterns, parts, templates, colors and type.",
             "imgType": "design-img"
         }
     ]
