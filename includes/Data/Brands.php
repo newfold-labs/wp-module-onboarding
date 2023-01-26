@@ -24,6 +24,11 @@ final class Brands {
 				'accountUrl'       => 'https://my.bluehost.com',
 				'domainsUrl'       => 'https://my.bluehost.com/hosting/app?lil=1#/domains',
 				'emailUrl'         => 'https://my.bluehost.com/hosting/app?lil=1#/email-office',
+				'phoneNumbers'	   => array(
+					'sales' 	=> '844-303-1730',
+					'support' 	=> '888-401-4678',
+					'intl'		=> '+1-801-765-9400',
+				),
 				'hireExpertsInfo'   => array(
 					'defaultLink'		=> 'admin.php?',
 					'fragment'			=> '#/marketplace/services/blue-sky', 
@@ -100,6 +105,57 @@ final class Brands {
 					'queryParams'		=> array(
 						'utm_source'	=> 'wp-onboarding',
 						'utm_medium'	=> 'brand-plugin',
+					),
+				),
+			),
+			'webcom' => array(
+				'brand'            => 'webcom',
+				'name'             => 'Web.com',
+				'url'              => 'https://web.com',
+				'knowledgeBaseUrl' => 'https://www.web.com/knowledge',
+				'helpUrl'          => 'https://www.web.com/knowledge',
+				'blogUrl'          => 'https://www.web.com/blog',
+				'facebookUrl'      => 'https://www.facebook.com/Web.com/',
+				'twitterName'      => '@webdotcom',
+				'twitterUrl'       => 'http://twitter.com/webdotcom',
+				'youtubeUrl'       => 'https://www.youtube.com/c/webdotcom',
+				'linkedinUrl'      => 'https://www.linkedin.com/company/website-pros/',
+				'accountUrl'       => 'https://www.web.com/my-account',
+				'domainsUrl'       => 'https://www.web.com/domains',
+				'emailUrl'         => 'https://www.web.com/email-service',
+				'phoneNumbers'	   => array(
+					'sales' 	=> '866-923-8821',
+					'support' 	=> '866-923-8821',
+					'intl'		=> '+1 904-680-6617',
+				),
+				'hireExpertsInfo'   => array(
+					'defaultLink' 		=> 'https://www.web.com/websites/pro-website-services', 
+					'utmParameters' 	=> array(
+						'utm_source' 	=> '',
+						'utm_medium' 	=> '',
+						'utm_campaign' 	=> ''
+					)
+				),
+				'expertsInfo' => array(
+					'defaultLink'		=> 'https://www.web.com/websites/pro-website-services',
+					'queryParams'		=> array(
+						'utm_source'	=> '',
+						'utm_medium'	=> '',
+					),
+				),
+				'fullServiceCreativeTeamInfo' => array(
+					'defaultLink'		=> 'https://www.web.com/websites/pro-website-services',
+					'fragment'			=> '',
+					'queryParams'		=> array(
+						'utm_source'	=> 'wp-onboarding',
+						'utm_medium'	=> 'brand-plugin',
+					),
+				),
+				'techSupportInfo' => array(
+					'defaultLink'		=> '',
+					'queryParams'		=> array(
+						'utm_source'	=> '',
+						'utm_medium'	=> '',
 					),
 				),
 			),
