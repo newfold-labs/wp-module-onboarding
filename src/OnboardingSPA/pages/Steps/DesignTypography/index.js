@@ -54,7 +54,7 @@ const StepDesignTypography = () => {
 	useEffect( () => {
 		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
 			getFontPatterns();
-	}, [ isLoaded ] );
+	}, [ isLoaded, themeStatus ] );
 
 	return (
 		<DesignStateHandler>
