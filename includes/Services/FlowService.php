@@ -158,7 +158,7 @@ class FlowService {
 			// To handle Indexed Arrays gracefully
 			if ( self::is_array_indexed( $params[ $key ] ) ) {
 				// Verify if a value expected as an Associative Array is NOT an Indexed Array
-				if( ! self::is_array_indexed( $value ) && count( $params[$key] ) > 0 ) {
+				if ( ! self::is_array_indexed( $value ) && count( $params[ $key ] ) > 0 ) {
 					return new \WP_Error(
 						'wrong_param_type_provided',
 						'Wrong Parameter Type Provided : ' . $key . ' => Indexed Array. Expected: Associative Array',
