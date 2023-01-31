@@ -8,13 +8,13 @@ const getContents = ( brandName, techSupportLink, fullServiceCreativeTeamLink ) 
 		introduction: {
 			heading: __( 'Features', 'wp-module-onboarding' ),
 			subheading: sprintf(
-				/* translators: 1: site 2: Brand */
+				/* translators: 1: Brand 2: site */
 				__(
-					`Add interactive, easy-to-use features to your %s using our partner's WordPress Plugins and unique %s solutions.`,
+					`Easy-to-use features from our partner's WordPress Plugins and unique %s solutions to put your %s to work.`,
 					'wp-module-onboarding'
 				),
+				brandName,
 				translations( 'site' ),
-				brandName
 			),
 			icon: plugins,
 		},
