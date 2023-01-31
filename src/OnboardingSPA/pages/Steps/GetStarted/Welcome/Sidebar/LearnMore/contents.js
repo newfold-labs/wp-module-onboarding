@@ -64,7 +64,7 @@ const getContents = ( brandName, expertsLink, techSupportLink, fullServiceCreati
 						),
 						translations( 'website' ),
 						brandName,
-						translations('website')
+						translations( 'site' )
 					),
 				},
 			],
