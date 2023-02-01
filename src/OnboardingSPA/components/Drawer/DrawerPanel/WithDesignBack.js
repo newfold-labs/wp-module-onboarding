@@ -5,12 +5,13 @@ import { useDispatch } from '@wordpress/data';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import { VIEW_NAV_DESIGN } from '../../../../constants';
+import Animate from '../../Animate';
 
 const WithDesignBack = ( { children } ) => {
 	const { setDrawerActiveView } = useDispatch( nfdOnboardingStore );
 
 	return (
-		<div className="is-drawer-fade">
+		<Animate type={ 'fade-in' } duration="100ms" timingFunction="ease-in">
 			<Button
 				className="nfd-onboarding-drawer__panel-back"
 				variant="tertiary"
@@ -20,7 +21,7 @@ const WithDesignBack = ( { children } ) => {
 				{ __( 'Design', 'wp-module-onboarding' ) }
 			</Button>
 			{ children }
-		</div>
+		</Animate>
 	);
 };
 

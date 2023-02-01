@@ -141,7 +141,6 @@ $main-color-light-rgb: var(--nfd-onboarding-white-rgb);
 .shimmer {
     background: $grey-color;
     background-repeat: no-repeat;
-    animation: shine-placeholder 1.5s linear infinite;
     background-image: linear-gradient(to right, 
                     $grey-color 0%, 
                     $main-color-grey 20%, 
@@ -152,7 +151,6 @@ $main-color-light-rgb: var(--nfd-onboarding-white-rgb);
 .shimmer-1 {
     background: rgba($main-color, 0.4);
     background-repeat: no-repeat;
-    animation: shine-placeholder 1.5s linear infinite;
     background-image: linear-gradient(to right,
             rgba($main-color, 0.4) 0%,
             rgba($main-color, 0.6) 20%,

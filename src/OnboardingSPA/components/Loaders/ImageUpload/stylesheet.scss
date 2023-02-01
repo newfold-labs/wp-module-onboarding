@@ -15,19 +15,6 @@
 			border-radius: 50px;
 			background: linear-gradient(45deg, #b6b5ff, #ff9797);
 			left: -100%;
-			animation: load 3s linear infinite;
-		}
-	}
-
-	// Loading Animation
-	@keyframes load {
-
-		0% {
-			left: -100%;
-		}
-
-		100% {
-			left: 100%;
 		}
 	}
 
