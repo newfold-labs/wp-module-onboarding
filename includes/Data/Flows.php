@@ -15,9 +15,9 @@ final class Flows {
 		'isViewed'             => array(),
 
 		// The first time required criteria met (if any), mark GMT timestamp.
-		'isComplete'           => false,
+		'isComplete'           => 0,
 
-		'hasExited'            => false,
+		'hasExited'            => 0,
 
 		// If user navigates to another step, mark GMT timestamp.
 		'isSkipped'            => array(),
@@ -25,12 +25,13 @@ final class Flows {
 		// path identifier for the current step within a flow
 		'currentStep'          => '/step/wp-setup/get-started',
 
-		'createdAt'            => '',
+		'createdAt'            => 0,
 
-		'updatedAt'            => '',
+		'updatedAt'            => 0,
 
 		// to populate the step fields if a user is resuming a flow.
 		'data'                 => array(
+			// Any manual fixes or modification made to siteType shall also be made in FlowServices::update_default_data_for_ecommerce()
 			'siteType'        => array(
 				'label'     => '',
 				'referTo'   => 'site',
@@ -40,6 +41,7 @@ final class Flows {
 
 			'wpComfortLevel'  => '0',
 
+			// Any manual fixes or modification made to topPriority shall also be made in FlowServices::update_default_data_for_ecommerce()
 			// Enums: `publishing`, `designing`, `selling`, 'migrating', 'regenerate' and 'skip'
 			'topPriority'     => array(
 				'priority1' => 'publishing',
@@ -52,7 +54,10 @@ final class Flows {
 			'blogDescription' => '',
 
 			// This integer will map to the attachment ID for an uploaded image to the WordPress media library
-			'siteLogo'        => 0,
+			'siteLogo'        => array(
+				'id'  => 0,
+				'url' => '',
+			),
 
 			// key-value store for social media accounts
 			'accounts'        => array(),
@@ -114,6 +119,8 @@ final class Flows {
 
 			// will include plugin installs, module activation/deactivation and perhaps API calls to the hosting platform for Newfold-specific services
 			'siteFeatures'    => array(),
+
+			'socialData'      => array(),
 		),
 
 		// we will store active flows (abandoned wp-setup, abandoned wp-commerce) with their identifier and use as a reference to access currentStep and data
@@ -139,6 +146,69 @@ final class Flows {
 			),
 		),
 	);
+
+	/**
+	 * Has all the Flow Key parameters to be updated for the user in Key-Value pair.
+	 *
+	 * - the value of old_key i.e OldKey is the key name in the option that has been modified to NewKey in the blueprint
+	 * - the value of new_key i.e NewKey is the key name that is be replaced in the option
+	 * - OldKey should also be manually updated to the NewKey in the blueprint
+	 * - retain_existing_value (Boolean): true if the value in the option for the OldKey is to be retained,
+	 *   false if the NewKey is to have the default value that is set in the blueprint and discard the value set in the option for OldKey
+	 *
+	 * @var array
+	 */
+	protected static $fixes = array(
+		// array( 'old_key' => 'OldKey', 'new_key' => 'NewKey', 'retain_existing_value' => true/false ),
+	);
+
+	/**
+	 * Array with Key Names as Key, and array to specify Key from Exception Key Array to remove/add as Value
+	 *
+	 * This shall be used temporarily as the respective keys having varied patterns of values cannot be handled by the scope of current functionality
+	 *
+	 * @var array
+	 */
+	protected static $exception_list = array(
+		'color'        => array(
+			'remove_key' => array(),
+			'add_key'    => array(),
+		),
+		'typography'   => array(
+			'remove_key' => array(),
+			'add_key'    => array(),
+		),
+		'other'        => array(
+			'remove_key' => array(),
+			'add_key'    => array(),
+		),
+		'siteFeatures' => array(
+			'remove_key' => array(),
+			'add_key'    => array(),
+		),
+		'socialData'   => array(
+			'remove_key' => array(),
+			'add_key'    => array(),
+		),
+	);
+
+	/**
+	 * Update Flow Key and/or Value.
+	 *
+	 * @return array
+	 */
+	public static function get_fixes() {
+		return self::$fixes;
+	}
+
+	/**
+	 * Update Exception Key(s).
+	 *
+	 * @return array
+	 */
+	public static function get_exception_list() {
+		return self::$exception_list;
+	}
 
 	 /**
 	  * Get Onboarding Flow information.

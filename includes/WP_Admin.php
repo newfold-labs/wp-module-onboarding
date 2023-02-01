@@ -5,6 +5,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use SebastianBergmann\CodeCoverage\Util\Percentage;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ThemeInstallTaskManager;
+use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
 
 /**
  * Register Admin Page, Assets & Admin functionality with WordPress.
@@ -100,24 +101,31 @@ final class WP_Admin {
 				$asset['version']
 			);
 
-            wp_add_inline_script(
-                'wp-blocks',
-                'wp.blocks.unstable__bootstrapServerSideBlockDefinitions(' . wp_json_encode( get_block_editor_server_block_settings() ) . ');'
-            );
+			wp_add_inline_script(
+				'wp-blocks',
+				'wp.blocks.unstable__bootstrapServerSideBlockDefinitions(' . wp_json_encode( get_block_editor_server_block_settings() ) . ');'
+			);
 
 			\wp_enqueue_script( self::$slug );
 			\wp_enqueue_style( self::$slug );
 		}
 	}
 
+	/**
+	 * Initialize and Register Assets on page refresh.
+	 *
+	 * @return void
+	 */
 	public static function initialize() {
-		if ( isset( $_GET['nfd_plugins'] ) && $_GET['nfd_plugins'] === 'true' ) {
+		if ( isset( $_GET['nfd_plugins'] ) && 'true' === $_GET['nfd_plugins'] ) {
 			PluginInstallTaskManager::queue_initial_installs();
 		}
 
-		if ( isset( $_GET['nfd_themes'] ) && $_GET['nfd_themes'] === 'true' ) {
+		if ( isset( $_GET['nfd_themes'] ) && 'true' === $_GET['nfd_themes'] ) {
 			ThemeInstallTaskManager::queue_initial_installs();
 		}
+
+		FlowService::initalize_flow_data();
 
 		self::register_assets();
 	}

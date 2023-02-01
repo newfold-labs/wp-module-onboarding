@@ -24,8 +24,8 @@ const NFDOnboarding = () => (
 );
 
 const initializeFlowData = ( currentData ) => {
-	currentData.hasExited = false;
-	currentData.isComplete = false;
+	currentData.hasExited = 0;
+	currentData.isComplete = 0;
 	return currentData;
 };
 
