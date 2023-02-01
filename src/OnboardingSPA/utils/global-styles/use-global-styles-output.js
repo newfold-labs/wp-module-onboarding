@@ -812,10 +812,10 @@ export const getBlockSelectors = ( blockTypes ) => {
 };
 
 const generateStylesheets = ( previewSettings, storedPreviewSettings ) => {
-
 	const hasBlockGapSupport =
-		storedPreviewSettings?.settings?.__experimentalFeatures.spacing.blockGap;
-	const hasFallbackGapSupport = !hasBlockGapSupport;
+		storedPreviewSettings?.settings?.__experimentalFeatures.spacing
+			.blockGap;
+	const hasFallbackGapSupport = ! hasBlockGapSupport;
 	const disableLayoutStyles = storedPreviewSettings?.settings
 		?.disableLayoutStyles
 		? storedPreviewSettings?.settings?.disableLayoutStyles
@@ -828,7 +828,7 @@ const generateStylesheets = ( previewSettings, storedPreviewSettings ) => {
 			: previewSettings?.styles,
 	};
 
-	const blockSelectors = getBlockSelectors(getBlockTypes());
+	const blockSelectors = getBlockSelectors( getBlockTypes() );
 	const customProperties = toCustomProperties(
 		requiredSettings,
 		blockSelectors
@@ -842,15 +842,18 @@ const generateStylesheets = ( previewSettings, storedPreviewSettings ) => {
 		disableLayoutStyles
 	);
 
-	const result = storedPreviewSettings?.settings?.styles.filter((style) => {
-		if (
-			!(
-				style.hasOwnProperty('id') &&
-				(style.id === 'customProperty' || style.id === 'globalStyle')
+	const result = storedPreviewSettings?.settings?.styles.filter(
+		( style ) => {
+			if (
+				! (
+					style.hasOwnProperty( 'id' ) &&
+					( style.id === 'customProperty' ||
+						style.id === 'globalStyle' )
+				)
 			)
-		)
-			return style;
-	});
+				return style;
+		}
+	);
 
 	const stylesheets = [
 		...result,
@@ -867,29 +870,31 @@ const generateStylesheets = ( previewSettings, storedPreviewSettings ) => {
 	];
 
 	return stylesheets;
-}
+};
 
 // This function serializes those objects into JSON strings to determine the cache key.
-const resolver = (arg1, arg2) => JSON.stringify([arg1, arg2]);
+const resolver = ( arg1, arg2 ) => JSON.stringify( [ arg1, arg2 ] );
 
 // Make a Memoized function that runs when the input changes
-const generateStylesheetsMemo = memoize(generateStylesheets, resolver);
+const generateStylesheetsMemo = memoize( generateStylesheets, resolver );
 
 export function useGlobalStylesOutput(
 	previewSettings,
 	storedPreviewSettings
 ) {
-	
 	if (
-		!previewSettings &&
-		!previewSettings?.styles &&
-		!previewSettings?.settings &&
-		!previewSettings?.globalStyles
+		! previewSettings &&
+		! previewSettings?.styles &&
+		! previewSettings?.settings &&
+		! previewSettings?.globalStyles
 	) {
 		return;
 	}
 
-	let stylesheets = generateStylesheetsMemo( previewSettings, storedPreviewSettings );
+	const stylesheets = generateStylesheetsMemo(
+		previewSettings,
+		storedPreviewSettings
+	);
 
 	previewSettings.settings.styles = stylesheets;
 	previewSettings.settings.__unstableResolvedAssets =

@@ -2,6 +2,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 
 import { store as nfdOnboardingStore } from '../../../store';
+import { THEME_STATUS_NOT_ACTIVE } from '../../../../constants';
 import { getGlobalStyles, setGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
@@ -32,10 +33,10 @@ const GlobalStylesProvider = ( { children } ) => {
 		let selectedGlobalStyle;
 		if ( storedPreviewSettings?.title && storedPreviewSettings?.settings )
 			selectedGlobalStyle = storedPreviewSettings;
-		else{ 
+		else {
 			const globalStyles = await getGlobalStyles();
-			if (globalStyles?.error) {
-				return updateThemeStatus(THEME_STATUS_NOT_ACTIVE);
+			if ( globalStyles?.error ) {
+				return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
 			}
 			if ( currentData.data.theme.variation ) {
 				selectedGlobalStyle = globalStyles.body.filter(

@@ -76,25 +76,25 @@ const BlockPreview = ( {
 		}
 	}, [ storedPreviewSettings ] );
 
-	const SkeletonLivePreview = memo(() => {
+	const SkeletonLivePreview = memo( () => {
 		return (
 			<div className="live-preview__container--is-skeleton">
-					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-header">
-						<Animate
-							type={ 'shine' }
-							className="live-preview__container--is-skeleton--shimmer"
-						></Animate>
-					</div>
-					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-1" />
-					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-2" />
-					<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-footer" />
+				<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-header">
+					<Animate
+						type={ 'shine' }
+						className="live-preview__container--is-skeleton--shimmer"
+					></Animate>
+				</div>
+				<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-1" />
+				<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-body-2" />
+				<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-footer" />
 			</div>
 		);
-	});
-	
+	} );
+
 	return (
 		<div className={ `live-preview__container-${ styling }` }>
-			{ loading && <SkeletonLivePreview/> }
+			{ loading && <SkeletonLivePreview /> }
 			{ settings && (
 				<BlockEditorProvider
 					value={ blocks }

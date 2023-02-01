@@ -3,7 +3,6 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 
 import { store as nfdOnboardingStore } from '../../../store';
-import { GlobalStylesProvider } from '../../../components/LivePreview';
 import { getGlobalStyles, getThemeFonts } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
@@ -131,11 +130,13 @@ const DesignTypography = () => {
 		const paletteRenderedList = [];
 		for ( const fontStyle in fontPalettes ) {
 			const splitLabel = fontPalettes[ fontStyle ]?.label.split( '&', 2 );
-			if ( splitLabel.length == 0 ) continue;
+			if ( splitLabel.length === 0 ) continue;
 			paletteRenderedList.push(
 				<div
 					className={ `font-palette ${
-						selectedFont == fontStyle ? 'font-palette-selected' : ''
+						selectedFont === fontStyle
+							? 'font-palette-selected'
+							: ''
 					} ` }
 					onClick={ ( e ) => handleClick( fontStyle ) }
 				>

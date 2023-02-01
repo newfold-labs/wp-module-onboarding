@@ -6,22 +6,32 @@
  * @return CardHeader
  */
 
-import React from 'react';
-import { memo } from '@wordpress/element'
+import { memo } from '@wordpress/element';
 
-const CardHeader = ({ heading, subHeading, question }) => {
-
+const CardHeader = ( { heading, subHeading, question } ) => {
 	return (
 		<div>
-			{heading && <h2 className="nfd-step-card-heading">{heading}</h2>}
+			{ heading && (
+				<h2 className="nfd-step-card-heading">{ heading }</h2>
+			) }
 
-			{subHeading && (
-				<h3 className={ question ? "nfd-step-card-subheading-other" : "nfd-step-card-subheading" }>{subHeading}</h3>
-			)}
+			{ subHeading && (
+				<h3
+					className={
+						question
+							? 'nfd-step-card-subheading-other'
+							: 'nfd-step-card-subheading'
+					}
+				>
+					{ subHeading }
+				</h3>
+			) }
 
-			{question && <h3 className="nfd-step-card-question">{question}</h3>}
+			{ question && (
+				<h3 className="nfd-step-card-question">{ question }</h3>
+			) }
 		</div>
 	);
 };
 
-export default memo(CardHeader);
+export default memo( CardHeader );
