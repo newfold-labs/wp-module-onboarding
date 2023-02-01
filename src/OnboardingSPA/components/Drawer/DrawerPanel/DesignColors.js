@@ -7,6 +7,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import { GlobalStylesProvider } from '../../LivePreview';
+import Animate from '../../Animate';
 
 const DesignColors = () => {
 	const [ isLoaded, setIsLoaded ] = useState( false );
@@ -346,7 +347,10 @@ const DesignColors = () => {
 						<div className="custom-palette__top-icon">-</div>
 					) }
 				</div>
-				<div
+				<Animate
+					type={ 'fade-in' }
+					duration="300ms"
+					timingFunction="ease-in-out"
 					className={ `custom-palette__below ${
 						isAccordionClosed
 							? 'custom-palette_acc_closed'
@@ -431,7 +435,7 @@ const DesignColors = () => {
 							Tertiary
 						</div>
 					</div>
-				</div>
+				</Animate>
 				{ showColorPicker && (
 					<Popover>
 						<div

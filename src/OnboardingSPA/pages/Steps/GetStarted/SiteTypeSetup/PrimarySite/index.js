@@ -1,4 +1,4 @@
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import CommonLayout from '../../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../../components/NewfoldLargeCard';
 import {
@@ -13,6 +13,7 @@ import NavCardButton from '../../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import content from '../content.json';
 import { translations } from '../../../../../utils/locales/translations';
+import Animate from '../../../../../components/Animate';
 
 const StepPrimarySetup = () => {
 	const {
@@ -94,63 +95,74 @@ const StepPrimarySetup = () => {
 						) }
 					/>
 				</div>
-
-				<div className="nfd-setup-primary-categories">
-					{ content.categories.map( ( item, idx ) => {
-						return (
-							<div
-								key={ item?.name }
-								className={ `${
-									clickedIndex === idx ||
-									item.name === selectedPrimaryCategoryInStore
-										? 'chosenPrimaryCategory '
-										: ''
-								}nfd-card-category` }
-								onClick={ ( e ) => handleCategoryClick( idx ) }
-							>
-								<div className="nfd-card-category-wrapper">
-									<span
-										className="icon"
-										style={ {
-											backgroundImage:
-												clickedIndex !== idx &&
-												item.name !==
-													selectedPrimaryCategoryInStore
-													? item?.icon
-													: item?.iconWhite,
-										} }
-									></span>
-									<span className="categName">
-										{ item?.name }
-									</span>
+				<Animate
+					type="fade-in-disabled"
+					after={
+						content.categories &&
+						selectedPrimaryCategoryInStore !== null
+					}
+				>
+					<div className="nfd-setup-primary-categories">
+						{ content.categories.map( ( item, idx ) => {
+							return (
+								<div
+									key={ item?.name }
+									className={ `${
+										clickedIndex === idx ||
+										item.name ===
+											selectedPrimaryCategoryInStore
+											? 'chosenPrimaryCategory '
+											: ''
+									}nfd-card-category` }
+									onClick={ ( e ) =>
+										handleCategoryClick( idx )
+									}
+								>
+									<div className="nfd-card-category-wrapper">
+										<span
+											className="icon"
+											style={ {
+												backgroundImage:
+													clickedIndex !== idx &&
+													item.name !==
+														selectedPrimaryCategoryInStore
+														? item?.icon
+														: item?.iconWhite,
+											} }
+										></span>
+										<span className="categName">
+											{ item?.name }
+										</span>
+									</div>
 								</div>
-							</div>
-						);
-					} ) }
-				</div>
+							);
+						} ) }
+					</div>
 
-				<div className="nfd-setup-primary-second">
-					<div className="nfd-setup-primary-second-top">
-						<p className="blackText">or tell us here:</p>
-						<input
-							type="text"
-							onChange={ ( e ) => categoryInput( e ) }
-							className="tellUsInput"
-							placeholder={ sprintf(
-								__(
-									content.placeholderSiteTypeInput,
-									'wp-module-onboarding'
-								),
-								translations( 'site' )
-							) }
-							value={ inputCategVal }
-						/>
+					<div className="nfd-setup-primary-second">
+						<div className="nfd-setup-primary-second-top">
+							<p className="blackText">or tell us here:</p>
+							<input
+								type="text"
+								onChange={ ( e ) => categoryInput( e ) }
+								className="tellUsInput"
+								placeholder={ sprintf(
+									__(
+										content.placeholderSiteTypeInput,
+										'wp-module-onboarding'
+									),
+									translations( 'site' )
+								) }
+								value={ inputCategVal }
+							/>
+						</div>
 					</div>
-					<div className="nfd-setup-primary-second-bottom">
-						<NavCardButton text={ __( content.buttonText ) } />
-						<NeedHelpTag />
-					</div>
-				</div>
+				</Animate>
+				<NavCardButton
+					text={ __( content.buttonText ) }
+					disabled={ content.categories === null }
+				/>
+				<NeedHelpTag />
 			</NewfoldLargeCard>
 		</CommonLayout>
 	);

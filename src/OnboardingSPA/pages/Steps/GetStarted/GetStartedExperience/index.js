@@ -13,7 +13,7 @@ import { RadioControl } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-import { RadioControlStateHandler } from '../../../../components/RadioControl';
+import Animate from '../../../../components/Animate';
 
 /**
  * Get Started: WordPress Experience Comfort Level.
@@ -81,32 +81,30 @@ const GetStartedExperience = () => {
 							question={ currentStep.subheading }
 						/>
 					</div>
-					<RadioControlStateHandler
-						watch={ wpComfortLevel }
-						options={ content.options }
+					<Animate
+						type={ 'fade-in-disabled' }
+						after={ wpComfortLevel }
 					>
 						<RadioControl
 							className={
 								'nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-main'
 							}
 							selected={ wpComfortLevel }
-							options={ content.options.map(
-								( option ) => {
-									return {
-										label: __(
-											option.content,
-											'wp-module-onboarding'
-										),
-										value: __(
-											option.value,
-											'wp-module-onboarding'
-										),
-									};
-								}
-							)}
-							onChange={( value ) => setWpComfortLevel( value )}
+							options={ content.options.map( ( option ) => {
+								return {
+									label: __(
+										option.content,
+										'wp-module-onboarding'
+									),
+									value: __(
+										option.value,
+										'wp-module-onboarding'
+									),
+								};
+							} ) }
+							onChange={ ( value ) => setWpComfortLevel( value ) }
 						/>
-					</RadioControlStateHandler>
+					</Animate>
 					<NavCardButton
 						text={ __(
 							content.buttonText,

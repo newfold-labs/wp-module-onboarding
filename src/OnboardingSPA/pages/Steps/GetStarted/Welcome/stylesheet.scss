@@ -88,31 +88,22 @@
     background-size: contain;
     background-repeat: no-repeat;
     height: 228px;
-    animation-duration: 360ms;
     width: clamp(180px, 50vw, 400px);
-    animation-timing-function: ease-out;
-    @media (prefers-reduced-motion) {
-        animation: none !important;
-        translation: none !important;
-    }
 }
 
 .content-img{
     @extend .tab-img-base;
     background-image: var(--get-started-content-img);
-    animation-name: fadeInRight;
 }
 
 .features-img{
     @extend .tab-img-base;
     background-image: var(--get-started-features-img);
-    animation-name: fadeInUp;
 }
 
 .design-img{
     @extend .tab-img-base;
     background-image: var(--get-started-design-img);
-    animation-name: fadeInLeft;
 }
 
 .welcome-card {

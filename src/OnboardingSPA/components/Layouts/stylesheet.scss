@@ -3,11 +3,6 @@
     @include break-medium {
         min-height: calc(100vh - #{$header-height} - #{$border-width});
     }
-    &.is-layout-fade-in {
-        animation-name: fadeIn;
-        animation-duration: 233ms;
-        animation-timing-function: ease-in-out;
-    }
     &.is-padded {
         min-height: calc(100vw - #{$header-height} - #{$border-width} - #{$grid-unit * 18} - #{$admin-bar-height-big});
         @include break-medium {
