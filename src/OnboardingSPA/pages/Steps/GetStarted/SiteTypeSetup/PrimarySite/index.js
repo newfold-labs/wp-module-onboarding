@@ -1,4 +1,4 @@
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import CommonLayout from '../../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../../components/NewfoldLargeCard';
 import {
@@ -95,7 +95,13 @@ const StepPrimarySetup = () => {
 						) }
 					/>
 				</div>
-				<Animate type="fade-in" after={ content.categories && ( selectedPrimaryCategoryInStore !== null ) }>
+				<Animate
+					type="fade-in-disabled"
+					after={
+						content.categories &&
+						selectedPrimaryCategoryInStore !== null
+					}
+				>
 					<div className="nfd-setup-primary-categories">
 						{ content.categories.map( ( item, idx ) => {
 							return (
@@ -103,11 +109,14 @@ const StepPrimarySetup = () => {
 									key={ item?.name }
 									className={ `${
 										clickedIndex === idx ||
-										item.name === selectedPrimaryCategoryInStore
+										item.name ===
+											selectedPrimaryCategoryInStore
 											? 'chosenPrimaryCategory '
 											: ''
 									}nfd-card-category` }
-									onClick={ ( e ) => handleCategoryClick( idx ) }
+									onClick={ ( e ) =>
+										handleCategoryClick( idx )
+									}
 								>
 									<div className="nfd-card-category-wrapper">
 										<span
@@ -151,7 +160,7 @@ const StepPrimarySetup = () => {
 				</Animate>
 				<NavCardButton
 					text={ __( content.buttonText ) }
-					disabled={ content.categories === null}
+					disabled={ content.categories === null }
 				/>
 				<NeedHelpTag />
 			</NewfoldLargeCard>

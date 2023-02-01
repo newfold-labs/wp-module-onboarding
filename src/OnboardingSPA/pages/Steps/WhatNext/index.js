@@ -42,6 +42,7 @@ const StepWhatNext = () => {
 									title={ __(tab.subtitle, 'wp-module-onboarding')}
 									text={ sprintf( __(tab.text, 'wp-module-onboarding'), translations('site'))}
 									imgType={tab.imgType}
+									animationName = { tab.animationName }
 									className="tab-data" />
 							};
 						} )}
