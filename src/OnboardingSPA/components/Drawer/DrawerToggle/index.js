@@ -1,15 +1,13 @@
 import {
 	Button,
-	Icon,
 	__unstableMotion as motion,
 } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
+import { useEffect, useRef } from '@wordpress/element';
+import { useDispatch, useSelect } from '@wordpress/data';
+
 import classNames from 'classnames';
 import { store as nfdOnboardingStore } from '../../../store';
-
-import { useDispatch, useSelect } from '@wordpress/data';
-import { useEffect, useRef } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
-import { wordpress } from '@wordpress/icons';
 
 const DrawerToggle = ({ isOpen }) => {
 	const { isDrawerOpen, isDrawerSuppressed } = useSelect((select) => {
