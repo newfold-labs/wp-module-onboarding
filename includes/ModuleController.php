@@ -8,6 +8,7 @@ use NewfoldLabs\WP\ModuleLoader\ModuleRegistry;
 use function NewfoldLabs\WP\ModuleLoader\activate;
 use function NewfoldLabs\WP\ModuleLoader\deactivate;
 
+
 /**
  * Class ModuleController
  */
@@ -50,9 +51,6 @@ class ModuleController {
 			// Check if the Module Does Exist
 			if ( ModuleRegistry::get( $module_name ) ) {
 
-				// Enable the Redirect for Onboarding SPA
-				LoginRedirect::enable_redirect();
-
 				// Activate the Module
 				activate( $module_name );
 			}
@@ -75,7 +73,7 @@ class ModuleController {
 		// August 18
 		$new_cust_date = gmdate( 'Y-m-d H:i:s', strtotime( '2022-08-18T15:30:00.000Z' ) );
 
-		if ( isset( $customer_data['plan_subtype'] ) && isset( $customer_data['signup_date'] ) ) {
+		if ( isset( $customer_data['signup_date'] ) ) {
 
 			// Convert the Customer Signup Date to a Php known format
 			$cust_signup_date = gmdate( 'Y-m-d H:i:s', strtotime( $customer_data['signup_date'] ) );
@@ -84,7 +82,13 @@ class ModuleController {
 			$is_new_cust = $cust_signup_date >= $new_cust_date;
 
 			// Check if the Customer has an Ecom Plan
-			$has_ecom_plan = Flows::is_ecommerce_plan( $customer_data['plan_subtype'] );
+			$has_ecom_plan = false;
+			if ( isset( $customer_data['plan_subtype'] ) ) {
+				$has_ecom_plan = Flows::is_ecommerce_plan( $customer_data['plan_subtype'] );
+			}
+			if ( ! $has_ecom_plan ) {
+				$has_ecom_plan = Flows::is_commerce_priority();
+			}
 
 			if ( $has_ecom_plan && $is_new_cust ) {
 				return true;
