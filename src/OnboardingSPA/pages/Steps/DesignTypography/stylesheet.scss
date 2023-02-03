@@ -1,10 +1,12 @@
 .theme-fonts-preview {
 	flex: 1;
-	margin: 16px;
+	width: 100%;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	justify-content: center;
+	background-color: #eee;
+	padding-top: 20px;
 
 	&__title-bar {
 		width: 70%;
@@ -27,31 +29,6 @@
 				height: 8px;
 				border-radius: 50%;
 				display: inline-block;
-			}
-		}
-	}
-
-	&__live-preview-container {
-		width: 70%;
-		min-height: 90vh;
-		overflow: hidden;
-		position: relative;
-		align-items: center;
-		border: 1px solid #e3dfdf;
-		margin-bottom: 30px;
-
-
-		&:hover {
-			cursor: not-allowed;
-		}
-
-		.live-preview {
-
-			&__container {
-
-				&-custom {
-					width: 100%;
-				}
 			}
 		}
 	}
