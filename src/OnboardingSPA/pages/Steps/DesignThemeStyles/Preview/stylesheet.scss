@@ -5,7 +5,7 @@
 	align-items: center;
 	flex-direction: column;
 	justify-content: center;
-	background-color: #eee;
+	background-color: var(--nfd-onboarding-light-gray-5);
 
 	&__checkbox {
 		margin: 20px 0;
