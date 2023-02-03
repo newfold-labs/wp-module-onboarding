@@ -134,8 +134,10 @@ const DesignTypography = () => {
 			if ( splitLabel.length == 0 ) continue;
 			paletteRenderedList.push(
 				<div
-					className={ `font-palette ${
-						selectedFont == fontStyle ? 'font-palette-selected' : ''
+					className={ `font-palette drawer-palette--button ${
+						selectedFont == fontStyle
+							? 'font-palette-selected drawer-palette--button--selected'
+							: ''
 					} ` }
 					onClick={ ( e ) => handleClick( fontStyle ) }
 				>
@@ -149,7 +151,7 @@ const DesignTypography = () => {
 					>
 						Aa
 					</div>
-					<div className="font-palette__name">
+					<div className="font-palette__name drawer-palette--button__text">
 						<span
 							style={ {
 								fontFamily:
