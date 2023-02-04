@@ -247,7 +247,7 @@ const DesignColors = () => {
 	};
 
 	async function resetColors() {
-		const globalStyles = await getGlobalStyles();
+		const globalStyles = await getGlobalStyles(true);
 		let selectedGlobalStyle;
 		if ( currentData?.data?.theme?.variation ) {
 			selectedGlobalStyle = globalStyles.body.filter(
@@ -313,6 +313,14 @@ const DesignColors = () => {
 		}
 
 		return paletteRenderedList;
+	}
+
+	function isCustomColorActive() {
+		for (const custom in customColors)
+			if(customColors[custom] != '')
+				return true;
+
+		return false;
 	}
 
 	function buildCustomPalette() {
@@ -436,6 +444,13 @@ const DesignColors = () => {
 						</div>
 					</div>
 				</Animate>
+				{ isCustomColorActive() && (
+					<Animate type={'fade-in'} duration="300ms">
+						<div className='theme-colors--drawer--reset' onClick={resetColors}>
+							<div>Reset</div>
+						</div>
+					</Animate>
+				) }
 				{ showColorPicker && (
 					<Popover>
 						<div
@@ -458,11 +473,6 @@ const DesignColors = () => {
 		<GlobalStylesProvider>
 			<div className="theme-colors--drawer">
 				<h2>{ __( 'Color Palettes', 'wp-module-onboarding' ) }</h2>
-				{ /* {selectedColors?.slug && 
-					<div className='theme-colors--drawer--reset' onClick={resetColors}>
-						<div>Reset Button</div>
-					</div>
-				} */ }
 				{ colorPalettes && buildPalettes() }
 				{ colorPalettes && buildCustomPalette() }
 			</div>

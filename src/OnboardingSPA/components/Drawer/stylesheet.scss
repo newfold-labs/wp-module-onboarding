@@ -343,19 +343,20 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 	padding: 0 4px;
 
 	&--reset {
-		width: 40%;
+		width: 30%;
 		height: 30px;
 		display: flex;
-		color: black;
 		cursor: pointer;
-		margin-left: 4px;
+		margin-top: 12px;
 		text-align: center;
 		align-items: center;
 		justify-content: center;
 		background-color: white;
+		color: var(--nfd-onboarding-primary);
 
 		&:hover {
-			background-color: var(--nfd-onboarding-drawer-icon-fill);
+			color: $black;
+			background-color: #ededed;
 		}
 	}
 }
