@@ -132,6 +132,16 @@ const DesignColors = () => {
 		}
 	}
 
+	function findInCustomColors(slugName, colorPickerCalledBy) {
+		const selectedGlobalStyle = storedPreviewSettings;
+		const selectedThemeColorPalette =
+			selectedGlobalStyle?.settings?.color?.palette;
+		const res = selectedThemeColorPalette.findIndex(({ slug }) => slug === slugName );
+		if(res ===  -1)
+			return selectedThemeColorPalette.findIndex(({ slug }) => slug === colorPickerCalledBy);
+		return res;
+	}
+
 	async function saveCustomColors() {
 		const selectedGlobalStyle = storedPreviewSettings;
 		const selectedThemeColorPalette =
@@ -139,38 +149,40 @@ const DesignColors = () => {
 
 		if ( selectedThemeColorPalette ) {
 			for ( let idx = 0; idx < selectedThemeColorPalette.length; idx++ ) {
-				switch ( selectedThemeColorPalette[ idx ]?.slug ) {
-					case 'base':
+				const slug = selectedThemeColorPalette[idx]?.slug;
+				if (
+					colorPickerCalledBy === slug && customColors &&
+					customColors[slug] !== undefined
+				)
+					selectedThemeColorPalette[idx].color =
+						customColors[slug];
+			}
+			if(true)
+			{
+				switch (colorPickerCalledBy) {
+					case 'base': 
 						if (
-							colorPickerCalledBy == 'base' &&
-							customColors?.base
-						)
-							selectedThemeColorPalette[ idx ].color =
-								customColors?.base;
-						break;
-					case 'primary':
-						if (
-							colorPickerCalledBy == 'primary' &&
-							customColors?.primary
-						)
-							selectedThemeColorPalette[ idx ].color =
-								customColors?.primary;
-						break;
-					case 'secondary':
-						if (
-							colorPickerCalledBy == 'secondary' &&
-							customColors?.secondary
-						)
-							selectedThemeColorPalette[ idx ].color =
-								customColors?.secondary;
+							customColors &&
+							customColors[colorPickerCalledBy] !== undefined
+						) {
+							selectedThemeColorPalette[findInCustomColors("header-foreground", colorPickerCalledBy)].color =
+								customColors[colorPickerCalledBy];
+							selectedThemeColorPalette[findInCustomColors("header-titles", colorPickerCalledBy)].color =
+								customColors[colorPickerCalledBy];
+							selectedThemeColorPalette[findInCustomColors("secondary-foreground", colorPickerCalledBy)].color =
+								customColors[colorPickerCalledBy];
+						}
 						break;
 					case 'tertiary':
 						if (
-							colorPickerCalledBy == 'tertiary' &&
-							customColors?.tertiary
-						)
-							selectedThemeColorPalette[ idx ].color =
-								customColors?.tertiary;
+							customColors &&
+							customColors[colorPickerCalledBy] !== undefined
+						) {
+							selectedThemeColorPalette[findInCustomColors("header-background", colorPickerCalledBy)].color =
+								customColors[colorPickerCalledBy];
+							selectedThemeColorPalette[findInCustomColors("secondary-background", colorPickerCalledBy)].color =
+								customColors[colorPickerCalledBy];
+						}
 						break;
 				}
 			}
@@ -324,18 +336,19 @@ const DesignColors = () => {
 	}
 
 	function buildCustomPalette() {
+		const defaultColor = '#fff';
 		const primaryColorTemp =
 			customColors && customColors?.primary != ''
 				? customColors?.primary
-				: selectedColorsLocal?.primary ?? '#fff';
+				: selectedColorsLocal?.primary ?? defaultColor;
 		const secondaryColorTemp =
 			customColors && customColors?.secondary != ''
 				? customColors?.secondary
-				: selectedColorsLocal?.secondary ?? '#fff';
+				: selectedColorsLocal?.secondary ?? defaultColor;
 		const tertiaryColorTemp =
 			customColors && customColors?.tertiary != ''
 				? customColors?.tertiary
-				: selectedColorsLocal?.tertiary ?? '#fff';
+				: selectedColorsLocal?.tertiary ?? defaultColor;
 
 		return (
 			<div className="custom-palette">
@@ -376,7 +389,7 @@ const DesignColors = () => {
 							}` }
 							style={ {
 								backgroundColor: `${
-									customColors?.base ?? '#FFF'
+									customColors?.base ?? defaultColor
 								}`,
 							} }
 						>
