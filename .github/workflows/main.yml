@@ -1,0 +1,40 @@
+name: JS LINT
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - '**.js'
+  pull_request:
+    types: [opened, edited, reopened, ready_for_review]
+    paths:
+      - '**.js'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  phpcs:
+    name: Run WordPress JS Lint
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        # pick the Node version to use and install it
+        # https://github.com/actions/setup-node
+        # - uses: actions/setup-node@v3
+
+      # Installs all the npm packages.
+      - name: Install npm dependencies
+        uses: bahmutov/npm-install@v1         
+
+      - uses: technote-space/get-diff-action@v6
+        with:
+          SUFFIX_FILTER: .js
+          
+      # Installs all the npm packages.
+      - name: Run wp-scripts lint
+        run: wp-scripts lint-js ${{ env.GIT_DIFF }}
