@@ -162,10 +162,12 @@ class SettingsController {
 						break;
 					case 'other_social_urls':
 						foreach ( $param_value as $param_key_osu => $param_url ) {
-							$param_value[ $param_key_osu ] = \sanitize_text_field( $param_url );	
+							// remove the key => value pair and make it a simple indexed array for yoast plugin compatibility
+							unset( $params[$param_key][ $param_key_osu ]);
+							$params[$param_key][] = \sanitize_text_field( $param_url );
 							if ( ! empty( $param_url ) && ! \wp_http_validate_url( $param_url ) ) {
 								$this->invalid_urls[] = $param_key_osu;
-								unset($params[$param_key_osu]);
+								unset($params[$param_key][$param_key_osu]);
 								continue;
 							}
 						}
@@ -217,6 +219,24 @@ class SettingsController {
 			$social_data['twitter_site'] = 'https://www.twitter.com/' . $twitter_handle;
 		}
 
+		// handle other social urls for onboarding
+		foreach( $social_data['other_social_urls'] as $index => $social_url ) {
+			// remove the indexed url from array
+			unset( $social_data[ 'other_social_urls' ][ $index ] );
+
+			switch( $social_url ) {
+				case ( -1 < stripos( $social_url, 'yelp.com' ) ):
+					$social_data[ 'other_social_urls' ][ 'yelp_url' ] = $social_url;
+					break;
+				case ( -1 < stripos( $social_url, 'tiktok.com' ) ):
+					$social_data[ 'other_social_urls' ][ 'tiktok_url' ] = $social_url;
+					break;
+				default:
+					// creating key value pairs for other social urls instead of indexed array
+					$social_data[ 'other_social_urls' ][ 'social_url_' . $index ] = $social_url;
+					break;
+			}
+		}
 		return $social_data;
 
 	}
