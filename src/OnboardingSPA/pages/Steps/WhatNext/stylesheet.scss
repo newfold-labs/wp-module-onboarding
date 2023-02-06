@@ -90,31 +90,22 @@
     background-size: contain;
     background-repeat: no-repeat;
     height: 228px;
-    animation-duration: 360ms;
     width: clamp(180px, 50vw, 400px);
-    animation-timing-function: ease-out;
-    @media (prefers-reduced-motion) {
-        animation: none !important;
-        transition: none !important;
-    }
 }
 
 .wpadmin-img {
     @extend .whatsnext-image;
     background-image: var(--what-next-wp-admin-img);
-    animation-name: fadeInRight;
 }
 
 .help-img {
     @extend .whatsnext-image;
     background-image: var(--what-next-help-img);
-    animation-name: fadeInUp;
 }
 
 .bluesky-img {
     @extend .whatsnext-image;
     background-image: var(--what-next-bluesky-img);
-    animation-name: fadeInLeft;
 }
 
 .whatnext-card {

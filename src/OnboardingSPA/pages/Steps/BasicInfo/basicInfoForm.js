@@ -41,16 +41,15 @@ const BasicInfoForm = () => {
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
-			currentData: select(
-				nfdOnboardingStore
-			).getCurrentOnboardingData(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	}, [] );
 
 	function setDefaultData() {
 		if ( isLoaded ) {
-			setSiteLogo( flowData?.data?.siteLogo ?? 0);
-			setSiteTitle( flowData?.data?.blogName ?? '');
+			setSiteLogo( flowData?.data?.siteLogo ?? 0 );
+			setSiteTitle( flowData?.data?.blogName ?? '' );
 			setSiteDesc( flowData?.data?.blogDescription ?? '' );
 		}
 	}
@@ -130,9 +129,9 @@ const BasicInfoForm = () => {
 
 	return (
 		<Animate
-			type="fade-in"
+			type={ 'fade-in-disabled' }
 			after={
-				typeof flowData === "object" && typeof socialData === "object"
+				typeof flowData === 'object' && typeof socialData === 'object'
 			}
 		>
 			<div className={ 'basic-info' }>
