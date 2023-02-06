@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { get, isEmpty, kebabCase, pickBy, reduce, set, memoize } from 'lodash';
+import { get, isEmpty, kebabCase, pickBy, reduce, set } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -872,12 +872,6 @@ const generateStylesheets = ( previewSettings, storedPreviewSettings ) => {
 	return stylesheets;
 };
 
-// This function serializes those objects into JSON strings to determine the cache key.
-const resolver = ( arg1, arg2 ) => JSON.stringify( [ arg1, arg2 ] );
-
-// Make a Memoized function that runs when the input changes
-const generateStylesheetsMemo = memoize( generateStylesheets, resolver );
-
 export function useGlobalStylesOutput(
 	previewSettings,
 	storedPreviewSettings
@@ -891,7 +885,7 @@ export function useGlobalStylesOutput(
 		return;
 	}
 
-	const stylesheets = generateStylesheetsMemo(
+	const stylesheets = generateStylesheets(
 		previewSettings,
 		storedPreviewSettings
 	);
