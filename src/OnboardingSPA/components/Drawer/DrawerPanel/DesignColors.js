@@ -277,9 +277,9 @@ const DesignColors = () => {
 			paletteRenderedList.push(
 				<div
 					key={ colorStyle }
-					className={ `color-palette ${
+					className={ `color-palette drawer-palette--button ${
 						colorStyle == selectedColors?.slug
-							? 'color-palette-selected'
+							? 'color-palette-selected drawer-palette--button--selected'
 							: ''
 					} ` }
 					onClick={ ( e ) => handleClick( colorStyle ) }
@@ -304,7 +304,7 @@ const DesignColors = () => {
 							} }
 						/>
 					</div>
-					<div className="color-palette__name">
+					<div className="color-palette__name drawer-palette--button__text">
 						{ colorStyle?.charAt( 0 ).toUpperCase() +
 							colorStyle?.slice( 1 ) }
 					</div>
