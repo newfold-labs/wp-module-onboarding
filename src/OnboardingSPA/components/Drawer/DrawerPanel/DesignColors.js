@@ -11,6 +11,7 @@ import Animate from '../../Animate';
 
 const DesignColors = () => {
 	const [ isLoaded, setIsLoaded ] = useState( false );
+	const [ customColorsMap, setCustomColorsMap ] = useState();
 	const [ selectedColors, setSelectedColors ] = useState();
 	const [ showColorPicker, setShowColorPicker ] = useState( false );
 	const [ isAccordionClosed, setIsAccordionClosed ] = useState( true );
@@ -157,33 +158,19 @@ const DesignColors = () => {
 					selectedThemeColorPalette[idx].color =
 						customColors[slug];
 			}
-			if(true)
+			if(customColorsMap)
 			{
-				switch (colorPickerCalledBy) {
-					case 'base': 
+				const colorVariant = customColorsMap[colorPickerCalledBy];
+				if ( colorVariant ) {
+					colorVariant.forEach(( variant ) => {
 						if (
 							customColors &&
 							customColors[colorPickerCalledBy] !== undefined
 						) {
-							selectedThemeColorPalette[findInCustomColors("header-foreground", colorPickerCalledBy)].color =
-								customColors[colorPickerCalledBy];
-							selectedThemeColorPalette[findInCustomColors("header-titles", colorPickerCalledBy)].color =
-								customColors[colorPickerCalledBy];
-							selectedThemeColorPalette[findInCustomColors("secondary-foreground", colorPickerCalledBy)].color =
+							selectedThemeColorPalette[findInCustomColors(variant, colorPickerCalledBy)].color =
 								customColors[colorPickerCalledBy];
 						}
-						break;
-					case 'tertiary':
-						if (
-							customColors &&
-							customColors[colorPickerCalledBy] !== undefined
-						) {
-							selectedThemeColorPalette[findInCustomColors("header-background", colorPickerCalledBy)].color =
-								customColors[colorPickerCalledBy];
-							selectedThemeColorPalette[findInCustomColors("secondary-background", colorPickerCalledBy)].color =
-								customColors[colorPickerCalledBy];
-						}
-						break;
+					})
 				}
 			}
 
@@ -200,7 +187,8 @@ const DesignColors = () => {
 
 	const getColorStylesAndPatterns = async () => {
 		const colorPalettes = await getThemeColors();
-		setColorPalettes( colorPalettes?.body );
+		setColorPalettes(colorPalettes?.body['color-palettes'] );
+		setCustomColorsMap(colorPalettes?.body['custom-colors'] );
 		let selectedColors;
 		let selectedColorsLocal;
 		if ( ! currentData?.data?.palette?.slug === '' ) {
