@@ -142,7 +142,7 @@ const DesignTypography = () => {
 					onClick={ ( e ) => handleClick( fontStyle ) }
 				>
 					<div
-						className="font-palette__icon"
+						className="font-palette__icon drawer-palette--button__text"
 						style={ {
 							fontFamily:
 								fontPalettes[ fontStyle ]?.styles?.typography
