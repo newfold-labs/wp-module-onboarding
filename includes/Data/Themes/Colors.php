@@ -137,18 +137,18 @@ final class Colors {
 					'base'                 => '#FFFFFF',
 				),
 			),
-			'custom-colors' => array(
-				'base' => array(
+			'custom-colors'  => array(
+				'base'     => array(
 					'header-foreground',
 					'header-titles',
-					'secondary-foreground'
+					'secondary-foreground',
 				),
 				'tertiary' => array(
 					'header-background',
-					'secondary-background'
+					'secondary-background',
 				),
-			)
-		)
+			),
+		),
 	);
 
 	/**
