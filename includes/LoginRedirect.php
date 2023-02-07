@@ -1,15 +1,26 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding;
 
+use DateTime;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
+/**
+ * Contains functionalities that redirect users to Onboarding on login to WordPress.
+ */
 class LoginRedirect {
-
+	/**
+	 * Handles the redirect to onboarding
+	 *
+	 * @param [type] $redirect The requested redirect URL.
+	 * @param [type] $redirect_to The requested redirect URL via param.
+	 * @param [type] $user The logged in user object.
+	 * @return string
+	 */
 	public static function handle_redirect( $redirect, $redirect_to, $user ) {
 		$redirect_option_name = Options::get_option_name( 'redirect' );
 		if ( isset( $_GET[ $redirect_option_name ] )
-		  && $_GET[ $redirect_option_name ] === 'false' ) {
+		  && 'false' === $_GET[ $redirect_option_name ] ) {
 			 self::disable_redirect();
 		}
 
@@ -32,14 +43,19 @@ class LoginRedirect {
 		if ( empty( $redirect_option ) ) {
 			$redirect_option = \update_option( $redirect_option_name, true );
 		}
+		$install_date      = new DateTime( \get_option( Options::get_option_name( 'install_date', false ), gmdate( 'M d, Y' ) ) );
+		$current_date      = new DateTime( gmdate( 'M d, Y' ) );
+		$interval          = $current_date->diff( $install_date );
+		$interval_in_hours = ( $interval->days * 24 ) + $interval->h;
 
 		if ( ! ( $redirect_option
-				&& \get_option( Options::get_option_name( 'coming_soon', false ), 'true' ) ) === 'true' ) {
+		&& \get_option( Options::get_option_name( 'coming_soon', false ), 'true' ) === 'true'
+		&& ( $interval_in_hours <= 72 ) ) ) {
 			 return $redirect;
 		}
 
 		if ( self::is_administrator( $user ) ) {
-			 return \admin_url( '/index.php?page=' . 'nfd-onboarding' );
+			 return \admin_url( '/index.php?page=nfd-onboarding' );
 		}
 
 		return $redirect;
