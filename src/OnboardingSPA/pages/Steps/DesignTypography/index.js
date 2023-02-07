@@ -7,7 +7,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import {
 	SIDEBAR_LEARN_MORE,
-	THEME_STATUS_FAILURE,
+	THEME_STATUS_INIT,
 	VIEW_DESIGN_TYPOGRAPHY,
 	THEME_STATUS_ACTIVE,
 } from '../../../../constants';
@@ -45,7 +45,7 @@ const StepDesignTypography = () => {
 			true
 		);
 		if ( patternsResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_FAILURE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		setPattern( patternsResponse?.body );
 		setIsLoaded( true );

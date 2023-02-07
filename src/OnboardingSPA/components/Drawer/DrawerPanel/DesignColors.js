@@ -9,7 +9,7 @@ import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-s
 import { GlobalStylesProvider } from '../../LivePreview';
 import {
 	THEME_STATUS_ACTIVE,
-	THEME_STATUS_FAILURE,
+	THEME_STATUS_INIT,
 } from '../../../../constants';
 import Animate from '../../Animate';
 
@@ -200,7 +200,7 @@ const DesignColors = () => {
 	const getColorStylesAndPatterns = async () => {
 		const colorPalettes = await getThemeColors();
 		if ( colorPalettes?.error ) {
-			return updateThemeStatus( THEME_STATUS_FAILURE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		setColorPalettes( colorPalettes?.body );
 		let selectedColors;

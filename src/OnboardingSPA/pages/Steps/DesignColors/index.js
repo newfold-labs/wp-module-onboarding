@@ -13,7 +13,7 @@ import {
 import {
 	SIDEBAR_LEARN_MORE,
 	THEME_STATUS_ACTIVE,
-	THEME_STATUS_FAILURE,
+	THEME_STATUS_INIT,
 	VIEW_DESIGN_COLORS,
 } from '../../../../constants';
 
@@ -42,7 +42,7 @@ const StepDesignColors = () => {
 	const getStylesAndPatterns = async () => {
 		const pattern = await getPatterns( currentStep.patternId, true );
 		if ( pattern?.error ) {
-			return updateThemeStatus( THEME_STATUS_FAILURE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		setPattern( pattern?.body );
 		setIsLoaded( true );

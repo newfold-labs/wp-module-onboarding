@@ -8,7 +8,7 @@ import { getGlobalStyles, getThemeFonts } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import {
 	THEME_STATUS_ACTIVE,
-	THEME_STATUS_FAILURE,
+	THEME_STATUS_INIT,
 } from '../../../../constants';
 
 const DesignTypography = () => {
@@ -41,7 +41,7 @@ const DesignTypography = () => {
 	const getFontStylesAndPatterns = async () => {
 		const fontPalettes = await getThemeFonts();
 		if ( fontPalettes?.error ) {
-			return updateThemeStatus( THEME_STATUS_FAILURE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		setFontPalettes( fontPalettes?.body );
 

@@ -13,7 +13,7 @@ import CommonLayout from '../../../../components/Layouts/Common';
 import {
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
 	THEME_STATUS_ACTIVE,
-	THEME_STATUS_FAILURE,
+	THEME_STATUS_INIT,
 	SIDEBAR_LEARN_MORE,
 } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
@@ -70,7 +70,7 @@ const StepDesignThemeStylesPreview = () => {
 			true
 		);
 		if ( patternsResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_FAILURE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		setPattern( patternsResponse?.body );
 		setIsLoaded( true );

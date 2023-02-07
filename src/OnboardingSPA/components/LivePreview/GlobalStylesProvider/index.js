@@ -6,7 +6,7 @@ import { getGlobalStyles, setGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import {
 	THEME_STATUS_ACTIVE,
-	THEME_STATUS_FAILURE,
+	THEME_STATUS_INIT,
 } from '../../../../constants';
 
 /**
@@ -39,7 +39,7 @@ const GlobalStylesProvider = ( { children } ) => {
 	const getStylesAndPatterns = async () => {
 		const globalStyles = await getGlobalStyles();
 		if ( globalStyles?.error ) {
-			return updateThemeStatus( THEME_STATUS_FAILURE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		let selectedGlobalStyle;
 		if ( storedPreviewSettings?.title && storedPreviewSettings?.settings )
