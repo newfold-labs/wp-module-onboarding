@@ -13,7 +13,7 @@ const StepDesignThemes = () => {
 		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
-	useEffect( () => { setSidebarActiveView(SIDEBAR_LEARN_MORE);
+	useEffect( () => {  setSidebarActiveView(SIDEBAR_LEARN_MORE);
 		setIsDrawerOpened(true);
 		setDrawerActiveView(VIEW_DESIGN_THEMES);
 		setIsHeaderNavigationEnabled( true );
