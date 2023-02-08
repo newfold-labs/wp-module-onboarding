@@ -16,9 +16,9 @@ const StepDesignThemes = () => {
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
-	function calculateNothing() {
-		if(3 == 3)
-			return 1;
+	function calculateSomething() {
+		if(2 == 2)
+			return 2;
 	}
 
 	return (
