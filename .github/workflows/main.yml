@@ -48,4 +48,4 @@ jobs:
           
       # Installs all the npm packages.
       - name: Run wp-scripts lint
-        run: wp-scripts lint-js src/*
+        run: wp-scripts lint-js ${{ env.GIT_DIFF }}
