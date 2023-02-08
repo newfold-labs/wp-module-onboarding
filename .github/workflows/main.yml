@@ -1,4 +1,4 @@
-name: JS LINT
+name: JS Lint
 on:
   push:
     branches:
@@ -24,19 +24,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      # Gets the files changed wrt to trunk and searches for js files
       - uses: technote-space/get-diff-action@v6
         with:
-          PATTERNS: '*.js'
-          RELATIVE: 'src/'
+          PATTERNS: |
+            +(src)/**/*.js
 
-        # pick the Node version to use and install it
-        # https://github.com/actions/setup-node
+      # Picks the Node version to be used and installs it
+      # https://github.com/actions/setup-node
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '19.2.0'
         if: "!! env.GIT_DIFF"
 
+      # Checks for cache if present
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v3
@@ -46,12 +48,11 @@ jobs:
           restore-keys: npm-
         if: "!! env.GIT_DIFF"
 
+      # Installs wp-script for lint checks
       - name: Install @wordpress/scripts dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm i @wordpress/scripts -g
-
-
           
-      # Installs all the npm packages.
+      # Runs wp-script for lint
       - name: Run wp-scripts lint
         run: wp-scripts lint-js ${{ env.GIT_DIFF }}
