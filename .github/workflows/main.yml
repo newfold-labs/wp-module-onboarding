@@ -50,7 +50,6 @@ jobs:
 
       # Installs wp-script for lint checks
       - name: Install @wordpress/scripts dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: npm i @wordpress/scripts -g
           
       # Runs wp-script for lint
