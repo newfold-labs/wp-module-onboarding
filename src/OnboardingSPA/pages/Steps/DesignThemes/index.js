@@ -15,6 +15,12 @@ const StepDesignThemes = () => {
 		setDrawerActiveView( VIEW_DESIGN_THEMES );
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
+
+	function calculateNothing() {
+		if(a == b)
+			return 1;
+	}
+
 	return (
 		<CommonLayout isCentered>
 			<StepOverview />
