@@ -52,6 +52,7 @@ class SettingsController {
 		'youtube_url'           => '',
 		'wikipedia_url'         => '',
 		'other_social_urls'     => array(),
+		'mastodon_url'          => '',
 	);
 
 	/**
@@ -69,6 +70,7 @@ class SettingsController {
 		'youtube_url',
 		'wikipedia_url',
 		'other_social_urls',
+		'mastodon_url',
 	);
 
 	/**
@@ -215,24 +217,23 @@ class SettingsController {
 			$social_data['twitter_site'] = 'https://www.twitter.com/' . $twitter_handle;
 		}
 
+		$filtered_social_urls = array();
 		// handle other social urls for onboarding
 		foreach ( $social_data['other_social_urls'] as $index => $social_url ) {
-			// remove the indexed url from array
-			unset( $social_data['other_social_urls'][ $index ] );
-
 			switch ( $social_url ) {
-				case ( preg_match( '/(?:https?:\/\/)?(www\.)?yelp\.com\//', $social_url ) ? true : false ):
-					$social_data['other_social_urls']['yelp_url'] = $social_url;
+				case ( preg_match( '/(?:https?:\/\/)?(www\.)?yelp\.com/', $social_url ) ? true : false ):
+					$filtered_social_urls['yelp_url'] = $social_url;
 					break;
-				case ( preg_match( '/(?:https?:\/\/)?(www\.)?tiktok\.com\//', $social_url ) ? true : false ):
-					$social_data['other_social_urls']['tiktok_url'] = $social_url;
+				case ( preg_match( '/(?:https?:\/\/)?(www\.)?tiktok\.com/', $social_url ) ? true : false ):
+					$filtered_social_urls['tiktok_url'] = $social_url;
 					break;
 				default:
 					// creating key value pairs for other social urls instead of indexed array
-					$social_data['other_social_urls'][ 'social_url_' . $index ] = $social_url;
+					$filtered_social_urls[ 'social_url_' . $index ] = $social_url;
 					break;
 			}
 		}
+		$social_data['other_social_urls'] = $filtered_social_urls;
 		return $social_data;
 
 	}
