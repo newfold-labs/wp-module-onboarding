@@ -24,27 +24,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - uses: technote-space/get-diff-action@v6
+        with:
+          PATTERNS: '*.js'
+          RELATIVE: 'src/'
+
         # pick the Node version to use and install it
         # https://github.com/actions/setup-node
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '19.2.0'
+        if: "!! env.GIT_DIFF"
 
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v3
         with:
-          path: ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+        if: "!! env.GIT_DIFF"
 
       - name: Install @wordpress/scripts dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm i @wordpress/scripts -g
 
-      - uses: technote-space/get-diff-action@v6
-        with:
-          SUFFIX_FILTER: .js
+
           
       # Installs all the npm packages.
       - name: Run wp-scripts lint
