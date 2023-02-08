@@ -8,7 +8,7 @@ import CommonLayout from '../../../components/Layouts/Common';
 import {
 	VIEW_NAV_DESIGN,
 	THEME_STATUS_ACTIVE,
-	THEME_STATUS_NOT_ACTIVE,
+	THEME_STATUS_INIT,
 	SIDEBAR_LEARN_MORE,
 } from '../../../../constants';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
@@ -103,7 +103,7 @@ const StepDesignHomepageMenu = () => {
 	async function getHomepagePatternsData() {
 		const homepagePatternData = await getPatterns( currentStep.patternId );
 		if ( homepagePatternData?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 
 		setHomepagePattern( refactorPatterns( homepagePatternData ) );
