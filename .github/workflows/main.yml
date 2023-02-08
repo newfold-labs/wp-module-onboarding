@@ -23,24 +23,23 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v3
+        
         # pick the Node version to use and install it
         # https://github.com/actions/setup-node
-        # - uses: actions/setup-node@v3
-
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '19.2.0'
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        id: cache
+        uses: actions/cache@v3
         with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
 
-      # Installs all the npm packages.
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
 
       - uses: technote-space/get-diff-action@v6
