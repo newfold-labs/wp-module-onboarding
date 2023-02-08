@@ -155,16 +155,17 @@ class SettingsController {
 						}
 						break;
 					case 'other_social_urls':
+						$filtered_social_urls = array();
 						foreach ( $param_value as $param_key_osu => $param_url ) {
-							// remove the key => value pair and make it a simple indexed array for yoast plugin compatibility
-							unset( $params[ $param_key ][ $param_key_osu ] );
-							$params[ $param_key ][] = \sanitize_text_field( $param_url );
-							if ( ! empty( $param_url ) && ! \wp_http_validate_url( $param_url ) ) {
-								$this->invalid_urls[] = $param_key_osu;
-								unset( $params[ $param_key ][ $param_key_osu ] );
-								continue;
+							if ( ! empty( $param_url ) ) {
+								if ( \wp_http_validate_url( $param_url ) ) {
+									$filtered_social_urls[] = \sanitize_text_field( $param_url );
+								} else {
+									$this->invalid_urls[] = $param_key_osu;
+								}
 							}
 						}
+						$params[ $param_key ] = $filtered_social_urls;
 						break;
 					default:
 						$param[ $param_key ] = \sanitize_text_field( $param_value );
@@ -220,10 +221,10 @@ class SettingsController {
 			unset( $social_data['other_social_urls'][ $index ] );
 
 			switch ( $social_url ) {
-				case ( -1 < stripos( $social_url, 'yelp.com' ) ):
+				case ( preg_match( '/(?:https?:\/\/)?(www\.)?yelp\.com\//', $social_url ) ? true : false ):
 					$social_data['other_social_urls']['yelp_url'] = $social_url;
 					break;
-				case ( -1 < stripos( $social_url, 'tiktok.com' ) ):
+				case ( preg_match( '/(?:https?:\/\/)?(www\.)?tiktok\.com\//', $social_url ) ? true : false ):
 					$social_data['other_social_urls']['tiktok_url'] = $social_url;
 					break;
 				default:
