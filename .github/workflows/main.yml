@@ -38,9 +38,9 @@ jobs:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
 
-      - name: Install dependencies
+      - name: Install @wordpress/scripts dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci --legacy-peer-deps
+        run: npm i @wordpress/scripts -g
 
       - uses: technote-space/get-diff-action@v6
         with:
@@ -48,4 +48,4 @@ jobs:
           
       # Installs all the npm packages.
       - name: Run wp-scripts lint
-        run: wp-scripts lint-js ${{ env.GIT_DIFF }}
+        run: wp-scripts lint-js src/*
