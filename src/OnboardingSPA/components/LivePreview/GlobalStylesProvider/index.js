@@ -2,9 +2,12 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 
 import { store as nfdOnboardingStore } from '../../../store';
-import { THEME_STATUS_NOT_ACTIVE } from '../../../../constants';
 import { getGlobalStyles, setGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
+import {
+	THEME_STATUS_ACTIVE,
+	THEME_STATUS_INIT,
+} from '../../../../constants';
 
 /**
  * Global Style Parent Component
@@ -17,14 +20,18 @@ import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-s
 const GlobalStylesProvider = ( { children } ) => {
 	const [ isLoaded, setIsLoaded ] = useState( false );
 
-	const { currentData, storedPreviewSettings } = useSelect( ( select ) => {
-		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			storedPreviewSettings:
-				select( nfdOnboardingStore ).getPreviewSettings(),
-		};
-	}, [] );
+	const { currentData, storedPreviewSettings, themeStatus } = useSelect(
+		( select ) => {
+			return {
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				storedPreviewSettings:
+					select( nfdOnboardingStore ).getPreviewSettings(),
+				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			};
+		},
+		[]
+	);
 
 	const { updateThemeStatus, updatePreviewSettings } =
 		useDispatch( nfdOnboardingStore );
@@ -36,7 +43,7 @@ const GlobalStylesProvider = ( { children } ) => {
 		else {
 			const globalStyles = await getGlobalStyles();
 			if ( globalStyles?.error ) {
-				return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+				return updateThemeStatus( THEME_STATUS_INIT );
 			}
 			if ( currentData.data.theme.variation ) {
 				selectedGlobalStyle = globalStyles.body.filter(
@@ -62,8 +69,9 @@ const GlobalStylesProvider = ( { children } ) => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded ) getStylesAndPatterns();
-	}, [ isLoaded ] );
+		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
+			getStylesAndPatterns();
+	}, [ isLoaded, themeStatus ] );
 
 	return children;
 };
