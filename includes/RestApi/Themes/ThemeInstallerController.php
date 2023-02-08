@@ -2,11 +2,12 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi\Themes;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Services\ThemeInstaller;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ThemeInstallTaskManager;
 use NewfoldLabs\WP\Module\Onboarding\Tasks\ThemeInstallTask;
-
+/**
+ * Controller defining API's for theme install related functionalities.
+ */
 class ThemeInstallerController extends \WP_REST_Controller {
 	 /**
 	  * The namespace of this controller's route.
@@ -31,8 +32,8 @@ class ThemeInstallerController extends \WP_REST_Controller {
 			$this->rest_base . '/initialize',
 			array(
 				array(
-					'methods'  => \WP_REST_Server::CREATABLE,
-					'callback' => array( $this, 'initialize' ),
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'initialize' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -56,9 +57,9 @@ class ThemeInstallerController extends \WP_REST_Controller {
 			$this->rest_base . '/status',
 			array(
 				array(
-					'methods'  => \WP_REST_Server::READABLE,
-					'callback' => array( $this, 'get_status' ),
-					'args'     => $this->get_status_args(),
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_status' ),
+					'args'                => $this->get_status_args(),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -91,6 +92,11 @@ class ThemeInstallerController extends \WP_REST_Controller {
 		 );
 	}
 
+	/**
+	 * Get the theme status check arguments.
+	 *
+	 * @return array
+	 */
 	public function get_status_args() {
 		return array(
 			'theme'     => array(
@@ -126,7 +132,7 @@ class ThemeInstallerController extends \WP_REST_Controller {
 	 /**
 	  * Install the requested theme via a slug (theme).
 	  *
-	  * @param \WP_REST_Request $request
+	  * @param \WP_REST_Request $request The request object.
 	  *
 	  * @return \WP_REST_Response|\WP_Error
 	  */
@@ -166,6 +172,13 @@ class ThemeInstallerController extends \WP_REST_Controller {
 		 return $theme_install_task->execute();
 	}
 
+	/**
+	 * Returns the status of a given theme slug.
+	 *
+	 * @param \WP_REST_Request $request The request object
+	 *
+	 * @return \WP_REST_Response
+	 */
 	public function get_status( \WP_REST_Request $request ) {
 		$theme     = $request->get_param( 'theme' );
 		$activated = $request->get_param( 'activated' );
@@ -181,7 +194,7 @@ class ThemeInstallerController extends \WP_REST_Controller {
 
 		$position_in_queue = ThemeInstallTaskManager::status( $theme );
 
-		if ( $position_in_queue !== false ) {
+		if ( false !== $position_in_queue ) {
 			return new \WP_REST_Response(
 				array(
 					'status'   => 'installing',
