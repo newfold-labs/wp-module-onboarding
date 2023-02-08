@@ -220,17 +220,14 @@ class SettingsController {
 		$filtered_social_urls = array();
 		// handle other social urls for onboarding
 		foreach ( $social_data['other_social_urls'] as $index => $social_url ) {
-			switch ( $social_url ) {
-				case ( preg_match( '/(?:https?:\/\/)?(www\.)?yelp\.com/', $social_url ) ? true : false ):
+			if ( ! empty( $social_url ) ) {
+				if ( preg_match( '/(?:https?:\/\/)?(www\.)?yelp\.com/', $social_url ) ) {
 					$filtered_social_urls['yelp_url'] = $social_url;
-					break;
-				case ( preg_match( '/(?:https?:\/\/)?(www\.)?tiktok\.com/', $social_url ) ? true : false ):
+				} elseif ( preg_match( '/(?:https?:\/\/)?(www\.)?tiktok\.com/', $social_url ) ) {
 					$filtered_social_urls['tiktok_url'] = $social_url;
-					break;
-				default:
-					// creating key value pairs for other social urls instead of indexed array
+				} else {
 					$filtered_social_urls[ 'social_url_' . $index ] = $social_url;
-					break;
+				}
 			}
 		}
 		$social_data['other_social_urls'] = $filtered_social_urls;
