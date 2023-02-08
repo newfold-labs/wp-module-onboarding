@@ -5,43 +5,43 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
  * List of Plugin Slugs/URLs/Domains
  */
 final class Plugins {
-
-	/*
-	 A value of true indicates that the slug/url/domain has been approved.
-	   A value of null indicates that the slug/url/domain has not been approved
-	   (or) has been temporarily deactivated.
-	*/
-
+	/**
+	 * A value of true indicates that the slug/url/domain has been approved.
+	 * A value of null indicates that the slug/url/domain has not been approved
+	 * (or) has been temporarily deactivated.
+	 *
+	 * @var array
+	 */
 	protected static $wp_slugs = array(
-		'jetpack'                        => array(
+		'jetpack'                           => array(
 			'approved' => true,
 			'path'     => 'jetpack/jetpack.php',
 		),
-		'woocommerce'                    => array(
+		'woocommerce'                       => array(
 			'approved' => true,
 			'path'     => 'woocommerce/woocommerce.php',
 		),
-		'wordpress-seo'                  => array(
+		'wordpress-seo'                     => array(
 			'approved' => true,
 			'path'     => 'wordpress-seo/wp-seo.php',
 		),
-		'wpforms-lite'                   => array(
+		'wpforms-lite'                      => array(
 			'approved' => true,
 			'path'     => 'wpforms-lite/wpforms.php',
 		),
-		'google-analytics-for-wordpress' => array(
+		'google-analytics-for-wordpress'    => array(
 			'approved' => true,
 			'path'     => 'google-analytics-for-wordpress/googleanalytics.php',
 		),
-		'optinmonster'                   => array(
+		'optinmonster'                      => array(
 			'approved' => true,
 			'path'     => 'optinmonster/optin-monster-wp-api.php',
 		),
-		'yith-woocommerce-ajax-search'   => array(
+		'yith-woocommerce-ajax-search'      => array(
 			'approved' => true,
 			'path'     => 'yith-woocommerce-ajax-search/init.php',
 		),
-		'creative-mail-by-constant-contact'   => array(
+		'creative-mail-by-constant-contact' => array(
 			'approved' => true,
 			'path'     => 'creative-mail-by-constant-contact/creative-mail-plugin.php',
 		),
@@ -100,18 +100,19 @@ final class Plugins {
 		),
 	);
 
-	 /**
-	  * @var array Initial plugins to be installed classified based on the hosting plan.
-	  *
-	  * Key 'default' contains a list of default plugins to be installed irrespective of the plan.
-	  * Key <flow> contains a Key 'default' and a list of Key <subtype>'s.
-	  * Key <flow> => 'default' contains a list of default plugin installs for <flow>.
-	  * Key <flow> => <subtype> contains a list of plugins to be installed for a particular <subtype>.
-	  *
-	  * The final queue of Plugins to be installed makes use of a max heap and hence the greater the number the earlier
-	  * a Plugin will be placed for install in the queue. This will also allow us to
-	  * prevent entering negative numbers when queueing a plugin for earlier installs.
-	  */
+	/**
+	 * Initial plugins to be installed classified based on the hosting plan.
+	 * Key 'default' contains a list of default plugins to be installed irrespective of the plan.
+	 * Key <flow> contains a Key 'default' and a list of Key <subtype>'s.
+	 * Key <flow> => 'default' contains a list of default plugin installs for <flow>.
+	 * Key <flow> => <subtype> contains a list of plugins to be installed for a particular <subtype>.
+	 *
+	 * The final queue of Plugins to be installed makes use of a max heap and hence the greater the number the earlier
+	 * a Plugin will be placed for install in the queue. This will also allow us to
+	 * prevent entering negative numbers when queueing a plugin for earlier installs.
+	 *
+	 * @var array
+	 */
 	protected static $init_list = array(
 		'default'   => array(
 			array(
@@ -146,12 +147,14 @@ final class Plugins {
 			),
 		),
 		'ecommerce' => array(
-			'default'    => array(
+			'default'     => array(
 				array(
 					'slug'     => 'woocommerce',
 					'activate' => true,
 					'priority' => 260,
 				),
+			),
+			'wc_standard' => array(
 				array(
 					'slug'     => 'nfd_slug_yith_woocommerce_customize_myaccount_page',
 					'activate' => true,
@@ -178,27 +181,64 @@ final class Plugins {
 					'priority' => 258,
 				),
 			),
-			'wc_premium' => array(
+			'wc_premium'  => array(
+				array(
+					'slug'     => 'nfd_slug_yith_woocommerce_customize_myaccount_page',
+					'activate' => true,
+					'priority' => 257,
+				),
+				array(
+					'slug'     => 'nfd_slug_yith_woocommerce_gift_cards',
+					'activate' => true,
+					'priority' => 100,
+				),
+				array(
+					'slug'     => 'nfd_slug_yith_woocommerce_wishlist',
+					'activate' => true,
+					'priority' => 80,
+				),
+				array(
+					'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
+					'activate' => true,
+					'priority' => 259,
+				),
+				array(
+					'slug'     => 'nfd_slug_yith_paypal_payments_for_woocommerce',
+					'activate' => true,
+					'priority' => 258,
+				),
 				array(
 					'slug'     => 'nfd_slug_ecomdash_wordpress_plugin',
 					'activate' => true,
 					'priority' => 20,
 				),
 			),
+			'wc_priority' => array(),
 		),
 	);
 
-	 // [TODO] Think about deprecating this approach and move to nfd_slugs for url based installs.
+	// [TODO] Think about deprecating this approach and move to nfd_slugs for url based installs.
+	/**
+	 * Contains a whitelist of zip url's.
+	 *
+	 * @var array
+	 */
 	protected static $urls = array(
 		'https://downloads.wordpress.org/plugin/google-analytics-for-wordpress.8.5.3.zip' => true,
 	);
-
+	/**
+	 * Contains a list of approved domains for zip based installs.
+	 *
+	 * @var array
+	 */
 	protected static $domains = array(
 		'downloads.wordpress.org' => true,
 		'nonapproveddomain.com'   => null,
 	);
 
 	/**
+	 * Returns a list of whitelisted WordPress Plugin slugs.
+	 *
 	 * @return array
 	 */
 	public static function get_wp_slugs() {
@@ -206,6 +246,8 @@ final class Plugins {
 	}
 
 	/**
+	 * Returns a list of whitelisted Plugin URL's.
+	 *
 	 * @return array
 	 */
 	public static function get_urls() {
@@ -213,6 +255,8 @@ final class Plugins {
 	}
 
 	/**
+	 * Returns a list of whitelisted Plugin URL domains.
+	 *
 	 * @return array
 	 */
 	public static function get_domains() {
@@ -240,7 +284,7 @@ final class Plugins {
 	 */
 	public static function get_squashed() {
 		return array_merge(
-			array_filter( self::$wp_slugs, array( __CLASS__, 'check_approved' ) ) ,
+			array_filter( self::$wp_slugs, array( __CLASS__, 'check_approved' ) ),
 			array_filter( self::$nfd_slugs, array( __CLASS__, 'check_approved' ) )
 		);
 	}
@@ -260,14 +304,13 @@ final class Plugins {
 	}
 
 	/**
-	 * @param array $value
+	 * Checks if a Plugin slug has been approved.
 	 *
-	 * Checks if $value has been approved.
-	 *
+	 * @param array $value The Plugin slug that will be checked.
 	 * @return boolean
 	 */
 	private static function check_approved( $value ) {
-		 return $value['approved'] === true;
+		 return true === $value['approved'];
 	}
 
 	/**
@@ -284,7 +327,7 @@ final class Plugins {
 			if ( isset( self::$init_list[ $plan_flow ]['default'] ) ) {
 				  $init_list = array_merge( $init_list, self::$init_list[ $plan_flow ]['default'] );
 			}
-			if ( $plan_subtype !== 'default' && isset( self::$init_list[ $plan_flow ][ $plan_subtype ] ) ) {
+			if ( 'default' !== $plan_subtype && isset( self::$init_list[ $plan_flow ][ $plan_subtype ] ) ) {
 				   $init_list = array_merge( $init_list, self::$init_list[ $plan_flow ][ $plan_subtype ] );
 			}
 		}

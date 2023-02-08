@@ -1,6 +1,8 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
+use NewfoldLabs\WP\Module\Onboarding\Services\PluginInstaller;
+
 /**
  * Contains Onboarding Flow information.
  */
@@ -185,6 +187,18 @@ final class Flows {
 	}
 
 	/**
+	 * Checks if an install is of type commerce priority.
+	 *
+	 * @return boolean
+	 */
+	public static function is_commerce_priority() {
+		if ( self::get_flow_from_plugins() === 'ecommerce' ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Get the type of flow from the flow query param or the flow preset option.
 	 *
 	 * @return string|boolean
@@ -205,6 +219,18 @@ final class Flows {
 			return $current_flow_type;
 		}
 
+		return false;
+	}
+
+	/**
+	 * Gets the flow based on the plugins installed/activated.
+	 *
+	 * @return string|boolean
+	 */
+	public static function get_flow_from_plugins() {
+		if ( PluginInstaller::exists( 'woocommerce', true ) ) {
+			return 'ecommerce';
+		}
 		return false;
 	}
 
