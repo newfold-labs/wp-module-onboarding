@@ -13,7 +13,7 @@
 			height: 100%;
 			position: absolute;
 			border-radius: 50px;
-			background: linear-gradient(45deg, #b6b5ff, #ff9797);
+			background: linear-gradient(45deg, var(--nfd-onboarding-loader-start), var(--nfd-onboarding-loader-end));
 			left: -100%;
 		}
 	}
