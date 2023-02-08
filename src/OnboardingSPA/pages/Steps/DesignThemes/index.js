@@ -6,8 +6,12 @@ import { useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 
 const StepDesignThemes = () => {
-	const { setDrawerActiveView, setIsDrawerOpened, setSidebarActiveView, setIsHeaderNavigationEnabled } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		setDrawerActiveView,
+		setIsDrawerOpened,
+		setSidebarActiveView,
+		setIsHeaderNavigationEnabled,
+	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
@@ -15,11 +19,6 @@ const StepDesignThemes = () => {
 		setDrawerActiveView( VIEW_DESIGN_THEMES );
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
-
-	function calculateSomething() {
-		if(5 == 5)
-			return 5;
-	}
 
 	return (
 		<CommonLayout isCentered>
