@@ -12,7 +12,8 @@ import {
 } from '../../../components/LivePreview';
 import {
 	SIDEBAR_LEARN_MORE,
-	THEME_STATUS_NOT_ACTIVE,
+	THEME_STATUS_ACTIVE,
+	THEME_STATUS_INIT,
 	VIEW_DESIGN_COLORS,
 } from '../../../../constants';
 
@@ -21,11 +22,12 @@ const StepDesignColors = () => {
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
 
-	const { currentStep } = useSelect( ( select ) => {
+	const { currentStep, themeStatus } = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
 			),
+			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 		};
 	}, [] );
 
@@ -40,15 +42,16 @@ const StepDesignColors = () => {
 	const getStylesAndPatterns = async () => {
 		const pattern = await getPatterns( currentStep.patternId, true );
 		if ( pattern?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		setPattern( pattern?.body );
 		setIsLoaded( true );
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded ) getStylesAndPatterns();
-	}, [ isLoaded ] );
+		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
+			getStylesAndPatterns();
+	}, [ isLoaded, themeStatus ] );
 
 	return (
 		<DesignStateHandler>
@@ -61,22 +64,20 @@ const StepDesignColors = () => {
 							<span className="theme-colors-preview__title-bar__browser__dot"></span>
 						</div>
 					</div>
-					<div className="theme-colors-preview__live-preview-container">
-						{ ! pattern && (
-							<LivePreview
-								blockGrammer={ '' }
-								styling={ 'custom' }
-								viewportWidth={ 1300 }
-							/>
-						) }
-						{ pattern && (
-							<LivePreview
-								blockGrammer={ pattern }
-								styling={ 'custom' }
-								viewportWidth={ 1300 }
-							/>
-						) }
-					</div>
+					{ ! pattern && (
+						<LivePreview
+							blockGrammer={ '' }
+							styling={ 'large' }
+							viewportWidth={ 1300 }
+						/>
+					) }
+					{ pattern && (
+						<LivePreview
+							blockGrammer={ pattern }
+							styling={ 'large' }
+							viewportWidth={ 1300 }
+						/>
+					) }
 				</CommonLayout>
 			</GlobalStylesProvider>
 		</DesignStateHandler>

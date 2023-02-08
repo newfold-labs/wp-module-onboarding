@@ -109,7 +109,10 @@ const CheckboxItem = ( {
 				</div>
 			</div>
 			{ showDescription && (
-				<Animate type={ 'dropdown' }>
+				<Animate
+					className={ ` ${ className }__dropdown ` }
+					type={ 'dropdown' }
+				>
 					<div className={ `${ className }__desc` }>{ desc }</div>
 				</Animate>
 			) }

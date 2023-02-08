@@ -68,8 +68,28 @@ final class Data {
 		}
 
 		$current_flow = Flows::get_flow_from_params();
+		if ( false !== $current_flow ) {
+			return array(
+				'flow'    => $current_flow,
+				'subtype' => Flows::is_commerce_priority() ? 'wc_priority' : null,
+				'type'    => null,
+			);
+		}
+
+		$current_flow = Flows::get_flow_from_plugins();
+		if ( false !== $current_flow ) {
+			switch ( $current_flow ) {
+				case 'ecommerce':
+					return array(
+						'flow'    => 'ecommerce',
+						'subtype' => 'wc_priority',
+						'type'    => null,
+					);
+			}
+		}
+
 		return array(
-			'flow'    => ( false !== $current_flow ) ? $current_flow : Flows::get_default_flow(),
+			'flow'    => Flows::get_default_flow(),
 			'subtype' => null,
 			'type'    => null,
 		);
@@ -83,6 +103,11 @@ final class Data {
 	public static function current_flow() {
 
 		$current_flow = Flows::get_flow_from_params();
+		if ( false !== $current_flow ) {
+			return $current_flow;
+		}
+
+		$current_flow = Flows::get_flow_from_plugins();
 		if ( false !== $current_flow ) {
 			return $current_flow;
 		}

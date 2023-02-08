@@ -7,6 +7,10 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import { GlobalStylesProvider } from '../../LivePreview';
+import {
+	THEME_STATUS_ACTIVE,
+	THEME_STATUS_INIT,
+} from '../../../../constants';
 import Animate from '../../Animate';
 
 const DesignColors = () => {
@@ -21,17 +25,24 @@ const DesignColors = () => {
 	const [ colorPalettes, setColorPalettes ] = useState();
 	const [ colorPickerCalledBy, setColorPickerCalledBy ] = useState( '' );
 
-	const { storedPreviewSettings, currentData } = useSelect( ( select ) => {
-		return {
-			storedPreviewSettings:
-				select( nfdOnboardingStore ).getPreviewSettings(),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-		};
-	}, [] );
+	const { storedPreviewSettings, currentData, themeStatus } = useSelect(
+		( select ) => {
+			return {
+				storedPreviewSettings:
+					select( nfdOnboardingStore ).getPreviewSettings(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			};
+		},
+		[]
+	);
 
-	const { updatePreviewSettings, setCurrentOnboardingData } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		updatePreviewSettings,
+		setCurrentOnboardingData,
+		updateThemeStatus,
+	} = useDispatch( nfdOnboardingStore );
 
 	function stateToLocal( selectedColors ) {
 		if ( selectedColors ) {
@@ -187,8 +198,11 @@ const DesignColors = () => {
 
 	const getColorStylesAndPatterns = async () => {
 		const colorPalettes = await getThemeColors();
-		setColorPalettes(colorPalettes?.body['color-palettes'] );
-		setCustomColorsMap(colorPalettes?.body['custom-colors'] );
+		if ( colorPalettes?.error ) {
+			return updateThemeStatus( THEME_STATUS_INIT );
+		}
+		setColorPalettes(colorPalettes?.body['color-palettes']);
+		setCustomColorsMap(colorPalettes?.body['custom-colors']);
 		let selectedColors;
 		let selectedColorsLocal;
 		if ( ! currentData?.data?.palette?.slug === '' ) {
@@ -215,8 +229,9 @@ const DesignColors = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded ) getColorStylesAndPatterns();
-	}, [ isLoaded ] );
+		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
+			getColorStylesAndPatterns();
+	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = ( colorStyle ) => {
 		const customColorsTemp = customColors;
@@ -277,9 +292,9 @@ const DesignColors = () => {
 			paletteRenderedList.push(
 				<div
 					key={ colorStyle }
-					className={ `color-palette ${
+					className={ `color-palette drawer-palette--button ${
 						colorStyle == selectedColors?.slug
-							? 'color-palette-selected'
+							? 'color-palette-selected drawer-palette--button--selected'
 							: ''
 					} ` }
 					onClick={ ( e ) => handleClick( colorStyle ) }
@@ -304,7 +319,7 @@ const DesignColors = () => {
 							} }
 						/>
 					</div>
-					<div className="color-palette__name">
+					<div className="color-palette__name drawer-palette--button__text">
 						{ colorStyle?.charAt( 0 ).toUpperCase() +
 							colorStyle?.slice( 1 ) }
 					</div>
