@@ -14,7 +14,7 @@ final class Colors {
 	 */
 	protected static $theme_colors = array(
 		'yith-wonder' => array(
-			'color-palettes' => array(
+			'tailored' => array(
 				'calm'         => array(
 					'header-background'    => '#1A4733',
 					'header-foreground'    => '#FFFFFF',
@@ -137,7 +137,7 @@ final class Colors {
 					'base'                 => '#FFFFFF',
 				),
 			),
-			'custom-colors'  => array(
+			'custom-picker-grouping'  => array(
 				'base'     => array(
 					'header-foreground',
 					'header-titles',

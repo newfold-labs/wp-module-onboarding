@@ -145,9 +145,8 @@ const DesignColors = () => {
 	}
 
 	function findInCustomColors(slugName, colorPickerCalledBy) {
-		const selectedGlobalStyle = storedPreviewSettings;
 		const selectedThemeColorPalette =
-			selectedGlobalStyle?.settings?.color?.palette;
+			storedPreviewSettings?.settings?.color?.palette;
 		const res = selectedThemeColorPalette.findIndex(({ slug }) => slug === slugName );
 		if(res ===  -1)
 			return selectedThemeColorPalette.findIndex(({ slug }) => slug === colorPickerCalledBy);
@@ -201,8 +200,8 @@ const DesignColors = () => {
 		if ( colorPalettes?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
-		setColorPalettes(colorPalettes?.body['color-palettes']);
-		setCustomColorsMap(colorPalettes?.body['custom-colors']);
+		setColorPalettes(colorPalettes?.body['tailored']);
+		setCustomColorsMap(colorPalettes?.body['custom-picker-grouping']);
 		let selectedColors;
 		let selectedColorsLocal;
 		if ( ! currentData?.data?.palette?.slug === '' ) {
