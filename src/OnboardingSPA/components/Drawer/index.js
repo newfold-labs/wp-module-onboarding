@@ -8,16 +8,17 @@ import { store as nfdOnboardingStore } from '../../store';
 
 /**
  * Off-canvas drawer to left of viewport.
+ *
  * @param {*} param0
- * @returns
+ * @return
  */
-const Drawer = ({ isDefaultOpen = false }) => {
-	const isDesktopViewport = useViewportMatch('medium');
-	const { setIsDrawerOpened } = useDispatch(nfdOnboardingStore);
+const Drawer = ( { isDefaultOpen = false } ) => {
+	const isDesktopViewport = useViewportMatch( 'medium' );
+	const { setIsDrawerOpened } = useDispatch( nfdOnboardingStore );
 
-	useEffect(() => {
-		setIsDrawerOpened(isDefaultOpen && isDesktopViewport);
-	}, [isDefaultOpen, isDesktopViewport, setIsDrawerOpened]);
+	useEffect( () => {
+		setIsDrawerOpened( isDefaultOpen && isDesktopViewport );
+	}, [ isDefaultOpen, isDesktopViewport, setIsDrawerOpened ] );
 
 	return (
 		<Fragment>
@@ -27,4 +28,4 @@ const Drawer = ({ isDefaultOpen = false }) => {
 	);
 };
 
-export default memo(Drawer);
+export default memo( Drawer );

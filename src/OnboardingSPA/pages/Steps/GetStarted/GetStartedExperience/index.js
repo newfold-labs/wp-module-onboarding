@@ -58,11 +58,11 @@ const GetStartedExperience = () => {
 		}
 	}, [ isLoaded ] );
 
-	const saveData = (value) => {
-		setWpComfortLevel(value);
+	const saveData = ( value ) => {
+		setWpComfortLevel( value );
 		const currentDataCopy = currentData;
 		currentDataCopy.data.wpComfortLevel = value || '0';
-		setCurrentOnboardingData(currentDataCopy);
+		setCurrentOnboardingData( currentDataCopy );
 	};
 
 	return (
@@ -100,7 +100,7 @@ const GetStartedExperience = () => {
 									),
 								};
 							} ) }
-							onChange={ (value) => saveData(value) }
+							onChange={ ( value ) => saveData( value ) }
 						/>
 					</Animate>
 					<NavCardButton

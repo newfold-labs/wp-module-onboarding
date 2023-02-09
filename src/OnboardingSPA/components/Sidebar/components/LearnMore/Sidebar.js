@@ -57,4 +57,4 @@ const LearnMoreSidebar = () => {
 	);
 };
 
-export default memo(LearnMoreSidebar);
+export default memo( LearnMoreSidebar );

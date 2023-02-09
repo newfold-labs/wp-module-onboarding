@@ -4,10 +4,7 @@ import { useState, useEffect } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, setGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import {
-	THEME_STATUS_ACTIVE,
-	THEME_STATUS_INIT,
-} from '../../../../constants';
+import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 
 /**
  * Global Style Parent Component
