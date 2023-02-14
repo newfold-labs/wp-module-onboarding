@@ -18,7 +18,7 @@ final class Colors {
 				'calm'         => array(
 					'header-background'    => '#1A4733',
 					'header-foreground'    => '#FFFFFF',
-					'header-title'         => '#FFFFFF',
+					'header-titles'        => '#FFFFFF',
 					'secondary-background' => '#1A4733',
 					'secondary-foreground' => '#FFF',
 					'tertiary'             => '#C7DBFF',
