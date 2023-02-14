@@ -31,6 +31,7 @@ const DesignHeaderMenu = () => {
 
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ patterns, setPatterns ] = useState();
+	const [ pagesRender, setPagesRender ] = useState( false );
 	const [ headerMenuPreviewData, setHeaderMenuPreviewData ] = useState();
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
 	const location = useLocation();
@@ -39,6 +40,12 @@ const DesignHeaderMenu = () => {
 	const { getEntityRecords, getEditedEntityRecord } = useSelect( ( select ) => {
 		return select( coreStore );
 	}, [] );
+
+	const pages = useSelect(
+		select =>
+			select( coreStore ).getEntityRecords( 'postType', 'page' ),
+		[]
+	);
 
 	const { currentStep, currentData, themeStatus } = useSelect( ( select ) => {
 		return {
@@ -52,13 +59,6 @@ const DesignHeaderMenu = () => {
 	}, [] );
 
 	const { setCurrentOnboardingData, updateThemeStatus, setHeaderMenuData } = useDispatch( nfdOnboardingStore );
-
-	const filteredPageList = () => {
-		return filter(
-			getEntityRecords( 'postType', 'page' ),
-			( page, idx ) => idx < 6
-		);
-	};
 
 	const getPatternsData = async () => {
 
@@ -103,24 +103,36 @@ const DesignHeaderMenu = () => {
 	};
 
 	useEffect( () => {
+		console.log(pages);
+		if( pages != null) {
+			pageList = filteredPageList( pages );
+			updatePageEntityData( pageList );
+			setPagesRender( true );
+		}
+	}, [ pages ] );
+
+	useEffect( () => {
 		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE ) {
 			getPatternsData();
 		}
 	}, [ isLoaded, themeStatus ] );
 
-	useEffect( () => {
-		pageList = filteredPageList();
-		updatePageEntityData();
-		getEditedEntityRecord( 'postType', 'page' );
-	}, [] );
-
-	const updatePageEntityData = ( ) => {
-		pageList.map( ( page, idx ) => {
+	const updatePageEntityData = ( pages ) => {
+		pages?.map( ( page, idx ) => {
+			console.log( page.id + ' = ' + JSON.stringify(page.title) );
 			editEntityRecord( 'postType', 'page',
 				page.id,
 				{ title: defaultMenuItems[idx] }
 			);
+			getEditedEntityRecord( 'postType', 'page', page.id);
 		});
+	};
+
+	const filteredPageList = ( pages ) => {
+		return filter(
+			pages,
+			( page, idx ) => idx < 6
+		);
 	};
 
 	const replaceNavigationGrammar = ( pageGrammar, headerSlug ) => {
@@ -131,24 +143,22 @@ const DesignHeaderMenu = () => {
 				menuGrammarDummy = '<!-- wp:navigation-link {"isTopLevelLink":true, "label":"' + item + '", "title":"' + item + '", "url":"' + wpSiteUrl + '"} /-->';
 				pageGrammar = pageGrammar.replace( menuNavigationGrammar, menuGrammarDummy);
 			});
-		} else {
-			let menuNavigationRegex = /<!-- wp:navigation (.*?)(\/)-->/ig,
-				menuNavigationGrammar = "<!-- wp:navigation $1-->",
-				menuDummyLinks = '';
-			defaultMenuItems.map( ( item ) => {
-				menuDummyLinks = '<!-- wp:navigation-link {"isTopLevelLink":true, "label":"' + item + '", "title":"' + item + '", "url":"' + wpSiteUrl + '"} /-->';
-				menuNavigationGrammar += menuDummyLinks;
-			});
-			menuNavigationGrammar += '<!-- /wp:navigation -->';
-			pageGrammar = pageGrammar.replace( menuNavigationRegex, menuNavigationGrammar);
 		}
+		//  else {
+		// 	let menuNavigationRegex = /<!-- wp:navigation (.*?)(\/)-->/ig,
+		// 		menuNavigationGrammar = "<!-- wp:navigation $1-->",
+		// 		menuDummyLinks = '';
+		// 	defaultMenuItems.map( ( item ) => {
+		// 		menuDummyLinks = '<!-- wp:navigation-link {"isTopLevelLink":true, "label":"' + item + '", "title":"' + item + '", "url":"' + wpSiteUrl + '"} /-->';
+		// 		menuNavigationGrammar += menuDummyLinks;
+		// 	});
+		// 	menuNavigationGrammar += '<!-- /wp:navigation -->';
+		// 	pageGrammar = pageGrammar.replace( menuNavigationRegex, menuNavigationGrammar);
+		// }
 		return pageGrammar;
 	}
 
 	const handleClick = ( idx ) => {
-
-		pageList = filteredPageList();
-		updatePageEntityData();
 
 		if ( document.getElementsByClassName( 'nfd-onboard-content' ) ) {
 			document.getElementsByClassName( 'nfd-onboard-content' )[0]
@@ -197,7 +207,7 @@ const DesignHeaderMenu = () => {
 		<GlobalStylesProvider>
 			<div className="theme-header-menu-preview--drawer">
 				<div className="theme-header-menu-preview--drawer__list">
-					{ buildPreviews() }
+					{ pagesRender && buildPreviews() }
 					{/* { <LivePreviewSkeleton 
 						className={ 'theme-styles-preview--drawer__list__item' }
 						watch={patterns}
