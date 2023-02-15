@@ -364,15 +364,15 @@ const DesignColors = () => {
 	function buildCustomPalette() {
 		const defaultColor = '#fff';
 		const primaryColorTemp =
-			customColors && customColors?.primary != ''
+			customColors && customColors?.primary !== ''
 				? customColors?.primary
 				: selectedColorsLocal?.primary ?? defaultColor;
 		const secondaryColorTemp =
-			customColors && customColors?.secondary != ''
+			customColors && customColors?.secondary !== ''
 				? customColors?.secondary
 				: selectedColorsLocal?.secondary ?? defaultColor;
 		const tertiaryColorTemp =
-			customColors && customColors?.tertiary != ''
+			customColors && customColors?.tertiary !== ''
 				? customColors?.tertiary
 				: selectedColorsLocal?.tertiary ?? defaultColor;
 
@@ -513,13 +513,11 @@ const DesignColors = () => {
 	}
 
 	return (
-		<GlobalStylesProvider>
-			<div className="theme-colors--drawer">
-				<h2>{ __( 'Color Palettes', 'wp-module-onboarding' ) }</h2>
-				{ colorPalettes && buildPalettes() }
-				{ colorPalettes && buildCustomPalette() }
-			</div>
-		</GlobalStylesProvider>
+		<div className="theme-colors--drawer">
+			<h2>{ __( 'Color Palettes', 'wp-module-onboarding' ) }</h2>
+			{ colorPalettes && buildPalettes() }
+			{ colorPalettes && buildCustomPalette() }
+		</div>
 	);
 };
 
