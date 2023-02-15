@@ -1,4 +1,4 @@
-name: JS Lint
+name: React Lint Check
 on:
   push:
     branches:
@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   phpcs:
-    name: Run WordPress JS Lint
+    name: Run WordPress React Lint Checks
     runs-on: ubuntu-latest
     steps:
 
