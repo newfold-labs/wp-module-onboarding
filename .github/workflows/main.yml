@@ -57,6 +57,7 @@ jobs:
       # Runs wp-script for linting js
       - name: Run wp-scripts lint-js
         run: wp-scripts lint-js ${{ env.GIT_DIFF }}
+        if: "!! env.GIT_DIFF"
 
       # Gets the files changed wrt to trunk and searches for css files
       - uses: technote-space/get-diff-action@v6
@@ -67,3 +68,4 @@ jobs:
       # Runs wp-script for linting scss
       - name: Run wp-scripts lint-style
         run: wp-scripts lint-style ${{ env.GIT_DIFF }}
+        if: "!! env.GIT_DIFF"
