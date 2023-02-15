@@ -7,10 +7,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import { GlobalStylesProvider } from '../../LivePreview';
-import {
-	THEME_STATUS_ACTIVE,
-	THEME_STATUS_INIT,
-} from '../../../../constants';
+import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 import Animate from '../../Animate';
 
 const DesignColors = () => {
@@ -109,8 +106,8 @@ const DesignColors = () => {
 						const slug = selectedThemeColorPalette[ idx ]?.slug;
 						if (
 							isCustomStyle &&
-							selectedColorsLocalTemp?.[ slug ] != '' && 
-							selectedColorsLocalTemp?.[slug] != undefined
+							selectedColorsLocalTemp?.[ slug ] != '' &&
+							selectedColorsLocalTemp?.[ slug ] != undefined
 						)
 							selectedThemeColorPalette[ idx ].color =
 								selectedColorsLocalTemp[ slug ];
@@ -129,6 +126,23 @@ const DesignColors = () => {
 							selectedThemeColorPalette[ idx ].color =
 								colorPalettesTemp[ colorStyle ][ slug ];
 						}
+
+						if ( customColorsMap ) {
+							const colorVariant = customColorsMap[ slug ];
+							if ( colorVariant ) {
+								colorVariant.forEach( ( variant ) => {
+									if (
+										customColors &&
+										customColors[ slug ] !== undefined
+									) {
+										selectedThemeColorPalette[
+											findInCustomColors( variant, slug )
+										].color = customColors[ slug ];
+									}
+								} );
+							}
+						}
+
 						break;
 				}
 			}
@@ -146,12 +160,16 @@ const DesignColors = () => {
 		}
 	}
 
-	function findInCustomColors(slugName, colorPickerCalledBy) {
+	function findInCustomColors( slugName, colorPickerCalledBy ) {
 		const selectedThemeColorPalette =
 			storedPreviewSettings?.settings?.color?.palette;
-		const res = selectedThemeColorPalette.findIndex(({ slug }) => slug === slugName );
-		if(res ===  -1)
-			return selectedThemeColorPalette.findIndex(({ slug }) => slug === colorPickerCalledBy);
+		const res = selectedThemeColorPalette.findIndex(
+			( { slug } ) => slug === slugName
+		);
+		if ( res === -1 )
+			return selectedThemeColorPalette.findIndex(
+				( { slug } ) => slug === colorPickerCalledBy
+			);
 		return res;
 	}
 
@@ -162,27 +180,31 @@ const DesignColors = () => {
 
 		if ( selectedThemeColorPalette ) {
 			for ( let idx = 0; idx < selectedThemeColorPalette.length; idx++ ) {
-				const slug = selectedThemeColorPalette[idx]?.slug;
+				const slug = selectedThemeColorPalette[ idx ]?.slug;
 				if (
-					colorPickerCalledBy === slug && customColors &&
-					customColors[slug] !== undefined
+					colorPickerCalledBy === slug &&
+					customColors &&
+					customColors[ slug ] !== undefined
 				)
-					selectedThemeColorPalette[idx].color =
-						customColors[slug];
+					selectedThemeColorPalette[ idx ].color =
+						customColors[ slug ];
 			}
-			if(customColorsMap)
-			{
-				const colorVariant = customColorsMap[colorPickerCalledBy];
+			if ( customColorsMap ) {
+				const colorVariant = customColorsMap[ colorPickerCalledBy ];
 				if ( colorVariant ) {
-					colorVariant.forEach(( variant ) => {
+					colorVariant.forEach( ( variant ) => {
 						if (
 							customColors &&
-							customColors[colorPickerCalledBy] !== undefined
+							customColors[ colorPickerCalledBy ] !== undefined
 						) {
-							selectedThemeColorPalette[findInCustomColors(variant, colorPickerCalledBy)].color =
-								customColors[colorPickerCalledBy];
+							selectedThemeColorPalette[
+								findInCustomColors(
+									variant,
+									colorPickerCalledBy
+								)
+							].color = customColors[ colorPickerCalledBy ];
 						}
-					})
+					} );
 				}
 			}
 
@@ -202,8 +224,8 @@ const DesignColors = () => {
 		if ( colorPalettes?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
-		setColorPalettes(colorPalettes?.body['tailored']);
-		setCustomColorsMap(colorPalettes?.body['custom-picker-grouping']);
+		setColorPalettes( colorPalettes?.body.tailored );
+		setCustomColorsMap( colorPalettes?.body[ 'custom-picker-grouping' ] );
 		let selectedColors;
 		let selectedColorsLocal;
 		if ( ! currentData?.data?.palette?.slug === '' ) {
@@ -234,7 +256,10 @@ const DesignColors = () => {
 			getColorStylesAndPatterns();
 		if ( isCustomColorActive() ) {
 			setIsAccordionClosed( false );
-			customColorsResetRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+			customColorsResetRef.current.scrollIntoView( {
+				behavior: 'smooth',
+				block: 'end',
+			} );
 		}
 	}, [ isLoaded, themeStatus ] );
 
@@ -267,7 +292,7 @@ const DesignColors = () => {
 	};
 
 	async function resetColors() {
-		const globalStyles = await getGlobalStyles(true);
+		const globalStyles = await getGlobalStyles( true );
 		let selectedGlobalStyle;
 		if ( currentData?.data?.theme?.variation ) {
 			selectedGlobalStyle = globalStyles.body.filter(
@@ -336,9 +361,8 @@ const DesignColors = () => {
 	}
 
 	function isCustomColorActive() {
-		for (const custom in customColors)
-			if(customColors[custom] != '')
-				return true;
+		for ( const custom in customColors )
+			if ( customColors[ custom ] != '' ) return true;
 
 		return false;
 	}
@@ -466,8 +490,12 @@ const DesignColors = () => {
 					</div>
 				</Animate>
 				{ isCustomColorActive() && (
-					<Animate type={'fade-in'} duration="300ms">
-						<div ref={ customColorsResetRef } className='theme-colors--drawer--reset' onClick={resetColors}>
+					<Animate type={ 'fade-in' } duration="300ms">
+						<div
+							ref={ customColorsResetRef }
+							className="theme-colors--drawer--reset"
+							onClick={ resetColors }
+						>
 							<div>Reset</div>
 						</div>
 					</Animate>
