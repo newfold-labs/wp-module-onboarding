@@ -6,11 +6,7 @@ import { Popover, ColorPicker } from '@wordpress/components';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import { GlobalStylesProvider } from '../../LivePreview';
-import {
-	THEME_STATUS_ACTIVE,
-	THEME_STATUS_INIT,
-} from '../../../../constants';
+import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 import Animate from '../../Animate';
 
 const DesignColors = () => {
@@ -107,7 +103,7 @@ const DesignColors = () => {
 						const slug = selectedThemeColorPalette[ idx ]?.slug;
 						if (
 							isCustomStyle &&
-							selectedColorsLocalTemp?.[ slug ] != ''
+							selectedColorsLocalTemp?.[ slug ] !== ''
 						)
 							selectedThemeColorPalette[ idx ].color =
 								selectedColorsLocalTemp[ slug ];
@@ -153,7 +149,7 @@ const DesignColors = () => {
 				switch ( selectedThemeColorPalette[ idx ]?.slug ) {
 					case 'base':
 						if (
-							colorPickerCalledBy == 'base' &&
+							colorPickerCalledBy === 'base' &&
 							customColors?.base
 						)
 							selectedThemeColorPalette[ idx ].color =
@@ -161,7 +157,7 @@ const DesignColors = () => {
 						break;
 					case 'primary':
 						if (
-							colorPickerCalledBy == 'primary' &&
+							colorPickerCalledBy === 'primary' &&
 							customColors?.primary
 						)
 							selectedThemeColorPalette[ idx ].color =
@@ -169,7 +165,7 @@ const DesignColors = () => {
 						break;
 					case 'secondary':
 						if (
-							colorPickerCalledBy == 'secondary' &&
+							colorPickerCalledBy === 'secondary' &&
 							customColors?.secondary
 						)
 							selectedThemeColorPalette[ idx ].color =
@@ -177,7 +173,7 @@ const DesignColors = () => {
 						break;
 					case 'tertiary':
 						if (
-							colorPickerCalledBy == 'tertiary' &&
+							colorPickerCalledBy === 'tertiary' &&
 							customColors?.tertiary
 						)
 							selectedThemeColorPalette[ idx ].color =
@@ -332,15 +328,15 @@ const DesignColors = () => {
 
 	function buildCustomPalette() {
 		const primaryColorTemp =
-			customColors && customColors?.primary != ''
+			customColors && customColors?.primary !== ''
 				? customColors?.primary
 				: selectedColorsLocal?.primary ?? '#fff';
 		const secondaryColorTemp =
-			customColors && customColors?.secondary != ''
+			customColors && customColors?.secondary !== ''
 				? customColors?.secondary
 				: selectedColorsLocal?.secondary ?? '#fff';
 		const tertiaryColorTemp =
-			customColors && customColors?.tertiary != ''
+			customColors && customColors?.tertiary !== ''
 				? customColors?.tertiary
 				: selectedColorsLocal?.tertiary ?? '#fff';
 
@@ -470,18 +466,16 @@ const DesignColors = () => {
 	}
 
 	return (
-		<GlobalStylesProvider>
-			<div className="theme-colors--drawer">
-				<h2>{ __( 'Color Palettes', 'wp-module-onboarding' ) }</h2>
-				{ /* {selectedColors?.slug && 
-					<div className='theme-colors--drawer--reset' onClick={resetColors}>
-						<div>Reset Button</div>
-					</div>
-				} */ }
-				{ colorPalettes && buildPalettes() }
-				{ colorPalettes && buildCustomPalette() }
-			</div>
-		</GlobalStylesProvider>
+		<div className="theme-colors--drawer">
+			<h2>{ __( 'Color Palettes', 'wp-module-onboarding' ) }</h2>
+			{ /* {selectedColors?.slug && 
+				<div className='theme-colors--drawer--reset' onClick={resetColors}>
+					<div>Reset Button</div>
+				</div>
+			} */ }
+			{ colorPalettes && buildPalettes() }
+			{ colorPalettes && buildCustomPalette() }
+		</div>
 	);
 };
 
