@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useState, useEffect } from '@wordpress/element';
 import { Popover, ColorPicker } from '@wordpress/components';
+import { useState, useEffect, useRef } from '@wordpress/element';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
@@ -14,6 +14,7 @@ import {
 import Animate from '../../Animate';
 
 const DesignColors = () => {
+	const customColorsResetRef = useRef( null );
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ customColorsMap, setCustomColorsMap ] = useState();
 	const [ selectedColors, setSelectedColors ] = useState();
@@ -231,6 +232,10 @@ const DesignColors = () => {
 	useEffect( () => {
 		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
 			getColorStylesAndPatterns();
+		if ( isCustomColorActive() ) {
+			setIsAccordionClosed( false );
+			customColorsResetRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+		}
 	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = ( colorStyle ) => {
@@ -462,7 +467,7 @@ const DesignColors = () => {
 				</Animate>
 				{ isCustomColorActive() && (
 					<Animate type={'fade-in'} duration="300ms">
-						<div className='theme-colors--drawer--reset' onClick={resetColors}>
+						<div ref={ customColorsResetRef } className='theme-colors--drawer--reset' onClick={resetColors}>
 							<div>Reset</div>
 						</div>
 					</Animate>
