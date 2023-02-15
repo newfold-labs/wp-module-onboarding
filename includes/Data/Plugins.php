@@ -45,6 +45,10 @@ final class Plugins {
 			'approved' => true,
 			'path'     => 'creative-mail-by-constant-contact/creative-mail-plugin.php',
 		),
+		'woo-razorpay'                      => array(
+			'approved' => true,
+			'path'     => 'woo-razorpay/woo-razorpay.php',
+		),
 	);
 
 	 /**
