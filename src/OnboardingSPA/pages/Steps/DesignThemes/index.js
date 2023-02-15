@@ -6,19 +6,15 @@ import { useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 
 const StepDesignThemes = () => {
-	const {
-		setDrawerActiveView,
-		setIsDrawerOpened,
-		setSidebarActiveView,
-		setIsHeaderNavigationEnabled,
-	} = useDispatch( nfdOnboardingStore );
+	const { setDrawerActiveView, setIsDrawerOpened, setSidebarActiveView, setIsHeaderNavigationEnabled } =
+		useDispatch(nfdOnboardingStore);
 
-	useEffect( () => {
-		setSidebarActiveView( SIDEBAR_LEARN_MORE );
-		setIsDrawerOpened( true );
-		setDrawerActiveView( VIEW_DESIGN_THEMES );
-		setIsHeaderNavigationEnabled( true );
-	}, [] );
+	useEffect(() => {
+		setSidebarActiveView(SIDEBAR_LEARN_MORE);
+		setIsDrawerOpened(true);
+		setDrawerActiveView(VIEW_DESIGN_THEMES);
+		setIsHeaderNavigationEnabled(true);
+	}, []);
 	return (
 		<CommonLayout isCentered>
 			<StepOverview />
