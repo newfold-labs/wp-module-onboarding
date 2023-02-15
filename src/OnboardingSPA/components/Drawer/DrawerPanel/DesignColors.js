@@ -242,12 +242,6 @@ const DesignColors = () => {
 			}
 		}
 		setSelectedColors( selectedColors );
-		saveThemeColorPalette(
-			currentData?.data?.palette.slug,
-			colorPalettes?.body,
-			selectedColorsLocal,
-			storedPreviewSettings
-		);
 		setIsLoaded( true );
 	};
 
