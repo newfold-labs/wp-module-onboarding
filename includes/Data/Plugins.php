@@ -51,11 +51,11 @@ final class Plugins {
 		),
 	);
 
-	 /**
-	  * Contains a list of zip url's with a unique "nfd_slug" for each.
-	  *
-	  * @var array
-	  */
+	/**
+	 * Contains a list of zip url's with a unique "nfd_slug" for each.
+	 *
+	 * @var array
+	 */
 	protected static $nfd_slugs = array(
 		'nfd_slug_endurance_page_cache'                  => array(
 			'approved' => true,
@@ -151,73 +151,127 @@ final class Plugins {
 			),
 		),
 		'ecommerce' => array(
-			'default'     => array(
+			'default'        => array(
 				array(
 					'slug'     => 'woocommerce',
 					'activate' => true,
 					'priority' => 260,
 				),
 			),
-			'wc_standard' => array(
-				array(
-					'slug'     => 'nfd_slug_yith_woocommerce_customize_myaccount_page',
-					'activate' => true,
-					'priority' => 257,
+			'bluehost'       => array(
+				'wc_standard' => array(
+					array(
+						'slug'     => 'nfd_slug_yith_woocommerce_customize_myaccount_page',
+						'activate' => true,
+						'priority' => 257,
+					),
+					array(
+						'slug'     => 'nfd_slug_yith_woocommerce_gift_cards',
+						'activate' => true,
+						'priority' => 100,
+					),
+					array(
+						'slug'     => 'nfd_slug_yith_woocommerce_wishlist',
+						'activate' => true,
+						'priority' => 80,
+					),
+					array(
+						'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
+						'activate' => true,
+						'priority' => 259,
+					),
+					array(
+						'slug'     => 'nfd_slug_yith_paypal_payments_for_woocommerce',
+						'activate' => true,
+						'priority' => 258,
+					),
 				),
-				array(
-					'slug'     => 'nfd_slug_yith_woocommerce_gift_cards',
-					'activate' => true,
-					'priority' => 100,
+				'wc_premium'  => array(
+					array(
+						'slug'     => 'nfd_slug_yith_woocommerce_customize_myaccount_page',
+						'activate' => true,
+						'priority' => 257,
+					),
+					array(
+						'slug'     => 'nfd_slug_yith_woocommerce_gift_cards',
+						'activate' => true,
+						'priority' => 100,
+					),
+					array(
+						'slug'     => 'nfd_slug_yith_woocommerce_wishlist',
+						'activate' => true,
+						'priority' => 80,
+					),
+					array(
+						'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
+						'activate' => true,
+						'priority' => 259,
+					),
+					array(
+						'slug'     => 'nfd_slug_yith_paypal_payments_for_woocommerce',
+						'activate' => true,
+						'priority' => 258,
+					),
+					array(
+						'slug'     => 'nfd_slug_ecomdash_wordpress_plugin',
+						'activate' => true,
+						'priority' => 20,
+					),
 				),
-				array(
-					'slug'     => 'nfd_slug_yith_woocommerce_wishlist',
-					'activate' => true,
-					'priority' => 80,
-				),
-				array(
-					'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
-					'activate' => true,
-					'priority' => 259,
-				),
-				array(
-					'slug'     => 'nfd_slug_yith_paypal_payments_for_woocommerce',
-					'activate' => true,
-					'priority' => 258,
-				),
+				'wc_priority' => array(),
 			),
-			'wc_premium'  => array(
-				array(
-					'slug'     => 'nfd_slug_yith_woocommerce_customize_myaccount_page',
-					'activate' => true,
-					'priority' => 257,
+			'bluehost-india' => array(
+				'wc_standard' => array(
+					array(
+						'slug'     => 'nfd_slug_yith_woocommerce_customize_myaccount_page',
+						'activate' => true,
+						'priority' => 257,
+					),
+					array(
+						'slug'     => 'nfd_slug_yith_woocommerce_gift_cards',
+						'activate' => true,
+						'priority' => 100,
+					),
+					array(
+						'slug'     => 'nfd_slug_yith_woocommerce_wishlist',
+						'activate' => true,
+						'priority' => 80,
+					),
+					array(
+						'slug'     => 'woo-razorpay',
+						'activate' => true,
+						'priority' => 258,
+					),
 				),
-				array(
-					'slug'     => 'nfd_slug_yith_woocommerce_gift_cards',
-					'activate' => true,
-					'priority' => 100,
+				'wc_premium'  => array(
+					array(
+						'slug'     => 'nfd_slug_yith_woocommerce_customize_myaccount_page',
+						'activate' => true,
+						'priority' => 257,
+					),
+					array(
+						'slug'     => 'nfd_slug_yith_woocommerce_gift_cards',
+						'activate' => true,
+						'priority' => 100,
+					),
+					array(
+						'slug'     => 'nfd_slug_yith_woocommerce_wishlist',
+						'activate' => true,
+						'priority' => 80,
+					),
+					array(
+						'slug'     => 'woo-razorpay',
+						'activate' => true,
+						'priority' => 258,
+					),
+					array(
+						'slug'     => 'nfd_slug_ecomdash_wordpress_plugin',
+						'activate' => true,
+						'priority' => 20,
+					),
 				),
-				array(
-					'slug'     => 'nfd_slug_yith_woocommerce_wishlist',
-					'activate' => true,
-					'priority' => 80,
-				),
-				array(
-					'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
-					'activate' => true,
-					'priority' => 259,
-				),
-				array(
-					'slug'     => 'nfd_slug_yith_paypal_payments_for_woocommerce',
-					'activate' => true,
-					'priority' => 258,
-				),
-				array(
-					'slug'     => 'nfd_slug_ecomdash_wordpress_plugin',
-					'activate' => true,
-					'priority' => 20,
-				),
+				'wc_priority' => array(),
 			),
-			'wc_priority' => array(),
 		),
 	);
 
@@ -302,8 +356,8 @@ final class Plugins {
 		return array(
 			'wp_slugs'  => array_keys( array_filter( self::$wp_slugs, array( __CLASS__, 'check_approved' ) ) ),
 			'nfd_slugs' => array_keys( array_filter( self::$nfd_slugs, array( __CLASS__, 'check_approved' ) ) ),
-			'urls'      => array_keys( self::$urls, true ),
-			'domains'   => array_keys( self::$domains, true ),
+			'urls'      => array_keys( self::$urls, true, true ),
+			'domains'   => array_keys( self::$domains, true, true ),
 		);
 	}
 
@@ -314,7 +368,7 @@ final class Plugins {
 	 * @return boolean
 	 */
 	private static function check_approved( $value ) {
-		 return true === $value['approved'];
+		return true === $value['approved'];
 	}
 
 	/**
@@ -329,10 +383,11 @@ final class Plugins {
 		$init_list    = self::$init_list['default'];
 		if ( $plan_flow && isset( self::$init_list[ $plan_flow ] ) ) {
 			if ( isset( self::$init_list[ $plan_flow ]['default'] ) ) {
-				  $init_list = array_merge( $init_list, self::$init_list[ $plan_flow ]['default'] );
+				$init_list = array_merge( $init_list, self::$init_list[ $plan_flow ]['default'] );
 			}
-			if ( 'default' !== $plan_subtype && isset( self::$init_list[ $plan_flow ][ $plan_subtype ] ) ) {
-				   $init_list = array_merge( $init_list, self::$init_list[ $plan_flow ][ $plan_subtype ] );
+			$current_brand = Data::current_brand()['brand'];
+			if ( 'default' !== $plan_subtype && isset( self::$init_list[ $plan_flow ][ $current_brand ][ $plan_subtype ] ) ) {
+				$init_list = array_merge( $init_list, self::$init_list[ $plan_flow ][ $current_brand ][ $plan_subtype ] );
 			}
 		}
 
