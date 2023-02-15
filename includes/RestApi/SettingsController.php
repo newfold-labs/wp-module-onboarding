@@ -52,6 +52,7 @@ class SettingsController {
 		'youtube_url'           => '',
 		'wikipedia_url'         => '',
 		'other_social_urls'     => array(),
+		'mastodon_url'          => '',
 	);
 
 	/**
@@ -69,6 +70,7 @@ class SettingsController {
 		'youtube_url',
 		'wikipedia_url',
 		'other_social_urls',
+		'mastodon_url',
 	);
 
 	/**
@@ -141,12 +143,12 @@ class SettingsController {
 			}
 
 			// check for proper url
-			if ( in_array( $param_key, $this->social_urls_to_validate ) ) {
+			if ( in_array( $param_key, $this->social_urls_to_validate, true ) ) {
 				switch ( $param_key ) {
 					case 'twitter_site':
 						if ( ! empty( $params['twitter_site'] ) ) {
 							$twitter_id = $this->validate_twitter_id( $params['twitter_site'] );
-							if ( ( $twitter_id ) === false ) {
+							if ( false === $twitter_id ) {
 								$this->invalid_urls[] = 'twitter_site';
 								unset( $params['twitter_site'] );
 							} else {
@@ -155,14 +157,17 @@ class SettingsController {
 						}
 						break;
 					case 'other_social_urls':
+						$filtered_social_urls = array();
 						foreach ( $param_value as $param_key_osu => $param_url ) {
-							$param_value[ $param_key_osu ] = \sanitize_text_field( $param_url );
-							if ( ! empty( $param_url ) && ! \wp_http_validate_url( $param_url ) ) {
-								$this->invalid_urls[] = $param_key_osu;
-								unset( $params[ $param_key_osu ] );
-								continue;
+							if ( ! empty( $param_url ) ) {
+								if ( \wp_http_validate_url( $param_url ) ) {
+									$filtered_social_urls[] = \sanitize_text_field( $param_url );
+								} else {
+									$this->invalid_urls[] = $param_key_osu;
+								}
 							}
 						}
+						$params[ $param_key ] = $filtered_social_urls;
 						break;
 					default:
 						$param[ $param_key ] = \sanitize_text_field( $param_value );
@@ -206,13 +211,26 @@ class SettingsController {
 			// update database
 			\add_option( Options::get_option_name( 'wpseo_social', false ), $social_data );
 		}
-		$twitter_handle = $this->validate_twitter_id( $social_data['twitter_site'] );
 		// add the full url for twitter cause only the handle is saved in the database
-		if ( ! empty( $social_data['twitter_site'] ) &&
-			( false !== $twitter_handle ) ) {
+		$twitter_handle = $this->validate_twitter_id( $social_data['twitter_site'] );
+		if ( ( ! empty( $social_data['twitter_site'] ) ) && ( false !== $twitter_handle ) ) {
 			$social_data['twitter_site'] = 'https://www.twitter.com/' . $twitter_handle;
 		}
 
+		$filtered_social_urls = array();
+		// handle other social urls for onboarding
+		foreach ( $social_data['other_social_urls'] as $index => $social_url ) {
+			if ( ! empty( $social_url ) ) {
+				if ( preg_match( '/(?:https?:\/\/)?(www\.)?yelp\.com/', $social_url ) ) {
+					$filtered_social_urls['yelp_url'] = $social_url;
+				} elseif ( preg_match( '/(?:https?:\/\/)?(www\.)?tiktok\.com/', $social_url ) ) {
+					$filtered_social_urls['tiktok_url'] = $social_url;
+				} else {
+					$filtered_social_urls[ 'social_url_' . $index ] = $social_url;
+				}
+			}
+		}
+		$social_data['other_social_urls'] = $filtered_social_urls;
 		return $social_data;
 
 	}
@@ -231,20 +249,20 @@ class SettingsController {
 			);
 		}
 
-		  // Update wp_options
+		// Update wp_options
 		$init_options = Options::get_initialization_options();
 		foreach ( $init_options as $option_key => $option_value ) {
-			 \update_option( Options::get_option_name( $option_key, false ), $option_value );
+			\update_option( Options::get_option_name( $option_key, false ), $option_value );
 		}
-		  // Can't be part of initialization constants as they are static.
+		// Can't be part of initialization constants as they are static.
 		\update_option( Options::get_option_name( 'install_date', false ), gmdate( 'M d, Y' ) );
 
-		  // Flush permalinks
+		// Flush permalinks
 		flush_rewrite_rules();
 
-		  // Add constants to the WordPress configuration (wp-config.php)
-		  $wp_config_constants = Config::get_wp_config_initialization_constants();
-		$wp_config             = new WP_Config();
+		// Add constants to the WordPress configuration (wp-config.php)
+		$wp_config_constants = Config::get_wp_config_initialization_constants();
+		$wp_config           = new WP_Config();
 		foreach ( $wp_config_constants as $constant_key => $constant_value ) {
 			if ( $wp_config->constant_exists( $constant_key ) ) {
 				$wp_config->update_constant( $constant_key, $constant_value );
@@ -253,7 +271,7 @@ class SettingsController {
 			$wp_config->add_constant( $constant_key, $constant_value );
 		}
 
-		  \update_option( Options::get_option_name( 'settings_initialized' ), true );
+		\update_option( Options::get_option_name( 'settings_initialized' ), true );
 
 		return new \WP_REST_Response(
 			array(),

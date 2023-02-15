@@ -1,5 +1,5 @@
 import { Fill, PanelBody, PanelHeader, Button } from '@wordpress/components';
-import { Fragment, Suspense } from '@wordpress/element';
+import { Fragment, memo, Suspense } from '@wordpress/element';
 import { closeSmall } from '@wordpress/icons';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
@@ -57,4 +57,4 @@ const LearnMoreSidebar = () => {
 	);
 };
 
-export default LearnMoreSidebar;
+export default memo( LearnMoreSidebar );

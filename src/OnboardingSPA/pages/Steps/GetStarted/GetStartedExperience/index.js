@@ -58,14 +58,12 @@ const GetStartedExperience = () => {
 		}
 	}, [ isLoaded ] );
 
-	useEffect( () => {
-		const saveData = async () => {
-			const currentDataCopy = currentData;
-			currentDataCopy.data.wpComfortLevel = wpComfortLevel || '0';
-			setCurrentOnboardingData( currentDataCopy );
-		};
-		if ( isLoaded ) saveData();
-	}, [ wpComfortLevel ] );
+	const saveData = ( value ) => {
+		setWpComfortLevel( value );
+		const currentDataCopy = currentData;
+		currentDataCopy.data.wpComfortLevel = value || '0';
+		setCurrentOnboardingData( currentDataCopy );
+	};
 
 	return (
 		<CommonLayout isBgPrimary isCentered>
@@ -102,7 +100,7 @@ const GetStartedExperience = () => {
 									),
 								};
 							} ) }
-							onChange={ ( value ) => setWpComfortLevel( value ) }
+							onChange={ ( value ) => saveData( value ) }
 						/>
 					</Animate>
 					<NavCardButton

@@ -4,10 +4,7 @@ import { useState, useEffect } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, setGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import {
-	THEME_STATUS_ACTIVE,
-	THEME_STATUS_INIT,
-} from '../../../../constants';
+import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 
 /**
  * Global Style Parent Component
@@ -37,20 +34,22 @@ const GlobalStylesProvider = ( { children } ) => {
 		useDispatch( nfdOnboardingStore );
 
 	const getStylesAndPatterns = async () => {
-		const globalStyles = await getGlobalStyles();
-		if ( globalStyles?.error ) {
-			return updateThemeStatus( THEME_STATUS_INIT );
-		}
 		let selectedGlobalStyle;
 		if ( storedPreviewSettings?.title && storedPreviewSettings?.settings )
 			selectedGlobalStyle = storedPreviewSettings;
-		else if ( currentData.data.theme.variation ) {
-			selectedGlobalStyle = globalStyles.body.filter(
-				( globalStyle ) =>
-					globalStyle.title === currentData.data.theme.variation
-			)[ 0 ];
-		} else if ( globalStyles.body[ 0 ]?.id === 0 ) {
-			selectedGlobalStyle = globalStyles.body[ 0 ];
+		else {
+			const globalStyles = await getGlobalStyles();
+			if ( globalStyles?.error ) {
+				return updateThemeStatus( THEME_STATUS_INIT );
+			}
+			if ( currentData.data.theme.variation ) {
+				selectedGlobalStyle = globalStyles.body.filter(
+					( globalStyle ) =>
+						globalStyle.title === currentData.data.theme.variation
+				)[ 0 ];
+			} else if ( globalStyles.body[ 0 ]?.id === 0 ) {
+				selectedGlobalStyle = globalStyles.body[ 0 ];
+			}
 		}
 
 		if ( selectedGlobalStyle )

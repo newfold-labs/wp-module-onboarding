@@ -34,7 +34,7 @@ import classNames from 'classnames';
 import { store as nfdOnboardingStore } from '../../../store';
 import WithDesignBack from './WithDesignBack';
 
-const DrawerPanel = ( { isOpen } ) => {
+const DrawerPanel = () => {
 	const [ isNavView, setIsNavView ] = useState( true ); // menu-primary is default view
 	const { isDrawerOpen, drawerView } = useSelect( ( select ) => {
 		const { isDrawerOpened, getDrawerView } = select( nfdOnboardingStore );
@@ -121,7 +121,7 @@ const DrawerPanel = ( { isOpen } ) => {
 							<WithDesignBack>
 								<DesignHomepageMenu />
 							</WithDesignBack>
-						)}
+						) }
 					</div>
 				</div>
 			</div>

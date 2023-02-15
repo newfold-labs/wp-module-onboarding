@@ -3,13 +3,9 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 
 import { store as nfdOnboardingStore } from '../../../store';
-import { GlobalStylesProvider } from '../../../components/LivePreview';
 import { getGlobalStyles, getThemeFonts } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import {
-	THEME_STATUS_ACTIVE,
-	THEME_STATUS_INIT,
-} from '../../../../constants';
+import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 
 const DesignTypography = () => {
 	const drawerFontOptions = useRef();
@@ -146,7 +142,7 @@ const DesignTypography = () => {
 		const paletteRenderedList = [];
 		for ( const fontStyle in fontPalettes ) {
 			const splitLabel = fontPalettes[ fontStyle ]?.label.split( '&', 2 );
-			if ( splitLabel.length == 0 ) continue;
+			if ( splitLabel.length === 0 ) continue;
 			paletteRenderedList.push(
 				<div
 					className={ `font-palette drawer-palette--button ${
@@ -219,19 +215,17 @@ const DesignTypography = () => {
 	}
 
 	return (
-		<GlobalStylesProvider>
-			<div ref={ drawerFontOptions } className="theme-fonts--drawer">
-				<h2>{ __( 'Font Palettes', 'wp-module-onboarding' ) }</h2>
-				{ /* { selectedFont && 
-				<div className='theme-fonts--drawer--reset' onClick={resetFonts}>
-					<div>Reset Button</div>
-				</div>
-			} */ }
-				{ fontPalettes && buildPalettes() }
-				{ /* { fontPalettes && buildCustomPalette() } */ }
-				<div className="custom-font-palette--hidden">{ rerender }</div>
+		<div ref={ drawerFontOptions } className="theme-fonts--drawer">
+			<h2>{ __( 'Font Palettes', 'wp-module-onboarding' ) }</h2>
+			{ /* { selectedFont && 
+			<div className='theme-fonts--drawer--reset' onClick={resetFonts}>
+				<div>Reset Button</div>
 			</div>
-		</GlobalStylesProvider>
+		} */ }
+			{ fontPalettes && buildPalettes() }
+			{ /* { fontPalettes && buildCustomPalette() } */ }
+			<div className="custom-font-palette--hidden">{ rerender }</div>
+		</div>
 	);
 };
 export default DesignTypography;
