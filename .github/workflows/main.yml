@@ -38,7 +38,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '19.2.0'
-        if: "!! env.GIT_DIFF"
 
       # Checks for cache if present
       - name: Cache dependencies
@@ -48,7 +47,6 @@ jobs:
           path: ~/.npm
           key: npm-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
-        if: "!! env.GIT_DIFF"
 
       # Installs wp-script for lint checks
       - name: Install @wordpress/scripts dependencies
