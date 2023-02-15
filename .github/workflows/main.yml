@@ -51,6 +51,10 @@ jobs:
       # Installs wp-script for lint checks
       - name: Install @wordpress/scripts dependencies
         run: npm i @wordpress/scripts -g
+
+      # Add Lodash Dependency
+      - name: Install Lodash
+        run: npm i -S lodash
           
       # Runs wp-script for linting js
       - name: Run wp-scripts lint-js
