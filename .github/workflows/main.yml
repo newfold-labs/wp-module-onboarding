@@ -5,10 +5,12 @@ on:
       - '**'
     paths:
       - '**.js'
+      - '**.scss'
   pull_request:
     types: [opened, edited, reopened, ready_for_review]
     paths:
       - '**.js'
+      - '**.scss'
   workflow_dispatch:
 
 concurrency:
