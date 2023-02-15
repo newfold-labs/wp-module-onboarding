@@ -1,12 +1,10 @@
 .is-centered {
-
 	display: flex;
 	place-content: center;
 	place-items: center;
 }
 
 .is-vertically-centered {
-	
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
@@ -16,7 +14,6 @@
 .is-bg-primary {
 	background-color: var(--nfd-onboarding-primary);
 	color: var(--nfd-onboarding-light);
-	color: var(--nfd-onboarding-light)
 }
 
 .center {
