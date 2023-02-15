@@ -223,10 +223,7 @@ const SocialMediaForm = ( {
 							} }
 						/>
 						<div className="social-form__label_name">
-							{ __(
-								toTitleCase( SocialMediaSites[ social ] ),
-								'wp-module-onboarding'
-							) }
+							{ toTitleCase( SocialMediaSites[ social ] ) }
 						</div>
 					</label>
 					<Tooltip
