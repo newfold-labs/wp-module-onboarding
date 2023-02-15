@@ -99,6 +99,7 @@ function AutoBlockPreview( {
 								? __experimentalMinHeight / scale
 								: __experimentalMinHeight,
 					} }
+					spellcheck="false"
 				>
 					{ contentResizeListener }
 					{
