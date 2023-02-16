@@ -27,7 +27,7 @@ const Content = () => {
 			/>
 		) );
 	}, [ routes ]);
-	console.count('Content');
+
 	return (
 		<main className="nfd-onboard-content">
 			<Suspense fallback={ <Fragment /> }>
