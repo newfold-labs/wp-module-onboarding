@@ -77,11 +77,14 @@ final class Brands {
 				'facebookUrl'                 => 'https://www.facebook.com/BlueHostIndia',
 				'twitterName'                 => '@BluehostIndia',
 				'twitterUrl'                  => 'https://twitter.com/bluehostindia',
-				'youtubeUrl'                  => null,
+				'youtubeUrl'                  => 'https://www.youtube.com/c/BluehostIndia1',
 				'linkedinUrl'                 => null,
 				'accountUrl'                  => 'https://my.bluehost.in',
 				'domainsUrl'                  => 'https://my.bluehost.in/hosting/app?lil=1#/domains',
 				'emailUrl'                    => 'https://my.bluehost.in/hosting/app?lil=1#/email-office',
+				'phoneNumbers'                => array(
+					'support' => '1800-419-4426',
+				),
 				'hireExpertsInfo'             => array(
 					'defaultLink'   => 'https://www.bluehost.in/solutions/full-service',
 					'utmParameters' => array(
