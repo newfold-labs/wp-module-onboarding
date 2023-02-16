@@ -1,4 +1,5 @@
 import { __ } from '@wordpress/i18n';
+import { memo } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { Button } from '@wordpress/components';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -17,10 +18,9 @@ const SkipButton = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const { previousStep, nextStep, currentData } = useSelect(
+    const { nextStep, currentData } = useSelect(
         (select) => {
             return {
-                previousStep: select(nfdOnboardingStore).getPreviousStep(),
                 nextStep: select(nfdOnboardingStore).getNextStep(),
                 currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
             };
@@ -28,9 +28,7 @@ const SkipButton = () => {
         []
     );
 
-    const isFirstStep = null === previousStep || false === previousStep;
     const isLastStep = null === nextStep || false === nextStep;
-
 
     async function syncSocialSettingsFinish(currentData) {
         const initialData = await getSettings();
@@ -68,7 +66,7 @@ const SkipButton = () => {
        {
            return (
                <Button className="skip-button"
-                   onClick={(e) => saveData(location.pathname, currentData)} >
+                   onClick={() => saveData(location.pathname, currentData)} >
                     {__('Skip this Step', 'wp-module-onboarding')}
                 </Button>
            );
@@ -76,7 +74,7 @@ const SkipButton = () => {
        else {
            return (
                <Button className="skip-button"
-                   onClick={(e) => navigate(nextStep.path)} >
+                   onClick={() => navigate(nextStep.path)} >
                    {__('Skip this Step', 'wp-module-onboarding')}
                </Button>
            );
@@ -85,7 +83,6 @@ const SkipButton = () => {
    
     return skipStep();
 };
-
 
 /*
  * check if this is the last step 
@@ -96,4 +93,6 @@ const exitToWordpressForEcommerce = () => {
     }
     return false;
 }
-export default SkipButton;
+
+const SkipButtonMemo = memo(SkipButton)
+export default SkipButtonMemo;
