@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n'; 
-import { useRef, useEffect, useState } from '@wordpress/element';
+import { useRef, useEffect, useState, memo } from '@wordpress/element';
 
 /**
  * Interface Text Inputs with standard design.
@@ -55,4 +55,4 @@ const TextInput = ({ title, hint, placeholder, height, maxCharacters, textValue,
     );
 };
 
-export default TextInput;
+export default memo(TextInput);
