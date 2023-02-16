@@ -83,6 +83,7 @@ function AutoBlockPreview( {
 						bodyElement.style.boxSizing = 'border-box';
 						bodyElement.style.position = 'absolute';
 						bodyElement.style.width = '100%';
+						bodyElement.spellcheck = 0;
 					}, [] ) }
 					aria-hidden
 					tabIndex={ -1 }
@@ -99,7 +100,6 @@ function AutoBlockPreview( {
 								? __experimentalMinHeight / scale
 								: __experimentalMinHeight,
 					} }
-					spellcheck="false"
 				>
 					{ contentResizeListener }
 					{
