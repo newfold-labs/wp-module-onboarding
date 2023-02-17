@@ -14,7 +14,6 @@ import { CheckboxListSkeleton } from '../../../components/CheckboxTemplate';
 const StepSiteFeatures = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
 
-	const [ isLoaded, setisLoaded ] = useState( false );
 	const [ selectedPlugins, setSelectedPlugins ] = useState();
 	const [ customPluginsList, setCustomPluginsList ] = useState();
 
@@ -74,14 +73,7 @@ const StepSiteFeatures = () => {
 		else setSelectedPlugins( { ...currentData?.data?.siteFeatures } );
 
 		setCustomPluginsList( customPluginsList.body );
-		setisLoaded( true );
 	}
-
-	useEffect( () => {
-		if ( ! isLoaded ) {
-			getCustomPlugins();
-		}
-	}, [ isLoaded ] );
 
 	useEffect( () => {
 		if ( isLargeViewport ) {
@@ -91,8 +83,10 @@ const StepSiteFeatures = () => {
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 		setIsHeaderNavigationEnabled( true );
+		getCustomPlugins();
 	}, [] );
 
+	console.count('Site Features');
 	return (
 		<CommonLayout>
 			<div style={ { margin: '100px' } }>
