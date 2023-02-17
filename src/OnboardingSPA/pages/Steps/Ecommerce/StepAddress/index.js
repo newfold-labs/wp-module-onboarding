@@ -1,6 +1,6 @@
 import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useEffect } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useNavigate } from 'react-router-dom';
 import { SIDEBAR_LEARN_MORE, VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../../../constants';
@@ -17,6 +17,8 @@ import Animate from '../../../../components/Animate';
 import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 
 const StepAddress = () => {
+	const [ settings, setSettings ] = useState();
+	const navigate = useNavigate();
 	const isLargeViewport = useViewportMatch('medium');
 	const {
 		setDrawerActiveView,
@@ -35,40 +37,44 @@ const StepAddress = () => {
 		setIsHeaderNavigationEnabled( true );
 	}
 
+	async function getSettingsData() {
+		setSettings( await useWPSettings() );
+	}
+
 	useEffect(() => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
+		getSettingsData();
 	}, []);
-
-	const navigate = useNavigate();
 
 	let currentData = useSelect((select) =>
 		select(nfdOnboardingStore).getCurrentOnboardingData()
 	);
 
-	const settings = useWPSettings();
 	useEffect(() => {
-		let addressKeys = [
-			'woocommerce_store_address',
-			'woocommerce_store_city',
-			'woocommerce_store_postcode',
-			'woocommerce_default_country',
-			'woocommerce_currency',
-			'woocommerce_email_from_address',
-		];
-		if (settings !== null && currentData.storeDetails.address === undefined) {
-			setCurrentOnboardingData({
-				storeDetails: {
-					...currentData.storeDetails,
-					address: {
-						...(currentData.storeDetails.address ?? {}),
-						...addressKeys.reduce(
-							(address, key) => ({ ...address, [key]: settings[key] }),
-							{}
-						),
+		if( settings ) {
+			let addressKeys = [
+				'woocommerce_store_address',
+				'woocommerce_store_city',
+				'woocommerce_store_postcode',
+				'woocommerce_default_country',
+				'woocommerce_currency',
+				'woocommerce_email_from_address',
+			];
+			if (settings !== null && currentData.storeDetails.address === undefined) {
+				setCurrentOnboardingData({
+					storeDetails: {
+						...currentData.storeDetails,
+						address: {
+							...(currentData.storeDetails.address ?? {}),
+							...addressKeys.reduce(
+								(address, key) => ({ ...address, [key]: settings[key] }),
+								{}
+							),
+						},
 					},
-				},
-			});
+				});
+			}
 		}
 	}, [settings, currentData.storeDetails]);
 
@@ -119,6 +125,7 @@ const StepAddress = () => {
 			},
 		});
 	}
+
 	return (
         <EcommerceStateHandler navigationStateCallback={ setNavigationState }>
 		<CommonLayout isBgPrimary isCentered>
