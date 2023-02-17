@@ -47,10 +47,11 @@ const GetStartedExperience = () => {
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
+	async function getFlowData() {
+		setWpComfortLevel( currentData.data.wpComfortLevel );
+	}
+
 	useEffect( () => {
-		async function getFlowData() {
-			setWpComfortLevel( currentData.data.wpComfortLevel );
-		}
 		getFlowData();
 	}, [ ] );
 
