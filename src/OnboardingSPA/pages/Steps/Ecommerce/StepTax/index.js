@@ -1,6 +1,6 @@
 import { RadioControl } from '@wordpress/components';
-import { useDispatch,useSelect } from '@wordpress/data';
-import { useEffect } from '@wordpress/element';
+import { useDispatch, useSelect  } from '@wordpress/data';
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useNavigate } from 'react-router-dom';
 import { SIDEBAR_LEARN_MORE, VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../../../constants';
@@ -26,19 +26,24 @@ const StepTax = () => {
 		setCurrentOnboardingData,
 	} = useDispatch(nfdOnboardingStore);
 	const navigate = useNavigate();
+	const [ settings, setSettings ] = useState();
 
 	let currentData = useSelect((select) =>
 		select(nfdOnboardingStore).getCurrentOnboardingData()
 	);
 
+	async function getSettingsData() {
+		setSettings( await useWPSettings() );
+	}
+
 	useEffect(() => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView(VIEW_NAV_ECOMMERCE_STORE_INFO);
+		getSettingsData();
 	}, []);
 
-	const settings = useWPSettings();
 	useEffect(() => {
-		if (settings !== null && currentData.storeDetails.tax === undefined) {
+		if (settings && settings !== null && currentData.storeDetails.tax === undefined) {
 			let selectedTaxOption = content.stepTaxOptions.find(
 				createReverseLookup(settings)
 			);
@@ -56,6 +61,7 @@ const StepTax = () => {
 			});
 		}
 	}, [settings, currentData.storeDetails]);
+
 	let { tax } = currentData.storeDetails;
 	const handleButtonClick = () => {
 		//Commented as auto-calculate tax option is removed for MMP
