@@ -22,7 +22,6 @@ import Animate from '../../../../components/Animate';
  */
 
 const GetStartedExperience = () => {
-	const [ isLoaded, setisLoaded ] = useState( false );
 	const [ wpComfortLevel, setWpComfortLevel ] = useState( '0' );
 
 	const { currentData, currentStep } = useSelect( ( select ) => {
@@ -51,12 +50,9 @@ const GetStartedExperience = () => {
 	useEffect( () => {
 		async function getFlowData() {
 			setWpComfortLevel( currentData.data.wpComfortLevel );
-			setisLoaded( true );
 		}
-		if ( ! isLoaded ) {
-			getFlowData();
-		}
-	}, [ isLoaded ] );
+		getFlowData();
+	}, [ ] );
 
 	const saveData = ( value ) => {
 		setWpComfortLevel( value );
