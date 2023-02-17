@@ -55,4 +55,5 @@ const TextInput = ({ title, hint, placeholder, height, maxCharacters, textValue,
     );
 };
 
-export default memo(TextInput);
+const TextInputMemo = memo(TextInput)
+export default TextInputMemo;
