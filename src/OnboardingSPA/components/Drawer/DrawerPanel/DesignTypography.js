@@ -9,7 +9,6 @@ import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 
 const DesignTypography = () => {
 	const drawerFontOptions = useRef();
-	const [ rerender, doRerender ] = useState( 0 );
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ selectedFont, setSelectedFont ] = useState();
 	const [ fontPalettes, setFontPalettes ] = useState();
@@ -75,12 +74,16 @@ const DesignTypography = () => {
 		// Changes the Global Styles to Recompute css properties
 		const globalStylesCopy = selectedGlobalStyle;
 
-		globalStylesCopy.styles.typography.fontFamily =
+		if( globalStylesCopy?.styles?.typography?.fontFamily 
+			&& globalStylesCopy?.styles?.blocks[ 'core/heading' ]?.typography?.fontFamily ) {
+			globalStylesCopy.styles.typography.fontFamily =
 			fontPalettesCopy[ fontStyle ]?.styles?.typography?.fontFamily;
-		globalStylesCopy.styles.blocks[ 'core/heading' ].typography.fontFamily =
-			fontPalettesCopy[ fontStyle ]?.styles.blocks[
-				'core/heading'
-			].typography.fontFamily;
+			globalStylesCopy.styles.blocks[ 'core/heading' ].typography.fontFamily =
+				fontPalettesCopy[ fontStyle ]?.styles.blocks[
+					'core/heading'
+				].typography.fontFamily;
+		}
+		
 		if (
 			globalStylesCopy.styles?.blocks[ 'core/site-title' ]?.typography
 				?.fontFamily
@@ -113,7 +116,6 @@ const DesignTypography = () => {
 			useGlobalStylesOutput( globalStylesCopy, storedPreviewSettings )
 		);
 		setCurrentOnboardingData( currentData );
-		doRerender( 1 );
 	};
 
 	async function resetFonts() {
@@ -135,7 +137,6 @@ const DesignTypography = () => {
 		currentData.data.typography.slug = '';
 		currentData.data.typography.data = [];
 		setCurrentOnboardingData( currentData );
-		doRerender( 1 );
 	}
 
 	function buildPalettes() {
@@ -224,7 +225,6 @@ const DesignTypography = () => {
 		} */ }
 			{ fontPalettes && buildPalettes() }
 			{ /* { fontPalettes && buildCustomPalette() } */ }
-			<div className="custom-font-palette--hidden">{ rerender }</div>
 		</div>
 	);
 };

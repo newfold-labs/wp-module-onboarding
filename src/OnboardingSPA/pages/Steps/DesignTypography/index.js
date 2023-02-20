@@ -21,8 +21,9 @@ const StepDesignTypography = () => {
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
 
-	const { currentStep, themeStatus } = useSelect( ( select ) => {
+	const { currentData, currentStep, themeStatus } = useSelect( ( select ) => {
 		return {
+			currentData: select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
 			),
@@ -53,6 +54,10 @@ const StepDesignTypography = () => {
 		if ( THEME_STATUS_ACTIVE === themeStatus )
 			getFontPatterns();
 	}, [ themeStatus ] );
+
+	useEffect( () => {
+		// This listens for typography to change and rerenders screen
+	}, [ currentData?.data?.typography ] );
 
 	return (
 		<DesignStateHandler>

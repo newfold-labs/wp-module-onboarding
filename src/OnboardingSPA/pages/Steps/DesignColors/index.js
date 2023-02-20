@@ -21,8 +21,9 @@ const StepDesignColors = () => {
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
 
-	const { currentStep, themeStatus } = useSelect( ( select ) => {
+	const { currentData, currentStep, themeStatus } = useSelect( ( select ) => {
 		return {
+			currentData: select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
 			),
@@ -45,6 +46,10 @@ const StepDesignColors = () => {
 		}
 		setPattern( pattern?.body );
 	};
+
+	useEffect( () => {
+		// This listens for colors to change and re-renders screen
+	}, [ currentData?.data?.palette ] );
 
 	useEffect( () => {
 		if ( THEME_STATUS_ACTIVE === themeStatus )
