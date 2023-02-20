@@ -86,7 +86,6 @@ const StepSiteFeatures = () => {
 		getCustomPlugins();
 	}, [] );
 
-	console.count('Site Features');
 	return (
 		<CommonLayout>
 			<div style={ { margin: '100px' } }>

@@ -23,7 +23,6 @@ import { DesignStateHandler } from '../../../../components/StateHandlers';
 
 const StepDesignThemeStylesPreview = () => {
 	const location = useLocation();
-	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
 	const [ customize, setCustomize ] = useState( false );
 
@@ -73,7 +72,6 @@ const StepDesignThemeStylesPreview = () => {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		setPattern( patternsResponse?.body );
-		setIsLoaded( true );
 	};
 
 	const addColorAndTypographyRoutes = () => {
@@ -157,9 +155,9 @@ const StepDesignThemeStylesPreview = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
+		if ( themeStatus === THEME_STATUS_ACTIVE )
 			getStylesAndPatterns();
-	}, [ isLoaded, themeStatus ] );
+	}, [ themeStatus ] );
 
 	return (
 		<DesignStateHandler>

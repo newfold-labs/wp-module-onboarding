@@ -19,7 +19,6 @@ import {
 
 const StepDesignColors = () => {
 	const location = useLocation();
-	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
 
 	const { currentStep, themeStatus } = useSelect( ( select ) => {
@@ -45,13 +44,12 @@ const StepDesignColors = () => {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		setPattern( pattern?.body );
-		setIsLoaded( true );
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
+		if ( THEME_STATUS_ACTIVE === themeStatus )
 			getStylesAndPatterns();
-	}, [ isLoaded, themeStatus ] );
+	}, [ themeStatus ] );
 
 	return (
 		<DesignStateHandler>

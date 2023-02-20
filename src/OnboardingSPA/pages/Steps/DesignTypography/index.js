@@ -20,7 +20,6 @@ import {
 const StepDesignTypography = () => {
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
-	const [ isLoaded, setIsLoaded ] = useState( false );
 
 	const { currentStep, themeStatus } = useSelect( ( select ) => {
 		return {
@@ -48,13 +47,12 @@ const StepDesignTypography = () => {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		setPattern( patternsResponse?.body );
-		setIsLoaded( true );
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
+		if ( THEME_STATUS_ACTIVE === themeStatus )
 			getFontPatterns();
-	}, [ isLoaded, themeStatus ] );
+	}, [ themeStatus ] );
 
 	return (
 		<DesignStateHandler>

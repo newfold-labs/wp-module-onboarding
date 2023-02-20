@@ -22,7 +22,6 @@ import {
 
 const StepDesignThemeStylesMenu = () => {
 	const location = useLocation();
-	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState();
 	const [ selectedStyle, setSelectedStyle ] = useState();
@@ -78,13 +77,12 @@ const StepDesignThemeStylesMenu = () => {
 		setPattern( patternsResponse?.body );
 		setGlobalStyles( globalStylesResponse?.body );
 		setSelectedStyle( currentData.data.theme.variation );
-		setIsLoaded( true );
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
+		if ( themeStatus === THEME_STATUS_ACTIVE )
 			getStylesAndPatterns();
-	}, [ isLoaded, themeStatus ] );
+	}, [ themeStatus ] );
 
 	const handleClick = ( idx ) => {
 		const selectedGlobalStyle = globalStyles[ idx ];
