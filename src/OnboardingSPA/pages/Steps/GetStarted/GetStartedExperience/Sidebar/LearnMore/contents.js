@@ -7,13 +7,9 @@ const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 	return {
 		introduction: {
 			heading: __( 'WordPress Experience', 'wp-module-onboarding' ),
-			subheading: sprintf(
-				/* translators: %s: site */
-				__(
-					`We can provide the best experience if you tell us a little about your %s and your needs.`,
-					'wp-module-onboarding'
-				),
-				translations( 'site' )
+			subheading: __(
+				`We want to offer the best default settings and guidance for someone with your WordPress experience.`,
+				'wp-module-onboarding'
 			),
 			icon: home,
 		},
@@ -24,9 +20,13 @@ const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 			headingWithDescriptions: [
 				{
 					heading: __( 'Why we ask', 'wp-module-onboarding' ),
-					description: __(
-						`We use this to help offer the best WordPress setup, features and suggestions for your site.`,
-						'wp-module-onboarding'
+					description: sprintf(
+						/* translators: %s: site */
+						__(
+							`We want to help everyone get the most out of their WordPress %s and this setup, so we use this to help optimize for a great experience and periodically when we offer tips, reminders and recommendations.`,
+							'wp-module-onboarding'
+						),
+						translations( 'site' )
 					),
 				},
 			],

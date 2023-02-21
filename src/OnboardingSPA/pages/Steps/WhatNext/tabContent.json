@@ -5,21 +5,24 @@
             "title": "WHATS NEXT",
             "subtitle": "Add content, organize your menu and launch.",
             "text": "✅ Theme created, features added and Coming Soon mode activated. Thank you for building your site with Bluehost, we're always here to help!",
-            "imgType": "wpadmin-img"
+            "imgType": "wpadmin-img",
+            "animationName": "fade-in-right"
         },
         {
             "name": "tab2",
             "title": "HELP & RESOURCES",
             "subtitle": "Next step or next level, we're your partner.",
             "text": "WordPress make it easy to grow your %s. Send a newsletter, broadcast a podcast, create courses and trainings. Dream it, build it.",
-            "imgType": "help-img"
+            "imgType": "help-img",
+            "animationName": "fade-in-up"
         },
         {
             "name": "tab3",
             "title": "HIRE OUR EXPERTS",
             "subtitle": "Make our great people your people.",
             "text": "Pick your %s's unique design now and refine by customing your block templates, colors and fonts in the WordPress Site Editor.",
-            "imgType": "bluesky-img"
+            "imgType": "bluesky-img",
+            "animationName": "fade-in-left"
         }
     ]
 }

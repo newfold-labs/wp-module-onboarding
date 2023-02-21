@@ -11,7 +11,7 @@ import { getGlobalStyles } from '../../../../utils/api/themes';
 import {
 	VIEW_NAV_DESIGN,
 	THEME_STATUS_ACTIVE,
-	THEME_STATUS_NOT_ACTIVE,
+	THEME_STATUS_INIT,
 	SIDEBAR_LEARN_MORE,
 } from '../../../../../constants';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
@@ -69,11 +69,11 @@ const StepDesignThemeStylesMenu = () => {
 			true
 		);
 		if ( patternsResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		const globalStylesResponse = await getGlobalStyles( true );
 		if ( globalStylesResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		setPattern( patternsResponse?.body );
 		setGlobalStyles( globalStylesResponse?.body );

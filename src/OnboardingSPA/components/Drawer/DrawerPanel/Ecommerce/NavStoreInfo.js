@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { VIEW_NAV_PRIMARY } from '../../../../../constants';
 import { __ } from '@wordpress/i18n';
 import { store as nfdOnboardingStore } from '../../../../store';
+import Animate from '../../../Animate';
 
 const NavStoreInfo = () => {
 	const { storeInfoSteps } = useSelect( ( select ) => {
@@ -16,7 +17,7 @@ const NavStoreInfo = () => {
 	const { setDrawerActiveView } = useDispatch( nfdOnboardingStore );
 
 	return (
-		<div className="is-drawer-fade">
+		<Animate type={ 'fade-in' } duration="100ms" timingFunction="ease-in">
 			<Button
 				className="nfd-onboarding-drawer__panel-back"
 				variant="tertiary"
@@ -49,7 +50,7 @@ const NavStoreInfo = () => {
 					} ) }
 				</ul>
 			</div>
-		</div>
+		</Animate>
 	);
 };
 

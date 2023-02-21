@@ -9,10 +9,15 @@ import { StepLoader } from '../../../components/Loaders';
 import { setSiteFeatures } from '../../../utils/api/plugins';
 import { StepErrorState } from '../../../components/ErrorState';
 import { DesignStateHandler } from '../../../components/StateHandlers';
+import { THEME_STATUS_INIT } from '../../../../constants';
 
 const StepComplete = () => {
-	const { setIsDrawerSuppressed, setIsHeaderNavigationEnabled, setSidebarActiveView } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		setIsDrawerSuppressed,
+		setIsHeaderNavigationEnabled,
+		setSidebarActiveView,
+		updateThemeStatus,
+	} = useDispatch( nfdOnboardingStore );
 
 	const navigate = useNavigate();
 	const [ isError, setIsError ] = useState( false );
@@ -34,18 +39,21 @@ const StepComplete = () => {
 	const contents = getContents( brandName );
 
 	const checkFlowComplete = async () => {
-		await Promise.all( [ completeFlowRequest(), setSiteFeaturesRequest() ] ).then(
-			( values ) =>
-				values.forEach( ( value ) => {
-					// If any Request returns False then Show Error
-					if ( ! value ) {
-						setIsHeaderNavigationEnabled( true );
-						return setIsError( true );
-					}
-				} )
+		await Promise.all( [
+			completeFlowRequest(),
+			setSiteFeaturesRequest(),
+		] ).then( ( values ) =>
+			values.forEach( ( value ) => {
+				// If any Request returns False then Show Error
+				if ( ! value ) {
+					setIsHeaderNavigationEnabled( true );
+					return setIsError( true );
+				}
+			} )
 		);
 
 		navigate( nextStep.path );
+		updateThemeStatus( THEME_STATUS_INIT );
 	};
 
 	async function completeFlowRequest() {
@@ -69,13 +77,13 @@ const StepComplete = () => {
 		setIsHeaderNavigationEnabled( false );
 		setIsDrawerSuppressed( true );
 		setSidebarActiveView( false );
-	}
+	};
 
 	useEffect( () => {
 		checkFlowComplete();
 	}, [] );
 	return (
-		<DesignStateHandler navigationStateCallback={setNavigationState}>
+		<DesignStateHandler navigationStateCallback={ setNavigationState }>
 			{ isError ? (
 				<StepErrorState
 					title={ contents.errorState.title }

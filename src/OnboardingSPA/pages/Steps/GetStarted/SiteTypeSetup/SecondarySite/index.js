@@ -1,4 +1,4 @@
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import CommonLayout from '../../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../../components/NewfoldLargeCard';
 import {
@@ -102,14 +102,21 @@ const StepPrimarySetup = () => {
 						) }
 					/>
 				</div>
-				<Animate type="fade-in" after={ categoriesArray[ 0 ]?.subCategories && ( selectedCategoryInStore !== null ) }>
+				<Animate
+					type="fade-in-disabled"
+					after={
+						categoriesArray[ 0 ]?.subCategories &&
+						selectedCategoryInStore !== null
+					}
+				>
 					<div className="nfd-setup-secondary-categories">
 						<div className="nfd-card-category-wrapper">
 							<div className="category-scrolling-wrapper">
 								<span
 									className="icon"
 									style={ {
-										backgroundImage: categoriesArray[ 0 ].icon,
+										backgroundImage:
+											categoriesArray[ 0 ].icon,
 									} }
 								/>
 								<p className="categName">

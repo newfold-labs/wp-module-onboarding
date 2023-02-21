@@ -3,6 +3,7 @@ import { Icon, help } from '@wordpress/icons';
 import { CheckboxControl } from '@wordpress/components';
 
 import { LivePreview } from '..';
+import Animate from '../../Animate';
 
 const SelectableCardWithInfo = ( {
 	className = 'live-preview--selectable-card--title-description',
@@ -80,8 +81,11 @@ const SelectableCardWithInfo = ( {
 				</div>
 			</div>
 			{ showDescription && (
-				<div
-					className={ `${ className }__description--container` }
+				<Animate
+					type={ 'dropdown' }
+					className={ `${ className }__description--container ${
+						showDescription ? 'highlighted' : 'not-highlighted'
+					}` }
 					style={ {
 						backgroundColor: showDescription
 							? 'var(--nfd-onboarding-light-gray-highlighted)'
@@ -91,7 +95,7 @@ const SelectableCardWithInfo = ( {
 					<p className={ `${ className }__description--text` }>
 						{ description }
 					</p>
-				</div>
+				</Animate>
 			) }
 		</div>
 	);

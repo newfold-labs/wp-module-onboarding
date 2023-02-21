@@ -61,8 +61,9 @@ const StepWelcome = () => {
 								title: __( tab.title , 'wp-module-onboarding'),
 								content: <Tab
 									title={ __(tab.subtitle, 'wp-module-onboarding')}
-									text={ sprintf( __(tab.text, 'wp-module-onboarding'), translations('site'))}
+									text={ sprintf( __(tab.text, 'wp-module-onboarding'), translations('site'), brandName )}
 									imgType={tab.imgType}
+									animationName = {tab.animationName}
 									className="tab-data" />
 							};
 						} )}
