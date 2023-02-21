@@ -48,10 +48,6 @@ const StepDesignColors = () => {
 	};
 
 	useEffect( () => {
-		// This listens for colors to change and re-renders screen
-	}, [ currentData?.data?.palette ] );
-
-	useEffect( () => {
 		if ( THEME_STATUS_ACTIVE === themeStatus )
 			getStylesAndPatterns();
 	}, [ themeStatus ] );

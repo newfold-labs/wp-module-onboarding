@@ -55,10 +55,6 @@ const StepDesignTypography = () => {
 			getFontPatterns();
 	}, [ themeStatus ] );
 
-	useEffect( () => {
-		// This listens for typography to change and rerenders screen
-	}, [ currentData?.data?.typography ] );
-
 	return (
 		<DesignStateHandler>
 			<GlobalStylesProvider>
