@@ -1,36 +1,27 @@
-name: React Lint Check
+name: "Lint Checker: Onboarding SPA"
 on:
+  workflow_dispatch:
   push:
-    branches:
-      - '**'
     paths:
-      - '**.js'
-      - '**.scss'
+      - "src/**/*.js"
+      - "src/**/*.scss"
   pull_request:
     types: [opened, edited, reopened, ready_for_review]
     paths:
-      - '**.js'
-      - '**.scss'
-  workflow_dispatch:
+      - "src/**/*.js"
+      - "src/**/*.scss"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
   cancel-in-progress: true
 
 jobs:
-  phpcs:
-    name: Run WordPress React Lint Checks
+  lint-check-spa:
+    name: Run Lint Checks
     runs-on: ubuntu-latest
     steps:
-
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v3
-
-      # Gets the files changed wrt to trunk and searches for js files
-      - uses: technote-space/get-diff-action@v6
-        with:
-          PATTERNS: |
-            +(src)/**/*.js
 
       # Picks the Node version to be used and installs it
       # https://github.com/actions/setup-node
@@ -38,27 +29,31 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '19.2.0'
-
+          cache: 'npm'
+      
       # Checks for cache if present
-      - name: Cache dependencies
+      - name: Cache node_modules directory
         id: cache
         uses: actions/cache@v3
         with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') 
+          restore-keys: ${{ runner.os }}-node-
 
       # Installs wp-script for lint checks
-      - name: Install @wordpress/scripts dependencies
-        run: npm i @wordpress/scripts -g
+      - name: Install dependencies
+        run: npm i @wordpress/scripts lodash
+        if: steps.cache.outputs.cache-hit != 'true'
 
-      # Add Lodash Dependency
-      - name: Install Lodash
-        run: npm i -S lodash
-          
+      # Gets the files changed wrt to trunk and searches for js files
+      - uses: technote-space/get-diff-action@v6
+        with:
+          PATTERNS: |
+            +(src)/**/*.js
+
       # Runs wp-script for linting js
-      - name: Run wp-scripts lint-js
-        run: wp-scripts lint-js ${{ env.GIT_DIFF }}
+      - name: Run JS Lint
+        run: node_modules/.bin/wp-scripts lint-js ${{ env.GIT_DIFF }}
         if: "!! env.GIT_DIFF"
 
       # Gets the files changed wrt to trunk and searches for css files
@@ -68,6 +63,6 @@ jobs:
             +(src)/**/*.scss
 
       # Runs wp-script for linting scss
-      - name: Run wp-scripts lint-style
-        run: wp-scripts lint-style ${{ env.GIT_DIFF }}
+      - name: Run SASS Lint
+        run: node_modules/.bin/wp-scripts lint-style ${{ env.GIT_DIFF }}
         if: "!! env.GIT_DIFF"
