@@ -53,7 +53,7 @@ const GetStartedExperience = () => {
 
 	useEffect( () => {
 		getFlowData();
-	}, [ ] );
+	}, [] );
 
 	const saveData = ( value ) => {
 		setWpComfortLevel( value );

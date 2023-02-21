@@ -53,8 +53,10 @@ const BlockPreview = ( {
 
 	const { currentData, storedPreviewSettings } = useSelect( ( select ) => {
 		return {
-			currentData: select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			storedPreviewSettings: select( nfdOnboardingStore ).getPreviewSettings(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			storedPreviewSettings:
+				select( nfdOnboardingStore ).getPreviewSettings(),
 		};
 	}, [] );
 
@@ -112,5 +114,5 @@ const BlockPreview = ( {
 	);
 };
 
-const BlockPreviewMemo = memo(BlockPreview);
+const BlockPreviewMemo = memo( BlockPreview );
 export default BlockPreviewMemo;

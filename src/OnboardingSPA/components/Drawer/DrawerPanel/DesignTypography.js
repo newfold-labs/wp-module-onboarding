@@ -74,16 +74,21 @@ const DesignTypography = () => {
 		// Changes the Global Styles to Recompute css properties
 		const globalStylesCopy = selectedGlobalStyle;
 
-		if( globalStylesCopy?.styles?.typography?.fontFamily 
-			&& globalStylesCopy?.styles?.blocks[ 'core/heading' ]?.typography?.fontFamily ) {
+		if (
+			globalStylesCopy?.styles?.typography?.fontFamily &&
+			globalStylesCopy?.styles?.blocks[ 'core/heading' ]?.typography
+				?.fontFamily
+		) {
 			globalStylesCopy.styles.typography.fontFamily =
-			fontPalettesCopy[ fontStyle ]?.styles?.typography?.fontFamily;
-			globalStylesCopy.styles.blocks[ 'core/heading' ].typography.fontFamily =
+				fontPalettesCopy[ fontStyle ]?.styles?.typography?.fontFamily;
+			globalStylesCopy.styles.blocks[
+				'core/heading'
+			].typography.fontFamily =
 				fontPalettesCopy[ fontStyle ]?.styles.blocks[
 					'core/heading'
 				].typography.fontFamily;
 		}
-		
+
 		if (
 			globalStylesCopy.styles?.blocks[ 'core/site-title' ]?.typography
 				?.fontFamily

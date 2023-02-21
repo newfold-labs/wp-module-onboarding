@@ -17,16 +17,19 @@ const Content = () => {
 		};
 	} );
 
-	const getMappedPages = useCallback(( routes ) => {
-		return routes?.map( ( route ) => (
-			<Route
-				key={ route.path }
-				path={ route.path }
-				end
-				element={ <route.Component /> }
-			/>
-		) );
-	}, [ routes ]);
+	const getMappedPages = useCallback(
+		( routes ) => {
+			return routes?.map( ( route ) => (
+				<Route
+					key={ route.path }
+					path={ route.path }
+					end
+					element={ <route.Component /> }
+				/>
+			) );
+		},
+		[ routes ]
+	);
 
 	return (
 		<main className="nfd-onboard-content">
@@ -37,5 +40,5 @@ const Content = () => {
 	);
 };
 
-const ContentMemo = memo(Content);
+const ContentMemo = memo( Content );
 export default ContentMemo;
