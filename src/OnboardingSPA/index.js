@@ -42,6 +42,7 @@ export async function initializeNFDOnboarding( id, runtime ) {
 
 	setInterval( cronTrigger, 45000 );
 
+
 	const DOM_TARGET = document.getElementById( id );
 	dispatch( nfdOnboardingStore ).setRuntime( runtime );
 	if ( runtime.previewSettings.settings.preRequisites?.themes ) {
