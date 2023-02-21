@@ -51,10 +51,12 @@ const BlockPreview = ( {
 		}
 	}, [ skeletonLoadingTime ] );
 
-	const storedPreviewSettings = useSelect(
-		( select ) => select( nfdOnboardingStore ).getPreviewSettings(),
-		[]
-	);
+	const { currentData, storedPreviewSettings } = useSelect( ( select ) => {
+		return {
+			currentData: select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			storedPreviewSettings: select( nfdOnboardingStore ).getPreviewSettings(),
+		};
+	}, [] );
 
 	useEffect( () => {
 		if ( previewSettings ) {
@@ -74,7 +76,7 @@ const BlockPreview = ( {
 		if ( ! previewSettings ) {
 			setSettings( storedPreviewSettings );
 		}
-	}, [ storedPreviewSettings ] );
+	}, [ storedPreviewSettings, currentData ] );
 
 	const SkeletonLivePreview = memo( () => {
 		return (
@@ -110,4 +112,5 @@ const BlockPreview = ( {
 	);
 };
 
-export default BlockPreview;
+const BlockPreviewMemo = memo(BlockPreview);
+export default BlockPreviewMemo;
