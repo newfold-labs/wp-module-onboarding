@@ -38,7 +38,6 @@ const initializeFlowData = ( currentData ) => {
 export async function initializeNFDOnboarding( id, runtime ) {
 	initializePlugins();
 	initializeThemes();
-
 	setInterval( cronTrigger, 45000 );
 
 	const DOM_TARGET = document.getElementById( id );
