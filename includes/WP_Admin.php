@@ -26,6 +26,8 @@ final class WP_Admin {
 	public function __construct() {
 		\add_action( 'admin_menu', array( __CLASS__, 'register_page' ) );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'initialize' ) );
+		\add_filter( 'rest_page_query', array( __CLASS__, 'header_menu_limit_pages' ) );
+		\add_filter( 'rest_request_after_callbacks', array( __CLASS__, 'header_menu_rename_pages' ), 10, 3 );
 		// \add_action( 'wp_dashboard_setup', array( __CLASS__, 'register_widget' ) );
 	}
 
@@ -47,6 +49,44 @@ final class WP_Admin {
 			array( __CLASS__, 'render' ),
 			100
 		);
+	}
+
+	public static function header_menu_limit_pages( $args ) {
+		$args['posts_per_page'] = 3;
+		$args['no_found_rows']  = true;
+		return $args;
+	}
+
+	public static function header_menu_rename_pages( $response, array $handler, \WP_REST_Request $request ) {
+		if ( self::is_wp_pages_request( $request ) ) {
+			self::modify_get_pages_response( $response );
+		}
+		 return $response;
+	}
+
+	public static function is_wp_pages_request( \WP_REST_Request $request ) {
+		return '/wp/v2/pages' === $request->get_route()
+		&& 'GET' === $request->get_method();
+	}
+
+	public static function modify_get_pages_response( $response ) {
+		if ( ! ( $response instanceof \WP_REST_Response ) ) {
+			return;
+		}
+		$data = array_map(
+			array( __CLASS__, 'rename_page' ),
+			$response->get_data(),
+			array_keys( $response->get_data() )
+		);
+		$response->set_data( $data );
+	}
+
+	public static function rename_page( array $page, $index ) {
+		$dummy_pages = array( 'About', 'Testimonials', 'Blog' );
+		if ( isset( $page['title']['rendered'] ) ) {
+			$page['title']['rendered'] = $dummy_pages[ $index ];
+		}
+		return $page;
 	}
 
 	/**
@@ -100,10 +140,10 @@ final class WP_Admin {
 				$asset['version']
 			);
 
-            wp_add_inline_script(
-                'wp-blocks',
-                'wp.blocks.unstable__bootstrapServerSideBlockDefinitions(' . wp_json_encode( get_block_editor_server_block_settings() ) . ');'
-            );
+			wp_add_inline_script(
+				'wp-blocks',
+				'wp.blocks.unstable__bootstrapServerSideBlockDefinitions(' . wp_json_encode( get_block_editor_server_block_settings() ) . ');'
+			);
 
 			\wp_enqueue_script( self::$slug );
 			\wp_enqueue_style( self::$slug );
