@@ -22,11 +22,14 @@ body {
 		--nfd-onboarding-light-gray-2: #efefef;
 		--nfd-onboarding-light-gray-3: #f2f2f2;
 		--nfd-onboarding-light-gray-4: #a7a7a7;
+		--nfd-onboarding-light-gray-5: #eee;
 		--nfd-onboarding-light-gray-highlighted: #e2e9f4;
 		--nfd-onboarding-dark: #1d2a3b;
 		--nfd-onboarding-border: 219, 219, 219;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
 		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
+		--nfd-onboarding-loader-start: var(--nfd-onboarding-primary);
+		--nfd-onboarding-loader-end: var(--nfd-onboarding-tertiary);
 		--nfd-onboarding-step-loader-icon: url("../../Brands/bluehost/step-loader-logo.svg");
 		--nfd-onboarding-step-error-icon: url("../../Brands/bluehost/step-error-logo.svg");
 	}
@@ -53,10 +56,13 @@ body {
 		--nfd-onboarding-light-gray-2: #efefef;
 		--nfd-onboarding-light-gray-3: #f2f2f2;
 		--nfd-onboarding-light-gray-4: #a7a7a7;
+		--nfd-onboarding-light-gray-5: #eee;
 		--nfd-onboarding-dark: #1e2044;
 		--nfd-onboarding-border: 245, 246, 248;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
 		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
+		--nfd-onboarding-loader-start: var(--nfd-onboarding-primary);
+		--nfd-onboarding-loader-end: var(--nfd-onboarding-tertiary);
 	}
 
 	&.nfd-brand-webcom {
@@ -81,9 +87,12 @@ body {
 		--nfd-onboarding-light-gray-2: #efefef;
 		--nfd-onboarding-light-gray-3: #f2f2f2;
 		--nfd-onboarding-light-gray-4: #a7a7a7;
+		--nfd-onboarding-light-gray-5: #eee;
 		--nfd-onboarding-dark: #000;
 		--nfd-onboarding-border: 219, 219, 219;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary-alt);
 		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-tertiary-alt);
+		--nfd-onboarding-loader-start: var(--nfd-onboarding-primary);
+		--nfd-onboarding-loader-end: var(--nfd-onboarding-tertiary);
 	}
 }

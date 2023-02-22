@@ -13,7 +13,7 @@ import CommonLayout from '../../../../components/Layouts/Common';
 import {
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
 	THEME_STATUS_ACTIVE,
-	THEME_STATUS_NOT_ACTIVE,
+	THEME_STATUS_INIT,
 	SIDEBAR_LEARN_MORE,
 } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
@@ -70,7 +70,7 @@ const StepDesignThemeStylesPreview = () => {
 			true
 		);
 		if ( patternsResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		setPattern( patternsResponse?.body );
 		setIsLoaded( true );
@@ -194,22 +194,20 @@ const StepDesignThemeStylesPreview = () => {
 							<span className="theme-styles-preview__title-bar__browser__dot"></span>
 						</div>
 					</div>
-					<div className="theme-styles-preview__live-preview-container">
-						{ ! pattern && (
-							<LivePreview
-								blockGrammer={ '' }
-								styling={ 'custom' }
-								viewportWidth={ 1300 }
-							/>
-						) }
-						{ pattern && (
-							<LivePreview
-								blockGrammer={ pattern }
-								styling={ 'custom' }
-								viewportWidth={ 1300 }
-							/>
-						) }
-					</div>
+					{ ! pattern && (
+						<LivePreview
+							blockGrammer={ '' }
+							styling={ 'large' }
+							viewportWidth={ 1300 }
+						/>
+					) }
+					{ pattern && (
+						<LivePreview
+							blockGrammer={ pattern }
+							styling={ 'large' }
+							viewportWidth={ 1300 }
+						/>
+					) }
 				</CommonLayout>
 			</GlobalStylesProvider>
 		</DesignStateHandler>

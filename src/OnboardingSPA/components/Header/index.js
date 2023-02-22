@@ -1,10 +1,11 @@
-import { useLocation } from 'react-router-dom';
 import { __ } from '@wordpress/i18n';
+import { useLocation } from 'react-router-dom';
+import { memo } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 
-import { store as nfdOnboardingStore } from '../../store';
-import ExitToWordPress from '../ExitToWordPress';
 import HeaderEnd from './components/HeaderEnd';
+import ExitToWordPress from '../ExitToWordPress';
+import { store as nfdOnboardingStore } from '../../store';
 
 /**
  * Interface header rendered into header render prop in <InterfaceSkeleton />.
@@ -19,15 +20,7 @@ const Header = () => {
 			firstStep: select( nfdOnboardingStore ).getFirstStep(),
 		};
 	}, [] );
-	const { previousStep, nextStep } = useSelect(
-		( select ) => {
-			return {
-				previousStep: select( nfdOnboardingStore ).getPreviousStep(),
-				nextStep: select( nfdOnboardingStore ).getNextStep(),
-			};
-		},
-		[ location.path ]
-	);
+
 	const isGettingStarted = firstStep?.path === location?.pathname;
 	return (
 		<div className="nfd-onboarding-header">
@@ -46,4 +39,4 @@ const Header = () => {
 	);
 };
 
-export default Header;
+export default memo( Header );
