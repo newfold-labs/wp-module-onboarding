@@ -86,7 +86,7 @@ final class Brands {
 					'support' => '1800-419-4426',
 				),
 				'hireExpertsInfo'             => array(
-					'defaultLink'   => 'https://www.bluehost.in/solutions/full-service',
+					'defaultLink'   => 'https://www.bluehost.in/bluesky',
 					'utmParameters' => array(
 						'utm_source'   => 'blog',
 						'utm_medium'   => 'socialmedia',
