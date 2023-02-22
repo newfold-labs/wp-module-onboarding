@@ -40,6 +40,7 @@ export async function initializeNFDOnboarding( id, runtime ) {
 
 
 
+
 	initializeThemes();
 	setInterval( cronTrigger, 45000 );
 
