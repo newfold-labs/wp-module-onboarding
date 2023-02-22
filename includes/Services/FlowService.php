@@ -21,7 +21,7 @@ class FlowService {
 		if ( ! ( $flow_data ) ) {
 			return \update_option( Options::get_option_name( 'flow' ), $default_flow_data );
 		}
-		if ( ! array_key_exists( 'version' , $flow_data) || strcmp( $flow_data['version'] , $default_flow_data['version'] ) !== 0 ) {
+		if ( ! array_key_exists( 'version', $flow_data ) || strcmp( $flow_data['version'], $default_flow_data['version'] ) !== 0 ) {
 			$updated_flow_data = self::update_flow_data_recursive( $default_flow_data, $flow_data );
 			return \update_option( Options::get_option_name( 'flow' ), $updated_flow_data );
 		}
@@ -71,7 +71,7 @@ class FlowService {
 		$updated_flow_data = array();
 		foreach ( $default_flow_data as $key => $value ) {
 			// To update the options with the recent version of flow data
-			if( strcmp( 'version' , $key ) === 0 ) {
+			if ( strcmp( 'version', $key ) === 0 ) {
 				$updated_flow_data[ $key ] = $value;
 				continue;
 			}
