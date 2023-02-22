@@ -327,12 +327,6 @@ class PluginsController {
 					continue;
 				}
 
-				// If the Plugin is already in queue
-				$position_in_queue = PluginInstallTaskManager::status( $plugin );
-				if ( false !== $position_in_queue ) {
-					continue;
-				}
-
 				PluginInstallTaskManager::add_to_queue(
 					new PluginInstallTask(
 						$plugin,
