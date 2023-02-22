@@ -1,16 +1,15 @@
 body {
 
-	&.nfd-brand-bluehost,
-	&.nfd-brand-bluehost-india {
+	&.nfd-brand-bluehost {
 		--wp-admin-theme-color: #3575d3;
 		--wp-admin-theme-color--rgb: 53, 117, 211;
 		--wp-admin-theme-color-darker-10: #1c5cba;
 		--wp-admin-theme-color-darker-10--rgb: 28, 92, 186;
 		--wp-admin-theme-color-darker-20: #0242a0;
 		--wp-admin-theme-color-darker-20--rgb: 2, 66, 160;
-		--nfd-onboarding-dark-icon: url(../../Brands/bluehost/dark.svg);
-		--nfd-onboarding-icon: url(../../Brands/bluehost/icon.svg);
-		--nfd-onboarding-logo: url(../../Brands/bluehost/logo.svg);
+		--nfd-onboarding-dark-icon: url("../../Brands/bluehost/dark.svg");
+		--nfd-onboarding-icon: url("../../Brands/bluehost/icon.svg");
+		--nfd-onboarding-logo: url("../../Brands/bluehost/logo.svg");
 		--nfd-onboarding-primary: #3575d3;
 		--nfd-onboarding-highlighted--rgb: 123, 177, 253;
 		--nfd-onboarding-primary-alt: #2c76dc;
@@ -31,8 +30,8 @@ body {
 		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
 		--nfd-onboarding-loader-start: var(--nfd-onboarding-primary);
 		--nfd-onboarding-loader-end: var(--nfd-onboarding-tertiary);
-		--nfd-onboarding-step-loader-icon: url(../../Brands/bluehost/step-loader-logo.svg);
-		--nfd-onboarding-step-error-icon: url(../../Brands/bluehost/step-error-logo.svg);
+		--nfd-onboarding-step-loader-icon: url("../../Brands/bluehost/step-loader-logo.svg");
+		--nfd-onboarding-step-error-icon: url("../../Brands/bluehost/step-error-logo.svg");
 	}
 
 	&.nfd-brand-hostgator {
@@ -42,9 +41,9 @@ body {
 		--wp-admin-theme-color-darker-10--rgb: 20, 133, 236;
 		--wp-admin-theme-color-darker-20: #1177d2;
 		--wp-admin-theme-color-darker-20--rgb: 17, 119, 210;
-		--nfd-onboarding-dark-icon: url(../../Brands/hostgator/dark.svg);
-		--nfd-onboarding-icon: url(../../Brands/hostgator/icon.svg);
-		--nfd-onboarding-logo: url(../../Brands/hostgator/logo.svg);
+		--nfd-onboarding-dark-icon: url("../../Brands/hostgator/dark.svg");
+		--nfd-onboarding-icon: url("../../Brands/hostgator/icon.svg");
+		--nfd-onboarding-logo: url("../../Brands/hostgator/logo.svg");
 		--nfd-onboarding-primary: #2e93ee;
 		--nfd-onboarding-highlighted--rgb: 30, 32, 68;
 		--nfd-onboarding-primary-alt: #3b97ff;
@@ -73,9 +72,9 @@ body {
 		--wp-admin-theme-color-darker-10--rgb: 43, 92, 251;
 		--wp-admin-theme-color-darker-20: #0b44fb;
 		--wp-admin-theme-color-darker-20--rgb: 11, 68, 251;
-		--nfd-onboarding-dark-icon: url(../../Brands/webcom/dark.svg);
-		--nfd-onboarding-icon: url(../../Brands/webcom/icon.svg);
-		--nfd-onboarding-logo: url(../../Brands/webcom/logo.svg);
+		--nfd-onboarding-dark-icon: url("../../Brands/webcom/dark.svg");
+		--nfd-onboarding-icon: url("../../Brands/webcom/icon.svg");
+		--nfd-onboarding-logo: url("../../Brands/webcom/logo.svg");
 		--nfd-onboarding-primary: #4b75fc;
 		--nfd-onboarding-highlighted--rgb: 13, 71, 251;
 		--nfd-onboarding-primary-alt: #0d47fb;
