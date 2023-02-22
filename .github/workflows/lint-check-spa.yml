@@ -62,6 +62,7 @@ jobs:
         with:
           PATTERNS: |
             +(src)/**/*.scss
+        if: ${{ success() || steps.js-lint.conclusion == 'failure' }}
 
       # Runs wp-script for linting scss
       - name: Run SASS Lint
