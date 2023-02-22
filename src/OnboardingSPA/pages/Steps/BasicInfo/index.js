@@ -28,7 +28,7 @@ const StepBasicInfo = () => {
 			setIsDrawerOpened( true );
 		}
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
-		setIsDrawerSuppressed( false );
+		setIsDrawerSuppressed(false);
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
