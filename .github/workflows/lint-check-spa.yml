@@ -23,12 +23,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Picks the Node version to be used and installs it
-      # https://github.com/actions/setup-node
+      # Install Node.js 14.x and npm < 7
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '19.2.0'
+          node-version: 14.x
           cache: 'npm'
       
       # Checks for cache if present
@@ -42,7 +41,7 @@ jobs:
 
       # Installs wp-script for lint checks
       - name: Install dependencies
-        run: npm i @wordpress/scripts@24.3.0
+        run: npm i @wordpress/scripts
         if: steps.cache.outputs.cache-hit != 'true'
 
       # Gets the files changed wrt to trunk and searches for js files
