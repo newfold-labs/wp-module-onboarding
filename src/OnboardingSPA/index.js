@@ -37,6 +37,7 @@ const initializeFlowData = ( currentData ) => {
  */
 export async function initializeNFDOnboarding( id, runtime ) {
 	initializePlugins();
+
 	initializeThemes();
 	setInterval( cronTrigger, 45000 );
 
