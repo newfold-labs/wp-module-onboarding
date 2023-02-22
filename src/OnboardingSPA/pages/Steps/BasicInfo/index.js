@@ -7,13 +7,6 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import { useViewportMatch } from '@wordpress/compose';
 
-import { memoize } from 'lodash';
-import { domAnimation } from 'framer-motion';
-import { Dialog } from 'reakit';
-import { _ } from 'redux';
-import { merge } from '@emotion/css';
-import { EditorMode } from '@wordpress/edit-post';
-
 const StepBasicInfo = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const {
