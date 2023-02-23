@@ -1,6 +1,7 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 use NewfoldLabs\WP\Module\Onboarding\Data\SiteFeatures;
@@ -277,6 +278,17 @@ class PluginsController {
 				array(
 					'status'   => 'installing',
 					'estimate' => ( ( $position_in_queue + 1 ) * 30 ),
+				),
+				200
+			);
+		}
+
+		$in_progress_plugin = \get_option( Options::get_option_name( 'plugins_init_status' ), '' );
+		if ( $in_progress_plugin === $plugin ) {
+			return new \WP_REST_Response(
+				array(
+					'status'   => 'installing',
+					'estimate' => 30,
 				),
 				200
 			);
