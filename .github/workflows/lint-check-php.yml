@@ -1,8 +1,6 @@
-name: Lint
+name: 'Lint Checker: PHP'
 on:
   push:
-    branches:
-      - '**'
     paths:
       - '**.php'
   pull_request:
