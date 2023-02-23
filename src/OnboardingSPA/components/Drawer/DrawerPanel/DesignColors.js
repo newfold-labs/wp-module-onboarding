@@ -91,62 +91,30 @@ const DesignColors = () => {
 			selectedGlobalStyle?.settings?.color?.palette;
 		if ( colorPalettesTemp && colorStyle && selectedThemeColorPalette ) {
 			for ( let idx = 0; idx < selectedThemeColorPalette.length; idx++ ) {
-				switch ( selectedThemeColorPalette[ idx ]?.slug ) {
-					case 'primary':
-					case 'secondary':
-					case 'tertiary':
-					case 'base':
-					case 'contrast':
-					/* YITH WONDER */
-					case 'header-background':
-					case 'header-foreground':
-					case 'header-titles':
-					case 'secondary-background':
-					case 'secondary-foreground':
-						const slug = selectedThemeColorPalette[ idx ]?.slug;
-						if (
-							isCustomStyle &&
-							selectedColorsLocalTemp?.[ slug ] != '' &&
-							selectedColorsLocalTemp?.[ slug ] != undefined
-						)
-							selectedThemeColorPalette[ idx ].color =
-								selectedColorsLocalTemp[ slug ];
-						/**
-						 * Add Exception for Background.
-						 * (perhaps scope to yith-wonder in future)
-						 */ else if (
-							colorPalettesTemp?.[ colorStyle ]?.[ slug ] &&
-							'base' === slug
-						) {
-							selectedThemeColorPalette[ idx ].color = '#FFFFFF';
-						} else if (
-							! isCustomStyle &&
-							colorPalettesTemp?.[ colorStyle ]?.[ slug ]
-						) {
-							selectedThemeColorPalette[ idx ].color =
-								colorPalettesTemp[ colorStyle ][ slug ];
-						}
-
-						if ( customColorsMap ) {
-							const colorVariant = customColorsMap[ slug ];
-							if ( colorVariant ) {
-								colorVariant.forEach( ( variant ) => {
-									if (
-										customColors &&
-										customColors[ slug ] !== undefined
-									) {
-										selectedThemeColorPalette[
-											findInCustomColors( variant, slug )
-										].color = customColors[ slug ];
-									}
-								} );
-							}
-						}
-
-						break;
+				const slug = selectedThemeColorPalette[ idx ]?.slug;
+				if (
+					isCustomStyle &&
+					selectedColorsLocalTemp?.[ slug ] != '' &&
+					selectedColorsLocalTemp?.[ slug ] != undefined
+				)
+					selectedThemeColorPalette[ idx ].color =
+						selectedColorsLocalTemp[ slug ];
+				/**
+				 * Add Exception for Background.
+				 * (perhaps scope to yith-wonder in future)
+				 */ else if (
+					colorPalettesTemp?.[ colorStyle ]?.[ slug ] &&
+					'base' === slug
+				) {
+					selectedThemeColorPalette[ idx ].color = '#FFFFFF';
+				} else if (
+					! isCustomStyle &&
+					colorPalettesTemp?.[ colorStyle ]?.[ slug ]
+				) {
+					selectedThemeColorPalette[ idx ].color =
+						colorPalettesTemp[ colorStyle ][ slug ];
 				}
 			}
-
 			selectedGlobalStyle.settings.color.palette =
 				selectedThemeColorPalette;
 			updatePreviewSettings(
@@ -160,9 +128,13 @@ const DesignColors = () => {
 		}
 	}
 
-	function findInCustomColors( slugName, colorPickerCalledBy ) {
+	function findInCustomColors(
+		slugName,
+		colorPickerCalledBy,
+		storedPreviewSettingsTemp = storedPreviewSettings
+	) {
 		const selectedThemeColorPalette =
-			storedPreviewSettings?.settings?.color?.palette;
+			storedPreviewSettingsTemp?.settings?.color?.palette;
 		const res = selectedThemeColorPalette.findIndex(
 			( { slug } ) => slug === slugName
 		);
@@ -220,8 +192,12 @@ const DesignColors = () => {
 	}
 
 	const getColorStylesAndPatterns = async () => {
+		const globalStyles = await getGlobalStyles();
 		const colorPalettes = await getThemeColors();
 		if ( colorPalettes?.error ) {
+			return updateThemeStatus( THEME_STATUS_INIT );
+		}
+		if ( globalStyles?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		setColorPalettes( colorPalettes?.body.tailored );
@@ -242,6 +218,12 @@ const DesignColors = () => {
 			}
 		}
 		setSelectedColors( selectedColors );
+		saveThemeColorPalette(
+			currentData?.data?.palette.slug,
+			colorPalettes?.body.tailored,
+			selectedColorsLocal,
+			globalStyles?.body[ 0 ]
+		);
 		setIsLoaded( true );
 	};
 
@@ -271,6 +253,15 @@ const DesignColors = () => {
 	const changeCustomPickerColor = async ( color ) => {
 		const selectedColorsLocalCopy = { ...selectedColorsLocal };
 		selectedColorsLocalCopy[ colorPickerCalledBy ] = color;
+
+		if ( customColorsMap ) {
+			const colorVariant = customColorsMap[ colorPickerCalledBy ];
+			if ( colorVariant ) {
+				colorVariant.forEach( ( variant ) => {
+					selectedColorsLocalCopy[ variant ] = color;
+				} );
+			}
+		}
 
 		saveCustomColors();
 		LocalToState( selectedColorsLocalCopy, 'custom' );
