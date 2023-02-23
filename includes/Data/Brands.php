@@ -39,8 +39,8 @@ final class Brands {
 					'fragment'        => '#/marketplace/services/blue-sky',
 					'queryParameters' => array(
 						'page'         => 'bluehost',
-						'utm_source'   => 'onboarding',
-						'utm_medium'   => 'wp_admin',
+						'utm_source'   => 'wp-onboarding',
+						'utm_medium'   => 'brand-plugin',
 						'utm_campaign' => 'wp-setup',
 					),
 				),
@@ -88,9 +88,9 @@ final class Brands {
 				'hireExpertsInfo'             => array(
 					'defaultLink'   => 'https://www.bluehost.in/bluesky',
 					'utmParameters' => array(
-						'utm_source'   => 'blog',
-						'utm_medium'   => 'socialmedia',
-						'utm_campaign' => 'blogpost',
+						'utm_source'   => 'wp-onboarding',
+						'utm_medium'   => 'brand-plugin',
+						'utm_campaign' => 'wp-setup',
 					),
 				),
 				'expertsInfo'                 => array(
