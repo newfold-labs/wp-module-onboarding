@@ -42,9 +42,10 @@ const StepAddress = () => {
 
 	const navigate = useNavigate();
 
-	let currentData = useSelect((select) =>
-		select(nfdOnboardingStore).getCurrentOnboardingData()
-	);
+	let [currentData, newfoldBrand] = useSelect((select) => [
+		select(nfdOnboardingStore).getCurrentOnboardingData(),
+		select(nfdOnboardingStore).getNewfoldBrand(),
+	]);
 
 	const settings = useWPSettings();
 	useEffect(() => {
@@ -81,7 +82,9 @@ const StepAddress = () => {
 	let defaultPlace =
 		address?.woocommerce_default_country ??
 		settings?.woocommerce_default_country ??
-		'US:AZ';
+		newfoldBrand === 'bluehost-india'
+			? 'IN:TN'
+			: 'US:AZ';
 	let [defaultCountry, defaultState] = defaultPlace.split(':');
 	let selectedCountry = address?.country ?? defaultCountry;
 	let states =
@@ -266,6 +269,7 @@ const StepAddress = () => {
 										type='text'
 										name='woocommerce_currency'
 										value={address?.woocommerce_currency}
+										defaultValue={newfoldBrand === 'bluehost-india' ? 'INR' : 'USD'}
 										{...fieldProps}
 									>
 										{Object.entries(currencies).map(([code, currency]) => (
