@@ -13,10 +13,17 @@ use NewfoldLabs\WP\Module\Onboarding\TaskManagers\TaskManager;
 final class Application {
 
 	/**
+	 * Newfold Labs Module Container
+	 *
 	 * @var Container
 	 */
 	protected $container;
 
+	/**
+	 * Arguments for the container
+	 *
+	 * @var agrs
+	 */
 	protected $args;
 
 	/**
@@ -58,11 +65,11 @@ final class Application {
 			new WP_CLI();
 		}
 
-		if ( Permissions::is_authorized_admin() ) {
+		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
 			new WP_Admin();
 		}
 
 		\do_action( 'nfd_module_onboarding_post_init' );
 	}
 }
-// END \NewfoldLabs\WP\Module\Onboarding\Application
+// END /NewfoldLabs/WP/Module/Onboarding/Application
