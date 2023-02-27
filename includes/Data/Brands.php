@@ -39,8 +39,8 @@ final class Brands {
 					'fragment'        => '#/marketplace/services/blue-sky',
 					'queryParameters' => array(
 						'page'         => 'bluehost',
-						'utm_source'   => 'onboarding',
-						'utm_medium'   => 'wp_admin',
+						'utm_source'   => 'wp-onboarding',
+						'utm_medium'   => 'brand-plugin',
 						'utm_campaign' => 'wp-setup',
 					),
 				),
@@ -77,17 +77,20 @@ final class Brands {
 				'facebookUrl'                 => 'https://www.facebook.com/BlueHostIndia',
 				'twitterName'                 => '@BluehostIndia',
 				'twitterUrl'                  => 'https://twitter.com/bluehostindia',
-				'youtubeUrl'                  => null,
+				'youtubeUrl'                  => 'https://www.youtube.com/c/BluehostIndia1',
 				'linkedinUrl'                 => null,
 				'accountUrl'                  => 'https://my.bluehost.in',
 				'domainsUrl'                  => 'https://my.bluehost.in/hosting/app?lil=1#/domains',
 				'emailUrl'                    => 'https://my.bluehost.in/hosting/app?lil=1#/email-office',
+				'phoneNumbers'                => array(
+					'support' => '1800-419-4426',
+				),
 				'hireExpertsInfo'             => array(
-					'defaultLink'   => 'https://www.bluehost.in/solutions/full-service',
+					'defaultLink'   => 'https://www.bluehost.in/bluesky',
 					'utmParameters' => array(
-						'utm_source'   => 'blog',
-						'utm_medium'   => 'socialmedia',
-						'utm_campaign' => 'blogpost',
+						'utm_source'   => 'wp-onboarding',
+						'utm_medium'   => 'brand-plugin',
+						'utm_campaign' => 'wp-setup',
 					),
 				),
 				'expertsInfo'                 => array(
