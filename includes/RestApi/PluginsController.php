@@ -1,6 +1,7 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 use NewfoldLabs\WP\Module\Onboarding\Data\SiteFeatures;
@@ -14,13 +15,16 @@ use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginUninstallTaskManager;
  * Class PluginsController
  */
 class PluginsController {
-
 	/**
+	 * The namespace of this controller's route.
+	 *
 	 * @var string
 	 */
 	 protected $namespace = 'newfold-onboarding/v1';
 
 	/**
+	 * The base of this controller's route.
+	 *
 	 * @var string
 	 */
 	protected $rest_base = '/plugins';
@@ -139,6 +143,11 @@ class PluginsController {
 		);
 	}
 
+	/**
+	 * Get the plugin status check arguments.
+	 *
+	 * @return array
+	 */
 	public function get_status_args() {
 		return array(
 			'plugin'    => array(
@@ -152,6 +161,11 @@ class PluginsController {
 		);
 	}
 
+	/**
+	 * Get the set site features arguments.
+	 *
+	 * @return array
+	 */
 	public function set_site_features_args() {
 		return array(
 			'plugins' => array(
@@ -164,7 +178,7 @@ class PluginsController {
 	/**
 	 * Verify caller has permissions to install plugins.
 	 *
-	 * @param \WP_REST_Request $request
+	 * @param \WP_REST_Request $request the incoming request object.
 	 *
 	 * @return boolean
 	 */
@@ -197,7 +211,7 @@ class PluginsController {
 	/**
 	 * Install the requested plugin via a zip url (or) slug.
 	 *
-	 * @param \WP_REST_Request $request
+	 * @param \WP_REST_Request $request the incoming request object.
 	 *
 	 * @return \WP_REST_Response|\WP_Error
 	 */
@@ -238,6 +252,12 @@ class PluginsController {
 		return $plugin_install_task->execute();
 	}
 
+	/**
+	 * Returns the status of a given plugin slug.
+	 *
+	 * @param \WP_REST_Request $request the incoming request object.
+	 * @return \WP_REST_Response
+	 */
 	public function get_status( \WP_REST_Request $request ) {
 		$plugin    = $request->get_param( 'plugin' );
 		$activated = $request->get_param( 'activated' );
@@ -253,11 +273,22 @@ class PluginsController {
 
 		$position_in_queue = PluginInstallTaskManager::status( $plugin );
 
-		if ( $position_in_queue !== false ) {
+		if ( false !== $position_in_queue ) {
 			return new \WP_REST_Response(
 				array(
 					'status'   => 'installing',
 					'estimate' => ( ( $position_in_queue + 1 ) * 30 ),
+				),
+				200
+			);
+		}
+
+		$in_progress_plugin = \get_option( Options::get_option_name( 'plugins_init_status' ), '' );
+		if ( $in_progress_plugin === $plugin ) {
+			return new \WP_REST_Response(
+				array(
+					'status'   => 'installing',
+					'estimate' => 30,
 				),
 				200
 			);
@@ -273,18 +304,18 @@ class PluginsController {
 	}
 
 	/**
-	 * Retrieves the Customized list of Plugins for the user.
+	 * Retrieves all the site features.
 	 *
 	 * @return array|\WP_Error
 	 */
 	public function get_site_features() {
-		 return SiteFeatures::get();
+		 return SiteFeatures::get_with_selections();
 	}
 
 	/**
 	 * Installs/Uninstalls the requested plugins.
 	 *
-	 * @param \WP_REST_Request $request
+	 * @param \WP_REST_Request $request the incoming request object.
 	 *
 	 * @return \WP_REST_Response|\WP_Error
 	 */
@@ -303,6 +334,11 @@ class PluginsController {
 
 		foreach ( $plugins as $plugin => $decision ) {
 			if ( $decision ) {
+				// If the Plugin exists and is activated
+				if ( PluginInstaller::exists( $plugin, $decision ) ) {
+					continue;
+				}
+
 				PluginInstallTaskManager::add_to_queue(
 					new PluginInstallTask(
 						$plugin,

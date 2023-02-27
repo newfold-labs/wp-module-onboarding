@@ -1,8 +1,5 @@
 <?php
-
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
-
-use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 /**
  * Class Patterns
@@ -104,7 +101,6 @@ final class Patterns {
 						'shown'  => true,
 					),
 				),
-				'site-features'   => SiteFeatures::get_site_features()[ Data::current_flow() ],
 			),
 		);
 	}
@@ -142,11 +138,11 @@ final class Patterns {
 		$block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
 		if ( $block_patterns_registry->is_registered( $pattern_slug ) ) {
 			$pattern = $block_patterns_registry->get_registered( $pattern_slug );
-			 return array(
-				 'title'   => $pattern['title'],
-				 'content' => self::cleanup_wp_grammar( $pattern['content'] ),
-				 'name'    => $pattern['name'],
-			 );
+			return array(
+				'title'   => $pattern['title'],
+				'content' => self::cleanup_wp_grammar( $pattern['content'] ),
+				'name'    => $pattern['name'],
+			);
 		}
 
 		return false;
