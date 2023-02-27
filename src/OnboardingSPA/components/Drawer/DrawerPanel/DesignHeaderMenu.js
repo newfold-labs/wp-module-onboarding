@@ -5,9 +5,7 @@ import HeaderMenuPreview from '../../HeaderMenuPreview';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
 import { GlobalStylesProvider, LivePreviewSkeleton } from '../../../components/LivePreview';
-import { store as coreStore } from '@wordpress/core-data';
 import { wpSiteUrl } from '../../../../constants';
-import { filter } from 'lodash';
 
 import {
 	THEME_STATUS_ACTIVE,
@@ -27,25 +25,12 @@ const DesignHeaderMenu = () => {
 	];
 
 	const defaultMenuItems = [ 'Home', 'About', 'Contact', 'News', 'Privacy', 'Careers' ];
-	let pageList = [];
 
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ patterns, setPatterns ] = useState();
-	const [ pagesRender, setPagesRender ] = useState( false );
 	const [ headerMenuPreviewData, setHeaderMenuPreviewData ] = useState();
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
 	const location = useLocation();
-
-	const { editEntityRecord } = useDispatch( coreStore );
-	const { getEntityRecords, getEditedEntityRecord } = useSelect( ( select ) => {
-		return select( coreStore );
-	}, [] );
-
-	const pages = useSelect(
-		select =>
-			select( coreStore ).getEntityRecords( 'postType', 'page' ),
-		[]
-	);
 
 	const { currentStep, currentData, themeStatus } = useSelect( ( select ) => {
 		return {
@@ -103,37 +88,10 @@ const DesignHeaderMenu = () => {
 	};
 
 	useEffect( () => {
-		console.log(pages);
-		if( pages != null) {
-			pageList = filteredPageList( pages );
-			updatePageEntityData( pageList );
-			setPagesRender( true );
-		}
-	}, [ pages ] );
-
-	useEffect( () => {
 		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE ) {
 			getPatternsData();
 		}
 	}, [ isLoaded, themeStatus ] );
-
-	const updatePageEntityData = ( pages ) => {
-		pages?.map( ( page, idx ) => {
-			console.log( page.id + ' = ' + JSON.stringify(page.title) );
-			editEntityRecord( 'postType', 'page',
-				page.id,
-				{ title: defaultMenuItems[idx] }
-			);
-			getEditedEntityRecord( 'postType', 'page', page.id);
-		});
-	};
-
-	const filteredPageList = ( pages ) => {
-		return filter(
-			pages,
-			( page, idx ) => idx < 6
-		);
-	};
 
 	const replaceNavigationGrammar = ( pageGrammar, headerSlug ) => {
 		if( headerSlug.includes('split') ) {
@@ -207,7 +165,7 @@ const DesignHeaderMenu = () => {
 		<GlobalStylesProvider>
 			<div className="theme-header-menu-preview--drawer">
 				<div className="theme-header-menu-preview--drawer__list">
-					{ pagesRender && buildPreviews() }
+					{ buildPreviews() }
 					{/* { <LivePreviewSkeleton 
 						className={ 'theme-styles-preview--drawer__list__item' }
 						watch={patterns}
