@@ -23,8 +23,6 @@ const StepDesignTypography = () => {
 
 	const { currentStep, themeStatus } = useSelect( ( select ) => {
 		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
 			),
