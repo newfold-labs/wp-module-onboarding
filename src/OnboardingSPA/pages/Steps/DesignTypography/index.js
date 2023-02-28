@@ -21,7 +21,7 @@ const StepDesignTypography = () => {
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
 
-	const { currentData, currentStep, themeStatus } = useSelect( ( select ) => {
+	const { currentStep, themeStatus } = useSelect( ( select ) => {
 		return {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
