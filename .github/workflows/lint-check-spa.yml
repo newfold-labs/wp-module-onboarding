@@ -1,0 +1,70 @@
+name: "Lint Checker: Onboarding SPA"
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "src/**/*.js"
+      - "src/**/*.scss"
+  pull_request:
+    types: [opened, edited, reopened, ready_for_review]
+    paths:
+      - "src/**/*.js"
+      - "src/**/*.scss"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  lint-check-spa:
+    name: Run Lint Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Install Node.js 14.x and npm < 7.
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.x
+          cache: 'npm'
+      
+      # Checks if node_modules exists in the cache.
+      - name: Cache node_modules directory
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-node-
+
+      # Installs @wordpress/scripts for lint checks if it does not exist in the cache.
+      - name: Install dependencies
+        run: npm i @wordpress/scripts
+        if: steps.cache.outputs.cache-hit != 'true'
+
+      # Gets the files changed wrt to trunk and filters out the js files.
+      - uses: technote-space/get-diff-action@v6
+        with:
+          PATTERNS: |
+            +(src)/**/*.js
+
+      # Runs wp-scripts for checking JS coding issues.
+      - name: Run JS Lint
+        id: js-lint
+        run: npx wp-scripts lint-js ${{ env.GIT_DIFF }}
+        if: "!! env.GIT_DIFF"
+
+      # Gets the files changed wrt to trunk and filters out the SASS files.
+      - uses: technote-space/get-diff-action@v6
+        with:
+          PATTERNS: |
+            +(src)/**/*.scss
+        if: ${{ success() || steps.js-lint.conclusion == 'failure' }}
+
+      # Runs wp-scripts for checking SASS coding issues.
+      - name: Run SASS Lint
+        id: sass-lint
+        run: npx wp-scripts lint-style ${{ env.GIT_DIFF }}
+        if: ${{ (!! env.GIT_DIFF) && (success() || steps.js-lint.conclusion == 'failure') }}

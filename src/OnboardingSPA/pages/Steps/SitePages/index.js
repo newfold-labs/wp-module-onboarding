@@ -8,7 +8,7 @@ import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { getPatterns } from '../../../utils/api/patterns';
 import {
 	THEME_STATUS_ACTIVE,
-	THEME_STATUS_NOT_ACTIVE,
+	THEME_STATUS_INIT,
 	SIDEBAR_LEARN_MORE,
 	VIEW_NAV_DESIGN,
 } from '../../../../constants';
@@ -21,7 +21,6 @@ import LivePreviewSkeleton from '../../../components/LivePreview/LivePreviewSkel
 
 const StepSitePages = () => {
 	const location = useLocation();
-	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ sitePages, setSitePages ] = useState();
 	const [ checkedPages, setCheckedPages ] = useState( [] );
 
@@ -54,7 +53,7 @@ const StepSitePages = () => {
 	const getSitePages = async () => {
 		const sitePagesResponse = await getPatterns( currentStep.patternId );
 		if ( sitePagesResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		if ( sitePagesResponse?.body ) {
 			setSitePages( sitePagesResponse.body );
@@ -78,7 +77,6 @@ const StepSitePages = () => {
 				}
 			}
 		}
-		setIsLoaded( true );
 	};
 
 	const stateToFlowData = ( selectedPages, sitePages ) => {
@@ -146,8 +144,8 @@ const StepSitePages = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE ) getSitePages();
-	}, [ isLoaded, themeStatus ] );
+		if ( themeStatus === THEME_STATUS_ACTIVE ) getSitePages();
+	}, [ themeStatus ] );
 
 	return (
 		<DesignStateHandler>

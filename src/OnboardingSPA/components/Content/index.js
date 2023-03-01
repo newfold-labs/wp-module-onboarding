@@ -1,5 +1,5 @@
-import { Fragment, Suspense } from '@wordpress/element';
 import { Route, Routes } from 'react-router-dom';
+import { Fragment, memo, Suspense, useCallback } from '@wordpress/element';
 
 import { store as nfdOnboardingStore } from '../../store';
 import { useSelect } from '@wordpress/data';
@@ -17,16 +17,19 @@ const Content = () => {
 		};
 	} );
 
-	const getMappedPages = ( routes ) => {
-		return routes?.map( ( route ) => (
-			<Route
-				key={ route.path }
-				path={ route.path }
-				end
-				element={ <route.Component /> }
-			/>
-		) );
-	};
+	const getMappedPages = useCallback(
+		( routes ) => {
+			return routes?.map( ( route ) => (
+				<Route
+					key={ route.path }
+					path={ route.path }
+					end
+					element={ <route.Component /> }
+				/>
+			) );
+		},
+		[ routes ]
+	);
 
 	return (
 		<main className="nfd-onboard-content">
@@ -37,4 +40,5 @@ const Content = () => {
 	);
 };
 
-export default Content;
+const ContentMemo = memo( Content );
+export default ContentMemo;

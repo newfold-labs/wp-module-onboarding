@@ -7,7 +7,7 @@ import { getGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import {
 	THEME_STATUS_ACTIVE,
-	THEME_STATUS_NOT_ACTIVE,
+	THEME_STATUS_INIT,
 } from '../../../../constants';
 import {
 	LivePreviewSelectableCard,
@@ -15,25 +15,28 @@ import {
 } from '../../LivePreview';
 
 const DesignThemeStylesPreview = () => {
-	const MAX_PREVIEWS_PER_ROW = 3;
-
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState();
 	const [ selectedStyle, setSelectedStyle ] = useState( '' );
 
-	const { currentStep, currentData, storedPreviewSettings, themeStatus, themeVariations, } =
-		useSelect( ( select ) => {
-			return {
-				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				storedPreviewSettings:
-					select( nfdOnboardingStore ).getPreviewSettings(),
-				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-				themeVariations: select(nfdOnboardingStore).getStepPreviewData(),
-			};
-		}, [] );
+	const {
+		currentStep,
+		currentData,
+		storedPreviewSettings,
+		themeStatus,
+		themeVariations,
+	} = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			storedPreviewSettings:
+				select( nfdOnboardingStore ).getPreviewSettings(),
+			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			themeVariations: select( nfdOnboardingStore ).getStepPreviewData(),
+		};
+	}, [] );
 
 	const {
 		updatePreviewSettings,
@@ -47,11 +50,11 @@ const DesignThemeStylesPreview = () => {
 			true
 		);
 		if ( patternResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		const globalStylesResponse = await getGlobalStyles( true );
 		if ( globalStylesResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		setPattern( patternResponse?.body );
 		setGlobalStyles( globalStylesResponse?.body );
@@ -120,9 +123,12 @@ const DesignThemeStylesPreview = () => {
 				<LivePreviewSkeleton
 					className={ 'theme-styles-preview--drawer__list__item' }
 					watch={ globalStyles && pattern }
-					count={ themeVariations[currentStep?.patternId]?.previewCount }
+					count={
+						themeVariations[ currentStep?.patternId ]?.previewCount
+					}
 					callback={ buildPreviews }
-					viewportWidth={ 900 }/>
+					viewportWidth={ 900 }
+				/>
 			</div>
 		</div>
 	);

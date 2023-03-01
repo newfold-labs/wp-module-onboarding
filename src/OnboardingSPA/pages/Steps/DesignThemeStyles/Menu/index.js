@@ -11,7 +11,7 @@ import { getGlobalStyles } from '../../../../utils/api/themes';
 import {
 	VIEW_NAV_DESIGN,
 	THEME_STATUS_ACTIVE,
-	THEME_STATUS_NOT_ACTIVE,
+	THEME_STATUS_INIT,
 	SIDEBAR_LEARN_MORE,
 } from '../../../../../constants';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
@@ -22,7 +22,6 @@ import {
 
 const StepDesignThemeStylesMenu = () => {
 	const location = useLocation();
-	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState();
 	const [ selectedStyle, setSelectedStyle ] = useState();
@@ -69,22 +68,20 @@ const StepDesignThemeStylesMenu = () => {
 			true
 		);
 		if ( patternsResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		const globalStylesResponse = await getGlobalStyles( true );
 		if ( globalStylesResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		setPattern( patternsResponse?.body );
 		setGlobalStyles( globalStylesResponse?.body );
 		setSelectedStyle( currentData.data.theme.variation );
-		setIsLoaded( true );
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
-			getStylesAndPatterns();
-	}, [ isLoaded, themeStatus ] );
+		if ( themeStatus === THEME_STATUS_ACTIVE ) getStylesAndPatterns();
+	}, [ themeStatus ] );
 
 	const handleClick = ( idx ) => {
 		const selectedGlobalStyle = globalStyles[ idx ];

@@ -33,11 +33,12 @@ export const NFD_PLUGINS_QUERY_PARAM = 'nfd_plugins';
 export const NFD_THEMES_QUERY_PARAM = 'nfd_themes';
 
 // [TODO] Read the theme from flow data once we have the themes step.
-export const DESIGN_STEPS_THEME = 'nfd_slug_yith_wonder'
+export const DESIGN_STEPS_THEME = 'nfd_slug_yith_wonder';
 export const THEME_STATUS_INIT = 'init';
 export const THEME_STATUS_NOT_ACTIVE = 'inactive';
 export const THEME_STATUS_INSTALLING = 'installing';
 export const THEME_STATUS_ACTIVE = 'activated';
+export const THEME_STATUS_FAILURE = 'failed';
 export const THEME_INSTALL_WAIT_TIMEOUT = 30000
 
 export const ECOMMERCE_STEPS_PLUGIN = 'woocommerce'

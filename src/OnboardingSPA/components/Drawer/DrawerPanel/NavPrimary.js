@@ -7,6 +7,7 @@ import { Icon } from '@wordpress/icons';
 import { store as nfdOnboardingStore } from '../../../store';
 import { useSelect, useDispatch } from '@wordpress/data';
 import classNames from 'classnames';
+import Animate from '../../Animate';
 
 const NavPrimary = () => {
 	const navigate = useNavigate();
@@ -21,7 +22,7 @@ const NavPrimary = () => {
 
 	const isFirstStep = topSteps[ 0 ].path === location.pathname;
 	return (
-		<div className="is-drawer-fade">
+		<Animate type={ 'fade-in' } duration="100ms" timingFunction="ease-in">
 			{ ( isFirstStep && (
 				<Button
 					className="nfd-onboarding-drawer__panel-back"
@@ -32,8 +33,8 @@ const NavPrimary = () => {
 				</Button>
 			) ) || (
 				<ExitToWordPress
-					className="nfd-onboarding-drawer__panel-back"
-					variant="tertiary"
+					buttonClassName="nfd-onboarding-drawer__panel-back"
+					buttonVariant="tertiary"
 					origin="drawer-panel"
 				/>
 			) }
@@ -78,7 +79,7 @@ const NavPrimary = () => {
 					} ) }
 				</ul>
 			</div>
-		</div>
+		</Animate>
 	);
 };
 

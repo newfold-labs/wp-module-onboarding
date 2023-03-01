@@ -1,4 +1,5 @@
 import { __ } from '@wordpress/i18n';
+import { memo } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { Button } from '@wordpress/components';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -11,89 +12,88 @@ import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
 /**
  * Interface Text Inputs with standard design.
  *
- * @returns
+ * @return
  */
 const SkipButton = () => {
+	const navigate = useNavigate();
+	const location = useLocation();
+	const { nextStep, currentData } = useSelect( ( select ) => {
+		return {
+			nextStep: select( nfdOnboardingStore ).getNextStep(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+		};
+	}, [] );
 
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { previousStep, nextStep, currentData } = useSelect(
-        (select) => {
-            return {
-                previousStep: select(nfdOnboardingStore).getPreviousStep(),
-                nextStep: select(nfdOnboardingStore).getNextStep(),
-                currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
-            };
-        },
-        []
-    );
+	const isLastStep = null === nextStep || false === nextStep;
 
-    const isFirstStep = null === previousStep || false === previousStep;
-    const isLastStep = null === nextStep || false === nextStep;
+	async function syncSocialSettingsFinish( currentData ) {
+		const initialData = await getSettings();
+		const result = await setSettings( currentData?.data?.socialData );
+		if ( result?.error != null ) {
+			console.error( 'Unable to Save Social Data!' );
+			return initialData?.body;
+		}
+		return result?.body;
+	}
 
+	async function saveData( path, currentData ) {
+		if ( currentData ) {
+			currentData.isComplete = new Date().getTime();
 
-    async function syncSocialSettingsFinish(currentData) {
-        const initialData = await getSettings();
-        const result = await setSettings(currentData?.data?.socialData);
-        if (result?.error != null) {
-            console.error('Unable to Save Social Data!');
-            return initialData?.body;
-        }
-        return result?.body;
-    }
+			// If Social Data is changed then sync it
+			if ( path?.includes( 'basic-info' ) ) {
+				const socialData = await syncSocialSettingsFinish(
+					currentData
+				);
 
-    async function saveData(path, currentData) {
+				// If Social Data is changed then Sync that also to the store
+				if ( socialData && currentData?.data )
+					currentData.data.socialData = socialData;
+			}
+			setFlow( currentData );
+		}
+		// Redirect to Admin Page for normal customers
+		// and Bluehost Dashboard for ecommerce customers
+		const exitLink = exitToWordpressForEcommerce()
+			? bluehostDashboardPage
+			: wpAdminPage;
+		window.location.replace( exitLink );
+	}
 
-        if (currentData) {
-          currentData.isComplete = new Date().getTime();
+	function skipStep() {
+		if ( isLastStep ) {
+			return (
+				<Button
+					className="skip-button"
+					onClick={ () => saveData( location.pathname, currentData ) }
+				>
+					{ __( 'Skip this Step', 'wp-module-onboarding' ) }
+				</Button>
+			);
+		}
+		return (
+			<Button
+				className="skip-button"
+				onClick={ () => navigate( nextStep.path ) }
+			>
+				{ __( 'Skip this Step', 'wp-module-onboarding' ) }
+			</Button>
+		);
+	}
 
-            // If Social Data is changed then sync it
-            if (path?.includes('basic-info')) {
-                const socialData = await syncSocialSettingsFinish(currentData);
-
-                // If Social Data is changed then Sync that also to the store
-                if (socialData && currentData?.data)
-                    currentData.data.socialData = socialData;
-            }
-            setFlow(currentData);
-        }
-        // Redirect to Admin Page for normal customers 
-        // and Bluehost Dashboard for ecommerce customers
-        const exitLink = exitToWordpressForEcommerce() ? bluehostDashboardPage : wpAdminPage;
-        window.location.replace(exitLink);
-    }
-
-    function skipStep() {
-       if (isLastStep) 
-       {
-           return (
-               <Button className="skip-button"
-                   onClick={(e) => saveData(location.pathname, currentData)} >
-                    {__('Skip this Step', 'wp-module-onboarding')}
-                </Button>
-           );
-       }
-       else {
-           return (
-               <Button className="skip-button"
-                   onClick={(e) => navigate(nextStep.path)} >
-                   {__('Skip this Step', 'wp-module-onboarding')}
-               </Button>
-           );
-       }
-    }
-   
-    return skipStep();
+	return skipStep();
 };
 
-
 /*
- * check if this is the last step 
+ * check if this is the last step
  */
 const exitToWordpressForEcommerce = () => {
-    if (window.nfdOnboarding.currentFlow == 'ecommerce') {
-        return true;
-    }
-    return false;
-}
-export default SkipButton;
+	if ( window.nfdOnboarding.currentFlow == 'ecommerce' ) {
+		return true;
+	}
+	return false;
+};
+
+const SkipButtonMemo = memo( SkipButton );
+export default SkipButtonMemo;

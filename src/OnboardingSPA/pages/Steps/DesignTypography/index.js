@@ -7,8 +7,9 @@ import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import {
 	SIDEBAR_LEARN_MORE,
-	THEME_STATUS_NOT_ACTIVE,
+	THEME_STATUS_INIT,
 	VIEW_DESIGN_TYPOGRAPHY,
+	THEME_STATUS_ACTIVE,
 } from '../../../../constants';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 import {
@@ -19,13 +20,13 @@ import {
 const StepDesignTypography = () => {
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
-	const [ isLoaded, setIsLoaded ] = useState( false );
 
-	const { currentStep } = useSelect( ( select ) => {
+	const { currentStep, themeStatus } = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
 			),
+			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 		};
 	}, [] );
 
@@ -43,15 +44,14 @@ const StepDesignTypography = () => {
 			true
 		);
 		if ( patternsResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		setPattern( patternsResponse?.body );
-		setIsLoaded( true );
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded ) getFontPatterns();
-	}, [ isLoaded ] );
+		if ( THEME_STATUS_ACTIVE === themeStatus ) getFontPatterns();
+	}, [ themeStatus ] );
 
 	return (
 		<DesignStateHandler>
@@ -64,22 +64,20 @@ const StepDesignTypography = () => {
 							<span className="theme-fonts-preview__title-bar__browser__dot"></span>
 						</div>
 					</div>
-					<div className="theme-fonts-preview__live-preview-container">
-						{ ! pattern && (
-							<LivePreview
-								blockGrammer={ '' }
-								styling={ 'custom' }
-								viewportWidth={ 1300 }
-							/>
-						) }
-						{ pattern && (
-							<LivePreview
-								blockGrammer={ pattern }
-								styling={ 'custom' }
-								viewportWidth={ 1300 }
-							/>
-						) }
-					</div>
+					{ ! pattern && (
+						<LivePreview
+							blockGrammer={ '' }
+							styling={ 'large' }
+							viewportWidth={ 1300 }
+						/>
+					) }
+					{ pattern && (
+						<LivePreview
+							blockGrammer={ pattern }
+							styling={ 'large' }
+							viewportWidth={ 1300 }
+						/>
+					) }
 				</CommonLayout>
 			</GlobalStylesProvider>
 		</DesignStateHandler>

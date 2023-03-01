@@ -25,7 +25,7 @@ const getContents = ( brandName, techSupportLink, fullServiceCreativeTeamLink ) 
 			headingWithDescriptions: [
 				{
 					heading: __(
-						'Edit, adjust, strap-in and launch!',
+						'Add, adjust and launch!',
 						'wp-module-onboarding'
 					),
 					description: sprintf(

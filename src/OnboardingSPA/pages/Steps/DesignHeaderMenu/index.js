@@ -46,15 +46,20 @@ const StepDesignHeaderMenu = () => {
 							<span className="theme-header-menu-preview__title-bar__browser__dot"></span>
 						</div>
 					</div>
-					<div className="theme-header-menu-preview__live-preview-container">
-						{ pattern && (
-							<LivePreview
-								blockGrammer={ pattern }
-								styling={ 'custom' }
-								viewportWidth={ 1300 }
-							/>
-						) }
-					</div>
+					{ ! pattern && (
+						<LivePreview
+							blockGrammer={ '' }
+							styling={ 'large' }
+							viewportWidth={ 1300 }
+						/>
+					) }
+					{ pattern && (
+						<LivePreview
+							blockGrammer={ pattern }
+							styling={ 'large' }
+							viewportWidth={ 1300 }
+						/>
+					) }
 				</CommonLayout>
 			</GlobalStylesProvider>
 		</DesignStateHandler>

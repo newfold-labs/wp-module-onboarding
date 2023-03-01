@@ -1,24 +1,32 @@
-import { Animate } from '@wordpress/components';
 import BaseLayout from './Base';
 import { Fragment } from '@wordpress/element';
 import classNames from 'classnames';
+import Animate from '../Animate';
 
 /**
  *
  * @param {*} param0
- * @returns
+ * @return
  */
-const InnerContainer = ({ children }) => {
-	return <section className="is-contained">{children}</section>;
+const InnerContainer = ( { children } ) => {
+	return <section className="is-contained">{ children }</section>;
 };
 
 /**
  * The Common Layout extends the Base Layout and applies structural styles and animations.
  *
- * @param {object} props
- * @returns
+ * @param {Object} props
+ * @param          props.className
+ * @param          props.children
+ * @param          props.isBgPrimary
+ * @param          props.isCentered
+ * @param          props.isVerticallyCentered
+ * @param          props.isContained
+ * @param          props.isPadded
+ * @param          props.isFadeIn
+ * @return
  */
-const CommonLayout = ({
+const CommonLayout = ( {
 	className = '',
 	children,
 	isBgPrimary = false,
@@ -27,22 +35,27 @@ const CommonLayout = ({
 	isContained = false,
 	isPadded = false,
 	isFadeIn = true,
-}) => {
+} ) => {
 	const Container = isContained ? InnerContainer : Fragment;
 	return (
-		<BaseLayout
-			className={classNames(
-				'nfd-onboarding-layout__common',
-				className,
-				{ 'is-layout-fade-in': isFadeIn },
-				{ 'is-bg-primary': isBgPrimary },
-				{ 'is-centered': isCentered },
-				{ 'is-vertically-centered': isVerticallyCentered },
-				{ 'is-padded': isPadded }
-			)}
+		<Animate
+			type={ isFadeIn && 'fade-in' }
+			duration={ '233ms' }
+			timingFunction={ 'ease-in-out' }
 		>
-			<Container>{children}</Container>
-		</BaseLayout>
+			<BaseLayout
+				className={ classNames(
+					'nfd-onboarding-layout__common',
+					className,
+					{ 'is-bg-primary': isBgPrimary },
+					{ 'is-centered': isCentered },
+					{ 'is-vertically-centered': isVerticallyCentered },
+					{ 'is-padded': isPadded }
+				) }
+			>
+				<Container>{ children }</Container>
+			</BaseLayout>
+		</Animate>
 	);
 };
 

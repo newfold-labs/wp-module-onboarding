@@ -8,7 +8,7 @@ import CommonLayout from '../../../components/Layouts/Common';
 import {
 	VIEW_NAV_DESIGN,
 	THEME_STATUS_ACTIVE,
-	THEME_STATUS_NOT_ACTIVE,
+	THEME_STATUS_INIT,
 	SIDEBAR_LEARN_MORE,
 } from '../../../../constants';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
@@ -45,7 +45,6 @@ const StepDesignHomepageMenu = () => {
 	};
 
 	const location = useLocation();
-	const [ isLoaded, setisLoaded ] = useState( false );
 	const [ homepagePattern, setHomepagePattern ] = useState();
 	const [ selectedHomepage, setSelectedHomepage ] = useState( 0 );
 
@@ -103,7 +102,7 @@ const StepDesignHomepageMenu = () => {
 	async function getHomepagePatternsData() {
 		const homepagePatternData = await getPatterns( currentStep.patternId );
 		if ( homepagePatternData?.error ) {
-			return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
+			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 
 		setHomepagePattern( refactorPatterns( homepagePatternData ) );
@@ -121,7 +120,6 @@ const StepDesignHomepageMenu = () => {
 			};
 			setCurrentOnboardingData( currentData );
 		}
-		setisLoaded( true );
 	}
 
 	function saveDataForHomepage( idx ) {
@@ -134,10 +132,10 @@ const StepDesignHomepageMenu = () => {
 	}
 
 	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE ) {
+		if ( themeStatus === THEME_STATUS_ACTIVE ) {
 			getHomepagePatternsData();
 		}
-	}, [ isLoaded, themeStatus ] );
+	}, [ themeStatus ] );
 
 	function buildHomepagePreviews() {
 		return homepagePattern?.map( ( homepage, idx ) => {

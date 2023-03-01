@@ -1,6 +1,6 @@
 {
     "name": "@newfold-labs/wp-module-onboarding",
-    "version": "1.0.4",
+    "version": "1.1.2",
     "description": "Next-generation WordPress Onboarding for WordPress sites at Newfold Digital.",
     "license": "GPL-2.0-or-later",
     "private": true,
@@ -12,7 +12,7 @@
         "@testing-library/cypress": "^8.0.2",
         "@wordpress/base-styles": "^4.3.0",
         "@wordpress/env": "^4.5.0",
-        "@wordpress/icons": "^8.2.0",
+        "@wordpress/icons": "^9.16.0",
         "@wordpress/scripts": "^22.4.0",
         "axe-core": "^4.4.1",
         "cypress": "^9.5.4",
