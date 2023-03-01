@@ -80,23 +80,24 @@ const StepDesignHomepageMenu = () => {
 		setDrawerActiveView( VIEW_NAV_DESIGN );
 	}, [] );
 
-	function refactorPatterns( homepagePatternData ) {
+	function refactorPatterns( homepagePatternsData ) {
 		const makeHomepagePattern = [];
 
 		for ( const key in homepagesList ) {
 			const homepagePatterns = homepagesList[ key ];
 			// update the header menu pattern if already selected
-			if ( 
-				currentData.data.partHeader || 
-				currentData.data.partHeader !== '' 
+			if (
+				currentData.data.partHeader ||
+				currentData.data.partHeader !== ''
 			) {
 				homepagePatterns[ 0 ] = currentData.data.partHeader;
 			}
+
 			let patternData = '';
 			homepagePatterns.forEach( ( patternName ) => {
-				homepagePatternData?.body.forEach( ( homepagePatternData ) => {
-					if ( homepagePatternData.slug === patternName ) {
-						patternData += homepagePatternData.content;
+				homepagePatternsData?.body.forEach( ( patternsData ) => {
+					if ( patternsData.slug === patternName ) {
+						patternData += patternsData.content;
 					}
 				} );
 			} );
