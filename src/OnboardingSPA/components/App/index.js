@@ -22,7 +22,7 @@ import { FullscreenMode, InterfaceSkeleton } from '@wordpress/interface';
  *
  * Is a child of the hash router and error boundary.
  *
- * @return WPComponent
+ * @return {WPComponent} App Component
  */
 const App = () => {
 	const location = useLocation();
@@ -70,10 +70,7 @@ const App = () => {
 		const initialData = await getSettings();
 		const result = await setSettings(socialData);
 		setDidVisitBasicInfo(false);
-		if (result?.error != null) {
-			console.error('Unable to Save Social Data!');
-			return initialData?.body;
-		}
+		if (result?.error !== null) return initialData?.body;
 		return result?.body;
 	}
 
@@ -86,8 +83,8 @@ const App = () => {
 			payload = address;
 		}
 		if (tax !== undefined) {
-			const option = tax.option;
-			const isStoreDetailsFilled = tax.isStoreDetailsFilled;
+			// const option = tax.option;
+			// const isStoreDetailsFilled = tax.isStoreDetailsFilled;
 			delete tax.option;
 			delete tax.isStoreDetailsFilled;
 			// No Auto-calculate taxes for MMP
@@ -128,9 +125,8 @@ const App = () => {
 				}
 
 				const result = await setFlow(currentData);
-				if (result?.error != null) {
+				if (result?.error !== null) {
 					setIsRequestPlaced(false);
-					console.error('Unable to Save data!');
 				} else {
 					setCurrentOnboardingData(result?.body);
 					setIsRequestPlaced(false);
@@ -206,8 +202,7 @@ const App = () => {
 			location?.pathname.includes('colors') ||
 			location?.pathname.includes('typography')
 		) {
-			let updates;
-			updates = currentData?.data?.customDesign
+			const updates = currentData?.data?.customDesign
 				? addColorAndTypographyRoutes()
 				: removeColorAndTypographyRoutes();
 
