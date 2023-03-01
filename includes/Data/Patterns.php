@@ -31,20 +31,32 @@ final class Patterns {
 					'site-header-left-logo-navigation-inline' => array(
 						'active' => true,
 					),
-					'homepage-1'  => array(
+					'homepage-1'                => array(
 						'active' => true,
 						'shown'  => true,
 					),
-					'homepage-2'  => array(
+					'homepage-2'                => array(
 						'active' => true,
 						'shown'  => true,
 					),
-					'homepage-3'  => array(
+					'homepage-3'                => array(
 						'active' => true,
 						'shown'  => true,
 					),
-					'site-footer' => array(
+					'site-footer'               => array(
 						'active' => true,
+					),
+					'site-header-left-logo-navigation-below' => array(
+						'active' => true,
+						'shown'  => false,
+					),
+					'site-header-centered'      => array(
+						'active' => true,
+						'shown'  => false,
+					),
+					'site-header-splitted-menu' => array(
+						'active' => true,
+						'shown'  => false,
 					),
 				),
 				'site-pages'      => array(
