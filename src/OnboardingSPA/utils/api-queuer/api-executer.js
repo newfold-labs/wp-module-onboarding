@@ -7,9 +7,9 @@ export async function apiExecuter(data, requests) {
 
     requests.forEach(request => {
         switch (request) {
-            case FLOW_SYNC: setFlow(data?.flowData);
+            case FLOW_SYNC: setFlow(data);
                 break;
-            case SETTINGS_SYNC: setSettings(data?.socialData);
+            case SETTINGS_SYNC: setSettings(data?.data?.socialData);
                 break;
             default:
                 break;

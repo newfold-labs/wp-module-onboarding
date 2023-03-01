@@ -52,11 +52,10 @@ const StepTopPriority = ( props ) => {
 		setIsDrawerSuppressed,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { currentStep, flowData, onboardingData } = useSelect( ( select ) => {
+	const { currentStep, flowData } = useSelect( ( select ) => {
 		return {
 			currentStep: select(nfdOnboardingStore).getCurrentStep(),
 			flowData: select(nfdOnboardingStore).getOnboardingFlowData(),
-			onboardingData: select(nfdOnboardingStore).getOnboardingData()
 		};
 	}, [] );
 
@@ -67,7 +66,7 @@ const StepTopPriority = ( props ) => {
 	};
 
 	useEffect( () => {
-		flushQueue(onboardingData);
+		flushQueue(flowData);
 		enqueueRequest(FLOW_SYNC);
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );

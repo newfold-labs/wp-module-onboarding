@@ -19,20 +19,18 @@ const StepPrimarySetup = () => {
 		nfdOnboardingStore
 	);
 
-	const { currentStep, flowData, onboardingData } = useSelect(
+	const { currentStep, flowData } = useSelect(
 		(select) => {
 			return {
 				currentStep: select(nfdOnboardingStore).getCurrentStep(),
-				flowData: select(nfdOnboardingStore).getOnboardingFlowData(),
-				onboardingData: select(nfdOnboardingStore).getOnboardingData()
-
+				flowData: select(nfdOnboardingStore).getOnboardingFlowData()
 			};
 		},
 		[]
 	);
 
 	useEffect(() => {
-		flushQueue(onboardingData);
+		flushQueue(flowData);
 		enqueueRequest(FLOW_SYNC);
 		setIsSidebarOpened(false);
 		setIsDrawerSuppressed(true);

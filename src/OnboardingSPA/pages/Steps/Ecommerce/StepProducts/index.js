@@ -23,19 +23,12 @@ const StepProducts = () => {
 		setCurrentOnboardingFlowData,
 	} = useDispatch(nfdOnboardingStore);
 
-	const { flowData, onboardingData } = useSelect(
-		(select) => {
-			return {
-				flowData: select(nfdOnboardingStore).getOnboardingFlowData(),
-				onboardingData: select(nfdOnboardingStore).getOnboardingData()
-			};
-		},
-		[]
+	let flowData = useSelect((select) =>
+		select(nfdOnboardingStore).getOnboardingFlowData()
 	);
-
 	let productInfo = flowData.storeDetails.productInfo;
 	useEffect(() => {
-		flushQueue(onboardingData);
+		flushQueue(flowData);
 		if (isLargeViewport) {
 			setIsDrawerOpened(true);
 		}

@@ -23,18 +23,17 @@ const StepPrimarySetup = () => {
 		} 
 	= useDispatch( nfdOnboardingStore );
 
-	const { currentStep, flowData, onboardingData } = useSelect((select) => {
+	const { currentStep, flowData } = useSelect((select) => {
 		return {
 			currentStep: select(nfdOnboardingStore).getCurrentStep(),
-			flowData: select(nfdOnboardingStore).getOnboardingFlowData(),
-			onboardingData: select(nfdOnboardingStore).getOnboardingData()
+			flowData: select(nfdOnboardingStore).getOnboardingFlowData()
 		};
 	}, []);
 
 	const selectedCategoryInStore = flowData?.data?.siteType?.secondary;
 
 	useEffect(() => {
-		flushQueue(onboardingData);
+		flushQueue(flowData);
 		enqueueRequest(FLOW_SYNC);
 		setIsSidebarOpened(false);
 		setIsDrawerSuppressed(true);

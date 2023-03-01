@@ -25,7 +25,7 @@ const StepAddress = () => {
 	} = useDispatch(nfdOnboardingStore);
 
 	useEffect(() => {
-		flushQueue(onboardingData);
+		flushQueue(flowData);
 		if (isLargeViewport) {
 			setIsDrawerOpened(true);
 		}
@@ -36,14 +36,8 @@ const StepAddress = () => {
 
 	const navigate = useNavigate();
 
-	const { flowData, onboardingData } = useSelect(
-		(select) => {
-			return {
-				flowData: select(nfdOnboardingStore).getOnboardingFlowData(),
-				onboardingData: select(nfdOnboardingStore).getOnboardingData()
-			};
-		},
-		[]
+	let flowData = useSelect((select) =>
+		select(nfdOnboardingStore).getOnboardingFlowData()
 	);
 
 	const settings = useWPSettings();
