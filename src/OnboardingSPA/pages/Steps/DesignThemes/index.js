@@ -9,14 +9,14 @@ const StepDesignThemes = () => {
 	const { flushQueue, setDrawerActiveView, setIsDrawerOpened, setIsSidebarOpened } =
 		useDispatch( nfdOnboardingStore );
 
-	const { flowData } = useSelect((select) => {
+	const { currentData } = useSelect((select) => {
 		return {
-			flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData()
+			currentData: select(nfdOnboardingStore).getCurrentOnboardingData()
 		};
 	}, []);
 
 	useEffect( () => {
-		flushQueue(flowData);
+		flushQueue(currentData);
 		setIsSidebarOpened( false );
 		setIsDrawerOpened( true );
 		setDrawerActiveView( VIEW_DESIGN_THEMES );

@@ -28,7 +28,7 @@ const StepProducts = () => {
 	);
 	let productInfo = flowData.storeDetails.productInfo;
 	useEffect(() => {
-		flushQueue(flowData);
+		flushQueue(currentData);
 		if (isLargeViewport) {
 			setIsDrawerOpened(true);
 		}

@@ -13,18 +13,18 @@ const StepBasicInfo = () => {
 	const { enqueueRequest, flushQueue, setIsDrawerOpened, setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed } =
 		useDispatch( nfdOnboardingStore );
 
-	const { currentStep, flowData } = useSelect(
+	const { currentStep, currentData } = useSelect(
 		(select) => {
 			return {
 				currentStep: select(nfdOnboardingStore).getCurrentStep(),
-				flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData()
+				currentData: select(nfdOnboardingStore).getCurrentOnboardingData()
 			};
 		},
 		[]
 	);
 
 	useEffect( () => {
-		flushQueue(flowData);
+		flushQueue(currentData);
 		enqueueRequest(FLOW_SYNC);
 		enqueueRequest(SETTINGS_SYNC);
 		if ( isLargeViewport ) {

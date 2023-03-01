@@ -22,11 +22,11 @@ import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
  */
 const StepWelcome = () => {
 	const location = useLocation();
-	const { currentStep, flowData, brandName } = useSelect(
+	const { currentStep, currentData, brandName } = useSelect(
 		(select) => {
 			return {
 				currentStep: select(nfdOnboardingStore).getCurrentStep(),
-				flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
+				currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
 				brandName: select(nfdOnboardingStore).getNewfoldBrandName(),
 			};
 		},
@@ -40,7 +40,7 @@ const StepWelcome = () => {
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		flushQueue(flowData);
+		flushQueue(currentData);
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
