@@ -1,8 +1,7 @@
-import { __, sprintf } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState, useEffect, useRef } from '@wordpress/element';
-import content from './content.json';
+import getContents from './contents';
 import TextInput from '../../../components/TextInput';
 import SkipButton from '../../../components/SkipButton';
 import MiniPreview from '../../../components/MiniPreview';
@@ -11,16 +10,14 @@ import { getSettings } from '../../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../../store';
 import ImageUploader from '../../../components/ImageUploader';
 import SocialMediaForm from '../../../components/SocialMediaForm';
-import { translations } from '../../../utils/locales/translations';
 
 /**
  * Basic Info Form.
  *
- * @return
+ * @return {WPComponent} BasicInfoForm Component
  */
 const BasicInfoForm = () => {
 	const socialMediaRef = useRef(null);
-	const [isError, setIsError] = useState(false);
 	const [flowData, setFlowData] = useState();
 	const [isLoaded, setisLoaded] = useState(false);
 	const [debouncedFlowData, setDebouncedFlowData] = useState();
@@ -40,13 +37,13 @@ const BasicInfoForm = () => {
 		return select(coreStore);
 	}, []);
 
-	const { currentData, socialDataStore } = useSelect((select) => {
+	const { currentData } = useSelect((select) => {
 		return {
 			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
-			socialDataStore:
-				select(nfdOnboardingStore).getOnboardingSocialData(),
 		};
 	}, []);
+
+	const content = getContents();
 
 	function setDefaultData() {
 		if (isLoaded) {
@@ -97,11 +94,11 @@ const BasicInfoForm = () => {
 		};
 	}, [siteTitle, siteDesc, siteLogo, socialData, isValidSocials]);
 
-	const updateCoreStore = (siteLogo, siteTitle, siteDesc) => {
+	const updateCoreStore = (siteLogoTemp, siteTitleTemp, siteDescTemp) => {
 		editEntityRecord('root', 'site', undefined, {
-			site_logo: siteLogo?.id ? siteLogo.id : null,
-			description: siteDesc,
-			title: siteTitle,
+			site_logo: siteLogoTemp?.id ? siteLogoTemp.id : null,
+			description: siteDescTemp,
+			title: siteTitleTemp,
 		});
 	};
 
@@ -138,65 +135,23 @@ const BasicInfoForm = () => {
 			}
 		>
 			<div className={'basic-info'}>
-				<div className={`${isError ? 'error__show' : 'error__hide'}`}>
-					{__(content.error.title, 'wp-module-onboarding')}
-				</div>
 				<div className="basic-info-form">
 					<div className="basic-info-form__left">
 						<TextInput
-							title={sprintf(
-								__(
-									content.siteTitle.title,
-									'wp-module-onboarding'
-								),
-								translations('Site')
-							)}
-							hint={__(
-								content.siteTitle.hint,
-								'wp-module-onboarding'
-							)}
-							placeholder={sprintf(
-								__(
-									content.siteTitle.placeholder,
-									'wp-module-onboarding'
-								),
-								translations('Site')
-							)}
-							maxCharacters={__(
-								content.siteTitle.maxCharacters,
-								'wp-module-onboarding'
-							)}
+							title={content.siteTitle.title}
+							hint={content.siteTitle.hint}
+							placeholder={content.siteTitle.placeholder}
+							maxCharacters={content.siteTitle.maxCharacters}
 							height="47px"
 							textValue={siteTitle}
 							textValueSetter={setSiteTitle}
 						/>
 
 						<TextInput
-							title={sprintf(
-								__(
-									content.siteDesc.title,
-									'wp-module-onboarding'
-								),
-								translations('Site')
-							)}
-							hint={sprintf(
-								__(
-									content.siteDesc.hint,
-									'wp-module-onboarding'
-								),
-								translations('site')
-							)}
-							placeholder={sprintf(
-								__(
-									content.siteDesc.placeholder,
-									'wp-module-onboarding'
-								),
-								translations('Site')
-							)}
-							maxCharacters={__(
-								content.siteTitle.maxCharacters,
-								'wp-module-onboarding'
-							)}
+							title={content.siteDesc.title}
+							hint={content.siteDesc.hint}
+							placeholder={content.siteDesc.placeholder}
+							maxCharacters={content.siteDesc.maxCharacters}
 							height="100px"
 							textValue={siteDesc}
 							textValueSetter={setSiteDesc}

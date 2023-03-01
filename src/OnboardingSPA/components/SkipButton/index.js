@@ -12,7 +12,7 @@ import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
 /**
  * Interface Text Inputs with standard design.
  *
- * @return {WPComponent} App Component
+ * @return {WPComponent} SkipButton Component
  */
 const SkipButton = () => {
 	const navigate = useNavigate();

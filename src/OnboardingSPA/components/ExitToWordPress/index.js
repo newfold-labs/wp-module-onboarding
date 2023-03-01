@@ -16,7 +16,7 @@ import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
  *
  * @param {*} param0
  *
- * @return {WPComponent} App Component
+ * @return {WPComponent} ExitToWordPress Component
  */
 const ExitToWordPress = ({
 	buttonText = __('Exit to WordPress', 'wp-module-onboarding'),
