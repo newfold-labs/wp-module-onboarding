@@ -30,7 +30,7 @@ const DesignHeaderMenu = () => {
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
 	const location = useLocation();
 
-	const { currentStep, currentData, themeStatus } = useSelect( ( select ) => {
+	const { currentStep, currentData, themeStatus, storedPreviewSettings } = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
@@ -38,6 +38,7 @@ const DesignHeaderMenu = () => {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			storedPreviewSettings: select( nfdOnboardingStore ).getStepPreviewData(),
 		};
 	}, [] );
 
@@ -145,7 +146,7 @@ const DesignHeaderMenu = () => {
 
 	return (
 		<LivePreviewSkeleton
-			count = { 4 }
+			count = { storedPreviewSettings[ currentStep?.patternId ]?.previewCount }
 			watch={ patterns }
 			callback = { buildPreviews }
 			className={ 'theme-header-menu-preview--drawer__list__item' }
