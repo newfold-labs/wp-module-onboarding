@@ -102,7 +102,7 @@ const StepNavigation = () => {
 			return {
 				nextStep: select(nfdOnboardingStore).getNextStep(),
 				previousStep: select(nfdOnboardingStore).getPreviousStep(),
-				flowData: select(nfdOnboardingStore).getOnboardingFlowData(),
+				flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
 			};
 		},
 		[location.pathname]

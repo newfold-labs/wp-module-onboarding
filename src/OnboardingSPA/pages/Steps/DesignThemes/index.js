@@ -11,7 +11,7 @@ const StepDesignThemes = () => {
 
 	const { flowData } = useSelect((select) => {
 		return {
-			flowData: select(nfdOnboardingStore).getOnboardingFlowData()
+			flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData()
 		};
 	}, []);
 

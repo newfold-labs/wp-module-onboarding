@@ -31,7 +31,7 @@ const StepTax = () => {
 	const navigate = useNavigate();
 
 	let flowData = useSelect((select) =>
-		select(nfdOnboardingStore).getOnboardingFlowData()
+		select(nfdOnboardingStore).getCurrentOnboardingFlowData()
 	);
 
 	useEffect(() => {

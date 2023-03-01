@@ -38,8 +38,8 @@ const App = () => {
 			isDrawerOpen: select(nfdOnboardingStore).isDrawerOpened(),
 			newfoldBrand: select(nfdOnboardingStore).getNewfoldBrand(),
 			onboardingFlow: select(nfdOnboardingStore).getOnboardingFlow(),
-			flowData: select(nfdOnboardingStore).getOnboardingFlowData(),
-			socialData: select(nfdOnboardingStore).getOnboardingSocialData(),
+			flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
+			socialData: select(nfdOnboardingStore).getCurrentOnboardingSocialData(),
 			firstStep: select(nfdOnboardingStore).getFirstStep(),
 		};
 	}, []);

@@ -64,23 +64,13 @@ export function getHireExpertsUrl( state ) {
 }
 
 /**
- * Gets the current complete Onboarding Data
- *
- * @param {*} state
- * @return string
- */
-export function getOnboardingData(state) {
-	return state?.data;
-}
-
-/**
  * Gets the current Onboarding Flow Data
  *
  * @param {*} state
  * @return string
  */
-export function getOnboardingFlowData( state ) {
-	return state?.data?.flowData;
+export function getCurrentOnboardingFlowData( state ) {
+	return state.data.flowData;
 }
 
 /**
@@ -89,8 +79,8 @@ export function getOnboardingFlowData( state ) {
  * @param {*} state
  * @return string
  */
-export function getOnboardingSocialData(state) {
-	return state?.data?.socialData;
+export function getCurrentOnboardingSocialData(state) {
+	return state.data.socialData;
 }
 
 

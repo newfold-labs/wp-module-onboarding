@@ -26,7 +26,7 @@ const GetStartedExperience = () => {
 	const { enqueueRequest, flushQueue, setCurrentOnboardingFlowData } = useDispatch( nfdOnboardingStore );
 	const { flowData, currentStep } = useSelect( ( select ) => {
 		return {
-			flowData: select(nfdOnboardingStore).getOnboardingFlowData(),
+			flowData: select(nfdOnboardingStore).getCurrentOnboardingFlowData(),
 			currentStep: select(nfdOnboardingStore).getCurrentStep(),
 		};
 	}, [] );
