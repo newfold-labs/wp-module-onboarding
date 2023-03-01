@@ -1,10 +1,9 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
-import HeaderMenuPreview from '../../HeaderMenuPreview';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
-import { GlobalStylesProvider, LivePreviewSkeleton } from '../../../components/LivePreview';
+import { LivePreviewSkeleton, LivePreviewSelectableCard } from '../../../components/LivePreview';
 import { wpSiteUrl } from '../../../../constants';
 
 import {
@@ -26,7 +25,6 @@ const DesignHeaderMenu = () => {
 
 	const defaultMenuItems = [ 'Home', 'About', 'Contact', 'News', 'Privacy', 'Careers' ];
 
-	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ patterns, setPatterns ] = useState();
 	const [ headerMenuPreviewData, setHeaderMenuPreviewData ] = useState();
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
@@ -58,7 +56,9 @@ const DesignHeaderMenu = () => {
 		const headerMenuPatterns = [];
 		headerMenuPreviewResponse.body.forEach( ( pageParts ) => {
 			if ( headerMenuSlugs.includes( pageParts.slug ) ) {
-				pageParts.content = replaceNavigationGrammar( pageParts.content, pageParts.slug );
+				if( pageParts.slug.includes('split') ) {
+					pageParts.content = replaceNavigationGrammar( pageParts.content );
+				}
 				headerMenuPatterns.push( pageParts );
 			}
 		} );
@@ -84,35 +84,21 @@ const DesignHeaderMenu = () => {
 		} );
 		pagePreview = headerContent + pageContent;
 		setHeaderMenuData( pagePreview );
-		setIsLoaded( true );
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE ) {
+		if ( themeStatus === THEME_STATUS_ACTIVE ) {
 			getPatternsData();
 		}
-	}, [ isLoaded, themeStatus ] );
+	}, [ themeStatus ] );
 
-	const replaceNavigationGrammar = ( pageGrammar, headerSlug ) => {
-		if( headerSlug.includes('split') ) {
-			let menuGrammarDummy = '',
-				menuNavigationGrammar = '<!-- wp:navigation-link {"isTopLevelLink":true} /-->';
-			defaultMenuItems.map( ( item ) => {
-				menuGrammarDummy = '<!-- wp:navigation-link {"isTopLevelLink":true, "label":"' + item + '", "title":"' + item + '", "url":"' + wpSiteUrl + '"} /-->';
-				pageGrammar = pageGrammar.replace( menuNavigationGrammar, menuGrammarDummy);
-			});
-		}
-		//  else {
-		// 	let menuNavigationRegex = /<!-- wp:navigation (.*?)(\/)-->/ig,
-		// 		menuNavigationGrammar = "<!-- wp:navigation $1-->",
-		// 		menuDummyLinks = '';
-		// 	defaultMenuItems.map( ( item ) => {
-		// 		menuDummyLinks = '<!-- wp:navigation-link {"isTopLevelLink":true, "label":"' + item + '", "title":"' + item + '", "url":"' + wpSiteUrl + '"} /-->';
-		// 		menuNavigationGrammar += menuDummyLinks;
-		// 	});
-		// 	menuNavigationGrammar += '<!-- /wp:navigation -->';
-		// 	pageGrammar = pageGrammar.replace( menuNavigationRegex, menuNavigationGrammar);
-		// }
+	const replaceNavigationGrammar = ( pageGrammar ) => {
+		let menuGrammarDummy = '',
+			menuNavigationGrammar = '<!-- wp:navigation-link {"isTopLevelLink":true} /-->';
+		defaultMenuItems.map( ( item ) => {
+			menuGrammarDummy = '<!-- wp:navigation-link {"isTopLevelLink":true, "label":"' + item + '", "title":"' + item + '", "url":"' + wpSiteUrl + '"} /-->';
+			pageGrammar = pageGrammar.replace( menuNavigationGrammar, menuGrammarDummy);
+		});
 		return pageGrammar;
 	}
 
@@ -141,11 +127,9 @@ const DesignHeaderMenu = () => {
 	};
 
 	const buildPreviews = () => {
-		const headerMenuPreviews = [];
-
-		patterns?.map( ( pattern, idx ) => {
-			headerMenuPreviews.push(
-				<HeaderMenuPreview
+		return patterns?.map( ( pattern, idx ) => {
+			return (
+				<LivePreviewSelectableCard
 					key={ idx }
 					className={ 'theme-header-menu-preview--drawer__list__item' }
 					selected={ pattern.slug === selectedPattern }
@@ -157,25 +141,16 @@ const DesignHeaderMenu = () => {
 				/>
 			);
 		} );
-
-		return headerMenuPreviews;
 	};
 
 	return (
-		<GlobalStylesProvider>
-			<div className="theme-header-menu-preview--drawer">
-				<div className="theme-header-menu-preview--drawer__list">
-					{ buildPreviews() }
-					{/* { <LivePreviewSkeleton 
-						className={ 'theme-styles-preview--drawer__list__item' }
-						watch={patterns}
-						count = {4}
-						callback = {buildPreviews}
-						viewportWidth={ 900 }
-					/> } */}
-				</div>
-			</div>
-		</GlobalStylesProvider>
+		<LivePreviewSkeleton
+			count = { 4 }
+			watch={ patterns }
+			callback = { buildPreviews }
+			className={ 'theme-header-menu-preview--drawer__list__item' }
+			viewportWidth={ 900 }
+		/>
 	);
 };
 
