@@ -100,12 +100,21 @@ export function drawer(
 
 	return state;
 }
-export function currentData( state = {}, action ) {
+export function data( state = { }, action ) {
 	switch ( action.type ) {
 		case 'SET_CURRENT_DATA':
 			return {
 				...state,
-				...action.currentData,
+				flowData: {
+					...action.flowData
+				},
+			};
+		case 'SET_SOCIAL_DATA':
+			return {
+				...state,
+				socialData: {
+					...action.socialData
+				},
 			};
 	}
 
@@ -206,7 +215,7 @@ export function settings(
 export default combineReducers( {
 	drawer,
 	runtime,
-	currentData,
+	data,
 	settings,
 	flow,
 	sidebar,

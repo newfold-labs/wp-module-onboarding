@@ -1,7 +1,7 @@
-import { useSelect } from '@wordpress/data';
 import { useLocation } from 'react-router-dom';
 import { chevronLeft } from '@wordpress/icons';
 import { Fragment, useState } from '@wordpress/element';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { Button, ButtonGroup, Modal } from '@wordpress/components';
 
 import { __, sprintf } from '@wordpress/i18n';
@@ -40,16 +40,19 @@ const ExitToWordPress = ( {
 	};
 
 	const location = useLocation();
-	const { currentData, brandName } = useSelect(
+	const { currentData, brandName, socialData } = useSelect(
 		( select ) => {
 			return {
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+				socialData: select( nfdOnboardingStore ).getOnboardingSocialData(),
 			};
 		},
 		[ location.pathname ]
 	);
+
+	const { setOnboardingSocialData } = useDispatch( nfdOnboardingStore );
 
 	if ( ! modalText ) {
 		modalText = sprintf(
@@ -62,9 +65,9 @@ const ExitToWordPress = ( {
 		);
 	}
 
-	async function syncSocialSettingsFinish( currentData ) {
+	async function syncSocialSettingsFinish( socialData ) {
 		const initialData = await getSettings();
-		const result = await setSettings( currentData?.data?.socialData );
+		const result = await setSettings( socialData );
 		if ( result?.error !== null ) {
 			return initialData?.body;
 		}
@@ -77,13 +80,13 @@ const ExitToWordPress = ( {
 
 			// If Social Data is changed then sync it
 			if ( path?.includes( 'basic-info' ) ) {
-				const socialData = await syncSocialSettingsFinish(
-					currentData
+				const socialDataResp = await syncSocialSettingsFinish(
+					socialData
 				);
 
 				// If Social Data is changed then Sync that also to the store
-				if ( socialData && currentData?.data )
-					currentData.data.socialData = socialData;
+				if( socialDataResp )
+					setOnboardingSocialData( socialDataResp );
 			}
 			setFlow( currentData );
 		}

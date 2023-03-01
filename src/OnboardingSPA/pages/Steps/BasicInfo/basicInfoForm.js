@@ -32,17 +32,18 @@ const BasicInfoForm = () => {
 	const [ isValidSocials, setIsValidSocials ] = useState( false );
 	const [ isSocialFormOpen, setIsSocialFormOpen ] = useState( false );
 
-	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
+	const { setOnboardingSocialData, setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
 	const { editEntityRecord } = useDispatch( coreStore );
 
 	const { getEditedEntityRecord } = useSelect( ( select ) => {
 		return select( coreStore );
 	}, [] );
 
-	const { currentData } = useSelect( ( select ) => {
+	const { currentData, socialDataStore } = useSelect( ( select ) => {
 		return {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			socialDataStore: select( nfdOnboardingStore ).getOnboardingSocialData(),
 		};
 	}, [] );
 
@@ -73,10 +74,11 @@ const BasicInfoForm = () => {
 	useEffect( () => {
 		async function getFlowData() {
 			const socialDataAPI = await getSettings();
-			setSocialData( socialDataAPI.body );
+			setSocialData( socialDataAPI?.body );
 			setFlowData( currentData );
 			setDebouncedFlowData( flowData );
 			setisLoaded( true );
+			setOnboardingSocialData( socialDataAPI?.body );
 		}
 		if ( ! isLoaded ) getFlowData();
 		getEditedEntityRecord( 'root', 'site' );
@@ -114,15 +116,13 @@ const BasicInfoForm = () => {
 			currentDataCopy.data.blogDescription =
 				debouncedFlowData.data.blogDescription ??
 				currentDataCopy.data.blogDescription;
-			currentDataCopy.data.socialData =
-				debouncedFlowData.data.socialData ??
-				currentDataCopy.data.socialData;
 			updateCoreStore(
 				currentDataCopy.data.siteLogo,
 				currentDataCopy.data.blogName,
 				currentDataCopy.data.blogDescription
 			);
 			setCurrentOnboardingData( currentDataCopy );
+			setOnboardingSocialData( debouncedFlowData.data.socialData ?? socialData );
 		};
 		if ( debouncedFlowData ) saveData();
 	}, [ debouncedFlowData ] );

@@ -34,6 +34,7 @@ const App = () => {
 		newfoldBrand,
 		onboardingFlow,
 		currentData,
+		socialData,
 		firstStep,
 		routes,
 		designSteps,
@@ -44,6 +45,7 @@ const App = () => {
 			newfoldBrand: select(nfdOnboardingStore).getNewfoldBrand(),
 			onboardingFlow: select(nfdOnboardingStore).getOnboardingFlow(),
 			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+			socialData: select( nfdOnboardingStore ).getOnboardingSocialData(),
 			firstStep: select(nfdOnboardingStore).getFirstStep(),
 			routes: select(nfdOnboardingStore).getRoutes(),
 			allSteps: select(nfdOnboardingStore).getAllSteps(),
@@ -59,12 +61,13 @@ const App = () => {
 			updateRoutes,
 			updateDesignSteps,
 			updateAllSteps,
+			setOnboardingSocialData,
 			setCurrentOnboardingData,
 		} = useDispatch(nfdOnboardingStore);
 
 	async function syncSocialSettings() {
 		const initialData = await getSettings();
-		const result = await setSettings(currentData?.data?.socialData);
+		const result = await setSettings( socialData );
 		setDidVisitBasicInfo(false);
 		if (result?.error != null) {
 			console.error('Unable to Save Social Data!');
@@ -117,11 +120,11 @@ const App = () => {
 
 				// If Social Data is changed then sync it
 				if (didVisitBasicInfo){
-					const socialData = await syncSocialSettings();
+					const socialDataResp = await syncSocialSettings();
 					
 					// If Social Data is changed then Sync that also to the store
-					if (socialData && currentData?.data)
-						currentData.data.socialData = socialData;
+					if( socialDataResp )
+						setOnboardingSocialData( socialDataResp );
 				} 
 
 				const result = await setFlow(currentData);

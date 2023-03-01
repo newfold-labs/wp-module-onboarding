@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { memo } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
 import { Button } from '@wordpress/components';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { setFlow } from '../../utils/api/flow';
@@ -17,19 +17,21 @@ import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
 const SkipButton = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const { nextStep, currentData } = useSelect( ( select ) => {
+	const { nextStep, currentData, socialData } = useSelect( ( select ) => {
 		return {
 			nextStep: select( nfdOnboardingStore ).getNextStep(),
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			socialData: select( nfdOnboardingStore ).getOnboardingSocialData(),
 		};
 	}, [] );
 
 	const isLastStep = null === nextStep || false === nextStep;
+	const { setOnboardingSocialData } = useDispatch( nfdOnboardingStore );
 
-	async function syncSocialSettingsFinish( currentData ) {
+	async function syncSocialSettingsFinish( socialData ) {
 		const initialData = await getSettings();
-		const result = await setSettings( currentData?.data?.socialData );
+		const result = await setSettings( socialData );
 		if ( result?.error != null ) {
 			console.error( 'Unable to Save Social Data!' );
 			return initialData?.body;
@@ -43,13 +45,13 @@ const SkipButton = () => {
 
 			// If Social Data is changed then sync it
 			if ( path?.includes( 'basic-info' ) ) {
-				const socialData = await syncSocialSettingsFinish(
-					currentData
+				const socialDataResp = await syncSocialSettingsFinish(
+					socialData
 				);
 
 				// If Social Data is changed then Sync that also to the store
-				if ( socialData && currentData?.data )
-					currentData.data.socialData = socialData;
+				if( socialDataResp )
+					setOnboardingSocialData( socialDataResp );
 			}
 			setFlow( currentData );
 		}

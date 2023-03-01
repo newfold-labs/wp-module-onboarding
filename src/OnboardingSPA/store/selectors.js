@@ -78,7 +78,17 @@ export function getHireExpertsUrl( state ) {
  * @return string
  */
 export function getCurrentOnboardingData( state ) {
-	return state.currentData;
+	return state.data.flowData;
+}
+
+/**
+ * Gets the current Onboarding Social Data
+ *
+ * @param {*} state
+ * @return string
+ */
+export function getOnboardingSocialData( state ) {
+	return state.data.socialData;
 }
 
 /**
