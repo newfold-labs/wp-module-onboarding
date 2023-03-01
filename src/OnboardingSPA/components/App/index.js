@@ -45,7 +45,7 @@ const App = () => {
 			newfoldBrand: select(nfdOnboardingStore).getNewfoldBrand(),
 			onboardingFlow: select(nfdOnboardingStore).getOnboardingFlow(),
 			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
-			socialData: select( nfdOnboardingStore ).getOnboardingSocialData(),
+			socialData: select(nfdOnboardingStore).getOnboardingSocialData(),
 			firstStep: select(nfdOnboardingStore).getFirstStep(),
 			routes: select(nfdOnboardingStore).getRoutes(),
 			allSteps: select(nfdOnboardingStore).getAllSteps(),
@@ -56,18 +56,19 @@ const App = () => {
 	const [isRequestPlaced, setIsRequestPlaced] = useState(false);
 	const [didVisitBasicInfo, setDidVisitBasicInfo] = useState(false);
 	const [didVisitEcommerce, setDidVisitEcommerce] = useState(false);
-	const { setActiveStep, 
-			setActiveFlow, 
-			updateRoutes,
-			updateDesignSteps,
-			updateAllSteps,
-			setOnboardingSocialData,
-			setCurrentOnboardingData,
-		} = useDispatch(nfdOnboardingStore);
+	const {
+		setActiveStep,
+		setActiveFlow,
+		updateRoutes,
+		updateDesignSteps,
+		updateAllSteps,
+		setOnboardingSocialData,
+		setCurrentOnboardingData,
+	} = useDispatch(nfdOnboardingStore);
 
 	async function syncSocialSettings() {
 		const initialData = await getSettings();
-		const result = await setSettings( socialData );
+		const result = await setSettings(socialData);
 		setDidVisitBasicInfo(false);
 		if (result?.error != null) {
 			console.error('Unable to Save Social Data!');
@@ -75,9 +76,9 @@ const App = () => {
 		}
 		return result?.body;
 	}
-	
+
 	async function syncStoreDetails() {
-		let { address, tax } = currentData.storeDetails;
+		const { address, tax } = currentData.storeDetails;
 		let payload = {};
 		if (address !== undefined) {
 			delete address.country;
@@ -85,8 +86,8 @@ const App = () => {
 			payload = address;
 		}
 		if (tax !== undefined) {
-			let option = tax.option;
-			let isStoreDetailsFilled = tax.isStoreDetailsFilled;
+			const option = tax.option;
+			const isStoreDetailsFilled = tax.isStoreDetailsFilled;
 			delete tax.option;
 			delete tax.isStoreDetailsFilled;
 			// No Auto-calculate taxes for MMP
@@ -110,8 +111,8 @@ const App = () => {
 	async function syncStoreToDB() {
 		// The First Welcome Step doesn't have any Store changes
 		const isFirstStep = location?.pathname === firstStep?.path;
-		if (currentData && !isFirstStep){
-			if(!isRequestPlaced){
+		if (currentData && !isFirstStep) {
+			if (!isRequestPlaced) {
 				setIsRequestPlaced(true);
 
 				if (didVisitEcommerce) {
@@ -119,13 +120,12 @@ const App = () => {
 				}
 
 				// If Social Data is changed then sync it
-				if (didVisitBasicInfo){
+				if (didVisitBasicInfo) {
 					const socialDataResp = await syncSocialSettings();
-					
+
 					// If Social Data is changed then Sync that also to the store
-					if( socialDataResp )
-						setOnboardingSocialData( socialDataResp );
-				} 
+					if (socialDataResp) setOnboardingSocialData(socialDataResp);
+				}
 
 				const result = await setFlow(currentData);
 				if (result?.error != null) {
@@ -135,7 +135,6 @@ const App = () => {
 					setCurrentOnboardingData(result?.body);
 					setIsRequestPlaced(false);
 				}
-				
 			}
 		}
 		// Check if the Basic Info page was visited
@@ -176,12 +175,8 @@ const App = () => {
 			routes: filter(
 				routes,
 				(route) =>
-					!route.path.includes(
-						conditionalSteps.designColors.path
-					) &&
-					!route.path.includes(
-						conditionalSteps.designTypography.path
-					)
+					!route.path.includes(conditionalSteps.designColors.path) &&
+					!route.path.includes(conditionalSteps.designTypography.path)
 			),
 			allSteps: filter(
 				allSteps,
@@ -207,10 +202,15 @@ const App = () => {
 	};
 
 	function handleColorsAndTypographyRoutes() {
-		if (location?.pathname.includes('colors') || location?.pathname.includes('typography')){
+		if (
+			location?.pathname.includes('colors') ||
+			location?.pathname.includes('typography')
+		) {
 			let updates;
-			updates = currentData?.data?.customDesign ? addColorAndTypographyRoutes() : removeColorAndTypographyRoutes();
-			
+			updates = currentData?.data?.customDesign
+				? addColorAndTypographyRoutes()
+				: removeColorAndTypographyRoutes();
+
 			updateRoutes(updates.routes);
 			updateDesignSteps(updates.designSteps);
 			updateAllSteps(updates.allSteps);
@@ -221,14 +221,14 @@ const App = () => {
 		document.body.classList.add(`nfd-brand-${newfoldBrand}`);
 	}, [newfoldBrand]);
 
-	useEffect( () => {
+	useEffect(() => {
 		syncStoreToDB();
 		handleColorsAndTypographyRoutes();
-		if ( location.pathname.includes( '/step' ) ) {
-			setActiveFlow( onboardingFlow );
-			setActiveStep( location.pathname );
+		if (location.pathname.includes('/step')) {
+			setActiveFlow(onboardingFlow);
+			setActiveStep(location.pathname);
 		}
-	}, [ location.pathname, onboardingFlow ] );
+	}, [location.pathname, onboardingFlow]);
 
 	return (
 		<Fragment>

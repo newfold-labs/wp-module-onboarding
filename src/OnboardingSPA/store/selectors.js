@@ -7,7 +7,7 @@ import { addQueryArgs, getFragment } from '@wordpress/url';
  * @param {*} state
  * @return string
  */
-export function getDrawerView( state ) {
+export function getDrawerView(state) {
 	return state.drawer.view;
 }
 
@@ -17,7 +17,7 @@ export function getDrawerView( state ) {
  * @param {*} state
  * @return boolean
  */
-export function isDrawerOpened( state ) {
+export function isDrawerOpened(state) {
 	return state.drawer.isOpen;
 }
 
@@ -27,11 +27,11 @@ export function isDrawerOpened( state ) {
  * @param {*} state
  * @return boolean
  */
-export function isDrawerSuppressed( state ) {
+export function isDrawerSuppressed(state) {
 	return state.drawer.isSuppressed;
 }
 
-export function isHeaderNavigationEnabled( state ) {
+export function isHeaderNavigationEnabled(state) {
 	return state.header.isNavigationEnabled;
 }
 
@@ -41,7 +41,7 @@ export function isHeaderNavigationEnabled( state ) {
  * @param {*} state
  * @return string
  */
-export function getNewfoldBrand( state ) {
+export function getNewfoldBrand(state) {
 	return state.runtime.currentBrand.brand;
 }
 
@@ -51,7 +51,7 @@ export function getNewfoldBrand( state ) {
  * @param {*} state
  * @return string
  */
-export function getNewfoldBrandName( state ) {
+export function getNewfoldBrandName(state) {
 	return state.runtime.currentBrand.name;
 }
 
@@ -61,13 +61,13 @@ export function getNewfoldBrandName( state ) {
  * @param {*} state
  * @return string
  */
-export function getHireExpertsUrl( state ) {
+export function getHireExpertsUrl(state) {
 	const hireExpertsInfo = state.runtime.currentBrand.hireExpertsInfo;
 	const hireExpertsUrl =
 		addQueryArgs(
 			hireExpertsInfo?.defaultLink,
 			hireExpertsInfo?.queryParameters
-		) + ( hireExpertsInfo?.fragment || '' );
+		) + (hireExpertsInfo?.fragment || '');
 	return hireExpertsUrl;
 }
 
@@ -77,7 +77,7 @@ export function getHireExpertsUrl( state ) {
  * @param {*} state
  * @return string
  */
-export function getCurrentOnboardingData( state ) {
+export function getCurrentOnboardingData(state) {
 	return state.data.flowData;
 }
 
@@ -87,7 +87,7 @@ export function getCurrentOnboardingData( state ) {
  * @param {*} state
  * @return string
  */
-export function getOnboardingSocialData( state ) {
+export function getOnboardingSocialData(state) {
 	return state.data.socialData;
 }
 
@@ -97,15 +97,15 @@ export function getOnboardingSocialData( state ) {
  * @param {*} state
  * @return string
  */
-export function getOnboardingFlow( state ) {
+export function getOnboardingFlow(state) {
 	return state.runtime.currentFlow ?? 'wp-setup';
 }
 
-export function getRoutes( state ) {
+export function getRoutes(state) {
 	return state.flow.steps.routes;
 }
 
-export function getAllSteps( state ) {
+export function getAllSteps(state) {
 	return state.flow.steps.allSteps;
 }
 
@@ -115,7 +115,7 @@ export function getAllSteps( state ) {
  * @param {*} state
  * @return
  */
-export function getTopSteps( state ) {
+export function getTopSteps(state) {
 	return state.flow.steps.topSteps;
 }
 
@@ -125,7 +125,7 @@ export function getTopSteps( state ) {
  * @param {*} state
  * @return
  */
-export function getDesignSteps( state ) {
+export function getDesignSteps(state) {
 	return state.flow.steps.designSteps;
 }
 
@@ -135,7 +135,7 @@ export function getDesignSteps( state ) {
  * @param {*} state
  * @return
  */
-export function getGetStartedSteps( state ) {
+export function getGetStartedSteps(state) {
 	return state.flow.steps.getStartedSteps;
 }
 
@@ -145,7 +145,7 @@ export function getGetStartedSteps( state ) {
  * @param {*} state
  * @return
  */
-export function getCurrentStepPath( state ) {
+export function getCurrentStepPath(state) {
 	return state.flow.steps.currentStep;
 }
 
@@ -155,8 +155,8 @@ export function getCurrentStepPath( state ) {
  * @param {*} state
  * @return object
  */
-export function getFirstStep( state ) {
-	return state.flow.steps.allSteps[ 0 ];
+export function getFirstStep(state) {
+	return state.flow.steps.allSteps[0];
 }
 
 /**
@@ -165,8 +165,8 @@ export function getFirstStep( state ) {
  * @param {*} state
  * @return object
  */
-export function getLastStep( state ) {
-	return state.flow.steps.allSteps[ state.flow.steps.allSteps.length - 1 ];
+export function getLastStep(state) {
+	return state.flow.steps.allSteps[state.flow.steps.allSteps.length - 1];
 }
 
 /**
@@ -175,17 +175,17 @@ export function getLastStep( state ) {
  * @param {*} state
  * @return object
  */
-export function getCurrentStep( state ) {
-	const filtered = filter( state.flow.steps.allSteps, [
+export function getCurrentStep(state) {
+	const filtered = filter(state.flow.steps.allSteps, [
 		'path',
 		state.flow.steps.currentStep,
-	] );
-	return filtered[ 0 ];
+	]);
+	return filtered[0];
 }
 
-export function getStepFromPath( state, path ) {
-	const filtered = filter( state.flow.steps.allSteps, [ 'path', path ] );
-	return filtered[ 0 ];
+export function getStepFromPath(state, path) {
+	const filtered = filter(state.flow.steps.allSteps, ['path', path]);
+	return filtered[0];
 }
 
 /**
@@ -194,17 +194,17 @@ export function getStepFromPath( state, path ) {
  * @param {*} state
  * @return object|null|false
  */
-export function getPreviousStep( state ) {
-	const currentStepIndex = findIndex( state.flow.steps.allSteps, {
+export function getPreviousStep(state) {
+	const currentStepIndex = findIndex(state.flow.steps.allSteps, {
 		path: state.flow.steps.currentStep,
-	} );
-	if ( 0 === currentStepIndex ) {
+	});
+	if (0 === currentStepIndex) {
 		return null; // current step is the first step
 	}
-	if ( -1 === currentStepIndex ) {
+	if (-1 === currentStepIndex) {
 		return false; // could not find index
 	}
-	return state.flow.steps.allSteps[ currentStepIndex - 1 ];
+	return state.flow.steps.allSteps[currentStepIndex - 1];
 }
 
 /**
@@ -213,53 +213,53 @@ export function getPreviousStep( state ) {
  * @param {*} state
  * @return object|null|false
  */
-export function getNextStep( state ) {
+export function getNextStep(state) {
 	const totalIndexes = state.flow.steps.allSteps.length - 1;
-	const currentStepIndex = findIndex( state.flow.steps.allSteps, {
+	const currentStepIndex = findIndex(state.flow.steps.allSteps, {
 		path: state.flow.steps.currentStep,
-	} );
-	if ( totalIndexes === currentStepIndex ) {
+	});
+	if (totalIndexes === currentStepIndex) {
 		return null; // currentStep is the last step
 	}
-	if ( -1 === currentStepIndex ) {
+	if (-1 === currentStepIndex) {
 		return false; // could not find index
 	}
-	return state.flow.steps.allSteps[ currentStepIndex + 1 ];
+	return state.flow.steps.allSteps[currentStepIndex + 1];
 }
 
-export function isSidebarOpened( state ) {
+export function isSidebarOpened(state) {
 	return state.sidebar.isOpen;
 }
 
-export function getSidebarView( state ) {
+export function getSidebarView(state) {
 	return state.sidebar.view;
 }
 
-export function getSidebars( state ) {
-	return filter( state.sidebar.sidebars, [ 'enabled', true ] );
+export function getSidebars(state) {
+	return filter(state.sidebar.sidebars, ['enabled', true]);
 }
 
-export function getPreviewSettings( state ) {
+export function getPreviewSettings(state) {
 	return state.runtime.previewSettings.settings;
 }
 
-export function getSettings( state ) {
+export function getSettings(state) {
 	return state.settings;
 }
 
-export function getThemeStatus( state ) {
+export function getThemeStatus(state) {
 	return state.settings.themeStatus;
 }
 
-export function getPluginsStatus( state ) {
+export function getPluginsStatus(state) {
 	return state.settings.pluginsStatus;
 }
 
-export function getStoreInfoSteps( state ) {
+export function getStoreInfoSteps(state) {
 	return state.flow.steps.storeInfoSteps;
 }
 
-export function getStepPreviewData( state ) {
+export function getStepPreviewData(state) {
 	return state.runtime.previewSettings.stepPreviewData;
 }
 
@@ -269,7 +269,7 @@ export function getStepPreviewData( state ) {
  * @param {*} state
  * @return string
  */
-export function getHeaderMenuData( state ) {
+export function getHeaderMenuData(state) {
 	return state.header.menu;
 }
 
@@ -279,13 +279,11 @@ export function getHeaderMenuData( state ) {
  * @param {*} state
  * @return string
  */
- export function getExpertsUrl( state ) {
+export function getExpertsUrl(state) {
 	const expertsInfo = state.runtime.currentBrand.expertsInfo;
 	const expertsUrl =
-		addQueryArgs(
-			expertsInfo?.defaultLink,
-			expertsInfo?.queryParams
-		) + ( expertsInfo?.fragment || '' );
+		addQueryArgs(expertsInfo?.defaultLink, expertsInfo?.queryParams) +
+		(expertsInfo?.fragment || '');
 	return expertsUrl;
 }
 
@@ -295,13 +293,14 @@ export function getHeaderMenuData( state ) {
  * @param {*} state
  * @return string
  */
- export function getfullServiceCreativeTeamUrl( state ) {
-	const fullServiceCreativeTeamInfo = state.runtime.currentBrand.fullServiceCreativeTeamInfo;
+export function getfullServiceCreativeTeamUrl(state) {
+	const fullServiceCreativeTeamInfo =
+		state.runtime.currentBrand.fullServiceCreativeTeamInfo;
 	const fullServiceCreativeTeamUrl =
 		addQueryArgs(
 			fullServiceCreativeTeamInfo?.defaultLink,
 			fullServiceCreativeTeamInfo?.queryParams
-		) + ( fullServiceCreativeTeamInfo?.fragment || '' );
+		) + (fullServiceCreativeTeamInfo?.fragment || '');
 	return fullServiceCreativeTeamUrl;
 }
 
@@ -311,15 +310,15 @@ export function getHeaderMenuData( state ) {
  * @param {*} state
  * @return string
  */
- export function getTechSupportUrl( state ) {
+export function getTechSupportUrl(state) {
 	const techSupportInfo = state.runtime.currentBrand.techSupportInfo;
 	const techSupportUrl =
 		addQueryArgs(
 			techSupportInfo?.defaultLink,
 			techSupportInfo?.queryParams
-		) + ( techSupportInfo?.fragment || '' );
+		) + (techSupportInfo?.fragment || '');
 	return techSupportUrl;
- }
+}
 
 /**
  * Gets the Plugin Install Hash for security
@@ -327,6 +326,6 @@ export function getHeaderMenuData( state ) {
  * @param {*} state
  * @return string
  */
-export function getPluginInstallHash( state ) {
+export function getPluginInstallHash(state) {
 	return state.runtime.pluginInstallHash;
 }

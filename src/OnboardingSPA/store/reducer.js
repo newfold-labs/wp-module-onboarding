@@ -32,7 +32,7 @@ export function flow(
 	},
 	action
 ) {
-	switch ( action.type ) {
+	switch (action.type) {
 		case 'SET_ACTIVE_STEP':
 			return {
 				...state,
@@ -79,7 +79,7 @@ export function drawer(
 	state = { isOpen: false, isSuppressed: false, view: VIEW_NAV_PRIMARY },
 	action
 ) {
-	switch ( action.type ) {
+	switch (action.type) {
 		case 'SET_DRAWER_OPENED':
 			return {
 				...state,
@@ -100,20 +100,20 @@ export function drawer(
 
 	return state;
 }
-export function data( state = { }, action ) {
-	switch ( action.type ) {
+export function data(state = {}, action) {
+	switch (action.type) {
 		case 'SET_CURRENT_DATA':
 			return {
 				...state,
 				flowData: {
-					...action.flowData
+					...action.flowData,
 				},
 			};
 		case 'SET_SOCIAL_DATA':
 			return {
 				...state,
 				socialData: {
-					...action.socialData
+					...action.socialData,
 				},
 			};
 	}
@@ -129,7 +129,7 @@ export function sidebar(
 	},
 	action
 ) {
-	switch ( action.type ) {
+	switch (action.type) {
 		case 'SET_SIDEBAR_OPENED':
 			return {
 				...state,
@@ -149,7 +149,7 @@ export function header(
 	state = { isNavigationEnabled: true, menu: '' },
 	action
 ) {
-	switch ( action.type ) {
+	switch (action.type) {
 		case 'SET_HEADER_NAVIGATION_ENABLED':
 			return {
 				...state,
@@ -164,8 +164,8 @@ export function header(
 	return state;
 }
 
-export function runtime( state = {}, action ) {
-	switch ( action.type ) {
+export function runtime(state = {}, action) {
+	switch (action.type) {
 		case 'SET_RUNTIME':
 			return {
 				...state,
@@ -187,11 +187,11 @@ export function runtime( state = {}, action ) {
 export function settings(
 	state = {
 		themeStatus: THEME_STATUS_INIT,
-		pluginsStatus: { [ ECOMMERCE_STEPS_PLUGIN ]: PLUGIN_STATUS_INIT },
+		pluginsStatus: { [ECOMMERCE_STEPS_PLUGIN]: PLUGIN_STATUS_INIT },
 	},
 	action
 ) {
-	switch ( action.type ) {
+	switch (action.type) {
 		case 'UPDATE_SETTINGS':
 			return {
 				...state,
@@ -212,7 +212,7 @@ export function settings(
 	return state;
 }
 
-export default combineReducers( {
+export default combineReducers({
 	drawer,
 	runtime,
 	data,
@@ -220,4 +220,4 @@ export default combineReducers( {
 	flow,
 	sidebar,
 	header,
-} );
+});
