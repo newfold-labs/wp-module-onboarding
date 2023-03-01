@@ -21,7 +21,6 @@ function createReverseLookup(state) {
 const StepTax = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const {
-		flushQueue,
 		setDrawerActiveView,
 		setIsDrawerOpened,
 		setIsDrawerSuppressed,
@@ -35,7 +34,6 @@ const StepTax = () => {
 	);
 
 	useEffect(() => {
-		flushQueue(currentData);
 		if (isLargeViewport) {
 			setIsDrawerOpened(true);
 		}

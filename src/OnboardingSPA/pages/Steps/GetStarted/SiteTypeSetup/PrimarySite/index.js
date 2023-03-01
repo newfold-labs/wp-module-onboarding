@@ -10,12 +10,11 @@ import NavCardButton from '../../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import content from '../content.json';
 import { translations } from '../../../../../utils/locales/translations';
-import { FLOW_SYNC } from '../../../../../utils/api-queuer/constants';
 
 
 const StepPrimarySetup = () => {
 
-	const { enqueueRequest, flushQueue, setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed } = useDispatch(
+	const { setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed } = useDispatch(
 		nfdOnboardingStore
 	);
 
@@ -30,8 +29,6 @@ const StepPrimarySetup = () => {
 	);
 
 	useEffect(() => {
-		flushQueue(currentData);
-		enqueueRequest(FLOW_SYNC);
 		setIsSidebarOpened(false);
 		setIsDrawerSuppressed(true);
 		setDrawerActiveView(VIEW_NAV_GET_STARTED);

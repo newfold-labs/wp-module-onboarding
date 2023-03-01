@@ -22,25 +22,22 @@ import { VIEW_NAV_GET_STARTED } from '../../../../../constants';
  */
 const StepWelcome = () => {
 	const location = useLocation();
-	const { currentStep, currentData, brandName } = useSelect(
+	const { currentStep, brandName } = useSelect(
 		(select) => {
 			return {
 				currentStep: select(nfdOnboardingStore).getCurrentStep(),
-				currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
 				brandName: select(nfdOnboardingStore).getNewfoldBrandName(),
 			};
 		},
 		[location.pathname]
 	);
 	const {
-		flushQueue,
 		setDrawerActiveView,
 		setIsSidebarOpened,
 		setIsDrawerSuppressed,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		flushQueue(currentData);
 		setIsSidebarOpened( false );
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );

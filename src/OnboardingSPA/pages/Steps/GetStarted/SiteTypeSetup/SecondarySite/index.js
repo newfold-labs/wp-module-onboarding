@@ -10,18 +10,24 @@ import NavCardButton from '../../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import content from '../content.json';
 import { translations } from '../../../../../utils/locales/translations';
-import { FLOW_SYNC } from '../../../../../utils/api-queuer/constants';
+
 
 const StepPrimarySetup = () => {
+	const { setDrawerActiveView, setIsSidebarOpened, setIsDrawerSuppressed } = useDispatch(
+		nfdOnboardingStore
+	);
 
-	const { enqueueRequest, 
-			flushQueue, 
-			setDrawerActiveView, 
-			setIsSidebarOpened, 
-			setIsDrawerSuppressed, 
-			setCurrentOnboardingFlowData
-		} 
-	= useDispatch( nfdOnboardingStore );
+	useEffect(() => {
+		setIsSidebarOpened(false);
+		setIsDrawerSuppressed(true);
+		setDrawerActiveView(VIEW_NAV_GET_STARTED);
+	}, []);
+
+	const [clickedIndex, changeCategory] = useState(-1);
+	const [inputCategVal, changeInputCateg] = useState('');
+
+
+	const { setCurrentOnboardingFlowData } = useDispatch(nfdOnboardingStore);
 
 	const { currentStep, flowData } = useSelect((select) => {
 		return {
@@ -31,18 +37,6 @@ const StepPrimarySetup = () => {
 	}, []);
 
 	const selectedCategoryInStore = flowData?.data?.siteType?.secondary;
-
-	useEffect(() => {
-		flushQueue(flowData);
-		enqueueRequest(FLOW_SYNC);
-		setIsSidebarOpened(false);
-		setIsDrawerSuppressed(true);
-		setDrawerActiveView(VIEW_NAV_GET_STARTED);
-	}, []);
-
-	const [clickedIndex, changeCategory] = useState(-1);
-	const [inputCategVal, changeInputCateg] = useState('');
-
 	const categoriesArray = content.categories;
 	const subCategories = categoriesArray[0]?.subCategories;
 

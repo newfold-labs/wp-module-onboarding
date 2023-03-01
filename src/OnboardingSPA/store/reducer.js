@@ -1,7 +1,6 @@
 import { combineReducers } from '@wordpress/data';
 
 import { VIEW_NAV_PRIMARY } from '../../constants';
-import { apiExecuter } from '../utils/api-queuer/api-executer';
 
 import {
 	routes as initialRoutes,
@@ -121,25 +120,6 @@ export function sidebar(
 	return state;
 }
 
-export function queue(state = [], action) {
-	switch (action.type) {
-		// Add a new API Request to the Queue
-		case 'ENQUEUE_REQUEST':
-			return [...state, action.request];
-
-		// Take out the topmost Queue Item
-		case 'DEQUEUE_REQUEST':
-			return [...state.slice(1)];
-
-		// Make all the Queue Requests and Empty the queue
-		case 'FLUSH_QUEUE':
-			apiExecuter(action.storeData, state);
-			return [];
-	}
-
-	return state;
-}
-
 export function runtime( state = {}, action ) {
 	switch ( action.type ) {
 		case 'SET_RUNTIME':
@@ -169,12 +149,11 @@ export function settings( state = {}, action ) {
 	return state;
 }
 
-export default combineReducers({
+export default combineReducers( {
 	drawer,
 	runtime,
 	data,
 	settings,
 	flow,
 	sidebar,
-	queue,
-});
+} );
