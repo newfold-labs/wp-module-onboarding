@@ -15,7 +15,8 @@ import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
  * Self-contained button and confirmation modal for exiting Onboarding page.
  *
  * @param {*} param0
- * @return
+ *
+ * @return {WPComponent} App Component
  */
 const ExitToWordPress = ({
 	buttonText = __('Exit to WordPress', 'wp-module-onboarding'),
@@ -66,7 +67,7 @@ const ExitToWordPress = ({
 		);
 	}
 
-	async function syncSocialSettingsFinish(socialData) {
+	async function syncSocialSettingsFinish() {
 		const initialData = await getSettings();
 		const result = await setSettings(socialData);
 		if (result?.error !== null) {
@@ -75,15 +76,13 @@ const ExitToWordPress = ({
 		return result?.body;
 	}
 
-	async function saveData(path, currentData) {
+	async function saveData(path) {
 		if (currentData) {
 			currentData.hasExited = new Date().getTime();
 
 			// If Social Data is changed then sync it
 			if (path?.includes('basic-info')) {
-				const socialDataResp = await syncSocialSettingsFinish(
-					socialData
-				);
+				const socialDataResp = await syncSocialSettingsFinish();
 
 				// If Social Data is changed then Sync that also to the store
 				if (socialDataResp) setOnboardingSocialData(socialDataResp);
@@ -125,9 +124,7 @@ const ExitToWordPress = ({
 						</Button>
 						<Button
 							variant="primary"
-							onClick={(e) =>
-								saveData(location.pathname, currentData)
-							}
+							onClick={() => saveData(location.pathname)}
 						>
 							{modalExitButtonText}
 						</Button>

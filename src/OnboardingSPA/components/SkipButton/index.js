@@ -12,7 +12,7 @@ import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
 /**
  * Interface Text Inputs with standard design.
  *
- * @return
+ * @return {WPComponent} App Component
  */
 const SkipButton = () => {
 	const navigate = useNavigate();
@@ -28,25 +28,20 @@ const SkipButton = () => {
 	const isLastStep = null === nextStep || false === nextStep;
 	const { setOnboardingSocialData } = useDispatch(nfdOnboardingStore);
 
-	async function syncSocialSettingsFinish(socialData) {
+	async function syncSocialSettingsFinish() {
 		const initialData = await getSettings();
 		const result = await setSettings(socialData);
-		if (result?.error != null) {
-			console.error('Unable to Save Social Data!');
-			return initialData?.body;
-		}
+		if (result?.error !== null) return initialData?.body;
 		return result?.body;
 	}
 
-	async function saveData(path, currentData) {
+	async function saveData(path) {
 		if (currentData) {
 			currentData.isComplete = new Date().getTime();
 
 			// If Social Data is changed then sync it
 			if (path?.includes('basic-info')) {
-				const socialDataResp = await syncSocialSettingsFinish(
-					socialData
-				);
+				const socialDataResp = await syncSocialSettingsFinish();
 
 				// If Social Data is changed then Sync that also to the store
 				if (socialDataResp) setOnboardingSocialData(socialDataResp);
@@ -89,7 +84,7 @@ const SkipButton = () => {
  * check if this is the last step
  */
 const exitToWordpressForEcommerce = () => {
-	if (window.nfdOnboarding.currentFlow == 'ecommerce') {
+	if (window.nfdOnboarding.currentFlow === 'ecommerce') {
 		return true;
 	}
 	return false;
