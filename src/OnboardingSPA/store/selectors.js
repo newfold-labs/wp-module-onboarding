@@ -1,11 +1,11 @@
 import { filter, findIndex } from 'lodash';
-import { addQueryArgs, getFragment } from '@wordpress/url';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Get the currently active drawer view
  *
  * @param {*} state
- * @return string
+ * @return {string} Drawer View
  */
 export function getDrawerView(state) {
 	return state.drawer.view;
@@ -15,7 +15,7 @@ export function getDrawerView(state) {
  * Check if the drawer is opened
  *
  * @param {*} state
- * @return boolean
+ * @return {boolean} Drawer isOpen
  */
 export function isDrawerOpened(state) {
 	return state.drawer.isOpen;
@@ -25,7 +25,7 @@ export function isDrawerOpened(state) {
  * Check if the drawer is suppressed
  *
  * @param {*} state
- * @return boolean
+ * @return {boolean} Drawer isSuppressed
  */
 export function isDrawerSuppressed(state) {
 	return state.drawer.isSuppressed;
@@ -39,7 +39,7 @@ export function isHeaderNavigationEnabled(state) {
  * Gets current Newfold brand
  *
  * @param {*} state
- * @return string
+ * @return {string} Newfold Brand
  */
 export function getNewfoldBrand(state) {
 	return state.runtime.currentBrand.brand;
@@ -49,7 +49,7 @@ export function getNewfoldBrand(state) {
  * Gets current Newfold brand
  *
  * @param {*} state
- * @return string
+ * @return {string} Current Brand Name
  */
 export function getNewfoldBrandName(state) {
 	return state.runtime.currentBrand.name;
@@ -59,7 +59,7 @@ export function getNewfoldBrandName(state) {
  * Gets dynamic Hire Experts URL for Need Help Tag per brand
  *
  * @param {*} state
- * @return string
+ * @return {string} hireExpertsUrl
  */
 export function getHireExpertsUrl(state) {
 	const hireExpertsInfo = state.runtime.currentBrand.hireExpertsInfo;
@@ -75,7 +75,7 @@ export function getHireExpertsUrl(state) {
  * Gets the current Onboarding Data
  *
  * @param {*} state
- * @return string
+ * @return {string} Current Onboarding Data
  */
 export function getCurrentOnboardingData(state) {
 	return state.data.flowData;
@@ -85,7 +85,7 @@ export function getCurrentOnboardingData(state) {
  * Gets the current Onboarding Social Data
  *
  * @param {*} state
- * @return string
+ * @return {string} Onboarding Social Data
  */
 export function getOnboardingSocialData(state) {
 	return state.data.socialData;
@@ -95,7 +95,7 @@ export function getOnboardingSocialData(state) {
  * Gets current Onboarding Flow
  *
  * @param {*} state
- * @return string
+ * @return {string} Onboarding Flow
  */
 export function getOnboardingFlow(state) {
 	return state.runtime.currentFlow ?? 'wp-setup';
@@ -113,7 +113,7 @@ export function getAllSteps(state) {
  * Gets steps to display in drawer.
  *
  * @param {*} state
- * @return
+ * @return {Array} Top Steps
  */
 export function getTopSteps(state) {
 	return state.flow.steps.topSteps;
@@ -123,7 +123,7 @@ export function getTopSteps(state) {
  * Gets design steps to display in drawer submenu.
  *
  * @param {*} state
- * @return
+ * @return {Array} Design Steps
  */
 export function getDesignSteps(state) {
 	return state.flow.steps.designSteps;
@@ -133,7 +133,7 @@ export function getDesignSteps(state) {
  * Gets get-started setup steps to display in drawer submenu.
  *
  * @param {*} state
- * @return
+ * @return {Array} Get Started Steps
  */
 export function getGetStartedSteps(state) {
 	return state.flow.steps.getStartedSteps;
@@ -143,7 +143,7 @@ export function getGetStartedSteps(state) {
  * Get the path to the current step.
  *
  * @param {*} state
- * @return
+ * @return {string} Current Step Path
  */
 export function getCurrentStepPath(state) {
 	return state.flow.steps.currentStep;
@@ -153,7 +153,7 @@ export function getCurrentStepPath(state) {
  * Gets the First step object.
  *
  * @param {*} state
- * @return object
+ * @return {Object} First Step
  */
 export function getFirstStep(state) {
 	return state.flow.steps.allSteps[0];
@@ -163,7 +163,7 @@ export function getFirstStep(state) {
  * Gets the Last step object.
  *
  * @param {*} state
- * @return object
+ * @return {Object} Last Step
  */
 export function getLastStep(state) {
 	return state.flow.steps.allSteps[state.flow.steps.allSteps.length - 1];
@@ -173,7 +173,7 @@ export function getLastStep(state) {
  * Gets the current step object.
  *
  * @param {*} state
- * @return object
+ * @return {Object} Current Step
  */
 export function getCurrentStep(state) {
 	const filtered = filter(state.flow.steps.allSteps, [
@@ -192,7 +192,7 @@ export function getStepFromPath(state, path) {
  * Get's the previous step's object.
  *
  * @param {*} state
- * @return object|null|false
+ * @return {object|null|false} Previous Step
  */
 export function getPreviousStep(state) {
 	const currentStepIndex = findIndex(state.flow.steps.allSteps, {
@@ -211,7 +211,7 @@ export function getPreviousStep(state) {
  * Gets the next steps object.
  *
  * @param {*} state
- * @return object|null|false
+ * @return {object|null|false} Next Step
  */
 export function getNextStep(state) {
 	const totalIndexes = state.flow.steps.allSteps.length - 1;
@@ -267,7 +267,7 @@ export function getStepPreviewData(state) {
  * Gets the current header menu Data
  *
  * @param {*} state
- * @return string
+ * @return {string} menu
  */
 export function getHeaderMenuData(state) {
 	return state.header.menu;
@@ -277,7 +277,7 @@ export function getHeaderMenuData(state) {
  * Gets 1-1 Experts URL for Help Section in the Sidebars
  *
  * @param {*} state
- * @return string
+ * @return {string} expertsUrl
  */
 export function getExpertsUrl(state) {
 	const expertsInfo = state.runtime.currentBrand.expertsInfo;
@@ -291,7 +291,7 @@ export function getExpertsUrl(state) {
  * Gets Full Service Creative Team URL for Help Section in the Sidebars
  *
  * @param {*} state
- * @return string
+ * @return {string} fullServiceCreativeTeamUrl
  */
 export function getfullServiceCreativeTeamUrl(state) {
 	const fullServiceCreativeTeamInfo =
@@ -308,7 +308,7 @@ export function getfullServiceCreativeTeamUrl(state) {
  * Gets Technical Support URL for Help Section in the Sidebars
  *
  * @param {*} state
- * @return string
+ * @return {string} techSupportUrl
  */
 export function getTechSupportUrl(state) {
 	const techSupportInfo = state.runtime.currentBrand.techSupportInfo;
@@ -324,7 +324,7 @@ export function getTechSupportUrl(state) {
  * Gets the Plugin Install Hash for security
  *
  * @param {*} state
- * @return string
+ * @return {string} pluginInstallHash
  */
 export function getPluginInstallHash(state) {
 	return state.runtime.pluginInstallHash;

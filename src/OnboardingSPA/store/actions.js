@@ -4,7 +4,7 @@
  * `url` is left to keep __webpack_public_path__ decoupled from store.
  *
  * @param {*} runtime
- * @return
+ * @return {Object} action object
  */
 export function setRuntime(runtime) {
 	window.nfdOnboarding = {
@@ -24,7 +24,7 @@ export function setRuntime(runtime) {
  * Sets the active view within the Drawer render slot.
  *
  * @param {*} view
- * @return
+ * @return {Object} action object
  */
 export function setDrawerActiveView(view) {
 	return {
@@ -37,7 +37,7 @@ export function setDrawerActiveView(view) {
  * Opens the off-canvas drawer on left of viewport.
  *
  * @param {*} isOpen
- * @return
+ * @return {Object} action object
  */
 export function setIsDrawerOpened(isOpen) {
 	return {
@@ -50,7 +50,7 @@ export function setIsDrawerOpened(isOpen) {
  * Keeps the drawer on the left suppressed.
  *
  * @param {*} isSuppressed
- * @return
+ * @return {Object} action object
  */
 export function setIsDrawerSuppressed(isSuppressed) {
 	return {
@@ -64,9 +64,8 @@ export function setIsDrawerSuppressed(isSuppressed) {
  *
  * NOTE: does not have any navigation side-effect.
  *
- * @param {*} path
- * @param     flow
- * @return
+ * @param {*} flow
+ * @return {Object} action object
  */
 export function setActiveFlow(flow) {
 	return {
@@ -81,7 +80,7 @@ export function setActiveFlow(flow) {
  * NOTE: does not have any navigation side-effect.
  *
  * @param {*} path
- * @return
+ * @return {Object} action object
  */
 export function setActiveStep(path) {
 	// Remove Trailing Spaces from URL
@@ -96,9 +95,8 @@ export function setActiveStep(path) {
 /**
  * Accepts a JSON to set the current data.
  *
- * @param {*} currentData
- * @param     flowData
- * @return
+ * @param {*} flowData
+ * @return {Object} action object
  */
 export function setCurrentOnboardingData(flowData) {
 	return {
@@ -111,7 +109,7 @@ export function setCurrentOnboardingData(flowData) {
  * Accepts a JSON to set the social data.
  *
  * @param {*} socialData
- * @return
+ * @return {Object} action object
  */
 export function setOnboardingSocialData(socialData) {
 	return {
@@ -124,7 +122,7 @@ export function setOnboardingSocialData(socialData) {
  * Updates general settings.
  *
  * @param {*} settings
- * @return
+ * @return {Object} action object
  */
 export function updateSettings(settings) {
 	return {
