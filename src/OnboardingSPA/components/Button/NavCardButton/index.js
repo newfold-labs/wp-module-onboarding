@@ -4,7 +4,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import Button from '../../Button';
 
 import { setFlow } from '../../../utils/api/flow';
-import { wpAdminPage, dashboardPage } from '../../../../constants';
+import { wpAdminPage, pluginDashboardPage } from '../../../../constants';
 
 /**
  * Navigation Button Component on Card
@@ -37,7 +37,7 @@ const NavCardButton = ( { text, disabled } ) => {
 		//Redirect to Admin Page for normal customers
 		// and Bluehost Dashboard for ecommerce customers
 		const exitLink = exitToWordpressForEcommerce()
-			? dashboardPage
+			? pluginDashboardPage
 			: wpAdminPage;
 		window.location.replace( exitLink );
 	}
