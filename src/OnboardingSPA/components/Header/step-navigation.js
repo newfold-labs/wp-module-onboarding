@@ -12,7 +12,8 @@ import { wpAdminPage, dashboardPage } from '../../../constants';
  * Back step Navigation button.
  *
  * @param {*} param0
- * @return
+ *
+ * @return {WPComponent} Back Component
  */
 const Back = ( { path } ) => {
 	const navigate = useNavigate();
@@ -34,7 +35,8 @@ const Back = ( { path } ) => {
  * Next step naigation button
  *
  * @param {*} param0
- * @return
+ *
+ * @return {WPComponent} Next Component
  */
 const Next = ( { path } ) => {
 	/* [TODO]: some sense of isStepComplete to enable/disable */
@@ -69,14 +71,13 @@ async function saveDataAndExit( currentData ) {
 /**
  * Finish step navigation button.
  *
- * @param  root0
- * @param  root0.currentData
- * @param  root0.saveDataAndExit
- * @return
+ * @param {*} param0
+ *
+ * @return {WPComponent} Finish Component
  */
-const Finish = ( { currentData, saveDataAndExit } ) => (
+const Finish = ( { currentData, saveDataAndExitFunc } ) => (
 	<Button
-		onClick={ ( e ) => saveDataAndExit( currentData ) }
+		onClick={ () => saveDataAndExitFunc( currentData ) }
 		className="navigation-buttons navigation-buttons_finish"
 		variant="primary"
 	>
@@ -88,7 +89,7 @@ const Finish = ( { currentData, saveDataAndExit } ) => (
 /**
  * Step buttons presented in Header.
  *
- * @return
+ * @return {WPComponent} StepNavigation Component
  */
 const StepNavigation = () => {
 	const location = useLocation();
@@ -114,7 +115,7 @@ const StepNavigation = () => {
 				{ isLastStep ? (
 					<Finish
 						currentData={ currentData }
-						saveDataAndExit={ saveDataAndExit }
+						saveDataAndExitFunc={ saveDataAndExit }
 					/>
 				) : (
 					<Next path={ nextStep.path } />

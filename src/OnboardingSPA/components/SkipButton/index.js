@@ -12,7 +12,7 @@ import { wpAdminPage, dashboardPage } from '../../../constants';
 /**
  * Interface Text Inputs with standard design.
  *
- * @return
+ * @return {WPComponent} SkipButton Component
  */
 const SkipButton = () => {
 	const navigate = useNavigate();
@@ -27,17 +27,16 @@ const SkipButton = () => {
 
 	const isLastStep = null === nextStep || false === nextStep;
 
-	async function syncSocialSettingsFinish( currentData ) {
+	async function syncSocialSettingsFinish() {
 		const initialData = await getSettings();
 		const result = await setSettings( currentData?.data?.socialData );
-		if ( result?.error != null ) {
-			console.error( 'Unable to Save Social Data!' );
+		if ( result?.error !== null ) {
 			return initialData?.body;
 		}
 		return result?.body;
 	}
 
-	async function saveData( path, currentData ) {
+	async function saveData( path ) {
 		if ( currentData ) {
 			currentData.isComplete = new Date().getTime();
 
@@ -48,8 +47,9 @@ const SkipButton = () => {
 				);
 
 				// If Social Data is changed then Sync that also to the store
-				if ( socialData && currentData?.data )
+				if ( socialData && currentData?.data ) {
 					currentData.data.socialData = socialData;
+				}
 			}
 			setFlow( currentData );
 		}
@@ -66,7 +66,7 @@ const SkipButton = () => {
 			return (
 				<Button
 					className="skip-button"
-					onClick={ () => saveData( location.pathname, currentData ) }
+					onClick={ () => saveData( location.pathname ) }
 				>
 					{ __( 'Skip this Step', 'wp-module-onboarding' ) }
 				</Button>
@@ -89,7 +89,7 @@ const SkipButton = () => {
  * check if this is the last step
  */
 const exitToWordpressForEcommerce = () => {
-	if ( window.nfdOnboarding.currentFlow == 'ecommerce' ) {
+	if ( window.nfdOnboarding.currentFlow === 'ecommerce' ) {
 		return true;
 	}
 	return false;
