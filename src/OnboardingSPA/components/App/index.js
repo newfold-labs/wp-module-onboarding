@@ -26,8 +26,8 @@ import { FullscreenMode, InterfaceSkeleton } from '@wordpress/interface';
  */
 const App = () => {
 	const location = useLocation();
-	const isLargeViewport = useViewportMatch('medium');
-	const pathname = kebabCase(location.pathname);
+	const isLargeViewport = useViewportMatch( 'medium' );
+	const pathname = kebabCase( location.pathname );
 
 	const {
 		isDrawerOpen,
@@ -39,23 +39,24 @@ const App = () => {
 		routes,
 		designSteps,
 		allSteps,
-	} = useSelect((select) => {
+	} = useSelect( ( select ) => {
 		return {
-			isDrawerOpen: select(nfdOnboardingStore).isDrawerOpened(),
-			newfoldBrand: select(nfdOnboardingStore).getNewfoldBrand(),
-			onboardingFlow: select(nfdOnboardingStore).getOnboardingFlow(),
-			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
-			socialData: select(nfdOnboardingStore).getOnboardingSocialData(),
-			firstStep: select(nfdOnboardingStore).getFirstStep(),
-			routes: select(nfdOnboardingStore).getRoutes(),
-			allSteps: select(nfdOnboardingStore).getAllSteps(),
-			designSteps: select(nfdOnboardingStore).getDesignSteps(),
+			isDrawerOpen: select( nfdOnboardingStore ).isDrawerOpened(),
+			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
+			onboardingFlow: select( nfdOnboardingStore ).getOnboardingFlow(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			socialData: select( nfdOnboardingStore ).getOnboardingSocialData(),
+			firstStep: select( nfdOnboardingStore ).getFirstStep(),
+			routes: select( nfdOnboardingStore ).getRoutes(),
+			allSteps: select( nfdOnboardingStore ).getAllSteps(),
+			designSteps: select( nfdOnboardingStore ).getDesignSteps(),
 		};
-	}, []);
+	}, [] );
 
-	const [isRequestPlaced, setIsRequestPlaced] = useState(false);
-	const [didVisitBasicInfo, setDidVisitBasicInfo] = useState(false);
-	const [didVisitEcommerce, setDidVisitEcommerce] = useState(false);
+	const [ isRequestPlaced, setIsRequestPlaced ] = useState( false );
+	const [ didVisitBasicInfo, setDidVisitBasicInfo ] = useState( false );
+	const [ didVisitEcommerce, setDidVisitEcommerce ] = useState( false );
 	const {
 		setActiveStep,
 		setActiveFlow,
@@ -64,25 +65,25 @@ const App = () => {
 		updateAllSteps,
 		setOnboardingSocialData,
 		setCurrentOnboardingData,
-	} = useDispatch(nfdOnboardingStore);
+	} = useDispatch( nfdOnboardingStore );
 
 	async function syncSocialSettings() {
 		const initialData = await getSettings();
-		const result = await setSettings(socialData);
-		setDidVisitBasicInfo(false);
-		if (result?.error !== null) return initialData?.body;
+		const result = await setSettings( socialData );
+		setDidVisitBasicInfo( false );
+		if ( result?.error !== null ) return initialData?.body;
 		return result?.body;
 	}
 
 	async function syncStoreDetails() {
 		const { address, tax } = currentData.storeDetails;
 		let payload = {};
-		if (address !== undefined) {
+		if ( address !== undefined ) {
 			delete address.country;
 			delete address.state;
 			payload = address;
 		}
-		if (tax !== undefined) {
+		if ( tax !== undefined ) {
 			// const option = tax.option;
 			// const isStoreDetailsFilled = tax.isStoreDetailsFilled;
 			delete tax.option;
@@ -97,47 +98,48 @@ const App = () => {
 			// }
 			payload = { ...payload, ...tax };
 		}
-		if (!isEmpty(payload)) {
-			await updateWPSettings(payload);
+		if ( ! isEmpty( payload ) ) {
+			await updateWPSettings( payload );
 		}
 		delete currentData.storeDetails.address;
 		delete currentData.storeDetails.tax;
-		setDidVisitEcommerce(false);
+		setDidVisitEcommerce( false );
 	}
 
 	async function syncStoreToDB() {
 		// The First Welcome Step doesn't have any Store changes
 		const isFirstStep = location?.pathname === firstStep?.path;
-		if (currentData && !isFirstStep) {
-			if (!isRequestPlaced) {
-				setIsRequestPlaced(true);
+		if ( currentData && ! isFirstStep ) {
+			if ( ! isRequestPlaced ) {
+				setIsRequestPlaced( true );
 
-				if (didVisitEcommerce) {
+				if ( didVisitEcommerce ) {
 					await syncStoreDetails();
 				}
 
 				// If Social Data is changed then sync it
-				if (didVisitBasicInfo) {
+				if ( didVisitBasicInfo ) {
 					const socialDataResp = await syncSocialSettings();
 
 					// If Social Data is changed then Sync that also to the store
-					if (socialDataResp) setOnboardingSocialData(socialDataResp);
+					if ( socialDataResp )
+						setOnboardingSocialData( socialDataResp );
 				}
 
-				const result = await setFlow(currentData);
-				if (result?.error !== null) {
-					setIsRequestPlaced(false);
+				const result = await setFlow( currentData );
+				if ( result?.error !== null ) {
+					setIsRequestPlaced( false );
 				} else {
-					setCurrentOnboardingData(result?.body);
-					setIsRequestPlaced(false);
+					setCurrentOnboardingData( result?.body );
+					setIsRequestPlaced( false );
 				}
 			}
 		}
 		// Check if the Basic Info page was visited
-		if (location?.pathname.includes('basic-info'))
-			setDidVisitBasicInfo(true);
-		if (location?.pathname.includes('ecommerce')) {
-			setDidVisitEcommerce(true);
+		if ( location?.pathname.includes( 'basic-info' ) )
+			setDidVisitBasicInfo( true );
+		if ( location?.pathname.includes( 'ecommerce' ) ) {
+			setDidVisitEcommerce( true );
 		}
 	}
 
@@ -149,19 +151,19 @@ const App = () => {
 		];
 		return {
 			routes: orderBy(
-				updates.routes.concat(steps),
-				['priority'],
-				['asc']
+				updates.routes.concat( steps ),
+				[ 'priority' ],
+				[ 'asc' ]
 			),
 			allSteps: orderBy(
-				updates.allSteps.concat(steps),
-				['priority'],
-				['asc']
+				updates.allSteps.concat( steps ),
+				[ 'priority' ],
+				[ 'asc' ]
 			),
 			designSteps: orderBy(
-				updates.designSteps.concat(steps),
-				['priority'],
-				['asc']
+				updates.designSteps.concat( steps ),
+				[ 'priority' ],
+				[ 'asc' ]
 			),
 		};
 	};
@@ -170,27 +172,31 @@ const App = () => {
 		return {
 			routes: filter(
 				routes,
-				(route) =>
-					!route.path.includes(conditionalSteps.designColors.path) &&
-					!route.path.includes(conditionalSteps.designTypography.path)
+				( route ) =>
+					! route.path.includes(
+						conditionalSteps.designColors.path
+					) &&
+					! route.path.includes(
+						conditionalSteps.designTypography.path
+					)
 			),
 			allSteps: filter(
 				allSteps,
-				(allStep) =>
-					!allStep.path.includes(
+				( allStep ) =>
+					! allStep.path.includes(
 						conditionalSteps.designColors.path
 					) &&
-					!allStep.path.includes(
+					! allStep.path.includes(
 						conditionalSteps.designTypography.path
 					)
 			),
 			designSteps: filter(
 				designSteps,
-				(designStep) =>
-					!designStep.path.includes(
+				( designStep ) =>
+					! designStep.path.includes(
 						conditionalSteps.designColors.path
 					) &&
-					!designStep.path.includes(
+					! designStep.path.includes(
 						conditionalSteps.designTypography.path
 					)
 			),
@@ -199,49 +205,49 @@ const App = () => {
 
 	function handleColorsAndTypographyRoutes() {
 		if (
-			location?.pathname.includes('colors') ||
-			location?.pathname.includes('typography')
+			location?.pathname.includes( 'colors' ) ||
+			location?.pathname.includes( 'typography' )
 		) {
 			const updates = currentData?.data?.customDesign
 				? addColorAndTypographyRoutes()
 				: removeColorAndTypographyRoutes();
 
-			updateRoutes(updates.routes);
-			updateDesignSteps(updates.designSteps);
-			updateAllSteps(updates.allSteps);
+			updateRoutes( updates.routes );
+			updateDesignSteps( updates.designSteps );
+			updateAllSteps( updates.allSteps );
 		}
 	}
 
-	useEffect(() => {
-		document.body.classList.add(`nfd-brand-${newfoldBrand}`);
-	}, [newfoldBrand]);
+	useEffect( () => {
+		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
+	}, [ newfoldBrand ] );
 
-	useEffect(() => {
+	useEffect( () => {
 		syncStoreToDB();
 		handleColorsAndTypographyRoutes();
-		if (location.pathname.includes('/step')) {
-			setActiveFlow(onboardingFlow);
-			setActiveStep(location.pathname);
+		if ( location.pathname.includes( '/step' ) ) {
+			setActiveFlow( onboardingFlow );
+			setActiveStep( location.pathname );
 		}
-	}, [location.pathname, onboardingFlow]);
+	}, [ location.pathname, onboardingFlow ] );
 
 	return (
 		<Fragment>
-			<FullscreenMode isActive={true} />\
+			<FullscreenMode isActive={ true } />\
 			<SlotFillProvider>
 				<InterfaceSkeleton
-					className={classNames(
+					className={ classNames(
 						'nfd-onboarding-skeleton',
-						`brand-${newfoldBrand}`,
-						`path-${pathname}`,
+						`brand-${ newfoldBrand }`,
+						`path-${ pathname }`,
 						{ 'is-drawer-open': isDrawerOpen },
 						{ 'is-large-viewport': isLargeViewport },
-						{ 'is-small-viewport': !isLargeViewport }
-					)}
-					header={<Header />}
-					drawer={<Drawer />}
-					content={<Content />}
-					sidebar={<Sidebar />}
+						{ 'is-small-viewport': ! isLargeViewport }
+					) }
+					header={ <Header /> }
+					drawer={ <Drawer /> }
+					content={ <Content /> }
+					sidebar={ <Sidebar /> }
 				/>
 			</SlotFillProvider>
 		</Fragment>

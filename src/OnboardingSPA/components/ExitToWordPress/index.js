@@ -18,45 +18,45 @@ import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
  *
  * @return {WPComponent} ExitToWordPress Component
  */
-const ExitToWordPress = ({
-	buttonText = __('Exit to WordPress', 'wp-module-onboarding'),
+const ExitToWordPress = ( {
+	buttonText = __( 'Exit to WordPress', 'wp-module-onboarding' ),
 	showButtonIcon = true,
 	showButton = true,
 	buttonVariant = 'secondary',
 	buttonClassName = false,
 	isModalOpen = false,
-	modalTitle = __('Exit without finishing?', 'wp-module-onboarding'),
+	modalTitle = __( 'Exit without finishing?', 'wp-module-onboarding' ),
 	modalText = false,
-	modalPrimaryCloseButtonText = __('Continue', 'wp-module-onboarding'),
+	modalPrimaryCloseButtonText = __( 'Continue', 'wp-module-onboarding' ),
 	modalOnClose = false,
-	modalExitButtonText = __('Exit', 'wp-module-onboarding'),
-}) => {
-	const [isOpen, setIsOpen] = useState(isModalOpen);
-	const openModal = () => setIsOpen(true);
+	modalExitButtonText = __( 'Exit', 'wp-module-onboarding' ),
+} ) => {
+	const [ isOpen, setIsOpen ] = useState( isModalOpen );
+	const openModal = () => setIsOpen( true );
 	const closeModal = () => {
-		if (typeof modalOnClose === 'function') {
+		if ( typeof modalOnClose === 'function' ) {
 			modalOnClose();
 		}
-		setIsOpen(false);
+		setIsOpen( false );
 	};
 
 	const location = useLocation();
 	const { currentData, brandName, socialData } = useSelect(
-		(select) => {
+		( select ) => {
 			return {
 				currentData:
-					select(nfdOnboardingStore).getCurrentOnboardingData(),
-				brandName: select(nfdOnboardingStore).getNewfoldBrandName(),
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
 				socialData:
-					select(nfdOnboardingStore).getOnboardingSocialData(),
+					select( nfdOnboardingStore ).getOnboardingSocialData(),
 			};
 		},
-		[location.pathname]
+		[ location.pathname ]
 	);
 
-	const { setOnboardingSocialData } = useDispatch(nfdOnboardingStore);
+	const { setOnboardingSocialData } = useDispatch( nfdOnboardingStore );
 
-	if (!modalText) {
+	if ( ! modalText ) {
 		modalText = sprintf(
 			/* translators: %s: Brand */
 			__(
@@ -69,68 +69,71 @@ const ExitToWordPress = ({
 
 	async function syncSocialSettingsFinish() {
 		const initialData = await getSettings();
-		const result = await setSettings(socialData);
-		if (result?.error !== null) {
+		const result = await setSettings( socialData );
+		if ( result?.error !== null ) {
 			return initialData?.body;
 		}
 		return result?.body;
 	}
 
-	async function saveData(path) {
-		if (currentData) {
+	async function saveData( path ) {
+		if ( currentData ) {
 			currentData.hasExited = new Date().getTime();
 
 			// If Social Data is changed then sync it
-			if (path?.includes('basic-info')) {
+			if ( path?.includes( 'basic-info' ) ) {
 				const socialDataResp = await syncSocialSettingsFinish();
 
 				// If Social Data is changed then Sync that also to the store
-				if (socialDataResp) setOnboardingSocialData(socialDataResp);
+				if ( socialDataResp ) setOnboardingSocialData( socialDataResp );
 			}
-			setFlow(currentData);
+			setFlow( currentData );
 		}
 		//Redirect to Admin Page for normal customers
 		// and Bluehost Dashboard for ecommerce customers
 		const exitLink = exitToWordpressForEcommerce()
 			? bluehostDashboardPage
 			: wpAdminPage;
-		window.location.replace(exitLink);
+		window.location.replace( exitLink );
 	}
 
 	return (
 		<Fragment>
-			{showButton && (
+			{ showButton && (
 				<Button
-					icon={showButtonIcon ? chevronLeft : false}
-					variant={buttonVariant}
-					onClick={openModal}
-					className={classNames(
+					icon={ showButtonIcon ? chevronLeft : false }
+					variant={ buttonVariant }
+					onClick={ openModal }
+					className={ classNames(
 						`nfd-onboarding-etw__trigger`,
 						buttonClassName
-					)}
+					) }
 				>
-					{buttonText}
+					{ buttonText }
 				</Button>
-			)}
-			{isOpen && (
-				<Modal title={modalTitle} onRequestClose={() => closeModal()}>
-					<p>{modalText}</p>
+			) }
+			{ isOpen && (
+				<Modal
+					title={ modalTitle }
+					onRequestClose={ () => closeModal() }
+				>
+					<p>{ modalText }</p>
 					<ButtonGroup className="nfd-onboarding-etw__buttons">
 						<Button
 							variant="secondary"
-							onClick={() => closeModal()}
+							onClick={ () => closeModal() }
 						>
-							{modalPrimaryCloseButtonText}
+							{ modalPrimaryCloseButtonText }
 						</Button>
 						<Button
 							variant="primary"
-							onClick={() => saveData(location.pathname)}
+							onClick={ () => saveData( location.pathname ) }
 						>
-							{modalExitButtonText}
+							{ modalExitButtonText }
 						</Button>
 					</ButtonGroup>
 				</Modal>
-			)}
+			) }
 		</Fragment>
 	);
 };
@@ -139,7 +142,7 @@ const ExitToWordPress = ({
  * check if this is the last step
  */
 const exitToWordpressForEcommerce = () => {
-	if (window.nfdOnboarding.currentFlow === 'ecommerce') {
+	if ( window.nfdOnboarding.currentFlow === 'ecommerce' ) {
 		return true;
 	}
 	return false;

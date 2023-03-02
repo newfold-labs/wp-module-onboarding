@@ -17,39 +17,40 @@ import SocialMediaForm from '../../../components/SocialMediaForm';
  * @return {WPComponent} BasicInfoForm Component
  */
 const BasicInfoForm = () => {
-	const socialMediaRef = useRef(null);
-	const [flowData, setFlowData] = useState();
-	const [isLoaded, setisLoaded] = useState(false);
-	const [debouncedFlowData, setDebouncedFlowData] = useState();
+	const socialMediaRef = useRef( null );
+	const [ flowData, setFlowData ] = useState();
+	const [ isLoaded, setisLoaded ] = useState( false );
+	const [ debouncedFlowData, setDebouncedFlowData ] = useState();
 
-	const [siteTitle, setSiteTitle] = useState('');
-	const [siteDesc, setSiteDesc] = useState('');
-	const [siteLogo, setSiteLogo] = useState(0);
-	const [socialData, setSocialData] = useState();
-	const [isValidSocials, setIsValidSocials] = useState(false);
-	const [isSocialFormOpen, setIsSocialFormOpen] = useState(false);
+	const [ siteTitle, setSiteTitle ] = useState( '' );
+	const [ siteDesc, setSiteDesc ] = useState( '' );
+	const [ siteLogo, setSiteLogo ] = useState( 0 );
+	const [ socialData, setSocialData ] = useState();
+	const [ isValidSocials, setIsValidSocials ] = useState( false );
+	const [ isSocialFormOpen, setIsSocialFormOpen ] = useState( false );
 
 	const { setOnboardingSocialData, setCurrentOnboardingData } =
-		useDispatch(nfdOnboardingStore);
-	const { editEntityRecord } = useDispatch(coreStore);
+		useDispatch( nfdOnboardingStore );
+	const { editEntityRecord } = useDispatch( coreStore );
 
-	const { getEditedEntityRecord } = useSelect((select) => {
-		return select(coreStore);
-	}, []);
+	const { getEditedEntityRecord } = useSelect( ( select ) => {
+		return select( coreStore );
+	}, [] );
 
-	const { currentData } = useSelect((select) => {
+	const { currentData } = useSelect( ( select ) => {
 		return {
-			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
-	}, []);
+	}, [] );
 
 	const content = getContents();
 
 	function setDefaultData() {
-		if (isLoaded) {
-			setSiteLogo(flowData?.data?.siteLogo ?? 0);
-			setSiteTitle(flowData?.data?.blogName ?? '');
-			setSiteDesc(flowData?.data?.blogDescription ?? '');
+		if ( isLoaded ) {
+			setSiteLogo( flowData?.data?.siteLogo ?? 0 );
+			setSiteTitle( flowData?.data?.blogName ?? '' );
+			setSiteDesc( flowData?.data?.blogDescription ?? '' );
 		}
 	}
 
@@ -65,44 +66,44 @@ const BasicInfoForm = () => {
 		return dataToSave;
 	}
 
-	useEffect(() => {
-		if (isSocialFormOpen) socialMediaRef.current.scrollIntoView();
-	}, [isSocialFormOpen]);
+	useEffect( () => {
+		if ( isSocialFormOpen ) socialMediaRef.current.scrollIntoView();
+	}, [ isSocialFormOpen ] );
 
-	useEffect(() => {
+	useEffect( () => {
 		async function getFlowData() {
 			const socialDataAPI = await getSettings();
-			setSocialData(socialDataAPI?.body);
-			setFlowData(currentData);
-			setDebouncedFlowData(flowData);
-			setisLoaded(true);
-			setOnboardingSocialData(socialDataAPI?.body);
+			setSocialData( socialDataAPI?.body );
+			setFlowData( currentData );
+			setDebouncedFlowData( flowData );
+			setisLoaded( true );
+			setOnboardingSocialData( socialDataAPI?.body );
 		}
-		if (!isLoaded) getFlowData();
-		getEditedEntityRecord('root', 'site');
+		if ( ! isLoaded ) getFlowData();
+		getEditedEntityRecord( 'root', 'site' );
 
 		setDefaultData();
-	}, [isLoaded]);
+	}, [ isLoaded ] );
 
-	useEffect(() => {
-		const timerId = setTimeout(() => {
-			if (isLoaded) setDebouncedFlowData(createSaveData());
-		}, 600);
+	useEffect( () => {
+		const timerId = setTimeout( () => {
+			if ( isLoaded ) setDebouncedFlowData( createSaveData() );
+		}, 600 );
 
 		return () => {
-			clearTimeout(timerId);
+			clearTimeout( timerId );
 		};
-	}, [siteTitle, siteDesc, siteLogo, socialData, isValidSocials]);
+	}, [ siteTitle, siteDesc, siteLogo, socialData, isValidSocials ] );
 
-	const updateCoreStore = (siteLogoTemp, siteTitleTemp, siteDescTemp) => {
-		editEntityRecord('root', 'site', undefined, {
+	const updateCoreStore = ( siteLogoTemp, siteTitleTemp, siteDescTemp ) => {
+		editEntityRecord( 'root', 'site', undefined, {
 			site_logo: siteLogoTemp?.id ? siteLogoTemp.id : null,
 			description: siteDescTemp,
 			title: siteTitleTemp,
-		});
+		} );
 	};
 
-	useEffect(() => {
+	useEffect( () => {
 		const saveData = async () => {
 			const currentDataCopy = currentData;
 			currentDataCopy.data.siteLogo =
@@ -119,65 +120,65 @@ const BasicInfoForm = () => {
 				currentDataCopy.data.blogName,
 				currentDataCopy.data.blogDescription
 			);
-			setCurrentOnboardingData(currentDataCopy);
+			setCurrentOnboardingData( currentDataCopy );
 			setOnboardingSocialData(
 				debouncedFlowData.data.socialData ?? socialData
 			);
 		};
-		if (debouncedFlowData) saveData();
-	}, [debouncedFlowData]);
+		if ( debouncedFlowData ) saveData();
+	}, [ debouncedFlowData ] );
 
 	return (
 		<Animate
-			type={'fade-in-disabled'}
+			type={ 'fade-in-disabled' }
 			after={
 				typeof flowData === 'object' && typeof socialData === 'object'
 			}
 		>
-			<div className={'basic-info'}>
+			<div className={ 'basic-info' }>
 				<div className="basic-info-form">
 					<div className="basic-info-form__left">
 						<TextInput
-							title={content.siteTitle.title}
-							hint={content.siteTitle.hint}
-							placeholder={content.siteTitle.placeholder}
-							maxCharacters={content.siteTitle.maxCharacters}
+							title={ content.siteTitle.title }
+							hint={ content.siteTitle.hint }
+							placeholder={ content.siteTitle.placeholder }
+							maxCharacters={ content.siteTitle.maxCharacters }
 							height="47px"
-							textValue={siteTitle}
-							textValueSetter={setSiteTitle}
+							textValue={ siteTitle }
+							textValueSetter={ setSiteTitle }
 						/>
 
 						<TextInput
-							title={content.siteDesc.title}
-							hint={content.siteDesc.hint}
-							placeholder={content.siteDesc.placeholder}
-							maxCharacters={content.siteDesc.maxCharacters}
+							title={ content.siteDesc.title }
+							hint={ content.siteDesc.hint }
+							placeholder={ content.siteDesc.placeholder }
+							maxCharacters={ content.siteDesc.maxCharacters }
 							height="100px"
-							textValue={siteDesc}
-							textValueSetter={setSiteDesc}
+							textValue={ siteDesc }
+							textValueSetter={ setSiteDesc }
 						/>
-						<div ref={socialMediaRef}>
+						<div ref={ socialMediaRef }>
 							<SocialMediaForm
-								socialData={socialData}
-								setSocialData={setSocialData}
-								isSocialFormOpen={isSocialFormOpen}
-								setIsValidSocials={setIsValidSocials}
-								setIsSocialFormOpen={setIsSocialFormOpen}
+								socialData={ socialData }
+								setSocialData={ setSocialData }
+								isSocialFormOpen={ isSocialFormOpen }
+								setIsValidSocials={ setIsValidSocials }
+								setIsSocialFormOpen={ setIsSocialFormOpen }
 							/>
 						</div>
 					</div>
 					<div className="basic-info-form__right">
 						<ImageUploader
-							icon={siteLogo}
-							iconSetter={setSiteLogo}
+							icon={ siteLogo }
+							iconSetter={ setSiteLogo }
 						/>
 						<MiniPreview
-							icon={siteLogo}
-							title={siteTitle}
-							desc={siteDesc}
-							socialData={socialData}
-							isSocialFormOpen={isSocialFormOpen}
-							setIsSocialFormOpen={setIsSocialFormOpen}
+							icon={ siteLogo }
+							title={ siteTitle }
+							desc={ siteDesc }
+							socialData={ socialData }
+							isSocialFormOpen={ isSocialFormOpen }
+							setIsSocialFormOpen={ setIsSocialFormOpen }
 						/>
 					</div>
 				</div>

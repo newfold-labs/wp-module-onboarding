@@ -17,62 +17,63 @@ import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
 const SkipButton = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const { nextStep, currentData, socialData } = useSelect((select) => {
+	const { nextStep, currentData, socialData } = useSelect( ( select ) => {
 		return {
-			nextStep: select(nfdOnboardingStore).getNextStep(),
-			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
-			socialData: select(nfdOnboardingStore).getOnboardingSocialData(),
+			nextStep: select( nfdOnboardingStore ).getNextStep(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			socialData: select( nfdOnboardingStore ).getOnboardingSocialData(),
 		};
-	}, []);
+	}, [] );
 
 	const isLastStep = null === nextStep || false === nextStep;
-	const { setOnboardingSocialData } = useDispatch(nfdOnboardingStore);
+	const { setOnboardingSocialData } = useDispatch( nfdOnboardingStore );
 
 	async function syncSocialSettingsFinish() {
 		const initialData = await getSettings();
-		const result = await setSettings(socialData);
-		if (result?.error !== null) return initialData?.body;
+		const result = await setSettings( socialData );
+		if ( result?.error !== null ) return initialData?.body;
 		return result?.body;
 	}
 
-	async function saveData(path) {
-		if (currentData) {
+	async function saveData( path ) {
+		if ( currentData ) {
 			currentData.isComplete = new Date().getTime();
 
 			// If Social Data is changed then sync it
-			if (path?.includes('basic-info')) {
+			if ( path?.includes( 'basic-info' ) ) {
 				const socialDataResp = await syncSocialSettingsFinish();
 
 				// If Social Data is changed then Sync that also to the store
-				if (socialDataResp) setOnboardingSocialData(socialDataResp);
+				if ( socialDataResp ) setOnboardingSocialData( socialDataResp );
 			}
-			setFlow(currentData);
+			setFlow( currentData );
 		}
 		// Redirect to Admin Page for normal customers
 		// and Bluehost Dashboard for ecommerce customers
 		const exitLink = exitToWordpressForEcommerce()
 			? bluehostDashboardPage
 			: wpAdminPage;
-		window.location.replace(exitLink);
+		window.location.replace( exitLink );
 	}
 
 	function skipStep() {
-		if (isLastStep) {
+		if ( isLastStep ) {
 			return (
 				<Button
 					className="skip-button"
-					onClick={() => saveData(location.pathname, currentData)}
+					onClick={ () => saveData( location.pathname, currentData ) }
 				>
-					{__('Skip this Step', 'wp-module-onboarding')}
+					{ __( 'Skip this Step', 'wp-module-onboarding' ) }
 				</Button>
 			);
 		}
 		return (
 			<Button
 				className="skip-button"
-				onClick={() => navigate(nextStep.path)}
+				onClick={ () => navigate( nextStep.path ) }
 			>
-				{__('Skip this Step', 'wp-module-onboarding')}
+				{ __( 'Skip this Step', 'wp-module-onboarding' ) }
 			</Button>
 		);
 	}
@@ -84,11 +85,11 @@ const SkipButton = () => {
  * check if this is the last step
  */
 const exitToWordpressForEcommerce = () => {
-	if (window.nfdOnboarding.currentFlow === 'ecommerce') {
+	if ( window.nfdOnboarding.currentFlow === 'ecommerce' ) {
 		return true;
 	}
 	return false;
 };
 
-const SkipButtonMemo = memo(SkipButton);
+const SkipButtonMemo = memo( SkipButton );
 export default SkipButtonMemo;

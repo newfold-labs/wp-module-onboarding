@@ -6,7 +6,7 @@
  * @param {*} runtime
  * @return {Object} action object
  */
-export function setRuntime(runtime) {
+export function setRuntime( runtime ) {
 	window.nfdOnboarding = {
 		buildUrl: runtime.buildUrl,
 		siteUrl: runtime.siteUrl,
@@ -26,7 +26,7 @@ export function setRuntime(runtime) {
  * @param {*} view
  * @return {Object} action object
  */
-export function setDrawerActiveView(view) {
+export function setDrawerActiveView( view ) {
 	return {
 		type: 'SET_DRAWER_ACTIVE_VIEW',
 		view,
@@ -39,7 +39,7 @@ export function setDrawerActiveView(view) {
  * @param {*} isOpen
  * @return {Object} action object
  */
-export function setIsDrawerOpened(isOpen) {
+export function setIsDrawerOpened( isOpen ) {
 	return {
 		type: 'SET_DRAWER_OPENED',
 		isOpen,
@@ -52,7 +52,7 @@ export function setIsDrawerOpened(isOpen) {
  * @param {*} isSuppressed
  * @return {Object} action object
  */
-export function setIsDrawerSuppressed(isSuppressed) {
+export function setIsDrawerSuppressed( isSuppressed ) {
 	return {
 		type: 'SET_DRAWER_SUPPRESSED',
 		isSuppressed,
@@ -67,7 +67,7 @@ export function setIsDrawerSuppressed(isSuppressed) {
  * @param {*} flow
  * @return {Object} action object
  */
-export function setActiveFlow(flow) {
+export function setActiveFlow( flow ) {
 	return {
 		type: 'SET_ACTIVE_FLOW',
 		flow,
@@ -82,9 +82,9 @@ export function setActiveFlow(flow) {
  * @param {*} path
  * @return {Object} action object
  */
-export function setActiveStep(path) {
+export function setActiveStep( path ) {
 	// Remove Trailing Spaces from URL
-	path = path.replace(/\/$/, '');
+	path = path.replace( /\/$/, '' );
 
 	return {
 		type: 'SET_ACTIVE_STEP',
@@ -98,7 +98,7 @@ export function setActiveStep(path) {
  * @param {*} flowData
  * @return {Object} action object
  */
-export function setCurrentOnboardingData(flowData) {
+export function setCurrentOnboardingData( flowData ) {
 	return {
 		type: 'SET_CURRENT_DATA',
 		flowData,
@@ -111,7 +111,7 @@ export function setCurrentOnboardingData(flowData) {
  * @param {*} socialData
  * @return {Object} action object
  */
-export function setOnboardingSocialData(socialData) {
+export function setOnboardingSocialData( socialData ) {
 	return {
 		type: 'SET_SOCIAL_DATA',
 		socialData,
@@ -124,77 +124,77 @@ export function setOnboardingSocialData(socialData) {
  * @param {*} settings
  * @return {Object} action object
  */
-export function updateSettings(settings) {
+export function updateSettings( settings ) {
 	return {
 		type: 'UPDATE_SETTINGS',
 		settings,
 	};
 }
 
-export function updateThemeStatus(themeStatus) {
+export function updateThemeStatus( themeStatus ) {
 	return {
 		type: 'UPDATE_THEME_STATUS',
 		themeStatus,
 	};
 }
 
-export function updatePluginsStatus(pluginsStatus) {
+export function updatePluginsStatus( pluginsStatus ) {
 	return {
 		type: 'UPDATE_PLUGINS_STATUS',
 		pluginsStatus,
 	};
 }
 
-export function setIsSidebarOpened(isOpen) {
+export function setIsSidebarOpened( isOpen ) {
 	return {
 		type: 'SET_SIDEBAR_OPENED',
 		isOpen,
 	};
 }
 
-export function setSidebarActiveView(view) {
+export function setSidebarActiveView( view ) {
 	return {
 		type: 'SET_SIDEBAR_ACTIVE_VIEW',
 		view,
 	};
 }
 
-export function setIsHeaderNavigationEnabled(isNavigationEnabled) {
+export function setIsHeaderNavigationEnabled( isNavigationEnabled ) {
 	return {
 		type: 'SET_HEADER_NAVIGATION_ENABLED',
 		isNavigationEnabled,
 	};
 }
 
-export function updatePreviewSettings(previewSettings) {
+export function updatePreviewSettings( previewSettings ) {
 	return {
 		type: 'SET_PREVIEW_SETTINGS',
 		previewSettings,
 	};
 }
 
-export function updateRoutes(routes) {
+export function updateRoutes( routes ) {
 	return {
 		type: 'UPDATE_ROUTES',
 		routes,
 	};
 }
 
-export function updateAllSteps(allSteps) {
+export function updateAllSteps( allSteps ) {
 	return {
 		type: 'UPDATE_ALL_STEPS',
 		allSteps,
 	};
 }
 
-export function updateDesignSteps(designSteps) {
+export function updateDesignSteps( designSteps ) {
 	return {
 		type: 'UPDATE_DESIGN_STEPS',
 		designSteps,
 	};
 }
 
-export function setHeaderMenuData(menu) {
+export function setHeaderMenuData( menu ) {
 	return {
 		type: 'UPDATE_HEADER_MENU_DATA',
 		menu,
