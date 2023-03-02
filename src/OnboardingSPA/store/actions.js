@@ -93,7 +93,7 @@ export function setActiveStep( path ) {
 }
 
 /**
- * Accepts a JSON to set the flow Data.
+ * Accepts a JSON to set the Flow Data.
  *
  * @param {*} flowData
  * @return {Object} action object
