@@ -4,11 +4,11 @@ import { useLocation } from 'react-router-dom';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
 import { LivePreviewSkeleton, LivePreviewSelectableCard } from '../../../components/LivePreview';
-import { wpSiteUrl } from '../../../../constants';
 
 import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_INIT,
+	wpSiteUrl,
 } from '../../../../constants';
 
 const DesignHeaderMenu = () => {
@@ -45,7 +45,6 @@ const DesignHeaderMenu = () => {
 	const { setCurrentOnboardingData, updateThemeStatus, setHeaderMenuData } = useDispatch( nfdOnboardingStore );
 
 	const getPatternsData = async () => {
-
 		const headerMenuPreviewResponse = await getPatterns(
 			currentStep.patternId
 		);
@@ -57,7 +56,7 @@ const DesignHeaderMenu = () => {
 		const headerMenuPatterns = [];
 		headerMenuPreviewResponse.body.forEach( ( pageParts ) => {
 			if ( headerMenuSlugs.includes( pageParts.slug ) ) {
-				if( pageParts.slug.includes('split') ) {
+				if ( pageParts.slug.includes( 'split' ) ) {
 					pageParts.content = replaceNavigationGrammar( pageParts.content );
 				}
 				headerMenuPatterns.push( pageParts );
@@ -94,31 +93,30 @@ const DesignHeaderMenu = () => {
 	}, [ themeStatus ] );
 
 	const replaceNavigationGrammar = ( pageGrammar ) => {
-		let menuGrammarDummy = '',
-			menuNavigationGrammar = '<!-- wp:navigation-link {"isTopLevelLink":true} /-->';
-		defaultMenuItems.map( ( item ) => {
+		let menuGrammarDummy = '';
+		const menuNavigationGrammar = '<!-- wp:navigation-link {"isTopLevelLink":true} /-->';
+		defaultMenuItems.forEach( ( item ) => {
 			menuGrammarDummy = '<!-- wp:navigation-link {"isTopLevelLink":true, "label":"' + item + '", "title":"' + item + '", "url":"' + wpSiteUrl + '"} /-->';
-			pageGrammar = pageGrammar.replace( menuNavigationGrammar, menuGrammarDummy);
-		});
+			pageGrammar = pageGrammar.replace( menuNavigationGrammar, menuGrammarDummy );
+		} );
 		return pageGrammar;
-	}
+	};
 
 	const handleClick = ( idx ) => {
-
 		if ( document.getElementsByClassName( 'nfd-onboard-content' ) ) {
-			document.getElementsByClassName( 'nfd-onboard-content' )[0]
+			document.getElementsByClassName( 'nfd-onboard-content' )[ 0 ]
 				.scrollIntoView( {
 					behavior: 'smooth',
 				} );
 		}
 
-		const selectedPattern = patterns[ idx ];
+		const chosenPattern = patterns[ idx ];
 
-		setSelectedPattern( selectedPattern.slug );
-		currentData.data.partHeader = selectedPattern.slug;
+		setSelectedPattern( chosenPattern.slug );
+		currentData.data.partHeader = chosenPattern.slug;
 		setCurrentOnboardingData( currentData );
 
-		let newPagePattern = selectedPattern.content;
+		let newPagePattern = chosenPattern.content;
 		headerMenuPreviewData.forEach( ( pageParts ) => {
 			if ( headerMenuBodySlugs.includes( pageParts.slug ) ) {
 				newPagePattern += pageParts.content;
@@ -146,9 +144,9 @@ const DesignHeaderMenu = () => {
 
 	return (
 		<LivePreviewSkeleton
-			count = { storedPreviewSettings[ currentStep?.patternId ]?.previewCount }
+			count={ storedPreviewSettings[ currentStep?.patternId ]?.previewCount }
 			watch={ patterns }
-			callback = { buildPreviews }
+			callback={ buildPreviews }
 			className={ 'theme-header-menu-preview--drawer__list__item' }
 			viewportWidth={ 900 }
 		/>
