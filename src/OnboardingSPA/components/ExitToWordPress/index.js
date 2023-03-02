@@ -85,7 +85,9 @@ const ExitToWordPress = ( {
 				const socialDataResp = await syncSocialSettingsFinish();
 
 				// If Social Data is changed then Sync that also to the store
-				if ( socialDataResp ) setOnboardingSocialData( socialDataResp );
+				if ( socialDataResp ) {
+					setOnboardingSocialData( socialDataResp );
+				}
 			}
 			setFlow( currentData );
 		}

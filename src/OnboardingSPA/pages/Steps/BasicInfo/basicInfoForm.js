@@ -67,7 +67,9 @@ const BasicInfoForm = () => {
 	}
 
 	useEffect( () => {
-		if ( isSocialFormOpen ) socialMediaRef.current.scrollIntoView();
+		if ( isSocialFormOpen ) {
+			socialMediaRef.current.scrollIntoView();
+		}
 	}, [ isSocialFormOpen ] );
 
 	useEffect( () => {
@@ -79,7 +81,9 @@ const BasicInfoForm = () => {
 			setisLoaded( true );
 			setOnboardingSocialData( socialDataAPI?.body );
 		}
-		if ( ! isLoaded ) getFlowData();
+		if ( ! isLoaded ) {
+			getFlowData();
+		}
 		getEditedEntityRecord( 'root', 'site' );
 
 		setDefaultData();
@@ -87,7 +91,9 @@ const BasicInfoForm = () => {
 
 	useEffect( () => {
 		const timerId = setTimeout( () => {
-			if ( isLoaded ) setDebouncedFlowData( createSaveData() );
+			if ( isLoaded ) {
+				setDebouncedFlowData( createSaveData() );
+			}
 		}, 600 );
 
 		return () => {
@@ -125,7 +131,9 @@ const BasicInfoForm = () => {
 				debouncedFlowData.data.socialData ?? socialData
 			);
 		};
-		if ( debouncedFlowData ) saveData();
+		if ( debouncedFlowData ) {
+			saveData();
+		}
 	}, [ debouncedFlowData ] );
 
 	return (

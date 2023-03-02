@@ -32,7 +32,9 @@ const SkipButton = () => {
 	async function syncSocialSettingsFinish() {
 		const initialData = await getSettings();
 		const result = await setSettings( socialData );
-		if ( result?.error !== null ) return initialData?.body;
+		if ( result?.error !== null ) {
+			return initialData?.body;
+		}
 		return result?.body;
 	}
 
@@ -45,7 +47,9 @@ const SkipButton = () => {
 				const socialDataResp = await syncSocialSettingsFinish();
 
 				// If Social Data is changed then Sync that also to the store
-				if ( socialDataResp ) setOnboardingSocialData( socialDataResp );
+				if ( socialDataResp ) {
+					setOnboardingSocialData( socialDataResp );
+				}
 			}
 			setFlow( currentData );
 		}

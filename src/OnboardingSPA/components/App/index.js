@@ -71,7 +71,9 @@ const App = () => {
 		const initialData = await getSettings();
 		const result = await setSettings( socialData );
 		setDidVisitBasicInfo( false );
-		if ( result?.error !== null ) return initialData?.body;
+		if ( result?.error !== null ) {
+			return initialData?.body;
+		}
 		return result?.body;
 	}
 
@@ -122,8 +124,9 @@ const App = () => {
 					const socialDataResp = await syncSocialSettings();
 
 					// If Social Data is changed then Sync that also to the store
-					if ( socialDataResp )
+					if ( socialDataResp ) {
 						setOnboardingSocialData( socialDataResp );
+					}
 				}
 
 				const result = await setFlow( currentData );
@@ -136,8 +139,9 @@ const App = () => {
 			}
 		}
 		// Check if the Basic Info page was visited
-		if ( location?.pathname.includes( 'basic-info' ) )
+		if ( location?.pathname.includes( 'basic-info' ) ) {
 			setDidVisitBasicInfo( true );
+		}
 		if ( location?.pathname.includes( 'ecommerce' ) ) {
 			setDidVisitEcommerce( true );
 		}
