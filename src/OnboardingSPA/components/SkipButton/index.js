@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
-import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
+import { wpAdminPage, dashboardPage } from '../../../constants';
 
 /**
  * Interface Text Inputs with standard design.
@@ -56,7 +56,7 @@ const SkipButton = () => {
 		// Redirect to Admin Page for normal customers
 		// and Bluehost Dashboard for ecommerce customers
 		const exitLink = exitToWordpressForEcommerce()
-			? bluehostDashboardPage
+			? dashboardPage
 			: wpAdminPage;
 		window.location.replace( exitLink );
 	}

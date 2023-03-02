@@ -10,7 +10,7 @@ export const onboardingRestRoute = 'newfold-onboarding/v1';
 export const wpRestBase = `${ wpRestURL }/${ wpRestRoute }`;
 export const onboardingRestBase = `${ wpRestURL }/${ onboardingRestRoute }`;
 export const wpAdminPage = `${ wpAdminUrl }index.php`;
-export const bluehostDashboardPage = `${ wpAdminPage }?page=bluehost`;
+export const dashboardPage = `${ wpAdminPage }${ window?.nfdOnboarding?.currentBrand?.dashboardUrl }`;
 export const NFD_ONBOARDING_EVENT_PREFIX = 'nfd-module-onboarding-event';
 export const VIEW_NAV_PRIMARY = 'nav-primary';
 export const VIEW_NAV_DESIGN = 'nav-design';

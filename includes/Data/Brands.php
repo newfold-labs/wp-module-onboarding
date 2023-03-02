@@ -29,6 +29,7 @@ final class Brands {
 				'accountUrl'                  => 'https://my.bluehost.com',
 				'domainsUrl'                  => 'https://my.bluehost.com/hosting/app?lil=1#/domains',
 				'emailUrl'                    => 'https://my.bluehost.com/hosting/app?lil=1#/email-office',
+				'dashboardUrl'                => '?page=bluehost',
 				'phoneNumbers'                => array(
 					'sales'   => '844-303-1730',
 					'support' => '888-401-4678',
@@ -82,6 +83,7 @@ final class Brands {
 				'accountUrl'                  => 'https://my.bluehost.in',
 				'domainsUrl'                  => 'https://my.bluehost.in/hosting/app?lil=1#/domains',
 				'emailUrl'                    => 'https://my.bluehost.in/hosting/app?lil=1#/email-office',
+				'dashboardUrl'                => '?page=bluehost',
 				'hireExpertsInfo'             => array(
 					'defaultLink'   => 'https://www.bluehost.in/solutions/full-service',
 					'utmParameters' => array(

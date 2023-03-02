@@ -6,7 +6,7 @@ import { Icon, chevronLeft, chevronRight } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
-import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
+import { wpAdminPage, dashboardPage } from '../../../constants';
 
 /**
  * Back step Navigation button.
@@ -61,7 +61,7 @@ async function saveDataAndExit( currentData ) {
 	//Redirect to Admin Page for normal customers
 	// and Bluehost Dashboard for ecommerce customers
 	const exitLink = exitToWordpressForEcommerce()
-		? bluehostDashboardPage
+		? dashboardPage
 		: wpAdminPage;
 	window.location.replace( exitLink );
 }
