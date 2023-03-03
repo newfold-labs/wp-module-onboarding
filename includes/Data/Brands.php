@@ -164,6 +164,56 @@ final class Brands {
 					),
 				),
 			),
+			'crazy-domains'       => array(
+				'brand'                       => 'crazy-domains',
+				'name'                        => 'Crazy Domains',
+				'url'                         => 'https://www.crazydomains.com',
+				'knowledgeBaseUrl'            => 'https://www.crazydomains.com/learn/online-academy/',
+				'helpUrl'                     => 'https://www.crazydomains.com/help',
+				'blogUrl'                     => 'https://www.crazydomains.com/learn/',
+				'facebookUrl'                 => 'https://www.facebook.com/crazydomains/',
+				'twitterName'                 => '@crazydomains',
+				'twitterUrl'                  => 'https://twitter.com/crazydomains',
+				'youtubeUrl'                  => 'https://www.youtube.com/user/CrazyDomains',
+				'linkedinUrl'                 => '',
+				'accountUrl'                  => 'https://www.crazydomains.com/my-account/home/',
+				'domainsUrl'                  => '',
+				'emailUrl'                    => 'https://www.crazydomains.com/contact/',
+				'phoneNumbers'                => array(
+					'support' => '2135592459',
+				),
+				'hireExpertsInfo'             => array(
+					'defaultLink'     => 'https://www.crazydomains.com/help/',
+					'fragment'        => '',
+					'queryParameters' => array(
+						'utm_source'   => 'wp-onboarding',
+						'utm_medium'   => 'brand-plugin',
+						'utm_campaign' => 'wp-setup',
+					),
+				),
+				'expertsInfo'                 => array(
+					'defaultLink' => 'https://www.crazydomains.com/help/',
+					'queryParams' => array(
+						'utm_source' => 'wp-onboarding',
+						'utm_medium' => 'brand-plugin',
+					),
+				),
+				'fullServiceCreativeTeamInfo' => array(
+					'defaultLink' => 'https://www.crazydomains.com/help/',
+					'fragment'    => '',
+					'queryParams' => array(
+						'utm_source' => 'wp-onboarding',
+						'utm_medium' => 'brand-plugin',
+					),
+				),
+				'techSupportInfo'             => array(
+					'defaultLink' => 'https://www.crazydomains.com/contact/',
+					'queryParams' => array(
+						'utm_source' => 'wp-onboarding',
+						'utm_medium' => 'brand-plugin',
+					),
+				),
+			),
 		);
 	}
 }

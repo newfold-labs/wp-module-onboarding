@@ -54,14 +54,13 @@ const CheckboxItem = ( {
 					<div className={ `${ className }__contents` }>
 						<div
 							className={ `${ className }__contents-icon
-                                     ${
-											isSelected &&
+                                     ${ isSelected &&
 											`${ className }__contents-icon--selected`
-										}
+		}
                                      ${
-											showDescription &&
+		showDescription &&
 											`${ className }__contents-icon--shown`
-										}` }
+		}` }
 						>
 							<div
 								style={ {
@@ -91,7 +90,7 @@ const CheckboxItem = ( {
 							</div>
 						</div>
 						<div
-							className={ `${ className }__contents-help` }
+							className={ `${ className }__contents-help ${ showDescription ? 'highlighted' : '' }` }
 							onClick={ handleShowDesc }
 						>
 							<Icon
@@ -99,9 +98,6 @@ const CheckboxItem = ( {
 								style={ {
 									width: '30px',
 									height: '30px',
-									fill: `${
-										showDescription ? '#1C5CBA' : '#666666'
-									}`,
 								} }
 							/>
 						</div>

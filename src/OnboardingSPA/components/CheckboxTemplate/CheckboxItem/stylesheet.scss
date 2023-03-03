@@ -7,6 +7,11 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 $box-shadow: var(--nfd-onboarding-light-gray-highlighted);
 
 .checkbox-item {
+
+	.highlighted {
+		fill: var(--wp-admin-theme-color-darker-10);
+	}
+
 	margin: 12px;
 	padding: 16px;
 	margin-top: 16px;
@@ -80,7 +85,12 @@ $box-shadow: var(--nfd-onboarding-light-gray-highlighted);
 		}
 
 		&-help {
-			cursor: pointer;
+			fill: #666;
+
+			&:hover {
+				cursor: pointer;
+				fill: var(--wp-admin-theme-color-darker-10);
+			}
 		}
 
 	}
