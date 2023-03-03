@@ -32,6 +32,9 @@ body {
 		--nfd-onboarding-loader-end: var(--nfd-onboarding-tertiary);
 		--nfd-onboarding-step-loader-icon: url(../../Brands/bluehost/step-loader-logo.svg);
 		--nfd-onboarding-step-error-icon: url(../../Brands/bluehost/step-error-logo.svg);
+		--nfd-onboarding-step-what-next-img-3: url(../../Brands/bluehost/bluesky.png);
+		--nfd-onboarding-step-what-next-img-1: url(../../Brands/bluehost/wp-admin.png);
+		--nfd-onboarding-step-what-next-img-2: url(../static/images/help.png);
 	}
 
 	&.nfd-brand-hostgator {
@@ -128,5 +131,8 @@ body {
 		--nfd-onboarding-loader-end: var(--nfd-onboarding-secondary);
 		--nfd-onboarding-step-loader-icon: url(../../Brands/crazy-domains/step-loader-logo.svg);
 		--nfd-onboarding-step-error-icon: url(../../Brands/crazy-domains/step-error-logo.svg);
+		--nfd-onboarding-step-what-next-img-3: url(../../Brands/crazy-domains/full-service.png);
+		--nfd-onboarding-step-what-next-img-1: url(../../Brands/crazy-domains/wp-admin.png);
+		--nfd-onboarding-step-what-next-img-2: url(../static/images/help.png);
 	}
 }

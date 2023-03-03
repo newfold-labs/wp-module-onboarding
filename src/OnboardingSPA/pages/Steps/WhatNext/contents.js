@@ -22,7 +22,7 @@ const getContents = ( brandName ) => {
 					),
 					brandName
 				),
-				imgType: 'wpadmin-img',
+				imgType: 'img-1',
 				animationName: 'fade-in-right',
 			},
 			{
@@ -40,7 +40,7 @@ const getContents = ( brandName ) => {
 					),
 					translations( 'site' )
 				),
-				imgType: 'help-img',
+				imgType: 'img-2',
 				animationName: 'fade-in-up',
 			},
 			{
@@ -58,7 +58,7 @@ const getContents = ( brandName ) => {
 					),
 					translations( 'site' )
 				),
-				imgType: 'bluesky-img',
+				imgType: 'img-3',
 				animationName: 'fade-in-left',
 			},
 		],
