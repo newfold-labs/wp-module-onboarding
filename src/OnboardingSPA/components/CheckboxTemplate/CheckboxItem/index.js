@@ -23,6 +23,7 @@ const CheckboxItem = ( {
 	desc,
 	subtitle,
 	callback,
+	tabIndex = 0,
 	isSelectedDefault,
 	className = 'checkbox-item',
 } ) => {
@@ -92,6 +93,9 @@ const CheckboxItem = ( {
 						<div
 							className={ `${ className }__contents-help ${ showDescription ? 'highlighted' : '' }` }
 							onClick={ handleShowDesc }
+							role="button"
+							onKeyDown={ handleShowDesc }
+							tabIndex={ tabIndex }
 						>
 							<Icon
 								icon={ help }
