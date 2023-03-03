@@ -16,6 +16,18 @@ import { useWPSettings } from '../useWPSettings';
 import Animate from '../../../../components/Animate';
 import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 
+function getDefaultValues(brand) {
+	switch (brand) {
+		case 'crazy-domains':
+			return { woocommerce_default_country: 'AU:NSW', woocommerce_currency: 'AUD' }
+		case 'bluehost-india':
+			return { woocommerce_default_country: 'IN:TN', woocommerce_currency: 'INR' }
+		case 'bluehost':
+		default:
+			return { woocommerce_default_country: 'US:AZ', woocommerce_currency: 'USD' }
+	}
+}
+
 const StepAddress = () => {
 	const isLargeViewport = useViewportMatch('medium');
 	const {
@@ -57,34 +69,40 @@ const StepAddress = () => {
 			'woocommerce_currency',
 			'woocommerce_email_from_address',
 		];
+		let keysWithDefaultValues = [
+			'woocommerce_default_country',
+			'woocommerce_currency',
+		]
 		if (settings !== null && currentData.storeDetails.address === undefined) {
+			let addressToBeSet = { ...settings };
+			let defaultValues = getDefaultValues(newfoldBrand);
+			for (const key of keysWithDefaultValues) {
+				if (addressToBeSet[key] === null || addressToBeSet[key] === '') {
+					addressToBeSet[key] = defaultValues[key];
+				}
+			}
 			setCurrentOnboardingData({
 				storeDetails: {
 					...currentData.storeDetails,
 					address: {
 						...(currentData.storeDetails.address ?? {}),
 						...addressKeys.reduce(
-							(address, key) => ({ ...address, [key]: settings[key] }),
+							(address, key) => ({ ...address, [key]: addressToBeSet[key] }),
 							{}
 						),
 					},
 				},
 			});
 		}
-	}, [settings, currentData.storeDetails]);
+	}, [settings, currentData.storeDetails, newfoldBrand]);
 
 	let { address } = currentData.storeDetails;
 	const fieldProps = {
-		disabled: settings === null,
+		disabled: address === undefined,
 		onChange: handleFieldChange,
 		onBlur: handleFieldChange,
 	};
-	let defaultPlace =
-		address?.woocommerce_default_country ??
-		settings?.woocommerce_default_country ??
-		newfoldBrand === 'bluehost-india'
-			? 'IN:TN'
-			: 'US:AZ';
+	let defaultPlace = address?.woocommerce_default_country ?? '';
 	let [defaultCountry, defaultState] = defaultPlace.split(':');
 	let selectedCountry = address?.country ?? defaultCountry;
 	let states =
@@ -158,13 +176,13 @@ const StepAddress = () => {
 								)}
 							/>
 						</div>
-						<Animate type={ 'fade-in-disabled' } after={ settings }>
+						<Animate type={ 'fade-in-disabled' } after={ address !== undefined }>
 							<div className={'store-address-form'}>
 								<div data-name='country'>
 									<label aria-required>
 										{__('Where is your store based?', 'wp-module-onboarding')}
 									</label>
-									{settings === null ? (
+									{address === undefined ? (
 										<input type='text' disabled />
 									) : (
 										<select
@@ -210,7 +228,7 @@ const StepAddress = () => {
 											{...fieldProps}
 										/>
 									</div>
-									{states.length === 0 || settings === null ? null : (
+									{states.length === 0 || address === undefined ? null : (
 										<div data-name='state'>
 											<label aria-required>
 												{__('State', 'wp-module-onboarding')}
@@ -269,7 +287,6 @@ const StepAddress = () => {
 										type='text'
 										name='woocommerce_currency'
 										value={address?.woocommerce_currency}
-										defaultValue={newfoldBrand === 'bluehost-india' ? 'INR' : 'USD'}
 										{...fieldProps}
 									>
 										{Object.entries(currencies).map(([code, currency]) => (
@@ -286,7 +303,7 @@ const StepAddress = () => {
 						</Animate>
 						<button
 							className='nfd-nav-card-button nfd-card-button'
-							disabled={settings === null}
+							disabled={address === undefined}
 							type='submit'
 						>
 							{__(content.buttonText, 'wp-module-onboarding')}
