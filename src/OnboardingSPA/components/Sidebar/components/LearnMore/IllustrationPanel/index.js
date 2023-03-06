@@ -3,10 +3,12 @@ import { PanelBody } from '@wordpress/components';
 const IllustrationPanel = ( {
 	cssIcon = 'nfd-onboarding-sidebar-learn-more-get-started-welcome-illustration',
 	baseClassName = 'nfd-onboarding-sidebar-learn-more--illustration-panel',
-	backgroundPosition = 'center'
+	backgroundPosition = 'center',
 } ) => {
+	const iconExists = window.getComputedStyle( document.body ).getPropertyValue( `--${ cssIcon }` ) !== '';
+
 	return (
-		<PanelBody
+		iconExists && <PanelBody
 			className={ `${ baseClassName }__container` }
 			initialOpen={ true }
 		>
@@ -18,7 +20,7 @@ const IllustrationPanel = ( {
 					height: '100%',
 					backgroundSize: 'contain',
 					backgroundRepeat: 'no-repeat',
-					backgroundPosition: backgroundPosition,
+					backgroundPosition,
 				} }
 			></div>
 		</PanelBody>

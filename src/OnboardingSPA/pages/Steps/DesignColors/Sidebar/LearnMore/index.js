@@ -30,11 +30,11 @@ const StepIntroPanel = lazy( () =>
 );
 
 const LearnMore = () => {
-
-	const { techSupportLink, fullServiceCreativeTeamLink } = useSelect( ( select ) => {
+	const { techSupportLink, fullServiceCreativeTeamLink, brandConfig } = useSelect( ( select ) => {
 		return {
 			techSupportLink: select( nfdOnboardingStore ).getTechSupportUrl(),
 			fullServiceCreativeTeamLink: select( nfdOnboardingStore ).getfullServiceCreativeTeamUrl(),
+			brandConfig: select( nfdOnboardingStore ).getNewfoldBrandConfig(),
 		};
 	} );
 
@@ -47,7 +47,8 @@ const LearnMore = () => {
 				subheading={ content.introduction.subheading }
 				icon={ content.introduction.icon }
 			/>
-			<IllustrationPanel cssIcon={ content.illustration.icon } />
+			{ brandConfig?.views?.sidebar?.illustration?.shown !== false &&
+				<IllustrationPanel cssIcon={ content.illustration.icon } /> }
 			<InfoPanel
 				headingWithDescriptions={
 					content.information.headingWithDescriptions
