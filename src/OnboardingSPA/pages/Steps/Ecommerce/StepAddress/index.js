@@ -21,7 +21,7 @@ function getDefaultValues(brand) {
 		case 'crazy-domains':
 			return { woocommerce_default_country: 'AU:NSW', woocommerce_currency: 'AUD' }
 		case 'bluehost-india':
-			return { woocommerce_default_country: 'IN:TN', woocommerce_currency: 'INR' }
+			return { woocommerce_default_country: 'IN:AP', woocommerce_currency: 'INR' }
 		case 'bluehost':
 		default:
 			return { woocommerce_default_country: 'US:AZ', woocommerce_currency: 'USD' }
