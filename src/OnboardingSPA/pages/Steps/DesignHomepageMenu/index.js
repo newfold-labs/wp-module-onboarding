@@ -45,7 +45,6 @@ const StepDesignHomepageMenu = () => {
 	};
 
 	const location = useLocation();
-	const [ isLoaded, setisLoaded ] = useState( false );
 	const [ homepagePattern, setHomepagePattern ] = useState();
 	const [ selectedHomepage, setSelectedHomepage ] = useState( 0 );
 
@@ -121,7 +120,6 @@ const StepDesignHomepageMenu = () => {
 			};
 			setCurrentOnboardingData( currentData );
 		}
-		setisLoaded( true );
 	}
 
 	function saveDataForHomepage( idx ) {
@@ -134,10 +132,10 @@ const StepDesignHomepageMenu = () => {
 	}
 
 	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE ) {
+		if ( themeStatus === THEME_STATUS_ACTIVE ) {
 			getHomepagePatternsData();
 		}
-	}, [ isLoaded, themeStatus ] );
+	}, [ themeStatus ] );
 
 	function buildHomepagePreviews() {
 		return homepagePattern?.map( ( homepage, idx ) => {
