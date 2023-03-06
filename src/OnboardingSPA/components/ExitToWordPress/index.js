@@ -9,13 +9,14 @@ import classNames from 'classnames';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
-import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
+import { wpAdminPage, pluginDashboardPage } from '../../../constants';
 
 /**
  * Self-contained button and confirmation modal for exiting Onboarding page.
  *
  * @param {*} param0
- * @return
+ *
+ * @return {WPComponent} ExitToWordPress Component
  */
 const ExitToWordPress = ( {
 	buttonText = __( 'Exit to WordPress', 'wp-module-onboarding' ),
@@ -62,7 +63,7 @@ const ExitToWordPress = ( {
 		);
 	}
 
-	async function syncSocialSettingsFinish( currentData ) {
+	async function syncSocialSettingsFinish() {
 		const initialData = await getSettings();
 		const result = await setSettings( currentData?.data?.socialData );
 		if ( result?.error !== null ) {
@@ -71,26 +72,25 @@ const ExitToWordPress = ( {
 		return result?.body;
 	}
 
-	async function saveData( path, currentData ) {
+	async function saveData( path ) {
 		if ( currentData ) {
 			currentData.hasExited = new Date().getTime();
 
 			// If Social Data is changed then sync it
 			if ( path?.includes( 'basic-info' ) ) {
-				const socialData = await syncSocialSettingsFinish(
-					currentData
-				);
+				const socialData = await syncSocialSettingsFinish();
 
 				// If Social Data is changed then Sync that also to the store
-				if ( socialData && currentData?.data )
+				if ( socialData && currentData?.data ) {
 					currentData.data.socialData = socialData;
+				}
 			}
 			setFlow( currentData );
 		}
 		//Redirect to Admin Page for normal customers
 		// and Bluehost Dashboard for ecommerce customers
 		const exitLink = exitToWordpressForEcommerce()
-			? bluehostDashboardPage
+			? pluginDashboardPage
 			: wpAdminPage;
 		window.location.replace( exitLink );
 	}
@@ -125,9 +125,7 @@ const ExitToWordPress = ( {
 						</Button>
 						<Button
 							variant="primary"
-							onClick={ ( e ) =>
-								saveData( location.pathname, currentData )
-							}
+							onClick={ () => saveData( location.pathname ) }
 						>
 							{ modalExitButtonText }
 						</Button>
