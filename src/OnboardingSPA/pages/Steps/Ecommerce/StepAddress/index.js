@@ -28,6 +28,32 @@ function getDefaultValues(brand) {
 	}
 }
 
+/**
+ * When WC in installed, it sets a bunch of defaults related to country etc
+ * which is detected by matching a set of values.
+ * 
+ * @param {Record<string, string | null>} options 
+ * @returns {boolean}
+ */
+function isDefaultAddressSet(options) {
+	let emptyFields = [
+		'woocommerce_store_address',
+		'woocommerce_store_city',
+		'woocommerce_store_postcode',
+	];
+	let areAddressFieldsEmpty = emptyFields.every(
+		(key) => options[key] === null || options[key] === ''
+	);
+	let wcDefaults = [
+		['woocommerce_default_country', 'US:CA'],
+		['woocommerce_currency', 'USD']
+	]
+	let isCountryUSA = wcDefaults.every(
+		([key, value]) => options[key] === value
+	);
+	return areAddressFieldsEmpty && isCountryUSA;
+}
+
 const StepAddress = () => {
 	const isLargeViewport = useViewportMatch('medium');
 	const {
@@ -74,10 +100,15 @@ const StepAddress = () => {
 			'woocommerce_currency',
 		]
 		if (settings !== null && currentData.storeDetails.address === undefined) {
+			let useDefaultValues = isDefaultAddressSet(settings);
 			let addressToBeSet = { ...settings };
 			let defaultValues = getDefaultValues(newfoldBrand);
 			for (const key of keysWithDefaultValues) {
-				if (addressToBeSet[key] === null || addressToBeSet[key] === '') {
+				if (
+					addressToBeSet[key] === null ||
+					addressToBeSet[key] === '' ||
+					useDefaultValues
+				) {
 					addressToBeSet[key] = defaultValues[key];
 				}
 			}
