@@ -57,9 +57,10 @@ export function getNewfoldBrandName( state ) {
 }
 
 /**
- * 
- * @param {*} state 
- * @returns {Object} Brand Onboarding Configuration.
+ * Gets the current Newfold Brand's Onboarding Configuration.
+ *
+ * @param {*} state
+ * @return {Object} Brand Onboarding Configuration.
  */
 export function getNewfoldBrandConfig( state ) {
 	return state.runtime.currentBrand.config;

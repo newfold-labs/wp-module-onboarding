@@ -56,7 +56,7 @@ const LearnMore = () => {
 				subheading={ content.introduction.subheading }
 				icon={ content.introduction.icon }
 			/>
-			{ brandConfig?.views?.sidebar?.illustration?.shown !== false && 
+			{ brandConfig?.views?.sidebar?.illustration?.shown !== false &&
 				<IllustrationPanel cssIcon={ content.illustration.icon } /> }
 			<InfoPanel
 				headingWithDescriptions={
