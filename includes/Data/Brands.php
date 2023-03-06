@@ -166,7 +166,7 @@ final class Brands {
 					),
 				),
 			),
-			'crazy-domains'       => array(
+			'crazy-domains'  => array(
 				'brand'                       => 'crazy-domains',
 				'name'                        => 'Crazy Domains',
 				'url'                         => 'https://www.crazydomains.com',
@@ -181,6 +181,7 @@ final class Brands {
 				'accountUrl'                  => 'https://www.crazydomains.com/my-account/home/',
 				'domainsUrl'                  => '',
 				'emailUrl'                    => 'https://www.crazydomains.com/contact/',
+				'pluginDashboardPage'         => \admin_url( 'admin.php?page=crazy-domains' ),
 				'phoneNumbers'                => array(
 					'support' => '2135592459',
 				),
