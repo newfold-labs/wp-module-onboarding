@@ -36,17 +36,11 @@ final class Data {
 	 * @return array
 	 */
 	public static function current_brand() {
-
-		$brand = \get_option( Options::get_option_name( 'brand', false ), 'newfold' );
-		// This case arises when the option mm_brand exists but has an empty string as it's value.
-		if ( empty( $brand ) ) {
-			$brand = 'newfold';
-		}
-		$brand = \apply_filters( 'nfd_module_onboarding_brand', sanitize_title_with_dashes( str_replace( '_', '-', $brand ) ) );
-
 		$brands = Brands::get_brands();
 
-		return array_key_exists( $brand, $brands ) ? $brands[ $brand ] : array( 'brand' => $brand );
+		return array_key_exists( NFD_ONBOARDING_PLUGIN_BRAND, $brands ) ?
+			$brands[ NFD_ONBOARDING_PLUGIN_BRAND ] :
+			array( 'brand' => NFD_ONBOARDING_PLUGIN_BRAND );
 	}
 
 
@@ -60,11 +54,11 @@ final class Data {
 
 		$current_flow = Flows::get_flow_from_customer_data( $customer_data );
 		if ( false !== $current_flow ) {
-			 return array(
-				 'flow'    => $current_flow,
-				 'subtype' => $customer_data['plan_subtype'],
-				 'type'    => $customer_data['plan_type'],
-			 );
+			return array(
+				'flow'    => $current_flow,
+				'subtype' => $customer_data['plan_subtype'],
+				'type'    => $customer_data['plan_type'],
+			);
 		}
 
 		$current_flow = Flows::get_flow_from_params();
@@ -128,9 +122,9 @@ final class Data {
 	 */
 	public static function customer_data() {
 		if ( class_exists( 'NewfoldLabs\WP\Module\CustomerBluehost\CustomerBluehost' ) ) {
-			 return CustomerBluehost::collect();
+			return CustomerBluehost::collect();
 		}
-		 return array();
+		return array();
 	}
 
-} // END \NewfoldLabs\WP\Module\Onboarding\Data()
+}

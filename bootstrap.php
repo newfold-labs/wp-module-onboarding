@@ -33,6 +33,13 @@ function nfd_wp_module_onboarding_register() {
 				if ( ! defined( 'NFD_ONBOARDING_BUILD_URL' && defined( 'NFD_ONBOARDING_VERSION' ) ) ) {
 					define( 'NFD_ONBOARDING_BUILD_URL', $container->plugin()->url . '/vendor/newfold-labs/wp-module-onboarding/build/' . NFD_ONBOARDING_VERSION );
 				}
+				if ( ! defined( 'NFD_ONBOARDING_PLUGIN_BRAND' ) ) {
+					$brand = $container->plugin()->brand;
+					if ( empty( $brand ) ) {
+						$brand = 'newfold';
+					}
+					define( 'NFD_ONBOARDING_PLUGIN_BRAND', sanitize_title_with_dashes( str_replace( '_', '-', $brand ) ) );
+				}
 				// Instantiate Onboarding Module Application
 				new Application( $container );
 			},
