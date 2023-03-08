@@ -1,6 +1,6 @@
 import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -12,15 +12,13 @@ import CommonLayout from '../../../../components/Layouts/Common';
 import NeedHelpTag from '../../../../components/NeedHelpTag';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import { store as nfdOnboardingStore } from '../../../../store';
-import content from '../content.json';
 import countries from '../countries.json';
 import currencies from '../currencies.json';
-import { useWPSettings } from '../useWPSettings';
+import { useWPSettings as getWPSettings } from '../useWPSettings';
 import Animate from '../../../../components/Animate';
 import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 
 const StepAddress = () => {
-	const [ settings, setSettings ] = useState();
 	const navigate = useNavigate();
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const {
@@ -32,6 +30,53 @@ const StepAddress = () => {
 		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
+	const getDefaultValues = ( brand ) => {
+		switch ( brand ) {
+			case 'crazy-domains':
+				return {
+					woocommerce_default_country: 'AU:NSW',
+					woocommerce_currency: 'AUD',
+				};
+			case 'bluehost-india':
+				return {
+					woocommerce_default_country: 'IN:AP',
+					woocommerce_currency: 'INR',
+				};
+			case 'bluehost':
+			default:
+				return {
+					woocommerce_default_country: 'US:AZ',
+					woocommerce_currency: 'USD',
+				};
+		}
+	};
+
+	/**
+	 * When WC in installed, it sets a bunch of defaults related to country etc
+	 * which is detected by matching a set of values.
+	 *
+	 * @param {Record<string, string | null>} options
+	 * @return {boolean} Is default address set
+	 */
+	const isDefaultAddressSet = ( options ) => {
+		const emptyFields = [
+			'woocommerce_store_address',
+			'woocommerce_store_city',
+			'woocommerce_store_postcode',
+		];
+		const areAddressFieldsEmpty = emptyFields.every(
+			( key ) => options[ key ] === null || options[ key ] === ''
+		);
+		const wcDefaults = [
+			[ 'woocommerce_default_country', 'US:CA' ],
+			[ 'woocommerce_currency', 'USD' ],
+		];
+		const isCountryUSA = wcDefaults.every(
+			( [ key, value ] ) => options[ key ] === value
+		);
+		return areAddressFieldsEmpty && isCountryUSA;
+	};
+
 	const setNavigationState = () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );
@@ -40,19 +85,19 @@ const StepAddress = () => {
 		setIsHeaderNavigationEnabled( true );
 	};
 
-	async function getSettingsData() {
-		setSettings( await useWPSettings() );
-	}
-
+	const settings = getWPSettings();
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView( VIEW_NAV_ECOMMERCE_STORE_INFO );
-		getSettingsData();
 	}, [] );
 
-	const currentData = useSelect( ( select ) =>
-		select( nfdOnboardingStore ).getCurrentOnboardingData()
-	);
+	const { currentData, newfoldBrand } = useSelect( ( select ) => {
+		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
+		};
+	}, [] );
 
 	useEffect( () => {
 		if ( settings ) {
@@ -64,10 +109,28 @@ const StepAddress = () => {
 				'woocommerce_currency',
 				'woocommerce_email_from_address',
 			];
+
+			const keysWithDefaultValues = [
+				'woocommerce_default_country',
+				'woocommerce_currency',
+			];
+
 			if (
 				settings !== null &&
 				currentData.storeDetails.address === undefined
 			) {
+				const useDefaultValues = isDefaultAddressSet( settings );
+				const addressToBeSet = { ...settings };
+				const defaultValues = getDefaultValues( newfoldBrand );
+				for ( const key of keysWithDefaultValues ) {
+					if (
+						addressToBeSet[ key ] === null ||
+						addressToBeSet[ key ] === '' ||
+						useDefaultValues
+					) {
+						addressToBeSet[ key ] = defaultValues[ key ];
+					}
+				}
 				setCurrentOnboardingData( {
 					storeDetails: {
 						...currentData.storeDetails,
@@ -76,7 +139,7 @@ const StepAddress = () => {
 							...addressKeys.reduce(
 								( address, key ) => ( {
 									...address,
-									[ key ]: settings[ key ],
+									[ key ]: addressToBeSet[ key ],
 								} ),
 								{}
 							),
@@ -85,18 +148,15 @@ const StepAddress = () => {
 				} );
 			}
 		}
-	}, [ settings, currentData.storeDetails ] );
+	}, [ settings, currentData.storeDetails, newfoldBrand ] );
 
 	const { address } = currentData.storeDetails;
 	const fieldProps = {
-		disabled: settings === null,
+		disabled: address === undefined,
 		onChange: handleFieldChange,
 		onBlur: handleFieldChange,
 	};
-	const defaultPlace =
-		address?.woocommerce_default_country ??
-		settings?.woocommerce_default_country ??
-		'US:AZ';
+	const defaultPlace = address?.woocommerce_default_country ?? '';
 	const [ defaultCountry, defaultState ] = defaultPlace.split( ':' );
 	const selectedCountry = address?.country ?? defaultCountry;
 	const states =
@@ -109,17 +169,16 @@ const StepAddress = () => {
 		if ( country === defaultCountry && state === undefined ) {
 			state = defaultState;
 		}
-		if ( states.length == 0 ) {
+		if ( states.length === 0 ) {
 			state = ''; // edge case to handle when the user goes back to onboarding and changes from a country with state to no state
 		}
 		let place = '';
 		if ( [ 'country', 'state' ].includes( fieldName ) ) {
-			place =
-				fieldName === 'country'
-					? state
-						? `${ newValue }:${ state }`
-						: newValue
-					: `${ country }:${ newValue }`;
+			if ( fieldName === 'country' ) {
+				place = state ? `${ newValue }:${ state }` : newValue;
+			} else {
+				place = `${ country }:${ newValue }`;
+			}
 		}
 		setCurrentOnboardingData( {
 			storeDetails: {
@@ -168,29 +227,34 @@ const StepAddress = () => {
 							<div className="nfd-card-heading center onboarding-ecommerce-step">
 								<CardHeader
 									heading={ __(
-										content.stepAddressHeading,
+										'Confirm your business or store address',
 										'wp-module-onboarding'
 									) }
 									subHeading={ __(
-										content.stepAddressSubHeading,
+										'We’ll use this information to help you setup your online store',
 										'wp-module-onboarding'
 									) }
 								/>
 							</div>
 							<Animate
 								type={ 'fade-in-disabled' }
-								after={ settings }
+								after={ address !== undefined }
 							>
 								<div className={ 'store-address-form' }>
 									<div data-name="country">
-										<label aria-required>
+										<label aria-required htmlFor="country">
 											{ __(
 												'Where is your store based?',
 												'wp-module-onboarding'
 											) }
 										</label>
-										{ settings === null ? (
-											<input type="text" disabled />
+										{ address === undefined ? (
+											<input
+												id="country"
+												name="country"
+												type="text"
+												disabled
+											/>
 										) : (
 											<select
 												type="text"
@@ -215,13 +279,17 @@ const StepAddress = () => {
 										) }
 									</div>
 									<div data-name="woocommerce_store_address">
-										<label aria-required>
+										<label
+											aria-required
+											htmlFor="woocommerce_store_address"
+										>
 											{ __(
 												'Address',
 												'wp-module-onboarding'
 											) }
 										</label>
 										<input
+											id="woocommerce_store_address"
 											name="woocommerce_store_address"
 											type="text"
 											required
@@ -236,7 +304,10 @@ const StepAddress = () => {
 										data-state-empty={ states.length === 0 }
 									>
 										<div data-name="woocommerce_store_city">
-											<label aria-required>
+											<label
+												aria-required
+												htmlFor="woocommerce_store_city"
+											>
 												{ __(
 													'City',
 													'wp-module-onboarding'
@@ -244,6 +315,7 @@ const StepAddress = () => {
 											</label>
 											<input
 												name="woocommerce_store_city"
+												id="woocommerce_store_city"
 												type="text"
 												required
 												defaultValue={
@@ -253,20 +325,24 @@ const StepAddress = () => {
 											/>
 										</div>
 										{ states.length === 0 ||
-										settings === null ? null : (
+										address === undefined ? null : (
 											<div data-name="state">
-												<label aria-required>
+												<label
+													aria-required
+													htmlFor="state"
+												>
 													{ __(
 														'State',
 														'wp-module-onboarding'
 													) }
 												</label>
 												<select
+													id="state"
 													type="text"
 													name="state"
 													required
 													defaultValue={
-														selectedCountry ==
+														selectedCountry ===
 														defaultCountry
 															? defaultState
 															: ''
@@ -290,13 +366,17 @@ const StepAddress = () => {
 											</div>
 										) }
 										<div data-name="woocommerce_store_postcode">
-											<label aria-required>
+											<label
+												aria-required
+												htmlFor="woocommerce_store_postcode"
+											>
 												{ __(
 													'Postal Code',
 													'wp-module-onboarding'
 												) }
 											</label>
 											<input
+												id="woocommerce_store_postcode"
 												name="woocommerce_store_postcode"
 												type="text"
 												required
@@ -308,7 +388,10 @@ const StepAddress = () => {
 										</div>
 									</div>
 									<div>
-										<label aria-required>
+										<label
+											aria-required
+											htmlFor="woocommerce_email_from_address"
+										>
 											{ __(
 												'Email',
 												'wp-module-onboarding'
@@ -316,6 +399,7 @@ const StepAddress = () => {
 										</label>
 										<input
 											name="woocommerce_email_from_address"
+											id="woocommerce_email_from_address"
 											type="email"
 											required
 											defaultValue={
@@ -325,13 +409,14 @@ const StepAddress = () => {
 										/>
 									</div>
 									<div>
-										<label>
+										<label htmlFor="woocommerce_currency">
 											{ __(
 												'What currency do you want to display in your store?',
 												'wp-module-onboarding'
 											) }
 										</label>
 										<select
+											id="woocommerce_currency"
 											type="text"
 											name="woocommerce_currency"
 											value={
@@ -359,11 +444,11 @@ const StepAddress = () => {
 							</Animate>
 							<button
 								className="nfd-nav-card-button nfd-card-button"
-								disabled={ settings === null }
+								disabled={ address === undefined }
 								type="submit"
 							>
 								{ __(
-									content.buttonText,
+									'Continue Setup',
 									'wp-module-onboarding'
 								) }
 							</button>
