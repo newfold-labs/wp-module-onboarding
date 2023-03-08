@@ -1,6 +1,6 @@
 import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useEffect } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -19,6 +19,7 @@ import Animate from '../../../../components/Animate';
 import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 
 const StepAddress = () => {
+	const [ settings, setSettings ] = useState();
 	const navigate = useNavigate();
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const {
@@ -85,10 +86,15 @@ const StepAddress = () => {
 		setIsHeaderNavigationEnabled( true );
 	};
 
-	const settings = getWPSettings();
+	const setWPSettings = async () => {
+		const wpSettings = await getWPSettings();
+		setSettings( wpSettings );
+	};
+
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView( VIEW_NAV_ECOMMERCE_STORE_INFO );
+		setWPSettings();
 	}, [] );
 
 	const { currentData, newfoldBrand } = useSelect( ( select ) => {
