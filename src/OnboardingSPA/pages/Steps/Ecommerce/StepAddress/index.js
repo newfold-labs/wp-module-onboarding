@@ -325,46 +325,46 @@ const StepAddress = () => {
 											/>
 										</div>
 										{ states.length === 0 ||
-										address === undefined ? null : (
-											<div data-name="state">
-												<label
-													aria-required
-													htmlFor="state"
-												>
-													{ __(
-														'State',
-														'wp-module-onboarding'
-													) }
-												</label>
-												<select
-													id="state"
-													type="text"
-													name="state"
-													required
-													defaultValue={
-														selectedCountry ===
-														defaultCountry
-															? defaultState
-															: ''
-													}
-													{ ...fieldProps }
-												>
-													<option
-														key={ '' }
-														value={ '' }
-														selected
-													/>
-													{ states.map( ( state ) => (
+											address === undefined ? null : (
+												<div data-name="state">
+													<label
+														aria-required
+														htmlFor="state"
+													>
+														{ __(
+															'State',
+															'wp-module-onboarding'
+														) }
+													</label>
+													<select
+														id="state"
+														type="text"
+														name="state"
+														required
+														defaultValue={
+															selectedCountry ===
+															defaultCountry
+																? defaultState
+																: ''
+														}
+														{ ...fieldProps }
+													>
 														<option
-															key={ state.code }
-															value={ state.code }
-														>
-															{ state.name }
-														</option>
-													) ) }
-												</select>
-											</div>
-										) }
+															key={ '' }
+															value={ '' }
+															selected
+														/>
+														{ states.map( ( state ) => (
+															<option
+																key={ state.code }
+																value={ state.code }
+															>
+																{ state.name }
+															</option>
+														) ) }
+													</select>
+												</div>
+											) }
 										<div data-name="woocommerce_store_postcode">
 											<label
 												aria-required
