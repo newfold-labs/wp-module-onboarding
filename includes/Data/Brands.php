@@ -67,6 +67,7 @@ final class Brands {
 						'utm_medium' => 'brand-plugin',
 					),
 				),
+				'config' => array(),
 			),
 			'bluehost-india' => array(
 				'brand'                       => 'bluehost-india',
@@ -114,6 +115,7 @@ final class Brands {
 						'utm_medium' => 'brand-plugin',
 					),
 				),
+				'config' => array(),
 			),
 			'webcom'         => array(
 				'brand'                       => 'webcom',
@@ -165,6 +167,7 @@ final class Brands {
 						'utm_medium' => '',
 					),
 				),
+				'config' => array(),
 			),
 			'crazy-domains'  => array(
 				'brand'                       => 'crazy-domains',
@@ -214,6 +217,15 @@ final class Brands {
 					'queryParams' => array(
 						'utm_source' => 'wp-onboarding',
 						'utm_medium' => 'brand-plugin',
+					),
+				),
+				'config'                      => array(
+					'views' => array(
+						'sidebar' => array(
+							'illustration' => array(
+								'shown' => false,
+							),
+						),
 					),
 				),
 			),
