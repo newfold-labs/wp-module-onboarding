@@ -80,7 +80,7 @@ const StepDesignHomepageMenu = () => {
 		setDrawerActiveView( VIEW_NAV_DESIGN );
 	}, [] );
 
-	function refactorPatterns( homepagePatternsData ) {
+	function refactorPatterns( homepagePatternDataResp ) {
 		const makeHomepagePattern = [];
 
 		for ( const key in homepagesList ) {
@@ -95,11 +95,13 @@ const StepDesignHomepageMenu = () => {
 
 			let patternData = '';
 			homepagePatterns.forEach( ( patternName ) => {
-				homepagePatternsData?.body.forEach( ( patternsData ) => {
-					if ( patternsData.slug === patternName ) {
-						patternData += patternsData.content;
+				homepagePatternDataResp?.body.forEach(
+					( homepagePatternData ) => {
+						if ( homepagePatternData.slug === patternName ) {
+							patternData += homepagePatternData.content;
+						}
 					}
-				} );
+				);
 			} );
 			makeHomepagePattern.push( patternData );
 		}
@@ -108,14 +110,15 @@ const StepDesignHomepageMenu = () => {
 	}
 
 	async function getHomepagePatternsData() {
-		const homepagePatternData = await getPatterns( currentStep.patternId );
-		if ( homepagePatternData?.error ) {
+		const homepagePatternDataTemp = await getPatterns(
+			currentStep.patternId
+		);
+		if ( homepagePatternDataTemp?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
+		setHomepagePattern( refactorPatterns( homepagePatternDataTemp ) );
 
-		setHomepagePattern( refactorPatterns( homepagePatternData ) );
-
-		if ( currentData?.data.sitePages.length !== 0 ) {
+		if ( currentData?.data.sitePages.homepage !== '' ) {
 			setSelectedHomepage(
 				homepagePatternList?.indexOf(
 					currentData?.data.sitePages.homepage
