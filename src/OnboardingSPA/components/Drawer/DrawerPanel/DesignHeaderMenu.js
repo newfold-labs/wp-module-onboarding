@@ -54,7 +54,7 @@ const DesignHeaderMenu = () => {
 		setHeaderMenuPreviewData( headerMenuPreviewResponse.body );
 
 		const headerMenuPatterns = [];
-		headerMenuPreviewResponse.body.forEach( ( pageParts ) => {
+		headerMenuPreviewResponse?.body.forEach( ( pageParts ) => {
 			if ( headerMenuSlugs.includes( pageParts.slug ) ) {
 				if ( pageParts.slug.includes( 'split' ) ) {
 					pageParts.content = replaceNavigationGrammar( pageParts.content );
