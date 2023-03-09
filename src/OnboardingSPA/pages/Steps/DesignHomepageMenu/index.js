@@ -107,7 +107,7 @@ const StepDesignHomepageMenu = () => {
 
 		setHomepagePattern( refactorPatterns( homepagePatternData ) );
 
-		if ( currentData?.data.sitePages.length !== 0 ) {
+		if ( currentData?.data.sitePages.homepage !== "" ) {
 			setSelectedHomepage(
 				homepagePatternList?.indexOf(
 					currentData?.data.sitePages.homepage
