@@ -67,7 +67,9 @@ final class Brands {
 						'utm_medium' => 'brand-plugin',
 					),
 				),
-				'config' => array(),
+				'config'                      => array(
+					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
+				),
 			),
 			'bluehost-india' => array(
 				'brand'                       => 'bluehost-india',
@@ -118,7 +120,9 @@ final class Brands {
 						'utm_medium' => 'brand-plugin',
 					),
 				),
-				'config' => array(),
+				'config'                      => array(
+					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
+				),
 			),
 			'webcom'         => array(
 				'brand'                       => 'webcom',
@@ -170,7 +174,9 @@ final class Brands {
 						'utm_medium' => '',
 					),
 				),
-				'config' => array(),
+				'config'                      => array(
+					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
+				),
 			),
 			'crazy-domains'  => array(
 				'brand'                       => 'crazy-domains',
@@ -223,7 +229,8 @@ final class Brands {
 					),
 				),
 				'config'                      => array(
-					'views' => array(
+					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
+					'views'                         => array(
 						'sidebar' => array(
 							'illustration' => array(
 								'shown' => false,
@@ -233,5 +240,21 @@ final class Brands {
 				),
 			),
 		);
+	}
+
+	/**
+	 * Sets the hosting brand for which Onboarding is active.
+	 *
+	 * @param array $container The brand plugin container.
+	 * @return void
+	 */
+	public static function set_current_brand( $container ) {
+		if ( ! defined( 'NFD_ONBOARDING_PLUGIN_BRAND' ) ) {
+			$brand = $container->plugin()->brand;
+			if ( empty( $brand ) ) {
+				$brand = 'newfold';
+			}
+			define( 'NFD_ONBOARDING_PLUGIN_BRAND', sanitize_title_with_dashes( str_replace( '_', '-', $brand ) ) );
+		}
 	}
 }
