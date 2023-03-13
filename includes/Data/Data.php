@@ -31,8 +31,6 @@ final class Data {
 	/**
 	 * Establish brand to apply to Onboarding experience.
 	 *
-	 * [TODO]: Pull brand from container.
-	 *
 	 * @return array
 	 */
 	public static function current_brand() {
