@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { memo } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
 import { Button } from '@wordpress/components';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { setFlow } from '../../utils/api/flow';
@@ -12,44 +12,44 @@ import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
 /**
  * Interface Text Inputs with standard design.
  *
- * @return
+ * @return {WPComponent} SkipButton Component
  */
 const SkipButton = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const { nextStep, currentData } = useSelect( ( select ) => {
+	const { nextStep, currentData, socialData } = useSelect( ( select ) => {
 		return {
 			nextStep: select( nfdOnboardingStore ).getNextStep(),
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			socialData: select( nfdOnboardingStore ).getOnboardingSocialData(),
 		};
 	}, [] );
 
 	const isLastStep = null === nextStep || false === nextStep;
+	const { setOnboardingSocialData } = useDispatch( nfdOnboardingStore );
 
-	async function syncSocialSettingsFinish( currentData ) {
+	async function syncSocialSettingsFinish() {
 		const initialData = await getSettings();
-		const result = await setSettings( currentData?.data?.socialData );
-		if ( result?.error != null ) {
-			console.error( 'Unable to Save Social Data!' );
+		const result = await setSettings( socialData );
+		if ( result?.error !== null ) {
 			return initialData?.body;
 		}
 		return result?.body;
 	}
 
-	async function saveData( path, currentData ) {
+	async function saveData( path ) {
 		if ( currentData ) {
 			currentData.isComplete = new Date().getTime();
 
 			// If Social Data is changed then sync it
 			if ( path?.includes( 'basic-info' ) ) {
-				const socialData = await syncSocialSettingsFinish(
-					currentData
-				);
+				const socialDataResp = await syncSocialSettingsFinish();
 
 				// If Social Data is changed then Sync that also to the store
-				if ( socialData && currentData?.data )
-					currentData.data.socialData = socialData;
+				if ( socialDataResp ) {
+					setOnboardingSocialData( socialDataResp );
+				}
 			}
 			setFlow( currentData );
 		}
@@ -89,7 +89,7 @@ const SkipButton = () => {
  * check if this is the last step
  */
 const exitToWordpressForEcommerce = () => {
-	if ( window.nfdOnboarding.currentFlow == 'ecommerce' ) {
+	if ( window.nfdOnboarding.currentFlow === 'ecommerce' ) {
 		return true;
 	}
 	return false;
