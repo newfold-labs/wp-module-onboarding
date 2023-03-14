@@ -21,7 +21,6 @@ import LivePreviewSkeleton from '../../../components/LivePreview/LivePreviewSkel
 
 const StepSitePages = () => {
 	const location = useLocation();
-	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ sitePages, setSitePages ] = useState();
 	const [ checkedPages, setCheckedPages ] = useState( [] );
 
@@ -78,7 +77,6 @@ const StepSitePages = () => {
 				}
 			}
 		}
-		setIsLoaded( true );
 	};
 
 	const stateToFlowData = ( selectedPages, sitePages ) => {
@@ -146,8 +144,8 @@ const StepSitePages = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE ) getSitePages();
-	}, [ isLoaded, themeStatus ] );
+		if ( themeStatus === THEME_STATUS_ACTIVE ) getSitePages();
+	}, [ themeStatus ] );
 
 	return (
 		<DesignStateHandler>
