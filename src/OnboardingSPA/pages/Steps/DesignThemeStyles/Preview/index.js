@@ -3,6 +3,7 @@ import { useState, useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { CheckboxControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { orderBy, filter } from 'lodash';
 
 import {

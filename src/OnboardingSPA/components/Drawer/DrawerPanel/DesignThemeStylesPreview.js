@@ -4,7 +4,7 @@ import { useState, useEffect } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../utils/api/themes';
-import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
+import { useGlobalStylesOutput as GlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_INIT,
@@ -94,7 +94,7 @@ const DesignThemeStylesPreview = () => {
 	const handleClick = ( idx ) => {
 		const selectedGlobalStyle = globalStyles[ idx ];
 		updatePreviewSettings(
-			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
+			GlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
 		setSelectedStyle( selectedGlobalStyle.title );
 		currentData.data.theme.variation = selectedGlobalStyle.title;
