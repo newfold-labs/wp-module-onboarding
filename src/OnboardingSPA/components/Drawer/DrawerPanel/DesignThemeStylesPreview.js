@@ -86,8 +86,9 @@ const DesignThemeStylesPreview = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
+		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE ) {
 			getStylesAndPatterns();
+		}
 	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = ( idx ) => {

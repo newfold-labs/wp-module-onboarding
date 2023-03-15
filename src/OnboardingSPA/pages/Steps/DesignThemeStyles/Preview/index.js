@@ -67,7 +67,7 @@ const StepDesignThemeStylesPreview = () => {
 		const patternsResponse = await getPatterns(
 			currentStep.patternId,
 			true,
-			currentData?.data?.partHeader ?  currentData?.data?.partHeader.split( '/' )[ 1 ] : '',
+			currentData?.data?.partHeader ? currentData?.data?.partHeader.split( '/' )[ 1 ] : '',
 		);
 		if ( patternsResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
@@ -135,10 +135,10 @@ const StepDesignThemeStylesPreview = () => {
 		};
 	};
 
-	const handleCheckbox = ( customize, updateOnboardingData = true ) => {
+	const handleCheckbox = ( customizationNeeded, updateOnboardingData = true ) => {
 		let updates;
 
-		if ( customize ) {
+		if ( customizationNeeded ) {
 			updates = addColorAndTypographyRoutes();
 		} else {
 			updates = removeColorAndTypographyRoutes();
@@ -147,16 +147,18 @@ const StepDesignThemeStylesPreview = () => {
 		updateRoutes( updates.routes );
 		updateDesignSteps( updates.designSteps );
 		updateAllSteps( updates.allSteps );
-		setCustomize( customize );
+		setCustomize( customizationNeeded );
 
 		if ( updateOnboardingData ) {
-			currentData.data.customDesign = customize;
+			currentData.data.customDesign = customizationNeeded;
 			setCurrentOnboardingData( currentData );
 		}
 	};
 
 	useEffect( () => {
-		if ( themeStatus === THEME_STATUS_ACTIVE ) getStylesAndPatterns();
+		if ( themeStatus === THEME_STATUS_ACTIVE ) {
+			getStylesAndPatterns();
+		}
 	}, [ themeStatus ] );
 
 	return (

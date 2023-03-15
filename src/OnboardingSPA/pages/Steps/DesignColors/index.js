@@ -41,15 +41,15 @@ const StepDesignColors = () => {
 	}, [] );
 
 	const getStylesAndPatterns = async () => {
-		const pattern = await getPatterns( 
-			currentStep.patternId, 
+		const designColorPatterns = await getPatterns(
+			currentStep.patternId,
 			true,
 			currentData?.data?.partHeader ? currentData?.data?.partHeader.split( '/' )[ 1 ] : '',
 		);
-		if ( pattern?.error ) {
+		if ( designColorPatterns?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
-		setPattern( pattern?.body );
+		setPattern( designColorPatterns?.body );
 	};
 
 	useEffect( () => {
