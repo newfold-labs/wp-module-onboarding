@@ -9,6 +9,11 @@ use NewfoldLabs\WP\Module\Onboarding\RestApi\RestApiFilter;
  */
 final class RestApi {
 
+	/**
+	 * List of custom REST API controllers
+	 *
+	 * @var array
+	 */
 	protected $controllers = array(
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteImagesController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeGeneratorController',
@@ -22,21 +27,21 @@ final class RestApi {
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SitePagesController',
 		'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeInstallerController',
 		'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeFontsController',
-		'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeColorsController'
+		'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeColorsController',
 	);
 
-	 /**
-     * Setup the custom REST API
-     */
+	/**
+	 * Setup the custom REST API
+	 */
 	public function __construct() {
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 		// create an instance of the RestApiFilter to filter the responses for header menu navigation
 		new RestApiFilter();
 	}
 
-	 /**
-     * Register the custom REST API routes
-     */
+	/**
+	 * Register the custom REST API routes
+	 */
 	public function register_routes() {
 		foreach ( $this->controllers as $controller ) {
 			/**

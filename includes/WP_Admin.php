@@ -119,7 +119,7 @@ final class WP_Admin {
 			PluginInstallTaskManager::queue_initial_installs();
 		}
 
-		if ( ! empty( sanitize_text_field( $_GET[ 'nfd_themes' ] ) ) && 'true' === sanitize_text_field( $_GET[ 'nfd_themes' ] ) ) {
+		if ( ! empty( sanitize_text_field( $_GET['nfd_themes'] ) ) && 'true' === sanitize_text_field( $_GET['nfd_themes'] ) ) {
 			ThemeInstallTaskManager::queue_initial_installs();
 		}
 

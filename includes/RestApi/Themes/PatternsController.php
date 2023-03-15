@@ -11,23 +11,23 @@ use NewfoldLabs\WP\Module\Onboarding\Permissions;
 class PatternsController extends \WP_REST_Controller {
 
 
-	 /**
-	  * The namespace of this controller's route.
-	  *
-	  * @var string
-	  */
-	 protected $namespace = 'newfold-onboarding/v1';
+	/**
+	 * The namespace of this controller's route.
+	 *
+	 * @var string
+	 */
+	protected $namespace = 'newfold-onboarding/v1';
 
-	 /**
-	  * The base of this controller's route.
-	  *
-	  * @var string
-	  */
-	 protected $rest_base = '/patterns';
+	/**
+	 * The base of this controller's route.
+	 *
+	 * @var string
+	 */
+	protected $rest_base = '/patterns';
 
-	 /**
-	  * Registers REST routes for this controller class.
-	  */
+	/**
+	 * Registers REST routes for this controller class.
+	 */
 	public function register_routes() {
 
 		register_rest_route(
@@ -44,34 +44,39 @@ class PatternsController extends \WP_REST_Controller {
 		);
 	}
 
+	/**
+	 *
+	 * Checks the type of the patterns.
+	 */
 	public function get_pattern_args() {
-		 return array(
-			 'slug'   => array(
-				 'type' => 'string',
-			 ),
-			 'step'   => array(
-				 'type' => 'string',
-			 ),
-			 'squash' => array(
-				 'type'    => 'boolean',
-				 'default' => false,
-			 ),
-			 'headerMenuSlug' => array(
+		return array(
+			'slug'           => array(
 				'type' => 'string',
-			 ),
-		 );
+			),
+			'step'           => array(
+				'type' => 'string',
+			),
+			'squash'         => array(
+				'type'    => 'boolean',
+				'default' => false,
+			),
+			'headerMenuSlug' => array(
+				'type' => 'string',
+			),
+		);
 	}
 
-	 /**
-	  * Retrieves the patterns approved by the Onboarding Module.
-	  *
-	  * @return \WP_Rest_Response|\WP_Error
-	  */
+	/**
+	 * Retrieves the patterns approved by the Onboarding Module.
+	 *
+	 * @param \WP_REST_Request $request WP Rest Response object
+	 * @return \WP_Rest_Response|\WP_Error
+	 */
 	public function get_pattern( \WP_REST_Request $request ) {
-		 $step   = $request->get_param( 'step' );
-		 $squash = $request->get_param( 'squash' );
-		 $slug   = $request->get_param( 'slug' );
-		 $headerMenuSlug = $request->get_param( 'headerMenuSlug' );
+		$step             = $request->get_param( 'step' );
+		$squash           = $request->get_param( 'squash' );
+		$slug             = $request->get_param( 'slug' );
+		$header_menu_slug = $request->get_param( 'headerMenuSlug' );
 
 		if ( ! $step && ! $slug ) {
 			return new \WP_Error(
@@ -82,7 +87,7 @@ class PatternsController extends \WP_REST_Controller {
 		}
 
 		if ( $step ) {
-			 $step_patterns = Patterns::get_theme_step_patterns_from_step( $step, $squash, $headerMenuSlug );
+			$step_patterns = Patterns::get_theme_step_patterns_from_step( $step, $squash, $header_menu_slug );
 			if ( ! $step_patterns ) {
 				return new \WP_Error(
 					'no_patterns_found',
@@ -96,7 +101,7 @@ class PatternsController extends \WP_REST_Controller {
 			);
 		}
 
-		 $pattern = Patterns::get_pattern_from_slug( $slug );
+		$pattern = Patterns::get_pattern_from_slug( $slug );
 		if ( ! $pattern ) {
 			return new \WP_Error(
 				'no_pattern_found',

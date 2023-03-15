@@ -7,13 +7,13 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
  */
 class RestApiFilter {
 
-    /**
+	/**
 	 * Default set of dummy pages.
 	 *
 	 * @var array
 	 */
 	private static function dummy_pages() {
-        return array(
+		return array(
 			__( 'Home', 'wp-module-onboarding' ),
 			__( 'About', 'wp-module-onboarding' ),
 			__( 'Contact', 'wp-module-onboarding' ),
@@ -21,16 +21,16 @@ class RestApiFilter {
 			__( 'Privacy', 'wp-module-onboarding' ),
 			__( 'Careers', 'wp-module-onboarding' ),
 		);
-    }
-
-    /**
-     * Setup the custom REST API filters
-     */
-	public function __construct() {
-		\add_filter( 'rest_request_before_callbacks', array( __CLASS__, 'add_appropriate_filters_for_onboarding' ), 10, 3 );		
 	}
 
-    /**
+	/**
+	 * Setup the custom REST API filters
+	 */
+	public function __construct() {
+		\add_filter( 'rest_request_before_callbacks', array( __CLASS__, 'add_appropriate_filters_for_onboarding' ), 10, 3 );
+	}
+
+	/**
 	 * Custom filter to check for pages API call, if true then add more filters for the onboarding flow only.
 	 *
 	 * @param array            $response - the API response
@@ -39,7 +39,7 @@ class RestApiFilter {
 	 *
 	 * @return array
 	 */
-    public static function add_appropriate_filters_for_onboarding( $response, array $handler, \WP_REST_Request $request ) {
+	public static function add_appropriate_filters_for_onboarding( $response, array $handler, \WP_REST_Request $request ) {
 		if ( ! self::is_request_from_onboarding_flow( $request ) ) {
 			return $response;
 		}
@@ -52,13 +52,13 @@ class RestApiFilter {
 		return $response;
 	}
 
-    /**
-     * Apply the appropriate filters based on the route 
-     *
-     * @param object $request REST API object
-     * @return void
-     */
-    private static function get_method_filters( $request ) {
+	/**
+	 * Apply the appropriate filters based on the route
+	 *
+	 * @param object $request REST API object
+	 * @return void
+	 */
+	private static function get_method_filters( $request ) {
 		$request_route = $request->get_route();
 		switch ( $request_route ) {
 			case '/wp/v2/pages':
@@ -70,7 +70,7 @@ class RestApiFilter {
 				break;
 		}
 	}
-    
+
 	/**
 	 * Function for modifying the navigation menu grammar.
 	 *
@@ -133,7 +133,7 @@ class RestApiFilter {
 	 * @return array
 	 */
 	public static function header_menu_rename_pages( $response, array $handler, \WP_REST_Request $request ) {
-        self::modify_get_pages_response( $response );
+		self::modify_get_pages_response( $response );
 		return $response;
 	}
 
@@ -143,7 +143,7 @@ class RestApiFilter {
 	 * @param \WP_REST_Request $request - WP_REST_Request object
 	 *
 	 * @return boolean
-     */
+	 */
 	public static function is_request_from_onboarding_flow( \WP_REST_Request $request ) {
 		return false !== stripos( $request->get_header( 'referer' ), 'page=nfd-onboarding' );
 	}

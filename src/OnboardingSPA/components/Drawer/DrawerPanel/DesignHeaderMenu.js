@@ -8,7 +8,6 @@ import { LivePreviewSkeleton, LivePreviewSelectableCard } from '../../../compone
 import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_INIT,
-	wpSiteUrl,
 } from '../../../../constants';
 
 const DesignHeaderMenu = () => {
