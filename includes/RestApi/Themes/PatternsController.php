@@ -56,6 +56,9 @@ class PatternsController extends \WP_REST_Controller {
 				 'type'    => 'boolean',
 				 'default' => false,
 			 ),
+			 'headerMenuSlug' => array(
+				'type' => 'string',
+			 ),
 		 );
 	}
 
@@ -68,6 +71,7 @@ class PatternsController extends \WP_REST_Controller {
 		 $step   = $request->get_param( 'step' );
 		 $squash = $request->get_param( 'squash' );
 		 $slug   = $request->get_param( 'slug' );
+		 $headerMenuSlug = $request->get_param( 'headerMenuSlug' );
 
 		if ( ! $step && ! $slug ) {
 			return new \WP_Error(
@@ -78,7 +82,7 @@ class PatternsController extends \WP_REST_Controller {
 		}
 
 		if ( $step ) {
-			 $step_patterns = Patterns::get_theme_step_patterns_from_step( $step, $squash );
+			 $step_patterns = Patterns::get_theme_step_patterns_from_step( $step, $squash, $headerMenuSlug );
 			if ( ! $step_patterns ) {
 				return new \WP_Error(
 					'no_patterns_found',

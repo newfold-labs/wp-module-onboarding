@@ -111,7 +111,9 @@ const StepDesignHomepageMenu = () => {
 
 	async function getHomepagePatternsData() {
 		const homepagePatternDataTemp = await getPatterns(
-			currentStep.patternId
+			currentStep.patternId,
+			false,
+			currentData?.data?.partHeader ? currentData?.data?.partHeader.split( '/' )[ 1 ] : '',
 		);
 		if ( homepagePatternDataTemp?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );

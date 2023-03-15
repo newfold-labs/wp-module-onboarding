@@ -354,7 +354,7 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 		text-align: center;
 		align-items: center;
 		justify-content: center;
-		background-color: #fff;
+		background-color: $main-color-light;
 		color: var(--nfd-onboarding-primary);
 
 		&:hover {
@@ -419,7 +419,7 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 		}
 
 		&__text {
-			color: #000;
+			color: $main-color-dark;
 			font-size: 12px;
 			font-weight: 700;
 			line-height: 16px;
@@ -466,11 +466,11 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 
 		&-row {
 			height: 50px;
-			color: #000;
+			color: $main-color-dark;
 			display: flex;
 			cursor: pointer;
 			align-items: center;
-			background-color: #fff;
+			background-color: $main-color-light;
 			justify-content: flex-start;
 			border: 0.5px solid rgba(0, 0, 0, 0.3);
 
@@ -495,14 +495,14 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 		width: 25px;
 		height: 25px;
 		display: flex;
-		color: #000;
+		color: $main-color-dark;
 		cursor: pointer;
 		font-weight: 900;
 		border-radius: 50%;
 		align-items: center;
 		justify-content: center;
-		border: 1px solid #000;
-		background-color: #fff;
+		border: 1px solid $main-color-dark;
+		background-color: $main-color-light;
 	}
 }
 
@@ -515,13 +515,13 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 		width: 40%;
 		height: 30px;
 		display: flex;
-		color: #000;
+		color: $main-color-dark;
 		cursor: pointer;
 		margin-left: 4px;
 		text-align: center;
 		align-items: center;
 		justify-content: center;
-		background-color: #fff;
+		background-color: $main-color-light;
 
 		&:hover {
 			background-color: var(--nfd-onboarding-drawer-icon-fill);
@@ -532,7 +532,7 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 .font-palette {
 
 	&__icon {
-		color: #000;
+		color: $main-color-dark;
 		font-weight: 700;
 		margin-right: 16px;
 	}

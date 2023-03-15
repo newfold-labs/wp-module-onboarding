@@ -23,8 +23,6 @@ const DesignHeaderMenu = () => {
 		'yith-wonder/site-footer',
 	];
 
-	const defaultMenuItems = [ 'Home', 'About', 'Contact', 'News', 'Privacy', 'Careers' ];
-
 	const [ patterns, setPatterns ] = useState();
 	const [ headerMenuPreviewData, setHeaderMenuPreviewData ] = useState();
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
@@ -56,9 +54,6 @@ const DesignHeaderMenu = () => {
 		const headerMenuPatterns = [];
 		headerMenuPreviewResponse?.body.forEach( ( pageParts ) => {
 			if ( headerMenuSlugs.includes( pageParts.slug ) ) {
-				if ( pageParts.slug.includes( 'split' ) ) {
-					pageParts.content = replaceNavigationGrammar( pageParts.content );
-				}
 				headerMenuPatterns.push( pageParts );
 			}
 		} );
@@ -91,16 +86,6 @@ const DesignHeaderMenu = () => {
 			getPatternsData();
 		}
 	}, [ themeStatus ] );
-
-	const replaceNavigationGrammar = ( pageGrammar ) => {
-		let menuGrammarDummy = '';
-		const menuNavigationGrammar = '<!-- wp:navigation-link {"isTopLevelLink":true} /-->';
-		defaultMenuItems.forEach( ( item ) => {
-			menuGrammarDummy = '<!-- wp:navigation-link {"isTopLevelLink":true, "label":"' + item + '", "title":"' + item + '", "url":"' + wpSiteUrl + '"} /-->';
-			pageGrammar = pageGrammar.replace( menuNavigationGrammar, menuGrammarDummy );
-		} );
-		return pageGrammar;
-	};
 
 	const handleClick = ( idx ) => {
 		if ( document.getElementsByClassName( 'nfd-onboard-content' ) ) {

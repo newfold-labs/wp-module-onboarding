@@ -7,6 +7,30 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
 final class Patterns {
 
 	/**
+	 * List of styles to check for header menu slugs and replace with user selected header menu slug.
+	 */
+	private static $styles_to_check_for_header_menu = array(
+		'theme-styles',
+		'homepage-styles',
+	);
+
+	/**
+	 * List of dummy menu page titles.
+	 * 
+	 * @return array
+	 */
+	protected static function default_menu_items() {
+		return array(
+			__( 'Home', 'wp-module-onboarding' ),
+			__( 'About', 'wp-module-onboarding' ),
+			__( 'Contact', 'wp-module-onboarding' ),
+			__( 'News', 'wp-module-onboarding' ),
+			__( 'Privacy', 'wp-module-onboarding' ),
+			__( 'Careers', 'wp-module-onboarding' ),
+		);
+	}
+
+	/**
 	 * Retrieve Patterns for Theme Step.
 	 *
 	 * @return array
@@ -45,18 +69,6 @@ final class Patterns {
 					),
 					'site-footer'               => array(
 						'active' => true,
-					),
-					'site-header-left-logo-navigation-below' => array(
-						'active' => true,
-						'shown'  => false,
-					),
-					'site-header-centered'      => array(
-						'active' => true,
-						'shown'  => false,
-					),
-					'site-header-splitted-menu' => array(
-						'active' => true,
-						'shown'  => false,
 					),
 				),
 				'site-pages'      => array(
@@ -161,6 +173,39 @@ final class Patterns {
 	}
 
 	/**
+	 * Replace the header menu slug in the patterns array
+	 *
+	 * @param array  $patterns Patterns for the specific step
+	 * @param string $headerMenuSlug header menu slug choosen by the user
+	 *
+	 * @return array
+	 */
+	private static function replace_header_menu_slug( $patterns, $headerMenuSlug ) {
+		foreach( $patterns as $slug => $slug_details) {
+			if( false !== stripos( $slug, '-header-' ) ) {
+				unset( $patterns[ $slug ] );
+				$patterns = array_merge( array( $headerMenuSlug => $slug_details ), $patterns );
+			}
+		}
+		return $patterns;
+	}
+
+	private static function replace_split_menu_items( $pattern_content ) {
+		$dummy_menu_grammar = '';
+		$menu_navigation_grammar = '<!-- wp:navigation-link {"isTopLevelLink":true} /-->';
+		foreach( self::default_menu_items() as $item ) {
+			$dummy_menu_grammar = '<!-- wp:navigation-link {
+				"isTopLevelLink":true, 
+				"label":"' . strtolower( $item ) . '", 
+				"title":"' . $item . '", 
+				"url":"' . get_site_url() . "/". strtolower( $item ) . '"
+			} /-->';
+			$pattern_content = preg_replace( $menu_navigation_grammar, $dummy_menu_grammar, $pattern_content, 1 );
+		}
+		return $pattern_content;
+	}
+
+	/**
 	 * Retrieve Theme Step Patterns from chosen Theme in Previous Step
 	 *
 	 * @param string  $step Step from which Theme Step Pattern is required
@@ -168,7 +213,7 @@ final class Patterns {
 	 *
 	 * @return array|string
 	 */
-	public static function get_theme_step_patterns_from_step( $step, $squash = false ) {
+	public static function get_theme_step_patterns_from_step( $step, $squash = false, $headerMenuSlug = '' ) {
 		$active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
 
 		if ( ! isset( self::get_theme_step_patterns()[ $active_theme ][ $step ] ) ) {
@@ -179,11 +224,21 @@ final class Patterns {
 		$block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
 		$block_patterns          = array();
 		$block_patterns_squashed = '';
+
+		if ( ! empty( $headerMenuSlug ) && in_array( $step, self::$styles_to_check_for_header_menu ) ) {
+			$pattern_slugs = self::replace_header_menu_slug( $pattern_slugs, $headerMenuSlug );
+		}
+
 		foreach ( array_keys( $pattern_slugs ) as $pattern_slug ) {
 			if ( true === $pattern_slugs[ $pattern_slug ]['active'] ) {
 				$pattern_name = $active_theme . '/' . $pattern_slug;
 				if ( $block_patterns_registry->is_registered( $pattern_name ) ) {
 					$pattern = $block_patterns_registry->get_registered( $pattern_name );
+					// if header menu slug contains "split" replace the menu links with dummy links
+					if( false !== stripos( $pattern_slug, 'split' ) ) {
+						$pattern['content'] = self::replace_split_menu_items( $pattern['content'] );
+					}
+					
 					if ( ! $squash ) {
 						$block_patterns[] = array_merge(
 							array(

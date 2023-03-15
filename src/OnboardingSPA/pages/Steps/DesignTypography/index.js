@@ -21,12 +21,13 @@ const StepDesignTypography = () => {
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
 
-	const { currentStep, themeStatus } = useSelect( ( select ) => {
+	const { currentStep, themeStatus, currentData } = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
 			),
 			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			currentData: select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	}, [] );
 
@@ -41,7 +42,8 @@ const StepDesignTypography = () => {
 	const getFontPatterns = async () => {
 		const patternsResponse = await getPatterns(
 			currentStep.patternId,
-			true
+			true,
+			currentData?.data?.partHeader ?  currentData?.data?.partHeader.split( '/' )[ 1 ] : '',
 		);
 		if ( patternsResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
