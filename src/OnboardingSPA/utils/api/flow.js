@@ -3,43 +3,33 @@ import { onboardingRestURL } from './common';
 
 import apiFetch from '@wordpress/api-fetch';
 
-let abortControllerGetFlow = undefined;
-let abortControllerSetFlow = undefined;
+let abortControllerGetFlow;
+let abortControllerSetFlow;
 
 export async function getFlow() {
-	if( abortControllerGetFlow ) {
+	if ( abortControllerGetFlow ) {
 		abortControllerGetFlow.abort();
 	}
-	abortControllerGetFlow = new AbortController()
-  	const { signal } = abortControllerGetFlow;
+	abortControllerGetFlow = new AbortController();
+	const { signal } = abortControllerGetFlow;
 
 	return await resolve(
-		apiFetch( { url: onboardingRestURL( 'flow' ), signal: signal } ).then()
+		apiFetch( { url: onboardingRestURL( 'flow' ), signal } ).then()
 	);
 }
 
 export async function setFlow( data ) {
-	if( abortControllerSetFlow ) {
-		abortControllerSetFlow.abort('New Request Placed!');
-
-		if (abortControllerSetFlow.signal.aborted) {
-			if (abortControllerSetFlow.signal.reason) {
-				console.log(`Request aborted with reason: ${abortControllerSetFlow.signal.reason}`);
-			} else {
-				console.log("Request aborted but no reason was given.");
-			}
-		} else {
-			console.log("Request not aborted");
-		}
+	if ( abortControllerSetFlow ) {
+		abortControllerSetFlow.abort( 'New setFlow request placed!' );
 	}
 
-	abortControllerSetFlow = new AbortController()
-  	const { signal } = abortControllerSetFlow;
+	abortControllerSetFlow = new AbortController();
+	const { signal } = abortControllerSetFlow;
 
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'flow' ),
-			signal: signal,
+			signal,
 			method: 'POST',
 			data,
 		} ).then()
