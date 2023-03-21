@@ -11,6 +11,7 @@ import { isEmpty, updateWPSettings } from '../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../store';
 import { conditionalSteps } from '../../data/routes/';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { kebabCase, orderBy, filter } from 'lodash';
 import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -136,9 +137,7 @@ const App = () => {
 
 				if ( location?.pathname.includes( 'header-menu' ) ) {
 					enqueueRequest( API_REQUEST.SET_FLOW );
-				} 
-				else
-					flushQueue( onboardingStore );
+				} else flushQueue( onboardingStore );
 				const result = await setFlow( currentData );
 				if ( result?.error !== null ) {
 					setIsRequestPlaced( false );

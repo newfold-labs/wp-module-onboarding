@@ -210,7 +210,7 @@ export function enqueueRequest( request ) {
 
 export function dequeueRequest() {
 	return {
-		type: 'DEQUEUE_REQUEST'
+		type: 'DEQUEUE_REQUEST',
 	};
 }
 
