@@ -5,6 +5,7 @@ import Sidebar from '../Sidebar';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { setFlow } from '../../utils/api/flow';
+import { API_REQUEST } from '../../../constants';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { isEmpty, updateWPSettings } from '../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../store';
@@ -30,6 +31,7 @@ const App = () => {
 	const pathname = kebabCase( location.pathname );
 
 	const {
+		onboardingStore,
 		isDrawerOpen,
 		newfoldBrand,
 		onboardingFlow,
@@ -41,6 +43,7 @@ const App = () => {
 		allSteps,
 	} = useSelect( ( select ) => {
 		return {
+			onboardingStore: select( nfdOnboardingStore ).getOnboardingStore(),
 			isDrawerOpen: select( nfdOnboardingStore ).isDrawerOpened(),
 			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
 			onboardingFlow: select( nfdOnboardingStore ).getOnboardingFlow(),
@@ -63,6 +66,8 @@ const App = () => {
 		updateRoutes,
 		updateDesignSteps,
 		updateAllSteps,
+		flushQueue,
+		enqueueRequest,
 		setOnboardingSocialData,
 		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
@@ -129,6 +134,11 @@ const App = () => {
 					}
 				}
 
+				if ( location?.pathname.includes( 'header-menu' ) ) {
+					enqueueRequest( API_REQUEST.SET_FLOW );
+				} 
+				else
+					flushQueue( onboardingStore );
 				const result = await setFlow( currentData );
 				if ( result?.error !== null ) {
 					setIsRequestPlaced( false );

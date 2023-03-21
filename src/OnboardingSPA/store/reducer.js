@@ -16,6 +16,7 @@ import {
 	initialStoreInfoSteps,
 } from '../data/routes/index';
 import { sidebars } from '../data/sidebars/index';
+import apiQueueExecuter from '../utils/api-queuer/api-queue-executer';
 
 export function flow(
 	state = {
@@ -212,6 +213,27 @@ export function settings(
 	return state;
 }
 
+export function queue( state = [], action ) {
+	switch ( action.type ) {
+		// Add a new API Request to the Queue
+		case 'ENQUEUE_REQUEST':
+			return [ ...state, action.request ];
+
+		// Take out the topmost Queue Item
+		case 'DEQUEUE_REQUEST':
+			console.log(state[0]);
+			return [ ...state.slice( 1 ) ];
+
+		// Make all the Queue Requests and Empty the queue
+		case 'FLUSH_QUEUE':
+			if(state.length === 0)
+				return [];
+			return apiQueueExecuter( action.onboardingStore, state );
+	}
+
+	return state;
+}
+
 export default combineReducers( {
 	drawer,
 	runtime,
@@ -220,4 +242,5 @@ export default combineReducers( {
 	flow,
 	sidebar,
 	header,
+	queue,
 } );

@@ -329,3 +329,33 @@ export function getTechSupportUrl( state ) {
 export function getPluginInstallHash( state ) {
 	return state.runtime.pluginInstallHash;
 }
+
+/**
+ * Gets the Queue Element on top
+ *
+ * @param {*} state
+ * @return {string} getQueuePeek
+ */
+export function getQueuePeek( state ) {
+	return state?.queue[0] ?? null;
+}
+
+/**
+ * Gets the Queue Element on top
+ *
+ * @param {*} state
+ * @return {string} getQueuePeek
+ */
+export function isQueueEmpty( state ) {
+	return state?.queue?.length === 0;
+}
+
+/**
+ * Gets the Onboarding Store
+ *
+ * @param {*} state
+ * @return {Object} getOnboardingStore
+ */
+export function getOnboardingStore( state ) {
+	return state;
+}

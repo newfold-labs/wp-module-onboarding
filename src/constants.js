@@ -75,3 +75,11 @@ export const DRAWER_NAV_VIEWS = [
 	VIEW_NAV_PAGE,
 	VIEW_NAV_ECOMMERCE_STORE_INFO,
 ];
+
+/**
+ * All API Requests for Onboarding.
+ */
+export const API_REQUEST = {
+	SET_FLOW: 'SetFlow',
+	COMPLETE_FLOW: 'CompleteFlow',
+};
