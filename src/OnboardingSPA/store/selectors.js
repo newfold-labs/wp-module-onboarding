@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { filter, findIndex } from 'lodash';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -337,7 +338,7 @@ export function getPluginInstallHash( state ) {
  * @return {string} getQueuePeek
  */
 export function getQueuePeek( state ) {
-	return state?.queue[0] ?? null;
+	return state?.queue[ 0 ] ?? null;
 }
 
 /**

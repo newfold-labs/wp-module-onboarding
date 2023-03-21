@@ -225,7 +225,9 @@ export function queue( state = [], action ) {
 
 		// Make all the Queue Requests and Empty the queue
 		case 'FLUSH_QUEUE':
-			if ( state.length === 0 ) return [];
+			if ( state.length === 0 ) {
+				return [];
+			}
 			return apiQueueExecuter( action.onboardingStore, state );
 	}
 

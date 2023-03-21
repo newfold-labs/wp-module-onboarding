@@ -137,7 +137,9 @@ const App = () => {
 
 				if ( location?.pathname.includes( 'header-menu' ) ) {
 					enqueueRequest( API_REQUEST.SET_FLOW );
-				} else flushQueue( onboardingStore );
+				} else {
+					flushQueue( onboardingStore );
+				}
 				const result = await setFlow( currentData );
 				if ( result?.error !== null ) {
 					setIsRequestPlaced( false );
