@@ -41,11 +41,7 @@ const StepDesignColors = () => {
 	}, [] );
 
 	const getStylesAndPatterns = async () => {
-		const designColorPatterns = await getPatterns(
-			currentStep.patternId,
-			true,
-			currentData?.data?.partHeader ? currentData?.data?.partHeader.split( '/' )[ 1 ] : '',
-		);
+		const designColorPatterns = await getPatterns( currentStep.patternId, true );
 		if ( designColorPatterns?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}

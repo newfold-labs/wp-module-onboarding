@@ -68,7 +68,6 @@ const StepDesignThemeStylesPreview = () => {
 		const patternsResponse = await getPatterns(
 			currentStep.patternId,
 			true,
-			currentData?.data?.partHeader ? currentData?.data?.partHeader.split( '/' )[ 1 ] : '',
 		);
 		if ( patternsResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );

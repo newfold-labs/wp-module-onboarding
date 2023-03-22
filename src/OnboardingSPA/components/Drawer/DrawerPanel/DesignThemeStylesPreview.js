@@ -48,7 +48,6 @@ const DesignThemeStylesPreview = () => {
 		const patternResponse = await getPatterns(
 			currentStep.patternId,
 			true,
-			currentData?.data?.partHeader ? currentData?.data?.partHeader.split( '/' )[ 1 ] : '',
 		);
 		if ( patternResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
