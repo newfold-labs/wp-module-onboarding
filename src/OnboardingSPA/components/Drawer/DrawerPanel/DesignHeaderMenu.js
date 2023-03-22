@@ -110,6 +110,9 @@ const DesignHeaderMenu = () => {
 		setHeaderMenuData( newPagePattern );
 		// API call to make sure the DB is in sync with the store for the selected header menu
 		const result = await setFlow( currentData );
+		if ( result?.error === null ) {
+			setCurrentOnboardingData( currentData );
+		}
 	};
 
 	const buildPreviews = () => {
