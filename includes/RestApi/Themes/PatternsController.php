@@ -50,18 +50,15 @@ class PatternsController extends \WP_REST_Controller {
 	 */
 	public function get_pattern_args() {
 		return array(
-			'slug'           => array(
+			'slug'   => array(
 				'type' => 'string',
 			),
-			'step'           => array(
+			'step'   => array(
 				'type' => 'string',
 			),
-			'squash'         => array(
+			'squash' => array(
 				'type'    => 'boolean',
 				'default' => false,
-			),
-			'headerMenuSlug' => array(
-				'type' => 'string',
 			),
 		);
 	}
@@ -73,10 +70,9 @@ class PatternsController extends \WP_REST_Controller {
 	 * @return \WP_Rest_Response|\WP_Error
 	 */
 	public function get_pattern( \WP_REST_Request $request ) {
-		$step             = $request->get_param( 'step' );
-		$squash           = $request->get_param( 'squash' );
-		$slug             = $request->get_param( 'slug' );
-		$header_menu_slug = $request->get_param( 'headerMenuSlug' );
+		$step   = $request->get_param( 'step' );
+		$squash = $request->get_param( 'squash' );
+		$slug   = $request->get_param( 'slug' );
 
 		if ( ! $step && ! $slug ) {
 			return new \WP_Error(
@@ -87,7 +83,7 @@ class PatternsController extends \WP_REST_Controller {
 		}
 
 		if ( $step ) {
-			$step_patterns = Patterns::get_theme_step_patterns_from_step( $step, $squash, $header_menu_slug );
+			$step_patterns = Patterns::get_theme_step_patterns_from_step( $step, $squash );
 			if ( ! $step_patterns ) {
 				return new \WP_Error(
 					'no_patterns_found',

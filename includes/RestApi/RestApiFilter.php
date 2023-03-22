@@ -2,26 +2,12 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Patterns;
+
 /**
  * Instantiate controllers and register routes.
  */
 class RestApiFilter {
-
-	/**
-	 * Default set of dummy pages.
-	 *
-	 * @var array
-	 */
-	private static function dummy_pages() {
-		return array(
-			__( 'Home', 'wp-module-onboarding' ),
-			__( 'About', 'wp-module-onboarding' ),
-			__( 'Contact', 'wp-module-onboarding' ),
-			__( 'News', 'wp-module-onboarding' ),
-			__( 'Privacy', 'wp-module-onboarding' ),
-			__( 'Careers', 'wp-module-onboarding' ),
-		);
-	}
 
 	/**
 	 * Setup the custom REST API filters
@@ -100,7 +86,7 @@ class RestApiFilter {
 	public static function prepare_raw_html_menu( $data, $index ) {
 		// create dummy menu links
 		$menu_navigation_grammar = '';
-		foreach ( self::dummy_pages() as $page_title ) {
+		foreach ( Patterns::default_menu_items() as $page_title ) {
 			$menu_navigation_grammar .= '<!-- wp:navigation-link {"isTopLevelLink":true, "label":"' . $page_title . '", "title":"' . $page_title . '"} /-->';
 		}
 		// need to reset ID else the data saved in the DB gets used
@@ -162,10 +148,10 @@ class RestApiFilter {
 
 		// make sure we have the number of dummy pages required
 		$pages = $response->get_data();
-		if ( count( $pages ) < count( self::dummy_pages() ) ) {
+		if ( count( $pages ) < count( Patterns::default_menu_items() ) ) {
 			$pages = array_pad(
 				$pages,
-				count( self::dummy_pages() ),
+				count( Patterns::default_menu_items() ),
 				array_pop( $pages )
 			);
 		}
@@ -190,7 +176,7 @@ class RestApiFilter {
 		if ( isset( $page['title']['rendered'] ) ) {
 			// changed id so that while rendering the menu link and name are proper
 			$page['id']                = $page['id'] + $index;
-			$page['title']['rendered'] = self::dummy_pages()[ $index ];
+			$page['title']['rendered'] = Patterns::default_menu_items()[ $index ];
 			$page['menu_order']        = $index;
 		}
 		return $page;

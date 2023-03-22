@@ -7,21 +7,11 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
 final class Patterns {
 
 	/**
-	 * List of styles to check for header menu slugs and replace with user selected header menu slug.
-	 *
-	 * @var array
-	 */
-	private static $styles_to_check_for_header_menu = array(
-		'theme-styles',
-		'homepage-styles',
-	);
-
-	/**
 	 * List of dummy menu page titles.
 	 *
 	 * @return array
 	 */
-	protected static function default_menu_items() {
+	public static function default_menu_items() {
 		return array(
 			__( 'Home', 'wp-module-onboarding' ),
 			__( 'About', 'wp-module-onboarding' ),
@@ -40,7 +30,11 @@ final class Patterns {
 	protected static function get_theme_step_patterns() {
 		return array(
 			'yith-wonder' => array(
-				'theme-styles'    => array(
+				'styles-for-header-menu-check' => array(
+					'theme-styles',
+					'homepage-styles',
+				),
+				'theme-styles'                 => array(
 					'site-header-left-logo-navigation-inline' => array(
 						'active' => true,
 					),
@@ -53,7 +47,7 @@ final class Patterns {
 						'active' => true,
 					),
 				),
-				'homepage-styles' => array(
+				'homepage-styles'              => array(
 					'site-header-left-logo-navigation-inline' => array(
 						'active' => true,
 					),
@@ -73,7 +67,7 @@ final class Patterns {
 						'active' => true,
 					),
 				),
-				'site-pages'      => array(
+				'site-pages'                   => array(
 					'company-page'      => array(
 						'active'      => true,
 						'title'       => 'About',
@@ -103,7 +97,7 @@ final class Patterns {
 						'description' => __( 'A page for periodic news, announcements and ideas.', 'wp-module-onboarding' ),
 					),
 				),
-				'header-menu'     => array(
+				'header-menu'                  => array(
 					'site-header-left-logo-navigation-inline' => array(
 						'active' => true,
 						'shown'  => true,
@@ -220,23 +214,26 @@ final class Patterns {
 	 *
 	 * @param string  $step Step from which Theme Step Pattern is required
 	 * @param boolean $squash Flag set to retrieve the block pattern
-	 * @param string  $header_menu_slug header menu slug for user selected menu
 	 *
 	 * @return array|string
 	 */
-	public static function get_theme_step_patterns_from_step( $step, $squash = false, $header_menu_slug = '' ) {
+	public static function get_theme_step_patterns_from_step( $step, $squash = false ) {
 		$active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
 
 		if ( ! isset( self::get_theme_step_patterns()[ $active_theme ][ $step ] ) ) {
 			return false;
 		}
 
-		$pattern_slugs           = self::get_theme_step_patterns()[ $active_theme ][ $step ];
-		$block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
-		$block_patterns          = array();
-		$block_patterns_squashed = '';
+		$styles_to_check_for_header_menu = self::get_theme_step_patterns()[ $active_theme ]['styles-for-header-menu-check'];
+		$pattern_slugs                   = self::get_theme_step_patterns()[ $active_theme ][ $step ];
+		$block_patterns_registry         = \WP_Block_Patterns_Registry::get_instance();
+		$block_patterns                  = array();
+		$block_patterns_squashed         = '';
 
-		if ( ! empty( $header_menu_slug ) && in_array( $step, self::$styles_to_check_for_header_menu, true ) ) {
+		// fetch the selected header menu slug from DB
+		$flow_data        = \get_option( Options::get_option_name( 'flow' ) );
+		$header_menu_slug = explode( '/', $flow_data['data']['partHeader'] )[1];
+		if ( ! empty( $header_menu_slug ) && in_array( $step, $styles_to_check_for_header_menu, true ) ) {
 			$pattern_slugs = self::replace_header_menu_slug( $pattern_slugs, $header_menu_slug );
 		}
 

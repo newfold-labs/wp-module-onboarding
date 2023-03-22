@@ -65,7 +65,7 @@ final class Application {
 			new WP_CLI();
 		}
 
-		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
+		if ( Permissions::is_authorized_admin() ) {
 			new WP_Admin();
 		}
 
