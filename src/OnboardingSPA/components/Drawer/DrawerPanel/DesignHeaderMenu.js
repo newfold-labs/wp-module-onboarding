@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
 import { LivePreviewSkeleton, LivePreviewSelectableCard } from '../../../components/LivePreview';
+import { setFlow } from '../../../utils/api/flow';
 
 import {
 	THEME_STATUS_ACTIVE,
@@ -86,7 +87,7 @@ const DesignHeaderMenu = () => {
 		}
 	}, [ themeStatus ] );
 
-	const handleClick = ( idx ) => {
+	const handleClick = async ( idx ) => {
 		if ( document.getElementsByClassName( 'nfd-onboard-content' ) ) {
 			document.getElementsByClassName( 'nfd-onboard-content' )[ 0 ]
 				.scrollIntoView( {
@@ -107,6 +108,11 @@ const DesignHeaderMenu = () => {
 			}
 		} );
 		setHeaderMenuData( newPagePattern );
+		// API call to make sure the DB is in sync with the store for the selected header menu
+		const result = await setFlow( currentData );
+		if ( result?.error != null ) {
+			console.error('Unable to Save data!');
+		}
 	};
 
 	const buildPreviews = () => {
