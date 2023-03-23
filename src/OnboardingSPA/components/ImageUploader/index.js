@@ -10,6 +10,7 @@ import { uploadImage } from '../../utils/api/uploader';
  */
 const ImageUploader = ( { icon, iconSetter } ) => {
 	const inputRef = useRef( null );
+	const inputWindowRef = useRef( null );
 	const [ isUploading, setIsUploading ] = useState( false );
 
 	async function updateItem( fileData ) {
@@ -23,8 +24,8 @@ const ImageUploader = ( { icon, iconSetter } ) => {
 					id,
 					url,
 				} );
-			} else console.error( 'Image Upload Failed' );
-		} else console.error( 'No File Attached' );
+			}
+		}
 
 		setIsUploading( false );
 	}
@@ -52,15 +53,53 @@ const ImageUploader = ( { icon, iconSetter } ) => {
 			</div>
 		);
 	}
+
+	const handleDragEnter = ( e ) => {
+		e.preventDefault();
+		e.stopPropagation();
+		inputWindowRef.current.style.background = '#E4E4E4';
+	};
+
+	const handleDragLeave = ( e ) => {
+		e.preventDefault();
+		e.stopPropagation();
+		inputWindowRef.current.style.background = '#F9F9F9';
+	};
+
+	const handleDragOver = ( e ) => {
+		e.preventDefault();
+		e.stopPropagation();
+		inputWindowRef.current.style.background = '#E4E4E4';
+	};
+
+	const handleDrop = ( e ) => {
+		e.preventDefault();
+		e.stopPropagation();
+		inputWindowRef.current.style.background = '#F9F9F9';
+		if ( e?.dataTransfer?.files && e?.dataTransfer?.files.length > 0 ) {
+			if (
+				e?.dataTransfer?.files[ 0 ]?.type.split( '/' )[ 0 ] === 'image'
+			)
+				updateItem( e?.dataTransfer?.files[ 0 ] );
+		}
+	};
+
 	function getImageUploadWindow() {
 		return (
-			<div className="image-uploader_window">
+			<div
+				className="image-uploader_window"
+				ref={ inputWindowRef }
+				onDrop={ ( e ) => handleDrop( e ) }
+				onDragOver={ ( e ) => handleDragOver( e ) }
+				onDragEnter={ ( e ) => handleDragEnter( e ) }
+				onDragLeave={ ( e ) => handleDragLeave( e ) }
+			>
 				<div className="image-uploader_window-empty"></div>
 				<div className="image-uploader_window-logo">
-					{ ( icon == 0 || icon == undefined ) && (
+					{ ( icon === 0 || icon === undefined ) && (
 						<div className="image-uploader_window-logo-icon-empty"></div>
 					) }
-					{ icon != 0 && icon != undefined && (
+					{ icon !== 0 && icon !== undefined && (
 						<img
 							className="image-uploader_window-logo-icon-selected"
 							src={ icon.url }
@@ -69,7 +108,7 @@ const ImageUploader = ( { icon, iconSetter } ) => {
 					) }
 				</div>
 				<div className="image-uploader_window-reset">
-					{ icon != 0 && icon != undefined && (
+					{ icon !== 0 && icon !== undefined && (
 						<button
 							className="image-uploader_window-reset-btn"
 							onClick={ removeSelectedImage }
@@ -77,7 +116,7 @@ const ImageUploader = ( { icon, iconSetter } ) => {
 							{ __( 'RESET', 'wp-module-onboarding' ) }
 						</button>
 					) }
-					{ ( icon == 0 || icon == undefined ) && (
+					{ ( icon === 0 || icon === undefined ) && (
 						<button
 							className="image-uploader_window-reset-btn"
 							onClick={ handleClick }

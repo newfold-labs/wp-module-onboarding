@@ -17,6 +17,7 @@ $primary-color: var(--nfd-onboarding-primary);
         margin-bottom: 24px;
         border: 1px dashed $border;
         background-color: $white-shade;
+        transition: all 0.4s ease-in-out;
 
         display: flex;
         align-items: center;
