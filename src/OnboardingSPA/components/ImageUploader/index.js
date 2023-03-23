@@ -79,8 +79,9 @@ const ImageUploader = ( { icon, iconSetter } ) => {
 		if ( e?.dataTransfer?.files && e?.dataTransfer?.files.length > 0 ) {
 			if (
 				e?.dataTransfer?.files[ 0 ]?.type.split( '/' )[ 0 ] === 'image'
-			)
+			) {
 				updateItem( e?.dataTransfer?.files[ 0 ] );
+			}
 		}
 	};
 
