@@ -23,6 +23,10 @@ $primary-color: var(--nfd-onboarding-primary);
 		align-items: center;
 		justify-content: center;
 
+		&--on-drag {
+			background-color: #e4e4e4;
+		}
+
 		@include break-medium() {
 			height: 18vh;
 		}

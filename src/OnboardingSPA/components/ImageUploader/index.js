@@ -10,8 +10,8 @@ import { uploadImage } from '../../utils/api/uploader';
  */
 const ImageUploader = ( { icon, iconSetter } ) => {
 	const inputRef = useRef( null );
-	const inputWindowRef = useRef( null );
 	const [ isUploading, setIsUploading ] = useState( false );
+	const [ onDragActive, setOnDragActive ] = useState( false );
 
 	async function updateItem( fileData ) {
 		if ( fileData ) {
@@ -57,25 +57,25 @@ const ImageUploader = ( { icon, iconSetter } ) => {
 	const handleDragEnter = ( e ) => {
 		e.preventDefault();
 		e.stopPropagation();
-		inputWindowRef.current.style.background = '#E4E4E4';
+		setOnDragActive( true );
 	};
 
 	const handleDragLeave = ( e ) => {
 		e.preventDefault();
 		e.stopPropagation();
-		inputWindowRef.current.style.background = '#F9F9F9';
+		setOnDragActive( false );
 	};
 
 	const handleDragOver = ( e ) => {
 		e.preventDefault();
 		e.stopPropagation();
-		inputWindowRef.current.style.background = '#E4E4E4';
+		setOnDragActive( true );
 	};
 
 	const handleDrop = ( e ) => {
 		e.preventDefault();
 		e.stopPropagation();
-		inputWindowRef.current.style.background = '#F9F9F9';
+		setOnDragActive( false );
 		if ( e?.dataTransfer?.files && e?.dataTransfer?.files.length > 0 ) {
 			if (
 				e?.dataTransfer?.files[ 0 ]?.type.split( '/' )[ 0 ] === 'image'
@@ -88,8 +88,9 @@ const ImageUploader = ( { icon, iconSetter } ) => {
 	function getImageUploadWindow() {
 		return (
 			<div
-				className="image-uploader_window"
-				ref={ inputWindowRef }
+				className={ `image-uploader_window ${
+					onDragActive && 'image-uploader_window--on-drag'
+				}` }
 				onDrop={ ( e ) => handleDrop( e ) }
 				onDragOver={ ( e ) => handleDragOver( e ) }
 				onDragEnter={ ( e ) => handleDragEnter( e ) }
