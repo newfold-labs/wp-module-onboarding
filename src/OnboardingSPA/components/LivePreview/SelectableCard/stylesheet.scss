@@ -29,7 +29,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 			justify-content: center;
 
 			&__dot {
-                background-color: #989EA7;
+				background-color: #989ea7;
 				width: 8px;
 				margin: 3px;
 				height: 8px;
@@ -71,6 +71,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 		.live-preview {
 
 			&__container {
+
 				&-custom {
 					width: 100%;
 					overflow: hidden;
@@ -86,6 +87,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 			left: 0;
 			right: 0;
 			height: 100%;
+			z-index: 2;
 			width: 100%;
 			opacity: 0;
 			transition: 0.5s ease;
@@ -110,5 +112,3 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 		}
 	}
 }
-
-
