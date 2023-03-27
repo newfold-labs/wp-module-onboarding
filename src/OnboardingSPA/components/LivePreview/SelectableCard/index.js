@@ -1,5 +1,5 @@
 import { check, search, Icon } from '@wordpress/icons';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 
 import { LivePreview } from '..';
 
@@ -19,11 +19,24 @@ const SelectableCard = ( {
 	return (
 		<div
 			className={ `${ className }` }
-			onClick={ typeof onClick === 'function' && ( () => {
-				if ( ! loadingParent ) {
-					onClick();
-				}
-			} ) }
+			role="button"
+			tabIndex={ 0 }
+			onClick={
+				typeof onClick === 'function' &&
+				( () => {
+					if ( ! loadingParent ) {
+						onClick();
+					}
+				} )
+			}
+			onKeyDown={
+				typeof onClick === 'function' &&
+				( () => {
+					if ( ! loadingParent ) {
+						onClick();
+					}
+				} )
+			}
 		>
 			<div className={ `${ className }__title-bar` }>
 				<div className={ `${ className }__title-bar__browser` }>
@@ -38,9 +51,10 @@ const SelectableCard = ( {
 					></span>
 				</div>
 				<div
-					className={ `${ selected
-						? `${ className }__title-bar--selected live-preview-selected-check`
-						: `${ className }__title-bar--unselected`
+					className={ `${
+						selected
+							? `${ className }__title-bar--selected live-preview-selected-check`
+							: `${ className }__title-bar--unselected`
 					}` }
 				>
 					<Icon
@@ -59,7 +73,7 @@ const SelectableCard = ( {
 					setIsLoadingParent={ setIsLoadingParent }
 					skeletonLoadingTime={ skeletonLoadingTime }
 				/>
-				{ overlay && (
+				{ overlay && ! loadingParent && (
 					<div
 						className={ `${ className }__live-preview-container__overlay` }
 					>

@@ -109,6 +109,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 					height: 100%;
 					width: 100%;
 					opacity: 0;
+					z-index: 2;
 					transition: 0.5s ease;
 					background-color: rgba(28, 92, 186);
 
