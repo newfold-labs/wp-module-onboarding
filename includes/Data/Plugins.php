@@ -98,7 +98,7 @@ final class Plugins {
 			'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-woocommerce-wishlist',
 			'path'     => 'yith-woocommerce-wishlist-extended/init.php',
 		),
-		'nfd_slug_woo_razorpay'             => array(
+		'nfd_slug_woo_razorpay'                          => array(
 			'approved' => true,
 			'url'      => 'https://hiive.cloud/workers/plugin-downloads/razorpay',
 			'path'     => 'woo-razorpay/woo-razorpay.php',
@@ -272,6 +272,20 @@ final class Plugins {
 					),
 				),
 				'wc_priority' => array(),
+			),
+			'crazy-domains'  => array(
+				'wc_priority' => array(
+					array(
+						'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
+						'activate' => true,
+						'priority' => 259,
+					),
+					array(
+						'slug'     => 'nfd_slug_yith_paypal_payments_for_woocommerce',
+						'activate' => true,
+						'priority' => 258,
+					),
+				),
 			),
 		),
 	);
