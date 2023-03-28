@@ -89,7 +89,17 @@ export function getHireExpertsUrl( state ) {
  * @return {string} Current Onboarding Data
  */
 export function getCurrentOnboardingData( state ) {
-	return state.currentData;
+	return state.data.flowData;
+}
+
+/**
+ * Gets the current Onboarding Social Data
+ *
+ * @param {*} state
+ * @return {string} Onboarding Social Data
+ */
+export function getOnboardingSocialData( state ) {
+	return state.data.socialData;
 }
 
 /**
@@ -283,10 +293,8 @@ export function getHeaderMenuData( state ) {
 export function getExpertsUrl( state ) {
 	const expertsInfo = state.runtime.currentBrand.expertsInfo;
 	const expertsUrl =
-		addQueryArgs(
-			expertsInfo?.defaultLink,
-			expertsInfo?.queryParams
-		) + ( expertsInfo?.fragment || '' );
+		addQueryArgs( expertsInfo?.defaultLink, expertsInfo?.queryParams ) +
+		( expertsInfo?.fragment || '' );
 	return expertsUrl;
 }
 
@@ -297,7 +305,8 @@ export function getExpertsUrl( state ) {
  * @return {string} fullServiceCreativeTeamUrl
  */
 export function getfullServiceCreativeTeamUrl( state ) {
-	const fullServiceCreativeTeamInfo = state.runtime.currentBrand.fullServiceCreativeTeamInfo;
+	const fullServiceCreativeTeamInfo =
+		state.runtime.currentBrand.fullServiceCreativeTeamInfo;
 	const fullServiceCreativeTeamUrl =
 		addQueryArgs(
 			fullServiceCreativeTeamInfo?.defaultLink,
