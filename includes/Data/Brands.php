@@ -66,6 +66,13 @@ final class Brands {
 						'utm_medium' => 'brand-plugin',
 					),
 				),
+				'config'                      => array(
+					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
+					'enabled_flows'                 => array(
+						'ecommerce' => true,
+						'wp-setup'  => false,
+					),
+				),
 			),
 			'bluehost-india' => array(
 				'brand'                       => 'bluehost-india',
@@ -113,6 +120,13 @@ final class Brands {
 					'queryParams' => array(
 						'utm_source' => 'wp-onboarding',
 						'utm_medium' => 'brand-plugin',
+					),
+				),
+				'config'                      => array(
+					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
+					'enabled_flows'                 => array(
+						'ecommerce' => true,
+						'wp-setup'  => false,
 					),
 				),
 			),
@@ -166,7 +180,30 @@ final class Brands {
 						'utm_medium' => '',
 					),
 				),
+				'config'                      => array(
+					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
+					'enabled_flows'                 => array(
+						'ecommerce' => false,
+						'wp-setup'  => false,
+					),
+				),
 			),
 		);
+	}
+
+	/**
+	 * Sets the hosting brand for which Onboarding is active.
+	 *
+	 * @param array $container The brand plugin container.
+	 * @return void
+	 */
+	public static function set_current_brand( $container ) {
+		if ( ! defined( 'NFD_ONBOARDING_PLUGIN_BRAND' ) ) {
+			$brand = $container->plugin()->brand;
+			if ( empty( $brand ) ) {
+				$brand = 'newfold';
+			}
+			define( 'NFD_ONBOARDING_PLUGIN_BRAND', sanitize_title_with_dashes( str_replace( '_', '-', $brand ) ) );
+		}
 	}
 }
