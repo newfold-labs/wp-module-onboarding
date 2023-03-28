@@ -21,8 +21,10 @@ const StepDesignColors = () => {
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
 
-	const { currentStep, themeStatus } = useSelect( ( select ) => {
+	const { currentData, currentStep, themeStatus } = useSelect( ( select ) => {
 		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
 			),
@@ -39,17 +41,15 @@ const StepDesignColors = () => {
 	}, [] );
 
 	const getStylesAndPatterns = async () => {
-		const designColorPatterns = await getPatterns( currentStep.patternId, true );
-		if ( designColorPatterns?.error ) {
+		const pattern = await getPatterns( currentStep.patternId, true );
+		if ( pattern?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
-		setPattern( designColorPatterns?.body );
+		setPattern( pattern?.body );
 	};
 
 	useEffect( () => {
-		if ( THEME_STATUS_ACTIVE === themeStatus ) {
-			getStylesAndPatterns();
-		}
+		if ( THEME_STATUS_ACTIVE === themeStatus ) getStylesAndPatterns();
 	}, [ themeStatus ] );
 
 	return (

@@ -41,7 +41,7 @@ const StepDesignTypography = () => {
 	const getFontPatterns = async () => {
 		const patternsResponse = await getPatterns(
 			currentStep.patternId,
-			true,
+			true
 		);
 		if ( patternsResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
@@ -50,9 +50,7 @@ const StepDesignTypography = () => {
 	};
 
 	useEffect( () => {
-		if ( THEME_STATUS_ACTIVE === themeStatus ) {
-			getFontPatterns();
-		}
+		if ( THEME_STATUS_ACTIVE === themeStatus ) getFontPatterns();
 	}, [ themeStatus ] );
 
 	return (

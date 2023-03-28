@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { store as nfdOnboardingStore } from '../../../../store';
 import CommonLayout from '../../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../../components/HeadingWithSubHeading';
-import { useGlobalStylesOutput as GlobalStylesOutput } from '../../../../utils/global-styles/use-global-styles-output';
+import { useGlobalStylesOutput } from '../../../../utils/global-styles/use-global-styles-output';
 import { getPatterns } from '../../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../../utils/api/themes';
 import {
@@ -65,7 +65,7 @@ const StepDesignThemeStylesMenu = () => {
 	const getStylesAndPatterns = async () => {
 		const patternsResponse = await getPatterns(
 			currentStep.patternId,
-			true,
+			true
 		);
 		if ( patternsResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
@@ -80,15 +80,13 @@ const StepDesignThemeStylesMenu = () => {
 	};
 
 	useEffect( () => {
-		if ( themeStatus === THEME_STATUS_ACTIVE ) {
-			getStylesAndPatterns();
-		}
+		if ( themeStatus === THEME_STATUS_ACTIVE ) getStylesAndPatterns();
 	}, [ themeStatus ] );
 
 	const handleClick = ( idx ) => {
 		const selectedGlobalStyle = globalStyles[ idx ];
 		updatePreviewSettings(
-			GlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
+			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
 		setSelectedStyle( selectedGlobalStyle.title );
 		currentData.data.theme.variation = selectedGlobalStyle.title;

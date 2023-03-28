@@ -3,7 +3,6 @@ import { useState, useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { CheckboxControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { orderBy, filter } from 'lodash';
 
 import {
@@ -67,7 +66,7 @@ const StepDesignThemeStylesPreview = () => {
 	const getStylesAndPatterns = async () => {
 		const patternsResponse = await getPatterns(
 			currentStep.patternId,
-			true,
+			true
 		);
 		if ( patternsResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
@@ -135,10 +134,10 @@ const StepDesignThemeStylesPreview = () => {
 		};
 	};
 
-	const handleCheckbox = ( customizationNeeded, updateOnboardingData = true ) => {
+	const handleCheckbox = ( customize, updateOnboardingData = true ) => {
 		let updates;
 
-		if ( customizationNeeded ) {
+		if ( customize ) {
 			updates = addColorAndTypographyRoutes();
 		} else {
 			updates = removeColorAndTypographyRoutes();
@@ -147,18 +146,16 @@ const StepDesignThemeStylesPreview = () => {
 		updateRoutes( updates.routes );
 		updateDesignSteps( updates.designSteps );
 		updateAllSteps( updates.allSteps );
-		setCustomize( customizationNeeded );
+		setCustomize( customize );
 
 		if ( updateOnboardingData ) {
-			currentData.data.customDesign = customizationNeeded;
+			currentData.data.customDesign = customize;
 			setCurrentOnboardingData( currentData );
 		}
 	};
 
 	useEffect( () => {
-		if ( themeStatus === THEME_STATUS_ACTIVE ) {
-			getStylesAndPatterns();
-		}
+		if ( themeStatus === THEME_STATUS_ACTIVE ) getStylesAndPatterns();
 	}, [ themeStatus ] );
 
 	return (
