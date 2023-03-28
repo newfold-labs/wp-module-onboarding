@@ -70,7 +70,7 @@ final class Brands {
 					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
 					'enabled_flows'                 => array(
 						'ecommerce' => true,
-						'wp-setup'  => false,
+						'wp-setup'  => true,
 					),
 				),
 			),
@@ -126,7 +126,7 @@ final class Brands {
 					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
 					'enabled_flows'                 => array(
 						'ecommerce' => true,
-						'wp-setup'  => false,
+						'wp-setup'  => true,
 					),
 				),
 			),
