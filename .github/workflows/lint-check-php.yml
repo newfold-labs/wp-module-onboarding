@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - '**.php'
+      - '!build/**'
   pull_request:
     types: [opened, edited, reopened, ready_for_review]
     paths:

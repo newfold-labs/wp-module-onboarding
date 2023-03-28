@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { filter, findIndex } from 'lodash';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -53,6 +54,16 @@ export function getNewfoldBrand( state ) {
  */
 export function getNewfoldBrandName( state ) {
 	return state.runtime.currentBrand.name;
+}
+
+/**
+ * Gets the current Newfold Brand's Onboarding Configuration.
+ *
+ * @param {*} state
+ * @return {Object} Brand Onboarding Configuration.
+ */
+export function getNewfoldBrandConfig( state ) {
+	return state.runtime.currentBrand.config;
 }
 
 /**
