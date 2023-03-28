@@ -50,6 +50,8 @@ body {
 	--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
 	--nfd-onboarding-loader-start: var(--nfd-onboarding-primary);
 	--nfd-onboarding-loader-end: var(--nfd-onboarding-secondary);
+	--nfd-onboarding-step-loader-icon: url(../../Brands/wordpress/step-loader-logo.svg);
+	--nfd-onboarding-step-error-icon: url(../../Brands/wordpress/step-error-logo.svg);
 
 	// Common Components across Brands
 	--nfd-onboarding-white: #fff;

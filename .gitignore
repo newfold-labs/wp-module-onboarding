@@ -2,3 +2,4 @@ node_modules
 vendor
 .DS_Store
 .vscode
+build/1.2.2/*
