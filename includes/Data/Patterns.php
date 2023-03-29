@@ -11,7 +11,7 @@ final class Patterns {
 	 *
 	 * @return array
 	 */
-	public static function default_menu_items() {
+	public static function get_dummy_menu_items() {
 		return array(
 			__( 'Home', 'wp-module-onboarding' ),
 			__( 'About', 'wp-module-onboarding' ),
@@ -30,13 +30,10 @@ final class Patterns {
 	protected static function get_theme_step_patterns() {
 		return array(
 			'yith-wonder' => array(
-				'styles-for-header-menu-check' => array(
-					'theme-styles',
-					'homepage-styles',
-				),
-				'theme-styles'                 => array(
+				'theme-styles'    => array(
 					'site-header-left-logo-navigation-inline' => array(
-						'active' => true,
+						'active'  => true,
+						'replace' => true,
 					),
 					'homepage-1'  => array(
 						'active'  => true,
@@ -47,9 +44,10 @@ final class Patterns {
 						'active' => true,
 					),
 				),
-				'homepage-styles'              => array(
+				'homepage-styles' => array(
 					'site-header-left-logo-navigation-inline' => array(
-						'active' => true,
+						'active'  => true,
+						'replace' => true,
 					),
 					'homepage-1'  => array(
 						'active' => true,
@@ -67,7 +65,7 @@ final class Patterns {
 						'active' => true,
 					),
 				),
-				'site-pages'                   => array(
+				'site-pages'      => array(
 					'company-page'      => array(
 						'active'      => true,
 						'title'       => 'About',
@@ -97,7 +95,7 @@ final class Patterns {
 						'description' => __( 'A page for periodic news, announcements and ideas.', 'wp-module-onboarding' ),
 					),
 				),
-				'header-menu'                  => array(
+				'header-menu'     => array(
 					'site-header-left-logo-navigation-inline' => array(
 						'active' => true,
 						'shown'  => true,
@@ -178,7 +176,7 @@ final class Patterns {
 	 */
 	private static function replace_header_menu_slug( $patterns, $header_menu_slug ) {
 		foreach ( $patterns as $slug => $slug_details ) {
-			if ( false !== stripos( $slug, '-header-' ) ) {
+			if ( true === $slug_details['replace'] ) {
 				unset( $patterns[ $slug ] );
 				$patterns = array_merge( array( $header_menu_slug => $slug_details ), $patterns );
 			}
@@ -197,7 +195,7 @@ final class Patterns {
 		$dummy_menu_grammar      = '';
 		$menu_navigation_grammar = '<!-- wp:navigation-link {"isTopLevelLink":true} /-->';
 
-		foreach ( self::default_menu_items() as $item ) {
+		foreach ( self::get_dummy_menu_items() as $item ) {
 			$dummy_menu_grammar = '<!-- wp:navigation-link {
 				"isTopLevelLink":true, 
 				"label":"' . strtolower( $item ) . '", 
@@ -233,7 +231,7 @@ final class Patterns {
 		// fetch the selected header menu slug from DB
 		$flow_data        = \get_option( Options::get_option_name( 'flow' ) );
 		$header_menu_slug = explode( '/', $flow_data['data']['partHeader'] )[1];
-		if ( ! empty( $header_menu_slug ) && in_array( $step, $styles_to_check_for_header_menu, true ) ) {
+		if ( ! empty( $header_menu_slug ) ) {
 			$pattern_slugs = self::replace_header_menu_slug( $pattern_slugs, $header_menu_slug );
 		}
 

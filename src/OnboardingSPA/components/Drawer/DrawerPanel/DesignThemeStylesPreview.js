@@ -4,7 +4,7 @@ import { useState, useEffect } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../utils/api/themes';
-import { useGlobalStylesOutput as GlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
+import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_INIT,
@@ -47,7 +47,7 @@ const DesignThemeStylesPreview = () => {
 	const getStylesAndPatterns = async () => {
 		const patternResponse = await getPatterns(
 			currentStep.patternId,
-			true,
+			true
 		);
 		if ( patternResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
@@ -85,15 +85,15 @@ const DesignThemeStylesPreview = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE ) {
+		if ( themeStatus === THEME_STATUS_ACTIVE ) {
 			getStylesAndPatterns();
 		}
-	}, [ isLoaded, themeStatus ] );
+	}, [ themeStatus ] );
 
 	const handleClick = ( idx ) => {
 		const selectedGlobalStyle = globalStyles[ idx ];
 		updatePreviewSettings(
-			GlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
+			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
 		setSelectedStyle( selectedGlobalStyle.title );
 		currentData.data.theme.variation = selectedGlobalStyle.title;
