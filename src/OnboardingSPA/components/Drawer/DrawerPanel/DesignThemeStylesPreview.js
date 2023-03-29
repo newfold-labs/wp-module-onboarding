@@ -80,7 +80,6 @@ const DesignThemeStylesPreview = () => {
 					block: 'center',
 				} );
 		}
-		setIsLoaded( true );
 	};
 
 	useEffect( () => {
