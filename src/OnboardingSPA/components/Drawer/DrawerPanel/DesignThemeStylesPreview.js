@@ -15,7 +15,6 @@ import {
 } from '../../LivePreview';
 
 const DesignThemeStylesPreview = () => {
-	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState();
 	const [ selectedStyle, setSelectedStyle ] = useState( '' );
