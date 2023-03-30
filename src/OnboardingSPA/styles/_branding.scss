@@ -117,22 +117,22 @@ body {
 	}
 
 	&.nfd-brand-crazy-domains {
-		--wp-admin-theme-color: #6fac2f;
-		--wp-admin-theme-color--rgb: 111, 172, 47;
-		--wp-admin-theme-color-darker-10: #568f1b;
-		--wp-admin-theme-color-darker-10--rgb: 86, 143, 27;
-		--wp-admin-theme-color-darker-20: #484848;
-		--wp-admin-theme-color-darker-20--rgb: 72, 72, 72;
+		--wp-admin-theme-color: #0D8821;
+		--wp-admin-theme-color--rgb: 13, 136, 33;
+		--wp-admin-theme-color-darker-10: #0c7a1e;
+		--wp-admin-theme-color-darker-10--rgb: 12, 122, 30;
+		--wp-admin-theme-color-darker-20: #0a6d1a;
+		--wp-admin-theme-color-darker-20--rgb: 10, 109, 26;
 		--nfd-onboarding-dark-icon: url(../../Brands/crazy-domains/icon-z.svg);
 		--nfd-onboarding-icon: url(../../Brands/crazy-domains/icon.svg);
 		--nfd-onboarding-logo: url(../../Brands/crazy-domains/logo.svg);
 		--nfd-onboarding-primary: var(--wp-admin-theme-color);
 		--nfd-onboarding-highlighted--rgb: var(--wp-admin-theme-color-darker-10--rgb);
 		--nfd-onboarding-primary-alt: var(--wp-admin-theme-color-darker-10);
-		--nfd-onboarding-secondary: var(--wp-admin-theme-color-darker-10);
-		--nfd-onboarding-secondary-alt: var(--wp-admin-theme-color-darker-20);
-		--nfd-onboarding-tertiary: var(--nfd-onboarding-primary);
-		--nfd-onboarding-tertiary-alt: var(--nfd-onboarding-primary-alt);
+		--nfd-onboarding-secondary: #C3CBD8;
+		--nfd-onboarding-secondary-alt: #1D2A3B;
+		--nfd-onboarding-tertiary: #196BDE;
+		--nfd-onboarding-tertiary-alt: #C77D1C;
 		--nfd-onboarding-light: #fff;
 		--nfd-onboarding-light-gray: #f0f0f0;
 		--nfd-onboarding-light-gray-2: #efefef;
@@ -140,7 +140,7 @@ body {
 		--nfd-onboarding-light-gray-4: #a7a7a7;
 		--nfd-onboarding-light-gray-5: #eee;
 		--nfd-onboarding-light-gray-highlighted: #e2e9f4;
-		--nfd-onboarding-dark: var(--wp-admin-theme-color-darker-20);
+		--nfd-onboarding-dark: #1D2A3B;
 		--nfd-onboarding-border: 219, 219, 219;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
 		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
