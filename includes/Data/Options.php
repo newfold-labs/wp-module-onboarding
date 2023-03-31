@@ -5,19 +5,19 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
  * Stores all the WordPress Options used in the module.
  */
 final class Options {
-	  /**
-	   * Prefix for options in the module.
-	   *
-	   * @var string
-	   */
+	/**
+	 * Prefix for options in the module.
+	 *
+	 * @var string
+	 */
 
 	protected static $prefix = 'nfd_module_onboarding_';
 
-	  /**
-	   * List of all the options.
-	   *
-	   * @var array
-	   */
+	/**
+	 * List of all the options.
+	 *
+	 * @var array
+	 */
 
 	protected static $options = array(
 		'redirect'                      => 'redirect',
@@ -28,6 +28,7 @@ final class Options {
 		'close_comments_days_old'       => 'close_comments_days_old',
 		'comments_per_page'             => 'comments_per_page',
 		'install_date'                  => 'mm_install_date',
+		'start_date'                    => 'start_date',
 		'allow_major_auto_core_updates' => 'allow_major_auto_core_updates',
 		'allow_minor_auto_core_updates' => 'allow_minor_auto_core_updates',
 		'auto_update_plugin'            => 'auto_update_plugin',
@@ -76,21 +77,21 @@ final class Options {
 	 * @return string|boolean
 	 */
 	public static function get_option_name( $option_key, $attach_prefix = true ) {
-		 return isset( self::$options[ $option_key ] )
-				   ? ( $attach_prefix
-						? self::$prefix . self::$options[ $option_key ]
-						: self::$options[ $option_key ]
-					)
-				   : false;
+		return isset( self::$options[ $option_key ] )
+				? ( $attach_prefix
+					? self::$prefix . self::$options[ $option_key ]
+					: self::$options[ $option_key ]
+				)
+				: false;
 	}
 
-	  /**
-	   * Get the list of all options.
-	   *
-	   * @return array
-	   */
+	/**
+	 * Get the list of all options.
+	 *
+	 * @return array
+	 */
 	public static function get_all_options() {
-		 return self::$options;
+		return self::$options;
 	}
 
 	/**
@@ -99,6 +100,6 @@ final class Options {
 	 * @return array
 	 */
 	public static function get_initialization_options() {
-		 return self::$initialization_options;
+		return self::$initialization_options;
 	}
 }

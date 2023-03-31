@@ -45,10 +45,6 @@ final class Plugins {
 			'approved' => true,
 			'path'     => 'creative-mail-by-constant-contact/creative-mail-plugin.php',
 		),
-		'woo-razorpay'                      => array(
-			'approved' => true,
-			'path'     => 'woo-razorpay/woo-razorpay.php',
-		),
 	);
 
 	/**
@@ -101,6 +97,11 @@ final class Plugins {
 			'approved' => true,
 			'url'      => 'https://hiive.cloud/workers/plugin-downloads/yith-woocommerce-wishlist',
 			'path'     => 'yith-woocommerce-wishlist-extended/init.php',
+		),
+		'nfd_slug_woo_razorpay'                          => array(
+			'approved' => true,
+			'url'      => 'https://hiive.cloud/workers/plugin-downloads/razorpay',
+			'path'     => 'woo-razorpay/woo-razorpay.php',
 		),
 	);
 
@@ -218,7 +219,18 @@ final class Plugins {
 						'priority' => 20,
 					),
 				),
-				'wc_priority' => array(),
+				'wc_priority' => array(
+					array(
+						'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
+						'activate' => true,
+						'priority' => 259,
+					),
+					array(
+						'slug'     => 'nfd_slug_yith_paypal_payments_for_woocommerce',
+						'activate' => true,
+						'priority' => 258,
+					),
+				),
 			),
 			'bluehost-india' => array(
 				'wc_standard' => array(
@@ -238,7 +250,7 @@ final class Plugins {
 						'priority' => 80,
 					),
 					array(
-						'slug'     => 'woo-razorpay',
+						'slug'     => 'nfd_slug_woo_razorpay',
 						'activate' => true,
 						'priority' => 258,
 					),
@@ -260,7 +272,7 @@ final class Plugins {
 						'priority' => 80,
 					),
 					array(
-						'slug'     => 'woo-razorpay',
+						'slug'     => 'nfd_slug_woo_razorpay',
 						'activate' => true,
 						'priority' => 258,
 					),
