@@ -103,13 +103,53 @@ final class Flows {
 						'name'  => 'Base',
 						'color' => '',
 					),
+					array(
+						'slug'  => 'secondary-foreground',
+						'name'  => 'Secondary-foreground',
+						'color' => '',
+					),
+					array(
+						'slug'  => 'secondary-background',
+						'name'  => 'Secondary-background',
+						'color' => '',
+					),
+					array(
+						'slug'  => 'header-titles',
+						'name'  => 'Header-titles',
+						'color' => '',
+					),
+					array(
+						'slug'  => 'header-foreground',
+						'name'  => 'Header-foreground',
+						'color' => '',
+					),	
+					array(
+						'slug'  => 'header-background',
+						'name'  => 'Header-background',
+						'color' => '',
+					),	
 				),
 				'supports' => array( 'yith-wonder' ),
 			),
 
 			'typography'      => array(
 				'slug' => '',
-				'data' => array(),
+				'data' => array(
+					'label'   => '',
+					'matches' => '',
+					'styles'  => array(
+						'typography' => array(
+							'fontFamily' => '',
+						),
+						'blocks'     => array(
+							'core/heading' => array(
+								'typography' => array(
+									'fontFamily' => '',
+								),
+							),
+						),
+					),
+				),
 			),
 
 			// This string will identify the Header Pattern
@@ -123,8 +163,6 @@ final class Flows {
 
 			// will include plugin installs, module activation/deactivation and perhaps API calls to the hosting platform for Newfold-specific services
 			'siteFeatures'    => array(),
-
-			'socialData'      => array(),
 		),
 
 		// we will store active flows (abandoned wp-setup, abandoned wp-commerce) with their identifier and use as a reference to access currentStep and data
@@ -174,23 +212,11 @@ final class Flows {
 	 * @var array
 	 */
 	protected static $exception_list = array(
-		'color'        => array(
-			'remove_key' => array(),
-			'add_key'    => array(),
-		),
-		'typography'   => array(
-			'remove_key' => array(),
-			'add_key'    => array(),
-		),
 		'other'        => array(
 			'remove_key' => array(),
 			'add_key'    => array(),
 		),
 		'siteFeatures' => array(
-			'remove_key' => array(),
-			'add_key'    => array(),
-		),
-		'socialData'   => array(
 			'remove_key' => array(),
 			'add_key'    => array(),
 		),

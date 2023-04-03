@@ -171,10 +171,24 @@ class FlowService {
 				}
 
 				// If the Database value is empty or an Indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
-				( ( count( $value ) === 0 ) || self::is_array_indexed( $value ) ) ?
-					$flow_data[ $key ]   = $params[ $key ]
-					: $flow_data[ $key ] = $value;
-				continue;
+				if ( self::is_array_indexed( $value ) ) {
+					// To check if an Indexed Array is further Nested or Not
+					foreach ( $params[$key] as $index_key => $index_value ) {
+						// For Indexed Arrays having Non Associative Array Values
+						if( count($value) === 0 || ! is_array( $index_value ) ) {
+							$flow_data[ $key ]  = $params[ $key ]; 
+							continue 2;
+						}
+						elseif(is_array($index_value)) {
+							if(count($value) === count($params[$key]))
+								$flow_data[$key][$index_key] = self::update_post_call_data_recursive($index_value, $params[$key][$index_key]);
+							else{
+								$flow_data[ $key ] = $value;
+								continue 2;
+							}
+						}
+					}						
+				}
 			}
 
 			// To handle Associative Arrays gracefully
@@ -318,6 +332,16 @@ class FlowService {
 					foreach ( $value as $index_key => $index_value ) {
 						// For Indexed Arrays having Associative Arrays as Values
 						if ( is_array( $index_value ) ) {
+							if(count($value) > count($flow_data[$key])) {
+								return new \WP_Error(
+									'wrong_param_provided',
+									'Wrong Parameter Provided',
+									array(
+										'status'                  => 400,
+										'Mismatched Parameter(s)' => $header_key . ' => ' . $key,
+									)
+								);
+							}
 							$verify_key = self::find_mismatch_key( $value[ $index_key ], $flow_data[ $key ][ $index_key ], $key . ' : ' . $index_key );
 							if ( \is_wp_error( $verify_key ) ) {
 								return $verify_key;
