@@ -91,7 +91,7 @@ const DesignThemeStylesPreview = () => {
 	const handleClick = ( idx ) => {
 		const selectedGlobalStyle = globalStyles[ idx ];
 		updatePreviewSettings(
-			// eslint-disable-next-line react-hooks/exhaustive-deps
+			// eslint-disable-next-line react-hooks/rules-of-hooks
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
 		setSelectedStyle( selectedGlobalStyle.title );
