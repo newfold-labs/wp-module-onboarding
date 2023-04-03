@@ -93,21 +93,25 @@ const DesignStateHandler = ( {
 		}
 	};
 
-	useEffect( async () => {
+	const handleThemeStatus = async () => {
+		const themeStatus = await checkThemeStatus();
+		switch ( themeStatus ) {
+			case THEME_STATUS_INSTALLING:
+				waitForInstall();
+				break;
+			case THEME_STATUS_ACTIVE:
+				window.location.reload();
+				break;
+			default:
+				updateThemeStatus( themeStatus );
+		}
+	};
+
+	useEffect( () => {
 		handleNavigationState();
 
 		if ( storedThemeStatus === THEME_STATUS_INIT ) {
-			const themeStatus = await checkThemeStatus();
-			switch ( themeStatus ) {
-				case THEME_STATUS_INSTALLING:
-					waitForInstall();
-					break;
-				case THEME_STATUS_ACTIVE:
-					window.location.reload();
-					break;
-				default:
-					updateThemeStatus( themeStatus );
-			}
+			handleThemeStatus( storedThemeStatus );
 		}
 	}, [ storedThemeStatus ] );
 
