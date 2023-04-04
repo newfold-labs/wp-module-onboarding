@@ -1,5 +1,5 @@
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useLayoutEffect } from '@wordpress/element';
 
 import CommonLayout from '../../../components/Layouts/Common';
 import { DesignStateHandler } from '../../../components/StateHandlers';
@@ -26,7 +26,7 @@ const StepDesignHeaderMenu = () => {
 	const { setDrawerActiveView, setSidebarActiveView } =
 		useDispatch( nfdOnboardingStore );
 
-	useEffect( () => {
+	useLayoutEffect( () => {
 		setPattern( headerMenu );
 	}, [ headerMenu ] );
 
