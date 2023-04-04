@@ -13,10 +13,17 @@ use NewfoldLabs\WP\Module\Onboarding\TaskManagers\TaskManager;
 final class Application {
 
 	/**
+	 * Newfold Labs Module Container
+	 *
 	 * @var Container
 	 */
 	protected $container;
 
+	/**
+	 * Arguments for the container
+	 *
+	 * @var agrs
+	 */
 	protected $args;
 
 	/**
@@ -65,4 +72,4 @@ final class Application {
 		\do_action( 'nfd_module_onboarding_post_init' );
 	}
 }
-// END \NewfoldLabs\WP\Module\Onboarding\Application
+// END /NewfoldLabs/WP/Module/Onboarding/Application
