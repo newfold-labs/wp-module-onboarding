@@ -2,6 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Compatibility;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 
@@ -25,6 +26,13 @@ class Safe_Mode {
 	public function __construct( Scan $scan ) {
 		$this->scan = $scan;
 		\add_action( 'admin_menu', array( $this, 'core_update_page' ) );
+
+		// Cleanup and Redirect to Onboarding once core has updated successfully.
+		\add_action( '_core_updated_successfully', array( self::class, 'handle_redirect' ) );
+
+		// Cleanup and Redirect to Onboarding once core has updated successfully via manual DB upgrade.
+		\add_action( 'load-about.php', array( self::class, 'handle_redirect' ) );
+
 	}
 
 	/**
@@ -45,7 +53,10 @@ class Safe_Mode {
 	/**
 	 * Render WP core update page.
 	 */
-	public function render() {            ?>
+	public function render() {
+		$request_url = \remove_query_arg( '_wp_http_referer' );
+		\set_transient( Options::get_option_name( 'core_update_referrer' ), $request_url, 259200 );
+		?>
 		<style>
 			body {
 				background-color: #f9f9f9;
@@ -204,30 +215,39 @@ class Safe_Mode {
 			const errorParagraph = document.getElementById( 'safe-mode__error' );
 
 			function handleForm( event ) {
-				event.preventDefault();
 				loader.style.visibility = 'visible';
 				form.style.display = 'none';
-				const data = new FormData( form );
-				fetch( 'update-core.php?action=do-core-upgrade', {
-					method: 'POST',
-					body: data,
-				} )
-					.then( ( response ) => {
-						if ( response.status === 404 ) {
-							loader.style.display = 'none';
-							errorParagraph.style.visibility = 'visible';
-							return;
-						}
-						window.location.reload();
-					} )
-					.catch( () => {
-						loader.style.display = 'none';
-						errorParagraph.style.visibility = 'visible';
-					} );
+				return true;
 			}
 
 			form.addEventListener( 'submit', handleForm );
 		</script>
 		<?php
+	}
+	/**
+	 * Cleanup and Redirect to Onboarding once core has updated successfully.
+	 *
+	 * @return void
+	 */
+	public static function handle_redirect() {
+		global $pagenow;
+		$valid_onboarding_referrer_regex = '/^\/wp-admin\/index.php\?page=' . WP_Admin::$slug . '*/';
+		if ( 'about.php' === $pagenow && ! isset( $_GET['updated'] ) ) {
+			return;
+		}
+		Status::reset();
+		$onboarding_referrer = \get_transient( Options::get_option_name( 'core_update_referrer' ) );
+		if ( $onboarding_referrer && \get_option( Options::get_option_name( 'coming_soon', false ), 'false' ) === 'true' ) {
+			\delete_transient( Options::get_option_name( 'core_update_referrer' ) );
+			if ( ! preg_match( $valid_onboarding_referrer_regex, $onboarding_referrer ) ) {
+				return;
+			}
+			?>
+		<script type="text/javascript">
+			window.location = "<?php echo \esc_url_raw( $onboarding_referrer ); ?>";
+		</script>
+			<?php
+			exit;
+		}
 	}
 }

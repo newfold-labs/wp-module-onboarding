@@ -51,6 +51,7 @@ final class Options {
 		'flow_preset'                   => 'flow_preset',
 		'wpseo_social'                  => 'wpseo_social',
 		'compatibility_results'         => 'compatibility_results',
+		'core_update_referrer'          => 'core_update_referrer',
 	);
 
 	/**
