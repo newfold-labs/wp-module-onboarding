@@ -188,7 +188,7 @@ class Safe_Mode {
 				<form method="post" action="update-core.php?action=do-core-upgrade" name="upgrade" class="upgrade" id="upgrade-form">
 					<?php \wp_nonce_field( 'upgrade-core' ); ?>
 					<p>
-						<input name="version" value="<?php echo esc_html( \find_core_auto_update()->current ); ?>" type="hidden">
+						<input name="version" value="<?php echo esc_html( \get_preferred_from_update_core()->current ); ?>" type="hidden">
 						<input name="locale" value="en_US" type="hidden">
 						<input name="upgrade" value="Upgrade WordPress" type="hidden">
 						<input type="submit" name="upgrade" id="upgrade" class="button button-primary button-hero" value="<?php echo \esc_html_e( 'Upgrade WordPress', 'wp-module-onboarding' ); ?>">
