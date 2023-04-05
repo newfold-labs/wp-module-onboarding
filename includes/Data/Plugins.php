@@ -219,7 +219,18 @@ final class Plugins {
 						'priority' => 20,
 					),
 				),
-				'wc_priority' => array(),
+				'wc_priority' => array(
+					array(
+						'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
+						'activate' => true,
+						'priority' => 259,
+					),
+					array(
+						'slug'     => 'nfd_slug_yith_paypal_payments_for_woocommerce',
+						'activate' => true,
+						'priority' => 258,
+					),
+				),
 			),
 			'bluehost-india' => array(
 				'wc_standard' => array(
