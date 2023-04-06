@@ -2,7 +2,6 @@
 namespace NewfoldLabs\WP\Module\Onboarding;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
-use SebastianBergmann\CodeCoverage\Util\Percentage;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ThemeInstallTaskManager;
 
@@ -115,11 +114,11 @@ final class WP_Admin {
 	 * @return void
 	 */
 	public static function initialize() {
-		if ( ! empty( sanitize_text_field( $_GET['nfd_plugins'] ) ) && 'true' === sanitize_text_field( $_GET['nfd_plugins'] ) ) {
+		if ( ! empty( $_GET['nfd_plugins'] ) && 'true' === sanitize_text_field( $_GET['nfd_plugins'] ) ) {
 			PluginInstallTaskManager::queue_initial_installs();
 		}
 
-		if ( ! empty( sanitize_text_field( $_GET['nfd_themes'] ) ) && 'true' === sanitize_text_field( $_GET['nfd_themes'] ) ) {
+		if ( ! empty( $_GET['nfd_themes'] ) && 'true' === sanitize_text_field( $_GET['nfd_themes'] ) ) {
 			ThemeInstallTaskManager::queue_initial_installs();
 		}
 
