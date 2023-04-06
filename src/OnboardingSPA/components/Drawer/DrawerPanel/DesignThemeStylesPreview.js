@@ -15,7 +15,6 @@ import {
 } from '../../LivePreview';
 
 const DesignThemeStylesPreview = () => {
-	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ pattern, setPattern ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState();
 	const [ selectedStyle, setSelectedStyle ] = useState( '' );
@@ -81,17 +80,18 @@ const DesignThemeStylesPreview = () => {
 					block: 'center',
 				} );
 		}
-		setIsLoaded( true );
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && themeStatus === THEME_STATUS_ACTIVE )
+		if ( themeStatus === THEME_STATUS_ACTIVE ) {
 			getStylesAndPatterns();
-	}, [ isLoaded, themeStatus ] );
+		}
+	}, [ themeStatus ] );
 
 	const handleClick = ( idx ) => {
 		const selectedGlobalStyle = globalStyles[ idx ];
 		updatePreviewSettings(
+			// eslint-disable-next-line react-hooks/rules-of-hooks
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
 		setSelectedStyle( selectedGlobalStyle.title );

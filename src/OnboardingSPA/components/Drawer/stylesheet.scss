@@ -131,53 +131,6 @@
 		}
 	}
 
-	.components-button.nfd-onboarding-drawer__panel-back.is-tertiary {
-		color: var(--nfd-onboarding-drawer-fg);
-		opacity: 0.7;
-		height: $button-size;
-		margin-top: $grid-unit-30;
-		padding: $grid-unit $grid-unit-20 $grid-unit $grid-unit;
-
-		svg {
-			margin-right: 0;
-		}
-
-		&:hover:not(:disabled),
-		&:focus:not(:disabled) {
-			opacity: 1;
-			box-shadow: none;
-		}
-
-		&:active {
-			background-color: transparent;
-		}
-	}
-
-	&-menu {
-		margin: $grid-unit-30 0;
-
-		h3 {
-			color: var(--nfd-onboarding-drawer-fg);
-			font-size: 20.28px;
-			line-height: 1.2;
-			padding: $grid-unit-05 $grid-unit-10 $grid-unit-05 $grid-unit-20;
-			margin-top: 0;
-			height: $grid-unit-50;
-			max-height: $grid-unit-60;
-			display: flex;
-			align-items: center;
-			margin-bottom: $grid-unit-10;
-		}
-	}
-
-	&-menu-item {
-		display: block;
-		width: 100%;
-		color: var(--nfd-onboarding-drawer-fg);
-		font-size: 14px;
-		line-height: 20px;
-	}
-
 	&-menu-link {
 		display: flex;
 		padding: $grid-unit-10 $grid-unit-20;
@@ -216,6 +169,53 @@
 			}
 		}
 	}
+
+	.components-button.nfd-onboarding-drawer__panel-back.is-tertiary {
+		color: var(--nfd-onboarding-drawer-fg);
+		opacity: 0.7;
+		height: $button-size;
+		margin-top: $grid-unit-30;
+		padding: $grid-unit $grid-unit-20 $grid-unit $grid-unit;
+
+		svg {
+			margin-right: 0;
+		}
+
+		&:active {
+			background-color: transparent;
+		}
+
+		&:hover:not(:disabled),
+		&:focus:not(:disabled) {
+			opacity: 1;
+			box-shadow: none;
+		}
+	}
+
+	&-menu {
+		margin: $grid-unit-30 0;
+
+		h3 {
+			color: var(--nfd-onboarding-drawer-fg);
+			font-size: 20.28px;
+			line-height: 1.2;
+			padding: $grid-unit-05 $grid-unit-10 $grid-unit-05 $grid-unit-20;
+			margin-top: 0;
+			height: $grid-unit-50;
+			max-height: $grid-unit-60;
+			display: flex;
+			align-items: center;
+			margin-bottom: $grid-unit-10;
+		}
+	}
+
+	&-menu-item {
+		display: block;
+		width: 100%;
+		color: var(--nfd-onboarding-drawer-fg);
+		font-size: 14px;
+		line-height: 20px;
+	}
 }
 
 .nfd-onboarding-drawer__panel.is-open {
@@ -232,6 +232,26 @@ $main-color-light: var(--nfd-onboarding-white);
 $main-border-light: var(--nfd-onboarding-border);
 $main-border-main: var(--nfd-onboarding-primary-alt);
 $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
+
+.theme-styles-preview--drawer__list__item__live-preview-container .live-preview__container-custom {
+	width: 100%;
+	overflow: hidden;
+	height: 250px;
+}
+
+.theme-header-menu-preview--drawer__list__item__live-preview-container .live-preview__container-custom {
+	width: 100%;
+	overflow: hidden;
+	min-height: 50px;
+}
+
+.theme-styles-preview--drawer__list__item__live-preview-container .live-preview__container-custom:hover {
+	cursor: pointer;
+}
+
+.theme-header-menu-preview--drawer__list__item__live-preview-container .live-preview__container-custom:hover {
+	cursor: pointer;
+}
 
 .theme-styles-preview {
 
@@ -314,23 +334,6 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 					overflow: hidden;
 					align-items: center;
 					border: 1px solid #b7b7b7;
-
-					.live-preview {
-
-						&__container {
-
-							&-custom {
-								width: 100%;
-								overflow: hidden;
-								height: 250px;
-
-								&:hover {
-									cursor: pointer;
-								}
-							}
-
-						}
-					}
 				}
 			}
 		}
@@ -351,7 +354,7 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 		text-align: center;
 		align-items: center;
 		justify-content: center;
-		background-color: white;
+		background-color: $main-color-light;
 		color: var(--nfd-onboarding-primary);
 
 		&:hover {
@@ -415,19 +418,19 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 			background-color: var(--nfd-onboarding-tertiary);
 		}
 
+		&__text {
+			color: $main-color-dark;
+			font-size: 12px;
+			font-weight: 700;
+			line-height: 16px;
+		}
+
 		&--selected {
 			background-color: var(--nfd-onboarding-primary-alt);
 
 			.drawer-palette--button__text {
 				color: var(--nfd-onboarding-white);
 			}
-		}
-
-		&__text {
-			color: black;
-			font-size: 12px;
-			font-weight: 700;
-			line-height: 16px;
 		}
 	}
 }
@@ -463,11 +466,11 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 
 		&-row {
 			height: 50px;
-			color: black;
+			color: $main-color-dark;
 			display: flex;
 			cursor: pointer;
 			align-items: center;
-			background-color: white;
+			background-color: $main-color-light;
 			justify-content: flex-start;
 			border: 0.5px solid rgba(0, 0, 0, 0.3);
 
@@ -492,14 +495,14 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 		width: 25px;
 		height: 25px;
 		display: flex;
-		color: black;
+		color: $main-color-dark;
 		cursor: pointer;
 		font-weight: 900;
 		border-radius: 50%;
 		align-items: center;
 		justify-content: center;
-		border: 1px solid black;
-		background-color: white;
+		border: 1px solid $main-color-dark;
+		background-color: $main-color-light;
 	}
 }
 
@@ -512,13 +515,13 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 		width: 40%;
 		height: 30px;
 		display: flex;
-		color: black;
+		color: $main-color-dark;
 		cursor: pointer;
 		margin-left: 4px;
 		text-align: center;
 		align-items: center;
 		justify-content: center;
-		background-color: white;
+		background-color: $main-color-light;
 
 		&:hover {
 			background-color: var(--nfd-onboarding-drawer-icon-fill);
@@ -529,7 +532,7 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 .font-palette {
 
 	&__icon {
-		color: black;
+		color: $main-color-dark;
 		font-weight: 700;
 		margin-right: 16px;
 	}
@@ -599,8 +602,10 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 
 				&__title-bar {
 					width: 90%;
-					height: 20px;
+					height: 0;
 					display: flex;
+					align-items: center;
+					background-color: #ccc;
 					justify-content: space-between;
 
 					&--selected {
@@ -608,7 +613,7 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 						width: 40px;
 						height: 40px;
 						display: flex;
-						margin-right: -12px;
+						margin-right: -15px;
 						border-radius: 50%;
 						align-items: center;
 						justify-content: center;
@@ -631,21 +636,6 @@ $main-border-main--rgb: var(--nfd-onboarding-highlighted--rgb);
 					width: 95%;
 					overflow: hidden;
 					align-items: center;
-
-					.live-preview {
-
-						&__container {
-
-							&-custom {
-								overflow: hidden;
-
-								&:hover {
-									cursor: pointer;
-								}
-							}
-
-						}
-					}
 				}
 			}
 		}
