@@ -27,10 +27,10 @@ class Safe_Mode {
 		$this->scan = $scan;
 		\add_action( 'admin_menu', array( $this, 'core_update_page' ) );
 
-		// Cleanup and Redirect to Onboarding once core has updated successfully.
+		// Cleanup and Redirect to Onboarding once core has updated successfully. See wp-admin/includes/update-core.php
 		\add_action( '_core_updated_successfully', array( self::class, 'handle_redirect' ) );
 
-		// Cleanup and Redirect to Onboarding once core has updated successfully via manual DB upgrade.
+		// Cleanup and Redirect to Onboarding once core has updated successfully via manual DB upgrade. See wp-admin/upgrade.php
 		\add_action( 'load-about.php', array( self::class, 'handle_redirect' ) );
 
 	}
@@ -54,7 +54,9 @@ class Safe_Mode {
 	 * Render WP core update page.
 	 */
 	public function render() {
+		// Get the Onboarding request URL.
 		$request_url = \remove_query_arg( '_wp_http_referer' );
+		// Set the post core update redirect URL transient.
 		\set_transient( Options::get_option_name( 'core_update_referrer' ), $request_url, 259200 );
 		?>
 		<style>
@@ -232,16 +234,22 @@ class Safe_Mode {
 	public static function handle_redirect() {
 		global $pagenow;
 		$valid_onboarding_referrer_regex = '/^\/wp-admin\/index.php\?page=' . WP_Admin::$slug . '*/';
+		// Prevent about.php hijack if it is not being loaded after a core update.
 		if ( 'about.php' === $pagenow && ! isset( $_GET['updated'] ) ) {
 			return;
 		}
+		// Reset the compatibility status to re-scan after a core update.
 		Status::reset();
+		// Get the post core update redirect URL.
 		$onboarding_referrer = \get_transient( Options::get_option_name( 'core_update_referrer' ) );
+		// Only redirect if th URL exists and the site is in coming soon mode.
 		if ( $onboarding_referrer && \get_option( Options::get_option_name( 'coming_soon', false ), 'false' ) === 'true' ) {
 			\delete_transient( Options::get_option_name( 'core_update_referrer' ) );
+			// Ensure that it is a safe Onboarding URL before redirecting.
 			if ( ! preg_match( $valid_onboarding_referrer_regex, $onboarding_referrer ) ) {
 				return;
 			}
+			// Prevent the default about page redirect after a core update and replace it with our URL. See wp-admin/includes/update-core.php _redirect_to_about_wordpress
 			?>
 		<script type="text/javascript">
 			window.location = "<?php echo \esc_url_raw( $onboarding_referrer ); ?>";
