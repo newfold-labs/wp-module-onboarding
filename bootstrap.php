@@ -3,6 +3,9 @@ use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Onboarding\Application;
 use function NewfoldLabs\WP\ModuleLoader\register;
 use NewfoldLabs\WP\Module\Onboarding\ModuleController;
+use NewfoldLabs\WP\Module\Onboarding\Compatibility\Scan;
+use NewfoldLabs\WP\Module\Onboarding\Compatibility\Safe_Mode;
+use NewfoldLabs\WP\Module\Onboarding\Compatibility\Status;
 
 /**
  * Register Onboarding with Newfold Module Loader
@@ -32,6 +35,14 @@ function nfd_wp_module_onboarding_register() {
 				}
 				if ( ! defined( 'NFD_ONBOARDING_BUILD_URL' && defined( 'NFD_ONBOARDING_VERSION' ) ) ) {
 					define( 'NFD_ONBOARDING_BUILD_URL', $container->plugin()->url . '/vendor/newfold-labs/wp-module-onboarding/build/' . NFD_ONBOARDING_VERSION );
+				}
+
+				if ( 'compatible' !== Status::get() ) {
+					$compatibility_scan = new Scan();
+					Status::set( $compatibility_scan );
+					if ( 'compatible' !== $compatibility_scan->result ) {
+						return new Safe_Mode( $compatibility_scan );
+					}
 				}
 				// Instantiate Onboarding Module Application
 				new Application( $container );

@@ -1,6 +1,7 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding;
 
+use NewfoldLabs\WP\Module\Onboarding\Compatibility\Status;
 use NewfoldLabs\WP\Module\Onboarding\RestApi\RestApi;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
@@ -13,16 +14,16 @@ use NewfoldLabs\WP\Module\Onboarding\TaskManagers\TaskManager;
 final class Application {
 
 	/**
-	 * Newfold Labs Module Container
+	 * The Plugin container.
 	 *
 	 * @var Container
 	 */
 	protected $container;
 
 	/**
-	 * Arguments for the container
+	 * Arguments for Onboarding.
 	 *
-	 * @var agrs
+	 * @var array
 	 */
 	protected $args;
 
@@ -51,6 +52,9 @@ final class Application {
 
 		\do_action( 'nfd_module_onboarding_pre_init' );
 
+		// Reset the stored Compatibility Status every time WP Core is updated.
+		\add_action( '_core_updated_successfully', array( Status::class, 'reset' ) );
+
 		\add_action( 'login_redirect', array( LoginRedirect::class, 'handle_redirect' ), 10, 3 );
 		\add_filter(
 			Options::get_option_name( 'redirect' ) . '_disable',
@@ -72,4 +76,3 @@ final class Application {
 		\do_action( 'nfd_module_onboarding_post_init' );
 	}
 }
-// END /NewfoldLabs/WP/Module/Onboarding/Application
