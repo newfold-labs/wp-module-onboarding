@@ -158,10 +158,13 @@ body {
 
 		.nfd-onboarding-drawer__toggle {
 			background-color: transparent;
+
 			&-button {
 				background-color: transparent;
 			}
+
 			border-bottom: 1px solid #e0e0e0;
+
 			&.is-open {
 				border-bottom: none;
 			}
@@ -169,12 +172,15 @@ body {
 		.nfd-onboarding-drawer__panel {
 			--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-light-gray-4);
 			--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-primary);
+
 			&-scroll-container {
 				border-right: 1px solid #e0e0e0; // mirror header border.
 			}
+
 			&-site-title {
 				color: var(--nfd-onboarding-light-gray-4);
 			}
+
 			&-menu-link {
 				color: var(--nfd-onboarding-light-gray-4);
 				&.active {
@@ -183,9 +189,11 @@ body {
 					border-color: var(--nfd-onboarding-primary);
 				}
 			}
+
 			.custom-palette {
 				color: var(--nfd-onboarding-light);
 			}
+
 			.drawer-palette--button {
 				border: 1px solid var(--nfd-onboarding-secondary);
 				&:hover {
@@ -198,12 +206,15 @@ body {
 		}
 
 		.nfd-onboarding-layout {
+			
 			&.is-bg-primary {
 				background-color: var(--nfd-onboarding-light);
 			}
+
 			.checkbox-item--selected {
 				background: rgba(var(--nfd-onboarding-highlighted--rgb), 0.05);
 			}
+
 			.tab-img {
 				background-color: rgba(var(--nfd-onboarding-highlighted--rgb), 0.2);
 			}
