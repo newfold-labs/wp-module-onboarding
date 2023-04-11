@@ -255,7 +255,7 @@ class SettingsController {
 			\update_option( Options::get_option_name( $option_key, false ), $option_value );
 		}
 		// Can't be part of initialization constants as they are static.
-		\update_option( Options::get_option_name( 'install_date', false ), gmdate( 'M d, Y' ) );
+		\update_option( Options::get_option_name( 'start_date' ), gmdate( 'U' ) );
 
 		// Flush permalinks
 		flush_rewrite_rules();
