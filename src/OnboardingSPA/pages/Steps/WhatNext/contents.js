@@ -50,14 +50,11 @@ const getContents = ( brandName ) => {
 					'Make our great people your people.',
 					'wp-module-onboarding'
 				),
-				text: sprintf(
-					/* translators: %s: Site */
+				text:
 					__(
-						"Pick your %s's unique design now and refine by customing your block templates, colors and fonts in the WordPress Site Editor.",
+						'Looking for personalized WordPress assistance, or someone to take-over from here? Go beyond support with our professional services.',
 						'wp-module-onboarding'
 					),
-					translations( 'site' )
-				),
 				imgType: 'img-3',
 				animationName: 'fade-in-left',
 			},
