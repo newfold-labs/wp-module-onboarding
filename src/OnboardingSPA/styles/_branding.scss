@@ -169,6 +169,7 @@ body {
 				border-bottom: none;
 			}
 		}
+
 		.nfd-onboarding-drawer__panel {
 			--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-light-gray-4);
 			--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-primary);
@@ -183,6 +184,7 @@ body {
 
 			&-menu-link {
 				color: var(--nfd-onboarding-light-gray-4);
+
 				&.active {
 					background-color: var(--nfd-onboarding-drawer-bg);
 					color: var(--nfd-onboarding-primary);
@@ -196,8 +198,10 @@ body {
 
 			.drawer-palette--button {
 				border: 1px solid var(--nfd-onboarding-secondary);
+
 				&:hover {
 					background-color: var(--nfd-onboarding-primary);
+
 					* {
 						color: var(--nfd-onboarding-light);
 					}
@@ -206,7 +210,7 @@ body {
 		}
 
 		.nfd-onboarding-layout {
-			
+
 			&.is-bg-primary {
 				background-color: var(--nfd-onboarding-light);
 			}
