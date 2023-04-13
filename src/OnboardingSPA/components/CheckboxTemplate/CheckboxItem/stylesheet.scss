@@ -1,5 +1,5 @@
 /*COLOR VARIABLES*/
-$white-offset: rgb(224, 224, 224);
+$white-offset: var(--nfd-onboarding-light-gray-6);
 $main-color-dark: var(--wp-admin-theme-color);
 $main-color-light: var(--nfd-onboarding-white);
 $main-color: var(--nfd-onboarding-highlighted--rgb);
@@ -41,7 +41,7 @@ $box-shadow: var(--nfd-onboarding-light-gray-highlighted);
 			margin-right: 16px;
 			border-radius: 50%;
 			align-items: center;
-			background: #f0f0f0;
+			background: var(--nfd-onboarding-light-gray);
 			justify-content: center;
 
 			&--selected {
@@ -49,7 +49,7 @@ $box-shadow: var(--nfd-onboarding-light-gray-highlighted);
 			}
 
 			&--shown {
-				background: #f0f0f0;
+				background: var(--nfd-onboarding-light-gray);
 			}
 		}
 
