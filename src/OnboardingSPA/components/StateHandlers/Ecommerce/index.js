@@ -100,25 +100,29 @@ const EcommerceStateHandler = ( {
 		handleNavigationState( woocommerceStatus );
 	}, [ woocommerceStatus ] );
 
-	useEffect( async () => {
+	const handlePluginsStatus = async ( pluginsStatus ) => {
+		const pluginStatus = await checkPluginStatus();
+		switch ( pluginStatus ) {
+			case PLUGIN_STATUS_INSTALLING:
+				waitForInstall();
+				break;
+			case PLUGIN_STATUS_ACTIVE:
+				window.location.reload();
+				break;
+			default:
+				pluginsStatus[ ECOMMERCE_STEPS_PLUGIN ] =
+						pluginStatus;
+				setWoocommerceStatus( pluginStatus );
+				updatePluginsStatus( pluginsStatus );
+		}
+	};
+
+	useEffect( () => {
 		setWoocommerceStatus( storedPluginsStatus[ ECOMMERCE_STEPS_PLUGIN ] );
 		if (
 			storedPluginsStatus[ ECOMMERCE_STEPS_PLUGIN ] === PLUGIN_STATUS_INIT
 		) {
-			const pluginStatus = await checkPluginStatus();
-			switch ( pluginStatus ) {
-				case PLUGIN_STATUS_INSTALLING:
-					waitForInstall();
-					break;
-				case PLUGIN_STATUS_ACTIVE:
-					window.location.reload();
-					break;
-				default:
-					storedPluginsStatus[ ECOMMERCE_STEPS_PLUGIN ] =
-						pluginStatus;
-					setWoocommerceStatus( pluginStatus );
-					updatePluginsStatus( storedPluginsStatus );
-			}
+			handlePluginsStatus( storedPluginsStatus );
 		}
 	}, [ storedPluginsStatus ] );
 

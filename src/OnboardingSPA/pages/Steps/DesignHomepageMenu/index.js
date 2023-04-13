@@ -85,6 +85,14 @@ const StepDesignHomepageMenu = () => {
 
 		for ( const key in homepagesList ) {
 			const homepagePatterns = homepagesList[ key ];
+			// update the header menu pattern if already selected
+			if (
+				currentData.data.partHeader ||
+				currentData.data.partHeader !== ''
+			) {
+				homepagePatterns[ 0 ] = currentData.data.partHeader;
+			}
+
 			let patternData = '';
 			homepagePatterns.forEach( ( patternName ) => {
 				homepagePatternDataResp?.body.forEach(
@@ -103,7 +111,7 @@ const StepDesignHomepageMenu = () => {
 
 	async function getHomepagePatternsData() {
 		const homepagePatternDataTemp = await getPatterns(
-			currentStep.patternId
+			currentStep.patternId,
 		);
 		if ( homepagePatternDataTemp?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
