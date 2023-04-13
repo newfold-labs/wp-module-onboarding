@@ -69,7 +69,6 @@ class FlowService {
 	 */
 	private static function update_flow_data_recursive( $default_flow_data, $flow_data ) {
 		$flow_data_fixes   = Flows::get_fixes();
-		$exception_list    = Flows::get_exception_list();
 		$updated_flow_data = array();
 		foreach ( $default_flow_data as $key => $value ) {
 			// Any Key renamed is updated in the database with NewKey and the value from the OldKey is retained or not based on retain_existing_value
@@ -88,12 +87,6 @@ class FlowService {
 			// To align the new data OR datatype of the respective values with the one set in the blueprint
 			if ( ! array_key_exists( $key, $flow_data ) || ( gettype( $value ) !== gettype( $flow_data[ $key ] ) ) ) {
 				$updated_flow_data[ $key ] = $value;
-				continue;
-			}
-
-			// Verifies the value of Exception List keys from the database and options
-			if ( isset( $exception_list[ $key ] ) ) {
-				$updated_flow_data[ $key ] = self::resolve_exception_key( $exception_list[ $key ], $value, $flow_data[ $key ] );
 				continue;
 			}
 
@@ -140,7 +133,7 @@ class FlowService {
 
 			// Verifies the value of Exception List keys from the database and options
 			if ( isset( $exception_list[ $key ] ) ) {
-				$flow_data[ $key ] = self::resolve_exception_key( $exception_list[ $key ], $flow_data[ $key ], $params[ $key ] );
+				$flow_data[ $key ] = $params[$key];
 				continue;
 			}
 
@@ -213,68 +206,6 @@ class FlowService {
 	}
 
 	/**
-	 * Function to handle the Exception List Gracefully if blueprint structure has unforseen changes
-	 *
-	 * @param array $exception_key To check if any key is to be added or removed
-	 * @param array $default_flow_data the Data as Source of Truth
-	 * @param array $flow_data the options data
-	 *
-	 * @return array
-	 */
-	private static function resolve_exception_key( $exception_key, $default_flow_data, $flow_data ) {
-		if ( empty( $exception_key['remove_key'] ) && empty( $exception_key['add_key'] ) ) {
-			return $flow_data;
-		}
-		return self::handle_exception_list( $exception_key, $default_flow_data, $flow_data );
-	}
-
-	/**
-	 * Function to handle the Exception List Gracefully if blueprint structure has unforseen changes
-	 *
-	 * @param array $exception_key To check if any key is to be added or removed
-	 * @param array $default_flow_data the Data as Source of Truth
-	 * @param array $flow_data the options data
-	 *
-	 * @return array
-	 */
-	private static function handle_exception_list( $exception_key, $default_flow_data, $flow_data ) {
-		// To remove any specific key at the expected level of nesting
-		if ( count( $exception_key['remove_key'] ) > 0 ) {
-			foreach ( $exception_key['remove_key'] as $index_key => $unset_key ) {
-				if ( array_key_exists( $unset_key, $flow_data ) ) {
-					unset( $flow_data[ $unset_key ] );
-				}
-			}
-		}
-
-		foreach ( $default_flow_data as $key => $value ) {
-			// Add a specific key at the expected level of nesting
-			if ( count( $exception_key['add_key'] ) > 0 ) {
-				foreach ( $exception_key['add_key'] as $index_key => $add_key ) {
-					if ( strcmp( $add_key, $key ) === 0 && ! array_key_exists( $add_key, $flow_data ) ) {
-						$flow_data[ $key ] = $default_flow_data[ $add_key ];
-					}
-				}
-			}
-
-			if ( is_array( $value ) ) {
-				if ( self::is_array_indexed( $value ) ) {
-					foreach ( $value as $index_key => $index_value ) {
-						// For Indexed Arrays having Associative Arrays as Values
-						if ( is_array( $index_value ) ) {
-							$flow_data[ $key ][ $index_key ] = self::handle_exception_list( $exception_key, $index_value, $flow_data[ $key ][ $index_key ] );
-						}
-					}
-				}
-
-				// For nested associative arrays
-				$flow_data[ $key ] = self::handle_exception_list( $exception_key, $value, $flow_data[ $key ] );
-			}
-		}
-		return $flow_data;
-	}
-
-	/**
 	 * Read onboarding flow options from database
 	 *
 	 * @return array|false
@@ -307,9 +238,8 @@ class FlowService {
 	 * @return \WP_error|boolean
 	 */
 	public static function find_mismatch_key( $params, $flow_data, $header_key = 'Base Level' ) {
-		$exception_list = Flows::get_exception_list();
 		foreach ( $params as $key => $value ) {
-			if ( ! isset( $exception_list[ $key ] ) && is_array( $flow_data ) ) {
+			if ( is_array( $flow_data ) ) {
 				// Error if the key added by the user is not present in the database
 				if ( ! array_key_exists( $key, $flow_data ) ) {
 					return new \WP_Error(
@@ -323,7 +253,7 @@ class FlowService {
 				}
 
 				// To check sub-Arrays
-				if ( ! is_array( $value ) || empty( $value ) ) {
+				if ( ! is_array( $value ) || empty( $value ) || ( ! empty( $value ) && empty( $flow_data[$key] ) ) ) {
 					continue;
 				}
 

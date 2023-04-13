@@ -40,9 +40,9 @@ const DesignTypography = () => {
 		}
 		setFontPalettes( fontPalettes?.body );
 
-		if ( currentData?.data?.typography?.slug !== '' ) {
+		if ( currentData?.data?.fontStyle !== '' ) {
 			handleClick(
-				currentData?.data?.typography?.slug,
+				currentData?.data?.fontStyle,
 				storedPreviewSettings,
 				fontPalettes?.body
 			);
@@ -114,8 +114,7 @@ const DesignTypography = () => {
 		}
 
 		// Saves the data to the Store
-		currentData.data.typography.slug = fontStyle;
-		currentData.data.typography.data = fontPalettesCopy[ fontStyle ];
+		currentData.data.fontStyle = fontStyle;
 
 		updatePreviewSettings(
 			useGlobalStylesOutput( globalStylesCopy, storedPreviewSettings )
@@ -139,8 +138,7 @@ const DesignTypography = () => {
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
 
-		currentData.data.typography.slug = '';
-		currentData.data.typography.data = [];
+		currentData.data.fontStyle = '';
 		setCurrentOnboardingData( currentData );
 	}
 

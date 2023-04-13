@@ -6,7 +6,6 @@ import { useState, useEffect, useRef } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import { GlobalStylesProvider } from '../../LivePreview';
 import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 import Animate from '../../Animate';
 
@@ -45,10 +44,9 @@ const DesignColors = () => {
 	function stateToLocal( selectedColors ) {
 		if ( selectedColors ) {
 			const selectedColorsLocalTemp = {};
-			selectedColors?.color?.forEach( ( color ) => {
+			selectedColors?.forEach( ( color ) => {
 				selectedColorsLocalTemp[ color.slug ] = color.color;
 			} );
-
 			setSelectedColorsLocal( selectedColorsLocalTemp );
 			return selectedColorsLocalTemp;
 		}
@@ -56,10 +54,6 @@ const DesignColors = () => {
 
 	function LocalToState( selectedColorsLocalTemp, colorStyle ) {
 		if ( selectedColorsLocalTemp && colorStyle ) {
-			selectedColors.slug = colorStyle;
-			selectedColors.name =
-				colorStyle?.charAt( 0 ).toUpperCase() + colorStyle?.slice( 1 );
-
 			const colorsArray = [];
 			for ( const colorName in selectedColorsLocalTemp ) {
 				colorsArray.push( {
@@ -70,12 +64,10 @@ const DesignColors = () => {
 					color: selectedColorsLocalTemp[ colorName ],
 				} );
 			}
-
-			selectedColors.color = colorsArray;
-			setSelectedColors( selectedColors );
-			currentData.data.palette = selectedColors;
+			setSelectedColors( colorsArray );
+			currentData.data.colorStyle = colorStyle;
 			setCurrentOnboardingData( currentData );
-			return selectedColors;
+			return colorsArray;
 		}
 	}
 
@@ -204,22 +196,22 @@ const DesignColors = () => {
 		setCustomColorsMap( colorPalettes?.body[ 'custom-picker-grouping' ] );
 		let selectedColors;
 		let selectedColorsLocal;
-		if ( ! currentData?.data?.palette?.slug === '' ) {
-			selectedColors = currentData.data.palette;
+		if ( ! currentData?.data?.colorStyle === '' ) {
+			selectedColors = globalStyles.body[0].settings.color.palette;
 			selectedColorsLocal = stateToLocal( selectedColors );
 			setCustomColors( selectedColorsLocal );
 			setCurrentOnboardingData( currentData );
 		} else {
-			selectedColors = currentData.data.palette;
+			selectedColors = globalStyles.body[0].settings.color.palette;
 			selectedColorsLocal = stateToLocal( selectedColors );
 
-			if ( selectedColors.slug === 'custom' ) {
+			if ( currentData?.data?.colorStyle === 'custom' ) {
 				setCustomColors( selectedColorsLocal );
 			}
 		}
 		setSelectedColors( selectedColors );
 		saveThemeColorPalette(
-			currentData?.data?.palette.slug,
+			currentData?.data?.colorStyle,
 			colorPalettes?.body.tailored,
 			selectedColorsLocal,
 			globalStyles?.body[ 0 ]
@@ -290,14 +282,7 @@ const DesignColors = () => {
 		updatePreviewSettings(
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
-		selectedColors.slug = '';
-		selectedColors.name = '';
-		for ( const colorVal in selectedColors?.color )
-			selectedColors.color[ colorVal ].color = '';
-		setCustomColors( stateToLocal( selectedColors ) );
-		currentData.data.palette = selectedColors;
-
-		setSelectedColors( selectedColors );
+		currentData.data.colorStyle = '';
 		setCurrentOnboardingData( currentData );
 	}
 
@@ -308,7 +293,7 @@ const DesignColors = () => {
 				<div
 					key={ colorStyle }
 					className={ `color-palette drawer-palette--button ${
-						colorStyle == selectedColors?.slug
+						colorStyle == currentData?.data?.colorStyle
 							? 'color-palette-selected drawer-palette--button--selected'
 							: ''
 					} ` }

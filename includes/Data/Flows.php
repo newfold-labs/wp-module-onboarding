@@ -79,78 +79,9 @@ final class Flows {
 
 			'customDesign'    => false,
 
-			'palette'         => array(
-				'slug'     => '',
-				'name'     => '',
-				'color'    => array(
-					array(
-						'slug'  => 'primary',
-						'name'  => 'Primary',
-						'color' => '',
-					),
-					array(
-						'slug'  => 'secondary',
-						'name'  => 'Secondary',
-						'color' => '',
-					),
-					array(
-						'slug'  => 'tertiary',
-						'name'  => 'Tertiary',
-						'color' => '',
-					),
-					array(
-						'slug'  => 'base',
-						'name'  => 'Base',
-						'color' => '',
-					),
-					array(
-						'slug'  => 'secondary-foreground',
-						'name'  => 'Secondary-foreground',
-						'color' => '',
-					),
-					array(
-						'slug'  => 'secondary-background',
-						'name'  => 'Secondary-background',
-						'color' => '',
-					),
-					array(
-						'slug'  => 'header-titles',
-						'name'  => 'Header-titles',
-						'color' => '',
-					),
-					array(
-						'slug'  => 'header-foreground',
-						'name'  => 'Header-foreground',
-						'color' => '',
-					),	
-					array(
-						'slug'  => 'header-background',
-						'name'  => 'Header-background',
-						'color' => '',
-					),	
-				),
-				'supports' => array( 'yith-wonder' ),
-			),
+			'colorStyle'	   => '',
 
-			'typography'      => array(
-				'slug' => '',
-				'data' => array(
-					'label'   => '',
-					'matches' => '',
-					'styles'  => array(
-						'typography' => array(
-							'fontFamily' => '',
-						),
-						'blocks'     => array(
-							'core/heading' => array(
-								'typography' => array(
-									'fontFamily' => '',
-								),
-							),
-						),
-					),
-				),
-			),
+			'fontStyle'	   	   => '',
 
 			// This string will identify the Header Pattern
 			'partHeader'      => '',
@@ -212,14 +143,7 @@ final class Flows {
 	 * @var array
 	 */
 	protected static $exception_list = array(
-		'other'        => array(
-			'remove_key' => array(),
-			'add_key'    => array(),
-		),
-		'siteFeatures' => array(
-			'remove_key' => array(),
-			'add_key'    => array(),
-		),
+		'other'        => true,
 	);
 
 	/**
