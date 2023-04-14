@@ -142,8 +142,8 @@ body {
 		--nfd-onboarding-light-gray-highlighted: #e2e9f4;
 		--nfd-onboarding-dark: #1d2a3b;
 		--nfd-onboarding-border: 219, 219, 219;
-		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
-		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
+		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-light-gray-4);
+		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-primary);
 		--nfd-onboarding-loader-start: var(--nfd-onboarding-primary);
 		--nfd-onboarding-loader-end: var(--nfd-onboarding-secondary);
 		--nfd-onboarding-step-loader-icon: url(../../Brands/crazy-domains/step-loader-logo.svg);
@@ -171,8 +171,6 @@ body {
 		}
 
 		.nfd-onboarding-drawer__panel {
-			--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-light-gray-4);
-			--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-primary);
 
 			&-scroll-container {
 				border-right: 1px solid #e0e0e0; // mirror header border.
