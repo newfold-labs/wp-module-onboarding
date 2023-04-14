@@ -136,32 +136,12 @@ final class Flows {
 	);
 
 	/**
-	 * Array with Key Names as Key, and array to specify Key from Exception Key Array to remove/add as Value
-	 *
-	 * This shall be used temporarily as the respective keys having varied patterns of values cannot be handled by the scope of current functionality
-	 *
-	 * @var array
-	 */
-	protected static $exception_list = array(
-		'other'        => true,
-	);
-
-	/**
 	 * Update Flow Key and/or Value.
 	 *
 	 * @return array
 	 */
 	public static function get_fixes() {
 		return self::$fixes;
-	}
-
-	/**
-	 * Update Exception Key(s).
-	 *
-	 * @return array
-	 */
-	public static function get_exception_list() {
-		return self::$exception_list;
 	}
 
 	 /**
