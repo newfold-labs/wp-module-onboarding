@@ -55,13 +55,14 @@ const CheckboxItem = ( {
 					<div className={ `${ className }__contents` }>
 						<div
 							className={ `${ className }__contents-icon
-                                     ${ isSelected &&
-											`${ className }__contents-icon--selected`
-		}
                                      ${
-		showDescription &&
+											isSelected &&
+											`${ className }__contents-icon--selected`
+										}
+                                     ${
+											showDescription &&
 											`${ className }__contents-icon--shown`
-		}` }
+										}` }
 						>
 							<div
 								style={ {
@@ -91,7 +92,9 @@ const CheckboxItem = ( {
 							</div>
 						</div>
 						<div
-							className={ `${ className }__contents-help ${ showDescription ? 'highlighted' : '' }` }
+							className={ `${ className }__contents-help ${
+								showDescription ? 'highlighted' : ''
+							}` }
 							onClick={ handleShowDesc }
 							role="button"
 							onKeyDown={ handleShowDesc }
