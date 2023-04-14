@@ -4,7 +4,10 @@
 	border-radius: 0;
 	display: flex;
 	position: absolute;
-	z-index: z-index(".edit-site-navigation-toggle");
+	// have changed the below value to 31 as the older value of 31 is no longer
+	// available in the @wordpress/base-styles
+	// old CSS property : z-index(".edit-site-navigation-toggle")
+	z-index: 31;
 	height: $header-height;
 	width: $header-height;
 
