@@ -1,22 +1,23 @@
-import CommonLayout from '../../../components/Layouts/Common';
-import { store as nfdOnboardingStore } from '../../../store';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
-import NewfoldLargeCard from '../../../components/NewfoldLargeCard';
-import { __ } from '@wordpress/i18n';
-import {translations} from '../../../utils/locales/translations';
 
+import CommonLayout from '../../../components/Layouts/Common';
+import NewfoldLargeCard from '../../../components/NewfoldLargeCard';
 import CardHeader from '../../../components/CardHeader';
 import NavCardButton from '../../../components/Button/NavCardButton';
-
 import Tab from '../../../components/Tab';
-import tabContent from './tabContent.json';
 import TabPanelHover from '../../../components/TabPanelHover';
+import { store as nfdOnboardingStore } from '../../../store';
+
 import { SIDEBAR_LEARN_MORE } from '../../../../constants';
+import getContents from './contents';
 
 const StepWhatNext = () => {
-	const { setIsDrawerOpened, setSidebarActiveView, setIsHeaderNavigationEnabled } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		setIsDrawerOpened,
+		setSidebarActiveView,
+		setIsHeaderNavigationEnabled,
+	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		setIsDrawerOpened( false );
@@ -24,36 +25,45 @@ const StepWhatNext = () => {
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
+	const { brandName } = useSelect( ( select ) => {
+		return {
+			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+		};
+	} );
+
+	const content = getContents( brandName );
+
 	return (
 		<CommonLayout isCentered isBgPrimary>
-						<NewfoldLargeCard>
-				<div className='whatnext-card'>
+			<NewfoldLargeCard>
+				<div className="whatnext-card">
 					<CardHeader
-						heading = { 'Nice work: Your site is ready 🎉' }
-						subHeading={ 'Move-in day begins! Let us know if you\'d like a hand.' } >
-					</CardHeader>
+						heading={ content.heading }
+						subHeading={ content.subheading }
+					></CardHeader>
 					<TabPanelHover
 						className="nfd-onboarding-overview__tab-panel"
-						tabs={tabContent.tabs.map( ( tab ) => {
+						tabs={ content.tabs.map( ( tab ) => {
 							return {
-								name: __( tab.name , 'wp-module-onboarding'),
-								title: __( tab.title , 'wp-module-onboarding'),
-								content: <Tab
-									title={ __(tab.subtitle, 'wp-module-onboarding')}
-									text={ sprintf( __(tab.text, 'wp-module-onboarding'), translations('site'))}
-									imgType={tab.imgType}
-									animationName = { tab.animationName }
-									className="tab-data" />
+								name: tab.name,
+								title: tab.title,
+								content: (
+									<Tab
+										title={ tab.subtitle }
+										text={ tab.text }
+										imgType={ tab.imgType }
+										animationName={ tab.animationName }
+										className="tab-data"
+									/>
+								),
 							};
-						} )}
+						} ) }
 					>
-						{( tab ) => <div>{tab.content}</div>}
-
+						{ ( tab ) => <div>{ tab.content }</div> }
 					</TabPanelHover>
-					<NavCardButton text={ __("Complete Setup", 'wp-module-onboarding') } ></NavCardButton>
+					<NavCardButton text={ content.buttonText }></NavCardButton>
 				</div>
 			</NewfoldLargeCard>
-
 		</CommonLayout>
 	);
 };

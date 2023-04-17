@@ -29,6 +29,7 @@ final class Brands {
 				'accountUrl'                  => 'https://my.bluehost.com',
 				'domainsUrl'                  => 'https://my.bluehost.com/hosting/app?lil=1#/domains',
 				'emailUrl'                    => 'https://my.bluehost.com/hosting/app?lil=1#/email-office',
+				'pluginDashboardPage'         => \admin_url( 'admin.php?page=bluehost' ),
 				'phoneNumbers'                => array(
 					'sales'   => '844-303-1730',
 					'support' => '888-401-4678',
@@ -66,6 +67,9 @@ final class Brands {
 						'utm_medium' => 'brand-plugin',
 					),
 				),
+				'config'                      => array(
+					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
+				),
 			),
 			'bluehost-india' => array(
 				'brand'                       => 'bluehost-india',
@@ -82,6 +86,7 @@ final class Brands {
 				'accountUrl'                  => 'https://my.bluehost.in',
 				'domainsUrl'                  => 'https://my.bluehost.in/hosting/app?lil=1#/domains',
 				'emailUrl'                    => 'https://my.bluehost.in/hosting/app?lil=1#/email-office',
+				'pluginDashboardPage'         => \admin_url( 'admin.php?page=bluehost' ),
 				'phoneNumbers'                => array(
 					'support' => '1800-419-4426',
 				),
@@ -114,6 +119,9 @@ final class Brands {
 						'utm_source' => 'wp-onboarding',
 						'utm_medium' => 'brand-plugin',
 					),
+				),
+				'config'                      => array(
+					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
 				),
 			),
 			'webcom'         => array(
@@ -166,7 +174,87 @@ final class Brands {
 						'utm_medium' => '',
 					),
 				),
+				'config'                      => array(
+					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
+				),
+			),
+			'crazy-domains'  => array(
+				'brand'                       => 'crazy-domains',
+				'name'                        => 'Crazy Domains',
+				'url'                         => 'https://www.crazydomains.com',
+				'knowledgeBaseUrl'            => 'https://www.crazydomains.com/learn/online-academy/',
+				'helpUrl'                     => 'https://www.crazydomains.com/help',
+				'blogUrl'                     => 'https://www.crazydomains.com/learn/',
+				'facebookUrl'                 => 'https://www.facebook.com/crazydomains/',
+				'twitterName'                 => '@crazydomains',
+				'twitterUrl'                  => 'https://twitter.com/crazydomains',
+				'youtubeUrl'                  => 'https://www.youtube.com/user/CrazyDomains',
+				'linkedinUrl'                 => '',
+				'accountUrl'                  => 'https://www.crazydomains.com/my-account/home/',
+				'domainsUrl'                  => '',
+				'emailUrl'                    => 'https://www.crazydomains.com/contact/',
+				'pluginDashboardPage'         => \admin_url( 'admin.php?page=crazy-domains' ),
+				'phoneNumbers'                => array(
+					'support' => '2135592459',
+				),
+				'hireExpertsInfo'             => array(
+					'defaultLink'     => 'https://www.crazydomains.com/help/',
+					'fragment'        => '',
+					'queryParameters' => array(
+						'utm_source'   => 'wp-onboarding',
+						'utm_medium'   => 'brand-plugin',
+						'utm_campaign' => 'wp-setup',
+					),
+				),
+				'expertsInfo'                 => array(
+					'defaultLink' => 'https://www.crazydomains.com/help/',
+					'queryParams' => array(
+						'utm_source' => 'wp-onboarding',
+						'utm_medium' => 'brand-plugin',
+					),
+				),
+				'fullServiceCreativeTeamInfo' => array(
+					'defaultLink' => 'https://www.crazydomains.com/help/',
+					'fragment'    => '',
+					'queryParams' => array(
+						'utm_source' => 'wp-onboarding',
+						'utm_medium' => 'brand-plugin',
+					),
+				),
+				'techSupportInfo'             => array(
+					'defaultLink' => 'https://www.crazydomains.com/contact/',
+					'queryParams' => array(
+						'utm_source' => 'wp-onboarding',
+						'utm_medium' => 'brand-plugin',
+					),
+				),
+				'config'                      => array(
+					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
+					'views'                         => array(
+						'sidebar' => array(
+							'illustration' => array(
+								'shown' => false,
+							),
+						),
+					),
+				),
 			),
 		);
+	}
+
+	/**
+	 * Sets the hosting brand for which Onboarding is active.
+	 *
+	 * @param array $container The brand plugin container.
+	 * @return void
+	 */
+	public static function set_current_brand( $container ) {
+		if ( ! defined( 'NFD_ONBOARDING_PLUGIN_BRAND' ) ) {
+			$brand = $container->plugin()->brand;
+			if ( empty( $brand ) ) {
+				$brand = 'newfold';
+			}
+			define( 'NFD_ONBOARDING_PLUGIN_BRAND', sanitize_title_with_dashes( str_replace( '_', '-', $brand ) ) );
+		}
 	}
 }

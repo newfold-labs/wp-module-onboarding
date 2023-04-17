@@ -23,6 +23,7 @@ const CheckboxItem = ( {
 	desc,
 	subtitle,
 	callback,
+	tabIndex = 0,
 	isSelectedDefault,
 	className = 'checkbox-item',
 } ) => {
@@ -91,17 +92,19 @@ const CheckboxItem = ( {
 							</div>
 						</div>
 						<div
-							className={ `${ className }__contents-help` }
+							className={ `${ className }__contents-help ${
+								showDescription ? 'highlighted' : ''
+							}` }
 							onClick={ handleShowDesc }
+							role="button"
+							onKeyDown={ handleShowDesc }
+							tabIndex={ tabIndex }
 						>
 							<Icon
 								icon={ help }
 								style={ {
 									width: '30px',
 									height: '30px',
-									fill: `${
-										showDescription ? '#1C5CBA' : '#666666'
-									}`,
 								} }
 							/>
 						</div>
