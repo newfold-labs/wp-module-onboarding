@@ -123,6 +123,7 @@ class FlowService {
 	 * @return \WP_Error|array
 	 */
 	private static function update_post_call_data_recursive( &$flow_data, $params ) {
+		$exception_list = Flows::get_exception_list();
 
 		foreach ( $flow_data as $key => $value ) {
 			if ( ! array_key_exists( $key, $params ) ) {
@@ -130,8 +131,8 @@ class FlowService {
 				continue;
 			}
 
-			// To accept default value as false/boolean (Eg: other)
-			if ( is_bool( $params[ $key ] ) || ( is_array( $params[ $key ] ) && is_bool( $value ) ) ) {
+			// Verifies the value of Exception List keys from the database and options
+			if ( isset( $exception_list[ $key ] ) ) {
 				$flow_data[ $key ] = $params[$key];
 				continue;
 			}
@@ -164,8 +165,22 @@ class FlowService {
 
 				// If the Database value is empty or an Indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
 				if ( self::is_array_indexed( $value ) ) {
-					$flow_data[ $key ]  = $params[ $key ]; 
-					continue;
+					// To check if an Indexed Array is further Nested or Not
+					foreach ( $params[$key] as $index_key => $index_value ) {
+						// For Indexed Arrays having Non Associative Array Values
+						if( count($value) === 0 || ! is_array( $index_value ) ) {
+							$flow_data[ $key ]  = $params[ $key ]; 
+							continue 2;
+						}
+						elseif(is_array($index_value)) {
+							if(count($value) === count($params[$key]))
+								$flow_data[$key][$index_key] = self::update_post_call_data_recursive($index_value, $params[$key][$index_key]);
+							else{
+								$flow_data[ $key ] = $value;
+								continue 2;
+							}
+						}
+					}						
 				}
 			}
 
