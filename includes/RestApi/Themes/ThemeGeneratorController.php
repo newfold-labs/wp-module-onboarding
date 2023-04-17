@@ -447,7 +447,7 @@ class ThemeGeneratorController {
 		}
 
 		if ( $flow_data['customDesign'] ) {
-			if ( ! $flow_data['palette'] && ! $flow_data['typography']['slug'] ) {
+			if ( ! $flow_data['colorStyle'] && ! $flow_data['fontStyle'] ) {
 				return false;
 			}
 		}
