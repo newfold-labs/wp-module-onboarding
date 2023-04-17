@@ -91,9 +91,10 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 			width: 100%;
 			opacity: 0;
 			transition: 0.5s ease;
-			background-color: rgba(28, 92, 186);
+			background-color:
+				rgb(var(--wp-admin-theme-color-darker-10--rgb))
 
-			&__icon {
+				&__icon{
 				fill: $main-color-light;
 				font-size: 20px;
 				position: absolute;

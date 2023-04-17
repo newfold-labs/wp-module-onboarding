@@ -37,16 +37,29 @@ const StepIntroPanel = lazy( () =>
 );
 
 const LearnMore = () => {
-	const { brandName, expertsLink, techSupportLink, fullServiceCreativeTeamLink } = useSelect( ( select ) => {
+	const {
+		brandName,
+		expertsLink,
+		techSupportLink,
+		fullServiceCreativeTeamLink,
+		brandConfig,
+	} = useSelect( ( select ) => {
 		return {
 			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
 			expertsLink: select( nfdOnboardingStore ).getExpertsUrl(),
 			techSupportLink: select( nfdOnboardingStore ).getTechSupportUrl(),
-			fullServiceCreativeTeamLink: select( nfdOnboardingStore ).getfullServiceCreativeTeamUrl(),
+			fullServiceCreativeTeamLink:
+				select( nfdOnboardingStore ).getfullServiceCreativeTeamUrl(),
+			brandConfig: select( nfdOnboardingStore ).getNewfoldBrandConfig(),
 		};
 	} );
 
-	const content = getContents( brandName, expertsLink, techSupportLink, fullServiceCreativeTeamLink );
+	const content = getContents(
+		brandName,
+		expertsLink,
+		techSupportLink,
+		fullServiceCreativeTeamLink
+	);
 
 	return (
 		<div className="nfd-onboarding-sidebar-learn-more__get-started-welcome">
@@ -55,7 +68,9 @@ const LearnMore = () => {
 				subheading={ content.introduction.subheading }
 				icon={ content.introduction.icon }
 			/>
-			<IllustrationPanel cssIcon={ content.illustration.icon } />
+			{ brandConfig?.views?.sidebar?.illustration?.shown !== false && (
+				<IllustrationPanel cssIcon={ content.illustration.icon } />
+			) }
 			<InfoPanel
 				headingWithDescriptions={
 					content.information.headingWithDescriptions
@@ -65,13 +80,13 @@ const LearnMore = () => {
 				<ButtonBlue
 					text={ content.help.experts.text }
 					onClick={ () =>
-						( window.open( content.help.experts.link, '_blank' ) )
+						window.open( content.help.experts.link, '_blank' )
 					}
 				/>
 				<ButtonWhite
 					text={ content.help.fullService.text }
 					onClick={ () =>
-						( window.open( content.help.fullService.link, '_blank' ) )
+						window.open( content.help.fullService.link, '_blank' )
 					}
 				/>
 				<SupportLink
