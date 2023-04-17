@@ -119,9 +119,9 @@ const StepTopPriority = () => {
 
 	const handleSkip = () => {
 		window.nfdOnboarding.newFlow = undefined;
-		currentData.data.topPriority.priority1 = priorityTypes[0] ;
+		currentData.data.topPriority.priority1 = priorityTypes[ 0 ];
 		setCurrentOnboardingData( currentData );
-	}
+	};
 
 	return (
 		<CommonLayout isVerticallyCentered>
@@ -146,7 +146,7 @@ const StepTopPriority = () => {
 						'wp-module-onboarding'
 					) }
 				</p>
-				<SkipButton callback = { handleSkip }/>
+				<SkipButton callback={ handleSkip } />
 			</div>
 		</CommonLayout>
 	);

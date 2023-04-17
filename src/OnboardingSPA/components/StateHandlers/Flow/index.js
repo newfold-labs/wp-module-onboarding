@@ -46,7 +46,10 @@ const FlowStateHandler = ( { children } ) => {
 		}
 		const firstEcommerceStep = getFirstEcommerceStep();
 		const fragment = getFragment( window.location.href );
-		const redirect = removeQueryParam( window.location.href, 'flow' ).replace( fragment, '' );
+		const redirect = removeQueryParam(
+			window.location.href,
+			'flow'
+		).replace( fragment, '' );
 		window.location.replace( `${ redirect }#${ firstEcommerceStep.path }` );
 		window.location.reload();
 	};
