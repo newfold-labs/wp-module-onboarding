@@ -153,35 +153,19 @@ class FlowService {
 			}
 
 			// To handle Indexed Arrays gracefully
-			if ( self::is_array_indexed( $params[ $key ] ) ) {
+			if ( self::is_array_indexed( $params[$key] ) && ! self::is_array_indexed( $value ) && count( $params[ $key ] ) > 0) {
 				// Verify if a value expected as an Associative Array is NOT an Indexed Array
-				if ( ! self::is_array_indexed( $value ) && count( $params[ $key ] ) > 0 ) {
-					return new \WP_Error(
-						'wrong_param_type_provided',
-						'Wrong Parameter Type Provided : ' . $key . ' => Indexed Array. Expected: Associative Array',
-						array( 'status' => 400 )
-					);
-				}
+				return new \WP_Error(
+					'wrong_param_type_provided',
+					'Wrong Parameter Type Provided : ' . $key . ' => Indexed Array. Expected: Associative Array',
+					array( 'status' => 400 )
+				);
+			}
 
-				// If the Database value is empty or an Indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
-				if ( self::is_array_indexed( $value ) ) {
-					// To check if an Indexed Array is further Nested or Not
-					foreach ( $params[$key] as $index_key => $index_value ) {
-						// For Indexed Arrays having Non Associative Array Values
-						if( count($value) === 0 || ! is_array( $index_value ) ) {
-							$flow_data[ $key ]  = $params[ $key ]; 
-							continue 2;
-						}
-						elseif(is_array($index_value)) {
-							if(count($value) === count($params[$key]))
-								$flow_data[$key][$index_key] = self::update_post_call_data_recursive($index_value, $params[$key][$index_key]);
-							else{
-								$flow_data[ $key ] = $value;
-								continue 2;
-							}
-						}
-					}						
-				}
+			// If the Database value is Empty/Indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
+			if ( self::is_array_indexed( $value ) ) {
+				$flow_data[ $key ]  = $params[ $key ]; 
+				continue;
 			}
 
 			// To handle Associative Arrays gracefully
