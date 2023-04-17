@@ -106,14 +106,14 @@
 					flex-direction: column;
 					justify-content: flex-start;
 					width: 100%;
-					border-left: 1px solid #e3dfdf;
-					border-right: 1px solid #e3dfdf;
-					border-bottom: 1px solid #e3dfdf;
+					border-left: 1px solid rgba(var(--nfd-onboarding-highlighted--rgb), 0.1);
+					border-right: 1px solid rgba(var(--nfd-onboarding-highlighted--rgb), 0.1);
+					border-bottom: 1px solid rgba(var(--nfd-onboarding-highlighted--rgb), 0.1);
 					border-top: none;
 					margin: 0 0;
 					height: 50px;
 					transform-origin: top center;
-					box-shadow: 0 11px 8px -3px rgba(88, 124, 175, 0.37);
+					box-shadow: 0 11px 8px -3px rgba(var(--nfd-onboarding-highlighted--rgb), 0.37);
 
 				}
 

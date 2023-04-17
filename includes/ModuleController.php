@@ -3,10 +3,12 @@ namespace NewfoldLabs\WP\Module\Onboarding;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Data\Flows;
-
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\Data\Brands;
 use NewfoldLabs\WP\ModuleLoader\ModuleRegistry;
 use function NewfoldLabs\WP\ModuleLoader\activate;
 use function NewfoldLabs\WP\ModuleLoader\deactivate;
+use function NewfoldLabs\WP\ModuleLoader\container;
 
 
 /**
@@ -18,24 +20,23 @@ class ModuleController {
 	 * Initialize the Module Controller functionality.
 	 */
 	public static function init() {
-		// Check the conditions after the step_theme loads as only after that the moudle had been registered prior
-		add_action( 'after_setup_theme', array( __CLASS__, 'module_switcher' ), 10, 0 );
+		// Enable/Disable the module after_setup_theme.
+		\add_action( 'after_setup_theme', array( __CLASS__, 'module_switcher' ), 10, 0 );
 	}
 
 	/**
-	 * Check if the user is a valid Ecommerce and subsequently enable/disable modules
+	 * Enable/Disable Onboarding based on certain checks.
 	 */
 	public static function module_switcher() {
 
-		$module_name   = 'onboarding';
+		$module_name = 'onboarding';
+
+		// Set brand context for the module.
+		Brands::set_current_brand( container() );
 		$customer_data = Data::customer_data();
 
-		// Sample data for Testing
-		// $customer_data['plan_subtype'] = 'wc_standard';
-		// $customer_data['signup_date']  = '2022-08-18T15:30:00.000Z';
-
 		// Check if he is a Non-Ecom Cust and Disable Redirect and Module
-		if ( ! self::is_ecom_customer( $customer_data ) ) {
+		if ( ! self::is_new_commerce_signup( $customer_data ) ) {
 
 			// Check if the Module Does Exist
 			if ( ModuleRegistry::get( $module_name ) ) {
@@ -59,43 +60,79 @@ class ModuleController {
 	}
 
 	/**
-	 * Get the current customer data using the Bluehost customer data module.
+	 * Get signup date of the install.
 	 *
-	 * @param array $customer_data The customer data to be parsed.
+	 * @param array $customer_data The customer data to be checked for signup date.
+	 * @return string|boolean
+	 */
+	public static function get_signup_date( $customer_data ) {
+		// Get the signup_date from customer data.
+		if ( isset( $customer_data['signup_date'] ) ) {
+			return gmdate( 'Y-m-d H:i:s', strtotime( $customer_data['signup_date'] ) );
+		}
+
+		// Get the signup_date from the container's install_date.
+		if ( ! empty( container()->plugin()->install_date ) ) {
+			return gmdate( 'Y-m-d H:i:s', container()->plugin()->install_date );
+		}
+
+		// Get the signup_date from the mm_install_date option.
+		$install_date = \get_option( Options::get_option_name( 'install_date', false ), false );
+		if ( false !== $install_date ) {
+			return gmdate( 'Y-m-d H:i:s', strtotime( $install_date ) );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Determine if the install is a new commerce signup
+	 *
+	 * @param array $customer_data The site's customer data.
 	 * @return boolean
 	 */
-	public static function is_ecom_customer( $customer_data ) {
-
+	public static function is_new_commerce_signup( $customer_data ) {
+		// Determine if the flow=ecommerce param is set.
 		if ( isset( $_GET['flow'] ) && 'ecommerce' === \sanitize_text_field( $_GET['flow'] ) ) {
 			return true;
 		}
 
-		// August 18
-		$new_cust_date = gmdate( 'Y-m-d H:i:s', strtotime( '2022-08-18T15:30:00.000Z' ) );
-
-		if ( isset( $customer_data['signup_date'] ) ) {
-
-			// Convert the Customer Signup Date to a Php known format
-			$cust_signup_date = gmdate( 'Y-m-d H:i:s', strtotime( $customer_data['signup_date'] ) );
-
-			// Check if the Customer is a new Customer
-			$is_new_cust = $cust_signup_date >= $new_cust_date;
-
-			// Check if the Customer has an Ecom Plan
-			$has_ecom_plan = false;
-			if ( isset( $customer_data['plan_subtype'] ) ) {
-				$has_ecom_plan = Flows::is_ecommerce_plan( $customer_data['plan_subtype'] );
-			}
-			if ( ! $has_ecom_plan ) {
-				$has_ecom_plan = Flows::is_commerce_priority();
-			}
-
-			if ( $has_ecom_plan && $is_new_cust ) {
-				return true;
-			}
+		// Determine if the install is on a commerce plan (or) has Woocommerce active (commerce priority).
+		$is_commerce = false;
+		if ( isset( $customer_data['plan_subtype'] ) ) {
+			$is_commerce = Flows::is_ecommerce_plan( $customer_data['plan_subtype'] );
+		}
+		if ( ! $is_commerce ) {
+			$is_commerce = Flows::is_commerce_priority();
+		}
+		if ( ! $is_commerce ) {
+			return false;
 		}
 
-		// If the Customer is not a Ecommerce Customer or is an Old Customer
-		return false;
+		/*
+		Get the net new signup date threshold from the brand configuration.
+		As a safety measure, return false if a threshold is not set for a particular brand.
+		*/
+		$current_brand = Data::current_brand();
+		if ( ! isset( $current_brand['config']['net_new_signup_date_threshold'] ) ) {
+			return false;
+		}
+		$net_new_signup_date_threshold = gmdate( 'Y-m-d H:i:s', strtotime( $current_brand['config']['net_new_signup_date_threshold'] ) );
+
+		// Get the actual signup date of the install.
+		$signup_date = self::get_signup_date( $customer_data );
+
+		// As a safety measure, return false if a signup date cannot be determined.
+		if ( false === $signup_date ) {
+			return false;
+		}
+
+		// Determine whether the commerce install is a net new signup.
+		$is_net_new_signup = $signup_date >= $net_new_signup_date_threshold;
+		if ( ! $is_net_new_signup ) {
+			return false;
+		}
+
+		return true;
 	}
 }

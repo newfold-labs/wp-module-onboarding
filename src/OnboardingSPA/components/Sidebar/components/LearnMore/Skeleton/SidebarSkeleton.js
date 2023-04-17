@@ -1,7 +1,17 @@
+import { useSelect } from '@wordpress/data';
+import { Fragment } from '@wordpress/element';
+
 import Animate from '../../../../Animate';
+import { store as nfdOnboardingStore } from '../../../../../store';
 
 /** Skeleton Structure for the SideBar */
 const SidebarSkeleton = () => {
+	const { brandConfig } = useSelect( ( select ) => {
+		return {
+			brandConfig: select( nfdOnboardingStore ).getNewfoldBrandConfig(),
+		};
+	} );
+
 	return (
 		<div className="sidebar-skeleton">
 			<div className="sidebar-skeleton-header">
@@ -27,13 +37,17 @@ const SidebarSkeleton = () => {
 				</div>
 			</div>
 			<div className="sidebar-skeleton-divider" />
-			<div className="sidebar-skeleton-body">
-				<Animate
-					type={ 'shine-placeholder' }
-					className="shimmer sidebar-skeleton-body-image"
-				/>
-			</div>
-			<div className="sidebar-skeleton-divider" />
+			{ brandConfig?.views?.sidebar?.illustration?.shown !== false && (
+				<Fragment>
+					<div className="sidebar-skeleton-body">
+						<Animate
+							type={ 'shine-placeholder' }
+							className="shimmer sidebar-skeleton-body-image"
+						/>
+					</div>
+					<div className="sidebar-skeleton-divider" />
+				</Fragment>
+			) }
 			<div className="sidebar-skeleton-footer">
 				<Animate
 					type={ 'shine-placeholder' }
