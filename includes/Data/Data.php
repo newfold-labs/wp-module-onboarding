@@ -80,6 +80,15 @@ final class Data {
 			}
 		}
 
+		$current_flow = Flows::get_flow_from_top_priority();
+		if ( false !== $current_flow ) {
+			return array(
+				'flow'    => 'ecommerce',
+				'subtype' => 'wc_priority',
+				'type'    => null,
+			);
+		}
+
 		return array(
 			'flow'    => Flows::get_default_flow(),
 			'subtype' => null,
@@ -93,24 +102,8 @@ final class Data {
 	 * @return string
 	 */
 	public static function current_flow() {
-
-		$current_flow = Flows::get_flow_from_params();
-		if ( false !== $current_flow ) {
-			return $current_flow;
-		}
-
-		$current_flow = Flows::get_flow_from_plugins();
-		if ( false !== $current_flow ) {
-			return $current_flow;
-		}
-
-		$customer_data = self::customer_data();
-		$current_flow  = Flows::get_flow_from_customer_data( $customer_data );
-		if ( false !== $current_flow ) {
-			return $current_flow;
-		}
-
-		return Flows::get_default_flow();
+		$current_plan = self::current_plan();
+		return $current_plan['flow'];
 	}
 
 	/**

@@ -33,7 +33,7 @@ const LearnMoreMenu = () => {
 
 	return (
 		<>
-			{ currentStep?.sidebars?.LearnMore && (
+			{ sideBarView && currentStep?.sidebars?.LearnMore && (
 				<Fill
 					name={ `${ SIDEBAR_MENU_SLOTFILL_PREFIX }/${ SIDEBAR_LEARN_MORE }` }
 				>

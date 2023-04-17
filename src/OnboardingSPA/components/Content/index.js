@@ -3,6 +3,7 @@ import { Fragment, memo, Suspense, useCallback } from '@wordpress/element';
 
 import { store as nfdOnboardingStore } from '../../store';
 import { useSelect } from '@wordpress/data';
+import FlowStateHandler from '../StateHandlers/Flow';
 
 /**
  * Primary content area within the <InterfaceSkeleton />.
@@ -17,24 +18,23 @@ const Content = () => {
 		};
 	} );
 
-	const getMappedPages = useCallback(
-		( routes ) => {
-			return routes?.map( ( route ) => (
-				<Route
-					key={ route.path }
-					path={ route.path }
-					end
-					element={ <route.Component /> }
-				/>
-			) );
-		},
-		[ routes ]
-	);
+	const getMappedPages = useCallback( () => {
+		return routes?.map( ( route ) => (
+			<Route
+				key={ route.path }
+				path={ route.path }
+				end
+				element={ <route.Component /> }
+			/>
+		) );
+	}, [ routes ] );
 
 	return (
 		<main className="nfd-onboard-content">
 			<Suspense fallback={ <Fragment /> }>
-				<Routes>{ getMappedPages( routes ) }</Routes>
+				<FlowStateHandler>
+					<Routes>{ getMappedPages( routes ) }</Routes>
+				</FlowStateHandler>
 			</Suspense>
 		</main>
 	);
