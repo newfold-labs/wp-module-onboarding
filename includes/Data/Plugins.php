@@ -284,6 +284,20 @@ final class Plugins {
 				),
 				'wc_priority' => array(),
 			),
+			'crazy-domains'  => array(
+				'wc_priority' => array(
+					array(
+						'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
+						'activate' => true,
+						'priority' => 259,
+					),
+					array(
+						'slug'     => 'nfd_slug_yith_paypal_payments_for_woocommerce',
+						'activate' => true,
+						'priority' => 258,
+					),
+				),
+			),
 		),
 	);
 

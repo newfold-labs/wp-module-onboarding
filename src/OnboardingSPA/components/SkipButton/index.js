@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
-import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
+import { wpAdminPage, pluginDashboardPage } from '../../../constants';
 
 /**
  * Interface Text Inputs with standard design.
@@ -56,7 +56,7 @@ const SkipButton = () => {
 		// Redirect to Admin Page for normal customers
 		// and Bluehost Dashboard for ecommerce customers
 		const exitLink = exitToWordpressForEcommerce()
-			? bluehostDashboardPage
+			? pluginDashboardPage
 			: wpAdminPage;
 		window.location.replace( exitLink );
 	}
@@ -66,7 +66,7 @@ const SkipButton = () => {
 			return (
 				<Button
 					className="skip-button"
-					onClick={ () => saveData( location.pathname, currentData ) }
+					onClick={ () => saveData( location.pathname ) }
 				>
 					{ __( 'Skip this Step', 'wp-module-onboarding' ) }
 				</Button>
