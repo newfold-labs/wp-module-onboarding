@@ -82,6 +82,6 @@ export const DRAWER_NAV_VIEWS = [
  * All API Requests for Onboarding.
  */
 export const API_REQUEST = {
-	SET_FLOW: "SET_FLOW",
-	COMPLETE_FLOW: "COMPLETE_FLOW",
+	SET_FLOW: 'SET_FLOW',
+	COMPLETE_FLOW: 'COMPLETE_FLOW',
 };
