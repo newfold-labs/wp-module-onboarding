@@ -201,9 +201,10 @@ export function setHeaderMenuData( menu ) {
 	};
 }
 
-export function enqueueRequest( request ) {
+export function enqueueRequest( id, request ) {
 	return {
 		type: 'ENQUEUE_REQUEST',
+		id,
 		request,
 	};
 }

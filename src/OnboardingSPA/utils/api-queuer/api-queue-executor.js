@@ -1,16 +1,13 @@
 /* eslint no-console: ["error", { allow: ["error"] }] */
 // This Executer is responsible to execute API requests in a sequence
-const apiQueueExecutor = ( requests ) => {
+const apiQueueExecutor = async ( requests ) => {
 	const items = requests;
 
-	const dequeue = () => {
+	const dequeue = async () => {
 		// Queue Empty
 		if ( ! items[ 0 ] ) return;
 
-		items[ 0 ]()
-			.catch( ( e ) => {
-				console.error( 'Error:', e );
-			} )
+		await items[ 0 ][ 1 ]()
 			.then( () => items.shift() )
 			.then( dequeue );
 	};

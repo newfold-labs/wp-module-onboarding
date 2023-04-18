@@ -217,7 +217,8 @@ export function queue( state = [], action ) {
 	switch ( action.type ) {
 		// Add a new API Request to the Queue
 		case 'ENQUEUE_REQUEST':
-			return [ ...state, action.request ];
+			state = state.filter( ( ele ) => ele[ 0 ] !== action.id );
+			return [ ...state, [ action.id, action.request ] ];
 
 		// Take out the topmost Queue Item
 		case 'DEQUEUE_REQUEST':

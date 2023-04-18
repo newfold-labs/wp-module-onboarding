@@ -17,6 +17,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { SlotFillProvider } from '@wordpress/components';
 import { useEffect, Fragment, useState } from '@wordpress/element';
 import { FullscreenMode, InterfaceSkeleton } from '@wordpress/interface';
+import { API_REQUEST } from '../../../constants';
 
 /**
  * Primary app that renders the <InterfaceSkeleton />.
@@ -130,8 +131,7 @@ const App = () => {
 						setOnboardingSocialData( socialDataResp );
 					}
 				}
-
-				enqueueRequest( () => setFlow( currentData ) );
+				enqueueRequest( API_REQUEST.SET_FLOW, () => setFlow( currentData ) );
 				flushQueue();
 				setIsRequestPlaced( false );
 			}
