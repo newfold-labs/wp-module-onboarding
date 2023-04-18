@@ -236,32 +236,8 @@ class FlowService {
 					);
 				}
 
-				// To check sub-Arrays
-				if ( ! is_array( $value ) || empty( $value ) || ( ! empty( $value ) && empty( $flow_data[$key] ) ) ) {
-					continue;
-				}
-
-				// For Indexed Arrays
-				if ( self::is_array_indexed( $value ) ) {
-					foreach ( $value as $index_key => $index_value ) {
-						// For Indexed Arrays having Associative Arrays as Values
-						if ( is_array( $index_value ) ) {
-							if(count($value) > count($flow_data[$key])) {
-								return new \WP_Error(
-									'wrong_param_provided',
-									'Wrong Parameter Provided',
-									array(
-										'status'                  => 400,
-										'Mismatched Parameter(s)' => $header_key . ' => ' . $key,
-									)
-								);
-							}
-							$verify_key = self::find_mismatch_key( $value[ $index_key ], $flow_data[ $key ][ $index_key ], $key . ' : ' . $index_key );
-							if ( \is_wp_error( $verify_key ) ) {
-								return $verify_key;
-							}
-						}
-					}
+				// To check sub-Arrays: Indexed/Empty Arrays
+				if ( ! is_array( $value ) || empty( $value ) || ( ! empty( $value ) && empty( $flow_data[$key] ) ) || self::is_array_indexed( $value ) ) {
 					continue;
 				}
 
