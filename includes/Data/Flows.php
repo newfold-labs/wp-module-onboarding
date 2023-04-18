@@ -79,9 +79,9 @@ final class Flows {
 
 			'customDesign'    => false,
 
-			'colorStyle'	   => '',
+			'colorStyle'      => '',
 
-			'fontStyle'	   	   => '',
+			'fontStyle'       => '',
 
 			// This string will identify the Header Pattern
 			'partHeader'      => '',
@@ -143,7 +143,7 @@ final class Flows {
 	 * @var array
 	 */
 	protected static $exception_list = array(
-		'other'        => true,
+		'other' => true,
 	);
 
 	/**
