@@ -133,7 +133,7 @@ class FlowService {
 
 			// Verifies the value of Exception List keys from the database and options
 			if ( isset( $exception_list[ $key ] ) ) {
-				$flow_data[ $key ] = $params[$key];
+				$flow_data[ $key ] = $params[ $key ];
 				continue;
 			}
 
@@ -153,7 +153,7 @@ class FlowService {
 			}
 
 			// To handle Indexed Arrays gracefully
-			if ( self::is_array_indexed( $params[$key] ) && ! self::is_array_indexed( $value ) && count( $params[ $key ] ) > 0) {
+			if ( self::is_array_indexed( $params[ $key ] ) && ! self::is_array_indexed( $value ) && count( $params[ $key ] ) > 0 ) {
 				// Verify if a value expected as an Associative Array is NOT an Indexed Array
 				return new \WP_Error(
 					'wrong_param_type_provided',
@@ -164,7 +164,7 @@ class FlowService {
 
 			// If the Database value is Empty/Indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
 			if ( self::is_array_indexed( $value ) ) {
-				$flow_data[ $key ]  = $params[ $key ]; 
+				$flow_data[ $key ] = $params[ $key ];
 				continue;
 			}
 
@@ -237,7 +237,7 @@ class FlowService {
 				}
 
 				// To check sub-Arrays: Indexed/Empty Arrays
-				if ( ! is_array( $value ) || empty( $value ) || ( ! empty( $value ) && empty( $flow_data[$key] ) ) || self::is_array_indexed( $value ) ) {
+				if ( ! is_array( $value ) || empty( $value ) || ( ! empty( $value ) && empty( $flow_data[ $key ] ) ) || self::is_array_indexed( $value ) ) {
 					continue;
 				}
 
