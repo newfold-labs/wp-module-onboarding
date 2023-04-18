@@ -68,7 +68,6 @@ const App = () => {
 		flushQueue,
 		enqueueRequest,
 		setOnboardingSocialData,
-		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	async function syncSocialSettings() {
@@ -134,16 +133,9 @@ const App = () => {
 				}
 
 				enqueueRequest( () => setFlow( currentData ) );
-				flushQueue( );
+				flushQueue();
 				setIsRequestPlaced( false );
 
-				// const result = await setFlow( currentData );
-				// if ( result?.error !== null ) {
-				// 	setIsRequestPlaced( false );
-				// } else {
-				// 	setCurrentOnboardingData( result?.body );
-				// 	setIsRequestPlaced( false );
-				// }
 			}
 		}
 		// Check if the Basic Info page was visited

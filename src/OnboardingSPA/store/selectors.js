@@ -360,4 +360,3 @@ export function getQueuePeek( state ) {
 export function isQueueEmpty( state ) {
 	return state?.queue?.length === 0;
 }
-

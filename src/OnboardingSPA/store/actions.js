@@ -214,7 +214,7 @@ export function dequeueRequest() {
 	};
 }
 
-export function flushQueue( ) {
+export function flushQueue() {
 	return {
 		type: 'FLUSH_QUEUE',
 	};
