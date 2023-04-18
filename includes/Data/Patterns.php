@@ -178,10 +178,13 @@ final class Patterns {
 	 * @return array|boolean
 	 */
 	public static function get_meta_from_pattern_slug( $pattern_slug ) {
-		$pattern             = explode( '/', $pattern_slug );
+		$theme_pattern = explode( '/', $pattern_slug );
+		if ( ! isset( $theme_pattern[0] ) || ! isset( $theme_pattern[1] ) ) {
+			return false;
+		}
 		$theme_patterns_meta = self::get_theme_patterns_meta();
-		return isset( $theme_patterns_meta[ $pattern[0] ][ $pattern[1] ] )
-		? $theme_patterns_meta[ $pattern[0] ][ $pattern[1] ]
+		return isset( $theme_patterns_meta[ $theme_pattern [0] ][ $theme_pattern [1] ] )
+		? $theme_patterns_meta[ $theme_pattern [0] ][ $theme_pattern [1] ]
 		: false;
 	}
 
