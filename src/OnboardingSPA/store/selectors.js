@@ -57,6 +57,16 @@ export function getNewfoldBrandName( state ) {
 }
 
 /**
+ * Gets the current Newfold Brand's Onboarding Configuration.
+ *
+ * @param {*} state
+ * @return {Object} Brand Onboarding Configuration.
+ */
+export function getNewfoldBrandConfig( state ) {
+	return state.runtime.currentBrand.config;
+}
+
+/**
  * Gets dynamic Hire Experts URL for Need Help Tag per brand
  *
  * @param {*} state
