@@ -5,7 +5,6 @@ import Sidebar from '../Sidebar';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { setFlow } from '../../utils/api/flow';
-import { API_REQUEST } from '../../../constants';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { isEmpty, updateWPSettings } from '../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../store';
@@ -135,7 +134,6 @@ const App = () => {
 				enqueueRequest( () => setFlow( currentData ) );
 				flushQueue();
 				setIsRequestPlaced( false );
-
 			}
 		}
 		// Check if the Basic Info page was visited
