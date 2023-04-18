@@ -16,7 +16,7 @@ import {
 	initialStoreInfoSteps,
 } from '../data/routes/index';
 import { sidebars } from '../data/sidebars/index';
-import apiQueueExecuter from '../utils/api-queuer/api-queue-executer';
+import apiQueueExecutor from '../utils/api-queuer/api-queue-executor';
 
 export function flow(
 	state = {
@@ -225,10 +225,8 @@ export function queue( state = [], action ) {
 
 		// Make all the Queue Requests and Empty the queue
 		case 'FLUSH_QUEUE':
-			if ( state.length === 0 ) {
-				return [];
-			}
-			return apiQueueExecuter( action.onboardingStore, state );
+			apiQueueExecutor( state );
+			return [];
 	}
 
 	return state;

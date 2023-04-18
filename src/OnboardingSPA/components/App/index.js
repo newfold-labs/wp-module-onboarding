@@ -135,18 +135,17 @@ const App = () => {
 					}
 				}
 
-				if ( location?.pathname.includes( 'header-menu' ) ) {
-					enqueueRequest( API_REQUEST.SET_FLOW );
-				} else {
-					flushQueue( onboardingStore );
-				}
-				const result = await setFlow( currentData );
-				if ( result?.error !== null ) {
-					setIsRequestPlaced( false );
-				} else {
-					setCurrentOnboardingData( result?.body );
-					setIsRequestPlaced( false );
-				}
+				enqueueRequest( () => setFlow( currentData ) );
+				flushQueue( );
+				setIsRequestPlaced( false );
+
+				// const result = await setFlow( currentData );
+				// if ( result?.error !== null ) {
+				// 	setIsRequestPlaced( false );
+				// } else {
+				// 	setCurrentOnboardingData( result?.body );
+				// 	setIsRequestPlaced( false );
+				// }
 			}
 		}
 		// Check if the Basic Info page was visited

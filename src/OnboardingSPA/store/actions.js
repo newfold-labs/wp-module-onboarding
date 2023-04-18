@@ -214,9 +214,8 @@ export function dequeueRequest() {
 	};
 }
 
-export function flushQueue( onboardingStore ) {
+export function flushQueue( ) {
 	return {
 		type: 'FLUSH_QUEUE',
-		onboardingStore,
 	};
 }
