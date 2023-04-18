@@ -446,12 +446,6 @@ class ThemeGeneratorController {
 			$flow_data['theme']['template'] = Themes::get_flow_default_theme_slug( $current_flow );
 		}
 
-		if ( $flow_data['customDesign'] ) {
-			if ( ! $flow_data['colorStyle'] && ! $flow_data['fontStyle'] ) {
-				return false;
-			}
-		}
-
 		return $flow_data;
 	}
 
