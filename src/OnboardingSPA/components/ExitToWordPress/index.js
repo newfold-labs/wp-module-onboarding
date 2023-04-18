@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
-import { wpAdminPage, bluehostDashboardPage } from '../../../constants';
+import { wpAdminPage, pluginDashboardPage } from '../../../constants';
 
 /**
  * Self-contained button and confirmation modal for exiting Onboarding page.
@@ -94,7 +94,7 @@ const ExitToWordPress = ( {
 		//Redirect to Admin Page for normal customers
 		// and Bluehost Dashboard for ecommerce customers
 		const exitLink = exitToWordpressForEcommerce()
-			? bluehostDashboardPage
+			? pluginDashboardPage
 			: wpAdminPage;
 		window.location.replace( exitLink );
 	}

@@ -111,7 +111,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 					opacity: 0;
 					z-index: 2;
 					transition: 0.5s ease;
-					background-color: rgba(28, 92, 186);
+					background-color: rgb(var(--wp-admin-theme-color-darker-10--rgb));
 
 					&__icon {
 						fill: $main-color-light;
