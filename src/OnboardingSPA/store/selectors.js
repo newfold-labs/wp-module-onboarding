@@ -361,12 +361,3 @@ export function isQueueEmpty( state ) {
 	return state?.queue?.length === 0;
 }
 
-/**
- * Gets the Onboarding Store
- *
- * @param {*} state
- * @return {Object} getOnboardingStore
- */
-export function getOnboardingStore( state ) {
-	return state;
-}

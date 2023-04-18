@@ -138,6 +138,7 @@ const StepAddress = () => {
 					}
 				}
 				setCurrentOnboardingData( {
+					...currentData,
 					storeDetails: {
 						...currentData.storeDetails,
 						address: {
@@ -187,6 +188,7 @@ const StepAddress = () => {
 			}
 		}
 		setCurrentOnboardingData( {
+			...currentData,
 			storeDetails: {
 				...currentData.storeDetails,
 				address: {

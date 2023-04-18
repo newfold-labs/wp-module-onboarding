@@ -32,7 +32,6 @@ const App = () => {
 	const pathname = kebabCase( location.pathname );
 
 	const {
-		onboardingStore,
 		isDrawerOpen,
 		newfoldBrand,
 		onboardingFlow,
@@ -44,7 +43,6 @@ const App = () => {
 		allSteps,
 	} = useSelect( ( select ) => {
 		return {
-			onboardingStore: select( nfdOnboardingStore ).getOnboardingStore(),
 			isDrawerOpen: select( nfdOnboardingStore ).isDrawerOpened(),
 			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
 			onboardingFlow: select( nfdOnboardingStore ).getOnboardingFlow(),

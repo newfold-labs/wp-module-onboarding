@@ -30,6 +30,7 @@ const StepProducts = () => {
 
 	const handleCheckbox = (value, checked) =>
 		setCurrentOnboardingData({
+			...currentData,
 			storeDetails: {
 				...currentData.storeDetails,
 				productInfo: {
@@ -43,6 +44,7 @@ const StepProducts = () => {
 
 	const handleProductCount = (count) =>
 		setCurrentOnboardingData({
+			...currentData,
 			storeDetails: {
 				...currentData.storeDetails,
 				productInfo: { ...productInfo, product_count: count },

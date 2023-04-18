@@ -58,6 +58,7 @@ const StepTax = () => {
 			);
 			const tax = selectedTaxOption?.data ?? {};
 			setCurrentOnboardingData( {
+				...currentData,
 				storeDetails: {
 					...currentData.storeDetails,
 					tax: {
@@ -88,6 +89,7 @@ const StepTax = () => {
 			( option ) => option.value === value
 		);
 		setCurrentOnboardingData( {
+			...currentData,
 			storeDetails: {
 				...currentData.storeDetails,
 				tax: {
