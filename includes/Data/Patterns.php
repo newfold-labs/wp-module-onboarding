@@ -124,6 +124,33 @@ final class Patterns {
 	}
 
 	/**
+	 * Get post metadata for a pattern. Ref: SitePagesController.php
+	 *
+	 * @return array
+	 */
+	public static function get_theme_patterns_meta() {
+		return array(
+			'yith-wonder' => array(
+				'company-page' => array(
+					'nf_dc_page' => 'about',
+				),
+				'contact-us'   => array(
+					'nf_dc_page' => 'contact',
+				),
+				'homepage-1'   => array(
+					'nf_dc_page' => 'home',
+				),
+				'homepage-2'   => array(
+					'nf_dc_page' => 'home',
+				),
+				'homepage-3'   => array(
+					'nf_dc_page' => 'home',
+				),
+			),
+		);
+	}
+
+	/**
 	 * Sanitize the content by cleaning wp_grammar.
 	 *
 	 * @param string $content Data to clean
@@ -145,6 +172,20 @@ final class Patterns {
 	}
 
 	/**
+	 * Get the post meta for a given pattern slug.
+	 *
+	 * @param string $pattern_slug The pattern slug (theme/kebab-cased-name).
+	 * @return array|boolean
+	 */
+	public static function get_meta_from_pattern_slug( $pattern_slug ) {
+		$pattern             = explode( '/', $pattern_slug );
+		$theme_patterns_meta = self::get_theme_patterns_meta();
+		return isset( $theme_patterns_meta[ $pattern[0] ][ $pattern[1] ] )
+		? $theme_patterns_meta[ $pattern[0] ][ $pattern[1] ]
+		: false;
+	}
+
+	/**
 	 * Retrieve pattern from slug.
 	 *
 	 * @param array $pattern_slug Pattern Slug Data
@@ -152,7 +193,6 @@ final class Patterns {
 	 * @return array|boolean
 	 */
 	public static function get_pattern_from_slug( $pattern_slug ) {
-
 		$block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
 		if ( $block_patterns_registry->is_registered( $pattern_slug ) ) {
 			$pattern = $block_patterns_registry->get_registered( $pattern_slug );
@@ -160,6 +200,7 @@ final class Patterns {
 				'title'   => $pattern['title'],
 				'content' => self::cleanup_wp_grammar( $pattern['content'] ),
 				'name'    => $pattern['name'],
+				'meta'    => self::get_meta_from_pattern_slug( $pattern_slug ),
 			);
 		}
 
@@ -222,11 +263,10 @@ final class Patterns {
 			return false;
 		}
 
-		$styles_to_check_for_header_menu = self::get_theme_step_patterns()[ $active_theme ]['styles-for-header-menu-check'];
-		$pattern_slugs                   = self::get_theme_step_patterns()[ $active_theme ][ $step ];
-		$block_patterns_registry         = \WP_Block_Patterns_Registry::get_instance();
-		$block_patterns                  = array();
-		$block_patterns_squashed         = '';
+		$pattern_slugs           = self::get_theme_step_patterns()[ $active_theme ][ $step ];
+		$block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
+		$block_patterns          = array();
+		$block_patterns_squashed = '';
 
 		// fetch the selected header menu slug from DB
 		$flow_data        = \get_option( Options::get_option_name( 'flow' ) );
