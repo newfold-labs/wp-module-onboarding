@@ -16,17 +16,17 @@
         }
         &-heading {
             margin: 0 0 6px 0;
-            color: var(--nfd-onboarding-dark);
+            color: var(--nfd-onboarding-contrast);
         }
         &-subheading {
-            color: var(--nfd-onboarding-dark);
+            color: var(--nfd-onboarding-contrast);
         }
     }
 
     &__tab-panel {
         width: 90%;
         padding-bottom: 40px;
-        color: var(--nfd-onboarding-dark);
+        color: var(--nfd-onboarding-contrast);
     }
 }
 

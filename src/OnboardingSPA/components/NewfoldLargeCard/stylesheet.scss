@@ -21,7 +21,7 @@
 
 	&::before {
 		content: "";
-		background: var(--nfd-onboarding-dark-icon) no-repeat;
+		background: var(--nfd-onboarding-contrast-icon) no-repeat;
 		width: 600px;
 		min-height: 500px;
 		transform: rotate(-14deg) translateZ(-1px);

@@ -8,7 +8,7 @@ body {
 		--wp-admin-theme-color-darker-10--rgb: 28, 92, 186;
 		--wp-admin-theme-color-darker-20: #0242a0;
 		--wp-admin-theme-color-darker-20--rgb: 2, 66, 160;
-		--nfd-onboarding-dark-icon: url(../../Brands/bluehost/dark.svg);
+		--nfd-onboarding-contrast-icon: url(../../Brands/bluehost/dark.svg);
 		--nfd-onboarding-icon: url(../../Brands/bluehost/icon.svg);
 		--nfd-onboarding-logo: url(../../Brands/bluehost/logo.svg);
 		--nfd-onboarding-primary: #3575d3;
@@ -26,7 +26,7 @@ body {
 		--nfd-onboarding-base-gray-5: #eee;
 		--nfd-onboarding-base-gray-6: rgb(224, 224, 224);
 		--nfd-onboarding-base-gray-highlighted: #e2e9f4;
-		--nfd-onboarding-dark: #1d2a3b;
+		--nfd-onboarding-contrast: #1d2a3b;
 		--nfd-onboarding-border: 219, 219, 219;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
 		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-base);
@@ -62,7 +62,7 @@ body {
 		--wp-admin-theme-color-darker-10--rgb: 20, 133, 236;
 		--wp-admin-theme-color-darker-20: #1177d2;
 		--wp-admin-theme-color-darker-20--rgb: 17, 119, 210;
-		--nfd-onboarding-dark-icon: url(../../Brands/hostgator/dark.svg);
+		--nfd-onboarding-contrast-icon: url(../../Brands/hostgator/dark.svg);
 		--nfd-onboarding-icon: url(../../Brands/hostgator/icon.svg);
 		--nfd-onboarding-logo: url(../../Brands/hostgator/logo.svg);
 		--nfd-onboarding-primary: #2e93ee;
@@ -79,7 +79,7 @@ body {
 		--nfd-onboarding-base-gray-4: #a7a7a7;
 		--nfd-onboarding-base-gray-5: #eee;
 		--nfd-onboarding-base-gray-6: rgb(224, 224, 224);
-		--nfd-onboarding-dark: #1e2044;
+		--nfd-onboarding-contrast: #1e2044;
 		--nfd-onboarding-border: 245, 246, 248;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
 		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-base);
@@ -94,7 +94,7 @@ body {
 		--wp-admin-theme-color-darker-10--rgb: 43, 92, 251;
 		--wp-admin-theme-color-darker-20: #0b44fb;
 		--wp-admin-theme-color-darker-20--rgb: 11, 68, 251;
-		--nfd-onboarding-dark-icon: url(../../Brands/webcom/dark.svg);
+		--nfd-onboarding-contrast-icon: url(../../Brands/webcom/dark.svg);
 		--nfd-onboarding-icon: url(../../Brands/webcom/icon.svg);
 		--nfd-onboarding-logo: url(../../Brands/webcom/logo.svg);
 		--nfd-onboarding-primary: #4b75fc;
@@ -111,7 +111,7 @@ body {
 		--nfd-onboarding-base-gray-4: #a7a7a7;
 		--nfd-onboarding-base-gray-5: #eee;
 		--nfd-onboarding-base-gray-6: rgb(224, 224, 224);
-		--nfd-onboarding-dark: #000;
+		--nfd-onboarding-contrast: #000;
 		--nfd-onboarding-border: 219, 219, 219;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary-alt);
 		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-tertiary-alt);
@@ -126,7 +126,7 @@ body {
 		--wp-admin-theme-color-darker-10--rgb: 76, 117, 32;
 		--wp-admin-theme-color-darker-20: #43681d;
 		--wp-admin-theme-color-darker-20--rgb: 67, 104, 29;
-		--nfd-onboarding-dark-icon: url(../../Brands/crazy-domains/icon-empty.svg);
+		--nfd-onboarding-contrast-icon: url(../../Brands/crazy-domains/icon-empty.svg);
 		--nfd-onboarding-icon: url(../../Brands/crazy-domains/icon.svg);
 		--nfd-onboarding-logo: url(../../Brands/crazy-domains/logo.svg);
 		--nfd-onboarding-primary: var(--wp-admin-theme-color);
@@ -144,7 +144,7 @@ body {
 		--nfd-onboarding-base-gray-5: var(--nfd-onboarding-base);
 		--nfd-onboarding-base-gray-6: rgb(224, 224, 224);
 		--nfd-onboarding-base-gray-highlighted: #e2e9f4;
-		--nfd-onboarding-dark: #1d2a3b;
+		--nfd-onboarding-contrast: #1d2a3b;
 		--nfd-onboarding-border: 219, 219, 219;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-base-gray-4);
 		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-primary);
@@ -157,7 +157,7 @@ body {
 		--nfd-onboarding-step-what-next-img-2: url(../static/images/help.png);
 
 		--nfd-onboarding-drawer-bg: var(--nfd-onboarding-base);
-		--nfd-onboarding-drawer-fg: var(--nfd-onboarding-dark);
+		--nfd-onboarding-drawer-fg: var(--nfd-onboarding-contrast);
 		--nfd-onboarding-content-bg: var(--nfd-onboarding-base);
 
 		.nfd-onboarding-drawer__toggle {

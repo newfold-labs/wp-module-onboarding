@@ -10,19 +10,19 @@ body {
 	--nfd-onboarding-logo: url(../../Brands/newfold/logo.svg);
 	--nfd-onboarding-primary: #dd5228;
 	--nfd-onboarding-base: #f2f2f2;
-	--nfd-onboarding-dark: #1e2223;
+	--nfd-onboarding-contrast: #1e2223;
 	--nfd-onboarding-white: #fff;
 	--nfd-onboarding-white-rgb: 255, 255, 255;
 	--nfd-onboarding-black: #000;
 	--nfd-onboarding-header-bg: var(--nfd-onboarding-base);
-	--nfd-onboarding-header-fg: var(--nfd-onboarding-dark);
+	--nfd-onboarding-header-fg: var(--nfd-onboarding-contrast);
 	--nfd-onboarding-content-bg: var(--nfd-onboarding-base);
-	--nfd-onboarding-content-fg: var(--nfd-onboarding-dark);
-	--nfd-onboarding-drawer-bg: var(--nfd-onboarding-dark);
+	--nfd-onboarding-content-fg: var(--nfd-onboarding-contrast);
+	--nfd-onboarding-drawer-bg: var(--nfd-onboarding-contrast);
 	--nfd-onboarding-drawer-fg: var(--nfd-onboarding-base);
-	--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-dark);
+	--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-contrast);
 	--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-base);
-	--nfd-onboarding-footer-fg: var(--nfd-onboarding-dark);
+	--nfd-onboarding-footer-fg: var(--nfd-onboarding-contrast);
 	--nfd-onboarding-footer-bg: var(--nfd-onboarding-base);
 	--nfd-onboarding-base-gray-5: #eee;
 
