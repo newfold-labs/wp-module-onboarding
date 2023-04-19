@@ -131,7 +131,9 @@ const App = () => {
 						setOnboardingSocialData( socialDataResp );
 					}
 				}
-				enqueueRequest( API_REQUEST.SET_FLOW, () => setFlow( currentData ) );
+				enqueueRequest( API_REQUEST.SET_FLOW, () =>
+					setFlow( currentData )
+				);
 				flushQueue();
 				setIsRequestPlaced( false );
 			}
