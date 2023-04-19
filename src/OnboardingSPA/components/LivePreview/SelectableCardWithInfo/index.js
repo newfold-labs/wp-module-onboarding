@@ -18,7 +18,6 @@ const SelectableCardWithInfo = ( {
 	description = false,
 	slug,
 } ) => {
-	const [ loadingParent, setIsLoadingParent ] = useState( true );
 	const [ showDescription, setShowDescription ] = useState( false );
 
 	const handleCheck = ( isChecked ) => {
@@ -32,13 +31,13 @@ const SelectableCardWithInfo = ( {
 			<div
 				className={ `${ className }__live-preview-container` }
 				onClick={ () => handleCheck( ! selected ) }
+				role="presentation"
 			>
 				<LivePreview
 					styling={ styling }
 					blockGrammer={ blockGrammer }
 					viewportWidth={ viewportWidth }
 					previewSettings={ previewSettings }
-					setIsLoadingParent={ setIsLoadingParent }
 					skeletonLoadingTime={ skeletonLoadingTime }
 				/>
 			</div>
