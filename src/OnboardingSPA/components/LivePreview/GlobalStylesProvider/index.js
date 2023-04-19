@@ -4,7 +4,11 @@ import { useState, useEffect } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, setGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
+import {
+	API_REQUEST,
+	THEME_STATUS_ACTIVE,
+	THEME_STATUS_INIT,
+} from '../../../../constants';
 
 /**
  * Global Style Parent Component
@@ -30,8 +34,12 @@ const GlobalStylesProvider = ( { children } ) => {
 		[]
 	);
 
-	const { updateThemeStatus, updatePreviewSettings } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		updateThemeStatus,
+		updatePreviewSettings,
+		flushQueue,
+		enqueueRequest,
+	} = useDispatch( nfdOnboardingStore );
 
 	const getStylesAndPatterns = async () => {
 		let selectedGlobalStyle;
@@ -52,13 +60,16 @@ const GlobalStylesProvider = ( { children } ) => {
 			}
 		}
 
-		if ( selectedGlobalStyle )
-			setGlobalStyles( {
-				...selectedGlobalStyle,
-				title: currentData.data.theme.variation,
-				version: 2,
-			} );
-
+		if ( selectedGlobalStyle ) {
+			enqueueRequest( API_REQUEST.SET_GLOBAL_STYLES, () =>
+				setGlobalStyles( {
+					...selectedGlobalStyle,
+					title: currentData.data.theme.variation,
+					version: 2,
+				} )
+			);
+			flushQueue();
+		}
 		updatePreviewSettings(
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
