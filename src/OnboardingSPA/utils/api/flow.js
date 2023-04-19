@@ -3,18 +3,11 @@ import { onboardingRestURL } from './common';
 
 import apiFetch from '@wordpress/api-fetch';
 
-let abortControllerGetFlow;
 let abortControllerSetFlow;
 
 export async function getFlow() {
-	if ( abortControllerGetFlow ) {
-		abortControllerGetFlow.abort();
-	}
-	abortControllerGetFlow = new AbortController();
-	const { signal } = abortControllerGetFlow;
-
 	return await resolve(
-		apiFetch( { url: onboardingRestURL( 'flow' ), signal } ).then()
+		apiFetch( { url: onboardingRestURL( 'flow' ) } ).then()
 	);
 }
 
