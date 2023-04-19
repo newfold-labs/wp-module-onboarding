@@ -1,25 +1,30 @@
 .nfd-onboarding-overview {
-    width: 100%;
-    max-width: 960px;
-    background-color: var(--nfd-onboarding-base);
-    padding: 20px;
-    &__header {
-        display: flex;
-        align-items: center;
-        column-gap: 1rem;
-        &-icon {
-            display: flex;
-            place-items: center;
-            svg {
-                fill: var(--nfd-onboarding-primary);
-            }
-        }
-        &-heading {
-            margin: 0 0 6px 0;
-            color: var(--nfd-onboarding-contrast);
-        }
-        &-subheading {
-            color: var(--nfd-onboarding-contrast);
-        }
-    }
+	width: 100%;
+	max-width: 960px;
+	background-color: var(--nfd-onboarding-base);
+	padding: 20px;
+
+	&__header {
+		display: flex;
+		align-items: center;
+		column-gap: 1rem;
+
+		&-icon {
+			display: flex;
+			place-items: center;
+
+			svg {
+				fill: var(--nfd-onboarding-primary);
+			}
+		}
+
+		&-heading {
+			margin: 0 0 6px 0;
+			color: var(--nfd-onboarding-contrast);
+		}
+
+		&-subheading {
+			color: var(--nfd-onboarding-contrast);
+		}
+	}
 }

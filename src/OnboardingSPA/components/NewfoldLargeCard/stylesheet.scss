@@ -36,12 +36,14 @@
 		transform-style: flat;
 		padding: 20px;
 		margin: 30px;
+
 		&::before {
 			display: none;
 		}
 	}
 
 	@media (min-width: #{ ($break-medium) }) and (max-width: 1300px) {
+
 		&::before {
 			width: 400px;
 			height: 350px;
@@ -53,6 +55,7 @@
 		max-width: 100%;
 		width: 50vw;
 		min-height: 960px;
+
 		&::before {
 			width: 860px;
 			min-height: 600px;
