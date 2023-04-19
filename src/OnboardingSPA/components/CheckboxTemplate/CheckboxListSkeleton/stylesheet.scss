@@ -6,11 +6,11 @@ $grey-color: #f6f7f8;
 	margin: 12px;
 	padding: 16px;
 	margin-top: 16px;
-	border: 0.5px solid var(--nfd-onboarding-light-gray-6);
+	border: 0.5px solid var(--nfd-onboarding-base-gray-6);
 	cursor: not-allowed;
 	width: clamp(15rem, 25vw, 35rem);
 	box-shadow: 0 2px 8px 2px rgba(204, 204, 204, 0.175295);
 	background: $grey-color;
 	background-repeat: no-repeat;
-	background-image: linear-gradient(to right, $grey-color 0%, var(--nfd-onboarding-light-gray) 20%, $grey-color 40%, $grey-color 100%);
+	background-image: linear-gradient(to right, $grey-color 0%, var(--nfd-onboarding-base-gray) 20%, $grey-color 40%, $grey-color 100%);
 }

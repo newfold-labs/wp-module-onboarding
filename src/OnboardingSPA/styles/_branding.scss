@@ -18,18 +18,18 @@ body {
 		--nfd-onboarding-secondary-alt: #304663;
 		--nfd-onboarding-tertiary: #7bb1fd;
 		--nfd-onboarding-tertiary-alt: #84c0fc;
-		--nfd-onboarding-light: #fff;
-		--nfd-onboarding-light-gray: #f0f0f0;
-		--nfd-onboarding-light-gray-2: #efefef;
-		--nfd-onboarding-light-gray-3: #f2f2f2;
-		--nfd-onboarding-light-gray-4: #a7a7a7;
-		--nfd-onboarding-light-gray-5: #eee;
-		--nfd-onboarding-light-gray-6: rgb(224, 224, 224);
-		--nfd-onboarding-light-gray-highlighted: #e2e9f4;
+		--nfd-onboarding-base: #fff;
+		--nfd-onboarding-base-gray: #f0f0f0;
+		--nfd-onboarding-base-gray-2: #efefef;
+		--nfd-onboarding-base-gray-3: #f2f2f2;
+		--nfd-onboarding-base-gray-4: #a7a7a7;
+		--nfd-onboarding-base-gray-5: #eee;
+		--nfd-onboarding-base-gray-6: rgb(224, 224, 224);
+		--nfd-onboarding-base-gray-highlighted: #e2e9f4;
 		--nfd-onboarding-dark: #1d2a3b;
 		--nfd-onboarding-border: 219, 219, 219;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
-		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
+		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-base);
 		--nfd-onboarding-loader-start: var(--nfd-onboarding-primary);
 		--nfd-onboarding-loader-end: var(--nfd-onboarding-tertiary);
 		--nfd-onboarding-step-loader-icon: url(../../Brands/bluehost/step-loader-logo.svg);
@@ -72,17 +72,17 @@ body {
 		--nfd-onboarding-secondary-alt: #363636;
 		--nfd-onboarding-tertiary: #ffcf00;
 		--nfd-onboarding-tertiary-alt: #ff9144;
-		--nfd-onboarding-light: #f5f6f8;
-		--nfd-onboarding-light-gray: #f0f0f0;
-		--nfd-onboarding-light-gray-2: #efefef;
-		--nfd-onboarding-light-gray-3: #f2f2f2;
-		--nfd-onboarding-light-gray-4: #a7a7a7;
-		--nfd-onboarding-light-gray-5: #eee;
-		--nfd-onboarding-light-gray-6: rgb(224, 224, 224);
+		--nfd-onboarding-base: #f5f6f8;
+		--nfd-onboarding-base-gray: #f0f0f0;
+		--nfd-onboarding-base-gray-2: #efefef;
+		--nfd-onboarding-base-gray-3: #f2f2f2;
+		--nfd-onboarding-base-gray-4: #a7a7a7;
+		--nfd-onboarding-base-gray-5: #eee;
+		--nfd-onboarding-base-gray-6: rgb(224, 224, 224);
 		--nfd-onboarding-dark: #1e2044;
 		--nfd-onboarding-border: 245, 246, 248;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
-		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
+		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-base);
 		--nfd-onboarding-loader-start: var(--nfd-onboarding-primary);
 		--nfd-onboarding-loader-end: var(--nfd-onboarding-tertiary);
 	}
@@ -104,13 +104,13 @@ body {
 		--nfd-onboarding-secondary-alt: #171003;
 		--nfd-onboarding-tertiary: #fed96a;
 		--nfd-onboarding-tertiary-alt: #fec101;
-		--nfd-onboarding-light: #fff;
-		--nfd-onboarding-light-gray: #f0f0f0;
-		--nfd-onboarding-light-gray-2: #efefef;
-		--nfd-onboarding-light-gray-3: #f2f2f2;
-		--nfd-onboarding-light-gray-4: #a7a7a7;
-		--nfd-onboarding-light-gray-5: #eee;
-		--nfd-onboarding-light-gray-6: rgb(224, 224, 224);
+		--nfd-onboarding-base: #fff;
+		--nfd-onboarding-base-gray: #f0f0f0;
+		--nfd-onboarding-base-gray-2: #efefef;
+		--nfd-onboarding-base-gray-3: #f2f2f2;
+		--nfd-onboarding-base-gray-4: #a7a7a7;
+		--nfd-onboarding-base-gray-5: #eee;
+		--nfd-onboarding-base-gray-6: rgb(224, 224, 224);
 		--nfd-onboarding-dark: #000;
 		--nfd-onboarding-border: 219, 219, 219;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary-alt);
@@ -136,17 +136,17 @@ body {
 		--nfd-onboarding-secondary-alt: #1d2a3b;
 		--nfd-onboarding-tertiary: #196bde;
 		--nfd-onboarding-tertiary-alt: #c77d1c;
-		--nfd-onboarding-light: #fff;
-		--nfd-onboarding-light-gray: #fcfff9;
-		--nfd-onboarding-light-gray-2: #fcfff9;
-		--nfd-onboarding-light-gray-3: #fcfff9;
-		--nfd-onboarding-light-gray-4: #5c5c5c;
-		--nfd-onboarding-light-gray-5: var(--nfd-onboarding-light);
-		--nfd-onboarding-light-gray-6: rgb(224, 224, 224);
-		--nfd-onboarding-light-gray-highlighted: #e2e9f4;
+		--nfd-onboarding-base: #fff;
+		--nfd-onboarding-base-gray: #fcfff9;
+		--nfd-onboarding-base-gray-2: #fcfff9;
+		--nfd-onboarding-base-gray-3: #fcfff9;
+		--nfd-onboarding-base-gray-4: #5c5c5c;
+		--nfd-onboarding-base-gray-5: var(--nfd-onboarding-base);
+		--nfd-onboarding-base-gray-6: rgb(224, 224, 224);
+		--nfd-onboarding-base-gray-highlighted: #e2e9f4;
 		--nfd-onboarding-dark: #1d2a3b;
 		--nfd-onboarding-border: 219, 219, 219;
-		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-light-gray-4);
+		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-base-gray-4);
 		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-primary);
 		--nfd-onboarding-loader-start: var(--nfd-onboarding-primary);
 		--nfd-onboarding-loader-end: var(--nfd-onboarding-secondary);
@@ -156,9 +156,9 @@ body {
 		--nfd-onboarding-step-what-next-img-1: url(../../Brands/crazy-domains/wp-admin.png);
 		--nfd-onboarding-step-what-next-img-2: url(../static/images/help.png);
 
-		--nfd-onboarding-drawer-bg: var(--nfd-onboarding-light);
+		--nfd-onboarding-drawer-bg: var(--nfd-onboarding-base);
 		--nfd-onboarding-drawer-fg: var(--nfd-onboarding-dark);
-		--nfd-onboarding-content-bg: var(--nfd-onboarding-light);
+		--nfd-onboarding-content-bg: var(--nfd-onboarding-base);
 
 		.nfd-onboarding-drawer__toggle {
 			background-color: transparent;
@@ -181,11 +181,11 @@ body {
 			}
 
 			&-site-title {
-				color: var(--nfd-onboarding-light-gray-4);
+				color: var(--nfd-onboarding-base-gray-4);
 			}
 
 			&-menu-link {
-				color: var(--nfd-onboarding-light-gray-4);
+				color: var(--nfd-onboarding-base-gray-4);
 
 				&.active {
 					background-color: var(--nfd-onboarding-drawer-bg);
@@ -195,7 +195,7 @@ body {
 			}
 
 			.custom-palette {
-				color: var(--nfd-onboarding-light);
+				color: var(--nfd-onboarding-base);
 			}
 
 			.drawer-palette--button {
@@ -205,7 +205,7 @@ body {
 					background-color: var(--nfd-onboarding-primary);
 
 					* {
-						color: var(--nfd-onboarding-light);
+						color: var(--nfd-onboarding-base);
 					}
 				}
 			}
@@ -214,7 +214,7 @@ body {
 		.nfd-onboarding-layout {
 
 			&.is-bg-primary {
-				background-color: var(--nfd-onboarding-light);
+				background-color: var(--nfd-onboarding-base);
 			}
 
 			.checkbox-item--selected {

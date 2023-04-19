@@ -13,7 +13,7 @@
 
 .is-bg-primary {
 	background-color: var(--nfd-onboarding-primary);
-	color: var(--nfd-onboarding-light);
+	color: var(--nfd-onboarding-base);
 }
 
 .center {
@@ -22,5 +22,5 @@
 
 input::placeholder {
 	font-size: 0.75rem;
-	color: var(--nfd-onboarding-light-gray-4);
+	color: var(--nfd-onboarding-base-gray-4);
 }

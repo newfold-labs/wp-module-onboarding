@@ -6,11 +6,11 @@
 	justify-content: center;
 
 	.highlighted {
-		background-color: var(--nfd-onboarding-light-gray-highlighted);
+		background-color: var(--nfd-onboarding-base-gray-highlighted);
 	}
 
 	.not-highlighted {
-		background-color: var(--nfd-onboarding-light-gray-3);
+		background-color: var(--nfd-onboarding-base-gray-3);
 	}
 
 	&__list {

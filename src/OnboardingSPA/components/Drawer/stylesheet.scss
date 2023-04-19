@@ -138,7 +138,7 @@
 		display: flex;
 		padding: $grid-unit-10 $grid-unit-20;
 		text-decoration: none;
-		color: var(--nfd-onboarding-light);
+		color: var(--nfd-onboarding-base);
 		align-items: center;
 		border-radius: 2px;
 		transition: background-color 100ms linear;
@@ -165,7 +165,7 @@
 
 		&.active {
 			background-color: var(--nfd-onboarding-primary);
-			color: var(--nfd-onboarding-light);
+			color: var(--nfd-onboarding-base);
 
 			svg {
 				fill: var(--nfd-onboarding-drawer-icon-active-fill);

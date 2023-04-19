@@ -36,7 +36,7 @@ $main-color-grey-other: #e2e2e2;
 			cursor: not-allowed;
 			align-items: center;
 			flex-direction: column;
-			background-color: var(--nfd-onboarding-light-gray);
+			background-color: var(--nfd-onboarding-base-gray);
 
 			&--box {
 				width: 90%;
@@ -65,7 +65,7 @@ $main-color-grey-other: #e2e2e2;
 				width: 100%;
 				height: 100%;
 				position: absolute;
-				background-image: linear-gradient(90deg, rgba(var(--nfd-onboarding-white-rgb), 0) 0, rgba(var(--nfd-onboarding-white-rgb), 0.4) 20%, rgba(var(--nfd-onboarding-white-rgb), 0.6) 60%, rgba(var(--nfd-onboarding-white-rgb), 0.4) 90%, rgba(var(--nfd-onboarding-white-rgb), 0.02) 100%, var(--nfd-onboarding-light-gray));
+				background-image: linear-gradient(90deg, rgba(var(--nfd-onboarding-white-rgb), 0) 0, rgba(var(--nfd-onboarding-white-rgb), 0.4) 20%, rgba(var(--nfd-onboarding-white-rgb), 0.6) 60%, rgba(var(--nfd-onboarding-white-rgb), 0.4) 90%, rgba(var(--nfd-onboarding-white-rgb), 0.02) 100%, var(--nfd-onboarding-base-gray));
 			}
 		}
 	}

@@ -138,7 +138,7 @@ $grey-color: #f6f7f8;
 .shimmer {
 	background: $grey-color;
 	background-repeat: no-repeat;
-	background-image: linear-gradient(to right, $grey-color 0%, var(--nfd-onboarding-light-gray) 20%, $grey-color 40%, $grey-color 100%);
+	background-image: linear-gradient(to right, $grey-color 0%, var(--nfd-onboarding-base-gray) 20%, $grey-color 40%, $grey-color 100%);
 }
 
 .shimmer-1 {
