@@ -1,5 +1,3 @@
-$white: var(--nfd-onboarding-white);
-$black: var(--nfd-onboarding-black);
 $browser-dark: #cacaca;
 $browser-light: var(--nfd-onboarding-light-gray-3);
 $link-browser-color: #007017;
@@ -52,7 +50,7 @@ $title-browser-color: #3858e9;
 .browser-content {
 	padding: 10px;
 	word-break: break-all;
-	background-color: $white;
+	background-color: var(--nfd-onboarding-white);
 
 	&_top-row {
 
@@ -75,7 +73,7 @@ $title-browser-color: #3858e9;
 	}
 
 	&_desc {
-		color: $black;
+		color: var(--nfd-onboarding-black);
 		text-align: left;
 		max-width: 450px;
 		font-weight: 400;
@@ -219,7 +217,7 @@ $title-browser-color: #3858e9;
 				width: 100%;
 				font-size: 0.8rem;
 				border: none !important;
-				background-color: $white;
+				background-color: var(--nfd-onboarding-white);
 			}
 		}
 

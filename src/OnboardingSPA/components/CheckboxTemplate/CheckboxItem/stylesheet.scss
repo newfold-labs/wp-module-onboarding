@@ -1,9 +1,4 @@
 /*COLOR VARIABLES*/
-$white-offset: var(--nfd-onboarding-light-gray-6);
-$main-color-dark: var(--wp-admin-theme-color);
-$main-color-light: var(--nfd-onboarding-white);
-$main-color: var(--nfd-onboarding-highlighted--rgb);
-$main-border-main: var(--nfd-onboarding-primary-alt);
 $box-shadow: var(--nfd-onboarding-light-gray-highlighted);
 
 .checkbox-item {
@@ -15,8 +10,8 @@ $box-shadow: var(--nfd-onboarding-light-gray-highlighted);
 	margin: 12px;
 	padding: 16px;
 	margin-top: 16px;
-	background: $main-color-light;
-	border: 1px solid $white-offset;
+	background: var(--nfd-onboarding-white);
+	border: 1px solid var(--nfd-onboarding-light-gray-6);
 	width: clamp(15rem, 25vw, 35rem);
 	box-shadow: 0 2px 8px 2px rgba(204, 204, 204, 0.175295);
 
@@ -50,7 +45,7 @@ $box-shadow: var(--nfd-onboarding-light-gray-highlighted);
 			justify-content: center;
 
 			&--selected {
-				background: $main-color-dark !important;
+				background: var(--wp-admin-theme-color) !important;
 			}
 
 			&--shown {
@@ -72,7 +67,7 @@ $box-shadow: var(--nfd-onboarding-light-gray-highlighted);
 				font-size: clamp(0.9rem, 2vw, 1rem);
 
 				&--selected {
-					color: $main-color-dark;
+					color: var(--wp-admin-theme-color);
 				}
 			}
 
@@ -96,18 +91,18 @@ $box-shadow: var(--nfd-onboarding-light-gray-highlighted);
 	}
 
 	&--selected {
-		background: rgba($main-color, 0.2);
-		border: 1px solid rgba($main-color, 0.6);
-		box-shadow: 0 2px 8px 2px rgba($white-offset, 0.8);
+		background: rgba(var(--nfd-onboarding-highlighted--rgb), 0.2);
+		border: 1px solid rgba(var(--nfd-onboarding-highlighted--rgb), 0.6);
+		box-shadow: 0 2px 8px 2px rgba(var(--nfd-onboarding-light-gray-6), 0.8);
 	}
 
 	&--shown {
 		border-bottom: none;
 		background: $box-shadow;
 		border-radius: 2px 2px 0 0;
-		border-top: 1px solid rgba($main-color, 0.1);
-		border-left: 1px solid rgba($main-color, 0.1);
-		border-right: 1px solid rgba($main-color, 0.1);
+		border-top: 1px solid rgba(var(--nfd-onboarding-highlighted--rgb), 0.1);
+		border-left: 1px solid rgba(var(--nfd-onboarding-highlighted--rgb), 0.1);
+		border-right: 1px solid rgba(var(--nfd-onboarding-highlighted--rgb), 0.1);
 	}
 
 	&__dropdown {
@@ -128,9 +123,9 @@ $box-shadow: var(--nfd-onboarding-light-gray-highlighted);
 		transform-origin: top center;
 		width: clamp(15rem, 25vw, 35rem);
 		font-size: clamp(0.82rem, 2vw, 0.9rem);
-		border-left: 1px solid rgba($main-color, 0.1);
-		border-right: 1px solid rgba($main-color, 0.1);
-		border-bottom: 1px solid rgba($main-color, 0.1);
-		box-shadow: 0 11px 8px -3px rgba($main-color, 0.37);
+		border-left: 1px solid rgba(var(--nfd-onboarding-highlighted--rgb), 0.1);
+		border-right: 1px solid rgba(var(--nfd-onboarding-highlighted--rgb), 0.1);
+		border-bottom: 1px solid rgba(var(--nfd-onboarding-highlighted--rgb), 0.1);
+		box-shadow: 0 11px 8px -3px rgba(var(--nfd-onboarding-highlighted--rgb), 0.37);
 	}
 }

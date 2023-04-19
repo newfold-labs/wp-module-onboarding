@@ -1,9 +1,3 @@
-/*COLOR VARIABLES*/
-$main-color-dark: var(--nfd-onboarding-dark);
-$main-color-light: var(--nfd-onboarding-white);
-$main-border-light: var(--nfd-onboarding-border);
-$main-border-main: var(--nfd-onboarding-primary-alt);
-$main-color: var(--nfd-onboarding-highlighted--rgb);
 
 /*BORDER RADIUS*/
 $radius: 0.2rem;
@@ -38,12 +32,12 @@ $radius: 0.2rem;
         padding-top: 20px;
         border-radius: $radius;
         background-color: transparent;
-        border: 1px solid rgba($main-border-light, 0.6);
+        border: 1px solid rgba(var(--nfd-onboarding-border), 0.6);
 
         &_title {
             font-weight: 700;
             margin-top: 30px;
-            color: $main-color-dark;
+            color: var(--nfd-onboarding-dark);
             padding: 14px 0px 10px 0px;
             transition: color 300ms ease-in;
             font-size: clamp(1rem, 2.5vw, 1.5rem);
@@ -53,7 +47,7 @@ $radius: 0.2rem;
             font-weight: 400;
             text-align: center;
             letter-spacing: 0.5px;
-            color: $main-color-dark;
+            color: var(--nfd-onboarding-dark);
             font-size: clamp(0.8rem, 2vw, 0.87rem);
         }
     }
@@ -73,11 +67,11 @@ $radius: 0.2rem;
             background-position: center;
             background-repeat: no-repeat;
             background-clip: padding-box;
-            background-color: $main-color-dark;
-            border: 4px solid rgba($main-color, 0.10544);
+            background-color: var(--nfd-onboarding-dark);
+            border: 4px solid rgba(var(--nfd-onboarding-highlighted--rgb), 0.10544);
 
             &-selected{
-                background-color: $main-border-main !important;
+                background-color: var(--nfd-onboarding-primary-alt) !important;
             }
         }
     }
@@ -91,10 +85,10 @@ $radius: 0.2rem;
         margin-top: 20px;
         justify-content: center;
         background-clip: padding-box;
-        background-color: $main-border-main;
+        background-color: var(--nfd-onboarding-primary-alt);
 
         &_path {
-            fill: $main-color-light;
+            fill: var(--nfd-onboarding-white);
             transform: scale(0.7);
         }
     }
@@ -108,7 +102,7 @@ $radius: 0.2rem;
 
 .nfd-selected-card{
     transition: all .2s ease-in-out;
-    background-color: rgba($main-color, 0.18) !important;
+    background-color: rgba(var(--nfd-onboarding-highlighted--rgb), 0.18) !important;
 }
 
 .nfd-selected-card-box{

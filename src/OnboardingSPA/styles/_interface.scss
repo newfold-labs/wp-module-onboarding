@@ -2,7 +2,7 @@ $header-height: 60px;
 $nav-sidebar-width: 300px;
 
 html.wp-toolbar {
-	background: $white;
+	background: var(--nfd-onboarding-white);
 }
 
 body {
