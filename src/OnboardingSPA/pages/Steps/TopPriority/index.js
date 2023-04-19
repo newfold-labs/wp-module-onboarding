@@ -1,5 +1,4 @@
 import { __ } from '@wordpress/i18n';
-import { useNavigate } from 'react-router-dom';
 import { useViewportMatch } from '@wordpress/compose';
 import { useEffect, useState } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -11,7 +10,7 @@ import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import SelectableCardList from '../../../components/SelectableCardList/selectable-card-list';
 
-const StepTopPriority = ( props ) => {
+const StepTopPriority = () => {
 	const priorityTypes = {
 		0: 'publishing',
 		1: 'selling',
@@ -21,22 +20,30 @@ const StepTopPriority = ( props ) => {
 	const priorities = [
 		{
 			icon: '--nfd-publish-icon',
-			title: 'Publishing',
-			desc: 'From blogs, to newsletters, to podcasts and videos, we help the web find your content.',
+			title: __( 'Publishing', 'wp-module-onboarding' ),
+			desc: __(
+				'From blogs, to newsletters, to podcasts and videos, we help the web find your content.',
+				'wp-module-onboarding'
+			),
 		},
 		{
 			icon: '--nfd-selling-icon',
-			title: 'Selling',
-			desc: "Startup or seasoned business, drop-shipping or downloads, we've got ecommerce covered.",
+			title: __( 'Selling', 'wp-module-onboarding' ),
+			desc: __(
+				"Startup or seasoned business, drop-shipping or downloads, we've got ecommerce covered.",
+				'wp-module-onboarding'
+			),
 		},
 		{
 			icon: '--nfd-design-icon',
-			title: 'Designing',
-			desc: 'With smart style presets and powerful options, we help your site look and feel polished.',
+			title: __( 'Designing', 'wp-module-onboarding' ),
+			desc: __(
+				'With smart style presets and powerful options, we help your site look and feel polished.',
+				'wp-module-onboarding'
+			),
 		},
 	];
 
-	const navigate = useNavigate();
 	const [ selected, setSelected ] = useState( 0 );
 	const [ isLoaded, setisLoaded ] = useState( false );
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -47,17 +54,18 @@ const StepTopPriority = ( props ) => {
 		setSidebarActiveView,
 		setCurrentOnboardingData,
 		setIsDrawerSuppressed,
-		setIsHeaderNavigationEnabled
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentStep, currentData } = useSelect( ( select ) => {
 		return {
-			currentStep: select(nfdOnboardingStore).getCurrentStep(),
-			currentData: select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	}, [] );
 
-	const getKey = ( priorityTypes, value ) => {
+	const getKey = ( value ) => {
 		return Object?.keys( priorityTypes ).find(
 			( key ) => priorityTypes[ key ] === value
 		);
@@ -68,7 +76,7 @@ const StepTopPriority = ( props ) => {
 			setIsDrawerOpened( true );
 		}
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
-		setIsDrawerSuppressed( false ); 
+		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
@@ -77,9 +85,9 @@ const StepTopPriority = ( props ) => {
 		async function setInitialData() {
 			if ( currentData ) {
 				const val = await currentData?.data.topPriority.priority1;
-				if ( val != '' )
-					setSelected( parseInt( getKey( priorityTypes, val ) ) );
-				else {
+				if ( val !== '' ) {
+					setSelected( parseInt( getKey( val ) ) );
+				} else {
 					currentData.data.topPriority.priority1 =
 						priorityTypes[ selected ];
 					setCurrentOnboardingData( currentData );
@@ -87,20 +95,40 @@ const StepTopPriority = ( props ) => {
 			}
 			setisLoaded( true );
 		}
-		if ( ! isLoaded ) setInitialData();
+		if ( ! isLoaded ) {
+			setInitialData();
+		}
 	}, [ isLoaded ] );
 
+	const handleSelling = () => {
+		if ( 'ecommerce' !== window.nfdOnboarding.currentFlow ) {
+			window.nfdOnboarding.newFlow = 'ecommerce';
+		}
+	};
+
 	useEffect( () => {
-		if ( isLoaded ) {
-			currentData.data.topPriority.priority1 = priorityTypes[ selected ];
-			setCurrentOnboardingData( currentData );
+		const selectedPriorityType = priorityTypes[ selected ];
+		currentData.data.topPriority.priority1 = selectedPriorityType;
+		setCurrentOnboardingData( currentData );
+		if ( 'selling' === selectedPriorityType ) {
+			handleSelling();
+		} else {
+			window.nfdOnboarding.newFlow = undefined;
 		}
 	}, [ selected ] );
+
+	const handleSkip = () => {
+		window.nfdOnboarding.newFlow = undefined;
+		currentData.data.topPriority.priority1 = priorityTypes[ 0 ];
+		setCurrentOnboardingData( currentData );
+	};
 
 	return (
 		<CommonLayout isVerticallyCentered>
 			<HeadingWithSubHeading
-				title={currentStep?.heading} subtitle={currentStep?.subheading} />
+				title={ currentStep?.heading }
+				subtitle={ currentStep?.subheading }
+			/>
 			<SelectableCardList
 				contents={ priorities }
 				selected={ selected }
@@ -118,7 +146,7 @@ const StepTopPriority = ( props ) => {
 						'wp-module-onboarding'
 					) }
 				</p>
-				<SkipButton />
+				<SkipButton callback={ handleSkip } />
 			</div>
 		</CommonLayout>
 	);

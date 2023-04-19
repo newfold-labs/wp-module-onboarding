@@ -1,6 +1,7 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
+use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginInstaller;
 
 /**
@@ -257,6 +258,18 @@ final class Flows {
 	 */
 	public static function get_flow_from_plan_subtype( $plan_subtype ) {
 		if ( self::is_ecommerce_plan( $plan_subtype ) ) {
+			return true === self::get_flows()['ecommerce'] ? 'ecommerce' : false;
+		}
+		return false;
+	}
+	/**
+	 * Get the corresponding flow from the top priority in flow data.
+	 *
+	 * @return string|boolean
+	 */
+	public static function get_flow_from_top_priority() {
+		$flow_data = FlowService::read_data_from_wp_option();
+		if ( $flow_data && isset( $flow_data['data']['topPriority']['priority1'] ) && 'selling' === $flow_data['data']['topPriority']['priority1'] ) {
 			return true === self::get_flows()['ecommerce'] ? 'ecommerce' : false;
 		}
 		return false;
