@@ -46,8 +46,8 @@ const SelectableCardWithInfo = ( {
 				className={ `${ className }__information` }
 				style={ {
 					backgroundColor: showDescription
-						? 'var(--nfd-onboarding-light-gray-highlighted)'
-						: 'var(--nfd-onboarding-light-gray-3)',
+						? 'var(--nfd-onboarding-base-gray-highlighted)'
+						: 'var(--nfd-onboarding-base-gray-3)',
 				} }
 			>
 				<div
@@ -88,8 +88,8 @@ const SelectableCardWithInfo = ( {
 					}` }
 					style={ {
 						backgroundColor: showDescription
-							? 'var(--nfd-onboarding-light-gray-highlighted)'
-							: 'var(--nfd-onboarding-light-gray-3)',
+							? 'var(--nfd-onboarding-base-gray-highlighted)'
+							: 'var(--nfd-onboarding-base-gray-3)',
 					} }
 				>
 					<p className={ `${ className }__description--text` }>
