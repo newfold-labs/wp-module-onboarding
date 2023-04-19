@@ -34,12 +34,8 @@ const GlobalStylesProvider = ( { children } ) => {
 		[]
 	);
 
-	const {
-		updateThemeStatus,
-		updatePreviewSettings,
-		flushQueue,
-		enqueueRequest,
-	} = useDispatch( nfdOnboardingStore );
+	const { updateThemeStatus, updatePreviewSettings, enqueueRequest } =
+		useDispatch( nfdOnboardingStore );
 
 	const getStylesAndPatterns = async () => {
 		let selectedGlobalStyle;
@@ -68,9 +64,9 @@ const GlobalStylesProvider = ( { children } ) => {
 					version: 2,
 				} )
 			);
-			flushQueue();
 		}
 		updatePreviewSettings(
+			// eslint-disable-next-line react-hooks/rules-of-hooks
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
 		setIsLoaded( true );
