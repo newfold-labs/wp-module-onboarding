@@ -88,6 +88,9 @@ class PluginInstaller {
 			if ( \is_wp_error( $status ) ) {
 				return $status;
 			}
+			if ( is_callable( $plugin_post_install_callback ) ) {
+				$plugin_post_install_callback();
+			}
 		}
 
 		if ( $activate && ! \is_plugin_active( $plugin_path ) ) {
@@ -96,9 +99,6 @@ class PluginInstaller {
 				$status->add_data( array( 'status' => 500 ) );
 
 				return $status;
-			}
-			if ( is_callable( $plugin_post_install_callback ) ) {
-				$plugin_post_install_callback();
 			}
 		}
 
