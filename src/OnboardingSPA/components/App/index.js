@@ -56,7 +56,6 @@ const App = () => {
 		};
 	}, [] );
 
-	const [ isApiQueuerActive, setIsApiQueuerActive ] = useState( false );
 	const [ isRequestPlaced, setIsRequestPlaced ] = useState( false );
 	const [ didVisitBasicInfo, setDidVisitBasicInfo ] = useState( false );
 	const [ didVisitEcommerce, setDidVisitEcommerce ] = useState( false );

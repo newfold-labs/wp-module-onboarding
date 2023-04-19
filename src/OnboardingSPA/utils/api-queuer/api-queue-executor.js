@@ -8,11 +8,11 @@ const apiQueueExecutor = async ( requests ) => {
 		if ( ! items[ 0 ] ) return;
 
 		await items[ 0 ][ 1 ]()
-			.then((e) => {
-				if(e.error && retryCount < 2) {
-					dequeue(retryCount + 1);
+			.then( ( e ) => {
+				if ( e.error && retryCount < 2 ) {
+					dequeue( retryCount + 1 );
 				}
-			})
+			} )
 			.then( () => items.shift() )
 			.then( dequeue );
 	};
