@@ -16,7 +16,7 @@ final class Brands {
 		return array(
 			array(
 				'brand'                       => 'wordpress',
-				'name'                        =>  __( 'your web host', 'wp-module-onboarding' ),
+				'name'                        => __( 'your web host', 'wp-module-onboarding' ),
 				'pluginDashboardPage'         => \admin_url(),
 				'hireExpertsInfo'             => array(
 					'defaultLink'     => 'https://www.bluehost.com/hosting',
