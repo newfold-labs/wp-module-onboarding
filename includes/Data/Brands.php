@@ -14,60 +14,18 @@ final class Brands {
 	public static function get_brands() {
 
 		return array(
-			'newfold'       => array(
-				'name'                        => 'your web host',
-				'url'                         => 'https://bluehost.com',
-				'knowledgeBaseUrl'            => 'https://www.bluehost.com/help/results/wordpress',
-				'helpUrl'                     => 'https://www.bluehost.com/help',
-				'blogUrl'                     => 'https://www.bluehost.com/blog/',
-				'facebookUrl'                 => 'https://www.facebook.com/bluehost',
-				'twitterName'                 => '@bluehost',
-				'twitterUrl'                  => 'https://twitter.com/bluehost',
-				'youtubeUrl'                  => 'https://www.youtube.com/user/bluehost',
-				'linkedinUrl'                 => 'https://www.linkedin.com/company/bluehost-com',
-				'accountUrl'                  => 'https://my.bluehost.com',
-				'domainsUrl'                  => 'https://my.bluehost.com/hosting/app?lil=1#/domains',
-				'emailUrl'                    => 'https://my.bluehost.com/hosting/app?lil=1#/email-office',
-				'pluginDashboardPage'         => \admin_url( 'admin.php?page=bluehost' ),
-				'phoneNumbers'                => array(
-					'sales'   => '844-303-1730',
-					'support' => '888-401-4678',
-					'intl'    => '+1-801-765-9400',
-				),
+			array(
+				'brand'                       => 'wordpress',
+				'name'                        =>  __( 'your web host', 'wp-module-onboarding' ),
+				'pluginDashboardPage'         => \admin_url(),
 				'hireExpertsInfo'             => array(
-					'defaultLink'     => 'admin.php?',
-					'fragment'        => '#/marketplace/services/blue-sky',
+					'defaultLink'     => 'https://www.bluehost.com/hosting',
 					'queryParameters' => array(
 						'page'         => 'bluehost',
 						'utm_source'   => 'wp-onboarding',
 						'utm_medium'   => 'brand-plugin',
 						'utm_campaign' => 'wp-setup',
 					),
-				),
-				'expertsInfo'                 => array(
-					'defaultLink' => 'https://my.bluehost.com/cgi/app/#/marketplace/product/i/bluesky',
-					'queryParams' => array(
-						'utm_source' => 'wp-onboarding',
-						'utm_medium' => 'brand-plugin',
-					),
-				),
-				'fullServiceCreativeTeamInfo' => array(
-					'defaultLink' => 'https://www.bluehost.com/solutions/full-service',
-					'fragment'    => '#full-service',
-					'queryParams' => array(
-						'utm_source' => 'wp-onboarding',
-						'utm_medium' => 'brand-plugin',
-					),
-				),
-				'techSupportInfo'             => array(
-					'defaultLink' => 'https://helpchat.bluehost.com/',
-					'queryParams' => array(
-						'utm_source' => 'wp-onboarding',
-						'utm_medium' => 'brand-plugin',
-					),
-				),
-				'config'                      => array(
-					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
 				),
 			),
 			'bluehost'       => array(
@@ -308,7 +266,7 @@ final class Brands {
 		if ( ! defined( 'NFD_ONBOARDING_PLUGIN_BRAND' ) ) {
 			$brand = $container->plugin()->brand;
 			if ( empty( $brand ) ) {
-				$brand = 'newfold';
+				$brand = 'wordpress';
 			}
 			define( 'NFD_ONBOARDING_PLUGIN_BRAND', sanitize_title_with_dashes( str_replace( '_', '-', $brand ) ) );
 		}
