@@ -15,7 +15,7 @@ final class Brands {
 
 		return array(
 			'newfold'       => array(
-				'name'                        => 'Your web host',
+				'name'                        => 'your web host',
 				'url'                         => 'https://bluehost.com',
 				'knowledgeBaseUrl'            => 'https://www.bluehost.com/help/results/wordpress',
 				'helpUrl'                     => 'https://www.bluehost.com/help',
