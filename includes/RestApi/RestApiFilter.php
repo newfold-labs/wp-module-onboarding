@@ -131,7 +131,11 @@ class RestApiFilter {
 	 * @return boolean
 	 */
 	public static function is_request_from_onboarding_flow( \WP_REST_Request $request ) {
-		return false !== stripos( $request->get_header( 'referer' ), 'page=nfd-onboarding' );
+		if ( ! $request->get_header( 'referer' ) ) {
+			return false;
+		} else {
+			return false !== stripos( $request->get_header( 'referer' ), 'page=nfd-onboarding' );
+		}
 	}
 
 	/**
