@@ -3,6 +3,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Patterns;
+use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 
 /**
  * Instantiate controllers and register routes.
@@ -131,11 +132,11 @@ class RestApiFilter {
 	 * @return boolean
 	 */
 	public static function is_request_from_onboarding_flow( \WP_REST_Request $request ) {
-		if ( ! $request->get_header( 'referer' ) ) {
+		$referrer = $request->get_header( 'referer' );
+		if ( ! $referrer ) {
 			return false;
-		} else {
-			return false !== stripos( $request->get_header( 'referer' ), 'page=nfd-onboarding' );
 		}
+		return false !== stripos( $referrer, 'page=' . WP_Admin::$slug );
 	}
 
 	/**
