@@ -13,8 +13,11 @@ import { SIDEBAR_LEARN_MORE } from '../../../../constants';
 import getContents from './contents';
 
 const StepWhatNext = () => {
-	const { setIsDrawerOpened, setSidebarActiveView, setIsHeaderNavigationEnabled } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		setIsDrawerOpened,
+		setSidebarActiveView,
+		setIsHeaderNavigationEnabled,
+	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		setIsDrawerOpened( false );
@@ -36,30 +39,31 @@ const StepWhatNext = () => {
 				<div className="whatnext-card">
 					<CardHeader
 						heading={ content.heading }
-						subHeading={ content.subheading } >
-					</CardHeader>
+						subHeading={ content.subheading }
+					></CardHeader>
 					<TabPanelHover
 						className="nfd-onboarding-overview__tab-panel"
 						tabs={ content.tabs.map( ( tab ) => {
 							return {
 								name: tab.name,
 								title: tab.title,
-								content: <Tab
-									title={ tab.subtitle }
-									text={ tab.text }
-									imgType={ tab.imgType }
-									animationName={ tab.animationName }
-									className="tab-data" />,
+								content: (
+									<Tab
+										title={ tab.subtitle }
+										text={ tab.text }
+										imgType={ tab.imgType }
+										animationName={ tab.animationName }
+										className="tab-data"
+									/>
+								),
 							};
 						} ) }
 					>
 						{ ( tab ) => <div>{ tab.content }</div> }
-
 					</TabPanelHover>
-					<NavCardButton text={ content.buttonText } ></NavCardButton>
+					<NavCardButton text={ content.buttonText }></NavCardButton>
 				</div>
 			</NewfoldLargeCard>
-
 		</CommonLayout>
 	);
 };

@@ -3,8 +3,14 @@ import { __, sprintf } from '@wordpress/i18n';
 
 const getContents = ( brandName ) => {
 	return {
-		heading: __( 'Nice work: Your site is ready 🎉', 'wp-module-onboarding' ),
-		subheading: __( 'Move-in day begins! Let us know if you\'d like a hand.', 'wp-module-onboarding' ),
+		heading: __(
+			'Nice work: Your site is ready 🎉',
+			'wp-module-onboarding'
+		),
+		subheading: __(
+			"Move-in day begins! Let us know if you'd like a hand.",
+			'wp-module-onboarding'
+		),
 		buttonText: __( 'Complete Setup', 'wp-module-onboarding' ),
 		tabs: [
 			{
@@ -50,13 +56,9 @@ const getContents = ( brandName ) => {
 					'Make our great people your people.',
 					'wp-module-onboarding'
 				),
-				text: sprintf(
-					/* translators: %s: Site */
-					__(
-						"Pick your %s's unique design now and refine by customing your block templates, colors and fonts in the WordPress Site Editor.",
-						'wp-module-onboarding'
-					),
-					translations( 'site' )
+				text: __(
+					'Looking for personalized WordPress assistance, or someone to take-over from here? Go beyond support with our professional services.',
+					'wp-module-onboarding'
 				),
 				imgType: 'img-3',
 				animationName: 'fade-in-left',
