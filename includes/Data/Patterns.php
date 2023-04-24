@@ -7,6 +7,22 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
 final class Patterns {
 
 	/**
+	 * List of dummy menu page titles.
+	 *
+	 * @return array
+	 */
+	public static function get_dummy_menu_items() {
+		return array(
+			__( 'Home', 'wp-module-onboarding' ),
+			__( 'About', 'wp-module-onboarding' ),
+			__( 'Contact', 'wp-module-onboarding' ),
+			__( 'News', 'wp-module-onboarding' ),
+			__( 'Privacy', 'wp-module-onboarding' ),
+			__( 'Careers', 'wp-module-onboarding' ),
+		);
+	}
+
+	/**
 	 * Retrieve Patterns for Theme Step.
 	 *
 	 * @return array
@@ -16,7 +32,8 @@ final class Patterns {
 			'yith-wonder' => array(
 				'theme-styles'    => array(
 					'site-header-left-logo-navigation-inline' => array(
-						'active' => true,
+						'active'  => true,
+						'replace' => true,
 					),
 					'homepage-1'  => array(
 						'active'  => true,
@@ -29,7 +46,8 @@ final class Patterns {
 				),
 				'homepage-styles' => array(
 					'site-header-left-logo-navigation-inline' => array(
-						'active' => true,
+						'active'  => true,
+						'replace' => true,
 					),
 					'homepage-1'  => array(
 						'active' => true,
@@ -106,6 +124,33 @@ final class Patterns {
 	}
 
 	/**
+	 * Get post metadata for a pattern. Ref: SitePagesController.php
+	 *
+	 * @return array
+	 */
+	public static function get_theme_patterns_meta() {
+		return array(
+			'yith-wonder' => array(
+				'company-page' => array(
+					'nf_dc_page' => 'about',
+				),
+				'contact-us'   => array(
+					'nf_dc_page' => 'contact',
+				),
+				'homepage-1'   => array(
+					'nf_dc_page' => 'home',
+				),
+				'homepage-2'   => array(
+					'nf_dc_page' => 'home',
+				),
+				'homepage-3'   => array(
+					'nf_dc_page' => 'home',
+				),
+			),
+		);
+	}
+
+	/**
 	 * Sanitize the content by cleaning wp_grammar.
 	 *
 	 * @param string $content Data to clean
@@ -127,6 +172,23 @@ final class Patterns {
 	}
 
 	/**
+	 * Get the post meta for a given pattern slug.
+	 *
+	 * @param string $pattern_slug The pattern slug (theme/kebab-cased-name).
+	 * @return array|boolean
+	 */
+	public static function get_meta_from_pattern_slug( $pattern_slug ) {
+		$theme_pattern = explode( '/', $pattern_slug );
+		if ( ! isset( $theme_pattern[0] ) || ! isset( $theme_pattern[1] ) ) {
+			return false;
+		}
+		$theme_patterns_meta = self::get_theme_patterns_meta();
+		return isset( $theme_patterns_meta[ $theme_pattern [0] ][ $theme_pattern [1] ] )
+		? $theme_patterns_meta[ $theme_pattern [0] ][ $theme_pattern [1] ]
+		: false;
+	}
+
+	/**
 	 * Retrieve pattern from slug.
 	 *
 	 * @param array $pattern_slug Pattern Slug Data
@@ -134,7 +196,6 @@ final class Patterns {
 	 * @return array|boolean
 	 */
 	public static function get_pattern_from_slug( $pattern_slug ) {
-
 		$block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
 		if ( $block_patterns_registry->is_registered( $pattern_slug ) ) {
 			$pattern = $block_patterns_registry->get_registered( $pattern_slug );
@@ -142,10 +203,52 @@ final class Patterns {
 				'title'   => $pattern['title'],
 				'content' => self::cleanup_wp_grammar( $pattern['content'] ),
 				'name'    => $pattern['name'],
+				'meta'    => self::get_meta_from_pattern_slug( $pattern_slug ),
 			);
 		}
 
 		return false;
+	}
+
+	/**
+	 * Replace the header menu slug in the patterns array
+	 *
+	 * @param array  $patterns Patterns for the specific step
+	 * @param string $header_menu_slug header menu slug choosen by the user
+	 *
+	 * @return array
+	 */
+	private static function replace_header_menu_slug( $patterns, $header_menu_slug ) {
+		foreach ( $patterns as $slug => $slug_details ) {
+			if ( true === $slug_details['replace'] ) {
+				unset( $patterns[ $slug ] );
+				$patterns = array_merge( array( $header_menu_slug => $slug_details ), $patterns );
+			}
+		}
+		return $patterns;
+	}
+
+	/**
+	 * Replace the header menu slug in the patterns array
+	 *
+	 * @param array $pattern_content pattern grammar that is to be modified
+	 *
+	 * @return array
+	 */
+	private static function replace_split_menu_items( $pattern_content ) {
+		$dummy_menu_grammar      = '';
+		$menu_navigation_grammar = '<!-- wp:navigation-link {"isTopLevelLink":true} /-->';
+
+		foreach ( self::get_dummy_menu_items() as $item ) {
+			$dummy_menu_grammar = '<!-- wp:navigation-link {
+				"isTopLevelLink":true, 
+				"label":"' . strtolower( $item ) . '", 
+				"title":"' . $item . '", 
+				"url":"' . get_site_url() . '/' . strtolower( $item ) . '"
+			} /-->';
+			$pattern_content    = preg_replace( $menu_navigation_grammar, $dummy_menu_grammar, $pattern_content, 1 );
+		}
+		return $pattern_content;
 	}
 
 	/**
@@ -167,11 +270,24 @@ final class Patterns {
 		$block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
 		$block_patterns          = array();
 		$block_patterns_squashed = '';
+
+		// fetch the selected header menu slug from DB
+		$flow_data        = \get_option( Options::get_option_name( 'flow' ) );
+		$header_menu_slug = explode( '/', $flow_data['data']['partHeader'] )[1];
+		if ( ! empty( $header_menu_slug ) ) {
+			$pattern_slugs = self::replace_header_menu_slug( $pattern_slugs, $header_menu_slug );
+		}
+
 		foreach ( array_keys( $pattern_slugs ) as $pattern_slug ) {
 			if ( true === $pattern_slugs[ $pattern_slug ]['active'] ) {
 				$pattern_name = $active_theme . '/' . $pattern_slug;
 				if ( $block_patterns_registry->is_registered( $pattern_name ) ) {
 					$pattern = $block_patterns_registry->get_registered( $pattern_name );
+					// if header menu slug contains "split" replace the menu links with dummy links
+					if ( false !== stripos( $pattern_slug, 'split' ) ) {
+						$pattern['content'] = self::replace_split_menu_items( $pattern['content'] );
+					}
+
 					if ( ! $squash ) {
 						$block_patterns[] = array_merge(
 							array(

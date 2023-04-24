@@ -3,7 +3,6 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Onboarding\Mustache\Mustache;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Patterns;
 
@@ -89,7 +88,7 @@ class SitePagesController {
 			return true;
 		}
 
-		 $pattern_data = Patterns::get_pattern_from_slug( $homepage_pattern_slug );
+		$pattern_data = Patterns::get_pattern_from_slug( $homepage_pattern_slug );
 		if ( ! $pattern_data ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
@@ -98,14 +97,14 @@ class SitePagesController {
 			);
 		}
 
-		 $show_pages_on_front = \get_option( Options::get_option_name( 'show_on_front', false ) );
+		$show_pages_on_front = \get_option( Options::get_option_name( 'show_on_front', false ) );
 
-		 // Check if default homepage is posts
+		// Check if default homepage is posts
 		if ( 'posts' === $show_pages_on_front ) {
-			 \update_option( Options::get_option_name( 'show_on_front', false ), 'page' );
+			\update_option( Options::get_option_name( 'show_on_front', false ), 'page' );
 		}
 
-		$post_id = $this->publish_page( 'Homepage', $pattern_data['content'], true );
+		$post_id = $this->publish_page( 'Homepage', $pattern_data['content'], true, $pattern_data['meta'] );
 		if ( is_wp_error( $post_id ) ) {
 			return $post_id;
 		}
@@ -137,7 +136,7 @@ class SitePagesController {
 					array( 'status' => 500 )
 				);
 			}
-			$page_data = $this->publish_page( $site_page['title'], $pattern_data['content'] );
+			$page_data = $this->publish_page( $site_page['title'], $pattern_data['content'], false, $pattern_data['meta'] );
 			if ( is_wp_error( $page_data ) ) {
 				return $page_data;
 			}
@@ -151,17 +150,21 @@ class SitePagesController {
 	 * @param string  $title Site Page Title
 	 * @param string  $content Pattern Content
 	 * @param boolean $is_template_no_title Check for Title
+	 * @param array   $meta The page post_meta.
 	 *
 	 * @return int|\WP_Error
 	 */
-	private function publish_page( $title, $content, $is_template_no_title = false ) {
-
+	private function publish_page( $title, $content, $is_template_no_title = false, $meta = false ) {
 		$post = array(
 			'post_title'   => $title,
 			'post_status'  => 'publish',
 			'post_content' => $content,
 			'post_type'    => 'page',
 		);
+
+		if ( $meta ) {
+			$post['meta_input'] = $meta;
+		}
 
 		if ( $is_template_no_title ) {
 			$post['page_template'] = 'no-title';
