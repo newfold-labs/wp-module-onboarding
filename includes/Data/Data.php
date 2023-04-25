@@ -35,10 +35,11 @@ final class Data {
 	 */
 	public static function current_brand() {
 		$brands = Brands::get_brands();
+		// $default_brand = Brands::get_default_brand();
 
 		return array_key_exists( NFD_ONBOARDING_PLUGIN_BRAND, $brands ) ?
 			$brands[ NFD_ONBOARDING_PLUGIN_BRAND ] :
-			array_replace( $brands['bluehost'], $brands[0] );
+			array_replace( $brands['bluehost'], Brands::get_default_brand() );
 	}
 
 
