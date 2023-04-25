@@ -48,7 +48,7 @@ const BasicInfoForm = () => {
 
 	function setDefaultData() {
 		if ( isLoaded ) {
-			setSiteLogo( flowData?.data?.siteLogo ?? 0 );
+			setSiteLogo( flowData?.data?.siteLogo ?? siteLogo );
 			setSiteTitle( flowData?.data?.blogName ?? '' );
 			setSiteDesc( flowData?.data?.blogDescription ?? '' );
 		}
