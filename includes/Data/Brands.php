@@ -7,27 +7,35 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
 final class Brands {
 
 	/**
-	 * Brand specific data - Bluehost, Bluhost India, Webcom
+	 * Default Brand Data
+	 *
+	 * @return array
+	 */
+	public static function get_default_brand() {
+		return array(
+			'brand'                       => 'wordpress',
+			'name'                        => __( 'your web host', 'wp-module-onboarding' ),
+			'pluginDashboardPage'         => \admin_url(),
+			'hireExpertsInfo'             => array(
+				'defaultLink'     => 'https://www.bluehost.com/hosting',
+				'queryParameters' => array(
+					'page'         => 'bluehost',
+					'utm_source'   => 'wp-onboarding',
+					'utm_medium'   => 'brand-plugin',
+					'utm_campaign' => 'wp-setup',
+				),
+			),
+		);
+	}
+
+	/**
+	 * Brand specific data - Bluehost, Bluehost India, Webcom
 	 *
 	 * @return array
 	 */
 	public static function get_brands() {
 
 		return array(
-			array(
-				'brand'                       => 'wordpress',
-				'name'                        => __( 'your web host', 'wp-module-onboarding' ),
-				'pluginDashboardPage'         => \admin_url(),
-				'hireExpertsInfo'             => array(
-					'defaultLink'     => 'https://www.bluehost.com/hosting',
-					'queryParameters' => array(
-						'page'         => 'bluehost',
-						'utm_source'   => 'wp-onboarding',
-						'utm_medium'   => 'brand-plugin',
-						'utm_campaign' => 'wp-setup',
-					),
-				),
-			),
 			'bluehost'       => array(
 				'brand'                       => 'bluehost',
 				'name'                        => 'Bluehost',
