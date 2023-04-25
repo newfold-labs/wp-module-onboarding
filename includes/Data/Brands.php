@@ -17,7 +17,7 @@ final class Brands {
 			'name'                        => __( 'your web host', 'wp-module-onboarding' ),
 			'pluginDashboardPage'         => \admin_url(),
 			'hireExpertsInfo'             => array(
-				'defaultLink'     => 'https://www.bluehost.com/hosting',
+				'defaultLink'     => 'https://www.bluehost.com/wp-live',
 				'queryParameters' => array(
 					'page'         => 'bluehost',
 					'utm_source'   => 'wp-onboarding',
