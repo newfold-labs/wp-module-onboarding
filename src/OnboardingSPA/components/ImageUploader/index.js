@@ -42,8 +42,8 @@ const ImageUploader = ( { icon, iconSetter } ) => {
 
 	const removeSelectedImage = () => {
 		iconSetter( {
-			id : 0,
-			url : '',
+			id: 0,
+			url: '',
 		} );
 		if ( inputRef?.current?.files.length > 0 ) {
 			inputRef.current.value = '';

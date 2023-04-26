@@ -60,8 +60,9 @@ const DesignTypography = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
+		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus ) {
 			getFontStylesAndPatterns();
+		}
 	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = async (
@@ -146,7 +147,9 @@ const DesignTypography = () => {
 		const paletteRenderedList = [];
 		for ( const fontStyle in fontPalettes ) {
 			const splitLabel = fontPalettes[ fontStyle ]?.label.split( '&', 2 );
-			if ( splitLabel.length === 0 ) continue;
+			if ( splitLabel.length === 0 ) {
+				continue;
+			}
 			paletteRenderedList.push(
 				<div
 					className={ `font-palette drawer-palette--button ${
@@ -221,7 +224,7 @@ const DesignTypography = () => {
 	return (
 		<div ref={ drawerFontOptions } className="theme-fonts--drawer">
 			<h2>{ __( 'Font Palettes', 'wp-module-onboarding' ) }</h2>
-			{ /* { selectedFont && 
+			{ /* { selectedFont &&
 			<div className='theme-fonts--drawer--reset' onClick={resetFonts}>
 				<div>Reset Button</div>
 			</div>
