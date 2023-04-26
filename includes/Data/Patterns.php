@@ -220,7 +220,7 @@ final class Patterns {
 	 */
 	private static function replace_header_menu_slug( $patterns, $header_menu_slug ) {
 		foreach ( $patterns as $slug => $slug_details ) {
-			if ( true === $slug_details['replace'] ) {
+			if ( isset( $slug_details['replace'] ) && true === $slug_details['replace'] ) {
 				unset( $patterns[ $slug ] );
 				$patterns = array_merge( array( $header_menu_slug => $slug_details ), $patterns );
 			}
