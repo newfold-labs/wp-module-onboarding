@@ -34,7 +34,11 @@ final class Data {
 	 * @return array
 	 */
 	public static function current_brand() {
-		return Brands::get_brand_data();
+		$brands = Brands::get_brands();
+		
+		return array_key_exists( NFD_ONBOARDING_PLUGIN_BRAND, $brands ) ?
+			$brands[ NFD_ONBOARDING_PLUGIN_BRAND ] :
+			Brands::get_default_brand();
 	}
 
 
