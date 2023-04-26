@@ -1,4 +1,6 @@
 /* eslint no-console: ["error", { allow: ["error"] }] */
+import { MAX_RETRIES_API_QUEUER } from "../../../constants";
+
 // This Executer is responsible to execute API requests in a sequence
 const apiQueueExecutor = async ( requests ) => {
 	const items = requests;
@@ -9,7 +11,7 @@ const apiQueueExecutor = async ( requests ) => {
 
 		await items[ 0 ][ 1 ]()
 			.then( ( e ) => {
-				if ( e.error && retryCount < 2 ) {
+				if ( e.error && retryCount < MAX_RETRIES_API_QUEUER ) {
 					dequeue( retryCount + 1 );
 				}
 			} )
