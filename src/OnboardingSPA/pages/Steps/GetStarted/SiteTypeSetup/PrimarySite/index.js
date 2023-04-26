@@ -76,6 +76,43 @@ const StepPrimarySetup = () => {
 		setCurrentOnboardingData( currentDataCopy );
 	};
 
+	const primarySiteTypeChips = () => {
+		let primaryChipList = [];
+		
+		let types = content?.categories?.types;
+		for ( let typeKey in types ) {
+			primaryChipList.push(
+				<div
+					key={ types[typeKey]?.slug }
+					className={ `${
+						types[typeKey].slug ===
+							selectedPrimaryCategoryInStore
+							? 'chosenPrimaryCategory '
+							: ''
+					}nfd-card-category` }
+					onClick={ ( e ) =>
+						handleCategoryClick( idx )
+					}
+				>
+					<div className="nfd-card-category-wrapper">
+						<span
+							className="nfd-card-category-wrapper-icon"
+							style={ {
+								backgroundImage:
+									`url(${types[typeKey]?.icon})`
+							} }
+						></span>
+						<span className="categName">
+							{ types[typeKey]?.label }
+						</span>
+					</div>
+				</div>
+			)
+		}
+
+		return primaryChipList;
+	}
+
 	return (
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard>
@@ -102,48 +139,17 @@ const StepPrimarySetup = () => {
 						selectedPrimaryCategoryInStore !== null
 					}
 				>
-					<div className="nfd-setup-primary-categories">
-						{ content.categories.map( ( item, idx ) => {
-							return (
-								<div
-									key={ item?.name }
-									className={ `${
-										clickedIndex === idx ||
-										item.name ===
-											selectedPrimaryCategoryInStore
-											? 'chosenPrimaryCategory '
-											: ''
-									}nfd-card-category` }
-									onClick={ ( e ) =>
-										handleCategoryClick( idx )
-									}
-								>
-									<div className="nfd-card-category-wrapper">
-										<span
-											className="icon"
-											style={ {
-												backgroundImage:
-													clickedIndex !== idx &&
-													item.name !==
-														selectedPrimaryCategoryInStore
-														? item?.icon
-														: item?.iconWhite,
-											} }
-										></span>
-										<span className="categName">
-											{ item?.name }
-										</span>
-									</div>
-								</div>
-							);
-						} ) }
+					<div style={{backgroundColor: 'red'}}>
+						<image src="https://cdn.hiive.space/site-classification/business.svg" height={24} width={24}/>
 					</div>
-
+					<div className="nfd-setup-primary-categories">
+						{ primarySiteTypeChips() }
+					</div>
 					<div className="nfd-setup-primary-second">
 						<div className="nfd-setup-primary-second-top">
 							<p className="blackText">or tell us here:</p>
 							<input
-								type="text"
+								type="search"
 								onChange={ ( e ) => categoryInput( e ) }
 								className="tellUsInput"
 								placeholder={ sprintf(
