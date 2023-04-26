@@ -1,5 +1,5 @@
 /* eslint no-console: ["error", { allow: ["error"] }] */
-import { MAX_RETRIES_API_QUEUER } from "../../../constants";
+import { MAX_RETRIES_API_QUEUER } from '../../../constants';
 
 // This Executer is responsible to execute API requests in a sequence
 const apiQueueExecutor = async ( requests ) => {
