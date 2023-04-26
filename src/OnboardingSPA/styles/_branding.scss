@@ -2,41 +2,43 @@ body {
 
 
 	// Default WP based Styles
-	--wp-admin-theme-color: #007cba;
-	--wp-admin-theme-color--rgb: 0, 124, 186;
-	--wp-admin-theme-color-darker-10: #006ba1;
-	--wp-admin-theme-color-darker-10--rgb: 0, 107, 161;
-	--wp-admin-theme-color-darker-20: #1e1e1e;
-	--wp-admin-theme-color-darker-20--rgb: 0, 30, 30;
-	--nfd-onboarding-dark-icon: url(../../Brands/wordpress/dark.svg);
-	--nfd-onboarding-icon: url(../../Brands/wordpress/icon.svg);
-	--nfd-onboarding-logo: url(../../Brands/wordpress/logo.svg);
-	--nfd-onboarding-primary: var(--wp-admin-theme-color);
-	--nfd-onboarding-highlighted--rgb: var(--wp-admin-theme-color-darker-10--rgb);
-	--nfd-onboarding-primary-alt: var(--wp-admin-theme-color-darker-10);
-	--nfd-onboarding-secondary: var(--wp-admin-theme-color-darker-10);
-	--nfd-onboarding-secondary-alt: var(--wp-admin-theme-color-darker-20);
-	--nfd-onboarding-tertiary: var(--nfd-onboarding-primary);
-	--nfd-onboarding-tertiary-alt: var(--nfd-onboarding-primary-alt);
-	--nfd-onboarding-light: #fff;
-	--nfd-onboarding-light-gray: #f0f0f0;
-	--nfd-onboarding-light-gray-2: #efefef;
-	--nfd-onboarding-light-gray-3: #f2f2f2;
-	--nfd-onboarding-light-gray-4: #a7a7a7;
-	--nfd-onboarding-light-gray-5: #eee;
-	--nfd-onboarding-light-gray-highlighted: #e2e9f4;
-	--nfd-onboarding-dark: var(--wp-admin-theme-color-darker-20);
-	--nfd-onboarding-border: 219, 219, 219;
-	--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
-	--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
-	--nfd-onboarding-loader-start: var(--nfd-onboarding-primary);
-	--nfd-onboarding-loader-end: var(--nfd-onboarding-secondary);
-	--nfd-onboarding-step-loader-icon: url(../../Brands/wordpress/step-loader-logo.svg);
-	--nfd-onboarding-step-error-icon: url(../../Brands/wordpress/step-error-logo.svg);
-	--nfd-onboarding-step-what-next-img-3: url(../../Brands/wordpress/full-service.png);
-	--nfd-onboarding-step-what-next-img-1: url(../../Brands/wordpress/wp-admin.png);
-	--nfd-onboarding-step-what-next-img-2: url(../static/images/help.png);
-
+	&.nfd-brand-wordpress {
+		--wp-admin-theme-color: #007cba;
+		--wp-admin-theme-color--rgb: 0, 124, 186;
+		--wp-admin-theme-color-darker-10: #006ba1;
+		--wp-admin-theme-color-darker-10--rgb: 0, 107, 161;
+		--wp-admin-theme-color-darker-20: #1e1e1e;
+		--wp-admin-theme-color-darker-20--rgb: 0, 30, 30;
+		--nfd-onboarding-dark-icon: url(../../Brands/wordpress/dark.svg);
+		--nfd-onboarding-icon: url(../../Brands/wordpress/icon.svg);
+		--nfd-onboarding-logo: url(../../Brands/wordpress/logo.svg);
+		--nfd-onboarding-primary: var(--wp-admin-theme-color);
+		--nfd-onboarding-highlighted--rgb: var(--wp-admin-theme-color-darker-10--rgb);
+		--nfd-onboarding-primary-alt: var(--wp-admin-theme-color-darker-10);
+		--nfd-onboarding-secondary: var(--wp-admin-theme-color-darker-10);
+		--nfd-onboarding-secondary-alt: var(--wp-admin-theme-color-darker-20);
+		--nfd-onboarding-tertiary: var(--nfd-onboarding-primary);
+		--nfd-onboarding-tertiary-alt: var(--nfd-onboarding-primary-alt);
+		--nfd-onboarding-light: #fff;
+		--nfd-onboarding-light-gray: #f0f0f0;
+		--nfd-onboarding-light-gray-2: #efefef;
+		--nfd-onboarding-light-gray-3: #f2f2f2;
+		--nfd-onboarding-light-gray-4: #a7a7a7;
+		--nfd-onboarding-light-gray-5: #eee;
+		--nfd-onboarding-light-gray-highlighted: #e2e9f4;
+		--nfd-onboarding-dark: var(--wp-admin-theme-color-darker-20);
+		--nfd-onboarding-border: 219, 219, 219;
+		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
+		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
+		--nfd-onboarding-loader-start: var(--nfd-onboarding-primary);
+		--nfd-onboarding-loader-end: var(--nfd-onboarding-secondary);
+		--nfd-onboarding-step-loader-icon: url(../../Brands/wordpress/step-loader-logo.svg);
+		--nfd-onboarding-step-error-icon: url(../../Brands/wordpress/step-error-logo.svg);
+		--nfd-onboarding-step-what-next-img-3: url(../../Brands/wordpress/full-service.png);
+		--nfd-onboarding-step-what-next-img-1: url(../../Brands/wordpress/wp-admin.png);
+		--nfd-onboarding-step-what-next-img-2: url(../static/images/help.png);
+	}
+	
 	&.nfd-brand-bluehost,
 	&.nfd-brand-bluehost-india {
 		--wp-admin-theme-color: #3575d3;
