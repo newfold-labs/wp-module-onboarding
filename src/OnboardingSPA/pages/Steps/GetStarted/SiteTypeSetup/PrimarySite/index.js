@@ -39,27 +39,21 @@ const StepPrimarySetup = () => {
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
-	const [ clickedIndex, changeCategory ] = useState( -1 );
-	const [ inputCategVal, changeInputCateg ] = useState( '' );
+	const [ primaryCategory, changePrimaryCategory ] = useState( "" );
+	const [ inputFieldValue, setInputFieldValue ] = useState( '' );
 
-	const categoriesArray = content.categories;
 	const selectedPrimaryCategoryInStore = currentData?.data?.siteType?.primary;
 
-	/**This condition fills the data in input box if the saved category isn't a subcategory from the content*/
-	if ( selectedPrimaryCategoryInStore && ! inputCategVal ) {
-		const found = categoriesArray.find(
-			( e ) => e.name === selectedPrimaryCategoryInStore
-		);
-		if ( ! found && selectedPrimaryCategoryInStore !== 'primaryCategory' )
-			changeInputCateg( selectedPrimaryCategoryInStore );
-	}
-
-	const handleCategoryClick = ( idxOfElm ) => {
-		changeCategory( idxOfElm );
-		changeInputCateg( '' );
+	/**
+	 * Function which saves data in redux when category name is selected via chips
+	 *
+	 * @param  input
+	 */
+	const handleCategoryClick = ( type ) => {
+		changePrimaryCategory( type );
+		setInputFieldValue( '' );
 		const currentDataCopy = currentData;
-		currentDataCopy.data.siteType.primary =
-			content.categories[ idxOfElm ]?.name;
+		currentDataCopy.data.siteType.primary = type;
 		setCurrentOnboardingData( currentDataCopy );
 	};
 
@@ -69,8 +63,8 @@ const StepPrimarySetup = () => {
 	 * @param  input
 	 */
 	const categoryInput = ( input ) => {
-		changeCategory( -1 );
-		changeInputCateg( input?.target?.value );
+		changePrimaryCategory( "" );
+		setInputFieldValue( input?.target?.value );
 		const currentDataCopy = currentData;
 		currentDataCopy.data.siteType.primary = input?.target?.value;
 		setCurrentOnboardingData( currentDataCopy );
@@ -85,18 +79,21 @@ const StepPrimarySetup = () => {
 				<div
 					key={ types[typeKey]?.slug }
 					className={ `${
-						types[typeKey].slug ===
-							selectedPrimaryCategoryInStore
+						types[typeKey].slug === primaryCategory
 							? 'chosenPrimaryCategory '
 							: ''
 					}nfd-card-category` }
 					onClick={ ( e ) =>
-						handleCategoryClick( idx )
+						handleCategoryClick( types[typeKey].slug )
 					}
 				>
 					<div className="nfd-card-category-wrapper">
 						<span
-							className="nfd-card-category-wrapper-icon"
+							className={ `nfd-card-category-wrapper-icon ${
+								types[typeKey].slug === primaryCategory
+									? 'nfd-card-category-wrapper-icon-selected '
+									: ''
+							}` }
 							style={ {
 								backgroundImage:
 									`url(${types[typeKey]?.icon})`
@@ -159,7 +156,7 @@ const StepPrimarySetup = () => {
 									),
 									translations( 'site' )
 								) }
-								value={ inputCategVal }
+								value={ inputFieldValue }
 							/>
 						</div>
 					</div>

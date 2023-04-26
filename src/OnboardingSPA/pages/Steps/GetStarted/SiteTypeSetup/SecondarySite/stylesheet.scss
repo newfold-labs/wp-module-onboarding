@@ -38,10 +38,14 @@
 			}
 	
 			.icon {
-				width: 25px;
+				width: 24px;
 				height: 24px;
+				transform: scale(0.6);
 				display: inline-block;
+				background-size: 24px 24px;
 				background-repeat: no-repeat;
+				background-position: center;
+				
 				@media (max-width:500px) {
 					display: none;					
 				}

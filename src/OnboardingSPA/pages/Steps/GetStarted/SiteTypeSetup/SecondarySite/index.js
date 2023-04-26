@@ -29,11 +29,14 @@ const StepPrimarySetup = () => {
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
 		setIsHeaderNavigationEnabled( true );
+		changePrimaryType( currentData?.data?.siteType?.primary );
 	}, [] );
 
-	const [ clickedIndex, changeCategory ] = useState( -1 );
+	const defaultPrimaryType = "business";
+	const [ primaryType, changePrimaryType ] = useState( defaultPrimaryType );
+	const [ secondaryType, changeSecondaryType ] = useState( "" );
 	const [ inputCategVal, changeInputCateg ] = useState( '' );
-
+	console.log(primaryType);
 	const { currentStep, currentData } = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
@@ -43,8 +46,8 @@ const StepPrimarySetup = () => {
 	}, [] );
 
 	const selectedCategoryInStore = currentData?.data?.siteType?.secondary;
-	const categoriesArray = content.categories;
-	const subCategories = categoriesArray[ 0 ]?.subCategories;
+	const primaryCategoryData = content.categories.types[ primaryType ];
+	const subCategories = primaryCategoryData?.secondaryTypes;
 
 	/**This condition fills the data in input box if the saved category isn't a subcategory from the content*/
 	if (
@@ -62,7 +65,7 @@ const StepPrimarySetup = () => {
 	 * @param  input
 	 */
 	const categoryInput = ( input ) => {
-		changeCategory( -1 );
+		changeSecondaryType( -1 );
 		changeInputCateg( input?.target?.value );
 		const currentDataCopy = currentData;
 		currentDataCopy.data.siteType.secondary = input?.target?.value;
@@ -75,13 +78,38 @@ const StepPrimarySetup = () => {
 	 * @param  idxOfElm
 	 */
 	const handleCategoryClick = ( idxOfElm ) => {
-		changeCategory( idxOfElm );
+		changeSecondaryType( idxOfElm );
 		changeInputCateg( '' );
 		const currentDataCopy = currentData;
-		currentDataCopy.data.siteType.secondary =
-			categoriesArray[ 0 ]?.subCategories[ idxOfElm ];
+		currentDataCopy.data.siteType.secondary = subCategories[ idxOfElm ];
 		setCurrentOnboardingData( currentDataCopy );
 	};
+
+	const secondarySiteTypeChips = () => {
+		let secondaryChipList = [];
+		
+		let types = content?.categories?.types["business"].secondaryTypes;
+		for ( let typeKey in types ) {
+			secondaryChipList.push(
+				<span
+					key={ typeKey }
+					onClick={ ( e ) =>
+						handleCategoryClick( typeKey )
+					}
+					className={ `${
+						types[typeKey] === selectedCategoryInStore
+							? 'chosenSecondaryCategory '
+							: ''
+					}nfd-card-category` }
+				>
+					{ types[typeKey].label }
+				</span>
+			)
+		}
+
+		return secondaryChipList;
+	}
+
 
 	return (
 		<CommonLayout isBgPrimary isCentered>
@@ -105,7 +133,7 @@ const StepPrimarySetup = () => {
 				<Animate
 					type="fade-in-disabled"
 					after={
-						categoriesArray[ 0 ]?.subCategories &&
+						primaryCategoryData?.secondaryTypes &&
 						selectedCategoryInStore !== null
 					}
 				>
@@ -116,37 +144,18 @@ const StepPrimarySetup = () => {
 									className="icon"
 									style={ {
 										backgroundImage:
-											categoriesArray[ 0 ].icon,
+											`url(${primaryCategoryData?.icon})`
 									} }
 								/>
 								<p className="categName">
 									{ ' ' }
-									{ categoriesArray[ 0 ].name }
+									{ primaryCategoryData.label }
 								</p>
 							</div>
 						</div>
 
 						<div className="subCategoriesSection">
-							{ categoriesArray[ 0 ]?.subCategories?.map(
-								( item, idx ) => {
-									return (
-										<span
-											key={ item }
-											onClick={ ( e ) =>
-												handleCategoryClick( idx )
-											}
-											className={ `${
-												clickedIndex === idx ||
-												item === selectedCategoryInStore
-													? 'chosenSecondaryCategory '
-													: ''
-											}nfd-card-category` }
-										>
-											{ item }
-										</span>
-									);
-								}
-							) }
+							{ secondarySiteTypeChips() }
 						</div>
 					</div>
 
@@ -176,7 +185,7 @@ const StepPrimarySetup = () => {
 				</Animate>
 				<NavCardButton
 					text={ __( content.buttonText ) }
-					disabled={ categoriesArray[ 0 ]?.subCategories === null }
+					disabled={ primaryCategoryData[ 0 ]?.subCategories === null }
 				/>
 				<NeedHelpTag />
 			</NewfoldLargeCard>
