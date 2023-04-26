@@ -11,8 +11,8 @@ final class Brands {
 	 *
 	 * @return array
 	 */
-	public static function get_default_brand() {
-		return array(
+	public static function get_brand_data() {
+		$default_brand_data = array(
 			'brand'                       => 'wordpress',
 			'name'                        => __( 'your web host', 'wp-module-onboarding' ),
 			'pluginDashboardPage'         => \admin_url(),
@@ -26,6 +26,12 @@ final class Brands {
 				),
 			),
 		);
+
+		$brands = self::get_brands();
+
+		return array_key_exists( NFD_ONBOARDING_PLUGIN_BRAND, $brands ) ?
+			$brands[ NFD_ONBOARDING_PLUGIN_BRAND ] :
+			array_replace( $brands['bluehost'], $default_brand_data );
 	}
 
 	/**
