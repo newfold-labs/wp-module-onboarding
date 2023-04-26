@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunknewfold_Onboarding=globalThis.webpackChunknewfold_Onboarding||[]).push([[677],{4677:(n,a,e)=>{e.r(a),e.d(a,{default:()=>l});var t=e(9307),o=e(5609);const l=n=>{let{className:a="nfd-onboarding-button--blue",text:e,onClick:l=!1}=n;return(0,t.createElement)(o.Button,{variant:"primary",className:a,onClick:"function"==typeof l&&l},e)}}}]);
