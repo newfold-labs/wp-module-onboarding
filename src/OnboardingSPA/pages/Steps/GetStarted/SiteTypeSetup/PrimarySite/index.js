@@ -14,6 +14,7 @@ import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import content from '../content.json';
 import { translations } from '../../../../../utils/locales/translations';
 import Animate from '../../../../../components/Animate';
+import { getSiteClassifications } from '../../../../../utils/api/site-classifications';
 
 const StepPrimarySetup = () => {
 	const {
@@ -37,18 +38,30 @@ const StepPrimarySetup = () => {
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
 		setIsHeaderNavigationEnabled( true );
+		getSiteClassificationsData();
+	}, [] );
+
+	const [ siteClassData, setSiteClassData ] = useState( );
+	const [ primaryCategory, changePrimaryCategory ] = useState( "" );
+	const [ inputFieldValue, setInputFieldValue ] = useState( '' );
+
+	const selectedPrimaryCategoryInStore = currentData?.data?.siteType?.primary;
+
+	/**
+	 * Function which fetches the Site Classifications
+	 *
+	 * @param  input
+	 */
+	const getSiteClassificationsData = async ( ) => {
+		// const siteClassificationsData = await getSiteClassifications();
+		setSiteClassData(content?.categories);
 		changePrimaryCategory( currentData?.data?.siteType?.primary ?? "" );
 
 		if(currentData?.data?.siteType?.label === 'custom'){
 			changePrimaryCategory("");
 			setInputFieldValue( currentData?.data?.siteType?.primary );
 		}
-	}, [] );
-
-	const [ primaryCategory, changePrimaryCategory ] = useState( "" );
-	const [ inputFieldValue, setInputFieldValue ] = useState( '' );
-
-	const selectedPrimaryCategoryInStore = currentData?.data?.siteType?.primary;
+	};
 
 	/**
 	 * Function which saves data in redux when category name is selected via chips
@@ -59,6 +72,7 @@ const StepPrimarySetup = () => {
 		changePrimaryCategory( primType );
 		setInputFieldValue( '' );
 		const currentDataCopy = currentData;
+		currentDataCopy.data.siteType.label = "";
 		currentDataCopy.data.siteType.primary = primType;
 		setCurrentOnboardingData( currentDataCopy );
 	};
@@ -80,7 +94,7 @@ const StepPrimarySetup = () => {
 	const primarySiteTypeChips = () => {
 		let primaryChipList = [];
 		
-		let types = content?.categories?.types;
+		let types = siteClassData?.types;
 		for ( let typeKey in types ) {
 			primaryChipList.push(
 				<div
@@ -138,13 +152,10 @@ const StepPrimarySetup = () => {
 				</div>
 				<Animate
 					type="fade-in-disabled"
-					after={
-						content.categories &&
-						selectedPrimaryCategoryInStore !== null
-					}
+					after={ siteClassData }
 				>
 					<div className="nfd-setup-primary-categories">
-						{ primarySiteTypeChips() }
+						{ siteClassData && primarySiteTypeChips() }
 					</div>
 					<div className="nfd-setup-primary-second">
 						<div className="nfd-setup-primary-second-top">
@@ -167,7 +178,7 @@ const StepPrimarySetup = () => {
 				</Animate>
 				<NavCardButton
 					text={ __( content.buttonText ) }
-					disabled={ content.categories === null }
+					// disabled={ content.categories === null }
 				/>
 				<NeedHelpTag />
 			</NewfoldLargeCard>

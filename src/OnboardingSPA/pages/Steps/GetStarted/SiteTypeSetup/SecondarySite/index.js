@@ -30,19 +30,11 @@ const StepPrimarySetup = () => {
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
 		setIsHeaderNavigationEnabled( true );
-
-		// getSiteClassificationsData();
-		changePrimaryType( currentData?.data?.siteType?.primary );
-		changeSecondaryType( currentData?.data?.siteType?.secondary ?? "" );
-
-		if(currentData?.data?.siteType?.label === 'custom'){
-			changePrimaryType(defaultPrimaryType);
-			changeSecondaryType("");
-			changeInputCateg( currentData?.data?.siteType?.secondary );
-		}
+		getSiteClassificationsData();
 	}, [] );
 
 	const defaultPrimaryType = "business";
+	const [ siteClassData, setSiteClassData ] = useState( );
 	const [ primaryType, changePrimaryType ] = useState( defaultPrimaryType );
 	const [ secondaryType, changeSecondaryType ] = useState( "" );
 	const [ inputCategVal, changeInputCateg ] = useState( '' );
@@ -55,18 +47,24 @@ const StepPrimarySetup = () => {
 		};
 	}, [] );
 
-	const selectedCategoryInStore = currentData?.data?.siteType?.secondary;
-	const primaryCategoryData = content.categories.types[ primaryType ];
-	const subCategories = primaryCategoryData?.secondaryTypes;
-
 	/**
-	 * Function which saves data in redux when category name is put-in via input box
+	 * Function which fetches the Site Classifications
 	 *
 	 * @param  input
 	 */
 	const getSiteClassificationsData = async ( ) => {
-		const siteClassificationsData = await getSiteClassifications();
-		console.log(siteClassificationsData);
+		// const siteClassificationsData = await getSiteClassifications();
+		setSiteClassData(content?.categories);
+
+		if( currentData?.data?.siteType?.primary !== "")
+			changePrimaryType( currentData?.data?.siteType?.primary );
+		changeSecondaryType( currentData?.data?.siteType?.secondary ?? "" );
+
+		if(currentData?.data?.siteType?.label === 'custom'){
+			changePrimaryType(defaultPrimaryType);
+			changeSecondaryType("");
+			changeInputCateg( currentData?.data?.siteType?.secondary );
+		}
 	};
 
 	/**
@@ -78,6 +76,7 @@ const StepPrimarySetup = () => {
 		changeSecondaryType( "" );
 		changeInputCateg( input?.target?.value );
 		const currentDataCopy = currentData;
+		currentDataCopy.data.siteType.label = "custom";
 		currentDataCopy.data.siteType.secondary = input?.target?.value;
 		setCurrentOnboardingData( currentDataCopy );
 	};
@@ -91,6 +90,8 @@ const StepPrimarySetup = () => {
 		changeSecondaryType( secType );
 		changeInputCateg( '' );
 		const currentDataCopy = currentData;
+		currentDataCopy.data.siteType.label = "";
+		currentDataCopy.data.siteType.primary = primaryType;
 		currentDataCopy.data.siteType.secondary = secType;
 		setCurrentOnboardingData( currentDataCopy );
 	};
@@ -98,7 +99,7 @@ const StepPrimarySetup = () => {
 	const secondarySiteTypeChips = () => {
 		let secondaryChipList = [];
 		
-		let types = content?.categories?.types[primaryType]?.secondaryTypes;
+		let types = siteClassData?.types[primaryType]?.secondaryTypes;
 		for ( let typeKey in types ) {
 			secondaryChipList.push(
 				<div
@@ -144,39 +145,38 @@ const StepPrimarySetup = () => {
 				</div>
 				<Animate
 					type="fade-in-disabled"
-					after={
-						primaryCategoryData?.secondaryTypes &&
-						selectedCategoryInStore !== null
-					}
+					after={ siteClassData }
 				>
 					<div className="nfd-setup-secondary-categories">
 						<div className="nfd-card-sec-category-wrapper">
-							<div className="category-scrolling-wrapper">
-								<div className="category-scrolling-wrapper_left-btn">
-									<span className="category-scrolling-wrapper_left-btn-icon" 
+							{
+								siteClassData && <div className="category-scrolling-wrapper">
+									<div className="category-scrolling-wrapper_left-btn">
+										<span className="category-scrolling-wrapper_left-btn-icon" 
+											onClick={()=> {}}
+											style={{ backgroundImage: "var(--chevron-left-icon)" }} />
+									</div>
+									<div className="category-scrolling-wrapper_type">
+										<span
+											className="category-scrolling-wrapper_type-icon"
+											style={ {
+												backgroundImage:
+													`url(${siteClassData?.types[ primaryType ]?.icon})`
+											} }
+										/>
+										<p className="category-scrolling-wrapper_type-text"> {siteClassData?.types[ primaryType ]?.label}</p>
+									</div>
+									<div className="category-scrolling-wrapper_right-btn">
+									<span className="category-scrolling-wrapper_right-btn-icon"
 										onClick={()=> {}}
-										style={{ backgroundImage: "var(--chevron-left-icon)" }} />
+										style={{ backgroundImage: "var(--chevron-right-icon)" }} />
+									</div>
 								</div>
-								<div className="category-scrolling-wrapper_type">
-									<span
-										className="category-scrolling-wrapper_type-icon"
-										style={ {
-											backgroundImage:
-												`url(${primaryCategoryData?.icon})`
-										} }
-									/>
-									<p className="category-scrolling-wrapper_type-text"> {primaryCategoryData.label}</p>
-								</div>
-								<div className="category-scrolling-wrapper_right-btn">
-								<span className="category-scrolling-wrapper_right-btn-icon"
-									onClick={()=> {}}
-									style={{ backgroundImage: "var(--chevron-right-icon)" }} />
-								</div>
-							</div>
+							}
 						</div>
 
 						<div className="subCategoriesSection">
-							{ secondarySiteTypeChips() }
+							{ siteClassData && secondarySiteTypeChips() }
 						</div>
 					</div>
 
@@ -206,7 +206,7 @@ const StepPrimarySetup = () => {
 				</Animate>
 				<NavCardButton
 					text={ __( content.buttonText ) }
-					disabled={ primaryCategoryData[ 0 ]?.subCategories === null }
+					// disabled={ primaryCategoryData[ 0 ]?.subCategories === null }
 				/>
 				<NeedHelpTag />
 			</NewfoldLargeCard>
