@@ -41,10 +41,10 @@ const DesignColors = () => {
 		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
 
-	function stateToLocal( selectedColors ) {
-		if ( selectedColors ) {
+	function stateToLocal( selectedColorPalette ) {
+		if ( selectedColorPalette ) {
 			const selectedColorsLocalTemp = {};
-			selectedColors?.forEach( ( color ) => {
+			selectedColorPalette?.forEach( ( color ) => {
 				selectedColorsLocalTemp[ color.slug ] = color.color;
 			} );
 			setSelectedColorsLocal( selectedColorsLocalTemp );
@@ -91,11 +91,11 @@ const DesignColors = () => {
 				) {
 					selectedThemeColorPalette[ idx ].color =
 						selectedColorsLocalTemp[ slug ];
-				}
-				/**
-				 * Add Exception for Background.
-				 * (perhaps scope to yith-wonder in future)
-				 */ else if (
+				} else if (
+					/**
+					 * Add Exception for Background.
+					 * (perhaps scope to yith-wonder in future)
+					 */
 					colorPalettesTemp?.[ colorStyle ]?.[ slug ] &&
 					'base' === slug
 				) {
@@ -111,6 +111,7 @@ const DesignColors = () => {
 			selectedGlobalStyle.settings.color.palette =
 				selectedThemeColorPalette;
 			updatePreviewSettings(
+				// eslint-disable-next-line react-hooks/rules-of-hooks
 				useGlobalStylesOutput(
 					selectedGlobalStyle,
 					storedPreviewSettings
@@ -123,7 +124,7 @@ const DesignColors = () => {
 
 	function findInCustomColors(
 		slugName,
-		colorPickerCalledBy,
+		colorPickerCalledByTemp,
 		storedPreviewSettingsTemp = storedPreviewSettings
 	) {
 		const selectedThemeColorPalette =
@@ -133,7 +134,7 @@ const DesignColors = () => {
 		);
 		if ( res === -1 ) {
 			return selectedThemeColorPalette.findIndex(
-				( { slug } ) => slug === colorPickerCalledBy
+				( { slug } ) => slug === colorPickerCalledByTemp
 			);
 		}
 		return res;
@@ -178,6 +179,7 @@ const DesignColors = () => {
 			selectedGlobalStyle.settings.color.palette =
 				selectedThemeColorPalette;
 			updatePreviewSettings(
+				// eslint-disable-next-line react-hooks/rules-of-hooks
 				useGlobalStylesOutput(
 					selectedGlobalStyle,
 					storedPreviewSettings
@@ -188,35 +190,39 @@ const DesignColors = () => {
 
 	const getColorStylesAndPatterns = async () => {
 		const globalStyles = await getGlobalStyles();
-		const colorPalettes = await getThemeColors();
-		if ( colorPalettes?.error ) {
+		const themeColorPalettes = await getThemeColors();
+		if ( themeColorPalettes?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		if ( globalStyles?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
-		setColorPalettes( colorPalettes?.body.tailored );
-		setCustomColorsMap( colorPalettes?.body[ 'custom-picker-grouping' ] );
-		let selectedColors;
-		let selectedColorsLocal;
+		setColorPalettes( themeColorPalettes?.body.tailored );
+		setCustomColorsMap(
+			themeColorPalettes?.body[ 'custom-picker-grouping' ]
+		);
+		let selectedColorPalette;
+		let selectedColorsLocalTemp;
 		if ( ! currentData?.data?.colorStyle === '' ) {
-			selectedColors = globalStyles.body[ 0 ].settings.color.palette;
-			selectedColorsLocal = stateToLocal( selectedColors );
-			setCustomColors( selectedColorsLocal );
+			selectedColorPalette =
+				globalStyles.body[ 0 ].settings.color.palette;
+			selectedColorsLocalTemp = stateToLocal( selectedColorPalette );
+			setCustomColors( selectedColorsLocalTemp );
 			setCurrentOnboardingData( currentData );
 		} else {
-			selectedColors = globalStyles.body[ 0 ].settings.color.palette;
-			selectedColorsLocal = stateToLocal( selectedColors );
+			selectedColorPalette =
+				globalStyles.body[ 0 ].settings.color.palette;
+			selectedColorsLocalTemp = stateToLocal( selectedColorPalette );
 
 			if ( currentData?.data?.colorStyle === 'custom' ) {
-				setCustomColors( selectedColorsLocal );
+				setCustomColors( selectedColorsLocalTemp );
 			}
 		}
-		setSelectedColors( selectedColors );
+		setSelectedColors( selectedColorPalette );
 		saveThemeColorPalette(
 			currentData?.data?.colorStyle,
-			colorPalettes?.body.tailored,
-			selectedColorsLocal,
+			themeColorPalettes?.body.tailored,
+			selectedColorsLocalTemp,
 			globalStyles?.body[ 0 ]
 		);
 		setIsLoaded( true );
@@ -288,6 +294,7 @@ const DesignColors = () => {
 			selectedGlobalStyle = globalStyles.body[ 0 ];
 		}
 		updatePreviewSettings(
+			// eslint-disable-next-line react-hooks/rules-of-hooks
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
 		currentData.data.colorStyle = '';
@@ -301,11 +308,14 @@ const DesignColors = () => {
 				<div
 					key={ colorStyle }
 					className={ `color-palette drawer-palette--button ${
-						colorStyle == currentData?.data?.colorStyle
+						colorStyle === currentData?.data?.colorStyle
 							? 'color-palette-selected drawer-palette--button--selected'
 							: ''
 					} ` }
-					onClick={ ( e ) => handleClick( colorStyle ) }
+					role="button"
+					tabIndex={ 0 }
+					onClick={ () => handleClick( colorStyle ) }
+					onKeyDown={ () => handleClick( colorStyle ) }
 				>
 					<div className="color-palette__colors">
 						<div
@@ -340,7 +350,7 @@ const DesignColors = () => {
 
 	function isCustomColorActive() {
 		for ( const custom in customColors ) {
-			if ( customColors[ custom ] != '' ) {
+			if ( customColors[ custom ] !== '' ) {
 				return true;
 			}
 		}
@@ -367,7 +377,12 @@ const DesignColors = () => {
 			<div className="custom-palette">
 				<div
 					className="custom-palette__top"
-					onClick={ ( e ) =>
+					role="button"
+					tabIndex={ 0 }
+					onClick={ () =>
+						setIsAccordionClosed( ! isAccordionClosed )
+					}
+					onKeyDown={ () =>
 						setIsAccordionClosed( ! isAccordionClosed )
 					}
 				>
@@ -393,7 +408,10 @@ const DesignColors = () => {
 				>
 					<div
 						className="custom-palette__below-row"
-						onClick={ ( e ) => selectCustomColor( 'base' ) }
+						role="button"
+						tabIndex={ 0 }
+						onClick={ () => selectCustomColor( 'base' ) }
+						onKeyDown={ () => selectCustomColor( 'base' ) }
 					>
 						<div
 							className={ `custom-palette__below-row-icon ${
@@ -414,7 +432,10 @@ const DesignColors = () => {
 					</div>
 					<div
 						className="custom-palette__below-row"
-						onClick={ ( e ) => selectCustomColor( 'primary' ) }
+						role="button"
+						tabIndex={ 0 }
+						onClick={ () => selectCustomColor( 'primary' ) }
+						onKeyDown={ () => selectCustomColor( 'primary' ) }
 					>
 						<div
 							className={ `custom-palette__below-row-icon ${
@@ -433,7 +454,10 @@ const DesignColors = () => {
 					</div>
 					<div
 						className="custom-palette__below-row"
-						onClick={ ( e ) => selectCustomColor( 'secondary' ) }
+						role="button"
+						tabIndex={ 0 }
+						onClick={ () => selectCustomColor( 'secondary' ) }
+						onKeyDown={ () => selectCustomColor( 'secondary' ) }
 					>
 						<div
 							className={ `custom-palette__below-row-icon ${
@@ -452,7 +476,10 @@ const DesignColors = () => {
 					</div>
 					<div
 						className="custom-palette__below-row"
-						onClick={ ( e ) => selectCustomColor( 'tertiary' ) }
+						role="button"
+						tabIndex={ 0 }
+						onClick={ () => selectCustomColor( 'tertiary' ) }
+						onKeyDown={ () => selectCustomColor( 'tertiary' ) }
 					>
 						<div
 							className={ `custom-palette__below-row-icon ${
@@ -475,7 +502,10 @@ const DesignColors = () => {
 						<div
 							ref={ customColorsResetRef }
 							className="theme-colors--drawer--reset"
+							role="button"
+							tabIndex={ 0 }
 							onClick={ resetColors }
+							onKeyDown={ resetColors }
 						>
 							<div>Reset</div>
 						</div>
@@ -485,7 +515,10 @@ const DesignColors = () => {
 					<Popover>
 						<div
 							className="custom-palette__picker-close-icon"
+							role="button"
+							tabIndex={ 0 }
 							onClick={ () => setShowColorPicker( false ) }
+							onKeyDown={ () => setShowColorPicker( false ) }
 						>
 							X
 						</div>

@@ -3,7 +3,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 
 import { store as nfdOnboardingStore } from '../../../store';
-import { getGlobalStyles, getThemeFonts } from '../../../utils/api/themes';
+import { getThemeFonts } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 
@@ -12,7 +12,6 @@ const DesignTypography = () => {
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ selectedFont, setSelectedFont ] = useState();
 	const [ fontPalettes, setFontPalettes ] = useState();
-	const [ isAccordionClosed, setIsAccordionClosed ] = useState( true );
 
 	const { storedPreviewSettings, currentData, themeStatus } = useSelect(
 		( select ) => {
@@ -34,17 +33,17 @@ const DesignTypography = () => {
 	} = useDispatch( nfdOnboardingStore );
 
 	const getFontStylesAndPatterns = async () => {
-		const fontPalettes = await getThemeFonts();
-		if ( fontPalettes?.error ) {
+		const themeFontPalettes = await getThemeFonts();
+		if ( themeFontPalettes?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
-		setFontPalettes( fontPalettes?.body );
+		setFontPalettes( themeFontPalettes?.body );
 
 		if ( currentData?.data?.fontStyle !== '' ) {
 			handleClick(
 				currentData?.data?.fontStyle,
 				storedPreviewSettings,
-				fontPalettes?.body
+				themeFontPalettes?.body
 			);
 		}
 		const stylesCustom = storedPreviewSettings?.settings?.styles[ 0 ]?.css;
@@ -118,30 +117,11 @@ const DesignTypography = () => {
 		currentData.data.fontStyle = fontStyle;
 
 		updatePreviewSettings(
+			// eslint-disable-next-line react-hooks/rules-of-hooks
 			useGlobalStylesOutput( globalStylesCopy, storedPreviewSettings )
 		);
 		setCurrentOnboardingData( currentData );
 	};
-
-	async function resetFonts() {
-		setSelectedFont( '' );
-		const globalStyles = await getGlobalStyles();
-		let selectedGlobalStyle;
-		if ( currentData?.data?.theme?.variation ) {
-			selectedGlobalStyle = globalStyles.body.filter(
-				( globalStyle ) =>
-					globalStyle.title === currentData.data.theme.variation
-			)[ 0 ];
-		} else if ( globalStyles.body[ 0 ]?.id === 0 ) {
-			selectedGlobalStyle = globalStyles.body[ 0 ];
-		}
-		updatePreviewSettings(
-			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
-		);
-
-		currentData.data.fontStyle = '';
-		setCurrentOnboardingData( currentData );
-	}
 
 	function buildPalettes() {
 		const paletteRenderedList = [];
@@ -153,11 +133,14 @@ const DesignTypography = () => {
 			paletteRenderedList.push(
 				<div
 					className={ `font-palette drawer-palette--button ${
-						selectedFont == fontStyle
+						selectedFont === fontStyle
 							? 'font-palette-selected drawer-palette--button--selected'
 							: ''
 					} ` }
-					onClick={ ( e ) => handleClick( fontStyle ) }
+					role="button"
+					tabIndex={ 0 }
+					onClick={ () => handleClick( fontStyle ) }
+					onKeyDown={ () => handleClick( fontStyle ) }
 				>
 					<div
 						className="font-palette__icon drawer-palette--button__text"
@@ -196,29 +179,6 @@ const DesignTypography = () => {
 		}
 
 		return paletteRenderedList;
-	}
-
-	function buildCustomPalette() {
-		return (
-			<div className="custom-font-palette">
-				<div
-					className="custom-font-palette__top"
-					onClick={ ( e ) =>
-						setIsAccordionClosed( ! isAccordionClosed )
-					}
-				>
-					<div className="custom-font-palette__top-text">
-						SELECT CUSTOM FONTS
-					</div>
-					{ isAccordionClosed && (
-						<div className="custom-font-palette__top-icon">+</div>
-					) }
-					{ ! isAccordionClosed && (
-						<div className="custom-font-palette__top-icon">-</div>
-					) }
-				</div>
-			</div>
-		);
 	}
 
 	return (
