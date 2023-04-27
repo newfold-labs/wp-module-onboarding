@@ -10,12 +10,14 @@ import { isEmpty, updateWPSettings } from '../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../store';
 import { conditionalSteps } from '../../data/routes/';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { kebabCase, orderBy, filter } from 'lodash';
 import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { SlotFillProvider } from '@wordpress/components';
 import { useEffect, Fragment, useState } from '@wordpress/element';
 import { FullscreenMode, InterfaceSkeleton } from '@wordpress/interface';
+import { API_REQUEST } from '../../../constants';
 
 /**
  * Primary app that renders the <InterfaceSkeleton />.
@@ -63,8 +65,9 @@ const App = () => {
 		updateRoutes,
 		updateDesignSteps,
 		updateAllSteps,
+		flushQueue,
+		enqueueRequest,
 		setOnboardingSocialData,
-		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	async function syncSocialSettings() {
@@ -128,14 +131,11 @@ const App = () => {
 						setOnboardingSocialData( socialDataResp );
 					}
 				}
-
-				const result = await setFlow( currentData );
-				if ( result?.error !== null ) {
-					setIsRequestPlaced( false );
-				} else {
-					setCurrentOnboardingData( result?.body );
-					setIsRequestPlaced( false );
-				}
+				flushQueue();
+				enqueueRequest( API_REQUEST.SET_FLOW, () =>
+					setFlow( currentData )
+				);
+				setIsRequestPlaced( false );
 			}
 		}
 		// Check if the Basic Info page was visited

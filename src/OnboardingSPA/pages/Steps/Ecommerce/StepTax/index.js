@@ -14,7 +14,7 @@ import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 import { store as nfdOnboardingStore } from '../../../../store';
 import content from '../content.json';
-import { useWPSettings } from '../useWPSettings';
+import { useWPSettings as getWPSettings } from '../useWPSettings';
 import Animate from '../../../../components/Animate';
 
 function createReverseLookup( state ) {
@@ -37,14 +37,15 @@ const StepTax = () => {
 		select( nfdOnboardingStore ).getCurrentOnboardingData()
 	);
 
-	async function getSettingsData() {
-		setSettings( await useWPSettings() );
-	}
+	const setWPSettings = async () => {
+		const wpSettings = await getWPSettings();
+		setSettings( wpSettings );
+	};
 
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView( VIEW_NAV_ECOMMERCE_STORE_INFO );
-		getSettingsData();
+		setWPSettings();
 	}, [] );
 
 	useEffect( () => {
@@ -58,6 +59,7 @@ const StepTax = () => {
 			);
 			const tax = selectedTaxOption?.data ?? {};
 			setCurrentOnboardingData( {
+				...currentData,
 				storeDetails: {
 					...currentData.storeDetails,
 					tax: {
@@ -88,6 +90,7 @@ const StepTax = () => {
 			( option ) => option.value === value
 		);
 		setCurrentOnboardingData( {
+			...currentData,
 			storeDetails: {
 				...currentData.storeDetails,
 				tax: {
