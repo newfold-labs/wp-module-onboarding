@@ -24,7 +24,7 @@ body {
 	--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-base);
 	--nfd-onboarding-footer-fg: var(--nfd-onboarding-contrast);
 	--nfd-onboarding-footer-bg: var(--nfd-onboarding-base);
-	--nfd-onboarding-base-gray-5: #eee;
+	--nfd-onboarding-light-gray-5: #eee;
 
 	&:not(.is-fullscreen-mode) {
 		opacity: 0;
