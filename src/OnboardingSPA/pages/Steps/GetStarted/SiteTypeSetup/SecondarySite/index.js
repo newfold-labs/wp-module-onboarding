@@ -14,6 +14,7 @@ import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import content from '../content.json';
 import { translations } from '../../../../../utils/locales/translations';
 import Animate from '../../../../../components/Animate';
+import { getSiteClassifications } from '../../../../../utils/api/site-classifications';
 
 const StepPrimarySetup = () => {
 	const {
@@ -29,14 +30,23 @@ const StepPrimarySetup = () => {
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
 		setIsHeaderNavigationEnabled( true );
+
+		// getSiteClassificationsData();
 		changePrimaryType( currentData?.data?.siteType?.primary );
+		changeSecondaryType( currentData?.data?.siteType?.secondary ?? "" );
+
+		if(currentData?.data?.siteType?.label === 'custom'){
+			changePrimaryType(defaultPrimaryType);
+			changeSecondaryType("");
+			changeInputCateg( currentData?.data?.siteType?.secondary );
+		}
 	}, [] );
 
 	const defaultPrimaryType = "business";
 	const [ primaryType, changePrimaryType ] = useState( defaultPrimaryType );
 	const [ secondaryType, changeSecondaryType ] = useState( "" );
 	const [ inputCategVal, changeInputCateg ] = useState( '' );
-	console.log(primaryType);
+
 	const { currentStep, currentData } = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
@@ -49,15 +59,15 @@ const StepPrimarySetup = () => {
 	const primaryCategoryData = content.categories.types[ primaryType ];
 	const subCategories = primaryCategoryData?.secondaryTypes;
 
-	/**This condition fills the data in input box if the saved category isn't a subcategory from the content*/
-	if (
-		selectedCategoryInStore &&
-		! inputCategVal &&
-		subCategories.indexOf( selectedCategoryInStore ) === -1
-	) {
-		if ( selectedCategoryInStore !== 'secondaryCategory' )
-			changeInputCateg( selectedCategoryInStore );
-	}
+	/**
+	 * Function which saves data in redux when category name is put-in via input box
+	 *
+	 * @param  input
+	 */
+	const getSiteClassificationsData = async ( ) => {
+		const siteClassificationsData = await getSiteClassifications();
+		console.log(siteClassificationsData);
+	};
 
 	/**
 	 * Function which saves data in redux when category name is put-in via input box
@@ -65,7 +75,7 @@ const StepPrimarySetup = () => {
 	 * @param  input
 	 */
 	const categoryInput = ( input ) => {
-		changeSecondaryType( -1 );
+		changeSecondaryType( "" );
 		changeInputCateg( input?.target?.value );
 		const currentDataCopy = currentData;
 		currentDataCopy.data.siteType.secondary = input?.target?.value;
@@ -77,33 +87,35 @@ const StepPrimarySetup = () => {
 	 *
 	 * @param  idxOfElm
 	 */
-	const handleCategoryClick = ( idxOfElm ) => {
-		changeSecondaryType( idxOfElm );
+	const handleCategoryClick = ( secType ) => {
+		changeSecondaryType( secType );
 		changeInputCateg( '' );
 		const currentDataCopy = currentData;
-		currentDataCopy.data.siteType.secondary = subCategories[ idxOfElm ];
+		currentDataCopy.data.siteType.secondary = secType;
 		setCurrentOnboardingData( currentDataCopy );
 	};
 
 	const secondarySiteTypeChips = () => {
 		let secondaryChipList = [];
 		
-		let types = content?.categories?.types["business"].secondaryTypes;
+		let types = content?.categories?.types[primaryType]?.secondaryTypes;
 		for ( let typeKey in types ) {
 			secondaryChipList.push(
-				<span
-					key={ typeKey }
-					onClick={ ( e ) =>
-						handleCategoryClick( typeKey )
-					}
+				<div
+					key={ types[typeKey]?.slug }
 					className={ `${
-						types[typeKey] === selectedCategoryInStore
+						types[typeKey].slug === secondaryType
 							? 'chosenSecondaryCategory '
 							: ''
-					}nfd-card-category` }
+					}nfd-card-sec-category` }
+					onClick={ ( e ) =>
+						handleCategoryClick( types[typeKey].slug )
+					}
 				>
-					{ types[typeKey].label }
-				</span>
+					<span className="categName">
+						{ types[typeKey]?.label }
+					</span>
+				</div>
 			)
 		}
 
@@ -138,19 +150,28 @@ const StepPrimarySetup = () => {
 					}
 				>
 					<div className="nfd-setup-secondary-categories">
-						<div className="nfd-card-category-wrapper">
+						<div className="nfd-card-sec-category-wrapper">
 							<div className="category-scrolling-wrapper">
-								<span
-									className="icon"
-									style={ {
-										backgroundImage:
-											`url(${primaryCategoryData?.icon})`
-									} }
-								/>
-								<p className="categName">
-									{ ' ' }
-									{ primaryCategoryData.label }
-								</p>
+								<div className="category-scrolling-wrapper_left-btn">
+									<span className="category-scrolling-wrapper_left-btn-icon" 
+										onClick={()=> {}}
+										style={{ backgroundImage: "var(--chevron-left-icon)" }} />
+								</div>
+								<div className="category-scrolling-wrapper_type">
+									<span
+										className="category-scrolling-wrapper_type-icon"
+										style={ {
+											backgroundImage:
+												`url(${primaryCategoryData?.icon})`
+										} }
+									/>
+									<p className="category-scrolling-wrapper_type-text"> {primaryCategoryData.label}</p>
+								</div>
+								<div className="category-scrolling-wrapper_right-btn">
+								<span className="category-scrolling-wrapper_right-btn-icon"
+									onClick={()=> {}}
+									style={{ backgroundImage: "var(--chevron-right-icon)" }} />
+								</div>
 							</div>
 						</div>
 
@@ -161,7 +182,7 @@ const StepPrimarySetup = () => {
 
 					<div className="nfd-setup-primary-second">
 						<div className="nfd-setup-primary-second-top">
-							<div className="blackText">
+							<div className="tellus-text">
 								{ __(
 									content.tellusHereText,
 									'wp-module-onboarding'
@@ -170,7 +191,7 @@ const StepPrimarySetup = () => {
 							<input
 								type="text"
 								onChange={ ( e ) => categoryInput( e ) }
-								className="tellUsInput"
+								className="tellus-input"
 								placeholder={ sprintf(
 									__(
 										content.placeholderSiteTypeInput,

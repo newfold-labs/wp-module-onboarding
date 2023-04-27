@@ -37,6 +37,12 @@ const StepPrimarySetup = () => {
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
 		setIsHeaderNavigationEnabled( true );
+		changePrimaryCategory( currentData?.data?.siteType?.primary ?? "" );
+
+		if(currentData?.data?.siteType?.label === 'custom'){
+			changePrimaryCategory("");
+			setInputFieldValue( currentData?.data?.siteType?.primary );
+		}
 	}, [] );
 
 	const [ primaryCategory, changePrimaryCategory ] = useState( "" );
@@ -49,11 +55,11 @@ const StepPrimarySetup = () => {
 	 *
 	 * @param  input
 	 */
-	const handleCategoryClick = ( type ) => {
-		changePrimaryCategory( type );
+	const handleCategoryClick = ( primType ) => {
+		changePrimaryCategory( primType );
 		setInputFieldValue( '' );
 		const currentDataCopy = currentData;
-		currentDataCopy.data.siteType.primary = type;
+		currentDataCopy.data.siteType.primary = primType;
 		setCurrentOnboardingData( currentDataCopy );
 	};
 
@@ -66,6 +72,7 @@ const StepPrimarySetup = () => {
 		changePrimaryCategory( "" );
 		setInputFieldValue( input?.target?.value );
 		const currentDataCopy = currentData;
+		currentDataCopy.data.siteType.label = "custom";
 		currentDataCopy.data.siteType.primary = input?.target?.value;
 		setCurrentOnboardingData( currentDataCopy );
 	};
@@ -82,16 +89,16 @@ const StepPrimarySetup = () => {
 						types[typeKey].slug === primaryCategory
 							? 'chosenPrimaryCategory '
 							: ''
-					}nfd-card-category` }
+					}nfd-card-pri-category` }
 					onClick={ ( e ) =>
 						handleCategoryClick( types[typeKey].slug )
 					}
 				>
-					<div className="nfd-card-category-wrapper">
+					<div className="nfd-card-pri-category-wrapper">
 						<span
-							className={ `nfd-card-category-wrapper-icon ${
+							className={ `nfd-card-pri-category-wrapper-icon ${
 								types[typeKey].slug === primaryCategory
-									? 'nfd-card-category-wrapper-icon-selected '
+									? 'nfd-card-pri-category-wrapper-icon-selected '
 									: ''
 							}` }
 							style={ {
@@ -136,19 +143,16 @@ const StepPrimarySetup = () => {
 						selectedPrimaryCategoryInStore !== null
 					}
 				>
-					<div style={{backgroundColor: 'red'}}>
-						<image src="https://cdn.hiive.space/site-classification/business.svg" height={24} width={24}/>
-					</div>
 					<div className="nfd-setup-primary-categories">
 						{ primarySiteTypeChips() }
 					</div>
 					<div className="nfd-setup-primary-second">
 						<div className="nfd-setup-primary-second-top">
-							<p className="blackText">or tell us here:</p>
+							<p className="tellus-text">or tell us here:</p>
 							<input
 								type="search"
 								onChange={ ( e ) => categoryInput( e ) }
-								className="tellUsInput"
+								className="tellus-input"
 								placeholder={ sprintf(
 									__(
 										content.placeholderSiteTypeInput,
