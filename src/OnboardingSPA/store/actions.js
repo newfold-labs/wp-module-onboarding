@@ -200,3 +200,23 @@ export function setHeaderMenuData( menu ) {
 		menu,
 	};
 }
+
+export function enqueueRequest( id, request ) {
+	return {
+		type: 'ENQUEUE_REQUEST',
+		id,
+		request,
+	};
+}
+
+export function dequeueRequest() {
+	return {
+		type: 'DEQUEUE_REQUEST',
+	};
+}
+
+export function flushQueue() {
+	return {
+		type: 'FLUSH_QUEUE',
+	};
+}
