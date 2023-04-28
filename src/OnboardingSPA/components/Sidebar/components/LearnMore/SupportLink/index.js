@@ -4,9 +4,16 @@ const SupportLink = ( {
 	text,
 } ) => {
 	return (
-		<a href={ link } className={ baseClassName } target={ '_blank' }>
-			{ text }
-		</a>
+		link !== '' && (
+			<a
+				href={ link }
+				className={ baseClassName }
+				target={ '_blank' }
+				rel="noreferrer"
+			>
+				{ text }
+			</a>
+		)
 	);
 };
 
