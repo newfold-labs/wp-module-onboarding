@@ -1,4 +1,5 @@
 .nfd-setup-primary {
+
 	&-categories {
 		margin-top: 3rem;
 		margin-bottom: 1rem;
@@ -51,7 +52,7 @@
 			background-size: 24px 24px;
 			background-repeat: no-repeat;
 			background-position: center;
-			
+
 			&-selected {
 				filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(162deg) brightness(103%) contrast(101%);
 			}
@@ -71,7 +72,7 @@
 }
 
 .tellus {
-	
+
 	&-text {
 		color: var(--nfd-onboarding-black);
 		font-size: 1rem;
@@ -87,11 +88,11 @@
 		font-weight: 300;
 		margin: 0 1rem 1.5rem 1rem;
 		padding: 8px 16px !important;
-	
+
 		&::placeholder {
 			font-size: 15px;
 		}
-	
+
 		@media (max-width: #{($break-medium - 1)}) {
 			width: 40vw;
 		}
