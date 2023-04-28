@@ -156,9 +156,9 @@ body {
 		--nfd-onboarding-step-what-next-img-1: url(../../Brands/crazy-domains/wp-admin.png);
 		--nfd-onboarding-step-what-next-img-2: url(../static/images/help.png);
 
-		--nfd-onboarding-drawer-bg: var(--nfd-onboarding-base);
-		--nfd-onboarding-drawer-fg: var(--nfd-onboarding-contrast);
-		--nfd-onboarding-content-bg: var(--nfd-onboarding-base);
+		--nfd-onboarding-drawer-base: var(--nfd-onboarding-base);
+		--nfd-onboarding-drawer-contrast: var(--nfd-onboarding-contrast);
+		--nfd-onboarding-content-base: var(--nfd-onboarding-base);
 
 		.nfd-onboarding-drawer__toggle {
 			background-color: transparent;
@@ -188,7 +188,7 @@ body {
 				color: var(--nfd-onboarding-light-gray-4);
 
 				&.active {
-					background-color: var(--nfd-onboarding-drawer-bg);
+					background-color: var(--nfd-onboarding-drawer-base);
 					color: var(--nfd-onboarding-primary);
 					border-color: var(--nfd-onboarding-primary);
 				}

@@ -14,16 +14,16 @@ body {
 	--nfd-onboarding-white: #fff;
 	--nfd-onboarding-white-rgb: 255, 255, 255;
 	--nfd-onboarding-black: #000;
-	--nfd-onboarding-header-bg: var(--nfd-onboarding-base);
-	--nfd-onboarding-header-fg: var(--nfd-onboarding-contrast);
-	--nfd-onboarding-content-bg: var(--nfd-onboarding-base);
-	--nfd-onboarding-content-fg: var(--nfd-onboarding-contrast);
-	--nfd-onboarding-drawer-bg: var(--nfd-onboarding-contrast);
-	--nfd-onboarding-drawer-fg: var(--nfd-onboarding-base);
+	--nfd-onboarding-header-base: var(--nfd-onboarding-base);
+	--nfd-onboarding-header-contrast: var(--nfd-onboarding-contrast);
+	--nfd-onboarding-content-base: var(--nfd-onboarding-base);
+	--nfd-onboarding-content-contrast: var(--nfd-onboarding-contrast);
+	--nfd-onboarding-drawer-base: var(--nfd-onboarding-contrast);
+	--nfd-onboarding-drawer-contrast: var(--nfd-onboarding-base);
 	--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-contrast);
 	--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-base);
-	--nfd-onboarding-footer-fg: var(--nfd-onboarding-contrast);
-	--nfd-onboarding-footer-bg: var(--nfd-onboarding-base);
+	--nfd-onboarding-footer-contrast: var(--nfd-onboarding-contrast);
+	--nfd-onboarding-footer-base: var(--nfd-onboarding-base);
 	--nfd-onboarding-light-gray-5: #eee;
 
 	&:not(.is-fullscreen-mode) {

@@ -1,9 +1,9 @@
 .nfd-onboarding-header {
     align-items: center;
-    background-color: var(--nfd-onboarding-header-bg);
-    color: var(--nfd-onboarding-header-fg);
+    background-color: var(--nfd-onboarding-header-base);
+    color: var(--nfd-onboarding-header-contrast);
     h2, h3, h4 {
-        color: var(--nfd-onboarding-header-fg);
+        color: var(--nfd-onboarding-header-contrast);
     }
     display: flex;
     height: $header-height;
