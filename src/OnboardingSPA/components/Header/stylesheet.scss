@@ -1,104 +1,112 @@
 .nfd-onboarding-header {
-    align-items: center;
-    background-color: var(--nfd-onboarding-header-base);
-    color: var(--nfd-onboarding-header-contrast);
-    h2, h3, h4 {
-        color: var(--nfd-onboarding-header-contrast);
-    }
-    display: flex;
-    height: $header-height;
-    box-sizing: border-box;
-    width: 100%;
-    justify-content: space-between;
+	align-items: center;
+	background-color: var(--nfd-onboarding-header-base);
+	color: var(--nfd-onboarding-header-contrast);
 
-    padding-right: $grid-unit-20;
+	h2,
+	h3,
+	h4 {
+		color: var(--nfd-onboarding-header-contrast);
+	}
+	display: flex;
+	height: $header-height;
+	box-sizing: border-box;
+	width: 100%;
+	justify-content: space-between;
 
-    body.is-fullscreen-mode & {
-        padding-left: $header-height;
-        transition: padding-left 20ms linear;
-        transition-delay: 80ms;
-        @include reduce-motion('transition');
-    }
+	padding-right: $grid-unit-20;
 
-    &__start,
-    &__end {
-        display: flex;
-    }
+	body.is-fullscreen-mode & {
+		padding-left: $header-height;
+		transition: padding-left 20ms linear;
+		transition-delay: 80ms;
 
-    &__start {
-        align-items: center;
-        margin-left: $grid-unit-20;
-    }
+		@include reduce-motion("transition");
+	}
 
-    &__center {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        flex-grow: 1;
-        justify-content: center;
-        min-width: 5px;
-        font-weight: 600;
-        font-size: 20px;
-        line-height: $grid-unit-30;
-        svg {
-            margin-right: $grid-unit-10;
-        }
-    }
+	&__start,
+	&__end {
+		display: flex;
+	}
 
-    &__end {
-        justify-content: flex-end;
-    }
+	&__start {
+		align-items: center;
+		margin-left: $grid-unit-20;
+	}
 
-    &__step-navigation {
-        display: flex;
-        column-gap: $grid-unit-10;
-    }
+	&__center {
+		display: flex;
+		align-items: center;
+		height: 100%;
+		flex-grow: 1;
+		justify-content: center;
+		min-width: 5px;
+		font-weight: 600;
+		font-size: 20px;
+		line-height: $grid-unit-30;
 
-    &__step-progress {
-        &:-webkit-progress-inner-element {
-            background-color: #999;
-        }
-        &:-moz-progress-bar,
-        &:-webkit-progress-bar {
-            background-color: var(--nfd-onboarding-primary);
-        }
-    }
+		svg {
+			margin-right: $grid-unit-10;
+		}
+	}
+
+	&__end {
+		justify-content: flex-end;
+	}
+
+	&__step-navigation {
+		display: flex;
+		column-gap: $grid-unit-10;
+	}
+
+	&__step-progress {
+
+		&:-webkit-progress-inner-element {
+			background-color: #999;
+		}
+
+		&:-moz-progress-bar,
+		&:-webkit-progress-bar {
+			background-color: var(--nfd-onboarding-primary);
+		}
+	}
 }
 
 .nfd-onboarding-skeleton.is-drawer-open {
-    .nfd-onboarding-header {
-        padding-left: 0;
-        transition: padding-left 20ms linear;
-        transition-delay: 0ms;
-        @include reduce-motion("transition");
-    }
+
+	.nfd-onboarding-header {
+		padding-left: 0;
+		transition: padding-left 20ms linear;
+		transition-delay: 0ms;
+
+		@include reduce-motion("transition");
+	}
 }
 
 .navigation-buttons {
-    font-size: 14px;
-    line-height: 40px;
-    align-items: center;
-    letter-spacing: 0.8px;
-    display: flex !important;
-    justify-content: space-evenly;
-    border-radius: 2px !important;
-    padding: 20px 14px !important; 
+	font-size: 14px;
+	line-height: 40px;
+	align-items: center;
+	letter-spacing: 0.8px;
+	display: flex !important;
+	justify-content: space-evenly;
+	border-radius: 2px !important;
+	padding: 20px 14px !important;
 
-    &_back {
-        padding-right: 22px !important;
-    }
+	&_back {
+		padding-right: 22px !important;
+	}
 
-    &_next {
-        padding-left: 22px !important;
-    }
+	&_next {
+		padding-left: 22px !important;
+	}
 
-    &_finish {
-        padding-left: 22px !important;
-    }
+	&_finish {
+		padding-left: 22px !important;
+	}
 
-    @media screen and (max-width: #{ ($break-medium) }) {
-        font-size: 13px;
-        padding: 15px 10px !important; 
-    }
+	@media screen and (max-width: #{ ($break-medium) }) {
+		font-size: 13px;
+		padding: 15px 10px !important;
+	}
 }
-
