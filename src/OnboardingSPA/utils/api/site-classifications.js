@@ -6,7 +6,7 @@ import apiFetch from '@wordpress/api-fetch';
 export async function getSiteClassifications() {
 	return await resolve(
 		apiFetch( {
-			url: onboardingRestURL( `site-classification` ),
+			url: onboardingRestURL( 'site-classification' ),
 		} ).then()
 	);
 }
