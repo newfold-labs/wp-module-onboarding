@@ -35,18 +35,18 @@ class SiteClassificationController {
 			$this->rest_base,
 			array(
 				'methods'             => \WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_site_classification' ),
+				'callback'            => array( $this, 'get' ),
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 			)
 		);
 	}
 
 	/**
-	 * Fetch the Site Classification data using the data module helper.
+	 * Get site classification data.
 	 *
 	 * @return array
 	 */
-	public function get_site_classification() {
+	public function get() {
 		if ( ! class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification' ) ) {
 			return array();
 		}
