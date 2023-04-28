@@ -52,14 +52,29 @@ final class Patterns {
 					'homepage-1'  => array(
 						'active' => true,
 						'shown'  => true,
+						'list'   => array(
+							'yith-wonder/site-header-left-logo-navigation-inline',
+							'yith-wonder/homepage-1',
+							'yith-wonder/site-footer',
+						),
 					),
 					'homepage-2'  => array(
 						'active' => true,
 						'shown'  => true,
+						'list'   => array(
+							'yith-wonder/site-header-left-logo-navigation-inline',
+							'yith-wonder/homepage-2',
+							'yith-wonder/site-footer',
+						),
 					),
 					'homepage-3'  => array(
 						'active' => true,
 						'shown'  => true,
+						'list'   => array(
+							'yith-wonder/site-header-left-logo-navigation-inline',
+							'yith-wonder/homepage-3',
+							'yith-wonder/site-footer',
+						),
 					),
 					'site-footer' => array(
 						'active' => true,
