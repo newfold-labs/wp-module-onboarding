@@ -213,7 +213,7 @@ const StepPrimarySetup = () => {
 								{ contents.tellusHereText }
 							</div>
 							<input
-								type="text"
+								type="search"
 								onChange={ ( e ) => categoryInput( e ) }
 								className="tellus-input"
 								placeholder={
