@@ -53,8 +53,8 @@ const StepPrimarySetup = () => {
 	 * @param  input
 	 */
 	const getSiteClassificationsData = async ( ) => {
-		// const siteClassificationsData = await getSiteClassifications();
-		setSiteClassData(content?.categories);
+		const siteClassificationsData = await getSiteClassifications();
+		setSiteClassData(siteClassificationsData?.body);
 		changePrimaryCategory( currentData?.data?.siteType?.primary ?? "" );
 
 		if(currentData?.data?.siteType?.label === 'custom'){
