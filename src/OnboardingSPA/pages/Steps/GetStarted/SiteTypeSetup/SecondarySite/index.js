@@ -34,6 +34,7 @@ const StepPrimarySetup = () => {
 	const contents = getContents();
 	const defaultPrimaryType = 'business';
 	const [ siteClassData, setSiteClassData ] = useState();
+	const [ primaryTypeList, setPrimaryTypeList ] = useState();
 	const [ primaryType, changePrimaryType ] = useState( defaultPrimaryType );
 	const [ secondaryType, changeSecondaryType ] = useState( '' );
 	const [ inputCategVal, changeInputCateg ] = useState( '' );
@@ -51,7 +52,11 @@ const StepPrimarySetup = () => {
 	 */
 	const getSiteClassificationsData = async () => {
 		const siteClassificationsData = await getSiteClassifications();
+
 		setSiteClassData( siteClassificationsData?.body );
+		setPrimaryTypeList(
+			Object.keys( siteClassificationsData?.body?.types )
+		);
 
 		if ( currentData?.data?.siteType?.primary !== '' )
 			changePrimaryType( currentData?.data?.siteType?.primary );
@@ -91,6 +96,22 @@ const StepPrimarySetup = () => {
 		currentDataCopy.data.siteType.primary = primaryType;
 		currentDataCopy.data.siteType.secondary = secType;
 		setCurrentOnboardingData( currentDataCopy );
+	};
+
+	const changePrimaryPrev = () => {
+		const idx = primaryTypeList.findIndex( ( val ) => primaryType === val );
+
+		if ( idx === 0 )
+			changePrimaryType( primaryTypeList[ primaryTypeList.length - 1 ] );
+		else changePrimaryType( primaryTypeList[ idx - 1 ] );
+	};
+
+	const changePrimaryNext = () => {
+		const idx = primaryTypeList.findIndex( ( val ) => primaryType === val );
+
+		if ( idx === primaryTypeList.length - 1 )
+			changePrimaryType( primaryTypeList[ 0 ] );
+		else changePrimaryType( primaryTypeList[ idx + 1 ] );
 	};
 
 	const secondarySiteTypeChips = () => {
@@ -138,9 +159,11 @@ const StepPrimarySetup = () => {
 							{ siteClassData && (
 								<div className="category-scrolling-wrapper">
 									<div className="category-scrolling-wrapper_left-btn">
+										{ /* eslint-disable-next-line jsx-a11y/no-static-element-interactions */ }
 										<span
 											className="category-scrolling-wrapper_left-btn-icon"
-											onClick={ () => {} }
+											onClick={ changePrimaryPrev }
+											onKeyUp={ changePrimaryPrev }
 											style={ {
 												backgroundImage:
 													'var(--chevron-left-icon)',
@@ -164,9 +187,11 @@ const StepPrimarySetup = () => {
 										</p>
 									</div>
 									<div className="category-scrolling-wrapper_right-btn">
+										{ /* eslint-disable-next-line jsx-a11y/no-static-element-interactions */ }
 										<span
 											className="category-scrolling-wrapper_right-btn-icon"
-											onClick={ () => {} }
+											onClick={ changePrimaryNext }
+											onKeyUp={ changePrimaryNext }
 											style={ {
 												backgroundImage:
 													'var(--chevron-right-icon)',

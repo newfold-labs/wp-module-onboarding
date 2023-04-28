@@ -3970,6 +3970,7 @@ div.onboarding-product-step .step-product-numbers .components-radio-control inpu
 }
 
 .subCategoriesSection {
+  height: 25vh;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
@@ -4016,7 +4017,7 @@ div.onboarding-product-step .step-product-numbers .components-radio-control inpu
 }
 .category-scrolling-wrapper_type-text {
   display: inline-block;
-  color: black;
+  color: var(--nfd-onboarding-dark);
   font-size: 0.85rem;
   font-weight: 400;
   margin: 0;
