@@ -41,11 +41,16 @@ class SiteClassificationController {
 		);
 	}
 
-    public function get_site_classification() {
-        if ( ! class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification' ) ) {
+	/**
+	 * Fetch the Site Classification data using the data module helper.
+	 *
+	 * @return array
+	 */
+	public function get_site_classification() {
+		if ( ! class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification' ) ) {
 			return array();
 		}
-        $classification = new SiteClassification();
-        return $classification->get();
-    }
+		$classification = new SiteClassification();
+		return $classification->get();
+	}
 }
