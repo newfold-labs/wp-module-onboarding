@@ -1,5 +1,6 @@
 import { __, sprintf } from '@wordpress/i18n';
 import { lazy } from '@wordpress/element';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { filter, orderBy } from 'lodash';
 import IndexPage from '../../pages/index';
 import { translations } from '../../utils/locales/translations';
@@ -22,8 +23,6 @@ import {
 import {
 	VIEW_DESIGN_COLORS,
 	VIEW_DESIGN_HEADER_MENU,
-	VIEW_DESIGN_HOMEPAGE_MENU,
-	VIEW_DESIGN_THEME_STYLES_MENU,
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
 	VIEW_DESIGN_TYPOGRAPHY,
 	VIEW_NAV_GET_STARTED,
@@ -82,10 +81,6 @@ const StepTopPriority = lazy( () => import( '../../pages/Steps/TopPriority' ) );
 const StepBasicInfo = lazy( () => import( '../../pages/Steps/BasicInfo' ) );
 const StepBasicInfoLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/BasicInfo/Sidebar/LearnMore' )
-);
-
-const StepDesignThemes = lazy( () =>
-	import( '../../pages/Steps/DesignThemes' )
 );
 
 const StepDesignThemeStylesMenu = lazy( () =>
@@ -194,8 +189,8 @@ export const steps = [
 	{
 		path: '/wp-setup/step/get-started/welcome',
 		title: __( 'Welcome', 'wp-module-onboarding' ),
-		/* translators: %s: website or store */
 		heading: sprintf(
+			/* translators: %s: website or store */
 			__( 'Make your %s dreams a reality!', 'wp-module-onboarding' ),
 			translations( 'website' )
 		),
@@ -217,8 +212,8 @@ export const steps = [
 	{
 		path: '/wp-setup/step/get-started/experience',
 		title: __( 'WordPress Experience', 'wp-module-onboarding' ),
-		/* translators: %s: website or store */
 		heading: sprintf(
+			/* translators: %s: website or store */
 			__(
 				'Help us tailor this setup to your %s',
 				'wp-module-onboarding'
@@ -245,26 +240,26 @@ export const steps = [
 	},
 	{
 		path: '/wp-setup/step/get-started/site-primary',
-		/* translators: %s: website or store */
 		title: sprintf(
+			/* translators: %s: website or store */
 			__( 'Primary %s Setup', 'wp-module-onboarding' ),
 			translations( 'Site' )
 		),
-		/* translators: %s: website or store */
 		heading: sprintf(
+			/* translators: %s: website or store */
 			__(
 				'Help us tailor this setup to your %s',
 				'wp-module-onboarding'
 			),
 			translations( 'site' )
 		),
-		/* translators: %s: website or store */
 		subheading: sprintf(
+			/* translators: %s: website or store */
 			__( 'What type of %s is it?', 'wp-module-onboarding' ),
 			translations( 'site' )
 		),
-		/* translators: %s: website or store */
 		description: sprintf(
+			/* translators: %s: website or store */
 			__(
 				"Setup more of your %s, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
 				'wp-module-onboarding'
@@ -284,26 +279,26 @@ export const steps = [
 	},
 	{
 		path: '/wp-setup/step/get-started/site-secondary',
-		/* translators: %s: website or store */
 		title: sprintf(
+			/* translators: %s: website or store */
 			__( 'Secondary %s Setup', 'wp-module-onboarding' ),
 			translations( 'Site' )
 		),
-		/* translators: %s: website or store */
 		heading: sprintf(
+			/* translators: %s: website or store */
 			__(
 				'Help us tailor this setup to your %s',
 				'wp-module-onboarding'
 			),
 			translations( 'site' )
 		),
-		/* translators: %s: website or store */
 		subheading: sprintf(
+			/* translators: %s: website or store */
 			__( 'What type of %s is it?', 'wp-module-onboarding' ),
 			translations( 'site' )
 		),
-		/* translators: %s: website or store */
 		description: sprintf(
+			/* translators: %s: website or store */
 			__(
 				"Setup more of your %s, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
 				'wp-module-onboarding'
@@ -340,8 +335,8 @@ export const steps = [
 	{
 		path: '/wp-setup/step/basic-info',
 		title: __( 'Basic Info', 'wp-module-onboarding' ),
-		/* translators: %s: website or store */
 		heading: sprintf(
+			/* translators: %s: website or store */
 			__( 'Introduce us to this %s', 'wp-module-onboarding' ),
 			translations( 'website' )
 		),
@@ -349,8 +344,8 @@ export const steps = [
 			'So we can introduce it to the web',
 			'wp-module-onboarding'
 		),
-		/* translators: %s: website or store */
 		description: sprintf(
+			/* translators: %s: website or store */
 			__(
 				'Help visitors, search results and social media identify your %s.',
 				'wp-module-onboarding'
@@ -628,7 +623,7 @@ export const routes = [ ...pages, ...steps ];
 /**
  * Filter-out the design steps and register a fake step in their place.
  *
- * @return
+ * @return {Array} steps
  */
 export const initialTopSteps = () => {
 	const topSteps = filter( steps, ( step ) => {
@@ -669,7 +664,7 @@ export const initialTopSteps = () => {
 /**
  * Filter out all non-design steps.
  *
- * @return
+ * @return {Array} steps
  */
 export const initialDesignSteps = () => {
 	const designSteps = filter( steps, ( step ) => {
