@@ -391,7 +391,7 @@ export const steps = [
 			'wp-module-onboarding'
 		),
 		subheading: __(
-			"Use these styles or bring your own. You're always free to remix them.",
+			'Start with a style preset or ',
 			'wp-module-onboarding'
 		),
 		description: __(
