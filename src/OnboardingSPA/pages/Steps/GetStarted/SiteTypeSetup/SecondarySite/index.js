@@ -1,4 +1,3 @@
-import { __, sprintf } from '@wordpress/i18n';
 import CommonLayout from '../../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../../components/NewfoldLargeCard';
 import {
@@ -11,9 +10,8 @@ import { useEffect, useState } from '@wordpress/element';
 import CardHeader from '../../../../../components/CardHeader';
 import NavCardButton from '../../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../../components/NeedHelpTag';
-import content from '../content.json';
-import { translations } from '../../../../../utils/locales/translations';
 import Animate from '../../../../../components/Animate';
+import getContents from '../contents';
 
 const StepPrimarySetup = () => {
 	const {
@@ -34,19 +32,18 @@ const StepPrimarySetup = () => {
 	const [ clickedIndex, changeCategory ] = useState( -1 );
 	const [ inputCategVal, changeInputCateg ] = useState( '' );
 
-	const { currentStep, currentData } = useSelect( ( select ) => {
+	const { currentData } = useSelect( ( select ) => {
 		return {
-			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	}, [] );
 
+	const content = getContents();
 	const selectedCategoryInStore = currentData?.data?.siteType?.secondary;
 	const categoriesArray = content.categories;
 	const subCategories = categoriesArray[ 0 ]?.subCategories;
 
-	/**This condition fills the data in input box if the saved category isn't a subcategory from the content*/
 	if (
 		selectedCategoryInStore &&
 		! inputCategVal &&
@@ -56,11 +53,6 @@ const StepPrimarySetup = () => {
 			changeInputCateg( selectedCategoryInStore );
 	}
 
-	/**
-	 * Function which saves data in redux when category name is put-in via input box
-	 *
-	 * @param  input
-	 */
 	const categoryInput = ( input ) => {
 		changeCategory( -1 );
 		changeInputCateg( input?.target?.value );
@@ -69,11 +61,6 @@ const StepPrimarySetup = () => {
 		setCurrentOnboardingData( currentDataCopy );
 	};
 
-	/**
-	 * Function which saves data in redux when category name is chosen via categories displayed
-	 *
-	 * @param  idxOfElm
-	 */
 	const handleCategoryClick = ( idxOfElm ) => {
 		changeCategory( idxOfElm );
 		changeInputCateg( '' );
@@ -88,18 +75,9 @@ const StepPrimarySetup = () => {
 			<NewfoldLargeCard>
 				<div className="nfd-card-heading center">
 					<CardHeader
-						heading={ __(
-							currentStep?.heading,
-							'wp-module-onboarding'
-						) }
-						subHeading={ sprintf(
-							__( content.subHeading, 'wp-module-onboarding' ),
-							translations( 'SITE' )
-						) }
-						question={ __(
-							currentStep?.subheading,
-							'wp-module-onboarding'
-						) }
+						heading={ content.heading }
+						subHeading={ content.subheading }
+						question={ content.question }
 					/>
 				</div>
 				<Animate
@@ -132,7 +110,12 @@ const StepPrimarySetup = () => {
 									return (
 										<span
 											key={ item }
-											onClick={ ( e ) =>
+											tabIndex={ idx + 1 }
+											role="button"
+											onClick={ () =>
+												handleCategoryClick( idx )
+											}
+											onKeyUp={ () =>
 												handleCategoryClick( idx )
 											}
 											className={ `${
@@ -153,29 +136,26 @@ const StepPrimarySetup = () => {
 					<div className="nfd-setup-primary-second">
 						<div className="nfd-setup-primary-second-top">
 							<div className="blackText">
-								{ __(
-									content.tellusHereText,
-									'wp-module-onboarding'
-								) }
+								{ content.customInputLabel }
 							</div>
 							<input
 								type="text"
+								tabIndex={
+									categoriesArray[ 0 ].subCategories.length +
+									1
+								}
 								onChange={ ( e ) => categoryInput( e ) }
 								className="tellUsInput"
-								placeholder={ sprintf(
-									__(
-										content.placeholderSiteTypeInput,
-										'wp-module-onboarding'
-									),
-									translations( 'site' )
-								) }
+								placeholder={
+									content.customInputPlaceholderText
+								}
 								value={ inputCategVal }
 							/>
 						</div>
 					</div>
 				</Animate>
 				<NavCardButton
-					text={ __( content.buttonText ) }
+					text={ content.buttonText }
 					disabled={ categoriesArray[ 0 ]?.subCategories === null }
 				/>
 				<NeedHelpTag />

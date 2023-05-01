@@ -1,7 +1,0 @@
-{
-	"aboutYouTag": "ABOUT YOU",
-	"buttonText": "Continue Setup",
-	"options": [{ "content":"Never used it" , "value" : "1"}, 
-				{ "content": "Used it some", "value" : "3"}, 
-				{ "content": "I'm an expert", "value" : "5"}]
-}

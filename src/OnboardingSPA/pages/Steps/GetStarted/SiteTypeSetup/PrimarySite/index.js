@@ -1,4 +1,3 @@
-import { __, sprintf } from '@wordpress/i18n';
 import CommonLayout from '../../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../../components/NewfoldLargeCard';
 import {
@@ -11,9 +10,8 @@ import { useState, useEffect } from '@wordpress/element';
 import CardHeader from '../../../../../components/CardHeader';
 import NavCardButton from '../../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../../components/NeedHelpTag';
-import content from '../content.json';
-import { translations } from '../../../../../utils/locales/translations';
 import Animate from '../../../../../components/Animate';
+import getContents from '../contents';
 
 const StepPrimarySetup = () => {
 	const {
@@ -24,9 +22,8 @@ const StepPrimarySetup = () => {
 		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { currentStep, currentData } = useSelect( ( select ) => {
+	const { currentData } = useSelect( ( select ) => {
 		return {
-			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
@@ -42,6 +39,7 @@ const StepPrimarySetup = () => {
 	const [ clickedIndex, changeCategory ] = useState( -1 );
 	const [ inputCategVal, changeInputCateg ] = useState( '' );
 
+	const content = getContents();
 	const categoriesArray = content.categories;
 	const selectedPrimaryCategoryInStore = currentData?.data?.siteType?.primary;
 
@@ -63,11 +61,6 @@ const StepPrimarySetup = () => {
 		setCurrentOnboardingData( currentDataCopy );
 	};
 
-	/**
-	 * Function which saves data in redux when category name is put-in via input box
-	 *
-	 * @param  input
-	 */
 	const categoryInput = ( input ) => {
 		changeCategory( -1 );
 		changeInputCateg( input?.target?.value );
@@ -81,18 +74,9 @@ const StepPrimarySetup = () => {
 			<NewfoldLargeCard>
 				<div className="nfd-card-heading center">
 					<CardHeader
-						heading={ __(
-							currentStep?.heading,
-							'wp-module-onboarding'
-						) }
-						subHeading={ sprintf(
-							__( content.subHeading, 'wp-module-onboarding' ),
-							translations( 'SITE' )
-						) }
-						question={ __(
-							currentStep?.subheading,
-							'wp-module-onboarding'
-						) }
+						heading={ content.heading }
+						subHeading={ content.subheading }
+						question={ content.question }
 					/>
 				</div>
 				<Animate
@@ -107,6 +91,8 @@ const StepPrimarySetup = () => {
 							return (
 								<div
 									key={ item?.name }
+									tabIndex={ idx + 1 }
+									role="button"
 									className={ `${
 										clickedIndex === idx ||
 										item.name ===
@@ -114,9 +100,8 @@ const StepPrimarySetup = () => {
 											? 'chosenPrimaryCategory '
 											: ''
 									}nfd-card-category` }
-									onClick={ ( e ) =>
-										handleCategoryClick( idx )
-									}
+									onClick={ () => handleCategoryClick( idx ) }
+									onKeyUp={ () => handleCategoryClick( idx ) }
 								>
 									<div className="nfd-card-category-wrapper">
 										<span
@@ -141,25 +126,24 @@ const StepPrimarySetup = () => {
 
 					<div className="nfd-setup-primary-second">
 						<div className="nfd-setup-primary-second-top">
-							<p className="blackText">or tell us here:</p>
+							<p className="blackText">
+								{ content.customInputLabel }
+							</p>
 							<input
 								type="text"
+								tabIndex={ content.categories.length + 1 }
 								onChange={ ( e ) => categoryInput( e ) }
 								className="tellUsInput"
-								placeholder={ sprintf(
-									__(
-										content.placeholderSiteTypeInput,
-										'wp-module-onboarding'
-									),
-									translations( 'site' )
-								) }
+								placeholder={
+									content.customInputPlaceholderText
+								}
 								value={ inputCategVal }
 							/>
 						</div>
 					</div>
 				</Animate>
 				<NavCardButton
-					text={ __( content.buttonText ) }
+					text={ content.buttonText }
 					disabled={ content.categories === null }
 				/>
 				<NeedHelpTag />

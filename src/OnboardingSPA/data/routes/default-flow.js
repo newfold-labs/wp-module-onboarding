@@ -1,5 +1,6 @@
 import { __, sprintf } from '@wordpress/i18n';
 import { lazy } from '@wordpress/element';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { filter, orderBy } from 'lodash';
 import IndexPage from '../../pages/index';
 import { translations } from '../../utils/locales/translations';
@@ -22,8 +23,6 @@ import {
 import {
 	VIEW_DESIGN_COLORS,
 	VIEW_DESIGN_HEADER_MENU,
-	VIEW_DESIGN_HOMEPAGE_MENU,
-	VIEW_DESIGN_THEME_STYLES_MENU,
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
 	VIEW_DESIGN_TYPOGRAPHY,
 	VIEW_NAV_GET_STARTED,
@@ -82,10 +81,6 @@ const StepTopPriority = lazy( () => import( '../../pages/Steps/TopPriority' ) );
 const StepBasicInfo = lazy( () => import( '../../pages/Steps/BasicInfo' ) );
 const StepBasicInfoLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/BasicInfo/Sidebar/LearnMore' )
-);
-
-const StepDesignThemes = lazy( () =>
-	import( '../../pages/Steps/DesignThemes' )
 );
 
 const StepDesignThemeStylesMenu = lazy( () =>
@@ -194,12 +189,6 @@ export const steps = [
 	{
 		path: '/wp-setup/step/get-started/welcome',
 		title: __( 'Welcome', 'wp-module-onboarding' ),
-		/* translators: %s: website or store */
-		heading: sprintf(
-			__( 'Make your %s dreams a reality!', 'wp-module-onboarding' ),
-			translations( 'website' )
-		),
-		subheading: __( 'with WordPress and ', 'wp-module-onboarding' ),
 		description: __(
 			"We'll use this to personalize this onboarding and future recommendations",
 			'wp-module-onboarding'
@@ -217,18 +206,6 @@ export const steps = [
 	{
 		path: '/wp-setup/step/get-started/experience',
 		title: __( 'WordPress Experience', 'wp-module-onboarding' ),
-		/* translators: %s: website or store */
-		heading: sprintf(
-			__(
-				'Help us tailor this setup to your %s',
-				'wp-module-onboarding'
-			),
-			translations( 'site' )
-		),
-		subheading: __(
-			'What is your experience with WordPress?',
-			'wp-module-onboarding'
-		),
 		description: __(
 			"We'll use this to personalize this onboarding and future recommendations",
 			'wp-module-onboarding'
@@ -245,31 +222,10 @@ export const steps = [
 	},
 	{
 		path: '/wp-setup/step/get-started/site-primary',
-		/* translators: %s: website or store */
 		title: sprintf(
+			/* translators: %s: website or store */
 			__( 'Primary %s Setup', 'wp-module-onboarding' ),
 			translations( 'Site' )
-		),
-		/* translators: %s: website or store */
-		heading: sprintf(
-			__(
-				'Help us tailor this setup to your %s',
-				'wp-module-onboarding'
-			),
-			translations( 'site' )
-		),
-		/* translators: %s: website or store */
-		subheading: sprintf(
-			__( 'What type of %s is it?', 'wp-module-onboarding' ),
-			translations( 'site' )
-		),
-		/* translators: %s: website or store */
-		description: sprintf(
-			__(
-				"Setup more of your %s, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
-				'wp-module-onboarding'
-			),
-			translations( 'site' )
 		),
 		Component: StepGetStartedPrimarySetup,
 		Icon: moveTo,
@@ -284,31 +240,10 @@ export const steps = [
 	},
 	{
 		path: '/wp-setup/step/get-started/site-secondary',
-		/* translators: %s: website or store */
 		title: sprintf(
+			/* translators: %s: website or store */
 			__( 'Secondary %s Setup', 'wp-module-onboarding' ),
 			translations( 'Site' )
-		),
-		/* translators: %s: website or store */
-		heading: sprintf(
-			__(
-				'Help us tailor this setup to your %s',
-				'wp-module-onboarding'
-			),
-			translations( 'site' )
-		),
-		/* translators: %s: website or store */
-		subheading: sprintf(
-			__( 'What type of %s is it?', 'wp-module-onboarding' ),
-			translations( 'site' )
-		),
-		/* translators: %s: website or store */
-		description: sprintf(
-			__(
-				"Setup more of your %s, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
-				'wp-module-onboarding'
-			),
-			translations( 'site' )
 		),
 		Component: StepGetStartedSecondarySetup,
 		Icon: moveTo,
@@ -340,8 +275,8 @@ export const steps = [
 	{
 		path: '/wp-setup/step/basic-info',
 		title: __( 'Basic Info', 'wp-module-onboarding' ),
-		/* translators: %s: website or store */
 		heading: sprintf(
+			/* translators: %s: website or store */
 			__( 'Introduce us to this %s', 'wp-module-onboarding' ),
 			translations( 'website' )
 		),
@@ -349,8 +284,8 @@ export const steps = [
 			'So we can introduce it to the web',
 			'wp-module-onboarding'
 		),
-		/* translators: %s: website or store */
 		description: sprintf(
+			/* translators: %s: website or store */
 			__(
 				'Help visitors, search results and social media identify your %s.',
 				'wp-module-onboarding'
@@ -366,23 +301,6 @@ export const steps = [
 			},
 		},
 	},
-	// {
-	// 	path: '/wp-setup/step/design/themes',
-	// 	title: __( 'Themes', 'wp-module-onboarding' ),
-	// 	heading: __( "Let's make you look your best", 'wp-module-onboarding' ),
-	// 	subheading: __(
-	// 		'Find a WordPress Theme to present polished and compelling.',
-	// 		'wp-module-onboarding'
-	// 	),
-	// 	description: __(
-	// 		'Your Theme is the starting place for layout and design, setting the tone for your site. Keep it for years or change and swap as you grow.',
-	// 		'wp-module-onboarding'
-	// 	),
-	// 	Component: StepDesignThemes,
-	// 	Icon: brush,
-	// 	priority: 140,
-	// 	VIEW: VIEW_DESIGN_THEMES,
-	// },
 	{
 		path: '/wp-setup/step/design/theme-styles/menu',
 		title: __( 'Theme Styles', 'wp-module-onboarding' ),
@@ -620,16 +538,8 @@ export const conditionalSteps = {
 	},
 };
 
-/**
- * Top-level registration of all routes.
- */
 export const routes = [ ...pages, ...steps ];
 
-/**
- * Filter-out the design steps and register a fake step in their place.
- *
- * @return
- */
 export const initialTopSteps = () => {
 	const topSteps = filter( steps, ( step ) => {
 		return (
@@ -666,11 +576,6 @@ export const initialTopSteps = () => {
 	return orderBy( topSteps, [ 'priority' ], [ 'asc' ] );
 };
 
-/**
- * Filter out all non-design steps.
- *
- * @return
- */
 export const initialDesignSteps = () => {
 	const designSteps = filter( steps, ( step ) => {
 		return (
