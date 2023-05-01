@@ -1,8 +1,9 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CheckboxControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { orderBy, filter } from 'lodash';
 
 import {
@@ -25,6 +26,7 @@ const StepDesignThemeStylesPreview = () => {
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
 	const [ customize, setCustomize ] = useState( false );
+	const navigate = useNavigate();
 
 	const {
 		currentStep,
@@ -60,7 +62,7 @@ const StepDesignThemeStylesPreview = () => {
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView( VIEW_DESIGN_THEME_STYLES_PREVIEW );
-		handleCheckbox( currentData.data.customDesign, false );
+		handleCheckbox( currentData.data.customDesign, false, 'flow' );
 	}, [] );
 
 	const getStylesAndPatterns = async () => {
@@ -134,10 +136,14 @@ const StepDesignThemeStylesPreview = () => {
 		};
 	};
 
-	const handleCheckbox = ( customize, updateOnboardingData = true ) => {
+	const handleCheckbox = (
+		selected,
+		updateOnboardingData = true,
+		context = 'click'
+	) => {
 		let updates;
 
-		if ( customize ) {
+		if ( selected ) {
 			updates = addColorAndTypographyRoutes();
 		} else {
 			updates = removeColorAndTypographyRoutes();
@@ -146,11 +152,15 @@ const StepDesignThemeStylesPreview = () => {
 		updateRoutes( updates.routes );
 		updateDesignSteps( updates.designSteps );
 		updateAllSteps( updates.allSteps );
-		setCustomize( customize );
+		setCustomize( selected );
 
 		if ( updateOnboardingData ) {
-			currentData.data.customDesign = customize;
+			currentData.data.customDesign = selected;
 			setCurrentOnboardingData( currentData );
+		}
+
+		if ( selected && 'click' === context ) {
+			navigate( conditionalSteps.designColors.path );
 		}
 	};
 
