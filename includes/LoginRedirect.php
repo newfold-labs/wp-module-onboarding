@@ -66,28 +66,6 @@ class LoginRedirect {
 		return $redirect;
 	}
 
-	 /**
-	  * Check if we have a valid user.
-	  *
-	  * @param \WP_User $user The WordPress user object.
-	  *
-	  * @return bool
-	  */
-	public static function is_user( $user ) {
-		return $user && is_object( $user ) && is_a( $user, 'WP_User' );
-	}
-
-	/**
-	 * Check if a user is an administrator.
-	 *
-	 * @param \WP_User $user WordPress user.
-	 *
-	 * @return bool
-	 */
-	public static function is_administrator( $user ) {
-		return self::is_user( $user ) && $user->has_cap( Permissions::ADMIN );
-	}
-
 	/**
 	 * Sets a transient that disables redirect to onboarding on login.
 	 *
