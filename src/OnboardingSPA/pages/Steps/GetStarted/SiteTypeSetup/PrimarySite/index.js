@@ -87,14 +87,16 @@ const StepPrimarySetup = () => {
 	};
 
 	const primarySiteTypeChips = () => {
+		let idx = 0;
 		const primaryChipList = [];
 
 		const types = siteClassData?.types;
 		for ( const typeKey in types ) {
 			primaryChipList.push(
-				// eslint-disable-next-line jsx-a11y/no-static-element-interactions
 				<div
 					key={ types[ typeKey ]?.slug }
+					tabIndex={ idx + 1 }
+					role="button"
 					className={ `${
 						types[ typeKey ].slug === primaryCategory
 							? 'chosenPrimaryCategory '
@@ -103,7 +105,9 @@ const StepPrimarySetup = () => {
 					onClick={ () =>
 						handleCategoryClick( types[ typeKey ].slug )
 					}
-					onKeyDown={ () => {} }
+					onKeyDown={ () =>
+						handleCategoryClick( types[ typeKey ].slug )
+					}
 				>
 					<div className="nfd-card-pri-category-wrapper">
 						<span
@@ -122,6 +126,7 @@ const StepPrimarySetup = () => {
 					</div>
 				</div>
 			);
+			idx++;
 		}
 
 		return primaryChipList;

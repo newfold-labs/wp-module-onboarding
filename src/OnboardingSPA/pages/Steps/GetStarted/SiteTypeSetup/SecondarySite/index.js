@@ -115,14 +115,16 @@ const StepPrimarySetup = () => {
 	};
 
 	const secondarySiteTypeChips = () => {
+		let idx = 0;
 		const secondaryChipList = [];
 
 		const types = siteClassData?.types[ primaryType ]?.secondaryTypes;
 		for ( const typeKey in types ) {
 			secondaryChipList.push(
-				// eslint-disable-next-line jsx-a11y/no-static-element-interactions
 				<div
 					key={ types[ typeKey ]?.slug }
+					role="button"
+					tabIndex={ idx + 1 }
 					className={ `${
 						types[ typeKey ].slug === secondaryType
 							? 'chosenSecondaryCategory '
@@ -131,13 +133,16 @@ const StepPrimarySetup = () => {
 					onClick={ () =>
 						handleCategoryClick( types[ typeKey ].slug )
 					}
-					onKeyDown={ () => {} }
+					onKeyDown={ () =>
+						handleCategoryClick( types[ typeKey ].slug )
+					}
 				>
 					<span className="categName">
 						{ types[ typeKey ]?.label }
 					</span>
 				</div>
 			);
+			idx++;
 		}
 
 		return secondaryChipList;
@@ -159,11 +164,12 @@ const StepPrimarySetup = () => {
 							{ siteClassData && (
 								<div className="category-scrolling-wrapper">
 									<div className="category-scrolling-wrapper_left-btn">
-										{ /* eslint-disable-next-line jsx-a11y/no-static-element-interactions */ }
 										<span
 											className="category-scrolling-wrapper_left-btn-icon"
 											onClick={ changePrimaryPrev }
 											onKeyUp={ changePrimaryPrev }
+											role="button"
+											tabIndex={ 0 }
 											style={ {
 												backgroundImage:
 													'var(--chevron-left-icon)',
@@ -187,11 +193,12 @@ const StepPrimarySetup = () => {
 										</p>
 									</div>
 									<div className="category-scrolling-wrapper_right-btn">
-										{ /* eslint-disable-next-line jsx-a11y/no-static-element-interactions */ }
 										<span
 											className="category-scrolling-wrapper_right-btn-icon"
 											onClick={ changePrimaryNext }
 											onKeyUp={ changePrimaryNext }
+											role="button"
+											tabIndex={ 0 }
 											style={ {
 												backgroundImage:
 													'var(--chevron-right-icon)',
