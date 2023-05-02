@@ -2,6 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Popover, ColorPicker } from '@wordpress/components';
 import { useState, useEffect, useRef } from '@wordpress/element';
+import classNames from 'classnames';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
@@ -304,11 +305,13 @@ const DesignColors = () => {
 			return (
 				<div
 					key={ colorStyle }
-					className={ `color-palette drawer-palette--button ${
-						colorStyle === currentData?.data?.colorStyle
-							? 'color-palette-selected drawer-palette--button--selected'
-							: ''
-					} ` }
+					className={ classNames(
+						'color-palette drawer-palette--button',
+						{
+							'color-palette-selected drawer-palette--button--selected':
+								colorStyle === currentData?.data?.colorStyle,
+						}
+					) }
 					role="button"
 					tabIndex={ idx + 1 }
 					onClick={ () => handleClick( colorStyle ) }
