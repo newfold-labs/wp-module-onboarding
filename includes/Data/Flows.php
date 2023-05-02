@@ -79,38 +79,9 @@ final class Flows {
 
 			'customDesign'    => false,
 
-			'palette'         => array(
-				'slug'     => '',
-				'name'     => '',
-				'color'    => array(
-					array(
-						'slug'  => 'primary',
-						'name'  => 'Primary',
-						'color' => '',
-					),
-					array(
-						'slug'  => 'secondary',
-						'name'  => 'Secondary',
-						'color' => '',
-					),
-					array(
-						'slug'  => 'tertiary',
-						'name'  => 'Tertiary',
-						'color' => '',
-					),
-					array(
-						'slug'  => 'base',
-						'name'  => 'Base',
-						'color' => '',
-					),
-				),
-				'supports' => array( 'yith-wonder' ),
-			),
+			'colorStyle'      => '',
 
-			'typography'      => array(
-				'slug' => '',
-				'data' => array(),
-			),
+			'fontStyle'       => '',
 
 			// This string will identify the Header Pattern
 			'partHeader'      => '',
@@ -123,8 +94,6 @@ final class Flows {
 
 			// will include plugin installs, module activation/deactivation and perhaps API calls to the hosting platform for Newfold-specific services
 			'siteFeatures'    => array(),
-
-			'socialData'      => array(),
 		),
 
 		// we will store active flows (abandoned wp-setup, abandoned wp-commerce) with their identifier and use as a reference to access currentStep and data
@@ -174,26 +143,7 @@ final class Flows {
 	 * @var array
 	 */
 	protected static $exception_list = array(
-		'color'        => array(
-			'remove_key' => array(),
-			'add_key'    => array(),
-		),
-		'typography'   => array(
-			'remove_key' => array(),
-			'add_key'    => array(),
-		),
-		'other'        => array(
-			'remove_key' => array(),
-			'add_key'    => array(),
-		),
-		'siteFeatures' => array(
-			'remove_key' => array(),
-			'add_key'    => array(),
-		),
-		'socialData'   => array(
-			'remove_key' => array(),
-			'add_key'    => array(),
-		),
+		'other' => true,
 	);
 
 	/**

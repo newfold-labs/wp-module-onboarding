@@ -24,7 +24,7 @@ const BasicInfoForm = () => {
 
 	const [ siteTitle, setSiteTitle ] = useState( '' );
 	const [ siteDesc, setSiteDesc ] = useState( '' );
-	const [ siteLogo, setSiteLogo ] = useState( {id : 0, url: ''} );
+	const [ siteLogo, setSiteLogo ] = useState( { id: 0, url: '' } );
 	const [ socialData, setSocialData ] = useState();
 	const [ isValidSocials, setIsValidSocials ] = useState( false );
 	const [ isSocialFormOpen, setIsSocialFormOpen ] = useState( false );
@@ -48,7 +48,7 @@ const BasicInfoForm = () => {
 
 	function setDefaultData() {
 		if ( isLoaded ) {
-			setSiteLogo( flowData?.data?.siteLogo ?? 0 );
+			setSiteLogo( flowData?.data?.siteLogo ?? siteLogo );
 			setSiteTitle( flowData?.data?.blogName ?? '' );
 			setSiteDesc( flowData?.data?.blogDescription ?? '' );
 		}
