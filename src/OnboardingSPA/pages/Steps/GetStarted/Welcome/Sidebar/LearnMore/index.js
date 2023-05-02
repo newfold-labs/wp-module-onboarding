@@ -77,18 +77,25 @@ const LearnMore = () => {
 				}
 			/>
 			<HelpPanel>
-				<ButtonBlue
-					text={ content.help.experts.text }
-					onClick={ () =>
-						window.open( content.help.experts.link, '_blank' )
-					}
-				/>
-				<ButtonWhite
-					text={ content.help.fullService.text }
-					onClick={ () =>
-						window.open( content.help.fullService.link, '_blank' )
-					}
-				/>
+				{ content.help.experts.link && (
+					<ButtonBlue
+						text={ content.help.experts.text }
+						onClick={ () =>
+							window.open( content.help.experts.link, '_blank' )
+						}
+					/>
+				) }
+				{ content.help.fullService.link && (
+					<ButtonWhite
+						text={ content.help.fullService.text }
+						onClick={ () =>
+							window.open(
+								content.help.fullService.link,
+								'_blank'
+							)
+						}
+					/>
+				) }
 				<SupportLink
 					text={ content.help.support.text }
 					link={ content.help.support.link }
