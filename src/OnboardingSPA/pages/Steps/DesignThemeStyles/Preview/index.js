@@ -98,10 +98,10 @@ const StepDesignThemeStylesPreview = () => {
 		updateRoutes( updates.routes );
 		updateDesignSteps( updates.designSteps );
 		updateAllSteps( updates.allSteps );
-		setCustomize( customize );
+		setCustomize( customizeSelection );
 
 		if ( updateOnboardingData ) {
-			currentData.data.customDesign = customize;
+			currentData.data.customDesign = customizeSelection;
 			setCurrentOnboardingData( currentData );
 		}
 	};
