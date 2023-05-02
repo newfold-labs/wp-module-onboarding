@@ -73,12 +73,17 @@ const LearnMore = () => {
 				}
 			/>
 			<HelpPanel>
-				<ButtonWhite
-					text={ content.help.fullService.text }
-					onClick={ () =>
-						window.open( content.help.fullService.link, '_blank' )
-					}
-				/>
+				{ content.help.fullService.link && (
+					<ButtonWhite
+						text={ content.help.fullService.text }
+						onClick={ () =>
+							window.open(
+								content.help.fullService.link,
+								'_blank'
+							)
+						}
+					/>
+				) }
 				<SupportLink
 					text={ content.help.support.text }
 					link={ content.help.support.link }
