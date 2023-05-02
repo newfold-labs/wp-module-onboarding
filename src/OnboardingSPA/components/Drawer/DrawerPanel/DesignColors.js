@@ -41,7 +41,8 @@ const DesignColors = () => {
 		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
 
-	function stateToLocal( selectedColorPalette ) {
+	function stateToLocal() {
+		const selectedColorPalette = selectedColors;
 		if ( selectedColorPalette ) {
 			const selectedColorsLocalTemp = {};
 			selectedColorPalette?.forEach( ( color ) => {
@@ -122,11 +123,8 @@ const DesignColors = () => {
 		}
 	}
 
-	function findInCustomColors(
-		slugName,
-		colorPickerCalledByTemp,
-		storedPreviewSettingsTemp = storedPreviewSettings
-	) {
+	function findInCustomColors( slugName, colorPickerCalledByTemp ) {
+		const storedPreviewSettingsTemp = storedPreviewSettings;
 		const selectedThemeColorPalette =
 			storedPreviewSettingsTemp?.settings?.color?.palette;
 		const res = selectedThemeColorPalette.findIndex(
@@ -206,13 +204,13 @@ const DesignColors = () => {
 		if ( ! currentData?.data?.colorStyle === '' ) {
 			selectedColorPalette =
 				globalStyles.body[ 0 ].settings.color.palette;
-			selectedColorsLocalTemp = stateToLocal( selectedColorPalette );
+			selectedColorsLocalTemp = stateToLocal();
 			setCustomColors( selectedColorsLocalTemp );
 			setCurrentOnboardingData( currentData );
 		} else {
 			selectedColorPalette =
 				globalStyles.body[ 0 ].settings.color.palette;
-			selectedColorsLocalTemp = stateToLocal( selectedColorPalette );
+			selectedColorsLocalTemp = stateToLocal();
 
 			if ( currentData?.data?.colorStyle === 'custom' ) {
 				setCustomColors( selectedColorsLocalTemp );
@@ -302,9 +300,8 @@ const DesignColors = () => {
 	}
 
 	function buildPalettes() {
-		const paletteRenderedList = [];
-		for ( const colorStyle in colorPalettes ) {
-			paletteRenderedList.push(
+		return Object.keys( colorPalettes ).map( ( colorStyle, idx ) => {
+			return (
 				<div
 					key={ colorStyle }
 					className={ `color-palette drawer-palette--button ${
@@ -313,7 +310,7 @@ const DesignColors = () => {
 							: ''
 					} ` }
 					role="button"
-					tabIndex={ 0 }
+					tabIndex={ idx + 1 }
 					onClick={ () => handleClick( colorStyle ) }
 					onKeyDown={ () => handleClick( colorStyle ) }
 				>
@@ -343,9 +340,7 @@ const DesignColors = () => {
 					</div>
 				</div>
 			);
-		}
-
-		return paletteRenderedList;
+		} );
 	}
 
 	function isCustomColorActive() {

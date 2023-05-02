@@ -39,13 +39,6 @@ const DesignTypography = () => {
 		}
 		setFontPalettes( themeFontPalettes?.body );
 
-		if ( currentData?.data?.fontStyle !== '' ) {
-			handleClick(
-				currentData?.data?.fontStyle,
-				storedPreviewSettings,
-				themeFontPalettes?.body
-			);
-		}
 		const stylesCustom = storedPreviewSettings?.settings?.styles[ 0 ]?.css;
 		if ( stylesCustom ) {
 			// Loads in all CSS variables related to fontFamily
@@ -59,20 +52,26 @@ const DesignTypography = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus ) {
-			getFontStylesAndPatterns();
+		if (
+			currentData?.data?.fontStyle !== '' &&
+			fontPalettes !== undefined
+		) {
+			setSelectedFont( currentData?.data?.fontStyle );
+			handleClick( currentData?.data?.fontStyle );
 		}
+	}, [ fontPalettes, storedPreviewSettings ] );
+
+	useEffect( () => {
+		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
+			getFontStylesAndPatterns();
 	}, [ isLoaded, themeStatus ] );
 
-	const handleClick = async (
-		fontStyle,
-		selectedGlobalStyle = storedPreviewSettings,
-		fontPalettesCopy = fontPalettes
-	) => {
+	const handleClick = async ( fontStyle ) => {
 		setSelectedFont( fontStyle );
 
 		// Changes the Global Styles to Recompute css properties
-		const globalStylesCopy = selectedGlobalStyle;
+		const globalStylesCopy = storedPreviewSettings;
+		const fontPalettesCopy = fontPalettes;
 
 		if (
 			globalStylesCopy?.styles?.typography?.fontFamily &&
@@ -124,21 +123,19 @@ const DesignTypography = () => {
 	};
 
 	function buildPalettes() {
-		const paletteRenderedList = [];
-		for ( const fontStyle in fontPalettes ) {
+		return Object.keys( fontPalettes ).map( ( fontStyle, idx ) => {
 			const splitLabel = fontPalettes[ fontStyle ]?.label.split( '&', 2 );
-			if ( splitLabel.length === 0 ) {
-				continue;
-			}
-			paletteRenderedList.push(
+			if ( splitLabel.length === 0 ) return null;
+			return (
 				<div
+					key={ fontStyle }
+					role="button"
+					tabIndex={ idx + 1 }
 					className={ `font-palette drawer-palette--button ${
 						selectedFont === fontStyle
 							? 'font-palette-selected drawer-palette--button--selected'
 							: ''
 					} ` }
-					role="button"
-					tabIndex={ 0 }
 					onClick={ () => handleClick( fontStyle ) }
 					onKeyDown={ () => handleClick( fontStyle ) }
 				>
@@ -176,21 +173,13 @@ const DesignTypography = () => {
 					</div>
 				</div>
 			);
-		}
-
-		return paletteRenderedList;
+		} );
 	}
 
 	return (
 		<div ref={ drawerFontOptions } className="theme-fonts--drawer">
 			<h2>{ __( 'Font Palettes', 'wp-module-onboarding' ) }</h2>
-			{ /* { selectedFont &&
-			<div className='theme-fonts--drawer--reset' onClick={resetFonts}>
-				<div>Reset Button</div>
-			</div>
-		} */ }
 			{ fontPalettes && buildPalettes() }
-			{ /* { fontPalettes && buildCustomPalette() } */ }
 		</div>
 	);
 };
