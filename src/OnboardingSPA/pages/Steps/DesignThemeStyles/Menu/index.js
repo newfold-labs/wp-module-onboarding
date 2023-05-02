@@ -121,9 +121,7 @@ const StepDesignThemeStylesMenu = () => {
 		setCurrentOnboardingData( currentData );
 
 		// Find the first Custom Conditional Step and navigate there
-		navigate(
-			conditionalSteps[ Object.keys( conditionalSteps )[ 0 ] ].path
-		);
+		navigate( conditionalSteps.designColors.path );
 	};
 
 	const buildPreviews = () => {
