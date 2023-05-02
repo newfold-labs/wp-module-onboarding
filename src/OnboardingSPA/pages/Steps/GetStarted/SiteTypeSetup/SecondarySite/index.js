@@ -62,7 +62,13 @@ const StepPrimarySetup = () => {
 			changePrimaryType( currentData?.data?.siteType?.primary );
 		changeSecondaryType( currentData?.data?.siteType?.secondary ?? '' );
 
-		if ( currentData?.data?.siteType?.label === 'custom' ) {
+		if ( currentData?.data?.siteType?.labelPri === 'custom' ) {
+			changePrimaryType( defaultPrimaryType );
+			changeSecondaryType( '' );
+			changeInputCateg( currentData?.data?.siteType?.secondary );
+		}
+
+		if ( currentData?.data?.siteType?.labelSec === 'custom' ) {
 			changePrimaryType( defaultPrimaryType );
 			changeSecondaryType( '' );
 			changeInputCateg( currentData?.data?.siteType?.secondary );
@@ -78,7 +84,7 @@ const StepPrimarySetup = () => {
 		changeSecondaryType( '' );
 		changeInputCateg( input?.target?.value );
 		const currentDataCopy = currentData;
-		currentDataCopy.data.siteType.label = 'custom';
+		currentDataCopy.data.siteType.labelSec = 'custom';
 		currentDataCopy.data.siteType.secondary = input?.target?.value;
 		setCurrentOnboardingData( currentDataCopy );
 	};
@@ -92,7 +98,8 @@ const StepPrimarySetup = () => {
 		changeSecondaryType( secType );
 		changeInputCateg( '' );
 		const currentDataCopy = currentData;
-		currentDataCopy.data.siteType.label = '';
+		currentDataCopy.data.siteType.labelPri = '';
+		currentDataCopy.data.siteType.labelSec = '';
 		currentDataCopy.data.siteType.primary = primaryType;
 		currentDataCopy.data.siteType.secondary = secType;
 		setCurrentOnboardingData( currentDataCopy );

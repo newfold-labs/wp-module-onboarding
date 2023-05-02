@@ -34,7 +34,8 @@ final class Flows {
 		// to populate the step fields if a user is resuming a flow.
 		'data'                 => array(
 			'siteType'        => array(
-				'label'     => '',
+				'labelPri'  => '',
+				'labelSec'  => '',
 				'referTo'   => 'site',
 				'primary'   => '',
 				'secondary' => '',

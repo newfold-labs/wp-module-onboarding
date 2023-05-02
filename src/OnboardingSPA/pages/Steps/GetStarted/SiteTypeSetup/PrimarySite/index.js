@@ -52,7 +52,7 @@ const StepPrimarySetup = () => {
 		setSiteClassData( siteClassificationsData?.body );
 		changePrimaryCategory( currentData?.data?.siteType?.primary ?? '' );
 
-		if ( currentData?.data?.siteType?.label === 'custom' ) {
+		if ( currentData?.data?.siteType?.labelPri === 'custom' ) {
 			changePrimaryCategory( '' );
 			setInputFieldValue( currentData?.data?.siteType?.primary );
 		}
@@ -67,7 +67,7 @@ const StepPrimarySetup = () => {
 		changePrimaryCategory( primType );
 		setInputFieldValue( '' );
 		const currentDataCopy = currentData;
-		currentDataCopy.data.siteType.label = '';
+		currentDataCopy.data.siteType.labelPri = '';
 		currentDataCopy.data.siteType.primary = primType;
 		setCurrentOnboardingData( currentDataCopy );
 	};
@@ -81,7 +81,7 @@ const StepPrimarySetup = () => {
 		changePrimaryCategory( '' );
 		setInputFieldValue( input?.target?.value );
 		const currentDataCopy = currentData;
-		currentDataCopy.data.siteType.label = 'custom';
+		currentDataCopy.data.siteType.labelPri = 'custom';
 		currentDataCopy.data.siteType.primary = input?.target?.value;
 		setCurrentOnboardingData( currentDataCopy );
 	};
