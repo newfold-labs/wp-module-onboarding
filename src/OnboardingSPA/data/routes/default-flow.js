@@ -381,18 +381,6 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/theme-styles/menu',
 		title: __( 'Theme Styles', 'wp-module-onboarding' ),
-		heading: __(
-			'Lets tailor your theme for the perfect fit',
-			'wp-module-onboarding'
-		),
-		subheading: __(
-			'Start with a style preset or ',
-			'wp-module-onboarding'
-		),
-		description: __(
-			'All these styles -- plus the ability to customize them -- are available in the WordPress Site Editor',
-			'wp-module-onboarding'
-		),
 		Component: StepDesignThemeStylesMenu,
 		Icon: styles,
 		priority: 160,
@@ -410,18 +398,6 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/theme-styles/preview',
 		title: __( 'Theme Styles', 'wp-module-onboarding' ),
-		heading: __(
-			'Lets tailor your theme for the perfect fit',
-			'wp-module-onboarding'
-		),
-		subheading: __(
-			"Use these styles or bring your own. You're always free to remix them.",
-			'wp-module-onboarding'
-		),
-		description: __(
-			'All these styles -- plus the ability to customize them -- are available in the WordPress Site Editor',
-			'wp-module-onboarding'
-		),
 		Component: StepDesignThemeStylesPreview,
 		Icon: styles,
 		priority: 170,
