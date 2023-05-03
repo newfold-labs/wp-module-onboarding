@@ -1,5 +1,3 @@
-import { __ } from '@wordpress/i18n';
-
 /**
  * Interface Cards with standard design.
  *
@@ -11,15 +9,9 @@ import { __ } from '@wordpress/i18n';
 const HeadingWithSubHeading = ( { title, subtitle, children } ) => {
 	return (
 		<div className="nfd-main-heading">
-			<h2 className="nfd-main-heading__title">
-				{ /* eslint-disable-next-line @wordpress/i18n-no-variables */ }
-				{ __( title, 'wp-module-onboarding' ) }
-			</h2>
+			<h2 className="nfd-main-heading__title">{ title }</h2>
 			{ subtitle && (
-				<h3 className="nfd-main-heading__subtitle">
-					{ /* eslint-disable-next-line @wordpress/i18n-no-variables */ }
-					{ __( subtitle, 'wp-module-onboarding' ) }
-				</h3>
+				<h3 className="nfd-main-heading__subtitle">{ subtitle }</h3>
 			) }
 			{ children }
 		</div>
