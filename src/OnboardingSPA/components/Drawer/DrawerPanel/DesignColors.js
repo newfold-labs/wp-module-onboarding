@@ -205,7 +205,9 @@ const DesignColors = () => {
 			selectedColorPalette =
 				globalStyles.body[ 0 ]?.settings?.color?.palette;
 			selectedColorsLocalTemp = stateToLocal( selectedColorPalette );
-			setCustomColors( selectedColorsLocalTemp );
+			if ( currentData?.data?.colorStyle === 'custom' ) {
+				setCustomColors( selectedColorsLocalTemp );
+			}
 		}
 		setSelectedColors( selectedColorPalette );
 		saveThemeColorPalette(
