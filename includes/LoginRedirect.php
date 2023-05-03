@@ -19,8 +19,8 @@ class LoginRedirect {
 		$redirect_option_name = Options::get_option_name( 'redirect' );
 		// If request has ?nfd_module_onboarding_redirect=false then temporarily disable the redirect
 		if ( isset( $_GET[ $redirect_option_name ] )
-		  && 'false' === $_GET[ $redirect_option_name ] ) {
-			 self::disable_redirect();
+			&& 'false' === $_GET[ $redirect_option_name ] ) {
+			self::disable_redirect();
 		}
 
 		// Redirect was temporarily disabled via transient
@@ -45,7 +45,7 @@ class LoginRedirect {
 		if ( empty( $redirect_option ) ) {
 			$redirect_option = \update_option( $redirect_option_name, true );
 		}
-		if (! $redirect_option) {
+		if ( ! $redirect_option ) {
 			return $redirect;
 		}
 
@@ -55,12 +55,12 @@ class LoginRedirect {
 		$interval          = $current_date->diff( $install_date );
 		$interval_in_hours = ( $interval->days * 24 ) + $interval->h;
 		if ( $interval_in_hours >= 72 ) {
-			 return $redirect;
+			return $redirect;
 		}
 
 		// Finally, if we made it this far, then set the redirect URL to point to onboarding if the user is an admin
 		if ( ! current_user_can( 'manage_options' ) ) {
-			 return \admin_url( '/index.php?page=nfd-onboarding' );
+			return \admin_url( '/index.php?page=nfd-onboarding' );
 		}
 
 		return $redirect;
@@ -72,7 +72,7 @@ class LoginRedirect {
 	 * @return void
 	 */
 	public static function disable_redirect() {
-		  \set_transient( Options::get_option_name( 'redirect_param' ), '1', 30 );
+		\set_transient( Options::get_option_name( 'redirect_param' ), '1', 30 );
 	}
 
 	/**
@@ -81,7 +81,7 @@ class LoginRedirect {
 	 * @return void
 	 */
 	public static function enable_redirect() {
-		  \set_transient( Options::get_option_name( 'redirect_param' ), '0', 30 );
+		\set_transient( Options::get_option_name( 'redirect_param' ), '0', 30 );
 	}
 
 	/**
@@ -90,6 +90,6 @@ class LoginRedirect {
 	 * @return bool
 	 */
 	public static function remove_handle_redirect_action() {
-		 return \remove_action( 'login_redirect', array( __CLASS__, 'handle_redirect' ) );
+		return \remove_action( 'login_redirect', array( __CLASS__, 'handle_redirect' ) );
 	}
 }
