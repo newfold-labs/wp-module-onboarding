@@ -59,7 +59,7 @@ class LoginRedirect {
 		}
 
 		// Finally, if we made it this far, then set the redirect URL to point to onboarding if the user is an admin
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( current_user_can( 'manage_options' ) ) {
 			return \admin_url( '/index.php?page=nfd-onboarding' );
 		}
 
