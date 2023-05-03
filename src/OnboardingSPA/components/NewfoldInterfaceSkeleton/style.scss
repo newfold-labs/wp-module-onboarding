@@ -4,7 +4,7 @@ html.nfd-interface-interface-skeleton__html-container {
 	position: fixed;
 	width: 100%;
 
-	@include break-medium() {
+	@media (max-width: #{($break-medium)}) {
 		position: initial;
 		width: initial;
 	}
@@ -68,7 +68,7 @@ html.nfd-interface-interface-skeleton__html-container {
 	// Footer overlap prevention
 	.has-footer & {
 
-		@include break-medium() {
+		@media (max-width: #{($break-medium)}) {
 			padding-bottom: 24px + 1px;
 		}
 	}
@@ -98,7 +98,7 @@ html.nfd-interface-interface-skeleton__html-container {
 .nfd-interface-interface-skeleton__sidebar {
 	display: block;
 	flex-shrink: 0;
-	position: absolute;
+	position: relative;
 	z-index: 100000;
 	top: 0;
 	right: 0;
@@ -108,7 +108,7 @@ html.nfd-interface-interface-skeleton__html-container {
 	color: #1e1e1e;
 
 	// On Mobile the header is fixed to keep HTML as scrollable.
-	@include break-medium() {
+	@media (max-width: #{($break-medium)}) {
 		position: relative !important;
 		z-index: 90;
 		width: auto; // Keep the sidebar width flexible.
@@ -117,15 +117,16 @@ html.nfd-interface-interface-skeleton__html-container {
 
 .nfd-interface-interface-skeleton__sidebar {
 	overflow: auto;
+	border-left: 1px solid #e0e0e0;
 
-	@include break-medium() {
+	@media (max-width: #{($break-medium)}) {
 		border-left: 1px solid #e0e0e0;
 	}
 }
 
 .nfd-interface-interface-skeleton__secondary-sidebar {
 
-	@include break-medium() {
+	@media (max-width: #{($break-medium)}) {
 		border-right: 1px solid #e0e0e0;
 	}
 }
@@ -153,7 +154,7 @@ html.nfd-interface-interface-skeleton__html-container {
 	// On Mobile the footer is hidden
 	display: none;
 
-	@include break-medium() {
+	@media (max-width: #{($break-medium)}) {
 		display: flex;
 	}
 
