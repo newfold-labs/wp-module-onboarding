@@ -16,6 +16,11 @@ class LoginRedirect {
 	 * @return string
 	 */
 	public static function handle_redirect( $original_redirect ) {
+		// Don't redirect if user is not an admin
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return $original_redirect;
+		}
+
 		$redirect_option_name = Options::get_option_name( 'redirect' );
 		// If request has ?nfd_module_onboarding_redirect=false then temporarily disable the redirect
 		if ( isset( $_GET[ $redirect_option_name ] )
@@ -58,12 +63,8 @@ class LoginRedirect {
 			return $original_redirect;
 		}
 
-		// Finally, if we made it this far, then set the redirect URL to point to onboarding if the user is an admin
-		if ( current_user_can( 'manage_options' ) ) {
-			return \admin_url( '/index.php?page=nfd-onboarding' );
-		}
-
-		return $original_redirect;
+		// Finally, if we made it this far, then set the redirect URL to point to onboarding
+		return \admin_url( '/index.php?page=nfd-onboarding' );
 	}
 
 	/**
