@@ -120,9 +120,9 @@ const StepDesignThemeStylesPreview = () => {
 							label={
 								<div className="theme-styles-preview__checkbox__label">
 									<span className="theme-styles-preview__checkbox__label__question">
-										{ content?.checkbox_label }
+										{ content.checkbox_label }
 										<span className="theme-styles-preview__checkbox__label__hint">
-											{ content?.checkbox_hint }
+											{ content.checkbox_hint }
 										</span>
 									</span>
 								</div>

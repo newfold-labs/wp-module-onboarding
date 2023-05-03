@@ -148,14 +148,14 @@ const StepDesignThemeStylesMenu = () => {
 		<DesignStateHandler>
 			<CommonLayout>
 				<div className="theme-styles-menu">
-					<HeadingWithSubHeading title={ content?.heading }>
+					<HeadingWithSubHeading title={ content.heading }>
 						<h3 className="nfd-main-heading__subtitle">
-							{ content?.subheading }{ ' ' }
+							{ `${ content.subheading } ` }
 							<button
 								className="theme-styles-menu__custom-pages-link"
 								onClick={ skiptoCustomPage }
 							>
-								{ content?.subheading_link }
+								{ content.subheading_link }
 							</button>
 						</h3>
 					</HeadingWithSubHeading>
