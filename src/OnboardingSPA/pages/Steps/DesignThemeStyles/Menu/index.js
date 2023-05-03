@@ -2,6 +2,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+import getContents from '../contents';
 import { store as nfdOnboardingStore } from '../../../../store';
 import CommonLayout from '../../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../../components/HeadingWithSubHeading';
@@ -23,6 +24,7 @@ import {
 import { addColorAndTypographyRoutes } from '../utils';
 
 const StepDesignThemeStylesMenu = () => {
+	const content = getContents();
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState();
@@ -146,14 +148,14 @@ const StepDesignThemeStylesMenu = () => {
 		<DesignStateHandler>
 			<CommonLayout>
 				<div className="theme-styles-menu">
-					<HeadingWithSubHeading title={ currentStep?.heading }>
+					<HeadingWithSubHeading title={ content?.heading }>
 						<h3 className="nfd-main-heading__subtitle">
-							{ currentStep?.subheading }{ ' ' }
+							{ content?.subheading }{ ' ' }
 							<button
 								className="theme-styles-menu__custom-pages-link"
 								onClick={ skiptoCustomPage }
 							>
-								build a custom design.
+								{ content?.subheading_link }
 							</button>
 						</h3>
 					</HeadingWithSubHeading>

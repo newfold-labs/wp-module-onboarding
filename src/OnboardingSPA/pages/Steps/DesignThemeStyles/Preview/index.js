@@ -2,7 +2,6 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { CheckboxControl } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
 import {
 	addColorAndTypographyRoutes,
 	removeColorAndTypographyRoutes,
@@ -12,6 +11,7 @@ import {
 	LivePreview,
 	GlobalStylesProvider,
 } from '../../../../components/LivePreview';
+import getContents from '../contents';
 import CommonLayout from '../../../../components/Layouts/Common';
 import {
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
@@ -24,6 +24,7 @@ import { getPatterns } from '../../../../utils/api/patterns';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
 
 const StepDesignThemeStylesPreview = () => {
+	const content = getContents();
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
 	const [ customize, setCustomize ] = useState( false );
@@ -119,15 +120,9 @@ const StepDesignThemeStylesPreview = () => {
 							label={
 								<div className="theme-styles-preview__checkbox__label">
 									<span className="theme-styles-preview__checkbox__label__question">
-										{ __(
-											'Customize Colors & Fonts?',
-											'wp-module-onboarding'
-										) }
+										{ content?.checkbox_label }
 										<span className="theme-styles-preview__checkbox__label__hint">
-											{ __(
-												'Check to customize in the next few steps (or leave empty and use the Site Editor later)',
-												'wp-module-onboarding'
-											) }
+											{ content?.checkbox_hint }
 										</span>
 									</span>
 								</div>
