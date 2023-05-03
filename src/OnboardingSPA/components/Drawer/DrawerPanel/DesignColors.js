@@ -42,8 +42,7 @@ const DesignColors = () => {
 		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
 
-	function stateToLocal() {
-		const selectedColorPalette = selectedColors;
+	function stateToLocal( selectedColorPalette ) {
 		if ( selectedColorPalette ) {
 			const selectedColorsLocalTemp = {};
 			selectedColorPalette?.forEach( ( color ) => {
@@ -205,13 +204,13 @@ const DesignColors = () => {
 		if ( ! currentData?.data?.colorStyle === '' ) {
 			selectedColorPalette =
 				globalStyles.body[ 0 ].settings.color.palette;
-			selectedColorsLocalTemp = stateToLocal();
+			selectedColorsLocalTemp = stateToLocal( selectedColorPalette );
 			setCustomColors( selectedColorsLocalTemp );
 			setCurrentOnboardingData( currentData );
 		} else {
 			selectedColorPalette =
 				globalStyles.body[ 0 ].settings.color.palette;
-			selectedColorsLocalTemp = stateToLocal();
+			selectedColorsLocalTemp = stateToLocal( selectedColorPalette );
 
 			if ( currentData?.data?.colorStyle === 'custom' ) {
 				setCustomColors( selectedColorsLocalTemp );
@@ -296,6 +295,13 @@ const DesignColors = () => {
 			// eslint-disable-next-line react-hooks/rules-of-hooks
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
+
+		for ( const colorVal in selectedColors ) {
+			selectedColors[ colorVal ].color = '';
+		}
+		setCustomColors( stateToLocal( selectedColors ) );
+		setSelectedColors( selectedColors );
+
 		currentData.data.colorStyle = '';
 		setCurrentOnboardingData( currentData );
 	}
@@ -370,6 +376,7 @@ const DesignColors = () => {
 			customColors && customColors?.tertiary !== ''
 				? customColors?.tertiary
 				: selectedColorsLocal?.tertiary ?? defaultColor;
+		const paletteCount = Object.keys( colorPalettes ).length;
 
 		return (
 			<div className="custom-palette">
@@ -407,7 +414,7 @@ const DesignColors = () => {
 					<div
 						className="custom-palette__below-row"
 						role="button"
-						tabIndex={ 0 }
+						tabIndex={ paletteCount + 1 }
 						onClick={ () => selectCustomColor( 'base' ) }
 						onKeyDown={ () => selectCustomColor( 'base' ) }
 					>
@@ -431,7 +438,7 @@ const DesignColors = () => {
 					<div
 						className="custom-palette__below-row"
 						role="button"
-						tabIndex={ 0 }
+						tabIndex={ paletteCount + 2 }
 						onClick={ () => selectCustomColor( 'primary' ) }
 						onKeyDown={ () => selectCustomColor( 'primary' ) }
 					>
@@ -453,7 +460,7 @@ const DesignColors = () => {
 					<div
 						className="custom-palette__below-row"
 						role="button"
-						tabIndex={ 0 }
+						tabIndex={ paletteCount + 3 }
 						onClick={ () => selectCustomColor( 'secondary' ) }
 						onKeyDown={ () => selectCustomColor( 'secondary' ) }
 					>
@@ -475,7 +482,7 @@ const DesignColors = () => {
 					<div
 						className="custom-palette__below-row"
 						role="button"
-						tabIndex={ 0 }
+						tabIndex={ paletteCount + 4 }
 						onClick={ () => selectCustomColor( 'tertiary' ) }
 						onKeyDown={ () => selectCustomColor( 'tertiary' ) }
 					>
