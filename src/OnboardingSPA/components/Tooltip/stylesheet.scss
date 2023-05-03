@@ -1,5 +1,4 @@
 
-$tooltip-text-color: var(--nfd-onboarding-white);
 $tooltip-background-color: rgba(0, 0, 0, 0.75);
 $tooltip-margin: 35px;
 $tooltip-arrow-size: 6px;
@@ -18,7 +17,7 @@ $tooltip-arrow-size: 6px;
 	left: 50%;
 	transform: translateX(-40%);
 	padding: 6px;
-	color: $tooltip-text-color;
+	color: var(--nfd-onboarding-white);
 	background: $tooltip-background-color;
 	font-size: 12px;
 	white-space: nowrap;

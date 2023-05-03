@@ -281,7 +281,7 @@
 					height: 15px;
 					display: flex;
 					align-items: center;
-					background-color: #ccc;
+					background-color: var(--nfd-onboarding-light-gray-8);
 					justify-content: space-between;
 					border: 1px solid transparent;
 
@@ -415,7 +415,7 @@
 		}
 
 		&__text {
-			color: var(--nfd-onboarding-contrast);
+			color: var(--nfd-onboarding-black);
 			font-size: 12px;
 			font-weight: 700;
 			line-height: 16px;
@@ -601,7 +601,7 @@
 					height: 0;
 					display: flex;
 					align-items: center;
-					background-color: #ccc;
+					background-color: var(--nfd-onboarding-light-gray-8);
 					justify-content: space-between;
 
 					&--selected {

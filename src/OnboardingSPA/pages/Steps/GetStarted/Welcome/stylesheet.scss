@@ -55,7 +55,7 @@
 
 .components-tab-panel__tabs-item {
 	justify-content: center;
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid var(--nfd-onboarding-light-gray-8);
 	width: 100%;
 	font-size: clamp(0.55rem, 1vw + 0.3rem, 1rem);
 	line-height: 1.5;
