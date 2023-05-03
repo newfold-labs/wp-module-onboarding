@@ -201,20 +201,11 @@ const DesignColors = () => {
 		);
 		let selectedColorPalette;
 		let selectedColorsLocalTemp;
-		if ( ! currentData?.data?.colorStyle === '' ) {
+		if ( ! ( currentData?.data?.colorStyle === '' ) ) {
 			selectedColorPalette =
-				globalStyles.body[ 0 ].settings.color.palette;
+				globalStyles.body[ 0 ]?.settings?.color?.palette;
 			selectedColorsLocalTemp = stateToLocal( selectedColorPalette );
 			setCustomColors( selectedColorsLocalTemp );
-			setCurrentOnboardingData( currentData );
-		} else {
-			selectedColorPalette =
-				globalStyles.body[ 0 ].settings.color.palette;
-			selectedColorsLocalTemp = stateToLocal( selectedColorPalette );
-
-			if ( currentData?.data?.colorStyle === 'custom' ) {
-				setCustomColors( selectedColorsLocalTemp );
-			}
 		}
 		setSelectedColors( selectedColorPalette );
 		saveThemeColorPalette(
