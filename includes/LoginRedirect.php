@@ -14,32 +14,32 @@ class LoginRedirect {
 	 * @param string $original_redirect The requested redirect URL
 	 * @return string The filtered url to redirect to
 	 */
-    public static function sso( $original_redirect ) {
-        return self::filter_redirect( $original_redirect, wp_get_current_user() );
-    }
+	public static function sso( $original_redirect ) {
+		return self::filter_redirect( $original_redirect, wp_get_current_user() );
+	}
 
 	/**
 	 * Redirect hook for direct WP Logins
 	 *
-	 * @param string $original_redirect
-	 * @param string $requested_original_redirect
-	 * @param WP_User|WP_Error $user
+	 * @param string $original_redirect           The requested redirect URL
+	 * @param string           $requested_original_redirect The requested redirect URL from parameter
+	 * @param WP_User|WP_Error $user              The current logged in user or WP_Error on login failure
 	 * @return string The filtered URL to redirect to
 	 */
-    public static function wplogin( $original_redirect, $requested_original_redirect, $user ) {
+	public static function wplogin( $original_redirect, $requested_original_redirect, $user ) {
 		// wp-login.php runs this filter on load and login failures
 		// We should only do a redirect with a succesful user login
 		if ( ! ( $user instanceof \WP_User ) ) {
 			return $original_redirect;
 		}
-        return self::filter_redirect( $original_redirect, $user );
-    }
+		return self::filter_redirect( $original_redirect, $user );
+	}
 
 	/**
 	 * Evaluate whether the redirect should point to onboarding
 	 *
-	 * @param string $original_redirect The requested redirect URL
-	 * @param WP_User $user The logged in user
+	 * @param string  $original_redirect The requested redirect URL
+	 * @param WP_User $user              The logged in user
 	 * @return string The filtered url to redirect to
 	 */
 	public static function filter_redirect( $original_redirect, $user ) {
