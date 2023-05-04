@@ -6,7 +6,7 @@ import {
 	addColorAndTypographyRoutes,
 	removeColorAndTypographyRoutes,
 } from '../utils';
-import { conditionalSteps } from '../../../data/routes/';
+import { conditionalSteps } from '../../../../data/routes';
 import {
 	LivePreview,
 	GlobalStylesProvider,
