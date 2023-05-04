@@ -91,7 +91,7 @@
 	&--selected {
 		background: rgba(var(--nfd-onboarding-highlighted--rgb), 0.2);
 		border: 1px solid rgba(var(--nfd-onboarding-highlighted--rgb), 0.6);
-		box-shadow: 0 2px 8px 2px rgba(var(--nfd-onboarding-light-gray-6), 0.8);
+		box-shadow: 0 2px 8px 2px rgba(224, 224, 224, 0.8);
 	}
 
 	&--shown {
