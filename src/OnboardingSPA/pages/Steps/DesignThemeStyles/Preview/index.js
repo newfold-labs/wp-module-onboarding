@@ -1,12 +1,12 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CheckboxControl } from '@wordpress/components';
 import {
 	addColorAndTypographyRoutes,
 	removeColorAndTypographyRoutes,
 } from '../utils';
-
+import { conditionalSteps } from '../../../../data/routes';
 import {
 	LivePreview,
 	GlobalStylesProvider,
@@ -28,6 +28,7 @@ const StepDesignThemeStylesPreview = () => {
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
 	const [ customize, setCustomize ] = useState( false );
+	const navigate = useNavigate();
 
 	const {
 		currentStep,
@@ -63,7 +64,7 @@ const StepDesignThemeStylesPreview = () => {
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView( VIEW_DESIGN_THEME_STYLES_PREVIEW );
-		handleCheckbox( currentData.data.customDesign, false );
+		handleCheckbox( currentData.data.customDesign, false, 'flow' );
 	}, [] );
 
 	const getStylesAndPatterns = async () => {
@@ -78,11 +79,12 @@ const StepDesignThemeStylesPreview = () => {
 	};
 
 	const handleCheckbox = (
-		customizeSelection,
-		updateOnboardingData = true
+		selected,
+		updateOnboardingData = true,
+		context = 'click'
 	) => {
 		let updates;
-		if ( customizeSelection ) {
+		if ( selected ) {
 			updates = addColorAndTypographyRoutes(
 				routes,
 				allSteps,
@@ -99,11 +101,15 @@ const StepDesignThemeStylesPreview = () => {
 		updateRoutes( updates.routes );
 		updateDesignSteps( updates.designSteps );
 		updateAllSteps( updates.allSteps );
-		setCustomize( customizeSelection );
+		setCustomize( selected );
 
 		if ( updateOnboardingData ) {
-			currentData.data.customDesign = customizeSelection;
+			currentData.data.customDesign = selected;
 			setCurrentOnboardingData( currentData );
+		}
+
+		if ( selected && 'click' === context ) {
+			navigate( conditionalSteps.designColors.path );
 		}
 	};
 
