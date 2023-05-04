@@ -9,20 +9,40 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
  */
 class LoginRedirect {
 	/**
-	 * Handles the redirect to onboarding
+	 * Redirect hook for SSO Logins
 	 *
 	 * @param string $original_redirect The requested redirect URL
 	 * @return string The filtered url to redirect to
 	 */
-	public static function handle_redirect( $original_redirect ) {
-		// Current user not always available from wp_get_current_user(), so must reference out of the global
-		global $user;
-		// Loading the login screen, or login failures set $user as a WP_Error object.
-		// We should only override the redirect param if we have a valid logged in user
+    public static function sso( $original_redirect ) {
+        return self::filter_redirect( $original_redirect, wp_get_current_user() );
+    }
+
+	/**
+	 * Redirect hook for direct WP Logins
+	 *
+	 * @param string $original_redirect
+	 * @param string $requested_original_redirect
+	 * @param WP_User|WP_Error $user
+	 * @return string The filtered URL to redirect to
+	 */
+    public static function wplogin( $original_redirect, $requested_original_redirect, $user ) {
+		// wp-login.php runs this filter on load and login failures
+		// We should only do a redirect with a succesful user login
 		if ( ! ( $user instanceof \WP_User ) ) {
 			return $original_redirect;
 		}
+        return self::filter_redirect( $original_redirect, $user );
+    }
 
+	/**
+	 * Evaluate whether the redirect should point to onboarding
+	 *
+	 * @param string $original_redirect The requested redirect URL
+	 * @param WP_User $user The logged in user
+	 * @return string The filtered url to redirect to
+	 */
+	public static function filter_redirect( $original_redirect, $user ) {
 		// Only admins should get the onboarding redirect
 		if ( ! user_can( $user, 'manage_options' ) ) {
 			return $original_redirect;
