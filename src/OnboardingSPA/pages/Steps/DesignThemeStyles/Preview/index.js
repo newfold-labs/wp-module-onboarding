@@ -2,13 +2,16 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { CheckboxControl } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
-import { orderBy, filter } from 'lodash';
+import {
+	addColorAndTypographyRoutes,
+	removeColorAndTypographyRoutes,
+} from '../utils';
 
 import {
 	LivePreview,
 	GlobalStylesProvider,
 } from '../../../../components/LivePreview';
+import getContents from '../contents';
 import CommonLayout from '../../../../components/Layouts/Common';
 import {
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
@@ -18,10 +21,10 @@ import {
 } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { getPatterns } from '../../../../utils/api/patterns';
-import { conditionalSteps } from '../../../../data/routes/';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
 
 const StepDesignThemeStylesPreview = () => {
+	const content = getContents();
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
 	const [ customize, setCustomize ] = useState( false );
@@ -74,82 +77,32 @@ const StepDesignThemeStylesPreview = () => {
 		setPattern( patternsResponse?.body );
 	};
 
-	const addColorAndTypographyRoutes = () => {
-		const updates = removeColorAndTypographyRoutes();
-		const steps = [
-			conditionalSteps.designColors,
-			conditionalSteps.designTypography,
-		];
-		return {
-			routes: orderBy(
-				updates.routes.concat( steps ),
-				[ 'priority' ],
-				[ 'asc' ]
-			),
-			allSteps: orderBy(
-				updates.allSteps.concat( steps ),
-				[ 'priority' ],
-				[ 'asc' ]
-			),
-			designSteps: orderBy(
-				updates.designSteps.concat( steps ),
-				[ 'priority' ],
-				[ 'asc' ]
-			),
-		};
-	};
-
-	const removeColorAndTypographyRoutes = () => {
-		return {
-			routes: filter(
-				routes,
-				( route ) =>
-					! route.path.includes(
-						conditionalSteps.designColors.path
-					) &&
-					! route.path.includes(
-						conditionalSteps.designTypography.path
-					)
-			),
-			allSteps: filter(
-				allSteps,
-				( allStep ) =>
-					! allStep.path.includes(
-						conditionalSteps.designColors.path
-					) &&
-					! allStep.path.includes(
-						conditionalSteps.designTypography.path
-					)
-			),
-			designSteps: filter(
-				designSteps,
-				( designStep ) =>
-					! designStep.path.includes(
-						conditionalSteps.designColors.path
-					) &&
-					! designStep.path.includes(
-						conditionalSteps.designTypography.path
-					)
-			),
-		};
-	};
-
-	const handleCheckbox = ( customize, updateOnboardingData = true ) => {
+	const handleCheckbox = (
+		customizeSelection,
+		updateOnboardingData = true
+	) => {
 		let updates;
-
-		if ( customize ) {
-			updates = addColorAndTypographyRoutes();
+		if ( customizeSelection ) {
+			updates = addColorAndTypographyRoutes(
+				routes,
+				allSteps,
+				designSteps
+			);
 		} else {
-			updates = removeColorAndTypographyRoutes();
+			updates = removeColorAndTypographyRoutes(
+				routes,
+				allSteps,
+				designSteps
+			);
 		}
 
 		updateRoutes( updates.routes );
 		updateDesignSteps( updates.designSteps );
 		updateAllSteps( updates.allSteps );
-		setCustomize( customize );
+		setCustomize( customizeSelection );
 
 		if ( updateOnboardingData ) {
-			currentData.data.customDesign = customize;
+			currentData.data.customDesign = customizeSelection;
 			setCurrentOnboardingData( currentData );
 		}
 	};
@@ -167,15 +120,9 @@ const StepDesignThemeStylesPreview = () => {
 							label={
 								<div className="theme-styles-preview__checkbox__label">
 									<span className="theme-styles-preview__checkbox__label__question">
-										{ __(
-											'Customize Colors & Fonts?',
-											'wp-module-onboarding'
-										) }
+										{ content.checkbox_label }
 										<span className="theme-styles-preview__checkbox__label__hint">
-											{ __(
-												'Check to customize in the next few steps (or leave empty and use the Site Editor later)',
-												'wp-module-onboarding'
-											) }
+											{ content.checkbox_hint }
 										</span>
 									</span>
 								</div>
