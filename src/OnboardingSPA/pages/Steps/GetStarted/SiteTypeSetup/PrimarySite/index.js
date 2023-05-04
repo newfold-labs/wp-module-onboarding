@@ -4,6 +4,7 @@ import {
 	SIDEBAR_LEARN_MORE,
 	VIEW_NAV_GET_STARTED,
 } from '../../../../../../constants';
+import fallbackDataTypes from '../content.json';
 import getContents from '../contents';
 import { store as nfdOnboardingStore } from '../../../../../store';
 import { useSelect, useDispatch } from '@wordpress/data';
@@ -48,7 +49,11 @@ const StepPrimarySetup = () => {
 	 *
 	 */
 	const getSiteClassificationsData = async () => {
-		const siteClassificationsData = await getSiteClassifications();
+		let siteClassificationsData = await getSiteClassifications();
+		if ( siteClassificationsData?.body.length === 0 ) {
+			siteClassificationsData = fallbackDataTypes;
+		}
+
 		setSiteClassData( siteClassificationsData?.body );
 		changePrimaryCategory( currentData?.data?.siteType?.primary ?? '' );
 

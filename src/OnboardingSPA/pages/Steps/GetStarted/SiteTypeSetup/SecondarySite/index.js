@@ -5,6 +5,7 @@ import {
 	VIEW_NAV_GET_STARTED,
 } from '../../../../../../constants';
 import getContents from '../contents';
+import fallbackDataTypes from '../content.json';
 import { store as nfdOnboardingStore } from '../../../../../store';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
@@ -51,8 +52,10 @@ const StepPrimarySetup = () => {
 	 *
 	 */
 	const getSiteClassificationsData = async () => {
-		const siteClassificationsData = await getSiteClassifications();
-
+		let siteClassificationsData = await getSiteClassifications();
+		if ( siteClassificationsData?.body.length === 0 ) {
+			siteClassificationsData = fallbackDataTypes;
+		}
 		setSiteClassData( siteClassificationsData?.body );
 		setPrimaryTypeList(
 			Object.keys( siteClassificationsData?.body?.types )
