@@ -2,7 +2,6 @@
 namespace NewfoldLabs\WP\Module\Onboarding;
 
 use DateTime;
-use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 /**
@@ -13,11 +12,19 @@ class LoginRedirect {
 	 * Handles the redirect to onboarding
 	 *
 	 * @param string $original_redirect The requested redirect URL
-	 * @return string
+	 * @return string The filtered url to redirect to
 	 */
 	public static function handle_redirect( $original_redirect ) {
-		// Don't redirect if user is not an admin
-		if ( ! current_user_can( 'manage_options' ) ) {
+		// Current user not always available from wp_get_current_user(), so must reference out of the global
+		global $user;
+		// Loading the login screen, or login failures set $user as a WP_Error object.
+		// We should only override the redirect param if we have a valid logged in user
+		if ( ! ( $user instanceof \WP_User ) ) {
+			return $original_redirect;
+		}
+
+		// Only admins should get the onboarding redirect
+		if ( ! user_can( $user, 'manage_options' ) ) {
 			return $original_redirect;
 		}
 
