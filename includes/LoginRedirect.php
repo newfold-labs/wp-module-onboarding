@@ -2,9 +2,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding;
 
 use DateTime;
-use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
-use WP_User;
 
 /**
  * Contains functionalities that redirect users to Onboarding on login to WordPress.
@@ -21,7 +19,7 @@ class LoginRedirect {
 		global $user;
 		// Loading the login screen, or login failures set $user as a WP_Error object.
 		// We should only override the redirect param if we have a valid logged in user
-		if ( ! ( $user instanceof WP_User ) ) {
+		if ( ! ( $user instanceof \WP_User ) ) {
 			return $original_redirect;
 		}
 
