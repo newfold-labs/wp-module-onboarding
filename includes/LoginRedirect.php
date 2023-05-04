@@ -21,9 +21,9 @@ class LoginRedirect {
 	/**
 	 * Redirect hook for direct WP Logins
 	 *
-	 * @param string $original_redirect           The requested redirect URL
+	 * @param string           $original_redirect           The requested redirect URL
 	 * @param string           $requested_original_redirect The requested redirect URL from parameter
-	 * @param WP_User|WP_Error $user              The current logged in user or WP_Error on login failure
+	 * @param WP_User|WP_Error $user                        The current logged in user or WP_Error on login failure
 	 * @return string The filtered URL to redirect to
 	 */
 	public static function wplogin( $original_redirect, $requested_original_redirect, $user ) {
