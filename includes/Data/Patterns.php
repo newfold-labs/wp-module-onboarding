@@ -285,6 +285,11 @@ final class Patterns {
 		return $squash ? $block_patterns_squashed : $block_patterns;
 	}
 
+	/**
+	 * Retrieve Homepage Menu Step Patterns
+	 *
+	 * @return array
+	 */
 	public static function get_patterns_for_homepage_menu_slugs() {
 		$flow_data        = \get_option( Options::get_option_name( 'flow' ) );
 		$header_menu_slug = explode( '/', $flow_data['data']['partHeader'] )[1];
