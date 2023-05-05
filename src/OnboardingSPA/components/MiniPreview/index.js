@@ -1,21 +1,7 @@
-import { __, sprintf } from '@wordpress/i18n';
 import { memo, useState, useEffect } from '@wordpress/element';
 
-import content from './miniPreview.json';
-import { translations } from '../../utils/locales/translations';
+import getContents from './contents';
 
-/**
- * A Mini Preview Section.
- *
- * @param  root0
- * @param  root0.title
- * @param  root0.desc
- * @param  root0.icon
- * @param  root0.socialData
- * @param  root0.isSocialFormOpen
- * @param  root0.setIsSocialFormOpen
- * @return
- */
 const MiniPreview = ( {
 	title,
 	desc,
@@ -24,22 +10,12 @@ const MiniPreview = ( {
 	isSocialFormOpen,
 	setIsSocialFormOpen,
 } ) => {
-	const iconPreview = icon == '' || icon == undefined ? content.icon : icon;
-	const titlePreview =
-		title == ''
-			? sprintf(
-					__( content.title, 'wp-module-onboarding' ),
-					translations( 'Site' )
-			  )
-			: title;
-	const descPreview =
-		desc == ''
-			? sprintf(
-					__( content.desc, 'wp-module-onboarding' ),
-					translations( 'Site' )
-			  )
-			: desc;
-	const urlPreview = title == '' ? content.url : titleToUrl( title );
+	const content = getContents();
+	const iconPreview =
+		icon.id === '' || icon.id === undefined ? content.defaultIcon : icon;
+	const titlePreview = title === '' ? content.defaultTitle : title;
+	const descPreview = desc === '' ? content.defaultDesc : desc;
+	const urlPreview = title === '' ? content.defaultUrl : titleToUrl();
 
 	const [ facebook, setFacebook ] = useState( '' );
 	const [ twitter, setTwitter ] = useState( '' );
@@ -91,7 +67,7 @@ const MiniPreview = ( {
 		{ url: tiktok, image: 'var(--tiktok-colored-icon)' },
 	];
 
-	function titleToUrl( title ) {
+	function titleToUrl() {
 		return `https://${ title
 			?.toLowerCase()
 			.replace( /\s/g, '' )
@@ -99,11 +75,14 @@ const MiniPreview = ( {
 	}
 
 	function socialIconList() {
-		return socialDataset.map( ( socialInfo ) => {
+		return socialDataset.map( ( socialInfo, idx ) => {
 			return (
 				<div
 					key={ socialInfo.image }
-					onClick={ ( e ) =>
+					tabIndex={ idx + 1 }
+					role="button"
+					onClick={ () => setIsSocialFormOpen( ! isSocialFormOpen ) }
+					onKeyDown={ () =>
 						setIsSocialFormOpen( ! isSocialFormOpen )
 					}
 					className={ `browser-content_social_icon ${
@@ -143,7 +122,7 @@ const MiniPreview = ( {
 							<div className="browser-row-title_bar_before-curve"></div>
 						</div>
 						<div className="browser-row-title_bar_main">
-							{ ( icon == 0 || icon == undefined ) && (
+							{ ( icon.id === 0 || icon.id === undefined ) && (
 								<div
 									className="browser-icon-title"
 									style={ {
@@ -151,7 +130,7 @@ const MiniPreview = ( {
 									} }
 								></div>
 							) }
-							{ icon != 0 && icon != undefined && (
+							{ icon.id !== 0 && icon.id !== undefined && (
 								<img
 									className="browser-icon-title"
 									src={ iconPreview.url }
@@ -159,10 +138,7 @@ const MiniPreview = ( {
 								/>
 							) }
 							<div className="browser-row-title_bar_main-text">
-								{ __(
-									titlePreview?.substring( 0, 20 ),
-									'wp-module-onboarding'
-								) }
+								{ titlePreview?.substring( 0, 20 ) }
 							</div>
 							<div className="browser-row-title_bar_main-cross">
 								x
@@ -192,8 +168,8 @@ const MiniPreview = ( {
 						<input
 							className="browser-row-search__search-box_input"
 							type="text"
-							onChange={ ( e ) => {} }
-							value={ __( urlPreview, 'wp-module-onboarding' ) }
+							onChange={ () => {} }
+							value={ urlPreview }
 						></input>
 					</div>
 					<div className="browser-row-search__more">
@@ -206,15 +182,13 @@ const MiniPreview = ( {
 				<div className="browser-content">
 					<div className="browser-content_top-row">
 						<h4 className="browser-content_top-row-name">
-							{ __( titlePreview, 'wp-module-onboarding' ) }
+							{ titlePreview }
 						</h4>
-						<a className="browser-content_top-row-link">
-							{ __( urlPreview, 'wp-module-onboarding' ) }
-						</a>
+						<span className="browser-content_top-row-link">
+							{ urlPreview }
+						</span>
 					</div>
-					<h5 className="browser-content_desc">
-						{ __( descPreview, 'wp-module-onboarding' ) }
-					</h5>
+					<h5 className="browser-content_desc">{ descPreview }</h5>
 					<div className="browser-content_social">
 						{ socialIconList() }
 					</div>
