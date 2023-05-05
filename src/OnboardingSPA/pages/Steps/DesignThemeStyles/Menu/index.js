@@ -2,12 +2,14 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+import getContents from '../contents';
 import { store as nfdOnboardingStore } from '../../../../store';
 import CommonLayout from '../../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../../components/HeadingWithSubHeading';
 import { useGlobalStylesOutput } from '../../../../utils/global-styles/use-global-styles-output';
 import { getPatterns } from '../../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../../utils/api/themes';
+import { conditionalSteps } from '../../../../data/routes/';
 import {
 	VIEW_NAV_DESIGN,
 	THEME_STATUS_ACTIVE,
@@ -19,8 +21,10 @@ import {
 	LivePreviewSelectableCard,
 	LivePreviewSkeleton,
 } from '../../../../components/LivePreview';
+import { addColorAndTypographyRoutes } from '../utils';
 
 const StepDesignThemeStylesMenu = () => {
+	const content = getContents();
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState();
@@ -32,6 +36,9 @@ const StepDesignThemeStylesMenu = () => {
 		nextStep,
 		currentData,
 		storedPreviewSettings,
+		routes,
+		allSteps,
+		designSteps,
 		themeStatus,
 		themeVariations,
 	} = useSelect( ( select ) => {
@@ -44,6 +51,9 @@ const StepDesignThemeStylesMenu = () => {
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			storedPreviewSettings:
 				select( nfdOnboardingStore ).getPreviewSettings(),
+			routes: select( nfdOnboardingStore ).getRoutes(),
+			allSteps: select( nfdOnboardingStore ).getAllSteps(),
+			designSteps: select( nfdOnboardingStore ).getDesignSteps(),
 			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 			themeVariations: select( nfdOnboardingStore ).getStepPreviewData(),
 		};
@@ -55,6 +65,9 @@ const StepDesignThemeStylesMenu = () => {
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
+		updateRoutes,
+		updateDesignSteps,
+		updateAllSteps,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -86,12 +99,31 @@ const StepDesignThemeStylesMenu = () => {
 	const handleClick = ( idx ) => {
 		const selectedGlobalStyle = globalStyles[ idx ];
 		updatePreviewSettings(
+			// eslint-disable-next-line react-hooks/rules-of-hooks
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
 		setSelectedStyle( selectedGlobalStyle.title );
 		currentData.data.theme.variation = selectedGlobalStyle.title;
 		setCurrentOnboardingData( currentData );
 		navigate( nextStep.path );
+	};
+
+	const skiptoCustomPage = () => {
+		// Add Custom Steps into the Flow
+		const updates = addColorAndTypographyRoutes(
+			routes,
+			allSteps,
+			designSteps
+		);
+		updateRoutes( updates.routes );
+		updateDesignSteps( updates.designSteps );
+		updateAllSteps( updates.allSteps );
+
+		currentData.data.customDesign = true;
+		setCurrentOnboardingData( currentData );
+
+		// Find the first Custom Conditional Step and navigate there
+		navigate( conditionalSteps.designColors.path );
 	};
 
 	const buildPreviews = () => {
@@ -116,10 +148,17 @@ const StepDesignThemeStylesMenu = () => {
 		<DesignStateHandler>
 			<CommonLayout>
 				<div className="theme-styles-menu">
-					<HeadingWithSubHeading
-						title={ currentStep?.heading }
-						subtitle={ currentStep?.subheading }
-					/>
+					<HeadingWithSubHeading title={ content.heading }>
+						<h3 className="nfd-main-heading__subtitle">
+							{ `${ content.subheading } ` }
+							<button
+								className="theme-styles-menu__custom-pages-link"
+								onClick={ skiptoCustomPage }
+							>
+								{ content.subheading_link }
+							</button>
+						</h3>
+					</HeadingWithSubHeading>
 					<div className="theme-styles-menu__list">
 						<LivePreviewSkeleton
 							className={ 'theme-styles-menu__list__item' }
