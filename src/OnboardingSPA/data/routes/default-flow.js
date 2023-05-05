@@ -304,18 +304,6 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/theme-styles/menu',
 		title: __( 'Theme Styles', 'wp-module-onboarding' ),
-		heading: __(
-			'Lets tailor your theme for the perfect fit',
-			'wp-module-onboarding'
-		),
-		subheading: __(
-			"Use these styles or bring your own. You're always free to remix them.",
-			'wp-module-onboarding'
-		),
-		description: __(
-			'All these styles -- plus the ability to customize them -- are available in the WordPress Site Editor',
-			'wp-module-onboarding'
-		),
 		Component: StepDesignThemeStylesMenu,
 		Icon: styles,
 		priority: 160,
@@ -333,18 +321,6 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/theme-styles/preview',
 		title: __( 'Theme Styles', 'wp-module-onboarding' ),
-		heading: __(
-			'Lets tailor your theme for the perfect fit',
-			'wp-module-onboarding'
-		),
-		subheading: __(
-			"Use these styles or bring your own. You're always free to remix them.",
-			'wp-module-onboarding'
-		),
-		description: __(
-			'All these styles -- plus the ability to customize them -- are available in the WordPress Site Editor',
-			'wp-module-onboarding'
-		),
 		Component: StepDesignThemeStylesPreview,
 		Icon: styles,
 		priority: 170,
@@ -540,6 +516,11 @@ export const conditionalSteps = {
 
 export const routes = [ ...pages, ...steps ];
 
+/**
+ * Filter-out the design steps and register a fake step in their place.
+ *
+ * @return {Array} steps
+ */
 export const initialTopSteps = () => {
 	const topSteps = filter( steps, ( step ) => {
 		return (
@@ -576,6 +557,11 @@ export const initialTopSteps = () => {
 	return orderBy( topSteps, [ 'priority' ], [ 'asc' ] );
 };
 
+/**
+ * Filter out all non-design steps.
+ *
+ * @return {Array} steps
+ */
 export const initialDesignSteps = () => {
 	const designSteps = filter( steps, ( step ) => {
 		return (
