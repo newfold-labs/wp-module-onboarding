@@ -218,26 +218,24 @@ const StepPrimarySetup = () => {
 								</div>
 							) }
 						</div>
-
 						<div className="subCategoriesSection">
 							{ siteClassData && secondarySiteTypeChips() }
 						</div>
-					</div>
-
-					<div className="nfd-setup-primary-second">
-						<div className="nfd-setup-primary-second-top">
-							<div className="tellus-text">
-								{ contents.tellusHereText }
+						<div className="nfd-setup-primary-second">
+							<div className="nfd-setup-primary-second-top">
+								<div className="tellus-text">
+									{ contents.tellusHereText }
+								</div>
+								<input
+									type="search"
+									onChange={ ( e ) => categoryInput( e ) }
+									className="tellus-input"
+									placeholder={
+										contents.placeholderSiteTypeInput
+									}
+									value={ inputCategVal }
+								/>
 							</div>
-							<input
-								type="search"
-								onChange={ ( e ) => categoryInput( e ) }
-								className="tellus-input"
-								placeholder={
-									contents.placeholderSiteTypeInput
-								}
-								value={ inputCategVal }
-							/>
 						</div>
 					</div>
 				</Animate>
