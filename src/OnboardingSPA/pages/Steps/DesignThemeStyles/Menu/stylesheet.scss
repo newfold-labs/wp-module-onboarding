@@ -128,4 +128,14 @@
 			}
 		}
 	}
+
+	&__custom-pages-link {
+		all: unset;
+		cursor: pointer;
+		color: rgba(var(--wp-admin-theme-color-darker-10--rgb), 0.9);
+
+		&:hover {
+			color: rgba(var(--wp-admin-theme-color-darker-10--rgb), 1);
+		}
+	}
 }
