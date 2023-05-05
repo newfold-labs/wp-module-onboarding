@@ -59,29 +59,9 @@ const StepDesignHomepageMenu = () => {
 
 	function refactorPatterns( homepagePatternDataResp ) {
 		const makeHomepagePattern = [];
-		const homepageSlugs = {};
-
-		for ( let idx = 0; idx < homepagePatternDataResp.length; idx++ ) {
-			homepageSlugs[ homepagePatternDataResp[ idx ].slug ] = idx;
-		}
 
 		homepagePatternDataResp.forEach( ( homepagePatternData ) => {
-			if ( homepagePatternData.slug.includes( 'homepage' ) ) {
-				const homepagePatterns = homepagePatternData?.list;
-				if (
-					currentData.data.partHeader ||
-					currentData.data.partHeader !== ''
-				) {
-					homepagePatterns[ 0 ] = currentData.data.partHeader;
-				}
-				let patternData = '';
-				homepagePatterns.forEach( ( partSlug ) => {
-					patternData +=
-						homepagePatternDataResp[ homepageSlugs[ partSlug ] ]
-							?.content;
-				} );
-				makeHomepagePattern.push( patternData );
-			}
+			makeHomepagePattern.push( homepagePatternData.content );
 		} );
 
 		return makeHomepagePattern;
@@ -91,7 +71,6 @@ const StepDesignHomepageMenu = () => {
 		const homepagePatternDataTemp = await getPatterns(
 			currentStep.patternId
 		);
-		const homepagePatternSlugList = [];
 
 		if ( homepagePatternDataTemp?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
@@ -99,11 +78,9 @@ const StepDesignHomepageMenu = () => {
 		setHomepagePattern( refactorPatterns( homepagePatternDataTemp?.body ) );
 
 		homepagePatternDataTemp?.body.forEach( ( homepagePatternData ) => {
-			if ( homepagePatternData.slug.includes( 'homepage' ) ) {
-				homepagePatternSlugList.push( homepagePatternData.slug );
-			}
+			homepagePatternList.push( homepagePatternData.slug );
 		} );
-		setHomepagePatternList( homepagePatternSlugList );
+		setHomepagePatternList( homepagePatternList );
 
 		if ( currentData?.data.sitePages.homepage !== '' ) {
 			setSelectedHomepage(
