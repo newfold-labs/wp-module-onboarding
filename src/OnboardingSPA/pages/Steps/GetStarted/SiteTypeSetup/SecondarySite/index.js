@@ -109,26 +109,25 @@ const StepPrimarySetup = () => {
 		setCurrentOnboardingData( currentData );
 	};
 
-	const changePrimaryPrev = () => {
+	const changePrimaryType = ( direction ) => {
 		const idx = primaryTypesList.findIndex(
 			( val ) => primaryCategory === val
 		);
-
-		if ( idx === 0 )
-			setPrimaryCategory(
-				primaryTypesList[ primaryTypesList.length - 1 ]
-			);
-		else setPrimaryCategory( primaryTypesList[ idx - 1 ] );
-	};
-
-	const changePrimaryNext = () => {
-		const idx = primaryTypesList.findIndex(
-			( val ) => primaryCategory === val
-		);
-
-		if ( idx === primaryTypesList.length - 1 )
-			setPrimaryCategory( primaryTypesList[ 0 ] );
-		else setPrimaryCategory( primaryTypesList[ idx + 1 ] );
+		switch ( direction ) {
+			case 'back':
+				setPrimaryCategory(
+					primaryTypesList[
+						( idx - 1 + primaryTypesList.length ) %
+							primaryTypesList.length
+					]
+				);
+				break;
+			case 'next':
+				setPrimaryCategory(
+					primaryTypesList[ ( idx + 1 ) % primaryTypesList.length ]
+				);
+				break;
+		}
 	};
 
 	const secondarySiteTypeChips = () => {
@@ -174,8 +173,12 @@ const StepPrimarySetup = () => {
 									<div className="category-scrolling-wrapper__left-btn">
 										<span
 											className="category-scrolling-wrapper__left-btn-icon"
-											onClick={ changePrimaryPrev }
-											onKeyUp={ changePrimaryPrev }
+											onClick={ () =>
+												changePrimaryType( 'back' )
+											}
+											onKeyUp={ () =>
+												changePrimaryType( 'back' )
+											}
 											role="button"
 											tabIndex={ 0 }
 											style={ {
@@ -198,8 +201,12 @@ const StepPrimarySetup = () => {
 									<div className="category-scrolling-wrapper__right-btn">
 										<span
 											className="category-scrolling-wrapper__right-btn-icon"
-											onClick={ changePrimaryNext }
-											onKeyUp={ changePrimaryNext }
+											onClick={ () =>
+												changePrimaryType( 'next' )
+											}
+											onKeyUp={ () =>
+												changePrimaryType( 'next' )
+											}
 											role="button"
 											tabIndex={ 0 }
 											style={ {
