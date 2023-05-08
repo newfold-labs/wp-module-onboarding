@@ -237,7 +237,7 @@ const App = () => {
 
 	return (
 		<Fragment>
-			<FullscreenMode isActive={ true } />\
+			<FullscreenMode isActive={ true } />
 			<SlotFillProvider>
 				<InterfaceSkeleton
 					className={ classNames(
