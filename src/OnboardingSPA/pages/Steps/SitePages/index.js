@@ -56,7 +56,6 @@ const StepSitePages = () => {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		if ( sitePagesResponse?.body ) {
-			setSitePages( sitePagesResponse.body );
 			if ( currentData.data.sitePages?.other ) {
 				if ( currentData.data.sitePages.other === false ) {
 					setCheckedPages( [] );
@@ -65,23 +64,24 @@ const StepSitePages = () => {
 						flowDataToState( currentData.data.sitePages.other )
 					);
 				} else {
-					const checkedPages = sitePagesResponse.body.reduce(
-						( checkedPages, sitePage ) => {
+					const selectedPages = sitePagesResponse.body.reduce(
+						( pages, sitePage ) => {
 							return sitePage?.selected && sitePage.selected
-								? checkedPages.concat( sitePage.slug )
-								: checkedPages;
+								? pages.concat( sitePage.slug )
+								: pages;
 						},
 						[]
 					);
-					handleCheckedPages( checkedPages, sitePagesResponse.body );
+					handleCheckedPages( selectedPages, sitePagesResponse.body );
 				}
 			}
+			setSitePages( sitePagesResponse.body );
 		}
 	};
 
-	const stateToFlowData = ( selectedPages, sitePages ) => {
-		return sitePages !== false
-			? sitePages?.reduce( ( newSitePages, sitePage ) => {
+	const stateToFlowData = ( selectedPages, pages ) => {
+		return pages !== false
+			? pages?.reduce( ( newSitePages, sitePage ) => {
 					return selectedPages.includes( sitePage.slug )
 						? newSitePages.concat( {
 								slug: sitePage.slug,
@@ -98,11 +98,11 @@ const StepSitePages = () => {
 		} );
 	};
 
-	const handleCheckedPages = ( selectedPages, sitePages = false ) => {
+	const handleCheckedPages = ( selectedPages, pages = false ) => {
 		setCheckedPages( selectedPages );
 		currentData.data.sitePages.other =
 			selectedPages.length !== 0
-				? stateToFlowData( selectedPages, sitePages )
+				? stateToFlowData( selectedPages, pages )
 				: false;
 		setCurrentOnboardingData( currentData );
 	};

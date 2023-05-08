@@ -33,7 +33,6 @@ const LivePreviewSkeleton = ( {
 			dummyPreviews.push(
 				<LivePreviewSelectableCard
 					key={ i }
-					blockGrammer={ '' }
 					styling={ 'custom' }
 					className={ className }
 					skeletonLoadingTime={ MAX_ANIMATION_TIME }
@@ -52,7 +51,6 @@ const LivePreviewSkeleton = ( {
 				<LivePreviewSelectableCardWithInfo
 						key={ i }
 						className={ className }
-						blockGrammer={ '' }
 						viewportWidth={ 1200 }
 						styling={ 'custom' }
 						title={ 'Loading...' }
