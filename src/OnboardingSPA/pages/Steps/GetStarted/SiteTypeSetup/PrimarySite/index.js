@@ -39,9 +39,9 @@ const StepPrimarySetup = () => {
 		getSiteClassificationData();
 	}, [] );
 
+	const [ custom, setCustom ] = useState( false );
 	const [ siteClassification, setSiteClassification ] = useState();
 	const [ primaryCategory, setPrimaryCategory ] = useState( '' );
-	const [ inputFieldValue, setInputFieldValue ] = useState( '' );
 
 	/**
 	 * Function which fetches the Site Classifications
@@ -58,7 +58,6 @@ const StepPrimarySetup = () => {
 			];
 
 		if ( currentData?.data?.siteType?.labelPri === 'custom' || ! types ) {
-			setInputFieldValue( currentData?.data?.siteType?.primary );
 			categoryInput( currentData?.data?.siteType?.primary );
 		}
 	};
@@ -69,8 +68,8 @@ const StepPrimarySetup = () => {
 	 * @param {string} primType
 	 */
 	const handleCategoryClick = ( primType ) => {
+		setCustom( false );
 		setPrimaryCategory( primType );
-		setInputFieldValue( '' );
 		currentData.data.siteType.labelPri = '';
 		currentData.data.siteType.primary = primType;
 		setCurrentOnboardingData( currentData );
@@ -82,8 +81,8 @@ const StepPrimarySetup = () => {
 	 * @param {string} value
 	 */
 	const categoryInput = ( value ) => {
-		setPrimaryCategory( '' );
-		setInputFieldValue( value );
+		setCustom( true );
+		setPrimaryCategory( value );
 		currentData.data.siteType.labelPri = 'custom';
 		currentData.data.siteType.primary = value;
 		setCurrentOnboardingData( currentData );
@@ -98,7 +97,7 @@ const StepPrimarySetup = () => {
 					tabIndex={ idx + 1 }
 					role="button"
 					className={ `${
-						types[ type ].slug === primaryCategory
+						types[ type ].slug === primaryCategory && ! custom
 							? 'chosenPrimaryCategory '
 							: ''
 					}nfd-card-pri-category` }
@@ -152,7 +151,7 @@ const StepPrimarySetup = () => {
 							}
 							className="nfd-setup-primary-custom__tellus-input"
 							placeholder={ contents.placeholderSiteTypeInput }
-							value={ inputFieldValue }
+							value={ custom ? primaryCategory : '' }
 						/>
 					</div>
 				</Animate>

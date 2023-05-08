@@ -32,11 +32,11 @@ const StepPrimarySetup = () => {
 	}, [] );
 
 	const contents = getContents();
+	const [ custom, setCustom ] = useState( false );
 	const [ siteClassification, setSiteClassification ] = useState();
 	const [ primaryTypesList, setPrimaryTypeList ] = useState();
 	const [ primaryCategory, setPrimaryCategory ] = useState();
 	const [ secondaryCategory, setSecondaryCategory ] = useState( '' );
-	const [ inputCategVal, changeInputCateg ] = useState( '' );
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
@@ -72,20 +72,12 @@ const StepPrimarySetup = () => {
 				setPrimaryCategory( currentData?.data?.siteType?.primary );
 			} else {
 				setPrimaryCategory( defaultPrimaryType );
-				setSecondaryCategory( '' );
-				changeInputCateg( currentData?.data?.siteType?.secondary );
+				categoryInput( currentData?.data?.siteType?.secondary );
 			}
 		}
 
-		if ( currentData?.data?.siteType?.labelPri === 'custom' ) {
-			setPrimaryCategory( defaultPrimaryType );
-			categoryInput( currentData?.data?.siteType?.secondary );
-		}
-
 		if ( currentData?.data?.siteType?.labelSec === 'custom' ) {
-			setPrimaryCategory( defaultPrimaryType );
-			setSecondaryCategory( '' );
-			changeInputCateg( currentData?.data?.siteType?.secondary );
+			categoryInput( currentData?.data?.siteType?.secondary );
 		}
 	};
 
@@ -95,8 +87,8 @@ const StepPrimarySetup = () => {
 	 * @param {string} value
 	 */
 	const categoryInput = ( value ) => {
-		setSecondaryCategory( '' );
-		changeInputCateg( value );
+		setCustom( true );
+		setSecondaryCategory( value );
 		currentData.data.siteType.labelSec = 'custom';
 		currentData.data.siteType.secondary = value;
 		setCurrentOnboardingData( currentData );
@@ -108,8 +100,8 @@ const StepPrimarySetup = () => {
 	 * @param {string} secType
 	 */
 	const handleCategoryClick = ( secType ) => {
+		setCustom( false );
 		setSecondaryCategory( secType );
-		changeInputCateg( '' );
 		currentData.data.siteType.labelPri = '';
 		currentData.data.siteType.labelSec = '';
 		currentData.data.siteType.primary = primaryCategory;
@@ -149,7 +141,7 @@ const StepPrimarySetup = () => {
 					role="button"
 					tabIndex={ idx + 1 }
 					className={ `${
-						types[ type ].slug === secondaryCategory
+						types[ type ].slug === secondaryCategory && ! custom
 							? 'chosenSecondaryCategory '
 							: ''
 					}nfd-card-sec-category` }
@@ -240,7 +232,7 @@ const StepPrimarySetup = () => {
 								placeholder={
 									contents.placeholderSiteTypeInput
 								}
-								value={ inputCategVal }
+								value={ custom ? secondaryCategory : '' }
 							/>
 						</div>
 					</div>
