@@ -52,6 +52,8 @@ const StepPrimarySetup = () => {
 		setSiteClassification( siteClassificationData?.body );
 		setPrimaryCategory( currentData?.data?.siteType?.primary ?? '' );
 
+		// Check if the data is valid
+		// Old version data is not valid
 		const types =
 			siteClassificationData?.body?.types[
 				currentData?.data?.siteType?.primary

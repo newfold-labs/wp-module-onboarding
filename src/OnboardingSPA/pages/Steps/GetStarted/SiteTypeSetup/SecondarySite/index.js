@@ -52,6 +52,7 @@ const StepPrimarySetup = () => {
 	const getSiteClassificationData = async () => {
 		const siteClassificationData = await getSiteClassification();
 
+		// First Key from the Data is the default Primary value
 		const defaultPrimaryType = Object.keys(
 			siteClassificationData?.body?.types
 		)[ 0 ];
@@ -64,6 +65,7 @@ const StepPrimarySetup = () => {
 
 		setSecondaryCategory( currentData?.data?.siteType?.secondary ?? '' );
 		if ( currentData?.data?.siteType?.primary !== '' ) {
+			// Determining if it is a old version data
 			const types =
 				siteClassificationData?.body?.types[
 					currentData?.data?.siteType?.primary
@@ -71,11 +73,14 @@ const StepPrimarySetup = () => {
 			if ( types ) {
 				setPrimaryCategory( currentData?.data?.siteType?.primary );
 			} else {
+				// Case where data is from old flow and is not custom but
+				// is no more valid in the new schema
 				setPrimaryCategory( defaultPrimaryType );
 				categoryInput( currentData?.data?.siteType?.secondary );
 			}
 		}
 
+		// Primary is valid and secondary is custom
 		if ( currentData?.data?.siteType?.labelSec === 'custom' ) {
 			categoryInput( currentData?.data?.siteType?.secondary );
 		}
@@ -115,6 +120,7 @@ const StepPrimarySetup = () => {
 		);
 		switch ( direction ) {
 			case 'back':
+				// idx = ( (idx - 1 + N) % N )
 				setPrimaryCategory(
 					primaryTypesList[
 						( idx - 1 + primaryTypesList.length ) %
@@ -123,6 +129,7 @@ const StepPrimarySetup = () => {
 				);
 				break;
 			case 'next':
+				// idx = ( (idx + 1 ) % N )
 				setPrimaryCategory(
 					primaryTypesList[ ( idx + 1 ) % primaryTypesList.length ]
 				);
