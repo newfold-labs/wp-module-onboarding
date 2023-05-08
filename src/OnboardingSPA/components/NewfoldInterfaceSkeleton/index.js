@@ -51,19 +51,19 @@ function NewfoldInterfaceSkeleton(
 
 	const defaultLabels = {
 		/* translators: accessibility text for the nav bar landmark region. */
-		drawer: __( 'Drawer' ),
+		drawer: __( 'Drawer', 'wp-module-onboarding' ),
 		/* translators: accessibility text for the top bar landmark region. */
-		header: __( 'Header' ),
+		header: __( 'Header', 'wp-module-onboarding' ),
 		/* translators: accessibility text for the content landmark region. */
-		body: __( 'Content' ),
+		body: __( 'Content', 'wp-module-onboarding' ),
 		/* translators: accessibility text for the secondary sidebar landmark region. */
-		secondarySidebar: __( 'Block Library' ),
+		secondarySidebar: __( 'Block Library', 'wp-module-onboarding' ),
 		/* translators: accessibility text for the settings landmark region. */
-		sidebar: __( 'Settings' ),
+		sidebar: __( 'Settings', 'wp-module-onboarding' ),
 		/* translators: accessibility text for the publish landmark region. */
-		actions: __( 'Publish' ),
+		actions: __( 'Publish', 'wp-module-onboarding' ),
 		/* translators: accessibility text for the footer landmark region. */
-		footer: __( 'Footer' ),
+		footer: __( 'Footer', 'wp-module-onboarding' ),
 	};
 
 	const mergedLabels = { ...defaultLabels, ...labels };
