@@ -4,7 +4,6 @@ import {
 	SIDEBAR_LEARN_MORE,
 	VIEW_NAV_GET_STARTED,
 } from '../../../../../../constants';
-import fallbackDataTypes from '../content.json';
 import getContents from '../contents';
 import { store as nfdOnboardingStore } from '../../../../../store';
 import { useSelect, useDispatch } from '@wordpress/data';
@@ -13,7 +12,7 @@ import CardHeader from '../../../../../components/CardHeader';
 import NavCardButton from '../../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import Animate from '../../../../../components/Animate';
-import { getSiteClassifications } from '../../../../../utils/api/site-classifications';
+import { getSiteClassification } from '../../../../../utils/api/siteClassification';
 
 const StepPrimarySetup = () => {
 	const {
@@ -37,28 +36,24 @@ const StepPrimarySetup = () => {
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
 		setIsHeaderNavigationEnabled( true );
-		getSiteClassificationsData();
+		getSiteClassificationData();
 	}, [] );
 
-	const [ siteClassData, setSiteClassData ] = useState();
-	const [ primaryCategory, changePrimaryCategory ] = useState( '' );
+	const [ siteClassification, setSiteClassification ] = useState();
+	const [ primaryCategory, setPrimaryCategory ] = useState( '' );
 	const [ inputFieldValue, setInputFieldValue ] = useState( '' );
 
 	/**
 	 * Function which fetches the Site Classifications
 	 *
 	 */
-	const getSiteClassificationsData = async () => {
-		let siteClassificationsData = await getSiteClassifications();
-		if ( siteClassificationsData?.body.length === 0 ) {
-			siteClassificationsData = fallbackDataTypes;
-		}
-
-		setSiteClassData( siteClassificationsData?.body );
-		changePrimaryCategory( currentData?.data?.siteType?.primary ?? '' );
+	const getSiteClassificationData = async () => {
+		const siteClassificationData = await getSiteClassification();
+		setSiteClassification( siteClassificationData?.body );
+		setPrimaryCategory( currentData?.data?.siteType?.primary ?? '' );
 
 		if ( currentData?.data?.siteType?.labelPri === 'custom' ) {
-			changePrimaryCategory( '' );
+			setPrimaryCategory( '' );
 			setInputFieldValue( currentData?.data?.siteType?.primary );
 		}
 	};
@@ -69,12 +64,11 @@ const StepPrimarySetup = () => {
 	 * @param {string} primType
 	 */
 	const handleCategoryClick = ( primType ) => {
-		changePrimaryCategory( primType );
+		setPrimaryCategory( primType );
 		setInputFieldValue( '' );
-		const currentDataCopy = currentData;
-		currentDataCopy.data.siteType.labelPri = '';
-		currentDataCopy.data.siteType.primary = primType;
-		setCurrentOnboardingData( currentDataCopy );
+		currentData.data.siteType.labelPri = '';
+		currentData.data.siteType.primary = primType;
+		setCurrentOnboardingData( currentData );
 	};
 
 	/**
@@ -83,19 +77,18 @@ const StepPrimarySetup = () => {
 	 * @param {string} input
 	 */
 	const categoryInput = ( input ) => {
-		changePrimaryCategory( '' );
+		setPrimaryCategory( '' );
 		setInputFieldValue( input?.target?.value );
-		const currentDataCopy = currentData;
-		currentDataCopy.data.siteType.labelPri = 'custom';
-		currentDataCopy.data.siteType.primary = input?.target?.value;
-		setCurrentOnboardingData( currentDataCopy );
+		currentData.data.siteType.labelPri = 'custom';
+		currentData.data.siteType.primary = input?.target?.value;
+		setCurrentOnboardingData( currentData );
 	};
 
 	const primarySiteTypeChips = () => {
 		let idx = 0;
 		const primaryChipList = [];
 
-		const types = siteClassData?.types;
+		const types = siteClassification?.types;
 		for ( const typeKey in types ) {
 			primaryChipList.push(
 				<div
@@ -147,9 +140,9 @@ const StepPrimarySetup = () => {
 						question={ contents.question }
 					/>
 				</div>
-				<Animate type="fade-in-disabled" after={ siteClassData }>
+				<Animate type="fade-in-disabled" after={ siteClassification }>
 					<div className="nfd-setup-primary-categories">
-						{ siteClassData && primarySiteTypeChips() }
+						{ siteClassification && primarySiteTypeChips() }
 					</div>
 					<div className="nfd-setup-primary-second">
 						<div className="nfd-setup-primary-second-top">

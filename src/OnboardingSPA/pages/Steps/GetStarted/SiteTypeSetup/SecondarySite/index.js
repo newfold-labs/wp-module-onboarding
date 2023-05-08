@@ -5,7 +5,6 @@ import {
 	VIEW_NAV_GET_STARTED,
 } from '../../../../../../constants';
 import getContents from '../contents';
-import fallbackDataTypes from '../content.json';
 import { store as nfdOnboardingStore } from '../../../../../store';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
@@ -13,7 +12,7 @@ import CardHeader from '../../../../../components/CardHeader';
 import NavCardButton from '../../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import Animate from '../../../../../components/Animate';
-import { getSiteClassifications } from '../../../../../utils/api/site-classifications';
+import { getSiteClassification } from '../../../../../utils/api/siteClassification';
 
 const StepPrimarySetup = () => {
 	const {
@@ -29,15 +28,14 @@ const StepPrimarySetup = () => {
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
 		setIsHeaderNavigationEnabled( true );
-		getSiteClassificationsData();
+		getSiteClassificationData();
 	}, [] );
 
 	const contents = getContents();
-	const defaultPrimaryType = 'business';
-	const [ siteClassData, setSiteClassData ] = useState();
-	const [ primaryTypeList, setPrimaryTypeList ] = useState();
-	const [ primaryType, changePrimaryType ] = useState( defaultPrimaryType );
-	const [ secondaryType, changeSecondaryType ] = useState( '' );
+	const [ siteClassification, setSiteClassification ] = useState();
+	const [ primaryTypesList, setPrimaryTypeList ] = useState();
+	const [ primaryCategory, setPrimaryCategory ] = useState();
+	const [ secondaryCategory, setSecondaryCategory ] = useState( '' );
 	const [ inputCategVal, changeInputCateg ] = useState( '' );
 
 	const { currentData } = useSelect( ( select ) => {
@@ -51,29 +49,30 @@ const StepPrimarySetup = () => {
 	 * Function which fetches the Site Classifications
 	 *
 	 */
-	const getSiteClassificationsData = async () => {
-		let siteClassificationsData = await getSiteClassifications();
-		if ( siteClassificationsData?.body.length === 0 ) {
-			siteClassificationsData = fallbackDataTypes;
-		}
-		setSiteClassData( siteClassificationsData?.body );
+	const getSiteClassificationData = async () => {
+		const siteClassificationData = await getSiteClassification();
+
+		const defaultPrimaryType = Object.keys(
+			siteClassificationData?.body?.types
+		)[ 0 ];
+		setSiteClassification( siteClassificationData?.body );
 		setPrimaryTypeList(
-			Object.keys( siteClassificationsData?.body?.types )
+			Object.keys( siteClassificationData?.body?.types )
 		);
 
 		if ( currentData?.data?.siteType?.primary !== '' )
-			changePrimaryType( currentData?.data?.siteType?.primary );
-		changeSecondaryType( currentData?.data?.siteType?.secondary ?? '' );
+			setPrimaryCategory( currentData?.data?.siteType?.primary );
+		setSecondaryCategory( currentData?.data?.siteType?.secondary ?? '' );
 
 		if ( currentData?.data?.siteType?.labelPri === 'custom' ) {
-			changePrimaryType( defaultPrimaryType );
-			changeSecondaryType( '' );
+			setPrimaryCategory( defaultPrimaryType );
+			setSecondaryCategory( '' );
 			changeInputCateg( currentData?.data?.siteType?.secondary );
 		}
 
 		if ( currentData?.data?.siteType?.labelSec === 'custom' ) {
-			changePrimaryType( defaultPrimaryType );
-			changeSecondaryType( '' );
+			setPrimaryCategory( defaultPrimaryType );
+			setSecondaryCategory( '' );
 			changeInputCateg( currentData?.data?.siteType?.secondary );
 		}
 	};
@@ -84,12 +83,11 @@ const StepPrimarySetup = () => {
 	 * @param {string} input
 	 */
 	const categoryInput = ( input ) => {
-		changeSecondaryType( '' );
+		setSecondaryCategory( '' );
 		changeInputCateg( input?.target?.value );
-		const currentDataCopy = currentData;
-		currentDataCopy.data.siteType.labelSec = 'custom';
-		currentDataCopy.data.siteType.secondary = input?.target?.value;
-		setCurrentOnboardingData( currentDataCopy );
+		currentData.data.siteType.labelSec = 'custom';
+		currentData.data.siteType.secondary = input?.target?.value;
+		setCurrentOnboardingData( currentData );
 	};
 
 	/**
@@ -98,37 +96,43 @@ const StepPrimarySetup = () => {
 	 * @param {string} secType
 	 */
 	const handleCategoryClick = ( secType ) => {
-		changeSecondaryType( secType );
+		setSecondaryCategory( secType );
 		changeInputCateg( '' );
-		const currentDataCopy = currentData;
-		currentDataCopy.data.siteType.labelPri = '';
-		currentDataCopy.data.siteType.labelSec = '';
-		currentDataCopy.data.siteType.primary = primaryType;
-		currentDataCopy.data.siteType.secondary = secType;
-		setCurrentOnboardingData( currentDataCopy );
+		currentData.data.siteType.labelPri = '';
+		currentData.data.siteType.labelSec = '';
+		currentData.data.siteType.primary = primaryCategory;
+		currentData.data.siteType.secondary = secType;
+		setCurrentOnboardingData( currentData );
 	};
 
 	const changePrimaryPrev = () => {
-		const idx = primaryTypeList.findIndex( ( val ) => primaryType === val );
+		const idx = primaryTypesList.findIndex(
+			( val ) => primaryCategory === val
+		);
 
 		if ( idx === 0 )
-			changePrimaryType( primaryTypeList[ primaryTypeList.length - 1 ] );
-		else changePrimaryType( primaryTypeList[ idx - 1 ] );
+			setPrimaryCategory(
+				primaryTypesList[ primaryTypesList.length - 1 ]
+			);
+		else setPrimaryCategory( primaryTypesList[ idx - 1 ] );
 	};
 
 	const changePrimaryNext = () => {
-		const idx = primaryTypeList.findIndex( ( val ) => primaryType === val );
+		const idx = primaryTypesList.findIndex(
+			( val ) => primaryCategory === val
+		);
 
-		if ( idx === primaryTypeList.length - 1 )
-			changePrimaryType( primaryTypeList[ 0 ] );
-		else changePrimaryType( primaryTypeList[ idx + 1 ] );
+		if ( idx === primaryTypesList.length - 1 )
+			setPrimaryCategory( primaryTypesList[ 0 ] );
+		else setPrimaryCategory( primaryTypesList[ idx + 1 ] );
 	};
 
 	const secondarySiteTypeChips = () => {
 		let idx = 0;
 		const secondaryChipList = [];
 
-		const types = siteClassData?.types[ primaryType ]?.secondaryTypes;
+		const types =
+			siteClassification?.types[ primaryCategory ]?.secondaryTypes;
 		for ( const typeKey in types ) {
 			secondaryChipList.push(
 				<div
@@ -136,7 +140,7 @@ const StepPrimarySetup = () => {
 					role="button"
 					tabIndex={ idx + 1 }
 					className={ `${
-						types[ typeKey ].slug === secondaryType
+						types[ typeKey ].slug === secondaryCategory
 							? 'chosenSecondaryCategory '
 							: ''
 					}nfd-card-sec-category` }
@@ -168,10 +172,10 @@ const StepPrimarySetup = () => {
 						question={ contents?.question }
 					/>
 				</div>
-				<Animate type="fade-in-disabled" after={ siteClassData }>
+				<Animate type="fade-in-disabled" after={ siteClassification }>
 					<div className="nfd-setup-secondary-categories">
 						<div className="nfd-card-sec-category-wrapper">
-							{ siteClassData && (
+							{ siteClassification && (
 								<div className="category-scrolling-wrapper">
 									<div className="category-scrolling-wrapper_left-btn">
 										<span
@@ -190,14 +194,14 @@ const StepPrimarySetup = () => {
 										<span
 											className="category-scrolling-wrapper_type-icon"
 											style={ {
-												backgroundImage: `url(${ siteClassData?.types[ primaryType ]?.icon })`,
+												backgroundImage: `url(${ siteClassification?.types[ primaryCategory ]?.icon })`,
 											} }
 										/>
 										<p className="category-scrolling-wrapper_type-text">
 											{ ' ' }
 											{
-												siteClassData?.types[
-													primaryType
+												siteClassification?.types[
+													primaryCategory
 												]?.label
 											}
 										</p>
@@ -219,7 +223,7 @@ const StepPrimarySetup = () => {
 							) }
 						</div>
 						<div className="subCategoriesSection">
-							{ siteClassData && secondarySiteTypeChips() }
+							{ siteClassification && secondarySiteTypeChips() }
 						</div>
 						<div className="nfd-setup-primary-second">
 							<div className="nfd-setup-primary-second-top">
