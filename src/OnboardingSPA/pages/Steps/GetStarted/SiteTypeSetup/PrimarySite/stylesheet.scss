@@ -7,20 +7,41 @@
 		text-align: center;
 	}
 
-	&-second {
+	&-custom {
 		display: flex;
 		align-items: center;
 		flex-direction: column;
 		justify-content: space-around;
 		width: 100%;
 
-		&-bottom {
-			margin-top: 20px;
-			width: 100%;
-			display: flex;
-			flex-flow: column;
-			align-items: center;
+		&__tellus {
+
+			&-text {
+				color: var(--nfd-onboarding-black);
+				font-size: 1rem;
+				font-weight: 700;
+				text-align: center;
+				padding: 10px;
+			}
+
+			&-input {
+				width: 30vw;
+				height: 5.5vh;
+				font-size: 16px;
+				font-weight: 300;
+				margin: 0 1rem 1.5rem 1rem;
+				padding: 8px 16px !important;
+
+				&::placeholder {
+					font-size: 15px;
+				}
+
+				@media (max-width: #{($break-medium - 1)}) {
+					width: 40vw;
+				}
+			}
 		}
+
 	}
 }
 
@@ -44,7 +65,7 @@
 		display: inline-flex;
 		align-items: center;
 
-		&-icon {
+		&__icon {
 			width: 24px;
 			height: 24px;
 			transform: scale(0.6);
@@ -71,30 +92,3 @@
 	}
 }
 
-.tellus {
-
-	&-text {
-		color: var(--nfd-onboarding-black);
-		font-size: 1rem;
-		font-weight: 700;
-		text-align: center;
-		padding: 10px;
-	}
-
-	&-input {
-		width: 30vw;
-		height: 5.5vh;
-		font-size: 16px;
-		font-weight: 300;
-		margin: 0 1rem 1.5rem 1rem;
-		padding: 8px 16px !important;
-
-		&::placeholder {
-			font-size: 15px;
-		}
-
-		@media (max-width: #{($break-medium - 1)}) {
-			width: 40vw;
-		}
-	}
-}

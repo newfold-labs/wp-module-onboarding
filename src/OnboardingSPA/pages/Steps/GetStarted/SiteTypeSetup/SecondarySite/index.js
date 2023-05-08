@@ -179,9 +179,9 @@ const StepPrimarySetup = () => {
 						<div className="nfd-card-sec-category-wrapper">
 							{ siteClassification && (
 								<div className="category-scrolling-wrapper">
-									<div className="category-scrolling-wrapper_left-btn">
+									<div className="category-scrolling-wrapper__left-btn">
 										<span
-											className="category-scrolling-wrapper_left-btn-icon"
+											className="category-scrolling-wrapper__left-btn-icon"
 											onClick={ changePrimaryPrev }
 											onKeyUp={ changePrimaryPrev }
 											role="button"
@@ -192,14 +192,14 @@ const StepPrimarySetup = () => {
 											} }
 										/>
 									</div>
-									<div className="category-scrolling-wrapper_type">
+									<div className="category-scrolling-wrapper__type">
 										<span
-											className="category-scrolling-wrapper_type-icon"
+											className="category-scrolling-wrapper__type-icon"
 											style={ {
 												backgroundImage: `url(${ siteClassification?.types[ primaryCategory ]?.icon })`,
 											} }
 										/>
-										<p className="category-scrolling-wrapper_type-text">
+										<p className="category-scrolling-wrapper__type-text">
 											{ ' ' }
 											{
 												siteClassification?.types[
@@ -208,9 +208,9 @@ const StepPrimarySetup = () => {
 											}
 										</p>
 									</div>
-									<div className="category-scrolling-wrapper_right-btn">
+									<div className="category-scrolling-wrapper__right-btn">
 										<span
-											className="category-scrolling-wrapper_right-btn-icon"
+											className="category-scrolling-wrapper__right-btn-icon"
 											onClick={ changePrimaryNext }
 											onKeyUp={ changePrimaryNext }
 											role="button"
@@ -227,23 +227,21 @@ const StepPrimarySetup = () => {
 						<div className="subCategoriesSection">
 							{ siteClassification && secondarySiteTypeChips() }
 						</div>
-						<div className="nfd-setup-primary-second">
-							<div className="nfd-setup-primary-second-top">
-								<div className="tellus-text">
-									{ contents.tellusHereText }
-								</div>
-								<input
-									type="search"
-									onChange={ ( e ) =>
-										categoryInput( e?.target?.value )
-									}
-									className="tellus-input"
-									placeholder={
-										contents.placeholderSiteTypeInput
-									}
-									value={ inputCategVal }
-								/>
+						<div className="nfd-setup-primary-custom">
+							<div className="nfd-setup-primary-custom__tellus-text">
+								{ contents.tellusHereText }
 							</div>
+							<input
+								type="search"
+								onChange={ ( e ) =>
+									categoryInput( e?.target?.value )
+								}
+								className="nfd-setup-primary-custom__tellus-input"
+								placeholder={
+									contents.placeholderSiteTypeInput
+								}
+								value={ inputCategVal }
+							/>
 						</div>
 					</div>
 				</Animate>

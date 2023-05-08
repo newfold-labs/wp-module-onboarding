@@ -109,9 +109,9 @@ const StepPrimarySetup = () => {
 				>
 					<div className="nfd-card-pri-category-wrapper">
 						<span
-							className={ `nfd-card-pri-category-wrapper-icon ${
+							className={ `nfd-card-pri-category-wrapper__icon ${
 								types[ type ].slug === primaryCategory
-									? 'nfd-card-pri-category-wrapper-icon-selected '
+									? 'nfd-card-pri-category-wrapper__icon-selected '
 									: ''
 							}` }
 							style={ {
@@ -141,21 +141,19 @@ const StepPrimarySetup = () => {
 					<div className="nfd-setup-primary-categories">
 						{ siteClassification && primarySiteTypeChips() }
 					</div>
-					<div className="nfd-setup-primary-second">
-						<div className="nfd-setup-primary-second-top">
-							<p className="tellus-text">or tell us here:</p>
-							<input
-								type="search"
-								onChange={ ( e ) =>
-									categoryInput( e?.target?.value )
-								}
-								className="tellus-input"
-								placeholder={
-									contents.placeholderSiteTypeInput
-								}
-								value={ inputFieldValue }
-							/>
-						</div>
+					<div className="nfd-setup-primary-custom">
+						<p className="nfd-setup-primary-custom__tellus-text">
+							or tell us here:
+						</p>
+						<input
+							type="search"
+							onChange={ ( e ) =>
+								categoryInput( e?.target?.value )
+							}
+							className="nfd-setup-primary-custom__tellus-input"
+							placeholder={ contents.placeholderSiteTypeInput }
+							value={ inputFieldValue }
+						/>
 					</div>
 				</Animate>
 				<NavCardButton text={ contents.buttonText } />
