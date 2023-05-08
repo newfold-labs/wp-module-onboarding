@@ -192,12 +192,7 @@ const StepPrimarySetup = () => {
 											} }
 										/>
 										<p className="category-scrolling-wrapper__type-text">
-											{ ' ' }
-											{
-												siteClassification?.types[
-													primaryCategory
-												]?.label
-											}
+											{ ` ${ siteClassification?.types[ primaryCategory ]?.label }` }
 										</p>
 									</div>
 									<div className="category-scrolling-wrapper__right-btn">
