@@ -85,49 +85,41 @@ const StepPrimarySetup = () => {
 	};
 
 	const primarySiteTypeChips = () => {
-		let idx = 0;
-		const primaryChipList = [];
-
 		const types = siteClassification?.types;
-		for ( const typeKey in types ) {
-			primaryChipList.push(
+		return Object.keys( types ).map( ( type, idx ) => {
+			return (
 				<div
-					key={ types[ typeKey ]?.slug }
+					key={ types[ type ]?.slug }
 					tabIndex={ idx + 1 }
 					role="button"
 					className={ `${
-						types[ typeKey ].slug === primaryCategory
+						types[ type ].slug === primaryCategory
 							? 'chosenPrimaryCategory '
 							: ''
 					}nfd-card-pri-category` }
-					onClick={ () =>
-						handleCategoryClick( types[ typeKey ].slug )
-					}
+					onClick={ () => handleCategoryClick( types[ type ].slug ) }
 					onKeyDown={ () =>
-						handleCategoryClick( types[ typeKey ].slug )
+						handleCategoryClick( types[ type ].slug )
 					}
 				>
 					<div className="nfd-card-pri-category-wrapper">
 						<span
 							className={ `nfd-card-pri-category-wrapper-icon ${
-								types[ typeKey ].slug === primaryCategory
+								types[ type ].slug === primaryCategory
 									? 'nfd-card-pri-category-wrapper-icon-selected '
 									: ''
 							}` }
 							style={ {
-								backgroundImage: `url(${ types[ typeKey ]?.icon })`,
+								backgroundImage: `url(${ types[ type ]?.icon })`,
 							} }
 						></span>
 						<span className="categName">
-							{ types[ typeKey ]?.label }
+							{ types[ type ]?.label }
 						</span>
 					</div>
 				</div>
 			);
-			idx++;
-		}
-
-		return primaryChipList;
+		} );
 	};
 
 	return (
@@ -161,7 +153,6 @@ const StepPrimarySetup = () => {
 				</Animate>
 				<NavCardButton
 					text={ contents.buttonText }
-					// disabled={ contents.categories === null }
 				/>
 				<NeedHelpTag />
 			</NewfoldLargeCard>

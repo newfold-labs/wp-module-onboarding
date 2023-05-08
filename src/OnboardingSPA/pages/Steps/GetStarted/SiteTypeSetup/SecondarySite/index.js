@@ -55,6 +55,8 @@ const StepPrimarySetup = () => {
 		const defaultPrimaryType = Object.keys(
 			siteClassificationData?.body?.types
 		)[ 0 ];
+
+		setPrimaryCategory( defaultPrimaryType );
 		setSiteClassification( siteClassificationData?.body );
 		setPrimaryTypeList(
 			Object.keys( siteClassificationData?.body?.types )
@@ -128,38 +130,28 @@ const StepPrimarySetup = () => {
 	};
 
 	const secondarySiteTypeChips = () => {
-		let idx = 0;
-		const secondaryChipList = [];
-
 		const types =
 			siteClassification?.types[ primaryCategory ]?.secondaryTypes;
-		for ( const typeKey in types ) {
-			secondaryChipList.push(
+		return Object.keys( types ).map( ( type, idx ) => {
+			return (
 				<div
-					key={ types[ typeKey ]?.slug }
+					key={ types[ type ]?.slug }
 					role="button"
 					tabIndex={ idx + 1 }
 					className={ `${
-						types[ typeKey ].slug === secondaryCategory
+						types[ type ].slug === secondaryCategory
 							? 'chosenSecondaryCategory '
 							: ''
 					}nfd-card-sec-category` }
-					onClick={ () =>
-						handleCategoryClick( types[ typeKey ].slug )
-					}
+					onClick={ () => handleCategoryClick( types[ type ].slug ) }
 					onKeyDown={ () =>
-						handleCategoryClick( types[ typeKey ].slug )
+						handleCategoryClick( types[ type ].slug )
 					}
 				>
-					<span className="categName">
-						{ types[ typeKey ]?.label }
-					</span>
+					<span className="categName">{ types[ type ]?.label }</span>
 				</div>
 			);
-			idx++;
-		}
-
-		return secondaryChipList;
+		} );
 	};
 
 	return (
@@ -245,7 +237,6 @@ const StepPrimarySetup = () => {
 				</Animate>
 				<NavCardButton
 					text={ contents.buttonText }
-					// disabled={ primaryCategoryData[ 0 ]?.subCategories === null }
 				/>
 				<NeedHelpTag />
 			</NewfoldLargeCard>
