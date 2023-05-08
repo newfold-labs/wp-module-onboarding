@@ -62,14 +62,24 @@ const StepPrimarySetup = () => {
 			Object.keys( siteClassificationData?.body?.types )
 		);
 
-		if ( currentData?.data?.siteType?.primary !== '' )
-			setPrimaryCategory( currentData?.data?.siteType?.primary );
 		setSecondaryCategory( currentData?.data?.siteType?.secondary ?? '' );
+		if ( currentData?.data?.siteType?.primary !== '' ) {
+			const types =
+				siteClassificationData?.body?.types[
+					currentData?.data?.siteType?.primary
+				]?.secondaryTypes;
+			if ( types ) {
+				setPrimaryCategory( currentData?.data?.siteType?.primary );
+			} else {
+				setPrimaryCategory( defaultPrimaryType );
+				setSecondaryCategory( '' );
+				changeInputCateg( currentData?.data?.siteType?.secondary );
+			}
+		}
 
 		if ( currentData?.data?.siteType?.labelPri === 'custom' ) {
 			setPrimaryCategory( defaultPrimaryType );
-			setSecondaryCategory( '' );
-			changeInputCateg( currentData?.data?.siteType?.secondary );
+			categoryInput( currentData?.data?.siteType?.secondary );
 		}
 
 		if ( currentData?.data?.siteType?.labelSec === 'custom' ) {
@@ -82,13 +92,13 @@ const StepPrimarySetup = () => {
 	/**
 	 * Function which saves data in redux when category name is put-in via input box
 	 *
-	 * @param {string} input
+	 * @param {string} value
 	 */
-	const categoryInput = ( input ) => {
+	const categoryInput = ( value ) => {
 		setSecondaryCategory( '' );
-		changeInputCateg( input?.target?.value );
+		changeInputCateg( value );
 		currentData.data.siteType.labelSec = 'custom';
-		currentData.data.siteType.secondary = input?.target?.value;
+		currentData.data.siteType.secondary = value;
 		setCurrentOnboardingData( currentData );
 	};
 
@@ -224,7 +234,9 @@ const StepPrimarySetup = () => {
 								</div>
 								<input
 									type="search"
-									onChange={ ( e ) => categoryInput( e ) }
+									onChange={ ( e ) =>
+										categoryInput( e?.target?.value )
+									}
 									className="tellus-input"
 									placeholder={
 										contents.placeholderSiteTypeInput
@@ -235,9 +247,7 @@ const StepPrimarySetup = () => {
 						</div>
 					</div>
 				</Animate>
-				<NavCardButton
-					text={ contents.buttonText }
-				/>
+				<NavCardButton text={ contents.buttonText } />
 				<NeedHelpTag />
 			</NewfoldLargeCard>
 		</CommonLayout>

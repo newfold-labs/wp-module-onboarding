@@ -52,9 +52,14 @@ const StepPrimarySetup = () => {
 		setSiteClassification( siteClassificationData?.body );
 		setPrimaryCategory( currentData?.data?.siteType?.primary ?? '' );
 
-		if ( currentData?.data?.siteType?.labelPri === 'custom' ) {
-			setPrimaryCategory( '' );
+		const types =
+			siteClassificationData?.body?.types[
+				currentData?.data?.siteType?.primary
+			];
+
+		if ( currentData?.data?.siteType?.labelPri === 'custom' || ! types ) {
 			setInputFieldValue( currentData?.data?.siteType?.primary );
+			categoryInput( currentData?.data?.siteType?.primary );
 		}
 	};
 
@@ -74,13 +79,13 @@ const StepPrimarySetup = () => {
 	/**
 	 * Function which saves data in redux when category name is put-in via input box
 	 *
-	 * @param {string} input
+	 * @param {string} value
 	 */
-	const categoryInput = ( input ) => {
+	const categoryInput = ( value ) => {
 		setPrimaryCategory( '' );
-		setInputFieldValue( input?.target?.value );
+		setInputFieldValue( value );
 		currentData.data.siteType.labelPri = 'custom';
-		currentData.data.siteType.primary = input?.target?.value;
+		currentData.data.siteType.primary = value;
 		setCurrentOnboardingData( currentData );
 	};
 
@@ -141,7 +146,9 @@ const StepPrimarySetup = () => {
 							<p className="tellus-text">or tell us here:</p>
 							<input
 								type="search"
-								onChange={ ( e ) => categoryInput( e ) }
+								onChange={ ( e ) =>
+									categoryInput( e?.target?.value )
+								}
 								className="tellus-input"
 								placeholder={
 									contents.placeholderSiteTypeInput
@@ -151,9 +158,7 @@ const StepPrimarySetup = () => {
 						</div>
 					</div>
 				</Animate>
-				<NavCardButton
-					text={ contents.buttonText }
-				/>
+				<NavCardButton text={ contents.buttonText } />
 				<NeedHelpTag />
 			</NewfoldLargeCard>
 		</CommonLayout>
