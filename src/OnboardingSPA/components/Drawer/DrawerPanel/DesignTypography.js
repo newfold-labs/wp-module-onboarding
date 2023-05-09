@@ -34,11 +34,11 @@ const DesignTypography = () => {
 	} = useDispatch( nfdOnboardingStore );
 
 	const getFontStylesAndPatterns = async () => {
-		const themeFontPalettes = await getThemeFonts();
-		if ( themeFontPalettes?.error ) {
+		const fonts = await getThemeFonts();
+		if ( fonts?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
-		setFontPalettes( themeFontPalettes?.body );
+		setFontPalettes( fonts?.body );
 
 		const stylesCustom = storedPreviewSettings?.settings?.styles[ 0 ]?.css;
 		if ( stylesCustom ) {
@@ -130,15 +130,13 @@ const DesignTypography = () => {
 			return (
 				<div
 					key={ fontStyle }
-					role="button"
 					tabIndex={ idx + 1 }
-					className={ classNames(
-						'font-palette drawer-palette--button',
-						{
-							'font-palette-selected drawer-palette--button--selected':
-								selectedFont === fontStyle,
-						}
-					) }
+					role="button"
+					className={ `font-palette drawer-palette--button ${
+						selectedFont === fontStyle
+							? 'font-palette-selected drawer-palette--button--selected'
+							: ''
+					} ` }
 					onClick={ () => handleClick( fontStyle ) }
 					onKeyDown={ () => handleClick( fontStyle ) }
 				>

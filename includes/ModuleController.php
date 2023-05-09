@@ -41,9 +41,6 @@ class ModuleController {
 			// Check if the Module Does Exist
 			if ( ModuleRegistry::get( $module_name ) ) {
 
-				// Disable the Redirect for Onboarding SPA
-				LoginRedirect::disable_redirect();
-
 				// Deactivate the Module
 				deactivate( $module_name );
 			}
