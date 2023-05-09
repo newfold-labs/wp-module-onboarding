@@ -71,11 +71,11 @@ const StepPrimarySetup = () => {
 			const primaryValue = currentData?.data?.siteType?.primary;
 			const secondaryValue = currentData?.data?.siteType?.secondary;
 			currentData.data.siteType.primary = {
-				type: 'custom',
+				refers: 'custom',
 				value: primaryValue,
 			};
 			currentData.data.siteType.secondary = {
-				type: 'custom',
+				refers: 'custom',
 				value: secondaryValue,
 			};
 			setCurrentOnboardingData( currentData );
@@ -87,7 +87,7 @@ const StepPrimarySetup = () => {
 		if ( currentData?.data?.siteType?.primary?.value !== '' ) {
 			// Determining if primary is Custom
 			const isNotPrimaryCustom =
-				currentData?.data?.siteType?.primary?.type !== 'custom';
+				currentData?.data?.siteType?.primary?.refers !== 'custom';
 
 			if ( isNotPrimaryCustom ) {
 				setPrimaryCategory(
@@ -100,7 +100,7 @@ const StepPrimarySetup = () => {
 		}
 
 		// Primary is valid and secondary is custom
-		if ( currentData?.data?.siteType?.secondary?.type === 'custom' ) {
+		if ( currentData?.data?.siteType?.secondary?.refers === 'custom' ) {
 			categoryInput( currentData?.data?.siteType?.secondary?.value );
 		}
 	};
@@ -113,7 +113,7 @@ const StepPrimarySetup = () => {
 	const categoryInput = ( value ) => {
 		setCustom( true );
 		setSecondaryCategory( value );
-		currentData.data.siteType.secondary.type = 'custom';
+		currentData.data.siteType.secondary.refers = 'custom';
 		currentData.data.siteType.secondary.value = value;
 		setCurrentOnboardingData( currentData );
 	};
@@ -126,8 +126,8 @@ const StepPrimarySetup = () => {
 	const handleCategoryClick = ( secType ) => {
 		setCustom( false );
 		setSecondaryCategory( secType );
-		currentData.data.siteType.primary.type = 'default';
-		currentData.data.siteType.secondary.type = 'default';
+		currentData.data.siteType.primary.refers = 'slug';
+		currentData.data.siteType.secondary.refers = 'slug';
 		currentData.data.siteType.primary.value = primaryCategory;
 		currentData.data.siteType.secondary.value = secType;
 		setCurrentOnboardingData( currentData );

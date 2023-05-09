@@ -36,12 +36,12 @@ final class Flows {
 			'siteType'        => array(
 				'referTo'   => 'site',
 				'primary'   => array(
-					'type'  => '',
-					'value' => '',
+					'refers' => '',
+					'value'  => '',
 				),
 				'secondary' => array(
-					'type'  => '',
-					'value' => '',
+					'refers' => '',
+					'value'  => '',
 				),
 			),
 

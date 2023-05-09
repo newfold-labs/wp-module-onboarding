@@ -59,18 +59,18 @@ const StepPrimarySetup = () => {
 			const primaryValue = currentData?.data?.siteType?.primary;
 			const secondaryValue = currentData?.data?.siteType?.secondary;
 			currentData.data.siteType.primary = {
-				type: 'custom',
+				refers: 'custom',
 				value: primaryValue,
 			};
 			currentData.data.siteType.secondary = {
-				type: 'custom',
+				refers: 'custom',
 				value: secondaryValue,
 			};
 			setCurrentOnboardingData( currentData );
 		}
 
 		setPrimaryCategory( currentData?.data?.siteType?.primary?.value ?? '' );
-		if ( currentData?.data?.siteType?.primary?.type === 'custom' ) {
+		if ( currentData?.data?.siteType?.primary?.refers === 'custom' ) {
 			categoryInput( currentData?.data?.siteType?.primary?.value );
 		}
 	};
@@ -83,7 +83,7 @@ const StepPrimarySetup = () => {
 	const handleCategoryClick = ( primType ) => {
 		setCustom( false );
 		setPrimaryCategory( primType );
-		currentData.data.siteType.primary.type = 'default';
+		currentData.data.siteType.primary.refers = 'slug';
 		currentData.data.siteType.primary.value = primType;
 		setCurrentOnboardingData( currentData );
 	};
@@ -96,7 +96,7 @@ const StepPrimarySetup = () => {
 	const categoryInput = ( value ) => {
 		setCustom( true );
 		setPrimaryCategory( value );
-		currentData.data.siteType.primary.type = 'custom';
+		currentData.data.siteType.primary.refers = 'custom';
 		currentData.data.siteType.primary.value = value;
 		setCurrentOnboardingData( currentData );
 	};
