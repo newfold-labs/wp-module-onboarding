@@ -34,11 +34,15 @@ final class Flows {
 		// to populate the step fields if a user is resuming a flow.
 		'data'                 => array(
 			'siteType'        => array(
-				'labelPri'  => '',
-				'labelSec'  => '',
 				'referTo'   => 'site',
-				'primary'   => '',
-				'secondary' => '',
+				'primary'   => array(
+					'type'  => '',
+					'value' => '',
+				),
+				'secondary' => array(
+					'type'  => '',
+					'value' => '',
+				),
 			),
 
 			'wpComfortLevel'  => '0',

@@ -50,17 +50,28 @@ const StepPrimarySetup = () => {
 	const getSiteClassificationData = async () => {
 		const siteClassificationData = await getSiteClassification();
 		setSiteClassification( siteClassificationData?.body );
-		setPrimaryCategory( currentData?.data?.siteType?.primary ?? '' );
 
-		// Check if the data is valid
-		// Old version data is not valid
-		const types =
-			siteClassificationData?.body?.types[
-				currentData?.data?.siteType?.primary
-			];
+		// Incase old user comes again with data, we need to save it
+		if (
+			typeof currentData?.data?.siteType?.primary === 'string' ||
+			typeof currentData?.data?.siteType?.secondary === 'string'
+		) {
+			const primaryValue = currentData?.data?.siteType?.primary;
+			const secondaryValue = currentData?.data?.siteType?.secondary;
+			currentData.data.siteType.primary = {
+				type: 'custom',
+				value: primaryValue,
+			};
+			currentData.data.siteType.secondary = {
+				type: 'custom',
+				value: secondaryValue,
+			};
+			setCurrentOnboardingData( currentData );
+		}
 
-		if ( currentData?.data?.siteType?.labelPri === 'custom' || ! types ) {
-			categoryInput( currentData?.data?.siteType?.primary );
+		setPrimaryCategory( currentData?.data?.siteType?.primary?.value ?? '' );
+		if ( currentData?.data?.siteType?.primary?.type === 'custom' ) {
+			categoryInput( currentData?.data?.siteType?.primary?.value );
 		}
 	};
 
@@ -72,8 +83,8 @@ const StepPrimarySetup = () => {
 	const handleCategoryClick = ( primType ) => {
 		setCustom( false );
 		setPrimaryCategory( primType );
-		currentData.data.siteType.labelPri = '';
-		currentData.data.siteType.primary = primType;
+		currentData.data.siteType.primary.type = 'default';
+		currentData.data.siteType.primary.value = primType;
 		setCurrentOnboardingData( currentData );
 	};
 
@@ -85,8 +96,8 @@ const StepPrimarySetup = () => {
 	const categoryInput = ( value ) => {
 		setCustom( true );
 		setPrimaryCategory( value );
-		currentData.data.siteType.labelPri = 'custom';
-		currentData.data.siteType.primary = value;
+		currentData.data.siteType.primary.type = 'custom';
+		currentData.data.siteType.primary.value = value;
 		setCurrentOnboardingData( currentData );
 	};
 

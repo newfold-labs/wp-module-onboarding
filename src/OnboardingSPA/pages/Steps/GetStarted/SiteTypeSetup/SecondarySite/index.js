@@ -63,26 +63,45 @@ const StepPrimarySetup = () => {
 			Object.keys( siteClassificationData?.body?.types )
 		);
 
-		setSecondaryCategory( currentData?.data?.siteType?.secondary ?? '' );
-		if ( currentData?.data?.siteType?.primary !== '' ) {
-			// Determining if it is a old version data
-			const types =
-				siteClassificationData?.body?.types[
-					currentData?.data?.siteType?.primary
-				]?.secondaryTypes;
-			if ( types ) {
-				setPrimaryCategory( currentData?.data?.siteType?.primary );
+		// Incase old user comes again with data, we need to save it
+		if (
+			typeof currentData?.data?.siteType?.primary === 'string' ||
+			typeof currentData?.data?.siteType?.secondary === 'string'
+		) {
+			const primaryValue = currentData?.data?.siteType?.primary;
+			const secondaryValue = currentData?.data?.siteType?.secondary;
+			currentData.data.siteType.primary = {
+				type: 'custom',
+				value: primaryValue,
+			};
+			currentData.data.siteType.secondary = {
+				type: 'custom',
+				value: secondaryValue,
+			};
+			setCurrentOnboardingData( currentData );
+		}
+
+		setSecondaryCategory(
+			currentData?.data?.siteType?.secondary?.value ?? ''
+		);
+		if ( currentData?.data?.siteType?.primary?.value !== '' ) {
+			// Determining if primary is Custom
+			const isNotPrimaryCustom =
+				currentData?.data?.siteType?.primary?.type !== 'custom';
+
+			if ( isNotPrimaryCustom ) {
+				setPrimaryCategory(
+					currentData?.data?.siteType?.primary?.value
+				);
 			} else {
-				// Case where data is from old flow and is not custom but
-				// is no more valid in the new schema
 				setPrimaryCategory( defaultPrimaryType );
-				categoryInput( currentData?.data?.siteType?.secondary );
+				categoryInput( currentData?.data?.siteType?.secondary?.value );
 			}
 		}
 
 		// Primary is valid and secondary is custom
-		if ( currentData?.data?.siteType?.labelSec === 'custom' ) {
-			categoryInput( currentData?.data?.siteType?.secondary );
+		if ( currentData?.data?.siteType?.secondary?.type === 'custom' ) {
+			categoryInput( currentData?.data?.siteType?.secondary?.value );
 		}
 	};
 
@@ -94,8 +113,8 @@ const StepPrimarySetup = () => {
 	const categoryInput = ( value ) => {
 		setCustom( true );
 		setSecondaryCategory( value );
-		currentData.data.siteType.labelSec = 'custom';
-		currentData.data.siteType.secondary = value;
+		currentData.data.siteType.secondary.type = 'custom';
+		currentData.data.siteType.secondary.value = value;
 		setCurrentOnboardingData( currentData );
 	};
 
@@ -107,10 +126,10 @@ const StepPrimarySetup = () => {
 	const handleCategoryClick = ( secType ) => {
 		setCustom( false );
 		setSecondaryCategory( secType );
-		currentData.data.siteType.labelPri = '';
-		currentData.data.siteType.labelSec = '';
-		currentData.data.siteType.primary = primaryCategory;
-		currentData.data.siteType.secondary = secType;
+		currentData.data.siteType.primary.type = 'default';
+		currentData.data.siteType.secondary.type = 'default';
+		currentData.data.siteType.primary.value = primaryCategory;
+		currentData.data.siteType.secondary.value = secType;
 		setCurrentOnboardingData( currentData );
 	};
 
