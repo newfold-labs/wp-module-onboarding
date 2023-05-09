@@ -1,7 +1,7 @@
 <?php
 /**
  * Handle critical updates for flow data version 1.0.0
- * 
+ *
  * @package Onboarding Module
  */
 
