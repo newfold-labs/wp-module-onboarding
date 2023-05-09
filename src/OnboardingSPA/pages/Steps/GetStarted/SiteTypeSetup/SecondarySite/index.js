@@ -68,9 +68,6 @@ const StepPrimarySetup = () => {
 			);
 		}
 		setPrimaryTypeList( primaryTypeList );
-		setPrimaryTypeList(
-			Object.keys( siteClassificationData?.body?.types )
-		);
 
 		// Incase old user comes again with data, we need to save it
 		if (
