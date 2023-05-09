@@ -2,7 +2,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
-use NewfoldLabs\WP\Module\Onboarding\Data\Flows;
+use NewfoldLabs\WP\Module\Onboarding\Data\Flows\Flows;
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 
 /**
@@ -18,10 +18,16 @@ class FlowService {
 	public static function initalize_flow_data() {
 		$default_flow_data = self::get_default_flow_data();
 		$flow_data         = self::read_flow_data_from_wp_option();
+
 		if ( ! ( $flow_data ) ) {
 			return \update_option( Options::get_option_name( 'flow' ), $default_flow_data );
 		}
+
 		if ( ! isset( $flow_data['version'] ) || strcmp( $flow_data['version'], $default_flow_data['version'] ) !== 0 ) {
+			$upgrade_path = NFD_ONBOARDING_DIR . '\\includes\\Data\\Flows\\Upgrades\\' . $default_flow_data['version'] . '.php';
+			if ( $upgrade_path ) {
+				require $upgrade_path;
+			}
 			$updated_flow_data = self::update_flow_data_recursive( $default_flow_data, $flow_data );
 			// To update the options with the recent version of flow data
 			$updated_flow_data['version'] = $default_flow_data['version'];
@@ -59,6 +65,39 @@ class FlowService {
 		return self::update_post_call_data_recursive( $flow_data, $params );
 	}
 
+
+	private static function get_key_fixes_value_recursive( $find_key, &$flow_data ) {
+
+		foreach ( $flow_data as $key => $value ) {
+			$retain_val = '';
+
+			if ( stripos( $find_key, '/' ) ) {
+				$fix_parent_key = explode( '/', $find_key );
+				$actual_key     = end( $fix_parent_key );
+				if ( array_key_exists( $actual_key, $flow_data ) ) {
+					$retain_val = $flow_data[ $actual_key ];
+					// ( $retain_value ) ?
+					// $updated_flow_data[ $fix['new_key'] ]   = $flow_data[ $fix_parent_key[0] ][$fix_key]
+					// : $updated_flow_data[ $fix['new_key'] ] = $default_flow_data[ $fix['new_key'] ];
+					// unset( $flow_data[ $fix_parent_key[0] ][$fix_key] );
+					$parent_key = array_pop( $fix_parent_key[0] );
+					break;
+				}
+				$retain_val = self::get_key_fixes_value_recursive( $fix_parent_key, $flow_data[ $parent_key ] );
+			} else {
+				if ( strcmp( $key, $find_key ) === 0 ) {
+					// \do_action('qm/debug', $value);
+					return $value;
+					break;
+				}
+				if ( is_array( $value ) && ! self::is_array_indexed( $value ) ) {
+					$retain_val = self::get_key_fixes_value_recursive( $find_key, $value );
+				}
+			}
+		}
+		return strlen( $val > 0 ) ? $val : '';
+	}
+
 	/**
 	 * Function to update the Flow Data (Blueprint) in an array recursively in comparison to Flows::get_data() (Database)
 	 *
@@ -68,12 +107,32 @@ class FlowService {
 	 * @return array
 	 */
 	private static function update_flow_data_recursive( $default_flow_data, $flow_data ) {
-		$flow_data_fixes   = Flows::get_fixes();
+		$flow_data_fixes = Flows::get_fixes();
+
 		$updated_flow_data = array();
 		foreach ( $default_flow_data as $key => $value ) {
 			// Any Key renamed is updated in the database with NewKey and the value from the OldKey is retained or not based on retain_existing_value
 			if ( count( $flow_data_fixes ) > 0 ) {
+
 				foreach ( $flow_data_fixes as $index => $fix ) {
+					// $val = self::retain_key_value('wpComfortLevel',  self::read_flow_data_from_wp_option());
+					// \do_action('qm/debug', $val);
+					// if(!$val) {
+					// \do_action('qm/debug', $val);
+					// continue 2;
+					// }
+					// if ( stripos($fix['old_key'], '/') ) {
+					// $fix_parent_key = explode('/', $fix['old_key']);
+					// $fix_key = $fix_parent_key[1];
+
+					// if ( array_key_exists( $fix_parent_key[0], $flow_data ) && array_key_exists( $fix_key, $flow_data[$fix_parent_key[0]] ) && strcmp( $key, $fix['new_key'] ) === 0 ) {
+					// ( $fix['retain_existing_value'] ) ?
+					// $updated_flow_data[ $fix['new_key'] ]   = $flow_data[ $fix_parent_key[0] ][$fix_key]
+					// : $updated_flow_data[ $fix['new_key'] ] = $default_flow_data[ $fix['new_key'] ];
+					// unset( $flow_data[ $fix_parent_key[0] ][$fix_key] );
+					// continue 2;
+					// }
+					// }
 					if ( array_key_exists( $fix['old_key'], $flow_data ) && strcmp( $key, $fix['new_key'] ) === 0 ) {
 						( $fix['retain_existing_value'] ) ?
 							$updated_flow_data[ $fix['new_key'] ]   = $flow_data[ $fix['old_key'] ]

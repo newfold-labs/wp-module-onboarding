@@ -3,6 +3,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\CustomerBluehost\CustomerBluehost;
+use NewfoldLabs\WP\Module\Onboarding\Data\Flows\Flows;
 
 /**
  * CRUD methods for Onboarding config for use in API, CLI and runtime.
