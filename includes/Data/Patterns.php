@@ -302,11 +302,7 @@ final class Patterns {
 		$flow_data        = \get_option( Options::get_option_name( 'flow' ) );
 		$header_menu_slug = explode( '/', $flow_data['data']['partHeader'] )[1];
 		$header_slug      = ! empty( $header_menu_slug ) ? $header_menu_slug : 'site-header-left-logo-navigation-inline';
-
-		$homepage_slugs = array(
-			$header_slug,
-			'site-footer',
-		);
+		$footer_slug      = 'site-footer';
 
 		$homepage_style_slugs = array(
 			'homepage-1' => array(
@@ -326,13 +322,13 @@ final class Patterns {
 			),
 		);
 
-		$header_block_grammar = self::get_pattern_from_slug( $homepage_slugs[0] )['content'];
+		$header_block_grammar = self::get_pattern_from_slug( $header_slug )['content'];
 		// if header menu slug contains "split" replace the menu links with dummy links
-		if ( false !== stripos( $homepage_slugs[0], 'split' ) ) {
+		if ( false !== stripos( $header_slug, 'split' ) ) {
 			$header_block_grammar = self::replace_split_menu_items( $header_block_grammar );
 		}
 
-		$footer_block_grammar = self::get_pattern_from_slug( $homepage_slugs[1] )['content'];
+		$footer_block_grammar = self::get_pattern_from_slug( $footer_slug )['content'];
 
 		foreach ( array_keys( $homepage_style_slugs ) as $homepage_style ) {
 			$homepage_style_slugs[ $homepage_style ]['content'] .= $header_block_grammar . self::get_pattern_from_slug( $homepage_style )['content'] . $footer_block_grammar;
