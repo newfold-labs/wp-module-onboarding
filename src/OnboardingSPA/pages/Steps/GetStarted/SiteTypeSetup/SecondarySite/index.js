@@ -62,6 +62,12 @@ const StepPrimarySetup = () => {
 		let primaryTypeList;
 		if ( window?.nfdOnboarding?.currentFlow === 'ecommerce' ) {
 			primaryTypeList = [ 'business' ];
+			if ( currentData?.data?.siteType?.primary?.value !== 'business' ) {
+				currentData.data.siteType.primary = {
+					refers: 'slug',
+					value: 'business',
+				};
+			}
 		} else {
 			primaryTypeList = Object.keys(
 				siteClassificationData?.body?.types
@@ -70,16 +76,17 @@ const StepPrimarySetup = () => {
 		setPrimaryTypeList( primaryTypeList );
 
 		// Incase old user comes again with data, we need to save it
-		if (
-			typeof currentData?.data?.siteType?.primary === 'string' ||
-			typeof currentData?.data?.siteType?.secondary === 'string'
-		) {
+		if ( typeof currentData?.data?.siteType?.primary === 'string' ) {
 			const primaryValue = currentData?.data?.siteType?.primary;
-			const secondaryValue = currentData?.data?.siteType?.secondary;
 			currentData.data.siteType.primary = {
 				refers: 'custom',
 				value: primaryValue,
 			};
+			setCurrentOnboardingData( currentData );
+		}
+
+		if ( typeof currentData?.data?.siteType?.secondary === 'string' ) {
+			const secondaryValue = currentData?.data?.siteType?.secondary;
 			currentData.data.siteType.secondary = {
 				refers: 'custom',
 				value: secondaryValue,
