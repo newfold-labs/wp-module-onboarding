@@ -209,23 +209,30 @@ const StepPrimarySetup = () => {
 						<div className="nfd-card-sec-category-wrapper">
 							{ siteClassification && (
 								<div className="category-scrolling-wrapper">
-									<div className="category-scrolling-wrapper__left-btn">
-										<span
-											className="category-scrolling-wrapper__left-btn-icon"
-											onClick={ () =>
-												changePrimaryType( 'back' )
-											}
-											onKeyUp={ () =>
-												changePrimaryType( 'back' )
-											}
-											role="button"
-											tabIndex={ 0 }
-											style={ {
-												backgroundImage:
-													'var(--chevron-left-icon)',
-											} }
-										/>
-									</div>
+									{ primaryTypesList &&
+										primaryTypesList.length > 1 && (
+											<div className="category-scrolling-wrapper__left-btn">
+												<span
+													className="category-scrolling-wrapper__left-btn-icon"
+													onClick={ () =>
+														changePrimaryType(
+															'back'
+														)
+													}
+													onKeyUp={ () =>
+														changePrimaryType(
+															'back'
+														)
+													}
+													role="button"
+													tabIndex={ 0 }
+													style={ {
+														backgroundImage:
+															'var(--chevron-left-icon)',
+													} }
+												/>
+											</div>
+										) }
 									<div className="category-scrolling-wrapper__type">
 										<span
 											className="category-scrolling-wrapper__type-icon"
@@ -237,23 +244,30 @@ const StepPrimarySetup = () => {
 											{ ` ${ siteClassification?.types[ primaryCategory ]?.label }` }
 										</p>
 									</div>
-									<div className="category-scrolling-wrapper__right-btn">
-										<span
-											className="category-scrolling-wrapper__right-btn-icon"
-											onClick={ () =>
-												changePrimaryType( 'next' )
-											}
-											onKeyUp={ () =>
-												changePrimaryType( 'next' )
-											}
-											role="button"
-											tabIndex={ 0 }
-											style={ {
-												backgroundImage:
-													'var(--chevron-right-icon)',
-											} }
-										/>
-									</div>
+									{ primaryTypesList &&
+										primaryTypesList.length > 1 && (
+											<div className="category-scrolling-wrapper__right-btn">
+												<span
+													className="category-scrolling-wrapper__right-btn-icon"
+													onClick={ () =>
+														changePrimaryType(
+															'next'
+														)
+													}
+													onKeyUp={ () =>
+														changePrimaryType(
+															'next'
+														)
+													}
+													role="button"
+													tabIndex={ 0 }
+													style={ {
+														backgroundImage:
+															'var(--chevron-right-icon)',
+													} }
+												/>
+											</div>
+										) }
 								</div>
 							) }
 						</div>

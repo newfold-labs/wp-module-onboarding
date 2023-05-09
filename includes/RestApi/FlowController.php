@@ -131,7 +131,7 @@ class FlowController {
 		At least the primary and secondary update does not run on every flow data request.
 		*/
 		if ( ! empty( $params['data']['siteType']['primary']['value'] ) &&
-		( $flow_data['data']['siteType']['primary']['value'] !== $params['data']['siteType']['primary']['value'] ) ) {
+		( empty( $flow_data['data']['siteType']['primary']['value'] ) || $flow_data['data']['siteType']['primary']['value'] !== $params['data']['siteType']['primary']['value'] ) ) {
 			if ( class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification\PrimaryType' ) ) {
 				$primary_type = new PrimaryType( $params['data']['siteType']['primary']['refers'], $params['data']['siteType']['primary']['value'] );
 				if ( ! $primary_type->save() ) {
@@ -145,7 +145,7 @@ class FlowController {
 		}
 
 		if ( ! empty( $params['data']['siteType']['secondary']['value'] ) &&
-		( $flow_data['data']['siteType']['secondary']['value'] !== $params['data']['siteType']['secondary']['value'] ) ) {
+		( empty( $flow_data['data']['siteType']['secondary']['value'] ) || $flow_data['data']['siteType']['secondary']['value'] !== $params['data']['siteType']['secondary']['value'] ) ) {
 			if ( class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification\SecondaryType' ) ) {
 				$secondary_type = new SecondaryType( $params['data']['siteType']['secondary']['refers'], $params['data']['siteType']['secondary']['value'] );
 				if ( ! $secondary_type->save() ) {
