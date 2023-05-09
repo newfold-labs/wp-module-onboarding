@@ -20,32 +20,9 @@ import {
 } from '../../../components/LivePreview';
 
 const StepDesignHomepageMenu = () => {
-	const homepagePatternList = [
-		'yith-wonder/homepage-1',
-		'yith-wonder/homepage-2',
-		'yith-wonder/homepage-3',
-	];
-
-	const homepagesList = {
-		'homepage-1': [
-			'yith-wonder/site-header-left-logo-navigation-inline',
-			'yith-wonder/homepage-1',
-			'yith-wonder/site-footer',
-		],
-		'homepage-2': [
-			'yith-wonder/site-header-left-logo-navigation-inline',
-			'yith-wonder/homepage-2',
-			'yith-wonder/site-footer',
-		],
-		'homepage-3': [
-			'yith-wonder/site-header-left-logo-navigation-inline',
-			'yith-wonder/homepage-3',
-			'yith-wonder/site-footer',
-		],
-	};
-
 	const location = useLocation();
 	const [ homepagePattern, setHomepagePattern ] = useState();
+	const [ homepagePatternList, setHomepagePatternList ] = useState( [] );
 	const [ selectedHomepage, setSelectedHomepage ] = useState( 0 );
 
 	const {
@@ -83,40 +60,27 @@ const StepDesignHomepageMenu = () => {
 	function refactorPatterns( homepagePatternDataResp ) {
 		const makeHomepagePattern = [];
 
-		for ( const key in homepagesList ) {
-			const homepagePatterns = homepagesList[ key ];
-			// update the header menu pattern if already selected
-			if (
-				currentData.data.partHeader ||
-				currentData.data.partHeader !== ''
-			) {
-				homepagePatterns[ 0 ] = currentData.data.partHeader;
-			}
-
-			let patternData = '';
-			homepagePatterns.forEach( ( patternName ) => {
-				homepagePatternDataResp?.body.forEach(
-					( homepagePatternData ) => {
-						if ( homepagePatternData.slug === patternName ) {
-							patternData += homepagePatternData.content;
-						}
-					}
-				);
-			} );
-			makeHomepagePattern.push( patternData );
-		}
+		homepagePatternDataResp.forEach( ( homepagePatternData ) => {
+			makeHomepagePattern.push( homepagePatternData.content );
+		} );
 
 		return makeHomepagePattern;
 	}
 
 	async function getHomepagePatternsData() {
 		const homepagePatternDataTemp = await getPatterns(
-			currentStep.patternId,
+			currentStep.patternId
 		);
+
 		if ( homepagePatternDataTemp?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
-		setHomepagePattern( refactorPatterns( homepagePatternDataTemp ) );
+		setHomepagePattern( refactorPatterns( homepagePatternDataTemp?.body ) );
+
+		homepagePatternDataTemp?.body.forEach( ( homepagePatternData ) => {
+			homepagePatternList.push( homepagePatternData.slug );
+		} );
+		setHomepagePatternList( homepagePatternList );
 
 		if ( currentData?.data.sitePages.homepage !== '' ) {
 			setSelectedHomepage(

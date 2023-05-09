@@ -44,27 +44,7 @@ final class Patterns {
 						'active' => true,
 					),
 				),
-				'homepage-styles' => array(
-					'site-header-left-logo-navigation-inline' => array(
-						'active'  => true,
-						'replace' => true,
-					),
-					'homepage-1'  => array(
-						'active' => true,
-						'shown'  => true,
-					),
-					'homepage-2'  => array(
-						'active' => true,
-						'shown'  => true,
-					),
-					'homepage-3'  => array(
-						'active' => true,
-						'shown'  => true,
-					),
-					'site-footer' => array(
-						'active' => true,
-					),
-				),
+				'homepage-styles' => self::get_patterns_for_homepage_menu_slugs(),
 				'site-pages'      => array(
 					'company-page'      => array(
 						'active'      => true,
@@ -191,11 +171,13 @@ final class Patterns {
 	/**
 	 * Retrieve pattern from slug.
 	 *
-	 * @param array $pattern_slug Pattern Slug Data
+	 * @param string $pattern_slug Pattern Slug Data
 	 *
 	 * @return array|boolean
 	 */
 	public static function get_pattern_from_slug( $pattern_slug ) {
+		$active_theme            = ( \wp_get_theme() )->get( 'TextDomain' );
+		$pattern_slug            = $active_theme . '/' . $pattern_slug;
 		$block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
 		if ( $block_patterns_registry->is_registered( $pattern_slug ) ) {
 			$pattern = $block_patterns_registry->get_registered( $pattern_slug );
@@ -281,8 +263,11 @@ final class Patterns {
 		foreach ( array_keys( $pattern_slugs ) as $pattern_slug ) {
 			if ( true === $pattern_slugs[ $pattern_slug ]['active'] ) {
 				$pattern_name = $active_theme . '/' . $pattern_slug;
+				$pattern      = $block_patterns_registry->get_registered( $pattern_name );
 				if ( $block_patterns_registry->is_registered( $pattern_name ) ) {
-					$pattern = $block_patterns_registry->get_registered( $pattern_name );
+					if ( array_key_exists( 'content', $pattern_slugs[ $pattern_slug ] ) && ! empty( $pattern_slugs[ $pattern_slug ]['content'] ) ) {
+						$pattern['content'] = $pattern_slugs[ $pattern_slug ]['content'];
+					}
 					// if header menu slug contains "split" replace the menu links with dummy links
 					if ( false !== stripos( $pattern_slug, 'split' ) ) {
 						$pattern['content'] = self::replace_split_menu_items( $pattern['content'] );
@@ -304,8 +289,56 @@ final class Patterns {
 				}
 			}
 		}
-
 		return $squash ? $block_patterns_squashed : $block_patterns;
+	}
+
+	/**
+	 * Retrieve Homepage Menu Step Patterns
+	 *
+	 * @return array
+	 */
+	public static function get_patterns_for_homepage_menu_slugs() {
+		// fetch the selected header menu slug from DB
+		$flow_data        = \get_option( Options::get_option_name( 'flow' ) );
+		$header_menu_slug = explode( '/', $flow_data['data']['partHeader'] )[1];
+		$header_slug      = ! empty( $header_menu_slug ) ? $header_menu_slug : 'site-header-left-logo-navigation-inline';
+
+		$homepage_slugs = array(
+			$header_slug,
+			'site-footer',
+		);
+
+		$homepage_style_slugs = array(
+			'homepage-1' => array(
+				'active'  => true,
+				'shown'   => true,
+				'content' => '',
+			),
+			'homepage-2' => array(
+				'active'  => true,
+				'shown'   => true,
+				'content' => '',
+			),
+			'homepage-3' => array(
+				'active'  => true,
+				'shown'   => true,
+				'content' => '',
+			),
+		);
+
+		$header_block_grammar = self::get_pattern_from_slug( $homepage_slugs[0] )['content'];
+		// if header menu slug contains "split" replace the menu links with dummy links
+		if ( false !== stripos( $homepage_slugs[0], 'split' ) ) {
+			$header_block_grammar = self::replace_split_menu_items( $header_block_grammar );
+		}
+
+		$footer_block_grammar = self::get_pattern_from_slug( $homepage_slugs[1] )['content'];
+
+		foreach ( array_keys( $homepage_style_slugs ) as $homepage_style ) {
+			$homepage_style_slugs[ $homepage_style ]['content'] .= $header_block_grammar . self::get_pattern_from_slug( $homepage_style )['content'] . $footer_block_grammar;
+		}
+
+		return $homepage_style_slugs;
 	}
 
 	/**
