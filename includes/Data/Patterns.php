@@ -171,7 +171,7 @@ final class Patterns {
 	/**
 	 * Retrieve pattern from slug.
 	 *
-	 * @param array $pattern_slug Pattern Slug Data
+	 * @param string $pattern_slug Pattern Slug Data
 	 *
 	 * @return array|boolean
 	 */
@@ -253,6 +253,13 @@ final class Patterns {
 		$block_patterns          = array();
 		$block_patterns_squashed = '';
 
+		// fetch the selected header menu slug from DB
+		$flow_data        = \get_option( Options::get_option_name( 'flow' ) );
+		$header_menu_slug = explode( '/', $flow_data['data']['partHeader'] )[1];
+		if ( ! empty( $header_menu_slug ) ) {
+			$pattern_slugs = self::replace_header_menu_slug( $pattern_slugs, $header_menu_slug );
+		}
+
 		foreach ( array_keys( $pattern_slugs ) as $pattern_slug ) {
 			if ( true === $pattern_slugs[ $pattern_slug ]['active'] ) {
 				$pattern_name = $active_theme . '/' . $pattern_slug;
@@ -291,6 +298,7 @@ final class Patterns {
 	 * @return array
 	 */
 	public static function get_patterns_for_homepage_menu_slugs() {
+		// fetch the selected header menu slug from DB
 		$flow_data        = \get_option( Options::get_option_name( 'flow' ) );
 		$header_menu_slug = explode( '/', $flow_data['data']['partHeader'] )[1];
 		$header_slug      = ! empty( $header_menu_slug ) ? $header_menu_slug : 'site-header-left-logo-navigation-inline';
