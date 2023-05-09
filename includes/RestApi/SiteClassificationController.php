@@ -3,7 +3,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Data\SiteClassification;
+use NewfoldLabs\WP\Module\Data\SiteClassification\SiteClassification;
 
 /**
  * Class SiteClassificationController
@@ -47,10 +47,9 @@ class SiteClassificationController {
 	 * @return array
 	 */
 	public function get() {
-		if ( ! class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification' ) ) {
+		if ( ! class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification\SiteClassification' ) ) {
 			return array();
 		}
-		$classification = new SiteClassification();
-		return $classification->get();
+		return SiteClassification::get();
 	}
 }
