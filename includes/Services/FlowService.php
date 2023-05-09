@@ -24,9 +24,9 @@ class FlowService {
 		}
 
 		if ( ! isset( $flow_data['version'] ) || strcmp( $flow_data['version'], $default_flow_data['version'] ) !== 0 ) {
-			$upgrade_path = NFD_ONBOARDING_DIR . '\\includes\\Data\\Flows\\Upgrades\\' . $default_flow_data['version'] . '.php';
-			if ( $upgrade_path ) {
-				require $upgrade_path;
+			$flow_data_upgrades = NFD_ONBOARDING_DIR . '\\includes\\Data\\Flows\\Upgrades\\' . $default_flow_data['version'] . '.php';
+			if ( $flow_data_upgrades ) {
+				require $flow_data_upgrades;
 			}
 			$updated_flow_data = self::update_flow_data_recursive( $default_flow_data, $flow_data );
 			// To update the options with the recent version of flow data
@@ -61,8 +61,9 @@ class FlowService {
 	 * @return array
 	 */
 	public static function get_updated_flow_data( $params ) {
+		$default_flow_data = self::get_default_flow_data();
 		$flow_data = self::read_flow_data_from_wp_option();
-		return self::update_post_call_data_recursive( $flow_data, $params );
+		return self::update_post_call_data_recursive( $flow_data, $default_flow_data, $params );
 	}
 
 	/**
@@ -129,7 +130,7 @@ class FlowService {
 	 *
 	 * @return \WP_Error|array
 	 */
-	private static function update_post_call_data_recursive( &$flow_data, $params ) {
+	private static function update_post_call_data_recursive( &$flow_data, $default_flow_data, $params ) {
 		$exception_list = Flows::get_exception_list();
 
 		foreach ( $flow_data as $key => $value ) {
@@ -170,13 +171,13 @@ class FlowService {
 			}
 
 			// If the Database value is Empty/Indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
-			if ( self::is_array_indexed( $value ) ) {
+			if ( self::is_array_indexed( $value ) || self::is_array_indexed( $default_flow_data[ $key ] )) {
 				$flow_data[ $key ] = $params[ $key ];
 				continue;
 			}
 
 			// To handle Associative Arrays gracefully
-			$nested_flow_data = self::update_post_call_data_recursive( $value, $params[ $key ] );
+			$nested_flow_data = self::update_post_call_data_recursive( $value, $default_flow_data[ $key ], $params[ $key ] );
 			if ( \is_wp_error( $nested_flow_data ) ) {
 				return $nested_flow_data;
 			}
