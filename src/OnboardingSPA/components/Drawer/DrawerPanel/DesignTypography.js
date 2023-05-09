@@ -130,13 +130,15 @@ const DesignTypography = () => {
 			return (
 				<div
 					key={ fontStyle }
-					tabIndex={ idx + 1 }
 					role="button"
-					className={ `font-palette drawer-palette--button ${
-						selectedFont === fontStyle
-							? 'font-palette-selected drawer-palette--button--selected'
-							: ''
-					} ` }
+					tabIndex={ idx + 1 }
+					className={ classNames(
+						'font-palette drawer-palette--button',
+						{
+							'font-palette-selected drawer-palette--button--selected':
+								selectedFont === fontStyle,
+						}
+					) }
 					onClick={ () => handleClick( fontStyle ) }
 					onKeyDown={ () => handleClick( fontStyle ) }
 				>
