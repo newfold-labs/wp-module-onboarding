@@ -59,6 +59,15 @@ const StepPrimarySetup = () => {
 
 		setPrimaryCategory( defaultPrimaryType );
 		setSiteClassification( siteClassificationData?.body );
+		let primaryTypeList;
+		if ( window?.nfdOnboarding?.currentFlow === 'ecommerce' ) {
+			primaryTypeList = [ 'business' ];
+		} else {
+			primaryTypeList = Object.keys(
+				siteClassificationData?.body?.types
+			);
+		}
+		setPrimaryTypeList( primaryTypeList );
 		setPrimaryTypeList(
 			Object.keys( siteClassificationData?.body?.types )
 		);
