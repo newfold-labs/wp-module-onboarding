@@ -17,24 +17,29 @@ const StepComplete = () => {
 		setIsHeaderNavigationEnabled,
 		setSidebarActiveView,
 		updateThemeStatus,
+		flushQueue,
 	} = useDispatch( nfdOnboardingStore );
 
 	const navigate = useNavigate();
 	const [ isError, setIsError ] = useState( false );
 
-	const { nextStep, brandName, currentData, pluginInstallHash } = useSelect(
-		( select ) => {
-			return {
-				nextStep: select( nfdOnboardingStore ).getNextStep(),
-				brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				pluginInstallHash:
-					select( nfdOnboardingStore ).getPluginInstallHash(),
-			};
-		},
-		[]
-	);
+	const {
+		nextStep,
+		brandName,
+		currentData,
+		isQueueEmpty,
+		pluginInstallHash,
+	} = useSelect( ( select ) => {
+		return {
+			nextStep: select( nfdOnboardingStore ).getNextStep(),
+			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			isQueueEmpty: select( nfdOnboardingStore ).isQueueEmpty(),
+			pluginInstallHash:
+				select( nfdOnboardingStore ).getPluginInstallHash(),
+		};
+	}, [] );
 
 	const contents = getContents( brandName );
 
@@ -80,8 +85,10 @@ const StepComplete = () => {
 	};
 
 	useEffect( () => {
-		checkFlowComplete();
-	}, [] );
+		if ( isQueueEmpty ) checkFlowComplete();
+		else flushQueue();
+	}, [ isQueueEmpty ] );
+
 	return (
 		<DesignStateHandler navigationStateCallback={ setNavigationState }>
 			{ isError ? (
