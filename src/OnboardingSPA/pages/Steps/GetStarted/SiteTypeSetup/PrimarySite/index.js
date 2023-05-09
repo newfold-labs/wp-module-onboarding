@@ -1,19 +1,18 @@
-import { __, sprintf } from '@wordpress/i18n';
 import CommonLayout from '../../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../../components/NewfoldLargeCard';
 import {
 	SIDEBAR_LEARN_MORE,
 	VIEW_NAV_GET_STARTED,
 } from '../../../../../../constants';
+import getContents from '../contents';
 import { store as nfdOnboardingStore } from '../../../../../store';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 import CardHeader from '../../../../../components/CardHeader';
 import NavCardButton from '../../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../../components/NeedHelpTag';
-import content from '../content.json';
-import { translations } from '../../../../../utils/locales/translations';
 import Animate from '../../../../../components/Animate';
+import { getSiteClassification } from '../../../../../utils/api/siteClassification';
 
 const StepPrimarySetup = () => {
 	const {
@@ -24,9 +23,9 @@ const StepPrimarySetup = () => {
 		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { currentStep, currentData } = useSelect( ( select ) => {
+	const contents = getContents();
+	const { currentData } = useSelect( ( select ) => {
 		return {
-			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
@@ -37,43 +36,107 @@ const StepPrimarySetup = () => {
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
 		setIsHeaderNavigationEnabled( true );
+		getSiteClassificationData();
 	}, [] );
 
-	const [ clickedIndex, changeCategory ] = useState( -1 );
-	const [ inputCategVal, changeInputCateg ] = useState( '' );
+	const [ custom, setCustom ] = useState( false );
+	const [ siteClassification, setSiteClassification ] = useState();
+	const [ primaryCategory, setPrimaryCategory ] = useState( '' );
 
-	const categoriesArray = content.categories;
-	const selectedPrimaryCategoryInStore = currentData?.data?.siteType?.primary;
+	/**
+	 * Function which fetches the Site Classifications
+	 *
+	 */
+	const getSiteClassificationData = async () => {
+		const siteClassificationData = await getSiteClassification();
+		setSiteClassification( siteClassificationData?.body );
 
-	/**This condition fills the data in input box if the saved category isn't a subcategory from the content*/
-	if ( selectedPrimaryCategoryInStore && ! inputCategVal ) {
-		const found = categoriesArray.find(
-			( e ) => e.name === selectedPrimaryCategoryInStore
-		);
-		if ( ! found && selectedPrimaryCategoryInStore !== 'primaryCategory' )
-			changeInputCateg( selectedPrimaryCategoryInStore );
-	}
+		// Incase old user comes again with data, we need to save it
+		if (
+			typeof currentData?.data?.siteType?.primary === 'string' ||
+			typeof currentData?.data?.siteType?.secondary === 'string'
+		) {
+			const primaryValue = currentData?.data?.siteType?.primary;
+			const secondaryValue = currentData?.data?.siteType?.secondary;
+			currentData.data.siteType.primary = {
+				refers: 'custom',
+				value: primaryValue,
+			};
+			currentData.data.siteType.secondary = {
+				refers: 'custom',
+				value: secondaryValue,
+			};
+			setCurrentOnboardingData( currentData );
+		}
 
-	const handleCategoryClick = ( idxOfElm ) => {
-		changeCategory( idxOfElm );
-		changeInputCateg( '' );
-		const currentDataCopy = currentData;
-		currentDataCopy.data.siteType.primary =
-			content.categories[ idxOfElm ]?.name;
-		setCurrentOnboardingData( currentDataCopy );
+		setPrimaryCategory( currentData?.data?.siteType?.primary?.value ?? '' );
+		if ( currentData?.data?.siteType?.primary?.refers === 'custom' ) {
+			categoryInput( currentData?.data?.siteType?.primary?.value );
+		}
+	};
+
+	/**
+	 * Function which saves data in redux when category name is selected via chips
+	 *
+	 * @param {string} primType
+	 */
+	const handleCategoryClick = ( primType ) => {
+		setCustom( false );
+		setPrimaryCategory( primType );
+		currentData.data.siteType.primary.refers = 'slug';
+		currentData.data.siteType.primary.value = primType;
+		setCurrentOnboardingData( currentData );
 	};
 
 	/**
 	 * Function which saves data in redux when category name is put-in via input box
 	 *
-	 * @param  input
+	 * @param {string} value
 	 */
-	const categoryInput = ( input ) => {
-		changeCategory( -1 );
-		changeInputCateg( input?.target?.value );
-		const currentDataCopy = currentData;
-		currentDataCopy.data.siteType.primary = input?.target?.value;
-		setCurrentOnboardingData( currentDataCopy );
+	const categoryInput = ( value ) => {
+		setCustom( true );
+		setPrimaryCategory( value );
+		currentData.data.siteType.primary.refers = 'custom';
+		currentData.data.siteType.primary.value = value;
+		setCurrentOnboardingData( currentData );
+	};
+
+	const primarySiteTypeChips = () => {
+		const types = siteClassification?.types;
+		return Object.keys( types ).map( ( type, idx ) => {
+			return (
+				<div
+					key={ types[ type ]?.slug }
+					tabIndex={ idx + 1 }
+					role="button"
+					className={ `${
+						types[ type ].slug === primaryCategory && ! custom
+							? 'chosenPrimaryCategory '
+							: ''
+					}nfd-card-pri-category` }
+					onClick={ () => handleCategoryClick( types[ type ].slug ) }
+					onKeyDown={ () =>
+						handleCategoryClick( types[ type ].slug )
+					}
+				>
+					<div className="nfd-card-pri-category-wrapper">
+						<span
+							className={ `nfd-card-pri-category-wrapper__icon ${
+								types[ type ].slug === primaryCategory
+									? 'nfd-card-pri-category-wrapper__icon-selected '
+									: ''
+							}` }
+							style={ {
+								backgroundImage: `url(${ types[ type ]?.icon })`,
+							} }
+						></span>
+						<span className="categName">
+							{ types[ type ]?.label }
+						</span>
+					</div>
+				</div>
+			);
+		} );
 	};
 
 	return (
@@ -81,87 +144,31 @@ const StepPrimarySetup = () => {
 			<NewfoldLargeCard>
 				<div className="nfd-card-heading center">
 					<CardHeader
-						heading={ __(
-							currentStep?.heading,
-							'wp-module-onboarding'
-						) }
-						subHeading={ sprintf(
-							__( content.subHeading, 'wp-module-onboarding' ),
-							translations( 'SITE' )
-						) }
-						question={ __(
-							currentStep?.subheading,
-							'wp-module-onboarding'
-						) }
+						heading={ contents.cardHeading }
+						subHeading={ contents.subHeading }
+						question={ contents.question }
 					/>
 				</div>
-				<Animate
-					type="fade-in-disabled"
-					after={
-						content.categories &&
-						selectedPrimaryCategoryInStore !== null
-					}
-				>
+				<Animate type="fade-in-disabled" after={ siteClassification }>
 					<div className="nfd-setup-primary-categories">
-						{ content.categories.map( ( item, idx ) => {
-							return (
-								<div
-									key={ item?.name }
-									className={ `${
-										clickedIndex === idx ||
-										item.name ===
-											selectedPrimaryCategoryInStore
-											? 'chosenPrimaryCategory '
-											: ''
-									}nfd-card-category` }
-									onClick={ ( e ) =>
-										handleCategoryClick( idx )
-									}
-								>
-									<div className="nfd-card-category-wrapper">
-										<span
-											className="icon"
-											style={ {
-												backgroundImage:
-													clickedIndex !== idx &&
-													item.name !==
-														selectedPrimaryCategoryInStore
-														? item?.icon
-														: item?.iconWhite,
-											} }
-										></span>
-										<span className="categName">
-											{ item?.name }
-										</span>
-									</div>
-								</div>
-							);
-						} ) }
+						{ siteClassification && primarySiteTypeChips() }
 					</div>
-
-					<div className="nfd-setup-primary-second">
-						<div className="nfd-setup-primary-second-top">
-							<p className="blackText">or tell us here:</p>
-							<input
-								type="text"
-								onChange={ ( e ) => categoryInput( e ) }
-								className="tellUsInput"
-								placeholder={ sprintf(
-									__(
-										content.placeholderSiteTypeInput,
-										'wp-module-onboarding'
-									),
-									translations( 'site' )
-								) }
-								value={ inputCategVal }
-							/>
-						</div>
+					<div className="nfd-setup-primary-custom">
+						<p className="nfd-setup-primary-custom__tellus-text">
+							or tell us here:
+						</p>
+						<input
+							type="search"
+							onChange={ ( e ) =>
+								categoryInput( e?.target?.value )
+							}
+							className="nfd-setup-primary-custom__tellus-input"
+							placeholder={ contents.placeholderSiteTypeInput }
+							value={ custom ? primaryCategory : '' }
+						/>
 					</div>
 				</Animate>
-				<NavCardButton
-					text={ __( content.buttonText ) }
-					disabled={ content.categories === null }
-				/>
+				<NavCardButton text={ contents.buttonText } />
 				<NeedHelpTag />
 			</NewfoldLargeCard>
 		</CommonLayout>
