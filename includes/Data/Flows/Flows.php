@@ -133,8 +133,6 @@ final class Flows {
 	 */
 	protected static $fixes = array(
 		// array( 'old_key' => 'OldKey', 'new_key' => 'NewKey', 'retain_existing_value' => true/false ),
-		// array( 'old_key' => 'palette/slug', 'new_key' => 'colorStyle', 'retain_existing_value' => true ),
-		// array( 'old_key' => 'typography/slug', 'new_key' => 'fontStyle', 'retain_existing_value' => true ),
 	);
 
 	/**
