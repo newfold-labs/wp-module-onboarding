@@ -126,6 +126,7 @@ class FlowService {
 	 * Function to update the Database recursively based on Values opted or entered by the User
 	 *
 	 * @param array $flow_data WP Options Data
+	 * @param array $default_flow_data Default Data
 	 * @param array $params Params Data
 	 *
 	 * @return \WP_Error|array
@@ -171,7 +172,7 @@ class FlowService {
 			}
 
 			// If the Database value is Empty/Indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
-			if ( self::is_array_indexed( $value ) || self::is_array_indexed( $default_flow_data[ $key ] )) {
+			if ( self::is_array_indexed( $value ) || self::is_array_indexed( $default_flow_data[ $key ] ) ) {
 				$flow_data[ $key ] = $params[ $key ];
 				continue;
 			}
