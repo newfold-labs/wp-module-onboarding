@@ -37,10 +37,15 @@ final class Flows {
 		'data'                 => array(
 			// Any manual fixes or modification made to siteType shall also be made in FlowServices::update_default_data_for_ecommerce()
 			'siteType'        => array(
-				'label'     => '',
 				'referTo'   => 'site',
-				'primary'   => '',
-				'secondary' => '',
+				'primary'   => array(
+					'refers' => '',
+					'value'  => '',
+				),
+				'secondary' => array(
+					'refers' => '',
+					'value'  => '',
+				),
 			),
 
 			'wpComfortLevel'  => '0',

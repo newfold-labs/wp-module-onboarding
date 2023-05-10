@@ -4,6 +4,8 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
+use NewfoldLabs\WP\Module\Data\SiteClassification\PrimaryType;
+use NewfoldLabs\WP\Module\Data\SiteClassification\SecondaryType;
 
 
 /**
@@ -106,23 +108,56 @@ class FlowController {
 			return $flow_data;
 		}
 
+		/*
+		[TODO] Handle this and some of the site name, logo, description logic in a cleaner way.
+		At least the primary and secondary update does not run on every flow data request.
+		*/
+		if ( ! empty( $params['data']['siteType']['primary']['refers'] ) &&
+		( empty( $flow_data['data']['siteType']['primary']['value'] ) || $flow_data['data']['siteType']['primary']['value'] !== $params['data']['siteType']['primary']['value'] ) ) {
+			if ( class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification\PrimaryType' ) ) {
+				$primary_type = new PrimaryType( $params['data']['siteType']['primary']['refers'], $params['data']['siteType']['primary']['value'] );
+				if ( ! $primary_type->save() ) {
+					return new \WP_Error(
+						'wrong_param_provided',
+						__( 'Wrong Parameter Provided : primary => value', 'wp-module-onboarding' ),
+						array( 'status' => 404 )
+					);
+				}
+			}
+		}
+
+		if ( ! empty( $params['data']['siteType']['secondary']['refers'] ) &&
+		( empty( $flow_data['data']['siteType']['secondary']['value'] ) || $flow_data['data']['siteType']['secondary']['value'] !== $params['data']['siteType']['secondary']['value'] ) ) {
+			if ( class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification\SecondaryType' ) ) {
+				$secondary_type = new SecondaryType( $params['data']['siteType']['secondary']['refers'], $params['data']['siteType']['secondary']['value'] );
+				if ( ! $secondary_type->save() ) {
+					return new \WP_Error(
+						'wrong_param_provided',
+						__( 'Wrong Parameter Provided : secondary => value', 'wp-module-onboarding' ),
+						array( 'status' => 404 )
+					);
+				}
+			}
+		}
+
+		// update timestamp once data is updated
 		$flow_data['updatedAt'] = time();
 
 		// Update Blog Information from Basic Info
 		if ( ( ! empty( $flow_data['data']['blogName'] ) ) ) {
-			 \update_option( Options::get_option_name( 'blog_name', false ), $flow_data['data']['blogName'] );
+			\update_option( Options::get_option_name( 'blog_name', false ), $flow_data['data']['blogName'] );
 		}
 
 		if ( ( ! empty( $flow_data['data']['blogDescription'] ) ) ) {
-			 \update_option( Options::get_option_name( 'blog_description', false ), $flow_data['data']['blogDescription'] );
+			\update_option( Options::get_option_name( 'blog_description', false ), $flow_data['data']['blogDescription'] );
 		}
 
 		if ( ( ! empty( $flow_data['data']['siteLogo'] ) ) && ! empty( $flow_data['data']['siteLogo']['id'] ) ) {
-				  \update_option( Options::get_option_name( 'site_icon', false ), $flow_data['data']['siteLogo']['id'] );
-				  \update_option( Options::get_option_name( 'site_logo', false ), $flow_data['data']['siteLogo']['id'] );
+				\update_option( Options::get_option_name( 'site_icon', false ), $flow_data['data']['siteLogo']['id'] );
+				\update_option( Options::get_option_name( 'site_logo', false ), $flow_data['data']['siteLogo']['id'] );
 		} else {
-			 \update_option( Options::get_option_name( 'site_icon', false ), 0 );
-			 \delete_option( Options::get_option_name( 'site_logo', false ) );
+			\update_option( Options::get_option_name( 'site_icon', false ), 0 );
+			\delete_option( Options::get_option_name( 'site_logo', false ) );
 		}
 
 		// save data to database

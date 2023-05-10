@@ -189,12 +189,6 @@ export const steps = [
 	{
 		path: '/wp-setup/step/get-started/welcome',
 		title: __( 'Welcome', 'wp-module-onboarding' ),
-		heading: sprintf(
-			/* translators: %s: website or store */
-			__( 'Make your %s dreams a reality!', 'wp-module-onboarding' ),
-			translations( 'website' )
-		),
-		subheading: __( 'with WordPress and ', 'wp-module-onboarding' ),
 		description: __(
 			"We'll use this to personalize this onboarding and future recommendations",
 			'wp-module-onboarding'
@@ -212,18 +206,6 @@ export const steps = [
 	{
 		path: '/wp-setup/step/get-started/experience',
 		title: __( 'WordPress Experience', 'wp-module-onboarding' ),
-		heading: sprintf(
-			/* translators: %s: website or store */
-			__(
-				'Help us tailor this setup to your %s',
-				'wp-module-onboarding'
-			),
-			translations( 'site' )
-		),
-		subheading: __(
-			'What is your experience with WordPress?',
-			'wp-module-onboarding'
-		),
 		description: __(
 			"We'll use this to personalize this onboarding and future recommendations",
 			'wp-module-onboarding'
@@ -245,27 +227,6 @@ export const steps = [
 			__( 'Primary %s Setup', 'wp-module-onboarding' ),
 			translations( 'Site' )
 		),
-		heading: sprintf(
-			/* translators: %s: website or store */
-			__(
-				'Help us tailor this setup to your %s',
-				'wp-module-onboarding'
-			),
-			translations( 'site' )
-		),
-		subheading: sprintf(
-			/* translators: %s: website or store */
-			__( 'What type of %s is it?', 'wp-module-onboarding' ),
-			translations( 'site' )
-		),
-		description: sprintf(
-			/* translators: %s: website or store */
-			__(
-				"Setup more of your %s, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
-				'wp-module-onboarding'
-			),
-			translations( 'site' )
-		),
 		Component: StepGetStartedPrimarySetup,
 		Icon: moveTo,
 		priority: 60,
@@ -283,27 +244,6 @@ export const steps = [
 			/* translators: %s: website or store */
 			__( 'Secondary %s Setup', 'wp-module-onboarding' ),
 			translations( 'Site' )
-		),
-		heading: sprintf(
-			/* translators: %s: website or store */
-			__(
-				'Help us tailor this setup to your %s',
-				'wp-module-onboarding'
-			),
-			translations( 'site' )
-		),
-		subheading: sprintf(
-			/* translators: %s: website or store */
-			__( 'What type of %s is it?', 'wp-module-onboarding' ),
-			translations( 'site' )
-		),
-		description: sprintf(
-			/* translators: %s: website or store */
-			__(
-				"Setup more of your %s, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
-				'wp-module-onboarding'
-			),
-			translations( 'site' )
 		),
 		Component: StepGetStartedSecondarySetup,
 		Icon: moveTo,
@@ -361,23 +301,6 @@ export const steps = [
 			},
 		},
 	},
-	// {
-	// 	path: '/wp-setup/step/design/themes',
-	// 	title: __( 'Themes', 'wp-module-onboarding' ),
-	// 	heading: __( "Let's make you look your best", 'wp-module-onboarding' ),
-	// 	subheading: __(
-	// 		'Find a WordPress Theme to present polished and compelling.',
-	// 		'wp-module-onboarding'
-	// 	),
-	// 	description: __(
-	// 		'Your Theme is the starting place for layout and design, setting the tone for your site. Keep it for years or change and swap as you grow.',
-	// 		'wp-module-onboarding'
-	// 	),
-	// 	Component: StepDesignThemes,
-	// 	Icon: brush,
-	// 	priority: 140,
-	// 	VIEW: VIEW_DESIGN_THEMES,
-	// },
 	{
 		path: '/wp-setup/step/design/theme-styles/menu',
 		title: __( 'Theme Styles', 'wp-module-onboarding' ),
@@ -591,9 +514,6 @@ export const conditionalSteps = {
 	},
 };
 
-/**
- * Top-level registration of all routes.
- */
 export const routes = [ ...pages, ...steps ];
 
 /**
