@@ -13,10 +13,10 @@ final class Brands {
 	 */
 	public static function get_default_brand() {
 		$default_brand_data = array(
-			'brand'                       => 'wordpress',
-			'name'                        => __( 'your web host', 'wp-module-onboarding' ),
-			'pluginDashboardPage'         => \admin_url(),
-			'hireExpertsInfo'             => array(
+			'brand'               => 'wordpress',
+			'name'                => __( 'your web host', 'wp-module-onboarding' ),
+			'pluginDashboardPage' => \admin_url(),
+			'hireExpertsInfo'     => array(
 				'defaultLink'     => 'https://www.bluehost.com/wp-live',
 				'queryParameters' => array(
 					'page'         => 'bluehost',
@@ -95,7 +95,7 @@ final class Brands {
 					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
 					'enabled_flows'                 => array(
 						'ecommerce' => true,
-						'wp-setup'  => true,
+						'wp-setup'  => false,
 					),
 				),
 			),
@@ -152,7 +152,7 @@ final class Brands {
 					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
 					'enabled_flows'                 => array(
 						'ecommerce' => true,
-						'wp-setup'  => true,
+						'wp-setup'  => false,
 					),
 				),
 			),
