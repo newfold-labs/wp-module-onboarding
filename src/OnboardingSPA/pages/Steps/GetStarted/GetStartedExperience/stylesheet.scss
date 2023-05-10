@@ -5,20 +5,22 @@
 	flex-direction: column;
 
 	&-tabs label {
-		border: 1px solid var(--nfd-onboarding-light-gray-2);
+		border: 1px solid var(--nfd-onboarding-base-gray);
 		display: flex;
 		justify-content: flex-start;
 		padding: 10px 190px 10px 15px;
 		color: var(--nfd-onboarding-black);
-		background: var(--nfd-onboarding-light-gray);
+		background: var(--nfd-onboarding-base-gray);
 		font-weight: 350;
 		font-size: clamp(0.8rem, 1.5vw, 1.2rem);
 		line-height: 1.5;
 		margin: 5px;
 		white-space: nowrap;
+
 		@media (max-width: #{ ($break-medium) - 1 }) {
 			padding-right: 100px;
 		}
+
 		@media (min-width: 3700px) {
 			font-size: clamp(3.7rem, -0.27vw + 3.5rem, 3rem);
 			margin: 25px;
@@ -33,10 +35,11 @@
 	}
 
 	.components-radio-control {
+
 		&__input input {
-		display: none !important;
+			display: none !important;
 		}
-		margin: 32px 0px 48px;
+		margin: 32px 0 48px;
 		align-items: center;
 	}
 }

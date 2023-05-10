@@ -7,6 +7,8 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Preview;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
 use NewfoldLabs\WP\Module\Onboarding\Tasks\PluginInstallTask;
+use NewfoldLabs\WP\Module\Data\SiteClassification\PrimaryType;
+use NewfoldLabs\WP\Module\Data\SiteClassification\SecondaryType;
 
 /**
  * Class FlowService
@@ -54,6 +56,38 @@ class FlowService {
 					"Wrong Parameter Provided : $key",
 					array( 'status' => 404 )
 				);
+			}
+		}
+
+		/*
+		[TODO] Handle this and some of the site name, logo, description logic in a cleaner way.
+		At least the primary and secondary update does not run on every flow data request.
+		*/
+		if ( ! empty( $params['data']['siteType']['primary']['refers'] ) &&
+		( empty( $flow_data['data']['siteType']['primary']['value'] ) || $flow_data['data']['siteType']['primary']['value'] !== $params['data']['siteType']['primary']['value'] ) ) {
+			if ( class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification\PrimaryType' ) ) {
+				$primary_type = new PrimaryType( $params['data']['siteType']['primary']['refers'], $params['data']['siteType']['primary']['value'] );
+				if ( ! $primary_type->save() ) {
+					return new \WP_Error(
+						'wrong_param_provided',
+						__( 'Wrong Parameter Provided : primary => value', 'wp-module-onboarding' ),
+						array( 'status' => 404 )
+					);
+				}
+			}
+		}
+
+		if ( ! empty( $params['data']['siteType']['secondary']['refers'] ) &&
+		( empty( $flow_data['data']['siteType']['secondary']['value'] ) || $flow_data['data']['siteType']['secondary']['value'] !== $params['data']['siteType']['secondary']['value'] ) ) {
+			if ( class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification\SecondaryType' ) ) {
+				$secondary_type = new SecondaryType( $params['data']['siteType']['secondary']['refers'], $params['data']['siteType']['secondary']['value'] );
+				if ( ! $secondary_type->save() ) {
+					return new \WP_Error(
+						'wrong_param_provided',
+						__( 'Wrong Parameter Provided : secondary => value', 'wp-module-onboarding' ),
+						array( 'status' => 404 )
+					);
+				}
 			}
 		}
 
@@ -157,10 +191,6 @@ class FlowService {
 		if ( 'ecommerce' === $flow_type ) {
 			// update default data with ecommerce data
 			$data['data']['topPriority']['priority1'] = 'selling';
-			$data['data']['siteType']                 = array(
-				'label'   => '',
-				'referTo' => 'business',
-			);
 		}
 		return $data;
 	}

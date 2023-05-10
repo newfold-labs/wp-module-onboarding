@@ -1,4 +1,3 @@
-$button-blue-text-color : #fff;
 
 .nfd-onboarding-button {
 
@@ -6,7 +5,7 @@ $button-blue-text-color : #fff;
 		justify-content: center;
 		align-items: center;
 		width: 100%;
-		color: $button-blue-text-color;
+		color: var(--nfd-onboarding-white);
 		height: 36px;
 		border: none;
 		margin: 10px 0;

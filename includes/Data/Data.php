@@ -38,7 +38,7 @@ final class Data {
 
 		return array_key_exists( NFD_ONBOARDING_PLUGIN_BRAND, $brands ) ?
 			$brands[ NFD_ONBOARDING_PLUGIN_BRAND ] :
-			array( 'brand' => NFD_ONBOARDING_PLUGIN_BRAND );
+			Brands::get_default_brand();
 	}
 
 

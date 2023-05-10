@@ -30,6 +30,7 @@ export const SIDEBAR_SLOTFILL_PREFIX = 'Sidebar';
 export const SIDEBAR_MENU_SLOTFILL_PREFIX = 'HeaderMenu';
 export const SIDEBAR_LEARN_MORE = 'LearnMore';
 
+export const MAX_RETRIES_API_QUEUER = 2;
 export const MAX_RETRIES_SETTINGS_INIT = 2;
 export const MAX_RETRIES_FLOW_SWITCH = 2;
 export const NFD_PLUGINS_QUERY_PARAM = 'nfd_plugins';
@@ -78,3 +79,11 @@ export const DRAWER_NAV_VIEWS = [
 	VIEW_NAV_PAGE,
 	VIEW_NAV_ECOMMERCE_STORE_INFO,
 ];
+
+/**
+ * All API Requests for Onboarding.
+ */
+export const API_REQUEST = {
+	SET_FLOW: 'SET_FLOW',
+	SET_GLOBAL_STYLES: 'SET_GLOBAL_STYLES',
+};

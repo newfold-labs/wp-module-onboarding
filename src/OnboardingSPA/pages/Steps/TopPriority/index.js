@@ -9,6 +9,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import SelectableCardList from '../../../components/SelectableCardList/selectable-card-list';
+import getContents from './contents';
 
 const StepTopPriority = () => {
 	const priorityTypes = {
@@ -16,33 +17,6 @@ const StepTopPriority = () => {
 		1: 'selling',
 		2: 'designing',
 	};
-
-	const priorities = [
-		{
-			icon: '--nfd-publish-icon',
-			title: __( 'Publishing', 'wp-module-onboarding' ),
-			desc: __(
-				'From blogs, to newsletters, to podcasts and videos, we help the web find your content.',
-				'wp-module-onboarding'
-			),
-		},
-		{
-			icon: '--nfd-selling-icon',
-			title: __( 'Selling', 'wp-module-onboarding' ),
-			desc: __(
-				"Startup or seasoned business, drop-shipping or downloads, we've got ecommerce covered.",
-				'wp-module-onboarding'
-			),
-		},
-		{
-			icon: '--nfd-design-icon',
-			title: __( 'Designing', 'wp-module-onboarding' ),
-			desc: __(
-				'With smart style presets and powerful options, we help your site look and feel polished.',
-				'wp-module-onboarding'
-			),
-		},
-	];
 
 	const [ selected, setSelected ] = useState( 0 );
 	const [ isLoaded, setisLoaded ] = useState( false );
@@ -57,9 +31,8 @@ const StepTopPriority = () => {
 		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { currentStep, currentData } = useSelect( ( select ) => {
+	const { currentData } = useSelect( ( select ) => {
 		return {
-			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
@@ -123,14 +96,16 @@ const StepTopPriority = () => {
 		setCurrentOnboardingData( currentData );
 	};
 
+	const content = getContents();
+
 	return (
 		<CommonLayout isVerticallyCentered>
 			<HeadingWithSubHeading
-				title={ currentStep?.heading }
-				subtitle={ currentStep?.subheading }
+				title={ content.heading }
+				subtitle={ content.subheading }
 			/>
 			<SelectableCardList
-				contents={ priorities }
+				contents={ content.options }
 				selected={ selected }
 				onSelectedChange={ setSelected }
 			></SelectableCardList>
@@ -140,7 +115,6 @@ const StepTopPriority = () => {
 						"Where would you like to start? We'll start ",
 						'wp-module-onboarding'
 					) }
-					<br></br>
 					{ __(
 						'there and then move into next steps.',
 						'wp-module-onboarding'
