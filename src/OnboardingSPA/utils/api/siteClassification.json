@@ -1,0 +1,100 @@
+{
+	"body": {
+        "types": {
+            "business": {
+                "slug": "business",
+                "label": "Business",
+                "icon": "https://cdn.hiive.space/site-classification/business.svg",
+                "emoji": "💼",
+                "schema": "Corporation",
+                "secondaryTypes": {
+                    "agency-consulting": {
+                        "primaryType": "business",
+                        "slug": "agency-consulting",
+                        "label": "Agency & Consulting"
+                    },
+                    "arts-crafts": {
+                        "primaryType": "business",
+                        "slug": "arts-crafts",
+                        "label": "Arts & Crafts"
+                    },
+                    "autos-repair": {
+                        "primaryType": "business",
+                        "slug": "autos-repair",
+                        "label": "Autos & Repair"
+                    },
+                    "child-care": {
+                        "primaryType": "business",
+                        "slug": "child-care",
+                        "label": "Child Care"
+                    },
+                    "events": {
+                        "primaryType": "business",
+                        "slug": "events",
+                        "label": "Events"
+                    },
+                    "finance": {
+                        "primaryType": "business",
+                        "slug": "finance",
+                        "label": "Finance"
+                    },
+                    "garden-florist": {
+                        "primaryType": "business",
+                        "slug": "garden-florist",
+                        "label": "Florist & Garden Center"
+                    },
+                    "hr-recruiting": {
+                        "primaryType": "business",
+                        "slug": "hr-recruiting",
+                        "label": "HR & Recruiting"
+                    },
+                    "insurance": {
+                        "primaryType": "business",
+                        "slug": "insurance",
+                        "label": "Insurance"
+                    },
+                    "legal": {
+                        "primaryType": "business",
+                        "slug": "legal",
+                        "label": "Legal"
+                    },
+                    "marketing": {
+                        "primaryType": "business",
+                        "slug": "marketing",
+                        "label": "Marketing"
+                    },
+                    "outdoors": {
+                        "primaryType": "business",
+                        "slug": "outdoors",
+                        "label": "Outdoors"
+                    },
+                    "pr-communications": {
+                        "primaryType": "business",
+                        "slug": "pr-communications",
+                        "label": "PR & Communications"
+                    },
+                    "real-estate-management": {
+                        "primaryType": "business",
+                        "slug": "real-estate-management",
+                        "label": "Real Estate & Management"
+                    },
+                    "shopping-retail": {
+                        "primaryType": "business",
+                        "slug": "shopping-retail",
+                        "label": "Shopping & Retail"
+                    },
+                    "trades-repair-services": {
+                        "primaryType": "business",
+                        "slug": "trades-repair-services",
+                        "label": "Trades & Repair Services"
+                    },
+                    "weddings": {
+                        "primaryType": "business",
+                        "slug": "weddings",
+                        "label": "Weddings"
+                    }
+                }
+            }
+        }
+    }
+}
