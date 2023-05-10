@@ -1,7 +1,6 @@
 import { CheckboxControl, RadioControl } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
 import {
 	SIDEBAR_LEARN_MORE,
 	VIEW_NAV_ECOMMERCE_STORE_INFO,
@@ -13,7 +12,7 @@ import NeedHelpTag from '../../../../components/NeedHelpTag';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 import { store as nfdOnboardingStore } from '../../../../store';
-import content from '../content.json';
+import getContents from './contents';
 
 const StepProducts = () => {
 	const {
@@ -56,6 +55,8 @@ const StepProducts = () => {
 			},
 		} );
 
+	const content = getContents();
+
 	return (
 		<EcommerceStateHandler>
 			<CommonLayout isBgPrimary isCentered>
@@ -63,18 +64,12 @@ const StepProducts = () => {
 					<div className="nfd-onboarding-experience-step onboarding-product-step onboarding-ecommerce-step">
 						<div className="nfd-card-heading center">
 							<CardHeader
-								heading={ __(
-									content.stepProductsHeading,
-									'wp-module-onboarding'
-								) }
-								subHeading={ __(
-									content.stepProductsSubHeading,
-									'wp-module-onboarding'
-								) }
+								heading={ content.heading }
+								subHeading={ content.subheading }
 							/>
 						</div>
 						<div className="nfd-product-step-options">
-							{ content.productOptions.map( ( product ) => (
+							{ content.typeOptions.map( ( product ) => (
 								<CheckboxControl
 									key={ product.value }
 									checked={ productInfo.product_types.includes(
@@ -89,37 +84,23 @@ const StepProducts = () => {
 						</div>
 						<div className="step-product-numbers">
 							<span style={ { fontSize: '16px' } }>
-								{ __(
-									content.stepProductsQuestion,
-									'wp-module-onboarding'
-								) }
+								{ content.question }
 							</span>
 							<RadioControl
 								className="components-radio-control__input"
 								selected={ productInfo?.product_count }
-								options={ content.stepProductNumbers.map(
+								options={ content.numberOptions.map(
 									( option ) => {
 										return {
-											label: __(
-												option.content,
-												'wp-module-onboarding'
-											),
-											value: __(
-												option.value,
-												'wp-module-onboarding'
-											),
+											label: option.content,
+											value: option.value,
 										};
 									}
 								) }
 								onChange={ handleProductCount }
 							/>
 						</div>
-						<NavCardButton
-							text={ __(
-								content.buttonText,
-								'wp-module-onboarding'
-							) }
-						/>
+						<NavCardButton text={ content.buttonText } />
 						<NeedHelpTag />
 					</div>
 				</NewfoldLargeCard>

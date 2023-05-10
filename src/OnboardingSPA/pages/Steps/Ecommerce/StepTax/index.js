@@ -1,7 +1,6 @@
 import { RadioControl } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
 import { useNavigate } from 'react-router-dom';
 import {
 	SIDEBAR_LEARN_MORE,
@@ -13,9 +12,9 @@ import NeedHelpTag from '../../../../components/NeedHelpTag';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 import { store as nfdOnboardingStore } from '../../../../store';
-import content from '../content.json';
 import { useWPSettings as getWPSettings } from '../useWPSettings';
 import Animate from '../../../../components/Animate';
+import getContents from './contents';
 
 function createReverseLookup( state ) {
 	return ( option ) =>
@@ -48,13 +47,15 @@ const StepTax = () => {
 		setWPSettings();
 	}, [] );
 
+	const content = getContents();
+
 	useEffect( () => {
 		if (
 			settings &&
 			settings !== null &&
 			currentData.storeDetails.tax === undefined
 		) {
-			const selectedTaxOption = content.stepTaxOptions.find(
+			const selectedTaxOption = content.options.find(
 				createReverseLookup( settings )
 			);
 			const tax = selectedTaxOption?.data ?? {};
@@ -86,7 +87,7 @@ const StepTax = () => {
 	};
 
 	const selectOption = ( value ) => {
-		const selectedOption = content.stepTaxOptions.find(
+		const selectedOption = content.options.find(
 			( option ) => option.value === value
 		);
 		setCurrentOnboardingData( {
@@ -109,18 +110,8 @@ const StepTax = () => {
 					<div className="nfd-onboarding-experience-step onboarding-ecommerce-step">
 						<div className="nfd-card-heading center onboarding-ecommerce-step">
 							<CardHeader
-								heading={ __(
-									content.stepTaxHeading,
-									'wp-module-onboarding'
-								) }
-								subHeading={ __(
-									content.stepTaxSubHeading,
-									'wp-module-onboarding'
-								) }
-								question={ __(
-									content.question,
-									'wp-module-onboarding'
-								) }
+								heading={ content.heading }
+								subHeading={ content.subheading }
 							/>
 						</div>
 						<Animate type={ 'fade-in-disabled' } after={ settings }>
@@ -129,20 +120,12 @@ const StepTax = () => {
 									'nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-tax-step radio-control-main'
 								}
 								selected={ tax?.option }
-								options={ content.stepTaxOptions.map(
-									( option ) => {
-										return {
-											label: __(
-												option.content,
-												'wp-module-onboarding'
-											),
-											value: __(
-												option.value,
-												'wp-module-onboarding'
-											),
-										};
-									}
-								) }
+								options={ content.options.map( ( option ) => {
+									return {
+										label: option.content,
+										value: option.value,
+									};
+								} ) }
 								onChange={ ( value ) => selectOption( value ) }
 							/>
 						</Animate>
@@ -153,7 +136,7 @@ const StepTax = () => {
 							}
 							onClick={ handleButtonClick }
 						>
-							{ __( 'Continue Setup', 'wp-module-onboarding' ) }
+							{ content.buttonText }
 						</button>
 						<NeedHelpTag />
 					</div>
