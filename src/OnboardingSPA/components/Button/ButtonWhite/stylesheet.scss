@@ -1,4 +1,3 @@
-$button-white-background-color : #fff;
 
 .nfd-onboarding-button {
 
@@ -6,7 +5,7 @@ $button-white-background-color : #fff;
 		justify-content: center;
 		align-items: center;
 		width: 100%;
-		background: $button-white-background-color;
+		background: var(--nfd-onboarding-white);
 		color: var(--wp-admin-theme-color);
 		border: 1px solid var(--wp-admin-theme-color);
 		height: 36px;

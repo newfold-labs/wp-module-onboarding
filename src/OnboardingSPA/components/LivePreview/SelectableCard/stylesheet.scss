@@ -1,8 +1,3 @@
-/*COLOR VARIABLES*/
-$main-color-dark: var(--nfd-onboarding-dark);
-$main-color-light: var(--nfd-onboarding-white);
-$main-border-light: var(--nfd-onboarding-border);
-$main-border-main: var(--nfd-onboarding-primary-alt);
 
 .live-preview--selectable-card {
 	flex: 1;
@@ -48,10 +43,10 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 			align-items: center;
 			justify-content: center;
 			background-clip: padding-box;
-			background-color: $main-border-main;
+			background-color: var(--nfd-onboarding-primary-alt);
 
 			&__path {
-				fill: $main-color-light;
+				fill: var(--nfd-onboarding-white);
 				transform: scale(0.7);
 			}
 		}
@@ -95,7 +90,7 @@ $main-border-main: var(--nfd-onboarding-primary-alt);
 				rgb(var(--wp-admin-theme-color-darker-10--rgb))
 
 				&__icon{
-				fill: $main-color-light;
+				fill: var(--nfd-onboarding-white);
 				font-size: 20px;
 				position: absolute;
 				top: 50%;

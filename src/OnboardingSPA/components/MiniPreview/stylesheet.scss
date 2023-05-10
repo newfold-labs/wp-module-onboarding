@@ -1,9 +1,5 @@
-$white: #fff;
-$black: #000;
 $browser-dark: #cacaca;
-$browser-light: #f2f2f2;
 $link-browser-color: #007017;
-$link-hover-color: var(--nfd-onboarding-link-hover-blue);
 $title-browser-color: #3858e9;
 
 .mini-preview {
@@ -53,7 +49,7 @@ $title-browser-color: #3858e9;
 .browser-content {
 	padding: 10px;
 	word-break: break-all;
-	background-color: $white;
+	background-color: var(--nfd-onboarding-white);
 
 	&_top-row {
 
@@ -72,15 +68,11 @@ $title-browser-color: #3858e9;
 			font-size: 1rem;
 			cursor: pointer;
 			color: $link-browser-color;
-
-			&:hover {
-				color: $link-hover-color;
-			}
 		}
 	}
 
 	&_desc {
-		color: $black;
+		color: var(--nfd-onboarding-black);
 		text-align: left;
 		max-width: 450px;
 		font-weight: 400;
@@ -141,7 +133,7 @@ $title-browser-color: #3858e9;
 			align-items: flex-end;
 
 			&_before {
-				background-color: $browser-light;
+				background-color: var(--nfd-onboarding-minipreview-base);
 
 				&-curve {
 					opacity: 1;
@@ -158,7 +150,7 @@ $title-browser-color: #3858e9;
 			}
 
 			&_after {
-				background-color: $browser-light;
+				background-color: var(--nfd-onboarding-minipreview-base);
 
 				&-curve {
 					opacity: 1;
@@ -184,7 +176,7 @@ $title-browser-color: #3858e9;
 				padding-right: 10px;
 				align-items: center;
 				border-radius: 8px 8px 0 0;
-				background-color: $browser-light;
+				background-color: var(--nfd-onboarding-minipreview-base);
 
 				&-text {
 					flex: 1;
@@ -195,21 +187,19 @@ $title-browser-color: #3858e9;
 					line-clamp: 1;
 					white-space: nowrap;
 					text-overflow: ellipsis;
-					background: -webkit-linear-gradient(left, #000 50%, #fff);
+					background: -webkit-linear-gradient(left, var(--nfd-onboarding-black) 50%, var(--nfd-onboarding-base));
 					background-clip: text;
 					-webkit-text-fill-color: transparent;
 				}
 			}
 		}
-
-
 	}
 
 	&-search {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background-color: $browser-light;
+		background-color: var(--nfd-onboarding-minipreview-base);
 
 		&__icons {
 			flex: 1;
@@ -226,7 +216,7 @@ $title-browser-color: #3858e9;
 				width: 100%;
 				font-size: 0.8rem;
 				border: none !important;
-				background-color: $white;
+				background-color: var(--nfd-onboarding-white);
 			}
 		}
 

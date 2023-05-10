@@ -238,7 +238,7 @@ const App = () => {
 
 	return (
 		<Fragment>
-			<FullscreenMode isActive={ true } />\
+			<FullscreenMode isActive={ true } />
 			<SlotFillProvider>
 				<NewfoldInterfaceSkeleton
 					className={ classNames(
