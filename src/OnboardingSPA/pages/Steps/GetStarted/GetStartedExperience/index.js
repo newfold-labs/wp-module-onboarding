@@ -8,27 +8,19 @@ import {
 	VIEW_NAV_GET_STARTED,
 } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
-import content from './content.json';
 import { RadioControl } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
 import Animate from '../../../../components/Animate';
-
-/**
- * Get Started: WordPress Experience Comfort Level.
- *
- * @return
- */
+import getContents from './contents';
 
 const GetStartedExperience = () => {
 	const [ wpComfortLevel, setWpComfortLevel ] = useState( '0' );
 
-	const { currentData, currentStep } = useSelect( ( select ) => {
+	const { currentData } = useSelect( ( select ) => {
 		return {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 		};
 	}, [] );
 
@@ -62,18 +54,17 @@ const GetStartedExperience = () => {
 		setCurrentOnboardingData( currentDataCopy );
 	};
 
+	const content = getContents();
+
 	return (
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard>
 				<div className="nfd-onboarding-experience-step">
 					<div className="nfd-card-heading center">
 						<CardHeader
-							heading={ currentStep.heading }
-							subHeading={ __(
-								content.aboutYouTag,
-								'wp-module-onboarding'
-							) }
-							question={ currentStep.subheading }
+							heading={ content.heading }
+							subHeading={ content.subheading }
+							question={ content.question }
 						/>
 					</div>
 					<Animate
@@ -87,25 +78,16 @@ const GetStartedExperience = () => {
 							selected={ wpComfortLevel }
 							options={ content.options.map( ( option ) => {
 								return {
-									label: __(
-										option.content,
-										'wp-module-onboarding'
-									),
-									value: __(
-										option.value,
-										'wp-module-onboarding'
-									),
+									label: option.label,
+									value: option.value,
 								};
 							} ) }
 							onChange={ ( value ) => saveData( value ) }
 						/>
 					</Animate>
 					<NavCardButton
-						text={ __(
-							content.buttonText,
-							'wp-module-onboarding'
-						) }
-						disabled={ wpComfortLevel == '0' }
+						text={ content.buttonText }
+						disabled={ wpComfortLevel === '0' }
 					/>
 					<NeedHelpTag />
 				</div>

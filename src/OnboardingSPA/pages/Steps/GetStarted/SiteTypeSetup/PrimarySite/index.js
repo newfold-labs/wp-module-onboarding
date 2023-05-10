@@ -23,7 +23,6 @@ const StepPrimarySetup = () => {
 		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
-	const contents = getContents();
 	const { currentData } = useSelect( ( select ) => {
 		return {
 			currentData:
@@ -42,6 +41,8 @@ const StepPrimarySetup = () => {
 	const [ custom, setCustom ] = useState( false );
 	const [ siteClassification, setSiteClassification ] = useState();
 	const [ primaryCategory, setPrimaryCategory ] = useState( '' );
+
+	const content = getContents();
 
 	/**
 	 * Function which fetches the Site Classifications
@@ -144,9 +145,9 @@ const StepPrimarySetup = () => {
 			<NewfoldLargeCard>
 				<div className="nfd-card-heading center">
 					<CardHeader
-						heading={ contents.cardHeading }
-						subHeading={ contents.subHeading }
-						question={ contents.question }
+						heading={ content.heading }
+						subHeading={ content.subheading }
+						question={ content.question }
 					/>
 				</div>
 				<Animate type="fade-in-disabled" after={ siteClassification }>
@@ -163,12 +164,12 @@ const StepPrimarySetup = () => {
 								categoryInput( e?.target?.value )
 							}
 							className="nfd-setup-primary-custom__tellus-input"
-							placeholder={ contents.placeholderSiteTypeInput }
+							placeholder={ content.customInputPlaceholderText }
 							value={ custom ? primaryCategory : '' }
 						/>
 					</div>
 				</Animate>
-				<NavCardButton text={ contents.buttonText } />
+				<NavCardButton text={ content.buttonText } />
 				<NeedHelpTag />
 			</NewfoldLargeCard>
 		</CommonLayout>
