@@ -16,11 +16,12 @@ import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { SlotFillProvider } from '@wordpress/components';
 import { useEffect, Fragment, useState } from '@wordpress/element';
-import { FullscreenMode, InterfaceSkeleton } from '@wordpress/interface';
+import { FullscreenMode } from '@wordpress/interface';
 import { API_REQUEST } from '../../../constants';
+import NewfoldInterfaceSkeleton from '../NewfoldInterfaceSkeleton';
 
 /**
- * Primary app that renders the <InterfaceSkeleton />.
+ * Primary app that renders the <NewfoldInterfaceSkeleton />.
  *
  * Is a child of the hash router and error boundary.
  *
@@ -239,7 +240,7 @@ const App = () => {
 		<Fragment>
 			<FullscreenMode isActive={ true } />
 			<SlotFillProvider>
-				<InterfaceSkeleton
+				<NewfoldInterfaceSkeleton
 					className={ classNames(
 						'nfd-onboarding-skeleton',
 						`brand-${ newfoldBrand }`,
