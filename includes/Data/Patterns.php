@@ -44,7 +44,9 @@ final class Patterns {
 						'active' => true,
 					),
 				),
-				'homepage-styles' => self::get_patterns_for_homepage_menu_slugs(),
+				'homepage-styles' => array(
+					'callable' => array( __CLASS__, 'get_patterns_for_homepage_menu_slugs' ),
+				),
 				'site-pages'      => array(
 					'company-page'      => array(
 						'active'      => true,
@@ -200,11 +202,16 @@ final class Patterns {
 	 *
 	 * @return array
 	 */
-	private static function replace_header_menu_slug( $patterns, $header_menu_slug ) {
-		foreach ( $patterns as $slug => $slug_details ) {
-			if ( isset( $slug_details['replace'] ) && true === $slug_details['replace'] ) {
-				unset( $patterns[ $slug ] );
-				$patterns = array_merge( array( $header_menu_slug => $slug_details ), $patterns );
+	private static function replace_header_menu_slug( $patterns ) {
+		// fetch the selected header menu slug from DB
+		$flow_data        = \get_option( Options::get_option_name( 'flow' ) );
+		$header_menu_slug = explode( '/', $flow_data['data']['partHeader'] )[1];
+		if ( ! empty( $header_menu_slug ) ) {
+			foreach ( $patterns as $slug => $slug_details ) {
+				if ( isset( $slug_details['replace'] ) && true === $slug_details['replace'] ) {
+					unset( $patterns[ $slug ] );
+					$patterns = array_merge( array( $header_menu_slug => $slug_details ), $patterns );
+				}
 			}
 		}
 		return $patterns;
@@ -253,18 +260,18 @@ final class Patterns {
 		$block_patterns          = array();
 		$block_patterns_squashed = '';
 
-		// fetch the selected header menu slug from DB
-		$flow_data        = \get_option( Options::get_option_name( 'flow' ) );
-		$header_menu_slug = explode( '/', $flow_data['data']['partHeader'] )[1];
-		if ( ! empty( $header_menu_slug ) ) {
-			$pattern_slugs = self::replace_header_menu_slug( $pattern_slugs, $header_menu_slug );
+		$pattern_slugs = self::replace_header_menu_slug( $pattern_slugs );
+
+		$pattern_slugs_callback = isset( $pattern_slugs['callable'] ) ? $pattern_slugs['callable'] : false;
+		if ( is_callable( $pattern_slugs_callback ) ) {
+			$pattern_slugs = $pattern_slugs_callback();
 		}
 
 		foreach ( array_keys( $pattern_slugs ) as $pattern_slug ) {
 			if ( true === $pattern_slugs[ $pattern_slug ]['active'] ) {
 				$pattern_name = $active_theme . '/' . $pattern_slug;
-				$pattern      = $block_patterns_registry->get_registered( $pattern_name );
 				if ( $block_patterns_registry->is_registered( $pattern_name ) ) {
+					$pattern = $block_patterns_registry->get_registered( $pattern_name );
 					if ( array_key_exists( 'content', $pattern_slugs[ $pattern_slug ] ) && ! empty( $pattern_slugs[ $pattern_slug ]['content'] ) ) {
 						$pattern['content'] = $pattern_slugs[ $pattern_slug ]['content'];
 					}
@@ -297,41 +304,49 @@ final class Patterns {
 	 *
 	 * @return array
 	 */
-	public static function get_patterns_for_homepage_menu_slugs() {
-		// fetch the selected header menu slug from DB
-		$flow_data        = \get_option( Options::get_option_name( 'flow' ) );
-		$header_menu_slug = explode( '/', $flow_data['data']['partHeader'] )[1];
-		$header_slug      = ! empty( $header_menu_slug ) ? $header_menu_slug : 'site-header-left-logo-navigation-inline';
-		$footer_slug      = 'site-footer';
-
-		$homepage_style_slugs = array(
-			'homepage-1' => array(
+	private static function get_patterns_for_homepage_menu_slugs() {
+		$header_footer_slugs = array(
+			'site-header-left-logo-navigation-inline' => array(
 				'active'  => true,
-				'shown'   => true,
-				'content' => '',
+				'replace' => true,
 			),
-			'homepage-2' => array(
-				'active'  => true,
-				'shown'   => true,
-				'content' => '',
-			),
-			'homepage-3' => array(
-				'active'  => true,
-				'shown'   => true,
-				'content' => '',
+			'site-footer'                             => array(
+				'active' => true,
 			),
 		);
 
-		$header_block_grammar = self::get_pattern_from_slug( $header_slug )['content'];
-		// if header menu slug contains "split" replace the menu links with dummy links
-		if ( false !== stripos( $header_slug, 'split' ) ) {
-			$header_block_grammar = self::replace_split_menu_items( $header_block_grammar );
+		$homepage_style_slugs = array(
+			'homepage-1' => array(
+				'active' => true,
+				'shown'  => true,
+			),
+			'homepage-2' => array(
+				'active' => true,
+				'shown'  => true,
+			),
+			'homepage-3' => array(
+				'active' => true,
+				'shown'  => true,
+			),
+		);
+
+		$header_footer_slugs = self::replace_header_menu_slug( $header_footer_slugs );
+
+		$header_footer_slug_keys = array(
+			'header' => 'site-header-left-logo-navigation-inline',
+			'footer' => 'site-footer',
+		);
+
+		foreach ( $header_footer_slug_keys as $slug_tag => $slug ) {
+			$header_footer_slugs[ $slug ]['content'] = self::get_pattern_from_slug( $slug )['content'];
+			// if header menu slug contains "split" replace the menu links with dummy links
+			if ( false !== stripos( $slug, 'split' ) ) {
+				$header_footer_slugs[ $slug ]['content'] = self::replace_split_menu_items( $header_footer_slugs[ $slug ]['content'] );
+			}
 		}
 
-		$footer_block_grammar = self::get_pattern_from_slug( $footer_slug )['content'];
-
 		foreach ( array_keys( $homepage_style_slugs ) as $homepage_style ) {
-			$homepage_style_slugs[ $homepage_style ]['content'] .= $header_block_grammar . self::get_pattern_from_slug( $homepage_style )['content'] . $footer_block_grammar;
+			$homepage_style_slugs[ $homepage_style ]['content'] .= $header_footer_slugs[ $header_footer_slug_keys['header'] ]['content'] . self::get_pattern_from_slug( $homepage_style )['content'] . $header_footer_slugs[ $header_footer_slug_keys['footer'] ]['content'];
 		}
 
 		return $homepage_style_slugs;
