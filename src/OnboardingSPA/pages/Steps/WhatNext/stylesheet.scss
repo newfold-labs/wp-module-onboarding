@@ -3,7 +3,7 @@
 .nfd-onboarding-overview {
 	width: 100%;
 	max-width: 960px;
-	background-color: var(--nfd-onboarding-light);
+	background-color: var(--nfd-onboarding-base);
 	padding: 20px;
 
 	&__header {
@@ -22,18 +22,18 @@
 
 		&-heading {
 			margin: 0 0 6px 0;
-			color: var(--nfd-onboarding-dark);
+			color: var(--nfd-onboarding-contrast);
 		}
 
 		&-subheading {
-			color: var(--nfd-onboarding-dark);
+			color: var(--nfd-onboarding-contrast);
 		}
 	}
 
 	&__tab-panel {
 		width: 90%;
 		padding-bottom: 40px;
-		color: var(--nfd-onboarding-dark);
+		color: var(--nfd-onboarding-contrast);
 	}
 }
 
@@ -57,7 +57,7 @@
 
 .components-tab-panel__tabs-item {
 	justify-content: center;
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid var(--nfd-onboarding-light-gray-8);
 	width: 100%;
 	font-size: clamp(0.55rem, 1vw + 0.3rem, 1rem);
 	line-height: 1.5;

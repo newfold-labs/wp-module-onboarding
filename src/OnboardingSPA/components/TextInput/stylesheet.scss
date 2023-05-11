@@ -1,56 +1,55 @@
-$white: var(--nfd-onboarding-white);
 $error: rgba(255, 0, 0, 0.26);
-$border: #D6D6D6;
+$border: #d6d6d6;
 $letter-spacing: 0.5px;
 
 .nfd-input {
-    margin-bottom: 25px;
-    width: 100% !important;
+	margin-bottom: 25px;
+	width: 100% !important;
 
-    &__field {
-        padding: 14px;
-        margin: 6px 0px;
-        font-size: 0.9rem;
-        letter-spacing: $letter-spacing;
+	&__field {
+		padding: 14px;
+		margin: 6px 0;
+		font-size: 0.9rem;
+		letter-spacing: $letter-spacing;
 
-        width: 100%;
-        resize: none;
-        overflow: hidden;
-        border-radius: 6px;
-        max-height: 150px;
-        border: 1px solid $border;
+		width: 100%;
+		resize: none;
+		overflow: hidden;
+		border-radius: 6px;
+		max-height: 150px;
+		border: 1px solid $border;
 
-        &_error{
-            background-color: $error !important;
-        }
-    }
-    
-    &__label{
-        display: flex;
-        padding: 4px 2px;
-        align-items: center;
-        justify-content: space-between;
+		&_error {
+			background-color: $error !important;
+		}
+	}
 
-        &_title{
-            margin: 0px;
-            font-size: 1rem;
-            font-weight: 500;
-            letter-spacing: $letter-spacing;
-        }
+	&__label {
+		display: flex;
+		padding: 4px 2px;
+		align-items: center;
+		justify-content: space-between;
 
-        &_maxChar {
-            margin: 0px;
-            font-size: 0.81rem;
-            letter-spacing: $letter-spacing;
-        }
-    }
+		&_title {
+			margin: 0;
+			font-size: 1rem;
+			font-weight: 500;
+			letter-spacing: $letter-spacing;
+		}
 
-    &__hint{
-        margin: 0px;
-        font-weight: 300;
-        font-size: 0.87rem;
-        padding: 0px 1.5px;
-        font-style: italic;
-        letter-spacing: $letter-spacing;
-    }
+		&_maxChar {
+			margin: 0;
+			font-size: 0.81rem;
+			letter-spacing: $letter-spacing;
+		}
+	}
+
+	&__hint {
+		margin: 0;
+		font-weight: 300;
+		font-size: 0.87rem;
+		padding: 0 1.5px;
+		font-style: italic;
+		letter-spacing: $letter-spacing;
+	}
 }

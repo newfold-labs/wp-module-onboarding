@@ -1,7 +1,6 @@
 import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
 import { useNavigate } from 'react-router-dom';
 import {
 	SIDEBAR_LEARN_MORE,
@@ -17,6 +16,7 @@ import currencies from '../currencies.json';
 import { useWPSettings as getWPSettings } from '../useWPSettings';
 import Animate from '../../../../components/Animate';
 import { EcommerceStateHandler } from '../../../../components/StateHandlers';
+import getContents from './contents';
 
 const StepAddress = () => {
 	const [ settings, setSettings ] = useState();
@@ -202,6 +202,8 @@ const StepAddress = () => {
 		} );
 	}
 
+	const content = getContents();
+
 	return (
 		<EcommerceStateHandler navigationStateCallback={ setNavigationState }>
 			<CommonLayout isBgPrimary isCentered>
@@ -234,14 +236,8 @@ const StepAddress = () => {
 						>
 							<div className="nfd-card-heading center onboarding-ecommerce-step">
 								<CardHeader
-									heading={ __(
-										'Confirm your business or store address',
-										'wp-module-onboarding'
-									) }
-									subHeading={ __(
-										'We’ll use this information to help you setup your online store',
-										'wp-module-onboarding'
-									) }
+									heading={ content.heading }
+									subHeading={ content.subheading }
 								/>
 							</div>
 							<Animate
@@ -251,10 +247,7 @@ const StepAddress = () => {
 								<div className={ 'store-address-form' }>
 									<div data-name="country">
 										<label aria-required htmlFor="country">
-											{ __(
-												'Where is your store based?',
-												'wp-module-onboarding'
-											) }
+											{ content.countryInputLabel }
 										</label>
 										{ address === undefined ? (
 											<input
@@ -291,10 +284,7 @@ const StepAddress = () => {
 											aria-required
 											htmlFor="woocommerce_store_address"
 										>
-											{ __(
-												'Address',
-												'wp-module-onboarding'
-											) }
+											{ content.addressInputLabel }
 										</label>
 										<input
 											id="woocommerce_store_address"
@@ -316,10 +306,7 @@ const StepAddress = () => {
 												aria-required
 												htmlFor="woocommerce_store_city"
 											>
-												{ __(
-													'City',
-													'wp-module-onboarding'
-												) }
+												{ content.cityInputLabel }
 											</label>
 											<input
 												name="woocommerce_store_city"
@@ -339,10 +326,7 @@ const StepAddress = () => {
 													aria-required
 													htmlFor="state"
 												>
-													{ __(
-														'State',
-														'wp-module-onboarding'
-													) }
+													{ content.stateInputLabel }
 												</label>
 												<select
 													id="state"
@@ -378,10 +362,7 @@ const StepAddress = () => {
 												aria-required
 												htmlFor="woocommerce_store_postcode"
 											>
-												{ __(
-													'Postal Code',
-													'wp-module-onboarding'
-												) }
+												{ content.postalCodeInputLabel }
 											</label>
 											<input
 												id="woocommerce_store_postcode"
@@ -400,10 +381,7 @@ const StepAddress = () => {
 											aria-required
 											htmlFor="woocommerce_email_from_address"
 										>
-											{ __(
-												'Email',
-												'wp-module-onboarding'
-											) }
+											{ content.emailInputLabel }
 										</label>
 										<input
 											name="woocommerce_email_from_address"
@@ -418,10 +396,7 @@ const StepAddress = () => {
 									</div>
 									<div>
 										<label htmlFor="woocommerce_currency">
-											{ __(
-												'What currency do you want to display in your store?',
-												'wp-module-onboarding'
-											) }
+											{ content.currencyInputLabel }
 										</label>
 										<select
 											id="woocommerce_currency"
@@ -446,7 +421,7 @@ const StepAddress = () => {
 										</select>
 									</div>
 									<em style={ { display: 'inline' } }>
-										* required
+										{ content.requiredText }
 									</em>
 								</div>
 							</Animate>
@@ -455,10 +430,7 @@ const StepAddress = () => {
 								disabled={ address === undefined }
 								type="submit"
 							>
-								{ __(
-									'Continue Setup',
-									'wp-module-onboarding'
-								) }
+								{ content.buttonText }
 							</button>
 						</form>
 						<NeedHelpTag />

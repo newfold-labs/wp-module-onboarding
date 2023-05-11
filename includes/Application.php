@@ -55,7 +55,8 @@ final class Application {
 		// Reset the stored Compatibility Status every time WP Core is updated.
 		\add_action( '_core_updated_successfully', array( Status::class, 'reset' ) );
 
-		\add_action( 'login_redirect', array( LoginRedirect::class, 'handle_redirect' ), 10, 3 );
+		\add_filter( 'login_redirect', array( LoginRedirect::class, 'wplogin' ), 10, 3 );
+		\add_filter( 'newfold_sso_success_url', array( LoginRedirect::class, 'sso' ), 10 );
 		\add_filter(
 			Options::get_option_name( 'redirect' ) . '_disable',
 			array( LoginRedirect::class, 'remove_handle_redirect_action' )
