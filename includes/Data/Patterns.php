@@ -197,7 +197,7 @@ final class Patterns {
 	/**
 	 * Replace the header menu slug in the patterns array
 	 *
-	 * @param array  $patterns Patterns for the specific step
+	 * @param array $patterns Patterns for the specific step
 	 *
 	 * @return array
 	 */
