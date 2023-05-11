@@ -4,12 +4,26 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Onboarding\Services\ThemeInstaller;
 
+/**
+ * Class Preview.
+ */
 final class Preview {
 
+	/**
+	 * Sets theme status.
+	 *
+	 * @param boolean $boolean Theme Active Status.
+	 * @return string
+	 */
 	private static function boolean_to_status( $boolean ) {
 		 return $boolean ? 'activated' : 'init';
 	}
 
+	/**
+	 * Preview Pre-requisites Data.
+	 *
+	 * @return array
+	 */
 	private static function pre_requisites() {
 		$theme_map = Themes::get();
 		return array(
@@ -30,11 +44,21 @@ final class Preview {
 		);
 	}
 
+	/**
+	 * Retrieve Pre-requisites.
+	 *
+	 * @return string|array
+	 */
 	public static function get_pre_requisites() {
 		 $pre_requisites = self::pre_requisites();
 		 return isset( $pre_requisites[ Data::current_flow() ] ) ? $pre_requisites[ Data::current_flow() ] : array();
 	}
 
+	/**
+	 * Retrieve Settings.
+	 *
+	 * @return array
+	 */
 	public static function get_settings() {
 		 $block_editor_context = new \WP_Block_Editor_Context( array( 'name' => 'core/edit-site' ) );
 		 $custom_settings      = array(

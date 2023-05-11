@@ -11,6 +11,12 @@ use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
 
 class PluginUninstaller {
 
+	/**
+	 * Uninstall Plugins.
+	 *
+	 * @param string $plugin Plugin URL.
+	 * @return \WP_REST_Response|\WP_Error
+	 */
 	public static function uninstall( $plugin ) {
 
 		$plugin_list = Plugins::get_squashed();
@@ -35,10 +41,9 @@ class PluginUninstaller {
 	}
 
 	/**
-	 * @param string $plugin
-	 *
 	 * Checks if a plugin with the given slug exists.
 	 *
+	 * @param string $plugin Plugin
 	 * @return boolean
 	 */
 	public static function exists( $plugin ) {
@@ -53,10 +58,9 @@ class PluginUninstaller {
 	}
 
 	/**
-	 * @param string $plugin_path Path to the plugin's header file.
-	 *
 	 * Determines if a plugin has already been installed.
 	 *
+	 * @param string $plugin_path Path to the plugin's header file.
 	 * @return boolean
 	 */
 	public static function is_plugin_installed( $plugin_path ) {

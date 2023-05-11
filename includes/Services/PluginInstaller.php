@@ -4,8 +4,18 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
+/**
+ * Class PluginInstaller.
+ */
 class PluginInstaller {
 
+	/**
+	 * Install Plugins.
+	 *
+	 * @param string $plugin Plugin URL.
+	 * @param boolean $activate Activate Status.
+	 * @return \WP_REST_Response|\WP_Error
+	 */
 	public static function install( $plugin, $activate ) {
 		$plugins_list = Plugins::get();
 
@@ -93,8 +103,10 @@ class PluginInstaller {
 	}
 
 	/**
-	 * @param string $slug Representing the wordpress.org slug.
-	 *
+	 * Install plugins from WordPress
+	 * 
+	 * @param string $plugin Representing the wordpress.org slug.
+	 * @param boolean $activate Activate Status.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public static function install_from_wordpress( $plugin, $activate ) {
@@ -133,8 +145,10 @@ class PluginInstaller {
 	}
 
 	/**
+	 * Install plugins from zip
+	 * 
 	 * @param string $url URL to the zip for the plugin.
-	 *
+	 * @param boolean $activate Activate Status.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public static function install_from_zip( $url, $activate ) {
@@ -207,10 +221,9 @@ class PluginInstaller {
 	}
 
 	/**
-	 * @param string $plugin Slug of the plugin.
-	 *
 	 * Checks if a given slug is a valid nfd_slug. Ref: includes/Data/Plugins.php for nfd_slug.
 	 *
+	 * @param string $plugin Slug of the plugin.
 	 * @return boolean
 	 */
 	public static function is_nfd_slug( $plugin ) {
@@ -222,10 +235,9 @@ class PluginInstaller {
 	}
 
 	/**
-	 * @param string $plugin_path Path to the plugin's header file.
-	 *
 	 * Determines if a plugin has already been installed.
 	 *
+	 * @param string $plugin_path Path to the plugin's header file.
 	 * @return boolean
 	 */
 	public static function is_plugin_installed( $plugin_path ) {
@@ -241,8 +253,9 @@ class PluginInstaller {
 	}
 
 	/**
-	 * @param string $plugin
-	 *
+	 * Retrieve the type of plugin.
+	 *  
+	 * @param string $plugin Plugin Name
 	 * @return string Type of plugin. Ref: includes/Data/Plugins.php for the different types.
 	 */
 	public static function get_plugin_type( $plugin ) {
@@ -256,10 +269,11 @@ class PluginInstaller {
 	}
 
 	/**
-	 * @param string $plugin
-	 * @param string $plugin_type
-	 *
-	 * @return string Path to the Plugin's header file.
+	 * Path to the Plugin's header file.
+	 * 
+	 * @param string $plugin Plugin Name
+	 * @param string $plugin_type Plugin Type
+	 * @return string 
 	 */
 	public static function get_plugin_path( $plugin, $plugin_type ) {
 		 $plugin_list = Plugins::get();
@@ -267,11 +281,10 @@ class PluginInstaller {
 	}
 
 	/**
-	 * @param string $plugin
-	 * @param string $activate
-	 *
 	 * Checks if a plugin with the given slug and activation criteria already exists.
 	 *
+	 * @param string $plugin Plugin Name
+	 * @param string $activate Acticate Status
 	 * @return boolean
 	 */
 	public static function exists( $plugin, $activate ) {

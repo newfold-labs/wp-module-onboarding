@@ -27,7 +27,7 @@ final class Permissions {
 	 * @return boolean
 	 */
 	public static function rest_is_authorized_admin() {
-		return \is_user_logged_in() && \current_user_can( Permissions::ADMIN );
+		return \is_user_logged_in() && \current_user_can( self::ADMIN );
 	}
 
 	/**
@@ -41,8 +41,8 @@ final class Permissions {
 
 	public static function rest_can_manage_themes() {
 		return \is_user_logged_in() &&
-			   \current_user_can( Permissions::INSTALL_THEMES ) &&
-			   \current_user_can( Permissions::EDIT_THEMES );
+			   \current_user_can( self::INSTALL_THEMES ) &&
+			   \current_user_can( self::EDIT_THEMES );
 	}
 
 	/**
@@ -51,8 +51,7 @@ final class Permissions {
 	 * @return boolean
 	 */
 	public static function custom_post_authorized_admin() {
-		return \current_user_can('edit_posts') && \current_user_can(Permissions::ADMIN);
+		return \current_user_can( 'edit_posts' ) && \current_user_can( self::ADMIN );
 	}
 
 } // END \NewfoldLabs\WP\Module\Onboarding\Permissions()
-

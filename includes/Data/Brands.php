@@ -13,10 +13,10 @@ final class Brands {
 	 */
 	public static function get_default_brand() {
 		$default_brand_data = array(
-			'brand'                       => 'wordpress',
-			'name'                        => __( 'your web host', 'wp-module-onboarding' ),
-			'pluginDashboardPage'         => \admin_url(),
-			'hireExpertsInfo'             => array(
+			'brand'               => 'wordpress',
+			'name'                => __( 'your web host', 'wp-module-onboarding' ),
+			'pluginDashboardPage' => \admin_url(),
+			'hireExpertsInfo'     => array(
 				'defaultLink'     => 'https://www.bluehost.com/wp-live',
 				'queryParameters' => array(
 					'page'         => 'bluehost',
