@@ -45,7 +45,7 @@ final class Patterns {
 					),
 				),
 				'homepage-styles' => array(
-					'callable' => array( __CLASS__, 'get_patterns_for_homepage_menu_slugs' ),
+					'pattern_slug_callback' => array( __CLASS__, 'get_patterns_for_homepage_menu_slugs' ),
 				),
 				'site-pages'      => array(
 					'company-page'      => array(
@@ -198,7 +198,6 @@ final class Patterns {
 	 * Replace the header menu slug in the patterns array
 	 *
 	 * @param array  $patterns Patterns for the specific step
-	 * @param string $header_menu_slug header menu slug choosen by the user
 	 *
 	 * @return array
 	 */
@@ -262,9 +261,9 @@ final class Patterns {
 
 		$pattern_slugs = self::replace_header_menu_slug( $pattern_slugs );
 
-		$pattern_slugs_callback = isset( $pattern_slugs['callable'] ) ? $pattern_slugs['callable'] : false;
-		if ( is_callable( $pattern_slugs_callback ) ) {
-			$pattern_slugs = $pattern_slugs_callback();
+		$pattern_slug_callback = isset( $pattern_slugs['pattern_slug_callback'] ) ? $pattern_slugs['pattern_slug_callback'] : false;
+		if ( is_callable( $pattern_slug_callback ) ) {
+			$pattern_slugs = $pattern_slug_callback();
 		}
 
 		foreach ( array_keys( $pattern_slugs ) as $pattern_slug ) {
