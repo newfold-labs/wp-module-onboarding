@@ -66,7 +66,7 @@ const StepSitePages = () => {
 				} else {
 					const selectedPages = sitePagesResponse.body.reduce(
 						( pages, sitePage ) => {
-							return sitePage?.selected && sitePage.selected
+							return sitePage?.selected
 								? pages.concat( sitePage.slug )
 								: pages;
 						},

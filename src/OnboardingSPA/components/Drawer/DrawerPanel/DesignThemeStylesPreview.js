@@ -44,7 +44,10 @@ const DesignThemeStylesPreview = () => {
 		if (
 			document.getElementsByClassName(
 				'theme-styles-preview--drawer__list__item__title-bar--selected'
-			)
+			) &&
+			document.getElementsByClassName(
+				'theme-styles-preview--drawer__list__item__title-bar--selected'
+			)[ 0 ]
 		) {
 			document
 				.getElementsByClassName(

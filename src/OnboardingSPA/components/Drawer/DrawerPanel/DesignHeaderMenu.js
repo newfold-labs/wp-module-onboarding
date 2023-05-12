@@ -102,6 +102,10 @@ const DesignHeaderMenu = () => {
 
 		const chosenPattern = patterns[ idx ];
 
+		if ( chosenPattern.slug === selectedPattern ) {
+			return true;
+		}
+
 		setSelectedPattern( chosenPattern.slug );
 		currentData.data.partHeader = chosenPattern.slug;
 		setCurrentOnboardingData( currentData );
