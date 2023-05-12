@@ -29,31 +29,6 @@ const getContents = () => {
 			translations( 'site' )
 		),
 		customInputLabel: __( 'or tell us here:', 'wp-module-onboarding' ),
-		categories: [
-			{
-				name: __( 'Business', 'wp-module-onboarding' ),
-				icon: 'var(--business-icon)',
-				iconWhite: 'var(--business-white-icon)',
-				subCategories: [
-					__(
-						'Fashion, apparel and accessories',
-						'wp-module-onboarding'
-					),
-					__( 'Health and beauty', 'wp-module-onboarding' ),
-					__( 'Electronics and computers', 'wp-module-onboarding' ),
-					__( 'Food and drink', 'wp-module-onboarding' ),
-					__(
-						'CBD and other hemp-derived products',
-						'wp-module-onboarding'
-					),
-					__( 'Jewelry', 'wp-module-onboarding' ),
-					__( 'Pets', 'wp-module-onboarding' ),
-					__( 'Motherhood & Baby', 'wp-module-onboarding' ),
-					__( 'Furniture & Home Decoration', 'wp-module-onboarding' ),
-					__( 'Education & Learning', 'wp-module-onboarding' ),
-				],
-			},
-		],
 	};
 };
 

@@ -39,6 +39,7 @@
 @import "../components/CheckboxTemplate/CheckboxListSkeleton/stylesheet";
 @import "../components/Sidebar/components/LearnMore/Skeleton/stylesheet";
 @import "../components/Animate/stylesheet";
+@import "../components/NewfoldInterfaceSkeleton/style";
 
 // CSS for Pages
 @import "../pages/Steps/BasicInfo/stylesheet";
@@ -55,7 +56,7 @@
 
 .nfd-onboarding-container {
 	display: flex;
-	background-color: $white;
+	background-color: var(--nfd-onboarding-white);
 
 	@include break-small {
 		bottom: 0;
