@@ -12,7 +12,7 @@ class PluginInstaller {
 	/**
 	 * Install Plugins.
 	 *
-	 * @param string $plugin Plugin URL.
+	 * @param string  $plugin Plugin URL.
 	 * @param boolean $activate Activate Status.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
@@ -47,7 +47,7 @@ class PluginInstaller {
 		$plugin = \sanitize_text_field( $plugin );
 		if ( self::is_nfd_slug( $plugin ) ) {
 			   // [TODO] Better handle mu-plugins and direct file downloads.
-			if ( $plugin === 'nfd_slug_endurance_page_cache' ) {
+			if ( 'nfd_slug_endurance_page_cache' === $plugin ) {
 				return self::install_endurance_page_cache();
 			}
 			 $plugin_path = $plugins_list['nfd_slugs'][ $plugin ]['path'];
@@ -104,8 +104,8 @@ class PluginInstaller {
 
 	/**
 	 * Install plugins from WordPress
-	 * 
-	 * @param string $plugin Representing the wordpress.org slug.
+	 *
+	 * @param string  $plugin Representing the wordpress.org slug.
 	 * @param boolean $activate Activate Status.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
@@ -146,8 +146,8 @@ class PluginInstaller {
 
 	/**
 	 * Install plugins from zip
-	 * 
-	 * @param string $url URL to the zip for the plugin.
+	 *
+	 * @param string  $url URL to the zip for the plugin.
 	 * @param boolean $activate Activate Status.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
@@ -254,7 +254,7 @@ class PluginInstaller {
 
 	/**
 	 * Retrieve the type of plugin.
-	 *  
+	 *
 	 * @param string $plugin Plugin Name
 	 * @return string Type of plugin. Ref: includes/Data/Plugins.php for the different types.
 	 */
@@ -270,10 +270,10 @@ class PluginInstaller {
 
 	/**
 	 * Path to the Plugin's header file.
-	 * 
+	 *
 	 * @param string $plugin Plugin Name
 	 * @param string $plugin_type Plugin Type
-	 * @return string 
+	 * @return string
 	 */
 	public static function get_plugin_path( $plugin, $plugin_type ) {
 		 $plugin_list = Plugins::get();
@@ -356,7 +356,7 @@ class PluginInstaller {
 
 		// We want to ensure that the user has direct access to the filesystem.
 		$access_type = \get_filesystem_method();
-		if ( $access_type !== 'direct' ) {
+		if ( 'direct' !== $access_type ) {
 			return false;
 		}
 

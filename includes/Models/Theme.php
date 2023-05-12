@@ -12,6 +12,8 @@ class Theme implements \JsonSerializable {
 	private $is_newfold_theme;
 
 	/**
+	 * Theme constructor
+	 *
 	 * @param string $theme_name
 	 */
 	public function __construct( $theme_name ) {
@@ -20,8 +22,9 @@ class Theme implements \JsonSerializable {
 	}
 
 	/**
-	 * @param string $theme_name
+	 * Sets the Theme Name
 	 *
+	 * @param string $theme_name Theme Name
 	 * @return void
 	 */
 	public function set_theme_name( $theme_name ) {
@@ -29,15 +32,18 @@ class Theme implements \JsonSerializable {
 	}
 
 	/**
-	 * @return string $theme_name
+	 * Retrieve the Theme Name
+	 *
+	 * @return string
 	 */
 	public function get_theme_name() {
 		return $this->theme_name;
 	}
 
 	/**
-	 * @param string $theme_image Path to theme screenshot image.
+	 * Sets the Theme image path
 	 *
+	 * @param string $theme_image Path to theme screenshot image.
 	 * @return void
 	 */
 	public function set_theme_image( $theme_image ) {
@@ -45,15 +51,18 @@ class Theme implements \JsonSerializable {
 	}
 
 	/**
-	 * @return $theme_image Path to theme screenshot image.
+	 * Retrieve the path to theme screenshot image
+	 *
+	 * @return string
 	 */
 	public function get_theme_image() {
 		return $this->theme_image;
 	}
 
 	/**
-	 * @param boolean $is_newfold_theme
+	 * Sets a theme as newfold theme
 	 *
+	 * @param boolean $is_newfold_theme Determines if there is a newfold theme
 	 * @return void
 	 */
 	public function set_is_newfold_theme( $is_newfold_theme ) {
@@ -61,14 +70,18 @@ class Theme implements \JsonSerializable {
 	}
 
 	/**
-	 * @return boolean $is_newfold_theme true if the theme author is Newfold Digital.
+	 * Retrieve is_newfold_theme status -true if the theme author is Newfold Digital.
+	 *
+	 * @return boolean
 	 */
 	public function get_is_newfold_theme() {
 		return $this->is_newfold_theme;
 	}
 
 	/**
-	 * @return array JSON Serialize the data
+	 * To JSON Serialise the data
+	 *
+	 * @return array
 	 */
 	public function jsonSerialize() {
 		return array(

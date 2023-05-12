@@ -13,12 +13,23 @@ final class Permissions {
 	const INSTALL_THEMES = 'install_themes';
 	const EDIT_THEMES    = 'edit_themes';
 
+	/**
+	 * Retrieve Plugin Install Hash Value.
+	 *
+	 * @return string
+	 */
 	public static function rest_get_plugin_install_hash() {
 		return 'NFD_ONBOARDING_' . hash( 'sha256', NFD_ONBOARDING_VERSION . wp_salt( 'nonce' ) . site_url() );
 	}
 
+	/**
+	 * Verify Plugin Install Hash Value.
+	 *
+	 * @param string $hash Hash Value.
+	 * @return boolean
+	 */
 	public static function rest_verify_plugin_install_hash( $hash ) {
-		return $hash === self::rest_get_plugin_install_hash();
+		return self::rest_get_plugin_install_hash() === $hash;
 	}
 
 	/**
@@ -39,6 +50,11 @@ final class Permissions {
 		return \is_admin() && self::rest_is_authorized_admin();
 	}
 
+	/**
+	 * Confirm logged-in user can manage themes.
+	 *
+	 * @return boolean
+	 */
 	public static function rest_can_manage_themes() {
 		return \is_user_logged_in() &&
 			   \current_user_can( self::INSTALL_THEMES ) &&

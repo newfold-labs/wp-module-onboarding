@@ -105,7 +105,7 @@ class PluginUninstaller {
 
 		// We want to ensure that the user has direct access to the filesystem.
 		$access_type = \get_filesystem_method();
-		if ( $access_type !== 'direct' ) {
+		if ( 'direct' !== $access_type ) {
 			return false;
 		}
 

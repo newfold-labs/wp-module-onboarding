@@ -65,5 +65,4 @@ class PluginInstallTask extends Task {
 			'retries'  => $this->retries,
 		);
 	}
-
 }

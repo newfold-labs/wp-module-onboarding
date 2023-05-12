@@ -19,8 +19,16 @@ class PluginInstallTaskManager {
 	  */
 	private static $retry_limit = 1;
 
+	/**
+	 * Name of the PluginInstallTask Queue.
+	 *
+	 * @var string
+	 */
 	private static $queue_name = 'plugin_install_queue';
 
+	/**
+	 * PluginInstallTaskManager constructor.
+	 */
 	function __construct() {
 		// Ensure there is a thirty second option in the cron schedules
 		add_filter( 'cron_schedules', array( $this, 'add_thirty_seconds_schedule' ) );
@@ -34,10 +42,21 @@ class PluginInstallTaskManager {
 		}
 	}
 
+	/**
+	 * Retrieve the Queue Name.
+	 *
+	 * @return string
+	 */
 	public static function get_queue_name() {
 		 return self::$queue_name;
 	}
 
+	/**
+	 * Adds thirty second option in the cron schedule.
+	 *
+	 * @param array $schedules Cron Schedule duration
+	 * @return array
+	 */
 	public function add_thirty_seconds_schedule( $schedules ) {
 		if ( ! array_key_exists( 'thirty_seconds', $schedules ) || 30 !== $schedules['thirty_seconds']['interval'] ) {
 			$schedules['thirty_seconds'] = array(
@@ -49,6 +68,11 @@ class PluginInstallTaskManager {
 		 return $schedules;
 	}
 
+	/**
+	 * Retrieve status of init_list of plugins being queued.
+	 *
+	 * @return boolean
+	 */
 	public static function queue_initial_installs() {
 
 		// Checks if the init_list of plugins have already been queued.
@@ -139,11 +163,10 @@ class PluginInstallTaskManager {
 	}
 
 	/**
-	 * @param PluginInstallTask $plugin_install_task
-	 *
 	 * Adds a new PluginInstallTask to the Plugin Install queue.
 	 * The Task will be inserted at an appropriate position in the queue based on it's priority.
 	 *
+	 * @param PluginInstallTask $plugin_install_task Plugin Task Details
 	 * @return array|false
 	 */
 	public static function add_to_queue( PluginInstallTask $plugin_install_task ) {
@@ -174,6 +197,13 @@ class PluginInstallTaskManager {
 		 return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
 	}
 
+	/**
+	 * Remove a non-matching PluginInstallTask from the Plugin Install queue.
+	 * The Task will be removed from an appropriate position in the queue and requeued in the end.
+	 *
+	 * @param string $plugin Plugin Slug
+	 * @return array|false
+	 */
 	public static function remove_from_queue( $plugin ) {
 		/*
 		   Get the plugins queued up to be installed, the PluginInstall task gets
@@ -192,6 +222,12 @@ class PluginInstallTaskManager {
 		 return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
 	}
 
+	/**
+	 * Returns the status of given plugin slug.
+	 *
+	 * @param string $plugin Plugin Slug
+	 * @return string|false
+	 */
 	public static function status( $plugin ) {
 		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
 		return array_search( $plugin, array_column( $plugins, 'slug' ) );

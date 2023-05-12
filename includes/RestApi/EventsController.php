@@ -9,12 +9,16 @@ use NewfoldLabs\WP\Module\Onboarding\Permissions;
  */
 class EventsController extends \WP_REST_Controller {
 
-	 /**
-	  * @var string
-	  */
+	/**
+	 * This is the REST API namespace that will be used for our custom API
+	 *
+	 * @var string
+	 */
 	 protected $namespace = 'newfold-onboarding/v1';
 
 	 /**
+	  * This is the REST endpoint
+	  *
 	  * @var string
 	  */
 	 protected $rest_base = '/events';
@@ -60,7 +64,7 @@ class EventsController extends \WP_REST_Controller {
 	 /**
 	  * Send events to the data module events API.
 	  *
-	  * @param \WP_REST_Request $request
+	  * @param \WP_REST_Request $request Request model.
 	  *
 	  * @return \WP_REST_Response|\WP_Error
 	  */

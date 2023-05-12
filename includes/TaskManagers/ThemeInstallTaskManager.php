@@ -19,8 +19,16 @@ class ThemeInstallTaskManager {
 	  */
 	private static $retry_limit = 1;
 
+	/**
+	 * Name of the ThemeInstallTaskManager Queue.
+	 *
+	 * @var string
+	 */
 	private static $queue_name = 'theme_install_queue';
 
+	/**
+	 * ThemeInstallTaskManager constructor.
+	 */
 	function __construct() {
 		// Ensure there is a ten second option in the cron schedules
 		add_filter( 'cron_schedules', array( $this, 'add_ten_seconds_schedule' ) );
@@ -34,10 +42,21 @@ class ThemeInstallTaskManager {
 		}
 	}
 
+	/**
+	 * Retrieve the Queue Name.
+	 *
+	 * @return string
+	 */
 	public static function get_queue_name() {
 		 return self::$queue_name;
 	}
 
+	/**
+	 * Adds ten seconds option in the cron schedule.
+	 *
+	 * @param array $schedules Cron Schedule duration
+	 * @return array
+	 */
 	public function add_ten_seconds_schedule( $schedules ) {
 		if ( ! array_key_exists( 'ten_seconds', $schedules ) || 10 !== $schedules['ten_seconds']['interval'] ) {
 			$schedules['ten_seconds'] = array(
@@ -49,6 +68,11 @@ class ThemeInstallTaskManager {
 		 return $schedules;
 	}
 
+	/**
+	 * Retrieve status of init_list of plugins being queued.
+	 *
+	 * @return boolean
+	 */
 	public static function queue_initial_installs() {
 		// Checks if the init_list of themes have already been queued.
 		if ( \get_option( Options::get_option_name( 'theme_init_status' ), 'init' ) !== 'init' ) {
@@ -129,11 +153,10 @@ class ThemeInstallTaskManager {
 	}
 
 	/**
-	 * @param ThemeInstallTask $theme_install_task
-	 *
 	 * Adds a new ThemeInstallTask to the Theme Install queue.
 	 * The Task will be inserted at an appropriate position in the queue based on it's priority.
 	 *
+	 * @param ThemeInstallTask $theme_install_task
 	 * @return array|false
 	 */
 	public static function add_to_queue( ThemeInstallTask $theme_install_task ) {
@@ -164,6 +187,12 @@ class ThemeInstallTaskManager {
 		 return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
 	}
 
+	/**
+	 * Returns the status of given plugin slug.
+	 *
+	 * @param string $theme Theme Slug
+	 * @return string|false
+	 */
 	public static function status( $theme ) {
 		$themes = \get_option( Options::get_option_name( self::$queue_name ), array() );
 		return array_search( $theme, array_column( $themes, 'slug' ) );

@@ -10,7 +10,6 @@ final class Options {
 	 *
 	 * @var string
 	 */
-
 	protected static $prefix = 'nfd_module_onboarding_';
 
 	/**
@@ -18,7 +17,6 @@ final class Options {
 	 *
 	 * @var array
 	 */
-
 	protected static $options = array(
 		'redirect'                      => 'redirect',
 		'redirect_param'                => 'redirect_param',

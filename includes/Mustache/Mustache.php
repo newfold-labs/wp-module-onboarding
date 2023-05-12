@@ -6,8 +6,16 @@ namespace NewfoldLabs\WP\Module\Onboarding\Mustache;
  */
 class Mustache {
 
+	/**
+	 * Mustache Engine.
+	 *
+	 * @var array
+	 */
 	protected $mustache_engine;
 
+	/**
+	 * Setup mustache engine.
+	 */
 	function __construct() {
 		$this->mustache_engine = new \Mustache_Engine(
 			array(
@@ -17,9 +25,10 @@ class Mustache {
 	}
 
 	/**
-	 * @param string $template_name
-	 * @param array  $data
+	 * Render respective template data.
 	 *
+	 * @param string $template_name Template Name
+	 * @param array  $data Data
 	 * @return string
 	 */
 	public function render_template( $template_name, $data ) {

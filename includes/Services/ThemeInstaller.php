@@ -11,7 +11,7 @@ class ThemeInstaller {
 	/**
 	 * Install Themes.
 	 *
-	 * @param string $theme Theme URL.
+	 * @param string  $theme Theme URL.
 	 * @param boolean $activate Activate Status.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
@@ -53,10 +53,10 @@ class ThemeInstaller {
 
 	/**
 	 * Install Theme from zip
-	 * 
-	 * @param string $url URL to the zip for the plugin.
+	 *
+	 * @param string  $url URL to the zip for the plugin.
 	 * @param boolean $activate Activate Status.
-	 * @param string $stylesheet Theme Stylesheet Name.
+	 * @param string  $stylesheet Theme Stylesheet Name.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public static function install_from_zip( $url, $activate, $stylesheet ) {
@@ -131,7 +131,7 @@ class ThemeInstaller {
 
 	/**
 	 * Retrieve Theme Stylesheet
-	 * 
+	 *
 	 * @param mixed $theme Slug of the theme present under includes/Data/Themes.php.
 	 * @param mixed $theme_type Type of theme Ref: includes/Data/Themes.php for types of theme slugs.
 	 * @return string The theme stylesheet name.
@@ -142,7 +142,7 @@ class ThemeInstaller {
 	}
 
 	 /**
-	  * Retrieve Theme Type  
+	  * Retrieve Theme Type
 	  *
 	  * @param string $theme Theme name
 	  * @return string Type of theme. Ref: includes/Data/Themes.php for the different types.
@@ -177,8 +177,8 @@ class ThemeInstaller {
 	 /**
 	  * Checks if a theme with the given slug and activation criteria already exists.
 	  *
- 	  * @param string $theme
-	  * @param string $activate
+	  * @param string $theme Theme name
+	  * @param string $activate Activation Criteria
 	  * @return boolean
 	  */
 	public static function exists( $theme, $activate ) {

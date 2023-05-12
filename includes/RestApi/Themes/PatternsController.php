@@ -45,8 +45,9 @@ class PatternsController extends \WP_REST_Controller {
 	}
 
 	/**
-	 *
 	 * Checks the type of the patterns.
+	 *
+	 * @return array
 	 */
 	public function get_pattern_args() {
 		return array(

@@ -9,16 +9,22 @@ use NewfoldLabs\WP\Module\Onboarding\Permissions;
 class SiteImagesController extends BaseHiiveController {
 
 	/**
+	 * The namespace of this controller's route.
+	 *
 	 * @var string
 	 */
 	protected $namespace = 'newfold-onboarding/v1';
 
 	/**
+	 * This is the REST endpoint
+	 *
 	 * @var string
 	 */
 	protected $rest_base = '/site-images';
 
 	/**
+	 * Results per page
+	 *
 	 * @var int
 	 */
 	protected $results_per_page = 25;

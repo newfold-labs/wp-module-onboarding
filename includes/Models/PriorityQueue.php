@@ -7,11 +7,10 @@ namespace NewfoldLabs\WP\Module\Onboarding\Models;
 class PriorityQueue extends \SplPriorityQueue {
 
 	/**
-	 * @param mixed $priority1
-	 * @param mixed $priority2
-	 *
 	 * Defines the logic to use when comparing two priorities.
 	 *
+	 * @param mixed $priority1
+	 * @param mixed $priority2   
 	 * @return int
 	 */
 	public function compare( $priority1, $priority2 ) {

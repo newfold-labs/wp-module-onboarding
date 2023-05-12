@@ -19,8 +19,16 @@ class PluginUninstallTaskManager {
 	  */
 	private static $retry_limit = 2;
 
+	/**
+	 * Name of the PluginUninstallTask Queue.
+	 *
+	 * @var string
+	 */
 	private static $queue_name = 'plugin_uninstall_queue';
 
+	/**
+	 * PluginUninstallTaskManager constructor.
+	 */
 	function __construct() {
 		// Ensure there is a Ten second option in the cron schedules
 		add_filter( 'cron_schedules', array( $this, 'add_ten_seconds_schedule' ) );
@@ -34,10 +42,21 @@ class PluginUninstallTaskManager {
 		}
 	}
 
+	/**
+	 * Retrieve the Queue Name.
+	 *
+	 * @return string
+	 */
 	public static function get_queue_name() {
 		 return self::$queue_name;
 	}
 
+	/**
+	 * Adds ten seconds option in the cron schedule.
+	 *
+	 * @param array $schedules Cron Schedule duration
+	 * @return array
+	 */
 	public function add_ten_seconds_schedule( $schedules ) {
 		if ( ! array_key_exists( 'ten_seconds', $schedules ) || 10 !== $schedules['ten_seconds']['interval'] ) {
 			$schedules['ten_seconds'] = array(
@@ -50,7 +69,6 @@ class PluginUninstallTaskManager {
 	}
 
 	/**
-
 	 * Queue out a PluginUninstallTask with the highest priority in the plugin uninstall queue and execute it.
 	 *
 	 * @return array|false
@@ -98,11 +116,10 @@ class PluginUninstallTaskManager {
 	}
 
 	/**
-	 * @param PluginUninstallTask $plugin_uninstall_task
-	 *
 	 * Adds a new PluginUninstallTask to the Plugin Uninstall queue.
 	 * The Task will be inserted at an appropriate position in the queue based on it's priority.
 	 *
+	 * @param PluginUninstallTask $plugin_uninstall_task Plugin Task Details
 	 * @return array|false
 	 */
 	public static function add_to_queue( PluginUninstallTask $plugin_uninstall_task ) {
@@ -112,7 +129,7 @@ class PluginUninstallTaskManager {
 		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
 		$position_in_queue = PluginInstallTaskManager::status( $plugin_uninstall_task->get_slug() );
-		if ( $position_in_queue !== false && $position_in_queue !== 0 ) {
+		if ( false !== $position_in_queue && 0 !== $position_in_queue ) {
 			PluginInstallTaskManager::remove_from_queue(
 				$plugin_uninstall_task->get_slug()
 			);
@@ -149,6 +166,12 @@ class PluginUninstallTaskManager {
 		 return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
 	}
 
+	/**
+	 * Returns the status of given plugin slug.
+	 *
+	 * @param string $plugin Plugin Slug
+	 * @return string|false
+	 */
 	public static function status( $plugin ) {
 		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
 		return array_search( $plugin, array_column( $plugins, 'slug' ) );
