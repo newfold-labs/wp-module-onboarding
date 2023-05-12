@@ -24,9 +24,9 @@ class FlowService {
 		}
 
 		if ( ! isset( $flow_data['version'] ) || strcmp( $flow_data['version'], $default_flow_data['version'] ) !== 0 ) {
-			$flow_data_upgrades = NFD_ONBOARDING_DIR . '\\includes\\Data\\Flows\\Upgrades\\' . $default_flow_data['version'] . '.php';
+			$flow_data_upgrades = NFD_ONBOARDING_DIR . '/includes/Data/Flows/Upgrades/' . $default_flow_data['version'] . '.php';
 			if ( $flow_data_upgrades ) {
-				require $flow_data_upgrades;
+				include $flow_data_upgrades;
 			}
 			$updated_flow_data = self::update_flow_data_recursive( $default_flow_data, $flow_data );
 			// To update the options with the recent version of flow data
