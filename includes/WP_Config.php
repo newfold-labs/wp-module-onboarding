@@ -7,10 +7,15 @@ namespace NewfoldLabs\WP\Module\Onboarding;
 class WP_Config {
 
 	 /**
+	  * WordPress Configuration
+	  *
 	  * @var \WPConfigTransformer
 	  */
 	 protected $wp_config;
 
+	 /**
+	  * WP_Config constructor.
+	  */
 	public function __construct() {
 		 $this->wp_config = new \WPConfigTransformer( ABSPATH . 'wp-config.php' );
 	}
