@@ -101,19 +101,19 @@ const ImageUploader = ( { icon, iconSetter } ) => {
 			>
 				<div className="image-uploader_window-empty"></div>
 				<div className="image-uploader_window-logo">
-					{ ( icon.id === 0 || icon.id === undefined ) && (
+					{ ( icon?.id === 0 || icon?.id === undefined ) && (
 						<div className="image-uploader_window-logo-icon-empty"></div>
 					) }
-					{ icon.id !== 0 && icon.id !== undefined && (
+					{ icon?.id !== 0 && icon?.id !== undefined && (
 						<img
 							className="image-uploader_window-logo-icon-selected"
-							src={ icon.url }
+							src={ icon?.url }
 							alt="Thumb"
 						/>
 					) }
 				</div>
 				<div className="image-uploader_window-reset">
-					{ icon.id !== 0 && icon.id !== undefined && (
+					{ icon?.id !== 0 && icon?.id !== undefined && (
 						<button
 							className="image-uploader_window-reset-btn"
 							onClick={ removeSelectedImage }
@@ -121,7 +121,7 @@ const ImageUploader = ( { icon, iconSetter } ) => {
 							{ __( 'RESET', 'wp-module-onboarding' ) }
 						</button>
 					) }
-					{ ( icon.id === 0 || icon.id === undefined ) && (
+					{ ( icon?.id === 0 || icon?.id === undefined ) && (
 						<button
 							className="image-uploader_window-reset-btn"
 							onClick={ handleClick }
