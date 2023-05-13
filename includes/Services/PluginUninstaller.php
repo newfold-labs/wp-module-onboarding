@@ -8,7 +8,6 @@ use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
  * Class PluginUninstaller
  * This class is responsible to Uninstall a specified plugin
  */
-
 class PluginUninstaller {
 
 	/**

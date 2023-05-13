@@ -16,7 +16,7 @@ class Mustache {
 	/**
 	 * Setup mustache engine.
 	 */
-	function __construct() {
+	public function __construct() {
 		$this->mustache_engine = new \Mustache_Engine(
 			array(
 				'loader' => new \Mustache_Loader_FilesystemLoader( dirname( __FILE__ ) . '/Templates' ),

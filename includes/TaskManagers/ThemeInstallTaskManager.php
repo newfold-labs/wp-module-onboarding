@@ -29,7 +29,7 @@ class ThemeInstallTaskManager {
 	/**
 	 * ThemeInstallTaskManager constructor.
 	 */
-	function __construct() {
+	public function __construct() {
 		// Ensure there is a ten second option in the cron schedules
 		add_filter( 'cron_schedules', array( $this, 'add_ten_seconds_schedule' ) );
 
@@ -109,12 +109,14 @@ class ThemeInstallTaskManager {
 	public function install() {
 		/*
 		   Get the theme install tasks queued up to be installed, the ThemeInstallTask gets
-		  converted to an associative array before storing it in the option. */
+		  converted to an associative array before storing it in the option.
+		*/
 		$themes = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
 		/*
 		   Conversion of the max heap to an array will always place the ThemeInstallTask with the highest
-		  priority at the beginning of the array */
+		  priority at the beginning of the array
+		*/
 		$theme_to_install = array_shift( $themes );
 
 		// Recreate the ThemeInstallTask from the associative array.
@@ -135,9 +137,10 @@ class ThemeInstallTaskManager {
 			   // If there is an error, then increase the retry count for the task.
 			   $theme_install_task->increment_retries();
 
-			   /*
+			/*
 				If the number of retries have not exceeded the limit
-				then re-queue the task at the end of the queue to be retried. */
+				then re-queue the task at the end of the queue to be retried.
+			*/
 			if ( $theme_install_task->get_retries() <= self::$retry_limit ) {
 					array_push( $themes, $theme_install_task->to_array() );
 			}
@@ -156,7 +159,7 @@ class ThemeInstallTaskManager {
 	 * Adds a new ThemeInstallTask to the Theme Install queue.
 	 * The Task will be inserted at an appropriate position in the queue based on it's priority.
 	 *
-	 * @param ThemeInstallTask $theme_install_task
+	 * @param ThemeInstallTask $theme_install_task Theme Intsall Task to add to the queue
 	 * @return array|false
 	 */
 	public static function add_to_queue( ThemeInstallTask $theme_install_task ) {
@@ -167,10 +170,10 @@ class ThemeInstallTaskManager {
 
 		$queue = new PriorityQueue();
 		foreach ( $themes as $queued_theme ) {
-
 			/*
 			   Check if there is an already existing ThemeInstallTask in the queue
-			   for a given slug and activation criteria. */
+			   for a given slug and activation criteria.
+			*/
 			if ( $queued_theme['slug'] === $theme_install_task->get_slug()
 				  && $queued_theme['activate'] === $theme_install_task->get_activate() ) {
 				 return false;

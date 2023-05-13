@@ -29,7 +29,7 @@ class PluginUninstallTaskManager {
 	/**
 	 * PluginUninstallTaskManager constructor.
 	 */
-	function __construct() {
+	public function __construct() {
 		// Ensure there is a Ten second option in the cron schedules
 		add_filter( 'cron_schedules', array( $this, 'add_ten_seconds_schedule' ) );
 
@@ -76,12 +76,14 @@ class PluginUninstallTaskManager {
 	public function uninstall() {
 		/*
 		   Get the plugins queued up to be uninstalled, the PluginUninstall task gets
-		  converted to an associative array before storing it in the option. */
+		  converted to an associative array before storing it in the option.
+		*/
 		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
 		/*
 		   Conversion of the max heap to an array will always place the PluginUninstallTask with the highest
-		  priority at the beginning of the array */
+		  priority at the beginning of the array
+		*/
 		$plugin_to_uninstall = array_shift( $plugins );
 
 		// Update the plugin uninstall queue.
@@ -101,9 +103,10 @@ class PluginUninstallTaskManager {
 			   // If there is an error, then increase the retry count for the task.
 			   $plugin_uninstall_task->increment_retries();
 
-			   /*
+			/*
 				If the number of retries have not exceeded the limit
-				then re-queue the task at the end of the queue to be retried. */
+				then re-queue the task at the end of the queue to be retried.
+			*/
 			if ( $plugin_uninstall_task->get_retries() <= self::$retry_limit ) {
 				array_push( $plugins, $plugin_uninstall_task->to_array() );
 
@@ -125,7 +128,8 @@ class PluginUninstallTaskManager {
 	public static function add_to_queue( PluginUninstallTask $plugin_uninstall_task ) {
 		/*
 		   Get the plugins queued up to be uninstalled, the PluginUninstall task gets
-		   converted to an associative array before storing it in the option. */
+		   converted to an associative array before storing it in the option.
+		*/
 		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
 		$position_in_queue = PluginInstallTaskManager::status( $plugin_uninstall_task->get_slug() );
@@ -147,10 +151,10 @@ class PluginUninstallTaskManager {
 
 		$queue = new PriorityQueue();
 		foreach ( $plugins as $queued_plugin ) {
-
 			/*
 			   Check if there is an already existing PluginUninstallTask in the queue
-			   for a given slug. */
+			   for a given slug.
+			*/
 			if ( $queued_plugin['slug'] === $plugin_uninstall_task->get_slug() ) {
 				 return false;
 			}

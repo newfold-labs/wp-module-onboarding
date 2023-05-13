@@ -28,8 +28,8 @@ abstract class BaseHiiveController extends \WP_REST_Controller {
 	/**
 	 * Get data containing the Hiive response.
 	 *
-	 * @param string $endpoint
-	 * @param array  $args
+	 * @param string $endpoint Endpoint request to get specific response
+	 * @param array  $args Arguments determining response
 	 * @return \WP_Error|string
 	 */
 	protected function get( $endpoint, $args = array() ) {

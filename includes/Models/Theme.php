@@ -7,14 +7,31 @@ namespace NewfoldLabs\WP\Module\Onboarding\Models;
  */
 class Theme implements \JsonSerializable {
 
+	/**
+	 * Flow data blueprint.
+	 *
+	 * @var string
+	 */
 	private $theme_name;
+
+	/**
+	 * Theme image Path.
+	 *
+	 * @var string
+	 */
 	private $theme_image;
+
+	/**
+	 * Status of a theme being a Newfold Theme.
+	 *
+	 * @var boolean
+	 */
 	private $is_newfold_theme;
 
 	/**
 	 * Theme constructor
 	 *
-	 * @param string $theme_name
+	 * @param string $theme_name Theme Name
 	 */
 	public function __construct( $theme_name ) {
 		$this->theme_name       = $theme_name;
