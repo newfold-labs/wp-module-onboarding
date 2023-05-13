@@ -11,7 +11,7 @@ class WP_Config {
 	  */
 	 protected $wp_config;
 
-	function __construct() {
+	public function __construct() {
 		 $this->wp_config = new \WPConfigTransformer( ABSPATH . 'wp-config.php' );
 	}
 
