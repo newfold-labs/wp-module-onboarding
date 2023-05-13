@@ -165,7 +165,8 @@ class ThemeInstallTaskManager {
 	public static function add_to_queue( ThemeInstallTask $theme_install_task ) {
 		/*
 		   Get the ThemeInstallTasks queued up to be installed, the ThemeInstallTask gets
-		   converted to an associative array before storing it in the option. */
+		   converted to an associative array before storing it in the option. 
+		*/
 		$themes = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
 		$queue = new PriorityQueue();
