@@ -14,7 +14,6 @@ const getContents = () => {
 			__( 'Just another WordPress %s', 'wp-module-onboarding' ),
 			translations( 'Site' )
 		),
-		defaultIcon: '--default-logo-icon',
 		defaultUrl: 'https://bluehost.com',
 	};
 };

@@ -11,8 +11,6 @@ const MiniPreview = ( {
 	setIsSocialFormOpen,
 } ) => {
 	const content = getContents();
-	const iconPreview =
-		icon?.id === '' || icon?.id === undefined ? content.defaultIcon : icon;
 	const titlePreview = title === '' ? content.defaultTitle : title;
 	const descPreview = desc === '' ? content.defaultDesc : desc;
 	const urlPreview = title === '' ? content.defaultUrl : titleToUrl();
@@ -122,7 +120,7 @@ const MiniPreview = ( {
 							<div className="browser-row-title_bar_before-curve"></div>
 						</div>
 						<div className="browser-row-title_bar_main">
-							{ ( icon?.id === 0 || icon?.id === undefined ) && (
+							{ ( icon === undefined || icon?.id === 0 ) && (
 								<div
 									className="browser-icon-title"
 									style={ {
@@ -130,10 +128,10 @@ const MiniPreview = ( {
 									} }
 								></div>
 							) }
-							{ icon?.id !== 0 && icon?.id !== undefined && (
+							{ icon !== undefined && icon?.id !== 0 && (
 								<img
 									className="browser-icon-title"
-									src={ iconPreview.url }
+									src={ icon?.url }
 									alt="Thumb"
 								/>
 							) }

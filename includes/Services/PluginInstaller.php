@@ -23,7 +23,7 @@ class PluginInstaller {
 			}
 
 			$status = self::install_from_zip( $plugin, $activate );
-			if ( \is_wp_error( $status ) ) {
+			if ( is_wp_error( $status ) ) {
 				return $status;
 			}
 
@@ -43,7 +43,7 @@ class PluginInstaller {
 			 $plugin_path = $plugins_list['nfd_slugs'][ $plugin ]['path'];
 			if ( ! self::is_plugin_installed( $plugin_path ) ) {
 				 $status = self::install_from_zip( $plugins_list['nfd_slugs'][ $plugin ]['url'], $activate );
-				if ( \is_wp_error( $status ) ) {
+				if ( is_wp_error( $status ) ) {
 					return $status;
 				}
 			}

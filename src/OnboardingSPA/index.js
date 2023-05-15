@@ -15,7 +15,7 @@ import { render } from '@wordpress/element';
 /**
  * Component passed to wp.element.render().
  *
- * return WPComponent
+ * @return WPComponent
  */
 const NFDOnboarding = () => (
 	<HashRouter>

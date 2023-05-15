@@ -101,7 +101,7 @@ const ImageUploader = ( { icon, iconSetter } ) => {
 			>
 				<div className="image-uploader_window-empty"></div>
 				<div className="image-uploader_window-logo">
-					{ ( icon?.id === 0 || icon?.id === undefined ) && (
+					{ ( icon === undefined || icon?.id === 0 ) && (
 						<div className="image-uploader_window-logo-icon-empty"></div>
 					) }
 					{ icon?.id !== 0 && icon?.id !== undefined && (
@@ -113,7 +113,7 @@ const ImageUploader = ( { icon, iconSetter } ) => {
 					) }
 				</div>
 				<div className="image-uploader_window-reset">
-					{ icon?.id !== 0 && icon?.id !== undefined && (
+					{ icon !== undefined && icon?.id !== 0 && (
 						<button
 							className="image-uploader_window-reset-btn"
 							onClick={ removeSelectedImage }
@@ -121,7 +121,7 @@ const ImageUploader = ( { icon, iconSetter } ) => {
 							{ __( 'RESET', 'wp-module-onboarding' ) }
 						</button>
 					) }
-					{ ( icon?.id === 0 || icon?.id === undefined ) && (
+					{ ( icon === undefined || icon?.id === 0 ) && (
 						<button
 							className="image-uploader_window-reset-btn"
 							onClick={ handleClick }

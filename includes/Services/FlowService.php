@@ -179,7 +179,7 @@ class FlowService {
 
 			// To handle Associative Arrays gracefully
 			$nested_flow_data = self::update_post_call_data_recursive( $value, $default_flow_data[ $key ], $params[ $key ] );
-			if ( \is_wp_error( $nested_flow_data ) ) {
+			if ( is_wp_error( $nested_flow_data ) ) {
 				return $nested_flow_data;
 			}
 			$flow_data[ $key ] = $nested_flow_data;
@@ -252,7 +252,7 @@ class FlowService {
 
 				// For Associative Arrays
 				$verify_key = self::find_mismatch_key( $value, $flow_data[ $key ], $key );
-				if ( \is_wp_error( $verify_key ) ) {
+				if ( is_wp_error( $verify_key ) ) {
 					return $verify_key;
 				}
 			}
