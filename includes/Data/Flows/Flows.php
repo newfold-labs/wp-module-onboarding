@@ -127,7 +127,7 @@ final class Flows {
 	);
 
 	/**
-	 * Has all the Flow Key parameters to be updated for the user in Key-Value pair.
+	 * Has all the Flow Key parameters to be updated for the user in Key-Value pair at the same level of nesting only.
 	 *
 	 * - the value of old_key i.e OldKey is the key name in the option that has been modified to NewKey in the blueprint
 	 * - the value of new_key i.e NewKey is the key name that is be replaced in the option

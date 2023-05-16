@@ -5,8 +5,6 @@
  * @package Onboarding Module
  */
 
-namespace NewfoldLabs\WP\Module\Onboarding\Data\Flows\Upgrades;
-
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 if ( \get_option( Options::get_option_name( 'flow' ), false ) ) {

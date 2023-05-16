@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Flows\Flows;
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
+use NewfoldLabs\WP\Module\Onboarding\Data\Flows\Upgrades\UpgradeHandler;
 
 /**
  * Class FlowService
@@ -24,9 +25,8 @@ class FlowService {
 		}
 
 		if ( ! isset( $flow_data['version'] ) || strcmp( $flow_data['version'], $default_flow_data['version'] ) !== 0 ) {
-			$flow_data_upgrades = NFD_ONBOARDING_DIR . '/includes/Data/Flows/Upgrades/' . $default_flow_data['version'] . '.php';
-			if ( $flow_data_upgrades ) {
-				include $flow_data_upgrades;
+			if ( isset( $flow_data['version'] ) ) {
+				UpgradeHandler::maybe_upgrade( $flow_data['version'], $default_flow_data['version'] );
 			}
 			$updated_flow_data = self::update_flow_data_recursive( $default_flow_data, $flow_data );
 			// To update the options with the recent version of flow data
@@ -62,7 +62,7 @@ class FlowService {
 	 */
 	public static function get_updated_flow_data( $params ) {
 		$default_flow_data = self::get_default_flow_data();
-		$flow_data = self::read_flow_data_from_wp_option();
+		$flow_data         = self::read_flow_data_from_wp_option();
 		return self::update_post_call_data_recursive( $flow_data, $default_flow_data, $params );
 	}
 
