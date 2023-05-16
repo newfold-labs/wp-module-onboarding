@@ -44,7 +44,7 @@ class UpgradeHandler {
 	/**
 	 * Get a collection of the required upgrade routines.
 	 *
-	 * @param array $available_routines A collection of available upgrade routines.
+	 * @param array  $available_routines A collection of available upgrade routines.
 	 * @param string $old_version The previous WP Options version.
 	 * @param string $new_version The current Flow Data version.
 	 *
