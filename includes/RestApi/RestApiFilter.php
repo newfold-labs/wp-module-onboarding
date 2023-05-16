@@ -28,9 +28,9 @@ class RestApiFilter {
 	 * @return array
 	 */
 	public static function add_appropriate_filters_for_onboarding( $response, array $handler, \WP_REST_Request $request ) {
-		// if ( ! self::is_request_from_onboarding_flow( $request ) ) {
-		// return $response;
-		// }
+		if ( ! self::is_request_from_onboarding_flow( $request ) ) {
+			return $response;
+		}
 		$request_method = $request->get_method();
 		switch ( $request_method ) {
 			case 'GET':
