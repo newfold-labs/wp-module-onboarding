@@ -29,7 +29,7 @@ class RestApiFilter {
 	 */
 	public static function add_appropriate_filters_for_onboarding( $response, array $handler, \WP_REST_Request $request ) {
 		// if ( ! self::is_request_from_onboarding_flow( $request ) ) {
-		// 	return $response;
+		// return $response;
 		// }
 		$request_method = $request->get_method();
 		switch ( $request_method ) {
@@ -73,19 +73,20 @@ class RestApiFilter {
 	public static function wp_onboarding_site_logo_filter( $response, $args ) {
 		$response_data = $response->get_data();
 
-		$site_logo_id   = \get_option( Options::get_option_name( 'site_icon', false ) );
-		if( "0" !== $site_logo_id ){
-			if ( is_string($response_data) ){
-				$response_data = self::wp_onboarding_add_site_logo_styles($response_data, $site_logo_id);
+		$site_logo_id = \get_option( Options::get_option_name( 'site_icon', false ) );
+		if ( '0' !== $site_logo_id ) {
+			if ( is_string( $response_data ) ) {
+				$response_data = self::wp_onboarding_add_site_logo_styles( $response_data, $site_logo_id );
 			}
-	
-			if ( is_array($response_data) ){
-				foreach ($response_data as &$value) {
-					if(isset($value["slug"]) && isset($value["content"])){
-						if( false !== strpos($value["slug"], "header") )
-						$value["content"] = self::wp_onboarding_add_site_logo_styles($value["content"], $site_logo_id);
+
+			if ( is_array( $response_data ) ) {
+				foreach ( $response_data as &$value ) {
+					if ( isset( $value['slug'] ) && isset( $value['content'] ) ) {
+						if ( false !== strpos( $value['slug'], 'header' ) ) {
+							$value['content'] = self::wp_onboarding_add_site_logo_styles( $value['content'], $site_logo_id );
+						}
 					}
-				  }
+				}
 			}
 		}
 
@@ -103,9 +104,9 @@ class RestApiFilter {
 	 */
 	public static function wp_onboarding_add_site_logo_styles( $content, $site_logo_id ) {
 		$calculated_width = self::wp_onboarding_calculate_site_logo_width( $site_logo_id );
-		if($calculated_width){
+		if ( $calculated_width ) {
 			// match everything that contains <!-- wp:site-logo /--> with a custom width
-			$content = preg_replace( '/<!-- wp:site-logo .*? \/-->/m', '<!-- wp:site-logo {"width":'.$calculated_width.'} /-->', $content );
+			$content = preg_replace( '/<!-- wp:site-logo .*? \/-->/m', '<!-- wp:site-logo {"width":' . $calculated_width . '} /-->', $content );
 		}
 
 		return $content;
@@ -115,19 +116,19 @@ class RestApiFilter {
 	 * Calculate the new site Logo size
 	 *
 	 * @param string $site_logo_id - Site Logo ID to be resized
-	 * 
+	 *
 	 * @return integer|boolean
 	 */
 	private static function wp_onboarding_calculate_site_logo_width( $site_logo_id ) {
-		$site_logo_metadata = wp_get_attachment_metadata($site_logo_id);
-		if(isset($site_logo_metadata) && isset($site_logo_metadata["height"]) && isset($site_logo_metadata["width"])){
-			$site_logo_img_ratio = $site_logo_metadata["height"]/$site_logo_metadata["width"];
-			switch ($site_logo_img_ratio) {
+		$site_logo_metadata = wp_get_attachment_metadata( $site_logo_id );
+		if ( isset( $site_logo_metadata ) && isset( $site_logo_metadata['height'] ) && isset( $site_logo_metadata['width'] ) ) {
+			$site_logo_img_ratio = $site_logo_metadata['height'] / $site_logo_metadata['width'];
+			switch ( $site_logo_img_ratio ) {
 				// Landscape
-				case ($site_logo_img_ratio < 0.7):
+				case ( $site_logo_img_ratio < 0.7 ):
 					return 180;
 				// Portrait
-				case ($site_logo_img_ratio > 1.3):
+				case ( $site_logo_img_ratio > 1.3 ):
 					return 130;
 				// Squarish
 				default:
