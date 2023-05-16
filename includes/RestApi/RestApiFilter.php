@@ -213,7 +213,6 @@ class RestApiFilter {
 	 */
 	public static function is_request_from_onboarding_flow( \WP_REST_Request $request ) {
 		$referrer = $request->get_header( 'referer' );
-		echo $referrer;
 		if ( ! $referrer ) {
 			return false;
 		}
