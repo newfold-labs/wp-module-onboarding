@@ -3,7 +3,7 @@
 	max-width: 960px;
 	width: 60vw;
 	min-height: 60vh;
-	background: var(--nfd-onboarding-light);
+	background: var(--nfd-onboarding-base);
 	position: relative;
 	transform-style: preserve-3d;
 	align-items: center;
@@ -21,7 +21,7 @@
 
 	&::before {
 		content: "";
-		background: var(--nfd-onboarding-dark-icon) no-repeat;
+		background: var(--nfd-onboarding-contrast-icon) no-repeat;
 		width: 600px;
 		min-height: 500px;
 		transform: rotate(-14deg) translateZ(-1px);
@@ -36,12 +36,14 @@
 		transform-style: flat;
 		padding: 20px;
 		margin: 30px;
+
 		&::before {
 			display: none;
 		}
 	}
 
 	@media (min-width: #{ ($break-medium) }) and (max-width: 1300px) {
+
 		&::before {
 			width: 400px;
 			height: 350px;
@@ -53,6 +55,7 @@
 		max-width: 100%;
 		width: 50vw;
 		min-height: 960px;
+
 		&::before {
 			width: 860px;
 			min-height: 600px;

@@ -1,5 +1,4 @@
 import { __ } from '@wordpress/i18n';
-import { useNavigate } from 'react-router-dom';
 import { useViewportMatch } from '@wordpress/compose';
 import { useEffect, useState } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -10,33 +9,15 @@ import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import SelectableCardList from '../../../components/SelectableCardList/selectable-card-list';
+import getContents from './contents';
 
-const StepTopPriority = ( props ) => {
+const StepTopPriority = () => {
 	const priorityTypes = {
 		0: 'publishing',
 		1: 'selling',
 		2: 'designing',
 	};
 
-	const priorities = [
-		{
-			icon: '--nfd-publish-icon',
-			title: 'Publishing',
-			desc: 'From blogs, to newsletters, to podcasts and videos, we help the web find your content.',
-		},
-		{
-			icon: '--nfd-selling-icon',
-			title: 'Selling',
-			desc: "Startup or seasoned business, drop-shipping or downloads, we've got ecommerce covered.",
-		},
-		{
-			icon: '--nfd-design-icon',
-			title: 'Designing',
-			desc: 'With smart style presets and powerful options, we help your site look and feel polished.',
-		},
-	];
-
-	const navigate = useNavigate();
 	const [ selected, setSelected ] = useState( 0 );
 	const [ isLoaded, setisLoaded ] = useState( false );
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -47,17 +28,17 @@ const StepTopPriority = ( props ) => {
 		setSidebarActiveView,
 		setCurrentOnboardingData,
 		setIsDrawerSuppressed,
-		setIsHeaderNavigationEnabled
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { currentStep, currentData } = useSelect( ( select ) => {
+	const { currentData } = useSelect( ( select ) => {
 		return {
-			currentStep: select(nfdOnboardingStore).getCurrentStep(),
-			currentData: select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	}, [] );
 
-	const getKey = ( priorityTypes, value ) => {
+	const getKey = ( value ) => {
 		return Object?.keys( priorityTypes ).find(
 			( key ) => priorityTypes[ key ] === value
 		);
@@ -68,7 +49,7 @@ const StepTopPriority = ( props ) => {
 			setIsDrawerOpened( true );
 		}
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
-		setIsDrawerSuppressed( false ); 
+		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
@@ -77,8 +58,7 @@ const StepTopPriority = ( props ) => {
 		async function setInitialData() {
 			if ( currentData ) {
 				const val = await currentData?.data.topPriority.priority1;
-				if ( val != '' )
-					setSelected( parseInt( getKey( priorityTypes, val ) ) );
+				if ( val !== '' ) setSelected( parseInt( getKey( val ) ) );
 				else {
 					currentData.data.topPriority.priority1 =
 						priorityTypes[ selected ];
@@ -97,12 +77,16 @@ const StepTopPriority = ( props ) => {
 		}
 	}, [ selected ] );
 
+	const content = getContents();
+
 	return (
 		<CommonLayout isVerticallyCentered>
 			<HeadingWithSubHeading
-				title={currentStep?.heading} subtitle={currentStep?.subheading} />
+				title={ content.heading }
+				subtitle={ content.subheading }
+			/>
 			<SelectableCardList
-				contents={ priorities }
+				contents={ content.options }
 				selected={ selected }
 				onSelectedChange={ setSelected }
 			></SelectableCardList>
@@ -112,7 +96,6 @@ const StepTopPriority = ( props ) => {
 						"Where would you like to start? We'll start ",
 						'wp-module-onboarding'
 					) }
-					<br></br>
 					{ __(
 						'there and then move into next steps.',
 						'wp-module-onboarding'

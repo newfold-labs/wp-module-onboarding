@@ -1,19 +1,13 @@
-/*COLOR VARIABLES*/
-$white-offset: rgb(224, 224, 224);
-$main-color-light: var(--nfd-onboarding-white);
-$grey-color: #f6f7f8;
-
 .checkbox-skeleton-item {
 	height: 45px;
 	margin: 12px;
 	padding: 16px;
 	margin-top: 16px;
-	border: 0.5px solid $white-offset;
+	border: 0.5px solid var(--nfd-onboarding-light-gray-6);
 	cursor: not-allowed;
 	width: clamp(15rem, 25vw, 35rem);
 	box-shadow: 0 2px 8px 2px rgba(204, 204, 204, 0.175295);
-	background: $grey-color;
+	background: var(--nfd-onboarding-light-gray-7);
 	background-repeat: no-repeat;
-	background-image:
- linear-gradient(to right, $grey-color 0%, $main-color-grey 20%, $grey-color 40%, $grey-color 100%);
+	background-image: linear-gradient(to right, var(--nfd-onboarding-light-gray-7) 0%, var(--nfd-onboarding-light-gray) 20%, var(--nfd-onboarding-light-gray-7) 40%, var(--nfd-onboarding-light-gray-7) 100%);
 }

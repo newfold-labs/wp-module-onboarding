@@ -1,6 +1,4 @@
-$main-color-grey: var(--nfd-onboarding-light-gray);
 $main-color-grey-other: #e2e2e2;
-$main-color-light-rgb: var(--nfd-onboarding-white-rgb);
 
 .live-preview {
 
@@ -38,7 +36,7 @@ $main-color-light-rgb: var(--nfd-onboarding-white-rgb);
 			cursor: not-allowed;
 			align-items: center;
 			flex-direction: column;
-			background-color: $main-color-grey;
+			background-color: var(--nfd-onboarding-light-gray);
 
 			&--box {
 				width: 90%;
@@ -67,8 +65,7 @@ $main-color-light-rgb: var(--nfd-onboarding-white-rgb);
 				width: 100%;
 				height: 100%;
 				position: absolute;
-				background-image:
- linear-gradient(90deg, rgba($main-color-light-rgb, 0) 0, rgba($main-color-light-rgb, 0.4) 20%, rgba($main-color-light-rgb, 0.6) 60%, rgba($main-color-light-rgb, 0.4) 90%, rgba($main-color-light-rgb, 0.02) 100%, $main-color-grey);
+				background-image: linear-gradient(90deg, rgba(var(--nfd-onboarding-white-rgb), 0) 0, rgba(var(--nfd-onboarding-white-rgb), 0.4) 20%, rgba(var(--nfd-onboarding-white-rgb), 0.6) 60%, rgba(var(--nfd-onboarding-white-rgb), 0.4) 90%, rgba(var(--nfd-onboarding-white-rgb), 0.02) 100%, var(--nfd-onboarding-light-gray));
 			}
 		}
 	}

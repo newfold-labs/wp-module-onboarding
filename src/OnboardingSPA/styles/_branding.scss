@@ -9,7 +9,7 @@ body {
 		--wp-admin-theme-color-darker-10--rgb: 0, 107, 161;
 		--wp-admin-theme-color-darker-20: #1e1e1e;
 		--wp-admin-theme-color-darker-20--rgb: 0, 30, 30;
-		--nfd-onboarding-dark-icon: url(../../Brands/wordpress/dark.svg);
+		--nfd-onboarding-contrast-icon: url(../../Brands/wordpress/dark.svg);
 		--nfd-onboarding-icon: url(../../Brands/wordpress/icon.svg);
 		--nfd-onboarding-logo: url(../../Brands/wordpress/logo.svg);
 		--nfd-onboarding-primary: var(--wp-admin-theme-color);
@@ -25,9 +25,16 @@ body {
 		--nfd-onboarding-light-gray-3: #f2f2f2;
 		--nfd-onboarding-light-gray-4: #a7a7a7;
 		--nfd-onboarding-light-gray-5: #eee;
+		--nfd-onboarding-light-gray-6: rgb(224, 224, 224);
+		--nfd-onboarding-light-gray-7: #f6f7f8;
+		--nfd-onboarding-light-gray-8: #ccc;
 		--nfd-onboarding-light-gray-highlighted: #e2e9f4;
 		--nfd-onboarding-dark: var(--wp-admin-theme-color-darker-20);
 		--nfd-onboarding-border: 219, 219, 219;
+		--nfd-onboarding-base: var(--nfd-onboarding-light);
+		--nfd-onboarding-contrast: var(--nfd-onboarding-dark);
+		--nfd-onboarding-drawer-base: var(--nfd-onboarding-dark);
+		--nfd-onboarding-drawer-contrast: var(--nfd-onboarding-light);
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
 		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
 		--nfd-onboarding-loader-start: var(--nfd-onboarding-primary);
@@ -47,7 +54,7 @@ body {
 		--wp-admin-theme-color-darker-10--rgb: 28, 92, 186;
 		--wp-admin-theme-color-darker-20: #0242a0;
 		--wp-admin-theme-color-darker-20--rgb: 2, 66, 160;
-		--nfd-onboarding-dark-icon: url(../../Brands/bluehost/dark.svg);
+		--nfd-onboarding-contrast-icon: url(../../Brands/bluehost/dark.svg);
 		--nfd-onboarding-icon: url(../../Brands/bluehost/icon.svg);
 		--nfd-onboarding-logo: url(../../Brands/bluehost/logo.svg);
 		--nfd-onboarding-primary: #3575d3;
@@ -57,17 +64,22 @@ body {
 		--nfd-onboarding-secondary-alt: #304663;
 		--nfd-onboarding-tertiary: #7bb1fd;
 		--nfd-onboarding-tertiary-alt: #84c0fc;
-		--nfd-onboarding-light: #fff;
+		--nfd-onboarding-base: #fff;
 		--nfd-onboarding-light-gray: #f0f0f0;
 		--nfd-onboarding-light-gray-2: #efefef;
 		--nfd-onboarding-light-gray-3: #f2f2f2;
 		--nfd-onboarding-light-gray-4: #a7a7a7;
 		--nfd-onboarding-light-gray-5: #eee;
+		--nfd-onboarding-light-gray-6: rgb(224, 224, 224);
+		--nfd-onboarding-light-gray-7: #f6f7f8;
+		--nfd-onboarding-light-gray-8: #ccc;
 		--nfd-onboarding-light-gray-highlighted: #e2e9f4;
-		--nfd-onboarding-dark: #1d2a3b;
+		--nfd-onboarding-contrast: #1d2a3b;
+		--nfd-onboarding-drawer-base: var(--nfd-onboarding-contrast);
+		--nfd-onboarding-drawer-contrast: var(--nfd-onboarding-base);
 		--nfd-onboarding-border: 219, 219, 219;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
-		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
+		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-base);
 		--nfd-onboarding-loader-start: var(--nfd-onboarding-primary);
 		--nfd-onboarding-loader-end: var(--nfd-onboarding-tertiary);
 		--nfd-onboarding-step-loader-icon: url(../../Brands/bluehost/step-loader-logo.svg);
@@ -100,7 +112,7 @@ body {
 		--wp-admin-theme-color-darker-10--rgb: 20, 133, 236;
 		--wp-admin-theme-color-darker-20: #1177d2;
 		--wp-admin-theme-color-darker-20--rgb: 17, 119, 210;
-		--nfd-onboarding-dark-icon: url(../../Brands/hostgator/dark.svg);
+		--nfd-onboarding-contrast-icon: url(../../Brands/hostgator/dark.svg);
 		--nfd-onboarding-icon: url(../../Brands/hostgator/icon.svg);
 		--nfd-onboarding-logo: url(../../Brands/hostgator/logo.svg);
 		--nfd-onboarding-primary: #2e93ee;
@@ -110,16 +122,21 @@ body {
 		--nfd-onboarding-secondary-alt: #363636;
 		--nfd-onboarding-tertiary: #ffcf00;
 		--nfd-onboarding-tertiary-alt: #ff9144;
-		--nfd-onboarding-light: #f5f6f8;
+		--nfd-onboarding-base: #f5f6f8;
 		--nfd-onboarding-light-gray: #f0f0f0;
 		--nfd-onboarding-light-gray-2: #efefef;
 		--nfd-onboarding-light-gray-3: #f2f2f2;
 		--nfd-onboarding-light-gray-4: #a7a7a7;
 		--nfd-onboarding-light-gray-5: #eee;
-		--nfd-onboarding-dark: #1e2044;
+		--nfd-onboarding-light-gray-6: rgb(224, 224, 224);
+		--nfd-onboarding-light-gray-7: #f6f7f8;
+		--nfd-onboarding-light-gray-8: #ccc;
+		--nfd-onboarding-contrast: #1e2044;
+		--nfd-onboarding-drawer-base: var(--nfd-onboarding-contrast);
+		--nfd-onboarding-drawer-contrast: var(--nfd-onboarding-base);
 		--nfd-onboarding-border: 245, 246, 248;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary);
-		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-light);
+		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-base);
 		--nfd-onboarding-loader-start: var(--nfd-onboarding-primary);
 		--nfd-onboarding-loader-end: var(--nfd-onboarding-tertiary);
 	}
@@ -131,7 +148,7 @@ body {
 		--wp-admin-theme-color-darker-10--rgb: 43, 92, 251;
 		--wp-admin-theme-color-darker-20: #0b44fb;
 		--wp-admin-theme-color-darker-20--rgb: 11, 68, 251;
-		--nfd-onboarding-dark-icon: url(../../Brands/webcom/dark.svg);
+		--nfd-onboarding-contrast-icon: url(../../Brands/webcom/dark.svg);
 		--nfd-onboarding-icon: url(../../Brands/webcom/icon.svg);
 		--nfd-onboarding-logo: url(../../Brands/webcom/logo.svg);
 		--nfd-onboarding-primary: #4b75fc;
@@ -141,13 +158,18 @@ body {
 		--nfd-onboarding-secondary-alt: #171003;
 		--nfd-onboarding-tertiary: #fed96a;
 		--nfd-onboarding-tertiary-alt: #fec101;
-		--nfd-onboarding-light: #fff;
+		--nfd-onboarding-base: #fff;
 		--nfd-onboarding-light-gray: #f0f0f0;
 		--nfd-onboarding-light-gray-2: #efefef;
 		--nfd-onboarding-light-gray-3: #f2f2f2;
 		--nfd-onboarding-light-gray-4: #a7a7a7;
 		--nfd-onboarding-light-gray-5: #eee;
-		--nfd-onboarding-dark: #000;
+		--nfd-onboarding-light-gray-6: rgb(224, 224, 224);
+		--nfd-onboarding-light-gray-7: #f6f7f8;
+		--nfd-onboarding-light-gray-8: #ccc;
+		--nfd-onboarding-contrast: #000;
+		--nfd-onboarding-drawer-base: var(--nfd-onboarding-contrast);
+		--nfd-onboarding-drawer-contrast: var(--nfd-onboarding-base);
 		--nfd-onboarding-border: 219, 219, 219;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-tertiary-alt);
 		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-tertiary-alt);
@@ -162,7 +184,7 @@ body {
 		--wp-admin-theme-color-darker-10--rgb: 76, 117, 32;
 		--wp-admin-theme-color-darker-20: #43681d;
 		--wp-admin-theme-color-darker-20--rgb: 67, 104, 29;
-		--nfd-onboarding-dark-icon: url(../../Brands/crazy-domains/icon-empty.svg);
+		--nfd-onboarding-contrast-icon: url(../../Brands/crazy-domains/icon-empty.svg);
 		--nfd-onboarding-icon: url(../../Brands/crazy-domains/icon.svg);
 		--nfd-onboarding-logo: url(../../Brands/crazy-domains/logo.svg);
 		--nfd-onboarding-primary: var(--wp-admin-theme-color);
@@ -172,14 +194,17 @@ body {
 		--nfd-onboarding-secondary-alt: #1d2a3b;
 		--nfd-onboarding-tertiary: #196bde;
 		--nfd-onboarding-tertiary-alt: #c77d1c;
-		--nfd-onboarding-light: #fff;
+		--nfd-onboarding-base: #fff;
 		--nfd-onboarding-light-gray: #fcfff9;
 		--nfd-onboarding-light-gray-2: #fcfff9;
 		--nfd-onboarding-light-gray-3: #fcfff9;
 		--nfd-onboarding-light-gray-4: #5c5c5c;
-		--nfd-onboarding-light-gray-5: var(--nfd-onboarding-light);
+		--nfd-onboarding-light-gray-5: var(--nfd-onboarding-base);
+		--nfd-onboarding-light-gray-6: rgb(224, 224, 224);
+		--nfd-onboarding-light-gray-7: #f6f7f8;
+		--nfd-onboarding-light-gray-8: #ccc;
 		--nfd-onboarding-light-gray-highlighted: #e2e9f4;
-		--nfd-onboarding-dark: #1d2a3b;
+		--nfd-onboarding-contrast: #1d2a3b;
 		--nfd-onboarding-border: 219, 219, 219;
 		--nfd-onboarding-drawer-icon-fill: var(--nfd-onboarding-light-gray-4);
 		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-primary);
@@ -191,9 +216,9 @@ body {
 		--nfd-onboarding-step-what-next-img-1: url(../../Brands/crazy-domains/wp-admin.png);
 		--nfd-onboarding-step-what-next-img-2: url(../static/images/help.png);
 
-		--nfd-onboarding-drawer-bg: var(--nfd-onboarding-light);
-		--nfd-onboarding-drawer-fg: var(--nfd-onboarding-dark);
-		--nfd-onboarding-content-bg: var(--nfd-onboarding-light);
+		--nfd-onboarding-drawer-base: var(--nfd-onboarding-base);
+		--nfd-onboarding-drawer-contrast: var(--nfd-onboarding-contrast);
+		--nfd-onboarding-content-base: var(--nfd-onboarding-base);
 
 		.nfd-onboarding-drawer__toggle {
 			background-color: transparent;
@@ -223,14 +248,14 @@ body {
 				color: var(--nfd-onboarding-light-gray-4);
 
 				&.active {
-					background-color: var(--nfd-onboarding-drawer-bg);
+					background-color: var(--nfd-onboarding-drawer-base);
 					color: var(--nfd-onboarding-primary);
 					border-color: var(--nfd-onboarding-primary);
 				}
 			}
 
 			.custom-palette {
-				color: var(--nfd-onboarding-light);
+				color: var(--nfd-onboarding-base);
 			}
 
 			.drawer-palette--button {
@@ -240,7 +265,7 @@ body {
 					background-color: var(--nfd-onboarding-primary);
 
 					* {
-						color: var(--nfd-onboarding-light);
+						color: var(--nfd-onboarding-base);
 					}
 				}
 			}
@@ -249,7 +274,7 @@ body {
 		.nfd-onboarding-layout {
 
 			&.is-bg-primary {
-				background-color: var(--nfd-onboarding-light);
+				background-color: var(--nfd-onboarding-base);
 			}
 
 			.checkbox-item--selected {
