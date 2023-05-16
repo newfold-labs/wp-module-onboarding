@@ -59,11 +59,11 @@ const StepDesignHomepageMenu = () => {
 
 	function refactorPatterns( homepagePatternDataResp ) {
 		const makeHomepagePattern = [];
-
-		homepagePatternDataResp.forEach( ( homepagePatternData ) => {
-			makeHomepagePattern.push( homepagePatternData.content );
-		} );
-
+		Object.values( homepagePatternDataResp ).forEach(
+			( homepagePatternData ) => {
+				makeHomepagePattern.push( homepagePatternData.content );
+			}
+		);
 		return makeHomepagePattern;
 	}
 
@@ -75,11 +75,14 @@ const StepDesignHomepageMenu = () => {
 		if ( homepagePatternDataTemp?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
+
 		setHomepagePattern( refactorPatterns( homepagePatternDataTemp?.body ) );
 
-		homepagePatternDataTemp?.body.forEach( ( homepagePatternData ) => {
-			homepagePatternList.push( homepagePatternData.slug );
-		} );
+		Object.values( homepagePatternDataTemp?.body ).forEach(
+			( homepagePatternData ) => {
+				homepagePatternList.push( homepagePatternData.slug );
+			}
+		);
 		setHomepagePatternList( homepagePatternList );
 
 		if ( currentData?.data.sitePages.homepage !== '' ) {

@@ -45,7 +45,25 @@ final class Patterns {
 					),
 				),
 				'homepage-styles' => array(
-					'pattern_slug_callback' => array( __CLASS__, 'get_patterns_for_homepage_menu_slugs' ),
+					'site-header-left-logo-navigation-inline' => array(
+						'active'  => true,
+						'replace' => true,
+					),
+					'homepage-1'  => array(
+						'active' => true,
+						'shown'  => true,
+					),
+					'homepage-2'  => array(
+						'active' => true,
+						'shown'  => true,
+					),
+					'homepage-3'  => array(
+						'active' => true,
+						'shown'  => true,
+					),
+					'site-footer' => array(
+						'active' => true,
+					),
 				),
 				'site-pages'      => array(
 					'company-page'      => array(
@@ -101,6 +119,19 @@ final class Patterns {
 						'shown'  => true,
 					),
 				),
+			),
+		);
+	}
+
+	/**
+	 * Callback Functions for Theme Step.
+	 *
+	 * @return array
+	 */
+	protected static function get_theme_step_patterns_callback() {
+		return array(
+			'yith-wonder' => array(
+				'homepage-styles' => array( __CLASS__, 'get_patterns_for_homepage_menu_slugs' ),
 			),
 		);
 	}
@@ -254,17 +285,17 @@ final class Patterns {
 			return false;
 		}
 
+		if ( ! isset( self::get_theme_step_patterns_callback()[ $active_theme ][ $step ] ) ) {
+			return false;
+		}
+
 		$pattern_slugs           = self::get_theme_step_patterns()[ $active_theme ][ $step ];
+		$pattern_slugs_callback  = self::get_theme_step_patterns_callback()[ $active_theme ][ $step ];
 		$block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
 		$block_patterns          = array();
 		$block_patterns_squashed = '';
 
 		$pattern_slugs = self::replace_header_menu_slug( $pattern_slugs );
-
-		$pattern_slug_callback = isset( $pattern_slugs['pattern_slug_callback'] ) ? $pattern_slugs['pattern_slug_callback'] : false;
-		if ( is_callable( $pattern_slug_callback ) ) {
-			$pattern_slugs = $pattern_slug_callback();
-		}
 
 		foreach ( array_keys( $pattern_slugs ) as $pattern_slug ) {
 			if ( true === $pattern_slugs[ $pattern_slug ]['active'] ) {
@@ -282,10 +313,11 @@ final class Patterns {
 					if ( ! $squash ) {
 						$block_patterns[] = array_merge(
 							array(
-								'slug'    => $pattern_name,
-								'title'   => $pattern['title'],
-								'content' => self::cleanup_wp_grammar( $pattern['content'] ),
-								'name'    => $pattern['name'],
+								'slug'       => $pattern_name,
+								'title'      => $pattern['title'],
+								'content'    => self::cleanup_wp_grammar( $pattern['content'] ),
+								'name'       => $pattern['name'],
+								'categories' => $pattern['categories'],
 							),
 							$pattern_slugs[ $pattern_slug ]
 						);
@@ -295,60 +327,51 @@ final class Patterns {
 				}
 			}
 		}
+
+		$pattern_slug_callback = isset( $pattern_slugs_callback ) ? $pattern_slugs_callback : false;
+		if ( is_callable( $pattern_slug_callback ) ) {
+			return $pattern_slug_callback( $block_patterns );
+		}
+
 		return $squash ? $block_patterns_squashed : $block_patterns;
 	}
 
 	/**
 	 * Retrieve Homepage Menu Step Patterns
 	 *
+	 * @param array $pattern_slugs Step Patterns Data
 	 * @return array
 	 */
-	private static function get_patterns_for_homepage_menu_slugs() {
-		$header_footer_slugs = array(
-			'site-header-left-logo-navigation-inline' => array(
-				'active'  => true,
-				'replace' => true,
-			),
-			'site-footer'                             => array(
-				'active' => true,
-			),
-		);
+	private static function get_patterns_for_homepage_menu_slugs( $pattern_slugs ) {
+		$header_content       = '';
+		$footer_content       = '';
+		$homepage_style_slugs = array_filter( $pattern_slugs, array( __CLASS__, 'filter_pattern_data' ) );
 
-		$homepage_style_slugs = array(
-			'homepage-1' => array(
-				'active' => true,
-				'shown'  => true,
-			),
-			'homepage-2' => array(
-				'active' => true,
-				'shown'  => true,
-			),
-			'homepage-3' => array(
-				'active' => true,
-				'shown'  => true,
-			),
-		);
-
-		$header_footer_slugs = self::replace_header_menu_slug( $header_footer_slugs );
-
-		$header_footer_slug_keys = array(
-			'header' => 'site-header-left-logo-navigation-inline',
-			'footer' => 'site-footer',
-		);
-
-		foreach ( $header_footer_slug_keys as $slug_tag => $slug ) {
-			$header_footer_slugs[ $slug ]['content'] = self::get_pattern_from_slug( $slug )['content'];
-			// if header menu slug contains "split" replace the menu links with dummy links
-			if ( false !== stripos( $slug, 'split' ) ) {
-				$header_footer_slugs[ $slug ]['content'] = self::replace_split_menu_items( $header_footer_slugs[ $slug ]['content'] );
+		$header_footer_slugs = array_diff_assoc( $pattern_slugs, $homepage_style_slugs );
+		foreach ( $header_footer_slugs as $key => $slug ) {
+			if ( in_array( 'yith-wonder-site-header', $slug['categories'] ) ) {
+				$header_content = $slug['content'];
+			}
+			if ( in_array( 'yith-wonder-site-footer', $slug['categories'] ) ) {
+				$footer_content = $slug['content'];
 			}
 		}
 
-		foreach ( array_keys( $homepage_style_slugs ) as $homepage_style ) {
-			$homepage_style_slugs[ $homepage_style ]['content'] .= $header_footer_slugs[ $header_footer_slug_keys['header'] ]['content'] . self::get_pattern_from_slug( $homepage_style )['content'] . $header_footer_slugs[ $header_footer_slug_keys['footer'] ]['content'];
+		foreach ( $homepage_style_slugs as $key => $homepage_style ) {
+			$homepage_style_slugs[ $key ]['content'] = $header_content . $homepage_style['content'] . $footer_content;
 		}
 
 		return $homepage_style_slugs;
+	}
+
+	/**
+	 * Filter out Homepage Menu Slug Patterns Data
+	 *
+	 * @param array $pattern_slugs Slug Data
+	 * @return boolean
+	 */
+	public static function filter_pattern_data( $pattern_slugs ) {
+		return in_array( 'yith-wonder-pages', $pattern_slugs['categories'] );
 	}
 
 	/**
