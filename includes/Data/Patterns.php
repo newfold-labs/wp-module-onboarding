@@ -351,9 +351,11 @@ final class Patterns {
 		foreach ( $header_footer_slugs as $key => $slug ) {
 			if ( in_array( 'yith-wonder-site-header', $slug['categories'] ) ) {
 				$header_content = $slug['content'];
+				continue;
 			}
 			if ( in_array( 'yith-wonder-site-footer', $slug['categories'] ) ) {
 				$footer_content = $slug['content'];
+				continue;
 			}
 		}
 
