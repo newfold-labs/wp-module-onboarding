@@ -26,6 +26,7 @@ class FlowService {
 
 		if ( ! isset( $flow_data['version'] ) || strcmp( $flow_data['version'], $default_flow_data['version'] ) !== 0 ) {
 			UpgradeHandler::maybe_upgrade( $flow_data['version'], $default_flow_data['version'] );
+			$flow_data = self::read_flow_data_from_wp_option();
 			$updated_flow_data = self::update_flow_data_recursive( $default_flow_data, $flow_data );
 			// To update the options with the recent version of flow data
 			$updated_flow_data['version'] = $default_flow_data['version'];
