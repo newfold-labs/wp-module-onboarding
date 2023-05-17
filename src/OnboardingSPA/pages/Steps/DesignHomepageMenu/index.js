@@ -25,25 +25,19 @@ const StepDesignHomepageMenu = () => {
 	const [ homepagePatternList, setHomepagePatternList ] = useState( [] );
 	const [ selectedHomepage, setSelectedHomepage ] = useState( 0 );
 
-	const {
-		currentStep,
-		currentData,
-		storedPreviewSettings,
-		themeStatus,
-		themeVariations,
-	} = useSelect( ( select ) => {
-		return {
-			currentStep: select( nfdOnboardingStore ).getStepFromPath(
-				location.pathname
-			),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			storedPreviewSettings:
-				select( nfdOnboardingStore ).getPreviewSettings(),
-			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-			themeVariations: select( nfdOnboardingStore ).getStepPreviewData(),
-		};
-	}, [] );
+	const { currentStep, currentData, themeStatus, themeVariations } =
+		useSelect( ( select ) => {
+			return {
+				currentStep: select( nfdOnboardingStore ).getStepFromPath(
+					location.pathname
+				),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				themeVariations:
+					select( nfdOnboardingStore ).getStepPreviewData(),
+			};
+		}, [] );
 
 	const {
 		setDrawerActiveView,
@@ -98,6 +92,8 @@ const StepDesignHomepageMenu = () => {
 			};
 			setCurrentOnboardingData( currentData );
 		}
+
+		setHomepagePattern( refactorPatterns( homepagePatternDataTemp ) );
 	}
 
 	function saveDataForHomepage( idx ) {
@@ -126,7 +122,6 @@ const StepDesignHomepageMenu = () => {
 						blockGrammer={ homepage }
 						viewportWidth={ 1200 }
 						styling={ 'custom' }
-						previewSettings={ storedPreviewSettings }
 						overlay={ false }
 						onClick={ () => saveDataForHomepage( idx ) }
 					/>

@@ -21,10 +21,8 @@ const StepDesignColors = () => {
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
 
-	const { currentData, currentStep, themeStatus } = useSelect( ( select ) => {
+	const { currentStep, themeStatus } = useSelect( ( select ) => {
 		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
 			),
@@ -41,11 +39,14 @@ const StepDesignColors = () => {
 	}, [] );
 
 	const getStylesAndPatterns = async () => {
-		const pattern = await getPatterns( currentStep.patternId, true );
-		if ( pattern?.error ) {
+		const patternResponse = await getPatterns(
+			currentStep.patternId,
+			true
+		);
+		if ( patternResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
-		setPattern( pattern?.body );
+		setPattern( patternResponse?.body );
 	};
 
 	useEffect( () => {
@@ -65,7 +66,6 @@ const StepDesignColors = () => {
 					</div>
 					{ ! pattern && (
 						<LivePreview
-							blockGrammer={ '' }
 							styling={ 'large' }
 							viewportWidth={ 1300 }
 						/>
