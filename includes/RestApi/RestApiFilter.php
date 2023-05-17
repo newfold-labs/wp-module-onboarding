@@ -105,8 +105,24 @@ class RestApiFilter {
 	public static function wp_onboarding_add_site_logo_styles( $content, $site_logo_id ) {
 		$calculated_width = self::wp_onboarding_calculate_site_logo_width( $site_logo_id );
 		if ( $calculated_width ) {
-			// match everything that contains <!-- wp:site-logo /--> with a custom width
-			$content = preg_replace( '/<!-- wp:site-logo .*? \/-->/m', '<!-- wp:site-logo {"width":' . $calculated_width . '} /-->', $content );
+			// Final Width Style to be applied.
+			$custom_width_style = '{"width":' . $calculated_width . '}';
+			// Check if there is a site-logo at all.
+			preg_match( '/<!-- wp:site-logo.*?\/-->/m', $content, $matches );
+
+			if ( isset( $matches ) && count( $matches ) >= 1 ) {
+				$site_logo_grammar = $matches[0];
+				// Check if the site-logo has a predefined width.
+				preg_match( '/{"width":.*?}/m', $site_logo_grammar, $width_style );
+				if ( isset( $width_style ) && count( $width_style ) >= 1 ) {
+					// If width is present we need to just replace that not modifying other properties.
+					$site_logo_grammar = preg_replace( '/{"width":.*?}/m', $custom_width_style, $site_logo_grammar );
+					$content           = preg_replace( '/<!-- wp:site-logo .*? \/-->/m', $site_logo_grammar, $content );
+				} else {
+					// If width is not present we need add it not modifying other properties.
+					$content = preg_replace( '/<!-- wp:site-logo/m', '<!-- wp:site-logo ' . $custom_width_style, $content );
+				}
+			}
 		}
 
 		return $content;
