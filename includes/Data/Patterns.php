@@ -209,8 +209,6 @@ final class Patterns {
 	 * @return array|boolean
 	 */
 	public static function get_pattern_from_slug( $pattern_slug ) {
-		$active_theme            = ( \wp_get_theme() )->get( 'TextDomain' );
-		$pattern_slug            = $active_theme . '/' . $pattern_slug;
 		$block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
 		if ( $block_patterns_registry->is_registered( $pattern_slug ) ) {
 			$pattern = $block_patterns_registry->get_registered( $pattern_slug );
@@ -282,10 +280,6 @@ final class Patterns {
 		$active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
 
 		if ( ! isset( self::get_theme_step_patterns()[ $active_theme ][ $step ] ) ) {
-			return false;
-		}
-
-		if ( ! isset( self::get_theme_step_patterns_callback()[ $active_theme ][ $step ] ) ) {
 			return false;
 		}
 
