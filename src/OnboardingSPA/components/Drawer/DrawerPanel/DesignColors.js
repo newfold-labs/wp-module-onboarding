@@ -126,8 +126,7 @@ const DesignColors = () => {
 		}
 	}
 
-	function findInCustomColors( slugName, colorPickerCalledByTemp ) {
-		const storedPreviewSettingsTemp = storedPreviewSettings;
+	function findInCustomColors( slugName ) {
 		const selectedThemeColorPalette =
 			storedPreviewSettings?.settings?.color?.palette;
 		const res = selectedThemeColorPalette.findIndex(
@@ -135,7 +134,7 @@ const DesignColors = () => {
 		);
 		if ( res === -1 ) {
 			return selectedThemeColorPalette.findIndex(
-				( { slug } ) => slug === colorPickerCalledByTemp
+				( { slug } ) => slug === colorPickerCalledBy
 			);
 		}
 		return res;
