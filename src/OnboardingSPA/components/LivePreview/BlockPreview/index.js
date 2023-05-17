@@ -8,21 +8,6 @@ import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-s
 import { store as nfdOnboardingStore } from '../../../store';
 import Animate from '../../Animate';
 
-/**
- * Renders themed WordPress block grammer.
- * [Note] Please do not remove any commented code, this will be used later to update our preview
- *
- * @param             root0
- * @param             root0.blockGrammer
- * @param             root0.viewportWidth
- * @param             root0.styling
- * @param             root0.previewSettings
- * @param             root0.setIsLoadingParent
- * @param             root0.skeletonLoadingTime
- * @property {string} blockGrammer              WordPress block grammer.
- * @property {number} viewportWidth             Set viewport width for the AutoHeightBlockPreview component.
- * @property {string} styling                   The type of styling to be applied (small, large, custom).
- */
 const BlockPreview = ( {
 	blockGrammer,
 	viewportWidth = 1300,
@@ -63,7 +48,12 @@ const BlockPreview = ( {
 	useEffect( () => {
 		if ( previewSettings ) {
 			setSettings(
-				useGlobalStylesOutput( previewSettings, storedPreviewSettings )
+				// eslint-disable-next-line react-hooks/rules-of-hooks
+				useGlobalStylesOutput(
+					previewSettings,
+					storedPreviewSettings,
+					'block-preview'
+				)
 			);
 		} else {
 			setSettings( storedPreviewSettings );
@@ -71,7 +61,9 @@ const BlockPreview = ( {
 	}, [] );
 
 	useEffect( () => {
-		setBlocks( parse( blockGrammer ) );
+		if ( blockGrammer ) {
+			setBlocks( parse( blockGrammer ) );
+		}
 	}, [ blockGrammer ] );
 
 	useEffect( () => {
@@ -99,7 +91,7 @@ const BlockPreview = ( {
 	return (
 		<div className={ `live-preview__container-${ styling }` }>
 			{ loading && <SkeletonLivePreview /> }
-			{ settings && (
+			{ blocks && settings && (
 				<BlockEditorProvider
 					value={ blocks }
 					settings={ settings.settings }
@@ -114,5 +106,4 @@ const BlockPreview = ( {
 	);
 };
 
-const BlockPreviewMemo = memo( BlockPreview );
-export default BlockPreviewMemo;
+export default memo( BlockPreview );

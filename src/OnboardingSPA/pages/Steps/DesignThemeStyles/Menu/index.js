@@ -83,13 +83,15 @@ const StepDesignThemeStylesMenu = () => {
 		if ( patternsResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
+
 		const globalStylesResponse = await getGlobalStyles( true );
 		if ( globalStylesResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
+
+		setSelectedStyle( currentData.data.theme.variation );
 		setPattern( patternsResponse?.body );
 		setGlobalStyles( globalStylesResponse?.body );
-		setSelectedStyle( currentData.data.theme.variation );
 	};
 
 	useEffect( () => {
