@@ -23,7 +23,7 @@ class FlowService {
 		if ( ! ( $flow_data ) ) {
 			return \update_option( Options::get_option_name( 'flow' ), $default_flow_data );
 		}
-		
+
 		if ( ! isset( $flow_data['version'] ) || strcmp( $flow_data['version'], $default_flow_data['version'] ) !== 0 ) {
 			UpgradeHandler::maybe_upgrade( $flow_data['version'], $default_flow_data['version'] );
 			$updated_flow_data = self::update_flow_data_recursive( $default_flow_data, $flow_data );
