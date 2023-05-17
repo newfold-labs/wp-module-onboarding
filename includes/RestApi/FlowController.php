@@ -178,7 +178,7 @@ class FlowController {
 	/**
 	 * Request and Complete Site Pages and Child Theme Generation.
 	 *
-	 * @return \WP_REST_Response
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function complete() {
 		$site_pages_publish_request  = new \WP_REST_Request(

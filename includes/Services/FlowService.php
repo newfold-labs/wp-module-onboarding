@@ -16,23 +16,23 @@ class FlowService {
 	 *
 	 * @return boolean
 	 */
-	public static function initalize_flow_data() {
+	public static function initialize_flow_data() {
 		$default_flow_data = self::get_default_flow_data();
 		$flow_data         = self::read_flow_data_from_wp_option();
 
 		if ( ! ( $flow_data ) ) {
 			return \update_option( Options::get_option_name( 'flow' ), $default_flow_data );
 		}
-
+		
 		if ( ! isset( $flow_data['version'] ) || strcmp( $flow_data['version'], $default_flow_data['version'] ) !== 0 ) {
-			if ( isset( $flow_data['version'] ) ) {
-				UpgradeHandler::maybe_upgrade( $flow_data['version'], $default_flow_data['version'] );
-			}
+			UpgradeHandler::maybe_upgrade( $flow_data['version'], $default_flow_data['version'] );
 			$updated_flow_data = self::update_flow_data_recursive( $default_flow_data, $flow_data );
 			// To update the options with the recent version of flow data
 			$updated_flow_data['version'] = $default_flow_data['version'];
 			return \update_option( Options::get_option_name( 'flow' ), $updated_flow_data );
 		}
+
+		return false;
 	}
 
 	/**
