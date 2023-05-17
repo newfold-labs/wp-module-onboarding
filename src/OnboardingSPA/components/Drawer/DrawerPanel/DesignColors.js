@@ -78,6 +78,9 @@ const DesignColors = () => {
 		selectedColorsLocalTemp = selectedColors,
 		globalStylesTemp = storedPreviewSettings
 	) {
+		if ( selectedColors?.slug === colorStyle ) {
+			return true;
+		}
 		const isCustomStyle = colorStyle === 'custom';
 		const selectedGlobalStyle = globalStylesTemp;
 		const selectedThemeColorPalette =
@@ -126,7 +129,7 @@ const DesignColors = () => {
 	function findInCustomColors( slugName, colorPickerCalledByTemp ) {
 		const storedPreviewSettingsTemp = storedPreviewSettings;
 		const selectedThemeColorPalette =
-			storedPreviewSettingsTemp?.settings?.color?.palette;
+			storedPreviewSettings?.settings?.color?.palette;
 		const res = selectedThemeColorPalette.findIndex(
 			( { slug } ) => slug === slugName
 		);
@@ -164,10 +167,7 @@ const DesignColors = () => {
 							customColors[ colorPickerCalledBy ] !== undefined
 						) {
 							selectedThemeColorPalette[
-								findInCustomColors(
-									variant,
-									colorPickerCalledBy
-								)
+								findInCustomColors( variant )
 							].color = customColors[ colorPickerCalledBy ];
 						}
 					} );
@@ -188,16 +188,16 @@ const DesignColors = () => {
 
 	const getColorStylesAndPatterns = async () => {
 		const globalStyles = await getGlobalStyles();
-		const themeColorPalettes = await getThemeColors();
-		if ( themeColorPalettes?.error ) {
+		const colorPaletteResponse = await getThemeColors();
+		if ( colorPaletteResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		if ( globalStyles?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
-		setColorPalettes( themeColorPalettes?.body.tailored );
+		setColorPalettes( colorPaletteResponse?.body.tailored );
 		setCustomColorsMap(
-			themeColorPalettes?.body[ 'custom-picker-grouping' ]
+			colorPaletteResponse?.body[ 'custom-picker-grouping' ]
 		);
 		let selectedColorPalette;
 		let selectedColorsLocalTemp;
@@ -212,7 +212,7 @@ const DesignColors = () => {
 		setSelectedColors( selectedColorPalette );
 		saveThemeColorPalette(
 			currentData?.data?.colorStyle,
-			themeColorPalettes?.body.tailored,
+			colorPaletteResponse?.body.tailored,
 			selectedColorsLocalTemp,
 			globalStyles?.body[ 0 ]
 		);
@@ -406,10 +406,10 @@ const DesignColors = () => {
 				>
 					<div
 						className="custom-palette__below-row"
-						role="button"
-						tabIndex={ paletteCount + 1 }
 						onClick={ () => selectCustomColor( 'base' ) }
 						onKeyDown={ () => selectCustomColor( 'base' ) }
+						role="button"
+						tabIndex={ paletteCount + 1 }
 					>
 						<div
 							className={ `custom-palette__below-row-icon ${
@@ -430,10 +430,10 @@ const DesignColors = () => {
 					</div>
 					<div
 						className="custom-palette__below-row"
-						role="button"
-						tabIndex={ paletteCount + 2 }
 						onClick={ () => selectCustomColor( 'primary' ) }
 						onKeyDown={ () => selectCustomColor( 'primary' ) }
+						role="button"
+						tabIndex={ paletteCount + 2 }
 					>
 						<div
 							className={ `custom-palette__below-row-icon ${
@@ -452,10 +452,10 @@ const DesignColors = () => {
 					</div>
 					<div
 						className="custom-palette__below-row"
-						role="button"
-						tabIndex={ paletteCount + 3 }
 						onClick={ () => selectCustomColor( 'secondary' ) }
 						onKeyDown={ () => selectCustomColor( 'secondary' ) }
+						role="button"
+						tabIndex={ paletteCount + 3 }
 					>
 						<div
 							className={ `custom-palette__below-row-icon ${
@@ -474,10 +474,10 @@ const DesignColors = () => {
 					</div>
 					<div
 						className="custom-palette__below-row"
-						role="button"
-						tabIndex={ paletteCount + 4 }
 						onClick={ () => selectCustomColor( 'tertiary' ) }
 						onKeyDown={ () => selectCustomColor( 'tertiary' ) }
+						role="button"
+						tabIndex={ paletteCount + 4 }
 					>
 						<div
 							className={ `custom-palette__below-row-icon ${
@@ -513,9 +513,9 @@ const DesignColors = () => {
 					<Popover>
 						<div
 							className="custom-palette__picker-close-icon"
+							onClick={ () => setShowColorPicker( false ) }
 							role="button"
 							tabIndex={ 0 }
-							onClick={ () => setShowColorPicker( false ) }
 							onKeyDown={ () => setShowColorPicker( false ) }
 						>
 							X

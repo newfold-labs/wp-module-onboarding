@@ -3,13 +3,13 @@ import { useState, useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
-import { LivePreviewSkeleton, LivePreviewSelectableCard } from '../../../components/LivePreview';
+import {
+	LivePreviewSkeleton,
+	LivePreviewSelectableCard,
+} from '../../../components/LivePreview';
 import { setFlow } from '../../../utils/api/flow';
 
-import {
-	THEME_STATUS_ACTIVE,
-	THEME_STATUS_INIT,
-} from '../../../../constants';
+import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 
 const DesignHeaderMenu = () => {
 	const headerMenuSlugs = [
@@ -28,37 +28,24 @@ const DesignHeaderMenu = () => {
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
 	const location = useLocation();
 
-	const { currentStep, currentData, themeStatus, storedPreviewSettings } = useSelect( ( select ) => {
-		return {
-			currentStep: select( nfdOnboardingStore ).getStepFromPath(
-				location.pathname
-			),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-			storedPreviewSettings: select( nfdOnboardingStore ).getStepPreviewData(),
-		};
-	}, [] );
+	const { currentStep, currentData, themeStatus, storedPreviewSettings } =
+		useSelect( ( select ) => {
+			return {
+				currentStep: select( nfdOnboardingStore ).getStepFromPath(
+					location.pathname
+				),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				storedPreviewSettings:
+					select( nfdOnboardingStore ).getStepPreviewData(),
+			};
+		}, [] );
 
-	const { setCurrentOnboardingData, updateThemeStatus, setHeaderMenuData } = useDispatch( nfdOnboardingStore );
+	const { setCurrentOnboardingData, updateThemeStatus, setHeaderMenuData } =
+		useDispatch( nfdOnboardingStore );
 
 	const getPatternsData = async () => {
-		const headerMenuPreviewResponse = await getPatterns(
-			currentStep.patternId
-		);
-		if ( headerMenuPreviewResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_INIT );
-		}
-		setHeaderMenuPreviewData( headerMenuPreviewResponse.body );
-
-		const headerMenuPatterns = [];
-		headerMenuPreviewResponse?.body.forEach( ( pageParts ) => {
-			if ( headerMenuSlugs.includes( pageParts.slug ) ) {
-				headerMenuPatterns.push( pageParts );
-			}
-		} );
-		setPatterns( headerMenuPatterns );
-
 		if (
 			! currentData.data.partHeader ||
 			currentData.data.partHeader === ''
@@ -67,6 +54,23 @@ const DesignHeaderMenu = () => {
 			setCurrentOnboardingData( currentData );
 		}
 		setSelectedPattern( currentData.data.partHeader );
+
+		const headerMenuPreviewResponse = await getPatterns(
+			currentStep.patternId
+		);
+		if ( headerMenuPreviewResponse?.error ) {
+			return updateThemeStatus( THEME_STATUS_INIT );
+		}
+
+		const headerMenuPatterns = [];
+		headerMenuPreviewResponse?.body.forEach( ( pageParts ) => {
+			if ( headerMenuSlugs.includes( pageParts.slug ) ) {
+				headerMenuPatterns.push( pageParts );
+			}
+		} );
+
+		setHeaderMenuPreviewData( headerMenuPreviewResponse.body );
+		setPatterns( headerMenuPatterns );
 
 		let [ pageContent, headerContent, pagePreview ] = [ '', '', '' ];
 		headerMenuPreviewResponse.body.forEach( ( pageParts ) => {
@@ -89,13 +93,18 @@ const DesignHeaderMenu = () => {
 
 	const handleClick = async ( idx ) => {
 		if ( document.getElementsByClassName( 'nfd-onboard-content' ) ) {
-			document.getElementsByClassName( 'nfd-onboard-content' )[ 0 ]
+			document
+				.getElementsByClassName( 'nfd-onboard-content' )[ 0 ]
 				.scrollIntoView( {
 					behavior: 'smooth',
 				} );
 		}
 
 		const chosenPattern = patterns[ idx ];
+
+		if ( chosenPattern.slug === selectedPattern ) {
+			return true;
+		}
 
 		setSelectedPattern( chosenPattern.slug );
 		currentData.data.partHeader = chosenPattern.slug;
@@ -120,7 +129,9 @@ const DesignHeaderMenu = () => {
 			return (
 				<LivePreviewSelectableCard
 					key={ idx }
-					className={ 'theme-header-menu-preview--drawer__list__item' }
+					className={
+						'theme-header-menu-preview--drawer__list__item'
+					}
 					selected={ pattern.slug === selectedPattern }
 					blockGrammer={ pattern.content }
 					viewportWidth={ 900 }
@@ -134,7 +145,9 @@ const DesignHeaderMenu = () => {
 
 	return (
 		<LivePreviewSkeleton
-			count={ storedPreviewSettings[ currentStep?.patternId ]?.previewCount }
+			count={
+				storedPreviewSettings[ currentStep?.patternId ]?.previewCount
+			}
 			watch={ patterns }
 			callback={ buildPreviews }
 			className={ 'theme-header-menu-preview--drawer__list__item' }
