@@ -57,13 +57,12 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	}
 
 	/**
-	 * Get the arguments with type of the patterns.
+	 * Get the patterns arguments.
+	 * Retrieves the orginal numerous variations if true, else sends the recently saved theme settings in the DB.
 	 *
 	 * @return array
 	 */
 	public function get_pattern_args() {
-		// These variable return the orginal numerous variations if true
-		// Else sends the recently saved theme settings in db
 		  return array(
 			  'variations' => array(
 				  'type'    => 'boolean',
@@ -73,12 +72,11 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	}
 
 	/**
-	 * Set the pattern arguments.
+	 * Set the pattern arguments to the latest modified Global Style that is to be saved in the DB.
 	 *
 	 * @return array
 	 */
 	public function set_pattern_args() {
-		// This is the latest modified Global Style to be saved in the db
 		 return array(
 			 'title'    => array(
 				 'type'     => 'string',
@@ -105,7 +103,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	}
 
 	/**
-	 * Retrieve Style Variations.
+	 * Translate the json decoded HTML Files and retrieve all the Theme Style Variations.
 	 *
 	 * @return array
 	 */

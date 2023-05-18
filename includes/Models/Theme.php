@@ -8,7 +8,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\Models;
 class Theme implements \JsonSerializable {
 
 	/**
-	 * Flow data blueprint.
+	 * Name of the Theme.
 	 *
 	 * @var string
 	 */
@@ -29,9 +29,9 @@ class Theme implements \JsonSerializable {
 	private $is_newfold_theme;
 
 	/**
-	 * Theme constructor
+	 * Theme constructor.
 	 *
-	 * @param string $theme_name Theme Name
+	 * @param string $theme_name Theme Name.
 	 */
 	public function __construct( $theme_name ) {
 		$this->theme_name       = $theme_name;
@@ -77,7 +77,7 @@ class Theme implements \JsonSerializable {
 	}
 
 	/**
-	 * Sets a theme as newfold theme
+	 * Sets the status of a theme as a newfold theme.
 	 *
 	 * @param boolean $is_newfold_theme Determines if there is a newfold theme
 	 * @return void
@@ -87,7 +87,7 @@ class Theme implements \JsonSerializable {
 	}
 
 	/**
-	 * Retrieve is_newfold_theme status -true if the theme author is Newfold Digital.
+	 * Retrieve is_newfold_theme status - true if the theme author is Newfold Digital.
 	 *
 	 * @return boolean
 	 */
@@ -96,7 +96,7 @@ class Theme implements \JsonSerializable {
 	}
 
 	/**
-	 * To JSON Serialise the data
+	 * To JSON Serialise the Theme data
 	 *
 	 * @return array
 	 */

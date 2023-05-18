@@ -43,7 +43,7 @@ class ThemeInstallTaskManager {
 	}
 
 	/**
-	 * Retrieve the Queue Name.
+	 * Retrieve the Queue Name for the TaskManager to perform Theme installation.
 	 *
 	 * @return string
 	 */
@@ -192,7 +192,7 @@ class ThemeInstallTaskManager {
 	}
 
 	/**
-	 * Returns the status of given plugin slug.
+	 * Returns the status of given plugin slug - installing/completed.
 	 *
 	 * @param string $theme Theme Slug
 	 * @return string|false

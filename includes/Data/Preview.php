@@ -20,7 +20,7 @@ final class Preview {
 	}
 
 	/**
-	 * Preview Pre-requisites Data.
+	 * Get Pre-requisites Plugin and Theme Data based on the flow type.
 	 *
 	 * @return array
 	 */
@@ -45,7 +45,7 @@ final class Preview {
 	}
 
 	/**
-	 * Retrieve Pre-requisites.
+	 * Retrieve Pre-requisites for the respective flow type.
 	 *
 	 * @return string|array
 	 */
@@ -55,7 +55,7 @@ final class Preview {
 	}
 
 	/**
-	 * Retrieve Settings.
+	 * Retrieve Settings, GlobalStyles and Pre-requisites for thw flow type.
 	 *
 	 * @return array
 	 */

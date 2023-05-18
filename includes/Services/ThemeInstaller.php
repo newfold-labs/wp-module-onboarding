@@ -9,7 +9,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 class ThemeInstaller {
 
 	/**
-	 * Install Themes.
+	 * Install valid and accesible Themes based on the activation status.
 	 *
 	 * @param string  $theme Theme URL.
 	 * @param boolean $activate Activate Status.
@@ -52,7 +52,7 @@ class ThemeInstaller {
 	}
 
 	/**
-	 * Install Theme from zip
+	 * Install theme from an approved zip url if not already installed. Activate and switch to the theme, if specified.
 	 *
 	 * @param string  $url URL to the zip for the plugin.
 	 * @param boolean $activate Activate Status.
@@ -130,11 +130,11 @@ class ThemeInstaller {
 	}
 
 	/**
-	 * Retrieve Theme Stylesheet
+	 * Retrieve Theme Stylesheet Name for a specified theme name and theme type.
 	 *
 	 * @param mixed $theme Slug of the theme present under includes/Data/Themes.php.
 	 * @param mixed $theme_type Type of theme Ref: includes/Data/Themes.php for types of theme slugs.
-	 * @return string The theme stylesheet name.
+	 * @return string|boolean
 	 */
 	public static function get_theme_stylesheet( $theme, $theme_type ) {
 		 $theme_list = Themes::get();
@@ -142,7 +142,7 @@ class ThemeInstaller {
 	}
 
 	 /**
-	  * Retrieve Theme Type
+	  * Retrieve Theme Type - approved NFD Slug/WP Slug.
 	  *
 	  * @param string $theme Theme name
 	  * @return string Type of theme. Ref: includes/Data/Themes.php for the different types.

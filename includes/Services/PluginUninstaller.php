@@ -11,7 +11,7 @@ use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
 class PluginUninstaller {
 
 	/**
-	 * Uninstall Plugins.
+	 * Deactivate a plugin if active and then Uninstall the specific plugin.
 	 *
 	 * @param string $plugin Plugin URL.
 	 * @return \WP_REST_Response|\WP_Error

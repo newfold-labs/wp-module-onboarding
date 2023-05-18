@@ -14,7 +14,7 @@ abstract class BaseHiiveController extends \WP_REST_Controller {
 	protected $url;
 
 	/**
-	 * BaseHiiveControlle constructor.
+	 * BaseHiiveController constructor.
 	 */
 	public function __construct() {
 
@@ -26,7 +26,7 @@ abstract class BaseHiiveController extends \WP_REST_Controller {
 	}
 
 	/**
-	 * Get data containing the Hiive response.
+	 * Get data from the endpoint containing the specific Hiive response.
 	 *
 	 * @param string $endpoint Endpoint request to get specific response
 	 * @param array  $args Arguments determining response

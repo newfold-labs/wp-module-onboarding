@@ -10,7 +10,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 class PluginInstaller {
 
 	/**
-	 * Install Plugins.
+	 * Install valid accessible Plugins based on the activation status.
 	 *
 	 * @param string  $plugin Plugin URL.
 	 * @param boolean $activate Activate Status.
@@ -103,10 +103,10 @@ class PluginInstaller {
 	}
 
 	/**
-	 * Install plugins from WordPress
+	 * Install valid and accessible plugins from WordPress if not already installed.
 	 *
 	 * @param string  $plugin Representing the wordpress.org slug.
-	 * @param boolean $activate Activate Status.
+	 * @param boolean $activate Plugin Activation Status.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public static function install_from_wordpress( $plugin, $activate ) {
@@ -145,7 +145,7 @@ class PluginInstaller {
 	}
 
 	/**
-	 * Install plugins from zip
+	 * Install plugins from an approved zip url if not already installed.
 	 *
 	 * @param string  $url URL to the zip for the plugin.
 	 * @param boolean $activate Activate Status.
@@ -253,7 +253,7 @@ class PluginInstaller {
 	}
 
 	/**
-	 * Retrieve the type of plugin.
+	 * Retrieve the type of plugin - a valid URL/approved NFD Slug/WP Slug.
 	 *
 	 * @param string $plugin Plugin Name
 	 * @return string Type of plugin. Ref: includes/Data/Plugins.php for the different types.
@@ -281,7 +281,7 @@ class PluginInstaller {
 	}
 
 	/**
-	 * Checks if a plugin with the given slug and activation criteria already exists.
+	 * Checks if a plugin exists with the given slug and activation criteria already exists.
 	 *
 	 * @param string $plugin Plugin Name
 	 * @param string $activate Acticate Status

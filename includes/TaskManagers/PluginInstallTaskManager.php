@@ -43,7 +43,7 @@ class PluginInstallTaskManager {
 	}
 
 	/**
-	 * Retrieve the Queue Name.
+	 * Retrieve the Queue Name for the TaskManager to perform Plugin installation.
 	 *
 	 * @return string
 	 */
@@ -229,7 +229,7 @@ class PluginInstallTaskManager {
 	}
 
 	/**
-	 * Returns the status of given plugin slug.
+	 * Returns the status of given plugin slug - installing/completed.
 	 *
 	 * @param string $plugin Plugin Slug
 	 * @return string|false

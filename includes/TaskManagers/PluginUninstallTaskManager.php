@@ -43,7 +43,7 @@ class PluginUninstallTaskManager {
 	}
 
 	/**
-	 * Retrieve the Queue Name.
+	 * Retrieve the Queue Name for the TaskManager to perform Plugin uninstallation.
 	 *
 	 * @return string
 	 */
@@ -171,7 +171,7 @@ class PluginUninstallTaskManager {
 	}
 
 	/**
-	 * Returns the status of given plugin slug.
+	 * Returns the status of given plugin slug - uninstalling/completed.
 	 *
 	 * @param string $plugin Plugin Slug
 	 * @return string|false
