@@ -20,22 +20,21 @@ class FlowService {
 		$default_flow_data = self::get_default_flow_data();
 		$flow_data         = self::read_flow_data_from_wp_option();
 
-		if ( ! ( $flow_data ) ) {
+		if ( ! $flow_data ) {
 			return \update_option( Options::get_option_name( 'flow' ), $default_flow_data );
 		}
 
-		if ( ! isset( $flow_data['version'] ) || strcmp( $flow_data['version'], $default_flow_data['version'] ) !== 0 ) {
-			$upgrade_handler = new UpgradeHandler(
-				NFD_ONBOARDING_DIR . '/includes/Data/Flows/UpgradeRoutine',
-				$flow_data['version'],
-				$default_flow_data['version']
-			);
-		
-			// Returns true if the old version doesn't match the new version
-			$upgrade_status = $upgrade_handler->maybe_upgrade();
-			if( $upgrade_status ) {
-				$flow_data = self::read_flow_data_from_wp_option();
-			}
+		$flow_data['version'] = isset( $flow_data['version'] ) ? $flow_data['version'] : '';
+		$upgrade_handler = new UpgradeHandler(
+			NFD_ONBOARDING_DIR . '/includes/Data/Flows/UpgradeRoutine',
+			$flow_data['version'],
+			$default_flow_data['version']
+		);
+
+		// Returns true if the old version doesn't match the new version
+		$upgrade_status = $upgrade_handler->maybe_upgrade();
+		if ( $upgrade_status ) {
+			$flow_data = self::read_flow_data_from_wp_option();
 			$updated_flow_data = self::update_flow_data_recursive( $default_flow_data, $flow_data );
 			// To update the options with the recent version of flow data
 			$updated_flow_data['version'] = $default_flow_data['version'];
