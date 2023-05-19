@@ -261,7 +261,7 @@ final class Patterns {
 		}
 		return $pattern_content;
 	}
- 
+
 	/**
 	 * Retrieve Theme Step Patterns from chosen Theme in Previous Step
 	 *
@@ -340,7 +340,7 @@ final class Patterns {
 				continue;
 			}
 			if ( in_array( 'yith-wonder-pages', $slug['categories'] ) ) {
-				array_push($homepage_style_slugs, $slug);
+				array_push( $homepage_style_slugs, $slug );
 			}
 			if ( in_array( 'yith-wonder-site-footer', $slug['categories'] ) ) {
 				$footer_content = $slug['content'];
