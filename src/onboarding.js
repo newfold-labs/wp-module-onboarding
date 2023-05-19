@@ -23,6 +23,7 @@ if ( runtimeDataExists ) {
 		registerCoreBlocks();
 	} );
 } else {
+	/* eslint-disable no-console */
 	console.log(
 		'Cannot find Newfold Onboarding runtime data to set __webpack_public_path__.'
 	);
