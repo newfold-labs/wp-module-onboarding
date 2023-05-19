@@ -68,6 +68,9 @@ const DesignTypography = () => {
 	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = async ( fontStyle, context = 'click' ) => {
+		if ( selectedFont === fontStyle ) {
+			return true;
+		}
 		setSelectedFont( fontStyle );
 
 		// Changes the Global Styles to Recompute css properties

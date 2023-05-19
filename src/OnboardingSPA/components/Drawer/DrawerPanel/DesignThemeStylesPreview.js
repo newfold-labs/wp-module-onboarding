@@ -41,33 +41,14 @@ const DesignThemeStylesPreview = () => {
 		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
 
-	const getStylesAndPatterns = async () => {
-		const patternResponse = await getPatterns(
-			currentStep.patternId,
-			true
-		);
-		if ( patternResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_INIT );
-		}
-		const globalStylesResponse = await getGlobalStyles( true );
-		if ( globalStylesResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_INIT );
-		}
-		setPattern( patternResponse?.body );
-		setGlobalStyles( globalStylesResponse?.body );
-		let selectedGlobalStyle;
-		if ( currentData.data.theme.variation ) {
-			selectedGlobalStyle = currentData.data.theme.variation;
-		} else {
-			selectedGlobalStyle = globalStylesResponse.body[ 0 ].title;
-			currentData.data.theme.variation = selectedGlobalStyle;
-			setCurrentOnboardingData( currentData );
-		}
-		setSelectedStyle( selectedGlobalStyle );
+	const scrollSelectionIntoView = () => {
 		if (
 			document.getElementsByClassName(
 				'theme-styles-preview--drawer__list__item__title-bar--selected'
-			)
+			) &&
+			document.getElementsByClassName(
+				'theme-styles-preview--drawer__list__item__title-bar--selected'
+			)[ 0 ]
 		) {
 			document
 				.getElementsByClassName(
@@ -80,6 +61,34 @@ const DesignThemeStylesPreview = () => {
 		}
 	};
 
+	const getStylesAndPatterns = async () => {
+		const globalStylesResponse = await getGlobalStyles( true );
+		if ( globalStylesResponse?.error ) {
+			return updateThemeStatus( THEME_STATUS_INIT );
+		}
+		let selectedGlobalStyle;
+		if ( currentData.data.theme.variation ) {
+			selectedGlobalStyle = currentData.data.theme.variation;
+		} else {
+			selectedGlobalStyle = globalStylesResponse.body[ 0 ].title;
+			currentData.data.theme.variation = selectedGlobalStyle;
+			setCurrentOnboardingData( currentData );
+		}
+		setSelectedStyle( selectedGlobalStyle );
+
+		const patternResponse = await getPatterns(
+			currentStep.patternId,
+			true
+		);
+		if ( patternResponse?.error ) {
+			return updateThemeStatus( THEME_STATUS_INIT );
+		}
+
+		setPattern( patternResponse?.body );
+		setGlobalStyles( globalStylesResponse?.body );
+		scrollSelectionIntoView();
+	};
+
 	useEffect( () => {
 		if ( themeStatus === THEME_STATUS_ACTIVE ) {
 			getStylesAndPatterns();
@@ -88,6 +97,9 @@ const DesignThemeStylesPreview = () => {
 
 	const handleClick = ( idx ) => {
 		const selectedGlobalStyle = globalStyles[ idx ];
+		if ( selectedStyle === selectedGlobalStyle.title ) {
+			return true;
+		}
 		updatePreviewSettings(
 			// eslint-disable-next-line react-hooks/rules-of-hooks
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )

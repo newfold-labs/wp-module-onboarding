@@ -47,22 +47,6 @@ const DesignHeaderMenu = () => {
 		useDispatch( nfdOnboardingStore );
 
 	const getPatternsData = async () => {
-		const headerMenuPreviewResponse = await getPatterns(
-			currentStep.patternId
-		);
-		if ( headerMenuPreviewResponse?.error ) {
-			return updateThemeStatus( THEME_STATUS_INIT );
-		}
-		setHeaderMenuPreviewData( headerMenuPreviewResponse.body );
-
-		const headerMenuPatterns = [];
-		headerMenuPreviewResponse?.body.forEach( ( pageParts ) => {
-			if ( headerMenuSlugs.includes( pageParts.slug ) ) {
-				headerMenuPatterns.push( pageParts );
-			}
-		} );
-		setPatterns( headerMenuPatterns );
-
 		if (
 			! currentData.data.partHeader ||
 			currentData.data.partHeader === ''
@@ -71,6 +55,23 @@ const DesignHeaderMenu = () => {
 			setCurrentOnboardingData( currentData );
 		}
 		setSelectedPattern( currentData.data.partHeader );
+
+		const headerMenuPreviewResponse = await getPatterns(
+			currentStep.patternId
+		);
+		if ( headerMenuPreviewResponse?.error ) {
+			return updateThemeStatus( THEME_STATUS_INIT );
+		}
+
+		const headerMenuPatterns = [];
+		headerMenuPreviewResponse?.body.forEach( ( pageParts ) => {
+			if ( headerMenuSlugs.includes( pageParts.slug ) ) {
+				headerMenuPatterns.push( pageParts );
+			}
+		} );
+
+		setHeaderMenuPreviewData( headerMenuPreviewResponse.body );
+		setPatterns( headerMenuPatterns );
 
 		let [ pageContent, headerContent, pagePreview ] = [ '', '', '' ];
 		headerMenuPreviewResponse.body.forEach( ( pageParts ) => {
@@ -101,6 +102,10 @@ const DesignHeaderMenu = () => {
 		}
 
 		const chosenPattern = patterns[ idx ];
+
+		if ( chosenPattern.slug === selectedPattern ) {
+			return true;
+		}
 
 		setSelectedPattern( chosenPattern.slug );
 		currentData.data.partHeader = chosenPattern.slug;
