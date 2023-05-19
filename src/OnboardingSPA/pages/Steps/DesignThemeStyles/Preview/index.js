@@ -116,7 +116,9 @@ const StepDesignThemeStylesPreview = () => {
 	};
 
 	useEffect( () => {
-		if ( themeStatus === THEME_STATUS_ACTIVE ) getStylesAndPatterns();
+		if ( themeStatus === THEME_STATUS_ACTIVE ) {
+			getStylesAndPatterns();
+		}
 	}, [ themeStatus ] );
 
 	return (

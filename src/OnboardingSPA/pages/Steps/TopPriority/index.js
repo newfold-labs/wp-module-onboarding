@@ -59,8 +59,9 @@ const StepTopPriority = () => {
 		async function setInitialData() {
 			if ( currentData ) {
 				const val = await currentData?.data.topPriority.priority1;
-				if ( val !== '' ) setSelected( parseInt( getKey( val ) ) );
-				else {
+				if ( val !== '' ) {
+					setSelected( parseInt( getKey( val ) ) );
+				} else {
 					currentData.data.topPriority.priority1 =
 						priorityTypes[ selected ];
 					setCurrentOnboardingData( currentData );
@@ -68,7 +69,9 @@ const StepTopPriority = () => {
 			}
 			setisLoaded( true );
 		}
-		if ( ! isLoaded ) setInitialData();
+		if ( ! isLoaded ) {
+			setInitialData();
+		}
 	}, [ isLoaded ] );
 
 	useEffect( () => {

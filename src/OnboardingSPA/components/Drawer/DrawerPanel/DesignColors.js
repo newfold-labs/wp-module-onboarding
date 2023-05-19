@@ -96,13 +96,11 @@ const DesignColors = () => {
 					isCustomStyle &&
 					selectedColorsLocalTemp?.[ slug ] !== '' &&
 					selectedColorsLocalTemp?.[ slug ] !== undefined
-				)
+				) {
 					selectedThemeColorPalette[ idx ].color =
 						selectedColorsLocalTemp[ slug ];
-				/**
-				 * Add Exception for Background.
-				 * (perhaps scope to yith-wonder in future)
-				 */ else if (
+				} else if (
+					// Add Exception for Background. (perhaps scope to yith-wonder in future)
 					colorPalettesTemp?.[ colorStyle ]?.[ slug ] &&
 					'base' === slug
 				) {
@@ -135,10 +133,11 @@ const DesignColors = () => {
 		const res = selectedThemeColorPalette.findIndex(
 			( { slug } ) => slug === slugName
 		);
-		if ( res === -1 )
+		if ( res === -1 ) {
 			return selectedThemeColorPalette.findIndex(
 				( { slug } ) => slug === colorPickerCalledBy
 			);
+		}
 		return res;
 	}
 
@@ -154,9 +153,10 @@ const DesignColors = () => {
 					colorPickerCalledBy === slug &&
 					customColors &&
 					customColors[ slug ] !== undefined
-				)
+				) {
 					selectedThemeColorPalette[ idx ].color =
 						customColors[ slug ];
+				}
 			}
 			if ( customColorsMap ) {
 				const colorVariant = customColorsMap[ colorPickerCalledBy ];
@@ -225,8 +225,9 @@ const DesignColors = () => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
+		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus ) {
 			getColorStylesAndPatterns();
+		}
 		if ( isCustomColorActive() ) {
 			setIsAccordionClosed( false );
 			customColorsResetRef.current.scrollIntoView( {
@@ -241,8 +242,9 @@ const DesignColors = () => {
 			return true;
 		}
 		const customColorsTemp = customColors;
-		for ( const custom in customColorsTemp )
+		for ( const custom in customColorsTemp ) {
 			customColorsTemp[ custom ] = '';
+		}
 
 		setCustomColors( customColorsTemp );
 		saveThemeColorPalette( colorStyle );
@@ -276,8 +278,11 @@ const DesignColors = () => {
 	const selectCustomColor = ( colorType ) => {
 		setShowColorPicker( ! showColorPicker );
 
-		if ( ! showColorPicker ) setColorPickerCalledBy( colorType );
-		else setColorPickerCalledBy( '' );
+		if ( ! showColorPicker ) {
+			setColorPickerCalledBy( colorType );
+		} else {
+			setColorPickerCalledBy( '' );
+		}
 	};
 
 	async function resetColors() {
@@ -297,8 +302,9 @@ const DesignColors = () => {
 		);
 		selectedColors.slug = '';
 		selectedColors.name = '';
-		for ( const colorVal in selectedColors?.color )
+		for ( const colorVal in selectedColors?.color ) {
 			selectedColors.color[ colorVal ].color = '';
+		}
 		setCustomColors( stateToLocal( selectedColors ) );
 		currentData.data.palette = selectedColors;
 
@@ -352,8 +358,11 @@ const DesignColors = () => {
 	}
 
 	function isCustomColorActive() {
-		for ( const custom in customColors )
-			if ( customColors[ custom ] !== '' ) return true;
+		for ( const custom in customColors ) {
+			if ( customColors[ custom ] !== '' ) {
+				return true;
+			}
+		}
 
 		return false;
 	}
