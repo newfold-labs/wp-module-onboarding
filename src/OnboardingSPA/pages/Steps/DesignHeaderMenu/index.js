@@ -48,7 +48,6 @@ const StepDesignHeaderMenu = () => {
 					</div>
 					{ ! pattern && (
 						<LivePreview
-							blockGrammer={ '' }
 							styling={ 'large' }
 							viewportWidth={ 1300 }
 						/>
