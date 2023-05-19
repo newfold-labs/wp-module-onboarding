@@ -226,9 +226,7 @@ final class Patterns {
 	/**
 	 * Replace the header menu slug in the patterns array
 	 *
-	 * @param array $patterns Patterns for the specific step
-	 *
-	 * @return array
+	 * @return array|boolean
 	 */
 	private static function replace_header_menu_slug() {
 		// fetch the selected header menu slug from DB
@@ -284,7 +282,7 @@ final class Patterns {
 
 		foreach ( array_keys( $pattern_slugs ) as $pattern_slug ) {
 			if ( true === $pattern_slugs[ $pattern_slug ]['active'] ) {
-				if( isset( $pattern_slugs[ $pattern_slug ]['replace'] ) && true === $pattern_slugs[ $pattern_slug ]['replace'] ) {
+				if ( isset( $pattern_slugs[ $pattern_slug ]['replace'] ) && true === $pattern_slugs[ $pattern_slug ]['replace'] ) {
 					$pattern_slug_data = $pattern_slugs[ $pattern_slug ];
 					$header_menu_slug = self::replace_header_menu_slug();
 					$pattern_slug = ( ! empty( $header_menu_slug ) ) ? $header_menu_slug : $pattern_slug;
@@ -328,7 +326,7 @@ final class Patterns {
 	/**
 	 * Retrieve Homepage Menu Step Patterns
 	 *
-	 * @param array $pattern_slugs Step Patterns Data
+	 * @param array $patterns Step Patterns Data
 	 * @return array
 	 */
 	private static function filter_homepage_patterns( $patterns ) {
@@ -341,7 +339,7 @@ final class Patterns {
 				$header_content = $slug['content'];
 				continue;
 			}
-			if( in_array( 'yith-wonder-pages', $slug['categories'] ) ) {
+			if ( in_array( 'yith-wonder-pages', $slug['categories'] ) ) {
 				array_push($homepage_style_slugs, $slug);
 			}
 			if ( in_array( 'yith-wonder-site-footer', $slug['categories'] ) ) {
