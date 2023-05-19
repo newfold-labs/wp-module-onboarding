@@ -5,7 +5,7 @@ import { NFD_ONBOARDING_ELEMENT_ID, runtimeDataExists } from './constants';
 import domReady from '@wordpress/dom-ready';
 import { registerCoreBlocks } from '@wordpress/block-library';
 import initializeNFDOnboarding from './OnboardingSPA';
-import { HiiveAnalytics } from '@newfold-labs/ui-analytics';
+import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import { onboardingRestURL } from './OnboardingSPA/utils/api/common';
 
 if ( runtimeDataExists ) {

@@ -19,7 +19,7 @@ import { useEffect, Fragment, useState } from '@wordpress/element';
 import { FullscreenMode } from '@wordpress/interface';
 import { API_REQUEST } from '../../../constants';
 import NewfoldInterfaceSkeleton from '../NewfoldInterfaceSkeleton';
-import { HiiveAnalytics } from '@newfold-labs/ui-analytics';
+import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import { trackHiiveEvent } from '../../utils/analytics';
 
 /**

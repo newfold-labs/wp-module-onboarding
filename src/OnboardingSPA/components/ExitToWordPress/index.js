@@ -10,7 +10,7 @@ import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { wpAdminPage, pluginDashboardPage } from '../../../constants';
-import { HiiveAnalytics } from '@newfold-labs/ui-analytics';
+import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import { trackHiiveEvent } from '../../utils/analytics';
 
 /**

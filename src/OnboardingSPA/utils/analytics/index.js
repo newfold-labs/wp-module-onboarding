@@ -1,4 +1,4 @@
-import { HiiveAnalytics, HiiveEvent } from '@newfold-labs/ui-analytics';
+import { HiiveAnalytics, HiiveEvent } from '@newfold-labs/js-utility-ui-analytics';
 import { HIIVE_ANALYTICS_CATEGORY } from '../../../constants';
 
 export const trackHiiveEvent = ( action, value ) => {
