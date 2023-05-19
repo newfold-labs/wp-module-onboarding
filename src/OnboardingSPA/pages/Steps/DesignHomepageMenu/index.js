@@ -18,6 +18,7 @@ import {
 	LivePreviewSkeleton,
 	GlobalStylesProvider,
 } from '../../../components/LivePreview';
+import { trackHiiveEvent } from '../../../utils/analytics';
 
 const StepDesignHomepageMenu = () => {
 	const homepagePatternList = [
@@ -111,7 +112,7 @@ const StepDesignHomepageMenu = () => {
 
 	async function getHomepagePatternsData() {
 		const homepagePatternDataTemp = await getPatterns(
-			currentStep.patternId,
+			currentStep.patternId
 		);
 		if ( homepagePatternDataTemp?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
@@ -135,11 +136,13 @@ const StepDesignHomepageMenu = () => {
 
 	function saveDataForHomepage( idx ) {
 		setSelectedHomepage( idx );
+		const homepage = homepagePatternList[ idx ];
 		currentData.data.sitePages = {
 			...currentData.data.sitePages,
-			homepage: homepagePatternList[ idx ],
+			homepage,
 		};
 		setCurrentOnboardingData( currentData );
+		trackHiiveEvent( 'homepage-layout', homepage );
 	}
 
 	useEffect( () => {

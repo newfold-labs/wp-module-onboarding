@@ -8,13 +8,9 @@ import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { wpAdminPage, pluginDashboardPage } from '../../../constants';
+import { HiiveAnalytics } from '@newfold-labs/ui-analytics';
 
-/**
- * Interface Text Inputs with standard design.
- *
- * @return {WPComponent} SkipButton Component
- */
-const SkipButton = () => {
+const SkipButton = ( { callback } ) => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { nextStep, currentData, socialData } = useSelect( ( select ) => {
@@ -53,12 +49,20 @@ const SkipButton = () => {
 			}
 			setFlow( currentData );
 		}
+		await HiiveAnalytics.dispatchEvents();
 		// Redirect to Admin Page for normal customers
 		// and Bluehost Dashboard for ecommerce customers
 		const exitLink = exitToWordpressForEcommerce()
 			? pluginDashboardPage
 			: wpAdminPage;
 		window.location.replace( exitLink );
+	}
+
+	function skip() {
+		if ( typeof callback === 'function' ) {
+			callback();
+		}
+		navigate( nextStep.path );
 	}
 
 	function skipStep() {
@@ -73,10 +77,7 @@ const SkipButton = () => {
 			);
 		}
 		return (
-			<Button
-				className="skip-button"
-				onClick={ () => navigate( nextStep.path ) }
-			>
+			<Button className="skip-button" onClick={ () => skip() }>
 				{ __( 'Skip this Step', 'wp-module-onboarding' ) }
 			</Button>
 		);

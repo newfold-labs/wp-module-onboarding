@@ -10,6 +10,7 @@ import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import SelectableCardList from '../../../components/SelectableCardList/selectable-card-list';
 import getContents from './contents';
+import { trackHiiveEvent } from '../../../utils/analytics';
 
 const StepTopPriority = () => {
 	const priorityTypes = {
@@ -74,6 +75,7 @@ const StepTopPriority = () => {
 		if ( isLoaded ) {
 			currentData.data.topPriority.priority1 = priorityTypes[ selected ];
 			setCurrentOnboardingData( currentData );
+			trackHiiveEvent( 'top-priority', priorityTypes[ selected ] );
 		}
 	}, [ selected ] );
 
@@ -101,7 +103,14 @@ const StepTopPriority = () => {
 						'wp-module-onboarding'
 					) }
 				</p>
-				<SkipButton />
+				<SkipButton
+					callback={ () =>
+						trackHiiveEvent(
+							'top-priority-skipped',
+							priorityTypes[ selected ]
+						)
+					}
+				/>
 			</div>
 		</CommonLayout>
 	);

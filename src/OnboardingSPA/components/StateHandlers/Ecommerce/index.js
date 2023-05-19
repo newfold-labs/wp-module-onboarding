@@ -1,6 +1,6 @@
 import { useViewportMatch } from '@wordpress/compose';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
 import { StepLoader } from '../../Loaders';
 import { store as nfdOnboardingStore } from '../../../store';
@@ -22,10 +22,6 @@ const EcommerceStateHandler = ( {
 } ) => {
 	const isLargeViewport = useViewportMatch( 'medium' );
 
-	const [ woocommerceStatus, setWoocommerceStatus ] = useState(
-		PLUGIN_STATUS_INSTALLING
-	);
-
 	const { storedPluginsStatus, brandName } = useSelect( ( select ) => {
 		return {
 			storedPluginsStatus:
@@ -35,6 +31,7 @@ const EcommerceStateHandler = ( {
 	}, [] );
 
 	const contents = getContents( brandName );
+	const woocommerceStatus = storedPluginsStatus[ ECOMMERCE_STEPS_PLUGIN ];
 
 	const {
 		updatePluginsStatus,
@@ -58,7 +55,6 @@ const EcommerceStateHandler = ( {
 				storedPluginsStatus[ ECOMMERCE_STEPS_PLUGIN ] =
 					PLUGIN_STATUS_NOT_ACTIVE;
 				updatePluginsStatus( storedPluginsStatus );
-				return setWoocommerceStatus( PLUGIN_STATUS_NOT_ACTIVE );
 			}
 			window.location.reload();
 		}, PLUGIN_INSTALL_WAIT_TIMEOUT );
@@ -98,7 +94,7 @@ const EcommerceStateHandler = ( {
 
 	useEffect( () => {
 		handleNavigationState( woocommerceStatus );
-	}, [ woocommerceStatus ] );
+	}, [ storedPluginsStatus ] );
 
 	const handlePluginsStatus = async ( pluginsStatus ) => {
 		const pluginStatus = await checkPluginStatus();
@@ -110,15 +106,12 @@ const EcommerceStateHandler = ( {
 				window.location.reload();
 				break;
 			default:
-				pluginsStatus[ ECOMMERCE_STEPS_PLUGIN ] =
-						pluginStatus;
-				setWoocommerceStatus( pluginStatus );
+				pluginsStatus[ ECOMMERCE_STEPS_PLUGIN ] = pluginStatus;
 				updatePluginsStatus( pluginsStatus );
 		}
 	};
 
 	useEffect( () => {
-		setWoocommerceStatus( storedPluginsStatus[ ECOMMERCE_STEPS_PLUGIN ] );
 		if (
 			storedPluginsStatus[ ECOMMERCE_STEPS_PLUGIN ] === PLUGIN_STATUS_INIT
 		) {

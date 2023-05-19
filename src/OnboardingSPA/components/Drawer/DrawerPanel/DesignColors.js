@@ -6,9 +6,9 @@ import { useState, useEffect, useRef } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import { GlobalStylesProvider } from '../../LivePreview';
 import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 import Animate from '../../Animate';
+import { trackHiiveEvent } from '../../../utils/analytics';
 
 const DesignColors = () => {
 	const customColorsResetRef = useRef( null );
@@ -248,6 +248,7 @@ const DesignColors = () => {
 		saveThemeColorPalette( colorStyle );
 		setSelectedColorsLocal( colorPalettes[ colorStyle ] );
 		LocalToState( colorPalettes[ colorStyle ], colorStyle );
+		trackHiiveEvent( 'color-selection', colorStyle );
 	};
 
 	const changeCustomPickerColor = async ( color ) => {
@@ -266,6 +267,9 @@ const DesignColors = () => {
 		saveCustomColors();
 		LocalToState( selectedColorsLocalCopy, 'custom' );
 		setSelectedColorsLocal( selectedColorsLocalCopy );
+		if ( ! isCustomColorActive() ) {
+			trackHiiveEvent( 'color-selection', 'custom' );
+		}
 		setCustomColors( selectedColorsLocalCopy );
 	};
 
@@ -299,6 +303,7 @@ const DesignColors = () => {
 
 		setSelectedColors( selectedColors );
 		setCurrentOnboardingData( currentData );
+		trackHiiveEvent( 'color-selection-reset', selectedGlobalStyle.title );
 	}
 
 	function buildPalettes() {

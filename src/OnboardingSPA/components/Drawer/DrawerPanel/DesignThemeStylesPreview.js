@@ -5,14 +5,12 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import {
-	THEME_STATUS_ACTIVE,
-	THEME_STATUS_INIT,
-} from '../../../../constants';
+import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 import {
 	LivePreviewSelectableCard,
 	LivePreviewSkeleton,
 } from '../../LivePreview';
+import { trackHiiveEvent } from '../../../utils/analytics';
 
 const DesignThemeStylesPreview = () => {
 	const [ pattern, setPattern ] = useState();
@@ -97,6 +95,7 @@ const DesignThemeStylesPreview = () => {
 		setSelectedStyle( selectedGlobalStyle.title );
 		currentData.data.theme.variation = selectedGlobalStyle.title;
 		setCurrentOnboardingData( currentData );
+		trackHiiveEvent( 'selected-style', selectedGlobalStyle.title );
 	};
 
 	const buildPreviews = () => {

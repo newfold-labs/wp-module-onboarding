@@ -3,13 +3,14 @@ import { useState, useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
-import { LivePreviewSkeleton, LivePreviewSelectableCard } from '../../../components/LivePreview';
+import {
+	LivePreviewSkeleton,
+	LivePreviewSelectableCard,
+} from '../../../components/LivePreview';
 import { setFlow } from '../../../utils/api/flow';
 
-import {
-	THEME_STATUS_ACTIVE,
-	THEME_STATUS_INIT,
-} from '../../../../constants';
+import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
+import { trackHiiveEvent } from '../../../utils/analytics';
 
 const DesignHeaderMenu = () => {
 	const headerMenuSlugs = [
@@ -28,19 +29,22 @@ const DesignHeaderMenu = () => {
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
 	const location = useLocation();
 
-	const { currentStep, currentData, themeStatus, storedPreviewSettings } = useSelect( ( select ) => {
-		return {
-			currentStep: select( nfdOnboardingStore ).getStepFromPath(
-				location.pathname
-			),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-			storedPreviewSettings: select( nfdOnboardingStore ).getStepPreviewData(),
-		};
-	}, [] );
+	const { currentStep, currentData, themeStatus, storedPreviewSettings } =
+		useSelect( ( select ) => {
+			return {
+				currentStep: select( nfdOnboardingStore ).getStepFromPath(
+					location.pathname
+				),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				storedPreviewSettings:
+					select( nfdOnboardingStore ).getStepPreviewData(),
+			};
+		}, [] );
 
-	const { setCurrentOnboardingData, updateThemeStatus, setHeaderMenuData } = useDispatch( nfdOnboardingStore );
+	const { setCurrentOnboardingData, updateThemeStatus, setHeaderMenuData } =
+		useDispatch( nfdOnboardingStore );
 
 	const getPatternsData = async () => {
 		const headerMenuPreviewResponse = await getPatterns(
@@ -89,7 +93,8 @@ const DesignHeaderMenu = () => {
 
 	const handleClick = async ( idx ) => {
 		if ( document.getElementsByClassName( 'nfd-onboard-content' ) ) {
-			document.getElementsByClassName( 'nfd-onboard-content' )[ 0 ]
+			document
+				.getElementsByClassName( 'nfd-onboard-content' )[ 0 ]
 				.scrollIntoView( {
 					behavior: 'smooth',
 				} );
@@ -113,6 +118,7 @@ const DesignHeaderMenu = () => {
 		if ( result?.error === null ) {
 			setCurrentOnboardingData( currentData );
 		}
+		trackHiiveEvent( 'theme-header', chosenPattern.slug );
 	};
 
 	const buildPreviews = () => {
@@ -120,7 +126,9 @@ const DesignHeaderMenu = () => {
 			return (
 				<LivePreviewSelectableCard
 					key={ idx }
-					className={ 'theme-header-menu-preview--drawer__list__item' }
+					className={
+						'theme-header-menu-preview--drawer__list__item'
+					}
 					selected={ pattern.slug === selectedPattern }
 					blockGrammer={ pattern.content }
 					viewportWidth={ 900 }
@@ -134,7 +142,9 @@ const DesignHeaderMenu = () => {
 
 	return (
 		<LivePreviewSkeleton
-			count={ storedPreviewSettings[ currentStep?.patternId ]?.previewCount }
+			count={
+				storedPreviewSettings[ currentStep?.patternId ]?.previewCount
+			}
 			watch={ patterns }
 			callback={ buildPreviews }
 			className={ 'theme-header-menu-preview--drawer__list__item' }

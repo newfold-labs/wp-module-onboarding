@@ -22,6 +22,7 @@ import {
 import { store as nfdOnboardingStore } from '../../../../store';
 import { getPatterns } from '../../../../utils/api/patterns';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
+import { trackHiiveEvent } from '../../../../utils/analytics';
 
 const StepDesignThemeStylesPreview = () => {
 	const content = getContents();
@@ -109,6 +110,7 @@ const StepDesignThemeStylesPreview = () => {
 		}
 
 		if ( selected && 'click' === context ) {
+			trackHiiveEvent( 'customize-design', true );
 			navigate( conditionalSteps.designColors.path );
 		}
 	};

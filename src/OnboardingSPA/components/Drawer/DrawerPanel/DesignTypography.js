@@ -6,6 +6,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { getThemeFonts } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
+import { trackHiiveEvent } from '../../../utils/analytics';
 
 const DesignTypography = () => {
 	const drawerFontOptions = useRef();
@@ -57,7 +58,7 @@ const DesignTypography = () => {
 			fontPalettes !== undefined
 		) {
 			setSelectedFont( currentData?.data?.typography?.slug );
-			handleClick( currentData?.data?.typography?.slug );
+			handleClick( currentData?.data?.typography?.slug, 'flow' );
 		}
 	}, [ fontPalettes, storedPreviewSettings ] );
 
@@ -66,7 +67,7 @@ const DesignTypography = () => {
 			getFontStylesAndPatterns();
 	}, [ isLoaded, themeStatus ] );
 
-	const handleClick = async ( fontStyle ) => {
+	const handleClick = async ( fontStyle, context = 'click' ) => {
 		setSelectedFont( fontStyle );
 
 		// Changes the Global Styles to Recompute css properties
@@ -121,6 +122,9 @@ const DesignTypography = () => {
 			useGlobalStylesOutput( globalStylesCopy, storedPreviewSettings )
 		);
 		setCurrentOnboardingData( currentData );
+		if ( 'click' === context ) {
+			trackHiiveEvent( 'font-selection', fontStyle );
+		}
 	};
 
 	function buildPalettes() {

@@ -22,6 +22,7 @@ import {
 	LivePreviewSkeleton,
 } from '../../../../components/LivePreview';
 import { addColorAndTypographyRoutes } from '../utils';
+import { trackHiiveEvent } from '../../../../utils/analytics';
 
 const StepDesignThemeStylesMenu = () => {
 	const content = getContents();
@@ -90,6 +91,12 @@ const StepDesignThemeStylesMenu = () => {
 		setPattern( patternsResponse?.body );
 		setGlobalStyles( globalStylesResponse?.body );
 		setSelectedStyle( currentData.data.theme.variation );
+		if ( '' === currentData.data.theme.variation ) {
+			trackHiiveEvent(
+				'default-style',
+				globalStylesResponse.body[ 0 ].title
+			);
+		}
 	};
 
 	useEffect( () => {
@@ -106,6 +113,7 @@ const StepDesignThemeStylesMenu = () => {
 		currentData.data.theme.variation = selectedGlobalStyle.title;
 		setCurrentOnboardingData( currentData );
 		navigate( nextStep.path );
+		trackHiiveEvent( 'selected-style', selectedGlobalStyle.title );
 	};
 
 	const skiptoCustomPage = () => {
@@ -121,7 +129,7 @@ const StepDesignThemeStylesMenu = () => {
 
 		currentData.data.customDesign = true;
 		setCurrentOnboardingData( currentData );
-
+		trackHiiveEvent( 'customize-design', true );
 		// Find the first Custom Conditional Step and navigate there
 		navigate( conditionalSteps.designColors.path );
 	};

@@ -19,6 +19,8 @@ import { useEffect, Fragment, useState } from '@wordpress/element';
 import { FullscreenMode } from '@wordpress/interface';
 import { API_REQUEST } from '../../../constants';
 import NewfoldInterfaceSkeleton from '../NewfoldInterfaceSkeleton';
+import { HiiveAnalytics } from '@newfold-labs/ui-analytics';
+import { trackHiiveEvent } from '../../utils/analytics';
 
 /**
  * Primary app that renders the <NewfoldInterfaceSkeleton />.
@@ -139,6 +141,7 @@ const App = () => {
 				setIsRequestPlaced( false );
 			}
 		}
+
 		// Check if the Basic Info page was visited
 		if ( location?.pathname.includes( 'basic-info' ) ) {
 			setDidVisitBasicInfo( true );
@@ -223,12 +226,57 @@ const App = () => {
 		}
 	}
 
+	const handlePreviousStepTracking = () => {
+		const previousStep = window.nfdOnboarding?.previousStepID;
+		if ( typeof previousStep !== 'string' ) {
+			window.nfdOnboarding.previousStepID = location.pathname;
+			HiiveAnalytics.dispatchEvents();
+			return;
+		}
+
+		if ( previousStep.includes( 'products' ) ) {
+			trackHiiveEvent( 'products-info', {
+				productCount:
+					currentData.storeDetails.productInfo.product_count,
+				productTypes:
+					currentData.storeDetails.productInfo.product_types.join(
+						','
+					),
+			} );
+		}
+
+		if ( previousStep.includes( 'site-pages' ) ) {
+			currentData.data.sitePages?.other?.forEach( ( sitePage ) => {
+				trackHiiveEvent( `${ sitePage.slug }-layout`, sitePage.slug );
+			} );
+		}
+
+		if ( previousStep.includes( 'site-features' ) ) {
+			const siteFeatures = currentData.data?.siteFeatures;
+			if ( siteFeatures ) {
+				const siteFeaturesArray = Object.keys( siteFeatures ).filter(
+					( key ) => {
+						return siteFeatures[ key ] !== false;
+					}
+				);
+				trackHiiveEvent(
+					'site-features',
+					siteFeaturesArray.join( ',' )
+				);
+			}
+		}
+
+		window.nfdOnboarding.previousStepID = location.pathname;
+		HiiveAnalytics.dispatchEvents();
+	};
+
 	useEffect( () => {
 		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
 	}, [ newfoldBrand ] );
 
 	useEffect( () => {
 		syncStoreToDB();
+		handlePreviousStepTracking();
 		handleColorsAndTypographyRoutes();
 		if ( location.pathname.includes( '/step' ) ) {
 			setActiveFlow( onboardingFlow );

@@ -50,6 +50,7 @@ export const PLUGIN_STATUS_NOT_ACTIVE = 'inactive';
 export const PLUGIN_STATUS_INSTALLING = 'installing';
 export const PLUGIN_STATUS_ACTIVE = 'activated';
 export const PLUGIN_INSTALL_WAIT_TIMEOUT = 30000;
+export const HIIVE_ANALYTICS_CATEGORY = 'wp-onboarding';
 
 /**
  * All views for the <Drawer /> component.
