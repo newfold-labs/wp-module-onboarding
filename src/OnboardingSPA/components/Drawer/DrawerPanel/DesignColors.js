@@ -85,9 +85,6 @@ const DesignColors = () => {
 		selectedColorsLocalTemp = selectedColors,
 		globalStylesTemp = storedPreviewSettings
 	) {
-		if ( selectedColors?.slug === colorStyle ) {
-			return true;
-		}
 		const isCustomStyle = colorStyle === 'custom';
 		const selectedGlobalStyle = globalStylesTemp;
 		const selectedThemeColorPalette =
@@ -240,6 +237,9 @@ const DesignColors = () => {
 	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = ( colorStyle ) => {
+		if ( selectedColors?.slug === colorStyle ) {
+			return true;
+		}
 		const customColorsTemp = customColors;
 		for ( const custom in customColorsTemp )
 			customColorsTemp[ custom ] = '';
