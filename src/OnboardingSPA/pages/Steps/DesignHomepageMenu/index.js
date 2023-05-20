@@ -53,11 +53,13 @@ const StepDesignHomepageMenu = () => {
 
 	function refactorPatterns( homepagePatternDataResp ) {
 		const makeHomepagePattern = [];
-		Object.values( homepagePatternDataResp ).forEach(
+		homepagePatternDataResp.forEach(
 			( homepagePatternData ) => {
 				makeHomepagePattern.push( homepagePatternData.content );
+				homepagePatternList.push( homepagePatternData.slug );
 			}
 		);
+		setHomepagePatternList( homepagePatternList );
 		return makeHomepagePattern;
 	}
 
@@ -72,13 +74,6 @@ const StepDesignHomepageMenu = () => {
 
 		setHomepagePattern( refactorPatterns( homepagePatternDataTemp?.body ) );
 
-		Object.values( homepagePatternDataTemp?.body ).forEach(
-			( homepagePatternData ) => {
-				homepagePatternList.push( homepagePatternData.slug );
-			}
-		);
-		setHomepagePatternList( homepagePatternList );
-
 		if ( currentData?.data.sitePages.homepage !== '' ) {
 			setSelectedHomepage(
 				homepagePatternList?.indexOf(
@@ -92,8 +87,6 @@ const StepDesignHomepageMenu = () => {
 			};
 			setCurrentOnboardingData( currentData );
 		}
-
-		setHomepagePattern( refactorPatterns( homepagePatternDataTemp ) );
 	}
 
 	function saveDataForHomepage( idx ) {
