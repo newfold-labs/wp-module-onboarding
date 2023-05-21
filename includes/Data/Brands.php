@@ -292,7 +292,7 @@ final class Brands {
 		if ( ! defined( 'NFD_ONBOARDING_PLUGIN_BRAND' ) ) {
 			$brand = $container->plugin()->brand;
 			if ( empty( $brand ) ) {
-				$brand = 'WordPress';
+				$brand = 'wordpress';
 			}
 			define( 'NFD_ONBOARDING_PLUGIN_BRAND', sanitize_title_with_dashes( str_replace( '_', '-', $brand ) ) );
 		}
