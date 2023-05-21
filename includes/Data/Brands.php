@@ -92,10 +92,10 @@ final class Brands {
 					),
 				),
 				'config'                      => array(
-					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
+					'net_new_signup_date_threshold' => '2023-05-04T00:00:00.000Z',
 					'enabled_flows'                 => array(
 						'ecommerce' => true,
-						'wp-setup'  => false,
+						'wp-setup'  => true,
 					),
 				),
 			),
@@ -265,10 +265,10 @@ final class Brands {
 					),
 				),
 				'config'                      => array(
-					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
+					'net_new_signup_date_threshold' => '2023-05-04T00:00:00.000Z',
 					'enabled_flows'                 => array(
-						'ecommerce' => false,
-						'wp-setup'  => false,
+						'ecommerce' => true,
+						'wp-setup'  => true,
 					),
 					'views'                         => array(
 						'sidebar' => array(
@@ -292,7 +292,7 @@ final class Brands {
 		if ( ! defined( 'NFD_ONBOARDING_PLUGIN_BRAND' ) ) {
 			$brand = $container->plugin()->brand;
 			if ( empty( $brand ) ) {
-				$brand = 'wordpress';
+				$brand = 'WordPress';
 			}
 			define( 'NFD_ONBOARDING_PLUGIN_BRAND', sanitize_title_with_dashes( str_replace( '_', '-', $brand ) ) );
 		}
