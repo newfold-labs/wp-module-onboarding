@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { useViewportMatch } from '@wordpress/compose';
 import { useEffect, useState } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { SIDEBAR_LEARN_MORE, VIEW_NAV_PRIMARY } from '../../../../constants';
+import { VIEW_NAV_PRIMARY } from '../../../../constants';
 
 import SkipButton from '../../../components/SkipButton';
 import { store as nfdOnboardingStore } from '../../../store';
@@ -48,7 +48,7 @@ const StepTopPriority = () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );
 		}
-		setSidebarActiveView( SIDEBAR_LEARN_MORE );
+		setSidebarActiveView( false );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 		setIsHeaderNavigationEnabled( true );
