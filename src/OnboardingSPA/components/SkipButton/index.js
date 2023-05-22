@@ -9,12 +9,7 @@ import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { wpAdminPage, pluginDashboardPage } from '../../../constants';
 
-/**
- * Interface Text Inputs with standard design.
- *
- * @return {WPComponent} SkipButton Component
- */
-const SkipButton = () => {
+const SkipButton = ( { callback = false } ) => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { nextStep, currentData, socialData } = useSelect( ( select ) => {
@@ -75,7 +70,12 @@ const SkipButton = () => {
 		return (
 			<Button
 				className="skip-button"
-				onClick={ () => navigate( nextStep.path ) }
+				onClick={ () => {
+					if ( typeof callback === 'function' ) {
+						callback();
+					}
+					navigate( nextStep.path );
+				} }
 			>
 				{ __( 'Skip this Step', 'wp-module-onboarding' ) }
 			</Button>
