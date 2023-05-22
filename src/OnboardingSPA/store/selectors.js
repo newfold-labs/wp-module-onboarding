@@ -206,7 +206,7 @@ export function getStepFromPath( state, path ) {
  * @return {object|null|false} Previous Step
  */
 export function getPreviousStep( state ) {
-	const currentStepIndex = findIndex( state.flow.steps.allSteps, {
+	let currentStepIndex = findIndex( state.flow.steps.allSteps, {
 		path: state.flow.steps.currentStep,
 	} );
 	if ( 0 === currentStepIndex ) {
@@ -214,6 +214,10 @@ export function getPreviousStep( state ) {
 	}
 	if ( -1 === currentStepIndex ) {
 		return false; // could not find index
+	}
+	// if current step is header menu and customDesign is false then skip colors and typography step
+	if ( skipColorsAndTypographyStep( state, '/design/header-menu' ) ) {
+		currentStepIndex -= 2;
 	}
 	return state.flow.steps.allSteps[ currentStepIndex - 1 ];
 }
@@ -226,7 +230,7 @@ export function getPreviousStep( state ) {
  */
 export function getNextStep( state ) {
 	const totalIndexes = state.flow.steps.allSteps.length - 1;
-	const currentStepIndex = findIndex( state.flow.steps.allSteps, {
+	let currentStepIndex = findIndex( state.flow.steps.allSteps, {
 		path: state.flow.steps.currentStep,
 	} );
 	if ( totalIndexes === currentStepIndex ) {
@@ -235,7 +239,19 @@ export function getNextStep( state ) {
 	if ( -1 === currentStepIndex ) {
 		return false; // could not find index
 	}
+	// if current step is theme preview and customDesign is false then skip colors and typography step
+	if ( skipColorsAndTypographyStep( state, '/theme-styles/preview' ) ) {
+		currentStepIndex += 2;
+	}
 	return state.flow.steps.allSteps[ currentStepIndex + 1 ];
+}
+
+export function skipColorsAndTypographyStep( state, pathToSearch ) {
+	const currentStep = state.flow.steps.currentStep;
+	return (
+		false === state.data.flowData.data.customDesign &&
+		currentStep.indexOf( pathToSearch ) > 0
+	);
 }
 
 export function isSidebarOpened( state ) {

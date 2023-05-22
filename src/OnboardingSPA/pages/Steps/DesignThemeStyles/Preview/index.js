@@ -2,10 +2,6 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CheckboxControl } from '@wordpress/components';
-import {
-	addColorAndTypographyRoutes,
-	removeColorAndTypographyRoutes,
-} from '../utils';
 import { conditionalSteps } from '../../../../data/routes';
 import {
 	LivePreview,
@@ -30,23 +26,13 @@ const StepDesignThemeStylesPreview = () => {
 	const [ customize, setCustomize ] = useState( false );
 	const navigate = useNavigate();
 
-	const {
-		currentStep,
-		currentData,
-		routes,
-		designSteps,
-		allSteps,
-		themeStatus,
-	} = useSelect( ( select ) => {
+	const { currentStep, currentData, themeStatus } = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
 			),
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			routes: select( nfdOnboardingStore ).getRoutes(),
-			allSteps: select( nfdOnboardingStore ).getAllSteps(),
-			designSteps: select( nfdOnboardingStore ).getDesignSteps(),
 			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 		};
 	}, [] );
@@ -54,9 +40,6 @@ const StepDesignThemeStylesPreview = () => {
 	const {
 		setDrawerActiveView,
 		setSidebarActiveView,
-		updateRoutes,
-		updateDesignSteps,
-		updateAllSteps,
 		setCurrentOnboardingData,
 		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
@@ -83,24 +66,6 @@ const StepDesignThemeStylesPreview = () => {
 		updateOnboardingData = true,
 		context = 'click'
 	) => {
-		let updates;
-		if ( selected ) {
-			updates = addColorAndTypographyRoutes(
-				routes,
-				allSteps,
-				designSteps
-			);
-		} else {
-			updates = removeColorAndTypographyRoutes(
-				routes,
-				allSteps,
-				designSteps
-			);
-		}
-
-		updateRoutes( updates.routes );
-		updateDesignSteps( updates.designSteps );
-		updateAllSteps( updates.allSteps );
 		setCustomize( selected );
 
 		if ( updateOnboardingData ) {

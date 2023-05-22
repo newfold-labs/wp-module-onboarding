@@ -21,21 +21,32 @@ const StepDesignColors = () => {
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
 
-	const { currentStep, themeStatus } = useSelect( ( select ) => {
+	const { currentStep, themeStatus, currentData } = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
 			),
 			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	}, [] );
 
-	const { setDrawerActiveView, setSidebarActiveView, updateThemeStatus } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		setDrawerActiveView,
+		setSidebarActiveView,
+		updateThemeStatus,
+		setCurrentOnboardingData,
+	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView( VIEW_DESIGN_COLORS );
+
+		// if the step was accessed directly then set the customDesign value to true
+		// so that the checkbox on design preview appears checked
+		currentData.data.customDesign = true;
+		setCurrentOnboardingData( currentData );
 	}, [] );
 
 	const getStylesAndPatterns = async () => {

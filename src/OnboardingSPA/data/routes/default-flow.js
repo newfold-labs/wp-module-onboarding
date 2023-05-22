@@ -336,6 +336,54 @@ export const steps = [
 		},
 	},
 	{
+		path: '/wp-setup/step/design/colors',
+		title: __( 'Colors', 'wp-module-onboarding' ),
+		heading: __( "What's your color palette?", 'wp-module-onboarding' ),
+		subheading: __(
+			"We'll paint everything with your colors for a fresh, crisp look.",
+			'wp-module-onboarding'
+		),
+		description: __(
+			'Strong contrast and clear readability help your words jump off the screen.',
+			'wp-module-onboarding'
+		),
+		Component: StepDesignColors,
+		Icon: color,
+		priority: 180,
+		VIEW: VIEW_DESIGN_COLORS,
+		patternId: 'theme-styles',
+		excludeFromRouter: true,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepDesignColorsLearnMoreSidebar ],
+			},
+		},
+	},
+	{
+		path: '/wp-setup/step/design/typography',
+		title: __( 'Typography', 'wp-module-onboarding' ),
+		heading: __( "What's your font style?", 'wp-module-onboarding' ),
+		subheading: __(
+			'Impress your visitors with strong branding and aesthetics.',
+			'wp-module-onboarding'
+		),
+		description: __(
+			"Good typography uses style and proportions to give your words identity and priority. What's your story? Your focus?",
+			'wp-module-onboarding'
+		),
+		Component: StepDesignTypography,
+		Icon: typography,
+		priority: 200,
+		VIEW: VIEW_DESIGN_TYPOGRAPHY,
+		patternId: 'theme-styles',
+		excludeFromRouter: true,
+		sidebars: {
+			LearnMore: {
+				SidebarComponents: [ StepDesignTypographyLearnMoreSidebar ],
+			},
+		},
+	},
+	{
 		path: '/wp-setup/step/design/header-menu',
 		title: __( 'Header & Menu', 'wp-module-onboarding' ),
 		heading: __(
