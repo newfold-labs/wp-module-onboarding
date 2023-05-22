@@ -224,19 +224,23 @@ final class Patterns {
 	}
 
 	/**
-	 * Replace the header menu slug in the patterns array
+	 * Retrieve the header menu slug from flow data.
 	 *
-	 * @return array|boolean
+	 * @return string|boolean
 	 */
-	private static function replace_header_menu_slug() {
+	private static function get_selected_header_from_flow_data() {
 		// fetch the selected header menu slug from DB
-		$flow_data        = \get_option( Options::get_option_name( 'flow' ) );
-		$header_menu_slug = $flow_data['data']['partHeader'];
-		$header_menu_slug = ! empty( $header_menu_slug ) ? explode( '/', $header_menu_slug )[1] : '';
-		if ( ! empty( $header_menu_slug ) ) {
-				return $header_menu_slug;
+		$flow_data        = \get_option( Options::get_option_name( 'flow' ), false );
+		if ( ! $flow_data ) {
+			return false;
 		}
+
+		if ( ! empty( $flow_data['data']['partHeader'] ) ) {
+			return explode( '/', $flow_data['data']['partHeader'] )[1];
+		}
+
 		return false;
+
 	}
 
 	/**
@@ -284,7 +288,7 @@ final class Patterns {
 			if ( true === $pattern_slugs[ $pattern_slug ]['active'] ) {
 				if ( isset( $pattern_slugs[ $pattern_slug ]['replace'] ) && true === $pattern_slugs[ $pattern_slug ]['replace'] ) {
 					$pattern_slug_data = $pattern_slugs[ $pattern_slug ];
-					$header_menu_slug = self::replace_header_menu_slug();
+					$header_menu_slug = self::get_selected_header_from_flow_data();
 					$pattern_slug = ( ! empty( $header_menu_slug ) ) ? $header_menu_slug : $pattern_slug;
 					$pattern_slugs[ $pattern_slug ] = $pattern_slug_data;
 				}
