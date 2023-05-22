@@ -61,7 +61,9 @@ const StepDesignTypography = () => {
 	};
 
 	useEffect( () => {
-		if ( THEME_STATUS_ACTIVE === themeStatus ) getFontPatterns();
+		if ( THEME_STATUS_ACTIVE === themeStatus ) {
+			getFontPatterns();
+		}
 	}, [ themeStatus ] );
 
 	return (
