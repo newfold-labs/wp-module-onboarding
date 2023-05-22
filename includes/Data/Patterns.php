@@ -285,37 +285,38 @@ final class Patterns {
 		$block_patterns_registry = \WP_Block_Patterns_Registry::get_instance();
 
 		foreach ( array_keys( $pattern_slugs ) as $pattern_slug ) {
-			if ( true === $pattern_slugs[ $pattern_slug ]['active'] ) {
-				if ( isset( $pattern_slugs[ $pattern_slug ]['replace'] ) && true === $pattern_slugs[ $pattern_slug ]['replace'] ) {
-					$pattern_slug_data = $pattern_slugs[ $pattern_slug ];
-					$header_menu_slug = self::get_selected_header_from_flow_data();
-					$pattern_slug = ( ! empty( $header_menu_slug ) ) ? $header_menu_slug : $pattern_slug;
-					$pattern_slugs[ $pattern_slug ] = $pattern_slug_data;
-				}
-				$pattern_name = $active_theme . '/' . $pattern_slug;
-				if ( $block_patterns_registry->is_registered( $pattern_name ) ) {
-					$pattern = $block_patterns_registry->get_registered( $pattern_name );
-					// if header menu slug contains "split" replace the menu links with dummy links
-					if ( false !== stripos( $pattern_slug, 'split' ) ) {
-						$pattern['content'] = self::replace_split_menu_items( $pattern['content'] );
-					}
-
-					if ( ! $squash ) {
-						$block_patterns[] = array_merge(
-							array(
-								'slug'       => $pattern_name,
-								'title'      => $pattern['title'],
-								'content'    => self::cleanup_wp_grammar( $pattern['content'] ),
-								'name'       => $pattern['name'],
-								'categories' => $pattern['categories'],
-							),
-							$pattern_slugs[ $pattern_slug ]
-						);
-						continue;
-					}
-					$block_patterns .= self::cleanup_wp_grammar( $pattern['content'] );
-				}
+			if ( true !== $pattern_slugs[ $pattern_slug ]['active'] ) {
+				continue;
 			}
+			if ( isset( $pattern_slugs[ $pattern_slug ]['replace'] ) && true === $pattern_slugs[ $pattern_slug ]['replace'] ) {
+				$pattern_slug_data = $pattern_slugs[ $pattern_slug ];
+				$header_menu_slug = self::get_selected_header_from_flow_data();
+				$pattern_slug = ( ! empty( $header_menu_slug ) ) ? $header_menu_slug : $pattern_slug;
+				$pattern_slugs[ $pattern_slug ] = $pattern_slug_data;
+			}
+			$pattern_name = $active_theme . '/' . $pattern_slug;
+			if ( ! $block_patterns_registry->is_registered( $pattern_name ) ) {
+				continue;
+			}
+			$pattern = $block_patterns_registry->get_registered( $pattern_name );
+			// if header menu slug contains "split" replace the menu links with dummy links
+			if ( false !== stripos( $pattern_slug, 'split' ) ) {
+				$pattern['content'] = self::replace_split_menu_items( $pattern['content'] );
+			}
+			if ( ! $squash ) {
+				$block_patterns[] = array_merge(
+					array(
+						'slug'       => $pattern_name,
+						'title'      => $pattern['title'],
+						'content'    => self::cleanup_wp_grammar( $pattern['content'] ),
+						'name'       => $pattern['name'],
+						'categories' => $pattern['categories'],
+					),
+					$pattern_slugs[ $pattern_slug ]
+				);
+				continue;
+			}
+			$block_patterns .= self::cleanup_wp_grammar( $pattern['content'] );
 		}
 
 		$step_filter = self::get_theme_step_filters()[ $active_theme ][ $step ];
