@@ -37,3 +37,15 @@ export async function completeFlow() {
 		} ).then()
 	);
 }
+
+export async function switchFlow( flow ) {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'flow/switch' ),
+			method: 'POST',
+			data: {
+				flow,
+			},
+		} ).then()
+	);
+}
