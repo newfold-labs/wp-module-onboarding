@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { store, institution, shipping } from '@wordpress/icons';
 import { lazy } from '@wordpress/element';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { orderBy, filter } from 'lodash';
 
 import {
@@ -37,11 +38,11 @@ export const ecommerceSteps = [
 		title: __( 'Street Address', 'wp-module-onboarding' ),
 		heading: __( 'Street Address', 'wp-module-onboarding' ),
 		subheading: __(
-			'In this step you confirm the business address of your store. Simply confirm the one you provided during your initial  Bluehost account setup or provide a new one.',
+			'In this step you confirm the business address of your store. Simply confirm the one you provided during your initial Bluehost account setup or provide a new one.',
 			'wp-module-onboarding'
 		),
 		description: __(
-			'In this step you confirm the business address of your store. Simply confirm the one you provided during your initial  Bluehost account setup or provide a new one.',
+			'In this step you confirm the business address of your store. Simply confirm the one you provided during your initial Bluehost account setup or provide a new one.',
 			'wp-module-onboarding'
 		),
 		Component: StepAddress,
@@ -155,4 +156,8 @@ export const ecommerceGetStartedSteps = () => {
 		defaultInitialGetStartedSteps(),
 		( step ) => ! step.path.includes( '/step/get-started/site-primary' )
 	);
+};
+
+export const getFirstEcommerceStep = () => {
+	return ecommerceSteps[ 0 ];
 };

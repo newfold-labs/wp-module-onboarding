@@ -203,15 +203,15 @@ const DesignColors = () => {
 		let selectedColorsLocalTemp;
 		if ( ! currentData?.data?.palette?.slug === '' ) {
 			selectedColorsTemp = currentData.data.palette;
-			selectedColorsLocalTemp = stateToLocal( selectedColors );
-			setCustomColors( selectedColorsLocal );
+			selectedColorsLocalTemp = stateToLocal( selectedColorsTemp );
+			setCustomColors( selectedColorsLocalTemp );
 			setCurrentOnboardingData( currentData );
 		} else {
 			selectedColorsTemp = currentData.data.palette;
-			selectedColorsLocalTemp = stateToLocal( selectedColors );
+			selectedColorsLocalTemp = stateToLocal( selectedColorsTemp );
 
 			if ( selectedColorsTemp.slug === 'custom' ) {
-				setCustomColors( selectedColorsLocal );
+				setCustomColors( selectedColorsLocalTemp );
 			}
 		}
 		setSelectedColors( selectedColorsTemp );

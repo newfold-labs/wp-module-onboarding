@@ -10,7 +10,7 @@ import { getSettings, setSettings } from '../../utils/api/settings';
 import { wpAdminPage, pluginDashboardPage } from '../../../constants';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 
-const SkipButton = ( { callback } ) => {
+const SkipButton = ( { callback = false } ) => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { nextStep, currentData, socialData } = useSelect( ( select ) => {

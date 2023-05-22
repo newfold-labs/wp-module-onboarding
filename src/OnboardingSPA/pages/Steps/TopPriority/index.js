@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { useViewportMatch } from '@wordpress/compose';
 import { useEffect, useState } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { SIDEBAR_LEARN_MORE, VIEW_NAV_PRIMARY } from '../../../../constants';
+import { VIEW_NAV_PRIMARY } from '../../../../constants';
 
 import SkipButton from '../../../components/SkipButton';
 import { store as nfdOnboardingStore } from '../../../store';
@@ -49,7 +49,7 @@ const StepTopPriority = () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );
 		}
-		setSidebarActiveView( SIDEBAR_LEARN_MORE );
+		setSidebarActiveView( false );
 		setIsDrawerSuppressed( false );
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 		setIsHeaderNavigationEnabled( true );
@@ -74,13 +74,33 @@ const StepTopPriority = () => {
 		}
 	}, [ isLoaded ] );
 
+	const handleSelling = () => {
+		if ( 'ecommerce' !== window.nfdOnboarding.currentFlow ) {
+			window.nfdOnboarding.newFlow = 'ecommerce';
+		}
+	};
+
 	useEffect( () => {
-		if ( isLoaded ) {
-			currentData.data.topPriority.priority1 = priorityTypes[ selected ];
-			setCurrentOnboardingData( currentData );
-			trackHiiveEvent( 'top-priority', priorityTypes[ selected ] );
+		const selectedPriorityType = priorityTypes[ selected ];
+		currentData.data.topPriority.priority1 = selectedPriorityType;
+		setCurrentOnboardingData( currentData );
+		trackHiiveEvent( 'top-priority', priorityTypes[ selected ] );
+		if ( 'selling' === selectedPriorityType ) {
+			handleSelling();
+		} else {
+			window.nfdOnboarding.newFlow = undefined;
 		}
 	}, [ selected ] );
+
+	const handleSkip = () => {
+		window.nfdOnboarding.newFlow = undefined;
+		currentData.data.topPriority.priority1 = priorityTypes[ 0 ];
+		setCurrentOnboardingData( currentData );
+		trackHiiveEvent(
+			'top-priority-skipped',
+			priorityTypes[ 0 ]
+		)
+	};
 
 	const content = getContents();
 
@@ -106,14 +126,7 @@ const StepTopPriority = () => {
 						'wp-module-onboarding'
 					) }
 				</p>
-				<SkipButton
-					callback={ () =>
-						trackHiiveEvent(
-							'top-priority-skipped',
-							priorityTypes[ selected ]
-						)
-					}
-				/>
+				<SkipButton callback={ handleSkip } />
 			</div>
 		</CommonLayout>
 	);

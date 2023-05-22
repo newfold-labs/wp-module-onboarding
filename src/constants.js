@@ -32,6 +32,7 @@ export const SIDEBAR_LEARN_MORE = 'LearnMore';
 
 export const MAX_RETRIES_API_QUEUER = 2;
 export const MAX_RETRIES_SETTINGS_INIT = 2;
+export const MAX_RETRIES_FLOW_SWITCH = 2;
 export const NFD_PLUGINS_QUERY_PARAM = 'nfd_plugins';
 export const NFD_THEMES_QUERY_PARAM = 'nfd_themes';
 
