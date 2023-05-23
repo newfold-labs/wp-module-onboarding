@@ -99,7 +99,7 @@ const StepTopPriority = () => {
 		trackHiiveEvent(
 			'top-priority-skipped',
 			priorityTypes[ 0 ]
-		)
+		);
 	};
 
 	const content = getContents();
