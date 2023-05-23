@@ -285,7 +285,7 @@ final class Brands {
 	/**
 	 * Sets the hosting brand for which Onboarding is active.
 	 *
-	 * @param array $container The brand plugin container.
+	 * @param object $container The brand plugin container.
 	 * @return void
 	 */
 	public static function set_current_brand( $container ) {
