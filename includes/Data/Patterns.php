@@ -131,7 +131,7 @@ final class Patterns {
 	protected static function get_theme_step_filters() {
 		return array(
 			'yith-wonder' => array(
-				'homepage-styles' => array( __CLASS__, 'filter_homepage_patterns' ),
+				'homepage-styles' => array( __CLASS__, 'filter_yith_wonder_homepage_patterns' ),
 			),
 		);
 	}
@@ -334,7 +334,7 @@ final class Patterns {
 	 * @param array $patterns Step Patterns Data
 	 * @return array
 	 */
-	private static function filter_homepage_patterns( $patterns ) {
+	private static function filter_yith_wonder_homepage_patterns( $patterns ) {
 		$header_content       = '';
 		$homepage_style_slugs = array();
 		$footer_content       = '';
