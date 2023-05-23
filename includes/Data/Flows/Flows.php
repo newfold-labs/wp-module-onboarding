@@ -1,7 +1,9 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Data\Flows;
 
+use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginInstaller;
+use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 /**
@@ -36,7 +38,7 @@ final class Flows {
 
 		// to populate the step fields if a user is resuming a flow.
 		'data'                 => array(
-			// Any manual fixes or modification made to siteType shall also be made in FlowServices::update_default_data_for_ecommerce()
+			// Any manual fixes or modification made to siteType shall also be made in FlowService::update_default_data_for_ecommerce()
 			'siteType'        => array(
 				'referTo'   => 'site',
 				'primary'   => array(
@@ -127,21 +129,6 @@ final class Flows {
 	);
 
 	/**
-	 * Has all the Flow Key parameters to be updated for the user in Key-Value pair at the same level of nesting only.
-	 *
-	 * - the value of old_key i.e OldKey is the key name in the option that has been modified to NewKey in the blueprint
-	 * - the value of new_key i.e NewKey is the key name that is be replaced in the option
-	 * - OldKey should also be manually updated to the NewKey in the blueprint
-	 * - retain_existing_value (Boolean): true if the value in the option for the OldKey is to be retained,
-	 *   false if the NewKey is to have the default value that is set in the blueprint and discard the value set in the option for OldKey
-	 *
-	 * @var array
-	 */
-	protected static $fixes = array(
-		// array( 'old_key' => 'OldKey', 'new_key' => 'NewKey', 'retain_existing_value' => true/false ),
-	);
-
-	/**
 	 * Array with Key Names as Key, and array to specify Key from Exception Key Array to remove/add as Value
 	 *
 	 * This shall be used temporarily as the respective keys having varied patterns of values cannot be handled by the scope of current functionality
@@ -151,15 +138,6 @@ final class Flows {
 	protected static $exception_list = array(
 		'other' => true,
 	);
-
-	/**
-	 * Update Flow Key and/or Value.
-	 *
-	 * @return array
-	 */
-	public static function get_fixes() {
-		return self::$fixes;
-	}
 
 	/**
 	 * Update Exception Key(s).
@@ -185,19 +163,21 @@ final class Flows {
 	 * @return string
 	 */
 	public static function get_default_flow() {
-		  return 'wp-setup';
+		return 'wp-setup';
 	}
 
 	/**
-	 * Retrive all the known onboarding flows.
+	 * Retrieve all the known onboarding flows.
 	 *
 	 * @return array A value of true for each key indicates that the flow has been approved
 	 * and a value of null indicates the flow has not been approved (or) has been temporarily disabled.
 	 */
 	public static function get_flows() {
-		return array(
-			'wp-setup'  => true,
-			'ecommerce' => true,
+		$current_brand = Data::current_brand();
+		return isset( $current_brand['config']['enabled_flows'] )
+		? $current_brand['config']['enabled_flows'] : array(
+			'wp-setup'  => false,
+			'ecommerce' => false,
 		);
 	}
 
@@ -235,15 +215,15 @@ final class Flows {
 		$flows = self::get_flows();
 
 		if ( isset( $_GET['flow'] ) ) {
-			   $current_flow_type = \sanitize_text_field( $_GET['flow'] );
+			$current_flow_type = \sanitize_text_field( $_GET['flow'] );
 		}
 
-		if ( ! empty( $current_flow_type ) && isset( $flows[ $current_flow_type ] ) ) {
+		if ( ! empty( $current_flow_type ) && true === $flows[ $current_flow_type ] ) {
 			return $current_flow_type;
 		}
 
 		$current_flow_type = \get_option( Options::get_option_name( 'flow_preset' ), false );
-		if ( $current_flow_type && isset( $flows[ $current_flow_type ] ) ) {
+		if ( $current_flow_type && true === $flows[ $current_flow_type ] ) {
 			return $current_flow_type;
 		}
 
@@ -257,7 +237,7 @@ final class Flows {
 	 */
 	public static function get_flow_from_plugins() {
 		if ( PluginInstaller::exists( 'woocommerce', true ) ) {
-			return 'ecommerce';
+			return true === self::get_flows()['ecommerce'] ? 'ecommerce' : false;
 		}
 		return false;
 	}
@@ -283,8 +263,20 @@ final class Flows {
 	 */
 	public static function get_flow_from_plan_subtype( $plan_subtype ) {
 		if ( self::is_ecommerce_plan( $plan_subtype ) ) {
-			 return isset( self::get_flows()['ecommerce'] ) ? 'ecommerce' : false;
+			return true === self::get_flows()['ecommerce'] ? 'ecommerce' : false;
 		}
-		 return false;
+		return false;
+	}
+	/**
+	 * Get the corresponding flow from the top priority in flow data.
+	 *
+	 * @return string|boolean
+	 */
+	public static function get_flow_from_top_priority() {
+		$flow_data = FlowService::read_data_from_wp_option();
+		if ( $flow_data && isset( $flow_data['data']['topPriority']['priority1'] ) && 'selling' === $flow_data['data']['topPriority']['priority1'] ) {
+			return true === self::get_flows()['ecommerce'] ? 'ecommerce' : false;
+		}
+		return false;
 	}
 }

@@ -96,10 +96,7 @@ const DesignColors = () => {
 					selectedThemeColorPalette[ idx ].color =
 						selectedColorsLocalTemp[ slug ];
 				} else if (
-					/**
-					 * Add Exception for Background.
-					 * (perhaps scope to yith-wonder in future)
-					 */
+				// Add Exception for Background.(perhaps scope to yith-wonder in future)
 					colorPalettesTemp?.[ colorStyle ]?.[ slug ] &&
 					'base' === slug
 				) {

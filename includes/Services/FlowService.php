@@ -4,6 +4,11 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Flows\Flows;
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
+use NewfoldLabs\WP\Module\Onboarding\Data\Preview;
+use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
+use NewfoldLabs\WP\Module\Onboarding\Tasks\PluginInstallTask;
+use NewfoldLabs\WP\Module\Data\SiteClassification\PrimaryType;
+use NewfoldLabs\WP\Module\Data\SiteClassification\SecondaryType;
 use WP_Forge\UpgradeHandler\UpgradeHandler;
 
 /**
@@ -17,16 +22,16 @@ class FlowService {
 	 * @return boolean
 	 */
 	public static function initialize_flow_data() {
-		$default_flow_data = self::get_default_flow_data();
-		$flow_data         = self::read_flow_data_from_wp_option();
+		$default_flow_data = self::get_default_data();
+		$flow_data         = self::read_data_from_wp_option();
 
 		if ( ! $flow_data ) {
-			return \update_option( Options::get_option_name( 'flow' ), $default_flow_data );
+			return self::update_data_in_wp_option( $default_flow_data );
 		}
 
 		$flow_data['version'] = isset( $flow_data['version'] ) ? $flow_data['version'] : '';
 		$upgrade_handler = new UpgradeHandler(
-			NFD_ONBOARDING_DIR . '/includes/Data/Flows/UpgradeRoutine',
+			NFD_ONBOARDING_DIR . '/includes/Data/Flows/Upgrades',
 			$flow_data['version'],
 			$default_flow_data['version']
 		);
@@ -34,11 +39,11 @@ class FlowService {
 		// Returns true if the old version doesn't match the new version
 		$upgrade_status = $upgrade_handler->maybe_upgrade();
 		if ( $upgrade_status ) {
-			$flow_data = self::read_flow_data_from_wp_option();
+			$flow_data = self::read_data_from_wp_option();
 			$updated_flow_data = self::update_flow_data_recursive( $default_flow_data, $flow_data );
 			// To update the options with the recent version of flow data
 			$updated_flow_data['version'] = $default_flow_data['version'];
-			return \update_option( Options::get_option_name( 'flow' ), $updated_flow_data );
+			return self::update_data_in_wp_option( $updated_flow_data );
 		}
 
 		return false;
@@ -49,30 +54,115 @@ class FlowService {
 	 *
 	 * @return array
 	 */
-	public static function get_default_flow_data() {
+	public static function get_default_data() {
 		// check if data is available in the database if not then fetch the default dataset
 		$flow_data              = Flows::get_data();
 		$flow_data['createdAt'] = time();
-		// get current flow type
-		$flow_type = Data::current_flow();
-		// update default data if flow type is ecommerce
-		if ( 'ecommerce' === $flow_type ) {
-			$flow_data = self::update_default_data_for_ecommerce( $flow_data );
-		}
+		$flow_data				= self::update_data_for_ecommerce( $flow_data );
 		return $flow_data;
 	}
 
 	/**
-	 * Function to encapsulate the private function post call made to update $flow_data
-	 *
-	 * @param array $params Param Data
+	 * Get the Onboarding flow data.
 	 *
 	 * @return array
 	 */
-	public static function get_updated_flow_data( $params ) {
-		$default_flow_data = self::get_default_flow_data();
-		$flow_data         = self::read_flow_data_from_wp_option();
-		return self::update_post_call_data_recursive( $flow_data, $default_flow_data, $params );
+	public static function get_flow_data() {
+		$result = self::read_data_from_wp_option();
+		if ( ! $result ) {
+			$result = self::get_default_data();
+			self::update_data_in_wp_option( $result );
+		}
+		return $result;
+	}
+
+	/**
+	 * Update the Onboarding flow data.
+	 *
+	 * @param array $params The params to update in flow data.
+	 * @return array
+	 */
+	public static function update_flow_data( $params ) {
+		if ( empty( $params ) ) {
+			return new \WP_Error(
+				'no_post_data',
+				'No Data Provided',
+				array( 'status' => 404 )
+			);
+		}
+
+		$default_flow_data = self::get_default_data();
+		$mismatch_key      = self::find_mismatch_key( $params, $default_flow_data );
+		if ( is_wp_error( $mismatch_key ) ) {
+			return $mismatch_key;
+		}
+
+		$flow_data = self::update_post_call_data_recursive( $default_flow_data, $params );
+		if ( is_wp_error( $flow_data ) ) {
+			return $flow_data;
+		}
+
+		/*
+		[TODO] Handle this and some of the site name, logo, description logic in a cleaner way.
+		At least the primary and secondary update does not run on every flow data request.
+		*/
+		if ( ! empty( $params['data']['siteType']['primary']['refers'] ) &&
+		( empty( $flow_data['data']['siteType']['primary']['value'] ) || $flow_data['data']['siteType']['primary']['value'] !== $params['data']['siteType']['primary']['value'] ) ) {
+			if ( class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification\PrimaryType' ) ) {
+				$primary_type = new PrimaryType( $params['data']['siteType']['primary']['refers'], $params['data']['siteType']['primary']['value'] );
+				if ( ! $primary_type->save() ) {
+					return new \WP_Error(
+						'wrong_param_provided',
+						__( 'Wrong Parameter Provided : primary => value', 'wp-module-onboarding' ),
+						array( 'status' => 404 )
+					);
+				}
+			}
+		}
+
+		if ( ! empty( $params['data']['siteType']['secondary']['refers'] ) &&
+		( empty( $flow_data['data']['siteType']['secondary']['value'] ) || $flow_data['data']['siteType']['secondary']['value'] !== $params['data']['siteType']['secondary']['value'] ) ) {
+			if ( class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification\SecondaryType' ) ) {
+				$secondary_type = new SecondaryType( $params['data']['siteType']['secondary']['refers'], $params['data']['siteType']['secondary']['value'] );
+				if ( ! $secondary_type->save() ) {
+					return new \WP_Error(
+						'wrong_param_provided',
+						__( 'Wrong Parameter Provided : secondary => value', 'wp-module-onboarding' ),
+						array( 'status' => 404 )
+					);
+				}
+			}
+		}
+
+		// Update timestamp everytime the Onboarding flow data is updated.
+		$flow_data['updatedAt'] = time();
+
+		// Update Blog Information from Basic Info
+		if ( ( ! empty( $flow_data['data']['blogName'] ) ) ) {
+			\update_option( Options::get_option_name( 'blog_name', false ), $flow_data['data']['blogName'] );
+		}
+
+		if ( ( ! empty( $flow_data['data']['blogDescription'] ) ) ) {
+			\update_option( Options::get_option_name( 'blog_description', false ), $flow_data['data']['blogDescription'] );
+		}
+
+		if ( ( ! empty( $flow_data['data']['siteLogo'] ) ) && ! empty( $flow_data['data']['siteLogo']['id'] ) ) {
+				\update_option( Options::get_option_name( 'site_icon', false ), $flow_data['data']['siteLogo']['id'] );
+				\update_option( Options::get_option_name( 'site_logo', false ), $flow_data['data']['siteLogo']['id'] );
+		} else {
+			\update_option( Options::get_option_name( 'site_icon', false ), 0 );
+			\delete_option( Options::get_option_name( 'site_logo', false ) );
+		}
+
+		if ( ! self::update_data_in_wp_option( $flow_data ) ) {
+			return new \WP_Error(
+				'database_update_failed',
+				'There was an error saving the data',
+				array( 'status' => 404 )
+			);
+		}
+
+		return $flow_data;
 	}
 
 	/**
@@ -84,23 +174,9 @@ class FlowService {
 	 * @return array
 	 */
 	private static function update_flow_data_recursive( $default_flow_data, $flow_data ) {
-		$flow_data_fixes = Flows::get_fixes();
-
 		$updated_flow_data = array();
-		foreach ( $default_flow_data as $key => $value ) {
-			// Any Key renamed is updated in the database with NewKey and the value from the OldKey is retained or not based on retain_existing_value
-			if ( count( $flow_data_fixes ) > 0 ) {
-				foreach ( $flow_data_fixes as $index => $fix ) {
-					if ( array_key_exists( $fix['old_key'], $flow_data ) && strcmp( $key, $fix['new_key'] ) === 0 ) {
-						( $fix['retain_existing_value'] ) ?
-							$updated_flow_data[ $fix['new_key'] ]   = $flow_data[ $fix['old_key'] ]
-							: $updated_flow_data[ $fix['new_key'] ] = $default_flow_data[ $fix['new_key'] ];
-						unset( $flow_data[ $fix['old_key'] ] );
-						continue 2;
-					}
-				}
-			}
 
+		foreach ( $default_flow_data as $key => $value ) {
 			// To align the new data OR datatype of the respective values with the one set in the blueprint
 			if ( ! array_key_exists( $key, $flow_data ) || ( gettype( $value ) !== gettype( $flow_data[ $key ] ) ) ) {
 				$updated_flow_data[ $key ] = $value;
@@ -134,19 +210,21 @@ class FlowService {
 	/**
 	 * Function to update the Database recursively based on Values opted or entered by the User
 	 *
-	 * @param array $flow_data WP Options Data
-	 * @param array $default_flow_data Default Data
+	 * @param array $flow_data Default Data
 	 * @param array $params Params Data
 	 *
 	 * @return \WP_Error|array
 	 */
-	private static function update_post_call_data_recursive( &$flow_data, $default_flow_data, $params ) {
+	private static function update_post_call_data_recursive( &$flow_data, $params ) {
 		$exception_list = Flows::get_exception_list();
 
 		foreach ( $flow_data as $key => $value ) {
 			if ( ! array_key_exists( $key, $params ) ) {
-				$flow_data[ $key ] = $value;
-				continue;
+				return new \WP_Error(
+					'param_not_provided',
+					'Parameter Not Provided : ' . $key,
+					array( 'status' => 400 )
+				);
 			}
 
 			// Verifies the value of Exception List keys from the database and options
@@ -164,8 +242,8 @@ class FlowService {
 				);
 			}
 
-			// Accepts non-Array Values entered by the user
-			if ( ! is_array( $value ) ) {
+			// Accepts non-Array Values entered by the user or if the Database value is Empty/Indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
+			if ( ! is_array( $value ) || self::is_array_indexed( $value ) ) {
 				$flow_data[ $key ] = $params[ $key ];
 				continue;
 			}
@@ -180,14 +258,8 @@ class FlowService {
 				);
 			}
 
-			// If the Database value is Empty/Indexed Array, to avoid Associative arrays to be overwritten (Eg: data)
-			if ( self::is_array_indexed( $value ) || self::is_array_indexed( $default_flow_data[ $key ] ) ) {
-				$flow_data[ $key ] = $params[ $key ];
-				continue;
-			}
-
 			// To handle Associative Arrays gracefully
-			$nested_flow_data = self::update_post_call_data_recursive( $value, $default_flow_data[ $key ], $params[ $key ] );
+			$nested_flow_data = self::update_post_call_data_recursive( $value, $params[ $key ] );
 			if ( is_wp_error( $nested_flow_data ) ) {
 				return $nested_flow_data;
 			}
@@ -208,33 +280,55 @@ class FlowService {
 	}
 
 	/**
-	 * Read onboarding flow options from database
+	 * Switch the Onboarding flow.
 	 *
-	 * @return array|false
+	 * @param string $flow A valid Onboarding flow for a brand.
+	 * @return \WP_Error|boolean
 	 */
-	public static function read_flow_data_from_wp_option() {
-		return \get_option( Options::get_option_name( 'flow' ), false );
-	}
+	public static function switch_flow( $flow ) {
+		// Get all the enabled flows for a brand.
+		$enabled_flows = Flows::get_flows();
+		// If the request flow does not exist or is not enabled then return an error.
+		if ( ! isset( $enabled_flows[ $flow ] ) || true !== $enabled_flows[ $flow ] ) {
+			return new \WP_Error(
+				'nfd_onboarding_error',
+				'Flow not enabled.',
+				array( 'status' => 400 )
+			);
+		}
 
-	/**
-	 * Check the current flow type and update default data if flowtype is ecommerce.
-	 *
-	 * @param array $data default flow data.
-	 *
-	 * @return array
-	 */
-	private static function update_default_data_for_ecommerce( $data ) {
-		// update default data with ecommerce data
-		$data['data']['topPriority']['priority1'] = 'selling';
-		$data['data']['siteType']['referTo']      = 'business';
-		return $data;
+		// Reset the Plugin Install Status and Queue.
+		PluginInstallTaskManager::reset_install_status();
+
+		// Get the pre requisites for a flow.
+		$pre_requisites = Preview::get_pre_requisites( $flow );
+		if ( ! isset( $pre_requisites ) || ! isset( $pre_requisites['plugins'] ) ) {
+			return true;
+		}
+
+		// Install and activate all the required plugins.
+		foreach ( $pre_requisites['plugins'] as $plugin => $active ) {
+			// Skip if the plugin installation if it is already active.
+			if ( 'activated' === $active ) {
+				continue;
+			}
+
+			$plugin_install_task = new PluginInstallTask( $plugin, true );
+			$status              = $plugin_install_task->execute();
+
+			if ( \is_wp_error( $status ) ) {
+				return $status;
+			}
+		}
+
+		return true;
 	}
 
 	/**
 	 * Function to search for key in array recursively with case sensitive exact match
 	 *
 	 * @param array  $params Param Data
-	 * @param array  $flow_data Options Data
+	 * @param array  $flow_data Default Data
 	 * @param string $header_key Array Level in Recursion
 	 *
 	 * @return \WP_error|boolean
@@ -267,5 +361,43 @@ class FlowService {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Read Onboarding flow data from the wp_option.
+	 *
+	 * @return array
+	 */
+	public static function read_data_from_wp_option() {
+		return \get_option( Options::get_option_name( 'flow' ), false );
+	}
+
+	/**
+	 * Update flow data params if the current flow is ecommerce.
+	 *
+	 * @param array $data The flow data.
+	 *
+	 * @return array
+	 */
+	private static function update_data_for_ecommerce( $data ) {
+		// get current flow type
+		$flow_type = Data::current_flow();
+		if ( 'ecommerce' === $flow_type ) {
+			// update default data with ecommerce data
+			$data['data']['topPriority']['priority1'] = 'selling';
+			$data['data']['siteType']['referTo']      = 'business';
+		}
+		return $data;
+	}
+
+	/**
+	 * Update Onboarding flow data in the wp_option.
+	 *
+	 * @param array $data default blueprint flow data.
+	 *
+	 * @return array
+	 */
+	private static function update_data_in_wp_option( $data ) {
+		return \update_option( Options::get_option_name( 'flow' ), $data );
 	}
 }
