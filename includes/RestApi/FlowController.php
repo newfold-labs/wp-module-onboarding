@@ -2,10 +2,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
-use NewfoldLabs\WP\Module\Data\SiteClassification\PrimaryType;
-use NewfoldLabs\WP\Module\Data\SiteClassification\SecondaryType;
 
 
 /**
