@@ -214,7 +214,7 @@ final class Patterns {
 	 * Replace the header menu slug in the patterns array
 	 *
 	 * @param array  $patterns Patterns for the specific step
-	 * @param string $header_menu_slug header menu slug choosen by the user
+	 * @param string $header_menu_slug header menu slug chosen by the user
 	 *
 	 * @return array
 	 */

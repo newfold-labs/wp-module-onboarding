@@ -93,7 +93,7 @@ class FlowService {
 
 		$flow_data = array_replace_recursive( $flow_data, $params );
 
-		// Update timestamp everytime the Onboarding flow data is updated.
+		// Update timestamp every time the Onboarding flow data is updated.
 		$flow_data['updatedAt'] = time();
 
 		// Update Blog Information from Basic Info

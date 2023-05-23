@@ -159,7 +159,7 @@ class ThemeInstallTaskManager {
 	 * Adds a new ThemeInstallTask to the Theme Install queue.
 	 * The Task will be inserted at an appropriate position in the queue based on it's priority.
 	 *
-	 * @param ThemeInstallTask $theme_install_task Theme Intsall Task to add to the queue
+	 * @param ThemeInstallTask $theme_install_task Theme Install Task to add to the queue
 	 * @return array|false
 	 */
 	public static function add_to_queue( ThemeInstallTask $theme_install_task ) {

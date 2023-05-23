@@ -9,20 +9,20 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 class ThemeInstaller {
 
 	/**
-	 * Install valid and accesible Themes based on the activation status.
+	 * Install a whitelisted Theme based on the activation status.
 	 *
-	 * @param string  $theme Theme URL.
-	 * @param boolean $activate Activate Status.
+	 * @param string  $theme Theme URL from Themes.php.
+	 * @param boolean $activate Whether to activate the theme after install.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public static function install( $theme, $activate ) {
 		 $theme_list = Themes::get();
 
-		  // Checks if the theme slug is an nfd slug.
+		// Checks if the theme slug is an nfd slug.
 		if ( self::is_nfd_slug( $theme ) ) {
-			   // Retrieve the theme stylesheet to determine if it has been already installed.
+			// Retrieve the theme stylesheet to determine if it has been already installed.
 			 $stylesheet = $theme_list['nfd_slugs'][ $theme ]['stylesheet'];
-				// Check if the theme already exists.
+			// Check if the theme already exists.
 			if ( ! ( \wp_get_theme( $stylesheet ) )->exists() ) {
 				$status = self::install_from_zip(
 					$theme_list['nfd_slugs'][ $theme ]['url'],
@@ -39,7 +39,7 @@ class ThemeInstaller {
 				);
 			}
 
-			   // If specified then activate the theme even if it already installed.
+			// If specified then activate the theme even if it already installed.
 			if ( $activate && ( ( \wp_get_theme() )->get( 'TextDomain' ) !== $stylesheet ) ) {
 				 $status = \switch_theme( $stylesheet );
 			}
@@ -52,10 +52,10 @@ class ThemeInstaller {
 	}
 
 	/**
-	 * Install theme from an approved zip url if not already installed. Activate and switch to the theme, if specified.
+	 * Install theme from an custom zip url if not already installed. Activate and switch to the theme, if specified.
 	 *
-	 * @param string  $url URL to the zip for the plugin.
-	 * @param boolean $activate Activate Status.
+	 * @param string  $url The ZIP URL to install the theme from.
+	 * @param boolean $activate Whether to activate the plugin after install.
 	 * @param string  $stylesheet Theme Stylesheet Name.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
@@ -103,7 +103,7 @@ class ThemeInstaller {
 			);
 		}
 
-		  // Activate the theme if specified.
+		// Activate the theme if specified.
 		if ( $activate && ( ( \wp_get_theme() )->get( 'TextDomain' ) !== $stylesheet ) ) {
 			 \switch_theme( $stylesheet );
 		}

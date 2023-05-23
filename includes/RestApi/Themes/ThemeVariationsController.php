@@ -58,7 +58,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 
 	/**
 	 * Get the patterns arguments.
-	 * Retrieves the orginal numerous variations if true, else sends the recently saved theme settings in the DB.
+	 * Retrieves the original numerous variations if true, else sends the recently saved theme settings in the DB.
 	 *
 	 * @return array
 	 */

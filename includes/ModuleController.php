@@ -37,7 +37,7 @@ class ModuleController {
 
 		$enable_onboarding = self::verify_onboarding_criteria( $customer_data );
 
-		// Check if he is a Non-Ecom Cust and Disable Redirect and Module
+		// Check if he is a Non-Ecommerce Customer and Disable Redirect and Module
 		if ( ! $enable_onboarding ) {
 
 			// Check if the Module Does Exist

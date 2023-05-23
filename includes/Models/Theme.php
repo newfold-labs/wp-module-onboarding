@@ -41,7 +41,7 @@ class Theme implements \JsonSerializable {
 	/**
 	 * Sets the Theme Name
 	 *
-	 * @param string $theme_name Theme Name
+	 * @param string $theme_name name of the theme.
 	 * @return void
 	 */
 	public function set_theme_name( $theme_name ) {
@@ -77,9 +77,9 @@ class Theme implements \JsonSerializable {
 	}
 
 	/**
-	 * Sets the status of a theme as a newfold theme.
+	 * Sets the status of a theme as a Newfold theme.
 	 *
-	 * @param boolean $is_newfold_theme Determines if there is a newfold theme
+	 * @param boolean $is_newfold_theme Determines if there is a Newfold theme
 	 * @return void
 	 */
 	public function set_is_newfold_theme( $is_newfold_theme ) {
@@ -96,7 +96,7 @@ class Theme implements \JsonSerializable {
 	}
 
 	/**
-	 * To JSON Serialise the Theme data
+	 * To JSON Serialize the Theme data
 	 *
 	 * @return array
 	 */

@@ -43,7 +43,7 @@ class PluginUninstallTaskManager {
 	}
 
 	/**
-	 * Retrieve the Queue Name for the TaskManager to perform Plugin uninstallation.
+	 * Retrieve the Queue Name for the TaskManager to perform Plugin Uninstalls.
 	 *
 	 * @return string
 	 */
