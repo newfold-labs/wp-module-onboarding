@@ -58,7 +58,7 @@ class FlowService {
 		// check if data is available in the database if not then fetch the default dataset
 		$flow_data              = Flows::get_data();
 		$flow_data['createdAt'] = time();
-		$flow_data				= self::update_data_for_ecommerce( $flow_data );
+		$flow_data              = self::update_data_for_ecommerce( $flow_data );
 		return $flow_data;
 	}
 
