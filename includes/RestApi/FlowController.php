@@ -1,13 +1,8 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
-use NewfoldLabs\WP\Module\Onboarding\Data\Data;
-use NewfoldLabs\WP\Module\Onboarding\Data\Flows;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Onboarding\Data\Options;
-use NewfoldLabs\WP\Module\Data\SiteClassification\PrimaryType;
-use NewfoldLabs\WP\Module\Data\SiteClassification\SecondaryType;
-
+use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
 
 /**
  * Class FlowController
@@ -61,132 +56,61 @@ class FlowController {
 				),
 			)
 		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/switch',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'switch' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+					'args'                => $this->get_switch_args(),
+				),
+			)
+		);
 	}
 
 	/**
-	 * Fetch onboarding flow details from database.
+	 * Get the valid request params for the switch endpoint.
 	 *
-	 * @param \WP_REST_Request $request Request model.
+	 * @return array
+	 */
+	public function get_switch_args() {
+		return array(
+			'flow' => array(
+				'required'          => true,
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+		);
+	}
+
+	/**
+	 * Get Onboarding flow data.
 	 *
 	 * @return \WP_REST_Response
 	 */
-	public function get_onboarding_flow_data( \WP_REST_Request $request ) {
-		// check if data is available in the database if not then fetch the default dataset
-		$result = $this->read_details_from_wp_options();
-		if ( ! $result ) {
-			$result              = Flows::get_data();
-			$result['createdAt'] = time();
-			// update default data if flow type is ecommerce
-			$result = $this->update_default_data_for_ecommerce( $result );
-			$this->save_details_to_wp_options( $result );
-		}
-
+	public function get_onboarding_flow_data() {
 		return new \WP_REST_Response(
-			$result,
+			FlowService::get_flow_data(),
 			200
 		);
 	}
 
 	/**
-	 * Save / Update onboarding flow details to database.
+	 * Update the Onboarding flow data.
 	 *
-	 * @param \WP_REST_Request $request Request model.
+	 * @param \WP_REST_Request $request The incoming request.
 	 *
-	 * @return \WP_REST_Response|\WP_Error
+	 * @return \WP_Error|\WP_REST_Response
 	 */
 	public function save_onboarding_flow_data( \WP_REST_Request $request ) {
-		$flow_data = array();
-		$params    = json_decode( $request->get_body(), true );
+		$params = json_decode( $request->get_body(), true );
 
-		if ( is_null( $params ) ) {
-			return new \WP_Error(
-				'no_post_data',
-				'No Data Provided',
-				array( 'status' => 404 )
-			);
-		}
-
-		$flow_data = $this->read_details_from_wp_options();
-		if ( ! $flow_data ) {
-			$flow_data              = Flows::get_data();
-			$flow_data['createdAt'] = time();
-			// update default data if flow type is ecommerce
-			$flow_data = $this->update_default_data_for_ecommerce( $flow_data );
-			$this->save_details_to_wp_options( $flow_data );
-		}
-
-		foreach ( $params as $key => $param ) {
-			$value = $this->array_search_key( $key, $flow_data );
-			if ( false === $value ) {
-				return new \WP_Error(
-					'wrong_param_provided',
-					"Wrong Parameter Provided : $key",
-					array( 'status' => 404 )
-				);
-			}
-		}
-
-		/*
-		[TODO] Handle this and some of the site name, logo, description logic in a cleaner way.
-		At least the primary and secondary update does not run on every flow data request.
-		*/
-		if ( ! empty( $params['data']['siteType']['primary']['refers'] ) &&
-		( empty( $flow_data['data']['siteType']['primary']['value'] ) || $flow_data['data']['siteType']['primary']['value'] !== $params['data']['siteType']['primary']['value'] ) ) {
-			if ( class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification\PrimaryType' ) ) {
-				$primary_type = new PrimaryType( $params['data']['siteType']['primary']['refers'], $params['data']['siteType']['primary']['value'] );
-				if ( ! $primary_type->save() ) {
-					return new \WP_Error(
-						'wrong_param_provided',
-						__( 'Wrong Parameter Provided : primary => value', 'wp-module-onboarding' ),
-						array( 'status' => 404 )
-					);
-				}
-			}
-		}
-
-		if ( ! empty( $params['data']['siteType']['secondary']['refers'] ) &&
-		( empty( $flow_data['data']['siteType']['secondary']['value'] ) || $flow_data['data']['siteType']['secondary']['value'] !== $params['data']['siteType']['secondary']['value'] ) ) {
-			if ( class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification\SecondaryType' ) ) {
-				$secondary_type = new SecondaryType( $params['data']['siteType']['secondary']['refers'], $params['data']['siteType']['secondary']['value'] );
-				if ( ! $secondary_type->save() ) {
-					return new \WP_Error(
-						'wrong_param_provided',
-						__( 'Wrong Parameter Provided : secondary => value', 'wp-module-onboarding' ),
-						array( 'status' => 404 )
-					);
-				}
-			}
-		}
-
-		$flow_data = array_replace_recursive( $flow_data, $params );
-
-		// update timestamp once data is updated
-		$flow_data['updatedAt'] = time();
-
-		// Update Blog Information from Basic Info
-		if ( ( ! empty( $flow_data['data']['blogName'] ) ) ) {
-			\update_option( Options::get_option_name( 'blog_name', false ), $flow_data['data']['blogName'] );
-		}
-
-		if ( ( ! empty( $flow_data['data']['blogDescription'] ) ) ) {
-			\update_option( Options::get_option_name( 'blog_description', false ), $flow_data['data']['blogDescription'] );
-		}
-
-		if ( ( ! empty( $flow_data['data']['siteLogo'] ) ) && ! empty( $flow_data['data']['siteLogo']['id'] ) ) {
-				\update_option( Options::get_option_name( 'site_icon', false ), $flow_data['data']['siteLogo']['id'] );
-				\update_option( Options::get_option_name( 'site_logo', false ), $flow_data['data']['siteLogo']['id'] );
-		} else {
-			\update_option( Options::get_option_name( 'site_icon', false ), 0 );
-			\delete_option( Options::get_option_name( 'site_logo', false ) );
-		}
-
-		// save data to database
-		if ( ! $this->update_wp_options_data_in_database( $flow_data ) ) {
-			return new \WP_Error(
-				'database_update_failed',
-				'There was an error saving the data',
-				array( 'status' => 404 )
-			);
+		$flow_data = FlowService::update_flow_data( $params );
+		if ( \is_wp_error( $flow_data ) ) {
+			return $flow_data;
 		}
 
 		return new \WP_REST_Response(
@@ -196,78 +120,7 @@ class FlowController {
 	}
 
 	/**
-	 * Check the current flow type and update default data if flowtype is ecommerce.
-	 *
-	 * @param array $data default blueprint flow data.
-	 *
-	 * @return array
-	 */
-	private function update_default_data_for_ecommerce( $data ) {
-		// get current flow type
-		$flow_type = Data::current_flow();
-		if ( 'ecommerce' === $flow_type ) {
-			// update default data with ecommerce data
-			$data['data']['topPriority']['priority1'] = 'selling';
-		}
-		return $data;
-	}
-
-	/**
-	 * Read onboarding flow options from database
-	 *
-	 * @return array
-	 */
-	public function read_details_from_wp_options() {
-		return \get_option( Options::get_option_name( 'flow' ) );
-	}
-
-	/**
-	 * Add onboarding flow options
-	 *
-	 * @param array $data default blueprint flow data.
-	 *
-	 * @return array
-	 */
-	private function save_details_to_wp_options( $data ) {
-		return \add_option( Options::get_option_name( 'flow' ), $data );
-	}
-
-	/**
-	 * Update onboarding flow options
-	 *
-	 * @param array $data default blueprint flow data.
-	 *
-	 * @return array
-	 */
-	private function update_wp_options_data_in_database( $data ) {
-		return \update_option( Options::get_option_name( 'flow' ), $data );
-	}
-
-	/**
-	 * Function to search for key in array recursively with case sensitive exact match
-	 *
-	 * @param array $needle_key specific key in flow data.
-	 * @param array $array WP Options Data.
-	 *
-	 * @return boolean
-	 */
-	private function array_search_key( $needle_key, $array ) {
-		foreach ( $array as $key => $value ) {
-			if ( strcmp( $key, $needle_key ) === 0 ) {
-				return true;
-			}
-			if ( is_array( $value ) ) {
-				$result = $this->array_search_key( $needle_key, $value );
-				if ( false !== $result ) {
-					return $result;
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * Flow completion API for child theme generation, verify child theme and publish site pages
+	 * Flow completion API for child theme generation, verify child theme and publish site pages.
 	 *
 	 * @return \WP_REST_Response
 	 */
@@ -292,6 +145,25 @@ class FlowController {
 		return new \WP_REST_Response(
 			array(),
 			201
+		);
+	}
+
+	/**
+	 * Switch the Onboarding flow.
+	 *
+	 * @param \WP_REST_Request $request The incoming switch request.
+	 * @return \WP_Error|\WP_REST_Response
+	 */
+	public function switch( \WP_REST_Request $request ) {
+		$flow   = $request->get_param( 'flow' );
+		$status = FlowService::switch_flow( $flow );
+		if ( \is_wp_error( $status ) ) {
+			return $status;
+		}
+
+		return new \WP_REST_Response(
+			array(),
+			200
 		);
 	}
 }

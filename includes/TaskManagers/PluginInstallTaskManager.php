@@ -12,22 +12,22 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
  */
 class PluginInstallTaskManager {
 
-	 /**
-	  * The number of times a PluginInstallTask can be retried.
-	  *
-	  * @var int
-	  */
+	/**
+	 * The number of times a PluginInstallTask can be retried.
+	 *
+	 * @var int
+	 */
 	private static $retry_limit = 1;
 
 	/**
-	 * Name of the PluginInstallTask Queue.
+	 * The name of the queue, might be prefixed.
 	 *
 	 * @var string
 	 */
 	private static $queue_name = 'plugin_install_queue';
 
 	/**
-	 * PluginInstallTaskManager constructor.
+	 * Schedules the crons.
 	 */
 	public function __construct() {
 		// Ensure there is a thirty second option in the cron schedules
@@ -43,18 +43,18 @@ class PluginInstallTaskManager {
 	}
 
 	/**
-	 * Retrieve the Queue Name for the TaskManager to perform Plugin installation.
+	 * Returns the queue name, might be prefixed.
 	 *
 	 * @return string
 	 */
 	public static function get_queue_name() {
-		 return self::$queue_name;
+		return self::$queue_name;
 	}
 
 	/**
-	 * Adds thirty second option in the cron schedule.
+	 * Adds a 30 second cron schedule.
 	 *
-	 * @param array $schedules Cron Schedule duration
+	 * @param array $schedules The existing cron schedule.
 	 * @return array
 	 */
 	public function add_thirty_seconds_schedule( $schedules ) {
@@ -65,11 +65,11 @@ class PluginInstallTaskManager {
 			);
 		}
 
-		 return $schedules;
+		return $schedules;
 	}
 
 	/**
-	 * Retrieve status of init_list of plugins being queued.
+	 * Queues the initial list of Plugin Installs for a flow.
 	 *
 	 * @return boolean
 	 */
@@ -81,7 +81,7 @@ class PluginInstallTaskManager {
 		}
 
 		// Set option to installing to prevent re-queueing the init_list again on page load.
-		 \update_option( Options::get_option_name( 'plugins_init_status' ), 'installing' );
+		\update_option( Options::get_option_name( 'plugins_init_status' ), 'installing' );
 
 		// Get the initial list of plugins to be installed based on the plan.
 		$init_plugins = Plugins::get_init();
@@ -110,19 +110,19 @@ class PluginInstallTaskManager {
 	 */
 	public function install() {
 		/*
-		   Get the plugins queued up to be installed, the PluginInstall task gets
-		  converted to an associative array before storing it in the option.
+		Get the plugins queued up to be installed, the PluginInstall task gets
+		converted to an associative array before storing it in the option.
 		*/
 		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
 		/*
-		   Conversion of the max heap to an array will always place the PluginInstallTask with the highest
-		  priority at the beginning of the array
+		Conversion of the max heap to an array will always place the PluginInstallTask with the highest
+		priority at the beginning of the array
 		*/
 		$plugin_to_install = array_shift( $plugins );
 
 		// Update the plugin install queue.
-		 \update_option( Options::get_option_name( self::$queue_name ), $plugins );
+		\update_option( Options::get_option_name( self::$queue_name ), $plugins );
 
 		// Recreate the PluginInstall task from the associative array.
 		$plugin_install_task = new PluginInstallTask(
@@ -139,15 +139,15 @@ class PluginInstallTaskManager {
 		$status = $plugin_install_task->execute();
 		if ( \is_wp_error( $status ) ) {
 
-			   // If there is an error, then increase the retry count for the task.
-			   $plugin_install_task->increment_retries();
+			// If there is an error, then increase the retry count for the task.
+			$plugin_install_task->increment_retries();
 
-			   // Get Latest Value of the install queue
-			   $plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
+			// Get Latest Value of the install queue
+			$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
 			/*
-				If the number of retries have not exceeded the limit
-				then re-queue the task at the end of the queue to be retried.
+			If the number of retries have not exceeded the limit
+			then re-queue the task at the end of the queue to be retried.
 			*/
 			if ( $plugin_install_task->get_retries() <= self::$retry_limit ) {
 				array_push( $plugins, $plugin_install_task->to_array() );
@@ -169,27 +169,27 @@ class PluginInstallTaskManager {
 	 * Adds a new PluginInstallTask to the Plugin Install queue.
 	 * The Task will be inserted at an appropriate position in the queue based on it's priority.
 	 *
-	 * @param PluginInstallTask $plugin_install_task Plugin Task Details
+	 * @param PluginInstallTask $plugin_install_task The task to be inserted.
 	 * @return array|false
 	 */
 	public static function add_to_queue( PluginInstallTask $plugin_install_task ) {
 		/*
-		   Get the plugins queued up to be installed, the PluginInstall task gets
-		   converted to an associative array before storing it in the option.
+		Get the plugins queued up to be installed, the PluginInstall task gets
+		converted to an associative array before storing it in the option.
 		*/
 		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
 		$queue = new PriorityQueue();
 		foreach ( $plugins as $queued_plugin ) {
 			/*
-			   Check if there is an already existing PluginInstallTask in the queue
-			   for a given slug and activation criteria.
+			Check if there is an already existing PluginInstallTask in the queue
+			for a given slug and activation criteria.
 			*/
 			if ( $queued_plugin['slug'] === $plugin_install_task->get_slug()
-				  && $queued_plugin['activate'] === $plugin_install_task->get_activate() ) {
-				 return false;
+				&& $queued_plugin['activate'] === $plugin_install_task->get_activate() ) {
+				return false;
 			}
-			 $queue->insert( $queued_plugin, $queued_plugin['priority'] );
+			$queue->insert( $queued_plugin, $queued_plugin['priority'] );
 		}
 
 		// Insert a new PluginInstallTask at the appropriate position in the queue.
@@ -198,44 +198,53 @@ class PluginInstallTaskManager {
 			$plugin_install_task->get_priority()
 		);
 
-		 return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
+		return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
 	}
 
 	/**
-	 * Remove a non-matching PluginInstallTask from the Plugin Install queue.
-	 * The Task will be removed from an appropriate position in the queue and requeued in the end.
+	 * Removes a PluginInstallTask from the queue.
 	 *
-	 * @param string $plugin Plugin Slug
-	 * @return array|false
+	 * @param string $plugin The slug of the task to remove.
+	 * @return array
 	 */
 	public static function remove_from_queue( $plugin ) {
 		/*
-		   Get the plugins queued up to be installed, the PluginInstall task gets
-		   converted to an associative array before storing it in the option.
+		Get the plugins queued up to be installed, the PluginInstall task gets
+		converted to an associative array before storing it in the option.
 		*/
 		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
 
 		$queue = new PriorityQueue();
 		foreach ( $plugins as $queued_plugin ) {
 			/*
-			   If the Plugin slug does not match add it back to the queue.
+			If the Plugin slug does not match add it back to the queue.
 			*/
 			if ( $queued_plugin['slug'] !== $plugin ) {
-				 $queue->insert( $queued_plugin, $queued_plugin['priority'] );
+				$queue->insert( $queued_plugin, $queued_plugin['priority'] );
 			}
 		}
 
-		 return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
+		return \update_option( Options::get_option_name( self::$queue_name ), $queue->to_array() );
 	}
 
 	/**
-	 * Returns the status of given plugin slug - installing/completed.
+	 * Get the status of a given plugin slug from the queue.
 	 *
-	 * @param string $plugin Plugin Slug
-	 * @return string|false
+	 * @param string $plugin The slug of the plugin.
+	 * @return boolean
 	 */
 	public static function status( $plugin ) {
 		$plugins = \get_option( Options::get_option_name( self::$queue_name ), array() );
-		return array_search( $plugin, array_column( $plugins, 'slug' ) );
+		return array_search( $plugin, array_column( $plugins, 'slug' ), true );
+	}
+
+	/**
+	 * Reset the Plugin install status and the queue.
+	 *
+	 * @return void
+	 */
+	public static function reset_install_status() {
+		\delete_option( Options::get_option_name( 'plugins_init_status' ) );
+		\delete_option( Options::get_option_name( 'plugin_install_queue' ) );
 	}
 }

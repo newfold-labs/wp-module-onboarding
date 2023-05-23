@@ -2,7 +2,6 @@ import { useViewportMatch } from '@wordpress/compose';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 
-import { StepLoader } from '../../Loaders';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPluginStatus } from '../../../utils/api/plugins';
 import {
@@ -15,6 +14,7 @@ import {
 } from '../../../../constants';
 import { StepErrorState } from '../../ErrorState';
 import getContents from './contents';
+import EcommerceStepLoader from '../../Loaders/Step/Ecommerce';
 
 const EcommerceStateHandler = ( {
 	children,
@@ -110,8 +110,7 @@ const EcommerceStateHandler = ( {
 				window.location.reload();
 				break;
 			default:
-				pluginsStatus[ ECOMMERCE_STEPS_PLUGIN ] =
-						pluginStatus;
+				pluginsStatus[ ECOMMERCE_STEPS_PLUGIN ] = pluginStatus;
 				setWoocommerceStatus( pluginStatus );
 				updatePluginsStatus( pluginsStatus );
 		}
@@ -139,12 +138,7 @@ const EcommerceStateHandler = ( {
 			case PLUGIN_STATUS_ACTIVE:
 				return children;
 			default:
-				return (
-					<StepLoader
-						title={ contents.loader.title }
-						subtitle={ contents.loader.subtitle }
-					/>
-				);
+				return <EcommerceStepLoader />;
 		}
 	};
 

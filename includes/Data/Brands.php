@@ -92,7 +92,11 @@ final class Brands {
 					),
 				),
 				'config'                      => array(
-					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
+					'net_new_signup_date_threshold' => '2023-05-04T00:00:00.000Z',
+					'enabled_flows'                 => array(
+						'ecommerce' => true,
+						'wp-setup'  => true,
+					),
 				),
 			),
 			'bluehost-india' => array(
@@ -146,6 +150,10 @@ final class Brands {
 				),
 				'config'                      => array(
 					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
+					'enabled_flows'                 => array(
+						'ecommerce' => true,
+						'wp-setup'  => false,
+					),
 				),
 			),
 			'webcom'         => array(
@@ -200,6 +208,10 @@ final class Brands {
 				),
 				'config'                      => array(
 					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
+					'enabled_flows'                 => array(
+						'ecommerce' => false,
+						'wp-setup'  => false,
+					),
 				),
 			),
 			'crazy-domains'  => array(
@@ -253,7 +265,11 @@ final class Brands {
 					),
 				),
 				'config'                      => array(
-					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
+					'net_new_signup_date_threshold' => '2023-05-04T00:00:00.000Z',
+					'enabled_flows'                 => array(
+						'ecommerce' => true,
+						'wp-setup'  => true,
+					),
 					'views'                         => array(
 						'sidebar' => array(
 							'illustration' => array(
