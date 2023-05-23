@@ -40,7 +40,7 @@ jobs:
           restore-keys: ${{ runner.os }}-node-
       
       - name: Setup Registry
-        run: echo "@newfold-labs:registry=https://npm.pkg.github.com/\\n//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+        run: printf "@newfold-labs:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=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" > .npmrc
         if: steps.cache.outputs.cache-hit != 'true'
 
       # Installs @wordpress/scripts for lint checks if it does not exist in the cache.
