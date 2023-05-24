@@ -63,8 +63,9 @@ const DesignTypography = () => {
 	}, [ fontPalettes, storedPreviewSettings ] );
 
 	useEffect( () => {
-		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
+		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus ) {
 			getFontStylesAndPatterns();
+		}
 	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = async ( fontStyle ) => {
@@ -129,7 +130,9 @@ const DesignTypography = () => {
 	function buildPalettes() {
 		return Object.keys( fontPalettes ).map( ( fontStyle, idx ) => {
 			const splitLabel = fontPalettes[ fontStyle ]?.label.split( '&', 2 );
-			if ( splitLabel.length === 0 ) return null;
+			if ( splitLabel.length === 0 ) {
+				return null;
+			}
 			return (
 				<div
 					key={ fontStyle }

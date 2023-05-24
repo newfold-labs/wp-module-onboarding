@@ -34,11 +34,13 @@ const MiniPreview = ( {
 			Object.keys( socialData ).includes( 'other_social_urls' )
 		) {
 			const otherURLS = socialData.other_social_urls;
-			if ( Object.keys( otherURLS ).includes( 'yelp_url' ) )
+			if ( Object.keys( otherURLS ).includes( 'yelp_url' ) ) {
 				setYelp( otherURLS.yelp_url ?? '' );
+			}
 
-			if ( Object.keys( otherURLS ).includes( 'tiktok_url' ) )
+			if ( Object.keys( otherURLS ).includes( 'tiktok_url' ) ) {
 				setTikTok( otherURLS.tiktok_url ?? '' );
+			}
 		}
 	}, [ socialData ] );
 
@@ -50,8 +52,9 @@ const MiniPreview = ( {
 			return false;
 		}
 
-		if ( url.protocol !== 'http:' && url.protocol !== 'https:' )
+		if ( url.protocol !== 'http:' && url.protocol !== 'https:' ) {
 			return false;
+		}
 		return true;
 	};
 
