@@ -35,8 +35,10 @@ class ModuleController {
 		Brands::set_current_brand( container() );
 		$customer_data = Data::customer_data();
 
+		$enable_onboarding = self::verify_onboarding_criteria( $customer_data );
+
 		// Check if he is a Non-Ecom Cust and Disable Redirect and Module
-		if ( ! self::is_new_commerce_signup( $customer_data ) ) {
+		if ( ! $enable_onboarding ) {
 
 			// Check if the Module Does Exist
 			if ( ModuleRegistry::get( $module_name ) ) {
@@ -54,6 +56,37 @@ class ModuleController {
 			}
 		}
 
+	}
+
+	/**
+	 * Verify all the necessary criteria to enable Onboarding for the site.
+	 *
+	 * @param array $customer_data The brand customer data.
+	 * @return boolean
+	 */
+	public static function verify_onboarding_criteria( $customer_data ) {
+		$brand_enabled_flows = Flows::get_flows();
+
+		foreach ( $brand_enabled_flows as $flow => $enabled ) {
+			if ( ! $enabled ) {
+				continue;
+			}
+
+			switch ( $flow ) {
+				case 'ecommerce':
+					if ( self::is_new_commerce_signup( $customer_data ) ) {
+						return true;
+					}
+					break;
+				case 'wp-setup':
+					if ( self::is_net_new_signup( $customer_data ) ) {
+						return true;
+					}
+					break;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -83,6 +116,31 @@ class ModuleController {
 	}
 
 	/**
+	 * Determines if the signup data is after the brand's net_new_signup_date_threshold.
+	 *
+	 * @param array $customer_data The brand customer data.
+	 * @return boolean
+	 */
+	public static function is_net_new_signup( $customer_data ) {
+		$current_brand = Data::current_brand();
+		if ( ! isset( $current_brand['config']['net_new_signup_date_threshold'] ) ) {
+			return false;
+		}
+		$net_new_signup_date_threshold = gmdate( 'Y-m-d H:i:s', strtotime( $current_brand['config']['net_new_signup_date_threshold'] ) );
+
+		// Get the actual signup date of the install.
+		$signup_date = self::get_signup_date( $customer_data );
+
+		// As a safety measure, return false if a signup date cannot be determined.
+		if ( false === $signup_date ) {
+			return false;
+		}
+
+		// Determine whether the commerce install is a net new signup.
+		return $signup_date >= $net_new_signup_date_threshold;
+	}
+
+	/**
 	 * Determine if the install is a new commerce signup
 	 *
 	 * @param array $customer_data The site's customer data.
@@ -106,26 +164,8 @@ class ModuleController {
 			return false;
 		}
 
-		/*
-		Get the net new signup date threshold from the brand configuration.
-		As a safety measure, return false if a threshold is not set for a particular brand.
-		*/
-		$current_brand = Data::current_brand();
-		if ( ! isset( $current_brand['config']['net_new_signup_date_threshold'] ) ) {
-			return false;
-		}
-		$net_new_signup_date_threshold = gmdate( 'Y-m-d H:i:s', strtotime( $current_brand['config']['net_new_signup_date_threshold'] ) );
-
-		// Get the actual signup date of the install.
-		$signup_date = self::get_signup_date( $customer_data );
-
-		// As a safety measure, return false if a signup date cannot be determined.
-		if ( false === $signup_date ) {
-			return false;
-		}
-
 		// Determine whether the commerce install is a net new signup.
-		$is_net_new_signup = $signup_date >= $net_new_signup_date_threshold;
+		$is_net_new_signup = self::is_net_new_signup( $customer_data );
 		if ( ! $is_net_new_signup ) {
 			return false;
 		}

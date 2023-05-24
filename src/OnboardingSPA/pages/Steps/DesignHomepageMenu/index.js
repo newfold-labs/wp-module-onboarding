@@ -20,53 +20,24 @@ import {
 } from '../../../components/LivePreview';
 
 const StepDesignHomepageMenu = () => {
-	const homepagePatternList = [
-		'yith-wonder/homepage-1',
-		'yith-wonder/homepage-2',
-		'yith-wonder/homepage-3',
-	];
-
-	const homepagesList = {
-		'homepage-1': [
-			'yith-wonder/site-header-left-logo-navigation-inline',
-			'yith-wonder/homepage-1',
-			'yith-wonder/site-footer',
-		],
-		'homepage-2': [
-			'yith-wonder/site-header-left-logo-navigation-inline',
-			'yith-wonder/homepage-2',
-			'yith-wonder/site-footer',
-		],
-		'homepage-3': [
-			'yith-wonder/site-header-left-logo-navigation-inline',
-			'yith-wonder/homepage-3',
-			'yith-wonder/site-footer',
-		],
-	};
-
 	const location = useLocation();
 	const [ homepagePattern, setHomepagePattern ] = useState();
+	const [ homepagePatternList, setHomepagePatternList ] = useState( [] );
 	const [ selectedHomepage, setSelectedHomepage ] = useState( 0 );
 
-	const {
-		currentStep,
-		currentData,
-		storedPreviewSettings,
-		themeStatus,
-		themeVariations,
-	} = useSelect( ( select ) => {
-		return {
-			currentStep: select( nfdOnboardingStore ).getStepFromPath(
-				location.pathname
-			),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			storedPreviewSettings:
-				select( nfdOnboardingStore ).getPreviewSettings(),
-			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-			themeVariations: select( nfdOnboardingStore ).getStepPreviewData(),
-		};
-	}, [] );
+	const { currentStep, currentData, themeStatus, themeVariations } =
+		useSelect( ( select ) => {
+			return {
+				currentStep: select( nfdOnboardingStore ).getStepFromPath(
+					location.pathname
+				),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				themeVariations:
+					select( nfdOnboardingStore ).getStepPreviewData(),
+			};
+		}, [] );
 
 	const {
 		setDrawerActiveView,
@@ -82,41 +53,26 @@ const StepDesignHomepageMenu = () => {
 
 	function refactorPatterns( homepagePatternDataResp ) {
 		const makeHomepagePattern = [];
-
-		for ( const key in homepagesList ) {
-			const homepagePatterns = homepagesList[ key ];
-			// update the header menu pattern if already selected
-			if (
-				currentData.data.partHeader ||
-				currentData.data.partHeader !== ''
-			) {
-				homepagePatterns[ 0 ] = currentData.data.partHeader;
+		homepagePatternDataResp.forEach(
+			( homepagePatternData ) => {
+				makeHomepagePattern.push( homepagePatternData.content );
+				homepagePatternList.push( homepagePatternData.slug );
 			}
-
-			let patternData = '';
-			homepagePatterns.forEach( ( patternName ) => {
-				homepagePatternDataResp?.body.forEach(
-					( homepagePatternData ) => {
-						if ( homepagePatternData.slug === patternName ) {
-							patternData += homepagePatternData.content;
-						}
-					}
-				);
-			} );
-			makeHomepagePattern.push( patternData );
-		}
-
+		);
+		setHomepagePatternList( homepagePatternList );
 		return makeHomepagePattern;
 	}
 
 	async function getHomepagePatternsData() {
 		const homepagePatternDataTemp = await getPatterns(
-			currentStep.patternId,
+			currentStep.patternId
 		);
+
 		if ( homepagePatternDataTemp?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
-		setHomepagePattern( refactorPatterns( homepagePatternDataTemp ) );
+
+		setHomepagePattern( refactorPatterns( homepagePatternDataTemp?.body ) );
 
 		if ( currentData?.data.sitePages.homepage !== '' ) {
 			setSelectedHomepage(
@@ -159,7 +115,6 @@ const StepDesignHomepageMenu = () => {
 						blockGrammer={ homepage }
 						viewportWidth={ 1200 }
 						styling={ 'custom' }
-						previewSettings={ storedPreviewSettings }
 						overlay={ false }
 						onClick={ () => saveDataForHomepage( idx ) }
 					/>

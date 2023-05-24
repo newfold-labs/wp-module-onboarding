@@ -54,6 +54,13 @@ const GlobalStylesProvider = ( { children } ) => {
 			} else if ( globalStyles.body[ 0 ]?.id === 0 ) {
 				selectedGlobalStyle = globalStyles.body[ 0 ];
 			}
+			updatePreviewSettings(
+				// eslint-disable-next-line react-hooks/rules-of-hooks
+				useGlobalStylesOutput(
+					selectedGlobalStyle,
+					storedPreviewSettings
+				)
+			);
 		}
 
 		if ( selectedGlobalStyle ) {
@@ -65,10 +72,7 @@ const GlobalStylesProvider = ( { children } ) => {
 				} )
 			);
 		}
-		updatePreviewSettings(
-			// eslint-disable-next-line react-hooks/rules-of-hooks
-			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
-		);
+
 		setIsLoaded( true );
 	};
 
