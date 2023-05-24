@@ -94,7 +94,7 @@ class FlowController {
 	 */
 	public function get() {
 		return new \WP_REST_Response(
-			FlowService::get_flow_data(),
+			FlowService::get_data(),
 			200
 		);
 	}
@@ -109,7 +109,7 @@ class FlowController {
 	public function save_onboarding_flow_data( \WP_REST_Request $request ) {
 		$params = json_decode( $request->get_body(), true );
 
-		$flow_data = FlowService::update_flow_data( $params );
+		$flow_data = FlowService::update_data( $params );
 		if ( is_wp_error( $flow_data ) ) {
 			return $flow_data;
 		}

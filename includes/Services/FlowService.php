@@ -21,7 +21,7 @@ class FlowService {
 	 *
 	 * @return boolean
 	 */
-	public static function initialize_flow_data() {
+	public static function initialize_data() {
 		$default_data = self::get_default_data();
 		$data    = self::read_data_from_wp_option();
 
@@ -67,7 +67,7 @@ class FlowService {
 	 *
 	 * @return array
 	 */
-	public static function get_flow_data() {
+	public static function get_data() {
 		$result = self::read_data_from_wp_option();
 		if ( ! $result ) {
 			$result = self::get_default_data();
@@ -82,7 +82,7 @@ class FlowService {
 	 * @param array $params The params to update in flow data.
 	 * @return array
 	 */
-	public static function update_flow_data( $params ) {
+	public static function update_data( $params ) {
 		if ( empty( $params ) ) {
 			return new \WP_Error(
 				'no_post_data',
@@ -92,10 +92,6 @@ class FlowService {
 		}
 
 		$default_data = self::get_default_data();
-		$mismatch_key = self::find_mismatch_key( $params, $default_data );
-		if ( is_wp_error( $mismatch_key ) ) {
-			return $mismatch_key;
-		}
 
 		$data = self::update_post_call_data_recursive( $params, $default_data );
 		if ( is_wp_error( $data ) ) {
@@ -233,6 +229,15 @@ class FlowService {
 				continue;
 			}
 
+			$mismatch_key = array_diff( array_keys( $params ), array_keys( $default_data ) );
+			if ( ! empty( $mismatch_key ) ) {
+				return new \WP_Error(
+					'invalid_param',
+					'Invalid Parameter : ' . implode( $mismatch_key ),
+					array( 'status' => 400 )
+				);
+			}
+
 			// Error thrown if the datatype of the parameter does not match
 			if ( gettype( $value ) !== gettype( $params[ $key ] ) ) {
 				return new \WP_Error(
@@ -325,45 +330,6 @@ class FlowService {
 	}
 
 	/**
-	 * Function to search for key in array recursively with case sensitive exact match
-	 *
-	 * @param array  $params Param Data
-	 * @param array  $default_data Default Blueprint Data
-	 * @param string $header_key Array Level in Recursion
-	 *
-	 * @return \WP_error|boolean
-	 */
-	public static function find_mismatch_key( $params, $default_data, $header_key = 'Base Level' ) {
-		foreach ( $params as $key => $value ) {
-			if ( is_array( $default_data ) ) {
-				// Error if the key added by the user is not present in the database
-				if ( ! array_key_exists( $key, $default_data ) ) {
-					return new \WP_Error(
-						'wrong_param_provided',
-						'Wrong Parameter Provided',
-						array(
-							'status'                  => 400,
-							'Mismatched Parameter(s)' => $header_key . ' => ' . $key,
-						)
-					);
-				}
-
-				// To check sub-Arrays: Indexed/Empty Arrays
-				if ( ! is_array( $value ) || empty( $value ) || ( ! empty( $value ) && empty( $default_data[ $key ] ) ) || self::is_array_indexed( $value ) ) {
-					continue;
-				}
-
-				// For Associative Arrays
-				$verify_key = self::find_mismatch_key( $value, $default_data[ $key ], $key );
-				if ( is_wp_error( $verify_key ) ) {
-					return $verify_key;
-				}
-			}
-		}
-		return true;
-	}
-
-	/**
 	 * Read Onboarding flow data from the wp_option.
 	 *
 	 * @return array
@@ -385,7 +351,6 @@ class FlowService {
 		if ( 'ecommerce' === $flow_type ) {
 			// update default data with ecommerce data
 			$data['data']['topPriority']['priority1'] = 'selling';
-			$data['data']['siteType']['referTo']      = 'business';
 		}
 		return $data;
 	}

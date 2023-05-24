@@ -96,7 +96,7 @@ const DesignColors = () => {
 					selectedThemeColorPalette[ idx ].color =
 						selectedColorsLocalTemp[ slug ];
 				} else if (
-				// Add Exception for Background.(perhaps scope to yith-wonder in future)
+					// Add Exception for Background.(perhaps scope to yith-wonder in future)
 					colorPalettesTemp?.[ colorStyle ]?.[ slug ] &&
 					'base' === slug
 				) {
@@ -204,6 +204,8 @@ const DesignColors = () => {
 			if ( currentData?.data?.colorStyle === 'custom' ) {
 				setCustomColors( selectedColorsLocalTemp );
 			}
+		} else {
+			setToDefaultPalette();
 		}
 		setSelectedColors( selectedColorPalette );
 		saveThemeColorPalette(
@@ -229,12 +231,6 @@ const DesignColors = () => {
 	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = ( colorStyle ) => {
-		const customColorsTemp = customColors;
-		for ( const custom in customColorsTemp ) {
-			customColorsTemp[ custom ] = '';
-		}
-
-		setCustomColors( customColorsTemp );
 		saveThemeColorPalette( colorStyle );
 		setSelectedColorsLocal( colorPalettes[ colorStyle ] );
 		LocalToState( colorPalettes[ colorStyle ], colorStyle );
@@ -269,7 +265,7 @@ const DesignColors = () => {
 		}
 	};
 
-	async function resetColors() {
+	async function setToDefaultPalette() {
 		const globalStyles = await getGlobalStyles( true );
 		let selectedGlobalStyle;
 		if ( currentData?.data?.theme?.variation ) {
@@ -288,8 +284,17 @@ const DesignColors = () => {
 		for ( const colorVal in selectedColors ) {
 			selectedColors[ colorVal ].color = '';
 		}
-		setCustomColors( stateToLocal( selectedColors ) );
-		setSelectedColors( selectedColors );
+
+		setCustomColors();
+
+		const selectedGlobalStylePalette =
+			selectedGlobalStyle.settings.color.palette;
+		setSelectedColors( selectedGlobalStylePalette );
+		setSelectedColorsLocal( stateToLocal( selectedGlobalStylePalette ) );
+	}
+
+	async function resetColors() {
+		setToDefaultPalette();
 
 		currentData.data.colorStyle = '';
 		setCurrentOnboardingData( currentData );
