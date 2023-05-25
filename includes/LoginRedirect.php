@@ -28,7 +28,7 @@ class LoginRedirect {
 	 */
 	public static function wplogin( $original_redirect, $requested_original_redirect, $user ) {
 		// wp-login.php runs this filter on load and login failures
-		// We should only do a redirect with a succesful user login
+		// We should only do a redirect with a successful user login
 		if ( ! ( $user instanceof \WP_User ) ) {
 			return $original_redirect;
 		}

@@ -2,6 +2,9 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 
+/**
+ * Contains custom font palettes for a given theme.
+ */
 final class Fonts {
 
 	 /**

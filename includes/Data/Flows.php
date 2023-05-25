@@ -167,7 +167,7 @@ final class Flows {
 	}
 
 	/**
-	 * Retrive all the known onboarding flows.
+	 * Retrieve all the known onboarding flows.
 	 *
 	 * @return array A value of true for each key indicates that the flow has been approved
 	 * and a value of null indicates the flow has not been approved (or) has been temporarily disabled.

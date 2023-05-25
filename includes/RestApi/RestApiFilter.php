@@ -77,7 +77,7 @@ class RestApiFilter {
 	}
 
 	/**
-	 * Modify the reponse to make sure it has the dummy pages.
+	 * Modify the response to make sure it has the dummy pages.
 	 *
 	 * @param array   $data - array containing navigation menu data
 	 * @param integer $index - array index from the pages list
@@ -140,7 +140,7 @@ class RestApiFilter {
 	}
 
 	/**
-	 * Modify the reponse to make sure it has the dummy pages.
+	 * Modify the response to make sure it has the dummy pages.
 	 *
 	 * @param array $response - response array
 	 *
@@ -170,9 +170,9 @@ class RestApiFilter {
 	}
 
 	/**
-	 * Modify the reponse to make sure it has the dummy pages.
+	 * Modify the response to make sure it has the dummy pages.
 	 *
-	 * @param array   $page - array containing page attibutes
+	 * @param array   $page - array containing page attributes
 	 * @param integer $index - array index from the pages list
 	 *
 	 * @return array
