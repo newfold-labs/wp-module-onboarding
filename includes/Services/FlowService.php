@@ -227,16 +227,7 @@ class FlowService {
 			if ( isset( $exception_list[ $key ] ) ) {
 				$default_data[ $key ] = $params[ $key ];
 				continue;
-			}
-
-			$mismatch_key = array_diff( array_keys( $params ), array_keys( $default_data ) );
-			if ( ! empty( $mismatch_key ) ) {
-				return new \WP_Error(
-					'invalid_param',
-					'Invalid Parameter : ' . implode( $mismatch_key ),
-					array( 'status' => 400 )
-				);
-			}
+			}			
 
 			// Error thrown if the datatype of the parameter does not match
 			if ( gettype( $value ) !== gettype( $params[ $key ] ) ) {
