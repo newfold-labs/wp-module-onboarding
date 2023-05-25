@@ -110,7 +110,7 @@ final class WP_Admin {
 	}
 
 	/**
-	 * Initialise Plugins and Themes if necessary.
+	 * Initialize Plugins and Themes if necessary.
 	 *
 	 * @return void
 	 */

@@ -130,7 +130,7 @@ class FlowService {
 			}
 		}
 
-		// Update timestamp everytime the Onboarding flow data is updated.
+		// Update timestamp every time the Onboarding flow data is updated.
 		$data['updatedAt'] = time();
 
 		// Update Blog Information from Basic Info

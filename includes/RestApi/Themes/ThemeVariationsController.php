@@ -56,9 +56,13 @@ class ThemeVariationsController extends \WP_REST_Controller {
 		);
 	}
 
+	/**
+	 * Get the patterns arguments.
+	 * Retrieves the original numerous variations if true, else sends the recently saved theme settings in the DB.
+	 *
+	 * @return array
+	 */
 	public function get_pattern_args() {
-		// These variable return the orginal numerous variations if true
-		// Else sends the recently saved theme settings in db
 		  return array(
 			  'variations' => array(
 				  'type'    => 'boolean',
@@ -67,8 +71,12 @@ class ThemeVariationsController extends \WP_REST_Controller {
 		  );
 	}
 
+	/**
+	 * Set the pattern arguments to the latest modified Global Style that is to be saved in the DB.
+	 *
+	 * @return array
+	 */
 	public function set_pattern_args() {
-		// This is the latest modified Global Style to be saved in the db
 		 return array(
 			 'title'    => array(
 				 'type'     => 'string',
@@ -81,12 +89,24 @@ class ThemeVariationsController extends \WP_REST_Controller {
 		 );
 	}
 
+	/**
+	 * Translate decoded json file.
+	 *
+	 * @param string $theme_json Theme content.
+	 * @param string $domain Domain type.
+	 * @return string
+	 */
 	private static function translate( $theme_json, $domain = 'default' ) {
 			$i18n_schema = wp_json_file_decode( __DIR__ . '/theme-i18n.json' );
 
 		return translate_settings_using_i18n_schema( $i18n_schema, $theme_json, $domain );
 	}
 
+	/**
+	 * Translate the json decoded HTML Files and retrieve all the Theme Style Variations.
+	 *
+	 * @return array
+	 */
 	private static function get_style_variations() {
 		$variations     = array();
 		$base_directory = get_stylesheet_directory() . '/styles';
@@ -112,7 +132,8 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	/**
 	 * Retrieves the active themes variations.
 	 *
-	 * @return \array|\WP_Error
+	 * @param \WP_REST_Request $request Request model.
+	 * @return array|\WP_Error
 	 */
 	public function get_theme_variations( \WP_REST_Request $request ) {
 
@@ -143,6 +164,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	/**
 	 * Saves the custom active theme variations.
 	 *
+	 * @param \WP_REST_Request $request Request model.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function set_theme_variation( \WP_REST_Request $request ) {
