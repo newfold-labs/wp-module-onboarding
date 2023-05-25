@@ -227,7 +227,7 @@ class FlowService {
 			if ( isset( $exception_list[ $key ] ) ) {
 				$default_data[ $key ] = $params[ $key ];
 				continue;
-			}			
+			}
 
 			// Error thrown if the datatype of the parameter does not match
 			if ( gettype( $value ) !== gettype( $params[ $key ] ) ) {
