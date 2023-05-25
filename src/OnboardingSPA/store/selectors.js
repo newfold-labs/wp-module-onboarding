@@ -209,6 +209,8 @@ export function getPreviousStep( state ) {
 	let currentStepIndex = findIndex( state.flow.steps.allSteps, {
 		path: state.flow.steps.currentStep,
 	} );
+	const currentStep = state.flow.steps.allSteps[ currentStepIndex ];
+
 	if ( 0 === currentStepIndex ) {
 		return null; // current step is the first step
 	}
@@ -216,8 +218,11 @@ export function getPreviousStep( state ) {
 		return false; // could not find index
 	}
 	// if current step is header menu and customDesign is false then skip colors and typography step
-	if ( skipColorsAndTypographyStep( state, '/design/header-menu' ) ) {
-		currentStepIndex -= 2;
+	if (
+		! state.data.flowData.data.customDesign &&
+		!! currentStep.excludePreviousStepsFromRouter
+	) {
+		currentStepIndex -= currentStep.numberOfStepsToSkip;
 	}
 	return state.flow.steps.allSteps[ currentStepIndex - 1 ];
 }
@@ -233,6 +238,8 @@ export function getNextStep( state ) {
 	let currentStepIndex = findIndex( state.flow.steps.allSteps, {
 		path: state.flow.steps.currentStep,
 	} );
+	const currentStep = state.flow.steps.allSteps[ currentStepIndex ];
+
 	if ( totalIndexes === currentStepIndex ) {
 		return null; // currentStep is the last step
 	}
@@ -240,18 +247,13 @@ export function getNextStep( state ) {
 		return false; // could not find index
 	}
 	// if current step is theme preview and customDesign is false then skip colors and typography step
-	if ( skipColorsAndTypographyStep( state, '/theme-styles/preview' ) ) {
-		currentStepIndex += 2;
+	if (
+		! state.data.flowData.data.customDesign &&
+		!! currentStep.excludeNextStepsFromRouter
+	) {
+		currentStepIndex += currentStep.numberOfStepsToSkip;
 	}
 	return state.flow.steps.allSteps[ currentStepIndex + 1 ];
-}
-
-export function skipColorsAndTypographyStep( state, pathToSearch ) {
-	const currentStep = state.flow.steps.currentStep;
-	return (
-		false === state.data.flowData.data.customDesign &&
-		currentStep.indexOf( pathToSearch ) > 0
-	);
 }
 
 export function isSidebarOpened( state ) {

@@ -327,6 +327,8 @@ export const steps = [
 		VIEW: VIEW_DESIGN_THEME_STYLES_PREVIEW,
 		designDrawerActiveLinkIncludes: '/wp-setup/step/design/theme-styles/',
 		patternId: 'theme-styles',
+		excludeNextStepsFromRouter: true,
+		numberOfStepsToSkip: 2,
 		sidebars: {
 			LearnMore: {
 				SidebarComponents: [
@@ -338,21 +340,11 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/colors',
 		title: __( 'Colors', 'wp-module-onboarding' ),
-		heading: __( "What's your color palette?", 'wp-module-onboarding' ),
-		subheading: __(
-			"We'll paint everything with your colors for a fresh, crisp look.",
-			'wp-module-onboarding'
-		),
-		description: __(
-			'Strong contrast and clear readability help your words jump off the screen.',
-			'wp-module-onboarding'
-		),
 		Component: StepDesignColors,
 		Icon: color,
 		priority: 180,
 		VIEW: VIEW_DESIGN_COLORS,
 		patternId: 'theme-styles',
-		excludeFromRouter: true,
 		sidebars: {
 			LearnMore: {
 				SidebarComponents: [ StepDesignColorsLearnMoreSidebar ],
@@ -362,21 +354,11 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/typography',
 		title: __( 'Typography', 'wp-module-onboarding' ),
-		heading: __( "What's your font style?", 'wp-module-onboarding' ),
-		subheading: __(
-			'Impress your visitors with strong branding and aesthetics.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			"Good typography uses style and proportions to give your words identity and priority. What's your story? Your focus?",
-			'wp-module-onboarding'
-		),
 		Component: StepDesignTypography,
 		Icon: typography,
 		priority: 200,
 		VIEW: VIEW_DESIGN_TYPOGRAPHY,
 		patternId: 'theme-styles',
-		excludeFromRouter: true,
 		sidebars: {
 			LearnMore: {
 				SidebarComponents: [ StepDesignTypographyLearnMoreSidebar ],
@@ -386,23 +368,13 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/header-menu',
 		title: __( 'Header & Menu', 'wp-module-onboarding' ),
-		heading: __(
-			"Let's make the right things visible",
-			'wp-module-onboarding'
-		),
-		subheading: __(
-			'Your site header helps organize your story for visitors.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			'A well-organized site makes visitors feel smart, helping you keep and convert them.',
-			'wp-module-onboarding'
-		),
 		Component: StepDesignHeaderMenu,
 		Icon: header,
 		priority: 220,
 		VIEW: VIEW_DESIGN_HEADER_MENU,
 		patternId: 'header-menu',
+		excludePreviousStepsFromRouter: true,
+		numberOfStepsToSkip: 2,
 		sidebars: {
 			LearnMore: {
 				SidebarComponents: [ StepDesignHeaderMenuLearnMoreSidebar ],

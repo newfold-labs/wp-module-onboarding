@@ -45,8 +45,10 @@ const StepDesignColors = () => {
 
 		// if the step was accessed directly then set the customDesign value to true
 		// so that the checkbox on design preview appears checked
-		currentData.data.customDesign = true;
-		setCurrentOnboardingData( currentData );
+		if ( ! currentData.data.customDesign ) {
+			currentData.data.customDesign = true;
+			setCurrentOnboardingData( currentData );
+		}
 	}, [] );
 
 	const getStylesAndPatterns = async () => {
