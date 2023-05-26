@@ -3,15 +3,26 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 
+/**
+ * Class ThemeInstaller.
+ */
 class ThemeInstaller {
+
+	/**
+	 * Install a whitelisted Theme based on the activation status.
+	 *
+	 * @param string  $theme Theme URL from Themes.php.
+	 * @param boolean $activate Whether to activate the theme after install.
+	 * @return \WP_REST_Response|\WP_Error
+	 */
 	public static function install( $theme, $activate ) {
 		 $theme_list = Themes::get();
 
-		  // Checks if the theme slug is an nfd slug.
+		// Checks if the theme slug is an nfd slug.
 		if ( self::is_nfd_slug( $theme ) ) {
-			   // Retrieve the theme stylesheet to determine if it has been already installed.
+			// Retrieve the theme stylesheet to determine if it has been already installed.
 			 $stylesheet = $theme_list['nfd_slugs'][ $theme ]['stylesheet'];
-				// Check if the theme already exists.
+			// Check if the theme already exists.
 			if ( ! ( \wp_get_theme( $stylesheet ) )->exists() ) {
 				$status = self::install_from_zip(
 					$theme_list['nfd_slugs'][ $theme ]['url'],
@@ -28,7 +39,7 @@ class ThemeInstaller {
 				);
 			}
 
-			   // If specified then activate the theme even if it already installed.
+			// If specified then activate the theme even if it already installed.
 			if ( $activate && ( ( \wp_get_theme() )->get( 'TextDomain' ) !== $stylesheet ) ) {
 				 $status = \switch_theme( $stylesheet );
 			}
@@ -40,6 +51,14 @@ class ThemeInstaller {
 		);
 	}
 
+	/**
+	 * Install theme from an custom zip url if not already installed. Activate and switch to the theme, if specified.
+	 *
+	 * @param string  $url The ZIP URL to install the theme from.
+	 * @param boolean $activate Whether to activate the plugin after install.
+	 * @param string  $stylesheet Theme Stylesheet Name.
+	 * @return \WP_REST_Response|\WP_Error
+	 */
 	public static function install_from_zip( $url, $activate, $stylesheet ) {
 		require_once ABSPATH . 'wp-admin/includes/file.php';
 		require_once ABSPATH . 'wp-admin/includes/misc.php';
@@ -84,7 +103,7 @@ class ThemeInstaller {
 			);
 		}
 
-		  // Activate the theme if specified.
+		// Activate the theme if specified.
 		if ( $activate && ( ( \wp_get_theme() )->get( 'TextDomain' ) !== $stylesheet ) ) {
 			 \switch_theme( $stylesheet );
 		}
@@ -97,10 +116,9 @@ class ThemeInstaller {
 	}
 
 	 /**
-	  * @param string $theme Slug of the theme.
-	  *
 	  * Checks if a given slug is a valid nfd_slug. Ref: includes/Data/Themes.php for nfd_slug.
 	  *
+	  * @param string $theme Slug of the theme.
 	  * @return boolean
 	  */
 	public static function is_nfd_slug( $theme ) {
@@ -112,10 +130,11 @@ class ThemeInstaller {
 	}
 
 	/**
+	 * Retrieve Theme Stylesheet Name for a specified theme name and theme type.
+	 *
 	 * @param mixed $theme Slug of the theme present under includes/Data/Themes.php.
 	 * @param mixed $theme_type Type of theme Ref: includes/Data/Themes.php for types of theme slugs.
-	 *
-	 * @return string The theme stylesheet name.
+	 * @return string|boolean
 	 */
 	public static function get_theme_stylesheet( $theme, $theme_type ) {
 		 $theme_list = Themes::get();
@@ -123,8 +142,9 @@ class ThemeInstaller {
 	}
 
 	 /**
-	  * @param string $theme
+	  * Retrieve Theme Type - approved NFD Slug/WP Slug.
 	  *
+	  * @param string $theme Theme name
 	  * @return string Type of theme. Ref: includes/Data/Themes.php for the different types.
 	  */
 	public static function get_theme_type( $theme ) {
@@ -135,10 +155,9 @@ class ThemeInstaller {
 	}
 
 	 /**
-	  * @param string $stylesheet The stylesheet of the theme.
-	  *
 	  * Determines if a theme has already been installed.
 	  *
+	  * @param string $stylesheet The stylesheet of the theme.
 	  * @return boolean
 	  */
 	public static function is_theme_installed( $stylesheet ) {
@@ -146,10 +165,9 @@ class ThemeInstaller {
 	}
 
 	 /**
-	  * @param string $stylesheet The stylesheet of the theme.
-	  *
 	  * Determines if a theme is already active.
 	  *
+	  * @param string $stylesheet The stylesheet of the theme.
 	  * @return boolean
 	  */
 	public static function is_theme_active( $stylesheet ) {
@@ -157,11 +175,10 @@ class ThemeInstaller {
 	}
 
 	 /**
-	  * @param string $theme
-	  * @param string $activate
-	  *
 	  * Checks if a theme with the given slug and activation criteria already exists.
 	  *
+	  * @param string $theme Theme name
+	  * @param string $activate Activation Criteria
 	  * @return boolean
 	  */
 	public static function exists( $theme, $activate ) {

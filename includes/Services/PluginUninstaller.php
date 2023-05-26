@@ -8,9 +8,14 @@ use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
  * Class PluginUninstaller
  * This class is responsible to Uninstall a specified plugin
  */
-
 class PluginUninstaller {
 
+	/**
+	 * Deactivate a plugin if active and then Uninstall the specific plugin.
+	 *
+	 * @param string $plugin Plugin URL.
+	 * @return \WP_REST_Response|\WP_Error
+	 */
 	public static function uninstall( $plugin ) {
 
 		$plugin_list = Plugins::get_squashed();
@@ -35,10 +40,9 @@ class PluginUninstaller {
 	}
 
 	/**
-	 * @param string $plugin
-	 *
 	 * Checks if a plugin with the given slug exists.
 	 *
+	 * @param string $plugin Plugin
 	 * @return boolean
 	 */
 	public static function exists( $plugin ) {
@@ -53,10 +57,9 @@ class PluginUninstaller {
 	}
 
 	/**
-	 * @param string $plugin_path Path to the plugin's header file.
-	 *
 	 * Determines if a plugin has already been installed.
 	 *
+	 * @param string $plugin_path Path to the plugin's header file.
 	 * @return boolean
 	 */
 	public static function is_plugin_installed( $plugin_path ) {
@@ -101,7 +104,7 @@ class PluginUninstaller {
 
 		// We want to ensure that the user has direct access to the filesystem.
 		$access_type = \get_filesystem_method();
-		if ( $access_type !== 'direct' ) {
+		if ( 'direct' !== $access_type ) {
 			return false;
 		}
 
