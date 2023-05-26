@@ -217,7 +217,7 @@ export function getPreviousStep( state ) {
 	if ( -1 === currentStepIndex ) {
 		return false; // could not find index
 	}
-	// if current step is header menu and customDesign is false then skip colors and typography step
+	// check customDesign and current step config to see if the previous step needs to be skipped
 	if (
 		! state.data.flowData.data.customDesign &&
 		!! currentStep.excludePreviousStepsFromRouter
@@ -246,7 +246,7 @@ export function getNextStep( state ) {
 	if ( -1 === currentStepIndex ) {
 		return false; // could not find index
 	}
-	// if current step is theme preview and customDesign is false then skip colors and typography step
+	// check customDesign and current step config to see if the next step needs to be skipped
 	if (
 		! state.data.flowData.data.customDesign &&
 		!! currentStep.excludeNextStepsFromRouter
