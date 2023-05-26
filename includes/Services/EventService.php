@@ -75,7 +75,7 @@ class EventService {
 		}
 
 		if ( ! isset( $event['category'] ) || ! self::validate_category( $event['category'] ) ) {
-			$event['category'] = Events::get_category();
+			return false;
 		}
 
 		return $event;

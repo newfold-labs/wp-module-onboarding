@@ -46,10 +46,10 @@ const SkipButton = ( { callback = false } ) => {
 				if ( socialDataResp ) {
 					setOnboardingSocialData( socialDataResp );
 				}
+				await HiiveAnalytics.dispatchEvents();
 			}
 			setFlow( currentData );
 		}
-		await HiiveAnalytics.dispatchEvents();
 		// Redirect to Admin Page for normal customers
 		// and Bluehost Dashboard for ecommerce customers
 		const exitLink = exitToWordpressForEcommerce()

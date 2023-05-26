@@ -11,9 +11,15 @@ import { onboardingRestURL } from './OnboardingSPA/utils/api/common';
 if ( runtimeDataExists ) {
 	domReady( () => {
 		HiiveAnalytics.initialize( {
-			defaultUrl: onboardingRestURL( 'events' ),
-			batchUrl: onboardingRestURL( 'events/batch' ),
-			debounceTime: 3000,
+			urls: {
+				single: onboardingRestURL( 'events' ),
+				batch: onboardingRestURL( 'events/batch' ),
+			},
+			settings: {
+				debounce: {
+					time: 3000,
+				},
+			},
 		} );
 
 		initializeNFDOnboarding(
