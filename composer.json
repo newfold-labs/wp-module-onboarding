@@ -24,13 +24,6 @@
 	},
 	"repositories": [
 		{
-			"type": "path",
-			"url": "../wp-module-installer",
-			"options": {
-				"symlink": true
-			}
-		},
-		{
 			"type": "composer",
 			"url": "https://newfold-labs.github.io/satis/",
 			"only": [
@@ -46,7 +39,7 @@
 		"wp-phpunit/wp-phpunit": "^5.9",
 		"yoast/phpunit-polyfills": "^1.0",
 		"newfold-labs/wp-php-standards": "^1.2",
-		"newfold-labs/wp-module-installer": "@dev"
+		"newfold-labs/wp-module-installer": "^1.0.0"
 	},
 	"scripts": {
 		"lint": [

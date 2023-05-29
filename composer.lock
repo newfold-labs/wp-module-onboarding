@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "70cec6682ff6fda0c8aec4c3889f5158",
+    "content-hash": "06d71429f830805afb16aca0971b0864",
     "packages": [
         {
             "name": "mustache/mustache",
@@ -308,41 +308,6 @@
                 }
             ],
             "time": "2022-03-03T13:19:32+00:00"
-        },
-        {
-            "name": "newfold-labs/wp-module-installer",
-            "version": "dev-enhance/code-improvements",
-            "dist": {
-                "type": "path",
-                "url": "../wp-module-installer",
-                "reference": "38187ec26c412fafdff23e8006af78da6f3cac7e"
-            },
-            "require-dev": {
-                "newfold-labs/wp-php-standards": "^1.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "NewfoldLabs\\WP\\Module\\Installer\\": "includes"
-                },
-                "files": [
-                    "bootstrap.php"
-                ]
-            },
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Micah Wood",
-                    "email": "micah.wood@newfold.com"
-                }
-            ],
-            "description": "An installer for WordPress plugins and themes.",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
         },
         {
             "name": "newfold-labs/wp-php-standards",
@@ -2660,9 +2625,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "newfold-labs/wp-module-installer": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
