@@ -20,6 +20,8 @@ final class Options {
 	protected static $options = array(
 		'redirect'                      => 'redirect',
 		'redirect_param'                => 'redirect_param',
+		'activate'                      => 'activate',
+		'activate_param'                => 'activate_param',
 		'coming_soon'                   => 'nfd_coming_soon',
 		'brand'                         => 'mm_brand',
 		'close_comments_for_old_posts'  => 'close_comments_for_old_posts',

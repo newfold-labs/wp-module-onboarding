@@ -28,14 +28,11 @@ class ModuleController {
 	 * Enable/Disable Onboarding based on certain checks.
 	 */
 	public static function module_switcher() {
-
 		$module_name = 'onboarding';
-
 		// Set brand context for the module.
 		Brands::set_current_brand( container() );
-		$customer_data = Data::customer_data();
 
-		$enable_onboarding = self::verify_onboarding_criteria( $customer_data );
+		$enable_onboarding = self::verify_onboarding_criteria();
 
 		// Check if he is a Non-Ecommerce Customer and Disable Redirect and Module
 		if ( ! $enable_onboarding ) {
@@ -61,12 +58,25 @@ class ModuleController {
 	/**
 	 * Verify all the necessary criteria to enable Onboarding for the site.
 	 *
-	 * @param array $customer_data The brand customer data.
 	 * @return boolean
 	 */
-	public static function verify_onboarding_criteria( $customer_data ) {
-		$brand_enabled_flows = Flows::get_flows();
+	public static function verify_onboarding_criteria() {
+		// Check if nfd_module_onboarding_activate query param was passed previously.
+		$activate_transient_name = Options::get_option_name( 'activate_param' );
+		if ( '1' === get_transient( $activate_transient_name ) ) {
+			return true;
+		}
 
+		// If the transient does not exist, check if nfd_module_onboarding_activate query param has been passed.
+		$activate_param_name = Options::get_option_name( 'activate' );
+		if ( isset( $_GET[ $activate_param_name ] ) && Permissions::is_authorized_admin() ) {
+				// Set a 30 day transient that reflects this parameter being passed.
+				set_transient( $activate_transient_name, '1', 2592000 );
+				return true;
+		}
+
+		$customer_data       = Data::customer_data();
+		$brand_enabled_flows = Flows::get_flows();
 		foreach ( $brand_enabled_flows as $flow => $enabled ) {
 			if ( ! $enabled ) {
 				continue;
