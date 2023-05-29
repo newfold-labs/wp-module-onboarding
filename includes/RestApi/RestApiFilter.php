@@ -2,6 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Patterns;
 use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 
@@ -55,7 +56,102 @@ class RestApiFilter {
 			case '/wp/v2/navigation':
 				\add_filter( 'rest_request_after_callbacks', array( __CLASS__, 'wp_onboarding_nav_menu_filter' ), 10, 2 );
 				break;
+			case '/newfold-onboarding/v1/patterns':
+				\add_filter( 'rest_request_after_callbacks', array( __CLASS__, 'wp_onboarding_site_logo_filter' ), 10, 2 );
+				break;
 		}
+	}
+
+	/**
+	 * Function for modifying the grammar to contain a dynamic sized logo.
+	 *
+	 * @param object $response - WP_REST_Response object
+	 * @param array  $args - An array containing arguments.
+	 *
+	 * @return object
+	 */
+	public static function wp_onboarding_site_logo_filter( $response, $args ) {
+		$response_data = $response->get_data();
+
+		$site_logo_id = \get_option( Options::get_option_name( 'site_icon', false ) );
+		if ( '0' !== $site_logo_id ) {
+			if ( is_string( $response_data ) ) {
+				$response_data = self::wp_onboarding_add_site_logo_styles( $response_data, $site_logo_id );
+			}
+
+			if ( is_array( $response_data ) ) {
+				foreach ( $response_data as &$value ) {
+					if ( isset( $value['slug'] ) && isset( $value['content'] ) ) {
+						if ( false !== strpos( $value['slug'], 'header' ) ) {
+							$value['content'] = self::wp_onboarding_add_site_logo_styles( $value['content'], $site_logo_id );
+						}
+					}
+				}
+			}
+		}
+
+		$response->set_data( $response_data );
+		return $response;
+	}
+
+	/**
+	 * Function for adding a custom width style to the Site Logo.
+	 *
+	 * @param string $content - WP Grammar with site Logo
+	 * @param string $site_logo_id - Site Logo ID to be resized
+	 *
+	 * @return string
+	 */
+	public static function wp_onboarding_add_site_logo_styles( $content, $site_logo_id ) {
+		$calculated_width = self::wp_onboarding_calculate_site_logo_width( $site_logo_id );
+		if ( $calculated_width ) {
+			// Final Width Style to be applied.
+			$custom_width_style = '{"width":' . $calculated_width . '}';
+			// Check if there is a site-logo at all.
+			preg_match( '/<!-- wp:site-logo.*?\/-->/m', $content, $matches );
+
+			if ( isset( $matches ) && count( $matches ) >= 1 ) {
+				$site_logo_grammar = $matches[0];
+				// Check if the site-logo has a predefined width.
+				preg_match( '/{"width":.*?}/m', $site_logo_grammar, $width_style );
+				if ( isset( $width_style ) && count( $width_style ) >= 1 ) {
+					// If width is present we need to just replace that not modifying other properties.
+					$site_logo_grammar = preg_replace( '/{"width":.*?}/m', $custom_width_style, $site_logo_grammar );
+					$content           = preg_replace( '/<!-- wp:site-logo .*? \/-->/m', $site_logo_grammar, $content );
+				} else {
+					// If width is not present we need add it not modifying other properties.
+					$content = preg_replace( '/<!-- wp:site-logo/m', '<!-- wp:site-logo ' . $custom_width_style, $content );
+				}
+			}
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Calculate the new site Logo size
+	 *
+	 * @param string $site_logo_id - Site Logo ID to be resized
+	 *
+	 * @return integer|boolean
+	 */
+	private static function wp_onboarding_calculate_site_logo_width( $site_logo_id ) {
+		$site_logo_metadata = wp_get_attachment_metadata( $site_logo_id );
+		if ( isset( $site_logo_metadata ) && isset( $site_logo_metadata['height'] ) && isset( $site_logo_metadata['width'] ) ) {
+			$site_logo_img_ratio = $site_logo_metadata['height'] / $site_logo_metadata['width'];
+			switch ( $site_logo_img_ratio ) {
+				// Landscape
+				case ( $site_logo_img_ratio < 0.7 ):
+					return 180;
+				// Portrait
+				case ( $site_logo_img_ratio > 1.3 ):
+					return 130;
+				// Squarish
+				default:
+					return 150;
+			}
+		}
+		return false;
 	}
 
 	/**
