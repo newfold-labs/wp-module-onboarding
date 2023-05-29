@@ -99,6 +99,7 @@ final class Patterns {
 					'site-header-left-logo-navigation-inline' => array(
 						'active' => true,
 						'shown'  => true,
+						'header' => true,
 					),
 					'homepage-1'                => array(
 						'active' => true,
@@ -109,14 +110,17 @@ final class Patterns {
 					'site-header-left-logo-navigation-below' => array(
 						'active' => true,
 						'shown'  => true,
+						'header' => true,
 					),
 					'site-header-centered'      => array(
 						'active' => true,
 						'shown'  => true,
+						'header' => true,
 					),
 					'site-header-splitted-menu' => array(
 						'active' => true,
 						'shown'  => true,
+						'header' => true,
 					),
 				),
 			),
@@ -191,7 +195,7 @@ final class Patterns {
 	/**
 	 * Retrieve pattern from slug.
 	 *
-	 * @param array $pattern_slug Pattern Slug Data
+	 * @param string $pattern_slug Pattern Slug Data
 	 *
 	 * @return array|boolean
 	 */
