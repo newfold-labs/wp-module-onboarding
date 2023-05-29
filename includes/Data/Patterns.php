@@ -99,6 +99,7 @@ final class Patterns {
 					'site-header-left-logo-navigation-inline' => array(
 						'active' => true,
 						'shown'  => true,
+						'header' => true,
 					),
 					'homepage-1'                => array(
 						'active' => true,
@@ -109,14 +110,17 @@ final class Patterns {
 					'site-header-left-logo-navigation-below' => array(
 						'active' => true,
 						'shown'  => true,
+						'header' => true,
 					),
 					'site-header-centered'      => array(
 						'active' => true,
 						'shown'  => true,
+						'header' => true,
 					),
 					'site-header-splitted-menu' => array(
 						'active' => true,
 						'shown'  => true,
+						'header' => true,
 					),
 				),
 			),

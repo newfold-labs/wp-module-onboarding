@@ -12,17 +12,6 @@ import { setFlow } from '../../../utils/api/flow';
 import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 
 const DesignHeaderMenu = () => {
-	const headerMenuSlugs = [
-		'yith-wonder/site-header-left-logo-navigation-inline',
-		'yith-wonder/site-header-left-logo-navigation-below',
-		'yith-wonder/site-header-centered',
-		'yith-wonder/site-header-splitted-menu',
-	];
-	const headerMenuBodySlugs = [
-		'yith-wonder/homepage-1',
-		'yith-wonder/site-footer',
-	];
-
 	const [ patterns, setPatterns ] = useState();
 	const [ headerMenuPreviewData, setHeaderMenuPreviewData ] = useState();
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
@@ -46,15 +35,6 @@ const DesignHeaderMenu = () => {
 		useDispatch( nfdOnboardingStore );
 
 	const getPatternsData = async () => {
-		if (
-			! currentData.data.partHeader ||
-			currentData.data.partHeader === ''
-		) {
-			currentData.data.partHeader = headerMenuSlugs[ 0 ];
-			setCurrentOnboardingData( currentData );
-		}
-		setSelectedPattern( currentData.data.partHeader );
-
 		const headerMenuPreviewResponse = await getPatterns(
 			currentStep.patternId
 		);
@@ -64,17 +44,25 @@ const DesignHeaderMenu = () => {
 
 		const headerMenuPatterns = [];
 		headerMenuPreviewResponse?.body.forEach( ( pageParts ) => {
-			if ( headerMenuSlugs.includes( pageParts.slug ) ) {
+			if ( pageParts.header ) {
 				headerMenuPatterns.push( pageParts );
 			}
 		} );
 
+		if (
+			! currentData.data.partHeader ||
+			currentData.data.partHeader === ''
+		) {
+			currentData.data.partHeader = headerMenuPatterns[ 0 ].slug;
+			setCurrentOnboardingData( currentData );
+		}
+		setSelectedPattern( currentData.data.partHeader );
 		setHeaderMenuPreviewData( headerMenuPreviewResponse.body );
 		setPatterns( headerMenuPatterns );
 
 		let [ pageContent, headerContent, pagePreview ] = [ '', '', '' ];
 		headerMenuPreviewResponse.body.forEach( ( pageParts ) => {
-			if ( headerMenuBodySlugs.includes( pageParts.slug ) ) {
+			if ( ! pageParts.header ) {
 				pageContent += pageParts.content;
 			}
 			if ( pageParts.slug === currentData.data.partHeader ) {
@@ -112,7 +100,7 @@ const DesignHeaderMenu = () => {
 
 		let newPagePattern = chosenPattern.content;
 		headerMenuPreviewData.forEach( ( pageParts ) => {
-			if ( headerMenuBodySlugs.includes( pageParts.slug ) ) {
+			if ( ! pageParts.header ) {
 				newPagePattern += pageParts.content;
 			}
 		} );
