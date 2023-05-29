@@ -1,8 +1,8 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
-use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\CustomerBluehost\CustomerBluehost;
+use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 
 /**
  * CRUD methods for Onboarding config for use in API, CLI and runtime.
@@ -20,7 +20,7 @@ final class Data {
 			'currentBrand'      => self::current_brand(),
 			'currentPlan'       => self::current_plan(),
 			'currentFlow'       => self::current_flow(),
-			'pluginInstallHash' => Permissions::rest_get_plugin_install_hash(),
+			'pluginInstallHash' => PluginInstaller::rest_get_plugin_install_hash(),
 			'previewSettings'   => array(
 				'settings'        => Preview::get_settings(),
 				'stepPreviewData' => Themes::step_preview_data(),

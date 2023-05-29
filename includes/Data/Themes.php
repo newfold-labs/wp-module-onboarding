@@ -6,22 +6,6 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
  */
 final class Themes {
 	/**
-	 * Contains a list of zipped theme url's with a unique "nfd_slug" for each.
-	 * A value of true indicates that the slug has been approved.
-	 * A value of null indicates that the slug has not been approved
-	 * (or) has been temporarily deactivated.
-	 *
-	 * @var array
-	 */
-	protected static $nfd_slugs = array(
-		'nfd_slug_yith_wonder' => array(
-			'approved'   => true,
-			'url'        => 'https://hiive.cloud/workers/plugin-downloads/yith-wonder-theme',
-			'stylesheet' => 'yith-wonder',
-		),
-	);
-
-	/**
 	 * Flow to necessary theme map.
 	 * This is temporary, as we implement theme selections we can remove this.
 	 *
@@ -65,38 +49,6 @@ final class Themes {
 			),
 		),
 	);
-
-	/**
-	 * Returns the list of themes in a data structure that is faster to search.
-	 *
-	 * @return array
-	 */
-	public static function get() {
-		return array(
-			'nfd_slugs' => self::$nfd_slugs,
-		);
-	}
-
-	/**
-	 * Get all the approved theme slugs.
-	 *
-	 * @return array
-	 */
-	public static function get_approved() {
-		return array(
-			'nfd_slugs' => array_keys( array_filter( self::$nfd_slugs, array( __CLASS__, 'check_approved' ) ) ),
-		);
-	}
-
-	/**
-	 * Checks if a slug has been approved.
-	 *
-	 * @param string $value The slug to check for
-	 * @return boolean
-	 */
-	private static function check_approved( $value ) {
-		return true === $value['approved'];
-	}
 
 	/**
 	 * Get the number of previews that will be fetched in each step.

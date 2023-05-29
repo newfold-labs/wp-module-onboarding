@@ -1,4 +1,4 @@
-import { onboardingRestBase, wpRestBase } from '../../../constants';
+import { onboardingRestBase, wpRestBase, installerRestBase } from '../../../constants';
 
 export const onboardingRestURL = ( api ) => {
 	return (
@@ -6,6 +6,12 @@ export const onboardingRestURL = ( api ) => {
 		( window.nfdOnboarding?.currentFlow
 			? `&flow=${ window.nfdOnboarding.currentFlow }`
 			: '' )
+	);
+};
+
+export const installerRestURL = ( api ) => {
+	return (
+		`${ installerRestBase }/${ api }`
 	);
 };
 
