@@ -91,12 +91,20 @@ class FlowService {
 			);
 		}
 
+		$default_data = self::get_default_data();
+		$data = self::update_post_call_data_recursive( $params, $default_data );
+		if ( is_wp_error( $data ) ) {
+			return $data;
+		}
+
+		$options_data = self::read_data_from_wp_option();
+
 		/*
 		[TODO] Handle this and some of the site name, logo, description logic in a cleaner way.
 		At least the primary and secondary update does not run on every flow data request.
 		*/
 		if ( ! empty( $params['data']['siteType']['primary']['refers'] ) &&
-		( empty( $data['data']['siteType']['primary']['value'] ) || $data['data']['siteType']['primary']['value'] !== $params['data']['siteType']['primary']['value'] ) ) {
+		$options_data['data']['siteType']['primary']['value'] !== $params['data']['siteType']['primary']['value'] ) {
 			if ( class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification\PrimaryType' ) ) {
 				$primary_type = new PrimaryType( $params['data']['siteType']['primary']['refers'], $params['data']['siteType']['primary']['value'] );
 				if ( ! $primary_type->save() ) {
@@ -110,7 +118,7 @@ class FlowService {
 		}
 
 		if ( ! empty( $params['data']['siteType']['secondary']['refers'] ) &&
-		( empty( $data['data']['siteType']['secondary']['value'] ) || $data['data']['siteType']['secondary']['value'] !== $params['data']['siteType']['secondary']['value'] ) ) {
+		$options_data['data']['siteType']['secondary']['value'] !== $params['data']['siteType']['secondary']['value'] ) {
 			if ( class_exists( 'NewfoldLabs\WP\Module\Data\SiteClassification\SecondaryType' ) ) {
 				$secondary_type = new SecondaryType( $params['data']['siteType']['secondary']['refers'], $params['data']['siteType']['secondary']['value'] );
 				if ( ! $secondary_type->save() ) {
@@ -121,13 +129,6 @@ class FlowService {
 					);
 				}
 			}
-		}
-
-		$default_data = self::get_default_data();
-
-		$data = self::update_post_call_data_recursive( $params, $default_data );
-		if ( is_wp_error( $data ) ) {
-			return $data;
 		}
 		
 		// Update timestamp every time the Onboarding flow data is updated.
