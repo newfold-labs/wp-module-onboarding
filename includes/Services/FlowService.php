@@ -91,13 +91,6 @@ class FlowService {
 			);
 		}
 
-		$default_data = self::get_default_data();
-
-		$data = self::update_post_call_data_recursive( $params, $default_data );
-		if ( is_wp_error( $data ) ) {
-			return $data;
-		}
-
 		/*
 		[TODO] Handle this and some of the site name, logo, description logic in a cleaner way.
 		At least the primary and secondary update does not run on every flow data request.
@@ -130,6 +123,13 @@ class FlowService {
 			}
 		}
 
+		$default_data = self::get_default_data();
+
+		$data = self::update_post_call_data_recursive( $params, $default_data );
+		if ( is_wp_error( $data ) ) {
+			return $data;
+		}
+		
 		// Update timestamp every time the Onboarding flow data is updated.
 		$data['updatedAt'] = time();
 
