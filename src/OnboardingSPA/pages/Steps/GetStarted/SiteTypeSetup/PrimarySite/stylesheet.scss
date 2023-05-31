@@ -38,14 +38,13 @@
 
 			&-input {
 				width: 30vw;
-				height: 5.5vh;
 				font-size: 16px;
 				font-weight: 300;
 				margin: 0 1rem 1.5rem 1rem;
 				padding: 8px 16px !important;
 
 				&::placeholder {
-					font-size: 15px;
+					font-size: 16px;
 				}
 
 				@media (max-width: #{($break-medium - 1)}) {

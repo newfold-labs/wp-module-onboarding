@@ -3,15 +3,13 @@
 	font-weight: 700;
 	line-height: 1.25;
 	text-align: center;
-	font-size: 1rem;
-	font-size: clamp(1rem, 0.8152173913043478rem + 0.9239130434782609vw, 3.125rem);
+	font-size: clamp(1rem, 0.81rem + 0.92vw, 3.125rem);
 }
 
 .nfd-step-card-subheading {
 	margin: 5px;
 	font-weight: 700;
 	color: var(--wp-admin-theme-color);
-	font-size: 1.5rem;
 	font-size: clamp(1rem, 0.91rem + 0.43vw, 2rem);
 	text-align: center;
 	line-height: 1;
@@ -26,7 +24,6 @@
 
 .nfd-step-card-question {
 	margin: 18px;
-	font-size: 1.3125rem;
 	font-size: clamp(1.3125rem, 1.2rem + 0.5vw, 2.5rem);
 	line-height: 1.2;
 }
