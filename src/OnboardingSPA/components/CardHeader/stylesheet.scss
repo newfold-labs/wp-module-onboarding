@@ -3,7 +3,8 @@
 	font-weight: 700;
 	line-height: 1.25;
 	text-align: center;
-	font-size: clamp(1.875rem, 1.76rem + 0.54vw, 3.125rem);
+	font-size: 1rem;
+	font-size: clamp(1rem, 0.8152173913043478rem + 0.9239130434782609vw, 3.125rem);
 }
 
 .nfd-step-card-subheading {
@@ -27,4 +28,5 @@
 	margin: 18px;
 	font-size: 1.3125rem;
 	font-size: clamp(1.3125rem, 1.2rem + 0.5vw, 2.5rem);
+	line-height: 1.2;
 }
