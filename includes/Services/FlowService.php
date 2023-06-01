@@ -327,13 +327,13 @@ class FlowService {
 	 * Read Onboarding flow data from the wp_option.
 	 *
 	 * @param boolean $include_version Condition to include the data version.
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function read_data_from_wp_option( $include_version = true ) {
 		$data = \get_option( Options::get_option_name( 'flow' ), false );
 		// Remove the version data from options for GET Call, refer get_data.
-		if( ! $include_version && isset( $data['version'] ) ) {
+		if ( ! $include_version && isset( $data['version'] ) ) {
 			unset( $data['version'] );
 		}
 		return $data;
@@ -359,14 +359,14 @@ class FlowService {
 	/**
 	 * Update Onboarding flow data in the wp_option.
 	 *
-	 * @param array $data flow data.
+	 * @param array   $data flow data.
 	 * @param boolean $include_version Condition to include the data version.
-	 * 
+	 *
 	 * @return array
 	 */
 	private static function update_data_in_wp_option( $data, $include_version = false ) {
 		// Add the version key to the options data. Refer the post call function: update_data
-		if( $include_version ) {
+		if ( $include_version ) {
 			$data_version = self::read_data_from_wp_option()['version'];
 			$data = array_merge( array( 'version' => $data_version ), $data );
 		}
