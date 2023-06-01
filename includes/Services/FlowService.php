@@ -68,7 +68,7 @@ class FlowService {
 	 * @return array
 	 */
 	public static function get_data() {
-		$result = self::read_data_from_wp_option();
+		$result = self::read_data_from_wp_option( false );
 		if ( ! $result ) {
 			$result = self::get_default_data();
 			self::update_data_in_wp_option( $result );
@@ -92,6 +92,8 @@ class FlowService {
 		}
 
 		$default_data = self::get_default_data();
+		// Removes the Data Version to align with the post call data.
+		unset( $default_data['version'] );
 		$data = self::update_post_call_data_recursive( $params, $default_data );
 		if ( is_wp_error( $data ) ) {
 			return $data;
@@ -151,7 +153,7 @@ class FlowService {
 			\delete_option( Options::get_option_name( 'site_logo', false ) );
 		}
 
-		if ( ! self::update_data_in_wp_option( $data ) ) {
+		if ( ! self::update_data_in_wp_option( $data, true ) ) {
 			return new \WP_Error(
 				'database_update_failed',
 				'There was an error saving the data',
@@ -324,10 +326,17 @@ class FlowService {
 	/**
 	 * Read Onboarding flow data from the wp_option.
 	 *
+	 * @param boolean $include_version Condition to include the data version.
+	 * 
 	 * @return array
 	 */
-	public static function read_data_from_wp_option() {
-		return \get_option( Options::get_option_name( 'flow' ), false );
+	public static function read_data_from_wp_option( $include_version = true ) {
+		$data = \get_option( Options::get_option_name( 'flow' ), false );
+		// Remove the version data from options for GET Call, refer get_data.
+		if( ! $include_version && isset( $data['version'] ) ) {
+			unset( $data['version'] );
+		}
+		return $data;
 	}
 
 	/**
@@ -351,10 +360,16 @@ class FlowService {
 	 * Update Onboarding flow data in the wp_option.
 	 *
 	 * @param array $data flow data.
-	 *
+	 * @param boolean $include_version Condition to include the data version.
+	 * 
 	 * @return array
 	 */
-	private static function update_data_in_wp_option( $data ) {
+	private static function update_data_in_wp_option( $data, $include_version = false ) {
+		// Add the version key to the options data. Refer the post call function: update_data
+		if( $include_version ) {
+			$data_version = self::read_data_from_wp_option()['version'];
+			$data = array_merge( array( 'version' => $data_version ), $data );
+		}
 		return \update_option( Options::get_option_name( 'flow' ), $data );
 	}
 }
