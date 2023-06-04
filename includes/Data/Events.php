@@ -2,29 +2,65 @@
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
 /**
- * List of Onboarding events.
+ * Contains data related to Onboarding Hiive Events.
  */
 final class Events {
+	/**
+	 * The category of an event.
+	 *
+	 * @var string
+	 */
+	protected static $category = 'wp-onboarding';
 
-	 /**
-	  * Contains a list of events with the key being the event slug.
-	  *
-	  * @var array
-	  */
-	protected static $events = array(
-		'nfd-module-onboarding-event-pageview' => array(
-			'category' => 'Admin',
-			'action'   => 'pageview',
-		),
+	/**
+	 * List of valid actions that an event can perform.
+	 *
+	 * A value of true indicates that the action is valid, set it to null if you want to invalidate an action.
+	 *
+	 * @var array
+	 */
+	protected static $valid_actions = array(
+		'pageview'                             => true,
+		'sidebar-opened'                       => true,
+		'sidebar-closed'                       => true,
+		'wp-experience'                        => true,
+		'primary-type'                         => true,
+		'secondary-type'                       => true,
+		'tax-information'                      => true,
+		'selected-style'                       => true,
+		'default-style'                        => true,
+		'customize-design'                     => true,
+		'font-selection'                       => true,
+		'theme-header'                         => true,
+		'homepage-layout'                      => true,
+		'top-priority'                         => true,
+		'top-priority-skipped'                 => true,
+		'exit-to-wordpress'                    => true,
+		'products-info'                        => true,
+		'yith-wonder/company-page-layout'      => true,
+		'yith-wonder/contact-us-layout'        => true,
+		'yith-wonder/blog-page-layout'         => true,
+		'yith-wonder/testimonials-page-layout' => true,
+		'site-features'                        => true,
+		'color-selection'                      => true,
+		'color-selection-reset'                => true,
 	);
 
 	/**
-	 * Retrieves the active theme color variations.
+	 * Returns the list of valid actions that an event can perform
 	 *
-	 * @param array $event_slug Event data.
-	 * @return array|boolean
+	 * @return array
 	 */
-	public static function get_event( $event_slug ) {
-		 return self::$events[ $event_slug ] ? self::$events[ $event_slug ] : false;
+	public static function get_valid_actions() {
+		return self::$valid_actions;
+	}
+
+	/**
+	 * Valid category of on event.
+	 *
+	 * @return string
+	 */
+	public static function get_category() {
+		return self::$category;
 	}
 }

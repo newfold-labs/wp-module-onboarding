@@ -6,6 +6,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { getThemeFonts } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
+import { trackHiiveEvent } from '../../../utils/analytics';
 
 const DesignTypography = () => {
 	const drawerFontOptions = useRef();
@@ -57,16 +58,17 @@ const DesignTypography = () => {
 			fontPalettes !== undefined
 		) {
 			setSelectedFont( currentData?.data?.typography?.slug );
-			handleClick( currentData?.data?.typography?.slug );
+			handleClick( currentData?.data?.typography?.slug, 'flow' );
 		}
 	}, [ fontPalettes, storedPreviewSettings ] );
 
 	useEffect( () => {
-		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
+		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus ) {
 			getFontStylesAndPatterns();
+		}
 	}, [ isLoaded, themeStatus ] );
 
-	const handleClick = async ( fontStyle ) => {
+	const handleClick = async ( fontStyle, context = 'click' ) => {
 		if ( selectedFont === fontStyle ) {
 			return true;
 		}
@@ -124,12 +126,17 @@ const DesignTypography = () => {
 			useGlobalStylesOutput( globalStylesCopy, storedPreviewSettings )
 		);
 		setCurrentOnboardingData( currentData );
+		if ( 'click' === context ) {
+			trackHiiveEvent( 'font-selection', fontStyle );
+		}
 	};
 
 	function buildPalettes() {
 		return Object.keys( fontPalettes ).map( ( fontStyle, idx ) => {
 			const splitLabel = fontPalettes[ fontStyle ]?.label.split( '&', 2 );
-			if ( splitLabel.length === 0 ) return null;
+			if ( splitLabel.length === 0 ) {
+				return null;
+			}
 			return (
 				<div
 					key={ fontStyle }

@@ -10,6 +10,8 @@ import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { wpAdminPage, pluginDashboardPage } from '../../../constants';
+import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
+import { trackHiiveEvent } from '../../utils/analytics';
 
 /**
  * Self-contained button and confirmation modal for exiting Onboarding page.
@@ -91,6 +93,8 @@ const ExitToWordPress = ( {
 			}
 			setFlow( currentData );
 		}
+		trackHiiveEvent( 'exit-to-wordpress', window.location.href );
+		await HiiveAnalytics.dispatchEvents();
 		//Redirect to Admin Page for normal customers
 		// and Bluehost Dashboard for ecommerce customers
 		const exitLink = exitToWordpressForEcommerce()
