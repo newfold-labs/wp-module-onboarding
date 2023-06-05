@@ -7,8 +7,10 @@ export const wpSiteUrl = window.nfdOnboarding.siteUrl;
 export const wpRestURL = window.nfdOnboarding.restUrl;
 export const wpRestRoute = 'wp/v2';
 export const onboardingRestRoute = 'newfold-onboarding/v1';
+export const installerRestRoute = 'newfold-installer/v1';
 export const wpRestBase = `${ wpRestURL }/${ wpRestRoute }`;
 export const onboardingRestBase = `${ wpRestURL }/${ onboardingRestRoute }`;
+export const installerRestBase = `${ wpRestURL }/${ installerRestRoute }`;
 export const wpAdminPage = `${ wpAdminUrl }index.php`;
 export const pluginDashboardPage = `${
 	window.nfdOnboarding.currentBrand?.pluginDashboardPage ?? wpAdminPage

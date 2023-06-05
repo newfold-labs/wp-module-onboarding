@@ -6,7 +6,6 @@ use NewfoldLabs\WP\Module\Onboarding\RestApi\RestApi;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use function NewfoldLabs\WP\ModuleLoader\container;
-use NewfoldLabs\WP\Module\Onboarding\TaskManagers\TaskManager;
 
 /**
  * Primary instantiation of Onboarding Application.
@@ -63,8 +62,6 @@ final class Application {
 		);
 
 		new RestAPI();
-
-		new TaskManager();
 
 		if ( defined( '\\WP_CLI' ) && \WP_CLI ) {
 			new WP_CLI();

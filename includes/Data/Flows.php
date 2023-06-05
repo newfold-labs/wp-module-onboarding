@@ -2,7 +2,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
 use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
-use NewfoldLabs\WP\Module\Onboarding\Services\PluginInstaller;
+use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 
 /**
  * Contains Onboarding Flow information.
