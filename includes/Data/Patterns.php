@@ -373,7 +373,6 @@ final class Patterns {
 		foreach ( $patterns as $pattern_details ) {
 			if ( in_array( 'yith-wonder-site-header', $pattern_details['categories'], true ) ) {
 				$header_menu_slugs['pageHeaders'][] = $pattern_details;
-				continue;
 			} else {
 				$body_content                 .= $pattern_details['content'];
 				$header_menu_slugs['pageBody'] = $body_content;
