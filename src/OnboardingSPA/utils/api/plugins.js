@@ -1,6 +1,6 @@
 import apiFetch from '@wordpress/api-fetch';
 
-import { installerRestURL, onboardingRestURL } from './common';
+import { onboardingRestURL } from './common';
 import { getQueryParam } from '../index';
 import { resolve } from './resolve';
 import { NFD_PLUGINS_QUERY_PARAM } from '../../../constants';
