@@ -99,7 +99,6 @@ final class Patterns {
 					'site-header-left-logo-navigation-inline' => array(
 						'active' => true,
 						'shown'  => true,
-						'header' => true,
 					),
 					'homepage-1'                => array(
 						'active' => true,
@@ -110,17 +109,14 @@ final class Patterns {
 					'site-header-left-logo-navigation-below' => array(
 						'active' => true,
 						'shown'  => true,
-						'header' => true,
 					),
 					'site-header-centered'      => array(
 						'active' => true,
 						'shown'  => true,
-						'header' => true,
 					),
 					'site-header-splitted-menu' => array(
 						'active' => true,
 						'shown'  => true,
-						'header' => true,
 					),
 				),
 			),
@@ -136,6 +132,7 @@ final class Patterns {
 		return array(
 			'yith-wonder' => array(
 				'homepage-styles' => array( __CLASS__, 'filter_yith_wonder_homepage_patterns' ),
+				'header-menu' => array( __CLASS__, 'filter_yith_wonder_headermenu_patterns' ),
 			),
 		);
 	}
@@ -364,6 +361,27 @@ final class Patterns {
 		return $homepage_style_slugs;
 	}
 
+	/**
+	 * Retrieve Header Menu Step Patterns
+	 *
+	 * @param array $patterns Step Patterns Data
+	 * @return array
+	 */
+	private static function filter_yith_wonder_headermenu_patterns( $patterns ) {
+		$body_content       = '';
+		$header_menu_slugs = array();
+		foreach ( $patterns as $pattern_details ) {
+			if ( in_array( 'yith-wonder-site-header', $pattern_details['categories'] ) ) {
+				$header_menu_slugs['pageHeaders'][] = $pattern_details;
+				continue;
+			} else {
+				$body_content .= $pattern_details['content'];
+				$header_menu_slugs['pageBody'] = $body_content;
+			}
+		}
+		return $header_menu_slugs;
+	}
+	
 	/**
 	 * Retrieve Pattern Count.
 	 *

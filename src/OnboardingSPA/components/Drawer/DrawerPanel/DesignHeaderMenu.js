@@ -42,12 +42,8 @@ const DesignHeaderMenu = () => {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 
-		const headerMenuPatterns = [];
-		headerMenuPreviewResponse?.body.forEach( ( pageParts ) => {
-			if ( pageParts.header ) {
-				headerMenuPatterns.push( pageParts );
-			}
-		} );
+		const headerMenuPatterns = headerMenuPreviewResponse?.body.pageHeaders;
+		const pageContent = headerMenuPreviewResponse?.body.pageBody;
 
 		if (
 			! currentData.data.partHeader ||
@@ -60,13 +56,11 @@ const DesignHeaderMenu = () => {
 		setHeaderMenuPreviewData( headerMenuPreviewResponse.body );
 		setPatterns( headerMenuPatterns );
 
-		let [ pageContent, headerContent, pagePreview ] = [ '', '', '' ];
-		headerMenuPreviewResponse.body.forEach( ( pageParts ) => {
-			if ( ! pageParts.header ) {
-				pageContent += pageParts.content;
-			}
-			if ( pageParts.slug === currentData.data.partHeader ) {
-				headerContent += pageParts.content;
+		// read the header menu array to get the selected header pattern and combine it with body content
+		let [ headerContent, pagePreview ] = [ '', '', '' ];
+		headerMenuPatterns.forEach( ( headerMenu ) => {
+			if ( headerMenu.slug === currentData.data.partHeader ) {
+				headerContent = headerMenu.content;
 			}
 		} );
 		pagePreview = headerContent + pageContent;
@@ -98,13 +92,10 @@ const DesignHeaderMenu = () => {
 		currentData.data.partHeader = chosenPattern.slug;
 		setCurrentOnboardingData( currentData );
 
-		let newPagePattern = chosenPattern.content;
-		headerMenuPreviewData.forEach( ( pageParts ) => {
-			if ( ! pageParts.header ) {
-				newPagePattern += pageParts.content;
-			}
-		} );
+		const newPagePattern =
+			chosenPattern.content + headerMenuPreviewData.pageBody;
 		setHeaderMenuData( newPagePattern );
+
 		// API call to make sure the DB is in sync with the store for the selected header menu
 		const result = await setFlow( currentData );
 		if ( result?.error === null ) {
