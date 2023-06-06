@@ -5,32 +5,12 @@ namespace NewfoldLabs\WP\Module\Onboarding;
  * Permissions and Authorization constants and utilities.
  */
 final class Permissions {
-
 	/**
 	 * WordPress Admin capability string
 	 */
 	const ADMIN          = 'manage_options';
 	const INSTALL_THEMES = 'install_themes';
 	const EDIT_THEMES    = 'edit_themes';
-
-	/**
-	 * Retrieve Plugin Install Hash Value.
-	 *
-	 * @return string
-	 */
-	public static function rest_get_plugin_install_hash() {
-		return 'NFD_ONBOARDING_' . hash( 'sha256', NFD_ONBOARDING_VERSION . wp_salt( 'nonce' ) . site_url() );
-	}
-
-	/**
-	 * Verify Plugin Install Hash Value.
-	 *
-	 * @param string $hash Hash Value.
-	 * @return boolean
-	 */
-	public static function rest_verify_plugin_install_hash( $hash ) {
-		return self::rest_get_plugin_install_hash() === $hash;
-	}
 
 	/**
 	 * Confirm REST API caller has ADMIN user capabilities.
@@ -57,8 +37,8 @@ final class Permissions {
 	 */
 	public static function rest_can_manage_themes() {
 		return \is_user_logged_in() &&
-			   \current_user_can( self::INSTALL_THEMES ) &&
-			   \current_user_can( self::EDIT_THEMES );
+			\current_user_can( self::INSTALL_THEMES ) &&
+			\current_user_can( self::EDIT_THEMES );
 	}
 
 	/**
@@ -69,5 +49,4 @@ final class Permissions {
 	public static function custom_post_authorized_admin() {
 		return \current_user_can( 'edit_posts' ) && \current_user_can( self::ADMIN );
 	}
-
-} // END \NewfoldLabs\WP\Module\Onboarding\Permissions()
+}

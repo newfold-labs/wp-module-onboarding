@@ -2,8 +2,8 @@
 namespace NewfoldLabs\WP\Module\Onboarding;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
-use NewfoldLabs\WP\Module\Onboarding\TaskManagers\PluginInstallTaskManager;
-use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ThemeInstallTaskManager;
+use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
+use NewfoldLabs\WP\Module\Onboarding\Services\ThemeService;
 use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
 
 /**
@@ -116,11 +116,11 @@ final class WP_Admin {
 	 */
 	public static function initialize() {
 		if ( ! empty( $_GET['nfd_plugins'] ) && 'true' === sanitize_text_field( $_GET['nfd_plugins'] ) ) {
-			PluginInstallTaskManager::queue_initial_installs();
+			PluginService::queue_initial_installs();
 		}
 
 		if ( ! empty( $_GET['nfd_themes'] ) && 'true' === sanitize_text_field( $_GET['nfd_themes'] ) ) {
-			ThemeInstallTaskManager::queue_initial_installs();
+			ThemeService::queue_initial_installs();
 		}
 
 		FlowService::initialize_data();

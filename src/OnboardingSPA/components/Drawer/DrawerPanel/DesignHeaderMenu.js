@@ -10,6 +10,7 @@ import {
 import { setFlow } from '../../../utils/api/flow';
 
 import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
+import { trackHiiveEvent } from '../../../utils/analytics';
 
 const DesignHeaderMenu = () => {
 	const headerMenuSlugs = [
@@ -122,6 +123,7 @@ const DesignHeaderMenu = () => {
 		if ( result?.error === null ) {
 			setCurrentOnboardingData( currentData );
 		}
+		trackHiiveEvent( 'theme-header', chosenPattern.slug );
 	};
 
 	const buildPreviews = () => {

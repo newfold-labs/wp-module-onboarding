@@ -1,8 +1,9 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
-use NewfoldLabs\WP\Module\Onboarding\Services\PluginInstaller;
-use NewfoldLabs\WP\Module\Onboarding\Services\ThemeInstaller;
+use NewfoldLabs\WP\Module\Installer\Data\Themes;
+use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
+use NewfoldLabs\WP\Module\Installer\Services\ThemeInstaller;
 
 /**
  * Class Preview

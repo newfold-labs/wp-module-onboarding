@@ -18,6 +18,7 @@ import {
 	LivePreviewSkeleton,
 	GlobalStylesProvider,
 } from '../../../components/LivePreview';
+import { trackHiiveEvent } from '../../../utils/analytics';
 
 const StepDesignHomepageMenu = () => {
 	const location = useLocation();
@@ -91,11 +92,13 @@ const StepDesignHomepageMenu = () => {
 
 	function saveDataForHomepage( idx ) {
 		setSelectedHomepage( idx );
+		const homepage = homepagePatternList[ idx ];
 		currentData.data.sitePages = {
 			...currentData.data.sitePages,
-			homepage: homepagePatternList[ idx ],
+			homepage,
 		};
 		setCurrentOnboardingData( currentData );
+		trackHiiveEvent( 'homepage-layout', homepage );
 	}
 
 	useEffect( () => {
