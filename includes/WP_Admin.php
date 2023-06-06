@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding;
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ThemeService;
+use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
 
 /**
  * Register Admin Page, Assets & Admin functionality with WordPress.
@@ -121,6 +122,8 @@ final class WP_Admin {
 		if ( ! empty( $_GET['nfd_themes'] ) && 'true' === sanitize_text_field( $_GET['nfd_themes'] ) ) {
 			ThemeService::queue_initial_installs();
 		}
+
+		FlowService::initialize_data();
 
 		self::register_assets();
 	}

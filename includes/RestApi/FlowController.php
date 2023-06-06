@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
 
+
 /**
  * Class FlowController
  */
@@ -35,7 +36,7 @@ class FlowController {
 			array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_onboarding_flow_data' ),
+					'callback'            => array( $this, 'get' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 				array(
@@ -91,9 +92,9 @@ class FlowController {
 	 *
 	 * @return \WP_REST_Response
 	 */
-	public function get_onboarding_flow_data() {
+	public function get() {
 		return new \WP_REST_Response(
-			FlowService::get_flow_data(),
+			FlowService::get_data(),
 			200
 		);
 	}
@@ -108,8 +109,8 @@ class FlowController {
 	public function save_onboarding_flow_data( \WP_REST_Request $request ) {
 		$params = json_decode( $request->get_body(), true );
 
-		$flow_data = FlowService::update_flow_data( $params );
-		if ( \is_wp_error( $flow_data ) ) {
+		$flow_data = FlowService::update_data( $params );
+		if ( is_wp_error( $flow_data ) ) {
 			return $flow_data;
 		}
 
@@ -122,7 +123,7 @@ class FlowController {
 	/**
 	 * Flow completion API for child theme generation, verify child theme and publish site pages.
 	 *
-	 * @return \WP_REST_Response
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function complete() {
 		$site_pages_publish_request  = new \WP_REST_Request(

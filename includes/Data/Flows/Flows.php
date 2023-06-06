@@ -1,7 +1,9 @@
 <?php
-namespace NewfoldLabs\WP\Module\Onboarding\Data;
+namespace NewfoldLabs\WP\Module\Onboarding\Data\Flows;
 
 use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Data;
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 
 /**
@@ -14,13 +16,15 @@ final class Flows {
 	 * @var array
 	 */
 	protected static $data = array(
+		'version'              => '1.0.0',
+
 		// Each time step is viewed, insert GMT timestamp to array.
 		'isViewed'             => array(),
 
 		// The first time required criteria met (if any), mark GMT timestamp.
-		'isComplete'           => false,
+		'isComplete'           => 0,
 
-		'hasExited'            => false,
+		'hasExited'            => 0,
 
 		// If user navigates to another step, mark GMT timestamp.
 		'isSkipped'            => array(),
@@ -28,12 +32,13 @@ final class Flows {
 		// path identifier for the current step within a flow
 		'currentStep'          => '/step/wp-setup/get-started',
 
-		'createdAt'            => '',
+		'createdAt'            => 0,
 
-		'updatedAt'            => '',
+		'updatedAt'            => 0,
 
 		// to populate the step fields if a user is resuming a flow.
 		'data'                 => array(
+			// Any manual fixes or modification made to siteType shall also be made in FlowService::update_default_data_for_ecommerce()
 			'siteType'        => array(
 				'referTo'   => 'site',
 				'primary'   => array(
@@ -48,6 +53,7 @@ final class Flows {
 
 			'wpComfortLevel'  => '0',
 
+			// Any manual fixes or modification made to topPriority shall also be made in FlowServices::update_default_data_for_ecommerce()
 			// Enums: `publishing`, `designing`, `selling`, 'migrating', 'regenerate' and 'skip'
 			'topPriority'     => array(
 				'priority1' => 'publishing',
@@ -60,7 +66,10 @@ final class Flows {
 			'blogDescription' => '',
 
 			// This integer will map to the attachment ID for an uploaded image to the WordPress media library
-			'siteLogo'        => 0,
+			'siteLogo'        => array(
+				'id'  => 0,
+				'url' => '',
+			),
 
 			// key-value store for social media accounts
 			'accounts'        => array(),
@@ -78,38 +87,9 @@ final class Flows {
 
 			'customDesign'    => false,
 
-			'palette'         => array(
-				'slug'     => '',
-				'name'     => '',
-				'color'    => array(
-					array(
-						'slug'  => 'primary',
-						'name'  => 'Primary',
-						'color' => '',
-					),
-					array(
-						'slug'  => 'secondary',
-						'name'  => 'Secondary',
-						'color' => '',
-					),
-					array(
-						'slug'  => 'tertiary',
-						'name'  => 'Tertiary',
-						'color' => '',
-					),
-					array(
-						'slug'  => 'base',
-						'name'  => 'Base',
-						'color' => '',
-					),
-				),
-				'supports' => array( 'yith-wonder' ),
-			),
+			'colorStyle'      => '',
 
-			'typography'      => array(
-				'slug' => '',
-				'data' => array(),
-			),
+			'fontStyle'       => '',
 
 			// This string will identify the Header Pattern
 			'partHeader'      => '',
@@ -149,10 +129,30 @@ final class Flows {
 	);
 
 	/**
-	 * Get Onboarding Flow information.
+	 * Array with Key Names as Key, and array to specify Key from Exception Key Array to remove/add as Value
+	 *
+	 * This shall be used temporarily as the respective keys having varied patterns of values cannot be handled by the scope of current functionality
+	 *
+	 * @var array
+	 */
+	protected static $exception_list = array(
+		'other' => true,
+	);
+
+	/**
+	 * Update Exception Key(s).
 	 *
 	 * @return array
 	 */
+	public static function get_exception_list() {
+		return self::$exception_list;
+	}
+
+	 /**
+	  * Get Onboarding Flow information.
+	  *
+	  * @return array
+	  */
 	public static function get_data() {
 		return self::$data;
 	}

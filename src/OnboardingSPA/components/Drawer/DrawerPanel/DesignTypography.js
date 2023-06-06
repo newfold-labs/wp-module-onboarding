@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect, useRef } from '@wordpress/element';
+import classNames from 'classnames';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import { getThemeFonts } from '../../../utils/api/themes';
@@ -54,11 +55,11 @@ const DesignTypography = () => {
 
 	useEffect( () => {
 		if (
-			currentData?.data?.typography?.slug !== '' &&
+			currentData?.data?.fontStyle !== '' &&
 			fontPalettes !== undefined
 		) {
-			setSelectedFont( currentData?.data?.typography?.slug );
-			handleClick( currentData?.data?.typography?.slug, 'flow' );
+			setSelectedFont( currentData?.data?.fontStyle );
+			handleClick( currentData?.data?.fontStyle );
 		}
 	}, [ fontPalettes, storedPreviewSettings ] );
 
@@ -118,8 +119,7 @@ const DesignTypography = () => {
 		}
 
 		// Saves the data to the Store
-		currentData.data.typography.slug = fontStyle;
-		currentData.data.typography.data = fontPalettesCopy[ fontStyle ];
+		currentData.data.fontStyle = fontStyle;
 
 		updatePreviewSettings(
 			// eslint-disable-next-line react-hooks/rules-of-hooks
@@ -140,13 +140,15 @@ const DesignTypography = () => {
 			return (
 				<div
 					key={ fontStyle }
-					tabIndex={ idx + 1 }
 					role="button"
-					className={ `font-palette drawer-palette--button ${
-						selectedFont === fontStyle
-							? 'font-palette-selected drawer-palette--button--selected'
-							: ''
-					} ` }
+					tabIndex={ idx + 1 }
+					className={ classNames(
+						'font-palette drawer-palette--button',
+						{
+							'font-palette-selected drawer-palette--button--selected':
+								selectedFont === fontStyle,
+						}
+					) }
 					onClick={ () => handleClick( fontStyle ) }
 					onKeyDown={ () => handleClick( fontStyle ) }
 				>

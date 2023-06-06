@@ -2,7 +2,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
-use NewfoldLabs\WP\Module\Onboarding\Data\Flows;
+use NewfoldLabs\WP\Module\Onboarding\Data\Flows\Flows;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Brands;
 use NewfoldLabs\WP\ModuleLoader\ModuleRegistry;

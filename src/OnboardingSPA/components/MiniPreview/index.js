@@ -11,8 +11,6 @@ const MiniPreview = ( {
 	setIsSocialFormOpen,
 } ) => {
 	const content = getContents();
-	const iconPreview =
-		icon === '' || icon === undefined ? content.defaultIcon : icon;
 	const titlePreview = title === '' ? content.defaultTitle : title;
 	const descPreview = desc === '' ? content.defaultDesc : desc;
 	const urlPreview = title === '' ? content.defaultUrl : titleToUrl();
@@ -36,11 +34,13 @@ const MiniPreview = ( {
 			Object.keys( socialData ).includes( 'other_social_urls' )
 		) {
 			const otherURLS = socialData.other_social_urls;
-			if ( Object.keys( otherURLS ).includes( 'yelp_url' ) )
+			if ( Object.keys( otherURLS ).includes( 'yelp_url' ) ) {
 				setYelp( otherURLS.yelp_url ?? '' );
+			}
 
-			if ( Object.keys( otherURLS ).includes( 'tiktok_url' ) )
+			if ( Object.keys( otherURLS ).includes( 'tiktok_url' ) ) {
 				setTikTok( otherURLS.tiktok_url ?? '' );
+			}
 		}
 	}, [ socialData ] );
 
@@ -52,8 +52,9 @@ const MiniPreview = ( {
 			return false;
 		}
 
-		if ( url.protocol !== 'http:' && url.protocol !== 'https:' )
+		if ( url.protocol !== 'http:' && url.protocol !== 'https:' ) {
 			return false;
+		}
 		return true;
 	};
 
@@ -122,7 +123,7 @@ const MiniPreview = ( {
 							<div className="browser-row-title_bar_before-curve"></div>
 						</div>
 						<div className="browser-row-title_bar_main">
-							{ ( icon === 0 || icon === undefined ) && (
+							{ ( icon === undefined || icon?.id === 0 ) && (
 								<div
 									className="browser-icon-title"
 									style={ {
@@ -130,10 +131,10 @@ const MiniPreview = ( {
 									} }
 								></div>
 							) }
-							{ icon !== 0 && icon !== undefined && (
+							{ icon !== undefined && icon?.id !== 0 && (
 								<img
 									className="browser-icon-title"
-									src={ iconPreview.url }
+									src={ icon?.url }
 									alt="Thumb"
 								/>
 							) }
