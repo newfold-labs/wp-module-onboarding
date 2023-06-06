@@ -246,9 +246,14 @@ const App = () => {
 		}
 
 		if ( previousStep.includes( 'site-pages' ) ) {
-			currentData.data.sitePages?.other?.forEach( ( sitePage ) => {
-				trackHiiveEvent( `${ sitePage.slug }-layout`, sitePage.slug );
-			} );
+			if ( currentData.data.sitePages?.other !== false ) {
+				currentData.data.sitePages?.other?.forEach( ( sitePage ) => {
+					trackHiiveEvent(
+						`${ sitePage.slug }-layout`,
+						sitePage.slug
+					);
+				} );
+			}
 		}
 
 		if ( previousStep.includes( 'site-features' ) ) {
