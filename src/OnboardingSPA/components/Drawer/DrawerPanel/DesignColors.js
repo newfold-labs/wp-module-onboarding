@@ -229,6 +229,10 @@ const DesignColors = () => {
 	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = ( colorStyle ) => {
+		if ( selectedColors?.slug === colorStyle ) {
+			return true;
+		}
+
 		saveThemeColorPalette( colorStyle );
 		setSelectedColorsLocal( colorPalettes[ colorStyle ] );
 		LocalToState( colorPalettes[ colorStyle ], colorStyle );
@@ -293,6 +297,7 @@ const DesignColors = () => {
 			selectedGlobalStyle.settings.color.palette;
 		setSelectedColors( selectedGlobalStylePalette );
 		setSelectedColorsLocal( stateToLocal( selectedGlobalStylePalette ) );
+		trackHiiveEvent( 'color-selection-reset', selectedGlobalStyle.title );
 	}
 
 	async function resetColors() {
@@ -300,7 +305,6 @@ const DesignColors = () => {
 
 		currentData.data.colorStyle = '';
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'color-selection-reset', selectedGlobalStyle.title );
 	}
 
 	function buildPalettes() {
