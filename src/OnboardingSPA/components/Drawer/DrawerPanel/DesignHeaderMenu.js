@@ -57,7 +57,7 @@ const DesignHeaderMenu = () => {
 		setPatterns( headerMenuPatterns );
 
 		// read the header menu array to get the selected header pattern and combine it with body content
-		let [ headerContent, pagePreview ] = [ '', '', '' ];
+		let [ headerContent, pagePreview ] = [ '', '' ];
 		headerMenuPatterns.forEach( ( headerMenu ) => {
 			if ( headerMenu.slug === currentData.data.partHeader ) {
 				headerContent = headerMenu.content;
