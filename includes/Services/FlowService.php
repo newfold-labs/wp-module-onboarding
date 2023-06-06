@@ -153,7 +153,10 @@ class FlowService {
 			\delete_option( Options::get_option_name( 'site_logo', false ) );
 		}
 
-		if ( ! self::update_data_in_wp_option( $data, true ) ) {
+		// Add the version key to the $data before updating to options data.
+		$updated_data = array_merge( array( 'version' => $options_data['version'] ), $data );
+
+		if ( ! self::update_data_in_wp_option( $updated_data ) ) {
 			return new \WP_Error(
 				'database_update_failed',
 				'There was an error saving the data',
@@ -359,17 +362,11 @@ class FlowService {
 	/**
 	 * Update Onboarding flow data in the wp_option.
 	 *
-	 * @param array   $data flow data.
-	 * @param boolean $include_version Condition to include the data version.
+	 * @param array $data flow data.
 	 *
 	 * @return array
 	 */
-	private static function update_data_in_wp_option( $data, $include_version = false ) {
-		// Add the version key to the options data. Refer the post call function: update_data
-		if ( $include_version ) {
-			$data_version = self::read_data_from_wp_option()['version'];
-			$data = array_merge( array( 'version' => $data_version ), $data );
-		}
+	private static function update_data_in_wp_option( $data ) {
 		return \update_option( Options::get_option_name( 'flow' ), $data );
 	}
 }
