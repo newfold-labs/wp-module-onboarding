@@ -74,6 +74,7 @@ $border: #D6D6D6;
             background-position: center;
             background-repeat: no-repeat;
             background-clip: padding-box;
+            filter: invert(0%) sepia(100%) saturate(0%) hue-rotate(357deg) brightness(0%) contrast(101%);
         }
 
         &_name {
