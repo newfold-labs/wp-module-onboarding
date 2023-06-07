@@ -10,6 +10,7 @@ import { getSettings } from '../../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../../store';
 import ImageUploader from '../../../components/ImageUploader';
 import SocialMediaForm from '../../../components/SocialMediaForm';
+import QuickReplySuggestions from './quickReplySuggestions';
 
 /**
  * Basic Info Form.
@@ -135,6 +136,10 @@ const BasicInfoForm = () => {
 			saveData();
 		}
 	}, [ debouncedFlowData ] );
+	let quickReplySuggestions = ['This is Site Description 1', 'This is Site Description 2', 'This is Site Description 3'];
+	const handleSuggestionClick = (suggestion) => {
+		setSiteDesc(suggestion);
+	};
 
 	return (
 		<Animate
@@ -165,6 +170,12 @@ const BasicInfoForm = () => {
 							textValue={ siteDesc }
 							textValueSetter={ setSiteDesc }
 						/>
+
+						<QuickReplySuggestions
+							suggestions={quickReplySuggestions} // Replace with your actual suggestions
+							onClick={handleSuggestionClick}
+						/>
+
 						<div ref={ socialMediaRef }>
 							<SocialMediaForm
 								socialData={ socialData }
