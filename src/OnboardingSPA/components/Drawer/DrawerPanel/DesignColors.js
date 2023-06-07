@@ -202,10 +202,10 @@ const DesignColors = () => {
 			if ( currentData?.data?.colorStyle === 'custom' ) {
 				setCustomColors( selectedColorsLocalTemp );
 			}
+			setSelectedColors( selectedColorPalette );
 		} else {
 			setToDefaultPalette();
 		}
-		setSelectedColors( selectedColorPalette );
 		saveThemeColorPalette(
 			currentData?.data?.colorStyle,
 			colorPaletteResponse?.body.tailored,
@@ -233,6 +233,12 @@ const DesignColors = () => {
 			return true;
 		}
 
+		const customColorsTemp = customColors;
+		for ( const custom in customColorsTemp ) {
+			customColorsTemp[ custom ] = '';
+		}
+
+		setCustomColors( customColorsTemp );
 		saveThemeColorPalette( colorStyle );
 		setSelectedColorsLocal( colorPalettes[ colorStyle ] );
 		LocalToState( colorPalettes[ colorStyle ], colorStyle );
@@ -376,7 +382,7 @@ const DesignColors = () => {
 		const tertiaryColorTemp =
 			customColors && customColors?.tertiary !== ''
 				? customColors?.tertiary
-				: selectedColorsLocal?.tertiary ?? defaultColor;
+				: selectedColorsLocal?.[ 'header-background' ] ?? defaultColor;
 		const paletteCount = Object.keys( colorPalettes ).length;
 
 		return (
