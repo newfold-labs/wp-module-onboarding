@@ -136,6 +136,8 @@ const BasicInfoForm = () => {
 			saveData();
 		}
 	}, [ debouncedFlowData ] );
+
+	// TODO: Replace with your actual suggestions
 	let quickReplySuggestions = ['This is Site Description 1', 'This is Site Description 2', 'This is Site Description 3'];
 	const handleSuggestionClick = (suggestion) => {
 		setSiteDesc(suggestion);
@@ -172,7 +174,7 @@ const BasicInfoForm = () => {
 						/>
 
 						<QuickReplySuggestions
-							suggestions={quickReplySuggestions} // Replace with your actual suggestions
+							suggestions={quickReplySuggestions}
 							onClick={handleSuggestionClick}
 						/>
 
