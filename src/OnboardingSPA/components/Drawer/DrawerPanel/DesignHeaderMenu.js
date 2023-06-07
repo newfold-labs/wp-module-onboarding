@@ -13,17 +13,6 @@ import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 import { trackHiiveEvent } from '../../../utils/analytics';
 
 const DesignHeaderMenu = () => {
-	const headerMenuSlugs = [
-		'yith-wonder/site-header-left-logo-navigation-inline',
-		'yith-wonder/site-header-left-logo-navigation-below',
-		'yith-wonder/site-header-centered',
-		'yith-wonder/site-header-splitted-menu',
-	];
-	const headerMenuBodySlugs = [
-		'yith-wonder/homepage-1',
-		'yith-wonder/site-footer',
-	];
-
 	const [ patterns, setPatterns ] = useState();
 	const [ headerMenuPreviewData, setHeaderMenuPreviewData ] = useState();
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
@@ -47,15 +36,6 @@ const DesignHeaderMenu = () => {
 		useDispatch( nfdOnboardingStore );
 
 	const getPatternsData = async () => {
-		if (
-			! currentData.data.partHeader ||
-			currentData.data.partHeader === ''
-		) {
-			currentData.data.partHeader = headerMenuSlugs[ 0 ];
-			setCurrentOnboardingData( currentData );
-		}
-		setSelectedPattern( currentData.data.partHeader );
-
 		const headerMenuPreviewResponse = await getPatterns(
 			currentStep.patternId
 		);
@@ -63,23 +43,25 @@ const DesignHeaderMenu = () => {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 
-		const headerMenuPatterns = [];
-		headerMenuPreviewResponse?.body.forEach( ( pageParts ) => {
-			if ( headerMenuSlugs.includes( pageParts.slug ) ) {
-				headerMenuPatterns.push( pageParts );
-			}
-		} );
+		const headerMenuPatterns = headerMenuPreviewResponse?.body.pageHeaders;
+		const pageContent = headerMenuPreviewResponse?.body.pageBody;
 
+		if (
+			! currentData.data.partHeader ||
+			currentData.data.partHeader === ''
+		) {
+			currentData.data.partHeader = headerMenuPatterns[ 0 ].slug;
+			setCurrentOnboardingData( currentData );
+		}
+		setSelectedPattern( currentData.data.partHeader );
 		setHeaderMenuPreviewData( headerMenuPreviewResponse.body );
 		setPatterns( headerMenuPatterns );
 
-		let [ pageContent, headerContent, pagePreview ] = [ '', '', '' ];
-		headerMenuPreviewResponse.body.forEach( ( pageParts ) => {
-			if ( headerMenuBodySlugs.includes( pageParts.slug ) ) {
-				pageContent += pageParts.content;
-			}
-			if ( pageParts.slug === currentData.data.partHeader ) {
-				headerContent += pageParts.content;
+		// read the header menu array to get the selected header pattern and combine it with body content
+		let [ headerContent, pagePreview ] = [ '', '' ];
+		headerMenuPatterns.forEach( ( headerMenu ) => {
+			if ( headerMenu.slug === currentData.data.partHeader ) {
+				headerContent = headerMenu.content;
 			}
 		} );
 		pagePreview = headerContent + pageContent;
@@ -111,13 +93,10 @@ const DesignHeaderMenu = () => {
 		currentData.data.partHeader = chosenPattern.slug;
 		setCurrentOnboardingData( currentData );
 
-		let newPagePattern = chosenPattern.content;
-		headerMenuPreviewData.forEach( ( pageParts ) => {
-			if ( headerMenuBodySlugs.includes( pageParts.slug ) ) {
-				newPagePattern += pageParts.content;
-			}
-		} );
+		const newPagePattern =
+			chosenPattern.content + headerMenuPreviewData.pageBody;
 		setHeaderMenuData( newPagePattern );
+
 		// API call to make sure the DB is in sync with the store for the selected header menu
 		const result = await setFlow( currentData );
 		if ( result?.error === null ) {

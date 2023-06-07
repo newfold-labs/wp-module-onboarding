@@ -132,6 +132,7 @@ final class Patterns {
 		return array(
 			'yith-wonder' => array(
 				'homepage-styles' => array( __CLASS__, 'filter_yith_wonder_homepage_patterns' ),
+				'header-menu'     => array( __CLASS__, 'filter_yith_wonder_headermenu_patterns' ),
 			),
 		);
 	}
@@ -230,7 +231,7 @@ final class Patterns {
 	 */
 	private static function get_selected_header_from_flow_data() {
 		// fetch the selected header menu slug from DB
-		$flow_data        = \get_option( Options::get_option_name( 'flow' ), false );
+		$flow_data = \get_option( Options::get_option_name( 'flow' ), false );
 		if ( ! $flow_data ) {
 			return false;
 		}
@@ -289,9 +290,9 @@ final class Patterns {
 				continue;
 			}
 			if ( isset( $pattern_slugs[ $pattern_slug ]['replace'] ) && true === $pattern_slugs[ $pattern_slug ]['replace'] ) {
-				$pattern_slug_data = $pattern_slugs[ $pattern_slug ];
-				$header_menu_slug = self::get_selected_header_from_flow_data();
-				$pattern_slug = ( ! empty( $header_menu_slug ) ) ? $header_menu_slug : $pattern_slug;
+				$pattern_slug_data              = $pattern_slugs[ $pattern_slug ];
+				$header_menu_slug               = self::get_selected_header_from_flow_data();
+				$pattern_slug                   = ( ! empty( $header_menu_slug ) ) ? $header_menu_slug : $pattern_slug;
 				$pattern_slugs[ $pattern_slug ] = $pattern_slug_data;
 			}
 			$pattern_name = $active_theme . '/' . $pattern_slug;
@@ -319,7 +320,7 @@ final class Patterns {
 			$block_patterns .= self::cleanup_wp_grammar( $pattern['content'] );
 		}
 
-		$step_filter = self::get_theme_step_filters()[ $active_theme ][ $step ];
+		$step_filter         = self::get_theme_step_filters()[ $active_theme ][ $step ];
 		$theme_step_callback = isset( $step_filter ) ? $step_filter : false;
 		if ( is_callable( $theme_step_callback ) ) {
 			return $theme_step_callback( $block_patterns );
@@ -340,14 +341,14 @@ final class Patterns {
 		$footer_content       = '';
 
 		foreach ( $patterns as $index_key => $slug ) {
-			if ( in_array( 'yith-wonder-site-header', $slug['categories'] ) ) {
+			if ( in_array( 'yith-wonder-site-header', $slug['categories'], true ) ) {
 				$header_content = $slug['content'];
 				continue;
 			}
-			if ( in_array( 'yith-wonder-pages', $slug['categories'] ) ) {
+			if ( in_array( 'yith-wonder-pages', $slug['categories'], true ) ) {
 				array_push( $homepage_style_slugs, $slug );
 			}
-			if ( in_array( 'yith-wonder-site-footer', $slug['categories'] ) ) {
+			if ( in_array( 'yith-wonder-site-footer', $slug['categories'], true ) ) {
 				$footer_content = $slug['content'];
 				continue;
 			}
@@ -358,6 +359,26 @@ final class Patterns {
 		}
 
 		return $homepage_style_slugs;
+	}
+
+	/**
+	 * Retrieve Header Menu Step Patterns
+	 *
+	 * @param array $patterns Step Patterns Data
+	 * @return array
+	 */
+	private static function filter_yith_wonder_headermenu_patterns( $patterns ) {
+		$body_content      = '';
+		$header_menu_slugs = array();
+		foreach ( $patterns as $pattern_details ) {
+			if ( in_array( 'yith-wonder-site-header', $pattern_details['categories'], true ) ) {
+				$header_menu_slugs['pageHeaders'][] = $pattern_details;
+			} else {
+				$body_content                 .= $pattern_details['content'];
+				$header_menu_slugs['pageBody'] = $body_content;
+			}
+		}
+		return $header_menu_slugs;
 	}
 
 	/**
