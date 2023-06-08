@@ -10,6 +10,7 @@ import { getSettings } from '../../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../../store';
 import ImageUploader from '../../../components/ImageUploader';
 import SocialMediaForm from '../../../components/SocialMediaForm';
+import moduleAI from '@newfold-labs/wp-module-ai';
 import QuickReplySuggestions from './quickReplySuggestions';
 
 /**
@@ -29,6 +30,7 @@ const BasicInfoForm = () => {
 	const [ socialData, setSocialData ] = useState();
 	const [ isValidSocials, setIsValidSocials ] = useState( false );
 	const [ isSocialFormOpen, setIsSocialFormOpen ] = useState( false );
+	const [aiResults, setAIResults] = useState([]);
 
 	const { setOnboardingSocialData, setCurrentOnboardingData } =
 		useDispatch( nfdOnboardingStore );
@@ -137,11 +139,29 @@ const BasicInfoForm = () => {
 		}
 	}, [ debouncedFlowData ] );
 
-	// TODO: Replace with your actual suggestions
-	let quickReplySuggestions = ['This is Site Description 1', 'This is Site Description 2', 'This is Site Description 3'];
 	const handleSuggestionClick = (suggestion) => {
 		setSiteDesc(suggestion);
 	};
+
+	const getAIResult = async () => {
+		try {
+			const result = await moduleAI.search.getSearchResult(
+				'site description',
+				'onboarding'
+			);
+            console.log("Result", result);
+			setAIResults(result.result);
+		} catch (exception) {
+			console.log('exception', exception);
+		} finally {
+			console.log('Finally block');
+		}
+	};
+
+	useEffect(() => {
+		getAIResult();
+		return () => {};
+	}, []);
 
 	return (
 		<Animate
@@ -174,7 +194,7 @@ const BasicInfoForm = () => {
 						/>
 
 						<QuickReplySuggestions
-							suggestions={quickReplySuggestions}
+							suggestions={aiResults}
 							onClick={handleSuggestionClick}
 						/>
 
