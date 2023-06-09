@@ -47,6 +47,8 @@ const BasicInfoForm = () => {
 		};
 	}, [] );
 
+	console.log("current Data", currentData);
+
 	const content = getContents();
 
 	function setDefaultData() {
@@ -144,10 +146,11 @@ const BasicInfoForm = () => {
 	};
 
 	const getAIResult = async () => {
+		const userPrompt = `current description is ${siteDesc} site type is ${currentData.data?.siteType?.primary?.value} sub type is ${currentData.data?.siteType?.secondary?.value} site url is ${window.nfdOnboarding?.siteUrl}`;
 		try {
 			const result = await moduleAI.search.getSearchResult(
-				'site description',
-				'onboarding'
+				userPrompt,
+				'descgenerator'
 			);
             console.log("Result", result);
 			setAIResults(result.result);
