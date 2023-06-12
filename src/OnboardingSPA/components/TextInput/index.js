@@ -22,6 +22,7 @@ const TextInput = ( {
 	maxCharacters,
 	textValue,
 	textValueSetter,
+	handleBlur,
 } ) => {
 	const textareaRef = useRef( null );
 	const [ inputText, setInputText ] = useState( 'nfd-input__field' );
@@ -61,6 +62,7 @@ const TextInput = ( {
 					value={ textValue }
 					maxLength={ maxCharacters }
 					onChange={ ( e ) => onTextChange( e ) }
+					onBlur={ handleBlur }
 				/>
 				<p className="nfd-input__hint">
 					{ __( hint, 'wp-module-onboarding' ) }

@@ -3,6 +3,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 import getContents from './contents';
 import TextInput from '../../../components/TextInput';
+import ButtonWhite from '../../../components/Button/ButtonWhite';
 import SkipButton from '../../../components/SkipButton';
 import MiniPreview from '../../../components/MiniPreview';
 import Animate from '../../../components/Animate';
@@ -31,6 +32,7 @@ const BasicInfoForm = () => {
 	const [ isValidSocials, setIsValidSocials ] = useState( false );
 	const [ isSocialFormOpen, setIsSocialFormOpen ] = useState( false );
 	const [aiResults, setAIResults] = useState([]);
+	const [suggestionButton, setSuggestionButton] = useState(false);
 
 	const { setOnboardingSocialData, setCurrentOnboardingData } =
 		useDispatch( nfdOnboardingStore );
@@ -46,8 +48,6 @@ const BasicInfoForm = () => {
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	}, [] );
-
-	console.log("current Data", currentData);
 
 	const content = getContents();
 
@@ -144,27 +144,38 @@ const BasicInfoForm = () => {
 	const handleSuggestionClick = (suggestion) => {
 		setSiteDesc(suggestion);
 	};
-
-	const getAIResult = async () => {
-		const userPrompt = `current description is ${siteDesc} site type is ${currentData.data?.siteType?.primary?.value} sub type is ${currentData.data?.siteType?.secondary?.value} site url is ${window.nfdOnboarding?.siteUrl}`;
-		try {
-			const result = await moduleAI.search.getSearchResult(
-				userPrompt,
-				'descgenerator'
-			);
-            console.log("Result", result);
-			setAIResults(result.result);
-		} catch (exception) {
-			console.log('exception', exception);
-		} finally {
-			console.log('Finally block');
+	const handleDescBlur = () => {
+		if(siteDesc){
+			setSuggestionButton(true);
 		}
-	};
+	}
 
 	useEffect(() => {
-		getAIResult();
-		return () => {};
-	}, []);
+		if (siteDesc) {
+			setSuggestionButton(true);
+		}
+		return () => {
+		}
+	}, [siteDesc])
+
+	const getAIResult = async () => {
+		console.log("Get AI");
+		if(siteDesc && siteTitle){
+			const userPrompt = `current description is ${siteDesc} site title is ${siteTitle} site type is ${currentData.data?.siteType?.primary?.value} sub type is ${currentData.data?.siteType?.secondary?.value} site url is ${window.nfdOnboarding?.siteUrl}`;
+			try {
+				const result = await moduleAI.search.getSearchResult(
+					userPrompt,
+					'descgenerator'
+				);
+				console.log("Result", result);
+				setAIResults(result.result);
+			} catch (exception) {
+				console.log('exception', exception);
+			} finally {
+				console.log('Finally block');
+			}
+		}
+	};
 
 	return (
 		<Animate
@@ -194,7 +205,11 @@ const BasicInfoForm = () => {
 							height="100px"
 							textValue={ siteDesc }
 							textValueSetter={ setSiteDesc }
+							handleBlur={handleDescBlur}
 						/>
+						{suggestionButton && 
+							<ButtonWhite text={'Show Suggestions'} onClick={() => { getAIResult() }} /> 
+						}
 
 						<QuickReplySuggestions
 							suggestions={aiResults}
