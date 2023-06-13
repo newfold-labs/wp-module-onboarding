@@ -381,7 +381,7 @@ const DesignColors = () => {
 				: selectedColorsLocal?.secondary ?? defaultColor;
 		const tertiaryColorTemp =
 			customColors && customColors?.tertiary !== ''
-				? customColors?.tertiary
+				? customColors?.['header-background']
 				: selectedColorsLocal?.[ 'header-background' ] ?? defaultColor;
 		const paletteCount = Object.keys( colorPalettes ).length;
 
