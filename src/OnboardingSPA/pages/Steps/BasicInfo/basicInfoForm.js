@@ -33,6 +33,7 @@ const BasicInfoForm = () => {
 	const [ isSocialFormOpen, setIsSocialFormOpen ] = useState( false );
 	const [aiResults, setAIResults] = useState([]);
 	const [suggestionButton, setSuggestionButton] = useState(false);
+	const [btnText, setBtnText] = useState('Show Suggestions');
 
 	const { setOnboardingSocialData, setCurrentOnboardingData } =
 		useDispatch( nfdOnboardingStore );
@@ -163,6 +164,7 @@ const BasicInfoForm = () => {
 		if(siteDesc && siteTitle){
 			const userPrompt = `current description is ${siteDesc} site title is ${siteTitle} site type is ${currentData.data?.siteType?.primary?.value} sub type is ${currentData.data?.siteType?.secondary?.value} site url is ${window.nfdOnboarding?.siteUrl}`;
 			try {
+				setBtnText("Fetching Suggestions...");
 				const result = await moduleAI.search.getSearchResult(
 					userPrompt,
 					'descgenerator'
@@ -171,7 +173,9 @@ const BasicInfoForm = () => {
 				setAIResults(result.result);
 			} catch (exception) {
 				console.log('exception', exception);
+				setBtnText("Show Suggestions");
 			} finally {
+				setBtnText("Show Suggestions");
 				console.log('Finally block');
 			}
 		}
@@ -208,7 +212,7 @@ const BasicInfoForm = () => {
 							handleBlur={handleDescBlur}
 						/>
 						{suggestionButton && 
-							<ButtonWhite text={'Show Suggestions'} onClick={() => { getAIResult() }} /> 
+							<ButtonWhite text={btnText} onClick={() => { getAIResult() }} /> 
 						}
 
 						<QuickReplySuggestions
