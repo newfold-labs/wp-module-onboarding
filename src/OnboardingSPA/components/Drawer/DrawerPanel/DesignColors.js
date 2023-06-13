@@ -47,7 +47,6 @@ const DesignColors = () => {
 		if ( selectedColorPalette ) {
 			const selectedColorsLocalTemp = {};
 			selectedColorPalette?.forEach( ( color ) => {
-				console.log(selectedColorPalette);
 				selectedColorsLocalTemp[ color.slug ] = color.color;
 			} );
 			setSelectedColorsLocal( selectedColorsLocalTemp );
