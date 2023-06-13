@@ -233,12 +233,7 @@ const DesignColors = () => {
 			return true;
 		}
 
-		const customColorsTemp = customColors;
-		for ( const custom in customColorsTemp ) {
-			customColorsTemp[ custom ] = '';
-		}
-
-		setCustomColors( customColorsTemp );
+		setCustomColors();
 		saveThemeColorPalette( colorStyle );
 		setSelectedColorsLocal( colorPalettes[ colorStyle ] );
 		LocalToState( colorPalettes[ colorStyle ], colorStyle );
