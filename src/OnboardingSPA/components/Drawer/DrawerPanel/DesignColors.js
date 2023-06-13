@@ -47,6 +47,7 @@ const DesignColors = () => {
 		if ( selectedColorPalette ) {
 			const selectedColorsLocalTemp = {};
 			selectedColorPalette?.forEach( ( color ) => {
+				console.log(selectedColorPalette);
 				selectedColorsLocalTemp[ color.slug ] = color.color;
 			} );
 			setSelectedColorsLocal( selectedColorsLocalTemp );
@@ -233,7 +234,13 @@ const DesignColors = () => {
 			return true;
 		}
 
-		setCustomColors();
+		const customColorsTemp = customColors;
+		for ( const custom in customColorsTemp ) {
+			customColorsTemp[ custom ] = '';
+		}
+
+		// Setting the color palette to the chosen predefined color.
+		setCustomColors( customColorsTemp );
 		saveThemeColorPalette( colorStyle );
 		setSelectedColorsLocal( colorPalettes[ colorStyle ] );
 		LocalToState( colorPalettes[ colorStyle ], colorStyle );
@@ -292,7 +299,8 @@ const DesignColors = () => {
 			selectedColors[ colorVal ].color = '';
 		}
 
-		setCustomColors();
+		// Resetting the color palette to default and unsetting the selected predefined color palette, if any.
+		setCustomColors( selectedColors );
 
 		const selectedGlobalStylePalette =
 			selectedGlobalStyle.settings.color.palette;
