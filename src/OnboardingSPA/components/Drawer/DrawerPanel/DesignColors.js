@@ -335,7 +335,7 @@ const DesignColors = () => {
 						<div
 							className="color-palette__colors--tertiary"
 							style={ {
-								backgroundColor: `${ colorPalettes[ colorStyle ]?.['header-background'] }`,
+								backgroundColor: `${ colorPalettes[ colorStyle ]?.[ 'header-background' ] }`,
 							} }
 						/>
 						<div
