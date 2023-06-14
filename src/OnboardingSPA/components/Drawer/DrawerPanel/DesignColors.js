@@ -233,13 +233,7 @@ const DesignColors = () => {
 			return true;
 		}
 
-		const customColorsTemp = customColors;
-		for ( const custom in customColorsTemp ) {
-			customColorsTemp[ custom ] = '';
-		}
-
-		// Setting the color palette to the chosen predefined color.
-		setCustomColors( customColorsTemp );
+		clearCustomColors();
 		saveThemeColorPalette( colorStyle );
 		setSelectedColorsLocal( colorPalettes[ colorStyle ] );
 		LocalToState( colorPalettes[ colorStyle ], colorStyle );
@@ -294,18 +288,23 @@ const DesignColors = () => {
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
 
-		for ( const colorVal in selectedColors ) {
-			selectedColors[ colorVal ].color = '';
-		}
-
-		// Resetting the color palette to default and unsetting the selected predefined color palette, if any.
-		setCustomColors( selectedColors );
+		clearCustomColors();
 
 		const selectedGlobalStylePalette =
 			selectedGlobalStyle.settings.color.palette;
 		setSelectedColors( selectedGlobalStylePalette );
 		setSelectedColorsLocal( stateToLocal( selectedGlobalStylePalette ) );
 		trackHiiveEvent( 'color-selection-reset', selectedGlobalStyle.title );
+	}
+
+	async function clearCustomColors() {
+		const customColorsTemp = customColors;
+		for ( const custom in customColorsTemp ) {
+			customColorsTemp[ custom ] = '';
+		}
+
+		// Resetting the color palette to default and unsetting the selected predefined color palette, if any.
+		setCustomColors( customColorsTemp );
 	}
 
 	async function resetColors() {
@@ -336,7 +335,7 @@ const DesignColors = () => {
 						<div
 							className="color-palette__colors--tertiary"
 							style={ {
-								backgroundColor: `${ colorPalettes[ colorStyle ]?.tertiary }`,
+								backgroundColor: `${ colorPalettes[ colorStyle ]?.['header-background'] }`,
 							} }
 						/>
 						<div
