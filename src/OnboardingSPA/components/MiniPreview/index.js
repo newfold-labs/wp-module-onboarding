@@ -59,13 +59,13 @@ const MiniPreview = ( {
 	};
 
 	const socialDataset = [
-		{ url: facebook, image: 'var(--facebook-colored-icon)' },
-		{ url: twitter, image: 'var(--twitter-colored-icon)' },
-		{ url: instagram, image: 'var(--instagram-colored-icon)' },
-		{ url: youtube, image: 'var(--youtube-colored-icon)' },
-		{ url: linkedin, image: 'var(--linkedin-colored-icon)' },
-		{ url: yelp, image: 'var(--yelp-colored-icon)' },
-		{ url: tiktok, image: 'var(--tiktok-colored-icon)' },
+		{ url: facebook, image: 'var(--facebook-icon)' },
+		{ url: twitter, image: 'var(--twitter-icon)' },
+		{ url: instagram, image: 'var(--instagram-icon)' },
+		{ url: youtube, image: 'var(--youtube-icon)' },
+		{ url: linkedin, image: 'var(--linkedin-icon)' },
+		{ url: yelp, image: 'var(--yelp-icon)' },
+		{ url: tiktok, image: 'var(--tiktok-icon)' },
 	];
 
 	function titleToUrl() {
