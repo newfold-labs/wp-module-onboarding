@@ -297,14 +297,13 @@ const DesignColors = () => {
 		trackHiiveEvent( 'color-selection-reset', selectedGlobalStyle.title );
 	}
 
-	async function clearCustomColors() {
-		const customColorsTemp = customColors;
-		for ( const custom in customColorsTemp ) {
-			customColorsTemp[ custom ] = '';
+	function clearCustomColors() {
+		for ( const custom in customColors ) {
+			customColors[ custom ] = '';
 		}
 
 		// Resetting the color palette to default and unsetting the selected predefined color palette, if any.
-		setCustomColors( customColorsTemp );
+		setCustomColors( customColors );
 	}
 
 	async function resetColors() {
@@ -381,7 +380,7 @@ const DesignColors = () => {
 				? customColors?.secondary
 				: selectedColorsLocal?.secondary ?? defaultColor;
 		const tertiaryColorTemp =
-			customColors && customColors?.tertiary !== ''
+			customColors && customColors?.[ 'header-background' ] !== ''
 				? customColors?.[ 'header-background' ]
 				: selectedColorsLocal?.[ 'header-background' ] ?? defaultColor;
 		const paletteCount = Object.keys( colorPalettes ).length;
