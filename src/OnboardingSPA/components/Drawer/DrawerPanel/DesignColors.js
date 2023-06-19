@@ -373,15 +373,15 @@ const DesignColors = () => {
 		const defaultColor = '#fff';
 		const primaryColorTemp =
 			customColors && customColors?.primary !== ''
-				? customColors?.primary
+				? customColors.primary
 				: selectedColorsLocal?.primary ?? defaultColor;
 		const secondaryColorTemp =
 			customColors && customColors?.secondary !== ''
-				? customColors?.secondary
+				? customColors.secondary
 				: selectedColorsLocal?.secondary ?? defaultColor;
 		const tertiaryColorTemp =
 			customColors && customColors?.[ 'header-background' ] !== ''
-				? customColors?.[ 'header-background' ]
+				? customColors[ 'header-background' ]
 				: selectedColorsLocal?.[ 'header-background' ] ?? defaultColor;
 		const paletteCount = Object.keys( colorPalettes ).length;
 
