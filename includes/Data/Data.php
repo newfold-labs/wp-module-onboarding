@@ -119,4 +119,26 @@ final class Data {
 		return array();
 	}
 
+	/**
+	 * Determine whether the site is in coming soon mode.
+	 *
+	 * @return boolean
+	 */
+	public static function coming_soon() {
+		// Check if nfd_coming_soon is set to true.
+		$coming_soon = \get_option( Options::get_option_name( 'new_coming_soon', false ), null );
+		if ( null !== $coming_soon ) {
+			return 'true' === $coming_soon;
+		}
+
+		// Check if legacy mm_coming_soon is set to true.
+		$coming_soon = \get_option( Options::get_option_name( 'old_coming_soon', false ), null );
+		if ( null !== $coming_soon ) {
+			return 'true' === $coming_soon;
+		}
+
+		// Assume site has been launched if both options do not exist.
+		return false;
+	}
+
 }
