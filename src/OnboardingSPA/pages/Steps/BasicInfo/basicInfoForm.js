@@ -12,7 +12,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import ImageUploader from '../../../components/ImageUploader';
 import SocialMediaForm from '../../../components/SocialMediaForm';
 import moduleAI from '@newfold-labs/wp-module-ai';
-import QuickReplySuggestions from './quickReplySuggestions';
+import QuickReplySuggestions from 'nfd-ai-ui';
 
 /**
  * Basic Info Form.
