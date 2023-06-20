@@ -30,8 +30,12 @@ const StepDesignTypography = () => {
 		};
 	}, [] );
 
-	const { updateThemeStatus, setDrawerActiveView, setSidebarActiveView, flushQueue } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		updateThemeStatus,
+		setDrawerActiveView,
+		setSidebarActiveView,
+		flushQueue,
+	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );

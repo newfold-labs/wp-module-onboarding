@@ -7,7 +7,6 @@ import {
 	LivePreviewSkeleton,
 	LivePreviewSelectableCard,
 } from '../../../components/LivePreview';
-import { setFlow } from '../../../utils/api/flow';
 
 import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 import { trackHiiveEvent } from '../../../utils/analytics';
@@ -96,7 +95,7 @@ const DesignHeaderMenu = () => {
 		const newPagePattern =
 			chosenPattern.content + headerMenuPreviewData.pageBody;
 		setHeaderMenuData( newPagePattern );
-		
+
 		trackHiiveEvent( 'theme-header', chosenPattern.slug );
 	};
 

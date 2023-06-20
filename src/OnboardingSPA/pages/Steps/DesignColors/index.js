@@ -30,8 +30,12 @@ const StepDesignColors = () => {
 		};
 	}, [] );
 
-	const { setDrawerActiveView, setSidebarActiveView, updateThemeStatus, flushQueue } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		setDrawerActiveView,
+		setSidebarActiveView,
+		updateThemeStatus,
+		flushQueue,
+	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
