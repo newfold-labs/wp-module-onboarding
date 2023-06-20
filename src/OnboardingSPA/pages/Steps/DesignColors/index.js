@@ -30,7 +30,7 @@ const StepDesignColors = () => {
 		};
 	}, [] );
 
-	const { setDrawerActiveView, setSidebarActiveView, updateThemeStatus } =
+	const { setDrawerActiveView, setSidebarActiveView, updateThemeStatus, flushQueue } =
 		useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -50,7 +50,10 @@ const StepDesignColors = () => {
 	};
 
 	useEffect( () => {
-		if ( THEME_STATUS_ACTIVE === themeStatus ) getStylesAndPatterns();
+		if ( THEME_STATUS_ACTIVE === themeStatus ) {
+			flushQueue();
+			getStylesAndPatterns();
+		}
 	}, [ themeStatus ] );
 
 	return (

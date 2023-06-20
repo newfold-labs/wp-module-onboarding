@@ -96,12 +96,7 @@ const DesignHeaderMenu = () => {
 		const newPagePattern =
 			chosenPattern.content + headerMenuPreviewData.pageBody;
 		setHeaderMenuData( newPagePattern );
-
-		// API call to make sure the DB is in sync with the store for the selected header menu
-		const result = await setFlow( currentData );
-		if ( result?.error === null ) {
-			setCurrentOnboardingData( currentData );
-		}
+		
 		trackHiiveEvent( 'theme-header', chosenPattern.slug );
 	};
 

@@ -60,6 +60,7 @@ const StepDesignThemeStylesPreview = () => {
 		updateAllSteps,
 		setCurrentOnboardingData,
 		updateThemeStatus,
+		flushQueue,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -117,6 +118,7 @@ const StepDesignThemeStylesPreview = () => {
 
 	useEffect( () => {
 		if ( themeStatus === THEME_STATUS_ACTIVE ) {
+			flushQueue();
 			getStylesAndPatterns();
 		}
 	}, [ themeStatus ] );

@@ -45,6 +45,7 @@ const StepDesignHomepageMenu = () => {
 		setSidebarActiveView,
 		setCurrentOnboardingData,
 		updateThemeStatus,
+		flushQueue,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -103,6 +104,7 @@ const StepDesignHomepageMenu = () => {
 
 	useEffect( () => {
 		if ( themeStatus === THEME_STATUS_ACTIVE ) {
+			flushQueue();
 			getHomepagePatternsData();
 		}
 	}, [ themeStatus ] );

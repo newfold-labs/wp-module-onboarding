@@ -69,6 +69,7 @@ const StepDesignThemeStylesMenu = () => {
 		updateRoutes,
 		updateDesignSteps,
 		updateAllSteps,
+		flushQueue,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -104,6 +105,7 @@ const StepDesignThemeStylesMenu = () => {
 
 	useEffect( () => {
 		if ( themeStatus === THEME_STATUS_ACTIVE ) {
+			flushQueue();
 			getStylesAndPatterns();
 		}
 	}, [ themeStatus ] );
