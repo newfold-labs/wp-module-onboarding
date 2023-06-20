@@ -92,8 +92,7 @@ final class Brands {
 					),
 				),
 				'config'                      => array(
-					'net_new_signup_date_threshold' => '2023-05-04T00:00:00.000Z',
-					'enabled_flows'                 => array(
+					'enabled_flows' => array(
 						'ecommerce' => true,
 						'wp-setup'  => true,
 					),
@@ -149,8 +148,7 @@ final class Brands {
 					),
 				),
 				'config'                      => array(
-					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
-					'enabled_flows'                 => array(
+					'enabled_flows' => array(
 						'ecommerce' => true,
 						'wp-setup'  => false,
 					),
@@ -207,8 +205,7 @@ final class Brands {
 					),
 				),
 				'config'                      => array(
-					'net_new_signup_date_threshold' => '2022-08-18T15:30:00.000Z',
-					'enabled_flows'                 => array(
+					'enabled_flows' => array(
 						'ecommerce' => false,
 						'wp-setup'  => false,
 					),
@@ -265,12 +262,11 @@ final class Brands {
 					),
 				),
 				'config'                      => array(
-					'net_new_signup_date_threshold' => '2023-05-04T00:00:00.000Z',
-					'enabled_flows'                 => array(
+					'enabled_flows' => array(
 						'ecommerce' => true,
 						'wp-setup'  => true,
 					),
-					'views'                         => array(
+					'views'         => array(
 						'sidebar' => array(
 							'illustration' => array(
 								'shown' => false,

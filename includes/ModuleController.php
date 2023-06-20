@@ -84,70 +84,16 @@ class ModuleController {
 
 			switch ( $flow ) {
 				case 'ecommerce':
-					if ( self::is_new_commerce_signup( $customer_data ) ) {
+					if ( self::is_commerce_signup( $customer_data ) ) {
 						return true;
 					}
 					break;
 				case 'wp-setup':
-					if ( self::is_net_new_signup( $customer_data ) ) {
-						return true;
-					}
-					break;
+					return true;
 			}
 		}
 
 		return false;
-	}
-
-	/**
-	 * Get signup date of the install.
-	 *
-	 * @param array $customer_data The customer data to be checked for signup date.
-	 * @return string|boolean
-	 */
-	public static function get_signup_date( $customer_data ) {
-		// Get the signup_date from customer data.
-		if ( isset( $customer_data['signup_date'] ) ) {
-			return gmdate( 'Y-m-d H:i:s', strtotime( $customer_data['signup_date'] ) );
-		}
-
-		// Get the signup_date from the container's install_date.
-		if ( ! empty( container()->plugin()->install_date ) ) {
-			return gmdate( 'Y-m-d H:i:s', container()->plugin()->install_date );
-		}
-
-		// Get the signup_date from the mm_install_date option.
-		$install_date = \get_option( Options::get_option_name( 'install_date', false ), false );
-		if ( false !== $install_date ) {
-			return gmdate( 'Y-m-d H:i:s', strtotime( $install_date ) );
-		}
-
-		return false;
-	}
-
-	/**
-	 * Determines if the signup data is after the brand's net_new_signup_date_threshold.
-	 *
-	 * @param array $customer_data The brand customer data.
-	 * @return boolean
-	 */
-	public static function is_net_new_signup( $customer_data ) {
-		$current_brand = Data::current_brand();
-		if ( ! isset( $current_brand['config']['net_new_signup_date_threshold'] ) ) {
-			return false;
-		}
-		$net_new_signup_date_threshold = gmdate( 'Y-m-d H:i:s', strtotime( $current_brand['config']['net_new_signup_date_threshold'] ) );
-
-		// Get the actual signup date of the install.
-		$signup_date = self::get_signup_date( $customer_data );
-
-		// As a safety measure, return false if a signup date cannot be determined.
-		if ( false === $signup_date ) {
-			return false;
-		}
-
-		// Determine whether the commerce install is a net new signup.
-		return $signup_date >= $net_new_signup_date_threshold;
 	}
 
 	/**
@@ -156,7 +102,7 @@ class ModuleController {
 	 * @param array $customer_data The site's customer data.
 	 * @return boolean
 	 */
-	public static function is_new_commerce_signup( $customer_data ) {
+	public static function is_commerce_signup( $customer_data ) {
 		// Determine if the flow=ecommerce param is set.
 		if ( isset( $_GET['flow'] ) && 'ecommerce' === \sanitize_text_field( $_GET['flow'] ) ) {
 			return true;
@@ -171,12 +117,6 @@ class ModuleController {
 			$is_commerce = Flows::is_commerce_priority();
 		}
 		if ( ! $is_commerce ) {
-			return false;
-		}
-
-		// Determine whether the commerce install is a net new signup.
-		$is_net_new_signup = self::is_net_new_signup( $customer_data );
-		if ( ! $is_net_new_signup ) {
 			return false;
 		}
 

@@ -202,10 +202,10 @@ const DesignColors = () => {
 			if ( currentData?.data?.colorStyle === 'custom' ) {
 				setCustomColors( selectedColorsLocalTemp );
 			}
+			setSelectedColors( selectedColorPalette );
 		} else {
 			setToDefaultPalette();
 		}
-		setSelectedColors( selectedColorPalette );
 		saveThemeColorPalette(
 			currentData?.data?.colorStyle,
 			colorPaletteResponse?.body.tailored,
@@ -233,6 +233,7 @@ const DesignColors = () => {
 			return true;
 		}
 
+		clearCustomColors();
 		saveThemeColorPalette( colorStyle );
 		setSelectedColorsLocal( colorPalettes[ colorStyle ] );
 		LocalToState( colorPalettes[ colorStyle ], colorStyle );
@@ -287,17 +288,22 @@ const DesignColors = () => {
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
 
-		for ( const colorVal in selectedColors ) {
-			selectedColors[ colorVal ].color = '';
-		}
-
-		setCustomColors();
+		clearCustomColors();
 
 		const selectedGlobalStylePalette =
 			selectedGlobalStyle.settings.color.palette;
 		setSelectedColors( selectedGlobalStylePalette );
 		setSelectedColorsLocal( stateToLocal( selectedGlobalStylePalette ) );
 		trackHiiveEvent( 'color-selection-reset', selectedGlobalStyle.title );
+	}
+
+	function clearCustomColors() {
+		for ( const custom in customColors ) {
+			customColors[ custom ] = '';
+		}
+
+		// Resetting the color palette to default and unsetting the selected predefined color palette, if any.
+		setCustomColors( customColors );
 	}
 
 	async function resetColors() {
@@ -328,7 +334,7 @@ const DesignColors = () => {
 						<div
 							className="color-palette__colors--tertiary"
 							style={ {
-								backgroundColor: `${ colorPalettes[ colorStyle ]?.tertiary }`,
+								backgroundColor: `${ colorPalettes[ colorStyle ]?.[ 'header-background' ] }`,
 							} }
 						/>
 						<div
@@ -367,16 +373,16 @@ const DesignColors = () => {
 		const defaultColor = '#fff';
 		const primaryColorTemp =
 			customColors && customColors?.primary !== ''
-				? customColors?.primary
+				? customColors.primary
 				: selectedColorsLocal?.primary ?? defaultColor;
 		const secondaryColorTemp =
 			customColors && customColors?.secondary !== ''
-				? customColors?.secondary
+				? customColors.secondary
 				: selectedColorsLocal?.secondary ?? defaultColor;
 		const tertiaryColorTemp =
-			customColors && customColors?.tertiary !== ''
-				? customColors?.tertiary
-				: selectedColorsLocal?.tertiary ?? defaultColor;
+			customColors && customColors?.[ 'header-background' ] !== ''
+				? customColors[ 'header-background' ]
+				: selectedColorsLocal?.[ 'header-background' ] ?? defaultColor;
 		const paletteCount = Object.keys( colorPalettes ).length;
 
 		return (

@@ -1,7 +1,7 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding;
 
-use DateTime;
+use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 /**
@@ -59,9 +59,8 @@ class LoginRedirect {
 		if ( \get_transient( Options::get_option_name( 'redirect_param' ) ) === '1' ) {
 			return $original_redirect;
 		}
-
-		// Don't redirect if coming soon is off. User has launched their site
-		if ( \get_option( Options::get_option_name( 'coming_soon', false ), 'true' ) !== 'true' ) {
+		// Don't redirect if coming_soon is off. User has launched their site
+		if ( ! Data::coming_soon() ) {
 			return $original_redirect;
 		}
 
@@ -78,15 +77,6 @@ class LoginRedirect {
 			$redirect_option = \update_option( $redirect_option_name, true );
 		}
 		if ( ! $redirect_option ) {
-			return $original_redirect;
-		}
-
-		// If site was created more than 72 hours ago, don't redirect to onboarding
-		$install_date      = new DateTime( \get_option( Options::get_option_name( 'install_date', false ), gmdate( 'M d, Y' ) ) );
-		$current_date      = new DateTime( gmdate( 'M d, Y' ) );
-		$interval          = $current_date->diff( $install_date );
-		$interval_in_hours = ( $interval->days * 24 ) + $interval->h;
-		if ( $interval_in_hours >= 72 ) {
 			return $original_redirect;
 		}
 
