@@ -3,7 +3,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 import getContents from './contents';
 import TextInput from '../../../components/TextInput';
-import ButtonWhite from '../../../components/Button/ButtonWhite';
+// import ButtonWhite from '../../../components/Button/ButtonWhite';
 import SkipButton from '../../../components/SkipButton';
 import MiniPreview from '../../../components/MiniPreview';
 import Animate from '../../../components/Animate';
@@ -11,8 +11,8 @@ import { getSettings } from '../../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../../store';
 import ImageUploader from '../../../components/ImageUploader';
 import SocialMediaForm from '../../../components/SocialMediaForm';
-import moduleAI from '@newfold-labs/wp-module-ai';
-import QuickReplySuggestions from 'nfd-ai-ui';
+import { DescriptionGenerator } from '@newfold-labs/wp-module-ai';
+// import QuickReplySuggestions from './quickReplySuggestions';
 
 /**
  * Basic Info Form.
@@ -159,7 +159,7 @@ const BasicInfoForm = () => {
 		}
 	}, [siteDesc])
 
-	const getAIResult = async () => {
+	/* const getAIResult = async () => {
 		console.log("Get AI");
 		if(siteDesc && siteTitle){
 			const userPrompt = `current description is ${siteDesc} site title is ${siteTitle} site type is ${currentData.data?.siteType?.primary?.value} sub type is ${currentData.data?.siteType?.secondary?.value} site url is ${window.nfdOnboarding?.siteUrl}`;
@@ -179,7 +179,7 @@ const BasicInfoForm = () => {
 				console.log('Finally block');
 			}
 		}
-	};
+	}; */
 
 	return (
 		<Animate
@@ -211,13 +211,22 @@ const BasicInfoForm = () => {
 							textValueSetter={ setSiteDesc }
 							handleBlur={handleDescBlur}
 						/>
-						{suggestionButton && 
+						{/* {suggestionButton && 
 							<ButtonWhite text={btnText} onClick={() => { getAIResult() }} /> 
 						}
 
 						<QuickReplySuggestions
 							suggestions={aiResults}
 							onClick={handleSuggestionClick}
+						/> */}
+
+						<DescriptionGenerator 
+							siteDesc={siteDesc}
+							siteTitle={siteTitle}
+							siteType={currentData.data?.siteType?.primary?.value}
+							siteSubtype={currentData.data?.siteType?.secondary?.value}
+							siteUrl={window.nfdOnboarding?.siteUrl}
+							handleSuggestionClick={handleSuggestionClick}
 						/>
 
 						<div ref={ socialMediaRef }>
