@@ -3,7 +3,6 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 import getContents from './contents';
 import TextInput from '../../../components/TextInput';
-// import ButtonWhite from '../../../components/Button/ButtonWhite';
 import SkipButton from '../../../components/SkipButton';
 import MiniPreview from '../../../components/MiniPreview';
 import Animate from '../../../components/Animate';
@@ -12,7 +11,6 @@ import { store as nfdOnboardingStore } from '../../../store';
 import ImageUploader from '../../../components/ImageUploader';
 import SocialMediaForm from '../../../components/SocialMediaForm';
 import { DescriptionGenerator } from '@newfold-labs/wp-module-ai';
-// import QuickReplySuggestions from './quickReplySuggestions';
 
 /**
  * Basic Info Form.
