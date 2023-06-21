@@ -31,9 +31,7 @@ const BasicInfoForm = () => {
 	const [ socialData, setSocialData ] = useState();
 	const [ isValidSocials, setIsValidSocials ] = useState( false );
 	const [ isSocialFormOpen, setIsSocialFormOpen ] = useState( false );
-	const [aiResults, setAIResults] = useState([]);
 	const [suggestionButton, setSuggestionButton] = useState(false);
-	const [btnText, setBtnText] = useState('Show Suggestions');
 
 	const { setOnboardingSocialData, setCurrentOnboardingData } =
 		useDispatch( nfdOnboardingStore );
@@ -159,28 +157,6 @@ const BasicInfoForm = () => {
 		}
 	}, [siteDesc])
 
-	/* const getAIResult = async () => {
-		console.log("Get AI");
-		if(siteDesc && siteTitle){
-			const userPrompt = `current description is ${siteDesc} site title is ${siteTitle} site type is ${currentData.data?.siteType?.primary?.value} sub type is ${currentData.data?.siteType?.secondary?.value} site url is ${window.nfdOnboarding?.siteUrl}`;
-			try {
-				setBtnText("Fetching Suggestions...");
-				const result = await moduleAI.search.getSearchResult(
-					userPrompt,
-					'descgenerator'
-				);
-				console.log("Result", result);
-				setAIResults(result.result);
-			} catch (exception) {
-				console.log('exception', exception);
-				setBtnText("Show Suggestions");
-			} finally {
-				setBtnText("Show Suggestions");
-				console.log('Finally block');
-			}
-		}
-	}; */
-
 	return (
 		<Animate
 			type={ 'fade-in-disabled' }
@@ -211,23 +187,17 @@ const BasicInfoForm = () => {
 							textValueSetter={ setSiteDesc }
 							handleBlur={handleDescBlur}
 						/>
-						{/* {suggestionButton && 
-							<ButtonWhite text={btnText} onClick={() => { getAIResult() }} /> 
+
+						{siteDesc &&
+							<DescriptionGenerator
+								siteDesc={siteDesc}
+								siteTitle={siteTitle}
+								siteType={currentData.data?.siteType?.primary?.value}
+								siteSubtype={currentData.data?.siteType?.secondary?.value}
+								siteUrl={window.nfdOnboarding?.siteUrl}
+								handleSuggestionClick={handleSuggestionClick}
+							/>
 						}
-
-						<QuickReplySuggestions
-							suggestions={aiResults}
-							onClick={handleSuggestionClick}
-						/> */}
-
-						<DescriptionGenerator 
-							siteDesc={siteDesc}
-							siteTitle={siteTitle}
-							siteType={currentData.data?.siteType?.primary?.value}
-							siteSubtype={currentData.data?.siteType?.secondary?.value}
-							siteUrl={window.nfdOnboarding?.siteUrl}
-							handleSuggestionClick={handleSuggestionClick}
-						/>
 
 						<div ref={ socialMediaRef }>
 							<SocialMediaForm
