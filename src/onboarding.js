@@ -1,6 +1,6 @@
 import './webpack-public-path';
 
-import { NFD_ONBOARDING_ELEMENT_ID, runtimeDataExists } from './constants';
+import { HIIVE_ANALYTICS_CATEGORY, NFD_ONBOARDING_ELEMENT_ID, runtimeDataExists } from './constants';
 
 import domReady from '@wordpress/dom-ready';
 import { registerCoreBlocks } from '@wordpress/block-library';
@@ -11,6 +11,7 @@ import { onboardingRestURL } from './OnboardingSPA/utils/api/common';
 if ( runtimeDataExists ) {
 	domReady( () => {
 		HiiveAnalytics.initialize( {
+			namespace: HIIVE_ANALYTICS_CATEGORY,
 			urls: {
 				single: onboardingRestURL( 'events' ),
 				batch: onboardingRestURL( 'events/batch' ),

@@ -12,7 +12,7 @@ export const trackHiiveEvent = ( action, value ) => {
 	if ( 'pageview' === action ) {
 		data.page = value;
 	}
-	const hiiveEvent = new HiiveEvent( HIIVE_ANALYTICS_CATEGORY, action, data );
+	const hiiveEvent = new HiiveEvent( HIIVE_ANALYTICS_CATEGORY, action, data, HIIVE_ANALYTICS_CATEGORY );
 
 	HiiveAnalytics.track( hiiveEvent );
 };

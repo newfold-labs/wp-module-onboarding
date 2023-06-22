@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
-import { wpAdminPage, pluginDashboardPage } from '../../../constants';
+import { wpAdminPage, pluginDashboardPage, HIIVE_ANALYTICS_CATEGORY } from '../../../constants';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 
 const SkipButton = ( { callback = false } ) => {
@@ -46,7 +46,7 @@ const SkipButton = ( { callback = false } ) => {
 				if ( socialDataResp ) {
 					setOnboardingSocialData( socialDataResp );
 				}
-				await HiiveAnalytics.dispatchEvents();
+				await HiiveAnalytics.dispatchEvents( HIIVE_ANALYTICS_CATEGORY );
 			}
 			setFlow( currentData );
 		}
