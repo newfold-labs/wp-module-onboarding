@@ -19,7 +19,7 @@
 		transform-style: flat;
 	}
 
-	&::before {
+	&__logo {
 		content: "";
 		background: var(--nfd-onboarding-contrast-icon) no-repeat;
 		width: 600px;
@@ -37,14 +37,14 @@
 		padding: 20px;
 		margin: 30px;
 
-		&::before {
+		&__logo {
 			display: none;
 		}
 	}
 
 	@media (min-width: #{ ($break-medium) }) and (max-width: 1300px) {
 
-		&::before {
+		&__logo {
 			width: 400px;
 			height: 350px;
 			left: -10.5rem;
@@ -56,7 +56,7 @@
 		width: 50vw;
 		min-height: 960px;
 
-		&::before {
+		&__logo {
 			width: 860px;
 			min-height: 600px;
 			left: -19rem;
