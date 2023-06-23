@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 
 import Tooltip from './../Tooltip'
+import urlValidator from './urlValidator';
 
 const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials, isSocialFormOpen, setIsSocialFormOpen }) => {
     const [facebook, setFacebook] = useState("");
@@ -130,6 +131,7 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials, isSocia
     }
 
     const checkValidUrlDebounce = _.debounce(checkValidUrl, 1000);
+    const urlValidatorDebounce = _.debounce(urlValidator, 1000);
 
     const handleAccordion = (e) => {
         setIsSocialFormOpen(!isSocialFormOpen);
@@ -140,37 +142,37 @@ const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials, isSocia
         const triggerID = e.target.id;
         switch (triggerID){
             case SocialMediaSites.FACEBOOK:
-                checkValidUrlDebounce(SocialMediaSites.FACEBOOK, value);
+                urlValidatorDebounce(SocialMediaSites.FACEBOOK, value, activeError, setActiveError);
                 setFacebook(value);
                 socialMediaDB.facebook_site = value;
                 break;
             case SocialMediaSites.TWITTER:
-                checkValidUrlDebounce(SocialMediaSites.TWITTER, value);
+                urlValidatorDebounce(SocialMediaSites.TWITTER, value, activeError, setActiveError);
                 setTwitter(value);
                 socialMediaDB.twitter_site = value;
                 break;
             case SocialMediaSites.INSTAGRAM:
-                checkValidUrlDebounce(SocialMediaSites.INSTAGRAM, value);
+                urlValidatorDebounce(SocialMediaSites.INSTAGRAM, value, activeError, setActiveError);
                 setInstagram(value);
                 socialMediaDB.instagram_url = value;
                 break;
             case SocialMediaSites.YOUTUBE:
-                checkValidUrlDebounce(SocialMediaSites.YOUTUBE, value);
+                urlValidatorDebounce(SocialMediaSites.YOUTUBE, value, activeError, setActiveError);
                 setYouTube(value);
                 socialMediaDB.youtube_url = value;
                 break;
             case SocialMediaSites.LINKEDIN:
-                checkValidUrlDebounce(SocialMediaSites.LINKEDIN, value);
+                urlValidatorDebounce(SocialMediaSites.LINKEDIN, value, activeError, setActiveError);
                 setLinkedIn(value);
                 socialMediaDB.linkedin_url = value;
                 break;
             case SocialMediaSites.YELP:
-                checkValidUrlDebounce(SocialMediaSites.YELP, value)
+                urlValidatorDebounce(SocialMediaSites.YELP, value, activeError, setActiveError);
                 setYelp(value);
                 socialMediaDB.other_social_urls["yelp_url"] = value;
                 break;
             case SocialMediaSites.TIKTOK:
-                checkValidUrlDebounce(SocialMediaSites.TIKTOK, value);
+                urlValidatorDebounce(SocialMediaSites.TIKTOK, value, activeError, setActiveError);
                 setTikTok(value);
                 socialMediaDB.other_social_urls["tiktok_url"] = value;
                 break;
