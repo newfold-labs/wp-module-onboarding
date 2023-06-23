@@ -1,6 +1,10 @@
 import './webpack-public-path';
 
-import { HIIVE_ANALYTICS_CATEGORY, NFD_ONBOARDING_ELEMENT_ID, runtimeDataExists } from './constants';
+import {
+	HIIVE_ANALYTICS_CATEGORY,
+	NFD_ONBOARDING_ELEMENT_ID,
+	runtimeDataExists,
+} from './constants';
 
 import domReady from '@wordpress/dom-ready';
 import { registerCoreBlocks } from '@wordpress/block-library';
