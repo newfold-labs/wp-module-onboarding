@@ -90,7 +90,10 @@ const StepPrimarySetup = () => {
 		currentData.data.siteType.primary.refers = 'slug';
 		currentData.data.siteType.primary.value = primType;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'primary-type', currentData.data.siteType.primary );
+		trackHiiveEvent( 'primary-type', {
+			refers: 'slug',
+			value: primType,
+		} );
 	};
 
 	/**

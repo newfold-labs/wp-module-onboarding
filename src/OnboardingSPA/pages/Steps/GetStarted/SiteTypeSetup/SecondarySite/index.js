@@ -164,10 +164,7 @@ const StepPrimarySetup = () => {
 		currentData.data.siteType.primary.value = primaryCategory;
 		currentData.data.siteType.secondary.value = secType;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent(
-			'secondary-type',
-			currentData.data.siteType.secondary
-		);
+		trackHiiveEvent( 'secondary-type', { refers: 'slug', value: secType } );
 	};
 
 	const changePrimaryType = ( direction ) => {
@@ -240,28 +237,28 @@ const StepPrimarySetup = () => {
 								<div className="category-scrolling-wrapper">
 									{ primaryTypesList &&
 										primaryTypesList.length > 1 && (
-										<div className="category-scrolling-wrapper__left-btn">
-											<span
-												className="category-scrolling-wrapper__left-btn-icon"
-												onClick={ () =>
-													changePrimaryType(
-														'back'
-													)
-												}
-												onKeyUp={ () =>
-													changePrimaryType(
-														'back'
-													)
-												}
-												role="button"
-												tabIndex={ 0 }
-												style={ {
-													backgroundImage:
+											<div className="category-scrolling-wrapper__left-btn">
+												<span
+													className="category-scrolling-wrapper__left-btn-icon"
+													onClick={ () =>
+														changePrimaryType(
+															'back'
+														)
+													}
+													onKeyUp={ () =>
+														changePrimaryType(
+															'back'
+														)
+													}
+													role="button"
+													tabIndex={ 0 }
+													style={ {
+														backgroundImage:
 															'var(--chevron-left-icon)',
-												} }
-											/>
-										</div>
-									) }
+													} }
+												/>
+											</div>
+										) }
 									<div className="category-scrolling-wrapper__type">
 										<span
 											className="category-scrolling-wrapper__type-icon"
@@ -275,28 +272,28 @@ const StepPrimarySetup = () => {
 									</div>
 									{ primaryTypesList &&
 										primaryTypesList.length > 1 && (
-										<div className="category-scrolling-wrapper__right-btn">
-											<span
-												className="category-scrolling-wrapper__right-btn-icon"
-												onClick={ () =>
-													changePrimaryType(
-														'next'
-													)
-												}
-												onKeyUp={ () =>
-													changePrimaryType(
-														'next'
-													)
-												}
-												role="button"
-												tabIndex={ 0 }
-												style={ {
-													backgroundImage:
+											<div className="category-scrolling-wrapper__right-btn">
+												<span
+													className="category-scrolling-wrapper__right-btn-icon"
+													onClick={ () =>
+														changePrimaryType(
+															'next'
+														)
+													}
+													onKeyUp={ () =>
+														changePrimaryType(
+															'next'
+														)
+													}
+													role="button"
+													tabIndex={ 0 }
+													style={ {
+														backgroundImage:
 															'var(--chevron-right-icon)',
-												} }
-											/>
-										</div>
-									) }
+													} }
+												/>
+											</div>
+										) }
 								</div>
 							) }
 						</div>
