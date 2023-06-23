@@ -110,10 +110,10 @@ const StepPrimarySetup = () => {
 			clearTimeout( typingTimeout );
 			setTypingTimeout(
 				setTimeout( () => {
-					trackHiiveEvent(
-						'primary-type',
-						currentData.data.siteType.primary
-					);
+					trackHiiveEvent( 'primary-type', {
+						refers: 'custom',
+						value,
+					} );
 				}, 1000 )
 			);
 		}
