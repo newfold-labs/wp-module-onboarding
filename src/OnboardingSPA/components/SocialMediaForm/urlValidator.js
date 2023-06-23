@@ -9,6 +9,8 @@ const SocialMediaSites = {
     TIKTOK: 'tiktok',
 }
 
+const validationExemption = new Set(["twitter", "instagram", "youtube"]);
+
 let errorsDup;
 let setErrorsDup;
 
@@ -24,11 +26,6 @@ const displayErrors = ( categ, isError ) => {
 }
 
 const handleCommonValidation = ( categ, url ) => {
-    const validationExemption = new Set(["twitter", "instagram", "youtube"]);
-
-    // Skip urlValidation as sites like twitter might be just a handle
-    if(validationExemption.has(categ))
-        return url;
 
     let isError = true;
     let wwwExp = /.*www\./gi;
@@ -66,21 +63,60 @@ const handleCommonValidation = ( categ, url ) => {
     return url;
 }
 
+const isValidHandle = (handle) => {
+    return handle.match(`^@?[A-Za-z0-9_]{1,25}$`) ? true : false;
+}
+
+const handleTwitterValidation = ( url ) => {
+    if( isValidHandle(url) ) {
+        if( url.charAt(0) === '@' )
+            url = url.substr(1);
+        url = 'https://www.twitter.com/' + url;
+    } else {
+        url = handleCommonValidation( SocialMediaSites.TWITTER, url);
+    }
+    return url;
+}
+
+const handleInstagramValidation = ( url ) => {
+    if( isValidHandle(url) ) {
+        if( url.charAt(0) === '@' )
+            url = url.substr(1);
+        url = 'https://www.instagram.com/' + url;
+    } else {
+        url = handleCommonValidation( SocialMediaSites.INSTAGRAM, url);
+    }
+    return url;
+}
+
+const handleYouTubeValidation = ( url ) => {
+    if( isValidHandle(url) ) {
+        url = 'https://www.youtube.com/' + url;
+    } else {
+        url = handleCommonValidation( SocialMediaSites.YOUTUBE, url);
+    }
+    return url;
+}
+
 const urlValidator = ( categ, url, errors, setErrors ) => {
     errorsDup = errors;
     setErrorsDup = setErrors;
-    url = handleCommonValidation( categ, url, errors, setErrors );
+
+    // Skip urlValidation for some sites
+    if(!validationExemption.has(categ))
+        url = handleCommonValidation( categ, url);
+    
     switch ( categ ) {
         case SocialMediaSites.FACEBOOK: 
             break;
         case SocialMediaSites.TWITTER: 
-            
+            handleTwitterValidation(url);
             break;
         case SocialMediaSites.INSTAGRAM: 
-            
+            handleInstagramValidation(url);
             break;
         case SocialMediaSites.YOUTUBE: 
-            
+            handleYouTubeValidation(url);
             break;
         case SocialMediaSites.LINKEDIN: 
             
