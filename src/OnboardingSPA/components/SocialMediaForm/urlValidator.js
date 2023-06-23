@@ -30,13 +30,10 @@ const handleCommonValidation = ( categ, url ) => {
     let isError = true;
     let wwwExp = /.*www\./gi;
     let protocolExp = /https?:\/\//gi;
-    let urlExp = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+    let urlExp = /((https?:\/\/(?:www\.|(?!www)))?[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
     let wwwRegex = new RegExp(wwwExp);
     let protocolRegex = new RegExp(protocolExp);
     let urlRegex = new RegExp(urlExp);
-
-    if( url === '' )
-        isError = false;
     
     let urlExtract = url.match(urlRegex);
     if( urlExtract ) {
@@ -55,8 +52,8 @@ const handleCommonValidation = ( categ, url ) => {
         else if ( iswwwValid && !isProtocolValid ){
             finalUrl = 'https://' + finalUrl;
         }
-        console.log(finalUrl);
         isError = false;
+        url = finalUrl;
     }
 
     displayErrors( categ, isError );
@@ -99,24 +96,27 @@ const handleYouTubeValidation = ( url ) => {
 }
 
 const urlValidator = ( categ, url, errors, setErrors ) => {
+    if( url === '' )
+        return url;
+        
     errorsDup = errors;
     setErrorsDup = setErrors;
 
     // Skip urlValidation for some sites
     if(!validationExemption.has(categ))
         url = handleCommonValidation( categ, url);
-    
+    console.log("ran till here");
     switch ( categ ) {
         case SocialMediaSites.FACEBOOK: 
             break;
         case SocialMediaSites.TWITTER: 
-            handleTwitterValidation(url);
+            url = handleTwitterValidation(url);
             break;
         case SocialMediaSites.INSTAGRAM: 
-            handleInstagramValidation(url);
+            url = handleInstagramValidation(url);
             break;
         case SocialMediaSites.YOUTUBE: 
-            handleYouTubeValidation(url);
+            url = handleYouTubeValidation(url);
             break;
         case SocialMediaSites.LINKEDIN: 
             
@@ -128,6 +128,8 @@ const urlValidator = ( categ, url, errors, setErrors ) => {
             
             break;
     }
+
+    return url;
 }
 
 export default urlValidator;
