@@ -26,7 +26,6 @@ const BasicInfoForm = () => {
 	const [ siteDesc, setSiteDesc ] = useState( '' );
 	const [ siteLogo, setSiteLogo ] = useState();
 	const [ socialData, setSocialData ] = useState();
-	const [ isValidSocials, setIsValidSocials ] = useState( false );
 	const [ isSocialFormOpen, setIsSocialFormOpen ] = useState( false );
 
 	const { setOnboardingSocialData, setCurrentOnboardingData } =
@@ -99,7 +98,7 @@ const BasicInfoForm = () => {
 		return () => {
 			clearTimeout( timerId );
 		};
-	}, [ siteTitle, siteDesc, siteLogo, socialData, isValidSocials ] );
+	}, [ siteTitle, siteDesc, siteLogo, socialData ] );
 
 	const updateCoreStore = ( siteLogoTemp, siteTitleTemp, siteDescTemp ) => {
 		editEntityRecord( 'root', 'site', undefined, {
@@ -170,7 +169,6 @@ const BasicInfoForm = () => {
 								socialData={ socialData }
 								setSocialData={ setSocialData }
 								isSocialFormOpen={ isSocialFormOpen }
-								setIsValidSocials={ setIsValidSocials }
 								setIsSocialFormOpen={ setIsSocialFormOpen }
 							/>
 						</div>
