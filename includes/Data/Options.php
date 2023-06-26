@@ -47,6 +47,16 @@ final class Options {
 		'wpseo_social'                  => 'wpseo_social',
 		'compatibility_results'         => 'compatibility_results',
 		'core_update_referrer'          => 'core_update_referrer',
+		'wc_currency'                   => 'woocommerce_currency',
+		'wc_default_country'            => 'woocommerce_default_country',
+		'wc_email'                      => 'woocommerce_email_from_address',
+		'wc_address_primary'            => 'woocommerce_store_address',
+		'wc_address_secondary'          => 'woocommerce_store_address_2',
+		'wc_city'                       => 'woocommerce_store_city',
+		'wc_postcode'                   => 'woocommerce_store_postcode',
+		'wc_taxes_enabled'              => 'wc_connect_taxes_enabled',
+		'wc_calc_taxes'                 => 'woocommerce_calc_taxes',
+		'wc_no_sales_tax'               => 'woocommerce_no_sales_tax',
 	);
 
 	/**
@@ -98,5 +108,65 @@ final class Options {
 	 */
 	public static function get_initialization_options() {
 		return self::$initialization_options;
+	}
+
+	/**
+	 * Get all the WooCommerce Settings Options.
+	 *
+	 * @return array
+	 */
+	public static function get_wc_settings_options() {
+		return array(
+			'wc_currency'          => array(
+				'show_in_rest' => true,
+				'type'         => 'string',
+				'description'  => __( 'Woocommerce Settings', 'wp-module-onboarding' ),
+			),
+			'wc_default_country'   => array(
+				'show_in_rest' => true,
+				'type'         => 'string',
+				'description'  => __( 'Woocommerce Settings', 'wp-module-onboarding' ),
+			),
+			'wc_email'             => array(
+				'show_in_rest' => true,
+				'type'         => 'string',
+				'description'  => __( 'Woocommerce Settings', 'wp-module-onboarding' ),
+			),
+			'wc_address_primary'   => array(
+				'show_in_rest' => true,
+				'type'         => 'string',
+				'description'  => __( 'Woocommerce Settings', 'wp-module-onboarding' ),
+			),
+			'wc_address_secondary' => array(
+				'show_in_rest' => true,
+				'type'         => 'string',
+				'description'  => __( 'Woocommerce Settings', 'wp-module-onboarding' ),
+			),
+			'wc_city'              => array(
+				'show_in_rest' => true,
+				'type'         => 'string',
+				'description'  => __( 'Woocommerce Settings', 'wp-module-onboarding' ),
+			),
+			'wc_postcode'          => array(
+				'show_in_rest' => true,
+				'type'         => 'string',
+				'description'  => __( 'Woocommerce Settings', 'wp-module-onboarding' ),
+			),
+			'wc_taxes_enabled'     => array(
+				'show_in_rest' => true,
+				'type'         => 'string',
+				'description'  => __( 'Woocommerce Settings', 'wp-module-onboarding' ),
+			),
+			'wc_calc_taxes'        => array(
+				'show_in_rest' => true,
+				'type'         => 'string',
+				'description'  => __( 'Woocommerce Settings', 'wp-module-onboarding' ),
+			),
+			'wc_no_sales_tax'      => array(
+				'show_in_rest' => true,
+				'type'         => 'boolean',
+				'description'  => __( 'Woocommerce Settings', 'wp-module-onboarding' ),
+			),
+		);
 	}
 }

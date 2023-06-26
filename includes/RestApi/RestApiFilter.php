@@ -2,6 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Patterns;
 use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
@@ -16,6 +17,9 @@ class RestApiFilter {
 	 */
 	public function __construct() {
 		\add_filter( 'rest_request_before_callbacks', array( __CLASS__, 'add_appropriate_filters_for_onboarding' ), 10, 3 );
+		if ( 'ecommerce' === Data::current_flow() ) {
+			\add_filter( 'rest_api_init', array( __CLASS__, 'register_wc_settings_options' ) );
+		}
 	}
 
 	/**
@@ -281,6 +285,18 @@ class RestApiFilter {
 			$page['menu_order']        = $index;
 		}
 		return $page;
+	}
+
+	/**
+	 * Registers Woocommerce settings options with the wp/v2/settings API.
+	 *
+	 * @return void
+	 */
+	public static function register_wc_settings_options() {
+		$wc_settings_options = Options::get_wc_settings_options();
+		foreach ( $wc_settings_options as $wc_settings_option => $value ) {
+			register_setting( 'general', Options::get_option_name( $wc_settings_option, false ), $value );
+		}
 	}
 
 } // END /NewfoldLabs/WP/Module/Onboarding/RestApiFilter()

@@ -1,11 +1,6 @@
 import { combineReducers } from '@wordpress/data';
 
-import {
-	VIEW_NAV_PRIMARY,
-	THEME_STATUS_INIT,
-	PLUGIN_STATUS_INIT,
-	ECOMMERCE_STEPS_PLUGIN,
-} from '../../constants';
+import { VIEW_NAV_PRIMARY, THEME_STATUS_INIT } from '../../constants';
 
 import {
 	routes as initialRoutes,
@@ -188,7 +183,6 @@ export function runtime( state = {}, action ) {
 export function settings(
 	state = {
 		themeStatus: THEME_STATUS_INIT,
-		pluginsStatus: { [ ECOMMERCE_STEPS_PLUGIN ]: PLUGIN_STATUS_INIT },
 	},
 	action
 ) {
@@ -202,11 +196,6 @@ export function settings(
 			return {
 				...state,
 				themeStatus: action.themeStatus,
-			};
-		case 'UPDATE_PLUGINS_STATUS':
-			return {
-				...state,
-				pluginsStatus: action.pluginsStatus,
 			};
 	}
 

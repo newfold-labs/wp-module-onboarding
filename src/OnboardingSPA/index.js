@@ -49,9 +49,7 @@ export async function initializeNFDOnboarding( id, runtime ) {
 			]
 		);
 	}
-	dispatch( nfdOnboardingStore ).updatePluginsStatus(
-		runtime.previewSettings.settings.preRequisites?.plugins
-	);
+
 	const currentData = await getFlow();
 	if ( currentData.error === null ) {
 		currentData.body = initializeFlowData( currentData.body );
