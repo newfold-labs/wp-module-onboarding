@@ -360,3 +360,13 @@ export function getQueuePeek( state ) {
 export function isQueueEmpty( state ) {
 	return state?.queue?.length === 0;
 }
+
+/**
+ * Gets the navigation callback to be run before Prev or Next
+ *
+ * @param {*} state
+ * @return {Function} navigationCallback
+ */
+export function getNavigationCallback( state ) {
+	return state?.flow?.steps?.navigationCallback;
+}

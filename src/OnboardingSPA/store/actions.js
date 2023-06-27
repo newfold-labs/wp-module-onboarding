@@ -220,3 +220,16 @@ export function flushQueue() {
 		type: 'FLUSH_QUEUE',
 	};
 }
+
+export function addNavigationCallback( navigationCallback ) {
+	return {
+		type: 'ADD_NAV_CALLBACK',
+		navigationCallback,
+	};
+}
+
+export function removeNavigationCallback() {
+	return {
+		type: 'REMOVE_NAV_CALLBACK',
+	};
+}

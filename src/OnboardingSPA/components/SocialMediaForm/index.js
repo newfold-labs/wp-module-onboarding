@@ -1,8 +1,10 @@
 import { __ } from '@wordpress/i18n';
+import { useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 
 import Tooltip from './../Tooltip';
 import urlValidator from './urlValidator';
+import { store as nfdOnboardingStore } from '../../store';
 
 const SocialMediaForm = ( {
 	socialData,
@@ -19,6 +21,9 @@ const SocialMediaForm = ( {
 	const [ tiktok, setTikTok ] = useState( '' );
 
 	const [ activeError, setActiveError ] = useState( [] );
+
+	const { addNavigationCallback, removeNavigationCallback } =
+		useDispatch( nfdOnboardingStore );
 
 	const SocialMediaSites = {
 		FACEBOOK: 'facebook',
@@ -51,6 +56,9 @@ const SocialMediaForm = ( {
 			tiktok_url: tiktok,
 		},
 	};
+	useEffect( () => {
+		addNavigationCallback( navigationCallback );
+	}, [] );
 
 	useEffect( () => {
 		setFacebook( socialData?.facebook_site ?? '' );
@@ -73,6 +81,11 @@ const SocialMediaForm = ( {
 
 	const handleAccordion = () => {
 		setIsSocialFormOpen( ! isSocialFormOpen );
+	};
+
+	const navigationCallback = ( callback ) => {
+		removeNavigationCallback();
+		callback();
 	};
 
 	const saveData = ( value, triggerID ) => {

@@ -15,10 +15,17 @@ import { wpAdminPage, pluginDashboardPage } from '../../../constants';
  *
  * @return {WPComponent} Back Component
  */
-const Back = ( { path } ) => {
+const Back = ( { path, navigationCallback } ) => {
 	const navigate = useNavigate();
-	const navigateBack = () =>
-		navigate( path, { state: { origin: 'header' } } );
+	const navigateBack = () => {
+		if(navigationCallback) {
+			navigationCallback(() => {
+				navigate( path, { state: { origin: 'header' } } );
+			});
+		}else{
+			navigate( path, { state: { origin: 'header' } } );
+		}
+	}
 	return (
 		<Button
 			className="navigation-buttons navigation-buttons_back"
@@ -38,11 +45,18 @@ const Back = ( { path } ) => {
  *
  * @return {WPComponent} Next Component
  */
-const Next = ( { path } ) => {
+const Next = ( { path, navigationCallback } ) => {
 	/* [TODO]: some sense of isStepComplete to enable/disable */
 	const navigate = useNavigate();
-	const navigateNext = () =>
-		navigate( path, { state: { origin: 'header' } } );
+	const navigateNext = () => {
+		if(navigationCallback) {
+			navigationCallback(() => {
+				navigate( path, { state: { origin: 'header' } } );
+			});
+		}else{
+			navigate( path, { state: { origin: 'header' } } );
+		}
+	}
 	return (
 		<Button
 			onClick={ navigateNext }
@@ -93,13 +107,15 @@ const Finish = ( { currentData, saveDataAndExitFunc } ) => (
  */
 const StepNavigation = () => {
 	const location = useLocation();
-	const { previousStep, nextStep, currentData } = useSelect(
+	const { previousStep, nextStep, currentData, navigationCallback } = useSelect(
 		( select ) => {
 			return {
 				nextStep: select( nfdOnboardingStore ).getNextStep(),
 				previousStep: select( nfdOnboardingStore ).getPreviousStep(),
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				navigationCallback:
+					select( nfdOnboardingStore ).getNavigationCallback(),
 			};
 		},
 		[ location.pathname ]
@@ -110,7 +126,7 @@ const StepNavigation = () => {
 		<div className="nfd-onboarding-header__step-navigation">
 			<ButtonGroup style={ { display: 'flex', columnGap: '0.5rem' } }>
 				{ isFirstStep || isLastStep ? null : (
-					<Back path={ previousStep.path } />
+					<Back path={ previousStep.path } navigationCallback={navigationCallback} />
 				) }
 				{ isLastStep ? (
 					<Finish
@@ -118,7 +134,7 @@ const StepNavigation = () => {
 						saveDataAndExitFunc={ saveDataAndExit }
 					/>
 				) : (
-					<Next path={ nextStep.path } />
+					<Next path={ nextStep.path } navigationCallback={navigationCallback} />
 				) }
 			</ButtonGroup>
 		</div>

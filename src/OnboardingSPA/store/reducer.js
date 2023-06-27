@@ -29,6 +29,7 @@ export function flow(
 			getStartedSteps: initialGetStartedSteps(),
 			storeInfoSteps: initialStoreInfoSteps(),
 			currentStep: '/wp-setup/step/what-next',
+			navigationCallback: null,
 		},
 	},
 	action
@@ -69,6 +70,22 @@ export function flow(
 				steps: {
 					...state.steps,
 					designSteps: action.designSteps,
+				},
+			};
+		case 'ADD_NAV_CALLBACK':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					navigationCallback: action.navigationCallback,
+				},
+			};
+		case 'REMOVE_NAV_CALLBACK':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					navigationCallback: null,
 				},
 			};
 	}
