@@ -4,6 +4,7 @@ import { useState, useEffect } from '@wordpress/element';
 
 import Tooltip from './../Tooltip';
 import urlValidator from './urlValidator';
+import SocialMediaModal from './socialMediaModal';
 import { store as nfdOnboardingStore } from '../../store';
 
 const SocialMediaForm = ( {
@@ -20,6 +21,7 @@ const SocialMediaForm = ( {
 	const [ yelp, setYelp ] = useState( '' );
 	const [ tiktok, setTikTok ] = useState( '' );
 
+	const [ showModal, setShowModal ] = useState( false );
 	const [ activeError, setActiveError ] = useState( [] );
 
 	const { addNavigationCallback, removeNavigationCallback } =
@@ -84,8 +86,9 @@ const SocialMediaForm = ( {
 	};
 
 	const navigationCallback = ( callback ) => {
-		removeNavigationCallback();
-		callback();
+		setShowModal( true );
+        removeNavigationCallback();
+        callback();
 	};
 
 	const saveData = ( value, triggerID ) => {
@@ -133,6 +136,18 @@ const SocialMediaForm = ( {
 		const value = e.target.value;
 		const triggerID = e.target.id;
 		saveData( value, triggerID );
+	};
+
+	const handleErrorModals = () => {
+		return (
+			<SocialMediaModal
+				showModal={ showModal }
+				setShowModal={ setShowModal }
+				modalTitle={ 'Allen' }
+				modalText={ 'Allen Benny' }
+				modalSecondaryButtonFunc={ () => {} }
+			/>
+		);
 	};
 
 	const showErrorMessage = ( socialMediaSite ) => {
@@ -204,6 +219,7 @@ const SocialMediaForm = ( {
 
 	return (
 		<div className="social-form">
+			{ showModal && handleErrorModals() }
 			<div
 				role="button"
 				tabIndex={ 0 }

@@ -18,7 +18,7 @@ import { wpAdminPage, pluginDashboardPage } from '../../../constants';
 const Back = ( { path, navigationCallback } ) => {
 	const navigate = useNavigate();
 	const navigateBack = () => {
-		if(navigationCallback) {
+		if( typeof navigationCallback === 'function' ) {
 			navigationCallback(() => {
 				navigate( path, { state: { origin: 'header' } } );
 			});
@@ -49,7 +49,7 @@ const Next = ( { path, navigationCallback } ) => {
 	/* [TODO]: some sense of isStepComplete to enable/disable */
 	const navigate = useNavigate();
 	const navigateNext = () => {
-		if(navigationCallback) {
+		if( typeof navigationCallback === 'function' ) {
 			navigationCallback(() => {
 				navigate( path, { state: { origin: 'header' } } );
 			});
