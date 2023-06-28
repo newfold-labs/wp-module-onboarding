@@ -35,7 +35,6 @@ const displayErrors = ( categ, isError ) => {
 };
 
 const handleCommonValidation = ( categ, url ) => {
-	let errorType;
 	let isError = true;
 	const wwwExp = /.*www\./gi;
 	const protocolExp = /https?:\/\//gi;
