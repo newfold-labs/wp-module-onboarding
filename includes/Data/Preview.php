@@ -27,10 +27,9 @@ final class Preview {
 		$theme_map = Themes::get();
 		return array(
 			'wp-setup'  => array(
-				'themes'  => array(
+				'themes' => array(
 					'nfd_slug_yith_wonder' => self::boolean_to_status( ThemeInstaller::is_theme_active( $theme_map['nfd_slugs']['nfd_slug_yith_wonder']['stylesheet'] ) ),
 				),
-				'plugins' => array(),
 			),
 			'ecommerce' => array(
 				'themes' => array(
