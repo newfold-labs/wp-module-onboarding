@@ -17,7 +17,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { SlotFillProvider } from '@wordpress/components';
 import { useEffect, Fragment, useState } from '@wordpress/element';
 import { FullscreenMode } from '@wordpress/interface';
-import { API_REQUEST } from '../../../constants';
+import { API_REQUEST, HIIVE_ANALYTICS_CATEGORY } from '../../../constants';
 import NewfoldInterfaceSkeleton from '../NewfoldInterfaceSkeleton';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import { trackHiiveEvent } from '../../utils/analytics';
@@ -230,7 +230,7 @@ const App = () => {
 		const previousStep = window.nfdOnboarding?.previousStepID;
 		if ( typeof previousStep !== 'string' ) {
 			window.nfdOnboarding.previousStepID = location.pathname;
-			HiiveAnalytics.dispatchEvents();
+			HiiveAnalytics.dispatchEvents( HIIVE_ANALYTICS_CATEGORY );
 			return;
 		}
 
@@ -272,7 +272,7 @@ const App = () => {
 		}
 
 		window.nfdOnboarding.previousStepID = location.pathname;
-		HiiveAnalytics.dispatchEvents();
+		HiiveAnalytics.dispatchEvents( HIIVE_ANALYTICS_CATEGORY );
 	};
 
 	useEffect( () => {
