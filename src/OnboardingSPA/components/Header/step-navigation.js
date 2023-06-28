@@ -18,14 +18,14 @@ import { wpAdminPage, pluginDashboardPage } from '../../../constants';
 const Back = ( { path, navigationCallback } ) => {
 	const navigate = useNavigate();
 	const navigateBack = () => {
-		if( typeof navigationCallback === 'function' ) {
-			navigationCallback(() => {
+		if ( typeof navigationCallback === 'function' ) {
+			navigationCallback( () => {
 				navigate( path, { state: { origin: 'header' } } );
-			});
-		}else{
+			} );
+		} else {
 			navigate( path, { state: { origin: 'header' } } );
 		}
-	}
+	};
 	return (
 		<Button
 			className="navigation-buttons navigation-buttons_back"
@@ -49,14 +49,14 @@ const Next = ( { path, navigationCallback } ) => {
 	/* [TODO]: some sense of isStepComplete to enable/disable */
 	const navigate = useNavigate();
 	const navigateNext = () => {
-		if( typeof navigationCallback === 'function' ) {
-			navigationCallback(() => {
+		if ( typeof navigationCallback === 'function' ) {
+			navigationCallback( () => {
 				navigate( path, { state: { origin: 'header' } } );
-			});
-		}else{
+			} );
+		} else {
 			navigate( path, { state: { origin: 'header' } } );
 		}
-	}
+	};
 	return (
 		<Button
 			onClick={ navigateNext }
@@ -107,26 +107,31 @@ const Finish = ( { currentData, saveDataAndExitFunc } ) => (
  */
 const StepNavigation = () => {
 	const location = useLocation();
-	const { previousStep, nextStep, currentData, navigationCallback } = useSelect(
-		( select ) => {
-			return {
-				nextStep: select( nfdOnboardingStore ).getNextStep(),
-				previousStep: select( nfdOnboardingStore ).getPreviousStep(),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				navigationCallback:
-					select( nfdOnboardingStore ).getNavigationCallback(),
-			};
-		},
-		[ location.pathname ]
-	);
+	const { previousStep, nextStep, currentData, navigationCallback } =
+		useSelect(
+			( select ) => {
+				return {
+					nextStep: select( nfdOnboardingStore ).getNextStep(),
+					previousStep:
+						select( nfdOnboardingStore ).getPreviousStep(),
+					currentData:
+						select( nfdOnboardingStore ).getCurrentOnboardingData(),
+					navigationCallback:
+						select( nfdOnboardingStore ).getNavigationCallback(),
+				};
+			},
+			[ location.pathname ]
+		);
 	const isFirstStep = null === previousStep || false === previousStep;
 	const isLastStep = null === nextStep || false === nextStep;
 	return (
 		<div className="nfd-onboarding-header__step-navigation">
 			<ButtonGroup style={ { display: 'flex', columnGap: '0.5rem' } }>
 				{ isFirstStep || isLastStep ? null : (
-					<Back path={ previousStep.path } navigationCallback={navigationCallback} />
+					<Back
+						path={ previousStep.path }
+						navigationCallback={ navigationCallback }
+					/>
 				) }
 				{ isLastStep ? (
 					<Finish
@@ -134,7 +139,10 @@ const StepNavigation = () => {
 						saveDataAndExitFunc={ saveDataAndExit }
 					/>
 				) : (
-					<Next path={ nextStep.path } navigationCallback={navigationCallback} />
+					<Next
+						path={ nextStep.path }
+						navigationCallback={ navigationCallback }
+					/>
 				) }
 			</ButtonGroup>
 		</div>
