@@ -80,7 +80,7 @@ const handleCommonValidation = ( categ, url ) => {
 		setErrorTypesDup( errorTypesDup );
 	}
 	displayErrors( categ, isError );
-	return [ url, errorType ];
+	return url;
 };
 
 const isValidHandle = ( handle ) => {
@@ -118,7 +118,7 @@ const urlValidator = (
 	errorTypes,
 	setErrorTypes
 ) => {
-	let res = [];
+	let res;
 	errorsDup = errors;
 	setErrorsDup = setErrors;
 	errorTypesDup = errorTypes;
