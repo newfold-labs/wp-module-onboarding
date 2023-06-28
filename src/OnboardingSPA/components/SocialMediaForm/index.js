@@ -1,8 +1,8 @@
-import { __ } from '@wordpress/i18n';
 import { useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 
 import Tooltip from './../Tooltip';
+import getContents from './contents';
 import urlValidator from './urlValidator';
 import SocialMediaModal from './socialMediaModal';
 import { store as nfdOnboardingStore } from '../../store';
@@ -13,6 +13,8 @@ const SocialMediaForm = ( {
 	isSocialFormOpen,
 	setIsSocialFormOpen,
 } ) => {
+	const content = getContents();
+
 	const [ facebook, setFacebook ] = useState( '' );
 	const [ twitter, setTwitter ] = useState( '' );
 	const [ instagram, setInstagram ] = useState( '' );
@@ -22,7 +24,9 @@ const SocialMediaForm = ( {
 	const [ tiktok, setTikTok ] = useState( '' );
 
 	const [ showModal, setShowModal ] = useState( false );
+	const [ modalCallback, setModalCallback ] = useState();
 	const [ activeError, setActiveError ] = useState( [] );
+	const [ activeErrorTypes, setActiveErrorTypes ] = useState();
 
 	const { addNavigationCallback, removeNavigationCallback } =
 		useDispatch( nfdOnboardingStore );
@@ -35,6 +39,16 @@ const SocialMediaForm = ( {
 		LINKEDIN: 'linkedin',
 		YELP: 'yelp',
 		TIKTOK: 'tiktok',
+	};
+
+	const SocialMediaSitesErrorTypes = {
+		facebook: 'none',
+		twitter: 'none',
+		instagram: 'none',
+		youtube: 'none',
+		linkedin: 'none',
+		yelp: 'none',
+		tiktok: 'none',
 	};
 
 	const SocialMediaStates = {
@@ -58,8 +72,15 @@ const SocialMediaForm = ( {
 			tiktok_url: tiktok,
 		},
 	};
+
+	const ERROR_TYPES = {
+		NONE: 'none',
+		AD_LINK_ERROR: 'ad-link-error',
+		INVALID_LINK_ERROR: 'invalid-link-error',
+	};
+
 	useEffect( () => {
-		addNavigationCallback( navigationCallback );
+		setActiveErrorTypes( SocialMediaSitesErrorTypes );
 	}, [] );
 
 	useEffect( () => {
@@ -87,8 +108,7 @@ const SocialMediaForm = ( {
 
 	const navigationCallback = ( callback ) => {
 		setShowModal( true );
-        removeNavigationCallback();
-        callback();
+		setModalCallback( () => callback );
 	};
 
 	const saveData = ( value, triggerID ) => {
@@ -125,11 +145,30 @@ const SocialMediaForm = ( {
 		setSocialData( socialMediaDB );
 	};
 
+	const getErrorType = () => {
+		let error = ERROR_TYPES.NONE;
+		for ( const key in activeErrorTypes ) {
+			if ( activeErrorTypes[ key ] !== ERROR_TYPES.NONE )
+				error = activeErrorTypes[ key ];
+		}
+		return error;
+	};
+
 	const handleOnBlur = ( e ) => {
-		let value = e.target.value;
+		const value = e.target.value;
 		const triggerID = e.target.id;
-		value = urlValidator( triggerID, value, activeError, setActiveError );
-		saveData( value, triggerID );
+		const res = urlValidator(
+			triggerID,
+			value,
+			activeError,
+			setActiveError,
+			activeErrorTypes,
+			setActiveErrorTypes
+		);
+		if ( getErrorType() !== ERROR_TYPES.NONE )
+			addNavigationCallback( navigationCallback );
+		else removeNavigationCallback();
+		saveData( res, triggerID );
 	};
 
 	const handleChange = ( e ) => {
@@ -139,15 +178,30 @@ const SocialMediaForm = ( {
 	};
 
 	const handleErrorModals = () => {
-		return (
-			<SocialMediaModal
-				showModal={ showModal }
-				setShowModal={ setShowModal }
-				modalTitle={ 'Allen' }
-				modalText={ 'Allen Benny' }
-				modalSecondaryButtonFunc={ () => {} }
-			/>
-		);
+		switch ( getErrorType() ) {
+			case ERROR_TYPES.AD_LINK_ERROR:
+				return (
+					<SocialMediaModal
+						showModal={ showModal }
+						setShowModal={ setShowModal }
+						modalTitle={ content.modals.shortUrl.modalTitle }
+						modalText={ content.modals.shortUrl.modalText }
+						modalSecondaryButtonFunc={ modalCallback }
+					/>
+				);
+			case ERROR_TYPES.INVALID_LINK_ERROR:
+				return (
+					<SocialMediaModal
+						showModal={ showModal }
+						setShowModal={ setShowModal }
+						modalTitle={ content.modals.invalidUrl.modalTitle }
+						modalText={ content.modals.invalidUrl.modalText }
+						modalSecondaryButtonFunc={ modalCallback }
+					/>
+				);
+			default:
+				return null;
+		}
 	};
 
 	const showErrorMessage = ( socialMediaSite ) => {
@@ -228,7 +282,7 @@ const SocialMediaForm = ( {
 				onClick={ handleAccordion }
 			>
 				<div className="social-form__top-row_heading">
-					{ __( 'Social Media', 'wp-module-onboarding' ) }
+					{ content.heading }
 				</div>
 				<div
 					className={ `social-form__top-row_icon ${

@@ -12,6 +12,14 @@ const validationExemption = new Set( [ 'twitter', 'instagram', 'youtube' ] );
 
 let errorsDup;
 let setErrorsDup;
+let errorTypesDup;
+let setErrorTypesDup;
+
+const ERROR_TYPES = {
+	NONE: 'none',
+	AD_LINK_ERROR: 'ad-link-error',
+	INVALID_LINK_ERROR: 'invalid-link-error',
+};
 
 const displayErrors = ( categ, isError ) => {
 	if ( isError ) {
@@ -27,10 +35,12 @@ const displayErrors = ( categ, isError ) => {
 };
 
 const handleCommonValidation = ( categ, url ) => {
+	let errorType;
 	let isError = true;
 	const wwwExp = /.*www\./gi;
 	const protocolExp = /https?:\/\//gi;
-    const adLinks = /^goo\.gl.*|^bit\.ly.*|^buff\.ly.*|^tinyurl\.com.*|^bl\.ink.*|^short\.io.*|^ow\.ly.*|^is\.gd.*|^adf\.ly.*|^bit\.do.*|^t\.co.*|^clk\.sh.*|^gplinks\.in.*|^tiny\.cc.*|^wp\.me.*/gi;
+	const adLinks =
+		/^goo\.gl.*|^bit\.ly.*|^buff\.ly.*|^tinyurl\.com.*|^bl\.ink.*|^short\.io.*|^ow\.ly.*|^is\.gd.*|^adf\.ly.*|^bit\.do.*|^t\.co.*|^clk\.sh.*|^gplinks\.in.*|^tiny\.cc.*|^wp\.me.*/gi;
 	const urlExp =
 		/((https?:\/\/(?:www\.|(?!www)))?[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 	const adRegex = new RegExp( adLinks );
@@ -38,34 +48,39 @@ const handleCommonValidation = ( categ, url ) => {
 	const protocolRegex = new RegExp( protocolExp );
 	const urlRegex = new RegExp( urlExp );
 
-    if( !url.match( adRegex )){
-        const urlExtract = url.match( urlRegex );
-        if ( urlExtract ) {
-            let finalUrl = urlExtract[ 0 ];
-            // Check if the link has the 'www.' prefix in it
-            const iswwwValid = urlExtract[ 0 ].match( wwwRegex );
-            // Check if the link has the 'https://' prefix in it
-            const isProtocolValid = urlExtract[ 0 ].match( protocolRegex );
+	if ( ! url.match( adRegex ) ) {
+		const urlExtract = url.match( urlRegex );
+		if ( urlExtract ) {
+			let finalUrl = urlExtract[ 0 ];
+			// Check if the link has the 'www.' prefix in it
+			const iswwwValid = urlExtract[ 0 ].match( wwwRegex );
+			// Check if the link has the 'https://' prefix in it
+			const isProtocolValid = urlExtract[ 0 ].match( protocolRegex );
 
-            if(finalUrl.match(new RegExp(/http:/gi)))
-                finalUrl = finalUrl.replace( /http:/gi, 'https:' );
+			if ( finalUrl.match( new RegExp( /http:/gi ) ) )
+				finalUrl = finalUrl.replace( /http:/gi, 'https:' );
 
-            if ( ! iswwwValid && ! isProtocolValid ) {
-                finalUrl = 'https://www.' + finalUrl;
-            } else if ( ! iswwwValid && isProtocolValid ) {
-                finalUrl = finalUrl.replace( /https?:\/\//gi, 'https://www.' );
-            } else if ( iswwwValid && ! isProtocolValid ) {
-                finalUrl = 'https://' + finalUrl;
-            }
-            isError = false;
-            url = finalUrl;
-        }
-    }else {
-        console.log('Here');
-    }
-
+			if ( ! iswwwValid && ! isProtocolValid ) {
+				finalUrl = 'https://www.' + finalUrl;
+			} else if ( ! iswwwValid && isProtocolValid ) {
+				finalUrl = finalUrl.replace( /https?:\/\//gi, 'https://www.' );
+			} else if ( iswwwValid && ! isProtocolValid ) {
+				finalUrl = 'https://' + finalUrl;
+			}
+			isError = false;
+			url = finalUrl;
+			errorTypesDup[ categ ] = ERROR_TYPES.NONE;
+			setErrorTypesDup( errorTypesDup );
+		} else {
+			errorTypesDup[ categ ] = ERROR_TYPES.INVALID_LINK_ERROR;
+			setErrorTypesDup( errorTypesDup );
+		}
+	} else {
+		errorTypesDup[ categ ] = ERROR_TYPES.AD_LINK_ERROR;
+		setErrorTypesDup( errorTypesDup );
+	}
 	displayErrors( categ, isError );
-	return url;
+	return [ url, errorType ];
 };
 
 const isValidHandle = ( handle ) => {
@@ -75,54 +90,61 @@ const isValidHandle = ( handle ) => {
 const handleTwitterValidation = ( url ) => {
 	if ( isValidHandle( url ) ) {
 		if ( url.charAt( 0 ) === '@' ) url = url.substr( 1 );
-		url = 'https://www.twitter.com/' + url;
-	} else {
-		url = handleCommonValidation( SocialMediaSites.TWITTER, url );
+		return 'https://www.twitter.com/' + url;
 	}
-	return url;
+	return handleCommonValidation( SocialMediaSites.TWITTER, url );
 };
 
 const handleInstagramValidation = ( url ) => {
 	if ( isValidHandle( url ) ) {
 		if ( url.charAt( 0 ) === '@' ) url = url.substr( 1 );
-		url = 'https://www.instagram.com/' + url;
-	} else {
-		url = handleCommonValidation( SocialMediaSites.INSTAGRAM, url );
+		return 'https://www.instagram.com/' + url;
 	}
-	return url;
+	return handleCommonValidation( SocialMediaSites.INSTAGRAM, url );
 };
 
 const handleYouTubeValidation = ( url ) => {
 	if ( isValidHandle( url ) ) {
-		url = 'https://www.youtube.com/' + url;
-	} else {
-		url = handleCommonValidation( SocialMediaSites.YOUTUBE, url );
+		return 'https://www.youtube.com/' + url;
 	}
-	return url;
+	return handleCommonValidation( SocialMediaSites.YOUTUBE, url );
 };
 
-const urlValidator = ( categ, url, errors, setErrors ) => {
+const urlValidator = (
+	categ,
+	url,
+	errors,
+	setErrors,
+	errorTypes,
+	setErrorTypes
+) => {
+	let res = [];
+	errorsDup = errors;
+	setErrorsDup = setErrors;
+	errorTypesDup = errorTypes;
+	setErrorTypesDup = setErrorTypes;
+
 	if ( url === '' ) {
+		errorTypesDup[ categ ] = ERROR_TYPES.NONE;
+		setErrorTypesDup( errorTypesDup );
 		displayErrors( categ, false );
 		return url;
 	}
-	errorsDup = errors;
-	setErrorsDup = setErrors;
 
 	// Skip urlValidation for some sites
 	if ( ! validationExemption.has( categ ) )
-		url = handleCommonValidation( categ, url );
+		res = handleCommonValidation( categ, url );
 	switch ( categ ) {
 		case SocialMediaSites.FACEBOOK:
 			break;
 		case SocialMediaSites.TWITTER:
-			url = handleTwitterValidation( url );
+			res = handleTwitterValidation( url );
 			break;
 		case SocialMediaSites.INSTAGRAM:
-			url = handleInstagramValidation( url );
+			res = handleInstagramValidation( url );
 			break;
 		case SocialMediaSites.YOUTUBE:
-			url = handleYouTubeValidation( url );
+			res = handleYouTubeValidation( url );
 			break;
 		case SocialMediaSites.LINKEDIN:
 			break;
@@ -131,8 +153,7 @@ const urlValidator = ( categ, url, errors, setErrors ) => {
 		case SocialMediaSites.TIKTOK:
 			break;
 	}
-
-	return url;
+	return res;
 };
 
 export default urlValidator;

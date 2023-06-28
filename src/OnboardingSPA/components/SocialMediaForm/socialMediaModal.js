@@ -1,6 +1,9 @@
 import { __ } from '@wordpress/i18n';
+import { useDispatch } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 import { Button, ButtonGroup, Modal } from '@wordpress/components';
+
+import { store as nfdOnboardingStore } from '../../store';
 
 const SocialMediaModal = ( {
 	showModal,
@@ -9,6 +12,8 @@ const SocialMediaModal = ( {
 	modalText,
 	modalSecondaryButtonFunc,
 } ) => {
+	const { removeNavigationCallback } = useDispatch( nfdOnboardingStore );
+
 	const closeModal = () => {
 		setShowModal( false );
 	};
@@ -34,8 +39,10 @@ const SocialMediaModal = ( {
 								if (
 									typeof modalSecondaryButtonFunc ===
 									'function'
-								)
+								) {
+									removeNavigationCallback();
 									modalSecondaryButtonFunc();
+								}
 							} }
 						>
 							{ __( 'Proceed Anyways', 'wp-module-onboarding' ) }
