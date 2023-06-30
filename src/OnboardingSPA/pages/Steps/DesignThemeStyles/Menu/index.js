@@ -117,16 +117,14 @@ const StepDesignThemeStylesMenu = () => {
 
 	const skiptoCustomPage = () => {
 		// Add Custom Steps into the Flow
-		const updates = addColorAndTypographyRoutes(
-			allSteps,
-		);
+		const updates = addColorAndTypographyRoutes( allSteps );
 		updateAllSteps( updates.allSteps );
 
 		currentData.data.customDesign = true;
 		setCurrentOnboardingData( currentData );
 		trackHiiveEvent( 'customize-design', true );
 		// Find the first Custom Conditional Step and navigate there
-		navigate( conditionalSteps.designColors.path );
+		navigate( conditionalSteps[ 0 ].path );
 	};
 
 	const buildPreviews = () => {

@@ -15,7 +15,10 @@ import {
 	THEME_STATUS_INIT,
 	SIDEBAR_LEARN_MORE,
 } from '../../../../../constants';
-import { addColorAndTypographyRoutes, removeColorAndTypographyRoutes } from '../utils';
+import {
+	addColorAndTypographyRoutes,
+	removeColorAndTypographyRoutes,
+} from '../utils';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { getPatterns } from '../../../../utils/api/patterns';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
@@ -28,17 +31,20 @@ const StepDesignThemeStylesPreview = () => {
 	const [ customize, setCustomize ] = useState( false );
 	const navigate = useNavigate();
 
-	const { currentStep, currentData, allSteps, themeStatus } = useSelect( ( select ) => {
-		return {
-			currentStep: select( nfdOnboardingStore ).getStepFromPath(
-				location.pathname
-			),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			allSteps: select( nfdOnboardingStore ).getAllSteps(),
-			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-		};
-	}, [] );
+	const { currentStep, currentData, allSteps, themeStatus } = useSelect(
+		( select ) => {
+			return {
+				currentStep: select( nfdOnboardingStore ).getStepFromPath(
+					location.pathname
+				),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				allSteps: select( nfdOnboardingStore ).getAllSteps(),
+				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			};
+		},
+		[]
+	);
 
 	const {
 		setDrawerActiveView,
@@ -72,16 +78,11 @@ const StepDesignThemeStylesPreview = () => {
 	) => {
 		setCustomize( selected );
 
-		if(selected)
-		{
-			const updates = addColorAndTypographyRoutes(
-				allSteps,
-			);
+		if ( selected ) {
+			const updates = addColorAndTypographyRoutes( allSteps );
 			updateAllSteps( updates.allSteps );
 		} else {
-			const updates = removeColorAndTypographyRoutes(
-				allSteps,
-			);
+			const updates = removeColorAndTypographyRoutes( allSteps );
 			updateAllSteps( updates.allSteps );
 		}
 
@@ -92,7 +93,7 @@ const StepDesignThemeStylesPreview = () => {
 
 		if ( selected && 'click' === context ) {
 			trackHiiveEvent( 'customize-design', true );
-			navigate( conditionalSteps.designColors.path );
+			navigate( conditionalSteps[ 0 ].path );
 		}
 	};
 

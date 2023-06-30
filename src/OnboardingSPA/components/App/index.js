@@ -8,10 +8,9 @@ import { setFlow } from '../../utils/api/flow';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { isEmpty, updateWPSettings } from '../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../store';
-import { conditionalSteps } from '../../data/routes/';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { kebabCase, orderBy, filter } from 'lodash';
+import { kebabCase } from 'lodash';
 import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { SlotFillProvider } from '@wordpress/components';
@@ -21,6 +20,7 @@ import { API_REQUEST, HIIVE_ANALYTICS_CATEGORY } from '../../../constants';
 import NewfoldInterfaceSkeleton from '../NewfoldInterfaceSkeleton';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import { trackHiiveEvent } from '../../utils/analytics';
+import { addColorAndTypographyRoutes } from '../../pages/Steps/DesignThemeStyles/utils';
 
 /**
  * Primary app that renders the <NewfoldInterfaceSkeleton />.
@@ -41,8 +41,6 @@ const App = () => {
 		currentData,
 		socialData,
 		firstStep,
-		routes,
-		designSteps,
 		allSteps,
 	} = useSelect( ( select ) => {
 		return {
@@ -53,9 +51,7 @@ const App = () => {
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			socialData: select( nfdOnboardingStore ).getOnboardingSocialData(),
 			firstStep: select( nfdOnboardingStore ).getFirstStep(),
-			routes: select( nfdOnboardingStore ).getRoutes(),
 			allSteps: select( nfdOnboardingStore ).getAllSteps(),
-			designSteps: select( nfdOnboardingStore ).getDesignSteps(),
 		};
 	}, [] );
 
@@ -65,12 +61,11 @@ const App = () => {
 	const {
 		setActiveStep,
 		setActiveFlow,
-		updateRoutes,
-		updateDesignSteps,
 		updateAllSteps,
 		flushQueue,
 		enqueueRequest,
 		setOnboardingSocialData,
+		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	async function syncSocialSettings() {
@@ -151,78 +146,17 @@ const App = () => {
 		}
 	}
 
-	const addColorAndTypographyRoutes = () => {
-		const updates = removeColorAndTypographyRoutes();
-		const steps = [
-			conditionalSteps.designColors,
-			conditionalSteps.designTypography,
-		];
-		return {
-			routes: orderBy(
-				updates.routes.concat( steps ),
-				[ 'priority' ],
-				[ 'asc' ]
-			),
-			allSteps: orderBy(
-				updates.allSteps.concat( steps ),
-				[ 'priority' ],
-				[ 'asc' ]
-			),
-			designSteps: orderBy(
-				updates.designSteps.concat( steps ),
-				[ 'priority' ],
-				[ 'asc' ]
-			),
-		};
-	};
-
-	const removeColorAndTypographyRoutes = () => {
-		return {
-			routes: filter(
-				routes,
-				( route ) =>
-					! route.path.includes(
-						conditionalSteps.designColors.path
-					) &&
-					! route.path.includes(
-						conditionalSteps.designTypography.path
-					)
-			),
-			allSteps: filter(
-				allSteps,
-				( allStep ) =>
-					! allStep.path.includes(
-						conditionalSteps.designColors.path
-					) &&
-					! allStep.path.includes(
-						conditionalSteps.designTypography.path
-					)
-			),
-			designSteps: filter(
-				designSteps,
-				( designStep ) =>
-					! designStep.path.includes(
-						conditionalSteps.designColors.path
-					) &&
-					! designStep.path.includes(
-						conditionalSteps.designTypography.path
-					)
-			),
-		};
-	};
-
 	function handleColorsAndTypographyRoutes() {
 		if (
 			location?.pathname.includes( 'colors' ) ||
 			location?.pathname.includes( 'typography' )
 		) {
-			const updates = currentData?.data?.customDesign
-				? addColorAndTypographyRoutes()
-				: removeColorAndTypographyRoutes();
-
-			updateRoutes( updates.routes );
-			updateDesignSteps( updates.designSteps );
+			const updates = addColorAndTypographyRoutes( allSteps );
 			updateAllSteps( updates.allSteps );
+			if ( ! currentData.data.customDesign ) {
+				currentData.data.customDesign = true;
+				setCurrentOnboardingData( currentData );
+			}
 		}
 	}
 
