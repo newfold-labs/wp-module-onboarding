@@ -30,8 +30,8 @@ const StepDesignTypography = () => {
 		};
 	}, [] );
 
-	const { updateThemeStatus, setDrawerActiveView, setSidebarActiveView, } = 
-			useDispatch( nfdOnboardingStore );
+	const { updateThemeStatus, setDrawerActiveView, setSidebarActiveView } =
+		useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
@@ -50,9 +50,7 @@ const StepDesignTypography = () => {
 	};
 
 	useEffect( () => {
-		if ( THEME_STATUS_ACTIVE === themeStatus ) {
-			getFontPatterns();
-		}
+		if ( THEME_STATUS_ACTIVE === themeStatus ) getFontPatterns();
 	}, [ themeStatus ] );
 
 	return (
