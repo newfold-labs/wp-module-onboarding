@@ -327,8 +327,6 @@ export const steps = [
 		VIEW: VIEW_DESIGN_THEME_STYLES_PREVIEW,
 		designDrawerActiveLinkIncludes: '/wp-setup/step/design/theme-styles/',
 		patternId: 'theme-styles',
-		excludeNextStepsFromRouter: true,
-		numberOfStepsToSkip: 2,
 		sidebars: {
 			LearnMore: {
 				SidebarComponents: [
@@ -345,8 +343,6 @@ export const steps = [
 		priority: 220,
 		VIEW: VIEW_DESIGN_HEADER_MENU,
 		patternId: 'header-menu',
-		excludePreviousStepsFromRouter: true,
-		numberOfStepsToSkip: 2,
 		sidebars: {
 			LearnMore: {
 				SidebarComponents: [ StepDesignHeaderMenuLearnMoreSidebar ],
@@ -555,7 +551,11 @@ export const initialTopSteps = () => {
  * @return {Array} steps
  */
 export const initialDesignSteps = () => {
-	let designSteps = orderBy( steps.concat(conditionalSteps), [ 'priority' ], [ 'asc' ] );
+	let designSteps = orderBy(
+		steps.concat( conditionalSteps ),
+		[ 'priority' ],
+		[ 'asc' ]
+	);
 	designSteps = filter( designSteps, ( step ) => {
 		return (
 			step.path.includes( '/step/design/' ) &&
