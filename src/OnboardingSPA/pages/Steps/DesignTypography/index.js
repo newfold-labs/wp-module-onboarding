@@ -21,34 +21,21 @@ const StepDesignTypography = () => {
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
 
-	const { currentStep, themeStatus, currentData } = useSelect( ( select ) => {
+	const { currentStep, themeStatus } = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
 			),
 			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	}, [] );
 
-	const {
-		updateThemeStatus,
-		setDrawerActiveView,
-		setSidebarActiveView,
-		setCurrentOnboardingData,
-	} = useDispatch( nfdOnboardingStore );
+	const { updateThemeStatus, setDrawerActiveView, setSidebarActiveView, } = 
+			useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView( VIEW_DESIGN_TYPOGRAPHY );
-
-		// if the step was accessed directly then set the customDesign value to true
-		// so that the checkbox on design preview appears checked
-		if ( ! currentData.data.customDesign ) {
-			currentData.data.customDesign = true;
-			setCurrentOnboardingData( currentData );
-		}
 	}, [] );
 
 	const getFontPatterns = async () => {

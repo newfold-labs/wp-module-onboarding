@@ -15,6 +15,7 @@ import {
 	THEME_STATUS_INIT,
 	SIDEBAR_LEARN_MORE,
 } from '../../../../../constants';
+import { addColorAndTypographyRoutes, removeColorAndTypographyRoutes } from '../utils';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { getPatterns } from '../../../../utils/api/patterns';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
@@ -27,13 +28,14 @@ const StepDesignThemeStylesPreview = () => {
 	const [ customize, setCustomize ] = useState( false );
 	const navigate = useNavigate();
 
-	const { currentStep, currentData, themeStatus } = useSelect( ( select ) => {
+	const { currentStep, currentData, allSteps, themeStatus } = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getStepFromPath(
 				location.pathname
 			),
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			allSteps: select( nfdOnboardingStore ).getAllSteps(),
 			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 		};
 	}, [] );
@@ -43,6 +45,7 @@ const StepDesignThemeStylesPreview = () => {
 		setSidebarActiveView,
 		setCurrentOnboardingData,
 		updateThemeStatus,
+		updateAllSteps,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -68,6 +71,19 @@ const StepDesignThemeStylesPreview = () => {
 		context = 'click'
 	) => {
 		setCustomize( selected );
+
+		if(selected)
+		{
+			const updates = addColorAndTypographyRoutes(
+				allSteps,
+			);
+			updateAllSteps( updates.allSteps );
+		} else {
+			const updates = removeColorAndTypographyRoutes(
+				allSteps,
+			);
+			updateAllSteps( updates.allSteps );
+		}
 
 		if ( updateOnboardingData ) {
 			currentData.data.customDesign = selected;

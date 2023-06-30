@@ -37,9 +37,7 @@ const StepDesignThemeStylesMenu = () => {
 		nextStep,
 		currentData,
 		storedPreviewSettings,
-		routes,
 		allSteps,
-		designSteps,
 		themeStatus,
 		themeVariations,
 	} = useSelect( ( select ) => {
@@ -52,9 +50,7 @@ const StepDesignThemeStylesMenu = () => {
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			storedPreviewSettings:
 				select( nfdOnboardingStore ).getPreviewSettings(),
-			routes: select( nfdOnboardingStore ).getRoutes(),
 			allSteps: select( nfdOnboardingStore ).getAllSteps(),
-			designSteps: select( nfdOnboardingStore ).getDesignSteps(),
 			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 			themeVariations: select( nfdOnboardingStore ).getStepPreviewData(),
 		};
@@ -66,8 +62,6 @@ const StepDesignThemeStylesMenu = () => {
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
-		updateRoutes,
-		updateDesignSteps,
 		updateAllSteps,
 	} = useDispatch( nfdOnboardingStore );
 
@@ -124,12 +118,8 @@ const StepDesignThemeStylesMenu = () => {
 	const skiptoCustomPage = () => {
 		// Add Custom Steps into the Flow
 		const updates = addColorAndTypographyRoutes(
-			routes,
 			allSteps,
-			designSteps
 		);
-		updateRoutes( updates.routes );
-		updateDesignSteps( updates.designSteps );
 		updateAllSteps( updates.allSteps );
 
 		currentData.data.customDesign = true;

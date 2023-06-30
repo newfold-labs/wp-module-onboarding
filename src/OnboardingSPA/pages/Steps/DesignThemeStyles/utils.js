@@ -3,32 +3,18 @@ import { orderBy, filter } from 'lodash';
 import { conditionalSteps } from '../../../data/routes/';
 
 export const addColorAndTypographyRoutes = (
-	routes,
 	allSteps,
-	designSteps
 ) => {
 	const updates = removeColorAndTypographyRoutes(
-		routes,
 		allSteps,
-		designSteps
 	);
 	const steps = [
-		conditionalSteps.designColors,
-		conditionalSteps.designTypography,
+		conditionalSteps[0],
+		conditionalSteps[1],
 	];
 	return {
-		routes: orderBy(
-			updates.routes.concat( steps ),
-			[ 'priority' ],
-			[ 'asc' ]
-		),
 		allSteps: orderBy(
 			updates.allSteps.concat( steps ),
-			[ 'priority' ],
-			[ 'asc' ]
-		),
-		designSteps: orderBy(
-			updates.designSteps.concat( steps ),
 			[ 'priority' ],
 			[ 'asc' ]
 		),
@@ -36,33 +22,15 @@ export const addColorAndTypographyRoutes = (
 };
 
 export const removeColorAndTypographyRoutes = (
-	routes,
 	allSteps,
-	designSteps
 ) => {
 	return {
-		routes: filter(
-			routes,
-			( route ) =>
-				! route.path.includes( conditionalSteps.designColors.path ) &&
-				! route.path.includes( conditionalSteps.designTypography.path )
-		),
 		allSteps: filter(
 			allSteps,
 			( allStep ) =>
-				! allStep.path.includes( conditionalSteps.designColors.path ) &&
+				! allStep.path.includes( conditionalSteps[0].path ) &&
 				! allStep.path.includes(
-					conditionalSteps.designTypography.path
-				)
-		),
-		designSteps: filter(
-			designSteps,
-			( designStep ) =>
-				! designStep.path.includes(
-					conditionalSteps.designColors.path
-				) &&
-				! designStep.path.includes(
-					conditionalSteps.designTypography.path
+					conditionalSteps[1].path
 				)
 		),
 	};

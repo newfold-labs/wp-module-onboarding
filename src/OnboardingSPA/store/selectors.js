@@ -206,23 +206,14 @@ export function getStepFromPath( state, path ) {
  * @return {object|null|false} Previous Step
  */
 export function getPreviousStep( state ) {
-	let currentStepIndex = findIndex( state.flow.steps.allSteps, {
+	const currentStepIndex = findIndex( state.flow.steps.allSteps, {
 		path: state.flow.steps.currentStep,
 	} );
-	const currentStep = state.flow.steps.allSteps[ currentStepIndex ];
-
 	if ( 0 === currentStepIndex ) {
 		return null; // current step is the first step
 	}
 	if ( -1 === currentStepIndex ) {
 		return false; // could not find index
-	}
-	// check customDesign and current step config to see if the previous step needs to be skipped
-	if (
-		! state.data.flowData.data.customDesign &&
-		!! currentStep.excludePreviousStepsFromRouter
-	) {
-		currentStepIndex -= currentStep.numberOfStepsToSkip;
 	}
 	return state.flow.steps.allSteps[ currentStepIndex - 1 ];
 }
@@ -235,23 +226,14 @@ export function getPreviousStep( state ) {
  */
 export function getNextStep( state ) {
 	const totalIndexes = state.flow.steps.allSteps.length - 1;
-	let currentStepIndex = findIndex( state.flow.steps.allSteps, {
+	const currentStepIndex = findIndex( state.flow.steps.allSteps, {
 		path: state.flow.steps.currentStep,
 	} );
-	const currentStep = state.flow.steps.allSteps[ currentStepIndex ];
-
 	if ( totalIndexes === currentStepIndex ) {
 		return null; // currentStep is the last step
 	}
 	if ( -1 === currentStepIndex ) {
 		return false; // could not find index
-	}
-	// check customDesign and current step config to see if the next step needs to be skipped
-	if (
-		! state.data.flowData.data.customDesign &&
-		!! currentStep.excludeNextStepsFromRouter
-	) {
-		currentStepIndex += currentStep.numberOfStepsToSkip;
 	}
 	return state.flow.steps.allSteps[ currentStepIndex + 1 ];
 }
