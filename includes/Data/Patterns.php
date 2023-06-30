@@ -60,7 +60,7 @@ final class Patterns {
 					'homepage-2'  => array(
 						'active'        => true,
 						'shown'         => true,
-						'wonder_blocks' => 'home-4',
+						'wonder_blocks' => 'home-2',
 					),
 					'homepage-3'  => array(
 						'active'        => true,
