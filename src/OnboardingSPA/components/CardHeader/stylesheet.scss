@@ -3,60 +3,27 @@
 	font-weight: 700;
 	line-height: 1.25;
 	text-align: center;
-	font-size: clamp(1.5rem, 1.82vw + 1.05rem, 2.5rem);
-
-	@media (max-width: #{($break-medium)}) {
-		font-size: clamp(1rem, 3.5vw, 1.2rem);
-		margin: 10px;
-	}
-
-	@media (min-width: 2600px) {
-		font-size: clamp(1rem, 2.44vw + 0.39rem, 6.25rem);
-		margin: 40px;
-	}
+	font-size: clamp(1rem, 0.81rem + 0.92vw, 3.125rem);
 }
 
 .nfd-step-card-subheading {
 	margin: 5px;
 	font-weight: 700;
 	color: var(--wp-admin-theme-color);
-	font-size: clamp(1rem, 0.91vw + 0.77rem, 1.5rem);
+	font-size: clamp(1rem, 0.91rem + 0.43vw, 2rem);
 	text-align: center;
 	line-height: 1;
-
-	@media (min-width: #{ ($break-medium)}) {
-		padding-bottom: 30px;
-	}
-  
-	@media (min-width: 2600px) {
-		font-size: clamp(3.38rem, -0.47vw + 3.49rem, 2.37rem);
-		margin: 80px;
-	}
 }
 
 .nfd-step-card-subheading-other {
 	font-weight: 700;
 	margin-top: 35px;
 	color: var(--wp-admin-theme-color);
-	font-size: clamp(0.8rem, 2.5vw, 1.2rem);
-	@media (max-width: #{($break-medium)}) {
-		margin: 3px;
-		font-size: clamp(0.7rem, 2.2vw, 1.2rem);
-	}
-
-	@media (min-width: 2600px) {
-		font-size: clamp(3.38rem, -0.47vw + 3.49rem, 2.37rem);
-		margin: 80px;
-	}
+	font-size: clamp(1rem, 0.93rem + 0.32vw, 1.75rem);
 }
 
 .nfd-step-card-question {
 	margin: 18px;
-	font-size: clamp(1rem, 2vw, 1.8rem);
-
-	@media (min-width: 2600px) {
-		font-size: clamp(3.38rem, -0.47vw + 3.49rem, 2.37rem);
-		font-weight: 700;
-		margin: 60px;
-	}
+	font-size: clamp(1.3125rem, 1.2rem + 0.5vw, 2.5rem);
+	line-height: 1.2;
 }

@@ -7,10 +7,15 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 abstract class BaseHiiveController extends \WP_REST_Controller {
 
 	/**
+	 * Hiive Base URL
+	 *
 	 * @var string
 	 */
 	protected $url;
 
+	/**
+	 * BaseHiiveController constructor.
+	 */
 	public function __construct() {
 
 		if ( ! defined( 'NFD_HIIVE_BASE_URL' ) ) {
@@ -21,10 +26,11 @@ abstract class BaseHiiveController extends \WP_REST_Controller {
 	}
 
 	/**
-	 * @param string $endpoint
-	 * @param array  $args
+	 * Get data from the endpoint containing the specific Hiive response.
 	 *
-	 * @return \WP_Error|string containing the Hiive response.
+	 * @param string $endpoint Endpoint request to get specific response
+	 * @param array  $args Arguments determining response
+	 * @return \WP_Error|string
 	 */
 	protected function get( $endpoint, $args = array() ) {
 		$request = $this->url . $endpoint . '?' . http_build_query( $args );

@@ -70,9 +70,10 @@ const CheckboxItem = ( {
 									height: '35px',
 									backgroundPosition: 'center',
 									backgroundRepeat: 'no-repeat',
-									backgroundImage: `var(${ icon }${
-										isSelected ? '--light' : ''
-									})`,
+									backgroundImage: `var(${ icon })`,
+									filter: isSelected
+										? 'invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%)'
+										: 'none',
 								} }
 							/>
 						</div>

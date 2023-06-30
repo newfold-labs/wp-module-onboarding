@@ -1,8 +1,9 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
-use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\CustomerBluehost\CustomerBluehost;
+use NewfoldLabs\WP\Module\Onboarding\Data\Flows\Flows;
+use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 
 /**
  * CRUD methods for Onboarding config for use in API, CLI and runtime.
@@ -20,7 +21,7 @@ final class Data {
 			'currentBrand'      => self::current_brand(),
 			'currentPlan'       => self::current_plan(),
 			'currentFlow'       => self::current_flow(),
-			'pluginInstallHash' => Permissions::rest_get_plugin_install_hash(),
+			'pluginInstallHash' => PluginInstaller::rest_get_plugin_install_hash(),
 			'previewSettings'   => array(
 				'settings'        => Preview::get_settings(),
 				'stepPreviewData' => Themes::step_preview_data(),
@@ -116,6 +117,28 @@ final class Data {
 			return CustomerBluehost::collect();
 		}
 		return array();
+	}
+
+	/**
+	 * Determine whether the site is in coming soon mode.
+	 *
+	 * @return boolean
+	 */
+	public static function coming_soon() {
+		// Check if nfd_coming_soon is set to true.
+		$coming_soon = \get_option( Options::get_option_name( 'new_coming_soon', false ), null );
+		if ( null !== $coming_soon ) {
+			return 'true' === $coming_soon;
+		}
+
+		// Check if legacy mm_coming_soon is set to true.
+		$coming_soon = \get_option( Options::get_option_name( 'old_coming_soon', false ), null );
+		if ( null !== $coming_soon ) {
+			return 'true' === $coming_soon;
+		}
+
+		// Assume site has been launched if both options do not exist.
+		return false;
 	}
 
 }

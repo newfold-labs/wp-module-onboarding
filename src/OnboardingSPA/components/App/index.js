@@ -16,8 +16,10 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { SlotFillProvider } from '@wordpress/components';
 import { useEffect, Fragment, useState } from '@wordpress/element';
 import { FullscreenMode } from '@wordpress/interface';
-import { API_REQUEST } from '../../../constants';
+import { API_REQUEST, HIIVE_ANALYTICS_CATEGORY } from '../../../constants';
 import NewfoldInterfaceSkeleton from '../NewfoldInterfaceSkeleton';
+import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
+import { trackHiiveEvent } from '../../utils/analytics';
 
 /**
  * Primary app that renders the <NewfoldInterfaceSkeleton />.
@@ -129,6 +131,7 @@ const App = () => {
 				setIsRequestPlaced( false );
 			}
 		}
+
 		// Check if the Basic Info page was visited
 		if ( location?.pathname.includes( 'basic-info' ) ) {
 			setDidVisitBasicInfo( true );
@@ -138,12 +141,62 @@ const App = () => {
 		}
 	}
 
+	const handlePreviousStepTracking = () => {
+		const previousStep = window.nfdOnboarding?.previousStepID;
+		if ( typeof previousStep !== 'string' ) {
+			window.nfdOnboarding.previousStepID = location.pathname;
+			HiiveAnalytics.dispatchEvents( HIIVE_ANALYTICS_CATEGORY );
+			return;
+		}
+
+		if ( previousStep.includes( 'products' ) ) {
+			trackHiiveEvent( 'products-info', {
+				productCount:
+					currentData.storeDetails.productInfo.product_count,
+				productTypes:
+					currentData.storeDetails.productInfo.product_types.join(
+						','
+					),
+			} );
+		}
+
+		if ( previousStep.includes( 'site-pages' ) ) {
+			if ( currentData.data.sitePages?.other !== false ) {
+				currentData.data.sitePages?.other?.forEach( ( sitePage ) => {
+					trackHiiveEvent(
+						`${ sitePage.slug }-layout`,
+						sitePage.slug
+					);
+				} );
+			}
+		}
+
+		if ( previousStep.includes( 'site-features' ) ) {
+			const siteFeatures = currentData.data?.siteFeatures;
+			if ( siteFeatures ) {
+				const siteFeaturesArray = Object.keys( siteFeatures ).filter(
+					( key ) => {
+						return siteFeatures[ key ] !== false;
+					}
+				);
+				trackHiiveEvent(
+					'site-features',
+					siteFeaturesArray.join( ',' )
+				);
+			}
+		}
+
+		window.nfdOnboarding.previousStepID = location.pathname;
+		HiiveAnalytics.dispatchEvents( HIIVE_ANALYTICS_CATEGORY );
+	};
+
 	useEffect( () => {
 		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
 	}, [ newfoldBrand ] );
 
 	useEffect( () => {
 		syncStoreToDB();
+		handlePreviousStepTracking();
 		if ( location.pathname.includes( '/step' ) ) {
 			setActiveFlow( onboardingFlow );
 			setActiveStep( location.pathname );

@@ -7,7 +7,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
-import { wpAdminPage, pluginDashboardPage } from '../../../constants';
+import {
+	wpAdminPage,
+	pluginDashboardPage,
+	HIIVE_ANALYTICS_CATEGORY,
+} from '../../../constants';
+import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 
 const SkipButton = ( { callback = false } ) => {
 	const navigate = useNavigate();
@@ -45,6 +50,7 @@ const SkipButton = ( { callback = false } ) => {
 				if ( socialDataResp ) {
 					setOnboardingSocialData( socialDataResp );
 				}
+				await HiiveAnalytics.dispatchEvents( HIIVE_ANALYTICS_CATEGORY );
 			}
 			setFlow( currentData );
 		}
@@ -54,6 +60,13 @@ const SkipButton = ( { callback = false } ) => {
 			? pluginDashboardPage
 			: wpAdminPage;
 		window.location.replace( exitLink );
+	}
+
+	function skip() {
+		if ( typeof callback === 'function' ) {
+			callback();
+		}
+		navigate( nextStep.path );
 	}
 
 	function skipStep() {
@@ -68,15 +81,7 @@ const SkipButton = ( { callback = false } ) => {
 			);
 		}
 		return (
-			<Button
-				className="skip-button"
-				onClick={ () => {
-					if ( typeof callback === 'function' ) {
-						callback();
-					}
-					navigate( nextStep.path );
-				} }
-			>
+			<Button className="skip-button" onClick={ () => skip() }>
 				{ __( 'Skip this Step', 'wp-module-onboarding' ) }
 			</Button>
 		);

@@ -13,6 +13,7 @@ import NavCardButton from '../../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import Animate from '../../../../../components/Animate';
 import { getSiteClassification } from '../../../../../utils/api/siteClassification';
+import { trackHiiveEvent } from '../../../../../utils/analytics';
 
 const StepPrimarySetup = () => {
 	const {
@@ -41,6 +42,8 @@ const StepPrimarySetup = () => {
 	const [ custom, setCustom ] = useState( false );
 	const [ siteClassification, setSiteClassification ] = useState();
 	const [ primaryCategory, setPrimaryCategory ] = useState( '' );
+	// Timeout after which a custom input analytics event will be sent.
+	const [ typingTimeout, setTypingTimeout ] = useState();
 
 	const content = getContents();
 
@@ -87,6 +90,10 @@ const StepPrimarySetup = () => {
 		currentData.data.siteType.primary.refers = 'slug';
 		currentData.data.siteType.primary.value = primType;
 		setCurrentOnboardingData( currentData );
+		trackHiiveEvent( 'primary-type', {
+			refers: 'slug',
+			value: primType,
+		} );
 	};
 
 	/**
@@ -96,10 +103,21 @@ const StepPrimarySetup = () => {
 	 */
 	const categoryInput = ( value ) => {
 		setCustom( true );
-		setPrimaryCategory( value );
 		currentData.data.siteType.primary.refers = 'custom';
 		currentData.data.siteType.primary.value = value;
 		setCurrentOnboardingData( currentData );
+		if ( '' !== primaryCategory && primaryCategory !== value ) {
+			clearTimeout( typingTimeout );
+			setTypingTimeout(
+				setTimeout( () => {
+					trackHiiveEvent( 'primary-type', {
+						refers: 'custom',
+						value,
+					} );
+				}, 1000 )
+			);
+		}
+		setPrimaryCategory( value );
 	};
 
 	const primarySiteTypeChips = () => {

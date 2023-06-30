@@ -14,9 +14,10 @@ export const init = () => {
 		url: onboardingRestURL( 'plugins/initialize' ),
 		method: 'POST',
 		headers: {
-			'X-NFD-ONBOARDING': window.nfdOnboarding.pluginInstallHash,
+			'X-NFD-INSTALLER': window.nfdOnboarding.pluginInstallHash,
 		},
 	} ).catch( ( error ) => {
+		// eslint-disable-next-line no-console
 		console.error( error );
 	} );
 };
@@ -45,7 +46,7 @@ export const setSiteFeatures = async ( pluginInstallHash, data ) => {
 			url: onboardingRestURL( 'plugins/site-features' ),
 			method: 'POST',
 			headers: {
-				'X-NFD-ONBOARDING': pluginInstallHash,
+				'X-NFD-INSTALLER': pluginInstallHash,
 			},
 			data,
 		} )
