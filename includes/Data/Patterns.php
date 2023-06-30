@@ -246,9 +246,9 @@ final class Patterns {
 		if ( ! isset( $theme_pattern[0] ) || ! isset( $theme_pattern[1] ) ) {
 			return false;
 		}
-		$theme_patterns_meta = self::get_fallbacks();
-		return isset( $theme_patterns_meta[ $theme_pattern [0] ][ $theme_pattern [1] ] )
-		? $theme_patterns_meta[ $theme_pattern [0] ][ $theme_pattern [1] ]
+		$fallbacks = self::get_fallbacks();
+		return isset( $fallbacks[ $theme_pattern [0] ][ $theme_pattern [1] ] )
+		? $fallbacks[ $theme_pattern [0] ][ $theme_pattern [1] ]
 		: false;
 	}
 
@@ -290,7 +290,7 @@ final class Patterns {
 					return false;
 				}
 
-				return self::get_pattern_from_block_patterns_registry( $pattern_slug );
+				return self::get_pattern_from_block_patterns_registry( $fallback_pattern_slug );
 			}
 
 			return $pattern;
