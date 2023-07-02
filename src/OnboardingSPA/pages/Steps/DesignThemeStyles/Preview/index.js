@@ -16,9 +16,9 @@ import {
 	SIDEBAR_LEARN_MORE,
 } from '../../../../../constants';
 import {
-	addColorAndTypographyRoutes,
-	removeColorAndTypographyRoutes,
-} from '../utils';
+	injectInAllSteps,
+	removeFromAllSteps,
+} from '../../../../data/routes/allStepsHandler';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { getPatterns } from '../../../../utils/api/patterns';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
@@ -79,10 +79,10 @@ const StepDesignThemeStylesPreview = () => {
 		setCustomize( selected );
 
 		if ( selected ) {
-			const updates = addColorAndTypographyRoutes( allSteps );
+			const updates = injectInAllSteps( allSteps, conditionalSteps );
 			updateAllSteps( updates.allSteps );
 		} else {
-			const updates = removeColorAndTypographyRoutes( allSteps );
+			const updates = removeFromAllSteps( allSteps, conditionalSteps );
 			updateAllSteps( updates.allSteps );
 		}
 

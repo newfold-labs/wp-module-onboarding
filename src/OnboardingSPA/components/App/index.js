@@ -5,6 +5,7 @@ import Sidebar from '../Sidebar';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { setFlow } from '../../utils/api/flow';
+import { conditionalSteps } from '../../data/routes';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { isEmpty, updateWPSettings } from '../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../store';
@@ -20,7 +21,7 @@ import { API_REQUEST, HIIVE_ANALYTICS_CATEGORY } from '../../../constants';
 import NewfoldInterfaceSkeleton from '../NewfoldInterfaceSkeleton';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import { trackHiiveEvent } from '../../utils/analytics';
-import { addColorAndTypographyRoutes } from '../../pages/Steps/DesignThemeStyles/utils';
+import { injectInAllSteps } from '../../data/routes/allStepsHandler';
 
 /**
  * Primary app that renders the <NewfoldInterfaceSkeleton />.
@@ -151,7 +152,7 @@ const App = () => {
 			location?.pathname.includes( 'colors' ) ||
 			location?.pathname.includes( 'typography' )
 		) {
-			const updates = addColorAndTypographyRoutes( allSteps );
+			const updates = injectInAllSteps( allSteps, conditionalSteps );
 			updateAllSteps( updates.allSteps );
 			if ( ! currentData.data.customDesign ) {
 				currentData.data.customDesign = true;

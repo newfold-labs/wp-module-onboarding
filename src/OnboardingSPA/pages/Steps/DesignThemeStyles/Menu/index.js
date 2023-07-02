@@ -21,7 +21,7 @@ import {
 	LivePreviewSelectableCard,
 	LivePreviewSkeleton,
 } from '../../../../components/LivePreview';
-import { addColorAndTypographyRoutes } from '../utils';
+import { injectInAllSteps } from '../../../../data/routes/allStepsHandler';
 import { trackHiiveEvent } from '../../../../utils/analytics';
 
 const StepDesignThemeStylesMenu = () => {
@@ -117,7 +117,7 @@ const StepDesignThemeStylesMenu = () => {
 
 	const skiptoCustomPage = () => {
 		// Add Custom Steps into the Flow
-		const updates = addColorAndTypographyRoutes( allSteps );
+		const updates = injectInAllSteps( allSteps, conditionalSteps );
 		updateAllSteps( updates.allSteps );
 
 		currentData.data.customDesign = true;
