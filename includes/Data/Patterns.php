@@ -219,13 +219,13 @@ final class Patterns {
 	}
 
 	/**
-	 * Get the post meta for a given pattern slug.
+	 * Get the post meta for a given slug.
 	 *
-	 * @param string $pattern_slug The pattern slug (theme/kebab-cased-name).
+	 * @param string $slug The slug (theme/kebab-cased-name).
 	 * @return array|boolean
 	 */
-	public static function get_meta_from_pattern_slug( $pattern_slug ) {
-		$theme_pattern = explode( '/', $pattern_slug );
+	public static function get_meta_from_slug( $slug ) {
+		$theme_pattern = explode( '/', $slug );
 		if ( ! isset( $theme_pattern[0] ) || ! isset( $theme_pattern[1] ) ) {
 			return false;
 		}
@@ -267,7 +267,7 @@ final class Patterns {
 				'title'      => $pattern['title'],
 				'content'    => self::cleanup_wp_grammar( $pattern['content'] ),
 				'name'       => $pattern['name'],
-				'meta'       => self::get_meta_from_pattern_slug( $pattern_slug ),
+				'meta'       => self::get_meta_from_slug( $pattern_slug ),
 				'categories' => $pattern['categories'],
 			);
 		}
@@ -283,7 +283,7 @@ final class Patterns {
 	 */
 	public static function get_pattern_from_slug( $pattern_slug ) {
 		if ( WonderBlocksService::is_valid_slug( $pattern_slug ) ) {
-			$pattern = WonderBlocksService::get_pattern( $pattern_slug );
+			$pattern = WonderBlocksService::get_template_from_slug( $pattern_slug );
 			if ( ! $pattern ) {
 				$fallback_pattern_slug = self::get_fallback_from_slug( $pattern_slug );
 				if ( ! $fallback_pattern_slug ) {

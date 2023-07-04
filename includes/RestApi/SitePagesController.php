@@ -113,7 +113,7 @@ class SitePagesController {
 		\update_option( Options::get_option_name( 'page_on_front', false ), $post_id );
 
 		if ( WonderBlocksService::is_valid_slug( $homepage_pattern_slug ) ) {
-			WonderBlocksService::delete_get_pattern_cache( $homepage_pattern_slug );
+			WonderBlocksService::delete_templates_cache_from_slug( $homepage_pattern_slug );
 		}
 
 		return true;
@@ -147,7 +147,7 @@ class SitePagesController {
 			}
 
 			if ( WonderBlocksService::is_valid_slug( $site_page['slug'] ) ) {
-				WonderBlocksService::delete_get_pattern_cache( $site_page['slug'] );
+				WonderBlocksService::delete_templates_cache_from_slug( $site_page['slug'] );
 			}
 		}
 		return true;

@@ -69,12 +69,12 @@ class WonderBlocksService {
 	}
 
 	/**
-	 * Fetches the pattern from WonderBlocks given the pattern slug.
+	 * Fetches the template from WonderBlocks given the template slug.
 	 *
-	 * @param string $pattern_slug The pattern slug.
+	 * @param string $template_slug The template slug.
 	 * @return array|false
 	 */
-	public static function get_pattern( $pattern_slug ) {
+	public static function get_template_from_slug( $template_slug ) {
 		$primary_type = PrimaryType::instantiate_from_option();
 		if ( ! $primary_type ) {
 			return false;
@@ -84,7 +84,7 @@ class WonderBlocksService {
 			return false;
 		}
 
-		$wonder_blocks_slug = self::strip_prefix_from_slug( $pattern_slug );
+		$wonder_blocks_slug = self::strip_prefix_from_slug( $template_slug );
 		$request            = new WonderBlocksFetchRequest(
 			array(
 				'endpoint'       => 'templates',
@@ -93,18 +93,18 @@ class WonderBlocksService {
 				'secondary_type' => $secondary_type->value,
 			)
 		);
-		$pattern            = WonderBlocks::fetch( $request );
+		$template           = WonderBlocks::fetch( $request );
 
-		if ( ! empty( $pattern ) ) {
-			$pattern['categories'] = array( $pattern['categories'], 'yith-wonder-pages' );
-			$pattern['name']       = $pattern['slug'];
+		if ( ! empty( $template ) ) {
+			$template['categories'] = array( $template['categories'], 'yith-wonder-pages' );
+			$template['name']       = $template['slug'];
 			return array(
-				'slug'       => $pattern_slug,
-				'title'      => $pattern['title'],
-				'content'    => $pattern['content'],
-				'name'       => $pattern['name'],
-				'meta'       => Patterns::get_meta_from_pattern_slug( $pattern_slug ),
-				'categories' => $pattern['categories'],
+				'slug'       => $template_slug,
+				'title'      => $template['title'],
+				'content'    => $template['content'],
+				'name'       => $template['name'],
+				'meta'       => Patterns::get_meta_from_slug( $template_slug ),
+				'categories' => $template['categories'],
 			);
 		}
 
@@ -112,13 +112,13 @@ class WonderBlocksService {
 	}
 
 	/**
-	 * Clear the cache for a pattern slug fetched via get_pattern.
+	 * Clear the cache for a template slug fetched via get_template_from_slug.
 	 *
-	 * @param string $pattern_slug Slug of the pattern previously fetched via get_pattern.
+	 * @param string $template_slug Slug of the template previously fetched via get_template_from_slug.
 	 * @return boolean
 	 */
-	public static function delete_get_pattern_cache( $pattern_slug ) {
-		$wonder_blocks_slug = self::strip_prefix_from_slug( $pattern_slug );
+	public static function delete_templates_cache_from_slug( $template_slug ) {
+		$wonder_blocks_slug = self::strip_prefix_from_slug( $template_slug );
 
 		$primary_type = PrimaryType::instantiate_from_option();
 		if ( ! $primary_type ) {
