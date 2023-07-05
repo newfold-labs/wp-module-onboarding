@@ -7,6 +7,7 @@ import { orderBy, filter } from 'lodash';
 import {
 	pages as defaultInitialPages,
 	steps as defaultInitialSteps,
+	conditionalSteps as defaultConditionalSteps,
 	initialTopSteps as defaultInitialTopSteps,
 	initialGetStartedSteps as defaultInitialGetStartedSteps,
 } from './default-flow';
@@ -116,7 +117,7 @@ export const steps = orderBy(
 );
 
 export const routes = orderBy(
-	[ ...steps, ...defaultInitialPages ],
+	[ ...steps, ...defaultConditionalSteps, ...defaultInitialPages ],
 	[ 'priority' ],
 	[ 'asc' ]
 );
