@@ -95,4 +95,13 @@ final class Themes {
 	public static function get_flow_default_theme_slug( $flow ) {
 		return isset( self::$flow_default_theme_slugs[ $flow ] ) ? self::$flow_default_theme_slugs[ $flow ] : false;
 	}
+
+	/**
+	 * Get the active theme on the site.
+	 *
+	 * @return string
+	 */
+	public static function get_active_theme() {
+		return ( \wp_get_theme() )->get( 'TextDomain' );
+	}
 }

@@ -2,6 +2,8 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
+
 /**
  * Contains custom color palettes for a given theme.
  */
@@ -157,7 +159,7 @@ final class Colors {
 	 * @return array|\WP_Error
 	 */
 	public static function get_colors_from_theme() {
-		$active_theme  = ( \wp_get_theme() )->get( 'TextDomain' );
+		$active_theme  = Themes::get_active_theme();
 		$pattern_slugs = self::$theme_colors[ $active_theme ];
 
 		if ( ! isset( $pattern_slugs ) ) {

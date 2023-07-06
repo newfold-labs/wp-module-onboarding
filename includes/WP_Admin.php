@@ -106,6 +106,9 @@ final class WP_Admin {
 
 			\wp_enqueue_script( self::$slug );
 			\wp_enqueue_style( self::$slug );
+
+			// This hook exists in the patterns module.
+			\do_action( 'enqueue_nfd_wonder_blocks_utilities' );
 		}
 	}
 

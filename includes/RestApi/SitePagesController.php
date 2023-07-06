@@ -5,6 +5,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Patterns;
+use NewfoldLabs\WP\Module\Onboarding\Services\WonderBlocksService;
 
 /**
  * Class SitePagesController
@@ -111,6 +112,10 @@ class SitePagesController {
 
 		\update_option( Options::get_option_name( 'page_on_front', false ), $post_id );
 
+		if ( WonderBlocksService::is_valid_slug( $homepage_pattern_slug ) ) {
+			WonderBlocksService::delete_templates_cache_from_slug( $homepage_pattern_slug );
+		}
+
 		return true;
 
 	}
@@ -139,6 +144,10 @@ class SitePagesController {
 			$page_data = $this->publish_page( $site_page['title'], $pattern_data['content'], false, $pattern_data['meta'] );
 			if ( is_wp_error( $page_data ) ) {
 				return $page_data;
+			}
+
+			if ( WonderBlocksService::is_valid_slug( $site_page['slug'] ) ) {
+				WonderBlocksService::delete_templates_cache_from_slug( $site_page['slug'] );
 			}
 		}
 		return true;
