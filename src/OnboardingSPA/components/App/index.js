@@ -147,7 +147,7 @@ const App = () => {
 		}
 	}
 
-	function handleColorsAndTypographyRoutes() {
+	function handleConditinalDesignStepsRoutes() {
 		if (
 			location?.pathname.includes( 'colors' ) ||
 			location?.pathname.includes( 'typography' )
@@ -217,7 +217,7 @@ const App = () => {
 	useEffect( () => {
 		syncStoreToDB();
 		handlePreviousStepTracking();
-		handleColorsAndTypographyRoutes();
+		handleConditinalDesignStepsRoutes();
 		if ( location.pathname.includes( '/step' ) ) {
 			setActiveFlow( onboardingFlow );
 			setActiveStep( location.pathname );

@@ -14,11 +14,11 @@ export const injectInAllSteps = ( allSteps, conditionalSteps ) => {
 };
 
 export const removeFromAllSteps = ( allSteps, conditionalSteps ) => {
-	const paths = new Set( conditionalSteps.map( ( a ) => a.path ) );
+	const conditionalStepsPaths = new Set( conditionalSteps.map( ( a ) => a.path ) );
 	return {
 		allSteps: filter(
 			allSteps,
-			( allStep ) => ! paths.has( allStep.path )
+			( allStep ) => ! conditionalStepsPaths.has( allStep.path )
 		),
 	};
 };
