@@ -14,7 +14,9 @@ export const injectInAllSteps = ( allSteps, conditionalSteps ) => {
 };
 
 export const removeFromAllSteps = ( allSteps, conditionalSteps ) => {
-	const conditionalStepsPaths = new Set( conditionalSteps.map( ( a ) => a.path ) );
+	const conditionalStepsPaths = new Set(
+		conditionalSteps.map( ( a ) => a.path )
+	);
 	return {
 		allSteps: filter(
 			allSteps,
