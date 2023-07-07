@@ -60,7 +60,7 @@ const setGlobalStyles = async ( data ) => {
 const getThemeStatus = async ( theme ) => {
 	return await resolve(
 		apiFetch( {
-			url: onboardingRestURL(
+			url: installerRestURL(
 				'themes/status' + ( theme ? `&theme=${ theme }` : '' )
 			),
 		} )
