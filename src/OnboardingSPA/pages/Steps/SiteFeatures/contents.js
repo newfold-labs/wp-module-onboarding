@@ -1,11 +1,8 @@
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
-import { translations } from '../../../../../utils/locales/translations';
-import { home } from '@wordpress/icons';
-
-const getContents = () => {	
+const getContents = () => {
 	return {
-        heading: __(
+		heading: __(
 			'Key features to supercharge your site',
 			'wp-module-onboarding'
 		),

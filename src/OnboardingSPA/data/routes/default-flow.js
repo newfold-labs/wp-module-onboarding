@@ -1,9 +1,8 @@
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { lazy } from '@wordpress/element';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { filter, orderBy } from 'lodash';
 import IndexPage from '../../pages/index';
-import { translations } from '../../utils/locales/translations';
 import {
 	home,
 	copy,
