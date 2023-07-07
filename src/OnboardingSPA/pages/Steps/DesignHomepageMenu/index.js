@@ -19,6 +19,7 @@ import {
 	GlobalStylesProvider,
 } from '../../../components/LivePreview';
 import { trackHiiveEvent } from '../../../utils/analytics';
+import getContents from './contents';
 
 const StepDesignHomepageMenu = () => {
 	const location = useLocation();
@@ -127,14 +128,16 @@ const StepDesignHomepageMenu = () => {
 		} );
 	}
 
+	const content = getContents();
+
 	return (
 		<DesignStateHandler>
 			<GlobalStylesProvider>
 				<CommonLayout>
 					<div className="homepage_preview">
 						<HeadingWithSubHeading
-							title={ currentStep?.heading }
-							subtitle={ currentStep?.subheading }
+							title={ content.heading }
+							subtitle={ content.subheading }
 						/>
 						<div className="homepage_preview__list">
 							<LivePreviewSkeleton

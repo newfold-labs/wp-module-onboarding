@@ -10,6 +10,7 @@ import { getSiteFeatures } from '../../../utils/api/plugins';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import CheckboxList from '../../../components/CheckboxTemplate/CheckboxList';
 import { CheckboxListSkeleton } from '../../../components/CheckboxTemplate';
+import getContents from './contents';
 
 const StepSiteFeatures = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -86,12 +87,14 @@ const StepSiteFeatures = () => {
 		getCustomPlugins();
 	}, [] );
 
+	const content = getContents();
+
 	return (
 		<CommonLayout>
 			<div style={ { margin: '100px' } }>
 				<HeadingWithSubHeading
-					title={ currentStep?.heading }
-					subtitle={ currentStep?.subheading }
+					title={ content.heading }
+					subtitle={ content.subheading }
 				/>
 			</div>
 			{ ! customPluginsList && (
