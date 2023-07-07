@@ -75,6 +75,7 @@ const handleCommonValidation = ( categ, url ) => {
 			setErrorTypesDup( errorTypesDup );
 		}
 	} else {
+		url = 'https://www.' + url;
 		errorTypesDup[ categ ] = ERROR_TYPES.AD_LINK_ERROR;
 		setErrorTypesDup( errorTypesDup );
 	}
