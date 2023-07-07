@@ -4,9 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 use NewfoldLabs\WP\Module\Installer\Data\Options;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginInstallTaskManager;
-use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginUninstallTaskManager;
 use NewfoldLabs\WP\Module\Installer\Tasks\PluginInstallTask;
-use NewfoldLabs\WP\Module\Installer\Tasks\PluginUninstallTask;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 
 /**
@@ -32,6 +30,9 @@ class PluginService {
 		$init_plugins = Plugins::get_init();
 
 		foreach ( $init_plugins as $init_plugin ) {
+			// Override behaviour to not activate any plugin by default.
+			$init_plugin['activate'] = false;
+
 			// Checks if a plugin with the given slug and activation criteria already exists.
 			if ( ! PluginInstaller::exists( $init_plugin['slug'], $init_plugin['activate'] ) ) {
 					// Add a new PluginInstallTask to the Plugin install queue.
@@ -48,46 +49,4 @@ class PluginService {
 		return true;
 	}
 
-	/**
-	 * Installs/Uninstalls the requested site features(plugins).
-	 *
-	 * @param \WP_REST_Request $request the incoming request object.
-	 *
-	 * @return \WP_REST_Response|\WP_Error
-	 */
-	/**
-	 * Installs/Uninstalls the requested site features (plugins).
-	 *
-	 * @param array $plugins The list of plugin slugs.
-	 * @return \WP_REST_Response
-	 */
-	public static function set_site_features( $plugins ) {
-
-		foreach ( $plugins as $plugin => $decision ) {
-			if ( $decision ) {
-				// If the Plugin exists and is activated
-				if ( PluginInstaller::exists( $plugin, $decision ) ) {
-					continue;
-				}
-
-				PluginInstallTaskManager::add_to_queue(
-					new PluginInstallTask(
-						$plugin,
-						true
-					)
-				);
-			} else {
-				PluginUninstallTaskManager::add_to_queue(
-					new PluginUninstallTask(
-						$plugin
-					)
-				);
-			}
-		}
-
-		return new \WP_REST_Response(
-			array(),
-			202
-		);
-	}
 }
