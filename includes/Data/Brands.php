@@ -96,6 +96,7 @@ final class Brands {
 						'ecommerce' => true,
 						'wp-setup'  => true,
 					),
+					'wonder_blocks' => true,
 				),
 			),
 			'bluehost-india' => array(
@@ -152,6 +153,7 @@ final class Brands {
 						'ecommerce' => true,
 						'wp-setup'  => false,
 					),
+					'wonder_blocks' => true,
 				),
 			),
 			'webcom'         => array(
@@ -209,6 +211,7 @@ final class Brands {
 						'ecommerce' => false,
 						'wp-setup'  => false,
 					),
+					'wonder_blocks' => true,
 				),
 			),
 			'crazy-domains'  => array(
@@ -266,6 +269,7 @@ final class Brands {
 						'ecommerce' => true,
 						'wp-setup'  => true,
 					),
+					'wonder_blocks' => true,
 					'views'         => array(
 						'sidebar' => array(
 							'illustration' => array(

@@ -2,16 +2,18 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
+
 /**
  * Contains custom font palettes for a given theme.
  */
 final class Fonts {
 
-	 /**
-	  * This contains the different font variations for the theme.
-	  *
-	  * @var string
-	  */
+	/**
+	 * This contains the different font variations for the theme.
+	 *
+	 * @var string
+	 */
 	protected static $theme_fonts = array(
 		'yith-wonder' => array(
 			'modern-approachable'            => array(
@@ -209,13 +211,13 @@ final class Fonts {
 		),
 	);
 
-	 /**
-	  * Retrieves the active theme font variations.
-	  *
-	  * @return array|\WP_Error
-	  */
+	/**
+	 * Retrieves the active theme font variations.
+	 *
+	 * @return array|\WP_Error
+	 */
 	public static function get_fonts_from_theme() {
-		 $active_theme = ( \wp_get_theme() )->get( 'TextDomain' );
-		 return isset( self::$theme_fonts[ $active_theme ] ) ? self::$theme_fonts[ $active_theme ] : false;
+		$active_theme = Themes::get_active_theme();
+		return isset( self::$theme_fonts[ $active_theme ] ) ? self::$theme_fonts[ $active_theme ] : false;
 	}
 }
