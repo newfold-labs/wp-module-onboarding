@@ -11,7 +11,7 @@ export const installerRestRoute = 'newfold-installer/v1';
 export const wpRestBase = `${ wpRestURL }/${ wpRestRoute }`;
 export const onboardingRestBase = `${ wpRestURL }/${ onboardingRestRoute }`;
 export const installerRestBase = `${ wpRestURL }/${ installerRestRoute }`;
-export const wpAdminPage = `${ wpAdminUrl }index.php`;
+export const wpAdminPage = `${ wpAdminUrl }index.php?enable_site_features=true`;
 export const pluginDashboardPage = `${
 	window.nfdOnboarding.currentBrand?.pluginDashboardPage ?? wpAdminPage
 }`;
