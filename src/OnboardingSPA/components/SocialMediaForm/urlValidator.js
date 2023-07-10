@@ -39,7 +39,7 @@ const handleCommonValidation = ( categ, url ) => {
 	const wwwExp = /.*www\./gi;
 	const protocolExp = /https?:\/\//gi;
 	const adLinks =
-		/^goo\.gl.*|^bit\.ly.*|^buff\.ly.*|^tinyurl\.com.*|^bl\.ink.*|^short\.io.*|^ow\.ly.*|^is\.gd.*|^adf\.ly.*|^bit\.do.*|^t\.co.*|^clk\.sh.*|^gplinks\.in.*|^tiny\.cc.*|^wp\.me.*/gi;
+		/goo\.gl.*|bit\.ly.*|buff\.ly.*|tinyurl\.com.*|bl\.ink.*|short\.io.*|ow\.ly.*|is\.gd.*|adf\.ly.*|bit\.do.*|t\.co.*|clk\.sh.*|gplinks\.in.*|tiny\.cc.*|wp\.me.*/gi;
 	const urlExp =
 		/((https?:\/\/(?:www\.|(?!www)))?[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 	const adRegex = new RegExp( adLinks );
@@ -75,7 +75,11 @@ const handleCommonValidation = ( categ, url ) => {
 			setErrorTypesDup( errorTypesDup );
 		}
 	} else {
-		url = 'https://www.' + url;
+		const iswwwValid = url.match( wwwRegex );
+		const isProtocolValid = url.match( protocolRegex );
+		if ( ! iswwwValid && ! isProtocolValid ) {
+			url = 'https://www.' + url;
+		}
 		errorTypesDup[ categ ] = ERROR_TYPES.AD_LINK_ERROR;
 		setErrorTypesDup( errorTypesDup );
 	}

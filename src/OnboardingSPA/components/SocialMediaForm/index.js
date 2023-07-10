@@ -205,11 +205,15 @@ const SocialMediaForm = ( {
 	};
 
 	const showErrorMessage = ( socialMediaSite ) => {
+		const errorStr =
+			activeErrorTypes[ socialMediaSite ] === 'ad-link-error'
+				? 'non-short'
+				: 'valid';
 		switch ( socialMediaSite ) {
 			case SocialMediaSites.TWITTER:
-				return `Please enter a valid ${ socialMediaSite } URL / username`;
+				return `Please enter a ${ errorStr } ${ socialMediaSite } URL / username`;
 			default:
-				return `Please enter a valid ${ socialMediaSite } URL`;
+				return `Please enter a ${ errorStr } ${ socialMediaSite } URL`;
 		}
 	};
 
