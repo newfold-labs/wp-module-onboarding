@@ -55,12 +55,10 @@ const StepDesignHomepageMenu = () => {
 
 	function refactorPatterns( homepagePatternDataResp ) {
 		const makeHomepagePattern = [];
-		homepagePatternDataResp.forEach(
-			( homepagePatternData ) => {
-				makeHomepagePattern.push( homepagePatternData.content );
-				homepagePatternList.push( homepagePatternData.slug );
-			}
-		);
+		homepagePatternDataResp.forEach( ( homepagePatternData ) => {
+			makeHomepagePattern.push( homepagePatternData.content );
+			homepagePatternList.push( homepagePatternData.slug );
+		} );
 		setHomepagePatternList( homepagePatternList );
 		return makeHomepagePattern;
 	}

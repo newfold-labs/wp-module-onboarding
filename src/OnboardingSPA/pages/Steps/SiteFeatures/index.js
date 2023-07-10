@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { isEmpty } from 'lodash';
 import { useViewportMatch } from '@wordpress/compose';
 import { useEffect, useState } from '@wordpress/element';
@@ -49,33 +50,30 @@ const StepSiteFeatures = () => {
 		setCurrentOnboardingData( currentData );
 	}
 
-	async function changeToStoreSchema(
-		customPluginsList,
-		saveToStore = false
-	) {
-		const selectedPlugins = {};
+	async function changeToStoreSchema( saveToStore = false ) {
+		const plugins = {};
 
 		for ( const key in customPluginsList ) {
 			const plugin = customPluginsList[ key ];
-			selectedPlugins[ plugin.slug ] = plugin.selected;
+			plugins[ plugin.slug ] = plugin.selected;
 		}
-		setSelectedPlugins( selectedPlugins );
+		setSelectedPlugins( plugins );
 
 		if ( saveToStore ) {
-			currentData.data.siteFeatures = { ...selectedPlugins };
+			currentData.data.siteFeatures = { ...plugins };
 			setCurrentOnboardingData( currentData );
 		}
 	}
 
 	async function getCustomPlugins() {
-		const customPluginsList = await getSiteFeatures();
+		const customPlugins = await getSiteFeatures();
 		if ( isEmpty( currentData?.data?.siteFeatures ) ) {
-			changeToStoreSchema( customPluginsList.body, true );
+			changeToStoreSchema( customPlugins.body, true );
 		} else {
 			setSelectedPlugins( { ...currentData?.data?.siteFeatures } );
 		}
 
-		setCustomPluginsList( customPluginsList.body );
+		setCustomPluginsList( customPlugins.body );
 	}
 
 	useEffect( () => {
