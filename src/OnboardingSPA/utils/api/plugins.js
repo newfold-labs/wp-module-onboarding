@@ -29,3 +29,16 @@ export const getSiteFeatures = async () => {
 		} )
 	);
 };
+
+export const setSiteFeatures = async ( pluginInstallHash, data ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'plugins/site-features' ),
+			method: 'POST',
+			headers: {
+				'X-NFD-INSTALLER': pluginInstallHash,
+			},
+			data,
+		} )
+	);
+};
