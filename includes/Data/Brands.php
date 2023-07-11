@@ -53,7 +53,8 @@ final class Brands {
 				'accountUrl'                  => 'https://my.bluehost.com',
 				'domainsUrl'                  => 'https://my.bluehost.com/hosting/app?lil=1#/domains',
 				'emailUrl'                    => 'https://my.bluehost.com/hosting/app?lil=1#/email-office',
-				'pluginDashboardPage'         => \admin_url( 'admin.php?page=bluehost&enable_site_features=true' ),
+				'pluginDashboardPage'         => \admin_url( 'admin.php?page=bluehost' ),
+				'dashboardUrlParams'          => 'enable_site_features=true',
 				'phoneNumbers'                => array(
 					'sales'   => '844-303-1730',
 					'support' => '888-401-4678',
@@ -114,7 +115,8 @@ final class Brands {
 				'accountUrl'                  => 'https://my.bluehost.in',
 				'domainsUrl'                  => 'https://my.bluehost.in/hosting/app?lil=1#/domains',
 				'emailUrl'                    => 'https://my.bluehost.in/hosting/app?lil=1#/email-office',
-				'pluginDashboardPage'         => \admin_url( 'admin.php?page=bluehost&enable_site_features=true' ),
+				'pluginDashboardPage'         => \admin_url( 'admin.php?page=bluehost' ),
+				'dashboardUrlParams'          => 'enable_site_features=true',
 				'phoneNumbers'                => array(
 					'support' => '1800-419-4426',
 				),
@@ -229,7 +231,8 @@ final class Brands {
 				'accountUrl'                  => 'https://www.crazydomains.com/my-account/home/',
 				'domainsUrl'                  => '',
 				'emailUrl'                    => 'https://www.crazydomains.com/contact/',
-				'pluginDashboardPage'         => \admin_url( 'admin.php?page=crazy-domains&enable_site_features=true' ),
+				'pluginDashboardPage'         => \admin_url( 'admin.php?page=crazy-domains' ),
+				'dashboardUrlParams'          => 'enable_site_features=true',
 				'phoneNumbers'                => array(
 					'support' => '2135592459',
 				),
@@ -292,7 +295,7 @@ final class Brands {
 		if ( ! defined( 'NFD_ONBOARDING_PLUGIN_BRAND' ) ) {
 			$brand = $container->plugin()->brand;
 			if ( empty( $brand ) ) {
-				$brand = 'wordpress';
+				$brand = 'WordPress';
 			}
 			define( 'NFD_ONBOARDING_PLUGIN_BRAND', sanitize_title_with_dashes( str_replace( '_', '-', $brand ) ) );
 		}
