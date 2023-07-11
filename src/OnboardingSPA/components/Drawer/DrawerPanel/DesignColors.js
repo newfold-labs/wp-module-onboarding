@@ -12,16 +12,52 @@ import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 
 const DesignColors = () => {
+	// Used for scrolling into custom colors section
 	const customColorsResetRef = useRef( null );
+
+	/**
+	 * Predefined color palettes with color mappings
+	 * eg: calm: {header-background: '#1A4733', secondary-foreground: '#FFF', …}
+	 */
+	const [ colorPalettes, setColorPalettes ] = useState();
+	/**
+	 * Custom mapping for selected colors from backend
+	 * eg: base => ["header-foreground", "header-titles", "secondary-foreground"]
+	 */
 	const [ customColorsMap, setCustomColorsMap ] = useState();
+	/**
+	 * Colors array similar to one in Global Styles
+	 * eg: [{color: '#ffffff', name: 'Base', slug: 'base'}, ...]
+	 */
 	const [ selectedColors, setSelectedColors ] = useState();
-	const [ showColorPicker, setShowColorPicker ] = useState( false );
-	const [ isAccordionClosed, setIsAccordionClosed ] = useState( true );
+	/**
+	 * Mapped value for every color type for faster updates
+	 * eg: {base: "#ffffff", contrast: "#404040", ... }
+	 * Note: This exists for Predefined and Custom colors as well
+	 */
 	const [ selectedColorsLocal, setSelectedColorsLocal ] = useState();
 
+	// Custom Colors Section
+	/**
+	 * Custom color mapping selected by the user
+	 * eg: {base: '#da2929', contrast: '#404040',.. }
+	 */
 	const [ customColors, setCustomColors ] = useState();
-	const [ colorPalettes, setColorPalettes ] = useState();
+	/**
+	 * Determines which custom color was toggled to select a color
+	 * e.g. base, primary, secondary..
+	 */
 	const [ colorPickerCalledBy, setColorPickerCalledBy ] = useState( '' );
+	/**
+	 * Determines if color picker should be shown
+	 * Boolean toggable value true/false
+	 */
+	const [ showColorPicker, setShowColorPicker ] = useState( false );
+	/**
+	 * Determines if custom colors accordion state
+	 * Boolean toggable value true/false
+	 */
+	const [ isAccordionClosed, setIsAccordionClosed ] = useState( true );
 
 	const { storedPreviewSettings, currentData, themeStatus } = useSelect(
 		( select ) => {
@@ -45,13 +81,13 @@ const DesignColors = () => {
 	useEffect( () => {
 		if ( THEME_STATUS_ACTIVE === themeStatus ) {
 			getColorStylesAndPatterns();
-		}
-		if ( isCustomColorActive() ) {
-			setIsAccordionClosed( false );
-			customColorsResetRef.current.scrollIntoView( {
-				behavior: 'smooth',
-				block: 'end',
-			} );
+			if ( currentData?.data?.colorStyle === 'custom' ) {
+				setIsAccordionClosed( false );
+				customColorsResetRef?.current?.scrollIntoView( {
+					behavior: 'smooth',
+					block: 'end',
+				} );
+			}
 		}
 	}, [ themeStatus ] );
 
@@ -86,12 +122,6 @@ const DesignColors = () => {
 		} else {
 			setToDefaultPalette();
 		}
-		saveThemeColorPalette(
-			currentData?.data?.colorStyle,
-			colorPaletteResponse?.body.tailored,
-			selectedColorsLocalTemp,
-			globalStyles?.body[ 0 ]
-		);
 	};
 
 	/**
@@ -186,25 +216,21 @@ const DesignColors = () => {
 	 */
 	async function resetColors() {
 		setToDefaultPalette();
-
 		currentData.data.colorStyle = '';
 		setCurrentOnboardingData( currentData );
 	}
 
 	/**
 	 * Converts the user selected value into a suitable valid global styles array value
-	 * param -> selectedColorsLocalTemp -> [{color: '#ffffff', name: 'Base', slug: 'base'}, ...]
 	 *
-	 * @param {string} colorStyle              - Selected Color Palette slug
-	 * @param {Object} colorPalettesTemp       - Color Palette from Backend with colors for every palette
-	 * @param {Array}  selectedColorsLocalTemp - Array of Map structure similar to the one in Global Styles
-	 * @param {Object} globalStylesTemp        - Global Styles from the store
+	 * @param {string} colorStyle        - Selected Color Palette slug
+	 * @param {Object} colorPalettesTemp - Color Palette from Backend with colors for every palette
+	 * @param {Object} globalStylesTemp  - Global Styles from the store
 	 * @return {Object} selectedGlobalStyle - Updated Global Styles with new color changes
 	 */
 	async function saveThemeColorPalette(
 		colorStyle,
 		colorPalettesTemp = colorPalettes,
-		selectedColorsLocalTemp = selectedColors,
 		globalStylesTemp = storedPreviewSettings
 	) {
 		const isCustomStyle = colorStyle === 'custom';
@@ -213,28 +239,20 @@ const DesignColors = () => {
 			selectedGlobalStyle?.settings?.color?.palette;
 		if ( colorPalettesTemp && colorStyle && selectedThemeColorPalette ) {
 			for ( let idx = 0; idx < selectedThemeColorPalette.length; idx++ ) {
+				// Iterate through every element in array
+				// i.e. [{color: '#ffffff', name: 'Base', slug: 'base'}, ...] and update the appropriate color that has been changed
 				const slug = selectedThemeColorPalette[ idx ]?.slug;
 				if (
-					isCustomStyle &&
-					selectedColorsLocalTemp?.[ slug ] !== '' &&
-					selectedColorsLocalTemp?.[ slug ] !== undefined
-				) {
-					selectedThemeColorPalette[ idx ].color =
-						selectedColorsLocalTemp[ slug ];
-				} else if (
-					// Add Exception for Background. (perhaps scope to yith-wonder in future)
-					colorPalettesTemp?.[ colorStyle ]?.[ slug ] &&
-					'base' === slug
-				) {
-					selectedThemeColorPalette[ idx ].color = '#FFFFFF';
-				} else if (
 					! isCustomStyle &&
 					colorPalettesTemp?.[ colorStyle ]?.[ slug ]
 				) {
+					// If not custom color then look for the predefined palette and get the color from the selected palette
 					selectedThemeColorPalette[ idx ].color =
 						colorPalettesTemp[ colorStyle ][ slug ];
 				}
 			}
+
+			// Update Global Styles to reflect the same
 			selectedGlobalStyle.settings.color.palette =
 				selectedThemeColorPalette;
 			updatePreviewSettings(
@@ -375,6 +393,7 @@ const DesignColors = () => {
 					customColors &&
 					customColors[ slug ] !== undefined
 				) {
+					// Assign the color to the color that toggled color picker
 					selectedThemeColorPalette[ idx ].color =
 						customColors[ slug ];
 				}
@@ -382,6 +401,7 @@ const DesignColors = () => {
 			if ( customColorsMap ) {
 				const colorVariant = customColorsMap[ colorPickerCalledBy ];
 				if ( colorVariant ) {
+					// Find if the Color had a mapping to other colors and update them with the same color too
 					colorVariant.forEach( ( variant ) => {
 						if (
 							customColors &&
@@ -395,6 +415,7 @@ const DesignColors = () => {
 				}
 			}
 
+			// Update the global styles to show the same.
 			selectedGlobalStyle.settings.color.palette =
 				selectedThemeColorPalette;
 			updatePreviewSettings(
@@ -420,6 +441,7 @@ const DesignColors = () => {
 		if ( customColorsMap ) {
 			const colorVariant = customColorsMap[ colorPickerCalledBy ];
 			if ( colorVariant ) {
+				// If the selected color has a mapping to other colors the update the other colors respectively
 				colorVariant.forEach( ( variant ) => {
 					selectedColorsLocalCopy[ variant ] = color;
 				} );
@@ -528,7 +550,7 @@ const DesignColors = () => {
 							{ customColors?.base ? <div>&#10003;</div> : null }
 						</div>
 						<div className="custom-palette__below-row-text">
-							Background
+							{ __( 'Background', 'wp-module-onboarding' ) }
 						</div>
 					</div>
 					<div
@@ -550,7 +572,7 @@ const DesignColors = () => {
 							{ customColors?.primary ? <>&#10003;</> : null }
 						</div>
 						<div className="custom-palette__below-row-text">
-							Primary
+							{ __( 'Primary', 'wp-module-onboarding' ) }
 						</div>
 					</div>
 					<div
@@ -572,7 +594,7 @@ const DesignColors = () => {
 							{ customColors?.secondary ? <>&#10003;</> : null }
 						</div>
 						<div className="custom-palette__below-row-text">
-							Secondary
+							{ __( 'Secondary', 'wp-module-onboarding' ) }
 						</div>
 					</div>
 					<div
@@ -594,7 +616,7 @@ const DesignColors = () => {
 							{ customColors?.tertiary ? <>&#10003;</> : null }
 						</div>
 						<div className="custom-palette__below-row-text">
-							Tertiary
+							{ __( 'Tertiary', 'wp-module-onboarding' ) }
 						</div>
 					</div>
 				</Animate>
@@ -615,10 +637,10 @@ const DesignColors = () => {
 				{ showColorPicker && (
 					<Popover>
 						<div
-							className="custom-palette__picker-close-icon"
-							onClick={ () => setShowColorPicker( false ) }
 							role="button"
 							tabIndex={ 0 }
+							className="custom-palette__picker-close-icon"
+							onClick={ () => setShowColorPicker( false ) }
 							onKeyDown={ () => setShowColorPicker( false ) }
 						>
 							X
