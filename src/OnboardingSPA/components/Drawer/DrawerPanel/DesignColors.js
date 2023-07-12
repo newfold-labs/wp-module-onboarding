@@ -94,7 +94,6 @@ const DesignColors = () => {
 	/**
 	 * Fetches the color palette for the Drawer and sets the state
 	 * Contains: 'tailored' and 'custom-picker-grouping'
-	 *
 	 */
 	const getColorStylesAndPatterns = async () => {
 		const globalStyles = await getGlobalStyles();
@@ -460,7 +459,6 @@ const DesignColors = () => {
 	/**
 	 * Toggles the color picker for every color
 	 * and sets by which color was the Picker toggled.
-	 *
 	 * Note: This does not change the color
 	 *
 	 * @param {string} colorType - Color Slug e.g. base, secondary,...
