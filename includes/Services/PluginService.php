@@ -4,9 +4,9 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 use NewfoldLabs\WP\Module\Installer\Data\Options;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginInstallTaskManager;
-use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginUninstallTaskManager;
+use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginDeactivateTaskManager;
 use NewfoldLabs\WP\Module\Installer\Tasks\PluginInstallTask;
-use NewfoldLabs\WP\Module\Installer\Tasks\PluginUninstallTask;
+use NewfoldLabs\WP\Module\Installer\Tasks\PluginDeactivateTask;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 
 /**
@@ -45,6 +45,12 @@ class PluginService {
 							$init_plugin['priority']
 						)
 					);
+			} else {
+				PluginDeactivateTaskManager::add_to_queue(
+					new PluginDeactivateTask(
+						$init_plugin['slug']
+					)
+				);
 			}
 		}
 
@@ -52,40 +58,26 @@ class PluginService {
 	}
 
 	/**
-	 * Installs/Uninstalls the requested site features(plugins).
+	 * Installs/Deactivates the requested site features(plugins).
 	 *
 	 * @param \WP_REST_Request $request the incoming request object.
 	 *
 	 * @return \WP_REST_Response|\WP_Error
 	 */
-	/**
-	 * Installs/Uninstalls the requested site features (plugins).
-	 *
-	 * @param array $plugins The list of plugin slugs.
-	 * @return \WP_REST_Response
-	 */
 	public static function set_site_features( $plugins ) {
 
 		foreach ( $plugins as $plugin => $decision ) {
-			if ( $decision ) {
-				// If the Plugin exists and is activated
-				if ( PluginInstaller::exists( $plugin, $decision ) ) {
-					continue;
-				}
-
-				PluginInstallTaskManager::add_to_queue(
-					new PluginInstallTask(
-						$plugin,
-						false
-					)
-				);
-			} else {
-				PluginUninstallTaskManager::add_to_queue(
-					new PluginUninstallTask(
-						$plugin
-					)
-				);
+			// If the Plugin exists and is activated
+			if ( PluginInstaller::exists( $plugin, $decision ) ) {
+				continue;
 			}
+
+			PluginInstallTaskManager::add_to_queue(
+				new PluginInstallTask(
+					$plugin,
+					false
+				)
+			);
 		}
 
 		return new \WP_REST_Response(

@@ -106,7 +106,7 @@ class PluginsController {
 	}
 
 	/**
-	 * Installs/Uninstalls the requested plugins.
+	 * Installs/Deactivates the requested plugins.
 	 *
 	 * @param \WP_REST_Request $request the incoming request object.
 	 *
