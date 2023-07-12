@@ -205,9 +205,10 @@ const SocialMediaForm = ( {
 	};
 
 	const showErrorMessage = ( socialMediaSite ) => {
+		// TODO change the text to new Error Messages
 		const errorStr =
 			activeErrorTypes[ socialMediaSite ] === 'ad-link-error'
-				? 'non-short'
+				? 'valid'
 				: 'valid';
 		switch ( socialMediaSite ) {
 			case SocialMediaSites.TWITTER:
