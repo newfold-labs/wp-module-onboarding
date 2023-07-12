@@ -60,8 +60,7 @@ class PluginService {
 	/**
 	 * Installs/Deactivates the requested site features(plugins).
 	 *
-	 * @param \WP_REST_Request $request the incoming request object.
-	 *
+	 * @param array $plugins The list of plugin slugs.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public static function set_site_features( $plugins ) {
