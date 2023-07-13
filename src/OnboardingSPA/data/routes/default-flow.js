@@ -358,14 +358,6 @@ export const steps = [
 			'You have ideas, we have page templates',
 			'wp-module-onboarding'
 		),
-		subheading: __(
-			'Begin closer to the finish line than a blank canvas.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			"Pick a page, pick a layout and we'll focus on the basics so you focus on what's important and unique.",
-			'wp-module-onboarding'
-		),
 		Component: StepSitePages,
 		Icon: copy,
 		priority: 260,
@@ -381,14 +373,6 @@ export const steps = [
 		title: __( 'Features', 'wp-module-onboarding' ),
 		heading: __(
 			'Key features to supercharge your site',
-			'wp-module-onboarding'
-		),
-		subheading: __(
-			'Our toolbox of Plugins & Services is your toolbox.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			"Through Plugins, partners and unique $BRAND WordPress features, you've got tons of capabilities with $SITE.",
 			'wp-module-onboarding'
 		),
 		Component: StepSiteFeatures,
@@ -410,14 +394,6 @@ export const steps = [
 		path: '/wp-setup/step/what-next',
 		title: __( 'What Next', 'wp-module-onboarding' ),
 		heading: __( 'How else can we help?', 'wp-module-onboarding' ),
-		subheading: __(
-			"We've got the basics setup, but we can help with any next steps.",
-			'wp-module-onboarding'
-		),
-		description: __(
-			"Setup more of your site, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
-			'wp-module-onboarding'
-		),
 		Component: StepWhatNext,
 		Icon: moveTo,
 		priority: 300,

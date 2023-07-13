@@ -10,6 +10,7 @@ import { getSiteFeatures } from '../../../utils/api/plugins';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import CheckboxList from '../../../components/CheckboxTemplate/CheckboxList';
 import { CheckboxListSkeleton } from '../../../components/CheckboxTemplate';
+import getContents from './contents';
 
 const StepSiteFeatures = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -85,6 +86,8 @@ const StepSiteFeatures = () => {
 		setIsHeaderNavigationEnabled( true );
 		getCustomPlugins();
 	}, [] );
+
+	const content = getContents();
 
 	return (
 		<CommonLayout>
