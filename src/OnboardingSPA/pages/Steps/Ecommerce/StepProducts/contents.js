@@ -7,6 +7,10 @@ const getContents = () => {
 			'What type of products will you be selling?',
 			'wp-module-onboarding'
 		),
+		description: __(
+			"In this section, you can provide more information about your products and business, which will help us tailor your store setup experience and identify possible extensions you'll need for your online store.",
+			'wp-module-onboarding'
+		),
 		question: __(
 			'How many products will you be selling?',
 			'wp-module-onboarding'

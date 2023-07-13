@@ -7,6 +7,10 @@ const getContents = () => {
 			'Do you want to enable tax rates and calculations?',
 			'wp-module-onboarding'
 		),
+		description: __(
+			'Taxes can be configured at anytime in the WooCommerce Settings tab.',
+			'wp-module-onboarding'
+		),
 		options: [
 			{
 				content: __(
