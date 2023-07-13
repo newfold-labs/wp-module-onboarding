@@ -9,7 +9,7 @@ const getContents = () => {
 		description: __(
 			'A well-organized homepage makes visitors feel smart.',
 			'wp-module-onboarding'
-		)
+		),
 	};
 };
 

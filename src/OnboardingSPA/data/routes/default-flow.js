@@ -409,7 +409,7 @@ export const conditionalSteps = {
 	designColors: {
 		path: '/wp-setup/step/design/colors',
 		title: __( 'Colors', 'wp-module-onboarding' ),
-		heading: __( "Whats your color palette?", 'wp-module-onboarding' ),
+		heading: __( "What's your color palette?", 'wp-module-onboarding' ),
 		Component: StepDesignColors,
 		Icon: color,
 		priority: 180,
