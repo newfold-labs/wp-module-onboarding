@@ -6,6 +6,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import { useViewportMatch } from '@wordpress/compose';
+import getContents from './contents';
 
 const StepBasicInfo = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -23,6 +24,8 @@ const StepBasicInfo = () => {
 		};
 	}, [] );
 
+	const content = getContents();
+
 	useEffect( () => {
 		if ( isLargeViewport ) {
 			setIsDrawerOpened( true );
@@ -36,7 +39,7 @@ const StepBasicInfo = () => {
 		<CommonLayout isVerticallyCentered>
 			<HeadingWithSubHeading
 				title={ currentStep?.heading }
-				subtitle={ currentStep?.subheading }
+				subtitle={ content.subheading }
 			/>
 			<BasicInfoForm />
 		</CommonLayout>

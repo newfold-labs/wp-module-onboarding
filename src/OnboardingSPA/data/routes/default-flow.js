@@ -260,14 +260,6 @@ export const steps = [
 		path: '/wp-setup/step/top-priority',
 		title: __( 'Top Priority', 'wp-module-onboarding' ),
 		heading: __( 'Tell us your top priority', 'wp-module-onboarding' ),
-		subheading: __(
-			"We'll prioritize getting you there.",
-			'wp-module-onboarding'
-		),
-		description: __(
-			"We'll recommend design choices, site options and products and features we have to offer.",
-			'wp-module-onboarding'
-		),
 		Component: StepTopPriority,
 		Icon: navigation,
 		priority: 100,
@@ -279,18 +271,6 @@ export const steps = [
 			/* translators: %s: website or store */
 			__( 'Introduce us to this %s', 'wp-module-onboarding' ),
 			translations( 'website' )
-		),
-		subheading: __(
-			'So we can introduce it to the web',
-			'wp-module-onboarding'
-		),
-		description: sprintf(
-			/* translators: %s: website or store */
-			__(
-				'Help visitors, search results and social media identify your %s.',
-				'wp-module-onboarding'
-			),
-			translations( 'site' )
 		),
 		Component: StepBasicInfo,
 		Icon: info,
