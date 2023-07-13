@@ -50,12 +50,12 @@ const DesignColors = () => {
 	const [ colorPickerCalledBy, setColorPickerCalledBy ] = useState( '' );
 	/**
 	 * Determines if color picker should be shown
-	 * Boolean toggable value true/false
+	 * Boolean able to toggle value i.e. true/false
 	 */
 	const [ showColorPicker, setShowColorPicker ] = useState( false );
 	/**
 	 * Determines if custom colors accordion state
-	 * Boolean toggable value true/false
+	 * Boolean able to toggle value i.e. true/false
 	 */
 	const [ isAccordionClosed, setIsAccordionClosed ] = useState( true );
 
@@ -125,10 +125,10 @@ const DesignColors = () => {
 
 	/**
 	 * Helper Function for state in global styles to local mapping
-	 * param -> selectedColorPalette -> [{color: '#ffffff', name: 'Base', slug: 'base'}, ...]
-	 * return -> {base: "#ffffff", contrast: "#404040", ... }
 	 *
 	 * @param {Array} selectedColorPalette - Array of Map structure similar to the one in Global Styles
+	 *                                     e.g. [{color: '#ffffff', name: 'Base', slug: 'base'}, ...]
+	 *                                     return -> {base: "#ffffff", contrast: "#404040", ... }
 	 */
 	function stateToLocal( selectedColorPalette ) {
 		if ( selectedColorPalette ) {
@@ -143,11 +143,11 @@ const DesignColors = () => {
 
 	/**
 	 * Converts the user selected value into a suitable valid global styles array value
-	 * param -> selectedColorsLocalTemp -> {base: "#ffffff", contrast: "#404040", ... }
-	 * return -> [{color: '#ffffff', name: 'Base', slug: 'base'}, ...]
 	 *
 	 * @param {Object} selectedColorsLocalTemp - Color type mapped to the color
+	 *                                         e.g. {base: "#ffffff", contrast: "#404040", ... }
 	 * @param {string} colorStyle              - Selected Color Palette slug
+	 *                                         e.g. [{color: '#ffffff', name: 'Base', slug: 'base'}, ...]
 	 */
 	function LocalToState( selectedColorsLocalTemp, colorStyle ) {
 		if ( selectedColorsLocalTemp && colorStyle ) {
@@ -358,7 +358,7 @@ const DesignColors = () => {
 	 * Array to check -> [{color: '#ffffff', name: 'Base', slug: 'base'}, ...]
 	 *
 	 * @param {string} slugName - Slug Name for color i.e. base, secondary, header-title,...
-	 * @return {number} res - Index of the Slug map ({color: '#ffffff', name: 'Base', slug: 'base'}) in the array
+	 * @return {number} res - Index of the key "slug" mapped ({color: '#ffffff', name: 'Base', slug: 'base'}, ...) in the array
 	 */
 	function findInCustomColors( slugName ) {
 		const selectedThemeColorPalette =
