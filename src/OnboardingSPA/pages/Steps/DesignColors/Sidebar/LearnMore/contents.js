@@ -5,6 +5,14 @@ import { color } from '@wordpress/icons';
 
 const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {	
 	return {
+		subheading: __(
+			"We'll paint everything with your colors for a fresh, crisp look.",
+			'wp-module-onboarding'
+		),
+		description: __(
+			'Strong contrast and clear readability help your words jump off the screen.',
+			'wp-module-onboarding'
+		),
 		introduction: {
 			heading: __( 'Colors', 'wp-module-onboarding' ),
 			subheading: sprintf(

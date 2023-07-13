@@ -5,6 +5,14 @@ import { header } from '@wordpress/icons';
 
 const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 	return {
+		subheading: __(
+			'Your site header helps organize your story for visitors.',
+			'wp-module-onboarding'
+		),
+		description: __(
+			'A well-organized site makes visitors feel smart, helping you keep and convert them.',
+			'wp-module-onboarding'
+		),
 		introduction: {
 			heading: __( 'Header & Menu', 'wp-module-onboarding' ),
 			subheading: sprintf(
