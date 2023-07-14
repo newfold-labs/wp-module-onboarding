@@ -8,19 +8,23 @@ const SocialMediaSites = {
 	TIKTOK: 'tiktok',
 };
 
+// Don't do standard validation for them
 const validationExemption = new Set( [ 'twitter', 'instagram', 'youtube' ] );
 
+// Local copies to prevent unnecessary passing as params
 let errorsDup;
 let setErrorsDup;
 let errorTypesDup;
 let setErrorTypesDup;
 
-const ERROR_TYPES = {
+// Types of errors
+export const ERROR_TYPES = {
 	NONE: 'none',
 	AD_LINK_ERROR: 'ad-link-error',
 	INVALID_LINK_ERROR: 'invalid-link-error',
 };
 
+// Adds error to a certain message.
 const displayErrors = ( categ, isError ) => {
 	if ( isError ) {
 		if ( ! errorsDup.includes( categ ) ) {
@@ -139,8 +143,6 @@ const urlValidator = (
 	if ( ! validationExemption.has( categ ) )
 		res = handleCommonValidation( categ, url );
 	switch ( categ ) {
-		case SocialMediaSites.FACEBOOK:
-			break;
 		case SocialMediaSites.TWITTER:
 			res = handleTwitterValidation( url );
 			break;
@@ -149,12 +151,6 @@ const urlValidator = (
 			break;
 		case SocialMediaSites.YOUTUBE:
 			res = handleYouTubeValidation( url );
-			break;
-		case SocialMediaSites.LINKEDIN:
-			break;
-		case SocialMediaSites.YELP:
-			break;
-		case SocialMediaSites.TIKTOK:
 			break;
 	}
 	return res;

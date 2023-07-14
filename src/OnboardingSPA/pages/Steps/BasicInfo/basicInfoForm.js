@@ -126,9 +126,6 @@ const BasicInfoForm = () => {
 				currentDataCopy.data.blogDescription
 			);
 			setCurrentOnboardingData( currentDataCopy );
-			setOnboardingSocialData(
-				debouncedFlowData.data.socialData ?? socialData
-			);
 		};
 		if ( debouncedFlowData ) {
 			saveData();
