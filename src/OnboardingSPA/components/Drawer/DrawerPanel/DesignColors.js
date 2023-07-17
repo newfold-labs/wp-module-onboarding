@@ -10,6 +10,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
 import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
+import CustomColorOption from '../../CustomColorOption';
 
 const DesignColors = () => {
 	// Used for scrolling into custom colors section
@@ -19,23 +20,18 @@ const DesignColors = () => {
 	 * Predefined color palettes with color mappings
 	 * eg: calm: {header-background: '#1A4733', secondary-foreground: '#FFF', …}
 	 */
-	const [ colorPalettes, setColorPalettes ] = useState();
+	const [ colors, setColors ] = useState();
 	/**
 	 * Custom mapping for selected colors from backend
 	 * eg: base => ["header-foreground", "header-titles", "secondary-foreground"]
 	 */
 	const [ customColorsMap, setCustomColorsMap ] = useState();
 	/**
-	 * Colors array similar to one in Global Styles
-	 * eg: [{color: '#ffffff', name: 'Base', slug: 'base'}, ...]
-	 */
-	const [ selectedColors, setSelectedColors ] = useState();
-	/**
 	 * Mapped value for every color type for faster updates
 	 * eg: {base: "#ffffff", contrast: "#404040", ... }
 	 * Note: This exists for Predefined and Custom colors as well
 	 */
-	const [ selectedColorsLocal, setSelectedColorsLocal ] = useState();
+	const [ selectedColors, setSelectedColors ] = useState();
 
 	// Custom Colors Section
 	/**
@@ -92,7 +88,7 @@ const DesignColors = () => {
 	}, [ themeStatus ] );
 
 	/**
-	 * Fetches the color palette for the Drawer and sets the state
+	 * Fetches the colors for the Drawer and sets the state
 	 * Contains: 'tailored' and 'custom-picker-grouping'
 	 */
 	const getColorStylesAndPatterns = async () => {
@@ -106,20 +102,20 @@ const DesignColors = () => {
 		if ( globalStyles?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
-		setColorPalettes( colorPaletteResponse?.body.tailored );
+		setColors( colorPaletteResponse?.body.tailored );
 		setCustomColorsMap(
 			colorPaletteResponse?.body[ 'custom-picker-grouping' ]
 		);
-		let selectedColorPalette;
+		let selectedColorsNew;
 		if ( ! ( currentData?.data?.colorStyle === '' ) ) {
-			selectedColorPalette =
+			selectedColorsNew =
 				globalStyles.body[ 0 ]?.settings?.color?.palette;
 			if ( currentData?.data?.colorStyle === 'custom' ) {
-				setCustomColors( stateToLocal( selectedColorPalette ) );
+				setCustomColors( stateToLocal( selectedColorsNew ) );
 			}
-			setSelectedColors( selectedColorPalette );
+			setSelectedColors( stateToLocal( selectedColorsNew ) );
 		} else {
-			// Adds colors to the custom Palette at start for no saved palette
+			// Adds colors to the custom colors at start if not saved
 			resetColors();
 		}
 	};
@@ -137,7 +133,7 @@ const DesignColors = () => {
 			selectedColorPalette?.forEach( ( color ) => {
 				selectedColorsLocalTemp[ color.slug ] = color.color;
 			} );
-			setSelectedColorsLocal( selectedColorsLocalTemp );
+			setSelectedColors( selectedColorsLocalTemp );
 			return selectedColorsLocalTemp;
 		}
 	}
@@ -147,7 +143,7 @@ const DesignColors = () => {
 	 *
 	 * @param {Object} selectedColorsLocalTemp - Color type mapped to the color
 	 *                                         e.g. {base: "#ffffff", contrast: "#404040", ... }
-	 * @param {string} colorStyle              - Selected Color Palette slug
+	 * @param {string} colorStyle              - Selected Color slug
 	 *                                         e.g. [{color: '#ffffff', name: 'Base', slug: 'base'}, ...]
 	 */
 	function localToState( selectedColorsLocalTemp, colorStyle ) {
@@ -162,8 +158,7 @@ const DesignColors = () => {
 					color: selectedColorsLocalTemp[ colorName ],
 				} );
 			}
-			setSelectedColors( colorsArray );
-			//  Save selected palette color to Store
+			//  Save selected color to Store
 			currentData.data.colorStyle = colorStyle;
 			setCurrentOnboardingData( currentData );
 			return colorsArray;
@@ -171,14 +166,14 @@ const DesignColors = () => {
 	}
 
 	/**
-	 * When the user clicks a predefined palette or reset then
+	 * When the user clicks a predefined colors or reset then
 	 * The custom colors should be reset to the original colors.
 	 */
 	function clearCustomColors() {
 		for ( const custom in customColors ) {
 			customColors[ custom ] = '';
 		}
-		// Resetting the color palette to default and unsetting the selected predefined color palette, if any.
+		// Resetting the colors to default and unsetting the selected predefined color, if any.
 		setCustomColors( customColors );
 	}
 
@@ -208,29 +203,28 @@ const DesignColors = () => {
 			selectedGlobalStyle.settings.color.palette;
 		currentData.data.colorStyle = '';
 		setCurrentOnboardingData( currentData );
-		setSelectedColors( selectedGlobalStylePalette );
-		setSelectedColorsLocal( stateToLocal( selectedGlobalStylePalette ) );
+		setSelectedColors( stateToLocal( selectedGlobalStylePalette ) );
 		trackHiiveEvent( 'color-selection-reset', selectedGlobalStyle.title );
 	}
 
 	/**
 	 * Converts the user selected value into a suitable valid global styles array value
 	 *
-	 * @param {string} colorStyle - Selected Color Palette slug
+	 * @param {string} colorStyle - Selected Color slug
 	 * @return {Object} selectedGlobalStyle - Updated Global Styles with new color changes
 	 */
 	async function saveThemeColorPalette( colorStyle ) {
 		const selectedGlobalStyle = storedPreviewSettings;
 		let selectedThemeColorPalette =
 			storedPreviewSettings?.settings?.color?.palette;
-		if ( ! ( colorPalettes && colorStyle && selectedThemeColorPalette ) ) {
+		if ( ! ( colors && colorStyle && selectedThemeColorPalette ) ) {
 			return storedPreviewSettings;
 		}
 		selectedThemeColorPalette = selectedThemeColorPalette.map(
 			( color ) => {
-				if ( colorPalettes?.[ colorStyle ]?.[ color.slug ] ) {
-					// If not custom color then look for the predefined palette and get the color from the selected palette
-					color.color = colorPalettes[ colorStyle ][ color.slug ];
+				if ( colors?.[ colorStyle ]?.[ color.slug ] ) {
+					// If not custom color then look for the predefined colors and get the color from the selected colors
+					color.color = colors[ colorStyle ][ color.slug ];
 				}
 				return color;
 			}
@@ -247,28 +241,25 @@ const DesignColors = () => {
 	// Pre-defined Colors Section
 
 	/**
-	 * Select a color from predefined palette and sync it.
+	 * Select a color from predefined colors and sync it.
 	 *
-	 * @param {string} colorStyle - Selected Color Palette slug
+	 * @param {string} colorStyle - Selected Color slug
 	 */
 	const handleClick = ( colorStyle ) => {
-		if ( selectedColors?.slug === colorStyle ) {
-			return true;
-		}
 		clearCustomColors();
 		saveThemeColorPalette( colorStyle );
-		setSelectedColorsLocal( colorPalettes[ colorStyle ] );
-		localToState( colorPalettes[ colorStyle ], colorStyle );
+		setSelectedColors( colors[ colorStyle ] );
+		localToState( colors[ colorStyle ], colorStyle );
 		trackHiiveEvent( 'color-selection', colorStyle );
 	};
 
 	/**
-	 * Build the predefined Color Palette Component
+	 * Build the predefined Colors Component
 	 *
-	 * @return {WPComponent} Predefined Color Palette Component
+	 * @return {WPComponent} Predefined Colors Component
 	 */
 	function buildPredefinedPalette() {
-		return Object.keys( colorPalettes ).map( ( colorStyle, idx ) => {
+		return Object.keys( colors ).map( ( colorStyle, idx ) => {
 			return (
 				<div
 					key={ colorStyle }
@@ -288,19 +279,19 @@ const DesignColors = () => {
 						<div
 							className="color-palette__colors--tertiary"
 							style={ {
-								backgroundColor: `${ colorPalettes[ colorStyle ]?.[ 'header-background' ] }`,
+								backgroundColor: `${ colors[ colorStyle ]?.[ 'header-background' ] }`,
 							} }
 						/>
 						<div
 							className="color-palette__colors--secondary"
 							style={ {
-								backgroundColor: `${ colorPalettes[ colorStyle ]?.secondary }`,
+								backgroundColor: `${ colors[ colorStyle ]?.secondary }`,
 							} }
 						/>
 						<div
 							className="color-palette__colors--primary"
 							style={ {
-								backgroundColor: `${ colorPalettes[ colorStyle ]?.primary }`,
+								backgroundColor: `${ colors[ colorStyle ]?.primary }`,
 							} }
 						/>
 					</div>
@@ -375,6 +366,7 @@ const DesignColors = () => {
 						customColors[ slug ];
 				}
 			}
+			// If there is a mapping for a color to other colors in custom colors map
 			if ( customColorsMap ) {
 				const colorVariant = customColorsMap[ colorPickerCalledBy ];
 				if ( colorVariant ) {
@@ -411,8 +403,8 @@ const DesignColors = () => {
 	 *
 	 * @param {string} color - The Color hex user has selected
 	 */
-	const toggleCustomPickerComponent = async ( color ) => {
-		const selectedColorsLocalCopy = { ...selectedColorsLocal };
+	const selectCustomPickerColor = async ( color ) => {
+		const selectedColorsLocalCopy = { ...selectedColors };
 		selectedColorsLocalCopy[ colorPickerCalledBy ] = color;
 
 		if ( customColorsMap ) {
@@ -427,7 +419,7 @@ const DesignColors = () => {
 
 		saveCustomColors();
 		localToState( selectedColorsLocalCopy, 'custom' );
-		setSelectedColorsLocal( selectedColorsLocalCopy );
+		setSelectedColors( selectedColorsLocalCopy );
 		if ( ! isCustomColorActive() ) {
 			trackHiiveEvent( 'color-selection', 'custom' );
 		}
@@ -461,16 +453,15 @@ const DesignColors = () => {
 		const primaryColor =
 			customColors && customColors?.primary !== ''
 				? customColors.primary
-				: selectedColorsLocal?.primary ?? defaultColor;
+				: selectedColors?.primary ?? defaultColor;
 		const secondaryColor =
 			customColors && customColors?.secondary !== ''
 				? customColors.secondary
-				: selectedColorsLocal?.secondary ?? defaultColor;
+				: selectedColors?.secondary ?? defaultColor;
 		const tertiaryColor =
 			customColors && customColors?.[ 'header-background' ] !== ''
 				? customColors[ 'header-background' ]
-				: selectedColorsLocal?.[ 'header-background' ] ?? defaultColor;
-		const paletteCount = Object.keys( colorPalettes ).length;
+				: selectedColors?.[ 'header-background' ] ?? defaultColor;
 
 		return (
 			<div className="custom-palette">
@@ -488,10 +479,9 @@ const DesignColors = () => {
 					<div className="custom-palette__top-text">
 						{ __( 'SELECT CUSTOM COLORS', 'wp-module-onboarding' ) }
 					</div>
-					{ isAccordionClosed && (
+					{ isAccordionClosed ? (
 						<div className="custom-palette__top-icon">+</div>
-					) }
-					{ ! isAccordionClosed && (
+					) : (
 						<div className="custom-palette__top-icon">-</div>
 					) }
 				</div>
@@ -505,96 +495,34 @@ const DesignColors = () => {
 							: 'custom-palette_acc_opened'
 					}` }
 				>
-					<div
-						className="custom-palette__below-row"
-						onClick={ () => selectCustomColor( 'base' ) }
-						onKeyDown={ () => selectCustomColor( 'base' ) }
-						role="button"
-						tabIndex={ paletteCount + 1 }
-					>
-						<div
-							className={ `custom-palette__below-row-icon ${
-								customColors?.base &&
-								'custom-palette__below-row-icon_selected_border'
-							}` }
-							style={ {
-								backgroundColor: `${
-									customColors?.base ?? defaultColor
-								}`,
-							} }
-						>
-							{ customColors?.base ? <div>&#10003;</div> : null }
-						</div>
-						<div className="custom-palette__below-row-text">
-							{ __( 'Background', 'wp-module-onboarding' ) }
-						</div>
-					</div>
-					<div
-						className="custom-palette__below-row"
-						onClick={ () => selectCustomColor( 'primary' ) }
-						onKeyDown={ () => selectCustomColor( 'primary' ) }
-						role="button"
-						tabIndex={ paletteCount + 2 }
-					>
-						<div
-							className={ `custom-palette__below-row-icon ${
-								customColors?.primary &&
-								'custom-palette__below-row-icon_selected_border'
-							}` }
-							style={ {
-								backgroundColor: `${ primaryColor }`,
-							} }
-						>
-							{ customColors?.primary ? <>&#10003;</> : null }
-						</div>
-						<div className="custom-palette__below-row-text">
-							{ __( 'Primary', 'wp-module-onboarding' ) }
-						</div>
-					</div>
-					<div
-						className="custom-palette__below-row"
-						onClick={ () => selectCustomColor( 'secondary' ) }
-						onKeyDown={ () => selectCustomColor( 'secondary' ) }
-						role="button"
-						tabIndex={ paletteCount + 3 }
-					>
-						<div
-							className={ `custom-palette__below-row-icon ${
-								customColors?.secondary &&
-								'custom-palette__below-row-icon_selected_border'
-							}` }
-							style={ {
-								backgroundColor: `${ secondaryColor }`,
-							} }
-						>
-							{ customColors?.secondary ? <>&#10003;</> : null }
-						</div>
-						<div className="custom-palette__below-row-text">
-							{ __( 'Secondary', 'wp-module-onboarding' ) }
-						</div>
-					</div>
-					<div
-						className="custom-palette__below-row"
-						onClick={ () => selectCustomColor( 'tertiary' ) }
-						onKeyDown={ () => selectCustomColor( 'tertiary' ) }
-						role="button"
-						tabIndex={ paletteCount + 4 }
-					>
-						<div
-							className={ `custom-palette__below-row-icon ${
-								customColors?.tertiary &&
-								'custom-palette__below-row-icon_selected_border'
-							}` }
-							style={ {
-								backgroundColor: `${ tertiaryColor }`,
-							} }
-						>
-							{ customColors?.tertiary ? <>&#10003;</> : null }
-						</div>
-						<div className="custom-palette__below-row-text">
-							{ __( 'Tertiary', 'wp-module-onboarding' ) }
-						</div>
-					</div>
+					<CustomColorOption
+						color={ customColors?.base }
+						displayColor={ customColors?.base ?? defaultColor }
+						colorCateg="base"
+						colorName={ __( 'Background', 'wp-module-onboarding' ) }
+						onClickFunc={ selectCustomColor }
+					/>
+					<CustomColorOption
+						color={ customColors?.primary }
+						displayColor={ primaryColor }
+						colorCateg="primary"
+						colorName={ __( 'Primary', 'wp-module-onboarding' ) }
+						onClickFunc={ selectCustomColor }
+					/>
+					<CustomColorOption
+						color={ customColors?.secondary }
+						displayColor={ secondaryColor }
+						colorCateg="secondary"
+						colorName={ __( 'Secondary', 'wp-module-onboarding' ) }
+						onClickFunc={ selectCustomColor }
+					/>
+					<CustomColorOption
+						color={ customColors?.tertiary }
+						displayColor={ tertiaryColor }
+						colorCateg="tertiary"
+						colorName={ __( 'Tertiary', 'wp-module-onboarding' ) }
+						onClickFunc={ selectCustomColor }
+					/>
 				</Animate>
 				{ isCustomColorActive() && (
 					<Animate type={ 'fade-in' } duration="300ms">
@@ -610,6 +538,7 @@ const DesignColors = () => {
 						</div>
 					</Animate>
 				) }
+				{ /* Common to all the custom color component */ }
 				{ showColorPicker && (
 					<Popover>
 						<div
@@ -621,7 +550,7 @@ const DesignColors = () => {
 						>
 							X
 						</div>
-						<ColorPicker onChange={ toggleCustomPickerComponent } />
+						<ColorPicker onChange={ selectCustomPickerColor } />
 					</Popover>
 				) }
 			</div>
@@ -629,7 +558,7 @@ const DesignColors = () => {
 	}
 
 	return (
-		colorPalettes && (
+		colors && (
 			<div className="theme-colors--drawer">
 				<h2>{ __( 'Color Palettes', 'wp-module-onboarding' ) }</h2>
 				{ buildPredefinedPalette() }
