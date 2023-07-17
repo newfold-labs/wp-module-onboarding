@@ -38,12 +38,15 @@ const displayErrors = ( categ, isError ) => {
 	}
 };
 
+// Common Validation for all links
 const handleCommonValidation = ( categ, url ) => {
 	let isError = true;
 	const wwwExp = /.*www\./gi;
 	const protocolExp = /https?:\/\//gi;
+	// This checks for short ad-links
 	const adLinks =
 		/goo\.gl.*|bit\.ly.*|buff\.ly.*|tinyurl\.com.*|bl\.ink.*|short\.io.*|ow\.ly.*|is\.gd.*|adf\.ly.*|bit\.do.*|t\.co.*|clk\.sh.*|gplinks\.in.*|tiny\.cc.*|wp\.me.*/gi;
+	// This is a basic complete url check
 	const urlExp =
 		/((https?:\/\/(?:www\.|(?!www)))?[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 	const adRegex = new RegExp( adLinks );
@@ -79,6 +82,7 @@ const handleCommonValidation = ( categ, url ) => {
 			setErrorTypesDup( errorTypesDup );
 		}
 	} else {
+		// If it is short url add the protocol prefix to save the data
 		const iswwwValid = url.match( wwwRegex );
 		const isProtocolValid = url.match( protocolRegex );
 		if ( ! iswwwValid && ! isProtocolValid ) {
@@ -91,12 +95,14 @@ const handleCommonValidation = ( categ, url ) => {
 	return url;
 };
 
+// Specific Site based Validation
 const isValidHandle = ( handle ) => {
 	return handle.match( `^@?[A-Za-z0-9_]{1,25}$` ) ? true : false;
 };
 
 const handleTwitterValidation = ( url ) => {
 	if ( isValidHandle( url ) ) {
+		// Strips the @ and adds the prefix link
 		if ( url.charAt( 0 ) === '@' ) url = url.substr( 1 );
 		return 'https://www.twitter.com/' + url;
 	}
@@ -105,6 +111,7 @@ const handleTwitterValidation = ( url ) => {
 
 const handleInstagramValidation = ( url ) => {
 	if ( isValidHandle( url ) ) {
+		// Strips the @ and adds the prefix link
 		if ( url.charAt( 0 ) === '@' ) url = url.substr( 1 );
 		return 'https://www.instagram.com/' + url;
 	}
@@ -139,7 +146,7 @@ const urlValidator = (
 		return url;
 	}
 
-	// Skip urlValidation for some sites
+	// Skip urlValidation for some sites with specific checks
 	if ( ! validationExemption.has( categ ) )
 		res = handleCommonValidation( categ, url );
 	switch ( categ ) {
