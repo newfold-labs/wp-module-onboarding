@@ -166,18 +166,6 @@ const DesignColors = () => {
 	}
 
 	/**
-	 * When the user clicks a predefined colors or reset then
-	 * The custom colors should be reset to the original colors.
-	 */
-	function clearCustomColors() {
-		for ( const custom in customColors ) {
-			customColors[ custom ] = '';
-		}
-		// Resetting the colors to default and unsetting the selected predefined color, if any.
-		setCustomColors( customColors );
-	}
-
-	/**
 	 * When the user clicks on reset button it fetches the
 	 * orginal colors and replaces them in the preview and store
 	 */
@@ -197,7 +185,7 @@ const DesignColors = () => {
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
 
-		clearCustomColors();
+		setCustomColors();
 
 		const selectedGlobalStylePalette =
 			selectedGlobalStyle.settings.color.palette;
@@ -246,7 +234,7 @@ const DesignColors = () => {
 	 * @param {string} colorStyle - Selected Color slug
 	 */
 	const handleClick = ( colorStyle ) => {
-		clearCustomColors();
+		setCustomColors();
 		saveThemeColorPalette( colorStyle );
 		setSelectedColors( colors[ colorStyle ] );
 		localToState( colors[ colorStyle ], colorStyle );
@@ -258,7 +246,7 @@ const DesignColors = () => {
 	 *
 	 * @return {WPComponent} Predefined Colors Component
 	 */
-	function buildPredefinedPalette() {
+	function buildColors() {
 		return Object.keys( colors ).map( ( colorStyle, idx ) => {
 			return (
 				<div
@@ -305,21 +293,6 @@ const DesignColors = () => {
 	}
 
 	// Custom Colors Section
-
-	/**
-	 * Checks id custom colors has a value
-	 * used to toggle the visiblity of Reset button
-	 *
-	 * @return {boolean} isCustomColorActive
-	 */
-	function isCustomColorActive() {
-		for ( const custom in customColors ) {
-			if ( customColors[ custom ] !== '' ) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 	/**
 	 * Finds the index of the color type being changed in the array
@@ -420,7 +393,7 @@ const DesignColors = () => {
 		saveCustomColors();
 		localToState( selectedColorsLocalCopy, 'custom' );
 		setSelectedColors( selectedColorsLocalCopy );
-		if ( ! isCustomColorActive() ) {
+		if ( ! customColors ) {
 			trackHiiveEvent( 'color-selection', 'custom' );
 		}
 		setCustomColors( selectedColorsLocalCopy );
@@ -448,7 +421,7 @@ const DesignColors = () => {
 	 *
 	 * @return {WPComponent} Custom Colors Component
 	 */
-	function buildCustomPalette() {
+	function buildCustomColors() {
 		const defaultColor = '#fff';
 		const primaryColor =
 			customColors && customColors?.primary !== ''
@@ -524,7 +497,7 @@ const DesignColors = () => {
 						onClickFunc={ selectCustomColor }
 					/>
 				</Animate>
-				{ isCustomColorActive() && (
+				{ customColors && (
 					<Animate type={ 'fade-in' } duration="300ms">
 						<div
 							ref={ customColorsResetRef }
@@ -561,8 +534,8 @@ const DesignColors = () => {
 		colors && (
 			<div className="theme-colors--drawer">
 				<h2>{ __( 'Color Palettes', 'wp-module-onboarding' ) }</h2>
-				{ buildPredefinedPalette() }
-				{ buildCustomPalette() }
+				{ buildColors() }
+				{ buildCustomColors() }
 			</div>
 		)
 	);
