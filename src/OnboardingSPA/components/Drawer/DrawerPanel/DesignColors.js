@@ -10,7 +10,12 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
 import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import CustomColorOption from '../../CustomColorOption';
+import {
+	stateToStore,
+	storeToState,
+	findInPalette,
+} from '../../../pages/Steps/DesignColors/utils';
+import ColorPickerButton from '../../ColorPickerButton';
 
 const DesignColors = () => {
 	// Used for scrolling into custom colors section
@@ -76,7 +81,7 @@ const DesignColors = () => {
 
 	useEffect( () => {
 		if ( THEME_STATUS_ACTIVE === themeStatus ) {
-			getColorStylesAndPatterns();
+			setColorStylesAndPatterns();
 			if ( currentData?.data?.colorStyle === 'custom' ) {
 				setIsAccordionClosed( false );
 				customColorsResetRef?.current?.scrollIntoView( {
@@ -91,7 +96,7 @@ const DesignColors = () => {
 	 * Fetches the colors for the Drawer and sets the state
 	 * Contains: 'tailored' and 'custom-picker-grouping'
 	 */
-	const getColorStylesAndPatterns = async () => {
+	const setColorStylesAndPatterns = async () => {
 		const [ globalStyles, colorPaletteResponse ] = await Promise.all( [
 			getGlobalStyles(),
 			getThemeColors(),
@@ -111,59 +116,15 @@ const DesignColors = () => {
 			selectedColorsNew =
 				globalStyles.body[ 0 ]?.settings?.color?.palette;
 			if ( currentData?.data?.colorStyle === 'custom' ) {
-				setCustomColors( stateToLocal( selectedColorsNew ) );
+				setSelectedColors( storeToState( selectedColorsNew ) );
+				setCustomColors( storeToState( selectedColorsNew ) );
 			}
-			setSelectedColors( stateToLocal( selectedColorsNew ) );
+			setSelectedColors( storeToState( selectedColorsNew ) );
 		} else {
 			// Adds colors to the custom colors at start if not saved
 			resetColors();
 		}
 	};
-
-	/**
-	 * Helper Function for state in global styles to local mapping
-	 *
-	 * @param {Array} selectedColorPalette - Array of Map structure similar to the one in Global Styles
-	 *                                     e.g. [{color: '#ffffff', name: 'Base', slug: 'base'}, ...]
-	 *                                     return -> {base: "#ffffff", contrast: "#404040", ... }
-	 */
-	function stateToLocal( selectedColorPalette ) {
-		if ( selectedColorPalette ) {
-			const selectedColorsLocalTemp = {};
-			selectedColorPalette?.forEach( ( color ) => {
-				selectedColorsLocalTemp[ color.slug ] = color.color;
-			} );
-			setSelectedColors( selectedColorsLocalTemp );
-			return selectedColorsLocalTemp;
-		}
-	}
-
-	/**
-	 * Converts the user selected value into a suitable valid global styles array value
-	 *
-	 * @param {Object} selectedColorsLocalTemp - Color type mapped to the color
-	 *                                         e.g. {base: "#ffffff", contrast: "#404040", ... }
-	 * @param {string} colorStyle              - Selected Color slug
-	 *                                         e.g. [{color: '#ffffff', name: 'Base', slug: 'base'}, ...]
-	 */
-	function localToState( selectedColorsLocalTemp, colorStyle ) {
-		if ( selectedColorsLocalTemp && colorStyle ) {
-			const colorsArray = [];
-			for ( const colorName in selectedColorsLocalTemp ) {
-				colorsArray.push( {
-					slug: colorName,
-					name:
-						colorName?.charAt( 0 ).toUpperCase() +
-						colorName?.slice( 1 ),
-					color: selectedColorsLocalTemp[ colorName ],
-				} );
-			}
-			//  Save selected color to Store
-			currentData.data.colorStyle = colorStyle;
-			setCurrentOnboardingData( currentData );
-			return colorsArray;
-		}
-	}
 
 	/**
 	 * When the user clicks on reset button it fetches the
@@ -191,7 +152,7 @@ const DesignColors = () => {
 			selectedGlobalStyle.settings.color.palette;
 		currentData.data.colorStyle = '';
 		setCurrentOnboardingData( currentData );
-		setSelectedColors( stateToLocal( selectedGlobalStylePalette ) );
+		setSelectedColors( storeToState( selectedGlobalStylePalette ) );
 		trackHiiveEvent( 'color-selection-reset', selectedGlobalStyle.title );
 	}
 
@@ -237,7 +198,10 @@ const DesignColors = () => {
 		setCustomColors();
 		saveThemeColorPalette( colorStyle );
 		setSelectedColors( colors[ colorStyle ] );
-		localToState( colors[ colorStyle ], colorStyle );
+		stateToStore( colors[ colorStyle ], colorStyle );
+		//  Save selected color to Store
+		currentData.data.colorStyle = colorStyle;
+		setCurrentOnboardingData( currentData );
 		trackHiiveEvent( 'color-selection', colorStyle );
 	};
 
@@ -295,28 +259,6 @@ const DesignColors = () => {
 	// Custom Colors Section
 
 	/**
-	 * Finds the index of the color type being changed in the array
-	 * Array to check -> [{color: '#ffffff', name: 'Base', slug: 'base'}, ...]
-	 *
-	 * @param {string} slugName - Slug Name for color i.e. base, secondary, header-title,...
-	 * @return {number} res - Index of the key "slug" mapped [{color: '#ffffff', name: 'Base', slug: 'base'}, ...] in the array
-	 */
-	function findInCustomColors( slugName ) {
-		const selectedThemeColorPalette =
-			storedPreviewSettings?.settings?.color?.palette;
-		const res = selectedThemeColorPalette.findIndex(
-			( { slug } ) => slug === slugName
-		);
-		// If the mapped slug doesn't exist then return the parent slug
-		if ( res === -1 ) {
-			return selectedThemeColorPalette.findIndex(
-				( { slug } ) => slug === colorPickerCalledBy
-			);
-		}
-		return res;
-	}
-
-	/**
 	 * Custom Color can be mapped to more than one slug
 	 * eg: base is mapped to ["header-foreground", "header-titles", "secondary-foreground"]
 	 * So for every change in base all the subsequent colors must also be changed concurrently
@@ -350,7 +292,11 @@ const DesignColors = () => {
 							customColors[ colorPickerCalledBy ] !== undefined
 						) {
 							selectedThemeColorPalette[
-								findInCustomColors( variant )
+								findInPalette(
+									variant,
+									storedPreviewSettings,
+									colorPickerCalledBy
+								)
 							].color = customColors[ colorPickerCalledBy ];
 						}
 					} );
@@ -376,7 +322,7 @@ const DesignColors = () => {
 	 *
 	 * @param {string} color - The Color hex user has selected
 	 */
-	const selectCustomPickerColor = async ( color ) => {
+	const handleColorPicker = async ( color ) => {
 		const selectedColorsLocalCopy = { ...selectedColors };
 		selectedColorsLocalCopy[ colorPickerCalledBy ] = color;
 
@@ -391,7 +337,10 @@ const DesignColors = () => {
 		}
 
 		saveCustomColors();
-		localToState( selectedColorsLocalCopy, 'custom' );
+		stateToStore( selectedColorsLocalCopy, 'custom' );
+		//  Save selected color to Store
+		currentData.data.colorStyle = 'custom';
+		setCurrentOnboardingData( currentData );
 		setSelectedColors( selectedColorsLocalCopy );
 		if ( ! customColors ) {
 			trackHiiveEvent( 'color-selection', 'custom' );
@@ -406,7 +355,7 @@ const DesignColors = () => {
 	 *
 	 * @param {string} colorType - Color Slug e.g. base, secondary,...
 	 */
-	const selectCustomColor = ( colorType ) => {
+	const handleColorPickerButton = ( colorType ) => {
 		setShowColorPicker( ! showColorPicker );
 
 		if ( ! showColorPicker ) {
@@ -468,33 +417,33 @@ const DesignColors = () => {
 							: 'custom-palette_acc_opened'
 					}` }
 				>
-					<CustomColorOption
-						color={ customColors?.base }
-						displayColor={ customColors?.base ?? defaultColor }
-						colorCateg="base"
-						colorName={ __( 'Background', 'wp-module-onboarding' ) }
-						onClickFunc={ selectCustomColor }
+					<ColorPickerButton
+						isColorSelected={ customColors }
+						color={ customColors?.base ?? defaultColor }
+						slug="base"
+						name={ __( 'Background', 'wp-module-onboarding' ) }
+						callback={ handleColorPickerButton }
 					/>
-					<CustomColorOption
-						color={ customColors?.primary }
-						displayColor={ primaryColor }
-						colorCateg="primary"
-						colorName={ __( 'Primary', 'wp-module-onboarding' ) }
-						onClickFunc={ selectCustomColor }
+					<ColorPickerButton
+						isColorSelected={ customColors }
+						color={ primaryColor }
+						slug="primary"
+						name={ __( 'Primary', 'wp-module-onboarding' ) }
+						callback={ handleColorPickerButton }
 					/>
-					<CustomColorOption
-						color={ customColors?.secondary }
-						displayColor={ secondaryColor }
-						colorCateg="secondary"
-						colorName={ __( 'Secondary', 'wp-module-onboarding' ) }
-						onClickFunc={ selectCustomColor }
+					<ColorPickerButton
+						isColorSelected={ customColors }
+						color={ secondaryColor }
+						slug="secondary"
+						name={ __( 'Secondary', 'wp-module-onboarding' ) }
+						callback={ handleColorPickerButton }
 					/>
-					<CustomColorOption
-						color={ customColors?.tertiary }
-						displayColor={ tertiaryColor }
-						colorCateg="tertiary"
-						colorName={ __( 'Tertiary', 'wp-module-onboarding' ) }
-						onClickFunc={ selectCustomColor }
+					<ColorPickerButton
+						isColorSelected={ customColors }
+						color={ tertiaryColor }
+						slug="tertiary"
+						name={ __( 'Tertiary', 'wp-module-onboarding' ) }
+						callback={ handleColorPickerButton }
 					/>
 				</Animate>
 				{ customColors && (
@@ -523,7 +472,7 @@ const DesignColors = () => {
 						>
 							X
 						</div>
-						<ColorPicker onChange={ selectCustomPickerColor } />
+						<ColorPicker onChange={ handleColorPicker } />
 					</Popover>
 				) }
 			</div>
