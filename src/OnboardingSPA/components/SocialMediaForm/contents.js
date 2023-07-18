@@ -25,6 +25,16 @@ const getContents = () => {
 				),
 			},
 		},
+		errorText: {
+			adLinkErrorText: __(
+				"That's clever! Short URLs are a great way to track clicks. However, To help build your social graph, we need the full URLs to your social profiles. You can go into your menus and change your social icon links after setup.",
+				'wp-module-onboarding'
+			),
+			invalidLinkErrorText: __(
+				'To help build your social graph, we need the full URLs to your social profiles. Please check your URLs for typos and try copy & paste with the official URL if you continue to see this error.',
+				'wp-module-onboarding'
+			),
+		},
 	};
 };
 

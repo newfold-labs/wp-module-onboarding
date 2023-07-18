@@ -220,17 +220,9 @@ const SocialMediaForm = ( {
 
 	// Tool tip error message to be shown
 	const showErrorMessage = ( socialMediaSite ) => {
-		// TODO change the text to new Error Messages
-		const errorStr =
-			activeErrorTypes[ socialMediaSite ] === 'ad-link-error'
-				? 'valid'
-				: 'valid';
-		switch ( socialMediaSite ) {
-			case SocialMedia.TWITTER.id:
-				return `Please enter a ${ errorStr } ${ socialMediaSite } URL / username`;
-			default:
-				return `Please enter a ${ errorStr } ${ socialMediaSite } URL`;
-		}
+		return activeErrorTypes[ socialMediaSite ] === 'ad-link-error'
+			? content.errorText.adLinkErrorText
+			: content.errorText.invalidLinkErrorText;
 	};
 
 	// Render Input Fields
@@ -258,7 +250,11 @@ const SocialMediaForm = ( {
 								? showErrorMessage( SocialMedia[ social ].id )
 								: 'hide'
 						}
-						direction="top"
+						direction={
+							SocialMedia[ social ].id === SocialMedia.TIKTOK.id
+								? 'top'
+								: 'bottom'
+						}
 					>
 						<input
 							className={ `${
