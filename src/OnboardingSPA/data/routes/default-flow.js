@@ -450,6 +450,7 @@ export const initialTopSteps = () => {
 		/* This is a fake step to stand-in for all Design steps and does not have a Component to render */
 		path: '/wp-setup/step/design/theme-styles/menu',
 		title: __( 'Design', 'wp-module-onboarding' ),
+		tooltipText: __( 'Design', 'wp-module-onboarding' ),
 		description: '',
 		Icon: brush,
 		VIEW: VIEW_NAV_DESIGN,
