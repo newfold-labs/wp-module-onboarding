@@ -91,7 +91,7 @@ const StepSiteFeatures = () => {
 		<CommonLayout>
 			<div style={ { margin: '100px' } }>
 				<HeadingWithSubHeading
-					title={ currentStep?.heading }
+					title={ content.heading }
 					subtitle={ content.subheading }
 				/>
 			</div>

@@ -2,12 +2,12 @@ import { __ } from '@wordpress/i18n';
 
 const getContents = () => {
 	return {
-		subheading: __(
-			'Pick a starter layout you can refine and remix with your content',
+		heading: __(
+			'There’s no place like a great home page',
 			'wp-module-onboarding'
 		),
-		description: __(
-			'A well-organized homepage makes visitors feel smart.',
+		subheading: __(
+			'Pick a starter layout you can refine and remix with your content',
 			'wp-module-onboarding'
 		),
 	};

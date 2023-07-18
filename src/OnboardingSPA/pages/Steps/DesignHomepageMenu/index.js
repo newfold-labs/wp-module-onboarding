@@ -134,7 +134,7 @@ const StepDesignHomepageMenu = () => {
 				<CommonLayout>
 					<div className="homepage_preview">
 						<HeadingWithSubHeading
-							title={ currentStep?.heading }
+							title={ content.heading }
 							subtitle={ content.subheading }
 						/>
 						<div className="homepage_preview__list">

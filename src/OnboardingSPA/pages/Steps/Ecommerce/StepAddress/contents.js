@@ -10,10 +10,6 @@ const getContents = () => {
 			'We’ll use this information to help you setup your online store',
 			'wp-module-onboarding'
 		),
-		description: __(
-			'In this step you confirm the business address of your store. Simply confirm the one you provided during your initial Bluehost account setup or provide a new one.',
-			'wp-module-onboarding'
-		),
 		countryInputLabel: __(
 			'Where is your store based?',
 			'wp-module-onboarding'

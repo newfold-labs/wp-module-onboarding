@@ -3,7 +3,7 @@ import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import BasicInfoForm from './basicInfoForm';
 import { SIDEBAR_LEARN_MORE, VIEW_NAV_PRIMARY } from '../../../../constants';
 import { store as nfdOnboardingStore } from '../../../store';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import { useViewportMatch } from '@wordpress/compose';
 import getContents from './contents';
@@ -17,12 +17,6 @@ const StepBasicInfo = () => {
 		setIsDrawerSuppressed,
 		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
-
-	const { currentStep } = useSelect( ( select ) => {
-		return {
-			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
-		};
-	}, [] );
 
 	const content = getContents();
 
@@ -38,7 +32,7 @@ const StepBasicInfo = () => {
 	return (
 		<CommonLayout isVerticallyCentered>
 			<HeadingWithSubHeading
-				title={ currentStep?.heading }
+				title={ content.heading }
 				subtitle={ content.subheading }
 			/>
 			<BasicInfoForm />

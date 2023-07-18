@@ -189,10 +189,6 @@ export const steps = [
 	{
 		path: '/wp-setup/step/get-started/welcome',
 		title: __( 'Welcome', 'wp-module-onboarding' ),
-		description: __(
-			"We'll use this to personalize this onboarding and future recommendations",
-			'wp-module-onboarding'
-		),
 		Component: StepGetStartedWelcome,
 		Icon: home,
 		priority: 20,
@@ -206,10 +202,6 @@ export const steps = [
 	{
 		path: '/wp-setup/step/get-started/experience',
 		title: __( 'WordPress Experience', 'wp-module-onboarding' ),
-		description: __(
-			"We'll use this to personalize this onboarding and future recommendations",
-			'wp-module-onboarding'
-		),
 		Component: StepGetStartedExperience,
 		Icon: home,
 		priority: 40,
@@ -259,7 +251,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/top-priority',
 		title: __( 'Top Priority', 'wp-module-onboarding' ),
-		heading: __( 'Tell us your top priority', 'wp-module-onboarding' ),
+		tooltipText: __( 'Tell us your top priority', 'wp-module-onboarding' ),
 		Component: StepTopPriority,
 		Icon: navigation,
 		priority: 100,
@@ -267,7 +259,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/basic-info',
 		title: __( 'Basic Info', 'wp-module-onboarding' ),
-		heading: sprintf(
+		tooltipText: sprintf(
 			/* translators: %s: website or store */
 			__( 'Introduce us to this %s', 'wp-module-onboarding' ),
 			translations( 'website' )
@@ -318,7 +310,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/header-menu',
 		title: __( 'Header & Menu', 'wp-module-onboarding' ),
-		heading: __(
+		tooltipText: __(
 			"Let's make the right things visible",
 			'wp-module-onboarding'
 		),
@@ -336,7 +328,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/homepage-menu',
 		title: __( 'Homepage Layouts', 'wp-module-onboarding' ),
-		heading: __(
+		tooltipText: __(
 			'There’s no place like a great home page',
 			'wp-module-onboarding'
 		),
@@ -354,7 +346,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/site-pages',
 		title: __( 'Page Layouts', 'wp-module-onboarding' ),
-		heading: __(
+		tooltipText: __(
 			'You have ideas, we have page templates',
 			'wp-module-onboarding'
 		),
@@ -371,7 +363,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/site-features',
 		title: __( 'Features', 'wp-module-onboarding' ),
-		heading: __(
+		tooltipText: __(
 			'Key features to supercharge your site',
 			'wp-module-onboarding'
 		),
@@ -393,7 +385,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/what-next',
 		title: __( 'What Next', 'wp-module-onboarding' ),
-		heading: __( 'How else can we help?', 'wp-module-onboarding' ),
+		tooltipText: __( 'How else can we help?', 'wp-module-onboarding' ),
 		Component: StepWhatNext,
 		Icon: moveTo,
 		priority: 300,
@@ -409,7 +401,7 @@ export const conditionalSteps = {
 	designColors: {
 		path: '/wp-setup/step/design/colors',
 		title: __( 'Colors', 'wp-module-onboarding' ),
-		heading: __( "What's your color palette?", 'wp-module-onboarding' ),
+		tooltipText: __( "What's your color palette?", 'wp-module-onboarding' ),
 		Component: StepDesignColors,
 		Icon: color,
 		priority: 180,
@@ -424,7 +416,7 @@ export const conditionalSteps = {
 	designTypography: {
 		path: '/wp-setup/step/design/typography',
 		title: __( 'Typography', 'wp-module-onboarding' ),
-		heading: __( "What's your font style?", 'wp-module-onboarding' ),
+		tooltipText: __( "What's your font style?", 'wp-module-onboarding' ),
 		Component: StepDesignTypography,
 		Icon: typography,
 		priority: 200,

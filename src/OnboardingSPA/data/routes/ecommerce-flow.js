@@ -36,7 +36,7 @@ export const ecommerceSteps = [
 	{
 		path: '/ecommerce/step/address',
 		title: __( 'Street Address', 'wp-module-onboarding' ),
-		heading: __( 'Street Address', 'wp-module-onboarding' ),
+		tooltipText: __( 'Street Address', 'wp-module-onboarding' ),
 		Component: StepAddress,
 		Icon: store,
 		priority: 85,
@@ -50,7 +50,7 @@ export const ecommerceSteps = [
 	{
 		path: '/ecommerce/step/tax',
 		title: __( 'Tax Info', 'wp-module-onboarding' ),
-		heading: __( 'Tax Info', 'wp-module-onboarding' ),
+		tooltipText: __( 'Tax Info', 'wp-module-onboarding' ),
 		Component: StepTax,
 		Icon: institution,
 		priority: 90,
@@ -64,7 +64,7 @@ export const ecommerceSteps = [
 	{
 		path: '/ecommerce/step/products',
 		title: __( 'Product Info', 'wp-module-onboarding' ),
-		heading: __( 'Product Info', 'wp-module-onboarding' ),
+		tooltipText: __( 'Product Info', 'wp-module-onboarding' ),
 		Component: StepProducts,
 		Icon: shipping,
 		priority: 95,

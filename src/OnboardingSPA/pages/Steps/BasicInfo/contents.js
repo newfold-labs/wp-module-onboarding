@@ -4,6 +4,11 @@ import { translations } from '../../../utils/locales/translations';
 
 const getContents = () => {
 	return {
+		heading: sprintf(
+			/* translators: %s: website or store */
+			__( 'Introduce us to this %s', 'wp-module-onboarding' ),
+			translations( 'website' )
+		),
 		subheading: __(
 			'So we can introduce it to the web',
 			'wp-module-onboarding'

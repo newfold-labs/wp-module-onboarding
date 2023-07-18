@@ -42,7 +42,7 @@ const NavPrimary = () => {
 				<ul className="nfd-onboarding-drawer__panel-routes">
 					{ topSteps.map( ( step ) => {
 						return (
-							<Tooltip key={ step.path } text={ step.heading }>
+							<Tooltip key={ step.path } text={ step.tooltipText }>
 								<li className="nfd-onboarding-drawer__panel-menu-item">
 									<NavLink
 										to={

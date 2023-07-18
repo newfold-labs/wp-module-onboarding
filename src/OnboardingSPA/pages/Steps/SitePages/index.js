@@ -156,7 +156,7 @@ const StepSitePages = () => {
 				<CommonLayout>
 					<div className="site-pages">
 						<HeadingWithSubHeading
-							title={ currentStep?.heading }
+							title={ content.heading }
 							subtitle={ content.subheading }
 						/>
 						<div className="site-pages__list">
