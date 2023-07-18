@@ -460,7 +460,7 @@ export const initialTopSteps = () => {
 	const getStartedStep = {
 		path: '/wp-setup/step/get-started/welcome',
 		title: __( 'Get Started', 'wp-module-onboarding' ),
-		heading: __( 'Get Started', 'wp-module-onboarding' ),
+		tooltipText: __( 'Get Started', 'wp-module-onboarding' ),
 		Icon: home,
 		VIEW: VIEW_NAV_GET_STARTED,
 		primaryDrawerActiveLinkIncludes: '/wp-setup/step/get-started/',
