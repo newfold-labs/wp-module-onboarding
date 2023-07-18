@@ -5,14 +5,6 @@ import { typography } from '@wordpress/icons';
 
 const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 	return {
-		subheading: __(
-			'Impress your visitors with strong branding and aesthetics.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			"Good typography uses style and proportions to give your words identity and priority. What's your story? Your focus?",
-			'wp-module-onboarding'
-		),
 		introduction: {
 			heading: __( 'Typography', 'wp-module-onboarding' ),
 			subheading: __(
