@@ -7,6 +7,9 @@ use NewfoldLabs\WP\Module\Onboarding\Compatibility\Scan;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Safe_Mode;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Status;
 
+require_once 'vendor/autoload.php';
+
+use NewfoldLabs\WP\Module\AI\Utils\Description;
 /**
  * Register Onboarding with Newfold Module Loader
  *
@@ -65,3 +68,6 @@ if ( is_callable( 'add_action' ) ) {
 	// Handle Module Disable if Non-Ecommerce
 	ModuleController::init();
 }
+
+$descriptionAi = new Description();
+$descriptionAi->description_admin_init();
