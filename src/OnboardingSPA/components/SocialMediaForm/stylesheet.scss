@@ -1,96 +1,98 @@
-$border: #D6D6D6;
+$border: #d6d6d6;
 
 .social-form {
-    width: 100%;
-    padding: 12px;
-    margin-top: 20px;
-    border-radius: 6px;
-    box-sizing: border-box;
-    border: 1px solid $border;
+	width: 100%;
+	padding: 12px;
+	margin-top: 20px;
+	border-radius: 6px;
+	box-sizing: border-box;
+	border: 1px solid $border;
 
-    &__top-row {
-        display: flex;
-        cursor: pointer;
-        padding-left: 6px;
-        align-items: center;
-        justify-content: space-between;
+	&__top-row {
+		display: flex;
+		cursor: pointer;
+		padding-left: 6px;
+		align-items: center;
+		justify-content: space-between;
 
-        &_heading {
-            font-size: 1rem;
-            font-weight: 500;
-        }
+		&_heading {
+			font-size: 1rem;
+			font-weight: 500;
+		}
 
-        &_icon {
-            width: 24px;
-            height: 24px;
-            text-align: center;
-            background-position: center;
-            transition: all 0.3s ease-in;
-            background-repeat: no-repeat;
-            background-clip: padding-box;
-            background-image: var(--chevron-down-icon);
+		&_icon {
+			width: 24px;
+			height: 24px;
+			text-align: center;
+			background-position: center;
+			transition: all 0.3s ease-in;
+			background-repeat: no-repeat;
+			background-clip: padding-box;
+			background-image: var(--chevron-down-icon);
 
-            &_opened {
-                transform: rotateX(180deg);
-            }
-        }
-    }
+			&_opened {
+				transform: rotateX(180deg);
+			}
+		}
+	}
 
-    &__main {
-        &-active {
-            opacity: 1;
-            overflow: hidden;
-            max-height: 650px;
-            transition: all 0.45s ease-in-out;
-            transition-property: max-height, opacity;
-        }
+	&__main {
 
-        &-hidden {
-            opacity: 0;
-            max-height: 0px;
-            overflow: hidden;
-            transition: all 0.45s ease-in-out;
-            transition-property: max-height, opacity;
-        }
-    }
+		&-active {
+			opacity: 1;
+			overflow: hidden;
+			max-height: 650px;
+			transition: all 0.45s ease-in-out;
+			transition-property: max-height, opacity;
+		}
 
-    &__label {
-        display: flex;
-        padding-top: 10px;
-        padding-left: 6px;
-        padding-bottom: 3px;
-        align-items: center;
-        justify-content: flex-start;
-        
-        &-facebook {
-            padding-top: 18px;
-        }
+		&-hidden {
+			opacity: 0;
+			max-height: 0;
+			overflow: hidden;
+			transition: all 0.45s ease-in-out;
+			transition-property: max-height, opacity;
+		}
+	}
 
-        &_icon {
-            width: 20px;
-            height: 20px;
-            text-align: center;
-            padding-right: 10px;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-clip: padding-box;
-        }
+	&__label {
+		display: flex;
+		padding-top: 10px;
+		padding-left: 6px;
+		padding-bottom: 3px;
+		align-items: center;
+		justify-content: flex-start;
 
-        &_name {
-            font-size: 0.9rem;
-        }
-    }
+		&-facebook {
+			padding-top: 18px;
+		}
 
-    &__box {
-        width: 95%;
-        font-size: 0.88rem;
-        margin: 6px 12px 10px 8px;
-    }
+		&_icon {
+			width: 20px;
+			height: 20px;
+			text-align: center;
+			padding-right: 10px;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-clip: padding-box;
+			filter: invert(0%) sepia(100%) saturate(0%) hue-rotate(357deg) brightness(0%) contrast(101%);
+		}
 
-    &__box-error {
-        width: 95%;
-        font-size: 0.88rem;
-        margin: 6px 12px 10px 8px;
-        background-color: rgba(255, 0, 0, 0.18) !important;
-    }
+		&_name {
+			font-size: 0.9rem;
+		}
+	}
+
+	&__box {
+		width: 95%;
+		font-size: 0.88rem;
+		margin: 6px 12px 10px 8px;
+	}
+
+	&__box-error {
+		width: 95%;
+		font-size: 0.88rem;
+		margin: 6px 12px 10px 8px;
+		background-color: rgba(255, 0, 0, 0.18) !important;
+	}
 }

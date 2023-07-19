@@ -8,6 +8,7 @@ import {
 	SIDEBAR_MENU_SLOTFILL_PREFIX,
 } from '../../../../../constants';
 import classNames from 'classnames';
+import { trackHiiveEvent } from '../../../../utils/analytics';
 
 const LearnMoreMenu = () => {
 	const { isSidebarOpened, sideBarView, currentStep } = useSelect(
@@ -23,12 +24,16 @@ const LearnMoreMenu = () => {
 	const { setIsSidebarOpened, setSidebarActiveView } =
 		useDispatch( nfdOnboardingStore );
 	const toggleSidebar = () => {
-		setSidebarActiveView( SIDEBAR_LEARN_MORE );
-		setIsSidebarOpened(
+		const isSidebarOpenedNew =
 			sideBarView === SIDEBAR_LEARN_MORE
 				? ! isSidebarOpened
-				: isSidebarOpened
+				: isSidebarOpened;
+		trackHiiveEvent(
+			isSidebarOpenedNew ? 'sidebar-opened' : 'sidebar-closed',
+			window.location.href
 		);
+		setSidebarActiveView( SIDEBAR_LEARN_MORE );
+		setIsSidebarOpened( isSidebarOpenedNew );
 	};
 
 	return (

@@ -10,6 +10,7 @@ import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import SelectableCardList from '../../../components/SelectableCardList/selectable-card-list';
 import getContents from './contents';
+import { trackHiiveEvent } from '../../../utils/analytics';
 
 const StepTopPriority = () => {
 	const priorityTypes = {
@@ -83,6 +84,7 @@ const StepTopPriority = () => {
 		const selectedPriorityType = priorityTypes[ selected ];
 		currentData.data.topPriority.priority1 = selectedPriorityType;
 		setCurrentOnboardingData( currentData );
+		trackHiiveEvent( 'top-priority', priorityTypes[ selected ] );
 		if ( 'selling' === selectedPriorityType ) {
 			handleSelling();
 		} else {
@@ -94,6 +96,10 @@ const StepTopPriority = () => {
 		window.nfdOnboarding.newFlow = undefined;
 		currentData.data.topPriority.priority1 = priorityTypes[ 0 ];
 		setCurrentOnboardingData( currentData );
+		trackHiiveEvent(
+			'top-priority-skipped',
+			priorityTypes[ 0 ]
+		);
 	};
 
 	const content = getContents();

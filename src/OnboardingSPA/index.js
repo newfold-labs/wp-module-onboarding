@@ -15,7 +15,7 @@ import { render } from '@wordpress/element';
 /**
  * Component passed to wp.element.render().
  *
- * @return WPComponent
+ * @return {WPComponent} NFDOnboarding Component
  */
 const NFDOnboarding = () => (
 	<HashRouter>
@@ -24,8 +24,8 @@ const NFDOnboarding = () => (
 );
 
 const initializeFlowData = ( currentData ) => {
-	currentData.hasExited = false;
-	currentData.isComplete = false;
+	currentData.hasExited = 0;
+	currentData.isComplete = 0;
 	return currentData;
 };
 
@@ -44,14 +44,14 @@ export async function initializeNFDOnboarding( id, runtime ) {
 	dispatch( nfdOnboardingStore ).setRuntime( runtime );
 	if ( runtime.previewSettings.settings.preRequisites?.themes ) {
 		dispatch( nfdOnboardingStore ).updateThemeStatus(
-			runtime.previewSettings.settings.preRequisites?.themes[ DESIGN_STEPS_THEME ]
+			runtime.previewSettings.settings.preRequisites?.themes[
+				DESIGN_STEPS_THEME
+			]
 		);
 	}
-	dispatch( nfdOnboardingStore ).updatePluginsStatus(
-		runtime.previewSettings.settings.preRequisites?.plugins
-	);
+
 	const currentData = await getFlow();
-	if ( currentData.error == null ) {
+	if ( currentData.error === null ) {
 		currentData.body = initializeFlowData( currentData.body );
 		dispatch( nfdOnboardingStore ).setCurrentOnboardingData(
 			currentData.body
@@ -62,6 +62,7 @@ export async function initializeNFDOnboarding( id, runtime ) {
 		render( <NFDOnboarding />, DOM_TARGET );
 		initializeSettings();
 	} else {
+		// eslint-disable-next-line no-console
 		console.log( 'Could not find mount element or wp.element.render().' );
 	}
 }

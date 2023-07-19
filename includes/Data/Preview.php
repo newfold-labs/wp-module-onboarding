@@ -1,8 +1,8 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
-use NewfoldLabs\WP\Module\Onboarding\Services\PluginInstaller;
-use NewfoldLabs\WP\Module\Onboarding\Services\ThemeInstaller;
+use NewfoldLabs\WP\Module\Installer\Data\Themes;
+use NewfoldLabs\WP\Module\Installer\Services\ThemeInstaller;
 
 /**
  * Class Preview
@@ -27,17 +27,13 @@ final class Preview {
 		$theme_map = Themes::get();
 		return array(
 			'wp-setup'  => array(
-				'themes'  => array(
+				'themes' => array(
 					'nfd_slug_yith_wonder' => self::boolean_to_status( ThemeInstaller::is_theme_active( $theme_map['nfd_slugs']['nfd_slug_yith_wonder']['stylesheet'] ) ),
 				),
-				'plugins' => array(),
 			),
 			'ecommerce' => array(
-				'themes'  => array(
+				'themes' => array(
 					'nfd_slug_yith_wonder' => self::boolean_to_status( ThemeInstaller::is_theme_active( $theme_map['nfd_slugs']['nfd_slug_yith_wonder']['stylesheet'] ) ),
-				),
-				'plugins' => array(
-					'woocommerce' => self::boolean_to_status( PluginInstaller::exists( 'woocommerce', true ) ),
 				),
 			),
 		);

@@ -1,6 +1,6 @@
 import apiFetch from '@wordpress/api-fetch';
 
-import { onboardingRestURL } from './common';
+import { installerRestURL, onboardingRestURL } from './common';
 import { resolve } from './resolve';
 import { getQueryParam } from '../index';
 import { NFD_THEMES_QUERY_PARAM } from '../../../constants';
@@ -14,6 +14,7 @@ const init = () => {
 		url: onboardingRestURL( 'themes/initialize' ),
 		method: 'POST',
 	} ).catch( ( error ) => {
+		// eslint-disable-next-line no-console
 		console.error( error );
 	} );
 };
@@ -25,7 +26,7 @@ const install = async ( theme, activate = true, queue = true ) => {
 
 	return await resolve(
 		apiFetch( {
-			url: onboardingRestURL( 'themes/install' ),
+			url: installerRestURL( 'themes/install' ),
 			method: 'POST',
 			data: {
 				theme,
@@ -59,7 +60,7 @@ const setGlobalStyles = async ( data ) => {
 const getThemeStatus = async ( theme ) => {
 	return await resolve(
 		apiFetch( {
-			url: onboardingRestURL(
+			url: installerRestURL(
 				'themes/status' + ( theme ? `&theme=${ theme }` : '' )
 			),
 		} )

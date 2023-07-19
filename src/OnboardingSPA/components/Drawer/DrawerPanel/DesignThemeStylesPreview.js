@@ -10,6 +10,7 @@ import {
 	LivePreviewSelectableCard,
 	LivePreviewSkeleton,
 } from '../../LivePreview';
+import { trackHiiveEvent } from '../../../utils/analytics';
 
 const DesignThemeStylesPreview = () => {
 	const [ pattern, setPattern ] = useState();
@@ -106,6 +107,7 @@ const DesignThemeStylesPreview = () => {
 		setSelectedStyle( selectedGlobalStyle.title );
 		currentData.data.theme.variation = selectedGlobalStyle.title;
 		setCurrentOnboardingData( currentData );
+		trackHiiveEvent( 'selected-style', selectedGlobalStyle.title );
 	};
 
 	const buildPreviews = () => {

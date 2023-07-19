@@ -2,12 +2,14 @@ import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Popover, ColorPicker } from '@wordpress/components';
 import { useState, useEffect, useRef } from '@wordpress/element';
+import classNames from 'classnames';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
 import Animate from '../../Animate';
+import { trackHiiveEvent } from '../../../utils/analytics';
 
 const DesignColors = () => {
 	const customColorsResetRef = useRef( null );
@@ -44,10 +46,9 @@ const DesignColors = () => {
 	function stateToLocal( selectedColorPalette ) {
 		if ( selectedColorPalette ) {
 			const selectedColorsLocalTemp = {};
-			selectedColorPalette?.color?.forEach( ( color ) => {
+			selectedColorPalette?.forEach( ( color ) => {
 				selectedColorsLocalTemp[ color.slug ] = color.color;
 			} );
-
 			setSelectedColorsLocal( selectedColorsLocalTemp );
 			return selectedColorsLocalTemp;
 		}
@@ -55,10 +56,6 @@ const DesignColors = () => {
 
 	function LocalToState( selectedColorsLocalTemp, colorStyle ) {
 		if ( selectedColorsLocalTemp && colorStyle ) {
-			selectedColors.slug = colorStyle;
-			selectedColors.name =
-				colorStyle?.charAt( 0 ).toUpperCase() + colorStyle?.slice( 1 );
-
 			const colorsArray = [];
 			for ( const colorName in selectedColorsLocalTemp ) {
 				colorsArray.push( {
@@ -69,12 +66,10 @@ const DesignColors = () => {
 					color: selectedColorsLocalTemp[ colorName ],
 				} );
 			}
-
-			selectedColors.color = colorsArray;
-			setSelectedColors( selectedColors );
-			currentData.data.palette = selectedColors;
+			setSelectedColors( colorsArray );
+			currentData.data.colorStyle = colorStyle;
 			setCurrentOnboardingData( currentData );
-			return selectedColors;
+			return colorsArray;
 		}
 	}
 
@@ -84,9 +79,6 @@ const DesignColors = () => {
 		selectedColorsLocalTemp = selectedColors,
 		globalStylesTemp = storedPreviewSettings
 	) {
-		if ( selectedColors?.slug === colorStyle ) {
-			return true;
-		}
 		const isCustomStyle = colorStyle === 'custom';
 		const selectedGlobalStyle = globalStylesTemp;
 		const selectedThemeColorPalette =
@@ -102,7 +94,7 @@ const DesignColors = () => {
 					selectedThemeColorPalette[ idx ].color =
 						selectedColorsLocalTemp[ slug ];
 				} else if (
-				// Add Exception for Background.(perhaps scope to yith-wonder in future)
+					// Add Exception for Background. (perhaps scope to yith-wonder in future)
 					colorPalettesTemp?.[ colorStyle ]?.[ slug ] &&
 					'base' === slug
 				) {
@@ -201,25 +193,22 @@ const DesignColors = () => {
 		setCustomColorsMap(
 			colorPaletteResponse?.body[ 'custom-picker-grouping' ]
 		);
-		let selectedColorsTemp;
+		let selectedColorPalette;
 		let selectedColorsLocalTemp;
-		if ( ! currentData?.data?.palette?.slug === '' ) {
-			selectedColorsTemp = currentData.data.palette;
-			selectedColorsLocalTemp = stateToLocal( selectedColorsTemp );
-			setCustomColors( selectedColorsLocalTemp );
-			setCurrentOnboardingData( currentData );
-		} else {
-			selectedColorsTemp = currentData.data.palette;
-			selectedColorsLocalTemp = stateToLocal( selectedColorsTemp );
-
-			if ( selectedColorsTemp.slug === 'custom' ) {
+		if ( ! ( currentData?.data?.colorStyle === '' ) ) {
+			selectedColorPalette =
+				globalStyles.body[ 0 ]?.settings?.color?.palette;
+			selectedColorsLocalTemp = stateToLocal( selectedColorPalette );
+			if ( currentData?.data?.colorStyle === 'custom' ) {
 				setCustomColors( selectedColorsLocalTemp );
 			}
+			setSelectedColors( selectedColorPalette );
+		} else {
+			setToDefaultPalette();
 		}
-		setSelectedColors( selectedColorsTemp );
 		saveThemeColorPalette(
-			currentData?.data?.palette.slug,
-			colorPalettes?.body.tailored,
+			currentData?.data?.colorStyle,
+			colorPaletteResponse?.body.tailored,
 			selectedColorsLocalTemp,
 			globalStyles?.body[ 0 ]
 		);
@@ -240,15 +229,15 @@ const DesignColors = () => {
 	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = ( colorStyle ) => {
-		const customColorsTemp = customColors;
-		for ( const custom in customColorsTemp ) {
-			customColorsTemp[ custom ] = '';
+		if ( selectedColors?.slug === colorStyle ) {
+			return true;
 		}
 
-		setCustomColors( customColorsTemp );
+		clearCustomColors();
 		saveThemeColorPalette( colorStyle );
 		setSelectedColorsLocal( colorPalettes[ colorStyle ] );
 		LocalToState( colorPalettes[ colorStyle ], colorStyle );
+		trackHiiveEvent( 'color-selection', colorStyle );
 	};
 
 	const changeCustomPickerColor = async ( color ) => {
@@ -267,6 +256,9 @@ const DesignColors = () => {
 		saveCustomColors();
 		LocalToState( selectedColorsLocalCopy, 'custom' );
 		setSelectedColorsLocal( selectedColorsLocalCopy );
+		if ( ! isCustomColorActive() ) {
+			trackHiiveEvent( 'color-selection', 'custom' );
+		}
 		setCustomColors( selectedColorsLocalCopy );
 	};
 
@@ -280,7 +272,7 @@ const DesignColors = () => {
 		}
 	};
 
-	async function resetColors() {
+	async function setToDefaultPalette() {
 		const globalStyles = await getGlobalStyles( true );
 		let selectedGlobalStyle;
 		if ( currentData?.data?.theme?.variation ) {
@@ -295,15 +287,29 @@ const DesignColors = () => {
 			// eslint-disable-next-line react-hooks/rules-of-hooks
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
-		selectedColors.slug = '';
-		selectedColors.name = '';
-		for ( const colorVal in selectedColors?.color ) {
-			selectedColors.color[ colorVal ].color = '';
-		}
-		setCustomColors( stateToLocal( selectedColors ) );
-		currentData.data.palette = selectedColors;
 
-		setSelectedColors( selectedColors );
+		clearCustomColors();
+
+		const selectedGlobalStylePalette =
+			selectedGlobalStyle.settings.color.palette;
+		setSelectedColors( selectedGlobalStylePalette );
+		setSelectedColorsLocal( stateToLocal( selectedGlobalStylePalette ) );
+		trackHiiveEvent( 'color-selection-reset', selectedGlobalStyle.title );
+	}
+
+	function clearCustomColors() {
+		for ( const custom in customColors ) {
+			customColors[ custom ] = '';
+		}
+
+		// Resetting the color palette to default and unsetting the selected predefined color palette, if any.
+		setCustomColors( customColors );
+	}
+
+	async function resetColors() {
+		setToDefaultPalette();
+
+		currentData.data.colorStyle = '';
 		setCurrentOnboardingData( currentData );
 	}
 
@@ -312,11 +318,13 @@ const DesignColors = () => {
 			return (
 				<div
 					key={ colorStyle }
-					className={ `color-palette drawer-palette--button ${
-						colorStyle === selectedColors?.slug
-							? 'color-palette-selected drawer-palette--button--selected'
-							: ''
-					} ` }
+					className={ classNames(
+						'color-palette drawer-palette--button',
+						{
+							'color-palette-selected drawer-palette--button--selected':
+								colorStyle === currentData?.data?.colorStyle,
+						}
+					) }
 					role="button"
 					tabIndex={ idx + 1 }
 					onClick={ () => handleClick( colorStyle ) }
@@ -326,7 +334,7 @@ const DesignColors = () => {
 						<div
 							className="color-palette__colors--tertiary"
 							style={ {
-								backgroundColor: `${ colorPalettes[ colorStyle ]?.tertiary }`,
+								backgroundColor: `${ colorPalettes[ colorStyle ]?.[ 'header-background' ] }`,
 							} }
 						/>
 						<div
@@ -365,16 +373,16 @@ const DesignColors = () => {
 		const defaultColor = '#fff';
 		const primaryColorTemp =
 			customColors && customColors?.primary !== ''
-				? customColors?.primary
+				? customColors.primary
 				: selectedColorsLocal?.primary ?? defaultColor;
 		const secondaryColorTemp =
 			customColors && customColors?.secondary !== ''
-				? customColors?.secondary
+				? customColors.secondary
 				: selectedColorsLocal?.secondary ?? defaultColor;
 		const tertiaryColorTemp =
-			customColors && customColors?.tertiary !== ''
-				? customColors?.tertiary
-				: selectedColorsLocal?.tertiary ?? defaultColor;
+			customColors && customColors?.[ 'header-background' ] !== ''
+				? customColors[ 'header-background' ]
+				: selectedColorsLocal?.[ 'header-background' ] ?? defaultColor;
 		const paletteCount = Object.keys( colorPalettes ).length;
 
 		return (

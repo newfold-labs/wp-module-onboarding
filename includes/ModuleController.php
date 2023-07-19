@@ -2,7 +2,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
-use NewfoldLabs\WP\Module\Onboarding\Data\Flows;
+use NewfoldLabs\WP\Module\Onboarding\Data\Flows\Flows;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Brands;
 use NewfoldLabs\WP\ModuleLoader\ModuleRegistry;
@@ -28,16 +28,13 @@ class ModuleController {
 	 * Enable/Disable Onboarding based on certain checks.
 	 */
 	public static function module_switcher() {
-
 		$module_name = 'onboarding';
-
 		// Set brand context for the module.
 		Brands::set_current_brand( container() );
-		$customer_data = Data::customer_data();
 
-		$enable_onboarding = self::verify_onboarding_criteria( $customer_data );
+		$enable_onboarding = self::verify_onboarding_criteria();
 
-		// Check if he is a Non-Ecom Cust and Disable Redirect and Module
+		// Check if he is a Non-Ecommerce Customer and Disable Redirect and Module
 		if ( ! $enable_onboarding ) {
 
 			// Check if the Module Does Exist
@@ -61,12 +58,25 @@ class ModuleController {
 	/**
 	 * Verify all the necessary criteria to enable Onboarding for the site.
 	 *
-	 * @param array $customer_data The brand customer data.
 	 * @return boolean
 	 */
-	public static function verify_onboarding_criteria( $customer_data ) {
-		$brand_enabled_flows = Flows::get_flows();
+	public static function verify_onboarding_criteria() {
+		// Check if nfd_module_onboarding_activate query param was passed previously.
+		$activate_transient_name = Options::get_option_name( 'activate_param' );
+		if ( '1' === get_transient( $activate_transient_name ) ) {
+			return true;
+		}
 
+		// If the transient does not exist, check if nfd_module_onboarding_activate query param has been passed.
+		$activate_param_name = Options::get_option_name( 'activate' );
+		if ( isset( $_GET[ $activate_param_name ] ) && Permissions::is_authorized_admin() ) {
+				// Set a 30 day transient that reflects this parameter being passed.
+				set_transient( $activate_transient_name, '1', 2592000 );
+				return true;
+		}
+
+		$customer_data       = Data::customer_data();
+		$brand_enabled_flows = Flows::get_flows();
 		foreach ( $brand_enabled_flows as $flow => $enabled ) {
 			if ( ! $enabled ) {
 				continue;
@@ -74,70 +84,16 @@ class ModuleController {
 
 			switch ( $flow ) {
 				case 'ecommerce':
-					if ( self::is_new_commerce_signup( $customer_data ) ) {
+					if ( self::is_commerce_signup( $customer_data ) ) {
 						return true;
 					}
 					break;
 				case 'wp-setup':
-					if ( self::is_net_new_signup( $customer_data ) ) {
-						return true;
-					}
-					break;
+					return true;
 			}
 		}
 
 		return false;
-	}
-
-	/**
-	 * Get signup date of the install.
-	 *
-	 * @param array $customer_data The customer data to be checked for signup date.
-	 * @return string|boolean
-	 */
-	public static function get_signup_date( $customer_data ) {
-		// Get the signup_date from customer data.
-		if ( isset( $customer_data['signup_date'] ) ) {
-			return gmdate( 'Y-m-d H:i:s', strtotime( $customer_data['signup_date'] ) );
-		}
-
-		// Get the signup_date from the container's install_date.
-		if ( ! empty( container()->plugin()->install_date ) ) {
-			return gmdate( 'Y-m-d H:i:s', container()->plugin()->install_date );
-		}
-
-		// Get the signup_date from the mm_install_date option.
-		$install_date = \get_option( Options::get_option_name( 'install_date', false ), false );
-		if ( false !== $install_date ) {
-			return gmdate( 'Y-m-d H:i:s', strtotime( $install_date ) );
-		}
-
-		return false;
-	}
-
-	/**
-	 * Determines if the signup data is after the brand's net_new_signup_date_threshold.
-	 *
-	 * @param array $customer_data The brand customer data.
-	 * @return boolean
-	 */
-	public static function is_net_new_signup( $customer_data ) {
-		$current_brand = Data::current_brand();
-		if ( ! isset( $current_brand['config']['net_new_signup_date_threshold'] ) ) {
-			return false;
-		}
-		$net_new_signup_date_threshold = gmdate( 'Y-m-d H:i:s', strtotime( $current_brand['config']['net_new_signup_date_threshold'] ) );
-
-		// Get the actual signup date of the install.
-		$signup_date = self::get_signup_date( $customer_data );
-
-		// As a safety measure, return false if a signup date cannot be determined.
-		if ( false === $signup_date ) {
-			return false;
-		}
-
-		// Determine whether the commerce install is a net new signup.
-		return $signup_date >= $net_new_signup_date_threshold;
 	}
 
 	/**
@@ -146,7 +102,7 @@ class ModuleController {
 	 * @param array $customer_data The site's customer data.
 	 * @return boolean
 	 */
-	public static function is_new_commerce_signup( $customer_data ) {
+	public static function is_commerce_signup( $customer_data ) {
 		// Determine if the flow=ecommerce param is set.
 		if ( isset( $_GET['flow'] ) && 'ecommerce' === \sanitize_text_field( $_GET['flow'] ) ) {
 			return true;
@@ -161,12 +117,6 @@ class ModuleController {
 			$is_commerce = Flows::is_commerce_priority();
 		}
 		if ( ! $is_commerce ) {
-			return false;
-		}
-
-		// Determine whether the commerce install is a net new signup.
-		$is_net_new_signup = self::is_net_new_signup( $customer_data );
-		if ( ! $is_net_new_signup ) {
 			return false;
 		}
 

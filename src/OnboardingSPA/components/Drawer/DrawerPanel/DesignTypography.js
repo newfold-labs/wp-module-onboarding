@@ -1,11 +1,13 @@
 import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect, useRef } from '@wordpress/element';
+import classNames from 'classnames';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import { getThemeFonts } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
+import { trackHiiveEvent } from '../../../utils/analytics';
 
 const DesignTypography = () => {
 	const drawerFontOptions = useRef();
@@ -53,20 +55,21 @@ const DesignTypography = () => {
 
 	useEffect( () => {
 		if (
-			currentData?.data?.typography?.slug !== '' &&
+			currentData?.data?.fontStyle !== '' &&
 			fontPalettes !== undefined
 		) {
-			setSelectedFont( currentData?.data?.typography?.slug );
-			handleClick( currentData?.data?.typography?.slug );
+			setSelectedFont( currentData?.data?.fontStyle );
+			handleClick( currentData?.data?.fontStyle );
 		}
 	}, [ fontPalettes, storedPreviewSettings ] );
 
 	useEffect( () => {
-		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
+		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus ) {
 			getFontStylesAndPatterns();
+		}
 	}, [ isLoaded, themeStatus ] );
 
-	const handleClick = async ( fontStyle ) => {
+	const handleClick = async ( fontStyle, context = 'click' ) => {
 		if ( selectedFont === fontStyle ) {
 			return true;
 		}
@@ -116,30 +119,36 @@ const DesignTypography = () => {
 		}
 
 		// Saves the data to the Store
-		currentData.data.typography.slug = fontStyle;
-		currentData.data.typography.data = fontPalettesCopy[ fontStyle ];
+		currentData.data.fontStyle = fontStyle;
 
 		updatePreviewSettings(
 			// eslint-disable-next-line react-hooks/rules-of-hooks
 			useGlobalStylesOutput( globalStylesCopy, storedPreviewSettings )
 		);
 		setCurrentOnboardingData( currentData );
+		if ( 'click' === context ) {
+			trackHiiveEvent( 'font-selection', fontStyle );
+		}
 	};
 
 	function buildPalettes() {
 		return Object.keys( fontPalettes ).map( ( fontStyle, idx ) => {
 			const splitLabel = fontPalettes[ fontStyle ]?.label.split( '&', 2 );
-			if ( splitLabel.length === 0 ) return null;
+			if ( splitLabel.length === 0 ) {
+				return null;
+			}
 			return (
 				<div
 					key={ fontStyle }
-					tabIndex={ idx + 1 }
 					role="button"
-					className={ `font-palette drawer-palette--button ${
-						selectedFont === fontStyle
-							? 'font-palette-selected drawer-palette--button--selected'
-							: ''
-					} ` }
+					tabIndex={ idx + 1 }
+					className={ classNames(
+						'font-palette drawer-palette--button',
+						{
+							'font-palette-selected drawer-palette--button--selected':
+								selectedFont === fontStyle,
+						}
+					) }
 					onClick={ () => handleClick( fontStyle ) }
 					onKeyDown={ () => handleClick( fontStyle ) }
 				>

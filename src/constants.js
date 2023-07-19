@@ -7,8 +7,10 @@ export const wpSiteUrl = window.nfdOnboarding.siteUrl;
 export const wpRestURL = window.nfdOnboarding.restUrl;
 export const wpRestRoute = 'wp/v2';
 export const onboardingRestRoute = 'newfold-onboarding/v1';
+export const installerRestRoute = 'newfold-installer/v1';
 export const wpRestBase = `${ wpRestURL }/${ wpRestRoute }`;
 export const onboardingRestBase = `${ wpRestURL }/${ onboardingRestRoute }`;
+export const installerRestBase = `${ wpRestURL }/${ installerRestRoute }`;
 export const wpAdminPage = `${ wpAdminUrl }index.php`;
 export const pluginDashboardPage = `${
 	window.nfdOnboarding.currentBrand?.pluginDashboardPage ?? wpAdminPage
@@ -45,12 +47,7 @@ export const THEME_STATUS_ACTIVE = 'activated';
 export const THEME_STATUS_FAILURE = 'failed';
 export const THEME_INSTALL_WAIT_TIMEOUT = 30000;
 
-export const ECOMMERCE_STEPS_PLUGIN = 'woocommerce';
-export const PLUGIN_STATUS_INIT = 'init';
-export const PLUGIN_STATUS_NOT_ACTIVE = 'inactive';
-export const PLUGIN_STATUS_INSTALLING = 'installing';
-export const PLUGIN_STATUS_ACTIVE = 'activated';
-export const PLUGIN_INSTALL_WAIT_TIMEOUT = 30000;
+export const HIIVE_ANALYTICS_CATEGORY = 'wp-onboarding';
 
 /**
  * All views for the <Drawer /> component.
