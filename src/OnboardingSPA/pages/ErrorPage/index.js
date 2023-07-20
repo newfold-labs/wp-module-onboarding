@@ -6,6 +6,7 @@ import HeadingWithSubHeading from '../../components/HeadingWithSubHeading';
 import { SIDEBAR_LEARN_MORE, VIEW_NAV_PAGE } from '../../../constants';
 import { store as nfdOnboardingStore } from '../../store';
 import { useViewportMatch } from '@wordpress/compose';
+import getContents from './contents';
 
 const ErrorPage = () => {
     const isLargeViewport = useViewportMatch('medium');
@@ -21,9 +22,11 @@ const ErrorPage = () => {
         setDrawerActiveView(VIEW_NAV_PAGE);
     }, []);
 
+    const content = getContents();
+
     return (
         <CommonLayout isVerticallyCentered>
-            <HeadingWithSubHeading title="Error 404" subtitle="Please Check Again!"/>
+            <HeadingWithSubHeading title={ content.heading } subtitle={ content.subheading }/>
         </CommonLayout>
     );
 };

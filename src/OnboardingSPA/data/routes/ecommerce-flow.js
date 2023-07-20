@@ -106,7 +106,6 @@ export const initialTopSteps = () => {
 		/* This is a pseudo step to stand-in for all StoreInfo steps and does not have a Component to render */
 		path: '/ecommerce/step/address',
 		title: __( 'Store Info', 'wp-module-onboarding' ),
-		description: '',
 		Icon: store,
 		primaryDrawerActiveLinkIncludes: '/ecommerce/step/',
 		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
