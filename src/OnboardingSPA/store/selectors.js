@@ -362,11 +362,21 @@ export function isQueueEmpty( state ) {
 }
 
 /**
- * Gets the navigation callback to be run before Prev or Next
+ * Gets the navigation error Code
  *
  * @param {*} state
- * @return {Function} navigationCallback
+ * @return {string} code
  */
-export function getNavigationCallback( state ) {
-	return state?.flow?.steps?.navigationCallback;
+export function getNavErrorModalCode( state ) {
+	return state?.flow?.steps?.navErrorModal?.code;
+}
+
+/**
+ * Gets the navigation error continue Path
+ *
+ * @param {*} state
+ * @return {string} continuePath
+ */
+export function getNavErrorModalPath( state ) {
+	return state?.flow?.steps?.navErrorModal?.continuePath;
 }

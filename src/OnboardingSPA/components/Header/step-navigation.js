@@ -1,4 +1,4 @@
-import { useSelect } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, ButtonGroup } from '@wordpress/components';
 import { Icon, chevronLeft, chevronRight } from '@wordpress/icons';
@@ -15,13 +15,12 @@ import { wpAdminPage, pluginDashboardPage } from '../../../constants';
  *
  * @return {WPComponent} Back Component
  */
-const Back = ( { path, navigationCallback } ) => {
+const Back = ( { path, navErrorModalCode } ) => {
+	const { setNavErrorModalPath } = useDispatch( nfdOnboardingStore );
 	const navigate = useNavigate();
 	const navigateBack = () => {
-		if ( typeof navigationCallback === 'function' ) {
-			navigationCallback( () => {
-				navigate( path, { state: { origin: 'header' } } );
-			} );
+		if ( navErrorModalCode ) {
+			setNavErrorModalPath( path );
 		} else {
 			navigate( path, { state: { origin: 'header' } } );
 		}
@@ -45,14 +44,13 @@ const Back = ( { path, navigationCallback } ) => {
  *
  * @return {WPComponent} Next Component
  */
-const Next = ( { path, navigationCallback } ) => {
+const Next = ( { path, navErrorModalCode } ) => {
+	const { setNavErrorModalPath } = useDispatch( nfdOnboardingStore );
 	/* [TODO]: some sense of isStepComplete to enable/disable */
 	const navigate = useNavigate();
 	const navigateNext = () => {
-		if ( typeof navigationCallback === 'function' ) {
-			navigationCallback( () => {
-				navigate( path, { state: { origin: 'header' } } );
-			} );
+		if ( navErrorModalCode ) {
+			setNavErrorModalPath( path );
 		} else {
 			navigate( path, { state: { origin: 'header' } } );
 		}
@@ -107,7 +105,7 @@ const Finish = ( { currentData, saveDataAndExitFunc } ) => (
  */
 const StepNavigation = () => {
 	const location = useLocation();
-	const { previousStep, nextStep, currentData, navigationCallback } =
+	const { previousStep, nextStep, currentData, navErrorModalCode } =
 		useSelect(
 			( select ) => {
 				return {
@@ -116,8 +114,8 @@ const StepNavigation = () => {
 						select( nfdOnboardingStore ).getPreviousStep(),
 					currentData:
 						select( nfdOnboardingStore ).getCurrentOnboardingData(),
-					navigationCallback:
-						select( nfdOnboardingStore ).getNavigationCallback(),
+					navErrorModalCode:
+						select( nfdOnboardingStore ).getNavErrorModalCode(),
 				};
 			},
 			[ location.pathname ]
@@ -130,7 +128,7 @@ const StepNavigation = () => {
 				{ isFirstStep || isLastStep ? null : (
 					<Back
 						path={ previousStep.path }
-						navigationCallback={ navigationCallback }
+						navErrorModalCode={ navErrorModalCode }
 					/>
 				) }
 				{ isLastStep ? (
@@ -141,7 +139,7 @@ const StepNavigation = () => {
 				) : (
 					<Next
 						path={ nextStep.path }
-						navigationCallback={ navigationCallback }
+						navErrorModalCode={ navErrorModalCode }
 					/>
 				) }
 			</ButtonGroup>

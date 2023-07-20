@@ -1,4 +1,4 @@
-import { useDispatch } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 
 import Tooltip from './../Tooltip';
@@ -24,15 +24,21 @@ const SocialMediaForm = ( {
 	const [ tiktok, setTikTok ] = useState( '' );
 
 	const [ showModal, setShowModal ] = useState( false );
-	const [ modalCallback, setModalCallback ] = useState();
 	const [ activeError, setActiveError ] = useState( [] );
 	const [ activeErrorTypes, setActiveErrorTypes ] = useState();
 
 	const {
-		addNavigationCallback,
+		addNavErrorModalCode,
 		setOnboardingSocialData,
-		removeNavigationCallback,
+		resetNavErrorModal,
 	} = useDispatch( nfdOnboardingStore );
+
+	const { navErrorModalPath } = useSelect( ( select ) => {
+		return {
+			navErrorModalPath:
+				select( nfdOnboardingStore ).getNavErrorModalPath(),
+		};
+	}, [] );
 
 	const SocialMediaSitesErrorTypes = {
 		facebook: 'none',
@@ -80,6 +86,12 @@ const SocialMediaForm = ( {
 	}, [] );
 
 	useEffect( () => {
+		if ( navErrorModalPath !== '' ) {
+			setShowModal( true );
+		}
+	}, [ navErrorModalPath ] );
+
+	useEffect( () => {
 		setFacebook( socialData?.facebook_site ?? '' );
 		setTwitter( socialData?.twitter_site ?? '' );
 		setInstagram( socialData?.instagram_url ?? '' );
@@ -106,12 +118,6 @@ const SocialMediaForm = ( {
 			);
 		} );
 	}
-
-	// This runs when user navigates using Next or Back
-	const navigationCallback = ( callback ) => {
-		setShowModal( true );
-		setModalCallback( () => callback );
-	};
 
 	// Save the Social Media data into the store
 	const saveData = ( value, triggerID ) => {
@@ -177,9 +183,8 @@ const SocialMediaForm = ( {
 			activeErrorTypes,
 			setActiveErrorTypes
 		);
-		if ( getErrorType() !== ERROR_TYPES.NONE )
-			addNavigationCallback( navigationCallback );
-		else removeNavigationCallback();
+		if ( getErrorType() !== ERROR_TYPES.NONE ) addNavErrorModalCode( 400 );
+		else resetNavErrorModal();
 		saveData( res, triggerID );
 	};
 
@@ -200,7 +205,6 @@ const SocialMediaForm = ( {
 						setShowModal={ setShowModal }
 						modalTitle={ content.modals.shortUrl.modalTitle }
 						modalText={ content.modals.shortUrl.modalText }
-						modalSecondaryButtonFunc={ modalCallback }
 					/>
 				);
 			case ERROR_TYPES.INVALID_LINK_ERROR:
@@ -210,7 +214,6 @@ const SocialMediaForm = ( {
 						setShowModal={ setShowModal }
 						modalTitle={ content.modals.invalidUrl.modalTitle }
 						modalText={ content.modals.invalidUrl.modalText }
-						modalSecondaryButtonFunc={ modalCallback }
 					/>
 				);
 			default:

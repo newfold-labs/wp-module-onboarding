@@ -29,7 +29,10 @@ export function flow(
 			getStartedSteps: initialGetStartedSteps(),
 			storeInfoSteps: initialStoreInfoSteps(),
 			currentStep: '/wp-setup/step/what-next',
-			navigationCallback: null,
+			navErrorModal: {
+				code: undefined,
+				continuePath: '',
+			},
 		},
 	},
 	action
@@ -72,20 +75,37 @@ export function flow(
 					designSteps: action.designSteps,
 				},
 			};
-		case 'ADD_NAV_CALLBACK':
+		case 'ADD_NAV_ERROR_MODAL_CODE':
 			return {
 				...state,
 				steps: {
 					...state.steps,
-					navigationCallback: action.navigationCallback,
+					navErrorModal: {
+						...state.steps.navErrorModal,
+						code: action.errorCode,
+					},
 				},
 			};
-		case 'REMOVE_NAV_CALLBACK':
+		case 'SET_NAV_ERROR_MODAL_PATH':
 			return {
 				...state,
 				steps: {
 					...state.steps,
-					navigationCallback: null,
+					navErrorModal: {
+						...state.steps.navErrorModal,
+						continuePath: action.continuePath,
+					},
+				},
+			};
+		case 'RESET_NAV_ERROR_MODAL_CODE':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					navErrorModal: {
+						code: undefined,
+						continuePath: '',
+					},
 				},
 			};
 	}

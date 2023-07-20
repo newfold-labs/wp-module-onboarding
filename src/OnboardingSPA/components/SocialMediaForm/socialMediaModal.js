@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n';
-import { useDispatch } from '@wordpress/data';
+import { useNavigate } from 'react-router-dom';
 import { Fragment } from '@wordpress/element';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { Button, ButtonGroup, Modal } from '@wordpress/components';
 
 import { store as nfdOnboardingStore } from '../../store';
@@ -10,11 +11,21 @@ const SocialMediaModal = ( {
 	setShowModal,
 	modalTitle,
 	modalText,
-	modalSecondaryButtonFunc,
 } ) => {
-	const { removeNavigationCallback } = useDispatch( nfdOnboardingStore );
+	const navigate = useNavigate();
+	const { navErrorModalPath } = useSelect( ( select ) => {
+		return {
+			navErrorModalPath:
+				select( nfdOnboardingStore ).getNavErrorModalPath(),
+		};
+	}, [] );
+
+	const { addNavErrorModalCode, resetNavErrorModal } =
+		useDispatch( nfdOnboardingStore );
 
 	const closeModal = () => {
+		resetNavErrorModal();
+		addNavErrorModalCode( 400 );
 		setShowModal( false );
 	};
 
@@ -36,13 +47,8 @@ const SocialMediaModal = ( {
 						<Button
 							variant="primary"
 							onClick={ () => {
-								if (
-									typeof modalSecondaryButtonFunc ===
-									'function'
-								) {
-									removeNavigationCallback();
-									modalSecondaryButtonFunc();
-								}
+								resetNavErrorModal();
+								navigate( navErrorModalPath );
 							} }
 						>
 							{ __( 'Proceed Anyways', 'wp-module-onboarding' ) }

@@ -221,15 +221,22 @@ export function flushQueue() {
 	};
 }
 
-export function addNavigationCallback( navigationCallback ) {
+export function addNavErrorModalCode( errorCode ) {
 	return {
-		type: 'ADD_NAV_CALLBACK',
-		navigationCallback,
+		type: 'ADD_NAV_ERROR_MODAL_CODE',
+		errorCode,
 	};
 }
 
-export function removeNavigationCallback() {
+export function setNavErrorModalPath( continuePath ) {
 	return {
-		type: 'REMOVE_NAV_CALLBACK',
+		type: 'SET_NAV_ERROR_MODAL_PATH',
+		continuePath,
+	};
+}
+
+export function resetNavErrorModal() {
+	return {
+		type: 'RESET_NAV_ERROR_MODAL_CODE',
 	};
 }
