@@ -13,7 +13,7 @@ import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-s
 import {
 	stateToStore,
 	storeToState,
-	findInPalette,
+	findIndexInPalette,
 } from '../../../pages/Steps/DesignColors/utils';
 import ColorPickerButton from '../../ColorPickerButton';
 
@@ -198,7 +198,7 @@ const DesignColors = () => {
 		setCustomColors();
 		saveThemeColorPalette( colorStyle );
 		setSelectedColors( colors[ colorStyle ] );
-		stateToStore( colors[ colorStyle ], colorStyle );
+		stateToStore( colors[ colorStyle ] );
 		//  Save selected color to Store
 		currentData.data.colorStyle = colorStyle;
 		setCurrentOnboardingData( currentData );
@@ -216,9 +216,9 @@ const DesignColors = () => {
 				<div
 					key={ colorStyle }
 					className={ classNames(
-						'color-palette drawer-palette--button',
+						'color-palette drawer-palette__button',
 						{
-							'color-palette-selected drawer-palette--button--selected':
+							'color-palette-selected drawer-palette__button--selected':
 								colorStyle === currentData?.data?.colorStyle,
 						}
 					) }
@@ -292,10 +292,11 @@ const DesignColors = () => {
 							customColors[ colorPickerCalledBy ] !== undefined
 						) {
 							selectedThemeColorPalette[
-								findInPalette(
+								findIndexInPalette(
 									variant,
-									storedPreviewSettings,
-									colorPickerCalledBy
+									colorPickerCalledBy,
+									storedPreviewSettings?.settings?.color
+										?.palette
 								)
 							].color = customColors[ colorPickerCalledBy ];
 						}
@@ -337,7 +338,7 @@ const DesignColors = () => {
 		}
 
 		saveCustomColors();
-		stateToStore( selectedColorsLocalCopy, 'custom' );
+		stateToStore( selectedColorsLocalCopy );
 		//  Save selected color to Store
 		currentData.data.colorStyle = 'custom';
 		setCurrentOnboardingData( currentData );
@@ -466,7 +467,7 @@ const DesignColors = () => {
 						<div
 							role="button"
 							tabIndex={ 0 }
-							className="custom-palette__picker-close-icon"
+							className="custom-palette__picker__close-icon"
 							onClick={ () => setShowColorPicker( false ) }
 							onKeyDown={ () => setShowColorPicker( false ) }
 						>
