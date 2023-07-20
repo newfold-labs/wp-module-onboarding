@@ -216,9 +216,9 @@ const DesignColors = () => {
 				<div
 					key={ colorStyle }
 					className={ classNames(
-						'color-palette drawer-palette__button',
+						'color-palette drawer-palette--button',
 						{
-							'color-palette-selected drawer-palette__button--selected':
+							'color-palette-selected drawer-palette--button--selected':
 								colorStyle === currentData?.data?.colorStyle,
 						}
 					) }
