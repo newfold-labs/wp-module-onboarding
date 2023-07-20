@@ -19,7 +19,7 @@ const Back = ( { path, navErrorModalCode } ) => {
 	const { setNavErrorModalPath } = useDispatch( nfdOnboardingStore );
 	const navigate = useNavigate();
 	const navigateBack = () => {
-		if ( navErrorModalCode ) {
+		if ( navErrorModalCode !== undefined ) {
 			setNavErrorModalPath( path );
 		} else {
 			navigate( path, { state: { origin: 'header' } } );
@@ -49,7 +49,7 @@ const Next = ( { path, navErrorModalCode } ) => {
 	/* [TODO]: some sense of isStepComplete to enable/disable */
 	const navigate = useNavigate();
 	const navigateNext = () => {
-		if ( navErrorModalCode ) {
+		if ( navErrorModalCode !== undefined ) {
 			setNavErrorModalPath( path );
 		} else {
 			navigate( path, { state: { origin: 'header' } } );

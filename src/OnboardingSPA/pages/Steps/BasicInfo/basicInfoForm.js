@@ -179,7 +179,6 @@ const BasicInfoForm = () => {
 							icon={ siteLogo }
 							title={ siteTitle }
 							desc={ siteDesc }
-							socialData={ socialData }
 							isSocialFormOpen={ isSocialFormOpen }
 							setIsSocialFormOpen={ setIsSocialFormOpen }
 						/>
