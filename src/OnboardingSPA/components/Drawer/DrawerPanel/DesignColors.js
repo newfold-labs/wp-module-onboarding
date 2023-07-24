@@ -114,6 +114,7 @@ const DesignColors = () => {
 		let selectedColorsNew;
 		if ( ! ( currentData?.data?.colorStyle === '' ) ) {
 			selectedColorsNew =
+				storedPreviewSettings?.settings?.color?.palette ??
 				globalStyles.body[ 0 ]?.settings?.color?.palette;
 			if ( currentData?.data?.colorStyle === 'custom' ) {
 				setSelectedColors( storeToState( selectedColorsNew ) );
