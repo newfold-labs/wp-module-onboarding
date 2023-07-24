@@ -4,17 +4,18 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 use NewfoldLabs\WP\Module\Installer\Data\Options;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginInstallTaskManager;
-use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginUninstallTaskManager;
+use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginControlTaskManager;
 use NewfoldLabs\WP\Module\Installer\Tasks\PluginInstallTask;
-use NewfoldLabs\WP\Module\Installer\Tasks\PluginUninstallTask;
+use NewfoldLabs\WP\Module\Installer\Tasks\PluginControlTask;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
+use NewfoldLabs\WP\Module\Onboarding\Data\SiteFeatures;
 
 /**
  * Class for providing plugin related services.
  */
 class PluginService {
 	/**
-	 * Queues the initial list of Plugin Installs for a flow.
+	 * Queues the initial list of Plugin Installs and site features for a flow.
 	 *
 	 * @return boolean
 	 */
@@ -29,9 +30,12 @@ class PluginService {
 		\update_option( Options::get_option_name( 'plugins_init_status' ), 'installing' );
 
 		// Get the initial list of plugins to be installed based on the plan.
-		$init_plugins = Plugins::get_init();
+		$init_plugins = array_merge( Plugins::get_init(), SiteFeatures::get_site_features_init_list() );
 
 		foreach ( $init_plugins as $init_plugin ) {
+			// Ensure all plugins are installed in deactivated state
+			$init_plugin['activate'] = false;
+
 			// Checks if a plugin with the given slug and activation criteria already exists.
 			if ( ! PluginInstaller::exists( $init_plugin['slug'], $init_plugin['activate'] ) ) {
 					// Add a new PluginInstallTask to the Plugin install queue.
@@ -49,20 +53,13 @@ class PluginService {
 	}
 
 	/**
-	 * Installs/Uninstalls the requested site features(plugins).
-	 *
-	 * @param \WP_REST_Request $request the incoming request object.
-	 *
-	 * @return \WP_REST_Response|\WP_Error
-	 */
-	/**
-	 * Installs/Uninstalls the requested site features (plugins).
+	 * Activated/Deactivates the requested site features(plugins).
 	 *
 	 * @param array $plugins The list of plugin slugs.
-	 * @return \WP_REST_Response
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public static function set_site_features( $plugins ) {
-
+		// TO-Do Ensure things work as expected for earlier installs and new ones
 		foreach ( $plugins as $plugin => $decision ) {
 			if ( $decision ) {
 				// If the Plugin exists and is activated
@@ -77,11 +74,11 @@ class PluginService {
 					)
 				);
 			} else {
-				PluginUninstallTaskManager::add_to_queue(
-					new PluginUninstallTask(
-						$plugin
-					)
-				);
+				// PluginUninstallTaskManager::add_to_queue(
+				// new PluginUninstallTask(
+				// $plugin
+				// )
+				// );
 			}
 		}
 

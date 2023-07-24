@@ -254,4 +254,28 @@ final class SiteFeatures {
 
 		return $site_features;
 	}
+
+	/**
+	 * Retrieves all the site features for a particular flow and plan,
+	 * to be queued for install with the plugins init list
+	 *
+	 * @return array
+	 */
+	public static function get_site_features_init_list() {
+		$site_features_init_list = array();
+		$site_features           = self::get();
+
+		if ( empty( $site_features ) ) {
+			return array();
+		}
+
+		foreach ( $site_features as $site_feature ) {
+			$site_features_init_list[] = array(
+				'slug'     => $site_feature['slug'],
+				'activate' => false,
+			);
+		}
+
+		return $site_features_init_list;
+	}
 }
