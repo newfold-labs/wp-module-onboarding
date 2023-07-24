@@ -338,18 +338,6 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/header-menu',
 		title: __( 'Header & Menu', 'wp-module-onboarding' ),
-		heading: __(
-			"Let's make the right things visible",
-			'wp-module-onboarding'
-		),
-		subheading: __(
-			'Your site header helps organize your story for visitors.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			'A well-organized site makes visitors feel smart, helping you keep and convert them.',
-			'wp-module-onboarding'
-		),
 		Component: StepDesignHeaderMenu,
 		Icon: header,
 		priority: 220,
@@ -465,8 +453,8 @@ export const steps = [
 	},
 ];
 
-export const conditionalSteps = {
-	designColors: {
+export const conditionalSteps = [
+	{
 		path: '/wp-setup/step/design/colors',
 		title: __( 'Colors', 'wp-module-onboarding' ),
 		heading: __( "What's your color palette?", 'wp-module-onboarding' ),
@@ -489,7 +477,7 @@ export const conditionalSteps = {
 			},
 		},
 	},
-	designTypography: {
+	{
 		path: '/wp-setup/step/design/typography',
 		title: __( 'Typography', 'wp-module-onboarding' ),
 		heading: __( "What's your font style?", 'wp-module-onboarding' ),
@@ -512,9 +500,9 @@ export const conditionalSteps = {
 			},
 		},
 	},
-};
+];
 
-export const routes = [ ...pages, ...steps ];
+export const routes = [ ...pages, ...steps, ...conditionalSteps ];
 
 /**
  * Filter-out the design steps and register a fake step in their place.
@@ -563,13 +551,17 @@ export const initialTopSteps = () => {
  * @return {Array} steps
  */
 export const initialDesignSteps = () => {
-	const designSteps = filter( steps, ( step ) => {
+	let designSteps = orderBy(
+		steps.concat( conditionalSteps ),
+		[ 'priority' ],
+		[ 'asc' ]
+	);
+	designSteps = filter( designSteps, ( step ) => {
 		return (
 			step.path.includes( '/step/design/' ) &&
 			! step.path.includes( '/theme-styles/preview' )
 		);
 	} );
-
 	return designSteps;
 };
 
