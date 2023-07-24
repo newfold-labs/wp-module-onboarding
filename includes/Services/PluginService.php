@@ -73,12 +73,6 @@ class PluginService {
 						true
 					)
 				);
-			} else {
-				// PluginUninstallTaskManager::add_to_queue(
-				// new PluginUninstallTask(
-				// $plugin
-				// )
-				// );
 			}
 		}
 
