@@ -54,7 +54,6 @@ final class Brands {
 				'domainsUrl'                  => 'https://my.bluehost.com/hosting/app?lil=1#/domains',
 				'emailUrl'                    => 'https://my.bluehost.com/hosting/app?lil=1#/email-office',
 				'pluginDashboardPage'         => \admin_url( 'admin.php?page=bluehost' ),
-				'dashboardUrlParams'          => 'enable_site_features=true',
 				'phoneNumbers'                => array(
 					'sales'   => '844-303-1730',
 					'support' => '888-401-4678',
@@ -116,7 +115,6 @@ final class Brands {
 				'domainsUrl'                  => 'https://my.bluehost.in/hosting/app?lil=1#/domains',
 				'emailUrl'                    => 'https://my.bluehost.in/hosting/app?lil=1#/email-office',
 				'pluginDashboardPage'         => \admin_url( 'admin.php?page=bluehost' ),
-				'dashboardUrlParams'          => 'enable_site_features=true',
 				'phoneNumbers'                => array(
 					'support' => '1800-419-4426',
 				),
@@ -232,7 +230,6 @@ final class Brands {
 				'domainsUrl'                  => '',
 				'emailUrl'                    => 'https://www.crazydomains.com/contact/',
 				'pluginDashboardPage'         => \admin_url( 'admin.php?page=crazy-domains' ),
-				'dashboardUrlParams'          => 'enable_site_features=true',
 				'phoneNumbers'                => array(
 					'support' => '2135592459',
 				),
