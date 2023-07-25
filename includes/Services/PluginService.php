@@ -78,7 +78,7 @@ class PluginService {
 		if ( isset( $site_features_plugins['data']['siteFeatures'] ) && count( $site_features_plugins['data']['siteFeatures'] ) > 0 ) {
 			$site_features_plugins = $site_features_plugins['data']['siteFeatures'];
 			foreach ( $site_features_plugins as $plugin => $decision ) {
-				if ( $decision === true ) {
+				if ( true === $decision ) {
 					// If it needs to be activated/deactivated and it exists already in the list, change the activation
 					if ( in_array( $plugin, $plugin_slugs ) ) {
 						$idx = array_search( $plugin, $plugin_slugs );
@@ -102,7 +102,6 @@ class PluginService {
 
 		// TO-Do Ensure things work as expected for earlier installs and new ones
 		foreach ( $plugin_slugs as $plugin ) {
-			\do_action('qm/debug', 'Added this: '. $plugin);
 			PluginControlTaskManager::add_to_queue(
 				new PluginControlTask(
 					$plugin,
