@@ -79,25 +79,13 @@ class PluginService {
 			$site_features_plugins = $site_features_plugins['data']['siteFeatures'];
 			foreach ( $site_features_plugins as $plugin => $decision ) {
 				if ( true === $decision ) {
-					// If it needs to be activated/deactivated and it exists already in the list, change the activation
-					if ( in_array( $plugin, $plugin_slugs ) ) {
-						$idx = array_search( $plugin, $plugin_slugs );
-						if ( $idx ) {
-							$plugins[ $idx ]['activate'] = $decision;
-						}
-					} else {
-						// If it needs to be activated and is not in plugins list add it.
-						$plugins[] = array(
-							'slug'     => $plugin,
-							'activate' => $decision,
-						);
+					if ( ! in_array( $plugin, $plugin_slugs ) ) {
+						$plugin_slugs[] = $plugin;
 					}
 				}
 			}
 		}
-
-		// Update Plugins Map to have the new slugs as well
-		$plugin_slugs = array_column( $plugins, 'slug' );
+		// Requeue the plugins that should be activated and are not installed yet.
 		$plugin_slugs = PluginInstallTaskManager::requeue_with_changed_activation( $plugin_slugs );
 
 		// TO-Do Ensure things work as expected for earlier installs and new ones
