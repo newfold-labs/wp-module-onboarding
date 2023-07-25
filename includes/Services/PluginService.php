@@ -53,27 +53,62 @@ class PluginService {
 	}
 
 	/**
+	 * Checks if a Plugin slug should be activated.
+	 *
+	 * @param array $value The Plugin slug that will be checked.
+	 * @return boolean
+	 */
+	private static function should_be_activated( $value ) {
+		return true === $value['activate'];
+	}
+
+	/**
 	 * Activated/Deactivates the requested site features(plugins).
 	 *
-	 * @param array $plugins The list of plugin slugs.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
-	public static function set_site_features( $plugins ) {
-		// TO-Do Ensure things work as expected for earlier installs and new ones
-		foreach ( $plugins as $plugin => $decision ) {
-			if ( $decision ) {
-				// If the Plugin exists and is activated
-				if ( PluginInstaller::exists( $plugin, $decision ) ) {
-					continue;
-				}
+	public static function activate_onboarding_plugins() {
+		// Get the init list plugins with activation true
+		$plugins = array_filter( Plugins::get_init(), array( __CLASS__, 'should_be_activated' ) );
+		// Convert the slugs into a map for a faster match.
+		$plugin_slugs          = array_column( $plugins, 'slug' );
+		$site_features_plugins = FlowService::read_data_from_wp_option( false );
 
-				PluginInstallTaskManager::add_to_queue(
-					new PluginInstallTask(
-						$plugin,
-						true
-					)
-				);
+		// If Site Features were selected add those plugins with activation
+		if ( isset( $site_features_plugins['data']['siteFeatures'] ) && count( $site_features_plugins['data']['siteFeatures'] ) > 0 ) {
+			$site_features_plugins = $site_features_plugins['data']['siteFeatures'];
+			foreach ( $site_features_plugins as $plugin => $decision ) {
+				if ( $decision === true ) {
+					// If it needs to be activated/deactivated and it exists already in the list, change the activation
+					if ( in_array( $plugin, $plugin_slugs ) ) {
+						$idx = array_search( $plugin, $plugin_slugs );
+						if ( $idx ) {
+							$plugins[ $idx ]['activate'] = $decision;
+						}
+					} else {
+						// If it needs to be activated and is not in plugins list add it.
+						$plugins[] = array(
+							'slug'     => $plugin,
+							'activate' => $decision,
+						);
+					}
+				}
 			}
+		}
+
+		// Update Plugins Map to have the new slugs as well
+		$plugin_slugs = array_column( $plugins, 'slug' );
+		$plugin_slugs = PluginInstallTaskManager::requeue_with_changed_activation( $plugin_slugs );
+
+		// TO-Do Ensure things work as expected for earlier installs and new ones
+		foreach ( $plugin_slugs as $plugin ) {
+			\do_action('qm/debug', 'Added this: '. $plugin);
+			PluginControlTaskManager::add_to_queue(
+				new PluginControlTask(
+					$plugin,
+					true
+				)
+			);
 		}
 
 		return new \WP_REST_Response(
