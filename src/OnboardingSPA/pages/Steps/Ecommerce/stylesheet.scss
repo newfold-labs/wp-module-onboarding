@@ -245,24 +245,25 @@ div.onboarding-product-step {
 	}
 }
 
-.nfd-onboarding-experience-step{
-	.nfd-onboarding-experience-step-tabs.components-radio-control__input{
-		.components-radio-control__option{
+.nfd-onboarding-experience-step {
+	.nfd-onboarding-experience-step-tabs.components-radio-control__input {
+		.components-radio-control__option {
 			@media (min-width: #{ ($break-wide)}) {
 				display: flex;
 				align-items: baseline;
-					input{
+
+				input {
 					display: block !important;
 					width: 22px;
-					&:focus{
+					&:focus {
 						box-shadow: 0 0 0 transparent;
 					}
-					}
-					input + label {
+				}
+
+				input + label {
 						width: 100%;
-					}
+				}
 			}
 		}
-		 
 	}
 }
