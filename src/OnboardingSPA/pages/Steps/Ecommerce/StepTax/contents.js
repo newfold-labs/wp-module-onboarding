@@ -4,13 +4,13 @@ const getContents = () => {
 	return {
 		heading: __( 'Configure your tax information', 'wp-module-onboarding' ),
 		subheading: __(
-			'Do you want to enable tax rates and calculations?',
+			'Would you like to enable sales tax?',
 			'wp-module-onboarding'
 		),
 		options: [
 			{
 				content: __(
-					'Yes, enable tax rates and calculations',
+					'Yes, enable sales tax.',
 					'wp-module-onboarding'
 				),
 				value: '1',
@@ -21,18 +21,7 @@ const getContents = () => {
 			},
 			{
 				content: __(
-					'I will configure my own tax information later',
-					'wp-module-onboarding'
-				),
-				value: '3',
-				data: {
-					wc_connect_taxes_enabled: 'no',
-					woocommerce_calc_taxes: 'yes',
-				},
-			},
-			{
-				content: __(
-					"I don't charge sales tax",
+					"No, don't enable sales tax.",
 					'wp-module-onboarding'
 				),
 				value: '5',
