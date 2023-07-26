@@ -33,19 +33,25 @@ class PluginService {
 		$init_plugins = array_merge( Plugins::get_init(), SiteFeatures::get_site_features_init_list() );
 
 		foreach ( $init_plugins as $init_plugin ) {
-			// Ensure all plugins are installed in deactivated state
-			$init_plugin['activate'] = false;
 
 			// Checks if a plugin with the given slug and activation criteria already exists.
 			if ( ! PluginInstaller::exists( $init_plugin['slug'], $init_plugin['activate'] ) ) {
 					// Add a new PluginInstallTask to the Plugin install queue.
+					// Add a activation false to disable plugin redirects
 					PluginInstallTaskManager::add_to_queue(
 						new PluginInstallTask(
 							$init_plugin['slug'],
-							$init_plugin['activate'],
+							false,
 							$init_plugin['priority']
 						)
 					);
+			} else {
+				PluginControlTaskManager::add_to_queue(
+					new PluginControlTask(
+						$init_plugin['slug'],
+						false
+					)
+				);
 			}
 		}
 
@@ -85,8 +91,6 @@ class PluginService {
 				}
 			}
 		}
-		// Requeue the plugins that should be activated and are not installed yet.
-		$plugin_slugs = PluginInstallTaskManager::requeue_with_changed_activation( $plugin_slugs );
 
 		// TO-Do Ensure things work as expected for earlier installs and new ones
 		foreach ( $plugin_slugs as $plugin ) {
