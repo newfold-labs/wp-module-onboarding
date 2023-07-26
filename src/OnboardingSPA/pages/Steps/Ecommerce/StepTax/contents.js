@@ -9,10 +9,7 @@ const getContents = () => {
 		),
 		options: [
 			{
-				content: __(
-					'Yes, enable sales tax.',
-					'wp-module-onboarding'
-				),
+				content: __( 'Yes, enable sales tax.', 'wp-module-onboarding' ),
 				value: '1',
 				data: {
 					wc_connect_taxes_enabled: 'yes',
