@@ -246,7 +246,7 @@ div.onboarding-product-step {
 }
 
 .nfd-onboarding-experience-step {
-	.nfd-onboarding-experience-step-tabs.components-radio-control__input {
+	.nfd-onboarding-experience-step-tabs.components-radio-control__input.radio-control-tax-step {
 		.components-radio-control__option {
 			@media (min-width: #{ ($break-wide)}) {
 				display: flex;
