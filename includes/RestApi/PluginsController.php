@@ -54,6 +54,17 @@ class PluginsController {
 				),
 			)
 		);
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/complete-plugin-setup',
+			array(
+				array(
+					'methods'  => \WP_REST_Server::CREATABLE,
+					'callback' => array( $this, 'complete_plugin_setup' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
 	}
 
 	/**
@@ -83,6 +94,19 @@ class PluginsController {
 	 */
 	public function get_site_features() {
 		return SiteFeatures::get_with_selections();
+	}
+
+	/**
+	 * Activates all the required plugins after onboarding completes
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function complete_plugin_setup() {
+		// Register the one time cron task if not already scheduled
+		if ( ! wp_next_scheduled( 'nfd_module_onboarding_plugin_setup_cron' ) ) {
+			wp_schedule_single_event( time() + 30 * MINUTE_IN_SECONDS, 'nfd_module_onboarding_plugin_setup_cron' );
+		}
+		return PluginService::activate_onboarding_plugins();
 	}
 
 }

@@ -29,3 +29,12 @@ export const getSiteFeatures = async () => {
 		} )
 	);
 };
+
+export const completePluginSetup = async () => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'plugins/complete-plugin-setup' ),
+			method: 'POST',
+		} )
+	);
+};

@@ -5,6 +5,7 @@ use NewfoldLabs\WP\Module\Onboarding\Compatibility\Status;
 use NewfoldLabs\WP\Module\Onboarding\RestApi\RestApi;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
@@ -72,5 +73,8 @@ final class Application {
 		}
 
 		\do_action( 'nfd_module_onboarding_post_init' );
+
+		// Setup a cleanup function to a cron to run when triggered
+		add_action( 'nfd_module_onboarding_plugin_setup_cron', array( PluginService::class, 'activate_onboarding_plugins' ) );
 	}
 }
