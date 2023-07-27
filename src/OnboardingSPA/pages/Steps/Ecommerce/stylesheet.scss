@@ -283,10 +283,6 @@ div.nfd-onboarding-large-card.ecommerce-step {
 					display: flex;
 					align-items: baseline;
 
-					input + label {
-						width: 100%;
-					}
-
 					label {
 						border: 1px solid var(--nfd-onboarding-base-gray);
 						display: flex;
@@ -303,6 +299,10 @@ div.nfd-onboarding-large-card.ecommerce-step {
 						@media (max-width: #{ ($break-medium) - 1 }) {
 							padding-right: 100px;
 						}
+					}
+
+					input + label {
+						width: 100%;
 					}
 
 					input:checked + label {
