@@ -100,6 +100,10 @@
 			input {
 				width: 22px;
 			}
+
+			input:focus {
+				box-shadow: 0 0 0 transparent;
+			}
 		}
 
 		margin: 32px 0 48px;
@@ -194,16 +198,6 @@
 				min-width: 100%;
 				width: 100%;
 			}
-		}
-	}
-}
-
-.nfd-onboarding-tax-step {
-
-	.components-radio-control__option {
-
-		input:focus {
-				box-shadow: 0 0 0 transparent;
 		}
 	}
 }
