@@ -200,16 +200,10 @@
 
 .nfd-onboarding-tax-step {
 
-	.components-radio-control {
+	.components-radio-control__option {
 
-		&__option {
-
-			input {
-
-				&:focus {
-					box-shadow: 0 0 0 transparent;
-				}
-			}
+		input:focus {
+				box-shadow: 0 0 0 transparent;
 		}
 	}
 }
