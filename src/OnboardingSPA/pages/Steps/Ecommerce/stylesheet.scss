@@ -31,6 +31,31 @@
 	}
 }
 
+.radio-control-tax-step {
+
+	label {
+		padding: 10px 100px 10px 20px;
+	}
+
+	@media (max-width: #{ ($break-medium - 1) }) {
+
+		label {
+			padding-right: 15px;
+		}
+	}
+
+	@media (max-width: 480px) {
+
+		label {
+			padding: clamp(10px, 1.5vh, 15px) clamp(10px, 5%, 13px) clamp(10px, 5%, 13px);
+			width: unset;
+			height: fit-content;
+			line-height: 1.5;
+			white-space: normal;
+		}
+	}
+}
+
 .nfd-ecommerce-address-step {
 	padding: 1rem 0;
 
@@ -99,6 +124,7 @@
 			}
 
 			@media (max-width: #{ ($break-large) }) {
+
 				&[data-state-empty] {
 					grid-template-columns: auto;
 				}
@@ -140,8 +166,64 @@ div.onboarding-ecommerce-step {
 }
 
 div.step-product-numbers:nth-child(3) .components-v-stack {
+	
 	@media (min-width: #{ ($break-mobile)}) {
 		flex-direction: row !important;
+	}
+}
+
+.nfd-onboarding-tax-step {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	flex-direction: column;
+
+	&-tabs label {
+		border: 1px solid var(--nfd-onboarding-base-gray);
+		display: flex;
+		justify-content: flex-start;
+		padding: 10px 190px 10px 15px;
+		color: var(--nfd-onboarding-black);
+		background: var(--nfd-onboarding-base-gray);
+		font-weight: 350;
+		font-size: clamp(1rem, 0.92rem + 0.38vw, 1.875rem);
+		line-height: 1.5;
+		margin: 5px;
+		white-space: nowrap;
+
+		@media (max-width: #{ ($break-medium) - 1 }) {
+			padding-right: 100px;
+		}
+
+	}
+
+	input + label {
+		width: 100%;
+	}
+
+	&-tabs input:checked + label {
+		color: var(--nfd-onboarding-white);
+		background: var(--wp-admin-theme-color-darker-10);
+		border: none;
+	}
+
+	.components-radio-control {
+
+		&__option {
+			display: flex;
+			align-items: baseline;
+
+			input {
+				width: 22px;
+
+				&:focus {
+					box-shadow: 0 0 0 transparent;
+				}
+			}
+		}
+
+		margin: 32px 0 48px;
+		align-items: center;
 	}
 }
 
@@ -190,7 +272,7 @@ div.onboarding-product-step {
 		width: 100%;
 		margin: 0.5em 0;
 
-		&>* {
+		> * {
 			align-self: center;
 		}
 
@@ -198,7 +280,7 @@ div.onboarding-product-step {
 			gap: 1em;
 			grid-template-columns: auto max-content;
 
-			&>* {
+			> * {
 				align-self: baseline;
 			}
 
@@ -232,87 +314,10 @@ div.onboarding-product-step {
 				cursor: pointer;
 			}
 
-			input:checked+label {
+			input:checked + label {
 				color: var(--nfd-onboarding-white);
 				background: var(--wp-admin-theme-color-darker-10);
 			}
 		}
-	}
-}
-
-.radio-control-tax-step {
-	label {
-		padding: 10px 100px 10px 20px;
-	}
-
-	@media (max-width: #{ ($break-medium - 1) }) {
-		label {
-			padding-right: 15px;
-		}
-	}
-
-	@media (max-width: 480px) {
-		label {
-			padding: clamp(10px, 1.5vh, 15px) clamp(10px, 5%, 13px) clamp(10px, 5%, 13px);
-			width: unset;
-			height: fit-content;
-			line-height: 1.5;
-			white-space: normal;
-		}
-	}
-}
-
-.nfd-onboarding-tax-step {
-	display: flex;
-	align-items: center;
-	width: 100%;
-	flex-direction: column;
-
-	&-tabs label {
-		border: 1px solid var(--nfd-onboarding-base-gray);
-		display: flex;
-		justify-content: flex-start;
-		padding: 10px 190px 10px 15px;
-		color: var(--nfd-onboarding-black);
-		background: var(--nfd-onboarding-base-gray);
-		font-weight: 350;
-		font-size: clamp(1rem, 0.92rem + 0.38vw, 1.875rem);
-		line-height: 1.5;
-		margin: 5px;
-		white-space: nowrap;
-
-		@media (max-width: #{ ($break-medium) - 1 }) {
-			padding-right: 100px;
-		}
-
-	}
-
-	input+label {
-		width: 100%;
-	}
-
-	&-tabs input:checked+label {
-		color: var(--nfd-onboarding-white);
-		background: var(--wp-admin-theme-color-darker-10);
-		border: none;
-	}
-
-	.components-radio-control {
-
-		&__option {
-			display: flex;
-			align-items: baseline;
-
-			input {
-				width: 22px;
-
-				&:focus {
-					box-shadow: 0 0 0 transparent;
-				}
-			}
-		}
-
-		margin: 32px 0 48px;
-		align-items: center;
 	}
 }
