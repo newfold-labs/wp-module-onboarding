@@ -108,7 +108,7 @@ const StepTax = () => {
 	return (
 		<CommonLayout isBgPrimary isCentered>
 			<NewfoldLargeCard className="ecommerce-step">
-				<div className="nfd-onboarding-experience-step onboarding-ecommerce-step">
+				<div className="nfd-onboarding-tax-step onboarding-ecommerce-step">
 					<div className="nfd-card-heading center onboarding-ecommerce-step">
 						<CardHeader
 							heading={ content.heading }
@@ -118,7 +118,7 @@ const StepTax = () => {
 					<Animate type={ 'fade-in-disabled' } after={ settings }>
 						<RadioControl
 							className={
-								'nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-tax-step radio-control-main'
+								'nfd-onboarding-tax-step-tabs components-radio-control__input radio-control-tax-step radio-control-main'
 							}
 							selected={ tax?.option }
 							options={ content.options.map( ( option ) => {
