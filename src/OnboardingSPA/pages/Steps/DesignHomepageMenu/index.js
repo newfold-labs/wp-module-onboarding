@@ -19,6 +19,7 @@ import {
 	GlobalStylesProvider,
 } from '../../../components/LivePreview';
 import { trackHiiveEvent } from '../../../utils/analytics';
+import getContents from './contents';
 
 const StepDesignHomepageMenu = () => {
 	const location = useLocation();
@@ -54,12 +55,10 @@ const StepDesignHomepageMenu = () => {
 
 	function refactorPatterns( homepagePatternDataResp ) {
 		const makeHomepagePattern = [];
-		homepagePatternDataResp.forEach(
-			( homepagePatternData ) => {
-				makeHomepagePattern.push( homepagePatternData.content );
-				homepagePatternList.push( homepagePatternData.slug );
-			}
-		);
+		homepagePatternDataResp.forEach( ( homepagePatternData ) => {
+			makeHomepagePattern.push( homepagePatternData.content );
+			homepagePatternList.push( homepagePatternData.slug );
+		} );
 		setHomepagePatternList( homepagePatternList );
 		return makeHomepagePattern;
 	}
@@ -107,6 +106,8 @@ const StepDesignHomepageMenu = () => {
 		}
 	}, [ themeStatus ] );
 
+	const content = getContents();
+
 	function buildHomepagePreviews() {
 		return homepagePattern?.map( ( homepage, idx ) => {
 			if ( homepage ) {
@@ -133,8 +134,8 @@ const StepDesignHomepageMenu = () => {
 				<CommonLayout>
 					<div className="homepage_preview">
 						<HeadingWithSubHeading
-							title={ currentStep?.heading }
-							subtitle={ currentStep?.subheading }
+							title={ content.heading }
+							subtitle={ content.subheading }
 						/>
 						<div className="homepage_preview__list">
 							<LivePreviewSkeleton

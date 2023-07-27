@@ -30,7 +30,7 @@ const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 					description: sprintf(
 						/* translators: 1: site 2: Site */
 						__(
-							`Just like a %s putting a map of departments at the front door, a great %s Header & Menu help point visitors at the places you most want them to visit.`,
+							`Just like a %1$s putting a map of departments at the front door, a great %2$s Header & Menu help point visitors at the places you most want them to visit.`,
 							'wp-module-onboarding'
 						),
 						translations( 'site' ),

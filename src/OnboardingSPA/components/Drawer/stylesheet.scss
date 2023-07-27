@@ -460,7 +460,7 @@
 	&__below {
 		margin-top: 16px;
 
-		&-row {
+		&__row {
 			height: 50px;
 			color: var(--nfd-onboarding-black);
 			display: flex;
@@ -470,7 +470,7 @@
 			justify-content: flex-start;
 			border: 0.5px solid rgba(0, 0, 0, 0.3);
 
-			&-icon {
+			&__icon {
 				width: 22px;
 				height: 22px;
 				margin: 2px 12px;
@@ -480,14 +480,14 @@
 				justify-content: center;
 				border: 1px solid rgba(0, 0, 0, 0.3);
 
-				&_selected_border {
+				&--selected-border {
 					box-shadow: 0 0 5px 3px rgba(var(--nfd-onboarding-highlighted--rgb), 0.5);
 				}
 			}
 		}
 	}
 
-	&__picker-close-icon {
+	&__picker__close-icon {
 		width: 25px;
 		height: 25px;
 		display: flex;

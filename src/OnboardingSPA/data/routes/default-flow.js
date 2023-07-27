@@ -153,28 +153,24 @@ export const pages = [
 	{
 		path: '/',
 		title: '',
-		description: '',
 		Component: IndexPage,
 		Icon: <></>,
 	},
 	{
 		path: '/page/resources',
 		title: __( 'Resources', 'wp-module-onboarding' ),
-		description: '',
 		Component: PageResources,
 		Icon: post,
 	},
 	{
 		path: '/page/what-to-expect',
 		title: __( 'What to Expect', 'wp-module-onboarding' ),
-		description: '',
 		Component: PageWhatToExpect,
 		Icon: redo,
 	},
 	{
 		path: '*',
 		title: __( 'Error 404', 'wp-module-onboarding' ),
-		description: 'Please Check Again!',
 		Component: ErrorPage,
 		Icon: redo,
 	},
@@ -189,10 +185,6 @@ export const steps = [
 	{
 		path: '/wp-setup/step/get-started/welcome',
 		title: __( 'Welcome', 'wp-module-onboarding' ),
-		description: __(
-			"We'll use this to personalize this onboarding and future recommendations",
-			'wp-module-onboarding'
-		),
 		Component: StepGetStartedWelcome,
 		Icon: home,
 		priority: 20,
@@ -206,10 +198,6 @@ export const steps = [
 	{
 		path: '/wp-setup/step/get-started/experience',
 		title: __( 'WordPress Experience', 'wp-module-onboarding' ),
-		description: __(
-			"We'll use this to personalize this onboarding and future recommendations",
-			'wp-module-onboarding'
-		),
 		Component: StepGetStartedExperience,
 		Icon: home,
 		priority: 40,
@@ -259,15 +247,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/top-priority',
 		title: __( 'Top Priority', 'wp-module-onboarding' ),
-		heading: __( 'Tell us your top priority', 'wp-module-onboarding' ),
-		subheading: __(
-			"We'll prioritize getting you there.",
-			'wp-module-onboarding'
-		),
-		description: __(
-			"We'll recommend design choices, site options and products and features we have to offer.",
-			'wp-module-onboarding'
-		),
+		tooltipText: __( 'Tell us your top priority', 'wp-module-onboarding' ),
 		Component: StepTopPriority,
 		Icon: navigation,
 		priority: 100,
@@ -275,22 +255,10 @@ export const steps = [
 	{
 		path: '/wp-setup/step/basic-info',
 		title: __( 'Basic Info', 'wp-module-onboarding' ),
-		heading: sprintf(
+		tooltipText: sprintf(
 			/* translators: %s: website or store */
 			__( 'Introduce us to this %s', 'wp-module-onboarding' ),
 			translations( 'website' )
-		),
-		subheading: __(
-			'So we can introduce it to the web',
-			'wp-module-onboarding'
-		),
-		description: sprintf(
-			/* translators: %s: website or store */
-			__(
-				'Help visitors, search results and social media identify your %s.',
-				'wp-module-onboarding'
-			),
-			translations( 'site' )
 		),
 		Component: StepBasicInfo,
 		Icon: info,
@@ -338,6 +306,10 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/header-menu',
 		title: __( 'Header & Menu', 'wp-module-onboarding' ),
+		tooltipText: __(
+			"Let's make the right things visible",
+			'wp-module-onboarding'
+		),
 		Component: StepDesignHeaderMenu,
 		Icon: header,
 		priority: 220,
@@ -352,16 +324,8 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/homepage-menu',
 		title: __( 'Homepage Layouts', 'wp-module-onboarding' ),
-		heading: __(
+		tooltipText: __(
 			'There’s no place like a great home page',
-			'wp-module-onboarding'
-		),
-		subheading: __(
-			'Pick a starter layout you can refine and remix with your content',
-			'wp-module-onboarding'
-		),
-		description: __(
-			'A well-organized homepage makes visitors feel smart.',
 			'wp-module-onboarding'
 		),
 		Component: StepDesignHomepageMenu,
@@ -378,16 +342,8 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/site-pages',
 		title: __( 'Page Layouts', 'wp-module-onboarding' ),
-		heading: __(
+		tooltipText: __(
 			'You have ideas, we have page templates',
-			'wp-module-onboarding'
-		),
-		subheading: __(
-			'Begin closer to the finish line than a blank canvas.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			"Pick a page, pick a layout and we'll focus on the basics so you focus on what's important and unique.",
 			'wp-module-onboarding'
 		),
 		Component: StepSitePages,
@@ -403,16 +359,8 @@ export const steps = [
 	{
 		path: '/wp-setup/step/site-features',
 		title: __( 'Features', 'wp-module-onboarding' ),
-		heading: __(
+		tooltipText: __(
 			'Key features to supercharge your site',
-			'wp-module-onboarding'
-		),
-		subheading: __(
-			'Our toolbox of Plugins & Services is your toolbox.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			"Through Plugins, partners and unique $BRAND WordPress features, you've got tons of capabilities with $SITE.",
 			'wp-module-onboarding'
 		),
 		Component: StepSiteFeatures,
@@ -433,15 +381,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/what-next',
 		title: __( 'What Next', 'wp-module-onboarding' ),
-		heading: __( 'How else can we help?', 'wp-module-onboarding' ),
-		subheading: __(
-			"We've got the basics setup, but we can help with any next steps.",
-			'wp-module-onboarding'
-		),
-		description: __(
-			"Setup more of your site, show you around WordPress or share secrets to success -- we'll follow your lead on how you'd like to proceed.",
-			'wp-module-onboarding'
-		),
+		tooltipText: __( 'How else can we help?', 'wp-module-onboarding' ),
 		Component: StepWhatNext,
 		Icon: moveTo,
 		priority: 300,
@@ -457,15 +397,7 @@ export const conditionalSteps = [
 	{
 		path: '/wp-setup/step/design/colors',
 		title: __( 'Colors', 'wp-module-onboarding' ),
-		heading: __( "What's your color palette?", 'wp-module-onboarding' ),
-		subheading: __(
-			"We'll paint everything with your colors for a fresh, crisp look.",
-			'wp-module-onboarding'
-		),
-		description: __(
-			'Strong contrast and clear readability help your words jump off the screen.',
-			'wp-module-onboarding'
-		),
+		tooltipText: __( "What's your color palette?", 'wp-module-onboarding' ),
 		Component: StepDesignColors,
 		Icon: color,
 		priority: 180,
@@ -480,15 +412,7 @@ export const conditionalSteps = [
 	{
 		path: '/wp-setup/step/design/typography',
 		title: __( 'Typography', 'wp-module-onboarding' ),
-		heading: __( "What's your font style?", 'wp-module-onboarding' ),
-		subheading: __(
-			'Impress your visitors with strong branding and aesthetics.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			"Good typography uses style and proportions to give your words identity and priority. What's your story? Your focus?",
-			'wp-module-onboarding'
-		),
+		tooltipText: __( "What's your font style?", 'wp-module-onboarding' ),
 		Component: StepDesignTypography,
 		Icon: typography,
 		priority: 200,
@@ -522,7 +446,7 @@ export const initialTopSteps = () => {
 		/* This is a fake step to stand-in for all Design steps and does not have a Component to render */
 		path: '/wp-setup/step/design/theme-styles/menu',
 		title: __( 'Design', 'wp-module-onboarding' ),
-		description: '',
+		tooltipText: __( 'Design', 'wp-module-onboarding' ),
 		Icon: brush,
 		VIEW: VIEW_NAV_DESIGN,
 		primaryDrawerActiveLinkIncludes: '/wp-setup/step/design/',
@@ -532,7 +456,7 @@ export const initialTopSteps = () => {
 	const getStartedStep = {
 		path: '/wp-setup/step/get-started/welcome',
 		title: __( 'Get Started', 'wp-module-onboarding' ),
-		heading: __( 'Get Started', 'wp-module-onboarding' ),
+		tooltipText: __( 'Get Started', 'wp-module-onboarding' ),
 		Icon: home,
 		VIEW: VIEW_NAV_GET_STARTED,
 		primaryDrawerActiveLinkIncludes: '/wp-setup/step/get-started/',
