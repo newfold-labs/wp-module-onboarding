@@ -7,6 +7,7 @@ import { __ } from '@wordpress/i18n';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { wpAdminPage, pluginDashboardPage } from '../../../constants';
+import { completePluginSetup } from '../../utils/api/plugins';
 
 /**
  * Back step Navigation button.
@@ -60,6 +61,7 @@ async function saveDataAndExit( currentData ) {
 		currentData.isComplete = new Date().getTime();
 		setFlow( currentData );
 	}
+	completePluginSetup();
 	//Redirect to Admin Page for normal customers
 	// and Bluehost Dashboard for ecommerce customers
 	const exitLink = exitToWordpressForEcommerce()

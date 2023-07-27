@@ -5,6 +5,7 @@ import Button from '../../Button';
 
 import { setFlow } from '../../../utils/api/flow';
 import { wpAdminPage, pluginDashboardPage } from '../../../../constants';
+import { completePluginSetup } from '../../../utils/api/plugins';
 
 /**
  * Navigation Button Component on Card
@@ -34,6 +35,7 @@ const NavCardButton = ( { text, disabled } ) => {
 			currentData.isComplete = new Date().getTime();
 			setFlow( currentData );
 		}
+		completePluginSetup();
 		//Redirect to Admin Page for normal customers
 		// and Bluehost Dashboard for ecommerce customers
 		const exitLink = exitToWordpressForEcommerce()
