@@ -275,10 +275,6 @@ div.nfd-onboarding-large-card.ecommerce-step {
 		width: 100%;
 		flex-direction: column;
 
-		input + label {
-			width: 100%;
-		}
-
 		&-tabs {
 
 			.components-radio-control {
@@ -286,6 +282,10 @@ div.nfd-onboarding-large-card.ecommerce-step {
 				&__option {
 					display: flex;
 					align-items: baseline;
+
+					input + label {
+						width: 100%;
+					}
 
 					label {
 						border: 1px solid var(--nfd-onboarding-base-gray);
@@ -299,11 +299,10 @@ div.nfd-onboarding-large-card.ecommerce-step {
 						line-height: 1.5;
 						margin: 5px;
 						white-space: nowrap;
-			
+
 						@media (max-width: #{ ($break-medium) - 1 }) {
 							padding-right: 100px;
 						}
-			
 					}
 
 					input:checked + label {
@@ -320,7 +319,6 @@ div.nfd-onboarding-large-card.ecommerce-step {
 						}
 					}
 				}
-
 				margin: 32px 0 48px;
 				align-items: center;
 			}
