@@ -202,6 +202,22 @@
 	}
 }
 
+.nfd-onboarding-tax-step {
+
+	.components-radio-control {
+
+		&__option {
+
+			input {
+
+				&:focus {
+					box-shadow: 0 0 0 transparent;
+				}
+			}
+		}
+	}
+}
+
 div.onboarding-ecommerce-step {
 	color: var(--nfd-onboarding-black);
 	display: flex;
@@ -258,7 +274,7 @@ div.onboarding-product-step {
 		background-color: #f0f0f0;
 
 		@media (max-width: #{ ($break-small)}),
-		(max-height: #{ ($break-small)}) {
+			(max-height: #{ ($break-small)}) {
 			padding: 5px;
 		}
 
