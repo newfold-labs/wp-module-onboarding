@@ -35,7 +35,7 @@ final class Events {
 		'homepage-layout'                      => true,
 		'top-priority'                         => true,
 		'top-priority-skipped'                 => true,
-		'exit-to-wordpress'                    => true,
+		'exit-to-wordpress'                    => null,
 		'products-info'                        => true,
 		'yith-wonder/company-page-layout'      => true,
 		'yith-wonder/contact-us-layout'        => true,
