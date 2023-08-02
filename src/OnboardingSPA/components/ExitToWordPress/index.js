@@ -9,7 +9,11 @@ import classNames from 'classnames';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
-import { wpAdminPage, pluginDashboardPage } from '../../../constants';
+import {
+	wpAdminPage,
+	pluginDashboardPage,
+	HIIVE_ANALYTICS_CATEGORY,
+} from '../../../constants';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import { trackHiiveEvent } from '../../utils/analytics';
 
@@ -94,7 +98,7 @@ const ExitToWordPress = ( {
 			setFlow( currentData );
 		}
 		trackHiiveEvent( 'exit-to-wordpress', window.location.href );
-		await HiiveAnalytics.dispatchEvents();
+		await HiiveAnalytics.dispatchEvents( HIIVE_ANALYTICS_CATEGORY );
 		//Redirect to Admin Page for normal customers
 		// and Bluehost Dashboard for ecommerce customers
 		const exitLink = exitToWordpressForEcommerce()

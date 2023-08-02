@@ -5,22 +5,23 @@ import Sidebar from '../Sidebar';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { setFlow } from '../../utils/api/flow';
+import { conditionalSteps } from '../../data/routes';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { isEmpty, updateWPSettings } from '../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../store';
-import { conditionalSteps } from '../../data/routes/';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { kebabCase, orderBy, filter } from 'lodash';
+import { kebabCase } from 'lodash';
 import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { SlotFillProvider } from '@wordpress/components';
 import { useEffect, Fragment, useState } from '@wordpress/element';
 import { FullscreenMode } from '@wordpress/interface';
-import { API_REQUEST } from '../../../constants';
+import { API_REQUEST, HIIVE_ANALYTICS_CATEGORY } from '../../../constants';
 import NewfoldInterfaceSkeleton from '../NewfoldInterfaceSkeleton';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import { trackHiiveEvent } from '../../utils/analytics';
+import { injectInAllSteps } from '../../data/routes/allStepsHandler';
 
 /**
  * Primary app that renders the <NewfoldInterfaceSkeleton />.
@@ -41,8 +42,6 @@ const App = () => {
 		currentData,
 		socialData,
 		firstStep,
-		routes,
-		designSteps,
 		allSteps,
 	} = useSelect( ( select ) => {
 		return {
@@ -53,9 +52,7 @@ const App = () => {
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			socialData: select( nfdOnboardingStore ).getOnboardingSocialData(),
 			firstStep: select( nfdOnboardingStore ).getFirstStep(),
-			routes: select( nfdOnboardingStore ).getRoutes(),
 			allSteps: select( nfdOnboardingStore ).getAllSteps(),
-			designSteps: select( nfdOnboardingStore ).getDesignSteps(),
 		};
 	}, [] );
 
@@ -65,12 +62,11 @@ const App = () => {
 	const {
 		setActiveStep,
 		setActiveFlow,
-		updateRoutes,
-		updateDesignSteps,
 		updateAllSteps,
 		flushQueue,
 		enqueueRequest,
 		setOnboardingSocialData,
+		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	async function syncSocialSettings() {
@@ -151,78 +147,17 @@ const App = () => {
 		}
 	}
 
-	const addColorAndTypographyRoutes = () => {
-		const updates = removeColorAndTypographyRoutes();
-		const steps = [
-			conditionalSteps.designColors,
-			conditionalSteps.designTypography,
-		];
-		return {
-			routes: orderBy(
-				updates.routes.concat( steps ),
-				[ 'priority' ],
-				[ 'asc' ]
-			),
-			allSteps: orderBy(
-				updates.allSteps.concat( steps ),
-				[ 'priority' ],
-				[ 'asc' ]
-			),
-			designSteps: orderBy(
-				updates.designSteps.concat( steps ),
-				[ 'priority' ],
-				[ 'asc' ]
-			),
-		};
-	};
-
-	const removeColorAndTypographyRoutes = () => {
-		return {
-			routes: filter(
-				routes,
-				( route ) =>
-					! route.path.includes(
-						conditionalSteps.designColors.path
-					) &&
-					! route.path.includes(
-						conditionalSteps.designTypography.path
-					)
-			),
-			allSteps: filter(
-				allSteps,
-				( allStep ) =>
-					! allStep.path.includes(
-						conditionalSteps.designColors.path
-					) &&
-					! allStep.path.includes(
-						conditionalSteps.designTypography.path
-					)
-			),
-			designSteps: filter(
-				designSteps,
-				( designStep ) =>
-					! designStep.path.includes(
-						conditionalSteps.designColors.path
-					) &&
-					! designStep.path.includes(
-						conditionalSteps.designTypography.path
-					)
-			),
-		};
-	};
-
-	function handleColorsAndTypographyRoutes() {
+	function handleConditionalDesignStepsRoutes() {
 		if (
 			location?.pathname.includes( 'colors' ) ||
 			location?.pathname.includes( 'typography' )
 		) {
-			const updates = currentData?.data?.customDesign
-				? addColorAndTypographyRoutes()
-				: removeColorAndTypographyRoutes();
-
-			updateRoutes( updates.routes );
-			updateDesignSteps( updates.designSteps );
+			const updates = injectInAllSteps( allSteps, conditionalSteps );
 			updateAllSteps( updates.allSteps );
+			if ( ! currentData.data.customDesign ) {
+				currentData.data.customDesign = true;
+				setCurrentOnboardingData( currentData );
+			}
 		}
 	}
 
@@ -230,7 +165,7 @@ const App = () => {
 		const previousStep = window.nfdOnboarding?.previousStepID;
 		if ( typeof previousStep !== 'string' ) {
 			window.nfdOnboarding.previousStepID = location.pathname;
-			HiiveAnalytics.dispatchEvents();
+			HiiveAnalytics.dispatchEvents( HIIVE_ANALYTICS_CATEGORY );
 			return;
 		}
 
@@ -272,7 +207,7 @@ const App = () => {
 		}
 
 		window.nfdOnboarding.previousStepID = location.pathname;
-		HiiveAnalytics.dispatchEvents();
+		HiiveAnalytics.dispatchEvents( HIIVE_ANALYTICS_CATEGORY );
 	};
 
 	useEffect( () => {
@@ -282,7 +217,7 @@ const App = () => {
 	useEffect( () => {
 		syncStoreToDB();
 		handlePreviousStepTracking();
-		handleColorsAndTypographyRoutes();
+		handleConditionalDesignStepsRoutes();
 		if ( location.pathname.includes( '/step' ) ) {
 			setActiveFlow( onboardingFlow );
 			setActiveStep( location.pathname );

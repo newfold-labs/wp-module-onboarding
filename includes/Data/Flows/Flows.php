@@ -148,11 +148,11 @@ final class Flows {
 		return self::$exception_list;
 	}
 
-	 /**
-	  * Get Onboarding Flow information.
-	  *
-	  * @return array
-	  */
+	/**
+	 * Get Onboarding Flow information.
+	 *
+	 * @return array
+	 */
 	public static function get_data() {
 		return self::$data;
 	}
@@ -236,7 +236,7 @@ final class Flows {
 	 * @return string|boolean
 	 */
 	public static function get_flow_from_plugins() {
-		if ( PluginInstaller::exists( 'woocommerce', true ) ) {
+		if ( PluginInstaller::exists( 'woocommerce', false ) ) {
 			return true === self::get_flows()['ecommerce'] ? 'ecommerce' : false;
 		}
 		return false;

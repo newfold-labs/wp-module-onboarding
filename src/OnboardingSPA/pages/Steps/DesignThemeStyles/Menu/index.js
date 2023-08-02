@@ -21,7 +21,7 @@ import {
 	LivePreviewSelectableCard,
 	LivePreviewSkeleton,
 } from '../../../../components/LivePreview';
-import { addColorAndTypographyRoutes } from '../utils';
+import { injectInAllSteps } from '../../../../data/routes/allStepsHandler';
 import { trackHiiveEvent } from '../../../../utils/analytics';
 
 const StepDesignThemeStylesMenu = () => {
@@ -37,9 +37,7 @@ const StepDesignThemeStylesMenu = () => {
 		nextStep,
 		currentData,
 		storedPreviewSettings,
-		routes,
 		allSteps,
-		designSteps,
 		themeStatus,
 		themeVariations,
 	} = useSelect( ( select ) => {
@@ -52,9 +50,7 @@ const StepDesignThemeStylesMenu = () => {
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			storedPreviewSettings:
 				select( nfdOnboardingStore ).getPreviewSettings(),
-			routes: select( nfdOnboardingStore ).getRoutes(),
 			allSteps: select( nfdOnboardingStore ).getAllSteps(),
-			designSteps: select( nfdOnboardingStore ).getDesignSteps(),
 			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 			themeVariations: select( nfdOnboardingStore ).getStepPreviewData(),
 		};
@@ -66,8 +62,6 @@ const StepDesignThemeStylesMenu = () => {
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
-		updateRoutes,
-		updateDesignSteps,
 		updateAllSteps,
 		flushQueue,
 	} = useDispatch( nfdOnboardingStore );
@@ -125,20 +119,14 @@ const StepDesignThemeStylesMenu = () => {
 
 	const skiptoCustomPage = () => {
 		// Add Custom Steps into the Flow
-		const updates = addColorAndTypographyRoutes(
-			routes,
-			allSteps,
-			designSteps
-		);
-		updateRoutes( updates.routes );
-		updateDesignSteps( updates.designSteps );
+		const updates = injectInAllSteps( allSteps, conditionalSteps );
 		updateAllSteps( updates.allSteps );
 
 		currentData.data.customDesign = true;
 		setCurrentOnboardingData( currentData );
 		trackHiiveEvent( 'customize-design', true );
 		// Find the first Custom Conditional Step and navigate there
-		navigate( conditionalSteps.designColors.path );
+		navigate( conditionalSteps[ 0 ].path );
 	};
 
 	const buildPreviews = () => {

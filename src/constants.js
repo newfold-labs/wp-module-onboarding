@@ -47,12 +47,6 @@ export const THEME_STATUS_ACTIVE = 'activated';
 export const THEME_STATUS_FAILURE = 'failed';
 export const THEME_INSTALL_WAIT_TIMEOUT = 30000;
 
-export const ECOMMERCE_STEPS_PLUGIN = 'woocommerce';
-export const PLUGIN_STATUS_INIT = 'init';
-export const PLUGIN_STATUS_NOT_ACTIVE = 'inactive';
-export const PLUGIN_STATUS_INSTALLING = 'installing';
-export const PLUGIN_STATUS_ACTIVE = 'activated';
-export const PLUGIN_INSTALL_WAIT_TIMEOUT = 30000;
 export const HIIVE_ANALYTICS_CATEGORY = 'wp-onboarding';
 
 /**

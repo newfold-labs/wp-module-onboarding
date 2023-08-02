@@ -1,6 +1,6 @@
 {
     "name": "@newfold-labs/wp-module-onboarding",
-    "version": "1.8.2",
+    "version": "1.9.1",
     "description": "Next-generation WordPress Onboarding for WordPress sites at Newfold Digital.",
     "license": "GPL-2.0-or-later",
     "private": true,
@@ -29,7 +29,7 @@
         "test:unit": "npx wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins//phpunit.xml --verbose'"
     },
     "dependencies": {
-        "@newfold-labs/js-utility-ui-analytics": "1.0.0",
+        "@newfold-labs/js-utility-ui-analytics": "1.2.0",
         "@wordpress/interface": "^5.10.0",
         "@wordpress/style-engine": "^0.11.0",
         "classnames": "^2.3.1",

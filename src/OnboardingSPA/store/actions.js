@@ -138,13 +138,6 @@ export function updateThemeStatus( themeStatus ) {
 	};
 }
 
-export function updatePluginsStatus( pluginsStatus ) {
-	return {
-		type: 'UPDATE_PLUGINS_STATUS',
-		pluginsStatus,
-	};
-}
-
 export function setIsSidebarOpened( isOpen ) {
 	return {
 		type: 'SET_SIDEBAR_OPENED',

@@ -10,7 +10,6 @@ import CardHeader from '../../../../components/CardHeader';
 import CommonLayout from '../../../../components/Layouts/Common';
 import NeedHelpTag from '../../../../components/NeedHelpTag';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
-import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { useWPSettings as getWPSettings } from '../useWPSettings';
 import Animate from '../../../../components/Animate';
@@ -107,45 +106,43 @@ const StepTax = () => {
 	};
 
 	return (
-		<EcommerceStateHandler>
-			<CommonLayout isBgPrimary isCentered>
-				<NewfoldLargeCard className="ecommerce-step">
-					<div className="nfd-onboarding-experience-step onboarding-ecommerce-step">
-						<div className="nfd-card-heading center onboarding-ecommerce-step">
-							<CardHeader
-								heading={ content.heading }
-								subHeading={ content.subheading }
-							/>
-						</div>
-						<Animate type={ 'fade-in-disabled' } after={ settings }>
-							<RadioControl
-								className={
-									'nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-tax-step radio-control-main'
-								}
-								selected={ tax?.option }
-								options={ content.options.map( ( option ) => {
-									return {
-										label: option.content,
-										value: option.value,
-									};
-								} ) }
-								onChange={ ( value ) => selectOption( value ) }
-							/>
-						</Animate>
-						<button
-							className="nfd-nav-card-button nfd-card-button"
-							disabled={
-								settings === null || tax?.option === undefined
-							}
-							onClick={ handleButtonClick }
-						>
-							{ content.buttonText }
-						</button>
-						<NeedHelpTag />
+		<CommonLayout isBgPrimary isCentered>
+			<NewfoldLargeCard className="ecommerce-step">
+				<div className="nfd-onboarding-experience-step onboarding-ecommerce-step">
+					<div className="nfd-card-heading center onboarding-ecommerce-step">
+						<CardHeader
+							heading={ content.heading }
+							subHeading={ content.subheading }
+						/>
 					</div>
-				</NewfoldLargeCard>
-			</CommonLayout>
-		</EcommerceStateHandler>
+					<Animate type={ 'fade-in-disabled' } after={ settings }>
+						<RadioControl
+							className={
+								'nfd-onboarding-experience-step-tabs components-radio-control__input radio-control-tax-step radio-control-main'
+							}
+							selected={ tax?.option }
+							options={ content.options.map( ( option ) => {
+								return {
+									label: option.content,
+									value: option.value,
+								};
+							} ) }
+							onChange={ ( value ) => selectOption( value ) }
+						/>
+					</Animate>
+					<button
+						className="nfd-nav-card-button nfd-card-button"
+						disabled={
+							settings === null || tax?.option === undefined
+						}
+						onClick={ handleButtonClick }
+					>
+						{ content.buttonText }
+					</button>
+					<NeedHelpTag />
+				</div>
+			</NewfoldLargeCard>
+		</CommonLayout>
 	);
 };
 
