@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { get, isEmpty, kebabCase, pickBy, reduce, set } from 'lodash';
 
 /**
@@ -13,7 +14,9 @@ import {
 } from '@wordpress/blocks';
 import { getCSSRules } from '@wordpress/style-engine';
 import {
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__unstablePresetDuotoneFilter as PresetDuotoneFilter,
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalGetGapCSSValue as getGapCSSValue,
 } from '@wordpress/block-editor';
 
@@ -182,7 +185,7 @@ export function getStylesDeclarations(
 	const isRoot = ROOT_BLOCK_SELECTOR === selector;
 	const output = reduce(
 		STYLE_PROPERTY,
-		( declarations, { value, properties, useEngine, rootOnly }, key ) => {
+		( declarations, { value, properties, rootOnly }, key ) => {
 			if ( rootOnly && ! isRoot ) {
 				return declarations;
 			}
@@ -337,20 +340,20 @@ export function getLayoutStyles( {
 								combinedSelector =
 									selector === ROOT_BLOCK_SELECTOR
 										? `:where(.${ className }${
-												spacingStyle?.selector || ''
-										  })`
+											spacingStyle?.selector || ''
+										})`
 										: `:where(${ selector }.${ className }${
-												spacingStyle?.selector || ''
-										  })`;
+											spacingStyle?.selector || ''
+										})`;
 							} else {
 								combinedSelector =
 									selector === ROOT_BLOCK_SELECTOR
 										? `${ selector } .${ className }${
-												spacingStyle?.selector || ''
-										  }`
+											spacingStyle?.selector || ''
+										}`
 										: `${ selector }.${ className }${
-												spacingStyle?.selector || ''
-										  }`;
+											spacingStyle?.selector || ''
+										}`;
 							}
 							ruleset += `${ combinedSelector } { ${ declarations.join(
 								'; '
@@ -811,6 +814,19 @@ export const getBlockSelectors = ( blockTypes ) => {
 	return result;
 };
 
+const processCSSNesting = ( css, blockSelector ) => {
+	let processedCSS = '';
+
+	// Split CSS nested rules.
+	const parts = css.split( '&' );
+	parts.forEach( ( part ) => {
+		processedCSS += ! part.includes( '{' )
+			? blockSelector + '{' + part + '}' // If the part doesn't contain braces, it applies to the root level.
+			: blockSelector + part; // Prepend the selector, which effectively replaces the "&" character.
+	} );
+	return processedCSS;
+};
+
 export function useGlobalStylesOutput(
 	previewSettings,
 	storedPreviewSettings
@@ -850,15 +866,13 @@ export function useGlobalStylesOutput(
 		hasFallbackGapSupport,
 		disableLayoutStyles
 	);
+	const svgs = toSvgFilters( requiredSettings, blockSelectors );
 
 	const result = storedPreviewSettings.settings.styles.filter( ( style ) => {
-		if (
-			! (
-				style.hasOwnProperty( 'id' ) &&
-				( style.id === 'customProperty' || style.id === 'globalStyle' )
-			)
-		)
-			return style;
+		return ! (
+			style.hasOwnProperty( 'id' ) &&
+			( style.id === 'customProperty' || style.id === 'globalStyle' )
+		);
 	} );
 
 	const stylesheets = [
@@ -873,7 +887,25 @@ export function useGlobalStylesOutput(
 			css: globalStyles,
 			isGlobalStyles: true,
 		},
+		{
+			assets: svgs,
+			__unstableType: 'svg',
+			isGlobalStyles: true,
+		},
 	];
+
+	getBlockTypes().forEach( ( blockType ) => {
+		if ( requiredSettings.styles.blocks[ blockType.name ]?.css ) {
+			const selector = blockSelectors[ blockType.name ].selector;
+			stylesheets.push( {
+				css: processCSSNesting(
+					requiredSettings.styles.blocks[ blockType.name ]?.css,
+					selector
+				),
+				isGlobalStyles: true,
+			} );
+		}
+	} );
 
 	previewSettings.settings.styles = stylesheets;
 	previewSettings.settings.__unstableResolvedAssets =

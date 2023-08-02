@@ -71,7 +71,6 @@ function ScaledBlockPreview( {
 			} }
 		>
 			<Iframe
-				head={ <EditorStyles styles={ editorStyles } /> }
 				assets={ assets }
 				contentRef={ useRefEffect( ( bodyElement ) => {
 					const {
@@ -105,6 +104,7 @@ function ScaledBlockPreview( {
 							: minHeight,
 				} }
 			>
+				<EditorStyles styles={ editorStyles } />
 				{ contentResizeListener }
 				{
 					/* Filters need to be rendered before children to avoid Safari rendering issues. */

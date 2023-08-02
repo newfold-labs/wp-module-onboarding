@@ -52,7 +52,6 @@ const BlockPreview = ( {
 				useGlobalStylesOutput(
 					previewSettings,
 					storedPreviewSettings,
-					'block-preview'
 				)
 			);
 		} else {
