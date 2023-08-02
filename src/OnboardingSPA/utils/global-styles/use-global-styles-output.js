@@ -340,20 +340,20 @@ export function getLayoutStyles( {
 								combinedSelector =
 									selector === ROOT_BLOCK_SELECTOR
 										? `:where(.${ className }${
-											spacingStyle?.selector || ''
-										})`
+												spacingStyle?.selector || ''
+										  })`
 										: `:where(${ selector }.${ className }${
-											spacingStyle?.selector || ''
-										})`;
+												spacingStyle?.selector || ''
+										  })`;
 							} else {
 								combinedSelector =
 									selector === ROOT_BLOCK_SELECTOR
 										? `${ selector } .${ className }${
-											spacingStyle?.selector || ''
-										}`
+												spacingStyle?.selector || ''
+										  }`
 										: `${ selector }.${ className }${
-											spacingStyle?.selector || ''
-										}`;
+												spacingStyle?.selector || ''
+										  }`;
 							}
 							ruleset += `${ combinedSelector } { ${ declarations.join(
 								'; '
