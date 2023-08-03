@@ -20,7 +20,7 @@ const BaseLayout = ( {
 	useEffect( () => {
 		mainContainer?.focus( { preventScroll: true } );
 		speakRouteTitle( 'Override' );
-		trackHiiveEvent( 'pageview', window.location.href );
+		trackHiiveEvent( 'pageview', { page: window.location.href } );
 	}, [ location.pathname ] );
 
 	return (

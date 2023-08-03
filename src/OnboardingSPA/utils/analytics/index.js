@@ -4,14 +4,14 @@ import {
 } from '@newfold-labs/js-utility-ui-analytics';
 import { HIIVE_ANALYTICS_CATEGORY } from '../../../constants';
 
-export const trackHiiveEvent = ( action, value ) => {
+export const trackHiiveEvent = ( action, eventObj ) => {
 	const data = {
-		value,
+		...eventObj,
 		timestamp: Date.now(),
 	};
-	if ( 'pageview' === action ) {
-		data.page = value;
-	}
+	// if ( 'pageview' === action ) {
+	// 	data.page = value;
+	// }
 	const hiiveEvent = new HiiveEvent(
 		HIIVE_ANALYTICS_CATEGORY,
 		action,

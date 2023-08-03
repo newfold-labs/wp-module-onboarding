@@ -47,7 +47,7 @@ export const THEME_STATUS_ACTIVE = 'activated';
 export const THEME_STATUS_FAILURE = 'failed';
 export const THEME_INSTALL_WAIT_TIMEOUT = 30000;
 
-export const HIIVE_ANALYTICS_CATEGORY = 'wp-onboarding';
+export const HIIVE_ANALYTICS_CATEGORY = 'wonder_start';
 
 /**
  * All views for the <Drawer /> component.

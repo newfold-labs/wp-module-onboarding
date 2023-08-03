@@ -135,9 +135,11 @@ const StepPrimarySetup = () => {
 			clearTimeout( typingTimeout );
 			setTypingTimeout(
 				setTimeout( () => {
-					trackHiiveEvent( 'secondary-type', {
+					trackHiiveEvent( 'secondary_type_set', {
 						refers: 'custom',
-						value,
+						label_key: 'secondary_type',
+						secondary_type: value,
+						page: window.location.href,
 					} );
 				}, 1000 )
 			);
@@ -164,7 +166,12 @@ const StepPrimarySetup = () => {
 		currentData.data.siteType.primary.value = primaryCategory;
 		currentData.data.siteType.secondary.value = secType;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'secondary-type', { refers: 'slug', value: secType } );
+		trackHiiveEvent( 'secondary_type_set', {
+			refers: 'slug',
+			label_key: 'secondary_type',
+			condary_type: secType,
+			page: window.location.href,
+		} );
 	};
 
 	const changePrimaryType = ( direction ) => {

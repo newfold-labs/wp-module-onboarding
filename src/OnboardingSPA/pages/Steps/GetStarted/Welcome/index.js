@@ -14,6 +14,7 @@ import {
 	SIDEBAR_LEARN_MORE,
 } from '../../../../../constants';
 import getContents from './contents';
+import { trackHiiveEvent } from '../../../../utils/analytics';
 
 const StepWelcome = () => {
 	const location = useLocation();
@@ -32,14 +33,17 @@ const StepWelcome = () => {
 		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
+	const content = getContents( brandName );
+
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsHeaderNavigationEnabled( true );
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
+		trackHiiveEvent( 'onboarding_started', {
+			page: window.location.href,
+		} );
 	}, [] );
-
-	const content = getContents( brandName );
 
 	return (
 		<CommonLayout isBgPrimary isCentered>

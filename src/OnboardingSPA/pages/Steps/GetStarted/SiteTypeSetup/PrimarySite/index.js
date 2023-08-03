@@ -90,9 +90,11 @@ const StepPrimarySetup = () => {
 		currentData.data.siteType.primary.refers = 'slug';
 		currentData.data.siteType.primary.value = primType;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'primary-type', {
+		trackHiiveEvent( 'primary_type_set', {
 			refers: 'slug',
-			value: primType,
+			label_key: 'primary_type',
+			primary_type: primType,
+			page: window.location.href,
 		} );
 	};
 
@@ -110,9 +112,11 @@ const StepPrimarySetup = () => {
 			clearTimeout( typingTimeout );
 			setTypingTimeout(
 				setTimeout( () => {
-					trackHiiveEvent( 'primary-type', {
+					trackHiiveEvent( 'primary_type_set', {
 						refers: 'custom',
-						value,
+						label_key: 'primary_type',
+						primary_type: value,
+						page: window.location.href,
 					} );
 				}, 1000 )
 			);

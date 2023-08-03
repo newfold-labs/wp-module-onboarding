@@ -84,7 +84,11 @@ const StepTopPriority = () => {
 		const selectedPriorityType = priorityTypes[ selected ];
 		currentData.data.topPriority.priority1 = selectedPriorityType;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'top-priority', priorityTypes[ selected ] );
+		trackHiiveEvent( 'onboarding_top_priority_set', {
+			label_key: 'top_riority',
+			top_priority: priorityTypes[ selected ],
+			page: window.location.href,
+		} );
 		if ( 'selling' === selectedPriorityType ) {
 			handleSelling();
 		} else {
@@ -96,10 +100,11 @@ const StepTopPriority = () => {
 		window.nfdOnboarding.newFlow = undefined;
 		currentData.data.topPriority.priority1 = priorityTypes[ 0 ];
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent(
-			'top-priority-skipped',
-			priorityTypes[ 0 ]
-		);
+		trackHiiveEvent( 'onboarding_top_priority_set', {
+			label_key: 'top_riority',
+			top_priority: 'skipped',
+			page: window.location.href,
+		} );
 	};
 
 	const content = getContents();

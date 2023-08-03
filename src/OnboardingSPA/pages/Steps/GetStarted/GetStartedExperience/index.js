@@ -53,12 +53,13 @@ const GetStartedExperience = () => {
 		const currentDataCopy = currentData;
 		currentDataCopy.data.wpComfortLevel = value || '0';
 		setCurrentOnboardingData( currentDataCopy );
-		trackHiiveEvent(
-			'wp-experience',
-			content.options.filter( ( option ) => {
+		trackHiiveEvent( 'experience_level_set', {
+			label_key: 'experience_level',
+			experience_level: content.options.filter( ( option ) => {
 				return option.value === value;
-			} )[ 0 ].label
-		);
+			} )[ 0 ].label,
+			page: window.location.href,
+		} );
 	};
 
 	const content = getContents();

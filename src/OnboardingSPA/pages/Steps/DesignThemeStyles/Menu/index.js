@@ -89,10 +89,11 @@ const StepDesignThemeStylesMenu = () => {
 		setGlobalStyles( globalStylesResponse?.body );
 		setSelectedStyle( currentData.data.theme.variation );
 		if ( '' === currentData.data.theme.variation ) {
-			trackHiiveEvent(
-				'default-style',
-				globalStylesResponse.body[ 0 ].title
-			);
+			trackHiiveEvent( 'theme_style_selected', {
+				label_key: 'theme_style',
+				theme_style: globalStylesResponse.body[ 0 ].title,
+				page: window.location.href,
+			} );
 		}
 	};
 
@@ -112,7 +113,11 @@ const StepDesignThemeStylesMenu = () => {
 		currentData.data.theme.variation = selectedGlobalStyle.title;
 		setCurrentOnboardingData( currentData );
 		navigate( nextStep.path );
-		trackHiiveEvent( 'selected-style', selectedGlobalStyle.title );
+		trackHiiveEvent( 'theme_style_selected', {
+			label_key: 'theme_style',
+			theme_style: selectedGlobalStyle.title,
+			page: window.location.href,
+		} );
 	};
 
 	const skiptoCustomPage = () => {

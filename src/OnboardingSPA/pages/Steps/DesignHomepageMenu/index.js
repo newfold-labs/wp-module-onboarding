@@ -97,7 +97,11 @@ const StepDesignHomepageMenu = () => {
 			homepage,
 		};
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'homepage-layout', homepage );
+		trackHiiveEvent( 'homepage_layout_selected', {
+			label_key: 'layout',
+			layout: homepage,
+			page: window.location.href,
+		} );
 	}
 
 	useEffect( () => {
