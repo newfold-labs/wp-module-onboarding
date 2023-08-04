@@ -23,8 +23,9 @@ export function flow(
 			designSteps: initialDesignSteps(),
 			getStartedSteps: initialGetStartedSteps(),
 			storeInfoSteps: initialStoreInfoSteps(),
-			currentStep: '/wp-setup/step/what-next',
+			currentStep: initialSteps[ 0 ].path,
 		},
+		chapter: undefined,
 	},
 	action
 ) {
@@ -65,6 +66,11 @@ export function flow(
 					...state.steps,
 					designSteps: action.designSteps,
 				},
+			};
+		case 'SET_ACTIVE_CHAPTER':
+			return {
+				...state,
+				chapter: action.chapter,
 			};
 	}
 

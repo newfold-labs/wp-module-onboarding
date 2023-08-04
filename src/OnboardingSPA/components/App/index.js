@@ -17,11 +17,25 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { SlotFillProvider } from '@wordpress/components';
 import { useEffect, Fragment, useState } from '@wordpress/element';
 import { FullscreenMode } from '@wordpress/interface';
-import { API_REQUEST, HIIVE_ANALYTICS_CATEGORY } from '../../../constants';
+import { API_REQUEST } from '../../../constants';
 import NewfoldInterfaceSkeleton from '../NewfoldInterfaceSkeleton';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
-import { trackHiiveEvent } from '../../utils/analytics';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../utils/analytics/hiive';
 import { injectInAllSteps } from '../../data/routes/allStepsHandler';
+import {
+	ACTION_LOGO_ADDED,
+	ACTION_ONBOARDING_CHAPTER_COMPLETE,
+	ACTION_ONBOARDING_CHAPTER_STARTED,
+	ACTION_SITE_TITLE_SET,
+	ACTION_SOCIAL_ADDED,
+	ACTION_STARTER_PAGES_SELECTED,
+	ACTION_TAGLINE_SET,
+	CATEGORY,
+} from '../../utils/analytics/hiive/constants';
+import { socialMediaStoreToState } from '../SocialMediaForm/utils';
 
 /**
  * Primary app that renders the <NewfoldInterfaceSkeleton />.
@@ -43,18 +57,28 @@ const App = () => {
 		socialData,
 		firstStep,
 		allSteps,
-	} = useSelect( ( select ) => {
-		return {
-			isDrawerOpen: select( nfdOnboardingStore ).isDrawerOpened(),
-			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
-			onboardingFlow: select( nfdOnboardingStore ).getOnboardingFlow(),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			socialData: select( nfdOnboardingStore ).getOnboardingSocialData(),
-			firstStep: select( nfdOnboardingStore ).getFirstStep(),
-			allSteps: select( nfdOnboardingStore ).getAllSteps(),
-		};
-	}, [] );
+		currentChapter,
+		currentStep,
+	} = useSelect(
+		( select ) => {
+			return {
+				isDrawerOpen: select( nfdOnboardingStore ).isDrawerOpened(),
+				newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
+				onboardingFlow:
+					select( nfdOnboardingStore ).getOnboardingFlow(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				socialData:
+					select( nfdOnboardingStore ).getOnboardingSocialData(),
+				firstStep: select( nfdOnboardingStore ).getFirstStep(),
+				allSteps: select( nfdOnboardingStore ).getAllSteps(),
+				currentChapter:
+					select( nfdOnboardingStore ).getCurrentChapter(),
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+			};
+		},
+		[ location.pathname ]
+	);
 
 	const [ isRequestPlaced, setIsRequestPlaced ] = useState( false );
 	const [ didVisitBasicInfo, setDidVisitBasicInfo ] = useState( false );
@@ -67,6 +91,7 @@ const App = () => {
 		enqueueRequest,
 		setOnboardingSocialData,
 		setCurrentOnboardingData,
+		setActiveChapter,
 	} = useDispatch( nfdOnboardingStore );
 
 	async function syncSocialSettings() {
@@ -88,18 +113,8 @@ const App = () => {
 			payload = address;
 		}
 		if ( tax !== undefined ) {
-			// const option = tax.option;
-			// const isStoreDetailsFilled = tax.isStoreDetailsFilled;
 			delete tax.option;
 			delete tax.isStoreDetailsFilled;
-			// No Auto-calculate taxes for MMP
-			// if (option === "1") {
-			// 	if (isStoreDetailsFilled) {
-			// 		payload = { ...payload, ...tax };
-			// 	}
-			// } else {
-			// 	payload = { ...payload, ...tax };
-			// }
 			payload = { ...payload, ...tax };
 		}
 		if ( ! isEmpty( payload ) ) {
@@ -165,49 +180,65 @@ const App = () => {
 		const previousStep = window.nfdOnboarding?.previousStepID;
 		if ( typeof previousStep !== 'string' ) {
 			window.nfdOnboarding.previousStepID = location.pathname;
-			HiiveAnalytics.dispatchEvents( HIIVE_ANALYTICS_CATEGORY );
+			HiiveAnalytics.dispatchEvents( CATEGORY );
 			return;
 		}
 
-		if ( previousStep.includes( 'products' ) ) {
-			trackHiiveEvent( 'products-info', {
-				productCount:
-					currentData.storeDetails.productInfo.product_count,
-				productTypes:
-					currentData.storeDetails.productInfo.product_types.join(
-						','
-					),
-			} );
-		}
+		if ( previousStep.includes( 'basic-info' ) ) {
+			const siteTitle = currentData.data.blogName;
+			const siteDescription = currentData.data.blogDescription;
+			const siteLogo = currentData.data.siteLogo.url;
+			if ( siteTitle ) {
+				trackOnboardingEvent(
+					new OnboardingEvent( ACTION_SITE_TITLE_SET, siteTitle )
+				);
+			}
 
-		if ( previousStep.includes( 'site-pages' ) ) {
-			if ( currentData.data.sitePages?.other !== false ) {
-				currentData.data.sitePages?.other?.forEach( ( sitePage ) => {
-					trackHiiveEvent(
-						`${ sitePage.slug }-layout`,
-						sitePage.slug
-					);
-				} );
+			if ( siteDescription ) {
+				trackOnboardingEvent(
+					new OnboardingEvent( ACTION_TAGLINE_SET, siteDescription )
+				);
+			}
+
+			if ( siteLogo ) {
+				trackOnboardingEvent(
+					new OnboardingEvent( ACTION_LOGO_ADDED )
+				);
+			}
+
+			const platforms = Object.keys(
+				socialMediaStoreToState( socialData )
+			).join( ',' );
+			if ( platforms ) {
+				trackOnboardingEvent(
+					new OnboardingEvent( ACTION_SOCIAL_ADDED, platforms )
+				);
 			}
 		}
 
-		if ( previousStep.includes( 'site-features' ) ) {
-			const siteFeatures = currentData.data?.siteFeatures;
-			if ( siteFeatures ) {
-				const siteFeaturesArray = Object.keys( siteFeatures ).filter(
-					( key ) => {
-						return siteFeatures[ key ] !== false;
-					}
+		if ( previousStep.includes( 'site-pages' ) ) {
+			const sitePages = currentData.data.sitePages?.other;
+			if ( ! sitePages || false === sitePages ) {
+				trackOnboardingEvent(
+					new OnboardingEvent( ACTION_STARTER_PAGES_SELECTED, [], {
+						count: 0,
+					} )
 				);
-				trackHiiveEvent(
-					'site-features',
-					siteFeaturesArray.join( ',' )
+			} else {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_STARTER_PAGES_SELECTED,
+						sitePages.map( ( sitePage ) => sitePage.title ),
+						{
+							count: sitePages.length,
+						}
+					)
 				);
 			}
 		}
 
 		window.nfdOnboarding.previousStepID = location.pathname;
-		HiiveAnalytics.dispatchEvents( HIIVE_ANALYTICS_CATEGORY );
+		HiiveAnalytics.dispatchEvents( CATEGORY );
 	};
 
 	useEffect( () => {
@@ -223,6 +254,29 @@ const App = () => {
 			setActiveStep( location.pathname );
 		}
 	}, [ location.pathname, onboardingFlow ] );
+
+	useEffect( () => {
+		if ( currentChapter !== currentStep?.chapter ) {
+			if ( currentStep?.chapter ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_ONBOARDING_CHAPTER_STARTED,
+						currentStep.chapter
+					)
+				);
+			}
+
+			if ( currentChapter ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_ONBOARDING_CHAPTER_COMPLETE,
+						currentChapter
+					)
+				);
+			}
+			setActiveChapter( currentStep?.chapter );
+		}
+	}, [ currentStep ] );
 
 	return (
 		<Fragment>

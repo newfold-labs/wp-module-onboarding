@@ -10,7 +10,7 @@ final class Events {
 	 *
 	 * @var string
 	 */
-	protected static $category = 'wp-onboarding';
+	protected static $category = 'wonder_start';
 
 	/**
 	 * List of valid actions that an event can perform.
@@ -20,30 +20,28 @@ final class Events {
 	 * @var array
 	 */
 	protected static $valid_actions = array(
-		'pageview'                             => true,
-		'sidebar-opened'                       => true,
-		'sidebar-closed'                       => true,
-		'wp-experience'                        => true,
-		'primary-type'                         => true,
-		'secondary-type'                       => true,
-		'tax-information'                      => true,
-		'selected-style'                       => true,
-		'default-style'                        => true,
-		'customize-design'                     => true,
-		'font-selection'                       => true,
-		'theme-header'                         => true,
-		'homepage-layout'                      => true,
-		'top-priority'                         => true,
-		'top-priority-skipped'                 => true,
-		'exit-to-wordpress'                    => true,
-		'products-info'                        => true,
-		'yith-wonder/company-page-layout'      => true,
-		'yith-wonder/contact-us-layout'        => true,
-		'yith-wonder/blog-page-layout'         => true,
-		'yith-wonder/testimonials-page-layout' => true,
-		'site-features'                        => true,
-		'color-selection'                      => true,
-		'color-selection-reset'                => true,
+		'pageview'                    => true,
+		'onboarding_started'          => true,
+		'onboarding_chapter_started'  => true,
+		'onboarding_chapter_complete' => true,
+		'onboarding_complete'         => true,
+		'experience_level_set'        => true,
+		'primary_type_set'            => true,
+		'secondary_type_set'          => true,
+		'theme_style_selected'        => true,
+		'typography_selected'         => true,
+		'header_selected'             => true,
+		'homepage_layout_selected'    => true,
+		'onboarding_top_priority_set' => true,
+		'onboarding_step_skipped'     => true,
+		'onboarding_exited'           => true,
+		'starter_pages_selected'      => true,
+		'feature_added'               => true,
+		'colors_selected'             => true,
+		'logo_added'                  => true,
+		'tagline_set'                 => true,
+		'site_title_set'              => true,
+		'social_added'                => true,
 	);
 
 	/**

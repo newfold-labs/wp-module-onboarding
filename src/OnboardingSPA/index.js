@@ -11,6 +11,8 @@ import App from './components/App';
 import { HashRouter } from 'react-router-dom';
 import { dispatch } from '@wordpress/data';
 import { render } from '@wordpress/element';
+import { OnboardingEvent, trackOnboardingEvent } from './utils/analytics/hiive';
+import { ACTION_ONBOARDING_STARTED } from './utils/analytics/hiive/constants';
 
 /**
  * Component passed to wp.element.render().
@@ -61,6 +63,9 @@ export async function initializeNFDOnboarding( id, runtime ) {
 	if ( null !== DOM_TARGET && 'undefined' !== typeof render ) {
 		render( <NFDOnboarding />, DOM_TARGET );
 		initializeSettings();
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_ONBOARDING_STARTED )
+		);
 	} else {
 		// eslint-disable-next-line no-console
 		console.log( 'Could not find mount element or wp.element.render().' );
