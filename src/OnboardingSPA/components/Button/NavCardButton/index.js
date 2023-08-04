@@ -5,6 +5,7 @@ import Button from '../../Button';
 
 import { setFlow } from '../../../utils/api/flow';
 import { wpAdminPage, pluginDashboardPage } from '../../../../constants';
+import { trackHiiveEvent } from '../../../utils/analytics';
 
 /**
  * Navigation Button Component on Card
@@ -39,6 +40,10 @@ const NavCardButton = ( { text, disabled } ) => {
 		const exitLink = exitToWordpressForEcommerce()
 			? pluginDashboardPage
 			: wpAdminPage;
+
+		trackHiiveEvent( 'onboarding_complete', {
+			page: window.location.href,
+		} );
 		window.location.replace( exitLink );
 	}
 

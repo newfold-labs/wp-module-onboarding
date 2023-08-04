@@ -154,7 +154,12 @@ const DesignColors = () => {
 		currentData.data.colorStyle = '';
 		setCurrentOnboardingData( currentData );
 		setSelectedColors( storeToState( selectedGlobalStylePalette ) );
-		trackHiiveEvent( 'color-selection-reset', selectedGlobalStyle.title );
+		trackHiiveEvent( 'colors_selected', {
+			label_key: 'color_palette',
+			color_palette: selectedGlobalStyle.title,
+			colors: colors[ selectedGlobalStyle.title ],
+			page: window.location.href,
+		} );
 	}
 
 	/**
@@ -203,7 +208,12 @@ const DesignColors = () => {
 		//  Save selected color to Store
 		currentData.data.colorStyle = colorStyle;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'color-selection', colorStyle );
+		trackHiiveEvent( 'colors_selected', {
+			label_key: 'color_palette',
+			color_palette: colorStyle,
+			colors: colors[ colorStyle ],
+			page: window.location.href,
+		} );
 	};
 
 	/**
@@ -345,7 +355,12 @@ const DesignColors = () => {
 		setCurrentOnboardingData( currentData );
 		setSelectedColors( selectedColorsLocalCopy );
 		if ( ! customColors ) {
-			trackHiiveEvent( 'color-selection', 'custom' );
+			trackHiiveEvent( 'colors_selected', {
+				label_key: 'color_palette',
+				color_palette: 'custom',
+				colors: selectedColors,
+				page: window.location.href,
+			} );
 		}
 		setCustomColors( selectedColorsLocalCopy );
 	};

@@ -127,7 +127,11 @@ const DesignTypography = () => {
 		);
 		setCurrentOnboardingData( currentData );
 		if ( 'click' === context ) {
-			trackHiiveEvent( 'font-selection', fontStyle );
+			trackHiiveEvent( 'typography_selected', {
+				label_key: 'font_set',
+				font_set: fontStyle,
+				page: window.location.href,
+			} );
 		}
 	};
 

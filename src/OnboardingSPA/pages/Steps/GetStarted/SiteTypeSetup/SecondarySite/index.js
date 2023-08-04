@@ -135,12 +135,7 @@ const StepPrimarySetup = () => {
 			clearTimeout( typingTimeout );
 			setTypingTimeout(
 				setTimeout( () => {
-					trackHiiveEvent( 'secondary_type_set', {
-						refers: 'custom',
-						label_key: 'secondary_type',
-						secondary_type: value,
-						page: window.location.href,
-					} );
+					sendEvent( 'custom', value );
 				}, 1000 )
 			);
 		}
@@ -166,12 +161,7 @@ const StepPrimarySetup = () => {
 		currentData.data.siteType.primary.value = primaryCategory;
 		currentData.data.siteType.secondary.value = secType;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'secondary_type_set', {
-			refers: 'slug',
-			label_key: 'secondary_type',
-			condary_type: secType,
-			page: window.location.href,
-		} );
+		sendEvent( 'slug', secType );
 	};
 
 	const changePrimaryType = ( direction ) => {
@@ -196,9 +186,11 @@ const StepPrimarySetup = () => {
 				setPrimaryCategory( primaryType );
 				break;
 		}
-		trackHiiveEvent( 'primary-type', {
+		trackHiiveEvent( 'primary_type_set', {
 			refers: 'slug',
-			value: primaryType,
+			label_key: 'primary_type',
+			primary_type: primaryType,
+			page: window.location.href,
 		} );
 	};
 
@@ -224,6 +216,15 @@ const StepPrimarySetup = () => {
 					<span className="categName">{ types[ type ]?.label }</span>
 				</div>
 			);
+		} );
+	};
+
+	const sendEvent = ( refers, value ) => {
+		trackHiiveEvent( 'secondary_type_set', {
+			refers,
+			label_key: 'secondary_type',
+			primary_type: value,
+			page: window.location.href,
 		} );
 	};
 

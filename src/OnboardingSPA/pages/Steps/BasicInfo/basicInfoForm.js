@@ -10,6 +10,7 @@ import { getSettings } from '../../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../../store';
 import ImageUploader from '../../../components/ImageUploader';
 import SocialMediaForm from '../../../components/SocialMediaForm';
+import { trackHiiveEvent } from '../../../utils/analytics';
 
 /**
  * Basic Info Form.
@@ -136,6 +137,14 @@ const BasicInfoForm = () => {
 		}
 	}, [ debouncedFlowData ] );
 
+	const handleSkip = () => {
+		trackHiiveEvent( 'onboarding_step_skipped', {
+			label_key: 'step',
+			step: 'basic_info',
+			page: window.location.href,
+		} );
+	};
+
 	return (
 		<Animate
 			type={ 'fade-in-disabled' }
@@ -190,7 +199,7 @@ const BasicInfoForm = () => {
 						/>
 					</div>
 				</div>
-				<SkipButton />
+				<SkipButton callback={ handleSkip } />
 			</div>
 		</Animate>
 	);

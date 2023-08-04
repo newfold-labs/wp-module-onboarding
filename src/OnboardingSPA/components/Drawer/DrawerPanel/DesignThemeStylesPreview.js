@@ -107,7 +107,11 @@ const DesignThemeStylesPreview = () => {
 		setSelectedStyle( selectedGlobalStyle.title );
 		currentData.data.theme.variation = selectedGlobalStyle.title;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'selected-style', selectedGlobalStyle.title );
+		trackHiiveEvent( 'theme_style_selected', {
+			label_key: 'theme_style',
+			theme_style: selectedGlobalStyle.title,
+			page: window.location.href,
+		} );
 	};
 
 	const buildPreviews = () => {

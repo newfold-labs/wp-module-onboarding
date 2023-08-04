@@ -127,7 +127,7 @@ const StepDesignThemeStylesMenu = () => {
 
 		currentData.data.customDesign = true;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'customize-design', true );
+		// trackHiiveEvent( 'customize-design', true );
 		// Find the first Custom Conditional Step and navigate there
 		navigate( conditionalSteps[ 0 ].path );
 	};

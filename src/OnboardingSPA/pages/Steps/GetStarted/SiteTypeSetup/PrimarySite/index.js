@@ -90,12 +90,7 @@ const StepPrimarySetup = () => {
 		currentData.data.siteType.primary.refers = 'slug';
 		currentData.data.siteType.primary.value = primType;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'primary_type_set', {
-			refers: 'slug',
-			label_key: 'primary_type',
-			primary_type: primType,
-			page: window.location.href,
-		} );
+		sendEvent( 'slug', primType );
 	};
 
 	/**
@@ -112,12 +107,7 @@ const StepPrimarySetup = () => {
 			clearTimeout( typingTimeout );
 			setTypingTimeout(
 				setTimeout( () => {
-					trackHiiveEvent( 'primary_type_set', {
-						refers: 'custom',
-						label_key: 'primary_type',
-						primary_type: value,
-						page: window.location.href,
-					} );
+					sendEvent( 'custom', value );
 				}, 1000 )
 			);
 		}
@@ -159,6 +149,15 @@ const StepPrimarySetup = () => {
 					</div>
 				</div>
 			);
+		} );
+	};
+
+	const sendEvent = ( refers, value ) => {
+		trackHiiveEvent( 'primary_type_set', {
+			refers,
+			label_key: 'primary_type',
+			primary_type: value,
+			page: window.location.href,
 		} );
 	};
 

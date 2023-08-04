@@ -102,7 +102,11 @@ const DesignHeaderMenu = () => {
 		if ( result?.error === null ) {
 			setCurrentOnboardingData( currentData );
 		}
-		trackHiiveEvent( 'theme-header', chosenPattern.slug );
+		trackHiiveEvent( 'header_selected', {
+			label_key: 'header',
+			header: chosenPattern.slug,
+			page: window.location.href,
+		} );
 	};
 
 	const buildPreviews = () => {

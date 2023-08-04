@@ -100,9 +100,9 @@ const StepTopPriority = () => {
 		window.nfdOnboarding.newFlow = undefined;
 		currentData.data.topPriority.priority1 = priorityTypes[ 0 ];
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'onboarding_top_priority_set', {
-			label_key: 'top_riority',
-			top_priority: 'skipped',
+		trackHiiveEvent( 'onboarding_step_skipped', {
+			label_key: 'step',
+			step: 'top_priority',
 			page: window.location.href,
 		} );
 	};

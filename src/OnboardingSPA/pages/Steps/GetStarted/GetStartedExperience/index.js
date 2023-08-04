@@ -53,16 +53,22 @@ const GetStartedExperience = () => {
 		const currentDataCopy = currentData;
 		currentDataCopy.data.wpComfortLevel = value || '0';
 		setCurrentOnboardingData( currentDataCopy );
-		trackHiiveEvent( 'experience_level_set', {
-			label_key: 'experience_level',
-			experience_level: content.options.filter( ( option ) => {
-				return option.value === value;
-			} )[ 0 ].label,
-			page: window.location.href,
-		} );
+		sendEvent( value );
 	};
 
 	const content = getContents();
+
+	const sendEvent = ( expLevel ) => {
+		const level = content.options.filter( ( option ) => {
+			return option.value === expLevel;
+		} )[ 0 ].label;
+
+		trackHiiveEvent( 'experience_level_set', {
+			label_key: 'experience_level',
+			experience_level: level,
+			page: window.location.href,
+		} );
+	};
 
 	return (
 		<CommonLayout isBgPrimary isCentered>
