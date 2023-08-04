@@ -10,7 +10,7 @@ final class Events {
 	 *
 	 * @var string
 	 */
-	protected static $category = 'wp-onboarding';
+	protected static $category = 'wonder_start';
 
 	/**
 	 * List of valid actions that an event can perform.
@@ -21,6 +21,20 @@ final class Events {
 	 */
 	protected static $valid_actions = array(
 		'pageview'                             => true,
+		'onboarding_started'				   => true,
+		'onboarding_exited'				       => true,
+		'onboarding_complete'                  => true,
+		'onboarding_step_skipped'              => true,
+		'onboarding_top_priority_set'	       => true,
+		'primary_type_set'                     => true,
+		'secondary_type_set'                   => true,
+		'experience_level_set'                 => true,
+		'theme_style_selected'                 => true,
+		'colors_selected'                      => true,
+		'typography_selected'                  => true,
+		'header_selected'                      => true,
+		'homepage_layout_selected'             => true,
+
 		'sidebar-opened'                       => true,
 		'sidebar-closed'                       => true,
 		'wp-experience'                        => true,
