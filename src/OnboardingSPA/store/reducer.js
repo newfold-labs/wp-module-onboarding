@@ -175,6 +175,11 @@ export function runtime( state = {}, action ) {
 					settings: action.previewSettings,
 				},
 			};
+		case 'SET_SITE_TITLE':
+			return {
+				...state,
+				siteTitle: action.siteTitle
+			}
 	}
 
 	return state;

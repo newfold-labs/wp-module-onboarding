@@ -36,12 +36,13 @@ import WithDesignBack from './WithDesignBack';
 
 const DrawerPanel = () => {
 	const [ isNavView, setIsNavView ] = useState( true ); // menu-primary is default view
-	const { isDrawerOpen, drawerView } = useSelect( ( select ) => {
-		const { isDrawerOpened, getDrawerView } = select( nfdOnboardingStore );
+	const { isDrawerOpen, drawerView, siteTitle } = useSelect( ( select ) => {
+		const { isDrawerOpened, getDrawerView, getSiteTitle } = select( nfdOnboardingStore );
 
 		return {
 			isDrawerOpen: isDrawerOpened(),
 			drawerView: getDrawerView(),
+			siteTitle: getSiteTitle(),
 		};
 	}, [] );
 
@@ -73,7 +74,7 @@ const DrawerPanel = () => {
 			<div className="nfd-onboarding-drawer__panel-inner">
 				<div className="nfd-onboarding-drawer__panel-site-title-container">
 					<div className="nfd-onboarding-drawer__panel-site-title">
-						{ __( 'WordPress Onboarding', 'wp-module-onboarding' ) }
+						{ siteTitle }
 					</div>
 				</div>
 				<div className="nfd-onboarding-drawer__panel-scroll-container">

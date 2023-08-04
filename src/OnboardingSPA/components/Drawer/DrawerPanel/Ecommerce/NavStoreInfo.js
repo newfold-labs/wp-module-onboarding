@@ -1,4 +1,4 @@
-import { Icon, chevronLeft } from '@wordpress/icons';
+import { Icon, chevronLeft, chevronRightSmall } from '@wordpress/icons';
 import { useDispatch, useSelect } from '@wordpress/data';
 
 import { Button } from '@wordpress/components';
@@ -7,6 +7,7 @@ import { VIEW_NAV_PRIMARY } from '../../../../../constants';
 import { __ } from '@wordpress/i18n';
 import { store as nfdOnboardingStore } from '../../../../store';
 import Animate from '../../../Animate';
+import DrawerPanelHeader from '../Header';
 
 const NavStoreInfo = () => {
 	const { storeInfoSteps } = useSelect( ( select ) => {
@@ -18,14 +19,11 @@ const NavStoreInfo = () => {
 
 	return (
 		<Animate type={ 'fade-in' } duration="100ms" timingFunction="ease-in">
-			<Button
-				className="nfd-onboarding-drawer__panel-back"
-				variant="tertiary"
-				icon={ chevronLeft }
-				onClick={ () => setDrawerActiveView( VIEW_NAV_PRIMARY ) }
-			>
-				{ __( 'Onboarding Menu', 'wp-module-onboarding' ) }
-			</Button>
+									<DrawerPanelHeader
+				heading = { __('Store Info', 'wp-module-onboarding') }
+				subheading = { __('Our commerce steps streamline store setup by collecting essential details like address and product info. Start selling seamlessly, ensuring your online business thrives from the get-go.', 'wp-module-onboarding') }
+				handleClick = { () => setDrawerActiveView( VIEW_NAV_PRIMARY ) }
+			 />
 			<div className="nfd-onboarding-drawer__panel-menu">
 				<ul className="nfd-onboarding-drawer__panel-routes">
 					{ storeInfoSteps.map( ( step ) => {
@@ -44,6 +42,7 @@ const NavStoreInfo = () => {
 								>
 									<Icon icon={ step.Icon } />
 									<span>{ step.title }</span>
+									{step?.hasSubMenu && <Icon className='nfd-onboarding-drawer__panel-menu-link__submenu-icon' icon={chevronRightSmall} />}
 								</NavLink>
 							</li>
 						);

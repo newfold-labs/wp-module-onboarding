@@ -6,8 +6,9 @@ import classNames from 'classnames';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getThemeFonts } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
+import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT, VIEW_NAV_DESIGN } from '../../../../constants';
 import { trackHiiveEvent } from '../../../utils/analytics';
+import DrawerPanelHeader from './Header';
 
 const DesignTypography = () => {
 	const drawerFontOptions = useRef();
@@ -32,6 +33,7 @@ const DesignTypography = () => {
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
+		setDrawerActiveView
 	} = useDispatch( nfdOnboardingStore );
 
 	const getFontStylesAndPatterns = async () => {
@@ -190,10 +192,16 @@ const DesignTypography = () => {
 	}
 
 	return (
-		<div ref={ drawerFontOptions } className="theme-fonts--drawer">
-			<h2>{ __( 'Font Palettes', 'wp-module-onboarding' ) }</h2>
+		<>
+								<DrawerPanelHeader
+			heading = { __('Typography', 'wp-module-onboarding') }
+			subheading = { __("Transform your content with typography that speaks volumes and captures your unique style. Select from meticulously curated font palettes.", 'wp-module-onboarding') }
+			handleClick={ () => setDrawerActiveView( VIEW_NAV_DESIGN ) }
+		 />
+				<div ref={ drawerFontOptions } className="theme-fonts--drawer">
 			{ fontPalettes && buildPalettes() }
 		</div>
+		</>
 	);
 };
 export default DesignTypography;

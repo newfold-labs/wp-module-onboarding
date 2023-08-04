@@ -16,6 +16,7 @@ final class Data {
 		return array(
 			'buildUrl'          => \NFD_ONBOARDING_BUILD_URL,
 			'siteUrl'           => \get_site_url(),
+			'siteTitle'         => \get_bloginfo( 'name' ),
 			'restUrl'           => \get_home_url() . '/index.php?rest_route=',
 			'adminUrl'          => \admin_url(),
 			'currentBrand'      => self::current_brand(),

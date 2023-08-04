@@ -3,14 +3,16 @@ import { useState, useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
+import { __ } from '@wordpress/i18n';
 import {
 	LivePreviewSkeleton,
 	LivePreviewSelectableCard,
 } from '../../../components/LivePreview';
 import { setFlow } from '../../../utils/api/flow';
 
-import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
+import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT, VIEW_NAV_DESIGN } from '../../../../constants';
 import { trackHiiveEvent } from '../../../utils/analytics';
+import DrawerPanelHeader from './Header';
 
 const DesignHeaderMenu = () => {
 	const [ patterns, setPatterns ] = useState();
@@ -32,7 +34,7 @@ const DesignHeaderMenu = () => {
 			};
 		}, [] );
 
-	const { setCurrentOnboardingData, updateThemeStatus, setHeaderMenuData } =
+	const { setCurrentOnboardingData, updateThemeStatus, setHeaderMenuData, setDrawerActiveView } =
 		useDispatch( nfdOnboardingStore );
 
 	const getPatternsData = async () => {
@@ -125,7 +127,13 @@ const DesignHeaderMenu = () => {
 	};
 
 	return (
-		<LivePreviewSkeleton
+		<>
+		<DrawerPanelHeader
+heading = { __('Header & Menu', 'wp-module-onboarding') }
+subheading = { __("Define your site's navigation and make a lasting first impression with a stunning and user-friendly layout. Choose from a range of tailored header and menu options.", 'wp-module-onboarding') }
+handleClick={ () => setDrawerActiveView( VIEW_NAV_DESIGN ) }
+/>
+				<LivePreviewSkeleton
 			count={
 				storedPreviewSettings[ currentStep?.patternId ]?.previewCount
 			}
@@ -133,7 +141,7 @@ const DesignHeaderMenu = () => {
 			callback={ buildPreviews }
 			className={ 'theme-header-menu-preview--drawer__list__item' }
 			viewportWidth={ 900 }
-		/>
+		/></>
 	);
 };
 

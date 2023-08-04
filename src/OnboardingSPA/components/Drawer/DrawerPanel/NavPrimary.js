@@ -1,11 +1,12 @@
-import { Tooltip } from '@wordpress/components';
+import { Tooltip, Button } from '@wordpress/components';
 import { NavLink, useLocation } from 'react-router-dom';
-
-import { Icon } from '@wordpress/icons';
+import { __ } from '@wordpress/i18n';
+import { Icon, chevronLeft, chevronRightSmall } from '@wordpress/icons';
 import { store as nfdOnboardingStore } from '../../../store';
 import { useSelect, useDispatch } from '@wordpress/data';
 import classNames from 'classnames';
 import Animate from '../../Animate';
+import DrawerPanelHeader from './Header';
 
 const NavPrimary = () => {
 	const location = useLocation();
@@ -18,6 +19,10 @@ const NavPrimary = () => {
 	const { setDrawerActiveView } = useDispatch( nfdOnboardingStore );
 	return (
 		<Animate type={ 'fade-in' } duration="100ms" timingFunction="ease-in">
+						<DrawerPanelHeader
+				heading = { __('WordPress Onboarding', 'wp-module-onboarding') }
+				subheading = { __('Accelarate your website building journey. Seamlessly go from idea to reality with powerful tools and guided steps.', 'wp-module-onboarding') }
+			 />
 			<div className="nfd-onboarding-drawer__panel-menu">
 				<ul className="nfd-onboarding-drawer__panel-routes">
 					{ topSteps.map( ( step ) => {
@@ -55,6 +60,7 @@ const NavPrimary = () => {
 									>
 										<Icon icon={ step.Icon } />
 										<span>{ step.title }</span>
+										{step?.hasSubMenu && <Icon className='nfd-onboarding-drawer__panel-menu-link__submenu-icon' icon={chevronRightSmall} />}
 									</NavLink>
 								</li>
 							</Tooltip>

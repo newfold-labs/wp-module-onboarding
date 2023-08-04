@@ -320,6 +320,7 @@ export const steps = [
 				SidebarComponents: [ StepDesignHeaderMenuLearnMoreSidebar ],
 			},
 		},
+		hasSubMenu: true,
 	},
 	{
 		path: '/wp-setup/step/design/homepage-menu',
@@ -408,6 +409,7 @@ export const conditionalSteps = [
 				SidebarComponents: [ StepDesignColorsLearnMoreSidebar ],
 			},
 		},
+		hasSubMenu: true,
 	},
 	{
 		path: '/wp-setup/step/design/typography',
@@ -423,6 +425,7 @@ export const conditionalSteps = [
 				SidebarComponents: [ StepDesignTypographyLearnMoreSidebar ],
 			},
 		},
+		hasSubMenu: true,
 	},
 ];
 
@@ -451,6 +454,7 @@ export const initialTopSteps = () => {
 		VIEW: VIEW_NAV_DESIGN,
 		primaryDrawerActiveLinkIncludes: '/wp-setup/step/design/',
 		priority: 140 /* matches priority for first design step */,
+		hasSubMenu: true,
 	};
 
 	const getStartedStep = {
@@ -461,6 +465,7 @@ export const initialTopSteps = () => {
 		VIEW: VIEW_NAV_GET_STARTED,
 		primaryDrawerActiveLinkIncludes: '/wp-setup/step/get-started/',
 		priority: 20,
+		hasSubMenu: true,
 	};
 
 	topSteps.push( designStep );

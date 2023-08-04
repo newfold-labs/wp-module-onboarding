@@ -29,7 +29,7 @@ const BasicInfoForm = () => {
 	const [ isValidSocials, setIsValidSocials ] = useState( false );
 	const [ isSocialFormOpen, setIsSocialFormOpen ] = useState( false );
 
-	const { setOnboardingSocialData, setCurrentOnboardingData } =
+	const { setOnboardingSocialData, setCurrentOnboardingData, setSiteTitle: setSiteTitleStore } =
 		useDispatch( nfdOnboardingStore );
 	const { editEntityRecord } = useDispatch( coreStore );
 
@@ -37,10 +37,11 @@ const BasicInfoForm = () => {
 		return select( coreStore );
 	}, [] );
 
-	const { currentData } = useSelect( ( select ) => {
+	const { currentData, siteTitleStore } = useSelect( ( select ) => {
 		return {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			siteTitleStore: select( nfdOnboardingStore ).getSiteTitle()
 		};
 	}, [] );
 
@@ -126,6 +127,11 @@ const BasicInfoForm = () => {
 				currentDataCopy.data.blogName,
 				currentDataCopy.data.blogDescription
 			);
+			if ( '' !== currentDataCopy.data.blogName ) {
+				setSiteTitleStore( currentDataCopy.data.blogName );
+			} else {
+				setSiteTitleStore( siteTitleStore );
+			}
 			setCurrentOnboardingData( currentDataCopy );
 			setOnboardingSocialData(
 				debouncedFlowData.data.socialData ?? socialData

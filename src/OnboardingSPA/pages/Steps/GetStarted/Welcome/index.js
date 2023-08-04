@@ -35,7 +35,6 @@ const StepWelcome = () => {
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsHeaderNavigationEnabled( true );
-		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
 	}, [] );
 

@@ -8,7 +8,7 @@ import Animate from '../../Animate';
 import { trackHiiveEvent } from '../../../utils/analytics';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
-import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
+import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT, VIEW_NAV_DESIGN } from '../../../../constants';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import {
 	stateToStore,
@@ -16,6 +16,7 @@ import {
 	findIndexInPalette,
 } from '../../../pages/Steps/DesignColors/utils';
 import ColorPickerButton from '../../ColorPickerButton';
+import DrawerPanelHeader from './Header';
 
 const DesignColors = () => {
 	// Used for scrolling into custom colors section
@@ -77,6 +78,7 @@ const DesignColors = () => {
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
+		setDrawerActiveView
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -483,11 +485,17 @@ const DesignColors = () => {
 
 	return (
 		colors && (
+			<>
+						<DrawerPanelHeader
+			heading = { __('Colors', 'wp-module-onboarding') }
+			subheading = { __("Craft a visually captivating website that truly represents your brand's identity. Choose from tailored color palettes or unleash your creativity with custom selections", 'wp-module-onboarding') }
+			handleClick={ () => setDrawerActiveView( VIEW_NAV_DESIGN ) }
+		 />
 			<div className="theme-colors--drawer">
-				<h2>{ __( 'Color Palettes', 'wp-module-onboarding' ) }</h2>
 				{ buildColors() }
 				{ buildCustomColors() }
 			</div>
+			</>
 		)
 	);
 };

@@ -6,20 +6,18 @@ import { __ } from '@wordpress/i18n';
 import { store as nfdOnboardingStore } from '../../../store';
 import { useDispatch } from '@wordpress/data';
 import Animate from '../../Animate';
+import DrawerPanelHeader from './Header';
 
 const NavPage = () => {
 	const { setDrawerActiveView } = useDispatch( nfdOnboardingStore );
 
 	return (
 		<Animate type={ 'fade-in' } duration="100ms" timingFunction="ease-in">
-			<Button
-				className="nfd-onboarding-drawer__panel-back"
-				variant="tertiary"
-				icon={ chevronLeft }
-				onClick={ () => setDrawerActiveView( VIEW_NAV_PRIMARY ) }
-			>
-				{ __( 'Resume Onboarding', 'wp-module-onboarding' ) }
-			</Button>
+						<DrawerPanelHeader
+				heading = { __('Design', 'wp-module-onboarding') }
+				subheading = { __('', 'wp-module-onboarding') }
+				handleClick={ () => setDrawerActiveView( VIEW_NAV_DESIGN ) }
+			 />
 		</Animate>
 	);
 };
