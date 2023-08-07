@@ -28,7 +28,7 @@ const StepTopPriority = () => {
 
 	const priorityTypesToAnalyticsMap = {
 		publishing: 'content',
-		seeling: 'store',
+		selling: 'store',
 		designing: 'design',
 	};
 

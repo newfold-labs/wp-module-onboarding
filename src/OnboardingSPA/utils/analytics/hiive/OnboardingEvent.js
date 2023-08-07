@@ -3,7 +3,7 @@ import { getLabelKeyFromAction } from '.';
 import { CATEGORY } from './constants';
 
 export class OnboardingEvent extends HiiveEvent {
-	constructor( action, value, additionalData ) {
+	constructor( action, value, additionalData, page ) {
 		const labelKey = getLabelKeyFromAction( action );
 		super(
 			CATEGORY,
@@ -12,7 +12,7 @@ export class OnboardingEvent extends HiiveEvent {
 				label_key: labelKey,
 				[ labelKey ]: value,
 				...additionalData,
-				page: window.location.href,
+				page: page ? page : window.location.href,
 			},
 			CATEGORY
 		);

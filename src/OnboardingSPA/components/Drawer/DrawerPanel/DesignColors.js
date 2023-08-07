@@ -66,6 +66,9 @@ const DesignColors = () => {
 	 */
 	const [ isAccordionClosed, setIsAccordionClosed ] = useState( true );
 
+	// Timeout after which a custom picker analytics event will be sent.
+	const [ colorPickerTimeout, setColorPickerTimeout ] = useState();
+
 	const { storedPreviewSettings, currentData, themeStatus } = useSelect(
 		( select ) => {
 			return {
@@ -353,15 +356,18 @@ const DesignColors = () => {
 		currentData.data.colorStyle = 'custom';
 		setCurrentOnboardingData( currentData );
 		setSelectedColors( selectedColorsLocalCopy );
-		if ( ! customColors ) {
-			trackOnboardingEvent(
-				new OnboardingEvent( ACTION_COLORS_SELECTED, 'custom', {
-					colors: convertObjectKeysToSnakeCase(
-						selectedColorsLocalCopy
-					),
-				} )
-			);
-		}
+		clearTimeout( colorPickerTimeout );
+		setColorPickerTimeout(
+			setTimeout( () => {
+				trackOnboardingEvent(
+					new OnboardingEvent( ACTION_COLORS_SELECTED, 'custom', {
+						colors: convertObjectKeysToSnakeCase(
+							selectedColorsLocalCopy
+						),
+					} )
+				);
+			}, 1000 )
+		);
 		setCustomColors( selectedColorsLocalCopy );
 	};
 

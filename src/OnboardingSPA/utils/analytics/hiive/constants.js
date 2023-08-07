@@ -32,7 +32,7 @@ export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_COLORS_SELECTED ]: 'color_palette',
 	[ ACTION_TYPOGRAPHY_SELECTED ]: 'font_set',
 	[ ACTION_HEADER_SELECTED ]: 'header',
-	[ ACTION_HOMEPAGE_LAYOUT_SELECTED ]: 'homepage_layout_selected',
+	[ ACTION_HOMEPAGE_LAYOUT_SELECTED ]: 'layout',
 	[ ACTION_STARTER_PAGES_SELECTED ]: 'pages',
 	[ ACTION_FEATURE_ADDED ]: 'feature',
 	[ ACTION_SITE_TITLE_SET ]: 'title',

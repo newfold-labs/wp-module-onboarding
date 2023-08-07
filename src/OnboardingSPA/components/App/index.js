@@ -29,6 +29,7 @@ import {
 	ACTION_LOGO_ADDED,
 	ACTION_ONBOARDING_CHAPTER_COMPLETE,
 	ACTION_ONBOARDING_CHAPTER_STARTED,
+	ACTION_ONBOARDING_STARTED,
 	ACTION_SITE_TITLE_SET,
 	ACTION_SOCIAL_ADDED,
 	ACTION_STARTER_PAGES_SELECTED,
@@ -177,32 +178,53 @@ const App = () => {
 	}
 
 	const handlePreviousStepTracking = () => {
-		const previousStep = window.nfdOnboarding?.previousStepID;
-		if ( typeof previousStep !== 'string' ) {
-			window.nfdOnboarding.previousStepID = location.pathname;
+		const previousStep = window.nfdOnboarding?.previousStep;
+		if ( typeof previousStep !== 'object' ) {
+			window.nfdOnboarding.previousStep = {
+				path: location.pathname,
+				url: window.location.href,
+			};
 			HiiveAnalytics.dispatchEvents( CATEGORY );
 			return;
 		}
 
-		if ( previousStep.includes( 'basic-info' ) ) {
+		const previousStepPath = previousStep.path;
+		const previousStepURL = previousStep.url;
+
+		if ( previousStepPath.includes( 'basic-info' ) ) {
 			const siteTitle = currentData.data.blogName;
 			const siteDescription = currentData.data.blogDescription;
 			const siteLogo = currentData.data.siteLogo.url;
 			if ( siteTitle ) {
 				trackOnboardingEvent(
-					new OnboardingEvent( ACTION_SITE_TITLE_SET, siteTitle )
+					new OnboardingEvent(
+						ACTION_SITE_TITLE_SET,
+						siteTitle,
+						{},
+						previousStepURL
+					)
 				);
 			}
 
 			if ( siteDescription ) {
 				trackOnboardingEvent(
-					new OnboardingEvent( ACTION_TAGLINE_SET, siteDescription )
+					new OnboardingEvent(
+						ACTION_TAGLINE_SET,
+						siteDescription,
+						{},
+						previousStepURL
+					)
 				);
 			}
 
 			if ( siteLogo ) {
 				trackOnboardingEvent(
-					new OnboardingEvent( ACTION_LOGO_ADDED )
+					new OnboardingEvent(
+						ACTION_LOGO_ADDED,
+						undefined,
+						{},
+						previousStepURL
+					)
 				);
 			}
 
@@ -211,18 +233,28 @@ const App = () => {
 			).join( ',' );
 			if ( platforms ) {
 				trackOnboardingEvent(
-					new OnboardingEvent( ACTION_SOCIAL_ADDED, platforms )
+					new OnboardingEvent(
+						ACTION_SOCIAL_ADDED,
+						platforms,
+						{},
+						previousStepURL
+					)
 				);
 			}
 		}
 
-		if ( previousStep.includes( 'site-pages' ) ) {
+		if ( previousStepPath.includes( 'site-pages' ) ) {
 			const sitePages = currentData.data.sitePages?.other;
 			if ( ! sitePages || false === sitePages ) {
 				trackOnboardingEvent(
-					new OnboardingEvent( ACTION_STARTER_PAGES_SELECTED, [], {
-						count: 0,
-					} )
+					new OnboardingEvent(
+						ACTION_STARTER_PAGES_SELECTED,
+						[],
+						{
+							count: 0,
+						},
+						previousStepURL
+					)
 				);
 			} else {
 				trackOnboardingEvent(
@@ -231,13 +263,18 @@ const App = () => {
 						sitePages.map( ( sitePage ) => sitePage.title ),
 						{
 							count: sitePages.length,
-						}
+						},
+						previousStepURL
 					)
 				);
 			}
 		}
 
-		window.nfdOnboarding.previousStepID = location.pathname;
+		window.nfdOnboarding.previousStep = {
+			path: location.pathname,
+			url: window.location.href,
+		};
+
 		HiiveAnalytics.dispatchEvents( CATEGORY );
 	};
 
@@ -256,7 +293,22 @@ const App = () => {
 	}, [ location.pathname, onboardingFlow ] );
 
 	useEffect( () => {
+		if ( location.pathname === firstStep.path ) {
+			trackOnboardingEvent(
+				new OnboardingEvent( ACTION_ONBOARDING_STARTED )
+			);
+		}
+
 		if ( currentChapter !== currentStep?.chapter ) {
+			if ( currentChapter ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_ONBOARDING_CHAPTER_COMPLETE,
+						currentChapter
+					)
+				);
+			}
+
 			if ( currentStep?.chapter ) {
 				trackOnboardingEvent(
 					new OnboardingEvent(
@@ -266,14 +318,6 @@ const App = () => {
 				);
 			}
 
-			if ( currentChapter ) {
-				trackOnboardingEvent(
-					new OnboardingEvent(
-						ACTION_ONBOARDING_CHAPTER_COMPLETE,
-						currentChapter
-					)
-				);
-			}
 			setActiveChapter( currentStep?.chapter );
 		}
 	}, [ currentStep ] );
