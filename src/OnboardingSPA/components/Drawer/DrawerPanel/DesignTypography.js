@@ -7,7 +7,11 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { getThemeFonts } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
-import { trackHiiveEvent } from '../../../utils/analytics';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import { ACTION_TYPOGRAPHY_SELECTED } from '../../../utils/analytics/hiive/constants';
 
 const DesignTypography = () => {
 	const drawerFontOptions = useRef();
@@ -127,7 +131,9 @@ const DesignTypography = () => {
 		);
 		setCurrentOnboardingData( currentData );
 		if ( 'click' === context ) {
-			trackHiiveEvent( 'font-selection', fontStyle );
+			trackOnboardingEvent(
+				new OnboardingEvent( ACTION_TYPOGRAPHY_SELECTED, fontStyle )
+			);
 		}
 	};
 

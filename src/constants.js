@@ -47,7 +47,11 @@ export const THEME_STATUS_ACTIVE = 'activated';
 export const THEME_STATUS_FAILURE = 'failed';
 export const THEME_INSTALL_WAIT_TIMEOUT = 30000;
 
-export const HIIVE_ANALYTICS_CATEGORY = 'wp-onboarding';
+export const CHAPTER_DEMOGRAPHIC = 'demographic';
+export const CHAPTER_COMMERCE = 'commerce';
+export const CHAPTER_DESIGN = 'design';
+export const CHAPTER_LAYOUT_AND_CONTENT = 'layout_and_content';
+export const CHAPTER_FEATURES = 'features';
 
 /**
  * All views for the <Drawer /> component.

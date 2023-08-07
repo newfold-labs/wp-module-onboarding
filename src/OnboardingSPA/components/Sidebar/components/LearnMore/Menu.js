@@ -8,7 +8,6 @@ import {
 	SIDEBAR_MENU_SLOTFILL_PREFIX,
 } from '../../../../../constants';
 import classNames from 'classnames';
-import { trackHiiveEvent } from '../../../../utils/analytics';
 
 const LearnMoreMenu = () => {
 	const { isSidebarOpened, sideBarView, currentStep } = useSelect(
@@ -28,10 +27,6 @@ const LearnMoreMenu = () => {
 			sideBarView === SIDEBAR_LEARN_MORE
 				? ! isSidebarOpened
 				: isSidebarOpened;
-		trackHiiveEvent(
-			isSidebarOpenedNew ? 'sidebar-opened' : 'sidebar-closed',
-			window.location.href
-		);
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setIsSidebarOpened( isSidebarOpenedNew );
 	};
