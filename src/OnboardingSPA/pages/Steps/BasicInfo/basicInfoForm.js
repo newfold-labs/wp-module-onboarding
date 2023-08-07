@@ -10,7 +10,7 @@ import { getSettings } from '../../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../../store';
 import ImageUploader from '../../../components/ImageUploader';
 import SocialMediaForm from '../../../components/SocialMediaForm';
-import { DescriptionGenerator } from '@newfold-labs/wp-module-ai';
+import DescriptionGenerator from '@newfold-labs/wp-module-ai';
 
 /**
  * Basic Info Form.
