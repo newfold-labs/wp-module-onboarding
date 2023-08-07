@@ -16,6 +16,7 @@ import currencies from '../currencies.json';
 import { useWPSettings as getWPSettings } from '../useWPSettings';
 import Animate from '../../../../components/Animate';
 import getContents from './contents';
+import NavCardButton from '../../../../components/Button/NavCardButton';
 
 const StepAddress = () => {
 	const [ settings, setSettings ] = useState();
@@ -226,7 +227,7 @@ const StepAddress = () => {
 							// 		? '/ecommerce/step/tax'
 							// 		: '/ecommerce/step/products'
 							// );
-							navigate( '/ecommerce/step/products' );
+							// navigate( '/ecommerce/step/products' );
 						} }
 						style={ {
 							display: 'grid',
@@ -418,13 +419,10 @@ const StepAddress = () => {
 								</em>
 							</div>
 						</Animate>
-						<button
-							className="nfd-nav-card-button nfd-card-button"
+						<NavCardButton
+							text={ content.buttonText }
 							disabled={ address === undefined }
-							type="submit"
-						>
-							{ content.buttonText }
-						</button>
+						/>
 					</form>
 					<NeedHelpTag />
 				</div>

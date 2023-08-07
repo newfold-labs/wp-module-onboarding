@@ -19,6 +19,11 @@ const StepAddressLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/Ecommerce/StepAddress/Sidebar/LearnMore/' )
 );
 
+// const StepTax = lazy( () => import( '../../pages/Steps/Ecommerce/StepTax' ) );
+// const StepTaxLearnMoreSidebar = lazy( () =>
+// 	import( '../../pages/Steps/Ecommerce/StepTax/Sidebar/LearnMore/' )
+// );
+
 const StepProducts = lazy( () =>
 	import( '../../pages/Steps/Ecommerce/StepProducts' )
 );
@@ -43,6 +48,20 @@ export const ecommerceSteps = [
 			},
 		},
 	},
+	// {
+	// 	path: '/ecommerce/step/tax',
+	// 	title: __( 'Tax Info', 'wp-module-onboarding' ),
+	// 	tooltipText: __( 'Tax Info', 'wp-module-onboarding' ),
+	// 	Component: StepTax,
+	// 	Icon: institution,
+	// 	priority: 90,
+	// 	VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
+	// 	sidebars: {
+	// 		LearnMore: {
+	// 			SidebarComponents: [ StepTaxLearnMoreSidebar ],
+	// 		},
+	// 	},
+	// },
 	{
 		path: '/ecommerce/step/products',
 		title: __( 'Product Info', 'wp-module-onboarding' ),
