@@ -226,7 +226,7 @@ const StepAddress = () => {
 							// 		? '/ecommerce/step/tax'
 							// 		: '/ecommerce/step/products'
 							// );
-							navigate( '/ecommerce/step/tax' );
+							navigate( '/ecommerce/step/products' );
 						} }
 						style={ {
 							display: 'grid',

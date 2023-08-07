@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { store, institution, shipping } from '@wordpress/icons';
+import { store, shipping } from '@wordpress/icons';
 import { lazy } from '@wordpress/element';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { orderBy, filter } from 'lodash';
@@ -17,11 +17,6 @@ const StepAddress = lazy( () =>
 );
 const StepAddressLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/Ecommerce/StepAddress/Sidebar/LearnMore/' )
-);
-
-const StepTax = lazy( () => import( '../../pages/Steps/Ecommerce/StepTax' ) );
-const StepTaxLearnMoreSidebar = lazy( () =>
-	import( '../../pages/Steps/Ecommerce/StepTax/Sidebar/LearnMore/' )
 );
 
 const StepProducts = lazy( () =>
@@ -45,20 +40,6 @@ export const ecommerceSteps = [
 		sidebars: {
 			LearnMore: {
 				SidebarComponents: [ StepAddressLearnMoreSidebar ],
-			},
-		},
-	},
-	{
-		path: '/ecommerce/step/tax',
-		title: __( 'Tax Info', 'wp-module-onboarding' ),
-		tooltipText: __( 'Tax Info', 'wp-module-onboarding' ),
-		Component: StepTax,
-		Icon: institution,
-		priority: 90,
-		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
-		sidebars: {
-			LearnMore: {
-				SidebarComponents: [ StepTaxLearnMoreSidebar ],
 			},
 		},
 	},

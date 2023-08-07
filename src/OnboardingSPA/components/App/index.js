@@ -80,27 +80,12 @@ const App = () => {
 	}
 
 	async function syncStoreDetails() {
-		const { address, tax } = currentData.storeDetails;
+		const { address } = currentData.storeDetails;
 		let payload = {};
 		if ( address !== undefined ) {
 			delete address.country;
 			delete address.state;
 			payload = address;
-		}
-		if ( tax !== undefined ) {
-			// const option = tax.option;
-			// const isStoreDetailsFilled = tax.isStoreDetailsFilled;
-			delete tax.option;
-			delete tax.isStoreDetailsFilled;
-			// No Auto-calculate taxes for MMP
-			// if (option === "1") {
-			// 	if (isStoreDetailsFilled) {
-			// 		payload = { ...payload, ...tax };
-			// 	}
-			// } else {
-			// 	payload = { ...payload, ...tax };
-			// }
-			payload = { ...payload, ...tax };
 		}
 		if ( ! isEmpty( payload ) ) {
 			await updateWPSettings( payload );
