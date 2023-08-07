@@ -1,7 +1,6 @@
 import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
-import { useNavigate } from 'react-router-dom';
 import {
 	SIDEBAR_LEARN_MORE,
 	VIEW_NAV_ECOMMERCE_STORE_INFO,
@@ -20,7 +19,6 @@ import NavCardButton from '../../../../components/Button/NavCardButton';
 
 const StepAddress = () => {
 	const [ settings, setSettings ] = useState();
-	const navigate = useNavigate();
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const {
 		setDrawerActiveView,
