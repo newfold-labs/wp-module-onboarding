@@ -62,20 +62,9 @@ const StepPrimarySetup = () => {
 
 		setPrimaryCategory( defaultPrimaryType );
 		setSiteClassification( siteClassificationData?.body );
-		let primaryTypeList;
-		if ( window?.nfdOnboarding?.currentFlow === 'ecommerce' ) {
-			primaryTypeList = [ 'business' ];
-			if ( currentData?.data?.siteType?.primary?.value !== 'business' ) {
-				currentData.data.siteType.primary = {
-					refers: 'slug',
-					value: 'business',
-				};
-			}
-		} else {
-			primaryTypeList = Object.keys(
-				siteClassificationData?.body?.types
-			);
-		}
+		let primaryTypeList = Object.keys(
+			siteClassificationData?.body?.types
+		);
 		setPrimaryTypeList( primaryTypeList );
 
 		// Incase old user comes again with data, we need to save it

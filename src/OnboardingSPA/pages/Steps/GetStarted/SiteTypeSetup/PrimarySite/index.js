@@ -71,6 +71,10 @@ const StepPrimarySetup = () => {
 				value: secondaryValue,
 			};
 			setCurrentOnboardingData( currentData );
+		} else if ( window?.nfdOnboarding?.currentFlow === 'ecommerce' ) {
+			currentData.data.siteType.primary.refers = 'slug';
+			currentData.data.siteType.primary.value = 'business';
+			setCurrentOnboardingData( currentData );
 		}
 
 		setPrimaryCategory( currentData?.data?.siteType?.primary?.value ?? '' );
