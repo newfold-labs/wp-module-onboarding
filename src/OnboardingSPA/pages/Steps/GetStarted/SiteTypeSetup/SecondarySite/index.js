@@ -62,7 +62,7 @@ const StepPrimarySetup = () => {
 
 		setPrimaryCategory( defaultPrimaryType );
 		setSiteClassification( siteClassificationData?.body );
-		let primaryTypeList = Object.keys(
+		const primaryTypeList = Object.keys(
 			siteClassificationData?.body?.types
 		);
 		setPrimaryTypeList( primaryTypeList );
