@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { store, institution, shipping } from '@wordpress/icons';
+import { store, shipping } from '@wordpress/icons';
 import { lazy } from '@wordpress/element';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { orderBy, filter } from 'lodash';
@@ -19,10 +19,10 @@ const StepAddressLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/Ecommerce/StepAddress/Sidebar/LearnMore/' )
 );
 
-const StepTax = lazy( () => import( '../../pages/Steps/Ecommerce/StepTax' ) );
-const StepTaxLearnMoreSidebar = lazy( () =>
-	import( '../../pages/Steps/Ecommerce/StepTax/Sidebar/LearnMore/' )
-);
+// const StepTax = lazy( () => import( '../../pages/Steps/Ecommerce/StepTax' ) );
+// const StepTaxLearnMoreSidebar = lazy( () =>
+// 	import( '../../pages/Steps/Ecommerce/StepTax/Sidebar/LearnMore/' )
+// );
 
 const StepProducts = lazy( () =>
 	import( '../../pages/Steps/Ecommerce/StepProducts' )
@@ -52,21 +52,20 @@ export const ecommerceSteps = [
 			},
 		},
 	},
-	{
-		path: '/ecommerce/step/tax',
-		title: __( 'Tax Info', 'wp-module-onboarding' ),
-		chapter: CHAPTER_COMMERCE,
-		tooltipText: __( 'Tax Info', 'wp-module-onboarding' ),
-		Component: StepTax,
-		Icon: institution,
-		priority: 90,
-		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
-		sidebars: {
-			LearnMore: {
-				SidebarComponents: [ StepTaxLearnMoreSidebar ],
-			},
-		},
-	},
+	// {
+	// 	path: '/ecommerce/step/tax',
+	// 	title: __( 'Tax Info', 'wp-module-onboarding' ),
+	// 	tooltipText: __( 'Tax Info', 'wp-module-onboarding' ),
+	// 	Component: StepTax,
+	// 	Icon: institution,
+	// 	priority: 90,
+	// 	VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
+	// 	sidebars: {
+	// 		LearnMore: {
+	// 			SidebarComponents: [ StepTaxLearnMoreSidebar ],
+	// 		},
+	// 	},
+	// },
 	{
 		path: '/ecommerce/step/products',
 		title: __( 'Product Info', 'wp-module-onboarding' ),
@@ -88,9 +87,7 @@ export const steps = orderBy(
 	[
 		...filter(
 			defaultInitialSteps,
-			( step ) =>
-				! step.path.includes( '/step/top-priority' ) &&
-				! step.path.includes( '/step/get-started/site-primary' )
+			( step ) => ! step.path.includes( '/step/top-priority' )
 		),
 		...ecommerceSteps,
 	],

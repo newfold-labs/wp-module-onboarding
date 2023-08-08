@@ -355,6 +355,8 @@ class FlowService {
 		if ( 'ecommerce' === $flow_type ) {
 			// update default data with ecommerce data
 			$data['data']['topPriority']['priority1'] = 'selling';
+			$data['data']['siteType']['primary']['refers'] = 'slug';
+			$data['data']['siteType']['primary']['value'] = 'business';
 		}
 		return $data;
 	}
