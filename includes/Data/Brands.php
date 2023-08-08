@@ -117,7 +117,6 @@ final class Brands {
 				'emailUrl'                    => 'https://my.bluehost.in/hosting/app?lil=1#/email-office',
 				'pluginDashboardPage'         => \admin_url( 'admin.php?page=bluehost' ),
 				'dashboardUrlParams'          => 'referrer=nfd-onboarding',
-				
 				'phoneNumbers'                => array(
 					'support' => '1800-419-4426',
 				),
