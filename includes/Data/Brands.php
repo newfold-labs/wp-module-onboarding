@@ -54,6 +54,7 @@ final class Brands {
 				'domainsUrl'                  => 'https://my.bluehost.com/hosting/app?lil=1#/domains',
 				'emailUrl'                    => 'https://my.bluehost.com/hosting/app?lil=1#/email-office',
 				'pluginDashboardPage'         => \admin_url( 'admin.php?page=bluehost' ),
+				'dashboardUrlParams'          => 'referrer=nfd-onboarding',
 				'phoneNumbers'                => array(
 					'sales'   => '844-303-1730',
 					'support' => '888-401-4678',
@@ -115,6 +116,7 @@ final class Brands {
 				'domainsUrl'                  => 'https://my.bluehost.in/hosting/app?lil=1#/domains',
 				'emailUrl'                    => 'https://my.bluehost.in/hosting/app?lil=1#/email-office',
 				'pluginDashboardPage'         => \admin_url( 'admin.php?page=bluehost' ),
+				'dashboardUrlParams'          => 'referrer=nfd-onboarding',
 				'phoneNumbers'                => array(
 					'support' => '1800-419-4426',
 				),
