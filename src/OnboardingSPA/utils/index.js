@@ -19,13 +19,3 @@ export const convertObjectKeysToSnakeCase = ( object ) => {
 		result[ snakeCase( key ) ] = value;
 	} );
 };
-
-export function addUrlParams( urlStr, params = '' ) {
-	if ( ! urlStr ) return urlStr;
-	if ( urlStr.includes( '?' ) ) {
-		urlStr = `${ urlStr }&${ params }`;
-	} else {
-		urlStr = `${ urlStr }?${ params }`;
-	}
-	return urlStr;
-}
