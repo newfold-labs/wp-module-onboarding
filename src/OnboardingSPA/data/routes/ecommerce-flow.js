@@ -31,12 +31,16 @@ const StepProductsLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/Ecommerce/StepProducts/Sidebar/LearnMore' )
 );
 
-import { VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../constants';
+import {
+	CHAPTER_COMMERCE,
+	VIEW_NAV_ECOMMERCE_STORE_INFO,
+} from '../../../constants';
 
 export const ecommerceSteps = [
 	{
 		path: '/ecommerce/step/address',
 		title: __( 'Street Address', 'wp-module-onboarding' ),
+		chapter: CHAPTER_COMMERCE,
 		tooltipText: __( 'Street Address', 'wp-module-onboarding' ),
 		Component: StepAddress,
 		Icon: store,
@@ -65,6 +69,7 @@ export const ecommerceSteps = [
 	{
 		path: '/ecommerce/step/products',
 		title: __( 'Product Info', 'wp-module-onboarding' ),
+		chapter: CHAPTER_COMMERCE,
 		tooltipText: __( 'Product Info', 'wp-module-onboarding' ),
 		Component: StepProducts,
 		Icon: shipping,
@@ -107,6 +112,8 @@ export const initialTopSteps = () => {
 		/* This is a pseudo step to stand-in for all StoreInfo steps and does not have a Component to render */
 		path: '/ecommerce/step/address',
 		title: __( 'Store Info', 'wp-module-onboarding' ),
+		tooltipText: __( 'Street Address', 'wp-module-onboarding' ),
+		chapter: CHAPTER_COMMERCE,
 		Icon: store,
 		primaryDrawerActiveLinkIncludes: '/ecommerce/step/',
 		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,

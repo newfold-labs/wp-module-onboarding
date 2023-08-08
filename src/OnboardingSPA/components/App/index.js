@@ -17,11 +17,26 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { SlotFillProvider } from '@wordpress/components';
 import { useEffect, Fragment, useState } from '@wordpress/element';
 import { FullscreenMode } from '@wordpress/interface';
-import { API_REQUEST, HIIVE_ANALYTICS_CATEGORY } from '../../../constants';
+import { API_REQUEST } from '../../../constants';
 import NewfoldInterfaceSkeleton from '../NewfoldInterfaceSkeleton';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
-import { trackHiiveEvent } from '../../utils/analytics';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../utils/analytics/hiive';
 import { injectInAllSteps } from '../../data/routes/allStepsHandler';
+import {
+	ACTION_LOGO_ADDED,
+	ACTION_ONBOARDING_CHAPTER_COMPLETE,
+	ACTION_ONBOARDING_CHAPTER_STARTED,
+	ACTION_ONBOARDING_STARTED,
+	ACTION_SITE_TITLE_SET,
+	ACTION_SOCIAL_ADDED,
+	ACTION_STARTER_PAGES_SELECTED,
+	ACTION_TAGLINE_SET,
+	CATEGORY,
+} from '../../utils/analytics/hiive/constants';
+import { socialMediaStoreToState } from '../SocialMediaForm/utils';
 
 /**
  * Primary app that renders the <NewfoldInterfaceSkeleton />.
@@ -43,18 +58,28 @@ const App = () => {
 		socialData,
 		firstStep,
 		allSteps,
-	} = useSelect( ( select ) => {
-		return {
-			isDrawerOpen: select( nfdOnboardingStore ).isDrawerOpened(),
-			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
-			onboardingFlow: select( nfdOnboardingStore ).getOnboardingFlow(),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			socialData: select( nfdOnboardingStore ).getOnboardingSocialData(),
-			firstStep: select( nfdOnboardingStore ).getFirstStep(),
-			allSteps: select( nfdOnboardingStore ).getAllSteps(),
-		};
-	}, [] );
+		currentChapter,
+		currentStep,
+	} = useSelect(
+		( select ) => {
+			return {
+				isDrawerOpen: select( nfdOnboardingStore ).isDrawerOpened(),
+				newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
+				onboardingFlow:
+					select( nfdOnboardingStore ).getOnboardingFlow(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				socialData:
+					select( nfdOnboardingStore ).getOnboardingSocialData(),
+				firstStep: select( nfdOnboardingStore ).getFirstStep(),
+				allSteps: select( nfdOnboardingStore ).getAllSteps(),
+				currentChapter:
+					select( nfdOnboardingStore ).getCurrentChapter(),
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+			};
+		},
+		[ location.pathname ]
+	);
 
 	const [ isRequestPlaced, setIsRequestPlaced ] = useState( false );
 	const [ didVisitBasicInfo, setDidVisitBasicInfo ] = useState( false );
@@ -67,6 +92,7 @@ const App = () => {
 		enqueueRequest,
 		setOnboardingSocialData,
 		setCurrentOnboardingData,
+		setActiveChapter,
 	} = useDispatch( nfdOnboardingStore );
 
 	async function syncSocialSettings() {
@@ -87,6 +113,11 @@ const App = () => {
 			delete address.state;
 			payload = address;
 		}
+		// if ( tax !== undefined ) {
+		// 	delete tax.option;
+		// 	delete tax.isStoreDetailsFilled;
+		// 	payload = { ...payload, ...tax };
+		// }
 		if ( ! isEmpty( payload ) ) {
 			await updateWPSettings( payload );
 		}
@@ -147,52 +178,104 @@ const App = () => {
 	}
 
 	const handlePreviousStepTracking = () => {
-		const previousStep = window.nfdOnboarding?.previousStepID;
-		if ( typeof previousStep !== 'string' ) {
-			window.nfdOnboarding.previousStepID = location.pathname;
-			HiiveAnalytics.dispatchEvents( HIIVE_ANALYTICS_CATEGORY );
+		const previousStep = window.nfdOnboarding?.previousStep;
+		if ( typeof previousStep !== 'object' ) {
+			window.nfdOnboarding.previousStep = {
+				path: location.pathname,
+				url: window.location.href,
+			};
+			HiiveAnalytics.dispatchEvents( CATEGORY );
 			return;
 		}
 
-		if ( previousStep.includes( 'products' ) ) {
-			trackHiiveEvent( 'products-info', {
-				productCount:
-					currentData.storeDetails.productInfo.product_count,
-				productTypes:
-					currentData.storeDetails.productInfo.product_types.join(
-						','
-					),
-			} );
-		}
+		const previousStepPath = previousStep.path;
+		const previousStepURL = previousStep.url;
 
-		if ( previousStep.includes( 'site-pages' ) ) {
-			if ( currentData.data.sitePages?.other !== false ) {
-				currentData.data.sitePages?.other?.forEach( ( sitePage ) => {
-					trackHiiveEvent(
-						`${ sitePage.slug }-layout`,
-						sitePage.slug
-					);
-				} );
+		if ( previousStepPath.includes( 'basic-info' ) ) {
+			const siteTitle = currentData.data.blogName;
+			const siteDescription = currentData.data.blogDescription;
+			const siteLogo = currentData.data.siteLogo.url;
+			if ( siteTitle ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_SITE_TITLE_SET,
+						siteTitle,
+						{},
+						previousStepURL
+					)
+				);
+			}
+
+			if ( siteDescription ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_TAGLINE_SET,
+						siteDescription,
+						{},
+						previousStepURL
+					)
+				);
+			}
+
+			if ( siteLogo ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_LOGO_ADDED,
+						undefined,
+						{},
+						previousStepURL
+					)
+				);
+			}
+
+			const platforms = Object.keys(
+				socialMediaStoreToState( socialData )
+			).join( ',' );
+			if ( platforms ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_SOCIAL_ADDED,
+						platforms,
+						{},
+						previousStepURL
+					)
+				);
 			}
 		}
 
-		if ( previousStep.includes( 'site-features' ) ) {
-			const siteFeatures = currentData.data?.siteFeatures;
-			if ( siteFeatures ) {
-				const siteFeaturesArray = Object.keys( siteFeatures ).filter(
-					( key ) => {
-						return siteFeatures[ key ] !== false;
-					}
+		if ( previousStepPath.includes( 'site-pages' ) ) {
+			const sitePages = currentData.data.sitePages?.other;
+			if ( ! sitePages || false === sitePages ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_STARTER_PAGES_SELECTED,
+						[],
+						{
+							count: 0,
+						},
+						previousStepURL
+					)
 				);
-				trackHiiveEvent(
-					'site-features',
-					siteFeaturesArray.join( ',' )
+			} else {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_STARTER_PAGES_SELECTED,
+						sitePages.map( ( sitePage ) => sitePage.title ),
+						{
+							count: sitePages.length,
+						},
+						previousStepURL
+					)
 				);
 			}
 		}
 
-		window.nfdOnboarding.previousStepID = location.pathname;
-		HiiveAnalytics.dispatchEvents( HIIVE_ANALYTICS_CATEGORY );
+		window.nfdOnboarding.previousStep = {
+			path: location.pathname,
+			url: window.location.href,
+		};
+
+		HiiveAnalytics.dispatchEvents( CATEGORY );
 	};
 
 	useEffect( () => {
@@ -208,6 +291,36 @@ const App = () => {
 			setActiveStep( location.pathname );
 		}
 	}, [ location.pathname, onboardingFlow ] );
+
+	useEffect( () => {
+		if ( location.pathname === firstStep.path ) {
+			trackOnboardingEvent(
+				new OnboardingEvent( ACTION_ONBOARDING_STARTED )
+			);
+		}
+
+		if ( currentChapter !== currentStep?.chapter ) {
+			if ( currentChapter ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_ONBOARDING_CHAPTER_COMPLETE,
+						currentChapter
+					)
+				);
+			}
+
+			if ( currentStep?.chapter ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_ONBOARDING_CHAPTER_STARTED,
+						currentStep.chapter
+					)
+				);
+			}
+
+			setActiveChapter( currentStep?.chapter );
+		}
+	}, [ currentStep ] );
 
 	return (
 		<Fragment>

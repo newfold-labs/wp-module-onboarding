@@ -18,8 +18,12 @@ import {
 	LivePreviewSkeleton,
 	GlobalStylesProvider,
 } from '../../../components/LivePreview';
-import { trackHiiveEvent } from '../../../utils/analytics';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
 import getContents from './contents';
+import { ACTION_HOMEPAGE_LAYOUT_SELECTED } from '../../../utils/analytics/hiive/constants';
 
 const StepDesignHomepageMenu = () => {
 	const location = useLocation();
@@ -97,7 +101,9 @@ const StepDesignHomepageMenu = () => {
 			homepage,
 		};
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'homepage-layout', homepage );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_HOMEPAGE_LAYOUT_SELECTED, homepage )
+		);
 	}
 
 	useEffect( () => {

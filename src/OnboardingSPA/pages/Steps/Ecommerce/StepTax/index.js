@@ -14,7 +14,6 @@ import { store as nfdOnboardingStore } from '../../../../store';
 import { useWPSettings as getWPSettings } from '../useWPSettings';
 import Animate from '../../../../components/Animate';
 import getContents from './contents';
-import { trackHiiveEvent } from '../../../../utils/analytics';
 
 function createReverseLookup( state ) {
 	return ( option ) =>
@@ -101,8 +100,6 @@ const StepTax = () => {
 				},
 			},
 		} );
-
-		trackHiiveEvent( 'tax-information', selectedOption.content );
 	};
 
 	return (
