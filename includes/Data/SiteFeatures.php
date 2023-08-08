@@ -307,7 +307,7 @@ final class SiteFeatures {
 
 		$flow_data = FlowService::read_data_from_wp_option( false );
 		if ( empty( $flow_data['data']['siteFeatures'] ) ) {
-			return array();
+			return $plugins;
 		}
 
 		$flow_data_site_features = $flow_data['data']['siteFeatures'];
