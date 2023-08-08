@@ -814,19 +814,6 @@ export const getBlockSelectors = ( blockTypes ) => {
 	return result;
 };
 
-const processCSSNesting = ( css, blockSelector ) => {
-	let processedCSS = '';
-
-	// Split CSS nested rules.
-	const parts = css.split( '&' );
-	parts.forEach( ( part ) => {
-		processedCSS += ! part.includes( '{' )
-			? blockSelector + '{' + part + '}' // If the part doesn't contain braces, it applies to the root level.
-			: blockSelector + part; // Prepend the selector, which effectively replaces the "&" character.
-	} );
-	return processedCSS;
-};
-
 export function useGlobalStylesOutput(
 	previewSettings,
 	storedPreviewSettings
@@ -893,19 +880,6 @@ export function useGlobalStylesOutput(
 			isGlobalStyles: true,
 		},
 	];
-
-	getBlockTypes().forEach( ( blockType ) => {
-		if ( requiredSettings.styles.blocks[ blockType.name ]?.css ) {
-			const selector = blockSelectors[ blockType.name ].selector;
-			stylesheets.push( {
-				css: processCSSNesting(
-					requiredSettings.styles.blocks[ blockType.name ]?.css,
-					selector
-				),
-				isGlobalStyles: true,
-			} );
-		}
-	} );
 
 	previewSettings.settings.styles = stylesheets;
 	previewSettings.settings.__unstableResolvedAssets =
