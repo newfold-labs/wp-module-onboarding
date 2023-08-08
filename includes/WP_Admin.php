@@ -128,11 +128,11 @@ final class WP_Admin {
 	 */
 	public static function initialize() {
 		if ( ! empty( $_GET['nfd_plugins'] ) && 'true' === sanitize_text_field( $_GET['nfd_plugins'] ) ) {
-			PluginService::queue_initial_installs();
+			PluginService::initialize();
 		}
 
 		if ( ! empty( $_GET['nfd_themes'] ) && 'true' === sanitize_text_field( $_GET['nfd_themes'] ) ) {
-			ThemeService::queue_initial_installs();
+			ThemeService::initialize();
 		}
 
 		FlowService::initialize_data();

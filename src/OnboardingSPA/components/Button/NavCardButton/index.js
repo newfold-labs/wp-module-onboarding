@@ -10,6 +10,7 @@ import {
 	sendOnboardingEvent,
 } from '../../../utils/analytics/hiive';
 import { ACTION_ONBOARDING_COMPLETE } from '../../../utils/analytics/hiive/constants';
+import { activateInitialPlugins } from '../../../utils/api/plugins';
 
 /**
  * Navigation Button Component on Card
@@ -44,6 +45,7 @@ const NavCardButton = ( { text, disabled } ) => {
 		const exitLink = exitToWordpressForEcommerce()
 			? pluginDashboardPage
 			: wpAdminPage;
+		activateInitialPlugins();
 		sendOnboardingEvent(
 			new OnboardingEvent( ACTION_ONBOARDING_COMPLETE )
 		);

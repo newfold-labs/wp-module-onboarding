@@ -45,7 +45,7 @@ class ThemeInstallerController extends \WP_REST_Controller {
 	 * @return \WP_REST_Response
 	 */
 	public static function initialize() {
-		if ( ThemeService::queue_initial_installs() ) {
+		if ( ThemeService::initialize() ) {
 			return new \WP_REST_Response(
 				array(),
 				202

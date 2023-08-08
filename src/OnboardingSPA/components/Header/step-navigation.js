@@ -7,6 +7,7 @@ import { __ } from '@wordpress/i18n';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { wpAdminPage, pluginDashboardPage } from '../../../constants';
+import { activateInitialPlugins } from '../../utils/api/plugins';
 import {
 	OnboardingEvent,
 	sendOnboardingEvent,
@@ -70,6 +71,7 @@ async function saveDataAndExit( currentData ) {
 	const exitLink = exitToWordpressForEcommerce()
 		? pluginDashboardPage
 		: wpAdminPage;
+	activateInitialPlugins();
 	sendOnboardingEvent( new OnboardingEvent( ACTION_ONBOARDING_COMPLETE ) );
 	window.location.replace( exitLink );
 }

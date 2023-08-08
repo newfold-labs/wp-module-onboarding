@@ -30,15 +30,11 @@ export const getSiteFeatures = async () => {
 	);
 };
 
-export const setSiteFeatures = async ( pluginInstallHash, data ) => {
+export async function activateInitialPlugins() {
 	return await resolve(
 		apiFetch( {
-			url: onboardingRestURL( 'plugins/site-features' ),
+			url: onboardingRestURL( 'plugins/initialize/activate' ),
 			method: 'POST',
-			headers: {
-				'X-NFD-INSTALLER': pluginInstallHash,
-			},
-			data,
-		} )
+		} ).then()
 	);
-};
+}
