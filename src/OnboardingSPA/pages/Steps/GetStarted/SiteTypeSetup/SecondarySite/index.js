@@ -154,14 +154,16 @@ const StepPrimarySetup = () => {
 		}
 		setCustom( false );
 		setSecondaryCategory( secType );
-		currentData.data.siteType.primary.refers = 'slug';
 		currentData.data.siteType.secondary.refers = 'slug';
-		currentData.data.siteType.primary.value = primaryCategory;
+		if ( currentData.data.siteType.primary.value !== primaryCategory ) {
+			currentData.data.siteType.primary.refers = 'slug';
+			currentData.data.siteType.primary.value = primaryCategory;
+			trackOnboardingEvent(
+				new OnboardingEvent( ACTION_PRIMARY_TYPE_SET, primaryCategory )
+			);
+		}
 		currentData.data.siteType.secondary.value = secType;
 		setCurrentOnboardingData( currentData );
-		trackOnboardingEvent(
-			new OnboardingEvent( ACTION_PRIMARY_TYPE_SET, primaryCategory )
-		);
 		trackOnboardingEvent(
 			new OnboardingEvent( ACTION_SECONDARY_TYPE_SET, secType )
 		);
