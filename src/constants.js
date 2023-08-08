@@ -1,3 +1,5 @@
+import { addQueryArgs } from '@wordpress/url';
+
 export const NFD_ONBOARDING_ELEMENT_ID = 'nfd-onboarding';
 export const runtimeDataExists =
 	'object' === typeof window?.nfdOnboarding &&
@@ -11,10 +13,15 @@ export const installerRestRoute = 'newfold-installer/v1';
 export const wpRestBase = `${ wpRestURL }/${ wpRestRoute }`;
 export const onboardingRestBase = `${ wpRestURL }/${ onboardingRestRoute }`;
 export const installerRestBase = `${ wpRestURL }/${ installerRestRoute }`;
-export const wpAdminPage = `${ wpAdminUrl }index.php`;
-export const pluginDashboardPage = `${
-	window.nfdOnboarding.currentBrand?.pluginDashboardPage ?? wpAdminPage
-}`;
+export const wpAdminPage = addQueryArgs(
+	`${ wpAdminUrl }index.php`,
+	window.nfdOnboarding.currentBrand?.dashboardRedirectParams
+);
+export const pluginDashboardPage =
+	addQueryArgs(
+		window.nfdOnboarding.currentBrand?.pluginDashboardPage,
+		window.nfdOnboarding.currentBrand?.dashboardRedirectParams
+	) ?? wpAdminPage;
 export const NFD_ONBOARDING_EVENT_PREFIX = 'nfd-module-onboarding-event';
 export const VIEW_NAV_PRIMARY = 'nav-primary';
 export const VIEW_NAV_DESIGN = 'nav-design';
