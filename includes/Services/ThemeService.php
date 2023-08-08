@@ -1,7 +1,6 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
-use NewfoldLabs\WP\Module\Installer\Data\Options;
 use NewfoldLabs\WP\Module\Installer\Services\ThemeInstaller;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\ThemeInstallTaskManager;
 use NewfoldLabs\WP\Module\Installer\Tasks\ThemeInstallTask;
@@ -16,14 +15,7 @@ class ThemeService {
 	 *
 	 * @return boolean
 	 */
-	public static function queue_initial_installs() {
-		// Checks if the init_list of themes have already been queued.
-		if ( \get_option( Options::get_option_name( 'theme_init_status' ), 'init' ) !== 'init' ) {
-			return true;
-		}
-
-		// Set option to installing to prevent re-queueing the init_list again on page load.
-		\update_option( Options::get_option_name( 'theme_init_status' ), 'installing' );
+	public static function initialize() {
 
 		// Get the initial list of themes to be installed based on the plan.
 		$init_themes = Themes::get_init();

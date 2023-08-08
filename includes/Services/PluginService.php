@@ -1,13 +1,15 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
-use NewfoldLabs\WP\Module\Installer\Data\Options;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
+use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginActivationTaskManager;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginInstallTaskManager;
-use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginUninstallTaskManager;
+use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginDeactivationTaskManager;
+use NewfoldLabs\WP\Module\Installer\Tasks\PluginActivationTask;
+use NewfoldLabs\WP\Module\Installer\Tasks\PluginDeactivationTask;
 use NewfoldLabs\WP\Module\Installer\Tasks\PluginInstallTask;
-use NewfoldLabs\WP\Module\Installer\Tasks\PluginUninstallTask;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
+use NewfoldLabs\WP\Module\Onboarding\Data\SiteFeatures;
 
 /**
  * Class for providing plugin related services.
@@ -18,22 +20,16 @@ class PluginService {
 	 *
 	 * @return boolean
 	 */
-	public static function queue_initial_installs() {
-
-		// Checks if the init_list of plugins have already been queued.
-		if ( \get_option( Options::get_option_name( 'plugins_init_status' ), 'init' ) !== 'init' ) {
-			return true;
-		}
-
-		// Set option to installing to prevent re-queueing the init_list again on page load.
-		\update_option( Options::get_option_name( 'plugins_init_status' ), 'installing' );
+	public static function initialize() {
 
 		// Get the initial list of plugins to be installed based on the plan.
-		$init_plugins = Plugins::get_init();
+		$init_plugins = array_merge( Plugins::get_init(), SiteFeatures::get_init() );
 
 		foreach ( $init_plugins as $init_plugin ) {
+			$init_plugin_type = PluginInstaller::get_plugin_type( $init_plugin['slug'] );
+			$init_plugin_path = PluginInstaller::get_plugin_path( $init_plugin['slug'], $init_plugin_type );
 			// Checks if a plugin with the given slug and activation criteria already exists.
-			if ( ! PluginInstaller::exists( $init_plugin['slug'], $init_plugin['activate'] ) ) {
+			if ( ! PluginInstaller::is_plugin_installed( $init_plugin_path ) ) {
 					// Add a new PluginInstallTask to the Plugin install queue.
 					PluginInstallTaskManager::add_to_queue(
 						new PluginInstallTask(
@@ -42,6 +38,15 @@ class PluginService {
 							$init_plugin['priority']
 						)
 					);
+					continue;
+			}
+
+			if ( PluginInstaller::is_active( $init_plugin_path ) ) {
+				PluginDeactivationTaskManager::add_to_queue(
+					new PluginDeactivationTask(
+						$init_plugin['slug']
+					)
+				);
 			}
 		}
 
@@ -49,45 +54,35 @@ class PluginService {
 	}
 
 	/**
-	 * Installs/Uninstalls the requested site features(plugins).
+	 * Activates the initial list of plugins, filtering out non-selected site features.
 	 *
-	 * @param \WP_REST_Request $request the incoming request object.
-	 *
-	 * @return \WP_REST_Response|\WP_Error
+	 * @return boolean
 	 */
-	/**
-	 * Installs/Uninstalls the requested site features (plugins).
-	 *
-	 * @param array $plugins The list of plugin slugs.
-	 * @return \WP_REST_Response
-	 */
-	public static function set_site_features( $plugins ) {
+	public static function activate_init_plugins() {
+		$init_plugins     = array_merge( Plugins::get_init(), SiteFeatures::get_init() );
+		$filtered_plugins = SiteFeatures::filter_selected( $init_plugins );
 
-		foreach ( $plugins as $plugin => $decision ) {
-			if ( $decision ) {
-				// If the Plugin exists and is activated
-				if ( PluginInstaller::exists( $plugin, $decision ) ) {
+		foreach ( $filtered_plugins as $init_plugin ) {
+			// Checks if a plugin with the given slug and activation criteria already exists.
+			if ( ! PluginInstaller::exists( $init_plugin['slug'], true ) ) {
+					// Add a new PluginInstallTask to the Plugin install queue.
+					PluginActivationTaskManager::add_to_queue(
+						new PluginActivationTask(
+							$init_plugin['slug']
+						)
+					);
 					continue;
-				}
-
-				PluginInstallTaskManager::add_to_queue(
-					new PluginInstallTask(
-						$plugin,
-						true
-					)
-				);
-			} else {
-				PluginUninstallTaskManager::add_to_queue(
-					new PluginUninstallTask(
-						$plugin
-					)
-				);
 			}
+
+			PluginInstallTaskManager::add_to_queue(
+				new PluginInstallTask(
+					$init_plugin['slug'],
+					true,
+					isset( $init_plugin['priority'] ) ? $init_plugin['priority'] : 0
+				)
+			);
 		}
 
-		return new \WP_REST_Response(
-			array(),
-			202
-		);
+		return true;
 	}
 }

@@ -7,6 +7,7 @@ import { __ } from '@wordpress/i18n';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { wpAdminPage, pluginDashboardPage } from '../../../constants';
+import { activateInitialPlugins } from '../../utils/api/plugins';
 
 /**
  * Back step Navigation button.
@@ -65,6 +66,7 @@ async function saveDataAndExit( currentData ) {
 	const exitLink = exitToWordpressForEcommerce()
 		? pluginDashboardPage
 		: wpAdminPage;
+	activateInitialPlugins();
 	window.location.replace( exitLink );
 }
 
