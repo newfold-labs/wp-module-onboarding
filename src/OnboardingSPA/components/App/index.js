@@ -106,18 +106,18 @@ const App = () => {
 	}
 
 	async function syncStoreDetails() {
-		const { address, tax } = currentData.storeDetails;
+		const { address } = currentData.storeDetails;
 		let payload = {};
 		if ( address !== undefined ) {
 			delete address.country;
 			delete address.state;
 			payload = address;
 		}
-		if ( tax !== undefined ) {
-			delete tax.option;
-			delete tax.isStoreDetailsFilled;
-			payload = { ...payload, ...tax };
-		}
+		// if ( tax !== undefined ) {
+		// 	delete tax.option;
+		// 	delete tax.isStoreDetailsFilled;
+		// 	payload = { ...payload, ...tax };
+		// }
 		if ( ! isEmpty( payload ) ) {
 			await updateWPSettings( payload );
 		}
