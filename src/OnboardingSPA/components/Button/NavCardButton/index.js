@@ -42,8 +42,8 @@ const NavCardButton = ( { text, disabled } ) => {
 		//Redirect to Admin Page for normal customers
 		// and Bluehost Dashboard for ecommerce customers
 		const exitLink = exitToWordpressForEcommerce()
-			? pluginDashboardPage
-			: wpAdminPage;
+			? pluginDashboardPage.concat( '&referrer=nfd-onboarding' )
+			: wpAdminPage.concat( '?referrer=nfd-onboarding' );
 		sendOnboardingEvent(
 			new OnboardingEvent( ACTION_ONBOARDING_COMPLETE )
 		);
