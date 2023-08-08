@@ -297,25 +297,26 @@ final class SiteFeatures {
 	}
 
 	/**
-	 * Filters the selected site features from a list of plugins.
+	 * Get only the selected plugins from site features init list.
 	 *
-	 * @param array $plugins The list of plugins to be filtered
 	 * @return array
 	 */
-	public static function filter_selected( $plugins ) {
-		$selected_plugins = array();
-		$flow_data        = FlowService::read_data_from_wp_option( false );
+	public static function get_selected() {
+		$site_features_init_list = self::get_init();
+		$selected_plugins        = array();
+
+		$flow_data = FlowService::read_data_from_wp_option( false );
 		if ( empty( $flow_data['data']['siteFeatures'] ) ) {
-			return $plugins;
+			return array();
 		}
 
-		$selected_site_features = $flow_data['data']['siteFeatures'];
-		foreach ( $plugins as $plugin ) {
-			if ( isset( $selected_site_features[ $plugin['slug'] ] ) && true === $selected_site_features[ $plugin['slug'] ] ) {
-				$selected_plugins[] = $plugin;
+		foreach ( $flow_data['data']['siteFeatures'] as $site_feature => $selected ) {
+			if ( $selected && isset( $site_features_init_list[ $site_feature ] ) ) {
+				$selected_plugins[] = $site_features_init_list[ $site_feature ];
 			}
 		}
-		echo wp_json_encode( $selected_plugins );
+
 		return $selected_plugins;
 	}
+
 }
