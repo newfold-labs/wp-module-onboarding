@@ -13,7 +13,14 @@ import NavCardButton from '../../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import Animate from '../../../../../components/Animate';
 import { getSiteClassification } from '../../../../../utils/api/siteClassification';
-import { trackHiiveEvent } from '../../../../../utils/analytics';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../../../utils/analytics/hiive';
+import {
+	ACTION_PRIMARY_TYPE_SET,
+	ACTION_SECONDARY_TYPE_SET,
+} from '../../../../../utils/analytics/hiive/constants';
 
 const StepPrimarySetup = () => {
 	const {
@@ -135,10 +142,9 @@ const StepPrimarySetup = () => {
 			clearTimeout( typingTimeout );
 			setTypingTimeout(
 				setTimeout( () => {
-					trackHiiveEvent( 'secondary-type', {
-						refers: 'custom',
-						value,
-					} );
+					trackOnboardingEvent(
+						new OnboardingEvent( ACTION_SECONDARY_TYPE_SET, value )
+					);
 				}, 1000 )
 			);
 		}
@@ -164,7 +170,12 @@ const StepPrimarySetup = () => {
 		currentData.data.siteType.primary.value = primaryCategory;
 		currentData.data.siteType.secondary.value = secType;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'secondary-type', { refers: 'slug', value: secType } );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_PRIMARY_TYPE_SET, primaryCategory )
+		);
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_SECONDARY_TYPE_SET, secType )
+		);
 	};
 
 	const changePrimaryType = ( direction ) => {
@@ -189,10 +200,9 @@ const StepPrimarySetup = () => {
 				setPrimaryCategory( primaryType );
 				break;
 		}
-		trackHiiveEvent( 'primary-type', {
-			refers: 'slug',
-			value: primaryType,
-		} );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_PRIMARY_TYPE_SET, primaryType )
+		);
 	};
 
 	const secondarySiteTypeChips = () => {

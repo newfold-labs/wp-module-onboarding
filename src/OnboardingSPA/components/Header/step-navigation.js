@@ -8,6 +8,11 @@ import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { wpAdminPage, pluginDashboardPage } from '../../../constants';
 import { activateInitialPlugins } from '../../utils/api/plugins';
+import {
+	OnboardingEvent,
+	sendOnboardingEvent,
+} from '../../utils/analytics/hiive';
+import { ACTION_ONBOARDING_COMPLETE } from '../../utils/analytics/hiive/constants';
 
 /**
  * Back step Navigation button.
@@ -67,6 +72,7 @@ async function saveDataAndExit( currentData ) {
 		? pluginDashboardPage
 		: wpAdminPage;
 	activateInitialPlugins();
+	sendOnboardingEvent( new OnboardingEvent( ACTION_ONBOARDING_COMPLETE ) );
 	window.location.replace( exitLink );
 }
 

@@ -10,7 +10,11 @@ import {
 import { setFlow } from '../../../utils/api/flow';
 
 import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
-import { trackHiiveEvent } from '../../../utils/analytics';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import { ACTION_HEADER_SELECTED } from '../../../utils/analytics/hiive/constants';
 
 const DesignHeaderMenu = () => {
 	const [ patterns, setPatterns ] = useState();
@@ -102,7 +106,9 @@ const DesignHeaderMenu = () => {
 		if ( result?.error === null ) {
 			setCurrentOnboardingData( currentData );
 		}
-		trackHiiveEvent( 'theme-header', chosenPattern.slug );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_HEADER_SELECTED, chosenPattern.slug )
+		);
 	};
 
 	const buildPreviews = () => {

@@ -5,7 +5,10 @@ import { Popover, ColorPicker } from '@wordpress/components';
 import { useState, useEffect, useRef } from '@wordpress/element';
 
 import Animate from '../../Animate';
-import { trackHiiveEvent } from '../../../utils/analytics';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
 import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
@@ -16,6 +19,9 @@ import {
 	findIndexInPalette,
 } from '../../../pages/Steps/DesignColors/utils';
 import ColorPickerButton from '../../ColorPickerButton';
+import { ACTION_COLORS_SELECTED } from '../../../utils/analytics/hiive/constants';
+
+import { convertObjectKeysToSnakeCase } from '../../../utils';
 
 const DesignColors = () => {
 	// Used for scrolling into custom colors section
@@ -59,6 +65,9 @@ const DesignColors = () => {
 	 * Boolean able to toggle value i.e. true/false
 	 */
 	const [ isAccordionClosed, setIsAccordionClosed ] = useState( true );
+
+	// Timeout after which a custom picker analytics event will be sent.
+	const [ colorPickerTimeout, setColorPickerTimeout ] = useState();
 
 	const { storedPreviewSettings, currentData, themeStatus } = useSelect(
 		( select ) => {
@@ -154,7 +163,6 @@ const DesignColors = () => {
 		currentData.data.colorStyle = '';
 		setCurrentOnboardingData( currentData );
 		setSelectedColors( storeToState( selectedGlobalStylePalette ) );
-		trackHiiveEvent( 'color-selection-reset', selectedGlobalStyle.title );
 	}
 
 	/**
@@ -203,7 +211,11 @@ const DesignColors = () => {
 		//  Save selected color to Store
 		currentData.data.colorStyle = colorStyle;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'color-selection', colorStyle );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_COLORS_SELECTED, colorStyle, {
+				colors: convertObjectKeysToSnakeCase( colors[ colorStyle ] ),
+			} )
+		);
 	};
 
 	/**
@@ -344,9 +356,18 @@ const DesignColors = () => {
 		currentData.data.colorStyle = 'custom';
 		setCurrentOnboardingData( currentData );
 		setSelectedColors( selectedColorsLocalCopy );
-		if ( ! customColors ) {
-			trackHiiveEvent( 'color-selection', 'custom' );
-		}
+		clearTimeout( colorPickerTimeout );
+		setColorPickerTimeout(
+			setTimeout( () => {
+				trackOnboardingEvent(
+					new OnboardingEvent( ACTION_COLORS_SELECTED, 'custom', {
+						colors: convertObjectKeysToSnakeCase(
+							selectedColorsLocalCopy
+						),
+					} )
+				);
+			}, 1000 )
+		);
 		setCustomColors( selectedColorsLocalCopy );
 	};
 
