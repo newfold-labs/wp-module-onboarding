@@ -57,7 +57,6 @@ final class Options {
 		'wc_taxes_enabled'              => 'wc_connect_taxes_enabled',
 		'wc_calc_taxes'                 => 'woocommerce_calc_taxes',
 		'wc_no_sales_tax'               => 'woocommerce_no_sales_tax',
-		'theme_init_status'             => 'theme_init_status',
 	);
 
 	/**
