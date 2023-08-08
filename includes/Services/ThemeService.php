@@ -4,7 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 use NewfoldLabs\WP\Module\Installer\Services\ThemeInstaller;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\ThemeInstallTaskManager;
 use NewfoldLabs\WP\Module\Installer\Tasks\ThemeInstallTask;
-use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Installer\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 
 /**
