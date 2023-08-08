@@ -209,23 +209,6 @@ const StepAddress = () => {
 				<div className="onboarding-ecommerce-step">
 					<form
 						className="onboarding-ecommerce-step"
-						onSubmit={ ( event ) => {
-							event.preventDefault();
-							event.stopPropagation();
-							//Commented as auto-calculate tax option is removed for MMP
-
-							// let selectedTaxOption = content.stepTaxOptions.find((option) =>
-							// 	Object.entries(option.data).every(
-							// 		([optionName, requiredValue]) =>
-							// 			settings?.[optionName] === requiredValue
-							// 	)
-							// );
-							// navigate(
-							// 	selectedTaxOption === undefined
-							// 		? '/ecommerce/step/tax'
-							// 		: '/ecommerce/step/products'
-							// );
-						} }
 						style={ {
 							display: 'grid',
 							justifyItems: 'center',
