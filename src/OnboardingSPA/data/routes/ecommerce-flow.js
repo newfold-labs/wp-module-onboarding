@@ -87,9 +87,7 @@ export const steps = orderBy(
 	[
 		...filter(
 			defaultInitialSteps,
-			( step ) =>
-				! step.path.includes( '/step/top-priority' ) &&
-				! step.path.includes( '/step/get-started/site-primary' )
+			( step ) => ! step.path.includes( '/step/top-priority' )
 		),
 		...ecommerceSteps,
 	],
