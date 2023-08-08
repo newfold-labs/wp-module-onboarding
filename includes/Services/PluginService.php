@@ -59,9 +59,12 @@ class PluginService {
 	 * @return boolean
 	 */
 	public static function activate_init_plugins() {
-		$init_plugins = array_merge( Plugins::get_init(), SiteFeatures::get_selected() );
+		$init_plugins           = Plugins::get_init();
+		$filtered_init_plugins  = SiteFeatures::filter_selected( $init_plugins );
+		$site_features_selected = SiteFeatures::get_selected();
+		$final_init_plugins     = array_merge( $filtered_init_plugins, $site_features_selected );
 
-		foreach ( $init_plugins as $init_plugin ) {
+		foreach ( $final_init_plugins as $init_plugin ) {
 			$init_plugin_type = PluginInstaller::get_plugin_type( $init_plugin['slug'] );
 			$init_plugin_path = PluginInstaller::get_plugin_path( $init_plugin['slug'], $init_plugin_type );
 			// Checks if a plugin with the given slug and activation criteria already exists.
