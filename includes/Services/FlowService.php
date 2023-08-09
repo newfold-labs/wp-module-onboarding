@@ -24,15 +24,14 @@ class FlowService {
 	public static function initialize_data() {
 		$default_data = self::get_default_data();
 		$data         = self::read_data_from_wp_option();
-		$flow_type    = Data::current_flow();
 
 		if ( ! $data ) {
+			self::set_primary_type_for_ecommerce();
 			return self::update_data_in_wp_option( $default_data );
 		}
 
-		if ( empty( $data['data']['siteType']['primary']['value'] ) && 'ecommerce' === $flow_type ) {
-			$primary_type = new PrimaryType( 'slug', 'business' );
-			$primary_type->save();
+		if ( empty( $data['data']['siteType']['primary']['value'] ) ) {
+			self::set_primary_type_for_ecommerce();
 		}
 
 		$data['version'] = isset( $data['version'] ) ? $data['version'] : '';
@@ -53,6 +52,19 @@ class FlowService {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Set Primary Type Site Classification Option.
+	 *
+	 * @return void
+	 */
+	public static function set_primary_type_for_ecommerce() {
+		$flow_type = Data::current_flow();
+		if ( 'ecommerce' === $flow_type ) {
+			$primary_type = new PrimaryType( 'slug', 'business' );
+			$primary_type->save();
+		}
 	}
 
 	/**
