@@ -13,7 +13,14 @@ import NavCardButton from '../../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import Animate from '../../../../../components/Animate';
 import { getSiteClassification } from '../../../../../utils/api/siteClassification';
-import { trackHiiveEvent } from '../../../../../utils/analytics';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../../../utils/analytics/hiive';
+import {
+	ACTION_PRIMARY_TYPE_SET,
+	ACTION_SECONDARY_TYPE_SET,
+} from '../../../../../utils/analytics/hiive/constants';
 
 const StepPrimarySetup = () => {
 	const {
@@ -62,20 +69,9 @@ const StepPrimarySetup = () => {
 
 		setPrimaryCategory( defaultPrimaryType );
 		setSiteClassification( siteClassificationData?.body );
-		let primaryTypeList;
-		if ( window?.nfdOnboarding?.currentFlow === 'ecommerce' ) {
-			primaryTypeList = [ 'business' ];
-			if ( currentData?.data?.siteType?.primary?.value !== 'business' ) {
-				currentData.data.siteType.primary = {
-					refers: 'slug',
-					value: 'business',
-				};
-			}
-		} else {
-			primaryTypeList = Object.keys(
-				siteClassificationData?.body?.types
-			);
-		}
+		const primaryTypeList = Object.keys(
+			siteClassificationData?.body?.types
+		);
 		setPrimaryTypeList( primaryTypeList );
 
 		// Incase old user comes again with data, we need to save it
@@ -135,9 +131,8 @@ const StepPrimarySetup = () => {
 			clearTimeout( typingTimeout );
 			setTypingTimeout(
 				setTimeout( () => {
-					trackHiiveEvent(
-						'secondary-type',
-						currentData.data.siteType.secondary
+					trackOnboardingEvent(
+						new OnboardingEvent( ACTION_SECONDARY_TYPE_SET, value )
 					);
 				}, 1000 )
 			);
@@ -159,14 +154,18 @@ const StepPrimarySetup = () => {
 		}
 		setCustom( false );
 		setSecondaryCategory( secType );
-		currentData.data.siteType.primary.refers = 'slug';
 		currentData.data.siteType.secondary.refers = 'slug';
-		currentData.data.siteType.primary.value = primaryCategory;
+		if ( currentData.data.siteType.primary.value !== primaryCategory ) {
+			currentData.data.siteType.primary.refers = 'slug';
+			currentData.data.siteType.primary.value = primaryCategory;
+			trackOnboardingEvent(
+				new OnboardingEvent( ACTION_PRIMARY_TYPE_SET, primaryCategory )
+			);
+		}
 		currentData.data.siteType.secondary.value = secType;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent(
-			'secondary-type',
-			currentData.data.siteType.secondary
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_SECONDARY_TYPE_SET, secType )
 		);
 	};
 
@@ -192,10 +191,9 @@ const StepPrimarySetup = () => {
 				setPrimaryCategory( primaryType );
 				break;
 		}
-		trackHiiveEvent( 'primary-type', {
-			refers: 'slug',
-			value: primaryType,
-		} );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_PRIMARY_TYPE_SET, primaryType )
+		);
 	};
 
 	const secondarySiteTypeChips = () => {
@@ -240,28 +238,28 @@ const StepPrimarySetup = () => {
 								<div className="category-scrolling-wrapper">
 									{ primaryTypesList &&
 										primaryTypesList.length > 1 && (
-										<div className="category-scrolling-wrapper__left-btn">
-											<span
-												className="category-scrolling-wrapper__left-btn-icon"
-												onClick={ () =>
-													changePrimaryType(
-														'back'
-													)
-												}
-												onKeyUp={ () =>
-													changePrimaryType(
-														'back'
-													)
-												}
-												role="button"
-												tabIndex={ 0 }
-												style={ {
-													backgroundImage:
+											<div className="category-scrolling-wrapper__left-btn">
+												<span
+													className="category-scrolling-wrapper__left-btn-icon"
+													onClick={ () =>
+														changePrimaryType(
+															'back'
+														)
+													}
+													onKeyUp={ () =>
+														changePrimaryType(
+															'back'
+														)
+													}
+													role="button"
+													tabIndex={ 0 }
+													style={ {
+														backgroundImage:
 															'var(--chevron-left-icon)',
-												} }
-											/>
-										</div>
-									) }
+													} }
+												/>
+											</div>
+										) }
 									<div className="category-scrolling-wrapper__type">
 										<span
 											className="category-scrolling-wrapper__type-icon"
@@ -275,28 +273,28 @@ const StepPrimarySetup = () => {
 									</div>
 									{ primaryTypesList &&
 										primaryTypesList.length > 1 && (
-										<div className="category-scrolling-wrapper__right-btn">
-											<span
-												className="category-scrolling-wrapper__right-btn-icon"
-												onClick={ () =>
-													changePrimaryType(
-														'next'
-													)
-												}
-												onKeyUp={ () =>
-													changePrimaryType(
-														'next'
-													)
-												}
-												role="button"
-												tabIndex={ 0 }
-												style={ {
-													backgroundImage:
+											<div className="category-scrolling-wrapper__right-btn">
+												<span
+													className="category-scrolling-wrapper__right-btn-icon"
+													onClick={ () =>
+														changePrimaryType(
+															'next'
+														)
+													}
+													onKeyUp={ () =>
+														changePrimaryType(
+															'next'
+														)
+													}
+													role="button"
+													tabIndex={ 0 }
+													style={ {
+														backgroundImage:
 															'var(--chevron-right-icon)',
-												} }
-											/>
-										</div>
-									) }
+													} }
+												/>
+											</div>
+										) }
 								</div>
 							) }
 						</div>

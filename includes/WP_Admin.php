@@ -106,7 +106,19 @@ final class WP_Admin {
 
 			\wp_enqueue_script( self::$slug );
 			\wp_enqueue_style( self::$slug );
+
+			\add_action( 'enqueue_block_assets', array( __CLASS__, 'enqueue_block_assets' ) );
 		}
+	}
+
+	/**
+	 * Enqueues the block assets for the live previews.
+	 *
+	 * @return void
+	 */
+	public static function enqueue_block_assets() {
+		// This hook exists in the patterns module.
+		\do_action( 'enqueue_nfd_wonder_blocks_utilities' );
 	}
 
 	/**
@@ -116,11 +128,11 @@ final class WP_Admin {
 	 */
 	public static function initialize() {
 		if ( ! empty( $_GET['nfd_plugins'] ) && 'true' === sanitize_text_field( $_GET['nfd_plugins'] ) ) {
-			PluginService::queue_initial_installs();
+			PluginService::initialize();
 		}
 
 		if ( ! empty( $_GET['nfd_themes'] ) && 'true' === sanitize_text_field( $_GET['nfd_themes'] ) ) {
-			ThemeService::queue_initial_installs();
+			ThemeService::initialize();
 		}
 
 		FlowService::initialize_data();

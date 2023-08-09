@@ -92,6 +92,13 @@ export function setActiveStep( path ) {
 	};
 }
 
+export function setActiveChapter( chapter ) {
+	return {
+		type: 'SET_ACTIVE_CHAPTER',
+		chapter,
+	};
+}
+
 /**
  * Accepts a JSON to set the Flow Data.
  *
@@ -135,13 +142,6 @@ export function updateThemeStatus( themeStatus ) {
 	return {
 		type: 'UPDATE_THEME_STATUS',
 		themeStatus,
-	};
-}
-
-export function updatePluginsStatus( pluginsStatus ) {
-	return {
-		type: 'UPDATE_PLUGINS_STATUS',
-		pluginsStatus,
 	};
 }
 

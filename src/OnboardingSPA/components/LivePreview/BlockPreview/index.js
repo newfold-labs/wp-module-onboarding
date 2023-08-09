@@ -49,11 +49,7 @@ const BlockPreview = ( {
 		if ( previewSettings ) {
 			setSettings(
 				// eslint-disable-next-line react-hooks/rules-of-hooks
-				useGlobalStylesOutput(
-					previewSettings,
-					storedPreviewSettings,
-					'block-preview'
-				)
+				useGlobalStylesOutput( previewSettings, storedPreviewSettings )
 			);
 		} else {
 			setSettings( storedPreviewSettings );

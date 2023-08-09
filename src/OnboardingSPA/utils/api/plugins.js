@@ -22,16 +22,6 @@ export const init = () => {
 	} );
 };
 
-export const getPluginStatus = async ( plugin ) => {
-	return await resolve(
-		apiFetch( {
-			url: onboardingRestURL(
-				'plugins/status' + ( plugin ? `&plugin=${ plugin }` : '' )
-			),
-		} )
-	);
-};
-
 export const getSiteFeatures = async () => {
 	return await resolve(
 		apiFetch( {
@@ -40,15 +30,11 @@ export const getSiteFeatures = async () => {
 	);
 };
 
-export const setSiteFeatures = async ( pluginInstallHash, data ) => {
+export async function activateInitialPlugins() {
 	return await resolve(
 		apiFetch( {
-			url: onboardingRestURL( 'plugins/site-features' ),
+			url: onboardingRestURL( 'plugins/initialize/activate' ),
 			method: 'POST',
-			headers: {
-				'X-NFD-INSTALLER': pluginInstallHash,
-			},
-			data,
-		} )
+		} ).then()
 	);
-};
+}

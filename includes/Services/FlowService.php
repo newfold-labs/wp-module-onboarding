@@ -23,7 +23,7 @@ class FlowService {
 	 */
 	public static function initialize_data() {
 		$default_data = self::get_default_data();
-		$data    = self::read_data_from_wp_option();
+		$data         = self::read_data_from_wp_option();
 
 		if ( ! $data ) {
 			return self::update_data_in_wp_option( $default_data );
@@ -39,7 +39,7 @@ class FlowService {
 		// Returns true if the old version doesn't match the new version
 		$upgrade_status = $upgrade_handler->maybe_upgrade();
 		if ( $upgrade_status ) {
-			$data = self::read_data_from_wp_option();
+			$data         = self::read_data_from_wp_option();
 			$updated_data = self::update_data_recursive( $default_data, $data );
 			// To update the options with the recent version of flow data
 			$updated_data['version'] = $default_data['version'];
@@ -354,7 +354,11 @@ class FlowService {
 		$flow_type = Data::current_flow();
 		if ( 'ecommerce' === $flow_type ) {
 			// update default data with ecommerce data
-			$data['data']['topPriority']['priority1'] = 'selling';
+			$data['data']['topPriority']['priority1']      = 'selling';
+			$data['data']['siteType']['primary']['refers'] = 'slug';
+			$data['data']['siteType']['primary']['value']  = 'business';
+			$primary_type                                  = new PrimaryType( 'slug', 'business' );
+			$primary_type->save();
 		}
 		return $data;
 	}

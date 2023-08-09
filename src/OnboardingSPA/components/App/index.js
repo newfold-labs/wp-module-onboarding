@@ -5,13 +5,13 @@ import Sidebar from '../Sidebar';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { setFlow } from '../../utils/api/flow';
+import { conditionalSteps } from '../../data/routes';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { isEmpty, updateWPSettings } from '../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../store';
-import { conditionalSteps } from '../../data/routes/';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { kebabCase, orderBy, filter } from 'lodash';
+import { kebabCase } from 'lodash';
 import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { SlotFillProvider } from '@wordpress/components';
@@ -20,7 +20,23 @@ import { FullscreenMode } from '@wordpress/interface';
 import { API_REQUEST } from '../../../constants';
 import NewfoldInterfaceSkeleton from '../NewfoldInterfaceSkeleton';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
-import { trackHiiveEvent } from '../../utils/analytics';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../utils/analytics/hiive';
+import { injectInAllSteps } from '../../data/routes/allStepsHandler';
+import {
+	ACTION_LOGO_ADDED,
+	ACTION_ONBOARDING_CHAPTER_COMPLETE,
+	ACTION_ONBOARDING_CHAPTER_STARTED,
+	ACTION_ONBOARDING_STARTED,
+	ACTION_SITE_TITLE_SET,
+	ACTION_SOCIAL_ADDED,
+	ACTION_STARTER_PAGES_SELECTED,
+	ACTION_TAGLINE_SET,
+	CATEGORY,
+} from '../../utils/analytics/hiive/constants';
+import { socialMediaStoreToState } from '../SocialMediaForm/utils';
 
 /**
  * Primary app that renders the <NewfoldInterfaceSkeleton />.
@@ -41,23 +57,29 @@ const App = () => {
 		currentData,
 		socialData,
 		firstStep,
-		routes,
-		designSteps,
 		allSteps,
-	} = useSelect( ( select ) => {
-		return {
-			isDrawerOpen: select( nfdOnboardingStore ).isDrawerOpened(),
-			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
-			onboardingFlow: select( nfdOnboardingStore ).getOnboardingFlow(),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			socialData: select( nfdOnboardingStore ).getOnboardingSocialData(),
-			firstStep: select( nfdOnboardingStore ).getFirstStep(),
-			routes: select( nfdOnboardingStore ).getRoutes(),
-			allSteps: select( nfdOnboardingStore ).getAllSteps(),
-			designSteps: select( nfdOnboardingStore ).getDesignSteps(),
-		};
-	}, [] );
+		currentChapter,
+		currentStep,
+	} = useSelect(
+		( select ) => {
+			return {
+				isDrawerOpen: select( nfdOnboardingStore ).isDrawerOpened(),
+				newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
+				onboardingFlow:
+					select( nfdOnboardingStore ).getOnboardingFlow(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				socialData:
+					select( nfdOnboardingStore ).getOnboardingSocialData(),
+				firstStep: select( nfdOnboardingStore ).getFirstStep(),
+				allSteps: select( nfdOnboardingStore ).getAllSteps(),
+				currentChapter:
+					select( nfdOnboardingStore ).getCurrentChapter(),
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+			};
+		},
+		[ location.pathname ]
+	);
 
 	const [ isRequestPlaced, setIsRequestPlaced ] = useState( false );
 	const [ didVisitBasicInfo, setDidVisitBasicInfo ] = useState( false );
@@ -65,12 +87,12 @@ const App = () => {
 	const {
 		setActiveStep,
 		setActiveFlow,
-		updateRoutes,
-		updateDesignSteps,
 		updateAllSteps,
 		flushQueue,
 		enqueueRequest,
 		setOnboardingSocialData,
+		setCurrentOnboardingData,
+		setActiveChapter,
 	} = useDispatch( nfdOnboardingStore );
 
 	async function syncSocialSettings() {
@@ -84,28 +106,18 @@ const App = () => {
 	}
 
 	async function syncStoreDetails() {
-		const { address, tax } = currentData.storeDetails;
+		const { address } = currentData.storeDetails;
 		let payload = {};
 		if ( address !== undefined ) {
 			delete address.country;
 			delete address.state;
 			payload = address;
 		}
-		if ( tax !== undefined ) {
-			// const option = tax.option;
-			// const isStoreDetailsFilled = tax.isStoreDetailsFilled;
-			delete tax.option;
-			delete tax.isStoreDetailsFilled;
-			// No Auto-calculate taxes for MMP
-			// if (option === "1") {
-			// 	if (isStoreDetailsFilled) {
-			// 		payload = { ...payload, ...tax };
-			// 	}
-			// } else {
-			// 	payload = { ...payload, ...tax };
-			// }
-			payload = { ...payload, ...tax };
-		}
+		// if ( tax !== undefined ) {
+		// 	delete tax.option;
+		// 	delete tax.isStoreDetailsFilled;
+		// 	payload = { ...payload, ...tax };
+		// }
 		if ( ! isEmpty( payload ) ) {
 			await updateWPSettings( payload );
 		}
@@ -151,128 +163,119 @@ const App = () => {
 		}
 	}
 
-	const addColorAndTypographyRoutes = () => {
-		const updates = removeColorAndTypographyRoutes();
-		const steps = [
-			conditionalSteps.designColors,
-			conditionalSteps.designTypography,
-		];
-		return {
-			routes: orderBy(
-				updates.routes.concat( steps ),
-				[ 'priority' ],
-				[ 'asc' ]
-			),
-			allSteps: orderBy(
-				updates.allSteps.concat( steps ),
-				[ 'priority' ],
-				[ 'asc' ]
-			),
-			designSteps: orderBy(
-				updates.designSteps.concat( steps ),
-				[ 'priority' ],
-				[ 'asc' ]
-			),
-		};
-	};
-
-	const removeColorAndTypographyRoutes = () => {
-		return {
-			routes: filter(
-				routes,
-				( route ) =>
-					! route.path.includes(
-						conditionalSteps.designColors.path
-					) &&
-					! route.path.includes(
-						conditionalSteps.designTypography.path
-					)
-			),
-			allSteps: filter(
-				allSteps,
-				( allStep ) =>
-					! allStep.path.includes(
-						conditionalSteps.designColors.path
-					) &&
-					! allStep.path.includes(
-						conditionalSteps.designTypography.path
-					)
-			),
-			designSteps: filter(
-				designSteps,
-				( designStep ) =>
-					! designStep.path.includes(
-						conditionalSteps.designColors.path
-					) &&
-					! designStep.path.includes(
-						conditionalSteps.designTypography.path
-					)
-			),
-		};
-	};
-
-	function handleColorsAndTypographyRoutes() {
+	function handleConditionalDesignStepsRoutes() {
 		if (
 			location?.pathname.includes( 'colors' ) ||
 			location?.pathname.includes( 'typography' )
 		) {
-			const updates = currentData?.data?.customDesign
-				? addColorAndTypographyRoutes()
-				: removeColorAndTypographyRoutes();
-
-			updateRoutes( updates.routes );
-			updateDesignSteps( updates.designSteps );
+			const updates = injectInAllSteps( allSteps, conditionalSteps );
 			updateAllSteps( updates.allSteps );
+			if ( ! currentData.data.customDesign ) {
+				currentData.data.customDesign = true;
+				setCurrentOnboardingData( currentData );
+			}
 		}
 	}
 
 	const handlePreviousStepTracking = () => {
-		const previousStep = window.nfdOnboarding?.previousStepID;
-		if ( typeof previousStep !== 'string' ) {
-			window.nfdOnboarding.previousStepID = location.pathname;
-			HiiveAnalytics.dispatchEvents();
+		const previousStep = window.nfdOnboarding?.previousStep;
+		if ( typeof previousStep !== 'object' ) {
+			window.nfdOnboarding.previousStep = {
+				path: location.pathname,
+				url: window.location.href,
+			};
+			HiiveAnalytics.dispatchEvents( CATEGORY );
 			return;
 		}
 
-		if ( previousStep.includes( 'products' ) ) {
-			trackHiiveEvent( 'products-info', {
-				productCount:
-					currentData.storeDetails.productInfo.product_count,
-				productTypes:
-					currentData.storeDetails.productInfo.product_types.join(
-						','
-					),
-			} );
-		}
+		const previousStepPath = previousStep.path;
+		const previousStepURL = previousStep.url;
 
-		if ( previousStep.includes( 'site-pages' ) ) {
-			if ( currentData.data.sitePages?.other !== false ) {
-				currentData.data.sitePages?.other?.forEach( ( sitePage ) => {
-					trackHiiveEvent(
-						`${ sitePage.slug }-layout`,
-						sitePage.slug
-					);
-				} );
+		if ( previousStepPath.includes( 'basic-info' ) ) {
+			const siteTitle = currentData.data.blogName;
+			const siteDescription = currentData.data.blogDescription;
+			const siteLogo = currentData.data.siteLogo.url;
+			if ( siteTitle ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_SITE_TITLE_SET,
+						siteTitle,
+						{},
+						previousStepURL
+					)
+				);
+			}
+
+			if ( siteDescription ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_TAGLINE_SET,
+						siteDescription,
+						{},
+						previousStepURL
+					)
+				);
+			}
+
+			if ( siteLogo ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_LOGO_ADDED,
+						undefined,
+						{},
+						previousStepURL
+					)
+				);
+			}
+
+			const platforms = Object.keys(
+				socialMediaStoreToState( socialData )
+			).join( ',' );
+			if ( platforms ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_SOCIAL_ADDED,
+						platforms,
+						{},
+						previousStepURL
+					)
+				);
 			}
 		}
 
-		if ( previousStep.includes( 'site-features' ) ) {
-			const siteFeatures = currentData.data?.siteFeatures;
-			if ( siteFeatures ) {
-				const siteFeaturesArray = Object.keys( siteFeatures ).filter(
-					( key ) => {
-						return siteFeatures[ key ] !== false;
-					}
+		if ( previousStepPath.includes( 'site-pages' ) ) {
+			const sitePages = currentData.data.sitePages?.other;
+			if ( ! sitePages || false === sitePages ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_STARTER_PAGES_SELECTED,
+						[],
+						{
+							count: 0,
+						},
+						previousStepURL
+					)
 				);
-				trackHiiveEvent(
-					'site-features',
-					siteFeaturesArray.join( ',' )
+			} else {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_STARTER_PAGES_SELECTED,
+						sitePages.map( ( sitePage ) => sitePage.title ),
+						{
+							count: sitePages.length,
+						},
+						previousStepURL
+					)
 				);
 			}
 		}
 
-		window.nfdOnboarding.previousStepID = location.pathname;
-		HiiveAnalytics.dispatchEvents();
+		window.nfdOnboarding.previousStep = {
+			path: location.pathname,
+			url: window.location.href,
+		};
+
+		HiiveAnalytics.dispatchEvents( CATEGORY );
 	};
 
 	useEffect( () => {
@@ -282,12 +285,42 @@ const App = () => {
 	useEffect( () => {
 		syncStoreToDB();
 		handlePreviousStepTracking();
-		handleColorsAndTypographyRoutes();
+		handleConditionalDesignStepsRoutes();
 		if ( location.pathname.includes( '/step' ) ) {
 			setActiveFlow( onboardingFlow );
 			setActiveStep( location.pathname );
 		}
 	}, [ location.pathname, onboardingFlow ] );
+
+	useEffect( () => {
+		if ( location.pathname === firstStep.path ) {
+			trackOnboardingEvent(
+				new OnboardingEvent( ACTION_ONBOARDING_STARTED )
+			);
+		}
+
+		if ( currentChapter !== currentStep?.chapter ) {
+			if ( currentChapter ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_ONBOARDING_CHAPTER_COMPLETE,
+						currentChapter
+					)
+				);
+			}
+
+			if ( currentStep?.chapter ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_ONBOARDING_CHAPTER_STARTED,
+						currentStep.chapter
+					)
+				);
+			}
+
+			setActiveChapter( currentStep?.chapter );
+		}
+	}, [ currentStep ] );
 
 	return (
 		<Fragment>

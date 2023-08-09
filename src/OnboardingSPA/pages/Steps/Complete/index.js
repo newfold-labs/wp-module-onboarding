@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import getContents from './contents';
 import { completeFlow } from '../../../utils/api/flow';
 import { StepLoader } from '../../../components/Loaders';
-import { setSiteFeatures } from '../../../utils/api/plugins';
 import { StepErrorState } from '../../../components/ErrorState';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 import { THEME_STATUS_INIT } from '../../../../constants';
@@ -23,31 +22,18 @@ const StepComplete = () => {
 	const navigate = useNavigate();
 	const [ isError, setIsError ] = useState( false );
 
-	const {
-		nextStep,
-		brandName,
-		currentData,
-		isQueueEmpty,
-		pluginInstallHash,
-	} = useSelect( ( select ) => {
+	const { nextStep, brandName, isQueueEmpty } = useSelect( ( select ) => {
 		return {
 			nextStep: select( nfdOnboardingStore ).getNextStep(),
 			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			isQueueEmpty: select( nfdOnboardingStore ).isQueueEmpty(),
-			pluginInstallHash:
-				select( nfdOnboardingStore ).getPluginInstallHash(),
 		};
 	}, [] );
 
 	const contents = getContents( brandName );
 
 	const checkFlowComplete = async () => {
-		await Promise.all( [
-			completeFlowRequest(),
-			setSiteFeaturesRequest(),
-		] ).then( ( values ) =>
+		await Promise.all( [ completeFlowRequest() ] ).then( ( values ) =>
 			values.forEach( ( value ) => {
 				// If any Request returns False then Show Error
 				if ( ! value ) {
@@ -64,17 +50,6 @@ const StepComplete = () => {
 	async function completeFlowRequest() {
 		const flowCompletionResponse = await completeFlow();
 		if ( flowCompletionResponse?.error ) return false;
-		return true;
-	}
-
-	async function setSiteFeaturesRequest() {
-		if ( Array.isArray( currentData?.data?.siteFeatures ) ) return true;
-
-		const siteFeaturesResponse = await setSiteFeatures( pluginInstallHash, {
-			plugins: currentData?.data?.siteFeatures,
-		} );
-		if ( siteFeaturesResponse?.error ) return false;
-
 		return true;
 	}
 

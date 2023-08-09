@@ -18,7 +18,12 @@ import {
 	LivePreviewSkeleton,
 	GlobalStylesProvider,
 } from '../../../components/LivePreview';
-import { trackHiiveEvent } from '../../../utils/analytics';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import getContents from './contents';
+import { ACTION_HOMEPAGE_LAYOUT_SELECTED } from '../../../utils/analytics/hiive/constants';
 
 const StepDesignHomepageMenu = () => {
 	const location = useLocation();
@@ -54,12 +59,10 @@ const StepDesignHomepageMenu = () => {
 
 	function refactorPatterns( homepagePatternDataResp ) {
 		const makeHomepagePattern = [];
-		homepagePatternDataResp.forEach(
-			( homepagePatternData ) => {
-				makeHomepagePattern.push( homepagePatternData.content );
-				homepagePatternList.push( homepagePatternData.slug );
-			}
-		);
+		homepagePatternDataResp.forEach( ( homepagePatternData ) => {
+			makeHomepagePattern.push( homepagePatternData.content );
+			homepagePatternList.push( homepagePatternData.slug );
+		} );
 		setHomepagePatternList( homepagePatternList );
 		return makeHomepagePattern;
 	}
@@ -98,7 +101,9 @@ const StepDesignHomepageMenu = () => {
 			homepage,
 		};
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'homepage-layout', homepage );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_HOMEPAGE_LAYOUT_SELECTED, homepage )
+		);
 	}
 
 	useEffect( () => {
@@ -106,6 +111,8 @@ const StepDesignHomepageMenu = () => {
 			getHomepagePatternsData();
 		}
 	}, [ themeStatus ] );
+
+	const content = getContents();
 
 	function buildHomepagePreviews() {
 		return homepagePattern?.map( ( homepage, idx ) => {
@@ -133,8 +140,8 @@ const StepDesignHomepageMenu = () => {
 				<CommonLayout>
 					<div className="homepage_preview">
 						<HeadingWithSubHeading
-							title={ currentStep?.heading }
-							subtitle={ currentStep?.subheading }
+							title={ content.heading }
+							subtitle={ content.subheading }
 						/>
 						<div className="homepage_preview__list">
 							<LivePreviewSkeleton

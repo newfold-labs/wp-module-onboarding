@@ -7,10 +7,12 @@ import { registerCoreBlocks } from '@wordpress/block-library';
 import initializeNFDOnboarding from './OnboardingSPA';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import { onboardingRestURL } from './OnboardingSPA/utils/api/common';
+import { CATEGORY } from './OnboardingSPA/utils/analytics/hiive/constants';
 
 if ( runtimeDataExists ) {
 	domReady( () => {
 		HiiveAnalytics.initialize( {
+			namespace: CATEGORY,
 			urls: {
 				single: onboardingRestURL( 'events' ),
 				batch: onboardingRestURL( 'events/batch' ),

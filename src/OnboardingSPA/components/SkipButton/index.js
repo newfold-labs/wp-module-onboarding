@@ -9,6 +9,7 @@ import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { wpAdminPage, pluginDashboardPage } from '../../../constants';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
+import { CATEGORY } from '../../utils/analytics/hiive/constants';
 
 const SkipButton = ( { callback = false } ) => {
 	const navigate = useNavigate();
@@ -46,7 +47,7 @@ const SkipButton = ( { callback = false } ) => {
 				if ( socialDataResp ) {
 					setOnboardingSocialData( socialDataResp );
 				}
-				await HiiveAnalytics.dispatchEvents();
+				await HiiveAnalytics.dispatchEvents( CATEGORY );
 			}
 			setFlow( currentData );
 		}

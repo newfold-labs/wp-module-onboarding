@@ -10,7 +10,6 @@ import CardHeader from '../../../../components/CardHeader';
 import CommonLayout from '../../../../components/Layouts/Common';
 import NeedHelpTag from '../../../../components/NeedHelpTag';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
-import { EcommerceStateHandler } from '../../../../components/StateHandlers';
 import { store as nfdOnboardingStore } from '../../../../store';
 import getContents from './contents';
 
@@ -58,54 +57,50 @@ const StepProducts = () => {
 	const content = getContents();
 
 	return (
-		<EcommerceStateHandler>
-			<CommonLayout isBgPrimary isCentered>
-				<NewfoldLargeCard className="ecommerce-step">
-					<div className="nfd-onboarding-experience-step onboarding-product-step onboarding-ecommerce-step">
-						<div className="nfd-card-heading center">
-							<CardHeader
-								heading={ content.heading }
-								subHeading={ content.subheading }
-							/>
-						</div>
-						<div className="nfd-product-step-options">
-							{ content.typeOptions.map( ( product ) => (
-								<CheckboxControl
-									key={ product.value }
-									checked={ productInfo.product_types.includes(
-										product.value
-									) }
-									label={ product.content }
-									onChange={ ( e ) =>
-										handleCheckbox( product.value, e )
-									}
-								/>
-							) ) }
-						</div>
-						<div className="step-product-numbers">
-							<span style={ { fontSize: '16px' } }>
-								{ content.question }
-							</span>
-							<RadioControl
-								className="components-radio-control__input"
-								selected={ productInfo?.product_count }
-								options={ content.numberOptions.map(
-									( option ) => {
-										return {
-											label: option.content,
-											value: option.value,
-										};
-									}
-								) }
-								onChange={ handleProductCount }
-							/>
-						</div>
-						<NavCardButton text={ content.buttonText } />
-						<NeedHelpTag />
+		<CommonLayout isBgPrimary isCentered>
+			<NewfoldLargeCard className="ecommerce-step">
+				<div className="nfd-onboarding-experience-step onboarding-product-step onboarding-ecommerce-step">
+					<div className="nfd-card-heading center">
+						<CardHeader
+							heading={ content.heading }
+							subHeading={ content.subheading }
+						/>
 					</div>
-				</NewfoldLargeCard>
-			</CommonLayout>
-		</EcommerceStateHandler>
+					<div className="nfd-product-step-options">
+						{ content.typeOptions.map( ( product ) => (
+							<CheckboxControl
+								key={ product.value }
+								checked={ productInfo.product_types.includes(
+									product.value
+								) }
+								label={ product.content }
+								onChange={ ( e ) =>
+									handleCheckbox( product.value, e )
+								}
+							/>
+						) ) }
+					</div>
+					<div className="step-product-numbers">
+						<span style={ { fontSize: '16px' } }>
+							{ content.question }
+						</span>
+						<RadioControl
+							className="components-radio-control__input"
+							selected={ productInfo?.product_count }
+							options={ content.numberOptions.map( ( option ) => {
+								return {
+									label: option.content,
+									value: option.value,
+								};
+							} ) }
+							onChange={ handleProductCount }
+						/>
+					</div>
+					<NavCardButton text={ content.buttonText } />
+					<NeedHelpTag />
+				</div>
+			</NewfoldLargeCard>
+		</CommonLayout>
 	);
 };
 

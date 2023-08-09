@@ -21,14 +21,17 @@ const getContents = () => {
 		options: [
 			{
 				label: __( 'Never used it', 'wp-module-onboarding' ),
+				slug: 'novice',
 				value: '1',
 			},
 			{
 				label: __( 'Used it some', 'wp-module-onboarding' ),
+				slug: 'intermediate',
 				value: '3',
 			},
 			{
 				label: __( "I'm an expert", 'wp-module-onboarding' ),
+				slug: 'expert',
 				value: '5',
 			},
 		],
