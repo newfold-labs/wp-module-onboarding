@@ -30,8 +30,7 @@ class FlowService {
 			return self::update_data_in_wp_option( $default_data );
 		}
 
-		if ( isset( $data['data']['siteType']['primary']['value'] )
-		&& '' === $data['data']['siteType']['primary']['value'] && 'ecommerce' === $flow_type ) {
+		if ( empty( $data['data']['siteType']['primary']['value'] ) && 'ecommerce' === $flow_type ) {
 			$primary_type = new PrimaryType( 'slug', 'business' );
 			$primary_type->save();
 		}
@@ -362,7 +361,7 @@ class FlowService {
 		if ( 'ecommerce' === $flow_type ) {
 			// update default data with ecommerce data
 			$data['data']['topPriority']['priority1'] = 'selling';
-			if ( isset( $data['data']['siteType']['primary']['value'] ) && '' === $data['data']['siteType']['primary']['value'] ) {
+			if ( empty( $data['data']['siteType']['primary']['value'] ) ) {
 				$data['data']['siteType']['primary']['refers'] = 'slug';
 				$data['data']['siteType']['primary']['value']  = 'business';
 			}
