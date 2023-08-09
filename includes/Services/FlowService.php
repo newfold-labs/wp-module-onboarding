@@ -24,9 +24,15 @@ class FlowService {
 	public static function initialize_data() {
 		$default_data = self::get_default_data();
 		$data         = self::read_data_from_wp_option();
+		$flow_type    = Data::current_flow();
 
 		if ( ! $data ) {
 			return self::update_data_in_wp_option( $default_data );
+		}
+
+		if ( empty( $data['data']['siteType']['primary']['value'] ) && 'ecommerce' === $flow_type ) {
+			$primary_type = new PrimaryType( 'slug', 'business' );
+			$primary_type->save();
 		}
 
 		$data['version'] = isset( $data['version'] ) ? $data['version'] : '';
@@ -354,11 +360,11 @@ class FlowService {
 		$flow_type = Data::current_flow();
 		if ( 'ecommerce' === $flow_type ) {
 			// update default data with ecommerce data
-			$data['data']['topPriority']['priority1']      = 'selling';
-			$data['data']['siteType']['primary']['refers'] = 'slug';
-			$data['data']['siteType']['primary']['value']  = 'business';
-			$primary_type                                  = new PrimaryType( 'slug', 'business' );
-			$primary_type->save();
+			$data['data']['topPriority']['priority1'] = 'selling';
+			if ( empty( $data['data']['siteType']['primary']['value'] ) ) {
+				$data['data']['siteType']['primary']['refers'] = 'slug';
+				$data['data']['siteType']['primary']['value']  = 'business';
+			}
 		}
 		return $data;
 	}
