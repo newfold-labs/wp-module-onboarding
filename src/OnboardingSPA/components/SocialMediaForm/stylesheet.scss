@@ -96,11 +96,3 @@ $border: #d6d6d6;
 		background-color: rgba(255, 0, 0, 0.18) !important;
 	}
 }
-
-.components-modal__frame {
-	max-width: 40%;
-
-	@media (max-width: #{ ($break-medium) }) {
-		max-width: 100%;
-	}
-}

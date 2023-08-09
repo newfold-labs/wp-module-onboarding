@@ -367,8 +367,8 @@ export function isQueueEmpty( state ) {
  * @param {*} state
  * @return {string} code
  */
-export function getNavErrorModalCode( state ) {
-	return state?.flow?.steps?.navErrorModal?.code;
+export function getShowErrorDialog( state ) {
+	return state.flow.steps.error.showDialog;
 }
 
 /**
@@ -377,6 +377,6 @@ export function getNavErrorModalCode( state ) {
  * @param {*} state
  * @return {string} continuePath
  */
-export function getNavErrorModalPath( state ) {
-	return state?.flow?.steps?.navErrorModal?.continuePath;
+export function getNavErrorPath( state ) {
+	return state.flow.steps.error.continuePath;
 }

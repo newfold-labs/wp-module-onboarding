@@ -6,26 +6,20 @@ import { Button, ButtonGroup, Modal } from '@wordpress/components';
 
 import { store as nfdOnboardingStore } from '../../store';
 
-const SocialMediaModal = ( {
-	showModal,
-	setShowModal,
-	modalTitle,
-	modalText,
-} ) => {
+const ErrorModal = ( { showModal, setShowModal, modalTitle, modalText } ) => {
 	const navigate = useNavigate();
 	const { navErrorModalPath } = useSelect( ( select ) => {
 		return {
-			navErrorModalPath:
-				select( nfdOnboardingStore ).getNavErrorModalPath(),
+			navErrorModalPath: select( nfdOnboardingStore ).getNavErrorPath(),
 		};
 	}, [] );
 
-	const { addNavErrorModalCode, resetNavErrorModal } =
+	const { showNavErrorDialog, resetNavError } =
 		useDispatch( nfdOnboardingStore );
 
 	const closeModal = () => {
-		resetNavErrorModal();
-		addNavErrorModalCode( 400 );
+		resetNavError();
+		showNavErrorDialog( true );
 		setShowModal( false );
 	};
 
@@ -47,7 +41,7 @@ const SocialMediaModal = ( {
 						<Button
 							variant="primary"
 							onClick={ () => {
-								resetNavErrorModal();
+								resetNavError();
 								navigate( navErrorModalPath );
 							} }
 						>
@@ -60,4 +54,4 @@ const SocialMediaModal = ( {
 	);
 };
 
-export default SocialMediaModal;
+export default ErrorModal;

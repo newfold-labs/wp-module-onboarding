@@ -221,22 +221,22 @@ export function flushQueue() {
 	};
 }
 
-export function addNavErrorModalCode( errorCode ) {
+export function showNavErrorDialog( showDialog ) {
 	return {
-		type: 'ADD_NAV_ERROR_MODAL_CODE',
-		errorCode,
+		type: 'SHOW_NAV_ERROR_DIALOG',
+		showDialog,
 	};
 }
 
-export function setNavErrorModalPath( continuePath ) {
+export function setNavErrorContinuePath( continuePath ) {
 	return {
-		type: 'SET_NAV_ERROR_MODAL_PATH',
+		type: 'SET_NAV_ERROR_CONTINUE_PATH',
 		continuePath,
 	};
 }
 
-export function resetNavErrorModal() {
+export function resetNavError() {
 	return {
-		type: 'RESET_NAV_ERROR_MODAL_CODE',
+		type: 'RESET_NAV_ERROR',
 	};
 }

@@ -4,7 +4,7 @@ import { useState, useEffect } from '@wordpress/element';
 import Tooltip from './../Tooltip';
 import getContents from './contents';
 import urlValidator, { ERROR_TYPES } from './urlValidator';
-import SocialMediaModal from './socialMediaModal';
+import SocialMediaModal from '../ErrorModal/ErrorModal';
 import { store as nfdOnboardingStore } from '../../store';
 
 const SocialMediaForm = ( {
@@ -27,16 +27,12 @@ const SocialMediaForm = ( {
 	const [ activeError, setActiveError ] = useState( [] );
 	const [ activeErrorTypes, setActiveErrorTypes ] = useState();
 
-	const {
-		addNavErrorModalCode,
-		setOnboardingSocialData,
-		resetNavErrorModal,
-	} = useDispatch( nfdOnboardingStore );
+	const { showNavErrorDialog, setOnboardingSocialData, resetNavError } =
+		useDispatch( nfdOnboardingStore );
 
 	const { navErrorModalPath } = useSelect( ( select ) => {
 		return {
-			navErrorModalPath:
-				select( nfdOnboardingStore ).getNavErrorModalPath(),
+			navErrorModalPath: select( nfdOnboardingStore ).getNavErrorPath(),
 		};
 	}, [] );
 
@@ -183,8 +179,8 @@ const SocialMediaForm = ( {
 			activeErrorTypes,
 			setActiveErrorTypes
 		);
-		if ( getErrorType() !== ERROR_TYPES.NONE ) addNavErrorModalCode( 400 );
-		else resetNavErrorModal();
+		if ( getErrorType() !== ERROR_TYPES.NONE ) showNavErrorDialog( true );
+		else resetNavError();
 		saveData( res, triggerID );
 	};
 

@@ -21,12 +21,12 @@ import { ACTION_ONBOARDING_COMPLETE } from '../../utils/analytics/hiive/constant
  *
  * @return {WPComponent} Back Component
  */
-const Back = ( { path, navErrorModalCode } ) => {
-	const { setNavErrorModalPath } = useDispatch( nfdOnboardingStore );
+const Back = ( { path, showErrorDialog } ) => {
+	const { setNavErrorContinuePath } = useDispatch( nfdOnboardingStore );
 	const navigate = useNavigate();
 	const navigateBack = () => {
-		if ( navErrorModalCode !== undefined ) {
-			setNavErrorModalPath( path );
+		if ( showErrorDialog !== false ) {
+			setNavErrorContinuePath( path );
 		} else {
 			navigate( path, { state: { origin: 'header' } } );
 		}
@@ -50,13 +50,13 @@ const Back = ( { path, navErrorModalCode } ) => {
  *
  * @return {WPComponent} Next Component
  */
-const Next = ( { path, navErrorModalCode } ) => {
-	const { setNavErrorModalPath } = useDispatch( nfdOnboardingStore );
+const Next = ( { path, showErrorDialog } ) => {
+	const { setNavErrorContinuePath } = useDispatch( nfdOnboardingStore );
 	/* [TODO]: some sense of isStepComplete to enable/disable */
 	const navigate = useNavigate();
 	const navigateNext = () => {
-		if ( navErrorModalCode !== undefined ) {
-			setNavErrorModalPath( path );
+		if ( showErrorDialog !== false ) {
+			setNavErrorContinuePath( path );
 		} else {
 			navigate( path, { state: { origin: 'header' } } );
 		}
@@ -113,21 +113,19 @@ const Finish = ( { currentData, saveDataAndExitFunc } ) => (
  */
 const StepNavigation = () => {
 	const location = useLocation();
-	const { previousStep, nextStep, currentData, navErrorModalCode } =
-		useSelect(
-			( select ) => {
-				return {
-					nextStep: select( nfdOnboardingStore ).getNextStep(),
-					previousStep:
-						select( nfdOnboardingStore ).getPreviousStep(),
-					currentData:
-						select( nfdOnboardingStore ).getCurrentOnboardingData(),
-					navErrorModalCode:
-						select( nfdOnboardingStore ).getNavErrorModalCode(),
-				};
-			},
-			[ location.pathname ]
-		);
+	const { previousStep, nextStep, currentData, showErrorDialog } = useSelect(
+		( select ) => {
+			return {
+				nextStep: select( nfdOnboardingStore ).getNextStep(),
+				previousStep: select( nfdOnboardingStore ).getPreviousStep(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				showErrorDialog:
+					select( nfdOnboardingStore ).getShowErrorDialog(),
+			};
+		},
+		[ location.pathname ]
+	);
 	const isFirstStep = null === previousStep || false === previousStep;
 	const isLastStep = null === nextStep || false === nextStep;
 	return (
@@ -136,7 +134,7 @@ const StepNavigation = () => {
 				{ isFirstStep || isLastStep ? null : (
 					<Back
 						path={ previousStep.path }
-						navErrorModalCode={ navErrorModalCode }
+						showErrorDialog={ showErrorDialog }
 					/>
 				) }
 				{ isLastStep ? (
@@ -147,7 +145,7 @@ const StepNavigation = () => {
 				) : (
 					<Next
 						path={ nextStep.path }
-						navErrorModalCode={ navErrorModalCode }
+						showErrorDialog={ showErrorDialog }
 					/>
 				) }
 			</ButtonGroup>

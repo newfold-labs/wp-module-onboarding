@@ -24,8 +24,8 @@ export function flow(
 			getStartedSteps: initialGetStartedSteps(),
 			storeInfoSteps: initialStoreInfoSteps(),
 			currentStep: initialSteps[ 0 ].path,
-			navErrorModal: {
-				code: undefined,
+			error: {
+				showDialog: false,
 				continuePath: '',
 			},
 		},
@@ -71,35 +71,35 @@ export function flow(
 					designSteps: action.designSteps,
 				},
 			};
-		case 'ADD_NAV_ERROR_MODAL_CODE':
+		case 'SHOW_NAV_ERROR_DIALOG':
 			return {
 				...state,
 				steps: {
 					...state.steps,
-					navErrorModal: {
-						...state.steps.navErrorModal,
-						code: action.errorCode,
+					error: {
+						...state.steps.error,
+						showDialog: action.showDialog,
 					},
 				},
 			};
-		case 'SET_NAV_ERROR_MODAL_PATH':
+		case 'SET_NAV_ERROR_CONTINUE_PATH':
 			return {
 				...state,
 				steps: {
 					...state.steps,
-					navErrorModal: {
-						...state.steps.navErrorModal,
+					error: {
+						...state.steps.error,
 						continuePath: action.continuePath,
 					},
 				},
 			};
-		case 'RESET_NAV_ERROR_MODAL_CODE':
+		case 'RESET_NAV_ERROR':
 			return {
 				...state,
 				steps: {
 					...state.steps,
-					navErrorModal: {
-						code: undefined,
+					error: {
+						showDialog: false,
 						continuePath: '',
 					},
 				},
