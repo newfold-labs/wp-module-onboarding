@@ -108,5 +108,5 @@ export {
 	getThemeColors,
 	getThemeFonts,
 	install,
-	expedite
+	expedite,
 };
