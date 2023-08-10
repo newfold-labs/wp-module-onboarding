@@ -52,7 +52,6 @@ export const THEME_STATUS_NOT_ACTIVE = 'inactive';
 export const THEME_STATUS_INSTALLING = 'installing';
 export const THEME_STATUS_ACTIVE = 'activated';
 export const THEME_STATUS_FAILURE = 'failed';
-export const THEME_INSTALL_WAIT_TIMEOUT = 30000;
 
 export const CHAPTER_DEMOGRAPHIC = 'demographic';
 export const CHAPTER_COMMERCE = 'commerce';
