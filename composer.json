@@ -25,12 +25,9 @@
 	"repositories": [
         {
             "type": "composer",
-            "url": "https://newfold-labs.github.io/satis/",
-            "exclude": [
-                "newfold-labs/wp-module-ai"
-            ]
+            "url": "https://newfold-labs.github.io/satis/"
         },
-        { "type": "vcs", "url": "https://github.com/newfold-labs/wp-module-ai/" }
+		{ "type": "vcs", "url": "https://github.com/newfold-labs/wp-module-ai/" }
     ],
 	"require": {
 		"mustache/mustache": "~2.5",

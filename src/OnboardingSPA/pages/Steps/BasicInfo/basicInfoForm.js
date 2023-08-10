@@ -138,9 +138,9 @@ const BasicInfoForm = () => {
 		}
 	}, [ debouncedFlowData ] );
 
-	const handleSuggestionClick = (suggestion) => {
+	/* const handleSuggestionClick = (suggestion) => {
 		setSiteDesc(suggestion);
-	};
+	}; */
 	const handleDescBlur = () => {
 		if(siteDesc){
 			setSuggestionButton(true);
@@ -184,6 +184,7 @@ const BasicInfoForm = () => {
 							textValue={ siteDesc }
 							textValueSetter={ setSiteDesc }
 							handleBlur={handleDescBlur}
+							className={"site-description-input"}
 						/>
 
 						{siteDesc &&
@@ -193,7 +194,7 @@ const BasicInfoForm = () => {
 								siteType={currentData.data?.siteType?.primary?.value}
 								siteSubtype={currentData.data?.siteType?.secondary?.value}
 								siteUrl={window.nfdOnboarding?.siteUrl}
-								handleSuggestionClick={handleSuggestionClick}
+								targetElementSelector=".basic-info-form__left .nfd-input:nth-child(2) textarea"
 							/>
 						}
 
