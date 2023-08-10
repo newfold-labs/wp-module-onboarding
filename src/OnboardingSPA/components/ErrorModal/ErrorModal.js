@@ -19,6 +19,9 @@ const ErrorModal = ( { showModal, setShowModal, modalTitle, modalText } ) => {
 
 	const closeModal = () => {
 		resetNavError();
+		// If the user closes the modal, it indicates that the error still exists.
+		// The user has closed the modal to address the error. Until the error is resolved
+		// or the user chooses to proceed anyway, the error message should remain visible.
 		showNavErrorDialog( true );
 		setShowModal( false );
 	};
@@ -41,6 +44,7 @@ const ErrorModal = ( { showModal, setShowModal, modalTitle, modalText } ) => {
 						<Button
 							variant="primary"
 							onClick={ () => {
+								// Since the user is overriding and proceeding anyway, there's no need to display a dialog anymore.
 								resetNavError();
 								navigate( navErrorModalPath );
 							} }
