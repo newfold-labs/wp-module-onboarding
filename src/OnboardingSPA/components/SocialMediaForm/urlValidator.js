@@ -1,3 +1,5 @@
+import { ERROR_TYPES } from './utils';
+
 const SocialMediaSites = {
 	FACEBOOK: 'facebook',
 	TWITTER: 'twitter',
@@ -16,13 +18,6 @@ let errorsDup;
 let setErrorsDup;
 let errorTypesDup;
 let setErrorTypesDup;
-
-// Types of errors
-export const ERROR_TYPES = {
-	NONE: 'none',
-	AD_LINK_ERROR: 'ad-link-error',
-	INVALID_LINK_ERROR: 'invalid-link-error',
-};
 
 // Adds error to a certain message.
 const displayErrors = ( categ, isError ) => {

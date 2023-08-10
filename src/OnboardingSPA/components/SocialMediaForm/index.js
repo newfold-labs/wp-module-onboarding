@@ -3,7 +3,8 @@ import { useState, useEffect } from '@wordpress/element';
 
 import Tooltip from './../Tooltip';
 import getContents from './contents';
-import urlValidator, { ERROR_TYPES } from './urlValidator';
+import { ERROR_TYPES } from './utils';
+import urlValidator from './urlValidator';
 import SocialMediaModal from '../ErrorModal/ErrorModal';
 import { store as nfdOnboardingStore } from '../../store';
 
