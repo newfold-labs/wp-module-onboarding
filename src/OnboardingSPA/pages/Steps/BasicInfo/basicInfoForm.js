@@ -29,7 +29,6 @@ const BasicInfoForm = () => {
 	const [ socialData, setSocialData ] = useState();
 	const [ isValidSocials, setIsValidSocials ] = useState( false );
 	const [ isSocialFormOpen, setIsSocialFormOpen ] = useState( false );
-	const [suggestionButton, setSuggestionButton] = useState(false);
 
 	const { setOnboardingSocialData, setCurrentOnboardingData } =
 		useDispatch( nfdOnboardingStore );
@@ -138,23 +137,6 @@ const BasicInfoForm = () => {
 		}
 	}, [ debouncedFlowData ] );
 
-	/* const handleSuggestionClick = (suggestion) => {
-		setSiteDesc(suggestion);
-	}; */
-	const handleDescBlur = () => {
-		if(siteDesc){
-			setSuggestionButton(true);
-		}
-	}
-
-	useEffect(() => {
-		if (siteDesc) {
-			setSuggestionButton(true);
-		}
-		return () => {
-		}
-	}, [siteDesc])
-
 	return (
 		<Animate
 			type={ 'fade-in-disabled' }
@@ -183,20 +165,16 @@ const BasicInfoForm = () => {
 							height="100px"
 							textValue={ siteDesc }
 							textValueSetter={ setSiteDesc }
-							handleBlur={handleDescBlur}
-							className={"site-description-input"}
 						/>
 
-						{siteDesc &&
-							<DescriptionGenerator
-								siteDesc={siteDesc}
-								siteTitle={siteTitle}
-								siteType={currentData.data?.siteType?.primary?.value}
-								siteSubtype={currentData.data?.siteType?.secondary?.value}
-								siteUrl={window.nfdOnboarding?.siteUrl}
-								targetElementSelector=".basic-info-form__left .nfd-input:nth-child(2) textarea"
-							/>
-						}
+						<DescriptionGenerator
+							siteDesc={siteDesc}
+							siteTitle={siteTitle}
+							siteType={currentData.data?.siteType?.primary?.value}
+							siteSubtype={currentData.data?.siteType?.secondary?.value}
+							siteUrl={window.nfdOnboarding?.siteUrl}
+							targetElementSelector=".basic-info-form__left .nfd-input:nth-child(2) textarea"
+						/>
 
 						<div ref={ socialMediaRef }>
 							<SocialMediaForm
