@@ -10,7 +10,6 @@ import {
 	SIDEBAR_SLOTFILL_PREFIX,
 } from '../../../../../constants';
 import SidebarSkeleton from './Skeleton/SidebarSkeleton';
-import { trackHiiveEvent } from '../../../../utils/analytics';
 
 const LearnMoreSidebar = () => {
 	const { currentStep } = useSelect( ( select ) => {
@@ -23,7 +22,6 @@ const LearnMoreSidebar = () => {
 
 	const closeSideBar = () => {
 		setIsSidebarOpened( false );
-		trackHiiveEvent( 'sidebar-closed', window.location.href );
 	};
 	return (
 		<Fill name={ `${ SIDEBAR_SLOTFILL_PREFIX }/${ SIDEBAR_LEARN_MORE }` }>

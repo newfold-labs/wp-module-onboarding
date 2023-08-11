@@ -18,6 +18,7 @@ import {
 	LivePreviewSelectableCardWithInfo,
 } from '../../../components/LivePreview';
 import LivePreviewSkeleton from '../../../components/LivePreview/LivePreviewSkeleton';
+import getContents from './contents';
 
 const StepSitePages = () => {
 	const location = useLocation();
@@ -147,14 +148,16 @@ const StepSitePages = () => {
 		if ( themeStatus === THEME_STATUS_ACTIVE ) getSitePages();
 	}, [ themeStatus ] );
 
+	const content = getContents();
+
 	return (
 		<DesignStateHandler>
 			<GlobalStylesProvider>
 				<CommonLayout>
 					<div className="site-pages">
 						<HeadingWithSubHeading
-							title={ currentStep?.heading }
-							subtitle={ currentStep?.subheading }
+							title={ content.heading }
+							subtitle={ content.subheading }
 						/>
 						<div className="site-pages__list">
 							<LivePreviewSkeleton

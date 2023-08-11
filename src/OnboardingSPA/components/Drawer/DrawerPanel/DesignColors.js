@@ -1,28 +1,73 @@
+import classNames from 'classnames';
 import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Popover, ColorPicker } from '@wordpress/components';
 import { useState, useEffect, useRef } from '@wordpress/element';
-import classNames from 'classnames';
 
+import Animate from '../../Animate';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
-import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
-import Animate from '../../Animate';
-import { trackHiiveEvent } from '../../../utils/analytics';
+import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
+import {
+	stateToStore,
+	storeToState,
+	findIndexInPalette,
+} from '../../../pages/Steps/DesignColors/utils';
+import ColorPickerButton from '../../ColorPickerButton';
+import { ACTION_COLORS_SELECTED } from '../../../utils/analytics/hiive/constants';
+
+import { convertObjectKeysToSnakeCase } from '../../../utils';
 
 const DesignColors = () => {
+	// Used for scrolling into custom colors section
 	const customColorsResetRef = useRef( null );
-	const [ isLoaded, setIsLoaded ] = useState( false );
-	const [ customColorsMap, setCustomColorsMap ] = useState();
-	const [ selectedColors, setSelectedColors ] = useState();
-	const [ showColorPicker, setShowColorPicker ] = useState( false );
-	const [ isAccordionClosed, setIsAccordionClosed ] = useState( true );
-	const [ selectedColorsLocal, setSelectedColorsLocal ] = useState();
 
+	/**
+	 * Predefined color palettes with color mappings
+	 * eg: calm: {header-background: '#1A4733', secondary-foreground: '#FFF', …}
+	 */
+	const [ colors, setColors ] = useState();
+	/**
+	 * Custom mapping for selected colors from backend
+	 * eg: base => ["header-foreground", "header-titles", "secondary-foreground"]
+	 */
+	const [ customColorsMap, setCustomColorsMap ] = useState();
+	/**
+	 * Mapped value for every color type for faster updates
+	 * eg: {base: "#ffffff", contrast: "#404040", ... }
+	 * Note: This exists for Predefined and Custom colors as well
+	 */
+	const [ selectedColors, setSelectedColors ] = useState();
+
+	// Custom Colors Section
+	/**
+	 * Custom color mapping selected by the user
+	 * eg: {base: '#da2929', contrast: '#404040',.. }
+	 */
 	const [ customColors, setCustomColors ] = useState();
-	const [ colorPalettes, setColorPalettes ] = useState();
+	/**
+	 * Determines which custom color was toggled to select a color
+	 * e.g. base, primary, secondary..
+	 */
 	const [ colorPickerCalledBy, setColorPickerCalledBy ] = useState( '' );
+	/**
+	 * Determines if color picker should be shown
+	 * Boolean able to toggle value i.e. true/false
+	 */
+	const [ showColorPicker, setShowColorPicker ] = useState( false );
+	/**
+	 * Determines if custom colors accordion state
+	 * Boolean able to toggle value i.e. true/false
+	 */
+	const [ isAccordionClosed, setIsAccordionClosed ] = useState( true );
+
+	// Timeout after which a custom picker analytics event will be sent.
+	const [ colorPickerTimeout, setColorPickerTimeout ] = useState();
 
 	const { storedPreviewSettings, currentData, themeStatus } = useSelect(
 		( select ) => {
@@ -43,236 +88,59 @@ const DesignColors = () => {
 		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
 
-	function stateToLocal( selectedColorPalette ) {
-		if ( selectedColorPalette ) {
-			const selectedColorsLocalTemp = {};
-			selectedColorPalette?.forEach( ( color ) => {
-				selectedColorsLocalTemp[ color.slug ] = color.color;
-			} );
-			setSelectedColorsLocal( selectedColorsLocalTemp );
-			return selectedColorsLocalTemp;
-		}
-	}
-
-	function LocalToState( selectedColorsLocalTemp, colorStyle ) {
-		if ( selectedColorsLocalTemp && colorStyle ) {
-			const colorsArray = [];
-			for ( const colorName in selectedColorsLocalTemp ) {
-				colorsArray.push( {
-					slug: colorName,
-					name:
-						colorName?.charAt( 0 ).toUpperCase() +
-						colorName?.slice( 1 ),
-					color: selectedColorsLocalTemp[ colorName ],
+	useEffect( () => {
+		if ( THEME_STATUS_ACTIVE === themeStatus ) {
+			setColorStylesAndPatterns();
+			if ( currentData?.data?.colorStyle === 'custom' ) {
+				setIsAccordionClosed( false );
+				customColorsResetRef?.current?.scrollIntoView( {
+					behavior: 'smooth',
+					block: 'end',
 				} );
 			}
-			setSelectedColors( colorsArray );
-			currentData.data.colorStyle = colorStyle;
-			setCurrentOnboardingData( currentData );
-			return colorsArray;
 		}
-	}
+	}, [ themeStatus ] );
 
-	async function saveThemeColorPalette(
-		colorStyle,
-		colorPalettesTemp = colorPalettes,
-		selectedColorsLocalTemp = selectedColors,
-		globalStylesTemp = storedPreviewSettings
-	) {
-		const isCustomStyle = colorStyle === 'custom';
-		const selectedGlobalStyle = globalStylesTemp;
-		const selectedThemeColorPalette =
-			selectedGlobalStyle?.settings?.color?.palette;
-		if ( colorPalettesTemp && colorStyle && selectedThemeColorPalette ) {
-			for ( let idx = 0; idx < selectedThemeColorPalette.length; idx++ ) {
-				const slug = selectedThemeColorPalette[ idx ]?.slug;
-				if (
-					isCustomStyle &&
-					selectedColorsLocalTemp?.[ slug ] !== '' &&
-					selectedColorsLocalTemp?.[ slug ] !== undefined
-				) {
-					selectedThemeColorPalette[ idx ].color =
-						selectedColorsLocalTemp[ slug ];
-				} else if (
-					// Add Exception for Background. (perhaps scope to yith-wonder in future)
-					colorPalettesTemp?.[ colorStyle ]?.[ slug ] &&
-					'base' === slug
-				) {
-					selectedThemeColorPalette[ idx ].color = '#FFFFFF';
-				} else if (
-					! isCustomStyle &&
-					colorPalettesTemp?.[ colorStyle ]?.[ slug ]
-				) {
-					selectedThemeColorPalette[ idx ].color =
-						colorPalettesTemp[ colorStyle ][ slug ];
-				}
-			}
-			selectedGlobalStyle.settings.color.palette =
-				selectedThemeColorPalette;
-			updatePreviewSettings(
-				// eslint-disable-next-line react-hooks/rules-of-hooks
-				useGlobalStylesOutput(
-					selectedGlobalStyle,
-					storedPreviewSettings
-				)
-			);
-
-			return selectedGlobalStyle;
-		}
-	}
-
-	function findInCustomColors( slugName ) {
-		const selectedThemeColorPalette =
-			storedPreviewSettings?.settings?.color?.palette;
-		const res = selectedThemeColorPalette.findIndex(
-			( { slug } ) => slug === slugName
-		);
-		if ( res === -1 ) {
-			return selectedThemeColorPalette.findIndex(
-				( { slug } ) => slug === colorPickerCalledBy
-			);
-		}
-		return res;
-	}
-
-	async function saveCustomColors() {
-		const selectedGlobalStyle = storedPreviewSettings;
-		const selectedThemeColorPalette =
-			selectedGlobalStyle?.settings?.color?.palette;
-
-		if ( selectedThemeColorPalette ) {
-			for ( let idx = 0; idx < selectedThemeColorPalette.length; idx++ ) {
-				const slug = selectedThemeColorPalette[ idx ]?.slug;
-				if (
-					colorPickerCalledBy === slug &&
-					customColors &&
-					customColors[ slug ] !== undefined
-				) {
-					selectedThemeColorPalette[ idx ].color =
-						customColors[ slug ];
-				}
-			}
-			if ( customColorsMap ) {
-				const colorVariant = customColorsMap[ colorPickerCalledBy ];
-				if ( colorVariant ) {
-					colorVariant.forEach( ( variant ) => {
-						if (
-							customColors &&
-							customColors[ colorPickerCalledBy ] !== undefined
-						) {
-							selectedThemeColorPalette[
-								findInCustomColors( variant )
-							].color = customColors[ colorPickerCalledBy ];
-						}
-					} );
-				}
-			}
-
-			selectedGlobalStyle.settings.color.palette =
-				selectedThemeColorPalette;
-			updatePreviewSettings(
-				// eslint-disable-next-line react-hooks/rules-of-hooks
-				useGlobalStylesOutput(
-					selectedGlobalStyle,
-					storedPreviewSettings
-				)
-			);
-		}
-	}
-
-	const getColorStylesAndPatterns = async () => {
-		const globalStyles = await getGlobalStyles();
-		const colorPaletteResponse = await getThemeColors();
+	/**
+	 * Fetches the colors for the Drawer and sets the state
+	 * Contains: 'tailored' and 'custom-picker-grouping'
+	 */
+	const setColorStylesAndPatterns = async () => {
+		const [ globalStyles, colorPaletteResponse ] = await Promise.all( [
+			getGlobalStyles(),
+			getThemeColors(),
+		] );
 		if ( colorPaletteResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
 		if ( globalStyles?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
 		}
-		setColorPalettes( colorPaletteResponse?.body.tailored );
+		setColors( colorPaletteResponse?.body.tailored );
 		setCustomColorsMap(
 			colorPaletteResponse?.body[ 'custom-picker-grouping' ]
 		);
-		let selectedColorPalette;
-		let selectedColorsLocalTemp;
+		let selectedColorsNew;
 		if ( ! ( currentData?.data?.colorStyle === '' ) ) {
-			selectedColorPalette =
+			selectedColorsNew =
+				storedPreviewSettings?.settings?.color?.palette ??
 				globalStyles.body[ 0 ]?.settings?.color?.palette;
-			selectedColorsLocalTemp = stateToLocal( selectedColorPalette );
 			if ( currentData?.data?.colorStyle === 'custom' ) {
-				setCustomColors( selectedColorsLocalTemp );
+				setSelectedColors( storeToState( selectedColorsNew ) );
+				setCustomColors( storeToState( selectedColorsNew ) );
 			}
-			setSelectedColors( selectedColorPalette );
+			setSelectedColors( storeToState( selectedColorsNew ) );
 		} else {
-			setToDefaultPalette();
-		}
-		saveThemeColorPalette(
-			currentData?.data?.colorStyle,
-			colorPaletteResponse?.body.tailored,
-			selectedColorsLocalTemp,
-			globalStyles?.body[ 0 ]
-		);
-		setIsLoaded( true );
-	};
-
-	useEffect( () => {
-		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus ) {
-			getColorStylesAndPatterns();
-		}
-		if ( isCustomColorActive() ) {
-			setIsAccordionClosed( false );
-			customColorsResetRef.current.scrollIntoView( {
-				behavior: 'smooth',
-				block: 'end',
-			} );
-		}
-	}, [ isLoaded, themeStatus ] );
-
-	const handleClick = ( colorStyle ) => {
-		if ( selectedColors?.slug === colorStyle ) {
-			return true;
-		}
-
-		clearCustomColors();
-		saveThemeColorPalette( colorStyle );
-		setSelectedColorsLocal( colorPalettes[ colorStyle ] );
-		LocalToState( colorPalettes[ colorStyle ], colorStyle );
-		trackHiiveEvent( 'color-selection', colorStyle );
-	};
-
-	const changeCustomPickerColor = async ( color ) => {
-		const selectedColorsLocalCopy = { ...selectedColorsLocal };
-		selectedColorsLocalCopy[ colorPickerCalledBy ] = color;
-
-		if ( customColorsMap ) {
-			const colorVariant = customColorsMap[ colorPickerCalledBy ];
-			if ( colorVariant ) {
-				colorVariant.forEach( ( variant ) => {
-					selectedColorsLocalCopy[ variant ] = color;
-				} );
-			}
-		}
-
-		saveCustomColors();
-		LocalToState( selectedColorsLocalCopy, 'custom' );
-		setSelectedColorsLocal( selectedColorsLocalCopy );
-		if ( ! isCustomColorActive() ) {
-			trackHiiveEvent( 'color-selection', 'custom' );
-		}
-		setCustomColors( selectedColorsLocalCopy );
-	};
-
-	const selectCustomColor = ( colorType ) => {
-		setShowColorPicker( ! showColorPicker );
-
-		if ( ! showColorPicker ) {
-			setColorPickerCalledBy( colorType );
-		} else {
-			setColorPickerCalledBy( '' );
+			// Adds colors to the custom colors at start if not saved
+			resetColors();
 		}
 	};
 
-	async function setToDefaultPalette() {
+	/**
+	 * When the user clicks on reset button it fetches the
+	 * orginal colors and replaces them in the preview and store
+	 */
+	async function resetColors() {
 		const globalStyles = await getGlobalStyles( true );
 		let selectedGlobalStyle;
 		if ( currentData?.data?.theme?.variation ) {
@@ -288,33 +156,75 @@ const DesignColors = () => {
 			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
 
-		clearCustomColors();
+		setCustomColors();
 
 		const selectedGlobalStylePalette =
 			selectedGlobalStyle.settings.color.palette;
-		setSelectedColors( selectedGlobalStylePalette );
-		setSelectedColorsLocal( stateToLocal( selectedGlobalStylePalette ) );
-		trackHiiveEvent( 'color-selection-reset', selectedGlobalStyle.title );
-	}
-
-	function clearCustomColors() {
-		for ( const custom in customColors ) {
-			customColors[ custom ] = '';
-		}
-
-		// Resetting the color palette to default and unsetting the selected predefined color palette, if any.
-		setCustomColors( customColors );
-	}
-
-	async function resetColors() {
-		setToDefaultPalette();
-
 		currentData.data.colorStyle = '';
 		setCurrentOnboardingData( currentData );
+		setSelectedColors( storeToState( selectedGlobalStylePalette ) );
 	}
 
-	function buildPalettes() {
-		return Object.keys( colorPalettes ).map( ( colorStyle, idx ) => {
+	/**
+	 * Converts the user selected value into a suitable valid global styles array value
+	 *
+	 * @param {string} colorStyle - Selected Color slug
+	 * @return {Object} selectedGlobalStyle - Updated Global Styles with new color changes
+	 */
+	async function saveThemeColorPalette( colorStyle ) {
+		const selectedGlobalStyle = storedPreviewSettings;
+		let selectedThemeColorPalette =
+			storedPreviewSettings?.settings?.color?.palette;
+		if ( ! ( colors && colorStyle && selectedThemeColorPalette ) ) {
+			return storedPreviewSettings;
+		}
+		selectedThemeColorPalette = selectedThemeColorPalette.map(
+			( color ) => {
+				if ( colors?.[ colorStyle ]?.[ color.slug ] ) {
+					// If not custom color then look for the predefined colors and get the color from the selected colors
+					color.color = colors[ colorStyle ][ color.slug ];
+				}
+				return color;
+			}
+		);
+		// Update Global Styles to reflect the same
+		selectedGlobalStyle.settings.color.palette = selectedThemeColorPalette;
+		updatePreviewSettings(
+			// eslint-disable-next-line react-hooks/rules-of-hooks
+			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
+		);
+		return selectedGlobalStyle;
+	}
+
+	// Pre-defined Colors Section
+
+	/**
+	 * Select a color from predefined colors and sync it.
+	 *
+	 * @param {string} colorStyle - Selected Color slug
+	 */
+	const handleClick = ( colorStyle ) => {
+		setCustomColors();
+		saveThemeColorPalette( colorStyle );
+		setSelectedColors( colors[ colorStyle ] );
+		stateToStore( colors[ colorStyle ] );
+		//  Save selected color to Store
+		currentData.data.colorStyle = colorStyle;
+		setCurrentOnboardingData( currentData );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_COLORS_SELECTED, colorStyle, {
+				colors: convertObjectKeysToSnakeCase( colors[ colorStyle ] ),
+			} )
+		);
+	};
+
+	/**
+	 * Build the predefined Colors Component
+	 *
+	 * @return {WPComponent} Predefined Colors Component
+	 */
+	function buildColors() {
+		return Object.keys( colors ).map( ( colorStyle, idx ) => {
 			return (
 				<div
 					key={ colorStyle }
@@ -334,56 +244,169 @@ const DesignColors = () => {
 						<div
 							className="color-palette__colors--tertiary"
 							style={ {
-								backgroundColor: `${ colorPalettes[ colorStyle ]?.[ 'header-background' ] }`,
+								backgroundColor: `${ colors[ colorStyle ]?.[ 'header-background' ] }`,
 							} }
 						/>
 						<div
 							className="color-palette__colors--secondary"
 							style={ {
-								backgroundColor: `${ colorPalettes[ colorStyle ]?.secondary }`,
+								backgroundColor: `${ colors[ colorStyle ]?.secondary }`,
 							} }
 						/>
 						<div
 							className="color-palette__colors--primary"
 							style={ {
-								backgroundColor: `${ colorPalettes[ colorStyle ]?.primary }`,
+								backgroundColor: `${ colors[ colorStyle ]?.primary }`,
 							} }
 						/>
 					</div>
 					<div className="color-palette__name drawer-palette--button__text">
-						{ colorStyle?.charAt( 0 ).toUpperCase() +
-							colorStyle?.slice( 1 ) }
+						{ colorStyle.charAt( 0 ).toUpperCase() +
+							colorStyle.slice( 1 ) }
 					</div>
 				</div>
 			);
 		} );
 	}
 
-	function isCustomColorActive() {
-		for ( const custom in customColors ) {
-			if ( customColors[ custom ] !== '' ) {
-				return true;
+	// Custom Colors Section
+
+	/**
+	 * Custom Color can be mapped to more than one slug
+	 * eg: base is mapped to ["header-foreground", "header-titles", "secondary-foreground"]
+	 * So for every change in base all the subsequent colors must also be changed concurrently
+	 */
+	async function saveCustomColors() {
+		const selectedGlobalStyle = storedPreviewSettings;
+		const selectedThemeColorPalette =
+			selectedGlobalStyle?.settings?.color?.palette;
+
+		if ( selectedThemeColorPalette ) {
+			for ( let idx = 0; idx < selectedThemeColorPalette.length; idx++ ) {
+				const slug = selectedThemeColorPalette[ idx ]?.slug;
+				if (
+					colorPickerCalledBy === slug &&
+					customColors &&
+					customColors[ slug ] !== undefined
+				) {
+					// Assign the color to the color that toggled color picker
+					selectedThemeColorPalette[ idx ].color =
+						customColors[ slug ];
+				}
+			}
+			// If there is a mapping for a color to other colors in custom colors map
+			if ( customColorsMap ) {
+				const colorVariant = customColorsMap[ colorPickerCalledBy ];
+				if ( colorVariant ) {
+					// Find if the Color had a mapping to other colors and update them with the same color too
+					colorVariant.forEach( ( variant ) => {
+						if (
+							customColors &&
+							customColors[ colorPickerCalledBy ] !== undefined
+						) {
+							selectedThemeColorPalette[
+								findIndexInPalette(
+									variant,
+									colorPickerCalledBy,
+									storedPreviewSettings?.settings?.color
+										?.palette
+								)
+							].color = customColors[ colorPickerCalledBy ];
+						}
+					} );
+				}
+			}
+
+			// Update the global styles to show the same.
+			selectedGlobalStyle.settings.color.palette =
+				selectedThemeColorPalette;
+			updatePreviewSettings(
+				// eslint-disable-next-line react-hooks/rules-of-hooks
+				useGlobalStylesOutput(
+					selectedGlobalStyle,
+					storedPreviewSettings
+				)
+			);
+		}
+	}
+
+	/**
+	 * Change the color for the active color picker
+	 * this changes the color when the user clicks on a new color.
+	 *
+	 * @param {string} color - The Color hex user has selected
+	 */
+	const handleColorPicker = async ( color ) => {
+		const selectedColorsLocalCopy = { ...selectedColors };
+		selectedColorsLocalCopy[ colorPickerCalledBy ] = color;
+
+		if ( customColorsMap ) {
+			const colorVariant = customColorsMap[ colorPickerCalledBy ];
+			if ( colorVariant ) {
+				// If the selected color has a mapping to other colors the update the other colors respectively
+				colorVariant.forEach( ( variant ) => {
+					selectedColorsLocalCopy[ variant ] = color;
+				} );
 			}
 		}
 
-		return false;
-	}
+		saveCustomColors();
+		stateToStore( selectedColorsLocalCopy );
+		//  Save selected color to Store
+		currentData.data.colorStyle = 'custom';
+		setCurrentOnboardingData( currentData );
+		setSelectedColors( selectedColorsLocalCopy );
+		clearTimeout( colorPickerTimeout );
+		setColorPickerTimeout(
+			setTimeout( () => {
+				trackOnboardingEvent(
+					new OnboardingEvent( ACTION_COLORS_SELECTED, 'custom', {
+						colors: convertObjectKeysToSnakeCase(
+							selectedColorsLocalCopy
+						),
+					} )
+				);
+			}, 1000 )
+		);
+		setCustomColors( selectedColorsLocalCopy );
+	};
 
-	function buildCustomPalette() {
+	/**
+	 * Toggles the color picker for every color
+	 * and sets by which color was the Picker toggled.
+	 * Note: This does not change the color
+	 *
+	 * @param {string} colorType - Color Slug e.g. base, secondary,...
+	 */
+	const handleColorPickerButton = ( colorType ) => {
+		setShowColorPicker( ! showColorPicker );
+
+		if ( ! showColorPicker ) {
+			setColorPickerCalledBy( colorType );
+		} else {
+			setColorPickerCalledBy( '' );
+		}
+	};
+
+	/**
+	 * Build the Custom Colors Component
+	 *
+	 * @return {WPComponent} Custom Colors Component
+	 */
+	function buildCustomColors() {
 		const defaultColor = '#fff';
-		const primaryColorTemp =
+		const primaryColor =
 			customColors && customColors?.primary !== ''
 				? customColors.primary
-				: selectedColorsLocal?.primary ?? defaultColor;
-		const secondaryColorTemp =
+				: selectedColors?.primary ?? defaultColor;
+		const secondaryColor =
 			customColors && customColors?.secondary !== ''
 				? customColors.secondary
-				: selectedColorsLocal?.secondary ?? defaultColor;
-		const tertiaryColorTemp =
+				: selectedColors?.secondary ?? defaultColor;
+		const tertiaryColor =
 			customColors && customColors?.[ 'header-background' ] !== ''
 				? customColors[ 'header-background' ]
-				: selectedColorsLocal?.[ 'header-background' ] ?? defaultColor;
-		const paletteCount = Object.keys( colorPalettes ).length;
+				: selectedColors?.[ 'header-background' ] ?? defaultColor;
 
 		return (
 			<div className="custom-palette">
@@ -399,12 +422,11 @@ const DesignColors = () => {
 					}
 				>
 					<div className="custom-palette__top-text">
-						SELECT CUSTOM COLORS
+						{ __( 'SELECT CUSTOM COLORS', 'wp-module-onboarding' ) }
 					</div>
-					{ isAccordionClosed && (
+					{ isAccordionClosed ? (
 						<div className="custom-palette__top-icon">+</div>
-					) }
-					{ ! isAccordionClosed && (
+					) : (
 						<div className="custom-palette__top-icon">-</div>
 					) }
 				</div>
@@ -418,98 +440,36 @@ const DesignColors = () => {
 							: 'custom-palette_acc_opened'
 					}` }
 				>
-					<div
-						className="custom-palette__below-row"
-						onClick={ () => selectCustomColor( 'base' ) }
-						onKeyDown={ () => selectCustomColor( 'base' ) }
-						role="button"
-						tabIndex={ paletteCount + 1 }
-					>
-						<div
-							className={ `custom-palette__below-row-icon ${
-								customColors?.base &&
-								'custom-palette__below-row-icon_selected_border'
-							}` }
-							style={ {
-								backgroundColor: `${
-									customColors?.base ?? defaultColor
-								}`,
-							} }
-						>
-							{ customColors?.base ? <div>&#10003;</div> : null }
-						</div>
-						<div className="custom-palette__below-row-text">
-							Background
-						</div>
-					</div>
-					<div
-						className="custom-palette__below-row"
-						onClick={ () => selectCustomColor( 'primary' ) }
-						onKeyDown={ () => selectCustomColor( 'primary' ) }
-						role="button"
-						tabIndex={ paletteCount + 2 }
-					>
-						<div
-							className={ `custom-palette__below-row-icon ${
-								customColors?.primary &&
-								'custom-palette__below-row-icon_selected_border'
-							}` }
-							style={ {
-								backgroundColor: `${ primaryColorTemp }`,
-							} }
-						>
-							{ customColors?.primary ? <>&#10003;</> : null }
-						</div>
-						<div className="custom-palette__below-row-text">
-							Primary
-						</div>
-					</div>
-					<div
-						className="custom-palette__below-row"
-						onClick={ () => selectCustomColor( 'secondary' ) }
-						onKeyDown={ () => selectCustomColor( 'secondary' ) }
-						role="button"
-						tabIndex={ paletteCount + 3 }
-					>
-						<div
-							className={ `custom-palette__below-row-icon ${
-								customColors?.secondary &&
-								'custom-palette__below-row-icon_selected_border'
-							}` }
-							style={ {
-								backgroundColor: `${ secondaryColorTemp }`,
-							} }
-						>
-							{ customColors?.secondary ? <>&#10003;</> : null }
-						</div>
-						<div className="custom-palette__below-row-text">
-							Secondary
-						</div>
-					</div>
-					<div
-						className="custom-palette__below-row"
-						onClick={ () => selectCustomColor( 'tertiary' ) }
-						onKeyDown={ () => selectCustomColor( 'tertiary' ) }
-						role="button"
-						tabIndex={ paletteCount + 4 }
-					>
-						<div
-							className={ `custom-palette__below-row-icon ${
-								customColors?.tertiary &&
-								'custom-palette__below-row-icon_selected_border'
-							}` }
-							style={ {
-								backgroundColor: `${ tertiaryColorTemp }`,
-							} }
-						>
-							{ customColors?.tertiary ? <>&#10003;</> : null }
-						</div>
-						<div className="custom-palette__below-row-text">
-							Tertiary
-						</div>
-					</div>
+					<ColorPickerButton
+						isColorSelected={ customColors }
+						color={ customColors?.base ?? defaultColor }
+						slug="base"
+						name={ __( 'Background', 'wp-module-onboarding' ) }
+						callback={ handleColorPickerButton }
+					/>
+					<ColorPickerButton
+						isColorSelected={ customColors }
+						color={ primaryColor }
+						slug="primary"
+						name={ __( 'Primary', 'wp-module-onboarding' ) }
+						callback={ handleColorPickerButton }
+					/>
+					<ColorPickerButton
+						isColorSelected={ customColors }
+						color={ secondaryColor }
+						slug="secondary"
+						name={ __( 'Secondary', 'wp-module-onboarding' ) }
+						callback={ handleColorPickerButton }
+					/>
+					<ColorPickerButton
+						isColorSelected={ customColors }
+						color={ tertiaryColor }
+						slug="tertiary"
+						name={ __( 'Tertiary', 'wp-module-onboarding' ) }
+						callback={ handleColorPickerButton }
+					/>
 				</Animate>
-				{ isCustomColorActive() && (
+				{ customColors && (
 					<Animate type={ 'fade-in' } duration="300ms">
 						<div
 							ref={ customColorsResetRef }
@@ -519,25 +479,23 @@ const DesignColors = () => {
 							onClick={ resetColors }
 							onKeyDown={ resetColors }
 						>
-							<div>Reset</div>
+							<div>{ __( 'Reset', 'wp-module-onboarding' ) }</div>
 						</div>
 					</Animate>
 				) }
+				{ /* Common to all the custom color component */ }
 				{ showColorPicker && (
 					<Popover>
 						<div
-							className="custom-palette__picker-close-icon"
-							onClick={ () => setShowColorPicker( false ) }
 							role="button"
 							tabIndex={ 0 }
+							className="custom-palette__picker__close-icon"
+							onClick={ () => setShowColorPicker( false ) }
 							onKeyDown={ () => setShowColorPicker( false ) }
 						>
 							X
 						</div>
-						<ColorPicker
-							onChange={ changeCustomPickerColor }
-							defaultValue="#874141"
-						/>
+						<ColorPicker onChange={ handleColorPicker } />
 					</Popover>
 				) }
 			</div>
@@ -545,11 +503,13 @@ const DesignColors = () => {
 	}
 
 	return (
-		<div className="theme-colors--drawer">
-			<h2>{ __( 'Color Palettes', 'wp-module-onboarding' ) }</h2>
-			{ colorPalettes && buildPalettes() }
-			{ colorPalettes && buildCustomPalette() }
-		</div>
+		colors && (
+			<div className="theme-colors--drawer">
+				<h2>{ __( 'Color Palettes', 'wp-module-onboarding' ) }</h2>
+				{ buildColors() }
+				{ buildCustomColors() }
+			</div>
+		)
 	);
 };
 

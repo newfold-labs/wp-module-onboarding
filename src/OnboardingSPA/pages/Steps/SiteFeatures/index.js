@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { isEmpty } from 'lodash';
 import { useViewportMatch } from '@wordpress/compose';
 import { useEffect, useState } from '@wordpress/element';
@@ -10,6 +11,12 @@ import { getSiteFeatures } from '../../../utils/api/plugins';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import CheckboxList from '../../../components/CheckboxTemplate/CheckboxList';
 import { CheckboxListSkeleton } from '../../../components/CheckboxTemplate';
+import getContents from './contents';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import { ACTION_FEATURE_ADDED } from '../../../utils/analytics/hiive/constants';
 
 const StepSiteFeatures = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -46,33 +53,35 @@ const StepSiteFeatures = () => {
 
 		currentData.data.siteFeatures = { ...selectedPluginsCopy };
 		setCurrentOnboardingData( currentData );
+		if ( true === choice ) {
+			trackOnboardingEvent(
+				new OnboardingEvent( ACTION_FEATURE_ADDED, slug )
+			);
+		}
 	}
 
-	async function changeToStoreSchema(
-		customPluginsList,
-		saveToStore = false
-	) {
-		const selectedPlugins = {};
+	async function changeToStoreSchema( customPlugins, saveToStore = false ) {
+		const plugins = {};
 
-		for ( const key in customPluginsList ) {
-			const plugin = customPluginsList[ key ];
-			selectedPlugins[ plugin.slug ] = plugin.selected;
+		for ( const key in customPlugins ) {
+			const plugin = customPlugins[ key ];
+			plugins[ plugin.slug ] = plugin.selected;
 		}
-		setSelectedPlugins( selectedPlugins );
+		setSelectedPlugins( plugins );
 
 		if ( saveToStore ) {
-			currentData.data.siteFeatures = { ...selectedPlugins };
+			currentData.data.siteFeatures = { ...plugins };
 			setCurrentOnboardingData( currentData );
 		}
 	}
 
 	async function getCustomPlugins() {
-		const customPluginsList = await getSiteFeatures();
+		const customPlugins = await getSiteFeatures();
 		if ( isEmpty( currentData?.data?.siteFeatures ) )
-			changeToStoreSchema( customPluginsList.body, true );
+			changeToStoreSchema( customPlugins.body, true );
 		else setSelectedPlugins( { ...currentData?.data?.siteFeatures } );
 
-		setCustomPluginsList( customPluginsList.body );
+		setCustomPluginsList( customPlugins.body );
 	}
 
 	useEffect( () => {
@@ -86,12 +95,14 @@ const StepSiteFeatures = () => {
 		getCustomPlugins();
 	}, [] );
 
+	const content = getContents();
+
 	return (
 		<CommonLayout>
 			<div style={ { margin: '100px' } }>
 				<HeadingWithSubHeading
-					title={ currentStep?.heading }
-					subtitle={ currentStep?.subheading }
+					title={ content.heading }
+					subtitle={ content.subheading }
 				/>
 			</div>
 			{ ! customPluginsList && (

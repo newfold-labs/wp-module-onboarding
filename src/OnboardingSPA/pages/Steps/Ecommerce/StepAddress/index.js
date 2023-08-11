@@ -1,7 +1,6 @@
 import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
-import { useNavigate } from 'react-router-dom';
 import {
 	SIDEBAR_LEARN_MORE,
 	VIEW_NAV_ECOMMERCE_STORE_INFO,
@@ -16,10 +15,10 @@ import currencies from '../currencies.json';
 import { useWPSettings as getWPSettings } from '../useWPSettings';
 import Animate from '../../../../components/Animate';
 import getContents from './contents';
+import NavCardButton from '../../../../components/Button/NavCardButton';
 
 const StepAddress = () => {
 	const [ settings, setSettings ] = useState();
-	const navigate = useNavigate();
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const {
 		setDrawerActiveView,
@@ -210,24 +209,6 @@ const StepAddress = () => {
 				<div className="onboarding-ecommerce-step">
 					<form
 						className="onboarding-ecommerce-step"
-						onSubmit={ ( event ) => {
-							event.preventDefault();
-							event.stopPropagation();
-							//Commented as auto-calculate tax option is removed for MMP
-
-							// let selectedTaxOption = content.stepTaxOptions.find((option) =>
-							// 	Object.entries(option.data).every(
-							// 		([optionName, requiredValue]) =>
-							// 			settings?.[optionName] === requiredValue
-							// 	)
-							// );
-							// navigate(
-							// 	selectedTaxOption === undefined
-							// 		? '/ecommerce/step/tax'
-							// 		: '/ecommerce/step/products'
-							// );
-							navigate( '/ecommerce/step/tax' );
-						} }
 						style={ {
 							display: 'grid',
 							justifyItems: 'center',
@@ -418,13 +399,10 @@ const StepAddress = () => {
 								</em>
 							</div>
 						</Animate>
-						<button
-							className="nfd-nav-card-button nfd-card-button"
+						<NavCardButton
+							text={ content.buttonText }
 							disabled={ address === undefined }
-							type="submit"
-						>
-							{ content.buttonText }
-						</button>
+						/>
 					</form>
 					<NeedHelpTag />
 				</div>

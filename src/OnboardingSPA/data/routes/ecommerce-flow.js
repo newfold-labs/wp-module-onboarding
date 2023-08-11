@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { store, institution, shipping } from '@wordpress/icons';
+import { store, shipping } from '@wordpress/icons';
 import { lazy } from '@wordpress/element';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { orderBy, filter } from 'lodash';
@@ -7,6 +7,7 @@ import { orderBy, filter } from 'lodash';
 import {
 	pages as defaultInitialPages,
 	steps as defaultInitialSteps,
+	conditionalSteps as defaultConditionalSteps,
 	initialTopSteps as defaultInitialTopSteps,
 	initialGetStartedSteps as defaultInitialGetStartedSteps,
 } from './default-flow';
@@ -18,10 +19,10 @@ const StepAddressLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/Ecommerce/StepAddress/Sidebar/LearnMore/' )
 );
 
-const StepTax = lazy( () => import( '../../pages/Steps/Ecommerce/StepTax' ) );
-const StepTaxLearnMoreSidebar = lazy( () =>
-	import( '../../pages/Steps/Ecommerce/StepTax/Sidebar/LearnMore/' )
-);
+// const StepTax = lazy( () => import( '../../pages/Steps/Ecommerce/StepTax' ) );
+// const StepTaxLearnMoreSidebar = lazy( () =>
+// 	import( '../../pages/Steps/Ecommerce/StepTax/Sidebar/LearnMore/' )
+// );
 
 const StepProducts = lazy( () =>
 	import( '../../pages/Steps/Ecommerce/StepProducts' )
@@ -30,21 +31,17 @@ const StepProductsLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/Ecommerce/StepProducts/Sidebar/LearnMore' )
 );
 
-import { VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../constants';
+import {
+	CHAPTER_COMMERCE,
+	VIEW_NAV_ECOMMERCE_STORE_INFO,
+} from '../../../constants';
 
 export const ecommerceSteps = [
 	{
 		path: '/ecommerce/step/address',
 		title: __( 'Street Address', 'wp-module-onboarding' ),
-		heading: __( 'Street Address', 'wp-module-onboarding' ),
-		subheading: __(
-			'In this step you confirm the business address of your store. Simply confirm the one you provided during your initial Bluehost account setup or provide a new one.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			'In this step you confirm the business address of your store. Simply confirm the one you provided during your initial Bluehost account setup or provide a new one.',
-			'wp-module-onboarding'
-		),
+		chapter: CHAPTER_COMMERCE,
+		tooltipText: __( 'Street Address', 'wp-module-onboarding' ),
 		Component: StepAddress,
 		Icon: store,
 		priority: 85,
@@ -55,40 +52,25 @@ export const ecommerceSteps = [
 			},
 		},
 	},
-	{
-		path: '/ecommerce/step/tax',
-		title: __( 'Tax Info', 'wp-module-onboarding' ),
-		heading: __( 'Tax Info', 'wp-module-onboarding' ),
-		subheading: __(
-			'Taxes can be configure at anytime in the WooCommerce Settings tab.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			'Taxes can be configured at anytime in the WooCommerce Settings tab.',
-			'wp-module-onboarding'
-		),
-		Component: StepTax,
-		Icon: institution,
-		priority: 90,
-		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
-		sidebars: {
-			LearnMore: {
-				SidebarComponents: [ StepTaxLearnMoreSidebar ],
-			},
-		},
-	},
+	// {
+	// 	path: '/ecommerce/step/tax',
+	// 	title: __( 'Tax Info', 'wp-module-onboarding' ),
+	// 	tooltipText: __( 'Tax Info', 'wp-module-onboarding' ),
+	// 	Component: StepTax,
+	// 	Icon: institution,
+	// 	priority: 90,
+	// 	VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
+	// 	sidebars: {
+	// 		LearnMore: {
+	// 			SidebarComponents: [ StepTaxLearnMoreSidebar ],
+	// 		},
+	// 	},
+	// },
 	{
 		path: '/ecommerce/step/products',
 		title: __( 'Product Info', 'wp-module-onboarding' ),
-		heading: __( 'Product Info', 'wp-module-onboarding' ),
-		subheading: __(
-			'Hello, add a subheading for the learn more sidebar.',
-			'wp-module-onboarding'
-		),
-		description: __(
-			"In this section, you can provide more information about your products and business, which will help us tailor your store setup experience and identify possible extensions you'll need for your online store.",
-			'wp-module-onboarding'
-		),
+		chapter: CHAPTER_COMMERCE,
+		tooltipText: __( 'Product Info', 'wp-module-onboarding' ),
 		Component: StepProducts,
 		Icon: shipping,
 		priority: 95,
@@ -105,9 +87,7 @@ export const steps = orderBy(
 	[
 		...filter(
 			defaultInitialSteps,
-			( step ) =>
-				! step.path.includes( '/step/top-priority' ) &&
-				! step.path.includes( '/step/get-started/site-primary' )
+			( step ) => ! step.path.includes( '/step/top-priority' )
 		),
 		...ecommerceSteps,
 	],
@@ -116,7 +96,7 @@ export const steps = orderBy(
 );
 
 export const routes = orderBy(
-	[ ...steps, ...defaultInitialPages ],
+	[ ...steps, ...defaultConditionalSteps, ...defaultInitialPages ],
 	[ 'priority' ],
 	[ 'asc' ]
 );
@@ -130,7 +110,8 @@ export const initialTopSteps = () => {
 		/* This is a pseudo step to stand-in for all StoreInfo steps and does not have a Component to render */
 		path: '/ecommerce/step/address',
 		title: __( 'Store Info', 'wp-module-onboarding' ),
-		description: '',
+		tooltipText: __( 'Street Address', 'wp-module-onboarding' ),
+		chapter: CHAPTER_COMMERCE,
 		Icon: store,
 		primaryDrawerActiveLinkIncludes: '/ecommerce/step/',
 		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,

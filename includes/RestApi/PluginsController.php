@@ -45,6 +45,18 @@ class PluginsController {
 
 		\register_rest_route(
 			$this->namespace,
+			$this->rest_base . '/initialize/activate',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'activate_init_plugins' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
+
+		\register_rest_route(
+			$this->namespace,
 			$this->rest_base . '/site-features',
 			array(
 				array(
@@ -52,27 +64,7 @@ class PluginsController {
 					'callback'            => array( $this, 'get_site_features' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
-				array(
-					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'set_site_features' ),
-					'args'                => $this->set_site_features_args(),
-					'permission_callback' => array( PluginInstaller::class, 'check_install_permissions' ),
-				),
 			)
-		);
-	}
-
-	/**
-	 * Get the set site features arguments.
-	 *
-	 * @return array
-	 */
-	public function set_site_features_args() {
-		return array(
-			'plugins' => array(
-				'type'     => 'object',
-				'required' => true,
-			),
 		);
 	}
 
@@ -83,7 +75,7 @@ class PluginsController {
 	 */
 	public function initialize() {
 
-		if ( PluginService::queue_initial_installs() ) {
+		if ( PluginService::initialize() ) {
 			return new \WP_REST_Response(
 				array(),
 				202
@@ -106,24 +98,21 @@ class PluginsController {
 	}
 
 	/**
-	 * Installs/Uninstalls the requested plugins.
+	 * Activate the initial set of installed plugins.
 	 *
-	 * @param \WP_REST_Request $request the incoming request object.
-	 *
-	 * @return \WP_REST_Response|\WP_Error
+	 * @return \WP_REST_Response
 	 */
-	public function set_site_features( \WP_REST_Request $request ) {
-		$plugin_body = json_decode( $request->get_body(), true );
-		$plugins     = isset( $plugin_body['plugins'] ) ? $plugin_body['plugins'] : false;
-
-		if ( ! $plugins ) {
-			return new \WP_Error(
-				'plugin_list_not_provided',
-				'Plugins List Not Provided',
-				array( 'status' => 404 )
+	public function activate_init_plugins() {
+		if ( PluginService::activate_init_plugins() ) {
+			return new \WP_REST_Response(
+				array(),
+				202
 			);
 		}
 
-		return PluginService::set_site_features( $plugins );
+		return new \WP_REST_Response(
+			array(),
+			500
+		);
 	}
 }

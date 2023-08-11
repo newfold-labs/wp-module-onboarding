@@ -6,6 +6,7 @@ import { __ } from '@wordpress/i18n';
 import { StepLoader } from '../../Loaders';
 import { store as nfdOnboardingStore } from '../../../store';
 import {
+	expedite,
 	getThemeStatus,
 	install as installTheme,
 } from '../../../utils/api/themes';
@@ -15,7 +16,6 @@ import {
 	THEME_STATUS_NOT_ACTIVE,
 	THEME_STATUS_ACTIVE,
 	DESIGN_STEPS_THEME,
-	THEME_INSTALL_WAIT_TIMEOUT,
 	THEME_STATUS_FAILURE,
 } from '../../../../constants';
 import { StepErrorState } from '../../ErrorState';
@@ -52,14 +52,14 @@ const DesignStateHandler = ( {
 		return themeStatus.body.status;
 	};
 
-	const waitForInstall = () => {
-		setTimeout( async () => {
-			const themeStatus = await checkThemeStatus();
-			if ( themeStatus !== THEME_STATUS_ACTIVE ) {
-				return updateThemeStatus( THEME_STATUS_NOT_ACTIVE );
-			}
+	const expediteInstall = async () => {
+		const status = await expedite( DESIGN_STEPS_THEME );
+		if ( ! status.error ) {
 			window.location.reload();
-		}, THEME_INSTALL_WAIT_TIMEOUT );
+			return;
+		}
+
+		installThemeManually();
 	};
 
 	const enableNavigation = () => {
@@ -97,7 +97,7 @@ const DesignStateHandler = ( {
 		const themeStatus = await checkThemeStatus();
 		switch ( themeStatus ) {
 			case THEME_STATUS_INSTALLING:
-				waitForInstall();
+				expediteInstall();
 				break;
 			case THEME_STATUS_ACTIVE:
 				window.location.reload();

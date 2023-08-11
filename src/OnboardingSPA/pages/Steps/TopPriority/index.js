@@ -10,13 +10,26 @@ import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import SelectableCardList from '../../../components/SelectableCardList/selectable-card-list';
 import getContents from './contents';
-import { trackHiiveEvent } from '../../../utils/analytics';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import {
+	ACTION_ONBOARDING_STEP_SKIPPED,
+	ACTION_ONBOARDING_TOP_PRIORITY_SET,
+} from '../../../utils/analytics/hiive/constants';
 
 const StepTopPriority = () => {
 	const priorityTypes = {
 		0: 'publishing',
 		1: 'selling',
 		2: 'designing',
+	};
+
+	const priorityTypesToAnalyticsMap = {
+		publishing: 'content',
+		selling: 'store',
+		designing: 'design',
 	};
 
 	const [ selected, setSelected ] = useState( 0 );
@@ -32,10 +45,11 @@ const StepTopPriority = () => {
 		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { currentData } = useSelect( ( select ) => {
+	const { currentData, currentStep } = useSelect( ( select ) => {
 		return {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 		};
 	}, [] );
 
@@ -84,7 +98,12 @@ const StepTopPriority = () => {
 		const selectedPriorityType = priorityTypes[ selected ];
 		currentData.data.topPriority.priority1 = selectedPriorityType;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'top-priority', priorityTypes[ selected ] );
+		trackOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_ONBOARDING_TOP_PRIORITY_SET,
+				priorityTypesToAnalyticsMap[ selectedPriorityType ]
+			)
+		);
 		if ( 'selling' === selectedPriorityType ) {
 			handleSelling();
 		} else {
@@ -96,9 +115,11 @@ const StepTopPriority = () => {
 		window.nfdOnboarding.newFlow = undefined;
 		currentData.data.topPriority.priority1 = priorityTypes[ 0 ];
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent(
-			'top-priority-skipped',
-			priorityTypes[ 0 ]
+		trackOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_ONBOARDING_STEP_SKIPPED,
+				currentStep.title
+			)
 		);
 	};
 

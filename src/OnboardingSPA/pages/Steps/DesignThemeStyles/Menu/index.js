@@ -21,8 +21,12 @@ import {
 	LivePreviewSelectableCard,
 	LivePreviewSkeleton,
 } from '../../../../components/LivePreview';
-import { addColorAndTypographyRoutes } from '../utils';
-import { trackHiiveEvent } from '../../../../utils/analytics';
+import { injectInAllSteps } from '../../../../data/routes/allStepsHandler';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../../utils/analytics/hiive';
+import { ACTION_THEME_STYLE_SELECTED } from '../../../../utils/analytics/hiive/constants';
 
 const StepDesignThemeStylesMenu = () => {
 	const content = getContents();
@@ -37,9 +41,7 @@ const StepDesignThemeStylesMenu = () => {
 		nextStep,
 		currentData,
 		storedPreviewSettings,
-		routes,
 		allSteps,
-		designSteps,
 		themeStatus,
 		themeVariations,
 	} = useSelect( ( select ) => {
@@ -52,9 +54,7 @@ const StepDesignThemeStylesMenu = () => {
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			storedPreviewSettings:
 				select( nfdOnboardingStore ).getPreviewSettings(),
-			routes: select( nfdOnboardingStore ).getRoutes(),
 			allSteps: select( nfdOnboardingStore ).getAllSteps(),
-			designSteps: select( nfdOnboardingStore ).getDesignSteps(),
 			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 			themeVariations: select( nfdOnboardingStore ).getStepPreviewData(),
 		};
@@ -66,8 +66,6 @@ const StepDesignThemeStylesMenu = () => {
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
-		updateRoutes,
-		updateDesignSteps,
 		updateAllSteps,
 	} = useDispatch( nfdOnboardingStore );
 
@@ -94,12 +92,6 @@ const StepDesignThemeStylesMenu = () => {
 		setPattern( patternsResponse?.body );
 		setGlobalStyles( globalStylesResponse?.body );
 		setSelectedStyle( currentData.data.theme.variation );
-		if ( '' === currentData.data.theme.variation ) {
-			trackHiiveEvent(
-				'default-style',
-				globalStylesResponse.body[ 0 ].title
-			);
-		}
 	};
 
 	useEffect( () => {
@@ -118,25 +110,23 @@ const StepDesignThemeStylesMenu = () => {
 		currentData.data.theme.variation = selectedGlobalStyle.title;
 		setCurrentOnboardingData( currentData );
 		navigate( nextStep.path );
-		trackHiiveEvent( 'selected-style', selectedGlobalStyle.title );
+		trackOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_THEME_STYLE_SELECTED,
+				selectedGlobalStyle.title
+			)
+		);
 	};
 
 	const skiptoCustomPage = () => {
 		// Add Custom Steps into the Flow
-		const updates = addColorAndTypographyRoutes(
-			routes,
-			allSteps,
-			designSteps
-		);
-		updateRoutes( updates.routes );
-		updateDesignSteps( updates.designSteps );
+		const updates = injectInAllSteps( allSteps, conditionalSteps );
 		updateAllSteps( updates.allSteps );
 
 		currentData.data.customDesign = true;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'customize-design', true );
 		// Find the first Custom Conditional Step and navigate there
-		navigate( conditionalSteps.designColors.path );
+		navigate( conditionalSteps[ 0 ].path );
 	};
 
 	const buildPreviews = () => {

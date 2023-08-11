@@ -92,6 +92,13 @@ export function setActiveStep( path ) {
 	};
 }
 
+export function setActiveChapter( chapter ) {
+	return {
+		type: 'SET_ACTIVE_CHAPTER',
+		chapter,
+	};
+}
+
 /**
  * Accepts a JSON to set the Flow Data.
  *
