@@ -19,6 +19,7 @@ import {
 	ACTION_ONBOARDING_EXITED,
 	CATEGORY,
 } from '../../utils/analytics/hiive/constants';
+import { activateInitialPlugins } from '../../utils/api/plugins';
 
 /**
  * Self-contained button and confirmation modal for exiting Onboarding page.
@@ -101,6 +102,7 @@ const ExitToWordPress = ( {
 			}
 			setFlow( currentData );
 		}
+		activateInitialPlugins();
 		trackOnboardingEvent(
 			new OnboardingEvent( ACTION_ONBOARDING_EXITED, currentStep.title )
 		);
