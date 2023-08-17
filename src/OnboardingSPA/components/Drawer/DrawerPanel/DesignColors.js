@@ -528,5 +528,4 @@ const DesignColors = () => {
 	);
 };
 
-
 export default DesignColors;
