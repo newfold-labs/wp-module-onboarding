@@ -26,7 +26,7 @@ const SocialMediaForm = ( {
 
 	const [ showModal, setShowModal ] = useState( false );
 	const [ activeError, setActiveError ] = useState( [] );
-	const [ activeErrorTypes, setActiveErrorTypes ] = useState();
+	const [ activeErrorTypes, setActiveErrorTypes ] = useState( Object );
 
 	const { showNavErrorDialog, setOnboardingSocialData, resetNavError } =
 		useDispatch( nfdOnboardingStore );
@@ -36,16 +36,6 @@ const SocialMediaForm = ( {
 			navErrorModalPath: select( nfdOnboardingStore ).getNavErrorPath(),
 		};
 	}, [] );
-
-	const SocialMediaSitesErrorTypes = {
-		facebook: 'none',
-		twitter: 'none',
-		instagram: 'none',
-		youtube: 'none',
-		linkedin: 'none',
-		yelp: 'none',
-		tiktok: 'none',
-	};
 
 	const SocialMedia = {
 		FACEBOOK: {
@@ -77,10 +67,6 @@ const SocialMediaForm = ( {
 			value: tiktok,
 		},
 	};
-
-	useEffect( () => {
-		setActiveErrorTypes( SocialMediaSitesErrorTypes );
-	}, [] );
 
 	useEffect( () => {
 		if ( navErrorModalPath !== '' ) {
@@ -168,21 +154,31 @@ const SocialMediaForm = ( {
 		return error;
 	};
 
+	// Adds error to a certain message.
+	const displayErrors = ( categ, isError ) => {
+		if ( isError ) {
+			if ( ! activeError.includes( categ ) ) {
+				setActiveError( [ ...activeError, categ ] );
+			}
+		} else {
+			const errorsFiltered = activeError.filter( function ( ele ) {
+				return ele !== categ;
+			} );
+			setActiveError( errorsFiltered );
+		}
+	};
+
 	// Handle urlValidation when user goes out of focus
 	const handleOnBlur = ( e ) => {
 		const value = e.target.value;
 		const triggerID = e.target.id;
-		const res = urlValidator(
-			triggerID,
-			value,
-			activeError,
-			setActiveError,
-			activeErrorTypes,
-			setActiveErrorTypes
-		);
+		const res = urlValidator( triggerID, value );
+		activeErrorTypes[ triggerID ] = res.error;
+		setActiveErrorTypes( activeErrorTypes );
+		displayErrors( triggerID, res.error !== ERROR_TYPES.NONE );
 		if ( getErrorType() !== ERROR_TYPES.NONE ) showNavErrorDialog( true );
 		else resetNavError();
-		saveData( res, triggerID );
+		saveData( res.url, triggerID );
 	};
 
 	// Change data while user types
