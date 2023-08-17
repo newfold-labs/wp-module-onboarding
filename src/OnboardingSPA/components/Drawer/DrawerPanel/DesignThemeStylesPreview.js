@@ -10,8 +10,12 @@ import {
 	LivePreviewSelectableCard,
 	LivePreviewSkeleton,
 } from '../../LivePreview';
-import { trackHiiveEvent } from '../../../utils/analytics';
 import DrawerPanelHeader from './Header';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import { ACTION_THEME_STYLE_SELECTED } from '../../../utils/analytics/hiive/constants';
 
 const DesignThemeStylesPreview = () => {
 	const [ pattern, setPattern ] = useState();
@@ -109,7 +113,12 @@ const DesignThemeStylesPreview = () => {
 		setSelectedStyle( selectedGlobalStyle.title );
 		currentData.data.theme.variation = selectedGlobalStyle.title;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'selected-style', selectedGlobalStyle.title );
+		trackOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_THEME_STYLE_SELECTED,
+				selectedGlobalStyle.title
+			)
+		);
 	};
 
 	const buildPreviews = () => {

@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { get, isEmpty, kebabCase, pickBy, reduce, set } from 'lodash';
 
 /**
@@ -13,7 +14,9 @@ import {
 } from '@wordpress/blocks';
 import { getCSSRules } from '@wordpress/style-engine';
 import {
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__unstablePresetDuotoneFilter as PresetDuotoneFilter,
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalGetGapCSSValue as getGapCSSValue,
 } from '@wordpress/block-editor';
 
@@ -182,7 +185,7 @@ export function getStylesDeclarations(
 	const isRoot = ROOT_BLOCK_SELECTOR === selector;
 	const output = reduce(
 		STYLE_PROPERTY,
-		( declarations, { value, properties, useEngine, rootOnly }, key ) => {
+		( declarations, { value, properties, rootOnly }, key ) => {
 			if ( rootOnly && ! isRoot ) {
 				return declarations;
 			}
@@ -850,15 +853,13 @@ export function useGlobalStylesOutput(
 		hasFallbackGapSupport,
 		disableLayoutStyles
 	);
+	const svgs = toSvgFilters( requiredSettings, blockSelectors );
 
 	const result = storedPreviewSettings.settings.styles.filter( ( style ) => {
-		if (
-			! (
-				style.hasOwnProperty( 'id' ) &&
-				( style.id === 'customProperty' || style.id === 'globalStyle' )
-			)
-		)
-			return style;
+		return ! (
+			style.hasOwnProperty( 'id' ) &&
+			( style.id === 'customProperty' || style.id === 'globalStyle' )
+		);
 	} );
 
 	const stylesheets = [
@@ -871,6 +872,11 @@ export function useGlobalStylesOutput(
 		{
 			id: 'globalStyle',
 			css: globalStyles,
+			isGlobalStyles: true,
+		},
+		{
+			assets: svgs,
+			__unstableType: 'svg',
 			isGlobalStyles: true,
 		},
 	];

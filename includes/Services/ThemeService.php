@@ -1,10 +1,10 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
-use NewfoldLabs\WP\Module\Installer\Data\Options;
 use NewfoldLabs\WP\Module\Installer\Services\ThemeInstaller;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\ThemeInstallTaskManager;
 use NewfoldLabs\WP\Module\Installer\Tasks\ThemeInstallTask;
+use NewfoldLabs\WP\Module\Installer\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 
 /**
@@ -16,7 +16,8 @@ class ThemeService {
 	 *
 	 * @return boolean
 	 */
-	public static function queue_initial_installs() {
+	public static function initialize() {
+
 		// Checks if the init_list of themes have already been queued.
 		if ( \get_option( Options::get_option_name( 'theme_init_status' ), 'init' ) !== 'init' ) {
 			return true;

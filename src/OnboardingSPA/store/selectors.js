@@ -194,6 +194,10 @@ export function getCurrentStep( state ) {
 	return filtered[ 0 ];
 }
 
+export function getCurrentChapter( state ) {
+	return state.flow.chapter;
+}
+
 export function getStepFromPath( state, path ) {
 	const filtered = filter( state.flow.steps.allSteps, [ 'path', path ] );
 	return filtered[ 0 ];

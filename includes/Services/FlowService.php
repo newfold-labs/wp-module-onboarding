@@ -23,10 +23,15 @@ class FlowService {
 	 */
 	public static function initialize_data() {
 		$default_data = self::get_default_data();
-		$data    = self::read_data_from_wp_option();
+		$data         = self::read_data_from_wp_option();
 
 		if ( ! $data ) {
+			self::set_primary_type_for_ecommerce();
 			return self::update_data_in_wp_option( $default_data );
+		}
+
+		if ( empty( $data['data']['siteType']['primary']['value'] ) ) {
+			self::set_primary_type_for_ecommerce();
 		}
 
 		$data['version'] = isset( $data['version'] ) ? $data['version'] : '';
@@ -39,7 +44,7 @@ class FlowService {
 		// Returns true if the old version doesn't match the new version
 		$upgrade_status = $upgrade_handler->maybe_upgrade();
 		if ( $upgrade_status ) {
-			$data = self::read_data_from_wp_option();
+			$data         = self::read_data_from_wp_option();
 			$updated_data = self::update_data_recursive( $default_data, $data );
 			// To update the options with the recent version of flow data
 			$updated_data['version'] = $default_data['version'];
@@ -47,6 +52,19 @@ class FlowService {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Set Primary Type Site Classification Option.
+	 *
+	 * @return void
+	 */
+	public static function set_primary_type_for_ecommerce() {
+		$flow_type = Data::current_flow();
+		if ( 'ecommerce' === $flow_type ) {
+			$primary_type = new PrimaryType( 'slug', 'business' );
+			$primary_type->save();
+		}
 	}
 
 	/**
@@ -355,6 +373,10 @@ class FlowService {
 		if ( 'ecommerce' === $flow_type ) {
 			// update default data with ecommerce data
 			$data['data']['topPriority']['priority1'] = 'selling';
+			if ( empty( $data['data']['siteType']['primary']['value'] ) ) {
+				$data['data']['siteType']['primary']['refers'] = 'slug';
+				$data['data']['siteType']['primary']['value']  = 'business';
+			}
 		}
 		return $data;
 	}

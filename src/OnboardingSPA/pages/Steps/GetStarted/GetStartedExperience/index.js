@@ -13,7 +13,11 @@ import { useState, useEffect } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import Animate from '../../../../components/Animate';
 import getContents from './contents';
-import { trackHiiveEvent } from '../../../../utils/analytics';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../../utils/analytics/hiive';
+import { ACTION_EXPERIENCE_LEVEL_SET } from '../../../../utils/analytics/hiive/constants';
 
 const GetStartedExperience = () => {
 	const [ wpComfortLevel, setWpComfortLevel ] = useState( '0' );
@@ -52,11 +56,13 @@ const GetStartedExperience = () => {
 		const currentDataCopy = currentData;
 		currentDataCopy.data.wpComfortLevel = value || '0';
 		setCurrentOnboardingData( currentDataCopy );
-		trackHiiveEvent(
-			'wp-experience',
-			content.options.filter( ( option ) => {
-				return option.value === value;
-			} )[ 0 ].label
+		trackOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_EXPERIENCE_LEVEL_SET,
+				content.options.filter( ( option ) => {
+					return option.value === value;
+				} )[ 0 ].slug
+			)
 		);
 	};
 
