@@ -258,7 +258,7 @@ export function getPreviewSettings( state ) {
 	return state.runtime.previewSettings.settings;
 }
 
-export function getSiteTitle ( state ) {
+export function getSiteTitle( state ) {
 	return state.runtime.siteTitle;
 }
 

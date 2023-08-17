@@ -22,6 +22,7 @@ const BasicInfoForm = () => {
 	const [ isLoaded, setisLoaded ] = useState( false );
 	const [ debouncedFlowData, setDebouncedFlowData ] = useState();
 
+	const [ initialSiteTitle, setInitialSiteTitle ] = useState();
 	const [ siteTitle, setSiteTitle ] = useState( '' );
 	const [ siteDesc, setSiteDesc ] = useState( '' );
 	const [ siteLogo, setSiteLogo ] = useState();
@@ -29,8 +30,11 @@ const BasicInfoForm = () => {
 	const [ isValidSocials, setIsValidSocials ] = useState( false );
 	const [ isSocialFormOpen, setIsSocialFormOpen ] = useState( false );
 
-	const { setOnboardingSocialData, setCurrentOnboardingData, setSiteTitle: setSiteTitleStore } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		setOnboardingSocialData,
+		setCurrentOnboardingData,
+		setSiteTitle: setSiteTitleStore,
+	} = useDispatch( nfdOnboardingStore );
 	const { editEntityRecord } = useDispatch( coreStore );
 
 	const { getEditedEntityRecord } = useSelect( ( select ) => {
@@ -41,7 +45,7 @@ const BasicInfoForm = () => {
 		return {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			siteTitleStore: select( nfdOnboardingStore ).getSiteTitle()
+			siteTitleStore: select( nfdOnboardingStore ).getSiteTitle(),
 		};
 	}, [] );
 
@@ -87,6 +91,7 @@ const BasicInfoForm = () => {
 		}
 		getEditedEntityRecord( 'root', 'site' );
 
+		setInitialSiteTitle( siteTitleStore );
 		setDefaultData();
 	}, [ isLoaded ] );
 
@@ -116,9 +121,11 @@ const BasicInfoForm = () => {
 			currentDataCopy.data.siteLogo =
 				debouncedFlowData.data.siteLogo ??
 				currentDataCopy.data.siteLogo;
-			currentDataCopy.data.blogName =
-				debouncedFlowData.data.blogName ??
-				currentDataCopy.data.blogName;
+			if ( debouncedFlowData.data.blogName ) {
+				currentDataCopy.data.blogName = debouncedFlowData.data.blogName;
+			} else {
+				currentDataCopy.data.blogName = initialSiteTitle;
+			}
 			currentDataCopy.data.blogDescription =
 				debouncedFlowData.data.blogDescription ??
 				currentDataCopy.data.blogDescription;
@@ -127,11 +134,7 @@ const BasicInfoForm = () => {
 				currentDataCopy.data.blogName,
 				currentDataCopy.data.blogDescription
 			);
-			if ( '' !== currentDataCopy.data.blogName ) {
-				setSiteTitleStore( currentDataCopy.data.blogName );
-			} else {
-				setSiteTitleStore( siteTitleStore );
-			}
+			setSiteTitleStore( currentDataCopy.data.blogName );
 			setCurrentOnboardingData( currentDataCopy );
 			setOnboardingSocialData(
 				debouncedFlowData.data.socialData ?? socialData

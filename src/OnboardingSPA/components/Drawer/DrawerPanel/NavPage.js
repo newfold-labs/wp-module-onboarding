@@ -1,6 +1,3 @@
-import { chevronLeft } from '@wordpress/icons';
-
-import { Button } from '@wordpress/components';
 import { VIEW_NAV_PRIMARY } from '../../../../constants';
 import { __ } from '@wordpress/i18n';
 import { store as nfdOnboardingStore } from '../../../store';
@@ -13,11 +10,11 @@ const NavPage = () => {
 
 	return (
 		<Animate type={ 'fade-in' } duration="100ms" timingFunction="ease-in">
-						<DrawerPanelHeader
-				heading = { __('Design', 'wp-module-onboarding') }
-				subheading = { __('', 'wp-module-onboarding') }
-				handleClick={ () => setDrawerActiveView( VIEW_NAV_DESIGN ) }
-			 />
+			<DrawerPanelHeader
+				heading={ __( 'Pages', 'wp-module-onboarding' ) }
+				subheading={ __( '', 'wp-module-onboarding' ) }
+				handleClick={ () => setDrawerActiveView( VIEW_NAV_PRIMARY ) }
+			/>
 		</Animate>
 	);
 };

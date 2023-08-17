@@ -116,6 +116,7 @@ export const initialTopSteps = () => {
 		primaryDrawerActiveLinkIncludes: '/ecommerce/step/',
 		VIEW: VIEW_NAV_ECOMMERCE_STORE_INFO,
 		priority: 41 /* matches priority for first store info step */,
+		hasSubMenu: true,
 	};
 
 	topSteps.push( ecommerceStep );

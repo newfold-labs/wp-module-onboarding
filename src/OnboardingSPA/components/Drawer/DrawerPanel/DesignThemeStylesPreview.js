@@ -5,7 +5,11 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT, VIEW_NAV_DESIGN } from '../../../../constants';
+import {
+	THEME_STATUS_ACTIVE,
+	THEME_STATUS_INIT,
+	VIEW_NAV_DESIGN,
+} from '../../../../constants';
 import {
 	LivePreviewSelectableCard,
 	LivePreviewSkeleton,
@@ -44,7 +48,7 @@ const DesignThemeStylesPreview = () => {
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
-		setDrawerActiveView
+		setDrawerActiveView,
 	} = useDispatch( nfdOnboardingStore );
 
 	const scrollSelectionIntoView = () => {
@@ -141,26 +145,29 @@ const DesignThemeStylesPreview = () => {
 
 	return (
 		<>
-				<DrawerPanelHeader
-		heading = { __('Theme Styles', 'wp-module-onboarding') }
-		subheading = { __("Elevate your website's appearance with diverse styles that align perfectly with your vision. Explore a curated collection of powerful theme variations.", 'wp-module-onboarding') }
-		handleClick={ () => setDrawerActiveView( VIEW_NAV_DESIGN ) }
-	 />
-	 		<div className="theme-styles-preview--drawer">
-			<div className="theme-styles-preview--drawer__list">
-				<LivePreviewSkeleton
-					className={ 'theme-styles-preview--drawer__list__item' }
-					watch={ globalStyles && pattern }
-					count={
-						themeVariations[ currentStep?.patternId ]?.previewCount
-					}
-					callback={ buildPreviews }
-					viewportWidth={ 900 }
-				/>
+			<DrawerPanelHeader
+				heading={ __( 'Theme Styles', 'wp-module-onboarding' ) }
+				subheading={ __(
+					"Elevate your website's appearance with diverse styles that align perfectly with your vision. Explore a curated collection of powerful theme variations.",
+					'wp-module-onboarding'
+				) }
+				handleBack={ () => setDrawerActiveView( VIEW_NAV_DESIGN ) }
+			/>
+			<div className="theme-styles-preview--drawer">
+				<div className="theme-styles-preview--drawer__list">
+					<LivePreviewSkeleton
+						className={ 'theme-styles-preview--drawer__list__item' }
+						watch={ globalStyles && pattern }
+						count={
+							themeVariations[ currentStep?.patternId ]
+								?.previewCount
+						}
+						callback={ buildPreviews }
+						viewportWidth={ 900 }
+					/>
+				</div>
 			</div>
-		</div>
 		</>
-
 	);
 };
 

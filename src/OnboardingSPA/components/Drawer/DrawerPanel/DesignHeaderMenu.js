@@ -10,7 +10,11 @@ import {
 } from '../../../components/LivePreview';
 import { setFlow } from '../../../utils/api/flow';
 import DrawerPanelHeader from './Header';
-import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT, VIEW_NAV_DESIGN } from '../../../../constants';
+import {
+	THEME_STATUS_ACTIVE,
+	THEME_STATUS_INIT,
+	VIEW_NAV_DESIGN,
+} from '../../../../constants';
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
@@ -37,8 +41,12 @@ const DesignHeaderMenu = () => {
 			};
 		}, [] );
 
-	const { setCurrentOnboardingData, updateThemeStatus, setHeaderMenuData, setDrawerActiveView } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		setCurrentOnboardingData,
+		updateThemeStatus,
+		setHeaderMenuData,
+		setDrawerActiveView,
+	} = useDispatch( nfdOnboardingStore );
 
 	const getPatternsData = async () => {
 		const headerMenuPreviewResponse = await getPatterns(
@@ -133,20 +141,25 @@ const DesignHeaderMenu = () => {
 
 	return (
 		<>
-		<DrawerPanelHeader
-heading = { __('Header & Menu', 'wp-module-onboarding') }
-subheading = { __("Define your site's navigation and make a lasting first impression with a stunning and user-friendly layout. Choose from a range of tailored header and menu options.", 'wp-module-onboarding') }
-handleClick={ () => setDrawerActiveView( VIEW_NAV_DESIGN ) }
-/>
-				<LivePreviewSkeleton
-			count={
-				storedPreviewSettings[ currentStep?.patternId ]?.previewCount
-			}
-			watch={ patterns }
-			callback={ buildPreviews }
-			className={ 'theme-header-menu-preview--drawer__list__item' }
-			viewportWidth={ 900 }
-		/></>
+			<DrawerPanelHeader
+				heading={ __( 'Header & Menu', 'wp-module-onboarding' ) }
+				subheading={ __(
+					"Define your site's navigation and make a lasting first impression with a stunning and user-friendly layout. Choose from a range of tailored header and menu options.",
+					'wp-module-onboarding'
+				) }
+				handleBack={ () => setDrawerActiveView( VIEW_NAV_DESIGN ) }
+			/>
+			<LivePreviewSkeleton
+				count={
+					storedPreviewSettings[ currentStep?.patternId ]
+						?.previewCount
+				}
+				watch={ patterns }
+				callback={ buildPreviews }
+				className={ 'theme-header-menu-preview--drawer__list__item' }
+				viewportWidth={ 900 }
+			/>
+		</>
 	);
 };
 

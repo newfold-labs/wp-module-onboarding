@@ -11,7 +11,11 @@ import {
 } from '../../../utils/analytics/hiive';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
-import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT, VIEW_NAV_DESIGN } from '../../../../constants';
+import {
+	THEME_STATUS_ACTIVE,
+	THEME_STATUS_INIT,
+	VIEW_NAV_DESIGN,
+} from '../../../../constants';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import {
 	stateToStore,
@@ -87,7 +91,7 @@ const DesignColors = () => {
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
-		setDrawerActiveView
+		setDrawerActiveView,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -507,15 +511,18 @@ const DesignColors = () => {
 	return (
 		colors && (
 			<>
-						<DrawerPanelHeader
-			heading = { __('Colors', 'wp-module-onboarding') }
-			subheading = { __("Craft a visually captivating website that truly represents your brand's identity. Choose from tailored color palettes or unleash your creativity with custom selections", 'wp-module-onboarding') }
-			handleClick={ () => setDrawerActiveView( VIEW_NAV_DESIGN ) }
-		 />
-			<div className="theme-colors--drawer">
-				{ buildColors() }
-				{ buildCustomColors() }
-			</div>
+				<DrawerPanelHeader
+					heading={ __( 'Colors', 'wp-module-onboarding' ) }
+					subheading={ __(
+						"Craft a visually captivating website that truly represents your brand's identity. Choose from tailored color palettes or unleash your creativity with custom selections",
+						'wp-module-onboarding'
+					) }
+					handleBack={ () => setDrawerActiveView( VIEW_NAV_DESIGN ) }
+				/>
+				<div className="theme-colors--drawer">
+					{ buildColors() }
+					{ buildCustomColors() }
+				</div>
 			</>
 		)
 	);

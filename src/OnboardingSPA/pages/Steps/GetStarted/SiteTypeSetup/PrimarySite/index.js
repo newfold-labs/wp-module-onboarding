@@ -37,6 +37,7 @@ const StepPrimarySetup = () => {
 
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
+		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
 		setIsHeaderNavigationEnabled( true );
 		getSiteClassificationData();

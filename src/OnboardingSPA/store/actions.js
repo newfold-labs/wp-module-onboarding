@@ -176,8 +176,8 @@ export function updatePreviewSettings( previewSettings ) {
 export function setSiteTitle( siteTitle ) {
 	return {
 		type: 'SET_SITE_TITLE',
-		siteTitle
-	}
+		siteTitle,
+	};
 }
 
 export function updateRoutes( routes ) {

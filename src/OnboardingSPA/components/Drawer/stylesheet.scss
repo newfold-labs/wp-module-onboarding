@@ -83,6 +83,7 @@
 
 	&-header {
 		margin: $grid-unit-20 0;
+
 		&__heading {
 			display: flex;
 			align-items: center;
@@ -102,7 +103,7 @@
 
 	&-inner {
 		position: relative;
-		width: $nav-sidebar-width;
+		width: $nav-drawer-width;
 		height: 100%;
 		overflow: auto;
 		visibility: hidden;
@@ -250,7 +251,7 @@
 }
 
 .nfd-onboarding-drawer__panel.is-open {
-	width: $nav-sidebar-width;
+	width: $nav-drawer-width;
 
 	.nfd-onboarding-drawer__panel-inner {
 		visibility: visible;

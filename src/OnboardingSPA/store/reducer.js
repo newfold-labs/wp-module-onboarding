@@ -184,8 +184,8 @@ export function runtime( state = {}, action ) {
 		case 'SET_SITE_TITLE':
 			return {
 				...state,
-				siteTitle: action.siteTitle
-			}
+				siteTitle: action.siteTitle,
+			};
 	}
 
 	return state;
