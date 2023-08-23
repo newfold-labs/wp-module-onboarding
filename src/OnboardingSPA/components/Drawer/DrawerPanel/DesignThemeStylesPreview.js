@@ -43,6 +43,7 @@ const DesignThemeStylesPreview = () => {
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
+		flushQueue,
 	} = useDispatch( nfdOnboardingStore );
 
 	const scrollSelectionIntoView = () => {
@@ -95,7 +96,9 @@ const DesignThemeStylesPreview = () => {
 
 	useEffect( () => {
 		if ( themeStatus === THEME_STATUS_ACTIVE ) {
-			getStylesAndPatterns();
+			Promise.all( [ flushQueue() ] ).then( () => {
+				getStylesAndPatterns();
+			} );
 		}
 	}, [ themeStatus ] );
 

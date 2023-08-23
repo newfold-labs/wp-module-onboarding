@@ -56,8 +56,9 @@ const StepDesignColors = () => {
 
 	useEffect( () => {
 		if ( THEME_STATUS_ACTIVE === themeStatus ) {
-			flushQueue();
-			getStylesAndPatterns();
+			Promise.all( [ flushQueue() ] ).then( () => {
+				getStylesAndPatterns();
+			} );
 		}
 	}, [ themeStatus ] );
 

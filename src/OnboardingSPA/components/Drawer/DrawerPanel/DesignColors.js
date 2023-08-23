@@ -86,11 +86,14 @@ const DesignColors = () => {
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
+		flushQueue,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		if ( THEME_STATUS_ACTIVE === themeStatus ) {
-			setColorStylesAndPatterns();
+			Promise.all( [ flushQueue() ] ).then( () => {
+				setColorStylesAndPatterns();
+			} );
 			if ( currentData?.data?.colorStyle === 'custom' ) {
 				setIsAccordionClosed( false );
 				customColorsResetRef?.current?.scrollIntoView( {

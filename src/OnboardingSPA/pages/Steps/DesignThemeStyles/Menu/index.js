@@ -97,8 +97,9 @@ const StepDesignThemeStylesMenu = () => {
 
 	useEffect( () => {
 		if ( themeStatus === THEME_STATUS_ACTIVE ) {
-			flushQueue();
-			getStylesAndPatterns();
+			Promise.all( [ flushQueue() ] ).then( () => {
+				getStylesAndPatterns();
+			} );
 		}
 	}, [ themeStatus ] );
 

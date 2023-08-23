@@ -34,8 +34,12 @@ const GlobalStylesProvider = ( { children } ) => {
 		[]
 	);
 
-	const { updateThemeStatus, updatePreviewSettings, enqueueRequest } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		updateThemeStatus,
+		updatePreviewSettings,
+		enqueueRequest,
+		flushQueue,
+	} = useDispatch( nfdOnboardingStore );
 
 	const getStylesAndPatterns = async () => {
 		let selectedGlobalStyle;
@@ -77,8 +81,11 @@ const GlobalStylesProvider = ( { children } ) => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus )
-			getStylesAndPatterns();
+		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus ) {
+			Promise.all( [ flushQueue() ] ).then( () => {
+				getStylesAndPatterns();
+			} );
+		}
 	}, [ isLoaded, themeStatus ] );
 
 	return children;

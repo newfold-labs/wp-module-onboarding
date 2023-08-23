@@ -44,6 +44,7 @@ const StepSitePages = () => {
 		setSidebarActiveView,
 		updateThemeStatus,
 		setCurrentOnboardingData,
+		flushQueue,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -145,7 +146,11 @@ const StepSitePages = () => {
 	};
 
 	useEffect( () => {
-		if ( themeStatus === THEME_STATUS_ACTIVE ) getSitePages();
+		if ( themeStatus === THEME_STATUS_ACTIVE ) {
+			Promise.all( [ flushQueue() ] ).then( () => {
+				getSitePages();
+			} );
+		}
 	}, [ themeStatus ] );
 
 	const content = getContents();

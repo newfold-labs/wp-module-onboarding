@@ -36,6 +36,7 @@ const DesignTypography = () => {
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
+		flushQueue,
 	} = useDispatch( nfdOnboardingStore );
 
 	const getFontStylesAndPatterns = async () => {
@@ -69,7 +70,9 @@ const DesignTypography = () => {
 
 	useEffect( () => {
 		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus ) {
-			getFontStylesAndPatterns();
+			Promise.all( [ flushQueue() ] ).then( () => {
+				getFontStylesAndPatterns();
+			} );
 		}
 	}, [ isLoaded, themeStatus ] );
 

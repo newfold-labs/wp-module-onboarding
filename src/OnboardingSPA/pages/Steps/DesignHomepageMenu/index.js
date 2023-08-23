@@ -109,8 +109,9 @@ const StepDesignHomepageMenu = () => {
 
 	useEffect( () => {
 		if ( themeStatus === THEME_STATUS_ACTIVE ) {
-			flushQueue();
-			getHomepagePatternsData();
+			Promise.all( [ flushQueue() ] ).then( () => {
+				getHomepagePatternsData();
+			} );
 		}
 	}, [ themeStatus ] );
 
