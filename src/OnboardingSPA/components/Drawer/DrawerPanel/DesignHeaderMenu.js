@@ -8,12 +8,17 @@ import {
 	LivePreviewSelectableCard,
 } from '../../../components/LivePreview';
 
-import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
+import {
+	THEME_STATUS_ACTIVE,
+	THEME_STATUS_INIT,
+	API_REQUEST,
+} from '../../../../constants';
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
 } from '../../../utils/analytics/hiive';
 import { ACTION_HEADER_SELECTED } from '../../../utils/analytics/hiive/constants';
+import { setFlow } from '../../../utils/api/flow';
 
 const DesignHeaderMenu = () => {
 	const [ patterns, setPatterns ] = useState();
@@ -105,10 +110,7 @@ const DesignHeaderMenu = () => {
 		setHeaderMenuData( newPagePattern );
 
 		// API call to make sure the DB is in sync with the store for the selected header menu
-		const result = await setFlow( currentData );
-		if ( result?.error === null ) {
-			setCurrentOnboardingData( currentData );
-		}
+		enqueueRequest( API_REQUEST.SET_FLOW, () => setFlow( currentData ) );
 		trackOnboardingEvent(
 			new OnboardingEvent( ACTION_HEADER_SELECTED, chosenPattern.slug )
 		);
