@@ -27,6 +27,10 @@ import {
 	VIEW_DESIGN_TYPOGRAPHY,
 	VIEW_NAV_GET_STARTED,
 	VIEW_NAV_DESIGN,
+	CHAPTER_DEMOGRAPHIC,
+	CHAPTER_DESIGN,
+	CHAPTER_LAYOUT_AND_CONTENT,
+	CHAPTER_FEATURES,
 } from '../../../constants';
 
 /**
@@ -198,6 +202,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/get-started/experience',
 		title: __( 'WordPress Experience', 'wp-module-onboarding' ),
+		chapter: CHAPTER_DEMOGRAPHIC,
 		Component: StepGetStartedExperience,
 		Icon: home,
 		priority: 40,
@@ -215,6 +220,7 @@ export const steps = [
 			__( 'Primary %s Setup', 'wp-module-onboarding' ),
 			translations( 'Site' )
 		),
+		chapter: CHAPTER_DEMOGRAPHIC,
 		Component: StepGetStartedPrimarySetup,
 		Icon: moveTo,
 		priority: 60,
@@ -233,6 +239,7 @@ export const steps = [
 			__( 'Secondary %s Setup', 'wp-module-onboarding' ),
 			translations( 'Site' )
 		),
+		chapter: CHAPTER_DEMOGRAPHIC,
 		Component: StepGetStartedSecondarySetup,
 		Icon: moveTo,
 		priority: 80,
@@ -247,6 +254,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/top-priority',
 		title: __( 'Top Priority', 'wp-module-onboarding' ),
+		chapter: CHAPTER_DEMOGRAPHIC,
 		tooltipText: __( 'Tell us your top priority', 'wp-module-onboarding' ),
 		Component: StepTopPriority,
 		Icon: navigation,
@@ -255,6 +263,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/basic-info',
 		title: __( 'Basic Info', 'wp-module-onboarding' ),
+		chapter: CHAPTER_DEMOGRAPHIC,
 		tooltipText: sprintf(
 			/* translators: %s: website or store */
 			__( 'Introduce us to this %s', 'wp-module-onboarding' ),
@@ -272,6 +281,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/theme-styles/menu',
 		title: __( 'Theme Styles', 'wp-module-onboarding' ),
+		chapter: CHAPTER_DESIGN,
 		Component: StepDesignThemeStylesMenu,
 		Icon: styles,
 		priority: 160,
@@ -289,6 +299,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/theme-styles/preview',
 		title: __( 'Theme Styles', 'wp-module-onboarding' ),
+		chapter: CHAPTER_DESIGN,
 		Component: StepDesignThemeStylesPreview,
 		Icon: styles,
 		priority: 170,
@@ -306,6 +317,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/header-menu',
 		title: __( 'Header & Menu', 'wp-module-onboarding' ),
+		chapter: CHAPTER_LAYOUT_AND_CONTENT,
 		tooltipText: __(
 			"Let's make the right things visible",
 			'wp-module-onboarding'
@@ -324,6 +336,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/homepage-menu',
 		title: __( 'Homepage Layouts', 'wp-module-onboarding' ),
+		chapter: CHAPTER_LAYOUT_AND_CONTENT,
 		tooltipText: __(
 			'There’s no place like a great home page',
 			'wp-module-onboarding'
@@ -342,6 +355,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/design/site-pages',
 		title: __( 'Page Layouts', 'wp-module-onboarding' ),
+		chapter: CHAPTER_LAYOUT_AND_CONTENT,
 		tooltipText: __(
 			'You have ideas, we have page templates',
 			'wp-module-onboarding'
@@ -359,6 +373,7 @@ export const steps = [
 	{
 		path: '/wp-setup/step/site-features',
 		title: __( 'Features', 'wp-module-onboarding' ),
+		chapter: CHAPTER_FEATURES,
 		tooltipText: __(
 			'Key features to supercharge your site',
 			'wp-module-onboarding'
@@ -397,6 +412,7 @@ export const conditionalSteps = [
 	{
 		path: '/wp-setup/step/design/colors',
 		title: __( 'Colors', 'wp-module-onboarding' ),
+		chapter: CHAPTER_DESIGN,
 		tooltipText: __( "What's your color palette?", 'wp-module-onboarding' ),
 		Component: StepDesignColors,
 		Icon: color,
@@ -412,6 +428,7 @@ export const conditionalSteps = [
 	{
 		path: '/wp-setup/step/design/typography',
 		title: __( 'Typography', 'wp-module-onboarding' ),
+		chapter: CHAPTER_DESIGN,
 		tooltipText: __( "What's your font style?", 'wp-module-onboarding' ),
 		Component: StepDesignTypography,
 		Icon: typography,
@@ -446,6 +463,7 @@ export const initialTopSteps = () => {
 		/* This is a fake step to stand-in for all Design steps and does not have a Component to render */
 		path: '/wp-setup/step/design/theme-styles/menu',
 		title: __( 'Design', 'wp-module-onboarding' ),
+		chapter: CHAPTER_DESIGN,
 		tooltipText: __( 'Design', 'wp-module-onboarding' ),
 		Icon: brush,
 		VIEW: VIEW_NAV_DESIGN,

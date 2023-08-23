@@ -13,7 +13,11 @@ import NavCardButton from '../../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../../components/NeedHelpTag';
 import Animate from '../../../../../components/Animate';
 import { getSiteClassification } from '../../../../../utils/api/siteClassification';
-import { trackHiiveEvent } from '../../../../../utils/analytics';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../../../utils/analytics/hiive';
+import { ACTION_PRIMARY_TYPE_SET } from '../../../../../utils/analytics/hiive/constants';
 
 const StepPrimarySetup = () => {
 	const {
@@ -90,10 +94,9 @@ const StepPrimarySetup = () => {
 		currentData.data.siteType.primary.refers = 'slug';
 		currentData.data.siteType.primary.value = primType;
 		setCurrentOnboardingData( currentData );
-		trackHiiveEvent( 'primary-type', {
-			refers: 'slug',
-			value: primType,
-		} );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_PRIMARY_TYPE_SET, primType )
+		);
 	};
 
 	/**
@@ -110,10 +113,9 @@ const StepPrimarySetup = () => {
 			clearTimeout( typingTimeout );
 			setTypingTimeout(
 				setTimeout( () => {
-					trackHiiveEvent( 'primary-type', {
-						refers: 'custom',
-						value,
-					} );
+					trackOnboardingEvent(
+						new OnboardingEvent( ACTION_PRIMARY_TYPE_SET, value )
+					);
 				}, 1000 )
 			);
 		}

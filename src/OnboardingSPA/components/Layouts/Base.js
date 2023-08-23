@@ -3,7 +3,11 @@ import { speak } from '@wordpress/a11y';
 import { useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 
-import { trackHiiveEvent } from '../../utils/analytics';
+import {
+	OnboardingEvent,
+	sendOnboardingEvent,
+} from '../../utils/analytics/hiive';
+import { ACTION_PAGEVIEW } from '../../utils/analytics/hiive/constants';
 
 const BaseLayout = ( {
 	className = 'nfd-onboarding-layout__base',
@@ -20,7 +24,7 @@ const BaseLayout = ( {
 	useEffect( () => {
 		mainContainer?.focus( { preventScroll: true } );
 		speakRouteTitle( 'Override' );
-		trackHiiveEvent( 'pageview', window.location.href );
+		sendOnboardingEvent( new OnboardingEvent( ACTION_PAGEVIEW ) );
 	}, [ location.pathname ] );
 
 	return (

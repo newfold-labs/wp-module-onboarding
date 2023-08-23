@@ -37,6 +37,23 @@ const install = async ( theme, activate = true, queue = true ) => {
 	);
 };
 
+const expedite = async ( theme, activate = true ) => {
+	if ( typeof theme !== 'string' ) {
+		return false;
+	}
+
+	return await resolve(
+		apiFetch( {
+			url: installerRestURL( 'themes/expedite' ),
+			method: 'POST',
+			data: {
+				theme,
+				activate,
+			},
+		} )
+	);
+};
+
 const getGlobalStyles = async ( variations = false ) => {
 	return await resolve(
 		apiFetch( {
@@ -91,4 +108,5 @@ export {
 	getThemeColors,
 	getThemeFonts,
 	install,
+	expedite,
 };

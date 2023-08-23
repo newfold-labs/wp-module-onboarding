@@ -12,6 +12,11 @@ import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import CheckboxList from '../../../components/CheckboxTemplate/CheckboxList';
 import { CheckboxListSkeleton } from '../../../components/CheckboxTemplate';
 import getContents from './contents';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import { ACTION_FEATURE_ADDED } from '../../../utils/analytics/hiive/constants';
 
 const StepSiteFeatures = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -48,6 +53,11 @@ const StepSiteFeatures = () => {
 
 		currentData.data.siteFeatures = { ...selectedPluginsCopy };
 		setCurrentOnboardingData( currentData );
+		if ( true === choice ) {
+			trackOnboardingEvent(
+				new OnboardingEvent( ACTION_FEATURE_ADDED, slug )
+			);
+		}
 	}
 
 	async function changeToStoreSchema( customPlugins, saveToStore = false ) {

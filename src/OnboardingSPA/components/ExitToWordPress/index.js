@@ -9,13 +9,17 @@ import classNames from 'classnames';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
-import {
-	wpAdminPage,
-	pluginDashboardPage,
-	HIIVE_ANALYTICS_CATEGORY,
-} from '../../../constants';
+import { wpAdminPage, pluginDashboardPage } from '../../../constants';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
-import { trackHiiveEvent } from '../../utils/analytics';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../utils/analytics/hiive';
+import {
+	ACTION_ONBOARDING_EXITED,
+	CATEGORY,
+} from '../../utils/analytics/hiive/constants';
+import { activateInitialPlugins } from '../../utils/api/plugins';
 
 /**
  * Self-contained button and confirmation modal for exiting Onboarding page.
@@ -47,7 +51,7 @@ const ExitToWordPress = ( {
 	};
 
 	const location = useLocation();
-	const { currentData, brandName, socialData } = useSelect(
+	const { currentData, brandName, socialData, currentStep } = useSelect(
 		( select ) => {
 			return {
 				currentData:
@@ -55,6 +59,7 @@ const ExitToWordPress = ( {
 				brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
 				socialData:
 					select( nfdOnboardingStore ).getOnboardingSocialData(),
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 			};
 		},
 		[ location.pathname ]
@@ -97,8 +102,11 @@ const ExitToWordPress = ( {
 			}
 			setFlow( currentData );
 		}
-		trackHiiveEvent( 'exit-to-wordpress', window.location.href );
-		await HiiveAnalytics.dispatchEvents( HIIVE_ANALYTICS_CATEGORY );
+		activateInitialPlugins();
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_ONBOARDING_EXITED, currentStep.title )
+		);
+		await HiiveAnalytics.dispatchEvents( CATEGORY );
 		//Redirect to Admin Page for normal customers
 		// and Bluehost Dashboard for ecommerce customers
 		const exitLink = exitToWordpressForEcommerce()
