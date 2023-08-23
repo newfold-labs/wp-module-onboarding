@@ -8,9 +8,9 @@ const getContents = ( brandName, techSupportLink, fullServiceCreativeTeamLink ) 
 		introduction: {
 			heading: __( 'What’s Next', 'wp-module-onboarding' ),
 			subheading: sprintf(
-				/* translators: 1: website 2: website */
+				/* translators: 1: website or store 2: website or store */
 				__(
-					`The beginning of your %s journey is complete. We’re here to support your next steps and %s goals!`,
+					`The beginning of your %1$s journey is complete. We’re here to support your next steps and %2$s goals!`,
 					'wp-module-onboarding'
 				),
 				translations( 'website' ),
@@ -29,9 +29,9 @@ const getContents = ( brandName, techSupportLink, fullServiceCreativeTeamLink ) 
 						'wp-module-onboarding'
 					),
 					description: sprintf(
-						/* translators: 1: site 2: Brand 3: site */
+						/* translators: 1: site or store 2: Brand 3: site or store */
 						__(
-							`Now that you’ve setup the basics, use WordPress to edit your pages, %s design and explore the unlimited destinations you can chart for your %s %s.`,
+							`Now that you’ve setup the basics, use WordPress to edit your pages, %1$s design and explore the unlimited destinations you can chart for your %2$s %3$s.`,
 							'wp-module-onboarding'
 						),
 						translations( 'site' ),

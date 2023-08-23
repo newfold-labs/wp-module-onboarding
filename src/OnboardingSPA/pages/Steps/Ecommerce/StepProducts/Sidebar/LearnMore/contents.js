@@ -19,13 +19,13 @@ const getContents = ( brandName, techSupportLink, fullServiceCreativeTeamLink ) 
 			headingWithDescriptions: [
 				{
 					heading: __(
-						'Go from multiple sizes to multiple locations to multiple online channels',
+						'',
 						'wp-module-onboarding'
 					),
 					description: sprintf(
-						/* translators: 1: Brand 2: Website */
+						/* translators: 1: Brand 2: site or store */
 						__(
-							`Tell us a little about how and what you’re planning to sell and we’ll bring the power of WooCommerce and unique %s %s solutions to elevate your business and enhance your capabilities.`,
+							`Tell us a little about how and what you’re planning to sell and we’ll bring the power of WooCommerce and unique %1$s %2$s solutions to elevate your business and enhance your capabilities.`,
 							'wp-module-onboarding'
 						),
 						brandName,

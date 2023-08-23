@@ -115,14 +115,14 @@ class Webfonts {
 
 		// Check the font-family.
 		if ( empty( $webfont['font-family'] ) || ! is_string( $webfont['font-family'] ) ) {
-			trigger_error( __( 'Webfont font family must be a non-empty string.' ) );
+			trigger_error( __( 'Webfont font family must be a non-empty string.', 'wp-module-onboarding' ) );
 
 			return false;
 		}
 
 		// Check that the `src` property is defined and a valid type.
 		if ( empty( $webfont['src'] ) || ( ! is_string( $webfont['src'] ) && ! is_array( $webfont['src'] ) ) ) {
-			trigger_error( __( 'Webfont src must be a non-empty string or an array of strings.' ) );
+			trigger_error( __( 'Webfont src must be a non-empty string or an array of strings.', 'wp-module-onboarding' ) );
 
 			return false;
 		}
@@ -130,7 +130,7 @@ class Webfonts {
 		// Validate the `src` property.
 		foreach ( (array) $webfont['src'] as $src ) {
 			if ( ! is_string( $src ) || '' === trim( $src ) ) {
-				trigger_error( __( 'Each webfont src must be a non-empty string.' ) );
+				trigger_error( __( 'Each webfont src must be a non-empty string.', 'wp-module-onboarding' ) );
 
 				return false;
 			}
@@ -138,7 +138,7 @@ class Webfonts {
 
 		// Check the font-weight.
 		if ( ! is_string( $webfont['font-weight'] ) && ! is_int( $webfont['font-weight'] ) ) {
-			trigger_error( __( 'Webfont font weight must be a properly formatted string or integer.' ) );
+			trigger_error( __( 'Webfont font weight must be a properly formatted string or integer.', 'wp-module-onboarding' ) );
 
 			return false;
 		}

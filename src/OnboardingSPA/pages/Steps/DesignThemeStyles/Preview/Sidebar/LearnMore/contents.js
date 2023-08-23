@@ -24,9 +24,9 @@ const getContents = ( brandName, techSupportLink, fullServiceCreativeTeamLink ) 
 						'wp-module-onboarding'
 					),
 					description: sprintf(
-						/* translators: 1: Brand 2: Site */
+						/* translators: 1: Brand 2: site or store */
 						__(
-							`Pick one of these professionally-designed website styles to start your %s %s.`,
+							`Pick one of these professionally-designed website styles to start your %1$s %2$s.`,
 							'wp-module-onboarding'
 						),
 						brandName,
@@ -35,7 +35,7 @@ const getContents = ( brandName, techSupportLink, fullServiceCreativeTeamLink ) 
 				},
 				{
 					description: sprintf(
-						/* translators: %s: website */
+						/* translators: %s: site or store */
 						__(
 							'In the next steps and in the future, you can change the specific colors and fonts to fit your aesthetic vision for your %s.',
 							'wp-module-onboarding'

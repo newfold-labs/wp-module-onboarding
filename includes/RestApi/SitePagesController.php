@@ -105,7 +105,7 @@ class SitePagesController {
 			\update_option( Options::get_option_name( 'show_on_front', false ), 'page' );
 		}
 
-		$post_id = $this->publish_page( 'Homepage', $pattern_data['content'], true, $pattern_data['meta'] );
+		$post_id = $this->publish_page( __( 'Homepage', 'wp-module-onboarding' ), $pattern_data['content'], true, $pattern_data['meta'] );
 		if ( is_wp_error( $post_id ) ) {
 			return $post_id;
 		}

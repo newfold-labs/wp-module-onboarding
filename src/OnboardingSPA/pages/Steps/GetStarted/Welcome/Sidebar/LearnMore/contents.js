@@ -4,14 +4,13 @@ import { translations } from '../../../../../../utils/locales/translations';
 import { home } from '@wordpress/icons';
 
 const getContents = ( brandName, expertsLink, techSupportLink, fullServiceCreativeTeamLink ) => {
-
 	return {
 		introduction: {
 			heading: __( 'Start Setup', 'wp-module-onboarding' ),
 			subheading: sprintf(
-				/* translators: 1: Brand 2: Website */
+				/* translators: 1: Brand 2: website or store */
 				__(
-					`Lay the foundation for a successful %s %s using our WordPress Onboarding. `,
+					`Lay the foundation for a successful %1$s %2$s using our WordPress Onboarding. `,
 					'wp-module-onboarding'
 				),
 				brandName,
@@ -26,7 +25,7 @@ const getContents = ( brandName, expertsLink, techSupportLink, fullServiceCreati
 			headingWithDescriptions: [
 				{
 					heading: sprintf(
-						/* translators: %s: Website */
+						/* translators: %s: website or store */
 						__(
 							'WordPress is free %s software',
 							'wp-module-onboarding'
@@ -34,11 +33,9 @@ const getContents = ( brandName, expertsLink, techSupportLink, fullServiceCreati
 						translations( 'website' )
 					),
 					description: sprintf(
-						/* translators: 1: Website 2: Website 3: Website */
+						/* translators: 1: website or store 2: website or store */
 						__(
-							`When you set up this new WordPress %s, you’re joining
-						millions of website owners who publish their %s using the free, community-built
-						software project we’re proud to support.`,
+							`When you set up this new WordPress %1$s, you’re joining millions of website owners who publish their %2$s using the free, community-built software project we’re proud to support.`,
 							'wp-module-onboarding'
 						),
 						translations( 'website' ),
@@ -48,18 +45,15 @@ const getContents = ( brandName, expertsLink, techSupportLink, fullServiceCreati
 				},
 				{
 					heading: sprintf(
-						/* translators: 1: Brand 2: Website */
-						__( '%s is your %s partner', 'wp-module-onboarding' ),
+						/* translators: 1: Brand 2: website or store */
+						__( '%1$s is your %2$s partner', 'wp-module-onboarding' ),
 						brandName,
 						translations( 'website' )
 					),
 					description: sprintf(
-						/* translators: 1: Website 2: Brand 3. Site */
+						/* translators: 1: website or store 2: Brand 3. site or store */
 						__(
-							`A WordPress %s hosted by %s has tons of unique and proven
-						solutions to help you get farther,
-						faster with your WordPress. We put our expertise, partnerships
-						and solutions to work on your %s.`,
+							`A WordPress %1$s hosted by %2$s has tons of unique and proven solutions to help you get farther, faster with your WordPress. We put our expertise, partnerships and solutions to work on your %3$s.`,
 							'wp-module-onboarding'
 						),
 						translations( 'website' ),

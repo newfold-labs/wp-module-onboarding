@@ -8,7 +8,7 @@ const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 		introduction: {
 			heading: __( 'Colors', 'wp-module-onboarding' ),
 			subheading: sprintf(
-				/* translators: %s: site */
+				/* translators: %s: site or store */
 				__(
 					`Whether your brand is vibrant, understated, elegant or edgy use color to delight your %s visitors.`,
 					'wp-module-onboarding'

@@ -7,12 +7,12 @@ const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 	return {
 		introduction: {
 			heading: sprintf(
-				/* translators: %s: Site */
+				/* translators: %s: Site or Store */
 				__( '%s Type', 'wp-module-onboarding' ),
 				translations( 'Site' )
 			),
 			subheading: sprintf(
-				/* translators: %s: site */
+				/* translators: %s: site or store */
 				__(
 					`We'll use this to provide our best-matching designs and features for %s like yours.`,
 					'wp-module-onboarding'
@@ -27,16 +27,12 @@ const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 		information: {
 			headingWithDescriptions: [
 				{
-					heading: sprintf(
-						/* translators: %s: site */
-						__(
-							'Why we ask',
-							'wp-module-onboarding'
-						),
-						translations( 'site' )
+					heading: __(
+						'Why we ask',
+						'wp-module-onboarding'
 					),
 					description: sprintf(
-						/* translators: %s: site */
+						/* translators: %s: site or store */
 						__(
 							`We chose the templates, features and best configuration we can for sites. You’re always in full control of your WordPress %s and we ask so we can be a good website partner.`,
 							'wp-module-onboarding'

@@ -4,7 +4,7 @@ import { translations } from '../../../../utils/locales/translations';
 const getContents = ( brandName ) => {
 	return {
 		title: sprintf(
-			/* translators: 1: Brand 2: Site */
+			/* translators: 1: Brand 2: Site or Store */
 			__(
 				'Making the keys to your %1$s Online %2$s',
 				'wp-module-onboarding'

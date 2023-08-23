@@ -74,7 +74,7 @@ final class Patterns {
 				'site-pages'      => array(
 					'company-page'      => array(
 						'active'      => true,
-						'title'       => 'About',
+						'title'       => __( 'About', 'wp-module-onboarding' ),
 						'selected'    => true,
 						'shown'       => true,
 						'description' => __( 'Explain your company values or the history behind your brand.', 'wp-module-onboarding' ),
@@ -82,13 +82,13 @@ final class Patterns {
 					'contact-us'        => array(
 						'active'      => true,
 						'selected'    => true,
-						'title'       => 'Contact',
+						'title'       => __( 'Contact', 'wp-module-onboarding' ),
 						'shown'       => true,
 						'description' => __( 'Offer visitors a single page with a contact form, your street address and social media.', 'wp-module-onboarding' ),
 					),
 					'testimonials-page' => array(
 						'active'      => true,
-						'title'       => 'Testimonials',
+						'title'       => __( 'Testimonials', 'wp-module-onboarding' ),
 						'selected'    => false,
 						'shown'       => true,
 						'description' => __( 'Highlight your success with testimonials from your fans.', 'wp-module-onboarding' ),
@@ -96,7 +96,7 @@ final class Patterns {
 					'blog-page'         => array(
 						'active'      => true,
 						'selected'    => true,
-						'title'       => 'Blog',
+						'title'       => __( 'Blog', 'wp-module-onboarding' ),
 						'shown'       => true,
 						'description' => __( 'A page for periodic news, announcements and ideas.', 'wp-module-onboarding' ),
 					),
