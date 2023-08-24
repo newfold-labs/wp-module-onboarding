@@ -129,7 +129,7 @@ describe( 'Basic Info Page', function () {
 	} );
 
 	it( 'Check if Image gets Uploaded', () => {
-		const sampleLogo = `tests/cypress/fixtures/${ Cypress.env('pluginId') }-logo.png`;
+		const sampleLogo = `vendor/newfold-labs/wp-module-onboarding/tests/cypress/fixtures/${ Cypress.env('pluginId') }-logo.png`;
 
 		if (
 			cy
