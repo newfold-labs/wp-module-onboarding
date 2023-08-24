@@ -35,7 +35,7 @@ jobs:
         with:
           PATTERNS: |
             **/*.php
-            !src/exclude.ts
+            !build/**/*.php
 
       - name: Get Composer cache directory
         id: composer-cache
