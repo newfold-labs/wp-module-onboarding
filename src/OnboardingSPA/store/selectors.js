@@ -362,6 +362,26 @@ export function isQueueEmpty( state ) {
 }
 
 /**
+ * Gets the navigation error Code
+ *
+ * @param {*} state
+ * @return {string} code
+ */
+export function getShowErrorDialog( state ) {
+	return state.flow.steps.error.showDialog;
+}
+
+/**
+ * Gets the navigation error continue Path
+ *
+ * @param {*} state
+ * @return {string} continuePath
+ */
+export function getNavErrorPath( state ) {
+	return state.flow.steps.error.continuePath;
+}
+
+/**
  * Gets the Queue length
  *
  * @param {*} state
