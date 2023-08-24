@@ -1,0 +1,7 @@
+.components-modal__frame {
+	max-width: 40%;
+
+	@media (max-width: #{ ($break-medium) }) {
+		max-width: 100%;
+	}
+}
