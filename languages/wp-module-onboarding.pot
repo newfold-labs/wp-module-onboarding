@@ -389,22 +389,6 @@ msgstr ""
 msgid "Wrong Parameter Provided : secondary => value"
 msgstr ""
 
-#: includes/Services/Webfonts.php:118
-msgid "Webfont font family must be a non-empty string."
-msgstr ""
-
-#: includes/Services/Webfonts.php:125
-msgid "Webfont src must be a non-empty string or an array of strings."
-msgstr ""
-
-#: includes/Services/Webfonts.php:133
-msgid "Each webfont src must be a non-empty string."
-msgstr ""
-
-#: includes/Services/Webfonts.php:141
-msgid "Webfont font weight must be a properly formatted string or integer."
-msgstr ""
-
 #: build/1.10.1/9.js:1
 #: build/1.10.1/onboarding.js:7
 msgid "Colors"
