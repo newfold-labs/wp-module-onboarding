@@ -16,7 +16,7 @@ function nfd_wp_module_onboarding_register() {
 	// wp-module-onboarding
 	register(
 		array(
-			'name'     => 'onboardings',
+			'name'     => 'onboarding',
 			'label'    => __( 'Onboarding', 'wp-module-onboarding' ),
 			'callback' => function ( Container $container ) {
 
