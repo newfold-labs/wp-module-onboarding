@@ -30,8 +30,8 @@ const StepDesignThemeStylesPreview = () => {
 	const [ customize, setCustomize ] = useState( false );
 	const navigate = useNavigate();
 
-	const { currentStep, currentData, allSteps, themeStatus } = useSelect(
-		( select ) => {
+	const { currentStep, currentData, allSteps, themeStatus, queueLength } =
+		useSelect( ( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getStepFromPath(
 					location.pathname
@@ -40,10 +40,9 @@ const StepDesignThemeStylesPreview = () => {
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				allSteps: select( nfdOnboardingStore ).getAllSteps(),
 				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				queueLength: select( nfdOnboardingStore ).getQueueLength(),
 			};
-		},
-		[]
-	);
+		}, [] );
 
 	const {
 		setDrawerActiveView,
@@ -97,12 +96,12 @@ const StepDesignThemeStylesPreview = () => {
 	};
 
 	useEffect( () => {
-		if ( themeStatus === THEME_STATUS_ACTIVE ) {
-			Promise.all( [ flushQueue() ] ).then( () => {
-				getStylesAndPatterns();
-			} );
+		if ( themeStatus === THEME_STATUS_ACTIVE && 0 === queueLength ) {
+			getStylesAndPatterns();
+		} else {
+			flushQueue();
 		}
-	}, [ themeStatus ] );
+	}, [ themeStatus, queueLength ] );
 
 	return (
 		<DesignStateHandler>

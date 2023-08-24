@@ -19,18 +19,17 @@ const DesignTypography = () => {
 	const [ selectedFont, setSelectedFont ] = useState();
 	const [ fontPalettes, setFontPalettes ] = useState();
 
-	const { storedPreviewSettings, currentData, themeStatus } = useSelect(
-		( select ) => {
+	const { storedPreviewSettings, currentData, themeStatus, queueLength } =
+		useSelect( ( select ) => {
 			return {
 				storedPreviewSettings:
 					select( nfdOnboardingStore ).getPreviewSettings(),
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				queueLength: select( nfdOnboardingStore ).getQueueLength(),
 			};
-		},
-		[]
-	);
+		}, [] );
 
 	const {
 		updatePreviewSettings,
@@ -69,12 +68,16 @@ const DesignTypography = () => {
 	}, [ fontPalettes, storedPreviewSettings ] );
 
 	useEffect( () => {
-		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus ) {
-			Promise.all( [ flushQueue() ] ).then( () => {
-				getFontStylesAndPatterns();
-			} );
+		if (
+			! isLoaded &&
+			THEME_STATUS_ACTIVE === themeStatus &&
+			0 === queueLength
+		) {
+			getFontStylesAndPatterns();
+		} else {
+			flushQueue();
 		}
-	}, [ isLoaded, themeStatus ] );
+	}, [ isLoaded, themeStatus, queueLength ] );
 
 	const handleClick = async ( fontStyle, context = 'click' ) => {
 		if ( selectedFont === fontStyle ) {

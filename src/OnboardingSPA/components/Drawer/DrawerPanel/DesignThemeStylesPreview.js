@@ -27,6 +27,7 @@ const DesignThemeStylesPreview = () => {
 		storedPreviewSettings,
 		themeStatus,
 		themeVariations,
+		queueLength,
 	} = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
@@ -36,6 +37,7 @@ const DesignThemeStylesPreview = () => {
 				select( nfdOnboardingStore ).getPreviewSettings(),
 			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 			themeVariations: select( nfdOnboardingStore ).getStepPreviewData(),
+			queueLength: select( nfdOnboardingStore ).getQueueLength(),
 		};
 	}, [] );
 
@@ -95,12 +97,12 @@ const DesignThemeStylesPreview = () => {
 	};
 
 	useEffect( () => {
-		if ( themeStatus === THEME_STATUS_ACTIVE ) {
-			Promise.all( [ flushQueue() ] ).then( () => {
-				getStylesAndPatterns();
-			} );
+		if ( themeStatus === THEME_STATUS_ACTIVE && 0 === queueLength ) {
+			getStylesAndPatterns();
+		} else {
+			flushQueue();
 		}
-	}, [ themeStatus ] );
+	}, [ themeStatus, queueLength ] );
 
 	const handleClick = ( idx ) => {
 		const selectedGlobalStyle = globalStyles[ idx ];

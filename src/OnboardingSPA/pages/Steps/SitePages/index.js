@@ -25,19 +25,24 @@ const StepSitePages = () => {
 	const [ sitePages, setSitePages ] = useState();
 	const [ checkedPages, setCheckedPages ] = useState( [] );
 
-	const { currentStep, currentData, themeStatus, themeVariations } =
-		useSelect( ( select ) => {
-			return {
-				currentStep: select( nfdOnboardingStore ).getStepFromPath(
-					location.pathname
-				),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-				themeVariations:
-					select( nfdOnboardingStore ).getStepPreviewData(),
-			};
-		}, [] );
+	const {
+		currentStep,
+		currentData,
+		themeStatus,
+		themeVariations,
+		queueLength,
+	} = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getStepFromPath(
+				location.pathname
+			),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			themeVariations: select( nfdOnboardingStore ).getStepPreviewData(),
+			queueLength: select( nfdOnboardingStore ).getQueueLength(),
+		};
+	}, [] );
 
 	const {
 		setDrawerActiveView,
@@ -146,12 +151,12 @@ const StepSitePages = () => {
 	};
 
 	useEffect( () => {
-		if ( themeStatus === THEME_STATUS_ACTIVE ) {
-			Promise.all( [ flushQueue() ] ).then( () => {
-				getSitePages();
-			} );
+		if ( themeStatus === THEME_STATUS_ACTIVE && 0 === queueLength ) {
+			getSitePages();
+		} else {
+			flushQueue();
 		}
-	}, [ themeStatus ] );
+	}, [ themeStatus, queueLength ] );
 
 	const content = getContents();
 

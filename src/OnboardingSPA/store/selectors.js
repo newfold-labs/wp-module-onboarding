@@ -352,11 +352,21 @@ export function getQueuePeek( state ) {
 }
 
 /**
- * Gets the Queue Element on top
+ * Returns whether the Queue is empty or not
  *
  * @param {*} state
- * @return {string} getQueuePeek
+ * @return {boolean} isQueueEmpty
  */
 export function isQueueEmpty( state ) {
 	return state?.queue?.length === 0;
+}
+
+/**
+ * Gets the Queue length
+ *
+ * @param {*} state
+ * @return {number} getQueueLength
+ */
+export function getQueueLength( state ) {
+	return state?.queue?.length;
 }

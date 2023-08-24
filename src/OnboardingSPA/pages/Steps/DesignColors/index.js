@@ -21,15 +21,19 @@ const StepDesignColors = () => {
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
 
-	const { currentStep, themeStatus, designSteps } = useSelect( ( select ) => {
-		return {
-			currentStep: select( nfdOnboardingStore ).getStepFromPath(
-				location.pathname
-			),
-			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-			designSteps: select( nfdOnboardingStore ).getDesignSteps(),
-		};
-	}, [] );
+	const { currentStep, themeStatus, designSteps, queueLength } = useSelect(
+		( select ) => {
+			return {
+				currentStep: select( nfdOnboardingStore ).getStepFromPath(
+					location.pathname
+				),
+				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				designSteps: select( nfdOnboardingStore ).getDesignSteps(),
+				queueLength: select( nfdOnboardingStore ).getQueueLength(),
+			};
+		},
+		[]
+	);
 
 	const {
 		setDrawerActiveView,
@@ -55,12 +59,12 @@ const StepDesignColors = () => {
 	};
 
 	useEffect( () => {
-		if ( THEME_STATUS_ACTIVE === themeStatus ) {
-			Promise.all( [ flushQueue() ] ).then( () => {
-				getStylesAndPatterns();
-			} );
+		if ( THEME_STATUS_ACTIVE === themeStatus && 0 === queueLength ) {
+			getStylesAndPatterns();
+		} else {
+			flushQueue();
 		}
-	}, [ themeStatus ] );
+	}, [ themeStatus, queueLength ] );
 
 	return (
 		<DesignStateHandler>

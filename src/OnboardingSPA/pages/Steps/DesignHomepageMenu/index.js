@@ -31,19 +31,24 @@ const StepDesignHomepageMenu = () => {
 	const [ homepagePatternList, setHomepagePatternList ] = useState( [] );
 	const [ selectedHomepage, setSelectedHomepage ] = useState( 0 );
 
-	const { currentStep, currentData, themeStatus, themeVariations } =
-		useSelect( ( select ) => {
-			return {
-				currentStep: select( nfdOnboardingStore ).getStepFromPath(
-					location.pathname
-				),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-				themeVariations:
-					select( nfdOnboardingStore ).getStepPreviewData(),
-			};
-		}, [] );
+	const {
+		currentStep,
+		currentData,
+		themeStatus,
+		themeVariations,
+		queueLength,
+	} = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getStepFromPath(
+				location.pathname
+			),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+			themeVariations: select( nfdOnboardingStore ).getStepPreviewData(),
+			queueLength: select( nfdOnboardingStore ).getQueueLength(),
+		};
+	}, [] );
 
 	const {
 		setDrawerActiveView,
@@ -108,12 +113,12 @@ const StepDesignHomepageMenu = () => {
 	}
 
 	useEffect( () => {
-		if ( themeStatus === THEME_STATUS_ACTIVE ) {
-			Promise.all( [ flushQueue() ] ).then( () => {
-				getHomepagePatternsData();
-			} );
+		if ( themeStatus === THEME_STATUS_ACTIVE && 0 === queueLength ) {
+			getHomepagePatternsData();
+		} else {
+			flushQueue();
 		}
-	}, [ themeStatus ] );
+	}, [ themeStatus, queueLength ] );
 
 	const content = getContents();
 

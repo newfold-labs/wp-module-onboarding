@@ -21,18 +21,17 @@ import {
 const GlobalStylesProvider = ( { children } ) => {
 	const [ isLoaded, setIsLoaded ] = useState( false );
 
-	const { currentData, storedPreviewSettings, themeStatus } = useSelect(
-		( select ) => {
+	const { currentData, storedPreviewSettings, themeStatus, queueLength } =
+		useSelect( ( select ) => {
 			return {
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				storedPreviewSettings:
 					select( nfdOnboardingStore ).getPreviewSettings(),
 				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				queueLength: select( nfdOnboardingStore ).getQueueLength(),
 			};
-		},
-		[]
-	);
+		}, [] );
 
 	const {
 		updateThemeStatus,
@@ -81,12 +80,16 @@ const GlobalStylesProvider = ( { children } ) => {
 	};
 
 	useEffect( () => {
-		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus ) {
-			Promise.all( [ flushQueue() ] ).then( () => {
-				getStylesAndPatterns();
-			} );
+		if (
+			! isLoaded &&
+			THEME_STATUS_ACTIVE === themeStatus &&
+			0 === queueLength
+		) {
+			getStylesAndPatterns();
+		} else {
+			flushQueue();
 		}
-	}, [ isLoaded, themeStatus ] );
+	}, [ isLoaded, themeStatus, queueLength ] );
 
 	return children;
 };
