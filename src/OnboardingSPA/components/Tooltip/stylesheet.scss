@@ -14,13 +14,11 @@ $tooltip-arrow-size: 6px;
 .Tooltip-Tip {
 	position: absolute;
 	border-radius: 4px;
-	left: 50%;
-	transform: translateX(-40%);
 	padding: 6px;
 	color: var(--nfd-onboarding-white);
 	background: $tooltip-background-color;
 	font-size: 12px;
-	white-space: nowrap;
+	z-index: 1;
 }
 
 /* CSS border triangles */
@@ -38,7 +36,11 @@ $tooltip-arrow-size: 6px;
 
 /* Absolute positioning */
 .Tooltip-Tip.top {
-	top: calc($tooltip-margin * -1);
+	top: calc($tooltip-margin * -2);
+
+	@media (max-width: #{ ($break-medium) }) {
+		top: calc($tooltip-margin * -3);
+	}
 }
 
 /* CSS border triangles */
@@ -64,7 +66,11 @@ $tooltip-arrow-size: 6px;
 
 /* Absolute positioning */
 .Tooltip-Tip.bottom {
-	bottom: calc($tooltip-margin * -1);
+	bottom: calc($tooltip-margin * -2);
+
+	@media (max-width: #{ ($break-medium) }) {
+		bottom: calc($tooltip-margin * -3);
+	}
 }
 
 /* CSS border triangles */

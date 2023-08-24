@@ -24,6 +24,10 @@ export function flow(
 			getStartedSteps: initialGetStartedSteps(),
 			storeInfoSteps: initialStoreInfoSteps(),
 			currentStep: initialSteps[ 0 ].path,
+			error: {
+				showDialog: false,
+				continuePath: '',
+			},
 		},
 		chapter: undefined,
 	},
@@ -65,6 +69,39 @@ export function flow(
 				steps: {
 					...state.steps,
 					designSteps: action.designSteps,
+				},
+			};
+		case 'SHOW_NAV_ERROR_DIALOG':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					error: {
+						...state.steps.error,
+						showDialog: action.showDialog,
+					},
+				},
+			};
+		case 'SET_NAV_ERROR_CONTINUE_PATH':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					error: {
+						...state.steps.error,
+						continuePath: action.continuePath,
+					},
+				},
+			};
+		case 'RESET_NAV_ERROR':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					error: {
+						showDialog: false,
+						continuePath: '',
+					},
 				},
 			};
 		case 'SET_ACTIVE_CHAPTER':

@@ -3,7 +3,7 @@ on:
   push:
     paths:
       - '**.php'
-      - '!build/**'
+      - '!build/**/*.php'
   pull_request:
     types: [opened, edited, reopened, ready_for_review]
     paths:
@@ -33,7 +33,9 @@ jobs:
 
       - uses: technote-space/get-diff-action@v6
         with:
-          SUFFIX_FILTER: .php
+          PATTERNS: |
+            **/*.php
+            !build/**/*.php
 
       - name: Get Composer cache directory
         id: composer-cache

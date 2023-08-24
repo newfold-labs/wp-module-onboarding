@@ -227,3 +227,23 @@ export function flushQueue() {
 		type: 'FLUSH_QUEUE',
 	};
 }
+
+export function showNavErrorDialog( showDialog ) {
+	return {
+		type: 'SHOW_NAV_ERROR_DIALOG',
+		showDialog,
+	};
+}
+
+export function setNavErrorContinuePath( continuePath ) {
+	return {
+		type: 'SET_NAV_ERROR_CONTINUE_PATH',
+		continuePath,
+	};
+}
+
+export function resetNavError() {
+	return {
+		type: 'RESET_NAV_ERROR',
+	};
+}

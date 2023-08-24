@@ -1,235 +1,309 @@
-import _ from 'lodash';
-import { __ } from '@wordpress/i18n'; 
+import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 
-import Tooltip from './../Tooltip'
+import Tooltip from './../Tooltip';
+import getContents from './contents';
+import { ERROR_TYPES } from './utils';
+import urlValidator from './urlValidator';
+import SocialMediaModal from '../ErrorModal/ErrorModal';
+import { store as nfdOnboardingStore } from '../../store';
 
-const SocialMediaForm = ({ socialData, setSocialData, setIsValidSocials, isSocialFormOpen, setIsSocialFormOpen }) => {
-    const [facebook, setFacebook] = useState("");
-    const [twitter, setTwitter] = useState("");
-    const [instagram, setInstagram] = useState("");
-    const [youtube, setYouTube] = useState("");
-    const [linkedin, setLinkedIn] = useState("");
-    const [yelp, setYelp] = useState("");
-    const [tiktok, setTikTok] = useState("");
+const SocialMediaForm = ( {
+	socialData,
+	setSocialData,
+	isSocialFormOpen,
+	setIsSocialFormOpen,
+} ) => {
+	const content = getContents();
 
-    const [activeError, setActiveError] = useState([]);
+	const [ facebook, setFacebook ] = useState( '' );
+	const [ twitter, setTwitter ] = useState( '' );
+	const [ instagram, setInstagram ] = useState( '' );
+	const [ youtube, setYouTube ] = useState( '' );
+	const [ linkedin, setLinkedIn ] = useState( '' );
+	const [ yelp, setYelp ] = useState( '' );
+	const [ tiktok, setTikTok ] = useState( '' );
 
-    const SocialMediaSites = {
-        FACEBOOK: 'facebook',
-        TWITTER: 'twitter',
-        INSTAGRAM: 'instagram',
-        YOUTUBE: 'youtube',
-        LINKEDIN: 'linkedin',
-        YELP: 'yelp',
-        TIKTOK: 'tiktok',
-    }
+	const [ showModal, setShowModal ] = useState( false );
+	const [ activeError, setActiveError ] = useState( [] );
+	const [ activeErrorTypes, setActiveErrorTypes ] = useState( Object );
 
-    const SocialMediaStates = {
-        FACEBOOK: facebook,
-        TWITTER: twitter,
-        INSTAGRAM: instagram,
-        YOUTUBE: youtube,
-        LINKEDIN: linkedin,
-        YELP: yelp,
-        TIKTOK: tiktok,
-    }
+	const { showNavErrorDialog, setOnboardingSocialData, resetNavError } =
+		useDispatch( nfdOnboardingStore );
 
-    var socialMediaDB = {
-        "facebook_site": facebook,
-        "twitter_site": twitter,
-        "instagram_url": instagram,
-        "youtube_url": youtube,
-        "linkedin_url": linkedin,
-        "other_social_urls": {
-            "yelp_url": yelp,
-            "tiktok_url": tiktok,
-        }
-    }
+	const { navErrorModalPath } = useSelect( ( select ) => {
+		return {
+			navErrorModalPath: select( nfdOnboardingStore ).getNavErrorPath(),
+		};
+	}, [] );
 
-    useEffect(() => {
-        setFacebook(socialData?.facebook_site ?? "");
-        setTwitter(socialData?.twitter_site ?? "");
-        setInstagram(socialData?.instagram_url ?? "");
-        setYouTube(socialData?.youtube_url ?? "");
-        setLinkedIn(socialData?.linkedin_url ?? "");
-        if (
+	const SocialMedia = {
+		FACEBOOK: {
+			id: 'facebook',
+			value: facebook,
+		},
+		TWITTER: {
+			id: 'twitter',
+			value: twitter,
+		},
+		INSTAGRAM: {
+			id: 'instagram',
+			value: instagram,
+		},
+		YOUTUBE: {
+			id: 'youtube',
+			value: youtube,
+		},
+		LINKEDIN: {
+			id: 'linkedin',
+			value: linkedin,
+		},
+		YELP: {
+			id: 'yelp',
+			value: yelp,
+		},
+		TIKTOK: {
+			id: 'tiktok',
+			value: tiktok,
+		},
+	};
+
+	useEffect( () => {
+		if ( navErrorModalPath !== '' ) {
+			setShowModal( true );
+		}
+	}, [ navErrorModalPath ] );
+
+	useEffect( () => {
+		setFacebook( socialData?.facebook_site ?? '' );
+		setTwitter( socialData?.twitter_site ?? '' );
+		setInstagram( socialData?.instagram_url ?? '' );
+		setYouTube( socialData?.youtube_url ?? '' );
+		setLinkedIn( socialData?.linkedin_url ?? '' );
+		if (
 			socialData &&
 			Object.keys( socialData ).includes( 'other_social_urls' )
-		)
-        {
-            const otherURLS = socialData.other_social_urls;
-            if (Object.keys(otherURLS).includes("yelp_url"))
-                setYelp(otherURLS["yelp_url"] ?? "");
+		) {
+			const otherURLS = socialData.other_social_urls;
+			if ( Object.keys( otherURLS ).includes( 'yelp_url' ) )
+				setYelp( otherURLS.yelp_url ?? '' );
 
-            if (Object.keys(otherURLS).includes("tiktok_url"))
-                setTikTok(otherURLS["tiktok_url"] ?? "");
-        }
+			if ( Object.keys( otherURLS ).includes( 'tiktok_url' ) )
+				setTikTok( otherURLS.tiktok_url ?? '' );
+		}
+	}, [ socialData ] );
 
-    }, [socialData]);
+	// Convert the first letter to capital
+	function toTitleCase( str ) {
+		return str.replace( /\w\S*/g, function ( txt ) {
+			return (
+				txt.charAt( 0 ).toUpperCase() + txt.substr( 1 ).toLowerCase()
+			);
+		} );
+	}
 
-    const isValidUrl = (urlString) => {
-        let url;
-        try {
-            url = new URL(urlString);
-        }
-        catch (e) {
-            return false;
-        }
+	// Save the Social Media data into the store
+	const saveData = ( value, triggerID ) => {
+		switch ( triggerID ) {
+			case SocialMedia.FACEBOOK.id:
+				setFacebook( value );
+				socialData.facebook_site = value;
+				break;
+			case SocialMedia.TWITTER.id:
+				setTwitter( value );
+				socialData.twitter_site = value;
+				break;
+			case SocialMedia.INSTAGRAM.id:
+				setInstagram( value );
+				socialData.instagram_url = value;
+				break;
+			case SocialMedia.YOUTUBE.id:
+				setYouTube( value );
+				socialData.youtube_url = value;
+				break;
+			case SocialMedia.LINKEDIN.id:
+				setLinkedIn( value );
+				socialData.linkedin_url = value;
+				break;
+			case SocialMedia.YELP.id:
+				setYelp( value );
+				socialData.other_social_urls = {
+					...socialData.other_social_urls,
+				};
+				socialData.other_social_urls.yelp_url = value;
+				break;
+			case SocialMedia.TIKTOK.id:
+				setTikTok( value );
+				socialData.other_social_urls = {
+					...socialData.other_social_urls,
+				};
+				socialData.other_social_urls.tiktok_url = value;
+				break;
+		}
+		setOnboardingSocialData( socialData );
+		setSocialData( socialData );
+	};
 
-        return (url.protocol !== "http:" && url.protocol !== "https:") ? false : true;
-    }
+	// Find the current latest error in the data
+	const getErrorType = () => {
+		let error = ERROR_TYPES.NONE;
+		for ( const key in activeErrorTypes ) {
+			if ( activeErrorTypes[ key ] !== ERROR_TYPES.NONE )
+				error = activeErrorTypes[ key ];
+		}
+		return error;
+	};
 
-    const checkValidUrl = function(socialInput, data) {
-        let errorResolved = false;
-        switch(socialInput) {
-            case SocialMediaSites.TWITTER:
-                data = data.substring(data.indexOf('@') + 1);
-                if( isValidTwitterHandle(data) || isValidTwitterUrl(data)) { // check for @handle and twitter url
-                    errorResolved = true;
-                }
-                break;
-            default:
-                if (isValidUrl(data)) {
-                    errorResolved = true;
-                }
-                break;
-        }
+	// Adds error to a certain message.
+	const displayErrors = ( categ, isError ) => {
+		if ( isError ) {
+			if ( ! activeError.includes( categ ) ) {
+				setActiveError( [ ...activeError, categ ] );
+			}
+		} else {
+			const errorsFiltered = activeError.filter( function ( ele ) {
+				return ele !== categ;
+			} );
+			setActiveError( errorsFiltered );
+		}
+	};
 
-        if(errorResolved){
-            var activeErrorFiltered = activeError.filter(function (item) {
-                return item !== socialInput
-            })
-            setActiveError(activeErrorFiltered);
-        } else {
-            if (!activeError.includes(socialInput)) {
-                setActiveError([...activeError, socialInput]);
-            }
-        }
+	// Handle urlValidation when user goes out of focus
+	const handleOnBlur = ( e ) => {
+		const value = e.target.value;
+		const triggerID = e.target.id;
+		const res = urlValidator( triggerID, value );
+		activeErrorTypes[ triggerID ] = res.error;
+		setActiveErrorTypes( activeErrorTypes );
+		displayErrors( triggerID, res.error !== ERROR_TYPES.NONE );
+		if ( getErrorType() !== ERROR_TYPES.NONE ) showNavErrorDialog( true );
+		else resetNavError();
+		saveData( res.url, triggerID );
+	};
 
-        setDataAndActiveErrorState(data, socialInput, activeError);        
-    }
+	// Change data while user types
+	const handleChange = ( e ) => {
+		const value = e.target.value;
+		const triggerID = e.target.id;
+		saveData( value, triggerID );
+	};
 
-    const setDataAndActiveErrorState = (data, socialInput, activeError) => {
-        if (!data){
-            var activeErrorFiltered = activeError.filter(function (item) {
-                return item !== socialInput
-            })
-            setActiveError(activeErrorFiltered);
-        }
+	// Decide Error Modal to be shown according to error
+	const handleErrorModals = () => {
+		switch ( getErrorType() ) {
+			case ERROR_TYPES.AD_LINK_ERROR:
+				return (
+					<SocialMediaModal
+						showModal={ showModal }
+						setShowModal={ setShowModal }
+						modalTitle={ content.modals.shortUrl.modalTitle }
+						modalText={ content.modals.shortUrl.modalText }
+					/>
+				);
+			case ERROR_TYPES.INVALID_LINK_ERROR:
+				return (
+					<SocialMediaModal
+						showModal={ showModal }
+						setShowModal={ setShowModal }
+						modalTitle={ content.modals.invalidUrl.modalTitle }
+						modalText={ content.modals.invalidUrl.modalText }
+					/>
+				);
+			default:
+				return null;
+		}
+	};
 
-        (activeError.length == 0) ? setIsValidSocials(true) : setIsValidSocials(false);
-    }
+	// Tool tip error message to be shown
+	const showErrorMessage = ( socialMediaSite ) => {
+		return activeErrorTypes[ socialMediaSite ] === 'ad-link-error'
+			? content.errorText.adLinkErrorText
+			: content.errorText.invalidLinkErrorText;
+	};
 
-    const isValidTwitterHandle = (handle) => {
-        return handle.match(`^[A-Za-z0-9_]{1,25}$`) ? true : false;
-    }
+	// Render Input Fields
+	function buildSocialBoxes() {
+		return Object.keys( SocialMedia ).map( ( social ) => {
+			return (
+				<div key={ SocialMedia[ social ].id }>
+					<label
+						htmlFor={ SocialMedia[ social ].id }
+						className={ `social-form__label social-form__label-${ SocialMedia[ social ].id }` }
+					>
+						<div
+							className="social-form__label_icon"
+							style={ {
+								backgroundImage: `var(--${ SocialMedia[ social ].id }-icon)`,
+							} }
+						/>
+						<div className="social-form__label_name">
+							{ toTitleCase( SocialMedia[ social ].id ) }
+						</div>
+					</label>
+					<Tooltip
+						content={
+							activeError.includes( SocialMedia[ social ].id )
+								? showErrorMessage( SocialMedia[ social ].id )
+								: 'hide'
+						}
+						direction={
+							SocialMedia[ social ].id === SocialMedia.TIKTOK.id
+								? 'top'
+								: 'bottom'
+						}
+					>
+						<input
+							className={ `${
+								activeError.includes( SocialMedia[ social ].id )
+									? 'social-form__box-error'
+									: 'social-form__box'
+							}` }
+							type="url"
+							id={ `${ SocialMedia[ social ].id }` }
+							value={ SocialMedia[ social ].value }
+							onChange={ ( value ) => {
+								handleChange( value );
+							} }
+							onBlur={ ( e ) => handleOnBlur( e ) }
+						/>
+					</Tooltip>
+				</div>
+			);
+		} );
+	}
 
-    const isValidTwitterUrl = (url) => {
-        return url.match(`^http(?:s)?:\/\/(?:www\.)?twitter\.com\/([A-Za-z0-9_]{1,25})\/?$`) ? true : false;
-    }
-
-    const checkValidUrlDebounce = _.debounce(checkValidUrl, 1000);
-
-    const handleAccordion = (e) => {
-        setIsSocialFormOpen(!isSocialFormOpen);
-    }
-
-    const handleChange = (e) => {
-        const value = e.target.value;
-        const triggerID = e.target.id;
-        switch (triggerID){
-            case SocialMediaSites.FACEBOOK:
-                checkValidUrlDebounce(SocialMediaSites.FACEBOOK, value);
-                setFacebook(value);
-                socialMediaDB.facebook_site = value;
-                break;
-            case SocialMediaSites.TWITTER:
-                checkValidUrlDebounce(SocialMediaSites.TWITTER, value);
-                setTwitter(value);
-                socialMediaDB.twitter_site = value;
-                break;
-            case SocialMediaSites.INSTAGRAM:
-                checkValidUrlDebounce(SocialMediaSites.INSTAGRAM, value);
-                setInstagram(value);
-                socialMediaDB.instagram_url = value;
-                break;
-            case SocialMediaSites.YOUTUBE:
-                checkValidUrlDebounce(SocialMediaSites.YOUTUBE, value);
-                setYouTube(value);
-                socialMediaDB.youtube_url = value;
-                break;
-            case SocialMediaSites.LINKEDIN:
-                checkValidUrlDebounce(SocialMediaSites.LINKEDIN, value);
-                setLinkedIn(value);
-                socialMediaDB.linkedin_url = value;
-                break;
-            case SocialMediaSites.YELP:
-                checkValidUrlDebounce(SocialMediaSites.YELP, value)
-                setYelp(value);
-                socialMediaDB.other_social_urls["yelp_url"] = value;
-                break;
-            case SocialMediaSites.TIKTOK:
-                checkValidUrlDebounce(SocialMediaSites.TIKTOK, value);
-                setTikTok(value);
-                socialMediaDB.other_social_urls["tiktok_url"] = value;
-                break;
-        }
-        setSocialData(socialMediaDB);
-    }
-
-    const showErrorMessage = (socialMediaSite) => {
-        switch (socialMediaSite) {
-            case SocialMediaSites.TWITTER :
-                return `Please enter a valid ${socialMediaSite} URL / username`;
-            default :
-                return `Please enter a valid ${socialMediaSite} URL`;
-        }
-    }
-
-    function toTitleCase(str) {
-        return str.replace(
-            /\w\S*/g,
-            function (txt) {
-                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-            }
-        );
-    }
-
-    function buildSocialBoxes() {
-        var socialBoxes = [];
-        for (var social in SocialMediaSites){
-            socialBoxes.push(
-                <div key={SocialMediaSites[social]}>
-                    <label className={`social-form__label social-form__label-${SocialMediaSites[social]}`} >
-                        <div className="social-form__label_icon" style={{ backgroundImage: `var(--${SocialMediaSites[social]}-icon)` }} />
-                        <div className="social-form__label_name">{__(toTitleCase(SocialMediaSites[social]), 'wp-module-onboarding')}</div>
-                    </label>
-                    <Tooltip content={activeError.includes(SocialMediaSites[social]) ? showErrorMessage(SocialMediaSites[social]) : 'hide'} direction="top">
-                        <input className={`${activeError.includes(SocialMediaSites[social]) ? "social-form__box-error" : "social-form__box"}`} type="url" id={`${SocialMediaSites[social]}`} value={SocialMediaStates[social]} onChange={(value) => { handleChange(value) }} />
-                    </Tooltip>
-                </div>
-            );
-        }
-        return socialBoxes;
-    }
-
-    return (
-        <div className="social-form">
-            <div className="social-form__top-row" onClick={(e) => { handleAccordion(e)}}>
-                <div className="social-form__top-row_heading">
-                    {__(
-                        "Social Media",
-                        'wp-module-onboarding'
-                    )}
-                </div>
-                <div className={`social-form__top-row_icon ${isSocialFormOpen ? 'social-form__top-row_icon_opened' : ''}`}></div>
-            </div>
-            <form className={isSocialFormOpen ? 'social-form__main-active' : 'social-form__main-hidden'} onSubmit={(e) => { handleSubmit(e) }}>
-                {buildSocialBoxes()}
-            </form>
-        </div>
-    );
+	return (
+		<div className="social-form">
+			{ showModal && handleErrorModals() }
+			<div
+				role="button"
+				tabIndex={ 0 }
+				onKeyDown={ () => setIsSocialFormOpen( ! isSocialFormOpen ) }
+				className="social-form__top-row"
+				onClick={ () => setIsSocialFormOpen( ! isSocialFormOpen ) }
+			>
+				<div className="social-form__top-row_heading">
+					{ content.heading }
+				</div>
+				<div
+					className={ `social-form__top-row_icon ${
+						isSocialFormOpen
+							? 'social-form__top-row_icon_opened'
+							: ''
+					}` }
+				></div>
+			</div>
+			<form
+				className={
+					isSocialFormOpen
+						? 'social-form__main-active'
+						: 'social-form__main-hidden'
+				}
+			>
+				{ buildSocialBoxes() }
+			</form>
+		</div>
+	);
 };
 
 export default SocialMediaForm;
