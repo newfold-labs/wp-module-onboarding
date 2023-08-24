@@ -1,4 +1,4 @@
-import { useSelect } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, ButtonGroup } from '@wordpress/components';
 import { Icon, chevronLeft, chevronRight } from '@wordpress/icons';
@@ -21,10 +21,16 @@ import { ACTION_ONBOARDING_COMPLETE } from '../../utils/analytics/hiive/constant
  *
  * @return {WPComponent} Back Component
  */
-const Back = ( { path } ) => {
+const Back = ( { path, showErrorDialog } ) => {
+	const { setNavErrorContinuePath } = useDispatch( nfdOnboardingStore );
 	const navigate = useNavigate();
-	const navigateBack = () =>
-		navigate( path, { state: { origin: 'header' } } );
+	const navigateBack = () => {
+		if ( showErrorDialog !== false ) {
+			setNavErrorContinuePath( path );
+		} else {
+			navigate( path, { state: { origin: 'header' } } );
+		}
+	};
 	return (
 		<Button
 			className="navigation-buttons navigation-buttons_back"
@@ -44,11 +50,17 @@ const Back = ( { path } ) => {
  *
  * @return {WPComponent} Next Component
  */
-const Next = ( { path } ) => {
+const Next = ( { path, showErrorDialog } ) => {
+	const { setNavErrorContinuePath } = useDispatch( nfdOnboardingStore );
 	/* [TODO]: some sense of isStepComplete to enable/disable */
 	const navigate = useNavigate();
-	const navigateNext = () =>
-		navigate( path, { state: { origin: 'header' } } );
+	const navigateNext = () => {
+		if ( showErrorDialog !== false ) {
+			setNavErrorContinuePath( path );
+		} else {
+			navigate( path, { state: { origin: 'header' } } );
+		}
+	};
 	return (
 		<Button
 			onClick={ navigateNext }
@@ -101,13 +113,15 @@ const Finish = ( { currentData, saveDataAndExitFunc } ) => (
  */
 const StepNavigation = () => {
 	const location = useLocation();
-	const { previousStep, nextStep, currentData } = useSelect(
+	const { previousStep, nextStep, currentData, showErrorDialog } = useSelect(
 		( select ) => {
 			return {
 				nextStep: select( nfdOnboardingStore ).getNextStep(),
 				previousStep: select( nfdOnboardingStore ).getPreviousStep(),
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				showErrorDialog:
+					select( nfdOnboardingStore ).getShowErrorDialog(),
 			};
 		},
 		[ location.pathname ]
@@ -118,7 +132,10 @@ const StepNavigation = () => {
 		<div className="nfd-onboarding-header__step-navigation">
 			<ButtonGroup style={ { display: 'flex', columnGap: '0.5rem' } }>
 				{ isFirstStep || isLastStep ? null : (
-					<Back path={ previousStep.path } />
+					<Back
+						path={ previousStep.path }
+						showErrorDialog={ showErrorDialog }
+					/>
 				) }
 				{ isLastStep ? (
 					<Finish
@@ -126,7 +143,10 @@ const StepNavigation = () => {
 						saveDataAndExitFunc={ saveDataAndExit }
 					/>
 				) : (
-					<Next path={ nextStep.path } />
+					<Next
+						path={ nextStep.path }
+						showErrorDialog={ showErrorDialog }
+					/>
 				) }
 			</ButtonGroup>
 		</div>
