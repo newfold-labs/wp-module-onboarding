@@ -12,7 +12,7 @@ class ThemeFontsController extends \WP_REST_Controller {
 
 
 	 /**
-	  * The namespace of this controller's routes.
+	  * The namespace of this controller's route.
 	  *
 	  * @var string
 	  */
