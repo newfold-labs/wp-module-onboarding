@@ -26,25 +26,19 @@ const DesignHeaderMenu = () => {
 	const [ selectedPattern, setSelectedPattern ] = useState( '' );
 	const location = useLocation();
 
-	const {
-		currentStep,
-		currentData,
-		themeStatus,
-		storedPreviewSettings,
-		queueLength,
-	} = useSelect( ( select ) => {
-		return {
-			currentStep: select( nfdOnboardingStore ).getStepFromPath(
-				location.pathname
-			),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-			storedPreviewSettings:
-				select( nfdOnboardingStore ).getStepPreviewData(),
-			queueLength: select( nfdOnboardingStore ).getQueueLength(),
-		};
-	}, [] );
+	const { currentStep, currentData, themeStatus, storedPreviewSettings } =
+		useSelect( ( select ) => {
+			return {
+				currentStep: select( nfdOnboardingStore ).getStepFromPath(
+					location.pathname
+				),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
+				storedPreviewSettings:
+					select( nfdOnboardingStore ).getStepPreviewData(),
+			};
+		}, [] );
 
 	const {
 		setCurrentOnboardingData,
@@ -87,10 +81,10 @@ const DesignHeaderMenu = () => {
 	};
 
 	useEffect( () => {
-		if ( themeStatus === THEME_STATUS_ACTIVE && 0 === queueLength ) {
+		if ( themeStatus === THEME_STATUS_ACTIVE ) {
 			getPatternsData();
 		}
-	}, [ themeStatus, queueLength ] );
+	}, [ themeStatus ] );
 
 	const handleClick = async ( idx ) => {
 		if ( document.getElementsByClassName( 'nfd-onboard-content' ) ) {
