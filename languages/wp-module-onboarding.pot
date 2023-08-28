@@ -1166,6 +1166,26 @@ msgstr ""
 msgid "Let your users ask a quote for your products"
 msgstr ""
 
+#: build/1.10.1/722.js:1
+msgid "0"
+msgstr ""
+
+#: build/1.10.1/722.js:1
+msgid "1 - 10"
+msgstr ""
+
+#: build/1.10.1/722.js:1
+msgid "11 - 100"
+msgstr ""
+
+#: build/1.10.1/722.js:1
+msgid "101 - 1000"
+msgstr ""
+
+#: build/1.10.1/722.js:1
+msgid "1000 +"
+msgstr ""
+
 #: build/1.10.1/848.js:1
 #: build/1.10.1/onboarding.js:7
 msgid "Typography"
@@ -1415,7 +1435,7 @@ msgid "What's your font style?"
 msgstr ""
 
 #: build/1.10.1/onboarding.js:7
-#: build/1.10.1/onboarding.js:9
+#: build/1.10.1/onboarding.js:11
 msgid "Design"
 msgstr ""
 
@@ -1547,53 +1567,58 @@ msgstr ""
 msgid "Font Palettes"
 msgstr ""
 
-#: build/1.10.1/onboarding.js:9
+#. translators: text in each font selection pill representing the respective font
+#: build/1.10.1/onboarding.js:11
+msgid "Aa"
+msgstr ""
+
+#: build/1.10.1/onboarding.js:11
 msgid "Onboarding Menu"
 msgstr ""
 
-#: build/1.10.1/onboarding.js:9
+#: build/1.10.1/onboarding.js:11
 msgid "Resume Onboarding"
 msgstr ""
 
-#: build/1.10.1/onboarding.js:9
+#: build/1.10.1/onboarding.js:11
 msgid "WordPress Onboarding"
 msgstr ""
 
-#: build/1.10.1/onboarding.js:9
+#: build/1.10.1/onboarding.js:11
 msgid "Toggle Navigation"
 msgstr ""
 
 #. translators: accessibility text for the nav bar landmark region.
-#: build/1.10.1/onboarding.js:11
+#: build/1.10.1/onboarding.js:13
 msgid "Drawer"
 msgstr ""
 
 #. translators: accessibility text for the top bar landmark region.
-#: build/1.10.1/onboarding.js:13
+#: build/1.10.1/onboarding.js:15
 msgid "Header"
 msgstr ""
 
 #. translators: accessibility text for the content landmark region.
-#: build/1.10.1/onboarding.js:15
+#: build/1.10.1/onboarding.js:17
 msgid "Content"
 msgstr ""
 
 #. translators: accessibility text for the secondary sidebar landmark region.
-#: build/1.10.1/onboarding.js:17
+#: build/1.10.1/onboarding.js:19
 msgid "Block Library"
 msgstr ""
 
 #. translators: accessibility text for the settings landmark region.
-#: build/1.10.1/onboarding.js:19
+#: build/1.10.1/onboarding.js:21
 msgid "Settings"
 msgstr ""
 
 #. translators: accessibility text for the publish landmark region.
-#: build/1.10.1/onboarding.js:21
+#: build/1.10.1/onboarding.js:23
 msgid "Publish"
 msgstr ""
 
 #. translators: accessibility text for the footer landmark region.
-#: build/1.10.1/onboarding.js:23
+#: build/1.10.1/onboarding.js:25
 msgid "Footer"
 msgstr ""
