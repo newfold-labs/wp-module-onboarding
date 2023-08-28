@@ -5,7 +5,7 @@ import {
 	VIEW_DESIGN_THEMES,
 	VIEW_DESIGN_THEME_STYLES_MENU,
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
-	VIEW_DESIGN_TYPOGRAPHY,
+	VIEW_DESIGN_FONTS,
 	VIEW_NAV_DESIGN,
 	VIEW_NAV_PAGE,
 	VIEW_NAV_PRIMARY,
@@ -22,7 +22,7 @@ import DesignHomepageMenu from './DesignHomepageMenu';
 import DesignThemeStylesMenu from './DesignThemeStylesMenu';
 import DesignThemeStylesPreview from './DesignThemeStylesPreview';
 import DesignThemes from './DesignThemes';
-import DesignTypography from './DesignTypography';
+import DesignFonts from './DesignFonts';
 import { ESCAPE } from '@wordpress/keycodes';
 import NavDesign from './NavDesign';
 import NavGetStarted from './NavGetStarted';
@@ -107,9 +107,9 @@ const DrawerPanel = () => {
 								<DesignColors />
 							</WithDesignBack>
 						) }
-						{ VIEW_DESIGN_TYPOGRAPHY === drawerView && (
+						{ VIEW_DESIGN_FONTS === drawerView && (
 							<WithDesignBack>
-								<DesignTypography />
+								<DesignFonts />
 							</WithDesignBack>
 						) }
 						{ VIEW_DESIGN_HEADER_MENU === drawerView && (

@@ -13,7 +13,7 @@ import {
 	navigation,
 	brush,
 	color,
-	typography,
+	typography as fonts,
 	header,
 	moveTo,
 	redo,
@@ -24,7 +24,7 @@ import {
 	VIEW_DESIGN_COLORS,
 	VIEW_DESIGN_HEADER_MENU,
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
-	VIEW_DESIGN_TYPOGRAPHY,
+	VIEW_DESIGN_FONTS,
 	VIEW_NAV_GET_STARTED,
 	VIEW_NAV_DESIGN,
 	CHAPTER_DEMOGRAPHIC,
@@ -108,11 +108,11 @@ const StepDesignColorsLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/DesignColors/Sidebar/LearnMore' )
 );
 
-const StepDesignTypography = lazy( () =>
-	import( '../../pages/Steps/DesignTypography' )
+const StepDesignFonts = lazy( () =>
+	import( '../../pages/Steps/DesignFonts' )
 );
-const StepDesignTypographyLearnMoreSidebar = lazy( () =>
-	import( '../../pages/Steps/DesignTypography/Sidebar/LearnMore' )
+const StepDesignFontsLearnMoreSidebar = lazy( () =>
+	import( '../../pages/Steps/DesignFonts/Sidebar/LearnMore' )
 );
 
 const StepDesignHeaderMenu = lazy( () =>
@@ -426,18 +426,18 @@ export const conditionalSteps = [
 		},
 	},
 	{
-		path: '/wp-setup/step/design/typography',
-		title: __( 'Typography', 'wp-module-onboarding' ),
+		path: '/wp-setup/step/design/fonts',
+		title: __( 'Fonts', 'wp-module-onboarding' ),
 		chapter: CHAPTER_DESIGN,
 		tooltipText: __( "What's your font style?", 'wp-module-onboarding' ),
-		Component: StepDesignTypography,
-		Icon: typography,
+		Component: StepDesignFonts,
+		Icon: fonts,
 		priority: 200,
-		VIEW: VIEW_DESIGN_TYPOGRAPHY,
+		VIEW: VIEW_DESIGN_FONTS,
 		patternId: 'theme-styles',
 		sidebars: {
 			LearnMore: {
-				SidebarComponents: [ StepDesignTypographyLearnMoreSidebar ],
+				SidebarComponents: [ StepDesignFontsLearnMoreSidebar ],
 			},
 		},
 	},

@@ -30,7 +30,7 @@ export const VIEW_DESIGN_THEMES = 'design-themes';
 export const VIEW_DESIGN_THEME_STYLES_MENU = 'design-theme-styles-menu';
 export const VIEW_DESIGN_THEME_STYLES_PREVIEW = 'design-theme-styles-preview';
 export const VIEW_DESIGN_COLORS = 'design-colors';
-export const VIEW_DESIGN_TYPOGRAPHY = 'design-typography';
+export const VIEW_DESIGN_FONTS = 'design-fonts';
 export const VIEW_DESIGN_HEADER_MENU = 'design-header-menu';
 export const VIEW_DESIGN_HOMEPAGE_MENU = 'design-homepage-menu';
 export const VIEW_NAV_GET_STARTED = 'nav-get-started';
@@ -72,7 +72,7 @@ export const DRAWER_VIEWS = [
 	VIEW_DESIGN_THEME_STYLES_MENU,
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
 	VIEW_DESIGN_COLORS,
-	VIEW_DESIGN_TYPOGRAPHY,
+	VIEW_DESIGN_FONTS,
 	VIEW_DESIGN_HEADER_MENU,
 ];
 
