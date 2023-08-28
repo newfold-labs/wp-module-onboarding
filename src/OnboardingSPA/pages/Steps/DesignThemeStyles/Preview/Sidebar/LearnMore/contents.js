@@ -3,7 +3,11 @@ import { __, sprintf } from '@wordpress/i18n';
 import { translations } from '../../../../../../utils/locales/translations';
 import { brush } from '@wordpress/icons';
 
-const getContents = ( brandName, techSupportLink, fullServiceCreativeTeamLink ) => {
+const getContents = (
+	brandName,
+	techSupportLink,
+	fullServiceCreativeTeamLink
+) => {
 	return {
 		introduction: {
 			heading: __( 'Theme Styles', 'wp-module-onboarding' ),

@@ -166,9 +166,10 @@ const DesignTypography = () => {
 									?.fontFamily,
 						} }
 					>
-
-						{ /* translators: text in each font selection pill representing the respective font */
-							__( 'Aa', 'wp-module-onboarding' ) }
+						{
+							/* translators: text in each font selection pill representing the respective font */
+							__( 'Aa', 'wp-module-onboarding' )
+						}
 					</div>
 					<div className="font-palette__name drawer-palette--button__text">
 						<span

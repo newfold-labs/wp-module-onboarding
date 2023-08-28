@@ -163,7 +163,7 @@ const SocialMediaForm = ( {
 				setActiveError( [ ...activeError, categ ] );
 			}
 		} else {
-			const errorsFiltered = activeError.filter( function( ele ) {
+			const errorsFiltered = activeError.filter( function ( ele ) {
 				return ele !== categ;
 			} );
 			setActiveError( errorsFiltered );

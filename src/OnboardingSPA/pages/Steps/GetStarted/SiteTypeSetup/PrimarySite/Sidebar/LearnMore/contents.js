@@ -27,10 +27,7 @@ const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 		information: {
 			headingWithDescriptions: [
 				{
-					heading: __(
-						'Why we ask',
-						'wp-module-onboarding'
-					),
+					heading: __( 'Why we ask', 'wp-module-onboarding' ),
 					description: sprintf(
 						/* translators: %s: site or store */
 						__(

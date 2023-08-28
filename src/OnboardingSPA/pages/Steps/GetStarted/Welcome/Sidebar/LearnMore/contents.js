@@ -3,7 +3,12 @@ import { __, sprintf } from '@wordpress/i18n';
 import { translations } from '../../../../../../utils/locales/translations';
 import { home } from '@wordpress/icons';
 
-const getContents = ( brandName, expertsLink, techSupportLink, fullServiceCreativeTeamLink ) => {
+const getContents = (
+	brandName,
+	expertsLink,
+	techSupportLink,
+	fullServiceCreativeTeamLink
+) => {
 	return {
 		introduction: {
 			heading: __( 'Start Setup', 'wp-module-onboarding' ),
@@ -46,7 +51,10 @@ const getContents = ( brandName, expertsLink, techSupportLink, fullServiceCreati
 				{
 					heading: sprintf(
 						/* translators: 1: Brand 2: website or store */
-						__( '%1$s is your %2$s partner', 'wp-module-onboarding' ),
+						__(
+							'%1$s is your %2$s partner',
+							'wp-module-onboarding'
+						),
 						brandName,
 						translations( 'website' )
 					),

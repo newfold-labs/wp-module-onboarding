@@ -3,7 +3,11 @@ import { __, sprintf } from '@wordpress/i18n';
 import { translations } from '../../../../../utils/locales/translations';
 import { moveTo } from '@wordpress/icons';
 
-const getContents = ( brandName, techSupportLink, fullServiceCreativeTeamLink ) => {
+const getContents = (
+	brandName,
+	techSupportLink,
+	fullServiceCreativeTeamLink
+) => {
 	return {
 		introduction: {
 			heading: __( 'What’s Next', 'wp-module-onboarding' ),

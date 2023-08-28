@@ -34,10 +34,13 @@ const TextInput = ( {
 		<div className="nfd-input">
 			<label htmlFor={ inputText }>
 				<div className="nfd-input__label">
-					<p className="nfd-input__label_title">
-						{ title }
+					<p className="nfd-input__label_title">{ title }</p>
+					<p className="nfd-input__label_maxChar">
+						{
+							getContents( maxCharacters - textValue?.length )
+								.charactersLeftPrompt.text
+						}
 					</p>
-					<p className="nfd-input__label_maxChar">{ getContents( maxCharacters - textValue?.length ).charactersLeftPrompt.text }</p>
 				</div>
 				<textarea
 					type="text"
@@ -49,9 +52,7 @@ const TextInput = ( {
 					maxLength={ maxCharacters }
 					onChange={ ( e ) => onTextChange( e ) }
 				/>
-				<p className="nfd-input__hint">
-					{ hint }
-				</p>
+				<p className="nfd-input__hint">{ hint }</p>
 			</label>
 		</div>
 	);
