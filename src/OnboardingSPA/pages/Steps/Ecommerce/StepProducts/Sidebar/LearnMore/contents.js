@@ -22,7 +22,10 @@ const getContents = (
 		information: {
 			headingWithDescriptions: [
 				{
-					heading: __( '', 'wp-module-onboarding' ),
+					heading: __(
+						'Go from multiple sizes to multiple locations to multiple online channels',
+						'wp-module-onboarding'
+					),
 					description: sprintf(
 						/* translators: 1: Brand 2: site or store */
 						__(
