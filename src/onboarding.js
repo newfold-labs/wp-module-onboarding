@@ -23,7 +23,7 @@ if ( runtimeDataExists ) {
 				},
 			},
 		} );
-		
+
 		initializeNFDOnboarding(
 			NFD_ONBOARDING_ELEMENT_ID,
 			window.nfdOnboarding
