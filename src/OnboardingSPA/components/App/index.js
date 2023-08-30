@@ -4,7 +4,6 @@ import Drawer from '../Drawer';
 import Sidebar from '../Sidebar';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
-import { setFlow } from '../../utils/api/flow';
 import { conditionalSteps } from '../../data/routes';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { isEmpty, updateWPSettings } from '../../utils/api/ecommerce';
@@ -17,7 +16,6 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { SlotFillProvider } from '@wordpress/components';
 import { useEffect, Fragment, useState } from '@wordpress/element';
 import { FullscreenMode } from '@wordpress/interface';
-import { API_REQUEST } from '../../../constants';
 import NewfoldInterfaceSkeleton from '../NewfoldInterfaceSkeleton';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import {
@@ -89,7 +87,6 @@ const App = () => {
 		setActiveFlow,
 		updateAllSteps,
 		flushQueue,
-		enqueueRequest,
 		setOnboardingSocialData,
 		setCurrentOnboardingData,
 		setActiveChapter,
@@ -147,9 +144,6 @@ const App = () => {
 					}
 				}
 				flushQueue();
-				enqueueRequest( API_REQUEST.SET_FLOW, () =>
-					setFlow( currentData )
-				);
 				setIsRequestPlaced( false );
 			}
 		}

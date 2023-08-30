@@ -45,6 +45,11 @@ const StepDesignTypography = () => {
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView( VIEW_DESIGN_TYPOGRAPHY );
+		if ( 0 !== queueLength ) {
+			console.log('flush called fomr typography .js..');
+			flushQueue();
+		}
+
 	}, [] );
 
 	const getFontPatterns = async () => {
@@ -61,8 +66,6 @@ const StepDesignTypography = () => {
 	useEffect( () => {
 		if ( THEME_STATUS_ACTIVE === themeStatus && 0 === queueLength ) {
 			getFontPatterns();
-		} else {
-			flushQueue();
 		}
 	}, [ themeStatus, queueLength ] );
 

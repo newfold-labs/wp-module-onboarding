@@ -61,6 +61,9 @@ const StepDesignHomepageMenu = () => {
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView( VIEW_NAV_DESIGN );
+		if( 0 !== queueLength ) {
+			flushQueue();
+		}
 	}, [] );
 
 	function refactorPatterns( homepagePatternDataResp ) {
@@ -115,8 +118,6 @@ const StepDesignHomepageMenu = () => {
 	useEffect( () => {
 		if ( themeStatus === THEME_STATUS_ACTIVE && 0 === queueLength ) {
 			getHomepagePatternsData();
-		} else {
-			flushQueue();
 		}
 	}, [ themeStatus, queueLength ] );
 

@@ -45,6 +45,9 @@ const StepDesignColors = () => {
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView( VIEW_DESIGN_COLORS );
+		if ( 0 !== queueLength ) {
+			flushQueue();
+		}
 	}, [] );
 
 	const getStylesAndPatterns = async () => {
@@ -61,8 +64,6 @@ const StepDesignColors = () => {
 	useEffect( () => {
 		if ( THEME_STATUS_ACTIVE === themeStatus && 0 === queueLength ) {
 			getStylesAndPatterns();
-		} else {
-			flushQueue();
 		}
 	}, [ themeStatus, queueLength ] );
 

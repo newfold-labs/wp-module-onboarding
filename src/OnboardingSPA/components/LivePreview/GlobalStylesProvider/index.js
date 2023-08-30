@@ -80,16 +80,10 @@ const GlobalStylesProvider = ( { children } ) => {
 	};
 
 	useEffect( () => {
-		if (
-			! isLoaded &&
-			THEME_STATUS_ACTIVE === themeStatus &&
-			0 === queueLength
-		) {
+		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus ) {
 			getStylesAndPatterns();
-		} else {
-			flushQueue();
 		}
-	}, [ isLoaded, themeStatus, queueLength ] );
+	}, [ isLoaded, themeStatus ] );
 
 	return children;
 };

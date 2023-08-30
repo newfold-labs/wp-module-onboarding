@@ -69,7 +69,7 @@ const DesignColors = () => {
 	// Timeout after which a custom picker analytics event will be sent.
 	const [ colorPickerTimeout, setColorPickerTimeout ] = useState();
 
-	const { storedPreviewSettings, currentData, themeStatus, queueLength } =
+	const { storedPreviewSettings, currentData, themeStatus } =
 		useSelect( ( select ) => {
 			return {
 				storedPreviewSettings:
@@ -77,7 +77,6 @@ const DesignColors = () => {
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-				queueLength: select( nfdOnboardingStore ).getQueueLength(),
 			};
 		}, [] );
 
@@ -85,11 +84,10 @@ const DesignColors = () => {
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
-		flushQueue,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		if ( THEME_STATUS_ACTIVE === themeStatus && 0 === queueLength ) {
+		if ( THEME_STATUS_ACTIVE === themeStatus ) {
 			setColorStylesAndPatterns();
 			if ( currentData?.data?.colorStyle === 'custom' ) {
 				setIsAccordionClosed( false );
@@ -98,10 +96,8 @@ const DesignColors = () => {
 					block: 'end',
 				} );
 			}
-		} else {
-			flushQueue();
 		}
-	}, [ themeStatus, queueLength ] );
+	}, [ themeStatus ] );
 
 	/**
 	 * Fetches the colors for the Drawer and sets the state
