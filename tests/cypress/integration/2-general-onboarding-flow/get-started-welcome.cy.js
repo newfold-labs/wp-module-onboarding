@@ -7,6 +7,7 @@ import {
 	CheckInfoPanel,
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 
 describe( 'Get Started Welcome Page', function () {
 	before( () => {
@@ -64,7 +65,7 @@ describe( 'Get Started Welcome Page', function () {
 	} );
 
 	it( 'Check for brandname in sub heading', () => {
-		cy.get( '.nfd-step-card-subheading' ).should( 'contain', Cypress.env('pluginId').charAt(0).toUpperCase() + Cypress.env('pluginId').slice(1) );
+		cy.get( '.nfd-step-card-subheading' ).should( 'contain', GetPluginId().charAt(0).toUpperCase() + GetPluginId().slice(1) );
 	} );
 
 	it( 'Check if `website` appears in heading', () => {

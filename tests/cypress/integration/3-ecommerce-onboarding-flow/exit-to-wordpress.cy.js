@@ -1,4 +1,5 @@
 // <reference types="Cypress" />
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 
 describe( 'Exit to WordPress', function () {
 	before( () => {
@@ -31,7 +32,7 @@ describe( 'Exit to WordPress', function () {
 	it.skip( 'Exit to WordPress Page', () => {
 		cy.get( '.nfd-onboarding-etw__trigger' ).click();
 		cy.get( '.nfd-onboarding-etw__buttons > .is-primary' ).click();
-		cy.url( { timeout: 12000 } ).should( 'contain', Cypress.env('pluginId') );
+		cy.url( { timeout: 12000 } ).should( 'contain', GetPluginId() );
 	} );
 
 	after( () => {
