@@ -35,7 +35,8 @@ import { store as nfdOnboardingStore } from '../../../store';
 import WithDesignBack from './WithDesignBack';
 
 const DrawerPanel = () => {
-	const [ setIsNavView ] = useState( true ); // menu-primary is default view
+	// eslint-disable-next-line no-unused-vars
+	const [ isNavView, setIsNavView ] = useState( true ); // menu-primary is default view
 	const { isDrawerOpen, drawerView } = useSelect( ( select ) => {
 		const { isDrawerOpened, getDrawerView } = select( nfdOnboardingStore );
 
@@ -45,7 +46,9 @@ const DrawerPanel = () => {
 		};
 	}, [] );
 
-	const { setIsDrawerOpened } = useDispatch( nfdOnboardingStore );
+	// eslint-disable-next-line no-unused-vars
+	const { setIsDrawerOpened, setDrawerActiveView } =
+		useDispatch( nfdOnboardingStore );
 
 	const closeOnEscape = ( event ) => {
 		if ( event.keyCode === ESCAPE && ! event.defaultPrevented ) {
