@@ -24,7 +24,7 @@ const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 						'wp-module-onboarding'
 					),
 					description: sprintf(
-						/* translators: %s: site */
+						/* translators: %s: site or store */
 						__(
 							`Fonts help our ideas look creative and compelling, astute and articulate, refined and regal, modern and much more. Great font combinations help set the perfect tone for your %s and your story jump off the screen.`,
 							'wp-module-onboarding'

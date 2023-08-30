@@ -3,9 +3,9 @@
 (0,p.__)("Make your %s dreams a reality!","wp-module-onboarding"),(0,g.I)("website")),subheading:(0,p.sprintf)(
 /* translators: %s: Brand */
 (0,p.__)("with WordPress and %s.","wp-module-onboarding"),e),buttonText:(0,p.__)("Start Setup","wp-module-onboarding"),tabs:[{name:"tab1",title:(0,p.__)("YOUR CONTENT","wp-module-onboarding"),subtitle:(0,p.__)("Publish boldly with WordPress Blocks.","wp-module-onboarding"),text:(0,p.sprintf)(
-/* translators: %s: Site */
+/* translators: %s: site or store */
 (0,p.__)("Build a beautiful %s using a visual builder. Block Patterns accelerate telling your story or tending your store with professional designs.","wp-module-onboarding"),(0,g.I)("site")),imgType:"content-img",animationName:"fade-in-right"},{name:"tab2",title:(0,p.__)("POWERFUL FEATURES","wp-module-onboarding"),subtitle:(0,p.__)("Proven, easy-to-use solutions.","wp-module-onboarding"),text:(0,p.sprintf)(
-/* translators: %s: Site */
+/* translators: 1: site or store 2: Brand */
 (0,p.__)("Reach for your %1$s goals using proven WordPress Plugins & %2$s solutions. Send a newsletter, host a podcast, book clients, take payments and more.","wp-module-onboarding"),(0,g.I)("site"),e),imgType:"features-img",animationName:"fade-in-up"},{name:"tab3",title:(0,p.__)("MODERN DESIGN","wp-module-onboarding"),subtitle:(0,p.__)("Paint trim. Move walls. No sweat.","wp-module-onboarding"),text:(0,p.sprintf)(
-/* translators: %s: site */
+/* translators: %s: site or store */
 (0,p.__)("Establish your %s's unique design. Use the WordPress Editor to refine over time with professionally-designed patterns, parts, templates, colors and type.","wp-module-onboarding"),(0,g.I)("site")),imgType:"design-img",animationName:"fade-in-left"}]}))(t);return(0,a.createElement)(r.Z,{isBgPrimary:!0,isCentered:!0},(0,a.createElement)(l.Z,null,(0,a.createElement)("div",{className:"welcome-card"},(0,a.createElement)(c.Z,{heading:w.heading,subHeading:w.subheading}),(0,a.createElement)(u.Z,{className:"nfd-onboarding-overview__tab-panel",tabs:w.tabs.map((e=>({name:e.name,title:e.title,content:(0,a.createElement)(m.Z,{title:e.subtitle,text:e.text,imgType:e.imgType,animationName:e.animationName,className:"tab-data"})})))},(e=>(0,a.createElement)("div",null,e.content))),(0,a.createElement)(d.Z,{text:w.buttonText}))))}}}]);

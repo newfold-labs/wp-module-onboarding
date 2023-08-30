@@ -15,12 +15,12 @@ const getContents = () => {
 		),
 		siteTitle: {
 			title: sprintf(
-				/* translators: 1: site */
+				/* translators: %s: Site */
 				__( '%s Title', 'wp-module-onboarding' ),
 				translations( 'Site' )
 			),
 			placeholder: sprintf(
-				/* translators: 1: site */
+				/* translators: %s: Site or Store */
 				__( 'WordPress %s', 'wp-module-onboarding' ),
 				translations( 'Site' )
 			),
@@ -32,17 +32,17 @@ const getContents = () => {
 		},
 		siteDesc: {
 			title: sprintf(
-				/* translators: 1: site */
+				/* translators: %s: Site or Store */
 				__( '%s Description', 'wp-module-onboarding' ),
 				translations( 'Site' )
 			),
 			placeholder: sprintf(
-				/* translators: 1: site */
+				/* translators: %s: Site or Store */
 				__( 'Just another WordPress %s.', 'wp-module-onboarding' ),
 				translations( 'Site' )
 			),
 			hint: sprintf(
-				/* translators: 1: site */
+				/* translators: %s: site or store */
 				__(
 					'Tell people who you are, what you sell and why they should visit your %s.',
 					'wp-module-onboarding'
