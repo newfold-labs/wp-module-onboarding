@@ -29,7 +29,7 @@ final class Events {
 		'primary_type_set'            => true,
 		'secondary_type_set'          => true,
 		'theme_style_selected'        => true,
-		'fonts_selected'	          => true,
+		'fonts_selected'              => true,
 		'header_selected'             => true,
 		'homepage_layout_selected'    => true,
 		'onboarding_top_priority_set' => true,

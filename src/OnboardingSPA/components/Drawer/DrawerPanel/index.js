@@ -35,7 +35,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import WithDesignBack from './WithDesignBack';
 
 const DrawerPanel = () => {
-	const [ isNavView, setIsNavView ] = useState( true ); // menu-primary is default view
+	const [ setIsNavView ] = useState( true ); // menu-primary is default view
 	const { isDrawerOpen, drawerView } = useSelect( ( select ) => {
 		const { isDrawerOpened, getDrawerView } = select( nfdOnboardingStore );
 
@@ -45,8 +45,7 @@ const DrawerPanel = () => {
 		};
 	}, [] );
 
-	const { setIsDrawerOpened, setDrawerActiveView } =
-		useDispatch( nfdOnboardingStore );
+	const { setIsDrawerOpened } = useDispatch( nfdOnboardingStore );
 
 	const closeOnEscape = ( event ) => {
 		if ( event.keyCode === ESCAPE && ! event.defaultPrevented ) {
@@ -64,6 +63,7 @@ const DrawerPanel = () => {
 	}, [ drawerView ] );
 
 	return (
+		// eslint-disable-next-line jsx-a11y/no-static-element-interactions
 		<div
 			className={ classNames( `nfd-onboarding-drawer__panel`, {
 				'is-open': isDrawerOpen,

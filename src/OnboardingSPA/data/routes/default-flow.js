@@ -108,9 +108,7 @@ const StepDesignColorsLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/DesignColors/Sidebar/LearnMore' )
 );
 
-const StepDesignFonts = lazy( () =>
-	import( '../../pages/Steps/DesignFonts' )
-);
+const StepDesignFonts = lazy( () => import( '../../pages/Steps/DesignFonts' ) );
 const StepDesignFontsLearnMoreSidebar = lazy( () =>
 	import( '../../pages/Steps/DesignFonts/Sidebar/LearnMore' )
 );
