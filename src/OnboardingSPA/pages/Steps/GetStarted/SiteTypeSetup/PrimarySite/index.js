@@ -3,6 +3,7 @@ import NewfoldLargeCard from '../../../../../components/NewfoldLargeCard';
 import {
 	SIDEBAR_LEARN_MORE,
 	VIEW_NAV_GET_STARTED,
+	API_REQUEST,
 } from '../../../../../../constants';
 import getContents from '../contents';
 import { store as nfdOnboardingStore } from '../../../../../store';
@@ -18,6 +19,7 @@ import {
 	trackOnboardingEvent,
 } from '../../../../../utils/analytics/hiive';
 import { ACTION_PRIMARY_TYPE_SET } from '../../../../../utils/analytics/hiive/constants';
+import { setFlow } from '../../../../../utils/api/flow';
 
 const StepPrimarySetup = () => {
 	const {
@@ -26,6 +28,7 @@ const StepPrimarySetup = () => {
 		setIsHeaderNavigationEnabled,
 		setSidebarActiveView,
 		setCurrentOnboardingData,
+		enqueueRequest,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData } = useSelect( ( select ) => {
@@ -94,6 +97,10 @@ const StepPrimarySetup = () => {
 		currentData.data.siteType.primary.refers = 'slug';
 		currentData.data.siteType.primary.value = primType;
 		setCurrentOnboardingData( currentData );
+
+		// enqueueing the setflow API to save data to DB
+		enqueueRequest( API_REQUEST.SET_FLOW, () => setFlow( currentData ) );
+
 		trackOnboardingEvent(
 			new OnboardingEvent( ACTION_PRIMARY_TYPE_SET, primType )
 		);

@@ -6,12 +6,13 @@ import classNames from 'classnames';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getThemeFonts } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
+import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT, API_REQUEST } from '../../../../constants';
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
 } from '../../../utils/analytics/hiive';
 import { ACTION_TYPOGRAPHY_SELECTED } from '../../../utils/analytics/hiive/constants';
+import { setFlow } from '../../../utils/api/flow';
 
 const DesignTypography = () => {
 	const drawerFontOptions = useRef();
@@ -34,6 +35,7 @@ const DesignTypography = () => {
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
+		enqueueRequest,
 	} = useDispatch( nfdOnboardingStore );
 
 	const getFontStylesAndPatterns = async () => {
@@ -130,6 +132,10 @@ const DesignTypography = () => {
 			useGlobalStylesOutput( globalStylesCopy, storedPreviewSettings )
 		);
 		setCurrentOnboardingData( currentData );
+
+		// enqueueing the setflow API to save data to DB
+		enqueueRequest( API_REQUEST.SET_FLOW, () => setFlow( currentData ) );
+
 		if ( 'click' === context ) {
 			trackOnboardingEvent(
 				new OnboardingEvent( ACTION_TYPOGRAPHY_SELECTED, fontStyle )

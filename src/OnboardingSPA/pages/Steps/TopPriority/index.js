@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { useViewportMatch } from '@wordpress/compose';
 import { useEffect, useState } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { VIEW_NAV_PRIMARY } from '../../../../constants';
+import { VIEW_NAV_PRIMARY, API_REQUEST } from '../../../../constants';
 
 import SkipButton from '../../../components/SkipButton';
 import { store as nfdOnboardingStore } from '../../../store';
@@ -18,6 +18,7 @@ import {
 	ACTION_ONBOARDING_STEP_SKIPPED,
 	ACTION_ONBOARDING_TOP_PRIORITY_SET,
 } from '../../../utils/analytics/hiive/constants';
+import { setFlow } from '../../../utils/api/flow';
 
 const StepTopPriority = () => {
 	const priorityTypes = {
@@ -43,6 +44,7 @@ const StepTopPriority = () => {
 		setCurrentOnboardingData,
 		setIsDrawerSuppressed,
 		setIsHeaderNavigationEnabled,
+		enqueueRequest,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData, currentStep } = useSelect( ( select ) => {
@@ -98,6 +100,10 @@ const StepTopPriority = () => {
 		const selectedPriorityType = priorityTypes[ selected ];
 		currentData.data.topPriority.priority1 = selectedPriorityType;
 		setCurrentOnboardingData( currentData );
+
+		// enqueueing the setflow API to save data to DB
+		enqueueRequest( API_REQUEST.SET_FLOW, () => setFlow( currentData ) );
+
 		trackOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_ONBOARDING_TOP_PRIORITY_SET,

@@ -15,6 +15,7 @@ import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_INIT,
 	SIDEBAR_LEARN_MORE,
+	API_REQUEST,
 } from '../../../../../constants';
 import { DesignStateHandler } from '../../../../components/StateHandlers';
 import {
@@ -27,6 +28,7 @@ import {
 	trackOnboardingEvent,
 } from '../../../../utils/analytics/hiive';
 import { ACTION_THEME_STYLE_SELECTED } from '../../../../utils/analytics/hiive/constants';
+import { setFlow } from '../../../../utils/api/flow';
 
 const StepDesignThemeStylesMenu = () => {
 	const content = getContents();
@@ -70,6 +72,7 @@ const StepDesignThemeStylesMenu = () => {
 		updateThemeStatus,
 		updateAllSteps,
 		flushQueue,
+		enqueueRequest,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -114,6 +117,10 @@ const StepDesignThemeStylesMenu = () => {
 		setSelectedStyle( selectedGlobalStyle.title );
 		currentData.data.theme.variation = selectedGlobalStyle.title;
 		setCurrentOnboardingData( currentData );
+
+		// enqueueing the setflow API to save data to DB
+		enqueueRequest( API_REQUEST.SET_FLOW, () => setFlow( currentData ) );
+
 		navigate( nextStep.path );
 		trackOnboardingEvent(
 			new OnboardingEvent(

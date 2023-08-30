@@ -11,7 +11,7 @@ import {
 } from '../../../utils/analytics/hiive';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getGlobalStyles, getThemeColors } from '../../../utils/api/themes';
-import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
+import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT, API_REQUEST } from '../../../../constants';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import {
 	stateToStore,
@@ -22,6 +22,7 @@ import ColorPickerButton from '../../ColorPickerButton';
 import { ACTION_COLORS_SELECTED } from '../../../utils/analytics/hiive/constants';
 
 import { convertObjectKeysToSnakeCase } from '../../../utils';
+import { setFlow } from '../../../utils/api/flow';
 
 const DesignColors = () => {
 	// Used for scrolling into custom colors section
@@ -84,6 +85,7 @@ const DesignColors = () => {
 		updatePreviewSettings,
 		setCurrentOnboardingData,
 		updateThemeStatus,
+		enqueueRequest,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -209,6 +211,10 @@ const DesignColors = () => {
 		//  Save selected color to Store
 		currentData.data.colorStyle = colorStyle;
 		setCurrentOnboardingData( currentData );
+
+		// enqueueing the setflow API to save data to DB
+		enqueueRequest( API_REQUEST.SET_FLOW, () => setFlow( currentData ) );
+
 		trackOnboardingEvent(
 			new OnboardingEvent( ACTION_COLORS_SELECTED, colorStyle, {
 				colors: convertObjectKeysToSnakeCase( colors[ colorStyle ] ),
@@ -353,6 +359,10 @@ const DesignColors = () => {
 		//  Save selected color to Store
 		currentData.data.colorStyle = 'custom';
 		setCurrentOnboardingData( currentData );
+				
+		// enqueueing the setflow API to save data to DB
+		enqueueRequest( API_REQUEST.SET_FLOW, () => setFlow( currentData ) );
+
 		setSelectedColors( selectedColorsLocalCopy );
 		clearTimeout( colorPickerTimeout );
 		setColorPickerTimeout(

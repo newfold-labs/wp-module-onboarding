@@ -6,6 +6,7 @@ import NeedHelpTag from '../../../../components/NeedHelpTag';
 import {
 	SIDEBAR_LEARN_MORE,
 	VIEW_NAV_GET_STARTED,
+	API_REQUEST,
 } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { RadioControl } from '@wordpress/components';
@@ -18,6 +19,7 @@ import {
 	trackOnboardingEvent,
 } from '../../../../utils/analytics/hiive';
 import { ACTION_EXPERIENCE_LEVEL_SET } from '../../../../utils/analytics/hiive/constants';
+import { setFlow } from '../../../../utils/api/flow';
 
 const GetStartedExperience = () => {
 	const [ wpComfortLevel, setWpComfortLevel ] = useState( '0' );
@@ -35,6 +37,7 @@ const GetStartedExperience = () => {
 		setSidebarActiveView,
 		setIsDrawerSuppressed,
 		setIsHeaderNavigationEnabled,
+		enqueueRequest,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -57,6 +60,10 @@ const GetStartedExperience = () => {
 		const currentDataCopy = currentData;
 		currentDataCopy.data.wpComfortLevel = value || '0';
 		setCurrentOnboardingData( currentDataCopy );
+
+		// enqueueing the setflow API to save data to DB
+		enqueueRequest( API_REQUEST.SET_FLOW, () => setFlow( currentData ) );
+		
 		trackOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_EXPERIENCE_LEVEL_SET,

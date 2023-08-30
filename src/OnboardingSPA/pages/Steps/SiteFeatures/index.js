@@ -5,7 +5,7 @@ import { useEffect, useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
 
-import { SIDEBAR_LEARN_MORE, VIEW_NAV_PRIMARY } from '../../../../constants';
+import { SIDEBAR_LEARN_MORE, VIEW_NAV_PRIMARY, API_REQUEST } from '../../../../constants';
 import CommonLayout from '../../../components/Layouts/Common';
 import { getSiteFeatures } from '../../../utils/api/plugins';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
@@ -17,6 +17,7 @@ import {
 	trackOnboardingEvent,
 } from '../../../utils/analytics/hiive';
 import { ACTION_FEATURE_ADDED } from '../../../utils/analytics/hiive/constants';
+import { setFlow } from '../../../utils/api/flow';
 
 const StepSiteFeatures = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -31,6 +32,7 @@ const StepSiteFeatures = () => {
 		setCurrentOnboardingData,
 		setIsDrawerSuppressed,
 		setIsHeaderNavigationEnabled,
+		enqueueRequest,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentStep, currentData, themeVariations } = useSelect(
@@ -53,6 +55,10 @@ const StepSiteFeatures = () => {
 
 		currentData.data.siteFeatures = { ...selectedPluginsCopy };
 		setCurrentOnboardingData( currentData );
+
+		// enqueueing the setflow API to save data to DB
+		enqueueRequest( API_REQUEST.SET_FLOW, () => setFlow( currentData ) );
+
 		if ( true === choice ) {
 			trackOnboardingEvent(
 				new OnboardingEvent( ACTION_FEATURE_ADDED, slug )

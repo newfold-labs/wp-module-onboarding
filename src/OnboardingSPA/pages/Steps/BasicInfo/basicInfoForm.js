@@ -10,6 +10,8 @@ import { getSettings } from '../../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../../store';
 import ImageUploader from '../../../components/ImageUploader';
 import SocialMediaForm from '../../../components/SocialMediaForm';
+import { setFlow } from '../../../utils/api/flow';
+import { API_REQUEST } from '../../../../constants';
 
 /**
  * Basic Info Form.
@@ -28,7 +30,7 @@ const BasicInfoForm = () => {
 	const [ socialData, setSocialData ] = useState();
 	const [ isSocialFormOpen, setIsSocialFormOpen ] = useState( false );
 
-	const { setOnboardingSocialData, setCurrentOnboardingData } =
+	const { setOnboardingSocialData, setCurrentOnboardingData, enqueueRequest } =
 		useDispatch( nfdOnboardingStore );
 	const { editEntityRecord } = useDispatch( coreStore );
 
@@ -130,6 +132,10 @@ const BasicInfoForm = () => {
 		if ( debouncedFlowData ) {
 			saveData();
 		}
+		
+		// enqueueing the setflow API to save data to DB
+		enqueueRequest( API_REQUEST.SET_FLOW, () => setFlow( currentData ) );
+
 	}, [ debouncedFlowData ] );
 
 	return (

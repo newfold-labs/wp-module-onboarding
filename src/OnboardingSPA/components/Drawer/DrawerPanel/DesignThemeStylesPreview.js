@@ -5,7 +5,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { getPatterns } from '../../../utils/api/patterns';
 import { getGlobalStyles } from '../../../utils/api/themes';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
-import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT } from '../../../../constants';
+import { THEME_STATUS_ACTIVE, THEME_STATUS_INIT, API_REQUEST } from '../../../../constants';
 import {
 	LivePreviewSelectableCard,
 	LivePreviewSkeleton,
@@ -15,6 +15,7 @@ import {
 	trackOnboardingEvent,
 } from '../../../utils/analytics/hiive';
 import { ACTION_THEME_STYLE_SELECTED } from '../../../utils/analytics/hiive/constants';
+import { setFlow } from '../../../utils/api/flow';
 
 const DesignThemeStylesPreview = () => {
 	const [ pattern, setPattern ] = useState();
@@ -46,6 +47,7 @@ const DesignThemeStylesPreview = () => {
 		setCurrentOnboardingData,
 		updateThemeStatus,
 		flushQueue,
+		enqueueRequest,
 	} = useDispatch( nfdOnboardingStore );
 
 	const scrollSelectionIntoView = () => {
@@ -116,6 +118,10 @@ const DesignThemeStylesPreview = () => {
 		setSelectedStyle( selectedGlobalStyle.title );
 		currentData.data.theme.variation = selectedGlobalStyle.title;
 		setCurrentOnboardingData( currentData );
+
+		// enqueueing the setflow API to save data to DB
+		enqueueRequest( API_REQUEST.SET_FLOW, () => setFlow( currentData ) );
+
 		trackOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_THEME_STYLE_SELECTED,

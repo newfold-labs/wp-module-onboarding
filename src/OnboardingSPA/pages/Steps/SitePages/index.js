@@ -11,6 +11,7 @@ import {
 	THEME_STATUS_INIT,
 	SIDEBAR_LEARN_MORE,
 	VIEW_NAV_DESIGN,
+	API_REQUEST,
 } from '../../../../constants';
 import { DesignStateHandler } from '../../../components/StateHandlers';
 import {
@@ -19,6 +20,7 @@ import {
 } from '../../../components/LivePreview';
 import LivePreviewSkeleton from '../../../components/LivePreview/LivePreviewSkeleton';
 import getContents from './contents';
+import { setFlow } from '../../../utils/api/flow';
 
 const StepSitePages = () => {
 	const location = useLocation();
@@ -50,6 +52,7 @@ const StepSitePages = () => {
 		updateThemeStatus,
 		setCurrentOnboardingData,
 		flushQueue,
+		enqueueRequest,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -112,6 +115,10 @@ const StepSitePages = () => {
 				? stateToFlowData( selectedPages, pages )
 				: false;
 		setCurrentOnboardingData( currentData );
+		
+		// enqueueing the setflow API to save data to DB
+		enqueueRequest( API_REQUEST.SET_FLOW, () => setFlow( currentData ) );
+
 	};
 
 	const handleClick = ( isChecked, slug ) => {

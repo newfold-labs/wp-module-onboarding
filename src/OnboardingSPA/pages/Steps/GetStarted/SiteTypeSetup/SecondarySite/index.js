@@ -3,6 +3,7 @@ import NewfoldLargeCard from '../../../../../components/NewfoldLargeCard';
 import {
 	SIDEBAR_LEARN_MORE,
 	VIEW_NAV_GET_STARTED,
+	API_REQUEST,
 } from '../../../../../../constants';
 import getContents from '../contents';
 import { store as nfdOnboardingStore } from '../../../../../store';
@@ -21,6 +22,7 @@ import {
 	ACTION_PRIMARY_TYPE_SET,
 	ACTION_SECONDARY_TYPE_SET,
 } from '../../../../../utils/analytics/hiive/constants';
+import { setFlow } from '../../../../../utils/api/flow';
 
 const StepPrimarySetup = () => {
 	const {
@@ -29,6 +31,7 @@ const StepPrimarySetup = () => {
 		setIsDrawerSuppressed,
 		setIsHeaderNavigationEnabled,
 		setCurrentOnboardingData,
+		enqueueRequest,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -164,6 +167,10 @@ const StepPrimarySetup = () => {
 		}
 		currentData.data.siteType.secondary.value = secType;
 		setCurrentOnboardingData( currentData );
+
+		// enqueueing the setflow API to save data to DB
+		enqueueRequest( API_REQUEST.SET_FLOW, () => setFlow( currentData ) );
+
 		trackOnboardingEvent(
 			new OnboardingEvent( ACTION_SECONDARY_TYPE_SET, secType )
 		);

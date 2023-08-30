@@ -10,6 +10,7 @@ import {
 	THEME_STATUS_ACTIVE,
 	THEME_STATUS_INIT,
 	SIDEBAR_LEARN_MORE,
+	API_REQUEST,
 } from '../../../../constants';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { DesignStateHandler } from '../../../components/StateHandlers';
@@ -24,6 +25,7 @@ import {
 } from '../../../utils/analytics/hiive';
 import getContents from './contents';
 import { ACTION_HOMEPAGE_LAYOUT_SELECTED } from '../../../utils/analytics/hiive/constants';
+import { setFlow } from '../../../utils/api/flow';
 
 const StepDesignHomepageMenu = () => {
 	const location = useLocation();
@@ -56,6 +58,7 @@ const StepDesignHomepageMenu = () => {
 		setCurrentOnboardingData,
 		updateThemeStatus,
 		flushQueue,
+		enqueueRequest,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -110,6 +113,10 @@ const StepDesignHomepageMenu = () => {
 			homepage,
 		};
 		setCurrentOnboardingData( currentData );
+				
+		// enqueueing the setflow API to save data to DB
+		enqueueRequest( API_REQUEST.SET_FLOW, () => setFlow( currentData ) );
+
 		trackOnboardingEvent(
 			new OnboardingEvent( ACTION_HOMEPAGE_LAYOUT_SELECTED, homepage )
 		);

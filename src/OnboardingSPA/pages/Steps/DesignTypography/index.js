@@ -46,7 +46,6 @@ const StepDesignTypography = () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
 		setDrawerActiveView( VIEW_DESIGN_TYPOGRAPHY );
 		if ( 0 !== queueLength ) {
-			console.log('flush called fomr typography .js..');
 			flushQueue();
 		}
 
