@@ -1,5 +1,4 @@
 import {
-	DRAWER_NAV_VIEWS,
 	VIEW_DESIGN_COLORS,
 	VIEW_DESIGN_HEADER_MENU,
 	VIEW_DESIGN_THEMES,
@@ -13,7 +12,6 @@ import {
 	VIEW_NAV_ECOMMERCE_STORE_INFO,
 	VIEW_DESIGN_HOMEPAGE_MENU,
 } from '../../../../constants';
-import { useEffect, useState } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 
 import DesignColors from './DesignColors';
@@ -35,8 +33,6 @@ import { store as nfdOnboardingStore } from '../../../store';
 import WithDesignBack from './WithDesignBack';
 
 const DrawerPanel = () => {
-	// eslint-disable-next-line no-unused-vars
-	const [ isNavView, setIsNavView ] = useState( true ); // menu-primary is default view
 	const { isDrawerOpen, drawerView } = useSelect( ( select ) => {
 		const { isDrawerOpened, getDrawerView } = select( nfdOnboardingStore );
 
@@ -46,9 +42,7 @@ const DrawerPanel = () => {
 		};
 	}, [] );
 
-	// eslint-disable-next-line no-unused-vars
-	const { setIsDrawerOpened, setDrawerActiveView } =
-		useDispatch( nfdOnboardingStore );
+	const { setIsDrawerOpened } = useDispatch( nfdOnboardingStore );
 
 	const closeOnEscape = ( event ) => {
 		if ( event.keyCode === ESCAPE && ! event.defaultPrevented ) {
@@ -57,20 +51,13 @@ const DrawerPanel = () => {
 		}
 	};
 
-	useEffect( () => {
-		if ( DRAWER_NAV_VIEWS.includes( drawerView ) ) {
-			setIsNavView( true );
-		} else {
-			setIsNavView( false );
-		}
-	}, [ drawerView ] );
-
 	return (
-		// eslint-disable-next-line jsx-a11y/no-static-element-interactions
 		<div
 			className={ classNames( `nfd-onboarding-drawer__panel`, {
 				'is-open': isDrawerOpen,
 			} ) }
+			role="button"
+			tabIndex="0"
 			onKeyDown={ closeOnEscape }
 		>
 			<div className="nfd-onboarding-drawer__panel-inner">
