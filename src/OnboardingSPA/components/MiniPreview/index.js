@@ -1,4 +1,7 @@
 import { memo, useState, useEffect } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+
+import { store as nfdOnboardingStore } from '../../store';
 
 import getContents from './contents';
 
@@ -6,7 +9,6 @@ const MiniPreview = ( {
 	title,
 	desc,
 	icon,
-	socialData,
 	isSocialFormOpen,
 	setIsSocialFormOpen,
 } ) => {
@@ -23,17 +25,24 @@ const MiniPreview = ( {
 	const [ yelp, setYelp ] = useState( '' );
 	const [ tiktok, setTikTok ] = useState( '' );
 
+	const { socialDataStore } = useSelect( ( select ) => {
+		return {
+			socialDataStore:
+				select( nfdOnboardingStore ).getOnboardingSocialData(),
+		};
+	}, [] );
+
 	useEffect( () => {
-		setFacebook( socialData?.facebook_site ?? '' );
-		setTwitter( socialData?.twitter_site ?? '' );
-		setInstagram( socialData?.instagram_url ?? '' );
-		setYouTube( socialData?.youtube_url ?? '' );
-		setLinkedIn( socialData?.linkedin_url ?? '' );
+		setFacebook( socialDataStore?.facebook_site ?? '' );
+		setTwitter( socialDataStore?.twitter_site ?? '' );
+		setInstagram( socialDataStore?.instagram_url ?? '' );
+		setYouTube( socialDataStore?.youtube_url ?? '' );
+		setLinkedIn( socialDataStore?.linkedin_url ?? '' );
 		if (
-			socialData &&
-			Object.keys( socialData ).includes( 'other_social_urls' )
+			socialDataStore &&
+			Object.keys( socialDataStore ).includes( 'other_social_urls' )
 		) {
-			const otherURLS = socialData.other_social_urls;
+			const otherURLS = socialDataStore.other_social_urls;
 			if ( Object.keys( otherURLS ).includes( 'yelp_url' ) ) {
 				setYelp( otherURLS.yelp_url ?? '' );
 			}
@@ -42,7 +51,7 @@ const MiniPreview = ( {
 				setTikTok( otherURLS.tiktok_url ?? '' );
 			}
 		}
-	}, [ socialData ] );
+	}, [ socialDataStore ] );
 
 	const isValidUrl = ( urlString ) => {
 		let url;

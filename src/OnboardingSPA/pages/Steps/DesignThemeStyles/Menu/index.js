@@ -162,7 +162,7 @@ const StepDesignThemeStylesMenu = () => {
 							</button>
 						</h3>
 					</HeadingWithSubHeading>
-					<div className="theme-styles-menu__list">
+					<div className="theme-styles-menu__list grid-col-3">
 						<LivePreviewSkeleton
 							className={ 'theme-styles-menu__list__item' }
 							count={

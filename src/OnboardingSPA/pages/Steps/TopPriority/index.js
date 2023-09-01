@@ -139,11 +139,7 @@ const StepTopPriority = () => {
 			<div className="center">
 				<p className="info-top-priority">
 					{ __(
-						"Where would you like to start? We'll start ",
-						'wp-module-onboarding'
-					) }
-					{ __(
-						'there and then move into next steps.',
+						"Where would you like to start? We'll start there and then move into next steps.",
 						'wp-module-onboarding'
 					) }
 				</p>

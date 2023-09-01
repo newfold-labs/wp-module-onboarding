@@ -8,7 +8,7 @@ const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 		introduction: {
 			heading: __( 'Header & Menu', 'wp-module-onboarding' ),
 			subheading: sprintf(
-				/* translators: %s: site */
+				/* translators: %s: site or store */
 				__(
 					`Surface key content in your %s -- who you are, what your about and where to find things.`,
 					'wp-module-onboarding'
@@ -28,7 +28,7 @@ const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 						'wp-module-onboarding'
 					),
 					description: sprintf(
-						/* translators: 1: site 2: Site */
+						/* translators: 1: site or store 2: Site or Store */
 						__(
 							`Just like a %1$s putting a map of departments at the front door, a great %2$s Header & Menu help point visitors at the places you most want them to visit.`,
 							'wp-module-onboarding'

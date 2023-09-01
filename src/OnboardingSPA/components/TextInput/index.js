@@ -1,19 +1,6 @@
-import { __ } from '@wordpress/i18n';
 import { useRef, useEffect, useState, memo } from '@wordpress/element';
+import getContents from './contents';
 
-/**
- * Interface Text Inputs with standard design.
- *
- * @param  root0
- * @param  root0.title
- * @param  root0.hint
- * @param  root0.placeholder
- * @param  root0.height
- * @param  root0.maxCharacters
- * @param  root0.textValue
- * @param  root0.textValueSetter
- * @return
- */
 const TextInput = ( {
 	title,
 	hint,
@@ -36,21 +23,24 @@ const TextInput = ( {
 		e.preventDefault();
 		textValueSetter( e.target.value );
 
-		e.target.value.length == maxCharacters
-			? setInputText( 'nfd-input__field nfd-input__field_error' )
-			: setInputText( 'nfd-input__field' );
+		if ( e.target.value.length === maxCharacters ) {
+			setInputText( 'nfd-input__field nfd-input__field_error' );
+		} else {
+			setInputText( 'nfd-input__field' );
+		}
 	};
 
 	return (
 		<div className="nfd-input">
-			<label>
+			<label htmlFor={ inputText }>
 				<div className="nfd-input__label">
-					<p className="nfd-input__label_title">
-						{ __( title, 'wp-module-onboarding' ) }
+					<p className="nfd-input__label_title">{ title }</p>
+					<p className="nfd-input__label_maxChar">
+						{
+							getContents( maxCharacters - textValue?.length )
+								.charactersLeftPrompt.text
+						}
 					</p>
-					<p className="nfd-input__label_maxChar">{ `(${
-						maxCharacters - textValue?.length
-					} characters left)` }</p>
 				</div>
 				<textarea
 					type="text"
@@ -62,9 +52,7 @@ const TextInput = ( {
 					maxLength={ maxCharacters }
 					onChange={ ( e ) => onTextChange( e ) }
 				/>
-				<p className="nfd-input__hint">
-					{ __( hint, 'wp-module-onboarding' ) }
-				</p>
+				<p className="nfd-input__hint">{ hint }</p>
 			</label>
 		</div>
 	);

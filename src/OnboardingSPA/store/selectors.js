@@ -360,3 +360,23 @@ export function getQueuePeek( state ) {
 export function isQueueEmpty( state ) {
 	return state?.queue?.length === 0;
 }
+
+/**
+ * Gets the navigation error Code
+ *
+ * @param {*} state
+ * @return {string} code
+ */
+export function getShowErrorDialog( state ) {
+	return state.flow.steps.error.showDialog;
+}
+
+/**
+ * Gets the navigation error continue Path
+ *
+ * @param {*} state
+ * @return {string} continuePath
+ */
+export function getNavErrorPath( state ) {
+	return state.flow.steps.error.continuePath;
+}

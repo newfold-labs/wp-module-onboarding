@@ -106,6 +106,7 @@ class SitePagesController {
 		}
 
 		$post_id = $this->publish_page( __( 'Home', 'wp-module-onboarding' ), $pattern_data['content'], true, $pattern_data['meta'] );
+
 		if ( is_wp_error( $post_id ) ) {
 			return $post_id;
 		}

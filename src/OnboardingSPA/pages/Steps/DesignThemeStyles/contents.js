@@ -10,6 +10,8 @@ const getContents = () => {
 			'Start with a style preset or',
 			'wp-module-onboarding'
 		),
+		/* translators: build a custom design is a link, this would be concatenated with "Start with a style preset or" making it
+		 "Start with a style preset or build a custom design."*/
 		subheading_link: __( 'build a custom design.', 'wp-module-onboarding' ),
 		checkbox_label: __(
 			'Customize Colors & Fonts?',
