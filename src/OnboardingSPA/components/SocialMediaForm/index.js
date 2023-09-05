@@ -7,6 +7,7 @@ import { ERROR_TYPES } from './utils';
 import urlValidator from './urlValidator';
 import SocialMediaModal from '../ErrorModal/ErrorModal';
 import { store as nfdOnboardingStore } from '../../store';
+import { __ } from '@wordpress/i18n';
 
 const SocialMediaForm = ( {
 	socialData,
@@ -41,30 +42,37 @@ const SocialMediaForm = ( {
 		FACEBOOK: {
 			id: 'facebook',
 			value: facebook,
+			name: __( 'Facebook', 'wp-module-onboarding' ),
 		},
 		TWITTER: {
 			id: 'twitter',
 			value: twitter,
+			name: __( 'Twitter', 'wp-module-onboarding' ),
 		},
 		INSTAGRAM: {
 			id: 'instagram',
 			value: instagram,
+			name: __( 'Instagram', 'wp-module-onboarding' ),
 		},
 		YOUTUBE: {
 			id: 'youtube',
 			value: youtube,
+			name: __( 'Youtube', 'wp-module-onboarding' ),
 		},
 		LINKEDIN: {
 			id: 'linkedin',
 			value: linkedin,
+			name: __( 'Linkedin', 'wp-module-onboarding' ),
 		},
 		YELP: {
 			id: 'yelp',
 			value: yelp,
+			name: __( 'Yelp', 'wp-module-onboarding' ),
 		},
 		TIKTOK: {
 			id: 'tiktok',
 			value: tiktok,
+			name: __( 'Tiktok', 'wp-module-onboarding' ),
 		},
 	};
 
@@ -85,22 +93,15 @@ const SocialMediaForm = ( {
 			Object.keys( socialData ).includes( 'other_social_urls' )
 		) {
 			const otherURLS = socialData.other_social_urls;
-			if ( Object.keys( otherURLS ).includes( 'yelp_url' ) )
+			if ( Object.keys( otherURLS ).includes( 'yelp_url' ) ) {
 				setYelp( otherURLS.yelp_url ?? '' );
+			}
 
-			if ( Object.keys( otherURLS ).includes( 'tiktok_url' ) )
+			if ( Object.keys( otherURLS ).includes( 'tiktok_url' ) ) {
 				setTikTok( otherURLS.tiktok_url ?? '' );
+			}
 		}
 	}, [ socialData ] );
-
-	// Convert the first letter to capital
-	function toTitleCase( str ) {
-		return str.replace( /\w\S*/g, function ( txt ) {
-			return (
-				txt.charAt( 0 ).toUpperCase() + txt.substr( 1 ).toLowerCase()
-			);
-		} );
-	}
 
 	// Save the Social Media data into the store
 	const saveData = ( value, triggerID ) => {
@@ -148,8 +149,9 @@ const SocialMediaForm = ( {
 	const getErrorType = () => {
 		let error = ERROR_TYPES.NONE;
 		for ( const key in activeErrorTypes ) {
-			if ( activeErrorTypes[ key ] !== ERROR_TYPES.NONE )
+			if ( activeErrorTypes[ key ] !== ERROR_TYPES.NONE ) {
 				error = activeErrorTypes[ key ];
+			}
 		}
 		return error;
 	};
@@ -176,8 +178,11 @@ const SocialMediaForm = ( {
 		activeErrorTypes[ triggerID ] = res.error;
 		setActiveErrorTypes( activeErrorTypes );
 		displayErrors( triggerID, res.error !== ERROR_TYPES.NONE );
-		if ( getErrorType() !== ERROR_TYPES.NONE ) showNavErrorDialog( true );
-		else resetNavError();
+		if ( getErrorType() !== ERROR_TYPES.NONE ) {
+			showNavErrorDialog( true );
+		} else {
+			resetNavError();
+		}
 		saveData( res.url, triggerID );
 	};
 
@@ -237,7 +242,7 @@ const SocialMediaForm = ( {
 							} }
 						/>
 						<div className="social-form__label_name">
-							{ toTitleCase( SocialMedia[ social ].id ) }
+							{ SocialMedia[ social ].name }
 						</div>
 					</label>
 					<Tooltip

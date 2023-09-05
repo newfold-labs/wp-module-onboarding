@@ -14,7 +14,7 @@ const getContents = ( brandName ) => {
 		buttonText: __( 'Complete Setup', 'wp-module-onboarding' ),
 		tabs: [
 			{
-				name: __( 'tab1', 'wp-module-onboarding' ),
+				name: 'tab1',
 				title: __( 'WHATS NEXT', 'wp-module-onboarding' ),
 				subtitle: __(
 					'Add content, organize your menu and launch.',
@@ -32,7 +32,7 @@ const getContents = ( brandName ) => {
 				animationName: 'fade-in-right',
 			},
 			{
-				name: __( 'tab2', 'wp-module-onboarding' ),
+				name: 'tab2',
 				title: __( 'HELP & RESOURCES', 'wp-module-onboarding' ),
 				subtitle: __(
 					"Next step or next level, we're your partner.",
@@ -50,7 +50,7 @@ const getContents = ( brandName ) => {
 				animationName: 'fade-in-up',
 			},
 			{
-				name: __( 'tab3', 'wp-module-onboarding' ),
+				name: 'tab3',
 				title: __( 'HIRE OUR EXPERTS', 'wp-module-onboarding' ),
 				subtitle: __(
 					'Make our great people your people.',
