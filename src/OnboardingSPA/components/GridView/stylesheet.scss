@@ -1,0 +1,11 @@
+.grid-col-3 {
+	display: grid;
+	justify-content: center;
+	grid-template-columns: repeat(auto-fit, clamp(18rem, 20vw, 60rem));
+}
+
+.grid-col-4 {
+	display: grid;
+	justify-content: center;
+	grid-template-columns: repeat(auto-fit, clamp(15rem, 17vw, 40rem));
+}
