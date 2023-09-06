@@ -5,8 +5,15 @@
  * @return GridView
  */
 
-const GridView = ( { size, children } ) => {
-	return <div className={ `grid-col-${ size }` }>{ children }</div>;
+const GridView = ( { size, colGap = 0, children } ) => {
+	return (
+		<div
+			className={ `grid-basic grid-col-${ size }` }
+			style={ { gridColumnGap: `${ colGap }px` } }
+		>
+			{ children }
+		</div>
+	);
 };
 
 export default GridView;

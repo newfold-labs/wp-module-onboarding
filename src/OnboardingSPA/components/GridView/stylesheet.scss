@@ -1,11 +1,29 @@
-.grid-col-3 {
+.grid-basic {
+	width: 100%;
 	display: grid;
 	justify-content: center;
-	grid-template-columns: repeat(auto-fit, clamp(18rem, 20vw, 60rem));
+
+	@media (max-width: #{ ($break-huge) }) {
+		grid-template-columns: repeat(2, 1fr) !important;
+	}
+
+	@media (max-width: #{ ($break-small) }) {
+		grid-template-columns: 1fr !important;
+	}
+}
+
+.grid-col-2 {
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-col-3 {
+	grid-template-columns: repeat(3, 1fr);
 }
 
 .grid-col-4 {
-	display: grid;
-	justify-content: center;
-	grid-template-columns: repeat(auto-fit, clamp(15rem, 17vw, 40rem));
+	grid-template-columns: repeat(4, 1fr);
+}
+
+.grid-col-5 {
+	grid-template-columns: repeat(5, 1fr);
 }
