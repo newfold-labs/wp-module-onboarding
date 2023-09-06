@@ -1,8 +1,9 @@
 /**
  * Common Grid View Component
  * Shows the components in a grid view
+ * Supports column size 2 - 5
  *
- * @return GridView
+ * @return GridView of children
  */
 
 const GridView = ( { size, colGap = 0, children } ) => {
