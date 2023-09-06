@@ -472,7 +472,7 @@ msgstr "Suporte Técnico"
 #. translators: %s: Site or Store
 #: build/1.10.1/27.js:3 build/1.10.1/61.js:3
 msgid "%s Type"
-msgstr "Tipo de %"
+msgstr "Tipo de %s"
 
 #. translators: %s: site or store
 #: build/1.10.1/27.js:5 build/1.10.1/61.js:5
@@ -495,7 +495,7 @@ msgid ""
 "good website partner."
 msgstr ""
 "Escolhemos sempre o melhores modelos, recursos e configurações para sites. "
-"Você está sempre no controle total do seu % WordPress e perguntamos para que "
+"Você está sempre no controle total do seu %s WordPress e perguntamos para que "
 "possamos ser bons parceiros."
 
 #: build/1.10.1/111.js:1
@@ -652,7 +652,7 @@ msgstr "Você pode reiniciar a integração na página de configurações do %."
 #: build/1.10.1/858.js:5 build/1.10.1/858.js:7 build/1.10.1/932.js:5
 #: build/1.10.1/932.js:7
 msgid "Preparing your %s design studio"
-msgstr "Preparando o estúdio de design de seu %"
+msgstr "Preparando o estúdio de design de seu %s"
 
 #: build/1.10.1/181.js:5 build/1.10.1/181.js:7 build/1.10.1/331.js:5
 #: build/1.10.1/331.js:7 build/1.10.1/360.js:5 build/1.10.1/360.js:7
@@ -1321,7 +1321,7 @@ msgid ""
 "length of each item and how those will visually impact the Header Pattern "
 "design you choose."
 msgstr ""
-"Ao escolher um cabeçalho de %, considere o número de itens de menu, o "
+"Ao escolher um cabeçalho de %s, considere o número de itens de menu, o "
 "comprimento dos caracteres de cada item e como eles impactarão visualmente o "
 "design do Padrão de Cabeçalho que você escolher."
 
