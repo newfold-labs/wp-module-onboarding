@@ -3,18 +3,22 @@ import { __, sprintf } from '@wordpress/i18n';
 import { translations } from '../../../../utils/locales/translations';
 import { plugins } from '@wordpress/icons';
 
-const getContents = ( brandName, techSupportLink, fullServiceCreativeTeamLink ) => {
+const getContents = (
+	brandName,
+	techSupportLink,
+	fullServiceCreativeTeamLink
+) => {
 	return {
 		introduction: {
 			heading: __( 'Features', 'wp-module-onboarding' ),
 			subheading: sprintf(
-				/* translators: 1: Brand 2: site */
+				/* translators: 1: Brand 2: site or store */
 				__(
-					`Easy-to-use features from our partner's WordPress Plugins and unique %s solutions to put your %s to work.`,
+					`Easy-to-use features from our partner's WordPress Plugins and unique %1$s solutions to put your %2$s to work.`,
 					'wp-module-onboarding'
 				),
 				brandName,
-				translations( 'site' ),
+				translations( 'site' )
 			),
 			icon: plugins,
 		},
@@ -25,7 +29,7 @@ const getContents = ( brandName, techSupportLink, fullServiceCreativeTeamLink ) 
 			headingWithDescriptions: [
 				{
 					heading: sprintf(
-						/* translators: %s: site */
+						/* translators: %s: site or store */
 						__(
 							'We’ve assembled the best building blocks for a successful %s',
 							'wp-module-onboarding'
@@ -33,9 +37,9 @@ const getContents = ( brandName, techSupportLink, fullServiceCreativeTeamLink ) 
 						translations( 'site' )
 					),
 					description: sprintf(
-						/* translators: 1: Brand 2: Site 3: Brand*/
+						/* translators: 1: Brand 2: Site or Store 3: Brand */
 						__(
-							`Put your %s %s to work for you using features that unlock the potential of WordPress with powerful solutions from %s and our partners.`,
+							`Put your %1$s %2$s to work for you using features that unlock the potential of WordPress with powerful solutions from %3$s and our partners.`,
 							'wp-module-onboarding'
 						),
 						brandName,

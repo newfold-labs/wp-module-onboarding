@@ -21,7 +21,7 @@ const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 				{
 					heading: __( 'Why we ask', 'wp-module-onboarding' ),
 					description: sprintf(
-						/* translators: %s: site */
+						/* translators: %s: site or store */
 						__(
 							`We want to help everyone get the most out of their WordPress %s and this setup, so we use this to help optimize for a great experience and periodically when we offer tips, reminders and recommendations.`,
 							'wp-module-onboarding'

@@ -24,7 +24,7 @@ const getContents = ( brandName ) => {
 					'wp-module-onboarding'
 				),
 				text: sprintf(
-					/* translators: %s: Site */
+					/* translators: %s: site or store */
 					__(
 						'Build a beautiful %s using a visual builder. Block Patterns accelerate telling your story or tending your store with professional designs.',
 						'wp-module-onboarding'
@@ -42,7 +42,7 @@ const getContents = ( brandName ) => {
 					'wp-module-onboarding'
 				),
 				text: sprintf(
-					/* translators: %s: Site */
+					/* translators: 1: site or store 2: Brand */
 					__(
 						'Reach for your %1$s goals using proven WordPress Plugins & %2$s solutions. Send a newsletter, host a podcast, book clients, take payments and more.',
 						'wp-module-onboarding'
@@ -61,7 +61,7 @@ const getContents = ( brandName ) => {
 					'wp-module-onboarding'
 				),
 				text: sprintf(
-					/* translators: %s: site */
+					/* translators: %s: site or store */
 					__(
 						"Establish your %s's unique design. Use the WordPress Editor to refine over time with professionally-designed patterns, parts, templates, colors and type.",
 						'wp-module-onboarding'

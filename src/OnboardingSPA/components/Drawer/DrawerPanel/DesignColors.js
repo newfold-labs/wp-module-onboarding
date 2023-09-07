@@ -261,8 +261,7 @@ const DesignColors = () => {
 						/>
 					</div>
 					<div className="color-palette__name drawer-palette--button__text">
-						{ colorStyle.charAt( 0 ).toUpperCase() +
-							colorStyle.slice( 1 ) }
+						{ colors[ colorStyle ]?.name }
 					</div>
 				</div>
 			);

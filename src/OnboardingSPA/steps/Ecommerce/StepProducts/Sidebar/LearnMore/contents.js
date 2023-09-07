@@ -3,7 +3,11 @@ import { __, sprintf } from '@wordpress/i18n';
 import { translations } from '../../../../../utils/locales/translations';
 import { box } from '@wordpress/icons';
 
-const getContents = ( brandName, techSupportLink, fullServiceCreativeTeamLink ) => {
+const getContents = (
+	brandName,
+	techSupportLink,
+	fullServiceCreativeTeamLink
+) => {
 	return {
 		introduction: {
 			heading: __( 'Products Info', 'wp-module-onboarding' ),
@@ -23,9 +27,9 @@ const getContents = ( brandName, techSupportLink, fullServiceCreativeTeamLink ) 
 						'wp-module-onboarding'
 					),
 					description: sprintf(
-						/* translators: 1: Brand 2: Website */
+						/* translators: 1: Brand 2: site or store */
 						__(
-							`Tell us a little about how and what you’re planning to sell and we’ll bring the power of WooCommerce and unique %s %s solutions to elevate your business and enhance your capabilities.`,
+							`Tell us a little about how and what you’re planning to sell and we’ll bring the power of WooCommerce and unique %1$s %2$s solutions to elevate your business and enhance your capabilities.`,
 							'wp-module-onboarding'
 						),
 						brandName,

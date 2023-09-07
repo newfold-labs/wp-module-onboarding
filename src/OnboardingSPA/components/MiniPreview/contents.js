@@ -5,7 +5,7 @@ import { translations } from '../../utils/locales/translations';
 const getContents = () => {
 	return {
 		defaultTitle: sprintf(
-			/* translators: %s: Site */
+			/* translators: %s: Site or Store */
 			__( 'WordPress %s', 'wp-module-onboarding' ),
 			translations( 'Site' )
 		),

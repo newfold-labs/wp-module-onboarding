@@ -3,7 +3,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { translations } from '../../../../utils/locales/translations';
 import { home } from '@wordpress/icons';
 
-const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {	
+const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 	return {
 		introduction: {
 			heading: __( 'Home Page', 'wp-module-onboarding' ),
@@ -24,7 +24,7 @@ const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 						'wp-module-onboarding'
 					),
 					description: sprintf(
-						/* translators: %s: site */
+						/* translators: %s: site or store */
 						__(
 							`Like good curb appeal, a great home page design helps get users excited about your %s. Mixing media, headings, text and more, you can bring your ideas to live and your products & services to the forefront for visitors.`,
 							'wp-module-onboarding'

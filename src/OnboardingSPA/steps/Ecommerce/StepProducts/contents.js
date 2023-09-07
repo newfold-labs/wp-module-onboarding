@@ -56,23 +56,23 @@ const getContents = () => {
 		],
 		numberOptions: [
 			{
-				content: '0',
+				content: __( '0', 'wp-module-onboarding' ),
 				value: '0',
 			},
 			{
-				content: '1 - 10',
+				content: __( '1 - 10', 'wp-module-onboarding' ),
 				value: '1-10',
 			},
 			{
-				content: '11 - 100',
+				content: __( '11 - 100', 'wp-module-onboarding' ),
 				value: '11-100',
 			},
 			{
-				content: '101 - 1000',
+				content: __( '101 - 1000', 'wp-module-onboarding' ),
 				value: '101-1000',
 			},
 			{
-				content: '1000 +',
+				content: __( '1000 +', 'wp-module-onboarding' ),
 				value: '1000+',
 			},
 		],

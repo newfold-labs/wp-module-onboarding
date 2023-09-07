@@ -8,7 +8,7 @@ const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 		introduction: {
 			heading: __( 'Pages', 'wp-module-onboarding' ),
 			subheading: sprintf(
-				/* translators: %s: site */
+				/* translators: %s: site or store */
 				__(
 					`Use professionally-designed templates for common site pages to assemble a beautiful, high-quality %s.`,
 					'wp-module-onboarding'
@@ -28,9 +28,9 @@ const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 						'wp-module-onboarding'
 					),
 					description: sprintf(
-						/* translators: 1: site 2: site */
+						/* translators: 1: site or store 2: site or store */
 						__(
-							`We’ve baked everything we know about making great designs and content for common %s needs into ease-to-use templates. Pick templates and we’ll add them as Page drafts to your WordPress %s.`,
+							`We’ve baked everything we know about making great designs and content for common %1$s needs into ease-to-use templates. Pick templates and we’ll add them as Page drafts to your WordPress %2$s.`,
 							'wp-module-onboarding'
 						),
 						translations( 'site' ),

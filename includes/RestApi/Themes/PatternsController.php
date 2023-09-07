@@ -78,7 +78,7 @@ class PatternsController extends \WP_REST_Controller {
 		if ( ! $step && ! $slug ) {
 			return new \WP_Error(
 				'missing_params',
-				__( 'Pattern identifier (slug) or step name (step) required.' ),
+				__( 'Pattern identifier (slug) or step name (step) required.', 'wp-module-onboarding' ),
 				array( 'status' => 400 )
 			);
 		}
@@ -88,7 +88,7 @@ class PatternsController extends \WP_REST_Controller {
 			if ( ! $step_patterns ) {
 				return new \WP_Error(
 					'no_patterns_found',
-					__( 'No Patterns Found.' ),
+					__( 'No Patterns Found.', 'wp-module-onboarding' ),
 					array( 'status' => 404 )
 				);
 			}
@@ -102,7 +102,7 @@ class PatternsController extends \WP_REST_Controller {
 		if ( ! $pattern ) {
 			return new \WP_Error(
 				'no_pattern_found',
-				__( 'No Pattern Found.' ),
+				__( 'No Pattern Found.', 'wp-module-onboarding' ),
 				array( 'status' => 404 )
 			);
 		}

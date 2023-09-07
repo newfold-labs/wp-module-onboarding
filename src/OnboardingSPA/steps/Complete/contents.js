@@ -6,9 +6,9 @@ const getContents = ( brandName ) => {
 	return {
 		loader: {
 			title: sprintf(
-				/* translators: 1: Brand 2: site */
+				/* translators: 1: Brand 2: site or store */
 				__(
-					'Hang tight, we’re building your %s %s',
+					'Hang tight, we’re building your %1$s %2$s',
 					'wp-module-onboarding'
 				),
 				brandName,
@@ -21,9 +21,9 @@ const getContents = ( brandName ) => {
 		},
 		errorState: {
 			title: sprintf(
-				/* translators: 1: Brand 2: site */
+				/* translators: 1: Brand 2: site or store */
 				__(
-					'Hang tight, we’re building your %s %s',
+					'Hang tight, we’re building your %1$s %2$s',
 					'wp-module-onboarding'
 				),
 				brandName,
