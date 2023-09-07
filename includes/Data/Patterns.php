@@ -392,7 +392,7 @@ final class Patterns {
 				);
 				continue;
 			}
-			if (isset($block_patterns)) {
+			if ( isset( $block_patterns ) ) {
 				$block_patterns .= self::cleanup_wp_grammar( $pattern['content'] );
 			} else {
 				$block_patterns = self::cleanup_wp_grammar( $pattern['content'] );
