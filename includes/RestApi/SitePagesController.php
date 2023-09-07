@@ -5,7 +5,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Patterns;
-use NewfoldLabs\WP\Module\Onboarding\Services\WonderBlocksService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\WonderBlocksService;
 
 /**
  * Class SitePagesController

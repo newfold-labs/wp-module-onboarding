@@ -2,7 +2,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\FlowService;
 
 
 /**

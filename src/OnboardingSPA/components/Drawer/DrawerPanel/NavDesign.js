@@ -10,9 +10,9 @@ import classNames from 'classnames';
 import Animate from '../../Animate';
 
 const NavDesign = () => {
-	const { designSteps } = useSelect( ( select ) => {
+	const { designRoutes } = useSelect( ( select ) => {
 		return {
-			designSteps: select( nfdOnboardingStore ).getDesignSteps(),
+			designRoutes: select( nfdOnboardingStore ).getDesignRoutes(),
 		};
 	}, [] );
 	const { setDrawerActiveView } = useDispatch( nfdOnboardingStore );
@@ -31,7 +31,7 @@ const NavDesign = () => {
 			</Button>
 			<div className="nfd-onboarding-drawer__panel-menu">
 				<ul className="nfd-onboarding-drawer__panel-routes">
-					{ designSteps.map( ( step ) => {
+					{ designRoutes.map( ( step ) => {
 						return (
 							<li
 								key={ step.path }
@@ -52,10 +52,10 @@ const NavDesign = () => {
 									) }
 									state={ { origin: 'drawer-nav' } }
 									onClick={ () =>
-										setDrawerActiveView( step.VIEW )
+										setDrawerActiveView( step.drawerView )
 									}
 								>
-									<Icon icon={ step.Icon } />
+									<Icon icon={ step.icon } />
 									<span>{ step.title }</span>
 								</NavLink>
 							</li>

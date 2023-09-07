@@ -3,14 +3,15 @@ import { chevronLeft } from '@wordpress/icons';
 import { Fragment, useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Button, ButtonGroup, Modal } from '@wordpress/components';
-
 import { __, sprintf } from '@wordpress/i18n';
 import classNames from 'classnames';
+import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
+
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { wpAdminPage, pluginDashboardPage } from '../../../constants';
-import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
+
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
@@ -20,6 +21,7 @@ import {
 	CATEGORY,
 } from '../../utils/analytics/hiive/constants';
 import { activateInitialPlugins } from '../../utils/api/plugins';
+import { ECOMMERCE_FLOW } from '../../data/flows/constants';
 
 /**
  * Self-contained button and confirmation modal for exiting Onboarding page.
@@ -160,7 +162,7 @@ const ExitToWordPress = ( {
  * check if this is the last step
  */
 const exitToWordpressForEcommerce = () => {
-	if ( window.nfdOnboarding.currentFlow === 'ecommerce' ) {
+	if ( window.nfdOnboarding.currentFlow === ECOMMERCE_FLOW ) {
 		return true;
 	}
 	return false;

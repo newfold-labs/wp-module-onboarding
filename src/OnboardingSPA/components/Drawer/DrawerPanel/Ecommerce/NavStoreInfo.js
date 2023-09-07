@@ -1,5 +1,5 @@
 import { Icon, chevronLeft } from '@wordpress/icons';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 
 import { Button } from '@wordpress/components';
 import { NavLink } from 'react-router-dom';
@@ -7,13 +7,10 @@ import { VIEW_NAV_PRIMARY } from '../../../../../constants';
 import { __ } from '@wordpress/i18n';
 import { store as nfdOnboardingStore } from '../../../../store';
 import Animate from '../../../Animate';
+import { commerce as commerceChapter } from '../../../../chapters/commerce';
 
 const NavStoreInfo = () => {
-	const { storeInfoSteps } = useSelect( ( select ) => {
-		return {
-			storeInfoSteps: select( nfdOnboardingStore ).getStoreInfoSteps(),
-		};
-	}, [] );
+	const storeInfoSteps = commerceChapter.steps;
 	const { setDrawerActiveView } = useDispatch( nfdOnboardingStore );
 
 	return (
@@ -39,10 +36,10 @@ const NavStoreInfo = () => {
 									className="nfd-onboarding-drawer__panel-menu-link"
 									state={ { origin: 'drawer-nav' } }
 									onClick={ () =>
-										setDrawerActiveView( step.VIEW )
+										setDrawerActiveView( step.drawerView )
 									}
 								>
-									<Icon icon={ step.Icon } />
+									<Icon icon={ step.icon } />
 									<span>{ step.title }</span>
 								</NavLink>
 							</li>

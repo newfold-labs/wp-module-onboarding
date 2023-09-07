@@ -11,6 +11,7 @@ import {
 } from '../../../utils/analytics/hiive';
 import { ACTION_ONBOARDING_COMPLETE } from '../../../utils/analytics/hiive/constants';
 import { activateInitialPlugins } from '../../../utils/api/plugins';
+import { ECOMMERCE_FLOW } from '../../../data/flows/constants';
 
 /**
  * Navigation Button Component on Card
@@ -53,7 +54,7 @@ const NavCardButton = ( { text, disabled } ) => {
 	}
 
 	const exitToWordpressForEcommerce = () => {
-		if ( window.nfdOnboarding.currentFlow === 'ecommerce' ) {
+		if ( window.nfdOnboarding.currentFlow === ECOMMERCE_FLOW ) {
 			return true;
 		}
 		return false;

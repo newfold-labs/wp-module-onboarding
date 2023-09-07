@@ -10,6 +10,7 @@ import { getSettings, setSettings } from '../../utils/api/settings';
 import { wpAdminPage, pluginDashboardPage } from '../../../constants';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import { CATEGORY } from '../../utils/analytics/hiive/constants';
+import { ECOMMERCE_FLOW } from '../../data/flows/constants';
 
 const SkipButton = ( { callback = false } ) => {
 	const navigate = useNavigate();
@@ -91,7 +92,7 @@ const SkipButton = ( { callback = false } ) => {
  * check if this is the last step
  */
 const exitToWordpressForEcommerce = () => {
-	if ( window.nfdOnboarding.currentFlow === 'ecommerce' ) {
+	if ( window.nfdOnboarding.currentFlow === ECOMMERCE_FLOW ) {
 		return true;
 	}
 	return false;

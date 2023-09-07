@@ -1,0 +1,83 @@
+.chapter-interstitial {
+
+    padding: 32px 32px;
+
+    &__content {
+        @media (max-width: #{ ($break-xlarge) }) {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        display: flex;
+        width: 100%;
+        line-height: 1.5;
+        color: black;
+        flex-direction: row;
+        margin-top: 30px;
+        &__column-left {
+            padding: 0px 20px;
+            width: 50%;
+            @media (max-width: #{ ($break-xlarge) }) {
+                width: 100%;
+            }
+
+            &__heading {
+                font-size: clamp(0.875rem, 0.7727rem + 0.5114vw, 2rem);
+                font-weight: bold;
+            }
+
+            &__question1, &__question2 {
+                font-size: clamp(0.625rem, 0.5795rem + 0.2273vw, 1.125rem);
+                line-height: 1.5;
+            }
+
+            &__question2 {
+                font-weight: bold;
+            }
+        }
+    
+        &__column-right {
+            width: 50%;
+            @media (max-width: #{ ($break-xlarge) }) {
+                display: none;
+            }
+            min-height: 250px;
+            max-height: 250px;
+            padding: 20px;
+            background-image: var(--nfd-onboarding-step-interstitial-img);
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        margin-top: 20px;
+        @media (max-width: #{ ($break-xlarge) }) {
+            flex-direction: column;
+        }
+
+        &--blue, &--white {
+            height: 76px;
+            width: 50%;
+            margin: 0px 20px;
+            font-size: clamp(1rem, 0.9091rem + 0.4545vw, 2rem);
+            @media (max-width: #{ ($break-xlarge) }) {
+                margin: 10px 0px;
+                width: 100%;
+            }
+        }
+
+        &--white {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            &__icon {
+                margin-left: 30px;
+            }
+        }
+    }
+}

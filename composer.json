@@ -34,9 +34,7 @@
 	"require": {
 		"mustache/mustache": "^2.14",
 		"wp-cli/wp-config-transformer": "^1.3",
-		"wp-forge/wp-upgrade-handler": "^1.0",
-		"newfold-labs/wp-module-installer": "^1.1",
-		"newfold-labs/wp-module-patterns": "^0.1.2"
+		"newfold-labs/wp-module-onboarding-data": "^1.0.0"
 	},
 	"require-dev": {
 		"wp-phpunit/wp-phpunit": "^6.2",

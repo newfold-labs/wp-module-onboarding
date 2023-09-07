@@ -41,7 +41,7 @@ const DesignHeaderMenu = () => {
 
 	const getPatternsData = async () => {
 		const headerMenuPreviewResponse = await getPatterns(
-			currentStep.patternId
+			currentStep?.data?.patternId
 		);
 		if ( headerMenuPreviewResponse?.error ) {
 			return updateThemeStatus( THEME_STATUS_INIT );
@@ -133,7 +133,8 @@ const DesignHeaderMenu = () => {
 	return (
 		<LivePreviewSkeleton
 			count={
-				storedPreviewSettings[ currentStep?.patternId ]?.previewCount
+				storedPreviewSettings[ currentStep?.data?.patternId ]
+					?.previewCount
 			}
 			watch={ patterns }
 			callback={ buildPreviews }

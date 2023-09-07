@@ -13,6 +13,7 @@ import {
 	sendOnboardingEvent,
 } from '../../utils/analytics/hiive';
 import { ACTION_ONBOARDING_COMPLETE } from '../../utils/analytics/hiive/constants';
+import { ECOMMERCE_FLOW } from '../../data/flows/constants';
 
 /**
  * Back step Navigation button.
@@ -157,7 +158,7 @@ const StepNavigation = () => {
  * check if this is the last step
  */
 const exitToWordpressForEcommerce = () => {
-	if ( window.nfdOnboarding.currentFlow === 'ecommerce' ) {
+	if ( window.nfdOnboarding.currentFlow === ECOMMERCE_FLOW ) {
 		return true;
 	}
 	return false;
