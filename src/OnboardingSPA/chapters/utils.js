@@ -16,7 +16,10 @@ const getTopPriorityChapter = ( topPriority ) => {
 		selling: commerce,
 		designing: design,
 	};
-	return topPriorityToChapterMap[ topPriority ];
+
+	return topPriorityToChapterMap[ topPriority ]
+		? topPriorityToChapterMap[ topPriority ]
+		: layoutContent;
 };
 
 export const getChaptersFromTopPriorityAndExperienceLevel = (
