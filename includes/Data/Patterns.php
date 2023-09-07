@@ -392,7 +392,11 @@ final class Patterns {
 				);
 				continue;
 			}
-			$block_patterns .= self::cleanup_wp_grammar( $pattern['content'] );
+			if (isset($block_patterns)) {
+				$block_patterns .= self::cleanup_wp_grammar( $pattern['content'] );
+			} else {
+				$block_patterns = self::cleanup_wp_grammar( $pattern['content'] );
+			}
 		}
 
 		if ( isset( self::get_theme_step_filters()[ $active_theme ][ $step ] ) ) {
