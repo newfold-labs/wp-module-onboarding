@@ -21,7 +21,10 @@ export const getSteps = ( chapters = initialChapters ) => {
 	let steps = [];
 	steps.push( stepWelcome );
 	chapters.forEach( ( chapter ) => {
-		steps = steps.concat( [ ...chapter.steps, ...chapter.interstitialSteps ] );
+		steps = steps.concat( [
+			...chapter.steps,
+			...chapter.interstitialSteps,
+		] );
 	} );
 	steps = steps.concat( [ stepComplete, stepWhatNext ] );
 	return steps;
@@ -34,7 +37,7 @@ export const getRoutes = ( chapters = initialChapters ) => {
 		routes = routes.concat( [
 			...chapter.steps,
 			...chapter.conditionalSteps,
-			...chapter.interstitialSteps
+			...chapter.interstitialSteps,
 		] );
 	} );
 	routes = routes.concat( [ stepComplete, stepWhatNext ] );
@@ -46,10 +49,10 @@ const getPseudoStepForGetStarted = ( firstGetStartedStep ) => {
 	firstGetStartedStepObject.title = __(
 		'Get Started',
 		'wp-module-onboarding'
-	)
+	);
 	firstGetStartedStepObject.data.tooltipText = __(
-			'Get Started',
-			'wp-module-onboarding'
+		'Get Started',
+		'wp-module-onboarding'
 	);
 	return new PseudoStep( firstGetStartedStepObject );
 };
@@ -102,16 +105,19 @@ export const getDesignRoutes = ( routes ) => {
 	} );
 };
 
-export const getData = ( chapters = initialChapters, onlyChapterSteps = false ) => {
+export const getData = (
+	chapters = initialChapters,
+	onlyChapterSteps = false
+) => {
 	let steps = getSteps( chapters );
 	let routes = getRoutes( chapters );
 	if ( onlyChapterSteps ) {
-		steps = steps.filter(( step ) => {
-			return ( ! step.path.includes('/interstitial') )
-		})
-		routes = routes.filter(( route ) => {
-			return ( ! route.path.includes('/interstitial') )
-		})
+		steps = steps.filter( ( step ) => {
+			return ! step.path.includes( '/interstitial' );
+		} );
+		routes = routes.filter( ( route ) => {
+			return ! route.path.includes( '/interstitial' );
+		} );
 	}
 	return {
 		steps,

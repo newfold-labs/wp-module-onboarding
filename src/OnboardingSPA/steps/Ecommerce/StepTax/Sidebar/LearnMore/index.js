@@ -1,35 +1,31 @@
 import { lazy } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 
-import { store as nfdOnboardingStore } from '../../../../../../store';
+import { store as nfdOnboardingStore } from '../../../../../store';
 import getContents from './contents';
 
 const IllustrationPanel = lazy( () =>
 	import(
-		'../../../../../../components/Sidebar/components/LearnMore/IllustrationPanel'
+		'../../../../../components/Sidebar/components/LearnMore/IllustrationPanel'
 	)
 );
 const InfoPanel = lazy( () =>
-	import(
-		'../../../../../../components/Sidebar/components/LearnMore/InfoPanel'
-	)
+	import( '../../../../../components/Sidebar/components/LearnMore/InfoPanel' )
 );
 const HelpPanel = lazy( () =>
-	import(
-		'../../../../../../components/Sidebar/components/LearnMore/HelpPanel'
-	)
+	import( '../../../../../components/Sidebar/components/LearnMore/HelpPanel' )
 );
 const ButtonWhite = lazy( () =>
-	import( '../../../../../../components/Button/ButtonWhite' )
+	import( '../../../../../components/Button/ButtonWhite' )
 );
 const SupportLink = lazy( () =>
 	import(
-		'../../../../../../components/Sidebar/components/LearnMore/SupportLink'
+		'../../../../../components/Sidebar/components/LearnMore/SupportLink'
 	)
 );
 const StepIntroPanel = lazy( () =>
 	import(
-		'../../../../../../components/Sidebar/components/LearnMore/StepIntroPanel'
+		'../../../../../components/Sidebar/components/LearnMore/StepIntroPanel'
 	)
 );
 

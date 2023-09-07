@@ -6,18 +6,18 @@ import { useSelect } from '@wordpress/data';
 
 const IndexPage = () => {
 	const navigate = useNavigate();
-	const { firstStep } = useSelect((select) => {
+	const { firstStep } = useSelect( ( select ) => {
 		return {
-			firstStep: select(nfdOnboardingStore).getFirstStep(),
+			firstStep: select( nfdOnboardingStore ).getFirstStep(),
 		};
-	}, []);
+	}, [] );
 
-	useEffect(() => {
-		navigate(firstStep.path, {
+	useEffect( () => {
+		navigate( firstStep.path, {
 			replace: true,
 			state: { origin: 'index-redirect' },
-		});
-	});
+		} );
+	} );
 
 	return <Fragment />;
 };

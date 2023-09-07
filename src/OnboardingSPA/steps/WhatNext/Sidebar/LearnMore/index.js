@@ -19,9 +19,7 @@ const ButtonWhite = lazy( () =>
 	import( '../../../../components/Button/ButtonWhite' )
 );
 const SupportLink = lazy( () =>
-	import(
-		'../../../../components/Sidebar/components/LearnMore/SupportLink'
-	)
+	import( '../../../../components/Sidebar/components/LearnMore/SupportLink' )
 );
 const StepIntroPanel = lazy( () =>
 	import(

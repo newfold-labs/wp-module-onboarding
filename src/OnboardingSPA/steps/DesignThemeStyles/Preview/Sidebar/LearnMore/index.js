@@ -10,14 +10,10 @@ const IllustrationPanel = lazy( () =>
 	)
 );
 const InfoPanel = lazy( () =>
-	import(
-		'../../../../../components/Sidebar/components/LearnMore/InfoPanel'
-	)
+	import( '../../../../../components/Sidebar/components/LearnMore/InfoPanel' )
 );
 const HelpPanel = lazy( () =>
-	import(
-		'../../../../../components/Sidebar/components/LearnMore/HelpPanel'
-	)
+	import( '../../../../../components/Sidebar/components/LearnMore/HelpPanel' )
 );
 const ButtonWhite = lazy( () =>
 	import( '../../../../../components/Button/ButtonWhite' )

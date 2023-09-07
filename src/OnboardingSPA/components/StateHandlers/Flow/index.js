@@ -150,7 +150,7 @@ const FlowStateHandler = ( { children } ) => {
 			currentData.data.chapters[ currentChapter ].lastStep =
 				currentStep?.path ?? '';
 		}
-	}
+	};
 
 	useEffect( () => {
 		prioritizeFlow();

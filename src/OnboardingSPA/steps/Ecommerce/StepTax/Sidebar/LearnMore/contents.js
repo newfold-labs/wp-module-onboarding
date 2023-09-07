@@ -1,6 +1,6 @@
 import { __, sprintf } from '@wordpress/i18n';
 
-import { translations } from '../../../../../../utils/locales/translations';
+import { translations } from '../../../../../utils/locales/translations';
 import { institution } from '@wordpress/icons';
 
 const getContents = (

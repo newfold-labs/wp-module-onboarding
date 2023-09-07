@@ -61,7 +61,7 @@ export const getTopSteps = routerMap[ getCurrentFlow() ].getTopSteps;
 
 export const resolveGetDataForFlow = ( flow ) => {
 	flow = flow ? flow : getCurrentFlow();
-	return routerMap[ getCurrentFlow() ].getData;
-}
+	return routerMap[ flow ].getData;
+};
 
 export const getDesignRoutes = routerMap[ getCurrentFlow() ].getDesignRoutes;
