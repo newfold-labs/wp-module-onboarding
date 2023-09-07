@@ -36,6 +36,9 @@ function nfd_wp_module_onboarding_register() {
 				if ( ! defined( 'NFD_ONBOARDING_BUILD_URL' && defined( 'NFD_ONBOARDING_VERSION' ) ) ) {
 					define( 'NFD_ONBOARDING_BUILD_URL', $container->plugin()->url . '/vendor/newfold-labs/wp-module-onboarding/build/' . NFD_ONBOARDING_VERSION );
 				}
+				if ( ! defined( 'NFD_ONBOARDING_PLUGIN_DIRNAME' ) ) {
+					define( 'NFD_ONBOARDING_PLUGIN_DIRNAME', dirname( $container->plugin()->basename ) );
+				}
 
 				if ( 'compatible' !== Status::get() ) {
 					$compatibility_scan = new Scan();
