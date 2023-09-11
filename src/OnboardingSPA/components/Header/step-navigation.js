@@ -1,19 +1,18 @@
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, ButtonGroup } from '@wordpress/components';
 import { Icon, chevronLeft, chevronRight } from '@wordpress/icons';
-
 import { __ } from '@wordpress/i18n';
+
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
-import { wpAdminPage, pluginDashboardPage } from '../../../constants';
+import { pluginDashboardPage } from '../../../constants';
 import { activateInitialPlugins } from '../../utils/api/plugins';
 import {
 	OnboardingEvent,
 	sendOnboardingEvent,
 } from '../../utils/analytics/hiive';
 import { ACTION_ONBOARDING_COMPLETE } from '../../utils/analytics/hiive/constants';
-import { ECOMMERCE_FLOW } from '../../data/flows/constants';
 
 /**
  * Back step Navigation button.
@@ -79,14 +78,10 @@ async function saveDataAndExit( currentData ) {
 		currentData.isComplete = new Date().getTime();
 		setFlow( currentData );
 	}
-	//Redirect to Admin Page for normal customers
-	// and Bluehost Dashboard for ecommerce customers
-	const exitLink = exitToWordpressForEcommerce()
-		? pluginDashboardPage
-		: wpAdminPage;
+
 	activateInitialPlugins();
 	sendOnboardingEvent( new OnboardingEvent( ACTION_ONBOARDING_COMPLETE ) );
-	window.location.replace( exitLink );
+	window.location.replace( pluginDashboardPage );
 }
 
 /**
@@ -113,7 +108,6 @@ const Finish = ( { currentData, saveDataAndExitFunc } ) => (
  * @return {WPComponent} StepNavigation Component
  */
 const StepNavigation = () => {
-	const location = useLocation();
 	const { previousStep, nextStep, currentData, showErrorDialog } = useSelect(
 		( select ) => {
 			return {
@@ -125,7 +119,7 @@ const StepNavigation = () => {
 					select( nfdOnboardingStore ).getShowErrorDialog(),
 			};
 		},
-		[ location.pathname ]
+		[]
 	);
 	const isFirstStep = null === previousStep || false === previousStep;
 	const isLastStep = null === nextStep || false === nextStep;
@@ -154,13 +148,4 @@ const StepNavigation = () => {
 	);
 };
 
-/*
- * check if this is the last step
- */
-const exitToWordpressForEcommerce = () => {
-	if ( window.nfdOnboarding.currentFlow === ECOMMERCE_FLOW ) {
-		return true;
-	}
-	return false;
-};
 export default StepNavigation;

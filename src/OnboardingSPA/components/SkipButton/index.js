@@ -3,14 +3,13 @@ import { memo } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
-import { wpAdminPage, pluginDashboardPage } from '../../../constants';
-import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
+import { pluginDashboardPage } from '../../../constants';
 import { CATEGORY } from '../../utils/analytics/hiive/constants';
-import { ECOMMERCE_FLOW } from '../../data/flows/constants';
 
 const SkipButton = ( { callback = false } ) => {
 	const navigate = useNavigate();
@@ -52,12 +51,8 @@ const SkipButton = ( { callback = false } ) => {
 			}
 			setFlow( currentData );
 		}
-		// Redirect to Admin Page for normal customers
-		// and Bluehost Dashboard for ecommerce customers
-		const exitLink = exitToWordpressForEcommerce()
-			? pluginDashboardPage
-			: wpAdminPage;
-		window.location.replace( exitLink );
+
+		window.location.replace( pluginDashboardPage );
 	}
 
 	function skip() {
@@ -86,16 +81,6 @@ const SkipButton = ( { callback = false } ) => {
 	}
 
 	return skipStep();
-};
-
-/*
- * check if this is the last step
- */
-const exitToWordpressForEcommerce = () => {
-	if ( window.nfdOnboarding.currentFlow === ECOMMERCE_FLOW ) {
-		return true;
-	}
-	return false;
 };
 
 const SkipButtonMemo = memo( SkipButton );
