@@ -87,7 +87,9 @@ const ChapterInterstitialLoader = () => {
 							<br /> { countdown }
 						</h2>
 					</div>
-					<div className="chapter-interstitial__content__column-right"></div>
+					<div className="chapter-interstitial__content__column-right">
+						<div className="chapter-interstitial__content__column-right__img"></div>
+					</div>
 				</div>
 				<div className="chapter-interstitial__buttons">
 					<ButtonWithBackground
