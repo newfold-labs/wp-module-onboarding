@@ -5,7 +5,10 @@ const ButtonWithBackground = ( { className, text, onClick = false } ) => {
 	return (
 		<Button
 			variant="primary"
-			className={ classNames( 'nfd-onboarding-button--background', className ) }
+			className={ classNames(
+				'nfd-onboarding-button--background',
+				className
+			) }
 			onClick={ typeof onClick === 'function' && onClick }
 		>
 			{ text }
