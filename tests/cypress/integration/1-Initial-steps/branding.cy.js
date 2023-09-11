@@ -3,7 +3,6 @@ import { GetPluginId } from '../wp-module-support/pluginID.cy';
 
 describe( 'Branding', function () {
 	before( () => {
-		cy.clearCustomerData();
 		cy.visit( 'wp-admin/index.php?page=nfd-onboarding' );
 	} );
 
