@@ -8,21 +8,19 @@ import CardHeader from '../../../CardHeader';
 import CommonLayout from '../../../Layouts/Common';
 import NewfoldLargeCard from '../../../NewfoldLargeCard';
 import getContents from './contents';
-import ButtonBlue from '../../../Button/ButtonBlue';
+import ButtonWithBackground from '../../../Button/ButtonWithBackground';
 import ButtonWhite from '../../../Button/ButtonWhite';
 import { activateInitialPlugins } from '../../../../utils/api/plugins';
 import {
 	OnboardingEvent,
 	sendOnboardingEvent,
 } from '../../../../utils/analytics/hiive';
-import { pluginDashboardPage, wpAdminPage } from '../../../../../constants';
+import { pluginDashboardPage } from '../../../../../constants';
 import { setFlow } from '../../../../utils/api/flow';
 import { ACTION_ONBOARDING_COMPLETE } from '../../../../utils/analytics/hiive/constants';
-import { ECOMMERCE_FLOW } from '../../../../data/flows/constants';
 
 const ChapterInterstitialLoader = () => {
-	let [ countdown, setCountdown ] = useState( 15 );
-	const [ countdownInterval, setCountdownInterval ] = useState();
+	const [ countdown, setCountdown ] = useState( 15 );
 	const navigate = useNavigate();
 	const { setIsDrawerSuppressed, setSidebarActiveView } =
 		useDispatch( nfdOnboardingStore );
@@ -32,38 +30,28 @@ const ChapterInterstitialLoader = () => {
 			currentData.isComplete = new Date().getTime();
 			setFlow( currentData );
 		}
-		//Redirect to Admin Page for normal customers
-		// and Bluehost Dashboard for ecommerce customers
-		const exitLink = exitToWordpressForEcommerce()
-			? pluginDashboardPage
-			: wpAdminPage;
+
 		activateInitialPlugins();
 		sendOnboardingEvent(
 			new OnboardingEvent( ACTION_ONBOARDING_COMPLETE )
 		);
-		window.location.replace( exitLink );
+		window.location.replace( pluginDashboardPage );
 	}
-
-	const exitToWordpressForEcommerce = () => {
-		if ( window.nfdOnboarding.currentFlow === ECOMMERCE_FLOW ) {
-			return true;
-		}
-		return false;
-	};
-
-	useEffect( () => {
-		if ( 0 === countdown ) {
-			clearInterval( countdownInterval );
-			saveDataAndExit();
-		}
-	}, [ countdown ] );
 
 	useEffect( () => {
 		const interval = setInterval( () => {
-			countdown -= 1;
-			setCountdown( countdown );
+			setCountdown( countdown - 1 );
 		}, 1000 );
-		setCountdownInterval( interval );
+		if ( 0 === countdown ) {
+			clearInterval( interval );
+			saveDataAndExit();
+		}
+		return () => {
+			clearInterval( interval );
+		};
+	}, [ countdown ] );
+
+	useEffect( () => {
 		setIsDrawerSuppressed( true );
 		setSidebarActiveView( false );
 	}, [] );
@@ -102,7 +90,7 @@ const ChapterInterstitialLoader = () => {
 					<div className="chapter-interstitial__content__column-right"></div>
 				</div>
 				<div className="chapter-interstitial__buttons">
-					<ButtonBlue
+					<ButtonWithBackground
 						onClick={ () => saveDataAndExit() }
 						text={ content.buttons.button1.text }
 						className={ 'chapter-interstitial__buttons--blue' }

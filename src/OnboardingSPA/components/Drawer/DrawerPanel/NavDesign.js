@@ -46,7 +46,8 @@ const NavDesign = () => {
 												location.pathname ===
 													step.path ||
 												location.pathname.includes(
-													step?.designDrawerActiveLinkIncludes
+													step?.data
+														?.designDrawerActiveLinkIncludes
 												),
 										}
 									) }

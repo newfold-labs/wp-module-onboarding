@@ -1,11 +1,11 @@
 import { Button } from '@wordpress/components';
 import classNames from 'classnames';
 
-const ButtonBlue = ( { className, text, onClick = false } ) => {
+const ButtonWithBackground = ( { className, text, onClick = false } ) => {
 	return (
 		<Button
 			variant="primary"
-			className={ classNames( 'nfd-onboarding-button--blue', className ) }
+			className={ classNames( 'nfd-onboarding-button--background', className ) }
 			onClick={ typeof onClick === 'function' && onClick }
 		>
 			{ text }
@@ -13,4 +13,4 @@ const ButtonBlue = ( { className, text, onClick = false } ) => {
 	);
 };
 
-export default ButtonBlue;
+export default ButtonWithBackground;

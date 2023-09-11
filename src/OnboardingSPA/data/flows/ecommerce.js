@@ -60,6 +60,8 @@ const getPseudoStepForEcommerce = ( firstEcommerceStep ) => {
 	const firstEcommerceStepObject = { ...firstEcommerceStep };
 	firstEcommerceStepObject.title = __( 'Store Info', 'wp-module-onboarding' );
 	firstEcommerceStepObject.icon = store;
+	firstEcommerceStepObject.data.primaryDrawerActiveLinkIncludes =
+		'/ecommerce/step/';
 	return new PseudoStep( firstEcommerceStepObject );
 };
 

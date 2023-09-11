@@ -15,8 +15,8 @@ const InfoPanel = lazy( () =>
 const HelpPanel = lazy( () =>
 	import( '../../../../../components/Sidebar/components/LearnMore/HelpPanel' )
 );
-const ButtonBlue = lazy( () =>
-	import( '../../../../../components/Button/ButtonBlue' )
+const ButtonWithBackground = lazy( () =>
+	import( '../../../../../components/Button/ButtonWithBackground' )
 );
 const ButtonWhite = lazy( () =>
 	import( '../../../../../components/Button/ButtonWhite' )
@@ -74,7 +74,7 @@ const LearnMore = () => {
 			/>
 			<HelpPanel>
 				{ content.help.experts.link && (
-					<ButtonBlue
+					<ButtonWithBackground
 						text={ content.help.experts.text }
 						onClick={ () =>
 							window.open( content.help.experts.link, '_blank' )

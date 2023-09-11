@@ -54,6 +54,8 @@ const getPseudoStepForGetStarted = ( firstGetStartedStep ) => {
 		'Get Started',
 		'wp-module-onboarding'
 	);
+	firstGetStartedStepObject.data.primaryDrawerActiveLinkIncludes =
+		'/wp-setup/step/get-started/';
 	return new PseudoStep( firstGetStartedStepObject );
 };
 
@@ -61,6 +63,8 @@ const getPseudoStepForDesign = ( firstDesignStep ) => {
 	const firstDesignStepObject = { ...firstDesignStep };
 	firstDesignStepObject.title = __( 'Design', 'wp-module-onboarding' );
 	firstDesignStepObject.icon = brush;
+	firstDesignStepObject.data.primaryDrawerActiveLinkIncludes =
+		'/wp-setup/step/design/';
 	return new PseudoStep( firstDesignStepObject );
 };
 
