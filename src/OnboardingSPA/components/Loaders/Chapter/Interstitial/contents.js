@@ -16,7 +16,7 @@ const getContents = ( brandName ) => {
 			heading: sprintf(
 				/* translators: site or store */
 				__(
-					'Would you like to enter your WordPress Dashboard or continue setting up your %s',
+					'Would you like to enter your WordPress Dashboard or continue setting up your %s?',
 					'wp-module-onboarding'
 				),
 				translations( 'site' )
