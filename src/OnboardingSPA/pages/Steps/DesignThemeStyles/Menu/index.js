@@ -27,7 +27,7 @@ import {
 	trackOnboardingEvent,
 } from '../../../../utils/analytics/hiive';
 import { ACTION_THEME_STYLE_SELECTED } from '../../../../utils/analytics/hiive/constants';
-import GridView from '../../../../components/GridView';
+import Grid from '../../../../components/Grid';
 
 const StepDesignThemeStylesMenu = () => {
 	const content = getContents();
@@ -164,7 +164,7 @@ const StepDesignThemeStylesMenu = () => {
 						</h3>
 					</HeadingWithSubHeading>
 					<div className="theme-styles-menu__list">
-						<GridView size={ 3 }>
+						<Grid size={ 3 }>
 							<LivePreviewSkeleton
 								className={ 'theme-styles-menu__list__item' }
 								count={
@@ -175,7 +175,7 @@ const StepDesignThemeStylesMenu = () => {
 								callback={ buildPreviews }
 								viewportWidth={ 900 }
 							/>
-						</GridView>
+						</Grid>
 					</div>
 				</div>
 			</CommonLayout>

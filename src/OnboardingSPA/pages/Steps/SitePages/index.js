@@ -19,7 +19,7 @@ import {
 } from '../../../components/LivePreview';
 import LivePreviewSkeleton from '../../../components/LivePreview/LivePreviewSkeleton';
 import getContents from './contents';
-import GridView from '../../../components/GridView';
+import Grid from '../../../components/Grid';
 
 const StepSitePages = () => {
 	const location = useLocation();
@@ -161,7 +161,7 @@ const StepSitePages = () => {
 							subtitle={ content.subheading }
 						/>
 						<div className="site-pages__list">
-							<GridView size={ 2 }>
+							<Grid size={ 2 }>
 								<LivePreviewSkeleton
 									className={ 'site-pages__list__item' }
 									count={
@@ -174,7 +174,7 @@ const StepSitePages = () => {
 									callback={ buildPreviews }
 									viewportWidth={ 1200 }
 								/>
-							</GridView>
+							</Grid>
 						</div>
 					</div>
 				</CommonLayout>
