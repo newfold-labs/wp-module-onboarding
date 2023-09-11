@@ -59,6 +59,7 @@ msgid "Woocommerce Settings"
 msgstr ""
 
 #: includes/Data/Patterns.php:18
+#: includes/RestApi/SitePagesController.php:108
 msgid "Home"
 msgstr ""
 
@@ -359,10 +360,6 @@ msgstr ""
 
 #: includes/RestApi/EventsController.php:129
 msgid "Some events failed."
-msgstr ""
-
-#: includes/RestApi/SitePagesController.php:108
-msgid "Homepage"
 msgstr ""
 
 #: includes/RestApi/Themes/PatternsController.php:81

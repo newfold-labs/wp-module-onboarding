@@ -5,6 +5,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ThemeService;
 use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
+use NewfoldLabs\WP\Module\Onboarding\Services\I18nService;
 
 /**
  * Register Admin Page, Assets & Admin functionality with WordPress.
@@ -24,8 +25,21 @@ final class WP_Admin {
 	 * @return void
 	 */
 	public function __construct() {
+		\add_action( 'init', array( __CLASS__, 'load_php_textdomain' ) );
 		\add_action( 'admin_menu', array( __CLASS__, 'register_page' ) );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'initialize' ) );
+	}
+
+	/**
+	 * Loads the textdomain for the module. This applies only to PHP strings.
+	 *
+	 * @return boolean
+	 */
+	public static function load_php_textdomain() {
+		return I18nService::load_php_translations(
+			'wp-module-onboarding',
+			NFD_ONBOARDING_PLUGIN_DIRNAME . '/vendor/newfold-labs/wp-module-onboarding/languages'
+		);
 	}
 
 	/**
@@ -84,6 +98,12 @@ final class WP_Admin {
 				array_merge( $asset['dependencies'], array() ),
 				$asset['version'],
 				true
+			);
+
+			I18nService::load_js_translations(
+				'wp-module-onboarding',
+				self::$slug,
+				NFD_ONBOARDING_DIR . '/languages'
 			);
 
 			\wp_add_inline_script(
