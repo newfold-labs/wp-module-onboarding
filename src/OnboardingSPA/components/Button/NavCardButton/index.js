@@ -1,10 +1,10 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelect } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
 import Button from '../../Button';
 
 import { setFlow } from '../../../utils/api/flow';
-import { wpAdminPage, pluginDashboardPage } from '../../../../constants';
+import { pluginDashboardPage } from '../../../../constants';
 import {
 	OnboardingEvent,
 	sendOnboardingEvent,
@@ -20,18 +20,14 @@ import { activateInitialPlugins } from '../../../utils/api/plugins';
 
 const NavCardButton = ( { text, disabled } ) => {
 	const navigate = useNavigate();
-	const location = useLocation();
 
-	const { nextStep, currentData } = useSelect(
-		( select ) => {
-			return {
-				nextStep: select( nfdOnboardingStore ).getNextStep(),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			};
-		},
-		[ location.path ]
-	);
+	const { nextStep, currentData } = useSelect( ( select ) => {
+		return {
+			nextStep: select( nfdOnboardingStore ).getNextStep(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+		};
+	}, [] );
 
 	const isLastStep = null === nextStep || false === nextStep;
 
@@ -40,24 +36,13 @@ const NavCardButton = ( { text, disabled } ) => {
 			currentData.isComplete = new Date().getTime();
 			setFlow( currentData );
 		}
-		//Redirect to Admin Page for normal customers
-		// and Bluehost Dashboard for ecommerce customers
-		const exitLink = exitToWordpressForEcommerce()
-			? pluginDashboardPage
-			: wpAdminPage;
+
 		activateInitialPlugins();
 		sendOnboardingEvent(
 			new OnboardingEvent( ACTION_ONBOARDING_COMPLETE )
 		);
-		window.location.replace( exitLink );
+		window.location.replace( pluginDashboardPage );
 	}
-
-	const exitToWordpressForEcommerce = () => {
-		if ( window.nfdOnboarding.currentFlow === 'ecommerce' ) {
-			return true;
-		}
-		return false;
-	};
 
 	const handleBtnClick = () => {
 		return isLastStep ? saveDataAndExit() : navigate( nextStep.path );

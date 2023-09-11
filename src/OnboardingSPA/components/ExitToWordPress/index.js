@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
-import { wpAdminPage, pluginDashboardPage } from '../../../constants';
+import { pluginDashboardPage } from '../../../constants';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import {
 	OnboardingEvent,
@@ -62,7 +62,7 @@ const ExitToWordPress = ( {
 				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 			};
 		},
-		[ location.pathname ]
+		[]
 	);
 
 	const { setOnboardingSocialData } = useDispatch( nfdOnboardingStore );
@@ -107,12 +107,8 @@ const ExitToWordPress = ( {
 			new OnboardingEvent( ACTION_ONBOARDING_EXITED, currentStep.title )
 		);
 		await HiiveAnalytics.dispatchEvents( CATEGORY );
-		//Redirect to Admin Page for normal customers
-		// and Bluehost Dashboard for ecommerce customers
-		const exitLink = exitToWordpressForEcommerce()
-			? pluginDashboardPage
-			: wpAdminPage;
-		window.location.replace( exitLink );
+
+		window.location.replace( pluginDashboardPage );
 	}
 
 	return (
@@ -156,13 +152,4 @@ const ExitToWordPress = ( {
 	);
 };
 
-/*
- * check if this is the last step
- */
-const exitToWordpressForEcommerce = () => {
-	if ( window.nfdOnboarding.currentFlow === 'ecommerce' ) {
-		return true;
-	}
-	return false;
-};
 export default ExitToWordPress;
