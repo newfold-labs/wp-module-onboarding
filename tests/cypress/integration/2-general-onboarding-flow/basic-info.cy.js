@@ -122,12 +122,6 @@ describe( 'Basic Info Page', function () {
 
 		}
 	});
-	// it( 'Check for any wrong URL entered & then tooltip and Modal appears' , () => {
-	// 	const WrongURL = 'randomtext';
-	// 	const Tooltiptext2 = 'we need the full URLs to your social profiles.';
-	// 	const ModalText2 = `One of those URLs doesn't look like a social media URL.`;
-	// 	SocialMediaTextValidations(WrongURL, Tooltiptext2, ModalText2 );
-	// } );
 
 	it( 'Check if Social Media URL checks are done', () => {
 		const invalidURL = 'htt';
