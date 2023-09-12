@@ -35,7 +35,7 @@ jobs:
       run: |
         file_path="bootstrap.php"
         file_content=$(cat bootstrap.php)
-        updated_content=$(echo "$file_content" | sed "s/define( 'NFD_ONBOARDING_VERSION', '*.*.*' );/define('NFD_ONBOARDING_VERSION', '$new_version' );/")
+        updated_content=$(echo "$file_content" | sed "s/define( 'NFD_ONBOARDING_VERSION', '*.*.*' );/define( 'NFD_ONBOARDING_VERSION', '$new_version' );/")
         echo "$updated_content" > "$file_path"
 
         git add "$file_path"
