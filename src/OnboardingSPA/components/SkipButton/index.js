@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
-import { wpAdminPage, pluginDashboardPage } from '../../../constants';
+import { pluginDashboardPage } from '../../../constants';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import { CATEGORY } from '../../utils/analytics/hiive/constants';
 
@@ -51,12 +51,8 @@ const SkipButton = ( { callback = false } ) => {
 			}
 			setFlow( currentData );
 		}
-		// Redirect to Admin Page for normal customers
-		// and Bluehost Dashboard for ecommerce customers
-		const exitLink = exitToWordpressForEcommerce()
-			? pluginDashboardPage
-			: wpAdminPage;
-		window.location.replace( exitLink );
+
+		window.location.replace( pluginDashboardPage );
 	}
 
 	function skip() {
@@ -85,16 +81,6 @@ const SkipButton = ( { callback = false } ) => {
 	}
 
 	return skipStep();
-};
-
-/*
- * check if this is the last step
- */
-const exitToWordpressForEcommerce = () => {
-	if ( window.nfdOnboarding.currentFlow === 'ecommerce' ) {
-		return true;
-	}
-	return false;
 };
 
 const SkipButtonMemo = memo( SkipButton );
