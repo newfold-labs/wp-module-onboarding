@@ -1,0 +1,100 @@
+name: Prepare Release
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Release Version'
+        required: true
+jobs:
+  prepare-release:
+    name: Prepare Release
+    runs-on: ubuntu-latest
+    env:
+      new_version: ${{ github.event.inputs.release_version }}
+      release_branch: "release/${{ github.event.inputs.release_version }}"
+    steps:
+
+    - name: Checkout trunk
+      uses: actions/checkout@v2
+
+    - name: Create Release Branch
+      run: |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+        git checkout -b "$release_branch"
+
+    - name: Update Version in package.json
+      run: |
+        jq ".version = \"$new_version\"" package.json > package.json.tmp
+        mv package.json.tmp package.json
+
+        git add package.json
+        git commit -m "Update package.json to $new_version"
+
+    - name: Update Version in bootstrap.php
+      run: |
+        file_path="bootstrap.php"
+        file_content=$(cat bootstrap.php)
+        updated_content=$(echo "$file_content" | sed "s/define( 'NFD_ONBOARDING_VERSION', '*.*.*' );/define('NFD_ONBOARDING_VERSION', '$new_version' );/")
+        echo "$updated_content" > "$file_path"
+
+        git add "$file_path"
+        git commit -m "Update boostrap.php to $new_version"
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        coverage: none
+        tools: composer, cs2pr
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14.x
+
+    - name: Setup Registry
+      run: printf "@newfold-labs:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+    
+    - name: Log Debug Information
+      run: |
+        php --version
+        composer --version
+        node --version
+        npm --version
+
+    - name: Validate composer.json and composer.lock files
+      run: composer validate
+
+    - name: Install JS Dependencies and Update package-lock.json
+      run: |
+        npm i --legacy-peer-deps
+        git add package-lock.json
+        git commit -m "Update package-lock.json to $new_version"
+
+    - name: Generate Build
+      id: generate-build
+      run: |
+        rm -rf build/*
+        npm run build
+        git add build/
+        git commit -m "Update build to $new_version"
+
+    - name: Install PHP Dependencies
+      run: composer install --no-progress --optimize-autoloader
+
+    - name: Update POT file
+      run: |
+        vendor/bin/wp i18n make-pot . ./languages/${{ github.event.repository.name }}.pot --headers='{"Report-Msgid-Bugs-To":"https://github.com/${{ github.repository }}/issues","POT-Creation-Date":null}' --exclude=node_modules,tests,src
+        git add ./languages/${{ github.event.repository.name }}.pot
+        git commit -m "Version $new_version"
+
+    - name: Push Changes
+      run: |
+        git push origin "$release_branch"
+
+    - name: Create Pull Request to trunk
+      run: |
+        gh pr create -B trunk -H "$release_branch" --title "Release Version $new_version" --body 'Created by Github action bot.'
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
