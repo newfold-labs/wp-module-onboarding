@@ -7,7 +7,6 @@ import getContents from './contents';
 import { completeFlow } from '../../utils/api/flow';
 import { StepLoader } from '../../components/Loaders';
 import { StepErrorState } from '../../components/ErrorState';
-import { DesignStateHandler } from '../../components/StateHandlers';
 import { THEME_STATUS_INIT } from '../../../constants';
 
 const StepComplete = () => {
@@ -64,8 +63,12 @@ const StepComplete = () => {
 		else flushQueue();
 	}, [ isQueueEmpty ] );
 
+	useEffect( () => {
+		setNavigationState();
+	}, [] );
+
 	return (
-		<DesignStateHandler navigationStateCallback={ setNavigationState }>
+		<>
 			{ isError ? (
 				<StepErrorState
 					title={ contents.errorState.title }
@@ -78,7 +81,7 @@ const StepComplete = () => {
 					subtitle={ contents.loader.subtitle }
 				/>
 			) }
-		</DesignStateHandler>
+		</>
 	);
 };
 
