@@ -8,6 +8,7 @@ import { completeFlow } from '../../utils/api/flow';
 import { StepLoader } from '../../components/Loaders';
 import { StepErrorState } from '../../components/ErrorState';
 import { THEME_STATUS_INIT } from '../../../constants';
+import { DesignStateHandler } from '../../components/StateHandlers';
 
 const StepComplete = () => {
 	const {
@@ -68,7 +69,10 @@ const StepComplete = () => {
 	}, [] );
 
 	return (
-		<>
+		<DesignStateHandler
+			navigationStateCallback={ setNavigationState }
+			refresh={ false }
+		>
 			{ isError ? (
 				<StepErrorState
 					title={ contents.errorState.title }
@@ -81,7 +85,7 @@ const StepComplete = () => {
 					subtitle={ contents.loader.subtitle }
 				/>
 			) }
-		</>
+		</DesignStateHandler>
 	);
 };
 
