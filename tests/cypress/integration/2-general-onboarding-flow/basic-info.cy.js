@@ -10,6 +10,7 @@ import {
 	CheckInfoPanel,
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
+import { SocialMediaTextValidations } from '../wp-module-support/socialMedia.cy';
 
 describe( 'Basic Info Page', function () {
 	before( () => {
@@ -92,9 +93,41 @@ describe( 'Basic Info Page', function () {
 			.should('have.css', 'opacity', '1');
 	} );
 
+	it( 'Check for the short URL tooltip & Modal exists when we use URL shortner' , () => {
+		const shortURL = 'https://bit.ly';
+		const Tooltiptext1 = 'Short URLs are a great way to track clicks';
+		const ModalText1 = `It looks like you're using a URL shortener!`;
+		SocialMediaTextValidations(shortURL, Tooltiptext1, ModalText1 );
+	});
+
+	it( 'Check if the URL automatically updates http to https' , () => {
+		const sampleURL = 'http://www.facebook.com';
+		const socialTest = '#facebook';
+		if ( cy.get(socialTest).should( 'exist' ) ) {
+			cy.get(socialTest).clear();
+			cy.get(socialTest).type(sampleURL);
+			cy.get('#twitter').focus();
+			cy.get(socialTest).invoke('val').should('contain', 'https://');
+		}
+	} );
+
+	it( 'Check for twitter or instagram id starting with `@` to convert it to URL' , () => {
+		const sampleID = '@infinity';
+		const socialTest3 = '#instagram';
+		if ( cy.get(socialTest3).should( 'exist' ) ) {
+			cy.get(socialTest3).clear();
+			cy.get(socialTest3).type(sampleID);
+			cy.get('#facebook').focus();
+			cy.get(socialTest3).invoke('val').should('contain', 'https://');
+
+		}
+	});
+
 	it( 'Check if Social Media URL checks are done', () => {
 		const invalidURL = 'htt';
 		const validURL = 'https://www.facebook.com';
+		const Tooltiptext2 = 'we need the full URLs to your social profiles.';
+		const ModalText2 = `One of those URLs doesn't look like a social media URL.`;
 
 		// Facebook Social Media Component
 		const socialTest2 = cy.get( '#twitter' );
@@ -106,13 +139,20 @@ describe( 'Basic Info Page', function () {
 				'.browser-content_social_icon[style="background-image: var(--facebook-icon);"]'
 			).should( 'have.css', 'opacity', '0.5' );
 
-			socialTest.focus();
+			socialTest2.focus();
 			socialTest.type( invalidURL );
 			socialTest2.focus();
 
 			// The URL Checker runs on a debounce
 			// Shows the message to the User in case of Invalid URL
 			cy.get( '.Tooltip-Wrapper', { timeout: 3000 } ).should( 'exist' );
+			cy.get( '.Tooltip-Tip' , { timeout: 3000 })
+            	.should('be.visible')
+            	.should('contain', Tooltiptext2);
+			cy.get('.navigation-buttons_next').click();
+			cy.get( '.components-modal__content' ).should('be.visible');
+			cy.get( '.components-modal__header-heading' ).should('have.text', ModalText2);
+			cy.get('.components-modal__content').type('{esc}');
 			cy.get(
 				'.browser-content_social_icon[style="background-image: var(--facebook-icon);"]'
 			).should( 'have.css', 'opacity', '0.75' );
@@ -129,7 +169,7 @@ describe( 'Basic Info Page', function () {
 			).should( 'have.css', 'opacity', '1' );
 
 			// Close Social Media Accordion
-			cy.get( '.social-form__top-row_icon' ).click();
+			cy.get( '.social-form__top-row_icon' ).scrollIntoView().click();
 		}
 	} );
 
