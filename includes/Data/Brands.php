@@ -287,7 +287,7 @@ final class Brands {
 			),
 			'hostgator-us'   => array(
 				'brand'                       => 'hostgator',
-				'name'                        => 'Hostgator',
+				'name'                        => 'HostGator',
 				'url'                         => 'https://www.hostgator.com',
 				'knowledgeBaseUrl'            => 'https://www.hostgator.com/help',
 				'helpUrl'                     => 'https://www.hostgator.com/help',
@@ -352,7 +352,7 @@ final class Brands {
 			),
 			'hostgator-br'   => array(
 				'brand'                       => 'hostgator',
-				'name'                        => 'Hostgator',
+				'name'                        => 'HostGator',
 				'url'                         => 'https://www.hostgator.com.br',
 				'knowledgeBaseUrl'            => 'https://suporte.hostgator.com.br/hc/pt-br',
 				'helpUrl'                     => 'https://suporte.hostgator.com.br/hc/pt-br',
