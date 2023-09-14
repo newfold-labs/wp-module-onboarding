@@ -1,0 +1,84 @@
+name: Create Release Branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Release Version'
+        required: true
+
+jobs:
+  create-release-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v2
+
+    - name: Create Release Branch
+      run: |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+        git checkout -b "release/${{ github.event.inputs.release_version }}"
+    
+    - name: Update Version in package.json
+      run: |
+        # Parse the current version from package.json
+        current_version=$(jq -r .version package.json)
+
+        # Update the version in package.json with the input value
+        new_version="${{ github.event.inputs.release_version }}"
+        jq ".version = \"$new_version\"" package.json > package.json.tmp
+        mv package.json.tmp package.json
+
+        # Commit the updated package.json
+        git add package.json
+        git commit -m "Update package.json to $new_version"
+
+    - name: Update Version in bootstrap.php
+      run: |
+        # Define the file to be modified
+        file_path="bootstrap.php"
+
+        # Get the current content of the file
+        file_content=$(cat "$file_path")
+
+        # Replace NFD_ONBOARDING_VERSION with the input value
+        new_version="${{ github.event.inputs.release_version }}"
+        updated_content=$(echo "$file_content" | sed "s/define( 'NFD_ONBOARDING_VERSION', '*.*.*' );/define('NFD_ONBOARDING_VERSION', '$new_version');/")
+
+        # Update the file with the new content
+        echo "$updated_content" > "$file_path"
+
+        # Commit the changes
+        git add "$file_path"
+        git commit -m "Update boostrap.php to $new_version"
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14.x
+
+    - name: Setup Registry
+      run: printf "@newfold-labs:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+
+    # Installs @wordpress/scripts for lint checks if it does not exist in the cache.
+    - name: Install dependencies and update package-lock.json
+      run: |
+        new_version="${{ github.event.inputs.release_version }}"
+        npm i --legacy-peer-deps
+        git add package-lock.json
+        git commit -m "Update package-lock.json to $new_version"
+
+    - name: Generate Build
+      id: generate-build
+      run: |
+        new_version="${{ github.event.inputs.release_version }}"
+        rm -rf build/*
+        npm run build
+        git add build/
+        git commit -m "Update build to $new_version"
+
+    - name: Push Changes
+      run: |
+        git push origin "release/${{ github.event.inputs.release_version }}"
