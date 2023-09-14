@@ -41,6 +41,11 @@ const StepAddress = () => {
 					woocommerce_default_country: 'IN:AP',
 					woocommerce_currency: 'INR',
 				};
+			case 'hostgator-br':
+				return {
+					woocommerce_default_country: 'BR:AC',
+					woocommerce_currency: 'BRL',
+				};
 			case 'bluehost':
 			default:
 				return {

@@ -66,6 +66,10 @@ export function getNewfoldBrandConfig( state ) {
 	return state.runtime.currentBrand.config;
 }
 
+export function getNewfoldBrandUrl( state ) {
+	return state.runtime.currentBrand.url;
+}
+
 /**
  * Gets dynamic Hire Experts URL for Need Help Tag per brand
  *
