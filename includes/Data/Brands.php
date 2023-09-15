@@ -350,12 +350,12 @@ final class Brands {
 					),
 				),
 			),
-			'hostgator-br'   => array(
-				'brand'                       => 'hostgator',
+			'hostgator-latam_BR'   => array(
+				'brand'                       => 'hostgator-latam_BR',
 				'name'                        => 'HostGator',
 				'url'                         => 'https://www.hostgator.com.br',
 				'knowledgeBaseUrl'            => 'https://suporte.hostgator.com.br/hc/pt-br',
-				'helpUrl'                     => 'https://suporte.hostgator.com.br/hc/pt-br',
+				'helpUrl'                     => 'https://cliente.hostgator.com.br/suporte',
 				'blogUrl'                     => 'https://www.hostgator.com.br/blog/',
 				'facebookUrl'                 => 'https://www.facebook.com/HostgatorBrasil/',
 				'twitterName'                 => '@hostgatorbrasil',
@@ -363,8 +363,8 @@ final class Brands {
 				'youtubeUrl'                  => 'https://www.youtube.com/c/HostGatorBrasil',
 				'linkedinUrl'                 => 'https://www.linkedin.com/company/hostgator-latam/',
 				'accountUrl'                  => 'https://financeiro.hostgator.com.br/',
-				'domainsUrl'                  => '',
-				'emailUrl'                    => 'https://cliente.hostgator.com.br/suporte',
+				'domainsUrl'                  => 'https://cliente.hostgator.com.br/dominios',
+				'emailUrl'                    => 'https://cliente.hostgator.com.br/emails-list',
 				'pluginDashboardPage'         => \admin_url( 'admin.php?page=hostgator' ),
 				'phoneNumbers'                => array(
 					'support' => '',
