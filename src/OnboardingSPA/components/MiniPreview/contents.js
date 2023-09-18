@@ -2,8 +2,9 @@ import { __, sprintf } from '@wordpress/i18n';
 
 import { translations } from '../../utils/locales/translations';
 
-const getContents = () => {
+const getContents = ( brandUrl = '' ) => {
 	return {
+		heading: __( 'Preview', 'wp-module-onboarding' ),
 		defaultTitle: sprintf(
 			/* translators: %s: Site or Store */
 			__( 'WordPress %s', 'wp-module-onboarding' ),
@@ -14,7 +15,7 @@ const getContents = () => {
 			__( 'Just another WordPress %s', 'wp-module-onboarding' ),
 			translations( 'Site' )
 		),
-		defaultUrl: 'https://bluehost.com',
+		defaultUrl: brandUrl,
 	};
 };
 

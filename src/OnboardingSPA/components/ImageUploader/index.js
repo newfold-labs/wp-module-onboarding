@@ -143,7 +143,9 @@ const ImageUploader = ( { icon, iconSetter } ) => {
 
 	return (
 		<div className="image-uploader">
-			<h4 className="image-uploader_heading">Logo</h4>
+			<h4 className="image-uploader_heading">
+				{ __( 'Logo', 'wp-module-onboarding' ) }
+			</h4>
 			{ isUploading ? loader() : getImageUploadWindow() }
 		</div>
 	);
