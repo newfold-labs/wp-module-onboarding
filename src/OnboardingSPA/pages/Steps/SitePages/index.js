@@ -19,6 +19,7 @@ import {
 } from '../../../components/LivePreview';
 import LivePreviewSkeleton from '../../../components/LivePreview/LivePreviewSkeleton';
 import getContents from './contents';
+import Grid from '../../../components/Grid';
 
 const StepSitePages = () => {
 	const location = useLocation();
@@ -160,17 +161,20 @@ const StepSitePages = () => {
 							subtitle={ content.subheading }
 						/>
 						<div className="site-pages__list">
-							<LivePreviewSkeleton
-								className={ 'site-pages__list__item' }
-								count={
-									themeVariations[ currentStep?.patternId ]
-										?.previewCount
-								}
-								watch={ sitePages }
-								isWithCard={ true }
-								callback={ buildPreviews }
-								viewportWidth={ 1200 }
-							/>
+							<Grid size={ 2 }>
+								<LivePreviewSkeleton
+									className={ 'site-pages__list__item' }
+									count={
+										themeVariations[
+											currentStep?.patternId
+										]?.previewCount
+									}
+									watch={ sitePages }
+									isWithCard={ true }
+									callback={ buildPreviews }
+									viewportWidth={ 1200 }
+								/>
+							</Grid>
 						</div>
 					</div>
 				</CommonLayout>
