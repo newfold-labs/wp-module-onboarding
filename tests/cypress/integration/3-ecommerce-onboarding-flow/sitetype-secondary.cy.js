@@ -103,7 +103,7 @@ describe( 'Get Started Site Type Secondary', function () {
 			'not.include',
 			'#/wp-setup/step/get-started/site-secondary'
 		);
-		cy.go( 'back' );
+		cy.get( '.navigation-buttons_back' ).click();
 	} );
 
 	it( 'Go to the previous step on clicking navigation Back', () => {
@@ -112,7 +112,7 @@ describe( 'Get Started Site Type Secondary', function () {
 			'not.include',
 			'#/wp-setup/step/get-started/site-secondary'
 		);
-		cy.go( 'back' );
+		cy.get( '.navigation-buttons_next' ).click();
 	} );
 
 	it( 'Go to next step on Continue Setup', () => {
@@ -121,6 +121,5 @@ describe( 'Get Started Site Type Secondary', function () {
 			'not.include',
 			'#/wp-setup/step/get-started/site-secondary'
 		);
-		cy.go( 'back' );
 	} );
 } );

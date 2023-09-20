@@ -100,6 +100,5 @@ describe( 'Step Ecommerce Products Info', function () {
 	it( 'Goes to next step on Continue Setup.', () => {
 		cy.get( '.nfd-nav-card-button' ).click();
 		cy.url().should( 'not.include', '#/ecommerce/step/products' );
-		cy.go( 'back' );
 	} );
 } );

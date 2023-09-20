@@ -100,6 +100,7 @@ describe( 'Basic Info Page', function () {
 	it( 'Check if the URL automatically updates http to https' , () => {
 		const sampleURL = 'http://www.facebook.com';
 		const socialTest = '#facebook';
+		cy.get( '.social-form__top-row_icon' ).click();
 		if ( cy.get(socialTest).should( 'exist' ) ) {
 			cy.get(socialTest).clear();
 			cy.get(socialTest).type(sampleURL);
