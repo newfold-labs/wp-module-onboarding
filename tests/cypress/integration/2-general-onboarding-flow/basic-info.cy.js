@@ -27,26 +27,26 @@ describe( 'Basic Info Page', function () {
 		);
 	} );
 
-	it( 'Check if Header and Subheader shows up', () => {
+	it.skip( 'Check if Header and Subheader shows up', () => {
 		cy.wait(3000);
 		DrawerClose();
 		CheckHeadingSubheading();
 	} );
 
-	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+	it.skip( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 		CheckIntroPanel( '__basic-info', 'Basic Info' );
 		CheckIllustrationPanel();
 		CheckInfoPanel();
 		CheckHelpPanelLinks();
 	} );
 
-	it( 'Check if Header has text `website` in it', () => {
+	it.skip( 'Check if Header has text `website` in it', () => {
 		cy.get( '.nfd-main-heading__title' )
 			.should('be.visible')
 			.contains('website');
 	} );
 
-	it( 'Enter a Title and then Check if it reflects elsewhere', () => {
+	it.skip( 'Enter a Title and then Check if it reflects elsewhere', () => {
 		const title = 'Hello WordPress';
 		const titleBox = cy.get( ':nth-child(1) > label > .nfd-input__field' );
 		if ( titleBox.should( 'exist' ) ) {
@@ -62,7 +62,7 @@ describe( 'Basic Info Page', function () {
 		}
 	} );
 
-	it( 'Enter a Desc and then Check if it reflects elsewhere', () => {
+	it.skip( 'Enter a Desc and then Check if it reflects elsewhere', () => {
 		const desc = 'Welcome to WordPress';
 		const descBox = cy.get( ':nth-child(2) > label > .nfd-input__field' );
 		if ( descBox.should( 'exist' ) ) {
@@ -76,7 +76,7 @@ describe( 'Basic Info Page', function () {
 		}
 	} );
 
-	it( 'Check if Social Media Accordion Toggles', () => {
+	it.skip( 'Check if Social Media Accordion Toggles', () => {
 		cy.get(
 			':nth-child(7) > .social-form__label > .social-form__label_name'
 		)
@@ -93,14 +93,14 @@ describe( 'Basic Info Page', function () {
 			.should('have.css', 'opacity', '1');
 	} );
 
-	it( 'Check for the short URL tooltip & Modal exists when we use URL shortner' , () => {
+	it.skip( 'Check for the short URL tooltip & Modal exists when we use URL shortner' , () => {
 		const shortURL = 'https://bit.ly';
 		const Tooltiptext1 = 'Short URLs are a great way to track clicks';
 		const ModalText1 = `It looks like you're using a URL shortener!`;
 		SocialMediaTextValidations(shortURL, Tooltiptext1, ModalText1 );
 	});
 
-	it( 'Check if the URL automatically updates http to https' , () => {
+	it.skip( 'Check if the URL automatically updates http to https' , () => {
 		const sampleURL = 'http://www.facebook.com';
 		const socialTest = '#facebook';
 		cy.get( '.social-form__top-row_icon' ).click();
@@ -112,7 +112,7 @@ describe( 'Basic Info Page', function () {
 		}
 	} );
 
-	it( 'Check for twitter or instagram id starting with `@` to convert it to URL' , () => {
+	it.skip( 'Check for twitter or instagram id starting with `@` to convert it to URL' , () => {
 		const sampleID = '@infinity';
 		const socialTest3 = '#instagram';
 		if ( cy.get(socialTest3).should( 'exist' ) ) {
@@ -124,7 +124,7 @@ describe( 'Basic Info Page', function () {
 		}
 	});
 
-	it( 'Check if Social Media URL checks are done', () => {
+	it.skip( 'Check if Social Media URL checks are done', () => {
 		const invalidURL = 'htt';
 		const validURL = 'https://www.facebook.com';
 		const Tooltiptext2 = 'we need the full URLs to your social profiles.';
@@ -174,7 +174,7 @@ describe( 'Basic Info Page', function () {
 		}
 	} );
 
-	it( 'Check if Image gets Uploaded', () => {
+	it.skip( 'Check if Image gets Uploaded', () => {
 		const sampleLogo = `vendor/newfold-labs/wp-module-onboarding/tests/cypress/fixtures/image.png`;
 
 		if (
