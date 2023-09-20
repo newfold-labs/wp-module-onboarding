@@ -20,8 +20,6 @@ export const SocialMediaTextValidations = ( URL, ToolTipText, ModalHeaderText ) 
         cy.get(':nth-child(2) > .components-button-group > .is-primary').click();
         cy.url().should('not.contain', 'wp-setup/step/basic-info');
         cy.go('back');
-        if (cy.get( '.components-modal__content' ).should('be.visible')){
-			cy.get('.components-modal__content').type('{esc}');
-		}
+        cy.get( '.nfd-onboarding-drawer__toggle-button' ).click();
     }
 };
