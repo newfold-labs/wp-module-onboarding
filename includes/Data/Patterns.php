@@ -358,6 +358,7 @@ final class Patterns {
 		}
 
 		$pattern_slugs = self::get_theme_step_patterns()[ $active_theme ][ $step ];
+		$block_patterns = $squash ? '' : array();
 
 		foreach ( array_keys( $pattern_slugs ) as $pattern_slug ) {
 			if ( true !== $pattern_slugs[ $pattern_slug ]['active'] ) {
@@ -392,11 +393,7 @@ final class Patterns {
 				);
 				continue;
 			}
-			if ( isset( $block_patterns ) ) {
-				$block_patterns .= self::cleanup_wp_grammar( $pattern['content'] );
-			} else {
-				$block_patterns = self::cleanup_wp_grammar( $pattern['content'] );
-			}
+			$block_patterns .= self::cleanup_wp_grammar( $pattern['content'] );
 		}
 
 		if ( isset( self::get_theme_step_filters()[ $active_theme ][ $step ] ) ) {
