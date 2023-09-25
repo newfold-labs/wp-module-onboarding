@@ -41,7 +41,8 @@
 	"require-dev": {
 		"wp-phpunit/wp-phpunit": "^6.2",
 		"yoast/phpunit-polyfills": "^2.0",
-		"newfold-labs/wp-php-standards": "^1.2"
+		"newfold-labs/wp-php-standards": "^1.2",
+		"wp-cli/i18n-command": "^2.4.3"
 	},
 	"scripts": {
 		"lint": [
