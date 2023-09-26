@@ -67,9 +67,11 @@ const StepSiteFeatures = () => {
 
 	async function getCustomPlugins() {
 		const customPlugins = await getSiteFeatures();
-		if ( isEmpty( currentData?.data?.siteFeatures ) )
+		if ( isEmpty( currentData?.data?.siteFeatures ) ) {
 			changeToStoreSchema( customPlugins.body, true );
-		else setSelectedPlugins( { ...currentData?.data?.siteFeatures } );
+		} else {
+			setSelectedPlugins( { ...currentData?.data?.siteFeatures } );
+		}
 
 		setCustomPluginsList( customPlugins.body );
 	}

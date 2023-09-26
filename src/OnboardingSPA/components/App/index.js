@@ -274,7 +274,7 @@ const App = () => {
 		if ( previousStepPath.includes( 'site-features' ) ) {
 			const siteFeatures = currentData.data.siteFeatures;
 			for ( const siteFeature in siteFeatures ) {
-				if ( false !== siteFeatures[ siteFeature ] )
+				if ( false !== siteFeatures[ siteFeature ] ) {
 					trackOnboardingEvent(
 						new OnboardingEvent(
 							ACTION_FEATURE_ADDED,
@@ -283,6 +283,7 @@ const App = () => {
 							previousStepURL
 						)
 					);
+				}
 			}
 		}
 
