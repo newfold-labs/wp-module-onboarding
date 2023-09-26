@@ -94,6 +94,11 @@ final class Brands {
 						'utm_medium' => 'brand-plugin',
 					),
 				),
+				'migrationInfo'               => array(
+					'defaultLink' => Config::is_jarvis() ?
+					'https://www.bluehost.com/my-account/hosting/details/sites/add/transfer'
+					: 'https://my.bluehost.com/cgi/services/migration',
+				),
 				'config'                      => array(
 					'enabled_flows' => array(
 						'ecommerce' => true,
@@ -154,6 +159,7 @@ final class Brands {
 						'utm_medium' => 'brand-plugin',
 					),
 				),
+				'migrationInfo'               => array(),
 				'config'                      => array(
 					'enabled_flows' => array(
 						'ecommerce' => true,
@@ -212,6 +218,7 @@ final class Brands {
 						'utm_medium' => '',
 					),
 				),
+				'migrationInfo'               => array(),
 				'config'                      => array(
 					'enabled_flows' => array(
 						'ecommerce' => false,
@@ -270,6 +277,7 @@ final class Brands {
 						'utm_medium' => 'brand-plugin',
 					),
 				),
+				'migrationInfo'               => array(),
 				'config'                      => array(
 					'enabled_flows' => array(
 						'ecommerce' => true,
@@ -335,6 +343,7 @@ final class Brands {
 						'utm_medium' => 'brand-plugin',
 					),
 				),
+				'migrationInfo'               => array(),
 				'config'                      => array(
 					'enabled_flows' => array(
 						'ecommerce' => true,
@@ -363,7 +372,7 @@ final class Brands {
 		if ( ! defined( 'NFD_ONBOARDING_PLUGIN_BRAND' ) ) {
 			$brand = $container->plugin()->brand;
 			if ( empty( $brand ) ) {
-				$brand = 'wordpress';
+				$brand = 'WordPress';
 			}
 
 			if ( false !== strpos( $brand, 'hostgator' ) ) {

@@ -336,6 +336,20 @@ export function getTechSupportUrl( state ) {
 }
 
 /**
+ * Gets the link to the migration service.
+ *
+ * @param {*} state
+ * @return {string} migrationUrl
+ */
+export function getMigrationUrl( state ) {
+	const migrationInfo = state.runtime.currentBrand.migrationInfo;
+	const migrationUrl =
+		addQueryArgs( migrationInfo?.defaultLink, migrationInfo?.queryParams ) +
+		( migrationInfo?.fragment || '' );
+	return migrationUrl;
+}
+
+/**
  * Gets the Plugin Install Hash for security
  *
  * @param {*} state

@@ -38,6 +38,7 @@
 }
 
 .nfd-step-card-subheading {
+	margin-bottom: 30px;
 	display: flex;
 	justify-content: space-around;
 }
@@ -123,7 +124,6 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-around;
-	height: clamp(600px, 59vh, 800px) !important;
 	width: 100%;
 	padding-bottom: 10px;
 }

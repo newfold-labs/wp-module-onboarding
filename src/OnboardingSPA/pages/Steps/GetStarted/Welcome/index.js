@@ -2,11 +2,11 @@ import { store as nfdOnboardingStore } from '../../../../store';
 import { useLocation } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
+import { chevronRight, external } from '@wordpress/icons';
 
 import CommonLayout from '../../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import CardHeader from '../../../../components/CardHeader';
-import NavCardButton from '../../../../components/Button/NavCardButton';
 import Tab from '../../../../components/Tab';
 import TabPanelHover from '../../../../components/TabPanelHover';
 import {
@@ -14,13 +14,16 @@ import {
 	SIDEBAR_LEARN_MORE,
 } from '../../../../../constants';
 import getContents from './contents';
+import ButtonWhite from '../../../../components/Button/ButtonWhite';
+import NavCardButton from '../../../../components/Button/NavCardButton';
 
 const StepWelcome = () => {
 	const location = useLocation();
-	const { brandName } = useSelect(
+	const { brandName, migrationUrl } = useSelect(
 		( select ) => {
 			return {
 				brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
 			};
 		},
 		[ location.pathname ]
@@ -69,7 +72,23 @@ const StepWelcome = () => {
 					>
 						{ ( tab ) => <div>{ tab.content }</div> }
 					</TabPanelHover>
-					<NavCardButton text={ content.buttonText }></NavCardButton>
+					<div className="nfd-onboarding-overview__buttons">
+						{ migrationUrl && (
+							<ButtonWhite
+								className="nfd-onboarding-overview__buttons--white"
+								text={ content.migrateButtonText }
+								icon={ external }
+								onClick={ () =>
+									window.open( migrationUrl, '_blank' )
+								}
+							/>
+						) }
+						<NavCardButton
+							className="nfd-onboarding-overview__buttons--background"
+							text={ content.startButtonText }
+							icon={ chevronRight }
+						></NavCardButton>
+					</div>
 				</div>
 			</NewfoldLargeCard>
 		</CommonLayout>

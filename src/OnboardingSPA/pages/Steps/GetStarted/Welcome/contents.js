@@ -14,7 +14,11 @@ const getContents = ( brandName ) => {
 			__( 'with WordPress and %s.', 'wp-module-onboarding' ),
 			brandName
 		),
-		buttonText: __( 'Start Setup', 'wp-module-onboarding' ),
+		migrateButtonText: __(
+			'Migrate a WordPress Site',
+			'wp-module-onboarding'
+		),
+		startButtonText: __( 'Start Setup', 'wp-module-onboarding' ),
 		tabs: [
 			{
 				name: 'tab1',
