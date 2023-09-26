@@ -358,6 +358,7 @@ final class Patterns {
 		}
 
 		$pattern_slugs = self::get_theme_step_patterns()[ $active_theme ][ $step ];
+		$block_patterns = $squash ? '' : array();
 
 		foreach ( array_keys( $pattern_slugs ) as $pattern_slug ) {
 			if ( true !== $pattern_slugs[ $pattern_slug ]['active'] ) {
