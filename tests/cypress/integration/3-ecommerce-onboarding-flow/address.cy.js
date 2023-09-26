@@ -115,6 +115,5 @@ describe( 'Step Ecommerce Address/Store Details', function () {
 	it( 'Goes to next step on Continue Setup', () => {
 		cy.get( '.nfd-nav-card-button' ).scrollIntoView().click();
 		cy.url().should( 'not.include', '#/ecommerce/step/address' );
-		cy.go( 'back' );
 	} );
 } );

@@ -176,7 +176,7 @@ const StepPrimarySetup = () => {
 					</div>
 					<div className="nfd-setup-primary-custom">
 						<p className="nfd-setup-primary-custom__tellus-text">
-							or tell us here:
+							{ content.customInputLabel }
 						</p>
 						<input
 							type="search"

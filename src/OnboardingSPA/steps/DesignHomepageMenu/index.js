@@ -23,7 +23,8 @@ import {
 	trackOnboardingEvent,
 } from '../../utils/analytics/hiive';
 import getContents from './contents';
-import { ACTION_HOMEPAGE_LAYOUT_SELECTED } from '../../utils/analytics/hiive/constants';
+import { ACTION_HOMEPAGE_LAYOUT_SELECTED } from '../../../utils/analytics/hiive/constants';
+import Grid from '../../../components/Grid';
 
 const StepDesignHomepageMenu = () => {
 	const location = useLocation();
@@ -144,17 +145,19 @@ const StepDesignHomepageMenu = () => {
 							subtitle={ content.subheading }
 						/>
 						<div className="homepage_preview__list">
-							<LivePreviewSkeleton
-								watch={ homepagePattern }
-								count={
-									themeVariations[
-										currentStep?.data?.patternId
-									]?.previewCount
-								}
-								callback={ buildHomepagePreviews }
-								className={ 'homepage_preview__list__item' }
-								viewportWidth={ 1200 }
-							/>
+							<Grid size={ 3 } colGap={ 50 }>
+								<LivePreviewSkeleton
+									watch={ homepagePattern }
+									count={
+										themeVariations[
+											currentStep?.patternId
+										]?.previewCount
+									}
+									callback={ buildHomepagePreviews }
+									className={ 'homepage_preview__list__item' }
+									viewportWidth={ 1200 }
+								/>
+							</Grid>
 						</div>
 					</div>
 				</CommonLayout>

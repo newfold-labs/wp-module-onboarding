@@ -34,8 +34,4 @@ describe( 'Exit to WordPress', function () {
 		cy.get( '.nfd-onboarding-etw__buttons > .is-primary' ).click();
 		cy.url( { timeout: 12000 } ).should( 'contain', GetPluginId() );
 	} );
-
-	after( () => {
-		cy.clearCustomerData();
-	} );
 } );

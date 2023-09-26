@@ -83,7 +83,7 @@ describe( 'Get Started Welcome Page', function () {
 	it( 'Check if next step loads on clicking navigation next', () => {
 		cy.get( '.navigation-buttons_next' ).click();
 		cy.url().should( 'not.include', '#/wp-setup/step/get-started/welcome' );
-		cy.go( 'back' );
+		cy.get('.navigation-buttons_back').click();
 	} );
 
 	it.skip( 'Check Exit to Wordpress button is visible and clickable and exit flow', () => {

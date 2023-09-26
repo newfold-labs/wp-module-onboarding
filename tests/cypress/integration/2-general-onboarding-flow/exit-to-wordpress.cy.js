@@ -34,7 +34,4 @@ describe( 'Exit to WordPress', function () {
 		cy.url( { timeout: 12000 } ).should( 'contain', 'index.php' );
 	} );
 
-	after( () => {
-		cy.clearCustomerData();
-	} );
 } );
