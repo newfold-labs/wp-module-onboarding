@@ -3,14 +3,14 @@ import { chevronLeft } from '@wordpress/icons';
 import { Fragment, useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Button, ButtonGroup, Modal } from '@wordpress/components';
-
 import { __, sprintf } from '@wordpress/i18n';
 import classNames from 'classnames';
+import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
+
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { pluginDashboardPage } from '../../../constants';
-import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,

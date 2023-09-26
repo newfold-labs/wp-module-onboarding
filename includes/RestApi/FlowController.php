@@ -2,8 +2,8 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
-
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\FlowService;
+use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 
 /**
  * Class FlowController
@@ -160,6 +160,13 @@ class FlowController {
 		$status = FlowService::switch_flow( $flow );
 		if ( \is_wp_error( $status ) ) {
 			return $status;
+		}
+
+		if ( ! PluginService::initialize() ) {
+			return new \WP_REST_Response(
+				array(),
+				500
+			);
 		}
 
 		return new \WP_REST_Response(

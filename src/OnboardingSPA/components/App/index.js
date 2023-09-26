@@ -5,7 +5,7 @@ import Sidebar from '../Sidebar';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { setFlow } from '../../utils/api/flow';
-import { conditionalSteps } from '../../data/routes';
+import { design as designChapter } from '../../chapters/design';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { isEmpty, updateWPSettings } from '../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../store';
@@ -24,13 +24,10 @@ import {
 	OnboardingEvent,
 	trackOnboardingEvent,
 } from '../../utils/analytics/hiive';
-import { injectInAllSteps } from '../../data/routes/allStepsHandler';
+import { injectInAllSteps } from '../../data/flows/utils';
 import {
 	ACTION_FEATURE_ADDED,
 	ACTION_LOGO_ADDED,
-	ACTION_ONBOARDING_CHAPTER_COMPLETE,
-	ACTION_ONBOARDING_CHAPTER_STARTED,
-	ACTION_ONBOARDING_STARTED,
 	ACTION_SITE_TITLE_SET,
 	ACTION_SOCIAL_ADDED,
 	ACTION_STARTER_PAGES_SELECTED,
@@ -59,8 +56,6 @@ const App = () => {
 		socialData,
 		firstStep,
 		allSteps,
-		currentChapter,
-		currentStep,
 	} = useSelect(
 		( select ) => {
 			return {
@@ -74,9 +69,6 @@ const App = () => {
 					select( nfdOnboardingStore ).getOnboardingSocialData(),
 				firstStep: select( nfdOnboardingStore ).getFirstStep(),
 				allSteps: select( nfdOnboardingStore ).getAllSteps(),
-				currentChapter:
-					select( nfdOnboardingStore ).getCurrentChapter(),
-				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 			};
 		},
 		[ location.pathname ]
@@ -93,7 +85,6 @@ const App = () => {
 		enqueueRequest,
 		setOnboardingSocialData,
 		setCurrentOnboardingData,
-		setActiveChapter,
 	} = useDispatch( nfdOnboardingStore );
 
 	async function syncSocialSettings() {
@@ -169,7 +160,10 @@ const App = () => {
 			location?.pathname.includes( 'colors' ) ||
 			location?.pathname.includes( 'typography' )
 		) {
-			const updates = injectInAllSteps( allSteps, conditionalSteps );
+			const updates = injectInAllSteps(
+				allSteps,
+				designChapter.conditionalSteps
+			);
 			updateAllSteps( updates.allSteps );
 			if ( ! currentData.data.customDesign ) {
 				currentData.data.customDesign = true;
@@ -308,36 +302,6 @@ const App = () => {
 			setActiveStep( location.pathname );
 		}
 	}, [ location.pathname, onboardingFlow ] );
-
-	useEffect( () => {
-		if ( location.pathname === firstStep.path ) {
-			trackOnboardingEvent(
-				new OnboardingEvent( ACTION_ONBOARDING_STARTED )
-			);
-		}
-
-		if ( currentChapter !== currentStep?.chapter ) {
-			if ( currentChapter ) {
-				trackOnboardingEvent(
-					new OnboardingEvent(
-						ACTION_ONBOARDING_CHAPTER_COMPLETE,
-						currentChapter
-					)
-				);
-			}
-
-			if ( currentStep?.chapter ) {
-				trackOnboardingEvent(
-					new OnboardingEvent(
-						ACTION_ONBOARDING_CHAPTER_STARTED,
-						currentStep.chapter
-					)
-				);
-			}
-
-			setActiveChapter( currentStep?.chapter );
-		}
-	}, [ currentStep ] );
 
 	return (
 		<Fragment>

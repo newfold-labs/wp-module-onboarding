@@ -11,6 +11,8 @@ import App from './components/App';
 import { HashRouter } from 'react-router-dom';
 import { dispatch } from '@wordpress/data';
 import { render } from '@wordpress/element';
+import { getInitialChapters } from './data/flows';
+import { stateToStore } from './chapters/utils';
 
 /**
  * Component passed to wp.element.render().
@@ -26,6 +28,11 @@ const NFDOnboarding = () => (
 const initializeFlowData = ( currentData ) => {
 	currentData.hasExited = 0;
 	currentData.isComplete = 0;
+	const currentFlow = window.nfdOnboarding.currentFlow;
+	currentData.data.chapters = stateToStore(
+		getInitialChapters( currentFlow ),
+		currentData.data.chapters
+	);
 	return currentData;
 };
 

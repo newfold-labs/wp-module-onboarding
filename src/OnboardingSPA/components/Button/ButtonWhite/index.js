@@ -1,13 +1,13 @@
 import { Button } from '@wordpress/components';
+import classNames from 'classnames';
 
-const ButtonWhite = ( {
-	className = 'nfd-onboarding-button--white',
-	text,
-	onClick = false,
-} ) => {
+const ButtonWhite = ( { className, text, onClick = false } ) => {
 	return (
 		<Button
-			className={ className }
+			className={ classNames(
+				'nfd-onboarding-button--white',
+				className
+			) }
 			onClick={ typeof onClick === 'function' && onClick }
 		>
 			{ text }
