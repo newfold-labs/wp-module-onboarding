@@ -81,7 +81,7 @@ const DesignThemeStylesPreview = () => {
 		setSelectedStyle( selectedGlobalStyle );
 
 		const patternResponse = await getPatterns(
-			currentStep.patternId,
+			currentStep?.data?.patternId,
 			true
 		);
 		if ( patternResponse?.error ) {
@@ -144,7 +144,8 @@ const DesignThemeStylesPreview = () => {
 					className={ 'theme-styles-preview--drawer__list__item' }
 					watch={ globalStyles && pattern }
 					count={
-						themeVariations[ currentStep?.patternId ]?.previewCount
+						themeVariations[ currentStep?.data?.patternId ]
+							?.previewCount
 					}
 					callback={ buildPreviews }
 					viewportWidth={ 900 }

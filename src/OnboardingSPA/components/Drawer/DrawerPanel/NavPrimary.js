@@ -1,9 +1,9 @@
 import { Tooltip } from '@wordpress/components';
 import { NavLink, useLocation } from 'react-router-dom';
-
 import { Icon } from '@wordpress/icons';
-import { store as nfdOnboardingStore } from '../../../store';
 import { useSelect, useDispatch } from '@wordpress/data';
+
+import { store as nfdOnboardingStore } from '../../../store';
 import classNames from 'classnames';
 import Animate from '../../Animate';
 
@@ -24,14 +24,15 @@ const NavPrimary = () => {
 						return (
 							<Tooltip
 								key={ step.path }
-								text={ step.tooltipText }
+								text={ step.data?.tooltipText }
 							>
 								<li className="nfd-onboarding-drawer__panel-menu-item">
 									<NavLink
 										to={
 											location.pathname === step.path ||
 											location.pathname.includes(
-												step?.primaryDrawerActiveLinkIncludes
+												step?.data
+													?.primaryDrawerActiveLinkIncludes
 											)
 												? location.pathname
 												: step.path
@@ -43,17 +44,20 @@ const NavPrimary = () => {
 													location.pathname ===
 														step.path ||
 													location.pathname.includes(
-														step?.primaryDrawerActiveLinkIncludes
+														step?.data
+															?.primaryDrawerActiveLinkIncludes
 													),
 											}
 										) }
 										state={ { origin: 'drawer-nav' } }
 										onClick={ () =>
-											step?.VIEW &&
-											setDrawerActiveView( step.VIEW )
+											step?.drawerView &&
+											setDrawerActiveView(
+												step.drawerView
+											)
 										}
 									>
-										<Icon icon={ step.Icon } />
+										<Icon icon={ step.icon } />
 										<span>{ step.title }</span>
 									</NavLink>
 								</li>

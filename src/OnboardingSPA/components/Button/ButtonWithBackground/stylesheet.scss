@@ -1,0 +1,14 @@
+
+.nfd-onboarding-button {
+
+	&--background {
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		color: var(--nfd-onboarding-white);
+		height: 40px;
+		border: none;
+		margin: 10px 0;
+		white-space: normal !important;
+	}
+}

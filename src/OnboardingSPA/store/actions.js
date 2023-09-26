@@ -1,3 +1,5 @@
+import { DEFAULT_FLOW } from '../data/flows/constants';
+
 /**
  * Receives `window.nfdOnboarding` and sets migrated: true.
  *
@@ -11,7 +13,7 @@ export function setRuntime( runtime ) {
 		buildUrl: runtime.buildUrl,
 		siteUrl: runtime.siteUrl,
 		migrated: true,
-		currentFlow: runtime.currentFlow ?? 'wp-setup',
+		currentFlow: runtime.currentFlow ?? DEFAULT_FLOW,
 		stepPreviewData: runtime.previewSettings.stepPreviewData,
 	};
 	return {
@@ -187,10 +189,17 @@ export function updateAllSteps( allSteps ) {
 	};
 }
 
-export function updateDesignSteps( designSteps ) {
+export function updateTopSteps( topSteps ) {
 	return {
-		type: 'UPDATE_DESIGN_STEPS',
-		designSteps,
+		type: 'UPDATE_TOP_STEPS',
+		topSteps,
+	};
+}
+
+export function updateDesignRoutes( designRoutes ) {
+	return {
+		type: 'UPDATE_DESIGN_ROUTES',
+		designRoutes,
 	};
 }
 

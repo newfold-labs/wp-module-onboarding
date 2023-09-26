@@ -3,27 +3,24 @@ import { combineReducers } from '@wordpress/data';
 import { VIEW_NAV_PRIMARY, THEME_STATUS_INIT } from '../../constants';
 
 import {
-	routes as initialRoutes,
-	steps as initialSteps,
-	initialDesignSteps,
+	initialDesignRoutes,
+	initialRoutes,
+	initialSteps,
 	initialTopSteps,
-	initialGetStartedSteps,
-	initialStoreInfoSteps,
-} from '../data/routes/index';
+} from '../data/flows/index';
 import { sidebars } from '../data/sidebars/index';
 import apiQueueExecutor from '../utils/api-queuer/api-queue-executor';
+import { DEFAULT_FLOW } from '../data/flows/constants';
 
 export function flow(
 	state = {
-		flow: 'wp-setup',
+		flow: DEFAULT_FLOW,
 		steps: {
 			routes: initialRoutes,
 			allSteps: initialSteps,
-			topSteps: initialTopSteps(),
-			designSteps: initialDesignSteps(),
-			getStartedSteps: initialGetStartedSteps(),
-			storeInfoSteps: initialStoreInfoSteps(),
-			currentStep: initialSteps[ 0 ].path,
+			topSteps: initialTopSteps,
+			designRoutes: initialDesignRoutes,
+			currentStep: '',
 			error: {
 				showDialog: false,
 				continuePath: '',
@@ -63,12 +60,20 @@ export function flow(
 					allSteps: action.allSteps,
 				},
 			};
-		case 'UPDATE_DESIGN_STEPS':
+		case 'UPDATE_TOP_STEPS':
 			return {
 				...state,
 				steps: {
 					...state.steps,
-					designSteps: action.designSteps,
+					topSteps: action.topSteps,
+				},
+			};
+		case 'UPDATE_DESIGN_ROUTES':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					designRoutes: action.designRoutes,
 				},
 			};
 		case 'SHOW_NAV_ERROR_DIALOG':

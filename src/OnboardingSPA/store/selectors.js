@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { filter, findIndex } from 'lodash';
 import { addQueryArgs } from '@wordpress/url';
+import { DEFAULT_FLOW } from '../data/flows/constants';
 
 /**
  * Get the currently active drawer view
@@ -113,7 +114,7 @@ export function getOnboardingSocialData( state ) {
  * @return {string} Onboarding Flow
  */
 export function getOnboardingFlow( state ) {
-	return state.runtime.currentFlow ?? 'wp-setup';
+	return state.runtime.currentFlow ?? DEFAULT_FLOW;
 }
 
 export function getRoutes( state ) {
@@ -134,24 +135,8 @@ export function getTopSteps( state ) {
 	return state.flow.steps.topSteps;
 }
 
-/**
- * Gets design steps to display in drawer submenu.
- *
- * @param {*} state
- * @return {Array} Design Steps
- */
-export function getDesignSteps( state ) {
-	return state.flow.steps.designSteps;
-}
-
-/**
- * Gets get-started setup steps to display in drawer submenu.
- *
- * @param {*} state
- * @return {Array} Get Started Steps
- */
-export function getGetStartedSteps( state ) {
-	return state.flow.steps.getStartedSteps;
+export function getDesignRoutes( state ) {
+	return state.flow.steps.designRoutes;
 }
 
 /**
@@ -270,10 +255,6 @@ export function getThemeStatus( state ) {
 	return state.settings.themeStatus;
 }
 
-export function getStoreInfoSteps( state ) {
-	return state.flow.steps.storeInfoSteps;
-}
-
 export function getStepPreviewData( state ) {
 	return state.runtime.previewSettings.stepPreviewData;
 }
@@ -383,4 +364,12 @@ export function getShowErrorDialog( state ) {
  */
 export function getNavErrorPath( state ) {
 	return state.flow.steps.error.continuePath;
+}
+
+export function getExperienceLevel( state ) {
+	return state.data.flowData.data.wpComfortLevel;
+}
+
+export function getTopPriority( state ) {
+	return state.data.flowData.data.topPriority.priority1;
 }

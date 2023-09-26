@@ -4,7 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding;
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ThemeService;
-use NewfoldLabs\WP\Module\Onboarding\Services\FlowService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\FlowService;
 use NewfoldLabs\WP\Module\Onboarding\Services\I18nService;
 
 /**
