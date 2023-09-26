@@ -128,7 +128,7 @@ const FlowStateHandler = ( { children } ) => {
 				trackOnboardingEvent(
 					new OnboardingEvent(
 						ACTION_ONBOARDING_CHAPTER_COMPLETE,
-						currentChapter
+						lastChapter
 					)
 				);
 			}
@@ -153,7 +153,9 @@ const FlowStateHandler = ( { children } ) => {
 	};
 
 	useEffect( () => {
-		prioritizeFlow();
+		if ( false !== brandConfig?.prioritization ) {
+			return prioritizeFlow();
+		}
 	}, [ experienceLevel, topPriority ] );
 
 	useEffect( () => {

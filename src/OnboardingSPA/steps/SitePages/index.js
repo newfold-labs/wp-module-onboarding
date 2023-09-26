@@ -19,7 +19,7 @@ import {
 } from '../../components/LivePreview';
 import LivePreviewSkeleton from '../../components/LivePreview/LivePreviewSkeleton';
 import getContents from './contents';
-import Grid from '../../../components/Grid';
+import Grid from '../../components/Grid';
 
 const StepSitePages = () => {
 	const location = useLocation();

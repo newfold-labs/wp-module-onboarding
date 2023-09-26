@@ -25,9 +25,9 @@ import { injectInAllSteps } from '../../../data/flows/utils';
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
-} from '../../../../utils/analytics/hiive';
-import { ACTION_THEME_STYLE_SELECTED } from '../../../../utils/analytics/hiive/constants';
-import Grid from '../../../../components/Grid';
+} from '../../../utils/analytics/hiive';
+import { ACTION_THEME_STYLE_SELECTED } from '../../../utils/analytics/hiive/constants';
+import Grid from '../../../components/Grid';
 
 const StepDesignThemeStylesMenu = () => {
 	const content = getContents();

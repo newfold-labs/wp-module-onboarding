@@ -14,7 +14,10 @@ export class Chapter {
 			step.chapter = this.id;
 			return step;
 		} );
-		this.conditionalSteps = conditionalSteps;
+		this.conditionalSteps = conditionalSteps.map( ( step ) => {
+			step.chapter = this.id;
+			return step;
+		} );
 		this.initialSteps = initialSteps;
 		this.topSteps = topSteps;
 		this.interstitialSteps = interstitialSteps;

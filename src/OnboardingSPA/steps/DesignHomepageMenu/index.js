@@ -23,8 +23,8 @@ import {
 	trackOnboardingEvent,
 } from '../../utils/analytics/hiive';
 import getContents from './contents';
-import { ACTION_HOMEPAGE_LAYOUT_SELECTED } from '../../../utils/analytics/hiive/constants';
-import Grid from '../../../components/Grid';
+import { ACTION_HOMEPAGE_LAYOUT_SELECTED } from '../../utils/analytics/hiive/constants';
+import Grid from '../../components/Grid';
 
 const StepDesignHomepageMenu = () => {
 	const location = useLocation();

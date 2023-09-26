@@ -35,7 +35,7 @@ export const getSteps = ( chapters = initialChapters ) => {
 	chapters.forEach( ( chapter ) => {
 		steps = steps.concat( [
 			...chapter.steps,
-			...chapter.interstitialSteps,
+			// ...chapter.interstitialSteps,
 		] );
 	} );
 	steps = steps.concat( [ stepComplete, stepWhatNext ] );
@@ -49,7 +49,7 @@ export const getRoutes = ( chapters = initialChapters ) => {
 		routes = routes.concat( [
 			...chapter.steps,
 			...chapter.conditionalSteps,
-			...chapter.interstitialSteps,
+			// ...chapter.interstitialSteps,
 		] );
 	} );
 	routes = routes.concat( [ stepComplete, stepWhatNext ] );
