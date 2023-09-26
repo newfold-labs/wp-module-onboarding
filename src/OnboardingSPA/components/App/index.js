@@ -26,6 +26,7 @@ import {
 } from '../../utils/analytics/hiive';
 import { injectInAllSteps } from '../../data/routes/allStepsHandler';
 import {
+	ACTION_FEATURE_ADDED,
 	ACTION_LOGO_ADDED,
 	ACTION_ONBOARDING_CHAPTER_COMPLETE,
 	ACTION_ONBOARDING_CHAPTER_STARTED,
@@ -267,6 +268,21 @@ const App = () => {
 						previousStepURL
 					)
 				);
+			}
+		}
+
+		if ( previousStepPath.includes( 'site-features' ) ) {
+			const siteFeatures = currentData.data.siteFeatures;
+			for ( const siteFeature in siteFeatures ) {
+				if ( false !== siteFeatures[ siteFeature ] )
+					trackOnboardingEvent(
+						new OnboardingEvent(
+							ACTION_FEATURE_ADDED,
+							siteFeature,
+							{},
+							previousStepURL
+						)
+					);
 			}
 		}
 
