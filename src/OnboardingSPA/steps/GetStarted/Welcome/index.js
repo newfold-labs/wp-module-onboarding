@@ -15,8 +15,7 @@ import {
 	SIDEBAR_LEARN_MORE,
 } from '../../../../constants';
 import getContents from './contents';
-import ButtonWhite from '../../../../components/Button/ButtonWhite';
-import NavCardButton from '../../../../components/Button/NavCardButton';
+import ButtonWhite from '../../../components/Button/ButtonWhite';
 
 const StepWelcome = () => {
 	const location = useLocation();
