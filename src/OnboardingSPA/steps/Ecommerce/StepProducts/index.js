@@ -39,8 +39,8 @@ const StepProducts = () => {
 					product_types: checked
 						? [ ...productInfo?.product_types, value ]
 						: productInfo?.product_types.filter(
-								( product ) => product !== value
-						  ),
+							( product ) => product !== value
+						),
 				},
 			},
 		} );

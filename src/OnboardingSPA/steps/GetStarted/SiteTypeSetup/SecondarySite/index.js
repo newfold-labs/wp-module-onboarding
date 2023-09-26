@@ -238,28 +238,28 @@ const StepSecondaryStep = () => {
 								<div className="category-scrolling-wrapper">
 									{ primaryTypesList &&
 										primaryTypesList.length > 1 && (
-											<div className="category-scrolling-wrapper__left-btn">
-												<span
-													className="category-scrolling-wrapper__left-btn-icon"
-													onClick={ () =>
-														changePrimaryType(
-															'back'
-														)
-													}
-													onKeyUp={ () =>
-														changePrimaryType(
-															'back'
-														)
-													}
-													role="button"
-													tabIndex={ 0 }
-													style={ {
-														backgroundImage:
+										<div className="category-scrolling-wrapper__left-btn">
+											<span
+												className="category-scrolling-wrapper__left-btn-icon"
+												onClick={ () =>
+													changePrimaryType(
+														'back'
+													)
+												}
+												onKeyUp={ () =>
+													changePrimaryType(
+														'back'
+													)
+												}
+												role="button"
+												tabIndex={ 0 }
+												style={ {
+													backgroundImage:
 															'var(--chevron-left-icon)',
-													} }
-												/>
-											</div>
-										) }
+												} }
+											/>
+										</div>
+									) }
 									<div className="category-scrolling-wrapper__type">
 										<span
 											className="category-scrolling-wrapper__type-icon"
@@ -273,28 +273,28 @@ const StepSecondaryStep = () => {
 									</div>
 									{ primaryTypesList &&
 										primaryTypesList.length > 1 && (
-											<div className="category-scrolling-wrapper__right-btn">
-												<span
-													className="category-scrolling-wrapper__right-btn-icon"
-													onClick={ () =>
-														changePrimaryType(
-															'next'
-														)
-													}
-													onKeyUp={ () =>
-														changePrimaryType(
-															'next'
-														)
-													}
-													role="button"
-													tabIndex={ 0 }
-													style={ {
-														backgroundImage:
+										<div className="category-scrolling-wrapper__right-btn">
+											<span
+												className="category-scrolling-wrapper__right-btn-icon"
+												onClick={ () =>
+													changePrimaryType(
+														'next'
+													)
+												}
+												onKeyUp={ () =>
+													changePrimaryType(
+														'next'
+													)
+												}
+												role="button"
+												tabIndex={ 0 }
+												style={ {
+													backgroundImage:
 															'var(--chevron-right-icon)',
-													} }
-												/>
-											</div>
-										) }
+												} }
+											/>
+										</div>
+									) }
 								</div>
 							) }
 						</div>

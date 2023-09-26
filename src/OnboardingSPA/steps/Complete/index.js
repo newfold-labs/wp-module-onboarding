@@ -49,7 +49,9 @@ const StepComplete = () => {
 
 	async function completeFlowRequest() {
 		const flowCompletionResponse = await completeFlow();
-		if ( flowCompletionResponse?.error ) return false;
+		if ( flowCompletionResponse?.error ) {
+			return false;
+		}
 		return true;
 	}
 
@@ -60,8 +62,11 @@ const StepComplete = () => {
 	};
 
 	useEffect( () => {
-		if ( isQueueEmpty ) checkFlowComplete();
-		else flushQueue();
+		if ( isQueueEmpty ) {
+			checkFlowComplete();
+		} else {
+			flushQueue();
+		}
 	}, [ isQueueEmpty ] );
 
 	useEffect( () => {
