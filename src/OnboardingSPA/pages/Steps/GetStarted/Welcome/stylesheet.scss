@@ -49,7 +49,7 @@
 		&--white {
 			height: 76px;
 			margin: 0 20px;
-			padding: 0px;
+			padding: 0;
 			width: 100%;
 			font-weight: 500;
 			border-radius: 0%;
@@ -61,11 +61,12 @@
 			}
 
 			&__text {
-					font-weight: bold;
+				font-weight: 700;
 			}
 		}
 
 		&--background {
+
 			&__icon {
 				fill: var(--nfd-onboarding-white);
 				height: auto;
