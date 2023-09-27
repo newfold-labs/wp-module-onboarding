@@ -89,8 +89,8 @@ export const getTopSteps = ( steps ) => {
 	return filter( steps, ( step ) => {
 		return (
 			step instanceof PseudoStep ||
-			! step.path.includes( '/ecommerce/step' ) &&
-			! step.path.includes( '/wp-setup/step/top-priority' ) // TODO: Filter to be removed once Chapter Prioritization is enabled.
+			( ! step.path.includes( '/ecommerce/step' ) &&
+			! step.path.includes( '/wp-setup/step/top-priority' ) ) // TODO: Filter to be removed once Chapter Prioritization is enabled.
 		);
 	} );
 };
