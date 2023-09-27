@@ -2,8 +2,8 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useNavigate } from 'react-router-dom';
 import { Button, ButtonGroup } from '@wordpress/components';
 import { Icon, chevronLeft, chevronRight } from '@wordpress/icons';
-
 import { __ } from '@wordpress/i18n';
+
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
 import { pluginDashboardPage } from '../../../constants';

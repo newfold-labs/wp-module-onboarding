@@ -11,7 +11,7 @@ import {
 describe( 'What Next Page', function () {
 	before( () => {
 		cy.visit(
-			'wp-admin/?page=nfd-onboarding&flow=ecommerce#/wp-setup/step/what-next'
+			'wp-admin/?page=nfd-onboarding#/wp-setup/step/what-next'
 		);
 		cy.wait( 5000 );
 	} );

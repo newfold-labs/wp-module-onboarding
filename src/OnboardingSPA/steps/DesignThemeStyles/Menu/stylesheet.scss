@@ -1,0 +1,137 @@
+
+.theme-styles-menu {
+	display: flex;
+	padding-top: 60px;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+
+	&__list {
+		width: 65vw;
+		height: 100%;
+
+		@media (max-width: #{ ($break-xlarge) }) {
+			width: 80vw;
+		}
+
+		@media (max-width: #{ ($break-small) }) {
+			width: 95vw;
+		}
+
+		&__item {
+			flex: 1;
+			width: 100%;
+			margin: 24px;
+			display: inline-block;
+
+			&__title-bar {
+				width: 90%;
+				height: 15px;
+				display: flex;
+				align-items: center;
+				background-color: #e4e4e4;
+				justify-content: space-between;
+				border: 1px solid transparent;
+
+				&__browser {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					&__dot {
+						background-color: #989ea7;
+						width: 8px;
+						margin: 3px;
+						height: 8px;
+						border-radius: 50%;
+						display: inline-block;
+					}
+				}
+
+				&--selected {
+					z-index: 2;
+					width: 40px;
+					height: 40px;
+					display: flex;
+					margin-right: -15px;
+					border-radius: 50%;
+					align-items: center;
+					justify-content: center;
+					background-clip: padding-box;
+					background-color: var(--nfd-onboarding-primary-alt);
+
+					&__path {
+						fill: var(--nfd-onboarding-white);
+						transform: scale(0.7);
+					}
+				}
+
+				&--unselected {
+					display: none;
+				}
+			}
+
+			&__live-preview-container {
+				position: relative;
+				width: 90%;
+				overflow: hidden;
+				align-items: center;
+				border: 1px solid #e3dfdf;
+
+				.live-preview {
+
+					&__container {
+
+						&-custom {
+							width: 100%;
+							overflow: hidden;
+							height: 35vh;
+							min-height: 350px;
+						}
+					}
+				}
+
+				&__overlay {
+					position: absolute;
+					top: 0;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					height: 100%;
+					width: 100%;
+					opacity: 0;
+					z-index: 2;
+					transition: 0.5s ease;
+					background-color: rgb(var(--wp-admin-theme-color-darker-10--rgb));
+
+					&__icon {
+						fill: var(--nfd-onboarding-white);
+						font-size: 20px;
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						-webkit-transform: translate(-50%, -50%);
+						-ms-transform: translate(-50%, -50%);
+						transform: translate(-50%, -50%);
+						text-align: center;
+					}
+
+					&:hover {
+						cursor: zoom-in;
+						opacity: 0.74;
+					}
+				}
+			}
+		}
+	}
+
+	&__custom-pages-link {
+		all: unset;
+		cursor: pointer;
+		color: rgba(var(--wp-admin-theme-color-darker-10--rgb), 0.9);
+
+		&:hover {
+			color: rgba(var(--wp-admin-theme-color-darker-10--rgb), 1);
+		}
+	}
+}

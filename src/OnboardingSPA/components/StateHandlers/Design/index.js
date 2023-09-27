@@ -25,6 +25,7 @@ import ExitToWordPress from '../../ExitToWordPress';
 const DesignStateHandler = ( {
 	children,
 	navigationStateCallback = false,
+	refresh = true,
 } ) => {
 	const isLargeViewport = useViewportMatch( 'medium' );
 
@@ -54,7 +55,7 @@ const DesignStateHandler = ( {
 
 	const expediteInstall = async () => {
 		const status = await expedite( DESIGN_STEPS_THEME );
-		if ( ! status.error ) {
+		if ( ! status.error && true === refresh ) {
 			window.location.reload();
 			return;
 		}
@@ -100,7 +101,9 @@ const DesignStateHandler = ( {
 				expediteInstall();
 				break;
 			case THEME_STATUS_ACTIVE:
-				window.location.reload();
+				if ( true === refresh ) {
+					window.location.reload();
+				}
 				break;
 			default:
 				updateThemeStatus( themeStatus );
@@ -126,7 +129,9 @@ const DesignStateHandler = ( {
 			return updateThemeStatus( THEME_STATUS_FAILURE );
 		}
 
-		return window.location.reload();
+		if ( true === refresh ) {
+			window.location.reload();
+		}
 	};
 
 	const handleRender = () => {

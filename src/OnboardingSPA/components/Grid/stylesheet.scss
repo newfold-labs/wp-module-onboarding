@@ -1,0 +1,13 @@
+.nfd-onboarding-grid {
+	width: 100%;
+	display: grid;
+	justify-content: center;
+
+	@media (max-width: #{ ($break-huge) }) {
+		grid-template-columns: repeat(2, 1fr) !important;
+	}
+
+	@media (max-width: #{ ($break-small) }) {
+		grid-template-columns: 1fr !important;
+	}
+}

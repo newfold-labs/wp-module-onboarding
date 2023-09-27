@@ -28,10 +28,10 @@
 @import "../components/Sidebar/stylesheet";
 @import "../components/Sidebar/components/LearnMore/stylesheet";
 @import "../components/LivePreview/stylesheet";
-@import "../pages/Steps/DesignColors/stylesheet";
-@import "../pages/Steps/GetStarted/GetStartedExperience/stylesheet";
+@import "../steps/DesignColors/stylesheet";
+@import "../steps/GetStarted/GetStartedExperience/stylesheet";
 @import "../components/Button/NavCardButton/stylesheet";
-@import "../pages/Steps/Ecommerce/stylesheet";
+@import "../steps/Ecommerce/stylesheet";
 @import "../components/ErrorState/stylesheet";
 @import "../components/ErrorModal/stylesheet";
 @import "../components/CheckboxTemplate/CheckboxItem/stylesheet";
@@ -40,19 +40,21 @@
 @import "../components/Sidebar/components/LearnMore/Skeleton/stylesheet";
 @import "../components/Animate/stylesheet";
 @import "../components/NewfoldInterfaceSkeleton/style";
+@import "../components/Loaders/Chapter/Interstitial/stylesheet";
+@import "../components/Grid/stylesheet";
 
 // CSS for Pages
-@import "../pages/Steps/BasicInfo/stylesheet";
-@import "../pages/Steps/TopPriority/stylesheet";
-@import "../pages/Steps/DesignHomepageMenu/stylesheet";
-@import "../pages/Steps/GetStarted/Welcome/stylesheet";
-@import "../pages/Steps/GetStarted/SiteTypeSetup/PrimarySite/stylesheet";
-@import "../pages/Steps/GetStarted/SiteTypeSetup/SecondarySite/stylesheet";
-@import "../pages/Steps/DesignThemeStyles/stylesheet";
-@import "../pages/Steps/WhatNext/stylesheet";
-@import "../pages/Steps/SitePages/stylesheet";
-@import "../pages/Steps/DesignFonts/stylesheet";
-@import "../pages/Steps/DesignHeaderMenu/stylesheet";
+@import "../steps/BasicInfo/stylesheet";
+@import "../steps/TopPriority/stylesheet";
+@import "../steps/DesignHomepageMenu/stylesheet";
+@import "../steps/GetStarted/Welcome/stylesheet";
+@import "../steps/GetStarted/SiteTypeSetup/PrimarySite/stylesheet";
+@import "../steps/GetStarted/SiteTypeSetup/SecondarySite/stylesheet";
+@import "../steps/DesignThemeStyles/stylesheet";
+@import "../steps/WhatNext/stylesheet";
+@import "../steps/SitePages/stylesheet";
+@import "../steps/DesignFonts/stylesheet";
+@import "../steps/DesignHeaderMenu/stylesheet";
 
 .nfd-onboarding-container {
 	display: flex;

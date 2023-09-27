@@ -12,7 +12,15 @@ const MiniPreview = ( {
 	isSocialFormOpen,
 	setIsSocialFormOpen,
 } ) => {
-	const content = getContents();
+	const { socialDataStore, brandUrl } = useSelect( ( select ) => {
+		return {
+			socialDataStore:
+				select( nfdOnboardingStore ).getOnboardingSocialData(),
+			brandUrl: select( nfdOnboardingStore ).getNewfoldBrandUrl(),
+		};
+	}, [] );
+
+	const content = getContents( brandUrl );
 	const titlePreview = title === '' ? content.defaultTitle : title;
 	const descPreview = desc === '' ? content.defaultDesc : desc;
 	const urlPreview = title === '' ? content.defaultUrl : titleToUrl();
@@ -24,13 +32,6 @@ const MiniPreview = ( {
 	const [ linkedin, setLinkedIn ] = useState( '' );
 	const [ yelp, setYelp ] = useState( '' );
 	const [ tiktok, setTikTok ] = useState( '' );
-
-	const { socialDataStore } = useSelect( ( select ) => {
-		return {
-			socialDataStore:
-				select( nfdOnboardingStore ).getOnboardingSocialData(),
-		};
-	}, [] );
 
 	useEffect( () => {
 		setFacebook( socialDataStore?.facebook_site ?? '' );
@@ -108,7 +109,7 @@ const MiniPreview = ( {
 
 	return (
 		<div>
-			<h4 className="mini-preview">Preview</h4>
+			<h4 className="mini-preview">{ content.heading }</h4>
 			<div className="browser-container">
 				<div className="browser-row-title">
 					<div className="browser-row-title_main">

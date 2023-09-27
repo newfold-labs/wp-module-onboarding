@@ -17,7 +17,7 @@ import {
 	stateToStore,
 	storeToState,
 	findIndexInPalette,
-} from '../../../pages/Steps/DesignColors/utils';
+} from '../../../steps/DesignColors/utils';
 import ColorPickerButton from '../../ColorPickerButton';
 import { ACTION_COLORS_SELECTED } from '../../../utils/analytics/hiive/constants';
 
