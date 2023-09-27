@@ -1,18 +1,18 @@
 import { lazy } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Step } from '../../data/models/Step';
-import { typography } from '@wordpress/icons';
+import { typography as fonts  } from '@wordpress/icons';
 import LearnMore from './Sidebar/LearnMore';
-import { VIEW_DESIGN_TYPOGRAPHY } from '../../../constants';
+import { VIEW_DESIGN_FONTS } from '../../../constants';
 
-const StepDesignTypography = lazy( () => import( './index' ) );
+const StepDesignFonts = lazy( () => import( './index' ) );
 
-export const stepDesignTypography = new Step( {
+export const stepDesignFonts = new Step( {
 	path: '/wp-setup/step/design/typography',
-	title: __( 'Typography', 'wp-module-onboarding' ),
-	Component: StepDesignTypography,
-	icon: typography,
-	drawerView: VIEW_DESIGN_TYPOGRAPHY,
+	title: __( 'Fonts', 'wp-module-onboarding' ),
+	Component: StepDesignFonts,
+	icon: fonts,
+	drawerView: VIEW_DESIGN_FONTS,
 	sidebars: {
 		LearnMore: {
 			SidebarComponents: [ LearnMore ],
