@@ -33,9 +33,61 @@
 		padding-bottom: 40px;
 		color: var(--nfd-onboarding-contrast);
 	}
+
+	&__buttons {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+
+		@media (max-width: #{ ($break-xlarge) }) {
+			flex-direction: column-reverse;
+		}
+
+		&--background,
+		&--white {
+			height: 76px;
+			margin: 0 20px;
+			padding: 0;
+			width: 100%;
+			font-weight: 500;
+			border-radius: 0%;
+			font-size: clamp(1rem, 0.9091rem + 0.4545vw, 2rem);
+
+			@media (max-width: #{ ($break-xlarge) }) {
+				margin: 10px 0;
+				width: 100%;
+			}
+
+			&__text {
+				font-weight: 700;
+			}
+		}
+
+		&--background {
+
+			&__icon {
+				fill: var(--nfd-onboarding-white);
+				height: auto;
+			}
+		}
+
+		&--white {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+
+			&__icon {
+				margin-left: 15px;
+			}
+		}
+	}
 }
 
 .nfd-step-card-subheading {
+	margin-bottom: 30px;
 	display: flex;
 	justify-content: space-around;
 }
@@ -120,7 +172,6 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-around;
-	height: clamp(560px, 59vh, 800px);
 	width: 100%;
 	padding-bottom: 10px;
 }

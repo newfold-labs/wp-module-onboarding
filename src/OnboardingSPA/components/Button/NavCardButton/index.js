@@ -11,6 +11,8 @@ import {
 } from '../../../utils/analytics/hiive';
 import { ACTION_ONBOARDING_COMPLETE } from '../../../utils/analytics/hiive/constants';
 import { activateInitialPlugins } from '../../../utils/api/plugins';
+import classNames from 'classnames';
+import { Icon } from '@wordpress/icons';
 
 /**
  * Navigation Button Component on Card
@@ -18,7 +20,7 @@ import { activateInitialPlugins } from '../../../utils/api/plugins';
  * @return
  */
 
-const NavCardButton = ( { text, disabled } ) => {
+const NavCardButton = ( { text, disabled, className, icon } ) => {
 	const navigate = useNavigate();
 
 	const { nextStep, currentData } = useSelect( ( select ) => {
@@ -50,8 +52,18 @@ const NavCardButton = ( { text, disabled } ) => {
 
 	return (
 		<Button
-			className="nfd-nav-card-button"
-			text={ text }
+			className={ classNames( 'nfd-nav-card-button', className ) }
+			text={
+				<>
+					<span className={ `${ className }__text` }>{ text }</span>
+					{ icon && (
+						<Icon
+							className={ `${ className }__icon` }
+							icon={ icon }
+						/>
+					) }
+				</>
+			}
 			handleClick={ handleBtnClick }
 			disabled={ disabled }
 		/>
