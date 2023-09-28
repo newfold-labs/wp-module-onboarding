@@ -26,6 +26,7 @@ import {
 } from '../../utils/analytics/hiive';
 import { injectInAllSteps } from '../../data/flows/utils';
 import {
+	ACTION_FEATURE_ADDED,
 	ACTION_LOGO_ADDED,
 	ACTION_SITE_TITLE_SET,
 	ACTION_SOCIAL_ADDED,
@@ -261,6 +262,22 @@ const App = () => {
 						previousStepURL
 					)
 				);
+			}
+		}
+
+		if ( previousStepPath.includes( 'site-features' ) ) {
+			const siteFeatures = currentData.data.siteFeatures;
+			for ( const siteFeature in siteFeatures ) {
+				if ( false !== siteFeatures[ siteFeature ] ) {
+					trackOnboardingEvent(
+						new OnboardingEvent(
+							ACTION_FEATURE_ADDED,
+							siteFeature,
+							{},
+							previousStepURL
+						)
+					);
+				}
 			}
 		}
 
