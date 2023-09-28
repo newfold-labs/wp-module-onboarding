@@ -60,6 +60,10 @@ const FlowStateHandler = ( { children } ) => {
 		updateDesignRoutes,
 		setCurrentOnboardingData,
 		setActiveChapter,
+		setIsDrawerOpened,
+		setIsDrawerSuppressed,
+		setIsHeaderNavigationEnabled,
+		setSidebarActiveView,
 	} = useDispatch( nfdOnboardingStore );
 
 	const handleCommerceFlow = async ( flow, retries = 0 ) => {
@@ -176,9 +180,18 @@ const FlowStateHandler = ( { children } ) => {
 		trackChapters();
 	}, [ currentStep ] );
 
+	const disableNavigation = () => {
+		setIsDrawerOpened( false );
+		setIsDrawerSuppressed( true );
+		setIsHeaderNavigationEnabled( false );
+		setSidebarActiveView( false );
+	};
+
 	useEffect( () => {
 		if ( window.nfdOnboarding?.newFlow ) {
 			const flow = window.nfdOnboarding.newFlow;
+			disableNavigation();
+			setNewFlow( flow );
 			switchToNewFlow( flow );
 			window.nfdOnboarding.newFlow = undefined;
 		}
