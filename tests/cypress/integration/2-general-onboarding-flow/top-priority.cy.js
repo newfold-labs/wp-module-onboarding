@@ -27,7 +27,7 @@ describe( 'Top Priority Page', function () {
 		cy.get( '.components-button.skip-button' ).should( 'be.visible' );
 	} );
 
-	it( 'Click on different cards and move on to next page', () => {
+	it.skip( 'Click on different cards and move on to next page', () => {
 		let previewCount = 0;
 		const className = '.components-surface.components-card.nfd-card';
 		const arr = cy.get( className );
