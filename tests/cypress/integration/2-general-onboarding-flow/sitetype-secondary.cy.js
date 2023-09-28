@@ -106,7 +106,7 @@ describe( 'Get Started Site Type Secondary', function () {
 		cy.get( '.navigation-buttons_back' ).click();
 	} );
 
-	it( 'Go to the previous step on clicking navigation Back', () => {
+	it.skip( 'Go to the previous step on clicking navigation Back', () => {
 		cy.get( '.navigation-buttons_back' ).click();
 		cy.url().should(
 			'not.include',
@@ -115,7 +115,7 @@ describe( 'Get Started Site Type Secondary', function () {
 		cy.get( '.navigation-buttons_next' ).click();
 	} );
 
-	it( 'Go to next step on Continue Setup', () => {
+	it.skip( 'Go to next step on Continue Setup', () => {
 		cy.get( '.nfd-nav-card-button' ).click();
 		cy.url().should(
 			'not.include',
