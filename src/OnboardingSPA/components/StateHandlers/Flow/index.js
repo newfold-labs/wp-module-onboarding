@@ -1,6 +1,7 @@
-import { useEffect } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
+import { getFragment } from '@wordpress/url';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import { switchFlow } from '../../../utils/api/flow';
@@ -21,10 +22,14 @@ import {
 	ACTION_ONBOARDING_STARTED,
 } from '../../../utils/analytics/hiive/constants';
 import { ECOMMERCE_FLOW } from '../../../data/flows/constants';
-import { getQueryParam } from '../../../utils';
+import { getQueryParam, removeQueryParam } from '../../../utils';
+import { commerce } from '../../../chapters/commerce';
+import EcommerceStepLoader from '../../Loaders/Step/Ecommerce';
 
 const FlowStateHandler = ( { children } ) => {
 	const location = useLocation();
+
+	const [ newFlow, setNewFlow ] = useState( false );
 
 	const {
 		brandConfig,
@@ -59,13 +64,20 @@ const FlowStateHandler = ( { children } ) => {
 
 	const handleCommerceFlow = async ( flow, retries = 0 ) => {
 		if ( retries >= MAX_RETRIES_FLOW_SWITCH ) {
-			return;
+			return setNewFlow( false );
 		}
 		const response = switchFlow( flow );
 		if ( response?.error ) {
 			retries = retries + 1;
 			return handleCommerceFlow( flow, retries );
 		}
+
+		// TODO: Remove code below once Chapter Prioritization is enabled.
+		const firstEcommerceStep = commerce.steps[ 0 ];
+		const fragment = getFragment( window.location.href );
+		const redirect = removeQueryParam( window.location.href, 'flow' ).replace( fragment, '' );
+		window.location.replace( `${ redirect }#${ firstEcommerceStep.path }` );
+		window.location.reload();
 	};
 
 	const switchToNewFlow = async ( flow ) => {
@@ -78,6 +90,8 @@ const FlowStateHandler = ( { children } ) => {
 			case ECOMMERCE_FLOW:
 				handleCommerceFlow( flow );
 				break;
+			default:
+				setNewFlow( false );
 		}
 	};
 
@@ -170,7 +184,17 @@ const FlowStateHandler = ( { children } ) => {
 		}
 	}, [ location.pathname ] );
 
-	return <>{ children }</>;
+	// TODO: Remove handleRender and replace with only children once Chapter Prioritization is enabled.
+	const handleRender = () => {
+		switch ( newFlow ) {
+			case 'ecommerce':
+				return <EcommerceStepLoader />;
+			default:
+				return children;
+		}
+	};
+
+	return <>{ handleRender() }</>;
 };
 
 export default FlowStateHandler;
