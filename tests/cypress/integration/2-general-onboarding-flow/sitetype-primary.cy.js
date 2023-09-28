@@ -25,7 +25,7 @@ describe( 'Get Started Site Type Primary', function () {
 	} );
 
 	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel( '__get-started-site-secondary', 'Site Type' );
+		CheckIntroPanel( '__get-started-site-type', 'Site Type' );
 		CheckIllustrationPanel();
 		CheckInfoPanel();
 		CheckHelpPanelLinks();
