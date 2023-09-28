@@ -1,7 +1,7 @@
 // <reference types="Cypress" />
 
 export const CheckCardHeadingSubheading = ( question = false ) => {
-	cy.get( '.nfd-step-card-heading' ).should( 'be.visible' );
+	cy.get( '.nfd-step-card-heading' ).scrollIntoView().should( 'be.visible' );
 	if ( question ) {
 		cy.get( '.nfd-step-card-subheading-other' ).should( 'be.visible' );
 		cy.get( '.nfd-step-card-question' ).should( 'be.visible' );

@@ -5,7 +5,7 @@ export const CheckIntroPanel = ( sidebarStep, headingText ) => {
 	cy.get( '.nfd-onboarding-header__end > .components-button' )
 		.click()
 		.and( 'have.class', 'is-pressed' );
-	cy.get( prefixSidebarStep.concat( sidebarStep ) ).should( 'be.visible' );
+	cy.get( prefixSidebarStep.concat( sidebarStep ) ).scrollIntoView().should( 'be.visible' );
 	const heading = prefixSidebarStep.concat( '--step-intro-panel__container' );
 	cy.get( heading.concat( '__icon' ) ).should( 'be.visible' );
 	cy.get( heading.concat( '__text__heading' ) )
@@ -47,12 +47,12 @@ export const CheckHelpPanelLinks = (
 		.scrollIntoView()
 		.should( 'be.visible' );
 	if ( blueButton ) {
-		cy.get( '.nfd-onboarding-button--blue' )
+		cy.get('.nfd-onboarding-sidebar-learn-more--help-panel__links > .nfd-onboarding-button--background')
 			.should( 'have.text', '1-1 Expert Solutions & Coaching' )
 			.should( 'have.attr', 'type' )
 			.and( 'match', /button/ );
 	}
-	cy.get( '.nfd-onboarding-button--white' )
+	cy.get('.nfd-onboarding-sidebar-learn-more--help-panel__links > .nfd-onboarding-button--white')
 		.should( 'have.text', whiteButtonText )
 		.should( 'have.attr', 'type' )
 		.and( 'match', /button/ );
