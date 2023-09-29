@@ -81,7 +81,10 @@ const FlowStateHandler = ( { children } ) => {
 		// TODO: Remove code below once Chapter Prioritization is enabled.
 		const firstEcommerceStep = commerce.steps[ 0 ];
 		const fragment = getFragment( window.location.href );
-		const redirect = removeQueryParam( window.location.href, 'flow' ).replace( fragment, '' );
+		const redirect = removeQueryParam(
+			window.location.href,
+			'flow'
+		).replace( fragment, '' );
 		window.location.replace( `${ redirect }#${ firstEcommerceStep.path }` );
 		window.location.reload();
 	};
