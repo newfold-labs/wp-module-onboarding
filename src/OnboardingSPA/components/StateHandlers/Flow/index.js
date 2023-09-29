@@ -25,6 +25,7 @@ import { ECOMMERCE_FLOW } from '../../../data/flows/constants';
 import { getQueryParam, removeQueryParam } from '../../../utils';
 import { commerce } from '../../../chapters/commerce';
 import EcommerceStepLoader from '../../Loaders/Step/Ecommerce';
+import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 
 const FlowStateHandler = ( { children } ) => {
 	const location = useLocation();
@@ -70,16 +71,20 @@ const FlowStateHandler = ( { children } ) => {
 		if ( retries >= MAX_RETRIES_FLOW_SWITCH ) {
 			return setNewFlow( false );
 		}
-		const response = switchFlow( flow );
+		const response = await switchFlow( flow );
 		if ( response?.error ) {
 			retries = retries + 1;
 			return handleCommerceFlow( flow, retries );
 		}
+		await HiiveAnalytics.dispatchEvents();
 
 		// TODO: Remove code below once Chapter Prioritization is enabled.
 		const firstEcommerceStep = commerce.steps[ 0 ];
 		const fragment = getFragment( window.location.href );
-		const redirect = removeQueryParam( window.location.href, 'flow' ).replace( fragment, '' );
+		const redirect = removeQueryParam(
+			window.location.href,
+			'flow'
+		).replace( fragment, '' );
 		window.location.replace( `${ redirect }#${ firstEcommerceStep.path }` );
 		window.location.reload();
 	};
