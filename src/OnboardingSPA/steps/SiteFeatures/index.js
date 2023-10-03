@@ -12,7 +12,7 @@ import HeadingWithSubHeading from '../../components/HeadingWithSubHeading';
 import CheckboxList from '../../components/CheckboxTemplate/CheckboxList';
 import { CheckboxListSkeleton } from '../../components/CheckboxTemplate';
 import getContents from './contents';
-import ComingSoon from '../../components/ComingSoon';
+import ComingSoon from '../../components/ComingSoon/1index';
 
 const StepSiteFeatures = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
