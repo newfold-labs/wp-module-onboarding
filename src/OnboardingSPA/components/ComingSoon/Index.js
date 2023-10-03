@@ -1,34 +1,37 @@
-// import { useState } from '@wordpress/element';
-// import { useSelect, useDispatch } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 
-import { CheckboxItem } from '../../components/CheckboxTemplate';
-// import { store as nfdOnboardingStore } from '../../store';
+import getContents from './contents';
+import { CheckboxItem } from '../CheckboxTemplate';
+import { store as nfdOnboardingStore } from '../../store';
 
 const ComingSoon = () => {
-	// const [ comingSoon, setComingSoon ] = useState();
+	const content = getContents();
 
-	// const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
+	const { currentData } = useSelect( ( select ) => {
+		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+		};
+	}, [] );
 
-	// const { currentData } = useSelect( ( select ) => {
-	// 	return {
-	// 		currentData:
-	// 			select( nfdOnboardingStore ).getCurrentOnboardingData(),
-	// 	};
-	// }, [] );
+	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
 
-	async function handleComingSoon() {}
+	async function handleComingSoon( name, selection ) {
+		currentData.data.comingSoon = selection;
+		setCurrentOnboardingData( currentData );
+	}
 
 	return (
 		<div className="coming-soon--wrapper">
 			<CheckboxItem
 				name="coming_soon"
-				title="Coming Soon"
-				subtitle="Keep your {site} private until you click launch"
-				icon="--site-features-security"
-				desc="Keep your {site} private until you click launch"
+				title={ content.title }
+				subtitle={ content.subtitle }
+				icon={ '--site-features-security' }
+				desc={ content.desc }
 				callback={ handleComingSoon }
 				fullWidth={ true }
-				isSelectedDefault={ false }
+				isSelectedDefault={ currentData?.data?.comingSoon }
 			/>
 		</div>
 	);
