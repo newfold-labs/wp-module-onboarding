@@ -16,7 +16,7 @@ const getContents = () => {
 		desc: sprintf(
 			/* translators: %s: site or store */
 			__(
-				'Keep your %s private until you click launch',
+				"We'll show a placeholder page to logged-out visitors while you build your %s.",
 				'wp-module-onboarding'
 			),
 			translations( 'site' )
