@@ -113,7 +113,7 @@ const StepSiteFeatures = () => {
 					customItemsList={ customPluginsList }
 				/>
 			) }
-			<ComingSoon />
+			{ customPluginsList && <ComingSoon /> }
 		</CommonLayout>
 	);
 };

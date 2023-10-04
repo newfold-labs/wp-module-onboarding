@@ -27,7 +27,7 @@ const ComingSoon = () => {
 				name="coming_soon"
 				title={ content.title }
 				subtitle={ content.subtitle }
-				icon={ '--site-features-security' }
+				icon={ '--site-features-comingsoon' }
 				desc={ content.desc }
 				callback={ handleComingSoon }
 				fullWidth={ true }
