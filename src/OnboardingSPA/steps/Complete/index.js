@@ -9,7 +9,7 @@ import { StepLoader } from '../../components/Loaders';
 import { StepErrorState } from '../../components/ErrorState';
 import { THEME_STATUS_INIT } from '../../../constants';
 import { DesignStateHandler } from '../../components/StateHandlers';
-import { setComingSoonDashboard } from '../../utils/api/comingSoon';
+import { setComingSoon } from '../../utils/api/comingSoon';
 
 const StepComplete = () => {
 	const {
@@ -41,7 +41,7 @@ const StepComplete = () => {
 	const checkFlowComplete = async () => {
 		await Promise.all( [
 			completeFlowRequest(),
-			setComingSoonDashboard( currentData?.data?.comingSoon ),
+			setComingSoon( currentData?.data?.comingSoon ),
 		] ).then( ( values ) =>
 			values.forEach( ( value ) => {
 				// If any Request returns False then Show Error

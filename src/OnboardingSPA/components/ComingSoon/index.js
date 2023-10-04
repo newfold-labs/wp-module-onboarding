@@ -22,7 +22,7 @@ const ComingSoon = () => {
 	}
 
 	return (
-		<div className="coming-soon--wrapper">
+		<div className="coming_soon__wrapper">
 			<CheckboxItem
 				name="coming_soon"
 				title={ content.title }

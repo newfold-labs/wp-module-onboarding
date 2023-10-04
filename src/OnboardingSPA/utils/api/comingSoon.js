@@ -3,7 +3,7 @@ import { wpSiteUrl } from '../../../constants';
 
 import apiFetch from '@wordpress/api-fetch';
 
-export async function setComingSoonDashboard( comingSoon ) {
+export async function setComingSoon( comingSoon ) {
 	const data = { comingSoon };
 	return await resolve(
 		apiFetch( {
