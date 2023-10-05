@@ -8,7 +8,7 @@ export const ACTION_SECONDARY_TYPE_SET = 'secondary_type_set';
 export const ACTION_EXPERIENCE_LEVEL_SET = 'experience_level_set';
 export const ACTION_THEME_STYLE_SELECTED = 'theme_style_selected';
 export const ACTION_COLORS_SELECTED = 'colors_selected';
-export const ACTION_TYPOGRAPHY_SELECTED = 'typography_selected';
+export const ACTION_FONTS_SELECTED = 'fonts_selected';
 export const ACTION_HEADER_SELECTED = 'header_selected';
 export const ACTION_HOMEPAGE_LAYOUT_SELECTED = 'homepage_layout_selected';
 export const ACTION_STARTER_PAGES_SELECTED = 'starter_pages_selected';
@@ -30,7 +30,7 @@ export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_EXPERIENCE_LEVEL_SET ]: 'experience_level',
 	[ ACTION_THEME_STYLE_SELECTED ]: 'theme_style',
 	[ ACTION_COLORS_SELECTED ]: 'color_palette',
-	[ ACTION_TYPOGRAPHY_SELECTED ]: 'font_set',
+	[ ACTION_FONTS_SELECTED ]: 'font_set',
 	[ ACTION_HEADER_SELECTED ]: 'header',
 	[ ACTION_HOMEPAGE_LAYOUT_SELECTED ]: 'layout',
 	[ ACTION_STARTER_PAGES_SELECTED ]: 'pages',

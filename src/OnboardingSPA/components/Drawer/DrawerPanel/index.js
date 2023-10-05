@@ -1,11 +1,10 @@
 import {
-	DRAWER_NAV_VIEWS,
 	VIEW_DESIGN_COLORS,
 	VIEW_DESIGN_HEADER_MENU,
 	VIEW_DESIGN_THEMES,
 	VIEW_DESIGN_THEME_STYLES_MENU,
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
-	VIEW_DESIGN_TYPOGRAPHY,
+	VIEW_DESIGN_FONTS,
 	VIEW_NAV_DESIGN,
 	VIEW_NAV_PAGE,
 	VIEW_NAV_PRIMARY,
@@ -13,7 +12,6 @@ import {
 	VIEW_NAV_ECOMMERCE_STORE_INFO,
 	VIEW_DESIGN_HOMEPAGE_MENU,
 } from '../../../../constants';
-import { useEffect, useState } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 
 import DesignColors from './DesignColors';
@@ -22,7 +20,7 @@ import DesignHomepageMenu from './DesignHomepageMenu';
 import DesignThemeStylesMenu from './DesignThemeStylesMenu';
 import DesignThemeStylesPreview from './DesignThemeStylesPreview';
 import DesignThemes from './DesignThemes';
-import DesignTypography from './DesignTypography';
+import DesignFonts from './DesignFonts';
 import { ESCAPE } from '@wordpress/keycodes';
 import NavDesign from './NavDesign';
 import NavGetStarted from './NavGetStarted';
@@ -35,7 +33,6 @@ import { store as nfdOnboardingStore } from '../../../store';
 import WithDesignBack from './WithDesignBack';
 
 const DrawerPanel = () => {
-	const [ isNavView, setIsNavView ] = useState( true ); // menu-primary is default view
 	const { isDrawerOpen, drawerView } = useSelect( ( select ) => {
 		const { isDrawerOpened, getDrawerView } = select( nfdOnboardingStore );
 
@@ -45,8 +42,7 @@ const DrawerPanel = () => {
 		};
 	}, [] );
 
-	const { setIsDrawerOpened, setDrawerActiveView } =
-		useDispatch( nfdOnboardingStore );
+	const { setIsDrawerOpened } = useDispatch( nfdOnboardingStore );
 
 	const closeOnEscape = ( event ) => {
 		if ( event.keyCode === ESCAPE && ! event.defaultPrevented ) {
@@ -55,19 +51,13 @@ const DrawerPanel = () => {
 		}
 	};
 
-	useEffect( () => {
-		if ( DRAWER_NAV_VIEWS.includes( drawerView ) ) {
-			setIsNavView( true );
-		} else {
-			setIsNavView( false );
-		}
-	}, [ drawerView ] );
-
 	return (
 		<div
 			className={ classNames( `nfd-onboarding-drawer__panel`, {
 				'is-open': isDrawerOpen,
 			} ) }
+			role="button"
+			tabIndex="0"
 			onKeyDown={ closeOnEscape }
 		>
 			<div className="nfd-onboarding-drawer__panel-inner">
@@ -107,9 +97,9 @@ const DrawerPanel = () => {
 								<DesignColors />
 							</WithDesignBack>
 						) }
-						{ VIEW_DESIGN_TYPOGRAPHY === drawerView && (
+						{ VIEW_DESIGN_FONTS === drawerView && (
 							<WithDesignBack>
-								<DesignTypography />
+								<DesignFonts />
 							</WithDesignBack>
 						) }
 						{ VIEW_DESIGN_HEADER_MENU === drawerView && (

@@ -8,7 +8,7 @@ import CommonLayout from '../../components/Layouts/Common';
 import {
 	SIDEBAR_LEARN_MORE,
 	THEME_STATUS_INIT,
-	VIEW_DESIGN_TYPOGRAPHY,
+	VIEW_DESIGN_FONTS,
 	THEME_STATUS_ACTIVE,
 } from '../../../constants';
 import { DesignStateHandler } from '../../components/StateHandlers';
@@ -19,7 +19,7 @@ import {
 
 import { initialDesignRoutes } from '../../data/flows';
 
-const StepDesignTypography = () => {
+const StepDesignFonts = () => {
 	const location = useLocation();
 	const [ pattern, setPattern ] = useState();
 
@@ -37,7 +37,7 @@ const StepDesignTypography = () => {
 
 	useEffect( () => {
 		setSidebarActiveView( SIDEBAR_LEARN_MORE );
-		setDrawerActiveView( VIEW_DESIGN_TYPOGRAPHY );
+		setDrawerActiveView( VIEW_DESIGN_FONTS );
 	}, [] );
 
 	const getFontPatterns = async () => {
@@ -88,4 +88,4 @@ const StepDesignTypography = () => {
 	);
 };
 
-export default StepDesignTypography;
+export default StepDesignFonts;

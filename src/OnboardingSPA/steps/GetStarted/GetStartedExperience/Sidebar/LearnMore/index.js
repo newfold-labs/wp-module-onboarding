@@ -47,6 +47,7 @@ const LearnMore = () => {
 	const content = getContents( techSupportLink, fullServiceCreativeTeamLink );
 
 	return (
+
 		<div className="nfd-onboarding-sidebar-learn-more__get-started-wp-experience">
 			<StepIntroPanel
 				heading={ content.introduction.heading }

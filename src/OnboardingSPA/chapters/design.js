@@ -6,7 +6,7 @@ import { CHAPTER_DESIGN } from '../../constants';
 import { stepDesignColors } from '../steps/DesignColors/step';
 import { stepDesignThemeStylesMenu } from '../steps/DesignThemeStyles/Menu/step.js';
 import { stepDesignThemeStylesPreview } from '../steps/DesignThemeStyles/Preview/step';
-import { stepDesignTypography } from '../steps/DesignTypography/step';
+import { stepDesignFonts } from '../steps/DesignFonts/step';
 import { Chapter } from '../data/models/Chapter';
 import { layoutContent } from './layoutContent';
 import { Step } from '../data/models/Step';
@@ -20,7 +20,7 @@ const interstitialStep = new Step( {
 
 const steps = [ stepDesignThemeStylesMenu, stepDesignThemeStylesPreview ];
 
-const conditionalSteps = [ stepDesignColors, stepDesignTypography ];
+const conditionalSteps = [ stepDesignColors, stepDesignFonts ];
 
 const initialSteps = filter(
 	[ ...steps, ...conditionalSteps, ...layoutContent.steps ],

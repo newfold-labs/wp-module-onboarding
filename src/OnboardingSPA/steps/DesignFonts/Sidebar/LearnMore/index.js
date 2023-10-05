@@ -44,7 +44,7 @@ const LearnMore = () => {
 
 	const content = getContents( techSupportLink, fullServiceCreativeTeamLink );
 	return (
-		<div className="nfd-onboarding-sidebar-learn-more__design-typography">
+		<div className="nfd-onboarding-sidebar-learn-more__design-fonts">
 			<StepIntroPanel
 				heading={ content.introduction.heading }
 				subheading={ content.introduction.subheading }

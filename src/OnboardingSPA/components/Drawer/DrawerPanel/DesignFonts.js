@@ -11,9 +11,9 @@ import {
 	OnboardingEvent,
 	trackOnboardingEvent,
 } from '../../../utils/analytics/hiive';
-import { ACTION_TYPOGRAPHY_SELECTED } from '../../../utils/analytics/hiive/constants';
+import { ACTION_FONTS_SELECTED } from '../../../utils/analytics/hiive/constants';
 
-const DesignTypography = () => {
+const DesignFonts = () => {
 	const drawerFontOptions = useRef();
 	const [ isLoaded, setIsLoaded ] = useState( false );
 	const [ selectedFont, setSelectedFont ] = useState();
@@ -132,7 +132,7 @@ const DesignTypography = () => {
 		setCurrentOnboardingData( currentData );
 		if ( 'click' === context ) {
 			trackOnboardingEvent(
-				new OnboardingEvent( ACTION_TYPOGRAPHY_SELECTED, fontStyle )
+				new OnboardingEvent( ACTION_FONTS_SELECTED, fontStyle )
 			);
 		}
 	};
@@ -205,4 +205,4 @@ const DesignTypography = () => {
 		</div>
 	);
 };
-export default DesignTypography;
+export default DesignFonts;

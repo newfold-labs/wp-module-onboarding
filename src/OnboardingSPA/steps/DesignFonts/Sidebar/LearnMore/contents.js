@@ -1,20 +1,20 @@
 import { __, sprintf } from '@wordpress/i18n';
 
 import { translations } from '../../../../utils/locales/translations';
-import { typography } from '@wordpress/icons';
+import { typography as fonts } from '@wordpress/icons';
 
 const getContents = ( techSupportLink, fullServiceCreativeTeamLink ) => {
 	return {
 		introduction: {
-			heading: __( 'Typography', 'wp-module-onboarding' ),
+			heading: __( 'Fonts', 'wp-module-onboarding' ),
 			subheading: __(
 				`Give tone and taste to your words using a curated set of great type treatments.`,
 				'wp-module-onboarding'
 			),
-			icon: typography,
+			icon: fonts,
 		},
 		illustration: {
-			icon: 'nfd-onboarding-sidebar-learn-more-design-typography-illustration',
+			icon: 'nfd-onboarding-sidebar-learn-more-design-fonts-illustration',
 		},
 		information: {
 			headingWithDescriptions: [
