@@ -92,7 +92,7 @@ const StepSiteFeatures = () => {
 
 	return (
 		<CommonLayout>
-			<div className='site-features__heading'>
+			<div className="site-features__heading">
 				<HeadingWithSubHeading
 					title={ content.heading }
 					subtitle={ content.subheading }
