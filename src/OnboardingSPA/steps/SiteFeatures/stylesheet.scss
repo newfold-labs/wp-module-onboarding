@@ -1,7 +1,7 @@
 .site-features__heading {
-    margin: 100px;
+	margin: 100px;
 
-    @media (max-width: #{ ($break-medium) }) {
-        margin: 0px;
-    }
+	@media (max-width: #{ ($break-medium) }) {
+		margin: 0;
+	}
 }
