@@ -42,6 +42,7 @@
 @import "../components/NewfoldInterfaceSkeleton/style";
 @import "../components/Loaders/Chapter/Interstitial/stylesheet";
 @import "../components/Grid/stylesheet";
+@import "../components/ComingSoon/stylesheet";
 
 // CSS for Pages
 @import "../steps/BasicInfo/stylesheet";
@@ -55,6 +56,7 @@
 @import "../steps/SitePages/stylesheet";
 @import "../steps/DesignFonts/stylesheet";
 @import "../steps/DesignHeaderMenu/stylesheet";
+@import "../steps/SiteFeatures/stylesheet";
 
 .nfd-onboarding-container {
 	display: flex;

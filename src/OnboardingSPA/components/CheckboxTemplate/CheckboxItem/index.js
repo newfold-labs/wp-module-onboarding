@@ -25,6 +25,7 @@ const CheckboxItem = ( {
 	callback,
 	tabIndex = 0,
 	isSelectedDefault,
+	fullWidth = false,
 	className = 'checkbox-item',
 } ) => {
 	const [ showDescription, setShowDescription ] = useState( false );
@@ -44,7 +45,9 @@ const CheckboxItem = ( {
 			<div
 				className={ `${ className } ${
 					isSelected && `${ className }--selected`
-				} ${ showDescription && `${ className }--shown` }` }
+				} ${ fullWidth && `${ className }--full-width` } ${
+					showDescription && `${ className }--shown`
+				}` }
 			>
 				<div className={ `${ className }-container` }>
 					<CheckboxControl
@@ -117,7 +120,13 @@ const CheckboxItem = ( {
 					className={ ` ${ className }__dropdown ` }
 					type={ 'dropdown' }
 				>
-					<div className={ `${ className }__desc` }>{ desc }</div>
+					<div
+						className={ `${ className }__desc ${
+							fullWidth && `${ className }__desc--full-width`
+						}` }
+					>
+						{ desc }
+					</div>
 				</Animate>
 			) }
 		</div>

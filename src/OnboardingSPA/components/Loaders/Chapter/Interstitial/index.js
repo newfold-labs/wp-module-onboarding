@@ -18,6 +18,7 @@ import {
 import { pluginDashboardPage } from '../../../../../constants';
 import { setFlow } from '../../../../utils/api/flow';
 import { ACTION_ONBOARDING_COMPLETE } from '../../../../utils/analytics/hiive/constants';
+import { setComingSoon } from '../../../../utils/api/comingSoon';
 
 const ChapterInterstitialLoader = () => {
 	const [ countdown, setCountdown ] = useState( 15 );
@@ -29,6 +30,7 @@ const ChapterInterstitialLoader = () => {
 		if ( currentData ) {
 			currentData.isComplete = new Date().getTime();
 			setFlow( currentData );
+			setComingSoon( currentData?.data?.comingSoon );
 		}
 
 		activateInitialPlugins();

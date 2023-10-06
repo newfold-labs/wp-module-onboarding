@@ -9,6 +9,7 @@ import { StepLoader } from '../../components/Loaders';
 import { StepErrorState } from '../../components/ErrorState';
 import { THEME_STATUS_INIT } from '../../../constants';
 import { DesignStateHandler } from '../../components/StateHandlers';
+import { setComingSoon } from '../../utils/api/comingSoon';
 
 const StepComplete = () => {
 	const {
@@ -22,18 +23,26 @@ const StepComplete = () => {
 	const navigate = useNavigate();
 	const [ isError, setIsError ] = useState( false );
 
-	const { nextStep, brandName, isQueueEmpty } = useSelect( ( select ) => {
-		return {
-			nextStep: select( nfdOnboardingStore ).getNextStep(),
-			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
-			isQueueEmpty: select( nfdOnboardingStore ).isQueueEmpty(),
-		};
-	}, [] );
+	const { nextStep, brandName, isQueueEmpty, currentData } = useSelect(
+		( select ) => {
+			return {
+				nextStep: select( nfdOnboardingStore ).getNextStep(),
+				brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+				isQueueEmpty: select( nfdOnboardingStore ).isQueueEmpty(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			};
+		},
+		[]
+	);
 
 	const contents = getContents( brandName );
 
 	const checkFlowComplete = async () => {
-		await Promise.all( [ completeFlowRequest() ] ).then( ( values ) =>
+		await Promise.all( [
+			completeFlowRequest(),
+			setComingSoon( currentData?.data?.comingSoon ),
+		] ).then( ( values ) =>
 			values.forEach( ( value ) => {
 				// If any Request returns False then Show Error
 				if ( ! value ) {
