@@ -4,9 +4,5 @@
 		width: 100%;
 		display: flex;
 		justify-content: center;
-
-		@media (max-width: #{ ($break-xlarge) }) {
-			justify-content: start;
-		}
 	}
 }

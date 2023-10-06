@@ -1,16 +1,18 @@
 .checkbox-list {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
 
-    @media (max-width: #{ ($break-xlarge) }) {
-        flex-direction: column;
-    }
+	@media (max-width: #{ ($break-medium) }) {
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
 
-    &-col {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-    }
+	&-col {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		justify-content: center;
+	}
 }

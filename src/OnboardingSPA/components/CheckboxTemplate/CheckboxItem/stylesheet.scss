@@ -16,7 +16,7 @@
 	&--full-width {
 		width: clamp(15rem, 53.5vw, 74rem);
 
-		@media (max-width: #{ ($break-xlarge) }) {
+		@media (max-width: #{ ($break-medium) }) {
 			width: clamp(15rem, 25vw, 35rem);
 		}
 	}
@@ -137,7 +137,7 @@
 		&--full-width {
 			width: clamp(15rem, 53.5vw, 74rem);
 
-			@media (max-width: #{ ($break-xlarge) }) {
+			@media (max-width: #{ ($break-medium) }) {
 				width: clamp(15rem, 25vw, 35rem);
 			}
 		}
