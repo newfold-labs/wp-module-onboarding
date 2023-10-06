@@ -1,7 +1,7 @@
 import { lazy } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Step } from '../../data/models/Step';
-import { typography as fonts  } from '@wordpress/icons';
+import { typography as fonts } from '@wordpress/icons';
 import LearnMore from './Sidebar/LearnMore';
 import { VIEW_DESIGN_FONTS } from '../../../constants';
 
