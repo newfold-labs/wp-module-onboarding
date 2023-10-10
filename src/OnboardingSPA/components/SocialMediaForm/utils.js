@@ -21,8 +21,8 @@ const socialMediaStoreToStateMap = {
 export const socialMediaStoreToState = ( socialMediaStore ) => {
 	return transform( socialMediaStoreToStateMap, ( result, value, key ) => {
 		const url =
-			socialMediaStore[ key ] ||
-			socialMediaStore?.other_social_urls[ key ];
+			socialMediaStore?.[ key ] ||
+			socialMediaStore?.other_social_urls?.[ key ];
 		if ( url ) {
 			result[ value ] = url;
 		}
