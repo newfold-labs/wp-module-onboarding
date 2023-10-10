@@ -96,7 +96,7 @@ class SettingsController {
 				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => array( $this, 'update_item' ),
-					// 'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
 		);
