@@ -65,6 +65,45 @@ describe( 'Start Setup WP Experience Page', function () {
 		} );
 	} );
 
+	const EventsAPI = ( experience_val ) => {
+		cy.intercept('http://localhost:8882/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fevents%2Fbatch&flow=wp-setup&_locale=user').as('events');
+		cy.wait('@events').then((interception) => {
+			const responseBody = interception.request.body;
+			const responseData1 = responseBody[0].data;
+			const responseData2 = responseBody[1].data;
+			if("experience_level" in responseData1){
+				expect(responseData1.experience_level).equal(experience_val);
+			};
+			if("experience_level" in responseData2){
+				expect(responseData2.experience_level).equal(experience_val);
+			};
+		});
+	};
+
+	it( 'Check if events API call being made after radio buttons are clicked', () => {
+		let radioCount = 0;
+		const className = '.components-radio-control__option';
+		const arr = cy.get( className );
+		arr.each( () => {
+			cy.reload();
+			cy.wait(2000);
+			cy.get( '[type="radio"]' )
+				.eq( radioCount )
+				.click( { force: true } )
+				if(radioCount==0){
+					EventsAPI("novice");
+				};
+				if(radioCount==1){
+					EventsAPI("intermediate");
+				};
+				if(radioCount>1){
+					cy.wait(5000);
+					EventsAPI("expert");
+				};
+			radioCount += 1;
+		} );
+	} );
+
 	it( 'Checks if Continue Setup Button is Enabled after the Radio Button is Checked.', () => {
 		cy.get( '[type=radio]:checked' ).should(
 			'have.css',
