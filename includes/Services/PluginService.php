@@ -1,6 +1,9 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
+use NewfoldLabs\WP\Module\Onboarding\WP_ADMIN;
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use function NewfoldLabs\WP\ModuleLoader\container;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginActivationTaskManager;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginInstallTaskManager;
@@ -88,5 +91,46 @@ class PluginService {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Sets up a Transient to activate plugins and filter active_plugins
+	 *
+	 * @return boolean
+	 */
+	public static function configure_activation_transient() {
+		global $pagenow;
+		global $current_screen;
+
+		switch ( $pagenow ) {
+			case 'admin.php':
+				\do_action( 'qm/debug', 'Here' );
+				delete_transient( Options::get_option_name( 'active_plugins', true ) );
+				self::activate_init_plugins();
+				break;
+			case 'plugins.php':
+				delete_transient( Options::get_option_name( 'active_plugins', true ) );
+				self::activate_init_plugins();
+				break;
+			case 'index.php':
+				// If the page is nfd-onboarding
+				if ( WP_ADMIN::$slug === $_GET['page'] ) {
+					if ( empty( get_transient( Options::get_option_name( 'active_plugins', true ) ) ) ) {
+						set_transient( Options::get_option_name( 'active_plugins', true ), '1', 20 * MINUTE_IN_SECONDS );
+					}
+				}
+				break;
+		}
+		// Add hook to activate plugins after transient is deleted
+		add_filter(
+			'option_active_plugins',
+			function( $plugins ) {
+				if ( ! empty( get_transient( Options::get_option_name( 'active_plugins', true ) ) ) ) {
+					return array( container()->plugin()->basename );
+				}
+				return $plugins;
+			}
+		);
+
 	}
 }
