@@ -150,7 +150,7 @@ const StepDesignHomepageMenu = () => {
 									watch={ homepagePattern }
 									count={
 										themeVariations[
-											currentStep?.patternId
+											currentStep?.data?.patternId
 										]?.previewCount
 									}
 									callback={ buildHomepagePreviews }
