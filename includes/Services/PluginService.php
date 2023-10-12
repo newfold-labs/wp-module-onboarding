@@ -62,10 +62,11 @@ class PluginService {
 	 * @return boolean
 	 */
 	public static function activate_init_plugins() {
-		$init_plugins           = Plugins::get_init();
-		$filtered_init_plugins  = SiteFeatures::filter_selected( $init_plugins );
-		$site_features_selected = SiteFeatures::get_selected();
-		$final_init_plugins     = array_merge( $filtered_init_plugins, $site_features_selected );
+		$init_plugins             = Plugins::get_init();
+		$filtered_init_plugins    = SiteFeatures::filter_selected( $init_plugins, true );
+		$site_features_selected   = SiteFeatures::get_selected();
+		$site_features_unselected = SiteFeatures::get_unselected();
+		$final_init_plugins       = array_merge( $filtered_init_plugins, $site_features_selected );
 
 		foreach ( $final_init_plugins as $init_plugin ) {
 			$init_plugin_type = PluginInstaller::get_plugin_type( $init_plugin['slug'] );
@@ -90,6 +91,29 @@ class PluginService {
 			);
 		}
 
+		foreach ( $site_features_unselected as $init_plugin ) {
+			$init_plugin_type = PluginInstaller::get_plugin_type( $init_plugin['slug'] );
+			$init_plugin_path = PluginInstaller::get_plugin_path( $init_plugin['slug'], $init_plugin_type );
+			// Checks if a plugin with the given slug and activation criteria already exists.
+			if ( PluginInstaller::is_plugin_installed( $init_plugin_path ) ) {
+					// Add a new PluginDeactivationTask to the Plugin Deactivation queue.
+					PluginDeactivationTaskManager::add_to_queue(
+						new PluginDeactivationTask(
+							$init_plugin['slug']
+						)
+					);
+					continue;
+			}
+
+			PluginInstallTaskManager::add_to_queue(
+				new PluginInstallTask(
+					$init_plugin['slug'],
+					false,
+					isset( $init_plugin['priority'] ) ? $init_plugin['priority'] : 0
+				)
+			);
+		}
+
 		return true;
 	}
 
@@ -106,16 +130,15 @@ class PluginService {
 			case 'admin.php':
 				\do_action( 'qm/debug', 'Here' );
 				delete_transient( Options::get_option_name( 'active_plugins', true ) );
-				self::activate_init_plugins();
 				break;
 			case 'plugins.php':
 				delete_transient( Options::get_option_name( 'active_plugins', true ) );
-				self::activate_init_plugins();
 				break;
 			case 'index.php':
 				// If the page is nfd-onboarding
 				if ( WP_ADMIN::$slug === $_GET['page'] ) {
 					if ( empty( get_transient( Options::get_option_name( 'active_plugins', true ) ) ) ) {
+						self::activate_init_plugins();
 						set_transient( Options::get_option_name( 'active_plugins', true ), '1', 20 * MINUTE_IN_SECONDS );
 					}
 				}
@@ -131,6 +154,7 @@ class PluginService {
 				return $plugins;
 			}
 		);
+		\do_action( 'qm/debug', get_option( 'active_plugins' ) );
 
 	}
 }
