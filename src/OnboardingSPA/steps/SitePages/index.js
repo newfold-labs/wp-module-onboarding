@@ -86,13 +86,13 @@ const StepSitePages = () => {
 	const stateToFlowData = ( selectedPages, pages ) => {
 		return pages !== false
 			? pages?.reduce( ( newSitePages, sitePage ) => {
-				return selectedPages.includes( sitePage.slug )
-					? newSitePages.concat( {
-						slug: sitePage.slug,
-						title: sitePage.title,
-					} )
-					: newSitePages;
-			}, [] )
+					return selectedPages.includes( sitePage.slug )
+						? newSitePages.concat( {
+								slug: sitePage.slug,
+								title: sitePage.title,
+						  } )
+						: newSitePages;
+			  }, [] )
 			: undefined;
 	};
 
@@ -170,7 +170,7 @@ const StepSitePages = () => {
 									className={ 'site-pages__list__item' }
 									count={
 										themeVariations[
-											currentStep?.patternId
+											currentStep?.data?.patternId
 										]?.previewCount
 									}
 									watch={ sitePages }

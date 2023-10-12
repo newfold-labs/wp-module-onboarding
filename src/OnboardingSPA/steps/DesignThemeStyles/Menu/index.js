@@ -171,8 +171,9 @@ const StepDesignThemeStylesMenu = () => {
 							<LivePreviewSkeleton
 								className={ 'theme-styles-menu__list__item' }
 								count={
-									themeVariations[ currentStep?.patternId ]
-										?.previewCount
+									themeVariations[
+										currentStep?.data?.patternId
+									]?.previewCount
 								}
 								watch={ pattern && globalStyles }
 								callback={ buildPreviews }
