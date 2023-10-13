@@ -128,10 +128,11 @@ class PluginService {
 
 		switch ( $pagenow ) {
 			case 'admin.php':
-				\do_action( 'qm/debug', 'Here' );
+				self::activate_init_plugins();
 				delete_transient( Options::get_option_name( 'active_plugins', true ) );
 				break;
 			case 'plugins.php':
+				self::activate_init_plugins();
 				delete_transient( Options::get_option_name( 'active_plugins', true ) );
 				break;
 			case 'index.php':
