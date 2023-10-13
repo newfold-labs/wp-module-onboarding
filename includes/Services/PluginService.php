@@ -138,7 +138,6 @@ class PluginService {
 				// If the page is nfd-onboarding
 				if ( WP_ADMIN::$slug === $_GET['page'] ) {
 					if ( empty( get_transient( Options::get_option_name( 'active_plugins', true ) ) ) ) {
-						self::activate_init_plugins();
 						set_transient( Options::get_option_name( 'active_plugins', true ), '1', 20 * MINUTE_IN_SECONDS );
 					}
 				}
