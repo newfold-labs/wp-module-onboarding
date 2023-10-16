@@ -129,15 +129,19 @@ class PluginService {
 		switch ( $pagenow ) {
 			case 'admin.php':
 				self::activate_init_plugins();
-				delete_transient( Options::get_option_name( 'active_plugins', true ) );
+				if ( ! empty( get_transient( Options::get_option_name( 'active_plugins', true ) ) ) ) {
+					delete_transient( Options::get_option_name( 'active_plugins', true ) );
+				}
 				break;
 			case 'plugins.php':
 				self::activate_init_plugins();
-				delete_transient( Options::get_option_name( 'active_plugins', true ) );
+				if ( ! empty( get_transient( Options::get_option_name( 'active_plugins', true ) ) ) ) {
+					delete_transient( Options::get_option_name( 'active_plugins', true ) );
+				}
 				break;
 			case 'index.php':
 				// If the page is nfd-onboarding
-				if ( WP_ADMIN::$slug === $_GET['page'] ) {
+				if ( isset( $_GET['page'] ) && WP_ADMIN::$slug === $_GET['page'] ) {
 					if ( empty( get_transient( Options::get_option_name( 'active_plugins', true ) ) ) ) {
 						set_transient( Options::get_option_name( 'active_plugins', true ), '1', 20 * MINUTE_IN_SECONDS );
 					}
@@ -154,7 +158,6 @@ class PluginService {
 				return $plugins;
 			}
 		);
-		\do_action( 'qm/debug', get_option( 'active_plugins' ) );
 
 	}
 }
