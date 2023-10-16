@@ -1,7 +1,7 @@
 import { translations } from '../../utils/locales/translations';
 import { __, sprintf } from '@wordpress/i18n';
 
-const getContents = ( brandName ) => {
+const getContents = ( brandName, brandSlug ) => {
 	const contents = {
 		heading: __(
 			'Nice work: Your site is ready 🎉',
@@ -66,8 +66,8 @@ const getContents = ( brandName ) => {
 		],
 	};
 
-	switch ( brandName ) {
-		case 'HostGator':
+	switch ( brandSlug ) {
+		case 'hostgator-br':
 			contents.tabs[ 2 ].title = __(
 				'ALWAYS COUNT ON OUR TEAM',
 				'wp-module-onboarding'
