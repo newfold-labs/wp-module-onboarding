@@ -68,30 +68,39 @@ const LearnMore = () => {
 				<IllustrationPanel cssIcon={ content.illustration.icon } />
 			) }
 			<InfoPanel
-				headingWithDescriptions={
-					content.information.headingWithDescriptions
-				}
+				headingWithDescriptions={ content.information.headingWithDescriptions.filter(
+					( headingWithDescription, idx ) => {
+						return brandConfig?.views?.sidebar?.infoPanel?.headingWithDescriptions?.shown?.includes(
+							idx
+						);
+					}
+				) }
 			/>
 			<HelpPanel>
-				{ content.help.experts.link && (
-					<ButtonWithBackground
-						text={ content.help.experts.text }
-						onClick={ () =>
-							window.open( content.help.experts.link, '_blank' )
-						}
-					/>
-				) }
-				{ content.help.fullService.link && (
-					<ButtonWhite
-						text={ content.help.fullService.text }
-						onClick={ () =>
-							window.open(
-								content.help.fullService.link,
-								'_blank'
-							)
-						}
-					/>
-				) }
+				{ brandConfig?.views?.sidebar?.experts?.shown !== false &&
+					content.help.experts.link && (
+						<ButtonWithBackground
+							text={ content.help.experts.text }
+							onClick={ () =>
+								window.open(
+									content.help.experts.link,
+									'_blank'
+								)
+							}
+						/>
+					) }
+				{ brandConfig?.views?.sidebar?.fullService?.shown !== false &&
+					content.help.fullService.link && (
+						<ButtonWhite
+							text={ content.help.fullService.text }
+							onClick={ () =>
+								window.open(
+									content.help.fullService.link,
+									'_blank'
+								)
+							}
+						/>
+					) }
 				<SupportLink
 					text={ content.help.support.text }
 					link={ content.help.support.link }
