@@ -1754,3 +1754,15 @@ msgstr "Publicar"
 #: build/1.10.1/onboarding.js:23
 msgid "Footer"
 msgstr "Rodapé"
+
+#: build/1.11.3/465.js:5
+msgid "ALWAYS COUNT ON OUR TEAM"
+msgstr "CONTE SEMPRE COM O NOSSO TIME"
+
+#: build/1.11.3/465.js:5
+msgid "24 hours a day / 7 days a week"
+msgstr "24h por dia / 7 dias por semana"
+
+#: build/1.11.3/465.js:5
+msgid "From beginner to advanced, you have a partner to trust. Our support works when you work. Also count on various help materials on YouTube, blog and Knowledge Base."
+msgstr "Do iniciante ao avançado, você tem um parceiro em quem confiar. Nosso suporte trabalha quando você trabalha. Conte também com diversos materiais de ajuda na Youtube, blog e Base de conhecimento."
