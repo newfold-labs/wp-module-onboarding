@@ -1777,3 +1777,17 @@ msgstr "Do iniciante ao avançado, você tem um parceiro em quem confiar. Nosso 
 #: build/1.11.3/onboarding.js:3
 msgid "Go from multiple sizes to multiple locations to multiple online channels"
 msgstr "Vá de vários tamanhos para vários locais e vários canais on-line"
+
+#: build/1.11.4/420.js:1
+msgid "Coming Soon"
+msgstr "Em breve"
+
+#. translators: %s: site or store
+#: build/1.11.4/420.js:3
+msgid "Keep your %s private until you click launch"
+msgstr "Mantenha seu %s privado até clicar em iniciar"
+
+#. translators: %s: site or store
+#: build/1.11.4/420.js:5
+msgid "We'll show a placeholder page to logged-out visitors while you build your %s."
+msgstr "Mostraremos uma página de espaço reservado para visitantes desconectados enquanto você cria seu %s."
