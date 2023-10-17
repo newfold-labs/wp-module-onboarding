@@ -71,12 +71,17 @@ const SidebarSkeleton = () => {
 				/>
 
 				<div className="sidebar-skeleton-footer-buttons">
-					<div className="sidebar-skeleton-footer-buttons-button-1">
-						<Animate
-							type={ 'shine-placeholder' }
-							className="shimmer-1 sidebar-skeleton-footer-buttons-button-2"
-						/>
-					</div>
+					{ ( brandConfig?.views?.sidebar?.fullService?.shown !==
+						false ||
+						brandConfig?.views?.sidebar?.experts?.shown !==
+							false ) && (
+						<div className="sidebar-skeleton-footer-buttons-button-1">
+							<Animate
+								type={ 'shine-placeholder' }
+								className="shimmer-1 sidebar-skeleton-footer-buttons-button-2"
+							/>
+						</div>
+					) }
 					<Animate
 						type={ 'shine-placeholder' }
 						className="shimmer-1 sidebar-skeleton-footer-buttons-button-3"
