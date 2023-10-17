@@ -25,13 +25,14 @@ const StepWhatNext = () => {
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
 
-	const { brandName } = useSelect( ( select ) => {
+	const { brandName, brandSlug } = useSelect( ( select ) => {
 		return {
 			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+			brandSlug: select( nfdOnboardingStore ).getNewfoldBrand(),
 		};
 	} );
 
-	const content = getContents( brandName );
+	const content = getContents( brandName, brandSlug );
 
 	return (
 		<CommonLayout isCentered isBgPrimary>

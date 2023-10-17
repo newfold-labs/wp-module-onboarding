@@ -1,8 +1,8 @@
 import { translations } from '../../utils/locales/translations';
 import { __, sprintf } from '@wordpress/i18n';
 
-const getContents = ( brandName ) => {
-	return {
+const getContents = ( brandName, brandSlug ) => {
+	const contents = {
 		heading: __(
 			'Nice work: Your site is ready 🎉',
 			'wp-module-onboarding'
@@ -65,6 +65,25 @@ const getContents = ( brandName ) => {
 			},
 		],
 	};
+
+	switch ( brandSlug ) {
+		case 'hostgator-br':
+			contents.tabs[ 2 ].title = __(
+				'ALWAYS COUNT ON OUR TEAM',
+				'wp-module-onboarding'
+			);
+			contents.tabs[ 2 ].subtitle = __(
+				'24 hours a day / 7 days a week',
+				'wp-module-onboarding'
+			);
+			contents.tabs[ 2 ].text = __(
+				'From beginner to advanced, you have a partner to trust. Our support works when you work. Also count on various help materials on YouTube, blog and Knowledge Base.',
+				'wp-module-onboarding'
+			);
+			contents.tabs[ 2 ].imgType = '';
+	}
+
+	return contents;
 };
 
 export default getContents;
