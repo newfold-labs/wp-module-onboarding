@@ -45,6 +45,7 @@ html.nfd-interface-interface-skeleton__html-container {
 .nfd-interface-interface-skeleton__body {
 	flex-grow: 1;
 	display: flex;
+	flex-direction: column;
 
 	// Even on Mobile, we choose to scroll this element on its own.
 	// This helps enable a fixed-to-top toolbar that makes the editing experience

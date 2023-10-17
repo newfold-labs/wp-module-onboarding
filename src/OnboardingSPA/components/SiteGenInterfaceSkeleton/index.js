@@ -94,17 +94,17 @@ function SiteGenInterfaceSkeleton(
 						{ adminbar }
 					</div>
 				) }
+				{ !! progressbar && (
+					<div
+						className="nfd-interface-interface-skeleton__progressbar"
+						role="region"
+						aria-label={ mergedLabels.progressbar }
+						tabIndex="-1"
+					>
+						{ progressbar }
+					</div>
+				) }
 				<div className="nfd-interface-interface-skeleton__body">
-					{ !! progressbar && (
-						<div
-							className="nfd-interface-interface-skeleton__progressbar"
-							role="region"
-							aria-label={ mergedLabels.progressbar }
-							tabIndex="-1"
-						>
-							{ progressbar }
-						</div>
-					) }
 					{ !! navigationbar && (
 						<div
 							className="nfd-interface-interface-skeleton__navigationbar"
