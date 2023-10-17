@@ -624,8 +624,6 @@ msgstr ""
 msgid "Looking for personalized WordPress assistance, or someone to take-over from here? Go beyond support with our professional services."
 msgstr ""
 
-<<<<<<< HEAD
-=======
 #: build/1.11.3/465.js:5
 msgid "ALWAYS COUNT ON OUR TEAM"
 msgstr ""
@@ -638,7 +636,6 @@ msgstr ""
 msgid "From beginner to advanced, you have a partner to trust. Our support works when you work. Also count on various help materials on YouTube, blog and Knowledge Base."
 msgstr ""
 
->>>>>>> c1aeef92f965e0e1062cad328d1fc9186d0bd01c
 #: build/1.11.3/491.js:1
 msgid "Tell us about your products"
 msgstr ""
