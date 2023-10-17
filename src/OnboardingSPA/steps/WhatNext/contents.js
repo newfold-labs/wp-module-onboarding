@@ -80,6 +80,7 @@ const getContents = ( brandName, brandSlug ) => {
 				'From beginner to advanced, you have a partner to trust. Our support works when you work. Also count on various help materials on YouTube, blog and Knowledge Base.',
 				'wp-module-onboarding'
 			);
+			contents.tabs[ 2 ].imgType = '';
 	}
 
 	return contents;
