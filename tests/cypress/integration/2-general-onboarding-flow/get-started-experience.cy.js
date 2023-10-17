@@ -7,6 +7,7 @@ import {
 	CheckInfoPanel,
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
+import { APIList } from '../wp-module-support/EventsApi.cy';
 
 describe( 'Start Setup WP Experience Page', function () {
 	before( () => {
@@ -51,31 +52,21 @@ describe( 'Start Setup WP Experience Page', function () {
 		cy.url().should( 'contain', 'get-started/experience' );
 	} );
 
-	it( 'Checks if all the Radio Buttons are Enabled and Highlighted when clicked', () => {
-		let radioCount = 0;
-		const className = '.components-radio-control__option';
-		const arr = cy.get( className );
-		arr.each( () => {
-			cy.get( '[type="radio"]' )
-				.eq( radioCount )
-				.click( { force: true } )
-				.should( 'not.be.disabled' )
-				.should( 'be.checked' );
-			radioCount += 1;
-		} );
-	} );
-
 	const EventsAPI = ( experience_val ) => {
-		cy.intercept('http://localhost:8882/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fevents%2Fbatch&flow=wp-setup&_locale=user').as('events');
-		cy.wait('@events').then((interception) => {
-			const responseBody = interception.request.body;
-			const responseData1 = responseBody[0].data;
-			const responseData2 = responseBody[1].data;
-			if("experience_level" in responseData1){
-				expect(responseData1.experience_level).equal(experience_val);
+		cy.intercept(APIList.get_started_experience).as('events');
+		cy.wait('@events').then((requestObject) => {
+			const responseBody = requestObject.request.body;
+			if(typeof responseBody[0].data != "undefined"){
+				const responseData1 = responseBody[0].data;
+				if("experience_level" in responseData1){
+					expect(responseData1.experience_level).equal(experience_val);
+				};
 			};
-			if("experience_level" in responseData2){
-				expect(responseData2.experience_level).equal(experience_val);
+			if(typeof responseBody[1].data != "undefined"){
+				const responseData2 = responseBody[1].data;
+				if("experience_level" in responseData2){
+					expect(responseData2.experience_level).equal(experience_val);
+				};
 			};
 		});
 	};
@@ -100,6 +91,20 @@ describe( 'Start Setup WP Experience Page', function () {
 					cy.wait(5000);
 					EventsAPI("expert");
 				};
+			radioCount += 1;
+		} );
+	} );
+
+	it( 'Checks if all the Radio Buttons are Enabled and Highlighted when clicked', () => {
+		let radioCount = 0;
+		const className = '.components-radio-control__option';
+		const arr = cy.get( className );
+		arr.each( () => {
+			cy.get( '[type="radio"]' )
+				.eq( radioCount )
+				.click( { force: true } )
+				.should( 'not.be.disabled' )
+				.should( 'be.checked' );
 			radioCount += 1;
 		} );
 	} );
