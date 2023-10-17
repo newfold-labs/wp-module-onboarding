@@ -1,0 +1,186 @@
+// On Mobile devices, swiping the HTML element should not scroll.
+// By making it fixed, we prevent that.
+html.nfd-interface-interface-skeleton__html-container {
+	position: fixed;
+	width: 100%;
+
+	@media (max-width: #{($break-medium)}) {
+		position: initial;
+		width: initial;
+	}
+}
+
+.nfd-interface-interface-skeleton {
+	display: flex;
+	flex-direction: row;
+	height: auto;
+	max-height: 100%;
+
+	// Fill the available space on Mobile.
+	position: fixed;
+	top: 46px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	// Adjust to admin-bar going small.
+	@media (min-width: #{ ($break-medium + 1) }) {
+		top: 32px;
+
+		.is-fullscreen-mode & {
+			top: 0;
+		}
+	}
+}
+
+.nfd-interface-interface-skeleton__editor {
+	display: flex;
+	flex-direction: column;
+	flex: 0 1 100%;
+	overflow: hidden;
+}
+
+@include editor-left(".nfd-interface-interface-skeleton");
+
+.nfd-interface-interface-skeleton__body {
+	flex-grow: 1;
+	display: flex;
+
+	// Even on Mobile, we choose to scroll this element on its own.
+	// This helps enable a fixed-to-top toolbar that makes the editing experience
+	// on Mobile Safari usable.
+	// Unfortunately an issue still exists where if you swipe the top toolbar
+	// or beyond the bottom of the page when the soft keyboard is showing,
+	// you scroll the body element and can scroll the toolbar out of view.
+	// This is still preferable, though, as it allows the editor
+	// to function at all.
+	overflow: auto;
+
+	// In future versions of Mobile Safari, hopefully overscroll-behavior
+	// to be supported.
+	// This allows us to disallow the scroll-chaining and rubber-banding
+	// that is currently is the cause of the issue outlined above.
+	// In other words, the following behavior doesn't yet work in Safari,
+	// but if/when it is added, it should take care of the issue.
+	// See also: https://drafts.csswg.org/css-overscroll/
+	overscroll-behavior-y: none;
+
+	// Footer overlap prevention
+	.has-footer & {
+
+		@media (max-width: #{($break-medium)}) {
+			padding-bottom: 24px + 1px;
+		}
+	}
+}
+
+.nfd-interface-interface-skeleton__content {
+	flex-grow: 1;
+
+	// Treat as flex container to allow children to grow to occupy full
+	// available height of the content area.
+	display: flex;
+	flex-direction: column;
+
+	// On Mobile the header is fixed to keep HTML as scrollable.
+	// Beyond the medium breakpoint, we allow the sidebar.
+	// The sidebar should scroll independently, so enable scroll here also.
+	overflow: auto;
+
+	// On Safari iOS on smaller viewports lack of a z-index causes the background
+	// to "bleed" through the header.
+	// See https://github.com/WordPress/gutenberg/issues/32631
+	z-index: 20;
+
+}
+
+.nfd-interface-interface-skeleton__secondary-sidebar,
+.nfd-interface-interface-skeleton__sidebar {
+	display: block;
+	flex-shrink: 0;
+	position: relative;
+	z-index: 100000;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: var(--nfd-onboarding-light);
+	color: #1e1e1e;
+
+	// On Mobile the header is fixed to keep HTML as scrollable.
+	@media (max-width: #{($break-medium)}) {
+		position: relative !important;
+		z-index: 90;
+		width: auto; // Keep the sidebar width flexible.
+	}
+}
+
+.nfd-interface-interface-skeleton__sidebar {
+	overflow: auto;
+	border-left: 1px solid #e0e0e0;
+
+	@media (max-width: #{($break-medium)}) {
+		border-left: 1px solid #e0e0e0;
+	}
+}
+
+.nfd-interface-interface-skeleton__secondary-sidebar {
+
+	@media (max-width: #{($break-medium)}) {
+		border-right: 1px solid #e0e0e0;
+	}
+}
+
+.nfd-interface-interface-skeleton__header {
+	flex-shrink: 0;
+	height: auto;  // Keep the height flexible.
+	border-bottom: 1px solid #e0e0e0;
+	z-index: 30;
+	color: #1e1e1e;
+}
+
+.nfd-interface-interface-skeleton__footer {
+	height: auto; // Keep the height flexible.
+	flex-shrink: 0;
+	border-top: 1px solid #e0e0e0;
+	color: #1e1e1e;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: var(--nfd-onboarding-light);
+	z-index: 90;
+
+	// On Mobile the footer is hidden
+	display: none;
+
+	@media (max-width: #{($break-medium)}) {
+		display: flex;
+	}
+
+	.block-editor-block-breadcrumb {
+		z-index: 30;
+		display: flex;
+		background: var(--nfd-onboarding-light);
+		height: 24px;
+		align-items: center;
+		font-size: 13px;
+		padding: 0 (12px + 6px);
+	}
+}
+
+.nfd-interface-interface-skeleton__actions {
+	z-index: 100000;
+	position: fixed !important; // Need to override the default relative positioning
+	top: -9999em;
+	bottom: auto;
+	left: auto;
+	right: 0;
+	width: 280px;
+	color: #1e1e1e;
+
+	&:focus {
+		top: auto;
+		bottom: 0;
+	}
+}
