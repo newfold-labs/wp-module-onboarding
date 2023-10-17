@@ -1754,3 +1754,11 @@ msgstr "Publicar"
 #: build/1.10.1/onboarding.js:23
 msgid "Footer"
 msgstr "Rodapé"
+
+#: build/1.11.3/onboarding.js:3
+msgid "We can offer free, exclusive solutions and apply our expert experience if we know how you sell."
+msgstr "Podemos oferecer soluções gratuitas e exclusivas e aplicar nossa experiência especializada se soubermos como você vende."
+
+#: build/1.11.3/onboarding.js:1
+msgid "Whether this is where the magic happens or the mail goes, tell us where your business is located."
+msgstr "Quer seja aqui que a magia acontece ou o correio vai, diga-nos onde está localizada a sua empresa."

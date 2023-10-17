@@ -12,7 +12,8 @@ const getContents = (
 		introduction: {
 			heading: __( 'Street Address', 'wp-module-onboarding' ),
 			subheading: __(
-				'Whether this is where the magic happens or the mail goes, tell us where your business is located.'
+				'Whether this is where the magic happens or the mail goes, tell us where your business is located.',
+				'wp-module-onboarding'
 			),
 			icon: store,
 		},
