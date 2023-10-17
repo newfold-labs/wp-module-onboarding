@@ -57,6 +57,17 @@ const LearnMore = () => {
 		fullServiceCreativeTeamLink
 	);
 
+	const headingWithDescriptions = brandConfig?.views?.sidebar?.infoPanel
+		?.headingWithDescriptions?.shown
+		? content.information.headingWithDescriptions.filter(
+				( headingWithDescription, idx ) => {
+					return brandConfig?.views?.sidebar?.infoPanel?.headingWithDescriptions?.shown?.includes(
+						idx
+					);
+				}
+		  )
+		: content.information.headingWithDescriptions;
+
 	return (
 		<div className="nfd-onboarding-sidebar-learn-more__get-started-welcome">
 			<StepIntroPanel
@@ -67,15 +78,7 @@ const LearnMore = () => {
 			{ brandConfig?.views?.sidebar?.illustration?.shown !== false && (
 				<IllustrationPanel cssIcon={ content.illustration.icon } />
 			) }
-			<InfoPanel
-				headingWithDescriptions={ content.information.headingWithDescriptions.filter(
-					( headingWithDescription, idx ) => {
-						return brandConfig?.views?.sidebar?.infoPanel?.headingWithDescriptions?.shown?.includes(
-							idx
-						);
-					}
-				) }
-			/>
+			<InfoPanel headingWithDescriptions={ headingWithDescriptions } />
 			<HelpPanel>
 				{ brandConfig?.views?.sidebar?.experts?.shown !== false &&
 					content.help.experts.link && (
