@@ -1755,6 +1755,13 @@ msgstr "Publicar"
 msgid "Footer"
 msgstr "Rodapé"
 
+#: build/1.11.3/onboarding.js:3
+msgid "We can offer free, exclusive solutions and apply our expert experience if we know how you sell."
+msgstr "Podemos oferecer soluções gratuitas e exclusivas e aplicar nossa experiência especializada se soubermos como você vende."
+
+#: build/1.11.3/onboarding.js:1
+msgid "Whether this is where the magic happens or the mail goes, tell us where your business is located."
+msgstr "Quer seja aqui que a magia acontece ou o correio vai, diga-nos onde está localizada a sua empresa."
 #: build/1.11.3/465.js:5
 msgid "ALWAYS COUNT ON OUR TEAM"
 msgstr "CONTE SEMPRE COM O NOSSO TIME"
@@ -1766,3 +1773,7 @@ msgstr "24h por dia / 7 dias por semana"
 #: build/1.11.3/465.js:5
 msgid "From beginner to advanced, you have a partner to trust. Our support works when you work. Also count on various help materials on YouTube, blog and Knowledge Base."
 msgstr "Do iniciante ao avançado, você tem um parceiro em quem confiar. Nosso suporte trabalha quando você trabalha. Conte também com diversos materiais de ajuda na Youtube, blog e Base de conhecimento."
+
+#: build/1.11.3/onboarding.js:3
+msgid "Go from multiple sizes to multiple locations to multiple online channels"
+msgstr "Vá de vários tamanhos para vários locais e vários canais on-line"

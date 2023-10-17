@@ -12,7 +12,8 @@ const getContents = (
 		introduction: {
 			heading: __( 'Products Info', 'wp-module-onboarding' ),
 			subheading: __(
-				'We can offer free, exclusive solutions and apply our expert experience if we know how you sell.'
+				'We can offer free, exclusive solutions and apply our expert experience if we know how you sell.',
+				'wp-module-onboarding'
 			),
 			icon: box,
 		},
