@@ -56,13 +56,11 @@ describe( 'Start Setup WP Experience Page', function () {
 		cy.intercept(APIList.get_started_experience_ecomm).as('events');
 		cy.wait('@events').then((requestObject) => {
 			const responseBody = requestObject.request.body;
-			if(typeof responseBody[0].data != "undefined"){
-				const responseData1 = responseBody[0].data;
-				if("experience_level" in responseData1){
-					expect(responseData1.experience_level).equal(experience_val);
-				};
-			};
-			if(typeof responseBody[1].data != "undefined"){
+			const responseData1 = responseBody[0].data;
+			if("experience_level" in responseData1){
+				expect(responseData1.experience_level).equal(experience_val);
+				}
+			else{
 				const responseData2 = responseBody[1].data;
 				if("experience_level" in responseData2){
 					expect(responseData2.experience_level).equal(experience_val);
@@ -76,8 +74,6 @@ describe( 'Start Setup WP Experience Page', function () {
 		const className = '.components-radio-control__option';
 		const arr = cy.get( className );
 		arr.each( () => {
-			cy.reload();
-			cy.wait(2000);
 			cy.get( '[type="radio"]' )
 				.eq( radioCount )
 				.click( { force: true } )
