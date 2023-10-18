@@ -1,8 +1,9 @@
 import Content from '../Content';
+import Header from '../Header';
 import Drawer from '../Drawer';
+import ToggleDarkMode from '../ToggleDarkMode';
 import AdminBarSiteGen from '../AdminBarSiteGen';
 import ProgressBarSiteGen from '../ProgressBarSiteGen';
-import NavigationBarSiteGen from '../NavigationBarSiteGen';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { setFlow } from '../../utils/api/flow';
@@ -318,10 +319,11 @@ const AppSiteGen = () => {
 						{ 'is-large-viewport': isLargeViewport },
 						{ 'is-small-viewport': ! isLargeViewport }
 					) }
+					header={ <Header /> }
 					adminbar={ <AdminBarSiteGen /> }
 					progressbar={ <ProgressBarSiteGen current={40} total={100} />  }
-					navigationbar={ <NavigationBarSiteGen /> }
 					content={ <Content /> }
+					darkModeToggle = { <ToggleDarkMode />}
 				/>
 			</SlotFillProvider>
 		</Fragment>

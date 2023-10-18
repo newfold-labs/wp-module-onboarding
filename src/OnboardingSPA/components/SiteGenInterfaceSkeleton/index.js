@@ -31,10 +31,10 @@ function useHTMLClass( className ) {
 
 function SiteGenInterfaceSkeleton(
 	{
+		header,
 		footer,
 		adminbar,
 		progressbar,
-		navigationbar,
 		notices,
 		content,
 		drawer,
@@ -42,6 +42,7 @@ function SiteGenInterfaceSkeleton(
 		labels,
 		className,
 		shortcuts,
+		darkModeToggle,
 	},
 	ref
 ) {
@@ -105,39 +106,49 @@ function SiteGenInterfaceSkeleton(
 					</div>
 				) }
 				<div className="nfd-interface-interface-skeleton__body">
-					{ !! navigationbar && (
+					{!!header && (
 						<div
-							className="nfd-interface-interface-skeleton__navigationbar"
+							className="nfd-interface-interface-skeleton__header"
 							role="region"
-							aria-label={ mergedLabels.navigationbar }
+							aria-label={mergedLabels.header}
 							tabIndex="-1"
 						>
-							{ navigationbar }
+							{header}
 						</div>
-					) }
-					{ !! notices && (
+					)}
+					{!!notices && (
 						<div className="nfd-interface-interface-skeleton__notices">
-							{ notices }
+							{notices}
 						</div>
-					) }
+					)}
 					<div
 						className="nfd-interface-interface-skeleton__content"
 						role="region"
-						aria-label={ mergedLabels.body }
+						aria-label={mergedLabels.body}
 						tabIndex="-1"
 					>
-						{ content }
+						{content}
 					</div>
-					{ !! actions && (
+					{!!actions && (
 						<div
 							className="nfd-interface-interface-skeleton__actions"
 							role="region"
-							aria-label={ mergedLabels.actions }
+							aria-label={mergedLabels.actions}
 							tabIndex="-1"
 						>
-							{ actions }
+							{actions}
 						</div>
-					) }
+					)}
+					{!!darkModeToggle && (
+						<div
+							className="nfd-interface-interface-skeleton__darkModeToggle"
+							role="region"
+							aria-label={mergedLabels.darkModeToggle}
+							tabIndex="-1"
+						>
+							{darkModeToggle}
+						</div>
+					)}
 				</div>
 			</div>
 			{ !! footer && (

@@ -1,5 +1,4 @@
 import { __ } from '@wordpress/i18n';
-import './stylesheet.scss';
 
 const ProgressBarSiteGen = ( { current, total  } ) => {
     const percentage = (current / total) * 100;
