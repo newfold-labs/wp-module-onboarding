@@ -1,22 +1,38 @@
 
 .nfd-interface-interface-skeleton__adminbar{
 
-    .nfd-admin-bar-sitegen{
+    .nfd-sitegen-admin-bar{
         padding: 5px;
         background-color: #23282d;  // Dark grayish background
         display: flex;
         justify-content: space-between;
+		align-items: center;
         
         
-        .nfd-admin-bar-logo {
-            color: #a0a5aa;  // Logo color
-            font-size: 20px;
-            font-weight: bold;
-        }
-        
-        .nfd-admin-bar-greeting {
-            color: #a0a5aa;  // Text color
-            font-size: 16px;
-        }
+		.nfd-admin-bar-wplogo {
+				color: white; // Logo color
+				font-size: 16px;
+				display: flex; 
+				align-items: center;
+				
+				svg {
+					color: #a0a5aa;
+					fill: #a0a5aa;
+				}
+		
+				span {
+					margin-left: 15px;
+				}
+			}
+			.nfd-sitegen-admin-bar-profile{
+				display: flex; 
+				align-items: center;
+
+				.nfd-admin-bar-greeting {
+					color: #a0a5aa;  // Text color
+					font-size: 16px;
+					margin-right: 5px;
+				}
+			}
     }
 }
