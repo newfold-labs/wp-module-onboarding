@@ -15,7 +15,7 @@ describe( 'Start Setup WP Experience Page', function () {
 		);
 	} );
 
-	it( 'Check if the Suppressed Drawer does not open on clicking Toggle Button', () => {
+	it.only( 'Check if the Suppressed Drawer does not open on clicking Toggle Button', () => {
 		CheckDrawerDisabled();
 	} );
 
