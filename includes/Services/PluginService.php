@@ -118,7 +118,7 @@ class PluginService {
 	}
 
 	/**
-	 * Sets up a Transient to activate plugins and filter active_plugins
+	 * Sets up a Transient to activate plugins and filter_active_plugins
 	 *
 	 * @return boolean
 	 */
@@ -129,15 +129,15 @@ class PluginService {
 			case 'index.php':
 				// If the page is nfd-onboarding
 				if ( isset( $_GET['page'] ) && WP_ADMIN::$slug === \sanitize_text_field( $_GET['page'] ) ) {
-					if ( '1' !== get_transient( Options::get_option_name( 'active_plugins' ) ) ) {
-						set_transient( Options::get_option_name( 'active_plugins' ), '1', 20 * MINUTE_IN_SECONDS );
+					if ( '1' !== get_transient( Options::get_option_name( 'filter_active_plugins' ) ) ) {
+						set_transient( Options::get_option_name( 'filter_active_plugins' ), '1', 20 * MINUTE_IN_SECONDS );
 					}
 				}
 				break;
 			default:
 				self::activate_init_plugins();
-				if ( '1' === get_transient( Options::get_option_name( 'active_plugins' ) ) ) {
-					delete_transient( Options::get_option_name( 'active_plugins' ) );
+				if ( '1' === get_transient( Options::get_option_name( 'filter_active_plugins' ) ) ) {
+					delete_transient( Options::get_option_name( 'filter_active_plugins' ) );
 				}
 				break;
 		}
@@ -146,7 +146,7 @@ class PluginService {
 		add_filter(
 			'option_active_plugins',
 			function( $plugins ) {
-				if ( '1' === get_transient( Options::get_option_name( 'active_plugins' ) ) ) {
+				if ( '1' === get_transient( Options::get_option_name( 'filter_active_plugins' ) ) ) {
 					return array( container()->plugin()->basename );
 				}
 				return $plugins;
