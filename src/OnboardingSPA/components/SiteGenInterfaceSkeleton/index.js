@@ -70,6 +70,7 @@ function SiteGenInterfaceSkeleton(
 			className={ classnames(
 				className,
 				'nfd-interface-interface-skeleton',
+				'nfd-sitegen-interface-skeleton',
 				navigateRegionsProps.className,
 				!! footer && 'has-footer'
 			) }
