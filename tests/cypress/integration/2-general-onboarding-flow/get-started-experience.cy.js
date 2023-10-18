@@ -15,11 +15,11 @@ describe( 'Start Setup WP Experience Page', function () {
 		);
 	} );
 
-	it( 'Check if the Suppressed Drawer does not open on clicking Toggle Button', () => {
+	it.only( 'Check if the Suppressed Drawer does not open on clicking Toggle Button', () => {
 		CheckDrawerDisabled();
 	} );
 
-	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+	it.only( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 		CheckIntroPanel(
 			'__get-started-wp-experience',
 			'WordPress Experience'
@@ -29,7 +29,7 @@ describe( 'Start Setup WP Experience Page', function () {
 		CheckHelpPanelLinks();
 	} );
 
-	it( 'Check if Headers Load', () => {
+	it.only( 'Check if Headers Load', () => {
 		CheckCardHeadingSubheading( true );
 	} );
 
