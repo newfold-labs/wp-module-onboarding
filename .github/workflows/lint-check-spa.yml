@@ -55,6 +55,7 @@ jobs:
         with:
           PATTERNS: |
             +(src)/**/*.js
+            +(tests)/**/*.cy.js
 
       # Runs wp-scripts for checking JS coding issues.
       - name: Run JS Lint
