@@ -63,7 +63,7 @@ class PluginService {
 	 */
 	public static function activate_init_plugins() {
 		$init_plugins             = Plugins::get_init();
-		$filtered_init_plugins    = SiteFeatures::filter_selected( $init_plugins, true );
+		$filtered_init_plugins    = SiteFeatures::filter( $init_plugins, true );
 		$site_features_selected   = SiteFeatures::get_selected();
 		$site_features_unselected = SiteFeatures::get_unselected();
 		$final_init_plugins       = array_merge( $filtered_init_plugins, $site_features_selected );
@@ -124,35 +124,29 @@ class PluginService {
 	 */
 	public static function configure_activation_transient() {
 		global $pagenow;
-		global $current_screen;
 
 		switch ( $pagenow ) {
-			case 'admin.php':
-				self::activate_init_plugins();
-				if ( ! empty( get_transient( Options::get_option_name( 'active_plugins', true ) ) ) ) {
-					delete_transient( Options::get_option_name( 'active_plugins', true ) );
-				}
-				break;
-			case 'plugins.php':
-				self::activate_init_plugins();
-				if ( ! empty( get_transient( Options::get_option_name( 'active_plugins', true ) ) ) ) {
-					delete_transient( Options::get_option_name( 'active_plugins', true ) );
-				}
-				break;
 			case 'index.php':
 				// If the page is nfd-onboarding
-				if ( isset( $_GET['page'] ) && WP_ADMIN::$slug === $_GET['page'] ) {
-					if ( empty( get_transient( Options::get_option_name( 'active_plugins', true ) ) ) ) {
-						set_transient( Options::get_option_name( 'active_plugins', true ), '1', 20 * MINUTE_IN_SECONDS );
+				if ( isset( $_GET['page'] ) && WP_ADMIN::$slug === \sanitize_text_field( $_GET['page'] ) ) {
+					if ( '1' !== get_transient( Options::get_option_name( 'active_plugins' ) ) ) {
+						set_transient( Options::get_option_name( 'active_plugins' ), '1', 20 * MINUTE_IN_SECONDS );
 					}
 				}
 				break;
+			default:
+				self::activate_init_plugins();
+				if ( '1' === get_transient( Options::get_option_name( 'active_plugins' ) ) ) {
+					delete_transient( Options::get_option_name( 'active_plugins' ) );
+				}
+				break;
 		}
+
 		// Add hook to activate plugins after transient is deleted
 		add_filter(
 			'option_active_plugins',
 			function( $plugins ) {
-				if ( ! empty( get_transient( Options::get_option_name( 'active_plugins', true ) ) ) ) {
+				if ( '1' === get_transient( Options::get_option_name( 'active_plugins' ) ) ) {
 					return array( container()->plugin()->basename );
 				}
 				return $plugins;
