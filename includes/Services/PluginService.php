@@ -135,9 +135,9 @@ class PluginService {
 				}
 				break;
 			default:
-				self::activate_init_plugins();
 				if ( '1' === get_transient( Options::get_option_name( 'filter_active_plugins' ) ) ) {
 					delete_transient( Options::get_option_name( 'filter_active_plugins' ) );
+					self::activate_init_plugins();
 				}
 				break;
 		}
