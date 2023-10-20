@@ -3,6 +3,7 @@ namespace NewfoldLabs\WP\Module\Onboarding;
 
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Status;
 use NewfoldLabs\WP\Module\Onboarding\RestApi\RestApi;
+use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use function NewfoldLabs\WP\ModuleLoader\container;
@@ -70,6 +71,9 @@ final class Application {
 		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
 			new WP_Admin();
 		}
+
+		// Adds a transient to activate plugins in all scenarios.
+		PluginService::configure_activation_transient();
 
 		\do_action( 'nfd_module_onboarding_post_init' );
 	}
