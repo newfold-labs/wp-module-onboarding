@@ -37,7 +37,7 @@ class PluginService {
 					PluginInstallTaskManager::add_to_queue(
 						new PluginInstallTask(
 							$init_plugin['slug'],
-							$init_plugin['activate'],
+							true,
 							$init_plugin['priority']
 						)
 					);
