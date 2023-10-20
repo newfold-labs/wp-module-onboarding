@@ -34,6 +34,7 @@ html.nfd-interface-interface-skeleton__html-container {
 }
 
 .nfd-sitegen-interface-skeleton {
+
 	.nfd-interface-interface-skeleton__editor {
 		display: flex;
 		flex-direction: column;
@@ -66,10 +67,7 @@ html.nfd-interface-interface-skeleton__html-container {
 		// but if/when it is added, it should take care of the issue.
 		// See also: https://drafts.csswg.org/css-overscroll/
 		overscroll-behavior-y: none;
-		background: linear-gradient(to bottom left,
-				#110c2d,
-				#39122a,
-				#060918);
+		background: linear-gradient(to bottom left, #110c2d, #39122a, #060918);
 
 		// Footer overlap prevention
 		.has-footer & {

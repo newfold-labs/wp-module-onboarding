@@ -1,4 +1,3 @@
-import { __ } from '@wordpress/i18n';
 import { useViewportMatch } from '@wordpress/compose';
 import { useEffect } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
@@ -9,13 +8,10 @@ import HeadingWithSubHeading from '../../components/HeadingWithSubHeading';
 import getContents from './contents';
 
 const StepSiteGenGetStarted = () => {
-	
 	const isLargeViewport = useViewportMatch( 'medium' );
 
-	const {
-		setIsDrawerOpened,
-		setIsHeaderNavigationEnabled,
-	} = useDispatch( nfdOnboardingStore );
+	const { setIsDrawerOpened, setIsHeaderNavigationEnabled } =
+		useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		if ( isLargeViewport ) {

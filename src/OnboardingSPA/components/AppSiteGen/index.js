@@ -16,23 +16,12 @@ import { useEffect, Fragment } from '@wordpress/element';
 import { FullscreenMode } from '@wordpress/interface';
 import SiteGenInterfaceSkeleton from '../SiteGenInterfaceSkeleton';
 
-/**
- * Primary app that renders the <SiteGenInterfaceSkeleton />.
- *
- * Is a child of the hash router and error boundary.
- *
- * @return {WPComponent} App Component
- */
 const AppSiteGen = () => {
 	const location = useLocation();
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const pathname = kebabCase( location.pathname );
 
-	const {
-		isDrawerOpen,
-		newfoldBrand,
-		onboardingFlow,
-	} = useSelect(
+	const { isDrawerOpen, newfoldBrand, onboardingFlow } = useSelect(
 		( select ) => {
 			return {
 				newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
@@ -46,10 +35,7 @@ const AppSiteGen = () => {
 		[ location.pathname ]
 	);
 
-	const {
-		setActiveStep,
-		setActiveFlow,
-	} = useDispatch( nfdOnboardingStore );
+	const { setActiveStep, setActiveFlow } = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
@@ -77,10 +63,12 @@ const AppSiteGen = () => {
 						{ 'is-small-viewport': ! isLargeViewport }
 					) }
 					adminbar={ <AdminBarSiteGen /> }
-					progressbar={ <ProgressBarSiteGen current={20} total={100} />  }
+					progressbar={
+						<ProgressBarSiteGen current={ 20 } total={ 100 } />
+					}
 					header={ <Header /> }
 					content={ <Content /> }
-					darkModeToggle = { <ToggleDarkMode />}
+					darkModeToggle={ <ToggleDarkMode /> }
 				/>
 			</SlotFillProvider>
 		</Fragment>

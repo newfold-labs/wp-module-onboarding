@@ -107,49 +107,49 @@ function SiteGenInterfaceSkeleton(
 					</div>
 				) }
 				<div className="nfd-interface-interface-skeleton__body">
-					{!!header && (
+					{ !! header && (
 						<div
 							className="nfd-interface-interface-skeleton__header"
 							role="region"
-							aria-label={mergedLabels.header}
+							aria-label={ mergedLabels.header }
 							tabIndex="-1"
 						>
-							{header}
+							{ header }
 						</div>
-					)}
-					{!!notices && (
+					) }
+					{ !! notices && (
 						<div className="nfd-interface-interface-skeleton__notices">
-							{notices}
+							{ notices }
 						</div>
-					)}
+					) }
 					<div
 						className="nfd-interface-interface-skeleton__content"
 						role="region"
-						aria-label={mergedLabels.body}
+						aria-label={ mergedLabels.body }
 						tabIndex="-1"
 					>
-						{content}
+						{ content }
 					</div>
-					{!!actions && (
+					{ !! actions && (
 						<div
 							className="nfd-interface-interface-skeleton__actions"
 							role="region"
-							aria-label={mergedLabels.actions}
+							aria-label={ mergedLabels.actions }
 							tabIndex="-1"
 						>
-							{actions}
+							{ actions }
 						</div>
-					)}
-					{!!darkModeToggle && (
+					) }
+					{ !! darkModeToggle && (
 						<div
 							className="nfd-interface-interface-skeleton__darkModeToggle"
 							role="region"
-							aria-label={mergedLabels.darkModeToggle}
+							aria-label={ mergedLabels.darkModeToggle }
 							tabIndex="-1"
 						>
-							{darkModeToggle}
+							{ darkModeToggle }
 						</div>
-					)}
+					) }
 				</div>
 			</div>
 			{ !! footer && (

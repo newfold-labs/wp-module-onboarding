@@ -1,16 +1,16 @@
-.nfd-progress-bar-site-gen{
-    width: 100%;
+.nfd-progress-bar-site-gen {
+	width: 100%;
 
-    .nfd-progress-bar-container {
-        background-color: #32373e;
-        height: 15px;
-        width: 100%;
-        border-radius: 0px;
-        overflow: hidden;
-    }
-    
-    .nfd-progress-bar-fill {
-        background-color: #3620f8; /* WordPress blue */
-        height: 100%;
-    }
+	.nfd-progress-bar-container {
+		background-color: #32373e;
+		height: 15px;
+		width: 100%;
+		border-radius: 0;
+		overflow: hidden;
+	}
+
+	.nfd-progress-bar-fill {
+		background-color: #3620f8;
+		height: 100%;
+	}
 }

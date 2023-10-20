@@ -19,7 +19,6 @@ const Content = () => {
 	} );
 
 	const getMappedPages = useCallback( () => {
-		debugger;
 		return routes?.map( ( route ) => (
 			<Route
 				key={ route.path }
