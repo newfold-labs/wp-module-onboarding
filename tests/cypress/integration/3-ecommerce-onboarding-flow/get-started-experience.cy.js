@@ -35,9 +35,9 @@ describe( 'Start Setup WP Experience Page', function () {
 	} );
 
 	it( 'Check if `store` appears in heading', () => {
-		cy.get('.nfd-step-card-heading')
-			.should('be.visible')
-			.contains('store');
+		cy.get( '.nfd-step-card-heading' )
+			.should( 'be.visible' )
+			.contains( 'store' );
 	} );
 
 	it( 'Check if Radio Options load', () => {
@@ -53,20 +53,23 @@ describe( 'Start Setup WP Experience Page', function () {
 	} );
 
 	const EventsAPI = ( experience_val ) => {
-		cy.intercept(APIList.get_started_experience_ecomm).as('events');
-		cy.wait('@events').then((requestObject) => {
+		cy.intercept( APIList.get_started_experience_ecomm ).as( 'events' );
+		cy.wait( '@events' ).then( ( requestObject ) => {
 			const responseBody = requestObject.request.body;
-			const responseData1 = responseBody[0].data;
-			if("experience_level" in responseData1){
-				expect(responseData1.experience_level).equal(experience_val);
+			const responseData1 = responseBody[ 0 ].data;
+			if ( 'experience_level' in responseData1 ) {
+				expect( responseData1.experience_level ).equal(
+					experience_val
+				);
+			} else {
+				const responseData2 = responseBody[ 1 ].data;
+				if ( 'experience_level' in responseData2 ) {
+					expect( responseData2.experience_level ).equal(
+						experience_val
+					);
 				}
-			else{
-				const responseData2 = responseBody[1].data;
-				if("experience_level" in responseData2){
-					expect(responseData2.experience_level).equal(experience_val);
-				};
-			};
-		});
+			}
+		} );
 	};
 
 	it( 'Check if events API call being made after radio buttons are clicked', () => {
@@ -76,17 +79,17 @@ describe( 'Start Setup WP Experience Page', function () {
 		arr.each( () => {
 			cy.get( '[type="radio"]' )
 				.eq( radioCount )
-				.click( { force: true } )
-				if(radioCount==0){
-					EventsAPI("novice");
-				};
-				if(radioCount==1){
-					EventsAPI("intermediate");
-				};
-				if(radioCount>1){
-					cy.wait(5000);
-					EventsAPI("expert");
-				};
+				.click( { force: true } );
+			if ( radioCount == 0 ) {
+				EventsAPI( 'novice' );
+			}
+			if ( radioCount == 1 ) {
+				EventsAPI( 'intermediate' );
+			}
+			if ( radioCount > 1 ) {
+				cy.wait( 5000 );
+				EventsAPI( 'expert' );
+			}
 			radioCount += 1;
 		} );
 	} );
