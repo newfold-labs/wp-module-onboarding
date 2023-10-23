@@ -48,6 +48,7 @@
 @import "../components/ProgressBarSiteGen/stylesheet";
 @import "../components/ToggleDarkMode/stylesheet";
 @import "../components/HeaderSiteGen/stylesheet";
+@import "../components/HeadingWithSubHeading/stylesheet";
 
 // CSS for Pages
 @import "../steps/BasicInfo/stylesheet";
@@ -62,6 +63,7 @@
 @import "../steps/DesignFonts/stylesheet";
 @import "../steps/DesignHeaderMenu/stylesheet";
 @import "../steps/SiteFeatures/stylesheet";
+@import "../steps/SiteGenGetStarted/stylesheet";
 
 .nfd-onboarding-container {
 	display: flex;

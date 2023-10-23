@@ -1,8 +1,11 @@
+$sitegen-progress-blue: #3620f8;
+$sitegen-progress-grey: #32373e;
+
 .nfd-progress-bar-site-gen {
 	width: 100%;
 
 	.nfd-progress-bar-container {
-		background-color: #32373e;
+		background-color: $sitegen-progress-grey;
 		height: 15px;
 		width: 100%;
 		border-radius: 0;
@@ -10,7 +13,7 @@
 	}
 
 	.nfd-progress-bar-fill {
-		background-color: #3620f8;
+		background-color: $sitegen-progress-blue;
 		height: 100%;
 	}
 }

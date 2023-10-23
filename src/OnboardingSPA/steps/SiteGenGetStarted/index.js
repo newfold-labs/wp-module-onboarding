@@ -4,7 +4,7 @@ import { useDispatch } from '@wordpress/data';
 
 import { store as nfdOnboardingStore } from '../../store';
 import CommonLayout from '../../components/Layouts/Common';
-import HeadingWithSubHeading from '../../components/HeadingWithSubHeading';
+import HeadingWithSubHeading from './headingwithsubheading';
 import getContents from './contents';
 
 const StepSiteGenGetStarted = () => {

@@ -1,3 +1,4 @@
+$light-grey : #a0a5aa;
 .nfd-interface-interface-skeleton__adminbar {
 
 	.nfd-sitegen-admin-bar {
@@ -8,14 +9,14 @@
 		align-items: center;
 
 		.nfd-admin-bar-wplogo {
-			color: #fff; // Logo color
+			color: var(--nfd-onboarding-white);
 			font-size: 16px;
 			display: flex;
 			align-items: center;
 
 			svg {
-				color: #a0a5aa;
-				fill: #a0a5aa;
+				color: $light-grey;
+				fill: $light-grey;
 			}
 
 			span {
@@ -28,9 +29,16 @@
 			align-items: center;
 
 			.nfd-admin-bar-greeting {
-				color: #a0a5aa; // Text color
+				color: $light-grey; 
 				font-size: 16px;
 				margin-right: 5px;
+			}
+			.nfd-admin-bar-avatar{
+				height: 20px;
+				width:20px;
+				display: inline-block;
+				background-image: var(--adminbar-avatar-img);
+				background-size: contain;
 			}
 		}
 	}

@@ -35,10 +35,8 @@ function SiteGenInterfaceSkeleton(
 		footer,
 		adminbar,
 		progressbar,
-		notices,
 		content,
 		drawer,
-		actions,
 		labels,
 		className,
 		shortcuts,
@@ -117,11 +115,6 @@ function SiteGenInterfaceSkeleton(
 							{ header }
 						</div>
 					) }
-					{ !! notices && (
-						<div className="nfd-interface-interface-skeleton__notices">
-							{ notices }
-						</div>
-					) }
 					<div
 						className="nfd-interface-interface-skeleton__content"
 						role="region"
@@ -130,16 +123,6 @@ function SiteGenInterfaceSkeleton(
 					>
 						{ content }
 					</div>
-					{ !! actions && (
-						<div
-							className="nfd-interface-interface-skeleton__actions"
-							role="region"
-							aria-label={ mergedLabels.actions }
-							tabIndex="-1"
-						>
-							{ actions }
-						</div>
-					) }
 					{ !! darkModeToggle && (
 						<div
 							className="nfd-interface-interface-skeleton__darkModeToggle"

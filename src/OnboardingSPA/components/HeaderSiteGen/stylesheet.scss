@@ -1,4 +1,4 @@
-.nfd-onboarding-header {
+.nfd-sitegen-header {
 	align-items: center;
 	background-color: var(--nfd-onboarding-header-base);
 	color: var(--nfd-onboarding-header-contrast);
@@ -58,29 +58,6 @@
 		display: flex;
 		column-gap: $grid-unit-10;
 	}
-
-	&__step-progress {
-
-		&:-webkit-progress-inner-element {
-			background-color: #999;
-		}
-
-		&:-moz-progress-bar,
-		&:-webkit-progress-bar {
-			background-color: var(--nfd-onboarding-primary);
-		}
-	}
-}
-
-.nfd-onboarding-skeleton.is-drawer-open {
-
-	.nfd-onboarding-header {
-		padding-left: 0;
-		transition: padding-left 20ms linear;
-		transition-delay: 0ms;
-
-		@include reduce-motion("transition");
-	}
 }
 
 .navigation-buttons {
@@ -95,14 +72,6 @@
 
 	&_back {
 		padding-right: 22px !important;
-	}
-
-	&_next {
-		padding-left: 22px !important;
-	}
-
-	&_finish {
-		padding-left: 22px !important;
 	}
 
 	@media screen and (max-width: #{ ($break-medium) }) {

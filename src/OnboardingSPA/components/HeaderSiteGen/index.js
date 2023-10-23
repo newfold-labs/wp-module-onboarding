@@ -1,13 +1,22 @@
 import { memo } from '@wordpress/element';
+import { Button } from '@wordpress/components';
+import { Icon, chevronLeft } from '@wordpress/icons';
+import { __ } from '@wordpress/i18n';
 
-import StepNavigation from './step-navigation';
-
-const Header = () => {
+const HeaderSiteGen = () => {
 	return (
-		<div className="nfd-onboarding-header">
-			<StepNavigation />
+		<div className="nfd-sitegen-header">
+			<div className="nfd-sitegen-header__step-navigation">
+				<Button
+					className="navigation-buttons navigation-buttons_back"
+					variant="secondary"
+				>
+					<Icon icon={ chevronLeft } />
+					{ __( 'Back', 'wp-module-onboarding' ) }
+				</Button>
+			</div>
 		</div>
 	);
 };
 
-export default memo( Header );
+export default memo( HeaderSiteGen );
