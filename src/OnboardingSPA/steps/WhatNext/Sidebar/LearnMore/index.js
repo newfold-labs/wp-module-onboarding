@@ -71,17 +71,18 @@ const LearnMore = () => {
 				}
 			/>
 			<HelpPanel>
-				{ content.help.fullService.link && (
-					<ButtonWhite
-						text={ content.help.fullService.text }
-						onClick={ () =>
-							window.open(
-								content.help.fullService.link,
-								'_blank'
-							)
-						}
-					/>
-				) }
+				{ brandConfig?.views?.sidebar?.fullService?.shown !== false &&
+					content.help.fullService.link && (
+						<ButtonWhite
+							text={ content.help.fullService.text }
+							onClick={ () =>
+								window.open(
+									content.help.fullService.link,
+									'_blank'
+								)
+							}
+						/>
+					) }
 				<SupportLink
 					text={ content.help.support.text }
 					link={ content.help.support.link }

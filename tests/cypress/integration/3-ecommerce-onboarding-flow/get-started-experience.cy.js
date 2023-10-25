@@ -7,6 +7,7 @@ import {
 	CheckInfoPanel,
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
+import { APIList } from '../wp-module-support/EventsApi.cy';
 
 describe( 'Start Setup WP Experience Page', function () {
 	before( () => {
@@ -34,9 +35,9 @@ describe( 'Start Setup WP Experience Page', function () {
 	} );
 
 	it( 'Check if `store` appears in heading', () => {
-		cy.get('.nfd-step-card-heading')
-			.should('be.visible')
-			.contains('store');
+		cy.get( '.nfd-step-card-heading' )
+			.should( 'be.visible' )
+			.contains( 'store' );
 	} );
 
 	it( 'Check if Radio Options load', () => {
@@ -49,6 +50,48 @@ describe( 'Start Setup WP Experience Page', function () {
 	it( 'Check if Continue Setup Button is Disabled when none of the options are checked', () => {
 		cy.get( '.nfd-card-button' ).should( 'be.disabled' );
 		cy.url().should( 'contain', 'get-started/experience' );
+	} );
+
+	const EventsAPI = ( experience_val ) => {
+		cy.intercept( APIList.get_started_experience_ecomm ).as( 'events' );
+		cy.wait( '@events' ).then( ( requestObject ) => {
+			const responseBody = requestObject.request.body;
+			const responseData1 = responseBody[ 0 ].data;
+			if ( 'experience_level' in responseData1 ) {
+				expect( responseData1.experience_level ).equal(
+					experience_val
+				);
+			} else {
+				const responseData2 = responseBody[ 1 ].data;
+				if ( 'experience_level' in responseData2 ) {
+					expect( responseData2.experience_level ).equal(
+						experience_val
+					);
+				}
+			}
+		} );
+	};
+
+	it( 'Check if events API call being made after radio buttons are clicked', () => {
+		let radioCount = 0;
+		const className = '.components-radio-control__option';
+		const arr = cy.get( className );
+		arr.each( () => {
+			cy.get( '[type="radio"]' )
+				.eq( radioCount )
+				.click( { force: true } );
+			if ( radioCount == 0 ) {
+				EventsAPI( 'novice' );
+			}
+			if ( radioCount == 1 ) {
+				EventsAPI( 'intermediate' );
+			}
+			if ( radioCount > 1 ) {
+				cy.wait( 5000 );
+				EventsAPI( 'expert' );
+			}
+			radioCount += 1;
+		} );
 	} );
 
 	it( 'Checks if all the Radio Buttons are Enabled and Highlighted when clicked', () => {

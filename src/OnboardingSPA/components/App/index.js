@@ -225,16 +225,18 @@ const App = () => {
 
 			const platforms = Object.keys(
 				socialMediaStoreToState( socialData )
-			).join( ',' );
-			if ( platforms ) {
-				trackOnboardingEvent(
-					new OnboardingEvent(
-						ACTION_SOCIAL_ADDED,
-						platforms,
-						{},
-						previousStepURL
-					)
-				);
+			);
+			if ( platforms.length ) {
+				platforms.forEach( ( platform ) => {
+					trackOnboardingEvent(
+						new OnboardingEvent(
+							ACTION_SOCIAL_ADDED,
+							platform,
+							{},
+							previousStepURL
+						)
+					);
+				} );
 			}
 		}
 

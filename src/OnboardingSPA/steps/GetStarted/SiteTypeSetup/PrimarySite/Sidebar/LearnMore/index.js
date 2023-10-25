@@ -66,15 +66,16 @@ const LearnMore = () => {
 				}
 			/>
 			<HelpPanel>
-				{ content.help.fullService.link && (
-					<ButtonWhite
-						text={ content.help.fullService.text }
-						onClick={ () =>
-							( window.location.href =
-								content.help.fullService.link )
-						}
-					/>
-				) }
+				{ brandConfig?.views?.sidebar?.fullService?.shown !== false &&
+					content.help.fullService.link && (
+						<ButtonWhite
+							text={ content.help.fullService.text }
+							onClick={ () =>
+								( window.location.href =
+									content.help.fullService.link )
+							}
+						/>
+					) }
 				<SupportLink
 					text={ content.help.support.text }
 					link={ content.help.support.link }
