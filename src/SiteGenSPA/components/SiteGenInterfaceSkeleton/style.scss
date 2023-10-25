@@ -11,30 +11,31 @@ html.nfd-interface-interface-skeleton__html-container {
 }
 
 .nfd-interface-interface-skeleton {
-	display: flex;
-	flex-direction: row;
-	height: auto;
-	max-height: 100%;
+	&.nfd-sitegen-interface-skeleton {
+		display: flex;
+		flex-direction: row;
+		height: auto;
+		max-height: 100%;
 
-	// Fill the available space on Mobile.
-	position: fixed;
-	top: 46px;
-	left: 0;
-	right: 0;
-	bottom: 0;
+		// Fill the available space on Mobile.
+		position: fixed;
+		top: 46px;
+		left: 0;
+		right: 0;
+		bottom: 0;
 
-	// Adjust to admin-bar going small.
-	@media (min-width: #{ ($break-medium + 1) }) {
-		top: 32px;
+		// Adjust to admin-bar going small.
+		@media (min-width: #{ ($break-medium + 1) }) {
+			top: 32px;
 
-		.is-fullscreen-mode & {
-			top: 0;
+			.is-fullscreen-mode & {
+				top: 0;
+			}
 		}
 	}
 }
 
 .nfd-sitegen-interface-skeleton {
-
 	.nfd-interface-interface-skeleton__editor {
 		display: flex;
 		flex-direction: column;
@@ -71,7 +72,6 @@ html.nfd-interface-interface-skeleton__html-container {
 
 		// Footer overlap prevention
 		.has-footer & {
-
 			@media (max-width: #{($break-medium)}) {
 				padding-bottom: 24px + 1px;
 			}
@@ -95,7 +95,6 @@ html.nfd-interface-interface-skeleton__html-container {
 		// to "bleed" through the header.
 		// See https://github.com/WordPress/gutenberg/issues/32631
 		z-index: 20;
-
 	}
 
 	.nfd-interface-interface-skeleton__secondary-sidebar,
@@ -129,7 +128,6 @@ html.nfd-interface-interface-skeleton__html-container {
 	}
 
 	.nfd-interface-interface-skeleton__secondary-sidebar {
-
 		@media (max-width: #{($break-medium)}) {
 			border-right: 1px solid #e0e0e0;
 		}

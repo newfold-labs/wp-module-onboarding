@@ -1,10 +1,10 @@
 $sitegen-progress-blue: #3620f8;
 $sitegen-progress-grey: #32373e;
 
-.nfd-progress-bar-site-gen {
+.nfd-sitegen-progressbar {
 	width: 100%;
 
-	.nfd-progress-bar-container {
+	.nfd-sitegen-progressbar-container{
 		background-color: $sitegen-progress-grey;
 		height: 15px;
 		width: 100%;
@@ -12,7 +12,7 @@ $sitegen-progress-grey: #32373e;
 		overflow: hidden;
 	}
 
-	.nfd-progress-bar-fill {
+	.nfd-sitegen-progressbar-fill {
 		background-color: $sitegen-progress-blue;
 		height: 100%;
 	}

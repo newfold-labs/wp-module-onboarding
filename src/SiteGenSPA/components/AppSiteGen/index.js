@@ -25,7 +25,6 @@ const AppSiteGen = () => {
 			<SlotFillProvider>
 				<SiteGenInterfaceSkeleton
 					className={ classNames(
-						'nfd-onboarding-skeleton',
 						'nfd-sitegen-skeleton',
 						`brand-sitegen`,
 						`path-${ pathname }`,

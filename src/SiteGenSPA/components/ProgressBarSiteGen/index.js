@@ -1,10 +1,10 @@
 const ProgressBarSiteGen = ( { current, total } ) => {
 	const percentage = ( current / total ) * 100;
 	return (
-		<div className="nfd-progress-bar-site-gen">
-			<div className="nfd-progress-bar-container">
+		<div className="nfd-sitegen-progressbar">
+			<div className="nfd-sitegen-progressbar-container">
 				<div
-					className="nfd-progress-bar-fill"
+					className="nfd-sitegen-progressbar-fill"
 					style={ { width: `${ percentage }%` } }
 				></div>
 			</div>
