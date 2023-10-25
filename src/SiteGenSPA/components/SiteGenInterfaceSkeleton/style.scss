@@ -11,6 +11,7 @@ html.nfd-interface-interface-skeleton__html-container {
 }
 
 .nfd-interface-interface-skeleton {
+
 	&.nfd-sitegen-interface-skeleton {
 		display: flex;
 		flex-direction: row;
@@ -36,6 +37,7 @@ html.nfd-interface-interface-skeleton__html-container {
 }
 
 .nfd-sitegen-interface-skeleton {
+
 	.nfd-interface-interface-skeleton__editor {
 		display: flex;
 		flex-direction: column;
@@ -72,6 +74,7 @@ html.nfd-interface-interface-skeleton__html-container {
 
 		// Footer overlap prevention
 		.has-footer & {
+
 			@media (max-width: #{($break-medium)}) {
 				padding-bottom: 24px + 1px;
 			}
@@ -128,6 +131,7 @@ html.nfd-interface-interface-skeleton__html-container {
 	}
 
 	.nfd-interface-interface-skeleton__secondary-sidebar {
+
 		@media (max-width: #{($break-medium)}) {
 			border-right: 1px solid #e0e0e0;
 		}
