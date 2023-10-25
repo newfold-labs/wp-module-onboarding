@@ -1,0 +1,21 @@
+.ai-heading {
+
+	display: flex;
+	margin-bottom: 20px;
+	align-items: center;
+
+	&--icon {
+		width: 24px;
+		margin: 4px;
+		height: 24px;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-image: var(--ai-logo);
+	}
+
+	&--title {
+		margin: 10px;
+		font-size: 1.8rem;
+		font-weight: 500;
+	}
+}
