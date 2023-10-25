@@ -10,7 +10,9 @@ const AdminBarSiteGen = () => {
 			</div>
 			<div className="nfd-sitegen-admin-bar-profile">
 				<span className="nfd-admin-bar-greeting">
-					Howdy, Maya Jiménez
+					<span>
+						{ __( 'Howdy!', 'wp-module-onboarding' ) }, Maya Jiménez
+					</span>
 				</span>
 				<div className="nfd-admin-bar-avatar"></div>
 			</div>

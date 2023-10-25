@@ -1,4 +1,4 @@
-import Content from '../Content';
+import Content from '../../../OnboardingSPA/components/Content';
 import HeaderSiteGen from '../HeaderSiteGen';
 import ToggleDarkMode from '../ToggleDarkMode';
 import AdminBarSiteGen from '../AdminBarSiteGen';

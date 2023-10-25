@@ -40,14 +40,14 @@
 @import "../components/Sidebar/components/LearnMore/Skeleton/stylesheet";
 @import "../components/Animate/stylesheet";
 @import "../components/NewfoldInterfaceSkeleton/style";
-@import "../components/SiteGenInterfaceSkeleton/style";
 @import "../components/Loaders/Chapter/Interstitial/stylesheet";
 @import "../components/Grid/stylesheet";
 @import "../components/ComingSoon/stylesheet";
-@import "../components/AdminBarSiteGen/stylesheet";
-@import "../components/ProgressBarSiteGen/stylesheet";
-@import "../components/ToggleDarkMode/stylesheet";
-@import "../components/HeaderSiteGen/stylesheet";
+@import "../../SiteGenSPA/components/SiteGenInterfaceSkeleton/style";
+@import "../../SiteGenSPA/components/AdminBarSiteGen/stylesheet";
+@import "../../SiteGenSPA/components/ProgressBarSiteGen/stylesheet";
+@import "../../SiteGenSPA/components/ToggleDarkMode/stylesheet";
+@import "../../SiteGenSPA/components/HeaderSiteGen/stylesheet";
 
 // CSS for Pages
 @import "../steps/BasicInfo/stylesheet";
@@ -62,7 +62,7 @@
 @import "../steps/DesignFonts/stylesheet";
 @import "../steps/DesignHeaderMenu/stylesheet";
 @import "../steps/SiteFeatures/stylesheet";
-@import "../steps/SiteGenGetStarted/stylesheet";
+@import "../../SiteGenSPA/steps/SiteGenGetStarted/stylesheet";
 
 .nfd-onboarding-container {
 	display: flex;
