@@ -1,4 +1,4 @@
-import CommonLayout from '../../../OnboardingSPA/components/Layouts/Common';
+import CommonLayout from '../../components/Layouts/Common';
 import HeadingWithSubHeading from './headingwithsubheading';
 import getContents from './contents';
 
@@ -6,7 +6,7 @@ const StepSiteGenGetStarted = () => {
 	const content = getContents();
 
 	return (
-		<CommonLayout isVerticallyCentered>
+		<CommonLayout>
 			<HeadingWithSubHeading
 				title={ content.heading }
 				subtitle={ content.subheading }

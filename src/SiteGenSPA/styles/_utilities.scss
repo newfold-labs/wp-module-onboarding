@@ -1,0 +1,26 @@
+.is-centered {
+	display: flex;
+	place-content: center;
+	place-items: center;
+}
+
+.is-vertically-centered {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	flex-direction: column;
+}
+
+.is-bg-primary {
+	background-color: var(--nfd-onboarding-primary);
+	color: var(--nfd-onboarding-base);
+}
+
+.center {
+	text-align: center;
+}
+
+input::placeholder {
+	font-size: 0.75rem;
+	color: var(--nfd-onboarding-light-gray-4);
+}

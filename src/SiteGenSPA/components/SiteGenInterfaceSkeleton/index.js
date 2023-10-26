@@ -2,13 +2,6 @@
  * External dependencies
  */
 import classnames from 'classnames';
-
-/**
- * WordPress dependencies
- */
-/**
- * WordPress dependencies
- */
 import { forwardRef, useEffect } from '@wordpress/element';
 // eslint-disable-next-line  @wordpress/no-unsafe-wp-apis
 import { __unstableUseNavigateRegions as useNavigateRegions } from '@wordpress/components';

@@ -1,0 +1,83 @@
+@import "wordpress";
+@import "interface";
+@import "icons";
+@import "branding";
+@import "utilities";
+
+// CSS for Components
+@import "../components/Drawer/stylesheet";
+@import "../components/Header/stylesheet";
+@import "../components/Content/stylesheet";
+@import "../components/Layouts/stylesheet";
+@import "../components/SkipButton/stylesheet";
+@import "../components/Loaders/stylesheet";
+@import "../components/MiniPreview/stylesheet";
+@import "../components/Tooltip/stylesheet";
+@import "../components/ImageUploader/stylesheet";
+@import "../components/SocialMediaForm/stylesheet";
+@import "../components/TextInput/stylesheet";
+@import "../components/ExitToWordPress/stylesheet";
+@import "../components/Accordion/stylesheet";
+@import "../components/NewfoldLargeCard/stylesheet";
+@import "../components/SelectableCard/stylesheet";
+@import "../components/SelectableCardList/stylesheet";
+@import "../components/HeadingWithSubHeading/stylesheet";
+@import "../components/Button/stylesheet";
+@import "../components/CardHeader/stylesheet";
+@import "../components/NeedHelpTag/stylesheet";
+@import "../components/Sidebar/stylesheet";
+@import "../components/Sidebar/components/LearnMore/stylesheet";
+@import "../components/LivePreview/stylesheet";
+@import "../steps/DesignColors/stylesheet";
+@import "../steps/GetStarted/GetStartedExperience/stylesheet";
+@import "../components/Button/NavCardButton/stylesheet";
+@import "../steps/Ecommerce/stylesheet";
+@import "../components/ErrorState/stylesheet";
+@import "../components/ErrorModal/stylesheet";
+@import "../components/CheckboxTemplate/CheckboxItem/stylesheet";
+@import "../components/CheckboxTemplate/CheckboxList/stylesheet";
+@import "../components/CheckboxTemplate/CheckboxListSkeleton/stylesheet";
+@import "../components/Sidebar/components/LearnMore/Skeleton/stylesheet";
+@import "../components/Animate/stylesheet";
+@import "../components/NewfoldInterfaceSkeleton/style";
+@import "../components/Loaders/Chapter/Interstitial/stylesheet";
+@import "../components/Grid/stylesheet";
+@import "../components/ComingSoon/stylesheet";
+@import "../../SiteGenSPA/components/SiteGenInterfaceSkeleton/style";
+@import "../../SiteGenSPA/components/AdminBarSiteGen/stylesheet";
+@import "../../SiteGenSPA/components/ProgressBarSiteGen/stylesheet";
+@import "../../SiteGenSPA/components/ToggleDarkMode/stylesheet";
+@import "../../SiteGenSPA/components/HeaderSiteGen/stylesheet";
+
+// CSS for Pages
+@import "../steps/BasicInfo/stylesheet";
+@import "../steps/TopPriority/stylesheet";
+@import "../steps/DesignHomepageMenu/stylesheet";
+@import "../steps/GetStarted/Welcome/stylesheet";
+@import "../steps/GetStarted/SiteTypeSetup/PrimarySite/stylesheet";
+@import "../steps/GetStarted/SiteTypeSetup/SecondarySite/stylesheet";
+@import "../steps/DesignThemeStyles/stylesheet";
+@import "../steps/WhatNext/stylesheet";
+@import "../steps/SitePages/stylesheet";
+@import "../steps/DesignFonts/stylesheet";
+@import "../steps/DesignHeaderMenu/stylesheet";
+@import "../steps/SiteFeatures/stylesheet";
+@import "../../SiteGenSPA/steps/SiteGenGetStarted/stylesheet";
+
+.nfd-onboarding-container {
+	display: flex;
+	background-color: var(--nfd-onboarding-white);
+
+	@include break-small {
+		bottom: 0;
+		left: 0;
+		min-height: calc(100vh - #{$admin-bar-height-big});
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	@include break-medium {
+		min-height: calc(100vh - #{$admin-bar-height});
+	}
+}

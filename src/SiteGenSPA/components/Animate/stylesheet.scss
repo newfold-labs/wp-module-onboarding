@@ -1,0 +1,170 @@
+@keyframes fadeIn {
+
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+
+@keyframes fadeInRight {
+
+	from {
+		opacity: 0;
+		transform: translate3d(33%, 0, 0);
+	}
+
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes fadeInLeft {
+
+	from {
+		opacity: 0;
+		transform: translate3d(-33%, 0, 0);
+	}
+
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes fadeInUp {
+
+	from {
+		opacity: 0;
+		transform: translate3d(0, 33%, 0);
+	}
+
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes fadeInWithDisabledClicks {
+
+	from {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes shine {
+
+	0% {
+		transform: translateX(-100%);
+	}
+
+	100% {
+		transform: translateX(100%);
+	}
+}
+
+@keyframes shine-placeholder {
+
+	0% {
+		background-position: -468px 0;
+	}
+
+	100% {
+		background-position: 468px 0;
+	}
+}
+
+@keyframes dropdown {
+
+	0% {
+		transform: rotateX(-90deg);
+	}
+
+	70% {
+		transform: rotateX(20deg);
+	}
+
+	100% {
+		transform: rotateX(0deg);
+	}
+}
+
+@keyframes load {
+
+	0% {
+		left: -100%;
+	}
+
+	100% {
+		left: 100%;
+	}
+}
+
+.animate {
+
+	&__blank {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	&__shine {
+		animation: shine 1.5s linear infinite;
+
+		&--placeholder {
+			animation: shine-placeholder 1.5s linear infinite;
+		}
+	}
+
+	&__dropdown {
+		animation: dropdown 400ms ease-in-out forwards;
+	}
+
+	&__fade-in {
+
+		animation: fadeIn 100ms ease-in-out;
+
+		&--disabled {
+			animation: fadeInWithDisabledClicks 500ms ease-in;
+		}
+
+		&--right {
+			animation: fadeInRight 360ms ease-out;
+
+			@media (prefers-reduced-motion) {
+				animation: none !important;
+				translation: none !important;
+			}
+		}
+
+		&--left {
+			animation: fadeInLeft 360ms ease-out;
+
+			@media (prefers-reduced-motion) {
+				animation: none !important;
+				translation: none !important;
+			}
+		}
+
+		&--up {
+			animation: fadeInUp 360ms ease-out;
+
+			@media (prefers-reduced-motion) {
+				animation: none !important;
+				translation: none !important;
+			}
+		}
+	}
+
+	&__load {
+		animation: load 3s linear infinite;
+	}
+}

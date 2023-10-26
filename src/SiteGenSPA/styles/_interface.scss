@@ -1,0 +1,38 @@
+$header-height: 60px;
+$nav-sidebar-width: 300px;
+
+html.wp-toolbar {
+	background: var(--nfd-onboarding-white);
+}
+
+body {
+
+	&:not(.is-fullscreen-mode) {
+		opacity: 0;
+	}
+
+	&.is-fullscreen-mode {
+		opacity: 1;
+		transition: opacity ease-in 500ms;
+	}
+
+	&.dashboard_page_nfd-onboarding {
+
+		@include wp-admin-reset(".nfd-onboarding-container");
+	}
+
+	// Common Components across Brands
+	--nfd-onboarding-white: #fff;
+	--nfd-onboarding-white-rgb: 255, 255, 255;
+	--nfd-onboarding-black: #000;
+	--nfd-onboarding-header-base: var(--nfd-onboarding-light);
+	--nfd-onboarding-header-contrast: var(--nfd-onboarding-dark);
+	--nfd-onboarding-content-base: var(--nfd-onboarding-light);
+	--nfd-onboarding-content-contrast: var(--nfd-onboarding-dark);
+	--nfd-onboarding-drawer-base: var(--nfd-onboarding-dark);
+	--nfd-onboarding-drawer-contrast: var(--nfd-onboarding-light);
+	--nfd-onboarding-footer-contrast: var(--nfd-onboarding-dark);
+	--nfd-onboarding-footer-base: var(--nfd-onboarding-light);
+	--nfd-onboarding-minipreview-base: #f2f2f2;
+	--nfd-onboarding-base-gray: #f0f0f0;
+}

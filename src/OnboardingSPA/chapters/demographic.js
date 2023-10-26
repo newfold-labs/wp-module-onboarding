@@ -6,7 +6,7 @@ import { stepExperience } from '../steps/GetStarted/GetStartedExperience/step';
 import { stepPrimarySetup } from '../steps/GetStarted/SiteTypeSetup/PrimarySite/step';
 import { stepSecondarySetup } from '../steps/GetStarted/SiteTypeSetup/SecondarySite/step';
 import { stepTopPriority } from '../steps/TopPriority/step';
-import { stepSiteGenGetStarted } from '../steps/SiteGenGetStarted/step';
+import { stepSiteGenGetStarted } from '../../SiteGenSPA/steps/SiteGenGetStarted/step';
 import { Chapter } from '../data/models/Chapter';
 import { Step } from '../data/models/Step';
 import ChapterInterstitialLoader from '../components/Loaders/Chapter/Interstitial';
