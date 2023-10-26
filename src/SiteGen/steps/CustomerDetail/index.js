@@ -2,7 +2,9 @@ import getContents from './contents';
 import { useState } from '@wordpress/element';
 import TextInput from '../../components/TextInput';
 import AIHeading from '../../components/AIHeading';
+import NextButton from '../../components/Navigation/NextButton';
 import CommonLayout from '../../../OnboardingSPA/components/Layouts/Common';
+import { addThemeSuffix } from '../../utils/helper';
 
 const CustomerDetail = () => {
 	const content = getContents();
@@ -10,7 +12,7 @@ const CustomerDetail = () => {
 
 	return (
 		<CommonLayout isCentered>
-			<div className="nfd-sg-customer-detail">
+			<div className={ addThemeSuffix( 'nfd-sg-customer-detail' ) }>
 				<AIHeading title={ content.heading } />
 				<TextInput
 					placeholder={ content.inputPlaceholder }
@@ -19,6 +21,9 @@ const CustomerDetail = () => {
 					customerInput={ customerInput }
 					setCustomerInput={ setCustomerInput }
 				/>
+				<div className={ addThemeSuffix( 'nfd-sg-customer-detail-endrow' ) }>
+					<NextButton />
+				</div>
 			</div>
 		</CommonLayout>
 	);

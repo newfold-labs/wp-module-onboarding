@@ -1,0 +1,36 @@
+.nfd-sg-next-btn {
+	height: 25px;
+	width: 60px;
+	color: #fff;
+	padding: 16px;
+	display: flex;
+	font-size: 1rem;
+	cursor: pointer;
+	padding-left: 24px;
+	align-items: center;
+	border-radius: 8px;
+	justify-content: center;
+	background-color: #000;
+	transition: all 300ms ease-in-out;
+
+	&--icon {
+		fill: #fff;
+
+		&--dark {
+			fill: #000;
+		}
+	}
+
+	&:hover {
+		box-shadow: 5px 5px rgba($color: #000000, $alpha: 0.1);
+	}
+
+	&--dark {
+		color: #000;
+		background-color: #fff;
+
+		&:hover {
+			box-shadow: 5px 5px rgba($color: #fff, $alpha: 0.1);
+		}
+	}
+}

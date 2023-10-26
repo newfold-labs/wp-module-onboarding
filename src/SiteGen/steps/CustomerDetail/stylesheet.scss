@@ -1,4 +1,20 @@
-// TO DO
 body {
 	--ai-logo: url(../../SiteGen/static/images/ai-logo.png);
+}
+
+.nfd-sg-customer-detail {
+
+	@media (max-width: #{ ($break-small) }) {
+		margin: 20px;
+	}
+
+	&-endrow {
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
+
+		@media (max-width: #{ ($break-small) }) {
+			justify-content: center;
+		}
+	}
 }

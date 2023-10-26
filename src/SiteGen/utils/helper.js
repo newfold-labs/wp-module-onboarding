@@ -1,4 +1,4 @@
 export const addThemeSuffix = ( className ) => {
-	const themeState = false;
+	const themeState = true;
 	return themeState ? className : `${ className } ${ className }--dark`;
 };
