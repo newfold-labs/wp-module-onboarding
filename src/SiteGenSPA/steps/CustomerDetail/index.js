@@ -21,7 +21,11 @@ const CustomerDetail = () => {
 					customerInput={ customerInput }
 					setCustomerInput={ setCustomerInput }
 				/>
-				<div className={ addThemeSuffix( 'nfd-sg-customer-detail-endrow' ) }>
+				<div
+					className={ addThemeSuffix(
+						'nfd-sg-customer-detail-endrow'
+					) }
+				>
 					<NextButton />
 				</div>
 			</div>
