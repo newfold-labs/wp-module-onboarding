@@ -128,6 +128,7 @@ const StepPrimarySetup = () => {
 			return (
 				<div
 					key={ types[ type ]?.slug }
+					data-slug={ types[ type ]?.slug }
 					tabIndex={ idx + 1 }
 					role="button"
 					className={ `${
