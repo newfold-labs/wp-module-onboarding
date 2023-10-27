@@ -1,11 +1,11 @@
 $sitegen-progress-blue: #3620f8;
-$sitegen-progress-grey: #32373e;
+// $sitegen-progress-grey: #32373e;
 
 .nfd-sitegen-progressbar {
 	width: 100%;
 
 	.nfd-sitegen-progressbar-container {
-		background-color: $sitegen-progress-grey;
+		background-color: var(--progress-background-color);
 		height: 15px;
 		width: 100%;
 		border-radius: 0;

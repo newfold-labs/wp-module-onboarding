@@ -13,6 +13,7 @@ import { SlotFillProvider } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 import { FullscreenMode } from '@wordpress/interface';
 import SiteGenInterfaceSkeleton from '../SiteGenInterfaceSkeleton';
+import { ThemeProvider } from '../ThemeContextProvider';
 
 const AppSiteGen = () => {
 	const location = useLocation();
@@ -21,25 +22,27 @@ const AppSiteGen = () => {
 
 	return (
 		<Fragment>
-			<FullscreenMode isActive={ true } />
-			<SlotFillProvider>
-				<SiteGenInterfaceSkeleton
-					className={ classNames(
-						'nfd-sitegen-skeleton',
-						`brand-sitegen`,
-						`path-${ pathname }`,
-						{ 'is-large-viewport': isLargeViewport },
-						{ 'is-small-viewport': ! isLargeViewport }
-					) }
-					adminbar={ <AdminBarSiteGen /> }
-					progressbar={
-						<ProgressBarSiteGen current={ 20 } total={ 100 } />
-					}
-					header={ <HeaderSiteGen /> }
-					content={ <Content /> }
-					darkModeToggle={ <ToggleDarkMode /> }
-				/>
-			</SlotFillProvider>
+			<ThemeProvider>
+				<FullscreenMode isActive={ true } />
+				<SlotFillProvider>
+					<SiteGenInterfaceSkeleton
+						className={ classNames(
+							'nfd-sitegen-skeleton',
+							`brand-sitegen`,
+							`path-${ pathname }`,
+							{ 'is-large-viewport': isLargeViewport },
+							{ 'is-small-viewport': ! isLargeViewport }
+						) }
+						adminbar={ <AdminBarSiteGen /> }
+						progressbar={
+							<ProgressBarSiteGen current={ 20 } total={ 100 } />
+						}
+						header={ <HeaderSiteGen /> }
+						content={ <Content /> }
+						darkModeToggle={ <ToggleDarkMode /> }
+					/>
+				</SlotFillProvider>
+			</ThemeProvider>
 		</Fragment>
 	);
 };

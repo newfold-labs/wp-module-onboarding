@@ -31,3 +31,12 @@
 		min-height: calc(100vh - #{$admin-bar-height});
 	}
 }
+
+.nfd-sitegen-dark-mode {
+	--progress-background-color: #32373e;
+}
+
+.nfd-sitegen-light-mode {
+	--progress-background-color: #fff;
+
+}

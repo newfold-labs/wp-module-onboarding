@@ -1,13 +1,14 @@
 import { ToggleControl } from '@wordpress/components';
-import { useState } from '@wordpress/element';
+import { useContext } from '@wordpress/element';
+import { ThemeContext } from '../ThemeContextProvider';
 import getContents from './contents';
 
 const ToggleDarkMode = () => {
-	const [ isChecked, setChecked ] = useState( false );
+	const { theme, toggleTheme } = useContext( ThemeContext );
+	const isChecked = theme === 'nfd-sitegen-dark-mode';
 	const content = getContents();
-	const onChange = ( value ) => {
-		setChecked( value );
-		// Handle the toggle action here
+	const onChange = () => {
+		toggleTheme();
 	};
 
 	return (

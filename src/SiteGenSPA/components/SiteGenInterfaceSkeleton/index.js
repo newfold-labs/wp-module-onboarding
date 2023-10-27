@@ -2,11 +2,12 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { forwardRef, useEffect } from '@wordpress/element';
+import { forwardRef, useEffect, useContext } from '@wordpress/element';
 // eslint-disable-next-line  @wordpress/no-unsafe-wp-apis
 import { __unstableUseNavigateRegions as useNavigateRegions } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useMergeRefs } from '@wordpress/compose';
+import { ThemeContext } from '../ThemeContextProvider';
 
 function useHTMLClass( className ) {
 	useEffect( () => {
@@ -38,6 +39,7 @@ function SiteGenInterfaceSkeleton(
 	ref
 ) {
 	const navigateRegionsProps = useNavigateRegions( shortcuts );
+	const { theme } = useContext( ThemeContext );
 
 	useHTMLClass( 'nfd-interface-interface-skeleton__html-container' );
 
@@ -60,6 +62,7 @@ function SiteGenInterfaceSkeleton(
 			ref={ useMergeRefs( [ ref, navigateRegionsProps.ref ] ) }
 			className={ classnames(
 				className,
+				theme,
 				'nfd-interface-interface-skeleton',
 				'nfd-sitegen-interface-skeleton',
 				navigateRegionsProps.className,
