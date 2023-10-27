@@ -70,7 +70,27 @@ html.nfd-interface-interface-skeleton__html-container {
 		// but if/when it is added, it should take care of the issue.
 		// See also: https://drafts.csswg.org/css-overscroll/
 		overscroll-behavior-y: none;
-		background: linear-gradient(to bottom left, #110c2d, #39122a, #060918);
+		// background:linear-gradient(
+		// 	45deg,
+		// 	#000000 3%, 
+		// 	#060b2b 38%,
+		// 	#220d2c 39%, 
+		// 	#220d2c 43%,
+		// 	#320f2a 44%,
+		// 	#2f0f2d 48%,
+		// 	#320f2a 49%,
+		// 	#320f2a 51%,
+		// 	#320f2a 53%,
+		// 	#320f2a 55%,
+		// 	#040b29 90%,
+		// 	#040b29 95%,
+		// 	#040712 100%);
+		
+		background-image: url('../static/images/ai_bg.jpg');
+		background-size: cover;
+		// position: relative;
+		// height: 100%;
+		// width: 100%;
 
 		// Footer overlap prevention
 		.has-footer & {
@@ -80,6 +100,17 @@ html.nfd-interface-interface-skeleton__html-container {
 			}
 		}
 	}
+
+	.nfd-interface-interface-skeleton__body::after {
+		content: "";
+		background-color: #060606;
+		opacity: 0.75;
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+	}	   
 
 	.nfd-interface-interface-skeleton__content {
 		flex-grow: 1;
