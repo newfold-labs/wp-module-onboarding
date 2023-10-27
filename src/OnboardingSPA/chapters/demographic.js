@@ -7,6 +7,7 @@ import { stepPrimarySetup } from '../steps/GetStarted/SiteTypeSetup/PrimarySite/
 import { stepSecondarySetup } from '../steps/GetStarted/SiteTypeSetup/SecondarySite/step';
 import { stepTopPriority } from '../steps/TopPriority/step';
 import { stepSiteGenGetStarted } from '../../SiteGenSPA/steps/SiteGenGetStarted/step';
+import { stepSiteGenGetStartedWelcome } from '../../SiteGenSPA/steps/Welcome/step';
 import { Chapter } from '../data/models/Chapter';
 import { Step } from '../data/models/Step';
 import ChapterInterstitialLoader from '../components/Loaders/Chapter/Interstitial';
@@ -24,6 +25,7 @@ const steps = [
 	stepBasicInfo,
 	stepTopPriority,
 	stepSiteGenGetStarted,
+	stepSiteGenGetStartedWelcome,
 ];
 
 export const demographic = new Chapter( {
