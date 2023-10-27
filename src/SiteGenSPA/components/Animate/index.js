@@ -1,12 +1,15 @@
 import classNames from 'classnames';
 
 /**
- * A Animator to show animation
- *
- * @param {string}             type  The name of Animation to be shown.
- * @param { object | boolean } after The variable to look after for before showing the animation, by default true to show the children right away.
- *
+ * @param {Object}           props                The properties passed to the Animate function.
+ * @param {string}           props.type           The name of Animation to be shown.
+ * @param {object | boolean} props.after          The variable to look after for before showing the animation, by default true to show the children right away.
+ * @param {Object}           props.children       The children of the component.
+ * @param {string}           props.className      The optional class name for the animation.
+ * @param {boolean}          props.duration       The duration for the animation.
+ * @param {boolean}          props.timingFunction The timing function for the animation.
  */
+
 const Animate = ( {
 	type,
 	after = true,
