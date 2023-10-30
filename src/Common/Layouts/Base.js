@@ -25,11 +25,11 @@ const BaseLayout = ( {
 		mainContainer?.focus( { preventScroll: true } );
 		speakRouteTitle( 'Override' );
 		sendOnboardingEvent( new OnboardingEvent( ACTION_PAGEVIEW ) );
-	}, [location.pathname] );
+	}, [ location.pathname ] );
 
 	return (
-		<div className={classNames( 'nfd-onboarding-layout', className )}>
-			{children}
+		<div className={ classNames( 'nfd-onboarding-layout', className ) }>
+			{ children }
 		</div>
 	);
 };

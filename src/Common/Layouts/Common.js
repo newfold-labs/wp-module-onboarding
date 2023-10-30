@@ -9,7 +9,7 @@ import Animate from '../Animate';
  * @return {ReturnType} Returns the inner contianer
  */
 const InnerContainer = ( { children } ) => {
-	return <section className="is-contained">{children}</section>;
+	return <section className="is-contained">{ children }</section>;
 };
 
 /**
@@ -26,7 +26,7 @@ const InnerContainer = ( { children } ) => {
  * @param {boolean} props.isFadeIn
  * @return {ReturnType} Returns the common layout
  */
-const CommonLayout = ({
+const CommonLayout = ( {
 	className = '',
 	children,
 	isBgPrimary = false,
@@ -39,21 +39,21 @@ const CommonLayout = ({
 	const Container = isContained ? InnerContainer : Fragment;
 	return (
 		<Animate
-			type={isFadeIn && 'fade-in'}
-			duration={'233ms'}
-			timingFunction={'ease-in-out'}
+			type={ isFadeIn && 'fade-in' }
+			duration={ '233ms' }
+			timingFunction={ 'ease-in-out' }
 		>
 			<BaseLayout
-				className={classNames(
+				className={ classNames(
 					'nfd-onboarding-layout__common',
 					className,
 					{ 'is-bg-primary': isBgPrimary },
 					{ 'is-centered': isCentered },
 					{ 'is-vertically-centered': isVerticallyCentered },
 					{ 'is-padded': isPadded }
-				)}
+				) }
 			>
-				<Container>{children}</Container>
+				<Container>{ children }</Container>
 			</BaseLayout>
 		</Animate>
 	);

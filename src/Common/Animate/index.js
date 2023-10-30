@@ -62,17 +62,17 @@ const Animate = ( {
 		}
 	}
 
-	return !after ? (
-		<div className={`${prefix}__blank`}>{children}</div>
+	return ! after ? (
+		<div className={ `${ prefix }__blank` }>{ children }</div>
 	) : (
 		<div
-			className={classNames( getAnimateClassName(), className )}
-			style={{
+			className={ classNames( getAnimateClassName(), className ) }
+			style={ {
 				animationDuration: duration,
 				animationTimingFunction: timingFunction,
-			}}
+			} }
 		>
-			{children}
+			{ children }
 		</div>
 	);
 };
