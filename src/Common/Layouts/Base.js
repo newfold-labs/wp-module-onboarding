@@ -9,26 +9,26 @@ import {
 } from '../../OnboardingSPA/utils/analytics/hiive';
 import { ACTION_PAGEVIEW } from '../../OnboardingSPA/utils/analytics/hiive/constants';
 
-const BaseLayout = ({
+const BaseLayout = ( {
 	className = 'nfd-onboarding-layout__base',
 	children,
-}) => {
+} ) => {
 	const location = useLocation();
-	const mainContainer = document.querySelector('.nfd-onboard-content');
+	const mainContainer = document.querySelector( '.nfd-onboard-content' );
 
-	const speakRouteTitle = (title = 'Showing new Onboarding Page') => {
+	const speakRouteTitle = ( title = 'Showing new Onboarding Page' ) => {
 		// [TODO]: Determine if some routes should not speak the title
-		speak(title, 'assertive');
+		speak( title, 'assertive' );
 	};
 
-	useEffect(() => {
-		mainContainer?.focus({ preventScroll: true });
-		speakRouteTitle('Override');
-		sendOnboardingEvent(new OnboardingEvent(ACTION_PAGEVIEW));
-	}, [location.pathname]);
+	useEffect( () => {
+		mainContainer?.focus( { preventScroll: true } );
+		speakRouteTitle( 'Override' );
+		sendOnboardingEvent( new OnboardingEvent( ACTION_PAGEVIEW ) );
+	}, [location.pathname] );
 
 	return (
-		<div className={classNames('nfd-onboarding-layout', className)}>
+		<div className={classNames( 'nfd-onboarding-layout', className )}>
 			{children}
 		</div>
 	);

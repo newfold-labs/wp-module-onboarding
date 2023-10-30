@@ -11,7 +11,7 @@ const AdminBar = () => {
 			<div className="nfd-sitegen-admin-bar-profile">
 				<span className="nfd-admin-bar-greeting">
 					<span>
-						{__( 'Howdy!', 'wp-module-onboarding' ) }, Maya Jiménez
+						{ __( 'Howdy!', 'wp-module-onboarding' ) }, Maya Jiménez
 					</span>
 				</span>
 				<div className="nfd-admin-bar-avatar"></div>

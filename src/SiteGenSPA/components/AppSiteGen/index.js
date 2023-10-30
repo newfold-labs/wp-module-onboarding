@@ -40,7 +40,7 @@ const AppSiteGen = () => {
 						header={ <Header /> }
 						content={ <Content /> }
 						darkModeToggle={ <ToggleDarkMode /> }
-						footer={<ToggleDarkMode />}
+						footer={ <ToggleDarkMode /> }
 					/>
 				</SlotFillProvider>
 			</ThemeProvider>

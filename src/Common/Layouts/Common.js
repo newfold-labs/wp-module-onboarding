@@ -8,7 +8,7 @@ import Animate from '../Animate';
  * @param {*} param0
  * @return {ReturnType} Returns the inner contianer
  */
-const InnerContainer = ({ children }) => {
+const InnerContainer = ( { children } ) => {
 	return <section className="is-contained">{children}</section>;
 };
 
@@ -35,7 +35,7 @@ const CommonLayout = ({
 	isContained = false,
 	isPadded = false,
 	isFadeIn = true,
-}) => {
+} ) => {
 	const Container = isContained ? InnerContainer : Fragment;
 	return (
 		<Animate
