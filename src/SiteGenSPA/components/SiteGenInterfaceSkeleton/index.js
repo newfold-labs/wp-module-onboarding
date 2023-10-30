@@ -41,7 +41,7 @@ function SiteGenInterfaceSkeleton(
 	const navigateRegionsProps = useNavigateRegions( shortcuts );
 	const { theme } = useContext( ThemeContext );
 
-	useHTMLClass( 'nfd-interface-interface-skeleton__html-container' );
+	useHTMLClass( 'nfd-sg-interface-skeleton__html-container' );
 
 	const defaultLabels = {
 		/* translators: accessibility text for the nav bar landmark region. */
@@ -63,7 +63,7 @@ function SiteGenInterfaceSkeleton(
 			className={ classnames(
 				className,
 				theme,
-				'nfd-interface-interface-skeleton',
+				'nfd-sg-interface-skeleton',
 				'nfd-sitegen-interface-skeleton',
 				navigateRegionsProps.className,
 				!! footer && 'has-footer'
@@ -71,7 +71,7 @@ function SiteGenInterfaceSkeleton(
 		>
 			{ !! drawer && (
 				<div
-					className="nfd-interface-interface-skeleton__drawer"
+					className="nfd-sg-interface-skeleton__drawer"
 					role="region"
 					aria-label={ mergedLabels.drawer }
 					tabIndex="-1"
@@ -79,10 +79,10 @@ function SiteGenInterfaceSkeleton(
 					{ drawer }
 				</div>
 			) }
-			<div className="nfd-interface-interface-skeleton__editor">
+			<div className="nfd-sg-interface-skeleton__editor">
 				{ !! adminbar && (
 					<div
-						className="nfd-interface-interface-skeleton__adminbar"
+						className="nfd-sg-interface-skeleton__adminbar"
 						role="region"
 						aria-label={ mergedLabels.adminbar }
 						tabIndex="-1"
@@ -92,7 +92,7 @@ function SiteGenInterfaceSkeleton(
 				) }
 				{ !! progressbar && (
 					<div
-						className="nfd-interface-interface-skeleton__progressbar"
+						className="nfd-sg-interface-skeleton__progressbar"
 						role="region"
 						aria-label={ mergedLabels.progressbar }
 						tabIndex="-1"
@@ -100,10 +100,10 @@ function SiteGenInterfaceSkeleton(
 						{ progressbar }
 					</div>
 				) }
-				<div className="nfd-interface-interface-skeleton__body">
+				<div className="nfd-sg-interface-skeleton__body">
 					{ !! header && (
 						<div
-							className="nfd-interface-interface-skeleton__header"
+							className="nfd-sg-interface-skeleton__header"
 							role="region"
 							aria-label={ mergedLabels.header }
 							tabIndex="-1"
@@ -112,7 +112,7 @@ function SiteGenInterfaceSkeleton(
 						</div>
 					) }
 					<div
-						className="nfd-interface-interface-skeleton__content"
+						className="nfd-sg-interface-skeleton__content"
 						role="region"
 						aria-label={ mergedLabels.body }
 						tabIndex="-1"
@@ -121,7 +121,7 @@ function SiteGenInterfaceSkeleton(
 					</div>
 					{ !! darkModeToggle && (
 						<div
-							className="nfd-interface-interface-skeleton__darkModeToggle"
+							className="nfd-sg-interface-skeleton__darkModeToggle"
 							role="region"
 							aria-label={ mergedLabels.darkModeToggle }
 							tabIndex="-1"
@@ -133,7 +133,7 @@ function SiteGenInterfaceSkeleton(
 			</div>
 			{ !! footer && (
 				<div
-					className="nfd-interface-interface-skeleton__footer"
+					className="nfd-sg-interface-skeleton__footer"
 					role="region"
 					aria-label={ mergedLabels.footer }
 					tabIndex="-1"

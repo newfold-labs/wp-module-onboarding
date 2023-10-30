@@ -1,10 +1,10 @@
-import Content from '../../../OnboardingSPA/components/Content';
-import HeaderSiteGen from '../HeaderSiteGen';
-import ToggleDarkMode from '../ToggleDarkMode';
-import AdminBarSiteGen from '../AdminBarSiteGen';
-import ProgressBarSiteGen from '../ProgressBarSiteGen';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
+import AdminBar from '../AdminBar';
+import ProgressBar from '../ProgressBar';
+import Header from '../Header';
+import Content from '../../../OnboardingSPA/components/Content';
+import ToggleDarkMode from '../ToggleDarkMode';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { kebabCase } from 'lodash';
@@ -33,13 +33,14 @@ const AppSiteGen = () => {
 							{ 'is-large-viewport': isLargeViewport },
 							{ 'is-small-viewport': ! isLargeViewport }
 						) }
-						adminbar={ <AdminBarSiteGen /> }
+						adminbar={ <AdminBar /> }
 						progressbar={
-							<ProgressBarSiteGen current={ 20 } total={ 100 } />
+							<ProgressBar current={ 20 } total={ 100 } />
 						}
-						header={ <HeaderSiteGen /> }
+						header={ <Header /> }
 						content={ <Content /> }
 						darkModeToggle={ <ToggleDarkMode /> }
+						footer={<ToggleDarkMode />}
 					/>
 				</SlotFillProvider>
 			</ThemeProvider>

@@ -1,4 +1,4 @@
-const ProgressBarSiteGen = ( { current, total } ) => {
+const ProgressBar = ( { current, total } ) => {
 	const percentage = ( current / total ) * 100;
 	return (
 		<div className="nfd-sitegen-progressbar">
@@ -12,4 +12,4 @@ const ProgressBarSiteGen = ( { current, total } ) => {
 	);
 };
 
-export default ProgressBarSiteGen;
+export default ProgressBar;

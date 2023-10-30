@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { Icon, wordpress } from '@wordpress/icons';
 
-const AdminBarSiteGen = () => {
+const AdminBar = () => {
 	return (
 		<div className="nfd-sitegen-admin-bar">
 			<div className="nfd-admin-bar-wplogo">
@@ -11,7 +11,7 @@ const AdminBarSiteGen = () => {
 			<div className="nfd-sitegen-admin-bar-profile">
 				<span className="nfd-admin-bar-greeting">
 					<span>
-						{ __( 'Howdy!', 'wp-module-onboarding' ) }, Maya Jiménez
+						{__( 'Howdy!', 'wp-module-onboarding' ) }, Maya Jiménez
 					</span>
 				</span>
 				<div className="nfd-admin-bar-avatar"></div>
@@ -20,4 +20,4 @@ const AdminBarSiteGen = () => {
 	);
 };
 
-export default AdminBarSiteGen;
+export default AdminBar;

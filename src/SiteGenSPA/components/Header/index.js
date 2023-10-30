@@ -3,7 +3,7 @@ import { Button } from '@wordpress/components';
 import { Icon, chevronLeft } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 
-const HeaderSiteGen = () => {
+const Header = () => {
 	return (
 		<div className="nfd-sitegen-header">
 			<div className="nfd-sitegen-header__step-navigation">
@@ -19,4 +19,4 @@ const HeaderSiteGen = () => {
 	);
 };
 
-export default memo( HeaderSiteGen );
+export default memo( Header );
