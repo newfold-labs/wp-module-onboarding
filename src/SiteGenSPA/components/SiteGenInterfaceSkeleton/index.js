@@ -119,16 +119,6 @@ function SiteGenInterfaceSkeleton(
 					>
 						{ content }
 					</div>
-					{ !! darkModeToggle && (
-						<div
-							className="nfd-sg-interface-skeleton__darkModeToggle"
-							role="region"
-							aria-label={ mergedLabels.darkModeToggle }
-							tabIndex="-1"
-						>
-							{ darkModeToggle }
-						</div>
-					) }
 				</div>
 			</div>
 			{ !! footer && (
