@@ -1,4 +1,5 @@
 // <reference types="Cypress" />
+import { APIList, EventsAPI } from '../wp-module-support/EventsApi.cy';
 import { CheckDrawerDisabled } from '../wp-module-support/drawer.cy';
 import { CheckCardHeadingSubheading } from '../wp-module-support/header.cy';
 import {
@@ -41,6 +42,36 @@ describe( 'Get Started Site Type Primary', function () {
 		cy.get( '.chosenPrimaryCategory' )
             .find( '.categName' )
             .should( 'have.text', 'Business' );
+	} );
+
+	it( 'Check for Event API call being made when different categories are selected', ()=>{
+		let categoryCount = 0;
+		let num = 0;
+		const className = '.nfd-card-pri-category';
+		cy.get( className ).should( 'be.visible' );
+		const arr = cy.get( className );
+		arr.each( () => {
+			cy.get( className )
+				.eq( categoryCount )
+				.click()
+				.then(($element) => {
+					const dataSlugText = $element.attr('data-slug');
+					if(num>=2){
+						cy.wait(4000);
+					}
+					EventsAPI('primary_type', dataSlugText, APIList.site_primary_ecomm);
+					num+=1;
+				});
+			categoryCount += 1;
+		} );
+	} );
+
+	it( 'Check for Event API call when we enter text in input box', ()=>{
+		cy.get( '.nfd-setup-primary-custom__tellus-input' )
+			.scrollIntoView()
+			.should( 'be.visible' )
+			.type( 'Test' );
+		EventsAPI('primary_type', 'Test', APIList.site_primary_ecomm);
 	} );
 
 	it( 'Check different Categories exist and is selectable', () => {
