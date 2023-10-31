@@ -1,0 +1,75 @@
+.nfd-sg-card {
+
+	margin: 8px;
+	padding: 24px;
+	border-radius: 12px;
+	background-color: #1e2327;
+	box-shadow: 3px 3px 5px rgba($color: #000, $alpha: 0.2);
+
+	&__title {
+		color: #fff;
+		margin: 24px;
+		line-height: 2;
+		font-size: 20px;
+		text-align: center;
+		margin-bottom: 40px;
+		letter-spacing: 1.5px;
+	}
+
+	&__data {
+		margin: 12px;
+
+		&__option {
+			display: flex;
+			cursor: pointer;
+			margin: 20px 4px;
+			border-radius: 12px 12px 0 0;
+			align-items: center;
+			padding: 16px 12px 20px 12px;
+			justify-content: space-between;
+			transition: background-color 400ms ease-in-out;
+
+			&:not(:last-child) {
+				border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
+			}
+
+			&:hover {
+				background-color: #262c30;
+			}
+
+			&__left_top {
+				color: #fff;
+				font-size: 18px;
+				font-weight: 500;
+				padding-bottom: 12px;
+			}
+
+			&__left_bottom {
+				color: #fff;
+				font-size: 16px;
+				font-weight: 300;
+			}
+
+			&__right {
+				fill: #fff;
+				transition: all 200ms ease-in-out;
+
+				&:hover {
+					transform: scale(1.1);
+				}
+			}
+		}
+	}
+
+	&__skip {
+		cursor: pointer;
+		text-align: end;
+		margin: 30px 30px 12px 30px;
+		color: rgba(255, 255, 255, 0.6);
+		transition: color 200ms ease-in-out;
+
+		&:hover {
+			color: #fff;
+		}
+	}
+}

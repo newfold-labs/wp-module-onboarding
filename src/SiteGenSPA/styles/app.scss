@@ -12,11 +12,12 @@
 @import "../components/Header/stylesheet";
 @import "../components/AIHeading/stylesheet";
 @import "../components/TextInput/stylesheet";
+@import "../components/CardWithOptions/stylesheet";
 @import "../components/Navigation/NextButton/stylesheet";
-@import "../steps/CustomerDetail/stylesheet";
 
 // CSS for Pages
 @import "../steps/SiteGenGetStarted/stylesheet";
+@import "../steps/CustomerDetail/stylesheet";
 
 .nfd-onboarding-container {
 	display: flex;

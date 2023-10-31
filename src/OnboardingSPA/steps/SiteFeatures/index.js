@@ -13,6 +13,7 @@ import CheckboxList from '../../components/CheckboxTemplate/CheckboxList';
 import { CheckboxListSkeleton } from '../../components/CheckboxTemplate';
 import getContents from './contents';
 import ComingSoon from '../../components/ComingSoon';
+import ExperienceLevel from '../../../SiteGenSPA/steps/ExperienceLevel';
 
 const StepSiteFeatures = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -91,30 +92,7 @@ const StepSiteFeatures = () => {
 	const content = getContents();
 
 	return (
-		<CommonLayout>
-			<div className="site-features__heading">
-				<HeadingWithSubHeading
-					title={ content.heading }
-					subtitle={ content.subheading }
-				/>
-			</div>
-			{ ! customPluginsList && (
-				<CheckboxListSkeleton
-					count={
-						themeVariations[ currentStep?.data?.patternId ]
-							?.previewCount
-					}
-				/>
-			) }
-			{ customPluginsList && (
-				<CheckboxList
-					callback={ selectPlugin }
-					selectedItems={ selectedPlugins }
-					customItemsList={ customPluginsList }
-				/>
-			) }
-			{ customPluginsList && <ComingSoon /> }
-		</CommonLayout>
+		<ExperienceLevel/>
 	);
 };
 
