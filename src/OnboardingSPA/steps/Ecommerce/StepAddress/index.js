@@ -214,27 +214,27 @@ const StepAddress = () => {
 				<div className="onboarding-ecommerce-step">
 					<form
 						className="onboarding-ecommerce-step"
-						style={{
+						style={ {
 							display: 'grid',
 							justifyItems: 'center',
-						}}
+						} }
 					>
 						<div className="nfd-card-heading center onboarding-ecommerce-step">
 							<CardHeader
-								heading={content.heading}
-								subHeading={content.subheading}
+								heading={ content.heading }
+								subHeading={ content.subheading }
 							/>
 						</div>
 						<Animate
-							type={'fade-in-disabled'}
-							after={address !== undefined}
+							type={ 'fade-in-disabled' }
+							after={ address !== undefined }
 						>
-							<div className={'store-address-form'}>
+							<div className={ 'store-address-form' }>
 								<div data-name="country">
 									<label aria-required htmlFor="country">
-										{content.countryInputLabel}
+										{ content.countryInputLabel }
 									</label>
-									{address === undefined ? (
+									{ address === undefined ? (
 										<input
 											id="country"
 											name="country"
@@ -246,26 +246,26 @@ const StepAddress = () => {
 											type="text"
 											name="country"
 											required
-											defaultValue={selectedCountry}
-											{...fieldProps}
+											defaultValue={ selectedCountry }
+											{ ...fieldProps }
 										>
-											{countries.map((country) => (
+											{ countries.map( ( country ) => (
 												<option
-													key={country.code}
-													value={country.code}
+													key={ country.code }
+													value={ country.code }
 												>
-													{country.name}
+													{ country.name }
 												</option>
-											))}
+											) ) }
 										</select>
-									)}
+									) }
 								</div>
 								<div data-name="woocommerce_store_address">
 									<label
 										aria-required
 										htmlFor="woocommerce_store_address"
 									>
-										{content.addressInputLabel}
+										{ content.addressInputLabel }
 									</label>
 									<input
 										id="woocommerce_store_address"
@@ -275,19 +275,19 @@ const StepAddress = () => {
 										defaultValue={
 											address?.woocommerce_store_address
 										}
-										{...fieldProps}
+										{ ...fieldProps }
 									/>
 								</div>
 								<div
 									data-name="full-address"
-									data-state-empty={states.length === 0}
+									data-state-empty={ states.length === 0 }
 								>
 									<div data-name="woocommerce_store_city">
 										<label
 											aria-required
 											htmlFor="woocommerce_store_city"
 										>
-											{content.cityInputLabel}
+											{ content.cityInputLabel }
 										</label>
 										<input
 											name="woocommerce_store_city"
@@ -297,17 +297,17 @@ const StepAddress = () => {
 											defaultValue={
 												address?.woocommerce_store_city
 											}
-											{...fieldProps}
+											{ ...fieldProps }
 										/>
 									</div>
-									{states.length === 0 ||
+									{ states.length === 0 ||
 									address === undefined ? null : (
 										<div data-name="state">
 											<label
 												aria-required
 												htmlFor="state"
 											>
-												{content.stateInputLabel}
+												{ content.stateInputLabel }
 											</label>
 											<select
 												id="state"
@@ -320,30 +320,30 @@ const StepAddress = () => {
 														? defaultState
 														: ''
 												}
-												{...fieldProps}
+												{ ...fieldProps }
 											>
 												<option
-													key={''}
-													value={''}
+													key={ '' }
+													value={ '' }
 													selected
 												/>
-												{states.map((state) => (
+												{ states.map( ( state ) => (
 													<option
-														key={state.code}
-														value={state.code}
+														key={ state.code }
+														value={ state.code }
 													>
-														{state.name}
+														{ state.name }
 													</option>
-												))}
+												) ) }
 											</select>
 										</div>
-									)}
+									) }
 									<div data-name="woocommerce_store_postcode">
 										<label
 											aria-required
 											htmlFor="woocommerce_store_postcode"
 										>
-											{content.postalCodeInputLabel}
+											{ content.postalCodeInputLabel }
 										</label>
 										<input
 											id="woocommerce_store_postcode"
@@ -353,7 +353,7 @@ const StepAddress = () => {
 											defaultValue={
 												address?.woocommerce_store_postcode
 											}
-											{...fieldProps}
+											{ ...fieldProps }
 										/>
 									</div>
 								</div>
@@ -362,7 +362,7 @@ const StepAddress = () => {
 										aria-required
 										htmlFor="woocommerce_email_from_address"
 									>
-										{content.emailInputLabel}
+										{ content.emailInputLabel }
 									</label>
 									<input
 										name="woocommerce_email_from_address"
@@ -372,41 +372,41 @@ const StepAddress = () => {
 										defaultValue={
 											address?.woocommerce_email_from_address
 										}
-										{...fieldProps}
+										{ ...fieldProps }
 									/>
 								</div>
 								<div>
 									<label htmlFor="woocommerce_currency">
-										{content.currencyInputLabel}
+										{ content.currencyInputLabel }
 									</label>
 									<select
 										id="woocommerce_currency"
 										type="text"
 										name="woocommerce_currency"
-										value={address?.woocommerce_currency}
-										{...fieldProps}
+										value={ address?.woocommerce_currency }
+										{ ...fieldProps }
 									>
-										{Object.entries(currencies).map(
-											([code, currency]) => (
+										{ Object.entries( currencies ).map(
+											( [ code, currency ] ) => (
 												<option
-													key={code}
-													value={code}
-													dangerouslySetInnerHTML={{
+													key={ code }
+													value={ code }
+													dangerouslySetInnerHTML={ {
 														__html: currency,
-													}}
+													} }
 												/>
 											)
-										)}
+										) }
 									</select>
 								</div>
-								<em style={{ display: 'inline' }}>
-									{content.requiredText}
+								<em style={ { display: 'inline' } }>
+									{ content.requiredText }
 								</em>
 							</div>
 						</Animate>
 						<NavCardButton
-							text={content.buttonText}
-							disabled={address === undefined}
+							text={ content.buttonText }
+							disabled={ address === undefined }
 						/>
 					</form>
 					<NeedHelpTag />

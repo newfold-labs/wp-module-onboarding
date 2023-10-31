@@ -34,7 +34,6 @@ function SiteGenInterfaceSkeleton(
 		labels,
 		className,
 		shortcuts,
-		darkModeToggle,
 	},
 	ref
 ) {
