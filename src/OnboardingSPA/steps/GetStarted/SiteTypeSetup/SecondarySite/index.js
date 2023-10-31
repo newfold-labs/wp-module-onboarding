@@ -203,6 +203,7 @@ const StepSecondaryStep = () => {
 			return (
 				<div
 					key={ types[ type ]?.slug }
+					data-slug={ types[ type ]?.slug }
 					role="button"
 					tabIndex={ idx + 1 }
 					className={ `${
