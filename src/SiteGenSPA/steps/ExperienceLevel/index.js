@@ -9,7 +9,11 @@ const ExperienceLevel = () => {
 	return (
 		<CommonLayout isCentered>
 			<div className={ addThemeSuffix( 'nfd-sg-experience-level' ) }>
-				<CardWithOptions title={ content.heading } options={ content.options } skip={content.skip}/>
+				<CardWithOptions
+					title={ content.heading }
+					options={ content.options }
+					skip={ content.skip }
+				/>
 			</div>
 		</CommonLayout>
 	);
