@@ -6,7 +6,7 @@ import Animate from '../Animate';
 /**
  *
  * @param {*} param0
- * @return
+ * @return {ReturnType} Returns the inner contianer
  */
 const InnerContainer = ( { children } ) => {
 	return <section className="is-contained">{ children }</section>;
@@ -15,16 +15,16 @@ const InnerContainer = ( { children } ) => {
 /**
  * The Common Layout extends the Base Layout and applies structural styles and animations.
  *
- * @param {Object} props
- * @param          props.className
- * @param          props.children
- * @param          props.isBgPrimary
- * @param          props.isCentered
- * @param          props.isVerticallyCentered
- * @param          props.isContained
- * @param          props.isPadded
- * @param          props.isFadeIn
- * @return
+ * @param {Object}  props
+ * @param {string}  props.className
+ * @param {Object}  props.children
+ * @param {boolean} props.isBgPrimary
+ * @param {boolean} props.isCentered
+ * @param {boolean} props.isVerticallyCentered
+ * @param {boolean} props.isContained
+ * @param {boolean} props.isPadded
+ * @param {boolean} props.isFadeIn
+ * @return {ReturnType} Returns the common layout
  */
 const CommonLayout = ( {
 	className = '',

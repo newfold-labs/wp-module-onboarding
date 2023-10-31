@@ -6,14 +6,14 @@ import {
 	VIEW_NAV_ECOMMERCE_STORE_INFO,
 } from '../../../../constants';
 import CardHeader from '../../../components/CardHeader';
-import CommonLayout from '../../../components/Layouts/Common';
+import CommonLayout from '../../../../Shared/Layouts/Common';
 import NeedHelpTag from '../../../components/NeedHelpTag';
 import NewfoldLargeCard from '../../../components/NewfoldLargeCard';
 import { store as nfdOnboardingStore } from '../../../store';
 import countries from '../countries.json';
 import currencies from '../currencies.json';
 import { useWPSettings as getWPSettings } from '../useWPSettings';
-import Animate from '../../../components/Animate';
+import Animate from '../../../../Shared/Animate';
 import getContents from './contents';
 import NavCardButton from '../../../components/Button/NavCardButton';
 
@@ -301,43 +301,43 @@ const StepAddress = () => {
 										/>
 									</div>
 									{ states.length === 0 ||
-										address === undefined ? null : (
-											<div data-name="state">
-												<label
-													aria-required
-													htmlFor="state"
-												>
-													{ content.stateInputLabel }
-												</label>
-												<select
-													id="state"
-													type="text"
-													name="state"
-													required
-													defaultValue={
-														selectedCountry ===
-														defaultCountry
-															? defaultState
-															: ''
-													}
-													{ ...fieldProps }
-												>
+									address === undefined ? null : (
+										<div data-name="state">
+											<label
+												aria-required
+												htmlFor="state"
+											>
+												{ content.stateInputLabel }
+											</label>
+											<select
+												id="state"
+												type="text"
+												name="state"
+												required
+												defaultValue={
+													selectedCountry ===
+													defaultCountry
+														? defaultState
+														: ''
+												}
+												{ ...fieldProps }
+											>
+												<option
+													key={ '' }
+													value={ '' }
+													selected
+												/>
+												{ states.map( ( state ) => (
 													<option
-														key={ '' }
-														value={ '' }
-														selected
-													/>
-													{ states.map( ( state ) => (
-														<option
-															key={ state.code }
-															value={ state.code }
-														>
-															{ state.name }
-														</option>
-													) ) }
-												</select>
-											</div>
-										) }
+														key={ state.code }
+														value={ state.code }
+													>
+														{ state.name }
+													</option>
+												) ) }
+											</select>
+										</div>
+									) }
 									<div data-name="woocommerce_store_postcode">
 										<label
 											aria-required

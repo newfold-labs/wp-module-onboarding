@@ -5,7 +5,7 @@ import { Icon, chevronRight } from '@wordpress/icons';
 
 import { store as nfdOnboardingStore } from '../../../../store';
 import CardHeader from '../../../CardHeader';
-import CommonLayout from '../../../Layouts/Common';
+import CommonLayout from '../../../../../Shared/Layouts/Common';
 import NewfoldLargeCard from '../../../NewfoldLargeCard';
 import getContents from './contents';
 import ButtonWithBackground from '../../../Button/ButtonWithBackground';

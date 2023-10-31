@@ -3,7 +3,7 @@ import { useState, useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 
 import { store as nfdOnboardingStore } from '../../store';
-import CommonLayout from '../../components/Layouts/Common';
+import CommonLayout from '../../../Shared/Layouts/Common';
 import HeadingWithSubHeading from '../../components/HeadingWithSubHeading';
 import { getPatterns } from '../../utils/api/patterns';
 import {

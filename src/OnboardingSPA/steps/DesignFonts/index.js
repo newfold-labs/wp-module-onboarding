@@ -4,7 +4,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 
 import { getPatterns } from '../../utils/api/patterns';
 import { store as nfdOnboardingStore } from '../../store';
-import CommonLayout from '../../components/Layouts/Common';
+import CommonLayout from '../../../Shared/Layouts/Common';
 import {
 	SIDEBAR_LEARN_MORE,
 	THEME_STATUS_INIT,

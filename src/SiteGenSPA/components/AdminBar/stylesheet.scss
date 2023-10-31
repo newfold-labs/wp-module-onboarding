@@ -1,0 +1,47 @@
+$light-grey : #a0a5aa;
+
+.nfd-sg-interface-skeleton__adminbar {
+
+	.nfd-sitegen-admin-bar {
+		padding: 5px;
+		background-color: #23282d;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.nfd-admin-bar-wplogo {
+			color: var(--nfd-onboarding-white);
+			font-size: 16px;
+			display: flex;
+			align-items: center;
+
+			svg {
+				color: $light-grey;
+				fill: $light-grey;
+			}
+
+			span {
+				margin-left: 15px;
+			}
+		}
+
+		.nfd-sitegen-admin-bar-profile {
+			display: flex;
+			align-items: center;
+
+			.nfd-admin-bar-greeting {
+				color: $light-grey;
+				font-size: 16px;
+				margin-right: 5px;
+			}
+
+			.nfd-admin-bar-avatar {
+				height: 20px;
+				width: 20px;
+				display: inline-block;
+				background-image: var(--adminbar-avatar-img);
+				background-size: contain;
+			}
+		}
+	}
+}

@@ -1,0 +1,33 @@
+@import "wordpress";
+@import "interface";
+@import "icons";
+@import "branding";
+@import "utilities";
+
+// CSS for Components
+@import "../components/SiteGenInterfaceSkeleton/style";
+@import "../components/AdminBar/stylesheet";
+@import "../components/ProgressBar/stylesheet";
+@import "../components/ToggleDarkMode/stylesheet";
+@import "../components/Header/stylesheet";
+
+// CSS for Pages
+@import "../steps/SiteGenGetStarted/stylesheet";
+
+.nfd-onboarding-container {
+	display: flex;
+	background-color: var(--nfd-onboarding-white);
+
+	@include break-small {
+		bottom: 0;
+		left: 0;
+		min-height: calc(100vh - #{$admin-bar-height-big});
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	@include break-medium {
+		min-height: calc(100vh - #{$admin-bar-height});
+	}
+}

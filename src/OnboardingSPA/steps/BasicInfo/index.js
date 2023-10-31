@@ -1,4 +1,4 @@
-import CommonLayout from '../../components/Layouts/Common';
+import CommonLayout from '../../../Shared/Layouts/Common';
 import HeadingWithSubHeading from '../../components/HeadingWithSubHeading';
 import BasicInfoForm from './basicInfoForm';
 import { SIDEBAR_LEARN_MORE, VIEW_NAV_PRIMARY } from '../../../constants';

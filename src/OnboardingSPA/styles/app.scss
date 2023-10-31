@@ -8,7 +8,7 @@
 @import "../components/Drawer/stylesheet";
 @import "../components/Header/stylesheet";
 @import "../components/Content/stylesheet";
-@import "../components/Layouts/stylesheet";
+@import "../../Shared/Layouts/stylesheet";
 @import "../components/SkipButton/stylesheet";
 @import "../components/Loaders/stylesheet";
 @import "../components/MiniPreview/stylesheet";
@@ -38,7 +38,7 @@
 @import "../components/CheckboxTemplate/CheckboxList/stylesheet";
 @import "../components/CheckboxTemplate/CheckboxListSkeleton/stylesheet";
 @import "../components/Sidebar/components/LearnMore/Skeleton/stylesheet";
-@import "../components/Animate/stylesheet";
+@import "../../Shared/Animate/stylesheet";
 @import "../components/NewfoldInterfaceSkeleton/style";
 @import "../components/Loaders/Chapter/Interstitial/stylesheet";
 @import "../components/Grid/stylesheet";

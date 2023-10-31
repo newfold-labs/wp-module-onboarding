@@ -1,4 +1,4 @@
-import CommonLayout from '../../../components/Layouts/Common';
+import CommonLayout from '../../../../Shared/Layouts/Common';
 import NewfoldLargeCard from '../../../components/NewfoldLargeCard';
 import CardHeader from '../../../components/CardHeader';
 import NavCardButton from '../../../components/Button/NavCardButton';
@@ -11,7 +11,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { RadioControl } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
-import Animate from '../../../components/Animate';
+import Animate from '../../../../Shared/Animate';
 import getContents from './contents';
 import {
 	OnboardingEvent,

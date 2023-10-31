@@ -3,7 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch } from '@wordpress/data';
 
 import { store as nfdOnboardingStore } from '../../store';
-import CommonLayout from '../../components/Layouts/Common';
+// import CommonLayout from '../../../Shared/Layouts/Common';
+import CommonLayout from '../../../Shared/Layouts/Common';
 import NewfoldLargeCard from '../../components/NewfoldLargeCard';
 import { SIDEBAR_LEARN_MORE, VIEW_NAV_GET_STARTED } from '../../../constants';
 

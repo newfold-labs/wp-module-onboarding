@@ -1,4 +1,4 @@
-import CommonLayout from '../../../../components/Layouts/Common';
+import CommonLayout from '../../../../../Shared/Layouts/Common';
 import NewfoldLargeCard from '../../../../components/NewfoldLargeCard';
 import {
 	SIDEBAR_LEARN_MORE,
@@ -11,7 +11,7 @@ import { useState, useEffect } from '@wordpress/element';
 import CardHeader from '../../../../components/CardHeader';
 import NavCardButton from '../../../../components/Button/NavCardButton';
 import NeedHelpTag from '../../../../components/NeedHelpTag';
-import Animate from '../../../../components/Animate';
+import Animate from '../../../../../Shared/Animate';
 import { getSiteClassification } from '../../../../utils/api/siteClassification';
 import {
 	OnboardingEvent,

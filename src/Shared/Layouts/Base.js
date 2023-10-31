@@ -6,8 +6,8 @@ import { useLocation } from 'react-router-dom';
 import {
 	OnboardingEvent,
 	sendOnboardingEvent,
-} from '../../utils/analytics/hiive';
-import { ACTION_PAGEVIEW } from '../../utils/analytics/hiive/constants';
+} from '../../OnboardingSPA/utils/analytics/hiive';
+import { ACTION_PAGEVIEW } from '../../OnboardingSPA/utils/analytics/hiive/constants';
 
 const BaseLayout = ( {
 	className = 'nfd-onboarding-layout__base',

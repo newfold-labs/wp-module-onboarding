@@ -4,7 +4,7 @@
  * @return Tab
  */
 
-import Animate from '../Animate';
+import Animate from '../../../Shared/Animate';
 
 const Tab = ( { title, text, imgType, className, animationName } ) => {
 	return (
