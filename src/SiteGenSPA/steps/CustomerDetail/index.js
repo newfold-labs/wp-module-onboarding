@@ -3,7 +3,7 @@ import { useState } from '@wordpress/element';
 import TextInput from '../../components/TextInput';
 import AIHeading from '../../components/AIHeading';
 import NextButton from '../../components/Navigation/NextButton';
-import CommonLayout from '../../../OnboardingSPA/components/Layouts/Common';
+import CommonLayout from '../../../Shared/Layouts/Common';
 import { addThemeSuffix } from '../../utils/helper';
 
 const CustomerDetail = () => {
