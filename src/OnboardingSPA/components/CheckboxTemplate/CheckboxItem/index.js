@@ -2,7 +2,7 @@ import { useState } from '@wordpress/element';
 import { Icon, help } from '@wordpress/icons';
 
 import { CheckboxControl } from '@wordpress/components';
-import Animate from '../../Animate';
+import Animate from '../../../../Shared/Animate';
 
 /**
  * Checkbox Item Component

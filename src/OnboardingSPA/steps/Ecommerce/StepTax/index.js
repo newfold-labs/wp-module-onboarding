@@ -7,12 +7,12 @@ import {
 	VIEW_NAV_ECOMMERCE_STORE_INFO,
 } from '../../../../constants';
 import CardHeader from '../../../components/CardHeader';
-import CommonLayout from '../../../components/Layouts/Common';
+import CommonLayout from '../../../../Shared/Layouts/Common';
 import NeedHelpTag from '../../../components/NeedHelpTag';
 import NewfoldLargeCard from '../../../components/NewfoldLargeCard';
 import { store as nfdOnboardingStore } from '../../../store';
 import { useWPSettings as getWPSettings } from '../useWPSettings';
-import Animate from '../../../components/Animate';
+import Animate from '../../../../Shared/Animate';
 import getContents from './contents';
 
 function createReverseLookup( state ) {

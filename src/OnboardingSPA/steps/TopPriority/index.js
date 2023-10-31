@@ -5,7 +5,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 
 import SkipButton from '../../components/SkipButton';
 import { store as nfdOnboardingStore } from '../../store';
-import CommonLayout from '../../components/Layouts/Common';
+import CommonLayout from '../../../Shared/Layouts/Common';
 import HeadingWithSubHeading from '../../components/HeadingWithSubHeading';
 import SelectableCardList from '../../components/SelectableCardList/selectable-card-list';
 import getContents from './contents';

@@ -15,7 +15,7 @@ import { FullscreenMode } from '@wordpress/interface';
 import SiteGenInterfaceSkeleton from '../SiteGenInterfaceSkeleton';
 import { ThemeProvider } from '../ThemeContextProvider';
 
-const AppSiteGen = () => {
+const App = () => {
 	const location = useLocation();
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const pathname = kebabCase( location.pathname );
@@ -47,4 +47,4 @@ const AppSiteGen = () => {
 	);
 };
 
-export default AppSiteGen;
+export default App;

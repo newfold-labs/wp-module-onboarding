@@ -1,7 +1,7 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect, useLayoutEffect } from '@wordpress/element';
 
-import CommonLayout from '../../components/Layouts/Common';
+import CommonLayout from '../../../Shared/Layouts/Common';
 import { DesignStateHandler } from '../../components/StateHandlers';
 import {
 	LivePreview,

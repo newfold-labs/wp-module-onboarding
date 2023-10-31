@@ -6,7 +6,7 @@ import { useEffect, useState, memo } from '@wordpress/element';
 import AutoHeightBlockPreview from './auto';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import { store as nfdOnboardingStore } from '../../../store';
-import Animate from '../../Animate';
+import Animate from '../../../../Shared/Animate';
 
 const BlockPreview = ( {
 	blockGrammer,

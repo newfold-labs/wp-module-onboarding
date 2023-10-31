@@ -1,4 +1,4 @@
-import CommonLayout from '../../../Common/Layouts/Common';
+import CommonLayout from '../../../Shared/Layouts/Common';
 import HeadingWithSubHeading from './headingwithsubheading';
 import getContents from './contents';
 

@@ -7,8 +7,8 @@ import { trigger as cronTrigger } from './utils/api/cronTrigger';
 import { initialize as initializeSettings } from './utils/api/settings';
 import { DESIGN_STEPS_THEME } from '../constants';
 
-// import App from './components/App';
-import AppSiteGen from '../SiteGenSPA/components/AppSiteGen';
+import App from './components/App';
+//import App from '../SiteGenSPA/components/App';
 import { HashRouter } from 'react-router-dom';
 import { dispatch } from '@wordpress/data';
 import { render } from '@wordpress/element';
@@ -22,7 +22,7 @@ import { stateToStore } from './chapters/utils';
  */
 const NFDOnboarding = () => (
 	<HashRouter>
-		<AppSiteGen />
+		<App />
 	</HashRouter>
 );
 

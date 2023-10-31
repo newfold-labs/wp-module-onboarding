@@ -8,7 +8,7 @@ import {
 	GlobalStylesProvider,
 } from '../../../components/LivePreview';
 import getContents from '../contents';
-import CommonLayout from '../../../components/Layouts/Common';
+import CommonLayout from '../../../../Shared/Layouts/Common';
 import {
 	VIEW_DESIGN_THEME_STYLES_PREVIEW,
 	THEME_STATUS_ACTIVE,

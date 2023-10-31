@@ -4,7 +4,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import { chevronRight, external } from '@wordpress/icons';
 
-import CommonLayout from '../../../components/Layouts/Common';
+import CommonLayout from '../../../../Shared/Layouts/Common';
 import NewfoldLargeCard from '../../../components/NewfoldLargeCard';
 import CardHeader from '../../../components/CardHeader';
 import NavCardButton from '../../../components/Button/NavCardButton';

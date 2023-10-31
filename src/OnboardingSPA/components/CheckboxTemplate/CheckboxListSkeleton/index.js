@@ -1,4 +1,4 @@
-import Animate from '../../Animate';
+import Animate from '../../../../Shared/Animate';
 
 /**
  * Checkbox List Skeleton Component
