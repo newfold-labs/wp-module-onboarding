@@ -59,7 +59,7 @@ describe( 'Get Started Site Type Secondary', function () {
 				.then(($element) => {
 					const dataSlugText = $element.attr('data-slug');
 					if(num>=2){
-						cy.wait(4000);
+						cy.wait(5000);
 					}
 					EventsAPI('secondary_type', dataSlugText, APIList.site_secondary_ecomm);
 					num+=1;
@@ -137,7 +137,7 @@ describe( 'Get Started Site Type Secondary', function () {
 		cy.get( '.navigation-buttons_back' ).click();
 	} );
 
-	it.skip( 'Go to the previous step on clicking navigation Back', () => {
+	it( 'Go to the previous step on clicking navigation Back', () => {
 		cy.get( '.navigation-buttons_back' ).click();
 		cy.url().should(
 			'not.include',
@@ -146,7 +146,7 @@ describe( 'Get Started Site Type Secondary', function () {
 		cy.get( '.navigation-buttons_next' ).click();
 	} );
 
-	it.skip( 'Go to next step on Continue Setup', () => {
+	it( 'Go to next step on Continue Setup', () => {
 		cy.get( '.nfd-nav-card-button' ).click();
 		cy.url().should(
 			'not.include',
