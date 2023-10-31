@@ -29,8 +29,8 @@ const StepProducts = () => {
 		setDrawerActiveView( VIEW_NAV_ECOMMERCE_STORE_INFO );
 	}, [] );
 
-	const handleCheckbox = ( value, checked ) =>
-		setCurrentOnboardingData( {
+	const handleCheckbox = (value, checked) =>
+		setCurrentOnboardingData({
 			...currentData,
 			storeDetails: {
 				...currentData.storeDetails,
@@ -39,11 +39,11 @@ const StepProducts = () => {
 					product_types: checked
 						? [ ...productInfo?.product_types, value ]
 						: productInfo?.product_types.filter(
-							( product ) => product !== value
-						),
+								( product ) => product !== value
+						  ),
 				},
 			},
-		} );
+		});
 
 	const handleProductCount = ( count ) =>
 		setCurrentOnboardingData( {

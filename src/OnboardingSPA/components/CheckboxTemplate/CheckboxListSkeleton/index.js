@@ -4,10 +4,12 @@ import Animate from '../../../../Shared/Animate';
  * Checkbox List Skeleton Component
  * This returns a List of Checkbox Items Skeletons to imitate loading
  *
- * @param  customItemsList.count
- * @param  customItemsList.count.count
- * @return CheckboxList
+ * @param {Object} customItemsList             - Object containing the count properties.
+ * @param {number} customItemsList.count       - Some description for this count.
+ * @param {number} customItemsList.count.count - Some description for this nested count.
+ * @return {Object} CheckboxList - A React component.
  */
+
 const CheckboxListSkeleton = ( { count } ) => {
 	const buildCheckboxSkeletonItems = () => {
 		const customItems = [];

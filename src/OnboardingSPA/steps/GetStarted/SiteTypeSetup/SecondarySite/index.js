@@ -226,100 +226,98 @@ const StepSecondaryStep = () => {
 			<NewfoldLargeCard>
 				<div className="nfd-card-heading center">
 					<CardHeader
-						heading={ content.heading }
-						subHeading={ content.subheading }
-						question={ content.question }
+						heading={content.heading}
+						subHeading={content.subheading}
+						question={content.question}
 					/>
 				</div>
-				<Animate type="fade-in-disabled" after={ siteClassification }>
+				<Animate type="fade-in-disabled" after={siteClassification}>
 					<div className="nfd-setup-secondary-categories">
 						<div className="nfd-card-sec-category-wrapper">
-							{ siteClassification && (
+							{siteClassification && (
 								<div className="category-scrolling-wrapper">
-									{ primaryTypesList &&
+									{primaryTypesList &&
 										primaryTypesList.length > 1 && (
-										<div className="category-scrolling-wrapper__left-btn">
-											<span
-												className="category-scrolling-wrapper__left-btn-icon"
-												onClick={ () =>
-													changePrimaryType(
-														'back'
-													)
-												}
-												onKeyUp={ () =>
-													changePrimaryType(
-														'back'
-													)
-												}
-												role="button"
-												tabIndex={ 0 }
-												style={ {
-													backgroundImage:
+											<div className="category-scrolling-wrapper__left-btn">
+												<span
+													className="category-scrolling-wrapper__left-btn-icon"
+													onClick={ () =>
+														changePrimaryType(
+															'back'
+														)
+													}
+													onKeyUp={ () =>
+														changePrimaryType(
+															'back'
+														)
+													}
+													role="button"
+													tabIndex={ 0 }
+													style={ {
+														backgroundImage:
 															'var(--chevron-left-icon)',
-												} }
-											/>
-										</div>
-									) }
+													} }
+												/>
+											</div>
+										)}
 									<div className="category-scrolling-wrapper__type">
 										<span
 											className="category-scrolling-wrapper__type-icon"
-											style={ {
-												backgroundImage: `url(${ siteClassification?.types[ primaryCategory ]?.icon })`,
-											} }
+											style={{
+												backgroundImage: `url(${siteClassification?.types[primaryCategory]?.icon})`,
+											}}
 										/>
 										<p className="category-scrolling-wrapper__type-text">
-											{ ` ${ siteClassification?.types[ primaryCategory ]?.label }` }
+											{` ${siteClassification?.types[primaryCategory]?.label}`}
 										</p>
 									</div>
-									{ primaryTypesList &&
+									{primaryTypesList &&
 										primaryTypesList.length > 1 && (
-										<div className="category-scrolling-wrapper__right-btn">
-											<span
-												className="category-scrolling-wrapper__right-btn-icon"
-												onClick={ () =>
-													changePrimaryType(
-														'next'
-													)
-												}
-												onKeyUp={ () =>
-													changePrimaryType(
-														'next'
-													)
-												}
-												role="button"
-												tabIndex={ 0 }
-												style={ {
-													backgroundImage:
+											<div className="category-scrolling-wrapper__right-btn">
+												<span
+													className="category-scrolling-wrapper__right-btn-icon"
+													onClick={() =>
+														changePrimaryType(
+															'next'
+														)
+													}
+													onKeyUp={() =>
+														changePrimaryType(
+															'next'
+														)
+													}
+													role="button"
+													tabIndex={0}
+													style={{
+														backgroundImage:
 															'var(--chevron-right-icon)',
-												} }
-											/>
-										</div>
-									) }
+													}}
+												/>
+											</div>
+										)}
 								</div>
-							) }
+							)}
 						</div>
 						<div className="subCategoriesSection">
-							{ siteClassification && secondarySiteTypeChips() }
+							{siteClassification && secondarySiteTypeChips()}
 						</div>
 						<div className="nfd-setup-primary-custom">
 							<div className="nfd-setup-primary-custom__tellus-text">
-								{ content.customInputLabel }
+								{content.customInputLabel}
 							</div>
 							<input
 								type="search"
-								onChange={ ( e ) =>
-									categoryInput( e?.target?.value )
+								onChange={(e) =>
+									categoryInput(e?.target?.value)
 								}
 								className="nfd-setup-primary-custom__tellus-input"
-								placeholder={
-									content.customInputPlaceholderText
-								}
-								value={ custom ? secondaryCategory : '' }
+								placeholder={content.customInputPlaceholderText}
+								value={custom ? secondaryCategory : ''}
 							/>
 						</div>
 					</div>
 				</Animate>
-				<NavCardButton text={ content.buttonText } />
+				<NavCardButton text={content.buttonText} />
 				<NeedHelpTag />
 			</NewfoldLargeCard>
 		</CommonLayout>
