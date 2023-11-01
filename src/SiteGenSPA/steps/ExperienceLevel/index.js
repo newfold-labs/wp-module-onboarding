@@ -1,4 +1,5 @@
 import getContents from './contents';
+import Loader from '../../components/Loader';
 import { addThemeSuffix } from '../../utils/helper';
 import CommonLayout from '../../../Shared/Layouts/Common';
 import CardWithOptions from '../../components/CardWithOptions';
@@ -9,6 +10,7 @@ const ExperienceLevel = () => {
 	return (
 		<CommonLayout isCentered>
 			<div className={ addThemeSuffix( 'nfd-sg-experience-level' ) }>
+				<Loader/>
 				<CardWithOptions
 					title={ content.heading }
 					options={ content.options }

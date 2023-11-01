@@ -1,7 +1,7 @@
 .nfd-sg-card {
 
 	margin: 8px;
-	padding: 24px;
+	padding: 24px 12px;
 	border-radius: 12px;
 	background-color: #1e2327;
 	box-shadow: 3px 3px 5px rgba($color: #000, $alpha: 0.2);
@@ -10,7 +10,7 @@
 		color: #fff;
 		margin: 16px;
 		line-height: 2;
-		font-size: 20px;
+		font-size: 18px;
 		text-align: center;
 		margin-bottom: 30px;
 		letter-spacing: 1.5px;
@@ -22,9 +22,9 @@
 		&__option {
 			display: flex;
 			cursor: pointer;
-			margin: 20px 4px;
-			border-radius: 12px 12px 0 0;
+			margin: 16px 4px;
 			align-items: center;
+			border-radius: 4px 4px 0 0;
 			padding: 16px 12px 20px 12px;
 			justify-content: space-between;
 			transition: background-color 400ms ease-in-out;
@@ -39,14 +39,14 @@
 
 			&__left_top {
 				color: #fff;
-				font-size: 18px;
+				font-size: 16px;
 				font-weight: 500;
 				padding-bottom: 12px;
 			}
 
 			&__left_bottom {
 				color: #fff;
-				font-size: 15px;
+				font-size: 14px;
 				font-weight: 300;
 			}
 
@@ -64,7 +64,7 @@
 	&__skip {
 		cursor: pointer;
 		text-align: end;
-		margin: 20px 20px 6px 20px;
+		margin: 0 20px 6px 20px;
 		color: rgba(255, 255, 255, 0.6);
 		transition: color 200ms ease-in-out;
 

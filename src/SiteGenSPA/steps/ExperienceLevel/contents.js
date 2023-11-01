@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 const getContents = () => {
 	return {
 		heading: __(
-			'How familiar are you with using WordPress',
+			'How familiar are you with using WordPress?',
 			'wp-module-onboarding'
 		),
 		options: [
