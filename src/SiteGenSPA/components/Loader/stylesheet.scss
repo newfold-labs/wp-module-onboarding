@@ -15,10 +15,24 @@
 	}
 
 	&__progress {
-		height: 6px;
-		max-width: 320px;
-		margin: 12px 60px;
-		border-radius: 6px;
-		background-color: #0060f0;
+		margin: 20px 60px;
+		position: relative;
+
+		&_bg {
+			height: 6px;
+			width: 320px;
+			border-radius: 6px;
+			background-color: #353a40;
+		}
+
+		&_bar {
+			top: 0;
+			left: 0;
+			height: 6px;
+			max-width: 320px;
+			border-radius: 6px;
+			position: absolute;
+			background-color: #0060f0;
+		}
 	}
 }
