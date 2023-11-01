@@ -21,22 +21,16 @@ const SelectableCard = ( {
 			className={ `${ className }` }
 			role="button"
 			tabIndex={ 0 }
-			onClick={
-				typeof onClick === 'function' &&
-				( () => {
-					if ( ! loadingParent ) {
-						onClick();
-					}
-				} )
-			}
-			onKeyDown={
-				typeof onClick === 'function' &&
-				( () => {
-					if ( ! loadingParent ) {
-						onClick();
-					}
-				} )
-			}
+			onClick={ () => {
+				if ( ! loadingParent && typeof onClick === 'function' ) {
+					onClick();
+				}
+			} }
+			onKeyDown={ () => {
+				if ( ! loadingParent && typeof onClick === 'function' ) {
+					onClick();
+				}
+			} }
 		>
 			<div className={ `${ className }__title-bar` }>
 				<div className={ `${ className }__title-bar__browser` }>
