@@ -48,6 +48,7 @@ const DesignHeaderMenu = () => {
 		}
 
 		const headerMenuPatterns = headerMenuPreviewResponse?.body.pageHeaders;
+		const footerPattern = headerMenuPreviewResponse?.body.pageFooter;
 		const pageContent = headerMenuPreviewResponse?.body.pageBody;
 
 		if (
@@ -55,6 +56,14 @@ const DesignHeaderMenu = () => {
 			currentData.data.partHeader === ''
 		) {
 			currentData.data.partHeader = headerMenuPatterns[ 0 ].slug;
+			setCurrentOnboardingData( currentData );
+		}
+
+		if (
+			! currentData.data?.partFooter ||
+			currentData.data?.partFooter === ''
+		) {
+			currentData.data.partFooter = footerPattern.slug;
 			setCurrentOnboardingData( currentData );
 		}
 		setSelectedPattern( currentData.data.partHeader );

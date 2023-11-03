@@ -6,6 +6,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Mustache\Mustache;
 use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\Data\Patterns;
 
 /**
  * Class ThemeGeneratorController
@@ -127,6 +128,13 @@ class ThemeGeneratorController {
 			$part_patterns['header'] = $this->generate_theme_part_pattern( $flow_data['partHeader'] );
 			if ( \is_wp_error( $part_patterns['header'] ) ) {
 				return $part_patterns['header'];
+			}
+		}
+
+		if ( $flow_data['partFooter'] ) {
+			$part_patterns['footer'] = $this->generate_theme_part_pattern( $flow_data['partFooter'] );
+			if ( \is_wp_error( $part_patterns['footer'] ) ) {
+				return $part_patterns['footer'];
 			}
 		}
 
@@ -295,7 +303,7 @@ class ThemeGeneratorController {
 	 * @return string|\WP_Error the pattern for the part.
 	 */
 	private function generate_theme_part_pattern( $pattern_slug ) {
-		$pattern = \WP_Block_Patterns_Registry::get_instance()->get_registered( $pattern_slug );
+		$pattern = Patterns::get_pattern_from_slug( $pattern_slug );
 		if ( ! $pattern ) {
 			return new \WP_Error(
 				'nfd_onboarding_pattern_not_registered',
