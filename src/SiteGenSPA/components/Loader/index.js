@@ -4,12 +4,18 @@ import { useEffect, useState } from '@wordpress/element';
 
 const Loader = () => {
 	let statusIdx = 0;
-	const percentage = 70;
 	const content = getContents();
+	const [ percentage, setPercentage ] = useState( 0 );
 	const [ status, setStatus ] = useState( content.status[ statusIdx ].title );
+
+	const checkStatus = async () => {
+		// Make fake API Call to get the status.
+		if ( percentage !== 100 ) setPercentage( ( t ) => t + 10 );
+	};
 
 	useEffect( () => {
 		const statusTimer = setInterval( () => {
+			checkStatus();
 			statusIdx += 1;
 			if ( statusIdx === content.status.length ) statusIdx = 0;
 			setStatus( content.status[ statusIdx ].title );
@@ -26,14 +32,22 @@ const Loader = () => {
 			</div>
 			<div className={ addThemeSuffix( 'nfd-sg-loader__progress' ) }>
 				<div
-					className={ addThemeSuffix( 'nfd-sg-loader__progress_bg' ) }
-				/>
-				<div
 					className={ addThemeSuffix(
-						'nfd-sg-loader__progress_bar'
+						'nfd-sg-loader__progress_bars'
 					) }
-					style={ { width: `${ 60 * percentage * 0.01 }vw` } }
-				/>
+				>
+					<div
+						className={ addThemeSuffix(
+							'nfd-sg-loader__progress_bars_bg'
+						) }
+					/>
+					<div
+						className={ addThemeSuffix(
+							'nfd-sg-loader__progress_bars_bar'
+						) }
+						style={ { width: `${ percentage }%` } }
+					/>
+				</div>
 			</div>
 			<div
 				className={ addThemeSuffix( 'nfd-sg-loader__status' ) }
