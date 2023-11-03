@@ -5,6 +5,7 @@
 	padding: 24px 12px;
 	border-radius: 12px;
 	background-color: #1e2327;
+	width: clamp(18.75rem, 22.6136rem + 5.6818vw, 31.25rem);
 	box-shadow: 3px 3px 5px rgba($color: #000, $alpha: 0.2);
 
 	&__title {
