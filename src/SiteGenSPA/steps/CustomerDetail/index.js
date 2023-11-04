@@ -10,6 +10,11 @@ const CustomerDetail = () => {
 	const content = getContents();
 	const [ customerInput, setCustomerInput ] = useState();
 
+	const checkAndNavigate = () => {
+		// console.log( customerInput );
+		// console.log( 'Navigate to the next screen!' );
+	};
+
 	return (
 		<CommonLayout isCentered>
 			<div className={ addThemeSuffix( 'nfd-sg-customer-detail' ) }>
@@ -26,7 +31,7 @@ const CustomerDetail = () => {
 						'nfd-sg-customer-detail-endrow'
 					) }
 				>
-					<NextButton />
+					<NextButton callback={ checkAndNavigate } />
 				</div>
 			</div>
 		</CommonLayout>
