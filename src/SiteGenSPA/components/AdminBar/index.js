@@ -1,23 +1,20 @@
 import { __ } from '@wordpress/i18n';
 import { Icon, wordpress } from '@wordpress/icons';
-import apiFetch from '@wordpress/api-fetch';
-import { useState, useEffect } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+import { store as nfdOnboardingStore } from '../../../OnboardingSPA/store';
 
 const AdminBar = () => {
-	const [ userData, setUserData ] = useState( null );
 
-	useEffect( () => {
-		apiFetch( { path: '/wp/v2/users/me' } )
-			.then( ( data ) => {
-				setUserData( data );
-			} )
-			.catch( ( error ) => {
-				// eslint-disable-next-line no-console
-				console.error( 'Error fetching user data:', error );
-			} );
-	}, [] );
+	const { currentUserInfo } = useSelect(
+		( select ) => {
+			return {
+				currentUserInfo: select( nfdOnboardingStore ).getCurrentUserDetails(),
+			};
+		},
+		[ ]
+	);
 
-	if ( ! userData ) {
+	if ( ! currentUserInfo ) {
 		return null;
 	}
 
@@ -31,13 +28,13 @@ const AdminBar = () => {
 				<span className="nfd-admin-bar-greeting">
 					<span>
 						{ __( 'Howdy!', 'wp-module-onboarding' ) },{ ' ' }
-						{ userData.name }
+						{ currentUserInfo.displayName }
 					</span>
 				</span>
 				<div className="nfd-admin-bar-avatar">
 					<img
-						src={ userData.avatar_urls[ '24' ] }
-						alt={ userData.name }
+						src={ currentUserInfo.avatarUrl }
+						alt={ currentUserInfo.displayName }
 					/>
 				</div>
 			</div>
