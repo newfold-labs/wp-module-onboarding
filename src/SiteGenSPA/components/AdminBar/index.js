@@ -4,15 +4,12 @@ import { useSelect } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../OnboardingSPA/store';
 
 const AdminBar = () => {
-
-	const { currentUserInfo } = useSelect(
-		( select ) => {
-			return {
-				currentUserInfo: select( nfdOnboardingStore ).getCurrentUserDetails(),
-			};
-		},
-		[ ]
-	);
+	const { currentUserInfo } = useSelect( ( select ) => {
+		return {
+			currentUserInfo:
+				select( nfdOnboardingStore ).getCurrentUserDetails(),
+		};
+	}, [] );
 
 	if ( ! currentUserInfo ) {
 		return null;

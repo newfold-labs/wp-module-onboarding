@@ -389,7 +389,7 @@ export function getTopPriority( state ) {
 }
 
 /**
- * Gets Current User Details like Display name and avatar URL 
+ * Gets Current User Details like Display name and avatar URL
  *
  * @param {*} state
  * @return {string} currentUserInfo
