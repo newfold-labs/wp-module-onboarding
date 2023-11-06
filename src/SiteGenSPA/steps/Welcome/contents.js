@@ -20,19 +20,22 @@ const getContents = () => {
 				'We\'ll stay out of your way.',
 				'wp-module-onboarding'
 			),
+			path: '/wp-setup/step/get-started/welcome',
 		}, {
 			title: __( ' Website Creator', 'wp-module-onboarding' ),
 			subtitle: __(
 				'Custom Al generated content & design.',
 				'wp-module-onboarding'
 			),
-			span: __( 'AI', 'wp-module-onboarding'),
+			span: __( 'AI', 'wp-module-onboarding' ),
+			path: '/wp-setup/step/get-started/ai',
 		}, {
 			title: __( 'Hire a Pro', 'wp-module-onboarding' ),
 			subtitle: __(
 				'Leave it to our WordPress experts.',
 				'wp-module-onboarding'
 			),
+			path: '/wp-setup/step/get-started/expert',
 		} ],
 		importtext: __(
 			'Already have a WordPress site you want to import?',
@@ -42,7 +45,7 @@ const getContents = () => {
 			'http://www.google.com',
 			'wp-module-onboarding'
 		),
-	
+
 	};
 };
 
