@@ -45,7 +45,7 @@ describe( 'Get Started Site Type Secondary', function () {
 				.then(($element) => {
 					const dataSlugText = $element.attr('data-slug');
 					if(num>=2){
-						cy.wait(4000);
+						cy.wait(5000);
 					}
 					EventsAPI('secondary_type', dataSlugText, APIList.site_secondary);
 					num+=1;
