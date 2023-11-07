@@ -12,6 +12,7 @@ import { PseudoStep } from '../models/PseudoStep';
 import { indexPage } from '../../pages/IndexPage/page';
 import { brush } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
+import { stepDesignStudioPreview } from '../../../SiteGenSPA/steps/DesignStudio/step';
 
 export const pages = [ indexPage, errorPage ];
 
@@ -20,6 +21,7 @@ export const initialChapters = [ demographic, design, layoutContent, features ];
 export const getSteps = ( chapters = initialChapters ) => {
 	let steps = [];
 	steps.push( stepWelcome );
+	steps.push( stepDesignStudioPreview );
 	chapters.forEach( ( chapter ) => {
 		steps = steps.concat( [
 			...chapter.steps,
@@ -31,8 +33,9 @@ export const getSteps = ( chapters = initialChapters ) => {
 };
 
 export const getRoutes = ( chapters = initialChapters ) => {
-	let routes = [ ...pages ];
+	let routes = [ ...pages ];	
 	routes.push( stepWelcome );
+	routes.push( stepDesignStudioPreview );
 	chapters.forEach( ( chapter ) => {
 		routes = routes.concat( [
 			...chapter.steps,

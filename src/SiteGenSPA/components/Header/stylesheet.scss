@@ -26,6 +26,9 @@
 
 	&__step-navigation {
 		display: flex;
+		width: 100%;
+		align-items: center;
+		justify-content: space-between;
 		column-gap: $grid-unit-10;
 	}
 }
@@ -36,8 +39,7 @@
 	align-items: center;
 	letter-spacing: 0.8px;
 	display: flex !important;
-	justify-content: space-evenly;
-	border-radius: 2px !important;
+	border-radius: 8px !important;
 	padding: 20px 14px !important;
 
 	&_back {
@@ -47,5 +49,25 @@
 	@media screen and (max-width: #{ ($break-medium) }) {
 		font-size: 13px;
 		padding: 15px 10px !important;
+	}
+}
+
+.navigation-section {
+	align-items: center;
+	display: flex !important;
+
+	&-left {
+		display: flex;
+		justify-content: flex-start;
+	}
+
+	&-center {
+		display: flex;
+		justify-content: center;
+	}
+
+	&-right {
+		display: flex;
+		justify-content: flex-end;
 	}
 }
