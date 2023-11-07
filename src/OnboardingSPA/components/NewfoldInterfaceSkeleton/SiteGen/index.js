@@ -7,7 +7,10 @@ import classNames from 'classnames';
 const SiteGen = () => {
 	return (
 		<NewfoldInterfaceSkeleton
-			className={ classNames( 'nfd-onboarding-skeleton--sitegen', 'nfd-onboarding-sitegen' ) }
+			className={ classNames(
+				'nfd-onboarding-skeleton--sitegen',
+				'nfd-onboarding-sitegen'
+			) }
 			header={ <Header /> }
 			content={ <Content /> }
 			sidebar={ <Sidebar /> }
