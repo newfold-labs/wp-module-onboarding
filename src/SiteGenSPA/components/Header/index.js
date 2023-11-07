@@ -1,5 +1,5 @@
 import { memo } from '@wordpress/element';
-import { chevronLeft, chevronRight, reusableBlock, settings,lock } from '@wordpress/icons';
+import { chevronLeft, chevronRight, reusableBlock, settings } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import LeftIconButton from './LeftIconButton';
 import RightIconButton from './RightIconButton';
@@ -14,7 +14,7 @@ const Header = () => {
 					<LeftIconButton icon = { reusableBlock } title = 'Regenerate' />
 				</div>
 				<div className="nfd-sitegen-header-navigation-section-center">
-					<VersionDropDown title = 'Version 1' />
+					<VersionDropDown title = ' Version 1 ' />
 				</div>
 				<div className="nfd-sitegen-header-navigation-section-right">
 					<LeftIconButton icon = { settings } title = 'Customize' />

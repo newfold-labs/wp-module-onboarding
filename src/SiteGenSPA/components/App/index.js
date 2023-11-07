@@ -34,9 +34,9 @@ const App = () => {
 							{ 'is-small-viewport': ! isLargeViewport }
 						) }
 						adminbar={ <AdminBar /> }
-						progressbar={
-							<ProgressBar current={ 20 } total={ 100 } />
-						}
+						// progressbar={
+						// 	<ProgressBar current={ 20 } total={ 100 } />
+						// }
 						header={ <Header /> }
 						content={ <Content /> }
 						footer={ <ToggleDarkMode /> }

@@ -1,4 +1,4 @@
-import { Icon, chevronDown, lock } from '@wordpress/icons';
+import { Icon, chevronDown, lock} from '@wordpress/icons';
 import { Button } from '@wordpress/components';
 
 const VersionDropDown = ( { title } ) => {
