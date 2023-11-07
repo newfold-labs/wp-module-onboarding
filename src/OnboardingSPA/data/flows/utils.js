@@ -42,3 +42,11 @@ export const addAfterChapter = ( chapters, chapterOne, chapterTwo ) => {
 	chapters.splice( position + 1, 0, chapterTwo );
 	return chapters;
 };
+
+export const validateFlow = ( brandConfig, flow ) => {
+	const enabledFlows = brandConfig?.enabled_flows ?? {};
+	if ( ! ( flow in enabledFlows ) || enabledFlows[ flow ] !== true ) {
+		return false;
+	}
+	return true;
+};

@@ -43,6 +43,10 @@
 @import "../components/Loaders/Chapter/Interstitial/stylesheet";
 @import "../components/Grid/stylesheet";
 @import "../components/ComingSoon/stylesheet";
+@import "../components/AdminBar/stylesheet";
+@import "../components/ProgressBar/stylesheet";
+@import "../components/Button/ButtonDark/stylesheet";
+@import "../components//SiteGenPlaceholder/stylesheet.scss";
 
 // CSS for Pages
 @import "../steps/BasicInfo/stylesheet";
@@ -57,6 +61,7 @@
 @import "../steps/DesignFonts/stylesheet";
 @import "../steps/DesignHeaderMenu/stylesheet";
 @import "../steps/SiteFeatures/stylesheet";
+@import "../steps/TheFork/stylesheet";
 
 .nfd-onboarding-container {
 	display: flex;

@@ -6,6 +6,7 @@ export class Step {
 		icon,
 		drawerView,
 		sidebars,
+		header,
 		data,
 	} ) {
 		this.path = path;
@@ -15,5 +16,6 @@ export class Step {
 		this.drawerView = drawerView;
 		this.sidebars = sidebars;
 		this.data = data;
+		this.header = header;
 	}
 }

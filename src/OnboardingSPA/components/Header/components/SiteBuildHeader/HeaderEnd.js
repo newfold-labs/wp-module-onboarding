@@ -2,9 +2,9 @@ import { Fragment } from '@wordpress/element';
 import { Slot } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 
-import StepNavigation from '../step-navigation';
-import { store as nfdOnboardingStore } from '../../../store';
-import { SIDEBAR_MENU_SLOTFILL_PREFIX } from '../../../../constants';
+import StepNavigation from './step-navigation';
+import { store as nfdOnboardingStore } from '../../../../store';
+import { SIDEBAR_MENU_SLOTFILL_PREFIX } from '../../../../../constants';
 
 const HeaderEnd = () => {
 	const { sidebars, isHeaderNavigationEnabled } = useSelect( ( select ) => {

@@ -18,6 +18,7 @@ import { layoutContent } from '../../chapters/layoutContent';
 import { filter } from 'lodash';
 import { store } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
+import { stepTheFork } from '../../steps/TheFork/step';
 
 export const pages = [ indexPage, errorPage ];
 
@@ -31,6 +32,7 @@ export const initialChapters = [
 
 export const getSteps = ( chapters = initialChapters ) => {
 	let steps = [];
+	steps.push( stepTheFork );
 	steps.push( stepWelcome );
 	chapters.forEach( ( chapter ) => {
 		steps = steps.concat( [
@@ -41,14 +43,13 @@ export const getSteps = ( chapters = initialChapters ) => {
 	steps = steps.concat( [ stepComplete, stepWhatNext ] );
 	// TODO: Filter to be removed once Chapter Prioritization is enabled.
 	return filter( steps, ( step ) => {
-		return (
-			! step.path.includes( '/wp-setup/step/top-priority' )
-		);
+		return ! step.path.includes( '/wp-setup/step/top-priority' );
 	} );
 };
 
 export const getRoutes = ( chapters = initialChapters ) => {
 	let routes = [ ...pages ];
+	routes.push( stepTheFork );
 	routes.push( stepWelcome );
 	chapters.forEach( ( chapter ) => {
 		routes = routes.concat( [
@@ -60,9 +61,7 @@ export const getRoutes = ( chapters = initialChapters ) => {
 	routes = routes.concat( [ stepComplete, stepWhatNext ] );
 	// TODO: Filter to be removed once Chapter Prioritization is enabled.
 	return filter( routes, ( route ) => {
-		return (
-			! route.path.includes( '/wp-setup/step/top-priority' )
-		);
+		return ! route.path.includes( '/wp-setup/step/top-priority' );
 	} );
 };
 
@@ -90,7 +89,7 @@ export const getTopSteps = ( steps ) => {
 		return (
 			step instanceof PseudoStep ||
 			( ! step.path.includes( '/ecommerce/step' ) &&
-			! step.path.includes( '/wp-setup/step/top-priority' ) ) // TODO: Filter to be removed once Chapter Prioritization is enabled.
+				! step.path.includes( '/wp-setup/step/top-priority' ) ) // TODO: Filter to be removed once Chapter Prioritization is enabled.
 		);
 	} );
 };

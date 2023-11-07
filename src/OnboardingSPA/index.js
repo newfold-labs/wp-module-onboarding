@@ -1,10 +1,6 @@
 import './styles/app.scss';
 import { store as nfdOnboardingStore } from './store'; /* must import prior to App! */
 import { getFlow } from './utils/api/flow';
-import { init as initializePlugins } from './utils/api/plugins';
-import { init as initializeThemes } from './utils/api/themes';
-import { trigger as cronTrigger } from './utils/api/cronTrigger';
-import { initialize as initializeSettings } from './utils/api/settings';
 import { DESIGN_STEPS_THEME } from '../constants';
 
 import App from './components/App';
@@ -43,10 +39,6 @@ const initializeFlowData = ( currentData ) => {
  * @param {Object} runtime - Expects runtime data from window.nfdOnboarding.
  */
 export async function initializeNFDOnboarding( id, runtime ) {
-	initializePlugins();
-	initializeThemes();
-	setInterval( cronTrigger, 45000 );
-
 	const DOM_TARGET = document.getElementById( id );
 	dispatch( nfdOnboardingStore ).setRuntime( runtime );
 	if ( runtime.previewSettings.settings.preRequisites?.themes ) {
@@ -67,7 +59,6 @@ export async function initializeNFDOnboarding( id, runtime ) {
 
 	if ( null !== DOM_TARGET && 'undefined' !== typeof render ) {
 		render( <NFDOnboarding />, DOM_TARGET );
-		initializeSettings();
 	} else {
 		// eslint-disable-next-line no-console
 		console.log( 'Could not find mount element or wp.element.render().' );

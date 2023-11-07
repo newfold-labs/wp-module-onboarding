@@ -1,0 +1,12 @@
+.nfd-onboarding-header {
+
+	&__admin-bar {
+		height: 32px;
+		background-color: var(--nfd-onboarding-admin-bar-background);
+		width: 100%;
+		color: var(--nfd-onboarding-admin-bar-color);
+		margin: 0;
+		padding-left: 10px;
+		padding-top: 7px;
+	}
+}
