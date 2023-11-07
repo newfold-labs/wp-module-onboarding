@@ -2,6 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames';
+import { addThemeSuffix } from '../../utils/helper';
 import { forwardRef, useEffect, useContext } from '@wordpress/element';
 // eslint-disable-next-line  @wordpress/no-unsafe-wp-apis
 import { __unstableUseNavigateRegions as useNavigateRegions } from '@wordpress/components';
@@ -99,7 +100,11 @@ function SiteGenInterfaceSkeleton(
 						{ progressbar }
 					</div>
 				) }
-				<div className="nfd-sg-interface-skeleton__body">
+				<div
+					className={ addThemeSuffix(
+						'nfd-sg-interface-skeleton__body'
+					) }
+				>
 					{ !! header && (
 						<div
 							className="nfd-sg-interface-skeleton__header"
