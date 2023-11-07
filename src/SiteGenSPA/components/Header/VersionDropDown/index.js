@@ -1,10 +1,11 @@
 import { Icon, chevronDown, lock} from '@wordpress/icons';
 import { Button } from '@wordpress/components';
+import { addThemeSuffix } from '../../../utils/helper';
 
 const VersionDropDown = ( { title } ) => {
 	return (
 		<Button
-        className="nfd-sitegen-header-navigation-buttons nfd-sitegen-header-navigation-buttons-version"
+        className={ addThemeSuffix( 'nfd-sitegen-header-navigation-buttons' ) }
 		variant="primary"
 		>
 		    <Icon icon={ lock } />

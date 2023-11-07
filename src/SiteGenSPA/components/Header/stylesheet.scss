@@ -1,8 +1,6 @@
 .nfd-sitegen-header {
 	align-items: center;
-	background-color: #1e2327;
-	// background-color: var(--nfd-onboarding-header-base);
-	// color: var(--nfd-onboarding-header-contrast);
+	background-color: #fff;
 
 	display: flex;
 	height: 60px;
@@ -28,6 +26,10 @@
 		column-gap: $grid-unit-10;
 	}
 
+	&--dark {
+		background-color: #1e2327;
+	}
+
 	@media screen and (max-width: #{ ($break-medium) }) {
 		font-size: 13px;
 		padding: 15px 10px !important;
@@ -41,13 +43,27 @@
 	display: flex !important;
 	border-radius: 8px !important;
 	margin: 1px 5px;
-	background-color: #272d30 !important;
-	color: #ffffff !important;
-	border-color: #ffffff !important;
+	background-color: #e6e6e6 !important;
+	color: #000 !important;
 
 	&-version {
 		font-size: 16px;
 		letter-spacing: 1px;
+	}
+	
+	&:hover {
+		background-color: #272d30 !important;
+		color: #ffffff !important;
+	}
+
+	&--dark {
+		background-color: #272d30 !important;
+		color: #ffffff !important;
+
+		&:hover {
+			background-color: #e6e6e6 !important;
+			color: #000 !important;
+		}
 	}
 
 	@media screen and (max-width: #{ ($break-medium) }) {
