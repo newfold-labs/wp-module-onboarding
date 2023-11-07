@@ -1,12 +1,11 @@
-import CommonLayout from '../../../components/Layouts/Common';
-
 import { useEffect } from '@wordpress/element';
-
 import { useDispatch } from '@wordpress/data';
+
+import CommonLayout from '../../../components/Layouts/Common';
+import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
-
-import SiteGenPlaceholder from '../../../components/SiteGenPlaceholder';
+import getContents from './contents';
 
 const SiteGenWelcome = () => {
 	const {
@@ -24,12 +23,25 @@ const SiteGenWelcome = () => {
 		setIsHeaderNavigationEnabled( true );
 		setDrawerActiveView( false );
 	} );
+
+	const content = getContents();
 	return (
-		<CommonLayout
-			isCentered
-			className="nfd-onboarding-step--site-gen__welcome"
-		>
-			<SiteGenPlaceholder heading={ 'Welcome' } />
+		<CommonLayout className="nfd-onboarding-step--site-gen__welcome">
+			<div className="nfd-onboarding-step--site-gen__welcome__container">
+				<div className="nfd-onboarding-step--site-gen__welcome__container__animation"></div>
+				<div className="nfd-onboarding-step--site-gen__welcome__container__heading">
+					<div className="nfd-onboarding-step--site-gen__welcome__container__heading__image"></div>
+					<h3 className="nfd-onboarding-step--site-gen__welcome__container__heading__text">
+						{ content.heading }
+					</h3>
+				</div>
+				<div className="nfd-onboarding-step--site-gen__welcome__container__sub-heading">
+					<p className="nfd-onboarding-step--site-gen__welcome__container__sub-heading__text">
+						{ content.subHeading }
+					</p>
+				</div>
+				<NextButtonSiteGen text={ content.buttonText } />
+			</div>
 		</CommonLayout>
 	);
 };

@@ -1,0 +1,13 @@
+.nfd-onboarding-button {
+
+	&--site-gen-next {
+		display: block;
+		background-color: var(--nfd-onboarding-primary);
+		color: var(--nfd-onboarding-secondary);
+		text-align: center;
+		width: 164px;
+		height: 50px;
+		font-size: 15px;
+		margin-top: 24px;
+	}
+}
