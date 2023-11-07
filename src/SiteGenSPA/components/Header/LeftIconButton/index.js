@@ -1,11 +1,11 @@
 import { Icon } from '@wordpress/icons';
 import { Button } from '@wordpress/components';
 
-const ActionButton = ( { icon, title } ) => {
+const LeftIconButton = ( { icon, title } ) => {
 	return (
 		<Button
-        className="navigation-buttons navigation-buttons_back"
-		variant="secondary"
+        className="nfd-sitegen-header-navigation-buttons"
+		variant="primary"
 		>
 		    <Icon icon={ icon } />
             { title }
@@ -13,4 +13,4 @@ const ActionButton = ( { icon, title } ) => {
 	);
 };
 
-export default ActionButton;
+export default LeftIconButton;

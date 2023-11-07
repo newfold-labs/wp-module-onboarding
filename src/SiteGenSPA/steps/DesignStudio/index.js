@@ -8,7 +8,6 @@ const DesignStudio = () => {
     return (
 		<CommonLayout isCentered>
             {/* <div className={ addThemeSuffix( 'nfd-sg-design-studio' ) }> */}
-                {/* <TopBar /> */}
                 <LivePreview 
                     blockGrammer={ pattern }
                     styling={ 'full' }
