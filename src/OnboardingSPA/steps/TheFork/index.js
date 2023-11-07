@@ -33,6 +33,7 @@ const TheFork = () => {
 		updateTopSteps,
 		updateRoutes,
 		updateDesignRoutes,
+		updateInitialize,
 	} = useDispatch( nfdOnboardingStore );
 
 	const switchFlow = ( newFlow ) => {
@@ -50,6 +51,7 @@ const TheFork = () => {
 			window.nfdOnboarding.oldFlow = currentFlow;
 		}
 		window.nfdOnboarding.currentFlow = newFlow;
+		updateInitialize( true );
 		navigate( data.steps[ 1 ].path );
 	};
 

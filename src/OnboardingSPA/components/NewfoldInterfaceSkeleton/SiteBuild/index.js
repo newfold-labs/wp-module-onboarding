@@ -431,6 +431,9 @@ const SiteBuild = () => {
 				{
 					'nfd-onboarding-skeleton--sitegen':
 						currentStep === stepTheFork,
+				},
+				{
+					'nfd-onboarding-sitegen': currentStep === stepTheFork,
 				}
 			) }
 			header={ <Header /> }
