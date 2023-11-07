@@ -7,7 +7,7 @@ import {
 	CheckInfoPanel,
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
-import { APIList } from '../wp-module-support/EventsApi.cy';
+import { APIList, EventsAPI } from '../wp-module-support/EventsApi.cy';
 
 describe( 'Start Setup WP Experience Page', function () {
 	before( () => {
@@ -52,26 +52,6 @@ describe( 'Start Setup WP Experience Page', function () {
 		cy.url().should( 'contain', 'get-started/experience' );
 	} );
 
-	const EventsAPI = ( experience_val ) => {
-		cy.intercept( APIList.get_started_experience ).as( 'events' );
-		cy.wait( '@events' ).then( ( requestObject ) => {
-			const responseBody = requestObject.request.body;
-			const responseData1 = responseBody[ 0 ].data;
-			if ( 'experience_level' in responseData1 ) {
-				expect( responseData1.experience_level ).equal(
-					experience_val
-				);
-			} else {
-				const responseData2 = responseBody[ 1 ].data;
-				if ( 'experience_level' in responseData2 ) {
-					expect( responseData2.experience_level ).equal(
-						experience_val
-					);
-				}
-			}
-		} );
-	};
-
 	it( 'Check if events API call being made after radio buttons are clicked', () => {
 		let radioCount = 0;
 		const className = '.components-radio-control__option';
@@ -81,14 +61,14 @@ describe( 'Start Setup WP Experience Page', function () {
 				.eq( radioCount )
 				.click( { force: true } );
 			if ( radioCount == 0 ) {
-				EventsAPI( 'novice' );
+				EventsAPI( 'experience_level', 'novice', APIList.get_started_experience );
 			}
 			if ( radioCount == 1 ) {
-				EventsAPI( 'intermediate' );
+				EventsAPI( 'experience_level', 'intermediate', APIList.get_started_experience );
 			}
 			if ( radioCount > 1 ) {
 				cy.wait( 5000 );
-				EventsAPI( 'expert' );
+				EventsAPI( 'experience_level', 'expert', APIList.get_started_experience );
 			}
 			radioCount += 1;
 		} );
