@@ -7,7 +7,19 @@
 		text-align: center;
 		width: 164px;
 		height: 50px;
-		font-size: 15px;
+		font-size: clamp(0.5rem, 0.3864rem + 0.5682vw, 1.75rem);
 		margin-top: 24px;
+		border-radius: 6px;
+
+		@media (min-width: 2600px ) {
+			width: 250px;
+			height: 76px;
+		}
+
+		@media (max-width: #{ ($break-small) }) {
+			width: 100px;
+			height: 30px;
+			margin-top: 10px;
+		}
 	}
 }

@@ -31,9 +31,9 @@ const SiteGenWelcome = () => {
 				<div className="nfd-onboarding-step--site-gen__welcome__container__animation"></div>
 				<div className="nfd-onboarding-step--site-gen__welcome__container__heading">
 					<div className="nfd-onboarding-step--site-gen__welcome__container__heading__image"></div>
-					<h3 className="nfd-onboarding-step--site-gen__welcome__container__heading__text">
+					<p className="nfd-onboarding-step--site-gen__welcome__container__heading__text">
 						{ content.heading }
-					</h3>
+					</p>
 				</div>
 				<div className="nfd-onboarding-step--site-gen__welcome__container__sub-heading">
 					<p className="nfd-onboarding-step--site-gen__welcome__container__sub-heading__text">
