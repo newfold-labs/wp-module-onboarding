@@ -9,7 +9,7 @@ import { DEFAULT_FLOW } from '../data/flows/constants';
  * @param {*} state
  * @return {string} Drawer View
  */
-export function getDrawerView( state ) {
+export function getActiveDrawerView( state ) {
 	return state.drawer.view;
 }
 
@@ -35,6 +35,18 @@ export function isDrawerSuppressed( state ) {
 
 export function isHeaderNavigationEnabled( state ) {
 	return state.header.isNavigationEnabled;
+}
+
+export function isHeaderEnabled( state ) {
+	return state.header.isEnabled;
+}
+
+export function getHeaders( state ) {
+	return state.header.headers;
+}
+
+export function getHeaderActiveView( state ) {
+	return state.header.view;
 }
 
 /**
@@ -253,6 +265,10 @@ export function getSettings( state ) {
 
 export function getThemeStatus( state ) {
 	return state.settings.themeStatus;
+}
+
+export function getInitialize( state ) {
+	return state.settings.initialize;
 }
 
 export function getStepPreviewData( state ) {

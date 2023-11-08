@@ -5,7 +5,7 @@ import { getQueryParam } from '../index';
 import { resolve } from './resolve';
 import { NFD_PLUGINS_QUERY_PARAM } from '../../../constants';
 
-export const init = () => {
+export const init = ( pluginInstallHash ) => {
 	// Backend should have done the initialization if this param is present.
 	if ( getQueryParam( NFD_PLUGINS_QUERY_PARAM ) ) {
 		return true;
@@ -14,7 +14,9 @@ export const init = () => {
 		url: onboardingRestURL( 'plugins/initialize' ),
 		method: 'POST',
 		headers: {
-			'X-NFD-INSTALLER': window.nfdOnboarding.pluginInstallHash,
+			'X-NFD-INSTALLER': pluginInstallHash
+				? pluginInstallHash
+				: window.nfdOnboarding.pluginInstallHash,
 		},
 	} ).catch( ( error ) => {
 		// eslint-disable-next-line no-console

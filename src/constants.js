@@ -38,6 +38,12 @@ export const VIEW_NAV_ECOMMERCE_STORE_INFO = 'nav-ecommerce-store-info';
 export const SIDEBAR_SLOTFILL_PREFIX = 'Sidebar';
 export const SIDEBAR_MENU_SLOTFILL_PREFIX = 'HeaderMenu';
 export const SIDEBAR_LEARN_MORE = 'LearnMore';
+export const HEADER_SITEBUILD = 'HeaderSiteBuild';
+export const HEADER_SITEGEN = 'HeaderSiteGen';
+export const HEADER_TOP = 'HeaderTop';
+export const HEADER_START = 'HeaderStart';
+export const HEADER_CENTER = 'HeaderCenter';
+export const HEADER_END = 'HeaderEnd';
 
 export const MAX_RETRIES_API_QUEUER = 2;
 export const MAX_RETRIES_SETTINGS_INIT = 2;
@@ -58,6 +64,7 @@ export const CHAPTER_COMMERCE = 'commerce';
 export const CHAPTER_DESIGN = 'design';
 export const CHAPTER_LAYOUT_AND_CONTENT = 'layout_and_content';
 export const CHAPTER_FEATURES = 'features';
+export const CHAPTER_SITEGEN = 'sitegen';
 
 /**
  * All views for the <Drawer /> component.

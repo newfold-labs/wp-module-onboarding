@@ -147,6 +147,13 @@ export function updateThemeStatus( themeStatus ) {
 	};
 }
 
+export function updateInitialize( initialize ) {
+	return {
+		type: 'UPDATE_INITIALIZE',
+		initialize,
+	};
+}
+
 export function setIsSidebarOpened( isOpen ) {
 	return {
 		type: 'SET_SIDEBAR_OPENED',
@@ -165,6 +172,20 @@ export function setIsHeaderNavigationEnabled( isNavigationEnabled ) {
 	return {
 		type: 'SET_HEADER_NAVIGATION_ENABLED',
 		isNavigationEnabled,
+	};
+}
+
+export function setIsHeaderEnabled( isEnabled ) {
+	return {
+		type: 'SET_HEADER_ENABLED',
+		isEnabled,
+	};
+}
+
+export function setHeaderActiveView( view ) {
+	return {
+		type: 'SET_HEADER_ACTIVE_VIEW',
+		view,
 	};
 }
 
