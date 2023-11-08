@@ -9,7 +9,7 @@ const SiteGen = () => {
 		<NewfoldInterfaceSkeleton
 			className={ classNames(
 				'nfd-onboarding-skeleton--sitegen',
-				'nfd-onboarding-sitegen'
+				'nfd-onboarding-sitegen-dark'
 			) }
 			header={ <Header /> }
 			content={ <Content /> }

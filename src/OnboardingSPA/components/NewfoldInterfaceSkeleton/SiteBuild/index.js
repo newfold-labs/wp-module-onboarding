@@ -433,7 +433,7 @@ const SiteBuild = () => {
 						currentStep === stepTheFork,
 				},
 				{
-					'nfd-onboarding-sitegen': currentStep === stepTheFork,
+					'nfd-onboarding-sitegen-dark': currentStep === stepTheFork,
 				}
 			) }
 			header={ <Header /> }
