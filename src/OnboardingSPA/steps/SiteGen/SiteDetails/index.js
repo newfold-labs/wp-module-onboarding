@@ -1,14 +1,18 @@
 import CommonLayout from '../../../components/Layouts/Common';
 
-import { useEffect } from '@wordpress/element';
-
 import { useDispatch } from '@wordpress/data';
-import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
+import { useEffect, useState } from '@wordpress/element';
+import { store as nfdOnboardingStore } from '../../../store';
 
-import SiteGenPlaceholder from '../../../components/SiteGenPlaceholder';
+import getContents from './contents';
+import AIHeading from '../../../components/AIHeading';
+import TextInputSiteGen from '../../../components/TextInput/TextInputSiteGen';
 
 const SiteGenSiteDetails = () => {
+	const content = getContents();
+	const [ customerInput, setCustomerInput ] = useState();
+
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -22,12 +26,25 @@ const SiteGenSiteDetails = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 	} );
+
+	// const checkAndNavigate = () => {
+	// 	// console.log( customerInput );
+	// 	// console.log( 'Navigate to the next screen!' );
+	// };
+
 	return (
-		<CommonLayout
-			isCentered
-			className="nfd-onboarding-step--site-gen__site-details"
-		>
-			<SiteGenPlaceholder heading={ 'Site Details' } />
+		<CommonLayout isCentered>
+			<div className={ 'nfd-sg-site-details' }>
+				<AIHeading title={ content.heading } />
+				<TextInputSiteGen
+					placeholder={ content.inputPlaceholder }
+					hint={ content.inputHint }
+					height={ '40px' }
+					customerInput={ customerInput }
+					setCustomerInput={ setCustomerInput }
+				/>
+				<div className={ 'nfd-sg-site-details-endrow' }></div>
+			</div>
 		</CommonLayout>
 	);
 };

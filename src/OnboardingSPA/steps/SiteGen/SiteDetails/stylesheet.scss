@@ -1,0 +1,16 @@
+.nfd-sg-site-details {
+
+	@media (max-width: #{ ($break-small) }) {
+		margin: 20px;
+	}
+
+	&-endrow {
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
+
+		@media (max-width: #{ ($break-small) }) {
+			justify-content: center;
+		}
+	}
+}
