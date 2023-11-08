@@ -7,8 +7,6 @@ import {
 	__unstableIframe as Iframe,
 	// eslint-disable-next-line  @wordpress/no-unsafe-wp-apis
 	__unstableEditorStyles as EditorStyles,
-	// eslint-disable-next-line  @wordpress/no-unsafe-wp-apis
-	__unstablePresetDuotoneFilter as PresetDuotoneFilter,
 } from '@wordpress/block-editor';
 
 // This is used to avoid rendering the block list if the sizes change.
@@ -29,10 +27,9 @@ function ScaledBlockPreview( {
 
 	const [ contentResizeListener, { height: contentHeight } ] =
 		useResizeObserver();
-	const { styles, assets, duotone } = {
+	const { styles, assets } = {
 		styles: settings.styles,
 		assets: settings.__unstableResolvedAssets,
-		duotone: settings.__experimentalFeatures?.color?.duotone,
 	};
 
 	// Avoid scrollbars for pattern previews.
@@ -51,20 +48,19 @@ function ScaledBlockPreview( {
 		return styles;
 	}, [ styles, additionalStyles ] );
 
-	const svgFilters = useMemo( () => {
-		return [ ...( duotone?.default ?? [] ), ...( duotone?.theme ?? [] ) ];
-	}, [ duotone ] );
-
 	// Initialize on render instead of module top level, to avoid circular dependency issues.
 	MemoizedBlockList = MemoizedBlockList || pure( BlockList );
 
 	const scale = containerWidth / viewportWidth;
+	const aspectRatio = contentHeight
+		? containerWidth / ( contentHeight * scale )
+		: 0;
 	return (
 		<Disabled
 			className="block-editor-block-preview__content"
 			style={ {
 				transform: `scale(${ scale })`,
-				height: contentHeight * scale,
+				aspectRatio,
 				maxHeight:
 					contentHeight > MAX_HEIGHT ? MAX_HEIGHT * scale : undefined,
 				minHeight,
@@ -106,15 +102,6 @@ function ScaledBlockPreview( {
 			>
 				<EditorStyles styles={ editorStyles } />
 				{ contentResizeListener }
-				{
-					/* Filters need to be rendered before children to avoid Safari rendering issues. */
-					svgFilters.map( ( preset ) => (
-						<PresetDuotoneFilter
-							preset={ preset }
-							key={ preset.slug }
-						/>
-					) )
-				}
 				<MemoizedBlockList renderAppender={ false } />
 			</Iframe>
 		</Disabled>

@@ -1,4 +1,4 @@
-import { DEFAULT_FLOW, ECOMMERCE_FLOW } from './constants';
+import { DEFAULT_FLOW, ECOMMERCE_FLOW, SITEGEN_FLOW } from './constants';
 import {
 	getRoutes as defaultGetRoutes,
 	getSteps as defaultGetSteps,
@@ -15,6 +15,15 @@ import {
 	initialChapters as ecommerceInitialChapters,
 	getData as ecommerceGetData,
 } from './ecommerce';
+
+import {
+	getSteps as sitegenGetSteps,
+	getRoutes as sitegenGetRoutes,
+	getTopSteps as sitegenGetTopSteps,
+	getDesignRoutes as sitegenGetDesignRoutes,
+	initialChapters as sitegenInitialChapters,
+	getData as sitegenGetData,
+} from './sitegen';
 
 export const getCurrentFlow = () => {
 	return window.nfdOnboarding.currentFlow ?? DEFAULT_FLOW;
@@ -36,6 +45,14 @@ const routerMap = {
 		chapters: ecommerceInitialChapters,
 		getData: ecommerceGetData,
 		getDesignRoutes: defaultGetDesignRoutes,
+	},
+	[ SITEGEN_FLOW ]: {
+		getRoutes: sitegenGetRoutes,
+		getSteps: sitegenGetSteps,
+		chapters: sitegenInitialChapters,
+		getData: sitegenGetData,
+		getTopSteps: sitegenGetTopSteps,
+		getDesignRoutes: sitegenGetDesignRoutes,
 	},
 };
 

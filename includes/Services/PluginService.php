@@ -1,7 +1,7 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
-use NewfoldLabs\WP\Module\Onboarding\WP_ADMIN;
+use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use function NewfoldLabs\WP\ModuleLoader\container;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
@@ -128,7 +128,7 @@ class PluginService {
 		switch ( $pagenow ) {
 			case 'index.php':
 				// If the page is nfd-onboarding
-				if ( isset( $_GET['page'] ) && WP_ADMIN::$slug === \sanitize_text_field( $_GET['page'] ) ) {
+				if ( isset( $_GET['page'] ) && WP_Admin::$slug === \sanitize_text_field( $_GET['page'] ) ) {
 					if ( '1' !== get_transient( Options::get_option_name( 'filter_active_plugins' ) ) ) {
 						set_transient( Options::get_option_name( 'filter_active_plugins' ), '1', 20 * MINUTE_IN_SECONDS );
 					}

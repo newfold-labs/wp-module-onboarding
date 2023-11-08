@@ -13,6 +13,7 @@ import TabPanelHover from '../../../components/TabPanelHover';
 import {
 	VIEW_NAV_GET_STARTED,
 	SIDEBAR_LEARN_MORE,
+	HEADER_SITEBUILD,
 } from '../../../../constants';
 import getContents from './contents';
 import ButtonWhite from '../../../components/Button/ButtonWhite';
@@ -33,6 +34,8 @@ const StepWelcome = () => {
 		setSidebarActiveView,
 		setIsDrawerSuppressed,
 		setIsHeaderNavigationEnabled,
+		setHeaderActiveView,
+		setIsHeaderEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -40,6 +43,8 @@ const StepWelcome = () => {
 		setIsHeaderNavigationEnabled( true );
 		setIsDrawerSuppressed( true );
 		setDrawerActiveView( VIEW_NAV_GET_STARTED );
+		setHeaderActiveView( HEADER_SITEBUILD );
+		setIsHeaderEnabled( true );
 	}, [] );
 
 	const content = getContents( brandName );

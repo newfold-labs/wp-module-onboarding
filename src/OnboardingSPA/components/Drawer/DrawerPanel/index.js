@@ -34,11 +34,12 @@ import WithDesignBack from './WithDesignBack';
 
 const DrawerPanel = () => {
 	const { isDrawerOpen, drawerView } = useSelect( ( select ) => {
-		const { isDrawerOpened, getDrawerView } = select( nfdOnboardingStore );
+		const { isDrawerOpened, getActiveDrawerView } =
+			select( nfdOnboardingStore );
 
 		return {
 			isDrawerOpen: isDrawerOpened(),
-			drawerView: getDrawerView(),
+			drawerView: getActiveDrawerView(),
 		};
 	}, [] );
 

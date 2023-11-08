@@ -1,0 +1,11 @@
+.nfd-onboarding-button {
+
+	&--dark {
+		background-color: var(--nfd-onboarding-navigation-back-background);
+		width: 74px;
+		height: 36px;
+		color: var(--nfd-onboarding-primary);
+		border-radius: 8px;
+		padding: 0, 13px, 0 13px;
+	}
+}

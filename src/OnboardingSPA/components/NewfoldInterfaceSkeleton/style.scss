@@ -184,3 +184,10 @@ html.nfd-interface-interface-skeleton__html-container {
 		bottom: 0;
 	}
 }
+
+.nfd-onboarding-skeleton {
+
+	&--sitegen {
+		background-image: var(--sitegen-background);
+	}
+}

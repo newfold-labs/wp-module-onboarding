@@ -1,4 +1,5 @@
 // <reference types="Cypress" />
+import { APIList, EventsAPI } from '../wp-module-support/EventsApi.cy';
 import { CheckDrawerDisabled } from '../wp-module-support/drawer.cy';
 import { CheckCardHeadingSubheading } from '../wp-module-support/header.cy';
 import {
@@ -31,10 +32,41 @@ describe( 'Get Started Site Type Secondary', function () {
 		CheckHelpPanelLinks();
 	} );
 
+	it( 'Check for Event API call being made when different sub-categories are selected', ()=>{
+		let SubcategoryCount = 0;
+		let num = 0;
+		const className = '.nfd-card-sec-category';
+		cy.get( className ).should( 'be.visible' );
+		const arr = cy.get( className );
+		arr.each( () => {
+			cy.get( className )
+				.eq( SubcategoryCount )
+				.click()
+				.then(($element) => {
+					const dataSlugText = $element.attr('data-slug');
+					if(num>=2){
+						cy.wait(5000);
+					}
+					EventsAPI('secondary_type', dataSlugText, APIList.site_secondary);
+					num+=1;
+				});
+			SubcategoryCount += 1;
+		} );
+	} );
+
+	it( 'Check for Event API call when we enter text in input box', ()=>{
+		cy.get( '.nfd-setup-primary-custom__tellus-input' )
+			.scrollIntoView()
+			.should( 'be.visible' )
+			.type( 'Test' );
+		EventsAPI('secondary_type', 'Test', APIList.site_secondary);
+	} );
+
 	it( 'Check different categories exist using `<` and `>`', () => {
 		cy.get( '.nfd-setup-secondary-categories' ).should( 'be.visible' );
 		const category_selected = cy.get('.category-scrolling-wrapper__type-text');
 		cy.get( '.category-scrolling-wrapper__left-btn' )
+			.scrollIntoView()
 			.should('be.visible')
 			.click();
 		cy.get( '.category-scrolling-wrapper__type-text' ).should('not.contain', category_selected);
@@ -106,7 +138,7 @@ describe( 'Get Started Site Type Secondary', function () {
 		cy.get( '.navigation-buttons_back' ).click();
 	} );
 
-	it.skip( 'Go to the previous step on clicking navigation Back', () => {
+	it( 'Go to the previous step on clicking navigation Back', () => {
 		cy.get( '.navigation-buttons_back' ).click();
 		cy.url().should(
 			'not.include',
@@ -115,7 +147,7 @@ describe( 'Get Started Site Type Secondary', function () {
 		cy.get( '.navigation-buttons_next' ).click();
 	} );
 
-	it.skip( 'Go to next step on Continue Setup', () => {
+	it( 'Go to next step on Continue Setup', () => {
 		cy.get( '.nfd-nav-card-button' ).click();
 		cy.url().should(
 			'not.include',

@@ -1,0 +1,35 @@
+.nfd-onboarding-step {
+
+	&--site-gen {
+
+		&__fork {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+			&__heading {
+				color: var(--nfd-onboarding-primary);
+				font-size: 70px;
+			}
+
+			&__buttons {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+
+				&__button {
+					display: block;
+					background-color: var(--nfd-onboarding-primary);
+					color: var(--nfd-onboarding-secondary);
+					text-align: center;
+					width: 200px;
+					height: 50px;
+					font-size: 15px;
+					margin: 24px;
+				}
+			}
+		}
+	}
+}

@@ -1,6 +1,10 @@
 import { combineReducers } from '@wordpress/data';
 
-import { VIEW_NAV_PRIMARY, THEME_STATUS_INIT } from '../../constants';
+import {
+	VIEW_NAV_PRIMARY,
+	THEME_STATUS_INIT,
+	HEADER_SITEBUILD,
+} from '../../constants';
 
 import {
 	initialDesignRoutes,
@@ -9,6 +13,7 @@ import {
 	initialTopSteps,
 } from '../data/flows/index';
 import { sidebars } from '../data/sidebars/index';
+import { headers } from '../data/headers';
 import apiQueueExecutor from '../utils/api-queuer/api-queue-executor';
 import { DEFAULT_FLOW } from '../data/flows/constants';
 
@@ -190,7 +195,13 @@ export function sidebar(
 }
 
 export function header(
-	state = { isNavigationEnabled: true, menu: '' },
+	state = {
+		isNavigationEnabled: true,
+		menu: '',
+		isEnabled: true,
+		headers,
+		view: HEADER_SITEBUILD,
+	},
 	action
 ) {
 	switch ( action.type ) {
@@ -199,10 +210,20 @@ export function header(
 				...state,
 				isNavigationEnabled: action.isNavigationEnabled,
 			};
+		case 'SET_HEADER_ENABLED':
+			return {
+				...state,
+				isEnabled: action.isEnabled,
+			};
 		case 'UPDATE_HEADER_MENU_DATA':
 			return {
 				...state,
 				menu: action.menu,
+			};
+		case 'SET_HEADER_ACTIVE_VIEW':
+			return {
+				...state,
+				view: action.view,
 			};
 	}
 	return state;
@@ -231,6 +252,7 @@ export function runtime( state = {}, action ) {
 export function settings(
 	state = {
 		themeStatus: THEME_STATUS_INIT,
+		initialize: false,
 	},
 	action
 ) {
@@ -244,6 +266,11 @@ export function settings(
 			return {
 				...state,
 				themeStatus: action.themeStatus,
+			};
+		case 'UPDATE_INITIALIZE':
+			return {
+				...state,
+				initialize: action.initialize,
 			};
 	}
 

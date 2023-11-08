@@ -1,6 +1,7 @@
 // <reference types="Cypress" />
 import { DrawerActivityForMenu } from '../wp-module-support/drawer.cy';
 import { CheckHeadingSubheading } from '../wp-module-support/header.cy';
+import { EventsAPI, APIList } from '../wp-module-support/EventsApi.cy';
 
 describe( 'Top Priority Page', function () {
 	before( () => {
@@ -25,6 +26,29 @@ describe( 'Top Priority Page', function () {
 
 	it( 'Check existence of Skip this Step button', () => {
 		cy.get( '.components-button.skip-button' ).should( 'be.visible' );
+	} );
+
+	it( 'Check for API events when different cards are selected', ()=> {
+		let previewCount = 0;
+		const className = '.components-surface.components-card.nfd-card';
+		const arr = cy.get( className );
+		arr.each( () => {
+			cy.get( className )
+				.eq( previewCount )
+				.should( 'be.visible' )
+				.click();
+				if ( previewCount == 0 ) {
+					EventsAPI( 'top_priority', 'content', APIList.top_priority );
+				}
+				if ( previewCount == 1 ) {
+					EventsAPI( 'top_priority', 'store', APIList.top_priority );
+				}
+				if ( previewCount > 1 ) {
+					cy.wait( 5000 );
+					EventsAPI( 'top_priority', 'design', APIList.top_priority );
+				}
+		previewCount += 1;
+		});
 	} );
 
 	it.skip( 'Click on different cards and move on to next page', () => {
