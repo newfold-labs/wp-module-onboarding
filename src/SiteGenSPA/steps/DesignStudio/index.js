@@ -1,4 +1,4 @@
-import CommonLayout from '../../../Shared/Layouts/Common';
+import CommonLayout from '../../../OnboardingSPA/components/Layouts/Common';
 import { LivePreview } from '../../../OnboardingSPA/components/LivePreview';
 // import TopBar from './TopBar';
 // import { addThemeSuffix } from '../../utils/helper';

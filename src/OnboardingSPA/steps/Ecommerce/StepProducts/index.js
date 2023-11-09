@@ -7,7 +7,7 @@ import {
 } from '../../../../constants';
 import NavCardButton from '../../../components/Button/NavCardButton';
 import CardHeader from '../../../components/CardHeader';
-import CommonLayout from '../../../../Shared/Layouts/Common';
+import CommonLayout from '../../../components/Layouts/Common';
 import NeedHelpTag from '../../../components/NeedHelpTag';
 import NewfoldLargeCard from '../../../components/NewfoldLargeCard';
 import { store as nfdOnboardingStore } from '../../../store';

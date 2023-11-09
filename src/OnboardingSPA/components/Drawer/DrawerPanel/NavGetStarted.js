@@ -6,7 +6,7 @@ import { __ } from '@wordpress/i18n';
 
 import { VIEW_NAV_PRIMARY } from '../../../../constants';
 import { store as nfdOnboardingStore } from '../../../store';
-import Animate from '../../../../Shared/Animate';
+import Animate from '../../Animate';
 import { demographic as demographicChapter } from '../../../chapters/demographic';
 
 const NavGetStarted = () => {

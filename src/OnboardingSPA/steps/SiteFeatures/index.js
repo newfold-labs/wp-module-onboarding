@@ -6,7 +6,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../store';
 
 import { SIDEBAR_LEARN_MORE, VIEW_NAV_PRIMARY } from '../../../constants';
-import CommonLayout from '../../../Shared/Layouts/Common';
+import CommonLayout from '../../components/Layouts/Common';
 import { getSiteFeatures } from '../../utils/api/plugins';
 import HeadingWithSubHeading from '../../components/HeadingWithSubHeading';
 import CheckboxList from '../../components/CheckboxTemplate/CheckboxList';

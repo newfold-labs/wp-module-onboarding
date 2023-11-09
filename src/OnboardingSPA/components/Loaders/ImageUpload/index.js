@@ -1,4 +1,4 @@
-import Animate from '../../../../Shared/Animate';
+import Animate from '../../Animate';
 
 const ImageUploadLoader = () => {
 	return (

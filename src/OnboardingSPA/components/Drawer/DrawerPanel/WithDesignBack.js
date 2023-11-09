@@ -5,7 +5,7 @@ import { useDispatch } from '@wordpress/data';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import { VIEW_NAV_DESIGN } from '../../../../constants';
-import Animate from '../../../../Shared/Animate';
+import Animate from '../../Animate';
 
 const WithDesignBack = ( { children } ) => {
 	const { setDrawerActiveView } = useDispatch( nfdOnboardingStore );

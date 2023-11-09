@@ -1,7 +1,7 @@
 import { useSelect } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 
-import Animate from '../../../../../../Shared/Animate';
+import Animate from '../../../../Animate';
 import { store as nfdOnboardingStore } from '../../../../../store';
 
 /** Skeleton Structure for the SideBar */

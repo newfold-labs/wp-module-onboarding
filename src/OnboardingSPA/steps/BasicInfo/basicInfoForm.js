@@ -5,7 +5,7 @@ import getContents from './contents';
 import TextInput from '../../components/TextInput';
 import SkipButton from '../../components/SkipButton';
 import MiniPreview from '../../components/MiniPreview';
-import Animate from '../../../Shared/Animate';
+import Animate from '../../components/Animate';
 import { getSettings } from '../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../store';
 import ImageUploader from '../../components/ImageUploader';

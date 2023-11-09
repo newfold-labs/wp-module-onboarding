@@ -1,4 +1,4 @@
-import CommonLayout from '../../../Shared/Layouts/Common';
+import CommonLayout from '../../../OnboardingSPA/components/Layouts/Common';
 import HeadingWithSubHeading from './headingwithsubheading';
 import getContents from './contents';
 

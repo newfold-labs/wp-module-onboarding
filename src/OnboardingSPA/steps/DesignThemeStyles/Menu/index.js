@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import getContents from '../contents';
 import { store as nfdOnboardingStore } from '../../../store';
-import CommonLayout from '../../../../Shared/Layouts/Common';
+import CommonLayout from '../../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
 import { getPatterns } from '../../../utils/api/patterns';

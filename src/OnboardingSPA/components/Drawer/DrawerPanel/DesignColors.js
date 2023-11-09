@@ -4,7 +4,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { Popover, ColorPicker } from '@wordpress/components';
 import { useState, useEffect, useRef } from '@wordpress/element';
 
-import Animate from '../../../../Shared/Animate';
+import Animate from '../../Animate';
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,

@@ -1,0 +1,17 @@
+.nfd-onboarding-layout__common {
+    min-height: calc(100vh - #{$header-height} - #{$border-width} - #{$admin-bar-height-big});
+    @include break-medium {
+        min-height: calc(100vh - #{$header-height} - #{$border-width});
+    }
+    &.is-padded {
+        min-height: calc(100vw - #{$header-height} - #{$border-width} - #{$grid-unit * 18} - #{$admin-bar-height-big});
+        @include break-medium {
+            min-height: calc(100vh - #{$header-height} - #{$border-width} - #{$grid-unit * 18});
+        }
+        padding: #{$grid-unit * 9};
+    }
+    > .is-contained {
+        width: 100%;
+        max-width: $break-huge;
+    }
+}

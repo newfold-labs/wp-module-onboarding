@@ -6,14 +6,14 @@ import {
 	VIEW_NAV_ECOMMERCE_STORE_INFO,
 } from '../../../../constants';
 import CardHeader from '../../../components/CardHeader';
-import CommonLayout from '../../../../Shared/Layouts/Common';
+import CommonLayout from '../../../components/Layouts/Common';
 import NeedHelpTag from '../../../components/NeedHelpTag';
 import NewfoldLargeCard from '../../../components/NewfoldLargeCard';
 import { store as nfdOnboardingStore } from '../../../store';
 import countries from '../countries.json';
 import currencies from '../currencies.json';
 import { useWPSettings as getWPSettings } from '../useWPSettings';
-import Animate from '../../../../Shared/Animate';
+import Animate from '../../../components/Animate';
 import getContents from './contents';
 import NavCardButton from '../../../components/Button/NavCardButton';
 

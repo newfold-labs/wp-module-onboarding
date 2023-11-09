@@ -3,7 +3,7 @@ import { Icon, help } from '@wordpress/icons';
 import { CheckboxControl } from '@wordpress/components';
 
 import { LivePreview } from '..';
-import Animate from '../../../../Shared/Animate';
+import Animate from '../../Animate';
 
 const SelectableCardWithInfo = ( {
 	className = 'live-preview--selectable-card--title-description',

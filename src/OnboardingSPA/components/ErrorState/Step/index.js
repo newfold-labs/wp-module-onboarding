@@ -1,4 +1,4 @@
-import CommonLayout from '../../../../Shared/Layouts/Common';
+import CommonLayout from '../../Layouts/Common';
 import HeadingWithSubHeading from '../../HeadingWithSubHeading';
 import NeedHelpTag from '../../NeedHelpTag';
 

@@ -1,4 +1,4 @@
-import CommonLayout from '../../Shared/Layouts/Common';
+import CommonLayout from '../components/Layouts/Common';
 
 const StepBase = () => {
 	return <CommonLayout isCentered>StepBase</CommonLayout>;

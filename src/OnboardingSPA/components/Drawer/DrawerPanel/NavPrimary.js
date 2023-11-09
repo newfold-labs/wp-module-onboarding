@@ -5,7 +5,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import classNames from 'classnames';
-import Animate from '../../../../Shared/Animate';
+import Animate from '../../Animate';
 
 const NavPrimary = () => {
 	const location = useLocation();
