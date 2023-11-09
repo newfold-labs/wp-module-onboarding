@@ -17,13 +17,8 @@
 	&--next-btn {
 		width: 100px;
 		color: var(--nfd-onboarding-secondary);
-		display: flex;
 		font-size: 1rem;
-		cursor: pointer;
 		padding-left: 24px;
-		align-items: center;
-		border-radius: 8px;
-		justify-content: center;
 		background-color: var(--nfd-onboarding-primary);
 		transition: all 300ms ease-in-out;
 
