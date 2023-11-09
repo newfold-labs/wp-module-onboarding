@@ -50,6 +50,8 @@
 @import "../components/AIHeading/stylesheet";
 @import "../components/TextInput/TextInputSiteGen/stylesheet";
 @import "../components/Button/NextButtonSiteGen/stylesheet";
+@import "../components/CardWithOptions/stylesheet";
+@import "../components/Loaders/SiteGenLoader/stylesheet";
 
 // CSS for Pages
 @import "../steps/BasicInfo/stylesheet";
@@ -66,6 +68,7 @@
 @import "../steps/SiteFeatures/stylesheet";
 @import "../steps/TheFork/stylesheet";
 @import "../steps/SiteGen/SiteDetails/stylesheet";
+@import "../steps/SiteGen/Experience/stylesheet";
 @import "../steps/SiteGen/Welcome/stylesheet";
 
 .nfd-onboarding-container {
