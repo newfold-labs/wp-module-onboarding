@@ -7,7 +7,11 @@ import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import { store as nfdOnboardingStore } from '../../../store';
 import { switchFlow } from '../../../utils/api/flow';
 import { MAX_RETRIES_FLOW_SWITCH } from '../../../../constants';
-import { ECOMMERCE_FLOW } from '../../../data/flows/constants';
+import {
+	DEFAULT_FLOW,
+	ECOMMERCE_FLOW,
+	SITEGEN_FLOW,
+} from '../../../data/flows/constants';
 import { removeQueryParam } from '../../../utils';
 import { commerce } from '../../../chapters/commerce';
 import EcommerceStepLoader from '../../Loaders/Step/Ecommerce';
@@ -91,15 +95,15 @@ const FlowStateHandler = () => {
 	// TODO: Remove handleRender and replace with only children once Chapter Prioritization is enabled.
 	const handleRender = () => {
 		switch ( newFlow ) {
-			case 'ecommerce':
+			case ECOMMERCE_FLOW:
 				return <EcommerceStepLoader />;
 		}
 
 		switch ( window.nfdOnboarding.currentFlow ) {
-			case 'wp-setup':
-			case 'ecommerce':
+			case DEFAULT_FLOW:
+			case ECOMMERCE_FLOW:
 				return <SiteBuild />;
-			case 'sitegen':
+			case SITEGEN_FLOW:
 				return <SiteGen />;
 		}
 	};
