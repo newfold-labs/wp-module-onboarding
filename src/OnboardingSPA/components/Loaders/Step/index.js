@@ -1,5 +1,5 @@
 import CommonLayout from '../../Layouts/Common';
-import HeadingWithSubHeading from '../../HeadingWithSubHeading';
+import HeadingWithSubHeading from '../../Heading/HeadingWithSubHeading';
 import NeedHelpTag from '../../NeedHelpTag';
 
 const StepLoader = ( { title, subtitle } ) => {

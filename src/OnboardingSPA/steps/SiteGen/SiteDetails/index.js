@@ -3,9 +3,9 @@ import { useEffect, useState } from '@wordpress/element';
 
 import getContents from './contents';
 import Animate from '../../../components/Animate';
-import AIHeading from '../../../components/AIHeading';
 import { HEADER_SITEGEN } from '../../../../constants';
 import { store as nfdOnboardingStore } from '../../../store';
+import AIHeading from '../../../components/Heading/AIHeading';
 import CommonLayout from '../../../components/Layouts/Common';
 import TextInputSiteGen from '../../../components/TextInput/TextInputSiteGen';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
