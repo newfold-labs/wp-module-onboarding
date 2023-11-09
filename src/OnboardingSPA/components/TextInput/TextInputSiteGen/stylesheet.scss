@@ -1,5 +1,6 @@
 $border: #d6d6d6;
 $letter-spacing: 0.5px;
+$selected-detail: #1de082;
 
 .nfd-sg-input {
 	margin-top: 25px;
@@ -25,6 +26,11 @@ $letter-spacing: 0.5px;
 			&:focus {
 				box-shadow: none;
 			}
+
+			&::placeholder {
+				font-weight: 100;
+				color: $border;
+			}
 		}
 
 		&__hint {
@@ -32,9 +38,9 @@ $letter-spacing: 0.5px;
 			font-weight: 300;
 			font-size: 0.87rem;
 			padding: 0 1.5px;
+			animation: fadeIn 100ms ease-out;
 			letter-spacing: $letter-spacing;
 			color: var(--nfd-onboarding-primary);
-
 		}
 
 		&__info {
@@ -46,6 +52,7 @@ $letter-spacing: 0.5px;
 				margin: 3px;
 				margin-right: 8px;
 				font-size: 0.87rem;
+				animation: fadeIn 100ms ease-in;
 				color: var(--nfd-onboarding-primary);
 			}
 
@@ -54,10 +61,12 @@ $letter-spacing: 0.5px;
 				height: 6px;
 				margin: 3px;
 				border-radius: 6px;
+				animation: fadeIn 100ms ease-in;
 				background-color: var(--nfd-onboarding-primary);
 
 				&--selected {
-					background-color: #1de082;
+					animation: fadeIn 400ms ease-in-out;
+					background-color: $selected-detail;
 				}
 			}
 		}

@@ -1,9 +1,9 @@
+import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
-
 import { useSelect } from '@wordpress/data';
 import { Button } from '@wordpress/components';
+import { Icon, chevronRight } from '@wordpress/icons';
 import { store as nfdOnboardingStore } from '../../../store';
-import classNames from 'classnames';
 
 const NextButtonSiteGen = ( { text, className } ) => {
 	const navigate = useNavigate();
@@ -25,6 +25,10 @@ const NextButtonSiteGen = ( { text, className } ) => {
 			} }
 		>
 			{ text }
+			<Icon
+				className={ 'nfd-onboarding-button--site-gen-next--icon' }
+				icon={ chevronRight }
+			/>
 		</Button>
 	);
 };

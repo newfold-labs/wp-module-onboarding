@@ -13,4 +13,22 @@
 			justify-content: center;
 		}
 	}
+
+	&--next-btn {
+		width: 100px;
+		color: var(--nfd-onboarding-secondary);
+		display: flex;
+		font-size: 1rem;
+		cursor: pointer;
+		padding-left: 24px;
+		align-items: center;
+		border-radius: 8px;
+		justify-content: center;
+		background-color: var(--nfd-onboarding-primary);
+		transition: all 300ms ease-in-out;
+
+		&:hover {
+			box-shadow: 5px 5px rgba($color:  var(--nfd-onboarding-secondary), $alpha: 0.1);
+		}
+	}
 }

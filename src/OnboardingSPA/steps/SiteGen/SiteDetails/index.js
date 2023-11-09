@@ -8,6 +8,8 @@ import { store as nfdOnboardingStore } from '../../../store';
 import getContents from './contents';
 import AIHeading from '../../../components/AIHeading';
 import TextInputSiteGen from '../../../components/TextInput/TextInputSiteGen';
+import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
+import Animate from '../../../components/Animate';
 
 const SiteGenSiteDetails = () => {
 	const content = getContents();
@@ -34,17 +36,24 @@ const SiteGenSiteDetails = () => {
 
 	return (
 		<CommonLayout isCentered>
-			<div className={ 'nfd-sg-site-details' }>
-				<AIHeading title={ content.heading } />
-				<TextInputSiteGen
-					placeholder={ content.inputPlaceholder }
-					hint={ content.inputHint }
-					height={ '40px' }
-					customerInput={ customerInput }
-					setCustomerInput={ setCustomerInput }
-				/>
-				<div className={ 'nfd-sg-site-details-endrow' }></div>
-			</div>
+			<Animate type={ 'fade-in' }>
+				<div className={ 'nfd-sg-site-details' }>
+					<AIHeading title={ content.heading } />
+					<TextInputSiteGen
+						placeholder={ content.inputPlaceholder }
+						hint={ content.inputHint }
+						height={ '40px' }
+						customerInput={ customerInput }
+						setCustomerInput={ setCustomerInput }
+					/>
+					<div className={ 'nfd-sg-site-details-endrow' }>
+						<NextButtonSiteGen
+							className={ 'nfd-sg-site-details--next-btn' }
+							text={ content.buttonText }
+						/>
+					</div>
+				</div>
+			</Animate>
 		</CommonLayout>
 	);
 };

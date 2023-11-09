@@ -11,6 +11,7 @@ const getContents = () => {
 			'wp-module-onboarding'
 		),
 		inputHint: __( 'The more detail the better', 'wp-module-onboarding' ),
+		buttonText: __( 'Next', 'wp-module-onboarding' ),
 	};
 };
 
