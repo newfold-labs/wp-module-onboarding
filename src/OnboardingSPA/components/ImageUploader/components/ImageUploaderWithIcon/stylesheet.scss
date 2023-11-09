@@ -1,0 +1,89 @@
+$border: #d6d6d6;
+$white-shade: #f9f9f9;
+$primary-color: var(--nfd-onboarding-primary);
+
+.image-uploader {
+
+	&_heading {
+		font-size: 16px;
+		font-weight: 500;
+		margin: 0 0 6px 0;
+	}
+
+	&_window {
+		width: 100%;
+		height: 15vh;
+		border-radius: 2px;
+		margin-bottom: 24px;
+		border: 1px dashed $border;
+		background-color: $white-shade;
+		transition: all 0.4s ease-in-out;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		&--on-drag {
+			background-color: #e4e4e4;
+		}
+
+		@include break-medium() {
+			height: 18vh;
+		}
+
+		&-empty {
+			flex: 1;
+			height: 100%;
+		}
+
+		&-logo {
+			flex: 2;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			&-icon-empty {
+				height: 95%;
+				content: var(--default-logo-icon);
+				object-fit: scale-down;
+				background-position: center;
+				background-repeat: no-repeat;
+				background-clip: padding-box;
+			}
+
+			&-icon-selected {
+				width: 80%;
+				height: 90%;
+				object-fit: scale-down;
+				background-position: center;
+				background-repeat: no-repeat;
+				background-clip: padding-box;
+			}
+		}
+
+		&-reset {
+			flex: 1;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+
+			&-btn {
+				width: 78%;
+				height: 35px;
+				margin: 10px;
+				cursor: pointer;
+				font-size: 14px;
+				font-weight: 300;
+				color: $primary-color;
+				border: 1px solid $primary-color;
+			}
+		}
+
+		&-select-btn {
+			display: none;
+		}
+
+	}
+}

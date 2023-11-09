@@ -1,0 +1,21 @@
+.nfd-onboarding-button {
+
+	&--next {
+		background-color: var(--nfd-onboarding-primary);
+		color: var(--nfd-onboarding-secondary);
+		width: 80px;
+		height: 50px;
+		font-size: 15px;
+		border-radius: 8px;
+		padding: 16px;
+
+		&--disabled {
+			background-color: rgba(var(--nfd-onboarding-primary-rgb), 0.5);
+
+			&:hover {
+				cursor: not-allowed;
+				color: var(--nfd-onboarding-secondary);
+			}
+		}
+	}
+}

@@ -13,7 +13,7 @@
 @import "../components/Loaders/stylesheet";
 @import "../components/MiniPreview/stylesheet";
 @import "../components/Tooltip/stylesheet";
-@import "../components/ImageUploader/stylesheet";
+@import "../components/ImageUploader/components/ImageUploaderWithIcon/stylesheet";
 @import "../components/SocialMediaForm/stylesheet";
 @import "../components/TextInput/stylesheet";
 @import "../components/ExitToWordPress/stylesheet";
@@ -47,6 +47,9 @@
 @import "../components/ProgressBar/stylesheet";
 @import "../components/Button/ButtonDark/stylesheet";
 @import "../components//SiteGenPlaceholder/stylesheet.scss";
+@import "../components/ImageUploader/components/ImageUploaderWithText/stylesheet";
+@import "../components/Button/ButtonNext/stylesheet";
+@import "../components/Loaders/Spinner/stylesheet";
 
 // CSS for Pages
 @import "../steps/BasicInfo/stylesheet";
@@ -62,6 +65,7 @@
 @import "../steps/DesignHeaderMenu/stylesheet";
 @import "../steps/SiteFeatures/stylesheet";
 @import "../steps/TheFork/stylesheet";
+@import "../steps/SiteGen/SiteLogo/stylesheet";
 
 .nfd-onboarding-container {
 	display: flex;
