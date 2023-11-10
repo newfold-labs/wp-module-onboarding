@@ -66,6 +66,9 @@ function NewfoldInterfaceSkeleton(
 		footer: __( 'Footer', 'wp-module-onboarding' ),
 	};
 
+	console.log("footer", footer);
+	console.log("Drawer", drawer);
+
 	const mergedLabels = { ...defaultLabels, ...labels };
 
 	return (

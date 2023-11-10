@@ -2,6 +2,7 @@ import Header from '../../Header';
 import Content from '../../Content';
 import Drawer from '../../Drawer';
 import Sidebar from '../../Sidebar';
+import ToggleDarkMode from '../../ToggleDarkMode';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { setFlow } from '../../../utils/api/flow';
@@ -14,7 +15,7 @@ import {
 import { isEmpty, updateWPSettings } from '../../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getQueryParam } from '../../../utils';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useState, useContext } from '@wordpress/element';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { kebabCase } from 'lodash';
@@ -52,6 +53,28 @@ import { init as initializePlugins } from '../../../utils/api/plugins';
 import { init as initializeThemes } from '../../../utils/api/themes';
 import { trigger as cronTrigger } from '../../../utils/api/cronTrigger';
 import { stepTheFork } from '../../../steps/TheFork/step';
+import { ThemeProvider } from '../../ThemeContextProvider';
+import themeToggleHOC from '../themeToggleHOC';
+
+/* // Higher-Order Component for theme toggling
+const withThemeToggler = (WrappedComponent, darkClass, lightClass) => {
+	// This HOC accepts a component and two class names for dark and light themes
+	return (props) => {
+		const { theme } = useContext(ThemeContext);
+		const isDarkMode = theme === 'dark'; // Determine if it's dark mode
+		// Construct the className with the appropriate theme class
+		const className = classNames(
+			props.className, // Preserves any class names already provided
+			{
+				[darkClass]: isDarkMode,
+				[lightClass]: !isDarkMode
+			}
+		);
+
+		// Pass the new className and any other props to the wrapped component
+		return <WrappedComponent {...props} className={className} />;
+	};
+}; */
 
 const SiteBuild = () => {
 	const location = useLocation();
@@ -419,28 +442,36 @@ const SiteBuild = () => {
 		handlePreviousStepTracking();
 		handleConditionalDesignStepsRoutes();
 	}, [ location.pathname, onboardingFlow ] );
+
+	// Now wrap the NewfoldInterfaceSkeleton with the HOC
+  // Adjust the darkClass and lightClass as needed
+	const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
+		NewfoldInterfaceSkeleton, 
+		'nfd-onboarding-sitegen-dark', 
+		'nfd-onboarding-sitegen-light'
+	);
+
 	return (
-		<NewfoldInterfaceSkeleton
-			className={ classNames(
-				'nfd-onboarding-skeleton',
-				`brand-${ newfoldBrand }`,
-				`path-${ pathname }`,
-				{ 'is-drawer-open': isDrawerOpen },
-				{ 'is-large-viewport': isLargeViewport },
-				{ 'is-small-viewport': ! isLargeViewport },
-				{
-					'nfd-onboarding-skeleton--sitegen':
-						currentStep === stepTheFork,
-				},
-				{
-					'nfd-onboarding-sitegen-dark': currentStep === stepTheFork,
-				}
-			) }
-			header={ <Header /> }
-			drawer={ <Drawer /> }
-			content={ <Content /> }
-			sidebar={ <Sidebar /> }
-		/>
+		<ThemeProvider> 
+			<ThemedNewfoldInterfaceSkeleton
+				className={ classNames(
+					'nfd-onboarding-skeleton',
+					`brand-${ newfoldBrand }`,
+					`path-${ pathname }`,
+					{ 'is-drawer-open': isDrawerOpen },
+					{ 'is-large-viewport': isLargeViewport },
+					{ 'is-small-viewport': ! isLargeViewport },
+					{
+						'nfd-onboarding-skeleton--sitegen': currentStep === stepTheFork,
+					},
+				) }
+				header={ <Header /> }
+				drawer={ <Drawer /> }
+				content={ <Content /> }
+				sidebar={ <Sidebar /> }
+				footer={ currentStep === stepTheFork ? <ToggleDarkMode /> : null }
+			/>
+		</ThemeProvider>
 	);
 };
 
