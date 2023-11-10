@@ -16,7 +16,7 @@ import StepNavigationRight from './step-navigation-right';
  *
  * @return {WPComponent} Header
  */
-const SiteGenEditorHeader = () => {
+const Header = () => {
 	return (
 		<>
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_START }` }>
@@ -32,4 +32,4 @@ const SiteGenEditorHeader = () => {
 	);
 };
 
-export default memo( SiteGenEditorHeader );
+export default memo( Header );
