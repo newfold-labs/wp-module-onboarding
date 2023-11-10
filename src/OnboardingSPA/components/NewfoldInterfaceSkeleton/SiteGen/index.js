@@ -7,26 +7,24 @@ import { ThemeProvider } from '../../ThemeContextProvider';
 import classNames from 'classnames';
 import themeToggleHOC from '../themeToggleHOC';
 
-// Wrap NewfoldInterfaceSkeleton with the HOC
+// Wrapping the NewfoldInterfaceSkeleton with the HOC to make theme available
 const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
 	NewfoldInterfaceSkeleton,
 	'nfd-onboarding-sitegen-dark',
 	'nfd-onboarding-sitegen-light'
-  );
+);
 
 const SiteGen = () => {
 	return (
-		<ThemeProvider> 
-			<ThemedNewfoldInterfaceSkeleton 
-				className={classNames(
-					'nfd-onboarding-skeleton--sitegen',
-				)}
+		<ThemeProvider>
+			<ThemedNewfoldInterfaceSkeleton
+				className={ classNames( 'nfd-onboarding-skeleton--sitegen' ) }
 				header={ <Header /> }
 				content={ <Content /> }
 				sidebar={ <Sidebar /> }
 				footer={ <ToggleDarkMode /> }
 			/>
-		</ThemeProvider> 
+		</ThemeProvider>
 	);
 };
 

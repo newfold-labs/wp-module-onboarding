@@ -8,7 +8,6 @@ const ToggleDarkMode = () => {
 	const isChecked = theme === 'dark';
 	const content = getContents();
 	const onChange = () => {
-		console.log("theme", theme);
 		toggleTheme();
 	};
 

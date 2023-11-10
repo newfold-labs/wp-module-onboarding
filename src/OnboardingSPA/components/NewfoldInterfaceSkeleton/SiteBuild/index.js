@@ -15,7 +15,7 @@ import {
 import { isEmpty, updateWPSettings } from '../../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getQueryParam } from '../../../utils';
-import { useEffect, useState, useContext } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { kebabCase } from 'lodash';
@@ -55,26 +55,6 @@ import { trigger as cronTrigger } from '../../../utils/api/cronTrigger';
 import { stepTheFork } from '../../../steps/TheFork/step';
 import { ThemeProvider } from '../../ThemeContextProvider';
 import themeToggleHOC from '../themeToggleHOC';
-
-/* // Higher-Order Component for theme toggling
-const withThemeToggler = (WrappedComponent, darkClass, lightClass) => {
-	// This HOC accepts a component and two class names for dark and light themes
-	return (props) => {
-		const { theme } = useContext(ThemeContext);
-		const isDarkMode = theme === 'dark'; // Determine if it's dark mode
-		// Construct the className with the appropriate theme class
-		const className = classNames(
-			props.className, // Preserves any class names already provided
-			{
-				[darkClass]: isDarkMode,
-				[lightClass]: !isDarkMode
-			}
-		);
-
-		// Pass the new className and any other props to the wrapped component
-		return <WrappedComponent {...props} className={className} />;
-	};
-}; */
 
 const SiteBuild = () => {
 	const location = useLocation();
@@ -443,16 +423,15 @@ const SiteBuild = () => {
 		handleConditionalDesignStepsRoutes();
 	}, [ location.pathname, onboardingFlow ] );
 
-	// Now wrap the NewfoldInterfaceSkeleton with the HOC
-  // Adjust the darkClass and lightClass as needed
+	// wrapping the NewfoldInterfaceSkeleton with the HOC to make 'theme' available 
 	const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
-		NewfoldInterfaceSkeleton, 
-		'nfd-onboarding-sitegen-dark', 
+		NewfoldInterfaceSkeleton,
+		'nfd-onboarding-sitegen-dark',
 		'nfd-onboarding-sitegen-light'
 	);
 
 	return (
-		<ThemeProvider> 
+		<ThemeProvider>
 			<ThemedNewfoldInterfaceSkeleton
 				className={ classNames(
 					'nfd-onboarding-skeleton',
@@ -462,14 +441,17 @@ const SiteBuild = () => {
 					{ 'is-large-viewport': isLargeViewport },
 					{ 'is-small-viewport': ! isLargeViewport },
 					{
-						'nfd-onboarding-skeleton--sitegen': currentStep === stepTheFork,
-					},
+						'nfd-onboarding-skeleton--sitegen':
+							currentStep === stepTheFork,
+					}
 				) }
 				header={ <Header /> }
 				drawer={ <Drawer /> }
 				content={ <Content /> }
 				sidebar={ <Sidebar /> }
-				footer={ currentStep === stepTheFork ? <ToggleDarkMode /> : null }
+				footer={
+					currentStep === stepTheFork ? <ToggleDarkMode /> : null
+				}
 			/>
 		</ThemeProvider>
 	);
