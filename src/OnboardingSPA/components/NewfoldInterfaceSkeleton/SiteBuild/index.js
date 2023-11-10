@@ -423,7 +423,7 @@ const SiteBuild = () => {
 		handleConditionalDesignStepsRoutes();
 	}, [ location.pathname, onboardingFlow ] );
 
-	// wrapping the NewfoldInterfaceSkeleton with the HOC to make 'theme' available 
+	// wrapping the NewfoldInterfaceSkeleton with the HOC to make 'theme' available
 	const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
 		NewfoldInterfaceSkeleton,
 		'nfd-onboarding-sitegen-dark',

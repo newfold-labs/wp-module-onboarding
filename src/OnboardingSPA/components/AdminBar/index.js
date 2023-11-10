@@ -18,8 +18,8 @@ const AdminBar = () => {
 	return (
 		<div className="nfd-onboarding-header__admin-bar">
 			<div className="nfd-onboarding-header__admin-bar__wplogo">
-				<Icon icon={wordpress} />
-				<span>{__('WordPress', 'wp-module-onboarding')}</span>
+				<Icon icon={ wordpress } />
+				<span>{ __( 'WordPress', 'wp-module-onboarding' ) }</span>
 			</div>
 			<div className="nfd-onboarding-header__admin-bar__profile">
 				<span className="nfd-onboarding-header__admin-bar__profile__greeting">
