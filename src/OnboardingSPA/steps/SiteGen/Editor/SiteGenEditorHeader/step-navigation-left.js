@@ -4,7 +4,7 @@ import { Icon, chevronLeft, reusableBlock } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 
 import { store as nfdOnboardingStore } from '../../../../store';
-import ButtonDark from '../../../Button/ButtonDark';
+import ButtonDark from '../../../../components/Button/ButtonDark';
 
 /**
  * Back step Navigation button.

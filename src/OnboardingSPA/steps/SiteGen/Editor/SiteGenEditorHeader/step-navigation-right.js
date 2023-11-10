@@ -3,7 +3,7 @@ import { Icon, chevronRight, settings } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 
 import { store as nfdOnboardingStore } from '../../../../store';
-import ButtonDark from '../../../Button/ButtonDark';
+import ButtonDark from '../../../../components/Button/ButtonDark';
 // import {ReactComponent as Equalizer} from '../../../../static/icons/equalizer.svg'
 
 /**
