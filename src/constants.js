@@ -40,6 +40,7 @@ export const SIDEBAR_MENU_SLOTFILL_PREFIX = 'HeaderMenu';
 export const SIDEBAR_LEARN_MORE = 'LearnMore';
 export const HEADER_SITEBUILD = 'HeaderSiteBuild';
 export const HEADER_SITEGEN = 'HeaderSiteGen';
+export const HEADER_SITEGEN_EDITOR = 'HeaderSiteGenEditor';
 export const HEADER_TOP = 'HeaderTop';
 export const HEADER_START = 'HeaderStart';
 export const HEADER_CENTER = 'HeaderCenter';

@@ -4,19 +4,18 @@ import ProgressBar from '../../../ProgressBar';
 
 import { Fill } from '@wordpress/components';
 import {
+	HEADER_CENTER,
 	HEADER_SITEGEN,
 	HEADER_START,
+	HEADER_END,
 	HEADER_TOP,
-	HEADER_CENTER,
-	HEADER_END
 } from '../../../../../constants';
 
 import { useSelect } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../../store';
-import StepNavigation from './step-navigation';
-import StepNavigationLeft from '../SiteGenEditorHeader/step-navigation-left';
-import StepNavigationCenter from '../SiteGenEditorHeader/step-navigation-center';
-import StepNavigationRight from '../SiteGenEditorHeader/step-navigation-right';
+import StepNavigationLeft from './step-navigation-left';
+import StepNavigationCenter from './step-navigation-center';
+import StepNavigationRight from './step-navigation-right';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { findIndex } from 'lodash';
@@ -26,7 +25,7 @@ import { findIndex } from 'lodash';
  *
  * @return {WPComponent} Header
  */
-const SiteGenHeader = () => {
+const SiteGenEditorHeader = () => {
 	const { isHeaderNavigationEnabled, currentStep, allSteps } = useSelect(
 		( select ) => {
 			return {
@@ -43,9 +42,6 @@ const SiteGenHeader = () => {
 	} );
 	const progress = ( currentStepIndex / allSteps.length ) * 100;
 
-	const isEditor = currentStep.path === '/sitegen/step/editor';
-	console.log(isEditor);
-	
 	return (
 		<>
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_TOP }` }>
@@ -56,27 +52,18 @@ const SiteGenHeader = () => {
 					) }
 				</>
 			</Fill>
-			{ !isEditor ? (
-				<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_START }` }>
-					<>{ isHeaderNavigationEnabled && <StepNavigation /> }</>
-				</Fill> 
-			) : (
-				<>
-					<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_START }` }>
-						<>{ isHeaderNavigationEnabled && <StepNavigationLeft /> }</>
-					</Fill>
-					<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_CENTER }` }>
-						<>{ isHeaderNavigationEnabled && <StepNavigationCenter /> }</>
-					</Fill>
-					<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_END }` }>
-						<>{ isHeaderNavigationEnabled && <StepNavigationRight /> }</>
-					</Fill>
-				</>
-			)}
-
+			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_START }` }>
+				<>{ isHeaderNavigationEnabled && <StepNavigationLeft /> }</>
+			</Fill>
+			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_CENTER }` }>
+				<>{ isHeaderNavigationEnabled && <StepNavigationCenter /> }</>
+			</Fill>
+			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_END }` }>
+				<>{ isHeaderNavigationEnabled && <StepNavigationRight /> }</>
+			</Fill>
 			{ currentStep?.header && <currentStep.header /> }
 		</>
 	);
 };
 
-export default memo( SiteGenHeader );
+export default memo( SiteGenEditorHeader );
