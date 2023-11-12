@@ -48,6 +48,23 @@
 		svg {
 			margin-right: $grid-unit-10;
 		}
+
+		&-dropdown-item {
+			padding: 2px 2px;
+			text-decoration: none;
+			display: block;
+			width: 80px !important;
+			text-align: center;
+		}
+
+		&-input {
+			max-width: 80px;
+			text-align: center;
+			border: none !important;
+			color: var(--nfd-onboarding-header-contrast) !important;
+			background-color: var(--nfd-onboarding-header-base) !important;
+
+		}
 	}
 
 	&__end {
