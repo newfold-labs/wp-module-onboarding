@@ -189,5 +189,17 @@ html.nfd-interface-interface-skeleton__html-container {
 
 	&--sitegen {
 		background-image: var(--sitegen-background);
+		background-size: cover;
 	}
 }
+
+.nfd-onboarding-skeleton--sitegen::after {
+	content: "";
+	background-color: #060606;
+	opacity: 0.75;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+}	

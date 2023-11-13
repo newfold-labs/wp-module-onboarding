@@ -14,14 +14,13 @@ import { SITEGEN_FLOW } from '../../data/flows/constants';
 import { resolveGetDataForFlow } from '../../data/flows';
 import { validateFlow } from '../../data/flows/utils';
 
+import HeadingWithSubHeading from './headingwithsubheading';
+import StartOptions from './startoptions';
+import ImportSite from './importsite';
+import getContents from './contents';
+
 const TheFork = () => {
-	const navigate = useNavigate();
-	const { brandConfig, migrationUrl } = useSelect( ( select ) => {
-		return {
-			brandConfig: select( nfdOnboardingStore ).getNewfoldBrandConfig(),
-			migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
-		};
-	} );
+	
 
 	const {
 		setIsHeaderEnabled,
@@ -36,25 +35,6 @@ const TheFork = () => {
 		updateInitialize,
 	} = useDispatch( nfdOnboardingStore );
 
-	const switchFlow = ( newFlow ) => {
-		if ( ! validateFlow( brandConfig, newFlow ) ) {
-			return false;
-		}
-		const currentFlow = window.nfdOnboarding.currentFlow;
-		const getData = resolveGetDataForFlow( newFlow );
-		const data = getData();
-		updateAllSteps( data.steps );
-		updateTopSteps( data?.topSteps );
-		updateRoutes( data.routes );
-		updateDesignRoutes( data?.designRoutes );
-		if ( SITEGEN_FLOW !== currentFlow ) {
-			window.nfdOnboarding.oldFlow = currentFlow;
-		}
-		window.nfdOnboarding.currentFlow = newFlow;
-		updateInitialize( true );
-		navigate( data.steps[ 1 ].path );
-	};
-
 	useEffect( () => {
 		setIsHeaderEnabled( false );
 		setSidebarActiveView( false );
@@ -66,36 +46,28 @@ const TheFork = () => {
 	const oldFlow = window.nfdOnboarding?.oldFlow
 		? window.nfdOnboarding.oldFlow
 		: window.nfdOnboarding.currentFlow;
+
+	const content = getContents();
 	return (
 		<CommonLayout
 			isCentered
 			className="nfd-onboarding-step--site-gen__fork"
 		>
-			<h1 className="nfd-onboarding-step--site-gen__fork__heading">
-				The Fork
-			</h1>
-			<div className="nfd-onboarding-step--site-gen__fork__buttons">
-				<Button
-					className="nfd-onboarding-step--site-gen__fork__buttons__button"
-					onClick={ () => switchFlow( SITEGEN_FLOW ) }
-				>
-					Goto sitegen flow
-				</Button>
-				<Button
-					className="nfd-onboarding-step--site-gen__fork__buttons__button"
-					onClick={ () => switchFlow( oldFlow ) }
-				>
-					Goto normal flow
-				</Button>
-				{ migrationUrl && (
-					<Button
-						className="nfd-onboarding-step--site-gen__fork__buttons__button"
-						onClick={ () => window.open( migrationUrl, '_blank' ) }
-					>
-						Migrate an existing site
-					</Button>
-				) }
-			</div>
+			<HeadingWithSubHeading
+				title={ content.heading }
+				subtitle={ content.subheading }
+			/>
+			<StartOptions
+				questionnaire={ content.questionnaire }
+				options={ content.options }
+				oldFlow={ oldFlow }
+			/>
+			<ImportSite
+				importtext={ content.importtext }
+				importlink={ content.importlink }
+			/>
+			
+			
 		</CommonLayout>
 	);
 };
