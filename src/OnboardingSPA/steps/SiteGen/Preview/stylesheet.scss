@@ -1,0 +1,48 @@
+.nfd-onboarding-step--site-gen__preview__container {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+    // width: 1300px;
+    // flex-direction: row;
+    // align-items: center;
+    
+    &__heading {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        padding: 0;
+        justify-content: center;
+        align-items: center;
+
+        &__text {
+            color: var(--nfd-onboarding-primary);
+            font-size: clamp(0.875rem, 0.6818rem + 0.9659vw, 3rem);
+            margin-left: 15px;
+            white-space: normal;
+            line-height: 1;
+        }
+    }
+
+    &__sub-heading {
+        width: 100%;
+        margin: 10px;
+        padding: 0;
+
+        &__text {
+            text-align: center;
+            color: var(--nfd-onboarding-primary);
+            font-size: clamp(0.875rem, 0.7727rem + 0.5114vw, 2rem);
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    &__options {
+        flex: 1;
+        min-width: 310px;
+        height: 143px;
+        text-align: center;
+        margin: 10px;
+        border-radius: 16px;
+    }
+}
