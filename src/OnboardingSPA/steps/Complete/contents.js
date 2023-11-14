@@ -11,7 +11,14 @@ const getContents = ( brandName ) => {
 					'Hang tight, we’re building your %1$s %2$s',
 					'wp-module-onboarding'
 				),
-				brandName,
+				<div
+					style={ {
+						width: '36px',
+						height: '36px',
+						backgroundImage: 'var(--nfd-onboarding-icon)',
+						backgroundSize: 'contain',
+					} }
+				/>,
 				translations( 'site' )
 			),
 			subtitle: __(

@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 const getContents = () => {
 	return {
 		heading: __( 'Welcome to Wordpress', 'wp-module-onboarding' ),
-		subheading: __( 'Powered by bluehost', 'wp-module-onboarding' ),
+		subheading: __( 'Powered by ', 'wp-module-onboarding' ),
 		questionnaire: __(
 			'Where would you like to start?',
 			'wp-module-onboarding'

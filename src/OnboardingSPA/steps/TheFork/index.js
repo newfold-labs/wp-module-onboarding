@@ -1,14 +1,13 @@
 import CommonLayout from '../../components/Layouts/Common';
 
 import { useEffect } from '@wordpress/element';
+import { useSelect, useDispatch } from '@wordpress/data';
 
-import { useDispatch } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../store';
 import { HEADER_SITEGEN } from '../../../constants';
 
 import HeadingWithSubHeading from '../../components/HeadingWithSubHeading/SiteGen/index';
 import StartOptions from '../../components/StartOptions';
-import ImportSite from '../../components/ImportSite';
 import getContents from './contents';
 
 const TheFork = () => {
@@ -32,6 +31,11 @@ const TheFork = () => {
 		? window.nfdOnboarding.oldFlow
 		: window.nfdOnboarding.currentFlow;
 
+	const { brandName } = useSelect( ( select ) => {
+		return {
+			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+		};
+	} );
 	const content = getContents();
 	return (
 		<CommonLayout
@@ -41,15 +45,20 @@ const TheFork = () => {
 			<HeadingWithSubHeading
 				title={ content.heading }
 				subtitle={ content.subheading }
+				brandName={ brandName }
 			/>
 			<StartOptions
 				questionnaire={ content.questionnaire }
 				oldFlow={ oldFlow }
 			/>
-			<ImportSite
-				importtext={ content.importtext }
-				importlink={ content.importlink }
-			/>
+			<br />
+			<br />
+			<a
+				className="nfd-onboarding-step--site-gen__fork__importsite"
+				href={ content.importlink }
+			>
+				{ content.importtext }
+			</a>
 		</CommonLayout>
 	);
 };
