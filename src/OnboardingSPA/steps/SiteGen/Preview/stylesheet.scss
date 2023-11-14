@@ -2,6 +2,7 @@
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
+    min-width: 400 px;
     // width: 1300px;
     // flex-direction: row;
     // align-items: center;
@@ -39,10 +40,12 @@
 
     &__options {
         flex: 1;
-        min-width: 310px;
+        min-width: 130px;
+        width: 400px;
         height: 143px;
         text-align: center;
         margin: 10px;
         border-radius: 16px;
+        // flex-direction: row !important;
     }
 }

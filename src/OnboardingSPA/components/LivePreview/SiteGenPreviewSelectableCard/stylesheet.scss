@@ -1,0 +1,71 @@
+
+.live-preview-sitegen--selectable-card {
+	flex: 1;
+	width: 100%;
+	margin: 24px;
+	display: flex;
+	overflow: hidden;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+
+	&__live-preview-container {
+		position: relative;
+		width: 90%;
+		overflow: hidden;
+		align-items: center;
+		border-radius: 8px;
+
+		.live-preview {
+
+			&__container {
+
+				&-custom {
+					width: 100%;
+					overflow: hidden;
+					height: 300px;
+				}
+			}
+		}
+
+		&__overlay {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 100%;
+			z-index: 2;
+			width: 100%;
+			opacity: 0;
+			transition: 0.5s ease;
+			background-color:
+				rgb(var(--wp-admin-theme-color-darker-10--rgb))
+
+				&__icon{
+				fill: var(--nfd-onboarding-white);
+				font-size: 20px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				-webkit-transform: translate(-50%, -50%);
+				-ms-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+				text-align: center;
+			}
+
+			&:hover {
+				cursor: pointer;
+				opacity: 0.74;
+			}
+		}
+
+		&-buttons {
+			padding-top: 20px;
+            display: flex;
+			flex-direction: row;
+            justify-content: space-between;
+			height: 40px;
+        }
+	}
+}
