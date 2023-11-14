@@ -49,18 +49,16 @@ const SiteGenPreview = () => {
 		
 		return designs.map( ( design, idx ) => {
 			return (
-				<div className="nfd-onboarding-step--site-gen__preview__container__options">
-					<SiteGenLivePreview
-						blockGrammer={ design }
-						styling={ 'custom' }
-						overlay={ false }
-						onClick = { () => {
-							navigate( nextStep.path );
-						} }
-						onWishlistClick = { onWishlistClick }
-						onRegenerateClick = { onRegenerateClick }
-					/>
-				</div>
+				<SiteGenLivePreview
+					blockGrammer={ design }
+					styling={ 'custom' }
+					overlay={ false }
+					onClick = { () => {
+						navigate( nextStep.path );
+					} }
+					onWishlistClick = { onWishlistClick }
+					onRegenerateClick = { onRegenerateClick }
+				/>
 			);
 		} );
 	};
@@ -83,8 +81,11 @@ const SiteGenPreview = () => {
 						{ content.subheading }
 					</p>
 				</div>
-				{ buildPreviews() }
 			</div>
+			<div className="nfd-onboarding-step--site-gen__preview__options">
+			{ buildPreviews() }
+			</div>
+			
 			
 		</CommonLayout>
 	);
