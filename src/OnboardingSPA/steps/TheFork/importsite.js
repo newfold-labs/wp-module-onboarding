@@ -2,7 +2,9 @@
 const ImportSite = ( { importtext, importlink } ) => {
 	return (
 		<div className="">
-			<a className="nfd-sitegen-importsite" href={ importlink }>{ importtext }</a>
+			<br />
+			<br />
+			<a className="nfd-onboarding-step--site-gen__fork__importsite" href={ importlink }>{ importtext }</a>
 		</div>
 
 	);

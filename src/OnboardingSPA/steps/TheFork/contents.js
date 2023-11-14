@@ -2,50 +2,38 @@ import { __ } from '@wordpress/i18n';
 
 const getContents = () => {
 	return {
-		heading: __(
-			'Welcome to Wordpress',
-			'wp-module-onboarding'
-		),
-		subheading: __(
-			'Powered by bluehost',
-			'wp-module-onboarding'
-		),
+		heading: __( 'Welcome to Wordpress', 'wp-module-onboarding' ),
+		subheading: __( 'Powered by bluehost', 'wp-module-onboarding' ),
 		questionnaire: __(
 			'Where would you like to start?',
 			'wp-module-onboarding'
 		),
-		options: [ {
+		optionsself: {
 			title: __( 'Build it myself', 'wp-module-onboarding' ),
 			subtitle: __(
-				'We\'ll stay out of your way.',
+				"We'll stay out of your way.",
 				'wp-module-onboarding'
 			),
-			path: '/wp-setup/step/get-started/welcome',
-		}, {
+		},
+		optionsai: {
 			title: __( ' Website Creator', 'wp-module-onboarding' ),
 			subtitle: __(
 				'Custom Al generated content & design.',
 				'wp-module-onboarding'
 			),
-			span: __( 'AI', 'wp-module-onboarding' ),
-			path: '/wp-setup/step/get-started/ai',
-		}, {
+		},
+		optionspro: {
 			title: __( 'Hire a Pro', 'wp-module-onboarding' ),
 			subtitle: __(
 				'Leave it to our WordPress experts.',
 				'wp-module-onboarding'
 			),
-			path: '/wp-setup/step/get-started/expert',
-		} ],
+		},
 		importtext: __(
 			'Already have a WordPress site you want to import?',
 			'wp-module-onboarding'
 		),
-		importlink: __(
-			'http://www.google.com',
-			'wp-module-onboarding'
-		),
-
+		importlink: __( 'http://www.google.com', 'wp-module-onboarding' ),
 	};
 };
 

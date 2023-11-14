@@ -50,12 +50,12 @@
 				&__options {
 					flex: 1;
 					min-width: 310px;
-					height: 143px;
+					height: 130px;
 					border: 1px solid #9CA2A7;
 					text-align: center;
 					padding: 24px;
-					padding-top: 45px;
-					margin: 10px;
+					padding-top: 50px;
+					margin: 20px;
 					border-radius: 16px;
 					text-align: center;
 					color: white;
@@ -64,10 +64,9 @@
 					&__span {
 						background-color: white;
 						color: black;
-						padding: 3px;
-						padding-right: 5px;
+						padding-right: 6px;
 						padding-left: 5px;
-						margin-left: -5px;
+						margin-right: 5px;
 						border: 1px solid #ffffff;
 						border-radius: 8px;
 					}
@@ -90,6 +89,14 @@
 					font-size: 15px;
 					margin: 24px;
 				}
+			}
+			&__importsite {
+				color: var(--nfd-onboarding-white);
+				font-weight: 510;
+				text-align: center;
+				font-size: 18px;
+				line-height: 20px;
+				margin-top: 35px !important;
 			}
 		}
 	}
