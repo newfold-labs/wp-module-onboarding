@@ -5,6 +5,7 @@ import { LivePreview } from '..';
 import ButtonDark from '../../../components/Button/ButtonDark';
 import {ReactComponent as Wishlist} from '../../../static/icons/site-features/wishlist.svg'
 import { __ } from '@wordpress/i18n';
+import ButtonWhite from '../../Button/ButtonWhite';
 
 const SiteGenPreviewSelectableCard = ( {
 	className = 'live-preview-sitegen--selectable-card',
@@ -49,11 +50,10 @@ const SiteGenPreviewSelectableCard = ( {
 					<div
 						className={ `${ className }__live-preview-container__overlay` }
 					>
-						<Icon
-							className={ `${ className }__live-preview-container__overlay__icon` }
-							size={ 64 }
-							icon={ search }
-						/>
+						<ButtonDark className={ `${ className }__live-preview-container__overlay__button` } >
+							<Icon icon={ search } />
+							Preview Version
+						</ButtonDark>
 					</div>
 				) }
 				<div className={ `${ className }__live-preview-container-buttons` }>

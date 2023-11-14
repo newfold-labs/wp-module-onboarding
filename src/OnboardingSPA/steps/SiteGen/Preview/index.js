@@ -52,7 +52,7 @@ const SiteGenPreview = () => {
 				<SiteGenLivePreview
 					blockGrammer={ design }
 					styling={ 'custom' }
-					overlay={ false }
+					overlay={ true }
 					onClick = { () => {
 						navigate( nextStep.path );
 					} }

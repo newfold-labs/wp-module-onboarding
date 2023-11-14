@@ -30,6 +30,9 @@
 
 		&__overlay {
 			position: absolute;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			top: 0;
 			bottom: 0;
 			left: 0;
@@ -40,9 +43,9 @@
 			opacity: 0;
 			transition: 0.5s ease;
 			background-color:
-				rgb(var(--wp-admin-theme-color-darker-10--rgb))
-
-				&__icon{
+				rgb(var(--wp-admin-theme-color-darker-10--rgb));
+			
+			&__button {
 				fill: var(--nfd-onboarding-white);
 				font-size: 20px;
 				position: absolute;
