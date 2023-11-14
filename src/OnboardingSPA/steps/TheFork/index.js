@@ -6,9 +6,9 @@ import { useDispatch } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../store';
 import { HEADER_SITEGEN } from '../../../constants';
 
-import HeadingWithSubHeading from './headingwithsubheading';
-import StartOptions from './startoptions';
-import ImportSite from './importsite';
+import HeadingWithSubHeading from '../../components/HeadingWithSubHeading/SiteGen/index';
+import StartOptions from '../../components/StartOptions';
+import ImportSite from '../../components/ImportSite';
 import getContents from './contents';
 
 const TheFork = () => {

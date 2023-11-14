@@ -8,19 +8,6 @@
 			justify-content: center;
 			align-items: center;
 
-			&__heading {
-				color: var(--nfd-onboarding-primary);
-				width: 96%;
-				margin: 50px 0 50px;
-				line-height: 1;
-
-				&__questionnaire {
-					color: var(--nfd-onboarding-white);
-					font-weight: 500;
-					text-align: center;
-					font-size: 18px;
-				}
-			}
 			&__questionnaire {
 				color: var(--nfd-onboarding-white);
 				font-weight: 500;
@@ -57,31 +44,6 @@
 					}
 				
 				}
-			}
-			&__buttons {
-				display: flex;
-				flex-direction: row;
-				justify-content: center;
-				align-items: center;
-
-				&__button {
-					display: block;
-					background-color: var(--nfd-onboarding-primary);
-					color: var(--nfd-onboarding-secondary);
-					text-align: center;
-					width: 200px;
-					height: 50px;
-					font-size: 15px;
-					margin: 24px;
-				}
-			}
-			&__importsite {
-				color: var(--nfd-onboarding-white);
-				font-weight: 510;
-				text-align: center;
-				font-size: 18px;
-				line-height: 20px;
-				margin-top: 35px !important;
 			}
 		}
 	}

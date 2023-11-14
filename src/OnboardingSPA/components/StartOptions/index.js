@@ -4,8 +4,9 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { validateFlow } from '../../data/flows/utils';
 import { useNavigate } from 'react-router-dom';
 import { store as nfdOnboardingStore } from '../../store';
+import getContents from '../../steps/TheFork/contents';
 
-const StartOptions = ( { questionnaire, options, oldFlow } ) => {
+const StartOptions = ( { oldFlow } ) => {
 	const navigate = useNavigate();
 	const { brandConfig, migrationUrl } = useSelect( ( select ) => {
 		return {
@@ -39,9 +40,12 @@ const StartOptions = ( { questionnaire, options, oldFlow } ) => {
 		updateInitialize( true );
 		navigate( data.steps[ 1 ].path );
 	};
+	const content = getContents();
 	return (
 		<div className="">
-			<p className="nfd-onboarding-step--site-gen__fork__questionnaire">{ questionnaire }</p>
+			<p className="nfd-onboarding-step--site-gen__fork__questionnaire">
+				{ content.questionnaire }
+			</p>
 			<div className="nfd-onboarding-step--site-gen__fork__container">
 				<div
 					className="nfd-onboarding-step--site-gen__fork__container__options"
@@ -51,9 +55,9 @@ const StartOptions = ( { questionnaire, options, oldFlow } ) => {
 					onKeyDown={ () => switchFlow( oldFlow ) }
 				>
 					<h3 className="nfd-onboarding-step--site-gen__fork__heading__subtitle">
-						Build it myself
+						{ content.optionsself.title }
 					</h3>
-					<p>We'll stay out of your way.</p>
+					<p>{ content.optionsself.subtitle }</p>
 				</div>
 				<div
 					className="nfd-onboarding-step--site-gen__fork__container__options"
@@ -66,9 +70,9 @@ const StartOptions = ( { questionnaire, options, oldFlow } ) => {
 						<span className="nfd-onboarding-step--site-gen__fork__container__options__span">
 							AI
 						</span>
-						 Website Creator
+						{ content.optionsai.title }
 					</h3>
-					<p>Custom Al generated content & design.</p>
+					<p>{ content.optionsai.subtitle }</p>
 				</div>
 				<div
 					className="nfd-onboarding-step--site-gen__fork__container__options"
@@ -78,13 +82,12 @@ const StartOptions = ( { questionnaire, options, oldFlow } ) => {
 					onKeyDown={ () => window.open( migrationUrl, '_blank' ) }
 				>
 					<h3 className="nfd-onboarding-step--site-gen__fork__heading__subtitle">
-						Hire a Pro
+						{ content.optionspro.title }
 					</h3>
-					<p>Leave it to our WordPress experts.</p>
+					<p>{ content.optionspro.subtitle }</p>
 				</div>
 			</div>
 		</div>
-
 	);
 };
 

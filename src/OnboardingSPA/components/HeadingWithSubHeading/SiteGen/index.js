@@ -9,9 +9,13 @@
 const HeadingWithSubHeading = ( { title, subtitle, children } ) => {
 	return (
 		<div className="nfd-onboarding-step--site-gen__fork__heading">
-			<h2 className="nfd-onboarding-step--site-gen__fork__heading__title">{ title }</h2>
+			<h2 className="nfd-onboarding-step--site-gen__fork__heading__title">
+				{ title }
+			</h2>
 			{ subtitle && (
-				<h3 className="nfd-onboarding-step--site-gen__fork__heading__subtitle">{ subtitle }</h3>
+				<h3 className="nfd-onboarding-step--site-gen__fork__heading__subtitle">
+					{ subtitle }
+				</h3>
 			) }
 			{ children }
 		</div>
