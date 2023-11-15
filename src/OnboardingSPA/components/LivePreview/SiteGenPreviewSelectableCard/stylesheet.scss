@@ -24,6 +24,7 @@
 					width: 100%;
 					overflow: hidden;
 					height: 300px;
+					border-radius: 16px;
 				}
 			}
 		}
@@ -37,7 +38,7 @@
 			bottom: 0;
 			left: 0;
 			right: 0;
-			height: 100%;
+			height: 300px;
 			z-index: 2;
 			width: 100%;
 			opacity: 0;
