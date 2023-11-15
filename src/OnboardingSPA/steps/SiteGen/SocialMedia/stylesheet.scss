@@ -1,0 +1,104 @@
+.nfd-onboarding-step {
+
+	&--site-gen {
+
+		&__social-media {
+
+			&__container {
+
+				&__heading {
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: center;
+
+					&__animation {
+						background-image: var(--sitegen-ai-animation);
+						background-repeat: no-repeat;
+						background-size: contain;
+						width: 83px;
+						height: 72px;
+					}
+
+					&__text {
+						color: var(--nfd-onboarding-primary);
+						font-size: clamp(0.875rem, 0.7727rem + 0.5114vw, 2rem);
+						margin-left: 15px;
+						white-space: normal;
+						line-height: 1;
+					}
+				}
+
+				&__buttons {
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: flex-end;
+					padding: 16px;
+
+					&__skip {
+						font-size: clamp(0.5rem, 0.4091rem + 0.4545vw, 1.5rem);
+						font-style: normal;
+						font-weight: 510;
+						margin-right: 24px;
+
+						&:hover {
+							text-decoration: underline;
+							color: var(--nfd-onboarding-primary);
+						}
+					}
+				}
+
+			}
+
+			&__contain {
+				width: 600px;
+				margin: 16px;
+				border: 1.25px dashed var(--nfd-onboarding-site-logo-border);
+				border-radius: 8px;
+				padding: 24px;
+				display: flex;
+				flex-direction: row;
+				justify-content: left;
+				align-items: left;
+
+				&__containleft {
+					width: 400px;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					color: var(--nfd-onboarding-primary);
+						font-size: clamp(0.875rem, 0.7727rem + 0.5114vw, 2rem);
+						margin-left: 15px;
+						white-space: normal;
+						line-height: 1;
+				}
+
+				&__containright {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+
+					&__button {
+						display: inline-flex;
+						align-items: center;
+						padding: 10px 15px;
+						background-color: #1877f2;
+						color: #fff;
+						border: none;
+						border-radius: 5px;
+						cursor: pointer;
+					}
+
+					&__button i {
+						margin-right: 8px;
+						background-image: var(--facebook-icon);
+						width: 25px;
+						height: 25px;
+					}
+				}
+			}
+		}
+	}
+}
