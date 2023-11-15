@@ -6,7 +6,7 @@ import { useDispatch } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
 
-import SiteGenPlaceholder from '../../../components/SiteGenPlaceholder';
+import SiteGenLoader from '../../../components/Loaders/SiteGenLoader';
 
 const SiteGenBuilding = () => {
 	const {
@@ -27,7 +27,17 @@ const SiteGenBuilding = () => {
 			isCentered
 			className="nfd-onboarding-step--site-gen__building"
 		>
-			<SiteGenPlaceholder heading={ 'Building Previews' } />
+			<div className="site-gen__building_skimmer">
+				<div className="site-gen__building_skimmer--header"></div>
+				<div className="site-gen__building_skimmer--body"></div>
+				<div className="site-gen__building_skimmer--footer">
+					<div className="site-gen__building_skimmer--footer_left"></div>
+					<div className="site-gen__building_skimmer--footer_right"></div>
+				</div>
+			</div>
+			<div className="site-gen__building_loader__overlay">
+				<SiteGenLoader />
+			</div>
 		</CommonLayout>
 	);
 };

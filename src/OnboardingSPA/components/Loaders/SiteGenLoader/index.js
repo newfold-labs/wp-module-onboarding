@@ -1,11 +1,21 @@
 import getContents from './contents';
+import { useSelect } from '@wordpress/data';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from '@wordpress/element';
+import { store as nfdOnboardingStore } from '../../../store';
 
 const SiteGenLoader = () => {
 	let statusIdx = 0;
 	const content = getContents();
+	const navigate = useNavigate();
 	const [ percentage, setPercentage ] = useState( 0 );
 	const [ status, setStatus ] = useState( content.status[ statusIdx ].title );
+
+	const { nextStep } = useSelect( ( select ) => {
+		return {
+			nextStep: select( nfdOnboardingStore ).getNextStep(),
+		};
+	} );
 
 	const checkStatus = async () => {
 		// Make fake API Call to get the status.
@@ -23,6 +33,14 @@ const SiteGenLoader = () => {
 			clearInterval( statusTimer );
 		};
 	}, [] );
+
+	useEffect( () => {
+		if ( percentage === 100 ) {
+			if ( nextStep ) {
+				navigate( nextStep.path );
+			}
+		}
+	}, [ percentage ] );
 
 	return (
 		<div className={ 'nfd-sg-loader' }>
