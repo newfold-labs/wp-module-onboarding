@@ -15,6 +15,16 @@ const HeadingWithSubHeading = ( { title, subtitle, brandName } ) => {
 			{ subtitle && (
 				<h3 className="nfd-onboarding-step--site-gen__fork__heading__subtitle">
 					{ subtitle }
+					<div
+						style={ {
+							display: 'inline-flex',
+							width: '20px',
+							height: '20px',
+							marginBottom: '-2px',
+							backgroundImage: 'var(--nfd-onboarding-icon)',
+							backgroundSize: 'contain',
+						} }
+					></div>
 					{ brandName }
 				</h3>
 			) }
