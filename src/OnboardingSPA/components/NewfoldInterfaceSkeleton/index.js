@@ -17,8 +17,8 @@ import { useMergeRefs } from '@wordpress/compose';
 import bgAiImg from '../../static/images/ai_bg.jpg';
 
 function useHTMLClass( className ) {
-
 	useEffect( () => {
+		// eslint-disable-next-line no-undef
 		const mainImage = new Image();
 		mainImage.src = bgAiImg;
 		mainImage.onload = () => {

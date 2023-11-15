@@ -32,7 +32,6 @@
 					border-radius: 16px;
 					color: var(--nfd-onboarding-white);
 					font-size: 20px;
-					
 
 					&__span {
 						background-color: var(--nfd-onboarding-white);
@@ -46,7 +45,7 @@
 				}
 
 				&__options:hover {
-					background-color: rgba(6, 0, 0,0.3);
+					background-color: rgba(6, 0, 0, 0.3);
 					cursor: pointer;
 				}
 			}
