@@ -1,6 +1,6 @@
 import { Icon, chevronRight } from '@wordpress/icons';
 
-const CardWithOptions = ( { title, options, skip, setSelection } ) => {
+const CardWithOptions = ( { title, options, skip, callback } ) => {
 	const buildOptions = () => {
 		return options.map( ( data, idx ) => {
 			return (
@@ -10,10 +10,14 @@ const CardWithOptions = ( { title, options, skip, setSelection } ) => {
 					tabIndex={ 0 }
 					className={ 'nfd-sg-card__data__option' }
 					onClick={ () => {
-						setSelection( idx );
+						if ( callback && typeof callback === 'function' ) {
+							callback( idx + 1 );
+						}
 					} }
 					onKeyDown={ () => {
-						setSelection( idx );
+						if ( callback && typeof callback === 'function' ) {
+							callback( idx + 1 );
+						}
 					} }
 				>
 					<div className={ 'nfd-sg-card__data__option__left' }>
@@ -48,10 +52,14 @@ const CardWithOptions = ( { title, options, skip, setSelection } ) => {
 				tabIndex={ 0 }
 				className={ 'nfd-sg-card__skip' }
 				onClick={ () => {
-					setSelection( -1 );
+					if ( callback && typeof callback === 'function' ) {
+						callback( -1 );
+					}
 				} }
 				onKeyDown={ () => {
-					setSelection( -1 );
+					if ( callback && typeof callback === 'function' ) {
+						callback( -1 );
+					}
 				} }
 			>
 				{ skip }

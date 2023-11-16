@@ -1,4 +1,4 @@
-import { useDispatch } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 
 import getContents from './contents';
@@ -14,11 +14,19 @@ const SiteGenSiteDetails = () => {
 	const content = getContents();
 	const [ customerInput, setCustomerInput ] = useState();
 
+	const { currentData } = useSelect( ( select ) => {
+		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+		};
+	} );
+
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
 		setHeaderActiveView,
 		setDrawerActiveView,
+		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -26,12 +34,17 @@ const SiteGenSiteDetails = () => {
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
-	} );
 
-	// const checkAndNavigate = () => {
-	// 	// console.log( customerInput );
-	// 	// console.log( 'Navigate to the next screen!' );
-	// };
+		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
+			setCustomerInput( currentData.sitegen.siteDetails.prompt );
+		}
+	}, [] );
+
+	const checkAndNavigate = () => {
+		currentData.sitegen.siteDetails.prompt = customerInput;
+		setCurrentOnboardingData( currentData );
+		// console.log( 'Navigate to the next screen!' );
+	};
 
 	return (
 		<CommonLayout isCentered>
@@ -49,6 +62,7 @@ const SiteGenSiteDetails = () => {
 						<NextButtonSiteGen
 							className={ 'nfd-sg-site-details--next-btn' }
 							text={ content.buttonText }
+							callback={ checkAndNavigate }
 						/>
 					</div>
 				</div>
