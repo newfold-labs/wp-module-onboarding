@@ -423,11 +423,15 @@ const SiteBuild = () => {
 		handleConditionalDesignStepsRoutes();
 	}, [ location.pathname, onboardingFlow ] );
 
+	const shouldApplyTheme =
+		currentStep === stepTheFork ||
+		window.nfdOnboarding.currentFlow === 'sitegen';
 	// wrapping the NewfoldInterfaceSkeleton with the HOC to make 'theme' available
 	const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
 		NewfoldInterfaceSkeleton,
 		'nfd-onboarding-sitegen-dark',
-		'nfd-onboarding-sitegen-light'
+		'nfd-onboarding-sitegen-light',
+		shouldApplyTheme
 	);
 
 	return (
@@ -441,17 +445,14 @@ const SiteBuild = () => {
 					{ 'is-large-viewport': isLargeViewport },
 					{ 'is-small-viewport': ! isLargeViewport },
 					{
-						'nfd-onboarding-skeleton--sitegen':
-							currentStep === stepTheFork,
+						'nfd-onboarding-skeleton--sitegen': shouldApplyTheme,
 					}
 				) }
 				header={ <Header /> }
 				drawer={ <Drawer /> }
 				content={ <Content /> }
 				sidebar={ <Sidebar /> }
-				footer={
-					currentStep === stepTheFork ? <ToggleDarkMode /> : null
-				}
+				footer={ shouldApplyTheme ? <ToggleDarkMode /> : null }
 			/>
 		</ThemeProvider>
 	);
