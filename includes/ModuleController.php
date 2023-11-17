@@ -109,7 +109,7 @@ class ModuleController {
 	 * @return boolean
 	 */
 	public static function is_brand_eligible( $brand_name ) {
-		if ( false !== strpos( $brand_name, 'hostgator' ) && 'hostgator-br' !== $brand_name ) {
+		if ( false !== strpos( $brand_name, 'hostgator' ) && 'hostgator-br' !== $brand_name && 'hostgator-us' !== $brand_name  ) {
 			return false;
 		}
 
