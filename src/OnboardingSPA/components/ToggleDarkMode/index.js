@@ -1,16 +1,27 @@
 import { useContext } from '@wordpress/element';
 import { ThemeContext } from '../ThemeContextProvider';
+import classNames from 'classnames';
+import { THEME_DARK } from '../../../constants';
 
 const ToggleDarkMode = () => {
-	const { toggleTheme } = useContext( ThemeContext );
+	const { theme, toggleTheme } = useContext( ThemeContext );
+	const isDarkMode = theme === THEME_DARK;
 	const onChange = () => {
 		toggleTheme();
 	};
 
 	return (
-		<div className="nfd-onboarding-toggle__darkmode">
+		<div className="nfd-onboarding-toggle__theme">
 			<div
-				className="nfd-onboarding-toggle__darkmode__button"
+				className={ classNames(
+					'nfd-onboarding-toggle__theme__button',
+					{
+						'nfd-onboarding-toggle__theme__button__light':
+							! isDarkMode,
+						'nfd-onboarding-toggle__theme__button__dark':
+							isDarkMode,
+					}
+				) }
 				onClick={ () => onChange() }
 				role="button"
 				onKeyDown={ ( event ) => {

@@ -1,13 +1,20 @@
-.nfd-onboarding-toggle__darkmode {
+.nfd-onboarding-toggle__theme {
 	position: absolute;
 	bottom: 25px;
 	left: 25px;
 	z-index: 999;
 
 	&__button {
-		background-image: var(--sitegen-toggle-theme-icon);
 		width: 60px;
 		height: 60px;
 		cursor: pointer;
+
+		&__light {
+			background: var(--sitegen-toggle-theme-icon-light);
+		}
+
+		&__dark {
+			background: var(--sitegen-toggle-theme-icon-dark);
+		}
 	}
 }
