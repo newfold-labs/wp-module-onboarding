@@ -36,7 +36,7 @@ const SiteGenBuilding = () => {
 				</div>
 			</div>
 			<div className="site-gen__building_loader__overlay">
-				<SiteGenLoader />
+				<SiteGenLoader autoNavigate={ true } />
 			</div>
 		</CommonLayout>
 	);

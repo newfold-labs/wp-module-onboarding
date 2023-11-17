@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../../store';
 
-const SiteGenLoader = () => {
+const SiteGenLoader = ( { autoNavigate = false } ) => {
 	let statusIdx = 0;
 	const content = getContents();
 	const navigate = useNavigate();
@@ -36,7 +36,7 @@ const SiteGenLoader = () => {
 
 	useEffect( () => {
 		if ( percentage === 100 ) {
-			if ( nextStep ) {
+			if ( nextStep && autoNavigate ) {
 				navigate( nextStep.path );
 			}
 		}

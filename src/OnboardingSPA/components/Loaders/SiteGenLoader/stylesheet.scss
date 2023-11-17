@@ -1,4 +1,4 @@
-$background-color: #1e2327;
+$background-color: var(--nfd-onboarding-admin-bar-background);
 
 .nfd-sg-loader {
 
@@ -15,7 +15,7 @@ $background-color: #1e2327;
 		font-size: 18px;
 		text-align: center;
 		letter-spacing: 1.5px;
-		color: var(--nfd-onboarding-white);
+		color: var(--nfd-onboarding-primary);
 	}
 
 	&__progress {
@@ -59,7 +59,7 @@ $background-color: #1e2327;
 		font-size: 14px;
 		text-align: center;
 		letter-spacing: 1.3px;
-		color: var(--nfd-onboarding-white);
+		color: var(--nfd-onboarding-primary);
 		animation: fadeInFast 3s ease-out infinite;
 	}
 }

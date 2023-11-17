@@ -1,4 +1,3 @@
-$border: #d6d6d6;
 $letter-spacing: 0.5px;
 $selected-detail: #1de082;
 
@@ -9,7 +8,7 @@ $selected-detail: #1de082;
 
 	&-box {
 		margin-bottom: 10px;
-		border-bottom: 2px solid $border;
+		border-bottom: 2px solid rgba(var(--nfd-onboarding-primary-rgb), 0.5);
 
 		&__field {
 			padding-top: 10px;
@@ -29,7 +28,7 @@ $selected-detail: #1de082;
 
 			&::placeholder {
 				font-weight: 100;
-				color: $border;
+				color: rgba(var(--nfd-onboarding-primary-rgb), 0.8);
 			}
 		}
 

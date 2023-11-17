@@ -1,13 +1,20 @@
-.nfd-onboarding-step--site-gen__building {
-	margin: 20px;
-	padding: 20px;
-	position: relative;
-}
-
 @property --angle {
 	inherits: true;
 	syntax: "<angle>";
 	initial-value: 90deg;
+}
+
+@keyframes borderRotate {
+
+	100% {
+		--angle: 360deg;
+	}
+}
+
+.nfd-onboarding-step--site-gen__building {
+	margin: 20px;
+	padding: 20px;
+	position: relative;
 }
 
 .site-gen__building {
@@ -19,7 +26,7 @@
 			background: rgba(255, 255, 255, 0.05);
 			box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 			border: 0.25px solid rgba(255, 255, 255, 0.26);
-			animation: borderRotate 2500ms infinite forwards;
+			animation: borderRotate 3500ms infinite forwards;
 			border-image: conic-gradient(from var(--angle), rgba(255, 255, 255, 0.26) calc(var(--angle) + 0.5deg), rgba(168, 239, 255, 0.5) calc(var(--angle) + 1deg)) 30;
 		}
 
@@ -56,12 +63,5 @@
 		top: 40%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-	}
-}
-
-@keyframes borderRotate {
-
-	100% {
-		--angle: 360deg;
 	}
 }
