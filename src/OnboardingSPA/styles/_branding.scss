@@ -106,7 +106,8 @@ body {
 		--nfd-onboarding-sidebar-learn-more-what-next-illustration: url(../../Brands/bluehost/learn-more-what-next.svg);
 	}
 
-	&.nfd-brand-hostgator-br {
+	&.nfd-brand-hostgator-br,
+	&.nfd-brand-hostgator-us {
 		--wp-admin-theme-color: #2e93ee;
 		--wp-admin-theme-color--rgb: 46, 147, 238;
 		--wp-admin-theme-color-darker-10: #1485ec;
