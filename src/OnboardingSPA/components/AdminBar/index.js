@@ -24,7 +24,7 @@ const AdminBar = () => {
 			<div className="nfd-onboarding-header__admin-bar__profile">
 				<span className="nfd-onboarding-header__admin-bar__profile__greeting">
 					<span>
-						{ __( 'Howdy!', 'wp-module-onboarding' ) },{ ' ' }
+						{ __( 'Howdy! ', 'wp-module-onboarding' ) }
 						{ currentUserInfo.displayName }
 					</span>
 				</span>

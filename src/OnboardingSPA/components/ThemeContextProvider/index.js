@@ -1,4 +1,5 @@
 import { useState, createContext } from '@wordpress/element';
+import { THEME_DARK, THEME_LIGHT } from '../../../constants';
 
 const ThemeContext = createContext();
 
@@ -7,7 +8,7 @@ const ThemeProvider = ( { children } ) => {
 
 	const toggleTheme = () => {
 		setTheme( ( prevTheme ) =>
-			prevTheme === 'dark' ? 'light' : 'dark'
+			prevTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK
 		);
 	};
 

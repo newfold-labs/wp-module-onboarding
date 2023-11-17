@@ -1,23 +1,25 @@
-import { ToggleControl } from '@wordpress/components';
 import { useContext } from '@wordpress/element';
 import { ThemeContext } from '../ThemeContextProvider';
-import getContents from './contents';
 
 const ToggleDarkMode = () => {
-	const { theme, toggleTheme } = useContext( ThemeContext );
-	const isChecked = theme === 'dark';
-	const content = getContents();
+	const { toggleTheme } = useContext( ThemeContext );
 	const onChange = () => {
 		toggleTheme();
 	};
 
 	return (
 		<div className="nfd-onboarding-toggle__darkmode">
-			<ToggleControl
-				label={ content.label }
-				checked={ isChecked }
-				onChange={ onChange }
-			/>
+			<div
+				className="nfd-onboarding-toggle__darkmode__button"
+				onClick={ () => onChange() }
+				role="button"
+				onKeyDown={ ( event ) => {
+					if ( event.key === 'Enter' ) {
+						onChange();
+					}
+				} }
+				tabIndex="0"
+			></div>
 		</div>
 	);
 };

@@ -1,24 +1,13 @@
 .nfd-onboarding-toggle__darkmode {
 	position: absolute;
-	bottom: 15px;
-	left: 50%;
-	transform: translateX(-50%);
+	bottom: 25px;
+	left: 25px;
 	z-index: 999;
-	color: #fff;
 
-	.components-toggle-control {
-
-		.components-form-toggle {
-
-			&.is-checked {
-
-				.components-form-toggle__track {
-					background-color: transparent;
-					outline: 2px solid #fff;
-					outline-offset: 0;
-				}
-			}
-
-		}
+	&__button {
+		background-image: var(--sitegen-toggle-theme-icon);
+		width: 60px;
+		height: 60px;
+		cursor: pointer;
 	}
 }
