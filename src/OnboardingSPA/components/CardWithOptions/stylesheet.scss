@@ -8,7 +8,7 @@ $background-color: var(--nfd-onboarding-admin-bar-background);
 	border-radius: 12px;
 	background-color: $background-color;
 	width: clamp(18.75rem, 22.6136rem + 5.6818vw, 31.25rem);
-	box-shadow: 3px 3px 5px rgba($color: var(--nfd-onboarding-black), $alpha: 0.2);
+	box-shadow: 3px 3px 5px rgba(var(--nfd-onboarding-primary-rgb), $alpha: 0.05);
 
 	&__title {
 		color: var(--nfd-onboarding-primary);
