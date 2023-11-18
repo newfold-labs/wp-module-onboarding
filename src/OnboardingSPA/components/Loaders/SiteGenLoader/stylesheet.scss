@@ -1,4 +1,4 @@
-$background-color: #1e2327;
+$background-color: var(--nfd-onboarding-admin-bar-background);
 
 .nfd-sg-loader {
 
@@ -8,14 +8,19 @@ $background-color: #1e2327;
 	border-radius: 12px;
 	background-color: $background-color;
 	width: clamp(18.75rem, 22.6136rem + 5.6818vw, 31.25rem);
-	box-shadow: 3px 3px 5px rgba($color: var(--nfd-onboarding-black), $alpha: 0.2);
+	box-shadow: 3px 3px 5px rgba(var(--nfd-onboarding-black-rgb), $alpha: 0.05);
+
+	@media (max-width: #{ ($break-small) }) {
+		margin: 20px;
+		max-width: 80vw;
+	}
 
 	&__title {
 		line-height: 2;
 		font-size: 18px;
 		text-align: center;
 		letter-spacing: 1.5px;
-		color: var(--nfd-onboarding-white);
+		color: var(--nfd-onboarding-primary);
 	}
 
 	&__progress {
@@ -59,7 +64,7 @@ $background-color: #1e2327;
 		font-size: 14px;
 		text-align: center;
 		letter-spacing: 1.3px;
-		color: var(--nfd-onboarding-white);
+		color: var(--nfd-onboarding-primary);
 		animation: fadeInFast 3s ease-out infinite;
 	}
 }

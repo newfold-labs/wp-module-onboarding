@@ -1,4 +1,4 @@
-$background-color: #1e2327;
+$background-color: var(--nfd-onboarding-admin-bar-background);
 
 .nfd-sg-card {
 
@@ -8,10 +8,10 @@ $background-color: #1e2327;
 	border-radius: 12px;
 	background-color: $background-color;
 	width: clamp(18.75rem, 22.6136rem + 5.6818vw, 31.25rem);
-	box-shadow: 3px 3px 5px rgba($color: var(--nfd-onboarding-black), $alpha: 0.2);
+	box-shadow: 3px 3px 5px rgba(var(--nfd-onboarding-primary-rgb), $alpha: 0.05);
 
 	&__title {
-		color: var(--nfd-onboarding-white);
+		color: var(--nfd-onboarding-primary);
 		margin: 16px;
 		line-height: 2;
 		font-size: 18px;
@@ -34,28 +34,28 @@ $background-color: #1e2327;
 			transition: background-color 400ms ease-in-out;
 
 			&:not(:last-child) {
-				border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
+				border-bottom: 0.5px solid rgba(var(--nfd-onboarding-primary-rgb), 0.3);
 			}
 
 			&:hover {
-				background-color: #262c30;
+				background-color: var(--nfd-onboarding-hover);
 			}
 
 			&__left_top {
-				color: var(--nfd-onboarding-white);
+				color: var(--nfd-onboarding-primary);
 				font-size: 16px;
 				font-weight: 500;
 				padding-bottom: 12px;
 			}
 
 			&__left_bottom {
-				color: var(--nfd-onboarding-white);
+				color: var(--nfd-onboarding-primary);
 				font-size: 14px;
 				font-weight: 300;
 			}
 
 			&__right {
-				fill: var(--nfd-onboarding-white);
+				fill: var(--nfd-onboarding-primary);
 				transition: all 200ms ease-in-out;
 
 				&:hover {
@@ -70,10 +70,10 @@ $background-color: #1e2327;
 		text-align: end;
 		margin: 0 20px 6px 20px;
 		transition: color 200ms ease-in-out;
-		color: rgba(var(--nfd-onboarding-white-rgb), 0.8);
+		color: rgba(var(--nfd-onboarding-primary-rgb), 0.8);
 
 		&:hover {
-			color: var(--nfd-onboarding-white);
+			color: var(--nfd-onboarding-primary);
 		}
 	}
 }

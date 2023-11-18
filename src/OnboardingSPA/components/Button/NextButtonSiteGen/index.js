@@ -5,7 +5,7 @@ import { Button } from '@wordpress/components';
 import { Icon, chevronRight } from '@wordpress/icons';
 import { store as nfdOnboardingStore } from '../../../store';
 
-const NextButtonSiteGen = ( { text, className } ) => {
+const NextButtonSiteGen = ( { text, className, callback = null } ) => {
 	const navigate = useNavigate();
 	const { nextStep } = useSelect( ( select ) => {
 		return {
@@ -19,6 +19,9 @@ const NextButtonSiteGen = ( { text, className } ) => {
 				className
 			) }
 			onClick={ () => {
+				if ( callback && typeof callback === 'function' ) {
+					callback();
+				}
 				if ( nextStep ) {
 					navigate( nextStep.path );
 				}

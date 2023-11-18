@@ -13,10 +13,13 @@ const SiteGenExperience = () => {
 	const navigate = useNavigate();
 	const content = getContents();
 	// Index of the selection user makes
+	/* eslint-disable no-unused-vars */
 	const [ selection, setSelection ] = useState();
 
-	const { nextStep } = useSelect( ( select ) => {
+	const { currentData, nextStep } = useSelect( ( select ) => {
 		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			nextStep: select( nfdOnboardingStore ).getNextStep(),
 		};
 	} );
@@ -26,6 +29,7 @@ const SiteGenExperience = () => {
 		setSidebarActiveView,
 		setHeaderActiveView,
 		setDrawerActiveView,
+		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -33,15 +37,25 @@ const SiteGenExperience = () => {
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
+
+		if ( currentData.sitegen.experience?.level ) {
+			setSelection( currentData.sitegen.experience.level );
+		}
 	} );
 
-	useEffect( () => {
-		// undefined => not selected, 0-2 => Selections, -1 => Skip
-		// console.log( 'Selection changed to', selection );
-		if ( selection !== undefined && nextStep ) {
+	const checkAndNavigate = ( idx ) => {
+		// 0 - Not Selected
+		// 1-2 Options
+		// -1 Skip
+		setSelection( idx );
+		currentData.sitegen.experience.level = idx;
+		setCurrentOnboardingData( currentData );
+		// console.log( selection );
+		// console.log( 'Navigate to the next screen!' );
+		if ( nextStep ) {
 			navigate( nextStep.path );
 		}
-	}, [ selection ] );
+	};
 
 	return (
 		<CommonLayout isCentered>
@@ -51,7 +65,7 @@ const SiteGenExperience = () => {
 					title={ content.heading }
 					options={ content.options }
 					skip={ content.skip }
-					setSelection={ setSelection }
+					callback={ checkAndNavigate }
 				/>
 			</div>
 		</CommonLayout>
