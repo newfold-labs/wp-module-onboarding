@@ -1,3 +1,5 @@
+$light-grey : #a0a5aa;
+
 .nfd-onboarding-header {
 
 	&__admin-bar {
@@ -6,7 +8,49 @@
 		width: 100%;
 		color: var(--nfd-onboarding-admin-bar-color);
 		margin: 0;
-		padding-left: 10px;
-		padding-top: 7px;
+		padding: 5px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		box-sizing: border-box;
+
+		&__wplogo {
+			color: var(--nfd-onboarding-white);
+			font-size: 16px;
+			display: flex;
+			align-items: center;
+
+			svg {
+				color: $light-grey;
+				fill: $light-grey;
+			}
+
+			span {
+				margin-left: 15px;
+			}
+		}
+
+		&__profile {
+			display: flex;
+			align-items: center;
+
+			&__greeting {
+				color: $light-grey;
+				font-size: 16px;
+				margin-right: 5px;
+			}
+
+			&__avatar {
+				height: 20px;
+				width: 20px;
+				display: inline-block;
+
+				img {
+					width: 100%;
+					height: 100%;
+					object-fit: contain;
+				}
+			}
+		}
 	}
 }

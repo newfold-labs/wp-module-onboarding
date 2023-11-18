@@ -191,5 +191,9 @@ html.nfd-interface-interface-skeleton__html-container {
 		background-image: var(--sitegen-background);
 		background-repeat: no-repeat;
 		background-size: cover;
+
+		.nfd-interface-interface-skeleton__footer {
+			display: flex;
+		}
 	}
 }

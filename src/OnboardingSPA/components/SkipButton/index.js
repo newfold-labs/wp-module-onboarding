@@ -10,8 +10,9 @@ import { store as nfdOnboardingStore } from '../../store';
 import { getSettings, setSettings } from '../../utils/api/settings';
 import { pluginDashboardPage } from '../../../constants';
 import { CATEGORY } from '../../utils/analytics/hiive/constants';
+import classNames from 'classnames';
 
-const SkipButton = ( { callback = false } ) => {
+const SkipButton = ( { callback = false, className, text } ) => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { nextStep, currentData, socialData } = useSelect( ( select ) => {
@@ -63,19 +64,16 @@ const SkipButton = ( { callback = false } ) => {
 	}
 
 	function skipStep() {
-		if ( isLastStep ) {
-			return (
-				<Button
-					className="skip-button"
-					onClick={ () => saveData( location.pathname ) }
-				>
-					{ __( 'Skip this Step', 'wp-module-onboarding' ) }
-				</Button>
-			);
-		}
 		return (
-			<Button className="skip-button" onClick={ () => skip() }>
-				{ __( 'Skip this Step', 'wp-module-onboarding' ) }
+			<Button
+				className={ classNames( 'skip-button', className ) }
+				onClick={
+					isLastStep
+						? () => saveData( location.pathname )
+						: () => skip()
+				}
+			>
+				{ text ? text : __( 'Skip this Step', 'wp-module-onboarding' ) }
 			</Button>
 		);
 	}
