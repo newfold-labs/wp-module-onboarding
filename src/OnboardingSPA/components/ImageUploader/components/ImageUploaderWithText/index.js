@@ -1,11 +1,15 @@
 import { __ } from '@wordpress/i18n';
 
-import { memo, useRef, useState } from '@wordpress/element';
+import { memo, useContext, useRef, useState } from '@wordpress/element';
 import { uploadImage } from '../../../../utils/api/uploader';
 import Spinner from '../../../Loaders/Spinner';
+import { ThemeContext } from '../../../ThemeContextProvider';
+import classNames from 'classnames';
+import { THEME_LIGHT } from '../../../../../constants';
 
 const ImageUploaderWithText = ( { image, imageSetter } ) => {
 	const inputRef = useRef( null );
+	const { theme } = useContext( ThemeContext );
 	const [ isUploading, setIsUploading ] = useState( false );
 	const [ onDragActive, setOnDragActive ] = useState( false );
 
@@ -95,7 +99,14 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 					{ ( image === undefined || image?.id === 0 ) && (
 						<>
 							<div className="nfd-onboarding-image-uploader--with-text__heading">
-								<div className="nfd-onboarding-image-uploader--with-text__heading__icon"></div>
+								<div
+									className={ classNames(
+										'nfd-onboarding-image-uploader--with-text__heading__icon',
+										theme === THEME_LIGHT
+											? 'nfd-onboarding-image-uploader--with-text__heading__icon--light'
+											: null
+									) }
+								></div>
 								<p className="nfd-onboarding-image-uploader--with-text__heading__text">
 									<span className="nfd-onboarding-image-uploader--with-text__heading__text__drop">
 										{ __(

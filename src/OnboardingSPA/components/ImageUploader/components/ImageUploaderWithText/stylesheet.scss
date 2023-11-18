@@ -3,7 +3,7 @@
 	&--with-text {
 		width: 600px;
 		margin: 16px;
-		border: 1.25px dashed var(--nfd-onboarding-site-logo-border);
+		border: 1.25px dashed var(--nfd-onboarding-admin-bar-background);
 		border-radius: 8px;
 		padding: 24px;
 		display: flex;
@@ -27,6 +27,10 @@
 				height: 22px;
 				background-repeat: no-repeat;
 				background-size: contain;
+
+				&--light {
+					filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(162deg) brightness(103%) contrast(101%);
+				}
 			}
 
 			&__text {
