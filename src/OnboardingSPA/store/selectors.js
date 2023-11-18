@@ -403,3 +403,14 @@ export function getExperienceLevel( state ) {
 export function getTopPriority( state ) {
 	return state.data.flowData.data.topPriority.priority1;
 }
+
+/**
+ * Gets Current User Details like Display name and avatar URL
+ *
+ * @param {*} state
+ * @return {string} currentUserInfo
+ */
+export function getCurrentUserDetails( state ) {
+	const currentUserInfo = state.runtime.currentUserDetails;
+	return currentUserInfo;
+}
