@@ -1,5 +1,4 @@
 // <reference types="Cypress" />
-import { DrawerActivityForMenu } from '../wp-module-support/drawer.cy';
 import {
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
