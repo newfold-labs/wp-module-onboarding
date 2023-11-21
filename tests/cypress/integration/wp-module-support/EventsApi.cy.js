@@ -83,14 +83,10 @@ export const BasicInfoAPI = (events_name, label_key = [], actual_values = []) =>
 
     cy.wait('@events')
         .then((requestObject) => {
-            cy.log(JSON.stringify(requestObject))
-
             const requestBody = requestObject.request.body;
 
-            cy.log(JSON.stringify(requestBody))
-
             label_key.forEach((labels, index) => {
-                cy.log(index)
+
                 if (labels == 'logo_added') {
                     expect(requestBody[index].action).to.eq('logo_added')
                 } else {
