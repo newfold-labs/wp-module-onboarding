@@ -1,7 +1,7 @@
 import CommonLayout from '../../components/Layouts/Common';
 
 import { useEffect } from '@wordpress/element';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 
 import { store as nfdOnboardingStore } from '../../store';
 import { HEADER_SITEGEN } from '../../../constants';
