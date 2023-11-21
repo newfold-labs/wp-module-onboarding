@@ -4,16 +4,23 @@
  * @param {Object} root0
  * @param {string} root0.title
  * @param {string} root0.subtitle
- * @param {Object} root0.brandName
  */
-const HeadingWithSubHeading = ( { title, subtitle, brandName } ) => {
+
+import { useSelect } from '@wordpress/data';
+import { store as nfdOnboardingStore } from '../../../store';
+
+const HeadingWithSubHeading = ( { title, subtitle } ) => {
+	const { brandName } = useSelect( ( select ) => {
+		return {
+			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+		};
+	} );
+
 	return (
-		<div className="nfd-onboarding-step--site-gen__fork__heading">
-			<h2 className="nfd-onboarding-step--site-gen__fork__heading__title">
-				{ title }
-			</h2>
+		<div className="nfd-onboarding-step__heading">
+			<h2 className="nfd-onboarding-step__heading__title">{ title }</h2>
 			{ subtitle && (
-				<h3 className="nfd-onboarding-step--site-gen__fork__heading__subtitle">
+				<h3 className="nfd-onboarding-step__heading__subtitle">
 					{ subtitle }
 					<div
 						style={ {

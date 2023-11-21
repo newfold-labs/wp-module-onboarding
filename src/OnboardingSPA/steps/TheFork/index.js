@@ -31,11 +31,6 @@ const TheFork = () => {
 		? window.nfdOnboarding.oldFlow
 		: window.nfdOnboarding.currentFlow;
 
-	const { brandName } = useSelect( ( select ) => {
-		return {
-			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
-		};
-	} );
 	const content = getContents();
 	return (
 		<CommonLayout
@@ -45,11 +40,11 @@ const TheFork = () => {
 			<HeadingWithSubHeading
 				title={ content.heading }
 				subtitle={ content.subheading }
-				brandName={ brandName }
 			/>
 			<StartOptions
 				questionnaire={ content.questionnaire }
 				oldFlow={ oldFlow }
+				options={ content.options }
 			/>
 			<br />
 			<br />

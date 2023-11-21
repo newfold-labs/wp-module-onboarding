@@ -4,9 +4,8 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { validateFlow } from '../../data/flows/utils';
 import { useNavigate } from 'react-router-dom';
 import { store as nfdOnboardingStore } from '../../store';
-import getContents from '../../steps/TheFork/contents';
 
-const StartOptions = ( { oldFlow } ) => {
+const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 	const navigate = useNavigate();
 	const { brandConfig, migrationUrl } = useSelect( ( select ) => {
 		return {
@@ -40,52 +39,50 @@ const StartOptions = ( { oldFlow } ) => {
 		updateInitialize( true );
 		navigate( data.steps[ 1 ].path );
 	};
-	const content = getContents();
+	const selectFlow = ( flow ) => {
+		switch ( flow ) {
+			case 'onboarding':
+				return switchFlow( oldFlow );
+			case 'ai':
+				return switchFlow( SITEGEN_FLOW );
+			case 'migration':
+				return window.open( migrationUrl, '_blank' );
+		}
+	};
 	return (
 		<div className="">
-			<p className="nfd-onboarding-step--site-gen__fork__questionnaire">
-				{ content.questionnaire }
+			<p className="nfd-onboarding-sitegen-options__questionnaire">
+				{ questionnaire }
 			</p>
-			<div className="nfd-onboarding-step--site-gen__fork__container">
-				<div
-					className="nfd-onboarding-step--site-gen__fork__container__options"
-					role="button"
-					tabIndex={ 0 }
-					onClick={ () => switchFlow( oldFlow ) }
-					onKeyDown={ () => switchFlow( oldFlow ) }
-				>
-					<h3 className="nfd-onboarding-step--site-gen__fork__heading__subtitle">
-						{ content.optionsself.title }
-					</h3>
-					<p>{ content.optionsself.subtitle }</p>
-				</div>
-				<div
-					className="nfd-onboarding-step--site-gen__fork__container__options"
-					role="button"
-					tabIndex={ 0 }
-					onClick={ () => switchFlow( SITEGEN_FLOW ) }
-					onKeyDown={ () => switchFlow( SITEGEN_FLOW ) }
-				>
-					<h3 className="nfd-onboarding-step--site-gen__fork__heading__subtitle">
-						<span className="nfd-onboarding-step--site-gen__fork__container__options__span">
-							AI
-						</span>
-						{ content.optionsai.title }
-					</h3>
-					<p>{ content.optionsai.subtitle }</p>
-				</div>
-				<div
-					className="nfd-onboarding-step--site-gen__fork__container__options"
-					role="button"
-					tabIndex={ 0 }
-					onClick={ () => window.open( migrationUrl, '_blank' ) }
-					onKeyDown={ () => window.open( migrationUrl, '_blank' ) }
-				>
-					<h3 className="nfd-onboarding-step--site-gen__fork__heading__subtitle">
-						{ content.optionspro.title }
-					</h3>
-					<p>{ content.optionspro.subtitle }</p>
-				</div>
+			<div className="nfd-onboarding-sitegen-options__container">
+				{ options.map( ( tab, idx ) => {
+					return (
+						<div
+							className="nfd-onboarding-sitegen-options__container__options"
+							key={ idx }
+							role="button"
+							tabIndex={ 0 }
+							onClick={ () => {
+								selectFlow( tab.flow );
+							} }
+							onKeyDown={ () => {
+								{
+									selectFlow( tab.flow );
+								}
+							} }
+						>
+							<h3 className="nfd-onboarding-sitegen-options__container__heading__subtitle">
+								{ tab.span && (
+									<span className="nfd-onboarding-sitegen-options__container__options__span">
+										{ tab.span }
+									</span>
+								) }
+								{ tab.title }
+							</h3>
+							<p>{ tab.subtitle }</p>
+						</div>
+					);
+				} ) }
 			</div>
 		</div>
 	);

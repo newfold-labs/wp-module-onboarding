@@ -1,9 +1,5 @@
 .nfd-onboarding-step {
 
-	&--site-gen {
-
-		&__fork {
-
 			&__heading {
 				color: var(--nfd-onboarding-primary);
 				width: 96%;
@@ -25,6 +21,4 @@
 					font-size: 20px;
 				}
 			}
-		}
-	}
 }

@@ -8,7 +8,7 @@ import MiniPreview from '../../components/MiniPreview';
 import Animate from '../../components/Animate';
 import { getSettings } from '../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../store';
-import ImageUploader from '../../components/ImageUploader';
+import ImageUploaderWithIcon from '../../components/ImageUploader/components/ImageUploaderWithIcon';
 import SocialMediaForm from '../../components/SocialMediaForm';
 
 /**
@@ -171,7 +171,7 @@ const BasicInfoForm = () => {
 						</div>
 					</div>
 					<div className="basic-info-form__right">
-						<ImageUploader
+						<ImageUploaderWithIcon
 							icon={ siteLogo }
 							iconSetter={ setSiteLogo }
 						/>
