@@ -1,27 +1,29 @@
 // <reference types="Cypress" />
-const customCommandTimeout = 30000
+const customCommandTimeout = 30000;
 
 export const CheckDrawerDisabled = () => {
-	cy.get('.nfd-onboarding-drawer__toggle-button', { timeout: customCommandTimeout })
+	cy.get( '.nfd-onboarding-drawer__toggle-button', {
+		timeout: customCommandTimeout,
+	} )
 		.click()
-		.should('have.class', 'is-suppressed');
-	cy.get('.nfd-onboarding-drawer__panel-scroll-container')
+		.should( 'have.class', 'is-suppressed' );
+	cy.get( '.nfd-onboarding-drawer__panel-scroll-container' )
 		.scrollIntoView()
-		.should('not.be.visible');
+		.should( 'not.be.visible' );
 };
 
 export const DrawerOpen = () => {
-	cy.get('.nfd-onboarding-drawer__toggle-button').click();
-	cy.get('.nfd-onboarding-drawer__panel-scroll-container')
+	cy.get( '.nfd-onboarding-drawer__toggle-button' ).click();
+	cy.get( '.nfd-onboarding-drawer__panel-scroll-container' )
 		.scrollIntoView()
-		.should('be.visible');
+		.should( 'be.visible' );
 };
 
 export const DrawerClose = () => {
-	cy.get('.nfd-onboarding-drawer__toggle-button').click();
-	cy.get('.nfd-onboarding-drawer__panel-scroll-container')
+	cy.get( '.nfd-onboarding-drawer__toggle-button' ).click();
+	cy.get( '.nfd-onboarding-drawer__panel-scroll-container' )
 		.scrollIntoView()
-		.should('not.be.visible');
+		.should( 'not.be.visible' );
 };
 
 export const DrawerActivityForMenu = (
@@ -31,25 +33,25 @@ export const DrawerActivityForMenu = (
 	isOpen = true
 ) => {
 	let href;
-	if (!isOpen) {
+	if ( ! isOpen ) {
 		DrawerOpen();
 	}
-	cy.get('.nfd-onboarding-drawer__panel-inner')
+	cy.get( '.nfd-onboarding-drawer__panel-inner' )
 		.scrollIntoView()
-		.should('be.visible');
-	cy.get('.nfd-onboarding-drawer__panel-back')
-		.should('be.visible')
-		.should('have.text', text);
+		.should( 'be.visible' );
+	cy.get( '.nfd-onboarding-drawer__panel-back' )
+		.should( 'be.visible' )
+		.should( 'have.text', text );
 	cy.get(
-		itemPosition.concat(' > .nfd-onboarding-drawer__panel-menu-link')
+		itemPosition.concat( ' > .nfd-onboarding-drawer__panel-menu-link' )
 	)
-		.should('have.class', 'active')
-		.should('have.text', itemName)
-		.and('have.attr', 'href')
-		.then((value) => (href = value));
-	cy.url().then((url) => {
-		expect(url).to.include(href);
-	});
+		.should( 'have.class', 'active' )
+		.should( 'have.text', itemName )
+		.and( 'have.attr', 'href' )
+		.then( ( value ) => ( href = value ) );
+	cy.url().then( ( url ) => {
+		expect( url ).to.include( href );
+	} );
 	DrawerClose();
 };
 
@@ -60,15 +62,17 @@ export const DrawerActivityForSubMenu = (
 	itemCount,
 	isOpen = true
 ) => {
-	if (!isOpen) {
+	if ( ! isOpen ) {
 		DrawerOpen();
 	}
-	cy.get('.nfd-onboarding-drawer__panel-inner')
+	cy.get( '.nfd-onboarding-drawer__panel-inner' )
 		.scrollIntoView()
-		.should('be.visible');
-	cy.get('.nfd-onboarding-drawer__panel-back', { timeout: customCommandTimeout })
-		.should('be.visible')
-		.should('have.text', text);
-	cy.get(subMenuDrawer).should('be.visible');
-	cy.get(itemClassName).should('have.length', itemCount);
+		.should( 'be.visible' );
+	cy.get( '.nfd-onboarding-drawer__panel-back', {
+		timeout: customCommandTimeout,
+	} )
+		.should( 'be.visible' )
+		.should( 'have.text', text );
+	cy.get( subMenuDrawer ).should( 'be.visible' );
+	cy.get( itemClassName ).should( 'have.length', itemCount );
 };
