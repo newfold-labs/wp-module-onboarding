@@ -10,11 +10,11 @@ const getContents = () => {
 			'Connect a Facebook Account',
 			'wp-module-onboarding'
 		),
-		facebookdesc: __(
+		facebookDesc: __(
 			'By connecting a Facebook profile, we can fetch relevant data to increase the accuracy of your Al generated site.',
 			'wp-module-onboarding'
 		),
-		facebookbutton: __( 'Connect Facebook', 'wp-module-onboarding' ),
+		facebookButton: __( 'Connect Facebook', 'wp-module-onboarding' ),
 		buttons: {
 			skip: __( 'Skip for now', 'wp-module-onboarding' ),
 		},

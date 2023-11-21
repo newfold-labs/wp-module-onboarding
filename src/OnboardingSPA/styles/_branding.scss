@@ -307,4 +307,15 @@ body {
 		--nfd-onboarding-site-logo-border: rgba(156, 162, 167, 1);
 		--nfd-onboarding-site-logo-on-drag: rgba(156, 162, 167, 0.3);
 	}
+
+	.nfd-onboarding-sitegen-light {
+		--nfd-onboarding-admin-bar-background: #1d2327;
+		--nfd-onboarding-admin-bar-color: #c3c4c7;
+		--nfd-onboarding-navigation-back-background: rgba(54, 62, 68, 0.35);
+		--nfd-onboarding-primary: #000;
+		--nfd-onboarding-primary-rgb: 0, 0, 0;
+		--nfd-onboarding-secondary: #fff;
+		--nfd-onboarding-progress-bar-background: #353a40;
+		--nfd-onboarding-progress-bar-fill: #0060f0;
+	}
 }

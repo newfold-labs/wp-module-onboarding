@@ -46,10 +46,12 @@
 @import "../components/AdminBar/stylesheet";
 @import "../components/ProgressBar/stylesheet";
 @import "../components/Button/ButtonDark/stylesheet";
-@import "../components//SiteGenPlaceholder/stylesheet.scss";
 @import "../components/ImageUploader/components/ImageUploaderWithText/stylesheet";
 @import "../components/Button/ButtonNext/stylesheet";
 @import "../components/Loaders/Spinner/stylesheet";
+@import "../components/SiteGenPlaceholder/stylesheet";
+@import "../components/ToggleDarkMode/stylesheet";
+@import "../components/Button/NextButtonSiteGen/stylesheet";
 
 // CSS for Pages
 @import "../steps/BasicInfo/stylesheet";
@@ -66,7 +68,8 @@
 @import "../steps/SiteFeatures/stylesheet";
 @import "../steps/TheFork/stylesheet";
 @import "../steps/SiteGen/SiteLogo/stylesheet";
-@import "../steps/SiteGen/SocialMedia/stylesheet.scss";
+@import "../steps/SiteGen/SocialMedia/stylesheet";
+@import "../steps/SiteGen/Welcome/stylesheet";
 
 .nfd-onboarding-container {
 	display: flex;

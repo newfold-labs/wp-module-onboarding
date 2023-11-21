@@ -2,6 +2,7 @@ import Header from '../../Header';
 import Content from '../../Content';
 import Drawer from '../../Drawer';
 import Sidebar from '../../Sidebar';
+import ToggleDarkMode from '../../ToggleDarkMode';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { setFlow } from '../../../utils/api/flow';
@@ -52,6 +53,8 @@ import { init as initializePlugins } from '../../../utils/api/plugins';
 import { init as initializeThemes } from '../../../utils/api/themes';
 import { trigger as cronTrigger } from '../../../utils/api/cronTrigger';
 import { stepTheFork } from '../../../steps/TheFork/step';
+import { ThemeProvider } from '../../ThemeContextProvider';
+import themeToggleHOC from '../themeToggleHOC';
 
 const SiteBuild = () => {
 	const location = useLocation();
@@ -419,28 +422,39 @@ const SiteBuild = () => {
 		handlePreviousStepTracking();
 		handleConditionalDesignStepsRoutes();
 	}, [ location.pathname, onboardingFlow ] );
+
+	const shouldApplyTheme =
+		currentStep === stepTheFork ||
+		window.nfdOnboarding.currentFlow === 'sitegen';
+	// wrapping the NewfoldInterfaceSkeleton with the HOC to make 'theme' available
+	const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
+		NewfoldInterfaceSkeleton,
+		'nfd-onboarding-sitegen-dark',
+		'nfd-onboarding-sitegen-light',
+		shouldApplyTheme
+	);
+
 	return (
-		<NewfoldInterfaceSkeleton
-			className={ classNames(
-				'nfd-onboarding-skeleton',
-				`brand-${ newfoldBrand }`,
-				`path-${ pathname }`,
-				{ 'is-drawer-open': isDrawerOpen },
-				{ 'is-large-viewport': isLargeViewport },
-				{ 'is-small-viewport': ! isLargeViewport },
-				{
-					'nfd-onboarding-skeleton--sitegen':
-						currentStep === stepTheFork,
-				},
-				{
-					'nfd-onboarding-sitegen-dark': currentStep === stepTheFork,
-				}
-			) }
-			header={ <Header /> }
-			drawer={ <Drawer /> }
-			content={ <Content /> }
-			sidebar={ <Sidebar /> }
-		/>
+		<ThemeProvider>
+			<ThemedNewfoldInterfaceSkeleton
+				className={ classNames(
+					'nfd-onboarding-skeleton',
+					`brand-${ newfoldBrand }`,
+					`path-${ pathname }`,
+					{ 'is-drawer-open': isDrawerOpen },
+					{ 'is-large-viewport': isLargeViewport },
+					{ 'is-small-viewport': ! isLargeViewport },
+					{
+						'nfd-onboarding-skeleton--sitegen': shouldApplyTheme,
+					}
+				) }
+				header={ <Header /> }
+				drawer={ <Drawer /> }
+				content={ <Content /> }
+				sidebar={ <Sidebar /> }
+				footer={ shouldApplyTheme ? <ToggleDarkMode /> : null }
+			/>
+		</ThemeProvider>
 	);
 };
 

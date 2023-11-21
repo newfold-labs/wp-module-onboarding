@@ -10,7 +10,7 @@
 		padding: 16px;
 
 		&--disabled {
-			background-color: rgba(var(--nfd-onboarding-primary-rgb), 0.5);
+			background-color: rgba(var(--nfd-onboarding-primary-rgb), 0.4);
 
 			&:hover {
 				cursor: not-allowed;

@@ -8,7 +8,6 @@ import { HEADER_SITEGEN } from '../../../../constants';
 import getContents from './contents';
 import ButtonNext from '../../../components/Button/ButtonNext';
 import SkipButton from '../../../components/SkipButton';
-import ImageUploaderWithText from '../../../components/ImageUploader/components/ImageUploaderWithText';
 
 const SiteGenSiteSocialMedia = () => {
 	const {
@@ -41,17 +40,17 @@ const SiteGenSiteSocialMedia = () => {
 				<div className="nfd-onboarding-step--site-gen__social-media__contain ">
 					<div className="nfd-onboarding-step--site-gen__social-media__contain__containleft ">
 						{ content.facebookTitle }
-						<p>{ content.facebookdesc }</p>
+						<p>{ content.facebookDesc }</p>
 					</div>
 					<div className="nfd-onboarding-step--site-gen__social-media__contain__containright ">
 						<button className="nfd-onboarding-step--site-gen__social-media__contain__containright__button ">
-						<i></i>{ content.facebookbutton }
+							<i></i>
+							{ content.facebookButton }
 						</button>
 					</div>
 				</div>
 				<div className="nfd-onboarding-step--site-gen__social-media__container__buttons">
 					<SkipButton
-						callback={ () => resetSiteLogo() }
 						className="nfd-onboarding-step--site-gen__social-media__container__buttons__skip"
 						text={ content.buttons.skip }
 					/>
