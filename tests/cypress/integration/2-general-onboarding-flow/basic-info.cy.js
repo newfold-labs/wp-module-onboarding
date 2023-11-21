@@ -1,14 +1,14 @@
 // <reference types="Cypress" />
 import {
 	DrawerActivityForMenu,
-	DrawerClose,
+	DrawerClose
 } from '../wp-module-support/drawer.cy';
 import { CheckHeadingSubheading } from '../wp-module-support/header.cy';
 import {
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
-	CheckIntroPanel,
+	CheckIntroPanel
 } from '../wp-module-support/sidebar.cy';
 import { SocialMediaTextValidations } from '../wp-module-support/socialMedia.cy';
 import { APIList, BasicInfoAPI } from '../wp-module-support/EventsApi.cy';
@@ -213,6 +213,11 @@ describe( 'Basic Info Page', function () {
 	} );
 
 	it( 'Basic Info Events API', () => {
+		const socialTest2 = '#twitter';
+		const socialTest4 = '#youtube';
+		const socialTest5 = '#linkedin';
+		const socialTest6 = '#yelp';
+		const socialTest7 = '#tiktok';
 		const label_keys = [
 			'',
 			'title',
@@ -220,15 +225,60 @@ describe( 'Basic Info Page', function () {
 			'logo_added',
 			'platform',
 			'platform',
+			'platform',
+			'platform',
+			'platform',
+			'platform',
+			'platform',
 		];
-		const actual_values = [ '', title, desc, '', 'facebook', 'instagram' ];
+		const actual_values = [
+			'',
+			title,
+			desc,
+			'',
+			'facebook',
+			'twitter',
+			'instagram',
+			'youtube',
+			'linkedin',
+			'yelp',
+			'tiktok',
+		];
+
+		cy.get( '.social-form__top-row_icon' )
+			.as( 'socialFormToggle' )
+			.invoke( 'attr', 'class' )
+			.then( ( class_name ) => {
+				if (
+					! class_name.includes( 'social-form__top-row_icon_opened' )
+				) {
+					cy.get( '@socialFormToggle' ).click();
+				}
+			} );
+
+		cy.get( socialTest2 ).should( 'exist' );
+		cy.get( socialTest2 ).clear();
+		cy.get( socialTest2 ).type( '@infinity' );
+
+		cy.get( socialTest4 ).should( 'exist' );
+		cy.get( socialTest4 ).clear();
+		cy.get( socialTest4 ).type( '@infinity' );
+
+		cy.get( socialTest5 ).should( 'exist' );
+		cy.get( socialTest5 ).clear();
+		cy.get( socialTest5 ).type( 'https://linkedin.com/in/infinity' );
+
+		cy.get( socialTest6 ).should( 'exist' );
+		cy.get( socialTest6 ).clear();
+		cy.get( socialTest6 ).type( 'https://www.yelp.com/infinity' );
+
+		cy.get( socialTest7 ).should( 'exist' );
+		cy.get( socialTest7 ).clear();
+		cy.get( socialTest7 ).type( 'https://www.tiktok.com/infinity' );
 
 		cy.wait( 2000 );
-
-		cy.intercept( APIList.basic_info_batch ).as( 'events' );
-
+		cy.intercept( APIList.basic_info ).as( 'events' );
 		cy.get( '.navigation-buttons_next' ).click();
-
-		BasicInfoAPI( 'basic_info_batch', label_keys, actual_values );
+		BasicInfoAPI( 'basic_info', label_keys, actual_values );
 	} );
 } );
