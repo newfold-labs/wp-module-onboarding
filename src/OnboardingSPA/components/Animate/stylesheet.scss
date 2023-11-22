@@ -109,6 +109,25 @@
 	}
 }
 
+@keyframes fadeInFast {
+
+	0% {
+		opacity: 0.1;
+	}
+
+	25% {
+		opacity: 1;
+	}
+
+	75% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0.1;
+	}
+}
+
 @-webkit-keyframes spin {
 
 	0% {

@@ -1,15 +1,18 @@
 .nfd-onboarding-button {
 
 	&--site-gen-next {
-		display: block;
-		background-color: var(--nfd-onboarding-primary);
-		color: var(--nfd-onboarding-secondary);
-		text-align: center;
 		width: 164px;
 		height: 50px;
-		font-size: clamp(0.5rem, 0.3864rem + 0.5682vw, 1.75rem);
+		display: flex;
+		cursor: pointer;
 		margin-top: 24px;
-		border-radius: 6px;
+		text-align: center;
+		border-radius: 8px;
+		align-items: center;
+		justify-content: center;
+		color: var(--nfd-onboarding-secondary);
+		background-color: var(--nfd-onboarding-primary);
+		font-size: clamp(0.5rem, 0.3864rem + 0.5682vw, 1.75rem);
 
 		@media (min-width: 2600px ) {
 			width: 250px;
@@ -21,5 +24,9 @@
 			height: 30px;
 			margin-top: 10px;
 		}
+	}
+
+	&--icon {
+		fill: var(--nfd-onboarding-secondary);
 	}
 }
