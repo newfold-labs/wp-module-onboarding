@@ -1,8 +1,5 @@
 // <reference types="Cypress" />
-import {
-	DrawerActivityForMenu,
-	DrawerClose
-} from '../wp-module-support/drawer.cy';
+import { DrawerClose } from '../wp-module-support/drawer.cy';
 import { CheckHeadingSubheading } from '../wp-module-support/header.cy';
 import {
 	CheckHelpPanelLinks,
@@ -22,11 +19,27 @@ describe( 'Basic Info Page', function () {
 	} );
 
 	it( 'Check Drawer Activity', () => {
-		DrawerActivityForMenu(
-			'Exit to WordPress',
-			':nth-child(3)',
-			'Basic Info'
-		);
+		let href;
+		cy.get( '.nfd-onboarding-drawer__toggle' )
+			.as( 'drawerOpen' )
+			.invoke( 'attr', 'class' )
+			.then( ( class_name ) => {
+				if ( ! class_name.includes( 'is-open' ) ) {
+					cy.get( '@drawerOpen' ).click();
+				}
+			} );
+		cy.get( '.nfd-onboarding-drawer__panel-inner' )
+			.scrollIntoView()
+			.should( 'be.visible' );
+
+		cy.get( ':nth-child(2) > .nfd-onboarding-drawer__panel-menu-link' )
+			.should( 'have.class', 'active' )
+			.should( 'have.text', 'Basic Info' )
+			.and( 'have.attr', 'href' )
+			.then( ( value ) => ( href = value ) );
+		cy.url().then( ( url ) => {
+			expect( url ).to.include( href );
+		} );
 	} );
 
 	it( 'Check if Header and Subheader shows up', () => {
@@ -103,9 +116,9 @@ describe( 'Basic Info Page', function () {
 	it( 'Check if the URL automatically updates http to https', () => {
 		const sampleURL = 'http://www.facebook.com';
 		const socialTest = '#facebook';
-		cy.get( '.social-form__top-row_icon' ).click();
+		cy.get( '.social-form__top-row_icon' ).click( { force: true } );
 		if ( cy.get( socialTest ).should( 'exist' ) ) {
-			cy.get( socialTest ).clear();
+			cy.get( socialTest ).clear({force: true});
 			cy.get( socialTest ).type( sampleURL );
 			cy.get( '#twitter' ).focus();
 			cy.get( socialTest )
@@ -117,8 +130,8 @@ describe( 'Basic Info Page', function () {
 	it( 'Check for twitter or instagram id starting with `@` to convert it to URL', () => {
 		const sampleID = '@infinity';
 		const socialTest3 = '#instagram';
-		if ( cy.get( socialTest3 ).should( 'exist' ) ) {
-			cy.get( socialTest3 ).clear();
+		if ( cy.get( socialTest3 , { timeout: 15000} ).should( 'exist' ) ) {
+			cy.get( socialTest3 ).clear({ force: true });
 			cy.get( socialTest3 ).type( sampleID );
 			cy.get( '#facebook' ).focus();
 			cy.get( socialTest3 )

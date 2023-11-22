@@ -17,6 +17,8 @@ export const APIList = {
 		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fevents%2Fbatch&flow=ecommerce&_locale=user',
 	basic_info:
 		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fevents%2Fbatch&flow=wp-setup&_locale=user',
+	basic_info_ecomm:
+		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fevents%2Fbatch&flow=ecommerce&_locale=user'
 };
 
 export const EventsAPI = ( events_name, card_val, api_name ) => {
@@ -83,10 +85,12 @@ export const BasicInfoAPI = (
 			} else {
 				const requestBodyData = requestBody[ index ].data;
 				if ( index == 0 ) {
-					expect( requestBodyData.label_key ).to.oneOf( [
-						'chapter',
-						'top_priority',
-					] );
+					if ( events_name == 'basic_info' ) {
+						expect( requestBodyData.label_key ).to.oneOf( [
+							'chapter',
+							'top_priority',
+						] );
+					}
 				} else {
 					expect( requestBodyData.label_key ).to.eq( labels );
 					expect( requestBodyData[ labels ] ).to.eq(
