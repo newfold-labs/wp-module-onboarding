@@ -57,6 +57,10 @@ class SiteGenController {
 				'required' => true,
 				'type'     => 'string',
 			),
+			'skip_cache' => array(
+				'required' => false,
+				'type'     => 'boolean',
+			),
 		);
 	}
 
@@ -65,17 +69,23 @@ class SiteGenController {
 	 *
 	 * @param \WP_REST_Request $request Request model.
 	 *
-	 * @return array
+	 * @return array|WP_Error
 	 */
 	public function generate_sitegen_meta( \WP_REST_Request $request ) {
 
 		$site_info  = $request->get_param( 'site_info' );
 		$identifier = $request->get_param( 'identifier' );
+		$skip_cache = $request->get_param( 'skip_cache' );
 
 		if ( SiteGenService::is_enabled() ) {
-			// TODO Implement the main function
+			// TODO Implement the main function and do computations if required.
+			return SiteGenService::instantiate_site_meta( $site_info, $identifier, $skip_cache );
 		}
 
-		return false;
+		return new \WP_Error(
+			'sitegen-error',
+			'SiteGen is Disabled.',
+			array( 'status' => 404 )
+		);
 	}
 }
