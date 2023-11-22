@@ -212,38 +212,14 @@ describe( 'Basic Info Page', function () {
 		}
 	} );
 
-	it( 'Basic Info Events API', () => {
+	it( 'Test Basic Info Events API gets triggered', () => {
 		const socialTest2 = '#twitter';
 		const socialTest4 = '#youtube';
 		const socialTest5 = '#linkedin';
 		const socialTest6 = '#yelp';
 		const socialTest7 = '#tiktok';
-		const label_keys = [
-			'',
-			'title',
-			'tagline',
-			'logo_added',
-			'platform',
-			'platform',
-			'platform',
-			'platform',
-			'platform',
-			'platform',
-			'platform',
-		];
-		const actual_values = [
-			'',
-			title,
-			desc,
-			'',
-			'facebook',
-			'twitter',
-			'instagram',
-			'youtube',
-			'linkedin',
-			'yelp',
-			'tiktok',
-		];
+		const label_keys = ['', 'title', 'tagline', 'logo_added', 'platform', 'platform', 'platform', 'platform', 'platform', 'platform', 'platform'];
+		const actual_values = ['', title, desc, '', 'facebook', 'twitter', 'instagram', 'youtube', 'linkedin', 'yelp', 'tiktok'];
 
 		cy.get( '.social-form__top-row_icon' )
 			.as( 'socialFormToggle' )
@@ -258,23 +234,23 @@ describe( 'Basic Info Page', function () {
 
 		cy.get( socialTest2 ).should( 'exist' );
 		cy.get( socialTest2 ).clear();
-		cy.get( socialTest2 ).type( '@infinity' );
+		cy.get( socialTest2 ).type( '@testTweet' );
 
 		cy.get( socialTest4 ).should( 'exist' );
 		cy.get( socialTest4 ).clear();
-		cy.get( socialTest4 ).type( '@infinity' );
+		cy.get( socialTest4 ).type( '@testYouTube' );
 
 		cy.get( socialTest5 ).should( 'exist' );
 		cy.get( socialTest5 ).clear();
-		cy.get( socialTest5 ).type( 'https://linkedin.com/in/infinity' );
+		cy.get( socialTest5 ).type( 'https://linkedin.com/in/testLinkedIn' );
 
 		cy.get( socialTest6 ).should( 'exist' );
 		cy.get( socialTest6 ).clear();
-		cy.get( socialTest6 ).type( 'https://www.yelp.com/infinity' );
+		cy.get( socialTest6 ).type( 'https://www.yelp.com/testYelp' );
 
 		cy.get( socialTest7 ).should( 'exist' );
 		cy.get( socialTest7 ).clear();
-		cy.get( socialTest7 ).type( 'https://www.tiktok.com/infinity' );
+		cy.get( socialTest7 ).type( 'https://www.tiktok.com/testTikTok' );
 
 		cy.wait( 2000 );
 		cy.intercept( APIList.basic_info ).as( 'events' );
