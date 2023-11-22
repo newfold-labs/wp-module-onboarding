@@ -3,9 +3,8 @@ import { useState } from '@wordpress/element';
 
 import { LivePreview } from '..';
 import ButtonDark from '../../../components/Button/ButtonDark';
-import {ReactComponent as Wishlist} from '../../../static/icons/site-features/wishlist.svg'
+import { ReactComponent as Wishlist } from '../../../static/icons/site-features/wishlist.svg';
 import { __ } from '@wordpress/i18n';
-import ButtonWhite from '../../Button/ButtonWhite';
 
 const SiteGenPreviewSelectableCard = ( {
 	className = 'live-preview-sitegen--selectable-card',
@@ -50,24 +49,27 @@ const SiteGenPreviewSelectableCard = ( {
 					<div
 						className={ `${ className }__live-preview-container__overlay` }
 					>
-						<ButtonDark className={ `${ className }__live-preview-container__overlay__button` } >
+						<ButtonDark
+							className={ `${ className }__live-preview-container__overlay__button` }
+						>
 							<Icon icon={ search } />
 							Preview Version
 						</ButtonDark>
 					</div>
 				) }
-				<div className={ `${ className }__live-preview-container-buttons` }>
-					<ButtonDark onClick={ onWishlistClick } >
+				<div
+					className={ `${ className }__live-preview-container-buttons` }
+				>
+					<ButtonDark onClick={ onWishlistClick }>
 						<Wishlist />
-						{  __( 'Version 1', 'wp-module-onboarding' ) }
+						{ __( 'Version 1', 'wp-module-onboarding' ) }
 					</ButtonDark>
-					<ButtonDark onClick={ onRegenerateClick } >
-						<Icon icon={reusableBlock} />
-						{  __( 'Regenerate', 'wp-module-onboarding' ) }
+					<ButtonDark onClick={ onRegenerateClick }>
+						<Icon icon={ reusableBlock } />
+						{ __( 'Regenerate', 'wp-module-onboarding' ) }
 					</ButtonDark>
 				</div>
 			</div>
-			
 		</div>
 	);
 };
