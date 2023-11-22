@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState, memo } from '@wordpress/element';
 import getContents from './contents';
 
-const TextInput = ( {
+const TextInputSiteBuild = ( {
 	title,
 	hint,
 	placeholder,
@@ -58,5 +58,5 @@ const TextInput = ( {
 	);
 };
 
-const TextInputMemo = memo( TextInput );
-export default TextInputMemo;
+const TextInputSiteBuildMemo = memo( TextInputSiteBuild );
+export default TextInputSiteBuildMemo;

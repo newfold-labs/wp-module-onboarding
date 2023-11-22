@@ -1,0 +1,67 @@
+@property --angle {
+	inherits: true;
+	syntax: "<angle>";
+	initial-value: 90deg;
+}
+
+@keyframes borderRotate {
+
+	100% {
+		--angle: 360deg;
+	}
+}
+
+.nfd-onboarding-step--site-gen__building {
+	margin: 20px;
+	padding: 20px;
+	position: relative;
+}
+
+.site-gen__building {
+
+	&_skimmer {
+
+		&--main {
+			margin-bottom: 30px;
+			background: rgba(var(--nfd-onboarding-primary-rgb), 0.05);
+			box-shadow: 0 4px 30px rgba(var(--nfd-onboarding-secondary-rgb), 0.1);
+			animation: borderRotate 3500ms infinite forwards;
+			border: 0.25px solid rgba(var(--nfd-onboarding-secondary-rgb), 0.26);
+			border-image: conic-gradient(from var(--angle), rgba(var(--nfd-onboarding-secondary-rgb), 0.26) calc(var(--angle) + 0.5deg), rgba(var(--nfd-onboarding-shimmer-color), 0.5) calc(var(--angle) + 1deg)) 30;
+		}
+
+		&--header {
+			height: 80px;
+			width: 90vw;
+		}
+
+		&--body {
+			width: 90vw;
+			height: 500px;
+		}
+
+		&--footer {
+			display: flex;
+			align-items: center;
+			flex-direction: row;
+			justify-content: space-between;
+
+			&_left {
+				width: 55vw;
+				height: 300px;
+			}
+
+			&_right {
+				width: 33vw;
+				height: 300px;
+			}
+		}
+	}
+
+	&_loader__overlay {
+		position: absolute;
+		top: 40%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+}
