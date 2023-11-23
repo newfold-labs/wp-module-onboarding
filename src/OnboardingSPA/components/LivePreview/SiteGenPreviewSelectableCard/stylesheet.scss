@@ -1,18 +1,22 @@
 
 .live-preview-sitegen--selectable-card {
 	flex: 1;
-	width: 100%;
-	margin: 24px;
+	width: 420px;
+	padding: 20px;
 	display: flex;
 	overflow: hidden;
 	align-items: center;
 	flex-direction: column;
 	justify-content: center;
 
+	@media (min-width: #{ ($break-xlarge) }) and (max-width: #{ ($break-wide) }) {
+		width: 340px;
+		padding: 15px;
+	}
+
 	&__live-preview-container {
 		position: relative;
-		width: 90%;
-		overflow: hidden;
+		width: 100%;
 		align-items: center;
 		border-radius: 8px;
 
@@ -23,7 +27,7 @@
 				&-custom {
 					width: 100%;
 					overflow: hidden;
-					height: 300px;
+					height: 315px;
 					border-radius: 16px;
 				}
 			}
@@ -38,13 +42,13 @@
 			bottom: 0;
 			left: 0;
 			right: 0;
-			height: 300px;
+			height: 315px;
 			z-index: 2;
 			width: 100%;
 			opacity: 0;
 			transition: 0.5s ease;
-			background-color:
-				rgb(var(--wp-admin-theme-color-darker-10--rgb));
+			background-color: rgb(var(--wp-admin-theme-color-darker-10--rgb));
+			border-radius: 8px;
 			
 			&__button {
 				fill: var(--nfd-onboarding-white);
