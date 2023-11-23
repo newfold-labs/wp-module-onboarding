@@ -34,7 +34,7 @@ const SiteGenHeader = () => {
 	);
 
 	const currentStepIndex = findIndex( allSteps, {
-		path: currentStep.path,
+		path: currentStep?.path,
 	} );
 	const progress = ( currentStepIndex / allSteps.length ) * 100;
 	

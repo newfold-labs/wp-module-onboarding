@@ -2,13 +2,13 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 import getContents from './contents';
-import TextInput from '../../components/TextInput';
+import TextInputSiteBuild from '../../components/TextInput/TextInputSiteBuild';
 import SkipButton from '../../components/SkipButton';
 import MiniPreview from '../../components/MiniPreview';
 import Animate from '../../components/Animate';
 import { getSettings } from '../../utils/api/settings';
 import { store as nfdOnboardingStore } from '../../store';
-import ImageUploader from '../../components/ImageUploader';
+import ImageUploaderWithIcon from '../../components/ImageUploader/components/ImageUploaderWithIcon';
 import SocialMediaForm from '../../components/SocialMediaForm';
 
 /**
@@ -142,7 +142,7 @@ const BasicInfoForm = () => {
 			<div className={ 'basic-info' }>
 				<div className="basic-info-form">
 					<div className="basic-info-form__left">
-						<TextInput
+						<TextInputSiteBuild
 							title={ content.siteTitle.title }
 							hint={ content.siteTitle.hint }
 							placeholder={ content.siteTitle.placeholder }
@@ -152,7 +152,7 @@ const BasicInfoForm = () => {
 							textValueSetter={ setSiteTitle }
 						/>
 
-						<TextInput
+						<TextInputSiteBuild
 							title={ content.siteDesc.title }
 							hint={ content.siteDesc.hint }
 							placeholder={ content.siteDesc.placeholder }
@@ -171,7 +171,7 @@ const BasicInfoForm = () => {
 						</div>
 					</div>
 					<div className="basic-info-form__right">
-						<ImageUploader
+						<ImageUploaderWithIcon
 							icon={ siteLogo }
 							iconSetter={ setSiteLogo }
 						/>

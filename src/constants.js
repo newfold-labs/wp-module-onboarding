@@ -66,6 +66,8 @@ export const CHAPTER_DESIGN = 'design';
 export const CHAPTER_LAYOUT_AND_CONTENT = 'layout_and_content';
 export const CHAPTER_FEATURES = 'features';
 export const CHAPTER_SITEGEN = 'sitegen';
+export const THEME_DARK = 'dark';
+export const THEME_LIGHT = 'light';
 
 /**
  * All views for the <Drawer /> component.
