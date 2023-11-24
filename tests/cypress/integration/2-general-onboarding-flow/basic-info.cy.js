@@ -138,6 +138,7 @@ describe( 'Basic Info Page', function () {
 				.invoke( 'val' )
 				.should( 'contain', 'https://' );
 		}
+		cy.wait( 2000 )
 	} );
 
 	it( 'Check if Social Media URL checks are done', () => {
@@ -149,9 +150,11 @@ describe( 'Basic Info Page', function () {
 		// Facebook Social Media Component
 		const socialTest2 = cy.get( '#twitter' );
 		const socialTest = cy.get( '#facebook' );
+		cy.wait(2000)
 
 		if ( socialTest.should( 'exist' ) ) {
-			socialTest.clear();
+			cy.get( '#facebook' ).clear();
+			cy.get( '.browser-content_social_icon.--no-url' ).should( 'exist' )
 			cy.get(
 				'.browser-content_social_icon[style="background-image: var(--facebook-icon);"]'
 			).should( 'have.css', 'opacity', '0.5' );
@@ -184,6 +187,7 @@ describe( 'Basic Info Page', function () {
 			cy.get( '.Tooltip-Wrapper', { timeout: 3000 } ).should(
 				'not.exist'
 			);
+			cy.wait( 2000 )
 			cy.get(
 				'.browser-content_social_icon[style="background-image: var(--facebook-icon);"]'
 			).should( 'have.css', 'opacity', '1' );
