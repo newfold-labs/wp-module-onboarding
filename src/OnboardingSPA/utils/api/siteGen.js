@@ -4,18 +4,18 @@ import { resolve } from './resolve.js';
 import { onboardingRestURL } from './common';
 
 export async function generateSiteGenMeta(
-	site_info,
+	siteInfo,
 	identifier,
-	skip_cache = false
+	skipCache = false
 ) {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/generate' ),
 			method: 'POST',
 			data: {
-				site_info,
+				site_info: siteInfo,
 				identifier,
-				skip_cache,
+				skip_cache: skipCache,
 			},
 		} ).then()
 	);

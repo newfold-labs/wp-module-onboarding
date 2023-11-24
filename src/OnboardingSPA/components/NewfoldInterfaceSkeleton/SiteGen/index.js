@@ -76,15 +76,14 @@ const SiteGen = () => {
 			identifiers = identifiers.slice( midIndex );
 		}
 
-		/* eslint-disable camelcase */
-		const site_info = {
+		const siteInfo = {
 			site_description: currentData.sitegen?.siteDetails?.prompt,
 		};
 
 		// Iterate over Identifiers and fire Requests!
 		identifiers.forEach( ( identifier ) => {
 			return new Promise( () =>
-				generateSiteGenMeta( site_info, identifier )
+				generateSiteGenMeta( siteInfo, identifier )
 					.then( ( data ) => {
 						if ( data.body !== null ) {
 							currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
