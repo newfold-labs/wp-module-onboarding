@@ -3,6 +3,14 @@ import apiFetch from '@wordpress/api-fetch';
 import { resolve } from './resolve.js';
 import { onboardingRestURL } from './common';
 
+export async function getSiteGenIdentifiers() {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/get-identifiers' ),
+		} ).then()
+	);
+}
+
 export async function generateSiteGenMeta(
 	siteInfo,
 	identifier,

@@ -11,7 +11,10 @@ import ToggleDarkMode from '../../ToggleDarkMode';
 import { ThemeProvider } from '../../ThemeContextProvider';
 import { store as nfdOnboardingStore } from '../../../store';
 import { setFlow } from '../../../utils/api/flow';
-import { generateSiteGenMeta } from '../../../utils/api/siteGen';
+import {
+	generateSiteGenMeta,
+	getSiteGenIdentifiers,
+} from '../../../utils/api/siteGen';
 
 // Wrapping the NewfoldInterfaceSkeleton with the HOC to make theme available
 const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
@@ -39,7 +42,7 @@ const SiteGen = () => {
 		}
 	}
 
-	function generateSiteGenData() {
+	async function generateSiteGenData() {
 		// Start the API Requests when the loader is shown.
 		if (
 			! (
@@ -58,16 +61,8 @@ const SiteGen = () => {
 			return;
 		}
 
-		let identifiers = [
-			'siteclassification',
-			'targetaudience',
-			'contenttones',
-			'contentstructure',
-			'colorpalette',
-			'sitemap',
-			'pluginrecommendation',
-			'fontpair',
-		];
+		let identifiers = await getSiteGenIdentifiers();
+		identifiers = identifiers.body;
 
 		const midIndex = Math.floor( identifiers.length / 2 );
 		if ( location.pathname.includes( 'experience' ) ) {

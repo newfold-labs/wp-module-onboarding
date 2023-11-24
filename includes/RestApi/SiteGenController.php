@@ -32,6 +32,15 @@ class SiteGenController {
 	public function register_routes() {
 		\register_rest_route(
 			$this->namespace,
+			$this->rest_base . '/get-identifiers',
+			array(
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_valid_identifiers' ),
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+			)
+		);
+		\register_rest_route(
+			$this->namespace,
 			$this->rest_base . '/generate',
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
@@ -62,6 +71,15 @@ class SiteGenController {
 				'type'     => 'boolean',
 			),
 		);
+	}
+
+	/**
+	 * Gets all the valid Identifiers
+	 *
+	 * @return array
+	 */
+	public function get_valid_identifiers() {
+		return array_keys( array_filter( SiteGenService::get_identifiers() ) );
 	}
 
 	/**
