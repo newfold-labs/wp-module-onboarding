@@ -31,6 +31,12 @@ html.nfd-interface-interface-skeleton__html-container {
 			top: 0;
 		}
 	}
+
+	&.nfd-onboarding-skeleton--sitegen{
+		.is-fullscreen-mode & {
+			top: 0;
+		}
+	}
 }
 
 .nfd-interface-interface-skeleton__editor {
