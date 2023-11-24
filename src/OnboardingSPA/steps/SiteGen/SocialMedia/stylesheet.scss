@@ -68,10 +68,10 @@
 					flex-direction: column;
 					justify-content: center;
 					color: var(--nfd-onboarding-primary);
-						font-size: clamp(0.875rem, 0.7727rem + 0.5114vw, 2rem);
-						margin-left: 15px;
-						white-space: normal;
-						line-height: 1;
+					font-size: clamp(0.875rem, 0.7727rem + 0.5114vw, 2rem);
+					margin-left: 15px;
+					white-space: normal;
+					line-height: 1;
 				}
 
 				&__containright {
@@ -93,7 +93,7 @@
 
 					&__button i {
 						margin-right: 8px;
-						background-image: var(--facebook-icon);
+						background-image: var(--facebook-white-icon);
 						width: 25px;
 						height: 25px;
 					}
