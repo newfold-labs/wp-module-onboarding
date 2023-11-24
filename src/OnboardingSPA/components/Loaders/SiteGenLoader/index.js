@@ -11,20 +11,16 @@ const SiteGenLoader = ( { autoNavigate = false } ) => {
 	const [ percentage, setPercentage ] = useState( 0 );
 	const [ status, setStatus ] = useState( content.status[ statusIdx ].title );
 
-	const { nextStep } = useSelect( ( select ) => {
+	const { currentData, nextStep } = useSelect( ( select ) => {
 		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			nextStep: select( nfdOnboardingStore ).getNextStep(),
 		};
 	} );
 
-	const checkStatus = async () => {
-		// Make fake API Call to get the status.
-		if ( percentage !== 100 ) setPercentage( ( t ) => t + 10 );
-	};
-
 	useEffect( () => {
 		const statusTimer = setInterval( () => {
-			checkStatus();
 			statusIdx += 1;
 			if ( statusIdx === content.status.length ) statusIdx = 0;
 			setStatus( content.status[ statusIdx ].title );
@@ -33,6 +29,14 @@ const SiteGenLoader = ( { autoNavigate = false } ) => {
 			clearInterval( statusTimer );
 		};
 	}, [] );
+
+	useEffect( () => {
+		const percentageValue =
+			( currentData.sitegen.siteGenMetaStatus.currentStatus /
+				currentData.sitegen.siteGenMetaStatus.totalCount ) *
+			100;
+		setPercentage( percentageValue );
+	}, [ currentData.sitegen.siteGenMetaStatus.currentStatus ] );
 
 	useEffect( () => {
 		if ( percentage === 100 ) {
