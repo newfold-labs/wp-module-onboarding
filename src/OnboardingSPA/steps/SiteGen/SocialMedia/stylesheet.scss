@@ -99,6 +99,26 @@
 					}
 				}
 			}
+			@media only screen and (max-width: 600px) {
+				&__contain {
+					margin: 8px;
+					flex-direction: column; 
+					justify-content: center; 
+					align-items: center; 
+					width: 85%;
+				}
+			
+				&__containright {
+					&__button {
+						padding: 8px 12px; 
+					}
+			
+					&__button i {
+						width: 20px; 
+						height: 20px;
+					}
+				}
+			}
 		}
 	}
 }
