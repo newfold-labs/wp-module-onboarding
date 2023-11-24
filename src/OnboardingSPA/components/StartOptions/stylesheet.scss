@@ -43,6 +43,8 @@
 		&__options:hover {
 			background-color: rgba(6, 0, 0, 0.3);
 			cursor: pointer;
+			outline: 2px solid #9ca2a7;
+			transition: .1s linear;
 		}
 
 		&__heading {
@@ -52,18 +54,19 @@
 			line-height: 1;
 
 			&__title {
-				font-weight: 300;
+				font-weight: 510;
 				text-align: center;
 				color: var(--nfd-onboarding-white);
-				margin: 35px !important;
-				font-size: 30px;
+				font-size: 20px;
+				line-height: 20px;
 			}
 
 			&__subtitle {
-				color: var(--nfd-onboarding-white) !important;
-				font-weight: 300;
+				color: #E8E8E8 !important;
+				font-weight: 510;
 				text-align: center;
-				font-size: 20px;
+				font-size: 14px;
+				line-height: 16.71px;
 			}
 		}
 	}

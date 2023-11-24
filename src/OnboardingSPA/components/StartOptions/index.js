@@ -71,7 +71,7 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 								}
 							} }
 						>
-							<h3 className="nfd-onboarding-sitegen-options__container__heading__subtitle">
+							<h3 className="nfd-onboarding-sitegen-options__container__heading__title">
 								{ tab.span && (
 									<span className="nfd-onboarding-sitegen-options__container__options__span">
 										{ tab.span }
@@ -79,7 +79,9 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 								) }
 								{ tab.title }
 							</h3>
-							<p>{ tab.subtitle }</p>
+							<p className="nfd-onboarding-sitegen-options__container__heading__subtitle">
+								{ tab.subtitle }
+							</p>
 						</div>
 					);
 				} ) }
