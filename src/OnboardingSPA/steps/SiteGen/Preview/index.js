@@ -9,9 +9,10 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
 
 import { SiteGenLivePreview } from '../../../components/LivePreview';
-import SiteGenPlaceholder from '../../../components/SiteGenPlaceholder';
+//import SiteGenPlaceholder from '../../../components/SiteGenPlaceholder';
 import getContents from './contents';
 import { pattern } from './pattern';
+import { ReactComponent as FavouriteIcon } from '../../../static/icons/sitegen/heart-stroked.svg';
 
 const SiteGenPreview = () => {
 	const {
@@ -89,6 +90,10 @@ const SiteGenPreview = () => {
 			</div>
 			<div className="nfd-onboarding-step--site-gen__preview__options">
 				{ buildPreviews() }
+			</div>
+			<div className="nfd-onboarding-step--site-gen__preview__note">
+				<FavouriteIcon />
+				<span>{ content.favouriteNote }</span>
 			</div>
 		</CommonLayout>
 	);

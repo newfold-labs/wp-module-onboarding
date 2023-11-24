@@ -53,4 +53,19 @@
 		text-align: center;
 		margin: 10px;
 	}
+
+	&__note {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		background: var(--nfd-onboarding-card-background);
+		color: var(--nfd-onboarding-primary);
+		gap: 18px;
+		padding: 16px;
+		font-size: 16px;
+		line-height: 22px;
+		text-align: center;
+		border-radius: 12px;
+	}
 }
