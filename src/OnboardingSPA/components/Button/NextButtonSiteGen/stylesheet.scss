@@ -24,6 +24,15 @@
 			height: 30px;
 			margin-top: 10px;
 		}
+
+		&--disabled {
+			background-color: rgba(var(--nfd-onboarding-primary-rgb), 0.4);
+
+			&:hover {
+				cursor: not-allowed;
+				color: var(--nfd-onboarding-secondary);
+			}
+		}
 	}
 
 	&--icon {

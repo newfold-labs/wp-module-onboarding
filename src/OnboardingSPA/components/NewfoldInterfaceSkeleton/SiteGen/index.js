@@ -1,6 +1,6 @@
-import { useSelect } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
+import { useSelect, useDispatch } from '@wordpress/data';
 
 import Header from '../../Header';
 import Content from '../../Content';
@@ -11,6 +11,7 @@ import ToggleDarkMode from '../../ToggleDarkMode';
 import { ThemeProvider } from '../../ThemeContextProvider';
 import { store as nfdOnboardingStore } from '../../../store';
 import { setFlow } from '../../../utils/api/flow';
+import { generateSiteGenMeta } from '../../../utils/api/siteGen';
 
 // Wrapping the NewfoldInterfaceSkeleton with the HOC to make theme available
 const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
@@ -29,6 +30,8 @@ const SiteGen = () => {
 		};
 	} );
 
+	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
+
 	async function syncStoreToDB() {
 		if ( currentData ) {
 			//Set the Flow Data and sync store and DB
@@ -36,8 +39,62 @@ const SiteGen = () => {
 		}
 	}
 
-	async function generateSiteGenData() {
-		// TODO Implement SiteGen Sync
+	function generateSiteGenData() {
+		// Start the API Requests when the loader is shown.
+		if (
+			! (
+				location.pathname.includes( 'experience' ) ||
+				location.pathname.includes( 'building' )
+			)
+		) {
+			return;
+		}
+
+		// If the calls are already made then skip doing that again.
+		if (
+			currentData.sitegen.siteGenMetaStatus.currentStatus >=
+			currentData.sitegen.siteGenMetaStatus.totalCount
+		) {
+			return;
+		}
+
+		let identifiers = [
+			'siteclassification',
+			'targetaudience',
+			'contenttones',
+			'contentstructure',
+			'colorpalette',
+			'sitemap',
+			'pluginrecommendation',
+			'fontpair',
+		];
+
+		const midIndex = Math.floor( identifiers.length / 2 );
+		if ( location.pathname.includes( 'experience' ) ) {
+			identifiers = identifiers.slice( 0, midIndex );
+		} else if ( location.pathname.includes( 'building' ) ) {
+			identifiers = identifiers.slice( midIndex );
+		}
+
+		/* eslint-disable camelcase */
+		const site_info = {
+			site_description: currentData.sitegen?.siteDetails?.prompt,
+		};
+
+		// Iterate over Identifiers and fire Requests!
+		identifiers.forEach( ( identifier ) => {
+			return new Promise( () =>
+				generateSiteGenMeta( site_info, identifier )
+					.then( ( data ) => {
+						if ( data.body !== null ) {
+							currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
+							setCurrentOnboardingData( currentData );
+						}
+					} )
+					/* eslint-disable no-console */
+					.catch( ( err ) => console.log( err ) )
+			);
+		} );
 	}
 
 	const handlePreviousStepTracking = () => {
@@ -50,12 +107,6 @@ const SiteGen = () => {
 			return;
 		}
 
-		const previousStepPath = previousStep.path;
-
-		if ( previousStepPath.includes( 'site-details' ) ) {
-			generateSiteGenData();
-		}
-
 		window.nfdOnboarding.previousStep = {
 			path: location.pathname,
 			url: window.location.href,
@@ -64,6 +115,7 @@ const SiteGen = () => {
 
 	useEffect( () => {
 		syncStoreToDB();
+		generateSiteGenData();
 		handlePreviousStepTracking();
 	}, [ location.pathname ] );
 
