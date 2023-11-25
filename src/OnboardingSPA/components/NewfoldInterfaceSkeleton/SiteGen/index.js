@@ -55,8 +55,8 @@ const SiteGen = () => {
 
 		// If the calls are already made then skip doing that again.
 		if (
-			currentData.sitegen.siteGenMetaStatus.currentStatus >=
-			currentData.sitegen.siteGenMetaStatus.totalCount
+			currentData.sitegen?.siteGenMetaStatus?.currentStatus >=
+			currentData.sitegen?.siteGenMetaStatus?.totalCount
 		) {
 			return;
 		}

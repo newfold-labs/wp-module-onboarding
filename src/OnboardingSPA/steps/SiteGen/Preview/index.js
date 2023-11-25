@@ -14,6 +14,8 @@ import getContents from './contents';
 import { pattern } from './pattern';
 import { ReactComponent as FavouriteIcon } from '../../../static/icons/sitegen/heart-stroked.svg';
 
+import { getHomePagePreviews } from '../../../utils/api/siteGen';
+
 const SiteGenPreview = () => {
 	const {
 		setIsHeaderEnabled,
@@ -22,19 +24,32 @@ const SiteGenPreview = () => {
 		setDrawerActiveView,
 	} = useDispatch( nfdOnboardingStore );
 
+	const { currentData } = useSelect( ( select ) => {
+		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+		};
+	} );
+
 	useEffect( () => {
+		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
+			getHomePagePreviews(
+				currentData.sitegen.siteDetails.prompt,
+				false
+			);
+		}
 		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
-	} );
+	}, [ currentData ] );
 
 	const onWishlistClick = () => {
 		alert( 'wishlist' );
 	};
 
 	const onRegenerateClick = () => {
-		alert( 'regenerate' );
+		//	alert( 'regenerate' );
 	};
 
 	const buildPreviews = () => {

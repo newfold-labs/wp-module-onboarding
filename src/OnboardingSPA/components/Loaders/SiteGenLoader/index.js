@@ -32,11 +32,11 @@ const SiteGenLoader = ( { autoNavigate = false } ) => {
 
 	useEffect( () => {
 		const percentageValue =
-			( currentData.sitegen.siteGenMetaStatus.currentStatus /
-				currentData.sitegen.siteGenMetaStatus.totalCount ) *
+			( currentData?.sitegen?.siteGenMetaStatus?.currentStatus /
+				currentData?.sitegen?.siteGenMetaStatus?.totalCount ) *
 			100;
 		setPercentage( percentageValue );
-	}, [ currentData.sitegen.siteGenMetaStatus.currentStatus ] );
+	}, [ currentData?.sitegen?.siteGenMetaStatus?.currentStatus ] );
 
 	useEffect( () => {
 		if ( percentage === 100 ) {

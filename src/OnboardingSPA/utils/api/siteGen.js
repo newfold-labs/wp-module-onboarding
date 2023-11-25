@@ -28,3 +28,20 @@ export async function generateSiteGenMeta(
 		} ).then()
 	);
 }
+
+/* export async function getHomePagePreviews() {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/get-homepages' ),
+		} ).then()
+	);
+} */
+export async function getHomePagePreviews( siteDescription, regenerate ) {
+	// eslint-disable-next-line no-debugger
+	debugger;
+	return await apiFetch( {
+		path: onboardingRestURL( 'sitegen/get-homepages' ),
+		method: 'GET',
+		data: { site_description: siteDescription, regenerate },
+	} );
+}
