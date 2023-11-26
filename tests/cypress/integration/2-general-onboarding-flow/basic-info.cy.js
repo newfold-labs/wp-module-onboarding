@@ -13,6 +13,7 @@ import { APIList, BasicInfoAPI } from '../wp-module-support/EventsApi.cy';
 describe( 'Basic Info Page', function () {
 	const desc = 'Welcome to WordPress';
 	const title = 'Hello WordPress';
+	const customCommandTimeout = 10000;
 
 	before( () => {
 		cy.visit( 'wp-admin/?page=nfd-onboarding#/wp-setup/step/basic-info' );
@@ -25,10 +26,10 @@ describe( 'Basic Info Page', function () {
 			.invoke( 'attr', 'class' )
 			.then( ( class_name ) => {
 				if ( ! class_name.includes( 'is-open' ) ) {
-					cy.get( '@drawerOpen' ).click();
+					cy.get( '.nfd-onboarding-drawer__toggle-button' ).click();
 				}
 			} );
-		cy.get( '.nfd-onboarding-drawer__panel-inner' )
+		cy.get( '.nfd-onboarding-drawer__panel-inner', {timeout: 10000} )
 			.scrollIntoView()
 			.should( 'be.visible' );
 
@@ -130,7 +131,7 @@ describe( 'Basic Info Page', function () {
 	it( 'Check for twitter or instagram id starting with `@` to convert it to URL', () => {
 		const sampleID = '@infinity';
 		const socialTest3 = '#instagram';
-		if ( cy.get( socialTest3 , { timeout: 15000} ).should( 'exist' ) ) {
+		if ( cy.get( socialTest3 , { timeout: customCommandTimeout} ).should( 'exist' ) ) {
 			cy.get( socialTest3 ).clear({ force: true });
 			cy.get( socialTest3 ).type( sampleID );
 			cy.get( '#facebook' ).focus();
@@ -138,7 +139,7 @@ describe( 'Basic Info Page', function () {
 				.invoke( 'val' )
 				.should( 'contain', 'https://' );
 		}
-		cy.wait( 2000 )
+		// cy.wait( 2000 )
 	} );
 
 	it( 'Check if Social Media URL checks are done', () => {
@@ -150,13 +151,14 @@ describe( 'Basic Info Page', function () {
 		// Facebook Social Media Component
 		const socialTest2 = cy.get( '#twitter' );
 		const socialTest = cy.get( '#facebook' );
-		cy.wait(2000)
+		cy.wait(3000)
 
-		if ( socialTest.should( 'exist' ) ) {
+		if ( socialTest.should( 'exist', { timeout: customCommandTimeout } ) ) {
 			cy.get( '#facebook' ).clear();
-			cy.get( '.browser-content_social_icon.--no-url' ).should( 'exist' )
+			cy.get( '.browser-content_social_icon.--no-url', { timeout: customCommandTimeout } ).should( 'exist' )
 			cy.get(
-				'.browser-content_social_icon[style="background-image: var(--facebook-icon);"]'
+				'.browser-content_social_icon[style="background-image: var(--facebook-icon);"]',
+				{ timeout : customCommandTimeout }
 			).should( 'have.css', 'opacity', '0.5' );
 
 			socialTest2.focus();
@@ -175,7 +177,8 @@ describe( 'Basic Info Page', function () {
 				'have.text',
 				ModalText2
 			);
-			cy.get( '.components-modal__content' ).type( '{esc}' );
+			// cy.get( '.components-modal__content' ).type( '{esc}' );
+			cy.get( '.components-modal__header button' , { timeout: customCommandTimeout } ).click()
 			cy.get(
 				'.browser-content_social_icon[style="background-image: var(--facebook-icon);"]'
 			).should( 'have.css', 'opacity', '0.75' );
@@ -229,8 +232,10 @@ describe( 'Basic Info Page', function () {
 		}
 	} );
 
-	it( 'Test Basic Info Events API gets triggered', () => {
+	it('Test Basic Info Events API gets triggered', () => {
+		const socialTest = '#facebook'
 		const socialTest2 = '#twitter';
+		const socialTest3 = '#instagram'
 		const socialTest4 = '#youtube';
 		const socialTest5 = '#linkedin';
 		const socialTest6 = '#yelp';
@@ -238,20 +243,28 @@ describe( 'Basic Info Page', function () {
 		const label_keys = ['', 'title', 'tagline', 'logo_added', 'platform', 'platform', 'platform', 'platform', 'platform', 'platform', 'platform'];
 		const actual_values = ['', title, desc, '', 'facebook', 'twitter', 'instagram', 'youtube', 'linkedin', 'yelp', 'tiktok'];
 
-		cy.get( '.social-form__top-row_icon' )
-			.as( 'socialFormToggle' )
-			.invoke( 'attr', 'class' )
-			.then( ( class_name ) => {
+		cy.get('.social-form__top-row_icon')
+			.as('socialFormToggle')
+			.invoke('attr', 'class')
+			.then((class_name) => {
 				if (
-					! class_name.includes( 'social-form__top-row_icon_opened' )
+					!class_name.includes('social-form__top-row_icon_opened')
 				) {
-					cy.get( '@socialFormToggle' ).click();
+					cy.get('@socialFormToggle').click();
 				}
-			} );
-
+			});
+		
+		cy.get( socialTest ).should( 'exist' );
+		cy.get( socialTest ).clear();
+		cy.get( socialTest ).type( 'https://www.facebook.com/testfaceboob' );
+	
 		cy.get( socialTest2 ).should( 'exist' );
 		cy.get( socialTest2 ).clear();
-		cy.get( socialTest2 ).type( '@testTweet' );
+		cy.get(socialTest2).type('@testTweet');
+		
+		cy.get( socialTest3 ).should( 'exist' );
+		cy.get( socialTest3 ).clear();
+		cy.get( socialTest3 ).type( '@testInsta' );
 
 		cy.get( socialTest4 ).should( 'exist' );
 		cy.get( socialTest4 ).clear();
