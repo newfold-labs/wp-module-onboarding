@@ -3,6 +3,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
+use NewfoldLabs\WP\Module\AI\SiteGen\SiteGen;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
 
 /**
@@ -99,12 +100,6 @@ class SiteGenController {
             ),
             'regenerate' => array(
                 'required' => false,
-                'validate_callback' => function($param, $request, $key) {
-                    return is_bool($param) || is_null($param);
-                },
-                'sanitize_callback' => function($param, $request, $key) {
-                    return is_null($param) ? $param : (bool)$param;
-                }
             ),
             // Add other parameters here as needed.
         );
@@ -149,44 +144,40 @@ class SiteGenController {
 	}
 
 	/**
-	 * Gets the preview homepages and fetches required parameters from the WordPress database.
+	 * Gets the preview homepages
 	 *
-	 * @param \WP_REST_Request $request Request object containing parameters from the front end.
-	 * @return WP_REST_Response
+	 * @return array
 	 */
 	public function get_homepages( \WP_REST_Request $request ) {
 		// Fetch parameters provided by the front end.
 		$site_description = $request->get_param( 'site_description' );
 		$regenerate = $request->get_param( 'regenerate' );
 		
-		// Set default values if not provided.
-		$site_description = $site_description ?: 'default description';
-		$regenerate = is_null($regenerate) ? true : (bool)$regenerate;
-
-		// Retrieve $content_style and $target_audience from the database or previous API call.
-		$content_style = get_option( 'contentstructure' ); // Replace with actual option name.
-		$target_audience = get_option( 'targetaudience' ); // Replace with actual option name.
-
-		// Ensure that $content_style and $target_audience have valid values.
-		if (!$content_style || !$target_audience) {
+		$nfd_ai_site_gen_option = get_option('nfd-ai-site-gen');
+		//$nfd_ai_site_gen = maybe_unserialize($nfd_ai_site_gen_option);
+	
+		// Extract the 'targetaudience' and 'contentstructure' values.
+		$target_audience = isset($nfd_ai_site_gen_option['targetaudience']) ? $nfd_ai_site_gen_option['targetaudience'] : null;
+		$content_style = isset($nfd_ai_site_gen_option['contentstructure']) ? $nfd_ai_site_gen_option['contentstructure'] : null;
+	
+		// Ensure that the required data is available.
+		if (!$target_audience || !$content_style) {
 			return new \WP_REST_Response(
-				array(
-					'message' => 'Missing required parameters from the database.',
-				),
-				400
+				array('message' => 'Required data is missing.'),
+				400 // Bad Request
 			);
 		}
-
+	
 		// Call the static method from SiteGenService with all parameters.
-		$home_pages = SiteGenService::get_home_pages(
+		$home_pages = SiteGen::get_home_pages(
 			$site_description,
 			$content_style,
 			$target_audience,
 			$regenerate
 		);
-
+	
 		// Return the result as a REST response.
-		return new \WP_REST_Response($home_pages, 200);
+		return new \WP_REST_Response($home_pages, 200); // OK
 	}
-
+	
 }
