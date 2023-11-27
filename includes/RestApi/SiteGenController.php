@@ -149,14 +149,13 @@ class SiteGenController {
 	 * @return array
 	 */
 	public function get_homepages( \WP_REST_Request $request ) {
-		// Fetch parameters provided by the front end.
+		// Fetching parameters provided by the front end.
 		$site_description = $request->get_param( 'site_description' );
 		$regenerate = $request->get_param( 'regenerate' );
 		
 		$nfd_ai_site_gen_option = get_option('nfd-ai-site-gen');
-		//$nfd_ai_site_gen = maybe_unserialize($nfd_ai_site_gen_option);
 	
-		// Extract the 'targetaudience' and 'contentstructure' values.
+		// Extracting the 'targetaudience' and 'contentstructure' values.
 		$target_audience = isset($nfd_ai_site_gen_option['targetaudience']) ? $nfd_ai_site_gen_option['targetaudience'] : null;
 		$content_style = isset($nfd_ai_site_gen_option['contentstructure']) ? $nfd_ai_site_gen_option['contentstructure'] : null;
 	
@@ -168,7 +167,7 @@ class SiteGenController {
 			);
 		}
 	
-		// Call the static method from SiteGenService with all parameters.
+		// Call the static method from SiteGen with all parameters.
 		$home_pages = SiteGen::get_home_pages(
 			$site_description,
 			$content_style,
@@ -176,7 +175,6 @@ class SiteGenController {
 			$regenerate
 		);
 	
-		// Return the result as a REST response.
 		return new \WP_REST_Response($home_pages, 200); // OK
 	}
 	

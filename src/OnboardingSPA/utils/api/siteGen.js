@@ -59,10 +59,8 @@ export async function generateSiteGenMeta(
  */
 
 export async function getHomePagePreviews( siteDescription, regenerate ) {
-	// Construct the base URL
 	const baseUrl = onboardingRestURL( 'sitegen/get-homepages' );
 
-	// Construct query parameters
 	const queryParams = new URLSearchParams();
 	if ( siteDescription !== undefined ) {
 		queryParams.append( 'site_description', siteDescription );
@@ -71,13 +69,11 @@ export async function getHomePagePreviews( siteDescription, regenerate ) {
 		queryParams.append( 'regenerate', regenerate );
 	}
 
-	// Create the full URL with query parameters
+	// Creating the full URL with query parameters
 	const url = `${ baseUrl }&${ queryParams }`;
 
-	// Log the URL to the console for verification
 	console.log( 'Fetching URL:', url );
 
-	// Make the fetch call and return the JSON response
 	try {
 		const response = await fetch( url );
 		if ( ! response.ok ) {
