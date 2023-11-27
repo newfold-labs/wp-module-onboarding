@@ -4,7 +4,7 @@ import { Icon, chevronLeft, reusableBlock } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 
 import { store as nfdOnboardingStore } from '../../../../store';
-import ButtonDark from '../../../../components/Button/ButtonDark';
+import classNames from 'classnames';
 
 /**
  * Back step Navigation button.
@@ -24,10 +24,21 @@ const Back = ( { path, showErrorDialog } ) => {
 		}
 	};
 	return (
-		<ButtonDark className='navigation-buttons' onClick={ navigateBack } variant="secondary">
+		<div
+			role="button"
+			tabIndex="0"
+			onClick={ navigateBack }
+			onKeyDown={ ( event ) => {
+				if ( event.key === 'Enter' ) {
+					navigateBack();
+				}
+			} }
+			aria-label="Back"
+			className={ classNames('navigation-buttons-editor_back', 'navigation-buttons-editor') }
+		>
 			<Icon icon={ chevronLeft } />
 			{ __( 'Back', 'wp-module-onboarding' ) }
-		</ButtonDark>
+		</div>
 	);
 };
 
@@ -36,10 +47,21 @@ const Regenerate = () => {
 		alert('regenerate');
 	};
 	return (
-		<ButtonDark onClick={ regenerate } variant="secondary">
+		<div
+			role="button"
+			tabIndex="0"
+			onClick={ regenerate }
+			onKeyDown={ ( event ) => {
+				if ( event.key === 'Enter' ) {
+					regenerate();
+				}
+			} }
+			aria-label="Regenerate"
+			className={ classNames('navigation-buttons-editor__regenerate', 'navigation-buttons-editor') }
+		>
 			<Icon icon={ reusableBlock } />
 			{ __( 'Regenerate', 'wp-module-onboarding' ) }
-		</ButtonDark>
+		</div>
 	);
 };
 

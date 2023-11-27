@@ -48,15 +48,23 @@ const VersionButton = ( {isInputDisabled} ) => {
 		<Dropdown
 			popoverProps={ { placement: 'bottom-start' } }
 			renderToggle={ ( { isOpen, onToggle } ) => (
-				<ButtonDark
+				<div
+					role="button"
+					tabIndex="0"
 					onClick={ onToggle }
+					onKeyDown={ ( event ) => {
+						if ( event.key === 'Enter' ) {
+							onToggle();
+						}
+					} }
 					aria-expanded={ isOpen }
+					aria-label="Regenerate"
+					className='navigation-buttons-editor'
 				>
 					<Wishlist />
-					{/* { __( 'Version 1', 'wp-module-onboarding' ) } */}
 					<TextInput customerInput={  __( 'Version 1', 'wp-module-onboarding' ) } disabled={isInputDisabled} />
 					<Icon icon={ chevronDown } />
-				</ButtonDark>
+				</div>
 			) }
 			renderContent={ () => <VersionDropDown />
 			}

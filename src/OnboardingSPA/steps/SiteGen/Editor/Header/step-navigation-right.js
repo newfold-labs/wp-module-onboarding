@@ -3,8 +3,7 @@ import { Icon, chevronRight, settings } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 
 import { store as nfdOnboardingStore } from '../../../../store';
-import ButtonDark from '../../../../components/Button/ButtonDark';
-// import {ReactComponent as Equalizer} from '../../../../static/icons/equalizer.svg'
+import classNames from 'classnames';
 
 /**
  * Back step Navigation button.
@@ -18,10 +17,21 @@ const Customize = ( ) => {
 		alert('customize');
 	};
 	return (
-		<ButtonDark onClick={ customize } variant="secondary">
+		<div
+			role="button"
+			tabIndex="0"
+			onClick={ customize }
+			onKeyDown={ ( event ) => {
+				if ( event.key === 'Enter' ) {
+					customize();
+				}
+			} }
+			aria-label="Customize"
+			className={ classNames('navigation-buttons-editor__customize', 'navigation-buttons-editor') }
+		>
 			<Icon icon={ settings } />
 			{ __( 'Customize', 'wp-module-onboarding' ) }
-		</ButtonDark>
+		</div>
 	);
 };
 
@@ -30,10 +40,21 @@ const Save = () => {
 		alert('save');
 	};
 	return (
-		<ButtonDark onClick={ save } variant="secondary">
-			{ __( 'Save & Continue', 'wp-module-onboarding' ) }
+		<div
+			role="button"
+			tabIndex="0"
+			onClick={ save }
+			onKeyDown={ ( event ) => {
+				if ( event.key === 'Enter' ) {
+					save();
+				}
+			} }
+			aria-label="Save"
+			className={ classNames('navigation-buttons-editor__continue', 'navigation-buttons-editor') }
+		>
+			<span>{ __( 'Save & Continue', 'wp-module-onboarding' ) }</span>
 			<Icon icon={ chevronRight } />
-		</ButtonDark>
+		</div>
 	);
 };
 
