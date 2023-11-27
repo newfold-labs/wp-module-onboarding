@@ -1,6 +1,6 @@
 .nfd-onboarding-header {
 	align-items: center;
-	background-color: var(--nfd-onboarding-header-base);
+	background-color: var(--nfd-onboarding-admin-bar-background);
 	color: var(--nfd-onboarding-header-contrast);
 
 	h2,
@@ -151,14 +151,14 @@
 				display: none;
 			}
 		}
-
 		&__continue {
-			@media (max-width: #{ ($break-xlarge) }) {
-				content: 'Next';
-			}
-		   
-			@media (min-width: #{ ($break-xlarge) }) {
+			&:before {
 				content: 'Save & Continue';
+			}
+			@media (max-width: #{ ($break-xlarge) }) {
+				&:before {
+					content: 'Next';
+				}
 			}
 		}
 	}

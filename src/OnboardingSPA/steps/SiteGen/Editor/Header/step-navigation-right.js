@@ -50,9 +50,11 @@ const Save = () => {
 				}
 			} }
 			aria-label="Save"
-			className={ classNames('navigation-buttons-editor__continue', 'navigation-buttons-editor') }
+			className={ classNames('navigation-buttons-editor') }
 		>
-			<span>{ __( 'Save & Continue', 'wp-module-onboarding' ) }</span>
+			<span className='navigation-buttons-editor__continue'>
+				{/* { __( 'Save & Continue', 'wp-module-onboarding' ) } */}
+			</span>
 			<Icon icon={ chevronRight } />
 		</div>
 	);
