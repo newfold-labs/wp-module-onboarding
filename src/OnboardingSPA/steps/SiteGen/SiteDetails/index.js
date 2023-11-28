@@ -63,6 +63,10 @@ const SiteGenSiteDetails = () => {
 							className={ 'nfd-sg-site-details--next-btn' }
 							text={ content.buttonText }
 							callback={ checkAndNavigate }
+							disabled={
+								customerInput === undefined ||
+								customerInput === ''
+							}
 						/>
 					</div>
 				</div>
