@@ -28,6 +28,7 @@ const HeadingWithSubHeading = ( { title, subtitle } ) => {
 							width: '20px',
 							height: '20px',
 							marginBottom: '-2px',
+							marginRight: '2px',
 							backgroundImage: 'var(--nfd-onboarding-icon)',
 							backgroundSize: 'contain',
 						} }
