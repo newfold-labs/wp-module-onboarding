@@ -3,32 +3,38 @@ namespace NewfoldLabs\WP\Module\Onboarding;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
- * Contains functionalities that redirect users to Onboarding on login to WordPress.
+ * Contains functionalities that redirect users to onboarding upon logging into WordPress.
  */
 class LoginRedirect {
 	/**
-	 * Redirect hook for SSO Logins
+	 * Redirect hook for Single Sign-On (SSO) logins.
 	 *
-	 * @param string $original_redirect The requested redirect URL
-	 * @return string The filtered url to redirect to
+	 * @param string $original_redirect The requested redirect URL.
+	 * @return string The filtered URL to redirect to.
 	 */
 	public static function sso( $original_redirect ) {
+		// Handle the redirect to onboarding query parameter.
+		self::handle_redirect_param();
 		return self::filter_redirect( $original_redirect, wp_get_current_user() );
 	}
 
 	/**
-	 * Redirect hook for direct WP Logins
+	 * Redirect hook for direct WordPress logins.
 	 *
-	 * @param string           $original_redirect           The requested redirect URL
-	 * @param string           $requested_original_redirect The requested redirect URL from parameter
-	 * @param WP_User|WP_Error $user                        The current logged in user or WP_Error on login failure
-	 * @return string The filtered URL to redirect to
+	 * @param string           $original_redirect           The requested redirect URL.
+	 * @param string           $requested_original_redirect The requested redirect URL from the parameter.
+	 * @param WP_User|WP_Error $user                        The current logged-in user or WP_Error on login failure.
+	 * @return string The filtered URL to redirect to.
 	 */
 	public static function wplogin( $original_redirect, $requested_original_redirect, $user ) {
-		// wp-login.php runs this filter on load and login failures
-		// We should only do a redirect with a successful user login
+		// Handle the redirect to onboarding query parameter.
+		self::handle_redirect_param();
+
+		// wp-login.php runs this filter upon loading and during login failures.
+		// We should perform a redirect only upon a successful user login.
 		if ( ! ( $user instanceof \WP_User ) ) {
 			return $original_redirect;
 		}
@@ -36,78 +42,97 @@ class LoginRedirect {
 	}
 
 	/**
-	 * Evaluate whether the redirect should point to onboarding
+	 * Evaluate whether the redirect should point to onboarding.
 	 *
-	 * @param string  $original_redirect The requested redirect URL
-	 * @param WP_User $user              The logged in user
-	 * @return string The filtered url to redirect to
+	 * @param string  $original_redirect The requested redirect URL.
+	 * @param WP_User $user              The logged in user.
+	 * @return string The filtered URL to redirect to.
 	 */
 	public static function filter_redirect( $original_redirect, $user ) {
-		// Only admins should get the onboarding redirect
+		// Only administrators should receive the onboarding redirect.
 		if ( ! user_can( $user, 'manage_options' ) ) {
 			return $original_redirect;
 		}
 
+		// Handle the redirect to onboarding WordPress option.
 		$redirect_option_name = Options::get_option_name( 'redirect' );
-		// If request has ?nfd_module_onboarding_redirect=false then temporarily disable the redirect
-		if ( isset( $_GET[ $redirect_option_name ] )
-			&& 'false' === $_GET[ $redirect_option_name ] ) {
+		$redirect_option      = get_option( $redirect_option_name );
+		if ( '0' === $redirect_option ) {
+			return $original_redirect;
+		} elseif ( '1' === $redirect_option ) {
+			// Redirect to onboarding and, disable the redirect via option for any subsequent logins that may occur later.
 			self::disable_redirect();
+			return admin_url( '/index.php?page=' . WP_Admin::$slug );
 		}
 
-		// Redirect was temporarily disabled via transient
-		if ( \get_transient( Options::get_option_name( 'redirect_param' ) ) === '1' ) {
-			return $original_redirect;
-		}
-		// Don't redirect if coming_soon is off. User has launched their site
-		if ( ! Data::coming_soon() ) {
-			return $original_redirect;
-		}
-
-		// Don't redirect if they have intentionally exited or completed onboarding
-		$flow_data = \get_option( Options::get_option_name( 'flow' ), false );
+		// Don't redirect to onboarding if onboarding was exited or completed.
+		$flow_data = get_option( Options::get_option_name( 'flow' ), false );
 		if ( data_get( $flow_data, 'hasExited' ) || data_get( $flow_data, 'isComplete' ) ) {
 			return $original_redirect;
 		}
 
-		// Check for disabled redirect database option: nfd_module_onboarding_redirect
-		$redirect_option = \get_option( $redirect_option_name, null );
-		// If not set, then set it to true
-		if ( empty( $redirect_option ) ) {
-			$redirect_option = \update_option( $redirect_option_name, true );
+		// Don't redirect to onboarding if the site is not a fresh installation.
+		if ( container()->has( 'isFreshInstallation' ) ) {
+			$is_fresh_installation = container()->get( 'isFreshInstallation' );
+			if ( false === $is_fresh_installation ) {
+				return $original_redirect;
+			}
 		}
-		if ( ! $redirect_option ) {
+
+		// Don't redirect to onboarding if the 'coming_soon' mode is off. The user has launched their site.
+		if ( ! Data::coming_soon() ) {
 			return $original_redirect;
 		}
 
-		// Finally, if we made it this far, then set the redirect URL to point to onboarding
-		return \admin_url( '/index.php?page=nfd-onboarding' );
+		// Redirect to onboarding and, disable the redirect via option for any subsequent logins that may occur later.
+		self::disable_redirect();
+		return admin_url( '/index.php?page=' . WP_Admin::$slug );
 	}
 
 	/**
-	 * Sets a transient that disables redirect to onboarding on login.
+	 * Sets an option that disables the redirect to onboarding on login.
 	 *
-	 * @return void
+	 * @return boolean
 	 */
 	public static function disable_redirect() {
-		\set_transient( Options::get_option_name( 'redirect_param' ), '1', 30 );
+		return update_option( Options::get_option_name( 'redirect' ), '0' );
 	}
 
 	/**
-	 * Sets a transient that enables redirect to onboarding on login.
+	 * Sets an option that enables the redirect to onboarding on login.
 	 *
-	 * @return void
+	 * @return boolean
 	 */
 	public static function enable_redirect() {
-		\set_transient( Options::get_option_name( 'redirect_param' ), '0', 30 );
+		return update_option( Options::get_option_name( 'redirect' ), '1' );
 	}
 
 	/**
 	 * Removes the onboarding login redirect action.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function remove_handle_redirect_action() {
-		return \remove_action( 'login_redirect', array( __CLASS__, 'handle_redirect' ) );
+		return remove_action( 'login_redirect', array( __CLASS__, 'handle_redirect' ) );
+	}
+
+	/**
+	 * Sets a WordPress option corresponding to the redirect parameter value.
+	 *
+	 * @return boolean
+	 */
+	private static function handle_redirect_param() {
+		$redirect_option_name = Options::get_option_name( 'redirect' );
+		if ( ! isset( $_GET[ $redirect_option_name ] ) ) {
+			return false;
+		}
+		switch ( $_GET[ $redirect_option_name ] ) {
+			case 'true':
+				return self::enable_redirect();
+			case 'false':
+				return self::disable_redirect();
+		}
+
+		return false;
 	}
 }
