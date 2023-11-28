@@ -93,9 +93,10 @@
 
 					&__button i {
 						margin-right: 8px;
-						background-image: var(--facebook-white-icon);
+						background-image: var(--facebook-icon);
 						width: 25px;
 						height: 25px;
+						filter: invert(100%) sepia(100%) saturate(100%) hue-rotate(215deg) brightness(104%) contrast(102%);
 					}
 				}
 			}
