@@ -15,13 +15,13 @@
 @import "../components/Tooltip/stylesheet";
 @import "../components/ImageUploader/components/ImageUploaderWithIcon/stylesheet";
 @import "../components/SocialMediaForm/stylesheet";
-@import "../components/TextInput/stylesheet";
+@import "../components/TextInput/TextInputSiteBuild/stylesheet";
 @import "../components/ExitToWordPress/stylesheet";
 @import "../components/Accordion/stylesheet";
 @import "../components/NewfoldLargeCard/stylesheet";
 @import "../components/SelectableCard/stylesheet";
 @import "../components/SelectableCardList/stylesheet";
-@import "../components/HeadingWithSubHeading/stylesheet";
+@import "../components/Heading/HeadingWithSubHeading/stylesheet";
 @import "../components/Button/stylesheet";
 @import "../components/CardHeader/stylesheet";
 @import "../components/NeedHelpTag/stylesheet";
@@ -52,8 +52,12 @@
 @import "../components/Button/ButtonNext/stylesheet";
 @import "../components/Loaders/Spinner/stylesheet";
 @import "../components/SiteGenPlaceholder/stylesheet";
+@import "../components/Heading/AIHeading/stylesheet";
+@import "../components/TextInput/TextInputSiteGen/stylesheet";
 @import "../components/ToggleDarkMode/stylesheet";
 @import "../components/Button/NextButtonSiteGen/stylesheet";
+@import "../components/CardWithOptions/stylesheet";
+@import "../components/Loaders/SiteGenLoader/stylesheet";
 
 // CSS for Pages
 @import "../steps/BasicInfo/stylesheet";
@@ -69,8 +73,12 @@
 @import "../steps/DesignHeaderMenu/stylesheet";
 @import "../steps/SiteFeatures/stylesheet";
 @import "../steps/TheFork/stylesheet";
+@import "../steps/SiteGen/SiteDetails/stylesheet";
+@import "../steps/SiteGen/Experience/stylesheet";
 @import "../steps/SiteGen/SiteLogo/stylesheet";
+@import "../steps/SiteGen/SocialMedia/stylesheet";
 @import "../steps/SiteGen/Welcome/stylesheet";
+@import "../steps/SiteGen/Building/stylesheet";
 
 .nfd-onboarding-container {
 	display: flex;

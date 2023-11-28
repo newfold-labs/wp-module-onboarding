@@ -1,19 +1,32 @@
-import CommonLayout from '../../../components/Layouts/Common';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { useEffect, useState } from '@wordpress/element';
 
-import { useEffect } from '@wordpress/element';
-
-import { useDispatch } from '@wordpress/data';
-import { store as nfdOnboardingStore } from '../../../store';
+import getContents from './contents';
+import Animate from '../../../components/Animate';
 import { HEADER_SITEGEN } from '../../../../constants';
-
-import SiteGenPlaceholder from '../../../components/SiteGenPlaceholder';
+import { store as nfdOnboardingStore } from '../../../store';
+import AIHeading from '../../../components/Heading/AIHeading';
+import CommonLayout from '../../../components/Layouts/Common';
+import TextInputSiteGen from '../../../components/TextInput/TextInputSiteGen';
+import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 
 const SiteGenSiteDetails = () => {
+	const content = getContents();
+	const [ customerInput, setCustomerInput ] = useState();
+
+	const { currentData } = useSelect( ( select ) => {
+		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+		};
+	} );
+
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
 		setHeaderActiveView,
 		setDrawerActiveView,
+		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -21,13 +34,43 @@ const SiteGenSiteDetails = () => {
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
-	} );
+
+		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
+			setCustomerInput( currentData.sitegen.siteDetails.prompt );
+		}
+	}, [] );
+
+	const checkAndNavigate = () => {
+		currentData.sitegen.siteDetails.prompt = customerInput;
+		setCurrentOnboardingData( currentData );
+		// console.log( 'Navigate to the next screen!' );
+	};
+
 	return (
-		<CommonLayout
-			isCentered
-			className="nfd-onboarding-step--site-gen__site-details"
-		>
-			<SiteGenPlaceholder heading={ 'Site Details' } />
+		<CommonLayout isCentered>
+			<Animate type={ 'fade-in' }>
+				<div className={ 'nfd-sg-site-details' }>
+					<AIHeading title={ content.heading } />
+					<TextInputSiteGen
+						placeholder={ content.inputPlaceholder }
+						hint={ content.inputHint }
+						height={ '40px' }
+						customerInput={ customerInput }
+						setCustomerInput={ setCustomerInput }
+					/>
+					<div className={ 'nfd-sg-site-details-endrow' }>
+						<NextButtonSiteGen
+							className={ 'nfd-sg-site-details--next-btn' }
+							text={ content.buttonText }
+							callback={ checkAndNavigate }
+							disabled={
+								customerInput === undefined ||
+								customerInput === ''
+							}
+						/>
+					</div>
+				</div>
+			</Animate>
 		</CommonLayout>
 	);
 };
