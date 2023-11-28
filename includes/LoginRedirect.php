@@ -1,8 +1,11 @@
 <?php
+
 namespace NewfoldLabs\WP\Module\Onboarding;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+
+use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
  * Contains functionalities that redirect users to Onboarding on login to WordPress.
@@ -12,6 +15,7 @@ class LoginRedirect {
 	 * Redirect hook for SSO Logins
 	 *
 	 * @param string $original_redirect The requested redirect URL
+	 *
 	 * @return string The filtered url to redirect to
 	 */
 	public static function sso( $original_redirect ) {
@@ -21,9 +25,10 @@ class LoginRedirect {
 	/**
 	 * Redirect hook for direct WP Logins
 	 *
-	 * @param string           $original_redirect           The requested redirect URL
-	 * @param string           $requested_original_redirect The requested redirect URL from parameter
-	 * @param WP_User|WP_Error $user                        The current logged in user or WP_Error on login failure
+	 * @param string $original_redirect The requested redirect URL
+	 * @param string $requested_original_redirect The requested redirect URL from parameter
+	 * @param WP_User|WP_Error $user The current logged in user or WP_Error on login failure
+	 *
 	 * @return string The filtered URL to redirect to
 	 */
 	public static function wplogin( $original_redirect, $requested_original_redirect, $user ) {
@@ -32,56 +37,72 @@ class LoginRedirect {
 		if ( ! ( $user instanceof \WP_User ) ) {
 			return $original_redirect;
 		}
+
 		return self::filter_redirect( $original_redirect, $user );
 	}
 
 	/**
 	 * Evaluate whether the redirect should point to onboarding
 	 *
-	 * @param string  $original_redirect The requested redirect URL
-	 * @param WP_User $user              The logged in user
+	 * @param string $original_redirect The requested redirect URL
+	 * @param \WP_User $user The logged-in user
+	 *
 	 * @return string The filtered url to redirect to
 	 */
 	public static function filter_redirect( $original_redirect, $user ) {
+
+		$onboarding_redirect = admin_url( '/index.php?page=nfd-onboarding' );
+
 		// Only admins should get the onboarding redirect
 		if ( ! user_can( $user, 'manage_options' ) ) {
 			return $original_redirect;
 		}
 
 		$redirect_option_name = Options::get_option_name( 'redirect' );
-		// If request has ?nfd_module_onboarding_redirect=false then temporarily disable the redirect
-		if ( isset( $_GET[ $redirect_option_name ] )
-			&& 'false' === $_GET[ $redirect_option_name ] ) {
-			self::disable_redirect();
+
+		// If request has ?nfd_module_onboarding_redirect={true|false} then enable/disable the redirect
+		$shouldRedirect = filter_input( INPUT_GET, $redirect_option_name, FILTER_VALIDATE_BOOLEAN );
+
+		// If URL parameter isn't set, then check the database option
+		if ( is_null( $shouldRedirect ) ) {
+			$shouldRedirect = get_option( $redirect_option_name, null );
 		}
 
-		// Redirect was temporarily disabled via transient
-		if ( \get_transient( Options::get_option_name( 'redirect_param' ) ) === '1' ) {
-			return $original_redirect;
-		}
-		// Don't redirect if coming_soon is off. User has launched their site
-		if ( ! Data::coming_soon() ) {
-			return $original_redirect;
+		// If we should explicitly handle the redirect, then update the database option and redirect accordingly
+		if ( ! is_null( $shouldRedirect ) ) {
+			update_option( $redirect_option_name, $shouldRedirect );
+
+			return $shouldRedirect ? $onboarding_redirect : $original_redirect;
 		}
 
-		// Don't redirect if they have intentionally exited or completed onboarding
+		// In all other cases, determine whether to redirect based on a few conditions:
+
+		// 1 - If user has previously completed or exited onboarding, then don't redirect
 		$flow_data = \get_option( Options::get_option_name( 'flow' ), false );
 		if ( data_get( $flow_data, 'hasExited' ) || data_get( $flow_data, 'isComplete' ) ) {
+			update_option( $redirect_option_name, false );
+
 			return $original_redirect;
 		}
 
-		// Check for disabled redirect database option: nfd_module_onboarding_redirect
-		$redirect_option = \get_option( $redirect_option_name, null );
-		// If not set, then set it to true
-		if ( empty( $redirect_option ) ) {
-			$redirect_option = \update_option( $redirect_option_name, true );
-		}
-		if ( ! $redirect_option ) {
+		// 2 - If the site is not a fresh WordPress installation, then don't redirect
+		if ( ! container()->get('isFreshInstallation') ) {
+			update_option( $redirect_option_name, false );
+
 			return $original_redirect;
 		}
 
-		// Finally, if we made it this far, then set the redirect URL to point to onboarding
-		return \admin_url( '/index.php?page=nfd-onboarding' );
+		// 3 - If coming soon is off, then don't redirect (user has launched their site)
+		if ( ! Data::coming_soon() ) {
+			update_option( $redirect_option_name, false );
+
+			return $original_redirect;
+		}
+
+		// If we made it here, then set the redirect URL to point to onboarding (and update the database option to prevent future redirects)
+		update_option( $redirect_option_name, false );
+
+		return $onboarding_redirect;
 	}
 
 	/**
