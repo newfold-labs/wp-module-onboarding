@@ -33,7 +33,7 @@ const SiteGen = () => {
 			<ThemedNewfoldInterfaceSkeleton
 				className={ classNames(
 					'nfd-onboarding-skeleton--sitegen',
-					`brand-${ newfoldBrand }`,
+					`brand-${ newfoldBrand }`
 				) }
 				header={ <Header /> }
 				content={ <Content /> }
