@@ -139,27 +139,5 @@
 			color: #272d30;
 			fill: #272d30;
 		}
-
-		&__regenerate {
-			@media (max-width: #{ ($break-xlarge) }) {
-				display: none;
-			}
-		}
-
-		&__customize {
-			@media (max-width: #{ ($break-xlarge) }) {
-				display: none;
-			}
-		}
-		&__continue {
-			&:before {
-				content: 'Save & Continue';
-			}
-			@media (max-width: #{ ($break-xlarge) }) {
-				&:before {
-					content: 'Next';
-				}
-			}
-		}
 	}
 }
