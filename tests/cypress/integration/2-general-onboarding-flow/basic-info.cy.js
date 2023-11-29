@@ -256,7 +256,7 @@ describe( 'Basic Info Page', function () {
 		
 		cy.get( socialTest ).should( 'exist' );
 		cy.get( socialTest ).clear();
-		cy.get( socialTest ).type( 'https://www.facebook.com/testfaceboob' );
+		cy.get( socialTest ).type( 'https://www.facebook.com/testfacebook' );
 	
 		cy.get( socialTest2 ).should( 'exist' );
 		cy.get( socialTest2 ).clear();
