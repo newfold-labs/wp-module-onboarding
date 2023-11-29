@@ -2,7 +2,7 @@ import { search, Icon, reusableBlock } from '@wordpress/icons';
 import { useState } from '@wordpress/element';
 
 import { LivePreview } from '..';
-import ButtonDark from '../../../components/Button/ButtonDark';
+import Button from '../../../components/Button';
 import { ReactComponent as FavouriteIcon } from '../../../static/icons/sitegen/heart-stroked.svg';
 import { __ } from '@wordpress/i18n';
 
@@ -49,12 +49,12 @@ const SiteGenPreviewSelectableCard = ( {
 					<div
 						className={ `${ className }__live-preview-container__overlay` }
 					>
-						<ButtonDark
+						<Button
 							className={ `${ className }__live-preview-container__overlay__button` }
 						>
 							<Icon icon={ search } />
 							Preview Version
-						</ButtonDark>
+						</Button>
 					</div>
 				) }
 				<div
