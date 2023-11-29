@@ -1,5 +1,5 @@
 import apiFetch from '@wordpress/api-fetch';
-// import { addQueryArgs } from '@wordpress/url';
+import { addQueryArgs } from '@wordpress/url';
 
 import { resolve } from './resolve.js';
 import { onboardingRestURL } from './common';
@@ -30,7 +30,7 @@ export async function generateSiteGenMeta(
 	);
 }
 
-/* export async function getHomePagePreviews( siteDescription, regenerate ) {
+ /* export async function getHomePagePreviews( siteDescription, regenerate ) {
 	// Construct the query parameters
 	const queryParams = {};
 	if ( siteDescription !== undefined ) {
@@ -57,8 +57,23 @@ export async function generateSiteGenMeta(
 	}
 }
  */
+export async function getHomePagePreviews(
+	siteDescription,
+	regenerate = false
+) {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/get-homepages' ),
+			method: 'POST',
+			data: {
+				site_description: siteDescription,
+				regenerate,
+			},
+		} ).then()
+	);
+}
 
-export async function getHomePagePreviews( siteDescription, regenerate ) {
+/* export async function getHomePagePreviews( siteDescription, regenerate ) {
 	const baseUrl = onboardingRestURL( 'sitegen/get-homepages' );
 
 	const queryParams = new URLSearchParams();
@@ -86,4 +101,4 @@ export async function getHomePagePreviews( siteDescription, regenerate ) {
 		console.error( 'Error fetching home page previews:', error );
 		throw error;
 	}
-}
+} */
