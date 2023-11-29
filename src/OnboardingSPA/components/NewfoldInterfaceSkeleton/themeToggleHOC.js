@@ -7,13 +7,12 @@ const themeToggleHOC = (
 	WrappedComponent,
 	darkClass,
 	lightClass,
-	shouldApplyTheme = true
+	isForkStep = true
 ) => {
 	return ( props ) => {
 		const { theme } = useContext( ThemeContext );
 		const isDarkMode = theme === THEME_DARK;
-		const shouldApply =
-			shouldApplyTheme !== undefined ? shouldApplyTheme : true;
+		const shouldApply = isForkStep !== undefined ? isForkStep : true;
 		const className = classNames( props.className, {
 			[ darkClass ]: isDarkMode && shouldApply,
 			[ lightClass ]: ! isDarkMode && shouldApply,

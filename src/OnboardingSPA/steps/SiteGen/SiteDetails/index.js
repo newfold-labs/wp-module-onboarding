@@ -43,7 +43,6 @@ const SiteGenSiteDetails = () => {
 	const checkAndNavigate = () => {
 		currentData.sitegen.siteDetails.prompt = customerInput;
 		setCurrentOnboardingData( currentData );
-		// console.log( 'Navigate to the next screen!' );
 	};
 
 	return (

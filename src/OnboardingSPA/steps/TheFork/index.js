@@ -4,7 +4,7 @@ import { useEffect } from '@wordpress/element';
 
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../store';
-import { HEADER_SITEGEN } from '../../../constants';
+import { FOOTER_SITEGEN, HEADER_SITEGEN } from '../../../constants';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -34,6 +34,7 @@ const TheFork = () => {
 		updateRoutes,
 		updateDesignRoutes,
 		updateInitialize,
+		setFooterActiveView,
 	} = useDispatch( nfdOnboardingStore );
 
 	const switchFlow = ( newFlow ) => {
@@ -61,6 +62,7 @@ const TheFork = () => {
 		setIsHeaderNavigationEnabled( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
+		setFooterActiveView( FOOTER_SITEGEN );
 	} );
 
 	const oldFlow = window.nfdOnboarding?.oldFlow

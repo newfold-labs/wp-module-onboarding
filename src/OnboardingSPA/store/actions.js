@@ -189,6 +189,13 @@ export function setHeaderActiveView( view ) {
 	};
 }
 
+export function setFooterActiveView( view ) {
+	return {
+		type: 'SET_FOOTER_ACTIVE_VIEW',
+		view,
+	};
+}
+
 export function updatePreviewSettings( previewSettings ) {
 	return {
 		type: 'SET_PREVIEW_SETTINGS',

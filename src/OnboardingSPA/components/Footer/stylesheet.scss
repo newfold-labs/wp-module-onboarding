@@ -1,0 +1,22 @@
+.nfd-onboarding-footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	z-index: 1;
+
+	display: flex;
+	flex-direction: row;
+
+	height: auto;
+	width: 100%;
+	border: none;
+
+	&__end {
+		position: absolute;
+		right: 25px;
+	}
+
+	&--background {
+		background-color: rgba(var(--nfd-onboarding-secondary-rgb), 0.75);
+	}
+}
