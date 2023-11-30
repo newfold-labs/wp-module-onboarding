@@ -9,16 +9,26 @@
 		&__title {
 			font-weight: 300;
 			text-align: center;
-			color: var(--nfd-onboarding-white);
+			color: var(--nfd-onboarding-primary);
 			margin: 35px !important;
 			font-size: 30px;
 		}
 
 		&__subtitle {
-			color: var(--nfd-onboarding-white) !important;
+			color: var(--nfd-onboarding-primary) !important;
 			font-weight: 300;
 			text-align: center;
 			font-size: 20px;
 		}
+
+		&__icon {
+			display: inline-flex;
+			width: 100px;
+			height: 17px;
+			background-image: var(--nfd-onboarding-logo-name);
+			background-size: contain;
+			background-repeat: no-repeat;
+			filter: invert(100%) sepia(100%) saturate(100%) hue-rotate(215deg) brightness(200%) contrast(200%)
+		} 
 	}
 }
