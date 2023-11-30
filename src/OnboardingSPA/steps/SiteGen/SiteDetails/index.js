@@ -122,24 +122,30 @@ const SiteGenSiteDetails = () => {
 							</label>
 							<div>
 								<button
-									onClick={ () =>
+									className={
+										'nfd-sg-site-details-rows-write-style'
+									}
+									onClick={ ( e ) =>
 										handleInputChange(
 											'hasBusinessName',
-											'yes'
+											e.target.value
 										)
 									}
 								>
-									Yes
+									We craft awesome goodies!
 								</button>
 								<button
-									onClick={ () =>
+									className={
+										'nfd-sg-site-details-rows-write-style'
+									}
+									onClick={ ( e ) =>
 										handleInputChange(
 											'hasBusinessName',
-											'no'
+											e.target.value
 										)
 									}
 								>
-									No
+									We manufacture quality products
 								</button>
 							</div>
 						</div>

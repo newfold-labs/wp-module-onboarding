@@ -26,9 +26,11 @@
 			box-shadow: 5px 5px rgba($color:  var(--nfd-onboarding-secondary), $alpha: 0.1);
 		}
 	}
-
+	&-rows > * {
+		margin-top: 20px;
+	  }
 	&-rows{
-		color: red;
+		margin-top: 30px;
 
 		label{
 			font-weight: 500px;
@@ -55,6 +57,46 @@
 
 		textarea{
 			height: 100px;
+		}
+
+		button{
+			min-width: 79px;
+			height: 40px;
+			padding: 8px, 24px, 8px, 24px;
+			border-radius: 8px;
+			margin-right: 8px;
+			background-color: #00000040;
+			// opacity: 0.25;
+			border: 1px solid #9CA2A7;
+			color: #FFFFFF !important;
+
+			
+			font-size: 18px;
+			font-weight: 500;
+			line-height: 19px;
+			letter-spacing: 0px;
+		}
+		
+		&-write-style:hover,button:hover{
+			cursor: pointer;
+
+		}
+
+		&-write-style{
+			width: 292px;
+			min-width: 79px;
+			height: 40px;
+			padding: 8px, 24px, 8px, 24px;
+			border-radius: 8px;
+			margin-right: 8px;
+			background-color: #00000040;
+			// opacity: 0.25;
+			border: 1px solid #9CA2A7;
+			color: #FFFFFF !important;
+			font-size: 15px !important;
+			font-weight: 500;
+			line-height: 19px;
+			letter-spacing: 0px;
 		}
 	}
 }
