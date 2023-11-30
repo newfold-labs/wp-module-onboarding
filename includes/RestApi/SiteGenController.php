@@ -127,11 +127,7 @@ class SiteGenController {
 		$identifier = $request->get_param( 'identifier' );
 		$skip_cache = $request->get_param( 'skip_cache' );
 
-		/* if ( SiteGenService::is_enabled() ) {
-			// TODO Implement the main function and do computations if required.
-			return SiteGenService::instantiate_site_meta( $site_info, $identifier, $skip_cache );
-		} */
-		if ( true ) {
+		if ( SiteGenService::is_enabled() ) {
 			// TODO Implement the main function and do computations if required.
 			return SiteGenService::instantiate_site_meta( $site_info, $identifier, $skip_cache );
 		}
