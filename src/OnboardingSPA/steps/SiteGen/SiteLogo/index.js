@@ -10,6 +10,7 @@ import getContents from './contents';
 import ImageUploaderWithText from '../../../components/ImageUploader/components/ImageUploaderWithText';
 import ButtonNext from '../../../components/Button/ButtonNext';
 import SkipButton from '../../../components/SkipButton';
+import AIHeading from '../../../components/Heading/AIHeading';
 
 const SiteGenSiteLogo = () => {
 	const [ siteLogo, setSiteLogo ] = useState();
@@ -69,12 +70,7 @@ const SiteGenSiteLogo = () => {
 			className="nfd-onboarding-step--site-gen__site-logo"
 		>
 			<div className="nfd-onboarding-step--site-gen__site-logo__container">
-				<div className="nfd-onboarding-step--site-gen__site-logo__container__heading">
-					<div className="nfd-onboarding-step--site-gen__site-logo__container__heading__animation"></div>
-					<p className="nfd-onboarding-step--site-gen__site-logo__container__heading__text">
-						{ content.heading }
-					</p>
-				</div>
+				<AIHeading title={ content.heading } />
 				<ImageUploaderWithText
 					image={ siteLogo }
 					imageSetter={ setSiteLogo }

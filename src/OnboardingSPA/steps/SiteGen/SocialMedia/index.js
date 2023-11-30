@@ -8,6 +8,7 @@ import { HEADER_SITEGEN } from '../../../../constants';
 import getContents from './contents';
 import ButtonNext from '../../../components/Button/ButtonNext';
 import SkipButton from '../../../components/SkipButton';
+import AIHeading from '../../../components/Heading/AIHeading';
 
 const SiteGenSiteSocialMedia = () => {
 	const {
@@ -31,12 +32,7 @@ const SiteGenSiteSocialMedia = () => {
 			className="nfd-onboarding-step--site-gen__social-media"
 		>
 			<div className="nfd-onboarding-step--site-gen__social-media__container">
-				<div className="nfd-onboarding-step--site-gen__social-media__container__heading">
-					<div className="nfd-onboarding-step--site-gen__social-media__container__heading__animation"></div>
-					<p className="nfd-onboarding-step--site-gen__social-media__container__heading__text">
-						{ content.heading }
-					</p>
-				</div>
+				<AIHeading title={ content.heading } />
 				<div className="nfd-onboarding-step--site-gen__social-media__contain ">
 					<div className="nfd-onboarding-step--site-gen__social-media__contain__containleft ">
 						{ content.facebookTitle }
