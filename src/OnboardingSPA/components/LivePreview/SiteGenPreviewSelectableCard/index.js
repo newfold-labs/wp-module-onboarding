@@ -3,7 +3,8 @@ import { useState } from '@wordpress/element';
 
 import { LivePreview } from '..';
 import Button from '../../../components/Button';
-import { ReactComponent as FavouriteIcon } from '../../../static/icons/sitegen/heart-stroked.svg';
+import { ReactComponent as FavouriteIconStroked } from '../../../static/icons/sitegen/heart-stroked.svg';
+import { ReactComponent as FavouriteIconFilled } from '../../../static/icons/sitegen/heart-filled.svg';
 import { __ } from '@wordpress/i18n';
 
 const SiteGenPreviewSelectableCard = ( {
@@ -15,6 +16,7 @@ const SiteGenPreviewSelectableCard = ( {
 	overlay = false,
 	onClick = false,
 	onWishlistClick = false,
+	isFavourite,
 	onRegenerateClick = false,
 	skeletonLoadingTime = 2500,
 } ) => {
@@ -72,7 +74,11 @@ const SiteGenPreviewSelectableCard = ( {
 						aria-label="Add to Wishlist"
 						className={ `${ className }__live-preview-container-buttons__button` }
 					>
-						<FavouriteIcon />
+						{ isFavourite ? (
+							<FavouriteIconFilled />
+						) : (
+							<FavouriteIconStroked />
+						) }
 						{ __( 'Version 1', 'wp-module-onboarding' ) }
 					</div>
 					<div

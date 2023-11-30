@@ -78,6 +78,7 @@ const SiteGenPreview = () => {
 						}
 					} }
 					onWishlistClick={ onWishlistClick }
+					isFavourite={ true }
 					onRegenerateClick={ onRegenerateClick }
 					tabIndex="0"
 					role="button"

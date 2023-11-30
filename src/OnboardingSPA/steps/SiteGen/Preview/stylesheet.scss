@@ -8,7 +8,8 @@
 		justify-content: center;
 		flex-wrap: wrap;
 		max-width: 500px;
-		padding-top: 50px;
+		padding-top: 32px;
+		margin-bottom: 15px;
 
 		&__heading {
 			display: flex;
@@ -20,7 +21,7 @@
 
 			&__text {
 				color: var(--nfd-onboarding-primary);
-				font-size: clamp(0.875rem, 0.6818rem + 0.9659vw, 3rem);
+				font-size: 28px;
 				margin-left: 15px;
 				white-space: normal;
 				line-height: 1;
@@ -35,7 +36,7 @@
 			&__text {
 				text-align: center;
 				color: var(--nfd-onboarding-primary);
-				font-size: clamp(0.875rem, 0.7727rem + 0.5114vw, 2rem);
+				font-size: 18px;
 				margin: 0;
 				padding: 0;
 			}
@@ -51,7 +52,7 @@
 		display: flex;
 		flex-direction: row;
 		text-align: center;
-		margin: 10px;
+		margin: 10px 10px 55px 10px;
 	}
 
 	&__note {
@@ -67,5 +68,6 @@
 		line-height: 22px;
 		text-align: center;
 		border-radius: 12px;
+		margin-bottom: 60px;
 	}
 }
