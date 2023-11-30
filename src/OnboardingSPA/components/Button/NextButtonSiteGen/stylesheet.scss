@@ -26,7 +26,7 @@
 		}
 
 		&--disabled {
-			background-color: rgba(var(--nfd-onboarding-primary-rgb), 0.4);
+			background-color: rgba(var(--nfd-onboarding-primary-rgb), 0.6) !important;
 
 			&:hover {
 				cursor: not-allowed;

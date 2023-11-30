@@ -96,7 +96,7 @@
 						background-image: var(--facebook-icon);
 						width: 25px;
 						height: 25px;
-						filter: invert(100%) sepia(100%) saturate(100%) hue-rotate(215deg) brightness(104%) contrast(102%);
+						filter: brightness(0) saturate(100%) invert(100%) sepia(1%) saturate(376%) hue-rotate(220deg) brightness(120%) contrast(100%);
 					}
 				}
 			}
