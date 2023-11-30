@@ -2,6 +2,7 @@ import { memo } from '@wordpress/element';
 import AdminBar from '../../../AdminBar';
 import ProgressBar from '../../../ProgressBar';
 
+import HeaderEnd from './HeaderEnd';
 import { Fill } from '@wordpress/components';
 import {
 	HEADER_SITEGEN,
@@ -50,6 +51,9 @@ const SiteGenHeader = () => {
 			</Fill>
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_START }` }>
 				<>{ isHeaderNavigationEnabled && <StepNavigation /> }</>
+			</Fill>
+			<Fill name={ `${ HEADER_SITEGEN }/HeaderEnd` }>
+				<HeaderEnd />
 			</Fill>
 			{ currentStep?.header && <currentStep.header /> }
 		</>
