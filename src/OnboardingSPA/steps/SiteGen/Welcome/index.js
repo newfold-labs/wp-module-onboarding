@@ -18,7 +18,7 @@ const SiteGenWelcome = () => {
 
 	useEffect( () => {
 		setIsHeaderEnabled( true );
-		setSidebarActiveView( false );
+		setSidebarActiveView( "Customize" );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setIsHeaderNavigationEnabled( true );
 		setDrawerActiveView( false );
