@@ -12,6 +12,10 @@ const getContents = () => {
 		),
 		inputHint: __( 'The more detail the better', 'wp-module-onboarding' ),
 		buttonText: __( 'Next', 'wp-module-onboarding' ),
+		walkThroughText: __(
+			'Not sure what to say? We can walk you through it.',
+			'wp-module-onboarding'
+		),
 	};
 };
 

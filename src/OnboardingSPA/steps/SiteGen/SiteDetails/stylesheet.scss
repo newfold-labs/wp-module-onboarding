@@ -26,4 +26,35 @@
 			box-shadow: 5px 5px rgba($color:  var(--nfd-onboarding-secondary), $alpha: 0.1);
 		}
 	}
+
+	&-rows{
+		color: red;
+
+		label{
+			font-weight: 500px;
+			font-size: 16px;
+			line-height: 19px;
+			color: var(--nfd-onboarding-primary);
+		}
+
+		input,textarea{
+			min-width: 600px;
+			height: 40px;
+			border: soild #9CA2A7 1px;
+			border-radius: 8px;
+			background-color: #00000040;
+			// opacity: 0.25;
+			padding: 8px, 24px, 8px, 24px;
+			color: #9CA2A7;
+			font-weight: 400px;
+			font-size: 17px;
+			line-height: 19px;
+
+
+		}
+
+		textarea{
+			height: 100px;
+		}
+	}
 }
