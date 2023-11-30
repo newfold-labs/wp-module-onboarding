@@ -6,6 +6,8 @@ import Spinner from '../../../Loaders/Spinner';
 import { ThemeContext } from '../../../ThemeContextProvider';
 import classNames from 'classnames';
 import { THEME_LIGHT } from '../../../../../constants';
+import bytes from 'bytes';
+import { Icon, closeSmall } from '@wordpress/icons';
 
 const ImageUploaderWithText = ( { image, imageSetter } ) => {
 	const inputRef = useRef( null );
@@ -17,14 +19,17 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 		if ( fileData ) {
 			setIsUploading( true );
 			const res = await uploadImage( fileData );
-			if ( res ) {
-				const id = res?.body?.id;
-				const url = res?.body?.source_url;
-				imageSetter( {
-					id,
-					url,
-				} );
+			if ( ! res?.body ) {
+				return setIsUploading( false );
 			}
+			const id = res.body?.id;
+			const url = res.body?.source_url;
+			imageSetter( {
+				id,
+				url,
+				fileName: fileData?.name,
+				fileSize: fileData?.size,
+			} );
 		}
 
 		setIsUploading( false );
@@ -81,11 +86,17 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 		}
 	};
 
+	const isImageUploaded =
+		! isUploading && image?.id !== 0 && image?.id !== undefined;
+
 	return (
 		<div
 			className={ `nfd-onboarding-image-uploader--with-text ${
 				onDragActive &&
 				'nfd-onboarding-image-uploader--with-text--on-drag'
+			} ${
+				isImageUploaded &&
+				'nfd-onboarding-image-uploader--with-text--not-dashed'
 			}` }
 			onDrop={ ( e ) => handleDrop( e ) }
 			onDragOver={ ( e ) => handleDragOver( e ) }
@@ -96,7 +107,7 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 				<Spinner />
 			) : (
 				<>
-					{ ( image === undefined || image?.id === 0 ) && (
+					{ ! isImageUploaded && (
 						<>
 							<div className="nfd-onboarding-image-uploader--with-text__heading">
 								<div
@@ -142,22 +153,36 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 							</div>
 						</>
 					) }
-					{ image?.id !== 0 && image?.id !== undefined && (
-						<>
+					{ isImageUploaded && (
+						<div className="nfd-onboarding-image-uploader--with-text__site_logo__preview">
 							<img
-								className="nfd-onboarding-image-uploader--with-text__site_logo"
-								src={ image?.url }
-								alt="Thumb"
+								className="nfd-onboarding-image-uploader--with-text__site_logo__preview__image"
+								src={ image.url }
+								alt={ __(
+									'Site Logo Preview',
+									'wp-module-onboarding'
+								) }
 							/>
-							<div className="nfd-onboarding-image-uploader--with-text__site_logo-reset">
+							<div className="nfd-onboarding-image-uploader--with-text__site_logo__preview__details">
+								<p className="nfd-onboarding-image-uploader--with-text__site_logo__preview__details__filename">
+									{ image.fileName }
+								</p>
+								<p className="nfd-onboarding-image-uploader--with-text__site_logo__preview__details__filesize">
+									{ bytes( image.fileSize ) }
+								</p>
+							</div>
+							<div className="nfd-onboarding-image-uploader--with-text__site_logo__preview__reset">
 								<button
-									className="nfd-onboarding-image-uploader--with-text__site_logo-reset__button"
+									className="nfd-onboarding-image-uploader--with-text__site_logo__preview__reset__button"
 									onClick={ removeSelectedImage }
 								>
-									{ __( 'Reset', 'wp-module-onboarding' ) }
+									<Icon
+										className="nfd-onboarding-image-uploader--with-text__site_logo__preview__reset__button__icon"
+										icon={ closeSmall }
+									/>
 								</button>
 							</div>
-						</>
+						</div>
 					) }
 				</>
 			) }

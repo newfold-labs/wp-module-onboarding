@@ -4,8 +4,9 @@ import { useEffect } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 
 import { store as nfdOnboardingStore } from '../../store';
-import { HEADER_SITEGEN } from '../../../constants';
+import { FOOTER_SITEGEN, HEADER_SITEGEN } from '../../../constants';
 
+import { DEFAULT_FLOW } from '../../data/flows/constants';
 import HeadingWithSubHeading from '../../components/HeadingWithSubHeading/SiteGen/index';
 import StartOptions from '../../components/StartOptions';
 import getContents from './contents';
@@ -17,6 +18,7 @@ const TheFork = () => {
 		setHeaderActiveView,
 		setDrawerActiveView,
 		setIsHeaderNavigationEnabled,
+		setFooterActiveView,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -25,11 +27,12 @@ const TheFork = () => {
 		setIsHeaderNavigationEnabled( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
+		setFooterActiveView( FOOTER_SITEGEN );
 	} );
 
 	const oldFlow = window.nfdOnboarding?.oldFlow
 		? window.nfdOnboarding.oldFlow
-		: window.nfdOnboarding.currentFlow;
+		: DEFAULT_FLOW;
 
 	const content = getContents();
 	return (

@@ -4,6 +4,7 @@ import {
 	VIEW_NAV_PRIMARY,
 	THEME_STATUS_INIT,
 	HEADER_SITEBUILD,
+	FOOTER_SITEGEN,
 } from '../../constants';
 
 import {
@@ -14,6 +15,7 @@ import {
 } from '../data/flows/index';
 import { sidebars } from '../data/sidebars/index';
 import { headers } from '../data/headers';
+import { footers } from '../data/footers';
 import apiQueueExecutor from '../utils/api-queuer/api-queue-executor';
 import { DEFAULT_FLOW } from '../data/flows/constants';
 
@@ -297,6 +299,24 @@ export function queue( state = [], action ) {
 	return state;
 }
 
+export function footer(
+	state = {
+		footers,
+		view: FOOTER_SITEGEN,
+	},
+	action
+) {
+	switch ( action.type ) {
+		case 'SET_FOOTER_ACTIVE_VIEW':
+			return {
+				...state,
+				view: action.view,
+			};
+	}
+
+	return state;
+}
+
 export default combineReducers( {
 	drawer,
 	runtime,
@@ -305,5 +325,6 @@ export default combineReducers( {
 	flow,
 	sidebar,
 	header,
+	footer,
 	queue,
 } );

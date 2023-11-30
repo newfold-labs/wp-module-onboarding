@@ -50,8 +50,6 @@ const SiteGenExperience = () => {
 		setSelection( idx );
 		currentData.sitegen.experience.level = idx;
 		setCurrentOnboardingData( currentData );
-		// console.log( selection );
-		// console.log( 'Navigate to the next screen!' );
 		if ( nextStep ) {
 			navigate( nextStep.path );
 		}
