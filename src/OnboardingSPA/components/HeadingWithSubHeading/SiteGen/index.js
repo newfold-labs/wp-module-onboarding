@@ -6,7 +6,6 @@
  * @param {string} root0.subtitle
  */
 
-
 const HeadingWithSubHeading = ( { title, subtitle } ) => {
 	return (
 		<div className="nfd-onboarding-step__heading">
