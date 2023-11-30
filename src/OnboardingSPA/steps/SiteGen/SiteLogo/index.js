@@ -34,6 +34,8 @@ const SiteGenSiteLogo = () => {
 		currentDataCopy.sitegen.siteLogo = {
 			id: 0,
 			url: '',
+			fileName: '',
+			fileSize: 0,
 		};
 		setCurrentOnboardingData( currentDataCopy );
 		setSiteLogo( undefined );
@@ -54,6 +56,8 @@ const SiteGenSiteLogo = () => {
 			const currentDataCopy = { ...currentData };
 			currentDataCopy.sitegen.siteLogo.id = siteLogo.id;
 			currentDataCopy.sitegen.siteLogo.url = siteLogo.url;
+			currentDataCopy.sitegen.siteLogo.fileName = siteLogo.fileName;
+			currentDataCopy.sitegen.siteLogo.fileSize = siteLogo.fileSize;
 			setCurrentOnboardingData( currentDataCopy );
 		}
 	}, [ siteLogo ] );
