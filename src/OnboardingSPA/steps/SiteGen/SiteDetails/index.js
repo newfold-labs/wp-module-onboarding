@@ -43,7 +43,6 @@ const SiteGenSiteDetails = () => {
 	const checkAndNavigate = () => {
 		currentData.sitegen.siteDetails.prompt = customerInput;
 		setCurrentOnboardingData( currentData );
-		// console.log( 'Navigate to the next screen!' );
 	};
 
 	return (
@@ -63,6 +62,10 @@ const SiteGenSiteDetails = () => {
 							className={ 'nfd-sg-site-details--next-btn' }
 							text={ content.buttonText }
 							callback={ checkAndNavigate }
+							disabled={
+								customerInput === undefined ||
+								customerInput === ''
+							}
 						/>
 					</div>
 				</div>

@@ -123,11 +123,6 @@ html.nfd-interface-interface-skeleton__html-container {
 
 .nfd-interface-interface-skeleton__sidebar {
 	overflow: auto;
-	border-left: 1px solid #e0e0e0;
-
-	@media (max-width: #{($break-medium)}) {
-		border-left: 1px solid #e0e0e0;
-	}
 }
 
 .nfd-interface-interface-skeleton__secondary-sidebar {
@@ -140,7 +135,6 @@ html.nfd-interface-interface-skeleton__html-container {
 .nfd-interface-interface-skeleton__header {
 	flex-shrink: 0;
 	height: auto;  // Keep the height flexible.
-	border-bottom: 1px solid #e0e0e0;
 	z-index: 30;
 	color: #1e1e1e;
 }
@@ -148,7 +142,6 @@ html.nfd-interface-interface-skeleton__html-container {
 .nfd-interface-interface-skeleton__footer {
 	height: auto; // Keep the height flexible.
 	flex-shrink: 0;
-	border-top: 1px solid #e0e0e0;
 	color: #1e1e1e;
 	position: absolute;
 	bottom: 0;
