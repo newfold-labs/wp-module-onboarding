@@ -9,7 +9,7 @@ import { HEADER_SITEGEN } from '../../../constants';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@wordpress/components';
-import { SITEGEN_FLOW } from '../../data/flows/constants';
+import { DEFAULT_FLOW, SITEGEN_FLOW } from '../../data/flows/constants';
 
 import { resolveGetDataForFlow } from '../../data/flows';
 import { validateFlow } from '../../data/flows/utils';
@@ -65,7 +65,7 @@ const TheFork = () => {
 
 	const oldFlow = window.nfdOnboarding?.oldFlow
 		? window.nfdOnboarding.oldFlow
-		: window.nfdOnboarding.currentFlow;
+		: DEFAULT_FLOW;
 	return (
 		<CommonLayout
 			isCentered
@@ -75,12 +75,14 @@ const TheFork = () => {
 				The Fork
 			</h1>
 			<div className="nfd-onboarding-step--site-gen__fork__buttons">
-				<Button
-					className="nfd-onboarding-step--site-gen__fork__buttons__button"
-					onClick={ () => switchFlow( SITEGEN_FLOW ) }
-				>
-					Goto sitegen flow
-				</Button>
+				{ validateFlow( brandConfig, SITEGEN_FLOW ) && (
+					<Button
+						className="nfd-onboarding-step--site-gen__fork__buttons__button"
+						onClick={ () => switchFlow( SITEGEN_FLOW ) }
+					>
+						Goto sitegen flow
+					</Button>
+				) }
 				<Button
 					className="nfd-onboarding-step--site-gen__fork__buttons__button"
 					onClick={ () => switchFlow( oldFlow ) }
