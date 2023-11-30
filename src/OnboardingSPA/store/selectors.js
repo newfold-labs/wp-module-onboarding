@@ -45,8 +45,16 @@ export function getHeaders( state ) {
 	return state.header.headers;
 }
 
+export function getFooters( state ) {
+	return state.footer.footers;
+}
+
 export function getHeaderActiveView( state ) {
 	return state.header.view;
+}
+
+export function getFooterActiveView( state ) {
+	return state.footer.view;
 }
 
 /**

@@ -7,7 +7,6 @@ import Content from '../../Content';
 import Sidebar from '../../Sidebar';
 import themeToggleHOC from '../themeToggleHOC';
 import NewfoldInterfaceSkeleton from '../index';
-import ToggleDarkMode from '../../ToggleDarkMode';
 import { ThemeProvider } from '../../ThemeContextProvider';
 import { store as nfdOnboardingStore } from '../../../store';
 import { setFlow } from '../../../utils/api/flow';
@@ -15,6 +14,7 @@ import {
 	generateSiteGenMeta,
 	getSiteGenIdentifiers,
 } from '../../../utils/api/siteGen';
+import Footer from '../../Footer';
 
 // Wrapping the NewfoldInterfaceSkeleton with the HOC to make theme available
 const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
@@ -116,11 +116,12 @@ const SiteGen = () => {
 	return (
 		<ThemeProvider>
 			<ThemedNewfoldInterfaceSkeleton
+				id={ 'nfd-onboarding-skeleton--sitegen' }
 				className={ 'nfd-onboarding-skeleton--sitegen' }
 				header={ <Header /> }
 				content={ <Content /> }
 				sidebar={ <Sidebar /> }
-				footer={ <ToggleDarkMode /> }
+				footer={ <Footer /> }
 			/>
 		</ThemeProvider>
 	);

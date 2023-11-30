@@ -2,7 +2,6 @@ import Header from '../../Header';
 import Content from '../../Content';
 import Drawer from '../../Drawer';
 import Sidebar from '../../Sidebar';
-import ToggleDarkMode from '../../ToggleDarkMode';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { setFlow } from '../../../utils/api/flow';
@@ -55,6 +54,7 @@ import { trigger as cronTrigger } from '../../../utils/api/cronTrigger';
 import { stepTheFork } from '../../../steps/TheFork/step';
 import { ThemeProvider } from '../../ThemeContextProvider';
 import themeToggleHOC from '../themeToggleHOC';
+import Footer from '../../Footer';
 
 const SiteBuild = () => {
 	const location = useLocation();
@@ -423,7 +423,7 @@ const SiteBuild = () => {
 		handleConditionalDesignStepsRoutes();
 	}, [ location.pathname, onboardingFlow ] );
 
-	const shouldApplyTheme =
+	const isForkStep =
 		currentStep === stepTheFork ||
 		window.nfdOnboarding.currentFlow === 'sitegen';
 	// wrapping the NewfoldInterfaceSkeleton with the HOC to make 'theme' available
@@ -431,7 +431,7 @@ const SiteBuild = () => {
 		NewfoldInterfaceSkeleton,
 		'nfd-onboarding-sitegen-dark',
 		'nfd-onboarding-sitegen-light',
-		shouldApplyTheme
+		isForkStep
 	);
 
 	return (
@@ -445,14 +445,14 @@ const SiteBuild = () => {
 					{ 'is-large-viewport': isLargeViewport },
 					{ 'is-small-viewport': ! isLargeViewport },
 					{
-						'nfd-onboarding-skeleton--sitegen': shouldApplyTheme,
+						'nfd-onboarding-skeleton--sitegen': isForkStep,
 					}
 				) }
 				header={ <Header /> }
 				drawer={ <Drawer /> }
 				content={ <Content /> }
 				sidebar={ <Sidebar /> }
-				footer={ shouldApplyTheme ? <ToggleDarkMode /> : null }
+				footer={ isForkStep ? <Footer /> : null }
 			/>
 		</ThemeProvider>
 	);

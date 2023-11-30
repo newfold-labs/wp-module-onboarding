@@ -40,10 +40,14 @@ export const SIDEBAR_MENU_SLOTFILL_PREFIX = 'HeaderMenu';
 export const SIDEBAR_LEARN_MORE = 'LearnMore';
 export const HEADER_SITEBUILD = 'HeaderSiteBuild';
 export const HEADER_SITEGEN = 'HeaderSiteGen';
+export const FOOTER_SITEBUILD = 'FooterSiteBuild';
+export const FOOTER_SITEGEN = 'FooterSiteGen';
 export const HEADER_TOP = 'HeaderTop';
 export const HEADER_START = 'HeaderStart';
 export const HEADER_CENTER = 'HeaderCenter';
 export const HEADER_END = 'HeaderEnd';
+export const FOOTER_START = 'FooterStart';
+export const FOOTER_END = 'FooterEnd';
 
 export const MAX_RETRIES_API_QUEUER = 2;
 export const MAX_RETRIES_SETTINGS_INIT = 2;
