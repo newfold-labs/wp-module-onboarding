@@ -1,8 +1,7 @@
 .nfd-onboarding-toggle__theme {
-	position: absolute;
-	bottom: 25px;
-	left: 25px;
-	z-index: 1;
+	margin-left: 25px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 
 	&__button {
 		width: 60px;
@@ -10,7 +9,6 @@
 		cursor: pointer;
 
 		&__light {
-			animation: fadeIn 600ms ease-in-out;
 			background: var(--sitegen-toggle-theme-icon-light);
 		}
 
