@@ -28,4 +28,10 @@
 	&--background {
 		background-color: rgba(var(--nfd-onboarding-secondary-rgb), 0.75);
 	}
+
+	@media (max-width: #{ ($break-small) }) {
+		backdrop-filter: blur(2px);
+		background: rgba(var(--nfd-onboarding-secondary-rgb), 0.5);
+		border-top: 1px solid rgba(var(--nfd-onboarding-primary-rgb), 0.25);
+	}
 }
