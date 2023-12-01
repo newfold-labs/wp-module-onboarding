@@ -23,6 +23,7 @@ const SiteGenSiteLogo = () => {
 	} );
 
 	const {
+		setFooterNavEnabled,
 		setIsHeaderEnabled,
 		setSidebarActiveView,
 		setHeaderActiveView,
@@ -40,6 +41,7 @@ const SiteGenSiteLogo = () => {
 		};
 		setCurrentOnboardingData( currentDataCopy );
 		setSiteLogo( undefined );
+		setFooterNavEnabled( false );
 	};
 
 	useEffect( () => {
@@ -48,8 +50,9 @@ const SiteGenSiteLogo = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		if ( currentData.sitegen.siteLogo?.id !== 0 ) {
-			setSiteLogo( currentData.sitegen.siteLogo );
+			return setSiteLogo( currentData.sitegen.siteLogo );
 		}
+		setFooterNavEnabled( false );
 	}, [] );
 
 	useEffect( () => {
@@ -60,6 +63,7 @@ const SiteGenSiteLogo = () => {
 			currentDataCopy.sitegen.siteLogo.fileName = siteLogo.fileName;
 			currentDataCopy.sitegen.siteLogo.fileSize = siteLogo.fileSize;
 			setCurrentOnboardingData( currentDataCopy );
+			setFooterNavEnabled( siteLogo.id !== 0 );
 		}
 	}, [ siteLogo ] );
 

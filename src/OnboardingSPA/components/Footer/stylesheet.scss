@@ -14,6 +14,15 @@
 	&__end {
 		position: absolute;
 		right: 25px;
+		bottom: 25px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		@media (max-width: #{ ($break-small) }) {
+			right: 16px;
+			bottom: 20px;
+		}
 	}
 
 	&--background {
