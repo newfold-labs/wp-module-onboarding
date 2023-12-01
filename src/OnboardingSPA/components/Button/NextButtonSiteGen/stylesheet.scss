@@ -20,8 +20,8 @@
 		}
 
 		@media (max-width: #{ ($break-small) }) {
-			width: 100px;
 			margin-top: 10px;
+			font-size: 16px;
 		}
 
 		&--disabled {
