@@ -5,8 +5,6 @@ import { __ } from '@wordpress/i18n';
 import { useViewportMatch } from '@wordpress/compose';
 
 import { store as nfdOnboardingStore } from '../../../../store';
-import classNames from 'classnames';
-
 
 /**
  * Step buttons presented in Header.
@@ -51,7 +49,7 @@ const StepNavigationLeft = () => {
 					}
 				} }
 				aria-label="Back"
-				className='navigation-buttons-editor'
+				className="navigation-buttons-editor"
 			>
 				<Icon icon={ chevronLeft } />
 				{ __( 'Back', 'wp-module-onboarding' ) }
@@ -61,7 +59,7 @@ const StepNavigationLeft = () => {
 
 	const Regenerate = () => {
 		const regenerate = () => {
-			alert('regenerate');
+			alert( 'regenerate' );
 		};
 		return (
 			<div
@@ -74,14 +72,14 @@ const StepNavigationLeft = () => {
 					}
 				} }
 				aria-label="Regenerate"
-				className='navigation-buttons-editor'
+				className="navigation-buttons-editor"
 			>
 				<Icon icon={ reusableBlock } />
 				{ __( 'Regenerate', 'wp-module-onboarding' ) }
 			</div>
 		);
 	};
-	
+
 	return (
 		<div className="nfd-onboarding-header__step-navigation">
 			<Back

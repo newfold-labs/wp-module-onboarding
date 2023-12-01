@@ -45,21 +45,6 @@
 		height: 100%;
 		font-size: 20px;
 		line-height: $grid-unit-30;
-
-		&-dropdown-item {
-			padding: 2px 2px;
-			text-decoration: none;
-			display: block;
-			text-align: center;
-		}
-
-		&-input {
-			max-width: 80px;
-			text-align: center;
-			border: none !important;
-			color: var(--nfd-onboarding-header-contrast) !important;
-			background-color: var(--nfd-onboarding-header-base) !important;
-		}
 	}
 
 	&__end {
@@ -141,4 +126,5 @@
 			fill: #272d30;
 		}
 	}
+
 }
