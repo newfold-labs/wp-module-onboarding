@@ -6,15 +6,20 @@
 
 			&__container {
 
+				display: flex;
+				align-items: center;
+				flex-direction: column;
+				justify-content: center;
+
 				&__buttons {
+					width: 95%;
 					display: flex;
-					flex-direction: row;
 					align-items: center;
 					justify-content: flex-end;
 					padding: 16px;
 
 					&__skip {
-						font-size: clamp(0.5rem, 0.4091rem + 0.4545vw, 1.5rem);
+						font-size: clamp(0.6rem, 0.755rem + 0.227vw, 1.3rem);
 						font-style: normal;
 						font-weight: 510;
 						margin-right: 24px;
@@ -24,20 +29,27 @@
 							color: var(--nfd-onboarding-primary);
 						}
 					}
+
+					@media (max-width: #{ ($break-small) }) {
+						justify-content: center;
+					}
 				}
 
 			}
 
 			&__contain {
-				max-width: 600px;
 				margin: 16px;
 				border: 1.25px solid var(--nfd-onboarding-site-logo-border);
 				border-radius: 8px;
-				padding: 24px;
+				padding: 30px 35px;
 				display: flex;
-				flex-direction: row;
-				justify-content: space-evenly;
+				justify-content: space-between;
 				align-items: left;
+				width: 40vw;
+
+				@media (max-width: #{ ($break-large) }) {
+					width: 80vw;
+				}
 
 				&__containleft {
 					width: 65%;
@@ -45,10 +57,26 @@
 					flex-direction: column;
 					justify-content: center;
 					color: var(--nfd-onboarding-primary);
-					font-size: clamp(0.875rem, 0.7727rem + 0.5114vw, 2rem);
 					margin-right: 25px;
 					white-space: normal;
 					line-height: 1;
+
+					span {
+						font-size: clamp(1.1rem, 0.927rem + 0.364vw, 1.8rem);
+					}
+
+					p {
+						margin-top: 15px;
+						font-size: clamp(0.6rem, 0.755rem + 0.227vw, 1.3rem);
+
+						@media (max-width: #{ ($break-small) }) {
+							text-align: justify;
+						}
+					}
+
+					@media (max-width: #{ ($break-small) }) {
+						margin-right: 0;
+					}
 				}
 
 				&__containright {
@@ -66,6 +94,10 @@
 						border: none;
 						border-radius: 5px;
 						cursor: pointer;
+
+						&:hover {
+							background-color: #0065ea;
+						}
 					}
 
 					&__button i {
@@ -74,6 +106,10 @@
 						width: 25px;
 						height: 25px;
 						filter: brightness(0) saturate(100%) invert(100%) sepia(1%) saturate(376%) hue-rotate(220deg) brightness(120%) contrast(100%);
+					}
+
+					@media (max-width: #{ ($break-small) }) {
+						margin: 30px;
 					}
 				}
 			}

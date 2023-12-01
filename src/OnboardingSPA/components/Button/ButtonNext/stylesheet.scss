@@ -17,5 +17,9 @@
 				color: var(--nfd-onboarding-secondary);
 			}
 		}
+
+		@media (max-width: #{ ($break-small) }) {
+			display: none;
+		}
 	}
 }

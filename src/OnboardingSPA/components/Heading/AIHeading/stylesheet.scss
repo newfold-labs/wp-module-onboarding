@@ -1,5 +1,6 @@
 .ai-heading {
 
+	width: 100%;
 	display: flex;
 	margin-bottom: 20px;
 	align-items: center;
@@ -18,7 +19,7 @@
 		margin: 10px;
 		line-height: 1.5;
 		font-weight: 500;
-		font-size: 1.2rem;
 		color: var(--nfd-onboarding-primary);
+		font-size: clamp(1.2rem, 1.1rem + 0.273vw, 2.5rem);
 	}
 }

@@ -92,7 +92,7 @@
 					width: 130px;
 					height: 100px;
 					object-fit: cover;
-					border-radius: 8px;
+					border-radius: 4px;
 				}
 
 				&__details {
@@ -125,7 +125,6 @@
 						font-size: clamp(0.5rem, 0.4091rem + 0.4545vw, 1.5rem);
 						font-style: normal;
 						font-weight: 510;
-						margin-right: 24px;
 						color: var(--nfd-onboarding-primary);
 						background-color: transparent;
 						border: none;

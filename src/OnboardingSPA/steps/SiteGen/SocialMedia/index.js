@@ -35,7 +35,7 @@ const SiteGenSiteSocialMedia = () => {
 				<AIHeading title={ content.heading } />
 				<div className="nfd-onboarding-step--site-gen__social-media__contain ">
 					<div className="nfd-onboarding-step--site-gen__social-media__contain__containleft ">
-						{ content.facebookTitle }
+						<span>{ content.facebookTitle }</span>
 						<p>{ content.facebookDesc }</p>
 					</div>
 					<div className="nfd-onboarding-step--site-gen__social-media__contain__containright ">
