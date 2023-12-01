@@ -4,7 +4,6 @@ import { __ } from '@wordpress/i18n';
 import { useViewportMatch } from '@wordpress/compose';
 
 import { store as nfdOnboardingStore } from '../../../../store';
-import classNames from 'classnames';
 
 /**
  * Step buttons presented in Header.
@@ -12,6 +11,7 @@ import classNames from 'classnames';
  * @return {WPComponent} StepNavigation Component
  */
 const StepNavigationRight = () => {
+	// eslint-disable-next-line no-unused-vars
 	const { previousStep, showErrorDialog } = useSelect( ( select ) => {
 		return {
 			previousStep: select( nfdOnboardingStore ).getPreviousStep(),
@@ -24,13 +24,13 @@ const StepNavigationRight = () => {
 	/**
 	 * Back step Navigation button.
 	 *
-	 * @param {*} param0
+	 * @param {Object} param0
 	 *
 	 * @return {WPComponent} Back Component
 	 */
-	const Customize = ( ) => {
+	const Customize = () => {
 		const customize = () => {
-			alert('customize');
+			//	alert('customize');
 		};
 		return (
 			<div
@@ -43,7 +43,7 @@ const StepNavigationRight = () => {
 					}
 				} }
 				aria-label="Customize"
-				className='navigation-buttons-editor'
+				className="navigation-buttons-editor"
 			>
 				<Icon icon={ settings } />
 				{ __( 'Customize', 'wp-module-onboarding' ) }
@@ -53,7 +53,7 @@ const StepNavigationRight = () => {
 
 	const Save = () => {
 		const save = () => {
-			alert('save');
+		//	alert( 'save' );
 		};
 		return (
 			<div
@@ -66,16 +66,16 @@ const StepNavigationRight = () => {
 					}
 				} }
 				aria-label="Save"
-				className='navigation-buttons-editor'
+				className="navigation-buttons-editor"
 			>
-				{ isLargeViewport ?
-					__( 'Save & Continue', 'wp-module-onboarding' )
-				: __( 'Next', 'wp-module-onboarding' ) }
+				{ isLargeViewport
+					? __( 'Save & Continue', 'wp-module-onboarding' )
+					: __( 'Next', 'wp-module-onboarding' ) }
 				<Icon icon={ chevronRight } />
 			</div>
 		);
 	};
-	
+
 	return (
 		<div className="nfd-onboarding-header__step-navigation">
 			{ isLargeViewport ? <Customize /> : '' }

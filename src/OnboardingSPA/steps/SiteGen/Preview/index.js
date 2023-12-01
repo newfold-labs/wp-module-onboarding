@@ -30,11 +30,11 @@ const SiteGenPreview = () => {
 	} );
 
 	const onWishlistClick = () => {
-		alert( 'wishlist' );
+		//	alert( 'wishlist' );
 	};
 
 	const onRegenerateClick = () => {
-		alert( 'regenerate' );
+		// alert( 'regenerate' );
 	};
 
 	const buildPreviews = () => {

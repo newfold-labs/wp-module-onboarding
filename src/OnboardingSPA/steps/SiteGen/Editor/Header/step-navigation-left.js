@@ -28,7 +28,7 @@ const StepNavigationLeft = () => {
 	 *
 	 * @return {WPComponent} Back Component
 	 */
-	const Back = ( { path, showErrorDialog } ) => {
+	const Back = ( { path } ) => {
 		const { setNavErrorContinuePath } = useDispatch( nfdOnboardingStore );
 		const navigate = useNavigate();
 		const navigateBack = () => {
@@ -59,7 +59,7 @@ const StepNavigationLeft = () => {
 
 	const Regenerate = () => {
 		const regenerate = () => {
-			alert( 'regenerate' );
+			// alert( 'regenerate' );
 		};
 		return (
 			<div
