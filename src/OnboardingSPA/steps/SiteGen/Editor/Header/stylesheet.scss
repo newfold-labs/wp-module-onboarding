@@ -1,0 +1,68 @@
+.nfd-onboarding-header {
+     &--sitegen{
+          &__editor {
+               &__start {
+                    &__regenerate {
+                         margin-left: 20px;
+                         height: 36px;
+                         color: var(--nfd-onboarding-primary);
+                         background-color: var(--nfd-onboarding-preview-favorite-background);
+                         border: none;
+                         :hover {
+                              cursor: pointer;
+                         }
+                         &__icon {
+                              background-image: var(--sitegen-regenerate);
+                              width: 16px;
+                              height: 18px;
+                         }
+                         display: flex;
+                         flex-direction: row;
+                         align-items: center;
+                         justify-content: space-evenly;
+                         width: 130px;
+                    }
+               }
+
+               &__center {
+                    &__dropdown {
+                         display: flex;
+                         flex-direction: row;
+                         align-items: center;
+                         justify-content: center;
+
+                         color: var(--nfd-onboarding-primary);
+
+                         &__favorite-icon {
+                              background-image: var(--sitegen-favorite);
+                              height: 20px;
+                              width: 20px;
+                              margin-right: 15px;
+                              cursor: pointer;
+
+                              &__fill {
+                                   background-color: var(--nfd-onboarding-favorite-fill);
+                              }
+                         }
+
+                         &__info {
+                              display: flex;
+                              flex-direction: row;
+                              align-items: center;
+                              cursor: pointer;
+                              &__text {
+                                   font-size: 18px;
+                                   margin-right: 15px;
+                              }
+     
+                              &__down-icon {
+                                   fill: var(--nfd-onboarding-primary);
+                                   width: 20px;
+                                   height: 20px;
+                              }
+                         }
+                    }
+               }
+          }
+     }
+}

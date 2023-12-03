@@ -1,0 +1,16 @@
+.nfd-onboarding-step {
+     &--site-gen {
+          &__editor {
+               &__live-preview {
+                    height: 100%;
+                    width: 100%;
+               }
+
+               .live-preview {
+                    &-custom {
+                         width: 100%;
+                    }
+               }
+          }
+     }
+}
