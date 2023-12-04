@@ -10,7 +10,16 @@
 
 			&__heading {
 				color: var(--nfd-onboarding-primary);
-				font-size: 70px;
+				width: 96%;
+				margin: 50px 0 50px;
+				line-height: 1;
+
+				&__questionnaire {
+					color: var(--nfd-onboarding-primary);
+					font-weight: 500;
+					text-align: center;
+					font-size: 18px;
+				}
 			}
 
 			&__buttons {
@@ -29,6 +38,15 @@
 					font-size: 15px;
 					margin: 24px;
 				}
+			}
+
+			&__importsite {
+				color: var(--nfd-onboarding-primary);
+				font-weight: 510;
+				text-align: center;
+				font-size: 18px;
+				line-height: 20px;
+				margin-top: 35px !important;
 			}
 		}
 	}
