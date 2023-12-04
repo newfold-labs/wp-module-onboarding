@@ -13,7 +13,7 @@ import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 const SiteGenSiteDetails = () => {
 	const content = getContents();
 	const [ customerInput, setCustomerInput ] = useState();
-	const [ isWalkthrough, setIsWalkthrough ] = useState( true );
+	const [ isWalkthrough, setIsWalkthrough ] = useState( false );
 
 	const [ formData, setFormData ] = useState( {
 		hasBusinessName: null,
@@ -191,16 +191,15 @@ const SiteGenSiteDetails = () => {
 							/>
 						</div>
 						<div className={ 'nfd-sg-site-details-walkThrough' }>
-							<p
-								className={
-									'nfd-sg-site-details--walkThroughText'
-								}
+							{ content.walkThroughText }
+							<span
+								onClick={ handleClick }
+								onKeyDown={ handleClick }
+								role="button"
+								tabIndex="0"
 							>
-								{ content.walkThroughText }
-								<button onClick={ handleClick }>
-									click here
-								</button>
-							</p>
+								click here
+							</span>
 						</div>
 					</div>
 				) }
