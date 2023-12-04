@@ -14,7 +14,7 @@ import { forwardRef, useEffect } from '@wordpress/element';
 import { __unstableUseNavigateRegions as useNavigateRegions } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useMergeRefs } from '@wordpress/compose';
-import bgAiImg from '../../static/images/ai_bg.jpg';
+import bgAiImg from '../../static/images/ai_bg.png';
 
 function useHTMLClass( className ) {
 	useEffect( () => {
