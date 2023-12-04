@@ -3,6 +3,8 @@ import { lazy } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Step } from '../../../data/models/Step';
 import Header from './Header';
+import Customize from './Sidebar/Customize';
+
 
 const StepSiteGenEditor = lazy( () => import( './index' ) );
 
@@ -13,8 +15,8 @@ export const stepSiteGenEditor = new Step( {
 	icon: copy,
 	header: Header,
 	sidebars: {
-		LearnMore: {
-			SidebarComponents: [],
+		Customize: {
+			SidebarComponents: [ Customize ],
 		},
 	},
 } );

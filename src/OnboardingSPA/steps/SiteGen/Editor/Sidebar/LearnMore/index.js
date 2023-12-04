@@ -43,7 +43,7 @@ const LearnMore = () => {
 		} );
 
 	const content = getContents( techSupportLink, fullServiceCreativeTeamLink );
-		console.log("Content");
+
 	return (
 		<div className="nfd-onboarding-sidebar-learn-more__design-colors">
 			<StepIntroPanel

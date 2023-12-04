@@ -1,4 +1,4 @@
-import { useSelect } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { Icon, chevronRight, settings } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { useViewportMatch } from '@wordpress/compose';
@@ -29,8 +29,25 @@ const StepNavigationRight = () => {
 	 * @return {WPComponent} Back Component
 	 */
 	const Customize = () => {
+
+		const { isSidebarOpened, sideBarView } = useSelect(
+			( select ) => {
+				return {
+					isSidebarOpened: select( nfdOnboardingStore ).isSidebarOpened(),
+					sideBarView: select( nfdOnboardingStore ).getSidebarView(),
+				};
+			}
+		);
+
+		const { setIsSidebarOpened, setSidebarActiveView } =
+		useDispatch( nfdOnboardingStore );		
 		const customize = () => {
-			//	alert('customize');
+				const isSidebarOpenedNew =
+					sideBarView === 'Customize'
+						? ! isSidebarOpened
+						: isSidebarOpened;
+				setSidebarActiveView( 'Customize' );
+				setIsSidebarOpened( isSidebarOpenedNew );
 		};
 		return (
 			<div
