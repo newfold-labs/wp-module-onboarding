@@ -1,7 +1,118 @@
 import React, { useState } from 'react';
-import { PanelBody, PanelRow, Button, Popover, ColorPicker } from '@wordpress/components';
+import { PanelBody, PanelRow, Button, Popover, ColorPicker, ColorPalette } from '@wordpress/components';
 import ColorPickerButton from '../../../../ColorPickerButton';
 
+
+const MyColorPalette = ({onChange}) => {
+	const [ color, setColor ] = useState ( '#f00' )
+	const colors = [
+    {
+      colors: [
+        {
+          color: '#f00',
+          name: 'Red'
+        },
+        {
+          color: '#ff0',
+          name: 'Yellow'
+        },
+        {
+          color: '#00f',
+          name: 'Blue'
+        },        {
+          color: '#f00',
+          name: 'Red'
+        },
+        {
+          color: '#ff0',
+          name: 'Yellow'
+        },
+        {
+          color: '#00f',
+          name: 'Blue'
+        },        {
+          color: '#f00',
+          name: 'Red'
+        },
+        {
+          color: '#ff0',
+          name: 'Yellow'
+        },
+        {
+          color: '#00f',
+          name: 'Blue'
+        },
+        {
+          color: '#00f',
+          name: 'Blue'
+        }
+      ],
+      name: 'Primary colors'
+    },
+    {
+      colors: [
+        {
+          color: '#f00',
+          name: 'Red'
+        },
+        {
+          color: '#ff0',
+          name: 'Yellow'
+        },
+        {
+          color: '#00f',
+          name: 'Blue'
+        },        {
+          color: '#f00',
+          name: 'Red'
+        },
+        {
+          color: '#ff0',
+          name: 'Yellow'
+        },
+        {
+          color: '#00f',
+          name: 'Blue'
+        },        {
+          color: '#f00',
+          name: 'Red'
+        },
+        {
+          color: '#ff0',
+          name: 'Yellow'
+        },
+        {
+          color: '#00f',
+          name: 'Blue'
+        },
+        {
+          color: '#00f',
+          name: 'Blue'
+        },
+        {
+          color: '#00f',
+          name: 'Blue'
+        },
+        {
+          color: '#00f',
+          name: 'Blue'
+        }
+      ],
+      name: 'Secondary colors'
+    }
+  ];
+  const handleColorChange = (newColor) => {
+    setColor(newColor);
+    onChange(newColor); 
+  };
+	return (
+		<ColorPalette
+			colors={ colors }
+			value={ color }
+      onChange={handleColorChange} 
+		/>
+	);
+};
 const DesignColorsPanel = ({
   baseClassName = 'nfd-onboarding-sidebar-customize--design-colors-panel',
   heading,
@@ -115,7 +226,12 @@ const DesignColorsPanel = ({
             </div>
             {showColorPicker && (
               <Popover>
-                <div
+                <div style={{padding: '16px', width: '260px'}}>
+    
+                  <MyColorPalette onChange={handleColorPicker} />
+                </div>
+
+                {/* <div
                   role="button"
                   tabIndex={0}
                   className="custom-palette__picker__close-icon"
@@ -124,7 +240,7 @@ const DesignColorsPanel = ({
                 >
                   X
                 </div>
-                <ColorPicker onChange={handleColorPicker} />
+                <ColorPicker onChange={handleColorPicker} /> */}
               </Popover>
             )}
           </div>
