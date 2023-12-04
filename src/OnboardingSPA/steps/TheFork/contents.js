@@ -40,7 +40,10 @@ const getContents = () => {
 			'Already have a WordPress site you want to import?',
 			'wp-module-onboarding'
 		),
-		importlink: __( 'http://www.bluehost.com', 'wp-module-onboarding' ),
+		importlink: __(
+			'https://my.bluehost.com/cgi/services/migration',
+			'wp-module-onboarding'
+		),
 	};
 };
 
