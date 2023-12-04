@@ -6,8 +6,16 @@
 	}
 }
 
-.navigation-buttons-editor__version__name {
-	font-size: 18px;
+.nfd-onboarding-header__center {
+
+	.nfd-onboarding-header__center-input {
+		font-size: 18px;
+		text-align: center;
+		border: none;
+		color: var(--nfd-onboarding-header-contrast);
+		background-color: var(--nfd-onboarding-header-base);
+		width: 150px;
+	}
 }
 
 .components-dropdown__content {
@@ -16,6 +24,7 @@
 		padding: 0;
 
 		.nfd-onboarding-header__version_dropdown-menu {
+			width: 240px;
 
 			.components-menu-item__button {
 
@@ -24,7 +33,7 @@
 				}
 
 				&:last-child {
-					border-top: 1px solid var(--nfd-onboarding-navigation-back-background);
+					border-top: 1px solid var(--nfd-onboarding-header-border);
 				}
 			}
 		}

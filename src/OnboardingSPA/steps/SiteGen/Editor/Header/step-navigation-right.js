@@ -24,7 +24,6 @@ const StepNavigationRight = () => {
 	/**
 	 * Back step Navigation button.
 	 *
-	 * @param {Object} param0
 	 *
 	 * @return {WPComponent} Back Component
 	 */
@@ -53,7 +52,7 @@ const StepNavigationRight = () => {
 
 	const Save = () => {
 		const save = () => {
-		//	alert( 'save' );
+			//	alert( 'save' );
 		};
 		return (
 			<div
