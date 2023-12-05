@@ -12,7 +12,7 @@ import { SiteGenLivePreview } from '../../../components/LivePreview';
 //import SiteGenPlaceholder from '../../../components/SiteGenPlaceholder';
 import getContents from './contents';
 import { pattern } from './pattern';
-import { ReactComponent as FavouriteIcon } from '../../../static/icons/sitegen/heart-stroked.svg';
+import HeartAnimation from './heartAnimation';
 
 import { getHomePagePreviews } from '../../../utils/api/siteGen';
 
@@ -108,7 +108,7 @@ const SiteGenPreview = () => {
 				{ buildPreviews() }
 			</div>
 			<div className="nfd-onboarding-step--site-gen__preview__note">
-				<FavouriteIcon />
+				<HeartAnimation />
 				<span>{ content.favouriteNote }</span>
 			</div>
 		</CommonLayout>

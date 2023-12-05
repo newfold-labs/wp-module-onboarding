@@ -318,6 +318,8 @@ body {
 		--nfd-onboarding-site-logo-border: var(--nfd-onboarding-primary);
 		--nfd-onboarding-header-border: rgba(var(--nfd-onboarding-primary-rgb), 0.3);
 		--nfd-onboarding-card-overlay: rgba(0, 0, 0, 0.4);
+		--nfd-onboarding-heart-icon-fill:#EF4A71;
+		--nfd-onboarding-heart-icon-stroke:#9CA2A7;
 	}
 
 	.nfd-onboarding-sitegen-dark {
@@ -337,5 +339,7 @@ body {
 		--nfd-onboarding-site-logo-border: rgba(156, 162, 167, 1);
 		--nfd-onboarding-header-border: rgba(var(--nfd-onboarding-primary-rgb), 0.3);
 		--nfd-onboarding-card-overlay: rgba(0, 0, 0, 0.4);
+		--nfd-onboarding-heart-icon-fill:#EF4A71;
+		--nfd-onboarding-heart-icon-stroke:#9CA2A7;
 	}
 }

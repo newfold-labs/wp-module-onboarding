@@ -70,4 +70,43 @@
 		border-radius: 12px;
 		margin-bottom: 60px;
 	}
+
+	@keyframes heartBeat {
+
+		0%,
+		100% {
+			fill: transparent;
+			transform: scale(1);
+			transform-origin: center;
+		}
+
+		33%,
+		66% {
+			fill: var(--nfd-onboarding-heart-icon-fill);
+			transform: scale(1.1);
+			transform-origin: center;
+		}
+
+		67% {
+			fill: var(--nfd-onboarding-heart-icon-fill);
+			transform: scale(1.3);
+			transform-origin: center;
+		}
+
+		87% {
+			fill: var(--nfd-onboarding-heart-icon-fill);
+			transform: scale(1.1);
+			transform-origin: center;
+		}
+	}
+
+	.heart {
+		stroke: var(--nfd-onboarding-heart-icon-stroke);
+		stroke-width: 2px;
+	}
+
+	.heart path {
+		animation: heartBeat 4s infinite;
+	}
+
 }
