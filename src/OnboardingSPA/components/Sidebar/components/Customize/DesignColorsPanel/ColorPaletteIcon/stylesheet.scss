@@ -1,0 +1,20 @@
+.nfd-onboarding-sidebar-customize--color-palette-icon {
+
+	&__container {
+		text-align: center;
+
+		&__icon {
+			box-sizing: border-box;
+			width: 45px;
+			height: 45px;
+			border-radius: 50%;
+			cursor: pointer;
+		}
+
+		p {
+			margin-top: 8px;
+			color: grey;
+		}
+	}
+
+}

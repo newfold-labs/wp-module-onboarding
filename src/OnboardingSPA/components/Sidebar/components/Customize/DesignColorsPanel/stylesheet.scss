@@ -16,10 +16,48 @@
 				}
 			}
 
+			&__color__palette__icon {
+				display: flex; 
+				justify-content: space-around;
+				gap: 20px;
+			}
+
 			&__icon {
 				margin-right: 5%;
 			}
 
+		}
+
+		&__custom__colors__container {
+			width: 100%;
+
+			&__buttons {
+				margin-top: 20px;
+				display: flex;
+				justify-content: flex-end;
+
+				.cancel {
+					color: #44494d;
+				  }
+			
+				.is-primary {
+				background-color: #44494d;
+				border-radius: 5px;
+				}
+			}
+		}
+
+		&__custom__colors__button__container {
+			width: 100%;
+			text-align: center;
+
+			button {
+				border: 1px solid #9ca2a7;
+                border-radius: 8px;
+                width: 100%;
+                display: block;
+                margin: 0 auto;
+			}
 		}
 	}
 
