@@ -13,21 +13,13 @@ import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 const SiteGenSiteDetails = () => {
 	const content = getContents();
 	const [ customerInput, setCustomerInput ] = useState();
+	const [ customerInputName, setCustomerInputName ] = useState();
+	const [ customerInputType, setCustomerInputType ] = useState();
+	const [ customerInputStyle, setCustomerInputStyle ] = useState();
+	const [ customerInputUnique, setCustomerInputUnique ] = useState();
+
 	const [ isWalkthrough, setIsWalkthrough ] = useState( false );
-
-	const [ formData, setFormData ] = useState( {
-		hasBusinessName: null,
-		websiteType: '',
-		likeWritingStyle: null,
-		uniqueAboutBusiness: '',
-	} );
-
-	const handleInputChange = ( field, value ) => {
-		setFormData( {
-			...formData,
-			[ field ]: value,
-		} );
-	};
+	const [ isEditing, setEditing ] = useState( false );
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
@@ -36,6 +28,68 @@ const SiteGenSiteDetails = () => {
 		};
 	} );
 
+	const handleInputChange = ( field, e ) => {
+		e.preventDefault();
+		currentData.sitegen.siteDetails[ field ] = e.target.value;
+		setCurrentOnboardingData( currentData );
+
+		switch ( field ) {
+			case 'name':
+				setCustomerInputName( e.target.value );
+				break;
+			case 'type':
+				setCustomerInputType( e.target.value );
+				break;
+			case 'style':
+				setCustomerInputStyle( e.target.value );
+				break;
+			case 'uniqueAboutBusiness':
+				setCustomerInputUnique( e.target.value );
+				break;
+			default:
+				break;
+		}
+	};
+
+	const handleBusinessNameButtonClick = ( value ) => {
+		switch ( value ) {
+			case 'yes':
+				setEditing( true );
+				break;
+			case 'no':
+				setEditing( false );
+				break;
+			default:
+				break;
+		}
+	};
+
+	const concatenatePrompt = () => {
+		const siteDetails = currentData.sitegen.siteDetails;
+		let concatenatedString = '';
+
+		for ( const field in siteDetails ) {
+			if ( siteDetails[ field ] ) {
+				switch ( field ) {
+					case 'name':
+						concatenatedString += `My business name is ${ siteDetails[ field ] }.`;
+						break;
+					case 'type':
+						concatenatedString += `I am making a website type of ${ siteDetails[ field ] }.`;
+						break;
+					case 'style':
+						concatenatedString += `My writing style is ${ siteDetails[ field ] }.`;
+						break;
+					case 'uniqueAboutBusiness':
+						concatenatedString += `Unique about my business is ${ siteDetails[ field ] }.`;
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		return concatenatedString;
+	};
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -53,16 +107,50 @@ const SiteGenSiteDetails = () => {
 		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
 			setCustomerInput( currentData.sitegen.siteDetails.prompt );
 		}
+		if ( currentData.sitegen.siteDetails?.name !== '' ) {
+			setCustomerInputName( currentData.sitegen.siteDetails.name );
+			setEditing( true );
+		}
+		if ( currentData.sitegen.siteDetails?.type !== '' ) {
+			setCustomerInputType( currentData.sitegen.siteDetails.type );
+		}
+		if ( currentData.sitegen.siteDetails?.style !== '' ) {
+			setCustomerInputStyle( currentData.sitegen.siteDetails.style );
+		}
+		if ( currentData.sitegen.siteDetails?.uniqueAboutBusiness !== '' ) {
+			setCustomerInputUnique(
+				currentData.sitegen.siteDetails.uniqueAboutBusiness
+			);
+		}
 	}, [] );
 
+	const addSelectedClassOnClick = ( event, classname ) => {
+		// Remove 'selected' class from all buttons
+		document.querySelectorAll( `.${ classname }` ).forEach( ( button ) => {
+			button.classList.remove(
+				'nfd-sg-site-details-rows-button-selected'
+			);
+		} );
+
+		// Add 'selected' class to the clicked button
+		event.target.classList.add(
+			'nfd-sg-site-details-rows-button-selected'
+		);
+	};
+
 	const checkAndNavigate = () => {
-		currentData.sitegen.siteDetails.prompt = customerInput;
+		if ( isWalkthrough ) {
+			currentData.sitegen.siteDetails.prompt = concatenatePrompt();
+		} else {
+			currentData.sitegen.siteDetails.prompt = customerInput;
+		}
 		setCurrentOnboardingData( currentData );
 	};
 
-	const handleClick = () => {
+	const handleClickWalkThrough = () => {
 		setIsWalkthrough( true );
 	};
+
 	return (
 		<CommonLayout isCentered>
 			<Animate type={ 'fade-in' }>
@@ -75,26 +163,38 @@ const SiteGenSiteDetails = () => {
 							</label>
 							<br></br>
 							<div>
-								<button
-									onClick={ () =>
-										handleInputChange(
-											'hasBusinessName',
-											'yes'
-										)
-									}
-								>
-									Yes
-								</button>
-								<button
-									onClick={ () =>
-										handleInputChange(
-											'hasBusinessName',
-											'no'
-										)
-									}
-								>
-									No
-								</button>
+								{ isEditing ? (
+									<div>
+										<input
+											type="text"
+											value={ customerInputName }
+											onChange={ ( e ) =>
+												handleInputChange( 'name', e )
+											}
+										/>
+									</div>
+								) : (
+									<div>
+										<button
+											onClick={ () => setEditing( true ) }
+										>
+											Yes
+										</button>
+										<button
+											className={ `nfd-sg-site-details-rows-button-site-name
+											${ ! isEditing ? 'nfd-sg-site-details-rows-button-selected' : '' }` }
+											onClick={ ( e ) => {
+												setEditing( false );
+												addSelectedClassOnClick(
+													e,
+													'nfd-sg-site-details-rows-button-site-name'
+												);
+											} }
+										>
+											No
+										</button>
+									</div>
+								) }
 							</div>
 						</div>
 
@@ -105,12 +205,9 @@ const SiteGenSiteDetails = () => {
 							<br></br>
 							<input
 								type="text"
-								value={ formData.websiteType }
+								value={ customerInputType }
 								onChange={ ( e ) =>
-									handleInputChange(
-										'websiteType',
-										e.target.value
-									)
+									handleInputChange( 'type', e )
 								}
 							/>
 						</div>
@@ -121,28 +218,38 @@ const SiteGenSiteDetails = () => {
 							</label>
 							<div>
 								<button
-									className={
-										'nfd-sg-site-details-rows-write-style'
-									}
-									onClick={ ( e ) =>
-										handleInputChange(
-											'hasBusinessName',
-											e.target.value
-										)
-									}
+									className={ `nfd-sg-site-details-rows-write-style ${
+										customerInputStyle ===
+										'We craft awesome goodies!'
+											? 'nfd-sg-site-details-rows-button-selected'
+											: ''
+									}` }
+									value={ 'We craft awesome goodies!' }
+									onClick={ ( e ) => {
+										handleInputChange( 'style', e );
+										addSelectedClassOnClick(
+											e,
+											'nfd-sg-site-details-rows-write-style'
+										);
+									} }
 								>
 									We craft awesome goodies!
 								</button>
 								<button
-									className={
-										'nfd-sg-site-details-rows-write-style'
-									}
-									onClick={ ( e ) =>
-										handleInputChange(
-											'hasBusinessName',
-											e.target.value
-										)
-									}
+									className={ `nfd-sg-site-details-rows-write-style ${
+										customerInputStyle ===
+										'We manufacture quality products'
+											? 'nfd-sg-site-details-rows-button-selected'
+											: ''
+									}` }
+									value={ 'We manufacture quality products' }
+									onClick={ ( e ) => {
+										handleInputChange( 'style', e );
+										addSelectedClassOnClick(
+											e,
+											'nfd-sg-site-details-rows-write-style'
+										);
+									} }
 								>
 									We manufacture quality products
 								</button>
@@ -156,11 +263,11 @@ const SiteGenSiteDetails = () => {
 							</label>
 							<br></br>
 							<textarea
-								value={ formData.uniqueAboutBusiness }
+								value={ customerInputUnique }
 								onChange={ ( e ) =>
 									handleInputChange(
 										'uniqueAboutBusiness',
-										e.target.value
+										e
 									)
 								}
 							/>
@@ -193,8 +300,8 @@ const SiteGenSiteDetails = () => {
 						<div className={ 'nfd-sg-site-details-walkThrough' }>
 							{ content.walkThroughText }
 							<span
-								onClick={ handleClick }
-								onKeyDown={ handleClick }
+								onClick={ handleClickWalkThrough }
+								onKeyDown={ handleClickWalkThrough }
 								role="button"
 								tabIndex="0"
 							>

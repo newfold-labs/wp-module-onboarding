@@ -126,7 +126,7 @@
 			background-color: #00000040;
 			// opacity: 0.25;
 			border: 1px solid #9CA2A7;
-			color: #FFFFFF !important;
+			color:var(--nfd-onboarding-primary) !important;
 
 			
 			font-size: 18px;
@@ -134,7 +134,18 @@
 			line-height: 19px;
 			letter-spacing: 0px;
 		}
-		
+
+		&-button-selected{
+			font-size: 15px;
+			font-style: italic;
+			font-weight: 500;
+			line-height: 19px;
+			letter-spacing: 0px;
+			color: var(--nfd-onboarding-primary) !important;
+			opacity: 0.6;
+
+		}
+
 		&-write-style:hover,button:hover{
 			cursor: pointer;
 
