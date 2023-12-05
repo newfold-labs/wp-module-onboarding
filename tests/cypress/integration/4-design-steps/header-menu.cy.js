@@ -41,6 +41,7 @@ describe( 'Header menu Page', function () {
 		const arr = cy.get( classname );
 		arr.each( () => {
 			cy.get( classname ).eq( previewCount ).click();
+			cy.wait(3000);
 			cy.get( classname )
 				.eq( previewCount )
 				.find( classname.concat( '__title-bar--selected' ) )
