@@ -17,7 +17,6 @@ const SiteGenSiteDetails = () => {
 	const [ customerInputType, setCustomerInputType ] = useState();
 	const [ customerInputStyle, setCustomerInputStyle ] = useState();
 	const [ customerInputUnique, setCustomerInputUnique ] = useState();
-
 	const [ isWalkthrough, setIsWalkthrough ] = useState( false );
 	const [ isEditing, setEditing ] = useState( false );
 
@@ -28,7 +27,7 @@ const SiteGenSiteDetails = () => {
 		};
 	} );
 
-	const handleInputChange = ( field, e ) => {
+	const handlePromptChange = ( field, e ) => {
 		e.preventDefault();
 		currentData.sitegen.siteDetails[ field ] = e.target.value;
 		setCurrentOnboardingData( currentData );
@@ -51,19 +50,6 @@ const SiteGenSiteDetails = () => {
 		}
 	};
 
-	const handleBusinessNameButtonClick = ( value ) => {
-		switch ( value ) {
-			case 'yes':
-				setEditing( true );
-				break;
-			case 'no':
-				setEditing( false );
-				break;
-			default:
-				break;
-		}
-	};
-
 	const concatenatePrompt = () => {
 		const siteDetails = currentData.sitegen.siteDetails;
 		let concatenatedString = '';
@@ -72,16 +58,16 @@ const SiteGenSiteDetails = () => {
 			if ( siteDetails[ field ] ) {
 				switch ( field ) {
 					case 'name':
-						concatenatedString += `My business name is ${ siteDetails[ field ] }.`;
+						concatenatedString += `${ content.businessNamePromptText } ${ siteDetails[ field ] }.`;
 						break;
 					case 'type':
-						concatenatedString += `I am making a website type of ${ siteDetails[ field ] }.`;
+						concatenatedString += `${ content.websiteTypePromptText } ${ siteDetails[ field ] }.`;
 						break;
 					case 'style':
-						concatenatedString += `My writing style is ${ siteDetails[ field ] }.`;
+						concatenatedString += `${ content.writeStylePromptText } "${ siteDetails[ field ] }".`;
 						break;
 					case 'uniqueAboutBusiness':
-						concatenatedString += `Unique about my business is ${ siteDetails[ field ] }.`;
+						concatenatedString += `${ content.uniqueBusinessPromptText } ${ siteDetails[ field ] }.`;
 						break;
 					default:
 						break;
@@ -90,6 +76,7 @@ const SiteGenSiteDetails = () => {
 		}
 		return concatenatedString;
 	};
+
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -124,15 +111,12 @@ const SiteGenSiteDetails = () => {
 		}
 	}, [] );
 
-	const addSelectedClassOnClick = ( event, classname ) => {
-		// Remove 'selected' class from all buttons
+	const selectOption = ( event, classname ) => {
 		document.querySelectorAll( `.${ classname }` ).forEach( ( button ) => {
 			button.classList.remove(
 				'nfd-sg-site-details-rows-button-selected'
 			);
 		} );
-
-		// Add 'selected' class to the clicked button
 		event.target.classList.add(
 			'nfd-sg-site-details-rows-button-selected'
 		);
@@ -158,9 +142,7 @@ const SiteGenSiteDetails = () => {
 					<div className={ 'nfd-sg-site-details' }>
 						<AIHeading title={ content.heading } />
 						<div className={ 'nfd-sg-site-details-rows' }>
-							<label>
-								1. Do you have a business name or website title?
-							</label>
+							<label> { content.businessName }</label>
 							<br></br>
 							<div>
 								{ isEditing ? (
@@ -169,7 +151,7 @@ const SiteGenSiteDetails = () => {
 											type="text"
 											value={ customerInputName }
 											onChange={ ( e ) =>
-												handleInputChange( 'name', e )
+												handlePromptChange( 'name', e )
 											}
 										/>
 									</div>
@@ -185,7 +167,7 @@ const SiteGenSiteDetails = () => {
 											${ ! isEditing ? 'nfd-sg-site-details-rows-button-selected' : '' }` }
 											onClick={ ( e ) => {
 												setEditing( false );
-												addSelectedClassOnClick(
+												selectOption(
 													e,
 													'nfd-sg-site-details-rows-button-site-name'
 												);
@@ -199,73 +181,70 @@ const SiteGenSiteDetails = () => {
 						</div>
 
 						<div className={ 'nfd-sg-site-details-rows' }>
-							<label>
-								2. What type of website are you making?
-							</label>
+							<label>{ content.websiteType }</label>
 							<br></br>
 							<input
 								type="text"
 								value={ customerInputType }
+								placeholder={ content.websiteTypePlaceholder }
 								onChange={ ( e ) =>
-									handleInputChange( 'type', e )
+									handlePromptChange( 'type', e )
 								}
 							/>
 						</div>
 
 						<div className={ 'nfd-sg-site-details-rows' }>
-							<label>
-								3. Which writing style do you like better?
-							</label>
+							<label>{ content.writeStyle }</label>
 							<div>
 								<button
 									className={ `nfd-sg-site-details-rows-write-style ${
 										customerInputStyle ===
-										'We craft awesome goodies!'
+										content.writeStyleOption1
 											? 'nfd-sg-site-details-rows-button-selected'
 											: ''
 									}` }
-									value={ 'We craft awesome goodies!' }
+									value={ content.writeStyleOption1 }
 									onClick={ ( e ) => {
-										handleInputChange( 'style', e );
-										addSelectedClassOnClick(
+										handlePromptChange( 'style', e );
+										selectOption(
 											e,
 											'nfd-sg-site-details-rows-write-style'
 										);
 									} }
 								>
-									We craft awesome goodies!
+									{ content.writeStyleOption1 }
 								</button>
 								<button
 									className={ `nfd-sg-site-details-rows-write-style ${
 										customerInputStyle ===
-										'We manufacture quality products'
+										content.writeStyleOption2
 											? 'nfd-sg-site-details-rows-button-selected'
 											: ''
 									}` }
-									value={ 'We manufacture quality products' }
+									value={ content.writeStyleOption2 }
 									onClick={ ( e ) => {
-										handleInputChange( 'style', e );
-										addSelectedClassOnClick(
+										handlePromptChange( 'style', e );
+										selectOption(
 											e,
 											'nfd-sg-site-details-rows-write-style'
 										);
 									} }
 								>
-									We manufacture quality products
+									{ content.writeStyleOption2 }
 								</button>
 							</div>
 						</div>
 
 						<div className={ 'nfd-sg-site-details-rows' }>
-							<label>
-								4. Is there anything unique about your business
-								or brand?
-							</label>
+							<label>{ content.uniqueBusiness }</label>
 							<br></br>
 							<textarea
 								value={ customerInputUnique }
+								placeholder={
+									content.uniqueBusinessPlaceholder
+								}
 								onChange={ ( e ) =>
-									handleInputChange(
+									handlePromptChange(
 										'uniqueAboutBusiness',
 										e
 									)
