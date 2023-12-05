@@ -76,6 +76,7 @@
 					}
 
 					@media (max-width: #{ ($break-small) }) {
+						width: 100%;
 						margin-right: 0;
 					}
 				}
@@ -95,9 +96,14 @@
 						border: none;
 						border-radius: 5px;
 						cursor: pointer;
+						justify-content: center;
 
 						&:hover {
 							background-color: #0065ea;
+						}
+
+						@media (max-width: #{ ($break-small) }) {
+							width: 100%;
 						}
 					}
 
@@ -110,7 +116,8 @@
 					}
 
 					@media (max-width: #{ ($break-small) }) {
-						margin: 30px;
+						width: 100%;
+						margin: 30px 0;
 					}
 				}
 			}
@@ -119,7 +126,7 @@
 
 				&__contain {
 					margin: 8px;
-					padding: 16px;
+					padding: 24px;
 					flex-direction: column;
 					justify-content: center;
 					align-items: center;

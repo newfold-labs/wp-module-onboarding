@@ -9,15 +9,19 @@
 				flex-direction: column;
 				align-items: center;
 				justify-content: center;
-				width: 600px;
+				width: 40vw;
+
+				@media (max-width: #{ ($break-large) }) {
+					width: 80vw;
+				}
 
 				&__buttons {
-					width: 108%;
+					width: 95%;
 					display: flex;
+					padding: 16px;
 					flex-direction: row;
 					align-items: center;
 					justify-content: flex-end;
-					padding: 16px;
 
 					&__skip {
 						font-size: clamp(0.6rem, 0.755rem + 0.227vw, 1.3rem);
@@ -29,6 +33,16 @@
 							text-decoration: underline;
 							color: var(--nfd-onboarding-primary);
 						}
+
+						@media (max-width: #{ ($break-small) }) {
+							margin-right: 0;
+						}
+					}
+
+					@media (max-width: #{ ($break-small) }) {
+						justify-content: center;
+						margin-bottom: 50px;
+						margin-right: 0;
 					}
 				}
 

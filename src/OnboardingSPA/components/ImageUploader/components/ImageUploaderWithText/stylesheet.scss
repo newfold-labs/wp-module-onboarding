@@ -1,9 +1,14 @@
 .nfd-onboarding-image-uploader {
 
 	&--with-text {
-		width: 600px;
+		width: 40vw;
 		margin: 16px;
 		border: 1.25px dashed var(--nfd-onboarding-site-logo-border);
+
+		@media (max-width: #{ ($break-large) }) {
+			width: 80vw;
+			margin: 24px;
+		}
 
 		&--not-dashed {
 			border: 1.25px solid rgba(var(--nfd-onboarding-primary-rgb), 0.5);
