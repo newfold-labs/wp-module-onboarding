@@ -142,7 +142,9 @@ const SiteGenSiteDetails = () => {
 					<div className={ 'nfd-sg-site-details' }>
 						<AIHeading title={ content.heading } />
 						<div className={ 'nfd-sg-site-details-rows' }>
-							<label> { content.businessName }</label>
+							<label htmlFor="businessName">
+								{ content.businessName }
+							</label>
 							<br></br>
 							<div>
 								{ isEditing ? (
@@ -181,7 +183,9 @@ const SiteGenSiteDetails = () => {
 						</div>
 
 						<div className={ 'nfd-sg-site-details-rows' }>
-							<label>{ content.websiteType }</label>
+							<label htmlFor="websiteType">
+								{ content.websiteType }
+							</label>
 							<br></br>
 							<input
 								type="text"
@@ -194,7 +198,9 @@ const SiteGenSiteDetails = () => {
 						</div>
 
 						<div className={ 'nfd-sg-site-details-rows' }>
-							<label>{ content.writeStyle }</label>
+							<label htmlFor="writeStyle">
+								{ content.writeStyle }
+							</label>
 							<div>
 								<button
 									className={ `nfd-sg-site-details-rows-write-style ${
@@ -236,7 +242,9 @@ const SiteGenSiteDetails = () => {
 						</div>
 
 						<div className={ 'nfd-sg-site-details-rows' }>
-							<label>{ content.uniqueBusiness }</label>
+							<label htmlFor="uniqueBusiness">
+								{ content.uniqueBusiness }
+							</label>
 							<br></br>
 							<textarea
 								value={ customerInputUnique }
