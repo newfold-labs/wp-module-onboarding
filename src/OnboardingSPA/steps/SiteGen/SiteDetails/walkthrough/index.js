@@ -108,6 +108,7 @@ const SiteGenSiteDetailsWalkthrough = () => {
 
 	const checkAndNavigate = () => {
 		currentData.sitegen.siteDetails.prompt = concatenatePrompt();
+		currentData.sitegen.siteDetails.mode = 'detailed';
 		setCurrentOnboardingData( currentData );
 	};
 

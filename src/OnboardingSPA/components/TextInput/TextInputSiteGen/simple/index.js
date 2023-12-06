@@ -1,5 +1,4 @@
-import classNames from 'classnames';
-import { useRef, useEffect, useState, memo } from '@wordpress/element';
+import { useRef, memo } from '@wordpress/element';
 
 const TextInputSiteGenSimple = ( {
 	type,
@@ -9,8 +8,6 @@ const TextInputSiteGenSimple = ( {
 	callback = null,
 } ) => {
 	const textareaRef = useRef( null );
-
-	useEffect( () => {}, [ customerInput ] );
 
 	return (
 		<div>

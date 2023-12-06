@@ -1,8 +1,7 @@
 import { Button } from '@wordpress/components';
-import { Icon } from '@wordpress/icons';
 import classNames from 'classnames';
 
-const ButtonSiteGen = ( { className, value, text, onClick, icon } ) => {
+const ButtonSiteGen = ( { className, value, text, onClick } ) => {
 	return (
 		<Button
 			className={ classNames( className ) }

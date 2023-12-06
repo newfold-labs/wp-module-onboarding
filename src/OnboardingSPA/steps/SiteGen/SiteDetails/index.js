@@ -49,6 +49,7 @@ const SiteGenSiteDetails = () => {
 	useEffect( () => {
 		setFooterNavEnabled( customerInput !== '' );
 		currentData.sitegen.siteDetails.prompt = customerInput;
+		currentData.sitegen.siteDetails.mode = 'simple';
 		setCurrentOnboardingData( currentData );
 	}, [ customerInput ] );
 

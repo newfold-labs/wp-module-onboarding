@@ -4,6 +4,7 @@
 	width: 40vw;
 	height: 100vh;
 
+
 	@media (max-width: #{ ($break-large) }) {
 		width: 80vw;
 	}
@@ -11,6 +12,7 @@
 	@media (max-width: #{ ($break-small) }) {
 		margin: 10px;
 		height: 100vh;
+		margin-bottom: 80px;
 	}
 
 	&-endrow {
@@ -194,7 +196,7 @@
 			cursor: pointer;
 
 		}
-		
+
 		@media (max-width: #{ ($break-small) }) {
 
 			label,
@@ -213,7 +215,7 @@
 			button {
 				width: 45%;
 				display: inline-flex;
-				margin-right: 5% !important
+				margin-right: 5% !important;
 			}
 		}
 	}
