@@ -9,7 +9,6 @@ import {
 	HEADER_END,
 	HEADER_START,
 	HEADER_TOP,
-	HEADER_SITEGEN,
 } from '../../../constants';
 
 const Header = () => {
@@ -23,9 +22,6 @@ const Header = () => {
 				isHeaderEnabled: select( nfdOnboardingStore ).isHeaderEnabled(),
 			};
 		} );
-	const isSiteGenEditor =
-		currentStep?.path === `/sitegen/step/editor` &&
-		headerActiveView === HEADER_SITEGEN;
 	return (
 		<>
 			<Suspense fallback={ <Fragment /> }>
@@ -41,7 +37,8 @@ const Header = () => {
 			{ isHeaderEnabled && (
 				<div
 					className={ classNames( 'nfd-onboarding-header', {
-						'nfd-onboarding-header-sg-editor': isSiteGenEditor,
+						[ currentStep?.header?.customClassName ]:
+							!! currentStep?.header?.customClassName,
 					} ) }
 				>
 					<div className="nfd-onboarding-header__start">

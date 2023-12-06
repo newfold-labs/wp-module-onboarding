@@ -21,6 +21,12 @@ const StepNavigationRight = () => {
 
 	const isLargeViewport = useViewportMatch( 'medium' );
 
+	/**
+	 * Back step Navigation button.
+	 *
+	 *
+	 * @return {WPComponent} Back Component
+	 */
 	const Customize = () => {
 		const { isSidebarOpened, sideBarView } = useSelect( ( select ) => {
 			return {
