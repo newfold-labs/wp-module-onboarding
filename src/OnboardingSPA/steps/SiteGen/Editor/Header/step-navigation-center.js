@@ -2,8 +2,10 @@ import { Icon, chevronDown, reusableBlock, settings } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 
 import { useViewportMatch } from '@wordpress/compose';
+import { useState } from '@wordpress/element';
 import { ReactComponent as FavouriteIcon } from '../../../../static/icons/sitegen/heart-stroked.svg';
 import { Dropdown, MenuGroup, MenuItem } from '@wordpress/components';
+import TextInputVersion from './TextInput';
 
 /**
  * Centre Step buttons presented in Header.
@@ -11,7 +13,13 @@ import { Dropdown, MenuGroup, MenuItem } from '@wordpress/components';
  * @return {WPComponent} StepNavigation Component
  */
 const StepNavigationCenter = () => {
+	const [ isInputDisabled, setIsInputDisabled ] = useState( true );
+	const [ versionName, setVersionName ] = useState( 'Version 1' );
 	const isLargeViewport = useViewportMatch( 'medium' );
+
+	const handleRenameClick = () => {
+		setIsInputDisabled( false );
+	};
 
 	/**
 	 * Version step Navigation button.
@@ -34,7 +42,7 @@ const StepNavigationCenter = () => {
 					</>
 				) }
 
-				<MenuItem onClick={ () => {} }>
+				<MenuItem onClick={ handleRenameClick }>
 					{ __( 'Rename', 'wp-module-onboarding' ) }
 				</MenuItem>
 				<MenuItem onClick={ () => {} }>
@@ -62,18 +70,22 @@ const StepNavigationCenter = () => {
 						aria-expanded={ isOpen }
 						aria-label="Regenerate"
 						className="navigation-buttons-editor"
-						onClick={ onToggle }
-						onKeyDown={ ( event ) => {
-							if ( event.key === 'Enter' ) {
-								onToggle();
-							}
-						} }
 					>
 						<FavouriteIcon />
-						<span className="navigation-buttons-editor__version__name">
-							{ __( 'Version 1', 'wp-module-onboarding' ) }
-						</span>
-						<Icon icon={ chevronDown } />
+						<TextInputVersion
+							versionName={ versionName }
+							setVersionName={ setVersionName }
+							isInputDisabled={ isInputDisabled }
+						/>
+						<Icon
+							icon={ chevronDown }
+							onClick={ onToggle }
+							onKeyDown={ ( event ) => {
+								if ( event.key === 'Enter' ) {
+									onToggle();
+								}
+							} }
+						/>
 					</div>
 				) }
 				renderContent={ VersionDropDownMenuItems }
@@ -84,7 +96,7 @@ const StepNavigationCenter = () => {
 
 	return (
 		<div className="nfd-onboarding-header__step-navigation">
-			<VersionButton />
+			<VersionButton isInputDisabled={ isInputDisabled } />
 		</div>
 	);
 };
