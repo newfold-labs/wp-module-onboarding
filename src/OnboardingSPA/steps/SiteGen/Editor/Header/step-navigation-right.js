@@ -21,33 +21,23 @@ const StepNavigationRight = () => {
 
 	const isLargeViewport = useViewportMatch( 'medium' );
 
-	/**
-	 * Back step Navigation button.
-	 *
-	 * @param {Object} param0
-	 *
-	 * @return {WPComponent} Back Component
-	 */
 	const Customize = () => {
-
-		const { isSidebarOpened, sideBarView } = useSelect(
-			( select ) => {
-				return {
-					isSidebarOpened: select( nfdOnboardingStore ).isSidebarOpened(),
-					sideBarView: select( nfdOnboardingStore ).getSidebarView(),
-				};
-			}
-		);
+		const { isSidebarOpened, sideBarView } = useSelect( ( select ) => {
+			return {
+				isSidebarOpened: select( nfdOnboardingStore ).isSidebarOpened(),
+				sideBarView: select( nfdOnboardingStore ).getSidebarView(),
+			};
+		} );
 
 		const { setIsSidebarOpened, setSidebarActiveView } =
-		useDispatch( nfdOnboardingStore );		
+			useDispatch( nfdOnboardingStore );
 		const customize = () => {
-				const isSidebarOpenedNew =
-					sideBarView === 'Customize'
-						? ! isSidebarOpened
-						: isSidebarOpened;
-				setSidebarActiveView( 'Customize' );
-				setIsSidebarOpened( isSidebarOpenedNew );
+			const isSidebarOpenedNew =
+				sideBarView === 'Customize'
+					? ! isSidebarOpened
+					: isSidebarOpened;
+			setSidebarActiveView( 'Customize' );
+			setIsSidebarOpened( isSidebarOpenedNew );
 		};
 		return (
 			<div
@@ -70,7 +60,7 @@ const StepNavigationRight = () => {
 
 	const Save = () => {
 		const save = () => {
-		//	alert( 'save' );
+			//	alert( 'save' );
 		};
 		return (
 			<div

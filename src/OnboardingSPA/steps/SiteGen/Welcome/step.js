@@ -10,6 +10,5 @@ export const stepSiteGenWelcome = new Step( {
 	title: __( 'Welcome', 'wp-module-onboarding' ),
 	Component: SiteGenWelcome,
 	icon: copy,
-	sidebars: {
-	},
+	sidebars: {},
 } );
