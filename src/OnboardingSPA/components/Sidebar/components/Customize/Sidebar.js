@@ -5,10 +5,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 import { store as nfdOnboardingStore } from '../../../../store';
-import {
-	SIDEBAR_LEARN_MORE,
-	SIDEBAR_SLOTFILL_PREFIX,
-} from '../../../../../constants';
+import { SIDEBAR_SLOTFILL_PREFIX } from '../../../../../constants';
 import SidebarSkeleton from './Skeleton/SidebarSkeleton';
 
 const CustomizeSidebar = () => {
@@ -31,7 +28,10 @@ const CustomizeSidebar = () => {
 			>
 				<Suspense fallback={ <SidebarSkeleton /> }>
 					<PanelHeader
-						label={ __( 'Customize Website', 'wp-module-onboarding' ) }
+						label={ __(
+							'Customize Website',
+							'wp-module-onboarding'
+						) }
 					>
 						<div className="nfd-onboarding-sidebar-learn-more__header">
 							<Button
