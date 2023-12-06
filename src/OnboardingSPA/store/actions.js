@@ -189,6 +189,13 @@ export function setHeaderActiveView( view ) {
 	};
 }
 
+export function setFooterNavEnabled( navEnabled ) {
+	return {
+		type: 'SET_FOOTER_NAV_ENABLED',
+		navEnabled,
+	};
+}
+
 export function setFooterActiveView( view ) {
 	return {
 		type: 'SET_FOOTER_ACTIVE_VIEW',

@@ -181,7 +181,7 @@ html.nfd-interface-interface-skeleton__html-container {
 .nfd-onboarding-skeleton {
 
 	&--sitegen {
-		background-image: var(--sitegen-background);
+		background: var(--sitegen-background);
 		background-repeat: no-repeat;
 		background-size: cover;
 
@@ -190,3 +190,4 @@ html.nfd-interface-interface-skeleton__html-container {
 		}
 	}
 }
+

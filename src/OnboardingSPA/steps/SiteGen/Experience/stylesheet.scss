@@ -3,4 +3,8 @@
 	align-items: center;
 	flex-direction: column;
 	justify-content: center;
+
+	@media (max-width: #{ ($break-large) }) {
+		margin-bottom: 70px;
+	}
 }

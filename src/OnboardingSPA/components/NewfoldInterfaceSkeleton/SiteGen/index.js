@@ -9,6 +9,7 @@ import themeToggleHOC from '../themeToggleHOC';
 import NewfoldInterfaceSkeleton from '../index';
 import { ThemeProvider } from '../../ThemeContextProvider';
 import { store as nfdOnboardingStore } from '../../../store';
+import classNames from 'classnames';
 import { setFlow } from '../../../utils/api/flow';
 import {
 	generateSiteGenMeta,
@@ -24,6 +25,15 @@ const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
 );
 
 const SiteGen = () => {
+	const { newfoldBrand } = useSelect( ( select ) => {
+		return {
+			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
+		};
+	}, [] );
+
+	useEffect( () => {
+		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
+	}, [ newfoldBrand ] );
 	const location = useLocation();
 
 	const { currentData } = useSelect( ( select ) => {
@@ -117,7 +127,10 @@ const SiteGen = () => {
 		<ThemeProvider>
 			<ThemedNewfoldInterfaceSkeleton
 				id={ 'nfd-onboarding-skeleton--sitegen' }
-				className={ 'nfd-onboarding-skeleton--sitegen' }
+				className={ classNames(
+					'nfd-onboarding-skeleton--sitegen',
+					`brand-${ newfoldBrand }`
+				) }
 				header={ <Header /> }
 				content={ <Content /> }
 				sidebar={ <Sidebar /> }

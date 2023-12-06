@@ -1,9 +1,14 @@
 .nfd-onboarding-image-uploader {
 
 	&--with-text {
-		width: 600px;
+		width: 40vw;
 		margin: 16px;
 		border: 1.25px dashed var(--nfd-onboarding-site-logo-border);
+
+		@media (max-width: #{ ($break-large) }) {
+			width: 80vw;
+			margin: 24px;
+		}
 
 		&--not-dashed {
 			border: 1.25px solid rgba(var(--nfd-onboarding-primary-rgb), 0.5);
@@ -92,7 +97,7 @@
 					width: 130px;
 					height: 100px;
 					object-fit: cover;
-					border-radius: 8px;
+					border-radius: 4px;
 				}
 
 				&__details {
@@ -105,7 +110,7 @@
 					&__filename {
 						margin: 0;
 						margin-bottom: 8px;
-						width: 300px;
+						width: 28vw;
 						font-size: clamp(0.75rem, 0.6591rem + 0.4545vw, 1.75rem);
 					}
 
@@ -125,7 +130,6 @@
 						font-size: clamp(0.5rem, 0.4091rem + 0.4545vw, 1.5rem);
 						font-style: normal;
 						font-weight: 510;
-						margin-right: 24px;
 						color: var(--nfd-onboarding-primary);
 						background-color: transparent;
 						border: none;

@@ -4,11 +4,16 @@ $background-color: var(--nfd-onboarding-card-background);
 
 	margin: 8px;
 	max-width: 90vw;
-	padding: 24px 12px;
+	padding: 24px 16px;
 	border-radius: 12px;
 	background-color: $background-color;
 	width: clamp(18.75rem, 22.6136rem + 5.6818vw, 31.25rem);
 	box-shadow: 3px 3px 5px rgba(var(--nfd-onboarding-primary-rgb), $alpha: 0.05);
+
+	@media (max-width: #{ ($break-large) }) {
+		margin: 12px;
+		padding: 12px 6px;
+	}
 
 	&__title {
 		color: var(--nfd-onboarding-primary);
