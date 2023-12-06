@@ -53,6 +53,8 @@
 		flex-direction: row;
 		text-align: center;
 		margin: 10px 10px 55px 10px;
+		flex-wrap: wrap;
+   		max-width: 1440px;
 	}
 
 	&__note {
@@ -110,3 +112,43 @@
 	}
 
 }
+
+// Define your color variables
+$progress-bar-background-color: rgba(53, 58, 64, 1);
+
+$progress-bar-filled-color: #0060F0;
+; // Blue progress bar
+
+.regenerating-site-card {
+	width: 420px;
+    height: 315px;
+    border-radius: 20px;
+    background-color: rgba(53, 58, 64, 0.1);
+    color: #fff;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+	
+	h3{
+		color:#fff;
+	}
+
+  .progress-bar {
+	width: 90%;
+    background: $progress-bar-background-color;
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden; // This keeps the child `div` within the parent's border-radius
+
+    &__fill {
+      background: $progress-bar-filled-color;
+      height: 100%;
+      transition: width 0.3s ease; // Smooth transition for the progress bar width
+    }
+  }
+}
+

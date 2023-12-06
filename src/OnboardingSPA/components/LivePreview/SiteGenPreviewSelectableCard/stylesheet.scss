@@ -1,5 +1,4 @@
 .live-preview-sitegen--selectable-card {
-	flex: 1;
 	width: 420px;
 	padding: 20px;
 	display: flex;
@@ -7,6 +6,7 @@
 	align-items: center;
 	flex-direction: column;
 	justify-content: center;
+	flex-wrap: wrap;
 
 	@media (min-width: #{ ($break-mobile) }) and (max-width: #{ ($break-wide) }) {
 		width: 340px;

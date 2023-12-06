@@ -1,9 +1,9 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-alert */
 import CommonLayout from '../../../components/Layouts/Common';
 
-import { useEffect } from '@wordpress/element';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
@@ -13,6 +13,7 @@ import { SiteGenLivePreview } from '../../../components/LivePreview';
 import getContents from './contents';
 import { pattern } from './pattern';
 import HeartAnimation from './heartAnimation';
+import RegeneratingSiteCard from './regeneratingCard';
 
 import { getHomePagePreviews } from '../../../utils/api/siteGen';
 
@@ -44,47 +45,42 @@ const SiteGenPreview = () => {
 		setDrawerActiveView( false );
 	}, [ currentData ] );
 
+	const [ isRegenerating, setIsRegenerating ] = useState( false );
+
 	const onWishlistClick = () => {
 		alert( 'wishlist' );
 	};
 
 	const onRegenerateClick = () => {
-		//	alert( 'regenerate' );
+		console.log("regenerate clicked");
+		setIsRegenerating( true );
 	};
 
 	const buildPreviews = () => {
-		const designs = [ pattern, pattern, pattern ];
+		const designs = isRegenerating
+			? [ <RegeneratingSiteCard progress={ 20 } /> ]
+			: [];
+		// const designs = pattern; // [ pattern, pattern, pattern ];
 
-		const navigate = useNavigate();
-		const { nextStep } = useSelect( ( select ) => {
-			return {
-				nextStep: select( nfdOnboardingStore ).getNextStep(),
-			};
-		} );
+		designs.push(
+			...pattern.map( ( design, idx ) => {
+				return (
+					<SiteGenLivePreview
+						key={ idx }
+						blockGrammer={ design }
+						styling={ 'custom' }
+						overlay={ true }
+						onWishlistClick={ onWishlistClick }
+						isFavourite={ true }
+						onRegenerateClick={ onRegenerateClick }
+						tabIndex="0"
+						role="button"
+					/>
+				);
+			} )
+		);
 
-		return designs.map( ( design, idx ) => {
-			return (
-				<SiteGenLivePreview
-					key={ idx }
-					blockGrammer={ design }
-					styling={ 'custom' }
-					overlay={ true }
-					onClick={ () => {
-						navigate( nextStep.path );
-					} }
-					onKeyDown={ ( event ) => {
-						if ( event.key === 'Enter' ) {
-							navigate( nextStep.path );
-						}
-					} }
-					onWishlistClick={ onWishlistClick }
-					isFavourite={ true }
-					onRegenerateClick={ onRegenerateClick }
-					tabIndex="0"
-					role="button"
-				/>
-			);
-		} );
+		return designs;
 	};
 
 	const content = getContents();
