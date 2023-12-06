@@ -1,0 +1,24 @@
+{
+    "homepages": {
+        "active": {
+            "slug": "currenthash1",
+            "title": "Active Version",
+            "favorite": true,
+            "content": "hello"
+        },
+        "data": [
+            {
+                "slug": "hash1",
+                "title": "Version 1",
+				"favorite": false,
+                "content": "Hello 1"
+            },
+            {
+                "slug": "hash2",
+                "title": "Version 2",
+                "favorite": true,
+                "content": "hello 3"
+            }
+        ]
+    }
+}

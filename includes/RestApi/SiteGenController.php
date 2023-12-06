@@ -54,7 +54,7 @@ class SiteGenController {
 			$this->namespace,
 			$this->rest_base . '/get-homepages',
 			array(
-				'methods'             => \WP_REST_Server::READABLE,
+				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'get_homepages' ),
 				'permission_callback' => '__return_true',
 				'args' => $this->get_homepages_args(),

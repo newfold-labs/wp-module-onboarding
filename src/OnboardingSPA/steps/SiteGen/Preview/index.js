@@ -15,8 +15,10 @@ import HeartAnimation from './heartAnimation';
 import RegeneratingSiteCard from './regeneratingCard';
 
 import { getHomePagePreviews } from '../../../utils/api/siteGen';
+import homepageData from '../data.json';
 
 const SiteGenPreview = () => {
+	const [ homepages, setHomepages ] = useState( { active: {}, data: [] } );
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -38,6 +40,7 @@ const SiteGenPreview = () => {
 				false
 			);
 		}
+		setHomepages( homepageData.homepages );
 		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
@@ -51,10 +54,10 @@ const SiteGenPreview = () => {
 	};
 
 	const onRegenerateClick = () => {
-		console.log("regenerate clicked");
+		console.log( 'HOme pages', homepages );
+		console.log( 'regenerate clicked' );
 		setIsRegenerating( true );
 	};
-
 	const buildPreviews = () => {
 		const designs = isRegenerating
 			? [ <RegeneratingSiteCard progress={ 20 } /> ]
