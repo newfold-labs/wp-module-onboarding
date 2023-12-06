@@ -40,9 +40,11 @@
 					&__image {
 						height: 36px;
 						width: 42px;
-						background-image: var(--sitegen-ai-icon);
-						background-repeat: no-repeat;
+						border-radius: 7px;
 						background-size: cover;
+						background-repeat: no-repeat;
+						background-image: var(--sitegen-ai-icon);
+						box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 
 						@media (max-width: #{ ($break-small) }) {
 							width: 32px;

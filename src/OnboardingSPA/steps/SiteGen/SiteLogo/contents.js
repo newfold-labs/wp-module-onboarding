@@ -14,6 +14,7 @@ const getContents = () => {
 		},
 		buttons: {
 			skip: __( 'Skip for now', 'wp-module-onboarding' ),
+			next: __( 'Next', 'wp-module-onboarding' ),
 		},
 	};
 };

@@ -1,18 +1,19 @@
-import CommonLayout from '../../../components/Layouts/Common';
-
+import { useViewportMatch } from '@wordpress/compose';
 import { useEffect, useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
-import { store as nfdOnboardingStore } from '../../../store';
-import { HEADER_SITEGEN } from '../../../../constants';
-
 import getContents from './contents';
-import ImageUploaderWithText from '../../../components/ImageUploader/components/ImageUploaderWithText';
-import ButtonNext from '../../../components/Button/ButtonNext';
+import { HEADER_SITEGEN } from '../../../../constants';
 import SkipButton from '../../../components/SkipButton';
+import { store as nfdOnboardingStore } from '../../../store';
+import AIHeading from '../../../components/Heading/AIHeading';
+import CommonLayout from '../../../components/Layouts/Common';
+import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
+import ImageUploaderWithText from '../../../components/ImageUploader/components/ImageUploaderWithText';
 
 const SiteGenSiteLogo = () => {
 	const [ siteLogo, setSiteLogo ] = useState();
+	const isLargeViewport = useViewportMatch( 'small' );
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
@@ -22,6 +23,7 @@ const SiteGenSiteLogo = () => {
 	} );
 
 	const {
+		setFooterNavEnabled,
 		setIsHeaderEnabled,
 		setSidebarActiveView,
 		setHeaderActiveView,
@@ -39,6 +41,7 @@ const SiteGenSiteLogo = () => {
 		};
 		setCurrentOnboardingData( currentDataCopy );
 		setSiteLogo( undefined );
+		setFooterNavEnabled( false );
 	};
 
 	useEffect( () => {
@@ -47,8 +50,9 @@ const SiteGenSiteLogo = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		if ( currentData.sitegen.siteLogo?.id !== 0 ) {
-			setSiteLogo( currentData.sitegen.siteLogo );
+			return setSiteLogo( currentData.sitegen.siteLogo );
 		}
+		setFooterNavEnabled( false );
 	}, [] );
 
 	useEffect( () => {
@@ -59,6 +63,7 @@ const SiteGenSiteLogo = () => {
 			currentDataCopy.sitegen.siteLogo.fileName = siteLogo.fileName;
 			currentDataCopy.sitegen.siteLogo.fileSize = siteLogo.fileSize;
 			setCurrentOnboardingData( currentDataCopy );
+			setFooterNavEnabled( siteLogo.id !== 0 );
 		}
 	}, [ siteLogo ] );
 
@@ -69,12 +74,7 @@ const SiteGenSiteLogo = () => {
 			className="nfd-onboarding-step--site-gen__site-logo"
 		>
 			<div className="nfd-onboarding-step--site-gen__site-logo__container">
-				<div className="nfd-onboarding-step--site-gen__site-logo__container__heading">
-					<div className="nfd-onboarding-step--site-gen__site-logo__container__heading__animation"></div>
-					<p className="nfd-onboarding-step--site-gen__site-logo__container__heading__text">
-						{ content.heading }
-					</p>
-				</div>
+				<AIHeading title={ content.heading } />
 				<ImageUploaderWithText
 					image={ siteLogo }
 					imageSetter={ setSiteLogo }
@@ -85,13 +85,16 @@ const SiteGenSiteLogo = () => {
 						className="nfd-onboarding-step--site-gen__site-logo__container__buttons__skip"
 						text={ content.buttons.skip }
 					/>
-					<ButtonNext
-						disabled={
-							siteLogo === undefined || siteLogo?.id === 0
-								? true
-								: false
-						}
-					/>
+					{ isLargeViewport && (
+						<NextButtonSiteGen
+							text={ content.buttons.next }
+							disabled={
+								siteLogo === undefined || siteLogo?.id === 0
+									? true
+									: false
+							}
+						/>
+					) }
 				</div>
 			</div>
 		</CommonLayout>

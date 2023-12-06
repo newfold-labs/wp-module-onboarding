@@ -31,13 +31,13 @@
 		}
 
 		&--header {
-			height: 80px;
+			height: 10vh;
 			width: 90vw;
 		}
 
 		&--body {
 			width: 90vw;
-			height: 500px;
+			height: 80vh;
 		}
 
 		&--footer {
@@ -48,12 +48,12 @@
 
 			&_left {
 				width: 55vw;
-				height: 300px;
+				height: 40vh;
 			}
 
 			&_right {
 				width: 33vw;
-				height: 300px;
+				height: 40vh;
 			}
 		}
 	}

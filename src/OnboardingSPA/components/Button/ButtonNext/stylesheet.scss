@@ -5,7 +5,7 @@
 		color: var(--nfd-onboarding-secondary);
 		width: 80px;
 		height: 50px;
-		font-size: 15px;
+		font-size: clamp(0.5rem, 0.3864rem + 0.5682vw, 1.75rem);
 		border-radius: 8px;
 		padding: 16px;
 
@@ -17,5 +17,6 @@
 				color: var(--nfd-onboarding-secondary);
 			}
 		}
+
 	}
 }

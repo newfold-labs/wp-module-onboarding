@@ -57,6 +57,10 @@ export function getFooterActiveView( state ) {
 	return state.footer.view;
 }
 
+export function getFooterNavEnabled( state ) {
+	return state.footer.navEnabled;
+}
+
 /**
  * Gets current Newfold brand
  *

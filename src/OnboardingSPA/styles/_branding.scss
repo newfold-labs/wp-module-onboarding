@@ -58,6 +58,7 @@ body {
 		--nfd-onboarding-contrast-icon: url(../../Brands/bluehost/dark.svg);
 		--nfd-onboarding-icon: url(../../Brands/bluehost/icon.svg);
 		--nfd-onboarding-logo: url(../../Brands/bluehost/logo.svg);
+		--nfd-onboarding-logo-name: url(../../Brands/bluehost/bluehost-logo.svg);
 		--nfd-onboarding-primary: #3575d3;
 		--nfd-onboarding-highlighted--rgb: 123, 177, 253;
 		--nfd-onboarding-primary-alt: #2c76dc;
@@ -301,6 +302,8 @@ body {
 	}
 
 	.nfd-onboarding-sitegen-light {
+
+		--sitegen-background: #ededed;
 		--nfd-onboarding-primary: #000;
 		--nfd-onboarding-primary-rgb: 0, 0, 0;
 		--nfd-onboarding-hover: #c3c4c7;
@@ -341,5 +344,6 @@ body {
 		--nfd-onboarding-preview-favorite-background: #1E2327;
 		--nfd-onboarding-favorite-fill : #EF4A71;
 		--nfd-onboarding-button-background: #363E4459;
+		--sitegen-background: url(../static/images/ai_bg.png);
 	}
 }
