@@ -291,3 +291,10 @@ export const setHomepagesData = ( homepagesData ) => {
 		homepagesData,
 	};
 };
+
+export const setActiveHomepage = ( activeHomepage ) => {
+	return {
+		type: 'SET_ACTIVE_HOMEPAGE',
+		activeHomepage,
+	};
+};

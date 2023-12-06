@@ -77,8 +77,7 @@ const SiteGenPreview = () => {
 						onRegenerateClick={ onRegenerateClick }
 						tabIndex="0"
 						role="button"
-						version={ design.version }
-						slug={ design.slug }
+						designObject={ design }
 					/>
 				);
 			} )

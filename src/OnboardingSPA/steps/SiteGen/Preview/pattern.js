@@ -603,12 +603,7 @@ const pattern4 = `<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"
 
 const homepageData = {
 	homepages: {
-		active: {
-			slug: 'hash1',
-			title: 'Version 1',
-			favorite: true,
-			content: pattern1,
-		},
+		active: {},
 		data: [
 			{
 				slug: 'hash1',
@@ -623,14 +618,14 @@ const homepageData = {
 				content: pattern2,
 			},
 			{
-				slug: 'hash2',
-				title: 'Version 2',
+				slug: 'hash3',
+				title: 'Version 3',
 				favorite: true,
 				content: pattern3,
 			},
 			{
-				slug: 'hash2',
-				title: 'Version 2',
+				slug: 'hash4',
+				title: 'Version 4',
 				favorite: true,
 				content: pattern4,
 			},

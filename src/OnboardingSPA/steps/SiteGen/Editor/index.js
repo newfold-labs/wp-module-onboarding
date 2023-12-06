@@ -24,8 +24,14 @@ const StepSiteGenEditor = () => {
 		( select ) => select( nfdOnboardingStore ).getHomepagesData(),
 		[]
 	);
-
-	console.log( 'Home pages', homepages );
+	const activeHomepage = useSelect(
+		( select ) => select( nfdOnboardingStore ).getActiveHomepage(),
+		[]
+	);
+	const allHomepages = useSelect(
+		( select ) => select( nfdOnboardingStore ).getAllHomepages(),
+		[]
+	);
 
 	useEffect( () => {
 		setIsHeaderEnabled( true );
@@ -40,7 +46,7 @@ const StepSiteGenEditor = () => {
 		>
 			{ /* <SiteGenPlaceholder heading={ 'Editing Previews' } /> */ }
 			<LivePreview
-				blockGrammer={ pattern }
+				blockGrammer={ activeHomepage?.content }
 				styling={ 'full' }
 				viewportWidth={ 1300 }
 			/>

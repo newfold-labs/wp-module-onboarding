@@ -2,7 +2,7 @@
 import { search, Icon, reusableBlock } from '@wordpress/icons';
 import { useState } from '@wordpress/element';
 import { useNavigate } from 'react-router-dom';
-import { useSelect } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { LivePreview } from '..';
 import Button from '../../../components/Button';
 import { store as nfdOnboardingStore } from '../../../store';
@@ -22,7 +22,9 @@ const SiteGenPreviewSelectableCard = ( {
 	isFavourite,
 	onRegenerateClick = false,
 	skeletonLoadingTime = 2500,
+	designObject,
 } ) => {
+	const { setActiveHomepage } = useDispatch( nfdOnboardingStore );
 	const [ loadingParent, setIsLoadingParent ] = useState( true );
 
 	const navigate = useNavigate();
@@ -31,6 +33,11 @@ const SiteGenPreviewSelectableCard = ( {
 			nextStep: select( nfdOnboardingStore ).getNextStep(),
 		};
 	} );
+
+	const onPreviewVersionClick = () => {
+		setActiveHomepage( designObject );
+		navigate( nextStep.path );
+	};
 
 	return (
 		<div
@@ -60,17 +67,16 @@ const SiteGenPreviewSelectableCard = ( {
 				{ overlay && ! loadingParent && (
 					<div
 						className={ `${ className }__live-preview-container__overlay` }
-						onClick={ () => {
-							navigate( nextStep.path );
-						} }
+						onClick={ onPreviewVersionClick }
 						onKeyDown={ ( event ) => {
 							if ( event.key === 'Enter' ) {
-								navigate( nextStep.path );
+								onPreviewVersionClick();
 							}
 						} }
 					>
 						<Button
 							className={ `${ className }__live-preview-container__overlay__button` }
+							onClick={ onPreviewVersionClick }
 						>
 							<Icon icon={ search } />
 							Preview Version

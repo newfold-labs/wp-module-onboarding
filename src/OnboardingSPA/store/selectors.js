@@ -436,3 +436,25 @@ export function getCurrentUserDetails( state ) {
 export const getHomepagesData = ( state ) => {
 	return state.homepagesData.homepages;
 };
+
+/**
+ * Gets actove homepage
+ *
+ * @param {*} state
+ * @return {Object} active
+ */
+
+export const getActiveHomepage = ( state ) => {
+	return state.homepagesData.homepages.active;
+};
+
+/**
+ * Gets actove homepage
+ *
+ * @param {*} state
+ * @return {Object} data
+ */
+
+export const getAllHomepages = ( state ) => {
+	return state.homepagesData.homepages.data;
+};

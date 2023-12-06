@@ -323,19 +323,27 @@ export function footer(
 	return state;
 }
 
-const initialhomepagesState = {
-	homepagess: {
+const initialHomepagesState = {
+	homepages: {
 		active: {},
 		data: [],
 	},
 };
 
-export function homepagesData( state = initialhomepagesState, action ) {
+export function homepagesData( state = initialHomepagesState, action ) {
 	switch ( action.type ) {
-		case 'SET_HOMEPAGES_DATA':
+		case 'SET_HOMEPAGE_DATA':
 			return {
 				...state,
-				homepages: action.homepagesData,
+				homepages: action.homepageData,
+			};
+		case 'SET_ACTIVE_HOMEPAGE':
+			return {
+				...state,
+				homepages: {
+					...state.homepages,
+					active: action.activeHomepage,
+				},
 			};
 
 		default:
