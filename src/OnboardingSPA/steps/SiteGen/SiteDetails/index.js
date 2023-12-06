@@ -1,3 +1,4 @@
+import { useViewportMatch } from '@wordpress/compose';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 
@@ -12,6 +13,7 @@ import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 
 const SiteGenSiteDetails = () => {
 	const content = getContents();
+	const isLargeViewport = useViewportMatch( 'small' );
 	const [ customerInput, setCustomerInput ] = useState();
 
 	const { currentData } = useSelect( ( select ) => {
@@ -22,6 +24,7 @@ const SiteGenSiteDetails = () => {
 	} );
 
 	const {
+		setFooterNavEnabled,
 		setIsHeaderEnabled,
 		setSidebarActiveView,
 		setHeaderActiveView,
@@ -36,14 +39,16 @@ const SiteGenSiteDetails = () => {
 		setDrawerActiveView( false );
 
 		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
-			setCustomerInput( currentData.sitegen.siteDetails.prompt );
+			return setCustomerInput( currentData.sitegen.siteDetails.prompt );
 		}
+		setFooterNavEnabled( false );
 	}, [] );
 
-	const checkAndNavigate = () => {
+	useEffect( () => {
+		setFooterNavEnabled( customerInput !== '' );
 		currentData.sitegen.siteDetails.prompt = customerInput;
 		setCurrentOnboardingData( currentData );
-	};
+	}, [ customerInput ] );
 
 	return (
 		<CommonLayout isCentered>
@@ -57,17 +62,18 @@ const SiteGenSiteDetails = () => {
 						customerInput={ customerInput }
 						setCustomerInput={ setCustomerInput }
 					/>
-					<div className={ 'nfd-sg-site-details-endrow' }>
-						<NextButtonSiteGen
-							className={ 'nfd-sg-site-details--next-btn' }
-							text={ content.buttonText }
-							callback={ checkAndNavigate }
-							disabled={
-								customerInput === undefined ||
-								customerInput === ''
-							}
-						/>
-					</div>
+					{ isLargeViewport && (
+						<div className={ 'nfd-sg-site-details-endrow' }>
+							<NextButtonSiteGen
+								className={ 'nfd-sg-site-details--next-btn' }
+								text={ content.buttonText }
+								disabled={
+									customerInput === undefined ||
+									customerInput === ''
+								}
+							/>
+						</div>
+					) }
 				</div>
 			</Animate>
 		</CommonLayout>
