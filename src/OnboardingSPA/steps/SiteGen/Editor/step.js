@@ -5,7 +5,6 @@ import { Step } from '../../../data/models/Step';
 import Header from './Header';
 import Customize from './Sidebar/Customize';
 
-
 const StepSiteGenEditor = lazy( () => import( './index' ) );
 
 export const stepSiteGenEditor = new Step( {

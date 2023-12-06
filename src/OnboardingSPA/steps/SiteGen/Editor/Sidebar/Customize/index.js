@@ -5,7 +5,9 @@ import { store as nfdOnboardingStore } from '../../../../../store';
 import getContents from './contents';
 
 const InfoPanel = lazy( () =>
-	import( '../../../../../components/Sidebar/components/Customize/DesignFontsPanel' )
+	import(
+		'../../../../../components/Sidebar/components/Customize/DesignFontsPanel'
+	)
 );
 const StepIntroPanel = lazy( () =>
 	import(
@@ -14,6 +16,7 @@ const StepIntroPanel = lazy( () =>
 );
 
 const Customize = () => {
+	// eslint-disable-next-line no-unused-vars
 	const { techSupportLink, fullServiceCreativeTeamLink, brandConfig } =
 		useSelect( ( select ) => {
 			return {
