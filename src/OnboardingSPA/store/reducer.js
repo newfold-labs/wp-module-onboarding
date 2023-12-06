@@ -302,11 +302,17 @@ export function queue( state = [], action ) {
 export function footer(
 	state = {
 		footers,
+		navEnabled: true,
 		view: FOOTER_SITEGEN,
 	},
 	action
 ) {
 	switch ( action.type ) {
+		case 'SET_FOOTER_NAV_ENABLED':
+			return {
+				...state,
+				navEnabled: action.navEnabled,
+			};
 		case 'SET_FOOTER_ACTIVE_VIEW':
 			return {
 				...state,
