@@ -1,7 +1,13 @@
 .nfd-sg-site-details {
 
+	width: 40vw;
+
+	@media (max-width: #{ ($break-large) }) {
+		width: 80vw;
+	}
+
 	@media (max-width: #{ ($break-small) }) {
-		margin: 20px;
+		margin: 10px;
 	}
 
 	&-endrow {

@@ -14,9 +14,24 @@
 	&__end {
 		position: absolute;
 		right: 25px;
+		bottom: 25px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		@media (max-width: #{ ($break-small) }) {
+			right: 16px;
+			bottom: 20px;
+		}
 	}
 
 	&--background {
 		background-color: rgba(var(--nfd-onboarding-secondary-rgb), 0.75);
+	}
+
+	@media (max-width: #{ ($break-small) }) {
+		backdrop-filter: blur(2px);
+		background: rgba(var(--nfd-onboarding-secondary-rgb), 0.5);
+		border-top: 1px solid rgba(var(--nfd-onboarding-primary-rgb), 0.25);
 	}
 }

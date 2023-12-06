@@ -14,18 +14,18 @@ import { forwardRef, useEffect } from '@wordpress/element';
 import { __unstableUseNavigateRegions as useNavigateRegions } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useMergeRefs } from '@wordpress/compose';
-import bgAiImg from '../../static/images/ai_bg.png';
+// import bgAiImg from '../../static/images/ai_bg.png';
 
 function useHTMLClass( className ) {
 	useEffect( () => {
 		// eslint-disable-next-line no-undef
-		const mainImage = new Image();
-		mainImage.src = bgAiImg;
-		mainImage.onload = () => {
-			document.querySelector(
-				'.nfd-onboarding-skeleton--sitegen'
-			).style.backgroundImage = `url('${ bgAiImg }')`;
-		};
+		// const mainImage = new Image();
+		// mainImage.src = bgAiImg;
+		// mainImage.onload = () => {
+		// 	document.querySelector(
+		// 		'.nfd-onboarding-skeleton--sitegen'
+		// 	).style.backgroundImage = `url('${ bgAiImg }')`;
+		// };
 
 		const element =
 			document && document.querySelector( `html:not(.${ className })` );

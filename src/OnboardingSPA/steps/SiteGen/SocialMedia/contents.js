@@ -17,6 +17,7 @@ const getContents = () => {
 		facebookButton: __( 'Connect Facebook', 'wp-module-onboarding' ),
 		buttons: {
 			skip: __( 'Skip for now', 'wp-module-onboarding' ),
+			next: __( 'Next', 'wp-module-onboarding' ),
 		},
 	};
 };
