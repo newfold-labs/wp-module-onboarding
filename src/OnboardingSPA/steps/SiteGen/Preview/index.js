@@ -11,11 +11,20 @@ import { HEADER_SITEGEN } from '../../../../constants';
 import LivePreviewSiteGenCard from '../../../components/LivePreview/SiteGenCard';
 
 import getContents from './contents';
-import getHomepages from '../../../data/homepages/getHomepages';
+import {
+	getHomepages,
+	getRandom,
+} from '../../../data/sitegen/homepages/homepages';
+import { getColorPalettes } from '../../../data/sitegen/sitemeta/siteMeta';
+import { getGlobalStyles } from '../../../utils/api/themes';
+
+import { isEmpty, cloneDeep } from 'lodash';
+import Grid from '../../../components/Grid';
 
 const SiteGenPreview = () => {
 	const navigate = useNavigate();
 	const [ homepages, setHomepages ] = useState();
+	const [ globalStyles, setGlobalStyles ] = useState( [] );
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -32,22 +41,42 @@ const SiteGenPreview = () => {
 		};
 	} );
 
-	useEffect( () => {
+	const loadData = async () => {
 		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
+		let homepagesObject = {};
+		if ( isEmpty( currentData.sitegen.homepages.data ) ) {
+			const homepagesResponse = getHomepages();
+			const colorsResponse = getColorPalettes();
+			homepagesResponse.forEach( ( homepage, index ) => {
+				if ( ! homepage?.color ) {
+					const paletteKeys = Object.keys( colorsResponse );
+					const paletteIndex =
+						paletteKeys[ index % paletteKeys.length ];
+					homepage.color = {
+						slug: paletteIndex,
+						palette: colorsResponse[ paletteIndex ],
+					};
+				}
+			} );
+			currentData.sitegen.homepages.data = homepagesResponse;
+			setCurrentOnboardingData( currentData );
+			homepagesResponse.forEach( ( homepage ) => {
+				homepagesObject[ homepage.slug ] = homepage;
+			} );
+		} else {
+			homepagesObject = currentData.sitegen.homepages.data;
+		}
+		const globalStyles = await getGlobalStyles();
+		setGlobalStyles( globalStyles.body );
 
-		const homepagesResponse = getHomepages();
-		currentData.sitegen.homepages.data = homepagesResponse;
-		setCurrentOnboardingData( currentData );
+		setHomepages( homepagesObject );
+	};
 
-		const homePagesObject = {};
-
-		homepagesResponse.forEach( ( homepage ) => {
-			homePagesObject[ homepage.slug ] = homepage;
-		} );
-		setHomepages( homePagesObject );
+	useEffect( () => {
+		loadData();
 	}, [] );
 
 	const handleFavorite = ( slug ) => {
@@ -69,7 +98,43 @@ const SiteGenPreview = () => {
 		navigate( nextStep.path );
 	};
 
+	const handleRegenerate = ( slug ) => {
+		if ( ! ( slug in homepages ) ) {
+			return false;
+		}
+		const page = { ...homepages };
+		const newPage = getRandom( { ...page[ slug ] } );
+		page[ newPage.slug ] = newPage;
+		setHomepages( page );
+		currentData.sitegen.homepages.data = page;
+		setCurrentOnboardingData( currentData );
+	};
+
 	const content = getContents();
+
+	const buildPreviews = () => {
+		return Object.keys( homepages ).map( ( homepage ) => {
+			const data = homepages[ homepage ];
+			const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
+			newPreviewSettings.settings.color.palette = data.color.palette;
+			return (
+				<LivePreviewSiteGenCard
+					key={ homepage }
+					viewportWidth={ 1300 }
+					slug={ homepage }
+					title={ data.title }
+					isFavorite={ data.favorite }
+					skeletonLoadingTime={ 2500 }
+					previewSettings={ newPreviewSettings }
+					styling={ 'custom' }
+					blockGrammer={ data.content }
+					onFavorite={ handleFavorite }
+					onPreview={ handlePreview }
+					onRegenerate={ handleRegenerate }
+				/>
+			);
+		} );
+	};
 
 	return (
 		<CommonLayout
@@ -85,24 +150,9 @@ const SiteGenPreview = () => {
 				</div>
 			</div>
 			<div className="nfd-onboarding-step--site-gen__preview__live_previews">
-				{ homepages &&
-					Object.keys( homepages ).map( ( homepage ) => {
-						const data = homepages[ homepage ];
-						return (
-							<LivePreviewSiteGenCard
-								key={ homepage }
-								viewportWidth={ 1300 }
-								slug={ homepage }
-								title={ data.title }
-								isFavorite={ data.favorite }
-								skeletonLoadingTime={ 0 }
-								styling={ 'custom' }
-								blockGrammer={ data.content }
-								onFavorite={ handleFavorite }
-								onPreview={ handlePreview }
-							/>
-						);
-					} ) }
+				{ homepages && globalStyles && (
+					<Grid size={ 3 }>{ buildPreviews() }</Grid>
+				) }
 			</div>
 			<div className="nfd-onboarding-step--site-gen__preview__favorite-info">
 				<div className="nfd-onboarding-step--site-gen__preview__favorite-info__icon"></div>

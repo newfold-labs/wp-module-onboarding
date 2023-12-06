@@ -4,7 +4,6 @@
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          margin: 24px;
           width: 100%;
           &__live-preview-container {
                position: relative;
@@ -87,17 +86,17 @@
                     align-items: center;
                     &__icon {
                          width: 20px;
-                         height: 20px;
+                         height: 21px;
                          margin-right: 12px;
                          cursor: pointer;
+                         background-image: var(--sitegen-favorite);
 
                          &__fill {
-                              background-color: var(--nfd-onboarding-favorite-fill);
+                              background-image: var(--sitegen-favorite-filled);
                          }
 
                     }
 
-                    &__text {}
                }
 
                &__regenerate {
@@ -105,6 +104,7 @@
                     flex-direction: row;
                     justify-content: center;
                     align-items: center;
+                    cursor: pointer;
                     &__icon {
                          background-image: var(--sitegen-regenerate);
                          width: 16px;

@@ -1,6 +1,5 @@
 import { Icon, search } from '@wordpress/icons';
 import { LivePreview } from '..';
-import favorite from '../../../static/icons/sitegen/favorite.svg';
 
 const LivePreviewSiteGenCard = ( {
 	className = 'nfd-onboarding-live-preview--sitegen-card',
@@ -70,8 +69,7 @@ const LivePreviewSiteGenCard = ( {
 			</div>
 			<div className={ `${ className }__buttons` }>
 				<div className={ `${ className }__buttons__favorite` }>
-					<img
-						src={ favorite }
+					<div
 						className={ `${ className }__buttons__favorite__icon ${
 							isFavorite &&
 							`${ className }__buttons__favorite__icon__fill`

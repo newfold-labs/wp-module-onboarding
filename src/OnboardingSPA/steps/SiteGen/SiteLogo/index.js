@@ -1,6 +1,7 @@
 import { useViewportMatch } from '@wordpress/compose';
 import { useEffect, useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 import getContents from './contents';
 import { HEADER_SITEGEN } from '../../../../constants';
@@ -21,6 +22,12 @@ const SiteGenSiteLogo = () => {
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	} );
+
+	const { editEntityRecord } = useDispatch( coreStore );
+
+	const { getEditedEntityRecord } = useSelect( ( select ) => {
+		return select( coreStore );
+	}, [] );
 
 	const {
 		setFooterNavEnabled,
@@ -49,23 +56,26 @@ const SiteGenSiteLogo = () => {
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
-		if ( currentData.sitegen.siteLogo?.id !== 0 ) {
-			return setSiteLogo( currentData.sitegen.siteLogo );
+		if ( currentData.data.siteLogo?.id !== 0 ) {
+			return setSiteLogo( currentData.data.siteLogo );
 		}
 		setFooterNavEnabled( false );
+		getEditedEntityRecord( 'root', 'site' );
 	}, [] );
 
-	useEffect( () => {
-		if ( undefined !== siteLogo ) {
-			const currentDataCopy = { ...currentData };
-			currentDataCopy.sitegen.siteLogo.id = siteLogo.id;
-			currentDataCopy.sitegen.siteLogo.url = siteLogo.url;
-			currentDataCopy.sitegen.siteLogo.fileName = siteLogo.fileName;
-			currentDataCopy.sitegen.siteLogo.fileSize = siteLogo.fileSize;
-			setCurrentOnboardingData( currentDataCopy );
-			setFooterNavEnabled( siteLogo.id !== 0 );
-		}
-	}, [ siteLogo ] );
+	const handleSiteLogo = ( siteLogo ) => {
+		const currentDataCopy = { ...currentData };
+		currentDataCopy.data.siteLogo.id = siteLogo.id;
+		currentDataCopy.data.siteLogo.url = siteLogo.url;
+		currentDataCopy.data.siteLogo.fileName = siteLogo.fileName;
+		currentDataCopy.data.siteLogo.fileSize = siteLogo.fileSize;
+		setCurrentOnboardingData( currentDataCopy );
+		setFooterNavEnabled( siteLogo.id !== 0 );
+		editEntityRecord( 'root', 'site', undefined, {
+			site_logo: siteLogo.id,
+		} );
+		setSiteLogo( siteLogo );
+	};
 
 	const content = getContents();
 	return (
@@ -77,7 +87,7 @@ const SiteGenSiteLogo = () => {
 				<AIHeading title={ content.heading } />
 				<ImageUploaderWithText
 					image={ siteLogo }
-					imageSetter={ setSiteLogo }
+					imageSetter={ handleSiteLogo }
 				/>
 				<div className="nfd-onboarding-step--site-gen__site-logo__container__buttons">
 					<SkipButton

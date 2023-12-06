@@ -7,9 +7,15 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
 
 import { LivePreview } from '../../../components/LivePreview';
+import { getGlobalStyles } from '../../../utils/api/themes';
+
+import { cloneDeep } from 'lodash';
 
 const StepSiteGenEditor = () => {
-	const [ pattern, setPattern ] = useState();
+	const [ activeHomepage, setActiveHomepage ] = useState();
+	const [ colorPalette, setColorPalette ] = useState();
+	const [ globalStyles, setGlobalStyles ] = useState( [] );
+	const [ reRender, setReRender ] = useState( false );
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -24,28 +30,54 @@ const StepSiteGenEditor = () => {
 		};
 	} );
 
-	useEffect( () => {
+	const loadData = async () => {
 		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		const homepage = currentData.sitegen.homepages.active;
-		setPattern( homepage.content );
+		setActiveHomepage( homepage );
+		const globalStyles = await getGlobalStyles();
+		setGlobalStyles( globalStyles.body );
+		setColorPalette( homepage.color.palette );
+	};
+
+	useEffect( () => {
+		loadData();
 	}, [] );
+
+	useEffect( () => {
+		if ( currentData?.sitegen?.homepages?.active ) {
+			setActiveHomepage( currentData.sitegen.homepages.active );
+			setReRender( true );
+		}
+	}, [ currentData ] );
+
+	const buildPreview = () => {
+		const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
+		newPreviewSettings.settings.color.palette =
+			activeHomepage.color.palette;
+		return (
+			<LivePreview
+				blockGrammer={ activeHomepage.content }
+				styling={ 'custom' }
+				previewSettings={ newPreviewSettings }
+				viewportWidth={ 1300 }
+				skeletonLoadingTime={ 0 }
+			/>
+		);
+	};
 	return (
 		<CommonLayout
 			isCentered
 			className="nfd-onboarding-step--site-gen__editor"
 		>
 			<div className="nfd-onboarding-step--site-gen__editor__live-preview">
-				{ pattern && (
-					<LivePreview
-						blockGrammer={ pattern }
-						styling={ 'custom' }
-						viewportWidth={ 1300 }
-						skeletonLoadingTime={ 0 }
-					/>
-				) }
+				{ activeHomepage &&
+					colorPalette &&
+					globalStyles &&
+					reRender &&
+					buildPreview() }
 			</div>
 		</CommonLayout>
 	);
