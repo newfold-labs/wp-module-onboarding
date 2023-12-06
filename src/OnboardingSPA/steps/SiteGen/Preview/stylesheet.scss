@@ -113,42 +113,48 @@
 
 }
 
-// Define your color variables
-$progress-bar-background-color: rgba(53, 58, 64, 1);
+.regenerating-site-card-wrap {
+	padding: 20px;
 
-$progress-bar-filled-color: #0060F0;
-; // Blue progress bar
+	.regenerating-site-card {
+		width: 420px;
+		height: 315px;
+		border-radius: 20px;
+		background-color: var(--nfd-onboarding-regenerating-card-background);
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid rgba(var(--nfd-onboarding-primary-rgb), 0.2);
+		margin-bottom: 20px;
+		padding: 60px;
+		box-sizing: border-box;
 
-.regenerating-site-card {
-	width: 420px;
-    height: 315px;
-    border-radius: 20px;
-    background-color: rgba(53, 58, 64, 0.1);
-    color: #fff;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-	
-	h3{
-		color:#fff;
+		&__title {
+			color: var(--nfd-onboarding-primary);
+		}
+
+		&__progress-bar {
+			width: 100%;
+			background: var(--nfd-onboarding-progress-bar-background);
+			border-radius: 4px;
+			height: 8px;
+			overflow: hidden;
+
+			&__fill {
+				background: var(--nfd-onboarding-progress-bar-fill);
+				height: 100%;
+				transition: width 0.3s ease;
+			}
+		}
 	}
 
-  .progress-bar {
-	width: 90%;
-    background: $progress-bar-background-color;
-    border-radius: 4px;
-    height: 8px;
-    overflow: hidden; // This keeps the child `div` within the parent's border-radius
-
-    &__fill {
-      background: $progress-bar-filled-color;
-      height: 100%;
-      transition: width 0.3s ease; // Smooth transition for the progress bar width
-    }
-  }
+	.regenerating-site-card__version {
+		text-align: left;
+		color: var(--nfd-onboarding-primary);
+		font-size: 18px;
+		display: flex;
+		gap: 8px;
+	}
 }
-

@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable no-alert */
 import CommonLayout from '../../../components/Layouts/Common';
 
 import { useEffect, useState } from '@wordpress/element';

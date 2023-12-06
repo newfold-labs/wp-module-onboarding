@@ -322,6 +322,7 @@ body {
 		--nfd-onboarding-card-overlay: rgba(0, 0, 0, 0.4);
 		--nfd-onboarding-heart-icon-fill:#EF4A71;
 		--nfd-onboarding-heart-icon-stroke:#9CA2A7;
+		--nfd-onboarding-regenerating-card-background: rgba(53, 58, 64, 0.1);
 	}
 
 	.nfd-onboarding-sitegen-dark {
@@ -344,5 +345,6 @@ body {
 		--nfd-onboarding-heart-icon-fill:#EF4A71;
 		--nfd-onboarding-heart-icon-stroke:#9CA2A7;
 		--sitegen-background: url(../static/images/ai_bg.png);
+		--nfd-onboarding-regenerating-card-background: rgba(53, 58, 64, 0.1);
 	}
 }
