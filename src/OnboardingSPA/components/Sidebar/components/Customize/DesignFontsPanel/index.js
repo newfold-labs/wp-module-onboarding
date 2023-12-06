@@ -46,7 +46,7 @@ const FontGroup = ( {
 					{ group.body }
 				</span>
 			</div>
-			{ group.id === 1 && <span className="default">Default</span> }
+			{ group.id === 0 && <span className="default">Default</span> }
 		</div>
 	</div>
 );
