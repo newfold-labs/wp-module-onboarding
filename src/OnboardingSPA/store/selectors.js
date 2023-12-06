@@ -426,3 +426,13 @@ export function getCurrentUserDetails( state ) {
 	const currentUserInfo = state.runtime.currentUserDetails;
 	return currentUserInfo;
 }
+
+/**
+ * Gets homepages
+ *
+ * @param {*} state
+ * @return {Object} homepages
+ */
+export const getHomepagesData = ( state ) => {
+	return state.homepagesData.homepages;
+};

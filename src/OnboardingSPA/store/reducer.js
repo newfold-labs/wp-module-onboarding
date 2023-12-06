@@ -323,6 +323,26 @@ export function footer(
 	return state;
 }
 
+const initialhomepagesState = {
+	homepagess: {
+		active: {},
+		data: [],
+	},
+};
+
+export function homepagesData( state = initialhomepagesState, action ) {
+	switch ( action.type ) {
+		case 'SET_HOMEPAGES_DATA':
+			return {
+				...state,
+				homepages: action.homepagesData,
+			};
+
+		default:
+			return state;
+	}
+}
+
 export default combineReducers( {
 	drawer,
 	runtime,
@@ -333,4 +353,5 @@ export default combineReducers( {
 	header,
 	footer,
 	queue,
+	homepagesData,
 } );

@@ -284,3 +284,10 @@ export function resetNavError() {
 		type: 'RESET_NAV_ERROR',
 	};
 }
+
+export const setHomepagesData = ( homepagesData ) => {
+	return {
+		type: 'SET_HOMEPAGES_DATA',
+		homepagesData,
+	};
+};

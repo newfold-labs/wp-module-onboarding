@@ -10,20 +10,20 @@ import { HEADER_SITEGEN } from '../../../../constants';
 import { SiteGenLivePreview } from '../../../components/LivePreview';
 //import SiteGenPlaceholder from '../../../components/SiteGenPlaceholder';
 import getContents from './contents';
-import { pattern } from './pattern';
+import { homepageData } from './pattern';
 import HeartAnimation from './heartAnimation';
 import RegeneratingSiteCard from './regeneratingCard';
 
 import { getHomePagePreviews } from '../../../utils/api/siteGen';
-import homepageData from '../data.json';
 
 const SiteGenPreview = () => {
-	const [ homepages, setHomepages ] = useState( { active: {}, data: [] } );
+	// const [ homepages, setHomepages ] = useState( { active: {}, data: [] } );
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
 		setHeaderActiveView,
 		setDrawerActiveView,
+		setHomepagesData,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData } = useSelect( ( select ) => {
@@ -40,11 +40,12 @@ const SiteGenPreview = () => {
 				false
 			);
 		}
-		setHomepages( homepageData.homepages );
+		//	setHomepages( homepageData.homepages );
 		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
+		setHomepagesData( homepageData );
 	}, [ currentData ] );
 
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
@@ -53,9 +54,8 @@ const SiteGenPreview = () => {
 		alert( 'wishlist' );
 	};
 
+	// console.log( 'HOme pages', JSON.parse( JSON.stringify( homepages ) ) );
 	const onRegenerateClick = () => {
-		console.log( 'HOme pages', homepages );
-		console.log( 'regenerate clicked' );
 		setIsRegenerating( true );
 	};
 	const buildPreviews = () => {
@@ -63,13 +63,13 @@ const SiteGenPreview = () => {
 			? [ <RegeneratingSiteCard progress={ 20 } /> ]
 			: [];
 		// const designs = pattern; // [ pattern, pattern, pattern ];
-
+		// console.log(homepageData.homepages.data);
 		designs.push(
-			...pattern.map( ( design, idx ) => {
+			...homepageData.homepages.data.map( ( design, idx ) => {
 				return (
 					<SiteGenLivePreview
 						key={ idx }
-						blockGrammer={ design }
+						blockGrammer={ design.content }
 						styling={ 'custom' }
 						overlay={ true }
 						onWishlistClick={ onWishlistClick }
@@ -77,6 +77,8 @@ const SiteGenPreview = () => {
 						onRegenerateClick={ onRegenerateClick }
 						tabIndex="0"
 						role="button"
+						version={ design.version }
+						slug={ design.slug }
 					/>
 				);
 			} )
