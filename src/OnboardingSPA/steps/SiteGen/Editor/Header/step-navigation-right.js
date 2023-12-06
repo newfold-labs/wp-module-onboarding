@@ -1,3 +1,4 @@
+import { useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Icon, chevronRight, settings } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
@@ -45,6 +46,9 @@ const StepNavigationRight = () => {
 			setSidebarActiveView( 'Customize' );
 			setIsSidebarOpened( isSidebarOpenedNew );
 		};
+		useEffect(() => {
+			customize();
+		}, []);
 		return (
 			<div
 				role="button"

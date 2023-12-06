@@ -246,6 +246,14 @@ export function runtime( state = {}, action ) {
 					settings: action.previewSettings,
 				},
 			};
+		case 'SET_AI_PREVIEW_SETTINGS':
+			return {
+				...state,
+				aiPreviewSettings: {
+					...state.aiPreviewSettings,
+					settings: action.aiPreviewSettings,
+				},
+			};
 	}
 
 	return state;

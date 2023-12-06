@@ -203,6 +203,13 @@ export function updatePreviewSettings( previewSettings ) {
 	};
 }
 
+export function updateAiPreviewSettings( aiPreviewSettings ) {
+	return {
+		type: 'SET_AI_PREVIEW_SETTINGS',
+		aiPreviewSettings,
+	};
+}
+
 export function updateRoutes( routes ) {
 	return {
 		type: 'UPDATE_ROUTES',

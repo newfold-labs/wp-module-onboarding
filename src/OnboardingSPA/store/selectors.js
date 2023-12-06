@@ -267,6 +267,10 @@ export function getPreviewSettings( state ) {
 	return state.runtime.previewSettings.settings;
 }
 
+export function getAiPreviewSettings( state ) {
+	return state.runtime.aiPreviewSettings.settings;
+}
+
 export function getSettings( state ) {
 	return state.settings;
 }

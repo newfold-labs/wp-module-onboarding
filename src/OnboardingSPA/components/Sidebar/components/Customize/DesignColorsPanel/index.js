@@ -1,10 +1,13 @@
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { PanelBody, PanelRow, Button } from '@wordpress/components';
 import ColorPickerButton from '../../../../ColorPickerButton';
 import { design, colorPalettes } from '../data';
 import ColorPaletteIcon from './ColorPaletteIcon';
 import CustomColorPalette from './CustomColorPalette';
 import './stylesheet.scss';
+import { store as nfdOnboardingStore } from '../../../../../store';
+import { useGlobalStylesOutput } from '../../../../../utils/global-styles/use-global-styles-output';
 
 const DesignColorsPanel = ( {
 	baseClassName = 'nfd-onboarding-sidebar-customize--design-colors-panel',
@@ -78,6 +81,60 @@ const DesignColorsPanel = ( {
 		updatedColor[ colorPickerCalledBy ] = color;
 		setSelectedColor( updatedColor );
 	};
+
+	const { storedPreviewSettings } = useSelect(
+		( select ) => {
+			return {
+				storedPreviewSettings:
+					select( nfdOnboardingStore ).getAiPreviewSettings(),
+			};
+		},
+		[]
+	);
+
+	const {
+		updateAiPreviewSettings,
+	} = useDispatch( nfdOnboardingStore );
+
+	
+	const convertColorSchema = ( inputObject ) => {
+		const outputArray = [];
+
+		for ( const key in inputObject ) {
+			if ( Object.prototype.hasOwnProperty.call ( inputObject, key ) ) {
+				const slug = key.replace(/_/g, '-');
+				const color = inputObject[key];
+				const name = key
+					.split('_')
+					.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+					.join(' ');
+
+				outputArray.push({
+					slug,
+					color,
+					name,
+				});
+			}
+		}
+		return outputArray;
+	}
+
+	const handleUpdatePreviewSettings = () => {
+		let selectedGlobalStyle = { ...storedPreviewSettings };
+		if ( selectedGlobalStyle?.settings?.color?.palette ) {
+			colorPalettes[selectedPalette]['primary'] = selectedColor.primary
+			colorPalettes[selectedPalette]['secondary'] = selectedColor.secondary
+			colorPalettes[selectedPalette]['tertiary'] = selectedColor.tertiary
+			selectedGlobalStyle.settings.color.palette = convertColorSchema(colorPalettes[selectedPalette]);
+			updateAiPreviewSettings(
+				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
+			);
+		}
+	}
+
+	useEffect(() => {
+		handleUpdatePreviewSettings();
+	  }, [selectedColor, selectedPalette]);
 
 	return (
 		<PanelBody className={ baseClassName } initialOpen={ true }>
