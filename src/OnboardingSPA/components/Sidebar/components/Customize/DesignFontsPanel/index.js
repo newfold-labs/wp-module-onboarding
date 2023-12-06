@@ -1,7 +1,10 @@
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { PanelBody, PanelRow, Button, Dashicon } from '@wordpress/components';
 import './stylesheet.scss';
 import { design, designStyles } from '../data';
+import { store as nfdOnboardingStore } from '../../../../../store';
+import { useGlobalStylesOutput } from '../../../../../utils/global-styles/use-global-styles-output';
 
 const FontGroup = ( {
 	baseClassName,
@@ -173,30 +176,39 @@ const CustomFontsDisplay = ( {
 const DesignFontsPanel = ( {
 	baseClassName = 'nfd-onboarding-sidebar-customize__design-fonts-panel',
 } ) => {
+	const { storedPreviewSettings } = useSelect( ( select ) => {
+		return {
+			storedPreviewSettings:
+				select( nfdOnboardingStore ).getAiPreviewSettings(),
+		};
+	}, [] );
+
+	const { updateAiPreviewSettings } = useDispatch( nfdOnboardingStore );
+
 	const fontGroups = [
 		{
-			id: 1,
+			id: 0,
 			headings: design.style.fonts_heading,
 			body: design.style.fonts_content,
 		},
 		{
-			id: 2,
+			id: 1,
 			headings: designStyles[ 1 ].fonts_heading,
 			body: designStyles[ 1 ].fonts_content,
 		},
 		{
-			id: 3,
+			id: 2,
 			headings: designStyles[ 2 ].fonts_heading,
 			body: designStyles[ 2 ].fonts_content,
 		},
 		{
-			id: 4,
+			id: 3,
 			headings: designStyles[ 3 ].fonts_heading,
 			body: designStyles[ 3 ].fonts_content,
 		},
 	];
 
-	const [ selectedGroup, setSelectedGroup ] = useState( null );
+	const [ selectedGroup, setSelectedGroup ] = useState( 0 );
 	const [ showCustomFonts, setShowCustomFonts ] = useState( false );
 	const [ customFont, setCustomFont ] = useState( {
 		headings: '',
@@ -207,6 +219,49 @@ const DesignFontsPanel = ( {
 
 	const fontsHeading = designStyles.map( ( style ) => style.fonts_heading );
 	const fontsContent = designStyles.map( ( style ) => style.fonts_content );
+
+	const handleUpdatePreviewSettings = () => {
+		const selectedGlobalStyle = { ...storedPreviewSettings };
+		let headings;
+		let body;
+		if ( selectedGroup === 'custom' ) {
+			headings = customFont.headings;
+			body = customFont.body;
+		} else {
+			headings = fontGroups[ selectedGroup ].headings;
+			body = fontGroups[ selectedGroup ].body;
+		}
+
+		if ( selectedGlobalStyle?.styles?.typography?.fontFamily ) {
+			selectedGlobalStyle.styles.typography.fontFamily = body;
+			updateAiPreviewSettings(
+				// eslint-disable-next-line react-hooks/rules-of-hooks
+				useGlobalStylesOutput(
+					selectedGlobalStyle,
+					storedPreviewSettings
+				)
+			);
+		}
+		if (
+			selectedGlobalStyle?.styles?.blocks[ 'core/heading' ]?.typography
+				?.fontFamily
+		) {
+			selectedGlobalStyle.styles.blocks[
+				'core/heading'
+			].typography.fontFamily = headings;
+			updateAiPreviewSettings(
+				// eslint-disable-next-line react-hooks/rules-of-hooks
+				useGlobalStylesOutput(
+					selectedGlobalStyle,
+					storedPreviewSettings
+				)
+			);
+		}
+	};
+
+	useEffect( () => {
+		handleUpdatePreviewSettings();
+	}, [ selectedGroup, customFont ] );
 
 	const fontOptions = [ ...new Set( [ ...fontsHeading, ...fontsContent ] ) ];
 

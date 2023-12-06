@@ -82,59 +82,63 @@ const DesignColorsPanel = ( {
 		setSelectedColor( updatedColor );
 	};
 
-	const { storedPreviewSettings } = useSelect(
-		( select ) => {
-			return {
-				storedPreviewSettings:
-					select( nfdOnboardingStore ).getAiPreviewSettings(),
-			};
-		},
-		[]
-	);
+	const { storedPreviewSettings } = useSelect( ( select ) => {
+		return {
+			storedPreviewSettings:
+				select( nfdOnboardingStore ).getAiPreviewSettings(),
+		};
+	}, [] );
 
-	const {
-		updateAiPreviewSettings,
-	} = useDispatch( nfdOnboardingStore );
+	const { updateAiPreviewSettings } = useDispatch( nfdOnboardingStore );
 
-	
 	const convertColorSchema = ( inputObject ) => {
 		const outputArray = [];
 
 		for ( const key in inputObject ) {
-			if ( Object.prototype.hasOwnProperty.call ( inputObject, key ) ) {
-				const slug = key.replace(/_/g, '-');
-				const color = inputObject[key];
+			if ( Object.prototype.hasOwnProperty.call( inputObject, key ) ) {
+				const slug = key.replace( /_/g, '-' );
+				const color = inputObject[ key ];
 				const name = key
-					.split('_')
-					.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-					.join(' ');
+					.split( '_' )
+					.map(
+						( word ) =>
+							word.charAt( 0 ).toUpperCase() + word.slice( 1 )
+					)
+					.join( ' ' );
 
-				outputArray.push({
+				outputArray.push( {
 					slug,
 					color,
 					name,
-				});
+				} );
 			}
 		}
 		return outputArray;
-	}
+	};
 
 	const handleUpdatePreviewSettings = () => {
-		let selectedGlobalStyle = { ...storedPreviewSettings };
+		const selectedGlobalStyle = { ...storedPreviewSettings };
 		if ( selectedGlobalStyle?.settings?.color?.palette ) {
-			colorPalettes[selectedPalette]['primary'] = selectedColor.primary
-			colorPalettes[selectedPalette]['secondary'] = selectedColor.secondary
-			colorPalettes[selectedPalette]['tertiary'] = selectedColor.tertiary
-			selectedGlobalStyle.settings.color.palette = convertColorSchema(colorPalettes[selectedPalette]);
+			colorPalettes[ selectedPalette ].primary = selectedColor.primary;
+			colorPalettes[ selectedPalette ].secondary =
+				selectedColor.secondary;
+			colorPalettes[ selectedPalette ].tertiary = selectedColor.tertiary;
+			selectedGlobalStyle.settings.color.palette = convertColorSchema(
+				colorPalettes[ selectedPalette ]
+			);
 			updateAiPreviewSettings(
-				useGlobalStylesOutput(selectedGlobalStyle, storedPreviewSettings)
+				// eslint-disable-next-line react-hooks/rules-of-hooks
+				useGlobalStylesOutput(
+					selectedGlobalStyle,
+					storedPreviewSettings
+				)
 			);
 		}
-	}
+	};
 
-	useEffect(() => {
+	useEffect( () => {
 		handleUpdatePreviewSettings();
-	  }, [selectedColor, selectedPalette]);
+	}, [ selectedColor, selectedPalette ] );
 
 	return (
 		<PanelBody className={ baseClassName } initialOpen={ true }>

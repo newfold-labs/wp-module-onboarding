@@ -22,17 +22,14 @@ const StepSiteGenEditor = () => {
 		updateAiPreviewSettings,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { storedPreviewSettings } = useSelect(
-		( select ) => {
-			return {
-				storedPreviewSettings:
-					select( nfdOnboardingStore ).getAiPreviewSettings(),
-			};
-		}
-	);
+	const { storedPreviewSettings } = useSelect( ( select ) => {
+		return {
+			storedPreviewSettings:
+				select( nfdOnboardingStore ).getAiPreviewSettings(),
+		};
+	} );
 
-	useEffect( () => {
-	}, [storedPreviewSettings])
+	useEffect( () => {}, [ storedPreviewSettings ] );
 
 	useEffect( () => {
 		setIsHeaderEnabled( true );
@@ -40,20 +37,17 @@ const StepSiteGenEditor = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		initGlobalStyles();
-	}, []);
+	}, [] );
 
 	const initGlobalStyles = async () => {
-		const globalStyles = await getGlobalStyles()
-		let selectedGlobalStyle = globalStyles?.body[0];
+		const globalStyles = await getGlobalStyles();
+		const selectedGlobalStyle = globalStyles?.body[ 0 ];
 
 		updateAiPreviewSettings(
 			// eslint-disable-next-line react-hooks/rules-of-hooks
-			useGlobalStylesOutput(
-				selectedGlobalStyle,
-				storedPreviewSettings
-			)
+			useGlobalStylesOutput( selectedGlobalStyle, storedPreviewSettings )
 		);
-	}
+	};
 
 	return (
 		<CommonLayout
