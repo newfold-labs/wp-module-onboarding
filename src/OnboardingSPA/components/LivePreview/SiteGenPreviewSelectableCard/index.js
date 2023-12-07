@@ -103,7 +103,7 @@ const SiteGenPreviewSelectableCard = ( {
 						) : (
 							<FavouriteIconStroked />
 						) }
-						{ __( 'Version 1', 'wp-module-onboarding' ) }
+						{ designObject?.title }
 					</div>
 					<div
 						role="button"

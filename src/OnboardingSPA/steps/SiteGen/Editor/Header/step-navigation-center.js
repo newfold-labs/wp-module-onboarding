@@ -6,6 +6,8 @@ import { useState } from '@wordpress/element';
 import { ReactComponent as FavouriteIcon } from '../../../../static/icons/sitegen/heart-stroked.svg';
 import { Dropdown, MenuGroup, MenuItem } from '@wordpress/components';
 import TextInputVersion from './TextInput';
+import { useSelect } from '@wordpress/data';
+import { store as nfdOnboardingStore } from '../../../../store';
 
 /**
  * Centre Step buttons presented in Header.
@@ -13,8 +15,12 @@ import TextInputVersion from './TextInput';
  * @return {WPComponent} StepNavigation Component
  */
 const StepNavigationCenter = () => {
+	const activeHomepage = useSelect(
+		( select ) => select( nfdOnboardingStore ).getActiveHomepage(),
+		[]
+	);
 	const [ isInputDisabled, setIsInputDisabled ] = useState( true );
-	const [ versionName, setVersionName ] = useState( 'Version 1' );
+	const [ versionName, setVersionName ] = useState( activeHomepage?.title );
 	const isLargeViewport = useViewportMatch( 'medium' );
 
 	const handleRenameClick = () => {

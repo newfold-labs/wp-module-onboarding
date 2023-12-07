@@ -62,8 +62,7 @@ const SiteGenPreview = () => {
 		const designs = isRegenerating
 			? [ <RegeneratingSiteCard progress={ 20 } /> ]
 			: [];
-		// const designs = pattern; // [ pattern, pattern, pattern ];
-		// console.log(homepageData.homepages.data);
+
 		designs.push(
 			...homepageData.homepages.data.map( ( design, idx ) => {
 				return (
