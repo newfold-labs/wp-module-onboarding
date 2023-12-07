@@ -63,18 +63,18 @@ const SiteGenSiteLogo = () => {
 		getEditedEntityRecord( 'root', 'site' );
 	}, [] );
 
-	const handleSiteLogo = ( siteLogo ) => {
+	const handleSiteLogo = ( siteLogoNew ) => {
 		const currentDataCopy = { ...currentData };
-		currentDataCopy.data.siteLogo.id = siteLogo.id;
-		currentDataCopy.data.siteLogo.url = siteLogo.url;
-		currentDataCopy.data.siteLogo.fileName = siteLogo.fileName;
-		currentDataCopy.data.siteLogo.fileSize = siteLogo.fileSize;
+		currentDataCopy.data.siteLogo.id = siteLogoNew.id;
+		currentDataCopy.data.siteLogo.url = siteLogoNew.url;
+		currentDataCopy.data.siteLogo.fileName = siteLogoNew.fileName;
+		currentDataCopy.data.siteLogo.fileSize = siteLogoNew.fileSize;
 		setCurrentOnboardingData( currentDataCopy );
-		setFooterNavEnabled( siteLogo.id !== 0 );
+		setFooterNavEnabled( siteLogoNew.id !== 0 );
 		editEntityRecord( 'root', 'site', undefined, {
-			site_logo: siteLogo.id,
+			site_logo: siteLogoNew.id,
 		} );
-		setSiteLogo( siteLogo );
+		setSiteLogo( siteLogoNew );
 	};
 
 	const content = getContents();

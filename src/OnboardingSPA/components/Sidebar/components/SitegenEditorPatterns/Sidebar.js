@@ -166,7 +166,7 @@ const SitegenEditorPatternsSidebar = () => {
 				className="nfd-onboarding-sidebar--sitegen-editor-patterns"
 				initialOpen={ true }
 			>
-				<Suspense fallback={ <></> }>
+				<Suspense fallback={ <Fragment></Fragment> }>
 					<PanelHeader>
 						<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header">
 							<TabPanelHover

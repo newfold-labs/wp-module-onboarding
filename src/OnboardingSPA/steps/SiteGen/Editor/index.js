@@ -12,6 +12,7 @@ import {
 import { LivePreview } from '../../../components/LivePreview';
 import { getGlobalStyles } from '../../../utils/api/themes';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { cloneDeep } from 'lodash';
 
 const StepSiteGenEditor = () => {
@@ -35,8 +36,8 @@ const StepSiteGenEditor = () => {
 		setDrawerActiveView( false );
 		const homepage = currentData.sitegen.homepages.active;
 		setActiveHomepage( homepage );
-		const globalStyles = await getGlobalStyles();
-		setGlobalStyles( globalStyles.body );
+		const globalStylesResponse = await getGlobalStyles();
+		setGlobalStyles( globalStylesResponse.body );
 		setColorPalette( homepage.color.palette );
 	};
 

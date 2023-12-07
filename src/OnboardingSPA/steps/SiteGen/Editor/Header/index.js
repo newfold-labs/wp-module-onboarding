@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n';
 import { Fill, Dropdown } from '@wordpress/components';
 import {
 	HEADER_CENTER,
@@ -6,7 +7,7 @@ import {
 	HEADER_START,
 	SIDEBAR_SITEGEN_EDITOR_PATTERNS,
 } from '../../../../../constants';
-import { Icon, chevronDown, chevronRight, home } from '@wordpress/icons';
+import { Icon, chevronDown, chevronRight } from '@wordpress/icons';
 import { store as nfdOnboardingStore } from '../../../../store';
 
 import { useSelect, useDispatch } from '@wordpress/data';
@@ -61,7 +62,10 @@ const StepSiteGenEditorHeader = () => {
 				<div className="nfd-onboarding-header--sitegen__editor__start">
 					<div
 						className="nfd-onboarding-header--sitegen__editor__start__regenerate"
+						role="button"
+						tabIndex={ 0 }
 						onClick={ () => handleRegenerate() }
+						onKeyDown={ () => handleRegenerate() }
 					>
 						<div
 							className={ `nfd-onboarding-header--sitegen__editor__start__regenerate__icon` }
@@ -69,7 +73,7 @@ const StepSiteGenEditorHeader = () => {
 						<div
 							className={ `nfd-onboarding-header--sitegen__editor__start__regenerate__text` }
 						>
-							Regenerate
+							{ __( 'Regenerate', 'wp-module-onboarding' ) }
 						</div>
 					</div>
 				</div>
@@ -80,18 +84,24 @@ const StepSiteGenEditorHeader = () => {
 						<div className="nfd-onboarding-header--sitegen__editor__center__icon"></div>
 						<Dropdown
 							className="nfd-onboarding-header--sitegen__editor__center__dropdown"
-							renderToggle={ ( { isOpen, onToggle } ) => {
+							renderToggle={ ( { onToggle } ) => {
 								return (
 									<>
-										<p
+										<div
 											className={ `nfd-onboarding-header--sitegen__editor__center__dropdown__favorite-icon ${
 												homepage.favorite &&
 												'nfd-onboarding-header--sitegen__editor__center__dropdown__favorite-icon__fill'
 											}` }
+											role="button"
+											tabIndex={ 0 }
+											onKeyDown={ handleFavorite }
 											onClick={ handleFavorite }
-										></p>
+										></div>
 										<div
 											className="nfd-onboarding-header--sitegen__editor__center__dropdown__info"
+											role="button"
+											tabIndex={ 0 }
+											onKeyDown={ onToggle }
 											onClick={ onToggle }
 										>
 											<p className="nfd-onboarding-header--sitegen__editor__center__dropdown__info__text">
@@ -108,13 +118,16 @@ const StepSiteGenEditorHeader = () => {
 							renderContent={ () => (
 								<div className="nfd-onboarding-header--sitegen__editor__center__dropdown__content">
 									<p className="nfd-onboarding-header--sitegen__editor__center__dropdown__content__rename">
-										Rename
+										{ __(
+											'Rename',
+											'wp-module-onboarding'
+										) }
 									</p>
-									<p
-										className="nfd-onboarding-header--sitegen__editor__center__dropdown__content__view-all"
-										onClick={ handleViewAll }
-									>
-										View All
+									<p className="nfd-onboarding-header--sitegen__editor__center__dropdown__content__view-all">
+										{ __(
+											'View All',
+											'wp-module-onboarding'
+										) }
 									</p>
 								</div>
 							) }
@@ -127,15 +140,18 @@ const StepSiteGenEditorHeader = () => {
 					<div className="nfd-onboarding-header--sitegen__editor__end__customize-button">
 						<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__icon"></div>
 						<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__text">
-							Customize
+							{ __( 'Customize', 'wp-module-onboarding' ) }
 						</div>
 					</div>
 					<div className="nfd-onboarding-header--sitegen__editor__end__save-button">
 						<div
 							className="nfd-onboarding-header--sitegen__editor__end__save-button__text"
+							role="button"
+							tabIndex={ 0 }
+							onKeyDown={ generateChildThemes }
 							onClick={ generateChildThemes }
 						>
-							Save & Continue
+							{ __( 'Save & Continue', 'wp-module-onboarding' ) }
 						</div>
 						<Icon
 							icon={ chevronRight }
