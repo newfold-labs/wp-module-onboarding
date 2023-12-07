@@ -6,12 +6,12 @@ import { store as nfdOnboardingStore } from '../../../../../store';
 import { SIDEBAR_SITEGEN_EDITOR_PATTERNS } from '../../../../../../constants';
 
 const Patterns = () => {
-     const { setSidebarActiveView } = useDispatch( nfdOnboardingStore )
+	const { setSidebarActiveView } = useDispatch( nfdOnboardingStore );
 
-     useEffect(() => {
-          setSidebarActiveView( SIDEBAR_SITEGEN_EDITOR_PATTERNS );
-     }, [])
-     return <div>Hello World</div>
-}
+	useEffect( () => {
+		setSidebarActiveView( SIDEBAR_SITEGEN_EDITOR_PATTERNS );
+	}, [] );
+	return <div>Hello World</div>;
+};
 
 export default Patterns;

@@ -18,6 +18,7 @@ import {
 import { getColorPalettes } from '../../../data/sitegen/sitemeta/siteMeta';
 import { getGlobalStyles } from '../../../utils/api/themes';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { isEmpty, cloneDeep } from 'lodash';
 import Grid from '../../../components/Grid';
 
@@ -69,8 +70,8 @@ const SiteGenPreview = () => {
 		} else {
 			homepagesObject = currentData.sitegen.homepages.data;
 		}
-		const globalStyles = await getGlobalStyles();
-		setGlobalStyles( globalStyles.body );
+		const globalStylesResponse = await getGlobalStyles();
+		setGlobalStyles( globalStylesResponse.body );
 
 		setHomepages( homepagesObject );
 	};

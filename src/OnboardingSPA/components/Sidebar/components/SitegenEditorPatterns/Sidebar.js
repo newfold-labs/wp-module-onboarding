@@ -23,12 +23,14 @@ const SitegenEditorPatternsSidebar = () => {
 		setIsSidebarOpened( false );
 	};
 	return (
-		<Fill name={ `${ SIDEBAR_SLOTFILL_PREFIX }/${ SIDEBAR_SITEGEN_EDITOR_PATTERNS }` }>
+		<Fill
+			name={ `${ SIDEBAR_SLOTFILL_PREFIX }/${ SIDEBAR_SITEGEN_EDITOR_PATTERNS }` }
+		>
 			<PanelBody
 				className="nfd-onboarding-sidebar--sitegen-editor-patterns"
 				initialOpen={ true }
 			>
-				<Suspense fallback={ <></>}>
+				<Suspense fallback={ <></> }>
 					<PanelHeader
 						label={ __( 'Learn More', 'wp-module-onboarding' ) }
 					>
