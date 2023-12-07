@@ -18,13 +18,12 @@ const SiteGenPreviewSelectableCard = ( {
 	previewSettings,
 	overlay = false,
 	onClick = false,
-	onWishlistClick = false,
-	isFavourite,
 	onRegenerateClick = false,
 	skeletonLoadingTime = 2500,
 	designObject,
 } ) => {
-	const { setActiveHomepage } = useDispatch( nfdOnboardingStore );
+	const { setActiveHomepage, toggleFavorite } =
+		useDispatch( nfdOnboardingStore );
 	const [ loadingParent, setIsLoadingParent ] = useState( true );
 
 	const navigate = useNavigate();
@@ -37,6 +36,10 @@ const SiteGenPreviewSelectableCard = ( {
 	const onPreviewVersionClick = () => {
 		setActiveHomepage( designObject );
 		navigate( nextStep.path );
+	};
+
+	const onWishlistClick = ( slug ) => {
+		toggleFavorite( slug );
 	};
 
 	return (
@@ -89,16 +92,16 @@ const SiteGenPreviewSelectableCard = ( {
 					<div
 						role="button"
 						tabIndex="0"
-						onClick={ onWishlistClick }
+						onClick={ onWishlistClick( designObject?.slug ) }
 						onKeyDown={ ( event ) => {
 							if ( event.key === 'Enter' ) {
-								onWishlistClick();
+								onWishlistClick( designObject?.slug );
 							}
 						} }
 						aria-label="Add to Wishlist"
 						className={ `${ className }__live-preview-container-buttons__button` }
 					>
-						{ isFavourite ? (
+						{ designObject?.favorite ? (
 							<FavouriteIconFilled />
 						) : (
 							<FavouriteIconStroked />

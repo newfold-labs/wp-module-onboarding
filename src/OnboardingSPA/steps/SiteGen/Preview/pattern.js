@@ -600,7 +600,6 @@ const pattern4 = `<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"
 <!-- /wp:columns --></div>
 <!-- /wp:group -->
 `;
-// const pattern = [ pattern1, pattern2, pattern3, pattern1, pattern3, pattern2 ];
 
 const homepageData = {
 	homepages: {
@@ -615,19 +614,19 @@ const homepageData = {
 			{
 				slug: 'hash2',
 				title: 'Version 2',
-				favorite: true,
+				favorite: false,
 				content: pattern2,
 			},
 			{
 				slug: 'hash3',
 				title: 'Version 3',
-				favorite: true,
+				favorite: false,
 				content: pattern3,
 			},
 			{
 				slug: 'hash4',
 				title: 'Version 4',
-				favorite: true,
+				favorite: false,
 				content: pattern4,
 			},
 		],

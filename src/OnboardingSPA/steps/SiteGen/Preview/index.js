@@ -50,10 +50,6 @@ const SiteGenPreview = () => {
 
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
 
-	const onWishlistClick = () => {
-		//	alert( 'wishlist' );
-	};
-
 	// console.log( 'HOme pages', JSON.parse( JSON.stringify( homepages ) ) );
 	const onRegenerateClick = () => {
 		setIsRegenerating( true );
@@ -71,8 +67,6 @@ const SiteGenPreview = () => {
 						blockGrammer={ design.content }
 						styling={ 'custom' }
 						overlay={ true }
-						onWishlistClick={ onWishlistClick }
-						isFavourite={ true }
 						onRegenerateClick={ onRegenerateClick }
 						tabIndex="0"
 						role="button"

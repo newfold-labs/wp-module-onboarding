@@ -298,3 +298,10 @@ export const setActiveHomepage = ( activeHomepage ) => {
 		activeHomepage,
 	};
 };
+
+export const toggleFavorite = ( slug ) => {
+	return {
+		type: 'TOGGLE_FAVORITE',
+		slug,
+	};
+};

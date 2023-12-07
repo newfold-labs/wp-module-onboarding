@@ -345,6 +345,18 @@ export function homepagesData( state = initialHomepagesState, action ) {
 					active: action.activeHomepage,
 				},
 			};
+		case 'TOGGLE_FAVORITE':
+			return {
+				...state,
+				homepages: {
+					...state.homepages,
+					data: state.homepages.data.map( ( homepage ) =>
+						homepage.slug === action.slug
+							? { ...homepage, favorite: ! homepage.favorite }
+							: homepage
+					),
+				},
+			};
 
 		default:
 			return state;
