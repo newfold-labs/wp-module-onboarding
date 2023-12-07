@@ -90,13 +90,15 @@ const LivePreviewSiteGenCard = ( {
 						{ title }
 					</div>
 				</div>
-				<div className={ `${ className }__buttons__regenerate` }>
+				<div
+					className={ `${ className }__buttons__regenerate` }
+					role="button"
+					tabIndex={ 0 }
+					onClick={ () => handleRegenerate() }
+					onKeyDown={ () => handleRegenerate() }
+				>
 					<div
 						className={ `${ className }__buttons__regenerate__icon` }
-						role="button"
-						tabIndex={ 0 }
-						onClick={ () => handleRegenerate() }
-						onKeyDown={ () => handleRegenerate() }
 					></div>
 					<div
 						className={ `${ className }__buttons__regenerate__text` }
