@@ -11,7 +11,10 @@ export const stepSiteGenEditor = new Step( {
 	title: __( 'Page Layouts', 'wp-module-onboarding' ),
 	Component: StepSiteGenEditor,
 	icon: copy,
-	header: Header,
+	header: {
+		component: Header,
+		customClassName: 'nfd-onboarding-header-sg-editor',
+	},
 	sidebars: {
 		LearnMore: {
 			SidebarComponents: [],

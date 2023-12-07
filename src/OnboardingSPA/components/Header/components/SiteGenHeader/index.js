@@ -37,7 +37,6 @@ const SiteGenHeader = () => {
 		path: currentStep?.path,
 	} );
 	const progress = ( currentStepIndex / allSteps.length ) * 100;
-
 	return (
 		<>
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_TOP }` }>
@@ -49,8 +48,8 @@ const SiteGenHeader = () => {
 				</>
 			</Fill>
 
-			{ currentStep?.header
-				? isHeaderNavigationEnabled && <currentStep.header />
+			{ currentStep?.header?.component
+				? isHeaderNavigationEnabled && <currentStep.header.component />
 				: isHeaderNavigationEnabled && (
 						<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_START }` }>
 							<StepNavigation />

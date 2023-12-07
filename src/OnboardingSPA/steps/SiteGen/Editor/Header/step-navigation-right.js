@@ -1,41 +1,9 @@
 import { useSelect } from '@wordpress/data';
 import { Icon, chevronRight, settings } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
+import { useViewportMatch } from '@wordpress/compose';
 
 import { store as nfdOnboardingStore } from '../../../../store';
-import ButtonDark from '../../../../components/Button/ButtonDark';
-// import {ReactComponent as Equalizer} from '../../../../static/icons/equalizer.svg'
-
-/**
- * Back step Navigation button.
- *
- * @param {*} param0
- *
- * @return {WPComponent} Back Component
- */
-const Customize = ( ) => {
-	const customize = () => {
-		alert('customize');
-	};
-	return (
-		<ButtonDark onClick={ customize } variant="secondary">
-			<Icon icon={ settings } />
-			{ __( 'Customize', 'wp-module-onboarding' ) }
-		</ButtonDark>
-	);
-};
-
-const Save = () => {
-	const save = () => {
-		alert('save');
-	};
-	return (
-		<ButtonDark onClick={ save } variant="secondary">
-			{ __( 'Save & Continue', 'wp-module-onboarding' ) }
-			<Icon icon={ chevronRight } />
-		</ButtonDark>
-	);
-};
 
 /**
  * Step buttons presented in Header.
@@ -43,16 +11,73 @@ const Save = () => {
  * @return {WPComponent} StepNavigation Component
  */
 const StepNavigationRight = () => {
+	// eslint-disable-next-line no-unused-vars
 	const { previousStep, showErrorDialog } = useSelect( ( select ) => {
 		return {
 			previousStep: select( nfdOnboardingStore ).getPreviousStep(),
 			showErrorDialog: select( nfdOnboardingStore ).getShowErrorDialog(),
 		};
 	}, [] );
-	
+
+	const isLargeViewport = useViewportMatch( 'medium' );
+
+	/**
+	 * Back step Navigation button.
+	 *
+	 *
+	 * @return {WPComponent} Back Component
+	 */
+	const Customize = () => {
+		const customize = () => {
+			//	alert('customize');
+		};
+		return (
+			<div
+				role="button"
+				tabIndex="0"
+				onClick={ customize }
+				onKeyDown={ ( event ) => {
+					if ( event.key === 'Enter' ) {
+						customize();
+					}
+				} }
+				aria-label="Customize"
+				className="navigation-buttons-editor"
+			>
+				<Icon icon={ settings } />
+				{ __( 'Customize', 'wp-module-onboarding' ) }
+			</div>
+		);
+	};
+
+	const Save = () => {
+		const save = () => {
+			//	alert( 'save' );
+		};
+		return (
+			<div
+				role="button"
+				tabIndex="0"
+				onClick={ save }
+				onKeyDown={ ( event ) => {
+					if ( event.key === 'Enter' ) {
+						save();
+					}
+				} }
+				aria-label="Save"
+				className="navigation-buttons-editor"
+			>
+				{ isLargeViewport
+					? __( 'Save & Continue', 'wp-module-onboarding' )
+					: __( 'Next', 'wp-module-onboarding' ) }
+				<Icon icon={ chevronRight } />
+			</div>
+		);
+	};
+
 	return (
 		<div className="nfd-onboarding-header__step-navigation">
-			<Customize />
+			{ isLargeViewport ? <Customize /> : '' }
 			<Save />
 		</div>
 	);

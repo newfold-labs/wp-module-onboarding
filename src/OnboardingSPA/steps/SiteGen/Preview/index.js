@@ -51,7 +51,7 @@ const SiteGenPreview = () => {
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
 
 	const onWishlistClick = () => {
-		alert( 'wishlist' );
+		//	alert( 'wishlist' );
 	};
 
 	// console.log( 'HOme pages', JSON.parse( JSON.stringify( homepages ) ) );

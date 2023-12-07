@@ -6,7 +6,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
 
-import SiteGenPlaceholder from '../../../components/SiteGenPlaceholder';
+// import SiteGenPlaceholder from '../../../components/SiteGenPlaceholder';
 import { LivePreview } from '../../../components/LivePreview';
 
 const pattern =

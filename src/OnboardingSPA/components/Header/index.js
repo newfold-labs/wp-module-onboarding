@@ -1,6 +1,7 @@
 import { Slot } from '@wordpress/components';
 import { Fragment, Suspense } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
+import classNames from 'classnames';
 
 import { store as nfdOnboardingStore } from '../../store';
 import {
@@ -11,17 +12,16 @@ import {
 } from '../../../constants';
 
 const Header = () => {
-	const { headers, headerActiveView, isHeaderEnabled } = useSelect(
-		( select ) => {
+	const { headers, headerActiveView, currentStep, isHeaderEnabled } =
+		useSelect( ( select ) => {
 			return {
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 				headers: select( nfdOnboardingStore ).getHeaders(),
 				headerActiveView:
 					select( nfdOnboardingStore ).getHeaderActiveView(),
 				isHeaderEnabled: select( nfdOnboardingStore ).isHeaderEnabled(),
 			};
-		}
-	);
-
+		} );
 	return (
 		<>
 			<Suspense fallback={ <Fragment /> }>
@@ -35,7 +35,12 @@ const Header = () => {
 			</Suspense>
 			<Slot name={ `${ headerActiveView }/${ HEADER_TOP }` } />
 			{ isHeaderEnabled && (
-				<div className="nfd-onboarding-header">
+				<div
+					className={ classNames( 'nfd-onboarding-header', {
+						[ currentStep?.header?.customClassName ]:
+							!! currentStep?.header?.customClassName,
+					} ) }
+				>
 					<div className="nfd-onboarding-header__start">
 						<Slot
 							name={ `${ headerActiveView }/${ HEADER_START }` }

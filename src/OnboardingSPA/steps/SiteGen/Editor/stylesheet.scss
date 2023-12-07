@@ -1,0 +1,41 @@
+.nfd-onboarding-header {
+
+	&.nfd-onboarding-header-sg-editor {
+		background-color: var(--nfd-onboarding-admin-bar-background);
+		color: var(--nfd-onboarding-admin-bar-color);
+	}
+}
+
+.nfd-onboarding-header__center {
+
+	.nfd-onboarding-header__center-input {
+		font-size: 18px;
+		text-align: center;
+		border: none;
+		color: var(--nfd-onboarding-header-contrast);
+		background-color: var(--nfd-onboarding-header-base);
+		width: 150px;
+	}
+}
+
+.components-dropdown__content {
+
+	.components-popover__content {
+		padding: 0;
+
+		.nfd-onboarding-header__version_dropdown-menu {
+			width: 240px;
+
+			.components-menu-item__button {
+
+				.components-menu-item__item {
+					gap: 8px;
+				}
+
+				&:last-child {
+					border-top: 1px solid var(--nfd-onboarding-header-border);
+				}
+			}
+		}
+	}
+}
