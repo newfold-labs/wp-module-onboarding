@@ -42,10 +42,6 @@ const SiteGenPreview = () => {
 	} );
 
 	const loadData = async () => {
-		setIsHeaderEnabled( true );
-		setSidebarActiveView( false );
-		setHeaderActiveView( HEADER_SITEGEN );
-		setDrawerActiveView( false );
 		let homepagesObject = {};
 		if ( isEmpty( currentData.sitegen.homepages.data ) ) {
 			const homepagesResponse = getHomepages();
@@ -76,6 +72,10 @@ const SiteGenPreview = () => {
 	};
 
 	useEffect( () => {
+		setIsHeaderEnabled( true );
+		setSidebarActiveView( false );
+		setHeaderActiveView( HEADER_SITEGEN );
+		setDrawerActiveView( false );
 		loadData();
 	}, [] );
 

@@ -4,7 +4,10 @@ import { useEffect, useState } from '@wordpress/element';
 
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
-import { HEADER_SITEGEN } from '../../../../constants';
+import {
+	HEADER_SITEGEN,
+	SIDEBAR_SITEGEN_EDITOR_PATTERNS,
+} from '../../../../constants';
 
 import { LivePreview } from '../../../components/LivePreview';
 import { getGlobalStyles } from '../../../utils/api/themes';
@@ -16,12 +19,8 @@ const StepSiteGenEditor = () => {
 	const [ colorPalette, setColorPalette ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState( [] );
 	const [ reRender, setReRender ] = useState( false );
-	const {
-		setIsHeaderEnabled,
-		setSidebarActiveView,
-		setHeaderActiveView,
-		setDrawerActiveView,
-	} = useDispatch( nfdOnboardingStore );
+	const { setIsHeaderEnabled, setHeaderActiveView, setDrawerActiveView } =
+		useDispatch( nfdOnboardingStore );
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
@@ -32,7 +31,6 @@ const StepSiteGenEditor = () => {
 
 	const loadData = async () => {
 		setIsHeaderEnabled( true );
-		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		const homepage = currentData.sitegen.homepages.active;

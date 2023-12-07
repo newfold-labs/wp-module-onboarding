@@ -4,6 +4,7 @@ import {
 	HEADER_END,
 	HEADER_SITEGEN,
 	HEADER_START,
+	SIDEBAR_SITEGEN_EDITOR_PATTERNS,
 } from '../../../../../constants';
 import { Icon, chevronDown, chevronRight, home } from '@wordpress/icons';
 import { store as nfdOnboardingStore } from '../../../../store';
@@ -16,7 +17,11 @@ import { getRandom } from '../../../../data/sitegen/homepages/homepages';
 const StepSiteGenEditorHeader = () => {
 	const [ homepage, setHomepage ] = useState();
 
-	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
+	const {
+		setCurrentOnboardingData,
+		setSidebarActiveView,
+		setIsSidebarOpened,
+	} = useDispatch( nfdOnboardingStore );
 	const { currentData } = useSelect( ( select ) => {
 		return {
 			currentData:
@@ -36,6 +41,11 @@ const StepSiteGenEditorHeader = () => {
 		currentData.sitegen.homepages.data[ newPage.slug ] = newPage;
 		currentData.sitegen.homepages.active = newPage;
 		setCurrentOnboardingData( currentData );
+	};
+
+	const handleViewAll = () => {
+		setSidebarActiveView( SIDEBAR_SITEGEN_EDITOR_PATTERNS );
+		setIsSidebarOpened( true );
 	};
 
 	const generateChildThemes = () => {};
@@ -100,7 +110,10 @@ const StepSiteGenEditorHeader = () => {
 									<p className="nfd-onboarding-header--sitegen__editor__center__dropdown__content__rename">
 										Rename
 									</p>
-									<p className="nfd-onboarding-header--sitegen__editor__center__dropdown__content__view-all">
+									<p
+										className="nfd-onboarding-header--sitegen__editor__center__dropdown__content__view-all"
+										onClick={ handleViewAll }
+									>
 										View All
 									</p>
 								</div>
