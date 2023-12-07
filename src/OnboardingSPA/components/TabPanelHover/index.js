@@ -1,7 +1,8 @@
 /**
  * External dependencies
  */
-import classnames from 'classnames';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { partial, find } from 'lodash';
 
 /**

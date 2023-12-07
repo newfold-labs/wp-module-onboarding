@@ -17,22 +17,20 @@ import {
 } from '../../../../../constants';
 import TabPanelHover from '../../../TabPanelHover';
 
-import { isEmpty } from 'lodash';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { cloneDeep, isEmpty } from 'lodash';
 import { getHomepages } from '../../../../data/sitegen/homepages/homepages';
 import { getColorPalettes } from '../../../../data/sitegen/sitemeta/siteMeta';
 import { getGlobalStyles } from '../../../../utils/api/themes';
 import { LivePreview } from '../../../LivePreview';
-
-import { cloneDeep } from 'lodash';
 
 const SitegenEditorPatternsSidebar = () => {
 	const [ homepages, setHomepages ] = useState();
 	const [ activeHomepage, setActiveHomepage ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState( [] );
 	const [ activeTab, setActiveTab ] = useState();
-	const { currentStep, currentData } = useSelect( ( select ) => {
+	const { currentData } = useSelect( ( select ) => {
 		return {
-			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
@@ -95,8 +93,8 @@ const SitegenEditorPatternsSidebar = () => {
 		} else {
 			homepagesObject = currentData.sitegen.homepages.data;
 		}
-		const globalStyles = await getGlobalStyles();
-		setGlobalStyles( globalStyles.body );
+		const globalStylesResponse = await getGlobalStyles();
+		setGlobalStyles( globalStylesResponse.body );
 		setHomepages( homepagesObject );
 		setActiveHomepage( currentData.sitegen.homepages.active );
 	};
@@ -110,7 +108,7 @@ const SitegenEditorPatternsSidebar = () => {
 			name: 'All Versions',
 			title: (
 				<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab">
-					<p>All Versions</p>
+					<p>{ __( 'All Versions', 'wp-module-onboarding' ) }</p>
 				</div>
 			),
 			content:
@@ -126,6 +124,10 @@ const SitegenEditorPatternsSidebar = () => {
 						<div
 							className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container` }
 							onClick={ () => handlePreview( data.slug ) }
+							role="button"
+							tabIndex={ 0 }
+							onKeyDown={ () => handlePreview( data.slug ) }
+							key={ data.slug }
 						>
 							<LivePreview
 								styling={
@@ -144,7 +146,12 @@ const SitegenEditorPatternsSidebar = () => {
 										data.favorite &&
 										'nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon__fill'
 									}` }
+									role="button"
+									tabIndex={ 0 }
 									onClick={ () =>
+										handleFavorite( data.slug )
+									}
+									onKeyDown={ () =>
 										handleFavorite( data.slug )
 									}
 								></div>
@@ -178,7 +185,12 @@ const SitegenEditorPatternsSidebar = () => {
 										name: 'All Versions',
 										title: (
 											<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab">
-												<p>All Versions</p>
+												<p>
+													{ __(
+														'All Versions',
+														'wp-module-onboarding'
+													) }
+												</p>
 											</div>
 										),
 										content:
@@ -198,6 +210,14 @@ const SitegenEditorPatternsSidebar = () => {
 													return (
 														<div
 															className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container` }
+															key={ data.slug }
+															role="button"
+															tabIndex={ 0 }
+															onKeyDown={ () =>
+																handlePreview(
+																	data.slug
+																)
+															}
 															onClick={ () =>
 																handlePreview(
 																	data.slug
@@ -230,6 +250,15 @@ const SitegenEditorPatternsSidebar = () => {
 																		data.favorite &&
 																		'nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon__fill'
 																	}` }
+																	role="button"
+																	tabIndex={
+																		0
+																	}
+																	onKeyDown={ () =>
+																		handleFavorite(
+																			data.slug
+																		)
+																	}
 																	onClick={ () =>
 																		handleFavorite(
 																			data.slug
@@ -253,7 +282,10 @@ const SitegenEditorPatternsSidebar = () => {
 											<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__favorites-tab">
 												<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__favorites-tab__icon"></div>
 												<p className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__favorites-tab__text">
-													Favorites
+													{ __(
+														'Favorites',
+														'wp-module-onboarding'
+													) }
 												</p>
 												<Button
 													className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__icon"
@@ -271,7 +303,7 @@ const SitegenEditorPatternsSidebar = () => {
 													const data =
 														homepages[ homepage ];
 													if ( ! data.favorite ) {
-														return;
+														return false;
 													}
 													const newPreviewSettings =
 														cloneDeep(
@@ -281,7 +313,15 @@ const SitegenEditorPatternsSidebar = () => {
 														data.color.palette;
 													return (
 														<div
+															key={ data.slug }
 															className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container` }
+															role="button"
+															tabIndex={ 0 }
+															onKeyDown={ () =>
+																handlePreview(
+																	data.slug
+																)
+															}
 															onClick={ () =>
 																handlePreview(
 																	data.slug

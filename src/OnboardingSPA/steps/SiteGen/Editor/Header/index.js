@@ -123,12 +123,18 @@ const StepSiteGenEditorHeader = () => {
 											'wp-module-onboarding'
 										) }
 									</p>
-									<p className="nfd-onboarding-header--sitegen__editor__center__dropdown__content__view-all">
+									<div
+										className="nfd-onboarding-header--sitegen__editor__center__dropdown__content__view-all"
+										onClick={ handleViewAll }
+										role="button"
+										tabIndex={ 0 }
+										onKeyDown={ handleViewAll }
+									>
 										{ __(
 											'View All',
 											'wp-module-onboarding'
 										) }
-									</p>
+									</div>
 								</div>
 							) }
 						/>

@@ -4,10 +4,7 @@ import { useEffect, useState } from '@wordpress/element';
 
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
-import {
-	HEADER_SITEGEN,
-	SIDEBAR_SITEGEN_EDITOR_PATTERNS,
-} from '../../../../constants';
+import { HEADER_SITEGEN } from '../../../../constants';
 
 import { LivePreview } from '../../../components/LivePreview';
 import { getGlobalStyles } from '../../../utils/api/themes';
