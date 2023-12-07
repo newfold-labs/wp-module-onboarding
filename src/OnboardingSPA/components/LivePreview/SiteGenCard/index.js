@@ -1,4 +1,6 @@
 import { Icon, search } from '@wordpress/icons';
+import { __ } from '@wordpress/i18n';
+
 import { LivePreview } from '..';
 
 const LivePreviewSiteGenCard = ( {
@@ -15,7 +17,7 @@ const LivePreviewSiteGenCard = ( {
 	onRegenerate,
 	onPreview,
 } ) => {
-	const handleFavorite = ( slug ) => {
+	const handleFavorite = () => {
 		if ( typeof onFavorite === 'function' ) {
 			return onFavorite( slug );
 		}
@@ -23,7 +25,7 @@ const LivePreviewSiteGenCard = ( {
 		return false;
 	};
 
-	const handleRegenerate = ( slug ) => {
+	const handleRegenerate = () => {
 		if ( typeof onRegenerate === 'function' ) {
 			return onRegenerate( slug );
 		}
@@ -50,7 +52,10 @@ const LivePreviewSiteGenCard = ( {
 				/>
 				<div
 					className={ `${ className }__live-preview-container__overlay` }
+					role="button"
+					tabIndex={ 0 }
 					onClick={ () => handlePreview( slug ) }
+					onKeyDown={ () => handlePreview( slug ) }
 				>
 					<div
 						className={ `${ className }__live-preview-container__overlay__preview-button` }
@@ -62,7 +67,7 @@ const LivePreviewSiteGenCard = ( {
 						<p
 							className={ `${ className }__live-preview-container__overlay__preview-button__text` }
 						>
-							Preview
+							{ __( 'Preview', 'wp-module-onboarding' ) }
 						</p>
 					</div>
 				</div>
@@ -74,7 +79,10 @@ const LivePreviewSiteGenCard = ( {
 							isFavorite &&
 							`${ className }__buttons__favorite__icon__fill`
 						}` }
-						onClick={ () => handleFavorite( slug ) }
+						role="button"
+						tabIndex={ 0 }
+						onClick={ () => handleFavorite() }
+						onKeyDown={ () => handleFavorite() }
 					/>
 					<div
 						className={ `${ className }__buttons__favorite__text` }
@@ -85,12 +93,15 @@ const LivePreviewSiteGenCard = ( {
 				<div className={ `${ className }__buttons__regenerate` }>
 					<div
 						className={ `${ className }__buttons__regenerate__icon` }
-						onClick={ () => handleRegenerate( slug ) }
+						role="button"
+						tabIndex={ 0 }
+						onClick={ () => handleRegenerate() }
+						onKeyDown={ () => handleRegenerate() }
 					></div>
 					<div
 						className={ `${ className }__buttons__regenerate__text` }
 					>
-						Regenerate
+						{ __( 'Regenerate', 'wp-module-onboarding' ) }
 					</div>
 				</div>
 			</div>

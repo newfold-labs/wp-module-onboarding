@@ -16,7 +16,6 @@ import {
 	getSiteGenIdentifiers,
 } from '../../../utils/api/siteGen';
 import Footer from '../../Footer';
-import { stepSiteGenEditor } from '../../../steps/SiteGen/Editor/step';
 
 // Wrapping the NewfoldInterfaceSkeleton with the HOC to make theme available
 const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
@@ -26,10 +25,9 @@ const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
 );
 
 const SiteGen = () => {
-	const { newfoldBrand, currentStep } = useSelect( ( select ) => {
+	const { newfoldBrand } = useSelect( ( select ) => {
 		return {
 			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
-			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 		};
 	}, [] );
 

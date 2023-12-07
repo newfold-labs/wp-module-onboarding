@@ -25,14 +25,14 @@ const getRandomColorPalette = ( activeColorPaletteSlug ) => {
 	let keys = Object.keys( colorPalettes );
 	if ( activeColorPaletteSlug ) {
 		keys = keys.filter( ( key ) => {
-			return key != activeColorPaletteSlug;
+			return key !== activeColorPaletteSlug;
 		} );
 	}
 
 	const rand = Math.floor( Math.random() * keys.length );
 	return {
-		slug: keys[ 2 ],
-		palette: colorPalettes[ keys[ 2 ] ],
+		slug: keys[ rand ],
+		palette: colorPalettes[ keys[ rand ] ],
 	};
 };
 
