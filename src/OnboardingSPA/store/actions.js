@@ -210,6 +210,13 @@ export function updateAiPreviewSettings( aiPreviewSettings ) {
 	};
 }
 
+export function updateCustomizeSidebarData( customizeSidebarData ) {
+	return {
+		type: 'CUSTOMIZE_SIDEBAR_DATA',
+		customizeSidebarData,
+	};
+}
+
 export function updateRoutes( routes ) {
 	return {
 		type: 'UPDATE_ROUTES',

@@ -2,7 +2,6 @@ import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { PanelBody, PanelRow, Button } from '@wordpress/components';
 import ColorPickerButton from '../../../../ColorPickerButton';
-import { design, colorPalettes } from '../data';
 import ColorPaletteIcon from './ColorPaletteIcon';
 import CustomColorPalette from './CustomColorPalette';
 import './stylesheet.scss';
@@ -13,7 +12,18 @@ const DesignColorsPanel = ( {
 	baseClassName = 'nfd-onboarding-sidebar-customize--design-colors-panel',
 	heading,
 } ) => {
-	const palettePrimaryColors = Object.entries( design.color_palette ).map(
+	const { storedPreviewSettings, customizeSidebarData } = useSelect( ( select ) => {
+		return {
+			storedPreviewSettings:
+				select( nfdOnboardingStore ).getAiPreviewSettings(),
+			customizeSidebarData:
+				select( nfdOnboardingStore ).getCustomizeSidebarData(),
+		};
+	}, [] );
+
+	const design = customizeSidebarData?.design;
+	const colorPalettes = customizeSidebarData?.colorPalettes;
+	const palettePrimaryColors = Object.entries( design?.color_palette ).map(
 		( [ , color ] ) => ( {
 			name: 'Custom',
 			color,
@@ -21,24 +31,24 @@ const DesignColorsPanel = ( {
 	);
 
 	const defaultColors = {
-		primary: design.color_palette.primary,
-		secondary: design.color_palette.secondary,
-		tertiary: design.color_palette.tertiary,
+		primary: design?.color_palette.primary,
+		secondary: design?.color_palette.secondary,
+		tertiary: design?.color_palette.tertiary,
 	};
 	const palette1 = {
-		primary: colorPalettes[ 1 ].primary,
-		secondary: colorPalettes[ 1 ].secondary,
-		tertiary: colorPalettes[ 1 ].tertiary,
+		primary: colorPalettes[ 1 ]?.primary,
+		secondary: colorPalettes[ 1 ]?.secondary,
+		tertiary: colorPalettes[ 1 ]?.tertiary,
 	};
 	const palette2 = {
-		primary: colorPalettes[ 2 ].primary,
-		secondary: colorPalettes[ 2 ].secondary,
-		tertiary: colorPalettes[ 2 ].tertiary,
+		primary: colorPalettes[ 2 ]?.primary,
+		secondary: colorPalettes[ 2 ]?.secondary,
+		tertiary: colorPalettes[ 2 ]?.tertiary,
 	};
 	const palette3 = {
-		primary: colorPalettes[ 3 ].primary,
-		secondary: colorPalettes[ 3 ].secondary,
-		tertiary: colorPalettes[ 3 ].tertiary,
+		primary: colorPalettes[ 3 ]?.primary,
+		secondary: colorPalettes[ 3 ]?.secondary,
+		tertiary: colorPalettes[ 3 ]?.tertiary,
 	};
 
 	const [ colors ] = useState( [
@@ -81,13 +91,6 @@ const DesignColorsPanel = ( {
 		updatedColor[ colorPickerCalledBy ] = color;
 		setSelectedColor( updatedColor );
 	};
-
-	const { storedPreviewSettings } = useSelect( ( select ) => {
-		return {
-			storedPreviewSettings:
-				select( nfdOnboardingStore ).getAiPreviewSettings(),
-		};
-	}, [] );
 
 	const { updateAiPreviewSettings } = useDispatch( nfdOnboardingStore );
 

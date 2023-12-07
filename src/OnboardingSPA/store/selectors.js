@@ -271,6 +271,10 @@ export function getAiPreviewSettings( state ) {
 	return state.runtime.aiPreviewSettings.settings;
 }
 
+export function getCustomizeSidebarData( state ) {
+	return state.runtime.customizeSidebarData;
+}
+
 export function getSettings( state ) {
 	return state.settings;
 }

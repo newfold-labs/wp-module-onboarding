@@ -2,7 +2,6 @@ import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { PanelBody, PanelRow, Button, Dashicon } from '@wordpress/components';
 import './stylesheet.scss';
-import { design, designStyles } from '../data';
 import { store as nfdOnboardingStore } from '../../../../../store';
 import { useGlobalStylesOutput } from '../../../../../utils/global-styles/use-global-styles-output';
 
@@ -176,35 +175,39 @@ const CustomFontsDisplay = ( {
 const DesignFontsPanel = ( {
 	baseClassName = 'nfd-onboarding-sidebar-customize__design-fonts-panel',
 } ) => {
-	const { storedPreviewSettings } = useSelect( ( select ) => {
+	const { storedPreviewSettings, customizeSidebarData } = useSelect( ( select ) => {
 		return {
 			storedPreviewSettings:
 				select( nfdOnboardingStore ).getAiPreviewSettings(),
+			customizeSidebarData:
+				select( nfdOnboardingStore ).getCustomizeSidebarData(),
 		};
 	}, [] );
 
+	const design = customizeSidebarData?.design;
+	const designStyles = customizeSidebarData?.designStyles;
 	const { updateAiPreviewSettings } = useDispatch( nfdOnboardingStore );
 
 	const fontGroups = [
 		{
 			id: 0,
-			headings: design.style.fonts_heading,
-			body: design.style.fonts_content,
+			headings: design?.style?.fonts_heading,
+			body: design?.style?.fonts_content,
 		},
 		{
 			id: 1,
-			headings: designStyles[ 1 ].fonts_heading,
-			body: designStyles[ 1 ].fonts_content,
+			headings: designStyles[ 1 ]?.fonts_heading,
+			body: designStyles[ 1 ]?.fonts_content,
 		},
 		{
 			id: 2,
-			headings: designStyles[ 2 ].fonts_heading,
-			body: designStyles[ 2 ].fonts_content,
+			headings: designStyles[ 2 ]?.fonts_heading,
+			body: designStyles[ 2 ]?.fonts_content,
 		},
 		{
 			id: 3,
-			headings: designStyles[ 3 ].fonts_heading,
-			body: designStyles[ 3 ].fonts_content,
+			headings: designStyles[ 3 ]?.fonts_heading,
+			body: designStyles[ 3 ]?.fonts_content,
 		},
 	];
 
@@ -217,8 +220,8 @@ const DesignFontsPanel = ( {
 	const [ selectedCustomFont, setSelectedCustomFont ] = useState( null );
 	const [ isEditingCustomFont, setIsEditingCustomFont ] = useState( false );
 
-	const fontsHeading = designStyles.map( ( style ) => style.fonts_heading );
-	const fontsContent = designStyles.map( ( style ) => style.fonts_content );
+	const fontsHeading = designStyles?.map( ( style ) => style.fonts_heading );
+	const fontsContent = designStyles?.map( ( style ) => style.fonts_content );
 
 	const handleUpdatePreviewSettings = () => {
 		const selectedGlobalStyle = { ...storedPreviewSettings };

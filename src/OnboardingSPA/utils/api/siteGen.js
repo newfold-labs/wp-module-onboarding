@@ -11,6 +11,14 @@ export async function getSiteGenIdentifiers() {
 	);
 }
 
+export async function getCustomizeSidebarData() {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/get-customize-data' ),
+		} ).then()
+	);
+}
+
 export async function generateSiteGenMeta(
 	siteInfo,
 	identifier,
