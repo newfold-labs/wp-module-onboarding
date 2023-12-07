@@ -5,7 +5,7 @@ import { useEffect, useState } from '@wordpress/element';
 import getContents from '../contents';
 import { store as nfdOnboardingStore } from '../../../../store';
 import AIHeading from '../../../../components/Heading/AIHeading';
-import TextInputSiteGenSimple from '../../../../components/TextInput/TextInputSiteGen/Simple';
+import TextInputSiteGenSimple from '../../../../components/TextInput/TextInputSiteGen/simple';
 import NextButtonSiteGen from '../../../../components/Button/NextButtonSiteGen';
 import ButtonSiteGen from '../../../../components/Button/ButtonWhite/SiteGen';
 
