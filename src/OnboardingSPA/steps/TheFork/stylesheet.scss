@@ -4,9 +4,13 @@
 
 		&__fork {
 			display: flex;
+			align-items: center;
 			flex-direction: column;
 			justify-content: center;
-			align-items: center;
+
+			@media (max-width: #{ ($break-large) }) {
+				margin-bottom: 80px;
+			}
 
 			&__heading {
 				color: var(--nfd-onboarding-primary);
