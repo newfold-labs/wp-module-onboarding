@@ -18,6 +18,7 @@ import { headers } from '../data/headers';
 import { footers } from '../data/footers';
 import apiQueueExecutor from '../utils/api-queuer/api-queue-executor';
 import { DEFAULT_FLOW } from '../data/flows/constants';
+import { sitegen } from '../chapters/sitegen';
 
 export function flow(
 	state = {
@@ -165,6 +166,39 @@ export function data( state = {}, action ) {
 				...state,
 				socialData: {
 					...action.socialData,
+				},
+			};
+		case 'SET_HOMEPAGES_DATA':
+			return {
+				...state,
+				flowData: {
+					...state.flowData,
+					sitegen: {
+						...state.flowData.sitegen,
+						homepages: action.homepagesData,
+					},
+				},
+			};
+
+		case 'SET_ACTIVE_HOMEPAGE':
+			/* return {
+				...state.flowData.sitegen,
+				homepages: {
+					...state.flowData.sitegen.homepages,
+					active: action.activeHomepage,
+				},
+			}; */
+			return {
+				...state,
+				flowData: {
+					...state.flowData,
+					sitegen: {
+						...state.flowData.sitegen,
+						homepages: {
+							...state.flowData.sitegen.homepages,
+							active: action.activeHomepage,
+						},
+					},
 				},
 			};
 	}
@@ -323,46 +357,6 @@ export function footer(
 	return state;
 }
 
-const initialHomepagesState = {
-	homepages: {
-		active: {},
-		data: [],
-	},
-};
-
-export function homepagesData( state = initialHomepagesState, action ) {
-	switch ( action.type ) {
-		case 'SET_HOMEPAGE_DATA':
-			return {
-				...state,
-				homepages: action.homepageData,
-			};
-		case 'SET_ACTIVE_HOMEPAGE':
-			return {
-				...state,
-				homepages: {
-					...state.homepages,
-					active: action.activeHomepage,
-				},
-			};
-		case 'TOGGLE_FAVORITE':
-			return {
-				...state,
-				homepages: {
-					...state.homepages,
-					data: state.homepages.data.map( ( homepage ) =>
-						homepage.slug === action.slug
-							? { ...homepage, favorite: ! homepage.favorite }
-							: homepage
-					),
-				},
-			};
-
-		default:
-			return state;
-	}
-}
-
 export default combineReducers( {
 	drawer,
 	runtime,
@@ -373,5 +367,4 @@ export default combineReducers( {
 	header,
 	footer,
 	queue,
-	homepagesData,
 } );

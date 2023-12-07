@@ -434,7 +434,7 @@ export function getCurrentUserDetails( state ) {
  * @return {Object} homepages
  */
 export const getHomepagesData = ( state ) => {
-	return state.homepagesData.homepages;
+	return state.data.flowData.sitegen.homepages;
 };
 
 /**
@@ -445,7 +445,7 @@ export const getHomepagesData = ( state ) => {
  */
 
 export const getActiveHomepage = ( state ) => {
-	return state.homepagesData.homepages.active;
+	return state.data.flowData.sitegen.homepages.active;
 };
 
 /**
@@ -456,5 +456,5 @@ export const getActiveHomepage = ( state ) => {
  */
 
 export const getAllHomepages = ( state ) => {
-	return state.homepagesData.homepages.data;
+	return state.data.flowData.sitegen.homepages.data;
 };

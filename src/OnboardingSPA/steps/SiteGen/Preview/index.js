@@ -14,7 +14,7 @@ import { homepageData } from './pattern';
 import HeartAnimation from './heartAnimation';
 import RegeneratingSiteCard from './regeneratingCard';
 
-import { getHomePagePreviews } from '../../../utils/api/siteGen';
+// import { getHomePagePreviews } from '../../../utils/api/siteGen';
 
 const SiteGenPreview = () => {
 	// const [ homepages, setHomepages ] = useState( { active: {}, data: [] } );
@@ -34,19 +34,22 @@ const SiteGenPreview = () => {
 	} );
 
 	useEffect( () => {
-		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
+		/* if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
 			getHomePagePreviews(
 				currentData.sitegen.siteDetails.prompt,
 				false
 			);
-		}
-		//	setHomepages( homepageData.homepages );
+		} */
 		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
-		setHomepagesData( homepageData );
 	}, [ currentData ] );
+
+
+	useEffect( () => {
+		setHomepagesData( homepageData.homepages );
+	}, [] );
 
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
 
