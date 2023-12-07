@@ -29,12 +29,16 @@ const SitegenEditorPatternsSidebar = () => {
 	const [ activeHomepage, setActiveHomepage ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState( [] );
 	const [ activeTab, setActiveTab ] = useState();
-	const { currentData } = useSelect( ( select ) => {
-		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-		};
-	} );
+	const { currentData, isSidebarOpened, sideBarView } = useSelect(
+		( select ) => {
+			return {
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				isSidebarOpened: select( nfdOnboardingStore ).isSidebarOpened(),
+				sideBarView: select( nfdOnboardingStore ).getSidebarView(),
+			};
+		}
+	);
 
 	const { setIsSidebarOpened, setCurrentOnboardingData } =
 		useDispatch( nfdOnboardingStore );
@@ -84,12 +88,11 @@ const SitegenEditorPatternsSidebar = () => {
 					};
 				}
 			} );
-			currentData.sitegen.homepages.data = homepagesResponse;
-			setCurrentOnboardingData( currentData );
-
 			homepagesResponse.forEach( ( homepage ) => {
 				homepagesObject[ homepage.slug ] = homepage;
 			} );
+			currentData.sitegen.homepages.data = homepagesObject;
+			setCurrentOnboardingData( currentData );
 		} else {
 			homepagesObject = currentData.sitegen.homepages.data;
 		}
@@ -100,19 +103,23 @@ const SitegenEditorPatternsSidebar = () => {
 	};
 
 	useEffect( () => {
-		loadData();
-	}, [] );
+		if (
+			SIDEBAR_SITEGEN_EDITOR_PATTERNS === sideBarView &&
+			isSidebarOpened
+		) {
+			loadData();
+		}
+	}, [ sideBarView, isSidebarOpened ] );
 
 	useEffect( () => {
 		setActiveTab( {
-			name: 'All Versions',
+			name: __( 'All Versions', 'wp-module-onboarding' ),
 			title: (
 				<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab">
 					<p>{ __( 'All Versions', 'wp-module-onboarding' ) }</p>
 				</div>
 			),
 			content:
-				activeTab &&
 				homepages &&
 				activeHomepage &&
 				Object.keys( homepages ).map( ( homepage ) => {
@@ -123,23 +130,28 @@ const SitegenEditorPatternsSidebar = () => {
 					return (
 						<div
 							className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container` }
-							onClick={ () => handlePreview( data.slug ) }
-							role="button"
-							tabIndex={ 0 }
-							onKeyDown={ () => handlePreview( data.slug ) }
 							key={ data.slug }
 						>
-							<LivePreview
-								styling={
-									data.slug !== activeHomepage.slug
-										? 'custom'
-										: 'custom__highlighted'
-								}
-								blockGrammer={ data.content }
-								viewportWidth={ 1300 }
-								previewSettings={ newPreviewSettings }
-								skeletonLoadingTime={ 0 }
-							/>
+							<div
+								className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__previews"
+								onClick={ () => handlePreview( data.slug ) }
+								role="button"
+								tabIndex={ 0 }
+								onKeyDown={ () => handlePreview( data.slug ) }
+							>
+								<LivePreview
+									styling={
+										data.slug !== activeHomepage.slug
+											? 'custom'
+											: 'custom__highlighted'
+									}
+									blockGrammer={ data.content }
+									viewportWidth={ 1300 }
+									previewSettings={ newPreviewSettings }
+									skeletonLoadingTime={ 0 }
+								/>
+							</div>
+
 							<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context">
 								<div
 									className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon ${
@@ -182,7 +194,10 @@ const SitegenEditorPatternsSidebar = () => {
 								}
 								tabs={ [
 									{
-										name: 'All Versions',
+										name: __(
+											'All Versions',
+											'wp-module-onboarding'
+										),
 										title: (
 											<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab">
 												<p>

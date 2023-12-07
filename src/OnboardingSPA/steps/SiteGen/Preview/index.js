@@ -58,11 +58,11 @@ const SiteGenPreview = () => {
 					};
 				}
 			} );
-			currentData.sitegen.homepages.data = homepagesResponse;
-			setCurrentOnboardingData( currentData );
 			homepagesResponse.forEach( ( homepage ) => {
 				homepagesObject[ homepage.slug ] = homepage;
 			} );
+			currentData.sitegen.homepages.data = homepagesObject;
+			setCurrentOnboardingData( currentData );
 		} else {
 			homepagesObject = currentData.sitegen.homepages.data;
 		}
