@@ -28,6 +28,10 @@
 					align-items: center;
 					justify-content: space-evenly;
 					width: 130px;
+
+					&__disabled {
+						cursor: disabled;
+					}
 				}
 			}
 
@@ -84,6 +88,10 @@
 						&__view-all {
 							border-top: 1px solid var(--nfd-onboarding-secondary);
 						}
+
+						&__disabled {
+							cursor: disabled;
+						}
 					}
 				}
 			}
@@ -110,6 +118,10 @@
 						height: 16px;
 						width: 16px;
 						margin-right: 8px;
+					}
+
+					&__disabled {
+						cursor: disabled;
 					}
 				}
 

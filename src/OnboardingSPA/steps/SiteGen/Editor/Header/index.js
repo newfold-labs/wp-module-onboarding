@@ -6,6 +6,7 @@ import {
 	HEADER_SITEGEN,
 	HEADER_START,
 	SIDEBAR_SITEGEN_EDITOR_PATTERNS,
+	wpEditorPage,
 } from '../../../../../constants';
 import { Icon, chevronDown, chevronRight } from '@wordpress/icons';
 import { store as nfdOnboardingStore } from '../../../../store';
@@ -14,9 +15,12 @@ import { useSelect, useDispatch } from '@wordpress/data';
 
 import { useEffect, useState } from '@wordpress/element';
 import { getRandom } from '../../../../data/sitegen/homepages/homepages';
+import { setFlow, completeFlow } from '../../../../utils/api/flow';
+import Spinner from '../../../../components/Loaders/Spinner';
 
 const StepSiteGenEditorHeader = () => {
 	const [ homepage, setHomepage ] = useState();
+	const [ isSaving, setIsSaving ] = useState( false );
 
 	const {
 		setCurrentOnboardingData,
@@ -31,12 +35,18 @@ const StepSiteGenEditorHeader = () => {
 	} );
 
 	const handleFavorite = () => {
+		if ( isSaving ) {
+			return;
+		}
 		homepage.favorite = ! homepage.favorite;
 		currentData.sitegen.homepages.data[ homepage.slug ] = homepage;
 		setCurrentOnboardingData( currentData );
 	};
 
 	const handleRegenerate = () => {
+		if ( isSaving ) {
+			return;
+		}
 		const newPage = getRandom( { ...homepage } );
 		setHomepage( newPage );
 		currentData.sitegen.homepages.data[ newPage.slug ] = newPage;
@@ -49,7 +59,12 @@ const StepSiteGenEditorHeader = () => {
 		setIsSidebarOpened( true );
 	};
 
-	const generateChildThemes = () => {};
+	const saveAndContinue = async () => {
+		setIsSaving( true );
+		await setFlow( currentData );
+		await completeFlow();
+		window.location.replace( wpEditorPage );
+	};
 
 	useEffect( () => {
 		if ( currentData?.sitegen?.homepages?.active ) {
@@ -61,7 +76,10 @@ const StepSiteGenEditorHeader = () => {
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_START }` }>
 				<div className="nfd-onboarding-header--sitegen__editor__start">
 					<div
-						className="nfd-onboarding-header--sitegen__editor__start__regenerate"
+						className={ `nfd-onboarding-header--sitegen__editor__start__regenerate ${
+							isSaving &&
+							'nfd-onboarding-header--sitegen__editor__start__regenerate__disabled'
+						}` }
 						role="button"
 						tabIndex={ 0 }
 						onClick={ () => handleRegenerate() }
@@ -116,7 +134,12 @@ const StepSiteGenEditorHeader = () => {
 								);
 							} }
 							renderContent={ () => (
-								<div className="nfd-onboarding-header--sitegen__editor__center__dropdown__content">
+								<div
+									className={ `nfd-onboarding-header--sitegen__editor__center__dropdown__content ${
+										isSaving &&
+										'nfd-onboarding-header--sitegen__editor__center__dropdown__content__disabled'
+									}` }
+								>
 									<p className="nfd-onboarding-header--sitegen__editor__center__dropdown__content__rename">
 										{ __(
 											'Rename',
@@ -143,7 +166,12 @@ const StepSiteGenEditorHeader = () => {
 			</Fill>
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_END }` }>
 				<div className="nfd-onboarding-header--sitegen__editor__end">
-					<div className="nfd-onboarding-header--sitegen__editor__end__customize-button">
+					<div
+						className={ `nfd-onboarding-header--sitegen__editor__end__customize-button ${
+							isSaving &&
+							'nfd-onboarding-header--sitegen__editor__end__customize-button__disabled'
+						}` }
+					>
 						<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__icon"></div>
 						<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__text">
 							{ __( 'Customize', 'wp-module-onboarding' ) }
@@ -152,17 +180,25 @@ const StepSiteGenEditorHeader = () => {
 					<div className="nfd-onboarding-header--sitegen__editor__end__save-button">
 						<div
 							className="nfd-onboarding-header--sitegen__editor__end__save-button__text"
+							onClick={ saveAndContinue }
 							role="button"
 							tabIndex={ 0 }
-							onKeyDown={ generateChildThemes }
-							onClick={ generateChildThemes }
+							onKeyDown={ saveAndContinue }
 						>
 							{ __( 'Save & Continue', 'wp-module-onboarding' ) }
 						</div>
-						<Icon
-							icon={ chevronRight }
-							className="nfd-onboarding-header--sitegen__editor__end__save-button__text"
-						></Icon>
+						{ isSaving ? (
+							<Spinner
+								className={
+									'nfd-onboarding-header--sitegen__editor__end__save-button__spinner'
+								}
+							/>
+						) : (
+							<Icon
+								icon={ chevronRight }
+								className="nfd-onboarding-header--sitegen__editor__end__save-button__text"
+							></Icon>
+						) }
 					</div>
 				</div>
 			</Fill>
