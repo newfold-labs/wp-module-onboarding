@@ -21,6 +21,13 @@ const DesignColorsPanel = ( {
 		};
 	}, [] );
 
+	const { currentData } = useSelect( ( select ) => {
+		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+		};
+	} );
+
 	const design = customizeSidebarData?.design;
 	const colorPalettes = customizeSidebarData?.colorPalettes;
 	const palettePrimaryColors = Object.entries( design?.color_palette ).map(
@@ -92,8 +99,10 @@ const DesignColorsPanel = ( {
 		setSelectedColor( updatedColor );
 	};
 
-	const { updateAiPreviewSettings } = useDispatch( nfdOnboardingStore );
-
+	const {
+		setCurrentOnboardingData,
+		updateAiPreviewSettings,
+	} = useDispatch( nfdOnboardingStore );
 	const convertColorSchema = ( inputObject ) => {
 		const outputArray = [];
 
@@ -126,16 +135,21 @@ const DesignColorsPanel = ( {
 			colorPalettes[ selectedPalette ].secondary =
 				selectedColor.secondary;
 			colorPalettes[ selectedPalette ].tertiary = selectedColor.tertiary;
-			selectedGlobalStyle.settings.color.palette = convertColorSchema(
+			// selectedGlobalStyle.settings.color.palette = convertColorSchema(
+			// 	colorPalettes[ selectedPalette ]
+			// );
+			const slug = currentData.sitegen.homepages.active.slug;
+			currentData.sitegen.homepages.data[slug].color.palette = convertColorSchema(
 				colorPalettes[ selectedPalette ]
 			);
-			updateAiPreviewSettings(
-				// eslint-disable-next-line react-hooks/rules-of-hooks
-				useGlobalStylesOutput(
-					selectedGlobalStyle,
-					storedPreviewSettings
-				)
-			);
+			setCurrentOnboardingData( currentData );
+			// updateAiPreviewSettings(
+			// 	// eslint-disable-next-line react-hooks/rules-of-hooks
+			// 	useGlobalStylesOutput(
+			// 		selectedGlobalStyle,
+			// 		storedPreviewSettings
+			// 	)
+			// );
 		}
 	};
 

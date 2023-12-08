@@ -184,9 +184,19 @@ const DesignFontsPanel = ( {
 		};
 	}, [] );
 
+	const { currentData } = useSelect( ( select ) => {
+		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+		};
+	} );
+
 	const design = customizeSidebarData?.design;
 	const designStyles = customizeSidebarData?.designStyles;
-	const { updateAiPreviewSettings } = useDispatch( nfdOnboardingStore );
+	const { 
+		updateAiPreviewSettings,
+		setCurrentOnboardingData,
+	} = useDispatch( nfdOnboardingStore );
 
 	const fontGroups = [
 		{
@@ -234,16 +244,18 @@ const DesignFontsPanel = ( {
 			headings = fontGroups[ selectedGroup ].headings;
 			body = fontGroups[ selectedGroup ].body;
 		}
-
+		const slug = currentData.sitegen.homepages.active.slug;
 		if ( selectedGlobalStyle?.styles?.typography?.fontFamily ) {
 			selectedGlobalStyle.styles.typography.fontFamily = body;
-			updateAiPreviewSettings(
-				// eslint-disable-next-line react-hooks/rules-of-hooks
-				useGlobalStylesOutput(
-					selectedGlobalStyle,
-					storedPreviewSettings
-				)
-			);
+			currentData.sitegen.homepages.data[slug].styles.typography.fontFamily = body;
+			setCurrentOnboardingData( currentData );
+			// updateAiPreviewSettings(
+			// 	// eslint-disable-next-line react-hooks/rules-of-hooks
+			// 	useGlobalStylesOutput(
+			// 		selectedGlobalStyle,
+			// 		storedPreviewSettings
+			// 	)
+			// );
 		}
 		if (
 			selectedGlobalStyle?.styles?.blocks[ 'core/heading' ]?.typography
@@ -252,13 +264,17 @@ const DesignFontsPanel = ( {
 			selectedGlobalStyle.styles.blocks[
 				'core/heading'
 			].typography.fontFamily = headings;
-			updateAiPreviewSettings(
-				// eslint-disable-next-line react-hooks/rules-of-hooks
-				useGlobalStylesOutput(
-					selectedGlobalStyle,
-					storedPreviewSettings
-				)
-			);
+			currentData.sitegen.homepages.data[slug].styles.blocks[
+				'core/heading'
+			].typography.fontFamily = headings;
+			setCurrentOnboardingData( currentData );
+			// updateAiPreviewSettings(
+			// 	// eslint-disable-next-line react-hooks/rules-of-hooks
+			// 	useGlobalStylesOutput(
+			// 		selectedGlobalStyle,
+			// 		storedPreviewSettings
+			// 	)
+			// );
 		}
 	};
 
