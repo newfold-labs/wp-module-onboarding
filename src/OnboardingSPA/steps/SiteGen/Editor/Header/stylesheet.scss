@@ -68,6 +68,20 @@
 							margin-right: 15px;
 						}
 
+						&__input {
+							font-size: 18px;
+							padding: 5px;
+
+							&:focus {
+								outline: none;
+							}
+						}
+
+						&__input::placeholder {
+							font-size: 18px;
+						}
+
+
 						&__down-icon {
 							fill: var(--nfd-onboarding-primary);
 							width: 20px;
@@ -76,17 +90,20 @@
 					}
 
 					&__content {
+						width: 100%;
 
 						&__rename,
 						&__view-all {
-							height: 40px;
-							padding: 0 9px 0 9px;
+							height: 20px;
 							width: 240px;
 							color: var(--nfd-onboarding-secondary);
+							cursor: pointer;
+							margin: 8px 0;
 						}
 
 						&__view-all {
 							border-top: 1px solid var(--nfd-onboarding-secondary);
+							padding-top: 8px;
 						}
 
 						&__disabled {
@@ -136,6 +153,18 @@
 					padding: 0 12px 0 12px;
 					height: 36px;
 					border-radius: 8px;
+
+					&__icon {
+						fill: var(--nfd-onboarding-secondary);
+					}
+
+					&__spinner {
+						height: 10px;
+						width: 10px;
+						border-width: 2px;
+						border-color: var(--nfd-onboarding-secondary);
+						margin-left: 8px;
+					}
 				}
 			}
 		}

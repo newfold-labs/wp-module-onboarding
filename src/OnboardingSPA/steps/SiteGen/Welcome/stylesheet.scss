@@ -40,7 +40,7 @@
 					&__image {
 						height: 36px;
 						width: 42px;
-						border-radius: 7px;
+						border-radius: 8px;
 						background-size: cover;
 						background-repeat: no-repeat;
 						background-image: var(--sitegen-ai-icon);
@@ -60,7 +60,7 @@
 
 					&__text {
 						color: var(--nfd-onboarding-primary);
-						font-size: clamp(0.875rem, 0.6818rem + 0.9659vw, 3rem);
+						font-size: clamp(1.125rem, 1.0341rem + 0.4545vw, 2.125rem);
 						margin-left: 15px;
 						white-space: normal;
 						line-height: 1;
@@ -75,11 +75,19 @@
 					&__text {
 						text-align: center;
 						color: var(--nfd-onboarding-primary);
-						font-size: clamp(0.875rem, 0.7727rem + 0.5114vw, 2rem);
+						font-size: clamp(0.875rem, 0.8182rem + 0.2841vw, 1.5rem);
 						margin: 0;
 						padding: 0;
 					}
 				}
+			}
+
+			&__button {
+				margin-top: 24px;
+				width: 165px;
+				padding: 16px 40px 16px 40px;
+				border-radius: 6px;
+				font-size: clamp(0.75rem, 0.7159rem + 0.1705vw, 1.125rem);
 			}
 		}
 

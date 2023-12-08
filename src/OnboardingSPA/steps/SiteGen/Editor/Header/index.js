@@ -21,6 +21,7 @@ import Spinner from '../../../../components/Loaders/Spinner';
 const StepSiteGenEditorHeader = () => {
 	const [ homepage, setHomepage ] = useState();
 	const [ isSaving, setIsSaving ] = useState( false );
+	const [ isEditingTitle, setIsEditingTitle ] = useState( false );
 
 	const {
 		setCurrentOnboardingData,
@@ -52,6 +53,20 @@ const StepSiteGenEditorHeader = () => {
 		currentData.sitegen.homepages.data[ newPage.slug ] = newPage;
 		currentData.sitegen.homepages.active = newPage;
 		setCurrentOnboardingData( currentData );
+	};
+
+	const handleRename = ( e ) => {
+		const name = e.target.value;
+		if ( ! name ) {
+			return setIsEditingTitle( false );
+		}
+		const activeHomepage = { ...homepage };
+		activeHomepage.title = name;
+		currentData.sitegen.homepages.active = activeHomepage;
+		currentData.sitegen.homepages.data[ activeHomepage.slug ] =
+			activeHomepage;
+		setCurrentOnboardingData( currentData );
+		setIsEditingTitle( false );
 	};
 
 	const handleViewAll = () => {
@@ -102,6 +117,7 @@ const StepSiteGenEditorHeader = () => {
 						<div className="nfd-onboarding-header--sitegen__editor__center__icon"></div>
 						<Dropdown
 							className="nfd-onboarding-header--sitegen__editor__center__dropdown"
+							contentClassName='className="nfd-onboarding-header--sitegen__editor__center__dropdown__content'
 							renderToggle={ ( { onToggle } ) => {
 								return (
 									<>
@@ -119,12 +135,21 @@ const StepSiteGenEditorHeader = () => {
 											className="nfd-onboarding-header--sitegen__editor__center__dropdown__info"
 											role="button"
 											tabIndex={ 0 }
-											onKeyDown={ onToggle }
 											onClick={ onToggle }
 										>
-											<p className="nfd-onboarding-header--sitegen__editor__center__dropdown__info__text">
-												{ homepage.title }
-											</p>
+											{ isEditingTitle ? (
+												<input
+													className="nfd-onboarding-header--sitegen__editor__center__dropdown__info__input"
+													placeholder={
+														homepage.title
+													}
+													onBlur={ handleRename }
+												></input>
+											) : (
+												<p className="nfd-onboarding-header--sitegen__editor__center__dropdown__info__text">
+													{ homepage.title }
+												</p>
+											) }
 											<Icon
 												className="nfd-onboarding-header--sitegen__editor__center__dropdown__info__down-icon"
 												icon={ chevronDown }
@@ -140,7 +165,14 @@ const StepSiteGenEditorHeader = () => {
 										'nfd-onboarding-header--sitegen__editor__center__dropdown__content__disabled'
 									}` }
 								>
-									<p className="nfd-onboarding-header--sitegen__editor__center__dropdown__content__rename">
+									<p
+										className="nfd-onboarding-header--sitegen__editor__center__dropdown__content__rename"
+										onClick={ () =>
+											setIsEditingTitle(
+												! isEditingTitle
+											)
+										}
+									>
 										{ __(
 											'Rename',
 											'wp-module-onboarding'
@@ -151,7 +183,6 @@ const StepSiteGenEditorHeader = () => {
 										onClick={ handleViewAll }
 										role="button"
 										tabIndex={ 0 }
-										onKeyDown={ handleViewAll }
 									>
 										{ __(
 											'View All',
@@ -196,7 +227,7 @@ const StepSiteGenEditorHeader = () => {
 						) : (
 							<Icon
 								icon={ chevronRight }
-								className="nfd-onboarding-header--sitegen__editor__end__save-button__text"
+								className="nfd-onboarding-header--sitegen__editor__end__save-button__icon"
 							></Icon>
 						) }
 					</div>

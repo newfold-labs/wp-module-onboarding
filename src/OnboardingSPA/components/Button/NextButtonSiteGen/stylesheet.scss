@@ -11,7 +11,7 @@
 		justify-content: center;
 		color: var(--nfd-onboarding-secondary);
 		background-color: var(--nfd-onboarding-primary);
-		font-size: clamp(0.5rem, 0.3864rem + 0.5682vw, 1.75rem);
+		font-size: clamp(0.75rem, 0.7159rem + 0.1705vw, 1.125rem);
 
 		@media (min-width: 2600px ) {
 			height: 76px;

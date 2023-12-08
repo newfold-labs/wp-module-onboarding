@@ -12,7 +12,7 @@ $selected-detail: #1de082;
 
 		&__field {
 			padding-top: 10px;
-			font-size: 1.5rem;
+			font-size: clamp(1.125rem, 1.0455rem + 0.3977vw, 2rem);
 			background: transparent;
 			letter-spacing: $letter-spacing;
 

@@ -53,7 +53,9 @@ const SitegenEditorPatternsSidebar = () => {
 		}
 		const homepagesCopy = { ...homepages };
 		homepagesCopy[ slug ].active = ! homepagesCopy[ slug ].active;
-		currentData.sitegen.homepages.active = homepagesCopy[ slug ];
+		currentData.sitegen.homepages.active = cloneDeep(
+			homepagesCopy[ slug ]
+		);
 		setActiveHomepage( homepagesCopy[ slug ] );
 		setHomepages( homepagesCopy );
 		setCurrentOnboardingData( currentData );
@@ -68,7 +70,7 @@ const SitegenEditorPatternsSidebar = () => {
 
 		homepagesCopy[ slug ].favorite = ! homepagesCopy[ slug ].favorite;
 		setHomepages( homepagesCopy );
-		currentData.sitegen.homepages.data = homepagesCopy;
+		currentData.sitegen.homepages.data = cloneDeep( homepagesCopy );
 		setCurrentOnboardingData( currentData );
 	};
 
@@ -175,7 +177,7 @@ const SitegenEditorPatternsSidebar = () => {
 					);
 				} ),
 		} );
-	}, [ homepages, activeHomepage ] );
+	}, [ homepages, activeHomepage, currentData ] );
 
 	return (
 		<Fill

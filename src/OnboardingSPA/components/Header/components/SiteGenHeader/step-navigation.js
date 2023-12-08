@@ -5,6 +5,8 @@ import { __ } from '@wordpress/i18n';
 
 import { store as nfdOnboardingStore } from '../../../../store';
 import ButtonDark from '../../../Button/ButtonDark';
+import { stepSiteGenPreview } from '../../../../steps/SiteGen/Preview/step';
+import { stepSiteGenSiteLogo } from '../../../../steps/SiteGen/SiteLogo/step';
 
 /**
  * Back step Navigation button.
@@ -37,13 +39,21 @@ const Back = ( { path, showErrorDialog } ) => {
  * @return {WPComponent} StepNavigation Component
  */
 const StepNavigation = () => {
-	const { previousStep, showErrorDialog } = useSelect( ( select ) => {
-		return {
-			previousStep: select( nfdOnboardingStore ).getPreviousStep(),
-			showErrorDialog: select( nfdOnboardingStore ).getShowErrorDialog(),
-		};
-	}, [] );
+	let { previousStep, showErrorDialog, currentStep } = useSelect(
+		( select ) => {
+			return {
+				previousStep: select( nfdOnboardingStore ).getPreviousStep(),
+				showErrorDialog:
+					select( nfdOnboardingStore ).getShowErrorDialog(),
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+			};
+		},
+		[]
+	);
 	const isFirstStep = null === previousStep || false === previousStep;
+	if ( stepSiteGenPreview === currentStep ) {
+		previousStep = stepSiteGenSiteLogo;
+	}
 	return (
 		<div className="nfd-onboarding-header--sitegen__step-navigation">
 			{ isFirstStep ? null : (

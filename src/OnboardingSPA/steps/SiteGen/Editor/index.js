@@ -16,7 +16,6 @@ const StepSiteGenEditor = () => {
 	const [ activeHomepage, setActiveHomepage ] = useState();
 	const [ colorPalette, setColorPalette ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState( [] );
-	const [ reRender, setReRender ] = useState( false );
 	const { setIsHeaderEnabled, setHeaderActiveView, setDrawerActiveView } =
 		useDispatch( nfdOnboardingStore );
 
@@ -31,7 +30,7 @@ const StepSiteGenEditor = () => {
 		setIsHeaderEnabled( true );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
-		const homepage = currentData.sitegen.homepages.active;
+		const homepage = cloneDeep( currentData.sitegen.homepages.active );
 		setActiveHomepage( homepage );
 		const globalStylesResponse = await getGlobalStyles();
 		setGlobalStyles( globalStylesResponse.body );
@@ -44,8 +43,9 @@ const StepSiteGenEditor = () => {
 
 	useEffect( () => {
 		if ( currentData?.sitegen?.homepages?.active ) {
-			setActiveHomepage( currentData.sitegen.homepages.active );
-			setReRender( true );
+			setActiveHomepage(
+				cloneDeep( currentData.sitegen.homepages.active )
+			);
 		}
 	}, [ currentData ] );
 
@@ -72,7 +72,6 @@ const StepSiteGenEditor = () => {
 				{ activeHomepage &&
 					colorPalette &&
 					globalStyles &&
-					reRender &&
 					buildPreview() }
 			</div>
 		</CommonLayout>
