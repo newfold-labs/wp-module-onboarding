@@ -60,7 +60,8 @@ const TheFork = () => {
 			<a
 				className="nfd-onboarding-step--site-gen__fork__importsite"
 				href={ migrationUrl }
-				target="_blank" rel="noreferrer"
+				target={ '_blank' }
+				rel={ 'noreferrer' }
 			>
 				{ content.importtext }
 			</a>
