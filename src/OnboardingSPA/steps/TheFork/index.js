@@ -1,7 +1,7 @@
 import CommonLayout from '../../components/Layouts/Common';
 
 import { useEffect } from '@wordpress/element';
-import { useDispatch } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 
 import { store as nfdOnboardingStore } from '../../store';
 import { FOOTER_SITEGEN, HEADER_SITEGEN } from '../../../constants';
@@ -12,6 +12,12 @@ import StartOptions from '../../components/StartOptions';
 import getContents from './contents';
 
 const TheFork = () => {
+	const { migrationUrl } = useSelect( ( select ) => {
+		return {
+			migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+		};
+	} );
+
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -53,7 +59,8 @@ const TheFork = () => {
 			<br />
 			<a
 				className="nfd-onboarding-step--site-gen__fork__importsite"
-				href={ content.importlink }
+				href={ migrationUrl }
+				target="_blank" rel="noreferrer"
 			>
 				{ content.importtext }
 			</a>
