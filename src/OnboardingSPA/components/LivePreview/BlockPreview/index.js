@@ -34,6 +34,7 @@ const BlockPreview = ( {
 		if ( setIsLoadingParent ) {
 			setIsLoadingParent( false );
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ skeletonLoadingTime ] );
 
 	const { currentData, storedPreviewSettings } = useSelect( ( select ) => {
@@ -54,7 +55,7 @@ const BlockPreview = ( {
 		} else {
 			setSettings( storedPreviewSettings );
 		}
-	}, [ previewSettings, storedPreviewSettings ]);
+	}, [ previewSettings, storedPreviewSettings ] );
 
 	useEffect( () => {
 		if ( blockGrammer ) {
@@ -66,6 +67,7 @@ const BlockPreview = ( {
 		if ( ! previewSettings ) {
 			setSettings( storedPreviewSettings );
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ storedPreviewSettings, currentData ] );
 
 	const SkeletonLivePreview = memo( () => {

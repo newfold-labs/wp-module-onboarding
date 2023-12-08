@@ -6,20 +6,23 @@ import ColorPaletteIcon from './ColorPaletteIcon';
 import CustomColorPalette from './CustomColorPalette';
 import './stylesheet.scss';
 import { store as nfdOnboardingStore } from '../../../../../store';
-import { useGlobalStylesOutput } from '../../../../../utils/global-styles/use-global-styles-output';
+// import { useGlobalStylesOutput } from '../../../../../utils/global-styles/use-global-styles-output';
 
 const DesignColorsPanel = ( {
 	baseClassName = 'nfd-onboarding-sidebar-customize--design-colors-panel',
 	heading,
 } ) => {
-	const { storedPreviewSettings, customizeSidebarData } = useSelect( ( select ) => {
-		return {
-			storedPreviewSettings:
-				select( nfdOnboardingStore ).getAiPreviewSettings(),
-			customizeSidebarData:
-				select( nfdOnboardingStore ).getCustomizeSidebarData(),
-		};
-	}, [] );
+	const { storedPreviewSettings, customizeSidebarData } = useSelect(
+		( select ) => {
+			return {
+				storedPreviewSettings:
+					select( nfdOnboardingStore ).getAiPreviewSettings(),
+				customizeSidebarData:
+					select( nfdOnboardingStore ).getCustomizeSidebarData(),
+			};
+		},
+		[]
+	);
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
@@ -99,10 +102,7 @@ const DesignColorsPanel = ( {
 		setSelectedColor( updatedColor );
 	};
 
-	const {
-		setCurrentOnboardingData,
-		updateAiPreviewSettings,
-	} = useDispatch( nfdOnboardingStore );
+	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
 	const convertColorSchema = ( inputObject ) => {
 		const outputArray = [];
 
@@ -139,9 +139,8 @@ const DesignColorsPanel = ( {
 			// 	colorPalettes[ selectedPalette ]
 			// );
 			const slug = currentData.sitegen.homepages.active.slug;
-			currentData.sitegen.homepages.data[slug].color.palette = convertColorSchema(
-				colorPalettes[ selectedPalette ]
-			);
+			currentData.sitegen.homepages.data[ slug ].color.palette =
+				convertColorSchema( colorPalettes[ selectedPalette ] );
 			setCurrentOnboardingData( currentData );
 			// updateAiPreviewSettings(
 			// 	// eslint-disable-next-line react-hooks/rules-of-hooks
@@ -155,6 +154,7 @@ const DesignColorsPanel = ( {
 
 	useEffect( () => {
 		handleUpdatePreviewSettings();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ selectedColor, selectedPalette ] );
 
 	return (

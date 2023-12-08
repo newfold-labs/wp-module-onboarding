@@ -3,7 +3,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { PanelBody, PanelRow, Button, Dashicon } from '@wordpress/components';
 import './stylesheet.scss';
 import { store as nfdOnboardingStore } from '../../../../../store';
-import { useGlobalStylesOutput } from '../../../../../utils/global-styles/use-global-styles-output';
+// import { useGlobalStylesOutput } from '../../../../../utils/global-styles/use-global-styles-output';
 
 const FontGroup = ( {
 	baseClassName,
@@ -175,14 +175,17 @@ const CustomFontsDisplay = ( {
 const DesignFontsPanel = ( {
 	baseClassName = 'nfd-onboarding-sidebar-customize__design-fonts-panel',
 } ) => {
-	const { storedPreviewSettings, customizeSidebarData } = useSelect( ( select ) => {
-		return {
-			storedPreviewSettings:
-				select( nfdOnboardingStore ).getAiPreviewSettings(),
-			customizeSidebarData:
-				select( nfdOnboardingStore ).getCustomizeSidebarData(),
-		};
-	}, [] );
+	const { storedPreviewSettings, customizeSidebarData } = useSelect(
+		( select ) => {
+			return {
+				storedPreviewSettings:
+					select( nfdOnboardingStore ).getAiPreviewSettings(),
+				customizeSidebarData:
+					select( nfdOnboardingStore ).getCustomizeSidebarData(),
+			};
+		},
+		[]
+	);
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
@@ -193,10 +196,7 @@ const DesignFontsPanel = ( {
 
 	const design = customizeSidebarData?.design;
 	const designStyles = customizeSidebarData?.designStyles;
-	const { 
-		updateAiPreviewSettings,
-		setCurrentOnboardingData,
-	} = useDispatch( nfdOnboardingStore );
+	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
 
 	const fontGroups = [
 		{
@@ -247,7 +247,9 @@ const DesignFontsPanel = ( {
 		const slug = currentData.sitegen.homepages.active.slug;
 		if ( selectedGlobalStyle?.styles?.typography?.fontFamily ) {
 			selectedGlobalStyle.styles.typography.fontFamily = body;
-			currentData.sitegen.homepages.data[slug].styles.typography.fontFamily = body;
+			currentData.sitegen.homepages.data[
+				slug
+			].styles.typography.fontFamily = body;
 			setCurrentOnboardingData( currentData );
 			// updateAiPreviewSettings(
 			// 	// eslint-disable-next-line react-hooks/rules-of-hooks
@@ -264,7 +266,7 @@ const DesignFontsPanel = ( {
 			selectedGlobalStyle.styles.blocks[
 				'core/heading'
 			].typography.fontFamily = headings;
-			currentData.sitegen.homepages.data[slug].styles.blocks[
+			currentData.sitegen.homepages.data[ slug ].styles.blocks[
 				'core/heading'
 			].typography.fontFamily = headings;
 			setCurrentOnboardingData( currentData );
@@ -280,6 +282,7 @@ const DesignFontsPanel = ( {
 
 	useEffect( () => {
 		handleUpdatePreviewSettings();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ selectedGroup, customFont ] );
 
 	const fontOptions = [ ...new Set( [ ...fontsHeading, ...fontsContent ] ) ];

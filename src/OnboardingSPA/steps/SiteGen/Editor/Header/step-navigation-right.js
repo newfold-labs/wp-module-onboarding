@@ -46,9 +46,10 @@ const StepNavigationRight = () => {
 			setSidebarActiveView( 'Customize' );
 			setIsSidebarOpened( isSidebarOpenedNew );
 		};
-		useEffect(() => {
+		useEffect( () => {
 			customize();
-		}, []);
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [] );
 		return (
 			<div
 				role="button"

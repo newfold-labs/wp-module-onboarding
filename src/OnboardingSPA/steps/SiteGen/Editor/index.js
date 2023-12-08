@@ -39,6 +39,7 @@ const StepSiteGenEditor = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		initGlobalStyles();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
 
 	const initGlobalStyles = async () => {
