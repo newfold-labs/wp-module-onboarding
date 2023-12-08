@@ -18,6 +18,13 @@ const SitegenEditorPatternsSidebar = lazy( () =>
 	)
 );
 
+const CustomizeMenu = lazy( () =>
+	import( '../../components/Sidebar/components/Customize/Menu' )
+);
+const CustomizeSidebar = lazy( () =>
+	import( '../../components/Sidebar/components/Customize/Sidebar' )
+);
+
 export const sidebars = [
 	{
 		id: SIDEBAR_LEARN_MORE,
@@ -28,6 +35,12 @@ export const sidebars = [
 	{
 		id: SIDEBAR_SITEGEN_EDITOR_PATTERNS,
 		sidebar: SitegenEditorPatternsSidebar,
+		enabled: true,
+	},
+	{
+		id: 'Customize',
+		menu: CustomizeMenu,
+		sidebar: CustomizeSidebar,
 		enabled: true,
 	},
 ];

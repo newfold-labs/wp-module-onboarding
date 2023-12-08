@@ -284,3 +284,11 @@ export function resetNavError() {
 		type: 'RESET_NAV_ERROR',
 	};
 }
+
+
+export function updateCustomizeSidebarData( customizeSidebarData ) {
+	return {
+		type: 'CUSTOMIZE_SIDEBAR_DATA',
+		customizeSidebarData,
+	};
+}

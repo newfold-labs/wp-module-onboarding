@@ -54,7 +54,7 @@ const BlockPreview = ( {
 		} else {
 			setSettings( storedPreviewSettings );
 		}
-	}, [] );
+	}, [ previewSettings, storedPreviewSettings  ] );
 
 	useEffect( () => {
 		if ( blockGrammer ) {

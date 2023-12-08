@@ -28,3 +28,11 @@ export async function generateSiteGenMeta(
 		} ).then()
 	);
 }
+
+export async function getCustomizeSidebarData() {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/get-customize-data' ),
+		} ).then()
+	);
+}

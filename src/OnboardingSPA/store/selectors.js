@@ -426,3 +426,8 @@ export function getCurrentUserDetails( state ) {
 	const currentUserInfo = state.runtime.currentUserDetails;
 	return currentUserInfo;
 }
+
+export function getCustomizeSidebarData( state ) {
+	return state.runtime.customizeSidebarData;
+}
+

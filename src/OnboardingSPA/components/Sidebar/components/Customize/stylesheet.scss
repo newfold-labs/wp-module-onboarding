@@ -1,0 +1,36 @@
+@import "./HeadingWithDescription/stylesheet";
+@import "./StepIntroPanel/stylesheet";
+@import "./IllustrationPanel/stylesheet";
+@import "./InfoPanel/stylesheet";
+@import "./HelpPanel/stylesheet";
+@import "./SupportLink/stylesheet";
+
+.components-button:focus:not(:disabled),
+.components-button.is-pressed:focus:not(:disabled) {
+	box-shadow: none;
+}
+
+.nfd-onboarding-sidebar-learn-more {
+	padding: 0 !important;
+	border: none;
+	overflow-y: auto;
+	width: 100%;
+	height: 100%;
+
+	&__header {
+
+		&__icon {
+			width: 24px;
+			height: 24px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+
+	&__menu-button {
+		margin: 0 5px;
+		min-height: 40px;
+	}
+}
+
