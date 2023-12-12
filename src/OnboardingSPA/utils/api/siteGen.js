@@ -36,3 +36,18 @@ export async function getCustomizeSidebarData() {
 		} ).then()
 	);
 }
+export async function getHomePagePreviews(
+	siteDescription,
+	regenerate = false
+) {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/get-homepages' ),
+			method: 'POST',
+			data: {
+				site_description: siteDescription,
+				regenerate,
+			},
+		} ).then()
+	);
+}
