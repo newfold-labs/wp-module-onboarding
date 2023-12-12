@@ -60,8 +60,6 @@ class LoginRedirect {
 		if ( '0' === $redirect_option ) {
 			return $original_redirect;
 		} elseif ( '1' === $redirect_option ) {
-			// Redirect to onboarding and, disable the redirect via option for any subsequent logins that may occur later.
-			self::disable_redirect();
 			return admin_url( '/index.php?page=' . WP_Admin::$slug );
 		}
 
@@ -84,8 +82,7 @@ class LoginRedirect {
 			return $original_redirect;
 		}
 
-		// Redirect to onboarding and, disable the redirect via option for any subsequent logins that may occur later.
-		self::disable_redirect();
+		// Redirect to onboarding
 		return admin_url( '/index.php?page=' . WP_Admin::$slug );
 	}
 
