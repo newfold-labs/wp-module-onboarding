@@ -14,10 +14,14 @@ import { homepageData } from './pattern';
 import HeartAnimation from './heartAnimation';
 import RegeneratingSiteCard from './regeneratingCard';
 
-// import { getHomePagePreviews } from '../../../utils/api/siteGen';
+import { getHomePagePreviews } from '../../../utils/api/siteGen';
 
 const SiteGenPreview = () => {
 	// const [ homepages, setHomepages ] = useState( { active: {}, data: [] } );
+
+	const [ homePagePreviewPatterns, setHomePagePreviewPatterns ] = useState(
+		{}
+	);
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -34,21 +38,44 @@ const SiteGenPreview = () => {
 	} );
 
 	useEffect( () => {
-		/* if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
+		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
 			getHomePagePreviews(
 				currentData.sitegen.siteDetails.prompt,
 				false
 			);
-		} */
+		}
 		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 	}, [ currentData ] );
 
-
 	useEffect( () => {
-		setHomepagesData( homepageData.homepages );
+		const fetchHomePagesPatterns = async () => {
+			if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
+				try {
+					const response = await getHomePagePreviews(
+						currentData.sitegen.siteDetails.prompt,
+						false
+					);
+
+					const processedPatterns = {};
+					for ( const key in response ) {
+						processedPatterns[ key ] = [
+							response[ key ]
+								.filter( ( item ) => item !== null )
+								.join( ' ' ),
+						];
+					}
+					setHomePagePreviewPatterns( processedPatterns );
+				} catch ( error ) {
+					// Handle or log error
+					// console.error( 'Error fetching data:', error );
+				}
+			}
+		};
+
+		fetchHomePagesPatterns();
 	}, [] );
 
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
@@ -57,17 +84,19 @@ const SiteGenPreview = () => {
 	const onRegenerateClick = () => {
 		setIsRegenerating( true );
 	};
+
+	console.log("home page preview patterns ", homePagePreviewPatterns);
 	const buildPreviews = () => {
 		const designs = isRegenerating
 			? [ <RegeneratingSiteCard progress={ 20 } /> ]
 			: [];
 
 		designs.push(
-			...homepageData.homepages.data.map( ( design, idx ) => {
+			Object.keys( homePagePreviewPatterns ).map( ( design, idx ) => {
 				return (
 					<SiteGenLivePreview
 						key={ idx }
-						blockGrammer={ design.content }
+						blockGrammer={ design }
 						styling={ 'custom' }
 						overlay={ true }
 						onRegenerateClick={ onRegenerateClick }
