@@ -1,6 +1,7 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\FlowService;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
@@ -108,6 +109,8 @@ class FlowController {
 	 */
 	public function save_onboarding_flow_data( \WP_REST_Request $request ) {
 		$params = json_decode( $request->get_body(), true );
+
+		update_option( Options::get_option_name( 'redirect' ), false );
 
 		$flow_data = FlowService::update_data( $params );
 		if ( is_wp_error( $flow_data ) ) {
