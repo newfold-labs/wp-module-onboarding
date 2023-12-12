@@ -49,6 +49,15 @@ class SiteGenController {
 				'args'                => $this->sitegen_meta_args(),
 			)
 		);
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/get-site-details-meta',
+			array(
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_site_details_meta' ),
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+			)
+		);
 	}
 
 	/**
@@ -104,6 +113,44 @@ class SiteGenController {
 			'sitegen-error',
 			'SiteGen is Disabled.',
 			array( 'status' => 404 )
+		);
+	}
+
+	/**
+	 * Generate Sitegen Site Details meta data.
+	 *
+	 * @param \WP_REST_Request $request Request model.
+	 *
+	 * @return array|WP_Error
+	 */
+	public function get_site_details_meta( \WP_REST_Request $request ) {
+
+		return  json_encode(
+			[
+				[
+					"question" => "1. Do you have a business name or website title?",
+					"field" => "businessName",
+					"prompt" => "My business name is ",
+				],
+				[
+					"question" => "2. What type of website are you making?",
+					"field" => "websiteType",
+					"placeholder" => "e.g. Graphic design portfolio",
+					"prompt" => "I am making a website type of ",
+				],
+				[
+					"question" => "3. Which writing style do you like better?",
+					"field" => "writeStyle",
+					"placeholder" => "e.g. Graphic design portfolio",
+					"prompt" => "I like the wirting style ",
+				],
+				[
+					"question" => "4. Is there anything unique about your business or brand?",
+					"field" => "uniqueBusiness",
+					"placeholder" => "e.g. Unique product, amazing customer service, customizations, etc.",
+					"prompt" => "Unique about my business is ",
+				],
+			]
 		);
 	}
 }

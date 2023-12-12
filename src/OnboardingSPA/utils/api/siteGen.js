@@ -28,3 +28,11 @@ export async function generateSiteGenMeta(
 		} ).then()
 	);
 }
+
+export async function getSiteDetailsmeta() {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/get-site-details-meta' ),
+		} ).then()
+	);
+}
