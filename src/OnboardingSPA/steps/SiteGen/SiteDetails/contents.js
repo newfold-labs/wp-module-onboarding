@@ -23,7 +23,7 @@ const getContents = () => {
 		writeStyleOption2: __(
 			'We manufacture quality products',
 			'wp-module-onboarding'
-		)
+		),
 	};
 };
 
