@@ -1,3 +1,8 @@
+import classNames from 'classnames';
+import { useContext } from '@wordpress/element';
+import { THEME_LIGHT } from '../../../../constants';
+import { ThemeContext } from '../../ThemeContextProvider';
+
 /**
  * Interface Cards with standard design.
  *
@@ -7,13 +12,22 @@
  */
 
 const HeadingWithSubHeading = ( { title, subtitle } ) => {
+	const { theme } = useContext( ThemeContext );
+
 	return (
 		<div className="nfd-onboarding-step__heading">
 			<h2 className="nfd-onboarding-step__heading__title">{ title }</h2>
 			{ subtitle && (
 				<div className="nfd-onboarding-step__heading__subtitle">
 					{ subtitle }
-					<div className="nfd-onboarding-step__heading__icon"></div>
+					<div
+						className={ classNames(
+							'nfd-onboarding-step__heading__icon',
+							theme === THEME_LIGHT
+								? 'nfd-onboarding-step__heading__icon--light'
+								: null
+						) }
+					></div>
 				</div>
 			) }
 		</div>
