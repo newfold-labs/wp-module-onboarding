@@ -27,7 +27,6 @@ export const sidebars = [
 	},
 	{
 		id: SIDEBAR_SITEGEN_EDITOR_PATTERNS,
-		menu: SitegenEditorPatternsSidebar,
 		sidebar: SitegenEditorPatternsSidebar,
 		enabled: true,
 	},

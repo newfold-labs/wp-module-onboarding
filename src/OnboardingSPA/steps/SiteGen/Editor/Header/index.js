@@ -6,6 +6,7 @@ import {
 	HEADER_SITEGEN,
 	HEADER_START,
 	wpEditorPage,
+	SIDEBAR_SITEGEN_EDITOR_PATTERNS,
 } from '../../../../../constants';
 import { Icon, chevronDown, chevronRight } from '@wordpress/icons';
 import { store as nfdOnboardingStore } from '../../../../store';
@@ -21,7 +22,11 @@ const StepSiteGenEditorHeader = () => {
 	const [ homepage, setHomepage ] = useState();
 	const [ isSaving, setIsSaving ] = useState( false );
 
-	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
+	const {
+		setCurrentOnboardingData,
+		setSidebarActiveView,
+		setIsSidebarOpened,
+	} = useDispatch( nfdOnboardingStore );
 	const { currentData } = useSelect( ( select ) => {
 		return {
 			currentData:
@@ -54,6 +59,10 @@ const StepSiteGenEditorHeader = () => {
 		await setFlow( currentData );
 		await completeFlow();
 		window.location.replace( wpEditorPage );
+	};
+	const handleViewAll = () => {
+		setSidebarActiveView( SIDEBAR_SITEGEN_EDITOR_PATTERNS );
+		setIsSidebarOpened( true );
 	};
 
 	useEffect( () => {
@@ -136,12 +145,18 @@ const StepSiteGenEditorHeader = () => {
 											'wp-module-onboarding'
 										) }
 									</p>
-									<p className="nfd-onboarding-header--sitegen__editor__center__dropdown__content__view-all">
+									<div
+										className="nfd-onboarding-header--sitegen__editor__center__dropdown__content__view-all"
+										onClick={ handleViewAll }
+										role="button"
+										tabIndex={ 0 }
+										onKeyDown={ handleViewAll }
+									>
 										{ __(
 											'View All',
 											'wp-module-onboarding'
 										) }
-									</p>
+									</div>
 								</div>
 							) }
 						/>
@@ -158,7 +173,6 @@ const StepSiteGenEditorHeader = () => {
 					>
 						<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__icon"></div>
 						<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__text">
-							Customize{ ' ' }
 							{ __( 'Customize', 'wp-module-onboarding' ) }
 						</div>
 					</div>
