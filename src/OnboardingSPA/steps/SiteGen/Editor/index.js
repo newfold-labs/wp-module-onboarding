@@ -17,12 +17,8 @@ const StepSiteGenEditor = () => {
 	const [ colorPalette, setColorPalette ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState( [] );
 	const [ reRender, setReRender ] = useState( false );
-	const {
-		setIsHeaderEnabled,
-		setSidebarActiveView,
-		setHeaderActiveView,
-		setDrawerActiveView,
-	} = useDispatch( nfdOnboardingStore );
+	const { setIsHeaderEnabled, setHeaderActiveView, setDrawerActiveView } =
+		useDispatch( nfdOnboardingStore );
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
@@ -33,7 +29,6 @@ const StepSiteGenEditor = () => {
 
 	const loadData = async () => {
 		setIsHeaderEnabled( true );
-		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		const homepage = currentData.sitegen.homepages.active;

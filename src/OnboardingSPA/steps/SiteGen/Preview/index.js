@@ -43,10 +43,6 @@ const SiteGenPreview = () => {
 	} );
 
 	const loadData = async () => {
-		setIsHeaderEnabled( true );
-		setSidebarActiveView( false );
-		setHeaderActiveView( HEADER_SITEGEN );
-		setDrawerActiveView( false );
 		let homepagesObject = {};
 		if ( isEmpty( currentData.sitegen.homepages.data ) ) {
 			const homepagesResponse = getHomepages();
@@ -62,11 +58,11 @@ const SiteGenPreview = () => {
 					};
 				}
 			} );
-			currentData.sitegen.homepages.data = homepagesResponse;
-			setCurrentOnboardingData( currentData );
 			homepagesResponse.forEach( ( homepage ) => {
 				homepagesObject[ homepage.slug ] = homepage;
 			} );
+			currentData.sitegen.homepages.data = homepagesObject;
+			setCurrentOnboardingData( currentData );
 		} else {
 			homepagesObject = currentData.sitegen.homepages.data;
 		}
@@ -77,6 +73,10 @@ const SiteGenPreview = () => {
 	};
 
 	useEffect( () => {
+		setIsHeaderEnabled( true );
+		setSidebarActiveView( false );
+		setHeaderActiveView( HEADER_SITEGEN );
+		setDrawerActiveView( false );
 		loadData();
 	}, [] );
 

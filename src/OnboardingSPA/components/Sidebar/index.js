@@ -23,8 +23,8 @@ const Sidebar = () => {
 				{ sidebars.map( ( sidebar ) => {
 					return (
 						<Fragment key={ sidebar.id }>
-							<sidebar.sidebar />
-							<sidebar.menu />
+							{ sidebar?.sidebar && <sidebar.sidebar /> }
+							{ sidebar?.menu && <sidebar.menu /> }
 						</Fragment>
 					);
 				} ) }
