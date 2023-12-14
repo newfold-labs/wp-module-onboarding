@@ -8,20 +8,16 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
 
 import { SiteGenLivePreview } from '../../../components/LivePreview';
-//import SiteGenPlaceholder from '../../../components/SiteGenPlaceholder';
 import getContents from './contents';
-import { homepageData } from './pattern';
 import HeartAnimation from './heartAnimation';
 import RegeneratingSiteCard from './regeneratingCard';
 
 import { getHomePagePreviews } from '../../../utils/api/siteGen';
 
 const SiteGenPreview = () => {
-	// const [ homepages, setHomepages ] = useState( { active: {}, data: [] } );
+	const [ homepages, setHomepages ] = useState( { active: {}, data: [] } );
+	const [ isRegenerating, setIsRegenerating ] = useState( false );
 
-	const [ homePagePreviewPatterns, setHomePagePreviewPatterns ] = useState(
-		{}
-	);
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -38,12 +34,6 @@ const SiteGenPreview = () => {
 	} );
 
 	useEffect( () => {
-		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
-			getHomePagePreviews(
-				currentData.sitegen.siteDetails.prompt,
-				false
-			);
-		}
 		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
@@ -58,18 +48,9 @@ const SiteGenPreview = () => {
 						currentData.sitegen.siteDetails.prompt,
 						false
 					);
-
-					const processedPatterns = {};
-					for ( const key in response ) {
-						processedPatterns[ key ] = [
-							response[ key ]
-								.filter( ( item ) => item !== null )
-								.join( ' ' ),
-						];
-					}
-					setHomePagePreviewPatterns( processedPatterns );
+					setHomepages( { ...homepages, data: response.body } ); // Update the local state with the response data
+					setHomepagesData( { ...homepages, data: response.body } ); // Dispatch the action with the response data
 				} catch ( error ) {
-					// Handle or log error
 					// console.error( 'Error fetching data:', error );
 				}
 			}
@@ -78,34 +59,30 @@ const SiteGenPreview = () => {
 		fetchHomePagesPatterns();
 	}, [] );
 
-	const [ isRegenerating, setIsRegenerating ] = useState( false );
-
-	// console.log( 'HOme pages', JSON.parse( JSON.stringify( homepages ) ) );
 	const onRegenerateClick = () => {
 		setIsRegenerating( true );
 	};
 
-	console.log("home page preview patterns ", homePagePreviewPatterns);
 	const buildPreviews = () => {
 		const designs = isRegenerating
 			? [ <RegeneratingSiteCard progress={ 20 } /> ]
 			: [];
-
 		designs.push(
-			Object.keys( homePagePreviewPatterns ).map( ( design, idx ) => {
-				return (
-					<SiteGenLivePreview
-						key={ idx }
-						blockGrammer={ design }
-						styling={ 'custom' }
-						overlay={ true }
-						onRegenerateClick={ onRegenerateClick }
-						tabIndex="0"
-						role="button"
-						designObject={ design }
-					/>
-				);
-			} )
+			homepages.data &&
+				homepages.data.map( ( design, idx ) => {
+					return (
+						<SiteGenLivePreview
+							key={ idx }
+							blockGrammer={ design.content }
+							styling={ 'custom' }
+							overlay={ true }
+							onRegenerateClick={ onRegenerateClick }
+							tabIndex="0"
+							role="button"
+							designObject={ design }
+						/>
+					);
+				} )
 		);
 
 		return designs;

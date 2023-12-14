@@ -145,15 +145,31 @@ class SiteGenController {
 	 * @return array
 	 */
 	public function get_homepages( \WP_REST_Request $request ) {
+		$existing_homepages = get_option('nfd-sitegen-homepages');
+
+		// If the option exists and is not empty, return it
+        if ( ! empty( $existing_homepages ) ) {
+            return new \WP_REST_Response( $existing_homepages, 200 );
+        }
+
 		// Fetching parameters provided by the front end.
 		$site_description = $request->get_param( 'site_description' );
 		$regenerate = $request->get_param( 'regenerate' );
 		
 		$nfd_ai_site_gen_option = get_option('nfd-ai-site-gen');
+		$site_info = array( 'site_info' => array( 'site_description' => $site_description ) );
 	
 		// Extracting the 'targetaudience' and 'contentstructure' values.
 		$target_audience = isset($nfd_ai_site_gen_option['targetaudience']) ? $nfd_ai_site_gen_option['targetaudience'] : null;
+		// Check if $target_audience is false, null, or not set and then call again.
+		if (!$target_audience) {
+			$target_audience = SiteGenService::instantiate_site_meta($site_info, 'targetaudience', $skip_cache);
+		}
+
 		$content_style = isset($nfd_ai_site_gen_option['contentstructure']) ? $nfd_ai_site_gen_option['contentstructure'] : null;
+		if(!$content_style) {
+			$content_style   = SiteGenService::instantiate_site_meta( $site_info, 'contentstructure', $skip_cache );
+		}
 	
 		// Ensure that the required data is available.
 		if (!$target_audience || !$content_style) {
@@ -170,8 +186,41 @@ class SiteGenController {
 			$target_audience,
 			$regenerate
 		);
+
+		$processed_home_pages = $this->process_homepages_response( $home_pages );
 	
-		return new \WP_REST_Response($home_pages, 200); // OK
+		// Save the structured data in the options table
+		update_option('nfd-sitegen-homepages', $processed_home_pages );
+		return new \WP_REST_Response($processed_home_pages, 200);
 	}
+
+	private function process_homepages_response( $home_pages ) {
+		$versions = [];
+		$version_number = 1; // Initialize the version number counter
+
+		foreach ( $home_pages as $key => $blocks ) {
+			if ( ! is_array( $blocks ) ) {
+				continue;
+			}
+
+			$filtered_blocks = array_filter( $blocks, function($value) {
+				return !is_null($value);
+			});
+
+			$content = implode( '', $filtered_blocks );
+
+			$version_info = [
+				"slug" => "version" . $version_number, // Construct slug using the version number
+				"title" => "Version " . $version_number,
+				"isFavourited" => false, // or true based on your logic
+				"colorScheme" => "#fff", // Replace with your logic for determining the color scheme
+				"content" => $content,
+			];
+
+			$versions[] = $version_info;
 	
+			$version_number++; // Increment the version number for the next iteration
+		}
+		return $versions;
+	}
 }
