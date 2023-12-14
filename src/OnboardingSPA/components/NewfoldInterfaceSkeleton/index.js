@@ -14,17 +14,17 @@ import { forwardRef, useEffect } from '@wordpress/element';
 import { __unstableUseNavigateRegions as useNavigateRegions } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useMergeRefs } from '@wordpress/compose';
-// import bgAiImg from '../../static/images/ai_bg.png';
 
 function useHTMLClass( className ) {
 	useEffect( () => {
 		// eslint-disable-next-line no-undef
 		// const mainImage = new Image();
-		// mainImage.src = bgAiImg;
+		// mainImage.src = '../../static/images/sitegen/ai_bg.png';
 		// mainImage.onload = () => {
+		// 	console.log('Image Loaded!');
 		// 	document.querySelector(
 		// 		'.nfd-onboarding-skeleton--sitegen'
-		// 	).style.backgroundImage = `url('${ bgAiImg }')`;
+		// 	).style.background = 'var(--sitegen-background)';
 		// };
 
 		const element =
