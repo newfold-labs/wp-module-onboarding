@@ -17,6 +17,7 @@ import { getHomePagePreviews } from '../../../utils/api/siteGen';
 const SiteGenPreview = () => {
 	const [ homepages, setHomepages ] = useState( { active: {}, data: [] } );
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
+	const [ isPreviewLoading, setIsPreviewLoading ] = useState( false );
 
 	const {
 		setIsHeaderEnabled,
@@ -42,6 +43,7 @@ const SiteGenPreview = () => {
 
 	useEffect( () => {
 		const fetchHomePagesPatterns = async () => {
+			setIsPreviewLoading( true );
 			if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
 				try {
 					const response = await getHomePagePreviews(
@@ -50,7 +52,9 @@ const SiteGenPreview = () => {
 					);
 					setHomepages( { ...homepages, data: response.body } ); // Update the local state with the response data
 					setHomepagesData( { ...homepages, data: response.body } ); // Dispatch the action with the response data
+					setIsPreviewLoading( false );
 				} catch ( error ) {
+					setIsPreviewLoading( false );
 					// console.error( 'Error fetching data:', error );
 				}
 			}
@@ -64,8 +68,19 @@ const SiteGenPreview = () => {
 	};
 
 	const buildPreviews = () => {
+		if ( isPreviewLoading ) {
+			return (
+				<RegeneratingSiteCard count={ 3 } isRegenerating={ false } />
+			);
+		}
+
 		const designs = isRegenerating
-			? [ <RegeneratingSiteCard progress={ 20 } /> ]
+			? [
+					<RegeneratingSiteCard
+						count={ 1 }
+						isRegenerating={ isRegenerating }
+					/>,
+			  ]
 			: [];
 		designs.push(
 			homepages.data &&

@@ -11,6 +11,8 @@ const getContents = () => {
 			'Favorite a generated version to find and use again in the future.',
 			'wp-module-onboarding'
 		),
+		generating: __( 'Generating Site', 'wp-module-onboarding' ),
+		regenerating: __( 'Regenerating Site', 'wp-module-onboarding' ),
 	};
 };
 

@@ -54,7 +54,7 @@
 		text-align: center;
 		margin: 10px 10px 55px 10px;
 		flex-wrap: wrap;
-   		max-width: 1440px;
+		max-width: 1440px;
 	}
 
 	&__note {
@@ -113,6 +113,17 @@
 
 }
 
+@keyframes infiniteProgress {
+
+	0% {
+		width: 0;
+	}
+
+	100% {
+		width: 100%;
+	}
+}
+
 .regenerating-site-card-wrap {
 	padding: 20px;
 
@@ -146,6 +157,7 @@
 				background: var(--nfd-onboarding-progress-bar-fill);
 				height: 100%;
 				transition: width 0.3s ease;
+				animation: infiniteProgress 1.5s ease-in-out infinite;
 			}
 		}
 	}
