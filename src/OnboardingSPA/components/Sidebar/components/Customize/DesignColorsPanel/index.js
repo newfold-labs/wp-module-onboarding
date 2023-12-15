@@ -12,11 +12,9 @@ const DesignColorsPanel = ( {
 	baseClassName = 'nfd-onboarding-sidebar-customize--design-colors-panel',
 	heading,
 } ) => {
-	const { storedPreviewSettings, customizeSidebarData } = useSelect(
+	const { customizeSidebarData } = useSelect(
 		( select ) => {
 			return {
-				storedPreviewSettings:
-					select( nfdOnboardingStore ).getPreviewSettings(),
 				customizeSidebarData:
 					select( nfdOnboardingStore ).getCustomizeSidebarData(),
 			};

@@ -175,11 +175,9 @@ const CustomFontsDisplay = ( {
 const DesignFontsPanel = ( {
 	baseClassName = 'nfd-onboarding-sidebar-customize__design-fonts-panel',
 } ) => {
-	const { storedPreviewSettings, customizeSidebarData } = useSelect(
+	const { customizeSidebarData } = useSelect(
 		( select ) => {
 			return {
-				storedPreviewSettings:
-					select( nfdOnboardingStore ).getPreviewSettings(),
 				customizeSidebarData:
 					select( nfdOnboardingStore ).getCustomizeSidebarData(),
 			};
@@ -234,7 +232,6 @@ const DesignFontsPanel = ( {
 	const fontsContent = designStyles?.map( ( style ) => style.fonts_content );
 
 	const handleUpdatePreviewSettings = () => {
-		const selectedGlobalStyle = { ...storedPreviewSettings };
 		let headings;
 		let body;
 		if ( selectedGroup === 'custom' ) {
