@@ -175,15 +175,12 @@ const CustomFontsDisplay = ( {
 const DesignFontsPanel = ( {
 	baseClassName = 'nfd-onboarding-sidebar-customize__design-fonts-panel',
 } ) => {
-	const { customizeSidebarData } = useSelect(
-		( select ) => {
-			return {
-				customizeSidebarData:
-					select( nfdOnboardingStore ).getCustomizeSidebarData(),
-			};
-		},
-		[]
-	);
+	const { customizeSidebarData } = useSelect( ( select ) => {
+		return {
+			customizeSidebarData:
+				select( nfdOnboardingStore ).getCustomizeSidebarData(),
+		};
+	}, [] );
 
 	const { currentData } = useSelect( ( select ) => {
 		return {

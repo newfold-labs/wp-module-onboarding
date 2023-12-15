@@ -12,15 +12,12 @@ const DesignColorsPanel = ( {
 	baseClassName = 'nfd-onboarding-sidebar-customize--design-colors-panel',
 	heading,
 } ) => {
-	const { customizeSidebarData } = useSelect(
-		( select ) => {
-			return {
-				customizeSidebarData:
-					select( nfdOnboardingStore ).getCustomizeSidebarData(),
-			};
-		},
-		[]
-	);
+	const { customizeSidebarData } = useSelect( ( select ) => {
+		return {
+			customizeSidebarData:
+				select( nfdOnboardingStore ).getCustomizeSidebarData(),
+		};
+	}, [] );
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
