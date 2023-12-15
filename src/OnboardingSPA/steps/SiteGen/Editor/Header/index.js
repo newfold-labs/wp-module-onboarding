@@ -28,14 +28,16 @@ const StepSiteGenEditorHeader = () => {
 		setSidebarActiveView,
 		setIsSidebarOpened,
 	} = useDispatch( nfdOnboardingStore );
-	const { currentData, sideBarView, isSidebarOpened } = useSelect( ( select ) => {
-		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			sideBarView: select( nfdOnboardingStore ).getSidebarView(),
-			isSidebarOpened: select(nfdOnboardingStore).isSidebarOpened(),
-		};
-	} );
+	const { currentData, sideBarView, isSidebarOpened } = useSelect(
+		( select ) => {
+			return {
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				sideBarView: select( nfdOnboardingStore ).getSidebarView(),
+				isSidebarOpened: select( nfdOnboardingStore ).isSidebarOpened(),
+			};
+		}
+	);
 
 	const handleFavorite = () => {
 		if ( isSaving ) {
@@ -85,12 +87,10 @@ const StepSiteGenEditorHeader = () => {
 
 	const handleCustomize = () => {
 		const isSidebarOpenedNew =
-		sideBarView === 'Customize'
-			? ! isSidebarOpened
-			: isSidebarOpened;
-	setSidebarActiveView( 'Customize' );
-	setIsSidebarOpened( isSidebarOpenedNew );
-	}
+			sideBarView === 'Customize' ? ! isSidebarOpened : isSidebarOpened;
+		setSidebarActiveView( 'Customize' );
+		setIsSidebarOpened( isSidebarOpenedNew );
+	};
 
 	useEffect( () => {
 		if ( currentData?.sitegen?.homepages?.active ) {
@@ -219,7 +219,7 @@ const StepSiteGenEditorHeader = () => {
 							isSaving &&
 							'nfd-onboarding-header--sitegen__editor__end__customize-button__disabled'
 						}` }
-						onClick={handleCustomize}
+						onClick={ handleCustomize }
 					>
 						<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__icon"></div>
 						<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__text">
