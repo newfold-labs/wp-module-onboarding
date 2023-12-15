@@ -246,33 +246,33 @@ const DesignFontsPanel = ( {
 		}
 		const slug = currentData.sitegen.homepages.active.slug;
 
-		currentData.sitegen.homepages.data[ slug ] =  {
+		currentData.sitegen.homepages.data[ slug ] = {
 			...currentData.sitegen.homepages.data[ slug ],
 			styles: {
 				blocks: [
-					{ 'core/heading': {
-						typography: {
-							fontFamily:
-							headings
-						}
-					}
-				}
-				]
-			}
+					{
+						'core/heading': {
+							typography: {
+								fontFamily: headings,
+							},
+						},
+					},
+				],
+			},
 		};
 		currentData.sitegen.homepages.active = {
-			...currentData.sitegen.homepages.active ,
+			...currentData.sitegen.homepages.active,
 			styles: {
 				blocks: [
-					{ 'core/heading': {
-						typography: {
-							fontFamily:
-							headings
-						}
-					}
-				}
-				]
-			}
+					{
+						'core/heading': {
+							typography: {
+								fontFamily: headings,
+							},
+						},
+					},
+				],
+			},
 		};
 		setCurrentOnboardingData( currentData );
 	};
@@ -285,7 +285,17 @@ const DesignFontsPanel = ( {
 	const fontOptions = [ ...new Set( [ ...fontsHeading, ...fontsContent ] ) ];
 
 	const handleGroupSelect = ( groupId ) => {
+		if ( groupId !== 'custom' && selectedCustomFont ) {
+			setShowCustomFonts( false );
+		}
 		setSelectedGroup( groupId );
+	};
+
+	const handleSelectYourOwnFonts = () => {
+		setShowCustomFonts( true );
+		if ( ! selectedCustomFont ) {
+			setIsEditingCustomFont( true );
+		}
 	};
 
 	const handleEditCustomFont = () => {
@@ -372,8 +382,7 @@ const DesignFontsPanel = ( {
 					<div className={ `${ baseClassName }__container` }>
 						<Button
 							onClick={ () => {
-								setShowCustomFonts( true );
-								setIsEditingCustomFont( true );
+								handleSelectYourOwnFonts();
 							} }
 						>
 							Select your own fonts

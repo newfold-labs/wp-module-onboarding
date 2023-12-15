@@ -97,6 +97,12 @@ const StepSiteGenEditorHeader = () => {
 			setHomepage( currentData.sitegen.homepages.active );
 		}
 	}, [ currentData ] );
+
+	useEffect( () => {
+		handleCustomize();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [] );
+
 	return (
 		<>
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_START }` }>

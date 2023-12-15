@@ -7,6 +7,7 @@ const ColorPaletteIcon = ( {
 	setSelectedPalette,
 	setSelectedColor,
 	colors,
+	setShowCustomColors = null,
 } ) => {
 	const conicGradient = `conic-gradient(${ colors[ idx ].primary } 90deg, ${ colors[ idx ].secondary } 90deg 150deg, ${ colors[ idx ].tertiary } 150deg 330deg, ${ colors[ idx ].primary } 330deg 360deg)`;
 	const baseClassName =
@@ -14,6 +15,9 @@ const ColorPaletteIcon = ( {
 	const handleClick = () => {
 		setSelectedPalette( idx );
 		setSelectedColor( colors[ idx ] );
+		if ( setShowCustomColors ) {
+			setShowCustomColors( false );
+		}
 	};
 	return (
 		<div className={ `${ baseClassName }__container` }>

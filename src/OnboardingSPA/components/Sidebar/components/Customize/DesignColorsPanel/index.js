@@ -60,16 +60,25 @@ const DesignColorsPanel = ( {
 		secondary: colorPalettes[ 3 ]?.secondary,
 		tertiary: colorPalettes[ 3 ]?.tertiary,
 	};
+	const palette4 = {
+		primary: colorPalettes[ 4 ]?.primary,
+		secondary: colorPalettes[ 4 ]?.secondary,
+		tertiary: colorPalettes[ 4 ]?.tertiary,
+	};
 
 	const [ colors ] = useState( [
 		defaultColors,
 		palette1,
 		palette2,
 		palette3,
+		palette4,
 	] );
 
 	const [ selectedColor, setSelectedColor ] = useState( palette1 );
 	const [ showCustomColors, setShowCustomColors ] = useState( false );
+	const [ isEditingCustomColors, setIsEditingCustomColors ] =
+		useState( false );
+	const [ selectedCustomColors, setSelectedCustomColors ] = useState( false );
 	const [ selectedPalette, setSelectedPalette ] = useState( 1 );
 	const [ colorPickerCalledBy, setColorPickerCalledBy ] = useState( '' );
 	const [ showColorPicker, setShowColorPicker ] = useState( false );
@@ -87,8 +96,16 @@ const DesignColorsPanel = ( {
 		.filter( Boolean );
 
 	const handleApplyCustomColors = () => {
+		setSelectedCustomColors( true );
+		setIsEditingCustomColors( false );
+		setSelectedPalette( 4 );
 		colors[ selectedPalette ] = selectedColor;
-		setShowCustomColors( false );
+	};
+
+	const handleEditCustomColors = () => {
+		setSelectedPalette( 4 );
+		setSelectedColor( colors[ 4 ] );
+		setIsEditingCustomColors( true );
 	};
 
 	const handleColorPickerButton = ( colorType ) => {
@@ -130,8 +147,7 @@ const DesignColorsPanel = ( {
 
 	const handleUpdatePreviewSettings = () => {
 		colorPalettes[ selectedPalette ].primary = selectedColor.primary;
-		colorPalettes[ selectedPalette ].secondary =
-			selectedColor.secondary;
+		colorPalettes[ selectedPalette ].secondary = selectedColor.secondary;
 		colorPalettes[ selectedPalette ].tertiary = selectedColor.tertiary;
 		// selectedGlobalStyle.settings.color.palette = convertColorSchema(
 		// 	colorPalettes[ selectedPalette ]
@@ -139,7 +155,9 @@ const DesignColorsPanel = ( {
 		const slug = currentData.sitegen.homepages.active.slug;
 		currentData.sitegen.homepages.data[ slug ].color.palette =
 			convertColorSchema( colorPalettes[ selectedPalette ] );
-		currentData.sitegen.homepages.active.color.palette = convertColorSchema( colorPalettes[ selectedPalette ] );
+		currentData.sitegen.homepages.active.color.palette = convertColorSchema(
+			colorPalettes[ selectedPalette ]
+		);
 		setCurrentOnboardingData( currentData );
 	};
 
@@ -147,6 +165,104 @@ const DesignColorsPanel = ( {
 		handleUpdatePreviewSettings();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ selectedColor, selectedPalette ] );
+
+	const renderCustomColorsPalette = () => {
+		return (
+			<div
+				className={ `${ baseClassName }__custom-color-palette__container` }
+			>
+				<div
+					className={ `${ baseClassName }__custom-color-palette__container__header` }
+				>
+					<h5 className={ `${ baseClassName }__heading` }>
+						<span>CUSTOM COLORS</span>
+					</h5>
+					<button onClick={ () => handleEditCustomColors() }>
+						Edit colors
+					</button>
+				</div>
+
+				<div style={ { marginLeft: '5px' } }>
+					<ColorPaletteIcon
+						key={ 4 }
+						idx={ 4 }
+						selectedPalette={ selectedPalette }
+						setSelectedPalette={ setSelectedPalette }
+						setSelectedColor={ setSelectedColor }
+						colors={ colors }
+					/>
+				</div>
+			</div>
+		);
+	};
+
+	const renderCustomColorPicker = () => {
+		return (
+			<div className={ `${ baseClassName }__custom__colors__container` }>
+				<h5 className={ `${ baseClassName }__heading` }>
+					CUSTOM COLORS
+				</h5>
+				<div>
+					{ [ 'primary', 'secondary', 'tertiary' ].map(
+						( colorType, index ) => (
+							<ColorPickerButton
+								key={ index }
+								isColorSelected={ selectedColor }
+								color={ selectedColor[ colorType ] }
+								slug={ colorType }
+								name={
+									colorType.charAt( 0 ).toUpperCase() +
+									colorType.slice( 1 )
+								}
+								callback={ handleColorPickerButton }
+							/>
+						)
+					) }
+				</div>
+				<div
+					className={ `${ baseClassName }__custom__colors__container__buttons` }
+				>
+					<Button
+						onClick={ () => handleCancelCustomColors() }
+						className={ 'cancel' }
+					>
+						Cancel
+					</Button>
+					<Button
+						onClick={ handleApplyCustomColors }
+						variant="primary"
+					>
+						Apply
+					</Button>
+				</div>
+
+				{ showColorPicker && (
+					<CustomColorPalette
+						onChange={ handleColorPicker }
+						palettePrimaryColors={ palettePrimaryColors }
+						paletteSecondaryColors={ paletteSecondaryColors }
+					/>
+				) }
+			</div>
+		);
+	};
+
+	const handlePickYourOwnColors = () => {
+		setSelectedPalette( 4 );
+		setSelectedColor( colors[ 4 ] );
+		setShowCustomColors( true );
+		if ( ! selectedCustomColors ) {
+			setIsEditingCustomColors( true );
+		}
+	};
+
+	const handleCancelCustomColors = () => {
+		if ( ! selectedCustomColors ) {
+			setShowCustomColors( false );
+		} else {
+			setIsEditingCustomColors( false );
+		}
+	};
 
 	return (
 		<PanelBody className={ baseClassName } initialOpen={ true }>
@@ -161,7 +277,7 @@ const DesignColorsPanel = ( {
 						<div
 							className={ `${ baseClassName }__container__color__palette__icon` }
 						>
-							{ colors.map( ( elem, idx ) => (
+							{ colors.slice( 0, 4 ).map( ( elem, idx ) => (
 								<ColorPaletteIcon
 									key={ idx }
 									idx={ idx }
@@ -170,6 +286,7 @@ const DesignColorsPanel = ( {
 									setSelectedPalette={ setSelectedPalette }
 									setSelectedColor={ setSelectedColor }
 									colors={ colors }
+									setShowCustomColors={ setShowCustomColors }
 								/>
 							) ) }
 						</div>
@@ -177,68 +294,21 @@ const DesignColorsPanel = ( {
 				</div>
 			</PanelRow>
 			<PanelRow>
-				{ showCustomColors ? (
-					<div
-						className={ `${ baseClassName }__custom__colors__container` }
-					>
-						<h5 className={ `${ baseClassName }__heading` }>
-							CUSTOM COLORS
-						</h5>
-						<div>
-							{ [ 'primary', 'secondary', 'tertiary' ].map(
-								( colorType, index ) => (
-									<ColorPickerButton
-										key={ index }
-										isColorSelected={ selectedColor }
-										color={ selectedColor[ colorType ] }
-										slug={ colorType }
-										name={
-											colorType
-												.charAt( 0 )
-												.toUpperCase() +
-											colorType.slice( 1 )
-										}
-										callback={ handleColorPickerButton }
-									/>
-								)
-							) }
-						</div>
-						<div
-							className={ `${ baseClassName }__custom__colors__container__buttons` }
-						>
-							<Button
-								onClick={ () => setShowCustomColors( false ) }
-								className={ 'cancel' }
-							>
-								Cancel
-							</Button>
-							<Button
-								onClick={ handleApplyCustomColors }
-								variant="primary"
-							>
-								Apply
-							</Button>
-						</div>
-
-						{ showColorPicker && (
-							<CustomColorPalette
-								onChange={ handleColorPicker }
-								palettePrimaryColors={ palettePrimaryColors }
-								paletteSecondaryColors={
-									paletteSecondaryColors
-								}
-							/>
-						) }
-					</div>
-				) : (
+				{ ! showCustomColors && (
 					<div
 						className={ `${ baseClassName }__custom__colors__button__container` }
 					>
-						<Button onClick={ () => setShowCustomColors( true ) }>
+						<Button onClick={ () => handlePickYourOwnColors() }>
 							Pick your own colors
 						</Button>
 					</div>
 				) }
+				{ showCustomColors &&
+					isEditingCustomColors &&
+					renderCustomColorPicker() }
+				{ showCustomColors &&
+					! isEditingCustomColors &&
+					renderCustomColorsPalette() }
 			</PanelRow>
 		</PanelBody>
 	);
