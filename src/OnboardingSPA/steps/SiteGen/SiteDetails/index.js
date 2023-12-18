@@ -69,6 +69,7 @@ const SiteGenSiteDetails = () => {
 			siteDetailsmetas = siteDetailsmetas.body;
 			setSiteDetailsmeta( siteDetailsmetas );
 		} catch ( err ) {
+			// eslint-disable-next-line no-console
 			console.error( 'Error fetching data:', err );
 		}
 	}

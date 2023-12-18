@@ -87,7 +87,6 @@ const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 		return concatenatedString;
 	};
 
-
 	const checkAndNavigate = () => {
 		currentData.sitegen.siteDetails.prompt = concatenatePrompt();
 		currentData.sitegen.siteDetails.mode = 'detailed';
@@ -142,7 +141,7 @@ const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 										className={ `nfd-sg-site-details-rows-button-site-name
 										${ ! isEditing ? 'nfd-sg-site-details-rows-button-selected' : '' }` }
 										text="No"
-										onClick={ ( e ) => {
+										onClick={ () => {
 											setEditing( false );
 										} }
 									/>
