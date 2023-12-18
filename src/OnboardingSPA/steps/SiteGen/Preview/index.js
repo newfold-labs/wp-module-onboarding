@@ -11,7 +11,6 @@ import { SiteGenLivePreview } from '../../../components/LivePreview';
 import getContents from './contents';
 import HeartAnimation from './heartAnimation';
 import RegeneratingSiteCard from './regeneratingCard';
-
 import { getHomePagePreviews } from '../../../utils/api/siteGen';
 
 const SiteGenPreview = () => {
@@ -24,7 +23,7 @@ const SiteGenPreview = () => {
 		setSidebarActiveView,
 		setHeaderActiveView,
 		setDrawerActiveView,
-		setHomepagesData,
+		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData } = useSelect( ( select ) => {
@@ -51,7 +50,8 @@ const SiteGenPreview = () => {
 						false
 					);
 					setHomepages( { ...homepages, data: response.body } ); // Update the local state with the response data
-					setHomepagesData( { ...homepages, data: response.body } ); // Dispatch the action with the response data
+					currentData.sitegen.homepages.data = response.body;
+					setCurrentOnboardingData( currentData );
 					setIsPreviewLoading( false );
 				} catch ( error ) {
 					setIsPreviewLoading( false );
@@ -65,6 +65,19 @@ const SiteGenPreview = () => {
 
 	const onRegenerateClick = () => {
 		setIsRegenerating( true );
+	};
+
+	const handleFavorite = ( slug ) => {
+		const homepagesList = currentData.sitegen.homepages.data;
+
+		if ( homepagesList && homepagesList.length > 0 ) {
+			homepagesList.forEach( ( homepageObj ) => {
+				if ( homepageObj.slug === slug ) {
+					homepageObj.isFavourited = ! homepageObj.isFavourited; // Toggle the isFavourited property
+				}
+			} );
+			setCurrentOnboardingData( { ...currentData } ); // Create a new object to ensure state updates
+		}
 	};
 
 	const buildPreviews = () => {
@@ -95,6 +108,7 @@ const SiteGenPreview = () => {
 							tabIndex="0"
 							role="button"
 							designObject={ design }
+							handleFavorite={ handleFavorite }
 						/>
 					);
 				} )

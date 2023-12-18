@@ -21,9 +21,9 @@ const SiteGenPreviewSelectableCard = ( {
 	onRegenerateClick = false,
 	skeletonLoadingTime = 2500,
 	designObject,
+	handleFavorite,
 } ) => {
-	const { setActiveHomepage, toggleFavorite } =
-		useDispatch( nfdOnboardingStore );
+	const { setActiveHomepage } = useDispatch( nfdOnboardingStore );
 	const [ loadingParent, setIsLoadingParent ] = useState( true );
 
 	const navigate = useNavigate();
@@ -38,9 +38,9 @@ const SiteGenPreviewSelectableCard = ( {
 		navigate( nextStep.path );
 	};
 
-	const onWishlistClick = ( slug ) => {
+	/* const onWishlistClick = ( slug ) => {
 		toggleFavorite( slug );
-	};
+	}; */
 
 	return (
 		<div
@@ -92,10 +92,10 @@ const SiteGenPreviewSelectableCard = ( {
 					<div
 						role="button"
 						tabIndex="0"
-						onClick={ onWishlistClick( designObject?.slug ) }
+						onClick={ () => handleFavorite( designObject?.slug ) }
 						onKeyDown={ ( event ) => {
 							if ( event.key === 'Enter' ) {
-								onWishlistClick( designObject?.slug );
+								handleFavorite( designObject?.slug );
 							}
 						} }
 						aria-label="Add to Wishlist"

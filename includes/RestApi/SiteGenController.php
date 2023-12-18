@@ -156,19 +156,19 @@ class SiteGenController {
 		$site_description = $request->get_param( 'site_description' );
 		$regenerate = $request->get_param( 'regenerate' );
 		
-		$nfd_ai_site_gen_option = get_option('nfd-ai-site-gen');
 		$site_info = array( 'site_info' => array( 'site_description' => $site_description ) );
 	
-		// Extracting the 'targetaudience' and 'contentstructure' values.
-		$target_audience = isset($nfd_ai_site_gen_option['targetaudience']) ? $nfd_ai_site_gen_option['targetaudience'] : null;
+		$target_audience_option = get_option('nfd-ai-site-gen-targetaudience');
+		$target_audience = isset($target_audience_option) ? $target_audience_option : null;
 		// Check if $target_audience is false, null, or not set and then call again.
 		if (!$target_audience) {
 			$target_audience = SiteGenService::instantiate_site_meta($site_info, 'targetaudience', $skip_cache);
 		}
 
-		$content_style = isset($nfd_ai_site_gen_option['contentstructure']) ? $nfd_ai_site_gen_option['contentstructure'] : null;
+		$content_style_option = get_option('nfd-ai-site-gen-contentstructure');
+		$content_style = isset($content_style_option) ? $content_style_option : null;
 		if(!$content_style) {
-			$content_style   = SiteGenService::instantiate_site_meta( $site_info, 'contentstructure', $skip_cache );
+			$content_style = SiteGenService::instantiate_site_meta($site_info, 'contentstructure', $skip_cache);
 		}
 	
 		// Ensure that the required data is available.
