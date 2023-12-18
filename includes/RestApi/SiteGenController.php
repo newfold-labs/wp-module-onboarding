@@ -165,12 +165,12 @@ class SiteGenController {
 			$target_audience = SiteGenService::instantiate_site_meta($site_info, 'targetaudience', $skip_cache);
 		}
 
-		$content_style_option = get_option('nfd-ai-site-gen-contentstructure');
+		$content_style_option = get_option('nfd-ai-site-gen-contenttones');
 		$content_style = isset($content_style_option) ? $content_style_option : null;
 		if(!$content_style) {
-			$content_style = SiteGenService::instantiate_site_meta($site_info, 'contentstructure', $skip_cache);
+			$content_style = SiteGenService::instantiate_site_meta($site_info, 'contenttones', $skip_cache);
 		}
-	
+
 		// Ensure that the required data is available.
 		if (!$target_audience || !$content_style) {
 			return new \WP_REST_Response(
