@@ -16,6 +16,7 @@ const getContents = () => {
 			'Not sure what to say? We can walk you through it.',
 			'wp-module-onboarding'
 		),
+		walkThroughlink: __( 'click here', 'wp-module-onboarding' ),
 		writeStyleOption1: __(
 			'We craft awesome goodies!',
 			'wp-module-onboarding'

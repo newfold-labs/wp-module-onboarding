@@ -125,32 +125,26 @@ class SiteGenController {
 	 */
 	public function get_site_details_meta( \WP_REST_Request $request ) {
 
-		return  json_encode(
-			[
-				[
-					"question" => "1. Do you have a business name or website title?",
-					"field" => "businessName",
-					"prompt" => "My business name is ",
-				],
-				[
-					"question" => "2. What type of website are you making?",
-					"field" => "websiteType",
-					"placeholder" => "e.g. Graphic design portfolio",
-					"prompt" => "I am making a website type of ",
-				],
-				[
-					"question" => "3. Which writing style do you like better?",
-					"field" => "writeStyle",
-					"placeholder" => "e.g. Graphic design portfolio",
-					"prompt" => "I like the wirting style ",
-				],
-				[
-					"question" => "4. Is there anything unique about your business or brand?",
-					"field" => "uniqueBusiness",
-					"placeholder" => "e.g. Unique product, amazing customer service, customizations, etc.",
-					"prompt" => "Unique about my business is ",
-				],
-			]
+		return array(
+			'businessName'  => array(
+				'question' => "1. Do you have a business name or website title?",
+				'prompt'     => "My business name is",
+			),
+			'websiteType' => array(
+				"question" => "2. What type of website are you making?",
+				"placeholder" => "e.g. Graphic design portfolio",
+				"prompt" => "I am making a website type of",
+			),
+			'writeStyle' => array(
+				"question" => "3. Which writing style do you like better?",
+				"placeholder" => "e.g. Graphic design portfolio",
+				"prompt" => "I like the writing style",
+			),
+			'uniqueBusiness' => array(
+				"question" => "4. Is there anything unique about your business or brand?",
+				"placeholder" => "e.g. Unique product, amazing customer service, customizations, etc.",
+				"prompt" => "Unique about my business is",
+			),
 		);
 	}
 }

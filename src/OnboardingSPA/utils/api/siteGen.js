@@ -29,7 +29,7 @@ export async function generateSiteGenMeta(
 	);
 }
 
-export async function getSiteDetailsmeta() {
+export async function getSiteDetailsQuestionare() {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/get-site-details-meta' ),

@@ -19,6 +19,7 @@
 		width: 100%;
 		display: flex;
 		justify-content: flex-end;
+		margin-top: 20px;
 
 		@media (max-width: #{ ($break-small) }) {
 			justify-content: center;
@@ -90,6 +91,9 @@
 		cursor: pointer !important;
 	}
 
+	&-businessname{
+		margin-top: 20px;
+	}
 
 	&-rows > * {
 		margin-top: 20px;
@@ -218,5 +222,9 @@
 				margin-right: 5% !important;
 			}
 		}
+	}
+
+	&-rows:last-child {
+		margin-bottom: 20px;
 	}
 }

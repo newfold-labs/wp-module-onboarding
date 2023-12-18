@@ -12,9 +12,7 @@ const TextInputSiteGenSimple = ( {
 	return (
 		<div>
 			<label htmlFor={ labelText }>{ labelText }</label>
-			<br></br>
-			<br></br>
-			<div>
+			<div className="nfd-sg-simple-input">
 				{ type === 'textarea' ? (
 					<textarea
 						type="text"

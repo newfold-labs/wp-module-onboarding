@@ -1,7 +1,7 @@
 import { Button } from '@wordpress/components';
 import classNames from 'classnames';
 
-const ButtonSiteGen = ( { className, value, text, onClick } ) => {
+const ButtonSiteGenPrompt = ( { className, value, text, onClick } ) => {
 	return (
 		<Button
 			className={ classNames( className ) }
@@ -13,4 +13,4 @@ const ButtonSiteGen = ( { className, value, text, onClick } ) => {
 	);
 };
 
-export default ButtonSiteGen;
+export default ButtonSiteGenPrompt;
