@@ -319,6 +319,10 @@ body {
 		--nfd-onboarding-navigation-back-background: rgba(54, 62, 68, 0.35);
 		--nfd-onboarding-site-logo-border: var(--nfd-onboarding-primary);
 		--nfd-onboarding-header-border: rgba(var(--nfd-onboarding-primary-rgb), 0.3);
+		--nfd-onboarding-preview-favorite-background: #1e2327;
+		--nfd-onboarding-favorite-fill: #ef4a71;
+		--nfd-onboarding-button-background: #363e4459;
+
 	}
 
 	.nfd-onboarding-sitegen-dark {
@@ -337,6 +341,10 @@ body {
 		--nfd-onboarding-navigation-back-background: rgba(54, 62, 68, 0.35);
 		--nfd-onboarding-site-logo-border: rgba(156, 162, 167, 1);
 		--nfd-onboarding-header-border: rgba(var(--nfd-onboarding-primary-rgb), 0.3);
+		--nfd-onboarding-preview-favorite-background: #1e2327;
+		--nfd-onboarding-editor-header-background: var(--nfd-onboarding-preview-favorite-background);
+		--nfd-onboarding-favorite-fill: #ef4a71;
+		--nfd-onboarding-button-background: #363e4459;
 		--sitegen-background: url(../static/images/ai_bg.png);
 	}
 }

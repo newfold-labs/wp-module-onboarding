@@ -1,0 +1,305 @@
+{
+     "siteclassification": {
+          "primaryType": "health-wellness",
+          "slug": "gym",
+          "emoji": "💪",
+          "wooType": "health-beauty",
+          "keywords": [
+               "fitness",
+               "group",
+               "weight loss",
+               "muscle",
+               "cardio",
+               "strength",
+               "yoga",
+               "pilates",
+               "crossfit",
+               "bodybuilding",
+               "weight",
+               "treadmill",
+               "elliptical",
+               "interval"
+          ],
+          "label": "Gym"
+     },
+     "targetaudience": {
+          "age": {
+               "min": "18",
+               "max": "45"
+          },
+          "gender": "both",
+          "income": {
+               "min": "0",
+               "max": "1000000",
+               "currency": "INR"
+          },
+          "education": "any",
+          "location": "Gym Beach, India",
+          "interests": [
+               "Fitness",
+               "Health",
+               "Exercise",
+               "Wellness"
+          ]
+     },
+     "contenttones": {
+          "tone": "Professional",
+          "undertone": "Positive",
+          "verbosity": 5,
+          "reading_level": 60
+     },
+     "contentstructure": {
+          "homepage1": [
+               "header",
+               "hero",
+               "headings",
+               "features",
+               "gallery",
+               "call-to-action",
+               "pricing-table",
+               "footer"
+          ],
+          "homepage2": [
+               "header",
+               "hero",
+               "team",
+               "features",
+               "gallery",
+               "call-to-action",
+               "testimonials",
+               "footer"
+          ],
+          "homepage3": [
+               "header",
+               "hero",
+               "headings",
+               "features",
+               "gallery",
+               "call-to-action",
+               "faq",
+               "footer"
+          ],
+          "homepage4": [
+               "header",
+               "hero",
+               "headings",
+               "features",
+               "gallery",
+               "call-to-action",
+               "blog",
+               "footer"
+          ],
+          "homepage5": [
+               "header",
+               "hero",
+               "headings",
+               "features",
+               "gallery",
+               "call-to-action",
+               "about",
+               "footer"
+          ]
+     },
+     "colorpalette": {
+          "palette1": {
+               "base": "#FF5733",
+               "contrast": "#FFFFFF",
+               "primary": "#2ECC71",
+               "tertiary": "#F1C40F",
+               "header_background": "#2E86C1",
+               "header_foreground": "#FFFFFF",
+               "header_tiles": "#FFC300",
+               "secondary_background": "#F39C12",
+               "secondary_foreground": "#FFFFFF"
+          },
+          "palette2": {
+               "base": "#FF5733",
+               "contrast": "#FFFFFF",
+               "primary": "#3498DB",
+               "tertiary": "#F1C40F",
+               "header_background": "#2E86C1",
+               "header_foreground": "#FFFFFF",
+               "header_tiles": "#FFC300",
+               "secondary_background": "#F39C12",
+               "secondary_foreground": "#FFFFFF"
+          },
+          "palette3": {
+               "base": "#FF5733",
+               "contrast": "#FFFFFF",
+               "primary": "#9B59B6",
+               "tertiary": "#F1C40F",
+               "header_background": "#2E86C1",
+               "header_foreground": "#FFFFFF",
+               "header_tiles": "#FFC300",
+               "secondary_background": "#F39C12",
+               "secondary_foreground": "#FFFFFF"
+          },
+          "palette4": {
+               "base": "#FF5733",
+               "contrast": "#FFFFFF",
+               "primary": "#E74C3C",
+               "tertiary": "#F1C40F",
+               "header_background": "#2E86C1",
+               "header_foreground": "#FFFFFF",
+               "header_tiles": "#FFC300",
+               "secondary_background": "#F39C12",
+               "secondary_foreground": "#FFFFFF"
+          },
+          "palette5": {
+               "base": "#FF5733",
+               "contrast": "#FFFFFF",
+               "primary": "#1ABC9C",
+               "tertiary": "#F1C40F",
+               "header_background": "#2E86C1",
+               "header_foreground": "#FFFFFF",
+               "header_tiles": "#FFC300",
+               "secondary_background": "#F39C12",
+               "secondary_foreground": "#FFFFFF"
+          }
+     },
+     "sitemap": [
+          {
+               "slug": "home",
+               "path": "/",
+               "title": "Gymmer - Home",
+               "keywords": [
+                    "Gymmer",
+                    "Gym Beach",
+                    "India",
+                    "fitness",
+                    "workout"
+               ]
+          },
+          {
+               "slug": "about",
+               "path": "/about",
+               "title": "Gymmer - About",
+               "keywords": [
+                    "Gymmer",
+                    "Gym Beach",
+                    "India",
+                    "studio",
+                    "history"
+               ]
+          },
+          {
+               "slug": "services",
+               "path": "/services",
+               "title": "Gymmer - Services",
+               "keywords": [
+                    "Gymmer",
+                    "Gym Beach",
+                    "India",
+                    "classes",
+                    "training"
+               ]
+          },
+          {
+               "slug": "gallery",
+               "path": "/gallery",
+               "title": "Gymmer - Gallery",
+               "keywords": [
+                    "Gymmer",
+                    "Gym Beach",
+                    "India",
+                    "photos",
+                    "videos"
+               ]
+          },
+          {
+               "slug": "contact",
+               "path": "/contact",
+               "title": "Gymmer - Contact",
+               "keywords": [
+                    "Gymmer",
+                    "Gym Beach",
+                    "India",
+                    "location",
+                    "contact"
+               ]
+          }
+     ],
+     "pluginrecommendation": {
+          "requiredPlugins": [
+               {
+                    "title": "Yoast SEO",
+                    "description": "Yoast SEO is a comprehensive search engine optimization plugin for WordPress, which offers various features to optimize your site for maximum visibility in search engines.",
+                    "slug": "wordpress-seo/wordpress-seo.php",
+                    "download_url": "https://downloads.wordpress.org/plugin/wordpress-seo.zip",
+                    "premium": false,
+                    "requires": []
+               },
+               {
+                    "title": "WooCommerce",
+                    "description": "WooCommerce is a customizable, open-source eCommerce platform built on WordPress, allowing users to set up online stores with ease.",
+                    "slug": "woocommerce/woocommerce.php",
+                    "download_url": "https://downloads.wordpress.org/plugin/woocommerce.zip",
+                    "premium": false,
+                    "requires": []
+               }
+          ],
+          "recommendedPlugins": [
+               {
+                    "title": "Jetpack",
+                    "description": "Jetpack offers a suite of design, security, and marketing tools for WordPress sites, including real-time backups and easy-to-use performance enhancements.",
+                    "slug": "jetpack/jetpack.php",
+                    "download_url": "https://downloads.wordpress.org/plugin/jetpack.zip",
+                    "premium": false,
+                    "requires": []
+               },
+               {
+                    "title": "WPForms Lite",
+                    "description": "WPForms Lite is a drag-and-drop form builder for WordPress, allowing users to create contact forms, surveys, and more without any coding.",
+                    "slug": "wpforms-lite/wpforms.php",
+                    "download_url": "https://downloads.wordpress.org/plugin/wpforms-lite.zip",
+                    "premium": false,
+                    "requires": []
+               }
+          ]
+     },
+     "fontpair": [
+          {
+               "aesthetics": "modern",
+               "font_heading": "Montserrat",
+               "font_content": "Roboto",
+               "spacing": 10,
+               "radius": 5
+          },
+          {
+               "aesthetics": "energetic",
+               "font_heading": "Bebas Neue",
+               "font_content": "Open Sans",
+               "spacing": 8,
+               "radius": 3
+          },
+          {
+               "aesthetics": "bold",
+               "font_heading": "Oswald",
+               "font_content": "Lato",
+               "spacing": 12,
+               "radius": 7
+          },
+          {
+               "aesthetics": "sleek",
+               "font_heading": "Raleway",
+               "font_content": "Nunito",
+               "spacing": 6,
+               "radius": 2
+          },
+          {
+               "aesthetics": "dynamic",
+               "font_heading": "Exo",
+               "font_content": "Poppins",
+               "spacing": 9,
+               "radius": 4
+          }
+     ],
+     "keywords": {
+          "keywords": [
+               "Gym studio",
+               "Gymmer",
+               "Gym Beach",
+               "India"
+          ]
+     }
+}
