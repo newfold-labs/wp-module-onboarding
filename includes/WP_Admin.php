@@ -2,9 +2,11 @@
 namespace NewfoldLabs\WP\Module\Onboarding;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ThemeService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\FlowService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 use NewfoldLabs\WP\Module\Onboarding\Services\I18nService;
 
 /**
@@ -28,6 +30,9 @@ final class WP_Admin {
 		\add_action( 'init', array( __CLASS__, 'load_php_textdomain' ) );
 		\add_action( 'admin_menu', array( __CLASS__, 'register_page' ) );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'initialize' ) );
+		if ( 'sitegen' === Data::current_flow() ) {
+			\add_action( 'load-themes.php', array( __CLASS__, 'mark_sitegen_generated_themes' ) );
+		}
 	}
 
 	/**
@@ -158,6 +163,49 @@ final class WP_Admin {
 		FlowService::initialize_data();
 
 		self::register_assets();
+	}
+
+	/**
+	 * Enqueue scripts that mark Sitegen flow generated themes.
+	 *
+	 * @return void
+	 */
+	public static function mark_sitegen_generated_themes() {
+		$flow_data = get_option( Options::get_option_name( 'flow' ), false );
+
+		if ( ! $flow_data || ! isset( $flow_data['sitegen']['homepages'] ) ) {
+			return;
+		}
+
+		\wp_register_script(
+			'sitegen-theme-marker',
+			NFD_ONBOARDING_SCRIPTS_URL . '/sitegen-theme-marker/sitegen-theme-marker.js',
+			array(),
+			'1.0.0',
+			true
+		);
+
+		\wp_add_inline_script(
+			'sitegen-theme-marker',
+			'var nfdOnboarding =' . wp_json_encode(
+				array(
+					'homepages' => $flow_data['sitegen']['homepages'],
+					'active'    => Themes::get_active_theme(),
+				)
+			) . ';',
+			'before'
+		);
+
+		\wp_register_style(
+			'sitegen-theme-marker',
+			NFD_ONBOARDING_SCRIPTS_URL . '/sitegen-theme-marker/sitegen-theme-marker.css',
+			array(),
+			'1.0.0',
+			'all'
+		);
+
+		\wp_enqueue_script( 'sitegen-theme-marker' );
+		\wp_enqueue_style( 'sitegen-theme-marker' );
 	}
 
 } // END /NewfoldLabs/WP/Module/Onboarding/Admin()
