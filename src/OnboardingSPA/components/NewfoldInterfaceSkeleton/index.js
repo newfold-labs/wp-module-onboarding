@@ -9,23 +9,26 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { forwardRef, useEffect } from '@wordpress/element';
+import { forwardRef, useEffect, useContext } from '@wordpress/element';
 // eslint-disable-next-line  @wordpress/no-unsafe-wp-apis
 import { __unstableUseNavigateRegions as useNavigateRegions } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useMergeRefs } from '@wordpress/compose';
+import AIImg from '../../static/images/sitegen/ai_bg.png';
+import { ThemeContext } from '../ThemeContextProvider';
+import { THEME_DARK } from '../../../constants';
 
-function useHTMLClass( className ) {
+function useHTMLClass( className, isDarkMode ) {
 	useEffect( () => {
 		// eslint-disable-next-line no-undef
-		// const mainImage = new Image();
-		// mainImage.src = '../../static/images/sitegen/ai_bg.png';
-		// mainImage.onload = () => {
-		// 	console.log('Image Loaded!');
-		// 	document.querySelector(
-		// 		'.nfd-onboarding-skeleton--sitegen'
-		// 	).style.background = 'var(--sitegen-background)';
-		// };
+		const mainImage = new Image();
+		mainImage.src = AIImg;
+		mainImage.onload = () => {
+			console.log('Image Loaded!');
+			document.querySelector(
+				'.nfd-onboarding-skeleton--sitegen'
+			).style.background = isDarkMode ? `url('${ AIImg }')` : '#ededed';
+		};
 
 		const element =
 			document && document.querySelector( `html:not(.${ className })` );
@@ -36,7 +39,7 @@ function useHTMLClass( className ) {
 		return () => {
 			element.classList.toggle( className );
 		};
-	}, [ className ] );
+	}, [ className, isDarkMode ] );
 }
 
 function NewfoldInterfaceSkeleton(
@@ -56,8 +59,8 @@ function NewfoldInterfaceSkeleton(
 	ref
 ) {
 	const navigateRegionsProps = useNavigateRegions( shortcuts );
-
-	useHTMLClass( 'nfd-interface-interface-skeleton__html-container' );
+	const { theme } = useContext( ThemeContext );
+	useHTMLClass( 'nfd-interface-interface-skeleton__html-container', theme === THEME_DARK );
 
 	const defaultLabels = {
 		/* translators: accessibility text for the nav bar landmark region. */
