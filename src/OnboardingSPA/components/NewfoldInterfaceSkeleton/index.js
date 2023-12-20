@@ -14,6 +14,7 @@ import { forwardRef, useEffect, useContext } from '@wordpress/element';
 import { __unstableUseNavigateRegions as useNavigateRegions } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useMergeRefs } from '@wordpress/compose';
+// Needs to explicitly imported to be added dynamically
 import AIImg from '../../static/images/sitegen/ai_bg.png';
 import { ThemeContext } from '../ThemeContextProvider';
 import { THEME_DARK } from '../../../constants';
