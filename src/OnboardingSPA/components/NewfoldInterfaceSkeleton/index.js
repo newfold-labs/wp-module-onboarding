@@ -14,9 +14,12 @@ import { forwardRef, useEffect, useContext } from '@wordpress/element';
 import { __unstableUseNavigateRegions as useNavigateRegions } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useMergeRefs } from '@wordpress/compose';
-import AIImg from '../../static/images/sitegen/ai_bg.png';
-import { ThemeContext } from '../ThemeContextProvider';
 import { THEME_DARK } from '../../../constants';
+import { ThemeContext } from '../ThemeContextProvider';
+/* For this to be dynamically added to build
+* and to be rendered in bg with React JS
+*/
+import AIImg from '../../static/images/sitegen/ai_bg.png';
 
 function useHTMLClass( className, isDarkMode ) {
 	useEffect( () => {
@@ -26,7 +29,7 @@ function useHTMLClass( className, isDarkMode ) {
 		mainImage.onload = () => {
 			document.querySelector(
 				'.nfd-onboarding-skeleton--sitegen'
-			).style.background = isDarkMode ? `url('${ AIImg }')` : '#ededed';
+			).style.background = isDarkMode ? `url('${ AIImg }')` : 'var(--sitegen-background)';
 		};
 
 		const element =
