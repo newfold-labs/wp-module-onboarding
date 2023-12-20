@@ -59,7 +59,10 @@ function NewfoldInterfaceSkeleton(
 ) {
 	const navigateRegionsProps = useNavigateRegions( shortcuts );
 	const { theme } = useContext( ThemeContext );
-	useHTMLClass( 'nfd-interface-interface-skeleton__html-container', theme === THEME_DARK );
+	useHTMLClass(
+		'nfd-interface-interface-skeleton__html-container',
+		theme === THEME_DARK
+	);
 
 	const defaultLabels = {
 		/* translators: accessibility text for the nav bar landmark region. */
