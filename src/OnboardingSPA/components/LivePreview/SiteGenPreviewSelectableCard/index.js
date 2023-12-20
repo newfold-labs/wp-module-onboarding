@@ -111,10 +111,12 @@ const SiteGenPreviewSelectableCard = ( {
 					<div
 						role="button"
 						tabIndex="0"
-						onClick={ onRegenerateClick }
+						onClick={ () =>
+							onRegenerateClick( designObject?.slug )
+						}
 						onKeyDown={ ( event ) => {
 							if ( event.key === 'Enter' ) {
-								onRegenerateClick();
+								onRegenerateClick( designObject?.slug );
 							}
 						} }
 						aria-label="Regenerate Content"

@@ -63,10 +63,6 @@ const SiteGenPreview = () => {
 		fetchHomePagesPatterns();
 	}, [] );
 
-	const onRegenerateClick = () => {
-		setIsRegenerating( true );
-	};
-
 	const handleFavorite = ( slug ) => {
 		const homepagesList = currentData.sitegen.homepages.data;
 
@@ -77,6 +73,27 @@ const SiteGenPreview = () => {
 				}
 			} );
 			setCurrentOnboardingData( { ...currentData } ); // Create a new object to ensure state updates
+		}
+	};
+
+	const handleRegenerate = async ( slug ) => {
+		setIsRegenerating( true );
+		if ( ! ( slug in homepages.data ) ) {
+			if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
+				try {
+					const response = await getHomePagePreviews(
+						currentData.sitegen.siteDetails.prompt,
+						true
+					);
+					setHomepages( { ...homepages.data, data: response.body } ); // Update the local state with the response data
+					currentData.sitegen.homepages.data = response.body;
+					setCurrentOnboardingData( currentData );
+					setIsRegenerating( false );
+				} catch ( error ) {
+					setIsRegenerating( false );
+					console.error( 'Error fetching data:', error );
+				}
+			}
 		}
 	};
 
@@ -104,7 +121,7 @@ const SiteGenPreview = () => {
 							blockGrammer={ design.content }
 							styling={ 'custom' }
 							overlay={ true }
-							onRegenerateClick={ onRegenerateClick }
+							onRegenerateClick={ handleRegenerate }
 							tabIndex="0"
 							role="button"
 							designObject={ design }

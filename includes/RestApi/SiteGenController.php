@@ -145,22 +145,24 @@ class SiteGenController {
 	 * @return array
 	 */
 	public function get_homepages( \WP_REST_Request $request ) {
-		$existing_homepages = get_option('nfd-sitegen-homepages');
-
-		// If the option exists and is not empty, return it
-        if ( ! empty( $existing_homepages ) ) {
-            return new \WP_REST_Response( $existing_homepages, 200 );
-        }
 
 		// Fetching parameters provided by the front end.
 		$site_description = $request->get_param( 'site_description' );
 		$regenerate = $request->get_param( 'regenerate' );
-		
 		$site_info = array( 'site_info' => array( 'site_description' => $site_description ) );
-	
+
+		// If the option exists and is not empty, return it
+		$existing_homepages = get_option('nfd-sitegen-homepages', []);		
+        if ( ! empty( $existing_homepages )  && !$regenerate ) {
+            return new \WP_REST_Response( $existing_homepages, 200 );
+        }
+
+		// Get the regenerated homepages.
+		$regenerated_homepages = get_option('nfd-sitegen-regenerated-homepages', []);
+		// Check if $target_audience is false, null, or not set and then call again.
 		$target_audience_option = get_option('nfd-ai-site-gen-targetaudience');
 		$target_audience = isset($target_audience_option) ? $target_audience_option : null;
-		// Check if $target_audience is false, null, or not set and then call again.
+
 		if (!$target_audience) {
 			$target_audience = SiteGenService::instantiate_site_meta($site_info, 'targetaudience', $skip_cache);
 		}
@@ -178,20 +180,42 @@ class SiteGenController {
 				400 // Bad Request
 			);
 		}
-	
-		// Call the static method from SiteGen with all parameters.
-		$home_pages = SiteGen::get_home_pages(
-			$site_description,
-			$content_style,
-			$target_audience,
-			$regenerate
-		);
 
-		$processed_home_pages = $this->process_homepages_response( $home_pages );
+		if ($regenerate) {
+			if (empty($regenerated_homepages)) {
+				$home_pages = SiteGen::get_home_pages(
+					$site_description,
+					$content_style,
+					$target_audience,
+					true
+				);
 	
-		// Save the structured data in the options table
-		update_option('nfd-sitegen-homepages', $processed_home_pages );
-		return new \WP_REST_Response($processed_home_pages, 200);
+				$regenerated_homepages= $this->process_homepages_response( $home_pages );
+				update_option('nfd-sitegen-regenerated-homepages', $regenerated_homepages);
+	
+				$regenerated_item = array_shift($regenerated_homepages);
+				$existing_homepages[] = $regenerated_item;
+				update_option('nfd-sitegen-regenerated-homepages', $regenerated_homepages);
+			} else {
+				$regenerated_item = array_shift($regenerated_homepages);
+				$existing_homepages[] = $regenerated_item;
+				update_option('nfd-sitegen-regenerated-homepages', $regenerated_homepages);
+			}
+	
+			update_option('nfd-sitegen-homepages', $existing_homepages);
+			return new \WP_REST_Response($existing_homepages, 200);
+		} else {
+			$home_pages = SiteGen::get_home_pages(
+				$site_description,
+				$content_style,
+				$target_audience,
+				$regenerate
+			);
+
+			$processed_home_pages = $this->process_homepages_response( $home_pages );
+			update_option('nfd-sitegen-homepages', $processed_home_pages );
+			return new \WP_REST_Response($processed_home_pages, 200);
+		}
 	}
 
 	private function process_homepages_response( $home_pages ) {
