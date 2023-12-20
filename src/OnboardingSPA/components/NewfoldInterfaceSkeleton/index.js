@@ -24,7 +24,6 @@ function useHTMLClass( className, isDarkMode ) {
 		const mainImage = new Image();
 		mainImage.src = AIImg;
 		mainImage.onload = () => {
-			console.log('Image Loaded!');
 			document.querySelector(
 				'.nfd-onboarding-skeleton--sitegen'
 			).style.background = isDarkMode ? `url('${ AIImg }')` : '#ededed';
