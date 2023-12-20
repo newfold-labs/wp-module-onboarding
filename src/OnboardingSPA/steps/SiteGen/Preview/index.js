@@ -11,7 +11,10 @@ import { SiteGenLivePreview } from '../../../components/LivePreview';
 import getContents from './contents';
 import HeartAnimation from './heartAnimation';
 import RegeneratingSiteCard from './regeneratingCard';
-import { getHomePagePreviews } from '../../../utils/api/siteGen';
+import {
+	getHomePagePreviews,
+	getRegeneratedHomePagePreviews,
+} from '../../../utils/api/siteGen';
 
 const SiteGenPreview = () => {
 	const [ homepages, setHomepages ] = useState( { active: {}, data: [] } );
@@ -81,7 +84,7 @@ const SiteGenPreview = () => {
 		if ( ! ( slug in homepages.data ) ) {
 			if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
 				try {
-					const response = await getHomePagePreviews(
+					const response = await getRegeneratedHomePagePreviews(
 						currentData.sitegen.siteDetails.prompt,
 						true
 					);

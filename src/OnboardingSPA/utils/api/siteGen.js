@@ -45,3 +45,19 @@ export async function getHomePagePreviews(
 	);
 }
 
+export async function getRegeneratedHomePagePreviews(
+	siteDescription,
+	regenerate = true
+) {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/get-homepages-regenerate' ),
+			method: 'POST',
+			data: {
+				site_description: siteDescription,
+				regenerate,
+			},
+		} ).then()
+	);
+}
+
