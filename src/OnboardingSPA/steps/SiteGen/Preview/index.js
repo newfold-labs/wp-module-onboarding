@@ -58,7 +58,7 @@ const SiteGenPreview = () => {
 					setIsPreviewLoading( false );
 				} catch ( error ) {
 					setIsPreviewLoading( false );
-					// console.error( 'Error fetching data:', error );
+					console.error( 'Error fetching data:', error );
 				}
 			}
 		};
@@ -79,14 +79,16 @@ const SiteGenPreview = () => {
 		}
 	};
 
-	const handleRegenerate = async ( slug ) => {
+	const handleRegenerate = async ( slug, colorPalattes ) => {
 		setIsRegenerating( true );
 		if ( ! ( slug in homepages.data ) ) {
 			if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
 				try {
 					const response = await getRegeneratedHomePagePreviews(
 						currentData.sitegen.siteDetails.prompt,
-						true
+						true,
+						slug,
+						colorPalattes
 					);
 					setHomepages( { ...homepages.data, data: response.body } ); // Update the local state with the response data
 					currentData.sitegen.homepages.data = response.body;

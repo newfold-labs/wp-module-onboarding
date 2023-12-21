@@ -163,9 +163,9 @@ class SiteGenController {
 
 		// If the option exists and is not empty, return it
 		$existing_homepages = get_option('nfd-sitegen-homepages', []);		
-        if ( ! empty( $existing_homepages )  && !$regenerate ) {
+       /*  if ( ! empty( $existing_homepages )  && !$regenerate ) {
             return new \WP_REST_Response( $existing_homepages, 200 );
-        }
+        } */
 
 		// Check if $target_audience is false, null, or not set and then call again.
 		$target_audience_option = get_option('nfd-ai-site-gen-targetaudience');
@@ -204,6 +204,8 @@ class SiteGenController {
 	public function get_regenerated_homepages( \WP_REST_Request $request ) {
 		// Fetching parameters provided by the front end.
 		$site_description = $request->get_param( 'site_description' );
+		$slug = $request->get_param( 'slug' );
+		$colorPalattes = $request->get_param( 'colorPalettes' );
 		$site_info = array( 'site_info' => array( 'site_description' => $site_description ) );
 	
 		// Get target audience and content style options.
@@ -260,39 +262,78 @@ class SiteGenController {
 		}
 	}	
 
-	private function process_homepages_response( $home_pages ) {
+	private function transform_color_palette($color_palette) {
+		$transformed_palette = array_map(function($key, $value) {
+			return [
+				"slug" => $key,
+				"title" => ucfirst(str_replace('_', ' ', $key)),
+				"color" => $value
+			];
+		}, array_keys($color_palette), $color_palette);
+	
+		return $transformed_palette;
+	}
+
+	private function get_color_palette($color_palettes) {
+		foreach ($color_palettes as $palette_index => $palette) {	
+			error_log("Homepage Version palette: " . print_r($palette, true));
+			$colors_list = array_map(function($key, $color) {
+				error_log("Homepage Version palette key: " . print_r($key, true));
+				error_log("Homepage Version palette: color" . print_r($color, true));
+				return [
+					"slug" => $key,
+					"palette" => $this->transform_color_palette($color)
+				];
+			}, array_keys($palette), $palette);
+		}
+		return $colors_list; 
+	}
+	
+
+	private function process_homepages_response($home_pages) {
 		$versions = [];
+	
+		// Fetch the color palette data from the options table.
+		$color_palettes = get_option('nfd-ai-site-gen-colorpalette');
+	
+		// If color palettes is not an array, try decoding it in case it's a JSON string.
+		if (!is_array($color_palettes)) {
+			$color_palettes = json_decode($color_palettes, true);
+		}
 	
 		// Retrieve the existing homepages to find the last version number.
 		$existing_homepages = get_option('nfd-sitegen-homepages', []);
 		$last_version_number = $this->get_last_version_number($existing_homepages);
 		$version_number = $last_version_number + 1; // Start numbering from the last version number + 1
 	
-		foreach ( $home_pages as $key => $blocks ) {
-			if ( ! is_array( $blocks ) ) {
+		// Iterate through each homepage block.
+		foreach ($home_pages as $key => $blocks) {
+			if (!is_array($blocks)) {
 				continue;
 			}
 	
-			$filtered_blocks = array_filter( $blocks, function($value) {
+			$filtered_blocks = array_filter($blocks, function($value) {
 				return !is_null($value);
 			});
 	
-			$content = implode( '', $filtered_blocks );
+			$content = implode('', $filtered_blocks);
 	
 			$version_info = [
-				"slug" => "version" . $version_number, // Construct slug using the version number
+				"slug" => "version" . $version_number,
 				"title" => "Version " . $version_number,
-				"isFavourited" => false, // Default to false; logic to set true can be added
-				"colorScheme" => "#fff", // Default to white; replace with actual logic if needed
+				"isFavourited" => false,
 				"content" => $content,
+				"color" => $this->get_color_palette($color_palettes)
 			];
 	
 			$versions[] = $version_info;
 	
-			$version_number++; // Increment the version number for the next iteration
+			$version_number++; // Increment the version number for the next iteration.
 		}
+	
 		return $versions;
 	}
+	
 
 	private function get_last_version_number($homepages) {
 		// Initialize to zero, assuming there are no versions yet.
