@@ -16,6 +16,12 @@ import {
 	getSiteGenIdentifiers,
 } from '../../../utils/api/siteGen';
 import Footer from '../../Footer';
+import {
+	initialize as initializeSettings,
+} from '../../../utils/api/settings';
+import { init as initializePlugins } from '../../../utils/api/plugins';
+import { init as initializeThemes } from '../../../utils/api/themes';
+import { trigger as cronTrigger } from '../../../utils/api/cronTrigger';
 
 // Wrapping the NewfoldInterfaceSkeleton with the HOC to make theme available
 const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
@@ -36,10 +42,13 @@ const SiteGen = () => {
 	}, [ newfoldBrand ] );
 	const location = useLocation();
 
-	const { currentData } = useSelect( ( select ) => {
+	const { currentData, initialize, pluginInstallHash } = useSelect( ( select ) => {
 		return {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			initialize: select( nfdOnboardingStore ).getInitialize(),
+			pluginInstallHash:
+				select( nfdOnboardingStore ).getPluginInstallHash(),
 		};
 	} );
 
@@ -118,10 +127,22 @@ const SiteGen = () => {
 	};
 
 	useEffect( () => {
+		if ( initialize ) {
+			initializePlugins( pluginInstallHash );
+			setInterval( cronTrigger, 45000 );
+		}
+	}, [ initialize ] );
+
+	useEffect( () => {
 		syncStoreToDB();
 		generateSiteGenData();
 		handlePreviousStepTracking();
 	}, [ location.pathname ] );
+
+	useEffect( () => {
+		initializeThemes();
+		initializeSettings();
+	}, [] );
 
 	return (
 		<ThemeProvider>
