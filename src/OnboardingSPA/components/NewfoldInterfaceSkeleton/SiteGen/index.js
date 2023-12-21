@@ -16,9 +16,7 @@ import {
 	getSiteGenIdentifiers,
 } from '../../../utils/api/siteGen';
 import Footer from '../../Footer';
-import {
-	initialize as initializeSettings,
-} from '../../../utils/api/settings';
+import { initialize as initializeSettings } from '../../../utils/api/settings';
 import { init as initializePlugins } from '../../../utils/api/plugins';
 import { init as initializeThemes } from '../../../utils/api/themes';
 import { trigger as cronTrigger } from '../../../utils/api/cronTrigger';
@@ -42,15 +40,17 @@ const SiteGen = () => {
 	}, [ newfoldBrand ] );
 	const location = useLocation();
 
-	const { currentData, initialize, pluginInstallHash } = useSelect( ( select ) => {
-		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			initialize: select( nfdOnboardingStore ).getInitialize(),
-			pluginInstallHash:
-				select( nfdOnboardingStore ).getPluginInstallHash(),
-		};
-	} );
+	const { currentData, initialize, pluginInstallHash } = useSelect(
+		( select ) => {
+			return {
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				initialize: select( nfdOnboardingStore ).getInitialize(),
+				pluginInstallHash:
+					select( nfdOnboardingStore ).getPluginInstallHash(),
+			};
+		}
+	);
 
 	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
 

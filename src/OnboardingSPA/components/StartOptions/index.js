@@ -7,13 +7,17 @@ import { store as nfdOnboardingStore } from '../../store';
 
 const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 	const navigate = useNavigate();
-	const { brandConfig, migrationUrl, currentData } = useSelect( ( select ) => {
-		return {
-			brandConfig: select( nfdOnboardingStore ).getNewfoldBrandConfig(),
-			migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
-			currentData: select( nfdOnboardingStore ).getCurrentOnboardingData(),
-		};
-	} );
+	const { brandConfig, migrationUrl, currentData } = useSelect(
+		( select ) => {
+			return {
+				brandConfig:
+					select( nfdOnboardingStore ).getNewfoldBrandConfig(),
+				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			};
+		}
+	);
 	const {
 		updateAllSteps,
 		updateTopSteps,
