@@ -5,17 +5,15 @@ import { useEffect, useState } from '@wordpress/element';
 import getContents from '../contents';
 import { store as nfdOnboardingStore } from '../../../../store';
 import AIHeading from '../../../../components/Heading/AIHeading';
-import TextInputSiteGenSimple from '../../../../components/TextInput/TextInputSiteGen/simple';
+import TextInputSiteGenDetails from '../../../../components/TextInput/TextInputSiteGenDetails';
+import TextAreaSiteGenDetails from '../../../../components/TextInput/TextAreaSiteGenDetails';
 import NextButtonSiteGen from '../../../../components/Button/NextButtonSiteGen';
-import ButtonSiteGenPrompt from '../../../../components/Button/ButtonWhite/SiteGen';
 
 const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 	const content = getContents();
 	const isLargeViewport = useViewportMatch( 'small' );
-	const [ isEditing, setEditing ] = useState( false );
 	const [ customerInputName, setCustomerInputName ] = useState();
 	const [ customerInputType, setCustomerInputType ] = useState();
-	const [ customerInputStyle, setCustomerInputStyle ] = useState();
 	const [ customerInputUnique, setCustomerInputUnique ] = useState();
 
 	const { currentData } = useSelect( ( select ) => {
@@ -30,13 +28,9 @@ const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 	useEffect( () => {
 		if ( currentData.sitegen.siteDetails?.name !== '' ) {
 			setCustomerInputName( currentData.sitegen.siteDetails.name );
-			setEditing( true );
 		}
 		if ( currentData.sitegen.siteDetails?.type !== '' ) {
 			setCustomerInputType( currentData.sitegen.siteDetails.type );
-		}
-		if ( currentData.sitegen.siteDetails?.style !== '' ) {
-			setCustomerInputStyle( currentData.sitegen.siteDetails.style );
 		}
 		if ( currentData.sitegen.siteDetails?.uniqueAboutBusiness !== '' ) {
 			setCustomerInputUnique(
@@ -53,7 +47,6 @@ const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 		const setters = {
 			name: setCustomerInputName,
 			type: setCustomerInputType,
-			style: setCustomerInputStyle,
 			uniqueAboutBusiness: setCustomerInputUnique,
 		};
 
@@ -72,9 +65,6 @@ const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 						break;
 					case 'type':
 						concatenatedString += `${ siteDetailsmeta.websiteType.prompt } ${ siteDetails[ field ] }. `;
-						break;
-					case 'style':
-						concatenatedString += `${ siteDetailsmeta.writeStyle.prompt } "${ siteDetails[ field ] }". `;
 						break;
 					case 'uniqueAboutBusiness':
 						concatenatedString += `${ siteDetailsmeta.uniqueBusiness.prompt } ${ siteDetails[ field ] }. `;
@@ -95,12 +85,8 @@ const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 
 	const isdisabledNextButton = () => {
 		return (
-			customerInputName === undefined ||
-			customerInputName === '' ||
 			customerInputType === undefined ||
 			customerInputType === '' ||
-			customerInputStyle === undefined ||
-			customerInputStyle === '' ||
 			customerInputUnique === undefined ||
 			customerInputUnique === ''
 		);
@@ -112,46 +98,16 @@ const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 			{ siteDetailsmeta && (
 				<>
 					<div className={ 'nfd-sg-site-details-rows' }>
-						{ isEditing ? (
-							<TextInputSiteGenSimple
-								type="text"
-								labelText={
-									siteDetailsmeta.businessName.question
-								}
-								customerInput={ customerInputName }
-								callback={ ( e ) =>
-									handlePromptChange( 'name', e )
-								}
-							/>
-						) : (
-							<div>
-								<label htmlFor="businessName">
-									{ siteDetailsmeta.businessName.question }
-								</label>
-								<div
-									className={
-										'nfd-sg-site-details-businessname'
-									}
-								>
-									<ButtonSiteGenPrompt
-										text="Yes"
-										onClick={ () => setEditing( true ) }
-									/>
-									<ButtonSiteGenPrompt
-										className={ `nfd-sg-site-details-rows-button-site-name
-										${ ! isEditing ? 'nfd-sg-site-details-rows-button-selected' : '' }` }
-										text="No"
-										onClick={ () => {
-											setEditing( false );
-										} }
-									/>
-								</div>
-							</div>
-						) }
+						<TextInputSiteGenDetails
+							labelText={ siteDetailsmeta.businessName.question }
+							customerInput={ customerInputName }
+							callback={ ( e ) =>
+								handlePromptChange( 'name', e )
+							}
+						/>
 					</div>
 					<div className={ 'nfd-sg-site-details-rows' }>
-						<TextInputSiteGenSimple
-							type="text"
+						<TextInputSiteGenDetails
 							labelText={ siteDetailsmeta.websiteType.question }
 							placeholder={
 								siteDetailsmeta.websiteType.placeholder
@@ -163,41 +119,7 @@ const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 						/>
 					</div>
 					<div className={ 'nfd-sg-site-details-rows' }>
-						<label htmlFor="writeStyle">
-							{ siteDetailsmeta.writeStyle.question }
-						</label>
-						<div>
-							<ButtonSiteGenPrompt
-								className={ `nfd-sg-site-details-rows-write-style ${
-									customerInputStyle ===
-									content.writeStyleOption1
-										? 'nfd-sg-site-details-rows-button-selected'
-										: ''
-								}` }
-								text={ content.writeStyleOption1 }
-								value={ content.writeStyleOption1 }
-								onClick={ ( e ) => {
-									handlePromptChange( 'style', e );
-								} }
-							/>
-							<ButtonSiteGenPrompt
-								className={ `nfd-sg-site-details-rows-write-style ${
-									customerInputStyle ===
-									content.writeStyleOption2
-										? 'nfd-sg-site-details-rows-button-selected'
-										: ''
-								}` }
-								text={ content.writeStyleOption2 }
-								value={ content.writeStyleOption2 }
-								onClick={ ( e ) => {
-									handlePromptChange( 'style', e );
-								} }
-							/>
-						</div>
-					</div>
-					<div className={ 'nfd-sg-site-details-rows' }>
-						<TextInputSiteGenSimple
-							type="textarea"
+						<TextAreaSiteGenDetails
 							labelText={
 								siteDetailsmeta.uniqueBusiness.question
 							}

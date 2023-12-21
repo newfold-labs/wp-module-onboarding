@@ -17,14 +17,6 @@ const getContents = () => {
 			'wp-module-onboarding'
 		),
 		walkThroughlink: __( 'click here', 'wp-module-onboarding' ),
-		writeStyleOption1: __(
-			'We craft awesome goodies!',
-			'wp-module-onboarding'
-		),
-		writeStyleOption2: __(
-			'We manufacture quality products',
-			'wp-module-onboarding'
-		),
 	};
 };
 

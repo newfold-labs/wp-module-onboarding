@@ -32,7 +32,7 @@ export async function generateSiteGenMeta(
 export async function getSiteDetailsQuestionare() {
 	return await resolve(
 		apiFetch( {
-			url: onboardingRestURL( 'sitegen/get-site-details-meta' ),
+			url: onboardingRestURL( 'sitegen/site-details-meta' ),
 		} ).then()
 	);
 }

@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Data\SiteGenData;
 
 /**
  * Class SiteGenController
@@ -51,7 +52,7 @@ class SiteGenController {
 		);
 		\register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/get-site-details-meta',
+			$this->rest_base . '/site-details-meta',
 			array(
 				'methods'             => \WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_site_details_meta' ),
@@ -124,27 +125,6 @@ class SiteGenController {
 	 * @return array|WP_Error
 	 */
 	public function get_site_details_meta( \WP_REST_Request $request ) {
-
-		return array(
-			'businessName'  => array(
-				'question' => "1. Do you have a business name or website title?",
-				'prompt'     => "My business name is",
-			),
-			'websiteType' => array(
-				"question" => "2. What type of website are you making?",
-				"placeholder" => "e.g. Graphic design portfolio",
-				"prompt" => "I am making a website type of",
-			),
-			'writeStyle' => array(
-				"question" => "3. Which writing style do you like better?",
-				"placeholder" => "e.g. Graphic design portfolio",
-				"prompt" => "I like the writing style",
-			),
-			'uniqueBusiness' => array(
-				"question" => "4. Is there anything unique about your business or brand?",
-				"placeholder" => "e.g. Unique product, amazing customer service, customizations, etc.",
-				"prompt" => "Unique about my business is",
-			),
-		);
+		return SiteGenData::get_site_details_questionnaire();
 	}
 }
