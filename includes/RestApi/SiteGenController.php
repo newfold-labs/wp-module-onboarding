@@ -60,16 +60,6 @@ class SiteGenController {
 				'args' => $this->get_homepages_args(),
 			)
 		);
-		\register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/get-homepages-regenerate',
-			array(
-				'methods'             => \WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'get_regenerated_homepages' ),
-				'permission_callback' => '__return_true',
-				'args' => $this->get_homepages_args(),
-			)
-		);
 	}
 
 	/**
@@ -167,6 +157,8 @@ class SiteGenController {
             return new \WP_REST_Response( $existing_homepages, 200 );
         } */
 
+		// Get the regenerated homepages.
+		$regenerated_homepages = get_option('nfd-sitegen-regenerated-homepages', []);
 		// Check if $target_audience is false, null, or not set and then call again.
 		$target_audience_option = get_option('nfd-ai-site-gen-targetaudience');
 		$target_audience = isset($target_audience_option) ? $target_audience_option : null;
@@ -230,37 +222,21 @@ class SiteGenController {
 			$regenerated_item = array_shift($regenerated_homepages);
 			$existing_homepages[] = $regenerated_item;
 	
-			// Update the options with the new values.
-			update_option('nfd-sitegen-regenerated-homepages', $regenerated_homepages);
 			update_option('nfd-sitegen-homepages', $existing_homepages);
-	
-			// Return the updated list of existing homepages.
 			return new \WP_REST_Response($existing_homepages, 200);
 		} else {
-			// Since there are no regenerated homepages left, generate new ones.
 			$home_pages = SiteGen::get_home_pages(
 				$site_description,
 				$content_style,
 				$target_audience,
-				true 
+				$regenerate
 			);
-	
-			// Process and save the new batch of regenerated homepages.
-			$regenerated_homepages = $this->process_homepages_response( $home_pages );
-			update_option('nfd-sitegen-regenerated-homepages', $regenerated_homepages);
-	
-			// Take the first regenerated homepage and add it to the existing homepages.
-			$regenerated_item = array_shift($regenerated_homepages);
-			$existing_homepages[] = $regenerated_item;
-	
-			// Save the updates and return the response.
-			update_option('nfd-sitegen-regenerated-homepages', $regenerated_homepages);
-			update_option('nfd-sitegen-homepages', $existing_homepages);
-	
-			// Return the updated list of existing homepages.
-			return new \WP_REST_Response($existing_homepages, 200);
+
+			$processed_home_pages = $this->process_homepages_response( $home_pages );
+			update_option('nfd-sitegen-homepages', $processed_home_pages );
+			return new \WP_REST_Response($processed_home_pages, 200);
 		}
-	}	
+	}
 
 	private function transform_color_palette($color_palette) {
 		$transformed_palette = array_map(function($key, $value) {
@@ -325,7 +301,7 @@ class SiteGenController {
 				"content" => $content,
 				"color" => $this->get_color_palette($color_palettes)
 			];
-	
+
 			$versions[] = $version_info;
 	
 			$version_number++; // Increment the version number for the next iteration.
