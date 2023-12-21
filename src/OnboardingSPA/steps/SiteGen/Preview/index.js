@@ -84,7 +84,7 @@ const SiteGenPreview = () => {
 
 	const loadData = async () => {
 		let homepagesObject = {};
-		const homepagesResponse = getHomepages();
+		const homepagesResponse = await getHomepages();
 		const homePageWithPatterns = updateContentWithHomepageValues(
 			homepagesResponse,
 			homePagePreviewPatterns
@@ -173,7 +173,8 @@ const SiteGenPreview = () => {
 					slug={ homepage }
 					title={ data.title }
 					isFavorite={ data.favorite }
-					skeletonLoadingTime={ 2500 }
+					showSkeletonLoader={ Object.keys( homePagePreviewPatterns ).length === 0 }
+					skeletonLoadingTime={ false }
 					previewSettings={ newPreviewSettings }
 					styling={ 'custom' }
 					blockGrammer={ data.content }

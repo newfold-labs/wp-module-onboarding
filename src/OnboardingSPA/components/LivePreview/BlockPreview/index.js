@@ -14,6 +14,7 @@ const BlockPreview = ( {
 	styling = 'large',
 	setIsLoadingParent = false,
 	previewSettings = false,
+	showSkeletonLoader,
 	skeletonLoadingTime = 2500,
 } ) => {
 	const [ blocks, setBlocks ] = useState();
@@ -30,11 +31,21 @@ const BlockPreview = ( {
 			}, skeletonLoadingTime );
 			return () => clearTimeout( timer );
 		}
-		setIsLoading( false );
+		if ( ! showSkeletonLoader ) {
+			setIsLoading( false );
+		}
 		if ( setIsLoadingParent ) {
 			setIsLoadingParent( false );
 		}
 	}, [ skeletonLoadingTime ] );
+
+	useEffect( () => {
+		if ( showSkeletonLoader ) {
+			setIsLoading( true );
+		} else {
+			setIsLoading( false );
+		}
+	}, [ showSkeletonLoader ] );
 
 	const { currentData, storedPreviewSettings } = useSelect( ( select ) => {
 		return {
@@ -54,7 +65,7 @@ const BlockPreview = ( {
 		} else {
 			setSettings( storedPreviewSettings );
 		}
-	}, [ previewSettings, storedPreviewSettings  ] );
+	}, [ previewSettings, storedPreviewSettings ] );
 
 	useEffect( () => {
 		if ( blockGrammer ) {

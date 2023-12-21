@@ -12,6 +12,7 @@ const LivePreviewSiteGenCard = ( {
 	isFavorite = false,
 	viewportWidth,
 	previewSettings,
+	showSkeletonLoader = false,
 	skeletonLoadingTime = 2500,
 	onFavorite,
 	onRegenerate,
@@ -48,6 +49,7 @@ const LivePreviewSiteGenCard = ( {
 					blockGrammer={ blockGrammer }
 					viewportWidth={ viewportWidth }
 					previewSettings={ previewSettings }
+					showSkeletonLoader={ showSkeletonLoader }
 					skeletonLoadingTime={ skeletonLoadingTime }
 				/>
 				<div
