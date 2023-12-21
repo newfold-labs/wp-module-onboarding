@@ -21,10 +21,14 @@ import { getGlobalStyles } from '../../../utils/api/themes';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { isEmpty, cloneDeep } from 'lodash';
 import Grid from '../../../components/Grid';
+import { getHomePagePreviews } from '../../../utils/api/siteGen';
 
 const SiteGenPreview = () => {
 	const navigate = useNavigate();
 	const [ homepages, setHomepages ] = useState();
+	const [ homePagePreviewPatterns, setHomePagePreviewPatterns ] = useState(
+		{}
+	);
 	const [ globalStyles, setGlobalStyles ] = useState( [] );
 	const {
 		setIsHeaderEnabled,
@@ -42,12 +46,52 @@ const SiteGenPreview = () => {
 		};
 	} );
 
+	function updateContentWithHomepageValues( initialStructure, homepageData ) {
+		// Assuming that the keys of homepageData are in the same order
+		// and correspond to the 'slug' values of the initialStructure
+		const homepageKeys = Object.keys( homepageData ).sort();
+		initialStructure.forEach( ( item, index ) => {
+			const homepageKey = homepageKeys[ index ];
+			if ( homepageData[ homepageKey ] ) {
+				// Join the array into a string, skip null values, and replace the content value
+				item.content = homepageData[ homepageKey ];
+			}
+		} );
+
+		return initialStructure;
+	}
+
+	const fetchHomePagesPatterns = async () => {
+		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
+			try {
+				const response = await getHomePagePreviews(
+					currentData.sitegen.siteDetails.prompt,
+					false
+				);
+				const processedPatterns = {};
+				for ( const key in response.body ) {
+					processedPatterns[ key ] = response.body[ key ]
+						.filter( ( item ) => item !== null )
+						.join( ' ' );
+				}
+				setHomePagePreviewPatterns( processedPatterns );
+			} catch ( error ) {
+				// eslint-disable-next-line no-console
+				console.error( 'Error fetching data:', error );
+			}
+		}
+	};
+
 	const loadData = async () => {
 		let homepagesObject = {};
+		const homepagesResponse = getHomepages();
+		const homePageWithPatterns = updateContentWithHomepageValues(
+			homepagesResponse,
+			homePagePreviewPatterns
+		);
 		if ( isEmpty( currentData.sitegen.homepages.data ) ) {
-			const homepagesResponse = getHomepages();
 			const colorsResponse = getColorPalettes();
-			homepagesResponse.forEach( ( homepage, index ) => {
+			homePageWithPatterns.forEach( ( homepage, index ) => {
 				if ( ! homepage?.color ) {
 					const paletteKeys = Object.keys( colorsResponse );
 					const paletteIndex =
@@ -58,7 +102,7 @@ const SiteGenPreview = () => {
 					};
 				}
 			} );
-			homepagesResponse.forEach( ( homepage ) => {
+			homePageWithPatterns.forEach( ( homepage ) => {
 				homepagesObject[ homepage.slug ] = homepage;
 			} );
 			currentData.sitegen.homepages.data = homepagesObject;
@@ -78,6 +122,10 @@ const SiteGenPreview = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		loadData();
+	}, [ homePagePreviewPatterns ] );
+
+	useEffect( () => {
+		fetchHomePagesPatterns();
 	}, [] );
 
 	const handleFavorite = ( slug ) => {
@@ -152,7 +200,9 @@ const SiteGenPreview = () => {
 			</div>
 			<div className="nfd-onboarding-step--site-gen__preview__live_previews">
 				{ homepages && globalStyles && (
-					<Grid size={ 3 }>{ buildPreviews() }</Grid>
+					<Grid size={ 3 }>
+						{ homepages && globalStyles && buildPreviews() }
+					</Grid>
 				) }
 			</div>
 			<div className="nfd-onboarding-step--site-gen__preview__favorite-info">
