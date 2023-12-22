@@ -112,7 +112,7 @@ const SiteGenPreviewSelectableCard = ( {
 						role="button"
 						tabIndex="0"
 						onClick={ () =>
-							onRegenerateClick( designObject?.slug )
+							onRegenerateClick( designObject?.slug, designObject?.color )
 						}
 						onKeyDown={ ( event ) => {
 							if ( event.key === 'Enter' ) {

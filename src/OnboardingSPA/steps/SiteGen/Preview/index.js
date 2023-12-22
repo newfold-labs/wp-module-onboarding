@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import CommonLayout from '../../../components/Layouts/Common';
 
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useState, useMemo } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
@@ -15,11 +15,13 @@ import {
 	getHomePagePreviews,
 	getRegeneratedHomePagePreviews,
 } from '../../../utils/api/siteGen';
+import { getGlobalStyles } from '../../../utils/api/themes';
 
 const SiteGenPreview = () => {
 	const [ homepages, setHomepages ] = useState( { active: {}, data: [] } );
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
 	const [ isPreviewLoading, setIsPreviewLoading ] = useState( false );
+	const [ globalStyles, setGlobalStyles ] = useState( [] );
 
 	const {
 		setIsHeaderEnabled,
@@ -64,7 +66,13 @@ const SiteGenPreview = () => {
 		};
 
 		fetchHomePagesPatterns();
+		loadGlobalStyles();
 	}, [] );
+
+	const loadGlobalStyles = async () => {
+		const globalStylesResponse = await getGlobalStyles();
+		setGlobalStyles( globalStylesResponse.body );
+	};
 
 	const handleFavorite = ( slug ) => {
 		const homepagesList = currentData.sitegen.homepages.data;
@@ -102,6 +110,23 @@ const SiteGenPreview = () => {
 		}
 	};
 
+	// Define the createPreviewSettings function inside your component
+	const createPreviewSettings = ( palette ) => {
+		let settings = {};
+		if ( globalStyles.length > 0 ) {
+			settings = JSON.parse( JSON.stringify( globalStyles[ 0 ] ) );
+			settings.settings.color.palette = palette;
+		}
+		return settings;
+	};
+
+	// Use useMemo to memoize the previewSettings
+	const previewSettings = useMemo( () => {
+		return homepages.data.map( ( homepage ) =>
+			createPreviewSettings( homepage.color.palette )
+		);
+	}, [ homepages.data, globalStyles ] );
+
 	const buildPreviews = () => {
 		if ( isPreviewLoading ) {
 			return (
@@ -119,20 +144,35 @@ const SiteGenPreview = () => {
 			: [];
 		designs.push(
 			homepages.data &&
-				homepages.data.map( ( design, idx ) => {
-					return (
-						<SiteGenLivePreview
-							key={ idx }
-							blockGrammer={ design.content }
-							styling={ 'custom' }
-							overlay={ true }
-							onRegenerateClick={ handleRegenerate }
-							tabIndex="0"
-							role="button"
-							designObject={ design }
-							handleFavorite={ handleFavorite }
-						/>
-					);
+				homepages.data.map( ( homepage, idx ) => {
+					let newPreviewSettings = {};
+					if ( globalStyles.length > 0 ) {
+						newPreviewSettings = JSON.parse(
+							JSON.stringify( globalStyles && globalStyles[ 0 ] )
+						);
+						newPreviewSettings.settings.color.palette =
+							homepage.color.palette;
+					}
+					const isPreviewSettingsEmpty =
+						Object.keys( previewSettings[ idx ] ).length === 0;
+					if ( ! isPreviewSettingsEmpty ) {
+						return (
+							<SiteGenLivePreview
+								key={ idx }
+								blockGrammer={ homepage.content }
+								styling={ 'custom' }
+								overlay={ true }
+								onRegenerateClick={ handleRegenerate }
+								tabIndex="0"
+								role="button"
+								designObject={ homepage }
+								handleFavorite={ handleFavorite }
+								previewSettings={ previewSettings[ idx ] }
+							/>
+						);
+					}
+					// Optionally return null or some other placeholder if newPreviewSettings is empty
+					return null;
 				} )
 		);
 
