@@ -24,7 +24,6 @@ export const calculateAnalysisScore = ( input ) => {
 	 * 200 < Count => 3
 	 */
 	const characterCount = input.length;
-	// eslint-disable-next-line	no-nested-ternary
 	let characterScore = 0;
 	if ( characterCount > 200 ) {
 		characterScore = 3;
