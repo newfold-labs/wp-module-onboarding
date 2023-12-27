@@ -1,33 +1,45 @@
 import classNames from 'classnames';
 import { useRef, useEffect, useState, memo } from '@wordpress/element';
+import { calculateAnalysisScore } from '../../../steps/SiteGen/SiteDetails/analyser';
 
 const TextInputSiteGen = ( {
 	hint,
 	height,
 	placeholder,
 	customerInput,
+	setIsValidInput,
 	setCustomerInput,
 } ) => {
 	const textareaRef = useRef( null );
+	const [ analysisScore, setAnalysisScore ] = useState( 0 );
 	const [ inputText, setInputText ] = useState( 'nfd-sg-input-box__field' );
 
 	useEffect( () => {
 		textareaRef.current.style.height = height;
 		const scrollHeight = textareaRef.current.scrollHeight;
 		textareaRef.current.style.height = scrollHeight + 'px';
+		const analysisResult = calculateAnalysisScore( customerInput );
+		setAnalysisScore( analysisResult );
+		setIsValidInput( analysisResult >= 2 );
 	}, [ customerInput ] );
 
-	const calculateDetail = ( num ) => {
+	const addInputScoreSyling = ( num ) => {
 		const selectedButton = 'nfd-sg-input-box__info-icon--selected';
 		switch ( num ) {
 			case 1:
-				if ( customerInput?.length > 30 ) return selectedButton;
+				if ( num <= analysisScore ) {
+					return selectedButton;
+				}
 				break;
 			case 2:
-				if ( customerInput?.length > 60 ) return selectedButton;
+				if ( num <= analysisScore ) {
+					return selectedButton;
+				}
 				break;
 			case 3:
-				if ( customerInput?.length > 100 ) return selectedButton;
+				if ( num <= analysisScore ) {
+					return selectedButton;
+				}
 		}
 	};
 
@@ -59,19 +71,19 @@ const TextInputSiteGen = ( {
 						<div
 							className={ classNames(
 								'nfd-sg-input-box__info-icon',
-								calculateDetail( 1 )
+								addInputScoreSyling( 1 )
 							) }
 						/>
 						<div
 							className={ classNames(
 								'nfd-sg-input-box__info-icon',
-								calculateDetail( 2 )
+								addInputScoreSyling( 2 )
 							) }
 						/>
 						<div
 							className={ classNames(
 								'nfd-sg-input-box__info-icon',
-								calculateDetail( 3 )
+								addInputScoreSyling( 3 )
 							) }
 						/>
 					</div>

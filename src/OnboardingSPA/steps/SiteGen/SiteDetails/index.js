@@ -15,6 +15,7 @@ const SiteGenSiteDetails = () => {
 	const content = getContents();
 	const isLargeViewport = useViewportMatch( 'small' );
 	const [ customerInput, setCustomerInput ] = useState();
+	const [ isValidInput, setIsValidInput ] = useState( false );
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
@@ -45,7 +46,7 @@ const SiteGenSiteDetails = () => {
 	}, [] );
 
 	useEffect( () => {
-		setFooterNavEnabled( customerInput !== '' );
+		setFooterNavEnabled( isValidInput );
 		currentData.sitegen.siteDetails.prompt = customerInput;
 		setCurrentOnboardingData( currentData );
 	}, [ customerInput ] );
@@ -60,6 +61,7 @@ const SiteGenSiteDetails = () => {
 						hint={ content.inputHint }
 						height={ '40px' }
 						customerInput={ customerInput }
+						setIsValidInput={ setIsValidInput }
 						setCustomerInput={ setCustomerInput }
 					/>
 					{ isLargeViewport && (
@@ -68,8 +70,7 @@ const SiteGenSiteDetails = () => {
 								className={ 'nfd-sg-site-details--next-btn' }
 								text={ content.buttonText }
 								disabled={
-									customerInput === undefined ||
-									customerInput === ''
+									! isValidInput
 								}
 							/>
 						</div>
