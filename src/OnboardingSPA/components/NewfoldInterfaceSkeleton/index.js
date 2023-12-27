@@ -15,19 +15,24 @@ import { __unstableUseNavigateRegions as useNavigateRegions } from '@wordpress/c
 import { __ } from '@wordpress/i18n';
 import { useMergeRefs } from '@wordpress/compose';
 // Needs to explicitly imported to be added dynamically
-import AIImg from '../../static/images/sitegen/ai_bg.png';
+import aiBg from '../../static/images/sitegen/ai_bg.png';
 import { ThemeContext } from '../ThemeContextProvider';
 import { THEME_DARK } from '../../../constants';
 
 function useHTMLClass( className, isDarkMode ) {
 	useEffect( () => {
+		const lightBg = '#ededed';
 		// eslint-disable-next-line no-undef
 		const mainImage = new Image();
-		mainImage.src = AIImg;
+		mainImage.src = aiBg;
 		mainImage.onload = () => {
-			document.querySelector(
+			if( document.querySelector(
 				'.nfd-onboarding-skeleton--sitegen'
-			).style.background = isDarkMode ? `url('${ AIImg }')` : '#ededed';
+			) ){
+				document.querySelector(
+				'.nfd-onboarding-skeleton--sitegen'
+				).style.background = isDarkMode ? `url('${ aiBg }')` : lightBg;
+			}
 		};
 
 		const element =
