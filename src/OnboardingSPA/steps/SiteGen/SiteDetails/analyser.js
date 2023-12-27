@@ -18,10 +18,10 @@ export const calculateAnalysisScore = ( input ) => {
 	}
 
 	/* Number of Characters in the input
-	* Count < 100 => 0
-	* 100 < Count <= 150 => 1
-	* 150 < Count <= 200 => 2
-	* 200 < Count => 3
+	 * Count < 100 => 0
+	 * 100 < Count <= 150 => 1
+	 * 150 < Count <= 200 => 2
+	 * 200 < Count => 3
 	*/
 	const characterCount = input.length;
 	// eslint-disable-next-line	no-nested-ternary
