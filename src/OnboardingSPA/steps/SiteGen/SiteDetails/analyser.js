@@ -22,17 +22,17 @@ export const calculateAnalysisScore = ( input ) => {
 	 * 100 < Count <= 150 => 1
 	 * 150 < Count <= 200 => 2
 	 * 200 < Count => 3
-	*/
+	 */
 	const characterCount = input.length;
 	// eslint-disable-next-line	no-nested-ternary
-	const characterScore =
-	characterCount > 200
-		? 3
-	 : characterCount > 150
-	  ? 2
-	   : characterCount > 100
-	   ? 1
-	    : 0;
+	let characterScore = 0;
+	if ( characterCount > 200 ) {
+		characterScore = 3;
+	} else if ( characterCount > 150 ) {
+		characterScore = 2;
+	} else if ( characterCount > 100 ) {
+		characterScore = 1;
+	}
 
 	// Nouns often end in suffixes like "-ment," "-ness," "-tion," "-ity," etc.
 	const nouns = /\w*ment\b|\w*ness\b|\w*tion\b|\w*ity\b/gm;
