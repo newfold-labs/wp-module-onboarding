@@ -26,11 +26,11 @@ function useHTMLClass( className, isDarkMode ) {
 		const mainImage = new Image();
 		mainImage.src = aiBg;
 		mainImage.onload = () => {
-			if( document.querySelector(
-				'.nfd-onboarding-skeleton--sitegen'
-			) ){
+			if(
+				document.querySelector('.nfd-onboarding-skeleton--sitegen')
+			){
 				document.querySelector(
-				'.nfd-onboarding-skeleton--sitegen'
+					'.nfd-onboarding-skeleton--sitegen'
 				).style.background = isDarkMode ? `url('${ aiBg }')` : lightBg;
 			}
 		};
