@@ -128,6 +128,7 @@
 
 		textarea {
 			padding-top: 8px !important;
+			height: 100px;
 		}
 
 		textarea::placeholder,
@@ -139,10 +140,6 @@
 			text-align: left;
 			color: #9ca2a7;
 
-		}
-
-		textarea {
-			height: 100px;
 		}
 
 		button {
