@@ -69,9 +69,7 @@ const SiteGenSiteDetails = () => {
 							<NextButtonSiteGen
 								className={ 'nfd-sg-site-details--next-btn' }
 								text={ content.buttonText }
-								disabled={
-									! isValidInput
-								}
+								disabled={ ! isValidInput }
 							/>
 						</div>
 					) }
