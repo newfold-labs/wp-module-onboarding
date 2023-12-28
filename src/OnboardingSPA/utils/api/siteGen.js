@@ -65,3 +65,14 @@ export async function getRegeneratedHomePagePreviews(
 	);
 }
 
+export async function toggleFavoriteHomepage( slug ) {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/favourites' ),
+			method: 'POST',
+			data: {
+				slug,
+			},
+		} ).then()
+	);
+}

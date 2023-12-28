@@ -14,6 +14,7 @@ import RegeneratingSiteCard from './regeneratingCard';
 import {
 	getHomePagePreviews,
 	getRegeneratedHomePagePreviews,
+	toggleFavoriteHomepage,
 } from '../../../utils/api/siteGen';
 import { getGlobalStyles } from '../../../utils/api/themes';
 
@@ -75,16 +76,25 @@ const SiteGenPreview = () => {
 	};
 
 	const handleFavorite = ( slug ) => {
-		const homepagesList = currentData.sitegen.homepages.data;
-
-		if ( homepagesList && homepagesList.length > 0 ) {
-			homepagesList.forEach( ( homepageObj ) => {
-				if ( homepageObj.slug === slug ) {
-					homepageObj.isFavourited = ! homepageObj.isFavourited; // Toggle the isFavourited property
+		toggleFavoriteHomepage( slug )
+			.then( ( response ) => {
+				// Check if the response indicates a successful toggle
+				if ( response ) {
+					const homepagesList = currentData.sitegen.homepages.data;
+					if ( homepagesList && homepagesList.length > 0 ) {
+						homepagesList.forEach( ( homepageObj ) => {
+							if ( homepageObj.slug === slug ) {
+								homepageObj.isFavourited =
+									! homepageObj.isFavourited;
+							}
+						} );
+						setCurrentOnboardingData( { ...currentData } );
+					}
+				} else {
+					console.error( 'Error toggling favorite status' );
 				}
-			} );
-			setCurrentOnboardingData( { ...currentData } ); // Create a new object to ensure state updates
-		}
+			} )
+			.catch( ( error ) => console.error( 'Error:', error ) );
 	};
 
 	const handleRegenerate = async ( slug, colorPalattes ) => {
@@ -123,7 +133,7 @@ const SiteGenPreview = () => {
 	// Use useMemo to memoize the previewSettings
 	const previewSettings = useMemo( () => {
 		return homepages.data.map( ( homepage ) =>
-			createPreviewSettings( homepage.color.palette )
+			createPreviewSettings( homepage?.color?.palette )
 		);
 	}, [ homepages.data, globalStyles ] );
 
