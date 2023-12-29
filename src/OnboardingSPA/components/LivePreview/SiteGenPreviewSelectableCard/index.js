@@ -22,6 +22,7 @@ const SiteGenPreviewSelectableCard = ( {
 	skeletonLoadingTime = 2500,
 	designObject,
 	handleFavorite,
+	handlePreview
 } ) => {
 	const { setActiveHomepage } = useDispatch( nfdOnboardingStore );
 	const [ loadingParent, setIsLoadingParent ] = useState( true );
@@ -73,13 +74,13 @@ const SiteGenPreviewSelectableCard = ( {
 						onClick={ onPreviewVersionClick }
 						onKeyDown={ ( event ) => {
 							if ( event.key === 'Enter' ) {
-								onPreviewVersionClick();
+								handlePreview();
 							}
 						} }
 					>
 						<Button
 							className={ `${ className }__live-preview-container__overlay__button` }
-							onClick={ onPreviewVersionClick }
+							onClick={ () => handlePreview() }
 						>
 							<Icon icon={ search } />
 							Preview Version
@@ -112,7 +113,10 @@ const SiteGenPreviewSelectableCard = ( {
 						role="button"
 						tabIndex="0"
 						onClick={ () =>
-							onRegenerateClick( designObject?.slug, designObject?.color )
+							onRegenerateClick(
+								designObject?.slug,
+								designObject?.color
+							)
 						}
 						onKeyDown={ ( event ) => {
 							if ( event.key === 'Enter' ) {
