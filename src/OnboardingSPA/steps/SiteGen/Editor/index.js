@@ -1,52 +1,80 @@
 import CommonLayout from '../../../components/Layouts/Common';
 
-import { useEffect } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
 
-// import SiteGenPlaceholder from '../../../components/SiteGenPlaceholder';
 import { LivePreview } from '../../../components/LivePreview';
+import { getGlobalStyles } from '../../../utils/api/themes';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { cloneDeep } from 'lodash';
 
 const StepSiteGenEditor = () => {
-	const {
-		setIsHeaderEnabled,
-		setSidebarActiveView,
-		setHeaderActiveView,
-		setDrawerActiveView,
-	} = useDispatch( nfdOnboardingStore );
+	const [ activeHomepage, setActiveHomepage ] = useState();
+	const [ colorPalette, setColorPalette ] = useState();
+	const [ globalStyles, setGlobalStyles ] = useState( [] );
+	const [ reRender, setReRender ] = useState( false );
+	const { setIsHeaderEnabled, setHeaderActiveView, setDrawerActiveView } =
+		useDispatch( nfdOnboardingStore );
 
-	const homepages = useSelect(
-		( select ) => select( nfdOnboardingStore ).getHomepagesData(),
-		[]
-	);
-	const activeHomepage = useSelect(
-		( select ) => select( nfdOnboardingStore ).getActiveHomepage(),
-		[]
-	);
-	const allHomepages = useSelect(
-		( select ) => select( nfdOnboardingStore ).getAllHomepages(),
-		[]
-	);
+	const { currentData } = useSelect( ( select ) => {
+		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+		};
+	} );
 
-	useEffect( () => {
+	const loadData = async () => {
 		setIsHeaderEnabled( true );
-		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
-	} );
+		const homepage = currentData.sitegen.homepages.active;
+		setActiveHomepage( homepage );
+		const globalStylesResponse = await getGlobalStyles();
+		setGlobalStyles( globalStylesResponse.body );
+		setColorPalette( homepage.color.palette );
+	};
+
+	useEffect( () => {
+		loadData();
+	}, [] );
+
+	useEffect( () => {
+		if ( currentData?.sitegen?.homepages?.active ) {
+			setActiveHomepage( currentData.sitegen.homepages.active );
+			setReRender( true );
+		}
+	}, [ currentData ] );
+
+	const buildPreview = () => {
+		const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
+		newPreviewSettings.settings.color.palette =
+			activeHomepage.color.palette;
+		return (
+			<LivePreview
+				blockGrammer={ activeHomepage.content }
+				styling={ 'custom' }
+				previewSettings={ newPreviewSettings }
+				viewportWidth={ 1300 }
+				skeletonLoadingTime={ 0 }
+			/>
+		);
+	};
 	return (
 		<CommonLayout
 			isCentered
 			className="nfd-onboarding-step--site-gen__editor"
 		>
-			{ /* <SiteGenPlaceholder heading={ 'Editing Previews' } /> */ }
-			<LivePreview
-				blockGrammer={ activeHomepage?.content }
-				styling={ 'full' }
-				viewportWidth={ 1300 }
-			/>
+			<div className="nfd-onboarding-step--site-gen__editor__live-preview">
+				{ activeHomepage &&
+					colorPalette &&
+					globalStyles &&
+					reRender &&
+					buildPreview() }
+			</div>
 		</CommonLayout>
 	);
 };

@@ -7,18 +7,24 @@ import { store as nfdOnboardingStore } from '../../store';
 
 const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 	const navigate = useNavigate();
-	const { brandConfig, migrationUrl } = useSelect( ( select ) => {
-		return {
-			brandConfig: select( nfdOnboardingStore ).getNewfoldBrandConfig(),
-			migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
-		};
-	} );
+	const { brandConfig, migrationUrl, currentData } = useSelect(
+		( select ) => {
+			return {
+				brandConfig:
+					select( nfdOnboardingStore ).getNewfoldBrandConfig(),
+				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			};
+		}
+	);
 	const {
 		updateAllSteps,
 		updateTopSteps,
 		updateRoutes,
 		updateDesignRoutes,
 		updateInitialize,
+		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	const switchFlow = ( newFlow ) => {
@@ -35,8 +41,13 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 		if ( SITEGEN_FLOW !== currentFlow ) {
 			window.nfdOnboarding.oldFlow = currentFlow;
 		}
+
 		window.nfdOnboarding.currentFlow = newFlow;
-		updateInitialize( true );
+		currentData.activeFlow = newFlow;
+		setCurrentOnboardingData( currentData );
+		if ( SITEGEN_FLOW !== newFlow ) {
+			updateInitialize( true );
+		}
 		navigate( data.steps[ 1 ].path );
 	};
 	const selectFlow = ( flow ) => {

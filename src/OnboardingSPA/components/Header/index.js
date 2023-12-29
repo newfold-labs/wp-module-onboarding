@@ -10,9 +10,10 @@ import {
 	HEADER_START,
 	HEADER_TOP,
 } from '../../../constants';
+import { stepSiteGenEditor } from '../../steps/SiteGen/Editor/step';
 
 const Header = () => {
-	const { headers, headerActiveView, currentStep, isHeaderEnabled } =
+	const { headers, headerActiveView, isHeaderEnabled, currentStep } =
 		useSelect( ( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
@@ -22,6 +23,9 @@ const Header = () => {
 				isHeaderEnabled: select( nfdOnboardingStore ).isHeaderEnabled(),
 			};
 		} );
+
+	const isEditorStep = currentStep === stepSiteGenEditor;
+
 	return (
 		<>
 			<Suspense fallback={ <Fragment /> }>
@@ -37,8 +41,7 @@ const Header = () => {
 			{ isHeaderEnabled && (
 				<div
 					className={ classNames( 'nfd-onboarding-header', {
-						[ currentStep?.header?.customClassName ]:
-							!! currentStep?.header?.customClassName,
+						'nfd-onboarding-header--dark': isEditorStep,
 					} ) }
 				>
 					<div className="nfd-onboarding-header__start">

@@ -59,6 +59,8 @@
 @import "../components/CardWithOptions/stylesheet";
 @import "../components/Loaders/SiteGenLoader/stylesheet";
 @import "../components/Footer/stylesheet";
+@import "../components/LivePreview/SiteGenCard/stylesheet";
+@import "../components/Sidebar/components/SitegenEditorPatterns/stylesheet";
 
 // CSS for Pages
 @import "../steps/BasicInfo/stylesheet";
@@ -82,6 +84,8 @@
 @import "../steps/SiteGen/Welcome/stylesheet";
 @import "../steps/SiteGen/Building/stylesheet";
 @import "../steps/SiteGen/Editor/stylesheet";
+@import "../steps/SiteGen/Preview/stylesheet";
+@import "../steps/SiteGen/Editor/Header/stylesheet";
 
 .nfd-onboarding-container {
 	display: flex;

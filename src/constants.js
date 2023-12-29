@@ -17,6 +17,7 @@ export const wpAdminPage = addQueryArgs(
 	`${ wpAdminUrl }index.php`,
 	window.nfdOnboarding.currentBrand?.dashboardRedirectParams
 );
+export const wpEditorPage = `${ wpAdminUrl }site-editor.php?canvas=edit`;
 export const pluginDashboardPage =
 	addQueryArgs(
 		window.nfdOnboarding.currentBrand?.pluginDashboardPage,
@@ -37,6 +38,7 @@ export const VIEW_NAV_GET_STARTED = 'nav-get-started';
 export const VIEW_NAV_ECOMMERCE_STORE_INFO = 'nav-ecommerce-store-info';
 export const SIDEBAR_SLOTFILL_PREFIX = 'Sidebar';
 export const SIDEBAR_MENU_SLOTFILL_PREFIX = 'HeaderMenu';
+export const SIDEBAR_SITEGEN_EDITOR_PATTERNS = 'SitegenEditorPatterns';
 export const SIDEBAR_LEARN_MORE = 'LearnMore';
 export const HEADER_SITEBUILD = 'HeaderSiteBuild';
 export const HEADER_SITEGEN = 'HeaderSiteGen';

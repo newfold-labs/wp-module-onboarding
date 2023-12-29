@@ -6,6 +6,7 @@ import { useEffect, useState, useMemo } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
+import { useNavigate } from 'react-router-dom';
 
 import { SiteGenLivePreview } from '../../../components/LivePreview';
 import getContents from './contents';
@@ -19,6 +20,7 @@ import {
 import { getGlobalStyles } from '../../../utils/api/themes';
 
 const SiteGenPreview = () => {
+	const navigate = useNavigate();
 	const [ homepages, setHomepages ] = useState( { active: {}, data: [] } );
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
 	const [ isPreviewLoading, setIsPreviewLoading ] = useState( false );
@@ -32,10 +34,11 @@ const SiteGenPreview = () => {
 		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { currentData } = useSelect( ( select ) => {
+	const { currentData, nextStep } = useSelect( ( select ) => {
 		return {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			nextStep: select( nfdOnboardingStore ).getNextStep(),
 		};
 	} );
 
@@ -73,6 +76,16 @@ const SiteGenPreview = () => {
 	const loadGlobalStyles = async () => {
 		const globalStylesResponse = await getGlobalStyles();
 		setGlobalStyles( globalStylesResponse.body );
+	};
+
+	const handlePreview = ( slug ) => {
+		if ( ! ( slug in homepages ) ) {
+			return false;
+		}
+		homepages[ slug ].active = ! homepages[ slug ].active;
+		currentData.sitegen.homepages.active = homepages[ slug ];
+		setCurrentOnboardingData( currentData );
+		navigate( nextStep.path );
 	};
 
 	const handleFavorite = ( slug ) => {
@@ -178,6 +191,7 @@ const SiteGenPreview = () => {
 								designObject={ homepage }
 								handleFavorite={ handleFavorite }
 								previewSettings={ previewSettings[ idx ] }
+								handlePreview={ handlePreview }
 							/>
 						);
 					}
