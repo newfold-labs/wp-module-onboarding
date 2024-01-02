@@ -64,7 +64,6 @@ const SiteGenPreview = () => {
 					setIsPreviewLoading( false );
 				} catch ( error ) {
 					setIsPreviewLoading( false );
-					console.error( 'Error fetching data:', error );
 				}
 			}
 		};
@@ -89,25 +88,23 @@ const SiteGenPreview = () => {
 	};
 
 	const handleFavorite = ( slug ) => {
-		toggleFavoriteHomepage( slug )
-			.then( ( response ) => {
-				// Check if the response indicates a successful toggle
-				if ( response ) {
-					const homepagesList = currentData.sitegen.homepages.data;
-					if ( homepagesList && homepagesList.length > 0 ) {
-						homepagesList.forEach( ( homepageObj ) => {
-							if ( homepageObj.slug === slug ) {
-								homepageObj.isFavourited =
-									! homepageObj.isFavourited;
-							}
-						} );
-						setCurrentOnboardingData( { ...currentData } );
-					}
-				} else {
-					console.error( 'Error toggling favorite status' );
+		toggleFavoriteHomepage( slug ).then( ( response ) => {
+			// Check if the response indicates a successful toggle
+			if ( response ) {
+				const homepagesList = currentData.sitegen.homepages.data;
+				if ( homepagesList && homepagesList.length > 0 ) {
+					homepagesList.forEach( ( homepageObj ) => {
+						if ( homepageObj.slug === slug ) {
+							homepageObj.isFavourited =
+								! homepageObj.isFavourited;
+						}
+					} );
+					setCurrentOnboardingData( { ...currentData } );
 				}
-			} )
-			.catch( ( error ) => console.error( 'Error:', error ) );
+			} else {
+				// console.error( 'Error toggling favorite status' );
+			}
+		} );
 	};
 
 	const handleRegenerate = async ( slug, colorPalattes ) => {
@@ -127,7 +124,6 @@ const SiteGenPreview = () => {
 					setIsRegenerating( false );
 				} catch ( error ) {
 					setIsRegenerating( false );
-					console.error( 'Error fetching data:', error );
 				}
 			}
 		}

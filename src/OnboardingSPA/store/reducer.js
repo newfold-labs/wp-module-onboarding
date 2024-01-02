@@ -18,7 +18,6 @@ import { headers } from '../data/headers';
 import { footers } from '../data/footers';
 import apiQueueExecutor from '../utils/api-queuer/api-queue-executor';
 import { DEFAULT_FLOW } from '../data/flows/constants';
-import { sitegen } from '../chapters/sitegen';
 
 export function flow(
 	state = {
@@ -181,13 +180,6 @@ export function data( state = {}, action ) {
 			};
 
 		case 'SET_ACTIVE_HOMEPAGE':
-			/* return {
-				...state.flowData.sitegen,
-				homepages: {
-					...state.flowData.sitegen.homepages,
-					active: action.activeHomepage,
-				},
-			}; */
 			return {
 				...state,
 				flowData: {

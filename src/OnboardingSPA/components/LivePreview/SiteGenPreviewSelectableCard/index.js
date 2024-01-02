@@ -22,7 +22,7 @@ const SiteGenPreviewSelectableCard = ( {
 	skeletonLoadingTime = 2500,
 	designObject,
 	handleFavorite,
-	handlePreview
+	handlePreview,
 } ) => {
 	const { setActiveHomepage } = useDispatch( nfdOnboardingStore );
 	const [ loadingParent, setIsLoadingParent ] = useState( true );
@@ -38,10 +38,6 @@ const SiteGenPreviewSelectableCard = ( {
 		setActiveHomepage( designObject );
 		navigate( nextStep.path );
 	};
-
-	/* const onWishlistClick = ( slug ) => {
-		toggleFavorite( slug );
-	}; */
 
 	return (
 		<div
