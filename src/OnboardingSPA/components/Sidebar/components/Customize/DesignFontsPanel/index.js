@@ -175,17 +175,12 @@ const CustomFontsDisplay = ( {
 const DesignFontsPanel = ( {
 	baseClassName = 'nfd-onboarding-sidebar-customize__design-fonts-panel',
 } ) => {
-	const { storedPreviewSettings, customizeSidebarData } = useSelect(
-		( select ) => {
-			return {
-				storedPreviewSettings:
-					select( nfdOnboardingStore ).getPreviewSettings(),
-				customizeSidebarData:
-					select( nfdOnboardingStore ).getCustomizeSidebarData(),
-			};
-		},
-		[]
-	);
+	const { customizeSidebarData } = useSelect( ( select ) => {
+		return {
+			customizeSidebarData:
+				select( nfdOnboardingStore ).getCustomizeSidebarData(),
+		};
+	}, [] );
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
@@ -234,7 +229,6 @@ const DesignFontsPanel = ( {
 	const fontsContent = designStyles?.map( ( style ) => style.fonts_content );
 
 	const handleUpdatePreviewSettings = () => {
-		const selectedGlobalStyle = { ...storedPreviewSettings };
 		let headings;
 		let body;
 		if ( selectedGroup === 'custom' ) {
@@ -246,33 +240,33 @@ const DesignFontsPanel = ( {
 		}
 		const slug = currentData.sitegen.homepages.active.slug;
 
-		currentData.sitegen.homepages.data[ slug ] =  {
+		currentData.sitegen.homepages.data[ slug ] = {
 			...currentData.sitegen.homepages.data[ slug ],
 			styles: {
 				blocks: [
-					{ 'core/heading': {
-						typography: {
-							fontFamily:
-							headings
-						}
-					}
-				}
-				]
-			}
+					{
+						'core/heading': {
+							typography: {
+								fontFamily: headings,
+							},
+						},
+					},
+				],
+			},
 		};
 		currentData.sitegen.homepages.active = {
-			...currentData.sitegen.homepages.active ,
+			...currentData.sitegen.homepages.active,
 			styles: {
 				blocks: [
-					{ 'core/heading': {
-						typography: {
-							fontFamily:
-							headings
-						}
-					}
-				}
-				]
-			}
+					{
+						'core/heading': {
+							typography: {
+								fontFamily: headings,
+							},
+						},
+					},
+				],
+			},
 		};
 		setCurrentOnboardingData( currentData );
 	};
@@ -285,7 +279,17 @@ const DesignFontsPanel = ( {
 	const fontOptions = [ ...new Set( [ ...fontsHeading, ...fontsContent ] ) ];
 
 	const handleGroupSelect = ( groupId ) => {
+		if ( groupId !== 'custom' && selectedCustomFont ) {
+			setShowCustomFonts( false );
+		}
 		setSelectedGroup( groupId );
+	};
+
+	const handleSelectYourOwnFonts = () => {
+		setShowCustomFonts( true );
+		if ( ! selectedCustomFont ) {
+			setIsEditingCustomFont( true );
+		}
 	};
 
 	const handleEditCustomFont = () => {
@@ -372,8 +376,7 @@ const DesignFontsPanel = ( {
 					<div className={ `${ baseClassName }__container` }>
 						<Button
 							onClick={ () => {
-								setShowCustomFonts( true );
-								setIsEditingCustomFont( true );
+								handleSelectYourOwnFonts();
 							} }
 						>
 							Select your own fonts
