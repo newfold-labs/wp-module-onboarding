@@ -23,12 +23,8 @@ const ColorPaletteIcon = ( {
 		<div className={ `${ baseClassName }__container` }>
 			<div
 				role="presentation"
-				className={ `${ baseClassName }__container__icon` }
+				className={`${selectedPalette === idx ? `${baseClassName}__container__icon__selected` : `${baseClassName}__container__icon`}`}
 				style={ {
-					boxShadow:
-						selectedPalette === idx
-							? '0 0 0 2px #FFF, 0 0 0 4px #035FEF'
-							: 'none',
 					background: conicGradient,
 				} }
 				onClick={ handleClick }

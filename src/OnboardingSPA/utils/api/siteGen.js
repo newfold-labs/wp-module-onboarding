@@ -32,7 +32,7 @@ export async function generateSiteGenMeta(
 export async function getCustomizeSidebarData() {
 	return await resolve(
 		apiFetch( {
-			url: onboardingRestURL( 'sitegen/get-customize-data' ),
+			url: onboardingRestURL( 'sitegen/customize-data' ),
 		} ).then()
 	);
 }

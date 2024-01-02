@@ -42,11 +42,11 @@ class SiteGenController {
 		);
 		\register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/get-customize-data',
+			$this->rest_base . '/customize-data',
 			array(
 				'methods'  => \WP_REST_Server::READABLE,
 				'callback' => array( $this, 'get_customize_sidebar_data' ),
-				// 'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 			)
 		);
 		\register_rest_route(

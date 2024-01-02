@@ -65,7 +65,7 @@ const DesignFonts = () => {
 			setSelectedFont( currentData?.data?.fontStyle );
 			handleClick( currentData?.data?.fontStyle );
 		}
-	}, [ fontPalettes, storedPreviewSettings ] );
+	}, [ fontPalettes ] );
 
 	useEffect( () => {
 		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus ) {
