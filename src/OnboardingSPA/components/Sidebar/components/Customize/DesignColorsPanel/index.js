@@ -37,22 +37,24 @@ const DesignColorsPanel = ( {
 
 	const defaultColors = {
 		primary: design?.color_palette.primary,
-		secondary: design?.color_palette.secondary || design?.color_palette.primary,
-		tertiary: design?.color_palette.tertiary || design?.color_palette.primary,
+		secondary:
+			design?.color_palette.secondary || design?.color_palette.primary,
+		tertiary:
+			design?.color_palette.tertiary || design?.color_palette.primary,
 	};
 
 	const palettes = [];
 
-	colorPalettes.slice(1, 5).forEach((palette) => {
-		palettes.push({
+	colorPalettes.slice( 1, 5 ).forEach( ( palette ) => {
+		palettes.push( {
 			primary: palette?.primary,
 			secondary: palette?.secondary || palette?.primary,
 			tertiary: palette?.tertiary || palette?.primary,
-		});
-	});
+		} );
+	} );
 
-	const [colors] = useState([defaultColors, ...palettes]);
-	const [selectedColor, setSelectedColor] = useState(palettes[0]);
+	const [ colors ] = useState( [ defaultColors, ...palettes ] );
+	const [ selectedColor, setSelectedColor ] = useState( palettes[ 0 ] );
 	const [ showCustomColors, setShowCustomColors ] = useState( false );
 	const [ isEditingCustomColors, setIsEditingCustomColors ] =
 		useState( false );
@@ -150,10 +152,12 @@ const DesignColorsPanel = ( {
 					className={ `${ baseClassName }__custom-color-palette__container__header` }
 				>
 					<h5 className={ `${ baseClassName }__heading` }>
-						<span>{__( 'CUSTOM COLORS', 'wp-module-onboarding' )}</span>
+						<span>
+							{ __( 'CUSTOM COLORS', 'wp-module-onboarding' ) }
+						</span>
 					</h5>
 					<button onClick={ () => handleEditCustomColors() }>
-						{__( 'Edit colors', 'wp-module-onboarding' )}
+						{ __( 'Edit colors', 'wp-module-onboarding' ) }
 					</button>
 				</div>
 
@@ -175,7 +179,7 @@ const DesignColorsPanel = ( {
 		return (
 			<div className={ `${ baseClassName }__custom__colors__container` }>
 				<h5 className={ `${ baseClassName }__heading` }>
-					{__( 'CUSTOM COLORS', 'wp-module-onboarding' )}
+					{ __( 'CUSTOM COLORS', 'wp-module-onboarding' ) }
 				</h5>
 				<div>
 					{ [ 'primary', 'secondary', 'tertiary' ].map(
@@ -201,13 +205,13 @@ const DesignColorsPanel = ( {
 						onClick={ () => handleCancelCustomColors() }
 						className={ 'cancel' }
 					>
-						{__( 'Cancel', 'wp-module-onboarding' )}
+						{ __( 'Cancel', 'wp-module-onboarding' ) }
 					</Button>
 					<Button
 						onClick={ handleApplyCustomColors }
 						variant="primary"
 					>
-						{__( 'Apply', 'wp-module-onboarding' )}
+						{ __( 'Apply', 'wp-module-onboarding' ) }
 					</Button>
 				</div>
 
@@ -256,7 +260,14 @@ const DesignColorsPanel = ( {
 								<ColorPaletteIcon
 									key={ idx }
 									idx={ idx }
-									label={ idx === 0 ? __( 'Default', 'wp-module-onboarding' ) : '' }
+									label={
+										idx === 0
+											? __(
+													'Default',
+													'wp-module-onboarding'
+											  )
+											: ''
+									}
 									selectedPalette={ selectedPalette }
 									setSelectedPalette={ setSelectedPalette }
 									setSelectedColor={ setSelectedColor }
@@ -274,7 +285,10 @@ const DesignColorsPanel = ( {
 						className={ `${ baseClassName }__custom__colors__button__container` }
 					>
 						<Button onClick={ () => handlePickYourOwnColors() }>
-							{__( 'Pick your own colors', 'wp-module-onboarding' )}
+							{ __(
+								'Pick your own colors',
+								'wp-module-onboarding'
+							) }
 						</Button>
 					</div>
 				) }

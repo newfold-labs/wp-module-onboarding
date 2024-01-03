@@ -34,9 +34,7 @@ const Customize = () => {
 	const content = getContents( techSupportLink, fullServiceCreativeTeamLink );
 	return (
 		<div className="nfd-onboarding-sidebar-learn-more__design-colors">
-			<DesignColorsPanel
-				heading={ content.introduction.heading }
-			/>
+			<DesignColorsPanel heading={ content.introduction.heading } />
 			<DesignFontsPanel />
 		</div>
 	);

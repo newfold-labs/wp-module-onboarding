@@ -45,7 +45,11 @@ const FontGroup = ( {
 					{ group.body }
 				</span>
 			</div>
-			{ group.id === 0 && <span className="default">{__( 'Default', 'wp-module-onboarding' )}</span> }
+			{ group.id === 0 && (
+				<span className="default">
+					{ __( 'Default', 'wp-module-onboarding' ) }
+				</span>
+			) }
 		</div>
 	</div>
 );
@@ -59,11 +63,15 @@ const CustomFontsForm = ( {
 	renderFontOptions,
 } ) => (
 	<div className={ `${ baseClassName }__fonts-form__container` }>
-		<h5 className={ `${ baseClassName }__heading` }>{__( 'CUSTOM FONTS', 'wp-module-onboarding' )}</h5>
+		<h5 className={ `${ baseClassName }__heading` }>
+			{ __( 'CUSTOM FONTS', 'wp-module-onboarding' ) }
+		</h5>
 		<div>
 			<div>
 				<div>
-					<span htmlFor="headings">{__( 'Headings', 'wp-module-onboarding' )}</span>
+					<span htmlFor="headings">
+						{ __( 'Headings', 'wp-module-onboarding' ) }
+					</span>
 					<br />
 					<select
 						id="headings"
@@ -80,7 +88,9 @@ const CustomFontsForm = ( {
 					</select>
 				</div>
 				<div>
-					<span htmlFor="body">{__( 'Body', 'wp-module-onboarding' )}</span>
+					<span htmlFor="body">
+						{ __( 'Body', 'wp-module-onboarding' ) }
+					</span>
 					<br />
 					<select
 						id="body"
@@ -92,7 +102,9 @@ const CustomFontsForm = ( {
 							} )
 						}
 					>
-						<option>{__( 'select', 'wp-module-onboarding' )}</option>
+						<option>
+							{ __( 'select', 'wp-module-onboarding' ) }
+						</option>
 						{ renderFontOptions() }
 					</select>
 				</div>
@@ -104,14 +116,14 @@ const CustomFontsForm = ( {
 					className="cancel"
 					onClick={ () => handleCancelCustomFonts() }
 				>
-					{__( 'Cancel', 'wp-module-onboarding' )}
+					{ __( 'Cancel', 'wp-module-onboarding' ) }
 				</Button>
 				<Button
 					className="apply"
 					onClick={ handleApplyCustomFonts }
 					variant="primary"
 				>
-					{__( 'Apply', 'wp-module-onboarding' )}
+					{ __( 'Apply', 'wp-module-onboarding' ) }
 				</Button>
 			</div>
 		</div>
@@ -130,7 +142,7 @@ const CustomFontsDisplay = ( {
 			className={ `${ baseClassName }__custom-fonts__container__header` }
 		>
 			<h5 className={ `${ baseClassName }__heading` }>
-				<span>{__( 'CUSTOM FONTS', 'wp-module-onboarding' )}</span>
+				<span>{ __( 'CUSTOM FONTS', 'wp-module-onboarding' ) }</span>
 			</h5>
 			<button onClick={ () => handleEditCustomFont() }>Edit fonts</button>
 		</div>
@@ -379,7 +391,10 @@ const DesignFontsPanel = ( {
 								handleSelectYourOwnFonts();
 							} }
 						>
-							{__( 'Select your own fonts', 'wp-module-onboarding' )}
+							{ __(
+								'Select your own fonts',
+								'wp-module-onboarding'
+							) }
 						</Button>
 					</div>
 				) }

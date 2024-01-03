@@ -23,7 +23,11 @@ const ColorPaletteIcon = ( {
 		<div className={ `${ baseClassName }__container` }>
 			<div
 				role="presentation"
-				className={`${selectedPalette === idx ? `${baseClassName}__container__icon__selected` : `${baseClassName}__container__icon`}`}
+				className={ `${
+					selectedPalette === idx
+						? `${ baseClassName }__container__icon__selected`
+						: `${ baseClassName }__container__icon`
+				}` }
 				style={ {
 					background: conicGradient,
 				} }
