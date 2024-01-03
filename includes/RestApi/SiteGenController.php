@@ -157,30 +157,9 @@ class SiteGenController {
 	 */
 	public function get_customize_sidebar_data( \WP_REST_Request $request ) {
 
-		return array(
-			'design'        => array(
-				'name'          => 'Modern Foodie',
-				'style'         => array(
-					'aesthetics'    => 'modern',
-					'fonts_heading' => 'Arial',
-					'fonts_content' => 'Times New Roman',
-					'spacing'       => 6,
-					'radius'        => 4,
-				),
-				'color_palette' => array(
-					'base'                 => '#F0F0F0',
-					'contrast'             => '#333333',
-					'primary'              => '#09728C',
-					'secondary'            => '#C79E10',
-					'tertiary'             => '#F5EBB8',
-					'header_background'    => '#09728C',
-					'header_foreground'    => '#F5EBB8',
-					'header_titles'        => '#F5EBB8',
-					'secondary_background' => '#09728C',
-					'secondary_foreground' => '#F5EBB8',
-				),
-			),
-			'colorPalettes' => array(
+		$color_palettes = \get_option( 'nfd-ai-site-gen-colorpalette', null );
+		if ( null === $color_palettes ) {
+			$color_palettes = array(
 				array(
 					'name'                 => 'Tropical Dawn',
 					'base'                 => '#F0F0F0',
@@ -246,7 +225,33 @@ class SiteGenController {
 					'secondary_background' => '#4717F6',
 					'secondary_foreground' => '#EDEDED',
 				),
+			);
+		}
+
+		return array(
+			'design'        => array(
+				'name'          => 'Modern Foodie',
+				'style'         => array(
+					'aesthetics'    => 'modern',
+					'fonts_heading' => 'Arial',
+					'fonts_content' => 'Times New Roman',
+					'spacing'       => 6,
+					'radius'        => 4,
+				),
+				'color_palette' => array(
+					'base'                 => '#F0F0F0',
+					'contrast'             => '#333333',
+					'primary'              => '#09728C',
+					'secondary'            => '#C79E10',
+					'tertiary'             => '#F5EBB8',
+					'header_background'    => '#09728C',
+					'header_foreground'    => '#F5EBB8',
+					'header_titles'        => '#F5EBB8',
+					'secondary_background' => '#09728C',
+					'secondary_foreground' => '#F5EBB8',
+				),
 			),
+			'colorPalettes' => $color_palettes,
 			'designStyles'  => array(
 				array(
 					'aesthetics'    => 'modern',
