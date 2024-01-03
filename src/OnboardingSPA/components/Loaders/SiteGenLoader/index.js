@@ -1,7 +1,7 @@
 import getContents from './contents';
 import { useSelect } from '@wordpress/data';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from '@wordpress/element';
+import { memo, useEffect, useState } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../../store';
 
 const SiteGenLoader = ( { autoNavigate = false } ) => {
@@ -22,7 +22,9 @@ const SiteGenLoader = ( { autoNavigate = false } ) => {
 	useEffect( () => {
 		const statusTimer = setInterval( () => {
 			statusIdx += 1;
-			if ( statusIdx === content.status.length ) statusIdx = 0;
+			if ( statusIdx === content.status.length ) {
+				statusIdx = 0;
+			}
 			setStatus( content.status[ statusIdx ].title );
 		}, 3000 );
 		return () => {
@@ -65,4 +67,4 @@ const SiteGenLoader = ( { autoNavigate = false } ) => {
 	);
 };
 
-export default SiteGenLoader;
+export default memo( SiteGenLoader );

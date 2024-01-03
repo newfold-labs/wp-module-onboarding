@@ -1,3 +1,4 @@
+import { memo } from '@wordpress/element';
 import { Icon, chevronRight } from '@wordpress/icons';
 
 const CardWithOptions = ( { title, options, skip, callback } ) => {
@@ -68,4 +69,4 @@ const CardWithOptions = ( { title, options, skip, callback } ) => {
 	);
 };
 
-export default CardWithOptions;
+export default memo( CardWithOptions );

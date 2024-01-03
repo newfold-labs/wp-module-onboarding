@@ -21,13 +21,19 @@ const TextInputSiteGen = ( {
 		const selectedButton = 'nfd-sg-input-box__info-icon--selected';
 		switch ( num ) {
 			case 1:
-				if ( customerInput?.length > 30 ) return selectedButton;
+				if ( customerInput?.length > 30 ) {
+					return selectedButton;
+				}
 				break;
 			case 2:
-				if ( customerInput?.length > 60 ) return selectedButton;
+				if ( customerInput?.length > 60 ) {
+					return selectedButton;
+				}
 				break;
 			case 3:
-				if ( customerInput?.length > 100 ) return selectedButton;
+				if ( customerInput?.length > 100 ) {
+					return selectedButton;
+				}
 		}
 	};
 

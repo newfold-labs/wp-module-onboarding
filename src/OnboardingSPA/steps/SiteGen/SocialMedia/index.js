@@ -1,5 +1,5 @@
 import { useDispatch } from '@wordpress/data';
-import { useEffect } from '@wordpress/element';
+import { memo, useEffect } from '@wordpress/element';
 import { useViewportMatch } from '@wordpress/compose';
 
 import getContents from './contents';
@@ -64,4 +64,4 @@ const SiteGenSiteSocialMedia = () => {
 	);
 };
 
-export default SiteGenSiteSocialMedia;
+export default memo( SiteGenSiteSocialMedia );
