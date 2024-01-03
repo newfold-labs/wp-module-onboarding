@@ -1,6 +1,7 @@
 import { useState } from '@wordpress/element';
 import { ColorPalette, Popover } from '@wordpress/components';
 import './stylesheet.scss';
+import { __ } from '@wordpress/i18n';
 
 const CustomColorPalette = ( {
 	onChange,
@@ -13,11 +14,11 @@ const CustomColorPalette = ( {
 	const colors = [
 		{
 			colors: palettePrimaryColors,
-			name: 'Primary colors',
+			name: __( 'Primary colors', 'wp-module-onboarding' ),
 		},
 		{
 			colors: paletteSecondaryColors,
-			name: 'Secondary colors',
+			name: __( 'Secondary colors', 'wp-module-onboarding' ),
 		},
 	];
 	const handleColorChange = ( newColor ) => {

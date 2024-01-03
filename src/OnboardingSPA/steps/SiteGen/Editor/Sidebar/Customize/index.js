@@ -4,12 +4,12 @@ import { lazy } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../../../../store';
 import getContents from './contents';
 
-const InfoPanel = lazy( () =>
+const DesignFontsPanel = lazy( () =>
 	import(
 		'../../../../../components/Sidebar/components/Customize/DesignFontsPanel'
 	)
 );
-const StepIntroPanel = lazy( () =>
+const DesignColorsPanel = lazy( () =>
 	import(
 		'../../../../../components/Sidebar/components/Customize/DesignColorsPanel'
 	)
@@ -34,16 +34,8 @@ const Customize = () => {
 	const content = getContents( techSupportLink, fullServiceCreativeTeamLink );
 	return (
 		<div className="nfd-onboarding-sidebar-learn-more__design-colors">
-			<StepIntroPanel
-				heading={ content.introduction.heading }
-				subheading={ content.introduction.subheading }
-				icon={ content.introduction.icon }
-			/>
-			<InfoPanel
-				headingWithDescriptions={
-					content.information.headingWithDescriptions
-				}
-			/>
+			<DesignColorsPanel heading={ content.introduction.heading } />
+			<DesignFontsPanel />
 		</div>
 	);
 };

@@ -6,7 +6,7 @@ import ColorPaletteIcon from './ColorPaletteIcon';
 import CustomColorPalette from './CustomColorPalette';
 import './stylesheet.scss';
 import { store as nfdOnboardingStore } from '../../../../../store';
-// import { useGlobalStylesOutput } from '../../../../../utils/global-styles/use-global-styles-output';
+import { __ } from '@wordpress/i18n';
 
 const DesignColorsPanel = ( {
 	baseClassName = 'nfd-onboarding-sidebar-customize--design-colors-panel',
@@ -30,46 +30,31 @@ const DesignColorsPanel = ( {
 	const colorPalettes = customizeSidebarData?.colorPalettes;
 	const palettePrimaryColors = Object.entries( design?.color_palette ).map(
 		( [ , color ] ) => ( {
-			name: 'Custom',
+			name: __( 'Custom', 'wp-module-onboarding' ),
 			color,
 		} )
 	);
 
 	const defaultColors = {
 		primary: design?.color_palette.primary,
-		secondary: design?.color_palette.secondary,
-		tertiary: design?.color_palette.tertiary,
-	};
-	const palette1 = {
-		primary: colorPalettes[ 1 ]?.primary,
-		secondary: colorPalettes[ 1 ]?.secondary,
-		tertiary: colorPalettes[ 1 ]?.tertiary,
-	};
-	const palette2 = {
-		primary: colorPalettes[ 2 ]?.primary,
-		secondary: colorPalettes[ 2 ]?.secondary,
-		tertiary: colorPalettes[ 2 ]?.tertiary,
-	};
-	const palette3 = {
-		primary: colorPalettes[ 3 ]?.primary,
-		secondary: colorPalettes[ 3 ]?.secondary,
-		tertiary: colorPalettes[ 3 ]?.tertiary,
-	};
-	const palette4 = {
-		primary: colorPalettes[ 4 ]?.primary,
-		secondary: colorPalettes[ 4 ]?.secondary,
-		tertiary: colorPalettes[ 4 ]?.tertiary,
+		secondary:
+			design?.color_palette.secondary || design?.color_palette.primary,
+		tertiary:
+			design?.color_palette.tertiary || design?.color_palette.primary,
 	};
 
-	const [ colors ] = useState( [
-		defaultColors,
-		palette1,
-		palette2,
-		palette3,
-		palette4,
-	] );
+	const palettes = [];
 
-	const [ selectedColor, setSelectedColor ] = useState( palette1 );
+	colorPalettes.slice( 1, 5 ).forEach( ( palette ) => {
+		palettes.push( {
+			primary: palette?.primary,
+			secondary: palette?.secondary || palette?.primary,
+			tertiary: palette?.tertiary || palette?.primary,
+		} );
+	} );
+
+	const [ colors ] = useState( [ defaultColors, ...palettes ] );
+	const [ selectedColor, setSelectedColor ] = useState( palettes[ 0 ] );
 	const [ showCustomColors, setShowCustomColors ] = useState( false );
 	const [ isEditingCustomColors, setIsEditingCustomColors ] =
 		useState( false );
@@ -82,7 +67,7 @@ const DesignColorsPanel = ( {
 		.map( ( [ name, color ] ) => {
 			if ( name !== 'name' ) {
 				return {
-					name: 'Custom',
+					name: __( 'Custom', 'wp-module-onboarding' ),
 					color,
 				};
 			}
@@ -144,9 +129,6 @@ const DesignColorsPanel = ( {
 		colorPalettes[ selectedPalette ].primary = selectedColor.primary;
 		colorPalettes[ selectedPalette ].secondary = selectedColor.secondary;
 		colorPalettes[ selectedPalette ].tertiary = selectedColor.tertiary;
-		// selectedGlobalStyle.settings.color.palette = convertColorSchema(
-		// 	colorPalettes[ selectedPalette ]
-		// );
 		const slug = currentData.sitegen.homepages.active.slug;
 		currentData.sitegen.homepages.data[ slug ].color.palette =
 			convertColorSchema( colorPalettes[ selectedPalette ] );
@@ -170,10 +152,12 @@ const DesignColorsPanel = ( {
 					className={ `${ baseClassName }__custom-color-palette__container__header` }
 				>
 					<h5 className={ `${ baseClassName }__heading` }>
-						<span>CUSTOM COLORS</span>
+						<span>
+							{ __( 'CUSTOM COLORS', 'wp-module-onboarding' ) }
+						</span>
 					</h5>
 					<button onClick={ () => handleEditCustomColors() }>
-						Edit colors
+						{ __( 'Edit colors', 'wp-module-onboarding' ) }
 					</button>
 				</div>
 
@@ -195,7 +179,7 @@ const DesignColorsPanel = ( {
 		return (
 			<div className={ `${ baseClassName }__custom__colors__container` }>
 				<h5 className={ `${ baseClassName }__heading` }>
-					CUSTOM COLORS
+					{ __( 'CUSTOM COLORS', 'wp-module-onboarding' ) }
 				</h5>
 				<div>
 					{ [ 'primary', 'secondary', 'tertiary' ].map(
@@ -221,13 +205,13 @@ const DesignColorsPanel = ( {
 						onClick={ () => handleCancelCustomColors() }
 						className={ 'cancel' }
 					>
-						Cancel
+						{ __( 'Cancel', 'wp-module-onboarding' ) }
 					</Button>
 					<Button
 						onClick={ handleApplyCustomColors }
 						variant="primary"
 					>
-						Apply
+						{ __( 'Apply', 'wp-module-onboarding' ) }
 					</Button>
 				</div>
 
@@ -276,7 +260,14 @@ const DesignColorsPanel = ( {
 								<ColorPaletteIcon
 									key={ idx }
 									idx={ idx }
-									label={ idx === 0 ? 'Default' : '' }
+									label={
+										idx === 0
+											? __(
+													'Default',
+													'wp-module-onboarding'
+											  )
+											: ''
+									}
 									selectedPalette={ selectedPalette }
 									setSelectedPalette={ setSelectedPalette }
 									setSelectedColor={ setSelectedColor }
@@ -294,7 +285,10 @@ const DesignColorsPanel = ( {
 						className={ `${ baseClassName }__custom__colors__button__container` }
 					>
 						<Button onClick={ () => handlePickYourOwnColors() }>
-							Pick your own colors
+							{ __(
+								'Pick your own colors',
+								'wp-module-onboarding'
+							) }
 						</Button>
 					</div>
 				) }
