@@ -111,6 +111,8 @@ class FlowController {
 	public function save_onboarding_flow_data( \WP_REST_Request $request ) {
 		$params = json_decode( $request->get_body(), true );
 
+		update_option( Options::get_option_name( 'redirect' ), '0' );
+
 		$flow_data = FlowService::update_data( $params );
 		if ( is_wp_error( $flow_data ) ) {
 			return $flow_data;

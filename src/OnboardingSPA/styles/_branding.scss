@@ -109,7 +109,8 @@ body {
 		--nfd-onboarding-header-border: #e0e0e0;
 	}
 
-	&.nfd-brand-hostgator-br {
+	&.nfd-brand-hostgator-br,
+	&.nfd-brand-hostgator-us {
 		--wp-admin-theme-color: #2e93ee;
 		--wp-admin-theme-color--rgb: 46, 147, 238;
 		--wp-admin-theme-color-darker-10: #1485ec;

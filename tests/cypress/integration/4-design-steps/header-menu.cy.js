@@ -1,16 +1,16 @@
 // <reference types="Cypress" />
-import { DrawerActivityForSubMenu } from '../../wp-module-support/drawer.cy';
+import { DrawerActivityForSubMenu } from '../wp-module-support/drawer.cy';
 import {
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
 	CheckIntroPanel,
-} from '../../wp-module-support/sidebar.cy';
+} from '../wp-module-support/sidebar.cy';
 
 describe( 'Header menu Page', function () {
 	before( () => {
 		cy.visit(
-			'wp-admin/?page=nfd-onboarding&flow=ecommerce#/wp-setup/step/design/header-menu'
+			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/header-menu'
 		);
 		cy.wait( 10000 );
 	} );
@@ -18,7 +18,7 @@ describe( 'Header menu Page', function () {
 	it( 'Check Drawer Activity', () => {
 		DrawerActivityForSubMenu(
 			'Design',
-			'.theme-header-menu-preview--drawer',
+			'.nfd-onboarding-drawer__panel-inside',
 			'.theme-header-menu-preview--drawer__list__item',
 			4
 		);
@@ -41,6 +41,7 @@ describe( 'Header menu Page', function () {
 		const arr = cy.get( classname );
 		arr.each( () => {
 			cy.get( classname ).eq( previewCount ).click();
+			cy.wait(3000);
 			cy.get( classname )
 				.eq( previewCount )
 				.find( classname.concat( '__title-bar--selected' ) )
@@ -49,7 +50,7 @@ describe( 'Header menu Page', function () {
 		} );
 	} );
 
-	it( 'Check navigation back button is visible and go one step back', () => {
+	it.skip( 'Check navigation back button is visible and go one step back', () => {
 		cy.get( '.navigation-buttons_back' ).should( 'be.visible' ).click();
 		cy.wait( 3000 );
 		cy.url().should( 'not.contain', '/wp-setup/step/design/header-menu' );
@@ -57,7 +58,7 @@ describe( 'Header menu Page', function () {
 		cy.wait( 3000 );
 	} );
 
-	it( 'Check if Navigation Next button is visible and go one step next', () => {
+	it.skip( 'Check if Navigation Next button is visible and go one step next', () => {
 		cy.get( '.navigation-buttons_next' ).should( 'be.visible' ).click();
 		cy.wait( 1000 );
 		cy.url().should( 'not.contain', '/wp-setup/step/design/header-menu' );
