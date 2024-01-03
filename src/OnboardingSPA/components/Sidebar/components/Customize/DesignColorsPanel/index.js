@@ -37,8 +37,8 @@ const DesignColorsPanel = ( {
 
 	const defaultColors = {
 		primary: design?.color_palette.primary,
-		secondary: design?.color_palette.secondary,
-		tertiary: design?.color_palette.tertiary,
+		secondary: design?.color_palette.secondary || design?.color_palette.primary,
+		tertiary: design?.color_palette.tertiary || design?.color_palette.primary,
 	};
 
 	const palettes = [];
@@ -46,8 +46,8 @@ const DesignColorsPanel = ( {
 	colorPalettes.slice(1, 5).forEach((palette) => {
 		palettes.push({
 			primary: palette?.primary,
-			secondary: palette?.secondary,
-			tertiary: palette?.tertiary,
+			secondary: palette?.secondary || palette?.primary,
+			tertiary: palette?.tertiary || palette?.primary,
 		});
 	});
 

@@ -226,6 +226,8 @@ class SiteGenController {
 					'secondary_foreground' => '#EDEDED',
 				),
 			);
+		} else {
+			$color_palettes = $color_palettes['colorpalette'];
 		}
 
 		return array(
