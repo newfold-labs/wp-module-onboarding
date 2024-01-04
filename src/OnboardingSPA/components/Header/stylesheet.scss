@@ -1,3 +1,5 @@
+$nfd-onboarding-editor-header-hover: #272d30;
+
 .nfd-onboarding-header {
 	align-items: center;
 	background-color: var(--nfd-onboarding-header-base);
@@ -121,9 +123,9 @@
 		border-radius: 6px;
 
 		&:hover {
-			background-color: #fff;
-			color: #272d30;
-			fill: #272d30;
+			background-color: var(--nfd-onboarding-primary);
+			color: $nfd-onboarding-editor-header-hover;
+			fill: $nfd-onboarding-editor-header-hover;
 		}
 	}
 

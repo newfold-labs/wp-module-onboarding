@@ -46,7 +46,7 @@ class SiteGenController {
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'generate_sitegen_meta' ),
-				'permission_callback' => '__return_true',
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				'args'                => $this->sitegen_meta_args(),
 			)
 		);
@@ -56,7 +56,7 @@ class SiteGenController {
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'get_homepages' ),
-				'permission_callback' => '__return_true',
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				'args' => $this->get_homepages_args(),
 			)
 		);
@@ -66,7 +66,7 @@ class SiteGenController {
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'get_regenerated_homepages' ),
-				'permission_callback' => '__return_true',
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				'args' => $this->get_homepages_regenerate_args(),
 			)
 		);
@@ -111,7 +111,7 @@ class SiteGenController {
     public function get_homepages_args() {
         return array(
             'site_description' => array(
-                'required' => false,
+                'required' => true,
                 'validate_callback' => function($param, $request, $key) {
                     return is_string($param);
                 },
@@ -132,7 +132,7 @@ class SiteGenController {
     public function get_homepages_regenerate_args() {
         return array(
             'site_description' => array(
-                'required' => false,
+                'required' => true,
                 'validate_callback' => function($param, $request, $key) {
                     return is_string($param);
                 },
@@ -203,6 +203,7 @@ class SiteGenController {
         }
 
 		// Check if $target_audience is false, null, or not set and then call again.
+		/* TODO : call them via a function and get options */
 		$target_audience_option = get_option('nfd-ai-site-gen-targetaudience');
 		$target_audience = isset($target_audience_option) ? $target_audience_option : null;
 
@@ -216,11 +217,11 @@ class SiteGenController {
 			$content_style = SiteGenService::instantiate_site_meta($site_info, 'contenttones', $skip_cache);
 		}
 
-		// Ensure that the required data is available.
+		 // Ensure that the required data is available.
 		if (!$target_audience || !$content_style) {
-			return new \WP_REST_Response(
+			return new \WP_Error(
 				array('message' => 'Required data is missing.'),
-				400 // Bad Request
+				400 
 			);
 		}
 
@@ -232,6 +233,11 @@ class SiteGenController {
 			$regenerate
 		);
 
+		// Check for errors in the response
+		if ( is_wp_error( $processed_home_pages ) ) {
+			return $processed_home_pages;
+		}
+
 		// Return the processed homepages
 		return new \WP_REST_Response($processed_home_pages, 200);
 	}
@@ -242,11 +248,12 @@ class SiteGenController {
         $regenerateColorPalattes = $request->get_param('colorPalettes');
         $favorites = get_option('nfd-sitegen-favorites', []);
         $isFavorite = in_array($regenerateSlug, $favorites);
+		/* TODO : call them via a function and get options */
         $target_audience = get_option('nfd-ai-site-gen-targetaudience');
         $content_style = get_option('nfd-ai-site-gen-contenttones');
 
         if (!$target_audience || !$content_style) {
-            return new \WP_REST_Response(array('message' => 'Required data is missing.'), 400);
+            return new \WP_Error(array('message' => 'Required data is missing.'), 400);
         }
 
         if ($isFavorite) {
@@ -256,7 +263,7 @@ class SiteGenController {
         }
 
         if ($result === null) {
-            return new \WP_REST_Response(array('message' => 'Error processing request.'), 500);
+            return new \WP_Error(array('message' => 'Error processing request.'), 500);
         }
 
         return new \WP_REST_Response($result, 200);

@@ -119,7 +119,10 @@ const SiteGenPreviewSelectableCard = ( {
 								onRegenerateClick( designObject?.slug );
 							}
 						} }
-						aria-label="Regenerate Content"
+						aria-label={ __(
+							'Regenerate Content',
+							'wp-module-onboarding'
+						) }
 						className={ `${ className }__live-preview-container-buttons__button` }
 					>
 						<Icon icon={ reusableBlock } />
