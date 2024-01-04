@@ -32,7 +32,6 @@ jobs:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: "bluehost/bluehost-wordpress-plugin"
-      sync-npm-package: false
     secrets: inherit
 
   hostgator:
@@ -43,7 +42,6 @@ jobs:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: "newfold-labs/wp-plugin-hostgator"
-      sync-npm-package: false
     secrets: inherit
 
   crazydomains:
@@ -54,5 +52,4 @@ jobs:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: "newfold-labs/wp-plugin-crazy-domains"
-      sync-npm-package: false
     secrets: inherit
