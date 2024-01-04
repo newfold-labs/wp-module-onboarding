@@ -5,6 +5,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\AI\SiteGen\SiteGen;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 /**
  * Class SiteGenController
@@ -197,31 +198,22 @@ class SiteGenController {
 		$site_info = array( 'site_info' => array( 'site_description' => $site_description ) );
 
 		// If the option exists and is not empty, return it
-		$existing_homepages = get_option('nfd-sitegen-homepages', []);		
+		$existing_homepages = get_option(Options::get_option_name( 'sitegen_homepages' ), []);		
         if ( ! empty( $existing_homepages )  && !$regenerate ) {
             return new \WP_REST_Response( $existing_homepages, 200 );
         }
 
-		// Check if $target_audience is false, null, or not set and then call again.
-		/* TODO : call them via a function and get options */
-		$target_audience_option = get_option('nfd-ai-site-gen-targetaudience');
-		$target_audience = isset($target_audience_option) ? $target_audience_option : null;
-
-		if (!$target_audience) {
-			$target_audience = SiteGenService::instantiate_site_meta($site_info, 'targetaudience', $skip_cache);
-		}
-
-		$content_style_option = get_option('nfd-ai-site-gen-contenttones');
-		$content_style = isset($content_style_option) ? $content_style_option : null;
-		if(!$content_style) {
-			$content_style = SiteGenService::instantiate_site_meta($site_info, 'contenttones', $skip_cache);
-		}
+		$target_audience = SiteGenService::instantiate_site_meta($site_info, 'targetaudience', $skip_cache);
+		$content_style = SiteGenService::instantiate_site_meta($site_info, 'contenttones', $skip_cache);
 
 		 // Ensure that the required data is available.
 		if (!$target_audience || !$content_style) {
 			return new \WP_Error(
-				array('message' => 'Required data is missing.'),
-				400 
+				'nfd_onboarding_error',
+				__( 'Required data is missing.', 'wp-module-onboarding' ),
+				array(
+					'status' => 400,
+				)
 			);
 		}
 
@@ -246,14 +238,21 @@ class SiteGenController {
         $site_description = $request->get_param('site_description');
         $regenerateSlug = $request->get_param('slug');
         $regenerateColorPalattes = $request->get_param('colorPalettes');
-        $favorites = get_option('nfd-sitegen-favorites', []);
+		/* TODO: call the favourites as a function from sitegenservice */
+        $favorites = get_option( Options::get_option_name( 'sitegen_favorites' ), []);
         $isFavorite = in_array($regenerateSlug, $favorites);
-		/* TODO : call them via a function and get options */
-        $target_audience = get_option('nfd-ai-site-gen-targetaudience');
-        $content_style = get_option('nfd-ai-site-gen-contenttones');
+
+		$target_audience = SiteGenService::instantiate_site_meta($site_info, 'targetaudience', $skip_cache);
+		$content_style = SiteGenService::instantiate_site_meta($site_info, 'contenttones', $skip_cache);
 
         if (!$target_audience || !$content_style) {
-            return new \WP_Error(array('message' => 'Required data is missing.'), 400);
+            return new \WP_Error(
+				'nfd_onboarding_error',
+				__( 'Required data is missing.', 'wp-module-onboarding' ),
+				array(
+					'status' => 400,
+				)
+			);
         }
 
         if ($isFavorite) {
@@ -263,7 +262,13 @@ class SiteGenController {
         }
 
         if ($result === null) {
-            return new \WP_Error(array('message' => 'Error processing request.'), 500);
+			return new \WP_Error(
+				'nfd_onboarding_error',
+				__( 'Error processing request.', 'wp-module-onboarding' ),
+				array(
+					'status' => 500,
+				)
+			);
         }
 
         return new \WP_REST_Response($result, 200);
