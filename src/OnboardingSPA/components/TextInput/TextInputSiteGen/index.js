@@ -24,11 +24,11 @@ const TextInputSiteGen = ( {
 
 	const calculateAnalysisScore = ( input ) => {
 		/* Number of Characters in the input
-		* Count < 100 => 0
-		* 100 < Count <= 150 => 1
-		* 150 < Count <= 200 => 2
-		* 200 < Count => 3
-		*/
+		 * Count < 100 => 0
+		 * 100 < Count <= 150 => 1
+		 * 150 < Count <= 200 => 2
+		 * 200 < Count => 3
+		 */
 		const characterCount = input?.length;
 		let characterScore = 0;
 		if ( characterCount > 200 ) {
@@ -55,7 +55,7 @@ const TextInputSiteGen = ( {
 		setInputText( 'nfd-sg-input-box__field' );
 	};
 
-	const renderDetails = ( ) => {
+	const renderDetails = () => {
 		const buttons = [];
 		for ( let i = 1; i <= 3; i++ ) {
 			buttons.push(
