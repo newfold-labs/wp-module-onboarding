@@ -2,7 +2,7 @@ name: Cypress Tests for Module Updates in Brand Plugin
 
 on:
   pull_request:
-    types: [ opened, reopened, ready_for_review, synchronize ]
+    types: [opened, reopened, ready_for_review, synchronize]
     branches:
       - main
       - trunk
@@ -19,7 +19,6 @@ jobs:
     outputs:
       branch: ${{ steps.extract_branch.outputs.branch }}
     steps:
-
       - name: Extract branch name
         shell: bash
         run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
@@ -32,9 +31,8 @@ jobs:
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'bluehost/bluehost-wordpress-plugin'
-      sync-npm-package: true
-      only-module-tests: true
+      plugin-repo: "bluehost/bluehost-wordpress-plugin"
+      sync-npm-package: false
     secrets: inherit
 
   hostgator:
@@ -44,8 +42,8 @@ jobs:
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-hostgator'
-      sync-npm-package: true
+      plugin-repo: "newfold-labs/wp-plugin-hostgator"
+      sync-npm-package: false
     secrets: inherit
 
   crazydomains:
@@ -55,6 +53,6 @@ jobs:
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-crazy-domains'
-      sync-npm-package: true
+      plugin-repo: "newfold-labs/wp-plugin-crazy-domains"
+      sync-npm-package: false
     secrets: inherit
