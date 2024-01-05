@@ -203,8 +203,8 @@ class SiteGenController {
             return new \WP_REST_Response( $existing_homepages, 200 );
         }
 
-		$target_audience = SiteGenService::instantiate_site_meta($site_info, 'targetaudience', $skip_cache);
-		$content_style = SiteGenService::instantiate_site_meta($site_info, 'contenttones', $skip_cache);
+		$target_audience = SiteGenService::instantiate_site_meta($site_info, 'targetaudience', true);
+		$content_style = SiteGenService::instantiate_site_meta($site_info, 'contenttones', true);
 
 		 // Ensure that the required data is available.
 		if (!$target_audience || !$content_style) {
@@ -239,9 +239,9 @@ class SiteGenController {
         $regenerateSlug = $request->get_param('slug');
         $regenerateColorPalattes = $request->get_param('colorPalettes');
         $isFavourite = $request->get_param('isFavourited'); 
-
-		$target_audience = SiteGenService::instantiate_site_meta($site_info, 'targetaudience', $skip_cache);
-		$content_style = SiteGenService::instantiate_site_meta($site_info, 'contenttones', $skip_cache);
+		$site_info = array( 'site_info' => array( 'site_description' => $site_description ) );
+		$target_audience = SiteGenService::instantiate_site_meta($site_info, 'targetaudience', true);
+		$content_style = SiteGenService::instantiate_site_meta($site_info, 'contenttones', true);
 
         if (!$target_audience || !$content_style) {
             return new \WP_Error(
@@ -277,6 +277,16 @@ class SiteGenController {
 
         $response = SiteGenService::toggle_favourite_homepage($slug);
 
+		if (is_wp_error($response)) {
+			$error_message = $response->get_error_message();
+			return new \WP_Error(
+				'nfd_onboarding_error',
+				__( $error_message, 'wp-module-onboarding' ),
+				array(
+					'status' => 404,
+				)
+			);
+		}
         return new \WP_REST_Response($response, 200);
     }
 }
