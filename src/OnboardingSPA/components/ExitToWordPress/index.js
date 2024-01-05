@@ -20,7 +20,6 @@ import {
 	CATEGORY,
 } from '../../utils/analytics/hiive/constants';
 import { activateInitialPlugins } from '../../utils/api/plugins';
-import { setComingSoon } from '../../utils/api/comingSoon';
 
 /**
  * Self-contained button and confirmation modal for exiting Onboarding page.
@@ -102,7 +101,6 @@ const ExitToWordPress = ( {
 				}
 			}
 			setFlow( currentData );
-			setComingSoon( currentData?.data?.comingSoon );
 		}
 		activateInitialPlugins();
 		trackOnboardingEvent(
