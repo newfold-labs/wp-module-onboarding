@@ -87,27 +87,44 @@ const SiteGenPreview = () => {
 		navigate( nextStep.path );
 	};
 
-	const handleFavorite = ( slug ) => {
-		toggleFavoriteHomepage( slug ).then( ( response ) => {
-			// Check if the response indicates a successful toggle
-			if ( response ) {
-				const homepagesList = currentData.sitegen.homepages.data;
-				if ( homepagesList && homepagesList.length > 0 ) {
-					homepagesList.forEach( ( homepageObj ) => {
-						if ( homepageObj.slug === slug ) {
-							homepageObj.isFavourited =
-								! homepageObj.isFavourited;
-						}
-					} );
-					setCurrentOnboardingData( { ...currentData } );
-				}
-			} else {
-				// console.error( 'Error toggling favorite status' );
+	const updateFavoriteStatus = ( slug, homepagesList ) => {
+		homepagesList.forEach( ( homepageObj ) => {
+			if ( homepageObj.slug === slug ) {
+				homepageObj.isFavourited = ! homepageObj.isFavourited;
 			}
 		} );
+		setCurrentOnboardingData( { ...currentData } );
 	};
 
-	const handleRegenerate = async ( slug, colorPalattes ) => {
+	const handleToggleFavoriteSuccess = ( response, slug, homepagesList ) => {
+		if ( ! response ) {
+			updateFavoriteStatus( slug, homepagesList );
+		}
+	};
+
+	const handleToggleFavoriteError = ( error, slug, homepagesList ) => {
+		updateFavoriteStatus( slug, homepagesList );
+		// eslint-disable-next-line no-console
+		console.error( error );
+	};
+
+	const handleFavorite = ( slug ) => {
+		const homepagesList = currentData.sitegen.homepages.data;
+
+		if ( homepagesList && homepagesList.length > 0 ) {
+			updateFavoriteStatus( slug, homepagesList );
+		}
+
+		toggleFavoriteHomepage( slug )
+			.then( ( response ) =>
+				handleToggleFavoriteSuccess( response, slug, homepagesList )
+			)
+			.catch( ( error ) =>
+				handleToggleFavoriteError( error, slug, homepagesList )
+			);
+	};
+
+	const handleRegenerate = async ( slug, colorPalattes, isFavourited ) => {
 		setIsRegenerating( true );
 		if ( ! ( slug in homepages.data ) ) {
 			if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
@@ -116,7 +133,8 @@ const SiteGenPreview = () => {
 						currentData.sitegen.siteDetails.prompt,
 						true,
 						slug,
-						colorPalattes
+						colorPalattes,
+						isFavourited
 					);
 					setHomepages( { ...homepages.data, data: response.body } ); // Update the local state with the response data
 					currentData.sitegen.homepages.data = response.body;

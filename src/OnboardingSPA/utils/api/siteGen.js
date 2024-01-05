@@ -49,7 +49,8 @@ export async function getRegeneratedHomePagePreviews(
 	siteDescription,
 	regenerate = true,
 	slug,
-	colorPalettes
+	colorPalettes,
+	isFavourited
 ) {
 	return await resolve(
 		apiFetch( {
@@ -60,6 +61,7 @@ export async function getRegeneratedHomePagePreviews(
 				regenerate,
 				slug,
 				colorPalettes,
+				isFavourited,
 			},
 		} ).then()
 	);

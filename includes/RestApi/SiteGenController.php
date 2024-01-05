@@ -76,8 +76,8 @@ class SiteGenController {
 			$this->rest_base . '/favourites',
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'toggle_favorite_homepage' ),
-				'permission_callback' => '__return_true',
+				'callback'            => array( $this, 'toggle_favourite_homepage' ),
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 			)
 		);
 	}
@@ -238,9 +238,7 @@ class SiteGenController {
         $site_description = $request->get_param('site_description');
         $regenerateSlug = $request->get_param('slug');
         $regenerateColorPalattes = $request->get_param('colorPalettes');
-		/* TODO: call the favourites as a function from sitegenservice */
-        $favorites = get_option( Options::get_option_name( 'sitegen_favorites' ), []);
-        $isFavorite = in_array($regenerateSlug, $favorites);
+        $isFavourite = $request->get_param('isFavourited'); 
 
 		$target_audience = SiteGenService::instantiate_site_meta($site_info, 'targetaudience', $skip_cache);
 		$content_style = SiteGenService::instantiate_site_meta($site_info, 'contenttones', $skip_cache);
@@ -255,7 +253,7 @@ class SiteGenController {
 			);
         }
 
-        if ($isFavorite) {
+        if ($isFavourite) {
             $result = SiteGenService::handle_favorite_regeneration($regenerateSlug, $regenerateColorPalattes);
         } else {
             $result = SiteGenService::handle_regular_regeneration($site_description, $content_style, $target_audience);
@@ -274,10 +272,10 @@ class SiteGenController {
         return new \WP_REST_Response($result, 200);
     }
 	
-    public function toggle_favorite_homepage(\WP_REST_Request $request) {
+    public function toggle_favourite_homepage(\WP_REST_Request $request) {
         $slug = $request->get_param('slug');
 
-        $response = SiteGenService::toggle_favorite_homepage($slug);
+        $response = SiteGenService::toggle_favourite_homepage($slug);
 
         return new \WP_REST_Response($response, 200);
     }
