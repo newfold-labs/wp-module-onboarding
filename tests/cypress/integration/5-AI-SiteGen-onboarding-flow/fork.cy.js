@@ -1,5 +1,7 @@
 // <reference types="Cypress" />
 
+import { AdminBarCheck, DarkBGCheck, LightBGChcek } from "../wp-module-support/siteGenBG.cy";
+
 describe( 'SiteGen Fork Step', function () {
 	before( () => {
 		cy.visit(
@@ -8,25 +10,15 @@ describe( 'SiteGen Fork Step', function () {
 	} );
 
     it( 'Check for the header admin bar', () => {
-        cy.get( '.nfd-onboarding-header__admin-bar' ).should('be.visible');
+        AdminBarCheck();
     } );
 
-	it( 'Check for the existing dark background', () => {
-		cy.wait( 2000 );
-		// When the page loads, it should have dark background by default
-        cy.get('.nfd-onboarding-sitegen-dark').should('be.visible');
+    it( 'Check for the existing dark background', () => {
+		DarkBGCheck();
 	} );
 
     it( 'Check for the light background', () => {
-        cy.get( '.nfd-onboarding-toggle__theme__button__dark' )
-            .should( 'exist' )
-            .click();
-        cy.get( '.nfd-onboarding-sitegen-light' ).should('be.visible');
-        // Now changing the background back to dark
-        cy.get( '.nfd-onboarding-toggle__theme__button__light' )
-            .should( 'exist' )
-            .click();
-        cy.get('.nfd-onboarding-sitegen-dark').should('be.visible');
+        LightBGChcek();
     } );
 
     it( 'Check for the heading and the title', () => {
@@ -39,6 +31,46 @@ describe( 'SiteGen Fork Step', function () {
         cy.get( '.nfd-onboarding-step__heading__subtitle' ).should('be.visible');
     } );
 
+    const OptionsDetails = (className,textValue,optionsValue) => {
+        cy.get(className)
+            .eq(optionsValue)
+            .find('.nfd-onboarding-sitegen-options__container__heading__title')
+            .invoke( 'text' )
+            .should('contain', textValue);
+        if(optionsValue!=2){   // Excluding the Last Option as it takes to new tab, just validating the title text
+            cy.get(className)
+                .eq(optionsValue)
+                .click();
+        };
+    };
+
+    it( 'Check for selection of different container options', () => {
+        let options = 0;
+        const className = '.nfd-onboarding-sitegen-options__container__options';
+        const arr = cy.get( className );
+		arr.each( () => {
+            if(options == 0){
+                OptionsDetails(className,'Build it myself',options);
+                cy.url().should('include', 'get-started/welcome',{
+                    timeout: 10000,
+                } );
+                cy.go('back');
+            };
+            if(options == 1){
+                OptionsDetails(className,'AI Website Creator',options);
+                cy.url().should('include', 'sitegen/step/welcome',{
+                    timeout: 10000,
+                } );
+                cy.go('back');
+            };
+            if(options == 2){
+                OptionsDetails(className, 'Hire a Pro',options);
+            };
+            options+=1;
+
+        });
+    });
+
     it( 'Check for the import your WP account link at the bottom', () => {
         cy.get( '.nfd-onboarding-step--site-gen__fork__importsite' )
             .scrollIntoView()
@@ -46,5 +78,4 @@ describe( 'SiteGen Fork Step', function () {
             .should('contain', 'Already have a WordPress site')
             .should('have.attr', 'href', 'https://my.bluehost.com/cgi/services/migration');
     } );
-
 });
