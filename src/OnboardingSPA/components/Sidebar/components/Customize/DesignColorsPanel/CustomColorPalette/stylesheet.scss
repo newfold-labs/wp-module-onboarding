@@ -1,8 +1,12 @@
-.nfd-onboarding-sidebar-customize--custom-color-palette {
+.nfd-onboarding-sidebar {
 
-	&__container {
-		padding: 16px;
-		width: 260px;
+	&--customize {
+		&__custom-color-palette {
+			&__container {
+				padding: 16px;
+				width: 260px;
+			}
+		}
 	}
 
 }

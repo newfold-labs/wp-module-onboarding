@@ -9,7 +9,7 @@ import { store as nfdOnboardingStore } from '../../../../../store';
 import { __ } from '@wordpress/i18n';
 
 const DesignColorsPanel = ( {
-	baseClassName = 'nfd-onboarding-sidebar-customize--design-colors-panel',
+	baseClassName = 'nfd-onboarding-sidebar--customize__design-colors-panel',
 	heading,
 } ) => {
 	const { customizeSidebarData } = useSelect( ( select ) => {

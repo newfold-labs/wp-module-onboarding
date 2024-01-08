@@ -25,7 +25,7 @@ const FontGroup = ( {
 				icon={ 'yes-alt' }
 				size={ 30 }
 				style={ {
-					color: selectedGroup === group.id ? '#0160F0' : '#9ca2a7',
+					color: selectedGroup === group.id ? 'var(--nfd-onboarding-sitegen-customize-icon-selected)' : 'var(--nfd-onboarding-sitegen-customize-grey-1)',
 				} }
 			/>
 			<div
@@ -159,7 +159,7 @@ const CustomFontsDisplay = ( {
 					size={ 30 }
 					style={ {
 						color:
-							selectedGroup === 'custom' ? '#0160F0' : '#9ca2a7',
+							selectedGroup === 'custom' ? 'var(--nfd-onboarding-sitegen-customize-icon-selected)' : 'var(--nfd-onboarding-sitegen-customize-grey-1)',
 					} }
 				/>
 				<div
@@ -185,7 +185,7 @@ const CustomFontsDisplay = ( {
 );
 
 const DesignFontsPanel = ( {
-	baseClassName = 'nfd-onboarding-sidebar-customize__design-fonts-panel',
+	baseClassName = 'nfd-onboarding-sidebar--customize__design-fonts-panel',
 } ) => {
 	const { customizeSidebarData } = useSelect( ( select ) => {
 		return {
