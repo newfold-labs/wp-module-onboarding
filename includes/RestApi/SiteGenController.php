@@ -58,7 +58,7 @@ class SiteGenController {
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'get_homepages' ),
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				'args' => $this->get_homepages_args(),
+				'args'                => $this->get_homepages_args(),
 			)
 		);
 		\register_rest_route(
@@ -68,7 +68,7 @@ class SiteGenController {
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'get_regenerated_homepages' ),
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				'args' => $this->get_homepages_regenerate_args(),
+				'args'                => $this->get_homepages_regenerate_args(),
 			)
 		);
 		\register_rest_route(
@@ -105,51 +105,51 @@ class SiteGenController {
 	}
 
 	/**
-     * Gets the arguments for the 'get-homepages' endpoint.
-     *
-     * @return array The array of arguments.
-     */
-    public function get_homepages_args() {
-        return array(
-            'site_description' => array(
-                'required' => true,
-                'validate_callback' => function($param, $request, $key) {
-                    return is_string($param);
-                },
-                'sanitize_callback' => 'sanitize_text_field'
-            ),
-            'regenerate' => array(
-                'required' => false,
-            ),
-            // Add other parameters here as needed.
-        );
-    }
+	 * Gets the arguments for the 'get-homepages' endpoint.
+	 *
+	 * @return array The array of arguments.
+	 */
+	public function get_homepages_args() {
+		return array(
+			'site_description' => array(
+				'required'          => true,
+				'validate_callback' => function ( $param ) {
+					return is_string( $param );
+				},
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+			'regenerate'       => array(
+				'required' => false,
+			),
+			// Add other parameters here as needed.
+		);
+	}
 
 	/**
-     * Gets the arguments for the 'get-homepages' endpoint.
-     *
-     * @return array The array of arguments.
-     */
-    public function get_homepages_regenerate_args() {
-        return array(
-            'site_description' => array(
-                'required' => true,
-                'validate_callback' => function($param, $request, $key) {
-                    return is_string($param);
-                },
-                'sanitize_callback' => 'sanitize_text_field'
-            ),
-            'regenerate' => array(
-                'required' => false,
-            ),
-			'slug' => array(
-                'required' => false,
-            ),
-			'colorPalettes' => array(
-                'required' => false,
-            ),
-        );
-    }
+	 * Gets the arguments for the 'get-homepages' endpoint.
+	 *
+	 * @return array The array of arguments.
+	 */
+	public function get_homepages_regenerate_args() {
+		return array(
+			'site_description' => array(
+				'required'          => true,
+				'validate_callback' => function ( $param ) {
+					return is_string( $param );
+				},
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+			'regenerate'       => array(
+				'required' => false,
+			),
+			'slug'             => array(
+				'required' => false,
+			),
+			'colorPalettes'    => array(
+				'required' => false,
+			),
+		);
+	}
 
 	/**
 	 * Gets all the valid Identifiers
@@ -182,32 +182,30 @@ class SiteGenController {
 
 		// TODO Implement the main function and do computations if required.
 		return SiteGenService::instantiate_site_meta( $site_info, $identifier, $skip_cache );
-
 	}
 
 	/**
 	 * Gets the preview homepages
 	 *
+	 * @param \WP_REST_Request $request parameter.
 	 * @return array
 	 */
 	public function get_homepages( \WP_REST_Request $request ) {
 
-		// Fetching parameters provided by the front end.
 		$site_description = $request->get_param( 'site_description' );
-		$regenerate = $request->get_param( 'regenerate' );
-		$site_info = array( 'site_info' => array( 'site_description' => $site_description ) );
+		$regenerate       = $request->get_param( 'regenerate' );
+		$site_info        = array( 'site_info' => array( 'site_description' => $site_description ) );
 
-		// If the option exists and is not empty, return it
-		$existing_homepages = get_option(Options::get_option_name( 'sitegen_homepages' ), []);		
-        if ( ! empty( $existing_homepages )  && !$regenerate ) {
-            return new \WP_REST_Response( $existing_homepages, 200 );
-        }
+		// If the option exists and is not empty, return it.
+		$existing_homepages = get_option( Options::get_option_name( 'sitegen_homepages' ), array() );
+		if ( ! empty( $existing_homepages ) && ! $regenerate ) {
+			return new \WP_REST_Response( $existing_homepages, 200 );
+		}
 
-		$target_audience = SiteGenService::instantiate_site_meta($site_info, 'targetaudience', true);
-		$content_style = SiteGenService::instantiate_site_meta($site_info, 'contenttones', true);
+		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'targetaudience', true );
+		$content_style   = SiteGenService::instantiate_site_meta( $site_info, 'contenttones', true );
 
-		 // Ensure that the required data is available.
-		if (!$target_audience || !$content_style) {
+		if ( ! $target_audience || ! $content_style ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
 				__( 'Required data is missing.', 'wp-module-onboarding' ),
@@ -217,7 +215,6 @@ class SiteGenController {
 			);
 		}
 
-		// Call the SiteGenService method to generate and process homepages
 		$processed_home_pages = SiteGenService::generate_homepages(
 			$site_description,
 			$content_style,
@@ -225,41 +222,45 @@ class SiteGenController {
 			$regenerate
 		);
 
-		// Check for errors in the response
 		if ( is_wp_error( $processed_home_pages ) ) {
 			return $processed_home_pages;
 		}
 
-		// Return the processed homepages
-		return new \WP_REST_Response($processed_home_pages, 200);
+		return new \WP_REST_Response( $processed_home_pages, 200 );
 	}
 
-    public function get_regenerated_homepages(\WP_REST_Request $request) {
-        $site_description = $request->get_param('site_description');
-        $regenerateSlug = $request->get_param('slug');
-        $regenerateColorPalattes = $request->get_param('colorPalettes');
-        $isFavourite = $request->get_param('isFavourited'); 
-		$site_info = array( 'site_info' => array( 'site_description' => $site_description ) );
-		$target_audience = SiteGenService::instantiate_site_meta($site_info, 'targetaudience', true);
-		$content_style = SiteGenService::instantiate_site_meta($site_info, 'contenttones', true);
+	/**
+	 * Gets the regenerated preview homepages
+	 *
+	 * @param \WP_REST_Request $request parameter.
+	 * @return array
+	 */
+	public function get_regenerated_homepages( \WP_REST_Request $request ) {
+		$site_description          = $request->get_param( 'site_description' );
+		$regenerate_slug           = $request->get_param( 'slug' );
+		$regenerate_color_palattes = $request->get_param( 'colorPalettes' );
+		$is_favourite              = $request->get_param( 'isFavourited' );
+		$site_info                 = array( 'site_info' => array( 'site_description' => $site_description ) );
+		$target_audience           = SiteGenService::instantiate_site_meta( $site_info, 'targetaudience', true );
+		$content_style             = SiteGenService::instantiate_site_meta( $site_info, 'contenttones', true );
 
-        if (!$target_audience || !$content_style) {
-            return new \WP_Error(
+		if ( ! $target_audience || ! $content_style ) {
+			return new \WP_Error(
 				'nfd_onboarding_error',
 				__( 'Required data is missing.', 'wp-module-onboarding' ),
 				array(
 					'status' => 400,
 				)
 			);
-        }
+		}
 
-        if ($isFavourite) {
-            $result = SiteGenService::handle_favorite_regeneration($regenerateSlug, $regenerateColorPalattes);
-        } else {
-            $result = SiteGenService::handle_regular_regeneration($site_description, $content_style, $target_audience);
-        }
+		if ( $is_favourite ) {
+			$result = SiteGenService::handle_favorite_regeneration( $regenerate_slug, $regenerate_color_palattes );
+		} else {
+			$result = SiteGenService::handle_regular_regeneration( $site_description, $content_style, $target_audience );
+		}
 
-        if ($result === null) {
+		if ( null === $result ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
 				__( 'Error processing request.', 'wp-module-onboarding' ),
@@ -267,26 +268,32 @@ class SiteGenController {
 					'status' => 500,
 				)
 			);
-        }
+		}
 
-        return new \WP_REST_Response($result, 200);
-    }
-	
-    public function toggle_favourite_homepage(\WP_REST_Request $request) {
-        $slug = $request->get_param('slug');
+		return new \WP_REST_Response( $result, 200 );
+	}
 
-        $response = SiteGenService::toggle_favourite_homepage($slug);
+	/**
+	 * Updates favourite status
+	 *
+	 * @param \WP_REST_Request $request parameter.
+	 * @return array
+	 */
+	public function toggle_favourite_homepage( \WP_REST_Request $request ) {
+		$slug = $request->get_param( 'slug' );
 
-		if (is_wp_error($response)) {
+		$response = SiteGenService::toggle_favourite_homepage( $slug );
+
+		if ( is_wp_error( $response ) ) {
 			$error_message = $response->get_error_message();
 			return new \WP_Error(
 				'nfd_onboarding_error',
-				__( $error_message, 'wp-module-onboarding' ),
+				__( 'Failed at updating Favourite status', 'wp-module-onboarding' ),
 				array(
 					'status' => 404,
 				)
 			);
 		}
-        return new \WP_REST_Response($response, 200);
-    }
+		return new \WP_REST_Response( $response, 200 );
+	}
 }
