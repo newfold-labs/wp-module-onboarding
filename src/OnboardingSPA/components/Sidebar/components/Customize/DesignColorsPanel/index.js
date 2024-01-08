@@ -140,7 +140,7 @@ const DesignColorsPanel = ( {
 	};
 
 	useEffect( () => {
-		if (selectedColor && selectedPalette) {
+		if ( selectedColor && selectedPalette ) {
 			handleUpdatePreviewSettings();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

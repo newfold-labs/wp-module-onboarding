@@ -25,7 +25,10 @@ const FontGroup = ( {
 				icon={ 'yes-alt' }
 				size={ 30 }
 				style={ {
-					color: selectedGroup === group.id ? 'var(--nfd-onboarding-sitegen-customize-icon-selected)' : 'var(--nfd-onboarding-sitegen-customize-grey-1)',
+					color:
+						selectedGroup === group.id
+							? 'var(--nfd-onboarding-sitegen-customize-icon-selected)'
+							: 'var(--nfd-onboarding-sitegen-customize-grey-1)',
 				} }
 			/>
 			<div
@@ -159,7 +162,9 @@ const CustomFontsDisplay = ( {
 					size={ 30 }
 					style={ {
 						color:
-							selectedGroup === 'custom' ? 'var(--nfd-onboarding-sitegen-customize-icon-selected)' : 'var(--nfd-onboarding-sitegen-customize-grey-1)',
+							selectedGroup === 'custom'
+								? 'var(--nfd-onboarding-sitegen-customize-icon-selected)'
+								: 'var(--nfd-onboarding-sitegen-customize-grey-1)',
 					} }
 				/>
 				<div
@@ -242,13 +247,13 @@ const DesignFontsPanel = ( {
 
 	const handleUpdatePreviewSettings = () => {
 		let headings;
-		let body;
+		// let body;
 		if ( selectedGroup === 'custom' ) {
 			headings = customFont.headings;
-			body = customFont.body;
+			// body = customFont.body;
 		} else {
 			headings = fontGroups[ selectedGroup ].headings;
-			body = fontGroups[ selectedGroup ].body;
+			// body = fontGroups[ selectedGroup ].body;
 		}
 		const slug = currentData.sitegen.homepages.active.slug;
 
@@ -284,7 +289,7 @@ const DesignFontsPanel = ( {
 	};
 
 	useEffect( () => {
-		if (selectedGroup) {
+		if ( selectedGroup ) {
 			handleUpdatePreviewSettings();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -379,10 +384,7 @@ const DesignFontsPanel = ( {
 							className={ `${ baseClassName }__container__text__heading` }
 						>
 							<strong>
-								{__(
-									'Fonts',
-									'wp-module-onboarding'
-								)}
+								{ __( 'Fonts', 'wp-module-onboarding' ) }
 							</strong>
 						</p>
 					</div>

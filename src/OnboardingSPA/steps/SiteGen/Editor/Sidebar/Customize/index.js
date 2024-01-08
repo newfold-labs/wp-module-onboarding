@@ -17,22 +17,23 @@ const DesignColorsPanel = lazy( () =>
 );
 
 const Customize = () => {
-	const [loading, setLoading] = useState(true);
+	const [ loading, setLoading ] = useState( true );
 	const { updateCustomizeSidebarData } = useDispatch( nfdOnboardingStore );
 
 	const loadData = async () => {
 		const customizeSidebarData = await getCustomizeSidebarData();
 		updateCustomizeSidebarData( customizeSidebarData?.body );
-		setLoading(false);
+		setLoading( false );
 	};
 
 	useEffect( () => {
 		loadData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
 
-	if (loading) {
+	if ( loading ) {
 		return <div>...</div>;
-	  }
+	}
 
 	const content = getContents();
 	return (
