@@ -11,13 +11,12 @@ import { getGlobalStyles } from '../../../utils/api/themes';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { cloneDeep } from 'lodash';
-import { getCustomizeSidebarData } from '../../../utils/api/siteGen';
 
 const StepSiteGenEditor = () => {
 	const [ activeHomepage, setActiveHomepage ] = useState();
 	const [ colorPalette, setColorPalette ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState( [] );
-	const { setIsHeaderEnabled, setHeaderActiveView, setDrawerActiveView, updateCustomizeSidebarData } =
+	const { setIsHeaderEnabled, setHeaderActiveView, setDrawerActiveView } =
 		useDispatch( nfdOnboardingStore );
 
 	const { currentData } = useSelect( ( select ) => {
@@ -36,9 +35,6 @@ const StepSiteGenEditor = () => {
 		const globalStylesResponse = await getGlobalStyles();
 		setGlobalStyles( globalStylesResponse.body );
 		setColorPalette( homepage.color.palette );
-		const customizeSidebarData = await getCustomizeSidebarData();
-
-		updateCustomizeSidebarData( customizeSidebarData?.body );
 	};
 
 	useEffect( () => {
