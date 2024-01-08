@@ -73,6 +73,13 @@
 	}
 }
 
+.nfd-onboarding-header--sitegen {
+
+	body.is-fullscreen-mode & {
+		padding-left: 0;
+	}
+}
+
 .nfd-onboarding-skeleton.is-drawer-open {
 
 	.nfd-onboarding-header {
