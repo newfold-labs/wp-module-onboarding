@@ -8,45 +8,47 @@ import {
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
 
-describe( 'Site Pages', function () {
+describe( 'Theme Styles Menu', function () {
 	before( () => {
 		cy.visit(
-			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/site-pages'
+			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/theme-styles/menu'
 		);
-		cy.wait( 10000 );
-	} );
-
-	it( 'Check if Header and Subheader shows up', () => {
-		CheckHeadingSubheading();
+		cy.wait( 5000 );
 	} );
 
 	it( 'Check Drawer Activity', () => {
 		DrawerActivityForMenu(
 			'Onboarding Menu',
-			':nth-child(6)',
-			'Page Layouts'
+			':nth-child(1)',
+			'Theme Styles'
 		);
 	} );
 
 	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel( '__site-pages', 'Pages' );
+		CheckIntroPanel( '__design-theme-styles-menu', 'Theme Styles' );
 		CheckIllustrationPanel();
-		CheckInfoPanel();
+		CheckInfoPanel( 2 );
 		CheckHelpPanelLinks();
 	} );
 
-	it( 'Check if Site Pages Templates exist and are selectable', () => {
+	it( 'Checks if Heading and Subheading are present', () => {
+		CheckHeadingSubheading();
+	} );
+
+	it( 'Check if Default Theme variations exists in Menu', () => {
 		let previewCount = 0;
-		const className = '.site-pages__list__item';
+		const className = '.theme-styles-menu__list__item';
 		const arr = cy.get( className );
 
 		arr.each( () => {
-			cy.get( className )
+			cy.get( className.concat( '__title-bar' ) )
 				.eq( previewCount )
 				.scrollIntoView()
-				.find( '.components-checkbox-control' )
-				.find( 'label' )
-				.click();
+				.should( 'be.visible' );
+			cy.get( className.concat( '__live-preview-container' ) )
+				.eq( previewCount )
+				.scrollIntoView()
+				.should( 'be.visible' );
 			previewCount += 1;
 		} );
 	} );
