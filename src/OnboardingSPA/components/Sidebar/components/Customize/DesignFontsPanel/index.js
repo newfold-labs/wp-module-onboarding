@@ -228,7 +228,7 @@ const DesignFontsPanel = ( {
 		},
 	];
 
-	const [ selectedGroup, setSelectedGroup ] = useState( 0 );
+	const [ selectedGroup, setSelectedGroup ] = useState( null );
 	const [ showCustomFonts, setShowCustomFonts ] = useState( false );
 	const [ customFont, setCustomFont ] = useState( {
 		headings: '',
@@ -284,7 +284,9 @@ const DesignFontsPanel = ( {
 	};
 
 	useEffect( () => {
-		handleUpdatePreviewSettings();
+		if (selectedGroup) {
+			handleUpdatePreviewSettings();
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ selectedGroup, customFont ] );
 
@@ -376,7 +378,12 @@ const DesignFontsPanel = ( {
 						<p
 							className={ `${ baseClassName }__container__text__heading` }
 						>
-							<strong>Fonts</strong>
+							<strong>
+								{__(
+									'Fonts',
+									'wp-module-onboarding'
+								)}
+							</strong>
 						</p>
 					</div>
 					<div>{ renderFontGroups() }</div>

@@ -54,14 +54,15 @@ const DesignColorsPanel = ( {
 	} );
 
 	const [ colors ] = useState( [ defaultColors, ...palettes ] );
-	const [ selectedColor, setSelectedColor ] = useState( palettes[ 0 ] );
+	const [ selectedColor, setSelectedColor ] = useState( null );
 	const [ showCustomColors, setShowCustomColors ] = useState( false );
 	const [ isEditingCustomColors, setIsEditingCustomColors ] =
 		useState( false );
 	const [ selectedCustomColors, setSelectedCustomColors ] = useState( false );
-	const [ selectedPalette, setSelectedPalette ] = useState( 1 );
+	const [ selectedPalette, setSelectedPalette ] = useState( null );
 	const [ colorPickerCalledBy, setColorPickerCalledBy ] = useState( '' );
 	const [ showColorPicker, setShowColorPicker ] = useState( false );
+	const customPaletteId = colors.length - 1;
 
 	const paletteSecondaryColors = Object.entries( colorPalettes[ 1 ] )
 		.map( ( [ name, color ] ) => {
@@ -78,13 +79,13 @@ const DesignColorsPanel = ( {
 	const handleApplyCustomColors = () => {
 		setSelectedCustomColors( true );
 		setIsEditingCustomColors( false );
-		setSelectedPalette( 4 );
+		setSelectedPalette( customPaletteId );
 		colors[ selectedPalette ] = selectedColor;
 	};
 
 	const handleEditCustomColors = () => {
-		setSelectedPalette( 4 );
-		setSelectedColor( colors[ 4 ] );
+		setSelectedPalette( customPaletteId );
+		setSelectedColor( colors[ customPaletteId ] );
 		setIsEditingCustomColors( true );
 	};
 
@@ -139,7 +140,9 @@ const DesignColorsPanel = ( {
 	};
 
 	useEffect( () => {
-		handleUpdatePreviewSettings();
+		if (selectedColor && selectedPalette) {
+			handleUpdatePreviewSettings();
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ selectedColor, selectedPalette ] );
 
@@ -163,8 +166,8 @@ const DesignColorsPanel = ( {
 
 				<div style={ { marginLeft: '5px' } }>
 					<ColorPaletteIcon
-						key={ 4 }
-						idx={ 4 }
+						key={ customPaletteId }
+						idx={ customPaletteId }
 						selectedPalette={ selectedPalette }
 						setSelectedPalette={ setSelectedPalette }
 						setSelectedColor={ setSelectedColor }
@@ -227,8 +230,8 @@ const DesignColorsPanel = ( {
 	};
 
 	const handlePickYourOwnColors = () => {
-		setSelectedPalette( 4 );
-		setSelectedColor( colors[ 4 ] );
+		setSelectedPalette( customPaletteId );
+		setSelectedColor( colors[ customPaletteId ] );
 		setShowCustomColors( true );
 		if ( ! selectedCustomColors ) {
 			setIsEditingCustomColors( true );
