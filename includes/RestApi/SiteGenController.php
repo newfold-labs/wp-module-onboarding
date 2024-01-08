@@ -156,6 +156,7 @@ class SiteGenController {
 	 * @return array|WP_Error
 	 */
 	public function get_customize_sidebar_data( \WP_REST_Request $request ) {
+//		return SiteGenService::get_customize_sidebar_data();
 
 		$color_palettes = \get_option( 'nfd-ai-site-gen-colorpalette', null );
 		if ( null === $color_palettes ) {
