@@ -42,11 +42,15 @@ const Header = () => {
 			<Slot name={ `${ headerActiveView }/${ HEADER_TOP }` } />
 			{ isHeaderEnabled && (
 				<div
-					className={ classNames( 'nfd-onboarding-header', {
-						'nfd-onboarding-header--dark': isEditorStep,
-					}, {
-						'nfd-onboarding-header--sitegen': isSitegenFlow,
-					} ) }
+					className={ classNames(
+						'nfd-onboarding-header',
+						{
+							'nfd-onboarding-header--dark': isEditorStep,
+						},
+						{
+							'nfd-onboarding-header--sitegen': isSitegenFlow,
+						}
+					) }
 				>
 					<div className="nfd-onboarding-header__start">
 						<Slot
