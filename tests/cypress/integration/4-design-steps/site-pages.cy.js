@@ -1,17 +1,17 @@
 // <reference types="Cypress" />
-import { DrawerActivityForMenu } from '../wp-module-support/drawer.cy';
-import { CheckHeadingSubheading } from '../wp-module-support/header.cy';
+import { DrawerActivityForMenu } from '../../wp-module-support/drawer.cy';
+import { CheckHeadingSubheading } from '../../wp-module-support/header.cy';
 import {
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
 	CheckIntroPanel,
-} from '../wp-module-support/sidebar.cy';
+} from '../../wp-module-support/sidebar.cy';
 
 describe( 'Site Pages', function () {
 	before( () => {
 		cy.visit(
-			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/site-pages'
+			'wp-admin/?page=nfd-onboarding&flow=ecommerce#/wp-setup/step/design/site-pages'
 		);
 		cy.wait( 10000 );
 	} );
@@ -23,7 +23,7 @@ describe( 'Site Pages', function () {
 	it( 'Check Drawer Activity', () => {
 		DrawerActivityForMenu(
 			'Onboarding Menu',
-			':nth-child(6)',
+			':nth-child(4)',
 			'Page Layouts'
 		);
 	} );
@@ -43,7 +43,6 @@ describe( 'Site Pages', function () {
 		arr.each( () => {
 			cy.get( className )
 				.eq( previewCount )
-				.scrollIntoView()
 				.find( '.components-checkbox-control' )
 				.find( 'label' )
 				.click();

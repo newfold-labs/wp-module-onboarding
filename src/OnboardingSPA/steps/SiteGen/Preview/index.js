@@ -36,7 +36,6 @@ const SiteGenPreview = () => {
 		setHeaderActiveView,
 		setDrawerActiveView,
 		setCurrentOnboardingData,
-		updateInitialize,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData, nextStep } = useSelect( ( select ) => {
@@ -122,7 +121,6 @@ const SiteGenPreview = () => {
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
-		updateInitialize( true );
 		loadData();
 	}, [ homePagePreviewPatterns ] );
 

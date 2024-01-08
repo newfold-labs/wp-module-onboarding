@@ -181,9 +181,9 @@ html.nfd-interface-interface-skeleton__html-container {
 .nfd-onboarding-skeleton {
 
 	&--sitegen {
-		background: var(--sitegen-background-low);
-		background-repeat: no-repeat !important;
-		background-size: cover !important;
+		background: var(--sitegen-background);
+		background-repeat: no-repeat;
+		background-size: cover;
 
 		.nfd-interface-interface-skeleton__footer {
 			display: flex;

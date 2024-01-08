@@ -15,11 +15,11 @@ export const SocialMediaTextValidations = ( URL, ToolTipText, ModalHeaderText ) 
         cy.get( '.components-modal__header-heading' ).should('have.text', ModalHeaderText);
         cy.get(':nth-child(2) > .components-button-group > .is-secondary').click();
         cy.get(NextButton).click();
-        cy.get('.components-modal__header button', {timeout: 10000}).click()
+        cy.get('.components-modal__content').type('{esc}');
         cy.get(NextButton).click();
         cy.get(':nth-child(2) > .components-button-group > .is-primary').click();
         cy.url().should('not.contain', 'wp-setup/step/basic-info');
         cy.go('back');
-        cy.get( '.nfd-onboarding-drawer__toggle-button', { timeout: 10000 } ).click();
+        cy.get( '.nfd-onboarding-drawer__toggle-button' ).click();
     }
 };
