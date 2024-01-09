@@ -207,5 +207,4 @@ final class WP_Admin {
 		\wp_enqueue_script( 'sitegen-theme-marker' );
 		\wp_enqueue_style( 'sitegen-theme-marker' );
 	}
-
 } // END /NewfoldLabs/WP/Module/Onboarding/Admin()

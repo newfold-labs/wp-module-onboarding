@@ -1,25 +1,18 @@
 // <reference types="Cypress" />
-import { DrawerActivityForSubMenu } from '../../wp-module-support/drawer.cy';
+import { DrawerActivityForSubMenu } from '../wp-module-support/drawer.cy';
 import {
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
 	CheckIntroPanel,
-} from '../../wp-module-support/sidebar.cy';
+} from '../wp-module-support/sidebar.cy';
 
 describe( 'Colors Step Test', function () {
 	before( () => {
 		cy.visit(
-			'wp-admin/?page=nfd-onboarding&flow=ecommerce#/wp-setup/step/design/theme-styles/preview'
+			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/colors'
 		);
-	} );
-
-	it( 'Navigate to Colors Step', () => {
-		cy.wait( 10000 );
-		// Have to select the Preview Step Checkbox to activate Colors and Typgoraphy
-		cy.get( '.theme-styles-preview__checkbox__label' ).click();
-		cy.get( '.navigation-buttons_next' ).click();
-		cy.wait( 10000 );
+		cy.wait(6000);
 	} );
 
 	it( 'Check Drawer Activity', () => {
@@ -57,7 +50,7 @@ describe( 'Colors Step Test', function () {
 		cy.get( '.custom-palette__top' ).scrollIntoView().click();
 
 		let previewCount = 0;
-		const className = '.custom-palette__below-row';
+		const className = '.custom-palette__below__row';
 		const arr = cy.get( className );
 
 		// Select Colors for custom Palette
