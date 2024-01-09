@@ -41,18 +41,24 @@ const SiteGenSiteDetails = () => {
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
-
+		setFooterNavEnabled( false );
 		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
 			setCustomerInput( currentData.sitegen.siteDetails.prompt );
+			setFooterNavEnabled( true );
 		}
-		setFooterNavEnabled( false );
 	}, [] );
 
 	useEffect( () => {
-		setFooterNavEnabled( customerInput !== '' );
-		currentData.sitegen.siteDetails.prompt = customerInput;
-		currentData.sitegen.siteDetails.mode = 'simple';
-		setCurrentOnboardingData( currentData );
+		if (
+			currentData.sitegen.siteDetails.prompt !== undefined &&
+			customerInput !== undefined &&
+			customerInput !== currentData.sitegen.siteDetails.prompt
+		) {
+			setFooterNavEnabled( customerInput !== '' );
+			currentData.sitegen.siteDetails.prompt = customerInput;
+			currentData.sitegen.siteDetails.mode = 'simple';
+			setCurrentOnboardingData( currentData );
+		}
 	}, [ customerInput ] );
 
 	const handleClickWalkThrough = () => {

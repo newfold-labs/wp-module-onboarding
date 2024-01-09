@@ -23,7 +23,8 @@ const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 		};
 	} );
 
-	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
+	const { setFooterNavEnabled, setCurrentOnboardingData } =
+		useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		if ( currentData.sitegen.siteDetails?.name !== '' ) {
@@ -37,12 +38,18 @@ const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 				currentData.sitegen.siteDetails.uniqueAboutBusiness
 			);
 		}
+
+		setFooterNavEnabled( ! isdisabledNextButton() );
 	}, [] );
+
+	useEffect( () => {
+		setFooterNavEnabled( ! isdisabledNextButton() );
+	}, [ customerInputUnique, customerInputType ] );
 
 	const handlePromptChange = ( field, e ) => {
 		e.preventDefault();
-		currentData.sitegen.siteDetails[ field ] = e.target.value;
-		currentData.sitegen.siteDetails.prompt = concatenatePrompt();
+		currentData.sitegen.siteDetails[ field ] = e.target.value.trim();
+		currentData.sitegen.siteDetails.prompt = concatenatePrompt().trim();
 		setCurrentOnboardingData( currentData );
 		const setters = {
 			name: setCustomerInputName,
@@ -51,6 +58,7 @@ const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 		};
 
 		setters[ field ]( e.target.value );
+		setFooterNavEnabled( ! isdisabledNextButton() );
 	};
 
 	const concatenatePrompt = () => {
@@ -67,7 +75,7 @@ const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 						concatenatedString += `${ siteDetailsmeta.websiteType.prompt } ${ siteDetails[ field ] }. `;
 						break;
 					case 'uniqueAboutBusiness':
-						concatenatedString += `${ siteDetailsmeta.uniqueBusiness.prompt } ${ siteDetails[ field ] }. `;
+						concatenatedString += `${ siteDetailsmeta.uniqueBusiness.prompt } ${ siteDetails[ field ] }.`;
 						break;
 					default:
 						break;
@@ -78,7 +86,7 @@ const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 	};
 
 	const checkAndNavigate = () => {
-		currentData.sitegen.siteDetails.prompt = concatenatePrompt();
+		currentData.sitegen.siteDetails.prompt = concatenatePrompt().trim();
 		currentData.sitegen.siteDetails.mode = 'detailed';
 		setCurrentOnboardingData( currentData );
 	};
