@@ -33,10 +33,10 @@ class SiteGenController {
 	public function register_routes() {
 		\register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/get-identifiers',
+			$this->rest_base . '/identifiers',
 			array(
 				'methods'             => \WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_valid_identifiers' ),
+				'callback'            => array( $this, 'get_enabled_identifiers' ),
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 			)
 		);
@@ -88,8 +88,8 @@ class SiteGenController {
 	 *
 	 * @return array
 	 */
-	public function get_valid_identifiers() {
-		return array_keys( array_filter( SiteGenService::get_identifiers() ) );
+	public function get_enabled_identifiers() {
+		return array_keys( array_filter( SiteGenService::enabled_identifiers() ) );
 	}
 
 	/**
@@ -100,21 +100,20 @@ class SiteGenController {
 	 * @return array|WP_Error
 	 */
 	public function generate_sitegen_meta( \WP_REST_Request $request ) {
+		if ( ! SiteGenService::is_enabled() ) {
+			return new \WP_Error(
+				'nfd_onboarding_error',
+				'SiteGen is Disabled.',
+				array( 'status' => 404 )
+			);
+		}
 
 		$site_info  = $request->get_param( 'site_info' );
 		$identifier = $request->get_param( 'identifier' );
 		$skip_cache = $request->get_param( 'skip_cache' );
 
-		if ( SiteGenService::is_enabled() ) {
-			// TODO Implement the main function and do computations if required.
-			return SiteGenService::instantiate_site_meta( $site_info, $identifier, $skip_cache );
-		}
-
-		return new \WP_Error(
-			'sitegen-error',
-			'SiteGen is Disabled.',
-			array( 'status' => 404 )
-		);
+		// TODO Implement the main function and do computations if required.
+		return SiteGenService::instantiate_site_meta( $site_info, $identifier, $skip_cache );
 	}
 
 	/**

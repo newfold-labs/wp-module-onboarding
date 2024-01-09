@@ -111,6 +111,8 @@ class FlowController {
 	public function save_onboarding_flow_data( \WP_REST_Request $request ) {
 		$params = json_decode( $request->get_body(), true );
 
+		update_option( Options::get_option_name( 'redirect' ), '0' );
+
 		$flow_data = FlowService::update_data( $params );
 		if ( is_wp_error( $flow_data ) ) {
 			return $flow_data;
@@ -125,10 +127,12 @@ class FlowController {
 	/**
 	 * Flow completion API for child theme generation, verify child theme and publish site pages.
 	 *
+	 * @param \WP_REST_Request $request The incoming request.
+	 *
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function complete( $request ) {
-		$flow = $request->get_param('flow');
+		$flow = $request->get_param( 'flow' );
 		if ( 'sitegen' === $flow ) {
 			$flow_data_option = \get_option( Options::get_option_name( 'flow' ), false );
 			if ( false === $flow_data_option || ! isset( $flow_data_option['data'] ) ) {
@@ -138,13 +142,13 @@ class FlowController {
 					array( 'status' => 500 )
 				);
 			}
-		$homepage_data = $flow_data_option['sitegen']['homepages']['data'];
-		$active_homepage = $flow_data_option['sitegen']['homepages']['active'];
-		SiteGenService::complete( $active_homepage, $homepage_data );
-		return new \WP_REST_Response(
-			array(),
-			201
-		);
+			$homepage_data   = $flow_data_option['sitegen']['homepages']['data'];
+			$active_homepage = $flow_data_option['sitegen']['homepages']['active'];
+			SiteGenService::complete( $active_homepage, $homepage_data );
+			return new \WP_REST_Response(
+				array(),
+				201
+			);
 		}
 
 		$site_pages_publish_request  = new \WP_REST_Request(

@@ -1,11 +1,13 @@
 <?php
+
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Onboarding\Application;
-use function NewfoldLabs\WP\ModuleLoader\register;
 use NewfoldLabs\WP\Module\Onboarding\ModuleController;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Scan;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Safe_Mode;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Status;
+
+use function NewfoldLabs\WP\ModuleLoader\register;
 
 /**
  * Register Onboarding with Newfold Module Loader
@@ -22,7 +24,7 @@ function nfd_wp_module_onboarding_register() {
 
 				// Set Global Constants
 				if ( ! defined( 'NFD_ONBOARDING_VERSION' ) ) {
-					define( 'NFD_ONBOARDING_VERSION', '1.11.8' );
+					define( 'NFD_ONBOARDING_VERSION', '1.11.13' );
 				}
 				if ( ! defined( 'NFD_ONBOARDING_DIR' ) ) {
 					define( 'NFD_ONBOARDING_DIR', __DIR__ );

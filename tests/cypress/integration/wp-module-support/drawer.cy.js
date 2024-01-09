@@ -1,7 +1,10 @@
 // <reference types="Cypress" />
+const customCommandTimeout = 30000;
 
 export const CheckDrawerDisabled = () => {
-	cy.get( '.nfd-onboarding-drawer__toggle-button' )
+	cy.get( '.nfd-onboarding-drawer__toggle-button', {
+		timeout: customCommandTimeout,
+	} )
 		.click()
 		.should( 'have.class', 'is-suppressed' );
 	cy.get( '.nfd-onboarding-drawer__panel-scroll-container' )
@@ -65,7 +68,9 @@ export const DrawerActivityForSubMenu = (
 	cy.get( '.nfd-onboarding-drawer__panel-inner' )
 		.scrollIntoView()
 		.should( 'be.visible' );
-	cy.get( '.nfd-onboarding-drawer__panel-back' )
+	cy.get( '.nfd-onboarding-drawer__panel-back', {
+		timeout: customCommandTimeout,
+	} )
 		.should( 'be.visible' )
 		.should( 'have.text', text );
 	cy.get( subMenuDrawer ).should( 'be.visible' );

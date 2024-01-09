@@ -6,7 +6,7 @@ import { onboardingRestURL } from './common';
 export async function getSiteGenIdentifiers() {
 	return await resolve(
 		apiFetch( {
-			url: onboardingRestURL( 'sitegen/get-identifiers' ),
+			url: onboardingRestURL( 'sitegen/identifiers' ),
 		} ).then()
 	);
 }
