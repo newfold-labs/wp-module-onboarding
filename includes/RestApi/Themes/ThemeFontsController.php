@@ -11,31 +11,31 @@ use NewfoldLabs\WP\Module\Onboarding\Permissions;
 class ThemeFontsController extends \WP_REST_Controller {
 
 
-	 /**
-	  * The namespace of this controller's route.
-	  *
-	  * @var string
-	  */
-	 protected $namespace = 'newfold-onboarding/v1';
+	/**
+	 * The namespace of this controller's route.
+	 *
+	 * @var string
+	 */
+	protected $namespace = 'newfold-onboarding/v1';
 
-	 /**
-	  * The base of this controller's route.
-	  *
-	  * @var string
-	  */
-	 protected $rest_base = '/themes';
+	/**
+	 * The base of this controller's route.
+	 *
+	 * @var string
+	 */
+	protected $rest_base = '/themes';
 
 
-	 /**
-	  * The extended base of this controller's route.
-	  *
-	  * @var string
-	  */
-	 protected $rest_extended_base = '/fonts';
+	/**
+	 * The extended base of this controller's route.
+	 *
+	 * @var string
+	 */
+	protected $rest_extended_base = '/fonts';
 
-	 /**
-	  * Registers routes for ThemeColorsController
-	  */
+	/**
+	 * Registers routes for ThemeColorsController
+	 */
 	public function register_routes() {
 		\register_rest_route(
 			$this->namespace,
@@ -50,13 +50,13 @@ class ThemeFontsController extends \WP_REST_Controller {
 		);
 	}
 
-	 /**
-	  * Retrieves the active theme font variations.
-	  *
-	  * @return array|\WP_Error
-	  */
+	/**
+	 * Retrieves the active theme font variations.
+	 *
+	 * @return array|\WP_Error
+	 */
 	public function get_theme_fonts() {
-		 $theme_font_palettes = Fonts::get_fonts_from_theme();
+		$theme_font_palettes = Fonts::get_fonts_from_theme();
 
 		if ( ! $theme_font_palettes ) {
 			return new \WP_Error(
@@ -66,6 +66,6 @@ class ThemeFontsController extends \WP_REST_Controller {
 			);
 		}
 
-		 return $theme_font_palettes;
+		return $theme_font_palettes;
 	}
 }

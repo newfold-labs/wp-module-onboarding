@@ -298,5 +298,4 @@ class RestApiFilter {
 			register_setting( 'general', Options::get_option_name( $wc_settings_option, false ), $value );
 		}
 	}
-
 } // END /NewfoldLabs/WP/Module/Onboarding/RestApiFilter()

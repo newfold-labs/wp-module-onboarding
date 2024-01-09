@@ -159,5 +159,4 @@ final class WP_Admin {
 
 		self::register_assets();
 	}
-
 } // END /NewfoldLabs/WP/Module/Onboarding/Admin()
