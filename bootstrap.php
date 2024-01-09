@@ -1,11 +1,13 @@
 <?php
+
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Onboarding\Application;
-use function NewfoldLabs\WP\ModuleLoader\register;
 use NewfoldLabs\WP\Module\Onboarding\ModuleController;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Scan;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Safe_Mode;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Status;
+
+use function NewfoldLabs\WP\ModuleLoader\register;
 
 /**
  * Register Onboarding with Newfold Module Loader
