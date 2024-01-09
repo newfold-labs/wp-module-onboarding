@@ -280,7 +280,6 @@ class SettingsController {
 		}
 		$social_data['other_social_urls'] = $filtered_social_urls;
 		return $social_data;
-
 	}
 
 	/**
@@ -355,5 +354,4 @@ class SettingsController {
 
 		return false;
 	}
-
 }

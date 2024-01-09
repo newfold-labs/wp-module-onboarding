@@ -3,7 +3,6 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
-use function NewfoldLabs\WP\ModuleLoader\container;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginActivationTaskManager;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginInstallTaskManager;
@@ -15,6 +14,8 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 use NewfoldLabs\WP\Module\Onboarding\Data\SiteFeatures;
+
+use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
  * Class for providing plugin related services.
@@ -161,13 +162,12 @@ class PluginService {
 		// Add hook to activate plugins after transient is deleted
 		add_filter(
 			'option_active_plugins',
-			function( $plugins ) {
+			function ( $plugins ) {
 				if ( '1' === get_transient( Options::get_option_name( 'filter_active_plugins' ) ) ) {
 					return array( container()->plugin()->basename );
 				}
 				return $plugins;
 			}
 		);
-
 	}
 }

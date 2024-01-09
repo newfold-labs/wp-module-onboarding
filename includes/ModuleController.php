@@ -43,16 +43,10 @@ class ModuleController {
 				// Deactivate the Module
 				deactivate( $module_name );
 			}
-		} else {
-
-			// Check if the Module Does Exist
-			if ( ModuleRegistry::get( $module_name ) ) {
-
+		} elseif ( ModuleRegistry::get( $module_name ) ) {
 				// Activate the Module
 				activate( $module_name );
-			}
 		}
-
 	}
 
 	/**
@@ -109,7 +103,7 @@ class ModuleController {
 	 * @return boolean
 	 */
 	public static function is_brand_eligible( $brand_name ) {
-		if ( false !== strpos( $brand_name, 'hostgator' ) && 'hostgator-br' !== $brand_name && 'hostgator-us' !== $brand_name  ) {
+		if ( false !== strpos( $brand_name, 'hostgator' ) && 'hostgator-br' !== $brand_name && 'hostgator-us' !== $brand_name ) {
 			return false;
 		}
 

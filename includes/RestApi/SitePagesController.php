@@ -11,8 +11,6 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Services\WonderBlocksService;
  * Class SitePagesController
  */
 class SitePagesController {
-
-
 	/**
 	 * The namespace of this controller's route.
 	 *
@@ -118,7 +116,6 @@ class SitePagesController {
 		}
 
 		return true;
-
 	}
 
 	/**
