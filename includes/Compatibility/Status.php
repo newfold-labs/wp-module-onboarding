@@ -60,5 +60,4 @@ class Status {
 	public static function reset() {
 		\delete_option( Options::get_option_name( 'compatibility_results' ) );
 	}
-
 }

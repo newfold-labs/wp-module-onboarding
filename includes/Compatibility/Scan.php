@@ -109,7 +109,5 @@ class Scan {
 		if ( 'scan-initiated' === $this->result ) {
 			$this->result = 'compatible';
 		}
-
 	}
-
 }
