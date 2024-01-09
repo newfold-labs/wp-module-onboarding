@@ -114,7 +114,6 @@ class SiteGenController {
 
 		// TODO Implement the main function and do computations if required.
 		return SiteGenService::instantiate_site_meta( $site_info, $identifier, $skip_cache );
-
 	}
 
 	/**
