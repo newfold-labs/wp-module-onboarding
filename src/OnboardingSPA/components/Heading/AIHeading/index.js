@@ -1,3 +1,5 @@
+import { memo } from '@wordpress/element';
+
 const AIHeading = ( { title } ) => {
 	return (
 		<div className={ 'ai-heading' }>
@@ -7,4 +9,4 @@ const AIHeading = ( { title } ) => {
 	);
 };
 
-export default AIHeading;
+export default memo( AIHeading );

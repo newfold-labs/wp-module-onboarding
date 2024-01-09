@@ -40,15 +40,21 @@ const SiteGenSiteDetails = () => {
 		setDrawerActiveView( false );
 
 		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
+			setIsValidInput( true );
+			setFooterNavEnabled( true );
 			return setCustomerInput( currentData.sitegen.siteDetails.prompt );
 		}
 		setFooterNavEnabled( false );
 	}, [] );
 
 	useEffect( () => {
-		setFooterNavEnabled( isValidInput );
-		currentData.sitegen.siteDetails.prompt = customerInput;
-		setCurrentOnboardingData( currentData );
+		if ( customerInput?.trim() === '' ) {
+			setFooterNavEnabled( false );
+		} else {
+			setFooterNavEnabled( isValidInput );
+			currentData.sitegen.siteDetails.prompt = customerInput?.trim();
+			setCurrentOnboardingData( currentData );
+		}
 	}, [ customerInput ] );
 
 	return (

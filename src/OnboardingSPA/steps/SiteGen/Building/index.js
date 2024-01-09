@@ -1,6 +1,6 @@
 import CommonLayout from '../../../components/Layouts/Common';
 
-import { useEffect } from '@wordpress/element';
+import { memo, useEffect } from '@wordpress/element';
 
 import { useDispatch } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
@@ -42,4 +42,4 @@ const SiteGenBuilding = () => {
 	);
 };
 
-export default SiteGenBuilding;
+export default memo( SiteGenBuilding );
