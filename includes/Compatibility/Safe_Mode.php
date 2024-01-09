@@ -33,7 +33,6 @@ class Safe_Mode {
 
 		// Cleanup and Redirect to Onboarding once core has updated successfully via manual DB upgrade. See wp-admin/upgrade.php
 		\add_action( 'load-about.php', array( self::class, 'handle_redirect' ) );
-
 	}
 
 	/**

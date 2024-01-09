@@ -11,33 +11,33 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Themes\Colors;
 class ThemeColorsController extends \WP_REST_Controller {
 
 
-	 /**
-	  * The namespace of this controller's route.
-	  *
-	  * @var string
-	  */
-	 protected $namespace = 'newfold-onboarding/v1';
+	/**
+	 * The namespace of this controller's route.
+	 *
+	 * @var string
+	 */
+	protected $namespace = 'newfold-onboarding/v1';
 
-	 /**
-	  * The base of this controller's route.
-	  *
-	  * @var string
-	  */
-	 protected $rest_base = '/themes';
-
-
-	 /**
-	  * The extended base of this controller's route.
-	  *
-	  * @var string
-	  */
-	 protected $rest_extended_base = '/colors';
+	/**
+	 * The base of this controller's route.
+	 *
+	 * @var string
+	 */
+	protected $rest_base = '/themes';
 
 
+	/**
+	 * The extended base of this controller's route.
+	 *
+	 * @var string
+	 */
+	protected $rest_extended_base = '/colors';
 
-	 /**
-	  * Registers routes for ThemeColorsController
-	  */
+
+
+	/**
+	 * Registers routes for ThemeColorsController
+	 */
 	public function register_routes() {
 		\register_rest_route(
 			$this->namespace,
@@ -52,13 +52,13 @@ class ThemeColorsController extends \WP_REST_Controller {
 		);
 	}
 
-	 /**
-	  * Retrieves the active theme color variations.
-	  *
-	  * @return array|\WP_Error
-	  */
+	/**
+	 * Retrieves the active theme color variations.
+	 *
+	 * @return array|\WP_Error
+	 */
 	public function get_theme_colors() {
-		 $theme_color_palettes = Colors::get_colors_from_theme();
-		 return $theme_color_palettes;
+		$theme_color_palettes = Colors::get_colors_from_theme();
+		return $theme_color_palettes;
 	}
 }

@@ -3,7 +3,6 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
-use function NewfoldLabs\WP\ModuleLoader\container;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginActivationTaskManager;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginInstallTaskManager;
@@ -11,8 +10,12 @@ use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginDeactivationTaskManager;
 use NewfoldLabs\WP\Module\Installer\Tasks\PluginActivationTask;
 use NewfoldLabs\WP\Module\Installer\Tasks\PluginDeactivationTask;
 use NewfoldLabs\WP\Module\Installer\Tasks\PluginInstallTask;
+use NewfoldLabs\WP\Module\Onboarding\Data\Data;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 use NewfoldLabs\WP\Module\Onboarding\Data\SiteFeatures;
+
+use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
  * Class for providing plugin related services.
@@ -25,8 +28,18 @@ class PluginService {
 	 */
 	public static function initialize() {
 
-		// Get the initial list of plugins to be installed based on the plan.
-		$init_plugins = array_merge( Plugins::get_init(), SiteFeatures::get_init() );
+		$init_plugins = array();
+
+		$flow = Data::current_flow();
+		if ( 'sitegen' === $flow && SiteGenService::is_enabled() ) {
+			$init_plugins = SiteGenService::get_plugin_recommendations();
+			if ( is_wp_error( $init_plugins ) ) {
+				return $init_plugins;
+			}
+		} else {
+			// Get the initial list of plugins to be installed based on the plan.
+			$init_plugins = array_merge( Plugins::get_init(), SiteFeatures::get_init() );
+		}
 
 		foreach ( $init_plugins as $init_plugin ) {
 			$init_plugin_type = PluginInstaller::get_plugin_type( $init_plugin['slug'] );
@@ -37,14 +50,14 @@ class PluginService {
 					PluginInstallTaskManager::add_to_queue(
 						new PluginInstallTask(
 							$init_plugin['slug'],
-							true,
+							$init_plugin['activate'],
 							$init_plugin['priority']
 						)
 					);
 					continue;
 			}
 
-			if ( PluginInstaller::is_active( $init_plugin_path ) ) {
+			if ( ! $init_plugin['activate'] && PluginInstaller::is_active( $init_plugin_path ) ) {
 				PluginDeactivationTaskManager::add_to_queue(
 					new PluginDeactivationTask(
 						$init_plugin['slug']
@@ -120,15 +133,16 @@ class PluginService {
 	/**
 	 * Sets up a Transient to activate plugins and filter_active_plugins
 	 *
-	 * @return boolean
+	 * @return void
 	 */
 	public static function configure_activation_transient() {
 		global $pagenow;
 
 		switch ( $pagenow ) {
 			case 'index.php':
-				// If the page is nfd-onboarding
-				if ( isset( $_GET['page'] ) && WP_Admin::$slug === \sanitize_text_field( $_GET['page'] ) ) {
+				// If the page is nfd-onboarding. Ignore lint since WP_Admin::$slug is a static string.
+				// phpcs:ignore
+				if ( isset( $_GET['page'] ) && ( WP_Admin::$slug === \sanitize_text_field( $_GET['page'] ) ) ) {
 					if ( '1' !== get_transient( Options::get_option_name( 'filter_active_plugins' ) ) ) {
 						set_transient( Options::get_option_name( 'filter_active_plugins' ), '1', 20 * MINUTE_IN_SECONDS );
 					}
@@ -136,8 +150,11 @@ class PluginService {
 				break;
 			default:
 				if ( '1' === get_transient( Options::get_option_name( 'filter_active_plugins' ) ) ) {
-					delete_transient( Options::get_option_name( 'filter_active_plugins' ) );
-					self::activate_init_plugins();
+					$flow = Data::current_flow();
+					if ( 'sitegen' !== $flow ) {
+						delete_transient( Options::get_option_name( 'filter_active_plugins' ) );
+						self::activate_init_plugins();
+					}
 				}
 				break;
 		}
@@ -145,13 +162,12 @@ class PluginService {
 		// Add hook to activate plugins after transient is deleted
 		add_filter(
 			'option_active_plugins',
-			function( $plugins ) {
+			function ( $plugins ) {
 				if ( '1' === get_transient( Options::get_option_name( 'filter_active_plugins' ) ) ) {
 					return array( container()->plugin()->basename );
 				}
 				return $plugins;
 			}
 		);
-
 	}
 }

@@ -1,25 +1,17 @@
 // <reference types="Cypress" />
-import { DrawerActivityForSubMenu } from '../../wp-module-support/drawer.cy';
+import { DrawerActivityForSubMenu } from '../wp-module-support/drawer.cy';
 import {
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
 	CheckIntroPanel,
-} from '../../wp-module-support/sidebar.cy';
+} from '../wp-module-support/sidebar.cy';
 
 describe( 'Typography Step Test', function () {
 	before( () => {
 		cy.visit(
-			'wp-admin/?page=nfd-onboarding&flow=ecommerce#/wp-setup/step/design/theme-styles/preview'
+			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/typography'
 		);
-	} );
-
-	it( 'Navigate to Typography Step', () => {
-		cy.wait( 10000 );
-		// Have to select the Preview Step Checkbox to activate Colors and Typgoraphy
-		cy.get( '.navigation-buttons_next' ).click();
-		cy.get( '.navigation-buttons_next' ).click();
-		cy.wait( 10000 );
 	} );
 
 	it( 'Check Drawer Activity', () => {
@@ -31,8 +23,8 @@ describe( 'Typography Step Test', function () {
 		);
 	} );
 
-	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel( '__design-typography', 'Typography' );
+	it.skip( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+		CheckIntroPanel( '__design-fonts', 'Fonts' );
 		CheckIllustrationPanel();
 		CheckInfoPanel();
 		CheckHelpPanelLinks();

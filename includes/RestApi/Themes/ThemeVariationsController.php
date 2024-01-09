@@ -63,12 +63,12 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	 * @return array
 	 */
 	public function get_pattern_args() {
-		  return array(
-			  'variations' => array(
-				  'type'    => 'boolean',
-				  'default' => false,
-			  ),
-		  );
+			return array(
+				'variations' => array(
+					'type'    => 'boolean',
+					'default' => false,
+				),
+			);
 	}
 
 	/**
@@ -77,16 +77,16 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	 * @return array
 	 */
 	public function set_pattern_args() {
-		 return array(
-			 'title'    => array(
-				 'type'     => 'string',
-				 'required' => true,
-			 ),
-			 'settings' => array(
-				 'type'     => 'object',
-				 'required' => true,
-			 ),
-		 );
+		return array(
+			'title'    => array(
+				'type'     => 'string',
+				'required' => true,
+			),
+			'settings' => array(
+				'type'     => 'object',
+				'required' => true,
+			),
+		);
 	}
 
 	/**
@@ -188,5 +188,4 @@ class ThemeVariationsController extends \WP_REST_Controller {
 			'Settings parameter is found to be missing'
 		);
 	}
-
 }
