@@ -101,6 +101,9 @@ const ExitToWordPress = ( {
 				}
 			}
 			setFlow( currentData );
+			if ( true === currentData?.data?.comingSoon ) {
+				await window.NewfoldRuntime.comingSoon.enable();
+			}
 		}
 		activateInitialPlugins();
 		trackOnboardingEvent(

@@ -22,17 +22,25 @@ const StepComplete = () => {
 	const navigate = useNavigate();
 	const [ isError, setIsError ] = useState( false );
 
-	const { nextStep, brandName, isQueueEmpty } = useSelect( ( select ) => {
-		return {
-			nextStep: select( nfdOnboardingStore ).getNextStep(),
-			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
-			isQueueEmpty: select( nfdOnboardingStore ).isQueueEmpty(),
-		};
-	}, [] );
+	const { nextStep, brandName, isQueueEmpty, currentData } = useSelect(
+		( select ) => {
+			return {
+				nextStep: select( nfdOnboardingStore ).getNextStep(),
+				brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+				isQueueEmpty: select( nfdOnboardingStore ).isQueueEmpty(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			};
+		},
+		[]
+	);
 
 	const contents = getContents( brandName );
 
 	const checkFlowComplete = async () => {
+		if ( true === currentData?.data?.comingSoon ) {
+			await window.NewfoldRuntime.comingSoon.enable();
+		}
 		await Promise.all( [ completeFlowRequest() ] ).then( ( values ) =>
 			values.forEach( ( value ) => {
 				// If any Request returns False then Show Error

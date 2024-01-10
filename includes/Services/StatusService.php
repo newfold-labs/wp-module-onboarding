@@ -10,6 +10,30 @@ use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 class StatusService {
 
 	/**
+	 * Handle Onboarding started event.
+	 *
+	 * @return void
+	 */
+	private static function handle_started() {
+		if ( 'started' !== get_option( Options::get_option_name( 'status' ) ) ) {
+			update_option( Options::get_option_name( 'status' ), 'started' );
+			do_action( 'newfold/onboarding/started' );
+		}
+	}
+
+	/**
+	 * Handles Onboarding completed event.
+	 *
+	 * @return void
+	 */
+	private static function handle_completed() {
+		if ( 'started' === get_option( Options::get_option_name( 'status' ) ) ) {
+			update_option( Options::get_option_name( 'status' ), 'completed' );
+			do_action( 'newfold/onboarding/completed' );
+		}
+	}
+
+	/**
 	 * Begin tracking the Onboarding status in an option.
 	 *
 	 * @return void
@@ -24,19 +48,15 @@ class StatusService {
 		switch ( $pagenow ) {
 			case 'index.php':
 				// If the page is nfd-onboarding
+				//phpcs:ignore
 				if ( isset( $_GET['page'] ) && WP_Admin::$slug === \sanitize_text_field( $_GET['page'] ) ) {
-					if ( 'started' !== get_option( Options::get_option_name( 'status' ) ) ) {
-						update_option( Options::get_option_name( 'status' ), 'started' );
-							do_action( 'newfold/onboarding/started' );
-					}
+					self::handle_started();
+				} else {
+					self::handle_completed();
 				}
 				break;
 			default:
-				if ( 'started' === get_option( Options::get_option_name( 'status' ) ) ) {
-					update_option( Options::get_option_name( 'status' ), 'completed' );
-						do_action( 'newfold/onboarding/completed' );
-				}
-				break;
+				self::handle_completed();
 		}
 	}
 }
