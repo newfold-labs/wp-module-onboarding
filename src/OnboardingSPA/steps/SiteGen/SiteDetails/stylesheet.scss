@@ -56,7 +56,7 @@
 		line-height: 20px;
 		letter-spacing: 0;
 		text-align: center;
-		color: #ffffff;
+		color: #fff;
 		display: flex;
 
 		@media (max-width: #{ ($break-small) }) {
@@ -79,7 +79,7 @@
 		letter-spacing: 0;
 		margin-left: 5px;
 		background: #1e2327;
-		color: #ffffff;
+		color: #fff;
 		text-decoration: underline;
 		border: none;
 		cursor: pointer;
