@@ -18,6 +18,7 @@ const SiteGenSiteDetails = () => {
 	const content = getContents();
 	const isLargeViewport = useViewportMatch( 'small' );
 	const [ customerInput, setCustomerInput ] = useState();
+	const [ isValidInput, setIsValidInput ] = useState( false );
 	const [ isWalkthrough, setIsWalkthrough ] = useState( false );
 	const [ siteDetailsmeta, setSiteDetailsmeta ] = useState();
 	const { currentData } = useSelect( ( select ) => {
@@ -54,7 +55,7 @@ const SiteGenSiteDetails = () => {
 			customerInput !== undefined &&
 			customerInput !== currentData.sitegen.siteDetails.prompt
 		) {
-			setFooterNavEnabled( customerInput !== '' );
+			setFooterNavEnabled( isValidInput );
 			currentData.sitegen.siteDetails.prompt = customerInput;
 			currentData.sitegen.siteDetails.mode = 'simple';
 			setCurrentOnboardingData( currentData );
@@ -83,49 +84,26 @@ const SiteGenSiteDetails = () => {
 	return (
 		<CommonLayout isCentered>
 			<Animate type={ 'fade-in' }>
-				{ isWalkthrough ? (
-					<SiteGenSiteDetailsWalkthrough
-						siteDetailsmeta={ siteDetailsmeta }
+				<div className={ 'nfd-sg-site-details' }>
+					<AIHeading title={ content.heading } />
+					<TextInputSiteGen
+						placeholder={ content.inputPlaceholder }
+						hint={ content.inputHint }
+						height={ '40px' }
+						customerInput={ customerInput }
+						setIsValidInput={ setIsValidInput }
+						setCustomerInput={ setCustomerInput }
 					/>
-				) : (
-					<div className={ 'nfd-sg-site-details' }>
-						<AIHeading title={ content.heading } />
-						<TextInputSiteGen
-							placeholder={ content.inputPlaceholder }
-							hint={ content.inputHint }
-							height={ '40px' }
-							customerInput={ customerInput }
-							setCustomerInput={ setCustomerInput }
-						/>
-						{ isLargeViewport && (
-							<>
-								<div className={ 'nfd-sg-site-details-endrow' }>
-									<NextButtonSiteGen
-										className={
-											'nfd-sg-site-details--next-btn'
-										}
-										text={ content.buttonText }
-										disabled={
-											customerInput === undefined ||
-											customerInput === ''
-										}
-									/>
-								</div>
-							</>
-						) }
-						<div className={ 'nfd-sg-site-details-walkThrough' }>
-							{ content.walkThroughText }
-							<span
-								onClick={ handleClickWalkThrough }
-								onKeyDown={ handleClickWalkThrough }
-								role="button"
-								tabIndex="0"
-							>
-								{ content.walkThroughlink }
-							</span>
+					{ isLargeViewport && (
+						<div className={ 'nfd-sg-site-details-endrow' }>
+							<NextButtonSiteGen
+								className={ 'nfd-sg-site-details--next-btn' }
+								text={ content.buttonText }
+								disabled={ ! isValidInput }
+							/>
 						</div>
-					</div>
-				) }
+					) }
+				</div>
 			</Animate>
 		</CommonLayout>
 	);
