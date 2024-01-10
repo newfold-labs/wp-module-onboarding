@@ -159,7 +159,7 @@ const SiteGenPreview = () => {
 
 	// Use useMemo to memoize the previewSettings
 	const previewSettings = useMemo( () => {
-		return homepages.data.map( ( homepage ) =>
+		return homepages?.data.map( ( homepage ) =>
 			createPreviewSettings( homepage?.color?.palette )
 		);
 	}, [ homepages.data, globalStyles ] );
