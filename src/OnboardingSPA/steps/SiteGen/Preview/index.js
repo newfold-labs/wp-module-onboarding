@@ -58,9 +58,23 @@ const SiteGenPreview = () => {
 						currentData.sitegen.siteDetails.prompt,
 						false
 					);
-					setHomepages( { ...homepages, data: response.body } ); // Update the local state with the response data
-					currentData.sitegen.homepages.data = response.body;
-					setCurrentOnboardingData( currentData );
+
+					if ( response && response.body ) {
+						setHomepages( { ...homepages, data: response.body } );
+						currentData.sitegen.homepages.data = response.body;
+						setCurrentOnboardingData( currentData );
+					} else if ( response && response.error ) {
+						// Log the error message
+						console.error(
+							'Error:',
+							response.error.message || 'Unknown error'
+						);
+					} else {
+						console.error(
+							'Invalid response format or missing data'
+						);
+					}
+
 					setIsPreviewLoading( false );
 				} catch ( error ) {
 					setIsPreviewLoading( false );

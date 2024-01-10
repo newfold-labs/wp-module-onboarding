@@ -194,24 +194,27 @@ class SiteGenController {
 
 		$site_description = $request->get_param( 'site_description' );
 		$regenerate       = $request->get_param( 'regenerate' );
-		$site_info        = array( 'site_info' => array( 'site_description' => $site_description ) );
-
+		$site_info        = array( 'site_description' => $site_description );
+		
 		// If the option exists and is not empty, return it.
 		$existing_homepages = get_option( Options::get_option_name( 'sitegen_homepages' ), array() );
 		if ( ! empty( $existing_homepages ) && ! $regenerate ) {
 			return new \WP_REST_Response( $existing_homepages, 200 );
 		}
-
-		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'targetaudience', true );
-		$content_style   = SiteGenService::instantiate_site_meta( $site_info, 'contenttones', true );
-
-		if ( ! $target_audience || ! $content_style ) {
+		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', true );
+		$content_style   = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', true );
+		if ( ! $target_audience || is_wp_error( $target_audience ) ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
 				__( 'Required data is missing.', 'wp-module-onboarding' ),
-				array(
-					'status' => 400,
-				)
+				array( 'status' => 400 )
+			);
+		}
+		if ( ! $content_style  || is_wp_error( $content_style ) ) {
+			return new \WP_Error(
+				'nfd_onboarding_error',
+				__( 'Required data is missing.', 'wp-module-onboarding' ),
+				array( 'status' => 400 )
 			);
 		}
 
@@ -240,17 +243,23 @@ class SiteGenController {
 		$regenerate_slug           = $request->get_param( 'slug' );
 		$regenerate_color_palattes = $request->get_param( 'colorPalettes' );
 		$is_favourite              = $request->get_param( 'isFavourited' );
-		$site_info                 = array( 'site_info' => array( 'site_description' => $site_description ) );
-		$target_audience           = SiteGenService::instantiate_site_meta( $site_info, 'targetaudience', true );
-		$content_style             = SiteGenService::instantiate_site_meta( $site_info, 'contenttones', true );
+		$site_info                 = array( 'site_description' => $site_description );
+		$target_audience           = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', true );
+		$content_style             = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', true );
 
-		if ( ! $target_audience || ! $content_style ) {
+		if ( ! $target_audience || is_wp_error( $target_audience ) ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
 				__( 'Required data is missing.', 'wp-module-onboarding' ),
-				array(
-					'status' => 400,
-				)
+				array( 'status' => 400 )
+			);
+		}
+
+		if ( ! $content_style  || is_wp_error( $content_style ) ) {
+			return new \WP_Error(
+				'nfd_onboarding_error',
+				__( 'Required data is missing.', 'wp-module-onboarding' ),
+				array( 'status' => 400 )
 			);
 		}
 
@@ -263,9 +272,9 @@ class SiteGenController {
 		if ( null === $result ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
-				__( 'Error processing request.', 'wp-module-onboarding' ),
+				__( 'Error at Regenerating home pages.', 'wp-module-onboarding' ),
 				array(
-					'status' => 500,
+					'status' => 400,
 				)
 			);
 		}
@@ -288,7 +297,7 @@ class SiteGenController {
 			$error_message = $response->get_error_message();
 			return new \WP_Error(
 				'nfd_onboarding_error',
-				__( 'Failed at updating Favourite status', 'wp-module-onboarding' ),
+				__( 'Error at updating Favourite status', 'wp-module-onboarding' ),
 				array(
 					'status' => 404,
 				)
