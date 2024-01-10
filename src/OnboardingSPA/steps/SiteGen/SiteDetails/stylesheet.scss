@@ -56,7 +56,7 @@
 		line-height: 20px;
 		letter-spacing: 0;
 		text-align: center;
-		color: white;
+		color: #ffffff;
 		display: flex;
 
 		@media (max-width: #{ ($break-small) }) {
@@ -79,7 +79,7 @@
 		letter-spacing: 0;
 		margin-left: 5px;
 		background: #1e2327;
-		color: white;
+		color: #ffffff;
 		text-decoration: underline;
 		border: none;
 		cursor: pointer;
@@ -116,7 +116,7 @@
 			height: 40px;
 			border: soild #9ca2a7 1px;
 			border-radius: 8px;
-			background-color:rgba(var(--nfd-onboarding-secondary-rgb),0.3);
+			background-color: rgba(var(--nfd-onboarding-secondary-rgb), 0.3);
 			// opacity: 0.25;
 			color: var(--nfd-onboarding-primary);
 			font-weight: 400;
@@ -138,7 +138,7 @@
 			line-height: 19px;
 			letter-spacing: 0;
 			text-align: left;
-			color: rgba(var(--nfd-onboarding-primary-rgb),0.5);;
+			color: rgba(var(--nfd-onboarding-primary-rgb), 0.5);
 
 		}
 

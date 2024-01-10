@@ -45,7 +45,7 @@ const SiteGenSiteDetails = () => {
 		setFooterNavEnabled( false );
 		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
 			setCustomerInput( currentData.sitegen.siteDetails.prompt );
-			setFooterNavEnabled( true );
+			setFooterNavEnabled( isValidInput );
 		}
 	}, [] );
 
@@ -84,26 +84,47 @@ const SiteGenSiteDetails = () => {
 	return (
 		<CommonLayout isCentered>
 			<Animate type={ 'fade-in' }>
-				<div className={ 'nfd-sg-site-details' }>
-					<AIHeading title={ content.heading } />
-					<TextInputSiteGen
-						placeholder={ content.inputPlaceholder }
-						hint={ content.inputHint }
-						height={ '40px' }
-						customerInput={ customerInput }
-						setIsValidInput={ setIsValidInput }
-						setCustomerInput={ setCustomerInput }
+				{ isWalkthrough ? (
+					<SiteGenSiteDetailsWalkthrough
+						siteDetailsmeta={ siteDetailsmeta }
 					/>
-					{ isLargeViewport && (
-						<div className={ 'nfd-sg-site-details-endrow' }>
-							<NextButtonSiteGen
-								className={ 'nfd-sg-site-details--next-btn' }
-								text={ content.buttonText }
-								disabled={ ! isValidInput }
-							/>
+				) : (
+					<div className={ 'nfd-sg-site-details' }>
+						<AIHeading title={ content.heading } />
+						<TextInputSiteGen
+							placeholder={ content.inputPlaceholder }
+							hint={ content.inputHint }
+							height={ '40px' }
+							customerInput={ customerInput }
+							setIsValidInput={ setIsValidInput }
+							setCustomerInput={ setCustomerInput }
+						/>
+						{ isLargeViewport && (
+							<>
+								<div className={ 'nfd-sg-site-details-endrow' }>
+									<NextButtonSiteGen
+										className={
+											'nfd-sg-site-details--next-btn'
+										}
+										text={ content.buttonText }
+										disabled={ ! isValidInput }
+									/>
+								</div>
+							</>
+						) }
+						<div className={ 'nfd-sg-site-details-walkThrough' }>
+							{ content.walkThroughText }
+							<span
+								onClick={ handleClickWalkThrough }
+								onKeyDown={ handleClickWalkThrough }
+								role="button"
+								tabIndex="0"
+							>
+								{ content.walkThroughlink }
+							</span>
 						</div>
-					) }
-				</div>
+					</div>
+				) }
 			</Animate>
 		</CommonLayout>
 	);
