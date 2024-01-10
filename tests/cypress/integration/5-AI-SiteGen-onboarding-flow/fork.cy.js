@@ -31,6 +31,12 @@ describe( 'SiteGen Fork Step', function () {
         cy.get( '.nfd-onboarding-step__heading__subtitle' ).should('be.visible');
     } );
 
+    it ( 'Check the number of container options available', () => {
+        cy.get( '.nfd-onboarding-sitegen-options__container__options' )
+            .should( 'be.visible' )
+            .should('have.length', 3);
+    } );
+
     it( 'Check for selection of different container options', () => {
         let options = 0;
         const className = '.nfd-onboarding-sitegen-options__container__options';
