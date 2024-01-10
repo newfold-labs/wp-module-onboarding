@@ -1,6 +1,6 @@
 // <reference types="Cypress" />
 
-import { AdminBarCheck, DarkBGCheck, LightBGChcek } from "../wp-module-support/siteGenBG.cy";
+import { AdminBarCheck, DarkBGCheck, LightBGChcek, OptionsDetails } from "../wp-module-support/siteGen.cy";
 
 describe( 'SiteGen Fork Step', function () {
 	before( () => {
@@ -30,19 +30,6 @@ describe( 'SiteGen Fork Step', function () {
     it ( 'Check for the subheading', () => {
         cy.get( '.nfd-onboarding-step__heading__subtitle' ).should('be.visible');
     } );
-
-    const OptionsDetails = (className,textValue,optionsValue) => {
-        cy.get(className)
-            .eq(optionsValue)
-            .find('.nfd-onboarding-sitegen-options__container__heading__title')
-            .invoke( 'text' )
-            .should('contain', textValue);
-        if(optionsValue!=2){   // Excluding the Last Option as it takes to new tab, just validating the title text
-            cy.get(className)
-                .eq(optionsValue)
-                .click();
-        };
-    };
 
     it( 'Check for selection of different container options', () => {
         let options = 0;

@@ -21,3 +21,16 @@ export const LightBGChcek = () => {
         .click();
     cy.get('.nfd-onboarding-sitegen-dark').should('be.visible');
 };
+
+export  const OptionsDetails = (className,textValue,optionsValue) => {
+    cy.get(className)
+        .eq(optionsValue)
+        .find('.nfd-onboarding-sitegen-options__container__heading__title')
+        .invoke( 'text' )
+        .should('contain', textValue);
+    if(optionsValue!=2){   // Excluding the Last Option as it takes to new tab, just validating the title text
+        cy.get(className)
+            .eq(optionsValue)
+            .click();
+    };
+};
