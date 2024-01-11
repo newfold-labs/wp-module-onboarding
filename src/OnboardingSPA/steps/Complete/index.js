@@ -38,7 +38,10 @@ const StepComplete = () => {
 	const contents = getContents( brandName );
 
 	const checkFlowComplete = async () => {
-		if ( true === currentData?.data?.comingSoon ) {
+		if (
+			true === currentData?.data?.comingSoon &&
+			window.NewfoldRuntime?.comingSoon
+		) {
 			await window.NewfoldRuntime.comingSoon.enable();
 		}
 		await Promise.all( [ completeFlowRequest() ] ).then( ( values ) =>

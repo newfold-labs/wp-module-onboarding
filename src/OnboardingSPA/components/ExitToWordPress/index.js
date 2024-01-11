@@ -101,7 +101,10 @@ const ExitToWordPress = ( {
 				}
 			}
 			setFlow( currentData );
-			if ( true === currentData?.data?.comingSoon ) {
+			if (
+				true === currentData?.data?.comingSoon &&
+				window.NewfoldRuntime?.comingSoon
+			) {
 				await window.NewfoldRuntime.comingSoon.enable();
 			}
 		}

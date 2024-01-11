@@ -29,7 +29,10 @@ const ChapterInterstitialLoader = () => {
 		if ( currentData ) {
 			currentData.isComplete = new Date().getTime();
 			setFlow( currentData );
-			if ( true === currentData?.data?.comingSoon ) {
+			if (
+				true === currentData?.data?.comingSoon &&
+				window.NewfoldRuntime?.comingSoon
+			) {
 				window.NewfoldRuntime.comingSoon.enable();
 			}
 		}
