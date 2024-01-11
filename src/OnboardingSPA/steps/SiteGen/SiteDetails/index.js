@@ -15,6 +15,7 @@ const SiteGenSiteDetails = () => {
 	const content = getContents();
 	const isLargeViewport = useViewportMatch( 'small' );
 	const [ customerInput, setCustomerInput ] = useState();
+	const [ isValidInput, setIsValidInput ] = useState( false );
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
@@ -39,15 +40,21 @@ const SiteGenSiteDetails = () => {
 		setDrawerActiveView( false );
 
 		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
+			setIsValidInput( true );
+			setFooterNavEnabled( true );
 			return setCustomerInput( currentData.sitegen.siteDetails.prompt );
 		}
 		setFooterNavEnabled( false );
 	}, [] );
 
 	useEffect( () => {
-		setFooterNavEnabled( customerInput !== '' );
-		currentData.sitegen.siteDetails.prompt = customerInput;
-		setCurrentOnboardingData( currentData );
+		if ( customerInput?.trim() === '' ) {
+			setFooterNavEnabled( false );
+		} else {
+			setFooterNavEnabled( isValidInput );
+			currentData.sitegen.siteDetails.prompt = customerInput?.trim();
+			setCurrentOnboardingData( currentData );
+		}
 	}, [ customerInput ] );
 
 	return (
@@ -60,6 +67,7 @@ const SiteGenSiteDetails = () => {
 						hint={ content.inputHint }
 						height={ '40px' }
 						customerInput={ customerInput }
+						setIsValidInput={ setIsValidInput }
 						setCustomerInput={ setCustomerInput }
 					/>
 					{ isLargeViewport && (
@@ -67,10 +75,7 @@ const SiteGenSiteDetails = () => {
 							<NextButtonSiteGen
 								className={ 'nfd-sg-site-details--next-btn' }
 								text={ content.buttonText }
-								disabled={
-									customerInput === undefined ||
-									customerInput === ''
-								}
+								disabled={ ! isValidInput }
 							/>
 						</div>
 					) }

@@ -11,6 +11,7 @@ import {
 	HEADER_TOP,
 } from '../../../constants';
 import { stepSiteGenEditor } from '../../steps/SiteGen/Editor/step';
+import { SITEGEN_FLOW } from '../../data/flows/constants';
 
 const Header = () => {
 	const { headers, headerActiveView, isHeaderEnabled, currentStep } =
@@ -25,6 +26,7 @@ const Header = () => {
 		} );
 
 	const isEditorStep = currentStep === stepSiteGenEditor;
+	const isSitegenFlow = window.nfdOnboarding.currentFlow === SITEGEN_FLOW;
 
 	return (
 		<>
@@ -40,9 +42,15 @@ const Header = () => {
 			<Slot name={ `${ headerActiveView }/${ HEADER_TOP }` } />
 			{ isHeaderEnabled && (
 				<div
-					className={ classNames( 'nfd-onboarding-header', {
-						'nfd-onboarding-header--dark': isEditorStep,
-					} ) }
+					className={ classNames(
+						'nfd-onboarding-header',
+						{
+							'nfd-onboarding-header--dark': isEditorStep,
+						},
+						{
+							'nfd-onboarding-header--sitegen': isSitegenFlow,
+						}
+					) }
 				>
 					<div className="nfd-onboarding-header__start">
 						<Slot
