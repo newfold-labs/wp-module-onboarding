@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable react-hooks/rules-of-hooks */
 import CommonLayout from '../../../components/Layouts/Common';
 
 import { useEffect, useState, useMemo } from '@wordpress/element';
@@ -226,7 +224,6 @@ const SiteGenPreview = () => {
 							/>
 						);
 					}
-					// Optionally return null or some other placeholder if newPreviewSettings is empty
 					return null;
 				} )
 		);
@@ -238,7 +235,6 @@ const SiteGenPreview = () => {
 
 	return (
 		<CommonLayout className="nfd-onboarding-step--site-gen__preview">
-			{ /* <SiteGenPlaceholder heading={ 'Previews' } /> */ }
 			<div className="nfd-onboarding-step--site-gen__preview__container">
 				<div className="nfd-onboarding-step--site-gen__preview__container__heading">
 					<p className="nfd-onboarding-step--site-gen__preview__container__heading__text">
