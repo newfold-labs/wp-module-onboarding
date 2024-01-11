@@ -85,17 +85,17 @@ const DesignFonts = () => {
 
 		if (
 			globalStylesCopy?.styles?.typography?.fontFamily &&
-			globalStylesCopy?.styles?.blocks[ 'core/heading' ]?.typography
-				?.fontFamily
+			globalStylesCopy?.styles?.blocks[ 'core/heading' ]
 		) {
 			globalStylesCopy.styles.typography.fontFamily =
 				fontPalettesCopy[ fontStyle ]?.styles?.typography?.fontFamily;
-			globalStylesCopy.styles.blocks[
-				'core/heading'
-			].typography.fontFamily =
-				fontPalettesCopy[ fontStyle ]?.styles.blocks[
-					'core/heading'
-				].typography.fontFamily;
+			globalStylesCopy.styles.blocks[ 'core/heading' ] = {
+				...globalStylesCopy.styles.blocks[ 'core/heading' ],
+				typography:
+					fontPalettesCopy[ fontStyle ]?.styles.blocks[
+						'core/heading'
+					].typography,
+			};
 		}
 
 		if (
