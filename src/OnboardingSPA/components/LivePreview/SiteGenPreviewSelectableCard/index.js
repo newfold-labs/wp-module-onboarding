@@ -3,7 +3,7 @@ import { search, Icon, reusableBlock } from '@wordpress/icons';
 import { useState } from '@wordpress/element';
 import { useNavigate } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { LivePreview } from '..';
+import { BlockPreviewSiteGen } from '..';
 import Button from '../../../components/Button';
 import { store as nfdOnboardingStore } from '../../../store';
 import { ReactComponent as FavouriteIconStroked } from '../../../static/icons/sitegen/heart-stroked.svg';
@@ -23,6 +23,7 @@ const SiteGenPreviewSelectableCard = ( {
 	designObject,
 	handleFavorite,
 	handlePreview,
+	isRegenerating,
 } ) => {
 	const { setActiveHomepage } = useDispatch( nfdOnboardingStore );
 	const [ loadingParent, setIsLoadingParent ] = useState( true );
@@ -37,6 +38,13 @@ const SiteGenPreviewSelectableCard = ( {
 	const onPreviewVersionClick = () => {
 		setActiveHomepage( designObject );
 		navigate( nextStep.path );
+	};
+	const handleRegenerate = () => {
+		onRegenerateClick(
+			designObject?.slug,
+			designObject?.color,
+			designObject?.isFavourited
+		);
 	};
 
 	return (
@@ -56,13 +64,14 @@ const SiteGenPreviewSelectableCard = ( {
 			} }
 		>
 			<div className={ `${ className }__live-preview-container` }>
-				<LivePreview
+				<BlockPreviewSiteGen
 					styling={ styling }
 					blockGrammer={ blockGrammer }
 					viewportWidth={ viewportWidth }
 					previewSettings={ previewSettings }
 					setIsLoadingParent={ setIsLoadingParent }
 					skeletonLoadingTime={ skeletonLoadingTime }
+					isRegenerating={ isRegenerating }
 				/>
 				{ overlay && ! loadingParent && (
 					<div
@@ -79,12 +88,14 @@ const SiteGenPreviewSelectableCard = ( {
 							onClick={ () => handlePreview() }
 						>
 							<Icon icon={ search } />
-							Preview Version
+							{ __( 'Preview Version', 'wp-module-onboarding' ) }
 						</Button>
 					</div>
 				) }
 				<div
-					className={ `${ className }__live-preview-container-buttons` }
+					className={ `${ className }__live-preview-container-buttons ${
+						isRegenerating ? 'disabled' : ''
+					}` }
 				>
 					<div
 						role="button"
@@ -98,30 +109,22 @@ const SiteGenPreviewSelectableCard = ( {
 						aria-label="Add to Wishlist"
 						className={ `${ className }__live-preview-container-buttons__button` }
 					>
-						{ designObject?.isFavourited ? (
-							<FavouriteIconFilled />
-						) : (
-							<FavouriteIconStroked />
-						) }
-						{ designObject?.title }
+						<span>
+							{ designObject?.isFavourited ? (
+								<FavouriteIconFilled />
+							) : (
+								<FavouriteIconStroked />
+							) }
+						</span>
+						<span>{ designObject?.title }</span>
 					</div>
 					<div
 						role="button"
 						tabIndex="0"
-						onClick={ () =>
-							onRegenerateClick(
-								designObject?.slug,
-								designObject?.color,
-								designObject?.isFavourited
-							)
-						}
+						onClick={ () => handleRegenerate() }
 						onKeyDown={ ( event ) => {
 							if ( event.key === 'Enter' ) {
-								onRegenerateClick(
-									designObject?.slug,
-									designObject?.color,
-									designObject?.isFavourited
-								);
+								handleRegenerate();
 							}
 						} }
 						aria-label={ __(
