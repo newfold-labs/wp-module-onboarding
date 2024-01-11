@@ -14,7 +14,7 @@ class StatusService {
 	 *
 	 * @return void
 	 */
-	private static function handle_started() {
+	public static function handle_started() {
 		if ( 'started' !== get_option( Options::get_option_name( 'status' ) ) ) {
 			update_option( Options::get_option_name( 'status' ), 'started' );
 			do_action( 'newfold/onboarding/started' );
@@ -26,7 +26,7 @@ class StatusService {
 	 *
 	 * @return void
 	 */
-	private static function handle_completed() {
+	public static function handle_completed() {
 		if ( 'started' === get_option( Options::get_option_name( 'status' ) ) ) {
 			update_option( Options::get_option_name( 'status' ), 'completed' );
 			do_action( 'newfold/onboarding/completed' );
@@ -47,11 +47,9 @@ class StatusService {
 
 		switch ( $pagenow ) {
 			case 'index.php':
-				// If the page is nfd-onboarding
+				// If the page is not nfd-onboarding.
 				//phpcs:ignore
-				if ( isset( $_GET['page'] ) && WP_Admin::$slug === \sanitize_text_field( $_GET['page'] ) ) {
-					self::handle_started();
-				} else {
+				if ( ! isset( $_GET['page'] ) || WP_Admin::$slug !== \sanitize_text_field( $_GET['page'] ) ) {
 					self::handle_completed();
 				}
 				break;
