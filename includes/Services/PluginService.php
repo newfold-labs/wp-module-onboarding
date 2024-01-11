@@ -3,7 +3,6 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
-use function NewfoldLabs\WP\ModuleLoader\container;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginActivationTaskManager;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginInstallTaskManager;
@@ -13,6 +12,8 @@ use NewfoldLabs\WP\Module\Installer\Tasks\PluginDeactivationTask;
 use NewfoldLabs\WP\Module\Installer\Tasks\PluginInstallTask;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 use NewfoldLabs\WP\Module\Onboarding\Data\SiteFeatures;
+
+use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
  * Class for providing plugin related services.
@@ -120,7 +121,7 @@ class PluginService {
 	/**
 	 * Sets up a Transient to activate plugins and filter_active_plugins
 	 *
-	 * @return boolean
+	 * @return void
 	 */
 	public static function configure_activation_transient() {
 		global $pagenow;
@@ -128,6 +129,7 @@ class PluginService {
 		switch ( $pagenow ) {
 			case 'index.php':
 				// If the page is nfd-onboarding
+				// phpcs:ignore
 				if ( isset( $_GET['page'] ) && WP_Admin::$slug === \sanitize_text_field( $_GET['page'] ) ) {
 					if ( '1' !== get_transient( Options::get_option_name( 'filter_active_plugins' ) ) ) {
 						set_transient( Options::get_option_name( 'filter_active_plugins' ), '1', 20 * MINUTE_IN_SECONDS );
@@ -145,13 +147,12 @@ class PluginService {
 		// Add hook to activate plugins after transient is deleted
 		add_filter(
 			'option_active_plugins',
-			function( $plugins ) {
+			function ( $plugins ) {
 				if ( '1' === get_transient( Options::get_option_name( 'filter_active_plugins' ) ) ) {
 					return array( container()->plugin()->basename );
 				}
 				return $plugins;
 			}
 		);
-
 	}
 }

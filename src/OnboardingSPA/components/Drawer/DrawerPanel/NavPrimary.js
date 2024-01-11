@@ -5,6 +5,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 
 import { store as nfdOnboardingStore } from '../../../store';
 import classNames from 'classnames';
+import ExitToWordPress from '../../ExitToWordPress';
 import Animate from '../../Animate';
 
 const NavPrimary = () => {
@@ -18,6 +19,11 @@ const NavPrimary = () => {
 	const { setDrawerActiveView } = useDispatch( nfdOnboardingStore );
 	return (
 		<Animate type={ 'fade-in' } duration="100ms" timingFunction="ease-in">
+			<ExitToWordPress
+				buttonClassName="nfd-onboarding-drawer__panel-back"
+				buttonVariant="tertiary"
+				origin="drawer-panel"
+			/>
 			<div className="nfd-onboarding-drawer__panel-menu">
 				<ul className="nfd-onboarding-drawer__panel-routes">
 					{ topSteps.map( ( step ) => {

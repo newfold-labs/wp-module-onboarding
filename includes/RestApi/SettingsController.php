@@ -112,49 +112,6 @@ class SettingsController {
 				),
 			)
 		);
-
-		\register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/coming-soon',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'set_coming_soon' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-					'args'                => $this->set_coming_soon_params(),
-				),
-			)
-		);
-	}
-
-	/**
-	 * Set query params for coming soon route.
-	 *
-	 * @return array
-	 */
-	public function set_coming_soon_params() {
-		return array(
-			'comingSoon' => array(
-				'type'     => 'boolean',
-				'required' => true,
-			),
-		);
-	}
-	/**
-	 * Endpoint to set Coming Soon for a website.
-	 *
-	 * @param \WP_REST_Request $request Request model.
-	 *
-	 * @return \WP_REST_Response|\WP_Error
-	 */
-	public function set_coming_soon( \WP_REST_Request $request ) {
-
-		$new_value = ( $request->get_param( 'comingSoon' ) ) ? 'true' : 'false';
-		update_option( 'nfd_coming_soon', $new_value );
-		return new \WP_REST_Response(
-			array(),
-			200
-		);
 	}
 
 	/**
@@ -280,7 +237,6 @@ class SettingsController {
 		}
 		$social_data['other_social_urls'] = $filtered_social_urls;
 		return $social_data;
-
 	}
 
 	/**
@@ -355,5 +311,4 @@ class SettingsController {
 
 		return false;
 	}
-
 }

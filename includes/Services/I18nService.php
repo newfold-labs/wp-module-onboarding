@@ -39,6 +39,5 @@ class I18nService {
 			$domain,
 			$languages_dir
 		);
-
 	}
 }

@@ -158,7 +158,7 @@ const App = () => {
 	function handleConditionalDesignStepsRoutes() {
 		if (
 			location?.pathname.includes( 'colors' ) ||
-			location?.pathname.includes( 'fonts' )
+			location?.pathname.includes( 'typography' )
 		) {
 			const updates = injectInAllSteps(
 				allSteps,
