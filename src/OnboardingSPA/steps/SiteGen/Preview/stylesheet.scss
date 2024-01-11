@@ -169,4 +169,8 @@
 		display: flex;
 		gap: 8px;
 	}
+
+	&.regenerating-site-card-skeleton {
+		padding: 0;
+	}
 }

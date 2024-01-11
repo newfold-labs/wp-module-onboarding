@@ -195,7 +195,6 @@ class SiteGenController {
 		$site_description = $request->get_param( 'site_description' );
 		$regenerate       = $request->get_param( 'regenerate' );
 		$site_info        = array( 'site_description' => $site_description );
-		
 		// If the option exists and is not empty, return it.
 		$existing_homepages = get_option( Options::get_option_name( 'sitegen_homepages' ), array() );
 		if ( ! empty( $existing_homepages ) && ! $regenerate ) {
@@ -210,7 +209,7 @@ class SiteGenController {
 				array( 'status' => 400 )
 			);
 		}
-		if ( ! $content_style  || is_wp_error( $content_style ) ) {
+		if ( ! $content_style || is_wp_error( $content_style ) ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
 				__( 'Required data is missing.', 'wp-module-onboarding' ),
@@ -255,7 +254,7 @@ class SiteGenController {
 			);
 		}
 
-		if ( ! $content_style  || is_wp_error( $content_style ) ) {
+		if ( ! $content_style || is_wp_error( $content_style ) ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
 				__( 'Required data is missing.', 'wp-module-onboarding' ),

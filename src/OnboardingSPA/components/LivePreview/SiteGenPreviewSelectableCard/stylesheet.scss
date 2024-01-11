@@ -79,6 +79,13 @@
 			flex-direction: row;
 			justify-content: space-between;
 			height: 40px;
+			opacity: 1;
+
+			&.disabled {
+				pointer-events: none;
+				cursor: not-allowed;
+				opacity: 0.5;
+			}
 
 			&__button {
 				display: flex;

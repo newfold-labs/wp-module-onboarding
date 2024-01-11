@@ -64,15 +64,9 @@ const SiteGenPreview = () => {
 						currentData.sitegen.homepages.data = response.body;
 						setCurrentOnboardingData( currentData );
 					} else if ( response && response.error ) {
-						// Log the error message
-						console.error(
-							'Error:',
-							response.error.message || 'Unknown error'
-						);
+						setHomepages( { ...homepages, data: [] } );
 					} else {
-						console.error(
-							'Invalid response format or missing data'
-						);
+						/* Handle Error UI state */
 					}
 
 					setIsPreviewLoading( false );
@@ -150,9 +144,24 @@ const SiteGenPreview = () => {
 						colorPalattes,
 						isFavourited
 					);
-					setHomepages( { ...homepages.data, data: response.body } ); // Update the local state with the response data
-					currentData.sitegen.homepages.data = response.body;
-					setCurrentOnboardingData( currentData );
+
+					if (
+						response &&
+						response.body &&
+						response.body.length > 0
+					) {
+						setHomepages( {
+							...homepages.data,
+							data: response.body,
+						} );
+						currentData.sitegen.homepages.data = response.body;
+						setCurrentOnboardingData( currentData );
+					} else if ( response && response.error ) {
+						/* Handle Error UI state */
+					} else {
+						/* Handle Error UI state */
+					}
+
 					setIsRegenerating( false );
 				} catch ( error ) {
 					setIsRegenerating( false );
@@ -185,14 +194,7 @@ const SiteGenPreview = () => {
 			);
 		}
 
-		const designs = isRegenerating
-			? [
-					<RegeneratingSiteCard
-						count={ 1 }
-						isRegenerating={ isRegenerating }
-					/>,
-			  ]
-			: [];
+		const designs = [];
 		designs.push(
 			homepages.data &&
 				homepages.data.map( ( homepage, idx ) => {
@@ -220,6 +222,7 @@ const SiteGenPreview = () => {
 								handleFavorite={ handleFavorite }
 								previewSettings={ previewSettings[ idx ] }
 								handlePreview={ handlePreview }
+								isRegenerating={ isRegenerating }
 							/>
 						);
 					}
@@ -250,6 +253,9 @@ const SiteGenPreview = () => {
 			</div>
 			<div className="nfd-onboarding-step--site-gen__preview__options">
 				{ buildPreviews() }
+				{ isRegenerating && (
+					<RegeneratingSiteCard count={ 1 } isRegenerating={ true } />
+				) }
 			</div>
 			<div className="nfd-onboarding-step--site-gen__preview__note">
 				<HeartAnimation />
