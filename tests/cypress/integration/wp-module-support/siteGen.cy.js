@@ -34,3 +34,36 @@ export  const OptionsDetails = (className,textValue,optionsValue) => {
             .click();
     };
 };
+
+export const ProgressBarCheck = ( WidthPercent ) => {
+    cy.get('.nfd-onboarding-header__progress-bar').should('be.visible');
+    cy.get('.nfd-onboarding-header__progress-bar__progress')
+      .invoke('attr', 'style')
+      .then((styleAttribute) => {
+        const value = styleAttribute.match(/width:\s*([\d.]+%)/)[1];
+        expect(value).equal(WidthPercent);
+      });
+};
+
+export const BackButtonCheck = (currURL) => {
+    cy.get('.nfd-onboarding-button--dark')
+        .should('be.visible')
+        .click();
+    cy.url().should('not.contain', currURL);
+    cy.go('back');
+};
+
+export const SkipButtonCheck = (currURL) => {
+    cy.get('.skip-button')
+        .should('be.visible')
+        .contains('Skip for now')
+        .click();
+    cy.url().should('not.contain', currURL);
+    cy.go('back');
+};
+
+export const DisabledNextButton = () => {
+    cy.get('.nfd-onboarding-button--site-gen-next--disabled')
+        .should('be.visible')
+        .contains( 'Next' );
+};
