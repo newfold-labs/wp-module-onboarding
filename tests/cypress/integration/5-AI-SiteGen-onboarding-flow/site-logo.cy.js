@@ -61,6 +61,10 @@ describe( 'SiteGen Site Logo Step', function () {
                         .scrollIntoView()
 						.should( 'be.visible' );
 				} );
+        cy.get('.nfd-onboarding-button--site-gen-next')
+            .should('not.be.disabled')
+            .click();
+        cy.url().should('not.contain', 'sitgen/step/site-logo');
     });
 
 });
