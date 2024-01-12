@@ -200,8 +200,9 @@ class SiteGenController {
 		if ( ! empty( $existing_homepages ) && ! $regenerate ) {
 			return new \WP_REST_Response( $existing_homepages, 200 );
 		}
-		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', true );
-		$content_style   = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', true );
+		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience' );
+		$content_style   = SiteGenService::instantiate_site_meta( $site_info, 'content_tones' );
+
 		if ( ! $target_audience || is_wp_error( $target_audience ) ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
@@ -243,8 +244,8 @@ class SiteGenController {
 		$regenerate_color_palattes = $request->get_param( 'colorPalettes' );
 		$is_favourite              = $request->get_param( 'isFavourited' );
 		$site_info                 = array( 'site_description' => $site_description );
-		$target_audience           = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', true );
-		$content_style             = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', true );
+		$target_audience           = SiteGenService::instantiate_site_meta( $site_info, 'target_audience' );
+		$content_style             = SiteGenService::instantiate_site_meta( $site_info, 'content_tones' );
 
 		if ( ! $target_audience || is_wp_error( $target_audience ) ) {
 			return new \WP_Error(

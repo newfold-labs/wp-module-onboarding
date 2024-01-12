@@ -14,7 +14,7 @@ export async function getSiteGenIdentifiers() {
 export async function generateSiteGenMeta(
 	siteInfo,
 	identifier,
-	skipCache = false
+	skipCache = true
 ) {
 	return await resolve(
 		apiFetch( {
