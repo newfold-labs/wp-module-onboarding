@@ -2,7 +2,7 @@
 
 import { AdminBarCheck, BackButtonCheck, DarkBGCheck, DisabledNextButton, LightBGChcek, ProgressBarCheck, SkipButtonCheck } from "../wp-module-support/siteGen.cy";
 
-describe( 'SiteGen Fork Step', function () {
+describe( 'SiteGen Site Logo Step', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/sitgen/step/site-logo'
