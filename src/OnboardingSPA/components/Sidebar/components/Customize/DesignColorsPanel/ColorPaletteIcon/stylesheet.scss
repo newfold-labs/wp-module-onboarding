@@ -1,4 +1,4 @@
-.nfd-onboarding-sidebar-customize--color-palette-icon {
+.nfd-onboarding-sidebar--customize__color-palette-icon {
 
 	&__container {
 		text-align: center;
@@ -18,12 +18,12 @@
 			height: 45px;
 			border-radius: 50%;
 			cursor: pointer;
-			box-shadow: 0 0 0 2px #fff, 0 0 0 4px #035fef;
+			box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--nfd-onboarding-sitegen-customize-icon-selected);
 		}
 
 		p {
 			margin-top: 8px;
-			color: #808080;
+			color: var(--nfd-onboarding-sitegen-customize-default-text-color);
 		}
 	}
 

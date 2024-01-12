@@ -1,8 +1,9 @@
-import { useSelect } from '@wordpress/data';
-import { lazy } from '@wordpress/element';
+import { useDispatch } from '@wordpress/data';
+import { lazy, useEffect, useState } from '@wordpress/element';
 
 import { store as nfdOnboardingStore } from '../../../../../store';
 import getContents from './contents';
+import { getCustomizeSidebarData } from '../../../../../utils/api/siteGen';
 
 const DesignFontsPanel = lazy( () =>
 	import(
@@ -16,22 +17,25 @@ const DesignColorsPanel = lazy( () =>
 );
 
 const Customize = () => {
-	// eslint-disable-next-line no-unused-vars
-	const { techSupportLink, fullServiceCreativeTeamLink, brandConfig } =
-		useSelect( ( select ) => {
-			return {
-				techSupportLink:
-					select( nfdOnboardingStore ).getTechSupportUrl(),
-				fullServiceCreativeTeamLink:
-					select(
-						nfdOnboardingStore
-					).getfullServiceCreativeTeamUrl(),
-				brandConfig:
-					select( nfdOnboardingStore ).getNewfoldBrandConfig(),
-			};
-		} );
+	const [ loading, setLoading ] = useState( true );
+	const { updateCustomizeSidebarData } = useDispatch( nfdOnboardingStore );
 
-	const content = getContents( techSupportLink, fullServiceCreativeTeamLink );
+	const loadData = async () => {
+		const customizeSidebarData = await getCustomizeSidebarData();
+		updateCustomizeSidebarData( customizeSidebarData?.body );
+		setLoading( false );
+	};
+
+	useEffect( () => {
+		loadData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [] );
+
+	if ( loading ) {
+		return <div>...</div>;
+	}
+
+	const content = getContents();
 	return (
 		<div className="nfd-onboarding-sidebar-learn-more__design-colors">
 			<DesignColorsPanel heading={ content.introduction.heading } />

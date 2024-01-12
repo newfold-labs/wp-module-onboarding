@@ -11,13 +11,12 @@ import { getGlobalStyles } from '../../../utils/api/themes';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { cloneDeep } from 'lodash';
-import { getCustomizeSidebarData } from '../../../utils/api/siteGen';
 
 const StepSiteGenEditor = () => {
 	const [ activeHomepage, setActiveHomepage ] = useState();
 	const [ colorPalette, setColorPalette ] = useState();
 	const [ globalStyles, setGlobalStyles ] = useState( [] );
-	const { setIsHeaderEnabled, setHeaderActiveView, setDrawerActiveView, updateCustomizeSidebarData } =
+	const { setIsHeaderEnabled, setHeaderActiveView, setDrawerActiveView } =
 		useDispatch( nfdOnboardingStore );
 
 	const { currentData } = useSelect( ( select ) => {
@@ -36,13 +35,11 @@ const StepSiteGenEditor = () => {
 		const globalStylesResponse = await getGlobalStyles();
 		setGlobalStyles( globalStylesResponse.body );
 		setColorPalette( homepage.color.palette );
-		const customizeSidebarData = await getCustomizeSidebarData();
-
-		updateCustomizeSidebarData( customizeSidebarData?.body );
 	};
 
 	useEffect( () => {
 		loadData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
 
 	useEffect( () => {
@@ -57,6 +54,26 @@ const StepSiteGenEditor = () => {
 		const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
 		newPreviewSettings.settings.color.palette =
 			activeHomepage.color.palette;
+
+		if ( activeHomepage && activeHomepage.styles ) {
+			if (
+				activeHomepage.styles.blocks &&
+				activeHomepage.styles.blocks.length > 0
+			) {
+				const firstBlock = activeHomepage.styles.blocks[ 0 ];
+				if ( firstBlock[ 'core/heading' ] ) {
+					newPreviewSettings.styles.blocks[
+						'core/heading'
+					].typography.fontFamily =
+						firstBlock[ 'core/heading' ].typography.fontFamily;
+				}
+				if ( firstBlock[ 'core/body' ] ) {
+					newPreviewSettings.styles.typography.fontFamily =
+						firstBlock[ 'core/body' ].typography.fontFamily;
+				}
+			}
+		}
+
 		return (
 			<LivePreview
 				blockGrammer={ activeHomepage.content }

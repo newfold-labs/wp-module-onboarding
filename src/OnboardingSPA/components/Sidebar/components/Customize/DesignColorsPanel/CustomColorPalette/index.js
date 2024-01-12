@@ -10,7 +10,7 @@ const CustomColorPalette = ( {
 } ) => {
 	const [ color, setColor ] = useState( palettePrimaryColors[ 0 ].color );
 	const baseClassName =
-		'nfd-onboarding-sidebar-customize--custom-color-palette';
+		'nfd-onboarding-sidebar--customize__custom-color-palette';
 	const colors = [
 		{
 			colors: palettePrimaryColors,

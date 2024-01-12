@@ -1,6 +1,6 @@
-.nfd-onboarding-sidebar-customize {
+.nfd-onboarding-sidebar--customize {
 
-	&--design-colors-panel {
+	&__design-colors-panel {
 		border: none;
 
 		&__container {
@@ -37,11 +37,11 @@
 				justify-content: flex-end;
 
 				.cancel {
-					color: #44494d;
+					color: var(--nfd-onboarding-sitegen-customize-primary-button-color);
 				}
 
 				.is-primary {
-					background-color: #44494d;
+					background-color: var(--nfd-onboarding-sitegen-customize-primary-button-color);
 					border-radius: 5px;
 				}
 			}
@@ -52,7 +52,7 @@
 			text-align: center;
 
 			button {
-				border: 1px solid #9ca2a7;
+				border: 1px solid var(--nfd-onboarding-sitegen-customize-grey-1);
 				border-radius: 8px;
 				width: 100%;
 				display: block;
@@ -74,7 +74,7 @@
 					padding: 0;
 					text-decoration: underline;
 					cursor: pointer;
-					color: #007cba;
+					color: var(--nfd-onboarding-sitegen-customize-link-text-color);
 				}
 			}
 		}
