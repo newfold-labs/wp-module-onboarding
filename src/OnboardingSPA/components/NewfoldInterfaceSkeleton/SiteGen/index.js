@@ -62,7 +62,11 @@ const SiteGen = () => {
 		}
 	}
 
-	async function performSiteGenMetaGeneration( siteInfo, identifier, retryCount = 1 ) {
+	async function performSiteGenMetaGeneration(
+		siteInfo,
+		identifier,
+		retryCount = 1
+	) {
 		return new Promise( () =>
 			generateSiteGenMeta( siteInfo, identifier )
 				.then( ( data ) => {
@@ -70,7 +74,11 @@ const SiteGen = () => {
 						currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
 						setCurrentOnboardingData( currentData );
 					} else if ( retryCount < MAX_RETRIES_SITE_GEN ) {
-						performSiteGenMetaGeneration( siteInfo, identifier, retryCount + 1 );
+						performSiteGenMetaGeneration(
+							siteInfo,
+							identifier,
+							retryCount + 1
+						);
 					}
 				} )
 				.catch( ( err ) => {
