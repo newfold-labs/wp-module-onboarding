@@ -93,6 +93,23 @@ const SiteGenPreview = () => {
 		navigate( nextStep.path );
 	};
 
+	const scrollSelectionIntoView = () => {
+		if (
+			document.getElementsByClassName(
+				'nfd-onboarding-step--site-gen__preview__note'
+			)
+		) {
+			document
+				.getElementsByClassName(
+					'nfd-onboarding-step--site-gen__preview__note'
+				)[ 0 ]
+				.scrollIntoView( {
+					behavior: 'smooth',
+					block: 'end',
+				} );
+		}
+	};
+
 	const updateFavoriteStatus = ( slug, homepagesList ) => {
 		homepagesList.forEach( ( homepageObj ) => {
 			if ( homepageObj.slug === slug ) {
@@ -131,6 +148,7 @@ const SiteGenPreview = () => {
 	};
 
 	const handleRegenerate = async ( slug, colorPalattes, isFavourited ) => {
+		scrollSelectionIntoView();
 		setIsRegenerating( true );
 		if ( ! ( slug in homepages.data ) ) {
 			if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
