@@ -247,13 +247,13 @@ const DesignFontsPanel = ( {
 
 	const handleUpdatePreviewSettings = () => {
 		let headings;
-		// let body;
+		let body;
 		if ( selectedGroup === 'custom' ) {
 			headings = customFont.headings;
-			// body = customFont.body;
+			body = customFont.body;
 		} else {
 			headings = fontGroups[ selectedGroup ].headings;
-			// body = fontGroups[ selectedGroup ].body;
+			body = fontGroups[ selectedGroup ].body;
 		}
 		const slug = currentData.sitegen.homepages.active.slug;
 
@@ -265,6 +265,11 @@ const DesignFontsPanel = ( {
 						'core/heading': {
 							typography: {
 								fontFamily: headings,
+							},
+						},
+						'core/body': {
+							typography: {
+								fontFamily: body,
 							},
 						},
 					},
@@ -281,6 +286,11 @@ const DesignFontsPanel = ( {
 								fontFamily: headings,
 							},
 						},
+						'core/body': {
+							typography: {
+								fontFamily: body,
+							},
+						},
 					},
 				],
 			},
@@ -289,7 +299,7 @@ const DesignFontsPanel = ( {
 	};
 
 	useEffect( () => {
-		if ( selectedGroup ) {
+		if ( selectedGroup !== null && selectedGroup !== undefined ) {
 			handleUpdatePreviewSettings();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
