@@ -51,6 +51,7 @@ export const HEADER_END = 'HeaderEnd';
 export const FOOTER_START = 'FooterStart';
 export const FOOTER_END = 'FooterEnd';
 
+export const MAX_RETRIES_SITE_GEN = 2;
 export const MAX_RETRIES_API_QUEUER = 2;
 export const MAX_RETRIES_SETTINGS_INIT = 2;
 export const MAX_RETRIES_FLOW_SWITCH = 2;

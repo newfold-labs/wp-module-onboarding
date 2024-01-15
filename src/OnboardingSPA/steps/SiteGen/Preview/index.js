@@ -1,38 +1,35 @@
 import CommonLayout from '../../../components/Layouts/Common';
 
-import { useNavigate } from 'react-router-dom';
-
-import { useEffect, useState } from '@wordpress/element';
-
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useEffect, useState, useMemo } from '@wordpress/element';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
+import { useNavigate } from 'react-router-dom';
 
-import LivePreviewSiteGenCard from '../../../components/LivePreview/SiteGenCard';
-
+import { SiteGenLivePreview } from '../../../components/LivePreview';
 import getContents from './contents';
+import HeartAnimation from './heartAnimation';
+import RegeneratingSiteCard from './regeneratingCard';
 import {
-	getHomepages,
-	getRandom,
-} from '../../../data/sitegen/homepages/homepages';
-import { getColorPalettes } from '../../../data/sitegen/sitemeta/siteMeta';
+	getHomePagePreviews,
+	getRegeneratedHomePagePreviews,
+	toggleFavoriteHomepage,
+} from '../../../utils/api/siteGen';
 import { getGlobalStyles } from '../../../utils/api/themes';
-
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { isEmpty, cloneDeep } from 'lodash';
-import Grid from '../../../components/Grid';
 
 const SiteGenPreview = () => {
 	const navigate = useNavigate();
-	const [ homepages, setHomepages ] = useState();
+	const [ homepages, setHomepages ] = useState( { active: {}, data: [] } );
+	const [ isRegenerating, setIsRegenerating ] = useState( false );
+	const [ isPreviewLoading, setIsPreviewLoading ] = useState( false );
 	const [ globalStyles, setGlobalStyles ] = useState( [] );
+
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
 		setHeaderActiveView,
 		setDrawerActiveView,
 		setCurrentOnboardingData,
-		updateInitialize,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData, nextStep } = useSelect( ( select ) => {
@@ -43,52 +40,47 @@ const SiteGenPreview = () => {
 		};
 	} );
 
-	const loadData = async () => {
-		let homepagesObject = {};
-		if ( isEmpty( currentData.sitegen.homepages.data ) ) {
-			const homepagesResponse = getHomepages();
-			const colorsResponse = getColorPalettes();
-			homepagesResponse.forEach( ( homepage, index ) => {
-				if ( ! homepage?.color ) {
-					const paletteKeys = Object.keys( colorsResponse );
-					const paletteIndex =
-						paletteKeys[ index % paletteKeys.length ];
-					homepage.color = {
-						slug: paletteIndex,
-						palette: colorsResponse[ paletteIndex ],
-					};
-				}
-			} );
-			homepagesResponse.forEach( ( homepage ) => {
-				homepagesObject[ homepage.slug ] = homepage;
-			} );
-			currentData.sitegen.homepages.data = homepagesObject;
-			setCurrentOnboardingData( currentData );
-		} else {
-			homepagesObject = currentData.sitegen.homepages.data;
-		}
-		const globalStylesResponse = await getGlobalStyles();
-		setGlobalStyles( globalStylesResponse.body );
-
-		setHomepages( homepagesObject );
-	};
-
 	useEffect( () => {
 		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
-		updateInitialize( true );
-		loadData();
+	}, [ currentData ] );
+
+	useEffect( () => {
+		const fetchHomePagesPatterns = async () => {
+			setIsPreviewLoading( true );
+			if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
+				try {
+					const response = await getHomePagePreviews(
+						currentData.sitegen.siteDetails.prompt,
+						false
+					);
+
+					if ( response && response.body ) {
+						setHomepages( { ...homepages, data: response.body } );
+						currentData.sitegen.homepages.data = response.body;
+						setCurrentOnboardingData( currentData );
+					} else if ( response && response.error ) {
+						setHomepages( { ...homepages, data: [] } );
+					} else {
+						/* Handle Error UI state */
+					}
+
+					setIsPreviewLoading( false );
+				} catch ( error ) {
+					setIsPreviewLoading( false );
+				}
+			}
+		};
+
+		fetchHomePagesPatterns();
+		loadGlobalStyles();
 	}, [] );
 
-	const handleFavorite = ( slug ) => {
-		if ( ! ( slug in homepages ) ) {
-			return false;
-		}
-		homepages[ slug ].favorite = ! homepages[ slug ].favorite;
-		currentData.sitegen.homepages.data = homepages;
-		setCurrentOnboardingData( currentData );
+	const loadGlobalStyles = async () => {
+		const globalStylesResponse = await getGlobalStyles();
+		setGlobalStyles( globalStylesResponse.body );
 	};
 
 	const handlePreview = ( slug ) => {
@@ -101,67 +93,187 @@ const SiteGenPreview = () => {
 		navigate( nextStep.path );
 	};
 
-	const handleRegenerate = ( slug ) => {
-		if ( ! ( slug in homepages ) ) {
-			return false;
+	const scrollSelectionIntoView = () => {
+		if (
+			document.getElementsByClassName(
+				'nfd-onboarding-step--site-gen__preview__note'
+			)
+		) {
+			document
+				.getElementsByClassName(
+					'nfd-onboarding-step--site-gen__preview__note'
+				)[ 0 ]
+				.scrollIntoView( {
+					behavior: 'smooth',
+					block: 'end',
+				} );
 		}
-		const page = { ...homepages };
-		const newPage = getRandom( { ...page[ slug ] } );
-		page[ newPage.slug ] = newPage;
-		setHomepages( page );
-		currentData.sitegen.homepages.data = page;
-		setCurrentOnboardingData( currentData );
+	};
+
+	const updateFavoriteStatus = ( slug, homepagesList ) => {
+		homepagesList.forEach( ( homepageObj ) => {
+			if ( homepageObj.slug === slug ) {
+				homepageObj.isFavourited = ! homepageObj.isFavourited;
+			}
+		} );
+		setCurrentOnboardingData( { ...currentData } );
+	};
+
+	const handleToggleFavoriteSuccess = ( response, slug, homepagesList ) => {
+		if ( ! response ) {
+			updateFavoriteStatus( slug, homepagesList );
+		}
+	};
+
+	const handleToggleFavoriteError = ( error, slug, homepagesList ) => {
+		updateFavoriteStatus( slug, homepagesList );
+		// eslint-disable-next-line no-console
+		console.error( error );
+	};
+
+	const handleFavorite = ( slug ) => {
+		const homepagesList = currentData.sitegen.homepages.data;
+
+		if ( homepagesList && homepagesList.length > 0 ) {
+			updateFavoriteStatus( slug, homepagesList );
+		}
+
+		toggleFavoriteHomepage( slug )
+			.then( ( response ) =>
+				handleToggleFavoriteSuccess( response, slug, homepagesList )
+			)
+			.catch( ( error ) =>
+				handleToggleFavoriteError( error, slug, homepagesList )
+			);
+	};
+
+	const handleRegenerate = async ( slug, colorPalattes, isFavourited ) => {
+		scrollSelectionIntoView();
+		setIsRegenerating( true );
+		if ( ! ( slug in homepages.data ) ) {
+			if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
+				try {
+					const response = await getRegeneratedHomePagePreviews(
+						currentData.sitegen.siteDetails.prompt,
+						true,
+						slug,
+						colorPalattes,
+						isFavourited
+					);
+
+					if (
+						response &&
+						response.body &&
+						response.body.length > 0
+					) {
+						setHomepages( {
+							...homepages.data,
+							data: response.body,
+						} );
+						currentData.sitegen.homepages.data = response.body;
+						setCurrentOnboardingData( currentData );
+					} else if ( response && response.error ) {
+						/* Handle Error UI state */
+					} else {
+						/* Handle Error UI state */
+					}
+
+					setIsRegenerating( false );
+				} catch ( error ) {
+					setIsRegenerating( false );
+				}
+			}
+		}
+	};
+
+	// Define the createPreviewSettings function inside your component
+	const createPreviewSettings = ( palette ) => {
+		let settings = {};
+		if ( globalStyles.length > 0 ) {
+			settings = JSON.parse( JSON.stringify( globalStyles[ 0 ] ) );
+			settings.settings.color.palette = palette;
+		}
+		return settings;
+	};
+
+	// Use useMemo to memoize the previewSettings
+	const previewSettings = useMemo( () => {
+		return homepages?.data.map( ( homepage ) =>
+			createPreviewSettings( homepage?.color?.palette )
+		);
+	}, [ homepages.data, globalStyles ] );
+
+	const buildPreviews = () => {
+		if ( isPreviewLoading ) {
+			return (
+				<RegeneratingSiteCard count={ 3 } isRegenerating={ false } />
+			);
+		}
+
+		const designs = [];
+		designs.push(
+			homepages.data &&
+				homepages.data.map( ( homepage, idx ) => {
+					let newPreviewSettings = {};
+					if ( globalStyles.length > 0 ) {
+						newPreviewSettings = JSON.parse(
+							JSON.stringify( globalStyles && globalStyles[ 0 ] )
+						);
+						newPreviewSettings.settings.color.palette =
+							homepage.color.palette;
+					}
+					const isPreviewSettingsEmpty =
+						Object.keys( previewSettings[ idx ] ).length === 0;
+					if ( ! isPreviewSettingsEmpty ) {
+						return (
+							<SiteGenLivePreview
+								key={ idx }
+								blockGrammer={ homepage.content }
+								styling={ 'custom' }
+								overlay={ true }
+								onRegenerateClick={ handleRegenerate }
+								tabIndex="0"
+								role="button"
+								designObject={ homepage }
+								handleFavorite={ handleFavorite }
+								previewSettings={ previewSettings[ idx ] }
+								handlePreview={ handlePreview }
+								isRegenerating={ isRegenerating }
+							/>
+						);
+					}
+					return null;
+				} )
+		);
+
+		return designs;
 	};
 
 	const content = getContents();
 
-	const buildPreviews = () => {
-		return Object.keys( homepages ).map( ( homepage ) => {
-			const data = homepages[ homepage ];
-			const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
-			newPreviewSettings.settings.color.palette = data.color.palette;
-			return (
-				<LivePreviewSiteGenCard
-					key={ homepage }
-					viewportWidth={ 1300 }
-					slug={ homepage }
-					title={ data.title }
-					isFavorite={ data.favorite }
-					skeletonLoadingTime={ 2500 }
-					previewSettings={ newPreviewSettings }
-					styling={ 'custom' }
-					blockGrammer={ data.content }
-					onFavorite={ handleFavorite }
-					onPreview={ handlePreview }
-					onRegenerate={ handleRegenerate }
-				/>
-			);
-		} );
-	};
-
 	return (
-		<CommonLayout
-			isCentered
-			className="nfd-onboarding-step--site-gen__preview"
-		>
-			<div className="nfd-onboarding-step--site-gen__preview__context">
-				<p className="nfd-onboarding-step--site-gen__preview__context__heading">
-					{ content.heading }
-				</p>
-				<div className="nfd-onboarding-step--site-gen__preview__context__subheading">
-					{ content.subheading }
+		<CommonLayout className="nfd-onboarding-step--site-gen__preview">
+			<div className="nfd-onboarding-step--site-gen__preview__container">
+				<div className="nfd-onboarding-step--site-gen__preview__container__heading">
+					<p className="nfd-onboarding-step--site-gen__preview__container__heading__text">
+						{ content.heading }
+					</p>
+				</div>
+				<div className="nfd-onboarding-step--site-gen__preview__container__sub-heading">
+					<p className="nfd-onboarding-step--site-gen__preview__container__sub-heading__text">
+						{ content.subheading }
+					</p>
 				</div>
 			</div>
-			<div className="nfd-onboarding-step--site-gen__preview__live_previews">
-				{ homepages && globalStyles && (
-					<Grid size={ 3 }>{ buildPreviews() }</Grid>
+			<div className="nfd-onboarding-step--site-gen__preview__options">
+				{ buildPreviews() }
+				{ isRegenerating && (
+					<RegeneratingSiteCard count={ 1 } isRegenerating={ true } />
 				) }
 			</div>
-			<div className="nfd-onboarding-step--site-gen__preview__favorite-info">
-				<div className="nfd-onboarding-step--site-gen__preview__favorite-info__icon"></div>
-				<p className="nfd-onboarding-step--site-gen__preview__favorite-info__text">
-					{ content.favoriteInfo }
-				</p>
+			<div className="nfd-onboarding-step--site-gen__preview__note">
+				<HeartAnimation />
+				<span>{ content.favouriteNote }</span>
 			</div>
 		</CommonLayout>
 	);

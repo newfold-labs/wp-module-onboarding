@@ -14,7 +14,7 @@ export async function getSiteGenIdentifiers() {
 export async function generateSiteGenMeta(
 	siteInfo,
 	identifier,
-	skipCache = false
+	skipCache = true
 ) {
 	return await resolve(
 		apiFetch( {
@@ -24,6 +24,56 @@ export async function generateSiteGenMeta(
 				site_info: siteInfo,
 				identifier,
 				skip_cache: skipCache,
+			},
+		} ).then()
+	);
+}
+
+export async function getHomePagePreviews(
+	siteDescription,
+	regenerate = false
+) {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/get-homepages' ),
+			method: 'POST',
+			data: {
+				site_description: siteDescription,
+				regenerate,
+			},
+		} ).then()
+	);
+}
+
+export async function getRegeneratedHomePagePreviews(
+	siteDescription,
+	regenerate = true,
+	slug,
+	colorPalettes,
+	isFavourited
+) {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/get-homepages-regenerate' ),
+			method: 'POST',
+			data: {
+				site_description: siteDescription,
+				regenerate,
+				slug,
+				colorPalettes,
+				isFavourited,
+			},
+		} ).then()
+	);
+}
+
+export async function toggleFavoriteHomepage( slug ) {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/favourites' ),
+			method: 'POST',
+			data: {
+				slug,
 			},
 		} ).then()
 	);

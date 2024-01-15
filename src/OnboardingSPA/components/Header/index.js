@@ -1,6 +1,7 @@
 import { Slot } from '@wordpress/components';
 import { Fragment, Suspense } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
+import classNames from 'classnames';
 
 import { store as nfdOnboardingStore } from '../../store';
 import {
@@ -9,7 +10,6 @@ import {
 	HEADER_START,
 	HEADER_TOP,
 } from '../../../constants';
-import classNames from 'classnames';
 import { stepSiteGenEditor } from '../../steps/SiteGen/Editor/step';
 import { SITEGEN_FLOW } from '../../data/flows/constants';
 
@@ -17,11 +17,11 @@ const Header = () => {
 	const { headers, headerActiveView, isHeaderEnabled, currentStep } =
 		useSelect( ( select ) => {
 			return {
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 				headers: select( nfdOnboardingStore ).getHeaders(),
 				headerActiveView:
 					select( nfdOnboardingStore ).getHeaderActiveView(),
 				isHeaderEnabled: select( nfdOnboardingStore ).isHeaderEnabled(),
-				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 			};
 		} );
 

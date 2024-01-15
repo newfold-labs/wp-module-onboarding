@@ -1,3 +1,5 @@
+$nfd-onboarding-editor-header-hover: #272d30;
+
 .nfd-onboarding-header {
 	align-items: center;
 	background-color: var(--nfd-onboarding-header-base);
@@ -23,6 +25,10 @@
 		transition-delay: 80ms;
 
 		@include reduce-motion("transition");
+
+		@media (max-width: #{ ($break-xlarge) }) {
+			padding-left: 4px;
+		}
 	}
 
 	&__start,
@@ -39,16 +45,8 @@
 		display: flex;
 		align-items: center;
 		height: 100%;
-		flex-grow: 1;
-		justify-content: center;
-		min-width: 5px;
-		font-weight: 600;
 		font-size: 20px;
 		line-height: $grid-unit-30;
-
-		svg {
-			margin-right: $grid-unit-10;
-		}
 	}
 
 	&__end {
@@ -117,4 +115,25 @@
 		font-size: 13px;
 		padding: 15px 10px !important;
 	}
+
+	&-editor {
+		padding: 0 13px 0 13px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 8px;
+		cursor: pointer;
+		height: 36px;
+		background-color: var(--nfd-onboarding-navigation-back-background);
+		color: var(--nfd-onboarding-primary);
+		fill: var(--nfd-onboarding-primary);
+		border-radius: 6px;
+
+		&:hover {
+			background-color: var(--nfd-onboarding-primary);
+			color: $nfd-onboarding-editor-header-hover;
+			fill: $nfd-onboarding-editor-header-hover;
+		}
+	}
+
 }

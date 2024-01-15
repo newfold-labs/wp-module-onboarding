@@ -11,20 +11,23 @@ import {
 	FOOTER_END,
 } from '../../../../../constants';
 import NextButtonSiteGen from '../../../Button/NextButtonSiteGen';
+import { stepSiteGenEditor } from '../../.././../steps/SiteGen/Editor/step';
 
 const SiteGenFooter = () => {
 	const isLargeViewport = useViewportMatch( 'small' );
-	const { footerNavEnabled } = useSelect( ( select ) => {
+	const { footerNavEnabled, currentStep } = useSelect( ( select ) => {
 		return {
 			footerNavEnabled:
 				select( nfdOnboardingStore ).getFooterNavEnabled(),
+			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 		};
 	} );
 
+	const isEditorStep = currentStep === stepSiteGenEditor;
 	return (
 		<>
 			<Fill name={ `${ FOOTER_SITEGEN }/${ FOOTER_START }` }>
-				<ToggleDarkMode />
+				{ ! isEditorStep && <ToggleDarkMode /> }
 			</Fill>
 			{ ! isLargeViewport && (
 				<Fill name={ `${ FOOTER_SITEGEN }/${ FOOTER_END }` }>
