@@ -40,7 +40,13 @@ const SiteGenWelcome = () => {
 						{ content.subHeading }
 					</p>
 				</div>
-				<NextButtonSiteGen className={ 'nfd-onboarding-step--site-gen__welcome--button' } text={ content.buttonText } showChevronRight={ false } />
+				<NextButtonSiteGen
+					className={
+						'nfd-onboarding-step--site-gen__welcome--button'
+					}
+					text={ content.buttonText }
+					showChevronRight={ false }
+				/>
 			</div>
 		</CommonLayout>
 	);
