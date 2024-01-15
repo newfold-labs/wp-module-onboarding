@@ -70,7 +70,10 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 			</p>
 			<div className="nfd-onboarding-sitegen-options__container">
 				{ options.map( ( tab, idx ) => {
-					if ( tab.flow === AI_FLOW && ! validateFlow( brandConfig, SITEGEN_FLOW ) ) {
+					if (
+						tab.flow === AI_FLOW &&
+						! validateFlow( brandConfig, SITEGEN_FLOW )
+					) {
 						// Do not show the Sitegen AI option if not enabled for the customer
 						return false;
 					}
