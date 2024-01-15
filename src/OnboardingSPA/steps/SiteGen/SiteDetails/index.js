@@ -74,7 +74,9 @@ const SiteGenSiteDetails = () => {
 						{ isLargeViewport && (
 							<div className={ 'nfd-sg-site-details-endrow' }>
 								<NextButtonSiteGen
-									className={ 'nfd-sg-site-details--next-btn' }
+									className={ 
+										'nfd-sg-site-details--next-btn'
+									}
 									text={ content.buttonText }
 									disabled={ ! isValidInput }
 								/>
