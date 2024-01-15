@@ -38,14 +38,12 @@ const NextButtonSiteGen = ( {
 			} }
 		>
 			{ text }
-		{
-				showChevronRight && (
+			{ showChevronRight && (
 				<Icon
 					className={ 'nfd-onboarding-button--site-gen-next--icon' }
 					icon={ chevronRight }
 				/> 
-				)
-			}
+			)}
 		</Button>
 	);
 };
