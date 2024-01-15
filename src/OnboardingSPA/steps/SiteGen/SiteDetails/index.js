@@ -69,16 +69,18 @@ const SiteGenSiteDetails = () => {
 						customerInput={ customerInput }
 						setIsValidInput={ setIsValidInput }
 						setCustomerInput={ setCustomerInput }
-					/>
-					{ isLargeViewport && (
-						<div className={ 'nfd-sg-site-details-endrow' }>
-							<NextButtonSiteGen
-								className={ 'nfd-sg-site-details--next-btn' }
-								text={ content.buttonText }
-								disabled={ ! isValidInput }
-							/>
-						</div>
-					) }
+						customChildren={ true }
+					>
+						{ isLargeViewport && (
+							<div className={ 'nfd-sg-site-details-endrow' }>
+								<NextButtonSiteGen
+									className={ 'nfd-sg-site-details--next-btn' }
+									text={ content.buttonText }
+									disabled={ ! isValidInput }
+								/>
+							</div>
+						) }
+					</TextInputSiteGen>
 				</div>
 			</Animate>
 		</CommonLayout>
