@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { __ } from '@wordpress/i18n';
 import { useRef, useEffect, useState, memo } from '@wordpress/element';
 
 const TextInputSiteGen = ( {
@@ -17,7 +18,7 @@ const TextInputSiteGen = ( {
 		textareaRef.current.style.height = height;
 		const scrollHeight = textareaRef.current.scrollHeight;
 		textareaRef.current.style.height = scrollHeight + 'px';
-		const analysisResult = calculateAnalysisScore( customerInput );
+		const analysisResult = calculateAnalysisScore( customerInput?.trim() );
 		setAnalysisScore( analysisResult );
 		setIsValidInput( analysisResult >= 2 );
 	}, [ customerInput ] );
@@ -87,7 +88,7 @@ const TextInputSiteGen = ( {
 				{ customerInput ? (
 					<div className={ 'nfd-sg-input-box__info' }>
 						<div className={ 'nfd-sg-input-box__info-text' }>
-							Detail
+							{ __( 'Detail', 'wp-module-onboarding' ) }
 						</div>
 						{ renderDetails() }
 					</div>

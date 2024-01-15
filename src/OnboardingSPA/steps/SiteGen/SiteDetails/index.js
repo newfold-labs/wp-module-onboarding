@@ -44,8 +44,9 @@ const SiteGenSiteDetails = () => {
 		setDrawerActiveView( false );
 		setFooterNavEnabled( false );
 		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
-			setCustomerInput( currentData.sitegen.siteDetails.prompt );
+			setIsValidInput( true );
 			setFooterNavEnabled( isValidInput );
+			return setCustomerInput( currentData.sitegen.siteDetails.prompt );
 		}
 	}, [] );
 
@@ -56,9 +57,11 @@ const SiteGenSiteDetails = () => {
 			customerInput !== currentData.sitegen.siteDetails.prompt
 		) {
 			setFooterNavEnabled( isValidInput );
-			currentData.sitegen.siteDetails.prompt = customerInput;
+			currentData.sitegen.siteDetails.prompt = customerInput?.trim();
 			currentData.sitegen.siteDetails.mode = 'simple';
 			setCurrentOnboardingData( currentData );
+		} else {
+			setFooterNavEnabled( false );
 		}
 	}, [ customerInput ] );
 

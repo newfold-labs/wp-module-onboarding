@@ -1,6 +1,7 @@
 import { Slot } from '@wordpress/components';
 import { Fragment, Suspense } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
+import classNames from 'classnames';
 
 import { store as nfdOnboardingStore } from '../../store';
 import {
@@ -9,22 +10,23 @@ import {
 	HEADER_START,
 	HEADER_TOP,
 } from '../../../constants';
-import classNames from 'classnames';
 import { stepSiteGenEditor } from '../../steps/SiteGen/Editor/step';
+import { SITEGEN_FLOW } from '../../data/flows/constants';
 
 const Header = () => {
 	const { headers, headerActiveView, isHeaderEnabled, currentStep } =
 		useSelect( ( select ) => {
 			return {
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 				headers: select( nfdOnboardingStore ).getHeaders(),
 				headerActiveView:
 					select( nfdOnboardingStore ).getHeaderActiveView(),
 				isHeaderEnabled: select( nfdOnboardingStore ).isHeaderEnabled(),
-				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 			};
 		} );
 
 	const isEditorStep = currentStep === stepSiteGenEditor;
+	const isSitegenFlow = window.nfdOnboarding.currentFlow === SITEGEN_FLOW;
 
 	return (
 		<>
@@ -40,9 +42,15 @@ const Header = () => {
 			<Slot name={ `${ headerActiveView }/${ HEADER_TOP }` } />
 			{ isHeaderEnabled && (
 				<div
-					className={ classNames( 'nfd-onboarding-header', {
-						'nfd-onboarding-header--dark': isEditorStep,
-					} ) }
+					className={ classNames(
+						'nfd-onboarding-header',
+						{
+							'nfd-onboarding-header--dark': isEditorStep,
+						},
+						{
+							'nfd-onboarding-header--sitegen': isSitegenFlow,
+						}
+					) }
 				>
 					<div className="nfd-onboarding-header__start">
 						<Slot

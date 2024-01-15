@@ -27,6 +27,17 @@ $main-color-grey-other: #e2e2e2;
 			}
 		}
 
+		&-full {
+			width: 100%;
+			min-height: 90vh;
+			overflow: hidden;
+			position: relative;
+			align-items: center;
+			border: 1px solid #e3dfdf;
+			border-top: 0;
+			margin-bottom: 30px;
+		}
+
 		&--is-skeleton {
 			z-index: 1;
 			width: 100%;
