@@ -33,7 +33,7 @@ final class WP_Admin {
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'initialize' ) );
 		if ( 'sitegen' === Data::current_flow() ) {
 			\add_action( 'load-themes.php', array( __CLASS__, 'mark_sitegen_generated_themes' ) );
-			SiteGenService::filter_wonder_blocks_transients();
+			SiteGenService::pre_set_filter_wonder_blocks_transients();
 		}
 	}
 
