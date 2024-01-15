@@ -53,10 +53,10 @@ const SiteGenHeader = () => {
 			{ currentStep?.header?.component
 				? isHeaderNavigationEnabled && <currentStep.header.component />
 				: isHeaderNavigationEnabled && (
-					<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_START }` }>
-						<StepNavigation />
-					</Fill>
-				) }
+						<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_START }` }>
+							<StepNavigation />
+						</Fill>
+				  ) }
 		</>
 	);
 };
