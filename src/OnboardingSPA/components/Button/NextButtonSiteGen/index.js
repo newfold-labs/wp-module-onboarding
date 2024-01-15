@@ -10,6 +10,7 @@ const NextButtonSiteGen = ( {
 	className,
 	callback = null,
 	disabled = false,
+	showChevronRight = true,
 } ) => {
 	const navigate = useNavigate();
 	const { nextStep } = useSelect( ( select ) => {
@@ -37,10 +38,10 @@ const NextButtonSiteGen = ( {
 			} }
 		>
 			{ text }
-			<Icon
+			{ showChevronRight && <Icon
 				className={ 'nfd-onboarding-button--site-gen-next--icon' }
 				icon={ chevronRight }
-			/>
+			/> }
 		</Button>
 	);
 };
