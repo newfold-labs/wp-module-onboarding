@@ -1,0 +1,104 @@
+.nfd-onboarding-sidebar--customize {
+
+	&__design-fonts-panel {
+		border-bottom: none;
+
+		&__container {
+			width: 100%;
+
+			button {
+				border: 1px solid var(--nfd-onboarding-sitegen-customize-grey-1);
+				border-radius: 8px;
+				width: 100%;
+				display: block;
+				margin: 0 auto;
+			}
+		}
+
+		&__custom-fonts__container {
+			width: 100%;
+
+			&__header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+
+				button {
+					background: none;
+					border: none;
+					padding: 0;
+					text-decoration: underline;
+					cursor: pointer;
+					color: var(--nfd-onboarding-sitegen-customize-link-text-color);
+				}
+			}
+		}
+
+		&__font-group__container {
+			margin-bottom: 20px;
+			display: flex;
+			align-items: flex-start;
+			width: 100%;
+
+			&__button {
+				cursor: pointer;
+				display: flex;
+				align-items: flex-start;
+				margin-left: 0;
+				width: 100%;
+
+				.default {
+					margin-left: auto;
+					text-align: right;
+				}
+
+				&__icon {
+					margin-right: 10px;
+				}
+
+				&__font-name__container {
+					margin-left: 10px;
+					flex: 1;
+
+					&__heading {
+						font-size: 18px;
+						margin-bottom: 5px;
+					}
+
+					&__body {
+						margin-bottom: 5px;
+					}
+				}
+			}
+		}
+
+		&__fonts-form__container {
+			width: 100%;
+
+			span {
+				margin: 10px 0;
+			}
+
+			select {
+				margin: 5px 0;
+				width: 100%;
+			}
+
+			&__button__container {
+				margin-top: 20px;
+				display: flex;
+				justify-content: flex-end;
+
+				.cancel {
+					color: var(--nfd-onboarding-sitegen-customize-primary-button-color);
+				}
+
+				.apply {
+					background-color: var(--nfd-onboarding-sitegen-customize-primary-button-color);
+					border-radius: 5px;
+				}
+			}
+		}
+	}
+
+}

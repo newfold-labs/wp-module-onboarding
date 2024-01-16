@@ -90,6 +90,15 @@ class SiteGenController {
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 			)
 		);
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/customize-data',
+			array(
+				'methods'  => \WP_REST_Server::READABLE,
+				'callback' => array( $this, 'get_customize_sidebar_data' ),
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+			)
+		);
 	}
 
 	/**
@@ -325,5 +334,16 @@ class SiteGenController {
 	 */
 	public function get_site_details_meta( \WP_REST_Request $request ) {
 		return SiteGenData::get_site_details_questionnaire();
+	}
+
+	/**
+	 * Get Sitegen Customize sidebar data.
+	 *
+	 * @param \WP_REST_Request $request Request model.
+	 *
+	 * @return array|WP_Error
+	 */
+	public function get_customize_sidebar_data( \WP_REST_Request $request ) {
+		return SiteGenService::get_customize_sidebar_data();
 	}
 }
