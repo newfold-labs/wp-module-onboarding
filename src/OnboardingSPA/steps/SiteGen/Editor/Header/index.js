@@ -153,6 +153,7 @@ const StepSiteGenEditorHeader = () => {
 											role="button"
 											tabIndex={ 0 }
 											onClick={ onToggle }
+											onKeyDown={ onToggle }
 										>
 											{ isEditingTitle ? (
 												<input
@@ -189,6 +190,12 @@ const StepSiteGenEditorHeader = () => {
 												! isEditingTitle
 											)
 										}
+										onKeyDown={ () =>
+											setIsEditingTitle(
+												! isEditingTitle
+											)
+										}
+										role="presentation"
 									>
 										{ __(
 											'Rename',
@@ -198,6 +205,7 @@ const StepSiteGenEditorHeader = () => {
 									<div
 										className="nfd-onboarding-header--sitegen__editor__center__dropdown__content__view-all"
 										onClick={ handleViewAll }
+										onKeyDown={ handleViewAll }
 										role="button"
 										tabIndex={ 0 }
 									>
@@ -220,6 +228,8 @@ const StepSiteGenEditorHeader = () => {
 							'nfd-onboarding-header--sitegen__editor__end__customize-button__disabled'
 						}` }
 						onClick={ handleCustomize }
+						onKeyDown={ handleCustomize }
+						role="presentation"
 					>
 						<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__icon"></div>
 						<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__text">

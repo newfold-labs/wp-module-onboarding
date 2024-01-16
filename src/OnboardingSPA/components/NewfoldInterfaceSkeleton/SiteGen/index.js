@@ -16,10 +16,6 @@ import {
 	getSiteGenIdentifiers,
 } from '../../../utils/api/siteGen';
 import Footer from '../../Footer';
-import { initialize as initializeSettings } from '../../../utils/api/settings';
-import { init as initializePlugins } from '../../../utils/api/plugins';
-import { init as initializeThemes } from '../../../utils/api/themes';
-import { trigger as cronTrigger } from '../../../utils/api/cronTrigger';
 import { MAX_RETRIES_SITE_GEN } from '../../../../constants';
 
 // Wrapping the NewfoldInterfaceSkeleton with the HOC to make theme available
@@ -136,6 +132,7 @@ const SiteGen = () => {
 		syncStoreToDB();
 		generateSiteGenData();
 		handlePreviousStepTracking();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ location.pathname ] );
 
 	return (

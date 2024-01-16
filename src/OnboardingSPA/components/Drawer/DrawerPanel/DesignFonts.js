@@ -65,12 +65,14 @@ const DesignFonts = () => {
 			setSelectedFont( currentData?.data?.fontStyle );
 			handleClick( currentData?.data?.fontStyle );
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ fontPalettes ] );
 
 	useEffect( () => {
 		if ( ! isLoaded && THEME_STATUS_ACTIVE === themeStatus ) {
 			getFontStylesAndPatterns();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ isLoaded, themeStatus ] );
 
 	const handleClick = async ( fontStyle, context = 'click' ) => {

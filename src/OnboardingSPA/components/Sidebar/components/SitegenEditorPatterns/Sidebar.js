@@ -111,6 +111,7 @@ const SitegenEditorPatternsSidebar = () => {
 		) {
 			loadData();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ sideBarView, isSidebarOpened ] );
 
 	useEffect( () => {
@@ -177,6 +178,7 @@ const SitegenEditorPatternsSidebar = () => {
 					);
 				} ),
 		} );
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ homepages, activeHomepage, currentData ] );
 
 	return (
