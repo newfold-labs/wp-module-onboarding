@@ -16,6 +16,11 @@ import {
 	getSiteGenIdentifiers,
 } from '../../../utils/api/siteGen';
 import Footer from '../../Footer';
+import { initialize as initializeSettings } from '../../../utils/api/settings';
+import { init as initializePlugins } from '../../../utils/api/plugins';
+import { init as initializeThemes } from '../../../utils/api/themes';
+import { trigger as cronTrigger } from '../../../utils/api/cronTrigger';
+import { MAX_RETRIES_SITE_GEN } from '../../../../constants';
 
 // Wrapping the NewfoldInterfaceSkeleton with the HOC to make theme available
 const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
@@ -52,6 +57,32 @@ const SiteGen = () => {
 		}
 	}
 
+	async function performSiteGenMetaGeneration(
+		siteInfo,
+		identifier,
+		retryCount = 1
+	) {
+		return new Promise( () =>
+			generateSiteGenMeta( siteInfo, identifier )
+				.then( ( data ) => {
+					if ( data.body !== null ) {
+						currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
+						setCurrentOnboardingData( currentData );
+					} else if ( retryCount < MAX_RETRIES_SITE_GEN ) {
+						performSiteGenMetaGeneration(
+							siteInfo,
+							identifier,
+							retryCount + 1
+						);
+					}
+				} )
+				.catch( ( err ) => {
+					/* eslint-disable no-console */
+					console.log( err );
+				} )
+		);
+	}
+
 	async function generateSiteGenData() {
 		// Start the API Requests when the loader is shown.
 		if (
@@ -63,41 +94,25 @@ const SiteGen = () => {
 			return;
 		}
 
-		// If the calls are already made then skip doing that again.
-		if (
-			currentData.sitegen.siteGenMetaStatus.currentStatus >=
-			currentData.sitegen.siteGenMetaStatus.totalCount
-		) {
-			return;
-		}
-
 		let identifiers = await getSiteGenIdentifiers();
 		identifiers = identifiers.body;
 
 		const midIndex = Math.floor( identifiers.length / 2 );
 		if ( location.pathname.includes( 'experience' ) ) {
 			identifiers = identifiers.slice( 0, midIndex );
+			currentData.sitegen.siteGenMetaStatus.currentStatus = 0;
 		} else if ( location.pathname.includes( 'building' ) ) {
 			identifiers = identifiers.slice( midIndex );
+			currentData.sitegen.siteGenMetaStatus.currentStatus = midIndex;
 		}
-
+		setCurrentOnboardingData( currentData );
 		const siteInfo = {
 			site_description: currentData.sitegen?.siteDetails?.prompt,
 		};
 
 		// Iterate over Identifiers and fire Requests!
 		identifiers.forEach( ( identifier ) => {
-			return new Promise( () =>
-				generateSiteGenMeta( siteInfo, identifier )
-					.then( ( data ) => {
-						if ( data.body !== null ) {
-							currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
-							setCurrentOnboardingData( currentData );
-						}
-					} )
-					/* eslint-disable no-console */
-					.catch( ( err ) => console.log( err ) )
-			);
+			performSiteGenMetaGeneration( siteInfo, identifier );
 		} );
 	}
 

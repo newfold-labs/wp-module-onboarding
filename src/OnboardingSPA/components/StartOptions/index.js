@@ -3,6 +3,7 @@ import { resolveGetDataForFlow } from '../../data/flows';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { validateFlow } from '../../data/flows/utils';
 import { useNavigate } from 'react-router-dom';
+import { memo } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../store';
 
 const StartOptions = ( { questionnaire, oldFlow, options } ) => {
@@ -90,4 +91,4 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 	);
 };
 
-export default StartOptions;
+export default memo( StartOptions );

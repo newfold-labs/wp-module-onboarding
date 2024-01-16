@@ -431,3 +431,34 @@ export function getCustomizeSidebarData( state ) {
 	return state.runtime.customizeSidebarData;
 }
 
+/**
+ * Gets homepages
+ *
+ * @param {*} state
+ * @return {Object} homepages
+ */
+export const getHomepagesData = ( state ) => {
+	return state.data.flowData.sitegen.homepages;
+};
+
+/**
+ * Gets actove homepage
+ *
+ * @param {*} state
+ * @return {Object} active
+ */
+
+export const getActiveHomepage = ( state ) => {
+	return state.data.flowData.sitegen.homepages.active;
+};
+
+/**
+ * Gets actove homepage
+ *
+ * @param {*} state
+ * @return {Object} data
+ */
+
+export const getAllHomepages = ( state ) => {
+	return state.data.flowData.sitegen.homepages.data;
+};

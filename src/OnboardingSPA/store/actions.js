@@ -285,10 +285,29 @@ export function resetNavError() {
 	};
 }
 
-
 export function updateCustomizeSidebarData( customizeSidebarData ) {
 	return {
 		type: 'CUSTOMIZE_SIDEBAR_DATA',
 		customizeSidebarData,
 	};
 }
+export const setHomepagesData = ( homepagesData ) => {
+	return {
+		type: 'SET_HOMEPAGES_DATA',
+		homepagesData,
+	};
+};
+
+export const setActiveHomepage = ( activeHomepage ) => {
+	return {
+		type: 'SET_ACTIVE_HOMEPAGE',
+		activeHomepage,
+	};
+};
+
+export const toggleFavorite = ( slug ) => {
+	return {
+		type: 'TOGGLE_FAVORITE',
+		slug,
+	};
+};

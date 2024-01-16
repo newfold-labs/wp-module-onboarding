@@ -15,6 +15,7 @@
 
 				@media (max-width: #{ ($break-small) }) {
 					margin: 16px;
+					margin-bottom: 100px;
 				}
 
 				@media (min-width: 2600px ) {
@@ -71,6 +72,7 @@
 					width: 100%;
 					margin: 10px;
 					padding: 0;
+					margin-bottom: 40px;
 
 					&__text {
 						text-align: center;

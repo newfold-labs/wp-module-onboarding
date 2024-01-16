@@ -1,4 +1,4 @@
-import { useEffect } from '@wordpress/element';
+import { memo, useEffect } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 
 import CommonLayout from '../../../components/Layouts/Common';
@@ -52,4 +52,4 @@ const SiteGenWelcome = () => {
 	);
 };
 
-export default SiteGenWelcome;
+export default memo( SiteGenWelcome );
