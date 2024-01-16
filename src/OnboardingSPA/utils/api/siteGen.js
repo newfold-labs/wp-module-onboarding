@@ -78,3 +78,11 @@ export async function toggleFavoriteHomepage( slug ) {
 		} ).then()
 	);
 }
+
+export async function getSiteDetailsQuestionare() {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/site-details-meta' ),
+		} ).then()
+	);
+}

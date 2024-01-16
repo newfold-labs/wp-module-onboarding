@@ -6,6 +6,7 @@ use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\AI\SiteGen\SiteGen;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\Data\SiteGen as SiteGenData;
 
 /**
  * Class SiteGenController
@@ -77,6 +78,15 @@ class SiteGenController {
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'toggle_favourite_homepage' ),
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+			)
+		);
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/site-details-meta',
+			array(
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_site_details_meta' ),
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 			)
 		);
@@ -304,5 +314,16 @@ class SiteGenController {
 			);
 		}
 		return new \WP_REST_Response( $response, 200 );
+	}
+
+	/**
+	 * Generate Sitegen Site Details meta data.
+	 *
+	 * @param \WP_REST_Request $request Request model.
+	 *
+	 * @return array|WP_Error
+	 */
+	public function get_site_details_meta( \WP_REST_Request $request ) {
+		return SiteGenData::get_site_details_questionnaire();
 	}
 }
