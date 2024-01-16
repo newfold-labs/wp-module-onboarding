@@ -17,6 +17,11 @@ import { useEffect, useState } from '@wordpress/element';
 import { getRandom } from '../../../../data/sitegen/homepages/homepages';
 import { setFlow, completeFlow } from '../../../../utils/api/flow';
 import Spinner from '../../../../components/Loaders/Spinner';
+import {
+	getHomePagePreviews,
+	getRegeneratedHomePagePreviews,
+	toggleFavoriteHomepage,
+} from '../../../../utils/api/siteGen';
 
 const StepSiteGenEditorHeader = () => {
 	const [ homepage, setHomepage ] = useState();
@@ -43,15 +48,60 @@ const StepSiteGenEditorHeader = () => {
 		setCurrentOnboardingData( currentData );
 	};
 
-	const handleRegenerate = () => {
+	const handleRegenerate = async () => {
 		if ( isSaving ) {
 			return;
 		}
-		const newPage = getRandom( { ...homepage } );
+		/* const newPage = getRandom( { ...homepage } );
 		setHomepage( newPage );
 		currentData.sitegen.homepages.data[ newPage.slug ] = newPage;
 		currentData.sitegen.homepages.active = newPage;
-		setCurrentOnboardingData( currentData );
+		setCurrentOnboardingData( currentData ); */
+		const { slug, colorPalattes, isFavourited } =
+			currentData?.sitegen?.homepages?.active || {};
+		try {
+			const response = await getRegeneratedHomePagePreviews(
+				currentData.sitegen.siteDetails.prompt,
+				true,
+				slug,
+				colorPalattes,
+				isFavourited
+			);
+
+			if ( response && response.body && response.body.length > 0 ) {
+				console.log( 'Response Body', response.body );
+				debugger;
+				// Assuming 'slug' is the unique identifier for objects in the arrays
+				const regeneratedPage = response.body.find(
+					( page ) =>
+						! currentData.sitegen.homepages.data.some(
+							( existingPage ) => existingPage.slug === page.slug
+						)
+				);
+				setHomepage( regeneratedPage );
+				currentData.sitegen.homepages.data[ regeneratedPage.slug ] =
+					regeneratedPage;
+				currentData.sitegen.homepages.active = regeneratedPage;
+				setCurrentOnboardingData( currentData );
+			} else if ( response && response.error ) {
+				// /* Handle Error UI state */
+				console.log(
+					'actvie page else if',
+					currentData?.sitegen?.homepages?.active
+				);
+			} else {
+				// /* Handle Error UI state */
+				console.log(
+					'actvie page else',
+					currentData?.sitegen?.homepages?.active
+				);
+			}
+		} catch ( error ) {
+			console.log(
+				'actvie page catch',
+				currentData?.sitegen?.homepages?.active
+			);
+		}
 	};
 
 	const saveAndContinue = async () => {
