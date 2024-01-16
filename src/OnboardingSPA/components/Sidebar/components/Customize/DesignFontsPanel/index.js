@@ -257,7 +257,7 @@ const DesignFontsPanel = ( {
 		}
 		const slug = currentData.sitegen?.homepages?.active?.slug;
 
-		if (slug) {
+		if ( slug ) {
 			currentData.sitegen.homepages.data[ slug ] = {
 				...currentData.sitegen.homepages.data[ slug ],
 				styles: {

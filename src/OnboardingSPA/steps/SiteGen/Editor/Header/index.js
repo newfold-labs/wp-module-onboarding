@@ -27,14 +27,16 @@ const StepSiteGenEditorHeader = () => {
 		setSidebarActiveView,
 		setIsSidebarOpened,
 	} = useDispatch( nfdOnboardingStore );
-	const { currentData, sideBarView, isSidebarOpened  } = useSelect( ( select ) => {
-		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			sideBarView: select( nfdOnboardingStore ).getSidebarView(),
-			isSidebarOpened: select( nfdOnboardingStore ).isSidebarOpened(),
-		};
-	} );
+	const { currentData, sideBarView, isSidebarOpened } = useSelect(
+		( select ) => {
+			return {
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				sideBarView: select( nfdOnboardingStore ).getSidebarView(),
+				isSidebarOpened: select( nfdOnboardingStore ).isSidebarOpened(),
+			};
+		}
+	);
 
 	const handleFavorite = () => {
 		if ( isSaving ) {
@@ -185,6 +187,8 @@ const StepSiteGenEditorHeader = () => {
 							'nfd-onboarding-header--sitegen__editor__end__customize-button__disabled'
 						}` }
 						onClick={ handleCustomize }
+						onKeyDown={ handleCustomize }
+						role="presentation"
 					>
 						<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__icon"></div>
 						<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__text">

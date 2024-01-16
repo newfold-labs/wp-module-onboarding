@@ -311,4 +311,4 @@ export function updateCustomizeSidebarData( customizeSidebarData ) {
 		type: 'CUSTOMIZE_SIDEBAR_DATA',
 		customizeSidebarData,
 	};
-};
+}

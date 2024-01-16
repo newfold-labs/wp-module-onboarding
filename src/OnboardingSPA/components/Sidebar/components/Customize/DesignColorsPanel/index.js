@@ -131,12 +131,11 @@ const DesignColorsPanel = ( {
 		colorPalettes[ selectedPalette ].secondary = selectedColor.secondary;
 		colorPalettes[ selectedPalette ].tertiary = selectedColor.tertiary;
 		const slug = currentData.sitegen?.homepages?.active?.slug;
-		if (slug) {
+		if ( slug ) {
 			currentData.sitegen.homepages.data[ slug ].color.palette =
-			convertColorSchema( colorPalettes[ selectedPalette ] );
-			currentData.sitegen.homepages.active.color.palette = convertColorSchema(
-				colorPalettes[ selectedPalette ]
-			);
+				convertColorSchema( colorPalettes[ selectedPalette ] );
+			currentData.sitegen.homepages.active.color.palette =
+				convertColorSchema( colorPalettes[ selectedPalette ] );
 			setCurrentOnboardingData( currentData );
 		}
 	};
