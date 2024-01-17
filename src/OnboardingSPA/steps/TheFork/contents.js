@@ -24,7 +24,7 @@ const getContents = () => {
 					'wp-module-onboarding'
 				),
 				span: __( 'AI', 'wp-module-onboarding' ),
-				flow: 'ai',
+				flow: 'sitegen',
 			},
 			{
 				title: __( 'Hire a Pro', 'wp-module-onboarding' ),
