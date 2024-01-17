@@ -16,8 +16,9 @@ $light-grey : #a0a5aa;
 
 		&__wplogo {
 			color: var(--nfd-onboarding-white);
-			font-size: 16px;
 			display: flex;
+			font-size: 16px;
+			font-weight: 510;
 			align-items: center;
 
 			svg {
@@ -35,8 +36,9 @@ $light-grey : #a0a5aa;
 			align-items: center;
 
 			&__greeting {
-				color: $light-grey;
+				color: var(--nfd-onboarding-white);
 				font-size: 16px;
+				font-weight: 510;
 				margin-right: 5px;
 			}
 

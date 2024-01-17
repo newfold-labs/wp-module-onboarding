@@ -1,7 +1,7 @@
 .nfd-onboarding-image-uploader {
 
 	&--with-text {
-		width: 40vw;
+		width: 36vw;
 		margin: 16px;
 		border: 1.25px dashed var(--nfd-onboarding-site-logo-border);
 
@@ -15,7 +15,7 @@
 			align-items: stretch;
 		}
 		border-radius: 8px;
-		padding: 24px;
+		padding: 30px;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -123,17 +123,19 @@
 				&__reset {
 					width: 100%;
 					display: flex;
-					flex-direction: row;
-					justify-content: flex-end;
+					flex-direction: column;
+					justify-content: center;
 
 					&__button {
-						font-size: clamp(0.5rem, 0.4091rem + 0.4545vw, 1.5rem);
-						font-style: normal;
-						font-weight: 510;
-						color: var(--nfd-onboarding-primary);
-						background-color: transparent;
-						border: none;
 						padding: 0;
+						width: 40px;
+						height: 40px;
+						border: none;
+						font-weight: 510;
+						font-style: normal;
+						background-color: #ff0e9099;
+						color: var(--nfd-onboarding-primary);
+						font-size: clamp(0.5rem, 0.4091rem + 0.4545vw, 1.5rem);
 
 						&:hover {
 							cursor: pointer;
@@ -141,7 +143,7 @@
 						}
 
 						&__icon {
-							fill: var(--nfd-onboarding-primary);
+							fill: rgb(255, 14, 144);
 						}
 					}
 				}
