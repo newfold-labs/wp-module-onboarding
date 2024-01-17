@@ -458,3 +458,7 @@ export const getActiveHomepage = ( state ) => {
 export const getAllHomepages = ( state ) => {
 	return state.data.flowData.sitegen.homepages.data;
 };
+
+export function getCustomizeSidebarData( state ) {
+	return state.runtime.customizeSidebarData;
+}
