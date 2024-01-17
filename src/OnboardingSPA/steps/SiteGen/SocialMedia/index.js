@@ -9,6 +9,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import AIHeading from '../../../components/Heading/AIHeading';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
+import { FacebookConnectButton } from '@newfold/wp-module-facebook';
 
 const SiteGenSiteSocialMedia = () => {
 	const isLargeViewport = useViewportMatch( 'small' );
@@ -41,10 +42,7 @@ const SiteGenSiteSocialMedia = () => {
 						<p>{ content.facebookDesc }</p>
 					</div>
 					<div className="nfd-onboarding-step--site-gen__social-media__contain__containright ">
-						<button className="nfd-onboarding-step--site-gen__social-media__contain__containright__button ">
-							<i></i>
-							{ content.facebookButton }
-						</button>
+						<FacebookConnectButton />
 					</div>
 				</div>
 				<div className="nfd-onboarding-step--site-gen__social-media__container__buttons">
