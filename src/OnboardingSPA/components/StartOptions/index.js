@@ -7,7 +7,6 @@ import { memo } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../store';
 
 const StartOptions = ( { questionnaire, oldFlow, options } ) => {
-	const SITEGEN = 'sitegen';
 	const navigate = useNavigate();
 	const { brandConfig, migrationUrl, currentData } = useSelect(
 		( select ) => {
@@ -56,7 +55,7 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 		switch ( flow ) {
 			case 'sitebuild':
 				return switchFlow( oldFlow );
-			case SITEGEN:
+			case 'sitegen':
 				return switchFlow( SITEGEN_FLOW );
 			case 'migration':
 				return window.open( migrationUrl, '_blank' );
@@ -70,7 +69,7 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 			<div className="nfd-onboarding-sitegen-options__container">
 				{ options.map( ( tab, idx ) => {
 					if (
-						tab.flow === SITEGEN &&
+						tab.flow === SITEGEN_FLOW &&
 						! validateFlow( brandConfig, tab.flow )
 					) {
 						// Do not show the Sitegen AI option if not enabled for the customer
