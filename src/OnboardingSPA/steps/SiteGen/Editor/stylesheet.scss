@@ -15,6 +15,10 @@
 		color: var(--nfd-onboarding-header-contrast);
 		background-color: var(--nfd-onboarding-header-base);
 		width: 150px;
+
+		@media (max-width: #{ ($break-small) }) {
+			width: 80px;
+		}
 	}
 }
 

@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { Fill, Dropdown } from '@wordpress/components';
+import { Fill } from '@wordpress/components';
 import {
 	HEADER_CENTER,
 	HEADER_END,
@@ -8,13 +8,12 @@ import {
 	wpEditorPage,
 	SIDEBAR_SITEGEN_EDITOR_PATTERNS,
 } from '../../../../../constants';
-import { Icon, chevronDown, chevronRight } from '@wordpress/icons';
+import { Icon, chevronRight } from '@wordpress/icons';
 import { store as nfdOnboardingStore } from '../../../../store';
 
 import { useSelect, useDispatch } from '@wordpress/data';
 
 import { useEffect, useState } from '@wordpress/element';
-import { getRandom } from '../../../../data/sitegen/homepages/homepages';
 import { setFlow, completeFlow } from '../../../../utils/api/flow';
 import Spinner from '../../../../components/Loaders/Spinner';
 import {
@@ -22,10 +21,14 @@ import {
 	getRegeneratedHomePagePreviews,
 	toggleFavoriteHomepage,
 } from '../../../../utils/api/siteGen';
+import StepNavigationCenter from './step-navigation-center';
+import { useViewportMatch } from '@wordpress/compose';
 
 const StepSiteGenEditorHeader = () => {
 	const [ homepage, setHomepage ] = useState();
 	const [ isSaving, setIsSaving ] = useState( false );
+
+	const isLargeViewport = useViewportMatch( 'medium' );
 
 	const {
 		setCurrentOnboardingData,
@@ -47,7 +50,7 @@ const StepSiteGenEditorHeader = () => {
 		if ( isSaving ) {
 			return;
 		}
-		homepage.favorite = ! homepage.favorite;
+		homepage.isFavourited = ! homepage.isFavourited;
 		currentData.sitegen.homepages.data[ homepage.slug ] = homepage;
 		setCurrentOnboardingData( currentData );
 	};
@@ -56,11 +59,6 @@ const StepSiteGenEditorHeader = () => {
 		if ( isSaving ) {
 			return;
 		}
-		/* const newPage = getRandom( { ...homepage } );
-		setHomepage( newPage );
-		currentData.sitegen.homepages.data[ newPage.slug ] = newPage;
-		currentData.sitegen.homepages.active = newPage;
-		setCurrentOnboardingData( currentData ); */
 		const { slug, colorPalattes, isFavourited } =
 			currentData?.sitegen?.homepages?.active || {};
 		try {
@@ -73,9 +71,6 @@ const StepSiteGenEditorHeader = () => {
 			);
 
 			if ( response && response.body && response.body.length > 0 ) {
-				console.log( 'Response Body', response.body );
-				debugger;
-				// Assuming 'slug' is the unique identifier for objects in the arrays
 				const regeneratedPage = response.body.find(
 					( page ) =>
 						! currentData.sitegen.homepages.data.some(
@@ -88,23 +83,12 @@ const StepSiteGenEditorHeader = () => {
 				currentData.sitegen.homepages.active = regeneratedPage;
 				setCurrentOnboardingData( currentData );
 			} else if ( response && response.error ) {
-				// /* Handle Error UI state */
-				console.log(
-					'actvie page else if',
-					currentData?.sitegen?.homepages?.active
-				);
+				/* Handle Error UI state */
 			} else {
-				// /* Handle Error UI state */
-				console.log(
-					'actvie page else',
-					currentData?.sitegen?.homepages?.active
-				);
+				/* Handle Error UI state */
 			}
 		} catch ( error ) {
-			console.log(
-				'actvie page catch',
-				currentData?.sitegen?.homepages?.active
-			);
+			/* Handle Error UI state */
 		}
 	};
 
@@ -140,111 +124,59 @@ const StepSiteGenEditorHeader = () => {
 		<>
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_START }` }>
 				<div className="nfd-onboarding-header--sitegen__editor__start">
-					<div
-						className={ `nfd-onboarding-header--sitegen__editor__start__regenerate ${
-							isSaving &&
-							'nfd-onboarding-header--sitegen__editor__start__regenerate__disabled'
-						}` }
-						role="button"
-						tabIndex={ 0 }
-						onClick={ () => handleRegenerate() }
-						onKeyDown={ () => handleRegenerate() }
-					>
+					{ isLargeViewport && (
 						<div
-							className={ `nfd-onboarding-header--sitegen__editor__start__regenerate__icon` }
-						></div>
-						<div
-							className={ `nfd-onboarding-header--sitegen__editor__start__regenerate__text` }
+							className={ `nfd-onboarding-header--sitegen__editor__start__regenerate ${
+								isSaving &&
+								'nfd-onboarding-header--sitegen__editor__start__regenerate__disabled'
+							}` }
+							role="button"
+							tabIndex={ 0 }
+							onClick={ () => handleRegenerate() }
+							onKeyDown={ () => handleRegenerate() }
 						>
-							{ __( 'Regenerate', 'wp-module-onboarding' ) }
+							<div
+								className={ `nfd-onboarding-header--sitegen__editor__start__regenerate__icon` }
+							></div>
+							<div
+								className={ `nfd-onboarding-header--sitegen__editor__start__regenerate__text` }
+							>
+								{ __( 'Regenerate', 'wp-module-onboarding' ) }
+							</div>
 						</div>
-					</div>
+					) }
 				</div>
 			</Fill>
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_CENTER }` }>
 				{ homepage && (
 					<div className="nfd-onboarding-header--sitegen__editor__center">
-						<div className="nfd-onboarding-header--sitegen__editor__center__icon"></div>
-						<Dropdown
-							className="nfd-onboarding-header--sitegen__editor__center__dropdown"
-							renderToggle={ ( { onToggle } ) => {
-								return (
-									<>
-										<div
-											className={ `nfd-onboarding-header--sitegen__editor__center__dropdown__favorite-icon ${
-												homepage.favorite &&
-												'nfd-onboarding-header--sitegen__editor__center__dropdown__favorite-icon__fill'
-											}` }
-											role="button"
-											tabIndex={ 0 }
-											onKeyDown={ handleFavorite }
-											onClick={ handleFavorite }
-										></div>
-										<div
-											className="nfd-onboarding-header--sitegen__editor__center__dropdown__info"
-											role="button"
-											tabIndex={ 0 }
-											onKeyDown={ onToggle }
-											onClick={ onToggle }
-										>
-											<p className="nfd-onboarding-header--sitegen__editor__center__dropdown__info__text">
-												{ homepage.title }
-											</p>
-											<Icon
-												className="nfd-onboarding-header--sitegen__editor__center__dropdown__info__down-icon"
-												icon={ chevronDown }
-											/>
-										</div>
-									</>
-								);
-							} }
-							renderContent={ () => (
-								<div
-									className={ `nfd-onboarding-header--sitegen__editor__center__dropdown__content ${
-										isSaving &&
-										'nfd-onboarding-header--sitegen__editor__center__dropdown__content__disabled'
-									}` }
-								>
-									<p className="nfd-onboarding-header--sitegen__editor__center__dropdown__content__rename">
-										{ __(
-											'Rename',
-											'wp-module-onboarding'
-										) }
-									</p>
-									<div
-										className="nfd-onboarding-header--sitegen__editor__center__dropdown__content__view-all"
-										onClick={ handleViewAll }
-										role="button"
-										tabIndex={ 0 }
-										onKeyDown={ handleViewAll }
-									>
-										{ __(
-											'View All',
-											'wp-module-onboarding'
-										) }
-									</div>
-								</div>
-							) }
+						<StepNavigationCenter
+							handleFavorite={ handleFavorite }
+							handleViewAll={ handleViewAll }
+							handleCustomize={ handleCustomize }
+							handleRegenerate={ handleRegenerate }
 						/>
 					</div>
 				) }
 			</Fill>
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_END }` }>
 				<div className="nfd-onboarding-header--sitegen__editor__end">
-					<div
-						className={ `nfd-onboarding-header--sitegen__editor__end__customize-button ${
-							isSaving &&
-							'nfd-onboarding-header--sitegen__editor__end__customize-button__disabled'
-						}` }
-						onClick={ handleCustomize }
-						onKeyDown={ handleCustomize }
-						role="presentation"
-					>
-						<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__icon"></div>
-						<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__text">
-							{ __( 'Customize', 'wp-module-onboarding' ) }
+					{ isLargeViewport && (
+						<div
+							className={ `nfd-onboarding-header--sitegen__editor__end__customize-button ${
+								isSaving &&
+								'nfd-onboarding-header--sitegen__editor__end__customize-button__disabled'
+							}` }
+							onClick={ handleCustomize }
+							onKeyDown={ handleCustomize }
+							role="presentation"
+						>
+							<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__icon"></div>
+							<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__text">
+								{ __( 'Customize', 'wp-module-onboarding' ) }
+							</div>
 						</div>
-					</div>
+					) }
 					<div className="nfd-onboarding-header--sitegen__editor__end__save-button">
 						<div
 							className="nfd-onboarding-header--sitegen__editor__end__save-button__text"
@@ -253,7 +185,12 @@ const StepSiteGenEditorHeader = () => {
 							tabIndex={ 0 }
 							onKeyDown={ saveAndContinue }
 						>
-							{ __( 'Save & Continue', 'wp-module-onboarding' ) }
+							{ isLargeViewport
+								? __(
+										'Save & Continue',
+										'wp-module-onboarding'
+								  )
+								: __( 'Next', 'wp-module-onboarding' ) }
 						</div>
 						{ isSaving ? (
 							<Spinner

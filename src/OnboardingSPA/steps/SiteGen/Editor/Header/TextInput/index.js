@@ -3,7 +3,8 @@ import { useRef, useEffect } from '@wordpress/element';
 const TextInputVersion = ( {
 	isInputDisabled,
 	versionName,
-	setVersionName,
+	handleVersionRename,
+	handleRenameOnBlur,
 } ) => {
 	const inputRef = useRef( null );
 
@@ -13,8 +14,10 @@ const TextInputVersion = ( {
 		}
 	}, [ isInputDisabled ] );
 
-	const handleTextChange = ( e ) => {
-		setVersionName( e.target.value );
+	const onInputBlurHandler = () => {
+		if ( handleRenameOnBlur ) {
+			handleRenameOnBlur( inputRef.current.value );
+		}
 	};
 
 	return (
@@ -24,7 +27,8 @@ const TextInputVersion = ( {
 			disabled={ isInputDisabled }
 			type="text"
 			value={ versionName }
-			onChange={ handleTextChange }
+			onChange={ handleVersionRename }
+			onBlur={ onInputBlurHandler }
 		/>
 	);
 };

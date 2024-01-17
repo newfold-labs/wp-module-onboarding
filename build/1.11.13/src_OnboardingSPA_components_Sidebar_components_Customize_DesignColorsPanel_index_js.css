@@ -1,0 +1,101 @@
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/OnboardingSPA/components/Sidebar/components/Customize/DesignColorsPanel/ColorPaletteIcon/stylesheet.scss ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.nfd-onboarding-sidebar--customize__color-palette-icon__container {
+  text-align: center;
+}
+.nfd-onboarding-sidebar--customize__color-palette-icon__container__icon {
+  box-sizing: border-box;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: "none";
+}
+.nfd-onboarding-sidebar--customize__color-palette-icon__container__icon__selected {
+  box-sizing: border-box;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--nfd-onboarding-sitegen-customize-icon-selected);
+}
+.nfd-onboarding-sidebar--customize__color-palette-icon__container p {
+  margin-top: 8px;
+  color: var(--nfd-onboarding-sitegen-customize-default-text-color);
+}
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/OnboardingSPA/components/Sidebar/components/Customize/DesignColorsPanel/CustomColorPalette/stylesheet.scss ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.nfd-onboarding-sidebar--customize__custom-color-palette__container {
+  padding: 16px;
+  width: 260px;
+}
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/OnboardingSPA/components/Sidebar/components/Customize/DesignColorsPanel/stylesheet.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************/
+.nfd-onboarding-sidebar--customize__design-colors-panel {
+  border: none;
+}
+.nfd-onboarding-sidebar--customize__design-colors-panel__container {
+  display: flex;
+}
+.nfd-onboarding-sidebar--customize__design-colors-panel__container__text {
+  align-items: center;
+}
+.nfd-onboarding-sidebar--customize__design-colors-panel__container__text__heading, .nfd-onboarding-sidebar--customize__design-colors-panel__container__text__subheading {
+  margin-top: 2px;
+  line-height: 16px;
+}
+.nfd-onboarding-sidebar--customize__design-colors-panel__container__color__palette__icon {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+.nfd-onboarding-sidebar--customize__design-colors-panel__container__icon {
+  margin-right: 5%;
+}
+.nfd-onboarding-sidebar--customize__design-colors-panel__custom__colors__container {
+  width: 100%;
+}
+.nfd-onboarding-sidebar--customize__design-colors-panel__custom__colors__container__buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+.nfd-onboarding-sidebar--customize__design-colors-panel__custom__colors__container__buttons .cancel {
+  color: var(--nfd-onboarding-sitegen-customize-primary-button-color);
+}
+.nfd-onboarding-sidebar--customize__design-colors-panel__custom__colors__container__buttons .is-primary {
+  background-color: var(--nfd-onboarding-sitegen-customize-primary-button-color);
+  border-radius: 5px;
+}
+.nfd-onboarding-sidebar--customize__design-colors-panel__custom__colors__button__container {
+  width: 100%;
+  text-align: center;
+}
+.nfd-onboarding-sidebar--customize__design-colors-panel__custom__colors__button__container button {
+  border: 1px solid var(--nfd-onboarding-sitegen-customize-grey-1);
+  border-radius: 8px;
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+.nfd-onboarding-sidebar--customize__design-colors-panel__custom-color-palette__container {
+  width: 100%;
+}
+.nfd-onboarding-sidebar--customize__design-colors-panel__custom-color-palette__container__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nfd-onboarding-sidebar--customize__design-colors-panel__custom-color-palette__container__header button {
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+  color: var(--nfd-onboarding-sitegen-customize-link-text-color);
+}
+
+/*# sourceMappingURL=src_OnboardingSPA_components_Sidebar_components_Customize_DesignColorsPanel_index_js.css.map*/

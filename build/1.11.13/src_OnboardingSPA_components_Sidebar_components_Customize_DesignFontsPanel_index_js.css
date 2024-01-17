@@ -1,0 +1,87 @@
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/OnboardingSPA/components/Sidebar/components/Customize/DesignFontsPanel/stylesheet.scss ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************/
+.nfd-onboarding-sidebar--customize__design-fonts-panel {
+  border-bottom: none;
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__container {
+  width: 100%;
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__container button {
+  border: 1px solid var(--nfd-onboarding-sitegen-customize-grey-1);
+  border-radius: 8px;
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__custom-fonts__container {
+  width: 100%;
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__custom-fonts__container__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__custom-fonts__container__header button {
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+  color: var(--nfd-onboarding-sitegen-customize-link-text-color);
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__font-group__container {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__font-group__container__button {
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  margin-left: 0;
+  width: 100%;
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__font-group__container__button .default {
+  margin-left: auto;
+  text-align: right;
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__font-group__container__button__icon {
+  margin-right: 10px;
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__font-group__container__button__font-name__container {
+  margin-left: 10px;
+  flex: 1;
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__font-group__container__button__font-name__container__heading {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__font-group__container__button__font-name__container__body {
+  margin-bottom: 5px;
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__fonts-form__container {
+  width: 100%;
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__fonts-form__container span {
+  margin: 10px 0;
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__fonts-form__container select {
+  margin: 5px 0;
+  width: 100%;
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__fonts-form__container__button__container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__fonts-form__container__button__container .cancel {
+  color: var(--nfd-onboarding-sitegen-customize-primary-button-color);
+}
+.nfd-onboarding-sidebar--customize__design-fonts-panel__fonts-form__container__button__container .apply {
+  background-color: var(--nfd-onboarding-sitegen-customize-primary-button-color);
+  border-radius: 5px;
+}
+
+/*# sourceMappingURL=src_OnboardingSPA_components_Sidebar_components_Customize_DesignFontsPanel_index_js.css.map*/

@@ -48,13 +48,19 @@ const SitegenEditorPatternsSidebar = () => {
 	};
 
 	const handlePreview = ( slug ) => {
-		if ( ! ( slug in homepages ) ) {
-			return false;
+		const index = homepages.findIndex(
+			( homepage ) => homepage.slug === slug
+		);
+
+		if ( index === -1 ) {
+			return false; // Slug not found in the array
 		}
-		const homepagesCopy = { ...homepages };
-		homepagesCopy[ slug ].active = ! homepagesCopy[ slug ].active;
-		currentData.sitegen.homepages.active = homepagesCopy[ slug ];
-		setActiveHomepage( homepagesCopy[ slug ] );
+
+		const homepagesCopy = [ ...homepages ];
+		homepagesCopy[ index ].active = ! homepagesCopy[ index ].active;
+		currentData.sitegen.homepages.active = homepagesCopy[ index ];
+
+		setActiveHomepage( homepagesCopy[ index ] );
 		setHomepages( homepagesCopy );
 		setCurrentOnboardingData( currentData );
 	};

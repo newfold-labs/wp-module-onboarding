@@ -449,7 +449,7 @@ export const getActiveHomepage = ( state ) => {
 };
 
 /**
- * Gets actove homepage
+ * Gets all homepage
  *
  * @param {*} state
  * @return {Object} data
