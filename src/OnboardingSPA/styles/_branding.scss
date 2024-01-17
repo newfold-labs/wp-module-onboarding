@@ -327,6 +327,9 @@ body {
 		--nfd-onboarding-preview-favorite-background: #1e2327;
 		--nfd-onboarding-favorite-fill: #ef4a71;
 		--nfd-onboarding-button-background: #363e4459;
+		--nfd-onboarding-facebook-connect-button-background: #1877f2;
+		--nfd-onboarding-facebook-connect-button-background-hover: #0065ea;
+		--nfd-onboarding-facebook-connected-button-background: #3bb143;
 
 	}
 
@@ -355,5 +358,8 @@ body {
 		--nfd-onboarding-button-background: #363e4459;
 		--nfd-onboarding-regenerating-card-background: rgba(53, 58, 64, 0.1);
 		--sitegen-background-low: url(../static/images/sitegen/ai_bg_low.png);
+		--nfd-onboarding-facebook-connect-button-background: #1877f2;
+		--nfd-onboarding-facebook-connect-button-background-hover: #0065ea;
+		--nfd-onboarding-facebook-connected-button-background: #3bb143;
 	}
 }

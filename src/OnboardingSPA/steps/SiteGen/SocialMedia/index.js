@@ -1,5 +1,5 @@
 import { useDispatch } from '@wordpress/data';
-import { memo, useEffect } from '@wordpress/element';
+import { memo, useEffect, useState } from '@wordpress/element';
 import { useViewportMatch } from '@wordpress/compose';
 
 import getContents from './contents';
@@ -13,6 +13,7 @@ import { FacebookConnectButton } from '@newfold/wp-module-facebook';
 
 const SiteGenSiteSocialMedia = () => {
 	const isLargeViewport = useViewportMatch( 'small' );
+	const [ connected, setConnected ] = useState( false );
 
 	const {
 		setIsHeaderEnabled,
@@ -42,7 +43,9 @@ const SiteGenSiteSocialMedia = () => {
 						<p>{ content.facebookDesc }</p>
 					</div>
 					<div className="nfd-onboarding-step--site-gen__social-media__contain__containright ">
-						<FacebookConnectButton />
+						<FacebookConnectButton className="nfd-onboarding-step--site-gen__social-media__contain__containright__button" onConnect={ () => setConnected( true ) }>
+							<i className="nfd-onboarding-step--site-gen__social-media__contain__containright__button__icon"></i>
+						</FacebookConnectButton>
 					</div>
 				</div>
 				<div className="nfd-onboarding-step--site-gen__social-media__container__buttons">
@@ -53,7 +56,7 @@ const SiteGenSiteSocialMedia = () => {
 					{ isLargeViewport && (
 						<NextButtonSiteGen
 							text={ content.buttons.next }
-							disabled={ true }
+							disabled={ ! connected }
 						/>
 					) }
 				</div>

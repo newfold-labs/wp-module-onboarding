@@ -91,28 +91,38 @@
 						display: inline-flex;
 						align-items: center;
 						padding: 10px 15px;
-						background-color: #1877f2;
-						color: #fff;
 						border: none;
 						border-radius: 5px;
 						cursor: pointer;
 						justify-content: center;
 
-						&:hover {
-							background-color: #0065ea;
-						}
-
 						@media (max-width: #{ ($break-small) }) {
 							width: 100%;
 						}
-					}
 
-					&__button i {
-						margin-right: 8px;
-						background-image: var(--facebook-icon);
-						width: 25px;
-						height: 25px;
-						filter: brightness(0) saturate(100%) invert(100%) sepia(1%) saturate(376%) hue-rotate(220deg) brightness(120%) contrast(100%);
+						&__icon {
+							margin-right: 8px;
+							background-image: var(--facebook-icon);
+							width: 25px;
+							height: 25px;
+							filter: brightness(0) saturate(100%) invert(100%) sepia(1%) saturate(376%) hue-rotate(220deg) brightness(120%) contrast(100%);
+						}
+
+						&--connect {
+
+							background-color: var(--nfd-onboarding-facebook-connect-button-background);
+							color: #fff;
+
+							&:hover {
+								background-color: var(--nfd-onboarding-facebook-connect-button-background-hover);
+							}
+						}
+
+						&--connected {
+							background-color: var(--nfd-onboarding-facebook-connected-button-background);
+							color: #fff;
+							cursor: pointer;
+						}
 					}
 
 					@media (max-width: #{ ($break-small) }) {
@@ -135,13 +145,18 @@
 				&__containright {
 
 					&__button {
-						padding: 8px 12px;
+
+						&__icon {
+							width: 20px;
+							height: 20px;
+						}
+
+						&--connect {
+							padding: 8px 12px;
+						}
+
 					}
 
-					&__button i {
-						width: 20px;
-						height: 20px;
-					}
 				}
 			}
 		}
