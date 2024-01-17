@@ -6,8 +6,9 @@
 		height: 16px;
 
 		&__progress {
-			background-color: var(--nfd-onboarding-progress-bar-fill);
 			height: 16px;
+			transition: width 2s ease-in-out;
+			background-color: var(--nfd-onboarding-progress-bar-fill);
 		}
 	}
 }
