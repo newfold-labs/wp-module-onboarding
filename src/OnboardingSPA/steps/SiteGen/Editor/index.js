@@ -53,6 +53,26 @@ const StepSiteGenEditor = () => {
 		const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
 		newPreviewSettings.settings.color.palette =
 			activeHomepage.color.palette;
+
+		if ( activeHomepage && activeHomepage.styles ) {
+			if (
+				activeHomepage.styles.blocks &&
+				activeHomepage.styles.blocks.length > 0
+			) {
+				const firstBlock = activeHomepage.styles.blocks[ 0 ];
+				if ( firstBlock[ 'core/heading' ] ) {
+					newPreviewSettings.styles.blocks[
+						'core/heading'
+					].typography.fontFamily =
+						firstBlock[ 'core/heading' ].typography.fontFamily;
+				}
+				if ( firstBlock[ 'core/body' ] ) {
+					newPreviewSettings.styles.typography.fontFamily =
+						firstBlock[ 'core/body' ].typography.fontFamily;
+				}
+			}
+		}
+
 		return (
 			<LivePreview
 				blockGrammer={ activeHomepage.content }
