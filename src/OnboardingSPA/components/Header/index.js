@@ -12,6 +12,7 @@ import {
 } from '../../../constants';
 import { stepSiteGenEditor } from '../../steps/SiteGen/Editor/step';
 import { SITEGEN_FLOW } from '../../data/flows/constants';
+import ExitToWordPress from '../ExitToWordPress';
 
 const Header = () => {
 	const { headers, headerActiveView, isHeaderEnabled, currentStep } =

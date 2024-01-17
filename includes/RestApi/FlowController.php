@@ -6,6 +6,7 @@ use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\FlowService;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Services\StatusService;
 
 /**
  * Class FlowController
@@ -111,7 +112,9 @@ class FlowController {
 	public function save_onboarding_flow_data( \WP_REST_Request $request ) {
 		$params = json_decode( $request->get_body(), true );
 
+		// Mark Onboarding as started only on the first REST API request from the React App.
 		update_option( Options::get_option_name( 'redirect' ), '0' );
+		StatusService::handle_started();
 
 		$flow_data = FlowService::update_data( $params );
 		if ( is_wp_error( $flow_data ) ) {
