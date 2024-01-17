@@ -51,7 +51,6 @@ const StepSiteGenEditor = () => {
 
 	const buildPreview = () => {
 		const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
-		console.log("Editor Step", activeHomepage);
 		newPreviewSettings.settings.color.palette =
 			activeHomepage?.color?.palette;
 

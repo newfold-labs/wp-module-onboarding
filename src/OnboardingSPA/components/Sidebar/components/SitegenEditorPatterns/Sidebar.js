@@ -53,7 +53,7 @@ const SitegenEditorPatternsSidebar = () => {
 		);
 
 		if ( index === -1 ) {
-			return false; // Slug not found in the array
+			return false;
 		}
 
 		const homepagesCopy = [ ...homepages ];
@@ -66,13 +66,18 @@ const SitegenEditorPatternsSidebar = () => {
 	};
 
 	const handleFavorite = ( slug ) => {
-		if ( ! ( slug in homepages ) ) {
+		const index = homepages.findIndex(
+			( homepage ) => homepage.slug === slug
+		);
+		if ( index === -1 ) {
 			return false;
 		}
 
-		const homepagesCopy = { ...homepages };
+		const homepagesCopy = [ ...homepages ];
 
-		homepagesCopy[ slug ].favorite = ! homepagesCopy[ slug ].favorite;
+		homepagesCopy[ index ].isFavourited =
+			! homepagesCopy[ index ].isFavourited;
+
 		setHomepages( homepagesCopy );
 		currentData.sitegen.homepages.data = homepagesCopy;
 		setCurrentOnboardingData( currentData );
@@ -161,7 +166,7 @@ const SitegenEditorPatternsSidebar = () => {
 							<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context">
 								<div
 									className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon ${
-										data.favorite &&
+										data.isFavourited &&
 										'nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon__fill'
 									}` }
 									role="button"
@@ -268,7 +273,7 @@ const SitegenEditorPatternsSidebar = () => {
 															<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context">
 																<div
 																	className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon ${
-																		data.favorite &&
+																		data.isFavourited &&
 																		'nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon__fill'
 																	}` }
 																	role="button"
@@ -323,7 +328,7 @@ const SitegenEditorPatternsSidebar = () => {
 												( homepage ) => {
 													const data =
 														homepages[ homepage ];
-													if ( ! data.favorite ) {
+													if ( ! data.isFavourited ) {
 														return false;
 													}
 													const newPreviewSettings =
