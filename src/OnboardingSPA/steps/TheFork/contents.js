@@ -20,7 +20,7 @@ const getContents = () => {
 			{
 				title: __( ' Website Creator', 'wp-module-onboarding' ),
 				subtitle: __(
-					'Custom Al generated content & design.',
+					'Custom AI generated content & design.',
 					'wp-module-onboarding'
 				),
 				span: __( 'AI', 'wp-module-onboarding' ),
