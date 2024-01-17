@@ -13,8 +13,8 @@ import { stepSiteGenEditor } from '../steps/SiteGen/Editor/step';
 const steps = [
 	stepSiteGenWelcome,
 	stepSiteGenSiteDetails,
-	stepSiteGenSiteLogo,
 	stepSiteGenSocialMedia,
+	stepSiteGenSiteLogo,
 	stepSiteGenExperience,
 	stepSiteGenBuilding,
 	stepSiteGenPreview,
