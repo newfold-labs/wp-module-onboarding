@@ -86,3 +86,11 @@ export async function getSiteDetailsQuestionare() {
 		} ).then()
 	);
 }
+
+export async function getCustomizeSidebarData() {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/customize-data' ),
+		} ).then()
+	);
+}

@@ -40,6 +40,7 @@ export const SIDEBAR_SLOTFILL_PREFIX = 'Sidebar';
 export const SIDEBAR_MENU_SLOTFILL_PREFIX = 'HeaderMenu';
 export const SIDEBAR_SITEGEN_EDITOR_PATTERNS = 'SitegenEditorPatterns';
 export const SIDEBAR_LEARN_MORE = 'LearnMore';
+export const SIDEBAR_CUSTOMIZE = 'Customize';
 export const HEADER_SITEBUILD = 'HeaderSiteBuild';
 export const HEADER_SITEGEN = 'HeaderSiteGen';
 export const FOOTER_SITEBUILD = 'FooterSiteBuild';

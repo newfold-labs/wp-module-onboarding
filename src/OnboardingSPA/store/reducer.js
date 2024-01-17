@@ -272,6 +272,11 @@ export function runtime( state = {}, action ) {
 					settings: action.previewSettings,
 				},
 			};
+		case 'CUSTOMIZE_SIDEBAR_DATA':
+			return {
+				...state,
+				customizeSidebarData: action.customizeSidebarData,
+			};
 	}
 
 	return state;

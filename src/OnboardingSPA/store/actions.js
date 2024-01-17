@@ -305,3 +305,10 @@ export const toggleFavorite = ( slug ) => {
 		slug,
 	};
 };
+
+export function updateCustomizeSidebarData( customizeSidebarData ) {
+	return {
+		type: 'CUSTOMIZE_SIDEBAR_DATA',
+		customizeSidebarData,
+	};
+}
