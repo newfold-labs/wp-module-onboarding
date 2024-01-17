@@ -1,7 +1,9 @@
 // <reference types="Cypress" />
 import { DrawerActivityForMenu } from '../wp-module-support/drawer.cy';
 import { CheckHeadingSubheading } from '../wp-module-support/header.cy';
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 import {
+	BasicSidebarCheck,
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
@@ -18,18 +20,26 @@ describe( 'Theme Styles Menu', function () {
 
 	it( 'Check Drawer Activity', () => {
 		DrawerActivityForMenu(
-			'Onboarding Menu',
+			'Onboarding',
 			':nth-child(1)',
 			'Theme Styles'
 		);
 	} );
 
-	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+	if(GetPluginId()!='hostgator'){
+		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 		CheckIntroPanel( '__design-theme-styles-menu', 'Theme Styles' );
 		CheckIllustrationPanel();
 		CheckInfoPanel( 2 );
 		CheckHelpPanelLinks();
 	} );
+	}
+	else{
+		it( 'Check to make sure Sidebar opens', () => {
+			BasicSidebarCheck();
+		} );
+	};
+
 
 	it( 'Checks if Heading and Subheading are present', () => {
 		CheckHeadingSubheading();

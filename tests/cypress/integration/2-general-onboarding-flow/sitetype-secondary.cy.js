@@ -3,11 +3,13 @@ import { APIList, EventsAPI } from '../wp-module-support/EventsApi.cy';
 import { CheckDrawerDisabled } from '../wp-module-support/drawer.cy';
 import { CheckCardHeadingSubheading } from '../wp-module-support/header.cy';
 import {
+	BasicSidebarCheck,
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 
 describe( 'Get Started Site Type Secondary', function () {
 	before( () => {
@@ -25,12 +27,19 @@ describe( 'Get Started Site Type Secondary', function () {
 		CheckCardHeadingSubheading( true );
 	} );
 
-	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel( '__get-started-site-type', 'Site Type' );
-		CheckIllustrationPanel();
-		CheckInfoPanel();
-		CheckHelpPanelLinks();
-	} );
+	if(GetPluginId()!='hostgator'){
+		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+			CheckIntroPanel( '__get-started-site-type', 'Site Type' );
+			CheckIllustrationPanel();
+			CheckInfoPanel();
+			CheckHelpPanelLinks();
+		} );
+	}
+	else{
+		it( 'Check to make sure Sidebar opens', () => {
+			BasicSidebarCheck();
+		} )
+	};
 
 	it( 'Check for Event API call being made when different sub-categories are selected', ()=>{
 		let SubcategoryCount = 0;

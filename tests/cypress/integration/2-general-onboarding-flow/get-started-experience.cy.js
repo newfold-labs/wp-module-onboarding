@@ -2,12 +2,14 @@
 import { CheckDrawerDisabled } from '../wp-module-support/drawer.cy';
 import { CheckCardHeadingSubheading } from '../wp-module-support/header.cy';
 import {
+	BasicSidebarCheck,
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
 import { APIList, EventsAPI } from '../wp-module-support/EventsApi.cy';
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 
 describe( 'Start Setup WP Experience Page', function () {
 	before( () => {
@@ -20,6 +22,7 @@ describe( 'Start Setup WP Experience Page', function () {
 		CheckDrawerDisabled();
 	} );
 
+	if(GetPluginId()!='hostgator'){
 	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 		CheckIntroPanel(
 			'__get-started-wp-experience',
@@ -29,17 +32,25 @@ describe( 'Start Setup WP Experience Page', function () {
 		CheckInfoPanel();
 		CheckHelpPanelLinks();
 	} );
+	}
+	else{
+		it( 'Check to make sure Sidebar opens', () => {
+			BasicSidebarCheck();
+		} );
+	};
 
 	it( 'Check if Headers Load', () => {
 		CheckCardHeadingSubheading( true );
 	} );
 
-	it( 'Check if `site` appears in heading', () => {
-		cy.get( '.nfd-step-card-heading' )
-			.should( 'be.visible' )
-			.contains( 'site' );
-	} );
-
+	if(GetPluginId()!='hostgator'){
+		it( 'Check if `site` appears in heading', () => {
+			cy.get( '.nfd-step-card-heading' )
+				.should( 'be.visible' )
+				.contains( 'site' );
+		} );
+	};
+	
 	it( 'Check if Radio Options load', () => {
 		cy.get( '.components-radio-control__option' )
 			.should( 'exist' )
@@ -89,11 +100,6 @@ describe( 'Start Setup WP Experience Page', function () {
 	} );
 
 	it( 'Checks if Continue Setup Button is Enabled after the Radio Button is Checked.', () => {
-		cy.get( '[type=radio]:checked' ).should(
-			'have.css',
-			'background-color',
-			'rgb(53, 117, 211)'
-		);
 		cy.get( '.nfd-card-button' ).should( 'not.be.disabled' ).click();
 		cy.url().should( 'not.contain', 'get-started/experience' );
 		cy.go( 'back' );

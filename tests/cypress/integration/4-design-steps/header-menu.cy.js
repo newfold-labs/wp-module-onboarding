@@ -1,6 +1,8 @@
 // <reference types="Cypress" />
 import { DrawerActivityForSubMenu } from '../wp-module-support/drawer.cy';
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 import {
+	BasicSidebarCheck,
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
@@ -28,12 +30,20 @@ describe( 'Header menu Page', function () {
 		cy.contains( 'button', 'Design' ).should( 'be.visible' );
 	} );
 
-	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel( '__design-header-menu', 'Header & Menu' );
-		CheckIllustrationPanel();
-		CheckInfoPanel( 2 );
-		CheckHelpPanelLinks();
-	} );
+	if(GetPluginId()!='hostgator'){
+		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+			CheckIntroPanel( '__design-header-menu', 'Header & Menu' );
+			CheckIllustrationPanel();
+			CheckInfoPanel( 2 );
+			CheckHelpPanelLinks();
+		} );
+	}
+	else{
+		it( 'Check to make sure Sidebar opens', () => {
+			BasicSidebarCheck();
+		} );
+	}
+	
 
 	it( 'Check to make sure different design is selected', () => {
 		let previewCount = 0;

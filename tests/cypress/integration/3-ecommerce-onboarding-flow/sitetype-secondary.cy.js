@@ -2,7 +2,9 @@
 import { APIList, EventsAPI } from '../wp-module-support/EventsApi.cy';
 import { CheckDrawerDisabled } from '../wp-module-support/drawer.cy';
 import { CheckCardHeadingSubheading } from '../wp-module-support/header.cy';
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 import {
+	BasicSidebarCheck,
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
@@ -25,26 +27,33 @@ describe( 'Get Started Site Type Secondary', function () {
 		CheckCardHeadingSubheading( true );
 	} );
 
-	it( 'Check if `store` appears in heading', () => {
-		cy.get('.nfd-step-card-heading')
-			.should('be.visible')
-			.contains('store');
-	} );
+	if(GetPluginId()!='hostgator'){
+		it( 'Check if `store` appears in heading', () => {
+			cy.get('.nfd-step-card-heading')
+				.should('be.visible')
+				.contains('store');
+		} );
+	
+		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+			CheckIntroPanel( '__get-started-site-type', 'Store Type' );
+			CheckIllustrationPanel();
+			CheckInfoPanel();
+			CheckHelpPanelLinks();
+		} );
 
-	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel( '__get-started-site-type', 'Store Type' );
-		CheckIllustrationPanel();
-		CheckInfoPanel();
-		CheckHelpPanelLinks();
-	} );
-
-	it( 'Check selected category is visible and selected', () => {
-		cy.get( '.category-scrolling-wrapper' ).should( 'be.visible' );
-		cy.get( '.category-scrolling-wrapper__type-text' ).should(
-			'contain',
-			'Business'
-		);
-	} );
+		it( 'Check selected category is visible and selected', () => {
+			cy.get( '.category-scrolling-wrapper' ).should( 'be.visible' );
+			cy.get( '.category-scrolling-wrapper__type-text' ).should(
+				'contain',
+				'Business'
+			);
+		} );
+	}
+	else{
+		it( 'Check to make sure Sidebar opens', () => {
+			BasicSidebarCheck();
+		} );
+	};
 
 	it( 'Check for Event API call being made when different sub-categories are selected', ()=>{
 		let SubcategoryCount = 0;

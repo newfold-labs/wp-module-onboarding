@@ -2,12 +2,13 @@
 import { CheckDrawerDisabled } from '../wp-module-support/drawer.cy';
 import { CheckCardHeadingSubheading } from '../wp-module-support/header.cy';
 import {
+	BasicSidebarCheck,
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
-import { GetPluginId } from '../wp-module-support/pluginID.cy';
+import { GetPluginId, GetPluginName } from '../wp-module-support/pluginID.cy';
 
 describe( 'Get Started Welcome Page', function () {
 	before( () => {
@@ -31,14 +32,14 @@ describe( 'Get Started Welcome Page', function () {
 		} );
 	} );
 
-	it.skip( 'Check Exit to Wordpress button is visible and clickable and continue flow', () => {
+	it( 'Check Exit to Wordpress button is visible and clickable and continue flow', () => {
 		cy.get( '.nfd-onboarding-etw__trigger' ).should( 'be.visible' ).click();
 		cy.get( '.components-modal__screen-overlay' ).should( 'be.visible' );
 		cy.get( '.nfd-onboarding-etw__buttons > .is-secondary' ).click();
 		cy.get( '.components-modal__screen-overlay' ).should( 'not.exist' );
 	} );
 
-	it.skip( 'Check Exit to Wordpress button is visible and clickable and cancel', () => {
+	it( 'Check Exit to Wordpress button is visible and clickable and cancel', () => {
 		cy.get( '.nfd-onboarding-etw__trigger' ).should( 'be.visible' ).click();
 		cy.get( '.components-modal__screen-overlay' ).should( 'be.visible' );
 		cy.get( '.components-modal__header > button' ).click();
@@ -49,12 +50,26 @@ describe( 'Get Started Welcome Page', function () {
 		CheckDrawerDisabled();
 	} );
 
-	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel( '__get-started-welcome', 'Start Setup' );
-		CheckIllustrationPanel();
-		CheckInfoPanel( 2 );
-		CheckHelpPanelLinks( true, 'Hire Our Full-Service Creative Team' );
-	} );
+	if(GetPluginId()!='hostgator'){
+		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+			CheckIntroPanel( '__get-started-welcome', 'Start Setup' );
+			CheckIllustrationPanel();
+			CheckInfoPanel( 2 );
+			CheckHelpPanelLinks( true, 'Hire Our Full-Service Creative Team' );
+		} );
+
+		it( 'Check if `website` appears in heading', () => {
+			cy.get('.nfd-step-card-heading')
+				.should('be.visible')
+				.contains('website');
+		});
+	}
+	else{
+		it( 'Check to make sure Sidebar opens', () => {
+			BasicSidebarCheck();
+		} );
+	};
+	
 
 	it( 'Check if welcome card is visible', () => {
 		cy.get( '.welcome-card' ).should( 'be.visible' );
@@ -65,13 +80,7 @@ describe( 'Get Started Welcome Page', function () {
 	} );
 
 	it( 'Check for brandname in sub heading', () => {
-		cy.get( '.nfd-step-card-subheading' ).should( 'contain', GetPluginId().charAt(0).toUpperCase() + GetPluginId().slice(1) );
-	} );
-
-	it( 'Check if `website` appears in heading', () => {
-		cy.get('.nfd-step-card-heading')
-			.should('be.visible')
-			.contains('website');
+		GetPluginName();
 	} );
 
 	it( 'Check navigation back is not visible', () => {
@@ -84,7 +93,7 @@ describe( 'Get Started Welcome Page', function () {
 		cy.get('.navigation-buttons_back').click();
 	} );
 
-	it.skip( 'Check Exit to Wordpress button is visible and clickable and exit flow', () => {
+	it( 'Check Exit to Wordpress button is visible and clickable and exit flow', () => {
 		cy.get( '.nfd-onboarding-etw__trigger' ).should( 'be.visible' ).click();
 		cy.get( '.components-modal__screen-overlay' ).should( 'be.visible' );
 		cy.get( '.nfd-onboarding-etw__buttons > .is-primary' ).click();

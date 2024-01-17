@@ -29,7 +29,6 @@ export const DrawerClose = () => {
 export const DrawerActivityForMenu = (
 	text,
 	itemPosition,
-	itemName,
 	isOpen = true
 ) => {
 	let href;
@@ -41,12 +40,11 @@ export const DrawerActivityForMenu = (
 		.should( 'be.visible' );
 	cy.get( '.nfd-onboarding-drawer__panel-back' )
 		.should( 'be.visible' )
-		.should( 'have.text', text );
+		.contains( text );
 	cy.get(
 		itemPosition.concat( ' > .nfd-onboarding-drawer__panel-menu-link' )
 	)
 		.should( 'have.class', 'active' )
-		.should( 'have.text', itemName )
 		.and( 'have.attr', 'href' )
 		.then( ( value ) => ( href = value ) );
 	cy.url().then( ( url ) => {

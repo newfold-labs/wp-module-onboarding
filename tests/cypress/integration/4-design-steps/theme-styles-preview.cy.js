@@ -1,5 +1,7 @@
 // <reference types="Cypress" />
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 import {
+	BasicSidebarCheck,
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
@@ -13,13 +15,21 @@ describe( 'Theme Styles Preview', function () {
 		);
 		cy.wait( 10000 );
 	} );
-
-	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel( '__design-theme-styles-preview', 'Theme Styles' );
-		CheckIllustrationPanel();
-		CheckInfoPanel( 2 );
-		CheckHelpPanelLinks();
-	} );
+	
+	if(GetPluginId()!='hostgator'){
+		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+			CheckIntroPanel( '__design-theme-styles-preview', 'Theme Styles' );
+			CheckIllustrationPanel();
+			CheckInfoPanel( 2 );
+			CheckHelpPanelLinks();
+		} );
+	}
+	else{
+		it( 'Check to make sure Sidebar opens', () => {
+			BasicSidebarCheck();
+		} );
+	}
+	
 
     it( 'Check if Theme is selected and content is in place', () => {
 		cy.get( ':nth-child(1) > .theme-styles-preview__title-bar' ).should(

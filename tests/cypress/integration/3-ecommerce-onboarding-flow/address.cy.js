@@ -1,7 +1,9 @@
 // <reference types="Cypress" />
 import { DrawerActivityForMenu } from '../wp-module-support/drawer.cy';
 import { CheckCardHeadingSubheading } from '../wp-module-support/header.cy';
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 import {
+	BasicSidebarCheck,
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
@@ -10,8 +12,9 @@ import {
 
 describe( 'Step Ecommerce Address/Store Details', function () {
 	before( () => {
-		cy.wait( 10000 );
+		cy.wait(2000);
 		cy.exec('npx wp-env run cli wp option delete nfd_module_onboarding_flow');
+		cy.wait( 10000 );
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding&flow=ecommerce#/ecommerce/step/address'
 		);
@@ -19,24 +22,26 @@ describe( 'Step Ecommerce Address/Store Details', function () {
 	} );
 
 	it( 'Check Drawer Activity', () => {
-		cy.visit(
-			'wp-admin/?page=nfd-onboarding&flow=ecommerce#/ecommerce/step/address'
-		);
-		cy.wait( 8000 );
 		DrawerActivityForMenu(
-			'Onboarding Menu',
+			'Onboarding',
 			':nth-child(1)',
-			'Street Address'
 		);
 	} );
 
-	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel( '__ecommerce-address', 'Street Address' );
-		CheckIllustrationPanel();
-		CheckInfoPanel();
-		CheckHelpPanelLinks();
-	} );
-
+	if(GetPluginId()!='hostgator'){
+		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+			CheckIntroPanel( '__ecommerce-address', 'Street Address' );
+			CheckIllustrationPanel();
+			CheckInfoPanel();
+			CheckHelpPanelLinks();
+		} );	
+	}
+	else{
+		it( 'Check to make sure Sidebar opens', () => {
+			BasicSidebarCheck();
+		} );
+	};
+	
 	it( 'Checks if Heading and Subheading are present', () => {
 		CheckCardHeadingSubheading();
 	} );

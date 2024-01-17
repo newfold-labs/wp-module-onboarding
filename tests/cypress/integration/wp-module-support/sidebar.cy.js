@@ -64,3 +64,13 @@ export const CheckHelpPanelLinks = (
 		.click()
 		.and( 'not.have.class', 'is-pressed' );
 };
+
+export const BasicSidebarCheck = () => {
+	cy.get('.nfd-onboarding-sidebar-learn-more__menu-button')
+				.should('be.visible')
+				.click();
+	cy.get('.nfd-onboarding-sidebar-learn-more--help-panel__links', {timeout:15000})
+		.should('be.visible');
+	cy.get('.nfd-onboarding-sidebar-learn-more__menu-button')
+		.click();
+}

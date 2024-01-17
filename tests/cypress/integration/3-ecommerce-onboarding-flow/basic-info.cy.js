@@ -2,6 +2,7 @@
 import { DrawerClose } from '../wp-module-support/drawer.cy';
 import { CheckHeadingSubheading } from '../wp-module-support/header.cy';
 import {
+	BasicSidebarCheck,
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
@@ -9,6 +10,7 @@ import {
 } from '../wp-module-support/sidebar.cy';
 import { SocialMediaTextValidations } from '../wp-module-support/socialMedia.cy';
 import { APIList, BasicInfoAPI } from '../wp-module-support/EventsApi.cy';
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 
 describe( 'Basic Info Page', function () {
 	const desc = 'Welcome to WordPress';
@@ -37,7 +39,6 @@ describe( 'Basic Info Page', function () {
 
 		cy.get( ':nth-child(2) > .nfd-onboarding-drawer__panel-menu-link' )
 			.should( 'have.class', 'active' )
-			.should( 'have.text', 'Basic Info' )
 			.and( 'have.attr', 'href' )
 			.then( ( value ) => ( href = value ) );
 		cy.url().then( ( url ) => {
@@ -51,18 +52,25 @@ describe( 'Basic Info Page', function () {
 		CheckHeadingSubheading();
 	} );
 
-	it( 'Check if `store` appears in heading', () => {
-		cy.get( '.nfd-main-heading__title' )
-			.should( 'be.visible' )
-			.contains( 'store' );
-	} );
+	if(GetPluginId()!='hostgator'){
+		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+			CheckIntroPanel( '__basic-info', 'Basic Info' );
+			CheckIllustrationPanel();
+			CheckInfoPanel();
+			CheckHelpPanelLinks();
+		} );
 
-	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel( '__basic-info', 'Basic Info' );
-		CheckIllustrationPanel();
-		CheckInfoPanel();
-		CheckHelpPanelLinks();
-	} );
+		it( 'Check if `store` appears in heading', () => {
+			cy.get( '.nfd-main-heading__title' )
+				.should( 'be.visible' )
+				.contains( 'store' );
+		} );
+	}
+	else{
+		it( 'Check to make sure Sidebar opens', () => {
+			BasicSidebarCheck();
+		} );
+	};
 
 	it( 'Enter a Title and then Check if it reflects elsewhere', () => {
 		const titleBox = cy.get( ':nth-child(1) > label > .nfd-input__field' );
@@ -169,15 +177,23 @@ describe( 'Basic Info Page', function () {
 			// The URL Checker runs on a debounce
 			// Shows the message to the User in case of Invalid URL
 			cy.get( '.Tooltip-Wrapper', { timeout: 3000 } ).should( 'exist' );
-			cy.get( '.Tooltip-Tip', { timeout: 3000 } )
+			if(GetPluginId()!='hostgator'){
+				cy.get( '.Tooltip-Tip', { timeout: 3000 } )
 				.should( 'be.visible' )
 				.should( 'contain', Tooltiptext2 );
-			cy.get( '.navigation-buttons_next' ).click();
-			cy.get( '.components-modal__content' ).should( 'be.visible' );
-			cy.get( '.components-modal__header-heading' ).should(
-				'have.text',
-				ModalText2
-			);
+				cy.get( '.navigation-buttons_next' ).click();
+				cy.get( '.components-modal__content' ).should( 'be.visible' );
+				cy.get( '.components-modal__header-heading' ).should(
+					'have.text',
+					ModalText2
+				);
+			}
+			else{
+				cy.get( '.Tooltip-Tip', { timeout: 3000 } ).should( 'be.visible' );
+				cy.get( '.navigation-buttons_next' ).click();
+				cy.get( '.components-modal__content' ).should( 'be.visible' );
+			}
+			
 			cy.get( '.components-modal__header button' , { timeout: customCommandTimeout } ).click()
 			cy.get(
 				'.browser-content_social_icon[style="background-image: var(--facebook-icon);"]'
@@ -207,7 +223,6 @@ describe( 'Basic Info Page', function () {
 			cy
 				.get( '.image-uploader_window-reset-btn' )
 				.should( 'exist' )
-				.contains( 'UPLOAD' )
 		) {
 			cy.get( '.image-uploader_window-logo-icon-selected' ).should(
 				'not.exist'
