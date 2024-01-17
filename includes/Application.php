@@ -6,6 +6,8 @@ use NewfoldLabs\WP\Module\Onboarding\RestApi\RestApi;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\Services\StatusService;
+
 use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
@@ -70,6 +72,10 @@ final class Application {
 
 		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
 			new WP_Admin();
+		}
+
+		if ( Permissions::is_authorized_admin() ) {
+			StatusService::track();
 		}
 
 		// Adds a transient to activate plugins in all scenarios.
