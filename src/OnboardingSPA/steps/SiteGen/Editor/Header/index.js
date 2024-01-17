@@ -16,11 +16,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 import { setFlow, completeFlow } from '../../../../utils/api/flow';
 import Spinner from '../../../../components/Loaders/Spinner';
-import {
-	getHomePagePreviews,
-	getRegeneratedHomePagePreviews,
-	toggleFavoriteHomepage,
-} from '../../../../utils/api/siteGen';
+import { getRegeneratedHomePagePreviews } from '../../../../utils/api/siteGen';
 import StepNavigationCenter from './step-navigation-center';
 import { useViewportMatch } from '@wordpress/compose';
 

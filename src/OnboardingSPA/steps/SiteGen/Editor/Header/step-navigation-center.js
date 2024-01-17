@@ -13,12 +13,12 @@ import { store as nfdOnboardingStore } from '../../../../store';
 /**
  * Centre Step buttons presented in Header.
  *
- * @param  root0
- * @param  root0.handleFavorite
- * @param  root0.handleViewAll
- * @param  root0.handleRegenerate
- * @param  root0.handleCustomize
- * @return {WPComponent} StepNavigation Component
+ * @param {Object}   root0                  - The root object containing all handlers.
+ * @param {Function} root0.handleFavorite   - Handler for the favorite action.
+ * @param {Function} root0.handleViewAll    - Handler for the view all action.
+ * @param {Function} root0.handleRegenerate - Handler for the regenerate action.
+ * @param {Function} root0.handleCustomize  - Handler for the customize action.
+ * @return {Object} StepNavigation Component
  */
 const StepNavigationCenter = ( {
 	handleFavorite,
@@ -56,7 +56,7 @@ const StepNavigationCenter = ( {
 	/**
 	 * Version step Navigation button.
 	 *
-	 * @return {WPComponent} VersionButton Component
+	 * @return {Object} VersionButton Component
 	 */
 	const VersionDropDownMenuItems = () => {
 		return (
@@ -97,7 +97,7 @@ const StepNavigationCenter = ( {
 	 *
 	 * @param  root0
 	 * @param  root0.isInputDisabled
-	 * @return {WPComponent} VersionButton Component
+	 * @return {Object} VersionButton Component
 	 */
 
 	const VersionButton = () => {
