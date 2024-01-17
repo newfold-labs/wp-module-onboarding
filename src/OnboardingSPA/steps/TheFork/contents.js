@@ -15,7 +15,7 @@ const getContents = () => {
 					"We'll stay out of your way.",
 					'wp-module-onboarding'
 				),
-				flow: 'onboarding',
+				flow: 'sitebuild',
 			},
 			{
 				title: __( ' Website Creator', 'wp-module-onboarding' ),
@@ -24,7 +24,7 @@ const getContents = () => {
 					'wp-module-onboarding'
 				),
 				span: __( 'AI', 'wp-module-onboarding' ),
-				flow: 'ai',
+				flow: 'sitegen',
 			},
 			{
 				title: __( 'Hire a Pro', 'wp-module-onboarding' ),
