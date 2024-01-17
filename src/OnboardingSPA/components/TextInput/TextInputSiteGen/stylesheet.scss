@@ -33,7 +33,6 @@ $selected-detail: #1de082;
 		}
 
 		&__hint {
-			margin-top: 30px;
 			font-weight: 300;
 			font-size: 0.87rem;
 			padding: 0 1.5px;
@@ -44,7 +43,6 @@ $selected-detail: #1de082;
 
 		&__info {
 			display: flex;
-			margin-top: 30px;
 			align-items: center;
 
 			&-text {
@@ -56,8 +54,8 @@ $selected-detail: #1de082;
 			}
 
 			&-icon {
-				width: 10px;
-				height: 6px;
+				width: 12px;
+				height: 6.5px;
 				margin: 3px;
 				border-radius: 6px;
 				animation: fadeIn 100ms ease-in;
@@ -68,6 +66,14 @@ $selected-detail: #1de082;
 					background-color: $selected-detail;
 				}
 			}
+		}
+
+		&_bottom {
+			display: flex;
+			margin-top: 30px;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
 		}
 	}
 

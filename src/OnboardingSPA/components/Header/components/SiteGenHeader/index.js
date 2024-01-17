@@ -36,7 +36,9 @@ const SiteGenHeader = () => {
 	const currentStepIndex = findIndex( allSteps, {
 		path: currentStep?.path,
 	} );
-	const progress = ( currentStepIndex / allSteps.length ) * 100;
+	const progress = Math.abs(
+		( ( currentStepIndex - 1 ) / ( allSteps.length - 1 ) ) * 100
+	);
 	return (
 		<>
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_TOP }` }>

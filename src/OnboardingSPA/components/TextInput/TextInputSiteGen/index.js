@@ -5,10 +5,12 @@ import { useRef, useEffect, useState, memo } from '@wordpress/element';
 const TextInputSiteGen = ( {
 	hint,
 	height,
+	children,
 	placeholder,
 	customerInput,
 	setIsValidInput,
 	setCustomerInput,
+	customChildren = false,
 } ) => {
 	const textareaRef = useRef( null );
 	const [ analysisScore, setAnalysisScore ] = useState( 0 );
@@ -85,16 +87,19 @@ const TextInputSiteGen = ( {
 						onChange={ ( e ) => onTextChange( e ) }
 					/>
 				</div>
-				{ customerInput ? (
-					<div className={ 'nfd-sg-input-box__info' }>
-						<div className={ 'nfd-sg-input-box__info-text' }>
-							{ __( 'Detail', 'wp-module-onboarding' ) }
+				<div className={ 'nfd-sg-input-box_bottom' }>
+					{ customerInput ? (
+						<div className={ 'nfd-sg-input-box__info' }>
+							<div className={ 'nfd-sg-input-box__info-text' }>
+								{ __( 'Detail', 'wp-module-onboarding' ) }
+							</div>
+							{ renderDetails() }
 						</div>
-						{ renderDetails() }
-					</div>
-				) : (
-					<p className={ 'nfd-sg-input-box__hint' }>{ hint }</p>
-				) }
+					) : (
+						<p className={ 'nfd-sg-input-box__hint' }>{ hint }</p>
+					) }
+					{ customChildren && children }
+				</div>
 			</label>
 		</div>
 	);

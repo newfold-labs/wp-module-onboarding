@@ -11,7 +11,7 @@ const getContents = () => {
 			'wp-module-onboarding'
 		),
 		facebookDesc: __(
-			'By connecting a Facebook profile, we can fetch relevant data to increase the accuracy of your Al generated site.',
+			'By connecting a Facebook profile, we can fetch relevant data to increase the accuracy of your AI generated site.',
 			'wp-module-onboarding'
 		),
 		facebookButton: __( 'Connect Facebook', 'wp-module-onboarding' ),

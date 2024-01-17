@@ -164,7 +164,7 @@ class PluginService {
 			'option_active_plugins',
 			function ( $plugins ) {
 				if ( '1' === get_transient( Options::get_option_name( 'filter_active_plugins' ) ) ) {
-					return array( container()->plugin()->basename );
+					return Plugins::get_active_plugins_list();
 				}
 				return $plugins;
 			}

@@ -101,9 +101,9 @@ const SiteGenSiteDetails = () => {
 							customerInput={ customerInput }
 							setIsValidInput={ setIsValidInput }
 							setCustomerInput={ setCustomerInput }
-						/>
-						{ isLargeViewport && (
-							<>
+							customChildren={ true }
+						>
+							{ isLargeViewport && (
 								<div className={ 'nfd-sg-site-details-endrow' }>
 									<NextButtonSiteGen
 										className={
@@ -113,8 +113,8 @@ const SiteGenSiteDetails = () => {
 										disabled={ ! isValidInput }
 									/>
 								</div>
-							</>
-						) }
+							) }
+						</TextInputSiteGen>
 						<div className={ 'nfd-sg-site-details-walkThrough' }>
 							{ content.walkThroughText }
 							<span
