@@ -54,7 +54,7 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 	};
 	const selectFlow = ( flow ) => {
 		switch ( flow ) {
-			case 'onboarding':
+			case 'sitebuild':
 				return switchFlow( oldFlow );
 			case SITEGEN:
 				return switchFlow( SITEGEN_FLOW );
@@ -71,7 +71,7 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 				{ options.map( ( tab, idx ) => {
 					if (
 						tab.flow === SITEGEN &&
-						! validateFlow( brandConfig, SITEGEN_FLOW )
+						! validateFlow( brandConfig, tab.flow )
 					) {
 						// Do not show the Sitegen AI option if not enabled for the customer
 						return false;
