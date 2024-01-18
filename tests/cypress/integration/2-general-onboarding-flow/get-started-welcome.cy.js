@@ -60,6 +60,7 @@ describe( 'Get Started Welcome Page', function () {
 
 		it( 'Check if `website` appears in heading', () => {
 			cy.get('.nfd-step-card-heading')
+				.scrollIntoView()
 				.should('be.visible')
 				.contains('website');
 		});
