@@ -51,6 +51,7 @@ const StepNavigationCenter = ( {
 		currentData.sitegen.homepages.data[ activeHomepage.slug ] =
 			activeHomepage;
 		setCurrentOnboardingData( currentData );
+		setIsInputDisabled( true );
 	};
 
 	/**
