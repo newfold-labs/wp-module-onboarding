@@ -193,9 +193,9 @@ const StepSiteGenEditorHeader = () => {
 						>
 							{ isLargeViewport
 								? __(
-										'Save & Continue',
-										'wp-module-onboarding'
-								  )
+									'Save & Continue',
+									'wp-module-onboarding'
+									)
 								: __( 'Next', 'wp-module-onboarding' ) }
 						</div>
 						{ isSaving ? (
