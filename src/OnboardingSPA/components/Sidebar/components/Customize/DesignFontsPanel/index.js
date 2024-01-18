@@ -206,32 +206,16 @@ const DesignFontsPanel = ( {
 		};
 	} );
 
-	const design = customizeSidebarData?.design;
 	const designStyles = customizeSidebarData?.designStyles;
 	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
 
-	const fontGroups = [
-		{
-			id: 0,
-			headings: design?.style?.fonts_heading,
-			body: design?.style?.fonts_content,
-		},
-		{
-			id: 1,
-			headings: designStyles[ 1 ]?.fonts_heading,
-			body: designStyles[ 1 ]?.fonts_content,
-		},
-		{
-			id: 2,
-			headings: designStyles[ 2 ]?.fonts_heading,
-			body: designStyles[ 2 ]?.fonts_content,
-		},
-		{
-			id: 3,
-			headings: designStyles[ 3 ]?.fonts_heading,
-			body: designStyles[ 3 ]?.fonts_content,
-		},
-	];
+	const fontGroups = designStyles.map( ( style, index ) => ( {
+		id: index,
+		headings: style.font_heading_name || style.font_heading,
+		body: style.font_content_name || style.font_content,
+		headingsSlug: style.font_heading,
+		bodySlug: style.font_content,
+	} ) );
 
 	const [ selectedGroup, setSelectedGroup ] = useState( null );
 	const [ showCustomFonts, setShowCustomFonts ] = useState( false );
@@ -242,18 +226,18 @@ const DesignFontsPanel = ( {
 	const [ selectedCustomFont, setSelectedCustomFont ] = useState( null );
 	const [ isEditingCustomFont, setIsEditingCustomFont ] = useState( false );
 
-	const fontsHeading = designStyles?.map( ( style ) => style.fonts_heading );
-	const fontsContent = designStyles?.map( ( style ) => style.fonts_content );
+	const fontsHeading = designStyles?.map( ( style ) => style.font_heading );
+	const fontsContent = designStyles?.map( ( style ) => style.font_content );
 
 	const handleUpdatePreviewSettings = () => {
 		let headings;
 		let body;
 		if ( selectedGroup === 'custom' ) {
-			headings = customFont.headings;
-			body = customFont.body;
+			headings = `var(--wp--preset--font-family--${ customFont.headings })`;
+			body = `var(--wp--preset--font-family--${ customFont.body })`;
 		} else {
-			headings = fontGroups[ selectedGroup ].headings;
-			body = fontGroups[ selectedGroup ].body;
+			headings = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].headings })`;
+			body = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].body })`;
 		}
 		const slug = currentData.sitegen?.homepages?.active?.slug;
 

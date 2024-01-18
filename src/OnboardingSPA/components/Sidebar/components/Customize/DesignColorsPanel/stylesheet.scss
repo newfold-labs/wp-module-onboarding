@@ -18,8 +18,10 @@
 
 			&__color__palette__icon {
 				display: flex;
-				justify-content: space-around;
 				gap: 20px;
+				padding: 10px 4px;
+				overflow-x: auto;
+				max-width: 250px;
 			}
 
 			&__icon {

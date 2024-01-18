@@ -26,34 +26,25 @@ const DesignColorsPanel = ( {
 		};
 	} );
 
-	const design = customizeSidebarData?.design;
 	const colorPalettes = customizeSidebarData?.colorPalettes;
-	const palettePrimaryColors = Object.entries( design?.color_palette ).map(
+	const palettePrimaryColors = Object.entries( colorPalettes[ 0 ] ).map(
 		( [ , color ] ) => ( {
 			name: __( 'Custom', 'wp-module-onboarding' ),
 			color,
 		} )
 	);
 
-	const defaultColors = {
-		primary: design?.color_palette.primary,
-		secondary:
-			design?.color_palette.secondary || design?.color_palette.primary,
-		tertiary:
-			design?.color_palette.tertiary || design?.color_palette.primary,
-	};
-
 	const palettes = [];
 
-	colorPalettes.slice( 1, 5 ).forEach( ( palette ) => {
+	colorPalettes.forEach( ( palette ) => {
 		palettes.push( {
 			primary: palette?.primary,
-			secondary: palette?.secondary || palette?.primary,
+			secondary: palette?.secondary || palette?.base,
 			tertiary: palette?.tertiary || palette?.primary,
 		} );
 	} );
 
-	const [ colors ] = useState( [ defaultColors, ...palettes ] );
+	const [ colors ] = useState( palettes );
 	const [ selectedColor, setSelectedColor ] = useState( null );
 	const [ showCustomColors, setShowCustomColors ] = useState( false );
 	const [ isEditingCustomColors, setIsEditingCustomColors ] =
@@ -128,12 +119,25 @@ const DesignColorsPanel = ( {
 
 	const handleUpdatePreviewSettings = () => {
 		colorPalettes[ selectedPalette ].primary = selectedColor.primary;
-		colorPalettes[ selectedPalette ].secondary = selectedColor.secondary;
+		if ( colorPalettes[ selectedPalette ].secondary ) {
+			colorPalettes[ selectedPalette ].secondary =
+				selectedColor.secondary;
+		} else {
+			colorPalettes[ selectedPalette ].base = selectedColor.secondary;
+		}
+
 		colorPalettes[ selectedPalette ].tertiary = selectedColor.tertiary;
 		const slug = currentData.sitegen?.homepages?.active?.slug;
 		if ( slug ) {
-			currentData.sitegen.homepages.data[ slug ].color.palette =
-				convertColorSchema( colorPalettes[ selectedPalette ] );
+			currentData.sitegen.homepages.data =
+				currentData.sitegen.homepages?.data?.map( ( ele ) => {
+					if ( ele.slug === slug ) {
+						ele.color.palette = convertColorSchema(
+							colorPalettes[ selectedPalette ]
+						);
+					}
+					return ele;
+				} );
 			currentData.sitegen.homepages.active.color.palette =
 				convertColorSchema( colorPalettes[ selectedPalette ] );
 			setCurrentOnboardingData( currentData );
@@ -141,7 +145,7 @@ const DesignColorsPanel = ( {
 	};
 
 	useEffect( () => {
-		if ( selectedColor && selectedPalette ) {
+		if ( selectedColor !== null && selectedPalette !== null ) {
 			handleUpdatePreviewSettings();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -260,7 +264,7 @@ const DesignColorsPanel = ( {
 						<div
 							className={ `${ baseClassName }__container__color__palette__icon` }
 						>
-							{ colors.slice( 0, 4 ).map( ( elem, idx ) => (
+							{ colors.map( ( elem, idx ) => (
 								<ColorPaletteIcon
 									key={ idx }
 									idx={ idx }
