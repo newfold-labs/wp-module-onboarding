@@ -115,7 +115,6 @@ const StepSiteGenEditorHeader = () => {
 	}, [] );
 
 	useEffect( () => {
-		console.log("header re-renders");
 		if ( currentData?.sitegen?.homepages?.active ) {
 			setHomepage( currentData.sitegen.homepages.active );
 		}
@@ -146,7 +145,7 @@ const StepSiteGenEditorHeader = () => {
 							{ isRegenerating && (
 								<Spinner
 									className={
-										'nfd-onboarding-header--sitegen__editor__end__save-button__spinner'
+										'nfd-onboarding-header--sitegen__editor__start__regenerate__spinner'
 									}
 								/>
 							) }
