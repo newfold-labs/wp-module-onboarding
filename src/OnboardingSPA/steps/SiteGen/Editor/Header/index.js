@@ -23,6 +23,7 @@ import { useViewportMatch } from '@wordpress/compose';
 const StepSiteGenEditorHeader = () => {
 	const [ homepage, setHomepage ] = useState();
 	const [ isSaving, setIsSaving ] = useState( false );
+	const [ isRegenerating, setIsRegenerating ] = useState( false );
 
 	const isLargeViewport = useViewportMatch( 'medium' );
 
@@ -52,6 +53,7 @@ const StepSiteGenEditorHeader = () => {
 	};
 
 	const handleRegenerate = async () => {
+		setIsRegenerating( true );
 		if ( isSaving ) {
 			return;
 		}
@@ -78,13 +80,14 @@ const StepSiteGenEditorHeader = () => {
 					regeneratedPage;
 				currentData.sitegen.homepages.active = regeneratedPage;
 				setCurrentOnboardingData( currentData );
+				setIsRegenerating( false );
 			} else if ( response && response.error ) {
-				/* Handle Error UI state */
+				setIsRegenerating( false );
 			} else {
-				/* Handle Error UI state */
+				setIsRegenerating( false );
 			}
 		} catch ( error ) {
-			/* Handle Error UI state */
+			setIsRegenerating( false );
 		}
 	};
 
@@ -112,6 +115,7 @@ const StepSiteGenEditorHeader = () => {
 	}, [] );
 
 	useEffect( () => {
+		console.log("header re-renders");
 		if ( currentData?.sitegen?.homepages?.active ) {
 			setHomepage( currentData.sitegen.homepages.active );
 		}
@@ -139,6 +143,13 @@ const StepSiteGenEditorHeader = () => {
 							>
 								{ __( 'Regenerate', 'wp-module-onboarding' ) }
 							</div>
+							{ isRegenerating && (
+								<Spinner
+									className={
+										'nfd-onboarding-header--sitegen__editor__end__save-button__spinner'
+									}
+								/>
+							) }
 						</div>
 					) }
 				</div>
@@ -183,9 +194,9 @@ const StepSiteGenEditorHeader = () => {
 						>
 							{ isLargeViewport
 								? __(
-									'Save & Continue',
-									'wp-module-onboarding'
-								)
+										'Save & Continue',
+										'wp-module-onboarding'
+								  )
 								: __( 'Next', 'wp-module-onboarding' ) }
 						</div>
 						{ isSaving ? (
