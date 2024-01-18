@@ -11,16 +11,11 @@ import CommonLayout from '../../../components/Layouts/Common';
 import TextInputSiteGen from '../../../components/TextInput/TextInputSiteGen';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 
-import SiteGenSiteDetailsWalkthrough from '../SiteDetails/walkthrough';
-import { getSiteDetailsQuestionare } from '../../../utils/api/siteGen';
-
 const SiteGenSiteDetails = () => {
 	const content = getContents();
 	const isLargeViewport = useViewportMatch( 'small' );
 	const [ customerInput, setCustomerInput ] = useState();
 	const [ isValidInput, setIsValidInput ] = useState( false );
-	const [ isWalkthrough, setIsWalkthrough ] = useState( false );
-	const [ siteDetailsmeta, setSiteDetailsmeta ] = useState();
 	const { currentData } = useSelect( ( select ) => {
 		return {
 			currentData:
@@ -65,69 +60,33 @@ const SiteGenSiteDetails = () => {
 		}
 	}, [ customerInput ] );
 
-	const handleClickWalkThrough = () => {
-		setIsWalkthrough( true );
-	};
-
-	useEffect( () => {
-		getSiteDetails();
-	}, [] );
-
-	async function getSiteDetails() {
-		try {
-			let siteDetailsmetas = await getSiteDetailsQuestionare();
-			siteDetailsmetas = siteDetailsmetas.body;
-			setSiteDetailsmeta( siteDetailsmetas );
-		} catch ( err ) {
-			// eslint-disable-next-line no-console
-			console.error( 'Error fetching data:', err );
-		}
-	}
-
 	return (
 		<CommonLayout isCentered>
 			<Animate type={ 'fade-in' }>
-				{ isWalkthrough ? (
-					<SiteGenSiteDetailsWalkthrough
-						siteDetailsmeta={ siteDetailsmeta }
-					/>
-				) : (
-					<div className={ 'nfd-sg-site-details' }>
-						<AIHeading title={ content.heading } />
-						<TextInputSiteGen
-							placeholder={ content.inputPlaceholder }
-							hint={ content.inputHint }
-							height={ '40px' }
-							customerInput={ customerInput }
-							setIsValidInput={ setIsValidInput }
-							setCustomerInput={ setCustomerInput }
-							customChildren={ true }
-						>
-							{ isLargeViewport && (
-								<div className={ 'nfd-sg-site-details-endrow' }>
-									<NextButtonSiteGen
-										className={
-											'nfd-sg-site-details--next-btn'
-										}
-										text={ content.buttonText }
-										disabled={ ! isValidInput }
-									/>
-								</div>
-							) }
-						</TextInputSiteGen>
-						<div className={ 'nfd-sg-site-details-walkThrough' }>
-							{ content.walkThroughText }
-							<span
-								onClick={ handleClickWalkThrough }
-								onKeyDown={ handleClickWalkThrough }
-								role="button"
-								tabIndex="0"
-							>
-								{ content.walkThroughlink }
-							</span>
-						</div>
-					</div>
-				) }
+				<div className={ 'nfd-sg-site-details' }>
+					<AIHeading title={ content.heading } />
+					<TextInputSiteGen
+						placeholder={ content.inputPlaceholder }
+						hint={ content.inputHint }
+						height={ '40px' }
+						customerInput={ customerInput }
+						setIsValidInput={ setIsValidInput }
+						setCustomerInput={ setCustomerInput }
+						customChildren={ true }
+					>
+						{ isLargeViewport && (
+							<div className={ 'nfd-sg-site-details-endrow' }>
+								<NextButtonSiteGen
+									className={
+										'nfd-sg-site-details--next-btn'
+									}
+									text={ content.buttonText }
+									disabled={ ! isValidInput }
+								/>
+							</div>
+						) }
+					</TextInputSiteGen>
+				</div>
 			</Animate>
 		</CommonLayout>
 	);
