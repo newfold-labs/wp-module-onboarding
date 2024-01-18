@@ -195,7 +195,7 @@ const StepSiteGenEditorHeader = () => {
 								? __(
 									'Save & Continue',
 									'wp-module-onboarding'
-									)
+								)
 								: __( 'Next', 'wp-module-onboarding' ) }
 						</div>
 						{ isSaving ? (
