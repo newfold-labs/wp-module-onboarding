@@ -48,25 +48,36 @@ const SitegenEditorPatternsSidebar = () => {
 	};
 
 	const handlePreview = ( slug ) => {
-		if ( ! ( slug in homepages ) ) {
+		const index = homepages.findIndex(
+			( homepage ) => homepage.slug === slug
+		);
+
+		if ( index === -1 ) {
 			return false;
 		}
-		const homepagesCopy = { ...homepages };
-		homepagesCopy[ slug ].active = ! homepagesCopy[ slug ].active;
-		currentData.sitegen.homepages.active = homepagesCopy[ slug ];
-		setActiveHomepage( homepagesCopy[ slug ] );
+
+		const homepagesCopy = [ ...homepages ];
+		homepagesCopy[ index ].active = ! homepagesCopy[ index ].active;
+		currentData.sitegen.homepages.active = homepagesCopy[ index ];
+
+		setActiveHomepage( homepagesCopy[ index ] );
 		setHomepages( homepagesCopy );
 		setCurrentOnboardingData( currentData );
 	};
 
 	const handleFavorite = ( slug ) => {
-		if ( ! ( slug in homepages ) ) {
+		const index = homepages.findIndex(
+			( homepage ) => homepage.slug === slug
+		);
+		if ( index === -1 ) {
 			return false;
 		}
 
-		const homepagesCopy = { ...homepages };
+		const homepagesCopy = [ ...homepages ];
 
-		homepagesCopy[ slug ].favorite = ! homepagesCopy[ slug ].favorite;
+		homepagesCopy[ index ].isFavourited =
+			! homepagesCopy[ index ].isFavourited;
+
 		setHomepages( homepagesCopy );
 		currentData.sitegen.homepages.data = homepagesCopy;
 		setCurrentOnboardingData( currentData );
@@ -155,7 +166,7 @@ const SitegenEditorPatternsSidebar = () => {
 							<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context">
 								<div
 									className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon ${
-										data.favorite &&
+										data.isFavourited &&
 										'nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon__fill'
 									}` }
 									role="button"
@@ -262,7 +273,7 @@ const SitegenEditorPatternsSidebar = () => {
 															<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context">
 																<div
 																	className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon ${
-																		data.favorite &&
+																		data.isFavourited &&
 																		'nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon__fill'
 																	}` }
 																	role="button"
@@ -317,7 +328,7 @@ const SitegenEditorPatternsSidebar = () => {
 												( homepage ) => {
 													const data =
 														homepages[ homepage ];
-													if ( ! data.favorite ) {
+													if ( ! data.isFavourited ) {
 														return false;
 													}
 													const newPreviewSettings =

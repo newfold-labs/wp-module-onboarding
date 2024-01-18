@@ -49,7 +49,6 @@ const SiteGenHeader = () => {
 					) }
 				</>
 			</Fill>
-
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_START }` }>
 				<>{ isHeaderNavigationEnabled && <StepNavigation /> }</>
 			</Fill>

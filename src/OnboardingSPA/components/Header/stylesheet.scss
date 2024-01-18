@@ -121,18 +121,16 @@ $nfd-onboarding-editor-header-hover: #272d30;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		gap: 8px;
+		text-align: left;
 		cursor: pointer;
 		height: 36px;
-		background-color: var(--nfd-onboarding-navigation-back-background);
+		border-radius: 6px;
 		color: var(--nfd-onboarding-primary);
 		fill: var(--nfd-onboarding-primary);
-		border-radius: 6px;
 
-		&:hover {
-			background-color: var(--nfd-onboarding-primary);
-			color: $nfd-onboarding-editor-header-hover;
-			fill: $nfd-onboarding-editor-header-hover;
+		&__favourite {
+			display: flex;
+			align-items: center;
 		}
 	}
 

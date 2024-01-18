@@ -52,7 +52,7 @@ const StepSiteGenEditor = () => {
 	const buildPreview = () => {
 		const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
 		newPreviewSettings.settings.color.palette =
-			activeHomepage.color.palette;
+			activeHomepage?.color?.palette;
 
 		if ( activeHomepage && activeHomepage.styles ) {
 			if (
