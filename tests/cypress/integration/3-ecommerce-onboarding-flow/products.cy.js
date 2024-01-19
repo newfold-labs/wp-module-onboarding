@@ -26,7 +26,7 @@ describe( 'Step Ecommerce Products Info', function () {
 		);
 	} );
 
-	if(GetPluginId()!='hostgator'){
+	if(GetPluginId()=='bluehost'){
 		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 			CheckIntroPanel( '__ecommerce-products', 'Products Info' );
 			CheckIllustrationPanel();

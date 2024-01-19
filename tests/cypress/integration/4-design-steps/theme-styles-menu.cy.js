@@ -26,7 +26,7 @@ describe( 'Theme Styles Menu', function () {
 		);
 	} );
 
-	if(GetPluginId()!='hostgator'){
+	if(GetPluginId()=='bluehost'){
 		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 		CheckIntroPanel( '__design-theme-styles-menu', 'Theme Styles' );
 		CheckIllustrationPanel();

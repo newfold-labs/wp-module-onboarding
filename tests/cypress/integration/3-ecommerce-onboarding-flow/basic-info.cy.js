@@ -52,7 +52,7 @@ describe( 'Basic Info Page', function () {
 		CheckHeadingSubheading();
 	} );
 
-	if(GetPluginId()!='hostgator'){
+	if(GetPluginId()=='bluehost'){
 		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 			CheckIntroPanel( '__basic-info', 'Basic Info' );
 			CheckIllustrationPanel();

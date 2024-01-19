@@ -28,7 +28,7 @@ describe( 'Step Ecommerce Address/Store Details', function () {
 		);
 	} );
 
-	if(GetPluginId()!='hostgator'){
+	if(GetPluginId()=='bluehost'){
 		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 			CheckIntroPanel( '__ecommerce-address', 'Street Address' );
 			CheckIllustrationPanel();

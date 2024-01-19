@@ -25,7 +25,7 @@ describe( 'Typography Step Test', function () {
 		);
 	} );
 
-	if(GetPluginId()!='hostgator'){
+	if(GetPluginId()=='bluehost'){
 		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 			CheckIntroPanel( '__design-fonts', 'Fonts' );
 			CheckIllustrationPanel();

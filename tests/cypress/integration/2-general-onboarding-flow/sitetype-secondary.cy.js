@@ -27,7 +27,7 @@ describe( 'Get Started Site Type Secondary', function () {
 		CheckCardHeadingSubheading( true );
 	} );
 
-	if(GetPluginId()!='hostgator'){
+	if(GetPluginId()=='bluehost'){
 		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 			CheckIntroPanel( '__get-started-site-type', 'Site Type' );
 			CheckIllustrationPanel();

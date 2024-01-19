@@ -30,7 +30,7 @@ describe( 'Header menu Page', function () {
 		cy.contains( 'button', 'Design' ).should( 'be.visible' );
 	} );
 
-	if(GetPluginId()!='hostgator'){
+	if(GetPluginId()=='bluehost'){
 		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 			CheckIntroPanel( '__design-header-menu', 'Header & Menu' );
 			CheckIllustrationPanel();

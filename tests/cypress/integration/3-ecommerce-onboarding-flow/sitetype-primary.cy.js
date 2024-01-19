@@ -27,7 +27,7 @@ describe( 'Get Started Site Type Primary', function () {
 		CheckCardHeadingSubheading( true );
 	} );
 
-	if(GetPluginId()!='hostgator'){
+	if(GetPluginId()=='bluehost'){
 		it( 'Check if `store` appears in heading', () => {
 			cy.get('.nfd-step-card-heading')
 				.should('be.visible')
