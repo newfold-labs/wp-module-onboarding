@@ -5,8 +5,8 @@ import {
 	HEADER_END,
 	HEADER_SITEGEN,
 	HEADER_START,
-	wpEditorPage,
 	SIDEBAR_SITEGEN_EDITOR_PATTERNS,
+	pluginDashboardPage,
 } from '../../../../../constants';
 import { Icon, chevronRight } from '@wordpress/icons';
 import { store as nfdOnboardingStore } from '../../../../store';
@@ -92,7 +92,7 @@ const StepSiteGenEditorHeader = () => {
 		setIsSaving( true );
 		await setFlow( currentData );
 		await completeFlow();
-		window.location.replace( wpEditorPage );
+		window.location.replace( pluginDashboardPage );
 	};
 	const handleViewAll = () => {
 		setSidebarActiveView( SIDEBAR_SITEGEN_EDITOR_PATTERNS );

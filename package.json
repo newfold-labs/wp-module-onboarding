@@ -20,7 +20,7 @@
         "webpack-merge": "^5.8.0"
     },
     "scripts": {
-        "build": "wp-scripts build ./src/onboarding.js",
+        "build": "wp-scripts build ./src/onboarding.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.css",
         "format": "wp-scripts format ./src",
         "start": "wp-scripts start ./src/onboarding.js",
         "lint:js": "wp-scripts lint-js ./src",

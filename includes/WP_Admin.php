@@ -181,7 +181,7 @@ final class WP_Admin {
 
 		\wp_register_script(
 			'sitegen-theme-marker',
-			NFD_ONBOARDING_SCRIPTS_URL . '/sitegen-theme-marker/sitegen-theme-marker.js',
+			NFD_ONBOARDING_BUILD_URL . '/sitegen-theme-marker.js',
 			array(),
 			'1.0.0',
 			true
@@ -200,7 +200,7 @@ final class WP_Admin {
 
 		\wp_register_style(
 			'sitegen-theme-marker',
-			NFD_ONBOARDING_SCRIPTS_URL . '/sitegen-theme-marker/sitegen-theme-marker.css',
+			NFD_ONBOARDING_BUILD_URL . '/sitegen-theme-marker.css.css',
 			array(),
 			'1.0.0',
 			'all'
