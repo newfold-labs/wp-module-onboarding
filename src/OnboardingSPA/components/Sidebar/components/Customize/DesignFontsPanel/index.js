@@ -147,7 +147,7 @@ const CustomFontsDisplay = ( {
 			<h5 className={ `${ baseClassName }__heading` }>
 				<span>{ __( 'CUSTOM FONTS', 'wp-module-onboarding' ) }</span>
 			</h5>
-			<button onClick={ () => handleEditCustomFont() }>Edit fonts</button>
+			<button onClick={ () => handleEditCustomFont() }>{ __( 'Edit fonts', 'wp-module-onboarding' ) }</button>
 		</div>
 
 		<div className={ `${ baseClassName }__font-group__container` }>
@@ -192,15 +192,10 @@ const CustomFontsDisplay = ( {
 const DesignFontsPanel = ( {
 	baseClassName = 'nfd-onboarding-sidebar--customize__design-fonts-panel',
 } ) => {
-	const { customizeSidebarData } = useSelect( ( select ) => {
+	const { currentData, customizeSidebarData } = useSelect( ( select ) => {
 		return {
 			customizeSidebarData:
-				select( nfdOnboardingStore ).getCustomizeSidebarData(),
-		};
-	}, [] );
-
-	const { currentData } = useSelect( ( select ) => {
-		return {
+			select( nfdOnboardingStore ).getCustomizeSidebarData(),
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
@@ -230,6 +225,11 @@ const DesignFontsPanel = ( {
 	const fontsContent = designStyles?.map( ( style ) => style.font_content );
 
 	const handleUpdatePreviewSettings = () => {
+		const slug = currentData.sitegen?.homepages?.active?.slug;
+		if ( ! slug ) {
+			return;
+		}
+
 		let headings;
 		let body;
 		if ( selectedGroup === 'custom' ) {
@@ -239,49 +239,46 @@ const DesignFontsPanel = ( {
 			headings = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].headings })`;
 			body = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].body })`;
 		}
-		const slug = currentData.sitegen?.homepages?.active?.slug;
 
-		if ( slug ) {
-			currentData.sitegen.homepages.data[ slug ] = {
-				...currentData.sitegen.homepages.data[ slug ],
-				styles: {
-					blocks: [
-						{
-							'core/heading': {
-								typography: {
-									fontFamily: headings,
-								},
-							},
-							'core/body': {
-								typography: {
-									fontFamily: body,
-								},
+		currentData.sitegen.homepages.data[ slug ] = {
+			...currentData.sitegen.homepages.data[ slug ],
+			styles: {
+				blocks: [
+					{
+						'core/heading': {
+							typography: {
+								fontFamily: headings,
 							},
 						},
-					],
-				},
-			};
-			currentData.sitegen.homepages.active = {
-				...currentData.sitegen.homepages.active,
-				styles: {
-					blocks: [
-						{
-							'core/heading': {
-								typography: {
-									fontFamily: headings,
-								},
-							},
-							'core/body': {
-								typography: {
-									fontFamily: body,
-								},
+						'core/body': {
+							typography: {
+								fontFamily: body,
 							},
 						},
-					],
-				},
-			};
-			setCurrentOnboardingData( currentData );
-		}
+					},
+				],
+			},
+		};
+		currentData.sitegen.homepages.active = {
+			...currentData.sitegen.homepages.active,
+			styles: {
+				blocks: [
+					{
+						'core/heading': {
+							typography: {
+								fontFamily: headings,
+							},
+						},
+						'core/body': {
+							typography: {
+								fontFamily: body,
+							},
+						},
+					},
+				],
+			},
+		};
+		setCurrentOnboardingData( currentData );
 	};
 
 	useEffect( () => {

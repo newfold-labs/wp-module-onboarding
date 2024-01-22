@@ -1,28 +1,29 @@
 import CommonLayout from '../../../components/Layouts/Common';
 
-import { useEffect, useState, useMemo } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
 import { useNavigate } from 'react-router-dom';
 
-import { SiteGenLivePreview } from '../../../components/LivePreview';
+import { SiteGenPreviewSelectableCard } from '../../../components/LivePreview';
 import getContents from './contents';
 import HeartAnimation from './heartAnimation';
 import RegeneratingSiteCard from './regeneratingCard';
 import {
-	getHomePagePreviews,
-	getRegeneratedHomePagePreviews,
-	toggleFavoriteHomepage,
+	getHomepages,
+	regenerateHomepage,
 } from '../../../utils/api/siteGen';
 import { getGlobalStyles } from '../../../utils/api/themes';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { cloneDeep, isEmpty } from 'lodash';
 
 const SiteGenPreview = () => {
 	const navigate = useNavigate();
-	const [ homepages, setHomepages ] = useState( { active: {}, data: [] } );
+	const [ homepages, setHomepages ] = useState( false );
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
 	const [ isPreviewLoading, setIsPreviewLoading ] = useState( false );
-	const [ globalStyles, setGlobalStyles ] = useState( [] );
+	const [ globalStyles, setGlobalStyles ] = useState( false );
 
 	const {
 		setIsHeaderEnabled,
@@ -49,47 +50,49 @@ const SiteGenPreview = () => {
 		updateInitialize( true );
 	}, [ currentData ] );
 
-	useEffect( () => {
-		const fetchHomePagesPatterns = async () => {
-			setIsPreviewLoading( true );
-			if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
-				try {
-					const response = await getHomePagePreviews(
-						currentData.sitegen.siteDetails.prompt,
-						false
-					);
+	const loadHomepages = async () => {
+		setIsPreviewLoading( true );
+		if ( ! isEmpty( currentData.sitegen.homepages.data ) ) {
+			setHomepages( currentData.sitegen.homepages.data );
+			setIsPreviewLoading( false );
+			return;
+		}
+		if ( currentData.sitegen.siteDetails?.prompt === '' ) {
+			return;
+		}
 
-					if ( response && response.body ) {
-						setHomepages( { ...homepages, data: response.body } );
-						currentData.sitegen.homepages.data = response.body;
-						setCurrentOnboardingData( currentData );
-					} else if ( response && response.error ) {
-						setHomepages( { ...homepages, data: [] } );
-					} else {
-						/* Handle Error UI state */
-					}
+		const response = await getHomepages(
+			currentData.sitegen.siteDetails.prompt,
+			false
+		);
 
-					setIsPreviewLoading( false );
-				} catch ( error ) {
-					setIsPreviewLoading( false );
-				}
-			}
-		};
+		if ( response.error ) {
+			return;
+		}
 
-		fetchHomePagesPatterns();
-		loadGlobalStyles();
-	}, [] );
+		currentData.sitegen.homepages.data = response.body;
+		setHomepages( response.body );
+		setCurrentOnboardingData( currentData );
+		setIsPreviewLoading( false );
+	};
 
 	const loadGlobalStyles = async () => {
 		const globalStylesResponse = await getGlobalStyles();
+		if ( globalStylesResponse.error ) {
+			return;
+		}
 		setGlobalStyles( globalStylesResponse.body );
 	};
+
+	useEffect( () => {
+		loadHomepages();
+		loadGlobalStyles();
+	}, [] );
 
 	const handlePreview = ( slug ) => {
 		if ( ! ( slug in homepages ) ) {
 			return false;
 		}
-		homepages[ slug ].active = ! homepages[ slug ].active;
 		currentData.sitegen.homepages.active = homepages[ slug ];
 		setCurrentOnboardingData( currentData );
 		navigate( nextStep.path );
@@ -112,143 +115,79 @@ const SiteGenPreview = () => {
 		}
 	};
 
-	const updateFavoriteStatus = ( slug, homepagesList ) => {
-		homepagesList.forEach( ( homepageObj ) => {
-			if ( homepageObj.slug === slug ) {
-				homepageObj.isFavourited = ! homepageObj.isFavourited;
-			}
-		} );
-		setCurrentOnboardingData( { ...currentData } );
-	};
-
-	const handleToggleFavoriteSuccess = ( response, slug, homepagesList ) => {
-		if ( ! response ) {
-			updateFavoriteStatus( slug, homepagesList );
-		}
-	};
-
-	const handleToggleFavoriteError = ( error, slug, homepagesList ) => {
-		updateFavoriteStatus( slug, homepagesList );
-		// eslint-disable-next-line no-console
-		console.error( error );
-	};
-
 	const handleFavorite = ( slug ) => {
-		const homepagesList = currentData.sitegen.homepages.data;
-
-		if ( homepagesList && homepagesList.length > 0 ) {
-			updateFavoriteStatus( slug, homepagesList );
+		if ( ! ( slug in homepages ) ) {
+			return;
 		}
-
-		toggleFavoriteHomepage( slug )
-			.then( ( response ) =>
-				handleToggleFavoriteSuccess( response, slug, homepagesList )
-			)
-			.catch( ( error ) =>
-				handleToggleFavoriteError( error, slug, homepagesList )
-			);
+		const isFavorite = ! homepages[ slug ].isFavorite;
+		homepages[ slug ].isFavorite = isFavorite;
+		currentData.sitegen.homepages.data = homepages;
+		setHomepages( homepages );
+		setCurrentOnboardingData( currentData );
 	};
 
-	const handleRegenerate = async ( slug, colorPalattes, isFavourited ) => {
+	const handleRegenerate = async ( slug, palette, isFavorite ) => {
 		scrollSelectionIntoView();
 		setIsRegenerating( true );
-		if ( ! ( slug in homepages.data ) ) {
-			if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
-				try {
-					const response = await getRegeneratedHomePagePreviews(
-						currentData.sitegen.siteDetails.prompt,
-						true,
-						slug,
-						colorPalattes,
-						isFavourited
-					);
-
-					if (
-						response &&
-						response.body &&
-						response.body.length > 0
-					) {
-						setHomepages( {
-							...homepages.data,
-							data: response.body,
-						} );
-						currentData.sitegen.homepages.data = response.body;
-						setCurrentOnboardingData( currentData );
-					} else if ( response && response.error ) {
-						/* Handle Error UI state */
-					} else {
-						/* Handle Error UI state */
-					}
-
-					setIsRegenerating( false );
-				} catch ( error ) {
-					setIsRegenerating( false );
-				}
-			}
+		if ( ! ( slug in homepages ) ) {
+			return;
 		}
-	};
 
-	// Define the createPreviewSettings function inside your component
-	const createPreviewSettings = ( palette ) => {
-		let settings = {};
-		if ( globalStyles.length > 0 ) {
-			settings = JSON.parse( JSON.stringify( globalStyles[ 0 ] ) );
-			settings.settings.color.palette = palette;
+		if ( currentData.sitegen.siteDetails?.prompt === '' ) {
+			return;
 		}
-		return settings;
-	};
 
-	// Use useMemo to memoize the previewSettings
-	const previewSettings = useMemo( () => {
-		return homepages?.data.map( ( homepage ) =>
-			createPreviewSettings( homepage?.color?.palette )
+		const response = await regenerateHomepage(
+			currentData.sitegen.siteDetails.prompt,
+			slug,
+			palette,
+			isFavorite
 		);
-	}, [ homepages.data, globalStyles ] );
+
+		if ( response.error ) {
+			return;
+		}
+
+		const regeneratedHomepage = response.body;
+		homepages[ regeneratedHomepage.slug ] = regeneratedHomepage;
+		currentData.sitegen.homepages.data = homepages;
+		setHomepages( homepages );
+		setCurrentOnboardingData( currentData );
+		setIsRegenerating( false );
+	};
 
 	const buildPreviews = () => {
-		if ( isPreviewLoading ) {
+		if ( ! ( homepages && globalStyles ) || isPreviewLoading ) {
 			return (
 				<RegeneratingSiteCard count={ 3 } isRegenerating={ false } />
 			);
 		}
 
-		const designs = [];
-		designs.push(
-			homepages.data &&
-				homepages.data.map( ( homepage, idx ) => {
-					let newPreviewSettings = {};
-					if ( globalStyles.length > 0 ) {
-						newPreviewSettings = JSON.parse(
-							JSON.stringify( globalStyles && globalStyles[ 0 ] )
-						);
-						newPreviewSettings.settings.color.palette =
-							homepage.color.palette;
-					}
-					const isPreviewSettingsEmpty =
-						Object.keys( previewSettings[ idx ] ).length === 0;
-					if ( ! isPreviewSettingsEmpty ) {
-						return (
-							<SiteGenLivePreview
-								key={ idx }
-								blockGrammer={ homepage.content }
-								styling={ 'custom' }
-								overlay={ true }
-								onRegenerateClick={ handleRegenerate }
-								tabIndex="0"
-								role="button"
-								designObject={ homepage }
-								handleFavorite={ handleFavorite }
-								previewSettings={ previewSettings[ idx ] }
-								handlePreview={ handlePreview }
-								isRegenerating={ isRegenerating }
-							/>
-						);
-					}
-					return null;
-				} )
-		);
-
-		return designs;
+		return Object.keys( homepages ).map( ( slug, idx ) => {
+			const data = homepages[ slug ];
+			const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
+			newPreviewSettings.settings.color.palette =
+					data.color.palette;
+			return (
+				<SiteGenPreviewSelectableCard
+					key={ idx }
+					blockGrammar={ data.content }
+					previewSettings={ newPreviewSettings }
+					slug={ slug }
+					title={ data.title }
+					isFavorite={ data.isFavorite }
+					palette={ data.color }
+					styling={ 'custom' }
+					overlay={ true }
+					tabIndex="0"
+					role="button"
+					handleFavorite={ handleFavorite }
+					handleRegenerate={ handleRegenerate }
+					handlePreview={ handlePreview }
+					isRegenerating={ isRegenerating }
+				/>
+			);
+		} );
 	};
 
 	const content = getContents();

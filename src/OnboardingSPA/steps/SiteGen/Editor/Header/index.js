@@ -16,13 +16,14 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 import { setFlow, completeFlow } from '../../../../utils/api/flow';
 import Spinner from '../../../../components/Loaders/Spinner';
-import { getRegeneratedHomePagePreviews } from '../../../../utils/api/siteGen';
-import StepNavigationCenter from './step-navigation-center';
+import { regenerateHomepage } from '../../../../utils/api/siteGen';
+import StepEditorHeaderCenter from './Center';
 import { useViewportMatch } from '@wordpress/compose';
 
 const StepSiteGenEditorHeader = () => {
 	const [ homepage, setHomepage ] = useState();
 	const [ isSaving, setIsSaving ] = useState( false );
+	const [ isEditingTitle, setIsEditingTitle ] = useState( false );
 
 	const isLargeViewport = useViewportMatch( 'medium' );
 
@@ -46,8 +47,15 @@ const StepSiteGenEditorHeader = () => {
 		if ( isSaving ) {
 			return;
 		}
-		homepage.isFavourited = ! homepage.isFavourited;
+		const homepages = currentData.sitegen.homepages.data;
+		if ( ! ( homepage.slug in homepages ) ) {
+			return;
+		}
+
+		const isFavorite = ! homepage.isFavorite;
+		homepage.isFavorite = isFavorite;
 		currentData.sitegen.homepages.data[ homepage.slug ] = homepage;
+		currentData.sitegen.homepages.active = homepage;
 		setCurrentOnboardingData( currentData );
 	};
 
@@ -55,37 +63,33 @@ const StepSiteGenEditorHeader = () => {
 		if ( isSaving ) {
 			return;
 		}
-		const { slug, colorPalattes, isFavourited } =
-			currentData?.sitegen?.homepages?.active || {};
-		try {
-			const response = await getRegeneratedHomePagePreviews(
-				currentData.sitegen.siteDetails.prompt,
-				true,
-				slug,
-				colorPalattes,
-				isFavourited
-			);
 
-			if ( response && response.body && response.body.length > 0 ) {
-				const regeneratedPage = response.body.find(
-					( page ) =>
-						! currentData.sitegen.homepages.data.some(
-							( existingPage ) => existingPage.slug === page.slug
-						)
-				);
-				setHomepage( regeneratedPage );
-				currentData.sitegen.homepages.data[ regeneratedPage.slug ] =
-					regeneratedPage;
-				currentData.sitegen.homepages.active = regeneratedPage;
-				setCurrentOnboardingData( currentData );
-			} else if ( response && response.error ) {
-				/* Handle Error UI state */
-			} else {
-				/* Handle Error UI state */
-			}
-		} catch ( error ) {
-			/* Handle Error UI state */
+		if ( currentData.sitegen.siteDetails?.prompt === '' ) {
+			return;
 		}
+
+		const homepages = currentData.sitegen.homepages.data;
+		if ( ! ( homepage.slug in homepages ) ) {
+			return;
+		}
+
+		const { slug, color, isFavorite } = homepage || {};
+		const response = await regenerateHomepage(
+			currentData.sitegen.siteDetails.prompt,
+			slug,
+			color,
+			isFavorite
+		);
+
+		if ( response.error ) {
+			return;
+		}
+
+		const regeneratedHomepage = response.body;
+		homepages[ regeneratedHomepage.slug ] = regeneratedHomepage;
+		currentData.sitegen.homepages.data = homepages;
+		currentData.sitegen.homepages.active = regeneratedHomepage;
+		setCurrentOnboardingData( currentData );
 	};
 
 	const saveAndContinue = async () => {
@@ -104,6 +108,13 @@ const StepSiteGenEditorHeader = () => {
 			sideBarView === 'Customize' ? ! isSidebarOpened : isSidebarOpened;
 		setSidebarActiveView( 'Customize' );
 		setIsSidebarOpened( isSidebarOpenedNew );
+	};
+
+	const handleRename = ( title ) => {
+		homepage.title = title;
+		currentData.sitegen.homepages.data[ homepage.slug ] = homepage;
+		currentData.sitegen.homepages.active = homepage;
+		setCurrentOnboardingData( currentData );
 	};
 
 	useEffect( () => {
@@ -146,11 +157,16 @@ const StepSiteGenEditorHeader = () => {
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_CENTER }` }>
 				{ homepage && (
 					<div className="nfd-onboarding-header--sitegen__editor__center">
-						<StepNavigationCenter
+						<StepEditorHeaderCenter
 							handleFavorite={ handleFavorite }
 							handleViewAll={ handleViewAll }
 							handleCustomize={ handleCustomize }
 							handleRegenerate={ handleRegenerate }
+							handleIsRenaming={ ( isRenaming ) => setIsEditingTitle( isRenaming ) }
+							handleRename={ handleRename }
+							homepageTitle={ homepage.title }
+							isFavorite={ homepage.isFavorite }
+							isRenaming={ isEditingTitle }
 						/>
 					</div>
 				) }

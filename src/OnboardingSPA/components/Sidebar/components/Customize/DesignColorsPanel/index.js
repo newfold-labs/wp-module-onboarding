@@ -12,17 +12,12 @@ const DesignColorsPanel = ( {
 	baseClassName = 'nfd-onboarding-sidebar--customize__design-colors-panel',
 	heading,
 } ) => {
-	const { customizeSidebarData } = useSelect( ( select ) => {
-		return {
-			customizeSidebarData:
-				select( nfdOnboardingStore ).getCustomizeSidebarData(),
-		};
-	}, [] );
-
-	const { currentData } = useSelect( ( select ) => {
+	const { currentData, customizeSidebarData } = useSelect( ( select ) => {
 		return {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			customizeSidebarData:
+				select( nfdOnboardingStore ).getCustomizeSidebarData(),
 		};
 	} );
 
@@ -118,6 +113,11 @@ const DesignColorsPanel = ( {
 	};
 
 	const handleUpdatePreviewSettings = () => {
+		const slug = currentData.sitegen?.homepages?.active?.slug;
+		if ( ! slug ) {
+			return;
+		}
+
 		colorPalettes[ selectedPalette ].primary = selectedColor.primary;
 		if ( colorPalettes[ selectedPalette ].secondary ) {
 			colorPalettes[ selectedPalette ].secondary =
@@ -127,21 +127,12 @@ const DesignColorsPanel = ( {
 		}
 
 		colorPalettes[ selectedPalette ].tertiary = selectedColor.tertiary;
-		const slug = currentData.sitegen?.homepages?.active?.slug;
-		if ( slug ) {
-			currentData.sitegen.homepages.data =
-				currentData.sitegen.homepages?.data?.map( ( ele ) => {
-					if ( ele.slug === slug ) {
-						ele.color.palette = convertColorSchema(
-							colorPalettes[ selectedPalette ]
-						);
-					}
-					return ele;
-				} );
-			currentData.sitegen.homepages.active.color.palette =
-				convertColorSchema( colorPalettes[ selectedPalette ] );
-			setCurrentOnboardingData( currentData );
-		}
+
+		currentData.sitegen.homepages.data[ slug ].color.palette = convertColorSchema(
+			colorPalettes[ selectedPalette ]
+		);
+		currentData.sitegen.homepages.active.color.palette = convertColorSchema( colorPalettes[ selectedPalette ] );
+		setCurrentOnboardingData( currentData );
 	};
 
 	useEffect( () => {
@@ -271,10 +262,9 @@ const DesignColorsPanel = ( {
 									label={
 										idx === 0
 											? __(
-													'Default',
-													'wp-module-onboarding'
-											  )
-											: ''
+												'Default',
+												'wp-module-onboarding'
+											) : ''
 									}
 									selectedPalette={ selectedPalette }
 									setSelectedPalette={ setSelectedPalette }

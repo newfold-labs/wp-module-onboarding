@@ -1,50 +1,47 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { search, Icon, reusableBlock } from '@wordpress/icons';
 import { useState } from '@wordpress/element';
-import { useNavigate } from 'react-router-dom';
-import { useSelect, useDispatch } from '@wordpress/data';
-import { BlockPreviewSiteGen } from '..';
+import { LivePreview } from '..';
 import Button from '../../../components/Button';
-import { store as nfdOnboardingStore } from '../../../store';
 import { ReactComponent as FavouriteIconStroked } from '../../../static/icons/sitegen/heart-stroked.svg';
 import { ReactComponent as FavouriteIconFilled } from '../../../static/icons/sitegen/heart-filled.svg';
 import { __ } from '@wordpress/i18n';
 
 const SiteGenPreviewSelectableCard = ( {
 	className = 'live-preview-sitegen--selectable-card',
-	blockGrammer,
+	blockGrammar,
 	viewportWidth = 1500,
 	styling = 'large',
 	previewSettings,
 	overlay = false,
-	onClick = false,
-	onRegenerateClick = false,
 	skeletonLoadingTime = 2500,
-	designObject,
+	slug,
+	title,
+	isFavorite,
+	palette,
 	handleFavorite,
 	handlePreview,
+	handleRegenerate,
 	isRegenerating,
 } ) => {
-	const { setActiveHomepage } = useDispatch( nfdOnboardingStore );
 	const [ loadingParent, setIsLoadingParent ] = useState( true );
 
-	const navigate = useNavigate();
-	const { nextStep } = useSelect( ( select ) => {
-		return {
-			nextStep: select( nfdOnboardingStore ).getNextStep(),
-		};
-	} );
-
-	const onPreviewVersionClick = () => {
-		setActiveHomepage( designObject );
-		navigate( nextStep.path );
+	const onPreview = () => {
+		if ( typeof handlePreview === 'function' ) {
+			return handlePreview( slug );
+		}
 	};
-	const handleRegenerate = () => {
-		onRegenerateClick(
-			designObject?.slug,
-			designObject?.color,
-			designObject?.isFavourited
-		);
+
+	const onRegenerate = () => {
+		if ( typeof handleRegenerate === 'function' ) {
+			return handleRegenerate( slug, palette, isFavorite );
+		}
+	};
+
+	const onFavorite = () => {
+		if ( typeof handleFavorite === 'function' ) {
+			return handleFavorite( slug );
+		}
 	};
 
 	return (
@@ -52,40 +49,31 @@ const SiteGenPreviewSelectableCard = ( {
 			className={ `${ className }` }
 			role="button"
 			tabIndex={ 0 }
-			onClick={ () => {
-				if ( ! loadingParent && typeof onClick === 'function' ) {
-					onClick();
-				}
-			} }
-			onKeyDown={ () => {
-				if ( ! loadingParent && typeof onClick === 'function' ) {
-					onClick();
-				}
-			} }
 		>
 			<div className={ `${ className }__live-preview-container` }>
-				<BlockPreviewSiteGen
+				<LivePreview
 					styling={ styling }
-					blockGrammer={ blockGrammer }
+					blockGrammer={ blockGrammar }
 					viewportWidth={ viewportWidth }
 					previewSettings={ previewSettings }
 					setIsLoadingParent={ setIsLoadingParent }
 					skeletonLoadingTime={ skeletonLoadingTime }
-					isRegenerating={ isRegenerating }
+					skeletonShouldWait={ isRegenerating }
+					skeletonType="sitegen"
 				/>
 				{ overlay && ! loadingParent && (
 					<div
 						className={ `${ className }__live-preview-container__overlay` }
-						onClick={ onPreviewVersionClick }
+						onClick={ onPreview }
 						onKeyDown={ ( event ) => {
 							if ( event.key === 'Enter' ) {
-								handlePreview();
+								onPreview();
 							}
 						} }
 					>
 						<Button
 							className={ `${ className }__live-preview-container__overlay__button` }
-							onClick={ () => handlePreview() }
+							onClick={ () => onPreview() }
 						>
 							<Icon icon={ search } />
 							{ __( 'Preview Version', 'wp-module-onboarding' ) }
@@ -100,31 +88,31 @@ const SiteGenPreviewSelectableCard = ( {
 					<div
 						role="button"
 						tabIndex="0"
-						onClick={ () => handleFavorite( designObject?.slug ) }
+						onClick={ () => onFavorite( slug ) }
 						onKeyDown={ ( event ) => {
 							if ( event.key === 'Enter' ) {
-								handleFavorite( designObject?.slug );
+								onFavorite( slug );
 							}
 						} }
 						aria-label="Add to Wishlist"
 						className={ `${ className }__live-preview-container-buttons__button` }
 					>
 						<span>
-							{ designObject?.isFavourited ? (
+							{ isFavorite ? (
 								<FavouriteIconFilled />
 							) : (
 								<FavouriteIconStroked />
 							) }
 						</span>
-						<span>{ designObject?.title }</span>
+						<span>{ title }</span>
 					</div>
 					<div
 						role="button"
 						tabIndex="0"
-						onClick={ () => handleRegenerate() }
+						onClick={ onRegenerate }
 						onKeyDown={ ( event ) => {
 							if ( event.key === 'Enter' ) {
-								handleRegenerate();
+								onRegenerate();
 							}
 						} }
 						aria-label={ __(
