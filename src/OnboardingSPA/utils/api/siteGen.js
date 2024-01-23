@@ -29,51 +29,35 @@ export async function generateSiteGenMeta(
 	);
 }
 
-export async function getHomePagePreviews(
-	siteDescription,
-	regenerate = false
+export async function getHomepages(
+	siteDescription
 ) {
 	return await resolve(
 		apiFetch( {
-			url: onboardingRestURL( 'sitegen/get-homepages' ),
+			url: onboardingRestURL( 'sitegen/homepages' ),
 			method: 'POST',
 			data: {
 				site_description: siteDescription,
-				regenerate,
 			},
 		} ).then()
 	);
 }
 
-export async function getRegeneratedHomePagePreviews(
+export async function regenerateHomepage(
 	siteDescription,
-	regenerate = true,
 	slug,
-	colorPalettes,
-	isFavourited
+	palette,
+	isFavorite
 ) {
 	return await resolve(
 		apiFetch( {
-			url: onboardingRestURL( 'sitegen/get-homepages-regenerate' ),
+			url: onboardingRestURL( 'sitegen/homepages/regenerate' ),
 			method: 'POST',
 			data: {
 				site_description: siteDescription,
-				regenerate,
 				slug,
-				colorPalettes,
-				isFavourited,
-			},
-		} ).then()
-	);
-}
-
-export async function toggleFavoriteHomepage( slug ) {
-	return await resolve(
-		apiFetch( {
-			url: onboardingRestURL( 'sitegen/favourites' ),
-			method: 'POST',
-			data: {
-				slug,
+				palette,
+				isFavorite,
 			},
 		} ).then()
 	);

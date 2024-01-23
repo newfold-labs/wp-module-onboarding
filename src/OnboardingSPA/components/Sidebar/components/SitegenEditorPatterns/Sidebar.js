@@ -75,8 +75,8 @@ const SitegenEditorPatternsSidebar = () => {
 
 		const homepagesCopy = [ ...homepages ];
 
-		homepagesCopy[ index ].isFavourited =
-			! homepagesCopy[ index ].isFavourited;
+		homepagesCopy[ index ].isFavorite =
+			! homepagesCopy[ index ].isFavorite;
 
 		setHomepages( homepagesCopy );
 		currentData.sitegen.homepages.data = homepagesCopy;
@@ -166,7 +166,7 @@ const SitegenEditorPatternsSidebar = () => {
 							<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context">
 								<div
 									className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon ${
-										data.isFavourited &&
+										data.isFavorite &&
 										'nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon__fill'
 									}` }
 									role="button"
@@ -273,7 +273,7 @@ const SitegenEditorPatternsSidebar = () => {
 															<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context">
 																<div
 																	className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon ${
-																		data.isFavourited &&
+																		data.isFavorite &&
 																		'nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon__fill'
 																	}` }
 																	role="button"
@@ -328,7 +328,7 @@ const SitegenEditorPatternsSidebar = () => {
 												( homepage ) => {
 													const data =
 														homepages[ homepage ];
-													if ( ! data.isFavourited ) {
+													if ( ! data.isFavorite ) {
 														return false;
 													}
 													const newPreviewSettings =

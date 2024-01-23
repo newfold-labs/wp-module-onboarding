@@ -13,9 +13,8 @@ import { getGlobalStyles } from '../../../utils/api/themes';
 import { cloneDeep } from 'lodash';
 
 const StepSiteGenEditor = () => {
-	const [ activeHomepage, setActiveHomepage ] = useState();
-	const [ colorPalette, setColorPalette ] = useState();
-	const [ globalStyles, setGlobalStyles ] = useState( [] );
+	const [ homepage, setHomepage ] = useState( false );
+	const [ globalStyles, setGlobalStyles ] = useState( false );
 	const [ reRender, setReRender ] = useState( false );
 	const { setIsHeaderEnabled, setHeaderActiveView, setDrawerActiveView, setFooterNavEnabled } =
 		useDispatch( nfdOnboardingStore );
@@ -32,35 +31,41 @@ const StepSiteGenEditor = () => {
 		setIsHeaderEnabled( true );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
-		const homepage = currentData.sitegen.homepages.active;
-		setActiveHomepage( homepage );
+		const activeHomepage = currentData.sitegen.homepages.active;
+		setHomepage( activeHomepage );
 		const globalStylesResponse = await getGlobalStyles();
 		setGlobalStyles( globalStylesResponse.body );
-		setColorPalette( homepage.color.palette );
 	};
 
 	useEffect( () => {
+		setIsHeaderEnabled( true );
+		setHeaderActiveView( HEADER_SITEGEN );
+		setDrawerActiveView( false );
 		loadData();
 	}, [] );
 
 	useEffect( () => {
 		if ( currentData?.sitegen?.homepages?.active ) {
-			setActiveHomepage( currentData.sitegen.homepages.active );
+			setHomepage( currentData.sitegen.homepages.active );
 			setReRender( true );
 		}
 	}, [ currentData ] );
 
 	const buildPreview = () => {
+		if ( ! ( homepage && globalStyles ) ) {
+			return <></>;
+		}
+
 		const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
 		newPreviewSettings.settings.color.palette =
-			activeHomepage?.color?.palette;
+			homepage.color.palette;
 
-		if ( activeHomepage && activeHomepage.styles ) {
+		if ( homepage && homepage.styles ) {
 			if (
-				activeHomepage.styles.blocks &&
-				activeHomepage.styles.blocks.length > 0
+				homepage.styles.blocks &&
+				homepage.styles.blocks.length > 0
 			) {
-				const firstBlock = activeHomepage.styles.blocks[ 0 ];
+				const firstBlock = homepage.styles.blocks[ 0 ];
 				if ( firstBlock[ 'core/heading' ] ) {
 					newPreviewSettings.styles.blocks[
 						'core/heading'
@@ -76,7 +81,7 @@ const StepSiteGenEditor = () => {
 
 		return (
 			<LivePreview
-				blockGrammer={ activeHomepage.content }
+				blockGrammer={ homepage.content }
 				styling={ 'custom' }
 				previewSettings={ newPreviewSettings }
 				viewportWidth={ 1300 }
@@ -90,10 +95,7 @@ const StepSiteGenEditor = () => {
 			className="nfd-onboarding-step--site-gen__editor"
 		>
 			<div className="nfd-onboarding-step--site-gen__editor__live-preview">
-				{ activeHomepage &&
-					colorPalette &&
-					globalStyles &&
-					reRender &&
+				{ reRender &&
 					buildPreview() }
 			</div>
 		</CommonLayout>

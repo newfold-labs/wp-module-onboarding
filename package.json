@@ -20,7 +20,7 @@
         "webpack-merge": "^5.8.0"
     },
     "scripts": {
-        "build": "wp-scripts build ./src/onboarding.js",
+        "build": "wp-scripts build ./src/onboarding.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.css",
         "format": "wp-scripts format ./src",
         "start": "wp-scripts start ./src/onboarding.js",
         "lint:js": "wp-scripts lint-js ./src",
@@ -31,6 +31,7 @@
     "dependencies": {
         "@newfold-labs/js-utility-ui-analytics": "1.2.0",
         "@wordpress/interface": "^5.25.0",
+        "@newfold/wp-module-facebook": "file:../wp-module-facebook",
         "@wordpress/style-engine": "^0.11.0",
         "bytes": "^3.1.2",
         "classnames": "^2.3.2",
