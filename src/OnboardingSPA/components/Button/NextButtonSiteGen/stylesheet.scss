@@ -13,6 +13,7 @@
 		color: var(--nfd-onboarding-secondary);
 		background-color: var(--nfd-onboarding-primary);
 		font-size: clamp(0.5rem, 0.3864rem + 0.5682vw, 1.75rem);
+		margin-top: -20px;
 
 		@media (min-width: 2600px ) {
 			height: 76px;
@@ -30,6 +31,12 @@
 				cursor: not-allowed;
 				color: var(--nfd-onboarding-secondary);
 			}
+		}
+		&--disabled p {
+			opacity: 0.5;
+		}
+		&--disabled svg {
+			opacity: 0.5;
 		}
 	}
 

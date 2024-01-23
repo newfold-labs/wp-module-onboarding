@@ -45,6 +45,7 @@
 						background-size: cover;
 						background-repeat: no-repeat;
 						background-image: var(--sitegen-ai-icon);
+						background-color: #fff;
 						box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 
 						@media (max-width: #{ ($break-small) }) {

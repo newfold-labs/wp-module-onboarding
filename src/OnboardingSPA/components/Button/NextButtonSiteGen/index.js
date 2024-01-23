@@ -37,7 +37,8 @@ const NextButtonSiteGen = ( {
 				}
 			} }
 		>
-			{ text }
+			<p>{ text }</p>
+
 			{ showChevronRight && (
 				<Icon
 					className={ 'nfd-onboarding-button--site-gen-next--icon' }
