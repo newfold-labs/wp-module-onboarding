@@ -15,7 +15,6 @@ import { cloneDeep } from 'lodash';
 const StepSiteGenEditor = () => {
 	const [ homepage, setHomepage ] = useState( false );
 	const [ globalStyles, setGlobalStyles ] = useState( false );
-	const [ reRender, setReRender ] = useState( false );
 	const { setIsHeaderEnabled, setHeaderActiveView, setDrawerActiveView } =
 		useDispatch( nfdOnboardingStore );
 
@@ -43,36 +42,35 @@ const StepSiteGenEditor = () => {
 	useEffect( () => {
 		if ( currentData?.sitegen?.homepages?.active ) {
 			setHomepage( currentData.sitegen.homepages.active );
-			setReRender( true );
 		}
 	}, [ currentData ] );
+
+	const populateFontsInPreviewSettings = ( previewSettings ) => {
+		const firstBlock = homepage.styles.blocks[ 0 ];
+		if ( firstBlock[ 'core/heading' ] ) {
+			previewSettings.styles.blocks[
+				'core/heading'
+			].typography.fontFamily =
+				firstBlock[ 'core/heading' ].typography.fontFamily;
+		}
+		if ( firstBlock[ 'core/body' ] ) {
+			previewSettings.styles.typography.fontFamily =
+				firstBlock[ 'core/body' ].typography.fontFamily;
+		}
+
+		return previewSettings;
+	};
 
 	const buildPreview = () => {
 		if ( ! ( homepage && globalStyles ) ) {
 			return <></>;
 		}
 
-		const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
+		let newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
 		newPreviewSettings.settings.color.palette =
 			homepage.color.palette;
-
-		if ( homepage && homepage.styles ) {
-			if (
-				homepage.styles.blocks &&
-				homepage.styles.blocks.length > 0
-			) {
-				const firstBlock = homepage.styles.blocks[ 0 ];
-				if ( firstBlock[ 'core/heading' ] ) {
-					newPreviewSettings.styles.blocks[
-						'core/heading'
-					].typography.fontFamily =
-						firstBlock[ 'core/heading' ].typography.fontFamily;
-				}
-				if ( firstBlock[ 'core/body' ] ) {
-					newPreviewSettings.styles.typography.fontFamily =
-						firstBlock[ 'core/body' ].typography.fontFamily;
-				}
-			}
+		if ( homepage?.styles?.blocks?.length > 0 ) {
+			newPreviewSettings = populateFontsInPreviewSettings( newPreviewSettings );
 		}
 
 		return (
@@ -85,13 +83,14 @@ const StepSiteGenEditor = () => {
 			/>
 		);
 	};
+
 	return (
 		<CommonLayout
 			isCentered
 			className="nfd-onboarding-step--site-gen__editor"
 		>
 			<div className="nfd-onboarding-step--site-gen__editor__live-preview">
-				{ reRender &&
+				{
 					buildPreview() }
 			</div>
 		</CommonLayout>
