@@ -1,4 +1,4 @@
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { memo, useEffect, useState } from '@wordpress/element';
 import { useViewportMatch } from '@wordpress/compose';
 
@@ -9,11 +9,14 @@ import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import AIHeading from '../../../components/Heading/AIHeading';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
-import { FacebookConnectButton } from '@newfold/wp-module-facebook';
+import { FacebookConnectButton } from '@newfold-labs/wp-module-facebook';
+import { useNavigate } from 'react-router-dom';
 
 const SiteGenSiteSocialMedia = () => {
 	const isLargeViewport = useViewportMatch( 'small' );
+	const navigate = useNavigate();
 	const [ connected, setConnected ] = useState( false );
+	const [ interacted, setInteracted ] = useState( false );
 
 	const {
 		setIsHeaderEnabled,
@@ -29,6 +32,22 @@ const SiteGenSiteSocialMedia = () => {
 		setDrawerActiveView( false );
 	} );
 
+	const { nextStep } = useSelect( ( select ) => {
+		return {
+			nextStep: select( nfdOnboardingStore ).getNextStep(),
+		};
+	} );
+
+	const handleConnect = () => {
+		setConnected( true );
+	};
+
+	useEffect( () => {
+		if ( interacted && connected ) {
+			navigate( nextStep.path );
+		}
+	}, [ interacted, connected ] );
+
 	const content = getContents();
 	return (
 		<CommonLayout
@@ -43,7 +62,11 @@ const SiteGenSiteSocialMedia = () => {
 						<p>{ content.facebookDesc }</p>
 					</div>
 					<div className="nfd-onboarding-step--site-gen__social-media__contain__containright ">
-						<FacebookConnectButton className="nfd-onboarding-step--site-gen__social-media__contain__containright__button" onConnect={ () => setConnected( true ) }>
+						<FacebookConnectButton
+							className="nfd-onboarding-step--site-gen__social-media__contain__containright__button"
+							onConnect={ handleConnect }
+							onClick={ () => setInteracted( true ) }
+						>
 							<i className="nfd-onboarding-step--site-gen__social-media__contain__containright__button__icon"></i>
 						</FacebookConnectButton>
 					</div>

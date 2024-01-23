@@ -23,15 +23,13 @@ export async function generateSiteGenMeta(
 			data: {
 				site_info: siteInfo,
 				identifier,
-				skip_cache: skipCache,
+				skip_cache: false,
 			},
 		} ).then()
 	);
 }
 
-export async function getHomepages(
-	siteDescription
-) {
+export async function getHomepages( siteDescription ) {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/homepages' ),
