@@ -25,9 +25,11 @@ const TheFork = () => {
 		setDrawerActiveView,
 		setIsHeaderNavigationEnabled,
 		setFooterActiveView,
+		setFooterNavEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
+		setFooterNavEnabled( null );
 		setIsHeaderEnabled( false );
 		setSidebarActiveView( false );
 		setIsHeaderNavigationEnabled( false );
