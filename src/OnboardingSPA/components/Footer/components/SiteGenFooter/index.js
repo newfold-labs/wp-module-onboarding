@@ -29,7 +29,7 @@ const SiteGenFooter = () => {
 			<Fill name={ `${ FOOTER_SITEGEN }/${ FOOTER_START }` }>
 				{ ! isEditorStep && <ToggleDarkMode /> }
 			</Fill>
-			{ ! isLargeViewport && (
+			{ ! isLargeViewport && footerNavEnabled !== null && (
 				<Fill name={ `${ FOOTER_SITEGEN }/${ FOOTER_END }` }>
 					<NextButtonSiteGen
 						text={ __( 'Next', 'wp-module-onboarding' ) }

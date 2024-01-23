@@ -27,7 +27,7 @@ const StepSiteGenEditor = () => {
 	} );
 
 	const loadData = async () => {
-		setFooterNavEnabled( false );
+		setFooterNavEnabled( null );
 		setIsHeaderEnabled( true );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );

@@ -9,7 +9,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import AIHeading from '../../../components/Heading/AIHeading';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
-import { FacebookConnectButton } from '@newfold/wp-module-facebook';
+import { FacebookConnectButton } from '@newfold-labs/wp-module-facebook';
 
 const SiteGenSiteSocialMedia = () => {
 	const isLargeViewport = useViewportMatch( 'small' );
