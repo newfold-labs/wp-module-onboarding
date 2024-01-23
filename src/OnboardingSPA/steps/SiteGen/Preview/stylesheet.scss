@@ -144,7 +144,7 @@
 				background: var(--nfd-onboarding-progress-bar-fill);
 				height: 100%;
 				transition: width 0.3s ease;
-				animation: infiniteProgress 1.5s ease-in-out infinite;
+				animation: infiniteProgress 1500ms ease-in-out infinite;
 			}
 		}
 	}

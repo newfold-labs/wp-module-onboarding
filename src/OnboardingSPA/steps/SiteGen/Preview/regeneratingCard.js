@@ -12,7 +12,14 @@ function RegeneratingSiteCard( { count = 1, isRegenerating } ) {
 							: __( 'Generating Site', 'wp-module-onboarding' ) }
 					</p>
 					<div className="regenerating-site-card__progress-bar">
-						<div className="regenerating-site-card__progress-bar__fill"></div>
+						<div
+							style={ {
+								animationDuration: `${
+									Math.random() * ( 3500 - 1500 ) + 1500
+								}ms`,
+							} }
+							className="regenerating-site-card__progress-bar__fill"
+						></div>
 					</div>
 				</div>
 			</div>
