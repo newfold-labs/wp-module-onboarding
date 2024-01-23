@@ -16,8 +16,12 @@ const StepSiteGenEditor = () => {
 	const [ homepage, setHomepage ] = useState( false );
 	const [ globalStyles, setGlobalStyles ] = useState( false );
 	const [ reRender, setReRender ] = useState( false );
-	const { setIsHeaderEnabled, setHeaderActiveView, setDrawerActiveView, setFooterNavEnabled } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		setIsHeaderEnabled,
+		setHeaderActiveView,
+		setDrawerActiveView,
+		setFooterNavEnabled,
+	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
@@ -57,14 +61,10 @@ const StepSiteGenEditor = () => {
 		}
 
 		const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
-		newPreviewSettings.settings.color.palette =
-			homepage.color.palette;
+		newPreviewSettings.settings.color.palette = homepage.color.palette;
 
 		if ( homepage && homepage.styles ) {
-			if (
-				homepage.styles.blocks &&
-				homepage.styles.blocks.length > 0
-			) {
+			if ( homepage.styles.blocks && homepage.styles.blocks.length > 0 ) {
 				const firstBlock = homepage.styles.blocks[ 0 ];
 				if ( firstBlock[ 'core/heading' ] ) {
 					newPreviewSettings.styles.blocks[
@@ -95,8 +95,7 @@ const StepSiteGenEditor = () => {
 			className="nfd-onboarding-step--site-gen__editor"
 		>
 			<div className="nfd-onboarding-step--site-gen__editor__live-preview">
-				{ reRender &&
-					buildPreview() }
+				{ reRender && buildPreview() }
 			</div>
 		</CommonLayout>
 	);

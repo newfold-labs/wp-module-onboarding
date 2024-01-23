@@ -43,7 +43,10 @@ const SiteGenSiteSocialMedia = () => {
 						<p>{ content.facebookDesc }</p>
 					</div>
 					<div className="nfd-onboarding-step--site-gen__social-media__contain__containright ">
-						<FacebookConnectButton className="nfd-onboarding-step--site-gen__social-media__contain__containright__button" onConnect={ () => setConnected( true ) }>
+						<FacebookConnectButton
+							className="nfd-onboarding-step--site-gen__social-media__contain__containright__button"
+							onConnect={ () => setConnected( true ) }
+						>
 							<i className="nfd-onboarding-step--site-gen__social-media__contain__containright__button__icon"></i>
 						</FacebookConnectButton>
 					</div>

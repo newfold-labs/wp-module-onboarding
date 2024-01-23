@@ -10,10 +10,7 @@ import { SiteGenPreviewSelectableCard } from '../../../components/LivePreview';
 import getContents from './contents';
 import HeartAnimation from './heartAnimation';
 import RegeneratingSiteCard from './regeneratingCard';
-import {
-	getHomepages,
-	regenerateHomepage,
-} from '../../../utils/api/siteGen';
+import { getHomepages, regenerateHomepage } from '../../../utils/api/siteGen';
 import { getGlobalStyles } from '../../../utils/api/themes';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { cloneDeep, isEmpty } from 'lodash';
@@ -168,8 +165,7 @@ const SiteGenPreview = () => {
 		return Object.keys( homepages ).map( ( slug, idx ) => {
 			const data = homepages[ slug ];
 			const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
-			newPreviewSettings.settings.color.palette =
-					data.color.palette;
+			newPreviewSettings.settings.color.palette = data.color.palette;
 			return (
 				<SiteGenPreviewSelectableCard
 					key={ idx }
