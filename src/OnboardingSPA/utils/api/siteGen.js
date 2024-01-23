@@ -23,7 +23,7 @@ export async function generateSiteGenMeta(
 			data: {
 				site_info: siteInfo,
 				identifier,
-				skip_cache: false,
+				skip_cache: skipCache,
 			},
 		} ).then()
 	);
