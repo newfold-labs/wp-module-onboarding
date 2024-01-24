@@ -32,9 +32,11 @@
 				color: var(--nfd-onboarding-secondary);
 			}
 		}
+
 		&--disabled p {
 			opacity: 0.5;
 		}
+
 		&--disabled svg {
 			opacity: 0.5;
 		}
