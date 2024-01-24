@@ -32,9 +32,7 @@ const ColorPickerButton = ( {
 				style={ {
 					backgroundColor: `${ color }`,
 				} }
-			>
-				{ isColorSelected ? <>&#10003;</> : null }
-			</div>
+			></div>
 			<div className="custom-palette__below__row__text">{ name }</div>
 		</div>
 	);

@@ -227,7 +227,6 @@ const DesignColorsPanel = ( {
 					<CustomColorPalette
 						onChange={ handleColorPicker }
 						palettePrimaryColors={ palettePrimaryColors }
-						paletteSecondaryColors={ paletteSecondaryColors }
 					/>
 				) }
 			</div>
