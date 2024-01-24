@@ -8,14 +8,14 @@ import { Dropdown, MenuGroup, MenuItem } from '@wordpress/components';
 
 const StepEditorHeaderCenter = ( {
 	handleFavorite,
+	handleRename,
 	handleViewAll,
 	handleRegenerate,
 	handleCustomize,
-	handleRename,
 	handleIsRenaming,
+	isRenaming,
 	homepageTitle,
 	isFavorite,
-	isRenaming,
 } ) => {
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const inputRef = useRef( null );
@@ -46,12 +46,12 @@ const StepEditorHeaderCenter = ( {
 
 	const onRenameItemSelect = () => {
 		if ( typeof handleIsRenaming === 'function' ) {
-			return handleIsRenaming( true );
+			handleIsRenaming( true );
+			return inputRef.current.focus();
 		}
 	};
 
-	const onRename = ( e ) => {
-		e.preventDefault();
+	const onRename = () => {
 		if ( typeof handleRename === 'function' ) {
 			handleRename( inputRef.current.value );
 		}
@@ -63,7 +63,11 @@ const StepEditorHeaderCenter = ( {
 		}
 	};
 
-	const HeaderCenterDropDownMenu = () => {
+	if ( isRenaming ) {
+		inputRef.current.focus();
+	}
+
+	const DropDownMenu = () => {
 		return (
 			<MenuGroup className="nfd-onboarding-header__version_dropdown-menu">
 				{ ! isLargeViewport && (
@@ -93,7 +97,7 @@ const StepEditorHeaderCenter = ( {
 		);
 	};
 
-	const HeaderCenterContent = () => {
+	const TitleContent = () => {
 		return (
 			<Dropdown
 				renderToggle={ ( { isOpen, onToggle } ) => (
@@ -101,11 +105,11 @@ const StepEditorHeaderCenter = ( {
 						role="button"
 						tabIndex="0"
 						aria-expanded={ isOpen }
-						aria-label="Regenerate"
+						aria-label={ __( 'Regenerate', 'wp-module-onboarding' ) }
 						className="navigation-buttons-editor"
 					>
 						<div
-							className="navigation-buttons-editor__favourite"
+							className="navigation-buttons-editor__favorite"
 							role="button"
 							tabIndex={ 0 }
 							onKeyDown={ onFavorite }
@@ -137,15 +141,14 @@ const StepEditorHeaderCenter = ( {
 						/>
 					</div>
 				) }
-				renderContent={ HeaderCenterDropDownMenu }
-				paddingSize="none"
+				renderContent={ DropDownMenu }
 			/>
 		);
 	};
 
 	return (
 		<div className="nfd-onboarding-header__step-navigation">
-			<HeaderCenterContent />
+			<TitleContent />
 		</div>
 	);
 };

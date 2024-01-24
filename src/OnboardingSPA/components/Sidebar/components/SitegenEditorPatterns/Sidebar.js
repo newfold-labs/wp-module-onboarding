@@ -27,7 +27,7 @@ import { LivePreview } from '../../../LivePreview';
 const SitegenEditorPatternsSidebar = () => {
 	const [ homepages, setHomepages ] = useState();
 	const [ activeHomepage, setActiveHomepage ] = useState();
-	const [ globalStyles, setGlobalStyles ] = useState( [] );
+	const [ globalStyles, setGlobalStyles ] = useState();
 	const [ activeTab, setActiveTab ] = useState();
 	const { currentData, isSidebarOpened, sideBarView } = useSelect(
 		( select ) => {
@@ -48,43 +48,33 @@ const SitegenEditorPatternsSidebar = () => {
 	};
 
 	const handlePreview = ( slug ) => {
-		const index = homepages.findIndex(
-			( homepage ) => homepage.slug === slug
-		);
-
-		if ( index === -1 ) {
+		if ( ! ( slug in homepages ) ) {
 			return false;
 		}
+		currentData.sitegen.homepages.active = homepages[ slug ];
 
-		const homepagesCopy = [ ...homepages ];
-		homepagesCopy[ index ].active = ! homepagesCopy[ index ].active;
-		currentData.sitegen.homepages.active = homepagesCopy[ index ];
-
-		setActiveHomepage( homepagesCopy[ index ] );
-		setHomepages( homepagesCopy );
+		setActiveHomepage( homepages[ slug ] );
 		setCurrentOnboardingData( currentData );
 	};
 
 	const handleFavorite = ( slug ) => {
-		const index = homepages.findIndex(
-			( homepage ) => homepage.slug === slug
-		);
-		if ( index === -1 ) {
-			return false;
+		if ( ! ( slug in homepages ) ) {
+			return;
+		}
+		const isFavorite = ! homepages[ slug ].isFavorite;
+		const homepagesCopy = cloneDeep( homepages );
+		homepagesCopy[ slug ].isFavorite = isFavorite;
+		currentData.sitegen.homepages.data = homepagesCopy;
+		if ( currentData.sitegen.homepages.active.slug === slug ) {
+			currentData.sitegen.homepages.active = homepagesCopy[ slug ];
 		}
 
-		const homepagesCopy = [ ...homepages ];
-
-		homepagesCopy[ index ].isFavorite =
-			! homepagesCopy[ index ].isFavorite;
-
 		setHomepages( homepagesCopy );
-		currentData.sitegen.homepages.data = homepagesCopy;
 		setCurrentOnboardingData( currentData );
 	};
 
 	const loadData = async () => {
-		let homepagesObject = {};
+		const homepagesObject = {};
 		if ( isEmpty( currentData.sitegen.homepages.data ) ) {
 			const homepagesResponse = getHomepages();
 			const colorsResponse = getColorPalettes();
@@ -104,13 +94,9 @@ const SitegenEditorPatternsSidebar = () => {
 			} );
 			currentData.sitegen.homepages.data = homepagesObject;
 			setCurrentOnboardingData( currentData );
-		} else {
-			homepagesObject = currentData.sitegen.homepages.data;
 		}
 		const globalStylesResponse = await getGlobalStyles();
 		setGlobalStyles( globalStylesResponse.body );
-		setHomepages( homepagesObject );
-		setActiveHomepage( currentData.sitegen.homepages.active );
 	};
 
 	useEffect( () => {
@@ -123,6 +109,14 @@ const SitegenEditorPatternsSidebar = () => {
 	}, [ sideBarView, isSidebarOpened ] );
 
 	useEffect( () => {
+		if ( currentData?.sitegen?.homepages ) {
+			const newHomepages = cloneDeep( currentData.sitegen.homepages );
+			setHomepages( newHomepages.data );
+			setActiveHomepage( newHomepages.active );
+		}
+	}, [ currentData ] );
+
+	useEffect( () => {
 		setActiveTab( {
 			name: __( 'All Versions', 'wp-module-onboarding' ),
 			title: (
@@ -133,6 +127,7 @@ const SitegenEditorPatternsSidebar = () => {
 			content:
 				homepages &&
 				activeHomepage &&
+				globalStyles &&
 				Object.keys( homepages ).map( ( homepage ) => {
 					const data = homepages[ homepage ];
 					const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
@@ -186,7 +181,7 @@ const SitegenEditorPatternsSidebar = () => {
 					);
 				} ),
 		} );
-	}, [ homepages, activeHomepage ] );
+	}, [ homepages, activeHomepage, globalStyles ] );
 
 	return (
 		<Fill
@@ -223,6 +218,7 @@ const SitegenEditorPatternsSidebar = () => {
 											activeTab &&
 											homepages &&
 											activeHomepage &&
+											globalStyles &&
 											Object.keys( homepages ).map(
 												( homepage ) => {
 													const data =
@@ -324,6 +320,7 @@ const SitegenEditorPatternsSidebar = () => {
 											activeTab &&
 											homepages &&
 											activeHomepage &&
+											globalStyles &&
 											Object.keys( homepages ).map(
 												( homepage ) => {
 													const data =

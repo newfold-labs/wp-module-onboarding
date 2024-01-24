@@ -29,9 +29,7 @@ export async function generateSiteGenMeta(
 	);
 }
 
-export async function getHomepages(
-	siteDescription
-) {
+export async function getHomepages( siteDescription ) {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/homepages' ),

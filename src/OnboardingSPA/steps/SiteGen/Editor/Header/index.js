@@ -17,7 +17,7 @@ import { useEffect, useState } from '@wordpress/element';
 import { setFlow, completeFlow } from '../../../../utils/api/flow';
 import Spinner from '../../../../components/Loaders/Spinner';
 import { regenerateHomepage } from '../../../../utils/api/siteGen';
-import StepEditorHeaderCenter from './Center';
+import StepEditorHeaderCenter from './center';
 import { useViewportMatch } from '@wordpress/compose';
 
 const StepSiteGenEditorHeader = () => {
@@ -92,12 +92,6 @@ const StepSiteGenEditorHeader = () => {
 		setCurrentOnboardingData( currentData );
 	};
 
-	const saveAndContinue = async () => {
-		setIsSaving( true );
-		await setFlow( currentData );
-		await completeFlow();
-		window.location.replace( pluginDashboardPage );
-	};
 	const handleViewAll = () => {
 		setSidebarActiveView( SIDEBAR_SITEGEN_EDITOR_PATTERNS );
 		setIsSidebarOpened( true );
@@ -117,9 +111,15 @@ const StepSiteGenEditorHeader = () => {
 		setCurrentOnboardingData( currentData );
 	};
 
+	const saveAndContinue = async () => {
+		setIsSaving( true );
+		await setFlow( currentData );
+		await completeFlow();
+		window.location.replace( pluginDashboardPage );
+	};
+
 	useEffect( () => {
 		handleCustomize();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
 
 	useEffect( () => {
@@ -127,6 +127,7 @@ const StepSiteGenEditorHeader = () => {
 			setHomepage( currentData.sitegen.homepages.active );
 		}
 	}, [ currentData ] );
+
 	return (
 		<>
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_START }` }>
@@ -139,8 +140,8 @@ const StepSiteGenEditorHeader = () => {
 							}` }
 							role="button"
 							tabIndex={ 0 }
-							onClick={ () => handleRegenerate() }
-							onKeyDown={ () => handleRegenerate() }
+							onClick={ handleRegenerate }
+							onKeyDown={ handleRegenerate }
 						>
 							<div
 								className={ `nfd-onboarding-header--sitegen__editor__start__regenerate__icon` }

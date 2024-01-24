@@ -107,7 +107,10 @@
 						}
 
 						&--connect {
-
+							display: flex;
+							flex-direction: row;
+							align-items: center;
+							justify-content: center;
 							background-color: var(--nfd-onboarding-facebook-connect-button-background);
 							color: #fff;
 
