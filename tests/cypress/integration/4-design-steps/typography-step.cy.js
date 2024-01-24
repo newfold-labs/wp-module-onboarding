@@ -1,6 +1,8 @@
 // <reference types="Cypress" />
 import { DrawerActivityForSubMenu } from '../wp-module-support/drawer.cy';
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 import {
+	BasicSidebarCheck,
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
@@ -23,12 +25,19 @@ describe( 'Typography Step Test', function () {
 		);
 	} );
 
-	it.skip( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel( '__design-fonts', 'Fonts' );
-		CheckIllustrationPanel();
-		CheckInfoPanel();
-		CheckHelpPanelLinks();
-	} );
+	if(GetPluginId()=='bluehost'){
+		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+			CheckIntroPanel( '__design-fonts', 'Fonts' );
+			CheckIllustrationPanel();
+			CheckInfoPanel();
+			CheckHelpPanelLinks();
+		} );
+	}
+	else{
+		it( 'Check to make sure Sidebar opens', () => {
+			BasicSidebarCheck();
+		} );
+	};
 
 	it( 'Check if Default Typography variations exists and are selectable', () => {
 		let previewCount = 0;

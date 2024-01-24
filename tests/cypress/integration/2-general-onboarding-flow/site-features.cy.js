@@ -1,7 +1,9 @@
 // <reference types="Cypress" />
 import { DrawerActivityForMenu } from '../wp-module-support/drawer.cy';
 import { CheckHeadingSubheading } from '../wp-module-support/header.cy';
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 import {
+	BasicSidebarCheck,
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
@@ -26,21 +28,27 @@ describe( 'Site Features', function () {
 			.contains('site');
 	} );
 
-	it.skip( 'Check Drawer Activity', () => {
+	it( 'Check Drawer Activity', () => {
 		DrawerActivityForMenu(
-			'Exit to WordPress',
+			'WordPress',
 			':nth-child(5)',
-			'Features',
 			false
 		);
 	} );
 
+	if(GetPluginId()=='bluehost'){
 	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 		CheckIntroPanel( '__site-features', 'Features' );
 		CheckIllustrationPanel();
 		CheckInfoPanel();
 		CheckHelpPanelLinks();
 	} );
+	}
+	else{
+		it( 'Check to make sure Sidebar opens', () => {
+			BasicSidebarCheck();
+		} );
+	};
 
 	it( 'Check if Site Features list exists and select them', () => {
 		let previewCount = 0;
