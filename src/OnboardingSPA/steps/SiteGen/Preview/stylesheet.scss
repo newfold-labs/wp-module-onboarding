@@ -58,6 +58,7 @@
 	}
 
 	&__note {
+		margin: 24px;
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
@@ -70,7 +71,7 @@
 		line-height: 22px;
 		text-align: center;
 		border-radius: 12px;
-		margin-bottom: 60px;
+		margin-bottom: 70px;
 	}
 
 	@keyframes heartBeat {
