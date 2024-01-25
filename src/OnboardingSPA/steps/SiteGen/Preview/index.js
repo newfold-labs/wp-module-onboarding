@@ -10,10 +10,7 @@ import { SiteGenPreviewSelectableCard } from '../../../components/LivePreview';
 import getContents from './contents';
 import HeartAnimation from './heartAnimation';
 import RegeneratingSiteCard from './regeneratingCard';
-import {
-	getHomepages,
-	regenerateHomepage,
-} from '../../../utils/api/siteGen';
+import { getHomepages, regenerateHomepage } from '../../../utils/api/siteGen';
 import { getGlobalStyles } from '../../../utils/api/themes';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { cloneDeep, isEmpty } from 'lodash';
@@ -58,6 +55,7 @@ const SiteGenPreview = () => {
 			return;
 		}
 		if ( currentData.sitegen.siteDetails?.prompt === '' ) {
+			setIsPreviewLoading( false );
 			return;
 		}
 
@@ -67,6 +65,7 @@ const SiteGenPreview = () => {
 		);
 
 		if ( response.error ) {
+			setIsPreviewLoading( false );
 			return;
 		}
 
@@ -79,6 +78,7 @@ const SiteGenPreview = () => {
 	const loadGlobalStyles = async () => {
 		const globalStylesResponse = await getGlobalStyles();
 		if ( globalStylesResponse.error ) {
+			setIsPreviewLoading( false );
 			return;
 		}
 		setGlobalStyles( globalStylesResponse.body );
@@ -130,10 +130,12 @@ const SiteGenPreview = () => {
 		scrollSelectionIntoView();
 		setIsRegenerating( true );
 		if ( ! ( slug in homepages ) ) {
+			setIsRegenerating( false );
 			return;
 		}
 
 		if ( currentData.sitegen.siteDetails?.prompt === '' ) {
+			setIsRegenerating( false );
 			return;
 		}
 
@@ -145,6 +147,7 @@ const SiteGenPreview = () => {
 		);
 
 		if ( response.error ) {
+			setIsRegenerating( false );
 			return;
 		}
 
@@ -166,8 +169,7 @@ const SiteGenPreview = () => {
 		return Object.keys( homepages ).map( ( slug, idx ) => {
 			const data = homepages[ slug ];
 			const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
-			newPreviewSettings.settings.color.palette =
-					data.color.palette;
+			newPreviewSettings.settings.color.palette = data.color.palette;
 			return (
 				<SiteGenPreviewSelectableCard
 					key={ idx }

@@ -201,20 +201,12 @@ class SiteGenController {
 
 		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience' );
 		if ( is_wp_error( $target_audience ) ) {
-			return new \WP_Error(
-				'nfd_onboarding_error',
-				__( 'Required data is missing.', 'wp-module-onboarding' ),
-				array( 'status' => 400 )
-			);
+			return $target_audience;
 		}
 
 		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones' );
 		if ( is_wp_error( $content_style ) ) {
-			return new \WP_Error(
-				'nfd_onboarding_error',
-				__( 'Required data is missing.', 'wp-module-onboarding' ),
-				array( 'status' => 400 )
-			);
+			return $content_style;
 		}
 
 		$homepages = SiteGenService::generate_homepages(
@@ -245,19 +237,11 @@ class SiteGenController {
 
 		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience' );
 		if ( is_wp_error( $target_audience ) ) {
-			return new \WP_Error(
-				'nfd_onboarding_error',
-				__( 'Required data is missing.', 'wp-module-onboarding' ),
-				array( 'status' => 400 )
-			);
+			return $target_audience;
 		}
 		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones' );
 		if ( is_wp_error( $content_style ) ) {
-			return new \WP_Error(
-				'nfd_onboarding_error',
-				__( 'Required data is missing.', 'wp-module-onboarding' ),
-				array( 'status' => 400 )
-			);
+			return $content_style;
 		}
 
 		if ( $is_favorite ) {

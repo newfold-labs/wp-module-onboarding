@@ -18,9 +18,7 @@ import {
 import TabPanelHover from '../../../TabPanelHover';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { cloneDeep, isEmpty } from 'lodash';
-import { getHomepages } from '../../../../data/sitegen/homepages/homepages';
-import { getColorPalettes } from '../../../../data/sitegen/sitemeta/siteMeta';
+import { cloneDeep } from 'lodash';
 import { getGlobalStyles } from '../../../../utils/api/themes';
 import { LivePreview } from '../../../LivePreview';
 
@@ -74,27 +72,6 @@ const SitegenEditorPatternsSidebar = () => {
 	};
 
 	const loadData = async () => {
-		const homepagesObject = {};
-		if ( isEmpty( currentData.sitegen.homepages.data ) ) {
-			const homepagesResponse = getHomepages();
-			const colorsResponse = getColorPalettes();
-			homepagesResponse.forEach( ( homepage, index ) => {
-				if ( ! homepage?.color ) {
-					const paletteKeys = Object.keys( colorsResponse );
-					const paletteIndex =
-						paletteKeys[ index % paletteKeys.length ];
-					homepage.color = {
-						slug: paletteIndex,
-						palette: colorsResponse[ paletteIndex ],
-					};
-				}
-			} );
-			homepagesResponse.forEach( ( homepage ) => {
-				homepagesObject[ homepage.slug ] = homepage;
-			} );
-			currentData.sitegen.homepages.data = homepagesObject;
-			setCurrentOnboardingData( currentData );
-		}
 		const globalStylesResponse = await getGlobalStyles();
 		setGlobalStyles( globalStylesResponse.body );
 	};
