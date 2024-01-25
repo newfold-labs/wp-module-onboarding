@@ -1,4 +1,4 @@
-import { Icon, chevronDown, reusableBlock, settings } from '@wordpress/icons';
+import { Icon, chevronDown, reusableBlock } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { useViewportMatch } from '@wordpress/compose';
 import { useRef } from '@wordpress/element';

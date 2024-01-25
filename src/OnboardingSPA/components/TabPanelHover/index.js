@@ -91,11 +91,11 @@ export default function TabPanelHover( {
 						{ ...( triggerEvent === 'click'
 							? { onClick: partial( handleEvent, tab.name ) }
 							: {
-									onMouseOver: partial(
-										handleEvent,
-										tab.name
-									),
-							  } ) }
+								onMouseOver: partial(
+									handleEvent,
+									tab.name
+								),
+							} ) }
 					>
 						{ tab.title }
 					</TabButton>
