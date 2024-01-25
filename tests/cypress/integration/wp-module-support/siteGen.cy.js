@@ -67,3 +67,19 @@ export const DisabledNextButton = () => {
         .should('be.visible')
         .contains( 'Next' );
 };
+
+export const ExperienceDetails = (classname,textValue,optionsValue) => {
+    cy.get(classname)
+        .eq(optionsValue)
+        .find('.nfd-sg-card__data__option__left_top')
+        .invoke( 'text' )
+        .should('contain', textValue);
+    cy.get(classname)
+        .eq(optionsValue)
+        .click();
+    cy.url().should('not.include', 'sitegen/step/experience',{
+        timeout: 10000,
+    } );
+    cy.go('back');
+    cy.wait(2000);
+};
