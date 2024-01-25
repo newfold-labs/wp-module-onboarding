@@ -51,19 +51,20 @@
 		}
 
 		&--footer {
+			width: 90vw;
 			display: flex;
 			align-items: center;
 			flex-direction: row;
 			justify-content: space-between;
 
 			&_left {
-				width: 55vw;
+				width: 45vw;
 				height: calc(38vh - 100px);
 				min-height: 150px;
 			}
 
 			&_right {
-				width: 33vw;
+				width: 37vw;
 				height: calc(38vh - 100px);
 				min-height: 150px;
 			}
