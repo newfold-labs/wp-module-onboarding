@@ -50,18 +50,6 @@ const DesignColorsPanel = ( {
 	const [ showColorPicker, setShowColorPicker ] = useState( false );
 	const customPaletteId = colors.length - 1;
 
-	const paletteSecondaryColors = Object.entries( colorPalettes[ 1 ] )
-		.map( ( [ name, color ] ) => {
-			if ( name !== 'name' ) {
-				return {
-					name: __( 'Custom', 'wp-module-onboarding' ),
-					color,
-				};
-			}
-			return null;
-		} )
-		.filter( Boolean );
-
 	const handleApplyCustomColors = () => {
 		setSelectedCustomColors( true );
 		setIsEditingCustomColors( false );
