@@ -76,7 +76,7 @@ const StepNavigationCenter = ( {
 								handleCustomize();
 							} }
 						>
-							<Icon icon={ settings } />
+							<div className="nfd-onboarding-header__version_dropdown-menu__customize-button__icon"></div>
 							{ __( 'Customize', 'wp-module-onboarding' ) }
 						</MenuItem>
 					</>
