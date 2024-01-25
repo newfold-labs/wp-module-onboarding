@@ -13,12 +13,14 @@ import { getGlobalStyles } from '../../../utils/api/themes';
 import { cloneDeep } from 'lodash';
 
 const StepSiteGenEditor = () => {
-	const [ activeHomepage, setActiveHomepage ] = useState();
-	const [ colorPalette, setColorPalette ] = useState();
-	const [ globalStyles, setGlobalStyles ] = useState( [] );
-	const [ reRender, setReRender ] = useState( false );
-	const { setIsHeaderEnabled, setHeaderActiveView, setDrawerActiveView } =
-		useDispatch( nfdOnboardingStore );
+	const [ homepage, setHomepage ] = useState( false );
+	const [ globalStyles, setGlobalStyles ] = useState( false );
+	const {
+		setIsHeaderEnabled,
+		setHeaderActiveView,
+		setDrawerActiveView,
+		setHideFooterNav,
+	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
@@ -28,54 +30,60 @@ const StepSiteGenEditor = () => {
 	} );
 
 	const loadData = async () => {
+		setHideFooterNav( true );
 		setIsHeaderEnabled( true );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
-		const homepage = currentData.sitegen.homepages.active;
-		setActiveHomepage( homepage );
+		const activeHomepage = currentData.sitegen.homepages.active;
+		setHomepage( activeHomepage );
 		const globalStylesResponse = await getGlobalStyles();
 		setGlobalStyles( globalStylesResponse.body );
-		setColorPalette( homepage.color.palette );
 	};
 
 	useEffect( () => {
+		setIsHeaderEnabled( true );
+		setHeaderActiveView( HEADER_SITEGEN );
+		setDrawerActiveView( false );
 		loadData();
 	}, [] );
 
 	useEffect( () => {
 		if ( currentData?.sitegen?.homepages?.active ) {
-			setActiveHomepage( currentData.sitegen.homepages.active );
-			setReRender( true );
+			setHomepage( currentData.sitegen.homepages.active );
 		}
 	}, [ currentData ] );
 
-	const buildPreview = () => {
-		const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
-		newPreviewSettings.settings.color.palette =
-			activeHomepage?.color?.palette;
+	const populateFontsInPreviewSettings = ( previewSettings ) => {
+		const firstBlock = homepage.styles.blocks[ 0 ];
+		if ( firstBlock[ 'core/heading' ] ) {
+			previewSettings.styles.blocks[
+				'core/heading'
+			].typography.fontFamily =
+				firstBlock[ 'core/heading' ].typography.fontFamily;
+		}
+		if ( firstBlock[ 'core/body' ] ) {
+			previewSettings.styles.typography.fontFamily =
+				firstBlock[ 'core/body' ].typography.fontFamily;
+		}
 
-		if ( activeHomepage && activeHomepage.styles ) {
-			if (
-				activeHomepage.styles.blocks &&
-				activeHomepage.styles.blocks.length > 0
-			) {
-				const firstBlock = activeHomepage.styles.blocks[ 0 ];
-				if ( firstBlock[ 'core/heading' ] ) {
-					newPreviewSettings.styles.blocks[
-						'core/heading'
-					].typography.fontFamily =
-						firstBlock[ 'core/heading' ].typography.fontFamily;
-				}
-				if ( firstBlock[ 'core/body' ] ) {
-					newPreviewSettings.styles.typography.fontFamily =
-						firstBlock[ 'core/body' ].typography.fontFamily;
-				}
-			}
+		return previewSettings;
+	};
+
+	const buildPreview = () => {
+		if ( ! ( homepage && globalStyles ) ) {
+			return <></>;
+		}
+
+		let newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
+		newPreviewSettings.settings.color.palette = homepage.color.palette;
+		if ( homepage?.styles?.blocks?.length > 0 ) {
+			newPreviewSettings =
+				populateFontsInPreviewSettings( newPreviewSettings );
 		}
 
 		return (
 			<LivePreview
-				blockGrammer={ activeHomepage.content }
+				blockGrammer={ homepage.content }
 				styling={ 'custom' }
 				previewSettings={ newPreviewSettings }
 				viewportWidth={ 1300 }
@@ -83,17 +91,14 @@ const StepSiteGenEditor = () => {
 			/>
 		);
 	};
+
 	return (
 		<CommonLayout
 			isCentered
 			className="nfd-onboarding-step--site-gen__editor"
 		>
 			<div className="nfd-onboarding-step--site-gen__editor__live-preview">
-				{ activeHomepage &&
-					colorPalette &&
-					globalStyles &&
-					reRender &&
-					buildPreview() }
+				{ buildPreview() }
 			</div>
 		</CommonLayout>
 	);

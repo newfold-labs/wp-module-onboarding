@@ -23,7 +23,7 @@ const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 		};
 	} );
 
-	const { setFooterNavEnabled, setCurrentOnboardingData } =
+	const { setIsFooterNavAllowed, setCurrentOnboardingData } =
 		useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -39,11 +39,11 @@ const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 			);
 		}
 
-		setFooterNavEnabled( ! isdisabledNextButton() );
+		setIsFooterNavAllowed( ! isdisabledNextButton() );
 	}, [] );
 
 	useEffect( () => {
-		setFooterNavEnabled( ! isdisabledNextButton() );
+		setIsFooterNavAllowed( ! isdisabledNextButton() );
 	}, [ customerInputUnique, customerInputType ] );
 
 	const handlePromptChange = ( field, e ) => {
@@ -58,7 +58,7 @@ const SiteGenSiteDetailsWalkthrough = ( { siteDetailsmeta } ) => {
 		};
 
 		setters[ field ]( e.target.value );
-		setFooterNavEnabled( ! isdisabledNextButton() );
+		setIsFooterNavAllowed( ! isdisabledNextButton() );
 	};
 
 	const concatenatePrompt = () => {
