@@ -39,6 +39,9 @@ $selected-detail: #1de082;
 			animation: fadeIn 100ms ease-out;
 			letter-spacing: $letter-spacing;
 			color: var(--nfd-onboarding-primary);
+			@media (prefers-reduced-motion) {
+				animation: none !important;
+			}
 		}
 
 		&__info {
@@ -51,6 +54,9 @@ $selected-detail: #1de082;
 				font-size: 0.87rem;
 				animation: fadeIn 100ms ease-in;
 				color: var(--nfd-onboarding-primary);
+				@media (prefers-reduced-motion) {
+					animation: none !important;
+				}
 			}
 
 			&-icon {
@@ -64,6 +70,13 @@ $selected-detail: #1de082;
 				&--selected {
 					animation: fadeIn 400ms ease-in-out;
 					background-color: $selected-detail;
+					@media (prefers-reduced-motion) {
+						animation: none !important;
+					}
+				}
+
+				@media (prefers-reduced-motion) {
+					animation: none !important;
 				}
 			}
 		}
