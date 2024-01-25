@@ -85,11 +85,17 @@ const SiteGenPreviewSelectableCard = ( {
 					>
 						<Button
 							className={ `${ className }__live-preview-container__overlay__button` }
-							onClick={ () => handlePreview() }
-						>
-							<Icon icon={ search } />
-							{ __( 'Preview Version', 'wp-module-onboarding' ) }
-						</Button>
+							text={
+								<>
+									<Icon icon={ search } />
+									{ __(
+										'Preview Version',
+										'wp-module-onboarding'
+									) }
+								</>
+							}
+							handleClick={ handlePreview }
+						/>
 					</div>
 				) }
 				<div

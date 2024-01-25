@@ -12,7 +12,8 @@ import { ThemeContext } from '../../ThemeContextProvider';
  */
 
 const HeadingWithSubHeading = ( { title, subtitle } ) => {
-	const { theme } = useContext( ThemeContext );
+	const themeContext = useContext( ThemeContext );
+	const theme = themeContext?.theme || false;
 
 	return (
 		<div className="nfd-onboarding-step__heading">

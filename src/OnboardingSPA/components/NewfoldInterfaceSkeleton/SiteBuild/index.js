@@ -434,28 +434,35 @@ const SiteBuild = () => {
 		isForkStep
 	);
 
-	return (
-		<ThemeProvider>
-			<ThemedNewfoldInterfaceSkeleton
-				className={ classNames(
-					'nfd-onboarding-skeleton',
-					`brand-${ newfoldBrand }`,
-					`path-${ pathname }`,
-					{ 'is-drawer-open': isDrawerOpen },
-					{ 'is-large-viewport': isLargeViewport },
-					{ 'is-small-viewport': ! isLargeViewport },
-					{
-						'nfd-onboarding-skeleton--sitegen': isForkStep,
-					}
-				) }
-				header={ <Header /> }
-				drawer={ <Drawer /> }
-				content={ <Content /> }
-				sidebar={ <Sidebar /> }
-				footer={ isForkStep ? <Footer /> : null }
-			/>
-		</ThemeProvider>
-	);
+	const commonSkeletonProps = {
+		className: classNames(
+			'nfd-onboarding-skeleton',
+			`brand-${ newfoldBrand }`,
+			`path-${ pathname }`,
+			{ 'is-drawer-open': isDrawerOpen },
+			{ 'is-large-viewport': isLargeViewport },
+			{ 'is-small-viewport': ! isLargeViewport },
+			{ 'nfd-onboarding-skeleton--sitegen': isForkStep }
+		),
+		header: <Header />,
+		drawer: <Drawer />,
+		content: <Content />,
+		sidebar: <Sidebar />,
+		footer: isForkStep ? <Footer /> : null,
+	};
+
+	const renderSkeleton = ( Component ) =>
+		isForkStep ? (
+			<ThemeProvider>
+				<Component { ...commonSkeletonProps } />
+			</ThemeProvider>
+		) : (
+			<Component { ...commonSkeletonProps } />
+		);
+
+	return isForkStep
+		? renderSkeleton( ThemedNewfoldInterfaceSkeleton )
+		: renderSkeleton( NewfoldInterfaceSkeleton );
 };
 
 export default SiteBuild;
