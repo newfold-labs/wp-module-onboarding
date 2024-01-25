@@ -15,8 +15,12 @@ import { cloneDeep } from 'lodash';
 const StepSiteGenEditor = () => {
 	const [ homepage, setHomepage ] = useState( false );
 	const [ globalStyles, setGlobalStyles ] = useState( false );
-	const { setIsHeaderEnabled, setHeaderActiveView, setDrawerActiveView } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		setIsHeaderEnabled,
+		setHeaderActiveView,
+		setDrawerActiveView,
+		setHideFooterNav,
+	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
@@ -26,6 +30,10 @@ const StepSiteGenEditor = () => {
 	} );
 
 	const loadData = async () => {
+		setHideFooterNav( true );
+		setIsHeaderEnabled( true );
+		setHeaderActiveView( HEADER_SITEGEN );
+		setDrawerActiveView( false );
 		const activeHomepage = currentData.sitegen.homepages.active;
 		setHomepage( activeHomepage );
 		const globalStylesResponse = await getGlobalStyles();
@@ -67,10 +75,10 @@ const StepSiteGenEditor = () => {
 		}
 
 		let newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
-		newPreviewSettings.settings.color.palette =
-			homepage.color.palette;
+		newPreviewSettings.settings.color.palette = homepage.color.palette;
 		if ( homepage?.styles?.blocks?.length > 0 ) {
-			newPreviewSettings = populateFontsInPreviewSettings( newPreviewSettings );
+			newPreviewSettings =
+				populateFontsInPreviewSettings( newPreviewSettings );
 		}
 
 		return (
@@ -90,8 +98,7 @@ const StepSiteGenEditor = () => {
 			className="nfd-onboarding-step--site-gen__editor"
 		>
 			<div className="nfd-onboarding-step--site-gen__editor__live-preview">
-				{
-					buildPreview() }
+				{ buildPreview() }
 			</div>
 		</CommonLayout>
 	);

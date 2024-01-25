@@ -29,6 +29,7 @@ const SiteGenPreview = () => {
 		setDrawerActiveView,
 		setCurrentOnboardingData,
 		updateInitialize,
+		setHideFooterNav,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData, nextStep } = useSelect( ( select ) => {
@@ -41,6 +42,7 @@ const SiteGenPreview = () => {
 
 	useEffect( () => {
 		setIsHeaderEnabled( true );
+		setHideFooterNav( true );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );

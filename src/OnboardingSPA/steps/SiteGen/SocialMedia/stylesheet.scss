@@ -5,14 +5,12 @@
 		&__social-media {
 
 			&__container {
-
 				display: flex;
-				width: 40vw;
 				flex-direction: column;
 				justify-content: center;
 
 				&__buttons {
-					width: 95%;
+					width: 96%;
 					display: flex;
 					align-items: center;
 					justify-content: flex-end;
@@ -46,7 +44,7 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: left;
-				width: 40vw;
+				width: 37vw;
 
 				@media (max-width: #{ ($break-large) }) {
 					width: 80vw;

@@ -57,8 +57,12 @@ export function getFooterActiveView( state ) {
 	return state.footer.view;
 }
 
-export function getFooterNavEnabled( state ) {
-	return state.footer.navEnabled;
+export function getIsFooterNavAllowed( state ) {
+	return state.footer.isNavAllowed;
+}
+
+export function getHideFooterNav( state ) {
+	return state.footer.hideFooterNav;
 }
 
 /**

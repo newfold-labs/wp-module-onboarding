@@ -55,6 +55,10 @@ $background-color: var(--nfd-onboarding-card-background);
 				position: absolute;
 				transition: width 2s ease-in-out;
 				background-color: var(--nfd-onboarding-progress-bar-fill);
+
+				@media (prefers-reduced-motion) {
+					transition: none !important;
+				}
 			}
 		}
 	}
@@ -66,5 +70,9 @@ $background-color: var(--nfd-onboarding-card-background);
 		letter-spacing: 1.3px;
 		color: var(--nfd-onboarding-primary);
 		animation: fadeInFast 3s ease-out infinite;
+
+		@media (prefers-reduced-motion) {
+			animation: none !important;
+		}
 	}
 }
