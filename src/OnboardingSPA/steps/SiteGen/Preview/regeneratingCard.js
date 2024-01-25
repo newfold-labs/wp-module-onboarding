@@ -12,6 +12,7 @@ function RegeneratingSiteCard( { count = 1, isRegenerating } ) {
 							: __( 'Generating Site', 'wp-module-onboarding' ) }
 					</p>
 					<div className="regenerating-site-card__progress-bar">
+						{ /* Math.random() * (max - min) + min, Just depicting the max and min values */ }
 						<div
 							style={ {
 								animationDuration: `${

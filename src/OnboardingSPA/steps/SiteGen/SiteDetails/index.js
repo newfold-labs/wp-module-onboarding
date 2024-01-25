@@ -24,25 +24,27 @@ const SiteGenSiteDetails = () => {
 	} );
 
 	const {
-		setFooterNavEnabled,
+		setIsFooterNavAllowed,
 		setIsHeaderEnabled,
 		setSidebarActiveView,
 		setHeaderActiveView,
 		setDrawerActiveView,
+		setHideFooterNav,
 		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
+		setHideFooterNav( false );
 		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
-		setFooterNavEnabled( false );
 		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
 			setIsValidInput( true );
-			setFooterNavEnabled( isValidInput );
+			setIsFooterNavAllowed( true );
 			return setCustomerInput( currentData.sitegen.siteDetails.prompt );
 		}
+		setIsFooterNavAllowed( false );
 	}, [] );
 
 	useEffect( () => {
@@ -51,13 +53,11 @@ const SiteGenSiteDetails = () => {
 			customerInput !== undefined &&
 			customerInput !== currentData.sitegen.siteDetails.prompt
 		) {
-			setFooterNavEnabled( isValidInput );
 			currentData.sitegen.siteDetails.prompt = customerInput?.trim();
 			currentData.sitegen.siteDetails.mode = 'simple';
 			setCurrentOnboardingData( currentData );
-		} else {
-			setFooterNavEnabled( false );
 		}
+		setIsFooterNavAllowed( isValidInput );
 	}, [ customerInput ] );
 
 	return (

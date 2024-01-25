@@ -333,16 +333,22 @@ export function queue( state = [], action ) {
 export function footer(
 	state = {
 		footers,
-		navEnabled: true,
+		isNavAllowed: true,
+		hideFooterNav: false,
 		view: FOOTER_SITEGEN,
 	},
 	action
 ) {
 	switch ( action.type ) {
-		case 'SET_FOOTER_NAV_ENABLED':
+		case 'SET_IS_FOOTER_NAV_ALLOWED':
 			return {
 				...state,
-				navEnabled: action.navEnabled,
+				isNavAllowed: action.isNavAllowed,
+			};
+		case 'SET_HIDE_FOOTER_NAV':
+			return {
+				...state,
+				hideFooterNav: action.hideFooterNav,
 			};
 		case 'SET_FOOTER_ACTIVE_VIEW':
 			return {
