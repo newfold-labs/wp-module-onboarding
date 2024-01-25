@@ -334,7 +334,9 @@ const SiteBuild = () => {
 
 		if ( lastChapter !== currentChapter ) {
 			if ( lastChapter ) {
-				currentData.data.chapters[ lastChapter ].completed = true;
+				if ( currentData.data.chapters[ lastChapter ] ) {
+					currentData.data.chapters[ lastChapter ].completed = true;
+				}
 				trackOnboardingEvent(
 					new OnboardingEvent(
 						ACTION_ONBOARDING_CHAPTER_COMPLETE,
@@ -344,7 +346,11 @@ const SiteBuild = () => {
 			}
 
 			if ( currentChapter ) {
-				currentData.data.chapters[ currentChapter ].completed = false;
+				if ( currentData.data.chapters[ currentChapter ] ) {
+					currentData.data.chapters[
+						currentChapter
+					].completed = false;
+				}
 				trackOnboardingEvent(
 					new OnboardingEvent(
 						ACTION_ONBOARDING_CHAPTER_STARTED,
