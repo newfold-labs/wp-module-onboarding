@@ -39,7 +39,6 @@ jobs:
     needs: setup
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
     with:
-      plugin-branch: 'add/tests-for-onboarding'
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: "newfold-labs/wp-plugin-hostgator"
@@ -50,7 +49,6 @@ jobs:
     needs: setup
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
     with:
-      plugin-branch: 'add/tests-for-onboarding'
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: "newfold-labs/wp-plugin-crazy-domains"
