@@ -147,7 +147,9 @@ const CustomFontsDisplay = ( {
 			<h5 className={ `${ baseClassName }__heading` }>
 				<span>{ __( 'CUSTOM FONTS', 'wp-module-onboarding' ) }</span>
 			</h5>
-			<button onClick={ () => handleEditCustomFont() }>{ __( 'Edit fonts', 'wp-module-onboarding' ) }</button>
+			<button onClick={ () => handleEditCustomFont() }>
+				{ __( 'Edit fonts', 'wp-module-onboarding' ) }
+			</button>
 		</div>
 
 		<div className={ `${ baseClassName }__font-group__container` }>
@@ -195,7 +197,7 @@ const DesignFontsPanel = ( {
 	const { currentData, customizeSidebarData } = useSelect( ( select ) => {
 		return {
 			customizeSidebarData:
-			select( nfdOnboardingStore ).getCustomizeSidebarData(),
+				select( nfdOnboardingStore ).getCustomizeSidebarData(),
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};

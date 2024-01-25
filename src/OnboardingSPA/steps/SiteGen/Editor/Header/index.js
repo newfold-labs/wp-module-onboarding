@@ -163,7 +163,9 @@ const StepSiteGenEditorHeader = () => {
 							handleViewAll={ handleViewAll }
 							handleCustomize={ handleCustomize }
 							handleRegenerate={ handleRegenerate }
-							handleIsRenaming={ ( isRenaming ) => setIsEditingTitle( isRenaming ) }
+							handleIsRenaming={ ( isRenaming ) =>
+								setIsEditingTitle( isRenaming )
+							}
 							handleRename={ handleRename }
 							homepageTitle={ homepage.title }
 							isFavorite={ homepage.isFavorite }
@@ -200,9 +202,9 @@ const StepSiteGenEditorHeader = () => {
 						>
 							{ isLargeViewport
 								? __(
-									'Save & Continue',
-									'wp-module-onboarding'
-								)
+										'Save & Continue',
+										'wp-module-onboarding'
+								  )
 								: __( 'Next', 'wp-module-onboarding' ) }
 						</div>
 						{ isSaving ? (

@@ -45,11 +45,7 @@ const SiteGenPreviewSelectableCard = ( {
 	};
 
 	return (
-		<div
-			className={ `${ className }` }
-			role="button"
-			tabIndex={ 0 }
-		>
+		<div className={ `${ className }` } role="button" tabIndex={ 0 }>
 			<div className={ `${ className }__live-preview-container` }>
 				<LivePreview
 					styling={ styling }

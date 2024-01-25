@@ -128,10 +128,11 @@ const DesignColorsPanel = ( {
 
 		colorPalettes[ selectedPalette ].tertiary = selectedColor.tertiary;
 
-		currentData.sitegen.homepages.data[ slug ].color.palette = convertColorSchema(
+		currentData.sitegen.homepages.data[ slug ].color.palette =
+			convertColorSchema( colorPalettes[ selectedPalette ] );
+		currentData.sitegen.homepages.active.color.palette = convertColorSchema(
 			colorPalettes[ selectedPalette ]
 		);
-		currentData.sitegen.homepages.active.color.palette = convertColorSchema( colorPalettes[ selectedPalette ] );
 		setCurrentOnboardingData( currentData );
 	};
 
@@ -262,9 +263,10 @@ const DesignColorsPanel = ( {
 									label={
 										idx === 0
 											? __(
-												'Default',
-												'wp-module-onboarding'
-											) : ''
+													'Default',
+													'wp-module-onboarding'
+											  )
+											: ''
 									}
 									selectedPalette={ selectedPalette }
 									setSelectedPalette={ setSelectedPalette }

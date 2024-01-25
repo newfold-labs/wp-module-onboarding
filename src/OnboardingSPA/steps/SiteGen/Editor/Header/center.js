@@ -72,15 +72,11 @@ const StepEditorHeaderCenter = ( {
 			<MenuGroup className="nfd-onboarding-header__version_dropdown-menu">
 				{ ! isLargeViewport && (
 					<>
-						<MenuItem
-							onClick={ onRegenerate }
-						>
+						<MenuItem onClick={ onRegenerate }>
 							<Icon icon={ reusableBlock } />
 							{ __( 'Regenerate', 'wp-module-onboarding' ) }
 						</MenuItem>
-						<MenuItem
-							onClick={ onCustomize }
-						>
+						<MenuItem onClick={ onCustomize }>
 							<Icon icon={ settings } />
 							{ __( 'Customize', 'wp-module-onboarding' ) }
 						</MenuItem>
@@ -105,7 +101,10 @@ const StepEditorHeaderCenter = ( {
 						role="button"
 						tabIndex="0"
 						aria-expanded={ isOpen }
-						aria-label={ __( 'Regenerate', 'wp-module-onboarding' ) }
+						aria-label={ __(
+							'Regenerate',
+							'wp-module-onboarding'
+						) }
 						className="navigation-buttons-editor"
 					>
 						<div

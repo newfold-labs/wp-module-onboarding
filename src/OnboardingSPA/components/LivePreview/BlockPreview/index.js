@@ -95,13 +95,13 @@ const BlockPreview = ( {
 						<p className="regenerating-site-card__title">
 							{ skeletonShouldWait
 								? __(
-									'Regenerating Site',
-									'wp-module-onboarding'
-								)
+										'Regenerating Site',
+										'wp-module-onboarding'
+								  )
 								: __(
-									'Generating Site',
-									'wp-module-onboarding'
-								) }
+										'Generating Site',
+										'wp-module-onboarding'
+								  ) }
 						</p>
 					</p>
 					<div className="regenerating-site-card__progress-bar">
