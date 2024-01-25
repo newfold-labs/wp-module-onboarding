@@ -15,53 +15,61 @@
 	margin: 20px;
 	padding: 20px;
 	position: relative;
-}
+	display: flex;
+	place-content: center;
+	place-items: flex-start;
 
-.site-gen__building {
+	.site-gen__building {
 
-	&_skimmer {
+		&_skimmer {
+			max-width: 1800px;
 
-		&--main {
-			margin-bottom: 30px;
-			background: rgba(var(--nfd-onboarding-primary-rgb), 0.05);
-			box-shadow: 0 4px 30px rgba(var(--nfd-onboarding-secondary-rgb), 0.1);
-			animation: borderRotate 3500ms infinite forwards;
-			border: 0.25px solid rgba(var(--nfd-onboarding-secondary-rgb), 0.26);
-			border-image: conic-gradient(from var(--angle), rgba(var(--nfd-onboarding-secondary-rgb), 0.26) calc(var(--angle) + 0.5deg), rgba(var(--nfd-onboarding-shimmer-color), 0.5) calc(var(--angle) + 1deg)) 30;
-		}
-
-		&--header {
-			height: 10vh;
-			width: 90vw;
-		}
-
-		&--body {
-			width: 90vw;
-			height: 80vh;
-		}
-
-		&--footer {
-			display: flex;
-			align-items: center;
-			flex-direction: row;
-			justify-content: space-between;
-
-			&_left {
-				width: 55vw;
-				height: 40vh;
+			&--main {
+				margin-bottom: 30px;
+				background: rgba(var(--nfd-onboarding-primary-rgb), 0.05);
+				box-shadow: 0 4px 30px rgba(var(--nfd-onboarding-secondary-rgb), 0.1);
+				animation: borderRotate 3500ms infinite forwards;
+				border: 0.25px solid rgba(var(--nfd-onboarding-secondary-rgb), 0.26);
+				border-image: conic-gradient(from var(--angle), rgba(var(--nfd-onboarding-secondary-rgb), 0.26) calc(var(--angle) + 0.5deg), rgba(var(--nfd-onboarding-shimmer-color), 0.5) calc(var(--angle) + 1deg)) 30;
 			}
 
-			&_right {
-				width: 33vw;
-				height: 40vh;
+			&--header {
+				height: 6vh;
+				width: 90vw;
+				min-height: 50px;
+			}
+
+			&--body {
+				width: 90vw;
+				height: calc(56vh - 150px);
+				min-height: 250px;
+			}
+
+			&--footer {
+				display: flex;
+				align-items: center;
+				flex-direction: row;
+				justify-content: space-between;
+
+				&_left {
+					width: 55vw;
+					height: calc(38vh - 100px);
+					min-height: 150px;
+				}
+
+				&_right {
+					width: 33vw;
+					height: calc(38vh - 100px);
+					min-height: 150px;
+				}
 			}
 		}
-	}
 
-	&_loader__overlay {
-		position: absolute;
-		top: 40%;
-		left: 50%;
-		transform: translate(-50%, -50%);
+		&_loader__overlay {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
 	}
 }
