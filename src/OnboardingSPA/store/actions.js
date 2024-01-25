@@ -189,10 +189,17 @@ export function setHeaderActiveView( view ) {
 	};
 }
 
-export function setFooterNavEnabled( navEnabled ) {
+export function setIsFooterNavAllowed( isNavAllowed ) {
 	return {
-		type: 'SET_FOOTER_NAV_ENABLED',
-		navEnabled,
+		type: 'SET_IS_FOOTER_NAV_ALLOWED',
+		isNavAllowed,
+	};
+}
+
+export function setHideFooterNav( hideFooterNav ) {
+	return {
+		type: 'SET_HIDE_FOOTER_NAV',
+		hideFooterNav,
 	};
 }
 
