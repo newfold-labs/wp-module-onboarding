@@ -23,6 +23,7 @@ import { useViewportMatch } from '@wordpress/compose';
 const StepSiteGenEditorHeader = () => {
 	const [ homepage, setHomepage ] = useState();
 	const [ isSaving, setIsSaving ] = useState( false );
+	const [ isRegenerating, setIsRegenerating ] = useState( false );
 	const [ isEditingTitle, setIsEditingTitle ] = useState( false );
 
 	const isLargeViewport = useViewportMatch( 'medium' );
@@ -64,12 +65,15 @@ const StepSiteGenEditorHeader = () => {
 			return;
 		}
 
+		setIsRegenerating( true );
 		if ( currentData.sitegen.siteDetails?.prompt === '' ) {
+			setIsRegenerating( false );
 			return;
 		}
 
 		const homepages = currentData.sitegen.homepages.data;
 		if ( ! ( homepage.slug in homepages ) ) {
+			setIsRegenerating( false );
 			return;
 		}
 
@@ -82,6 +86,7 @@ const StepSiteGenEditorHeader = () => {
 		);
 
 		if ( response.error ) {
+			setIsRegenerating( false );
 			return;
 		}
 
@@ -90,6 +95,7 @@ const StepSiteGenEditorHeader = () => {
 		currentData.sitegen.homepages.data = homepages;
 		currentData.sitegen.homepages.active = regeneratedHomepage;
 		setCurrentOnboardingData( currentData );
+		setIsRegenerating( false );
 	};
 
 	const handleViewAll = () => {
@@ -151,6 +157,13 @@ const StepSiteGenEditorHeader = () => {
 							>
 								{ __( 'Regenerate', 'wp-module-onboarding' ) }
 							</div>
+							{ isRegenerating && (
+								<Spinner
+									className={
+										'nfd-onboarding-header--sitegen__editor__start__regenerate__spinner'
+									}
+								/>
+							) }
 						</div>
 					) }
 				</div>
