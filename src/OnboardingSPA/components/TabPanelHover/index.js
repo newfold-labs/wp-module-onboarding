@@ -42,11 +42,12 @@ export default function TabPanelHover( {
 	notActiveClass = 'is-not-active',
 	callback,
 	onSelect = noop,
+	triggerEvent = 'click',
 } ) {
 	const instanceId = useInstanceId( TabPanelHover, 'tab-panel' );
 	const [ selected, setSelected ] = useState( null );
 
-	const handleMouseOver = ( tabKey ) => {
+	const handleEvent = ( tabKey ) => {
 		setSelected( tabKey );
 		onSelect( tabKey );
 		const selectedTab = find( tabs, { name: tabKey } );
@@ -87,7 +88,14 @@ export default function TabPanelHover( {
 						aria-controls={ `${ instanceId }-${ tab.name }-view` }
 						selected={ tab.name === selected }
 						key={ tab.name }
-						onMouseOver={ partial( handleMouseOver, tab.name ) }
+						{ ...( triggerEvent === 'click'
+							? { onClick: partial( handleEvent, tab.name ) }
+							: {
+									onMouseOver: partial(
+										handleEvent,
+										tab.name
+									),
+							  } ) }
 					>
 						{ tab.title }
 					</TabButton>
