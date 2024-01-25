@@ -3,9 +3,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\AI\SiteGen\SiteGen;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
-use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\SiteGen as SiteGenData;
 
 /**
@@ -54,7 +52,7 @@ class SiteGenController {
 		);
 		\register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/get-homepages',
+			$this->rest_base . '/homepages',
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'get_homepages' ),
@@ -64,21 +62,12 @@ class SiteGenController {
 		);
 		\register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/get-homepages-regenerate',
+			$this->rest_base . '/homepages/regenerate',
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'get_regenerated_homepages' ),
+				'callback'            => array( $this, 'regenerate_homepage' ),
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				'args'                => $this->get_homepages_regenerate_args(),
-			)
-		);
-		\register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/favourites',
-			array(
-				'methods'             => \WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'toggle_favourite_homepage' ),
-				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				'args'                => $this->get_regenerate_homepage_args(),
 			)
 		);
 		\register_rest_route(
@@ -94,8 +83,8 @@ class SiteGenController {
 			$this->namespace,
 			$this->rest_base . '/customize-data',
 			array(
-				'methods'  => \WP_REST_Server::READABLE,
-				'callback' => array( $this, 'get_customize_sidebar_data' ),
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_customize_sidebar_data' ),
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 			)
 		);
@@ -132,15 +121,9 @@ class SiteGenController {
 		return array(
 			'site_description' => array(
 				'required'          => true,
-				'validate_callback' => function ( $param ) {
-					return is_string( $param );
-				},
+				'type'              => 'string',
 				'sanitize_callback' => 'sanitize_text_field',
 			),
-			'regenerate'       => array(
-				'required' => false,
-			),
-			// Add other parameters here as needed.
 		);
 	}
 
@@ -149,23 +132,21 @@ class SiteGenController {
 	 *
 	 * @return array The array of arguments.
 	 */
-	public function get_homepages_regenerate_args() {
+	public function get_regenerate_homepage_args() {
 		return array(
 			'site_description' => array(
 				'required'          => true,
-				'validate_callback' => function ( $param ) {
-					return is_string( $param );
-				},
+				'type'              => 'string',
 				'sanitize_callback' => 'sanitize_text_field',
-			),
-			'regenerate'       => array(
-				'required' => false,
 			),
 			'slug'             => array(
 				'required' => false,
 			),
 			'colorPalettes'    => array(
 				'required' => false,
+			),
+			'isFavorite'       => array(
+				'required' => true,
 			),
 		);
 	}
@@ -210,45 +191,35 @@ class SiteGenController {
 	 * @return array
 	 */
 	public function get_homepages( \WP_REST_Request $request ) {
-
-		$site_description = $request->get_param( 'site_description' );
-		$regenerate       = $request->get_param( 'regenerate' );
-		$site_info        = array( 'site_description' => $site_description );
-		// If the option exists and is not empty, return it.
-		$existing_homepages = get_option( Options::get_option_name( 'sitegen_homepages' ), array() );
-		if ( ! empty( $existing_homepages ) && ! $regenerate ) {
+		$existing_homepages = SiteGenService::get_homepages();
+		if ( ! empty( $existing_homepages ) ) {
 			return new \WP_REST_Response( $existing_homepages, 200 );
 		}
+
+		$site_description = $request->get_param( 'site_description' );
+		$site_info        = array( 'site_description' => $site_description );
+
 		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience' );
-		$content_style   = SiteGenService::instantiate_site_meta( $site_info, 'content_tones' );
-
-		if ( ! $target_audience || is_wp_error( $target_audience ) ) {
-			return new \WP_Error(
-				'nfd_onboarding_error',
-				__( 'Required data is missing.', 'wp-module-onboarding' ),
-				array( 'status' => 400 )
-			);
-		}
-		if ( ! $content_style || is_wp_error( $content_style ) ) {
-			return new \WP_Error(
-				'nfd_onboarding_error',
-				__( 'Required data is missing.', 'wp-module-onboarding' ),
-				array( 'status' => 400 )
-			);
+		if ( is_wp_error( $target_audience ) ) {
+			return $target_audience;
 		}
 
-		$processed_home_pages = SiteGenService::generate_homepages(
+		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones' );
+		if ( is_wp_error( $content_style ) ) {
+			return $content_style;
+		}
+
+		$homepages = SiteGenService::generate_homepages(
 			$site_description,
 			$content_style,
-			$target_audience,
-			$regenerate
+			$target_audience
 		);
 
-		if ( is_wp_error( $processed_home_pages ) ) {
-			return $processed_home_pages;
+		if ( is_wp_error( $homepages ) ) {
+			return $homepages;
 		}
 
-		return new \WP_REST_Response( $processed_home_pages, 200 );
+		return new \WP_REST_Response( $homepages, 201 );
 	}
 
 	/**
@@ -257,35 +228,26 @@ class SiteGenController {
 	 * @param \WP_REST_Request $request parameter.
 	 * @return array
 	 */
-	public function get_regenerated_homepages( \WP_REST_Request $request ) {
-		$site_description          = $request->get_param( 'site_description' );
-		$regenerate_slug           = $request->get_param( 'slug' );
-		$regenerate_color_palattes = $request->get_param( 'colorPalettes' );
-		$is_favourite              = $request->get_param( 'isFavourited' );
-		$site_info                 = array( 'site_description' => $site_description );
-		$target_audience           = SiteGenService::instantiate_site_meta( $site_info, 'target_audience' );
-		$content_style             = SiteGenService::instantiate_site_meta( $site_info, 'content_tones' );
+	public function regenerate_homepage( \WP_REST_Request $request ) {
+		$site_description = $request->get_param( 'site_description' );
+		$slug             = $request->get_param( 'slug' );
+		$color_palette    = $request->get_param( 'palette' );
+		$is_favorite      = $request->get_param( 'isFavorite' );
+		$site_info        = array( 'site_description' => $site_description );
 
-		if ( ! $target_audience || is_wp_error( $target_audience ) ) {
-			return new \WP_Error(
-				'nfd_onboarding_error',
-				__( 'Required data is missing.', 'wp-module-onboarding' ),
-				array( 'status' => 400 )
-			);
+		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience' );
+		if ( is_wp_error( $target_audience ) ) {
+			return $target_audience;
+		}
+		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones' );
+		if ( is_wp_error( $content_style ) ) {
+			return $content_style;
 		}
 
-		if ( ! $content_style || is_wp_error( $content_style ) ) {
-			return new \WP_Error(
-				'nfd_onboarding_error',
-				__( 'Required data is missing.', 'wp-module-onboarding' ),
-				array( 'status' => 400 )
-			);
-		}
-
-		if ( $is_favourite ) {
-			$result = SiteGenService::handle_favorite_regeneration( $regenerate_slug, $regenerate_color_palattes );
+		if ( $is_favorite ) {
+			$result = SiteGenService::regenerate_favorite_homepage( $slug, $color_palette );
 		} else {
-			$result = SiteGenService::handle_regular_regeneration( $site_description, $content_style, $target_audience );
+			$result = SiteGenService::regenerate_homepage( $site_description, $content_style, $target_audience );
 		}
 
 		if ( null === $result ) {
@@ -299,30 +261,6 @@ class SiteGenController {
 		}
 
 		return new \WP_REST_Response( $result, 200 );
-	}
-
-	/**
-	 * Updates favourite status
-	 *
-	 * @param \WP_REST_Request $request parameter.
-	 * @return array
-	 */
-	public function toggle_favourite_homepage( \WP_REST_Request $request ) {
-		$slug = $request->get_param( 'slug' );
-
-		$response = SiteGenService::toggle_favourite_homepage( $slug );
-
-		if ( is_wp_error( $response ) ) {
-			$error_message = $response->get_error_message();
-			return new \WP_Error(
-				'nfd_onboarding_error',
-				__( 'Error at updating Favourite status', 'wp-module-onboarding' ),
-				array(
-					'status' => 404,
-				)
-			);
-		}
-		return new \WP_REST_Response( $response, 200 );
 	}
 
 	/**

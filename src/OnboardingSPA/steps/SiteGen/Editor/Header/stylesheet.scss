@@ -32,6 +32,13 @@
 					&__disabled {
 						cursor: disabled;
 					}
+
+					&__spinner {
+						border-radius: 50%;
+						width: 5em;
+						height: 5em;
+						font-size: 3px;
+					}
 				}
 			}
 
