@@ -18,10 +18,10 @@
 				&__buttons {
 					width: 99%;
 					display: flex;
-					padding: 16px;
 					flex-direction: row;
 					align-items: center;
 					justify-content: flex-end;
+					margin-top: 20px;
 
 					&__skip {
 						font-size: clamp(0.6rem, 0.755rem + 0.227vw, 1.3rem);

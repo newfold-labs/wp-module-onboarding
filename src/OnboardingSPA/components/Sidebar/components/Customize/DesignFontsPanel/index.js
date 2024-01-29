@@ -22,17 +22,11 @@ const FontGroup = ( {
 			role="presentation"
 			onClick={ () => handleGroupSelect( group.id ) }
 		>
-			<Dashicon
-				className={ `${ baseClassName }__font-group__container__button__icon` }
-				icon={ 'yes-alt' }
-				size={ 30 }
-				style={ {
-					color:
-						selectedGroup === group.id
-							? 'var(--nfd-onboarding-sitegen-customize-icon-selected)'
-							: 'var(--nfd-onboarding-sitegen-customize-grey-1)',
-				} }
-			/>
+			<span
+				className={ `${ baseClassName }__font-group__container__button__icon${
+					selectedGroup === group.id ? ` selected` : ``
+				}` }
+			></span>
 			<div
 				className={ `${ baseClassName }__font-group__container__button__font-name__container` }
 			>

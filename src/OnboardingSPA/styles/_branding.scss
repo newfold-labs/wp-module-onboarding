@@ -327,7 +327,7 @@ body {
 		--nfd-onboarding-progress-bar-fill: #0060f0;
 		--nfd-onboarding-progress-bar-background: #d5d5d5;
 		--nfd-onboarding-site-logo-on-drag: rgba(53, 59, 64, 0.3);
-		--nfd-onboarding-navigation-back-background: rgba(54, 62, 68, 0.35);
+		--nfd-onboarding-navigation-back-background: rgba(212, 212, 212, 0.35);
 		--nfd-onboarding-site-logo-border: var(--nfd-onboarding-primary);
 		--nfd-onboarding-header-border: rgba(var(--nfd-onboarding-primary-rgb), 0.3);
 		--nfd-onboarding-card-overlay: rgba(0, 0, 0, 0.4);
@@ -337,6 +337,7 @@ body {
 		--nfd-onboarding-preview-favorite-background: #1e2327;
 		--nfd-onboarding-favorite-fill: #ef4a71;
 		--nfd-onboarding-button-background: #363e4459;
+		--nfd-onboarding-sidebar-border-left: #e0e0e0;
 		--nfd-onboarding-facebook-connect-button-background: #1877f2;
 		--nfd-onboarding-facebook-connect-button-background-hover: #0065ea;
 		--nfd-onboarding-facebook-connected-button-background: #3bb143;
@@ -368,6 +369,7 @@ body {
 		--nfd-onboarding-button-background: #363e4459;
 		--nfd-onboarding-regenerating-card-background: rgba(53, 58, 64, 0.1);
 		--sitegen-background-low: url(../static/images/sitegen/ai_bg_low.png);
+		--nfd-onboarding-sidebar-border-left: #e0e0e0;
 		--nfd-onboarding-facebook-connect-button-background: #1877f2;
 		--nfd-onboarding-facebook-connect-button-background-hover: #0065ea;
 		--nfd-onboarding-facebook-connected-button-background: #3bb143;

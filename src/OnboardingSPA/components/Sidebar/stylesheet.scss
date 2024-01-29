@@ -28,6 +28,7 @@
 
 .nfd-onboarding-sidebar__panel.is-open {
 	width: $nav-sidebar-width;
+	border-left: 1px solid var(--nfd-onboarding-sidebar-border-left);
 
 	.nfd-onboarding-sidebar__panel-inner,
 	.interface-interface-skeleton__sidebar {

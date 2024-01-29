@@ -1,4 +1,4 @@
-import { Icon, chevronDown, reusableBlock, settings } from '@wordpress/icons';
+import { Icon, chevronDown, reusableBlock } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { useViewportMatch } from '@wordpress/compose';
 import { useRef } from '@wordpress/element';
@@ -77,7 +77,7 @@ const StepEditorHeaderCenter = ( {
 							{ __( 'Regenerate', 'wp-module-onboarding' ) }
 						</MenuItem>
 						<MenuItem onClick={ onCustomize }>
-							<Icon icon={ settings } />
+							<div className="nfd-onboarding-header__version_dropdown-menu__customize-button__icon"></div>
 							{ __( 'Customize', 'wp-module-onboarding' ) }
 						</MenuItem>
 					</>
