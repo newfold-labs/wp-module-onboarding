@@ -3,7 +3,7 @@
  */
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { partial, find } from 'lodash';
+import { find } from 'lodash';
 
 /**
  * WordPress dependencies
