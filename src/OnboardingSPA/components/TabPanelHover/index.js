@@ -8,7 +8,7 @@ import { partial, find } from 'lodash';
 /**
  * WordPress dependencies
  */
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useCallback } from '@wordpress/element';
 import { useInstanceId } from '@wordpress/compose';
 
 /**
@@ -19,18 +19,42 @@ import { Button } from '@wordpress/components';
 
 const noop = () => {};
 
-const TabButton = ( { tabId, onClick, children, selected, ...rest } ) => (
-	<Button
-		role="tab"
-		tabIndex={ selected ? null : -1 }
-		aria-selected={ selected }
-		id={ tabId }
-		onClick={ onClick }
-		{ ...rest }
-	>
-		{ children }
-	</Button>
-);
+const TabButton = ( {
+	tabId,
+	onClick,
+	children,
+	selected,
+	triggerEvent,
+	handleEvent,
+	tabName,
+	...rest
+} ) => {
+	const eventProps = useEventTrigger( triggerEvent, handleEvent, tabName );
+
+	return (
+		<Button
+			role="tab"
+			tabIndex={ selected ? null : -1 }
+			aria-selected={ selected }
+			id={ tabId }
+			{ ...eventProps }
+			{ ...rest }
+		>
+			{ children }
+		</Button>
+	);
+};
+
+const useEventTrigger = ( triggerEvent, handleEvent, tabName ) => {
+	const eventHandler = useCallback(
+		() => handleEvent( tabName ),
+		[ handleEvent, tabName ]
+	);
+
+	return triggerEvent === 'click'
+		? { onClick: eventHandler }
+		: { onMouseOver: eventHandler };
+};
 
 export default function TabPanelHover( {
 	className,
@@ -88,14 +112,9 @@ export default function TabPanelHover( {
 						aria-controls={ `${ instanceId }-${ tab.name }-view` }
 						selected={ tab.name === selected }
 						key={ tab.name }
-						{ ...( triggerEvent === 'click'
-							? { onClick: partial( handleEvent, tab.name ) }
-							: {
-								onMouseOver: partial(
-									handleEvent,
-									tab.name
-								),
-							} ) }
+						triggerEvent={ triggerEvent }
+						handleEvent={ handleEvent }
+						tabName={ tab.name }
 					>
 						{ tab.title }
 					</TabButton>
