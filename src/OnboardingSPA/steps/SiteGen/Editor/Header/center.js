@@ -1,10 +1,119 @@
 import { Icon, chevronDown, reusableBlock } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { useViewportMatch } from '@wordpress/compose';
-import { useRef } from '@wordpress/element';
+import { useRef, memo } from '@wordpress/element';
 import { ReactComponent as FavoriteIconStroked } from '../../../../static/icons/sitegen/heart-stroked.svg';
 import { ReactComponent as FavoriteFilled } from '../../../../static/icons/sitegen/heart-filled.svg';
 import { Dropdown, MenuGroup, MenuItem } from '@wordpress/components';
+
+const DropDownMenu = memo(
+	( {
+		onRegenerate,
+		onCustomize,
+		onRenameItemSelect,
+		onViewAll,
+		isLargeViewport,
+	} ) => {
+		return (
+			<MenuGroup className="nfd-onboarding-header__version_dropdown-menu">
+				{ ! isLargeViewport && (
+					<>
+						<MenuItem onClick={ onRegenerate }>
+							<Icon icon={ reusableBlock } />
+							{ __( 'Regenerate', 'wp-module-onboarding' ) }
+						</MenuItem>
+						<MenuItem onClick={ onCustomize }>
+							<div className="nfd-onboarding-header__version_dropdown-menu__customize-button__icon"></div>
+							{ __( 'Customize', 'wp-module-onboarding' ) }
+						</MenuItem>
+					</>
+				) }
+
+				<MenuItem onClick={ onRenameItemSelect }>
+					{ __( 'Rename', 'wp-module-onboarding' ) }
+				</MenuItem>
+				<MenuItem onClick={ onViewAll }>
+					{ __( 'View All', 'wp-module-onboarding' ) }
+				</MenuItem>
+			</MenuGroup>
+		);
+	}
+);
+
+const TitleContent = memo(
+	( {
+		isFavorite,
+		isRenaming,
+		homepageTitle,
+		onFavorite,
+		onRename,
+		onTitleInputBlur,
+		inputRef,
+		onRegenerate,
+		onCustomize,
+		onRenameItemSelect,
+		onViewAll,
+		isLargeViewport,
+	} ) => {
+		return (
+			<Dropdown
+				renderToggle={ ( { isOpen, onToggle } ) => (
+					<div
+						role="button"
+						tabIndex="0"
+						aria-expanded={ isOpen }
+						aria-label={ __(
+							'Regenerate',
+							'wp-module-onboarding'
+						) }
+						className="navigation-buttons-editor"
+					>
+						<div
+							className="navigation-buttons-editor__favorite"
+							role="button"
+							tabIndex={ 0 }
+							onKeyDown={ onFavorite }
+							onClick={ onFavorite }
+						>
+							{ isFavorite ? (
+								<FavoriteFilled />
+							) : (
+								<FavoriteIconStroked />
+							) }
+						</div>
+						<input
+							ref={ inputRef }
+							className="nfd-onboarding-header__center-input"
+							disabled={ ! isRenaming }
+							type="text"
+							value={ homepageTitle }
+							onBlur={ onTitleInputBlur }
+							onChange={ onRename }
+						/>
+						<Icon
+							icon={ chevronDown }
+							onClick={ onToggle }
+							onKeyDown={ ( event ) => {
+								if ( event.key === 'Enter' ) {
+									onToggle();
+								}
+							} }
+						/>
+					</div>
+				) }
+				renderContent={ () => (
+					<DropDownMenu
+						onRegenerate={ onRegenerate }
+						onCustomize={ onCustomize }
+						onRenameItemSelect={ onRenameItemSelect }
+						onViewAll={ onViewAll }
+						isLargeViewport={ isLargeViewport }
+					/>
+				) }
+			/>
+		);
+	}
+);
 
 const StepEditorHeaderCenter = ( {
 	handleFavorite,
@@ -67,87 +176,22 @@ const StepEditorHeaderCenter = ( {
 		inputRef.current.focus();
 	}
 
-	const DropDownMenu = () => {
-		return (
-			<MenuGroup className="nfd-onboarding-header__version_dropdown-menu">
-				{ ! isLargeViewport && (
-					<>
-						<MenuItem onClick={ onRegenerate }>
-							<Icon icon={ reusableBlock } />
-							{ __( 'Regenerate', 'wp-module-onboarding' ) }
-						</MenuItem>
-						<MenuItem onClick={ onCustomize }>
-							<div className="nfd-onboarding-header__version_dropdown-menu__customize-button__icon"></div>
-							{ __( 'Customize', 'wp-module-onboarding' ) }
-						</MenuItem>
-					</>
-				) }
-
-				<MenuItem onClick={ onRenameItemSelect }>
-					{ __( 'Rename', 'wp-module-onboarding' ) }
-				</MenuItem>
-				<MenuItem onClick={ onViewAll }>
-					{ __( 'View All', 'wp-module-onboarding' ) }
-				</MenuItem>
-			</MenuGroup>
-		);
-	};
-
-	const TitleContent = () => {
-		return (
-			<Dropdown
-				renderToggle={ ( { isOpen, onToggle } ) => (
-					<div
-						role="button"
-						tabIndex="0"
-						aria-expanded={ isOpen }
-						aria-label={ __(
-							'Regenerate',
-							'wp-module-onboarding'
-						) }
-						className="navigation-buttons-editor"
-					>
-						<div
-							className="navigation-buttons-editor__favorite"
-							role="button"
-							tabIndex={ 0 }
-							onKeyDown={ onFavorite }
-							onClick={ onFavorite }
-						>
-							{ isFavorite ? (
-								<FavoriteFilled />
-							) : (
-								<FavoriteIconStroked />
-							) }
-						</div>
-						<input
-							ref={ inputRef }
-							className="nfd-onboarding-header__center-input"
-							disabled={ ! isRenaming }
-							type="text"
-							value={ homepageTitle }
-							onBlur={ onTitleInputBlur }
-							onChange={ onRename }
-						/>
-						<Icon
-							icon={ chevronDown }
-							onClick={ onToggle }
-							onKeyDown={ ( event ) => {
-								if ( event.key === 'Enter' ) {
-									onToggle();
-								}
-							} }
-						/>
-					</div>
-				) }
-				renderContent={ DropDownMenu }
-			/>
-		);
-	};
-
 	return (
 		<div className="nfd-onboarding-header__step-navigation">
-			<TitleContent />
+			<TitleContent
+				isFavorite={ isFavorite }
+				isRenaming={ isRenaming }
+				homepageTitle={ homepageTitle }
+				onFavorite={ onFavorite }
+				onRename={ onRename }
+				onTitleInputBlur={ onTitleInputBlur }
+				inputRef={ inputRef }
+				onRegenerate={ onRegenerate }
+				onCustomize={ onCustomize }
+				onRenameItemSelect={ onRenameItemSelect }
+				onViewAll={ onViewAll }
+				isLargeViewport={ isLargeViewport }
+			/>
 		</div>
 	);
 };
