@@ -8,12 +8,12 @@ import { store as nfdOnboardingStore } from '../../store';
 
 const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 	const navigate = useNavigate();
-	const { brandConfig, migrationUrl, currentData } = useSelect(
+	const { brandConfig, hireProUrl, currentData } = useSelect(
 		( select ) => {
 			return {
 				brandConfig:
 					select( nfdOnboardingStore ).getNewfoldBrandConfig(),
-				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+				hireProUrl: select( nfdOnboardingStore ).getfullServiceCreativeTeamUrl(),
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			};
@@ -57,8 +57,8 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 				return switchFlow( oldFlow );
 			case 'sitegen':
 				return switchFlow( SITEGEN_FLOW );
-			case 'migration':
-				return window.open( migrationUrl, '_blank' );
+			case 'hirepro':
+				return window.open( hireProUrl, '_blank' );
 		}
 	};
 	return (
