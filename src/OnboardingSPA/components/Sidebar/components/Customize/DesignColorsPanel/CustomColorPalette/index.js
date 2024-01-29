@@ -3,22 +3,14 @@ import { ColorPalette, Popover } from '@wordpress/components';
 import './stylesheet.scss';
 import { __ } from '@wordpress/i18n';
 
-const CustomColorPalette = ( {
-	onChange,
-	paletteSecondaryColors,
-	palettePrimaryColors,
-} ) => {
+const CustomColorPalette = ( { onChange, palettePrimaryColors } ) => {
 	const [ color, setColor ] = useState( palettePrimaryColors[ 0 ].color );
 	const baseClassName =
 		'nfd-onboarding-sidebar--customize__custom-color-palette';
 	const colors = [
 		{
 			colors: palettePrimaryColors,
-			name: __( 'Primary colors', 'wp-module-onboarding' ),
-		},
-		{
-			colors: paletteSecondaryColors,
-			name: __( 'Secondary colors', 'wp-module-onboarding' ),
+			name: __( 'THEME', 'wp-module-onboarding' ),
 		},
 	];
 	const handleColorChange = ( newColor ) => {

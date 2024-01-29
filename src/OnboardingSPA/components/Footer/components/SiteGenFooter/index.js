@@ -15,13 +15,16 @@ import { stepSiteGenEditor } from '../../.././../steps/SiteGen/Editor/step';
 
 const SiteGenFooter = () => {
 	const isLargeViewport = useViewportMatch( 'small' );
-	const { footerNavEnabled, currentStep } = useSelect( ( select ) => {
-		return {
-			footerNavEnabled:
-				select( nfdOnboardingStore ).getFooterNavEnabled(),
-			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
-		};
-	} );
+	const { hideFooterNav, isFooterNavAllowed, currentStep } = useSelect(
+		( select ) => {
+			return {
+				hideFooterNav: select( nfdOnboardingStore ).getHideFooterNav(),
+				isFooterNavAllowed:
+					select( nfdOnboardingStore ).getIsFooterNavAllowed(),
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+			};
+		}
+	);
 
 	const isEditorStep = currentStep === stepSiteGenEditor;
 	return (
@@ -29,11 +32,11 @@ const SiteGenFooter = () => {
 			<Fill name={ `${ FOOTER_SITEGEN }/${ FOOTER_START }` }>
 				{ ! isEditorStep && <ToggleDarkMode /> }
 			</Fill>
-			{ ! isLargeViewport && (
+			{ ! isLargeViewport && hideFooterNav !== true && (
 				<Fill name={ `${ FOOTER_SITEGEN }/${ FOOTER_END }` }>
 					<NextButtonSiteGen
 						text={ __( 'Next', 'wp-module-onboarding' ) }
-						disabled={ ! footerNavEnabled }
+						disabled={ ! isFooterNavAllowed }
 					/>
 				</Fill>
 			) }

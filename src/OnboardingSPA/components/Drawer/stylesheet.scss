@@ -479,10 +479,6 @@
 				align-items: center;
 				justify-content: center;
 				border: 1px solid rgba(0, 0, 0, 0.3);
-
-				&--selected-border {
-					box-shadow: 0 0 5px 3px rgba(var(--nfd-onboarding-highlighted--rgb), 0.5);
-				}
 			}
 		}
 	}

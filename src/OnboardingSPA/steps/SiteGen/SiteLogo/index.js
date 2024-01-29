@@ -30,11 +30,12 @@ const SiteGenSiteLogo = () => {
 	}, [] );
 
 	const {
-		setFooterNavEnabled,
+		setIsFooterNavAllowed,
 		setIsHeaderEnabled,
 		setSidebarActiveView,
 		setHeaderActiveView,
 		setDrawerActiveView,
+		setHideFooterNav,
 		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
@@ -48,10 +49,11 @@ const SiteGenSiteLogo = () => {
 		};
 		setCurrentOnboardingData( currentDataCopy );
 		setSiteLogo( undefined );
-		setFooterNavEnabled( false );
+		setIsFooterNavAllowed( false );
 	};
 
 	useEffect( () => {
+		setHideFooterNav( false );
 		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
@@ -59,7 +61,7 @@ const SiteGenSiteLogo = () => {
 		if ( currentData.data.siteLogo?.id !== 0 ) {
 			return setSiteLogo( currentData.data.siteLogo );
 		}
-		setFooterNavEnabled( false );
+		setIsFooterNavAllowed( false );
 		getEditedEntityRecord( 'root', 'site' );
 	}, [] );
 
@@ -70,7 +72,7 @@ const SiteGenSiteLogo = () => {
 		currentDataCopy.data.siteLogo.fileName = siteLogoNew.fileName;
 		currentDataCopy.data.siteLogo.fileSize = siteLogoNew.fileSize;
 		setCurrentOnboardingData( currentDataCopy );
-		setFooterNavEnabled( siteLogoNew.id !== 0 );
+		setIsFooterNavAllowed( siteLogoNew.id !== 0 );
 		editEntityRecord( 'root', 'site', undefined, {
 			site_logo: siteLogoNew.id,
 		} );

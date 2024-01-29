@@ -20,17 +20,11 @@ const FontGroup = ( {
 			role="presentation"
 			onClick={ () => handleGroupSelect( group.id ) }
 		>
-			<Dashicon
-				className={ `${ baseClassName }__font-group__container__button__icon` }
-				icon={ 'yes-alt' }
-				size={ 30 }
-				style={ {
-					color:
-						selectedGroup === group.id
-							? 'var(--nfd-onboarding-sitegen-customize-icon-selected)'
-							: 'var(--nfd-onboarding-sitegen-customize-grey-1)',
-				} }
-			/>
+			<span
+				className={ `${ baseClassName }__font-group__container__button__icon${
+					selectedGroup === group.id ? ` selected` : ``
+				}` }
+			></span>
 			<div
 				className={ `${ baseClassName }__font-group__container__button__font-name__container` }
 			>
@@ -147,7 +141,9 @@ const CustomFontsDisplay = ( {
 			<h5 className={ `${ baseClassName }__heading` }>
 				<span>{ __( 'CUSTOM FONTS', 'wp-module-onboarding' ) }</span>
 			</h5>
-			<button onClick={ () => handleEditCustomFont() }>Edit fonts</button>
+			<button onClick={ () => handleEditCustomFont() }>
+				{ __( 'Edit fonts', 'wp-module-onboarding' ) }
+			</button>
 		</div>
 
 		<div className={ `${ baseClassName }__font-group__container` }>
@@ -192,15 +188,10 @@ const CustomFontsDisplay = ( {
 const DesignFontsPanel = ( {
 	baseClassName = 'nfd-onboarding-sidebar--customize__design-fonts-panel',
 } ) => {
-	const { customizeSidebarData } = useSelect( ( select ) => {
+	const { currentData, customizeSidebarData } = useSelect( ( select ) => {
 		return {
 			customizeSidebarData:
 				select( nfdOnboardingStore ).getCustomizeSidebarData(),
-		};
-	}, [] );
-
-	const { currentData } = useSelect( ( select ) => {
-		return {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
@@ -230,6 +221,11 @@ const DesignFontsPanel = ( {
 	const fontsContent = designStyles?.map( ( style ) => style.font_content );
 
 	const handleUpdatePreviewSettings = () => {
+		const slug = currentData.sitegen?.homepages?.active?.slug;
+		if ( ! slug ) {
+			return;
+		}
+
 		let headings;
 		let body;
 		if ( selectedGroup === 'custom' ) {
@@ -239,49 +235,46 @@ const DesignFontsPanel = ( {
 			headings = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].headings })`;
 			body = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].body })`;
 		}
-		const slug = currentData.sitegen?.homepages?.active?.slug;
 
-		if ( slug ) {
-			currentData.sitegen.homepages.data[ slug ] = {
-				...currentData.sitegen.homepages.data[ slug ],
-				styles: {
-					blocks: [
-						{
-							'core/heading': {
-								typography: {
-									fontFamily: headings,
-								},
-							},
-							'core/body': {
-								typography: {
-									fontFamily: body,
-								},
+		currentData.sitegen.homepages.data[ slug ] = {
+			...currentData.sitegen.homepages.data[ slug ],
+			styles: {
+				blocks: [
+					{
+						'core/heading': {
+							typography: {
+								fontFamily: headings,
 							},
 						},
-					],
-				},
-			};
-			currentData.sitegen.homepages.active = {
-				...currentData.sitegen.homepages.active,
-				styles: {
-					blocks: [
-						{
-							'core/heading': {
-								typography: {
-									fontFamily: headings,
-								},
-							},
-							'core/body': {
-								typography: {
-									fontFamily: body,
-								},
+						'core/body': {
+							typography: {
+								fontFamily: body,
 							},
 						},
-					],
-				},
-			};
-			setCurrentOnboardingData( currentData );
-		}
+					},
+				],
+			},
+		};
+		currentData.sitegen.homepages.active = {
+			...currentData.sitegen.homepages.active,
+			styles: {
+				blocks: [
+					{
+						'core/heading': {
+							typography: {
+								fontFamily: headings,
+							},
+						},
+						'core/body': {
+							typography: {
+								fontFamily: body,
+							},
+						},
+					},
+				],
+			},
+		};
+		setCurrentOnboardingData( currentData );
 	};
 
 	useEffect( () => {
