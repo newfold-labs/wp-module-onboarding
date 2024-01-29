@@ -30,6 +30,13 @@
 		.nfd-onboarding-header__version_dropdown-menu {
 			width: 240px;
 
+			&__customize-button__icon {
+				background-image: var(--sitegen-settings-dark);
+				height: 16px;
+				width: 16px;
+				margin-right: 8px;
+			}
+
 			.components-menu-item__button {
 
 				.components-menu-item__item {

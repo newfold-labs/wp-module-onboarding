@@ -286,11 +286,6 @@ const SitegenEditorPatternsSidebar = () => {
 														'wp-module-onboarding'
 													) }
 												</p>
-												<Button
-													className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__icon"
-													onClick={ closeSideBar }
-													icon={ closeSmall }
-												></Button>
 											</div>
 										),
 										content:
@@ -358,8 +353,15 @@ const SitegenEditorPatternsSidebar = () => {
 									},
 								] }
 								callback={ setActiveTab }
+								triggerEvent="click"
 							></TabPanelHover>
 						</div>
+
+						<Button
+							className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__icon"
+							onClick={ closeSideBar }
+							icon={ closeSmall }
+						></Button>
 					</PanelHeader>
 					{ activeTab &&
 						homepages &&
