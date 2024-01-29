@@ -4,8 +4,6 @@ import { PanelBody, PanelRow, Button, Dashicon } from '@wordpress/components';
 import './stylesheet.scss';
 import { store as nfdOnboardingStore } from '../../../../../store';
 import { __ } from '@wordpress/i18n';
-import { ReactComponent as RadioChecked } from '../../../../../static/icons/sitegen/radio-checked.svg';
-import { ReactComponent as RadioUnchecked } from '../../../../../static/icons/sitegen/radio-unchecked.svg';
 
 const FontGroup = ( {
 	baseClassName,
@@ -23,14 +21,10 @@ const FontGroup = ( {
 			onClick={ () => handleGroupSelect( group.id ) }
 		>
 			<span
-				className={ `${ baseClassName }__font-group__container__button__icon` }
-			>
-				{ selectedGroup === group.id ? (
-					<RadioChecked />
-				) : (
-					<RadioUnchecked />
-				) }
-			</span>
+				className={ `${ baseClassName }__font-group__container__button__icon${
+					selectedGroup === group.id ? ` selected` : ``
+				}` }
+			></span>
 			<div
 				className={ `${ baseClassName }__font-group__container__button__font-name__container` }
 			>
