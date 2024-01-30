@@ -172,10 +172,16 @@ const SiteGenPreview = () => {
 			const data = homepages[ slug ];
 			const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
 			newPreviewSettings.settings.color.palette = data.color.palette;
+			let blockGrammar = '';
+			[ 'header', 'content', 'footer' ].forEach( ( part ) => {
+				if ( part in data ) {
+					blockGrammar += data[ part ];
+				}
+			} );
 			return (
 				<SiteGenPreviewSelectableCard
 					key={ idx }
-					blockGrammar={ data.content }
+					blockGrammar={ blockGrammar }
 					previewSettings={ newPreviewSettings }
 					slug={ slug }
 					title={ data.title }
