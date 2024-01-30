@@ -1,7 +1,7 @@
 import { Icon, chevronDown, reusableBlock } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { useViewportMatch } from '@wordpress/compose';
-import { useRef, memo } from '@wordpress/element';
+import { useRef, useState, useEffect, memo } from '@wordpress/element';
 import { ReactComponent as FavoriteIconStroked } from '../../../../static/icons/sitegen/heart-stroked.svg';
 import { ReactComponent as FavoriteFilled } from '../../../../static/icons/sitegen/heart-filled.svg';
 import { Dropdown, MenuGroup, MenuItem } from '@wordpress/components';
@@ -43,18 +43,36 @@ const DropDownMenu = memo(
 const TitleContent = memo(
 	( {
 		isFavorite,
-		isRenaming,
 		homepageTitle,
 		onFavorite,
 		onRename,
-		onTitleInputBlur,
 		inputRef,
 		onRegenerate,
 		onCustomize,
 		onRenameItemSelect,
 		onViewAll,
 		isLargeViewport,
+		isInputEnabled,
+		enableInput,
 	} ) => {
+		const [ renameInputValue, setRenameInputValue ] =
+			useState( homepageTitle );
+
+		const handleOnChange = () => {
+			setRenameInputValue( inputRef.current.value );
+		};
+
+		const onTitleInputBlur = () => {
+			onRename();
+			enableInput( false );
+		};
+
+		useEffect( () => {
+			if ( isInputEnabled ) {
+				inputRef.current?.focus();
+			}
+		}, [ isInputEnabled, inputRef ] );
+
 		return (
 			<Dropdown
 				renderToggle={ ( { isOpen, onToggle } ) => (
@@ -83,12 +101,12 @@ const TitleContent = memo(
 						</div>
 						<input
 							ref={ inputRef }
+							disabled={ ! isInputEnabled }
 							className="nfd-onboarding-header__center-input"
-							disabled={ ! isRenaming }
 							type="text"
-							value={ homepageTitle }
+							value={ renameInputValue }
 							onBlur={ onTitleInputBlur }
-							onChange={ onRename }
+							onChange={ handleOnChange }
 						/>
 						<Icon
 							icon={ chevronDown }
@@ -121,13 +139,18 @@ const StepEditorHeaderCenter = ( {
 	handleViewAll,
 	handleRegenerate,
 	handleCustomize,
-	handleIsRenaming,
-	isRenaming,
 	homepageTitle,
 	isFavorite,
 } ) => {
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const inputRef = useRef( null );
+	const [ isInputEnabled, setInputEnabled ] = useState( false );
+	const enableInput = ( isEnabled ) => {
+		setInputEnabled( isEnabled );
+		if ( isEnabled ) {
+			inputRef.current?.focus();
+		}
+	};
 
 	const onRegenerate = () => {
 		if ( typeof handleRegenerate === 'function' ) {
@@ -154,10 +177,7 @@ const StepEditorHeaderCenter = ( {
 	};
 
 	const onRenameItemSelect = () => {
-		if ( typeof handleIsRenaming === 'function' ) {
-			handleIsRenaming( true );
-			return inputRef.current.focus();
-		}
+		enableInput( true );
 	};
 
 	const onRename = () => {
@@ -166,31 +186,21 @@ const StepEditorHeaderCenter = ( {
 		}
 	};
 
-	const onTitleInputBlur = () => {
-		if ( typeof handleIsRenaming === 'function' ) {
-			return handleIsRenaming( false );
-		}
-	};
-
-	if ( isRenaming ) {
-		inputRef.current.focus();
-	}
-
 	return (
 		<div className="nfd-onboarding-header__step-navigation">
 			<TitleContent
 				isFavorite={ isFavorite }
-				isRenaming={ isRenaming }
 				homepageTitle={ homepageTitle }
 				onFavorite={ onFavorite }
 				onRename={ onRename }
-				onTitleInputBlur={ onTitleInputBlur }
 				inputRef={ inputRef }
 				onRegenerate={ onRegenerate }
 				onCustomize={ onCustomize }
 				onRenameItemSelect={ onRenameItemSelect }
 				onViewAll={ onViewAll }
 				isLargeViewport={ isLargeViewport }
+				isInputEnabled={ isInputEnabled }
+				enableInput={ enableInput }
 			/>
 		</div>
 	);
