@@ -78,6 +78,7 @@ const SiteGen = () => {
 						performSiteGenMetaGeneration(
 							siteInfo,
 							identifier,
+							skipCache,
 							retryCount + 1
 						);
 					}
