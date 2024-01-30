@@ -192,6 +192,10 @@ class SitePagesController {
 
 		foreach ( $site_pages as $key => $site_page ) {
 
+			$page_data = $this->publish_page( $key, $site_page['content'], false );
+			if ( is_wp_error( $page_data ) ) {
+				return $page_data;
+			}
 		}
 
 		return true;
