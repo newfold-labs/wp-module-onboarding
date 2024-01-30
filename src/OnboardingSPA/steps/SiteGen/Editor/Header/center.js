@@ -73,6 +73,10 @@ const TitleContent = memo(
 			}
 		}, [ isInputEnabled, inputRef ] );
 
+		useEffect( () => {
+			setRenameInputValue( homepageTitle );
+		}, [ homepageTitle ] );
+
 		return (
 			<Dropdown
 				renderToggle={ ( { isOpen, onToggle } ) => (
