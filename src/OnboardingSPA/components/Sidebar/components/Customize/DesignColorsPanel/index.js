@@ -29,7 +29,7 @@ const DesignColorsPanel = forwardRef(
 			}
 			const slug = currentData.sitegen?.homepages?.active?.slug;
 			if ( slug ) {
-				const defaultDataToReset = defaultGlobalData[slug];
+				const defaultDataToReset = defaultGlobalData[ slug ];
 
 				if ( defaultDataToReset ) {
 					const updatedData = {
@@ -110,13 +110,12 @@ const DesignColorsPanel = forwardRef(
 		const [ showColorPicker, setShowColorPicker ] = useState( false );
 		const customPaletteId = colors.length - 1;
 
-    const handleApplyCustomColors = () => {
-      setSelectedCustomColors( true );
-      setIsEditingCustomColors( false );
-      setSelectedPalette( customPaletteId );
-      colors[ selectedPalette ] = selectedColor;
-    };
-
+		const handleApplyCustomColors = () => {
+			setSelectedCustomColors( true );
+			setIsEditingCustomColors( false );
+			setSelectedPalette( customPaletteId );
+			colors[ selectedPalette ] = selectedColor;
+		};
 
 		const handleEditCustomColors = () => {
 			setSelectedPalette( customPaletteId );
@@ -270,17 +269,15 @@ const DesignColorsPanel = forwardRef(
 						</Button>
 					</div>
 
-
-          { showColorPicker && (
-            <CustomColorPalette
-              onChange={ handleColorPicker }
-              palettePrimaryColors={ palettePrimaryColors }
-            />
-          ) }
-        </div>
-      );
-    };
-
+					{ showColorPicker && (
+						<CustomColorPalette
+							onChange={ handleColorPicker }
+							palettePrimaryColors={ palettePrimaryColors }
+						/>
+					) }
+				</div>
+			);
+		};
 
 		const handlePickYourOwnColors = () => {
 			setSelectedPalette( customPaletteId );
@@ -314,25 +311,29 @@ const DesignColorsPanel = forwardRef(
 							<div
 								className={ `${ baseClassName }__container__color__palette__icon` }
 							>
-                { colors.map( ( elem, idx ) => (
-                  <ColorPaletteIcon
-                    key={ idx }
-                    idx={ idx }
-                    label={
-                      idx === 0
-                        ? __(
-                          'Default',
-                          'wp-module-onboarding'
-                        )
-                        : ''
-                    }
-                    selectedPalette={ selectedPalette }
-                    setSelectedPalette={ setSelectedPalette }
-                    setSelectedColor={ setSelectedColor }
-                    colors={ colors }
-                    setShowCustomColors={ setShowCustomColors }
-                  />
-                ) ) }
+								{ colors.map( ( elem, idx ) => (
+									<ColorPaletteIcon
+										key={ idx }
+										idx={ idx }
+										label={
+											idx === 0
+												? __(
+														'Default',
+														'wp-module-onboarding'
+												  )
+												: ''
+										}
+										selectedPalette={ selectedPalette }
+										setSelectedPalette={
+											setSelectedPalette
+										}
+										setSelectedColor={ setSelectedColor }
+										colors={ colors }
+										setShowCustomColors={
+											setShowCustomColors
+										}
+									/>
+								) ) }
 							</div>
 						</div>
 					</div>
