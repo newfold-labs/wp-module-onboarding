@@ -65,10 +65,11 @@ const SiteGen = () => {
 	async function performSiteGenMetaGeneration(
 		siteInfo,
 		identifier,
+		skipCache,
 		retryCount = 1
 	) {
 		return new Promise( () =>
-			generateSiteGenMeta( siteInfo, identifier )
+			generateSiteGenMeta( siteInfo, identifier, skipCache )
 				.then( ( data ) => {
 					if ( data.body !== null ) {
 						currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
@@ -115,9 +116,11 @@ const SiteGen = () => {
 			site_description: currentData.sitegen?.siteDetails?.prompt,
 		};
 
+		const skipCache = currentData.sitegen?.skipCache;
+
 		// Iterate over Identifiers and fire Requests!
 		identifiers.forEach( ( identifier ) => {
-			performSiteGenMetaGeneration( siteInfo, identifier );
+			performSiteGenMetaGeneration( siteInfo, identifier, skipCache );
 		} );
 	}
 
