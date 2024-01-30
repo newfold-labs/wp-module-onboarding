@@ -213,9 +213,14 @@ const SitegenEditorPatternsSidebar = () => {
 													newPreviewSettings.settings.color.palette =
 														data.color.palette;
 													let blockGrammar = '';
-													[ 'header', 'content', 'footer' ].forEach( ( part ) => {
+													[
+														'header',
+														'content',
+														'footer',
+													].forEach( ( part ) => {
 														if ( part in data ) {
-															blockGrammar += data[ part ];
+															blockGrammar +=
+																data[ part ];
 														}
 													} );
 													return (
