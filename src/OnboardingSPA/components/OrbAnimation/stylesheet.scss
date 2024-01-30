@@ -108,7 +108,7 @@
 		transition: all 0.3s ease-in;
 
 		&--bg {
-			box-shadow: 0 0 80px 10px var(--wnd-ai-logo-glow-color), 0 0 20px 0px var(--wnd-ai-logo-glow-color);
+			box-shadow: 0 0 80px 10px var(--wnd-ai-logo-glow-color), 0 0 20px 0 var(--wnd-ai-logo-glow-color);
 			opacity: var(--wnd-ai-logo-glow-opacity);
 			background: var(--wnd-ai-logo-glow-color);
 			border: none;
