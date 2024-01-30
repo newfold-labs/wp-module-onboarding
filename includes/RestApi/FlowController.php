@@ -137,6 +137,18 @@ class FlowController {
 	public function complete( $request ) {
 		$flow = $request->get_param( 'flow' );
 		if ( 'sitegen' === $flow ) {
+
+			// Publish Site Pages before saving Child Theme.
+			$sitegen_site_pages_request  = new \WP_REST_Request(
+				'POST',
+				'/newfold-onboarding/v1/site-pages/sitegen-publish'
+			);
+			$sitegen_site_pages_request = \rest_do_request( $sitegen_site_pages_request );
+			if ( $sitegen_site_pages_request->is_error() ) {
+				return $sitegen_site_pages_request->as_error();
+			}
+
+			// Generate Child Theme
 			$flow_data_option = \get_option( Options::get_option_name( 'flow' ), false );
 			if ( false === $flow_data_option || ! isset( $flow_data_option['data'] ) ) {
 				return new \WP_Error(

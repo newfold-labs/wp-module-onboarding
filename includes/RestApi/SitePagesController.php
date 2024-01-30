@@ -40,6 +40,16 @@ class SitePagesController {
 				'permission_callback' => array( Permissions::class, 'custom_post_authorized_admin' ),
 			)
 		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/sitegen-publish',
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'publish_sitegen_site_pages' ),
+				'permission_callback' => array( Permissions::class, 'custom_post_authorized_admin' ),
+			)
+		);
 	}
 
 	/**
@@ -149,6 +159,16 @@ class SitePagesController {
 			}
 		}
 		return true;
+	}
+
+
+	/**
+	 * Publishes all the Site Pages for Sitegen Pages
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function publish_sitegen_site_pages() {
+		// Make an AI Call, Iterate over it and publish all the pages that are returned.
 	}
 
 	/**
