@@ -29,9 +29,7 @@ const DesignColorsPanel = forwardRef(
 			}
 			const slug = currentData.sitegen?.homepages?.active?.slug;
 			if ( slug ) {
-				const defaultDataToReset = defaultGlobalData?.find(
-					( ele ) => ele.slug === slug
-				);
+				const defaultDataToReset = defaultGlobalData[slug];
 
 				if ( defaultDataToReset ) {
 					const updatedData = {
