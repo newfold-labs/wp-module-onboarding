@@ -5,6 +5,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Patterns;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\WonderBlocksService;
 
 /**
@@ -169,6 +170,31 @@ class SitePagesController {
 	 */
 	public function publish_sitegen_site_pages() {
 		// Make an AI Call, Iterate over it and publish all the pages that are returned.
+		$site_description = SiteGenService::get_prompt();
+		$site_info        = array( 'site_description' => $site_description );
+
+		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience' );
+		if ( is_wp_error( $target_audience ) ) {
+			return $target_audience;
+		}
+
+		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones' );
+		if ( is_wp_error( $content_style ) ) {
+			return $content_style;
+		}
+
+		$sitemap = SiteGenService::instantiate_site_meta( $site_info, 'sitemap' );
+		if ( is_wp_error( $sitemap ) ) {
+			return $sitemap;
+		}
+
+		$site_pages = SiteGenService::generate_site_pages( $site_description, $content_style, $target_audience, $sitemap );
+
+		foreach ( $site_pages as $key => $site_page ) {
+
+		}
+
+		return true;
 	}
 
 	/**
