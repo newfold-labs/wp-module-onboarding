@@ -81,8 +81,8 @@
 	filter: blur(2px);
 }
 
-.wnd-ai-logo__spinner:after,
-.wnd-ai-logo__spinner:before {
+.wnd-ai-logo__spinner::after,
+.wnd-ai-logo__spinner::before {
 	content: "";
 	position: absolute;
 	top: 0;
