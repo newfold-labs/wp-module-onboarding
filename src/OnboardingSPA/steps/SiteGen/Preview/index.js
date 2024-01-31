@@ -62,8 +62,7 @@ const SiteGenPreview = () => {
 		}
 
 		const response = await getHomepages(
-			currentData.sitegen.siteDetails.prompt,
-			false
+			currentData.sitegen.siteDetails.prompt
 		);
 
 		if ( response.error ) {
@@ -96,6 +95,7 @@ const SiteGenPreview = () => {
 			return false;
 		}
 		currentData.sitegen.homepages.active = homepages[ slug ];
+		currentData.sitegen.skipCache = false;
 		setCurrentOnboardingData( currentData );
 		navigate( nextStep.path );
 	};

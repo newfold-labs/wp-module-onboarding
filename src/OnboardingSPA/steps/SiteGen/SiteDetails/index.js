@@ -49,12 +49,13 @@ const SiteGenSiteDetails = () => {
 
 	useEffect( () => {
 		if (
-			currentData.sitegen.siteDetails.prompt !== undefined &&
-			customerInput !== undefined &&
+			customerInput !== '' &&
 			customerInput !== currentData.sitegen.siteDetails.prompt
 		) {
 			currentData.sitegen.siteDetails.prompt = customerInput?.trim();
 			currentData.sitegen.siteDetails.mode = 'simple';
+			currentData.sitegen.skipCache = true;
+			currentData.sitegen.sitemapPagesGenerated = false;
 			setCurrentOnboardingData( currentData );
 		}
 		setIsFooterNavAllowed( isValidInput );
