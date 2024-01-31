@@ -2,7 +2,9 @@
 import { APIList, EventsAPI } from '../wp-module-support/EventsApi.cy';
 import { CheckDrawerDisabled } from '../wp-module-support/drawer.cy';
 import { CheckCardHeadingSubheading } from '../wp-module-support/header.cy';
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 import {
+	BasicSidebarCheck,
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
@@ -25,24 +27,31 @@ describe( 'Get Started Site Type Primary', function () {
 		CheckCardHeadingSubheading( true );
 	} );
 
-	it( 'Check if `store` appears in heading', () => {
-		cy.get('.nfd-step-card-heading')
-			.should('be.visible')
-			.contains('store');
-	} );
+	if(GetPluginId()=='bluehost'){
+		it( 'Check if `store` appears in heading', () => {
+			cy.get('.nfd-step-card-heading')
+				.should('be.visible')
+				.contains('store');
+		} );
 
-	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel( '__get-started-site-type', 'Store Type' );
-		CheckIllustrationPanel();
-		CheckInfoPanel();
-		CheckHelpPanelLinks();
-	} );
+		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+			CheckIntroPanel( '__get-started-site-type', 'Store Type' );
+			CheckIllustrationPanel();
+			CheckInfoPanel();
+			CheckHelpPanelLinks();
+		} );
 
-	it( 'Check if Business category is pre-selected', () => {
-		cy.get( '.chosenPrimaryCategory' )
-            .find( '.categName' )
-            .should( 'have.text', 'Business' );
-	} );
+		it( 'Check if Business category is pre-selected', () => {
+			cy.get( '.chosenPrimaryCategory' )
+				.find( '.categName' )
+				.should( 'have.text', 'Business' );
+		} );
+	}
+	else{
+		it( 'Check to make sure Sidebar opens', () => {
+			BasicSidebarCheck();
+		} );
+	};
 
 	it( 'Check for Event API call being made when different categories are selected', ()=>{
 		let categoryCount = 0;

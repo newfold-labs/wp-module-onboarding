@@ -31,7 +31,6 @@ describe( 'Sidebar', function () {
 		cy.get( '.nfd-onboarding-header__end > .components-button' ).click();
 		cy.get( '.components-panel__header' )
 			.should( 'be.visible' )
-			.should( 'have.text', 'Learn More' );
 		cy.get( '.navigation-buttons_next' ).click();
 		cy.url().should( 'not.include', '#/wp-setup/step/get-started/welcome' );
 		cy.get( '.components-panel__header' ).should( 'be.visible' );

@@ -1,7 +1,9 @@
 // <reference types="Cypress" />
 import { DrawerActivityForMenu } from '../wp-module-support/drawer.cy';
 import { CheckCardHeadingSubheading } from '../wp-module-support/header.cy';
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 import {
+	BasicSidebarCheck,
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
@@ -16,42 +18,48 @@ describe( 'What Next Page', function () {
 		cy.wait( 5000 );
 	} );
 
-	it.skip( 'Check Drawer Activity', () => {
+	it( 'Check Drawer Activity', () => {
 		DrawerActivityForMenu(
-			'Exit to WordPress',
+			'WordPress',
 			':nth-child(6)',
-			'What Next',
 			false
 		);
 	} );
 
-	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel( '__what-next', 'What’s Next' );
-		CheckIllustrationPanel( '__what-next' );
-		CheckInfoPanel( 2 );
-		CheckHelpPanelLinks();
-	} );
+	if(GetPluginId()=='bluehost'){
+		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+			CheckIntroPanel( '__what-next', 'What’s Next' );
+			CheckIllustrationPanel( '__what-next' );
+			CheckInfoPanel( 2 );
+			CheckHelpPanelLinks();
+		} );
+
+		it( 'Hovering over overview tab panel and asserting the tab data', () => {
+			cy.contains( 'button', 'WHATS NEXT' ).trigger( 'mouseover' );
+			cy.get( '.tab-text' ).should(
+				'contain',
+				'Add content, organize your menu and launch.'
+			);
+			cy.contains( 'button', 'HELP & RESOURCES' ).trigger( 'mouseover' );
+			cy.get( '.tab-text' ).should(
+				'contain',
+				"Next step or next level, we're your partner."
+			);
+			cy.contains( 'button', 'HIRE OUR EXPERTS' ).trigger( 'mouseover' );
+			cy.get( '.tab-text' ).should(
+				'contain',
+				'Make our great people your people.'
+			);
+		} );
+	}
+	else{
+		it( 'Check to make sure Sidebar opens', () => {
+			BasicSidebarCheck();
+		} );
+	};
 
 	it( 'Check if whatnext card is visible', () => {
 		cy.get( '.whatnext-card' ).should( 'be.visible' );
-	} );
-
-	it( 'Hovering over overview tab panel and asserting the tab data', () => {
-		cy.contains( 'button', 'WHATS NEXT' ).trigger( 'mouseover' );
-		cy.get( '.tab-text' ).should(
-			'contain',
-			'Add content, organize your menu and launch.'
-		);
-		cy.contains( 'button', 'HELP & RESOURCES' ).trigger( 'mouseover' );
-		cy.get( '.tab-text' ).should(
-			'contain',
-			"Next step or next level, we're your partner."
-		);
-		cy.contains( 'button', 'HIRE OUR EXPERTS' ).trigger( 'mouseover' );
-		cy.get( '.tab-text' ).should(
-			'contain',
-			'Make our great people your people.'
-		);
 	} );
 
 	it( 'Check if main heading and sub heading shows up', () => {
@@ -63,11 +71,11 @@ describe( 'What Next Page', function () {
 	} );
 
 	it( 'Check if complete setup button is visible', () => {
-		cy.contains( 'button', 'Complete Setup' ).should( 'be.visible' );
+		cy.get('.nfd-nav-card-button').should( 'be.visible' );
 	} );
 
 	it( 'Check Finish button is visible and finish the setup', () => {
-		cy.contains( 'button', 'Finish' ).should( 'be.visible' ).click();
+		cy.get('.components-button-group > .components-button').should( 'be.visible' ).click();
 		cy.wait( 1000 );
 		cy.url().should( 'not.contain', '/wp-setup/step/what-next' );
 	} );

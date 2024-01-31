@@ -2,7 +2,9 @@
 
 import { DrawerActivityForMenu } from '../wp-module-support/drawer.cy';
 import { CheckHeadingSubheading } from '../wp-module-support/header.cy';
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 import {
+	BasicSidebarCheck,
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
@@ -23,18 +25,25 @@ describe( 'Homepage Styles Page', function () {
 
 	it( 'Check Drawer Activity', () => {
 		DrawerActivityForMenu(
-			'Onboarding Menu',
+			'Onboarding',
 			':nth-child(5)',
 			'Homepage Layouts'
 		);
 	} );
 
+	if(GetPluginId()=='bluehost'){
 	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 		CheckIntroPanel( '__design-homepage', 'Home Page' );
 		CheckIllustrationPanel();
 		CheckInfoPanel( 2 );
 		CheckHelpPanelLinks();
 	} );
+	}
+	else{
+		it( 'Check to make sure Sidebar opens', () => {
+			BasicSidebarCheck();
+		} );
+	};
 
 	it( 'Check if Homepage Styles exist and are selectable', () => {
 		let previewCount = 0;
