@@ -32,7 +32,7 @@ const getContents = () => {
 					'Leave it to our WordPress experts.',
 					'wp-module-onboarding'
 				),
-				flow: 'migration',
+				flow: 'hirepro',
 			},
 		],
 

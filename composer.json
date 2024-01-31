@@ -37,7 +37,7 @@
 		"newfold-labs/wp-module-onboarding-data": "^0.1.0",
 		"newfold-labs/wp-module-patterns": "^0.1.12",
 		"newfold-labs/wp-module-install-checker": "^1.0",
-		"newfold-labs/wp-module-facebook": "1.0.0"
+		"newfold-labs/wp-module-facebook": "^1.0.2"
 	},
 	"require-dev": {
 		"wp-phpunit/wp-phpunit": "^6.2",

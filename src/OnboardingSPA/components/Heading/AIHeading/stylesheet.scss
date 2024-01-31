@@ -5,14 +5,8 @@
 	margin: 16px;
 	align-items: center;
 
-	&--icon {
-		width: 50px;
-		margin-right: 4px;
-		height: 50px;
-		background-size: 200%;
-		background-position: center;
-		background-repeat: no-repeat;
-		background-image: var(--sitegen-ai-animation);
+	.wnd-ai-logo {
+		margin-right: 5px;
 	}
 
 	&--title {

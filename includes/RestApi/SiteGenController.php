@@ -88,6 +88,17 @@ class SiteGenController {
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 			)
 		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/pages/sitemap',
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'publish_sitemap_pages' ),
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				'args'                => $this->get_publish_sitemap_pages_args(),
+			)
+		);
 	}
 
 	/**
@@ -113,11 +124,26 @@ class SiteGenController {
 	}
 
 	/**
-	 * Gets the arguments for the 'get-homepages' endpoint.
+	 * Gets the arguments for the homepages endpoint.
 	 *
 	 * @return array The array of arguments.
 	 */
 	public function get_homepages_args() {
+		return array(
+			'site_description' => array(
+				'required'          => true,
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+		);
+	}
+
+	/**
+	 * Gets the arguments for the '/pages/sitemap' endpoint.
+	 *
+	 * @return array The array of arguments.
+	 */
+	public function get_publish_sitemap_pages_args() {
 		return array(
 			'site_description' => array(
 				'required'          => true,
@@ -264,24 +290,50 @@ class SiteGenController {
 	}
 
 	/**
-	 * Generate Sitegen Site Details meta data.
+	 * Publish the pages in the sitemap.
 	 *
-	 * @param \WP_REST_Request $request Request model.
+	 * @param \WP_REST_Request $request The incoming request
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function publish_sitemap_pages( \WP_REST_Request $request ) {
+		$site_description = $request->get_param( 'site_description' );
+		$site_info        = array( 'site_description' => $site_description );
+
+		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience' );
+		if ( is_wp_error( $target_audience ) ) {
+			return $target_audience;
+		}
+
+		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones' );
+		if ( is_wp_error( $content_style ) ) {
+			return $content_style;
+		}
+
+		$sitemap = SiteGenService::instantiate_site_meta( $site_info, 'sitemap' );
+		if ( is_wp_error( $sitemap ) ) {
+			return $sitemap;
+		}
+
+		SiteGenService::publish_sitemap_pages( $site_description, $content_style, $target_audience, $sitemap );
+
+		return new \WP_REST_Response( array(), 201 );
+	}
+
+	/**
+	 * Generate Sitegen Site Details meta data.
 	 *
 	 * @return array|WP_Error
 	 */
-	public function get_site_details_meta( \WP_REST_Request $request ) {
+	public function get_site_details_meta() {
 		return SiteGenData::get_site_details_questionnaire();
 	}
 
 	/**
 	 * Get Sitegen Customize sidebar data.
 	 *
-	 * @param \WP_REST_Request $request Request model.
-	 *
 	 * @return array|WP_Error
 	 */
-	public function get_customize_sidebar_data( \WP_REST_Request $request ) {
+	public function get_customize_sidebar_data() {
 		return SiteGenService::get_customize_sidebar_data();
 	}
 }
