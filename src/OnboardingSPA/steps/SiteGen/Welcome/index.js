@@ -6,6 +6,7 @@ import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
 import getContents from './contents';
+import OrbAnimation from '../../../components/OrbAnimation';
 
 const SiteGenWelcome = () => {
 	const {
@@ -30,7 +31,9 @@ const SiteGenWelcome = () => {
 	return (
 		<CommonLayout className="nfd-onboarding-step--site-gen__welcome">
 			<div className="nfd-onboarding-step--site-gen__welcome__container">
-				<div className="nfd-onboarding-step--site-gen__welcome__container__animation"></div>
+				<div className="nfd-onboarding-step--site-gen__welcome__container__orb">
+					<OrbAnimation height={ `100px` } />
+				</div>
 				<div className="nfd-onboarding-step--site-gen__welcome__container__heading">
 					<div className="nfd-onboarding-step--site-gen__welcome__container__heading__image"></div>
 					<p className="nfd-onboarding-step--site-gen__welcome__container__heading__text">

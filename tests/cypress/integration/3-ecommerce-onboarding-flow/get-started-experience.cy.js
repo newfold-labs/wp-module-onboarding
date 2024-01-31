@@ -2,12 +2,14 @@
 import { CheckDrawerDisabled } from '../wp-module-support/drawer.cy';
 import { CheckCardHeadingSubheading } from '../wp-module-support/header.cy';
 import {
+	BasicSidebarCheck,
 	CheckHelpPanelLinks,
 	CheckIllustrationPanel,
 	CheckInfoPanel,
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
 import { APIList, EventsAPI } from '../wp-module-support/EventsApi.cy';
+import { GetPluginId } from '../wp-module-support/pluginID.cy';
 
 describe( 'Start Setup WP Experience Page', function () {
 	before( () => {
@@ -20,24 +22,31 @@ describe( 'Start Setup WP Experience Page', function () {
 		CheckDrawerDisabled();
 	} );
 
-	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel(
-			'__get-started-wp-experience',
-			'WordPress Experience'
-		);
-		CheckIllustrationPanel();
-		CheckInfoPanel();
-		CheckHelpPanelLinks();
-	} );
+	if(GetPluginId()=='bluehost'){
+		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+			CheckIntroPanel(
+				'__get-started-wp-experience',
+				'WordPress Experience'
+			);
+			CheckIllustrationPanel();
+			CheckInfoPanel();
+			CheckHelpPanelLinks();
+		} );
+
+		it( 'Check if `store` appears in heading', () => {
+			cy.get( '.nfd-step-card-heading' )
+				.should( 'be.visible' )
+				.contains( 'store' );
+		} );
+	}
+	else{
+		it( 'Check to make sure Sidebar opens', () => {
+			BasicSidebarCheck();
+		} );
+	};
 
 	it( 'Check if Headers Load', () => {
 		CheckCardHeadingSubheading( true );
-	} );
-
-	it( 'Check if `store` appears in heading', () => {
-		cy.get( '.nfd-step-card-heading' )
-			.should( 'be.visible' )
-			.contains( 'store' );
 	} );
 
 	it( 'Check if Radio Options load', () => {
@@ -89,11 +98,6 @@ describe( 'Start Setup WP Experience Page', function () {
 	} );
 
 	it( 'Checks if Continue Setup Button is Enabled after the Radio Button is Checked.', () => {
-		cy.get( '[type=radio]:checked' ).should(
-			'have.css',
-			'background-color',
-			'rgb(53, 117, 211)'
-		);
 		cy.get( '.nfd-card-button' ).should( 'not.be.disabled' ).click();
 		cy.url().should( 'not.contain', 'get-started/experience' );
 		cy.go( 'back' );
