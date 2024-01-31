@@ -63,7 +63,10 @@ const TitleContent = memo(
 		};
 
 		const onTitleInputBlur = () => {
-			onRename();
+			const newTitleValue = inputRef.current.value.trim();
+			if ( newTitleValue && newTitleValue !== homepageTitle ) {
+				onRename( newTitleValue );
+			}
 			enableInput( false );
 		};
 
@@ -184,9 +187,9 @@ const StepEditorHeaderCenter = ( {
 		enableInput( true );
 	};
 
-	const onRename = () => {
+	const onRename = ( newTitleValue ) => {
 		if ( typeof handleRename === 'function' ) {
-			handleRename( inputRef.current.value );
+			handleRename( newTitleValue );
 		}
 	};
 
