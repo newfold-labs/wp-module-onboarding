@@ -2,9 +2,9 @@ $background-color: var(--nfd-onboarding-card-background);
 
 .nfd-sg-loader {
 
-	margin: 8px;
+	margin-bottom: 8px;
 	max-width: 90vw;
-	padding: 16px 12px;
+	padding: 18px 12px 10px 12px;
 	border-radius: 12px;
 	background-color: $background-color;
 	width: clamp(18.75rem, 22.6136rem + 5.6818vw, 31.25rem);
@@ -16,16 +16,17 @@ $background-color: var(--nfd-onboarding-card-background);
 	}
 
 	&__title {
-		line-height: 2;
-		font-size: 18px;
+		line-height: 19px;
+		font-size: 16px;
 		text-align: center;
-		letter-spacing: 1.5px;
+		font-weight: 500;
 		color: var(--nfd-onboarding-primary);
+		letter-spacing: 1.5;
 	}
 
 	&__progress {
 		display: flex;
-		margin: 20px 60px;
+		margin: 17px 60px 04px 60px;
 		align-items: center;
 		justify-content: center;
 

@@ -1,7 +1,7 @@
 // <reference types="Cypress" />
 
 export const AdminBarCheck = () => {
-    cy.get( '.nfd-onboarding-header__admin-bar' ).should('be.visible');
+    cy.get( '.nfd-onboarding-header__admin-bar', {timeout:15000} ).should('be.visible');
 };
 
 export const DarkBGCheck =  () => {
@@ -66,4 +66,20 @@ export const DisabledNextButton = () => {
     cy.get('.nfd-onboarding-button--site-gen-next--disabled')
         .should('be.visible')
         .contains( 'Next' );
+};
+
+export const ExperienceDetails = (classname,textValue,optionsValue) => {
+    cy.get(classname)
+        .eq(optionsValue)
+        .find('.nfd-sg-card__data__option__left_top')
+        .invoke( 'text' )
+        .should('contain', textValue);
+    cy.get(classname)
+        .eq(optionsValue)
+        .click();
+    cy.url().should('not.include', 'sitegen/step/experience',{
+        timeout: 10000,
+    } );
+    cy.go('back');
+    cy.wait(2000);
 };

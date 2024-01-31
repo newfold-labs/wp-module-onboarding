@@ -62,8 +62,7 @@ const SiteGenPreview = () => {
 		}
 
 		const response = await getHomepages(
-			currentData.sitegen.siteDetails.prompt,
-			false
+			currentData.sitegen.siteDetails.prompt
 		);
 
 		if ( response.error ) {
@@ -96,6 +95,7 @@ const SiteGenPreview = () => {
 			return false;
 		}
 		currentData.sitegen.homepages.active = homepages[ slug ];
+		currentData.sitegen.skipCache = false;
 		setCurrentOnboardingData( currentData );
 		navigate( nextStep.path );
 	};
@@ -172,10 +172,16 @@ const SiteGenPreview = () => {
 			const data = homepages[ slug ];
 			const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
 			newPreviewSettings.settings.color.palette = data.color.palette;
+			let blockGrammar = '';
+			[ 'header', 'content', 'footer' ].forEach( ( part ) => {
+				if ( part in data ) {
+					blockGrammar += data[ part ];
+				}
+			} );
 			return (
 				<SiteGenPreviewSelectableCard
 					key={ idx }
-					blockGrammar={ data.content }
+					blockGrammar={ blockGrammar }
 					previewSettings={ newPreviewSettings }
 					slug={ slug }
 					title={ data.title }

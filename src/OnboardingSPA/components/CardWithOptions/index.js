@@ -21,24 +21,28 @@ const CardWithOptions = ( { title, options, skip, callback } ) => {
 						}
 					} }
 				>
-					<div className={ 'nfd-sg-card__data__option__left' }>
-						<div
-							className={ 'nfd-sg-card__data__option__left_top' }
-						>
-							{ data.title }
+					<div className={ 'nfd-sg-card__data__option__wrapper' }>
+						<div className={ 'nfd-sg-card__data__option__left' }>
+							<div
+								className={
+									'nfd-sg-card__data__option__left_top'
+								}
+							>
+								{ data.title }
+							</div>
+							<div
+								className={
+									'nfd-sg-card__data__option__left_bottom'
+								}
+							>
+								{ data.desc }
+							</div>
 						</div>
-						<div
-							className={
-								'nfd-sg-card__data__option__left_bottom'
-							}
-						>
-							{ data.desc }
-						</div>
+						<Icon
+							className={ 'nfd-sg-card__data__option__right' }
+							icon={ chevronRight }
+						/>
 					</div>
-					<Icon
-						className={ 'nfd-sg-card__data__option__right' }
-						icon={ chevronRight }
-					/>
 				</div>
 			);
 		} );
