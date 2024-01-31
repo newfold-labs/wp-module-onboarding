@@ -11,6 +11,7 @@ import { getGlobalStyles } from '../../../utils/api/themes';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { cloneDeep } from 'lodash';
+import { publishSitemapPages } from '../../../utils/api/siteGen';
 
 const StepSiteGenEditor = () => {
 	const [ homepage, setHomepage ] = useState( false );
@@ -20,6 +21,7 @@ const StepSiteGenEditor = () => {
 		setHeaderActiveView,
 		setDrawerActiveView,
 		setHideFooterNav,
+		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData } = useSelect( ( select ) => {
@@ -28,6 +30,18 @@ const StepSiteGenEditor = () => {
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	} );
+
+	const handleSitemapPagesGeneration = async () => {
+		if ( false === currentData?.sitegen?.sitemapPagesGenerated ) {
+			const sitemapPagesPublished = await publishSitemapPages(
+				currentData.sitegen.siteDetails.prompt
+			);
+			if ( ! sitemapPagesPublished.error ) {
+				currentData.sitegen.sitemapPagesGenerated = true;
+				setCurrentOnboardingData( currentData );
+			}
+		}
+	};
 
 	const loadData = async () => {
 		setHideFooterNav( true );
@@ -45,6 +59,7 @@ const StepSiteGenEditor = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		loadData();
+		handleSitemapPagesGeneration();
 	}, [] );
 
 	useEffect( () => {
@@ -81,9 +96,16 @@ const StepSiteGenEditor = () => {
 				populateFontsInPreviewSettings( newPreviewSettings );
 		}
 
+		let blockGrammar = '';
+		[ 'header', 'content', 'footer' ].forEach( ( part ) => {
+			if ( part in homepage ) {
+				blockGrammar += homepage[ part ];
+			}
+		} );
+
 		return (
 			<LivePreview
-				blockGrammer={ homepage.content }
+				blockGrammer={ blockGrammar }
 				styling={ 'custom' }
 				previewSettings={ newPreviewSettings }
 				viewportWidth={ 1300 }

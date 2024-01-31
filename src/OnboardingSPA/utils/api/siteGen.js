@@ -76,3 +76,15 @@ export async function getCustomizeSidebarData() {
 		} ).then()
 	);
 }
+
+export async function publishSitemapPages( siteDescription ) {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/pages/sitemap' ),
+			method: 'POST',
+			data: {
+				site_description: siteDescription,
+			},
+		} ).then()
+	);
+}
