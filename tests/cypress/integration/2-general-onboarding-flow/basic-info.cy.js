@@ -136,6 +136,7 @@ describe( 'Basic Info Page', function () {
 		if ( cy.get( socialTest3 , { timeout: customCommandTimeout} ).should( 'exist' ) ) {
 			cy.get( socialTest3 ).clear({ force: true });
 			cy.get( socialTest3 ).type( sampleID );
+			cy.wait(200);
 			cy.get( '#facebook' ).focus();
 			cy.get( socialTest3 )
 				.invoke( 'val' )
@@ -165,7 +166,9 @@ describe( 'Basic Info Page', function () {
 
 			socialTest2.focus();
 			socialTest.type( invalidURL );
+			cy.wait(200);
 			socialTest2.focus();
+			cy.wait(200);
 			if(GetPluginId()!='hostgator'){
 				cy.get( '.Tooltip-Wrapper', { timeout: 3000 } ).should( 'exist' );
 				cy.get( '.Tooltip-Tip', { timeout: 3000 } )
@@ -177,16 +180,18 @@ describe( 'Basic Info Page', function () {
 					'have.text',
 					ModalText2
 				);
-				cy.get( '.components-modal__header button' , { timeout: customCommandTimeout } ).click()
-				cy.get(
-					'.browser-content_social_icon[style="background-image: var(--facebook-icon);"]'
-				).should( 'have.css', 'opacity', '0.75' );
 			}
 			else{
 				cy.get( '.Tooltip-Wrapper', { timeout: 3000 } ).should( 'exist' );
 				cy.get( '.Tooltip-Tip', { timeout: 3000 } )
 					.should( 'be.visible' );
 			};
+
+			cy.get( '.components-modal__header button' , { timeout: customCommandTimeout } ).click();
+			cy.wait(200);
+			cy.get(
+				'.browser-content_social_icon[style="background-image: var(--facebook-icon);"]'
+			).should( 'have.css', 'opacity', '0.75' );
 			// The URL Checker runs on a debounce
 			// Shows the message to the User in case of Invalid URL
 			
@@ -195,8 +200,10 @@ describe( 'Basic Info Page', function () {
 
 			socialTest.focus();
 			socialTest.clear();
+			cy.wait(200);
 			socialTest.type( validURL );
 			socialTest2.focus();
+			cy.wait(200);
 			cy.get( '.Tooltip-Wrapper', { timeout: 3000 } ).should(
 				'not.exist'
 			);
