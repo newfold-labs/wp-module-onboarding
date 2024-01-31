@@ -45,7 +45,7 @@
 
 	&__options {
 
-		@media (max-width: #{ ($break-xlarge) }) {
+		@media (max-width: #{ ($break-medium) }) {
 			flex-direction: column;
 		}
 
@@ -55,6 +55,8 @@
 		margin: 10px 10px 55px 10px;
 		flex-wrap: wrap;
 		max-width: 1440px;
+		align-items: center;
+		justify-content: center;
 	}
 
 	&__note {
