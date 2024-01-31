@@ -2,7 +2,7 @@
 import { forwardRef, useImperativeHandle } from 'react';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { PanelBody, PanelRow, Button, Dashicon } from '@wordpress/components';
+import { PanelBody, PanelRow, Button } from '@wordpress/components';
 import './stylesheet.scss';
 import { store as nfdOnboardingStore } from '../../../../../store';
 import { __ } from '@wordpress/i18n';
