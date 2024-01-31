@@ -22,8 +22,8 @@ import { StepErrorState } from '../../ErrorState';
 import getContents from './contents';
 import ExitToWordPress from '../../ExitToWordPress';
 
-const SitegenAiStateHandler = ( { children } ) => {
-	const [ isError, setisError ] = useState( false );
+const SitegenAiStateHandler = ( { children, isError = false } ) => {
+	
 
 	const handleRender = () => {
 		if ( isError ) {

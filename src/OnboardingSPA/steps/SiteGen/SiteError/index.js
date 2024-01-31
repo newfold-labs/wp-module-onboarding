@@ -1,17 +1,13 @@
 import { useViewportMatch } from '@wordpress/compose';
-import { useEffect, useState } from '@wordpress/element';
-import { useSelect, useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
-
+import { useEffect } from '@wordpress/element';
+import { useDispatch } from '@wordpress/data';
 import getContents from './contents';
-import { HEADER_SITEGEN } from '../../../../constants';
+import { HEADER_SITEGEN, pluginDashboardPage } from '../../../../constants';
 import SkipButton from '../../../components/SkipButton';
 import { store as nfdOnboardingStore } from '../../../store';
-import AIHeading from '../../../components/Heading/AIHeading';
 import CommonLayout from '../../../components/Layouts/Common';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
-import ImageUploaderWithText from '../../../components/ImageUploader/components/ImageUploaderWithText';
-import { Button } from '@wordpress/components';
+import OrbAnimation from '../../../components/OrbAnimation';
 
 const SiteGenSiteError = () => {
 	const {
@@ -37,7 +33,9 @@ const SiteGenSiteError = () => {
 	return (
 		<CommonLayout className="nfd-onboarding-step--site-gen__error">
 			<div className="nfd-onboarding-step--site-gen__error__container">
-				<div className="nfd-onboarding-step--site-gen__error__container__animation"></div>
+				<div className="nfd-onboarding-step--site-gen__error__container__orb">
+					<OrbAnimation height={ `100px` } />
+				</div>
 				<div className="nfd-onboarding-step--site-gen__error__container__heading">
 					<p className="nfd-onboarding-step--site-gen__error__container__heading__text">
 						{ content.heading }
@@ -51,7 +49,7 @@ const SiteGenSiteError = () => {
 						{ content.message }
 						<a
 							className="nfd-onboarding-step--site-gen__error__container__sub-heading__exit"
-							href="http://the.url.com/page.html">
+							href={ pluginDashboardPage }>
 							{ content.buttonExit }
 						</a>
 
