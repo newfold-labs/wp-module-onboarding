@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function () {
 	const homepages = window.nfdOnboarding.homepages.data;
 	const activeTheme = window.nfdOnboarding.active;
 	Object.keys( homepages ).forEach( ( slug ) => {
