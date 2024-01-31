@@ -81,9 +81,16 @@ const StepSiteGenEditor = () => {
 				populateFontsInPreviewSettings( newPreviewSettings );
 		}
 
+		let blockGrammar = '';
+		[ 'header', 'content', 'footer' ].forEach( ( part ) => {
+			if ( part in homepage ) {
+				blockGrammar += homepage[ part ];
+			}
+		} );
+
 		return (
 			<LivePreview
-				blockGrammer={ homepage.content }
+				blockGrammer={ blockGrammar }
 				styling={ 'custom' }
 				previewSettings={ newPreviewSettings }
 				viewportWidth={ 1300 }

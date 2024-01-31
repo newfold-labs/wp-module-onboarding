@@ -110,6 +110,12 @@ const SitegenEditorPatternsSidebar = () => {
 					const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
 					newPreviewSettings.settings.color.palette =
 						data.color.palette;
+					let blockGrammar = '';
+					[ 'header', 'content', 'footer' ].forEach( ( part ) => {
+						if ( part in data ) {
+							blockGrammar += data[ part ];
+						}
+					} );
 					return (
 						<div
 							className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container` }
@@ -128,7 +134,7 @@ const SitegenEditorPatternsSidebar = () => {
 											? 'custom'
 											: 'custom__highlighted'
 									}
-									blockGrammer={ data.content }
+									blockGrammer={ blockGrammar }
 									viewportWidth={ 1300 }
 									previewSettings={ newPreviewSettings }
 									skeletonLoadingTime={ 0 }
@@ -206,6 +212,17 @@ const SitegenEditorPatternsSidebar = () => {
 														);
 													newPreviewSettings.settings.color.palette =
 														data.color.palette;
+													let blockGrammar = '';
+													[
+														'header',
+														'content',
+														'footer',
+													].forEach( ( part ) => {
+														if ( part in data ) {
+															blockGrammar +=
+																data[ part ];
+														}
+													} );
 													return (
 														<div
 															className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container` }
@@ -231,7 +248,7 @@ const SitegenEditorPatternsSidebar = () => {
 																		: 'custom__highlighted'
 																}
 																blockGrammer={
-																	data.content
+																	blockGrammar
 																}
 																viewportWidth={
 																	1300
@@ -306,6 +323,17 @@ const SitegenEditorPatternsSidebar = () => {
 														);
 													newPreviewSettings.settings.color.palette =
 														data.color.palette;
+													let blockGrammar = '';
+													[
+														'header',
+														'content',
+														'footer',
+													].forEach( ( part ) => {
+														if ( part in data ) {
+															blockGrammar +=
+																data[ part ];
+														}
+													} );
 													return (
 														<div
 															key={ data.slug }
@@ -331,7 +359,7 @@ const SitegenEditorPatternsSidebar = () => {
 																		: 'custom__highlighted'
 																}
 																blockGrammer={
-																	data.content
+																	blockGrammar
 																}
 																viewportWidth={
 																	1300
