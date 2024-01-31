@@ -8,17 +8,15 @@ import { store as nfdOnboardingStore } from '../../store';
 
 const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 	const navigate = useNavigate();
-	const { brandConfig, hireProUrl, currentData } = useSelect(
-		( select ) => {
-			return {
-				brandConfig:
-					select( nfdOnboardingStore ).getNewfoldBrandConfig(),
-				hireProUrl: select( nfdOnboardingStore ).getfullServiceCreativeTeamUrl(),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			};
-		}
-	);
+	const { brandConfig, hireProUrl, currentData } = useSelect( ( select ) => {
+		return {
+			brandConfig: select( nfdOnboardingStore ).getNewfoldBrandConfig(),
+			hireProUrl:
+				select( nfdOnboardingStore ).getfullServiceCreativeTeamUrl(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+		};
+	} );
 	const {
 		updateAllSteps,
 		updateTopSteps,
