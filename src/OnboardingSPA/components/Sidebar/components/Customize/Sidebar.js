@@ -1,5 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { useRef } from 'react';
 import { Fill, PanelBody, PanelHeader, Button } from '@wordpress/components';
 import { Fragment, memo, Suspense } from '@wordpress/element';
 import { closeSmall } from '@wordpress/icons';
@@ -11,7 +9,6 @@ import { SIDEBAR_SLOTFILL_PREFIX } from '../../../../../constants';
 import SidebarSkeleton from './Skeleton/SidebarSkeleton';
 
 const CustomizeSidebar = () => {
-	const sidebarRef = useRef();
 	const { currentStep } = useSelect( ( select ) => {
 		return {
 			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
@@ -23,11 +20,6 @@ const CustomizeSidebar = () => {
 	const closeSideBar = () => {
 		setIsSidebarOpened( false );
 	};
-
-	const resetCustomization = () => {
-		sidebarRef.current.resetCustomizationCallback();
-	};
-
 	return (
 		<Fill name={ `${ SIDEBAR_SLOTFILL_PREFIX }/Customize` }>
 			<PanelBody
@@ -41,7 +33,6 @@ const CustomizeSidebar = () => {
 							'wp-module-onboarding'
 						) }
 					>
-						<Button onClick={ resetCustomization }>Reset</Button>
 						<div className="nfd-onboarding-sidebar-learn-more__header">
 							<Button
 								className="nfd-onboarding-sidebar-learn-more__header__icon"
@@ -55,7 +46,7 @@ const CustomizeSidebar = () => {
 							( SidebarComponent, index ) => {
 								return (
 									<Fragment key={ index }>
-										<SidebarComponent ref={ sidebarRef } />
+										<SidebarComponent />
 									</Fragment>
 								);
 							}

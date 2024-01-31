@@ -1,5 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { forwardRef, useImperativeHandle, createRef } from 'react';
 import { useDispatch } from '@wordpress/data';
 import { lazy, useEffect, useState } from '@wordpress/element';
 
@@ -18,7 +16,7 @@ const DesignColorsPanel = lazy( () =>
 	)
 );
 
-const Customize = forwardRef( ( props, ref ) => {
+const Customize = () => {
 	const [ loading, setLoading ] = useState( true );
 	const { updateCustomizeSidebarData } = useDispatch( nfdOnboardingStore );
 
@@ -27,17 +25,6 @@ const Customize = forwardRef( ( props, ref ) => {
 		updateCustomizeSidebarData( customizeSidebarData?.body );
 		setLoading( false );
 	};
-
-	const designColorPanelRef = createRef();
-	const designFontsPanelRef = createRef();
-	const resetCustomizationCallback = () => {
-		designFontsPanelRef.current.resetToDefaultFonts();
-		designColorPanelRef.current.resetToDefaultColors();
-	};
-
-	useImperativeHandle( ref, () => ( {
-		resetCustomizationCallback,
-	} ) );
 
 	useEffect( () => {
 		loadData();
@@ -51,13 +38,10 @@ const Customize = forwardRef( ( props, ref ) => {
 	const content = getContents();
 	return (
 		<div className="nfd-onboarding-sidebar-learn-more__design-colors">
-			<DesignColorsPanel
-				heading={ content.introduction.heading }
-				ref={ designColorPanelRef }
-			/>
-			<DesignFontsPanel ref={ designFontsPanelRef } />
+			<DesignColorsPanel heading={ content.introduction.heading } />
+			<DesignFontsPanel />
 		</div>
 	);
-} );
+};
 
 export default Customize;

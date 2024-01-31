@@ -1,5 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { forwardRef, useImperativeHandle } from 'react';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { PanelBody, PanelRow, Button, Dashicon } from '@wordpress/components';
@@ -187,28 +185,65 @@ const CustomFontsDisplay = ( {
 	</div>
 );
 
-const DesignFontsPanel = forwardRef(
-	(
-		{
-			baseClassName = 'nfd-onboarding-sidebar--customize__design-fonts-panel',
-		},
-		ref
-	) => {
-		const resetToDefaultFonts = () => {
-			setStylesOfCurrentData();
-			setSelectedGroup( null );
-			setShowCustomFonts( false );
-			setSelectedCustomFont( null );
+const DesignFontsPanel = ( {
+	baseClassName = 'nfd-onboarding-sidebar--customize__design-fonts-panel',
+} ) => {
+	const { currentData, customizeSidebarData } = useSelect( ( select ) => {
+		return {
+			customizeSidebarData:
+				select( nfdOnboardingStore ).getCustomizeSidebarData(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
+	} );
 
-		const setStylesOfCurrentData = ( heading = '', body = '' ) => {
-			const slug = currentData.sitegen?.homepages?.active?.slug;
-			const styles = {
+	const designStyles = customizeSidebarData?.designStyles;
+	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
+
+	const fontGroups = designStyles.map( ( style, index ) => ( {
+		id: index,
+		headings: style.font_heading_name || style.font_heading,
+		body: style.font_content_name || style.font_content,
+		headingsSlug: style.font_heading,
+		bodySlug: style.font_content,
+	} ) );
+
+	const [ selectedGroup, setSelectedGroup ] = useState( null );
+	const [ showCustomFonts, setShowCustomFonts ] = useState( false );
+	const [ customFont, setCustomFont ] = useState( {
+		headings: '',
+		body: '',
+	} );
+	const [ selectedCustomFont, setSelectedCustomFont ] = useState( null );
+	const [ isEditingCustomFont, setIsEditingCustomFont ] = useState( false );
+
+	const fontsHeading = designStyles?.map( ( style ) => style.font_heading );
+	const fontsContent = designStyles?.map( ( style ) => style.font_content );
+
+	const handleUpdatePreviewSettings = () => {
+		const slug = currentData.sitegen?.homepages?.active?.slug;
+		if ( ! slug ) {
+			return;
+		}
+
+		let headings;
+		let body;
+		if ( selectedGroup === 'custom' ) {
+			headings = `var(--wp--preset--font-family--${ customFont.headings })`;
+			body = `var(--wp--preset--font-family--${ customFont.body })`;
+		} else {
+			headings = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].headings })`;
+			body = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].body })`;
+		}
+
+		currentData.sitegen.homepages.data[ slug ] = {
+			...currentData.sitegen.homepages.data[ slug ],
+			styles: {
 				blocks: [
 					{
 						'core/heading': {
 							typography: {
-								fontFamily: heading,
+								fontFamily: headings,
 							},
 						},
 						'core/body': {
@@ -218,208 +253,158 @@ const DesignFontsPanel = forwardRef(
 						},
 					},
 				],
-			};
-
-			if ( slug ) {
-				currentData.sitegen.homepages.data[ slug ] = {
-					...currentData.sitegen.homepages.data[ slug ],
-					styles,
-				};
-				currentData.sitegen.homepages.active = {
-					...currentData.sitegen.homepages.active,
-					styles,
-				};
-				setCurrentOnboardingData( currentData );
-			}
+			},
 		};
-
-		useImperativeHandle( ref, () => ( {
-			resetToDefaultFonts,
-		} ) );
-
-		const { currentData, customizeSidebarData } = useSelect( ( select ) => {
-			return {
-				customizeSidebarData:
-					select( nfdOnboardingStore ).getCustomizeSidebarData(),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			};
-		} );
-
-		const designStyles = customizeSidebarData?.designStyles;
-		const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
-
-		const fontGroups = designStyles.map( ( style, index ) => ( {
-			id: index,
-			headings: style.font_heading_name || style.font_heading,
-			body: style.font_content_name || style.font_content,
-			headingsSlug: style.font_heading,
-			bodySlug: style.font_content,
-		} ) );
-
-		const [ selectedGroup, setSelectedGroup ] = useState( null );
-		const [ showCustomFonts, setShowCustomFonts ] = useState( false );
-		const [ customFont, setCustomFont ] = useState( {
-			headings: '',
-			body: '',
-		} );
-		const [ selectedCustomFont, setSelectedCustomFont ] = useState( null );
-		const [ isEditingCustomFont, setIsEditingCustomFont ] =
-			useState( false );
-
-		const fontsHeading = designStyles?.map(
-			( style ) => style.font_heading
-		);
-		const fontsContent = designStyles?.map(
-			( style ) => style.font_content
-		);
-
-		const handleUpdatePreviewSettings = () => {
-			let headings;
-			let body;
-			if ( selectedGroup === 'custom' ) {
-				headings = `var(--wp--preset--font-family--${ customFont.headings })`;
-				body = `var(--wp--preset--font-family--${ customFont.body })`;
-			} else {
-				headings = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].headings })`;
-				body = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].body })`;
-			}
-			setStylesOfCurrentData( headings, body );
+		currentData.sitegen.homepages.active = {
+			...currentData.sitegen.homepages.active,
+			styles: {
+				blocks: [
+					{
+						'core/heading': {
+							typography: {
+								fontFamily: headings,
+							},
+						},
+						'core/body': {
+							typography: {
+								fontFamily: body,
+							},
+						},
+					},
+				],
+			},
 		};
+		setCurrentOnboardingData( currentData );
+	};
 
-		useEffect( () => {
-			if ( selectedGroup !== null && selectedGroup !== undefined ) {
-				handleUpdatePreviewSettings();
-			}
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [ selectedGroup, customFont ] );
+	useEffect( () => {
+		if ( selectedGroup !== null && selectedGroup !== undefined ) {
+			handleUpdatePreviewSettings();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [ selectedGroup, customFont ] );
 
-		const fontOptions = [
-			...new Set( [ ...fontsHeading, ...fontsContent ] ),
-		];
+	const fontOptions = [ ...new Set( [ ...fontsHeading, ...fontsContent ] ) ];
 
-		const handleGroupSelect = ( groupId ) => {
-			if ( groupId !== 'custom' && selectedCustomFont ) {
-				setShowCustomFonts( false );
-			}
-			setSelectedGroup( groupId );
-		};
+	const handleGroupSelect = ( groupId ) => {
+		if ( groupId !== 'custom' && selectedCustomFont ) {
+			setShowCustomFonts( false );
+		}
+		setSelectedGroup( groupId );
+	};
 
-		const handleSelectYourOwnFonts = () => {
-			setShowCustomFonts( true );
-			if ( ! selectedCustomFont ) {
-				setIsEditingCustomFont( true );
-			}
-		};
-
-		const handleEditCustomFont = () => {
+	const handleSelectYourOwnFonts = () => {
+		setShowCustomFonts( true );
+		if ( ! selectedCustomFont ) {
 			setIsEditingCustomFont( true );
-		};
+		}
+	};
 
-		const handleCancelCustomFonts = () => {
-			if ( ! selectedCustomFont ) {
-				setShowCustomFonts( false );
-			} else {
-				setIsEditingCustomFont( false );
-			}
-		};
+	const handleEditCustomFont = () => {
+		setIsEditingCustomFont( true );
+	};
 
-		const handleApplyCustomFonts = () => {
-			setSelectedGroup( null );
-			setSelectedCustomFont( customFont );
+	const handleCancelCustomFonts = () => {
+		if ( ! selectedCustomFont ) {
+			setShowCustomFonts( false );
+		} else {
 			setIsEditingCustomFont( false );
-			setSelectedGroup( 'custom' );
-		};
+		}
+	};
 
-		const renderFontOptions = () => {
-			return fontOptions.map( ( font ) => (
-				<option key={ font } value={ font }>
-					{ font }
-				</option>
-			) );
-		};
+	const handleApplyCustomFonts = () => {
+		setSelectedGroup( null );
+		setSelectedCustomFont( customFont );
+		setIsEditingCustomFont( false );
+		setSelectedGroup( 'custom' );
+	};
 
-		const renderFontGroups = () => {
-			return fontGroups.map( ( group ) => (
-				<FontGroup
-					baseClassName={ baseClassName }
-					key={ group.id }
-					group={ group }
-					selectedGroup={ selectedGroup }
-					handleGroupSelect={ handleGroupSelect }
-				/>
-			) );
-		};
+	const renderFontOptions = () => {
+		return fontOptions.map( ( font ) => (
+			<option key={ font } value={ font }>
+				{ font }
+			</option>
+		) );
+	};
 
-		const renderCustomFontsForm = () => {
-			return (
-				<CustomFontsForm
-					baseClassName={ baseClassName }
-					customFont={ customFont }
-					setCustomFont={ setCustomFont }
-					handleCancelCustomFonts={ handleCancelCustomFonts }
-					handleApplyCustomFonts={ handleApplyCustomFonts }
-					renderFontOptions={ renderFontOptions }
-				/>
-			);
-		};
+	const renderFontGroups = () => {
+		return fontGroups.map( ( group ) => (
+			<FontGroup
+				baseClassName={ baseClassName }
+				key={ group.id }
+				group={ group }
+				selectedGroup={ selectedGroup }
+				handleGroupSelect={ handleGroupSelect }
+			/>
+		) );
+	};
 
-		const renderCustomFontsDisplay = () => {
-			return (
-				<CustomFontsDisplay
-					baseClassName={ baseClassName }
-					selectedGroup={ selectedGroup }
-					selectedCustomFont={ selectedCustomFont }
-					handleGroupSelect={ handleGroupSelect }
-					handleEditCustomFont={ handleEditCustomFont }
-				/>
-			);
-		};
-
+	const renderCustomFontsForm = () => {
 		return (
-			<PanelBody className={ baseClassName } initialOpen={ true }>
-				<PanelRow>
-					<div className={ `${ baseClassName }__container` }>
-						<div
-							className={ `${ baseClassName }__container__text` }
-						>
-							<p
-								className={ `${ baseClassName }__container__text__heading` }
-							>
-								<strong>
-									{ __( 'Fonts', 'wp-module-onboarding' ) }
-								</strong>
-							</p>
-						</div>
-						<div>{ renderFontGroups() }</div>
-					</div>
-				</PanelRow>
-
-				<PanelRow>
-					{ ! showCustomFonts && (
-						<div className={ `${ baseClassName }__container` }>
-							<Button
-								onClick={ () => {
-									handleSelectYourOwnFonts();
-								} }
-							>
-								{ __(
-									'Select your own fonts',
-									'wp-module-onboarding'
-								) }
-							</Button>
-						</div>
-					) }
-					{ showCustomFonts &&
-						isEditingCustomFont &&
-						renderCustomFontsForm() }
-					{ showCustomFonts &&
-						! isEditingCustomFont &&
-						renderCustomFontsDisplay() }
-				</PanelRow>
-			</PanelBody>
+			<CustomFontsForm
+				baseClassName={ baseClassName }
+				customFont={ customFont }
+				setCustomFont={ setCustomFont }
+				handleCancelCustomFonts={ handleCancelCustomFonts }
+				handleApplyCustomFonts={ handleApplyCustomFonts }
+				renderFontOptions={ renderFontOptions }
+			/>
 		);
-	}
-);
+	};
+
+	const renderCustomFontsDisplay = () => {
+		return (
+			<CustomFontsDisplay
+				baseClassName={ baseClassName }
+				selectedGroup={ selectedGroup }
+				selectedCustomFont={ selectedCustomFont }
+				handleGroupSelect={ handleGroupSelect }
+				handleEditCustomFont={ handleEditCustomFont }
+			/>
+		);
+	};
+
+	return (
+		<PanelBody className={ baseClassName } initialOpen={ true }>
+			<PanelRow>
+				<div className={ `${ baseClassName }__container` }>
+					<div className={ `${ baseClassName }__container__text` }>
+						<p
+							className={ `${ baseClassName }__container__text__heading` }
+						>
+							<strong>
+								{ __( 'Fonts', 'wp-module-onboarding' ) }
+							</strong>
+						</p>
+					</div>
+					<div>{ renderFontGroups() }</div>
+				</div>
+			</PanelRow>
+
+			<PanelRow>
+				{ ! showCustomFonts && (
+					<div className={ `${ baseClassName }__container` }>
+						<Button
+							onClick={ () => {
+								handleSelectYourOwnFonts();
+							} }
+						>
+							{ __(
+								'Select your own fonts',
+								'wp-module-onboarding'
+							) }
+						</Button>
+					</div>
+				) }
+				{ showCustomFonts &&
+					isEditingCustomFont &&
+					renderCustomFontsForm() }
+				{ showCustomFonts &&
+					! isEditingCustomFont &&
+					renderCustomFontsDisplay() }
+			</PanelRow>
+		</PanelBody>
+	);
+};
 
 export default DesignFontsPanel;
