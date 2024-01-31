@@ -11,7 +11,7 @@
 				flex-direction: column;
 				align-items: center;
 				justify-content: center;
-				width: 500px;
+				width: 544px;
 
 				@media (max-width: #{ ($break-small) }) {
 					margin: 16px;
@@ -40,35 +40,81 @@
 
 					&__text {
 						line-height: 1;
-						font-weight: 510;
-						margin-left: 15px;
-						white-space: normal;
-						letter-spacing: 0.8px;
+						font-weight: 500;
 						color: var(--nfd-onboarding-primary);
-						font-size: clamp(0.875rem, 0.6818rem + 0.9659vw, 3rem);
+						font-size: 18px;
 					}
 				}
 
 				&__sub-heading {
-					padding: 0;
-					width: 100%;
-					margin: 10px;
+					padding: 24px 24px 10px 24px;
+					// min-height: 115px;
 					margin-bottom: 50px;
+					border: solid #E01C1C 1px;
+					border-radius: 8px;
+					margin-top: 20px;
 
 					&__text {
 						margin: 0;
 						padding: 0;
 						text-align: left;
 						color: var(--nfd-onboarding-primary);
-						font-size: clamp(0.875rem, 0.727rem + 0.5114vw, 2rem);
+						font-size: 16px;
+						font-weight: 600;
 					}
 
 					&__message {
+						margin-top: 10px;
+						padding: 0;
+						text-align: left;
+						color: var(--nfd-onboarding-primary);
+						font-size: 14px;
+						font-weight: 400;
+						// line-height: 0.5 !important; 
+					}
+
+					&__exit {
+						font-size: 14px;
+						font-weight: 400;
+						color: var(--nfd-onboarding-primary);
 						margin: 0;
-							padding: 0;
-							text-align: left;
+						padding: 0;
+
+						&:hover {
+							text-decoration: underline;
 							color: var(--nfd-onboarding-primary);
-							font-size: clamp(0.0625rem, 0.727rem + 0.5114vw, 2rem);
+						}
+					}
+				}
+
+				&__buttons {
+					width: 100%;
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: flex-end;
+
+					&__skip {
+						font-size: clamp(0.6rem, 0.755rem + 0.227vw, 1.3rem);
+						font-style: normal;
+						font-weight: 510;
+						margin-right: 24px;
+						color: var(--nfd-onboarding-primary);
+
+						&:hover {
+							text-decoration: underline;
+							color: var(--nfd-onboarding-primary);
+						}
+
+						@media (max-width: #{ ($break-small) }) {
+							margin-right: 0;
+						}
+					}
+
+					@media (max-width: #{ ($break-small) }) {
+						justify-content: center;
+						margin-bottom: 50px;
+						margin-right: 0;
 					}
 				}
 				

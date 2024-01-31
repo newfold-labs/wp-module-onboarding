@@ -11,6 +11,7 @@ import AIHeading from '../../../components/Heading/AIHeading';
 import CommonLayout from '../../../components/Layouts/Common';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 import ImageUploaderWithText from '../../../components/ImageUploader/components/ImageUploaderWithText';
+import { Button } from '@wordpress/components';
 
 const SiteGenSiteError = () => {
 	const {
@@ -30,6 +31,7 @@ const SiteGenSiteError = () => {
 		setIsHeaderNavigationEnabled( true );
 		setDrawerActiveView( false );
 	} );
+	const isLargeViewport = useViewportMatch( 'small' );
 
 	const content = getContents();
 	return (
@@ -47,15 +49,27 @@ const SiteGenSiteError = () => {
 					</p>
 					<p className="nfd-onboarding-step--site-gen__error__container__sub-heading__message">
 						{ content.message }
+						<a
+							className="nfd-onboarding-step--site-gen__error__container__sub-heading__exit"
+							href="http://the.url.com/page.html">
+							{ content.buttonExit }
+						</a>
+
 					</p>
 				</div>
-				<NextButtonSiteGen
-					className={
-						'nfd-onboarding-step--site-gen__error--button'
-					}
-					text={ content.buttonText }
-					showChevronRight={ false }
-				/>
+				<div className="nfd-onboarding-step--site-gen__error__container__buttons">
+					<SkipButton
+						className="nfd-onboarding-step--site-gen__error__container__buttons__skip"
+						text={ content.buttonSkip }
+					/>
+					{ isLargeViewport && (
+						<NextButtonSiteGen
+							text={ content.buttonText }
+							disabled={ false }
+							showChevronRight={ false }
+						/>
+					) }
+				</div>
 			</div>
 		</CommonLayout>
 	);

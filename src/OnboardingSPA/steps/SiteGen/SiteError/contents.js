@@ -8,10 +8,12 @@ const getContents = () => {
 			'wp-module-onboarding'
 		),
 		message: __(
-			'If you continue to get this error, you may either continue creating your site without using our AI assistant, or you can exit directly to WordPress',
+			'If you continue to get this error, you may either continue creating your site without using our AI assistant, or you can ',
 			'wp-module-onboarding'
 		),
 		buttonText: __( 'Try again', 'wp-module-onboarding' ),
+		buttonSkip: __( 'Continue without AI', 'wp-module-onboarding' ),
+		buttonExit: __( 'exit to WordPress', 'wp-module-onboarding' ),
 	};
 };
 
