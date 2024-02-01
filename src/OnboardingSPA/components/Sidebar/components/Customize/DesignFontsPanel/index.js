@@ -268,12 +268,27 @@ const DesignFontsPanel = forwardRef(
 			( style ) => style.font_content
 		);
 
+
+		useEffect(() => {
+			const slug = currentData.sitegen?.homepages?.active?.slug;
+			if (slug && !customFont.headings) {
+				const storedCustomFonts = currentData.sitegen.homepages.data[ slug ].customFont;
+				if (storedCustomFonts) {
+					setCustomFont(storedCustomFonts);
+				}
+			}
+		}, [ currentData ]);
+
 		const handleUpdatePreviewSettings = () => {
 			let headings;
 			let body;
 			if ( selectedGroup === 'custom' ) {
 				headings = `var(--wp--preset--font-family--${ customFont.headings })`;
 				body = `var(--wp--preset--font-family--${ customFont.body })`;
+				const slug = currentData.sitegen?.homepages?.active?.slug;
+				if (slug) {
+					currentData.sitegen.homepages.data[ slug ]['customFont'] = customFont;
+				}
 			} else {
 				headings = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].headings })`;
 				body = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].body })`;
