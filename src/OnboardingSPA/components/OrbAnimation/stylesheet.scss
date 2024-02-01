@@ -186,9 +186,13 @@ body.wnd-ai-logo-loading .wnd-ai-logo {
 }
 
 /* Focus & Hover */
-body:has([data-wnd-ai-logo]:focus) .wnd-ai-logo,
 body:not(.wnd-ai-logo-loading) .wnd-ai-logo:hover {
 	transform: scale(1.05);
+	filter: brightness(1.35) saturate(1.5);
+}
+
+body:has([data-wnd-ai-logo]:focus) .wnd-ai-logo {
+	transform: scale(1.2);
 	filter: brightness(1.35) saturate(1.5);
 }
 

@@ -78,6 +78,7 @@ const TextInputSiteGen = ( {
 			<label htmlFor={ inputText }>
 				<div className={ 'nfd-sg-input-box' }>
 					<textarea
+						data-wnd-ai-logo
 						type="text"
 						className={ inputText }
 						ref={ textareaRef }
