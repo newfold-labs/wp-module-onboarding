@@ -81,6 +81,16 @@ const DesignColorsPanel = forwardRef(
 		}, [ currentData ] );
 
 		const colorPalettes = customizeSidebarData?.colorPalettes;
+
+		useEffect( () => {
+			if ( ! defaultGlobalData ) {
+				defaultGlobalData = cloneDeep(
+					currentData.sitegen.homepages.data
+				);
+			}
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [ colorPalettes ] );
+
 		const palettePrimaryColors = Object.entries( colorPalettes[ 0 ] ).map(
 			( [ , color ] ) => ( {
 				name: __( 'Custom', 'wp-module-onboarding' ),
@@ -99,6 +109,7 @@ const DesignColorsPanel = forwardRef(
 		} );
 
 		const [ colors ] = useState( palettes );
+		const [ customColors, setCustomColors ] = useState( null );
 		const [ selectedColor, setSelectedColor ] = useState( null );
 		const [ showCustomColors, setShowCustomColors ] = useState( false );
 		const [ isEditingCustomColors, setIsEditingCustomColors ] =
@@ -108,18 +119,55 @@ const DesignColorsPanel = forwardRef(
 		const [ selectedPalette, setSelectedPalette ] = useState( null );
 		const [ colorPickerCalledBy, setColorPickerCalledBy ] = useState( '' );
 		const [ showColorPicker, setShowColorPicker ] = useState( false );
-		const customPaletteId = colors.length - 1;
+
+		useEffect(() => {
+			const slug = currentData.sitegen?.homepages?.active?.slug;
+			if (slug && !customColors) {
+				const storedCustomColors = currentData.sitegen.homepages.data[ slug ].color['customColors'];
+				if (storedCustomColors) {
+					setCustomColors(storedCustomColors);
+				} else {
+					const defaultPalette = currentData.sitegen.homepages.data[ slug ].color.palette;
+					let defaultCustomColors = {
+						primary: "",
+						secondary: "",
+						tertiary: "",
+					}
+					for (const item of defaultPalette) {
+						switch (item.slug) {
+						  case "primary":
+							defaultCustomColors.primary = item.color;
+							break;
+						  case "secondary":
+							defaultCustomColors.secondary = item.color;
+							break;
+						  case "tertiary":
+							defaultCustomColors.tertiary = item.color;
+							break;
+						  default:
+							break;
+						}
+					  }
+
+					  if (!defaultCustomColors.secondary) {
+						defaultCustomColors.secondary = defaultPalette.find(item => item.slug === "base").color;
+					  }
+
+					setCustomColors(defaultCustomColors);
+				}
+			}
+		}, [ currentData ]);		
 
 		const handleApplyCustomColors = () => {
 			setSelectedCustomColors( true );
 			setIsEditingCustomColors( false );
-			setSelectedPalette( customPaletteId );
-			colors[ selectedPalette ] = selectedColor;
+			setSelectedPalette( 'custom' );
+			setCustomColors(selectedColor);
 		};
 
 		const handleEditCustomColors = () => {
-			setSelectedPalette( customPaletteId );
-			setSelectedColor( colors[ customPaletteId ] );
+			setSelectedPalette( 'custom' );
+			setSelectedColor( customColors );
 			setIsEditingCustomColors( true );
 		};
 
@@ -168,20 +216,25 @@ const DesignColorsPanel = forwardRef(
 				return;
 			}
 
-			colorPalettes[ selectedPalette ].primary = selectedColor.primary;
-			if ( colorPalettes[ selectedPalette ].secondary ) {
-				colorPalettes[ selectedPalette ].secondary =
-					selectedColor.secondary;
-			} else {
-				colorPalettes[ selectedPalette ].base = selectedColor.secondary;
+			if ( selectedPalette === 'custom' ) {
+				currentData.sitegen.homepages.data[ slug ].color['customColors'] = selectedColor;
 			}
 
-			colorPalettes[ selectedPalette ].tertiary = selectedColor.tertiary;
+			const colorPaletteIndex = selectedPalette === 'custom' ? 0 : selectedPalette
+			colorPalettes[ colorPaletteIndex ].primary = selectedColor.primary;
+			if ( colorPalettes[ colorPaletteIndex ].secondary ) {
+				colorPalettes[ colorPaletteIndex ].secondary =
+					selectedColor.secondary;
+			} else {
+				colorPalettes[ colorPaletteIndex ].base = selectedColor.secondary;
+			}
+
+			colorPalettes[ colorPaletteIndex ].tertiary = selectedColor.tertiary;
 
 			currentData.sitegen.homepages.data[ slug ].color.palette =
-				convertColorSchema( colorPalettes[ selectedPalette ] );
+				convertColorSchema( colorPalettes[ colorPaletteIndex ] );
 			currentData.sitegen.homepages.active.color.palette =
-				convertColorSchema( colorPalettes[ selectedPalette ] );
+				convertColorSchema( colorPalettes[ colorPaletteIndex ] );
 			setCurrentOnboardingData( currentData );
 		};
 
@@ -215,12 +268,12 @@ const DesignColorsPanel = forwardRef(
 
 					<div style={ { marginLeft: '5px' } }>
 						<ColorPaletteIcon
-							key={ customPaletteId }
-							idx={ customPaletteId }
+							key={ 'custom' }
+							idx={ 'custom' }
 							selectedPalette={ selectedPalette }
 							setSelectedPalette={ setSelectedPalette }
 							setSelectedColor={ setSelectedColor }
-							colors={ colors }
+							customColors={ customColors }
 						/>
 					</div>
 				</div>
@@ -280,8 +333,8 @@ const DesignColorsPanel = forwardRef(
 		};
 
 		const handlePickYourOwnColors = () => {
-			setSelectedPalette( customPaletteId );
-			setSelectedColor( colors[ customPaletteId ] );
+			setSelectedPalette( 'custom' );
+			setSelectedColor( customColors );
 			setShowCustomColors( true );
 			if ( ! selectedCustomColors ) {
 				setIsEditingCustomColors( true );
@@ -318,9 +371,9 @@ const DesignColorsPanel = forwardRef(
 										label={
 											idx === 0
 												? __(
-														'Default',
-														'wp-module-onboarding'
-												  )
+												'Default',
+												'wp-module-onboarding'
+												) 
 												: ''
 										}
 										selectedPalette={ selectedPalette }
