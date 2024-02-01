@@ -93,14 +93,20 @@ const SiteGenPreviewSelectableCard = ( {
 						aria-label="Add to Wishlist"
 						className={ `${ className }__live-preview-container-buttons__button` }
 					>
-						<span>
+						<span
+							className={ `${ className }__live-preview-container-buttons__button__icon` }
+						>
 							{ isFavorite ? (
 								<FavouriteIconFilled />
 							) : (
 								<FavouriteIconStroked />
 							) }
 						</span>
-						<span>{ title }</span>
+						<span
+							className={ `${ className }__live-preview-container-buttons__button__title` }
+						>
+							{ title }
+						</span>
 					</div>
 					<div
 						role="button"

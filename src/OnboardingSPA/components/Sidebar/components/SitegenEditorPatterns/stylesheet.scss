@@ -93,6 +93,13 @@
 							align-items: center;
 							color: #000;
 
+							&__title {
+								width: 200px;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								text-wrap: nowrap;
+							}
+
 							&__icon {
 								background-image: var(--sitegen-favorite);
 								height: 21px;
