@@ -44,17 +44,26 @@
 	}
 
 	&__options {
-
-		@media (max-width: #{ ($break-xlarge) }) {
-			flex-direction: column;
-		}
-
 		display: flex;
 		flex-direction: row;
 		text-align: center;
 		margin: 10px 10px 55px 10px;
 		flex-wrap: wrap;
-		max-width: 1440px;
+		width: 1380px;
+
+		@media (max-width: #{ ($break-huge) }) {
+			width: 920px;
+		}
+
+		@media (max-width: #{ ($break-large) }) {
+			flex-direction: column;
+			width: 480px;
+		}
+
+		@media (max-width: #{ ($break-mobile) }) {
+			width: 300px;
+		}
+
 	}
 
 	&__note {
@@ -65,13 +74,17 @@
 		align-items: center;
 		background: var(--nfd-onboarding-card-background);
 		color: var(--nfd-onboarding-primary);
-		gap: 18px;
+		gap: 14px;
 		padding: 16px;
 		font-size: 16px;
 		line-height: 22px;
 		text-align: center;
 		border-radius: 12px;
 		margin-bottom: 70px;
+
+		@media (max-width: #{ ($break-mobile) }) {
+			gap: 8px;
+		}
 	}
 
 	@keyframes heartBeat {
@@ -92,6 +105,11 @@
 	.heart {
 		stroke-width: 2px;
 		stroke: var(--nfd-onboarding-heart-icon-stroke);
+
+		@media (max-width: #{ ($break-mobile) }) {
+			width: 50px;
+			height: auto;
+		}
 	}
 
 	.heart path {
@@ -133,6 +151,11 @@
 		margin-bottom: 20px;
 		padding: 60px;
 		box-sizing: border-box;
+
+		@media (max-width: #{ ($break-mobile) }) {
+			width: 300px;
+		}
+
 
 		&__title {
 			color: var(--nfd-onboarding-primary);

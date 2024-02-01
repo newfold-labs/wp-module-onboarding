@@ -8,14 +8,9 @@
 	justify-content: center;
 	flex-wrap: wrap;
 
-	@media (min-width: #{ ($break-mobile) }) and (max-width: #{ ($break-wide) }) {
-		width: 340px;
-		padding: 15px;
-	}
-
 	@media (max-width: #{ ($break-mobile) }) {
 		width: 300px;
-		padding: 10px;
+		padding: 20px 0;
 	}
 
 	&__live-preview-container {

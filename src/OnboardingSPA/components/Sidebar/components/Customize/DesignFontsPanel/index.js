@@ -2,7 +2,7 @@
 import { forwardRef, useImperativeHandle } from 'react';
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { PanelBody, PanelRow, Button, Dashicon } from '@wordpress/components';
+import { PanelBody, PanelRow, Button } from '@wordpress/components';
 import './stylesheet.scss';
 import { store as nfdOnboardingStore } from '../../../../../store';
 import { __ } from '@wordpress/i18n';
@@ -154,17 +154,11 @@ const CustomFontsDisplay = ( {
 				role="presentation"
 				onClick={ () => handleGroupSelect( 'custom' ) }
 			>
-				<Dashicon
-					className={ `${ baseClassName }__font-group__container__button__icon` }
-					icon={ 'yes-alt' }
-					size={ 30 }
-					style={ {
-						color:
-							selectedGroup === 'custom'
-								? 'var(--nfd-onboarding-sitegen-customize-icon-selected)'
-								: 'var(--nfd-onboarding-sitegen-customize-grey-1)',
-					} }
-				/>
+				<span
+					className={ `${ baseClassName }__font-group__container__button__icon${
+						selectedGroup === 'custom' ? ` selected` : ``
+					}` }
+				></span>
 				<div
 					className={ `${ baseClassName }__font-group__container__button__font-name__container` }
 				>

@@ -1,73 +1,19 @@
 import { Icon, chevronDown, reusableBlock } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { useViewportMatch } from '@wordpress/compose';
-import { useRef } from '@wordpress/element';
+import { useRef, useState, useEffect, memo } from '@wordpress/element';
 import { ReactComponent as FavoriteIconStroked } from '../../../../static/icons/sitegen/heart-stroked.svg';
 import { ReactComponent as FavoriteFilled } from '../../../../static/icons/sitegen/heart-filled.svg';
 import { Dropdown, MenuGroup, MenuItem } from '@wordpress/components';
 
-const StepEditorHeaderCenter = ( {
-	handleFavorite,
-	handleRename,
-	handleViewAll,
-	handleRegenerate,
-	handleCustomize,
-	handleIsRenaming,
-	isRenaming,
-	homepageTitle,
-	isFavorite,
-} ) => {
-	const isLargeViewport = useViewportMatch( 'medium' );
-	const inputRef = useRef( null );
-
-	const onRegenerate = () => {
-		if ( typeof handleRegenerate === 'function' ) {
-			return handleRegenerate();
-		}
-	};
-
-	const onFavorite = () => {
-		if ( typeof onFavorite === 'function' ) {
-			return handleFavorite();
-		}
-	};
-
-	const onCustomize = () => {
-		if ( typeof handleCustomize === 'function' ) {
-			return handleCustomize();
-		}
-	};
-
-	const onViewAll = () => {
-		if ( typeof handleViewAll === 'function' ) {
-			return handleViewAll();
-		}
-	};
-
-	const onRenameItemSelect = () => {
-		if ( typeof handleIsRenaming === 'function' ) {
-			handleIsRenaming( true );
-			return inputRef.current.focus();
-		}
-	};
-
-	const onRename = () => {
-		if ( typeof handleRename === 'function' ) {
-			handleRename( inputRef.current.value );
-		}
-	};
-
-	const onTitleInputBlur = () => {
-		if ( typeof handleIsRenaming === 'function' ) {
-			return handleIsRenaming( false );
-		}
-	};
-
-	if ( isRenaming ) {
-		inputRef.current.focus();
-	}
-
-	const DropDownMenu = () => {
+const DropDownMenu = memo(
+	( {
+		onRegenerate,
+		onCustomize,
+		onRenameItemSelect,
+		onViewAll,
+		isLargeViewport,
+	} ) => {
 		return (
 			<MenuGroup className="nfd-onboarding-header__version_dropdown-menu">
 				{ ! isLargeViewport && (
@@ -91,9 +37,49 @@ const StepEditorHeaderCenter = ( {
 				</MenuItem>
 			</MenuGroup>
 		);
-	};
+	}
+);
 
-	const TitleContent = () => {
+const TitleContent = memo(
+	( {
+		isFavorite,
+		homepageTitle,
+		onFavorite,
+		onRename,
+		inputRef,
+		onRegenerate,
+		onCustomize,
+		onRenameItemSelect,
+		onViewAll,
+		isLargeViewport,
+		isInputEnabled,
+		enableInput,
+	} ) => {
+		const [ renameInputValue, setRenameInputValue ] =
+			useState( homepageTitle );
+
+		const handleOnChange = () => {
+			setRenameInputValue( inputRef.current.value );
+		};
+
+		const onTitleInputBlur = () => {
+			const newTitleValue = inputRef.current.value.trim();
+			if ( newTitleValue && newTitleValue !== homepageTitle ) {
+				onRename( newTitleValue );
+			}
+			enableInput( false );
+		};
+
+		useEffect( () => {
+			if ( isInputEnabled ) {
+				inputRef.current?.focus();
+			}
+		}, [ isInputEnabled, inputRef ] );
+
+		useEffect( () => {
+			setRenameInputValue( homepageTitle );
+		}, [ homepageTitle ] );
+
 		return (
 			<Dropdown
 				renderToggle={ ( { isOpen, onToggle } ) => (
@@ -122,12 +108,12 @@ const StepEditorHeaderCenter = ( {
 						</div>
 						<input
 							ref={ inputRef }
+							disabled={ ! isInputEnabled }
 							className="nfd-onboarding-header__center-input"
-							disabled={ ! isRenaming }
 							type="text"
-							value={ homepageTitle }
+							value={ renameInputValue }
 							onBlur={ onTitleInputBlur }
-							onChange={ onRename }
+							onChange={ handleOnChange }
 						/>
 						<Icon
 							icon={ chevronDown }
@@ -140,14 +126,89 @@ const StepEditorHeaderCenter = ( {
 						/>
 					</div>
 				) }
-				renderContent={ DropDownMenu }
+				renderContent={ () => (
+					<DropDownMenu
+						onRegenerate={ onRegenerate }
+						onCustomize={ onCustomize }
+						onRenameItemSelect={ onRenameItemSelect }
+						onViewAll={ onViewAll }
+						isLargeViewport={ isLargeViewport }
+					/>
+				) }
 			/>
 		);
+	}
+);
+
+const StepEditorHeaderCenter = ( {
+	handleFavorite,
+	handleRename,
+	handleViewAll,
+	handleRegenerate,
+	handleCustomize,
+	homepageTitle,
+	isFavorite,
+} ) => {
+	const isLargeViewport = useViewportMatch( 'medium' );
+	const inputRef = useRef( null );
+	const [ isInputEnabled, setInputEnabled ] = useState( false );
+	const enableInput = ( isEnabled ) => {
+		setInputEnabled( isEnabled );
+		if ( isEnabled ) {
+			inputRef.current?.focus();
+		}
+	};
+
+	const onRegenerate = () => {
+		if ( typeof handleRegenerate === 'function' ) {
+			return handleRegenerate();
+		}
+	};
+
+	const onFavorite = () => {
+		if ( typeof onFavorite === 'function' ) {
+			return handleFavorite();
+		}
+	};
+
+	const onCustomize = () => {
+		if ( typeof handleCustomize === 'function' ) {
+			return handleCustomize();
+		}
+	};
+
+	const onViewAll = () => {
+		if ( typeof handleViewAll === 'function' ) {
+			return handleViewAll();
+		}
+	};
+
+	const onRenameItemSelect = () => {
+		enableInput( true );
+	};
+
+	const onRename = ( newTitleValue ) => {
+		if ( typeof handleRename === 'function' ) {
+			handleRename( newTitleValue );
+		}
 	};
 
 	return (
 		<div className="nfd-onboarding-header__step-navigation">
-			<TitleContent />
+			<TitleContent
+				isFavorite={ isFavorite }
+				homepageTitle={ homepageTitle }
+				onFavorite={ onFavorite }
+				onRename={ onRename }
+				inputRef={ inputRef }
+				onRegenerate={ onRegenerate }
+				onCustomize={ onCustomize }
+				onRenameItemSelect={ onRenameItemSelect }
+				onViewAll={ onViewAll }
+				isLargeViewport={ isLargeViewport }
+				isInputEnabled={ isInputEnabled }
+				enableInput={ enableInput }
+			/>
 		</div>
 	);
 };
