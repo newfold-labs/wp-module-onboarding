@@ -5,9 +5,9 @@
  * @return Button
  */
 
-const Button = ( { text, handleClick, disabled, className } ) => {
+const Button = ( { children, handleClick, disabled, className } ) => {
 	const handleBtnClick = () => {
-		if ( handleClick ) {
+		if ( typeof handleClick === 'function' ) {
 			handleClick();
 		}
 	};
@@ -19,7 +19,7 @@ const Button = ( { text, handleClick, disabled, className } ) => {
 			onClick={ handleBtnClick }
 			disabled={ disabled }
 		>
-			{ text }
+			{ children }
 		</button>
 	);
 };

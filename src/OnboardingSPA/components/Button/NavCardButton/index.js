@@ -53,20 +53,16 @@ const NavCardButton = ( { text, disabled, className, icon } ) => {
 	return (
 		<Button
 			className={ classNames( 'nfd-nav-card-button', className ) }
-			text={
-				<>
-					<span className={ `${ className }__text` }>{ text }</span>
-					{ icon && (
-						<Icon
-							className={ `${ className }__icon` }
-							icon={ icon }
-						/>
-					) }
-				</>
-			}
 			handleClick={ handleBtnClick }
 			disabled={ disabled }
-		/>
+		>
+			<>
+				<span className={ `${ className }__text` }>{ text }</span>
+				{ icon && (
+					<Icon className={ `${ className }__icon` } icon={ icon } />
+				) }
+			</>
+		</Button>
 	);
 };
 
