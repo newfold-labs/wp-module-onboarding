@@ -93,7 +93,15 @@
 				fill: var(--nfd-onboarding-primary);
 				cursor: pointer;
 				text-align: left;
+
+				&__title {
+					width: 200px;
+					text-overflow: ellipsis;
+					text-wrap: nowrap;
+					overflow: hidden;
+				}
 			}
+
 		}
 	}
 }
