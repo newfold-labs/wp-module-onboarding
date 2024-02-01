@@ -44,6 +44,12 @@ body {
 		--nfd-onboarding-step-what-next-img-3: url(../../Brands/wordpress/full-service.png);
 		--nfd-onboarding-step-what-next-img-1: url(../../Brands/wordpress/wp-admin.png);
 		--nfd-onboarding-step-what-next-img-2: url(../static/images/help.png);
+		--nfd-onboarding-header-border: #e0e0e0;
+		--nfd-onboarding-sitegen-customize-primary-button-color: #44494d;
+		--nfd-onboarding-sitegen-customize-grey-1: #9ca2a7;
+		--nfd-onboarding-sitegen-customize-link-text-color: #007cba;
+		--nfd-onboarding-sitegen-customize-icon-selected: #035fef;
+		--nfd-onboarding-sitegen-customize-default-text-color: #808080;
 	}
 
 	&.nfd-brand-bluehost,
@@ -57,6 +63,7 @@ body {
 		--nfd-onboarding-contrast-icon: url(../../Brands/bluehost/dark.svg);
 		--nfd-onboarding-icon: url(../../Brands/bluehost/icon.svg);
 		--nfd-onboarding-logo: url(../../Brands/bluehost/logo.svg);
+		--nfd-onboarding-logo-name: url(../../Brands/bluehost/bluehost-logo.svg);
 		--nfd-onboarding-primary: #3575d3;
 		--nfd-onboarding-highlighted--rgb: 123, 177, 253;
 		--nfd-onboarding-primary-alt: #2c76dc;
@@ -104,6 +111,12 @@ body {
 		--nfd-onboarding-sidebar-learn-more-pages-illustration: url(../../Brands/bluehost/learn-more-pages.svg);
 		--nfd-onboarding-sidebar-learn-more-site-features-illustration: url(../../Brands/bluehost/learn-more-site-features.svg);
 		--nfd-onboarding-sidebar-learn-more-what-next-illustration: url(../../Brands/bluehost/learn-more-what-next.svg);
+		--nfd-onboarding-header-border: #e0e0e0;
+		--nfd-onboarding-sitegen-customize-primary-button-color: #44494d;
+		--nfd-onboarding-sitegen-customize-grey-1: #9ca2a7;
+		--nfd-onboarding-sitegen-customize-link-text-color: #007cba;
+		--nfd-onboarding-sitegen-customize-icon-selected: #035fef;
+		--nfd-onboarding-sitegen-customize-default-text-color: #808080;
 	}
 
 	&.nfd-brand-hostgator-br,
@@ -147,6 +160,7 @@ body {
 		--nfd-onboarding-step-what-next-img-3: url(../../Brands/wordpress/full-service.png);
 		--nfd-onboarding-step-what-next-img-1: url(../../Brands/wordpress/wp-admin.png);
 		--nfd-onboarding-step-what-next-img-2: url(../static/images/help.png);
+		--nfd-onboarding-header-border: #e0e0e0;
 	}
 
 	&.nfd-brand-webcom {
@@ -184,6 +198,7 @@ body {
 		--nfd-onboarding-drawer-icon-active-fill: var(--nfd-onboarding-tertiary-alt);
 		--nfd-onboarding-loader-start: var(--nfd-onboarding-primary);
 		--nfd-onboarding-loader-end: var(--nfd-onboarding-tertiary);
+		--nfd-onboarding-header-border: #e0e0e0;
 	}
 
 	&.nfd-brand-crazy-domains {
@@ -294,5 +309,69 @@ body {
 				background-color: rgba(var(--nfd-onboarding-highlighted--rgb), 0.2);
 			}
 		}
+		--nfd-onboarding-header-border: #e0e0e0;
+	}
+
+	.nfd-onboarding-sitegen-light {
+
+		--sitegen-background-low: #ededed;
+		--nfd-onboarding-primary: #000;
+		--nfd-onboarding-primary-rgb: 0, 0, 0;
+		--nfd-onboarding-hover: #c3c4c7;
+		--nfd-onboarding-secondary: #fff;
+		--nfd-onboarding-secondary-rgb: 255, 255, 255;
+		--nfd-onboarding-admin-bar-color: #c3c4c7;
+		--nfd-onboarding-shimmer-color: 0, 0, 0;
+		--nfd-onboarding-card-background: #fff;
+		--nfd-onboarding-admin-bar-background: #1d2327;
+		--nfd-onboarding-progress-bar-fill: #0060f0;
+		--nfd-onboarding-progress-bar-background: #d5d5d5;
+		--nfd-onboarding-site-logo-on-drag: rgba(53, 59, 64, 0.3);
+		--nfd-onboarding-navigation-back-background: rgba(212, 212, 212, 0.35);
+		--nfd-onboarding-site-logo-border: var(--nfd-onboarding-primary);
+		--nfd-onboarding-header-border: rgba(var(--nfd-onboarding-primary-rgb), 0.3);
+		--nfd-onboarding-card-overlay: rgba(0, 0, 0, 0.4);
+		--nfd-onboarding-heart-icon-fill: #ef4a71;
+		--nfd-onboarding-heart-icon-stroke: #9ca2a7;
+		--nfd-onboarding-regenerating-card-background: rgba(53, 58, 64, 0.1);
+		--nfd-onboarding-preview-favorite-background: #1e2327;
+		--nfd-onboarding-favorite-fill: #ef4a71;
+		--nfd-onboarding-button-background: #363e4459;
+		--nfd-onboarding-sidebar-border-left: #e0e0e0;
+		--nfd-onboarding-facebook-connect-button-background: #1877f2;
+		--nfd-onboarding-facebook-connect-button-background-hover: #0065ea;
+		--nfd-onboarding-facebook-connected-button-background: #3bb143;
+
+	}
+
+	.nfd-onboarding-sitegen-dark {
+		--nfd-onboarding-primary: #fff;
+		--nfd-onboarding-primary-rgb: 255, 255, 255;
+		--nfd-onboarding-hover: #262c30;
+		--nfd-onboarding-secondary: #000;
+		--nfd-onboarding-secondary-rgb: 0, 0, 0;
+		--nfd-onboarding-admin-bar-color: #c3c4c7;
+		--nfd-onboarding-card-background: #1d2327;
+		--nfd-onboarding-shimmer-color: 168, 239, 255;
+		--nfd-onboarding-admin-bar-background: #1d2327;
+		--nfd-onboarding-progress-bar-fill: #0060f0;
+		--nfd-onboarding-progress-bar-background: #353a40;
+		--nfd-onboarding-site-logo-on-drag: rgba(156, 162, 167, 0.3);
+		--nfd-onboarding-navigation-back-background: rgba(54, 62, 68, 0.35);
+		--nfd-onboarding-site-logo-border: rgba(156, 162, 167, 1);
+		--nfd-onboarding-header-border: rgba(var(--nfd-onboarding-primary-rgb), 0.3);
+		--nfd-onboarding-card-overlay: rgba(0, 0, 0, 0.4);
+		--nfd-onboarding-heart-icon-fill: #ef4a71;
+		--nfd-onboarding-heart-icon-stroke: #9ca2a7;
+		--nfd-onboarding-preview-favorite-background: #1e2327;
+		--nfd-onboarding-editor-header-background: var(--nfd-onboarding-preview-favorite-background);
+		--nfd-onboarding-favorite-fill: #ef4a71;
+		--nfd-onboarding-button-background: #363e4459;
+		--nfd-onboarding-regenerating-card-background: rgba(53, 58, 64, 0.1);
+		--sitegen-background-low: url(../static/images/sitegen/ai_bg_low.png);
+		--nfd-onboarding-sidebar-border-left: #e0e0e0;
+		--nfd-onboarding-facebook-connect-button-background: #1877f2;
+		--nfd-onboarding-facebook-connect-button-background-hover: #0065ea;
+		--nfd-onboarding-facebook-connected-button-background: #3bb143;
 	}
 }

@@ -9,7 +9,7 @@ import { DEFAULT_FLOW } from '../data/flows/constants';
  * @param {*} state
  * @return {string} Drawer View
  */
-export function getDrawerView( state ) {
+export function getActiveDrawerView( state ) {
 	return state.drawer.view;
 }
 
@@ -35,6 +35,34 @@ export function isDrawerSuppressed( state ) {
 
 export function isHeaderNavigationEnabled( state ) {
 	return state.header.isNavigationEnabled;
+}
+
+export function isHeaderEnabled( state ) {
+	return state.header.isEnabled;
+}
+
+export function getHeaders( state ) {
+	return state.header.headers;
+}
+
+export function getFooters( state ) {
+	return state.footer.footers;
+}
+
+export function getHeaderActiveView( state ) {
+	return state.header.view;
+}
+
+export function getFooterActiveView( state ) {
+	return state.footer.view;
+}
+
+export function getIsFooterNavAllowed( state ) {
+	return state.footer.isNavAllowed;
+}
+
+export function getHideFooterNav( state ) {
+	return state.footer.hideFooterNav;
 }
 
 /**
@@ -255,6 +283,10 @@ export function getThemeStatus( state ) {
 	return state.settings.themeStatus;
 }
 
+export function getInitialize( state ) {
+	return state.settings.initialize;
+}
+
 export function getStepPreviewData( state ) {
 	return state.runtime.previewSettings.stepPreviewData;
 }
@@ -386,4 +418,51 @@ export function getExperienceLevel( state ) {
 
 export function getTopPriority( state ) {
 	return state.data.flowData.data.topPriority.priority1;
+}
+
+/**
+ * Gets Current User Details like Display name and avatar URL
+ *
+ * @param {*} state
+ * @return {string} currentUserInfo
+ */
+export function getCurrentUserDetails( state ) {
+	const currentUserInfo = state.runtime.currentUserDetails;
+	return currentUserInfo;
+}
+
+/**
+ * Gets homepages
+ *
+ * @param {*} state
+ * @return {Object} homepages
+ */
+export const getHomepagesData = ( state ) => {
+	return state.data.flowData.sitegen.homepages;
+};
+
+/**
+ * Gets actove homepage
+ *
+ * @param {*} state
+ * @return {Object} active
+ */
+
+export const getActiveHomepage = ( state ) => {
+	return state.data.flowData.sitegen.homepages.active;
+};
+
+/**
+ * Gets all homepage
+ *
+ * @param {*} state
+ * @return {Object} data
+ */
+
+export const getAllHomepages = ( state ) => {
+	return state.data.flowData.sitegen.homepages.data;
+};
+
+export function getCustomizeSidebarData( state ) {
+	return state.runtime.customizeSidebarData;
 }

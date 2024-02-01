@@ -1,0 +1,19 @@
+.ai-heading {
+
+	width: 100%;
+	display: flex;
+	margin: 16px;
+	align-items: center;
+
+	.wnd-ai-logo {
+		margin-right: 5px;
+	}
+
+	&--title {
+		margin: 10px;
+		line-height: 1.5;
+		font-weight: 500;
+		color: var(--nfd-onboarding-primary);
+		font-size: clamp(1.2rem, 1.1rem + 0.273vw, 2.5rem);
+	}
+}

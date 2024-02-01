@@ -1,0 +1,165 @@
+.nfd-onboarding-step {
+
+	&--site-gen {
+
+		&__social-media {
+
+			&__container {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+
+				&__buttons {
+					width: 96%;
+					display: flex;
+					align-items: center;
+					justify-content: flex-end;
+					margin-top: 20px;
+
+					&__skip {
+						font-size: clamp(0.6rem, 0.755rem + 0.227vw, 1.3rem);
+						font-style: normal;
+						font-weight: 510;
+						margin-right: 24px;
+
+						&:hover {
+							text-decoration: underline;
+							color: var(--nfd-onboarding-primary);
+						}
+					}
+
+					@media (max-width: #{ ($break-small) }) {
+						justify-content: center;
+						margin-bottom: 50px;
+					}
+				}
+
+			}
+
+			&__contain {
+				margin: 16px;
+				border: 1.25px solid var(--nfd-onboarding-site-logo-border);
+				border-radius: 8px;
+				padding: 30px 35px;
+				display: flex;
+				justify-content: space-between;
+				align-items: left;
+				width: 37vw;
+
+				@media (max-width: #{ ($break-large) }) {
+					width: 80vw;
+				}
+
+				&__containleft {
+					width: 65%;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					color: var(--nfd-onboarding-primary);
+					margin-right: 25px;
+					white-space: normal;
+					line-height: 1;
+
+					span {
+						font-size: clamp(1.1rem, 0.927rem + 0.364vw, 1.8rem);
+					}
+
+					p {
+						margin-top: 15px;
+						font-size: clamp(0.6rem, 0.755rem + 0.227vw, 1.3rem);
+
+						@media (max-width: #{ ($break-small) }) {
+							text-align: justify;
+						}
+					}
+
+					@media (max-width: #{ ($break-small) }) {
+						width: 100%;
+						margin-right: 0;
+					}
+				}
+
+				&__containright {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+
+					&__button {
+						display: inline-flex;
+						align-items: center;
+						padding: 10px 15px;
+						border: none;
+						border-radius: 5px;
+						cursor: pointer;
+						justify-content: center;
+
+						@media (max-width: #{ ($break-small) }) {
+							width: 100%;
+						}
+
+						&__icon {
+							margin-right: 8px;
+							background-image: var(--facebook-icon);
+							width: 25px;
+							height: 25px;
+							filter: brightness(0) saturate(100%) invert(100%) sepia(1%) saturate(376%) hue-rotate(220deg) brightness(120%) contrast(100%);
+						}
+
+						&--connect {
+							display: flex;
+							flex-direction: row;
+							align-items: center;
+							justify-content: center;
+							background-color: var(--nfd-onboarding-facebook-connect-button-background);
+							color: #fff;
+
+							&:hover {
+								background-color: var(--nfd-onboarding-facebook-connect-button-background-hover);
+							}
+						}
+
+						&--connected {
+							background-color: var(--nfd-onboarding-facebook-connected-button-background);
+							color: #fff;
+							cursor: pointer;
+						}
+					}
+
+					@media (max-width: #{ ($break-small) }) {
+						width: 100%;
+						margin: 30px 0;
+					}
+				}
+			}
+
+			@media only screen and (max-width: 600px) {
+
+				&__contain {
+					margin: 8px;
+					padding: 24px;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+				}
+
+				&__containright {
+
+					&__button {
+
+						&__icon {
+							width: 20px;
+							height: 20px;
+						}
+
+						&--connect {
+							padding: 8px 12px;
+						}
+
+					}
+
+				}
+			}
+		}
+	}
+}

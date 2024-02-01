@@ -14,6 +14,10 @@ body {
 	&.is-fullscreen-mode {
 		opacity: 1;
 		transition: opacity ease-in 500ms;
+
+		#wpadminbar {
+			display: none;
+		}
 	}
 
 	&.dashboard_page_nfd-onboarding {
@@ -25,6 +29,7 @@ body {
 	--nfd-onboarding-white: #fff;
 	--nfd-onboarding-white-rgb: 255, 255, 255;
 	--nfd-onboarding-black: #000;
+	--nfd-onboarding-black-rgb: 0, 0, 0;
 	--nfd-onboarding-header-base: var(--nfd-onboarding-light);
 	--nfd-onboarding-header-contrast: var(--nfd-onboarding-dark);
 	--nfd-onboarding-content-base: var(--nfd-onboarding-light);

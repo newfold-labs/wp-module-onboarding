@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 import { store as nfdOnboardingStore } from '../../store';
 import CommonLayout from '../../components/Layouts/Common';
-import HeadingWithSubHeading from '../../components/HeadingWithSubHeading';
+import HeadingWithSubHeading from '../../components/Heading/HeadingWithSubHeading';
 import { getPatterns } from '../../utils/api/patterns';
 import {
 	THEME_STATUS_ACTIVE,

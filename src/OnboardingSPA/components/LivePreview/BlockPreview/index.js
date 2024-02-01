@@ -2,6 +2,7 @@ import { useSelect } from '@wordpress/data';
 import { BlockEditorProvider } from '@wordpress/block-editor';
 import { parse } from '@wordpress/blocks';
 import { useEffect, useState, memo } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 import AutoHeightBlockPreview from './auto';
 import { useGlobalStylesOutput } from '../../../utils/global-styles/use-global-styles-output';
@@ -15,6 +16,8 @@ const BlockPreview = ( {
 	setIsLoadingParent = false,
 	previewSettings = false,
 	skeletonLoadingTime = 2500,
+	skeletonType = 'default',
+	skeletonShouldWait = false,
 } ) => {
 	const [ blocks, setBlocks ] = useState();
 	const [ settings, setSettings ] = useState();
@@ -54,7 +57,7 @@ const BlockPreview = ( {
 		} else {
 			setSettings( storedPreviewSettings );
 		}
-	}, [] );
+	}, [ previewSettings, storedPreviewSettings ] );
 
 	useEffect( () => {
 		if ( blockGrammer ) {
@@ -68,7 +71,7 @@ const BlockPreview = ( {
 		}
 	}, [ storedPreviewSettings, currentData ] );
 
-	const SkeletonLivePreview = memo( () => {
+	const SkeletonLivePreviewDefault = memo( () => {
 		return (
 			<div className="live-preview__container--is-skeleton">
 				<div className="live-preview__container--is-skeleton--box live-preview__container--is-skeleton--box-header">
@@ -84,9 +87,43 @@ const BlockPreview = ( {
 		);
 	} );
 
+	const SkeletonLivePreviewSitegen = memo( () => {
+		return (
+			<div className="regenerating-site-card-wrap regenerating-site-card-skeleton">
+				<div className="regenerating-site-card">
+					<p className="regenerating-site-card__title">
+						<p className="regenerating-site-card__title">
+							{ skeletonShouldWait
+								? __(
+										'Regenerating Site',
+										'wp-module-onboarding'
+								  )
+								: __(
+										'Generating Site',
+										'wp-module-onboarding'
+								  ) }
+						</p>
+					</p>
+					<div className="regenerating-site-card__progress-bar">
+						<div className="regenerating-site-card__progress-bar__fill"></div>
+					</div>
+				</div>
+			</div>
+		);
+	} );
+
+	const getSkeleton = () => {
+		switch ( skeletonType ) {
+			case 'sitegen':
+				return <SkeletonLivePreviewSitegen />;
+			default:
+				return <SkeletonLivePreviewDefault />;
+		}
+	};
+
 	return (
 		<div className={ `live-preview__container-${ styling }` }>
-			{ loading && <SkeletonLivePreview /> }
+			{ loading && getSkeleton() }
 			{ blocks && settings && (
 				<BlockEditorProvider
 					value={ blocks }

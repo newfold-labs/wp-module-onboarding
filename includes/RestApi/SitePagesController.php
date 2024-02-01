@@ -52,7 +52,7 @@ class SitePagesController {
 		if ( false === $flow_data_option || ! isset( $flow_data_option['data'] ) ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
-				'Flow data does not exist to generate a child theme.',
+				'Flow data does not exist to publish site pages',
 				array( 'status' => 500 )
 			);
 		}

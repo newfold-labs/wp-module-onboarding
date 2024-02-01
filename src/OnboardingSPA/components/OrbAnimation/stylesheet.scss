@@ -1,0 +1,220 @@
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable declaration-block-no-duplicate-properties */
+:root {
+	--wnd-ai-logo-speed: 0.6; /* range from 0-1, lower the slower */
+	--wnd-ai-logo-size: 100px;
+	--wnd-ai-logo-glow-color: #8b00ff;
+	--wnd-ai-logo-glow-opacity: 0.45;
+	--wnd-ai-logo-gradient: #fff7f3, #fde4e1, #fccfcc, #fbb5bc, #f993b0, #f369a3, #e03f98, #c11889, #360261, #360261, #360261;
+	--wnd-ai-logo-cutout-size: 55%;
+	--wnd-ai-logo-loading-gradient: linear-gradient(25deg, #fff 10%, rgba(0, 0, 0, 0) 60%), linear-gradient(50deg, #fff 10%, rgba(0, 0, 0, 0) 20%);
+	--wnd-ai-logo-mask-composite-webkit: destination-out;
+	--wnd-ai-logo-mask-composite: exclude;
+}
+
+@keyframes wnd-ai-logo-rotate {
+
+	0% {
+		transform: rotateZ(0deg);
+	}
+
+	100% {
+		transform: rotateZ(360deg);
+	}
+}
+
+@keyframes wnd-ai-logo-pulse {
+
+	0% {
+		transform: scale(1);
+		transform: rotateZ(0deg);
+	}
+
+	50% {
+		transform: scale(1.1);
+		transform: rotateZ(180deg);
+	}
+
+	100% {
+		transform: scale(1);
+		transform: rotateZ(360deg);
+	}
+}
+
+.wnd-ai-logo {
+	position: relative;
+	height: var(--wnd-ai-logo-size, 80px);
+	aspect-ratio: 1/1;
+	transition-property: transform, filter;
+	will-change: transform, filter;
+	transition-duration: 0.8s;
+	transition-timing-function: cubic-bezier(0.47, 2, 0.41, 0.8);
+	transform: scale(1);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	filter: brightness(1.3) saturate(1);
+	user-select: none;
+
+	&__spinner {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		pointer-events: none;
+		background: trasparent;
+		background-image: var(--wnd-ai-logo-loading-gradient);
+		mask:
+			radial-gradient(ellipse at 50% 50%, #000 calc(var(--wnd-ai-logo-cutout-size) * 1), transparent calc(var(--wnd-ai-logo-cutout-size) * 1)),
+			linear-gradient(to right, #000, #000);
+		-webkit-mask-composite: var(--wnd-ai-logo-mask-composite-webkit);
+		mask-composite: var(--wnd-ai-logo-mask-composite);
+		border-radius: 50%;
+		animation: wnd-ai-logo-rotate 0.85s linear infinite;
+		opacity: 0;
+		transition: filter 0.3s ease-in, opacity 0.3s ease-in-out;
+		mix-blend-mode: overlay;
+		filter: blur(2px);
+
+		&::after,
+		&::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background-image: var(--wnd-ai-logo-loading-gradient);
+			border-radius: 50%;
+			filter: blur(2px);
+		}
+	}
+
+	&__circle {
+		background: transparent;
+		background-image: linear-gradient(45deg, var(--wnd-ai-logo-gradient));
+		width: 100%;
+		height: 90%;
+		position: absolute;
+		opacity: 0.16;
+		mix-blend-mode: plus-lighter;
+		filter: brightness(1.2);
+		border-radius: 45%;
+		border: 0.01em solid rgba(255, 255, 255, 1);
+		animation: wnd-ai-logo-circle 2s linear infinite;
+		mask:
+			radial-gradient(ellipse at 50% 50%, #000 var(--wnd-ai-logo-cutout-size), transparent var(--wnd-ai-logo-cutout-size)),
+			linear-gradient(to right, #000, #000);
+		-webkit-mask-composite: var(--wnd-ai-logo-mask-composite-webkit);
+		mask-composite: var(--wnd-ai-logo-mask-composite);
+		animation: wnd-ai-logo-rotate calc(var(--wnd-ai-logo-speed, 1) * 5s) linear infinite;
+		will-change: transform;
+		transition: all 0.3s ease-in;
+
+		&--bg {
+			box-shadow: 0 0 80px 10px var(--wnd-ai-logo-glow-color), 0 0 20px 0 var(--wnd-ai-logo-glow-color);
+			opacity: var(--wnd-ai-logo-glow-opacity);
+			background: var(--wnd-ai-logo-glow-color);
+			border: none;
+			mask: none !important;
+			animation: none;
+			filter: blur(32px);
+			mask: none !important;
+		}
+
+		&--1 {
+			transform: rotateZ(15deg);
+			animation-duration: calc(var(--wnd-ai-logo-speed, 1) * 4s);
+			animation-direction: reverse;
+		}
+
+		&--2 {
+			transform: rotateZ(30deg);
+			animation-duration: calc(var(--wnd-ai-logo-speed, 1) * 4.5s);
+		}
+
+		&--3 {
+			transform: rotateZ(45deg);
+			animation-duration: calc(var(--wnd-ai-logo-speed, 1) * 5s);
+			animation-direction: reverse;
+		}
+
+		&--4 {
+			transform: rotateZ(60deg);
+			animation-duration: calc(var(--wnd-ai-logo-speed, 1) * 6s);
+		}
+
+		&--5 {
+			transform: rotateZ(75deg);
+			animation-duration: calc(var(--wnd-ai-logo-speed, 1) * 7s);
+		}
+
+		&--6 {
+			transform: rotateZ(-90deg);
+			animation-duration: calc(var(--wnd-ai-logo-speed, 1) * 8s);
+			animation-direction: reverse;
+		}
+	}
+}
+
+.light {
+
+	.wnd-ai-logo {
+
+		filter: brightness(1.1) saturate(1.2);
+
+		&__circle {
+
+			&--bg {
+				opacity: 0.2;
+			}
+		}
+	}
+}
+
+
+/* Loading */
+body.wnd-ai-logo-loading .wnd-ai-logo {
+	transition-duration: 0.4s;
+
+	&__spinner {
+		opacity: 1;
+	}
+
+	&__circle:not(.wnd-ai-logo__circle--bg) {
+		filter: brightness(0.3) !important;
+		opacity: 0.065;
+	}
+
+	filter: brightness(1.35) saturate(1.35);
+}
+
+/* Focus & Hover */
+body:has([data-wnd-ai-logo]:focus) .wnd-ai-logo,
+body:not(.wnd-ai-logo-loading) .wnd-ai-logo:hover {
+	transform: scale(1.05);
+	filter: brightness(1.35) saturate(1.5);
+}
+
+/* Keydown */
+body.wnd-ai-logo-keydown .wnd-ai-logo.wnd-ai-logo {
+	transform: scale(1.1);
+	transition-duration: 0.4s;
+	filter: brightness(1.45) saturate(1.2);
+}
+
+
+.light {
+
+	/* Loading */
+	body.wnd-ai-logo-loading .wnd-ai-logo {
+		filter: brightness(1.5) saturate(1.3);
+
+		&__circle:not(.wnd-ai-logo__circle--bg) {
+			filter: brightness(1.2) saturate(1.2) !important;
+			opacity: 0.08;
+		}
+
+		&__spinner {
+			filter: invert(1) blur(6px);
+			opacity: 0.5;
+			mix-blend-mode: plus-darker;
+		}
+	}
+}

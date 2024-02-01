@@ -147,6 +147,13 @@ export function updateThemeStatus( themeStatus ) {
 	};
 }
 
+export function updateInitialize( initialize ) {
+	return {
+		type: 'UPDATE_INITIALIZE',
+		initialize,
+	};
+}
+
 export function setIsSidebarOpened( isOpen ) {
 	return {
 		type: 'SET_SIDEBAR_OPENED',
@@ -165,6 +172,41 @@ export function setIsHeaderNavigationEnabled( isNavigationEnabled ) {
 	return {
 		type: 'SET_HEADER_NAVIGATION_ENABLED',
 		isNavigationEnabled,
+	};
+}
+
+export function setIsHeaderEnabled( isEnabled ) {
+	return {
+		type: 'SET_HEADER_ENABLED',
+		isEnabled,
+	};
+}
+
+export function setHeaderActiveView( view ) {
+	return {
+		type: 'SET_HEADER_ACTIVE_VIEW',
+		view,
+	};
+}
+
+export function setIsFooterNavAllowed( isNavAllowed ) {
+	return {
+		type: 'SET_IS_FOOTER_NAV_ALLOWED',
+		isNavAllowed,
+	};
+}
+
+export function setHideFooterNav( hideFooterNav ) {
+	return {
+		type: 'SET_HIDE_FOOTER_NAV',
+		hideFooterNav,
+	};
+}
+
+export function setFooterActiveView( view ) {
+	return {
+		type: 'SET_FOOTER_ACTIVE_VIEW',
+		view,
 	};
 }
 
@@ -247,5 +289,33 @@ export function setNavErrorContinuePath( continuePath ) {
 export function resetNavError() {
 	return {
 		type: 'RESET_NAV_ERROR',
+	};
+}
+
+export const setHomepagesData = ( homepagesData ) => {
+	return {
+		type: 'SET_HOMEPAGES_DATA',
+		homepagesData,
+	};
+};
+
+export const setActiveHomepage = ( activeHomepage ) => {
+	return {
+		type: 'SET_ACTIVE_HOMEPAGE',
+		activeHomepage,
+	};
+};
+
+export const toggleFavorite = ( slug ) => {
+	return {
+		type: 'TOGGLE_FAVORITE',
+		slug,
+	};
+};
+
+export function updateCustomizeSidebarData( customizeSidebarData ) {
+	return {
+		type: 'CUSTOMIZE_SIDEBAR_DATA',
+		customizeSidebarData,
 	};
 }

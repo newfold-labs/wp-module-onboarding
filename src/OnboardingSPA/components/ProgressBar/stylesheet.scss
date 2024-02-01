@@ -1,0 +1,14 @@
+.nfd-onboarding-header {
+
+	&__progress-bar {
+		width: 100%;
+		background-color: var(--nfd-onboarding-progress-bar-background);
+		height: 16px;
+
+		&__progress {
+			height: 16px;
+			transition: width 2s ease-in-out;
+			background-color: var(--nfd-onboarding-progress-bar-fill);
+		}
+	}
+}

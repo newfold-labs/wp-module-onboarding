@@ -1,0 +1,52 @@
+.nfd-onboarding-step {
+
+	&--site-gen {
+
+		&__site-logo {
+
+			&__container {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				width: 40vw;
+
+				@media (max-width: #{ ($break-large) }) {
+					width: 80vw;
+				}
+
+				&__buttons {
+					width: 99%;
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: flex-end;
+					margin-top: 20px;
+
+					&__skip {
+						font-size: clamp(0.6rem, 0.755rem + 0.227vw, 1.3rem);
+						font-style: normal;
+						font-weight: 510;
+						margin-right: 24px;
+
+						&:hover {
+							text-decoration: underline;
+							color: var(--nfd-onboarding-primary);
+						}
+
+						@media (max-width: #{ ($break-small) }) {
+							margin-right: 0;
+						}
+					}
+
+					@media (max-width: #{ ($break-small) }) {
+						justify-content: center;
+						margin-bottom: 50px;
+						margin-right: 0;
+					}
+				}
+
+			}
+		}
+	}
+}

@@ -1,41 +1,76 @@
-import { memo } from '@wordpress/element';
+import { Slot } from '@wordpress/components';
+import { Fragment, Suspense } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
-import { useLocation } from 'react-router-dom';
+import classNames from 'classnames';
 
-import HeaderEnd from './components/HeaderEnd';
-import ExitToWordPress from '../ExitToWordPress';
 import { store as nfdOnboardingStore } from '../../store';
+import {
+	HEADER_CENTER,
+	HEADER_END,
+	HEADER_START,
+	HEADER_TOP,
+} from '../../../constants';
+import { stepSiteGenEditor } from '../../steps/SiteGen/Editor/step';
+import { SITEGEN_FLOW } from '../../data/flows/constants';
 
-/**
- * Interface header rendered into header render prop in <InterfaceSkeleton />.
- *
- * @return {WPComponent} Header
- */
 const Header = () => {
-	const location = useLocation();
+	const { headers, headerActiveView, isHeaderEnabled, currentStep } =
+		useSelect( ( select ) => {
+			return {
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+				headers: select( nfdOnboardingStore ).getHeaders(),
+				headerActiveView:
+					select( nfdOnboardingStore ).getHeaderActiveView(),
+				isHeaderEnabled: select( nfdOnboardingStore ).isHeaderEnabled(),
+			};
+		} );
 
-	const { firstStep } = useSelect( ( select ) => {
-		return {
-			firstStep: select( nfdOnboardingStore ).getFirstStep(),
-		};
-	}, [] );
+	const isEditorStep = currentStep === stepSiteGenEditor;
+	const isSitegenFlow = window.nfdOnboarding.currentFlow === SITEGEN_FLOW;
 
-	const isGettingStarted = firstStep?.path === location?.pathname;
 	return (
-		<div className="nfd-onboarding-header">
-			<div className="nfd-onboarding-header__start">
-				{ isGettingStarted ? (
-					<ExitToWordPress origin="header-first-step" />
-				) : null }
-			</div>
-			<div className="nfd-onboarding-header__center">
-				{ /* Centered Header Slot */ }
-			</div>
-			<div className="nfd-onboarding-header__end">
-				<HeaderEnd />
-			</div>
-		</div>
+		<>
+			<Suspense fallback={ <Fragment /> }>
+				{ headers.map( ( header ) => {
+					return (
+						<Fragment key={ header.id }>
+							<header.header />
+						</Fragment>
+					);
+				} ) }
+			</Suspense>
+			<Slot name={ `${ headerActiveView }/${ HEADER_TOP }` } />
+			{ isHeaderEnabled && (
+				<div
+					className={ classNames(
+						'nfd-onboarding-header',
+						{
+							'nfd-onboarding-header--dark': isEditorStep,
+						},
+						{
+							'nfd-onboarding-header--sitegen': isSitegenFlow,
+						}
+					) }
+				>
+					<div className="nfd-onboarding-header__start">
+						<Slot
+							name={ `${ headerActiveView }/${ HEADER_START }` }
+						/>
+					</div>
+					<div className="nfd-onboarding-header__center">
+						<Slot
+							name={ `${ headerActiveView }/${ HEADER_CENTER }` }
+						/>
+					</div>
+					<div className="nfd-onboarding-header__end">
+						<Slot
+							name={ `${ headerActiveView }/${ HEADER_END }` }
+						/>
+					</div>
+				</div>
+			) }
+		</>
 	);
 };
 
-export default memo( Header );
+export default Header;

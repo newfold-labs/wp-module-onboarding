@@ -1,13 +1,14 @@
 /**
  * External dependencies
  */
-import classnames from 'classnames';
-import { partial, find } from 'lodash';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { find } from 'lodash';
 
 /**
  * WordPress dependencies
  */
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useCallback } from '@wordpress/element';
 import { useInstanceId } from '@wordpress/compose';
 
 /**
@@ -16,87 +17,120 @@ import { useInstanceId } from '@wordpress/compose';
 import { NavigableMenu } from './navigableContainer';
 import { Button } from '@wordpress/components';
 
-const noop = () => { };
+const noop = () => {};
 
-const TabButton = ({ tabId, onClick, children, selected, ...rest }) => (
-    <Button
-        role="tab"
-        tabIndex={selected ? null : -1}
-        aria-selected={selected}
-        id={tabId}
-        onClick={onClick}
-        {...rest}
-    >
-        {children}
-    </Button>
-);
+const TabButton = ( {
+	tabId,
+	onClick,
+	children,
+	selected,
+	triggerEvent,
+	handleEvent,
+	tabName,
+	...rest
+} ) => {
+	const eventProps = useEventTrigger( triggerEvent, handleEvent, tabName );
 
-export default function TabPanelHover({
-    className,
-    children,
-    tabs,
-    initialTabName,
-    orientation = 'horizontal',
-    activeClass = 'is-active',
-    notActiveClass = 'is-not-active',
-    onSelect = noop,
-}) {
-    const instanceId = useInstanceId(TabPanelHover, 'tab-panel');
-    const [selected, setSelected] = useState(null);
+	return (
+		<Button
+			role="tab"
+			tabIndex={ selected ? null : -1 }
+			aria-selected={ selected }
+			id={ tabId }
+			{ ...eventProps }
+			{ ...rest }
+		>
+			{ children }
+		</Button>
+	);
+};
 
-    const handleMouseOver = (tabKey) => {
-        setSelected(tabKey);
-        onSelect(tabKey);
-    };
+const useEventTrigger = ( triggerEvent, handleEvent, tabName ) => {
+	const eventHandler = useCallback(
+		() => handleEvent( tabName ),
+		[ handleEvent, tabName ]
+	);
 
-    const onNavigate = (childIndex, child) => {
-        child.click();
-    };
-    const selectedTab = find(tabs, { name: selected });
-    const selectedId = `${instanceId}-${selectedTab?.name ?? 'none'}`;
+	return triggerEvent === 'click'
+		? { onClick: eventHandler }
+		: { onMouseOver: eventHandler };
+};
 
-    useEffect(() => {
-        const newSelectedTab = find(tabs, { name: selected });
-        if (!newSelectedTab) {
-            setSelected(
-                initialTabName || (tabs.length > 0 ? tabs[0].name : null)
-            );
-        }
-    }, [tabs]);
+export default function TabPanelHover( {
+	className,
+	children,
+	tabs,
+	initialTabName,
+	orientation = 'horizontal',
+	activeClass = 'is-active',
+	notActiveClass = 'is-not-active',
+	callback,
+	onSelect = noop,
+	triggerEvent = 'click',
+} ) {
+	const instanceId = useInstanceId( TabPanelHover, 'tab-panel' );
+	const [ selected, setSelected ] = useState( null );
 
-    return (
-        <div className={className}>
-            <NavigableMenu
-                role="tablist"
-                orientation={orientation}
-                onNavigate={onNavigate}
-                className="components-tab-panel__tabs"
-            >
-                {tabs.map((tab) => (
-                    <TabButton
-                        className={
-                            `components-tab-panel__tabs-item ${tab.name === selected && activeClass} ${ tab.name !== selected && notActiveClass }`
-                        }
-                        tabId={`${instanceId}-${tab.name}`}
-                        aria-controls={`${instanceId}-${tab.name}-view`}
-                        selected={tab.name === selected}
-                        key={tab.name}
-                        onMouseOver={partial(handleMouseOver, tab.name)}
-                    >
-                        {tab.title}
-                    </TabButton>
-                ))}
-            </NavigableMenu>
-            {selectedTab && (
-                <div
-                    key={selectedId}
-                    aria-labelledby={selectedId}
-                    role="tabpanel"
-                    id={`${selectedId}-view`}
-                    className="components-tab-panel__tab-content">
-                    {children(selectedTab)}
-                </div>
-            )}
-        </div>
-    );
+	const handleEvent = ( tabKey ) => {
+		setSelected( tabKey );
+		onSelect( tabKey );
+		const selectedTab = find( tabs, { name: tabKey } );
+		if ( typeof callback === 'function' ) {
+			callback( selectedTab );
+		}
+	};
+
+	const onNavigate = ( childIndex, child ) => {
+		child.click();
+	};
+	const selectedTab = find( tabs, { name: selected } );
+	const selectedId = `${ instanceId }-${ selectedTab?.name ?? 'none' }`;
+
+	useEffect( () => {
+		const newSelectedTab = find( tabs, { name: selected } );
+		if ( ! newSelectedTab ) {
+			setSelected(
+				initialTabName || ( tabs.length > 0 ? tabs[ 0 ].name : null )
+			);
+		}
+	}, [ tabs ] );
+
+	return (
+		<div className={ className }>
+			<NavigableMenu
+				role="tablist"
+				orientation={ orientation }
+				onNavigate={ onNavigate }
+				className="components-tab-panel__tabs"
+			>
+				{ tabs.map( ( tab ) => (
+					<TabButton
+						className={ `components-tab-panel__tabs-item ${
+							tab.name === selected && activeClass
+						} ${ tab.name !== selected && notActiveClass }` }
+						tabId={ `${ instanceId }-${ tab.name }` }
+						aria-controls={ `${ instanceId }-${ tab.name }-view` }
+						selected={ tab.name === selected }
+						key={ tab.name }
+						triggerEvent={ triggerEvent }
+						handleEvent={ handleEvent }
+						tabName={ tab.name }
+					>
+						{ tab.title }
+					</TabButton>
+				) ) }
+			</NavigableMenu>
+			{ selectedTab && (
+				<div
+					key={ selectedId }
+					aria-labelledby={ selectedId }
+					role="tabpanel"
+					id={ `${ selectedId }-view` }
+					className="components-tab-panel__tab-content"
+				>
+					{ children && children( selectedTab ) }
+				</div>
+			) }
+		</div>
+	);
 }

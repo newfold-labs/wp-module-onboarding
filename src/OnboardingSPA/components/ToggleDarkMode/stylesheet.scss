@@ -1,0 +1,24 @@
+.nfd-onboarding-toggle__theme {
+	margin-left: 25px;
+	margin-top: 10px;
+	margin-bottom: 25px;
+
+	&__button {
+		width: 60px;
+		height: 60px;
+		cursor: pointer;
+
+		&__light {
+			background: var(--sitegen-toggle-theme-icon-light);
+		}
+
+		&__dark {
+			background: var(--sitegen-toggle-theme-icon-dark);
+		}
+	}
+
+	@media (max-width: #{ ($break-small) }) {
+		margin-left: 16px;
+		margin-bottom: 16px;
+	}
+}

@@ -17,6 +17,7 @@ export const wpAdminPage = addQueryArgs(
 	`${ wpAdminUrl }index.php`,
 	window.nfdOnboarding.currentBrand?.dashboardRedirectParams
 );
+export const wpEditorPage = `${ wpAdminUrl }site-editor.php?canvas=edit`;
 export const pluginDashboardPage =
 	addQueryArgs(
 		window.nfdOnboarding.currentBrand?.pluginDashboardPage,
@@ -37,8 +38,21 @@ export const VIEW_NAV_GET_STARTED = 'nav-get-started';
 export const VIEW_NAV_ECOMMERCE_STORE_INFO = 'nav-ecommerce-store-info';
 export const SIDEBAR_SLOTFILL_PREFIX = 'Sidebar';
 export const SIDEBAR_MENU_SLOTFILL_PREFIX = 'HeaderMenu';
+export const SIDEBAR_SITEGEN_EDITOR_PATTERNS = 'SitegenEditorPatterns';
 export const SIDEBAR_LEARN_MORE = 'LearnMore';
+export const SIDEBAR_CUSTOMIZE = 'Customize';
+export const HEADER_SITEBUILD = 'HeaderSiteBuild';
+export const HEADER_SITEGEN = 'HeaderSiteGen';
+export const FOOTER_SITEBUILD = 'FooterSiteBuild';
+export const FOOTER_SITEGEN = 'FooterSiteGen';
+export const HEADER_TOP = 'HeaderTop';
+export const HEADER_START = 'HeaderStart';
+export const HEADER_CENTER = 'HeaderCenter';
+export const HEADER_END = 'HeaderEnd';
+export const FOOTER_START = 'FooterStart';
+export const FOOTER_END = 'FooterEnd';
 
+export const MAX_RETRIES_SITE_GEN = 2;
 export const MAX_RETRIES_API_QUEUER = 2;
 export const MAX_RETRIES_SETTINGS_INIT = 2;
 export const MAX_RETRIES_FLOW_SWITCH = 2;
@@ -58,6 +72,9 @@ export const CHAPTER_COMMERCE = 'commerce';
 export const CHAPTER_DESIGN = 'design';
 export const CHAPTER_LAYOUT_AND_CONTENT = 'layout_and_content';
 export const CHAPTER_FEATURES = 'features';
+export const CHAPTER_SITEGEN = 'sitegen';
+export const THEME_DARK = 'dark';
+export const THEME_LIGHT = 'light';
 
 /**
  * All views for the <Drawer /> component.

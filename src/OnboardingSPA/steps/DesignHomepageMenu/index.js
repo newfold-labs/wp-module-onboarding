@@ -11,7 +11,7 @@ import {
 	THEME_STATUS_INIT,
 	SIDEBAR_LEARN_MORE,
 } from '../../../constants';
-import HeadingWithSubHeading from '../../components/HeadingWithSubHeading';
+import HeadingWithSubHeading from '../../components/Heading/HeadingWithSubHeading';
 import { DesignStateHandler } from '../../components/StateHandlers';
 import {
 	LivePreviewSelectableCard,

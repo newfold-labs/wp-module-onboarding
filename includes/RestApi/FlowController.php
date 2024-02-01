@@ -5,6 +5,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\FlowService;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Services\StatusService;
 
 /**
@@ -129,9 +130,30 @@ class FlowController {
 	/**
 	 * Flow completion API for child theme generation, verify child theme and publish site pages.
 	 *
+	 * @param \WP_REST_Request $request The incoming request.
+	 *
 	 * @return \WP_REST_Response|\WP_Error
 	 */
-	public function complete() {
+	public function complete( $request ) {
+		$flow = $request->get_param( 'flow' );
+		if ( 'sitegen' === $flow ) {
+			$flow_data_option = \get_option( Options::get_option_name( 'flow' ), false );
+			if ( false === $flow_data_option || ! isset( $flow_data_option['data'] ) ) {
+				return new \WP_Error(
+					'nfd_onboarding_error',
+					'Flow data does not exist to generate a child theme.',
+					array( 'status' => 500 )
+				);
+			}
+			$homepage_data   = $flow_data_option['sitegen']['homepages']['data'];
+			$active_homepage = $flow_data_option['sitegen']['homepages']['active'];
+			SiteGenService::complete( $active_homepage, $homepage_data );
+			return new \WP_REST_Response(
+				array(),
+				201
+			);
+		}
+
 		$site_pages_publish_request  = new \WP_REST_Request(
 			'POST',
 			'/newfold-onboarding/v1/site-pages/publish'

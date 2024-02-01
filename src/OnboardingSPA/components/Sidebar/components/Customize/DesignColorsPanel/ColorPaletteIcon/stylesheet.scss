@@ -1,0 +1,30 @@
+.nfd-onboarding-sidebar--customize__color-palette-icon {
+
+	&__container {
+		text-align: center;
+
+		&__icon {
+			box-sizing: border-box;
+			width: 45px;
+			height: 45px;
+			border-radius: 50%;
+			cursor: pointer;
+			box-shadow: "none";
+		}
+
+		&__icon__selected {
+			box-sizing: border-box;
+			width: 45px;
+			height: 45px;
+			border-radius: 50%;
+			cursor: pointer;
+			box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--nfd-onboarding-sitegen-customize-icon-selected);
+		}
+
+		p {
+			margin-top: 8px;
+			color: var(--nfd-onboarding-sitegen-customize-default-text-color);
+		}
+	}
+
+}

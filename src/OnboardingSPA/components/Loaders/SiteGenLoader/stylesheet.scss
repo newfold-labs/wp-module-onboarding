@@ -1,0 +1,79 @@
+$background-color: var(--nfd-onboarding-card-background);
+
+.nfd-sg-loader {
+
+	margin-bottom: 8px;
+	max-width: 90vw;
+	padding: 18px 12px 10px 12px;
+	border-radius: 12px;
+	background-color: $background-color;
+	width: clamp(18.75rem, 22.6136rem + 5.6818vw, 31.25rem);
+	box-shadow: 3px 3px 5px rgba(var(--nfd-onboarding-black-rgb), $alpha: 0.05);
+
+	@media (max-width: #{ ($break-small) }) {
+		margin: 20px;
+		max-width: 80vw;
+	}
+
+	&__title {
+		line-height: 19px;
+		font-size: 16px;
+		text-align: center;
+		font-weight: 500;
+		color: var(--nfd-onboarding-primary);
+		letter-spacing: 1.5;
+	}
+
+	&__progress {
+		display: flex;
+		margin: 17px 60px 04px 60px;
+		align-items: center;
+		justify-content: center;
+
+		@media (max-width: #{ ($break-small) }) {
+			margin: 20px 30px;
+		}
+
+		&_bars {
+			width: 100%;
+			display: flex;
+			position: relative;
+			align-items: center;
+			justify-content: flex-start;
+
+			&_bg {
+				height: 6px;
+				width: 100%;
+				border-radius: 6px;
+				background-color: var(--nfd-onboarding-progress-bar-background);
+			}
+
+			&_bar {
+				top: 0;
+				height: 6px;
+				max-width: 100%;
+				border-radius: 6px;
+				position: absolute;
+				transition: width 2s ease-in-out;
+				background-color: var(--nfd-onboarding-progress-bar-fill);
+
+				@media (prefers-reduced-motion) {
+					transition: none !important;
+				}
+			}
+		}
+	}
+
+	&__status {
+		line-height: 2;
+		font-size: 14px;
+		text-align: center;
+		letter-spacing: 1.3px;
+		color: var(--nfd-onboarding-primary);
+		animation: fadeInFast 3s ease-out infinite;
+
+		@media (prefers-reduced-motion) {
+			animation: none !important;
+		}
+	}
+}

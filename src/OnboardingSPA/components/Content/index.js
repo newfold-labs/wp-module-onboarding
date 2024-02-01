@@ -1,9 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import { Fragment, memo, Suspense, useCallback } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
 
 import { store as nfdOnboardingStore } from '../../store';
-import { useSelect } from '@wordpress/data';
-import FlowStateHandler from '../StateHandlers/Flow';
 
 /**
  * Primary content area within the <InterfaceSkeleton />.
@@ -32,9 +31,7 @@ const Content = () => {
 	return (
 		<main className="nfd-onboard-content">
 			<Suspense fallback={ <Fragment /> }>
-				<FlowStateHandler>
-					<Routes>{ getMappedPages( routes ) }</Routes>
-				</FlowStateHandler>
+				<Routes>{ getMappedPages( routes ) }</Routes>
 			</Suspense>
 		</main>
 	);

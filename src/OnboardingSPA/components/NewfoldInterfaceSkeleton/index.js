@@ -9,14 +9,32 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { forwardRef, useEffect } from '@wordpress/element';
+import { forwardRef, useEffect, useContext } from '@wordpress/element';
 // eslint-disable-next-line  @wordpress/no-unsafe-wp-apis
 import { __unstableUseNavigateRegions as useNavigateRegions } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useMergeRefs } from '@wordpress/compose';
+// Needs to explicitly imported to be added dynamically
+import aiBg from '../../static/images/sitegen/ai_bg.png';
+import { ThemeContext } from '../ThemeContextProvider';
+import { THEME_DARK } from '../../../constants';
 
-function useHTMLClass( className ) {
+function useHTMLClass( className, isDarkMode ) {
 	useEffect( () => {
+		const lightBg = '#ededed';
+		// eslint-disable-next-line no-undef
+		const mainImage = new Image();
+		mainImage.src = aiBg;
+		mainImage.onload = () => {
+			if (
+				document.querySelector( '.nfd-onboarding-skeleton--sitegen' )
+			) {
+				document.querySelector(
+					'.nfd-onboarding-skeleton--sitegen'
+				).style.background = isDarkMode ? `url('${ aiBg }')` : lightBg;
+			}
+		};
+
 		const element =
 			document && document.querySelector( `html:not(.${ className })` );
 		if ( ! element ) {
@@ -26,7 +44,7 @@ function useHTMLClass( className ) {
 		return () => {
 			element.classList.toggle( className );
 		};
-	}, [ className ] );
+	}, [ className, isDarkMode ] );
 }
 
 function NewfoldInterfaceSkeleton(
@@ -46,8 +64,16 @@ function NewfoldInterfaceSkeleton(
 	ref
 ) {
 	const navigateRegionsProps = useNavigateRegions( shortcuts );
-
-	useHTMLClass( 'nfd-interface-interface-skeleton__html-container' );
+	const isSiteGenFlow = window.nfdOnboarding.currentFlow === 'sitegen';
+	if ( isSiteGenFlow ) {
+		// eslint-disable-next-line react-hooks/rules-of-hooks
+		const { theme } = useContext( ThemeContext );
+		// eslint-disable-next-line react-hooks/rules-of-hooks
+		useHTMLClass(
+			'nfd-interface-interface-skeleton__html-container',
+			theme === THEME_DARK
+		);
+	}
 
 	const defaultLabels = {
 		/* translators: accessibility text for the nav bar landmark region. */

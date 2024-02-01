@@ -29,6 +29,9 @@ function nfd_wp_module_onboarding_register() {
 				if ( ! defined( 'NFD_ONBOARDING_DIR' ) ) {
 					define( 'NFD_ONBOARDING_DIR', __DIR__ );
 				}
+				if ( ! defined( 'NFD_ONBOARDING_SCRIPTS_URL' ) ) {
+					define( 'NFD_ONBOARDING_SCRIPTS_URL', $container->plugin()->url . 'vendor/newfold-labs/wp-module-onboarding/src/Scripts' );
+				}
 				if ( ! defined( 'NFD_ONBOARDING_BUILD_DIR' ) && defined( 'NFD_ONBOARDING_VERSION' ) ) {
 					define( 'NFD_ONBOARDING_BUILD_DIR', __DIR__ . '/build/' . NFD_ONBOARDING_VERSION );
 				}

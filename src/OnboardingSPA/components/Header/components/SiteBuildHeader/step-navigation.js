@@ -4,15 +4,15 @@ import { Button, ButtonGroup } from '@wordpress/components';
 import { Icon, chevronLeft, chevronRight } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 
-import { setFlow } from '../../utils/api/flow';
-import { store as nfdOnboardingStore } from '../../store';
-import { pluginDashboardPage } from '../../../constants';
-import { activateInitialPlugins } from '../../utils/api/plugins';
+import { setFlow } from '../../../../utils/api/flow';
+import { store as nfdOnboardingStore } from '../../../../store';
+import { pluginDashboardPage } from '../../../../../constants';
+import { activateInitialPlugins } from '../../../../utils/api/plugins';
 import {
 	OnboardingEvent,
 	sendOnboardingEvent,
-} from '../../utils/analytics/hiive';
-import { ACTION_ONBOARDING_COMPLETE } from '../../utils/analytics/hiive/constants';
+} from '../../../../utils/analytics/hiive';
+import { ACTION_ONBOARDING_COMPLETE } from '../../../../utils/analytics/hiive/constants';
 
 /**
  * Back step Navigation button.

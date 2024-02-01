@@ -2,22 +2,24 @@
  * Common Button Component
  * Different variants can be added later based on our requirements
  *
- * @returns Button
+ * @return Button
  */
 
-const Button = ({ text, handleClick, disabled, className }) => {
+const Button = ( { text, handleClick, disabled, className } ) => {
 	const handleBtnClick = () => {
-		handleClick();
+		if ( handleClick ) {
+			handleClick();
+		}
 	};
 
 	return (
 		<button
 			type="button"
-			className={`${className} nfd-card-button`}
-			onClick={handleBtnClick}
-			disabled={disabled}
+			className={ `${ className } nfd-card-button` }
+			onClick={ handleBtnClick }
+			disabled={ disabled }
 		>
-			{text}
+			{ text }
 		</button>
 	);
 };

@@ -1,14 +1,14 @@
 import { __ } from '@wordpress/i18n';
 import { memo, useRef, useState } from '@wordpress/element';
 
-import { ImageUploadLoader } from '../Loaders';
-import { uploadImage } from '../../utils/api/uploader';
+import { ImageUploadLoader } from '../../../Loaders';
+import { uploadImage } from '../../../../utils/api/uploader';
 
 /*
  * Image Uploader
  *
  */
-const ImageUploader = ( { icon, iconSetter } ) => {
+const ImageUploaderWithIcon = ( { icon, iconSetter } ) => {
 	const inputRef = useRef( null );
 	const [ isUploading, setIsUploading ] = useState( false );
 	const [ onDragActive, setOnDragActive ] = useState( false );
@@ -151,4 +151,4 @@ const ImageUploader = ( { icon, iconSetter } ) => {
 	);
 };
 
-export default memo( ImageUploader );
+export default memo( ImageUploaderWithIcon );

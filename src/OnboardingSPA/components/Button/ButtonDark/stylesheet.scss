@@ -1,0 +1,15 @@
+.nfd-onboarding-button {
+
+	&--dark {
+		background-color: var(--nfd-onboarding-navigation-back-background);
+		height: 36px;
+		color: var(--nfd-onboarding-primary);
+		border-radius: 8px;
+		padding: 0, 13px, 0 13px;
+
+		&:hover {
+			background-color: #fff;
+			color: #272d30;
+		}
+	}
+}

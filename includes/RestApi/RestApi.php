@@ -29,6 +29,7 @@ final class RestApi {
 		'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeFontsController',
 		'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeColorsController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteClassificationController',
+		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteGenController',
 	);
 
 	/**
