@@ -64,11 +64,16 @@ function NewfoldInterfaceSkeleton(
 	ref
 ) {
 	const navigateRegionsProps = useNavigateRegions( shortcuts );
-	const { theme } = useContext( ThemeContext );
-	useHTMLClass(
-		'nfd-interface-interface-skeleton__html-container',
-		theme === THEME_DARK
-	);
+	const isSiteGenFlow = window.nfdOnboarding.currentFlow === 'sitegen';
+	if ( isSiteGenFlow ) {
+		// eslint-disable-next-line react-hooks/rules-of-hooks
+		const { theme } = useContext( ThemeContext );
+		// eslint-disable-next-line react-hooks/rules-of-hooks
+		useHTMLClass(
+			'nfd-interface-interface-skeleton__html-container',
+			theme === THEME_DARK
+		);
+	}
 
 	const defaultLabels = {
 		/* translators: accessibility text for the nav bar landmark region. */
