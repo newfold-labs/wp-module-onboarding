@@ -108,7 +108,21 @@
 
 						@media (max-width: #{ ($break-small) }) {
 							margin-right: 0;
-						}
+						}	
+					}
+
+					&__retry {
+						height: 50px;
+						display: flex;
+						cursor: pointer;
+						padding: 0 16px;
+						text-align: center;
+						border-radius: 8px;
+						align-items: center;
+						justify-content: center;
+						color: var(--nfd-onboarding-secondary);
+						background-color: var(--nfd-onboarding-primary);
+						font-size: clamp(0.5rem, 0.3864rem + 0.5682vw, 1.75rem);
 					}
 
 					@media (max-width: #{ ($break-small) }) {

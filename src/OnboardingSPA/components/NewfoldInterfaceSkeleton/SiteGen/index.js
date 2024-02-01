@@ -53,7 +53,7 @@ const SiteGen = () => {
 		}
 	);
 
-	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
+	const { setCurrentOnboardingData, updateSiteGenErrorStatus } = useDispatch( nfdOnboardingStore );
 
 	async function syncStoreToDB() {
 		if ( currentData ) {
@@ -69,6 +69,7 @@ const SiteGen = () => {
 		retryCount = 1
 	) {
 		return new Promise( () =>
+
 			generateSiteGenMeta( siteInfo, identifier, skipCache )
 				.then( ( data ) => {
 					if ( data.body !== null ) {
@@ -82,10 +83,14 @@ const SiteGen = () => {
 							retryCount + 1
 						);
 					}
+					if ( retryCount === MAX_RETRIES_SITE_GEN ) {
+						updateSiteGenErrorStatus( true );
+					}
 				} )
 				.catch( ( err ) => {
 					/* eslint-disable no-console */
 					console.log( err );
+					updateSiteGenErrorStatus( true );
 				} )
 		);
 	}

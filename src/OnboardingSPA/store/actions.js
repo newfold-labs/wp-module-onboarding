@@ -319,3 +319,10 @@ export function updateCustomizeSidebarData( customizeSidebarData ) {
 		customizeSidebarData,
 	};
 }
+
+export function updateSiteGenErrorStatus( siteGenErrorStatus ) {
+	return {
+		type: 'SET_SITEGEN_AI_ERROR_STATUS',
+		siteGenErrorStatus,
+	};
+}

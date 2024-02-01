@@ -22,7 +22,6 @@ const SiteGenPreview = () => {
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
 	const [ isPreviewLoading, setIsPreviewLoading ] = useState( false );
 	const [ globalStyles, setGlobalStyles ] = useState( false );
-	const [ isError, setisError ] = useState( false );
 
 	const {
 		setIsHeaderEnabled,
@@ -32,6 +31,7 @@ const SiteGenPreview = () => {
 		setCurrentOnboardingData,
 		updateInitialize,
 		setHideFooterNav,
+		updateSiteGenErrorStatus,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData, nextStep } = useSelect( ( select ) => {
@@ -69,8 +69,7 @@ const SiteGenPreview = () => {
 
 		if ( response.error ) {
 			setIsPreviewLoading( false );
-			console.log( 'aila' );
-			setisError( ! isError );
+			updateSiteGenErrorStatus( true );
 			return;
 		}
 
@@ -207,7 +206,7 @@ const SiteGenPreview = () => {
 	const content = getContents();
 
 	return (
-		<SitegenAiStateHandler isError={ isError }>
+		<SitegenAiStateHandler>
 			<CommonLayout className="nfd-onboarding-step--site-gen__preview">
 				<div className="nfd-onboarding-step--site-gen__preview__container">
 					<div className="nfd-onboarding-step--site-gen__preview__container__heading">

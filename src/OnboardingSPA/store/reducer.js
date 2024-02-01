@@ -193,6 +193,17 @@ export function data( state = {}, action ) {
 					},
 				},
 			};
+		case 'SET_SITEGEN_AI_ERROR_STATUS':
+			return {
+				...state,
+				flowData: {
+					...state.flowData,
+					sitegen: {
+						...state.flowData.sitegen,
+						siteGenErrorStatus: action.siteGenErrorStatus,
+					},
+				},
+			};
 	}
 
 	return state;

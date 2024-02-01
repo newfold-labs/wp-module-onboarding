@@ -64,6 +64,7 @@
 @import "../components/TextInput/TextAreaSiteGenDetails/stylesheet";
 @import "../components/TextInput/TextInputSiteGenDetails/stylesheet";
 @import "../components/OrbAnimation/stylesheet";
+@import "../components/SiteGenError/stylesheet";
 
 // CSS for Pages
 @import "../steps/BasicInfo/stylesheet";
@@ -88,7 +89,6 @@
 @import "../steps/SiteGen/Building/stylesheet";
 @import "../steps/SiteGen/Editor/stylesheet";
 @import "../steps/SiteGen/Editor/Header/stylesheet";
-@import "../steps/SiteGen/SiteError/stylesheet";
 
 .nfd-onboarding-container {
 	display: flex;
