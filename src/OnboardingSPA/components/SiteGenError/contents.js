@@ -2,7 +2,10 @@ import { __ } from '@wordpress/i18n';
 
 const getContents = () => {
 	return {
-		heading: __( 'Sorry, we\'re having trouble communicating with our AI service.', 'wp-module-onboarding' ),
+		heading: __(
+			"Sorry, we're having trouble communicating with our AI service.",
+			'wp-module-onboarding'
+		),
 		subHeading: __(
 			'Do you keep getting this error?',
 			'wp-module-onboarding'

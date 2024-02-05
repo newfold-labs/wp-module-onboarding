@@ -21,6 +21,7 @@ import { init as initializePlugins } from '../../../utils/api/plugins';
 import { init as initializeThemes } from '../../../utils/api/themes';
 import { trigger as cronTrigger } from '../../../utils/api/cronTrigger';
 import { MAX_RETRIES_SITE_GEN } from '../../../../constants';
+import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
 
 // Wrapping the NewfoldInterfaceSkeleton with the HOC to make theme available
 const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
@@ -41,7 +42,7 @@ const SiteGen = () => {
 	}, [ newfoldBrand ] );
 	const location = useLocation();
 
-	const { currentData, initialize, pluginInstallHash } = useSelect(
+	const { currentData, initialize, pluginInstallHash, siteGenErrorStatus } = useSelect(
 		( select ) => {
 			return {
 				currentData:
@@ -49,11 +50,13 @@ const SiteGen = () => {
 				initialize: select( nfdOnboardingStore ).getInitialize(),
 				pluginInstallHash:
 					select( nfdOnboardingStore ).getPluginInstallHash(),
+				siteGenErrorStatus: select( nfdOnboardingStore ).getSiteGenErrorStatus(),
 			};
 		}
 	);
 
-	const { setCurrentOnboardingData, updateSiteGenErrorStatus } = useDispatch( nfdOnboardingStore );
+	const { setCurrentOnboardingData, updateSiteGenErrorStatus } =
+		useDispatch( nfdOnboardingStore );
 
 	async function syncStoreToDB() {
 		if ( currentData ) {
@@ -69,7 +72,6 @@ const SiteGen = () => {
 		retryCount = 1
 	) {
 		return new Promise( () =>
-
 			generateSiteGenMeta( siteInfo, identifier, skipCache )
 				.then( ( data ) => {
 					if ( data.body !== null ) {
@@ -85,6 +87,7 @@ const SiteGen = () => {
 					}
 					if ( retryCount === MAX_RETRIES_SITE_GEN ) {
 						updateSiteGenErrorStatus( true );
+						retryCount  = 0;
 					}
 				} )
 				.catch( ( err ) => {
@@ -157,7 +160,7 @@ const SiteGen = () => {
 		syncStoreToDB();
 		generateSiteGenData();
 		handlePreviousStepTracking();
-	}, [ location.pathname ] );
+	}, [ location.pathname, siteGenErrorStatus ] );
 
 	useEffect( () => {
 		initializeThemes();
@@ -176,7 +179,9 @@ const SiteGen = () => {
 				content={ <Content /> }
 				sidebar={ <Sidebar /> }
 				footer={ <Footer /> }
-			/>
+			>
+				<SitegenAiStateHandler></SitegenAiStateHandler>
+			</ThemedNewfoldInterfaceSkeleton>
 		</ThemeProvider>
 	);
 };

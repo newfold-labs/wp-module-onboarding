@@ -81,9 +81,8 @@ const SiteGenSiteError = () => {
 		}
 		navigate( data.steps[ 1 ].path );
 	};
-	const handleRetry = ( ) => {
+	const handleRetry = () => {
 		updateSiteGenErrorStatus( false );
-		window.location.reload();
 	};
 	return (
 		<CommonLayout className="nfd-onboarding-step--site-gen__error">
@@ -104,10 +103,10 @@ const SiteGenSiteError = () => {
 						{ content.message }
 						<a
 							className="nfd-onboarding-step--site-gen__error__container__sub-heading__exit"
-							href={ pluginDashboardPage }>
+							href={ pluginDashboardPage }
+						>
 							{ content.buttonExit }
 						</a>
-
 					</p>
 				</div>
 				<div className="nfd-onboarding-step--site-gen__error__container__buttons">
@@ -126,7 +125,9 @@ const SiteGenSiteError = () => {
 								handleRetry();
 							} }
 						>
-							<p className="nfd-onboarding-button--site-gen-next--text">{ content.buttonText }</p>
+							<p className="nfd-onboarding-button--site-gen-next--text">
+								{ content.buttonText }
+							</p>
 						</Button>
 					) : (
 						<Fill name={ `${ FOOTER_SITEGEN }/${ FOOTER_END }` }>
@@ -136,7 +137,9 @@ const SiteGenSiteError = () => {
 									handleRetry();
 								} }
 							>
-								<p className="nfd-onboarding-button--site-gen-next--text">{ content.buttonText }</p>
+								<p className="nfd-onboarding-button--site-gen-next--text">
+									{ content.buttonText }
+								</p>
 							</Button>
 						</Fill>
 					) }
