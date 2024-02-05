@@ -120,49 +120,56 @@ const DesignColorsPanel = forwardRef(
 		const [ colorPickerCalledBy, setColorPickerCalledBy ] = useState( '' );
 		const [ showColorPicker, setShowColorPicker ] = useState( false );
 
-		useEffect(() => {
+		useEffect( () => {
 			const slug = currentData.sitegen?.homepages?.active?.slug;
-			if (slug && !customColors) {
-				const storedCustomColors = currentData.sitegen.homepages.data[ slug ].color['customColors'];
-				if (storedCustomColors) {
-					setCustomColors(storedCustomColors);
+			if ( slug && ! customColors ) {
+				const storedCustomColors =
+					currentData.sitegen.homepages.data[ slug ].color
+						.customColors;
+				if ( storedCustomColors ) {
+					setCustomColors( storedCustomColors );
 				} else {
-					const defaultPalette = currentData.sitegen.homepages.data[ slug ].color.palette;
-					let defaultCustomColors = {
-						primary: "",
-						secondary: "",
-						tertiary: "",
-					}
-					for (const item of defaultPalette) {
-						switch (item.slug) {
-						  case "primary":
-							defaultCustomColors.primary = item.color;
-							break;
-						  case "secondary":
-							defaultCustomColors.secondary = item.color;
-							break;
-						  case "tertiary":
-							defaultCustomColors.tertiary = item.color;
-							break;
-						  default:
-							break;
+					const defaultPalette =
+						currentData.sitegen.homepages.data[ slug ].color
+							.palette;
+					const defaultCustomColors = {
+						primary: '',
+						secondary: '',
+						tertiary: '',
+					};
+					for ( const item of defaultPalette ) {
+						switch ( item.slug ) {
+							case 'primary':
+								defaultCustomColors.primary = item.color;
+								break;
+							case 'secondary':
+								defaultCustomColors.secondary = item.color;
+								break;
+							case 'tertiary':
+								defaultCustomColors.tertiary = item.color;
+								break;
+							default:
+								break;
 						}
-					  }
+					}
 
-					  if (!defaultCustomColors.secondary) {
-						defaultCustomColors.secondary = defaultPalette.find(item => item.slug === "base").color;
-					  }
+					if ( ! defaultCustomColors.secondary ) {
+						defaultCustomColors.secondary = defaultPalette.find(
+							( item ) => item.slug === 'base'
+						).color;
+					}
 
-					setCustomColors(defaultCustomColors);
+					setCustomColors( defaultCustomColors );
 				}
 			}
-		}, [ currentData ]);		
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [ currentData ] );
 
 		const handleApplyCustomColors = () => {
 			setSelectedCustomColors( true );
 			setIsEditingCustomColors( false );
 			setSelectedPalette( 'custom' );
-			setCustomColors(selectedColor);
+			setCustomColors( selectedColor );
 		};
 
 		const handleEditCustomColors = () => {
@@ -217,19 +224,23 @@ const DesignColorsPanel = forwardRef(
 			}
 
 			if ( selectedPalette === 'custom' ) {
-				currentData.sitegen.homepages.data[ slug ].color['customColors'] = selectedColor;
+				currentData.sitegen.homepages.data[ slug ].color.customColors =
+					selectedColor;
 			}
 
-			const colorPaletteIndex = selectedPalette === 'custom' ? 0 : selectedPalette
+			const colorPaletteIndex =
+				selectedPalette === 'custom' ? 0 : selectedPalette;
 			colorPalettes[ colorPaletteIndex ].primary = selectedColor.primary;
 			if ( colorPalettes[ colorPaletteIndex ].secondary ) {
 				colorPalettes[ colorPaletteIndex ].secondary =
 					selectedColor.secondary;
 			} else {
-				colorPalettes[ colorPaletteIndex ].base = selectedColor.secondary;
+				colorPalettes[ colorPaletteIndex ].base =
+					selectedColor.secondary;
 			}
 
-			colorPalettes[ colorPaletteIndex ].tertiary = selectedColor.tertiary;
+			colorPalettes[ colorPaletteIndex ].tertiary =
+				selectedColor.tertiary;
 
 			currentData.sitegen.homepages.data[ slug ].color.palette =
 				convertColorSchema( colorPalettes[ colorPaletteIndex ] );
@@ -371,9 +382,9 @@ const DesignColorsPanel = forwardRef(
 										label={
 											idx === 0
 												? __(
-												'Default',
-												'wp-module-onboarding'
-												) 
+														'Default',
+														'wp-module-onboarding'
+												  )
 												: ''
 										}
 										selectedPalette={ selectedPalette }

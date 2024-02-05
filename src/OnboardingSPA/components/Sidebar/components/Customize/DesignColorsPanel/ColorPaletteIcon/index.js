@@ -11,7 +11,7 @@ const ColorPaletteIcon = ( {
 	customColors,
 } ) => {
 	let conicGradient;
-	if (colors) {
+	if ( colors ) {
 		conicGradient = `conic-gradient(${ colors[ idx ].primary } 90deg, ${ colors[ idx ].secondary } 90deg 150deg, ${ colors[ idx ].tertiary } 150deg 330deg, ${ colors[ idx ].primary } 330deg 360deg)`;
 	} else if ( customColors ) {
 		conicGradient = `conic-gradient(${ customColors.primary } 90deg, ${ customColors.secondary } 90deg 150deg, ${ customColors.tertiary } 150deg 330deg, ${ customColors.primary } 330deg 360deg)`;
