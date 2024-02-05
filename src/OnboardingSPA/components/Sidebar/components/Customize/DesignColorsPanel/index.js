@@ -382,9 +382,9 @@ const DesignColorsPanel = forwardRef(
 										label={
 											idx === 0
 												? __(
-														'Default',
-														'wp-module-onboarding'
-												  )
+													'Default',
+													'wp-module-onboarding'
+												)
 												: ''
 										}
 										selectedPalette={ selectedPalette }
