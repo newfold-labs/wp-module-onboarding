@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function () {
 	const homepages = window.nfdOnboarding.homepages.data;
 	const activeTheme = window.nfdOnboarding.active;
 	Object.keys( homepages ).forEach( ( slug ) => {
@@ -16,7 +16,7 @@ window.onload = function() {
                <path d="M6.85742 16L9.54834 8.24951H11.4551L14.1514 16H12.4434L11.8687 14.1201H9.13477L8.56006 16H6.85742ZM10.4561 9.79639L9.50537 12.9062H11.498L10.5527 9.79639H10.4561ZM14.9673 16V8.24951H16.5894V16H14.9673Z" fill="white"/>
                </svg>               
                ` +
-				`<span class="nfd-onboarding-sitegen-theme-marker-title">${ homepage.title }</span>`;
+				`<div class="nfd-onboarding-sitegen-theme-marker-title">${ homepage.title }</div>`;
 		}
 	} );
 };

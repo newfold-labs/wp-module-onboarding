@@ -49,6 +49,7 @@ const SiteGenSiteDetails = () => {
 
 	useEffect( () => {
 		if (
+			customerInput !== undefined &&
 			customerInput !== '' &&
 			customerInput !== currentData.sitegen.siteDetails.prompt
 		) {

@@ -71,23 +71,27 @@ const SiteGen = () => {
 		retryCount = 1
 	) {
 		try {
-			if ( ! siteGenErrorStatus ) {
-				const data = await generateSiteGenMeta(
+			const data = await generateSiteGenMeta(
+				siteInfo,
+				identifier,
+				skipCache
+			);
+			if ( data.body !== null ) {
+				currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
+				if (
+					currentData.sitegen.siteGenMetaStatus.currentStatus ===
+					currentData.sitegen.siteGenMetaStatus.totalCount
+				) {
+					currentData.sitegen.skipCache = false;
+				}
+				setCurrentOnboardingData( currentData );
+			} else if ( retryCount < MAX_RETRIES_SITE_GEN ) {
+				performSiteGenMetaGeneration(
 					siteInfo,
 					identifier,
-					skipCache
+					skipCache,
+					retryCount + 1
 				);
-				if ( data.body !== null ) {
-					currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
-					setCurrentOnboardingData( currentData );
-				} else if ( retryCount < MAX_RETRIES_SITE_GEN ) {
-					performSiteGenMetaGeneration(
-						siteInfo,
-						identifier,
-						skipCache,
-						retryCount + 1
-					);
-				}
 			}
 		} catch ( err ) {
 			currentData.sitegen.siteGenErrorStatus = true;

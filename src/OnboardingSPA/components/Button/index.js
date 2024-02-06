@@ -5,10 +5,10 @@
  * @return Button
  */
 
-const Button = ( { children, onClick, disabled, className } ) => {
+const Button = ( { children, handleClick, disabled, className } ) => {
 	const handleBtnClick = () => {
-		if ( onClick ) {
-			onClick();
+		if ( typeof handleClick === 'function' ) {
+			handleClick();
 		}
 	};
 

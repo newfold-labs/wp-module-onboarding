@@ -24,7 +24,6 @@ const StepSiteGenEditorHeader = () => {
 	const [ homepage, setHomepage ] = useState();
 	const [ isSaving, setIsSaving ] = useState( false );
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
-	const [ isEditingTitle, setIsEditingTitle ] = useState( false );
 
 	const isLargeViewport = useViewportMatch( 'medium' );
 
@@ -176,13 +175,9 @@ const StepSiteGenEditorHeader = () => {
 							handleViewAll={ handleViewAll }
 							handleCustomize={ handleCustomize }
 							handleRegenerate={ handleRegenerate }
-							handleIsRenaming={ ( isRenaming ) =>
-								setIsEditingTitle( isRenaming )
-							}
 							handleRename={ handleRename }
 							homepageTitle={ homepage.title }
 							isFavorite={ homepage.isFavorite }
-							isRenaming={ isEditingTitle }
 						/>
 					</div>
 				) }
