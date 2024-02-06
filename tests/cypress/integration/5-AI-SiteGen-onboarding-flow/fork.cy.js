@@ -1,6 +1,6 @@
 // <reference types="Cypress" />
 
-import { AdminBarCheck, DarkBGCheck, LightBGChcek, OptionsDetails } from "../wp-module-support/siteGen.cy";
+import { AdminBarCheck, DarkBGCheck, LightBGCheck, OptionsDetails } from "../wp-module-support/siteGen.cy";
 
 describe( 'SiteGen Fork Step', function () {
 	before( () => {
@@ -18,7 +18,7 @@ describe( 'SiteGen Fork Step', function () {
 	} );
 
     it( 'Check for the light background', () => {
-        LightBGChcek();
+        LightBGCheck();
     } );
 
     it( 'Check for the heading and the title', () => {

@@ -1,6 +1,6 @@
 // <reference types="Cypress" />
 
-import { AdminBarCheck, BackButtonCheck, DarkBGCheck, LightBGChcek, ProgressBarCheck} from "../wp-module-support/siteGen.cy";
+import { AdminBarCheck, BackButtonCheck, DarkBGCheck, LightBGCheck, ProgressBarCheck} from "../wp-module-support/siteGen.cy";
 
 describe( 'SiteGen Welcome Step', function () {
 	before( () => {
@@ -18,7 +18,7 @@ describe( 'SiteGen Welcome Step', function () {
 	} );
 
     it( 'Check for the light background', () => {
-        LightBGChcek();
+        LightBGCheck();
     } );
 
     it( 'Check the Progress Bar Value', () => {

@@ -10,7 +10,7 @@ export const DarkBGCheck =  () => {
     cy.get('.nfd-onboarding-sitegen-dark').should('be.visible');
 };
 
-export const LightBGChcek = () => {
+export const LightBGCheck = () => {
     cy.get( '.nfd-onboarding-toggle__theme__button__dark' )
         .should( 'exist' )
         .click();

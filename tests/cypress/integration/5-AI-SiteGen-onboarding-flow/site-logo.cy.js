@@ -1,6 +1,6 @@
 // <reference types="Cypress" />
 
-import { AdminBarCheck, BackButtonCheck, DarkBGCheck, DisabledNextButton, LightBGChcek, ProgressBarCheck, SkipButtonCheck } from '../wp-module-support/siteGen.cy';
+import { AdminBarCheck, BackButtonCheck, DarkBGCheck, DisabledNextButton, LightBGCheck, ProgressBarCheck, SkipButtonCheck } from '../wp-module-support/siteGen.cy';
 
 describe( 'SiteGen Site Logo Step', function() {
 	before( () => {
@@ -18,7 +18,7 @@ describe( 'SiteGen Site Logo Step', function() {
 	} );
 
 	it( 'Check for the light background', () => {
-		LightBGChcek();
+		LightBGCheck();
 	} );
 
 	it( 'Check the Progress Bar Value', () => {
