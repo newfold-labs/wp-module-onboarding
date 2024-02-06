@@ -85,17 +85,19 @@ const SiteGen = () => {
 					currentData.sitegen.skipCache = false;
 				}
 				setCurrentOnboardingData( currentData );
-			} else if ( retryCount < MAX_RETRIES_SITE_GEN ) {
+			}
+		} catch ( err ) {
+			if ( retryCount < MAX_RETRIES_SITE_GEN ) {
 				performSiteGenMetaGeneration(
 					siteInfo,
 					identifier,
 					skipCache,
 					retryCount + 1
 				);
+			} else {
+				currentData.sitegen.siteGenErrorStatus = true;
+				updateSiteGenErrorStatus( true );
 			}
-		} catch ( err ) {
-			currentData.sitegen.siteGenErrorStatus = true;
-			updateSiteGenErrorStatus( true );
 		}
 	}
 
