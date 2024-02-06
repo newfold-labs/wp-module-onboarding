@@ -120,7 +120,7 @@ const DesignColorsPanel = forwardRef(
 				if ( storedCustomColors ) {
 					setCustomColors( storedCustomColors );
 				} else {
-					const defaultCustomColors = palettes[0];
+					const defaultCustomColors = palettes[ 0 ];
 					setCustomColors( defaultCustomColors );
 				}
 			}
@@ -246,7 +246,7 @@ const DesignColorsPanel = forwardRef(
 							selectedPalette={ selectedPalette }
 							setSelectedPalette={ setSelectedPalette }
 							setSelectedColor={ setSelectedColor }
-							colors={ {'custom': customColors} }
+							colors={ { custom: customColors } }
 						/>
 					</div>
 				</div>
