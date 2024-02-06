@@ -82,15 +82,6 @@ const DesignColorsPanel = forwardRef(
 
 		const colorPalettes = customizeSidebarData?.colorPalettes;
 
-		useEffect( () => {
-			if ( ! defaultGlobalData ) {
-				defaultGlobalData = cloneDeep(
-					currentData.sitegen.homepages.data
-				);
-			}
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [ colorPalettes ] );
-
 		const palettePrimaryColors = Object.entries( colorPalettes[ 0 ] ).map(
 			( [ , color ] ) => ( {
 				name: __( 'Custom', 'wp-module-onboarding' ),
@@ -129,36 +120,7 @@ const DesignColorsPanel = forwardRef(
 				if ( storedCustomColors ) {
 					setCustomColors( storedCustomColors );
 				} else {
-					const defaultPalette =
-						currentData.sitegen.homepages.data[ slug ].color
-							.palette;
-					const defaultCustomColors = {
-						primary: '',
-						secondary: '',
-						tertiary: '',
-					};
-					for ( const item of defaultPalette ) {
-						switch ( item.slug ) {
-							case 'primary':
-								defaultCustomColors.primary = item.color;
-								break;
-							case 'secondary':
-								defaultCustomColors.secondary = item.color;
-								break;
-							case 'tertiary':
-								defaultCustomColors.tertiary = item.color;
-								break;
-							default:
-								break;
-						}
-					}
-
-					if ( ! defaultCustomColors.secondary ) {
-						defaultCustomColors.secondary = defaultPalette.find(
-							( item ) => item.slug === 'base'
-						).color;
-					}
-
+					const defaultCustomColors = palettes[0];
 					setCustomColors( defaultCustomColors );
 				}
 			}
@@ -284,7 +246,7 @@ const DesignColorsPanel = forwardRef(
 							selectedPalette={ selectedPalette }
 							setSelectedPalette={ setSelectedPalette }
 							setSelectedColor={ setSelectedColor }
-							customColors={ customColors }
+							colors={ {'custom': customColors} }
 						/>
 					</div>
 				</div>
