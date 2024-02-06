@@ -6,7 +6,8 @@ import { store as nfdOnboardingStore } from '../../../store';
 const SitegenAiStateHandler = ( { children } ) => {
 	const { siteGenErrorStatus } = useSelect( ( select ) => {
 		return {
-			siteGenErrorStatus: select( nfdOnboardingStore ).getSiteGenErrorStatus(),
+			siteGenErrorStatus:
+				select( nfdOnboardingStore ).getSiteGenErrorStatus(),
 		};
 	} );
 

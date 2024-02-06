@@ -72,7 +72,6 @@ const SiteGenExperience = () => {
 				</div>
 			</CommonLayout>
 		</SitegenAiStateHandler>
-
 	);
 };
 

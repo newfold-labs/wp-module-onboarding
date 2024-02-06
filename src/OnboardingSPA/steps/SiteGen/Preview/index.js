@@ -223,7 +223,10 @@ const SiteGenPreview = () => {
 				<div className="nfd-onboarding-step--site-gen__preview__options">
 					{ buildPreviews() }
 					{ isRegenerating && (
-						<RegeneratingSiteCard count={ 1 } isRegenerating={ true } />
+						<RegeneratingSiteCard
+							count={ 1 }
+							isRegenerating={ true }
+						/>
 					) }
 				</div>
 				<div className="nfd-onboarding-step--site-gen__preview__note">

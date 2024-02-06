@@ -1,4 +1,4 @@
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
 
@@ -21,7 +21,6 @@ import { init as initializePlugins } from '../../../utils/api/plugins';
 import { init as initializeThemes } from '../../../utils/api/themes';
 import { trigger as cronTrigger } from '../../../utils/api/cronTrigger';
 import { MAX_RETRIES_SITE_GEN } from '../../../../constants';
-import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
 
 // Wrapping the NewfoldInterfaceSkeleton with the HOC to make theme available
 const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
@@ -160,7 +159,7 @@ const SiteGen = () => {
 	}, [ location.pathname ] );
 
 	useEffect( () => {
-		if (! siteGenErrorStatus ) {
+		if ( ! siteGenErrorStatus ) {
 			generateSiteGenData();
 		}
 	}, [ siteGenErrorStatus ] );
@@ -182,7 +181,7 @@ const SiteGen = () => {
 				content={ <Content /> }
 				sidebar={ <Sidebar /> }
 				footer={ <Footer /> }
-			></ThemedNewfoldInterfaceSkeleton>
+			/>
 		</ThemeProvider>
 	);
 };
