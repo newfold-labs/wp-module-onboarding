@@ -1,4 +1,4 @@
-import { useEffect } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
 
@@ -42,18 +42,18 @@ const SiteGen = () => {
 	}, [ newfoldBrand ] );
 	const location = useLocation();
 
-	const { currentData, initialize, pluginInstallHash, siteGenErrorStatus } = useSelect(
-		( select ) => {
+	const { currentData, initialize, pluginInstallHash, siteGenErrorStatus } =
+		useSelect( ( select ) => {
 			return {
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				initialize: select( nfdOnboardingStore ).getInitialize(),
 				pluginInstallHash:
 					select( nfdOnboardingStore ).getPluginInstallHash(),
-				siteGenErrorStatus: select( nfdOnboardingStore ).getSiteGenErrorStatus(),
+				siteGenErrorStatus:
+					select( nfdOnboardingStore ).getSiteGenErrorStatus(),
 			};
-		}
-	);
+		} );
 
 	const { setCurrentOnboardingData, updateSiteGenErrorStatus } =
 		useDispatch( nfdOnboardingStore );
@@ -71,31 +71,29 @@ const SiteGen = () => {
 		skipCache,
 		retryCount = 1
 	) {
-		return new Promise( () =>
-			generateSiteGenMeta( siteInfo, identifier, skipCache )
-				.then( ( data ) => {
-					if ( data.body !== null ) {
-						currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
-						setCurrentOnboardingData( currentData );
-					} else if ( retryCount < MAX_RETRIES_SITE_GEN ) {
-						performSiteGenMetaGeneration(
-							siteInfo,
-							identifier,
-							skipCache,
-							retryCount + 1
-						);
-					}
-					if ( retryCount === MAX_RETRIES_SITE_GEN ) {
-						updateSiteGenErrorStatus( true );
-						retryCount  = 0;
-					}
-				} )
-				.catch( ( err ) => {
-					/* eslint-disable no-console */
-					console.log( err );
-					updateSiteGenErrorStatus( true );
-				} )
-		);
+		try {
+			if ( ! siteGenErrorStatus ) {
+				const data = await generateSiteGenMeta(
+					siteInfo,
+					identifier,
+					skipCache
+				);
+				if ( data.body !== null ) {
+					currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
+					setCurrentOnboardingData( currentData );
+				} else if ( retryCount < MAX_RETRIES_SITE_GEN ) {
+					performSiteGenMetaGeneration(
+						siteInfo,
+						identifier,
+						skipCache,
+						retryCount + 1
+					);
+				}
+			}
+		} catch ( err ) {
+			currentData.sitegen.siteGenErrorStatus = true;
+			updateSiteGenErrorStatus( true );
+		}
 	}
 
 	async function generateSiteGenData() {
@@ -108,7 +106,6 @@ const SiteGen = () => {
 		) {
 			return;
 		}
-
 		let identifiers = await getSiteGenIdentifiers();
 		identifiers = identifiers.body;
 
@@ -160,7 +157,13 @@ const SiteGen = () => {
 		syncStoreToDB();
 		generateSiteGenData();
 		handlePreviousStepTracking();
-	}, [ location.pathname, siteGenErrorStatus ] );
+	}, [ location.pathname ] );
+
+	useEffect( () => {
+		if (! siteGenErrorStatus ) {
+			generateSiteGenData();
+		}
+	}, [ siteGenErrorStatus ] );
 
 	useEffect( () => {
 		initializeThemes();
@@ -179,9 +182,7 @@ const SiteGen = () => {
 				content={ <Content /> }
 				sidebar={ <Sidebar /> }
 				footer={ <Footer /> }
-			>
-				<SitegenAiStateHandler></SitegenAiStateHandler>
-			</ThemedNewfoldInterfaceSkeleton>
+			></ThemedNewfoldInterfaceSkeleton>
 		</ThemeProvider>
 	);
 };
