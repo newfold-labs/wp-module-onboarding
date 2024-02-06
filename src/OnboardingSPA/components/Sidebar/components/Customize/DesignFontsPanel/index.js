@@ -269,10 +269,9 @@ const DesignFontsPanel = forwardRef(
 		);
 
 		useEffect( () => {
-			const slug = currentData.sitegen?.homepages?.active?.slug;
-			if ( slug && ! customFont.headings ) {
+			if ( ! customFont.headings ) {
 				const storedCustomFonts =
-					currentData.sitegen.homepages.data[ slug ].customFont;
+					currentData.sitegen.homepages.active.customFont;
 				if ( storedCustomFonts ) {
 					setCustomFont( storedCustomFonts );
 				}
@@ -290,6 +289,8 @@ const DesignFontsPanel = forwardRef(
 				if ( slug ) {
 					currentData.sitegen.homepages.data[ slug ].customFont =
 						customFont;
+					currentData.sitegen.homepages.active.customFont =
+					customFont;
 				}
 			} else {
 				headings = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].headings })`;

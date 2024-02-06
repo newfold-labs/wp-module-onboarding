@@ -112,10 +112,9 @@ const DesignColorsPanel = forwardRef(
 		const [ showColorPicker, setShowColorPicker ] = useState( false );
 
 		useEffect( () => {
-			const slug = currentData.sitegen?.homepages?.active?.slug;
-			if ( slug && ! customColors ) {
+			if ( ! customColors ) {
 				const storedCustomColors =
-					currentData.sitegen.homepages.data[ slug ].color
+					currentData.sitegen.homepages.active.color
 						.customColors;
 				if ( storedCustomColors ) {
 					setCustomColors( storedCustomColors );
@@ -188,6 +187,8 @@ const DesignColorsPanel = forwardRef(
 			if ( selectedPalette === 'custom' ) {
 				currentData.sitegen.homepages.data[ slug ].color.customColors =
 					selectedColor;
+				currentData.sitegen.homepages.active.color.customColors =
+				selectedColor;
 			}
 
 			const colorPaletteIndex =
