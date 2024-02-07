@@ -111,3 +111,9 @@ export const API_REQUEST = {
 	SET_FLOW: 'SET_FLOW',
 	SET_GLOBAL_STYLES: 'SET_GLOBAL_STYLES',
 };
+
+/**
+ * ERROR code to skip for flow api 
+ */
+export const SKIP_FLOW_ERROR_CODE_20 = 20;
+export const SKIP_FLOW_ERROR_CODE_DATABASE = 'database_update_failed';

@@ -20,7 +20,11 @@ import { initialize as initializeSettings } from '../../../utils/api/settings';
 import { init as initializePlugins } from '../../../utils/api/plugins';
 import { init as initializeThemes } from '../../../utils/api/themes';
 import { trigger as cronTrigger } from '../../../utils/api/cronTrigger';
-import { MAX_RETRIES_SITE_GEN } from '../../../../constants';
+import {
+	MAX_RETRIES_SITE_GEN,
+	SKIP_FLOW_ERROR_CODE_DATABASE,
+	SKIP_FLOW_ERROR_CODE_20,
+} from '../../../../constants';
 
 // Wrapping the NewfoldInterfaceSkeleton with the HOC to make theme available
 const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
@@ -62,8 +66,16 @@ const SiteGen = () => {
 			//Set the Flow Data and sync store and DB
 			const result = await setFlow( currentData );
 			if ( result?.error !== null ) {
-				currentData.sitegen.siteGenErrorStatus = true;
-				updateSiteGenErrorStatus( true );
+				switch ( result?.error.code ) {
+					case SKIP_FLOW_ERROR_CODE_DATABASE:
+						break;
+					case SKIP_FLOW_ERROR_CODE_20:
+						break;
+					default:
+						currentData.sitegen.siteGenErrorStatus = true;
+						updateSiteGenErrorStatus( true );
+						break;
+				}
 			}
 		}
 	}
