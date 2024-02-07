@@ -11,6 +11,7 @@ import AIHeading from '../../../components/Heading/AIHeading';
 import CommonLayout from '../../../components/Layouts/Common';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 import ImageUploaderWithText from '../../../components/ImageUploader/components/ImageUploaderWithText';
+import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
 
 const SiteGenSiteLogo = () => {
 	const [ siteLogo, setSiteLogo ] = useState();
@@ -81,35 +82,37 @@ const SiteGenSiteLogo = () => {
 
 	const content = getContents();
 	return (
-		<CommonLayout
-			isCentered
-			className="nfd-onboarding-step--site-gen__site-logo"
-		>
-			<div className="nfd-onboarding-step--site-gen__site-logo__container">
-				<AIHeading title={ content.heading } />
-				<ImageUploaderWithText
-					image={ siteLogo }
-					imageSetter={ handleSiteLogo }
-				/>
-				<div className="nfd-onboarding-step--site-gen__site-logo__container__buttons">
-					<SkipButton
-						callback={ () => resetSiteLogo() }
-						className="nfd-onboarding-step--site-gen__site-logo__container__buttons__skip"
-						text={ content.buttons.skip }
+		<SitegenAiStateHandler>
+			<CommonLayout
+				isCentered
+				className="nfd-onboarding-step--site-gen__site-logo"
+			>
+				<div className="nfd-onboarding-step--site-gen__site-logo__container">
+					<AIHeading title={ content.heading } />
+					<ImageUploaderWithText
+						image={ siteLogo }
+						imageSetter={ handleSiteLogo }
 					/>
-					{ isLargeViewport && (
-						<NextButtonSiteGen
-							text={ content.buttons.next }
-							disabled={
-								siteLogo === undefined || siteLogo?.id === 0
-									? true
-									: false
-							}
+					<div className="nfd-onboarding-step--site-gen__site-logo__container__buttons">
+						<SkipButton
+							callback={ () => resetSiteLogo() }
+							className="nfd-onboarding-step--site-gen__site-logo__container__buttons__skip"
+							text={ content.buttons.skip }
 						/>
-					) }
+						{ isLargeViewport && (
+							<NextButtonSiteGen
+								text={ content.buttons.next }
+								disabled={
+									siteLogo === undefined || siteLogo?.id === 0
+										? true
+										: false
+								}
+							/>
+						) }
+					</div>
 				</div>
-			</div>
-		</CommonLayout>
+			</CommonLayout>
+		</SitegenAiStateHandler>
 	);
 };
 

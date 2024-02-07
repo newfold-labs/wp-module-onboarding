@@ -60,7 +60,11 @@ const SiteGen = () => {
 	async function syncStoreToDB() {
 		if ( currentData ) {
 			//Set the Flow Data and sync store and DB
-			setFlow( currentData );
+			const result = await setFlow( currentData );
+			if ( result?.error !== null ) {
+				currentData.sitegen.siteGenErrorStatus = true;
+				updateSiteGenErrorStatus( true );
+			}
 		}
 	}
 
@@ -167,6 +171,7 @@ const SiteGen = () => {
 	useEffect( () => {
 		if ( ! siteGenErrorStatus ) {
 			generateSiteGenData();
+			syncStoreToDB();
 		}
 	}, [ siteGenErrorStatus ] );
 

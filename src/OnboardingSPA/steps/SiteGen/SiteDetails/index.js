@@ -10,6 +10,7 @@ import AIHeading from '../../../components/Heading/AIHeading';
 import CommonLayout from '../../../components/Layouts/Common';
 import TextInputSiteGen from '../../../components/TextInput/TextInputSiteGen';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
+import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
 
 const SiteGenSiteDetails = () => {
 	const content = getContents();
@@ -63,34 +64,36 @@ const SiteGenSiteDetails = () => {
 	}, [ customerInput ] );
 
 	return (
-		<CommonLayout isCentered>
-			<Animate type={ 'fade-in' }>
-				<div className={ 'nfd-sg-site-details' }>
-					<AIHeading title={ content.heading } />
-					<TextInputSiteGen
-						placeholder={ content.inputPlaceholder }
-						hint={ content.inputHint }
-						height={ '40px' }
-						customerInput={ customerInput }
-						setIsValidInput={ setIsValidInput }
-						setCustomerInput={ setCustomerInput }
-						customChildren={ true }
-					>
-						{ isLargeViewport && (
-							<div className={ 'nfd-sg-site-details-endrow' }>
-								<NextButtonSiteGen
-									className={
-										'nfd-sg-site-details--next-btn'
-									}
-									text={ content.buttonText }
-									disabled={ ! isValidInput }
-								/>
-							</div>
-						) }
-					</TextInputSiteGen>
-				</div>
-			</Animate>
-		</CommonLayout>
+		<SitegenAiStateHandler>
+			<CommonLayout isCentered>
+				<Animate type={ 'fade-in' }>
+					<div className={ 'nfd-sg-site-details' }>
+						<AIHeading title={ content.heading } />
+						<TextInputSiteGen
+							placeholder={ content.inputPlaceholder }
+							hint={ content.inputHint }
+							height={ '40px' }
+							customerInput={ customerInput }
+							setIsValidInput={ setIsValidInput }
+							setCustomerInput={ setCustomerInput }
+							customChildren={ true }
+						>
+							{ isLargeViewport && (
+								<div className={ 'nfd-sg-site-details-endrow' }>
+									<NextButtonSiteGen
+										className={
+											'nfd-sg-site-details--next-btn'
+										}
+										text={ content.buttonText }
+										disabled={ ! isValidInput }
+									/>
+								</div>
+							) }
+						</TextInputSiteGen>
+					</div>
+				</Animate>
+			</CommonLayout>
+		</SitegenAiStateHandler>
 	);
 };
 
