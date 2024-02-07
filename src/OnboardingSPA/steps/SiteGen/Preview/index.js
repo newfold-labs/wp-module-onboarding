@@ -12,6 +12,7 @@ import HeartAnimation from './heartAnimation';
 import RegeneratingSiteCard from './regeneratingCard';
 import { getHomepages, regenerateHomepage } from '../../../utils/api/siteGen';
 import { getGlobalStyles } from '../../../utils/api/themes';
+import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { cloneDeep, isEmpty } from 'lodash';
 
@@ -30,6 +31,7 @@ const SiteGenPreview = () => {
 		setCurrentOnboardingData,
 		updateInitialize,
 		setHideFooterNav,
+		updateSiteGenErrorStatus,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData, nextStep } = useSelect( ( select ) => {
@@ -67,6 +69,7 @@ const SiteGenPreview = () => {
 
 		if ( response.error ) {
 			setIsPreviewLoading( false );
+			updateSiteGenErrorStatus( true );
 			return;
 		}
 
@@ -203,30 +206,35 @@ const SiteGenPreview = () => {
 	const content = getContents();
 
 	return (
-		<CommonLayout className="nfd-onboarding-step--site-gen__preview">
-			<div className="nfd-onboarding-step--site-gen__preview__container">
-				<div className="nfd-onboarding-step--site-gen__preview__container__heading">
-					<p className="nfd-onboarding-step--site-gen__preview__container__heading__text">
-						{ content.heading }
-					</p>
+		<SitegenAiStateHandler>
+			<CommonLayout className="nfd-onboarding-step--site-gen__preview">
+				<div className="nfd-onboarding-step--site-gen__preview__container">
+					<div className="nfd-onboarding-step--site-gen__preview__container__heading">
+						<p className="nfd-onboarding-step--site-gen__preview__container__heading__text">
+							{ content.heading }
+						</p>
+					</div>
+					<div className="nfd-onboarding-step--site-gen__preview__container__sub-heading">
+						<p className="nfd-onboarding-step--site-gen__preview__container__sub-heading__text">
+							{ content.subheading }
+						</p>
+					</div>
 				</div>
-				<div className="nfd-onboarding-step--site-gen__preview__container__sub-heading">
-					<p className="nfd-onboarding-step--site-gen__preview__container__sub-heading__text">
-						{ content.subheading }
-					</p>
+				<div className="nfd-onboarding-step--site-gen__preview__options">
+					{ buildPreviews() }
+					{ isRegenerating && (
+						<RegeneratingSiteCard
+							count={ 1 }
+							isRegenerating={ true }
+						/>
+					) }
 				</div>
-			</div>
-			<div className="nfd-onboarding-step--site-gen__preview__options">
-				{ buildPreviews() }
-				{ isRegenerating && (
-					<RegeneratingSiteCard count={ 1 } isRegenerating={ true } />
-				) }
-			</div>
-			<div className="nfd-onboarding-step--site-gen__preview__note">
-				<HeartAnimation />
-				<span>{ content.favouriteNote }</span>
-			</div>
-		</CommonLayout>
+				<div className="nfd-onboarding-step--site-gen__preview__note">
+					<HeartAnimation />
+					<span>{ content.favouriteNote }</span>
+				</div>
+			</CommonLayout>
+		</SitegenAiStateHandler>
 	);
 };
 

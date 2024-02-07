@@ -8,6 +8,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
 import CardWithOptions from '../../../components/CardWithOptions';
 import SiteGenLoader from '../../../components/Loaders/SiteGenLoader';
+import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
 
 const SiteGenExperience = () => {
 	const navigate = useNavigate();
@@ -58,17 +59,19 @@ const SiteGenExperience = () => {
 	};
 
 	return (
-		<CommonLayout isCentered>
-			<div className={ 'nfd-sg-experience-level' }>
-				<SiteGenLoader />
-				<CardWithOptions
-					title={ content.heading }
-					options={ content.options }
-					skip={ content.skip }
-					callback={ checkAndNavigate }
-				/>
-			</div>
-		</CommonLayout>
+		<SitegenAiStateHandler>
+			<CommonLayout isCentered>
+				<div className={ 'nfd-sg-experience-level' }>
+					<SiteGenLoader />
+					<CardWithOptions
+						title={ content.heading }
+						options={ content.options }
+						skip={ content.skip }
+						callback={ checkAndNavigate }
+					/>
+				</div>
+			</CommonLayout>
+		</SitegenAiStateHandler>
 	);
 };
 

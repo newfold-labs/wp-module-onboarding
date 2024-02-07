@@ -10,6 +10,7 @@ import { DEFAULT_FLOW } from '../../data/flows/constants';
 import HeadingWithSubHeading from '../../components/HeadingWithSubHeading/SiteGen/index';
 import StartOptions from '../../components/StartOptions';
 import getContents from './contents';
+import SitegenAiStateHandler from '../../components/StateHandlers/SitegenAi';
 
 const TheFork = () => {
 	const { migrationUrl } = useSelect( ( select ) => {
@@ -44,30 +45,32 @@ const TheFork = () => {
 
 	const content = getContents();
 	return (
-		<CommonLayout
-			isCentered
-			className="nfd-onboarding-step--site-gen__fork"
-		>
-			<HeadingWithSubHeading
-				title={ content.heading }
-				subtitle={ content.subheading }
-			/>
-			<StartOptions
-				questionnaire={ content.questionnaire }
-				oldFlow={ oldFlow }
-				options={ content.options }
-			/>
-			<br />
-			<br />
-			<a
-				className="nfd-onboarding-step--site-gen__fork__importsite"
-				href={ migrationUrl }
-				target={ '_blank' }
-				rel={ 'noreferrer' }
+		<SitegenAiStateHandler>
+			<CommonLayout
+				isCentered
+				className="nfd-onboarding-step--site-gen__fork"
 			>
-				{ content.importtext }
-			</a>
-		</CommonLayout>
+				<HeadingWithSubHeading
+					title={ content.heading }
+					subtitle={ content.subheading }
+				/>
+				<StartOptions
+					questionnaire={ content.questionnaire }
+					oldFlow={ oldFlow }
+					options={ content.options }
+				/>
+				<br />
+				<br />
+				<a
+					className="nfd-onboarding-step--site-gen__fork__importsite"
+					href={ migrationUrl }
+					target={ '_blank' }
+					rel={ 'noreferrer' }
+				>
+					{ content.importtext }
+				</a>
+			</CommonLayout>
+		</SitegenAiStateHandler>
 	);
 };
 

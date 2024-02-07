@@ -11,6 +11,7 @@ import AIHeading from '../../../components/Heading/AIHeading';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 import { FacebookConnectButton } from '@newfold-labs/wp-module-facebook';
 import { useNavigate } from 'react-router-dom';
+import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
 
 const SiteGenSiteSocialMedia = () => {
 	const isLargeViewport = useViewportMatch( 'small' );
@@ -23,6 +24,7 @@ const SiteGenSiteSocialMedia = () => {
 		setSidebarActiveView,
 		setHeaderActiveView,
 		setDrawerActiveView,
+		updateSiteGenErrorStatus,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -42,6 +44,10 @@ const SiteGenSiteSocialMedia = () => {
 		setConnected( true );
 	};
 
+	const handleFailure = () => {
+		updateSiteGenErrorStatus( true );
+	};
+
 	useEffect( () => {
 		if ( interacted && connected ) {
 			navigate( nextStep.path );
@@ -50,41 +56,44 @@ const SiteGenSiteSocialMedia = () => {
 
 	const content = getContents();
 	return (
-		<CommonLayout
-			isCentered
-			className="nfd-onboarding-step--site-gen__social-media"
-		>
-			<div className="nfd-onboarding-step--site-gen__social-media__container">
-				<AIHeading title={ content.heading } />
-				<div className="nfd-onboarding-step--site-gen__social-media__contain ">
-					<div className="nfd-onboarding-step--site-gen__social-media__contain__containleft ">
-						<span>{ content.facebookTitle }</span>
-						<p>{ content.facebookDesc }</p>
+		<SitegenAiStateHandler>
+			<CommonLayout
+				isCentered
+				className="nfd-onboarding-step--site-gen__social-media"
+			>
+				<div className="nfd-onboarding-step--site-gen__social-media__container">
+					<AIHeading title={ content.heading } />
+					<div className="nfd-onboarding-step--site-gen__social-media__contain ">
+						<div className="nfd-onboarding-step--site-gen__social-media__contain__containleft ">
+							<span>{ content.facebookTitle }</span>
+							<p>{ content.facebookDesc }</p>
+						</div>
+						<div className="nfd-onboarding-step--site-gen__social-media__contain__containright ">
+							<FacebookConnectButton
+								className="nfd-onboarding-step--site-gen__social-media__contain__containright__button"
+								onConnect={ handleConnect }
+								onClick={ () => setInteracted( true ) }
+								onFailure={ handleFailure }
+							>
+								<i className="nfd-onboarding-step--site-gen__social-media__contain__containright__button__icon"></i>
+							</FacebookConnectButton>
+						</div>
 					</div>
-					<div className="nfd-onboarding-step--site-gen__social-media__contain__containright ">
-						<FacebookConnectButton
-							className="nfd-onboarding-step--site-gen__social-media__contain__containright__button"
-							onConnect={ handleConnect }
-							onClick={ () => setInteracted( true ) }
-						>
-							<i className="nfd-onboarding-step--site-gen__social-media__contain__containright__button__icon"></i>
-						</FacebookConnectButton>
-					</div>
-				</div>
-				<div className="nfd-onboarding-step--site-gen__social-media__container__buttons">
-					<SkipButton
-						className="nfd-onboarding-step--site-gen__social-media__container__buttons__skip"
-						text={ content.buttons.skip }
-					/>
-					{ isLargeViewport && (
-						<NextButtonSiteGen
-							text={ content.buttons.next }
-							disabled={ ! connected }
+					<div className="nfd-onboarding-step--site-gen__social-media__container__buttons">
+						<SkipButton
+							className="nfd-onboarding-step--site-gen__social-media__container__buttons__skip"
+							text={ content.buttons.skip }
 						/>
-					) }
+						{ isLargeViewport && (
+							<NextButtonSiteGen
+								text={ content.buttons.next }
+								disabled={ ! connected }
+							/>
+						) }
+					</div>
 				</div>
-			</div>
-		</CommonLayout>
+			</CommonLayout>
+		</SitegenAiStateHandler>
 	);
 };
 

@@ -8,6 +8,8 @@ import classNames from 'classnames';
 import { THEME_LIGHT } from '../../../../../constants';
 import bytes from 'bytes';
 import { Icon, closeSmall } from '@wordpress/icons';
+import { store as nfdOnboardingStore } from '../../../../store';
+import { useDispatch } from '@wordpress/data';
 
 const ImageUploaderWithText = ( { image, imageSetter } ) => {
 	const inputRef = useRef( null );
@@ -15,11 +17,14 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 	const [ isUploading, setIsUploading ] = useState( false );
 	const [ onDragActive, setOnDragActive ] = useState( false );
 
+	const { updateSiteGenErrorStatus } = useDispatch( nfdOnboardingStore );
+
 	async function updateItem( fileData ) {
 		if ( fileData ) {
 			setIsUploading( true );
 			const res = await uploadImage( fileData );
 			if ( ! res?.body ) {
+				updateSiteGenErrorStatus( true );
 				return setIsUploading( false );
 			}
 			const id = res.body?.id;
@@ -31,7 +36,6 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 				fileSize: fileData?.size,
 			} );
 		}
-
 		setIsUploading( false );
 	}
 

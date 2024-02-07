@@ -466,3 +466,7 @@ export const getAllHomepages = ( state ) => {
 export function getCustomizeSidebarData( state ) {
 	return state.runtime.customizeSidebarData;
 }
+
+export function getSiteGenErrorStatus( state ) {
+	return state.data.flowData.sitegen.siteGenErrorStatus;
+}

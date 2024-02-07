@@ -20,7 +20,11 @@ import { initialize as initializeSettings } from '../../../utils/api/settings';
 import { init as initializePlugins } from '../../../utils/api/plugins';
 import { init as initializeThemes } from '../../../utils/api/themes';
 import { trigger as cronTrigger } from '../../../utils/api/cronTrigger';
-import { MAX_RETRIES_SITE_GEN } from '../../../../constants';
+import {
+	MAX_RETRIES_SITE_GEN,
+	SKIP_FLOW_ERROR_CODE_DATABASE,
+	SKIP_FLOW_ERROR_CODE_20,
+} from '../../../../constants';
 
 // Wrapping the NewfoldInterfaceSkeleton with the HOC to make theme available
 const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
@@ -41,24 +45,38 @@ const SiteGen = () => {
 	}, [ newfoldBrand ] );
 	const location = useLocation();
 
-	const { currentData, initialize, pluginInstallHash } = useSelect(
-		( select ) => {
+	const { currentData, initialize, pluginInstallHash, siteGenErrorStatus } =
+		useSelect( ( select ) => {
 			return {
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				initialize: select( nfdOnboardingStore ).getInitialize(),
 				pluginInstallHash:
 					select( nfdOnboardingStore ).getPluginInstallHash(),
+				siteGenErrorStatus:
+					select( nfdOnboardingStore ).getSiteGenErrorStatus(),
 			};
-		}
-	);
+		} );
 
-	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
+	const { setCurrentOnboardingData, updateSiteGenErrorStatus } =
+		useDispatch( nfdOnboardingStore );
 
 	async function syncStoreToDB() {
 		if ( currentData ) {
 			//Set the Flow Data and sync store and DB
-			setFlow( currentData );
+			const result = await setFlow( currentData );
+			if ( result?.error !== null ) {
+				switch ( result?.error.code ) {
+					case SKIP_FLOW_ERROR_CODE_DATABASE:
+						break;
+					case SKIP_FLOW_ERROR_CODE_20:
+						break;
+					default:
+						currentData.sitegen.siteGenErrorStatus = true;
+						updateSiteGenErrorStatus( true );
+						break;
+				}
+			}
 		}
 	}
 
@@ -68,33 +86,35 @@ const SiteGen = () => {
 		skipCache,
 		retryCount = 1
 	) {
-		return new Promise( () =>
-			generateSiteGenMeta( siteInfo, identifier, skipCache )
-				.then( ( data ) => {
-					if ( data.body !== null ) {
-						currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
-						if (
-							currentData.sitegen.siteGenMetaStatus
-								.currentStatus ===
-							currentData.sitegen.siteGenMetaStatus.totalCount
-						) {
-							currentData.sitegen.skipCache = false;
-						}
-						setCurrentOnboardingData( currentData );
-					} else if ( retryCount < MAX_RETRIES_SITE_GEN ) {
-						performSiteGenMetaGeneration(
-							siteInfo,
-							identifier,
-							skipCache,
-							retryCount + 1
-						);
-					}
-				} )
-				.catch( ( err ) => {
-					/* eslint-disable no-console */
-					console.log( err );
-				} )
-		);
+		try {
+			const data = await generateSiteGenMeta(
+				siteInfo,
+				identifier,
+				skipCache
+			);
+			if ( data.body !== null ) {
+				currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
+				if (
+					currentData.sitegen.siteGenMetaStatus.currentStatus ===
+					currentData.sitegen.siteGenMetaStatus.totalCount
+				) {
+					currentData.sitegen.skipCache = false;
+				}
+				setCurrentOnboardingData( currentData );
+			}
+		} catch ( err ) {
+			if ( retryCount < MAX_RETRIES_SITE_GEN ) {
+				performSiteGenMetaGeneration(
+					siteInfo,
+					identifier,
+					skipCache,
+					retryCount + 1
+				);
+			} else {
+				currentData.sitegen.siteGenErrorStatus = true;
+				updateSiteGenErrorStatus( true );
+			}
+		}
 	}
 
 	async function generateSiteGenData() {
@@ -107,7 +127,6 @@ const SiteGen = () => {
 		) {
 			return;
 		}
-
 		let identifiers = await getSiteGenIdentifiers();
 		identifiers = identifiers.body;
 
@@ -160,6 +179,13 @@ const SiteGen = () => {
 		generateSiteGenData();
 		handlePreviousStepTracking();
 	}, [ location.pathname ] );
+
+	useEffect( () => {
+		if ( ! siteGenErrorStatus ) {
+			generateSiteGenData();
+			syncStoreToDB();
+		}
+	}, [ siteGenErrorStatus ] );
 
 	useEffect( () => {
 		initializeThemes();
