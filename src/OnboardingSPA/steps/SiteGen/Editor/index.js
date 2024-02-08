@@ -122,6 +122,7 @@ const StepSiteGenEditor = () => {
 			<div className="nfd-onboarding-step--site-gen__editor__live-preview">
 				{ buildPreview() }
 			</div>
+			<div className="nfd-onboarding-screenshot-container"></div>
 		</CommonLayout>
 	);
 };
