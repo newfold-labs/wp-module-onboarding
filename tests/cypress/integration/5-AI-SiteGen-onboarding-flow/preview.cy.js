@@ -27,7 +27,7 @@ describe( 'SiteGen Site Preview Step', function () {
     });
 
     it( 'Check for back button and go back', () => {
-        BackButtonCheck('sitegen/step/site-details');
+        BackButtonCheck('sitegen/step/preview');
         cy.visit('wp-admin/index.php?page=nfd-onboarding#/sitegen/step/preview');
         cy.reload();
     } );
@@ -39,7 +39,7 @@ describe( 'SiteGen Site Preview Step', function () {
     } );
 
     it( 'Check for the favourited theme versions', () => {
-        cy.get('g[clip-path="url(#heart-filled_svg__a)"]').should('not.exist');  // when no fav theme is there
+        cy.get('g[clip-path="url(#heart-filled_svg__a)"]').should('not.exist');  // when no fav theme is selected
         cy.get( '.live-preview-sitegen--selectable-card__live-preview-container-buttons__button__icon' )
             .eq(0)
             .scrollIntoView()
@@ -68,4 +68,12 @@ describe( 'SiteGen Site Preview Step', function () {
         cy.get('.nfd-onboarding-step--site-gen__preview__note span').scrollIntoView().contains('Favorite');
     } );
 
+    it( 'Select any theme and go forward to the next step', () => {
+        cy.get('.live-preview-sitegen--selectable-card')
+            .eq(0)
+            .scrollIntoView()
+            .click();
+        cy.wait(5000);
+        cy.url().should('not.contain', 'sitegen/step/preview');
+    } );
 });
