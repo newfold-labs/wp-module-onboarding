@@ -34,13 +34,17 @@ const SiteGenPreview = () => {
 		updateSiteGenErrorStatus,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { currentData, nextStep } = useSelect( ( select ) => {
-		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			nextStep: select( nfdOnboardingStore ).getNextStep(),
-		};
-	} );
+	const { currentData, nextStep, siteGenErrorStatus } = useSelect(
+		( select ) => {
+			return {
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				nextStep: select( nfdOnboardingStore ).getNextStep(),
+				siteGenErrorStatus:
+					select( nfdOnboardingStore ).getSiteGenErrorStatus(),
+			};
+		}
+	);
 
 	useEffect( () => {
 		setIsHeaderEnabled( true );
@@ -49,6 +53,10 @@ const SiteGenPreview = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		updateInitialize( true );
+		if ( ! siteGenErrorStatus ) {
+			loadHomepages();
+			loadGlobalStyles();
+		}
 	}, [ currentData ] );
 
 	const loadHomepages = async () => {
