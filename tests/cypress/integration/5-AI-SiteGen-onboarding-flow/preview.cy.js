@@ -47,10 +47,20 @@ describe( 'SiteGen Site Preview Step', function () {
             .click();
         cy.get('g[clip-path="url(#heart-filled_svg__a)"]' , {timeout:10000} )
             .should('exist');
+        cy.get('.live-preview-sitegen--selectable-card__live-preview-container__overlay')
+            .eq(0)
+            .scrollIntoView()
+            .click();
+        cy.reload();
+        cy.wait(5000);
+        cy.get('g[clip-path="url(#heart-filled_svg__a)"]' , {timeout:10000} )
+            .should('exist');
+        cy.go('back');
+        cy.reload();
     } );
 
     it( 'Check for regenerating the new theme versions', () => {
-        cy.get('[aria-label="Regenerate Content"]')
+        cy.get('[aria-label="Regenerate Content"]', {timeout:10000})
             .eq(2)
             .scrollIntoView()
             .click();
