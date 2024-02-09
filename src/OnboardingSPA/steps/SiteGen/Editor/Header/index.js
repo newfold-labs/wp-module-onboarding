@@ -1,5 +1,12 @@
 import { __ } from '@wordpress/i18n';
 import { Fill } from '@wordpress/components';
+import { Icon, chevronRight } from '@wordpress/icons';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { useEffect, useState, render } from '@wordpress/element';
+import { useViewportMatch } from '@wordpress/compose';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { cloneDeep } from 'lodash';
+
 import {
 	HEADER_CENTER,
 	HEADER_END,
@@ -8,22 +15,20 @@ import {
 	SIDEBAR_SITEGEN_EDITOR_PATTERNS,
 	pluginDashboardPage,
 } from '../../../../../constants';
-import { Icon, chevronRight } from '@wordpress/icons';
 import { store as nfdOnboardingStore } from '../../../../store';
-
-import { useSelect, useDispatch } from '@wordpress/data';
-
-import { useEffect, useState } from '@wordpress/element';
 import { setFlow, completeFlow } from '../../../../utils/api/flow';
 import Spinner from '../../../../components/Loaders/Spinner';
 import { regenerateHomepage } from '../../../../utils/api/siteGen';
 import StepEditorHeaderCenter from './center';
-import { useViewportMatch } from '@wordpress/compose';
+import { getGlobalStyles } from '../../../../utils/api/themes';
+import { LivePreview } from '../../../../components/LivePreview';
+import { blockRenderScreenshot } from '../../../../utils/api/blockRender';
 
 const StepSiteGenEditorHeader = () => {
 	const [ homepage, setHomepage ] = useState();
 	const [ isSaving, setIsSaving ] = useState( false );
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
+	const [ globalStyles, setGlobalStyles ] = useState( false );
 
 	const isLargeViewport = useViewportMatch( 'medium' );
 
@@ -102,11 +107,13 @@ const StepSiteGenEditorHeader = () => {
 		setIsSidebarOpened( true );
 	};
 
-	const handleCustomize = () => {
+	const handleCustomize = async () => {
 		const isSidebarOpenedNew =
 			sideBarView === 'Customize' ? ! isSidebarOpened : isSidebarOpened;
 		setSidebarActiveView( 'Customize' );
 		setIsSidebarOpened( isSidebarOpenedNew );
+		const globalStylesResponse = await getGlobalStyles();
+		setGlobalStyles( globalStylesResponse.body );
 	};
 
 	const handleRename = ( title ) => {
@@ -116,8 +123,91 @@ const StepSiteGenEditorHeader = () => {
 		setCurrentOnboardingData( currentData );
 	};
 
+	const buildPreviewsForScreenshot = ( homepages, activeHomepage ) => {
+		return (
+			<div className="nfd-onboarding-screenshot-container__pages">
+				{ Object.keys( homepages ).map( ( slug, idx ) => {
+					const data = homepages[ slug ];
+					if ( ! data.isFavorite && slug !== activeHomepage.slug ) {
+						return false;
+					}
+					const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
+					newPreviewSettings.settings.color.palette =
+						data.color.palette;
+					let blockGrammar = '';
+					[ 'header', 'content', 'footer' ].forEach( ( part ) => {
+						if ( part in data ) {
+							blockGrammar += data[ part ];
+						}
+					} );
+					return (
+						<LivePreview
+							key={ idx }
+							blockGrammer={ blockGrammar }
+							previewSettings={ newPreviewSettings }
+							slug={ slug }
+							tabIndex="0"
+							role="button"
+						/>
+					);
+				} ) }
+			</div>
+		);
+	};
+
 	const saveAndContinue = async () => {
 		setIsSaving( true );
+
+		const homepages = currentData.sitegen.homepages.data;
+		const activeHomepage = currentData.sitegen.homepages.active;
+		const finalPreviews = buildPreviewsForScreenshot(
+			homepages,
+			activeHomepage
+		);
+		const ele = document.querySelector(
+			'.nfd-onboarding-screenshot-container'
+		);
+		if ( ele ) {
+			render( finalPreviews, ele );
+
+			const delay = ( ms ) =>
+				new Promise( ( res ) => setTimeout( res, ms ) );
+			await delay( 5000 );
+
+			const screenshots = await Promise.all(
+				Object.keys( homepages ).map( ( slug ) => {
+					const data = homepages[ slug ];
+					if ( ! data.isFavorite && slug !== activeHomepage.slug ) {
+						return false;
+					}
+
+					const iframe = ele.querySelector(
+						`div > div[data-slug="nfd-onboarding-block-preview-${ slug }"] > .block-editor-block-preview__container > div > iframe`
+					);
+					const html = iframe.contentWindow.document.querySelector(
+						'.block-editor-block-preview__content-iframe'
+					);
+
+					return blockRenderScreenshot( html.innerHTML );
+				} )
+			);
+
+			Object.keys( homepages ).forEach( ( slug, idx ) => {
+				if ( screenshots[ idx ]?.body?.screenshot ) {
+					homepages[ slug ].screenshot =
+						screenshots[ idx ].body.screenshot;
+					if ( slug === activeHomepage.slug ) {
+						activeHomepage.screenshot =
+							screenshots[ idx ].body.screenshot;
+					}
+				}
+			} );
+
+			currentData.sitegen.homepages.data = homepages;
+			currentData.sitegen.homepages.active = activeHomepage;
+			setCurrentOnboardingData( currentData );
+			return currentData;
+		}
 		await setFlow( currentData );
 		await completeFlow();
 		window.location.replace( pluginDashboardPage );

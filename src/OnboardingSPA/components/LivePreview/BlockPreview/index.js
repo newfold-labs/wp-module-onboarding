@@ -10,6 +10,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import Animate from '../../Animate';
 
 const BlockPreview = ( {
+	slug = '',
 	blockGrammer,
 	viewportWidth = 1300,
 	styling = 'large',
@@ -122,7 +123,10 @@ const BlockPreview = ( {
 	};
 
 	return (
-		<div className={ `live-preview__container-${ styling }` }>
+		<div
+			data-slug={ `nfd-onboarding-block-preview-${ slug }` }
+			className={ `live-preview__container-${ styling }` }
+		>
 			{ loading && getSkeleton() }
 			{ blocks && settings && (
 				<BlockEditorProvider
