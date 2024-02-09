@@ -206,7 +206,6 @@ const StepSiteGenEditorHeader = () => {
 			currentData.sitegen.homepages.data = homepages;
 			currentData.sitegen.homepages.active = activeHomepage;
 			setCurrentOnboardingData( currentData );
-			return currentData;
 		}
 		await setFlow( currentData );
 		await completeFlow();
