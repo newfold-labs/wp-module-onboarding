@@ -123,7 +123,7 @@ const StepSiteGenEditorHeader = () => {
 		setCurrentOnboardingData( currentData );
 	};
 
-	const buildLivePreviews = ( homepages, activeHomepage ) => {
+	const buildPreviewsForScreenshot = ( homepages, activeHomepage ) => {
 		return (
 			<div className="nfd-onboarding-screenshot-container__pages">
 				{ Object.keys( homepages ).map( ( slug, idx ) => {
@@ -157,46 +157,57 @@ const StepSiteGenEditorHeader = () => {
 
 	const saveAndContinue = async () => {
 		setIsSaving( true );
+
 		const homepages = currentData.sitegen.homepages.data;
 		const activeHomepage = currentData.sitegen.homepages.active;
-		const finalPreviews = buildLivePreviews( homepages, activeHomepage );
+		const finalPreviews = buildPreviewsForScreenshot(
+			homepages,
+			activeHomepage
+		);
 		const ele = document.querySelector(
 			'.nfd-onboarding-screenshot-container'
 		);
-		render( finalPreviews, ele );
-		const delay = ( ms ) => new Promise( ( res ) => setTimeout( res, ms ) );
-		await delay( 5000 );
+		if ( ele ) {
+			render( finalPreviews, ele );
 
-		const stuff = await Promise.all(
-			Object.keys( homepages ).map( ( slug ) => {
-				const data = homepages[ slug ];
-				if ( ! data.isFavorite && slug !== activeHomepage.slug ) {
-					return false;
+			const delay = ( ms ) =>
+				new Promise( ( res ) => setTimeout( res, ms ) );
+			await delay( 5000 );
+
+			const screenshots = await Promise.all(
+				Object.keys( homepages ).map( ( slug ) => {
+					const data = homepages[ slug ];
+					if ( ! data.isFavorite && slug !== activeHomepage.slug ) {
+						return false;
+					}
+
+					const iframe = ele.querySelector(
+						`div > div[data-slug="nfd-onboarding-block-preview-${ slug }"] > .block-editor-block-preview__container > div > iframe`
+					);
+					const html = iframe.contentWindow.document.querySelector(
+						'.block-editor-block-preview__content-iframe'
+					);
+
+					return blockRenderScreenshot( html.innerHTML );
+				} )
+			);
+
+			Object.keys( homepages ).forEach( ( slug, idx ) => {
+				if ( screenshots[ idx ]?.body?.screenshot ) {
+					homepages[ slug ].screenshot =
+						screenshots[ idx ].body.screenshot;
+					if ( slug === activeHomepage.slug ) {
+						activeHomepage.screenshot =
+							screenshots[ idx ].body.screenshot;
+					}
 				}
+			} );
 
-				const iframe = ele.querySelector(
-					`div > div[data-slug="nfd-onboarding-block-preview-${ slug }"] > .block-editor-block-preview__container > div > iframe`
-				);
-				const html = iframe.contentWindow.document.querySelector(
-					'.block-editor-block-preview__content-iframe'
-				);
-				return blockRenderScreenshot( html.innerHTML );
-			} )
-		);
-
-		Object.keys( homepages ).forEach( ( slug, idx ) => {
-			if ( stuff[ idx ]?.body?.screenshot ) {
-				homepages[ slug ].screenshot = stuff[ idx ].body.screenshot;
-				if ( slug === activeHomepage.slug ) {
-					activeHomepage.screenshot = stuff[ idx ].body.screenshot;
-				}
-			}
-		} );
-
-		currentData.sitegen.homepages.data = homepages;
-		currentData.sitegen.homepages.active = activeHomepage;
-		setCurrentOnboardingData( currentData );
-
+			currentData.sitegen.homepages.data = homepages;
+			currentData.sitegen.homepages.active = activeHomepage;
+			setCurrentOnboardingData( currentData );
+			return currentData;
+		}
 		await setFlow( currentData );
 		await completeFlow();
 		window.location.replace( pluginDashboardPage );
@@ -289,9 +300,9 @@ const StepSiteGenEditorHeader = () => {
 						>
 							{ isLargeViewport
 								? __(
-									'Save & Continue',
-									'wp-module-onboarding'
-								)
+										'Save & Continue',
+										'wp-module-onboarding'
+								  )
 								: __( 'Next', 'wp-module-onboarding' ) }
 						</div>
 						{ isSaving ? (
