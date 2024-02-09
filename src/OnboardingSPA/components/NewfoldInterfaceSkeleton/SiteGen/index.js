@@ -1,4 +1,4 @@
-import { useEffect } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
 
@@ -61,6 +61,8 @@ const SiteGen = () => {
 	const { setCurrentOnboardingData, updateSiteGenErrorStatus } =
 		useDispatch( nfdOnboardingStore );
 
+	const prevSiteGenErrorStatus = useRef();
+
 	async function syncStoreToDB() {
 		if ( currentData ) {
 			//Set the Flow Data and sync store and DB
@@ -72,7 +74,6 @@ const SiteGen = () => {
 					case SKIP_FLOW_ERROR_CODE_20:
 						break;
 					default:
-						currentData.sitegen.siteGenErrorStatus = true;
 						updateSiteGenErrorStatus( true );
 						break;
 				}
@@ -111,7 +112,6 @@ const SiteGen = () => {
 					retryCount + 1
 				);
 			} else {
-				currentData.sitegen.siteGenErrorStatus = true;
 				updateSiteGenErrorStatus( true );
 			}
 		}
@@ -181,10 +181,11 @@ const SiteGen = () => {
 	}, [ location.pathname ] );
 
 	useEffect( () => {
-		if ( ! siteGenErrorStatus ) {
+		if ( prevSiteGenErrorStatus.current === true && siteGenErrorStatus === false ) {
 			generateSiteGenData();
 			syncStoreToDB();
 		}
+		prevSiteGenErrorStatus.current = siteGenErrorStatus;
 	}, [ siteGenErrorStatus ] );
 
 	useEffect( () => {
