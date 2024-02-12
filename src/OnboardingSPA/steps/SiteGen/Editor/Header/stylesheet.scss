@@ -160,3 +160,15 @@
 		}
 	}
 }
+
+body {
+
+	&.editor-actions-disabled {
+		pointer-events: none;
+		opacity: 0.7;
+
+		.nfd-onboarding-header--sitegen__editor__end__save-button {
+			pointer-events: all;
+		}
+	}
+}

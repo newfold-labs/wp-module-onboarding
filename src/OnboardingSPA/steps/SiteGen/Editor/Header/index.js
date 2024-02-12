@@ -222,6 +222,14 @@ const StepSiteGenEditorHeader = () => {
 		}
 	}, [ currentData ] );
 
+	useEffect( () => {
+		if ( isSaving ) {
+			document.body.classList.add( 'editor-actions-disabled' );
+		} else {
+			document.body.classList.remove( 'editor-actions-disabled' );
+		}
+	}, [ isSaving ] );
+
 	return (
 		<>
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_START }` }>
