@@ -16,9 +16,11 @@ import { stepSiteGenSiteLogo } from '../../../../steps/SiteGen/SiteLogo/step';
  * @return {WPComponent} Back Component
  */
 const Back = ( { path, showErrorDialog } ) => {
-	const { setNavErrorContinuePath } = useDispatch( nfdOnboardingStore );
+	const { setNavErrorContinuePath, updateSiteGenErrorStatus } =
+		useDispatch( nfdOnboardingStore );
 	const navigate = useNavigate();
 	const navigateBack = () => {
+		updateSiteGenErrorStatus( false );
 		if ( showErrorDialog !== false ) {
 			setNavErrorContinuePath( path );
 		} else {
