@@ -1,11 +1,12 @@
-import CommonLayout from '../../../components/Layouts/Common';
-
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useState, useRef } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
+import { useNavigate } from 'react-router-dom';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { cloneDeep, isEmpty } from 'lodash';
+
+import CommonLayout from '../../../components/Layouts/Common';
 import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
-import { useNavigate } from 'react-router-dom';
-
 import { SiteGenPreviewSelectableCard } from '../../../components/LivePreview';
 import getContents from './contents';
 import HeartAnimation from './heartAnimation';
@@ -13,8 +14,6 @@ import RegeneratingSiteCard from './regeneratingCard';
 import { getHomepages, regenerateHomepage } from '../../../utils/api/siteGen';
 import { getGlobalStyles } from '../../../utils/api/themes';
 import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { cloneDeep, isEmpty } from 'lodash';
 
 const SiteGenPreview = () => {
 	const navigate = useNavigate();
@@ -22,6 +21,8 @@ const SiteGenPreview = () => {
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
 	const [ isPreviewLoading, setIsPreviewLoading ] = useState( false );
 	const [ globalStyles, setGlobalStyles ] = useState( false );
+
+	const prevSiteGenErrorStatus = useRef();
 
 	const {
 		setIsHeaderEnabled,
@@ -53,11 +54,18 @@ const SiteGenPreview = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		updateInitialize( true );
-		if ( ! siteGenErrorStatus ) {
+	}, [ currentData ] );
+
+	useEffect( () => {
+		if (
+			prevSiteGenErrorStatus.current === true &&
+			siteGenErrorStatus === false
+		) {
 			loadHomepages();
 			loadGlobalStyles();
 		}
-	}, [ currentData ] );
+		prevSiteGenErrorStatus.current = siteGenErrorStatus;
+	}, [ siteGenErrorStatus ] );
 
 	const loadHomepages = async () => {
 		setIsPreviewLoading( true );
