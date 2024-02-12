@@ -228,6 +228,10 @@ const StepSiteGenEditorHeader = () => {
 		} else {
 			document.body.classList.remove( 'editor-actions-disabled' );
 		}
+
+		return () => {
+			document.body.classList.remove( 'editor-actions-disabled' );
+		};
 	}, [ isSaving ] );
 
 	return (
