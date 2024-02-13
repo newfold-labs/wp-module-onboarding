@@ -57,6 +57,7 @@ const SiteGenExperience = () => {
 				<div className={ 'nfd-sg-experience-level' }>
 					<SiteGenLoader
 						watcher={ selection !== 0 ? true : false }
+						customNavPercentage={ 50 }
 						autoNavigate={ true }
 					/>
 					<CardWithOptions
