@@ -193,7 +193,8 @@ const DesignFontsPanel = forwardRef(
 			setSelectedGroup( null );
 			const slug = currentData.sitegen?.homepages?.active?.slug;
 			if ( slug ) {
-				currentData.sitegen.homepages.data[ slug ].selectedFontGroup = null;
+				currentData.sitegen.homepages.data[ slug ].selectedFontGroup =
+					null;
 				currentData.sitegen.homepages.active.selectedFontGroup = null;
 				setCurrentOnboardingData( currentData );
 			}
@@ -293,8 +294,7 @@ const DesignFontsPanel = forwardRef(
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [ currentData ] );
-		console.log('(((')
-		console.log(customFont)
+
 		const handleUpdatePreviewSettings = () => {
 			let headings;
 			let body;
@@ -306,14 +306,16 @@ const DesignFontsPanel = forwardRef(
 					currentData.sitegen.homepages.data[ slug ].customFont =
 						customFont;
 					currentData.sitegen.homepages.active.customFont =
-					customFont;
+						customFont;
 				}
 			} else {
 				headings = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].headingsSlug })`;
 				body = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].bodySlug })`;
 			}
-			currentData.sitegen.homepages.data[ slug ].selectedFontGroup = selectedGroup;
-			currentData.sitegen.homepages.active.selectedFontGroup = selectedGroup;
+			currentData.sitegen.homepages.data[ slug ].selectedFontGroup =
+				selectedGroup;
+			currentData.sitegen.homepages.active.selectedFontGroup =
+				selectedGroup;
 			setStylesOfCurrentData( headings, body );
 		};
 

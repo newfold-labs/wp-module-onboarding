@@ -55,9 +55,11 @@ const DesignColorsPanel = forwardRef(
 					setSelectedPalette( null );
 					setCurrentOnboardingData( updatedData );
 				}
-				currentData.sitegen.homepages.active.color.selectedPalette = null;
-				currentData.sitegen.homepages.data[ slug ].color.selectedPalette = 
+				currentData.sitegen.homepages.active.color.selectedPalette =
 					null;
+				currentData.sitegen.homepages.data[
+					slug
+				].color.selectedPalette = null;
 				setCurrentOnboardingData( currentData );
 			}
 		};
@@ -118,8 +120,7 @@ const DesignColorsPanel = forwardRef(
 		useEffect( () => {
 			if ( ! customColors ) {
 				const storedCustomColors =
-					currentData.sitegen.homepages.active.color
-						.customColors;
+					currentData.sitegen.homepages.active.color.customColors;
 				if ( storedCustomColors ) {
 					setCustomColors( storedCustomColors );
 				} else {
@@ -129,10 +130,9 @@ const DesignColorsPanel = forwardRef(
 			}
 			if ( ! selectedPalette ) {
 				const storedSelectedPalette =
-					currentData.sitegen.homepages.active.color
-						.selectedPalette;
+					currentData.sitegen.homepages.active.color.selectedPalette;
 				if ( storedSelectedPalette ) {
-					setSelectedPalette(storedSelectedPalette);
+					setSelectedPalette( storedSelectedPalette );
 					if ( storedSelectedPalette === 'custom' ) {
 						setShowCustomColors( true );
 						setSelectedCustomColors( true );
@@ -204,12 +204,12 @@ const DesignColorsPanel = forwardRef(
 				currentData.sitegen.homepages.data[ slug ].color.customColors =
 					selectedColor;
 				currentData.sitegen.homepages.active.color.customColors =
-				selectedColor;
+					selectedColor;
 			}
-			currentData.sitegen.homepages.data[ slug ].color.selectedPalette = 
+			currentData.sitegen.homepages.data[ slug ].color.selectedPalette =
 				selectedPalette;
 			currentData.sitegen.homepages.active.color.selectedPalette =
-			selectedPalette;
+				selectedPalette;
 
 			const colorPaletteIndex =
 				selectedPalette === 'custom' ? 0 : selectedPalette;
@@ -365,9 +365,9 @@ const DesignColorsPanel = forwardRef(
 										label={
 											idx === 0
 												? __(
-													'Default',
-													'wp-module-onboarding'
-												)
+														'Default',
+														'wp-module-onboarding'
+												  )
 												: ''
 										}
 										selectedPalette={ selectedPalette }
