@@ -293,8 +293,8 @@ const DesignFontsPanel = forwardRef(
 					customFont;
 				}
 			} else {
-				headings = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].headings })`;
-				body = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].body })`;
+				headings = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].headingsSlug })`;
+				body = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].bodySlug })`;
 			}
 			setStylesOfCurrentData( headings, body );
 		};

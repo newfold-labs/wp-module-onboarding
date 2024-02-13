@@ -362,7 +362,7 @@ const SiteBuild = () => {
 			setActiveChapter( currentChapter );
 		}
 
-		if ( currentChapter ) {
+		if ( currentChapter && currentData.data.chapters[ currentChapter ] ) {
 			currentData.data.chapters[ currentChapter ].lastStep =
 				currentStep?.path ?? '';
 		}
