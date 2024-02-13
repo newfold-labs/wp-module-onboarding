@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 
@@ -11,17 +10,14 @@ import SiteGenLoader from '../../../components/Loaders/SiteGenLoader';
 import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
 
 const SiteGenExperience = () => {
-	const navigate = useNavigate();
 	const content = getContents();
 	// Index of the selection user makes
-	/* eslint-disable no-unused-vars */
-	const [ selection, setSelection ] = useState();
+	const [ selection, setSelection ] = useState( 0 );
 
-	const { currentData, nextStep } = useSelect( ( select ) => {
+	const { currentData } = useSelect( ( select ) => {
 		return {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			nextStep: select( nfdOnboardingStore ).getNextStep(),
 		};
 	} );
 
@@ -53,16 +49,16 @@ const SiteGenExperience = () => {
 		setSelection( idx );
 		currentData.sitegen.experience.level = idx;
 		setCurrentOnboardingData( currentData );
-		if ( nextStep ) {
-			navigate( nextStep.path );
-		}
 	};
 
 	return (
 		<SitegenAiStateHandler>
 			<CommonLayout isCentered>
 				<div className={ 'nfd-sg-experience-level' }>
-					<SiteGenLoader />
+					<SiteGenLoader
+						watcher={ selection !== 0 ? true : false }
+						autoNavigate={ true }
+					/>
 					<CardWithOptions
 						title={ content.heading }
 						options={ content.options }
