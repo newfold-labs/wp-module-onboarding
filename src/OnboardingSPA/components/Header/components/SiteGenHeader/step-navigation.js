@@ -18,9 +18,17 @@ import { stepSiteGenSiteLogo } from '../../../../steps/SiteGen/SiteLogo/step';
 const Back = ( { path, showErrorDialog } ) => {
 	const { setNavErrorContinuePath, updateSiteGenErrorStatus } =
 		useDispatch( nfdOnboardingStore );
+	const { siteGenErrorStatus } = useSelect( ( select ) => {
+		return {
+			siteGenErrorStatus:
+				select( nfdOnboardingStore ).getSiteGenErrorStatus(),
+		};
+	} );
 	const navigate = useNavigate();
 	const navigateBack = () => {
-		updateSiteGenErrorStatus( false );
+		if ( siteGenErrorStatus === true ) {
+			updateSiteGenErrorStatus( false );
+		}
 		if ( showErrorDialog !== false ) {
 			setNavErrorContinuePath( path );
 		} else {
