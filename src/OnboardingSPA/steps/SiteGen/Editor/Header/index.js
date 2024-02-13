@@ -223,14 +223,22 @@ const StepSiteGenEditorHeader = () => {
 	}, [ currentData ] );
 
 	useEffect( () => {
-		if ( isSaving ) {
-			document.body.classList.add( 'editor-actions-disabled' );
-		} else {
-			document.body.classList.remove( 'editor-actions-disabled' );
+		const editorElement = document.querySelector(
+			'.nfd-interface-interface-skeleton__editor'
+		);
+
+		if ( editorElement ) {
+			if ( isSaving ) {
+				editorElement.classList.add( 'editor-actions-disabled' );
+			} else {
+				editorElement.classList.remove( 'editor-actions-disabled' );
+			}
 		}
 
 		return () => {
-			document.body.classList.remove( 'editor-actions-disabled' );
+			if ( editorElement ) {
+				editorElement.classList.remove( 'editor-actions-disabled' );
+			}
 		};
 	}, [ isSaving ] );
 
@@ -331,6 +339,7 @@ const StepSiteGenEditorHeader = () => {
 					</div>
 				</div>
 			</Fill>
+			<div className="nfd-editor-actions-overlay"></div>
 		</>
 	);
 };

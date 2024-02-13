@@ -45,6 +45,7 @@ html.nfd-interface-interface-skeleton__html-container {
 	flex-direction: column;
 	flex: 0 1 100%;
 	overflow: hidden;
+	position: relative;
 }
 
 @include editor-left(".nfd-interface-interface-skeleton");

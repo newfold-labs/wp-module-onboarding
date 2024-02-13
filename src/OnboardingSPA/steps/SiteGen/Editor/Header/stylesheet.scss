@@ -161,14 +161,25 @@
 	}
 }
 
-body {
+.nfd-interface-interface-skeleton__editor {
 
 	&.editor-actions-disabled {
-		pointer-events: none;
-		opacity: 0.7;
+
+		.nfd-editor-actions-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(var(--nfd-onboarding-primary-rgb), 0.3);
+			z-index: 1;
+		}
 
 		.nfd-onboarding-header--sitegen__editor__end__save-button {
+			position: relative;
+			z-index: 2;
 			pointer-events: all;
 		}
 	}
 }
+
