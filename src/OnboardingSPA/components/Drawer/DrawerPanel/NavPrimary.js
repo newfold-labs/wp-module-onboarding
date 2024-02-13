@@ -7,6 +7,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import classNames from 'classnames';
 import ExitToWordPress from '../../ExitToWordPress';
 import Animate from '../../Animate';
+import { stepTheFork } from '../../../steps/TheFork/step';
 
 const NavPrimary = () => {
 	const location = useLocation();
@@ -27,6 +28,9 @@ const NavPrimary = () => {
 			<div className="nfd-onboarding-drawer__panel-menu">
 				<ul className="nfd-onboarding-drawer__panel-routes">
 					{ topSteps.map( ( step ) => {
+						if ( step === stepTheFork ) {
+							return false;
+						}
 						return (
 							<Tooltip
 								key={ step.path }
