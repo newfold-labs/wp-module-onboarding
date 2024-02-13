@@ -55,6 +55,10 @@ const DesignColorsPanel = forwardRef(
 					setSelectedPalette( null );
 					setCurrentOnboardingData( updatedData );
 				}
+				currentData.sitegen.homepages.active.color.selectedPalette = null;
+				currentData.sitegen.homepages.data[ slug ].color.selectedPalette = 
+					null;
+				setCurrentOnboardingData( currentData );
 			}
 		};
 
@@ -121,6 +125,18 @@ const DesignColorsPanel = forwardRef(
 				} else {
 					const defaultCustomColors = palettes[ 0 ];
 					setCustomColors( defaultCustomColors );
+				}
+			}
+			if ( ! selectedPalette ) {
+				const storedSelectedPalette =
+					currentData.sitegen.homepages.active.color
+						.selectedPalette;
+				if ( storedSelectedPalette ) {
+					setSelectedPalette(storedSelectedPalette);
+					if ( storedSelectedPalette === 'custom' ) {
+						setShowCustomColors( true );
+						setSelectedCustomColors( true );
+					}
 				}
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -190,6 +206,10 @@ const DesignColorsPanel = forwardRef(
 				currentData.sitegen.homepages.active.color.customColors =
 				selectedColor;
 			}
+			currentData.sitegen.homepages.data[ slug ].color.selectedPalette = 
+				selectedPalette;
+			currentData.sitegen.homepages.active.color.selectedPalette =
+			selectedPalette;
 
 			const colorPaletteIndex =
 				selectedPalette === 'custom' ? 0 : selectedPalette;
