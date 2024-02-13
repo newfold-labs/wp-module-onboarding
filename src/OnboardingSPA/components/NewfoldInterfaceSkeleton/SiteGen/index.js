@@ -186,7 +186,6 @@ const SiteGen = () => {
 			prevSiteGenErrorStatus.current === true &&
 			siteGenErrorStatus === false
 		) {
-			console.log("am called");
 			generateSiteGenData();
 			syncStoreToDB();
 		}
