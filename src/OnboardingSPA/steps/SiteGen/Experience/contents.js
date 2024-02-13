@@ -8,6 +8,7 @@ const getContents = () => {
 		),
 		options: [
 			{
+				key: 1,
 				title: __( 'Beginner', 'wp-module-onboarding' ),
 				desc: __(
 					'First time here, where am I?',
@@ -15,6 +16,7 @@ const getContents = () => {
 				),
 			},
 			{
+				key: 2,
 				title: __( 'Used it some', 'wp-module-onboarding' ),
 				desc: __(
 					"I'll ask for help when I need it",
@@ -22,6 +24,7 @@ const getContents = () => {
 				),
 			},
 			{
+				key: 3,
 				title: __( 'Expert', 'wp-module-onboarding' ),
 				desc: __(
 					"Stay out of my way, I know what I'm doing",

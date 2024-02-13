@@ -44,7 +44,7 @@ const SiteGenExperience = () => {
 
 	const checkAndNavigate = ( idx ) => {
 		// 0 - Not Selected
-		// 1-2 Options
+		// 1-3 Options
 		// -1 Skip
 		setSelection( idx );
 		currentData.sitegen.experience.level = idx;
@@ -63,6 +63,7 @@ const SiteGenExperience = () => {
 						title={ content.heading }
 						options={ content.options }
 						skip={ content.skip }
+						selection={ selection }
 						callback={ checkAndNavigate }
 					/>
 				</div>

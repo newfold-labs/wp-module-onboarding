@@ -1,7 +1,8 @@
+import classNames from 'classnames';
 import { memo } from '@wordpress/element';
 import { Icon, chevronRight } from '@wordpress/icons';
 
-const CardWithOptions = ( { title, options, skip, callback } ) => {
+const CardWithOptions = ( { title, options, skip, selection, callback } ) => {
 	const buildOptions = () => {
 		return options.map( ( data, idx ) => {
 			return (
@@ -21,7 +22,13 @@ const CardWithOptions = ( { title, options, skip, callback } ) => {
 						}
 					} }
 				>
-					<div className={ 'nfd-sg-card__data__option__wrapper' }>
+					<div
+						className={ classNames(
+							'nfd-sg-card__data__option__wrapper',
+							data.key === selection &&
+								'nfd-sg-card__data__option__wrapper--selected'
+						) }
+					>
 						<div className={ 'nfd-sg-card__data__option__left' }>
 							<div
 								className={
@@ -55,7 +62,10 @@ const CardWithOptions = ( { title, options, skip, callback } ) => {
 			<div
 				role="button"
 				tabIndex={ 0 }
-				className={ 'nfd-sg-card__skip' }
+				className={ classNames(
+					'nfd-sg-card__skip',
+					-1 === selection && 'nfd-sg-card__skip--selected'
+				) }
 				onClick={ () => {
 					if ( callback && typeof callback === 'function' ) {
 						callback( -1 );

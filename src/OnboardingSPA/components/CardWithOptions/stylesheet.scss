@@ -41,7 +41,7 @@ $background-color: var(--nfd-onboarding-card-background);
 				justify-content: space-between;
 				transition: background-color 400ms ease-in-out;
 
-				&:hover {
+				&--selected {
 					background-color: var(--nfd-onboarding-hover);
 				}
 			}
@@ -84,7 +84,7 @@ $background-color: var(--nfd-onboarding-card-background);
 		color: rgba(var(--nfd-onboarding-primary-rgb), 0.8);
 		font-weight: 500;
 
-		&:hover {
+		&--selected {
 			color: var(--nfd-onboarding-primary);
 		}
 	}
