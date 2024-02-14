@@ -38,10 +38,7 @@ const SiteGenBuilding = () => {
 					</div>
 				</div>
 				<div className="site-gen__building_loader__overlay">
-					<SiteGenLoader
-						customNavPercentage={ 100 }
-						autoNavigate={ true }
-					/>
+					<SiteGenLoader customNavPercentage={ 100 } />
 				</div>
 			</CommonLayout>
 		</SitegenAiStateHandler>

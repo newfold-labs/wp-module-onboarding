@@ -58,7 +58,6 @@ const SiteGenExperience = () => {
 					<SiteGenLoader
 						watcher={ selection !== 0 ? true : false }
 						customNavPercentage={ 50 }
-						autoNavigate={ true }
 					/>
 					<CardWithOptions
 						title={ content.heading }
