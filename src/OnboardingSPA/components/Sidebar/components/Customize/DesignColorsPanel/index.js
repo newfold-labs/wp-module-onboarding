@@ -30,6 +30,12 @@ const DesignColorsPanel = forwardRef(
 			const slug = currentData.sitegen?.homepages?.active?.slug;
 			if ( slug ) {
 				const defaultDataToReset = defaultGlobalData[ slug ];
+				currentData.sitegen.homepages.active.color.selectedPalette =
+					null;
+				currentData.sitegen.homepages.data[
+					slug
+				].color.selectedPalette = null;
+				setCurrentOnboardingData( currentData );
 
 				if ( defaultDataToReset ) {
 					const updatedData = {
@@ -55,12 +61,6 @@ const DesignColorsPanel = forwardRef(
 					setSelectedPalette( null );
 					setCurrentOnboardingData( updatedData );
 				}
-				currentData.sitegen.homepages.active.color.selectedPalette =
-					null;
-				currentData.sitegen.homepages.data[
-					slug
-				].color.selectedPalette = null;
-				setCurrentOnboardingData( currentData );
 			}
 		};
 
