@@ -167,7 +167,7 @@ const StepSiteGenEditorHeader = () => {
 		const ele = document.querySelector(
 			'.nfd-onboarding-screenshot-container'
 		);
-		if ( ele ) {
+		if (ele) {
 			render( finalPreviews, ele );
 
 			const delay = ( ms ) =>
@@ -203,7 +203,7 @@ const StepSiteGenEditorHeader = () => {
 				}
 			} );
 
-			currentData.sitegen.homepages.data = homepages;
+				currentData.sitegen.homepages.data = homepages;
 			currentData.sitegen.homepages.active = activeHomepage;
 			setCurrentOnboardingData( currentData );
 		}
