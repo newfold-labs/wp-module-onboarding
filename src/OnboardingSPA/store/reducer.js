@@ -121,6 +121,11 @@ export function flow(
 				...state,
 				chapter: action.chapter,
 			};
+		case 'SET_FLOW_WITHOUT_AI':
+			return {
+				...state,
+				flow: action.continueWithoutAi,
+			};
 	}
 
 	return state;

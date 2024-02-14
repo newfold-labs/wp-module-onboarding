@@ -326,3 +326,9 @@ export function updateSiteGenErrorStatus( siteGenErrorStatus ) {
 		siteGenErrorStatus,
 	};
 }
+export function setContinueWithoutAi( continueWithoutAi ) {
+	return {
+		type: 'SET_FLOW_WITHOUT_AI',
+		continueWithoutAi,
+	};
+}
