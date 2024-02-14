@@ -7,9 +7,10 @@ const StepTheFork = lazy( () => import( './index' ) );
 
 export const stepTheFork = new Step( {
 	path: '/wp-setup/step/fork',
-	title: __( 'Page Layouts', 'wp-module-onboarding' ),
+	title: __( 'The Fork', 'wp-module-onboarding' ),
 	Component: StepTheFork,
 	icon: copy,
+	drawerNavigation: false,
 	sidebars: {
 		LearnMore: {
 			SidebarComponents: [],
