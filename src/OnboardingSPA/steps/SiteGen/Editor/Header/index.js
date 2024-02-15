@@ -81,7 +81,7 @@ const StepSiteGenEditorHeader = () => {
 			return;
 		}
 
-		const { slug, color, isFavorite } = homepage || {};
+		const { slug, title, color, isFavorite } = homepage || {};
 		const response = await regenerateHomepage(
 			currentData.sitegen.siteDetails.prompt,
 			slug,
@@ -95,6 +95,14 @@ const StepSiteGenEditorHeader = () => {
 		}
 
 		const regeneratedHomepage = response.body;
+		/* The below condition is a temp work-around as during the rename the homepage title is not saved the options table directly,
+		but is update in the local state only, so to display the Title of the newly regeneated page we assign the newly renamed title */
+		if ( isFavorite ) {
+			const renamedTitleWithSuffix = `${ title } (Copy)`;
+			if ( renamedTitleWithSuffix !== regeneratedHomepage?.title ) {
+				regeneratedHomepage.title = renamedTitleWithSuffix;
+			}
+		}
 		homepages[ regeneratedHomepage.slug ] = regeneratedHomepage;
 		currentData.sitegen.homepages.data = homepages;
 		currentData.sitegen.homepages.active = regeneratedHomepage;
