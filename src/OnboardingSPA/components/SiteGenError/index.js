@@ -79,6 +79,7 @@ const SiteGenSiteError = () => {
 		currentData.continueWithoutAi = true;
 		setContinueWithoutAi(true);
 		setCurrentOnboardingData( currentData );
+		updateSiteGenErrorStatus( false );
 		if ( SITEGEN_FLOW !== newFlow ) {
 			updateInitialize( true );
 		}
