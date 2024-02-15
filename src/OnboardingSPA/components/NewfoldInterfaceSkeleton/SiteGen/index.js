@@ -45,18 +45,25 @@ const SiteGen = () => {
 	}, [ newfoldBrand ] );
 	const location = useLocation();
 
-	const { currentData, initialize, pluginInstallHash, siteGenErrorStatus } =
-		useSelect( ( select ) => {
-			return {
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				initialize: select( nfdOnboardingStore ).getInitialize(),
-				pluginInstallHash:
-					select( nfdOnboardingStore ).getPluginInstallHash(),
-				siteGenErrorStatus:
-					select( nfdOnboardingStore ).getSiteGenErrorStatus(),
-			};
-		} );
+	const {
+		currentData,
+		initialize,
+		pluginInstallHash,
+		siteGenErrorStatus,
+		interactionDisabled,
+	} = useSelect( ( select ) => {
+		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			initialize: select( nfdOnboardingStore ).getInitialize(),
+			pluginInstallHash:
+				select( nfdOnboardingStore ).getPluginInstallHash(),
+			siteGenErrorStatus:
+				select( nfdOnboardingStore ).getSiteGenErrorStatus(),
+			interactionDisabled:
+				select( nfdOnboardingStore ).getInteractionDisabled(),
+		};
+	} );
 
 	const { setCurrentOnboardingData, updateSiteGenErrorStatus } =
 		useDispatch( nfdOnboardingStore );
@@ -181,7 +188,10 @@ const SiteGen = () => {
 	}, [ location.pathname ] );
 
 	useEffect( () => {
-		if ( prevSiteGenErrorStatus.current === true && siteGenErrorStatus === false ) {
+		if (
+			prevSiteGenErrorStatus.current === true &&
+			siteGenErrorStatus === false
+		) {
 			generateSiteGenData();
 			syncStoreToDB();
 		}
@@ -205,6 +215,7 @@ const SiteGen = () => {
 				content={ <Content /> }
 				sidebar={ <Sidebar /> }
 				footer={ <Footer /> }
+				interactionDisabled={ interactionDisabled }
 			/>
 		</ThemeProvider>
 	);

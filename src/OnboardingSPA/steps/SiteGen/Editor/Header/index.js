@@ -36,6 +36,7 @@ const StepSiteGenEditorHeader = () => {
 		setCurrentOnboardingData,
 		setSidebarActiveView,
 		setIsSidebarOpened,
+		setInteractionDisabled,
 	} = useDispatch( nfdOnboardingStore );
 	const { currentData, sideBarView, isSidebarOpened } = useSelect(
 		( select ) => {
@@ -223,22 +224,14 @@ const StepSiteGenEditorHeader = () => {
 	}, [ currentData ] );
 
 	useEffect( () => {
-		const editorElement = document.querySelector(
-			'.nfd-interface-interface-skeleton__editor'
-		);
-
-		if ( editorElement ) {
-			if ( isSaving ) {
-				editorElement.classList.add( 'editor-actions-disabled' );
-			} else {
-				editorElement.classList.remove( 'editor-actions-disabled' );
-			}
+		if ( isSaving ) {
+			setInteractionDisabled( true );
+		} else {
+			setInteractionDisabled( false );
 		}
 
 		return () => {
-			if ( editorElement ) {
-				editorElement.classList.remove( 'editor-actions-disabled' );
-			}
+			setInteractionDisabled( false );
 		};
 	}, [ isSaving ] );
 
@@ -319,9 +312,9 @@ const StepSiteGenEditorHeader = () => {
 						>
 							{ isLargeViewport
 								? __(
-									'Save & Continue',
-									'wp-module-onboarding'
-								)
+										'Save & Continue',
+										'wp-module-onboarding'
+								  )
 								: __( 'Next', 'wp-module-onboarding' ) }
 						</div>
 						{ isSaving ? (
@@ -339,7 +332,6 @@ const StepSiteGenEditorHeader = () => {
 					</div>
 				</div>
 			</Fill>
-			<div className="nfd-editor-actions-overlay"></div>
 		</>
 	);
 };
