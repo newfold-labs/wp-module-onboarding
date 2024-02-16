@@ -235,10 +235,16 @@ class SiteGenController {
 			return $content_style;
 		}
 
+		$site_map = SiteGenService::instantiate_site_meta( $site_info, 'sitemap' );
+		if ( is_wp_error( $site_map ) ) {
+			return $site_map;
+		}
+
 		$homepages = SiteGenService::generate_homepages(
 			$site_description,
 			$content_style,
-			$target_audience
+			$target_audience,
+			$site_map
 		);
 
 		if ( is_wp_error( $homepages ) ) {
