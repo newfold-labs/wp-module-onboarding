@@ -14,6 +14,7 @@ import {
 	HEADER_START,
 	SIDEBAR_SITEGEN_EDITOR_PATTERNS,
 	pluginDashboardPage,
+	wpEditorPage,
 } from '../../../../../constants';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { setFlow, completeFlow } from '../../../../utils/api/flow';
@@ -209,7 +210,7 @@ const StepSiteGenEditorHeader = () => {
 		}
 		await setFlow( currentData );
 		await completeFlow();
-		window.location.replace( pluginDashboardPage );
+		window.location.replace( wpEditorPage );
 	};
 
 	useEffect( () => {
