@@ -76,8 +76,6 @@ const TheFork = () => {
 				<a
 					className="nfd-onboarding-step--site-gen__fork__exit"
 					href={ pluginDashboardPage }
-					target={ '_blank' }
-					rel={ 'noreferrer' }
 				>
 					{ content.exitToWordPress }
 				</a>
