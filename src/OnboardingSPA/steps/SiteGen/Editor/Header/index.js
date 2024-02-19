@@ -224,7 +224,7 @@ const StepSiteGenEditorHeader = () => {
 	}, [ currentData ] );
 
 	useEffect( () => {
-		if ( isSaving ) {
+		if ( isSaving || isRegenerating ) {
 			setInteractionDisabled( true );
 		} else {
 			setInteractionDisabled( false );
@@ -233,7 +233,7 @@ const StepSiteGenEditorHeader = () => {
 		return () => {
 			setInteractionDisabled( false );
 		};
-	}, [ isSaving ] );
+	}, [ isSaving, isRegenerating ] );
 
 	return (
 		<>

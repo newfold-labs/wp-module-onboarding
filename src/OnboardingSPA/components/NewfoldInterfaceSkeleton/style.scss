@@ -40,7 +40,7 @@ html.nfd-interface-interface-skeleton__html-container {
 	}
 
 	&__overlay {
-
+		// z-index: to display over sidebar.
 		&--disabled {
 			position: fixed;
 			top: 0;
@@ -49,7 +49,7 @@ html.nfd-interface-interface-skeleton__html-container {
 			bottom: 0;
 			background: rgba(var(--nfd-onboarding-secondary-rgb), 0.3);
 			cursor: not-allowed;
-			z-index: 30;
+			z-index: 1000001;
 		}
 	}
 }
