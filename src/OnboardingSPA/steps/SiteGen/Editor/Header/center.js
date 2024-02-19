@@ -13,26 +13,31 @@ const DropDownMenu = memo(
 		onRenameItemSelect,
 		onViewAll,
 		isLargeViewport,
+		onToggle,
 	} ) => {
+		const onMenuItemClick = ( action ) => () => {
+			action();
+			onToggle();
+		};
 		return (
 			<MenuGroup className="nfd-onboarding-header__version_dropdown-menu">
 				{ ! isLargeViewport && (
 					<>
-						<MenuItem onClick={ onRegenerate }>
+						<MenuItem onClick={ onMenuItemClick( onRegenerate ) }>
 							<Icon icon={ reusableBlock } />
 							{ __( 'Regenerate', 'wp-module-onboarding' ) }
 						</MenuItem>
-						<MenuItem onClick={ onCustomize }>
+						<MenuItem onClick={ onMenuItemClick( onCustomize ) }>
 							<div className="nfd-onboarding-header__version_dropdown-menu__customize-button__icon"></div>
 							{ __( 'Customize', 'wp-module-onboarding' ) }
 						</MenuItem>
 					</>
 				) }
 
-				<MenuItem onClick={ onRenameItemSelect }>
+				<MenuItem onClick={ onMenuItemClick( onRenameItemSelect ) }>
 					{ __( 'Rename', 'wp-module-onboarding' ) }
 				</MenuItem>
-				<MenuItem onClick={ onViewAll }>
+				<MenuItem onClick={ onMenuItemClick( onViewAll ) }>
 					{ __( 'View All', 'wp-module-onboarding' ) }
 				</MenuItem>
 			</MenuGroup>
@@ -126,13 +131,14 @@ const TitleContent = memo(
 						/>
 					</div>
 				) }
-				renderContent={ () => (
+				renderContent={ ( { onToggle } ) => (
 					<DropDownMenu
 						onRegenerate={ onRegenerate }
 						onCustomize={ onCustomize }
 						onRenameItemSelect={ onRenameItemSelect }
 						onViewAll={ onViewAll }
 						isLargeViewport={ isLargeViewport }
+						onToggle={ onToggle }
 					/>
 				) }
 			/>
