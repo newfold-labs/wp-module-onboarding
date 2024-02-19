@@ -4,7 +4,11 @@ import { useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
 import { store as nfdOnboardingStore } from '../../store';
-import { FOOTER_SITEGEN, HEADER_SITEGEN } from '../../../constants';
+import {
+	FOOTER_SITEGEN,
+	HEADER_SITEGEN,
+	pluginDashboardPage,
+} from '../../../constants';
 
 import { DEFAULT_FLOW } from '../../data/flows/constants';
 import HeadingWithSubHeading from '../../components/HeadingWithSubHeading/SiteGen/index';
@@ -68,6 +72,14 @@ const TheFork = () => {
 					rel={ 'noreferrer' }
 				>
 					{ content.importtext }
+				</a>
+				<a
+					className="nfd-onboarding-step--site-gen__fork__exit"
+					href={ pluginDashboardPage }
+					target={ '_blank' }
+					rel={ 'noreferrer' }
+				>
+					{ content.exitToWordPress }
 				</a>
 			</CommonLayout>
 		</SitegenAiStateHandler>
