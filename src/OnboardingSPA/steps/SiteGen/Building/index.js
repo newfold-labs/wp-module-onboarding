@@ -15,11 +15,13 @@ const SiteGenBuilding = () => {
 		setSidebarActiveView,
 		setHeaderActiveView,
 		setDrawerActiveView,
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
+		setIsHeaderNavigationEnabled( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 	} );

@@ -32,6 +32,7 @@ const SiteGenSiteDetails = () => {
 		setDrawerActiveView,
 		setHideFooterNav,
 		setCurrentOnboardingData,
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -39,6 +40,7 @@ const SiteGenSiteDetails = () => {
 		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
+		setIsHeaderNavigationEnabled( true );
 		setDrawerActiveView( false );
 		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
 			setIsValidInput( true );

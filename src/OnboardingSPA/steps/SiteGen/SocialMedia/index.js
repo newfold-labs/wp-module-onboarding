@@ -25,6 +25,7 @@ const SiteGenSiteSocialMedia = () => {
 		setHeaderActiveView,
 		setDrawerActiveView,
 		updateSiteGenErrorStatus,
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -32,6 +33,7 @@ const SiteGenSiteSocialMedia = () => {
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
+		setIsHeaderNavigationEnabled( true );
 	} );
 
 	const { nextStep } = useSelect( ( select ) => {

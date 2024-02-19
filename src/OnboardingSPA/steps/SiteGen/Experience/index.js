@@ -32,12 +32,14 @@ const SiteGenExperience = () => {
 		setDrawerActiveView,
 		setHideFooterNav,
 		setCurrentOnboardingData,
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		setHideFooterNav( true );
 		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
+		setIsHeaderNavigationEnabled( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 
