@@ -1,0 +1,32 @@
+$background-color: var(--nfd-onboarding-card-background);
+
+.nfd-sg-card {
+
+	margin: 8px;
+	max-width: 90vw;
+	padding: 24px 16px;
+	border-radius: 12px;
+	background-color: $background-color;
+	width: clamp(18.75rem, 22.6136rem + 5.6818vw, 31.25rem);
+	box-shadow: 3px 3px 5px rgba(var(--nfd-onboarding-primary-rgb), $alpha: 0.05);
+
+	@media (max-width: #{ ($break-large) }) {
+		margin: 12px;
+		padding: 12px 6px;
+	}
+
+	&__title {
+		color: var(--nfd-onboarding-primary);
+		margin: 16px;
+		line-height: 1.5;
+		font-size: 18px;
+		text-align: center;
+		margin-bottom: 30px;
+		font-weight: 400;
+		letter-spacing: 1.5;
+	}
+
+	&__data {
+		margin: 12px;
+	}
+}
