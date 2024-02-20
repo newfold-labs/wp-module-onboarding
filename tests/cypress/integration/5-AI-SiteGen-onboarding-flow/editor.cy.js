@@ -38,9 +38,39 @@ describe( 'SiteGen Site Editor Step', function () {
         cy.timeout(10000);
     } );
 
-    // it( 'Check if rename functionality works as expected', () => {
-
-    // } );
+    it( 'Check if rename functionality works as expected', () => {
+        let existing_theme_name;
+        cy.get('.nfd-onboarding-header__center-input')
+            .invoke('attr', 'value')
+            .then(value => {
+                existing_theme_name = value;
+        cy.get('.nfd-onboarding-header__center-input').should('be.disabled');  // not able to rename
+        cy.get('.nfd-onboarding-header__center-dropdown_icon')
+            .should('be.visible')
+            .click();
+        cy.get('.nfd-onboarding-header__version_dropdown-menu')
+            .should('be.visible');
+        cy.get('.components-menu-item__button')
+            .eq(0)
+            .should('be.visible')
+            .should('have.text','Rename')
+            .click();
+        cy.get('.nfd-onboarding-header__center-input')
+            .clear() 
+            .type('New Changes');
+        cy.get('.nfd-onboarding-header__center-dropdown_icon')
+            .click();
+        let NewVal;
+        cy.get('.nfd-onboarding-header__center-input')
+            .invoke('attr', 'value')
+            .then(value => {
+                NewVal = value;
+        expect(existing_theme_name).to.not.equal(NewVal);
+        
+    })});
+       
+        
+    } );
 
     // it( 'Check for favouriting a theme and it appears everywhere', () => {
 
