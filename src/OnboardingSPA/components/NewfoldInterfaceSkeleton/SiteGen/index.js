@@ -1,4 +1,4 @@
-import { useEffect, useRef } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
 
@@ -34,6 +34,7 @@ const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
 );
 
 const SiteGen = () => {
+	const [ failedApi, setFailedApi ] = useState( [] );
 	const { newfoldBrand } = useSelect( ( select ) => {
 		return {
 			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
@@ -62,6 +63,7 @@ const SiteGen = () => {
 		useDispatch( nfdOnboardingStore );
 
 	const prevSiteGenErrorStatus = useRef();
+	const preFailedApis = useRef();
 
 	async function syncStoreToDB() {
 		if ( currentData ) {
@@ -105,19 +107,27 @@ const SiteGen = () => {
 			}
 		} catch ( err ) {
 			if ( retryCount < MAX_RETRIES_SITE_GEN ) {
-				performSiteGenMetaGeneration(
+				return performSiteGenMetaGeneration(
 					siteInfo,
 					identifier,
 					skipCache,
 					retryCount + 1
 				);
-			} else {
-				updateSiteGenErrorStatus( true );
 			}
+			// setFailedApi( ( prevState ) => [ ...prevState, identifier ] );
+			setFailedApi( ( prevState ) => {
+				if ( ! prevState.includes( identifier ) ) {
+					return [ ...prevState, identifier ];
+				}
+				return prevState;
+			} );
+			currentData.sitegen.siteGenErrorStatus = true;
+			updateSiteGenErrorStatus( true );
 		}
 	}
 
 	async function generateSiteGenData() {
+		console.log( failedApi );
 		// Start the API Requests when the loader is shown.
 		if (
 			! (
@@ -127,24 +137,32 @@ const SiteGen = () => {
 		) {
 			return;
 		}
-		let identifiers = await getSiteGenIdentifiers();
-		identifiers = identifiers.body;
+		let identifiers;
+		if ( Array.isArray( failedApi ) && failedApi.length > 0 ) {
+			identifiers = failedApi;
+			preFailedApis.current = [ ...preFailedApis.current, ...failedApi ];
+			setFailedApi( [] );
+		} else {
+			identifiers = await getSiteGenIdentifiers();
+			identifiers = identifiers.body;
+			console.log( identifiers );
 
-		const midIndex = Math.floor( identifiers.length / 2 );
-		if ( location.pathname.includes( 'experience' ) ) {
-			identifiers = identifiers.slice( 0, midIndex );
-			currentData.sitegen.siteGenMetaStatus.currentStatus = 0;
-		} else if ( location.pathname.includes( 'building' ) ) {
-			identifiers = identifiers.slice( midIndex );
-			currentData.sitegen.siteGenMetaStatus.currentStatus = midIndex;
+			const midIndex = Math.floor( identifiers.length / 2 );
+			if ( location.pathname.includes( 'experience' ) ) {
+				identifiers = identifiers.slice( 0, midIndex );
+				currentData.sitegen.siteGenMetaStatus.currentStatus = 0;
+			} else if ( location.pathname.includes( 'building' ) ) {
+				identifiers = identifiers.slice( midIndex );
+				currentData.sitegen.siteGenMetaStatus.currentStatus = midIndex;
+			}
+			setCurrentOnboardingData( currentData );
 		}
-		setCurrentOnboardingData( currentData );
 		const siteInfo = {
 			site_description: currentData.sitegen?.siteDetails?.prompt,
 		};
 
-		const skipCache = currentData.sitegen?.skipCache;
-
+		const skipCache = false;
+		console.log( identifiers );
 		// Iterate over Identifiers and fire Requests!
 		identifiers.forEach( ( identifier ) => {
 			performSiteGenMetaGeneration( siteInfo, identifier, skipCache );
@@ -182,7 +200,7 @@ const SiteGen = () => {
 
 	useEffect( () => {
 		if ( prevSiteGenErrorStatus.current === true && siteGenErrorStatus === false ) {
-			generateSiteGenData();
+			generateSiteGenData( failedApi );
 			syncStoreToDB();
 		}
 		prevSiteGenErrorStatus.current = siteGenErrorStatus;
