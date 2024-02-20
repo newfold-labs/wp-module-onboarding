@@ -60,6 +60,7 @@ const SiteGenSiteLogo = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		if ( currentData.data.siteLogo?.id !== 0 ) {
+			setIsFooterNavAllowed( true );
 			return setSiteLogo( currentData.data.siteLogo );
 		}
 		setIsFooterNavAllowed( false );
