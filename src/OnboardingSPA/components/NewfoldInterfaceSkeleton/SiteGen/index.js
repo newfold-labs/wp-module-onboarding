@@ -63,7 +63,6 @@ const SiteGen = () => {
 		useDispatch( nfdOnboardingStore );
 
 	const prevSiteGenErrorStatus = useRef();
-	const preFailedApis = useRef();
 
 	async function syncStoreToDB() {
 		if ( currentData ) {
@@ -114,7 +113,7 @@ const SiteGen = () => {
 					retryCount + 1
 				);
 			}
-			// setFailedApi( ( prevState ) => [ ...prevState, identifier ] );
+
 			setFailedApi( ( prevState ) => {
 				if ( ! prevState.includes( identifier ) ) {
 					return [ ...prevState, identifier ];
@@ -127,7 +126,6 @@ const SiteGen = () => {
 	}
 
 	async function generateSiteGenData() {
-		console.log( failedApi );
 		// Start the API Requests when the loader is shown.
 		if (
 			! (
@@ -137,15 +135,14 @@ const SiteGen = () => {
 		) {
 			return;
 		}
+
 		let identifiers;
 		if ( Array.isArray( failedApi ) && failedApi.length > 0 ) {
 			identifiers = failedApi;
-			preFailedApis.current = [ ...preFailedApis.current, ...failedApi ];
 			setFailedApi( [] );
 		} else {
 			identifiers = await getSiteGenIdentifiers();
 			identifiers = identifiers.body;
-			console.log( identifiers );
 
 			const midIndex = Math.floor( identifiers.length / 2 );
 			if ( location.pathname.includes( 'experience' ) ) {
@@ -161,8 +158,7 @@ const SiteGen = () => {
 			site_description: currentData.sitegen?.siteDetails?.prompt,
 		};
 
-		const skipCache = false;
-		console.log( identifiers );
+		const skipCache = currentData.sitegen?.skipCache;
 		// Iterate over Identifiers and fire Requests!
 		identifiers.forEach( ( identifier ) => {
 			performSiteGenMetaGeneration( siteInfo, identifier, skipCache );
