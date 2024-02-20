@@ -124,7 +124,7 @@ const DesignColorsPanel = forwardRef(
 			}
 
 			if ( ! selectedPalette && selectedPalette !== 0 ) {
-				const selectedPaletteToSet = activeColor.selectedPalette;
+				const selectedPaletteToSet = activeColor.selectedPalette || 0;
 				setSelectedPalette( selectedPaletteToSet );
 				if ( selectedPaletteToSet === 'custom' ) {
 					setShowCustomColors( true );
