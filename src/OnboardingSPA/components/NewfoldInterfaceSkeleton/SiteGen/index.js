@@ -205,6 +205,7 @@ const SiteGen = () => {
 	useEffect( () => {
 		initializeThemes();
 		initializeSettings();
+		updateSiteGenErrorStatus( false );
 	}, [] );
 
 	return (
