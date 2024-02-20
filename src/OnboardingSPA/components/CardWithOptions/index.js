@@ -2,7 +2,7 @@ import { memo } from '@wordpress/element';
 import OptionWithHeadingSubHeading from '../OptionWithHeadingSubHeading';
 
 const CardWithOptions = ( { title, options, selection, callback } ) => {
-	const buildOptions = () => {
+	const buildCardOptions = () => {
 		return options.map( ( data, idx ) => {
 			return (
 				<OptionWithHeadingSubHeading
@@ -20,7 +20,7 @@ const CardWithOptions = ( { title, options, selection, callback } ) => {
 	return (
 		<div className={ 'nfd-sg-card' }>
 			<div className={ 'nfd-sg-card__title' }>{ title }</div>
-			<div className={ 'nfd-sg-card__data' }>{ buildOptions() }</div>
+			<div className={ 'nfd-sg-card__data' }>{ buildCardOptions() }</div>
 		</div>
 	);
 };
