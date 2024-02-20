@@ -119,24 +119,16 @@ const SiteGen = () => {
 
 	async function generateSiteGenData() {
 		// Start the API Requests when the loader is shown.
-		if (
-			! (
-				location.pathname.includes( 'experience' ) ||
-				location.pathname.includes( 'building' )
-			)
-		) {
+		if ( ! location.pathname.includes( 'experience' ) ) {
 			return;
 		}
 		let identifiers = await getSiteGenIdentifiers();
 		identifiers = identifiers.body;
 
-		const midIndex = Math.floor( identifiers.length / 2 );
+		const midIndex = Math.floor( identifiers.length );
 		if ( location.pathname.includes( 'experience' ) ) {
 			identifiers = identifiers.slice( 0, midIndex );
 			currentData.sitegen.siteGenMetaStatus.currentStatus = 0;
-		} else if ( location.pathname.includes( 'building' ) ) {
-			identifiers = identifiers.slice( midIndex );
-			currentData.sitegen.siteGenMetaStatus.currentStatus = midIndex;
 		}
 		setCurrentOnboardingData( currentData );
 		const siteInfo = {
@@ -181,7 +173,10 @@ const SiteGen = () => {
 	}, [ location.pathname ] );
 
 	useEffect( () => {
-		if ( prevSiteGenErrorStatus.current === true && siteGenErrorStatus === false ) {
+		if (
+			prevSiteGenErrorStatus.current === true &&
+			siteGenErrorStatus === false
+		) {
 			generateSiteGenData();
 			syncStoreToDB();
 		}
