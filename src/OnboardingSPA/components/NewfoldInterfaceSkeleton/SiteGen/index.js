@@ -125,7 +125,7 @@ const SiteGen = () => {
 		let identifiers = await getSiteGenIdentifiers();
 		identifiers = identifiers.body;
 
-		const midIndex = Math.floor( identifiers.length );
+		const midIndex = Math.floor( identifiers.length / 2 );
 		if ( location.pathname.includes( 'experience' ) ) {
 			identifiers = identifiers.slice( 0, midIndex );
 			currentData.sitegen.siteGenMetaStatus.currentStatus = 0;

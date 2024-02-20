@@ -6,12 +6,17 @@ import { cloneDeep, isEmpty } from 'lodash';
 
 import CommonLayout from '../../../components/Layouts/Common';
 import { store as nfdOnboardingStore } from '../../../store';
-import { HEADER_SITEGEN } from '../../../../constants';
+import { HEADER_SITEGEN, MAX_RETRIES_SITE_GEN } from '../../../../constants';
 import { SiteGenPreviewSelectableCard } from '../../../components/LivePreview';
 import getContents from './contents';
 import HeartAnimation from './heartAnimation';
 import RegeneratingSiteCard from './regeneratingCard';
-import { getHomepages, regenerateHomepage } from '../../../utils/api/siteGen';
+import {
+	getHomepages,
+	regenerateHomepage,
+	generateSiteGenMeta,
+	getSiteGenIdentifiers,
+} from '../../../utils/api/siteGen';
 import { getGlobalStyles } from '../../../utils/api/themes';
 import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
 
@@ -47,6 +52,13 @@ const SiteGenPreview = () => {
 		}
 	);
 
+	// Define fetchData outside of useEffect
+	async function fetchPreviewData() {
+		await generateSiteGenData();
+		loadHomepages();
+		loadGlobalStyles();
+	}
+
 	useEffect( () => {
 		setIsHeaderEnabled( true );
 		setHideFooterNav( true );
@@ -66,6 +78,64 @@ const SiteGenPreview = () => {
 		}
 		prevSiteGenErrorStatus.current = siteGenErrorStatus;
 	}, [ siteGenErrorStatus ] );
+
+	async function performSiteGenMetaGeneration(
+		siteInfo,
+		identifier,
+		skipCache,
+		retryCount = 1
+	) {
+		try {
+			const data = await generateSiteGenMeta(
+				siteInfo,
+				identifier,
+				skipCache
+			);
+			if ( data.body !== null ) {
+				currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
+				if (
+					currentData.sitegen.siteGenMetaStatus.currentStatus ===
+					currentData.sitegen.siteGenMetaStatus.totalCount
+				) {
+					currentData.sitegen.skipCache = false;
+				}
+				setCurrentOnboardingData( currentData );
+			}
+		} catch ( err ) {
+			if ( retryCount < MAX_RETRIES_SITE_GEN ) {
+				performSiteGenMetaGeneration(
+					siteInfo,
+					identifier,
+					skipCache,
+					retryCount + 1
+				);
+			} else {
+				updateSiteGenErrorStatus( true );
+			}
+		}
+	}
+
+	async function generateSiteGenData() {
+		setIsPreviewLoading( true );
+		// Start the API Requests when the loader is shown.
+		let identifiers = await getSiteGenIdentifiers();
+		identifiers = identifiers.body;
+
+		const midIndex = Math.floor( identifiers.length / 2 );
+		identifiers = identifiers.slice( midIndex, identifiers.length );
+		currentData.sitegen.siteGenMetaStatus.currentStatus = midIndex;
+		setCurrentOnboardingData( currentData );
+		const siteInfo = {
+			site_description: currentData.sitegen?.siteDetails?.prompt,
+		};
+
+		const skipCache = currentData.sitegen?.skipCache;
+
+		// Iterate over Identifiers and fire Requests!
+		identifiers.forEach( ( identifier ) => {
+			performSiteGenMetaGeneration( siteInfo, identifier, skipCache );
+		} );
+	}
 
 	const loadHomepages = async () => {
 		setIsPreviewLoading( true );
@@ -105,8 +175,7 @@ const SiteGenPreview = () => {
 	};
 
 	useEffect( () => {
-		loadHomepages();
-		loadGlobalStyles();
+		fetchPreviewData();
 	}, [] );
 
 	const handlePreview = ( slug ) => {
