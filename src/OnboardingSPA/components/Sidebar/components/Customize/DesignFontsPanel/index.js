@@ -284,7 +284,10 @@ const DesignFontsPanel = forwardRef(
 				setSelectedCustomFont( activeCustomFont );
 			}
 
-			if ( ! selectedGroup && storedSelectedGroup ) {
+			if (
+				! selectedGroup &&
+				( storedSelectedGroup || storedSelectedGroup === 0 )
+			) {
 				setSelectedGroup( storedSelectedGroup );
 				if ( storedSelectedGroup === 'custom' ) {
 					setShowCustomFonts( true );
