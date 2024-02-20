@@ -2,13 +2,19 @@ import classNames from 'classnames';
 import { memo } from '@wordpress/element';
 import { Icon, chevronRight } from '@wordpress/icons';
 
-const OptionItem = ( { idx, title, desc, isSelected, callback } ) => {
+const OptionWithHeadingSubHeading = ( {
+	idx,
+	title,
+	desc,
+	isSelected,
+	callback,
+} ) => {
 	return (
 		<div
 			key={ idx }
 			role="button"
 			tabIndex={ 0 }
-			className={ 'nfd-sg-card__data__option' }
+			className={ 'nfd__option_heading_subheading' }
 			onClick={ () => {
 				if ( callback && typeof callback === 'function' ) {
 					callback( idx + 1 );
@@ -22,20 +28,27 @@ const OptionItem = ( { idx, title, desc, isSelected, callback } ) => {
 		>
 			<div
 				className={ classNames(
-					'nfd-sg-card__data__option__wrapper',
-					isSelected && 'nfd-sg-card__data__option__wrapper--selected'
+					'nfd__option_heading_subheading__wrapper',
+					isSelected &&
+						'nfd__option_heading_subheading__wrapper--selected'
 				) }
 			>
-				<div className={ 'nfd-sg-card__data__option__left' }>
-					<div className={ 'nfd-sg-card__data__option__left_top' }>
+				<div className={ 'nfd__option_heading_subheading__left' }>
+					<div
+						className={ 'nfd__option_heading_subheading__left_top' }
+					>
 						{ title }
 					</div>
-					<div className={ 'nfd-sg-card__data__option__left_bottom' }>
+					<div
+						className={
+							'nfd__option_heading_subheading__left_bottom'
+						}
+					>
 						{ desc }
 					</div>
 				</div>
 				<Icon
-					className={ 'nfd-sg-card__data__option__right' }
+					className={ 'nfd__option_heading_subheading__right' }
 					icon={ chevronRight }
 				/>
 			</div>
@@ -43,4 +56,4 @@ const OptionItem = ( { idx, title, desc, isSelected, callback } ) => {
 	);
 };
 
-export default memo( OptionItem );
+export default memo( OptionWithHeadingSubHeading );

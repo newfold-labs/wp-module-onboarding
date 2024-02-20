@@ -1,11 +1,11 @@
-import { OptionItem } from '../';
 import { memo } from '@wordpress/element';
+import OptionWithHeadingSubHeading from '../OptionWithHeadingSubHeading';
 
 const CardWithOptions = ( { title, options, selection, callback } ) => {
 	const buildOptions = () => {
 		return options.map( ( data, idx ) => {
 			return (
-				<OptionItem
+				<OptionWithHeadingSubHeading
 					key={ idx }
 					idx={ idx }
 					title={ data.title }

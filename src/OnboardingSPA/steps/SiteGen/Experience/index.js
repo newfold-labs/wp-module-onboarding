@@ -5,7 +5,7 @@ import getContents from './contents';
 import { HEADER_SITEGEN } from '../../../../constants';
 import { store as nfdOnboardingStore } from '../../../store';
 import CommonLayout from '../../../components/Layouts/Common';
-import { CardWithOptions } from '../../../components/CardWithOptionsTemplate';
+import CardWithOptions from '../../../components/CardWithOptions';
 import SiteGenLoader from '../../../components/Loaders/SiteGenLoader';
 import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
 
