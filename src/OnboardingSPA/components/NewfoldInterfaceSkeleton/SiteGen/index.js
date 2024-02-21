@@ -1,4 +1,5 @@
 import { useEffect, useRef } from '@wordpress/element';
+import { store as coreStore } from '@wordpress/core-data';
 import { useLocation } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
 
@@ -38,6 +39,12 @@ const SiteGen = () => {
 		return {
 			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
 		};
+	}, [] );
+
+	// Update Title and Tagline on the site.
+	const { editEntityRecord } = useDispatch( coreStore );
+	const { getEditedEntityRecord } = useSelect( ( select ) => {
+		return select( coreStore );
 	}, [] );
 
 	useEffect( () => {
@@ -93,7 +100,7 @@ const SiteGen = () => {
 				identifier,
 				skipCache
 			);
-			if ( data.body !== null ) {
+			if ( data !== null ) {
 				currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
 				if (
 					currentData.sitegen.siteGenMetaStatus.currentStatus ===
@@ -102,6 +109,13 @@ const SiteGen = () => {
 					currentData.sitegen.skipCache = false;
 				}
 				setCurrentOnboardingData( currentData );
+
+				if ( identifier === 'site_config' ) {
+					editEntityRecord( 'root', 'site', undefined, {
+						title: data.site_title,
+						description: data.tagline,
+					} );
+				}
 			}
 		} catch ( err ) {
 			if ( retryCount < MAX_RETRIES_SITE_GEN ) {
@@ -181,7 +195,10 @@ const SiteGen = () => {
 	}, [ location.pathname ] );
 
 	useEffect( () => {
-		if ( prevSiteGenErrorStatus.current === true && siteGenErrorStatus === false ) {
+		if (
+			prevSiteGenErrorStatus.current === true &&
+			siteGenErrorStatus === false
+		) {
 			generateSiteGenData();
 			syncStoreToDB();
 		}
@@ -191,6 +208,7 @@ const SiteGen = () => {
 	useEffect( () => {
 		initializeThemes();
 		initializeSettings();
+		getEditedEntityRecord( 'root', 'site' );
 	}, [] );
 
 	return (
