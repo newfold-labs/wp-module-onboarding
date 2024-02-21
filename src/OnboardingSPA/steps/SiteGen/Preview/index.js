@@ -25,7 +25,9 @@ const SiteGenPreview = () => {
 	const [ homepages, setHomepages ] = useState( false );
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
 	const [ isPreviewLoading, setIsPreviewLoading ] = useState( false );
+	const [ isMetaApiSuccess, setIsMetaApiSuccess ] = useState( false );
 	const [ globalStyles, setGlobalStyles ] = useState( false );
+	const [ failedApi, setFailedApi ] = useState( [] );
 
 	const prevSiteGenErrorStatus = useRef();
 
@@ -52,18 +54,6 @@ const SiteGenPreview = () => {
 		}
 	);
 
-	// Define fetchData outside of useEffect
-	async function fetchPreviewData() {
-		await generateSiteGenData();
-		if ( ! siteGenErrorStatus ) {
-			console.log( 'Load homepages' );
-			loadHomepages();
-			loadGlobalStyles();
-		} else {
-			console.log( 'Do not load home pages' );
-		}
-	}
-
 	useEffect( () => {
 		setIsHeaderEnabled( true );
 		setHideFooterNav( true );
@@ -74,12 +64,27 @@ const SiteGenPreview = () => {
 	}, [ currentData ] );
 
 	useEffect( () => {
+		generateSiteGenData();
+	}, [] );
+
+	useEffect( () => {
+		if ( isMetaApiSuccess ) {
+			loadHomepages();
+			loadGlobalStyles();
+		}
+	}, [ isMetaApiSuccess ] );
+
+	useEffect( () => {
 		if (
 			prevSiteGenErrorStatus.current === true &&
 			siteGenErrorStatus === false
 		) {
-			loadHomepages();
-			loadGlobalStyles();
+			if ( ! isMetaApiSuccess ) {
+				generateSiteGenData();
+			} else {
+				loadHomepages();
+				loadGlobalStyles();
+			}
 		}
 		prevSiteGenErrorStatus.current = siteGenErrorStatus;
 	}, [ siteGenErrorStatus ] );
@@ -103,6 +108,7 @@ const SiteGenPreview = () => {
 					currentData.sitegen.siteGenMetaStatus.totalCount
 				) {
 					currentData.sitegen.skipCache = false;
+					setIsMetaApiSuccess( true );
 				}
 				setCurrentOnboardingData( currentData );
 			}
@@ -115,6 +121,13 @@ const SiteGenPreview = () => {
 					retryCount + 1
 				);
 			} else {
+				setFailedApi( ( prevState ) => {
+					if ( ! prevState.includes( identifier ) ) {
+						return [ ...prevState, identifier ];
+					}
+					return prevState;
+				} );
+				currentData.sitegen.siteGenErrorStatus = true;
 				updateSiteGenErrorStatus( true );
 				setIsPreviewLoading( false );
 			}
@@ -124,12 +137,20 @@ const SiteGenPreview = () => {
 	async function generateSiteGenData() {
 		setIsPreviewLoading( true );
 		// Start the API Requests when the loader is shown.
-		let identifiers = await getSiteGenIdentifiers();
-		identifiers = identifiers.body;
 
-		const midIndex = Math.floor( identifiers.length / 2 );
-		identifiers = identifiers.slice( midIndex, identifiers.length );
-		currentData.sitegen.siteGenMetaStatus.currentStatus = midIndex;
+		let identifiers;
+		if ( Array.isArray( failedApi ) && failedApi.length > 0 ) {
+			identifiers = failedApi;
+			setFailedApi( [] );
+		} else {
+			identifiers = await getSiteGenIdentifiers();
+			identifiers = identifiers.body;
+
+			const midIndex = Math.floor( identifiers.length / 2 );
+			identifiers = identifiers.slice( midIndex, identifiers.length );
+			currentData.sitegen.siteGenMetaStatus.currentStatus = midIndex;
+		}
+
 		setCurrentOnboardingData( currentData );
 		const siteInfo = {
 			site_description: currentData.sitegen?.siteDetails?.prompt,
@@ -179,10 +200,6 @@ const SiteGenPreview = () => {
 		}
 		setGlobalStyles( globalStylesResponse.body );
 	};
-
-	useEffect( () => {
-		fetchPreviewData();
-	}, [] );
 
 	const handlePreview = ( slug ) => {
 		if ( ! ( slug in homepages ) ) {
