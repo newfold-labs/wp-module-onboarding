@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 const getContents = () => {
 	return {
 		heading: __(
-			'Tell me some details about the site you want created?',
+			'Tell me some details about the site you want created? New',
 			'wp-module-onboarding'
 		),
 		inputPlaceholder: __(
