@@ -100,6 +100,7 @@ const SiteGen = () => {
 				identifier,
 				skipCache
 			);
+
 			if ( data.body !== null ) {
 				currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
 				if (
@@ -112,15 +113,14 @@ const SiteGen = () => {
 			}
 		} catch ( err ) {
 			if ( retryCount < MAX_RETRIES_SITE_GEN ) {
-				performSiteGenMetaGeneration(
+				return performSiteGenMetaGeneration(
 					siteInfo,
 					identifier,
 					skipCache,
 					retryCount + 1
 				);
-			} else {
-				updateSiteGenErrorStatus( true );
 			}
+			updateSiteGenErrorStatus( true );
 		}
 	}
 
