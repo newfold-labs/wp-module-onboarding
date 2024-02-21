@@ -193,6 +193,22 @@ const SiteGenPreview = () => {
 			const data = homepages[ slug ];
 			const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
 			newPreviewSettings.settings.color.palette = data.color.palette;
+			const body =
+				data.styles?.blocks[ 0 ]?.[ 'core/body' ].typography.fontFamily;
+			const headings =
+				data.styles?.blocks[ 0 ]?.[ 'core/heading' ].typography
+					.fontFamily;
+			if ( newPreviewSettings.styles.typography ) {
+				newPreviewSettings.styles.typography.fontFamily = body;
+			}
+			if (
+				newPreviewSettings.styles.blocks[ 'core/heading' ].typography
+			) {
+				newPreviewSettings.styles.blocks[
+					'core/heading'
+				].typography.fontFamily = headings;
+			}
+
 			let blockGrammar = '';
 			[ 'header', 'content', 'footer' ].forEach( ( part ) => {
 				if ( part in data ) {
