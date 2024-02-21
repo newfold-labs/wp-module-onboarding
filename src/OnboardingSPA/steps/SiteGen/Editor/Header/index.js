@@ -36,6 +36,7 @@ const StepSiteGenEditorHeader = () => {
 		setCurrentOnboardingData,
 		setSidebarActiveView,
 		setIsSidebarOpened,
+		setInteractionDisabled,
 	} = useDispatch( nfdOnboardingStore );
 	const { currentData, sideBarView, isSidebarOpened } = useSelect(
 		( select ) => {
@@ -222,6 +223,18 @@ const StepSiteGenEditorHeader = () => {
 		}
 	}, [ currentData ] );
 
+	useEffect( () => {
+		if ( isSaving || isRegenerating ) {
+			setInteractionDisabled( true );
+		} else {
+			setInteractionDisabled( false );
+		}
+
+		return () => {
+			setInteractionDisabled( false );
+		};
+	}, [ isSaving, isRegenerating ] );
+
 	return (
 		<>
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_START }` }>
@@ -299,9 +312,9 @@ const StepSiteGenEditorHeader = () => {
 						>
 							{ isLargeViewport
 								? __(
-										'Save & Continue',
-										'wp-module-onboarding'
-								  )
+									'Save & Continue',
+									'wp-module-onboarding'
+								)
 								: __( 'Next', 'wp-module-onboarding' ) }
 						</div>
 						{ isSaving ? (
