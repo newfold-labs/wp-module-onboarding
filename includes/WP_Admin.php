@@ -149,6 +149,16 @@ final class WP_Admin {
 	}
 
 	/**
+	 * Adding action hooks that trigger the AI Module generates site meta.
+	 * This needs to be added before the do_action is triggered from AI Module
+	 *
+	 * @return void
+	 */
+	public static function instantiate_sitegen_hooks() {
+		\add_action( 'nfd-ai-site-gen-targetaudience', array( SiteGenService::class, 'set_site_title_and_tagline' ), 10, 1 );
+	}
+
+	/**
 	 * Initialize Plugins and Themes if necessary.
 	 *
 	 * @return void
@@ -165,6 +175,7 @@ final class WP_Admin {
 		FlowService::initialize_data();
 
 		self::register_assets();
+		self::instantiate_sitegen_hooks();
 	}
 
 	/**
