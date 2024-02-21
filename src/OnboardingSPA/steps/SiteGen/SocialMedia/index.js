@@ -24,7 +24,9 @@ const SiteGenSiteSocialMedia = () => {
 		setSidebarActiveView,
 		setHeaderActiveView,
 		setDrawerActiveView,
+		setIsFooterNavAllowed,
 		updateSiteGenErrorStatus,
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -32,6 +34,7 @@ const SiteGenSiteSocialMedia = () => {
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
+		setIsHeaderNavigationEnabled( true );
 	} );
 
 	const { nextStep } = useSelect( ( select ) => {
@@ -49,6 +52,7 @@ const SiteGenSiteSocialMedia = () => {
 	};
 
 	useEffect( () => {
+		setIsFooterNavAllowed( connected );
 		if ( interacted && connected ) {
 			navigate( nextStep.path );
 		}

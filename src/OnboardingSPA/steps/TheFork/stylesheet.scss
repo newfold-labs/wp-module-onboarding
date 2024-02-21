@@ -45,12 +45,20 @@
 			}
 
 			&__importsite {
-				color: var(--nfd-onboarding-primary);
-				font-weight: 510;
-				text-align: center;
 				font-size: 18px;
+				font-weight: 510;
 				line-height: 20px;
-				margin: 35px !important;
+				text-align: center;
+				margin: 25px !important;
+				color: var(--nfd-onboarding-primary);
+			}
+
+			&__exit {
+				cursor: pointer;
+				font-weight: 510;
+				line-height: 20px;
+				text-align: center;
+				color: var(--nfd-onboarding-primary);
 			}
 		}
 	}

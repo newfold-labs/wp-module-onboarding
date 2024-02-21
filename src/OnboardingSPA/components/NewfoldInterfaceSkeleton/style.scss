@@ -38,6 +38,20 @@ html.nfd-interface-interface-skeleton__html-container {
 			top: 0;
 		}
 	}
+
+	&__overlay {
+		// z-index: to display over sidebar.
+		&--disabled {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(var(--nfd-onboarding-secondary-rgb), 0.3);
+			cursor: not-allowed;
+			z-index: 1000001;
+		}
+	}
 }
 
 .nfd-interface-interface-skeleton__editor {
@@ -45,6 +59,7 @@ html.nfd-interface-interface-skeleton__html-container {
 	flex-direction: column;
 	flex: 0 1 100%;
 	overflow: hidden;
+	position: relative;
 }
 
 @include editor-left(".nfd-interface-interface-skeleton");
@@ -197,4 +212,3 @@ html.nfd-interface-interface-skeleton__html-container {
 		}
 	}
 }
-

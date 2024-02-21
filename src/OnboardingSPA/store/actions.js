@@ -326,3 +326,10 @@ export function updateSiteGenErrorStatus( siteGenErrorStatus ) {
 		siteGenErrorStatus,
 	};
 }
+
+export function setInteractionDisabled( interactionDisabled ) {
+	return {
+		type: 'SET_INTERACTION_DISABLED',
+		interactionDisabled,
+	};
+}
