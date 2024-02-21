@@ -34,7 +34,7 @@ final class WP_Admin {
 		if ( 'sitegen' === Data::current_flow() ) {
 			\add_action( 'load-themes.php', array( __CLASS__, 'mark_sitegen_generated_themes' ) );
 			SiteGenService::pre_set_filter_wonder_blocks_transients();
-			SiteGenService::instantiate_site_meta();
+			SiteGenService::instantiate_sitegen_hooks();
 		}
 	}
 
