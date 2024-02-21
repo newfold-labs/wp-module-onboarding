@@ -191,12 +191,20 @@ const DesignFontsPanel = forwardRef(
 		const resetToDefaultFonts = () => {
 			setStylesOfCurrentData();
 			setSelectedGroup( null );
-			setShowCustomFonts( false );
-			setSelectedCustomFont( null );
+			const slug = currentData.sitegen?.homepages?.active?.slug;
+			if ( ! slug ) {
+				return;
+			}
+			currentData.sitegen.homepages.data[ slug ].selectedFontGroup = null;
+			currentData.sitegen.homepages.active.selectedFontGroup = null;
+			setCurrentOnboardingData( currentData );
 		};
 
 		const setStylesOfCurrentData = ( heading = '', body = '' ) => {
 			const slug = currentData.sitegen?.homepages?.active?.slug;
+			if ( ! slug ) {
+				return;
+			}
 			const styles = {
 				blocks: [
 					{
@@ -214,17 +222,14 @@ const DesignFontsPanel = forwardRef(
 				],
 			};
 
-			if ( slug ) {
-				currentData.sitegen.homepages.data[ slug ] = {
-					...currentData.sitegen.homepages.data[ slug ],
-					styles,
-				};
-				currentData.sitegen.homepages.active = {
-					...currentData.sitegen.homepages.active,
-					styles,
-				};
-				setCurrentOnboardingData( currentData );
-			}
+			const updatedData = {
+				...currentData.sitegen.homepages.data[ slug ],
+				styles,
+			};
+
+			currentData.sitegen.homepages.data[ slug ] = updatedData;
+			currentData.sitegen.homepages.active = updatedData;
+			setCurrentOnboardingData( currentData );
 		};
 
 		useImperativeHandle( ref, () => ( {
@@ -269,11 +274,23 @@ const DesignFontsPanel = forwardRef(
 		);
 
 		useEffect( () => {
-			if ( ! customFont.headings ) {
-				const storedCustomFonts =
-					currentData.sitegen.homepages.active.customFont;
-				if ( storedCustomFonts ) {
-					setCustomFont( storedCustomFonts );
+			const activeCustomFont =
+				currentData.sitegen.homepages.active.customFont;
+			const storedSelectedGroup =
+				currentData.sitegen.homepages.active.selectedFontGroup;
+
+			if ( ! customFont.headings && activeCustomFont ) {
+				setCustomFont( activeCustomFont );
+				setSelectedCustomFont( activeCustomFont );
+			}
+
+			if (
+				! selectedGroup &&
+				( storedSelectedGroup || storedSelectedGroup === 0 )
+			) {
+				setSelectedGroup( storedSelectedGroup );
+				if ( storedSelectedGroup === 'custom' ) {
+					setShowCustomFonts( true );
 				}
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -282,20 +299,24 @@ const DesignFontsPanel = forwardRef(
 		const handleUpdatePreviewSettings = () => {
 			let headings;
 			let body;
+			const slug = currentData.sitegen?.homepages?.active?.slug;
 			if ( selectedGroup === 'custom' ) {
 				headings = `var(--wp--preset--font-family--${ customFont.headings })`;
 				body = `var(--wp--preset--font-family--${ customFont.body })`;
-				const slug = currentData.sitegen?.homepages?.active?.slug;
 				if ( slug ) {
 					currentData.sitegen.homepages.data[ slug ].customFont =
 						customFont;
 					currentData.sitegen.homepages.active.customFont =
-					customFont;
+						customFont;
 				}
 			} else {
-				headings = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].headings })`;
-				body = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].body })`;
+				headings = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].headingsSlug })`;
+				body = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].bodySlug })`;
 			}
+			currentData.sitegen.homepages.data[ slug ].selectedFontGroup =
+				selectedGroup;
+			currentData.sitegen.homepages.active.selectedFontGroup =
+				selectedGroup;
 			setStylesOfCurrentData( headings, body );
 		};
 
