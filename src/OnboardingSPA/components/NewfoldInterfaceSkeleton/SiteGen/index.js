@@ -113,7 +113,6 @@ const SiteGen = () => {
 					retryCount + 1
 				);
 			}
-			currentData.sitegen.siteGenErrorStatus = true;
 			updateSiteGenErrorStatus( true );
 		}
 	}
