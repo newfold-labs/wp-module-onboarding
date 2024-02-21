@@ -155,7 +155,7 @@ final class WP_Admin {
 	 * @return void
 	 */
 	public static function instantiate_sitegen_hooks() {
-		\add_action( 'nfd-ai-site-gen-targetaudience', array( SiteGenService::class, 'set_site_title_and_tagline' ), 10, 1 );
+		\add_action( 'nfd-ai-site-gen-siteconfig', array( SiteGenService::class, 'set_site_title_and_tagline' ), 10, 1 );
 	}
 
 	/**
