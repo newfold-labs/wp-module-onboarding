@@ -30,14 +30,19 @@ const DesignColorsPanel = forwardRef(
 			resetToDefaultColors,
 		} ) );
 
-		const { currentData, customizeSidebarData } = useSelect( ( select ) => {
-			return {
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				customizeSidebarData:
-					select( nfdOnboardingStore ).getCustomizeSidebarData(),
-			};
-		} );
+		const { currentData, customizeSidebarData, themeColors } = useSelect(
+			( select ) => {
+				return {
+					currentData:
+						select( nfdOnboardingStore ).getCurrentOnboardingData(),
+					customizeSidebarData:
+						select( nfdOnboardingStore ).getCustomizeSidebarData(),
+					themeColors:
+						select( nfdOnboardingStore ).getPreviewSettings()
+							.settings.colors,
+				};
+			}
+		);
 
 		useEffect( () => {
 			const slug = currentData.sitegen?.homepages?.active?.slug;
@@ -60,13 +65,19 @@ const DesignColorsPanel = forwardRef(
 		}, [ currentData ] );
 
 		const colorPalettes = customizeSidebarData?.colorPalettes;
+		let palettePrimaryColors = themeColors?.map( ( colorObj ) => ( {
+			name: colorObj.name,
+			color: colorObj.color,
+		} ) );
 
-		const palettePrimaryColors = Object.entries( colorPalettes[ 0 ] ).map(
-			( [ , color ] ) => ( {
-				name: __( 'Custom', 'wp-module-onboarding' ),
-				color,
-			} )
-		);
+		if ( ! palettePrimaryColors ) {
+			palettePrimaryColors = Object.entries( colorPalettes[ 0 ] ).map(
+				( [ , color ] ) => ( {
+					name: __( 'Custom', 'wp-module-onboarding' ),
+					color,
+				} )
+			);
+		}
 
 		const definePalettes = () => {
 			const palettes = [];
