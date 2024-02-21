@@ -59,7 +59,7 @@ const SiteGenSiteSocialMedia = () => {
 		<SitegenAiStateHandler>
 			<CommonLayout
 				isCentered
-				className="nfd-onboarding-step--site-gen__social-media wups"
+				className="nfd-onboarding-step--site-gen__social-media"
 			>
 				<div className="nfd-onboarding-step--site-gen__social-media__container">
 					<AIHeading title={ content.heading } />

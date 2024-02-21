@@ -139,7 +139,7 @@ final class WP_Admin {
 	}
 
 	/**
-	 * Enqueues the block assets for the live previews test
+	 * Enqueues the block assets for the live previews.
 	 *
 	 * @return void
 	 */
