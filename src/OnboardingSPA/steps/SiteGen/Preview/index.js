@@ -55,8 +55,13 @@ const SiteGenPreview = () => {
 	// Define fetchData outside of useEffect
 	async function fetchPreviewData() {
 		await generateSiteGenData();
-		loadHomepages();
-		loadGlobalStyles();
+		if ( ! siteGenErrorStatus ) {
+			console.log( 'Load homepages' );
+			loadHomepages();
+			loadGlobalStyles();
+		} else {
+			console.log( 'Do not load home pages' );
+		}
 	}
 
 	useEffect( () => {
@@ -111,6 +116,7 @@ const SiteGenPreview = () => {
 				);
 			} else {
 				updateSiteGenErrorStatus( true );
+				setIsPreviewLoading( false );
 			}
 		}
 	}
