@@ -60,6 +60,8 @@ const SiteGenSiteDetails = () => {
 			currentData.sitegen.siteDetails.mode = 'simple';
 			currentData.sitegen.skipCache = true;
 			currentData.sitegen.sitemapPagesGenerated = false;
+			currentData.sitegen.homepages.active = {};
+			currentData.sitegen.homepages.data = {};
 			setCurrentOnboardingData( currentData );
 		}
 		setIsFooterNavAllowed( isValidInput );
