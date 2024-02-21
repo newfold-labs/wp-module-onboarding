@@ -45,7 +45,7 @@ jobs:
 
       # Installs @wordpress/scripts for lint checks if it does not exist in the cache.
       - name: Install dependencies
-        run: npm ci @wordpress/scripts@26.10.0 @newfold-labs/js-utility-ui-analytics --legacy-peer-deps
+        run: npm i @wordpress/scripts@27.2.0 @newfold-labs/js-utility-ui-analytics --legacy-peer-deps
         if: steps.cache.outputs.cache-hit != 'true'
 
       # Gets the files changed wrt to trunk and filters out the js files.
