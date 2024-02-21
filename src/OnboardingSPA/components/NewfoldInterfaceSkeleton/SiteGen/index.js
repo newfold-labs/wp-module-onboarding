@@ -1,4 +1,4 @@
-import { useEffect, useRef } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
 
@@ -34,6 +34,7 @@ const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
 );
 
 const SiteGen = () => {
+	const [ failedApi, setFailedApi ] = useState( [] );
 	const { newfoldBrand } = useSelect( ( select ) => {
 		return {
 			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
@@ -105,15 +106,22 @@ const SiteGen = () => {
 			}
 		} catch ( err ) {
 			if ( retryCount < MAX_RETRIES_SITE_GEN ) {
-				performSiteGenMetaGeneration(
+				return performSiteGenMetaGeneration(
 					siteInfo,
 					identifier,
 					skipCache,
 					retryCount + 1
 				);
-			} else {
-				updateSiteGenErrorStatus( true );
 			}
+
+			setFailedApi( ( prevState ) => {
+				if ( ! prevState.includes( identifier ) ) {
+					return [ ...prevState, identifier ];
+				}
+				return prevState;
+			} );
+			currentData.sitegen.siteGenErrorStatus = true;
+			updateSiteGenErrorStatus( true );
 		}
 	}
 
@@ -122,21 +130,27 @@ const SiteGen = () => {
 		if ( ! location.pathname.includes( 'experience' ) ) {
 			return;
 		}
-		let identifiers = await getSiteGenIdentifiers();
-		identifiers = identifiers.body;
 
-		const midIndex = Math.floor( identifiers.length / 2 );
-		if ( location.pathname.includes( 'experience' ) ) {
-			identifiers = identifiers.slice( 0, midIndex );
-			currentData.sitegen.siteGenMetaStatus.currentStatus = 0;
+		let identifiers;
+		if ( Array.isArray( failedApi ) && failedApi.length > 0 ) {
+			identifiers = failedApi;
+			setFailedApi( [] );
+		} else {
+			identifiers = await getSiteGenIdentifiers();
+			identifiers = identifiers.body;
+
+			const midIndex = Math.floor( identifiers.length / 2 );
+			if ( location.pathname.includes( 'experience' ) ) {
+				identifiers = identifiers.slice( 0, midIndex );
+				currentData.sitegen.siteGenMetaStatus.currentStatus = 0;
+			}
+			setCurrentOnboardingData( currentData );
 		}
-		setCurrentOnboardingData( currentData );
 		const siteInfo = {
 			site_description: currentData.sitegen?.siteDetails?.prompt,
 		};
 
 		const skipCache = currentData.sitegen?.skipCache;
-
 		// Iterate over Identifiers and fire Requests!
 		identifiers.forEach( ( identifier ) => {
 			performSiteGenMetaGeneration( siteInfo, identifier, skipCache );
@@ -186,6 +200,7 @@ const SiteGen = () => {
 	useEffect( () => {
 		initializeThemes();
 		initializeSettings();
+		updateSiteGenErrorStatus( false );
 	}, [] );
 
 	return (
