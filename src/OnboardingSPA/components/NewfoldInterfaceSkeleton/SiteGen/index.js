@@ -196,7 +196,7 @@ const SiteGen = () => {
 
 	useEffect( () => {
 		if ( prevSiteGenErrorStatus.current === true && siteGenErrorStatus === false ) {
-			generateSiteGenData( failedApi );
+			generateSiteGenData();
 			syncStoreToDB();
 		}
 		prevSiteGenErrorStatus.current = siteGenErrorStatus;
