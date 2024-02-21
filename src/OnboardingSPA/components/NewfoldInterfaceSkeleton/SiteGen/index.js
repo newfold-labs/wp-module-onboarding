@@ -52,18 +52,25 @@ const SiteGen = () => {
 	}, [ newfoldBrand ] );
 	const location = useLocation();
 
-	const { currentData, initialize, pluginInstallHash, siteGenErrorStatus } =
-		useSelect( ( select ) => {
-			return {
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				initialize: select( nfdOnboardingStore ).getInitialize(),
-				pluginInstallHash:
-					select( nfdOnboardingStore ).getPluginInstallHash(),
-				siteGenErrorStatus:
-					select( nfdOnboardingStore ).getSiteGenErrorStatus(),
-			};
-		} );
+	const {
+		currentData,
+		initialize,
+		pluginInstallHash,
+		siteGenErrorStatus,
+		interactionDisabled,
+	} = useSelect( ( select ) => {
+		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			initialize: select( nfdOnboardingStore ).getInitialize(),
+			pluginInstallHash:
+				select( nfdOnboardingStore ).getPluginInstallHash(),
+			siteGenErrorStatus:
+				select( nfdOnboardingStore ).getSiteGenErrorStatus(),
+			interactionDisabled:
+				select( nfdOnboardingStore ).getInteractionDisabled(),
+		};
+	} );
 
 	const { setCurrentOnboardingData, updateSiteGenErrorStatus } =
 		useDispatch( nfdOnboardingStore );
@@ -119,15 +126,14 @@ const SiteGen = () => {
 			}
 		} catch ( err ) {
 			if ( retryCount < MAX_RETRIES_SITE_GEN ) {
-				performSiteGenMetaGeneration(
+				return performSiteGenMetaGeneration(
 					siteInfo,
 					identifier,
 					skipCache,
 					retryCount + 1
 				);
-			} else {
-				updateSiteGenErrorStatus( true );
 			}
+			updateSiteGenErrorStatus( true );
 		}
 	}
 
@@ -223,6 +229,7 @@ const SiteGen = () => {
 				content={ <Content /> }
 				sidebar={ <Sidebar /> }
 				footer={ <Footer /> }
+				interactionDisabled={ interactionDisabled }
 			/>
 		</ThemeProvider>
 	);

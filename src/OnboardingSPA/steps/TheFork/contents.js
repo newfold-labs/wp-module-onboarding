@@ -10,9 +10,9 @@ const getContents = () => {
 		),
 		options: [
 			{
-				title: __( 'Build it myself', 'wp-module-onboarding' ),
+				title: __( 'Guided Configuration', 'wp-module-onboarding' ),
 				subtitle: __(
-					"We'll stay out of your way.",
+					'A few questions & settings to get you a jumpstart.',
 					'wp-module-onboarding'
 				),
 				flow: 'sitebuild',
@@ -20,7 +20,7 @@ const getContents = () => {
 			{
 				title: __( ' Website Creator', 'wp-module-onboarding' ),
 				subtitle: __(
-					'Custom AI generated content & design.',
+					'Unique AI generated content & design curated for you.',
 					'wp-module-onboarding'
 				),
 				span: __( 'AI', 'wp-module-onboarding' ),
@@ -35,13 +35,16 @@ const getContents = () => {
 				flow: 'hirepro',
 			},
 		],
-
 		importtext: __(
 			'Already have a WordPress site you want to import?',
 			'wp-module-onboarding'
 		),
 		importlink: __(
 			'https://my.bluehost.com/cgi/services/migration',
+			'wp-module-onboarding'
+		),
+		exitToWordPress: __(
+			'I’m following a tutorial',
 			'wp-module-onboarding'
 		),
 	};

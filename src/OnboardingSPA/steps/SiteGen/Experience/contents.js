@@ -8,28 +8,27 @@ const getContents = () => {
 		),
 		options: [
 			{
+				key: 1,
 				title: __( 'Beginner', 'wp-module-onboarding' ),
 				desc: __(
-					'First time here, where am I?',
+					'First time building a website using WordPress',
 					'wp-module-onboarding'
 				),
 			},
 			{
-				title: __( 'Used it some', 'wp-module-onboarding' ),
+				key: 2,
+				title: __( 'Intermediate', 'wp-module-onboarding' ),
 				desc: __(
-					"I'll ask for help when I need it",
+					'I’ve built a few sites for myself or others',
 					'wp-module-onboarding'
 				),
 			},
 			{
+				key: 3,
 				title: __( 'Expert', 'wp-module-onboarding' ),
-				desc: __(
-					"Stay out of my way, I know what I'm doing",
-					'wp-module-onboarding'
-				),
+				desc: __( 'I do this frequently', 'wp-module-onboarding' ),
 			},
 		],
-		skip: __( 'Skip', 'wp-module-onboarding' ),
 	};
 };
 

@@ -16,9 +16,19 @@ import { stepSiteGenSiteLogo } from '../../../../steps/SiteGen/SiteLogo/step';
  * @return {WPComponent} Back Component
  */
 const Back = ( { path, showErrorDialog } ) => {
-	const { setNavErrorContinuePath } = useDispatch( nfdOnboardingStore );
+	const { setNavErrorContinuePath, updateSiteGenErrorStatus } =
+		useDispatch( nfdOnboardingStore );
+	const { siteGenErrorStatus } = useSelect( ( select ) => {
+		return {
+			siteGenErrorStatus:
+				select( nfdOnboardingStore ).getSiteGenErrorStatus(),
+		};
+	} );
 	const navigate = useNavigate();
 	const navigateBack = () => {
+		if ( siteGenErrorStatus === true ) {
+			updateSiteGenErrorStatus( false );
+		}
 		if ( showErrorDialog !== false ) {
 			setNavErrorContinuePath( path );
 		} else {

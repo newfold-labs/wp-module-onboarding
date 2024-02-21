@@ -15,11 +15,13 @@ const SiteGenBuilding = () => {
 		setSidebarActiveView,
 		setHeaderActiveView,
 		setDrawerActiveView,
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
+		setIsHeaderNavigationEnabled( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 	} );
@@ -38,7 +40,7 @@ const SiteGenBuilding = () => {
 					</div>
 				</div>
 				<div className="site-gen__building_loader__overlay">
-					<SiteGenLoader autoNavigate={ true } />
+					<SiteGenLoader customNavPercentage={ 100 } />
 				</div>
 			</CommonLayout>
 		</SitegenAiStateHandler>

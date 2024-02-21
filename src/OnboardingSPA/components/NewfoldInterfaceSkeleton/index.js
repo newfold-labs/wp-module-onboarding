@@ -60,6 +60,7 @@ function NewfoldInterfaceSkeleton(
 		labels,
 		className,
 		shortcuts,
+		interactionDisabled,
 	},
 	ref
 ) {
@@ -181,6 +182,9 @@ function NewfoldInterfaceSkeleton(
 				>
 					{ footer }
 				</div>
+			) }
+			{ interactionDisabled && (
+				<div className="nfd-interface-interface-skeleton__overlay--disabled"></div>
 			) }
 		</div>
 	);

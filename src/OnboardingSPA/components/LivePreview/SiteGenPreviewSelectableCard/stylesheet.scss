@@ -99,6 +99,10 @@
 					text-overflow: ellipsis;
 					text-wrap: nowrap;
 					overflow: hidden;
+
+					@media (max-width: #{ ($break-mobile) }) {
+						width: 150px;
+					}
 				}
 			}
 
