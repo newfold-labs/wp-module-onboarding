@@ -24,6 +24,7 @@ const SiteGenSiteSocialMedia = () => {
 		setSidebarActiveView,
 		setHeaderActiveView,
 		setDrawerActiveView,
+		setIsFooterNavAllowed,
 		updateSiteGenErrorStatus,
 	} = useDispatch( nfdOnboardingStore );
 
@@ -49,6 +50,7 @@ const SiteGenSiteSocialMedia = () => {
 	};
 
 	useEffect( () => {
+		setIsFooterNavAllowed( connected );
 		if ( interacted && connected ) {
 			navigate( nextStep.path );
 		}

@@ -121,6 +121,7 @@ const TitleContent = memo(
 							onChange={ handleOnChange }
 						/>
 						<Icon
+							className="nfd-onboarding-header__center-dropdown_icon"
 							icon={ chevronDown }
 							onClick={ onToggle }
 							onKeyDown={ ( event ) => {

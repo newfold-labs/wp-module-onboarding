@@ -8,6 +8,7 @@ export class Step {
 		sidebars,
 		header,
 		data,
+		drawerNavigation,
 	} ) {
 		this.path = path;
 		this.title = title;
@@ -17,5 +18,6 @@ export class Step {
 		this.sidebars = sidebars;
 		this.data = data;
 		this.header = header;
+		this.drawerNavigation = drawerNavigation ?? true;
 	}
 }
