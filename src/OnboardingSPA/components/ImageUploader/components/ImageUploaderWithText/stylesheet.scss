@@ -93,10 +93,18 @@
 				display: flex;
 				flex-direction: row;
 
+				&__wrapper {
+					background-color: transparent;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					border-radius: 2px;
+				}
+
 				&__image {
 					width: 130px;
 					height: 100px;
-					object-fit: cover;
+					object-fit: contain;
 					border-radius: 4px;
 				}
 
