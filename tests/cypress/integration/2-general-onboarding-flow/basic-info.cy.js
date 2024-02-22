@@ -190,12 +190,9 @@ describe( 'Basic Info Page', function () {
 			cy.get(
 				'.browser-content_social_icon[style="background-image: var(--facebook-icon);"]'
 			).should( 'have.css', 'opacity', '0.75' );
+
 			// The URL Checker runs on a debounce
 			// Shows the message to the User in case of Invalid URL
-			
-			// cy.get( '.components-modal__content' ).type( '{esc}' );
-			
-
 			socialTest.focus();
 			socialTest.clear();
 			cy.wait(200);
