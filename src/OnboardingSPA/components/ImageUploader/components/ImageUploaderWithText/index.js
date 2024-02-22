@@ -10,18 +10,72 @@ import bytes from 'bytes';
 import { Icon, closeSmall } from '@wordpress/icons';
 import { store as nfdOnboardingStore } from '../../../../store';
 import { useDispatch } from '@wordpress/data';
+import ColorThief from 'colorthief';
 
 const ImageUploaderWithText = ( { image, imageSetter } ) => {
 	const inputRef = useRef( null );
 	const { theme } = useContext( ThemeContext );
 	const [ isUploading, setIsUploading ] = useState( false );
 	const [ onDragActive, setOnDragActive ] = useState( false );
+	const [ bgColor, setBgColor ] = useState( 'transparent' );
 
 	const { updateSiteGenErrorStatus } = useDispatch( nfdOnboardingStore );
 
+	/* TODO: need to refactor this to use wordpress iamge url and only for png */
+	// Utility function to convert a File object to a Data URL
+	const fileToDataUrl = ( file ) => {
+		return new Promise( ( resolve, reject ) => {
+			// eslint-disable-next-line no-undef
+			const reader = new FileReader();
+			reader.onload = () => resolve( reader.result );
+			reader.onerror = ( error ) => reject( error );
+			reader.readAsDataURL( file );
+		} );
+	};
+
+	// Function to extract the dominant color from an image file
+	const extractDominantColor = async ( fileData ) => {
+		const dataUrl = await fileToDataUrl( fileData );
+		// eslint-disable-next-line no-undef
+		const img = new Image();
+		img.src = dataUrl;
+
+		return new Promise( ( resolve, reject ) => {
+			img.onload = () => {
+				const colorThief = new ColorThief();
+				try {
+					const color = colorThief.getColor( img );
+					resolve( color );
+				} catch ( error ) {
+					reject( error );
+				}
+			};
+			img.onerror = ( error ) => reject( error );
+			// This is necessary for CORS policy, even for local files in some browsers
+			img.crossOrigin = 'Anonymous';
+		} );
+	};
+
 	async function updateItem( fileData ) {
+		debugger;
 		if ( fileData ) {
 			setIsUploading( true );
+			extractDominantColor( fileData )
+				.then( ( color ) => {
+					console.log( 'Dominant Color:', color );
+					const dominantColor = color;
+					// You can now use this color to set a dynamic background
+					// For example, setting state to re-render the component with the new background color
+					// setBackgroundColor(`rgb(${color[0]}, ${color[1]}, ${color[2]})`);
+					const contrastColor =
+						determineContrastColor( dominantColor );
+					setBgColor(
+						`rgb(${ contrastColor[ 0 ] }, ${ contrastColor[ 1 ] }, ${ contrastColor[ 2 ] })`
+					);
+				} )
+				.catch( ( error ) => {
+					console.error( 'Error extracting color:', error );
+				} );
 			const res = await uploadImage( fileData );
 			if ( ! res?.body ) {
 				updateSiteGenErrorStatus( true );
@@ -29,6 +83,7 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 			}
 			const id = res.body?.id;
 			const url = res.body?.source_url;
+			console.log( 'fildata', fileData.name );
 			imageSetter( {
 				id,
 				url,
@@ -37,6 +92,14 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 			} );
 		}
 		setIsUploading( false );
+	}
+
+	// This function determines a contrasting color (simplified example)
+	function determineContrastColor( [ r, g, b ] ) {
+		// This is a very simplified way to determine contrast, consider more sophisticated approach for production
+		return r * 0.299 + g * 0.587 + b * 0.114 > 186
+			? [ 0, 0, 0 ]
+			: [ 255, 255, 255 ];
 	}
 
 	const handleClick = () => {
@@ -158,7 +221,10 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 						</>
 					) }
 					{ isImageUploaded && (
-						<div className="nfd-onboarding-image-uploader--with-text__site_logo__preview">
+						<div
+							className="nfd-onboarding-image-uploader--with-text__site_logo__preview"
+							style={ { backgroundColor: bgColor } }
+						>
 							<img
 								className="nfd-onboarding-image-uploader--with-text__site_logo__preview__image"
 								src={ image.url }
