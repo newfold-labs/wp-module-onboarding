@@ -264,15 +264,15 @@ describe( 'Basic Info Page', function () {
 					cy.get('@socialFormToggle').click();
 				}
 			});
-		
+
 		cy.get( socialTest ).should( 'exist' );
 		cy.get( socialTest ).clear();
 		cy.get( socialTest ).type( 'https://www.facebook.com/testfacebook' );
-	
+
 		cy.get( socialTest2 ).should( 'exist' );
 		cy.get( socialTest2 ).clear();
 		cy.get(socialTest2).type('@testTweet');
-		
+
 		cy.get( socialTest3 ).should( 'exist' );
 		cy.get( socialTest3 ).clear();
 		cy.get( socialTest3 ).type( '@testInsta' );
