@@ -16,7 +16,6 @@ describe( 'Get Started Site Type Primary', function () {
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/get-started/site-primary'
 		);
-		cy.wait( 3000 );
 	} );
 
 	it( 'Check if the Suppressed Drawer does not open on clicking Toggle Button', () => {
@@ -40,7 +39,7 @@ describe( 'Get Started Site Type Primary', function () {
 			BasicSidebarCheck();
 		} );
 	};
-	
+
 	it( 'Check for Event API call being made when different categories are selected', ()=>{
 		let categoryCount = 0;
 		let num = 0;
