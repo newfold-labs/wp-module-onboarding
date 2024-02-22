@@ -9,6 +9,12 @@ describe( 'Branding', function () {
 	// since we are setting brand from plugin container, it will not be set to "newfold"
 	// by default even if mm_brand option is deleted from the database
 	it( 'Has ' + GetPluginId() + ' class when mm_brand does not exist.', () => {
+		if(cy.url().should('contains','fork')){
+			cy.get('.nfd-onboarding-sitegen-options__container__options')
+				.eq(0)
+				.should('be.visible')
+				.click();
+		};
 		cy.exec( 'npx wp-env run cli wp option delete mm_brand' );
 		cy.reload();
 		if(GetPluginId()=='hostgator'){
