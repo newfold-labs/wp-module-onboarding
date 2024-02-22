@@ -187,8 +187,6 @@ describe( 'Basic Info Page', function () {
 					.should( 'be.visible' );
 			};
 
-			cy.get( '.components-modal__header button' , { timeout: customCommandTimeout } ).click();
-			cy.wait(200);
 			cy.get(
 				'.browser-content_social_icon[style="background-image: var(--facebook-icon);"]'
 			).should( 'have.css', 'opacity', '0.75' );
