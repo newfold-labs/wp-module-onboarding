@@ -11,7 +11,7 @@ describe( 'Branding', function () {
 	it( 'Has ' + GetPluginId() + ' class when mm_brand does not exist.', () => {
 		if(cy.url().should('contains','fork')){
 			cy.wait(5000);
-			cy.get('.nfd-onboarding-sitegen-options__container__options', {timeout:10000})
+			cy.get('.nfd-onboarding-sitegen-options__container__options', {timeout:30000})
 				.eq(0)
 				.should('be.visible')
 				.click();

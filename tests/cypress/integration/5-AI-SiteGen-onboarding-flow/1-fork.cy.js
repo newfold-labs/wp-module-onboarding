@@ -4,9 +4,13 @@ import { AdminBarCheck, DarkBGCheck, LightBGCheck, OptionsDetails } from "../wp-
 
 describe( 'SiteGen Fork Step', function () {
 	before( () => {
+        cy.exec( `npx wp-env run cli wp option set _transient_nfd_site_capabilities '{"isJarvis": true}' --format=json` );
+        cy.exec( `npx wp-env run cli wp option set _transient_timeout_nfd_site_capabilities 4102444800` );
+        cy.wait(10000);
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/fork'
 		);
+        cy.wait(5000);
 	} );
 
     it( 'Check for the header admin bar', () => {
