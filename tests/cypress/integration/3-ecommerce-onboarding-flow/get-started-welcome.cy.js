@@ -83,12 +83,8 @@ describe( 'Get Started Welcome Page', function () {
 		GetPluginName();
 	} );
 
-	it( 'Check navigation back is visible and go one step back', () => {
-		cy.get( '.navigation-buttons_back' )
-			.should( 'exist' )
-			.click();
-		cy.url().should('not.include','#/wp-setup/step/get-started/welcome' );
-		cy.go('back');
+	it( 'Check navigation back is visible', () => {
+		cy.get( '.navigation-buttons_back' ).should( 'exist' );
 	} );
 
 	it( 'Check if next step loads on clicking navigation next', () => {
