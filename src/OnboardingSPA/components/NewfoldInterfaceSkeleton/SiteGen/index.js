@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from '@wordpress/element';
+import { store as coreStore } from '@wordpress/core-data';
 import { useLocation } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
 
@@ -41,23 +42,36 @@ const SiteGen = () => {
 		};
 	}, [] );
 
+	// Update Title and Tagline on the site.
+	const { editEntityRecord } = useDispatch( coreStore );
+	const { getEditedEntityRecord } = useSelect( ( select ) => {
+		return select( coreStore );
+	}, [] );
+
 	useEffect( () => {
 		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
 	}, [ newfoldBrand ] );
 	const location = useLocation();
 
-	const { currentData, initialize, pluginInstallHash, siteGenErrorStatus } =
-		useSelect( ( select ) => {
-			return {
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				initialize: select( nfdOnboardingStore ).getInitialize(),
-				pluginInstallHash:
-					select( nfdOnboardingStore ).getPluginInstallHash(),
-				siteGenErrorStatus:
-					select( nfdOnboardingStore ).getSiteGenErrorStatus(),
-			};
-		} );
+	const {
+		currentData,
+		initialize,
+		pluginInstallHash,
+		siteGenErrorStatus,
+		interactionDisabled,
+	} = useSelect( ( select ) => {
+		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			initialize: select( nfdOnboardingStore ).getInitialize(),
+			pluginInstallHash:
+				select( nfdOnboardingStore ).getPluginInstallHash(),
+			siteGenErrorStatus:
+				select( nfdOnboardingStore ).getSiteGenErrorStatus(),
+			interactionDisabled:
+				select( nfdOnboardingStore ).getInteractionDisabled(),
+		};
+	} );
 
 	const { setCurrentOnboardingData, updateSiteGenErrorStatus } =
 		useDispatch( nfdOnboardingStore );
@@ -94,7 +108,7 @@ const SiteGen = () => {
 				identifier,
 				skipCache
 			);
-			if ( data.body !== null ) {
+			if ( data !== null ) {
 				currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
 				if (
 					currentData.sitegen.siteGenMetaStatus.currentStatus ===
@@ -103,6 +117,13 @@ const SiteGen = () => {
 					currentData.sitegen.skipCache = false;
 				}
 				setCurrentOnboardingData( currentData );
+
+				if ( identifier === 'site_config' ) {
+					editEntityRecord( 'root', 'site', undefined, {
+						title: data.site_title,
+						description: data.tagline,
+					} );
+				}
 			}
 		} catch ( err ) {
 			if ( retryCount < MAX_RETRIES_SITE_GEN ) {
@@ -200,6 +221,7 @@ const SiteGen = () => {
 	useEffect( () => {
 		initializeThemes();
 		initializeSettings();
+		getEditedEntityRecord( 'root', 'site' );
 		updateSiteGenErrorStatus( false );
 	}, [] );
 
@@ -215,6 +237,7 @@ const SiteGen = () => {
 				content={ <Content /> }
 				sidebar={ <Sidebar /> }
 				footer={ <Footer /> }
+				interactionDisabled={ interactionDisabled }
 			/>
 		</ThemeProvider>
 	);

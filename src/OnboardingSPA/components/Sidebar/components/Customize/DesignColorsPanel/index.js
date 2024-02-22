@@ -12,7 +12,6 @@ import { __ } from '@wordpress/i18n';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { cloneDeep } from 'lodash';
 
-let defaultGlobalData = null;
 const DesignColorsPanel = forwardRef(
 	(
 		{
@@ -22,80 +21,98 @@ const DesignColorsPanel = forwardRef(
 		ref
 	) => {
 		const resetToDefaultColors = () => {
-			const slug = currentData.sitegen?.homepages?.active?.slug;
-			if ( ! slug ) {
-				return;
-			}
-			const defaultDataToReset = defaultGlobalData[ slug ];
-			if ( ! defaultDataToReset ) {
-				return;
-			}
-			const updatedData = {
-				...currentData,
-				sitegen: {
-					...currentData.sitegen,
-					homepages: {
-						...currentData.sitegen.homepages,
-						active: {
-							...currentData.sitegen.homepages.active,
-							color: {
-								...currentData.sitegen.homepages.active.color,
-								selectedPalette: null,
-								palette: [
-									...defaultDataToReset.color.palette,
-								],
-							},
-						},
-					},
-				},
-			};
-
-			setSelectedColor( {} );
-			setSelectedPalette( null );
+			setSelectedPalette( 0 );
+			setSelectedColor( colors[ 0 ] );
 			setShowCustomColors( false );
-			setCurrentOnboardingData( updatedData );
 		};
 
 		useImperativeHandle( ref, () => ( {
 			resetToDefaultColors,
 		} ) );
 
-		const { currentData, customizeSidebarData } = useSelect( ( select ) => {
-			return {
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				customizeSidebarData:
-					select( nfdOnboardingStore ).getCustomizeSidebarData(),
-			};
-		} );
+		const { currentData, customizeSidebarData, themeColors } = useSelect(
+			( select ) => {
+				return {
+					currentData:
+						select( nfdOnboardingStore ).getCurrentOnboardingData(),
+					customizeSidebarData:
+						select( nfdOnboardingStore ).getCustomizeSidebarData(),
+					themeColors:
+						select( nfdOnboardingStore ).getPreviewSettings()
+							.settings.colors,
+				};
+			}
+		);
 
 		useEffect( () => {
-			if ( ! defaultGlobalData ) {
-				defaultGlobalData = cloneDeep(
-					currentData.sitegen.homepages.data
-				);
+			const slug = currentData.sitegen?.homepages?.active?.slug;
+
+			let defaultPalette =
+				currentData.sitegen.homepages.active.color.defaultPalette;
+			if ( defaultPalette ) {
+				return;
 			}
+			defaultPalette = cloneDeep(
+				currentData.sitegen.homepages.active.color.palette
+			);
+			currentData.sitegen.homepages.data[ slug ].color.defaultPalette =
+				defaultPalette;
+			currentData.sitegen.homepages.active.color.defaultPalette =
+				defaultPalette;
+			setCurrentOnboardingData( currentData );
+
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [ currentData ] );
 
 		const colorPalettes = customizeSidebarData?.colorPalettes;
+		let palettePrimaryColors = themeColors?.map( ( colorObj ) => ( {
+			name: colorObj.name,
+			color: colorObj.color,
+		} ) );
 
-		const palettePrimaryColors = Object.entries( colorPalettes[ 0 ] ).map(
-			( [ , color ] ) => ( {
-				name: __( 'Custom', 'wp-module-onboarding' ),
-				color,
-			} )
-		);
+		if ( ! palettePrimaryColors ) {
+			palettePrimaryColors = Object.entries( colorPalettes[ 0 ] ).map(
+				( [ , color ] ) => ( {
+					name: __( 'Custom', 'wp-module-onboarding' ),
+					color,
+				} )
+			);
+		}
 
-		const palettes = [];
+		const definePalettes = () => {
+			const palettes = [];
+			const defaultPalette =
+				currentData?.sitegen?.homepages?.active?.color
+					?.defaultPalette ||
+				currentData?.sitegen?.homepages?.active?.color?.palette;
 
-		colorPalettes.forEach( ( palette ) => {
-			palettes.push( {
-				primary: palette?.primary,
-				secondary: palette?.secondary || palette?.base,
-				tertiary: palette?.tertiary || palette?.primary,
+			colorPalettes.forEach( ( palette ) => {
+				let isDefault = true;
+				[ 'primary', 'base', 'tertiary' ].forEach( ( key ) => {
+					const colorInPalette = palette[ key ];
+					const colorInDefault = defaultPalette.find(
+						( color ) => color.slug === key
+					)?.color;
+					if ( colorInPalette !== colorInDefault ) {
+						isDefault = false;
+					}
+				} );
+				const paletteObj = {
+					primary: palette?.primary,
+					secondary: palette?.secondary || palette?.base,
+					tertiary: palette?.tertiary || palette?.primary,
+					isDefault,
+				};
+				if ( isDefault ) {
+					palettes.unshift( paletteObj );
+				} else {
+					palettes.push( paletteObj );
+				}
 			} );
-		} );
+
+			return palettes;
+		};
+		const palettes = definePalettes();
 
 		const [ colors ] = useState( palettes );
 		const [ customColors, setCustomColors ] = useState( null );
@@ -117,8 +134,8 @@ const DesignColorsPanel = forwardRef(
 				setCustomColors( customColorsToSet || palettes[ 0 ] );
 			}
 
-			if ( ! selectedPalette ) {
-				const selectedPaletteToSet = activeColor.selectedPalette;
+			if ( ! selectedPalette && selectedPalette !== 0 ) {
+				const selectedPaletteToSet = activeColor.selectedPalette || 0;
 				setSelectedPalette( selectedPaletteToSet );
 				if ( selectedPaletteToSet === 'custom' ) {
 					setShowCustomColors( true );

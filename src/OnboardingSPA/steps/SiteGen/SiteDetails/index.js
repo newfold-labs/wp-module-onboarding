@@ -32,6 +32,7 @@ const SiteGenSiteDetails = () => {
 		setDrawerActiveView,
 		setHideFooterNav,
 		setCurrentOnboardingData,
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -39,6 +40,7 @@ const SiteGenSiteDetails = () => {
 		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
+		setIsHeaderNavigationEnabled( true );
 		setDrawerActiveView( false );
 		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
 			setIsValidInput( true );
@@ -58,6 +60,8 @@ const SiteGenSiteDetails = () => {
 			currentData.sitegen.siteDetails.mode = 'simple';
 			currentData.sitegen.skipCache = true;
 			currentData.sitegen.sitemapPagesGenerated = false;
+			currentData.sitegen.homepages.active = {};
+			currentData.sitegen.homepages.data = {};
 			setCurrentOnboardingData( currentData );
 		}
 		setIsFooterNavAllowed( isValidInput );
