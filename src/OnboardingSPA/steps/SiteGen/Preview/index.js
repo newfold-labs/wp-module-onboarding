@@ -14,6 +14,7 @@ import RegeneratingSiteCard from './regeneratingCard';
 import { getHomepages, regenerateHomepage } from '../../../utils/api/siteGen';
 import { getGlobalStyles } from '../../../utils/api/themes';
 import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
+import Animate from '../../../components/Animate';
 
 const SiteGenPreview = () => {
 	const navigate = useNavigate();
@@ -33,6 +34,7 @@ const SiteGenPreview = () => {
 		updateInitialize,
 		setHideFooterNav,
 		updateSiteGenErrorStatus,
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData, nextStep, siteGenErrorStatus } = useSelect(
@@ -54,6 +56,7 @@ const SiteGenPreview = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		updateInitialize( true );
+		setIsHeaderNavigationEnabled( false );
 	}, [ currentData ] );
 
 	useEffect( () => {
@@ -191,6 +194,22 @@ const SiteGenPreview = () => {
 			const data = homepages[ slug ];
 			const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
 			newPreviewSettings.settings.color.palette = data.color.palette;
+			const body =
+				data.styles?.blocks[ 0 ]?.[ 'core/body' ].typography.fontFamily;
+			const headings =
+				data.styles?.blocks[ 0 ]?.[ 'core/heading' ].typography
+					.fontFamily;
+			if ( newPreviewSettings.styles.typography ) {
+				newPreviewSettings.styles.typography.fontFamily = body;
+			}
+			if (
+				newPreviewSettings.styles.blocks[ 'core/heading' ].typography
+			) {
+				newPreviewSettings.styles.blocks[
+					'core/heading'
+				].typography.fontFamily = headings;
+			}
+
 			let blockGrammar = '';
 			[ 'header', 'content', 'footer' ].forEach( ( part ) => {
 				if ( part in data ) {
@@ -225,16 +244,20 @@ const SiteGenPreview = () => {
 		<SitegenAiStateHandler>
 			<CommonLayout className="nfd-onboarding-step--site-gen__preview">
 				<div className="nfd-onboarding-step--site-gen__preview__container">
-					<div className="nfd-onboarding-step--site-gen__preview__container__heading">
-						<p className="nfd-onboarding-step--site-gen__preview__container__heading__text">
-							{ content.heading }
-						</p>
-					</div>
-					<div className="nfd-onboarding-step--site-gen__preview__container__sub-heading">
-						<p className="nfd-onboarding-step--site-gen__preview__container__sub-heading__text">
-							{ content.subheading }
-						</p>
-					</div>
+					{ ! isPreviewLoading && (
+						<Animate type={ 'fade-in' }>
+							<div className="nfd-onboarding-step--site-gen__preview__container__heading">
+								<p className="nfd-onboarding-step--site-gen__preview__container__heading__text">
+									{ content.heading }
+								</p>
+							</div>
+							<div className="nfd-onboarding-step--site-gen__preview__container__sub-heading">
+								<p className="nfd-onboarding-step--site-gen__preview__container__sub-heading__text">
+									{ content.subheading }
+								</p>
+							</div>
+						</Animate>
+					) }
 				</div>
 				<div className="nfd-onboarding-step--site-gen__preview__options">
 					{ buildPreviews() }

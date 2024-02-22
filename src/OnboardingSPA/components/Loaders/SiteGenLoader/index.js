@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { memo, useEffect, useState } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../../store';
 
-const SiteGenLoader = ( { autoNavigate = false } ) => {
+const SiteGenLoader = ( { customNavPercentage, watcher = null } ) => {
 	let statusIdx = 0;
 	const content = getContents();
 	const navigate = useNavigate();
@@ -41,12 +41,15 @@ const SiteGenLoader = ( { autoNavigate = false } ) => {
 	}, [ currentData?.sitegen?.siteGenMetaStatus?.currentStatus ] );
 
 	useEffect( () => {
-		if ( percentage === 100 ) {
-			if ( nextStep && autoNavigate ) {
+		if ( percentage === customNavPercentage ) {
+			if ( nextStep ) {
+				if ( watcher !== null && watcher === false ) {
+					return;
+				}
 				navigate( nextStep.path );
 			}
 		}
-	}, [ percentage ] );
+	}, [ percentage, watcher ] );
 
 	return (
 		<div className={ 'nfd-sg-loader' }>

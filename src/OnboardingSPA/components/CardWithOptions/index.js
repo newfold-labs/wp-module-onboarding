@@ -1,49 +1,18 @@
 import { memo } from '@wordpress/element';
-import { Icon, chevronRight } from '@wordpress/icons';
+import OptionWithHeadingSubHeading from '../OptionWithHeadingSubHeading';
 
-const CardWithOptions = ( { title, options, skip, callback } ) => {
-	const buildOptions = () => {
+const CardWithOptions = ( { title, options, selection, callback } ) => {
+	const buildCardOptions = () => {
 		return options.map( ( data, idx ) => {
 			return (
-				<div
+				<OptionWithHeadingSubHeading
 					key={ idx }
-					role="button"
-					tabIndex={ 0 }
-					className={ 'nfd-sg-card__data__option' }
-					onClick={ () => {
-						if ( callback && typeof callback === 'function' ) {
-							callback( idx + 1 );
-						}
-					} }
-					onKeyDown={ () => {
-						if ( callback && typeof callback === 'function' ) {
-							callback( idx + 1 );
-						}
-					} }
-				>
-					<div className={ 'nfd-sg-card__data__option__wrapper' }>
-						<div className={ 'nfd-sg-card__data__option__left' }>
-							<div
-								className={
-									'nfd-sg-card__data__option__left_top'
-								}
-							>
-								{ data.title }
-							</div>
-							<div
-								className={
-									'nfd-sg-card__data__option__left_bottom'
-								}
-							>
-								{ data.desc }
-							</div>
-						</div>
-						<Icon
-							className={ 'nfd-sg-card__data__option__right' }
-							icon={ chevronRight }
-						/>
-					</div>
-				</div>
+					idx={ idx }
+					title={ data.title }
+					desc={ data.desc }
+					isSelected={ data.key === selection }
+					callback={ callback }
+				/>
 			);
 		} );
 	};
@@ -51,24 +20,7 @@ const CardWithOptions = ( { title, options, skip, callback } ) => {
 	return (
 		<div className={ 'nfd-sg-card' }>
 			<div className={ 'nfd-sg-card__title' }>{ title }</div>
-			<div className={ 'nfd-sg-card__data' }>{ buildOptions() }</div>
-			<div
-				role="button"
-				tabIndex={ 0 }
-				className={ 'nfd-sg-card__skip' }
-				onClick={ () => {
-					if ( callback && typeof callback === 'function' ) {
-						callback( -1 );
-					}
-				} }
-				onKeyDown={ () => {
-					if ( callback && typeof callback === 'function' ) {
-						callback( -1 );
-					}
-				} }
-			>
-				{ skip }
-			</div>
+			<div className={ 'nfd-sg-card__data' }>{ buildCardOptions() }</div>
 		</div>
 	);
 };

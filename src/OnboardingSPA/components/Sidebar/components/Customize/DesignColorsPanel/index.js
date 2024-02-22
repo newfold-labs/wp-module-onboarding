@@ -12,7 +12,6 @@ import { __ } from '@wordpress/i18n';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { cloneDeep } from 'lodash';
 
-let defaultGlobalData = null;
 const DesignColorsPanel = forwardRef(
 	(
 		{
@@ -22,86 +21,102 @@ const DesignColorsPanel = forwardRef(
 		ref
 	) => {
 		const resetToDefaultColors = () => {
-			if ( isEditingCustomColors ) {
-				setSelectedPalette( 0 );
-				setSelectedColor( colors[ 0 ] );
-				setShowCustomColors( false );
-			}
-			const slug = currentData.sitegen?.homepages?.active?.slug;
-			if ( slug ) {
-				const defaultDataToReset = defaultGlobalData[ slug ];
-
-				if ( defaultDataToReset ) {
-					const updatedData = {
-						...currentData,
-						sitegen: {
-							...currentData.sitegen,
-							homepages: {
-								...currentData.sitegen.homepages,
-								active: {
-									...currentData.sitegen.homepages.active,
-									color: {
-										...currentData.sitegen.homepages.active
-											.color,
-										palette: [
-											...defaultDataToReset.color.palette,
-										],
-									},
-								},
-							},
-						},
-					};
-					setSelectedColor( null );
-					setSelectedPalette( null );
-					setCurrentOnboardingData( updatedData );
-				}
-			}
+			setSelectedPalette( 0 );
+			setSelectedColor( colors[ 0 ] );
+			setShowCustomColors( false );
 		};
 
 		useImperativeHandle( ref, () => ( {
 			resetToDefaultColors,
 		} ) );
 
-		const { currentData, customizeSidebarData } = useSelect( ( select ) => {
-			return {
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				customizeSidebarData:
-					select( nfdOnboardingStore ).getCustomizeSidebarData(),
-			};
-		} );
+		const { currentData, customizeSidebarData, themeColors } = useSelect(
+			( select ) => {
+				return {
+					currentData:
+						select( nfdOnboardingStore ).getCurrentOnboardingData(),
+					customizeSidebarData:
+						select( nfdOnboardingStore ).getCustomizeSidebarData(),
+					themeColors:
+						select( nfdOnboardingStore ).getPreviewSettings()
+							.settings.colors,
+				};
+			}
+		);
 
 		useEffect( () => {
-			if ( ! defaultGlobalData ) {
-				defaultGlobalData = cloneDeep(
-					currentData.sitegen.homepages.data
-				);
+			const slug = currentData.sitegen?.homepages?.active?.slug;
+
+			let defaultPalette =
+				currentData.sitegen.homepages.active.color.defaultPalette;
+			if ( defaultPalette ) {
+				return;
 			}
+			defaultPalette = cloneDeep(
+				currentData.sitegen.homepages.active.color.palette
+			);
+			currentData.sitegen.homepages.data[ slug ].color.defaultPalette =
+				defaultPalette;
+			currentData.sitegen.homepages.active.color.defaultPalette =
+				defaultPalette;
+			setCurrentOnboardingData( currentData );
+
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [ currentData ] );
 
 		const colorPalettes = customizeSidebarData?.colorPalettes;
+		let palettePrimaryColors = themeColors?.map( ( colorObj ) => ( {
+			name: colorObj.name,
+			color: colorObj.color,
+		} ) );
 
-		const palettePrimaryColors = Object.entries( colorPalettes[ 0 ] ).map(
-			( [ , color ] ) => ( {
-				name: __( 'Custom', 'wp-module-onboarding' ),
-				color,
-			} )
-		);
+		if ( ! palettePrimaryColors ) {
+			palettePrimaryColors = Object.entries( colorPalettes[ 0 ] ).map(
+				( [ , color ] ) => ( {
+					name: __( 'Custom', 'wp-module-onboarding' ),
+					color,
+				} )
+			);
+		}
 
-		const palettes = [];
+		const definePalettes = () => {
+			const palettes = [];
+			const defaultPalette =
+				currentData?.sitegen?.homepages?.active?.color
+					?.defaultPalette ||
+				currentData?.sitegen?.homepages?.active?.color?.palette;
 
-		colorPalettes.forEach( ( palette ) => {
-			palettes.push( {
-				primary: palette?.primary,
-				secondary: palette?.secondary || palette?.base,
-				tertiary: palette?.tertiary || palette?.primary,
+			colorPalettes.forEach( ( palette ) => {
+				let isDefault = true;
+				[ 'primary', 'base', 'tertiary' ].forEach( ( key ) => {
+					const colorInPalette = palette[ key ];
+					const colorInDefault = defaultPalette.find(
+						( color ) => color.slug === key
+					)?.color;
+					if ( colorInPalette !== colorInDefault ) {
+						isDefault = false;
+					}
+				} );
+				const paletteObj = {
+					primary: palette?.primary,
+					secondary: palette?.secondary || palette?.base,
+					tertiary: palette?.tertiary || palette?.primary,
+					isDefault,
+				};
+				if ( isDefault ) {
+					palettes.unshift( paletteObj );
+				} else {
+					palettes.push( paletteObj );
+				}
 			} );
-		} );
+
+			return palettes;
+		};
+		const palettes = definePalettes();
 
 		const [ colors ] = useState( palettes );
 		const [ customColors, setCustomColors ] = useState( null );
-		const [ selectedColor, setSelectedColor ] = useState( null );
+		const [ selectedColor, setSelectedColor ] = useState( {} );
 		const [ showCustomColors, setShowCustomColors ] = useState( false );
 		const [ isEditingCustomColors, setIsEditingCustomColors ] =
 			useState( false );
@@ -112,15 +127,19 @@ const DesignColorsPanel = forwardRef(
 		const [ showColorPicker, setShowColorPicker ] = useState( false );
 
 		useEffect( () => {
+			const activeColor = currentData.sitegen.homepages.active.color;
+
 			if ( ! customColors ) {
-				const storedCustomColors =
-					currentData.sitegen.homepages.active.color
-						.customColors;
-				if ( storedCustomColors ) {
-					setCustomColors( storedCustomColors );
-				} else {
-					const defaultCustomColors = palettes[ 0 ];
-					setCustomColors( defaultCustomColors );
+				const customColorsToSet = activeColor.customColors;
+				setCustomColors( customColorsToSet || palettes[ 0 ] );
+			}
+
+			if ( ! selectedPalette && selectedPalette !== 0 ) {
+				const selectedPaletteToSet = activeColor.selectedPalette || 0;
+				setSelectedPalette( selectedPaletteToSet );
+				if ( selectedPaletteToSet === 'custom' ) {
+					setShowCustomColors( true );
+					setSelectedCustomColors( true );
 				}
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -184,36 +203,33 @@ const DesignColorsPanel = forwardRef(
 				return;
 			}
 
+			const activeColor = currentData.sitegen.homepages.active.color;
+
 			if ( selectedPalette === 'custom' ) {
-				currentData.sitegen.homepages.data[ slug ].color.customColors =
-					selectedColor;
-				currentData.sitegen.homepages.active.color.customColors =
-				selectedColor;
+				activeColor.customColors = selectedColor;
 			}
+
+			activeColor.selectedPalette = selectedPalette;
 
 			const colorPaletteIndex =
 				selectedPalette === 'custom' ? 0 : selectedPalette;
-			colorPalettes[ colorPaletteIndex ].primary = selectedColor.primary;
-			if ( colorPalettes[ colorPaletteIndex ].secondary ) {
-				colorPalettes[ colorPaletteIndex ].secondary =
-					selectedColor.secondary;
-			} else {
-				colorPalettes[ colorPaletteIndex ].base =
-					selectedColor.secondary;
-			}
+			const selectedPaletteColors = colorPalettes[ colorPaletteIndex ];
 
-			colorPalettes[ colorPaletteIndex ].tertiary =
-				selectedColor.tertiary;
+			selectedPaletteColors.primary = selectedColor.primary;
+			selectedPaletteColors.secondary = selectedColor.secondary;
+			selectedPaletteColors.base = selectedColor.secondary;
+			selectedPaletteColors.tertiary = selectedColor.tertiary;
 
-			currentData.sitegen.homepages.data[ slug ].color.palette =
-				convertColorSchema( colorPalettes[ colorPaletteIndex ] );
-			currentData.sitegen.homepages.active.color.palette =
-				convertColorSchema( colorPalettes[ colorPaletteIndex ] );
+			activeColor.palette = convertColorSchema( selectedPaletteColors );
+			currentData.sitegen.homepages.data[ slug ].color = activeColor;
 			setCurrentOnboardingData( currentData );
 		};
 
 		useEffect( () => {
-			if ( selectedColor !== null && selectedPalette !== null ) {
+			if (
+				Object.keys( selectedColor ).length !== 0 &&
+				selectedPalette !== null
+			) {
 				handleUpdatePreviewSettings();
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -345,9 +361,9 @@ const DesignColorsPanel = forwardRef(
 										label={
 											idx === 0
 												? __(
-													'Default',
-													'wp-module-onboarding'
-												)
+														'Default',
+														'wp-module-onboarding'
+												  )
 												: ''
 										}
 										selectedPalette={ selectedPalette }

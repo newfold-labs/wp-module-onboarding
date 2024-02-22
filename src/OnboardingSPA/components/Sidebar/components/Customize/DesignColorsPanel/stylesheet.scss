@@ -20,7 +20,7 @@
 				display: flex;
 				gap: 20px;
 				padding: 10px 4px;
-				overflow-x: auto;
+				flex-wrap: wrap;
 				max-width: 250px;
 			}
 

@@ -22,6 +22,7 @@ const StepSiteGenEditor = () => {
 		setDrawerActiveView,
 		setHideFooterNav,
 		setCurrentOnboardingData,
+		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData } = useSelect( ( select ) => {
@@ -48,6 +49,7 @@ const StepSiteGenEditor = () => {
 		setIsHeaderEnabled( true );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
+		setIsHeaderNavigationEnabled( false );
 		const activeHomepage = currentData.sitegen.homepages.active;
 		setHomepage( activeHomepage );
 		const globalStylesResponse = await getGlobalStyles();

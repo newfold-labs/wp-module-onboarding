@@ -45,6 +45,7 @@ const TabButton = ( {
 	);
 };
 
+/* the default will be mouseover and will be click event if triggerEvent="click" is specifically passed */
 const useEventTrigger = ( triggerEvent, handleEvent, tabName ) => {
 	const eventHandler = useCallback(
 		() => handleEvent( tabName ),
@@ -66,7 +67,7 @@ export default function TabPanelHover( {
 	notActiveClass = 'is-not-active',
 	callback,
 	onSelect = noop,
-	triggerEvent = 'click',
+	triggerEvent,
 } ) {
 	const instanceId = useInstanceId( TabPanelHover, 'tab-panel' );
 	const [ selected, setSelected ] = useState( null );
