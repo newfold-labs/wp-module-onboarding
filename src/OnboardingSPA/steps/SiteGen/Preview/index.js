@@ -89,9 +89,7 @@ const SiteGenPreview = () => {
 		const response = await getHomepages(
 			currentData.sitegen.siteDetails.prompt
 		);
-		// setIsPreviewLoading( false );
-		// updateSiteGenErrorStatus( true );
-		// return;
+
 		if ( response.error ) {
 			setIsPreviewLoading( false );
 			updateSiteGenErrorStatus( true );

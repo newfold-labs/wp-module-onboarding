@@ -142,7 +142,7 @@ const SiteGen = () => {
 				return prevState;
 			} );
 			currentData.sitegen.siteGenErrorStatus = true;
-			updateSiteGenErrorStatus( true );
+			setCurrentOnboardingData( currentData );
 		}
 	}
 
