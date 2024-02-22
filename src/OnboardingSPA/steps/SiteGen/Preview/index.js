@@ -6,7 +6,7 @@ import { cloneDeep, isEmpty } from 'lodash';
 
 import CommonLayout from '../../../components/Layouts/Common';
 import { store as nfdOnboardingStore } from '../../../store';
-import { HEADER_SITEGEN, MAX_RETRIES_SITE_GEN } from '../../../../constants';
+import { HEADER_SITEGEN } from '../../../../constants';
 import { SiteGenPreviewSelectableCard } from '../../../components/LivePreview';
 import getContents from './contents';
 import HeartAnimation from './heartAnimation';
@@ -14,8 +14,6 @@ import RegeneratingSiteCard from './regeneratingCard';
 import {
 	getHomepages,
 	regenerateHomepage,
-	generateSiteGenMeta,
-	getSiteGenIdentifiers,
 } from '../../../utils/api/siteGen';
 import { getGlobalStyles } from '../../../utils/api/themes';
 import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
@@ -26,9 +24,8 @@ const SiteGenPreview = () => {
 	const [ homepages, setHomepages ] = useState( false );
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
 	const [ isPreviewLoading, setIsPreviewLoading ] = useState( false );
-	const [ isMetaApiSuccess, setIsMetaApiSuccess ] = useState( false );
 	const [ globalStyles, setGlobalStyles ] = useState( false );
-	const [ failedApi, setFailedApi ] = useState( [] );
+
 
 	const prevSiteGenErrorStatus = useRef();
 
@@ -67,105 +64,15 @@ const SiteGenPreview = () => {
 	}, [ currentData ] );
 
 	useEffect( () => {
-		generateSiteGenData();
-	}, [] );
-
-	useEffect( () => {
-		if ( isMetaApiSuccess ) {
-			loadHomepages();
-			loadGlobalStyles();
-		}
-	}, [ isMetaApiSuccess ] );
-
-	useEffect( () => {
 		if (
 			prevSiteGenErrorStatus.current === true &&
 			siteGenErrorStatus === false
 		) {
-			if ( ! isMetaApiSuccess ) {
-				generateSiteGenData();
-			} else {
-				loadHomepages();
-				loadGlobalStyles();
-			}
+			loadHomepages();
+			loadGlobalStyles();
 		}
 		prevSiteGenErrorStatus.current = siteGenErrorStatus;
 	}, [ siteGenErrorStatus ] );
-
-	async function performSiteGenMetaGeneration(
-		siteInfo,
-		identifier,
-		skipCache,
-		retryCount = 1
-	) {
-		try {
-			const data = await generateSiteGenMeta(
-				siteInfo,
-				identifier,
-				skipCache
-			);
-			if ( data.body !== null ) {
-				currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
-				if (
-					currentData.sitegen.siteGenMetaStatus.currentStatus ===
-					currentData.sitegen.siteGenMetaStatus.totalCount
-				) {
-					currentData.sitegen.skipCache = false;
-					setIsMetaApiSuccess( true );
-				}
-				setCurrentOnboardingData( currentData );
-			}
-		} catch ( err ) {
-			if ( retryCount < MAX_RETRIES_SITE_GEN ) {
-				performSiteGenMetaGeneration(
-					siteInfo,
-					identifier,
-					skipCache,
-					retryCount + 1
-				);
-			} else {
-				setFailedApi( ( prevState ) => {
-					if ( ! prevState.includes( identifier ) ) {
-						return [ ...prevState, identifier ];
-					}
-					return prevState;
-				} );
-				currentData.sitegen.siteGenErrorStatus = true;
-				updateSiteGenErrorStatus( true );
-				setIsPreviewLoading( false );
-			}
-		}
-	}
-
-	async function generateSiteGenData() {
-		setIsPreviewLoading( true );
-		// Start the API Requests when the loader is shown.
-
-		let identifiers;
-		if ( Array.isArray( failedApi ) && failedApi.length > 0 ) {
-			identifiers = failedApi;
-			setFailedApi( [] );
-		} else {
-			identifiers = await getSiteGenIdentifiers();
-			identifiers = identifiers.body;
-
-			const midIndex = Math.floor( identifiers.length / 2 );
-			identifiers = identifiers.slice( midIndex, identifiers.length );
-			currentData.sitegen.siteGenMetaStatus.currentStatus = midIndex;
-		}
-
-		setCurrentOnboardingData( currentData );
-		const siteInfo = {
-			site_description: currentData.sitegen?.siteDetails?.prompt,
-		};
-
-		const skipCache = currentData.sitegen?.skipCache;
-
-		// Iterate over Identifiers and fire Requests!
-		identifiers.forEach( ( identifier ) => {
-			performSiteGenMetaGeneration( siteInfo, identifier, skipCache );
-		} );
-	}
 
 	const loadHomepages = async () => {
 		setIsPreviewLoading( true );
@@ -182,7 +89,9 @@ const SiteGenPreview = () => {
 		const response = await getHomepages(
 			currentData.sitegen.siteDetails.prompt
 		);
-
+		// setIsPreviewLoading( false );
+		// updateSiteGenErrorStatus( true );
+		// return;
 		if ( response.error ) {
 			setIsPreviewLoading( false );
 			updateSiteGenErrorStatus( true );
@@ -203,6 +112,11 @@ const SiteGenPreview = () => {
 		}
 		setGlobalStyles( globalStylesResponse.body );
 	};
+
+	useEffect( () => {
+		loadHomepages();
+		loadGlobalStyles();
+	}, [] );
 
 	const handlePreview = ( slug ) => {
 		if ( ! ( slug in homepages ) ) {

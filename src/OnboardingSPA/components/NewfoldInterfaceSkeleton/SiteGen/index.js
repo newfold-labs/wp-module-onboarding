@@ -160,11 +160,8 @@ const SiteGen = () => {
 			identifiers = await getSiteGenIdentifiers();
 			identifiers = identifiers.body;
 
-			const midIndex = Math.floor( identifiers.length / 2 );
-			if ( location.pathname.includes( 'experience' ) ) {
-				identifiers = identifiers.slice( 0, midIndex );
-				currentData.sitegen.siteGenMetaStatus.currentStatus = 0;
-			}
+			currentData.sitegen.siteGenMetaStatus.currentStatus = 0;
+
 			setCurrentOnboardingData( currentData );
 		}
 		const siteInfo = {
