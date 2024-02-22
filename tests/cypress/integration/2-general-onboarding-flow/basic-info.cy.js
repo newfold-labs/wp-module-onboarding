@@ -244,6 +244,16 @@ describe( 'Basic Info Page', function () {
 	} );
 
 	it('Test Basic Info Events API gets triggered', () => {
+
+		// cy.exec( 'npx wp-env run cli wp plugin deactivate woocommerce' );
+		// cy.intercept( APIList.basic_info ).as( 'events' );
+
+		// It looks like we always hit the ecomm endpoint, even if we're not using ecomm
+		cy.intercept( APIList.basic_info_ecomm ).as( 'events' );
+
+		// Change viewport so required elements are visible
+		cy.viewport( 1120, 720 );
+
 		const socialTest = '#facebook'
 		const socialTest2 = '#twitter';
 		const socialTest3 = '#instagram'
@@ -294,8 +304,8 @@ describe( 'Basic Info Page', function () {
 		cy.get( socialTest7 ).type( 'https://www.tiktok.com/testTikTok' );
 
 		cy.wait( 2000 );
-		cy.intercept( APIList.basic_info ).as( 'events' );
 		cy.get( '.navigation-buttons_next' ).click();
+
 		BasicInfoAPI( 'basic_info', label_keys, actual_values );
 	} );
 } );
