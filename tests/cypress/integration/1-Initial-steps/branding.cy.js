@@ -3,19 +3,12 @@ import { GetPluginId, GetPluginName } from '../wp-module-support/pluginID.cy';
 
 describe( 'Branding', function () {
 	before( () => {
-		cy.visit( 'wp-admin/index.php?page=nfd-onboarding' );
+		cy.visit( 'wp-admin/index.php?page=nfd-onboarding#/wp-setup/step/get-started/welcome' );
 	} );
 
 	// since we are setting brand from plugin container, it will not be set to "newfold"
 	// by default even if mm_brand option is deleted from the database
 	it( 'Has ' + GetPluginId() + ' class when mm_brand does not exist.', () => {
-		if(cy.url().should('contains','fork')){
-			cy.wait(5000);
-			cy.get('.nfd-onboarding-sitegen-options__container__options', {timeout:30000})
-				.eq(0)
-				.should('be.visible')
-				.click();
-		};
 		cy.exec( 'npx wp-env run cli wp option delete mm_brand' );
 		cy.reload();
 		if(GetPluginId()=='hostgator'){
