@@ -26,7 +26,6 @@ const SiteGenPreview = () => {
 	const [ isPreviewLoading, setIsPreviewLoading ] = useState( false );
 	const [ globalStyles, setGlobalStyles ] = useState( false );
 
-
 	const prevSiteGenErrorStatus = useRef();
 
 	const {
