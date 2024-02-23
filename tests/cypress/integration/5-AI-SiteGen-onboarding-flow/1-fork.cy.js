@@ -4,7 +4,7 @@ import { AdminBarCheck, DarkBGCheck, LightBGCheck, OptionsDetails } from "../wp-
 
 describe( 'SiteGen Fork Step', function () {
 	before( () => {
-        cy.exec( `npx wp-env run cli wp transient set nfd_site_capabilities '{"hasAISitegGen": true, "canAccessAI": true}' --format=json 4102444800` );
+        cy.exec(`npx wp-env run cli wp transient set nfd_site_capabilities '{\"hasAISitegGen\": true, \"canAccessAI\": true}' --format=json 4102444800`);
         cy.wait(10000);
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/fork'
