@@ -65,14 +65,16 @@ const TheFork = () => {
 				/>
 				<br />
 				<br />
-				<a
-					className="nfd-onboarding-step--site-gen__fork__importsite"
-					href={ migrationUrl }
-					target={ '_blank' }
-					rel={ 'noreferrer' }
-				>
-					{ content.importtext }
-				</a>
+				{ migrationUrl && (
+					<a
+						className="nfd-onboarding-step--site-gen__fork__importsite"
+						href={ migrationUrl }
+						target={ '_blank' }
+						rel={ 'noreferrer' }
+					>
+						{ content.importtext }
+					</a>
+				) }
 				<a
 					className="nfd-onboarding-step--site-gen__fork__exit"
 					href={ pluginDashboardPage }
