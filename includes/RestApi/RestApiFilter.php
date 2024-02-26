@@ -187,7 +187,7 @@ class RestApiFilter {
 	public static function prepare_raw_html_menu( $data, $index ) {
 		// create dummy menu links
 		$menu_navigation_grammar = '';
-		foreach ( Patterns::get_dummy_menu_items() as $page_title ) {
+		foreach ( Patterns::get_dummy_navigation_menu_items() as $page_title ) {
 			$menu_navigation_grammar .= '<!-- wp:navigation-link {"isTopLevelLink":true, "label":"' . $page_title . '", "title":"' . $page_title . '"} /-->';
 		}
 		// need to reset ID else the data saved in the DB gets used
@@ -252,11 +252,12 @@ class RestApiFilter {
 		}
 
 		// make sure we have the number of dummy pages required
-		$pages = $response->get_data();
-		if ( count( $pages ) < count( Patterns::get_dummy_menu_items() ) ) {
+		$pages       = $response->get_data();
+		$dummy_items = Patterns::get_dummy_navigation_menu_items();
+		if ( count( $pages ) < count( $dummy_items ) ) {
 			$pages = array_pad(
 				$pages,
-				count( Patterns::get_dummy_menu_items() ),
+				count( $dummy_items ),
 				array_pop( $pages )
 			);
 		}
@@ -281,9 +282,10 @@ class RestApiFilter {
 		if ( isset( $page['title']['rendered'] ) ) {
 			// changed id so that while rendering the menu link and name are proper
 			$page['id']                = $page['id'] + $index;
-			$page['title']['rendered'] = Patterns::get_dummy_menu_items()[ $index ];
+			$page['title']['rendered'] = Patterns::get_dummy_navigation_menu_items()[ $index ];
 			$page['menu_order']        = $index;
 		}
+
 		return $page;
 	}
 

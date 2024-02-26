@@ -27,6 +27,9 @@ const NavPrimary = () => {
 			<div className="nfd-onboarding-drawer__panel-menu">
 				<ul className="nfd-onboarding-drawer__panel-routes">
 					{ topSteps.map( ( step ) => {
+						if ( false === step.drawerNavigation ) {
+							return false;
+						}
 						return (
 							<Tooltip
 								key={ step.path }

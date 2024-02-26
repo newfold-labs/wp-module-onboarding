@@ -326,6 +326,13 @@ export function updateSiteGenErrorStatus( siteGenErrorStatus ) {
 		siteGenErrorStatus,
 	};
 }
+
+export function setInteractionDisabled( interactionDisabled ) {
+	return {
+		type: 'SET_INTERACTION_DISABLED',
+		interactionDisabled,
+	};
+}
 export function setContinueWithoutAi( continueWithoutAi ) {
 	return {
 		type: 'SET_FLOW_WITHOUT_AI',

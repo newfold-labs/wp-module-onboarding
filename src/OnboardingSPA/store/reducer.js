@@ -34,6 +34,7 @@ export function flow(
 			},
 		},
 		chapter: undefined,
+		interactionDisabled: false,
 	},
 	action
 ) {
@@ -120,6 +121,11 @@ export function flow(
 			return {
 				...state,
 				chapter: action.chapter,
+			};
+		case 'SET_INTERACTION_DISABLED':
+			return {
+				...state,
+				interactionDisabled: action.interactionDisabled,
 			};
 		case 'SET_FLOW_WITHOUT_AI':
 			return {
