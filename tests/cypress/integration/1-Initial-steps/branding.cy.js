@@ -3,7 +3,7 @@ import { GetPluginId, GetPluginName } from '../wp-module-support/pluginID.cy';
 
 describe( 'Branding', function () {
 	before( () => {
-		cy.visit( 'wp-admin/index.php?page=nfd-onboarding' );
+		cy.visit( 'wp-admin/index.php?page=nfd-onboarding#/wp-setup/step/get-started/welcome' );
 	} );
 
 	// since we are setting brand from plugin container, it will not be set to "newfold"

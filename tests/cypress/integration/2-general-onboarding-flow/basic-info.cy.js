@@ -182,9 +182,9 @@ describe( 'Basic Info Page', function () {
 				);
 			}
 			else{
-				cy.get( '.Tooltip-Wrapper', { timeout: 3000 } ).should( 'exist' );
-				cy.get( '.Tooltip-Tip', { timeout: 3000 } )
-					.should( 'be.visible' );
+				cy.get( '.Tooltip-Tip', { timeout: 3000 } ).should( 'be.visible' );
+				cy.get( '.navigation-buttons_next' ).click();
+				cy.get( '.components-modal__content' ).should( 'be.visible' );
 			};
 
 			cy.get( '.components-modal__header button' , { timeout: customCommandTimeout } ).click();
