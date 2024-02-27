@@ -11,6 +11,7 @@ import {
 	trackOnboardingEvent,
 } from '../../../../../utils/analytics/hiive';
 import { ACTION_FONTS_SELECTED } from '../../../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../../../data/flows/constants';
 
 const FontGroup = ( {
 	baseClassName,
@@ -348,6 +349,7 @@ const DesignFontsPanel = forwardRef(
 			trackOnboardingEvent(
 				new OnboardingEvent( ACTION_FONTS_SELECTED, 'generated', {
 					fonts: eventFonts,
+					source: SITEGEN_FLOW,
 				} )
 			);
 		};
@@ -377,6 +379,7 @@ const DesignFontsPanel = forwardRef(
 			trackOnboardingEvent(
 				new OnboardingEvent( ACTION_FONTS_SELECTED, 'custom', {
 					fonts: customFont,
+					source: SITEGEN_FLOW,
 				} )
 			);
 			setIsEditingCustomFont( false );

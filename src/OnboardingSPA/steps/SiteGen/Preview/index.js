@@ -25,6 +25,7 @@ import {
 	ACTION_SITEGEN_HOMEPAGE_SELECTED,
 	ACTION_SITEGEN_SITE_GENERATION_TIME,
 } from '../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenPreview = () => {
 	const navigate = useNavigate();
@@ -116,7 +117,10 @@ const SiteGenPreview = () => {
 			trackOnboardingEvent(
 				new OnboardingEvent(
 					ACTION_SITEGEN_SITE_GENERATION_TIME,
-					window.nfdOnboarding.siteGenTime
+					window.nfdOnboarding.siteGenTime,
+					{
+						source: SITEGEN_FLOW,
+					}
 				)
 			);
 		}
@@ -146,6 +150,7 @@ const SiteGenPreview = () => {
 		trackOnboardingEvent(
 			new OnboardingEvent( ACTION_SITEGEN_HOMEPAGE_SELECTED, slug, {
 				position,
+				source: SITEGEN_FLOW,
 			} )
 		);
 		navigate( nextStep.path );
@@ -183,6 +188,7 @@ const SiteGenPreview = () => {
 				favorite: isFavorite,
 				placement: 'preview_grid',
 				position,
+				source: SITEGEN_FLOW,
 			} )
 		);
 	};
@@ -221,6 +227,7 @@ const SiteGenPreview = () => {
 		trackOnboardingEvent(
 			new OnboardingEvent( ACTION_SITEGEN_HOMEPAGE_REGENERATED, slug, {
 				position,
+				source: SITEGEN_FLOW,
 			} )
 		);
 	};

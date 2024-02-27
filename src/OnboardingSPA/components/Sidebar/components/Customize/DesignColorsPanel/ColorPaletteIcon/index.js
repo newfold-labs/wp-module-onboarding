@@ -1,3 +1,4 @@
+import { SITEGEN_FLOW } from '../../../../../../data/flows/constants';
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
@@ -25,6 +26,7 @@ const ColorPaletteIcon = ( {
 		trackOnboardingEvent(
 			new OnboardingEvent( ACTION_COLORS_SELECTED, 'generated', {
 				colors: colorsForEvent,
+				source: SITEGEN_FLOW,
 			} )
 		);
 		if ( setShowCustomColors ) {

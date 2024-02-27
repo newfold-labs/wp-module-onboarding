@@ -34,6 +34,7 @@ import {
 	ACTION_SITEGEN_HOMEPAGE_RENAMED,
 	ACTION_SITEGEN_SIDEBAR_OPENED,
 } from '../../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../../data/flows/constants';
 
 const StepSiteGenEditorHeader = () => {
 	const [ homepage, setHomepage ] = useState();
@@ -81,6 +82,7 @@ const StepSiteGenEditorHeader = () => {
 				{
 					favorite: isFavorite,
 					placement: 'editor_toolbar',
+					source: SITEGEN_FLOW,
 				}
 			)
 		);
@@ -143,7 +145,13 @@ const StepSiteGenEditorHeader = () => {
 		setSidebarActiveView( SIDEBAR_SITEGEN_EDITOR_PATTERNS );
 		setIsSidebarOpened( true );
 		trackOnboardingEvent(
-			new OnboardingEvent( ACTION_SITEGEN_SIDEBAR_OPENED, 'all_versions' )
+			new OnboardingEvent(
+				ACTION_SITEGEN_SIDEBAR_OPENED,
+				'all_versions',
+				{
+					source: SITEGEN_FLOW,
+				}
+			)
 		);
 	};
 
@@ -177,6 +185,7 @@ const StepSiteGenEditorHeader = () => {
 				homepage.slug,
 				{
 					name: title,
+					source: SITEGEN_FLOW,
 				}
 			)
 		);
@@ -269,7 +278,9 @@ const StepSiteGenEditorHeader = () => {
 		await setFlow( currentData );
 		await completeFlow();
 		sendOnboardingEvent(
-			new OnboardingEvent( ACTION_ONBOARDING_COMPLETE )
+			new OnboardingEvent( ACTION_ONBOARDING_COMPLETE, {
+				source: SITEGEN_FLOW,
+			} )
 		);
 		window.location.replace( pluginDashboardPage );
 	};

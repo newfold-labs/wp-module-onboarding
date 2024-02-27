@@ -16,6 +16,7 @@ import {
 	trackOnboardingEvent,
 } from '../../../utils/analytics/hiive';
 import { ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET } from '../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenSiteDetails = () => {
 	const content = getContents();
@@ -74,6 +75,7 @@ const SiteGenSiteDetails = () => {
 					customerInput,
 					{
 						strength: customerInputStrengthForEvent,
+						source: SITEGEN_FLOW,
 					}
 				)
 			);

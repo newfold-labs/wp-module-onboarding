@@ -30,6 +30,7 @@ import {
 	ACTION_SITEGEN_HOMEPAGE_SELECTED,
 	ACTION_SITEGEN_SIDEBAR_OPENED,
 } from '../../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../../data/flows/constants';
 
 const SitegenEditorPatternsSidebar = () => {
 	const [ homepages, setHomepages ] = useState();
@@ -56,7 +57,9 @@ const SitegenEditorPatternsSidebar = () => {
 
 	const handleTabSwitch = ( tab ) => {
 		trackOnboardingEvent(
-			new OnboardingEvent( ACTION_SITEGEN_SIDEBAR_OPENED, tab.name )
+			new OnboardingEvent( ACTION_SITEGEN_SIDEBAR_OPENED, tab.name, {
+				source: SITEGEN_FLOW,
+			} )
 		);
 		setActiveTab( tab );
 	};
@@ -72,6 +75,7 @@ const SitegenEditorPatternsSidebar = () => {
 		trackOnboardingEvent(
 			new OnboardingEvent( ACTION_SITEGEN_HOMEPAGE_SELECTED, slug, {
 				position: position + 1,
+				source: SITEGEN_FLOW,
 			} )
 		);
 	};
@@ -96,6 +100,7 @@ const SitegenEditorPatternsSidebar = () => {
 				favorite: isFavorite,
 				position: position + 1,
 				placement: 'editor_sidebar',
+				source: SITEGEN_FLOW,
 			} )
 		);
 	};

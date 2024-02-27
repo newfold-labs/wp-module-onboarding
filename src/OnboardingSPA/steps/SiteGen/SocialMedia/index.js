@@ -20,6 +20,7 @@ import {
 	ACTION_SITEGEN_SOCIAL_CONNECTED,
 	ACTION_SITEGEN_SOCIAL_CONNECT_SKIPPED,
 } from '../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenSiteSocialMedia = () => {
 	const isLargeViewport = useViewportMatch( 'small' );
@@ -53,7 +54,9 @@ const SiteGenSiteSocialMedia = () => {
 
 	const handleConnect = () => {
 		trackOnboardingEvent(
-			new OnboardingEvent( ACTION_SITEGEN_SOCIAL_CONNECTED, 'facebook' )
+			new OnboardingEvent( ACTION_SITEGEN_SOCIAL_CONNECTED, 'facebook', {
+				source: SITEGEN_FLOW,
+			} )
 		);
 
 		setConnected( true );
@@ -65,7 +68,9 @@ const SiteGenSiteSocialMedia = () => {
 
 	const trackSkipEvent = () => {
 		trackOnboardingEvent(
-			new OnboardingEvent( ACTION_SITEGEN_SOCIAL_CONNECT_SKIPPED )
+			new OnboardingEvent( ACTION_SITEGEN_SOCIAL_CONNECT_SKIPPED, {
+				source: SITEGEN_FLOW,
+			} )
 		);
 	};
 

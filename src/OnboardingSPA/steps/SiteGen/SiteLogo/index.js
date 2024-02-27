@@ -20,6 +20,7 @@ import {
 	ACTION_LOGO_ADDED,
 	ACTION_SITEGEN_LOGO_SKIPPED,
 } from '../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenSiteLogo = () => {
 	const [ siteLogo, setSiteLogo ] = useState();
@@ -61,7 +62,9 @@ const SiteGenSiteLogo = () => {
 		setSiteLogo( undefined );
 		setIsFooterNavAllowed( false );
 		trackOnboardingEvent(
-			new OnboardingEvent( ACTION_SITEGEN_LOGO_SKIPPED )
+			new OnboardingEvent( ACTION_SITEGEN_LOGO_SKIPPED, {
+				source: SITEGEN_FLOW,
+			} )
 		);
 	};
 

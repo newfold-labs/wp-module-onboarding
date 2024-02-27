@@ -13,6 +13,7 @@ import {
 	trackOnboardingEvent,
 } from '../../../utils/analytics/hiive';
 import { ACTION_EXPERIENCE_LEVEL_SET } from '../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenExperience = () => {
 	const content = getContents();
@@ -73,7 +74,10 @@ const SiteGenExperience = () => {
 			trackOnboardingEvent(
 				new OnboardingEvent(
 					ACTION_EXPERIENCE_LEVEL_SET,
-					experienceForEvent
+					experienceForEvent,
+					{
+						source: SITEGEN_FLOW,
+					}
 				)
 			);
 		}
