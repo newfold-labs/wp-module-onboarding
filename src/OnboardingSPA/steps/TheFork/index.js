@@ -20,14 +20,17 @@ import { resolveGetDataForFlow } from '../../data/flows';
 import { useNavigate } from 'react-router-dom';
 
 const TheFork = () => {
-	const { migrationUrl, brandConfig, currentData } = useSelect( ( select ) => {
-		return {
-			migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
-			brandConfig: select( nfdOnboardingStore ).getNewfoldBrandConfig(),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-		};
-	} );
+	const { migrationUrl, brandConfig, currentData } = useSelect(
+		( select ) => {
+			return {
+				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+				brandConfig:
+					select( nfdOnboardingStore ).getNewfoldBrandConfig(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			};
+		}
+	);
 
 	const {
 		setIsHeaderEnabled,
