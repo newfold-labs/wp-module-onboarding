@@ -61,9 +61,9 @@ const SiteGenSiteLogo = () => {
 		setIsHeaderNavigationEnabled( true );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
-		if ( currentData.data.siteLogo?.id !== 0 ) {
+		if ( currentData.sitegen.siteLogo?.id !== 0 ) {
 			setIsFooterNavAllowed( true );
-			return setSiteLogo( currentData.data.siteLogo );
+			return setSiteLogo( currentData.sitegen.siteLogo );
 		}
 		setIsFooterNavAllowed( false );
 		getEditedEntityRecord( 'root', 'site' );
@@ -71,10 +71,10 @@ const SiteGenSiteLogo = () => {
 
 	const handleSiteLogo = ( siteLogoNew ) => {
 		const currentDataCopy = { ...currentData };
-		currentDataCopy.data.siteLogo.id = siteLogoNew.id;
-		currentDataCopy.data.siteLogo.url = siteLogoNew.url;
-		currentDataCopy.data.siteLogo.fileName = siteLogoNew.fileName;
-		currentDataCopy.data.siteLogo.fileSize = siteLogoNew.fileSize;
+		currentDataCopy.sitegen.siteLogo.id = siteLogoNew.id;
+		currentDataCopy.sitegen.siteLogo.url = siteLogoNew.url;
+		currentDataCopy.sitegen.siteLogo.fileName = siteLogoNew.fileName;
+		currentDataCopy.sitegen.siteLogo.fileSize = siteLogoNew.fileSize;
 		setCurrentOnboardingData( currentDataCopy );
 		setIsFooterNavAllowed( siteLogoNew.id !== 0 );
 		editEntityRecord( 'root', 'site', undefined, {

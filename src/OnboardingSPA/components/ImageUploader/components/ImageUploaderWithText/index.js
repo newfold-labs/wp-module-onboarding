@@ -71,7 +71,7 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 	const getContrastingColor = ( color ) => {
 		/* if the contrast value more than 150 it should have black bg, otherwise white */
 		const [ r, g, b ] = color.match( /\d+/g ).map( Number );
-		const contrastValue = ( 0.2126 * r ) + ( 0.7152 * g ) + ( 0.0722 * b );
+		const contrastValue = 0.2126 * r + 0.7152 * g + 0.0722 * b;
 		return contrastValue > 160 ? 'black' : 'white';
 	};
 
@@ -130,6 +130,8 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 		imageSetter( {
 			id: 0,
 			url: '',
+			fileName: '',
+			fileSize: 0,
 		} );
 		if ( inputRef?.current?.files.length > 0 ) {
 			inputRef.current.value = '';
