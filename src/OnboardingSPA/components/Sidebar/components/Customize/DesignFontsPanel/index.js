@@ -6,6 +6,11 @@ import { PanelBody, PanelRow, Button } from '@wordpress/components';
 import './stylesheet.scss';
 import { store as nfdOnboardingStore } from '../../../../../store';
 import { __ } from '@wordpress/i18n';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../../../utils/analytics/hiive';
+import { ACTION_FONTS_SELECTED } from '../../../../../utils/analytics/hiive/constants';
 
 const FontGroup = ( {
 	baseClassName,
@@ -336,6 +341,15 @@ const DesignFontsPanel = forwardRef(
 				setShowCustomFonts( false );
 			}
 			setSelectedGroup( groupId );
+			const eventFonts = {
+				headings: fontGroups[ groupId ].headings,
+				body: fontGroups[ groupId ].body,
+			};
+			trackOnboardingEvent(
+				new OnboardingEvent( ACTION_FONTS_SELECTED, 'generated', {
+					fonts: eventFonts,
+				} )
+			);
 		};
 
 		const handleSelectYourOwnFonts = () => {
@@ -360,6 +374,11 @@ const DesignFontsPanel = forwardRef(
 		const handleApplyCustomFonts = () => {
 			setSelectedGroup( null );
 			setSelectedCustomFont( customFont );
+			trackOnboardingEvent(
+				new OnboardingEvent( ACTION_FONTS_SELECTED, 'custom', {
+					fonts: customFont,
+				} )
+			);
 			setIsEditingCustomFont( false );
 			setSelectedGroup( 'custom' );
 		};

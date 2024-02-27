@@ -12,6 +12,14 @@ import CommonLayout from '../../../components/Layouts/Common';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 import ImageUploaderWithText from '../../../components/ImageUploader/components/ImageUploaderWithText';
 import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import {
+	ACTION_LOGO_ADDED,
+	ACTION_SITEGEN_LOGO_SKIPPED,
+} from '../../../utils/analytics/hiive/constants';
 
 const SiteGenSiteLogo = () => {
 	const [ siteLogo, setSiteLogo ] = useState();
@@ -52,6 +60,9 @@ const SiteGenSiteLogo = () => {
 		setCurrentOnboardingData( currentDataCopy );
 		setSiteLogo( undefined );
 		setIsFooterNavAllowed( false );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_SITEGEN_LOGO_SKIPPED )
+		);
 	};
 
 	useEffect( () => {
@@ -81,6 +92,7 @@ const SiteGenSiteLogo = () => {
 			site_logo: siteLogoNew.id,
 		} );
 		setSiteLogo( siteLogoNew );
+		trackOnboardingEvent( new OnboardingEvent( ACTION_LOGO_ADDED ) );
 	};
 
 	const content = getContents();

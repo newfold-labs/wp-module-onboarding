@@ -21,6 +21,15 @@ import TabPanelHover from '../../../TabPanelHover';
 import { cloneDeep } from 'lodash';
 import { getGlobalStyles } from '../../../../utils/api/themes';
 import { LivePreview } from '../../../LivePreview';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../../utils/analytics/hiive';
+import {
+	ACTION_SITEGEN_HOMEPAGE_FAVORITED,
+	ACTION_SITEGEN_HOMEPAGE_SELECTED,
+	ACTION_SITEGEN_SIDEBAR_OPENED,
+} from '../../../../utils/analytics/hiive/constants';
 
 const SitegenEditorPatternsSidebar = () => {
 	const [ homepages, setHomepages ] = useState();
@@ -45,17 +54,29 @@ const SitegenEditorPatternsSidebar = () => {
 		setIsSidebarOpened( false );
 	};
 
-	const handlePreview = ( slug ) => {
+	const handleTabSwitch = ( tab ) => {
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_SITEGEN_SIDEBAR_OPENED, tab.name )
+		);
+		setActiveTab( tab );
+	};
+
+	const handlePreview = ( slug, position ) => {
 		if ( ! ( slug in homepages ) ) {
 			return false;
 		}
-		currentData.sitegen.homepages.active = homepages[ slug ];
 
+		currentData.sitegen.homepages.active = homepages[ slug ];
 		setActiveHomepage( homepages[ slug ] );
 		setCurrentOnboardingData( currentData );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_SITEGEN_HOMEPAGE_SELECTED, slug, {
+				position: position + 1,
+			} )
+		);
 	};
 
-	const handleFavorite = ( slug ) => {
+	const handleFavorite = ( slug, position ) => {
 		if ( ! ( slug in homepages ) ) {
 			return;
 		}
@@ -69,6 +90,14 @@ const SitegenEditorPatternsSidebar = () => {
 
 		setHomepages( homepagesCopy );
 		setCurrentOnboardingData( currentData );
+
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_SITEGEN_HOMEPAGE_FAVORITED, slug, {
+				favorite: isFavorite,
+				position: position + 1,
+				placement: 'editor_sidebar',
+			} )
+		);
 	};
 
 	const loadData = async () => {
@@ -95,7 +124,7 @@ const SitegenEditorPatternsSidebar = () => {
 
 	useEffect( () => {
 		setActiveTab( {
-			name: __( 'All Versions', 'wp-module-onboarding' ),
+			name: 'all_versions',
 			title: (
 				<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab">
 					<p>{ __( 'All Versions', 'wp-module-onboarding' ) }</p>
@@ -105,7 +134,7 @@ const SitegenEditorPatternsSidebar = () => {
 				homepages &&
 				activeHomepage &&
 				globalStyles &&
-				Object.keys( homepages ).map( ( homepage ) => {
+				Object.keys( homepages ).map( ( homepage, idx ) => {
 					const data = homepages[ homepage ];
 					const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
 					newPreviewSettings.settings.color.palette =
@@ -123,10 +152,14 @@ const SitegenEditorPatternsSidebar = () => {
 						>
 							<div
 								className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__previews"
-								onClick={ () => handlePreview( data.slug ) }
+								onClick={ () =>
+									handlePreview( data.slug, idx )
+								}
 								role="button"
 								tabIndex={ 0 }
-								onKeyDown={ () => handlePreview( data.slug ) }
+								onKeyDown={ () =>
+									handlePreview( data.slug, idx )
+								}
 							>
 								<LivePreview
 									styling={
@@ -150,10 +183,10 @@ const SitegenEditorPatternsSidebar = () => {
 									role="button"
 									tabIndex={ 0 }
 									onClick={ () =>
-										handleFavorite( data.slug )
+										handleFavorite( data.slug, idx )
 									}
 									onKeyDown={ () =>
-										handleFavorite( data.slug )
+										handleFavorite( data.slug, idx )
 									}
 								></div>
 								<p className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__title">
@@ -183,10 +216,7 @@ const SitegenEditorPatternsSidebar = () => {
 								}
 								tabs={ [
 									{
-										name: __(
-											'All Versions',
-											'wp-module-onboarding'
-										),
+										name: 'all_versions',
 										title: (
 											<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab">
 												<p>
@@ -203,7 +233,7 @@ const SitegenEditorPatternsSidebar = () => {
 											activeHomepage &&
 											globalStyles &&
 											Object.keys( homepages ).map(
-												( homepage ) => {
+												( homepage, idx ) => {
 													const data =
 														homepages[ homepage ];
 													const newPreviewSettings =
@@ -231,12 +261,14 @@ const SitegenEditorPatternsSidebar = () => {
 															tabIndex={ 0 }
 															onKeyDown={ () =>
 																handlePreview(
-																	data.slug
+																	data.slug,
+																	idx
 																)
 															}
 															onClick={ () =>
 																handlePreview(
-																	data.slug
+																	data.slug,
+																	idx
 																)
 															}
 														>
@@ -272,12 +304,14 @@ const SitegenEditorPatternsSidebar = () => {
 																	}
 																	onKeyDown={ () =>
 																		handleFavorite(
-																			data.slug
+																			data.slug,
+																			idx
 																		)
 																	}
 																	onClick={ () =>
 																		handleFavorite(
-																			data.slug
+																			data.slug,
+																			idx
 																		)
 																	}
 																></div>
@@ -293,7 +327,7 @@ const SitegenEditorPatternsSidebar = () => {
 											),
 									},
 									{
-										name: 'Favorites',
+										name: 'favorites',
 										title: (
 											<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__favorites-tab">
 												<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__favorites-tab__icon"></div>
@@ -311,7 +345,7 @@ const SitegenEditorPatternsSidebar = () => {
 											activeHomepage &&
 											globalStyles &&
 											Object.keys( homepages ).map(
-												( homepage ) => {
+												( homepage, idx ) => {
 													const data =
 														homepages[ homepage ];
 													if ( ! data.isFavorite ) {
@@ -342,12 +376,14 @@ const SitegenEditorPatternsSidebar = () => {
 															tabIndex={ 0 }
 															onKeyDown={ () =>
 																handlePreview(
-																	data.slug
+																	data.slug,
+																	idx
 																)
 															}
 															onClick={ () =>
 																handlePreview(
-																	data.slug
+																	data.slug,
+																	idx
 																)
 															}
 														>
@@ -380,7 +416,7 @@ const SitegenEditorPatternsSidebar = () => {
 											),
 									},
 								] }
-								callback={ setActiveTab }
+								callback={ handleTabSwitch }
 								triggerEvent="click"
 							></TabPanelHover>
 						</div>

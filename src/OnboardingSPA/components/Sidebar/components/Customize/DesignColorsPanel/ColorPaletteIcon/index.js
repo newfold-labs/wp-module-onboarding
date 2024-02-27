@@ -1,3 +1,8 @@
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../../../../utils/analytics/hiive';
+import { ACTION_COLORS_SELECTED } from '../../../../../../utils/analytics/hiive/constants';
 import './stylesheet.scss';
 
 const ColorPaletteIcon = ( {
@@ -16,6 +21,12 @@ const ColorPaletteIcon = ( {
 	const handleClick = () => {
 		setSelectedPalette( idx );
 		setSelectedColor( colors[ idx ] );
+		const { isDefault, ...colorsForEvent } = colors[ idx ];
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_COLORS_SELECTED, 'generated', {
+				colors: colorsForEvent,
+			} )
+		);
 		if ( setShowCustomColors ) {
 			setShowCustomColors( false );
 		}

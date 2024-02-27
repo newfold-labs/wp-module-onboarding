@@ -11,6 +11,11 @@ import { store as nfdOnboardingStore } from '../../../../../store';
 import { __ } from '@wordpress/i18n';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { cloneDeep } from 'lodash';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../../../utils/analytics/hiive';
+import { ACTION_COLORS_SELECTED } from '../../../../../utils/analytics/hiive/constants';
 
 const DesignColorsPanel = forwardRef(
 	(
@@ -150,6 +155,12 @@ const DesignColorsPanel = forwardRef(
 			setIsEditingCustomColors( false );
 			setSelectedPalette( 'custom' );
 			setCustomColors( selectedColor );
+			const { isDefault, ...colorsForEvent } = selectedColor;
+			trackOnboardingEvent(
+				new OnboardingEvent( ACTION_COLORS_SELECTED, 'custom', {
+					colors: colorsForEvent,
+				} )
+			);
 		};
 
 		const handleEditCustomColors = () => {
