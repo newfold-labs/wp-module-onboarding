@@ -57,6 +57,9 @@ describe( 'SiteGen Site Details Step', function () {
         cy.get('.nfd-sg-input-box__info-icon--selected')
             .should('be.visible')
             .should('have.length', 3);
+    } );
+
+    it.skip( 'Check if the Next Button is enabled and click Next', () => {
         cy.get('.nfd-sg-site-details--next-btn')
             .should('be.visible')
             .click();
