@@ -34,6 +34,7 @@ import {
 	ACTION_ONBOARDING_CHAPTER_COMPLETE,
 	ACTION_ONBOARDING_CHAPTER_STARTED,
 } from '../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 // Wrapping the NewfoldInterfaceSkeleton with the HOC to make theme available
 const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
@@ -217,7 +218,10 @@ const SiteGen = () => {
 				trackOnboardingEvent(
 					new OnboardingEvent(
 						ACTION_ONBOARDING_CHAPTER_COMPLETE,
-						lastChapter
+						lastChapter,
+						{
+							source: SITEGEN_FLOW,
+						}
 					)
 				);
 			}
@@ -231,7 +235,10 @@ const SiteGen = () => {
 				trackOnboardingEvent(
 					new OnboardingEvent(
 						ACTION_ONBOARDING_CHAPTER_STARTED,
-						currentChapter
+						currentChapter,
+						{
+							source: SITEGEN_FLOW,
+						}
 					)
 				);
 			}

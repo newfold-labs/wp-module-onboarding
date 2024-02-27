@@ -95,7 +95,9 @@ const SiteGenSiteLogo = () => {
 			site_logo: siteLogoNew.id,
 		} );
 		setSiteLogo( siteLogoNew );
-		trackOnboardingEvent( new OnboardingEvent( ACTION_LOGO_ADDED ) );
+		trackOnboardingEvent( new OnboardingEvent( ACTION_LOGO_ADDED ), {
+			source: SITEGEN_FLOW,
+		} );
 	};
 
 	const content = getContents();
