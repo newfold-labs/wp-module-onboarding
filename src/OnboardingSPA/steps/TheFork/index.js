@@ -48,7 +48,10 @@ const TheFork = () => {
 		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
+	const navigate = useNavigate();
+
 	useEffect( () => {
+		checkHasAiAccess();
 		setHideFooterNav( true );
 		setIsHeaderEnabled( false );
 		setSidebarActiveView( false );
@@ -57,8 +60,8 @@ const TheFork = () => {
 		setDrawerActiveView( false );
 		setFooterActiveView( FOOTER_SITEGEN );
 	} );
-	const navigate = useNavigate();
-	useEffect( () => {
+
+	const checkHasAiAccess = () => {
 		if ( false === validateFlow( brandConfig, SITEGEN_FLOW ) ) {
 			const currentFlow = window.nfdOnboarding.currentFlow;
 			const getData = resolveGetDataForFlow( DEFAULT_FLOW );
@@ -76,8 +79,7 @@ const TheFork = () => {
 			updateInitialize( true );
 			navigate( data.steps[ 1 ].path );
 		}
-	} );
-
+	};
 	const oldFlow = window.nfdOnboarding?.oldFlow
 		? window.nfdOnboarding.oldFlow
 		: DEFAULT_FLOW;
