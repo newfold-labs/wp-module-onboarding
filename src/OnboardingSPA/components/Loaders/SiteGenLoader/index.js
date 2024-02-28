@@ -33,6 +33,7 @@ const SiteGenLoader = ( { customNavPercentage, watcher = null } ) => {
 	}, [] );
 
 	useEffect( () => {
+		/* Divided the totalCount by 2 to complete the progress bar in the experience step */
 		const percentageValue =
 			( currentData?.sitegen?.siteGenMetaStatus?.currentStatus /
 				currentData?.sitegen?.siteGenMetaStatus?.totalCount ) *

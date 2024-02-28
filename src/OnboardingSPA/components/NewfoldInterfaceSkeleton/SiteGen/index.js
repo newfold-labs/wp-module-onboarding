@@ -1,4 +1,4 @@
-import { useEffect, useRef } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { useLocation } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
@@ -44,6 +44,13 @@ const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
 );
 
 const SiteGen = () => {
+	const [ failedApi, setFailedApi ] = useState( [] );
+
+	useEffect( () => {
+		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
+	}, [ newfoldBrand ] );
+	const location = useLocation();
+
 	const {
 		currentData,
 		initialize,
@@ -85,7 +92,6 @@ const SiteGen = () => {
 	useEffect( () => {
 		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
 	}, [ newfoldBrand ] );
-	const location = useLocation();
 
 	const prevSiteGenErrorStatus = useRef();
 
@@ -145,18 +151,21 @@ const SiteGen = () => {
 					retryCount + 1
 				);
 			}
-			updateSiteGenErrorStatus( true );
+
+			setFailedApi( ( prevState ) => {
+				if ( ! prevState.includes( identifier ) ) {
+					return [ ...prevState, identifier ];
+				}
+				return prevState;
+			} );
+			currentData.sitegen.siteGenErrorStatus = true;
+			setCurrentOnboardingData( currentData );
 		}
 	}
 
 	async function generateSiteGenData() {
 		// Start the API Requests when the loader is shown.
-		if (
-			! (
-				location.pathname.includes( 'experience' ) ||
-				location.pathname.includes( 'building' )
-			)
-		) {
+		if ( ! location.pathname.includes( 'experience' ) ) {
 			return;
 		}
 
@@ -167,24 +176,23 @@ const SiteGen = () => {
 			}, 1000 );
 		}
 
-		let identifiers = await getSiteGenIdentifiers();
-		identifiers = identifiers.body;
+		let identifiers;
+		if ( Array.isArray( failedApi ) && failedApi.length > 0 ) {
+			identifiers = failedApi;
+			setFailedApi( [] );
+		} else {
+			identifiers = await getSiteGenIdentifiers();
+			identifiers = identifiers.body;
 
-		const midIndex = Math.floor( identifiers.length / 2 );
-		if ( location.pathname.includes( 'experience' ) ) {
-			identifiers = identifiers.slice( 0, midIndex );
 			currentData.sitegen.siteGenMetaStatus.currentStatus = 0;
-		} else if ( location.pathname.includes( 'building' ) ) {
-			identifiers = identifiers.slice( midIndex );
-			currentData.sitegen.siteGenMetaStatus.currentStatus = midIndex;
+
+			setCurrentOnboardingData( currentData );
 		}
-		setCurrentOnboardingData( currentData );
 		const siteInfo = {
 			site_description: currentData.sitegen?.siteDetails?.prompt,
 		};
 
 		const skipCache = currentData.sitegen?.skipCache;
-
 		// Iterate over Identifiers and fire Requests!
 		identifiers.forEach( ( identifier ) => {
 			performSiteGenMetaGeneration( siteInfo, identifier, skipCache );
@@ -284,6 +292,7 @@ const SiteGen = () => {
 		initializeThemes();
 		initializeSettings();
 		getEditedEntityRecord( 'root', 'site' );
+		updateSiteGenErrorStatus( false );
 	}, [] );
 
 	return (
