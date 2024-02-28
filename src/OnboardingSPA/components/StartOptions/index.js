@@ -30,6 +30,7 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 		if ( ! validateFlow( brandConfig, newFlow ) ) {
 			return false;
 		}
+		window.nfdOnboarding.currentBrand = brandConfig;
 		const currentFlow = window.nfdOnboarding.currentFlow;
 		const getData = resolveGetDataForFlow( newFlow );
 		const data = getData();
@@ -46,8 +47,10 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 		setCurrentOnboardingData( currentData );
 		if ( SITEGEN_FLOW !== newFlow ) {
 			updateInitialize( true );
+			navigate( data.steps[ 0 ].path );
+		} else {
+			navigate( data.steps[ 1 ].path );
 		}
-		navigate( data.steps[ 1 ].path );
 	};
 	const selectFlow = ( flow ) => {
 		switch ( flow ) {
