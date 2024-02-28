@@ -18,7 +18,10 @@ import {
 import { store as nfdOnboardingStore } from '../../../../store';
 import { setFlow, completeFlow } from '../../../../utils/api/flow';
 import Spinner from '../../../../components/Loaders/Spinner';
-import { regenerateHomepage } from '../../../../utils/api/siteGen';
+import {
+	regenerateHomepage,
+	sideLoadImages,
+} from '../../../../utils/api/siteGen';
 import StepEditorHeaderCenter from './center';
 import { getGlobalStyles } from '../../../../utils/api/themes';
 import { LivePreview } from '../../../../components/LivePreview';
@@ -166,9 +169,9 @@ const StepSiteGenEditorHeader = () => {
 
 	const saveAndContinue = async () => {
 		setIsSaving( true );
-
 		const homepages = currentData.sitegen.homepages.data;
 		const activeHomepage = currentData.sitegen.homepages.active;
+		sideLoadImages( activeHomepage );
 		const finalPreviews = buildPreviewsForScreenshot(
 			homepages,
 			activeHomepage

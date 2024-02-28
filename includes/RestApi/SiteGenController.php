@@ -99,6 +99,31 @@ class SiteGenController {
 				'args'                => $this->get_publish_sitemap_pages_args(),
 			)
 		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/sideload-images',
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'sideload_images' ),
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				'args'                => $this->get_sideload_args(),
+			)
+		);
+	}
+
+	/**
+	 * Required Args for Generating Site Gen Meta.
+	 *
+	 * @return array
+	 */
+	public function get_sideload_args() {
+		return array(
+			'active_homepage'  => array(
+				'required' => true,
+				'type'     => 'object',
+			),
+		);
 	}
 
 	/**
@@ -211,12 +236,24 @@ class SiteGenController {
 	}
 
 	/**
+	 * SideLoad image
+	 *
+	 * @param \WP_REST_Request $request parameter.
+	 * 
+	 */
+	public function sideload_images( \WP_REST_Request $request ) {
+		$active_homepage = $request->get_param( 'active_homepage' );
+		SiteGenService::sideload_and_replace($active_homepage);
+	}
+
+	/**
 	 * Gets the preview homepages
 	 *
 	 * @param \WP_REST_Request $request parameter.
 	 * @return array
 	 */
 	public function get_homepages( \WP_REST_Request $request ) {
+	
 		$existing_homepages = SiteGenService::get_homepages();
 		if ( ! empty( $existing_homepages ) ) {
 			return new \WP_REST_Response( $existing_homepages, 200 );
