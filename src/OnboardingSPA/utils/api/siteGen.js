@@ -88,16 +88,3 @@ export async function publishSitemapPages( siteDescription ) {
 		} ).then()
 	);
 }
-
-export async function sideLoadImages( activeHomepage ) {
-	console.log("active homepage", activeHomepage);
-	return await resolve(
-		apiFetch( {
-			url: onboardingRestURL( 'sitegen/sideload-images' ),
-			method: 'POST',
-			data: {
-				active_homepage: activeHomepage,
-			},
-		} ).then()
-	);
-}

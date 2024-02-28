@@ -18,10 +18,7 @@ import {
 import { store as nfdOnboardingStore } from '../../../../store';
 import { setFlow, completeFlow } from '../../../../utils/api/flow';
 import Spinner from '../../../../components/Loaders/Spinner';
-import {
-	regenerateHomepage,
-	sideLoadImages,
-} from '../../../../utils/api/siteGen';
+import { regenerateHomepage } from '../../../../utils/api/siteGen';
 import StepEditorHeaderCenter from './center';
 import { getGlobalStyles } from '../../../../utils/api/themes';
 import { LivePreview } from '../../../../components/LivePreview';
@@ -322,9 +319,9 @@ const StepSiteGenEditorHeader = () => {
 						>
 							{ isLargeViewport
 								? __(
-									'Save & Continue',
-									'wp-module-onboarding'
-								)
+										'Save & Continue',
+										'wp-module-onboarding'
+								  )
 								: __( 'Next', 'wp-module-onboarding' ) }
 						</div>
 						{ isSaving ? (
