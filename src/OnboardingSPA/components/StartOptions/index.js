@@ -5,6 +5,11 @@ import { validateFlow } from '../../data/flows/utils';
 import { useNavigate } from 'react-router-dom';
 import { memo } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../store';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../utils/analytics/hiive';
+import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
 
 const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 	const navigate = useNavigate();
@@ -50,13 +55,29 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 		navigate( data.steps[ 1 ].path );
 	};
 	const selectFlow = ( flow ) => {
+		let flowForEvent = false;
 		switch ( flow ) {
 			case 'sitebuild':
-				return switchFlow( oldFlow );
+				flowForEvent = 'DIY';
+				switchFlow( oldFlow );
+				break;
 			case 'sitegen':
-				return switchFlow( SITEGEN_FLOW );
+				flowForEvent = 'AI';
+				switchFlow( SITEGEN_FLOW );
+				break;
 			case 'hirepro':
-				return window.open( hireProUrl, '_blank' );
+				flowForEvent = 'PRO';
+				window.open( hireProUrl, '_blank' );
+				break;
+		}
+
+		if ( flowForEvent ) {
+			trackOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_SITEGEN_FORK_OPTION_SELECTED,
+					flowForEvent
+				)
+			);
 		}
 	};
 	return (

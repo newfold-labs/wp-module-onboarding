@@ -55,10 +55,15 @@
 
 			&__exit {
 				cursor: pointer;
+				text-decoration: underline;
 				font-weight: 510;
 				line-height: 20px;
 				text-align: center;
 				color: var(--nfd-onboarding-primary);
+
+				&:hover {
+					color: var(--nfd-onboarding-sitegen-link-color);
+				}
 			}
 		}
 	}

@@ -26,6 +26,15 @@ import {
 	SKIP_FLOW_ERROR_CODE_DATABASE,
 	SKIP_FLOW_ERROR_CODE_20,
 } from '../../../../constants';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import {
+	ACTION_ONBOARDING_CHAPTER_COMPLETE,
+	ACTION_ONBOARDING_CHAPTER_STARTED,
+} from '../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 // Wrapping the NewfoldInterfaceSkeleton with the HOC to make theme available
 const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
@@ -35,29 +44,15 @@ const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
 );
 
 const SiteGen = () => {
-	const { newfoldBrand } = useSelect( ( select ) => {
-		return {
-			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
-		};
-	}, [] );
-
-	// Update Title and Tagline on the site.
-	const { editEntityRecord } = useDispatch( coreStore );
-	const { getEditedEntityRecord } = useSelect( ( select ) => {
-		return select( coreStore );
-	}, [] );
-
-	useEffect( () => {
-		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
-	}, [ newfoldBrand ] );
-	const location = useLocation();
-
 	const {
 		currentData,
 		initialize,
 		pluginInstallHash,
 		siteGenErrorStatus,
 		interactionDisabled,
+		newfoldBrand,
+		currentStep,
+		lastChapter,
 	} = useSelect( ( select ) => {
 		return {
 			currentData:
@@ -69,11 +64,28 @@ const SiteGen = () => {
 				select( nfdOnboardingStore ).getSiteGenErrorStatus(),
 			interactionDisabled:
 				select( nfdOnboardingStore ).getInteractionDisabled(),
+			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
+			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+			lastChapter: select( nfdOnboardingStore ).getCurrentChapter(),
 		};
 	} );
 
-	const { setCurrentOnboardingData, updateSiteGenErrorStatus } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		setCurrentOnboardingData,
+		updateSiteGenErrorStatus,
+		setActiveChapter,
+	} = useDispatch( nfdOnboardingStore );
+
+	// Update Title and Tagline on the site.
+	const { editEntityRecord } = useDispatch( coreStore );
+	const { getEditedEntityRecord } = useSelect( ( select ) => {
+		return select( coreStore );
+	}, [] );
+
+	useEffect( () => {
+		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
+	}, [ newfoldBrand ] );
+	const location = useLocation();
 
 	const prevSiteGenErrorStatus = useRef();
 
@@ -147,6 +159,14 @@ const SiteGen = () => {
 		) {
 			return;
 		}
+
+		if ( ! window.nfdOnboarding?.siteGenTimerInterval ) {
+			window.nfdOnboarding.siteGenTime = 0;
+			window.nfdOnboarding.siteGenTimerInterval = setInterval( () => {
+				window.nfdOnboarding.siteGenTime += 1;
+			}, 1000 );
+		}
+
 		let identifiers = await getSiteGenIdentifiers();
 		identifiers = identifiers.body;
 
@@ -186,6 +206,55 @@ const SiteGen = () => {
 			url: window.location.href,
 		};
 	};
+
+	const trackChapters = () => {
+		const currentChapter = currentStep?.chapter;
+
+		if ( lastChapter !== currentChapter ) {
+			if ( lastChapter ) {
+				if ( currentData.data.chapters[ lastChapter ] ) {
+					currentData.data.chapters[ lastChapter ].completed = true;
+				}
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_ONBOARDING_CHAPTER_COMPLETE,
+						lastChapter,
+						{
+							source: SITEGEN_FLOW,
+						}
+					)
+				);
+			}
+
+			if ( currentChapter ) {
+				if ( currentData.data.chapters[ currentChapter ] ) {
+					currentData.data.chapters[
+						currentChapter
+					].completed = false;
+				}
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_ONBOARDING_CHAPTER_STARTED,
+						currentChapter,
+						{
+							source: SITEGEN_FLOW,
+						}
+					)
+				);
+			}
+
+			setActiveChapter( currentChapter );
+		}
+
+		if ( currentChapter && currentData.data.chapters[ currentChapter ] ) {
+			currentData.data.chapters[ currentChapter ].lastStep =
+				currentStep?.path ?? '';
+		}
+	};
+
+	useEffect( () => {
+		trackChapters();
+	}, [ currentStep ] );
 
 	useEffect( () => {
 		if ( initialize ) {

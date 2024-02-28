@@ -23,6 +23,19 @@ import StepEditorHeaderCenter from './center';
 import { getGlobalStyles } from '../../../../utils/api/themes';
 import { LivePreview } from '../../../../components/LivePreview';
 import { blockRenderScreenshot } from '../../../../utils/api/blockRender';
+import {
+	OnboardingEvent,
+	sendOnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../../utils/analytics/hiive';
+import {
+	ACTION_ONBOARDING_COMPLETE,
+	ACTION_SITEGEN_HOMEPAGE_FAVORITED,
+	ACTION_SITEGEN_HOMEPAGE_REGENERATED,
+	ACTION_SITEGEN_HOMEPAGE_RENAMED,
+	ACTION_SITEGEN_SIDEBAR_OPENED,
+} from '../../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../../data/flows/constants';
 
 const StepSiteGenEditorHeader = () => {
 	const [ homepage, setHomepage ] = useState();
@@ -63,6 +76,17 @@ const StepSiteGenEditorHeader = () => {
 		currentData.sitegen.homepages.data[ homepage.slug ] = homepage;
 		currentData.sitegen.homepages.active = homepage;
 		setCurrentOnboardingData( currentData );
+		trackOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_SITEGEN_HOMEPAGE_FAVORITED,
+				homepage.slug,
+				{
+					favorite: isFavorite,
+					placement: 'editor_toolbar',
+					source: SITEGEN_FLOW,
+				}
+			)
+		);
 	};
 
 	const handleRegenerate = async () => {
@@ -109,11 +133,33 @@ const StepSiteGenEditorHeader = () => {
 		currentData.sitegen.homepages.active = regeneratedHomepage;
 		setCurrentOnboardingData( currentData );
 		setIsRegenerating( false );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_SITEGEN_HOMEPAGE_REGENERATED, slug, {
+				source: SITEGEN_FLOW,
+				placement: 'editor_toolbar',
+			} )
+		);
 	};
 
 	const handleViewAll = () => {
+		if (
+			isSidebarOpened &&
+			sideBarView === SIDEBAR_SITEGEN_EDITOR_PATTERNS
+		) {
+			return;
+		}
+
 		setSidebarActiveView( SIDEBAR_SITEGEN_EDITOR_PATTERNS );
 		setIsSidebarOpened( true );
+		trackOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_SITEGEN_SIDEBAR_OPENED,
+				'all_versions',
+				{
+					source: SITEGEN_FLOW,
+				}
+			)
+		);
 	};
 
 	const handleCustomize = async () => {
@@ -121,6 +167,16 @@ const StepSiteGenEditorHeader = () => {
 			sideBarView === 'Customize' ? ! isSidebarOpened : isSidebarOpened;
 		setSidebarActiveView( 'Customize' );
 		setIsSidebarOpened( isSidebarOpenedNew );
+
+		if ( isSidebarOpenedNew === true ) {
+			trackOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_SITEGEN_SIDEBAR_OPENED,
+					'customize'
+				)
+			);
+		}
+
 		const globalStylesResponse = await getGlobalStyles();
 		setGlobalStyles( globalStylesResponse.body );
 	};
@@ -130,6 +186,16 @@ const StepSiteGenEditorHeader = () => {
 		currentData.sitegen.homepages.data[ homepage.slug ] = homepage;
 		currentData.sitegen.homepages.active = homepage;
 		setCurrentOnboardingData( currentData );
+		trackOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_SITEGEN_HOMEPAGE_RENAMED,
+				homepage.slug,
+				{
+					name: title,
+					source: SITEGEN_FLOW,
+				}
+			)
+		);
 	};
 
 	const buildPreviewsForScreenshot = ( homepages, activeHomepage ) => {
@@ -218,6 +284,11 @@ const StepSiteGenEditorHeader = () => {
 		}
 		await setFlow( currentData );
 		await completeFlow();
+		sendOnboardingEvent(
+			new OnboardingEvent( ACTION_ONBOARDING_COMPLETE, {
+				source: SITEGEN_FLOW,
+			} )
+		);
 		window.location.replace( pluginDashboardPage );
 	};
 
@@ -320,9 +391,9 @@ const StepSiteGenEditorHeader = () => {
 						>
 							{ isLargeViewport
 								? __(
-									'Save & Continue',
-									'wp-module-onboarding'
-								)
+										'Save & Continue',
+										'wp-module-onboarding'
+								  )
 								: __( 'Next', 'wp-module-onboarding' ) }
 						</div>
 						{ isSaving ? (

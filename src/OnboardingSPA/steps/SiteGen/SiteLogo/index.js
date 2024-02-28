@@ -12,6 +12,15 @@ import CommonLayout from '../../../components/Layouts/Common';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 import ImageUploaderWithText from '../../../components/ImageUploader/components/ImageUploaderWithText';
 import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import {
+	ACTION_LOGO_ADDED,
+	ACTION_SITEGEN_LOGO_SKIPPED,
+} from '../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenSiteLogo = () => {
 	const [ siteLogo, setSiteLogo ] = useState();
@@ -52,6 +61,11 @@ const SiteGenSiteLogo = () => {
 		setCurrentOnboardingData( currentDataCopy );
 		setSiteLogo( undefined );
 		setIsFooterNavAllowed( false );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_SITEGEN_LOGO_SKIPPED, {
+				source: SITEGEN_FLOW,
+			} )
+		);
 	};
 
 	useEffect( () => {
@@ -104,6 +118,18 @@ const SiteGenSiteLogo = () => {
 						/>
 						{ isLargeViewport && (
 							<NextButtonSiteGen
+								callback={ () => {
+									if ( siteLogo ) {
+										trackOnboardingEvent(
+											new OnboardingEvent(
+												ACTION_LOGO_ADDED
+											),
+											{
+												source: SITEGEN_FLOW,
+											}
+										);
+									}
+								} }
 								text={ content.buttons.next }
 								disabled={
 									siteLogo === undefined || siteLogo?.id === 0

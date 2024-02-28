@@ -10,6 +10,7 @@ const TextInputSiteGen = ( {
 	customerInput,
 	setIsValidInput,
 	setCustomerInput,
+	setCustomerInputStrength,
 	customChildren = false,
 } ) => {
 	const textareaRef = useRef( null );
@@ -22,6 +23,7 @@ const TextInputSiteGen = ( {
 		textareaRef.current.style.height = scrollHeight + 'px';
 		const analysisResult = calculateAnalysisScore( customerInput?.trim() );
 		setAnalysisScore( analysisResult );
+		setCustomerInputStrength( analysisResult );
 		setIsValidInput( analysisResult >= 2 );
 	}, [ customerInput ] );
 
