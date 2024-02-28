@@ -49,8 +49,7 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 
 		window.nfdOnboarding.currentFlow = newFlow;
 		currentData.activeFlow = newFlow;
-		currentData.continueWithoutAi = false;
-		setContinueWithoutAi( false );
+		currentData.continueWithoutAi = true;
 		setCurrentOnboardingData( currentData );
 		if ( SITEGEN_FLOW !== newFlow ) {
 			updateInitialize( true );
