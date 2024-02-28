@@ -171,7 +171,6 @@ const StepSiteGenEditorHeader = () => {
 		setIsSaving( true );
 		const homepages = currentData.sitegen.homepages.data;
 		const activeHomepage = currentData.sitegen.homepages.active;
-		sideLoadImages( activeHomepage );
 		const finalPreviews = buildPreviewsForScreenshot(
 			homepages,
 			activeHomepage
