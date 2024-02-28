@@ -10,7 +10,7 @@ describe( 'SiteGen Fork Step', function () {
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/fork'
 		);
-        cy.wait(60000);  
+        cy.timeout(60000);  
         cy.wait(5000);
 	} );
 

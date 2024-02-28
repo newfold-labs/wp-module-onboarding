@@ -29,7 +29,6 @@ jobs:
     needs: setup
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
     with:
-      plugin-branch: 'release/3.9.0'
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: "bluehost/bluehost-wordpress-plugin"
@@ -40,7 +39,6 @@ jobs:
     needs: setup
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
     with:
-      plugin-branch: 'release/2.7.0'
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: "newfold-labs/wp-plugin-hostgator"
