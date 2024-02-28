@@ -16,6 +16,7 @@ const SiteGenPreviewSelectableCard = ( {
 	overlay = false,
 	skeletonLoadingTime = 2500,
 	slug,
+	position,
 	title,
 	isFavorite,
 	palette,
@@ -28,19 +29,19 @@ const SiteGenPreviewSelectableCard = ( {
 
 	const onPreview = () => {
 		if ( typeof handlePreview === 'function' ) {
-			return handlePreview( slug );
+			return handlePreview( slug, position );
 		}
 	};
 
 	const onRegenerate = () => {
 		if ( typeof handleRegenerate === 'function' ) {
-			return handleRegenerate( slug, palette, isFavorite );
+			return handleRegenerate( slug, palette, isFavorite, position );
 		}
 	};
 
 	const onFavorite = () => {
 		if ( typeof handleFavorite === 'function' ) {
-			return handleFavorite( slug );
+			return handleFavorite( slug, position );
 		}
 	};
 

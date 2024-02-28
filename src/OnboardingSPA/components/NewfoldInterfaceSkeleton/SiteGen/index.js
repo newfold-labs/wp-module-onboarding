@@ -1,4 +1,4 @@
-import { useEffect, useRef } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { useLocation } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
@@ -26,6 +26,15 @@ import {
 	SKIP_FLOW_ERROR_CODE_DATABASE,
 	SKIP_FLOW_ERROR_CODE_20,
 } from '../../../../constants';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import {
+	ACTION_ONBOARDING_CHAPTER_COMPLETE,
+	ACTION_ONBOARDING_CHAPTER_STARTED,
+} from '../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 // Wrapping the NewfoldInterfaceSkeleton with the HOC to make theme available
 const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
@@ -35,17 +44,7 @@ const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
 );
 
 const SiteGen = () => {
-	const { newfoldBrand } = useSelect( ( select ) => {
-		return {
-			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
-		};
-	}, [] );
-
-	// Update Title and Tagline on the site.
-	const { editEntityRecord } = useDispatch( coreStore );
-	const { getEditedEntityRecord } = useSelect( ( select ) => {
-		return select( coreStore );
-	}, [] );
+	const [ failedApi, setFailedApi ] = useState( [] );
 
 	useEffect( () => {
 		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
@@ -58,6 +57,9 @@ const SiteGen = () => {
 		pluginInstallHash,
 		siteGenErrorStatus,
 		interactionDisabled,
+		newfoldBrand,
+		currentStep,
+		lastChapter,
 	} = useSelect( ( select ) => {
 		return {
 			currentData:
@@ -69,11 +71,27 @@ const SiteGen = () => {
 				select( nfdOnboardingStore ).getSiteGenErrorStatus(),
 			interactionDisabled:
 				select( nfdOnboardingStore ).getInteractionDisabled(),
+			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
+			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+			lastChapter: select( nfdOnboardingStore ).getCurrentChapter(),
 		};
 	} );
 
-	const { setCurrentOnboardingData, updateSiteGenErrorStatus } =
-		useDispatch( nfdOnboardingStore );
+	const {
+		setCurrentOnboardingData,
+		updateSiteGenErrorStatus,
+		setActiveChapter,
+	} = useDispatch( nfdOnboardingStore );
+
+	// Update Title and Tagline on the site.
+	const { editEntityRecord } = useDispatch( coreStore );
+	const { getEditedEntityRecord } = useSelect( ( select ) => {
+		return select( coreStore );
+	}, [] );
+
+	useEffect( () => {
+		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
+	}, [ newfoldBrand ] );
 
 	const prevSiteGenErrorStatus = useRef();
 
@@ -133,38 +151,48 @@ const SiteGen = () => {
 					retryCount + 1
 				);
 			}
-			updateSiteGenErrorStatus( true );
+
+			setFailedApi( ( prevState ) => {
+				if ( ! prevState.includes( identifier ) ) {
+					return [ ...prevState, identifier ];
+				}
+				return prevState;
+			} );
+			currentData.sitegen.siteGenErrorStatus = true;
+			setCurrentOnboardingData( currentData );
 		}
 	}
 
 	async function generateSiteGenData() {
 		// Start the API Requests when the loader is shown.
-		if (
-			! (
-				location.pathname.includes( 'experience' ) ||
-				location.pathname.includes( 'building' )
-			)
-		) {
+		if ( ! location.pathname.includes( 'experience' ) ) {
 			return;
 		}
-		let identifiers = await getSiteGenIdentifiers();
-		identifiers = identifiers.body;
 
-		const midIndex = Math.floor( identifiers.length / 2 );
-		if ( location.pathname.includes( 'experience' ) ) {
-			identifiers = identifiers.slice( 0, midIndex );
-			currentData.sitegen.siteGenMetaStatus.currentStatus = 0;
-		} else if ( location.pathname.includes( 'building' ) ) {
-			identifiers = identifiers.slice( midIndex );
-			currentData.sitegen.siteGenMetaStatus.currentStatus = midIndex;
+		if ( ! window.nfdOnboarding?.siteGenTimerInterval ) {
+			window.nfdOnboarding.siteGenTime = 0;
+			window.nfdOnboarding.siteGenTimerInterval = setInterval( () => {
+				window.nfdOnboarding.siteGenTime += 1;
+			}, 1000 );
 		}
-		setCurrentOnboardingData( currentData );
+
+		let identifiers;
+		if ( Array.isArray( failedApi ) && failedApi.length > 0 ) {
+			identifiers = failedApi;
+			setFailedApi( [] );
+		} else {
+			identifiers = await getSiteGenIdentifiers();
+			identifiers = identifiers.body;
+
+			currentData.sitegen.siteGenMetaStatus.currentStatus = 0;
+
+			setCurrentOnboardingData( currentData );
+		}
 		const siteInfo = {
 			site_description: currentData.sitegen?.siteDetails?.prompt,
 		};
 
 		const skipCache = currentData.sitegen?.skipCache;
-
 		// Iterate over Identifiers and fire Requests!
 		identifiers.forEach( ( identifier ) => {
 			performSiteGenMetaGeneration( siteInfo, identifier, skipCache );
@@ -186,6 +214,55 @@ const SiteGen = () => {
 			url: window.location.href,
 		};
 	};
+
+	const trackChapters = () => {
+		const currentChapter = currentStep?.chapter;
+
+		if ( lastChapter !== currentChapter ) {
+			if ( lastChapter ) {
+				if ( currentData.data.chapters[ lastChapter ] ) {
+					currentData.data.chapters[ lastChapter ].completed = true;
+				}
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_ONBOARDING_CHAPTER_COMPLETE,
+						lastChapter,
+						{
+							source: SITEGEN_FLOW,
+						}
+					)
+				);
+			}
+
+			if ( currentChapter ) {
+				if ( currentData.data.chapters[ currentChapter ] ) {
+					currentData.data.chapters[
+						currentChapter
+					].completed = false;
+				}
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_ONBOARDING_CHAPTER_STARTED,
+						currentChapter,
+						{
+							source: SITEGEN_FLOW,
+						}
+					)
+				);
+			}
+
+			setActiveChapter( currentChapter );
+		}
+
+		if ( currentChapter && currentData.data.chapters[ currentChapter ] ) {
+			currentData.data.chapters[ currentChapter ].lastStep =
+				currentStep?.path ?? '';
+		}
+	};
+
+	useEffect( () => {
+		trackChapters();
+	}, [ currentStep ] );
 
 	useEffect( () => {
 		if ( initialize ) {
@@ -215,6 +292,7 @@ const SiteGen = () => {
 		initializeThemes();
 		initializeSettings();
 		getEditedEntityRecord( 'root', 'site' );
+		updateSiteGenErrorStatus( false );
 	}, [] );
 
 	return (

@@ -13,6 +13,7 @@ import {
 	sendOnboardingEvent,
 } from '../../../../utils/analytics/hiive';
 import { ACTION_ONBOARDING_COMPLETE } from '../../../../utils/analytics/hiive/constants';
+import { stepWelcome } from '../../../../steps/GetStarted/Welcome/step';
 
 /**
  * Back step Navigation button.
@@ -21,7 +22,7 @@ import { ACTION_ONBOARDING_COMPLETE } from '../../../../utils/analytics/hiive/co
  *
  * @return {WPComponent} Back Component
  */
-const Back = ( { path, showErrorDialog } ) => {
+const Back = ( { path, showErrorDialog, disabled } ) => {
 	const { setNavErrorContinuePath } = useDispatch( nfdOnboardingStore );
 	const navigate = useNavigate();
 	const navigateBack = () => {
@@ -36,6 +37,7 @@ const Back = ( { path, showErrorDialog } ) => {
 			className="navigation-buttons navigation-buttons_back"
 			onClick={ navigateBack }
 			variant="secondary"
+			disabled={ disabled }
 		>
 			<Icon icon={ chevronLeft } />
 			{ __( 'Back', 'wp-module-onboarding' ) }
@@ -108,19 +110,22 @@ const Finish = ( { currentData, saveDataAndExitFunc } ) => (
  * @return {WPComponent} StepNavigation Component
  */
 const StepNavigation = () => {
-	const { previousStep, nextStep, currentData, showErrorDialog } = useSelect(
-		( select ) => {
-			return {
-				nextStep: select( nfdOnboardingStore ).getNextStep(),
-				previousStep: select( nfdOnboardingStore ).getPreviousStep(),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				showErrorDialog:
-					select( nfdOnboardingStore ).getShowErrorDialog(),
-			};
-		},
-		[]
-	);
+	const {
+		currentStep,
+		previousStep,
+		nextStep,
+		currentData,
+		showErrorDialog,
+	} = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+			nextStep: select( nfdOnboardingStore ).getNextStep(),
+			previousStep: select( nfdOnboardingStore ).getPreviousStep(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			showErrorDialog: select( nfdOnboardingStore ).getShowErrorDialog(),
+		};
+	}, [] );
 	const isFirstStep = null === previousStep || false === previousStep;
 	const isLastStep = null === nextStep || false === nextStep;
 	return (
@@ -130,6 +135,11 @@ const StepNavigation = () => {
 					<Back
 						path={ previousStep.path }
 						showErrorDialog={ showErrorDialog }
+						disabled={
+							currentStep === stepWelcome
+								? currentData.continueWithoutAi
+								: false
+						}
 					/>
 				) }
 				{ isLastStep ? (

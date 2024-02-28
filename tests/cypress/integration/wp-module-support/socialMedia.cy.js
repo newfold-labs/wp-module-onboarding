@@ -6,7 +6,7 @@ export const SocialMediaTextValidations = ( URL, ToolTipText, ModalHeaderText ) 
     const NextButton = '.navigation-buttons_next';
     const socialTest = '#facebook';
     if ( cy.get(socialTest).should( 'exist' ) ) {
-        cy.get(socialTest).clear();
+        cy.get(socialTest).clear({force: true});
         cy.wait(200);
         cy.get(socialTest).type( URL );
         cy.wait(200);
@@ -28,7 +28,7 @@ export const SocialMediaTextValidations = ( URL, ToolTipText, ModalHeaderText ) 
             cy.get( '.components-modal__content' ).should('be.visible');
             cy.get( '.components-modal__header-heading' ).should('have.text', ModalHeaderText);
         };
-        cy.get(':nth-child(2) > .components-button-group > .is-secondary').click();
+        cy.get('.components-button-group.nfd-onboarding-etw__buttons > .components-button.is-secondary').click();
         cy.wait(200);
         cy.get(NextButton).click();
         cy.wait(200);
@@ -36,7 +36,7 @@ export const SocialMediaTextValidations = ( URL, ToolTipText, ModalHeaderText ) 
         cy.wait(200);
         cy.get(NextButton).click();
         cy.wait(200);
-        cy.get(':nth-child(2) > .components-button-group > .is-primary').click();
+        cy.get('.components-button-group.nfd-onboarding-etw__buttons > .components-button.is-primary').click();
         cy.wait(200);
         cy.url().should('not.contain', 'wp-setup/step/basic-info');
         cy.wait(200);

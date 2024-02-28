@@ -12,6 +12,15 @@ import CommonLayout from '../../../components/Layouts/Common';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 import ImageUploaderWithText from '../../../components/ImageUploader/components/ImageUploaderWithText';
 import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import {
+	ACTION_LOGO_ADDED,
+	ACTION_SITEGEN_LOGO_SKIPPED,
+} from '../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenSiteLogo = () => {
 	const [ siteLogo, setSiteLogo ] = useState();
@@ -52,6 +61,11 @@ const SiteGenSiteLogo = () => {
 		setCurrentOnboardingData( currentDataCopy );
 		setSiteLogo( undefined );
 		setIsFooterNavAllowed( false );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_SITEGEN_LOGO_SKIPPED, {
+				source: SITEGEN_FLOW,
+			} )
+		);
 	};
 
 	useEffect( () => {
@@ -61,9 +75,9 @@ const SiteGenSiteLogo = () => {
 		setIsHeaderNavigationEnabled( true );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
-		if ( currentData.data.siteLogo?.id !== 0 ) {
+		if ( currentData.sitegen.siteLogo?.id !== 0 ) {
 			setIsFooterNavAllowed( true );
-			return setSiteLogo( currentData.data.siteLogo );
+			return setSiteLogo( currentData.sitegen.siteLogo );
 		}
 		setIsFooterNavAllowed( false );
 		getEditedEntityRecord( 'root', 'site' );
@@ -71,10 +85,10 @@ const SiteGenSiteLogo = () => {
 
 	const handleSiteLogo = ( siteLogoNew ) => {
 		const currentDataCopy = { ...currentData };
-		currentDataCopy.data.siteLogo.id = siteLogoNew.id;
-		currentDataCopy.data.siteLogo.url = siteLogoNew.url;
-		currentDataCopy.data.siteLogo.fileName = siteLogoNew.fileName;
-		currentDataCopy.data.siteLogo.fileSize = siteLogoNew.fileSize;
+		currentDataCopy.sitegen.siteLogo.id = siteLogoNew.id;
+		currentDataCopy.sitegen.siteLogo.url = siteLogoNew.url;
+		currentDataCopy.sitegen.siteLogo.fileName = siteLogoNew.fileName;
+		currentDataCopy.sitegen.siteLogo.fileSize = siteLogoNew.fileSize;
 		setCurrentOnboardingData( currentDataCopy );
 		setIsFooterNavAllowed( siteLogoNew.id !== 0 );
 		editEntityRecord( 'root', 'site', undefined, {
@@ -104,6 +118,18 @@ const SiteGenSiteLogo = () => {
 						/>
 						{ isLargeViewport && (
 							<NextButtonSiteGen
+								callback={ () => {
+									if ( siteLogo ) {
+										trackOnboardingEvent(
+											new OnboardingEvent(
+												ACTION_LOGO_ADDED
+											),
+											{
+												source: SITEGEN_FLOW,
+											}
+										);
+									}
+								} }
 								text={ content.buttons.next }
 								disabled={
 									siteLogo === undefined || siteLogo?.id === 0

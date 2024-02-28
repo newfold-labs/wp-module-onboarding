@@ -8,6 +8,12 @@ import CommonLayout from '../../../components/Layouts/Common';
 import CardWithOptions from '../../../components/CardWithOptions';
 import SiteGenLoader from '../../../components/Loaders/SiteGenLoader';
 import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import { ACTION_EXPERIENCE_LEVEL_SET } from '../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenExperience = () => {
 	const content = getContents();
@@ -51,6 +57,30 @@ const SiteGenExperience = () => {
 		setSelection( idx );
 		currentData.sitegen.experience.level = idx;
 		setCurrentOnboardingData( currentData );
+		let experienceForEvent = false;
+		switch ( idx ) {
+			case 1:
+				experienceForEvent = 'novice';
+				break;
+			case 2:
+				experienceForEvent = 'intermediate';
+				break;
+			case 3:
+				experienceForEvent = 'expert';
+				break;
+		}
+
+		if ( experienceForEvent ) {
+			trackOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_EXPERIENCE_LEVEL_SET,
+					experienceForEvent,
+					{
+						source: SITEGEN_FLOW,
+					}
+				)
+			);
+		}
 	};
 
 	return (
@@ -59,7 +89,7 @@ const SiteGenExperience = () => {
 				<div className={ 'nfd-sg-experience-level' }>
 					<SiteGenLoader
 						watcher={ selection !== 0 ? true : false }
-						customNavPercentage={ 50 }
+						customNavPercentage={ 100 }
 					/>
 					<CardWithOptions
 						title={ content.heading }

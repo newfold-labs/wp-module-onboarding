@@ -22,15 +22,15 @@ describe( 'SiteGen Welcome Step', function () {
     } );
 
     it( 'Check the Progress Bar Value', () => {
-        ProgressBarCheck('11.1111%');
+        ProgressBarCheck('0%');
     });
 
     it( 'Check for back button and go back', () => {
         BackButtonCheck('sitegen/step/welcome');
     } );
 
-    it( 'Check for the animation', () => {
-        cy.get( '.nfd-onboarding-step--site-gen__welcome__container__animation' )
+    it( 'Check if the orb is visible', () => {
+        cy.get( '.nfd-onboarding-step--site-gen__welcome__container__orb' )
             .should('be.visible');
     } );
 
