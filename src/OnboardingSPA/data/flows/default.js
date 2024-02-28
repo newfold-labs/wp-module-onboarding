@@ -22,7 +22,9 @@ export const initialChapters = [ demographic, design, layoutContent, features ];
 
 export const getSteps = ( chapters = initialChapters ) => {
 	let steps = [];
-	if ( validateFlow( window.nfdOnboarding.currentBrand.config, SITEGEN_FLOW ) ) {
+	if (
+		validateFlow( window.nfdOnboarding.currentBrand.config, SITEGEN_FLOW )
+	) {
 		steps.push( stepTheFork );
 	}
 	steps.push( stepWelcome );
@@ -38,7 +40,9 @@ export const getSteps = ( chapters = initialChapters ) => {
 
 export const getRoutes = ( chapters = initialChapters ) => {
 	let routes = [ ...pages ];
-	if ( validateFlow( window.nfdOnboarding.currentBrand.config, SITEGEN_FLOW ) ) {
+	if (
+		validateFlow( window.nfdOnboarding.currentBrand.config, SITEGEN_FLOW )
+	) {
 		routes.push( stepTheFork );
 	}
 	routes.push( stepWelcome );
