@@ -15,6 +15,12 @@ import HeadingWithSubHeading from '../../components/HeadingWithSubHeading/SiteGe
 import StartOptions from '../../components/StartOptions';
 import getContents from './contents';
 import SitegenAiStateHandler from '../../components/StateHandlers/SitegenAi';
+import {
+	OnboardingEvent,
+	sendOnboardingEvent,
+	trackOnboardingEvent,
+} from '../../utils/analytics/hiive';
+import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
 import { validateFlow } from '../../data/flows/utils';
 import { resolveGetDataForFlow } from '../../data/flows';
 import { useNavigate } from 'react-router-dom';
@@ -84,6 +90,16 @@ const TheFork = () => {
 		? window.nfdOnboarding.oldFlow
 		: DEFAULT_FLOW;
 
+	const handleForkExit = () => {
+		sendOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_SITEGEN_FORK_OPTION_SELECTED,
+				'TUTORIAL'
+			)
+		);
+
+		window.location.replace( pluginDashboardPage );
+	};
 	const content = getContents();
 	return (
 		<SitegenAiStateHandler>
@@ -108,16 +124,27 @@ const TheFork = () => {
 						href={ migrationUrl }
 						target={ '_blank' }
 						rel={ 'noreferrer' }
+						onClick={ () =>
+							trackOnboardingEvent(
+								new OnboardingEvent(
+									ACTION_SITEGEN_FORK_OPTION_SELECTED,
+									'MIGRATE'
+								)
+							)
+						}
 					>
 						{ content.importtext }
 					</a>
 				) }
-				<a
+				<span
+					role="button"
+					tabIndex={ 0 }
 					className="nfd-onboarding-step--site-gen__fork__exit"
-					href={ pluginDashboardPage }
+					onClick={ () => handleForkExit() }
+					onKeyDown={ () => handleForkExit() }
 				>
 					{ content.exitToWordPress }
-				</a>
+				</span>
 			</CommonLayout>
 		</SitegenAiStateHandler>
 	);

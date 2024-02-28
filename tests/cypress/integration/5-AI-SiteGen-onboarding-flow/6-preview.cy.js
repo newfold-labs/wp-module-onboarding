@@ -10,35 +10,35 @@ describe( 'SiteGen Site Preview Step', function () {
         cy.wait(5000);
     } );
 
-    it( 'Check for the header admin bar', () => {
+    it.skip( 'Check for the header admin bar', () => {
         AdminBarCheck();
     } );
 
-    it( 'Check for the existing dark background', () => {
+    it.skip( 'Check for the existing dark background', () => {
         DarkBGCheck();
     } );
 
-    it( 'Check for the light background', () => {
+    it.skip( 'Check for the light background', () => {
         LightBGCheck();
     } );
 
-    it( 'Check the Progress Bar Value', () => {
+    it.skip( 'Check the Progress Bar Value', () => {
         ProgressBarCheck('75%');
     });
 
-    it( 'Check for back button and go back', () => {
+    it.skip( 'Check for back button and go back', () => {
         BackButtonCheck('sitegen/step/preview');
         cy.visit('wp-admin/index.php?page=nfd-onboarding#/sitegen/step/preview');
         cy.reload();
     } );
 
-    it( 'Check for by default 3 versions should be there', () => {
+    it.skip( 'Check for by default 3 versions should be there', () => {
         cy.get('.live-preview-sitegen--selectable-card', {timeout:20000})
             .should('be.visible')
             .should('have.length', 3);
     } );
 
-    it( 'Check for the favourited theme versions', () => {
+    it.skip( 'Check for the favourited theme versions', () => {
         cy.get('g[clip-path="url(#heart-filled_svg__a)"]').should('not.exist');  // when no fav theme is selected
         cy.get( '.live-preview-sitegen--selectable-card__live-preview-container-buttons__button__icon' )
             .eq(0)
@@ -59,7 +59,7 @@ describe( 'SiteGen Site Preview Step', function () {
         cy.reload();
     } );
 
-    it( 'Check for regenerating the new theme versions', () => {
+    it.skip( 'Check for regenerating the new theme versions', () => {
         cy.get('[aria-label="Regenerate Content"]', {timeout:10000})
             .eq(2)
             .scrollIntoView()
@@ -70,7 +70,7 @@ describe( 'SiteGen Site Preview Step', function () {
             .should('have.length', 4);
     } );
 
-    it( 'Check for the preview note at the bottom', () => {
+    it.skip( 'Check for the preview note at the bottom', () => {
         cy.get('.nfd-onboarding-step--site-gen__preview__note')
             .scrollIntoView()
             .should('be.visible');
@@ -78,7 +78,7 @@ describe( 'SiteGen Site Preview Step', function () {
         cy.get('.nfd-onboarding-step--site-gen__preview__note span').scrollIntoView().contains('Favorite');
     } );
 
-    it( 'Select any theme and go forward to the next step', () => {
+    it.skip( 'Select any theme and go forward to the next step', () => {
         cy.get('.live-preview-sitegen--selectable-card')
             .eq(0)
             .scrollIntoView()

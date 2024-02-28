@@ -25,10 +25,6 @@ $nfd-onboarding-editor-header-hover: #272d30;
 		transition-delay: 80ms;
 
 		@include reduce-motion("transition");
-
-		@media (max-width: #{ ($break-xlarge) }) {
-			padding-left: 4px;
-		}
 	}
 
 	&__start,
