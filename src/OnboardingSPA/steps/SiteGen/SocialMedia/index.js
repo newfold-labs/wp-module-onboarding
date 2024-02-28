@@ -68,9 +68,13 @@ const SiteGenSiteSocialMedia = () => {
 
 	const trackSkipEvent = () => {
 		trackOnboardingEvent(
-			new OnboardingEvent( ACTION_SITEGEN_SOCIAL_CONNECT_SKIPPED, {
-				source: SITEGEN_FLOW,
-			} )
+			new OnboardingEvent(
+				ACTION_SITEGEN_SOCIAL_CONNECT_SKIPPED,
+				undefined,
+				{
+					source: SITEGEN_FLOW,
+				}
+			)
 		);
 	};
 

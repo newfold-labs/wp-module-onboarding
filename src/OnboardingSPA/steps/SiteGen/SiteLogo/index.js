@@ -62,7 +62,7 @@ const SiteGenSiteLogo = () => {
 		setSiteLogo( undefined );
 		setIsFooterNavAllowed( false );
 		trackOnboardingEvent(
-			new OnboardingEvent( ACTION_SITEGEN_LOGO_SKIPPED, {
+			new OnboardingEvent( ACTION_SITEGEN_LOGO_SKIPPED, undefined, {
 				source: SITEGEN_FLOW,
 			} )
 		);
