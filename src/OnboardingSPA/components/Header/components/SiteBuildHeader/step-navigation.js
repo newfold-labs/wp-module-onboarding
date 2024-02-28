@@ -126,8 +126,19 @@ const StepNavigation = () => {
 			showErrorDialog: select( nfdOnboardingStore ).getShowErrorDialog(),
 		};
 	}, [] );
-	const isFirstStep = null === previousStep || false === previousStep;
+	let isFirstStep = null === previousStep || false === previousStep;
 	const isLastStep = null === nextStep || false === nextStep;
+
+	let isDisabled = false;
+	if ( currentStep === stepWelcome ) {
+		if ( currentData.continueWithoutAi === true ) {
+			isFirstStep = false;
+			isDisabled = false;
+		} else {
+			isFirstStep = true;
+		}
+	}
+
 	return (
 		<div className="nfd-onboarding-header__step-navigation">
 			<ButtonGroup style={ { display: 'flex', columnGap: '0.5rem' } }>
@@ -135,11 +146,7 @@ const StepNavigation = () => {
 					<Back
 						path={ previousStep.path }
 						showErrorDialog={ showErrorDialog }
-						disabled={
-							currentStep === stepWelcome
-								? currentData.continueWithoutAi
-								: false
-						}
+						disabled={ isDisabled }
 					/>
 				) }
 				{ isLastStep ? (
