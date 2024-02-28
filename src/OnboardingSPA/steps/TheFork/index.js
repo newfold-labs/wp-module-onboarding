@@ -10,7 +10,7 @@ import {
 	pluginDashboardPage,
 } from '../../../constants';
 
-import { DEFAULT_FLOW } from '../../data/flows/constants';
+import { DEFAULT_FLOW, SITEGEN_FLOW } from '../../data/flows/constants';
 import HeadingWithSubHeading from '../../components/HeadingWithSubHeading/SiteGen/index';
 import StartOptions from '../../components/StartOptions';
 import getContents from './contents';
@@ -21,13 +21,22 @@ import {
 	trackOnboardingEvent,
 } from '../../utils/analytics/hiive';
 import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
+import { validateFlow } from '../../data/flows/utils';
+import { resolveGetDataForFlow } from '../../data/flows';
+import { useNavigate } from 'react-router-dom';
 
 const TheFork = () => {
-	const { migrationUrl } = useSelect( ( select ) => {
-		return {
-			migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
-		};
-	} );
+	const { migrationUrl, brandConfig, currentData } = useSelect(
+		( select ) => {
+			return {
+				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+				brandConfig:
+					select( nfdOnboardingStore ).getNewfoldBrandConfig(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			};
+		}
+	);
 
 	const {
 		setIsHeaderEnabled,
@@ -37,9 +46,18 @@ const TheFork = () => {
 		setIsHeaderNavigationEnabled,
 		setFooterActiveView,
 		setHideFooterNav,
+		updateAllSteps,
+		updateTopSteps,
+		updateRoutes,
+		updateDesignRoutes,
+		updateInitialize,
+		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
+	const navigate = useNavigate();
+
 	useEffect( () => {
+		checkHasAiAccess();
 		setHideFooterNav( true );
 		setIsHeaderEnabled( false );
 		setSidebarActiveView( false );
@@ -49,6 +67,25 @@ const TheFork = () => {
 		setFooterActiveView( FOOTER_SITEGEN );
 	} );
 
+	const checkHasAiAccess = () => {
+		if ( false === validateFlow( brandConfig, SITEGEN_FLOW ) ) {
+			const currentFlow = window.nfdOnboarding.currentFlow;
+			const getData = resolveGetDataForFlow( DEFAULT_FLOW );
+			const data = getData();
+			updateAllSteps( data.steps );
+			updateTopSteps( data?.topSteps );
+			updateRoutes( data.routes );
+			updateDesignRoutes( data?.designRoutes );
+			if ( SITEGEN_FLOW !== currentFlow ) {
+				window.nfdOnboarding.oldFlow = currentFlow;
+			}
+			window.nfdOnboarding.currentFlow = DEFAULT_FLOW;
+			currentData.activeFlow = DEFAULT_FLOW;
+			setCurrentOnboardingData( currentData );
+			updateInitialize( true );
+			navigate( data.steps[ 1 ].path );
+		}
+	};
 	const oldFlow = window.nfdOnboarding?.oldFlow
 		? window.nfdOnboarding.oldFlow
 		: DEFAULT_FLOW;
