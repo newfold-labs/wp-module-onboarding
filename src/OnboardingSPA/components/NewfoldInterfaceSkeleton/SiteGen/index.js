@@ -45,17 +45,6 @@ const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
 
 const SiteGen = () => {
 	const [ failedApi, setFailedApi ] = useState( [] );
-	const { newfoldBrand } = useSelect( ( select ) => {
-		return {
-			newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
-		};
-	}, [] );
-
-	// Update Title and Tagline on the site.
-	const { editEntityRecord } = useDispatch( coreStore );
-	const { getEditedEntityRecord } = useSelect( ( select ) => {
-		return select( coreStore );
-	}, [] );
 
 	useEffect( () => {
 		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
@@ -103,7 +92,6 @@ const SiteGen = () => {
 	useEffect( () => {
 		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
 	}, [ newfoldBrand ] );
-	const location = useLocation();
 
 	const prevSiteGenErrorStatus = useRef();
 
