@@ -29,6 +29,7 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 		updateDesignRoutes,
 		updateInitialize,
 		setCurrentOnboardingData,
+		setContinueWithoutAi,
 	} = useDispatch( nfdOnboardingStore );
 
 	const switchFlow = ( newFlow ) => {
@@ -48,6 +49,8 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 
 		window.nfdOnboarding.currentFlow = newFlow;
 		currentData.activeFlow = newFlow;
+		currentData.continueWithoutAi = false;
+		setContinueWithoutAi( false );
 		setCurrentOnboardingData( currentData );
 		if ( SITEGEN_FLOW !== newFlow ) {
 			updateInitialize( true );

@@ -127,6 +127,11 @@ export function flow(
 				...state,
 				interactionDisabled: action.interactionDisabled,
 			};
+		case 'SET_FLOW_WITHOUT_AI':
+			return {
+				...state,
+				flow: action.continueWithoutAi,
+			};
 	}
 
 	return state;
