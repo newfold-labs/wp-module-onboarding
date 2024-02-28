@@ -19,8 +19,6 @@ import { filter } from 'lodash';
 import { store } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { stepTheFork } from '../../steps/TheFork/step';
-import { validateFlow } from '../../data/flows/utils';
-import { SITEGEN_FLOW } from '../../data/flows/constants';
 
 export const pages = [ indexPage, errorPage ];
 
@@ -34,12 +32,7 @@ export const initialChapters = [
 
 export const getSteps = ( chapters = initialChapters ) => {
 	let steps = [];
-	if (
-		validateFlow( window.nfdOnboarding.currentBrand.config, SITEGEN_FLOW )
-	) {
-		steps.push( stepTheFork );
-	}
-
+	steps.push( stepTheFork );
 	steps.push( stepWelcome );
 	chapters.forEach( ( chapter ) => {
 		steps = steps.concat( [
@@ -56,11 +49,7 @@ export const getSteps = ( chapters = initialChapters ) => {
 
 export const getRoutes = ( chapters = initialChapters ) => {
 	let routes = [ ...pages ];
-	if (
-		validateFlow( window.nfdOnboarding.currentBrand.config, SITEGEN_FLOW )
-	) {
-		routes.push( stepTheFork );
-	}
+	routes.push( stepTheFork );
 	routes.push( stepWelcome );
 	chapters.forEach( ( chapter ) => {
 		routes = routes.concat( [
