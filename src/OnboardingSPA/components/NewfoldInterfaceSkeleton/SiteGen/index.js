@@ -45,10 +45,6 @@ const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
 
 const SiteGen = () => {
 	const [ failedApi, setFailedApi ] = useState( [] );
-
-	useEffect( () => {
-		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
-	}, [ newfoldBrand ] );
 	const location = useLocation();
 
 	const {
