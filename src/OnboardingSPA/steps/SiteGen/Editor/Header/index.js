@@ -31,6 +31,7 @@ import {
 import {
 	ACTION_ONBOARDING_COMPLETE,
 	ACTION_SITEGEN_HOMEPAGE_FAVORITED,
+	ACTION_SITEGEN_HOMEPAGE_REGENERATED,
 	ACTION_SITEGEN_HOMEPAGE_RENAMED,
 	ACTION_SITEGEN_SIDEBAR_OPENED,
 } from '../../../../utils/analytics/hiive/constants';
@@ -132,6 +133,12 @@ const StepSiteGenEditorHeader = () => {
 		currentData.sitegen.homepages.active = regeneratedHomepage;
 		setCurrentOnboardingData( currentData );
 		setIsRegenerating( false );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_SITEGEN_HOMEPAGE_REGENERATED, slug, {
+				source: SITEGEN_FLOW,
+				placement: 'editor_toolbar',
+			} )
+		);
 	};
 
 	const handleViewAll = () => {

@@ -95,9 +95,6 @@ const SiteGenSiteLogo = () => {
 			site_logo: siteLogoNew.id,
 		} );
 		setSiteLogo( siteLogoNew );
-		trackOnboardingEvent( new OnboardingEvent( ACTION_LOGO_ADDED ), {
-			source: SITEGEN_FLOW,
-		} );
 	};
 
 	const content = getContents();
@@ -121,6 +118,18 @@ const SiteGenSiteLogo = () => {
 						/>
 						{ isLargeViewport && (
 							<NextButtonSiteGen
+								callback={ () => {
+									if ( siteLogo ) {
+										trackOnboardingEvent(
+											new OnboardingEvent(
+												ACTION_LOGO_ADDED
+											),
+											{
+												source: SITEGEN_FLOW,
+											}
+										);
+									}
+								} }
 								text={ content.buttons.next }
 								disabled={
 									siteLogo === undefined || siteLogo?.id === 0

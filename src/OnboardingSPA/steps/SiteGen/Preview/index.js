@@ -228,6 +228,7 @@ const SiteGenPreview = () => {
 			new OnboardingEvent( ACTION_SITEGEN_HOMEPAGE_REGENERATED, slug, {
 				position,
 				source: SITEGEN_FLOW,
+				placement: 'preview_grid',
 			} )
 		);
 	};

@@ -99,12 +99,15 @@ const TheFork = () => {
 						{ content.importtext }
 					</a>
 				) }
-				<a
+				<span
+					role="button"
+					tabIndex={ 0 }
 					className="nfd-onboarding-step--site-gen__fork__exit"
 					onClick={ () => handleForkExit() }
+					onKeyDown={ () => handleForkExit() }
 				>
 					{ content.exitToWordPress }
-				</a>
+				</span>
 			</CommonLayout>
 		</SitegenAiStateHandler>
 	);
