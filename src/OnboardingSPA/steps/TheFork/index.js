@@ -17,11 +17,14 @@ import getContents from './contents';
 import SitegenAiStateHandler from '../../components/StateHandlers/SitegenAi';
 
 const TheFork = () => {
-	const { migrationUrl } = useSelect( ( select ) => {
-		return {
-			migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
-		};
-	} );
+	const { migrationUrl } = useSelect(
+		( select ) => {
+			return {
+				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+
+			};
+		}
+	);
 
 	const {
 		setIsHeaderEnabled,
