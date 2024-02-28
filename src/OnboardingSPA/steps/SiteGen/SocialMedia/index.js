@@ -12,6 +12,15 @@ import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 import { FacebookConnectButton } from '@newfold-labs/wp-module-facebook';
 import { useNavigate } from 'react-router-dom';
 import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import {
+	ACTION_SITEGEN_SOCIAL_CONNECTED,
+	ACTION_SITEGEN_SOCIAL_CONNECT_SKIPPED,
+} from '../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenSiteSocialMedia = () => {
 	const isLargeViewport = useViewportMatch( 'small' );
@@ -44,11 +53,25 @@ const SiteGenSiteSocialMedia = () => {
 	} );
 
 	const handleConnect = () => {
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_SITEGEN_SOCIAL_CONNECTED, 'facebook', {
+				source: SITEGEN_FLOW,
+			} )
+		);
+
 		setConnected( true );
 	};
 
 	const handleFailure = () => {
 		updateSiteGenErrorStatus( true );
+	};
+
+	const trackSkipEvent = () => {
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_SITEGEN_SOCIAL_CONNECT_SKIPPED, {
+				source: SITEGEN_FLOW,
+			} )
+		);
 	};
 
 	useEffect( () => {
@@ -85,6 +108,7 @@ const SiteGenSiteSocialMedia = () => {
 					</div>
 					<div className="nfd-onboarding-step--site-gen__social-media__container__buttons">
 						<SkipButton
+							callback={ trackSkipEvent }
 							className="nfd-onboarding-step--site-gen__social-media__container__buttons__skip"
 							text={ content.buttons.skip }
 						/>

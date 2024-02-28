@@ -3,7 +3,9 @@ namespace NewfoldLabs\WP\Module\Onboarding;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+
 use function NewfoldLabs\WP\ModuleLoader\container;
+use function WP_Forge\Helpers\dataGet;
 
 /**
  * Contains functionalities that redirect users to onboarding upon logging into WordPress.
@@ -65,7 +67,7 @@ class LoginRedirect {
 
 		// Don't redirect to onboarding if onboarding was exited or completed.
 		$flow_data = get_option( Options::get_option_name( 'flow' ), false );
-		if ( data_get( $flow_data, 'hasExited' ) || data_get( $flow_data, 'isComplete' ) ) {
+		if ( dataGet( $flow_data, 'hasExited' ) || dataGet( $flow_data, 'isComplete' ) ) {
 			return $original_redirect;
 		}
 

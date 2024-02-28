@@ -18,6 +18,17 @@ import {
 import { getGlobalStyles } from '../../../utils/api/themes';
 import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
 import Animate from '../../../components/Animate';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import {
+	ACTION_SITEGEN_HOMEPAGE_FAVORITED,
+	ACTION_SITEGEN_HOMEPAGE_REGENERATED,
+	ACTION_SITEGEN_HOMEPAGE_SELECTED,
+	ACTION_SITEGEN_SITE_GENERATION_TIME,
+} from '../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenPreview = () => {
 	const navigate = useNavigate();
@@ -78,6 +89,7 @@ const SiteGenPreview = () => {
 		if ( ! isEmpty( currentData.sitegen.homepages.data ) ) {
 			setHomepages( currentData.sitegen.homepages.data );
 			setIsPreviewLoading( false );
+			trackSiteGenerationTime();
 			return;
 		}
 		if ( currentData.sitegen.siteDetails?.prompt === '' ) {
@@ -99,6 +111,22 @@ const SiteGenPreview = () => {
 		setHomepages( response.body );
 		setCurrentOnboardingData( currentData );
 		setIsPreviewLoading( false );
+		trackSiteGenerationTime();
+	};
+
+	const trackSiteGenerationTime = () => {
+		if ( window.nfdOnboarding.siteGenTimerInterval ) {
+			clearInterval( window.nfdOnboarding.siteGenTimerInterval );
+			trackOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_SITEGEN_SITE_GENERATION_TIME,
+					window.nfdOnboarding.siteGenTime,
+					{
+						source: SITEGEN_FLOW,
+					}
+				)
+			);
+		}
 	};
 
 	const loadGlobalStyles = async () => {
@@ -115,13 +143,19 @@ const SiteGenPreview = () => {
 		loadGlobalStyles();
 	}, [] );
 
-	const handlePreview = ( slug ) => {
+	const handlePreview = ( slug, position ) => {
 		if ( ! ( slug in homepages ) ) {
 			return false;
 		}
 		currentData.sitegen.homepages.active = homepages[ slug ];
 		currentData.sitegen.skipCache = false;
 		setCurrentOnboardingData( currentData );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_SITEGEN_HOMEPAGE_SELECTED, slug, {
+				position,
+				source: SITEGEN_FLOW,
+			} )
+		);
 		navigate( nextStep.path );
 	};
 
@@ -142,7 +176,7 @@ const SiteGenPreview = () => {
 		}
 	};
 
-	const handleFavorite = ( slug ) => {
+	const handleFavorite = ( slug, position ) => {
 		if ( ! ( slug in homepages ) ) {
 			return;
 		}
@@ -151,9 +185,18 @@ const SiteGenPreview = () => {
 		currentData.sitegen.homepages.data = homepages;
 		setHomepages( homepages );
 		setCurrentOnboardingData( currentData );
+
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_SITEGEN_HOMEPAGE_FAVORITED, slug, {
+				favorite: isFavorite,
+				placement: 'preview_grid',
+				position,
+				source: SITEGEN_FLOW,
+			} )
+		);
 	};
 
-	const handleRegenerate = async ( slug, palette, isFavorite ) => {
+	const handleRegenerate = async ( slug, palette, isFavorite, position ) => {
 		scrollSelectionIntoView();
 		setIsRegenerating( true );
 		if ( ! ( slug in homepages ) ) {
@@ -184,6 +227,13 @@ const SiteGenPreview = () => {
 		setHomepages( homepages );
 		setCurrentOnboardingData( currentData );
 		setIsRegenerating( false );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_SITEGEN_HOMEPAGE_REGENERATED, slug, {
+				position,
+				source: SITEGEN_FLOW,
+				placement: 'preview_grid',
+			} )
+		);
 	};
 
 	const buildPreviews = () => {
@@ -225,6 +275,7 @@ const SiteGenPreview = () => {
 					blockGrammar={ blockGrammar }
 					previewSettings={ newPreviewSettings }
 					slug={ slug }
+					position={ idx + 1 }
 					title={ data.title }
 					isFavorite={ data.isFavorite }
 					palette={ data.color }

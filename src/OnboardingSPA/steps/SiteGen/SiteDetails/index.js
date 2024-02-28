@@ -11,11 +11,18 @@ import CommonLayout from '../../../components/Layouts/Common';
 import TextInputSiteGen from '../../../components/TextInput/TextInputSiteGen';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import { ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET } from '../../../utils/analytics/hiive/constants';
+import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenSiteDetails = () => {
 	const content = getContents();
 	const isLargeViewport = useViewportMatch( 'small' );
 	const [ customerInput, setCustomerInput ] = useState();
+	const [ customerInputStrength, setCustomerInputStrength ] = useState( 0 );
 	const [ isValidInput, setIsValidInput ] = useState( false );
 	const { currentData } = useSelect( ( select ) => {
 		return {
@@ -50,6 +57,31 @@ const SiteGenSiteDetails = () => {
 		setIsFooterNavAllowed( false );
 	}, [] );
 
+	const trackPromptSetEvent = () => {
+		let customerInputStrengthForEvent = false;
+		switch ( customerInputStrength ) {
+			case 2:
+				customerInputStrengthForEvent = 'MEDIUM';
+				break;
+			case 3:
+				customerInputStrengthForEvent = 'HIGH';
+				break;
+		}
+
+		if ( customerInputStrengthForEvent ) {
+			trackOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET,
+					customerInput,
+					{
+						strength: customerInputStrengthForEvent,
+						source: SITEGEN_FLOW,
+					}
+				)
+			);
+		}
+	};
+
 	useEffect( () => {
 		if (
 			customerInput !== undefined &&
@@ -80,6 +112,9 @@ const SiteGenSiteDetails = () => {
 							customerInput={ customerInput }
 							setIsValidInput={ setIsValidInput }
 							setCustomerInput={ setCustomerInput }
+							setCustomerInputStrength={
+								setCustomerInputStrength
+							}
 							customChildren={ true }
 						>
 							{ isLargeViewport && (
@@ -88,6 +123,9 @@ const SiteGenSiteDetails = () => {
 										className={
 											'nfd-sg-site-details--next-btn'
 										}
+										callback={ () => {
+											trackPromptSetEvent();
+										} }
 										text={ content.buttonText }
 										disabled={ ! isValidInput }
 									/>
