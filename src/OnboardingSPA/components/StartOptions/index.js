@@ -29,7 +29,6 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 		updateDesignRoutes,
 		updateInitialize,
 		setCurrentOnboardingData,
-		setContinueWithoutAi,
 	} = useDispatch( nfdOnboardingStore );
 
 	const switchFlow = ( newFlow ) => {
