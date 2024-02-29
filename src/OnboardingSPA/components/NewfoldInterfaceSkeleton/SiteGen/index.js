@@ -167,9 +167,12 @@ const SiteGen = () => {
 		}
 	}
 
-	async function generateSiteGenData() {
+	async function generateSiteGenData( forceRun = false ) {
+		// ForceRun tells us to bypass the page check or not
+		// because the requests failed on Logo step is retried in Experience step
+
 		// Start the API Requests when the loader is shown.
-		if ( ! location.pathname.includes( 'site-logo' ) ) {
+		if ( ! location.pathname.includes( 'site-logo' ) && ! forceRun ) {
 			return;
 		}
 
@@ -286,7 +289,7 @@ const SiteGen = () => {
 			prevSiteGenErrorStatus.current === true &&
 			siteGenErrorStatus === false
 		) {
-			generateSiteGenData();
+			generateSiteGenData( true );
 			syncStoreToDB();
 		}
 		prevSiteGenErrorStatus.current = siteGenErrorStatus;

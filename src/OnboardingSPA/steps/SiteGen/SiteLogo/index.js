@@ -11,7 +11,6 @@ import AIHeading from '../../../components/Heading/AIHeading';
 import CommonLayout from '../../../components/Layouts/Common';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 import ImageUploaderWithText from '../../../components/ImageUploader/components/ImageUploaderWithText';
-import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
@@ -99,49 +98,47 @@ const SiteGenSiteLogo = () => {
 
 	const content = getContents();
 	return (
-		<SitegenAiStateHandler>
-			<CommonLayout
-				isCentered
-				className="nfd-onboarding-step--site-gen__site-logo"
-			>
-				<div className="nfd-onboarding-step--site-gen__site-logo__container">
-					<AIHeading title={ content.heading } />
-					<ImageUploaderWithText
-						image={ siteLogo }
-						imageSetter={ handleSiteLogo }
+		<CommonLayout
+			isCentered
+			className="nfd-onboarding-step--site-gen__site-logo"
+		>
+			<div className="nfd-onboarding-step--site-gen__site-logo__container">
+				<AIHeading title={ content.heading } />
+				<ImageUploaderWithText
+					image={ siteLogo }
+					imageSetter={ handleSiteLogo }
+				/>
+				<div className="nfd-onboarding-step--site-gen__site-logo__container__buttons">
+					<SkipButton
+						callback={ () => resetSiteLogo() }
+						className="nfd-onboarding-step--site-gen__site-logo__container__buttons__skip"
+						text={ content.buttons.skip }
 					/>
-					<div className="nfd-onboarding-step--site-gen__site-logo__container__buttons">
-						<SkipButton
-							callback={ () => resetSiteLogo() }
-							className="nfd-onboarding-step--site-gen__site-logo__container__buttons__skip"
-							text={ content.buttons.skip }
-						/>
-						{ isLargeViewport && (
-							<NextButtonSiteGen
-								callback={ () => {
-									if ( siteLogo ) {
-										trackOnboardingEvent(
-											new OnboardingEvent(
-												ACTION_LOGO_ADDED
-											),
-											{
-												source: SITEGEN_FLOW,
-											}
-										);
-									}
-								} }
-								text={ content.buttons.next }
-								disabled={
-									siteLogo === undefined || siteLogo?.id === 0
-										? true
-										: false
+					{ isLargeViewport && (
+						<NextButtonSiteGen
+							callback={ () => {
+								if ( siteLogo ) {
+									trackOnboardingEvent(
+										new OnboardingEvent(
+											ACTION_LOGO_ADDED
+										),
+										{
+											source: SITEGEN_FLOW,
+										}
+									);
 								}
-							/>
-						) }
-					</div>
+							} }
+							text={ content.buttons.next }
+							disabled={
+								siteLogo === undefined || siteLogo?.id === 0
+									? true
+									: false
+							}
+						/>
+					) }
 				</div>
-			</CommonLayout>
-		</SitegenAiStateHandler>
+			</div>
+		</CommonLayout>
 	);
 };
 
