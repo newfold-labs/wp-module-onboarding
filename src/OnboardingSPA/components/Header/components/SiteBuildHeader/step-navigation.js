@@ -136,9 +136,11 @@ const StepNavigation = () => {
 					<Back
 						path={ previousStep.path }
 						showErrorDialog={ showErrorDialog }
-						disabled={ currentStep === stepWelcome
-							? currentData.continueWithoutAi
-							: false }
+						disabled={
+							currentStep === stepWelcome
+								? currentData.continueWithoutAi
+								: false
+						}
 					/>
 				) }
 				{ isLastStep ? (

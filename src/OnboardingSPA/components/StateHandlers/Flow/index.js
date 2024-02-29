@@ -17,7 +17,12 @@ import { commerce } from '../../../chapters/commerce';
 import EcommerceStepLoader from '../../Loaders/Step/Ecommerce';
 import SiteBuild from '../../NewfoldInterfaceSkeleton/SiteBuild';
 import SiteGen from '../../NewfoldInterfaceSkeleton/SiteGen';
-import { validateFlow, removeFromAllSteps, removeFromTopSteps, removeFromRoutes } from '../../../data/flows/utils';
+import {
+	validateFlow,
+	removeFromAllSteps,
+	removeFromTopSteps,
+	removeFromRoutes,
+} from '../../../data/flows/utils';
 import { resolveGetDataForFlow } from '../../../data/flows';
 import { stepTheFork } from '../../../steps/TheFork/step';
 
@@ -89,22 +94,19 @@ const FlowStateHandler = () => {
 			const getData = resolveGetDataForFlow( DEFAULT_FLOW );
 			const data = getData();
 
-			const updateAllStep = removeFromAllSteps(
-				data.steps,
-				[ stepTheFork ]
-			);
+			const updateAllStep = removeFromAllSteps( data.steps, [
+				stepTheFork,
+			] );
 			updateAllSteps( updateAllStep.allSteps );
 
-			const updateTopStep = removeFromTopSteps(
-				data?.topSteps,
-				[ stepTheFork ]
-			);
+			const updateTopStep = removeFromTopSteps( data?.topSteps, [
+				stepTheFork,
+			] );
 			updateTopSteps( updateTopStep.topSteps );
 
-			const updateRoute = removeFromRoutes(
-				data.routes,
-				[ stepTheFork ]
-			);
+			const updateRoute = removeFromRoutes( data.routes, [
+				stepTheFork,
+			] );
 			updateRoutes( updateRoute.routes );
 		}
 	};

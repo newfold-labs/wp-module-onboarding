@@ -10,7 +10,7 @@ import {
 	pluginDashboardPage,
 } from '../../../constants';
 
-import { DEFAULT_FLOW, SITEGEN_FLOW } from '../../data/flows/constants';
+import { DEFAULT_FLOW } from '../../data/flows/constants';
 import HeadingWithSubHeading from '../../components/HeadingWithSubHeading/SiteGen/index';
 import StartOptions from '../../components/StartOptions';
 import getContents from './contents';
@@ -21,20 +21,13 @@ import {
 	trackOnboardingEvent,
 } from '../../utils/analytics/hiive';
 import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
-import { useNavigate } from 'react-router-dom';
 
 const TheFork = () => {
-	const { migrationUrl, brandConfig, currentData } = useSelect(
-		( select ) => {
-			return {
-				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
-				brandConfig:
-					select( nfdOnboardingStore ).getNewfoldBrandConfig(),
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			};
-		}
-	);
+	const { migrationUrl } = useSelect( ( select ) => {
+		return {
+			migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+		};
+	} );
 
 	const {
 		setIsHeaderEnabled,
@@ -45,8 +38,6 @@ const TheFork = () => {
 		setFooterActiveView,
 		setHideFooterNav,
 	} = useDispatch( nfdOnboardingStore );
-
-	const navigate = useNavigate();
 
 	useEffect( () => {
 		setHideFooterNav( true );

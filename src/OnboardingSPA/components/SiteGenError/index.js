@@ -33,7 +33,6 @@ const SiteGenSiteError = () => {
 		updateInitialize,
 		setCurrentOnboardingData,
 		updateSiteGenErrorStatus,
-		setContinueWithoutAi,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
