@@ -17,7 +17,9 @@ import { commerce } from '../../../chapters/commerce';
 import EcommerceStepLoader from '../../Loaders/Step/Ecommerce';
 import SiteBuild from '../../NewfoldInterfaceSkeleton/SiteBuild';
 import SiteGen from '../../NewfoldInterfaceSkeleton/SiteGen';
-import { validateFlow } from '../../../data/flows/utils';
+import { validateFlow, removeFromAllSteps, removeFromTopSteps, removeFromRoutes } from '../../../data/flows/utils';
+import { resolveGetDataForFlow } from '../../../data/flows';
+import { stepTheFork } from '../../../steps/TheFork/step';
 
 const FlowStateHandler = () => {
 	const location = useLocation();
@@ -37,6 +39,9 @@ const FlowStateHandler = () => {
 		setSidebarActiveView,
 		setActiveFlow,
 		setActiveStep,
+		updateAllSteps,
+		updateTopSteps,
+		updateRoutes,
 	} = useDispatch( nfdOnboardingStore );
 
 	const handleCommerceFlow = async ( flow, retries = 0 ) => {
@@ -79,6 +84,31 @@ const FlowStateHandler = () => {
 		setSidebarActiveView( false );
 	};
 
+	const checkCapability = () => {
+		if ( ! validateFlow( brandConfig, SITEGEN_FLOW ) ) {
+			const getData = resolveGetDataForFlow( DEFAULT_FLOW );
+			const data = getData();
+
+			const updateAllStep = removeFromAllSteps(
+				data.steps,
+				[ stepTheFork ]
+			);
+			updateAllSteps( updateAllStep.allSteps );
+
+			const updateTopStep = removeFromTopSteps(
+				data?.topSteps,
+				[ stepTheFork ]
+			);
+			updateTopSteps( updateTopStep.topSteps );
+
+			const updateRoute = removeFromRoutes(
+				data.routes,
+				[ stepTheFork ]
+			);
+			updateRoutes( updateRoute.routes );
+		}
+	};
+
 	useEffect( () => {
 		if ( window.nfdOnboarding?.newFlow ) {
 			const flow = window.nfdOnboarding.newFlow;
@@ -102,6 +132,7 @@ const FlowStateHandler = () => {
 		switch ( window.nfdOnboarding.currentFlow ) {
 			case DEFAULT_FLOW:
 			case ECOMMERCE_FLOW:
+				checkCapability();
 				return <SiteBuild />;
 			case SITEGEN_FLOW:
 				return <SiteGen />;

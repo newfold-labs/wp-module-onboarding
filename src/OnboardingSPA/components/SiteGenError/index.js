@@ -77,7 +77,6 @@ const SiteGenSiteError = () => {
 		window.nfdOnboarding.currentFlow = newFlow;
 		currentData.activeFlow = newFlow;
 		currentData.continueWithoutAi = true;
-		setContinueWithoutAi( true );
 		setCurrentOnboardingData( currentData );
 		updateSiteGenErrorStatus( false );
 		if ( SITEGEN_FLOW !== newFlow ) {
