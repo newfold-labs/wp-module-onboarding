@@ -14,6 +14,7 @@ import classNames from 'classnames';
 import { setFlow } from '../../../utils/api/flow';
 import {
 	generateSiteGenMeta,
+	getHomepages,
 	getSiteGenIdentifiers,
 } from '../../../utils/api/siteGen';
 import Footer from '../../Footer';
@@ -130,6 +131,20 @@ const SiteGen = () => {
 				) {
 					// Once all requests are completed use cache to get data
 					currentData.sitegen.skipCache = false;
+
+					// Increase count after site meta calls to ensure systematic call of homepages
+					currentData.sitegen.siteGenMetaStatus.totalCount += 1;
+					setCurrentOnboardingData( currentData );
+
+					// Get the homepages and set that in flow
+					const response = await getHomepages(
+						currentData.sitegen.siteDetails.prompt
+					);
+
+					if ( response.body ) {
+						currentData.sitegen.homepages.data = response.body;
+					}
+					currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
 				}
 				// Sync the current request changed to State
 				setCurrentOnboardingData( currentData );
