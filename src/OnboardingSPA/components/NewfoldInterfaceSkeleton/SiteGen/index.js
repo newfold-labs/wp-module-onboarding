@@ -122,15 +122,19 @@ const SiteGen = () => {
 				skipCache
 			);
 			if ( data !== null ) {
+				// A Identifier request was sucessfuly made with valid response
 				currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
 				if (
 					currentData.sitegen.siteGenMetaStatus.currentStatus ===
 					currentData.sitegen.siteGenMetaStatus.totalCount
 				) {
+					// Once all requests are completed use cache to get data
 					currentData.sitegen.skipCache = false;
 				}
+				// Sync the current request changed to State
 				setCurrentOnboardingData( currentData );
 
+				// Sets the Site Title and Taglin in Live Preview
 				if ( identifier === 'site_config' ) {
 					editEntityRecord( 'root', 'site', undefined, {
 						title: data.site_title,
@@ -139,6 +143,7 @@ const SiteGen = () => {
 				}
 			}
 		} catch ( err ) {
+			// Check if it failed then retry again
 			if ( retryCount < MAX_RETRIES_SITE_GEN ) {
 				return performSiteGenMetaGeneration(
 					siteInfo,
@@ -148,12 +153,15 @@ const SiteGen = () => {
 				);
 			}
 
+			// If the retry also did not work show the error state
 			setFailedApi( ( prevState ) => {
+				// If the error doesn't exist add it to the Failed List
 				if ( ! prevState.includes( identifier ) ) {
 					return [ ...prevState, identifier ];
 				}
 				return prevState;
 			} );
+			// Activate the Error Page
 			currentData.sitegen.siteGenErrorStatus = true;
 			setCurrentOnboardingData( currentData );
 		}
@@ -161,7 +169,7 @@ const SiteGen = () => {
 
 	async function generateSiteGenData() {
 		// Start the API Requests when the loader is shown.
-		if ( ! location.pathname.includes( 'experience' ) ) {
+		if ( ! location.pathname.includes( 'site-logo' ) ) {
 			return;
 		}
 
@@ -181,9 +189,9 @@ const SiteGen = () => {
 			identifiers = identifiers.body;
 
 			currentData.sitegen.siteGenMetaStatus.currentStatus = 0;
-
 			setCurrentOnboardingData( currentData );
 		}
+
 		const siteInfo = {
 			site_description: currentData.sitegen?.siteDetails?.prompt,
 		};
