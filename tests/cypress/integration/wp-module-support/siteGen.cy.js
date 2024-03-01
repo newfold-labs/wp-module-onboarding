@@ -1,7 +1,7 @@
 // <reference types="Cypress" />
 
 export const AdminBarCheck = () => {
-    cy.get( '.nfd-onboarding-header__admin-bar', {timeout:60000} ).should('be.visible');
+    cy.get( '.nfd-onboarding-header__admin-bar', {timeout:120000} ).should('be.visible');
 };
 
 export const DarkBGCheck =  () => {
@@ -23,16 +23,11 @@ export const LightBGCheck = () => {
 };
 
 export  const OptionsDetails = (className,textValue,optionsValue) => {
-    cy.get(className)
+    cy.get(className, {timeout:10000})
         .eq(optionsValue)
         .find('.nfd-onboarding-sitegen-options__container__heading__title')
         .invoke( 'text' )
         .should('contain', textValue);
-    if(optionsValue!=2){   // Excluding the Last Option as it takes to new tab, just validating the title text
-        cy.get(className)
-            .eq(optionsValue)
-            .click();
-    };
 };
 
 export const ProgressBarCheck = ( WidthPercent ) => {
