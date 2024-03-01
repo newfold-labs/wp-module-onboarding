@@ -245,10 +245,11 @@ const SiteGenPreview = () => {
 			const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
 			newPreviewSettings.settings.color.palette = data.color.palette;
 			const body =
-				data.styles?.blocks[ 0 ]?.[ 'core/body' ].typography.fontFamily;
+				data.styles?.blocks[ 0 ]?.[ 'core/body' ]?.typography
+					?.fontFamily;
 			const headings =
-				data.styles?.blocks[ 0 ]?.[ 'core/heading' ].typography
-					.fontFamily;
+				data.styles?.blocks[ 0 ]?.[ 'core/heading' ]?.typography
+					?.fontFamily;
 			if ( newPreviewSettings.styles.typography ) {
 				newPreviewSettings.styles.typography.fontFamily = body;
 			}
