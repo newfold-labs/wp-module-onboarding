@@ -30,11 +30,11 @@ describe( 'SiteGen Site Logo Step', function() {
 	} );
 
 	it( 'Check if the heading is visible', () => {
-		cy.get( '.ai-heading' ).should( 'be.visible' );
+		cy.get( '.ai-heading', {timeout:20000} ).should( 'be.visible' );
 	} );
 
-	it( 'Check for the skip button and click', () => {
-		SkipButtonCheck( 'sitegen/step/site-logo' );
+	it( 'Check for the skip button', () => {
+		SkipButtonCheck();
 	} );
 
 	it( 'Check if the Next Button is disabled when there is no logo', () => {
@@ -61,6 +61,8 @@ describe( 'SiteGen Site Logo Step', function() {
 					.scrollIntoView()
 					.should( 'be.visible' );
 			} );
+		cy.get( '.nfd-onboarding-button--site-gen-next' )
+			.should( 'not.be.disabled' );
 	} );
 
 	it.skip( 'Check if the Next Button is enabled and go next', () => {

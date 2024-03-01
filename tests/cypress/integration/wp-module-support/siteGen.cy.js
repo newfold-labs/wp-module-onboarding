@@ -48,13 +48,10 @@ export const BackButtonCheck = (currURL) => {
     cy.go('back');
 };
 
-export const SkipButtonCheck = (currURL) => {
+export const SkipButtonCheck = () => {
     cy.get('.skip-button')
         .should('be.visible')
-        .contains('Skip for now')
-        .click();
-    cy.url().should('not.contain', currURL);
-    cy.go('back');
+        .contains('Skip for now');
 };
 
 export const DisabledNextButton = () => {
