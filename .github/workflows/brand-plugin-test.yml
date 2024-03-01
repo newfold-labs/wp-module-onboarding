@@ -29,6 +29,7 @@ jobs:
     needs: setup
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
     with:
+      plugin-branch: 'enhance/fix-onboarding-tests'
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: "bluehost/bluehost-wordpress-plugin"
