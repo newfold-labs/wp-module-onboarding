@@ -191,6 +191,14 @@ const SiteGen = () => {
 			return;
 		}
 
+		// If all the requests have been made already skip this
+		if (
+			currentData.sitegen.siteGenMetaStatus.currentStatus ===
+			currentData.sitegen.siteGenMetaStatus.totalCount
+		) {
+			return;
+		}
+
 		if ( ! window.nfdOnboarding?.siteGenTimerInterval ) {
 			window.nfdOnboarding.siteGenTime = 0;
 			window.nfdOnboarding.siteGenTimerInterval = setInterval( () => {
