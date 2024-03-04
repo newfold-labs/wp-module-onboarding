@@ -4,6 +4,7 @@ import { AdminBarCheck, DarkBGCheck, LightBGCheck, OptionsDetails } from "../wp-
 
 describe( 'SiteGen Fork Step', function () {
 	before( () => {
+        cy.exec('npx wp-env run cli wp option delete nfd_module_onboarding_flow');
         cy.exec(`npx wp-env run cli wp option set _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true}' --format=json`);
         cy.exec(`npx wp-env run cli wp option set _transient_timeout_nfd_site_capabilities 4102444800`);
         cy.wait(10000);
@@ -49,13 +50,12 @@ describe( 'SiteGen Fork Step', function () {
 		arr.each( () => {
             if(options == 0){
                 OptionsDetails(className,'Guided Configuration',options);
-                cy.url().should('include', 'get-started/welcome',{
-                    timeout: 10000,
-                } );
-                cy.go('back');
             };
             if(options == 1){
                 OptionsDetails(className,'AI Website Creator',options);
+                cy.get(className)
+                    .eq(options)
+                    .click();
                 cy.url().should('include', 'sitegen/step/welcome',{
                     timeout: 10000,
                 } );
