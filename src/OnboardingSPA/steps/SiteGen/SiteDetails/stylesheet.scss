@@ -1,7 +1,6 @@
 .nfd-sg-site-details {
 
 	width: 40vw;
-	height: 100vh;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -13,7 +12,6 @@
 	}
 
 	@media (max-width: #{ ($break-small) }) {
-		height: 100vh;
 		margin-top: 30%;
 		margin-bottom: 150px;
 	}
