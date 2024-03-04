@@ -14,6 +14,7 @@ import classNames from 'classnames';
 import { setFlow } from '../../../utils/api/flow';
 import {
 	generateSiteGenMeta,
+	getHomepages,
 	getSiteGenIdentifiers,
 } from '../../../utils/api/siteGen';
 import Footer from '../../Footer';
@@ -122,15 +123,33 @@ const SiteGen = () => {
 				skipCache
 			);
 			if ( data !== null ) {
+				// A Identifier request was sucessfuly made with valid response
 				currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
 				if (
 					currentData.sitegen.siteGenMetaStatus.currentStatus ===
 					currentData.sitegen.siteGenMetaStatus.totalCount
 				) {
+					// Once all requests are completed use cache to get data
 					currentData.sitegen.skipCache = false;
+
+					// Increase count after site meta calls to ensure systematic call of homepages
+					currentData.sitegen.siteGenMetaStatus.totalCount += 1;
+					setCurrentOnboardingData( currentData );
+
+					// Get the homepages and set that in flow
+					const response = await getHomepages(
+						currentData.sitegen.siteDetails.prompt
+					);
+
+					if ( response.body ) {
+						currentData.sitegen.homepages.data = response.body;
+					}
+					currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
 				}
+				// Sync the current request changed to State
 				setCurrentOnboardingData( currentData );
 
+				// Sets the Site Title and Taglin in Live Preview
 				if ( identifier === 'site_config' ) {
 					editEntityRecord( 'root', 'site', undefined, {
 						title: data.site_title,
@@ -139,6 +158,7 @@ const SiteGen = () => {
 				}
 			}
 		} catch ( err ) {
+			// Check if it failed then retry again
 			if ( retryCount < MAX_RETRIES_SITE_GEN ) {
 				return performSiteGenMetaGeneration(
 					siteInfo,
@@ -148,20 +168,34 @@ const SiteGen = () => {
 				);
 			}
 
+			// If the retry also did not work show the error state
 			setFailedApi( ( prevState ) => {
+				// If the error doesn't exist add it to the Failed List
 				if ( ! prevState.includes( identifier ) ) {
 					return [ ...prevState, identifier ];
 				}
 				return prevState;
 			} );
+			// Activate the Error Page
 			currentData.sitegen.siteGenErrorStatus = true;
 			setCurrentOnboardingData( currentData );
 		}
 	}
 
-	async function generateSiteGenData() {
+	async function generateSiteGenData( forceRun = false ) {
+		// ForceRun tells us to bypass the page check or not
+		// because the requests failed on Logo step is retried in Experience step
+
 		// Start the API Requests when the loader is shown.
-		if ( ! location.pathname.includes( 'experience' ) ) {
+		if ( ! location.pathname.includes( 'site-logo' ) && ! forceRun ) {
+			return;
+		}
+
+		// If all the requests have been made already skip this
+		if (
+			currentData.sitegen.siteGenMetaStatus.currentStatus ===
+			currentData.sitegen.siteGenMetaStatus.totalCount
+		) {
 			return;
 		}
 
@@ -181,9 +215,9 @@ const SiteGen = () => {
 			identifiers = identifiers.body;
 
 			currentData.sitegen.siteGenMetaStatus.currentStatus = 0;
-
 			setCurrentOnboardingData( currentData );
 		}
+
 		const siteInfo = {
 			site_description: currentData.sitegen?.siteDetails?.prompt,
 		};
@@ -278,7 +312,7 @@ const SiteGen = () => {
 			prevSiteGenErrorStatus.current === true &&
 			siteGenErrorStatus === false
 		) {
-			generateSiteGenData();
+			generateSiteGenData( true );
 			syncStoreToDB();
 		}
 		prevSiteGenErrorStatus.current = siteGenErrorStatus;

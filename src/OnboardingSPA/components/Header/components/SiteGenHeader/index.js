@@ -10,6 +10,7 @@ import {
 } from '../../../../../constants';
 
 import { useSelect } from '@wordpress/data';
+import { stepTheFork } from '../../../../steps/TheFork/step';
 import { store as nfdOnboardingStore } from '../../../../store';
 import StepNavigation from './step-navigation';
 
@@ -44,7 +45,7 @@ const SiteGenHeader = () => {
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_TOP }` }>
 				<>
 					<AdminBar />
-					{ isHeaderNavigationEnabled && (
+					{ currentStep !== stepTheFork && (
 						<ProgressBar progress={ progress } />
 					) }
 				</>
