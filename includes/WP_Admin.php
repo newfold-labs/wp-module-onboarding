@@ -60,7 +60,7 @@ final class WP_Admin {
 	 */
 	public static function register_page() {
 		\add_submenu_page(
-			null,
+			'',
 			\__( 'Onboarding', 'wp-module-onboarding' ),
 			\__( 'Onboarding', 'wp-module-onboarding' ),
 			Permissions::ADMIN,
