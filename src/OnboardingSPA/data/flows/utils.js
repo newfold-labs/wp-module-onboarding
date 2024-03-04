@@ -50,3 +50,29 @@ export const validateFlow = ( brandConfig, flow ) => {
 	}
 	return true;
 };
+
+export const removeFromTopSteps = ( topSteps, conditionalSteps ) => {
+	const conditionalStepsPaths = new Set(
+		conditionalSteps.map( ( a ) => a.path )
+	);
+
+	return {
+		topSteps: filter(
+			topSteps,
+			( topStep ) => ! conditionalStepsPaths.has( topStep.path )
+		),
+	};
+};
+
+export const removeFromRoutes = ( routes, conditionalSteps ) => {
+	const conditionalStepsPaths = new Set(
+		conditionalSteps.map( ( a ) => a.path )
+	);
+
+	return {
+		routes: filter(
+			routes,
+			( route ) => ! conditionalStepsPaths.has( route.path )
+		),
+	};
+};
