@@ -91,7 +91,9 @@ const FlowStateHandler = () => {
 
 	const checkCapability = () => {
 		if ( ! validateFlow( brandConfig, SITEGEN_FLOW ) ) {
-			const getData = resolveGetDataForFlow( DEFAULT_FLOW );
+			const getData = resolveGetDataForFlow(
+				window.nfdOnboarding.currentFlow
+			);
 			const data = getData();
 
 			const updateAllStep = removeFromAllSteps( data.steps, [
