@@ -7,7 +7,7 @@ const getContents = () => {
 			'wp-module-onboarding'
 		),
 		inputPlaceholder: __(
-			'I want a site for my company that sells …',
+			'I want a site for my company that sells…',
 			'wp-module-onboarding'
 		),
 		inputHint: __( 'The more detail the better', 'wp-module-onboarding' ),
