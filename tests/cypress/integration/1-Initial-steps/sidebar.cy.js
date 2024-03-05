@@ -1,6 +1,6 @@
 // <reference types="Cypress" />
 
-describe( 'Sidebar', function () {
+describe( 'Sidebar Checks', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/get-started/welcome'
