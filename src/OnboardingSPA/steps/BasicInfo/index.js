@@ -29,7 +29,6 @@ const StepBasicInfo = () => {
 		setDrawerActiveView( VIEW_NAV_PRIMARY );
 		setIsHeaderNavigationEnabled( true );
 	}, [] );
-	//console.log( 'test' );
 	return (
 		<CommonLayout isVerticallyCentered>
 			<HeadingWithSubHeading
