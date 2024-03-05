@@ -2,7 +2,7 @@ $letter-spacing: 0.5px;
 $selected-detail: #1de082;
 
 .nfd-sg-input {
-	margin: 25px 16px;
+	margin: 10px 16px;
 	width: 100% !important;
 
 	&-box {
@@ -11,6 +11,7 @@ $selected-detail: #1de082;
 
 		&__field {
 			padding-top: 10px;
+			padding-left: 0;
 			font-size: 1.5rem;
 			background: transparent;
 			letter-spacing: $letter-spacing;
@@ -19,6 +20,7 @@ $selected-detail: #1de082;
 			resize: none;
 			border: none;
 			max-height: 400px;
+			min-height: 55px;
 			color: var(--nfd-onboarding-primary);
 
 			&:focus {
