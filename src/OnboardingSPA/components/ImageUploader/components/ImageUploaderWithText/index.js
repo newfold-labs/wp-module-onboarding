@@ -168,9 +168,9 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 			'nfd-onboarding-image-uploader--with-text--not-dashed':
 				isImageUploaded,
 			'nfd-onboarding-image-uploader--with-text--not-dashed__dark':
-				pngLogoBgTheme === THEME_DARK,
+				isImageUploaded && pngLogoBgTheme === THEME_DARK,
 			'nfd-onboarding-image-uploader--with-text--not-dashed__light':
-				pngLogoBgTheme === THEME_LIGHT,
+				isImageUploaded && pngLogoBgTheme === THEME_LIGHT,
 		}
 	);
 
