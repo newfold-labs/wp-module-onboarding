@@ -5,7 +5,7 @@ import { uploadImage } from '../../../../utils/api/uploader';
 import Spinner from '../../../Loaders/Spinner';
 import { ThemeContext } from '../../../ThemeContextProvider';
 import classNames from 'classnames';
-import { THEME_LIGHT } from '../../../../../constants';
+import { THEME_LIGHT, THEME_DARK } from '../../../../../constants';
 import bytes from 'bytes';
 import { Icon, closeSmall } from '@wordpress/icons';
 import { store as nfdOnboardingStore } from '../../../../store';
@@ -16,7 +16,7 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 	const { theme } = useContext( ThemeContext );
 	const [ isUploading, setIsUploading ] = useState( false );
 	const [ onDragActive, setOnDragActive ] = useState( false );
-	const [ pngLogoBgColor, setPngLogoBgColor ] = useState( 'transparent' );
+	const [ pngLogoBgTheme, setPngLogoBgTheme ] = useState( 'transparent' );
 
 	const { updateSiteGenErrorStatus } = useDispatch( nfdOnboardingStore );
 
@@ -72,7 +72,7 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 		/* if the contrast value more than 150 it should have black bg, otherwise white */
 		const [ r, g, b ] = color.match( /\d+/g ).map( Number );
 		const contrastValue = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-		return contrastValue > 160 ? 'black' : 'white';
+		return contrastValue > 160 ? THEME_DARK : THEME_LIGHT;
 	};
 
 	async function updateItem( fileData ) {
@@ -91,7 +91,7 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 				getDominantColor( url, ( dominantColor ) => {
 					const contrastingColor =
 						getContrastingColor( dominantColor );
-					setPngLogoBgColor( contrastingColor );
+					setPngLogoBgTheme( contrastingColor );
 				} );
 			}
 			imageSetter( {
@@ -160,15 +160,22 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 	const isImageUploaded =
 		! isUploading && image?.id !== 0 && image?.id !== undefined;
 
+	const logoContainerClassnames = classNames(
+		'nfd-onboarding-image-uploader--with-text',
+		{
+			'nfd-onboarding-image-uploader--with-text--on-drag': onDragActive,
+			'nfd-onboarding-image-uploader--with-text--not-dashed':
+				isImageUploaded,
+			'nfd-onboarding-image-uploader--with-text--not-dashed__dark':
+				pngLogoBgTheme === THEME_DARK,
+			'nfd-onboarding-image-uploader--with-text--not-dashed__light':
+				pngLogoBgTheme === THEME_LIGHT,
+		}
+	);
+
 	return (
 		<div
-			className={ `nfd-onboarding-image-uploader--with-text ${
-				onDragActive &&
-				'nfd-onboarding-image-uploader--with-text--on-drag'
-			} ${
-				isImageUploaded &&
-				'nfd-onboarding-image-uploader--with-text--not-dashed'
-			}` }
+			className={ logoContainerClassnames }
 			onDrop={ ( e ) => handleDrop( e ) }
 			onDragOver={ ( e ) => handleDragOver( e ) }
 			onDragEnter={ ( e ) => handleDragEnter( e ) }
@@ -226,10 +233,7 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 					) }
 					{ isImageUploaded && (
 						<div className="nfd-onboarding-image-uploader--with-text__site_logo__preview">
-							<div
-								className="nfd-onboarding-image-uploader--with-text__site_logo__preview__wrapper"
-								style={ { backgroundColor: pngLogoBgColor } }
-							>
+							<div className="nfd-onboarding-image-uploader--with-text__site_logo__preview__wrapper">
 								<img
 									className="nfd-onboarding-image-uploader--with-text__site_logo__preview__image"
 									src={ image.url }
