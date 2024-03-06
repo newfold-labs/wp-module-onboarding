@@ -139,8 +139,11 @@ const SiteGen = () => {
 					// Get the homepages and set that in flow
 					getHomepages( currentData.sitegen.siteDetails.prompt ).then(
 						( response ) => {
+							if ( response.body ) {
+								currentData.sitegen.homepages.data =
+									response.body;
+							}
 							currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
-							currentData.sitegen.homepages.data = response.body;
 						}
 					);
 				}
