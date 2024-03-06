@@ -36,6 +36,7 @@ import {
 	ACTION_ONBOARDING_CHAPTER_STARTED,
 } from '../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
+import { stepTheFork } from '../../../steps/TheFork/step';
 
 // Wrapping the NewfoldInterfaceSkeleton with the HOC to make theme available
 const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
@@ -93,7 +94,8 @@ const SiteGen = () => {
 	const prevSiteGenErrorStatus = useRef();
 
 	async function syncStoreToDB() {
-		if ( currentData ) {
+		// The First Fork Step doesn't have any Store changes
+		if ( currentData && location?.pathname !== stepTheFork.path ) {
 			//Set the Flow Data and sync store and DB
 			const result = await setFlow( currentData );
 			if ( result?.error !== null ) {
