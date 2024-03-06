@@ -14,7 +14,6 @@ import { DEFAULT_FLOW } from '../../data/flows/constants';
 import HeadingWithSubHeading from '../../components/HeadingWithSubHeading/SiteGen/index';
 import StartOptions from '../../components/StartOptions';
 import getContents from './contents';
-import SitegenAiStateHandler from '../../components/StateHandlers/SitegenAi';
 import {
 	OnboardingEvent,
 	sendOnboardingEvent,
@@ -65,51 +64,49 @@ const TheFork = () => {
 	};
 	const content = getContents();
 	return (
-		<SitegenAiStateHandler>
-			<CommonLayout
-				isCentered
-				className="nfd-onboarding-step--site-gen__fork"
-			>
-				<HeadingWithSubHeading
-					title={ content.heading }
-					subtitle={ content.subheading }
-				/>
-				<StartOptions
-					questionnaire={ content.questionnaire }
-					oldFlow={ oldFlow }
-					options={ content.options }
-				/>
-				<br />
-				<br />
-				{ migrationUrl && (
-					<a
-						className="nfd-onboarding-step--site-gen__fork__importsite"
-						href={ migrationUrl }
-						target={ '_blank' }
-						rel={ 'noreferrer' }
-						onClick={ () =>
-							trackOnboardingEvent(
-								new OnboardingEvent(
-									ACTION_SITEGEN_FORK_OPTION_SELECTED,
-									'MIGRATE'
-								)
+		<CommonLayout
+			isCentered
+			className="nfd-onboarding-step--site-gen__fork"
+		>
+			<HeadingWithSubHeading
+				title={ content.heading }
+				subtitle={ content.subheading }
+			/>
+			<StartOptions
+				questionnaire={ content.questionnaire }
+				oldFlow={ oldFlow }
+				options={ content.options }
+			/>
+			<br />
+			<br />
+			{ migrationUrl && (
+				<a
+					className="nfd-onboarding-step--site-gen__fork__importsite"
+					href={ migrationUrl }
+					target={ '_blank' }
+					rel={ 'noreferrer' }
+					onClick={ () =>
+						trackOnboardingEvent(
+							new OnboardingEvent(
+								ACTION_SITEGEN_FORK_OPTION_SELECTED,
+								'MIGRATE'
 							)
-						}
-					>
-						{ content.importtext }
-					</a>
-				) }
-				<span
-					role="button"
-					tabIndex={ 0 }
-					className="nfd-onboarding-step--site-gen__fork__exit"
-					onClick={ () => handleForkExit() }
-					onKeyDown={ () => handleForkExit() }
+						)
+					}
 				>
-					{ content.exitToWordPress }
-				</span>
-			</CommonLayout>
-		</SitegenAiStateHandler>
+					{ content.importtext }
+				</a>
+			) }
+			<span
+				role="button"
+				tabIndex={ 0 }
+				className="nfd-onboarding-step--site-gen__fork__exit"
+				onClick={ () => handleForkExit() }
+				onKeyDown={ () => handleForkExit() }
+			>
+				{ content.exitToWordPress }
+			</span>
+		</CommonLayout>
 	);
 };
 
