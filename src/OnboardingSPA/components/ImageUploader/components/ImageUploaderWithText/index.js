@@ -16,7 +16,7 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 	const { theme } = useContext( ThemeContext );
 	const [ isUploading, setIsUploading ] = useState( false );
 	const [ onDragActive, setOnDragActive ] = useState( false );
-	const [ pngLogoBgTheme, setPngLogoBgTheme ] = useState( 'transparent' );
+	const [ pngLogoBgTheme, setPngLogoBgTheme ] = useState( '' );
 
 	const { updateSiteGenErrorStatus } = useDispatch( nfdOnboardingStore );
 
@@ -127,6 +127,7 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 	};
 
 	const removeSelectedImage = () => {
+		setPngLogoBgTheme( '' );
 		imageSetter( {
 			id: 0,
 			url: '',
