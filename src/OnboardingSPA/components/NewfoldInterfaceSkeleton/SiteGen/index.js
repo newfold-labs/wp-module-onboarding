@@ -137,14 +137,15 @@ const SiteGen = () => {
 					setCurrentOnboardingData( currentData );
 
 					// Get the homepages and set that in flow
-					const response = await getHomepages(
-						currentData.sitegen.siteDetails.prompt
+					getHomepages( currentData.sitegen.siteDetails.prompt ).then(
+						( response ) => {
+							if ( response.body ) {
+								currentData.sitegen.homepages.data =
+									response.body;
+							}
+							currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
+						}
 					);
-
-					if ( response.body ) {
-						currentData.sitegen.homepages.data = response.body;
-					}
-					currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
 				}
 				// Sync the current request changed to State
 				setCurrentOnboardingData( currentData );
