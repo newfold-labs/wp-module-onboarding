@@ -250,11 +250,12 @@ const SiteGenPreview = () => {
 			const headings =
 				data.styles?.blocks[ 0 ]?.[ 'core/heading' ]?.typography
 					?.fontFamily;
-			if ( newPreviewSettings.styles.typography && body ) {
+			if ( newPreviewSettings?.styles?.typography && body ) {
 				newPreviewSettings.styles.typography.fontFamily = body;
 			}
 			if (
-				newPreviewSettings.styles.blocks[ 'core/heading' ].typography &&
+				newPreviewSettings?.styles?.blocks[ 'core/heading' ]
+					?.typography &&
 				headings
 			) {
 				newPreviewSettings.styles.blocks[
