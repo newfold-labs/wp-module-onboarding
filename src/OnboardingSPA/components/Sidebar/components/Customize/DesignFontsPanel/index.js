@@ -262,6 +262,7 @@ const DesignFontsPanel = forwardRef(
 			bodySlug: style.font_content,
 		} ) );
 
+		const [ fontsLoaded, setFontsLoaded ] = useState( false );
 		const [ selectedGroup, setSelectedGroup ] = useState( null );
 		const [ showCustomFonts, setShowCustomFonts ] = useState( false );
 		const [ customFont, setCustomFont ] = useState( {
@@ -277,6 +278,12 @@ const DesignFontsPanel = forwardRef(
 		);
 		const fontsContent = designStyles?.map(
 			( style ) => style.font_content
+		);
+		const fontsHeadingNames = designStyles?.map(
+			( style ) => style.font_heading_name
+		);
+		const fontsContentNames = designStyles?.map(
+			( style ) => style.font_content_name
 		);
 
 		useEffect( () => {
@@ -336,6 +343,53 @@ const DesignFontsPanel = forwardRef(
 		const fontOptions = [
 			...new Set( [ ...fontsHeading, ...fontsContent ] ),
 		];
+
+		const fontOptionsNames = [
+			...new Set( [ ...fontsHeadingNames, ...fontsContentNames ] ),
+		];
+
+		useEffect( () => {
+			// Create a div element for the invisible text
+			const invisibleTextContainer = document.createElement( 'div' );
+			invisibleTextContainer.style.position = 'absolute';
+			invisibleTextContainer.style.top = '-9999px';
+			invisibleTextContainer.style.left = '-9999px';
+			invisibleTextContainer.style.visibility = 'hidden';
+
+			// Append the invisible text container to the body
+			document.body.appendChild( invisibleTextContainer );
+
+			// Apply all fonts to the invisible text
+			fontOptionsNames.forEach( ( font ) => {
+				const invisibleText = document.createElement( 'span' );
+				invisibleText.textContent =
+					'Hidden text to check font availability';
+				invisibleText.style.font = `1em ${ font }`;
+				invisibleTextContainer.appendChild( invisibleText );
+			} );
+
+			const checkFontsLoaded = setInterval( () => {
+				if ( areFontsLoaded() ) {
+					clearInterval( checkFontsLoaded );
+					setFontsLoaded( true );
+				}
+			}, 100 );
+
+			return () => {
+				clearInterval( checkFontsLoaded );
+			};
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [ fontOptions ] );
+
+		const areFontsLoaded = () => {
+			return fontOptionsNames.every( ( font ) =>
+				document.fonts.check( `1em ${ font }` )
+			);
+		};
+
+		if ( ! fontsLoaded ) {
+			return null;
+		}
 
 		const handleGroupSelect = ( groupId ) => {
 			if ( groupId !== 'custom' && selectedCustomFont ) {
