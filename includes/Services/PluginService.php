@@ -64,7 +64,7 @@ class PluginService {
 			$init_plugins = array_merge( Plugins::get_init(), SiteFeatures::get_init() );
 		}
 
-		// Add plugins according to Hiive Flags
+		// Add plugins enabled by Hiive Flags
 		$init_plugins = array_merge( $init_plugins, self::initialize_hiive_flag_plugins() );
 
 		foreach ( $init_plugins as $init_plugin ) {
@@ -77,7 +77,7 @@ class PluginService {
 						new PluginInstallTask(
 							$init_plugin['slug'],
 							$init_plugin['activate'],
-							$init_plugin['priority']
+							isset( $init_plugin['priority'] ) ? $init_plugin['priority'] : 0
 						)
 					);
 					continue;
