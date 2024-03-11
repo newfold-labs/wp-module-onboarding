@@ -41,7 +41,7 @@ describe( 'SiteGen Site Logo Step', function() {
 		DisabledNextButton();
 	} );
 
-	it.skip( 'Check if Image gets uploaded', () => {
+	it( 'Check if Image gets uploaded', () => {
 		const sampleLogoPath = `vendor/newfold-labs/wp-module-onboarding/tests/cypress/fixtures/image.png`;
 		const LogoPreviewClass = '.nfd-onboarding-image-uploader--with-text__site_logo__preview';
 		if (
