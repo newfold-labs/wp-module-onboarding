@@ -3,6 +3,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\Data\Config;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginActivationTaskManager;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginInstallTaskManager;
@@ -21,6 +22,28 @@ use function NewfoldLabs\WP\ModuleLoader\container;
  * Class for providing plugin related services.
  */
 class PluginService {
+
+	/**
+	 * Gets the list of plugins based on different enabled Hiive Flags
+	 *
+	 * @return array
+	 */
+	public static function initialize_hiive_flag_plugins() {
+		$init_plugins_extended = array();
+		$hiive_flags           = Plugins::get_hiive_plugin_flags();
+
+		foreach ( $hiive_flags as $hiive_flag => $is_enabled ) {
+			// Check if it is an allowed flag and is enabled on the container
+			if ( true === $is_enabled && true === Config::get_site_capability( $hiive_flag ) ) {
+				// Check if there are plugins for the flag.
+				if ( isset( Plugins::$hiive_flag_plugin_list[ $hiive_flag ] ) ) {
+					$init_plugins_extended = array_merge( $init_plugins_extended, Plugins::$hiive_flag_plugin_list[ $hiive_flag ] );
+				}
+			}
+		}
+		return $init_plugins_extended;
+	}
+
 	/**
 	 * Queues the initial list of Plugin Installs for a flow.
 	 *
@@ -29,6 +52,9 @@ class PluginService {
 	public static function initialize() {
 
 		$init_plugins = array();
+
+		// Add plugins according to Hiive Flags
+		$init_plugins = array_merge( $init_plugins, self::initialize_hiive_flag_plugins() );
 
 		$flow = Data::current_flow();
 		if ( 'sitegen' === $flow && SiteGenService::is_enabled() ) {
@@ -40,6 +66,8 @@ class PluginService {
 			// Get the initial list of plugins to be installed based on the plan.
 			$init_plugins = array_merge( Plugins::get_init(), SiteFeatures::get_init() );
 		}
+
+		return print_r( json_encode( $init_plugins ) );
 
 		foreach ( $init_plugins as $init_plugin ) {
 			$init_plugin_type = PluginInstaller::get_plugin_type( $init_plugin['slug'] );
