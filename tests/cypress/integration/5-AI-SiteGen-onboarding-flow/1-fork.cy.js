@@ -5,6 +5,7 @@ import { AdminBarCheck, DarkBGCheck, LightBGCheck, OptionsDetails } from "../wp-
 describe( 'SiteGen Fork Step', function () {
 	before( () => {
         cy.exec('npx wp-env run cli wp option delete nfd_module_onboarding_flow');
+        cy.exec('npx wp-env run cli wp option update site_logo 0');
         cy.exec(`npx wp-env run cli wp option set _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true}' --format=json`);
         cy.exec(`npx wp-env run cli wp option set _transient_timeout_nfd_site_capabilities 4102444800`);
         cy.wait(10000);
