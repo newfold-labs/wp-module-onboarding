@@ -67,8 +67,6 @@ class PluginService {
 			$init_plugins = array_merge( Plugins::get_init(), SiteFeatures::get_init() );
 		}
 
-		return print_r( json_encode( $init_plugins ) );
-
 		foreach ( $init_plugins as $init_plugin ) {
 			$init_plugin_type = PluginInstaller::get_plugin_type( $init_plugin['slug'] );
 			$init_plugin_path = PluginInstaller::get_plugin_path( $init_plugin['slug'], $init_plugin_type );
