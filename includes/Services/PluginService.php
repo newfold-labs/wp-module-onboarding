@@ -53,9 +53,6 @@ class PluginService {
 
 		$init_plugins = array();
 
-		// Add plugins according to Hiive Flags
-		$init_plugins = array_merge( $init_plugins, self::initialize_hiive_flag_plugins() );
-
 		$flow = Data::current_flow();
 		if ( 'sitegen' === $flow && SiteGenService::is_enabled() ) {
 			$init_plugins = SiteGenService::get_plugin_recommendations();
@@ -66,6 +63,9 @@ class PluginService {
 			// Get the initial list of plugins to be installed based on the plan.
 			$init_plugins = array_merge( Plugins::get_init(), SiteFeatures::get_init() );
 		}
+
+		// Add plugins according to Hiive Flags
+		$init_plugins = array_merge( $init_plugins, self::initialize_hiive_flag_plugins() );
 
 		foreach ( $init_plugins as $init_plugin ) {
 			$init_plugin_type = PluginInstaller::get_plugin_type( $init_plugin['slug'] );
