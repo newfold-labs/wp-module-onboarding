@@ -46,10 +46,6 @@ const Customize = forwardRef( ( props, ref ) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
 
-	// if ( loading ) {
-	// 	return <div>...</div>;
-	// }
-
 	const content = getContents();
 	return (
 		<>
