@@ -36,7 +36,7 @@ class PluginService {
 			// Check if the capability is enabled on Hiive
 			if ( true === Config::get_site_capability( $hiive_capability ) ) {
 				// Check if there are plugins for the flag.
-				if ( ! empty( $plugins_data ) ) {
+				if ( is_array( $plugins_data ) && ! empty( $plugins_data ) ) {
 					$init_plugins_extended = array_merge( $init_plugins_extended, $plugins_data );
 				}
 			}
