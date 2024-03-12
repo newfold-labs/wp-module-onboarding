@@ -6,7 +6,7 @@ import { cloneDeep, isEmpty } from 'lodash';
 
 import CommonLayout from '../../../components/Layouts/Common';
 import { store as nfdOnboardingStore } from '../../../store';
-import { HEADER_SITEGEN } from '../../../../constants';
+import { HEADER_SITEGEN, THEME_STATUS_ACTIVE } from '../../../../constants';
 import { SiteGenPreviewSelectableCard } from '../../../components/LivePreview';
 import getContents from './contents';
 import HeartAnimation from './heartAnimation';
@@ -26,6 +26,7 @@ import {
 	ACTION_SITEGEN_SITE_GENERATION_TIME,
 } from '../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
+import { DesignStateHandler } from '../../../components/StateHandlers';
 
 const SiteGenPreview = () => {
 	const navigate = useNavigate();
@@ -48,17 +49,17 @@ const SiteGenPreview = () => {
 		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { currentData, nextStep, siteGenErrorStatus } = useSelect(
-		( select ) => {
+	const { currentData, nextStep, siteGenErrorStatus, themeStatus } =
+		useSelect( ( select ) => {
 			return {
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				nextStep: select( nfdOnboardingStore ).getNextStep(),
 				siteGenErrorStatus:
 					select( nfdOnboardingStore ).getSiteGenErrorStatus(),
+				themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 			};
-		}
-	);
+		} );
 
 	useEffect( () => {
 		setIsHeaderEnabled( true );
@@ -136,9 +137,11 @@ const SiteGenPreview = () => {
 	};
 
 	useEffect( () => {
-		loadHomepages();
-		loadGlobalStyles();
-	}, [] );
+		if ( THEME_STATUS_ACTIVE === themeStatus ) {
+			loadHomepages();
+			loadGlobalStyles();
+		}
+	}, [ themeStatus ] );
 
 	const handlePreview = ( slug, position ) => {
 		if ( ! ( slug in homepages ) ) {
@@ -295,37 +298,39 @@ const SiteGenPreview = () => {
 
 	return (
 		<SitegenAiStateHandler>
-			<CommonLayout className="nfd-onboarding-step--site-gen__preview">
-				<div className="nfd-onboarding-step--site-gen__preview__container">
-					{ ! isPreviewLoading && (
-						<Animate type={ 'fade-in' }>
-							<div className="nfd-onboarding-step--site-gen__preview__container__heading">
-								<p className="nfd-onboarding-step--site-gen__preview__container__heading__text">
-									{ content.heading }
-								</p>
-							</div>
-							<div className="nfd-onboarding-step--site-gen__preview__container__sub-heading">
-								<p className="nfd-onboarding-step--site-gen__preview__container__sub-heading__text">
-									{ content.subheading }
-								</p>
-							</div>
-						</Animate>
-					) }
-				</div>
-				<div className="nfd-onboarding-step--site-gen__preview__options">
-					{ buildPreviews() }
-					{ isRegenerating && (
-						<RegeneratingSiteCard
-							count={ 1 }
-							isRegenerating={ true }
-						/>
-					) }
-				</div>
-				<div className="nfd-onboarding-step--site-gen__preview__note">
-					<HeartAnimation />
-					<span>{ content.favouriteNote }</span>
-				</div>
-			</CommonLayout>
+			<DesignStateHandler render={ false }>
+				<CommonLayout className="nfd-onboarding-step--site-gen__preview">
+					<div className="nfd-onboarding-step--site-gen__preview__container">
+						{ ! isPreviewLoading && (
+							<Animate type={ 'fade-in' }>
+								<div className="nfd-onboarding-step--site-gen__preview__container__heading">
+									<p className="nfd-onboarding-step--site-gen__preview__container__heading__text">
+										{ content.heading }
+									</p>
+								</div>
+								<div className="nfd-onboarding-step--site-gen__preview__container__sub-heading">
+									<p className="nfd-onboarding-step--site-gen__preview__container__sub-heading__text">
+										{ content.subheading }
+									</p>
+								</div>
+							</Animate>
+						) }
+					</div>
+					<div className="nfd-onboarding-step--site-gen__preview__options">
+						{ buildPreviews() }
+						{ isRegenerating && (
+							<RegeneratingSiteCard
+								count={ 1 }
+								isRegenerating={ true }
+							/>
+						) }
+					</div>
+					<div className="nfd-onboarding-step--site-gen__preview__note">
+						<HeartAnimation />
+						<span>{ content.favouriteNote }</span>
+					</div>
+				</CommonLayout>
+			</DesignStateHandler>
 		</SitegenAiStateHandler>
 	);
 };
