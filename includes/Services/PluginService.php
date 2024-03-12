@@ -29,15 +29,15 @@ class PluginService {
 	 * @return array
 	 */
 	public static function initialize_hiive_flag_plugins() {
-		$init_plugins_extended = array();
-		$hiive_flags           = Plugins::get_hiive_plugin_flags();
+		$init_plugins_extended               = array();
+		$plugins_data_for_hiive_capabilities = Plugins::$hiive_flag_plugin_list;
 
-		foreach ( $hiive_flags as $hiive_flag => $is_enabled ) {
-			// Check if it is an allowed flag and is enabled on the container
-			if ( true === $is_enabled && true === Config::get_site_capability( $hiive_flag ) ) {
+		foreach ( $plugins_data_for_hiive_capabilities as $hiive_capability => $plugins_data ) {
+			// Check if the capability is enabled on Hiive
+			if ( true === Config::get_site_capability( $hiive_capability ) ) {
 				// Check if there are plugins for the flag.
-				if ( isset( Plugins::$hiive_flag_plugin_list[ $hiive_flag ] ) ) {
-					$init_plugins_extended = array_merge( $init_plugins_extended, Plugins::$hiive_flag_plugin_list[ $hiive_flag ] );
+				if ( ! empty( $plugins_data ) ) {
+					$init_plugins_extended = array_merge( $init_plugins_extended, $plugins_data );
 				}
 			}
 		}
