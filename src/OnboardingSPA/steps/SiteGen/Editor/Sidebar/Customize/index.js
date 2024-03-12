@@ -6,6 +6,8 @@ import { lazy, useEffect, useState } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../../../../store';
 import getContents from './contents';
 import { getCustomizeSidebarData } from '../../../../../utils/api/siteGen';
+import classNames from 'classnames';
+import { Spinner } from '@wordpress/components';
 
 const DesignFontsPanel = lazy( () =>
 	import(
@@ -44,19 +46,27 @@ const Customize = forwardRef( ( props, ref ) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
 
-	if ( loading ) {
-		return <div>...</div>;
-	}
+	// if ( loading ) {
+	// 	return <div>...</div>;
+	// }
 
 	const content = getContents();
 	return (
-		<div className="nfd-onboarding-sidebar-learn-more__design-colors">
-			<DesignColorsPanel
-				heading={ content.introduction.heading }
-				ref={ designColorPanelRef }
-			/>
-			<DesignFontsPanel ref={ designFontsPanelRef } />
-		</div>
+		<>
+			{ loading ? (
+				<div className={ classNames( 'center' ) }>
+					<Spinner />
+				</div>
+			) : (
+				<div className="nfd-onboarding-sidebar-learn-more__design-colors">
+					<DesignColorsPanel
+						heading={ content.introduction.heading }
+						ref={ designColorPanelRef }
+					/>
+					<DesignFontsPanel ref={ designFontsPanelRef } />
+				</div>
+			) }
+		</>
 	);
 } );
 
