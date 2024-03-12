@@ -6,13 +6,24 @@ import { cloneDeep, isEmpty } from 'lodash';
 
 import CommonLayout from '../../../components/Layouts/Common';
 import { store as nfdOnboardingStore } from '../../../store';
-import { HEADER_SITEGEN } from '../../../../constants';
+import {
+	HEADER_SITEGEN,
+	THEME_STATUS_INSTALLING,
+	THEME_STATUS_NOT_ACTIVE,
+	THEME_STATUS_ACTIVE,
+	DESIGN_STEPS_THEME,
+	THEME_STATUS_FAILURE,
+} from '../../../../constants';
 import { SiteGenPreviewSelectableCard } from '../../../components/LivePreview';
 import getContents from './contents';
 import HeartAnimation from './heartAnimation';
 import RegeneratingSiteCard from './regeneratingCard';
 import { getHomepages, regenerateHomepage } from '../../../utils/api/siteGen';
-import { getGlobalStyles } from '../../../utils/api/themes';
+import {
+	getGlobalStyles,
+	getThemeStatus,
+	install as installTheme,
+} from '../../../utils/api/themes';
 import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
 import Animate from '../../../components/Animate';
 import {
@@ -46,6 +57,7 @@ const SiteGenPreview = () => {
 		setHideFooterNav,
 		updateSiteGenErrorStatus,
 		setIsHeaderNavigationEnabled,
+		updateThemeStatus,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData, nextStep, siteGenErrorStatus } = useSelect(
@@ -68,6 +80,8 @@ const SiteGenPreview = () => {
 		setDrawerActiveView( false );
 		updateInitialize( true );
 		setIsHeaderNavigationEnabled( false );
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ currentData ] );
 
 	useEffect( () => {
@@ -79,6 +93,8 @@ const SiteGenPreview = () => {
 			loadGlobalStyles();
 		}
 		prevSiteGenErrorStatus.current = siteGenErrorStatus;
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ siteGenErrorStatus ] );
 
 	const loadHomepages = async () => {
@@ -135,9 +151,39 @@ const SiteGenPreview = () => {
 		setGlobalStyles( globalStylesResponse.body );
 	};
 
+	const installThemeManually = async () => {
+		updateThemeStatus( THEME_STATUS_INSTALLING );
+		const themeInstallStatus = await installTheme(
+			DESIGN_STEPS_THEME,
+			true,
+			false
+		);
+		window.location.reload();
+		if ( themeInstallStatus.error ) {
+			return updateThemeStatus( THEME_STATUS_FAILURE );
+		}
+	};
+
+	const checkThemeStatus = async () => {
+		const themeStatus = await getThemeStatus( DESIGN_STEPS_THEME );
+		if ( themeStatus?.error ) {
+			return THEME_STATUS_NOT_ACTIVE;
+		}
+		return themeStatus.body.status;
+	};
+
+	const handleThemeInstall = async () => {
+		const themeStatus = await checkThemeStatus();
+		if ( themeStatus !== THEME_STATUS_ACTIVE ) {
+			installThemeManually();
+		}
+	};
+
 	useEffect( () => {
+		handleThemeInstall();
 		loadHomepages();
 		loadGlobalStyles();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
 
 	const handlePreview = ( slug, position ) => {
@@ -250,11 +296,12 @@ const SiteGenPreview = () => {
 			const headings =
 				data.styles?.blocks[ 0 ]?.[ 'core/heading' ]?.typography
 					?.fontFamily;
-			if ( newPreviewSettings.styles.typography && body ) {
+			if ( newPreviewSettings?.styles?.typography && body ) {
 				newPreviewSettings.styles.typography.fontFamily = body;
 			}
 			if (
-				newPreviewSettings.styles.blocks[ 'core/heading' ].typography &&
+				newPreviewSettings?.styles?.blocks[ 'core/heading' ]
+					?.typography &&
 				headings
 			) {
 				newPreviewSettings.styles.blocks[
