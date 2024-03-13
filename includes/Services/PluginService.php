@@ -22,28 +22,6 @@ use function NewfoldLabs\WP\ModuleLoader\container;
  * Class for providing plugin related services.
  */
 class PluginService {
-
-	/**
-	 * Gets the list of plugins based on different enabled Hiive Flags
-	 *
-	 * @return array
-	 */
-	public static function initialize_hiive_flag_plugins() {
-		$init_plugins_extended               = array();
-		$plugins_data_for_hiive_capabilities = Plugins::$hiive_flag_plugin_list;
-
-		foreach ( $plugins_data_for_hiive_capabilities as $hiive_capability => $plugins_data ) {
-			// Check if the capability is enabled on Hiive
-			if ( true === Config::get_site_capability( $hiive_capability ) ) {
-				// Check if there are plugins for the flag.
-				if ( is_array( $plugins_data ) && ! empty( $plugins_data ) ) {
-					$init_plugins_extended = array_merge( $init_plugins_extended, $plugins_data );
-				}
-			}
-		}
-		return $init_plugins_extended;
-	}
-
 	/**
 	 * Queues the initial list of Plugin Installs for a flow.
 	 *
@@ -55,7 +33,7 @@ class PluginService {
 
 		$flow = Data::current_flow();
 		if ( 'sitegen' === $flow && SiteGenService::is_enabled() ) {
-			$init_plugins = SiteGenService::get_plugin_recommendations();
+			$init_plugins = array_merge( Plugins::get_init(), SiteGenService::get_plugin_recommendations() );
 			if ( is_wp_error( $init_plugins ) ) {
 				return $init_plugins;
 			}
@@ -63,9 +41,6 @@ class PluginService {
 			// Get the initial list of plugins to be installed based on the plan.
 			$init_plugins = array_merge( Plugins::get_init(), SiteFeatures::get_init() );
 		}
-
-		// Add plugins enabled by Hiive Flags
-		$init_plugins = array_merge( $init_plugins, self::initialize_hiive_flag_plugins() );
 
 		foreach ( $init_plugins as $init_plugin ) {
 			$init_plugin_type = PluginInstaller::get_plugin_type( $init_plugin['slug'] );
