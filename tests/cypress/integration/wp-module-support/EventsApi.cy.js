@@ -18,6 +18,8 @@ export const APIList = {
 	basic_info:
 		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fevents%2Fbatch&flow=wp-setup&_locale=user',
 	basic_info_ecomm:
+		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fevents%2Fbatch&flow=ecommerce&_locale=user',
+	site_features_ecomm:
 		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fevents%2Fbatch&flow=ecommerce&_locale=user'
 };
 
@@ -101,3 +103,24 @@ export const BasicInfoAPI = (
 		} );
 	} );
 };
+
+export const SiteFeaturesAPI = (
+	label_key_value,
+	features = []
+) => {
+	let index = 0;
+	
+	cy.wait( '@events' ).then( ( requestObject ) => {
+		const requestBody = requestObject.request.body;
+		expect( requestBody[ index ].action ).to.eq( 'feature_added' );
+
+		requestBody.forEach(() => {
+			
+			const requestBodyData = requestBody[index].data;
+			expect(requestBodyData.label_key).to.eq(label_key_value)
+			expect(requestBodyData[label_key_value]).to.eq(features[index])
+			index += 1;
+		})
+	} );
+};
+

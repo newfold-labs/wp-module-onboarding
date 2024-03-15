@@ -9,6 +9,7 @@ import {
 	CheckInfoPanel,
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
+import { APIList, SiteFeaturesAPI } from '../wp-module-support/EventsApi.cy';
 
 describe( 'Site Features', function () {
 	before( () => {
@@ -59,5 +60,19 @@ describe( 'Site Features', function () {
 				.click();
 			previewCount += 1;
 		} );
-	} );
+	});
+	
+	it('Check if site-features GA events are triggerred', () => {
+		const features = ['jetpack', 'wpforms-lite', 'google-analytics-for-wordpress', 'wordpress-seo', 'creative-mail-by-constant-contact', 'optinmonster']
+		// Make sure if all site-features are selected
+		cy.get('.components-checkbox-control__input').each(($checkbox) => {
+			if (!$checkbox.is(':checked')) {
+				cy.wrap($checkbox).click();
+			}
+		});
+
+		cy.intercept( APIList.site_features_ecomm ).as( 'events' );
+		cy.get('.navigation-buttons_next').click();
+		SiteFeaturesAPI( 'feature', features );
+	})
 } );
