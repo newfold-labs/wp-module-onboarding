@@ -85,6 +85,7 @@ describe( 'Site Features', function () {
 
 		cy.intercept( APIList.site_features ).as( 'events' );
 		cy.get( '.navigation-buttons_next' ).click();
+		cy.wait( 2000 )
 		SiteFeaturesAPI( 'feature', features );
 	} );
 } );
