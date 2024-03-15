@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { __ } from '@wordpress/i18n';
+import { count } from '@wordpress/wordcount';
 import { useRef, useEffect, useState, memo } from '@wordpress/element';
 
 const TextInputSiteGen = ( {
@@ -54,6 +55,10 @@ const TextInputSiteGen = ( {
 		}
 	};
 
+	const getCurrentWordCount = () => {
+		return count( customerInput ?? '', 'words', {} );
+	};
+
 	const onTextChange = ( e ) => {
 		e.preventDefault();
 		setCustomerInput( e.target.value );
@@ -92,8 +97,8 @@ const TextInputSiteGen = ( {
 				</div>
 				{
 					<p className={ 'nfd-sg-input-box__count' }>
-						{ customerInput?.length ?? 0 }
-						{ __( ' Characters', 'wp-module-onboarding' ) }
+						{ getCurrentWordCount() }
+						{ __( ' Words', 'wp-module-onboarding' ) }
 					</p>
 				}
 				<div className={ 'nfd-sg-input-box_bottom' }>
