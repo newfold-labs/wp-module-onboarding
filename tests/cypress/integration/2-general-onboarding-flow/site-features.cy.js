@@ -76,6 +76,11 @@ describe( 'Site Features', function () {
 			'optinmonster',
 		];
 
+		cy.visit(
+			'wp-admin/?page=nfd-onboarding#/wp-setup/step/site-features'
+		);
+		cy.wait( 10000 );
+
 		// Make sure if all site-features are selected
 		cy.get( '.components-checkbox-control__input' ).each( ( $checkbox ) => {
 			if ( ! $checkbox.is( ':checked' ) ) {
@@ -85,7 +90,6 @@ describe( 'Site Features', function () {
 
 		cy.intercept( APIList.site_features ).as( 'events' );
 		cy.get( '.navigation-buttons_next' ).click();
-		cy.wait( 2000 )
 		SiteFeaturesAPI( 'feature', features );
 	} );
 } );
