@@ -9,6 +9,7 @@ import {
 	CheckInfoPanel,
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
+import { APIList, SiteFeaturesAPI } from '../wp-module-support/EventsApi.cy';
 
 describe( 'Site Features', function () {
 	before( () => {
@@ -24,8 +25,8 @@ describe( 'Site Features', function () {
 
 	it( 'Check if Header has text `site` in it', () => {
 		cy.get( '.nfd-main-heading__title' )
-			.should('be.visible')
-			.contains('site');
+			.should( 'be.visible' )
+			.contains( 'site' );
 	} );
 
 	it( 'Check Drawer Activity', () => {
@@ -36,19 +37,18 @@ describe( 'Site Features', function () {
 		);
 	} );
 
-	if(GetPluginId()=='bluehost'){
-	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel( '__site-features', 'Features' );
-		CheckIllustrationPanel();
-		CheckInfoPanel();
-		CheckHelpPanelLinks();
-	} );
-	}
-	else{
+	if ( GetPluginId() == 'bluehost' ) {
+		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+			CheckIntroPanel( '__site-features', 'Features' );
+			CheckIllustrationPanel();
+			CheckInfoPanel();
+			CheckHelpPanelLinks();
+		} );
+	} else {
 		it( 'Check to make sure Sidebar opens', () => {
 			BasicSidebarCheck();
 		} );
-	};
+	}
 
 	it( 'Check if Site Features list exists and select them', () => {
 		let previewCount = 0;
@@ -64,5 +64,27 @@ describe( 'Site Features', function () {
 				.click();
 			previewCount += 1;
 		} );
+	} );
+
+	it( 'Check if site-features GA events are triggerred', () => {
+		const features = [
+			'jetpack',
+			'wpforms-lite',
+			'google-analytics-for-wordpress',
+			'wordpress-seo',
+			'creative-mail-by-constant-contact',
+			'optinmonster',
+		];
+
+		// Make sure if all site-features are selected
+		cy.get( '.components-checkbox-control__input' ).each( ( $checkbox ) => {
+			if ( ! $checkbox.is( ':checked' ) ) {
+				cy.wrap( $checkbox ).click();
+			}
+		} );
+
+		cy.intercept( APIList.events_api_general_onb ).as( 'events' );
+		cy.get( '.navigation-buttons_next' ).click();
+		SiteFeaturesAPI( 'feature', features );
 	} );
 } );
