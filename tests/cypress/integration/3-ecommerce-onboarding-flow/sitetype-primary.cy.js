@@ -68,7 +68,7 @@ describe( 'Get Started Site Type Primary', function () {
 					if(num>=2){
 						cy.wait(4000);
 					}
-					EventsAPI('primary_type', dataSlugText, APIList.site_primary_ecomm);
+					EventsAPI('primary_type', dataSlugText, APIList.events_api_ecomm);
 					num+=1;
 				});
 			categoryCount += 1;
@@ -80,7 +80,7 @@ describe( 'Get Started Site Type Primary', function () {
 			.scrollIntoView()
 			.should( 'be.visible' )
 			.type( 'Test' );
-		EventsAPI('primary_type', 'Test', APIList.site_primary_ecomm);
+		EventsAPI('primary_type', 'Test', APIList.events_api_ecomm);
 	} );
 
 	it( 'Check different Categories exist and is selectable', () => {

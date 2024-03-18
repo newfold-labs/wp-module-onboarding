@@ -38,14 +38,14 @@ describe( 'Top Priority Page', function () {
 				.should( 'be.visible' )
 				.click();
 				if ( previewCount == 0 ) {
-					EventsAPI( 'top_priority', 'content', APIList.top_priority );
+					EventsAPI( 'top_priority', 'content', APIList.events_api_general_onb );
 				}
 				if ( previewCount == 1 ) {
-					EventsAPI( 'top_priority', 'store', APIList.top_priority );
+					EventsAPI( 'top_priority', 'store', APIList.events_api_general_onb );
 				}
 				if ( previewCount > 1 ) {
 					cy.wait( 5000 );
-					EventsAPI( 'top_priority', 'design', APIList.top_priority );
+					EventsAPI( 'top_priority', 'design', APIList.events_api_general_onb );
 				}
 		previewCount += 1;
 		});

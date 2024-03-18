@@ -70,7 +70,7 @@ describe( 'Get Started Site Type Secondary', function () {
 					if(num>=2){
 						cy.wait(5000);
 					}
-					EventsAPI('secondary_type', dataSlugText, APIList.site_secondary_ecomm);
+					EventsAPI('secondary_type', dataSlugText, APIList.events_api_ecomm);
 					num+=1;
 				});
 			SubcategoryCount += 1;
@@ -82,7 +82,7 @@ describe( 'Get Started Site Type Secondary', function () {
 			.scrollIntoView()
 			.should( 'be.visible' )
 			.type( 'Test' );
-		EventsAPI('secondary_type', 'Test', APIList.site_secondary_ecomm);
+		EventsAPI('secondary_type', 'Test', APIList.events_api_ecomm);
 	} );
 
 	it( 'Check different subCategories exist and is selectable', () => {

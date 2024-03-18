@@ -303,7 +303,7 @@ describe( 'Basic Info Page', function () {
 		cy.get( socialTest7 ).type( 'https://www.tiktok.com/testTikTok' );
 
 		cy.wait( 2000 );
-		cy.intercept( APIList.basic_info_ecomm ).as( 'events' );
+		cy.intercept( APIList.events_api_ecomm ).as( 'events' );
 		cy.get( '.navigation-buttons_next' ).click();
 		BasicInfoAPI( 'basic_info_ecomm', label_keys, actual_values );
 	} );
