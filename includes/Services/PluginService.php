@@ -162,9 +162,9 @@ class PluginService {
 				break;
 			default:
 				if ( '1' === get_transient( Options::get_option_name( 'filter_active_plugins' ) ) ) {
+					delete_transient( Options::get_option_name( 'filter_active_plugins' ) );
 					$flow = Data::current_flow();
 					if ( 'sitegen' !== $flow ) {
-						delete_transient( Options::get_option_name( 'filter_active_plugins' ) );
 						self::activate_init_plugins();
 					}
 				}
