@@ -3,6 +3,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\Data\Config;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginActivationTaskManager;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginInstallTaskManager;
@@ -36,6 +37,17 @@ class PluginService {
 			if ( is_wp_error( $init_plugins ) ) {
 				return $init_plugins;
 			}
+			// Convert { slug->slug } to hash for faster search
+			// As Php uses array as { [0] -> slug_name } and that won't work with array_key_exists
+			$plugin_slugs = array_column( $init_plugins, 'slug', 'slug' );
+
+			// Iterate and ensure no duplicates are added
+			$default_plugins = Plugins::get_init();
+			foreach ( $default_plugins as $default_plugin ) {
+				if ( ! array_key_exists( $default_plugin['slug'], $plugin_slugs ) ) {
+					$init_plugins[] = $default_plugin;
+				}
+			}
 		} else {
 			// Get the initial list of plugins to be installed based on the plan.
 			$init_plugins = array_merge( Plugins::get_init(), SiteFeatures::get_init() );
@@ -51,7 +63,7 @@ class PluginService {
 						new PluginInstallTask(
 							$init_plugin['slug'],
 							$init_plugin['activate'],
-							$init_plugin['priority']
+							isset( $init_plugin['priority'] ) ? $init_plugin['priority'] : 0
 						)
 					);
 					continue;
