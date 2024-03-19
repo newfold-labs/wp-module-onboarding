@@ -2,7 +2,10 @@ import { Fragment, useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 
 import { store as nfdOnboardingStore } from '../../../store';
-import { OnboardingEvent, trackOnboardingEvent } from '../../../utils/analytics/hiive';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
 import { ACTION_SITEGEN_ERROR_STATE_TRIGGERED } from '../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
