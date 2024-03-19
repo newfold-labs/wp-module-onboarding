@@ -3,7 +3,6 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
-use NewfoldLabs\WP\Module\Onboarding\Data\Config;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginActivationTaskManager;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginInstallTaskManager;
@@ -15,8 +14,6 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 use NewfoldLabs\WP\Module\Onboarding\Data\SiteFeatures;
-
-use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
  * Class for providing plugin related services.
@@ -56,6 +53,9 @@ class PluginService {
 		foreach ( $init_plugins as $init_plugin ) {
 			$init_plugin_type = PluginInstaller::get_plugin_type( $init_plugin['slug'] );
 			$init_plugin_path = PluginInstaller::get_plugin_path( $init_plugin['slug'], $init_plugin_type );
+			if ( ! $init_plugin_path ) {
+				continue;
+			}
 			// Checks if a plugin with the given slug and activation criteria already exists.
 			if ( ! PluginInstaller::is_plugin_installed( $init_plugin_path ) ) {
 					// Add a new PluginInstallTask to the Plugin install queue.
@@ -96,6 +96,9 @@ class PluginService {
 		foreach ( $final_init_plugins as $init_plugin ) {
 			$init_plugin_type = PluginInstaller::get_plugin_type( $init_plugin['slug'] );
 			$init_plugin_path = PluginInstaller::get_plugin_path( $init_plugin['slug'], $init_plugin_type );
+			if ( ! $init_plugin_path ) {
+				continue;
+			}
 			// Checks if a plugin with the given slug and activation criteria already exists.
 			if ( PluginInstaller::is_plugin_installed( $init_plugin_path ) ) {
 					// Add a new PluginInstallTask to the Plugin install queue.
@@ -119,6 +122,9 @@ class PluginService {
 		foreach ( $site_features_unselected as $init_plugin ) {
 			$init_plugin_type = PluginInstaller::get_plugin_type( $init_plugin['slug'] );
 			$init_plugin_path = PluginInstaller::get_plugin_path( $init_plugin['slug'], $init_plugin_type );
+			if ( ! $init_plugin_path ) {
+				continue;
+			}
 			// Checks if a plugin with the given slug and activation criteria already exists.
 			if ( PluginInstaller::is_plugin_installed( $init_plugin_path ) ) {
 					// Add a new PluginDeactivationTask to the Plugin Deactivation queue.
