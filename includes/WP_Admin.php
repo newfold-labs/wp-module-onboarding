@@ -36,7 +36,32 @@ final class WP_Admin {
 			SiteGenService::pre_set_filter_wonder_blocks_transients();
 			SiteGenService::instantiate_sitegen_hooks();
 		}
+		// \add_action( 'init', array( __CLASS__, 'temp' ) );
+		\add_action( 'enqueue_block_editor_assets', array( __CLASS__, 'temp' ) );
+		
+		
 	}
+
+	public static function temp() {
+
+		\wp_register_script(
+			'nfd-tour',
+			NFD_ONBOARDING_BUILD_URL . '/tour.js',
+			array(),
+			'1.0.0',
+			true
+		);
+
+		\wp_register_style(
+			'nfd-tour',
+			NFD_ONBOARDING_BUILD_URL . '/tour.css',
+			array(),
+			'1.0.0'
+		);
+
+		\wp_enqueue_script( 'nfd-tour' );
+		\wp_enqueue_style( 'nfd-tour' );
+		}
 
 	/**
 	 * Loads the textdomain for the module. This applies only to PHP strings.
