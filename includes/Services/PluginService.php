@@ -33,16 +33,17 @@ class PluginService {
 
 		$flow = Data::current_flow();
 		if ( 'sitegen' === $flow && SiteGenService::is_enabled() ) {
-			$init_plugins = SiteGenService::get_plugin_recommendations();
-			if ( is_wp_error( $init_plugins ) ) {
-				return $init_plugins;
-			}
+			$init_plugins = Plugins::get_init();
+
 			// Convert { slug->slug } to hash for faster search
 			// As Php uses array as { [0] -> slug_name } and that won't work with array_key_exists
 			$plugin_slugs = array_column( $init_plugins, 'slug', 'slug' );
 
 			// Iterate and ensure no duplicates are added
-			$default_plugins = Plugins::get_init();
+			$default_plugins = SiteGenService::get_plugin_recommendations();
+			if ( is_wp_error( $default_plugins ) ) {
+				return $default_plugins;
+			}
 			foreach ( $default_plugins as $default_plugin ) {
 				if ( ! array_key_exists( $default_plugin['slug'], $plugin_slugs ) ) {
 					$init_plugins[] = $default_plugin;
