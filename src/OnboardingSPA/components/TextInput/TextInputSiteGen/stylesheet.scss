@@ -33,6 +33,19 @@ $selected-detail: #1de082;
 			}
 		}
 
+		&__count {
+			margin: 3px;
+			text-align: end;
+			font-size: 0.87rem;
+			animation: fadeIn 100ms ease-in;
+			color: var(--nfd-onboarding-primary);
+
+			@media (prefers-reduced-motion) {
+				animation: none !important;
+			}
+		}
+
+
 		&__hint {
 			font-weight: 300;
 			font-size: 0.87rem;
