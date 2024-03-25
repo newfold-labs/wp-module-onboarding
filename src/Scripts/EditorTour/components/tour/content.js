@@ -9,7 +9,7 @@ const getContents = () => {
 					'Take a moment to click through some features and tools that you may find useful in your next steps.'
 				),
 				stepTargetClassName: null,
-				image: 'welcome',
+				image: 'welcomeImg',
 			},
 			{
 				title: __( 'Introducing WonderBlocks' ),
@@ -17,7 +17,7 @@ const getContents = () => {
 					'Enhance your page designs with our custom pre-built patterns and templates.'
 				),
 				stepTargetClassName: __( 'nfd-wba-shrink-0' ),
-                image: 'wonderblocks',
+				image: 'wonderblocksImg',
 			},
 			{
 				title: __( 'Ready to share your website?' ),
@@ -25,7 +25,7 @@ const getContents = () => {
 					'Click the "Publish" button to save changes and publish content to your live website.'
 				),
 				stepTargetClassName: __( 'editor-post-publish-button' ),
-                image: 'publish',
+				image: 'publishImg',
 			},
 			{
 				title: __( 'Exiting the WordPress Editor' ),
@@ -33,7 +33,7 @@ const getContents = () => {
 					'Return to the WordPress admin area anytime by clicking the WordPress "W" icon.'
 				),
 				stepTargetClassName: __( 'edit-post-fullscreen-mode-close' ),
-                image: 'wp',
+				image: 'wpImg',
 			},
 		],
 	};

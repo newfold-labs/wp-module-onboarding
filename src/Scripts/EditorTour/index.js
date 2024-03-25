@@ -1,22 +1,17 @@
-// window.onload = function () {
-// 	alert( 'volla' );
-// 	console.log('volla')
-// };
-
-/**
- * WordPress dependencies
- */
 import domReady from '@wordpress/dom-ready';
 import { render } from '@wordpress/element';
+import Tour from './components/tour';
 
-import Tour from '../tour/index';
-
-domReady( () => {
-	renderModal();
-} );
+const EditorTour = () => {
+	return (
+		<div className="App">
+			<Tour />
+		</div>
+	);
+};
 
 const renderModal = () => {
-	const elementId  = 'nfd-tour-modal';
+	const elementId = 'nfd-editor-tour-modal';
 	const modalRoot = document.createElement( 'div' );
 	modalRoot.id = elementId;
 
@@ -24,5 +19,9 @@ const renderModal = () => {
 	if ( ! document.getElementById( elementId ) ) {
 		document.body.append( modalRoot );
 	}
-	render( <Tour />, modalRoot );
+	render( <EditorTour />, modalRoot );
 };
+
+domReady( () => {
+	renderModal();
+} );
