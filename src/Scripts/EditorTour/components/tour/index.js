@@ -1,4 +1,4 @@
-import './stylesheet.css';
+// import './stylesheet.css';
 import { useState } from '@wordpress/element';
 import { Icon, closeSmall } from '@wordpress/icons';
 import welcomeImg from '../../images/welcome.png';
@@ -86,7 +86,13 @@ const Tour = () => {
 				break;
 		}
 
-		return <img className="tour-step-img" src={ imageUrl } alt="img"></img>;
+		return (
+			<img
+				className="nfd-tour__step__img"
+				src={ imageUrl }
+				alt="img"
+			></img>
+		);
 	}
 
 	function renderStepProgress() {
@@ -95,8 +101,8 @@ const Tour = () => {
 				key={ index }
 				className={
 					index == stepIndex
-						? 'tour-step-progress-icon-selected'
-						: 'tour-step-progress-icon'
+						? 'nfd-tour__step__footer__progress-icon__selected'
+						: 'nfd-tour__step__footer__progress-icon'
 				}
 			></div>
 		) );
@@ -104,13 +110,13 @@ const Tour = () => {
 
 	const renderStepHeader = () => {
 		return (
-			<div className={ 'tour-step-header' }>
+			<div className={ 'nfd-tour__step__header' }>
 				<button
-					className="tour-step-header__resetbutton"
+					className="nfd-tour__step__header__resetbutton"
 					onClick={ handleSkipTour }
 				>
 					<Icon
-						className="tour-step-header__resetbutton__icon"
+						className="nfd-tour__step__header__resetbutton__icon"
 						icon={ closeSmall }
 					/>
 				</button>
@@ -120,17 +126,19 @@ const Tour = () => {
 	const renderStepContent = () => {
 		return (
 			<>
-				<div className="tour-step-img-container">{ StepImg() }</div>
+				<div className="nfd-tour__step__img-container">
+					{ StepImg() }
+				</div>
 				<div
-					className={ `tour-step-title ${
-						stepIndex === 0 ? 'tour-step-title-big' : ''
+					className={ `nfd-tour__step__title ${
+						stepIndex === 0 ? 'nfd-tour__step__title__big' : ''
 					}` }
 				>
 					{ currentStep.title }
 				</div>
 				<div
-					className={ `tour-step-content ${
-						stepIndex === 0 ? 'tour-step-content-big' : ''
+					className={ `nfd-tour__step__content ${
+						stepIndex === 0 ? 'nfd-tour__step__content__big' : ''
 					}` }
 				>
 					{ currentStep.content }
@@ -140,11 +148,11 @@ const Tour = () => {
 	};
 	const renderStepFooter = () => {
 		return (
-			<div className={ 'tour-step-footer' }>
-				<div className={ 'tour-step-footer-box-info' }>
+			<div className={ 'nfd-tour__step__footer' }>
+				<div className={ 'nfd-tour__step__footer__box-info' }>
 					{ renderStepProgress() }
 				</div>
-				<div className={ 'tour-step-footer-button' }>
+				<div className={ 'nfd-tour__step__footer__button' }>
 					{ stepIndex > 0 && (
 						<button onClick={ handlePrevStep }>Previous</button>
 					) }
@@ -164,18 +172,17 @@ const Tour = () => {
 	return (
 		<div>
 			{ isVisible && (
-				<div className="overlay">
-					{ /* <div className="overlay"></div> { /* Overlay */ }
+				<div className="nfd-tour-overlay">
 					<div
-						className={ `tour-dialog ${
-							stepIndex === 0 ? 'tour-dialog-big' : ''
+						className={ `nfd-tour__dialog ${
+							stepIndex === 0 ? 'nfd-tour__dialog__big' : ''
 						}` }
 						style={ {
 							top: dialogPosition.top,
 							left: dialogPosition.left,
 						} }
 					>
-						<div className="tour-content">
+						<div className="nfd-tour-content">
 							{ renderStepHeader() }
 							{ renderStepContent() }
 							{ renderStepFooter() }

@@ -1,6 +1,7 @@
 import domReady from '@wordpress/dom-ready';
 import { render } from '@wordpress/element';
 import Tour from './components/tour';
+import './app.scss';
 
 const EditorTour = () => {
 	return (
