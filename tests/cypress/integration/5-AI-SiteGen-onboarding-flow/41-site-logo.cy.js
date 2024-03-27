@@ -6,10 +6,11 @@ describe('SiteGen Site Logo Step', function () {
         // );
     });
 
-  it.only('Check whether API mocking is possible for site_config', () => {
+  it('Check whether API mocking is possible for site_config', () => {
     const site_config_fixture = `vendor/newfold-labs/wp-module-onboarding/tests/cypress/fixtures/site-config.json`
     const site_classification_fixture = `vendor/newfold-labs/wp-module-onboarding/tests/cypress/fixtures/site-classification.json`
-    // // 1st logic
+    const target_audience_fixture = `vendor/newfold-labs/wp-module-onboarding/tests/cypress/fixtures/target-audience.json`
+    // // ***************       START OF LOGIC 1 ****************************************
     // cy.intercept(end_point)
     //   .as('sitegenCalls')
 
@@ -29,12 +30,14 @@ describe('SiteGen Site Logo Step', function () {
     //   cy.log(JSON.stringify(site_classification_req.request.body))
         
     //   })
+    // *********************** END OF LOGIC 1 **********************************
 
-    // second logic
+    // // *****************START OF LOGIC 2 *************************************
     // Intercepting requests to the same endpoint
 cy.intercept(end_point, (req) => {
   // Check the request object and provide appropriate mock response
   if (req.hasOwnProperty('identifier') && req.identifier.includes('site_config')) {
+    cy.log('********************************************************')
 
     req.reply({
       statusCode: 200,
@@ -43,30 +46,37 @@ cy.intercept(end_point, (req) => {
         'content-type': 'application/json'
       }
     });
-  } else if (req.identifier.includes('site_classification')) {
-    req.reply({
-      statusCode: 200,
-      body: site_classification_fixture,
-      headers: {
-        'content-type': 'application/json'
-      }
-    });
-  } else {
-    // req.reply({
-    //   statusCode: 200,
-    //   body: {
-    //     message: 'Default response'
-    //   },
-    //   headers: {
-    //     'content-type': 'application/json'
-    //   }
-    // });
   }
+  // if (req.hasOwnProperty('identifier') && req.identifier.includes('site_classification')) {
+  //   cy.log(JSON.stringify(req.body))
+  //   req.reply({
+  //     statusCode: 200,
+  //     body: site_classification_fixture,
+  //     headers: {
+  //       'content-type': 'application/json'
+  //     }
+  //   });
+  // } 
+
+  // if (req.hasOwnProperty('identifier') && req.identifier.includes('target_audience')) {
+  //   cy.log(JSON.stringify(req.body))
+  //   req.reply({
+  //     statusCode: 200,
+  //     body: target_audience_fixture,
+  //     headers: {
+  //       'content-type': 'application/json'
+  //     }
+  //   });
+  // } 
+
+  // similarly for other identifiers
 }).as('sitegenCalls');
     
       cy.visit('wp-admin/index.php?page=nfd-onboarding#/sitegen/step/site-logo')
     
-    cy.wait('@sitegenCalls', {timeout: 25000} )
+    cy.wait('@sitegenCalls', { timeout: 25000 })
+    
+    // **************************** END OF LOGIC 2 ***************************
     
 
 
