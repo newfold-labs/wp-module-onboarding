@@ -8,12 +8,15 @@ const sitemap_mock = require( '../../fixtures/sitemap.json' );
 const plugin_recommendation_mock = require( '../../fixtures/plugin-recommendation.json' );
 const font_pair_mock = require( '../../fixtures/font-pair.json' );
 const homepages_mock = require( '../../fixtures/homepages.json' );
+const homepage_regenerate_mock = require( '../../fixtures/homepage-regenerate.json' )
 
 export const apiList = {
 	sitegen:
 		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fsitegen%2Fgenerate&flow=sitegen&_locale=user',
 	homepages:
-		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fsitegen%2Fhomepages&flow=sitegen&_locale=user',
+    '/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fsitegen%2Fhomepages&flow=sitegen&_locale=user',
+  homepagesRegenerate: 
+    '/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fsitegen%2Fhomepages%2Fregenerate&flow=sitegen&_locale=user'
 };
 
 export const siteGenMockAll = ( req ) => {
@@ -46,3 +49,13 @@ export const homePagesMock = ( req ) => {
 		},
 	} );
 };
+
+export const homePagesRegenerate = (req) => {
+  req.reply( {
+		statusCode: 200,
+		body: homepage_regenerate_mock,
+		headers: {
+			'content-type': 'application/json',
+		},
+	} );
+}
