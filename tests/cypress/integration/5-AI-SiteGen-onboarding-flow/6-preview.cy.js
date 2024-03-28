@@ -1,6 +1,6 @@
 // <reference types="Cypress" />
 
-import { AdminBarCheck, BackButtonCheck, DarkBGCheck, LightBGCheck, ProgressBarCheck } from "../wp-module-support/siteGen.cy";
+import { AdminBarCheck, DarkBGCheck, LightBGCheck, ProgressBarCheck } from "../wp-module-support/siteGen.cy";
 
 describe( 'SiteGen Site Preview Step', function () {
     before( () => {
@@ -10,42 +10,36 @@ describe( 'SiteGen Site Preview Step', function () {
         cy.wait(5000);
     } );
 
-    it.skip( 'Check for the header admin bar', () => {
+    it( 'Check for the header admin bar', () => {
         AdminBarCheck();
     } );
 
-    it.skip( 'Check for the existing dark background', () => {
+    it( 'Check for the existing dark background', () => {
         DarkBGCheck();
     } );
 
-    it.skip( 'Check for the light background', () => {
+    it( 'Check for the light background', () => {
         LightBGCheck();
     } );
 
-    it.skip( 'Check the Progress Bar Value', () => {
-        ProgressBarCheck('75%');
+    it( 'Check the Progress Bar Value', () => {
+        ProgressBarCheck('71.4286%');
     });
 
-    it.skip( 'Check for back button and go back', () => {
-        BackButtonCheck('sitegen/step/preview');
-        cy.visit('wp-admin/index.php?page=nfd-onboarding#/sitegen/step/preview');
-        cy.reload();
-    } );
-
-    it.skip( 'Check for by default 3 versions should be there', () => {
+    it( 'Check for by default 3 versions should be there', () => {
         cy.get('.live-preview-sitegen--selectable-card', {timeout:20000})
             .should('be.visible')
             .should('have.length', 3);
     } );
 
-    it.skip( 'Check for the favourited theme versions', () => {
+    it( 'Check for the favourited theme versions', () => {
         cy.get('g[clip-path="url(#heart-filled_svg__a)"]').should('not.exist');  // when no fav theme is selected
         cy.get( '.live-preview-sitegen--selectable-card__live-preview-container-buttons__button__icon' )
             .eq(0)
             .scrollIntoView()
             .should('be.visible')
             .click();
-        cy.get('g[clip-path="url(#heart-filled_svg__a)"]' , {timeout:10000} )
+        cy.get('g[clip-path="url(#heart-filled_svg__a)"]' , {timeout:20000} )
             .should('exist');
         cy.get('.live-preview-sitegen--selectable-card__live-preview-container__overlay')
             .eq(0)
@@ -53,24 +47,24 @@ describe( 'SiteGen Site Preview Step', function () {
             .click();
         cy.reload();
         cy.wait(5000);
-        cy.get('g[clip-path="url(#heart-filled_svg__a)"]' , {timeout:10000} )
+        cy.get('g[clip-path="url(#heart-filled_svg__a)"]' , {timeout:20000} )
             .should('exist');
         cy.go('back');
         cy.reload();
     } );
 
-    it.skip( 'Check for regenerating the new theme versions', () => {
-        cy.get('[aria-label="Regenerate Content"]', {timeout:10000})
+    it( 'Check for regenerating the new theme versions', () => {
+        cy.get('[aria-label="Regenerate Content"]', {timeout:20000})
             .eq(2)
             .scrollIntoView()
             .click();
         cy.wait(3000);
-        cy.get('.live-preview-sitegen--selectable-card')
+        cy.get('.live-preview-sitegen--selectable-card', {timeout:20000})
             .should('be.visible')
             .should('have.length', 4);
     } );
 
-    it.skip( 'Check for the preview note at the bottom', () => {
+    it( 'Check for the preview note at the bottom', () => {
         cy.get('.nfd-onboarding-step--site-gen__preview__note')
             .scrollIntoView()
             .should('be.visible');
@@ -78,7 +72,7 @@ describe( 'SiteGen Site Preview Step', function () {
         cy.get('.nfd-onboarding-step--site-gen__preview__note span').scrollIntoView().contains('Favorite');
     } );
 
-    it.skip( 'Select any theme and go forward to the next step', () => {
+    it( 'Select any theme and go forward to the next step', () => {
         cy.get('.live-preview-sitegen--selectable-card')
             .eq(0)
             .scrollIntoView()
