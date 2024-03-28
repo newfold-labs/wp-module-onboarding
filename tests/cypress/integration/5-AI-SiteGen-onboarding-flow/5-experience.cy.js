@@ -1,6 +1,6 @@
 // <reference types="Cypress" />
 
-import { AdminBarCheck, BackButtonCheck, DarkBGCheck, ExperienceDetails, LightBGChcek, ProgressBarCheck} from "../wp-module-support/siteGen.cy";
+import { AdminBarCheck, DarkBGCheck, ExperienceDetails, LightBGCheck, ProgressBarCheck} from "../wp-module-support/siteGen.cy";
 
 describe( 'SiteGen Experience & Site Building Step', function () {
 	before( () => {
@@ -9,35 +9,31 @@ describe( 'SiteGen Experience & Site Building Step', function () {
 		);
 	} );
 
-    it.skip( 'Check for the header admin bar', () => {
+    it( 'Check for the header admin bar', () => {
         AdminBarCheck();
     } );
 
-    it.skip( 'Check for the existing dark background', () => {
+    it( 'Check for the existing dark background', () => {
 		DarkBGCheck();
 	} );
 
-    it.skip( 'Check for the light background', () => {
-        LightBGChcek();
+    it( 'Check for the light background', () => {
+        LightBGCheck();
     } );
 
-    it.skip( 'Check the Progress Bar Value', () => {
-        ProgressBarCheck('50%');
+    it( 'Check the Progress Bar Value', () => {
+        ProgressBarCheck('57.1429%');
     });
 
-    it.skip( 'Check for back button and go back', () => {
-        BackButtonCheck('sitegen/step/experience');
-    } );
-
-    it.skip( 'Check for the existence & the count of experience level cards', () => {
+    it( 'Check for the existence & the count of experience level cards', () => {
         cy.get( '.nfd-sg-experience-level' ).should('be.visible');
         cy.get( '.nfd-sg-loader' ).should('be.visible');
         cy.get( '.nfd-sg-card' ).should('be.visible');
-        cy.get( '.nfd-sg-card__data__option' ).should('have.length',3)
+        cy.get('.nfd__option_heading_subheading__wrapper').should('have.length',3)
     } );
 
-    it.skip( 'Check and click each experience cards', () => {
-        const className = '.nfd-sg-card__data__option'
+    it( 'Check each experience cards', () => {
+        const className = '.nfd__option_heading_subheading__wrapper'
         let options = 0;
         const arr = cy.get( className );
 		arr.each( () => {
@@ -45,20 +41,12 @@ describe( 'SiteGen Experience & Site Building Step', function () {
                 ExperienceDetails(className,'Beginner',options);
             };
             if(options == 1){
-                ExperienceDetails(className,'Used it some',options);
+                ExperienceDetails(className,'Intermediate',options);
             };
             if(options == 2){
                 ExperienceDetails(className, 'Expert',options);
             };
             options+=1;
         });
-    } );
-
-    it.skip( 'Check for the existence of skip button and click', () => {
-        cy.get( '.nfd-sg-card__skip' )
-            .scrollIntoView()
-            .should('be.visible')
-            .click();
-        cy.url().should('not.contain', 'sitegen/step/experience');
     } );
 });
