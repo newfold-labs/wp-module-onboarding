@@ -55,11 +55,10 @@ describe( 'SiteGen Site Preview Step', function () {
     } );
 
     it( 'Check for regenerating the new theme versions', () => {
-        cy.wait(3000)
-        cy.intercept( apiList.homepagesRegenerate, ( req ) => {
+        cy.intercept(apiList.homepagesRegenerate, (req) => {
 			homePagesRegenerate( req );
         }).as('regenerate');
-        cy.wait(2000)
+
         cy.get('[aria-label="Regenerate Content"]', {timeout:20000})
             .eq(2)
             .scrollIntoView()
