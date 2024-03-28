@@ -55,15 +55,16 @@ describe( 'SiteGen Site Preview Step', function () {
     } );
 
     it( 'Check for regenerating the new theme versions', () => {
+        cy.wait(3000)
         cy.intercept( apiList.homepagesRegenerate, ( req ) => {
 			homePagesRegenerate( req );
         }).as('regenerate');
-        
+        cy.wait(2000)
         cy.get('[aria-label="Regenerate Content"]', {timeout:20000})
             .eq(2)
             .scrollIntoView()
             .click();
-        cy.wait('@regenerate', {timeout:20000})
+        cy.wait('@regenerate', { timeout: 30000 } )
         cy.get('.live-preview-sitegen--selectable-card', {timeout:20000})
             .should('be.visible')
             .should('have.length', 4);

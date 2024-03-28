@@ -50,7 +50,7 @@ export const homePagesMock = ( req ) => {
 	} );
 };
 
-export const homePagesRegenerate = (req) => {
+export const homePagesRegenerate = ( req ) => {
   req.reply( {
 		statusCode: 200,
 		body: homepage_regenerate_mock,
