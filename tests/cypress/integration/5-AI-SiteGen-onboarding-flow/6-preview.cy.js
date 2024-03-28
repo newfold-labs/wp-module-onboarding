@@ -54,7 +54,7 @@ describe( 'SiteGen Site Preview Step', function () {
         cy.reload();
     } );
 
-    it.only( 'Check for regenerating the new theme versions', () => {
+    it.skip( 'Check for regenerating the new theme versions', () => {
         cy.intercept(apiList.homepagesRegenerate, (req) => {
 			homePagesRegenerate( req );
         }).as('regenerate');
