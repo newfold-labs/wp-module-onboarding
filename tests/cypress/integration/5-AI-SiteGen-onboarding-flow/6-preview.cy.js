@@ -62,9 +62,8 @@ describe( 'SiteGen Site Preview Step', function () {
 
         cy.get('[aria-label="Regenerate Content"]', {timeout:20000})
             .eq(1)
-            .scrollIntoView()
-            .wait(3000)
-            .click()
+            .wait(1000)
+            .click({force : true})
         cy.wait('@regenerate', { timeout: 20000 } )
         cy.get('.live-preview-sitegen--selectable-card', {timeout:20000})
             .should('be.visible')
