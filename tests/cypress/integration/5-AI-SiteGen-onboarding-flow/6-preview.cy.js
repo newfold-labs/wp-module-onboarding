@@ -79,9 +79,8 @@ describe( 'SiteGen Site Preview Step', function () {
     } );
 
     it( 'Select any theme and go forward to the next step', () => {
-        cy.get('.live-preview-sitegen--selectable-card')
+        cy.get('.live-preview-sitegen--selectable-card__live-preview-container__overlay', {timeout: 10000})
             .eq(0)
-            .scrollIntoView()
             .click();
         cy.url().should('not.contain', 'sitegen/step/preview', {timeout: 20000});
     } );
