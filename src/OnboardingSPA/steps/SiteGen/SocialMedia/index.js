@@ -1,21 +1,29 @@
+// WordPress
 import { useDispatch, useSelect } from '@wordpress/data';
 import { memo, useEffect, useState } from '@wordpress/element';
 import { useViewportMatch } from '@wordpress/compose';
 
-import getContents from './contents';
-import { HEADER_SITEGEN } from '../../../../constants';
-import SkipButton from '../../../components/SkipButton';
-import { store as nfdOnboardingStore } from '../../../store';
-import CommonLayout from '../../../components/Layouts/Common';
-import AIHeading from '../../../components/Heading/AIHeading';
-import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
-import { FacebookConnectButton } from '@newfold-labs/wp-module-facebook';
+// Third-party
 import { useNavigate } from 'react-router-dom';
-import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
+import { FacebookConnectButton } from '@newfold-labs/wp-module-facebook';
+
+// Classes and functions
+import getContents from './contents';
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
 } from '../../../utils/analytics/hiive';
+
+// Components
+import CommonLayout from '../../../components/Layouts/Common';
+import AIHeading from '../../../components/Heading/AIHeading';
+import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
+import SkipButton from '../../../components/SkipButton';
+import { SiteGenStateHandler } from '../../../components/StateHandlers';
+
+// Misc
+import { store as nfdOnboardingStore } from '../../../store';
+import { HEADER_SITEGEN } from '../../../../constants';
 import {
 	ACTION_SITEGEN_SOCIAL_CONNECTED,
 	ACTION_SITEGEN_SOCIAL_CONNECT_SKIPPED,
@@ -23,10 +31,17 @@ import {
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenSiteSocialMedia = () => {
-	const isLargeViewport = useViewportMatch( 'small' );
-	const navigate = useNavigate();
 	const [ connected, setConnected ] = useState( false );
 	const [ interacted, setInteracted ] = useState( false );
+
+	const isLargeViewport = useViewportMatch( 'small' );
+	const navigate = useNavigate();
+
+	const { nextStep } = useSelect( ( select ) => {
+		return {
+			nextStep: select( nfdOnboardingStore ).getNextStep(),
+		};
+	} );
 
 	const {
 		setIsHeaderEnabled,
@@ -46,11 +61,12 @@ const SiteGenSiteSocialMedia = () => {
 		setIsHeaderNavigationEnabled( true );
 	} );
 
-	const { nextStep } = useSelect( ( select ) => {
-		return {
-			nextStep: select( nfdOnboardingStore ).getNextStep(),
-		};
-	} );
+	useEffect( () => {
+		setIsFooterNavAllowed( connected );
+		if ( interacted && connected ) {
+			navigate( nextStep.path );
+		}
+	}, [ interacted, connected ] );
 
 	const handleConnect = () => {
 		trackOnboardingEvent(
@@ -78,16 +94,10 @@ const SiteGenSiteSocialMedia = () => {
 		);
 	};
 
-	useEffect( () => {
-		setIsFooterNavAllowed( connected );
-		if ( interacted && connected ) {
-			navigate( nextStep.path );
-		}
-	}, [ interacted, connected ] );
-
 	const content = getContents();
+
 	return (
-		<SitegenAiStateHandler>
+		<SiteGenStateHandler>
 			<CommonLayout
 				isCentered
 				className="nfd-onboarding-step--site-gen__social-media"
@@ -125,7 +135,7 @@ const SiteGenSiteSocialMedia = () => {
 					</div>
 				</div>
 			</CommonLayout>
-		</SitegenAiStateHandler>
+		</SiteGenStateHandler>
 	);
 };
 

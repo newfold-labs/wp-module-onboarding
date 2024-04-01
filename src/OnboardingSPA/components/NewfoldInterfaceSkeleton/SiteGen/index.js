@@ -1,36 +1,44 @@
+// WordPress
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
-import { useLocation } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
 
-import Header from '../../Header';
-import Content from '../../Content';
-import Sidebar from '../../Sidebar';
-import themeToggleHOC from '../themeToggleHOC';
-import NewfoldInterfaceSkeleton from '../index';
-import { ThemeProvider } from '../../ThemeContextProvider';
-import { store as nfdOnboardingStore } from '../../../store';
+// Third-party
+import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
+
+// Classes and functions
 import { setFlow } from '../../../utils/api/flow';
+import themeToggleHOC from '../themeToggleHOC';
 import {
 	generateSiteGenMeta,
 	getHomepages,
 	getSiteGenIdentifiers,
 } from '../../../utils/api/siteGen';
-import Footer from '../../Footer';
 import { initialize as initializeSettings } from '../../../utils/api/settings';
 import { init as initializePlugins } from '../../../utils/api/plugins';
 import { init as initializeThemes } from '../../../utils/api/themes';
 import { trigger as cronTrigger } from '../../../utils/api/cronTrigger';
 import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+
+// Components
+import Header from '../../Header';
+import Content from '../../Content';
+import Sidebar from '../../Sidebar';
+import Footer from '../../Footer';
+import NewfoldInterfaceSkeleton from '../index';
+import { ThemeProvider } from '../../ThemeContextProvider';
+
+// Misc
+import { store as nfdOnboardingStore } from '../../../store';
+import {
 	MAX_RETRIES_SITE_GEN,
 	SKIP_FLOW_ERROR_CODE_DATABASE,
 	SKIP_FLOW_ERROR_CODE_20,
 } from '../../../../constants';
-import {
-	OnboardingEvent,
-	trackOnboardingEvent,
-} from '../../../utils/analytics/hiive';
 import {
 	ACTION_ONBOARDING_CHAPTER_COMPLETE,
 	ACTION_ONBOARDING_CHAPTER_STARTED,
@@ -46,8 +54,7 @@ const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
 );
 
 const SiteGen = () => {
-	const [ failedApi, setFailedApi ] = useState( [] );
-	const location = useLocation();
+	const [ failedSiteMetaAPIs, setFailedSiteMetaAPIs ] = useState( [] );
 
 	const {
 		currentData,
@@ -81,33 +88,70 @@ const SiteGen = () => {
 		setActiveChapter,
 	} = useDispatch( nfdOnboardingStore );
 
-	// Update Title and Tagline on the site.
-	const { editEntityRecord } = useDispatch( coreStore );
 	const { getEditedEntityRecord } = useSelect( ( select ) => {
 		return select( coreStore );
+	}, [] );
+
+	const { editEntityRecord } = useDispatch( coreStore );
+
+	const location = useLocation();
+	const prevSiteGenErrorStatus = useRef();
+
+	useEffect( () => {
+		initializeThemes();
+		initializeSettings();
+		getEditedEntityRecord( 'root', 'site' );
 	}, [] );
 
 	useEffect( () => {
 		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
 	}, [ newfoldBrand ] );
 
-	const prevSiteGenErrorStatus = useRef();
+	useEffect( () => {
+		trackChapters();
+	}, [ currentStep ] );
+
+	useEffect( () => {
+		if ( initialize ) {
+			initializePlugins( pluginInstallHash );
+			setInterval( cronTrigger, 45000 );
+		}
+	}, [ initialize ] );
+
+	useEffect( () => {
+		syncStoreToDB();
+		generateSiteGenData();
+		handlePreviousStepTracking();
+	}, [ location.pathname ] );
+
+	useEffect( () => {
+		if (
+			prevSiteGenErrorStatus.current === true &&
+			siteGenErrorStatus === false
+		) {
+			generateSiteGenData();
+		}
+		prevSiteGenErrorStatus.current = siteGenErrorStatus;
+	}, [ siteGenErrorStatus ] );
 
 	async function syncStoreToDB() {
 		// The First Fork Step doesn't have any Store changes
 		if ( currentData && location?.pathname !== stepTheFork.path ) {
 			//Set the Flow Data and sync store and DB
 			const result = await setFlow( currentData );
-			if ( result?.error !== null ) {
-				switch ( result?.error.code ) {
-					case SKIP_FLOW_ERROR_CODE_DATABASE:
-						break;
-					case SKIP_FLOW_ERROR_CODE_20:
-						break;
-					default:
-						updateSiteGenErrorStatus( true );
-						break;
-				}
+			if ( result.body !== null ) {
+				return true;
+			}
+
+			switch ( result.error.code ) {
+				case SKIP_FLOW_ERROR_CODE_DATABASE:
+				case SKIP_FLOW_ERROR_CODE_20:
+					return true;
+			}
+
+			if ( false === siteGenErrorStatus ) {
+				updateSiteGenErrorStatus( true );
+				return false;
 			}
 		}
 	}
@@ -118,49 +162,13 @@ const SiteGen = () => {
 		skipCache,
 		retryCount = 1
 	) {
-		try {
-			const data = await generateSiteGenMeta(
-				siteInfo,
-				identifier,
-				skipCache
-			);
-			if ( data !== null ) {
-				// A Identifier request was sucessfuly made with valid response
-				currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
-				if (
-					currentData.sitegen.siteGenMetaStatus.currentStatus ===
-					currentData.sitegen.siteGenMetaStatus.totalCount
-				) {
-					// Once all requests are completed use cache to get data
-					currentData.sitegen.skipCache = false;
+		const data = await generateSiteGenMeta(
+			siteInfo,
+			identifier,
+			skipCache
+		);
 
-					// Increase count after site meta calls to ensure systematic call of homepages
-					currentData.sitegen.siteGenMetaStatus.totalCount += 1;
-					setCurrentOnboardingData( currentData );
-
-					// Get the homepages and set that in flow
-					getHomepages( currentData.sitegen.siteDetails.prompt ).then(
-						( response ) => {
-							if ( response.body ) {
-								currentData.sitegen.homepages.data =
-									response.body;
-							}
-							currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
-						}
-					);
-				}
-				// Sync the current request changed to State
-				setCurrentOnboardingData( currentData );
-
-				// Sets the Site Title and Taglin in Live Preview
-				if ( identifier === 'site_config' ) {
-					editEntityRecord( 'root', 'site', undefined, {
-						title: data.site_title,
-						description: data.tagline,
-					} );
-				}
-			}
-		} catch ( err ) {
+		if ( data.error ) {
 			// Check if it failed then retry again
 			if ( retryCount < MAX_RETRIES_SITE_GEN ) {
 				return performSiteGenMetaGeneration(
@@ -172,25 +180,64 @@ const SiteGen = () => {
 			}
 
 			// If the retry also did not work show the error state
-			setFailedApi( ( prevState ) => {
+			setFailedSiteMetaAPIs( ( prevState ) => {
 				// If the error doesn't exist add it to the Failed List
 				if ( ! prevState.includes( identifier ) ) {
 					return [ ...prevState, identifier ];
 				}
+
 				return prevState;
 			} );
-			// Activate the Error Page
-			currentData.sitegen.siteGenErrorStatus = true;
-			setCurrentOnboardingData( currentData );
+
+			if ( siteGenErrorStatus === false ) {
+				updateSiteGenErrorStatus( true );
+			}
+
+			if ( window.nfdOnboarding.siteGenTimerInterval ) {
+				clearInterval( window.nfdOnboarding.siteGenTimerInterval );
+			}
+
+			return;
 		}
+
+		// Sets the Site Title and Taglin in Live Preview
+		if ( identifier === 'site_config' ) {
+			editEntityRecord( 'root', 'site', undefined, {
+				title: data.body.site_title,
+				description: data.body.tagline,
+			} );
+		}
+
+		// A Identifier request was sucessfuly made with valid response
+		currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
+
+		if (
+			currentData.sitegen.siteGenMetaStatus.currentStatus ===
+			currentData.sitegen.siteGenMetaStatus.totalCount
+		) {
+			// Once all requests are completed use cache to get data
+			currentData.sitegen.skipCache = false;
+
+			// Get the homepages and set that in flow
+			const response = await getHomepages(
+				currentData.sitegen.siteDetails.prompt
+			);
+
+			if ( response.body ) {
+				currentData.sitegen.homepages.data = response.body;
+			}
+		}
+		// Sync the current request changed to State
+		setCurrentOnboardingData( currentData );
 	}
 
-	async function generateSiteGenData( forceRun = false ) {
-		// ForceRun tells us to bypass the page check or not
-		// because the requests failed on Logo step is retried in Experience step
-
+	async function generateSiteGenData() {
 		// Start the API Requests when the loader is shown.
-		if ( ! location.pathname.includes( 'site-logo' ) && ! forceRun ) {
+		if (
+			true === siteGenErrorStatus ||
+			( ! location.pathname.includes( 'site-logo' ) &&
+				! location.pathname.includes( 'experience' ) )
+		) {
 			return;
 		}
 
@@ -210,9 +257,12 @@ const SiteGen = () => {
 		}
 
 		let identifiers;
-		if ( Array.isArray( failedApi ) && failedApi.length > 0 ) {
-			identifiers = failedApi;
-			setFailedApi( [] );
+		if (
+			Array.isArray( failedSiteMetaAPIs ) &&
+			failedSiteMetaAPIs.length > 0
+		) {
+			identifiers = failedSiteMetaAPIs;
+			setFailedSiteMetaAPIs( [] );
 		} else {
 			identifiers = await getSiteGenIdentifiers();
 			identifiers = identifiers.body;
@@ -292,41 +342,6 @@ const SiteGen = () => {
 				currentStep?.path ?? '';
 		}
 	};
-
-	useEffect( () => {
-		trackChapters();
-	}, [ currentStep ] );
-
-	useEffect( () => {
-		if ( initialize ) {
-			initializePlugins( pluginInstallHash );
-			setInterval( cronTrigger, 45000 );
-		}
-	}, [ initialize ] );
-
-	useEffect( () => {
-		syncStoreToDB();
-		generateSiteGenData();
-		handlePreviousStepTracking();
-	}, [ location.pathname ] );
-
-	useEffect( () => {
-		if (
-			prevSiteGenErrorStatus.current === true &&
-			siteGenErrorStatus === false
-		) {
-			generateSiteGenData( true );
-			syncStoreToDB();
-		}
-		prevSiteGenErrorStatus.current = siteGenErrorStatus;
-	}, [ siteGenErrorStatus ] );
-
-	useEffect( () => {
-		initializeThemes();
-		initializeSettings();
-		getEditedEntityRecord( 'root', 'site' );
-		updateSiteGenErrorStatus( false );
-	}, [] );
 
 	return (
 		<ThemeProvider>
