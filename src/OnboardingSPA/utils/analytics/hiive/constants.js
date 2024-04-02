@@ -32,6 +32,7 @@ export const ACTION_SITEGEN_HOMEPAGE_FAVORITED = 'homepage_favorited';
 export const ACTION_SITEGEN_HOMEPAGE_RENAMED = 'homepage_renamed';
 export const ACTION_SITEGEN_SIDEBAR_OPENED = 'sidebar_opened';
 export const ACTION_SITEGEN_SITE_GENERATION_TIME = 'site_generation_time';
+export const ACTION_SITEGEN_ERROR_STATE_TRIGGERED = 'error_state_triggered';
 export const CATEGORY = 'wonder_start';
 
 export const ACTION_TO_LABEL_KEY_MAP = {

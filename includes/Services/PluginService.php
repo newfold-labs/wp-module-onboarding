@@ -15,8 +15,6 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 use NewfoldLabs\WP\Module\Onboarding\Data\SiteFeatures;
 
-use function NewfoldLabs\WP\ModuleLoader\container;
-
 /**
  * Class for providing plugin related services.
  */
@@ -32,9 +30,21 @@ class PluginService {
 
 		$flow = Data::current_flow();
 		if ( 'sitegen' === $flow && SiteGenService::is_enabled() ) {
-			$init_plugins = SiteGenService::get_plugin_recommendations();
-			if ( is_wp_error( $init_plugins ) ) {
-				return $init_plugins;
+			$init_plugins = Plugins::get_init();
+
+			// Convert { slug->slug } to hash for faster search
+			// As Php uses array as { [0] -> slug_name } and that won't work with array_key_exists
+			$plugin_slugs = array_column( $init_plugins, 'slug', 'slug' );
+
+			// Iterate and ensure no duplicates are added
+			$default_plugins = SiteGenService::get_plugin_recommendations();
+			if ( is_wp_error( $default_plugins ) ) {
+				return $default_plugins;
+			}
+			foreach ( $default_plugins as $default_plugin ) {
+				if ( ! array_key_exists( $default_plugin['slug'], $plugin_slugs ) ) {
+					$init_plugins[] = $default_plugin;
+				}
 			}
 		} else {
 			// Get the initial list of plugins to be installed based on the plan.
@@ -44,6 +54,9 @@ class PluginService {
 		foreach ( $init_plugins as $init_plugin ) {
 			$init_plugin_type = PluginInstaller::get_plugin_type( $init_plugin['slug'] );
 			$init_plugin_path = PluginInstaller::get_plugin_path( $init_plugin['slug'], $init_plugin_type );
+			if ( ! $init_plugin_path ) {
+				continue;
+			}
 			// Checks if a plugin with the given slug and activation criteria already exists.
 			if ( ! PluginInstaller::is_plugin_installed( $init_plugin_path ) ) {
 					// Add a new PluginInstallTask to the Plugin install queue.
@@ -51,7 +64,7 @@ class PluginService {
 						new PluginInstallTask(
 							$init_plugin['slug'],
 							$init_plugin['activate'],
-							$init_plugin['priority']
+							isset( $init_plugin['priority'] ) ? $init_plugin['priority'] : 0
 						)
 					);
 					continue;
@@ -84,6 +97,9 @@ class PluginService {
 		foreach ( $final_init_plugins as $init_plugin ) {
 			$init_plugin_type = PluginInstaller::get_plugin_type( $init_plugin['slug'] );
 			$init_plugin_path = PluginInstaller::get_plugin_path( $init_plugin['slug'], $init_plugin_type );
+			if ( ! $init_plugin_path ) {
+				continue;
+			}
 			// Checks if a plugin with the given slug and activation criteria already exists.
 			if ( PluginInstaller::is_plugin_installed( $init_plugin_path ) ) {
 					// Add a new PluginInstallTask to the Plugin install queue.
@@ -107,6 +123,9 @@ class PluginService {
 		foreach ( $site_features_unselected as $init_plugin ) {
 			$init_plugin_type = PluginInstaller::get_plugin_type( $init_plugin['slug'] );
 			$init_plugin_path = PluginInstaller::get_plugin_path( $init_plugin['slug'], $init_plugin_type );
+			if ( ! $init_plugin_path ) {
+				continue;
+			}
 			// Checks if a plugin with the given slug and activation criteria already exists.
 			if ( PluginInstaller::is_plugin_installed( $init_plugin_path ) ) {
 					// Add a new PluginDeactivationTask to the Plugin Deactivation queue.
@@ -150,9 +169,9 @@ class PluginService {
 				break;
 			default:
 				if ( '1' === get_transient( Options::get_option_name( 'filter_active_plugins' ) ) ) {
+					delete_transient( Options::get_option_name( 'filter_active_plugins' ) );
 					$flow = Data::current_flow();
 					if ( 'sitegen' !== $flow ) {
-						delete_transient( Options::get_option_name( 'filter_active_plugins' ) );
 						self::activate_init_plugins();
 					}
 				}

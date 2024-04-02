@@ -70,14 +70,14 @@ describe( 'Start Setup WP Experience Page', function () {
 				.eq( radioCount )
 				.click( { force: true } );
 			if ( radioCount == 0 ) {
-				EventsAPI( 'experience_level', 'novice', APIList.get_started_experience_ecomm );
+				EventsAPI( 'experience_level', 'novice', APIList.events_api_ecomm );
 			}
 			if ( radioCount == 1 ) {
-				EventsAPI( 'experience_level', 'intermediate', APIList.get_started_experience_ecomm );
+				EventsAPI( 'experience_level', 'intermediate', APIList.events_api_ecomm );
 			}
 			if ( radioCount > 1 ) {
 				cy.wait( 5000 );
-				EventsAPI( 'experience_level', 'expert', APIList.get_started_experience_ecomm );
+				EventsAPI( 'experience_level', 'expert', APIList.events_api_ecomm );
 			}
 			radioCount += 1;
 		} );

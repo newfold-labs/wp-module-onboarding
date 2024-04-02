@@ -299,7 +299,7 @@ describe( 'Basic Info Page', function () {
 		cy.get( socialTest7 ).type( 'https://www.tiktok.com/testTikTok' );
 
 		cy.wait( 2000 );
-		cy.intercept( APIList.basic_info ).as( 'events' );
+		cy.intercept( APIList.events_api_general_onb ).as( 'events' );
 		cy.get( '.navigation-buttons_next' ).click();
 		BasicInfoAPI( 'basic_info', label_keys, actual_values );
 	} );
