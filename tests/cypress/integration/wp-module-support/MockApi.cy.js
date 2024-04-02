@@ -1,7 +1,7 @@
 const site_config_mock = require( '../../fixtures/site-config.json' );
 const site_classification_mock = require( '../../fixtures/site-classification.json' );
 const target_audience_mock = require( '../../fixtures/target-audience.json' );
-const content_tones_mock = require( '../../fixtures/content-structure.json' );
+const content_tones_mock = require( '../../fixtures/content-tones.json' );
 const content_structure_mock = require( '../../fixtures/content-structure.json' );
 const color_palette_mock = require( '../../fixtures/color-palette.json' );
 const sitemap_mock = require( '../../fixtures/sitemap.json' );
