@@ -1,8 +1,8 @@
 // <reference types="Cypress" />
 
 import { AdminBarCheck, DarkBGCheck, LightBGCheck, ProgressBarCheck } from "../wp-module-support/siteGen.cy";
-import { apiList, homePagesRegenerate } from "../wp-module-support/MockApi.cy";
-const jsonRes = require('../../fixtures/homepage-regenerate.json')
+import { apiList } from "../wp-module-support/MockApi.cy";
+const homepage_regenerate_mock = require('../../fixtures/homepage-regenerate.json')
 
 describe( 'SiteGen Site Preview Step', function () {
     before( () => {
@@ -55,16 +55,15 @@ describe( 'SiteGen Site Preview Step', function () {
         cy.reload();
     } );
 
-    it.skip( 'Check for regenerating the new theme versions', () => {
-        cy.intercept(apiList.homepagesRegenerate, (req) => {
-			homePagesRegenerate( req );
-        }).as('regenerate');
-
+    it( 'Check for regenerating the new theme versions', () => {
+        cy.intercept(apiList.homepagesRegenerate, {
+            statusCode: 200,
+            body: homepage_regenerate_mock
+        })
         cy.get('[aria-label="Regenerate Content"]', {timeout:20000})
             .eq(1)
             .wait(1000)
             .click({force : true})
-        cy.wait('@regenerate', { timeout: 20000 } )
         cy.get('.live-preview-sitegen--selectable-card', {timeout:20000})
             .should('be.visible')
             .should('have.length', 4);
