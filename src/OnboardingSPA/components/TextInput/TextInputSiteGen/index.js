@@ -54,8 +54,8 @@ const TextInputSiteGen = ( {
 		}
 	};
 
-	const getCurrentWordCount = () => {
-		return customerInput?.length ?? 0;
+	const getRemainingCharacterCount = () => {
+		return Math.max( 200 - ( customerInput?.length ?? 0 ), 0 );
 	};
 
 	const onTextChange = ( e ) => {
@@ -96,8 +96,8 @@ const TextInputSiteGen = ( {
 				</div>
 				{
 					<p className={ 'nfd-sg-input-box__count' }>
-						{ getCurrentWordCount() }
-						{ __( ' Characters', 'wp-module-onboarding' ) }
+						{ getRemainingCharacterCount() }
+						{ __( ' Characters left', 'wp-module-onboarding' ) }
 					</p>
 				}
 				<div className={ 'nfd-sg-input-box_bottom' }>
