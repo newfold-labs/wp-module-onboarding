@@ -58,12 +58,18 @@ describe( 'SiteGen Site Preview Step', function () {
     it( 'Check for regenerating the new theme versions', () => {
         cy.intercept(apiList.homepagesRegenerate, {
             statusCode: 200,
-            body: homepage_regenerate_mock
+            body: homepage_regenerate_mock,
+            headers: {
+                'content-type': 'application/json',
+            },
         })
         cy.get('[aria-label="Regenerate Content"]', {timeout:20000})
             .eq(1)
             .wait(1000)
             .click({force : true})
+        cy.get('[aria-label="Regenerate Content"]', {timeout:20000})
+            .eq(2)
+            .scrollIntoView()
         cy.get('.live-preview-sitegen--selectable-card', {timeout:20000})
             .should('be.visible')
             .should('have.length', 4);
