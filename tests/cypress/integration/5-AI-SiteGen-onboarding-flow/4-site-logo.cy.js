@@ -8,7 +8,7 @@ describe( 'SiteGen Site Logo Step', function () {
 		cy.intercept( apiList.sitegen, ( req ) => {
 			siteGenMockAll( req );
 		} ).as( 'sitegenCalls' );
-
+		
 		cy.intercept( apiList.homepages, ( req ) => {
 			homePagesMock( req );
 		} ).as( 'homePageCall' );

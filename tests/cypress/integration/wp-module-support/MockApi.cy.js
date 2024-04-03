@@ -20,23 +20,27 @@ export const apiList = {
 
 export const siteGenMockAll = ( req ) => {
 	const requestBody = req.body;
-	const sitegen_identifiers = ['site_config', 'site_classification', 'target_audience', 'content_tones','content_structure', 'color_palette','sitemap', 'plugin_recommendation', 'font_pair'];
-	const siteGenFixtures = [site_config_mock, site_classification_mock, target_audience_mock, content_tones_mock, content_structure_mock, color_palette_mock, sitemap_mock, plugin_recommendation_mock, font_pair_mock];
+	const sitegen_identifiers = {
+		'site_config': site_config_mock,
+		'site_classification': site_classification_mock,
+		'target_audience': target_audience_mock,
+		'content_tones': content_tones_mock,
+		'content_structure': content_structure_mock,
+		'color_palette': color_palette_mock,
+		'sitemap': sitemap_mock,
+		'plugin_recommendation': plugin_recommendation_mock,
+		'font_pair': font_pair_mock
+	}
 
-	sitegen_identifiers.forEach( ( identifierKey, index ) => {
-		if (
-			requestBody.hasOwnProperty( 'identifier' ) &&
-			requestBody.identifier == identifierKey
-		) {
-			req.reply( {
-				statusCode: 200,
-				body: siteGenFixtures[ index ],
-				headers: {
-					'content-type': 'application/json',
-				},
-			} );
-		}
-	} );
+	if ( sitegen_identifiers.hasOwnProperty( requestBody.identifier ) ) {
+		req.reply( {
+			statusCode: 200,
+			body: sitegen_identifiers[requestBody.identifier],
+			headers: {
+				'content-type': 'application/json',
+			},
+		} );
+	}
 };
 
 export const homePagesMock = ( req ) => {
