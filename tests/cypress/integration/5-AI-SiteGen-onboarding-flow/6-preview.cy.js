@@ -2,7 +2,6 @@
 
 import { AdminBarCheck, DarkBGCheck, LightBGCheck, ProgressBarCheck } from "../wp-module-support/siteGen.cy";
 import { apiList } from "../wp-module-support/MockApi.cy";
-const homepage_regenerate_mock = require('../../fixtures/homepage-regenerate.json')
 
 describe( 'SiteGen Site Preview Step', function () {
     before( () => {
@@ -56,13 +55,6 @@ describe( 'SiteGen Site Preview Step', function () {
     } );
 
     it.skip( 'Check for regenerating the new theme versions', () => {
-        cy.intercept(apiList.homepagesRegenerate, {
-            statusCode: 200,
-            body: homepage_regenerate_mock,
-            headers: {
-                'content-type': 'application/json',
-            },
-        }).as('regenerate')
         cy.get('[aria-label="Regenerate Content"]', {timeout:20000})
             .eq(1)
             .wait(1000)
