@@ -13,9 +13,9 @@ export const apiList = {
 	sitegen:
 		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fsitegen%2Fgenerate&flow=sitegen&_locale=user',
 	homepages:
-    '/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fsitegen%2Fhomepages&flow=sitegen&_locale=user',
-  homepagesRegenerate: 
-    '/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fsitegen%2Fhomepages%2Fregenerate&flow=sitegen&_locale=user'
+		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fsitegen%2Fhomepages&flow=sitegen&_locale=user',
+	homepagesRegenerate:
+		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fsitegen%2Fhomepages%2Fregenerate&flow=sitegen&_locale=user',
 };
 
 export const siteGenMockAll = ( req ) => {
@@ -29,13 +29,13 @@ export const siteGenMockAll = ( req ) => {
 		'color_palette': color_palette_mock,
 		'sitemap': sitemap_mock,
 		'plugin_recommendation': plugin_recommendation_mock,
-		'font_pair': font_pair_mock
-	}
+		'font_pair': font_pair_mock,
+	};
 
 	if ( sitegen_identifiers.hasOwnProperty( requestBody.identifier ) ) {
 		req.reply( {
 			statusCode: 200,
-			body: sitegen_identifiers[requestBody.identifier],
+			body: sitegen_identifiers[ requestBody.identifier ],
 			headers: {
 				'content-type': 'application/json',
 			},

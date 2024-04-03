@@ -1,21 +1,31 @@
 // <reference types="Cypress" />
 
-import { AdminBarCheck, BackButtonCheck, DarkBGCheck, DisabledNextButton, LightBGCheck, ProgressBarCheck, SkipButtonCheck } from '../wp-module-support/siteGen.cy';
-import { apiList, siteGenMockAll, homePagesMock } from '../wp-module-support/MockApi.cy';
+import {
+	AdminBarCheck,
+	BackButtonCheck,
+	DarkBGCheck,
+	DisabledNextButton,
+	LightBGCheck,
+	ProgressBarCheck,
+	SkipButtonCheck,
+} from '../wp-module-support/siteGen.cy';
+import {
+	apiList,
+	siteGenMockAll,
+	homePagesMock,
+} from '../wp-module-support/MockApi.cy';
 
 describe( 'SiteGen Site Logo Step', function () {
 	before( () => {
 		cy.intercept( apiList.sitegen, ( req ) => {
 			siteGenMockAll( req );
 		} ).as( 'sitegenCalls' );
-		
+
 		cy.intercept( apiList.homepages, ( req ) => {
 			homePagesMock( req );
 		} ).as( 'homePageCall' );
 
-		cy.visit(
-			'wp-admin/?page=nfd-onboarding#/sitegen/step/site-logo'
-		);
+		cy.visit( 'wp-admin/?page=nfd-onboarding#/sitegen/step/site-logo' );
 		cy.wait( '@sitegenCalls', { timeout: 60000 } );
 		cy.wait( '@homePageCall', { timeout: 60000 } );
 	} );
