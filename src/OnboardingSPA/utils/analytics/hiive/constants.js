@@ -35,6 +35,7 @@ export const ACTION_SITEGEN_SIDEBAR_OPENED = 'sidebar_opened';
 export const ACTION_SITEGEN_SITE_GENERATION_TIME = 'site_generation_time';
 export const ACTION_SITEGEN_ERROR_STATE_TRIGGERED = 'error_state_triggered';
 export const CATEGORY = 'wonder_start';
+export const CATEGORY_EXPERIMENT = 'experiment';
 
 export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_ONBOARDING_TOP_PRIORITY_SET ]: 'top_priority',
@@ -56,6 +57,7 @@ export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_ONBOARDING_CHAPTER_COMPLETE ]: 'chapter',
 	[ ACTION_SOCIAL_ADDED ]: 'platform',
 	[ ACTION_SITEGEN_FORK_OPTION_SELECTED ]: 'flow',
+	[ ACTION_SITEGEN_FORK_AI_EXPERIMENT ]: 'experiment_version',
 	[ ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET ]: 'prompt',
 	[ ACTION_SITEGEN_SOCIAL_CONNECTED ]: 'platform',
 	[ ACTION_SITEGEN_HOMEPAGE_SELECTED ]: 'version',

@@ -4,6 +4,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 
 // Classes and functions
 import getContents from './contents';
+import { setFlow } from '../../utils/api/flow';
 
 // Components
 import StartOptions from '../../components/StartOptions';
@@ -21,10 +22,13 @@ import {
 	sendOnboardingEvent,
 	trackOnboardingEvent,
 } from '../../utils/analytics/hiive';
+import {
+	ACTION_SITEGEN_FORK_AI_EXPERIMENT,
+	ACTION_SITEGEN_FORK_OPTION_SELECTED,
+	CATEGORY_EXPERIMENT,
+} from '../../utils/analytics/hiive/constants';
 import { store as nfdOnboardingStore } from '../../store';
 import { DEFAULT_FLOW } from '../../data/flows/constants';
-import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
-import { setFlow } from '../../utils/api/flow';
 
 const TheFork = () => {
 	const [ experimentVersion, setExperimentVersion ] = useState();
@@ -59,13 +63,14 @@ const TheFork = () => {
 	} );
 
 	const handleExperimentVersion = async () => {
-		var theForkExperimentVersion = 0;
+		let theForkExperimentVersion = 0;
 		if ( currentData.sitegen.theForkExperimentVersion !== 0 ) {
 			// Use an existing experiment version if it exists
 			setExperimentVersion(
 				currentData.sitegen.theForkExperimentVersion
 			);
-			theForkExperimentVersion = currentData.sitegen.theForkExperimentVersion;
+			theForkExperimentVersion =
+				currentData.sitegen.theForkExperimentVersion;
 		} else {
 			// Generate a random experiment version from 1 to 4
 			theForkExperimentVersion = Math.floor( Math.random() * 5 );
@@ -77,10 +82,14 @@ const TheFork = () => {
 			setCurrentOnboardingData( currentData );
 			await setFlow( currentData );
 		}
+		console.log('Event');
 		sendOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_SITEGEN_FORK_AI_EXPERIMENT,
-				theForkExperimentVersion
+				theForkExperimentVersion,
+				null,
+				null,
+				CATEGORY_EXPERIMENT
 			)
 		);
 	};
