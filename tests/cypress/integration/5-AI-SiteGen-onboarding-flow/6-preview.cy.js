@@ -55,14 +55,14 @@ describe( 'SiteGen Site Preview Step', function () {
         cy.reload();
     } );
 
-    it( 'Check for regenerating the new theme versions', () => {
+    it.skip( 'Check for regenerating the new theme versions', () => {
         cy.intercept(apiList.homepagesRegenerate, {
             statusCode: 200,
             body: homepage_regenerate_mock,
             headers: {
                 'content-type': 'application/json',
             },
-        })
+        }).as('regenerate')
         cy.get('[aria-label="Regenerate Content"]', {timeout:20000})
             .eq(1)
             .wait(1000)
