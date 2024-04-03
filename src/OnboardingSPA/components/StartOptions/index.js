@@ -11,7 +11,7 @@ import {
 } from '../../utils/analytics/hiive';
 import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
 
-const StartOptions = ( { questionnaire, oldFlow, options } ) => {
+const StartOptions = ( { experimentVersion, questionnaire, oldFlow, options } ) => {
 	const navigate = useNavigate();
 	const { brandConfig, hireProUrl, currentData } = useSelect( ( select ) => {
 		return {

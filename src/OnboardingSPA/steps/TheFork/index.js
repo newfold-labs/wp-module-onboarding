@@ -1,29 +1,37 @@
-import CommonLayout from '../../components/Layouts/Common';
-
-import { useEffect } from '@wordpress/element';
+// WordPress
+import { useEffect, useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
-import { store as nfdOnboardingStore } from '../../store';
+// Classes and functions
+import getContents from './contents';
+
+// Components
+import StartOptions from '../../components/StartOptions';
+import CommonLayout from '../../components/Layouts/Common';
+import HeadingWithSubHeading from '../../components/HeadingWithSubHeading/SiteGen/index';
+
+// Misc
 import {
 	FOOTER_SITEGEN,
 	HEADER_SITEGEN,
 	pluginDashboardPage,
 } from '../../../constants';
-
-import { DEFAULT_FLOW } from '../../data/flows/constants';
-import HeadingWithSubHeading from '../../components/HeadingWithSubHeading/SiteGen/index';
-import StartOptions from '../../components/StartOptions';
-import getContents from './contents';
 import {
 	OnboardingEvent,
 	sendOnboardingEvent,
 	trackOnboardingEvent,
 } from '../../utils/analytics/hiive';
+import { store as nfdOnboardingStore } from '../../store';
+import { DEFAULT_FLOW } from '../../data/flows/constants';
 import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
+import { setFlow } from '../../utils/api/flow';
 
 const TheFork = () => {
-	const { migrationUrl } = useSelect( ( select ) => {
+	const [ experimentVersion, setExperimentVersion ] = useState();
+	const { currentData, migrationUrl } = useSelect( ( select ) => {
 		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 			migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
 		};
 	} );
@@ -36,6 +44,7 @@ const TheFork = () => {
 		setIsHeaderNavigationEnabled,
 		setFooterActiveView,
 		setHideFooterNav,
+		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -46,7 +55,28 @@ const TheFork = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		setFooterActiveView( FOOTER_SITEGEN );
+		handleExperimentVersion();
 	} );
+
+	const handleExperimentVersion = async () => {
+		// theForkExperimentVersion
+		if ( currentData.sitegen.theForkExperimentVersion !== 0 ) {
+			// Use an existing experiment version if it exists
+			setExperimentVersion(
+				currentData.sitegen.theForkExperimentVersion
+			);
+		} else {
+			// Generate a random experiment version from 1 to 4
+			const randomExperimentVersion = Math.floor( Math.random() * 5 );
+			setExperimentVersion( randomExperimentVersion );
+
+			// Sync that to the store and DB for same version on refresh
+			currentData.sitegen.theForkExperimentVersion =
+				randomExperimentVersion;
+			setCurrentOnboardingData( currentData );
+			await setFlow( currentData );
+		}
+	};
 
 	const oldFlow = window.nfdOnboarding?.oldFlow
 		? window.nfdOnboarding.oldFlow
@@ -73,6 +103,7 @@ const TheFork = () => {
 				subtitle={ content.subheading }
 			/>
 			<StartOptions
+				experimentVersion={ experimentVersion }
 				questionnaire={ content.questionnaire }
 				oldFlow={ oldFlow }
 				options={ content.options }
