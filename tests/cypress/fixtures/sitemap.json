@@ -1,0 +1,68 @@
+[
+    {
+        "slug": "home",
+        "path": "\/",
+        "title": "Asana Yoga Studio",
+        "keywords": [
+            "yoga studio",
+            "Cocoa Beach",
+            "Florida",
+            "sustainability",
+            "yoga mats",
+            "eco-conscious suppliers"
+        ]
+    },
+    {
+        "slug": "classes",
+        "path": "\/classes",
+        "title": "Yoga Classes",
+        "keywords": [
+            "yoga classes",
+            "Cocoa Beach",
+            "Florida"
+        ]
+    },
+    {
+        "slug": "attire",
+        "path": "\/attire",
+        "title": "Yoga Attire",
+        "keywords": [
+            "yoga attire",
+            "Cocoa Beach",
+            "Florida"
+        ]
+    },
+    {
+        "slug": "accessories",
+        "path": "\/accessories",
+        "title": "Yoga Accessories",
+        "keywords": [
+            "yoga accessories",
+            "Cocoa Beach",
+            "Florida"
+        ]
+    },
+    {
+        "slug": "about",
+        "path": "\/about",
+        "title": "About Us",
+        "keywords": [
+            "about us",
+            "yoga studio",
+            "Cocoa Beach",
+            "Florida",
+            "sustainability"
+        ]
+    },
+    {
+        "slug": "contact",
+        "path": "\/contact",
+        "title": "Contact Us",
+        "keywords": [
+            "contact us",
+            "yoga studio",
+            "Cocoa Beach",
+            "Florida"
+        ]
+    }
+]

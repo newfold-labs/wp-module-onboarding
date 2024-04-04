@@ -1,0 +1,23 @@
+{
+    "primaryType": "business",
+    "slug": "shopping-retail",
+    "emoji": "\ud83c\udfec",
+    "wooType": "other",
+    "schema": "Store",
+    "keywords": [
+        "commerce",
+        "brick-and-mortar",
+        "discounts",
+        "coupons",
+        "customer",
+        "product",
+        "loyalty",
+        "inventory",
+        "shipping",
+        "returns",
+        "cross-sell",
+        "upsell",
+        "gift cards"
+    ],
+    "label": "Shopping & Retail"
+}
