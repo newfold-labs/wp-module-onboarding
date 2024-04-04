@@ -14,7 +14,7 @@ export class OnboardingEvent extends HiiveEvent {
 				...additionalData,
 				page: page ? page : window.location.href,
 			},
-			category ? category : CATEGORY,
+			category ? category : CATEGORY
 		);
 	}
 }

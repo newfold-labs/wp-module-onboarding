@@ -94,7 +94,7 @@ const TheFork = () => {
 		sendOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_SITEGEN_FORK_AI_EXPERIMENT,
-				experimentVersionNames[theForkExperimentVersion],
+				experimentVersionNames[ theForkExperimentVersion ],
 				null,
 				null,
 				CATEGORY_EXPERIMENT

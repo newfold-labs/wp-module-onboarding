@@ -23,6 +23,7 @@
 
 		&__options {
 			flex: 1;
+			position: relative;
 			min-width: 310px;
 			height: 130px;
 			border: 1px solid #9ca2a7;
@@ -60,7 +61,13 @@
 			}
 
 			&--badge {
-				background-color: red;
+				top: -12px;
+				font-size: 16px;
+				padding: 8px 12px;
+				border-radius: 4px;
+				position: absolute;
+				background: linear-gradient(0deg, #f36, #f36);
+
 			}
 		}
 

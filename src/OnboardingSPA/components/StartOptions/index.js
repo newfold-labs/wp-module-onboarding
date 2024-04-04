@@ -1,4 +1,5 @@
 // WordPress
+import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { memo, useEffect, useState } from '@wordpress/element';
 
@@ -15,7 +16,6 @@ import {
 import { SITEGEN_FLOW } from '../../data/flows/constants';
 import { store as nfdOnboardingStore } from '../../store';
 import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
-import classNames from 'classnames';
 
 const StartOptions = ( {
 	experimentVersion,
@@ -53,7 +53,6 @@ const StartOptions = ( {
 		) {
 			// Swap the DIY flow with the AI Flow
 			[ options[ 0 ], options[ 1 ] ] = [ options[ 1 ], options[ 0 ] ];
-			setForkOptions( options );
 		}
 
 		if (
@@ -63,6 +62,7 @@ const StartOptions = ( {
 			// Show a Badge in the AI Option
 			setShowAIRecommendedBadge( true );
 		}
+		setForkOptions( options );
 	}, [ experimentVersion ] );
 
 	const switchFlow = ( newFlow ) => {
@@ -134,12 +134,9 @@ const StartOptions = ( {
 						}
 						return (
 							<div
-								className={ classNames(
-									'nfd-onboarding-sitegen-options__container__options',
-									tab.flow === SITEGEN_FLOW &&
-										showAIRecommendedBadge &&
-										'nfd-onboarding-sitegen-options__container__options--badge'
-								) }
+								className={
+									'nfd-onboarding-sitegen-options__container__options'
+								}
 								key={ idx }
 								role="button"
 								tabIndex={ 0 }
@@ -152,6 +149,19 @@ const StartOptions = ( {
 									}
 								} }
 							>
+								{ tab.flow === SITEGEN_FLOW &&
+									showAIRecommendedBadge && (
+										<div
+											className={
+												'nfd-onboarding-sitegen-options__container__options--badge'
+											}
+										>
+											{ __(
+												'Recommended',
+												'wp-module-onboarding'
+											) }
+										</div>
+									) }
 								<h3 className="nfd-onboarding-sitegen-options__container__heading__title">
 									{ tab.span && (
 										<span className="nfd-onboarding-sitegen-options__container__options__span">
