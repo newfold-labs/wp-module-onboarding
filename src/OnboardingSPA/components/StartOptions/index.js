@@ -1,18 +1,33 @@
-import { SITEGEN_FLOW } from '../../data/flows/constants';
-import { resolveGetDataForFlow } from '../../data/flows';
+// WordPress
 import { useSelect, useDispatch } from '@wordpress/data';
-import { validateFlow } from '../../data/flows/utils';
+import { memo, useEffect, useState } from '@wordpress/element';
+
+// Classes and functions
 import { useNavigate } from 'react-router-dom';
-import { memo } from '@wordpress/element';
-import { store as nfdOnboardingStore } from '../../store';
+import { validateFlow } from '../../data/flows/utils';
+import { resolveGetDataForFlow } from '../../data/flows';
+
+// Misc
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
 } from '../../utils/analytics/hiive';
+import { SITEGEN_FLOW } from '../../data/flows/constants';
+import { store as nfdOnboardingStore } from '../../store';
 import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
+import classNames from 'classnames';
 
-const StartOptions = ( { experimentVersion, questionnaire, oldFlow, options } ) => {
+const StartOptions = ( {
+	experimentVersion,
+	questionnaire,
+	oldFlow,
+	options,
+} ) => {
 	const navigate = useNavigate();
+	const [ forkOptions, setForkOptions ] = useState( [] );
+	const [ showAIRecommendedBadge, setShowAIRecommendedBadge ] =
+		useState( false );
+
 	const { brandConfig, hireProUrl, currentData } = useSelect( ( select ) => {
 		return {
 			brandConfig: select( nfdOnboardingStore ).getNewfoldBrandConfig(),
@@ -30,6 +45,25 @@ const StartOptions = ( { experimentVersion, questionnaire, oldFlow, options } ) 
 		updateInitialize,
 		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
+
+	useEffect( () => {
+		if (
+			experimentVersion &&
+			( experimentVersion === 2 || experimentVersion === 4 )
+		) {
+			// Swap the DIY flow with the AI Flow
+			[ options[ 0 ], options[ 1 ] ] = [ options[ 1 ], options[ 0 ] ];
+			setForkOptions( options );
+		}
+
+		if (
+			experimentVersion &&
+			( experimentVersion === 3 || experimentVersion === 4 )
+		) {
+			// Show a Badge in the AI Option
+			setShowAIRecommendedBadge( true );
+		}
+	}, [ experimentVersion ] );
 
 	const switchFlow = ( newFlow ) => {
 		if ( ! validateFlow( brandConfig, newFlow ) ) {
@@ -81,51 +115,60 @@ const StartOptions = ( { experimentVersion, questionnaire, oldFlow, options } ) 
 			);
 		}
 	};
+
 	return (
-		<div className="">
-			<p className="nfd-onboarding-sitegen-options__questionnaire">
-				{ questionnaire }
-			</p>
-			<div className="nfd-onboarding-sitegen-options__container">
-				{ options.map( ( tab, idx ) => {
-					if (
-						tab.flow === SITEGEN_FLOW &&
-						! validateFlow( brandConfig, tab.flow )
-					) {
-						// Do not show the Sitegen AI option if not enabled for the customer
-						return false;
-					}
-					return (
-						<div
-							className="nfd-onboarding-sitegen-options__container__options"
-							key={ idx }
-							role="button"
-							tabIndex={ 0 }
-							onClick={ () => {
-								selectFlow( tab.flow );
-							} }
-							onKeyDown={ () => {
-								{
-									selectFlow( tab.flow );
-								}
-							} }
-						>
-							<h3 className="nfd-onboarding-sitegen-options__container__heading__title">
-								{ tab.span && (
-									<span className="nfd-onboarding-sitegen-options__container__options__span">
-										{ tab.span }
-									</span>
+		experimentVersion &&
+		forkOptions && (
+			<div className="">
+				<p className="nfd-onboarding-sitegen-options__questionnaire">
+					{ questionnaire }
+				</p>
+				<div className="nfd-onboarding-sitegen-options__container">
+					{ forkOptions.map( ( tab, idx ) => {
+						if (
+							tab.flow === SITEGEN_FLOW &&
+							! validateFlow( brandConfig, tab.flow )
+						) {
+							// Do not show the Sitegen AI option if not enabled for the customer
+							return false;
+						}
+						return (
+							<div
+								className={ classNames(
+									'nfd-onboarding-sitegen-options__container__options',
+									tab.flow === SITEGEN_FLOW &&
+										showAIRecommendedBadge &&
+										'nfd-onboarding-sitegen-options__container__options--badge'
 								) }
-								{ tab.title }
-							</h3>
-							<p className="nfd-onboarding-sitegen-options__container__heading__subtitle">
-								{ tab.subtitle }
-							</p>
-						</div>
-					);
-				} ) }
+								key={ idx }
+								role="button"
+								tabIndex={ 0 }
+								onClick={ () => {
+									selectFlow( tab.flow );
+								} }
+								onKeyDown={ () => {
+									{
+										selectFlow( tab.flow );
+									}
+								} }
+							>
+								<h3 className="nfd-onboarding-sitegen-options__container__heading__title">
+									{ tab.span && (
+										<span className="nfd-onboarding-sitegen-options__container__options__span">
+											{ tab.span }
+										</span>
+									) }
+									{ tab.title }
+								</h3>
+								<p className="nfd-onboarding-sitegen-options__container__heading__subtitle">
+									{ tab.subtitle }
+								</p>
+							</div>
+						);
+					} ) }
+				</div>
 			</div>
-		</div>
+		)
 	);
 };
 

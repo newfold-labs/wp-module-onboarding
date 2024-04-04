@@ -74,6 +74,7 @@ const TheFork = () => {
 		} else {
 			// Generate a random experiment version from 1 to 4
 			theForkExperimentVersion = Math.floor( Math.random() * 5 );
+			theForkExperimentVersion = 4;
 			setExperimentVersion( theForkExperimentVersion );
 
 			// Sync that to the store and DB for same version on refresh
@@ -82,11 +83,18 @@ const TheFork = () => {
 			setCurrentOnboardingData( currentData );
 			await setFlow( currentData );
 		}
-		console.log('Event');
+		const experimentVersionNames = {
+			1: 'control',
+			2: 'position',
+			3: 'badge',
+			4: 'position_badge',
+		};
+
+		// Send an event for the experiment version shown to the user.
 		sendOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_SITEGEN_FORK_AI_EXPERIMENT,
-				theForkExperimentVersion,
+				experimentVersionNames[theForkExperimentVersion],
 				null,
 				null,
 				CATEGORY_EXPERIMENT
