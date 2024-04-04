@@ -1,0 +1,41 @@
+.nfd-onboarding-step--site-gen__migration {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-weight: 500;
+  .description{
+    font-size: 18px;
+    color: var(--nfd-onboarding-primary);
+    margin: 50px 0;
+  }
+  .nfd-onboarding-step--site-gen__migration__contain {
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    gap: 16px;
+    padding: 24px;
+    background-color: var(--nfd-onboarding-card-background);
+    justify-content: center;
+    width: 436px;
+    .importtext{
+      color: var(--nfd-onboarding-primary);
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .nfd-onboarding-step--site-gen__migration__loader {
+      border: 5px solid var(--nfd-onboarding-progress-bar-background);
+      border-top: 5px solid var(--nfd-onboarding-progress-bar-fill);
+      border-radius: 50%;
+      width: 29px;
+      height: 28px;
+      animation: spin 2s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  }
+
+}

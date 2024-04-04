@@ -16,6 +16,7 @@ import StepNavigation from './step-navigation';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { findIndex } from 'lodash';
+import { stepMigration } from '../../../../steps/SiteGen/Migration/step';
 
 /**
  * Interface header rendered into header render prop in <InterfaceSkeleton />.
@@ -23,16 +24,16 @@ import { findIndex } from 'lodash';
  * @return {WPComponent} Header
  */
 const SiteGenHeader = () => {
-	const { isHeaderNavigationEnabled, currentStep, allSteps } = useSelect(
-		( select ) => {
+	const { isHeaderNavigationEnabled, currentStep, allSteps, currentRoute } =
+		useSelect( ( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+				currentRoute: select( nfdOnboardingStore ).getCurrentStepPath(),
 				isHeaderNavigationEnabled:
 					select( nfdOnboardingStore ).isHeaderNavigationEnabled(),
 				allSteps: select( nfdOnboardingStore ).getAllSteps(),
 			};
-		}
-	);
+		} );
 
 	const currentStepIndex = findIndex( allSteps, {
 		path: currentStep?.path,
@@ -45,9 +46,10 @@ const SiteGenHeader = () => {
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_TOP }` }>
 				<>
 					<AdminBar />
-					{ currentStep !== stepTheFork && (
-						<ProgressBar progress={ progress } />
-					) }
+					{ currentStep !== stepTheFork &&
+						currentRoute !== stepMigration.path && (
+							<ProgressBar progress={ progress } />
+						) }
 				</>
 			</Fill>
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_START }` }>

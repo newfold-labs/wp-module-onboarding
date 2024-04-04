@@ -20,6 +20,7 @@ import {
 	trackOnboardingEvent,
 } from '../../utils/analytics/hiive';
 import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
+import { useNavigate } from 'react-router-dom';
 
 const TheFork = () => {
 	const { migrationUrl } = useSelect( ( select ) => {
@@ -63,6 +64,8 @@ const TheFork = () => {
 		window.location.replace( pluginDashboardPage );
 	};
 	const content = getContents();
+	const navigate = useNavigate();
+
 	return (
 		<CommonLayout
 			isCentered
@@ -80,22 +83,23 @@ const TheFork = () => {
 			<br />
 			<br />
 			{ migrationUrl && (
-				<a
+				<div
 					className="nfd-onboarding-step--site-gen__fork__importsite"
-					href={ migrationUrl }
-					target={ '_blank' }
-					rel={ 'noreferrer' }
-					onClick={ () =>
+					// href={ migrationUrl }
+					// target={ '_blank' }
+					// rel={ 'noreferrer' }
+					onClick={ () => {
+						navigate( '/sitegen/step/migration' );
 						trackOnboardingEvent(
 							new OnboardingEvent(
 								ACTION_SITEGEN_FORK_OPTION_SELECTED,
 								'MIGRATE'
 							)
-						)
-					}
+						);
+					} }
 				>
 					{ content.importtext }
-				</a>
+				</div>
 			) }
 			<span
 				role="button"
