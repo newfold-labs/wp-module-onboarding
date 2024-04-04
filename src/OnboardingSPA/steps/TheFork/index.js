@@ -74,7 +74,6 @@ const TheFork = () => {
 		} else {
 			// Generate a random experiment version from 1 to 4
 			theForkExperimentVersion = Math.floor( Math.random() * 5 );
-			theForkExperimentVersion = 4;
 			setExperimentVersion( theForkExperimentVersion );
 
 			// Sync that to the store and DB for same version on refresh
