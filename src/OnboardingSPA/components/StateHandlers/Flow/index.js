@@ -1,22 +1,15 @@
+// WordPress
 import { useEffect, useState } from '@wordpress/element';
-import { useLocation } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { getFragment } from '@wordpress/url';
+
+// Third-party
+import { useLocation } from 'react-router-dom';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 
-import { store as nfdOnboardingStore } from '../../../store';
+// Classes and functions
 import { switchFlow } from '../../../utils/api/flow';
-import { MAX_RETRIES_FLOW_SWITCH } from '../../../../constants';
-import {
-	DEFAULT_FLOW,
-	ECOMMERCE_FLOW,
-	SITEGEN_FLOW,
-} from '../../../data/flows/constants';
 import { removeQueryParam } from '../../../utils';
-import { commerce } from '../../../chapters/commerce';
-import EcommerceStepLoader from '../../Loaders/Step/Ecommerce';
-import SiteBuild from '../../NewfoldInterfaceSkeleton/SiteBuild';
-import SiteGen from '../../NewfoldInterfaceSkeleton/SiteGen';
 import {
 	validateFlow,
 	removeFromAllSteps,
@@ -24,10 +17,24 @@ import {
 	removeFromRoutes,
 } from '../../../data/flows/utils';
 import { resolveGetDataForFlow } from '../../../data/flows';
+
+// Components
+import EcommerceStepLoader from '../../Loaders/Step/Ecommerce';
+import SiteBuild from '../../NewfoldInterfaceSkeleton/SiteBuild';
+import SiteGen from '../../NewfoldInterfaceSkeleton/SiteGen';
+
+// Misc
+import { store as nfdOnboardingStore } from '../../../store';
+import { MAX_RETRIES_FLOW_SWITCH } from '../../../../constants';
+import {
+	DEFAULT_FLOW,
+	ECOMMERCE_FLOW,
+	SITEGEN_FLOW,
+} from '../../../data/flows/constants';
+import { commerce } from '../../../chapters/commerce';
 import { stepTheFork } from '../../../steps/TheFork/step';
 
 const FlowStateHandler = () => {
-	const location = useLocation();
 	const [ newFlow, setNewFlow ] = useState( false );
 
 	const { brandConfig, onboardingFlow } = useSelect( ( select ) => {
@@ -47,7 +54,23 @@ const FlowStateHandler = () => {
 		updateAllSteps,
 		updateTopSteps,
 		updateRoutes,
+		updateInitialize,
 	} = useDispatch( nfdOnboardingStore );
+
+	const location = useLocation();
+
+	useEffect( () => {
+		if ( window.nfdOnboarding?.newFlow ) {
+			const flow = window.nfdOnboarding.newFlow;
+			disableNavigation();
+			setNewFlow( flow );
+			switchToNewFlow( flow );
+			window.nfdOnboarding.newFlow = undefined;
+		} else if ( location.pathname.includes( '/step' ) ) {
+			setActiveFlow( onboardingFlow );
+			setActiveStep( location.pathname );
+		}
+	}, [ location.pathname ] );
 
 	const handleCommerceFlow = async ( flow, retries = 0 ) => {
 		if ( retries >= MAX_RETRIES_FLOW_SWITCH ) {
@@ -110,21 +133,9 @@ const FlowStateHandler = () => {
 				stepTheFork,
 			] );
 			updateRoutes( updateRoute.routes );
+			updateInitialize( true );
 		}
 	};
-
-	useEffect( () => {
-		if ( window.nfdOnboarding?.newFlow ) {
-			const flow = window.nfdOnboarding.newFlow;
-			disableNavigation();
-			setNewFlow( flow );
-			switchToNewFlow( flow );
-			window.nfdOnboarding.newFlow = undefined;
-		} else if ( location.pathname.includes( '/step' ) ) {
-			setActiveFlow( onboardingFlow );
-			setActiveStep( location.pathname );
-		}
-	}, [ location.pathname ] );
 
 	// TODO: Remove handleRender and replace with only children once Chapter Prioritization is enabled.
 	const handleRender = () => {
