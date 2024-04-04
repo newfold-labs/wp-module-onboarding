@@ -4,7 +4,6 @@ import { siteGenCore } from '../../chapters/siteGen/core';
 import { errorPage } from '../../pages/ErrorPage/page';
 import { indexPage } from '../../pages/IndexPage/page';
 import { stepSiteGenWelcome } from '../../steps/SiteGen/Welcome/step';
-import { stepMigration } from '../../steps/SiteGen/Migration/step';
 import { stepTheFork } from '../../steps/TheFork/step';
 
 export const pages = [ indexPage, errorPage ];
@@ -25,7 +24,7 @@ export const getSteps = ( chapters = initialChapters ) => {
 
 export const getRoutes = ( chapters = initialChapters ) => {
 	let routes = [ ...pages ];
-	routes.push( stepTheFork, stepSiteGenWelcome, stepMigration );
+	routes.push( stepTheFork, stepSiteGenWelcome );
 	chapters.forEach( ( chapter ) => {
 		routes = routes.concat( [
 			...chapter.steps,

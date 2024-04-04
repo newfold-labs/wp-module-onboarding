@@ -55,6 +55,7 @@ import { stepTheFork } from '../../../steps/TheFork/step';
 import { ThemeProvider } from '../../ThemeContextProvider';
 import themeToggleHOC from '../themeToggleHOC';
 import Footer from '../../Footer';
+import { stepMigration } from '../../../steps/SiteGen/Migration/step';
 
 const SiteBuild = () => {
 	const location = useLocation();
@@ -67,6 +68,7 @@ const SiteBuild = () => {
 		onboardingFlow,
 		currentData,
 		currentStep,
+		currentRoute,
 		lastChapter,
 		socialData,
 		firstStep,
@@ -99,6 +101,7 @@ const SiteBuild = () => {
 				initialize: select( nfdOnboardingStore ).getInitialize(),
 				pluginInstallHash:
 					select( nfdOnboardingStore ).getPluginInstallHash(),
+				currentRoute: select( nfdOnboardingStore ).getCurrentStepPath(),
 			};
 		},
 		[ location.pathname ]
@@ -431,6 +434,7 @@ const SiteBuild = () => {
 
 	const isForkStep =
 		currentStep === stepTheFork ||
+		currentRoute === stepMigration.path ||
 		window.nfdOnboarding.currentFlow === 'sitegen';
 	// wrapping the NewfoldInterfaceSkeleton with the HOC to make 'theme' available
 	const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
