@@ -94,12 +94,12 @@ const TextInputSiteGen = ( {
 						onChange={ ( e ) => onTextChange( e ) }
 					/>
 				</div>
-				{
+				{ getRemainingCharacterCount() > 0 && (
 					<p className={ 'nfd-sg-input-box__count' }>
 						{ getRemainingCharacterCount() }
 						{ __( ' Characters left', 'wp-module-onboarding' ) }
 					</p>
-				}
+				) }
 				<div className={ 'nfd-sg-input-box_bottom' }>
 					{ customerInput ? (
 						<div className={ 'nfd-sg-input-box__info' }>
