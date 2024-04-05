@@ -81,24 +81,24 @@ const TheFork = () => {
 				theForkExperimentVersion;
 			setCurrentOnboardingData( currentData );
 			await setFlow( currentData );
-		}
-		const experimentVersionNames = {
-			1: 'control',
-			2: 'position',
-			3: 'badge',
-			4: 'position_badge',
-		};
+			const experimentVersionNames = {
+				1: 'control',
+				2: 'position',
+				3: 'badge',
+				4: 'position_badge',
+			};
 
-		// Send an event for the experiment version shown to the user.
-		trackOnboardingEvent(
-			new OnboardingEvent(
-				ACTION_SITEGEN_FORK_AI_EXPERIMENT,
-				experimentVersionNames[ theForkExperimentVersion ],
-				null,
-				null,
-				CATEGORY_EXPERIMENT
-			)
-		);
+			// Send an event for the experiment version shown to the user.
+			sendOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_SITEGEN_FORK_AI_EXPERIMENT,
+					experimentVersionNames[ theForkExperimentVersion ],
+					null,
+					null,
+					CATEGORY_EXPERIMENT
+				)
+			);
+		}
 	};
 
 	const oldFlow = window.nfdOnboarding?.oldFlow
