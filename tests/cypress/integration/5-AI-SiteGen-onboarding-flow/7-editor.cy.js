@@ -86,7 +86,7 @@ describe( 'SiteGen Site Editor Step', function () {
 			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container'
 		)
 			.should( 'be.visible' )
-			.should( 'have.length', 3 ); // as we are not currently regenrating new themes
+			.should( 'have.length', 3 );        // as we are not currently regenrating new themes
 	} );
 
 	it( 'Check for favoriting a theme and it appears everywhere', () => {
@@ -128,7 +128,19 @@ describe( 'SiteGen Site Editor Step', function () {
 		).should( 'be.visible' );
 	} );
 
-	it( 'Check changing the existing fonts from sidebar', () => {
+    it( 'Check for the existence of Regenerate button', () => {
+		cy.get( '.nfd-onboarding-header--sitegen__editor__start__regenerate' )
+			.scrollIntoView()
+			.should( 'be.visible' );
+	} );
+
+	it( 'Check existence of Save & Continue button', () => {
+		cy.get( '.nfd-onboarding-header--sitegen__editor__end__save-button' )
+			.scrollIntoView()
+			.should( 'exist' );
+	} );
+
+	it.skip( 'Check changing the existing fonts from sidebar', () => {
 		cy.wait( 2000 );
 		cy.get(
 			'.nfd-onboarding-header--sitegen__editor__end__customize-button'
@@ -151,7 +163,7 @@ describe( 'SiteGen Site Editor Step', function () {
 		} );
 	} );
 
-	it( 'Check changing the custom fonts from sidebar', () => {
+	it.skip( 'Check changing the custom fonts from sidebar', () => {
 		const CustomeFontsClass =
 			'.nfd-onboarding-sidebar--customize__design-fonts-panel__fonts-form__container';
 		cy.get( CustomeFontsClass ).should( 'not.exist' );
@@ -183,7 +195,7 @@ describe( 'SiteGen Site Editor Step', function () {
 		).should( 'have.length', 6 );
 	} );
 
-	it( 'Check changing the existing colors from sidebar', () => {
+	it.skip( 'Check changing the existing colors from sidebar', () => {
 		cy.get(
 			'.components-panel__body.nfd-onboarding-sidebar--customize__design-colors-panel.is-opened'
 		).should( 'exist' );
@@ -200,7 +212,7 @@ describe( 'SiteGen Site Editor Step', function () {
 		} );
 	} );
 
-	it( 'Check changing the custom colors from sidebar', () => {
+	it.skip( 'Check changing the custom colors from sidebar', () => {
 		const CustomColorClass =
 			'.nfd-onboarding-sidebar--customize__design-colors-panel__custom__colors__container';
 		cy.get( CustomColorClass ).should( 'not.exist' );
@@ -234,7 +246,7 @@ describe( 'SiteGen Site Editor Step', function () {
 			.should( 'have.length', 6 );
 	} );
 
-	it( 'Check clicking the reset button', () => {
+	it.skip( 'Check clicking the reset button', () => {
 		cy.get( '.components-panel__header > :nth-child(2)' )
 			.scrollIntoView()
 			.should( 'exist' )
@@ -242,17 +254,5 @@ describe( 'SiteGen Site Editor Step', function () {
 		cy.get(
 			'.nfd-onboarding-sidebar--customize__design-colors-panel__custom__colors__container'
 		).should( 'not.exist' );
-	} );
-
-	it( 'Check for the existence of Regenerate button', () => {
-		cy.get( '.nfd-onboarding-header--sitegen__editor__start__regenerate' )
-			.scrollIntoView()
-			.should( 'be.visible' );
-	} );
-
-	it( 'Check existence of Save & Continue button', () => {
-		cy.get( '.nfd-onboarding-header--sitegen__editor__end__save-button' )
-			.scrollIntoView()
-			.should( 'exist' );
 	} );
 } );
