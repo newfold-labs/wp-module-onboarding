@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { __ } from '@wordpress/i18n';
 import { useRef, useEffect, useState, memo } from '@wordpress/element';
+import getContents from './contents';
 
 const TextInputSiteGen = ( {
 	hint,
@@ -13,9 +14,12 @@ const TextInputSiteGen = ( {
 	setCustomerInputStrength,
 	customChildren = false,
 } ) => {
+	const content = getContents();
 	const textareaRef = useRef( null );
 	const [ analysisScore, setAnalysisScore ] = useState( 0 );
 	const [ inputText, setInputText ] = useState( 'nfd-sg-input-box__field' );
+	const [ remainingCharacterCount, setRemainingCharacterCount ] =
+		useState( 0 );
 
 	useEffect( () => {
 		textareaRef.current.style.height = height;
@@ -25,6 +29,9 @@ const TextInputSiteGen = ( {
 		setAnalysisScore( analysisResult );
 		setCustomerInputStrength( analysisResult );
 		setIsValidInput( analysisResult >= 2 );
+		setRemainingCharacterCount(
+			Math.max( 200 - ( customerInput?.length ?? 0 ), 0 )
+		);
 	}, [ customerInput ] );
 
 	const calculateAnalysisScore = ( input ) => {
@@ -52,10 +59,6 @@ const TextInputSiteGen = ( {
 		if ( num <= analysisScore ) {
 			return selectedButton;
 		}
-	};
-
-	const getRemainingCharacterCount = () => {
-		return Math.max( 200 - ( customerInput?.length ?? 0 ), 0 );
 	};
 
 	const onTextChange = ( e ) => {
@@ -94,10 +97,9 @@ const TextInputSiteGen = ( {
 						onChange={ ( e ) => onTextChange( e ) }
 					/>
 				</div>
-				{ getRemainingCharacterCount() > 0 && (
+				{ remainingCharacterCount > 0 && (
 					<p className={ 'nfd-sg-input-box__count' }>
-						{ getRemainingCharacterCount() }
-						{ __( ' Characters left', 'wp-module-onboarding' ) }
+						{ `${ remainingCharacterCount } ${ content.characterCount }` }
 					</p>
 				) }
 				<div className={ 'nfd-sg-input-box_bottom' }>
