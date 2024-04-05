@@ -55,6 +55,7 @@ const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(
 
 const SiteGen = () => {
 	const [ failedSiteMetaAPIs, setFailedSiteMetaAPIs ] = useState( [] );
+	const [ isGeneratingSiteMeta, setIsGeneratingSiteMeta ] = useState( false );
 
 	const {
 		currentData,
@@ -191,6 +192,7 @@ const SiteGen = () => {
 
 			if ( siteGenErrorStatus === false ) {
 				updateSiteGenErrorStatus( true );
+				setIsGeneratingSiteMeta( false );
 			}
 
 			if ( window.nfdOnboarding.siteGenTimerInterval ) {
@@ -208,7 +210,7 @@ const SiteGen = () => {
 			} );
 		}
 
-		// A Identifier request was sucessfuly made with valid response
+		// A Identifier request was successfully made with valid response
 		currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
 
 		if (
@@ -217,7 +219,8 @@ const SiteGen = () => {
 		) {
 			// Once all requests are completed use cache to get data
 			currentData.sitegen.skipCache = false;
-
+			// Increase count after site meta calls to ensure systematic call of homepages
+			currentData.sitegen.siteGenMetaStatus.totalCount += 1;
 			// Get the homepages and set that in flow
 			const response = await getHomepages(
 				currentData.sitegen.siteDetails.prompt
@@ -225,6 +228,8 @@ const SiteGen = () => {
 
 			if ( response.body ) {
 				currentData.sitegen.homepages.data = response.body;
+				currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
+				setIsGeneratingSiteMeta( false );
 			}
 		}
 		// Sync the current request changed to State
@@ -235,6 +240,7 @@ const SiteGen = () => {
 		// Start the API Requests when the loader is shown.
 		if (
 			true === siteGenErrorStatus ||
+			true === isGeneratingSiteMeta ||
 			( ! location.pathname.includes( 'site-logo' ) &&
 				! location.pathname.includes( 'experience' ) )
 		) {
@@ -248,6 +254,8 @@ const SiteGen = () => {
 		) {
 			return;
 		}
+
+		setIsGeneratingSiteMeta( true );
 
 		if ( ! window.nfdOnboarding?.siteGenTimerInterval ) {
 			window.nfdOnboarding.siteGenTime = 0;
