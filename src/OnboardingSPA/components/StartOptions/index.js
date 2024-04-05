@@ -1,5 +1,4 @@
 // WordPress
-import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { memo, useEffect, useState } from '@wordpress/element';
 
@@ -16,6 +15,7 @@ import {
 import { SITEGEN_FLOW } from '../../data/flows/constants';
 import { store as nfdOnboardingStore } from '../../store';
 import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
+import getContents from './contents';
 
 const StartOptions = ( {
 	experimentVersion,
@@ -23,6 +23,7 @@ const StartOptions = ( {
 	oldFlow,
 	options,
 } ) => {
+	const content = getContents();
 	const navigate = useNavigate();
 	const [ forkOptions, setForkOptions ] = useState( [] );
 	const [ showAIRecommendedBadge, setShowAIRecommendedBadge ] =
@@ -156,10 +157,7 @@ const StartOptions = ( {
 												'nfd-onboarding-sitegen-options__container__options--badge'
 											}
 										>
-											{ __(
-												'Recommended',
-												'wp-module-onboarding'
-											) }
+											{ content.badge }
 										</div>
 									) }
 								<h3 className="nfd-onboarding-sitegen-options__container__heading__title">
