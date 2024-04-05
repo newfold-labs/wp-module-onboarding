@@ -14,12 +14,12 @@ const TextInputSiteGen = ( {
 	setCustomerInputStrength,
 	customChildren = false,
 } ) => {
+	const content = getContents();
 	const textareaRef = useRef( null );
 	const [ analysisScore, setAnalysisScore ] = useState( 0 );
 	const [ inputText, setInputText ] = useState( 'nfd-sg-input-box__field' );
 	const [ remainingCharacterCount, setRemainingCharacterCount ] =
 		useState( 0 );
-	const content = getContents( remainingCharacterCount );
 
 	useEffect( () => {
 		textareaRef.current.style.height = height;
@@ -99,7 +99,7 @@ const TextInputSiteGen = ( {
 				</div>
 				{ remainingCharacterCount > 0 && (
 					<p className={ 'nfd-sg-input-box__count' }>
-						{ content.characterCount }
+						{ `${ remainingCharacterCount } ${ content.characterCount }` }
 					</p>
 				) }
 				<div className={ 'nfd-sg-input-box_bottom' }>

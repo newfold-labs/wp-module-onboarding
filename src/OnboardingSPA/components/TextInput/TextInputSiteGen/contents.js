@@ -1,12 +1,8 @@
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
-const getContents = ( characterCount ) => {
+const getContents = () => {
 	return {
-		characterCount: sprintf(
-			/* translators: 1: characterCount */
-			__( '%d Characters left', 'wp-module-onboarding' ),
-			characterCount
-		),
+		characterCount: __( 'Characters left', 'wp-module-onboarding' ),
 	};
 };
 
