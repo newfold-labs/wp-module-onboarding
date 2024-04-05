@@ -90,7 +90,7 @@ const TheFork = () => {
 		};
 
 		// Send an event for the experiment version shown to the user.
-		sendOnboardingEvent(
+		trackOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_SITEGEN_FORK_AI_EXPERIMENT,
 				experimentVersionNames[ theForkExperimentVersion ],
