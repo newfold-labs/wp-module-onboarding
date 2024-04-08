@@ -26,6 +26,7 @@ const DesignStateHandler = ( {
 	children,
 	navigationStateCallback = false,
 	refresh = true,
+	render = true,
 } ) => {
 	const isLargeViewport = useViewportMatch( 'medium' );
 
@@ -176,7 +177,7 @@ const DesignStateHandler = ( {
 		}
 	};
 
-	return <Fragment>{ handleRender() }</Fragment>;
+	return <Fragment>{ render ? handleRender() : children }</Fragment>;
 };
 
 export default DesignStateHandler;
