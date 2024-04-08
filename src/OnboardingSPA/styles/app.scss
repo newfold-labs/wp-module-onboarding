@@ -33,6 +33,7 @@
 @import "../components/Button/NavCardButton/stylesheet";
 @import "../steps/Ecommerce/stylesheet";
 @import "../components/ErrorState/stylesheet";
+@import "../components/ErrorState/Step/SiteGen/stylesheet";
 @import "../components/ErrorModal/stylesheet";
 @import "../components/CheckboxTemplate/CheckboxItem/stylesheet";
 @import "../components/CheckboxTemplate/CheckboxList/stylesheet";
@@ -65,7 +66,6 @@
 @import "../components/TextInput/TextAreaSiteGenDetails/stylesheet";
 @import "../components/TextInput/TextInputSiteGenDetails/stylesheet";
 @import "../components/OrbAnimation/stylesheet";
-@import "../components/SiteGenError/stylesheet";
 
 // CSS for Pages
 @import "../steps/BasicInfo/stylesheet";

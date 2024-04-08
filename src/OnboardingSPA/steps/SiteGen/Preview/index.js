@@ -1,24 +1,33 @@
+// WordPress
 import { useEffect, useState, useRef } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
+
+// Third-party
 import { useNavigate } from 'react-router-dom';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { cloneDeep, isEmpty } from 'lodash';
 
-import CommonLayout from '../../../components/Layouts/Common';
-import { store as nfdOnboardingStore } from '../../../store';
-import { HEADER_SITEGEN, THEME_STATUS_ACTIVE } from '../../../../constants';
-import { SiteGenPreviewSelectableCard } from '../../../components/LivePreview';
+// Classes and functions
 import getContents from './contents';
-import HeartAnimation from './heartAnimation';
-import RegeneratingSiteCard from './regeneratingCard';
 import { getHomepages, regenerateHomepage } from '../../../utils/api/siteGen';
 import { getGlobalStyles } from '../../../utils/api/themes';
-import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
-import Animate from '../../../components/Animate';
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
 } from '../../../utils/analytics/hiive';
+
+// Components
+import CommonLayout from '../../../components/Layouts/Common';
+import { SiteGenPreviewSelectableCard } from '../../../components/LivePreview';
+import HeartAnimation from './heartAnimation';
+import RegeneratingSiteCard from './regeneratingCard';
+import Animate from '../../../components/Animate';
+import {
+	DesignStateHandler,
+	SiteGenStateHandler,
+} from '../../../components/StateHandlers';
+
+// Misc
 import {
 	ACTION_SITEGEN_HOMEPAGE_FAVORITED,
 	ACTION_SITEGEN_HOMEPAGE_REGENERATED,
@@ -26,28 +35,17 @@ import {
 	ACTION_SITEGEN_SITE_GENERATION_TIME,
 } from '../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
-import { DesignStateHandler } from '../../../components/StateHandlers';
+import { store as nfdOnboardingStore } from '../../../store';
+import { HEADER_SITEGEN, THEME_STATUS_ACTIVE } from '../../../../constants';
 
 const SiteGenPreview = () => {
-	const navigate = useNavigate();
 	const [ homepages, setHomepages ] = useState( false );
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
 	const [ isPreviewLoading, setIsPreviewLoading ] = useState( false );
 	const [ globalStyles, setGlobalStyles ] = useState( false );
 
+	const navigate = useNavigate();
 	const prevSiteGenErrorStatus = useRef();
-
-	const {
-		setIsHeaderEnabled,
-		setSidebarActiveView,
-		setHeaderActiveView,
-		setDrawerActiveView,
-		setCurrentOnboardingData,
-		updateInitialize,
-		setHideFooterNav,
-		updateSiteGenErrorStatus,
-		setIsHeaderNavigationEnabled,
-	} = useDispatch( nfdOnboardingStore );
 
 	const { currentData, nextStep, siteGenErrorStatus, themeStatus } =
 		useSelect( ( select ) => {
@@ -61,6 +59,18 @@ const SiteGenPreview = () => {
 			};
 		} );
 
+	const {
+		setIsHeaderEnabled,
+		setSidebarActiveView,
+		setHeaderActiveView,
+		setDrawerActiveView,
+		setCurrentOnboardingData,
+		updateInitialize,
+		setHideFooterNav,
+		updateSiteGenErrorStatus,
+		setIsHeaderNavigationEnabled,
+	} = useDispatch( nfdOnboardingStore );
+
 	useEffect( () => {
 		setIsHeaderEnabled( true );
 		setHideFooterNav( true );
@@ -68,8 +78,7 @@ const SiteGenPreview = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		updateInitialize( true );
-		setIsHeaderNavigationEnabled( false );
-	}, [ currentData ] );
+	}, [] );
 
 	useEffect( () => {
 		if (
@@ -78,6 +87,7 @@ const SiteGenPreview = () => {
 		) {
 			loadHomepages();
 			loadGlobalStyles();
+			setIsHeaderNavigationEnabled( false );
 		}
 		prevSiteGenErrorStatus.current = siteGenErrorStatus;
 	}, [ siteGenErrorStatus ] );
@@ -297,8 +307,8 @@ const SiteGenPreview = () => {
 	const content = getContents();
 
 	return (
-		<SitegenAiStateHandler>
-			<DesignStateHandler render={ false }>
+		<DesignStateHandler>
+			<SiteGenStateHandler>
 				<CommonLayout className="nfd-onboarding-step--site-gen__preview">
 					<div className="nfd-onboarding-step--site-gen__preview__container">
 						{ ! isPreviewLoading && (
@@ -330,8 +340,8 @@ const SiteGenPreview = () => {
 						<span>{ content.favouriteNote }</span>
 					</div>
 				</CommonLayout>
-			</DesignStateHandler>
-		</SitegenAiStateHandler>
+			</SiteGenStateHandler>
+		</DesignStateHandler>
 	);
 };
 

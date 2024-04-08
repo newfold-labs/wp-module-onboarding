@@ -431,36 +431,8 @@ export function getCurrentUserDetails( state ) {
 	return currentUserInfo;
 }
 
-/**
- * Gets homepages
- *
- * @param {*} state
- * @return {Object} homepages
- */
-export const getHomepagesData = ( state ) => {
-	return state.data.flowData.sitegen.homepages;
-};
-
-/**
- * Gets actove homepage
- *
- * @param {*} state
- * @return {Object} active
- */
-
-export const getActiveHomepage = ( state ) => {
-	return state.data.flowData.sitegen.homepages.active;
-};
-
-/**
- * Gets all homepage
- *
- * @param {*} state
- * @return {Object} data
- */
-
-export const getAllHomepages = ( state ) => {
-	return state.data.flowData.sitegen.homepages.data;
+export const isGeneratingHomepages = ( state ) => {
+	return state.data.isGeneratingHomepages;
 };
 
 export function getCustomizeSidebarData( state ) {

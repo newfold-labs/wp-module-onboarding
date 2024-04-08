@@ -1,40 +1,39 @@
+// WordPress
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useNavigate } from 'react-router-dom';
 import { Icon, chevronLeft } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 
-import { store as nfdOnboardingStore } from '../../../../store';
+// Third-party
+import { useNavigate } from 'react-router-dom';
+
+// Components
 import ButtonDark from '../../../Button/ButtonDark';
+
+// Misc
+import { store as nfdOnboardingStore } from '../../../../store';
 import { stepSiteGenPreview } from '../../../../steps/SiteGen/Preview/step';
 import { stepSiteGenSiteLogo } from '../../../../steps/SiteGen/SiteLogo/step';
 
-/**
- * Back step Navigation button.
- *
- * @param {*} param0
- *
- * @return {WPComponent} Back Component
- */
-const Back = ( { path, showErrorDialog } ) => {
-	const { setNavErrorContinuePath, updateSiteGenErrorStatus } =
-		useDispatch( nfdOnboardingStore );
+const Back = ( { path } ) => {
 	const { siteGenErrorStatus } = useSelect( ( select ) => {
 		return {
 			siteGenErrorStatus:
 				select( nfdOnboardingStore ).getSiteGenErrorStatus(),
 		};
 	} );
+
+	const { updateSiteGenErrorStatus } = useDispatch( nfdOnboardingStore );
+
 	const navigate = useNavigate();
+
 	const navigateBack = () => {
-		if ( siteGenErrorStatus === true ) {
+		if ( true === siteGenErrorStatus ) {
 			updateSiteGenErrorStatus( false );
 		}
-		if ( showErrorDialog !== false ) {
-			setNavErrorContinuePath( path );
-		} else {
-			navigate( path, { state: { origin: 'header' } } );
-		}
+
+		navigate( path, { state: { origin: 'header' } } );
 	};
+
 	return (
 		<ButtonDark onClick={ navigateBack } variant="secondary">
 			<Icon icon={ chevronLeft } />
@@ -43,35 +42,28 @@ const Back = ( { path, showErrorDialog } ) => {
 	);
 };
 
-/**
- * Step buttons presented in Header.
- *
- * @return {WPComponent} StepNavigation Component
- */
 const StepNavigation = () => {
-	const { previousStep, currentStep, showErrorDialog } = useSelect(
-		( select ) => {
-			return {
-				previousStep: select( nfdOnboardingStore ).getPreviousStep(),
-				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
-				showErrorDialog:
-					select( nfdOnboardingStore ).getShowErrorDialog(),
-			};
-		},
-		[]
-	);
+	const { previousStep, currentStep } = useSelect( ( select ) => {
+		return {
+			previousStep: select( nfdOnboardingStore ).getPreviousStep(),
+			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+		};
+	}, [] );
+
 	const isFirstStep = null === previousStep || false === previousStep;
 	const isPreviewStep = currentStep.path === stepSiteGenPreview.path;
+
 	return (
 		<div className="nfd-onboarding-header--sitegen__step-navigation">
-			{ isFirstStep ? null : (
+			{ isFirstStep ? (
+				<></>
+			) : (
 				<Back
 					path={
 						isPreviewStep
 							? stepSiteGenSiteLogo.path
 							: previousStep.path
 					}
-					showErrorDialog={ showErrorDialog }
 				/>
 			) }
 		</div>

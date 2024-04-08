@@ -162,6 +162,7 @@ export function drawer(
 
 	return state;
 }
+
 export function data( state = {}, action ) {
 	switch ( action.type ) {
 		case 'SET_CURRENT_DATA':
@@ -178,32 +179,7 @@ export function data( state = {}, action ) {
 					...action.socialData,
 				},
 			};
-		case 'SET_HOMEPAGES_DATA':
-			return {
-				...state,
-				flowData: {
-					...state.flowData,
-					sitegen: {
-						...state.flowData.sitegen,
-						homepages: action.homepagesData,
-					},
-				},
-			};
 
-		case 'SET_ACTIVE_HOMEPAGE':
-			return {
-				...state,
-				flowData: {
-					...state.flowData,
-					sitegen: {
-						...state.flowData.sitegen,
-						homepages: {
-							...state.flowData.sitegen.homepages,
-							active: action.activeHomepage,
-						},
-					},
-				},
-			};
 		case 'SET_SITEGEN_AI_ERROR_STATUS':
 			return {
 				...state,
@@ -214,6 +190,12 @@ export function data( state = {}, action ) {
 						siteGenErrorStatus: action.siteGenErrorStatus,
 					},
 				},
+			};
+
+		case 'SET_IS_GENERATING_HOMEPAGES':
+			return {
+				...state,
+				isGeneratingHomepages: action.isGeneratingHomepages,
 			};
 	}
 
