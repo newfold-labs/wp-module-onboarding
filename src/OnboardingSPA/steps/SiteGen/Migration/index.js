@@ -23,7 +23,9 @@ const Migrate = () => {
 
 	const loadData = async () => {
 		const migrateUrl = await getSiteMigrateUrl();
-		migrateUrl?.body && window.open(migrateUrl?.body, "_self")
+		if ( migrateUrl?.body ) {
+			window.open( migrateUrl?.body?.data?.redirect_url, '_self' );
+		}
 	};
 
 	useEffect( () => {
@@ -34,7 +36,7 @@ const Migrate = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		setFooterActiveView( FOOTER_SITEGEN );
-		loadData()
+		loadData();
 	} );
 
 	const content = getContents();
