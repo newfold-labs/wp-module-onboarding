@@ -87,6 +87,7 @@ const SiteGen = () => {
 		setCurrentOnboardingData,
 		updateSiteGenErrorStatus,
 		setActiveChapter,
+		setIsGeneratingHomepages,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { getEditedEntityRecord } = useSelect( ( select ) => {
@@ -219,18 +220,23 @@ const SiteGen = () => {
 		) {
 			// Once all requests are completed use cache to get data
 			currentData.sitegen.skipCache = false;
+			setIsGeneratingSiteMeta( false );
 			// Increase count after site meta calls to ensure systematic call of homepages
-			currentData.sitegen.siteGenMetaStatus.totalCount += 1;
 			// Get the homepages and set that in flow
+			setIsGeneratingHomepages( true );
 			const response = await getHomepages(
 				currentData.sitegen.siteDetails.prompt
 			);
 
-			if ( response.body ) {
-				currentData.sitegen.homepages.data = response.body;
-				currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
-				setIsGeneratingSiteMeta( false );
+			if ( response.error ) {
+				updateSiteGenErrorStatus( true );
+				setIsGeneratingHomepages( false );
+				setCurrentOnboardingData( currentData );
+				return;
 			}
+
+			currentData.sitegen.homepages.data = response.body;
+			setIsGeneratingHomepages( false );
 		}
 		// Sync the current request changed to State
 		setCurrentOnboardingData( currentData );
