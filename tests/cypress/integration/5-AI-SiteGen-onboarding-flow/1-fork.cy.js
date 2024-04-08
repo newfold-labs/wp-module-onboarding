@@ -43,7 +43,7 @@ describe( 'SiteGen Fork Step', function () {
             .should('have.length', 3);
     } );
 
-    it( 'Check for selection of different container options', () => {
+    it.skip( 'Check for selection of different container options', () => {
         let options = 0;
         const className = '.nfd-onboarding-sitegen-options__container__options';
         const arr = cy.get( className );

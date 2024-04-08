@@ -12,7 +12,7 @@ const getContents = () => {
 			{
 				title: __( 'Guided Configuration', 'wp-module-onboarding' ),
 				subtitle: __(
-					'A few questions & settings to get you a jumpstart.',
+					'Robust configuration guide to help you build your site',
 					'wp-module-onboarding'
 				),
 				flow: 'sitebuild',
