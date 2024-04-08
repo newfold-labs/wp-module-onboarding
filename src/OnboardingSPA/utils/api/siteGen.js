@@ -1,7 +1,7 @@
 import apiFetch from '@wordpress/api-fetch';
 
 import { resolve } from './resolve.js';
-import { onboardingRestURL } from './common';
+import { onboardingRestURL, migrateRestURL } from './common';
 
 export async function getSiteGenIdentifiers() {
 	return await resolve(
@@ -85,6 +85,14 @@ export async function publishSitemapPages( siteDescription ) {
 			data: {
 				site_description: siteDescription,
 			},
+		} ).then()
+	);
+}
+
+export async function getSiteMigrateUrl() {
+	return await resolve(
+		apiFetch( {
+			url: migrateRestURL( 'migrate/connect' ),
 		} ).then()
 	);
 }
