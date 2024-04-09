@@ -149,6 +149,7 @@ const StartOptions = ( {
 										selectFlow( tab.flow );
 									}
 								} }
+								data-flow={ tab.flow }
 							>
 								{ tab.flow === SITEGEN_FLOW &&
 									showAIRecommendedBadge && (
