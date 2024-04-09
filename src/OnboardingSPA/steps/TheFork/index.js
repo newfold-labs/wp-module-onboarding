@@ -64,7 +64,10 @@ const TheFork = () => {
 
 	const handleExperimentVersion = async () => {
 		let theForkExperimentVersion = 0;
-		if ( currentData.sitegen.theForkExperimentVersion !== 0 ) {
+		if (
+			currentData.sitegen.theForkExperimentVersion &&
+			currentData.sitegen.theForkExperimentVersion !== 0
+		) {
 			// Use an existing experiment version if it exists
 			setExperimentVersion(
 				currentData.sitegen.theForkExperimentVersion
