@@ -8,6 +8,8 @@ const sitemap_mock = require( '../../fixtures/sitemap.json' );
 const plugin_recommendation_mock = require( '../../fixtures/plugin-recommendation.json' );
 const font_pair_mock = require( '../../fixtures/font-pair.json' );
 const homepages_mock = require( '../../fixtures/homepages.json' );
+const theme_style_mock = require( '../../fixtures/theme-style.json' );
+const customize_data_mock = require( '../../fixtures/customize-data.json' );
 
 export const apiList = {
 	sitegen:
@@ -16,6 +18,10 @@ export const apiList = {
 		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fsitegen%2Fhomepages&flow=sitegen&_locale=user',
 	homepagesRegenerate:
 		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fsitegen%2Fhomepages%2Fregenerate&flow=sitegen&_locale=user',
+	themestyle:
+		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fthemes%2Fvariations&variations=false&flow=sitegen&_locale=user',
+	customizedata:
+		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fsitegen%2Fcustomize-data&flow=sitegen&_locale=user'
 };
 
 export const siteGenMockAll = ( req ) => {
@@ -51,4 +57,23 @@ export const homePagesMock = ( req ) => {
 			'content-type': 'application/json',
 		},
 	} );
+};
+
+export const themeStyleMock = ( req ) => {
+	req.reply({
+		method: 'GET',
+		statusCode: 200,
+		body: theme_style_mock,
+	});
+};
+
+export const customizeDataMock = ( req ) => {
+	req.reply({
+		method: 'GET',
+		statusCode: 200,
+		body: customize_data_mock,
+		headers: {
+			'content-type': 'application/json',
+		},
+	});
 };

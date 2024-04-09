@@ -1,4 +1,5 @@
 // <reference types="Cypress" />
+import { apiList, customizeDataMock, themeStyleMock } from '../wp-module-support/MockApi.cy';
 import {
 	AdminBarCheck,
 	DarkBGCheck,
@@ -140,11 +141,19 @@ describe( 'SiteGen Site Editor Step', function () {
 			.should( 'exist' );
 	} );
 
-	it.skip( 'Check changing the existing fonts from sidebar', () => {
+	it( 'Check changing the existing fonts from sidebar', () => {
+		cy.intercept( apiList.themestyle, ( req ) => {
+			themeStyleMock( req );
+		} ).as( 'themeStyleCalls' );
+		cy.intercept( apiList.customizedata, ( req ) => {
+			customizeDataMock( req );
+		} ).as( 'customizeDataCall' );
 		cy.wait( 2000 );
 		cy.get(
 			'.nfd-onboarding-header--sitegen__editor__end__customize-button'
 		).click();
+		cy.wait( '@themeStyleCalls', { timeout: 60000 } );
+		cy.wait( '@customizeDataCall', { timeout: 60000 } );
 		cy.get(
 			'.components-panel__body.nfd-onboarding-sidebar-learn-more.is-opened',
 			{ timeout: 20000 }
@@ -163,7 +172,7 @@ describe( 'SiteGen Site Editor Step', function () {
 		} );
 	} );
 
-	it.skip( 'Check changing the custom fonts from sidebar', () => {
+	it( 'Check changing the custom fonts from sidebar', () => {
 		const CustomeFontsClass =
 			'.nfd-onboarding-sidebar--customize__design-fonts-panel__fonts-form__container';
 		cy.get( CustomeFontsClass ).should( 'not.exist' );
@@ -195,7 +204,7 @@ describe( 'SiteGen Site Editor Step', function () {
 		).should( 'have.length', 6 );
 	} );
 
-	it.skip( 'Check changing the existing colors from sidebar', () => {
+	it( 'Check changing the existing colors from sidebar', () => {
 		cy.get(
 			'.components-panel__body.nfd-onboarding-sidebar--customize__design-colors-panel.is-opened'
 		).should( 'exist' );
@@ -212,7 +221,7 @@ describe( 'SiteGen Site Editor Step', function () {
 		} );
 	} );
 
-	it.skip( 'Check changing the custom colors from sidebar', () => {
+	it( 'Check changing the custom colors from sidebar', () => {
 		const CustomColorClass =
 			'.nfd-onboarding-sidebar--customize__design-colors-panel__custom__colors__container';
 		cy.get( CustomColorClass ).should( 'not.exist' );
@@ -246,7 +255,7 @@ describe( 'SiteGen Site Editor Step', function () {
 			.should( 'have.length', 6 );
 	} );
 
-	it.skip( 'Check clicking the reset button', () => {
+	it( 'Check clicking the reset button', () => {
 		cy.get( '.components-panel__header > :nth-child(2)' )
 			.scrollIntoView()
 			.should( 'exist' )
