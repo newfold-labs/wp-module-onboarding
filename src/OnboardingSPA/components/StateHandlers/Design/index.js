@@ -106,6 +106,13 @@ const DesignStateHandler = ( {
 					window.location.reload();
 				}
 				break;
+			case THEME_STATUS_NOT_ACTIVE:
+				if ( false === render ) {
+					// When render is false add this condition because
+					// handleRender() func does not run here and theme is not activated.
+					expediteInstall();
+				}
+				break;
 			default:
 				updateThemeStatus( themeStatus );
 		}
