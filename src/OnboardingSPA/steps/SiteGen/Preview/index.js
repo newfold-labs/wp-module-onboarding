@@ -307,7 +307,7 @@ const SiteGenPreview = () => {
 	const content = getContents();
 
 	return (
-		<DesignStateHandler>
+		<DesignStateHandler render={ false }>
 			<SiteGenStateHandler>
 				<CommonLayout className="nfd-onboarding-step--site-gen__preview">
 					<div className="nfd-onboarding-step--site-gen__preview__container">
