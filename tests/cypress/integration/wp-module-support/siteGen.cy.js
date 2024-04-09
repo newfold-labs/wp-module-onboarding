@@ -24,14 +24,6 @@ export const LightBGCheck = () => {
 	cy.get( '.nfd-onboarding-sitegen-dark' ).should( 'be.visible' );
 };
 
-export const OptionsDetails = ( className, textValue, optionsValue ) => {
-	cy.get( className, { timeout: 10000 } )
-		.eq( optionsValue )
-		.find( '.nfd-onboarding-sitegen-options__container__heading__title' )
-		.invoke( 'text' )
-		.should( 'contain', textValue );
-};
-
 export const ProgressBarCheck = ( WidthPercent ) => {
 	cy.get( '.nfd-onboarding-header__progress-bar' ).should( 'be.visible' );
 	cy.get( '.nfd-onboarding-header__progress-bar__progress' )

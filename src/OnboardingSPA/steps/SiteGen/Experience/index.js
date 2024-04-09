@@ -1,29 +1,36 @@
+// WordPress
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 
+// Classes and functions
 import getContents from './contents';
-import { HEADER_SITEGEN } from '../../../../constants';
-import { store as nfdOnboardingStore } from '../../../store';
-import CommonLayout from '../../../components/Layouts/Common';
-import CardWithOptions from '../../../components/CardWithOptions';
-import SiteGenLoader from '../../../components/Loaders/SiteGenLoader';
-import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
 } from '../../../utils/analytics/hiive';
+
+// Components
+import CommonLayout from '../../../components/Layouts/Common';
+import CardWithOptions from '../../../components/CardWithOptions';
+import SiteGenLoader from '../../../components/Loaders/SiteGenLoader';
+import { SiteGenStateHandler } from '../../../components/StateHandlers';
+
+// Misc
+import { HEADER_SITEGEN } from '../../../../constants';
+import { store as nfdOnboardingStore } from '../../../store';
 import { ACTION_EXPERIENCE_LEVEL_SET } from '../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenExperience = () => {
-	const content = getContents();
 	// Index of the selection user makes
 	const [ selection, setSelection ] = useState( 0 );
 
-	const { currentData } = useSelect( ( select ) => {
+	const { currentData, siteGenErrorStatus } = useSelect( ( select ) => {
 		return {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			siteGenErrorStatus:
+				select( nfdOnboardingStore ).getSiteGenErrorStatus(),
 		};
 	} );
 
@@ -44,11 +51,17 @@ const SiteGenExperience = () => {
 		setIsHeaderNavigationEnabled( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
+	}, [] );
+
+	useEffect( () => {
+		if ( true === siteGenErrorStatus ) {
+			return;
+		}
 
 		if ( currentData.sitegen.experience?.level ) {
 			setSelection( currentData.sitegen.experience.level );
 		}
-	} );
+	}, [ siteGenErrorStatus ] );
 
 	const checkAndNavigate = ( idx ) => {
 		// 0 - Not Selected
@@ -83,8 +96,10 @@ const SiteGenExperience = () => {
 		}
 	};
 
+	const content = getContents();
+
 	return (
-		<SitegenAiStateHandler>
+		<SiteGenStateHandler>
 			<CommonLayout isCentered>
 				<div className={ 'nfd-sg-experience-level' }>
 					<SiteGenLoader
@@ -99,7 +114,7 @@ const SiteGenExperience = () => {
 					/>
 				</div>
 			</CommonLayout>
-		</SitegenAiStateHandler>
+		</SiteGenStateHandler>
 	);
 };
 

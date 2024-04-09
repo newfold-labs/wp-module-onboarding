@@ -45,7 +45,13 @@ class EventService {
 	 * @return boolean
 	 */
 	public static function validate_category( $category ) {
-		return Events::get_category() === $category;
+		$default_categories = Events::get_category();
+		foreach ( $default_categories as $event_category ) {
+			if ( $event_category === $category ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

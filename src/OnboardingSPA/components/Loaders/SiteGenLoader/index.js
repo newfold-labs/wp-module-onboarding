@@ -11,13 +11,17 @@ const SiteGenLoader = ( { customNavPercentage, watcher = null } ) => {
 	const [ percentage, setPercentage ] = useState( 0 );
 	const [ status, setStatus ] = useState( content.status[ statusIdx ].title );
 
-	const { currentData, nextStep } = useSelect( ( select ) => {
-		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			nextStep: select( nfdOnboardingStore ).getNextStep(),
-		};
-	} );
+	const { currentData, nextStep, isGeneratingHomepages } = useSelect(
+		( select ) => {
+			return {
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				nextStep: select( nfdOnboardingStore ).getNextStep(),
+				isGeneratingHomepages:
+					select( nfdOnboardingStore ).isGeneratingHomepages(),
+			};
+		}
+	);
 
 	useEffect( () => {
 		const statusTimer = setInterval( () => {
@@ -42,7 +46,7 @@ const SiteGenLoader = ( { customNavPercentage, watcher = null } ) => {
 	}, [ currentData?.sitegen?.siteGenMetaStatus?.currentStatus ] );
 
 	useEffect( () => {
-		if ( percentage === customNavPercentage ) {
+		if ( percentage === customNavPercentage && ! isGeneratingHomepages ) {
 			if ( nextStep ) {
 				if ( watcher !== null && watcher === false ) {
 					return;
@@ -50,7 +54,7 @@ const SiteGenLoader = ( { customNavPercentage, watcher = null } ) => {
 				navigate( nextStep.path );
 			}
 		}
-	}, [ percentage, watcher ] );
+	}, [ percentage, watcher, isGeneratingHomepages ] );
 
 	return (
 		<div className={ 'nfd-sg-loader' }>

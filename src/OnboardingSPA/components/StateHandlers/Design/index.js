@@ -26,6 +26,7 @@ const DesignStateHandler = ( {
 	children,
 	navigationStateCallback = false,
 	refresh = true,
+	render = true,
 } ) => {
 	const isLargeViewport = useViewportMatch( 'medium' );
 
@@ -105,6 +106,13 @@ const DesignStateHandler = ( {
 					window.location.reload();
 				}
 				break;
+			case THEME_STATUS_NOT_ACTIVE:
+				if ( false === render ) {
+					// When render is false add this condition because
+					// handleRender() func does not run here and theme is not activated.
+					expediteInstall();
+				}
+				break;
 			default:
 				updateThemeStatus( themeStatus );
 		}
@@ -176,7 +184,7 @@ const DesignStateHandler = ( {
 		}
 	};
 
-	return <Fragment>{ handleRender() }</Fragment>;
+	return <Fragment>{ render ? handleRender() : children }</Fragment>;
 };
 
 export default DesignStateHandler;

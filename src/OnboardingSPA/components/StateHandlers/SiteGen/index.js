@@ -1,17 +1,22 @@
+// WordPress
 import { Fragment, useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 
-import { store as nfdOnboardingStore } from '../../../store';
+// Classes and functions
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
 } from '../../../utils/analytics/hiive';
+
+// Components
+import SiteGenStepErrorState from '../../ErrorState/Step/SiteGen';
+
+// Misc
+import { store as nfdOnboardingStore } from '../../../store';
 import { ACTION_SITEGEN_ERROR_STATE_TRIGGERED } from '../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
-import SiteGenSiteError from '../../SiteGenError';
-
-const SitegenAiStateHandler = ( { children } ) => {
+const SiteGenStateHandler = ( { children } ) => {
 	const { siteGenErrorStatus } = useSelect( ( select ) => {
 		return {
 			siteGenErrorStatus:
@@ -20,7 +25,7 @@ const SitegenAiStateHandler = ( { children } ) => {
 	} );
 
 	useEffect( () => {
-		if ( siteGenErrorStatus === true ) {
+		if ( true === siteGenErrorStatus ) {
 			trackOnboardingEvent(
 				new OnboardingEvent(
 					ACTION_SITEGEN_ERROR_STATE_TRIGGERED,
@@ -35,7 +40,7 @@ const SitegenAiStateHandler = ( { children } ) => {
 
 	const handleRender = () => {
 		if ( siteGenErrorStatus ) {
-			return <SiteGenSiteError />;
+			return <SiteGenStepErrorState />;
 		}
 
 		return children;
@@ -43,4 +48,4 @@ const SitegenAiStateHandler = ( { children } ) => {
 	return <Fragment>{ handleRender() }</Fragment>;
 };
 
-export default SitegenAiStateHandler;
+export default SiteGenStateHandler;
