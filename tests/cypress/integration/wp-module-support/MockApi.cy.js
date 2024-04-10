@@ -21,21 +21,21 @@ export const apiList = {
 	themestyle:
 		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fthemes%2Fvariations&variations=false&flow=sitegen&_locale=user',
 	customizedata:
-		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fsitegen%2Fcustomize-data&flow=sitegen&_locale=user'
+		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fsitegen%2Fcustomize-data&flow=sitegen&_locale=user',
 };
 
 export const siteGenMockAll = ( req ) => {
 	const requestBody = req.body;
 	const sitegen_identifiers = {
-		'site_config': site_config_mock,
-		'site_classification': site_classification_mock,
-		'target_audience': target_audience_mock,
-		'content_tones': content_tones_mock,
-		'content_structure': content_structure_mock,
-		'color_palette': color_palette_mock,
-		'sitemap': sitemap_mock,
-		'plugin_recommendation': plugin_recommendation_mock,
-		'font_pair': font_pair_mock,
+		site_config: site_config_mock,
+		site_classification: site_classification_mock,
+		target_audience: target_audience_mock,
+		content_tones: content_tones_mock,
+		content_structure: content_structure_mock,
+		color_palette: color_palette_mock,
+		sitemap: sitemap_mock,
+		plugin_recommendation: plugin_recommendation_mock,
+		font_pair: font_pair_mock,
 	};
 
 	if ( sitegen_identifiers.hasOwnProperty( requestBody.identifier ) ) {
@@ -45,6 +45,7 @@ export const siteGenMockAll = ( req ) => {
 			headers: {
 				'content-type': 'application/json',
 			},
+			delay: 2000,
 		} );
 	}
 };
@@ -60,20 +61,20 @@ export const homePagesMock = ( req ) => {
 };
 
 export const themeStyleMock = ( req ) => {
-	req.reply({
+	req.reply( {
 		method: 'GET',
 		statusCode: 200,
 		body: theme_style_mock,
-	});
+	} );
 };
 
 export const customizeDataMock = ( req ) => {
-	req.reply({
+	req.reply( {
 		method: 'GET',
 		statusCode: 200,
 		body: customize_data_mock,
 		headers: {
 			'content-type': 'application/json',
 		},
-	});
+	} );
 };

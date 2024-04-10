@@ -78,6 +78,7 @@ const SiteGenPreview = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		updateInitialize( true );
+		setIsHeaderNavigationEnabled( false );
 	}, [] );
 
 	useEffect( () => {

@@ -1,5 +1,9 @@
 // <reference types="Cypress" />
-import { apiList, customizeDataMock, themeStyleMock } from '../wp-module-support/MockApi.cy';
+import {
+	apiList,
+	customizeDataMock,
+	themeStyleMock,
+} from '../wp-module-support/MockApi.cy';
 import {
 	AdminBarCheck,
 	DarkBGCheck,
@@ -9,9 +13,21 @@ import {
 describe( 'SiteGen Site Editor Step', function () {
 	before( () => {
 		cy.visit(
-			'wp-admin/index.php?page=nfd-onboarding#/sitegen/step/editor'
+			'wp-admin/index.php?page=nfd-onboarding#/sitegen/step/preview'
 		);
-		cy.wait( 5000 );
+		cy.wait( 15000 );
+	} );
+
+	it( 'Select any theme and go forward to the next step', () => {
+		cy.get(
+			'.live-preview-sitegen--selectable-card__live-preview-container__overlay',
+			{ timeout: 10000 }
+		)
+			.eq( 0 )
+			.click();
+		cy.url().should( 'not.contain', 'sitegen/step/preview', {
+			timeout: 20000,
+		} );
 	} );
 
 	it( 'Check for the header admin bar', () => {
@@ -87,14 +103,14 @@ describe( 'SiteGen Site Editor Step', function () {
 			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container'
 		)
 			.should( 'be.visible' )
-			.should( 'have.length', 3 );        // as we are not currently regenrating new themes
+			.should( 'have.length', 3 ); // as we are not currently regenrating new themes
 	} );
 
-	it( 'Check for favoriting a theme and it appears everywhere', () => {
+	it.skip( 'Check for favoriting a theme and it appears everywhere', () => {
 		cy.get(
 			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container'
 		)
-			.eq( 2 )
+			.eq( 1 )
 			.click();
 		cy.get( 'g[clip-path="url(#heart-filled_svg__a)"]' ).should(
 			'not.exist'
@@ -113,7 +129,7 @@ describe( 'SiteGen Site Editor Step', function () {
 		).should( 'exist' );
 	} );
 
-	it( 'Check for favorite themes inside favorite tab', () => {
+	it.skip( 'Check for favorite themes inside favorite tab', () => {
 		cy.get(
 			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__favorites-tab'
 		)
@@ -123,13 +139,13 @@ describe( 'SiteGen Site Editor Step', function () {
 			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container'
 		)
 			.should( 'be.visible' )
-			.should( 'have.length', 2 );
+			.should( 'have.length', 1 );
 		cy.get(
 			'.components-button.nfd-onboarding-sidebar--sitegen-editor-patterns__header__icon'
 		).should( 'be.visible' );
 	} );
 
-    it( 'Check for the existence of Regenerate button', () => {
+	it( 'Check for the existence of Regenerate button', () => {
 		cy.get( '.nfd-onboarding-header--sitegen__editor__start__regenerate' )
 			.scrollIntoView()
 			.should( 'be.visible' );

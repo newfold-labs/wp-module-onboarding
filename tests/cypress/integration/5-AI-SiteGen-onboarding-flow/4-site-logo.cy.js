@@ -17,7 +17,6 @@ import {
 
 describe( 'SiteGen Site Logo Step', function () {
 	before( () => {
-		cy.visit( 'wp-admin/?page=nfd-onboarding#/sitegen/step/site-logo' );
 		cy.intercept( apiList.sitegen, ( req ) => {
 			siteGenMockAll( req );
 		} ).as( 'sitegenCalls' );
@@ -25,7 +24,10 @@ describe( 'SiteGen Site Logo Step', function () {
 		cy.intercept( apiList.homepages, ( req ) => {
 			homePagesMock( req );
 		} ).as( 'homePageCall' );
-		cy.timeout(120000);
+		cy.visit( 'wp-admin/?page=nfd-onboarding#/sitegen/step/site-logo' );
+		cy.wait( '@sitegenCalls', { timeout: 60000 } );
+		cy.wait( '@homePageCall', { timeout: 60000 } );
+		cy.timeout( 120000 );
 	} );
 
 	it( 'Check for the header admin bar', () => {
