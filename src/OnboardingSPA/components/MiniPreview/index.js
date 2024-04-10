@@ -2,6 +2,7 @@ import { memo, useState, useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 
 import { store as nfdOnboardingStore } from '../../store';
+import { wpSiteUrl } from '../../../constants';
 
 import getContents from './contents';
 
@@ -23,7 +24,6 @@ const MiniPreview = ( {
 	const content = getContents( brandUrl );
 	const titlePreview = title === '' ? content.defaultTitle : title;
 	const descPreview = desc === '' ? content.defaultDesc : desc;
-	const urlPreview = title === '' ? content.defaultUrl : titleToUrl();
 
 	const [ facebook, setFacebook ] = useState( '' );
 	const [ twitter, setTwitter ] = useState( '' );
@@ -77,13 +77,6 @@ const MiniPreview = ( {
 		{ url: yelp, image: 'var(--yelp-icon)' },
 		{ url: tiktok, image: 'var(--tiktok-icon)' },
 	];
-
-	function titleToUrl() {
-		return `https://${ title
-			?.toLowerCase()
-			.replace( /\s/g, '' )
-			.replace( /\W/g, '' ) }.com`;
-	}
 
 	function socialIconList() {
 		return socialDataset.map( ( socialInfo, idx ) => {
@@ -180,7 +173,7 @@ const MiniPreview = ( {
 							className="browser-row-search__search-box_input"
 							type="text"
 							onChange={ () => {} }
-							value={ urlPreview }
+							value={ wpSiteUrl }
 						></input>
 					</div>
 					<div className="browser-row-search__more">
@@ -196,7 +189,7 @@ const MiniPreview = ( {
 							{ titlePreview }
 						</h4>
 						<span className="browser-content_top-row-link">
-							{ urlPreview }
+							{ wpSiteUrl }
 						</span>
 					</div>
 					<h5 className="browser-content_desc">{ descPreview }</h5>
