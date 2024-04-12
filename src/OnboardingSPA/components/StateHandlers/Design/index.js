@@ -1,7 +1,6 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Fragment, useEffect } from '@wordpress/element';
 import { useViewportMatch } from '@wordpress/compose';
-import { __ } from '@wordpress/i18n';
 
 import { StepLoader } from '../../Loaders';
 import { store as nfdOnboardingStore } from '../../../store';
@@ -21,6 +20,7 @@ import {
 import { StepErrorState } from '../../ErrorState';
 import getContents from './contents';
 import ExitToWordPress from '../../ExitToWordPress';
+import { setFlow } from '../../../utils/api/flow';
 
 const DesignStateHandler = ( {
 	children,
@@ -30,12 +30,18 @@ const DesignStateHandler = ( {
 } ) => {
 	const isLargeViewport = useViewportMatch( 'medium' );
 
-	const { storedThemeStatus, brandName } = useSelect( ( select ) => {
-		return {
-			storedThemeStatus: select( nfdOnboardingStore ).getThemeStatus(),
-			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
-		};
-	}, [] );
+	const { storedThemeStatus, brandName, isFreshInstallation, currentData } =
+		useSelect( ( select ) => {
+			return {
+				storedThemeStatus:
+					select( nfdOnboardingStore ).getThemeStatus(),
+				brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+				isFreshInstallation:
+					select( nfdOnboardingStore ).getIsFreshInstallation(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			};
+		}, [] );
 
 	const contents = getContents( brandName );
 
@@ -44,6 +50,7 @@ const DesignStateHandler = ( {
 		setIsDrawerOpened,
 		setIsDrawerSuppressed,
 		setIsHeaderNavigationEnabled,
+		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	const checkThemeStatus = async () => {
@@ -107,11 +114,7 @@ const DesignStateHandler = ( {
 				}
 				break;
 			case THEME_STATUS_NOT_ACTIVE:
-				if ( false === render ) {
-					// When render is false add this condition because
-					// handleRender() func does not run here and theme is not activated.
-					expediteInstall();
-				}
+				installThemeManually();
 				break;
 			default:
 				updateThemeStatus( themeStatus );
@@ -121,10 +124,18 @@ const DesignStateHandler = ( {
 	useEffect( () => {
 		handleNavigationState();
 
+		if (
+			true === render &&
+			! isFreshInstallation &&
+			currentData.data.siteOverrideConsent === false
+		) {
+			return;
+		}
+
 		if ( storedThemeStatus === THEME_STATUS_INIT ) {
 			handleThemeStatus( storedThemeStatus );
 		}
-	}, [ storedThemeStatus ] );
+	}, [ storedThemeStatus, isFreshInstallation, currentData ] );
 
 	const installThemeManually = async () => {
 		updateThemeStatus( THEME_STATUS_INSTALLING );
@@ -133,6 +144,7 @@ const DesignStateHandler = ( {
 			true,
 			false
 		);
+
 		if ( themeInstallStatus.error ) {
 			return updateThemeStatus( THEME_STATUS_FAILURE );
 		}
@@ -142,28 +154,29 @@ const DesignStateHandler = ( {
 		}
 	};
 
+	const handleModalClose = () => {
+		currentData.data.siteOverrideConsent = true;
+		setCurrentOnboardingData( currentData );
+		setFlow( currentData );
+	};
+
 	const handleRender = () => {
+		if (
+			! isFreshInstallation &&
+			currentData.data.siteOverrideConsent === false
+		) {
+			return (
+				<ExitToWordPress
+					showButton={ false }
+					isModalOpen={ true }
+					modalTitle={ contents.exitModal.title }
+					modalText={ contents.exitModal.description }
+					modalOnClose={ handleModalClose }
+					modalExitButtonText={ contents.exitModal.buttonText }
+				/>
+			);
+		}
 		switch ( storedThemeStatus ) {
-			case THEME_STATUS_NOT_ACTIVE:
-				return (
-					<ExitToWordPress
-						showButton={ false }
-						isModalOpen={ true }
-						modalTitle={ __(
-							'It looks like you may have an existing website',
-							'wp-module-onboarding'
-						) }
-						modalText={ __(
-							'Going through this setup will change your active theme, WordPress settings, add content – would you like to continue?',
-							'wp-module-onboarding'
-						) }
-						modalOnClose={ installThemeManually }
-						modalExitButtonText={ __(
-							'Exit to WordPress',
-							'wp-module-onboarding'
-						) }
-					/>
-				);
 			case THEME_STATUS_FAILURE:
 				return (
 					<StepErrorState
