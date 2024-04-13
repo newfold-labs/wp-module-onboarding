@@ -1,29 +1,34 @@
+// WordPress
 import { useViewportMatch } from '@wordpress/compose';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 
-import getContents from './contents';
-import Animate from '../../../components/Animate';
-import { HEADER_SITEGEN } from '../../../../constants';
-import { store as nfdOnboardingStore } from '../../../store';
-import AIHeading from '../../../components/Heading/AIHeading';
-import CommonLayout from '../../../components/Layouts/Common';
-import TextInputSiteGen from '../../../components/TextInput/TextInputSiteGen';
-import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
-import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
+// Classes and functions
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
 } from '../../../utils/analytics/hiive';
+import getContents from './contents';
+
+// Components
+import Animate from '../../../components/Animate';
+import AIHeading from '../../../components/Heading/AIHeading';
+import CommonLayout from '../../../components/Layouts/Common';
+import TextInputSiteGen from '../../../components/TextInput/TextInputSiteGen';
+import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
+import { SiteGenStateHandler } from '../../../components/StateHandlers';
+
+// Misc
+import { HEADER_SITEGEN } from '../../../../constants';
+import { store as nfdOnboardingStore } from '../../../store';
 import { ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET } from '../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenSiteDetails = () => {
-	const content = getContents();
-	const isLargeViewport = useViewportMatch( 'small' );
 	const [ customerInput, setCustomerInput ] = useState();
 	const [ customerInputStrength, setCustomerInputStrength ] = useState( 0 );
 	const [ isValidInput, setIsValidInput ] = useState( false );
+
 	const { currentData } = useSelect( ( select ) => {
 		return {
 			currentData:
@@ -42,6 +47,8 @@ const SiteGenSiteDetails = () => {
 		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
+	const isLargeViewport = useViewportMatch( 'small' );
+
 	useEffect( () => {
 		setHideFooterNav( false );
 		setIsHeaderEnabled( true );
@@ -56,6 +63,23 @@ const SiteGenSiteDetails = () => {
 		}
 		setIsFooterNavAllowed( false );
 	}, [] );
+
+	useEffect( () => {
+		if (
+			customerInput !== undefined &&
+			customerInput !== '' &&
+			customerInput !== currentData.sitegen.siteDetails.prompt
+		) {
+			currentData.sitegen.siteDetails.prompt = customerInput?.trim();
+			currentData.sitegen.siteDetails.mode = 'simple';
+			currentData.sitegen.skipCache = true;
+			currentData.sitegen.sitemapPagesGenerated = false;
+			currentData.sitegen.homepages.active = {};
+			currentData.sitegen.homepages.data = {};
+			setCurrentOnboardingData( currentData );
+		}
+		setIsFooterNavAllowed( isValidInput );
+	}, [ customerInput ] );
 
 	const trackPromptSetEvent = () => {
 		let customerInputStrengthForEvent = false;
@@ -82,25 +106,10 @@ const SiteGenSiteDetails = () => {
 		}
 	};
 
-	useEffect( () => {
-		if (
-			customerInput !== undefined &&
-			customerInput !== '' &&
-			customerInput !== currentData.sitegen.siteDetails.prompt
-		) {
-			currentData.sitegen.siteDetails.prompt = customerInput?.trim();
-			currentData.sitegen.siteDetails.mode = 'simple';
-			currentData.sitegen.skipCache = true;
-			currentData.sitegen.sitemapPagesGenerated = false;
-			currentData.sitegen.homepages.active = {};
-			currentData.sitegen.homepages.data = {};
-			setCurrentOnboardingData( currentData );
-		}
-		setIsFooterNavAllowed( isValidInput );
-	}, [ customerInput ] );
+	const content = getContents();
 
 	return (
-		<SitegenAiStateHandler>
+		<SiteGenStateHandler>
 			<CommonLayout isCentered>
 				<Animate type={ 'fade-in' }>
 					<div className={ 'nfd-sg-site-details' }>
@@ -135,7 +144,7 @@ const SiteGenSiteDetails = () => {
 					</div>
 				</Animate>
 			</CommonLayout>
-		</SitegenAiStateHandler>
+		</SiteGenStateHandler>
 	);
 };
 

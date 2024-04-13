@@ -1,12 +1,33 @@
 // <reference types="Cypress" />
 
-import { AdminBarCheck, BackButtonCheck, DarkBGCheck, DisabledNextButton, LightBGCheck, ProgressBarCheck, SkipButtonCheck } from '../wp-module-support/siteGen.cy';
+import {
+	AdminBarCheck,
+	BackButtonCheck,
+	DarkBGCheck,
+	DisabledNextButton,
+	LightBGCheck,
+	ProgressBarCheck,
+	SkipButtonCheck,
+} from '../wp-module-support/siteGen.cy';
+import {
+	apiList,
+	siteGenMockAll,
+	homePagesMock,
+} from '../wp-module-support/MockApi.cy';
 
-describe( 'SiteGen Site Logo Step', function() {
+describe( 'SiteGen Site Logo Step', function () {
 	before( () => {
-		cy.visit(
-			'wp-admin/?page=nfd-onboarding#/sitegen/step/site-logo'
-		);
+		cy.intercept( apiList.sitegen, ( req ) => {
+			siteGenMockAll( req );
+		} ).as( 'sitegenCalls' );
+
+		cy.intercept( apiList.homepages, ( req ) => {
+			homePagesMock( req );
+		} ).as( 'homePageCall' );
+		cy.visit( 'wp-admin/?page=nfd-onboarding#/sitegen/step/site-logo' );
+		cy.wait( '@sitegenCalls', { timeout: 60000 } );
+		cy.wait( '@homePageCall', { timeout: 60000 } );
+		cy.timeout( 120000 );
 	} );
 
 	it( 'Check for the header admin bar', () => {
@@ -30,7 +51,7 @@ describe( 'SiteGen Site Logo Step', function() {
 	} );
 
 	it( 'Check if the heading is visible', () => {
-		cy.get( '.ai-heading', {timeout:20000} ).should( 'be.visible' );
+		cy.get( '.ai-heading', { timeout: 20000 } ).should( 'be.visible' );
 	} );
 
 	it( 'Check for the skip button', () => {
@@ -41,31 +62,37 @@ describe( 'SiteGen Site Logo Step', function() {
 		DisabledNextButton();
 	} );
 
-	it.skip( 'Check if Image gets uploaded', () => {
+	it( 'Check if Image gets uploaded', () => {
 		const sampleLogoPath = `vendor/newfold-labs/wp-module-onboarding/tests/cypress/fixtures/image.png`;
-		const LogoPreviewClass = '.nfd-onboarding-image-uploader--with-text__site_logo__preview';
+		const LogoPreviewClass =
+			'.nfd-onboarding-image-uploader--with-text__site_logo__preview';
 		if (
-			cy.get( '.nfd-onboarding-button--site-gen-next--disabled' )
+			cy
+				.get( '.nfd-onboarding-button--site-gen-next--disabled' )
 				.should( 'be.visible' )
 		) {
-			cy.get( LogoPreviewClass )
-				.should( 'not.exist' );
+			cy.get( LogoPreviewClass ).should( 'not.exist' );
 		}
 		cy.get( 'input[type=file]', { timeout: 180000 } )
 			.should( 'exist' )
 			.selectFile( sampleLogoPath, { force: true } )
 			.then( () => {
 				cy.wait( 2000 );
-				cy.get( LogoPreviewClass, { timeout: 60000 } ).should( 'be.visible' );
-				cy.get( '.nfd-onboarding-image-uploader--with-text__site_logo__preview__reset__button' )
+				cy.get( LogoPreviewClass, { timeout: 60000 } ).should(
+					'be.visible'
+				);
+				cy.get(
+					'.nfd-onboarding-image-uploader--with-text__site_logo__preview__reset__button'
+				)
 					.scrollIntoView()
 					.should( 'be.visible' );
 			} );
-		cy.get( '.nfd-onboarding-button--site-gen-next' )
-			.should( 'not.be.disabled' );
+		cy.get( '.nfd-onboarding-button--site-gen-next' ).should(
+			'not.be.disabled'
+		);
 	} );
 
-	it.skip( 'Check if the Next Button is enabled and go next', () => {
+	it( 'Check if the Next Button is enabled and go next', () => {
 		cy.get( '.nfd-onboarding-button--site-gen-next' )
 			.should( 'not.be.disabled' )
 			.click();

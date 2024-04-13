@@ -1,87 +1,38 @@
+// WordPress
 import { __ } from '@wordpress/i18n';
-
 import { memo, useContext, useRef, useState } from '@wordpress/element';
-import { uploadImage } from '../../../../utils/api/uploader';
-import Spinner from '../../../Loaders/Spinner';
-import { ThemeContext } from '../../../ThemeContextProvider';
-import classNames from 'classnames';
-import { THEME_LIGHT, THEME_DARK } from '../../../../../constants';
-import bytes from 'bytes';
 import { Icon, closeSmall } from '@wordpress/icons';
-import { store as nfdOnboardingStore } from '../../../../store';
-import { useDispatch } from '@wordpress/data';
 
-const ImageUploaderWithText = ( { image, imageSetter } ) => {
+// Third-party
+import classNames from 'classnames';
+import bytes from 'bytes';
+
+// Classes and functions
+import { uploadImage } from '../../../../utils/api/uploader';
+import { getDominantColor, getContrastingColor } from './utils';
+
+// Components
+import { ThemeContext } from '../../../ThemeContextProvider';
+import Spinner from '../../../Loaders/Spinner';
+
+// Misc
+import { THEME_LIGHT, THEME_DARK } from '../../../../../constants';
+
+const ImageUploaderWithText = ( { image, imageSetter, onFailure } ) => {
 	const inputRef = useRef( null );
 	const { theme } = useContext( ThemeContext );
 	const [ isUploading, setIsUploading ] = useState( false );
 	const [ onDragActive, setOnDragActive ] = useState( false );
 	const [ pngLogoBgTheme, setPngLogoBgTheme ] = useState( '' );
 
-	const { updateSiteGenErrorStatus } = useDispatch( nfdOnboardingStore );
-
-	const getDominantColor = ( imageSrc, callback ) => {
-		// eslint-disable-next-line no-undef
-		const img = new Image();
-		img.crossOrigin = 'Anonymous';
-		/* Registering on load before src to so that event listener is ready capture when image loads */
-		img.onload = () => {
-			const canvas = document.createElement( 'canvas' );
-			const ctx = canvas.getContext( '2d' );
-			canvas.width = img.width;
-			canvas.height = img.height;
-			ctx.drawImage( img, 0, 0 );
-			const imageData = ctx.getImageData(
-				0,
-				0,
-				canvas.width,
-				canvas.height
-			);
-			const data = imageData.data;
-			let r = 0,
-				g = 0,
-				b = 0,
-				count = 0;
-
-			/* skip transparent areas as the 0 alpha value leads to lower rgb values even in white logos */
-			for ( let i = 0; i < data.length; i += 4 ) {
-				const alpha = data[ i + 3 ];
-				if ( alpha > 0 ) {
-					r += data[ i ];
-					g += data[ i + 1 ];
-					b += data[ i + 2 ];
-					count++;
-				}
-			}
-
-			/* Get the average rgb value of the image  */
-			if ( count > 0 ) {
-				// To avoid division by zero
-				r = Math.floor( r / count );
-				g = Math.floor( g / count );
-				b = Math.floor( b / count );
-			}
-
-			// Callback with the avrage dominant color
-			callback( `rgb(${ r }, ${ g }, ${ b })` );
-		};
-		img.src = imageSrc;
-	};
-
-	const getContrastingColor = ( color ) => {
-		/* if the contrast value more than 150 it should have black bg, otherwise white */
-		const [ r, g, b ] = color.match( /\d+/g ).map( Number );
-		const contrastValue = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-		return contrastValue > 160 ? THEME_DARK : THEME_LIGHT;
-	};
-
 	async function updateItem( fileData ) {
 		if ( fileData ) {
 			setIsUploading( true );
 			const res = await uploadImage( fileData );
 			if ( ! res?.body ) {
-				updateSiteGenErrorStatus( true );
-				return setIsUploading( false );
+				setIsUploading( false );
+				handleFailure();
+				return false;
 			}
 			const id = res.body?.id;
 			const url = res.body?.source_url;
@@ -103,6 +54,12 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 		}
 		setIsUploading( false );
 	}
+
+	const handleFailure = () => {
+		if ( typeof onFailure === 'function' ) {
+			return onFailure();
+		}
+	};
 
 	const handleClick = () => {
 		inputRef?.current.click();
@@ -168,9 +125,9 @@ const ImageUploaderWithText = ( { image, imageSetter } ) => {
 			'nfd-onboarding-image-uploader--with-text--not-dashed':
 				isImageUploaded,
 			'nfd-onboarding-image-uploader--with-text--not-dashed__dark':
-				pngLogoBgTheme === THEME_DARK,
+				isImageUploaded && pngLogoBgTheme === THEME_DARK,
 			'nfd-onboarding-image-uploader--with-text--not-dashed__light':
-				pngLogoBgTheme === THEME_LIGHT,
+				isImageUploaded && pngLogoBgTheme === THEME_LIGHT,
 		}
 	);
 

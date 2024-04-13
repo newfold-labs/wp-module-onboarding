@@ -1,20 +1,26 @@
+// WordPress
 import { useViewportMatch } from '@wordpress/compose';
 import { useEffect, useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
+// Classes and functions
 import getContents from './contents';
-import { HEADER_SITEGEN } from '../../../../constants';
-import SkipButton from '../../../components/SkipButton';
-import { store as nfdOnboardingStore } from '../../../store';
-import AIHeading from '../../../components/Heading/AIHeading';
-import CommonLayout from '../../../components/Layouts/Common';
-import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
-import ImageUploaderWithText from '../../../components/ImageUploader/components/ImageUploaderWithText';
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
 } from '../../../utils/analytics/hiive';
+
+// Components
+import SkipButton from '../../../components/SkipButton';
+import AIHeading from '../../../components/Heading/AIHeading';
+import CommonLayout from '../../../components/Layouts/Common';
+import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
+import ImageUploaderWithText from '../../../components/ImageUploader/components/ImageUploaderWithText';
+
+// Misc
+import { store as nfdOnboardingStore } from '../../../store';
+import { HEADER_SITEGEN } from '../../../../constants';
 import {
 	ACTION_LOGO_ADDED,
 	ACTION_SITEGEN_LOGO_SKIPPED,
@@ -23,6 +29,7 @@ import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenSiteLogo = () => {
 	const [ siteLogo, setSiteLogo ] = useState();
+
 	const isLargeViewport = useViewportMatch( 'small' );
 
 	const { currentData } = useSelect( ( select ) => {
@@ -32,11 +39,11 @@ const SiteGenSiteLogo = () => {
 		};
 	} );
 
-	const { editEntityRecord } = useDispatch( coreStore );
-
 	const { getEditedEntityRecord } = useSelect( ( select ) => {
 		return select( coreStore );
 	}, [] );
+
+	const { editEntityRecord } = useDispatch( coreStore );
 
 	const {
 		setIsFooterNavAllowed,
@@ -47,7 +54,23 @@ const SiteGenSiteLogo = () => {
 		setHideFooterNav,
 		setCurrentOnboardingData,
 		setIsHeaderNavigationEnabled,
+		updateSiteGenErrorStatus,
 	} = useDispatch( nfdOnboardingStore );
+
+	useEffect( () => {
+		setHideFooterNav( false );
+		setIsHeaderEnabled( true );
+		setSidebarActiveView( false );
+		setIsHeaderNavigationEnabled( true );
+		setHeaderActiveView( HEADER_SITEGEN );
+		setDrawerActiveView( false );
+		if ( currentData.sitegen.siteLogo?.id !== 0 ) {
+			setIsFooterNavAllowed( true );
+			return setSiteLogo( currentData.sitegen.siteLogo );
+		}
+		setIsFooterNavAllowed( false );
+		getEditedEntityRecord( 'root', 'site' );
+	}, [] );
 
 	const resetSiteLogo = () => {
 		const currentDataCopy = { ...currentData };
@@ -67,21 +90,6 @@ const SiteGenSiteLogo = () => {
 		);
 	};
 
-	useEffect( () => {
-		setHideFooterNav( false );
-		setIsHeaderEnabled( true );
-		setSidebarActiveView( false );
-		setIsHeaderNavigationEnabled( true );
-		setHeaderActiveView( HEADER_SITEGEN );
-		setDrawerActiveView( false );
-		if ( currentData.sitegen.siteLogo?.id !== 0 ) {
-			setIsFooterNavAllowed( true );
-			return setSiteLogo( currentData.sitegen.siteLogo );
-		}
-		setIsFooterNavAllowed( false );
-		getEditedEntityRecord( 'root', 'site' );
-	}, [] );
-
 	const handleSiteLogo = ( siteLogoNew ) => {
 		const currentDataCopy = { ...currentData };
 		currentDataCopy.sitegen.siteLogo.id = siteLogoNew.id;
@@ -96,7 +104,12 @@ const SiteGenSiteLogo = () => {
 		setSiteLogo( siteLogoNew );
 	};
 
+	const handleFailure = () => {
+		updateSiteGenErrorStatus( true );
+	};
+
 	const content = getContents();
+
 	return (
 		<CommonLayout
 			isCentered
@@ -107,6 +120,7 @@ const SiteGenSiteLogo = () => {
 				<ImageUploaderWithText
 					image={ siteLogo }
 					imageSetter={ handleSiteLogo }
+					onFailure={ handleFailure }
 				/>
 				<div className="nfd-onboarding-step--site-gen__site-logo__container__buttons">
 					<SkipButton
