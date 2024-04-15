@@ -42,7 +42,7 @@ const Migrate = () => {
 	const content = getContents();
 	return (
 		<CommonLayout
-			// isCentered
+			isVerticallyCentered
 			className="nfd-onboarding-step--site-gen__migration"
 		>
 			<HeadingWithSubHeading title={ content?.heading } />
