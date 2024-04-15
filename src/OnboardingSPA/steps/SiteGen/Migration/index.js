@@ -46,11 +46,15 @@ const Migrate = () => {
 			className="nfd-onboarding-step--site-gen__migration"
 		>
 			<HeadingWithSubHeading title={ content?.heading } />
-			<div className="nfd-onboarding-step--site-gen__migration__contain">
-				<div className="nfd-onboarding-step--site-gen__migration__loader"></div>{ ' ' }
-				<p className="importtext">{ content?.importtext }</p>
+			<div className="nfd-onboarding-step--site-gen__migration--container">
+				<div className="nfd-onboarding-step--site-gen__migration--container__loader"></div>
+				<p className="nfd-onboarding-step--site-gen__migration--container__importtext">
+					{ content?.importtext }
+				</p>
 			</div>
-			<p className="description">{ content?.description }</p>
+			<p className="nfd-onboarding-step--site-gen__migration__description">
+				{ content?.description }
+			</p>
 		</CommonLayout>
 	);
 };
