@@ -4,13 +4,17 @@
 	flex-direction: column;
 	justify-content: flex-start;
 	font-weight: 500;
-	padding: 0 15px;
+	padding: 30px 15px;
 
 	&__description {
 		font-size: 18px;
 		color: var(--nfd-onboarding-primary);
 		margin: 50px 0;
 		text-align: center;
+
+		@media (max-width: #{ ($break-small) }) {
+			font-size: 16px;
+		}
 	}
 
 	&--container {
@@ -21,7 +25,8 @@
 		padding: 10px;
 		background-color: var(--nfd-onboarding-card-background);
 		justify-content: center;
-		width: 436px;
+		width: 100%;
+		max-width: 436px;
 
 		&__importtext {
 			color: var(--nfd-onboarding-primary);
