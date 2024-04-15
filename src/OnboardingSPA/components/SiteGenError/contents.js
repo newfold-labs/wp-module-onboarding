@@ -17,6 +17,10 @@ const getContents = () => {
 		buttonText: __( 'Try again', 'wp-module-onboarding' ),
 		buttonSkip: __( 'Continue without AI', 'wp-module-onboarding' ),
 		buttonExit: __( 'exit to WordPress', 'wp-module-onboarding' ),
+		migrationHeading: __(
+			"Sorry, we're having trouble starting the site transfer process.",
+			'wp-module-onboarding'
+		),
 	};
 };
 

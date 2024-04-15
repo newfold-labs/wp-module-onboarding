@@ -10,10 +10,13 @@ import { ACTION_SITEGEN_ERROR_STATE_TRIGGERED } from '../../../utils/analytics/h
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 import SiteGenSiteError from '../../SiteGenError';
+import SiteGenMigrationError from '../../SiteGenError/migration';
+import { stepMigration } from '../../../steps/SiteGen/Migration/step';
 
 const SitegenAiStateHandler = ( { children } ) => {
-	const { siteGenErrorStatus } = useSelect( ( select ) => {
+	const { siteGenErrorStatus, currentStep } = useSelect( ( select ) => {
 		return {
+			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 			siteGenErrorStatus:
 				select( nfdOnboardingStore ).getSiteGenErrorStatus(),
 		};
@@ -32,10 +35,14 @@ const SitegenAiStateHandler = ( { children } ) => {
 			);
 		}
 	}, [ siteGenErrorStatus ] );
-
+	const isMigrationStep = currentStep === stepMigration;
 	const handleRender = () => {
 		if ( siteGenErrorStatus ) {
-			return <SiteGenSiteError />;
+			return isMigrationStep ? (
+				<SiteGenMigrationError />
+			) : (
+				<SiteGenSiteError />
+			);
 		}
 
 		return children;
