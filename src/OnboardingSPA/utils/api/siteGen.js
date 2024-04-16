@@ -16,15 +16,17 @@ export async function generateSiteGenMeta(
 	identifier,
 	skipCache = true
 ) {
-	const data = await apiFetch( {
-		url: onboardingRestURL( 'sitegen/generate' ),
-		method: 'POST',
-		data: {
-			site_info: siteInfo,
-			identifier,
-			skip_cache: skipCache,
-		},
-	} );
+	const data = await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/generate' ),
+			method: 'POST',
+			data: {
+				site_info: siteInfo,
+				identifier,
+				skip_cache: skipCache,
+			},
+		} )
+	);
 
 	return data;
 }

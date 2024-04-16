@@ -1,24 +1,35 @@
+// WordPress
 import { useViewportMatch } from '@wordpress/compose';
 import { useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
-import getContents from './contents';
 import { Button, Fill } from '@wordpress/components';
-import { store as nfdOnboardingStore } from '../../store';
-import CommonLayout from '../Layouts/Common';
-import OrbAnimation from '../OrbAnimation';
-import { SITEGEN_FLOW, DEFAULT_FLOW } from '../../data/flows/constants';
-import { validateFlow } from '../../data/flows/utils';
-import { resolveGetDataForFlow } from '../../data/flows';
+
+// Third-party
 import { useNavigate } from 'react-router-dom';
+
+// Classes and functions
+import getContents from './contents';
+import { validateFlow } from '../../../../data/flows/utils';
+import { resolveGetDataForFlow } from '../../../../data/flows';
+
+// Components
+import CommonLayout from '../../../Layouts/Common';
+import OrbAnimation from '../../../OrbAnimation';
+
+// Misc
+import { store as nfdOnboardingStore } from '../../../../store';
+import { SITEGEN_FLOW, DEFAULT_FLOW } from '../../../../data/flows/constants';
 import {
 	FOOTER_SITEGEN,
 	FOOTER_END,
 	HEADER_SITEGEN,
 	pluginDashboardPage,
-} from '../../../constants';
+} from '../../../../../constants';
 
-const SiteGenSiteError = () => {
+const SiteGenStepErrorState = () => {
 	const navigate = useNavigate();
+	const isLargeViewport = useViewportMatch( 'small' );
+
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -38,11 +49,11 @@ const SiteGenSiteError = () => {
 	useEffect( () => {
 		setHideFooterNav( true );
 		setIsHeaderEnabled( true );
-		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
 		setIsHeaderNavigationEnabled( true );
 		setDrawerActiveView( false );
-	} );
+		setSidebarActiveView( false );
+	}, [] );
 
 	const { brandConfig, currentData } = useSelect( ( select ) => {
 		return {
@@ -51,13 +62,10 @@ const SiteGenSiteError = () => {
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	} );
-	const isLargeViewport = useViewportMatch( 'small' );
 
-	const content = getContents();
 	const oldFlow = window.nfdOnboarding?.oldFlow
 		? window.nfdOnboarding.oldFlow
 		: DEFAULT_FLOW;
-
 	const switchFlow = ( newFlow ) => {
 		if ( ! validateFlow( brandConfig, newFlow ) ) {
 			return false;
@@ -77,15 +85,18 @@ const SiteGenSiteError = () => {
 		currentData.activeFlow = newFlow;
 		currentData.continueWithoutAi = true;
 		setCurrentOnboardingData( currentData );
-		updateSiteGenErrorStatus( false );
 		if ( SITEGEN_FLOW !== newFlow ) {
 			updateInitialize( true );
 		}
 		navigate( data.steps[ 1 ].path );
 	};
+
 	const handleRetry = () => {
 		updateSiteGenErrorStatus( false );
 	};
+
+	const content = getContents();
+
 	return (
 		<CommonLayout className="nfd-onboarding-step--site-gen__error">
 			<div className="nfd-onboarding-step--site-gen__error__container">
@@ -151,4 +162,4 @@ const SiteGenSiteError = () => {
 	);
 };
 
-export default SiteGenSiteError;
+export default SiteGenStepErrorState;

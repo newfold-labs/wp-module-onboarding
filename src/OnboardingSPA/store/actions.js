@@ -292,24 +292,10 @@ export function resetNavError() {
 	};
 }
 
-export const setHomepagesData = ( homepagesData ) => {
+export const setIsGeneratingHomepages = ( isGeneratingHomepages ) => {
 	return {
-		type: 'SET_HOMEPAGES_DATA',
-		homepagesData,
-	};
-};
-
-export const setActiveHomepage = ( activeHomepage ) => {
-	return {
-		type: 'SET_ACTIVE_HOMEPAGE',
-		activeHomepage,
-	};
-};
-
-export const toggleFavorite = ( slug ) => {
-	return {
-		type: 'TOGGLE_FAVORITE',
-		slug,
+		type: 'SET_IS_GENERATING_HOMEPAGES',
+		isGeneratingHomepages,
 	};
 };
 

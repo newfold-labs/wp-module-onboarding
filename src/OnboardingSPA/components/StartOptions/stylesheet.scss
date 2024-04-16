@@ -23,6 +23,7 @@
 
 		&__options {
 			flex: 1;
+			position: relative;
 			min-width: 310px;
 			height: 130px;
 			border: 1px solid #9ca2a7;
@@ -57,6 +58,16 @@
 				font-size: clamp(15px, 17px, 19px);
 				padding-top: 3px;
 				padding-bottom: 2px;
+			}
+
+			&--badge {
+				top: -12px;
+				font-size: 16px;
+				padding: 8px 12px;
+				border-radius: 4px;
+				position: absolute;
+				background: linear-gradient(0deg, #f36, #f36);
+
 			}
 		}
 

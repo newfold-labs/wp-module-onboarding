@@ -4,7 +4,7 @@ import { useEffect, useState } from '@wordpress/element';
 
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../store';
-import { HEADER_SITEGEN } from '../../../../constants';
+import { HEADER_SITEGEN, THEME_STATUS_ACTIVE } from '../../../../constants';
 
 import { LivePreview } from '../../../components/LivePreview';
 import { getGlobalStyles } from '../../../utils/api/themes';
@@ -12,6 +12,7 @@ import { getGlobalStyles } from '../../../utils/api/themes';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { cloneDeep } from 'lodash';
 import { publishSitemapPages } from '../../../utils/api/siteGen';
+import { DesignStateHandler } from '../../../components/StateHandlers';
 
 const StepSiteGenEditor = () => {
 	const [ homepage, setHomepage ] = useState( false );
@@ -25,10 +26,11 @@ const StepSiteGenEditor = () => {
 		setIsHeaderNavigationEnabled,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { currentData } = useSelect( ( select ) => {
+	const { currentData, themeStatus } = useSelect( ( select ) => {
 		return {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			themeStatus: select( nfdOnboardingStore ).getThemeStatus(),
 		};
 	} );
 
@@ -57,12 +59,14 @@ const StepSiteGenEditor = () => {
 	};
 
 	useEffect( () => {
-		setIsHeaderEnabled( true );
-		setHeaderActiveView( HEADER_SITEGEN );
-		setDrawerActiveView( false );
-		loadData();
-		handleSitemapPagesGeneration();
-	}, [] );
+		if ( THEME_STATUS_ACTIVE === themeStatus ) {
+			setIsHeaderEnabled( true );
+			setHeaderActiveView( HEADER_SITEGEN );
+			setDrawerActiveView( false );
+			loadData();
+			handleSitemapPagesGeneration();
+		}
+	}, [ themeStatus ] );
 
 	useEffect( () => {
 		if ( currentData?.sitegen?.homepages?.active ) {
@@ -117,15 +121,17 @@ const StepSiteGenEditor = () => {
 	};
 
 	return (
-		<CommonLayout
-			isCentered
-			className="nfd-onboarding-step--site-gen__editor"
-		>
-			<div className="nfd-onboarding-step--site-gen__editor__live-preview">
-				{ buildPreview() }
-			</div>
-			<div className="nfd-onboarding-screenshot-container"></div>
-		</CommonLayout>
+		<DesignStateHandler render={ false }>
+			<CommonLayout
+				isCentered
+				className="nfd-onboarding-step--site-gen__editor"
+			>
+				<div className="nfd-onboarding-step--site-gen__editor__live-preview">
+					{ buildPreview() }
+				</div>
+				<div className="nfd-onboarding-screenshot-container"></div>
+			</CommonLayout>
+		</DesignStateHandler>
 	);
 };
 
