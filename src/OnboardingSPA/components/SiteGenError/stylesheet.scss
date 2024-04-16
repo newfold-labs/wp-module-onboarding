@@ -142,6 +142,13 @@
 
 			.nfd-onboarding-step--site-gen__error__container {
 				width: 610px;
+
+				&__buttons {
+
+					@media (max-width: #{ ($break-small) }) {
+						justify-content: end;
+					}
+				}
 			}
 		}
 	}
