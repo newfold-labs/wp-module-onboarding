@@ -67,7 +67,6 @@ class EventsController extends \WP_REST_Controller {
 					'required'          => true,
 					'description'       => __( 'Event action', 'wp-module-onboarding' ),
 					'type'              => 'string',
-					'sanitize_callback' => 'sanitize_title',
 					'validate_callback' => array( EventService::class, 'validate_action' ),
 				),
 				'category' => array(
