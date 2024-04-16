@@ -3,12 +3,17 @@
 height="42" />
 </a>
 
-# wp-module-onboarding WordPress Module
-[![Version Number](https://img.shields.io/github/v/release/newfold-labs/wp-module-onboarding?color=21a0ed&labelColor=333333)](https://github.com/newfold/wp-module-onboarding/releases)
-[![License](https://img.shields.io/github/license/newfold-labs/wp-module-onboarding?labelColor=333333&color=666666)](https://raw.githubusercontent.com/newfold-labs/wp-module-onboarding/master/LICENSE)
+# WordPress Onboarding Module
+[![Version Number](https://img.shields.io/github/v/release/newfold-labs/wp-module-onboarding?color=77dd77&labelColor=00000&style=for-the-badge)](https://github.com/newfold/wp-module-onboarding/releases)
+[![License](https://img.shields.io/github/license/newfold-labs/wp-module-onboarding?labelColor=333333&color=666666&style=for-the-badge)](https://raw.githubusercontent.com/newfold-labs/wp-module-onboarding/master/LICENSE)
+
 
 The Onboarding module is designed to streamline various tasks related to user onboarding and customization within a WordPress environment. It provides functionalities to enhance user experience, configure settings, install plugins and themes dynamically, and interact with other modules seamlessly.
-
+<br><br>
+[![React](https://img.shields.io/badge/Wordpress-21759B?style=for-the-badge&logo=wordpress&logoColor=white)]()
+[![React](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)]()
+[![React](https://shields.io/badge/react-black?logo=react&style=for-the-badge)]()
+<br>
 ## Module Responsibilities
 
 1. **User Redirection:**
@@ -59,7 +64,7 @@ The Onboarding module is designed to streamline various tasks related to user on
 
 ## Release Process
 
-### Pre-release Preparation
+### Local Release Preparation
 
 1. **Checkout the trunk branch locally:**
    ```bash
@@ -92,7 +97,7 @@ The Onboarding module is designed to streamline various tasks related to user on
    git push origin trunk
    ```
 
-### Creating a Release
+### Creating a Release on Github
 
 6. **Create a new release on Github:**
    - Go to: [New Release](https://github.com/newfold-labs/wp-module-onboarding/releases/new)
@@ -103,10 +108,10 @@ The Onboarding module is designed to streamline various tasks related to user on
 
 7. **Ensure release tag exists on [Github](https://github.com/newfold-labs/wp-module-onboarding/releases/) and [Satis](https://github.com/newfold-labs/satis/actions).**
 
-### Pull Request and Testing
+### Pull Request and Cypress Testing
 
 8. **Make a branch in the Brand Plugin:**
-   - Create a branch `update/onboarding` in the Brand plugin.
+   - Create a branch `update/onboarding` in the Brand plugin from `develop`.
 
 9. **Update Onboarding version in:**
    - `composer.json`
