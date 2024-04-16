@@ -10,17 +10,20 @@ import { ACTION_SITEGEN_ERROR_STATE_TRIGGERED } from '../../../utils/analytics/h
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 import SiteGenSiteError from '../../SiteGenError';
-import SiteGenMigrationError from '../../SiteGenError/migration';
+import SiteGenMigrationError from '../../SiteGenError/Migration';
 import { stepMigration } from '../../../steps/SiteGen/Migration/step';
 
 const SitegenAiStateHandler = ( { children } ) => {
-	const { siteGenErrorStatus, currentStep } = useSelect( ( select ) => {
-		return {
-			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
-			siteGenErrorStatus:
-				select( nfdOnboardingStore ).getSiteGenErrorStatus(),
-		};
-	} );
+	const { siteGenErrorStatus, currentStep, currentRoute } = useSelect(
+		( select ) => {
+			return {
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+				currentRoute: select( nfdOnboardingStore ).getCurrentStepPath(),
+				siteGenErrorStatus:
+					select( nfdOnboardingStore ).getSiteGenErrorStatus(),
+			};
+		}
+	);
 
 	useEffect( () => {
 		if ( siteGenErrorStatus === true ) {
@@ -35,7 +38,8 @@ const SitegenAiStateHandler = ( { children } ) => {
 			);
 		}
 	}, [ siteGenErrorStatus ] );
-	const isMigrationStep = currentStep === stepMigration;
+	const isMigrationStep =
+		currentStep === stepMigration || currentRoute === stepMigration.path;
 	const handleRender = () => {
 		if ( siteGenErrorStatus ) {
 			return isMigrationStep ? (
