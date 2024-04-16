@@ -10,13 +10,13 @@ import {
 
 // Components
 import SiteGenStepErrorState from '../../ErrorState/Step/SiteGen';
+import SiteGenMigrationError from '../../ErrorState/Step/SiteGen/Migration';
 
 // Misc
 import { store as nfdOnboardingStore } from '../../../store';
 import { ACTION_SITEGEN_ERROR_STATE_TRIGGERED } from '../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
-import SiteGenMigrationError from '../../SiteGenError/Migration';
 import { stepMigration } from '../../../steps/SiteGen/Migration/step';
 
 const SiteGenStateHandler = ( { children } ) => {

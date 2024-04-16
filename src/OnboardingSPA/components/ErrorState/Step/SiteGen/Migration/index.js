@@ -2,12 +2,12 @@ import { useEffect } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 import getContents from './contents';
 import { Button } from '@wordpress/components';
-import { store as nfdOnboardingStore } from '../../../store';
-import CommonLayout from '../../Layouts/Common';
-import OrbAnimation from '../../OrbAnimation';
+import { store as nfdOnboardingStore } from '../../../../../store';
+import CommonLayout from '../../../../Layouts/Common';
+import OrbAnimation from '../../../../OrbAnimation';
 import { useNavigate } from 'react-router-dom';
-import { HEADER_SITEGEN } from '../../../../constants';
-import { stepTheFork } from '../../../steps/TheFork/step';
+import { HEADER_SITEGEN } from '../../../../../../constants';
+import { stepTheFork } from '../../../../../steps/TheFork/step';
 
 const SiteGenMigrationError = () => {
 	const navigate = useNavigate();

@@ -9,7 +9,7 @@ import { FOOTER_SITEGEN, HEADER_SITEGEN } from '../../../../constants';
 import getContents from './contents';
 import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading/SiteGen';
 import { getSiteMigrateUrl } from '../../../utils/api/siteGen';
-import SitegenAiStateHandler from '../../../components/StateHandlers/SitegenAi';
+import { SiteGenStateHandler } from '../../../components/StateHandlers';
 
 const Migrate = () => {
 	const {
@@ -57,7 +57,7 @@ const Migrate = () => {
 
 	const content = getContents();
 	return (
-		<SitegenAiStateHandler>
+		<SiteGenStateHandler>
 			<CommonLayout
 				isVerticallyCentered
 				className="nfd-onboarding-step--site-gen__migration"
@@ -73,7 +73,7 @@ const Migrate = () => {
 					{ content?.description }
 				</p>
 			</CommonLayout>
-		</SitegenAiStateHandler>
+		</SiteGenStateHandler>
 	);
 };
 
