@@ -1,11 +1,12 @@
 // import './stylesheet.css';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { Icon, closeSmall } from '@wordpress/icons';
 import welcomeImg from '../../images/welcome.png';
 import wonderblocksImg from '../../images/wonderblocks.png';
 import publishImg from '../../images/publish.png';
 import wpImg from '../../images/wp.png';
 import getContents from './content';
+import { getEditorTourStatus, updateEditorTourStatus } from '../../utils/api';
 
 const Tour = () => {
 	const content = getContents();
@@ -17,7 +18,8 @@ const Tour = () => {
 		dialogRightBuffer: 50,
 		dialogMidPoint: 500,
 	};
-	const [ isVisible, setIsVisible ] = useState( true );
+
+	const [ isVisible, setIsVisible ] = useState( false );
 	const [ stepIndex, setStepIndex ] = useState( 0 );
 
 	let dialogPosition = {
@@ -36,8 +38,24 @@ const Tour = () => {
 	const handleSkipTour = () => {
 		// Logic for skipping the tour
 		// setStepIndex( steps.length - 1 );
-		setIsVisible( false );
+		updateTourStatus();
 	};
+
+	const checkTourStatus = async () => {
+		const editorTourStatus = await getEditorTourStatus();
+		setIsVisible( editorTourStatus.body );
+	};
+
+	const updateTourStatus = async () => {
+		const editorTourStatus = await updateEditorTourStatus();
+		if ( editorTourStatus.body ) {
+			setIsVisible( false );
+		}
+	};
+
+	useEffect( () => {
+		checkTourStatus();
+	}, [] );
 
 	const currentStep = steps[ stepIndex ];
 
@@ -153,9 +171,10 @@ const Tour = () => {
 					{ renderStepProgress() }
 				</div>
 				<div className={ 'nfd-tour__step__footer__button' }>
+					{ /* keeping the code as the decision is pending 
 					{ stepIndex > 0 && (
 						<button onClick={ handlePrevStep }>Previous</button>
-					) }
+					) } */ }
 					{ stepIndex === 0 && (
 						<button onClick={ handleNextStep }>Start Tour ></button>
 					) }

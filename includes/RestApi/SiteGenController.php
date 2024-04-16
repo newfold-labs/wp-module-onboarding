@@ -99,6 +99,26 @@ class SiteGenController {
 				'args'                => $this->get_publish_sitemap_pages_args(),
 			)
 		);
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/editortour',
+			array(
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_editor_tour_status' ),
+				// 'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+			)
+		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/editortour/update',
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'update_editor_tour_status' ),
+				// 'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				'args'                => $this->get_editor_tour_args(),
+			)
+		);
 	}
 
 	/**
@@ -172,6 +192,19 @@ class SiteGenController {
 				'required' => false,
 			),
 			'isFavorite'       => array(
+				'required' => true,
+			),
+		);
+	}
+
+	/**
+	 * Gets the arguments for the 'update-editor-status' endpoint.
+	 *
+	 * @return array The array of arguments.
+	 */
+	public function get_editor_tour_args() {
+		return array(
+			'status'       => array(
 				'required' => true,
 			),
 		);
@@ -336,4 +369,31 @@ class SiteGenController {
 	public function get_customize_sidebar_data() {
 		return SiteGenService::get_customize_sidebar_data();
 	}
+
+	/**
+	 * Gets the editor_tour status
+	 *
+	 * @param \WP_REST_Request $request parameter.
+	 * @return array
+	 */
+	public function get_editor_tour_status( \WP_REST_Request $request ) {
+		$editor_tour = SiteGenService::get_editor_tour_status();
+		return new \WP_REST_Response( $editor_tour, 200 );
+		
+	}
+
+	/**
+	 * Updates the editor_tour status
+	 *
+	 * @param \WP_REST_Request $request parameter.
+	 * @return array
+	 */
+	public function update_editor_tour_status( \WP_REST_Request $request ) {
+		$editor_tour = SiteGenService::update_editor_tour_status();
+		return new \WP_REST_Response( $editor_tour, 200 );
+		
+	}
+
+	
+
 }
