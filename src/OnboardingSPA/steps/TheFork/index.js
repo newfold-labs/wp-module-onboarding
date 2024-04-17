@@ -29,17 +29,21 @@ import {
 } from '../../utils/analytics/hiive/constants';
 import { store as nfdOnboardingStore } from '../../store';
 import { DEFAULT_FLOW } from '../../data/flows/constants';
+import { stepMigration } from '../../steps/SiteGen/Migration/step';
 import { useNavigate } from 'react-router-dom';
 
 const TheFork = () => {
 	const [ experimentVersion, setExperimentVersion ] = useState();
-	const { currentData, migrationUrl } = useSelect( ( select ) => {
-		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
-		};
-	} );
+	const { currentData, migrationUrl, newfoldBrand } = useSelect(
+		( select ) => {
+			return {
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+				newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
+			};
+		}
+	);
 
 	const {
 		setIsHeaderEnabled,
@@ -120,7 +124,7 @@ const TheFork = () => {
 	const navigate = useNavigate();
 
 	const handleMigration = () => {
-		navigate( '/sitegen/step/migration' );
+		navigate( stepMigration.path );
 		trackOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_SITEGEN_FORK_OPTION_SELECTED,
@@ -146,7 +150,7 @@ const TheFork = () => {
 			/>
 			<br />
 			<br />
-			{ migrationUrl && (
+			{ newfoldBrand === 'bluehost' || newfoldBrand === 'hostgator-us' ? (
 				<div
 					className="nfd-onboarding-step--site-gen__fork__importsite"
 					onClick={ () => {
@@ -163,6 +167,25 @@ const TheFork = () => {
 				>
 					{ content.importtext }
 				</div>
+			) : (
+				migrationUrl && (
+					<a
+						className="nfd-onboarding-step--site-gen__fork__importsite"
+						href={ migrationUrl }
+						target={ '_blank' }
+						rel={ 'noreferrer' }
+						onClick={ () =>
+							trackOnboardingEvent(
+								new OnboardingEvent(
+									ACTION_SITEGEN_FORK_OPTION_SELECTED,
+									'MIGRATE'
+								)
+							)
+						}
+					>
+						{ content.importtext }
+					</a>
+				)
 			) }
 			<span
 				role="button"
