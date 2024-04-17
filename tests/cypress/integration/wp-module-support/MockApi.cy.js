@@ -52,9 +52,9 @@ export const siteGenMockAll = ( req ) => {
 };
 
 export const homePagesMock = ( req ) => {
-	req.reply( {
-		statusCode: 200,
-		delay: 2000,
+	req.reply({
+		method: 'POST',
+		statusCode: 201,
 		body: homepages_mock,
 		headers: {
 			'content-type': 'application/json',
@@ -85,7 +85,6 @@ export const homePagesRegenerate = (req) => {
 	req.reply({
 		method: 'POST',
 		statusCode: 200,
-		delay: 2000,
 		body: homepage_regenerate_mock,
 		headers: {
 			'content-type': 'application/json',
