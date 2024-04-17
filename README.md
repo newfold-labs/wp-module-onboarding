@@ -139,10 +139,10 @@ The Onboarding module is designed to streamline various tasks related to user on
 
 ## Installation
 
-### 1. Add the Bluehost Satis to your `composer.json`.
+### 1. Add the Newfold Satis to your `composer.json`.
 
  ```bash
- composer config repositories.bluehost composer https://bluehost.github.io/satis
+ composer config repositories.newfold composer https://newfold-labs.github.io/satis
  ```
 
 ### 2. Require the `newfold-labs/wp-module-onboarding` package.
