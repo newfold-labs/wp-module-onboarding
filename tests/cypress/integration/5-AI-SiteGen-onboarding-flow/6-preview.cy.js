@@ -8,8 +8,7 @@ import {
 } from '../wp-module-support/siteGen.cy';
 import {
 	apiList,
-	siteGenMockAll,
-	homePagesMock,
+	homePagesRegenerate,
 } from '../wp-module-support/MockApi.cy';
 
 describe( 'SiteGen Site Preview Step', function () {

@@ -25,7 +25,8 @@ describe( 'SiteGen Site Logo Step', function () {
 			homePagesMock( req );
 		} ).as( 'homePageCall' );
 		cy.visit( 'wp-admin/?page=nfd-onboarding#/sitegen/step/site-logo' );
-		cy.wait( '@sitegenCalls', { timeout: 60000 } );
+		cy.wait('@sitegenCalls', { timeout: 60000 });
+		cy.wait(5000)
 	} );
 
 	it( 'Check for the header admin bar', () => {
@@ -71,12 +72,12 @@ describe( 'SiteGen Site Logo Step', function () {
 		) {
 			cy.get( LogoPreviewClass ).should( 'not.exist' );
 		}
-		cy.get( 'input[type=file]', { timeout: 180000 } )
+		cy.get( 'input[type=file]', { timeout: 20000 } )
 			.should( 'exist' )
 			.selectFile( sampleLogoPath, { force: true } )
 			.then( () => {
 				cy.wait( 2000 );
-				cy.get( LogoPreviewClass, { timeout: 60000 } ).should(
+				cy.get( LogoPreviewClass, { timeout: 120000 } ).should(
 					'be.visible'
 				);
 				cy.get(

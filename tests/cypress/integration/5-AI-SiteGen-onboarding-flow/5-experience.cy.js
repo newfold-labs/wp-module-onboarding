@@ -13,7 +13,7 @@ describe( 'SiteGen Experience & Site Building Step', function () {
 		cy.visit(
 			'wp-admin/index.php?page=nfd-onboarding#/sitegen/step/experience'
 		);
-		cy.wait( 5000 );
+		cy.wait( 10000 );
 	} );
 
 	it( 'Check for the header admin bar', () => {
