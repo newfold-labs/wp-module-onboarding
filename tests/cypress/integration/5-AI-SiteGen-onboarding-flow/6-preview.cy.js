@@ -17,15 +17,6 @@ describe( 'SiteGen Site Preview Step', function () {
 		cy.visit(
 			'wp-admin/index.php?page=nfd-onboarding#/sitegen/step/preview'
 		);
-		cy.intercept( apiList.sitegen, ( req ) => {
-			siteGenMockAll( req );
-		} ).as( 'sitegenCalls' );
-
-		cy.intercept( apiList.homepages, ( req ) => {
-			homePagesMock( req );
-		} ).as( 'homePageCall' );
-		cy.timeout( 120000 );
-		cy.wait( 5000 );
 		cy.wait( 5000 );
 	} );
 
@@ -51,15 +42,16 @@ describe( 'SiteGen Site Preview Step', function () {
 			.should( 'have.length', 3 );
 	} );
 
-	it.skip( 'Check for the favourited theme versions', () => {
+	it( 'Check for the favourited theme versions', () => {
 		cy.get( 'g[clip-path="url(#heart-filled_svg__a)"]' ).should(
 			'not.exist'
 		); // when no fav theme is selected
 		cy.get(
-			'.live-preview-sitegen--selectable-card__live-preview-container-buttons__button__icon'
+			'.live-preview-sitegen--selectable-card__live-preview-container-buttons__button'
 		)
 			.eq( 0 )
 			.scrollIntoView()
+			.wait(2000)
 			.should( 'be.visible' )
 			.click();
 		cy.get( 'g[clip-path="url(#heart-filled_svg__a)"]', {
@@ -71,23 +63,23 @@ describe( 'SiteGen Site Preview Step', function () {
 			.eq( 0 )
 			.scrollIntoView()
 			.click();
-		cy.reload();
-		cy.wait( 5000 );
 		cy.get( 'g[clip-path="url(#heart-filled_svg__a)"]', {
 			timeout: 20000,
 		} ).should( 'exist' );
 		cy.go( 'back' );
-		cy.reload();
 	} );
 
-	it.skip( 'Check for regenerating the new theme versions', () => {
+	it( 'Check for regenerating the new theme versions', () => {
+		cy.intercept( apiList.homepagesRegenerate, ( req ) => {
+			homePagesRegenerate( req );
+        }).as('regenerate');
+
 		cy.get( '[aria-label="Regenerate Content"]', { timeout: 20000 } )
-			.eq( 1 )
-			.wait( 1000 )
-			.click( { force: true } );
-		cy.get( '[aria-label="Regenerate Content"]', { timeout: 20000 } )
-			.eq( 2 )
-			.scrollIntoView();
+			.eq(0)
+			.scrollIntoView()
+			.wait( 2000 )
+			.click({ force: true });
+		cy.wait('@regenerate', {timeout: 30000})
 		cy.get( '.live-preview-sitegen--selectable-card', { timeout: 20000 } )
 			.should( 'be.visible' )
 			.should( 'have.length', 4 );

@@ -9,7 +9,8 @@ const plugin_recommendation_mock = require( '../../fixtures/plugin-recommendatio
 const font_pair_mock = require( '../../fixtures/font-pair.json' );
 const homepages_mock = require( '../../fixtures/homepages.json' );
 const theme_style_mock = require( '../../fixtures/theme-style.json' );
-const customize_data_mock = require( '../../fixtures/customize-data.json' );
+const customize_data_mock = require('../../fixtures/customize-data.json');
+const homepage_regenerate_mock = require('../../fixtures/homepage-regenerate.json')
 
 export const apiList = {
 	sitegen:
@@ -78,3 +79,14 @@ export const customizeDataMock = ( req ) => {
 		},
 	} );
 };
+
+export const homePagesRegenerate = (req) => {
+	req.reply({
+		method: 'POST',
+		statusCode: 200,
+		body: homepage_regenerate_mock,
+		headers: {
+			'content-type': 'application/json',
+		},
+	} );
+}
