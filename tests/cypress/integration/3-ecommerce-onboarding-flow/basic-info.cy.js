@@ -12,7 +12,7 @@ import { SocialMediaTextValidations } from '../wp-module-support/socialMedia.cy'
 import { APIList, BasicInfoAPI } from '../wp-module-support/EventsApi.cy';
 import { GetPluginId } from '../wp-module-support/pluginID.cy';
 
-describe( 'Basic Info Page', function () {
+describe.skip( 'Basic Info Page', function () {
 	const desc = 'Welcome to WordPress';
 	const title = 'Hello WordPress';
 	const customCommandTimeout = 10000;

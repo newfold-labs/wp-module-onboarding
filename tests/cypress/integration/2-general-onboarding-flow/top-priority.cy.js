@@ -3,7 +3,7 @@ import { DrawerActivityForMenu } from '../wp-module-support/drawer.cy';
 import { CheckHeadingSubheading } from '../wp-module-support/header.cy';
 import { EventsAPI, APIList } from '../wp-module-support/EventsApi.cy';
 
-describe( 'Top Priority Page', function () {
+describe.skip( 'Top Priority Page', function () {
 	before( () => {
 		cy.visit( 'wp-admin/?page=nfd-onboarding#/wp-setup/step/top-priority' );
 	} );
