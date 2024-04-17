@@ -119,6 +119,16 @@ const TheFork = () => {
 	const content = getContents();
 	const navigate = useNavigate();
 
+	const handleMigration = () => {
+		navigate( '/sitegen/step/migration' );
+		trackOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_SITEGEN_FORK_OPTION_SELECTED,
+				'MIGRATE'
+			)
+		);
+	};
+
 	return (
 		<CommonLayout
 			isCentered
@@ -139,18 +149,17 @@ const TheFork = () => {
 			{ migrationUrl && (
 				<div
 					className="nfd-onboarding-step--site-gen__fork__importsite"
-					// href={ migrationUrl }
-					// target={ '_blank' }
-					// rel={ 'noreferrer' }
 					onClick={ () => {
-						navigate( '/sitegen/step/migration' );
-						trackOnboardingEvent(
-							new OnboardingEvent(
-								ACTION_SITEGEN_FORK_OPTION_SELECTED,
-								'MIGRATE'
-							)
-						);
+						handleMigration();
 					} }
+					onKeyUp={ ( event ) => {
+						if ( event.key === 'Enter' ) {
+							handleMigration();
+						}
+					} }
+					tabIndex={ 0 }
+					role="button"
+					aria-label="Trigger site migration"
 				>
 					{ content.importtext }
 				</div>
