@@ -34,13 +34,13 @@ import { useNavigate } from 'react-router-dom';
 
 const TheFork = () => {
 	const [ experimentVersion, setExperimentVersion ] = useState();
-	const { currentData, migrationUrl, newfoldBrand } = useSelect(
+	const { currentData, migrationUrl, isImportEnabled } = useSelect(
 		( select ) => {
 			return {
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
-				newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
+				isImportEnabled: select( nfdOnboardingStore ).isImportEnabled(),
 			};
 		}
 	);
@@ -150,7 +150,7 @@ const TheFork = () => {
 			/>
 			<br />
 			<br />
-			{ newfoldBrand === 'bluehost' || newfoldBrand === 'hostgator-us' ? (
+			{ isImportEnabled ? (
 				<div
 					className="nfd-onboarding-step--site-gen__fork__importsite"
 					onClick={ () => {

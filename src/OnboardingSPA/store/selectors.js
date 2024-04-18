@@ -363,6 +363,17 @@ export function getMigrationUrl( state ) {
 }
 
 /**
+ * Checks if import is enabled for the brand.
+ *
+ * @param {*} state
+ * @return {boolean} isImportEnabled
+ */
+export function isImportEnabled( state ) {
+	const migrationInfo = state.runtime.currentBrand.migrationInfo;
+	return migrationInfo?.isImportEnabled;
+}
+
+/**
  * Gets the Plugin Install Hash for security
  *
  * @param {*} state
