@@ -16,50 +16,22 @@ The Onboarding module is designed to streamline various tasks related to user on
 <br>
 ## Module Responsibilities
 
-1. **User Redirection:**
    - Provide functions to redirect users after login, ensuring a smooth transition and a complete onboarding experience.
-
-2. **Dynamic Plugin and Theme Installation:**
    - Install various plugins and themes dynamically based on user requirements, enhancing customization options.
-
-3. **WordPress Initialization:**
    - Initialize WordPress options, permalinks, and configurations to ensure a consistent setup across users.
-
-4. **WordPress Version Upgrade:**
    - Automatically upgrade WordPress versions for users running below version 6.2, ensuring security and performance improvements.
-
-5. **Brand-based Experience Customization:**
    - Show a completely different experience to users based on the brands they are redirected from, enhancing brand consistency and personalization.
-
-6. **Custom Theme Generation:**
    - Generate themes with templates and multiple pages according to user selections, including chosen colors and fonts, enhancing visual customization.
-
-7. **Event Handling:**
    - Send various events according to user selections, enabling tracking and analytics for user behavior.
-
-8. **Integration with Onboarding Data Module:**
    - Interact with the Onboarding Data Module for various operations and tasks, ensuring seamless user experience.
 
 ## Critical Paths
-1. **Automatic Onboarding Redirection:**
    - Users should be automatically redirected to the onboarding process the first time they log in to wp-admin.
-
-2. **Onboarding Suppression:**
    - Subsequent logins to WordPress should not display the onboarding process for users who have completed it previously.
-
-3. **WordPress Version Upgrade Prompt:**
    - Users should be guided to upgrade the WordPress version if it is less than 6.2.
-
-4. **Brand-specific Experience:**
    - Users should experience a brand-specific interface, displaying different brand logos and colors tailored to their brand affiliation.
-
-5. **Preview Options Display:**
    - Users should be presented with either the Wonder Blocks or YITH Wonder Live Previews options.
-
-6. **Customized Child Theme Generation:**
    - The child theme generated should reflect the choices made by the user during their onboarding experience.
-
-7. **User-provided Site Details:**
    - The user's site should display a title, description, and logo provided during the onboarding process.
 
 ## Release Process
