@@ -28,15 +28,15 @@ export const apiList = {
 export const siteGenMockAll = ( req ) => {
 	const requestBody = req.body;
 	const sitegen_identifiers = {
-		site_config: site_config_mock,
-		site_classification: site_classification_mock,
-		target_audience: target_audience_mock,
-		content_tones: content_tones_mock,
-		content_structure: content_structure_mock,
-		color_palette: color_palette_mock,
-		sitemap: sitemap_mock,
-		plugin_recommendation: plugin_recommendation_mock,
-		font_pair: font_pair_mock,
+		'site_config': site_config_mock,
+		'site_classification': site_classification_mock,
+		'target_audience': target_audience_mock,
+		'content_tones': content_tones_mock,
+		'content_structure': content_structure_mock,
+		'color_palette': color_palette_mock,
+		'sitemap': sitemap_mock,
+		'plugin_recommendation': plugin_recommendation_mock,
+		'font_pair': font_pair_mock,
 	};
 
 	if ( sitegen_identifiers.hasOwnProperty( requestBody.identifier ) ) {
@@ -46,7 +46,7 @@ export const siteGenMockAll = ( req ) => {
 			headers: {
 				'content-type': 'application/json',
 			},
-			// delay: 2000,
+			delay: 2000,
 		} );
 	}
 };
@@ -59,6 +59,7 @@ export const homePagesMock = ( req ) => {
 		headers: {
 			'content-type': 'application/json',
 		},
+		delay: 3000
 	} );
 };
 
