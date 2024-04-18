@@ -14,7 +14,9 @@ The Onboarding module is designed to streamline various tasks related to user on
 [![React](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)]()
 [![React](https://shields.io/badge/react-black?logo=react&style=for-the-badge)]()
 <br>
+
 ## Module Responsibilities
+
 ### Common Grounds
 
 - Automatically upgrade WordPress versions for users running below version 6.2, ensuring security and performance improvements.
@@ -49,16 +51,32 @@ The Onboarding module is designed to streamline various tasks related to user on
 - A customized child theme is created based on the user's preferences, accompanied by a live preview showcasing the website's appearance.
 
 ## Critical Paths
+
+### Common Grounds
+
    - Users should be automatically redirected to the onboarding process the first time they log in to wp-admin.
    - Subsequent logins to WordPress should not display the onboarding process for users who have completed it previously.
    - Users should be guided to upgrade the WordPress version if it is less than 6.2.
    - Users should experience a brand-specific interface, displaying different brand logos and colors tailored to their brand affiliation.
-   - Users should be presented with either the Wonder Blocks or YITH Wonder Live Previews options.
    - The child theme generated should reflect the choices made by the user during their onboarding experience.
-   - The user's site should display a title, description, and logo provided during the onboarding process.
+
+### Default Flow [wp-setup]
+
+- Primary and secondary classifications should be promptly established in the SiteClassification option upon the user's selection.
+- The workflow should seamlessly switch when the user prioritizes "Selling" in the Top Priority step.
+- Users should be presented with a choice between Wonder Blocks or YITH Wonder Live Previews options.
+- The Live preview should vividly illustrate the user's selections, providing a visual depiction of the site's appearance.
+
+### Sitegen Flow [sitegen]
+
+- Ensure that all Site meta requests are executed concurrently and that data processing proceeds smoothly.
+- Validate the functionality of all live previews, showcasing various iterations of the site.
+- Generate and publish additional pages according to the user's instructions.
+- Apply the chosen color schemes and fonts, allowing users to observe immediate updates reflected in their live previews.
+- Upload large AI-generated images into WordPress media and incorporate the new WordPress links into their respective contexts.
+- Generate screenshots tailored to the user's preferences and create a child theme using the provided name.
 
 ## Release Process
-
 ### Local Release Preparation
 
 1. **Checkout the trunk branch locally:**
