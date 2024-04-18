@@ -15,15 +15,38 @@ The Onboarding module is designed to streamline various tasks related to user on
 [![React](https://shields.io/badge/react-black?logo=react&style=for-the-badge)]()
 <br>
 ## Module Responsibilities
+### Common Grounds
 
-   - Provide functions to redirect users after login, ensuring a smooth transition and a complete onboarding experience.
-   - Install various plugins and themes dynamically based on user requirements, enhancing customization options.
-   - Initialize WordPress options, permalinks, and configurations to ensure a consistent setup across users.
-   - Automatically upgrade WordPress versions for users running below version 6.2, ensuring security and performance improvements.
-   - Show a completely different experience to users based on the brands they are redirected from, enhancing brand consistency and personalization.
-   - Generate themes with templates and multiple pages according to user selections, including chosen colors and fonts, enhancing visual customization.
-   - Send various events according to user selections, enabling tracking and analytics for user behavior.
-   - Interact with the Onboarding Data Module for various operations and tasks, ensuring seamless user experience.
+- Automatically upgrade WordPress versions for users running below version 6.2, ensuring security and performance improvements.
+- Initialize WordPress options, permalinks, and configurations to ensure a consistent setup across users.
+- Provide functions to redirect users after login, ensuring a smooth transition and a complete onboarding experience.
+- Install various plugins and themes dynamically based on user requirements, enhancing customization options.
+- Show a completely different experience to users based on the brands they are redirected from, enhancing brand consistency and personalization.
+- Send various events according to user selections, enabling tracking and analytics for user behavior.
+- Interact with the Onboarding Data Module for various operations and tasks, ensuring seamless user experience.
+
+### Default Flow [wp-setup]
+
+- Defines appropriate Primary and Secondary categories in the Site Classification section within the Data Module.
+- Incorporate the title, description, and logo supplied by the user for their WordPress site.
+- Transition to an ecommerce flow if the user selects "Selling" as the Top Priority Step.
+- Produce themes featuring templates such as headers, homepages, and supplementary pages, tailored to the user's preferences, including selected colors and fonts.
+
+### Ecommerce Flow [ecommerce]
+
+- This flow has supplementary stages, including address input, tax particulars, and product configuration.
+- User-provided address details are seamlessly integrated into the WooCommerce plugin, with the default currency adapted based on user selections.
+- The Tax step facilitates the establishment of default tax calculation preferences.
+- The Products step, users can define the type and quantity of products they intend to sell.
+
+### Sitegen Flow [sitegen]
+
+- Users are presented with the option to proceed through either the standard DIY process or the cutting-edge Sitegen Flow.
+- Users have the capability to integrate their Facebook accounts to elevate the website creation experience.
+- Many pivotal elements of the site are synthesized through AI calls.
+- Users are presented with various iterations of their site and have the ability to generate multiple versions with distinct styles.
+- They can personalize the visual aspects of the website, including color schemes, typography, and even the theme name.
+- A customized child theme is created based on the user's preferences, accompanied by a live preview showcasing the website's appearance.
 
 ## Critical Paths
    - Users should be automatically redirected to the onboarding process the first time they log in to wp-admin.
