@@ -8,6 +8,8 @@ import {
 } from '../wp-module-support/siteGen.cy';
 import {
 	apiList,
+	siteGenMockAll,
+	homePagesMock,
 	homePagesRegenerate,
 } from '../wp-module-support/MockApi.cy';
 
@@ -16,6 +18,13 @@ describe( 'SiteGen Site Preview Step', function () {
 		cy.visit(
 			'wp-admin/index.php?page=nfd-onboarding#/sitegen/step/preview'
 		);
+		cy.intercept( apiList.sitegen, ( req ) => {
+			siteGenMockAll( req );
+		} ).as( 'sitegenCalls' );
+
+		cy.intercept( apiList.homepages, ( req ) => {
+			homePagesMock( req );
+		} ).as( 'homePageCall' );
 		cy.wait( 10000 );
 	} );
 

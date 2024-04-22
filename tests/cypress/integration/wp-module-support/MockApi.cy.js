@@ -59,7 +59,6 @@ export const homePagesMock = ( req ) => {
 		headers: {
 			'content-type': 'application/json',
 		},
-		delay: 3000
 	} );
 };
 
