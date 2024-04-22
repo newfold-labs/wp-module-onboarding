@@ -9,7 +9,7 @@ import {
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
 
-describe.skip( 'Header menu Page', function () {
+describe( 'Header menu Page', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/header-menu'

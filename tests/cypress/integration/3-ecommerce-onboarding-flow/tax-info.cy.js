@@ -8,7 +8,7 @@ import {
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
 
-describe.skip( 'Step Ecommerce Tax Information', function () {
+describe( 'Step Ecommerce Tax Information', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding&flow=ecommerce#/ecommerce/step/tax'

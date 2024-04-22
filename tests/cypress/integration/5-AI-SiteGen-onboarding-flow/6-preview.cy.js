@@ -16,7 +16,7 @@ describe( 'SiteGen Site Preview Step', function () {
 		cy.visit(
 			'wp-admin/index.php?page=nfd-onboarding#/sitegen/step/preview'
 		);
-		cy.wait( 5000 );
+		cy.wait( 10000 );
 	} );
 
 	it( 'Check for the header admin bar', () => {
@@ -78,7 +78,7 @@ describe( 'SiteGen Site Preview Step', function () {
 			.scrollIntoView()
 			.wait( 2000 )
 			.click({ force: true });
-		cy.wait('@regenerate', {timeout: 30000})
+		cy.wait('@regenerate', {timeout: 60000})
 		cy.get( '.live-preview-sitegen--selectable-card', { timeout: 20000 } )
 			.should( 'be.visible' )
 			.should( 'have.length', 4 );

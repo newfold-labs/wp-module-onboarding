@@ -9,7 +9,7 @@ import {
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
 
-describe.skip( 'Colors Step Test', function () {
+describe( 'Colors Step Test', function () {
 	before( () => {
 		cy.exec('npx wp-env run cli wp theme activate yith-wonder');
 		cy.wait(5000);

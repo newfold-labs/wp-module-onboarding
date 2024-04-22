@@ -11,7 +11,7 @@ import {
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
 
-describe.skip( 'Get Started Site Type Primary', function () {
+describe( 'Get Started Site Type Primary', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding&flow=ecommerce#/wp-setup/step/get-started/site-primary'
