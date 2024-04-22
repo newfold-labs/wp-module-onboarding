@@ -58,6 +58,7 @@ describe( 'SiteGen Site Preview Step', function () {
 			'.live-preview-sitegen--selectable-card__live-preview-container-buttons__button'
 		)
 			.eq( 0 )
+			.as( 'fav' )
 			.scrollIntoView()
 			.wait(2000)
 			.should( 'be.visible' )
@@ -75,6 +76,7 @@ describe( 'SiteGen Site Preview Step', function () {
 			timeout: 20000,
 		} ).should( 'exist' );
 		cy.go( 'back' );
+		cy.get( '@fav' ).click();
 	} );
 
 	it( 'Check for regenerating the new theme versions', () => {

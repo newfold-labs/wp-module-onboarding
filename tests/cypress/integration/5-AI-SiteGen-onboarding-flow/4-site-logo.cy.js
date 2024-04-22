@@ -25,7 +25,7 @@ describe( 'SiteGen Site Logo Step', function () {
 			homePagesMock( req );
 		} ).as( 'homePageCall' );
 		cy.visit( 'wp-admin/?page=nfd-onboarding#/sitegen/step/site-logo' );
-		cy.wait('@sitegenCalls', { timeout: 60000 });
+		cy.wait( '@sitegenCalls', { timeout: 60000 } );
 	} );
 
 	it( 'Check for the header admin bar', () => {
