@@ -31,13 +31,12 @@ const Tour = () => {
 		setStepIndex( ( prevIndex ) => prevIndex + 1 );
 	};
 
-	const handlePrevStep = () => {
-		setStepIndex( ( prevIndex ) => prevIndex - 1 );
-	};
+	// keeping the code as the decision is pending
+	// const handlePrevStep = () => {
+	// 	setStepIndex( ( prevIndex ) => prevIndex - 1 );
+	// };
 
 	const handleSkipTour = () => {
-		// Logic for skipping the tour
-		// setStepIndex( steps.length - 1 );
 		updateTourStatus();
 	};
 
@@ -118,7 +117,7 @@ const Tour = () => {
 			<div
 				key={ index }
 				className={
-					index == stepIndex
+					index === stepIndex
 						? 'nfd-tour__step__footer__progress-icon__selected'
 						: 'nfd-tour__step__footer__progress-icon'
 				}
@@ -176,10 +175,12 @@ const Tour = () => {
 						<button onClick={ handlePrevStep }>Previous</button>
 					) } */ }
 					{ stepIndex === 0 && (
-						<button onClick={ handleNextStep }>Start Tour ></button>
+						<button onClick={ handleNextStep }>
+							Start Tour &gt;
+						</button>
 					) }
 					{ stepIndex > 0 && stepIndex < steps.length - 1 && (
-						<button onClick={ handleNextStep }>Next ></button>
+						<button onClick={ handleNextStep }>Next &gt;</button>
 					) }
 					{ stepIndex === steps.length - 1 && (
 						<button onClick={ handleSkipTour }>Done</button>
