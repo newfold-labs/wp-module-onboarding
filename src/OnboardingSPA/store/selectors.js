@@ -374,6 +374,17 @@ export function isImportEnabled( state ) {
 }
 
 /**
+ * Checks if the site has migration access.
+ *
+ * @param {*} state
+ * @return {boolean} canMigrateSites
+ */
+export function canMigrateSites( state ) {
+	const migrationInfo = state.runtime.currentBrand.migrationInfo;
+	return migrationInfo?.canMigrateSites;
+}
+
+/**
  * Gets the Plugin Install Hash for security
  *
  * @param {*} state
