@@ -7,10 +7,7 @@ import { registerCoreBlocks } from '@wordpress/block-library';
 import initializeNFDOnboarding from './OnboardingSPA';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import { onboardingRestURL } from './OnboardingSPA/utils/api/common';
-import {
-	CATEGORY,
-	CATEGORY_EXPERIMENT,
-} from './OnboardingSPA/utils/analytics/hiive/constants';
+import { CATEGORY } from './OnboardingSPA/utils/analytics/hiive/constants';
 
 if ( runtimeDataExists ) {
 	domReady( () => {
@@ -27,18 +24,19 @@ if ( runtimeDataExists ) {
 			},
 		} );
 
-		HiiveAnalytics.initialize( {
-			namespace: CATEGORY_EXPERIMENT,
-			urls: {
-				single: onboardingRestURL( 'events' ),
-				batch: onboardingRestURL( 'events/batch' ),
-			},
-			settings: {
-				debounce: {
-					time: 3000,
-				},
-			},
-		} );
+		// uncomment and use during New experiment
+		// HiiveAnalytics.initialize( {
+		// 	namespace: CATEGORY_EXPERIMENT,
+		// 	urls: {
+		// 		single: onboardingRestURL( 'events' ),
+		// 		batch: onboardingRestURL( 'events/batch' ),
+		// 	},
+		// 	settings: {
+		// 		debounce: {
+		// 			time: 3000,
+		// 		},
+		// 	},
+		// } );
 
 		initializeNFDOnboarding(
 			NFD_ONBOARDING_ELEMENT_ID,
