@@ -109,6 +109,7 @@ const StartOptions = ( { questionnaire, oldFlow, options } ) => {
 									selectFlow( tab.flow );
 								}
 							} }
+							data-flow={ tab.flow }
 						>
 							<h3 className="nfd-onboarding-sitegen-options__container__heading__title">
 								{ tab.span && (
