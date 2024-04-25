@@ -377,11 +377,11 @@ export function isImportEnabled( state ) {
  * Checks if the site has migration access.
  *
  * @param {*} state
- * @return {boolean} canMigrateSites
+ * @return {boolean} canMigrateSite
  */
-export function canMigrateSites( state ) {
+export function canMigrateSite( state ) {
 	const migrationInfo = state.runtime.currentBrand.migrationInfo;
-	return migrationInfo?.canMigrateSites;
+	return migrationInfo?.canMigrateSite;
 }
 
 /**
