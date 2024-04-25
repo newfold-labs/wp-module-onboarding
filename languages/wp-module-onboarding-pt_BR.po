@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://github.com/wp-module-onboarding/issues\n"
+"Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-onboarding/issues\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
