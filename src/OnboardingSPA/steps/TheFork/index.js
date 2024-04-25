@@ -34,16 +34,16 @@ import { useNavigate } from 'react-router-dom';
 
 const TheFork = () => {
 	const [ experimentVersion, setExperimentVersion ] = useState();
-	const { currentData, migrationUrl, isImportEnabled, canMigrateSite } =
-		useSelect( ( select ) => {
+	const { currentData, migrationUrl, canMigrateSite } = useSelect(
+		( select ) => {
 			return {
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
-				isImportEnabled: select( nfdOnboardingStore ).isImportEnabled(),
 				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
 			};
-		} );
+		}
+	);
 
 	const {
 		setIsHeaderEnabled,
@@ -133,7 +133,6 @@ const TheFork = () => {
 		);
 	};
 
-	console.log("can migrate sites", canMigrateSite );
 	return (
 		<CommonLayout
 			isCentered
@@ -151,7 +150,7 @@ const TheFork = () => {
 			/>
 			<br />
 			<br />
-			{ isImportEnabled && canMigrateSite ? (
+			{ canMigrateSite ? (
 				<div
 					className="nfd-onboarding-step--site-gen__fork__importsite"
 					onClick={ () => {
