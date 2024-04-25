@@ -55,7 +55,7 @@ import { stepTheFork } from '../../../steps/TheFork/step';
 import { ThemeProvider } from '../../ThemeContextProvider';
 import themeToggleHOC from '../themeToggleHOC';
 import Footer from '../../Footer';
-import { stepMigration } from '../../../steps/SiteGen/Migration/step';
+import { stepSiteGenMigration } from '../../../steps/SiteGen/Migration/step';
 
 const SiteBuild = () => {
 	const location = useLocation();
@@ -434,7 +434,7 @@ const SiteBuild = () => {
 
 	const isForkStep =
 		currentStep === stepTheFork ||
-		currentRoute === stepMigration.path ||
+		currentRoute === stepSiteGenMigration.path ||
 		window.nfdOnboarding.currentFlow === 'sitegen';
 	// wrapping the NewfoldInterfaceSkeleton with the HOC to make 'theme' available
 	const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(

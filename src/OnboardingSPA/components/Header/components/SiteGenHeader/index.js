@@ -16,7 +16,7 @@ import StepNavigation from './step-navigation';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { findIndex } from 'lodash';
-import { stepMigration } from '../../../../steps/SiteGen/Migration/step';
+import { stepSiteGenMigration } from '../../../../steps/SiteGen/Migration/step';
 
 /**
  * Interface header rendered into header render prop in <InterfaceSkeleton />.
@@ -47,7 +47,7 @@ const SiteGenHeader = () => {
 				<>
 					<AdminBar />
 					{ currentStep !== stepTheFork &&
-						currentRoute !== stepMigration.path && (
+						currentRoute !== stepSiteGenMigration.path && (
 							<ProgressBar progress={ progress } />
 						) }
 				</>

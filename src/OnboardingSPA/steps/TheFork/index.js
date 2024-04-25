@@ -29,7 +29,7 @@ import {
 } from '../../utils/analytics/hiive/constants';
 import { store as nfdOnboardingStore } from '../../store';
 import { DEFAULT_FLOW } from '../../data/flows/constants';
-import { stepMigration } from '../../steps/SiteGen/Migration/step';
+import { stepSiteGenMigration } from '../../steps/SiteGen/Migration/step';
 import { useNavigate } from 'react-router-dom';
 
 const TheFork = () => {
@@ -124,7 +124,7 @@ const TheFork = () => {
 	const navigate = useNavigate();
 
 	const handleMigration = () => {
-		navigate( stepMigration.path );
+		navigate( stepSiteGenMigration.path );
 		trackOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_SITEGEN_FORK_OPTION_SELECTED,

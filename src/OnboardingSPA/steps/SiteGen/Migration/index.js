@@ -11,7 +11,7 @@ import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading/Sit
 import { getSiteMigrateUrl } from '../../../utils/api/siteGen';
 import { SiteGenStateHandler } from '../../../components/StateHandlers';
 
-const Migrate = () => {
+const StepSiteGenMigration = () => {
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -77,4 +77,4 @@ const Migrate = () => {
 	);
 };
 
-export default Migrate;
+export default StepSiteGenMigration;

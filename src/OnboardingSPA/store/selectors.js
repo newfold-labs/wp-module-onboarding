@@ -369,7 +369,7 @@ export function getMigrationUrl( state ) {
  * @return {boolean} canMigrateSite
  */
 export function canMigrateSite( state ) {
-	const migrationInfo = state.runtime.currentBrand.migrationInfo;
+	const migrationInfo = state.runtime.currentBrand.config;
 	return migrationInfo?.canMigrateSite;
 }
 

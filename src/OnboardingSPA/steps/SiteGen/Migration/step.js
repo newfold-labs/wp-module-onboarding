@@ -3,12 +3,12 @@ import { lazy } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Step } from '../../../data/models/Step';
 
-const StepMigration = lazy( () => import( './index' ) );
+const StepSiteGenMigration = lazy( () => import( './index' ) );
 
-export const stepMigration = new Step( {
+export const stepSiteGenMigration = new Step( {
 	path: '/sitegen/step/migration',
 	title: __( 'Migration', 'wp-module-onboarding' ),
-	Component: StepMigration,
+	Component: StepSiteGenMigration,
 	icon: copy,
 	drawerNavigation: false,
 	sidebars: {

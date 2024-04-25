@@ -17,7 +17,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { ACTION_SITEGEN_ERROR_STATE_TRIGGERED } from '../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
-import { stepMigration } from '../../../steps/SiteGen/Migration/step';
+import { stepSiteGenMigration } from '../../../steps/SiteGen/Migration/step';
 
 const SiteGenStateHandler = ( { children } ) => {
 	const { siteGenErrorStatus, currentStep, currentRoute } = useSelect(
@@ -45,7 +45,8 @@ const SiteGenStateHandler = ( { children } ) => {
 		}
 	}, [ siteGenErrorStatus ] );
 	const isMigrationStep =
-		currentStep === stepMigration || currentRoute === stepMigration.path;
+		currentStep === stepSiteGenMigration ||
+		currentRoute === stepSiteGenMigration.path;
 	const handleRender = () => {
 		if ( siteGenErrorStatus ) {
 			return isMigrationStep ? (
