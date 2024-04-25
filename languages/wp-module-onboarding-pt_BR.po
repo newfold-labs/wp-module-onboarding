@@ -1571,7 +1571,7 @@ msgstr ""
 
 #: build/2.1.9/onboarding.js:1
 msgid "Whether this is where the magic happens or the mail goes, tell us where your business is located."
-msgstr ""
+msgstr "Quer seja aqui que a magia acontece ou o correio vai, diga-nos onde está localizada a sua empresa."
 
 #: build/2.1.9/onboarding.js:3
 msgid "Commerce"
