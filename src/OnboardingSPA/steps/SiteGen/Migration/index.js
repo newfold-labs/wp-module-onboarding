@@ -62,7 +62,7 @@ const Migrate = () => {
 				isVerticallyCentered
 				className="nfd-onboarding-step--site-gen__migration"
 			>
-				<HeadingWithSubHeading title={ content?.heading } />
+				<HeadingWithSubHeading title={ content.heading } />
 				<div className="nfd-onboarding-step--site-gen__migration--container">
 					<div className="nfd-onboarding-step--site-gen__migration--container__loader"></div>
 					<p className="nfd-onboarding-step--site-gen__migration--container__importtext">
