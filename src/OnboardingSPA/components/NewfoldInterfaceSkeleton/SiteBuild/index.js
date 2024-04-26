@@ -68,7 +68,6 @@ const SiteBuild = () => {
 		onboardingFlow,
 		currentData,
 		currentStep,
-		currentRoute,
 		lastChapter,
 		socialData,
 		firstStep,
@@ -101,7 +100,6 @@ const SiteBuild = () => {
 				initialize: select( nfdOnboardingStore ).getInitialize(),
 				pluginInstallHash:
 					select( nfdOnboardingStore ).getPluginInstallHash(),
-				currentRoute: select( nfdOnboardingStore ).getCurrentStepPath(),
 			};
 		},
 		[ location.pathname ]
@@ -434,7 +432,7 @@ const SiteBuild = () => {
 
 	const isForkStep =
 		currentStep === stepTheFork ||
-		currentRoute === stepSiteGenMigration.path ||
+		currentStep === stepSiteGenMigration ||
 		window.nfdOnboarding.currentFlow === 'sitegen';
 	// wrapping the NewfoldInterfaceSkeleton with the HOC to make 'theme' available
 	const ThemedNewfoldInterfaceSkeleton = themeToggleHOC(

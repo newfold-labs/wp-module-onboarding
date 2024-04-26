@@ -23,10 +23,10 @@ const SiteGenMigrationError = () => {
 
 	useEffect( () => {
 		setHideFooterNav( true );
-		setIsHeaderEnabled( true );
+		setIsHeaderEnabled( false );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
-		setIsHeaderNavigationEnabled( true );
+		setIsHeaderNavigationEnabled( false );
 		setDrawerActiveView( false );
 	} );
 

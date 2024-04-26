@@ -20,16 +20,13 @@ import { SITEGEN_FLOW } from '../../../data/flows/constants';
 import { stepSiteGenMigration } from '../../../steps/SiteGen/Migration/step';
 
 const SiteGenStateHandler = ( { children } ) => {
-	const { siteGenErrorStatus, currentStep, currentRoute } = useSelect(
-		( select ) => {
-			return {
-				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
-				currentRoute: select( nfdOnboardingStore ).getCurrentStepPath(),
-				siteGenErrorStatus:
-					select( nfdOnboardingStore ).getSiteGenErrorStatus(),
-			};
-		}
-	);
+	const { siteGenErrorStatus, currentStep } = useSelect( ( select ) => {
+		return {
+			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+			siteGenErrorStatus:
+				select( nfdOnboardingStore ).getSiteGenErrorStatus(),
+		};
+	} );
 
 	useEffect( () => {
 		if ( true === siteGenErrorStatus ) {
@@ -44,9 +41,7 @@ const SiteGenStateHandler = ( { children } ) => {
 			);
 		}
 	}, [ siteGenErrorStatus ] );
-	const isMigrationStep =
-		currentStep === stepSiteGenMigration ||
-		currentRoute === stepSiteGenMigration.path;
+	const isMigrationStep = currentStep === stepSiteGenMigration;
 	const handleRender = () => {
 		if ( siteGenErrorStatus ) {
 			return isMigrationStep ? (

@@ -8,6 +8,7 @@ import { stepSiteGenSocialMedia } from '../steps/SiteGen/SocialMedia/step';
 import { stepSiteGenExperience } from '../steps/SiteGen/Experience/step';
 import { stepSiteGenPreview } from '../steps/SiteGen/Preview/step';
 import { stepSiteGenEditor } from '../steps/SiteGen/Editor/step';
+import { stepSiteGenMigration } from '../steps/SiteGen/Migration/step';
 
 const steps = [
 	stepSiteGenWelcome,
@@ -17,6 +18,7 @@ const steps = [
 	stepSiteGenExperience,
 	stepSiteGenPreview,
 	stepSiteGenEditor,
+	stepSiteGenMigration,
 ];
 
 export const sitegen = new Chapter( {

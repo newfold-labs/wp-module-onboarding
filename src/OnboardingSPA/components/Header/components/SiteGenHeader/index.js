@@ -24,16 +24,16 @@ import { stepSiteGenMigration } from '../../../../steps/SiteGen/Migration/step';
  * @return {WPComponent} Header
  */
 const SiteGenHeader = () => {
-	const { isHeaderNavigationEnabled, currentStep, allSteps, currentRoute } =
-		useSelect( ( select ) => {
+	const { isHeaderNavigationEnabled, currentStep, allSteps } = useSelect(
+		( select ) => {
 			return {
 				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
-				currentRoute: select( nfdOnboardingStore ).getCurrentStepPath(),
 				isHeaderNavigationEnabled:
 					select( nfdOnboardingStore ).isHeaderNavigationEnabled(),
 				allSteps: select( nfdOnboardingStore ).getAllSteps(),
 			};
-		} );
+		}
+	);
 
 	const currentStepIndex = findIndex( allSteps, {
 		path: currentStep?.path,
@@ -41,13 +41,14 @@ const SiteGenHeader = () => {
 	const progress = Math.abs(
 		( ( currentStepIndex - 1 ) / ( allSteps.length - 1 ) ) * 100
 	);
+	console.log("current step ", currentStep);
 	return (
 		<>
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_TOP }` }>
 				<>
 					<AdminBar />
 					{ currentStep !== stepTheFork &&
-						currentRoute !== stepSiteGenMigration.path && (
+						currentStep !== stepSiteGenMigration && (
 							<ProgressBar progress={ progress } />
 						) }
 				</>
