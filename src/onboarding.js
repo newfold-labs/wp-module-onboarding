@@ -24,20 +24,6 @@ if ( runtimeDataExists ) {
 			},
 		} );
 
-		// uncomment and use during New experiment
-		// HiiveAnalytics.initialize( {
-		// 	namespace: CATEGORY_EXPERIMENT,
-		// 	urls: {
-		// 		single: onboardingRestURL( 'events' ),
-		// 		batch: onboardingRestURL( 'events/batch' ),
-		// 	},
-		// 	settings: {
-		// 		debounce: {
-		// 			time: 3000,
-		// 		},
-		// 	},
-		// } );
-
 		initializeNFDOnboarding(
 			NFD_ONBOARDING_ELEMENT_ID,
 			window.nfdOnboarding

@@ -1,14 +1,19 @@
-import { SITEGEN_FLOW } from '../../data/flows/constants';
-import { resolveGetDataForFlow } from '../../data/flows';
-import { useSelect, useDispatch } from '@wordpress/data';
-import { validateFlow } from '../../data/flows/utils';
-import { useNavigate } from 'react-router-dom';
+// WordPress
 import { memo } from '@wordpress/element';
-import { store as nfdOnboardingStore } from '../../store';
+import { useSelect, useDispatch } from '@wordpress/data';
+
+// Classes and functions
+import { useNavigate } from 'react-router-dom';
+import { validateFlow } from '../../data/flows/utils';
+import { resolveGetDataForFlow } from '../../data/flows';
+
+// Misc
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
 } from '../../utils/analytics/hiive';
+import { SITEGEN_FLOW } from '../../data/flows/constants';
+import { store as nfdOnboardingStore } from '../../store';
 import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
 
 const StartOptions = ( { questionnaire, oldFlow, options } ) => {
