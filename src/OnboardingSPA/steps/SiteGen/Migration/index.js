@@ -66,7 +66,7 @@ const StepSiteGenMigration = () => {
 				<div className="nfd-onboarding-step--site-gen__migration--container">
 					<div className="nfd-onboarding-step--site-gen__migration--container__loader"></div>
 					<p className="nfd-onboarding-step--site-gen__migration--container__importtext">
-						{ content?.importtext }
+						{ content?.importText }
 					</p>
 				</div>
 				<p className="nfd-onboarding-step--site-gen__migration__description">

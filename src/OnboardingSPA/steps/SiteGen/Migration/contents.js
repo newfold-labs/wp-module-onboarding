@@ -10,7 +10,7 @@ const getContents = () => {
 			'Please wait a few seconds while we get your new account ready to import your existing WordPress site. ',
 			'wp-module-onboarding'
 		),
-		importtext: __( 'Preparing your account', 'wp-module-onboarding' ),
+		importText: __( 'Preparing your account', 'wp-module-onboarding' ),
 	};
 };
 
