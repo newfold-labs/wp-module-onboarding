@@ -13,7 +13,7 @@ export const initialChapters = [ siteGenCore, siteGenFeatures, siteGenDesign ];
 
 export const getSteps = ( chapters = initialChapters ) => {
 	let steps = [];
-	steps.push( stepTheFork, stepSiteGenWelcome );
+	steps.push( stepTheFork, stepSiteGenWelcome, stepSiteGenMigration );
 	chapters.forEach( ( chapter ) => {
 		steps = steps.concat( [
 			...chapter.steps,
@@ -25,7 +25,7 @@ export const getSteps = ( chapters = initialChapters ) => {
 
 export const getRoutes = ( chapters = initialChapters ) => {
 	let routes = [ ...pages ];
-	routes.push( stepTheFork, stepSiteGenMigration, stepSiteGenWelcome );
+	routes.push( stepTheFork, stepSiteGenWelcome, stepSiteGenMigration );
 	chapters.forEach( ( chapter ) => {
 		routes = routes.concat( [
 			...chapter.steps,

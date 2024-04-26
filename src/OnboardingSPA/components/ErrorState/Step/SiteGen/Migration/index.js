@@ -23,10 +23,10 @@ const SiteGenMigrationError = () => {
 
 	useEffect( () => {
 		setHideFooterNav( true );
-		setIsHeaderEnabled( false );
+		setIsHeaderEnabled( true );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );
-		setIsHeaderNavigationEnabled( false );
+		setIsHeaderNavigationEnabled( true );
 		setDrawerActiveView( false );
 	} );
 
@@ -36,6 +36,7 @@ const SiteGenMigrationError = () => {
 		updateSiteGenErrorStatus( false );
 	};
 	const handleGoBack = () => {
+		updateSiteGenErrorStatus( false );
 		navigate( stepTheFork.path );
 	};
 	return (

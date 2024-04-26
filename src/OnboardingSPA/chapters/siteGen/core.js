@@ -5,13 +5,11 @@ import { Chapter } from '../../data/models/Chapter';
 import { stepSiteGenSiteDetails } from '../../steps/SiteGen/SiteDetails/step';
 import { stepSiteGenSiteLogo } from '../../steps/SiteGen/SiteLogo/step';
 import { stepSiteGenSocialMedia } from '../../steps/SiteGen/SocialMedia/step';
-import { stepSiteGenMigration } from '../../steps/SiteGen/Migration/step';
 
 const steps = [
 	stepSiteGenSiteDetails,
 	stepSiteGenSocialMedia,
 	stepSiteGenSiteLogo,
-	stepSiteGenMigration,
 ];
 
 export const siteGenCore = new Chapter( {

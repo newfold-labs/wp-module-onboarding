@@ -41,7 +41,6 @@ const SiteGenHeader = () => {
 	const progress = Math.abs(
 		( ( currentStepIndex - 1 ) / ( allSteps.length - 1 ) ) * 100
 	);
-	console.log("current step ", currentStep);
 	return (
 		<>
 			<Fill name={ `${ HEADER_SITEGEN }/${ HEADER_TOP }` }>
