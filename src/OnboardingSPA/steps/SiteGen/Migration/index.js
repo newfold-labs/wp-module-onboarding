@@ -50,7 +50,7 @@ const StepSiteGenMigration = () => {
 	}, [] );
 
 	useEffect( () => {
-		if ( ! siteGenErrorStatus ) {
+		if ( siteGenErrorStatus === false ) {
 			loadData();
 		}
 	}, [ siteGenErrorStatus ] );
