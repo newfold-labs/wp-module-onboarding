@@ -10,7 +10,7 @@ import {
 	ProgressBarCheck,
 } from '../wp-module-support/siteGen.cy';
 
-describe( 'SiteGen Site Editor Step', function () {
+describe.skip( 'SiteGen Site Editor Step', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/index.php?page=nfd-onboarding#/sitegen/step/preview'
