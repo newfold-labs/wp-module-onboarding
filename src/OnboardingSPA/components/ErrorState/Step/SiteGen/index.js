@@ -10,14 +10,13 @@ import classNames from 'classnames';
 
 // Classes and functions
 import getContents from './contents';
-import { validateFlow } from '../../../../data/flows/utils';
+import { validateFlow, removeStep } from '../../../../data/flows/utils';
 import { resolveGetDataForFlow } from '../../../../data/flows';
 
 // Components
 import CommonLayout from '../../../Layouts/Common';
 import OrbAnimation from '../../../OrbAnimation';
 import { stepSiteGenMigration } from '../../../../steps/SiteGen/Migration/step';
-import { stepTheFork } from '../../../../steps/TheFork/step';
 
 // Misc
 import { store as nfdOnboardingStore } from '../../../../store';
@@ -58,8 +57,8 @@ const SiteGenStepErrorState = () => {
 		setSidebarActiveView( false );
 	}, [] );
 
-	const { brandConfig, currentData, currentStep, previousStep } = useSelect(
-		( select ) => {
+	const { brandConfig, currentData, currentStep, previousStep, allSteps } =
+		useSelect( ( select ) => {
 			return {
 				brandConfig:
 					select( nfdOnboardingStore ).getNewfoldBrandConfig(),
@@ -67,12 +66,10 @@ const SiteGenStepErrorState = () => {
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 				previousStep: select( nfdOnboardingStore ).getPreviousStep(),
+				allSteps: select( nfdOnboardingStore ).getAllSteps(),
 			};
-		}
-	);
-	debugger;
-	console.log( currentStep?.path );
-	console.log( stepSiteGenMigration?.path );
+		} );
+
 	const isMigrationStep = currentStep?.path === stepSiteGenMigration?.path;
 
 	const oldFlow = window.nfdOnboarding?.oldFlow
@@ -109,6 +106,8 @@ const SiteGenStepErrorState = () => {
 
 	const handleGoBack = () => {
 		updateSiteGenErrorStatus( false );
+		const updates = removeStep( allSteps, stepSiteGenMigration );
+		updateAllSteps( updates );
 		navigate( previousStep.path );
 	};
 

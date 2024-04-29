@@ -91,3 +91,13 @@ export const injectMigrationStep = ( allSteps, targetStep ) => {
 		allSteps: addAfterStep( allSteps, targetStep, stepSiteGenMigration ),
 	};
 };
+
+export const removeStep = ( steps, stepToRemove ) => {
+	const position = steps.findIndex(
+		( step ) => step.path === stepToRemove.path
+	);
+	if ( position !== -1 ) {
+		steps.splice( position, 1 );
+	}
+	return steps;
+};
