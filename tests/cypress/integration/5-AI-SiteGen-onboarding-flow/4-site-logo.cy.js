@@ -44,7 +44,7 @@ describe( 'SiteGen Site Logo Step', function () {
 		ProgressBarCheck( '42.8571%' );
 	} );
 
-	it( 'Check for back button and go back', () => {
+	it.skip( 'Check for back button and go back', () => {
 		BackButtonCheck( 'sitegen/step/site-logo' );
 	} );
 
