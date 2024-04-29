@@ -36,14 +36,6 @@ export const addAfter = ( steps, stepOne, stepTwo ) => {
 	return steps;
 };
 
-export const addAfterStep = ( steps, stepOne, stepTwo ) => {
-	const position = steps.findIndex( ( step ) => {
-		return step.path === stepOne.path;
-	} );
-	steps.splice( position + 1, 0, stepTwo );
-	return steps;
-};
-
 export const addAfterChapter = ( chapters, chapterOne, chapterTwo ) => {
 	const position = chapters.findIndex( ( chapter ) => {
 		return chapter.id === chapterOne.id;
@@ -88,7 +80,7 @@ export const removeFromRoutes = ( routes, conditionalSteps ) => {
 
 export const injectMigrationStep = ( allSteps, targetStep ) => {
 	return {
-		allSteps: addAfterStep( allSteps, targetStep, stepSiteGenMigration ),
+		allSteps: addAfter( allSteps, targetStep, [ stepSiteGenMigration ] ),
 	};
 };
 

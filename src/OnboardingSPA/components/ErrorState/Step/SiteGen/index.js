@@ -10,7 +10,7 @@ import classNames from 'classnames';
 
 // Classes and functions
 import getContents from './contents';
-import { validateFlow, removeStep } from '../../../../data/flows/utils';
+import { validateFlow, removeFromAllSteps } from '../../../../data/flows/utils';
 import { resolveGetDataForFlow } from '../../../../data/flows';
 
 // Components
@@ -106,8 +106,10 @@ const SiteGenStepErrorState = () => {
 
 	const handleGoBack = () => {
 		updateSiteGenErrorStatus( false );
-		const updates = removeStep( allSteps, stepSiteGenMigration );
-		updateAllSteps( updates );
+		const updates = removeFromAllSteps( allSteps, [
+			stepSiteGenMigration,
+		] );
+		updateAllSteps( updates.allSteps );
 		navigate( previousStep.path );
 	};
 
