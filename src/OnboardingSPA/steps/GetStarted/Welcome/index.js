@@ -19,32 +19,26 @@ import getContents from './contents';
 import ButtonWhite from '../../../components/Button/ButtonWhite';
 import {
 	injectMigrationStep,
-	addToRoutes,
-	removeFromRoutes,
 	removeFromAllSteps,
 } from '../../../data/flows/utils';
 import { stepWelcome } from './step';
 import { stepSiteGenMigration } from '../../../steps/SiteGen/Migration/step';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../../utils/analytics/hiive/constants';
 
 const StepWelcome = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
-	const {
-		brandName,
-		migrationUrl,
-		allSteps,
-		canMigrateSite,
-		currentStep,
-		routes,
-	} = useSelect(
+	const { brandName, migrationUrl, allSteps, canMigrateSite } = useSelect(
 		( select ) => {
 			return {
 				brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
 				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
 				allSteps: select( nfdOnboardingStore ).getAllSteps(),
 				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
-				routes: select( nfdOnboardingStore ).getRoutes(),
-				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 			};
 		},
 		[ location.pathname ]
@@ -57,7 +51,6 @@ const StepWelcome = () => {
 		setHeaderActiveView,
 		setIsHeaderEnabled,
 		updateAllSteps,
-		updateRoutes,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -70,10 +63,6 @@ const StepWelcome = () => {
 	}, [] );
 
 	useEffect( () => {
-		const updateRoute = removeFromRoutes( routes, [
-			stepSiteGenMigration,
-		] );
-		updateRoutes( updateRoute.routes );
 		const updates = removeFromAllSteps( allSteps, [
 			stepSiteGenMigration,
 		] );
@@ -84,18 +73,16 @@ const StepWelcome = () => {
 		if ( canMigrateSite ) {
 			const updates = injectMigrationStep( allSteps, stepWelcome );
 			updateAllSteps( updates.allSteps );
-			const addedRoute = addToRoutes(
-				routes,
-				stepSiteGenMigration,
-				currentStep
-			);
-			updateRoutes( addedRoute.routes );
 			navigate( stepSiteGenMigration.path );
-		} else if ( migrationUrl ) {
-			window.open( migrationUrl, '_blank' );
 		} else {
-			return false;
+			window.open( migrationUrl, '_blank' );
 		}
+		trackOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_SITEGEN_FORK_OPTION_SELECTED,
+				'MIGRATE'
+			)
+		);
 	};
 
 	const content = getContents( brandName );

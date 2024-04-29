@@ -1,11 +1,12 @@
 // WordPress
 import { useEffect, useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
+import { useNavigate } from 'react-router-dom';
 
 // Classes and functions
 import getContents from './contents';
 import { setFlow } from '../../utils/api/flow';
-import { injectMigrationStep, addToRoutes } from '../../data/flows/utils';
+import { injectMigrationStep } from '../../data/flows/utils';
 
 // Components
 import StartOptions from '../../components/StartOptions';
@@ -32,29 +33,22 @@ import { store as nfdOnboardingStore } from '../../store';
 import { DEFAULT_FLOW } from '../../data/flows/constants';
 import { stepSiteGenMigration } from '../../steps/SiteGen/Migration/step';
 import { stepTheFork } from './step';
-import { useNavigate } from 'react-router-dom';
 
 const TheFork = () => {
 	const [ experimentVersion, setExperimentVersion ] = useState();
-	const {
-		currentData,
-		migrationUrl,
-		canMigrateSite,
-		allSteps,
-		routes,
-		currentStep,
-	} = useSelect( ( select ) => {
-		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
-			canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
-			allSteps: select( nfdOnboardingStore ).getAllSteps(),
-			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
-			routes: select( nfdOnboardingStore ).getRoutes(),
-		};
-	} );
-
+	const { currentData, migrationUrl, canMigrateSite, allSteps } = useSelect(
+		( select ) => {
+			return {
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
+				allSteps: select( nfdOnboardingStore ).getAllSteps(),
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+				routes: select( nfdOnboardingStore ).getRoutes(),
+			};
+		}
+	);
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -65,7 +59,6 @@ const TheFork = () => {
 		setHideFooterNav,
 		setCurrentOnboardingData,
 		updateAllSteps,
-		updateRoutes,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -136,15 +129,13 @@ const TheFork = () => {
 	const navigate = useNavigate();
 
 	const handleMigration = () => {
-		const addedRoute = addToRoutes(
-			routes,
-			stepSiteGenMigration,
-			currentStep
-		);
-		updateRoutes( addedRoute.routes );
-		const updates = injectMigrationStep( allSteps, stepTheFork );
-		updateAllSteps( updates.allSteps );
-		navigate( stepSiteGenMigration.path );
+		if ( canMigrateSite ) {
+			const updates = injectMigrationStep( allSteps, stepTheFork );
+			updateAllSteps( updates.allSteps );
+			navigate( stepSiteGenMigration.path );
+		} else {
+			window.open( migrationUrl, '_blank' );
+		}
 		trackOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_SITEGEN_FORK_OPTION_SELECTED,
@@ -170,7 +161,7 @@ const TheFork = () => {
 			/>
 			<br />
 			<br />
-			{ canMigrateSite ? (
+			{ ( canMigrateSite || migrationUrl ) && (
 				<div
 					className="nfd-onboarding-step--site-gen__fork__importsite"
 					onClick={ () => {
@@ -187,25 +178,6 @@ const TheFork = () => {
 				>
 					{ content.importtext }
 				</div>
-			) : (
-				migrationUrl && (
-					<a
-						className="nfd-onboarding-step--site-gen__fork__importsite"
-						href={ migrationUrl }
-						target={ '_blank' }
-						rel={ 'noreferrer' }
-						onClick={ () =>
-							trackOnboardingEvent(
-								new OnboardingEvent(
-									ACTION_SITEGEN_FORK_OPTION_SELECTED,
-									'MIGRATE'
-								)
-							)
-						}
-					>
-						{ content.importtext }
-					</a>
-				)
 			) }
 			<span
 				role="button"

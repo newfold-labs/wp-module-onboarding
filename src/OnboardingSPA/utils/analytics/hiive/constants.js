@@ -20,6 +20,7 @@ export const ACTION_ONBOARDING_EXITED = 'onboarding_exited';
 export const ACTION_ONBOARDING_CHAPTER_STARTED = 'onboarding_chapter_started';
 export const ACTION_ONBOARDING_CHAPTER_COMPLETE = 'onboarding_chapter_complete';
 export const ACTION_SOCIAL_ADDED = 'social_added';
+export const ACTION_MIGRATION_INITIATED = 'migration_initiated';
 
 export const ACTION_SITEGEN_FORK_OPTION_SELECTED = 'fork_option_selected';
 export const ACTION_SITEGEN_FORK_AI_EXPERIMENT = 'exp_fork_ai';
@@ -66,4 +67,5 @@ export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_SITEGEN_SIDEBAR_OPENED ]: 'type',
 	[ ACTION_SITEGEN_HOMEPAGE_RENAMED ]: 'version',
 	[ ACTION_SITEGEN_SITE_GENERATION_TIME ]: 'time',
+	[ ACTION_MIGRATION_INITIATED ]: 'path',
 };
