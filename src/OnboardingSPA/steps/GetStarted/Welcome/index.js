@@ -1,5 +1,5 @@
 import { store as nfdOnboardingStore } from '../../../store';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import { chevronRight, external } from '@wordpress/icons';
@@ -17,14 +17,20 @@ import {
 } from '../../../../constants';
 import getContents from './contents';
 import ButtonWhite from '../../../components/Button/ButtonWhite';
+import { injectMigrationStep } from '../../../data/flows/utils';
+import { stepWelcome } from './step';
+import { stepSiteGenMigration } from '../../../steps/SiteGen/Migration/step';
 
 const StepWelcome = () => {
 	const location = useLocation();
-	const { brandName, migrationUrl } = useSelect(
+	const navigate = useNavigate();
+	const { brandName, migrationUrl, allSteps, canMigrateSite } = useSelect(
 		( select ) => {
 			return {
 				brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
 				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+				allSteps: select( nfdOnboardingStore ).getAllSteps(),
+				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
 			};
 		},
 		[ location.pathname ]
@@ -36,6 +42,7 @@ const StepWelcome = () => {
 		setIsHeaderNavigationEnabled,
 		setHeaderActiveView,
 		setIsHeaderEnabled,
+		updateAllSteps,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -46,6 +53,18 @@ const StepWelcome = () => {
 		setHeaderActiveView( HEADER_SITEBUILD );
 		setIsHeaderEnabled( true );
 	}, [] );
+
+	const handleMigration = () => {
+		if ( canMigrateSite ) {
+			const updates = injectMigrationStep( allSteps, stepWelcome );
+			updateAllSteps( updates.allSteps );
+			navigate( stepSiteGenMigration.path );
+		} else if ( migrationUrl ) {
+			window.open( migrationUrl, '_blank' );
+		} else {
+			return false;
+		}
+	};
 
 	const content = getContents( brandName );
 
@@ -78,14 +97,14 @@ const StepWelcome = () => {
 						{ ( tab ) => <div>{ tab.content }</div> }
 					</TabPanelHover>
 					<div className="nfd-onboarding-overview__buttons">
-						{ migrationUrl && (
+						{ ( migrationUrl || canMigrateSite ) && (
 							<ButtonWhite
 								className="nfd-onboarding-overview__buttons--white"
 								text={ content.migrateButtonText }
 								icon={ external }
-								onClick={ () =>
-									window.open( migrationUrl, '_blank' )
-								}
+								onClick={ () => {
+									handleMigration( migrationUrl );
+								} }
 							/>
 						) }
 						<NavCardButton

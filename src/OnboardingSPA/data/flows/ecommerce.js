@@ -34,7 +34,6 @@ export const initialChapters = [
 export const getSteps = ( chapters = initialChapters ) => {
 	let steps = [];
 	steps.push( stepTheFork );
-	steps.push( stepSiteGenMigration );
 	steps.push( stepWelcome );
 	chapters.forEach( ( chapter ) => {
 		steps = steps.concat( [

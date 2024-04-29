@@ -58,17 +58,21 @@ const SiteGenStepErrorState = () => {
 		setSidebarActiveView( false );
 	}, [] );
 
-	const { brandConfig, currentData, currentStep } = useSelect( ( select ) => {
-		return {
-			brandConfig: select( nfdOnboardingStore ).getNewfoldBrandConfig(),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
-		};
-	} );
+	const { brandConfig, currentData, currentStep, previousStep } = useSelect(
+		( select ) => {
+			return {
+				brandConfig:
+					select( nfdOnboardingStore ).getNewfoldBrandConfig(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+				previousStep: select( nfdOnboardingStore ).getPreviousStep(),
+			};
+		}
+	);
 	debugger;
-	console.log(currentStep?.path);
-	console.log(stepSiteGenMigration?.path);
+	console.log( currentStep?.path );
+	console.log( stepSiteGenMigration?.path );
 	const isMigrationStep = currentStep?.path === stepSiteGenMigration?.path;
 
 	const oldFlow = window.nfdOnboarding?.oldFlow
@@ -104,7 +108,8 @@ const SiteGenStepErrorState = () => {
 	};
 
 	const handleGoBack = () => {
-		navigate( stepTheFork.path );
+		updateSiteGenErrorStatus( false );
+		navigate( previousStep.path );
 	};
 
 	const content = ! isMigrationStep

@@ -5,6 +5,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 // Classes and functions
 import getContents from './contents';
 import { setFlow } from '../../utils/api/flow';
+import { injectMigrationStep } from '../../data/flows/utils';
 
 // Components
 import StartOptions from '../../components/StartOptions';
@@ -30,17 +31,19 @@ import {
 import { store as nfdOnboardingStore } from '../../store';
 import { DEFAULT_FLOW } from '../../data/flows/constants';
 import { stepSiteGenMigration } from '../../steps/SiteGen/Migration/step';
+import { stepTheFork } from './step';
 import { useNavigate } from 'react-router-dom';
 
 const TheFork = () => {
 	const [ experimentVersion, setExperimentVersion ] = useState();
-	const { currentData, migrationUrl, canMigrateSite } = useSelect(
+	const { currentData, migrationUrl, canMigrateSite, allSteps } = useSelect(
 		( select ) => {
 			return {
 				currentData:
 					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
 				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
+				allSteps: select( nfdOnboardingStore ).getAllSteps(),
 			};
 		}
 	);
@@ -54,6 +57,7 @@ const TheFork = () => {
 		setFooterActiveView,
 		setHideFooterNav,
 		setCurrentOnboardingData,
+		updateAllSteps,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -124,6 +128,8 @@ const TheFork = () => {
 	const navigate = useNavigate();
 
 	const handleMigration = () => {
+		const updates = injectMigrationStep( allSteps, stepTheFork );
+		updateAllSteps( updates.allSteps );
 		navigate( stepSiteGenMigration.path );
 		trackOnboardingEvent(
 			new OnboardingEvent(

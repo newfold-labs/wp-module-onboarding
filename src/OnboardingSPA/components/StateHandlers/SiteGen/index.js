@@ -10,17 +10,17 @@ import {
 
 // Components
 import SiteGenStepErrorState from '../../ErrorState/Step/SiteGen';
-import SiteGenMigrationError from '../../ErrorState/Step/SiteGen/Migration';
+// import SiteGenMigrationError from '../../ErrorState/Step/SiteGen/Migration';
 
 // Misc
 import { store as nfdOnboardingStore } from '../../../store';
 import { ACTION_SITEGEN_ERROR_STATE_TRIGGERED } from '../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
-import { stepSiteGenMigration } from '../../../steps/SiteGen/Migration/step';
+// import { stepSiteGenMigration } from '../../../steps/SiteGen/Migration/step';
 
 const SiteGenStateHandler = ( { children } ) => {
-	const { siteGenErrorStatus, currentStepPath } = useSelect( ( select ) => {
+	const { siteGenErrorStatus } = useSelect( ( select ) => {
 		return {
 			currentStepPath: select( nfdOnboardingStore ).getCurrentStepPath(),
 			siteGenErrorStatus:
@@ -42,14 +42,10 @@ const SiteGenStateHandler = ( { children } ) => {
 		}
 	}, [ siteGenErrorStatus ] );
 
-	const isMigrationStep = currentStepPath === stepSiteGenMigration.path;
+	// const isMigrationStep = currentStepPath === stepSiteGenMigration.path;
 	const handleRender = () => {
 		if ( siteGenErrorStatus ) {
-			return isMigrationStep ? (
-				<SiteGenMigrationError />
-			) : (
-				<SiteGenStepErrorState />
-			);
+			return <SiteGenStepErrorState />;
 		}
 
 		return children;
