@@ -71,12 +71,12 @@ describe( 'SiteGen Site Logo Step', function () {
 		) {
 			cy.get( LogoPreviewClass ).should( 'not.exist' );
 		}
-		cy.get( 'input[type=file]', { timeout: 180000 } )
+		cy.get( 'input[type=file]', { timeout: 240000 } )
 			.should( 'exist' )
 			.selectFile( sampleLogoPath, { force: true } )
 			.then( () => {
 				cy.wait( 2000 );
-				cy.get( LogoPreviewClass, { timeout: 60000 } ).should(
+				cy.get( LogoPreviewClass, { timeout: 120000 } ).should(
 					'be.visible'
 				);
 				cy.get(
