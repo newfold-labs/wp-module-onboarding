@@ -12,6 +12,8 @@ import { injectMigrationStep } from '../../data/flows/utils';
 import StartOptions from '../../components/StartOptions';
 import CommonLayout from '../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../components/HeadingWithSubHeading/SiteGen/index';
+import { stepSiteGenMigration } from '../../steps/SiteGen/Migration/step';
+import { stepTheFork } from './step';
 
 // Misc
 import {
@@ -31,8 +33,6 @@ import {
 } from '../../utils/analytics/hiive/constants';
 import { store as nfdOnboardingStore } from '../../store';
 import { DEFAULT_FLOW } from '../../data/flows/constants';
-import { stepSiteGenMigration } from '../../steps/SiteGen/Migration/step';
-import { stepTheFork } from './step';
 
 const TheFork = () => {
 	const [ experimentVersion, setExperimentVersion ] = useState();

@@ -1,24 +1,28 @@
-import CommonLayout from '../../../components/Layouts/Common';
-
+// Wordpress
 import { useEffect } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 
+// Classes and fucntions
+import getContents from './contents';
+import { getSiteMigrateUrl } from '../../../utils/api/siteGen';
+
+//Components
+import CommonLayout from '../../../components/Layouts/Common';
+import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading/SiteGen';
+import { SiteGenStateHandler } from '../../../components/StateHandlers';
+import { stepTheFork } from '../../TheFork/step';
+import { stepSiteGenMigration } from './step';
+import { stepWelcome } from '../../GetStarted/Welcome/step';
+
+//Misc.
+import { injectMigrationStep } from '../../../data/flows/utils';
 import { store as nfdOnboardingStore } from '../../../store';
 import { FOOTER_SITEGEN, HEADER_SITEGEN } from '../../../../constants';
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
 } from '../../../utils/analytics/hiive';
-
-import getContents from './contents';
-import HeadingWithSubHeading from '../../../components/HeadingWithSubHeading/SiteGen';
-import { getSiteMigrateUrl } from '../../../utils/api/siteGen';
-import { SiteGenStateHandler } from '../../../components/StateHandlers';
-import { injectMigrationStep } from '../../../data/flows/utils';
-import { stepTheFork } from '../../TheFork/step';
-import { stepSiteGenMigration } from './step';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
-import { stepWelcome } from '../../GetStarted/Welcome/step';
 import { ACTION_MIGRATION_INITIATED } from '../../../utils/analytics/hiive/constants';
 
 const StepSiteGenMigration = () => {

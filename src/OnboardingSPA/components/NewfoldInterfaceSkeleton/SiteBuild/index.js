@@ -1,9 +1,33 @@
+// Wordpress
+import { useEffect, useState } from '@wordpress/element';
+import { useViewportMatch } from '@wordpress/compose';
+import { useDispatch, useSelect } from '@wordpress/data';
+
+// Third part
+import classNames from 'classnames';
+import { useLocation } from 'react-router-dom';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { kebabCase } from 'lodash';
+
+// Components
 import Header from '../../Header';
 import Content from '../../Content';
 import Drawer from '../../Drawer';
 import Sidebar from '../../Sidebar';
-import classNames from 'classnames';
-import { useLocation } from 'react-router-dom';
+import Footer from '../../Footer';
+import NewfoldInterfaceSkeleton from '../index';
+import { ThemeProvider } from '../../ThemeContextProvider';
+import { stepTheFork } from '../../../steps/TheFork/step';
+import { stepSiteGenMigration } from '../../../steps/SiteGen/Migration/step';
+
+// classes
+import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
+import themeToggleHOC from '../themeToggleHOC';
+import { init as initializePlugins } from '../../../utils/api/plugins';
+import { init as initializeThemes } from '../../../utils/api/themes';
+import { trigger as cronTrigger } from '../../../utils/api/cronTrigger';
+
+// Misc.
 import { setFlow } from '../../../utils/api/flow';
 import { design as designChapter } from '../../../chapters/design';
 import {
@@ -14,16 +38,7 @@ import {
 import { isEmpty, updateWPSettings } from '../../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getQueryParam } from '../../../utils';
-import { useEffect, useState } from '@wordpress/element';
-
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { kebabCase } from 'lodash';
-import { useViewportMatch } from '@wordpress/compose';
-import { useDispatch, useSelect } from '@wordpress/data';
-
 import { API_REQUEST } from '../../../../constants';
-import NewfoldInterfaceSkeleton from '../index';
-import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import {
 	getChapterFromId,
 	getChaptersFromTopPriorityAndExperienceLevel,
@@ -48,14 +63,6 @@ import {
 	CATEGORY,
 } from '../../../utils/analytics/hiive/constants';
 import { socialMediaStoreToState } from '../../SocialMediaForm/utils';
-import { init as initializePlugins } from '../../../utils/api/plugins';
-import { init as initializeThemes } from '../../../utils/api/themes';
-import { trigger as cronTrigger } from '../../../utils/api/cronTrigger';
-import { stepTheFork } from '../../../steps/TheFork/step';
-import { ThemeProvider } from '../../ThemeContextProvider';
-import themeToggleHOC from '../themeToggleHOC';
-import Footer from '../../Footer';
-import { stepSiteGenMigration } from '../../../steps/SiteGen/Migration/step';
 
 const SiteBuild = () => {
 	const location = useLocation();

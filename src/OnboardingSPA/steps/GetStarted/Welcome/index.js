@@ -1,15 +1,19 @@
-import { store as nfdOnboardingStore } from '../../../store';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelect, useDispatch } from '@wordpress/data';
+// Wordpress
 import { useEffect } from '@wordpress/element';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { chevronRight, external } from '@wordpress/icons';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+// Components
 import CommonLayout from '../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../components/NewfoldLargeCard';
 import CardHeader from '../../../components/CardHeader';
 import NavCardButton from '../../../components/Button/NavCardButton';
 import Tab from '../../../components/Tab';
 import TabPanelHover from '../../../components/TabPanelHover';
+
+// Misc
+import { store as nfdOnboardingStore } from '../../../store';
 import {
 	VIEW_NAV_GET_STARTED,
 	SIDEBAR_LEARN_MORE,
