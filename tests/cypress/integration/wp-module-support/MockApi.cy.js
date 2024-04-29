@@ -46,7 +46,7 @@ export const siteGenMockAll = ( req ) => {
 			headers: {
 				'content-type': 'application/json',
 			},
-			delay: 5000,
+			delay: 3000,
 		} );
 	}
 };

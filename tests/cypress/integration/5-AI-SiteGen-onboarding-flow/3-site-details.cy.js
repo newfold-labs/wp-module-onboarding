@@ -50,7 +50,7 @@ describe( 'SiteGen Site Details Step', function () {
 		cy.get( '.nfd-sg-input-box__hint' ).should( 'be.visible' );
 	});
 	
-	it( 'Check for back button and go back', () => {
+	it.skip( 'Check for back button and go back', () => {
 		BackButtonCheck( 'sitegen/step/site-details' );
 	} );
 

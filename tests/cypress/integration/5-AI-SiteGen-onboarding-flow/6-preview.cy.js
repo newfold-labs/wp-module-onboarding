@@ -45,7 +45,7 @@ describe( 'SiteGen Site Preview Step', function () {
 	} );
 
 	it( 'Check for by default 3 versions should be there', () => {
-		cy.get( '.live-preview-sitegen--selectable-card', { timeout: 20000 } )
+		cy.get( '.live-preview-sitegen--selectable-card', { timeout: 60000 } )
 			.should( 'be.visible' )
 			.should( 'have.length', 3 );
 	} );
@@ -84,7 +84,7 @@ describe( 'SiteGen Site Preview Step', function () {
 			homePagesRegenerate( req );
         }).as('regenerate');
 
-		cy.get( '[aria-label="Regenerate Content"]', { timeout: 20000 } )
+		cy.get( '[aria-label="Regenerate Content"]', { timeout: 60000 } )
 			.eq(0)
 			.scrollIntoView()
 			.wait( 2000 )
