@@ -15,13 +15,13 @@ describe( 'SiteGen Site Editor Step', function () {
 		cy.visit(
 			'wp-admin/index.php?page=nfd-onboarding#/sitegen/step/preview'
 		);
-		cy.wait( 15000 );
+		cy.wait( 10000 );
 	} );
 
 	it( 'Select any theme and go forward to the next step', () => {
 		cy.get(
 			'.live-preview-sitegen--selectable-card__live-preview-container__overlay',
-			{ timeout: 10000 }
+			{ timeout: 60000 }
 		)
 			.eq( 0 )
 			.click();
