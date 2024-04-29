@@ -78,6 +78,7 @@ const Next = ( { path, showErrorDialog } ) => {
 async function saveDataAndExit( currentData ) {
 	if ( currentData ) {
 		currentData.isComplete = new Date().getTime();
+		currentData.data.siteOverrideConsent = false;
 		setFlow( currentData );
 	}
 
