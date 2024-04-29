@@ -93,3 +93,16 @@ export const removeStep = ( steps, stepToRemove ) => {
 	}
 	return steps;
 };
+
+export const addToRoutes = ( routes, newStep, afterStep ) => {
+	const index = routes.findIndex(
+		( route ) => route.path === afterStep.path
+	);
+	if ( index !== -1 ) {
+		// Insert newStep into routes after the specified afterStep
+		routes.splice( index + 1, 0, newStep );
+	}
+	return {
+		routes,
+	};
+};

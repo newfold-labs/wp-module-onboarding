@@ -5,7 +5,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 // Classes and functions
 import getContents from './contents';
 import { setFlow } from '../../utils/api/flow';
-import { injectMigrationStep } from '../../data/flows/utils';
+import { injectMigrationStep, addToRoutes } from '../../data/flows/utils';
 
 // Components
 import StartOptions from '../../components/StartOptions';
@@ -36,17 +36,24 @@ import { useNavigate } from 'react-router-dom';
 
 const TheFork = () => {
 	const [ experimentVersion, setExperimentVersion ] = useState();
-	const { currentData, migrationUrl, canMigrateSite, allSteps } = useSelect(
-		( select ) => {
-			return {
-				currentData:
-					select( nfdOnboardingStore ).getCurrentOnboardingData(),
-				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
-				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
-				allSteps: select( nfdOnboardingStore ).getAllSteps(),
-			};
-		}
-	);
+	const {
+		currentData,
+		migrationUrl,
+		canMigrateSite,
+		allSteps,
+		routes,
+		currentStep,
+	} = useSelect( ( select ) => {
+		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+			canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
+			allSteps: select( nfdOnboardingStore ).getAllSteps(),
+			currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+			routes: select( nfdOnboardingStore ).getRoutes(),
+		};
+	} );
 
 	const {
 		setIsHeaderEnabled,
@@ -58,6 +65,7 @@ const TheFork = () => {
 		setHideFooterNav,
 		setCurrentOnboardingData,
 		updateAllSteps,
+		updateRoutes,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -128,6 +136,12 @@ const TheFork = () => {
 	const navigate = useNavigate();
 
 	const handleMigration = () => {
+		const addedRoute = addToRoutes(
+			routes,
+			stepSiteGenMigration,
+			currentStep
+		);
+		updateRoutes( addedRoute.routes );
 		const updates = injectMigrationStep( allSteps, stepTheFork );
 		updateAllSteps( updates.allSteps );
 		navigate( stepSiteGenMigration.path );
