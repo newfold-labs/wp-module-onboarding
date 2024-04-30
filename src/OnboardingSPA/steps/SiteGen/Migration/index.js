@@ -38,26 +38,33 @@ const StepSiteGenMigration = () => {
 		updateAllSteps,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { siteGenErrorStatus, allSteps } = useSelect( ( select ) => {
-		return {
-			siteGenErrorStatus:
-				select( nfdOnboardingStore ).getSiteGenErrorStatus(),
-			allSteps: select( nfdOnboardingStore ).getAllSteps(),
-		};
-	} );
+	const { siteGenErrorStatus, allSteps, canMigrateSite } = useSelect(
+		( select ) => {
+			return {
+				siteGenErrorStatus:
+					select( nfdOnboardingStore ).getSiteGenErrorStatus(),
+				allSteps: select( nfdOnboardingStore ).getAllSteps(),
+				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
+			};
+		}
+	);
 
 	const loadData = async () => {
 		try {
-			const response = await getSiteMigrateUrl();
-			const migrateUrl = response?.body?.data?.redirect_url;
-			if ( migrateUrl ) {
-				window.open( migrateUrl, '_self' );
-				trackOnboardingEvent(
-					new OnboardingEvent(
-						ACTION_MIGRATION_INITIATED,
-						migrateUrl
-					)
-				);
+			if ( canMigrateSite ) {
+				const response = await getSiteMigrateUrl();
+				const migrateUrl = response?.body?.data?.redirect_url;
+				if ( migrateUrl ) {
+					trackOnboardingEvent(
+						new OnboardingEvent(
+							ACTION_MIGRATION_INITIATED,
+							migrateUrl
+						)
+					);
+					window.open( migrateUrl, '_self' );
+				} else {
+					updateSiteGenErrorStatus( true );
+				}
 			} else {
 				updateSiteGenErrorStatus( true );
 			}
