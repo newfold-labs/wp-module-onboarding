@@ -38,6 +38,7 @@
 		"newfold-labs/wp-module-patterns": "^0.2",
 		"newfold-labs/wp-module-install-checker": "^1.0",
 		"newfold-labs/wp-module-facebook": "^1.0",
+		"newfold-labs/wp-module-migration": "^1.0",
 		"wp-forge/helpers": "^2.0"
 	},
 	"require-dev": {
