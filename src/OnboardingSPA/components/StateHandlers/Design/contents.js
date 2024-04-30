@@ -28,17 +28,6 @@ const getContents = ( brandName ) => {
 				'wp-module-onboarding'
 			),
 		},
-		exitModal: {
-			title: __(
-				'It looks like you may have an existing website',
-				'wp-module-onboarding'
-			),
-			description: __(
-				'Going through this setup will change your active theme, WordPress settings, add content – would you like to continue?',
-				'wp-module-onboarding'
-			),
-			buttonText: __( 'Exit to WordPress', 'wp-module-onboarding' ),
-		},
 	};
 };
 

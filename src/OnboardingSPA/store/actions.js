@@ -14,6 +14,7 @@ export function setRuntime( runtime ) {
 		siteUrl: runtime.siteUrl,
 		migrated: true,
 		currentFlow: runtime.currentFlow ?? DEFAULT_FLOW,
+		stepPreviewData: runtime.previewSettings.stepPreviewData,
 	};
 	return {
 		type: 'SET_RUNTIME',
