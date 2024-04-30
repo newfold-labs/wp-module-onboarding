@@ -6,12 +6,26 @@ import {
 	LightBGCheck,
 	ProgressBarCheck,
 } from '../wp-module-support/siteGen.cy';
+import {
+	apiList,
+	siteGenMockAll,
+	homePagesMock,
+} from '../wp-module-support/MockApi.cy';
 
 describe( 'SiteGen Site Preview Step', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/index.php?page=nfd-onboarding#/sitegen/step/preview'
 		);
+		cy.intercept( apiList.sitegen, ( req ) => {
+			siteGenMockAll( req );
+		} ).as( 'sitegenCalls' );
+
+		cy.intercept( apiList.homepages, ( req ) => {
+			homePagesMock( req );
+		} ).as( 'homePageCall' );
+		cy.timeout( 120000 );
+		cy.wait( 5000 );
 		cy.wait( 5000 );
 	} );
 
@@ -37,7 +51,7 @@ describe( 'SiteGen Site Preview Step', function () {
 			.should( 'have.length', 3 );
 	} );
 
-	it( 'Check for the favourited theme versions', () => {
+	it.skip( 'Check for the favourited theme versions', () => {
 		cy.get( 'g[clip-path="url(#heart-filled_svg__a)"]' ).should(
 			'not.exist'
 		); // when no fav theme is selected

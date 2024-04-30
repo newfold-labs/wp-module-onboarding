@@ -7,12 +7,26 @@ import {
 	LightBGCheck,
 	ProgressBarCheck,
 } from '../wp-module-support/siteGen.cy';
+import {
+	apiList,
+	siteGenMockAll,
+	homePagesMock,
+} from '../wp-module-support/MockApi.cy';
 
 describe( 'SiteGen Experience & Site Building Step', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/index.php?page=nfd-onboarding#/sitegen/step/experience'
 		);
+		cy.intercept( apiList.sitegen, ( req ) => {
+			siteGenMockAll( req );
+		} ).as( 'sitegenCalls' );
+
+		cy.intercept( apiList.homepages, ( req ) => {
+			homePagesMock( req );
+		} ).as( 'homePageCall' );
+		cy.timeout( 120000 );
+		cy.wait( 5000 );
 	} );
 
 	it( 'Check for the header admin bar', () => {

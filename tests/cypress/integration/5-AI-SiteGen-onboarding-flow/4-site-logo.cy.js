@@ -24,10 +24,10 @@ describe( 'SiteGen Site Logo Step', function () {
 		cy.intercept( apiList.homepages, ( req ) => {
 			homePagesMock( req );
 		} ).as( 'homePageCall' );
-
 		cy.visit( 'wp-admin/?page=nfd-onboarding#/sitegen/step/site-logo' );
 		cy.wait( '@sitegenCalls', { timeout: 60000 } );
 		cy.wait( '@homePageCall', { timeout: 60000 } );
+		cy.timeout( 120000 );
 	} );
 
 	it( 'Check for the header admin bar', () => {
@@ -62,7 +62,7 @@ describe( 'SiteGen Site Logo Step', function () {
 		DisabledNextButton();
 	} );
 
-	it.skip( 'Check if Image gets uploaded', () => {
+	it( 'Check if Image gets uploaded', () => {
 		const sampleLogoPath = `vendor/newfold-labs/wp-module-onboarding/tests/cypress/fixtures/image.png`;
 		const LogoPreviewClass =
 			'.nfd-onboarding-image-uploader--with-text__site_logo__preview';
@@ -92,7 +92,7 @@ describe( 'SiteGen Site Logo Step', function () {
 		);
 	} );
 
-	it.skip( 'Check if the Next Button is enabled and go next', () => {
+	it( 'Check if the Next Button is enabled and go next', () => {
 		cy.get( '.nfd-onboarding-button--site-gen-next' )
 			.should( 'not.be.disabled' )
 			.click();
