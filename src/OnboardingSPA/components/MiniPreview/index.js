@@ -13,15 +13,14 @@ const MiniPreview = ( {
 	isSocialFormOpen,
 	setIsSocialFormOpen,
 } ) => {
-	const { socialDataStore, brandUrl } = useSelect( ( select ) => {
+	const { socialDataStore } = useSelect( ( select ) => {
 		return {
 			socialDataStore:
 				select( nfdOnboardingStore ).getOnboardingSocialData(),
-			brandUrl: select( nfdOnboardingStore ).getNewfoldBrandUrl(),
 		};
 	}, [] );
 
-	const content = getContents( brandUrl );
+	const content = getContents();
 	const titlePreview = title === '' ? content.defaultTitle : title;
 	const descPreview = desc === '' ? content.defaultDesc : desc;
 
