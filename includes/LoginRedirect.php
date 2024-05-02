@@ -4,7 +4,6 @@ namespace NewfoldLabs\WP\Module\Onboarding;
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
-use function NewfoldLabs\WP\ModuleLoader\container;
 use function WP_Forge\Helpers\dataGet;
 
 /**
@@ -72,11 +71,8 @@ class LoginRedirect {
 		}
 
 		// Don't redirect to onboarding if the site is not a fresh installation.
-		if ( container()->has( 'isFreshInstallation' ) ) {
-			$is_fresh_installation = container()->get( 'isFreshInstallation' );
-			if ( false === $is_fresh_installation ) {
-				return $original_redirect;
-			}
+		if ( false === Data::is_fresh_installation() ) {
+			return $original_redirect;
 		}
 
 		// Don't redirect to onboarding if the 'coming_soon' mode is off. The user has launched their site.
