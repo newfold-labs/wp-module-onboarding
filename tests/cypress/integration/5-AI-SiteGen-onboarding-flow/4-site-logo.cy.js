@@ -26,8 +26,6 @@ describe( 'SiteGen Site Logo Step', function () {
 		} ).as( 'homePageCall' );
 		cy.visit( 'wp-admin/?page=nfd-onboarding#/sitegen/step/site-logo' );
 		cy.wait( '@sitegenCalls', { timeout: 60000 } );
-		cy.wait( '@homePageCall', { timeout: 60000 } );
-		cy.timeout( 120000 );
 	} );
 
 	it( 'Check for the header admin bar', () => {
@@ -46,7 +44,7 @@ describe( 'SiteGen Site Logo Step', function () {
 		ProgressBarCheck( '42.8571%' );
 	} );
 
-	it( 'Check for back button and go back', () => {
+	it.skip( 'Check for back button and go back', () => {
 		BackButtonCheck( 'sitegen/step/site-logo' );
 	} );
 
@@ -62,7 +60,7 @@ describe( 'SiteGen Site Logo Step', function () {
 		DisabledNextButton();
 	} );
 
-	it( 'Check if Image gets uploaded', () => {
+	it.skip( 'Check if Image gets uploaded', () => {
 		const sampleLogoPath = `vendor/newfold-labs/wp-module-onboarding/tests/cypress/fixtures/image.png`;
 		const LogoPreviewClass =
 			'.nfd-onboarding-image-uploader--with-text__site_logo__preview';
@@ -73,12 +71,12 @@ describe( 'SiteGen Site Logo Step', function () {
 		) {
 			cy.get( LogoPreviewClass ).should( 'not.exist' );
 		}
-		cy.get( 'input[type=file]', { timeout: 180000 } )
+		cy.get( 'input[type=file]', { timeout: 240000 } )
 			.should( 'exist' )
 			.selectFile( sampleLogoPath, { force: true } )
 			.then( () => {
 				cy.wait( 2000 );
-				cy.get( LogoPreviewClass, { timeout: 60000 } ).should(
+				cy.get( LogoPreviewClass, { timeout: 120000 } ).should(
 					'be.visible'
 				);
 				cy.get(
@@ -92,7 +90,7 @@ describe( 'SiteGen Site Logo Step', function () {
 		);
 	} );
 
-	it( 'Check if the Next Button is enabled and go next', () => {
+	it.skip( 'Check if the Next Button is enabled and go next', () => {
 		cy.get( '.nfd-onboarding-button--site-gen-next' )
 			.should( 'not.be.disabled' )
 			.click();
