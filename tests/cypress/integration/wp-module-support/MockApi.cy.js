@@ -10,6 +10,7 @@ const font_pair_mock = require( '../../fixtures/font-pair.json' );
 const homepages_mock = require( '../../fixtures/homepages.json' );
 const theme_style_mock = require( '../../fixtures/theme-style.json' );
 const customize_data_mock = require( '../../fixtures/customize-data.json' );
+const homepage_regenerate_mock = require( '../../fixtures/homepage-regenerate.json' );
 
 export const apiList = {
 	sitegen:
@@ -45,14 +46,15 @@ export const siteGenMockAll = ( req ) => {
 			headers: {
 				'content-type': 'application/json',
 			},
-			delay: 2000,
+			delay: 3000,
 		} );
 	}
 };
 
 export const homePagesMock = ( req ) => {
 	req.reply( {
-		statusCode: 200,
+		method: 'POST',
+		statusCode: 201,
 		body: homepages_mock,
 		headers: {
 			'content-type': 'application/json',
@@ -73,6 +75,17 @@ export const customizeDataMock = ( req ) => {
 		method: 'GET',
 		statusCode: 200,
 		body: customize_data_mock,
+		headers: {
+			'content-type': 'application/json',
+		},
+	} );
+};
+
+export const homePagesRegenerate = ( req ) => {
+	req.reply( {
+		method: 'POST',
+		statusCode: 200,
+		body: homepage_regenerate_mock,
 		headers: {
 			'content-type': 'application/json',
 		},
