@@ -134,11 +134,12 @@ const SiteGenSiteLogo = () => {
 								if ( siteLogo ) {
 									trackOnboardingEvent(
 										new OnboardingEvent(
-											ACTION_LOGO_ADDED
-										),
-										{
-											source: SITEGEN_FLOW,
-										}
+											ACTION_LOGO_ADDED,
+											undefined,
+											{
+												source: SITEGEN_FLOW,
+											}
+										)
 									);
 								}
 							} }
