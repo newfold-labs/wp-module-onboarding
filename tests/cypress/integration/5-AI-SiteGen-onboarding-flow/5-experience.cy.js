@@ -25,8 +25,7 @@ describe( 'SiteGen Experience & Site Building Step', function () {
 		cy.intercept( apiList.homepages, ( req ) => {
 			homePagesMock( req );
 		} ).as( 'homePageCall' );
-		cy.timeout( 120000 );
-		cy.wait( 5000 );
+		cy.wait( 20000 );
 	} );
 
 	it( 'Check for the header admin bar', () => {

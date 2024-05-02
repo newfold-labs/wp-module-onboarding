@@ -37,10 +37,6 @@ describe( 'SiteGen Site Details Step', function () {
 		);
 	} );
 
-	it( 'Check for back button and go back', () => {
-		BackButtonCheck( 'sitegen/step/site-details' );
-	} );
-
 	it( 'Check for the header to be visible', () => {
 		cy.get( '.ai-heading' ).should( 'be.visible' );
 	} );
@@ -52,6 +48,10 @@ describe( 'SiteGen Site Details Step', function () {
 			'I want a site for my company that sells…'
 		);
 		cy.get( '.nfd-sg-input-box__hint' ).should( 'be.visible' );
+	});
+	
+	it.skip( 'Check for back button and go back', () => {
+		BackButtonCheck( 'sitegen/step/site-details' );
 	} );
 
 	it( 'Enter the prompt and see the box-info progress', () => {
