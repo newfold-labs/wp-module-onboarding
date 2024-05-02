@@ -1,10 +1,14 @@
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
-const getContents = () => {
+const getContents = ( currentBrandName ) => {
 	return {
-		heading: __(
-			"Let's migrate your existing site to your new account",
-			'wp-module-onboarding'
+		heading: sprintf(
+			/* translators: %s: to replace Brand name */
+			__(
+				"Let's migrate your existing site to %s",
+				'wp-module-onboarding'
+			),
+			currentBrandName
 		),
 		description: __(
 			'Please wait a few seconds while we get your new account ready to import your existing WordPress site. ',

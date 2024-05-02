@@ -38,13 +38,14 @@ const StepSiteGenMigration = () => {
 		updateAllSteps,
 	} = useDispatch( nfdOnboardingStore );
 
-	const { siteGenErrorStatus, allSteps, canMigrateSite } = useSelect(
+	const { siteGenErrorStatus, allSteps, canMigrateSite, currentBrandName } = useSelect(
 		( select ) => {
 			return {
 				siteGenErrorStatus:
 					select( nfdOnboardingStore ).getSiteGenErrorStatus(),
 				allSteps: select( nfdOnboardingStore ).getAllSteps(),
 				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
+				currentBrandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
 			};
 		}
 	);
@@ -104,7 +105,7 @@ const StepSiteGenMigration = () => {
 		}
 	}, [ siteGenErrorStatus ] );
 
-	const content = getContents();
+	const content = getContents( currentBrandName );
 	return (
 		<SiteGenStateHandler>
 			<CommonLayout
