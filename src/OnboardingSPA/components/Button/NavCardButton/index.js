@@ -36,6 +36,7 @@ const NavCardButton = ( { text, disabled, className, icon } ) => {
 	async function saveDataAndExit() {
 		if ( currentData ) {
 			currentData.isComplete = new Date().getTime();
+			currentData.data.siteOverrideConsent = false;
 			setFlow( currentData );
 		}
 

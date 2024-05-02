@@ -446,3 +446,7 @@ export function getSiteGenErrorStatus( state ) {
 export function getInteractionDisabled( state ) {
 	return state.flow.interactionDisabled;
 }
+
+export function getIsFreshInstallation( state ) {
+	return state.runtime.isFreshInstallation;
+}
