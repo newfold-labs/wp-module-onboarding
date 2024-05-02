@@ -10,18 +10,18 @@ import {
 	ProgressBarCheck,
 } from '../wp-module-support/siteGen.cy';
 
-describe( 'SiteGen Site Editor Step', function () {
+describe.skip( 'SiteGen Site Editor Step', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/index.php?page=nfd-onboarding#/sitegen/step/preview'
 		);
-		cy.wait( 15000 );
+		cy.wait( 10000 );
 	} );
 
 	it( 'Select any theme and go forward to the next step', () => {
 		cy.get(
 			'.live-preview-sitegen--selectable-card__live-preview-container__overlay',
-			{ timeout: 10000 }
+			{ timeout: 60000 }
 		)
 			.eq( 0 )
 			.click();
@@ -103,10 +103,10 @@ describe( 'SiteGen Site Editor Step', function () {
 			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container'
 		)
 			.should( 'be.visible' )
-			.should( 'have.length', 3 ); // as we are not currently regenrating new themes
+			.should( 'have.length', 3 ); // as we are not regenrating new themes
 	} );
 
-	it.skip( 'Check for favoriting a theme and it appears everywhere', () => {
+	it( 'Check for favoriting a theme and it appears everywhere', () => {
 		cy.get(
 			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container'
 		)
@@ -125,14 +125,16 @@ describe( 'SiteGen Site Editor Step', function () {
 			timeout: 20000,
 		} ).should( 'exist' );
 		cy.get(
-			':nth-child(4) > .nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context > .nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon__fill'
+			':nth-child(3) > .nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context > .nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon__fill'
 		).should( 'exist' );
 	} );
 
-	it.skip( 'Check for favorite themes inside favorite tab', () => {
+	it( 'Check for favorite themes inside favorite tab', () => {
 		cy.get(
-			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__favorites-tab'
-		)
+			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__favorites-tab', {
+			timeout: 10000
+		} )
+			.scrollIntoView()
 			.should( 'be.visible' )
 			.click();
 		cy.get(

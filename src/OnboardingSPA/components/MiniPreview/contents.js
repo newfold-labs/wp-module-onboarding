@@ -2,7 +2,7 @@ import { __, sprintf } from '@wordpress/i18n';
 
 import { translations } from '../../utils/locales/translations';
 
-const getContents = ( brandUrl = '' ) => {
+const getContents = () => {
 	return {
 		heading: __( 'Preview', 'wp-module-onboarding' ),
 		defaultTitle: sprintf(
@@ -15,7 +15,6 @@ const getContents = ( brandUrl = '' ) => {
 			__( 'Just another WordPress %s', 'wp-module-onboarding' ),
 			translations( 'Site' )
 		),
-		defaultUrl: brandUrl,
 	};
 };
 
