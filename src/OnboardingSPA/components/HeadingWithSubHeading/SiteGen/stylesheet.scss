@@ -12,6 +12,11 @@
 			color: var(--nfd-onboarding-primary);
 			margin: 35px 35px 15px 35px !important;
 			font-size: 30px;
+
+			@media (max-width: #{ ($break-small) }) {
+				line-height: 1.5;
+				margin: 35px 15px 15px 15px !important;
+			}
 		}
 
 		&__subtitle {

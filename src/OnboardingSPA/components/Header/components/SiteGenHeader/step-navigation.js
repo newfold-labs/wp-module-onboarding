@@ -51,7 +51,7 @@ const StepNavigation = () => {
 	}, [] );
 
 	const isFirstStep = null === previousStep || false === previousStep;
-	const isPreviewStep = currentStep.path === stepSiteGenPreview.path;
+	const isPreviewStep = currentStep?.path === stepSiteGenPreview?.path;
 
 	return (
 		<div className="nfd-onboarding-header--sitegen__step-navigation">
