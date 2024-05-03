@@ -23,14 +23,21 @@
 		}
 	},
 	"repositories": [
-		{
-			"type": "composer",
-			"url": "https://newfold-labs.github.io/satis/",
-			"only": [
-				"newfold-labs/*"
-			]
-		}
-	],
+        {
+          "type": "composer",
+          "url": "https://newfold-labs.github.io/satis/",
+          "only": [
+            "newfold-labs/*"
+          ]
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:InstaWP/connect-helpers.git",
+            "only": [
+              "instawp/*"
+            ]
+        }
+      ],
 	"require": {
 		"mustache/mustache": "^2.14",
 		"wp-cli/wp-config-transformer": "^1.3",
