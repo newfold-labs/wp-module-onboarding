@@ -55,7 +55,7 @@ describe( 'Site Pages', function () {
 				.scrollIntoView()
 				.find( '.components-checkbox-control' )
 				.find( 'label' )
-				.click();
+				.click({ force: true });
 			previewCount += 1;
 		} );
 	} );
