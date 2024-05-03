@@ -45,6 +45,7 @@ describe( 'Site Pages', function () {
 	}
 
 	it( 'Check if Site Pages Templates exist and are selectable', () => {
+		DrawerClose();
 		let previewCount = 0;
 		const className = '.site-pages__list__item';
 		const arr = cy.get( className );
