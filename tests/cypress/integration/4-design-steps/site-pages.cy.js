@@ -1,5 +1,5 @@
 // <reference types="Cypress" />
-import { DrawerActivityForMenu } from '../wp-module-support/drawer.cy';
+import { DrawerActivityForMenu, DrawerClose } from '../wp-module-support/drawer.cy';
 import { CheckHeadingSubheading } from '../wp-module-support/header.cy';
 import { GetPluginId } from '../wp-module-support/pluginID.cy';
 import {
