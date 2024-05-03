@@ -1,14 +1,18 @@
 // WordPress
 import { useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
+import { useNavigate } from 'react-router-dom';
 
 // Classes and functions
 import getContents from './contents';
+import { injectMigrationStep } from '../../data/flows/utils';
 
 // Components
 import StartOptions from '../../components/StartOptions';
 import CommonLayout from '../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../components/HeadingWithSubHeading/SiteGen/index';
+import { stepSiteGenMigration } from '../../steps/SiteGen/Migration/step';
+import { stepTheFork } from './step';
 
 // Misc
 import {
@@ -26,12 +30,17 @@ import { store as nfdOnboardingStore } from '../../store';
 import { DEFAULT_FLOW } from '../../data/flows/constants';
 
 const TheFork = () => {
-	const { migrationUrl } = useSelect( ( select ) => {
-		return {
-			migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
-		};
-	} );
-
+	const { migrationUrl, canMigrateSite, allSteps } = useSelect(
+		( select ) => {
+			return {
+				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
+				allSteps: select( nfdOnboardingStore ).getAllSteps(),
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+				routes: select( nfdOnboardingStore ).getRoutes(),
+			};
+		}
+	);
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -40,6 +49,7 @@ const TheFork = () => {
 		setIsHeaderNavigationEnabled,
 		setFooterActiveView,
 		setHideFooterNav,
+		updateAllSteps,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -67,6 +77,24 @@ const TheFork = () => {
 		window.location.replace( pluginDashboardPage );
 	};
 	const content = getContents();
+	const navigate = useNavigate();
+
+	const handleMigration = () => {
+		if ( canMigrateSite ) {
+			const updates = injectMigrationStep( allSteps, stepTheFork );
+			updateAllSteps( updates.allSteps );
+			navigate( stepSiteGenMigration.path );
+		} else {
+			window.open( migrationUrl, '_blank' );
+		}
+		trackOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_SITEGEN_FORK_OPTION_SELECTED,
+				'MIGRATE'
+			)
+		);
+	};
+
 	return (
 		<CommonLayout
 			isCentered
@@ -83,23 +111,23 @@ const TheFork = () => {
 			/>
 			<br />
 			<br />
-			{ migrationUrl && (
-				<a
+			{ ( canMigrateSite || migrationUrl ) && (
+				<div
 					className="nfd-onboarding-step--site-gen__fork__importsite"
-					href={ migrationUrl }
-					target={ '_blank' }
-					rel={ 'noreferrer' }
-					onClick={ () =>
-						trackOnboardingEvent(
-							new OnboardingEvent(
-								ACTION_SITEGEN_FORK_OPTION_SELECTED,
-								'MIGRATE'
-							)
-						)
-					}
+					onClick={ () => {
+						handleMigration();
+					} }
+					onKeyUp={ ( event ) => {
+						if ( event.key === 'Enter' ) {
+							handleMigration();
+						}
+					} }
+					tabIndex={ 0 }
+					role="button"
+					aria-label="Trigger site migration"
 				>
 					{ content.importtext }
-				</a>
+				</div>
 			) }
 			<span
 				role="button"

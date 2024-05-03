@@ -19,6 +19,7 @@ import { SITEGEN_FLOW } from '../../../data/flows/constants';
 const SiteGenStateHandler = ( { children } ) => {
 	const { siteGenErrorStatus } = useSelect( ( select ) => {
 		return {
+			currentStepPath: select( nfdOnboardingStore ).getCurrentStepPath(),
 			siteGenErrorStatus:
 				select( nfdOnboardingStore ).getSiteGenErrorStatus(),
 		};

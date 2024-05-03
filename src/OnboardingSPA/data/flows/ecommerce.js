@@ -19,6 +19,7 @@ import { filter } from 'lodash';
 import { store } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 import { stepTheFork } from '../../steps/TheFork/step';
+import { stepSiteGenMigration } from '../../steps/SiteGen/Migration/step';
 
 export const pages = [ indexPage, errorPage ];
 
@@ -51,6 +52,7 @@ export const getRoutes = ( chapters = initialChapters ) => {
 	let routes = [ ...pages ];
 	routes.push( stepTheFork );
 	routes.push( stepWelcome );
+	routes.push( stepSiteGenMigration );
 	chapters.forEach( ( chapter ) => {
 		routes = routes.concat( [
 			...chapter.steps,

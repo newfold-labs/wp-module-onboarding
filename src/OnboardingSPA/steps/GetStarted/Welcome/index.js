@@ -1,15 +1,19 @@
-import { store as nfdOnboardingStore } from '../../../store';
-import { useLocation } from 'react-router-dom';
-import { useSelect, useDispatch } from '@wordpress/data';
+// Wordpress
 import { useEffect } from '@wordpress/element';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { chevronRight, external } from '@wordpress/icons';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+// Components
 import CommonLayout from '../../../components/Layouts/Common';
 import NewfoldLargeCard from '../../../components/NewfoldLargeCard';
 import CardHeader from '../../../components/CardHeader';
 import NavCardButton from '../../../components/Button/NavCardButton';
 import Tab from '../../../components/Tab';
 import TabPanelHover from '../../../components/TabPanelHover';
+
+// Misc
+import { store as nfdOnboardingStore } from '../../../store';
 import {
 	VIEW_NAV_GET_STARTED,
 	SIDEBAR_LEARN_MORE,
@@ -17,14 +21,28 @@ import {
 } from '../../../../constants';
 import getContents from './contents';
 import ButtonWhite from '../../../components/Button/ButtonWhite';
+import {
+	injectMigrationStep,
+	removeFromAllSteps,
+} from '../../../data/flows/utils';
+import { stepWelcome } from './step';
+import { stepSiteGenMigration } from '../../../steps/SiteGen/Migration/step';
+import {
+	OnboardingEvent,
+	trackOnboardingEvent,
+} from '../../../utils/analytics/hiive';
+import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../../utils/analytics/hiive/constants';
 
 const StepWelcome = () => {
 	const location = useLocation();
-	const { brandName, migrationUrl } = useSelect(
+	const navigate = useNavigate();
+	const { brandName, migrationUrl, allSteps, canMigrateSite } = useSelect(
 		( select ) => {
 			return {
 				brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
 				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+				allSteps: select( nfdOnboardingStore ).getAllSteps(),
+				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
 			};
 		},
 		[ location.pathname ]
@@ -36,6 +54,7 @@ const StepWelcome = () => {
 		setIsHeaderNavigationEnabled,
 		setHeaderActiveView,
 		setIsHeaderEnabled,
+		updateAllSteps,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -46,6 +65,29 @@ const StepWelcome = () => {
 		setHeaderActiveView( HEADER_SITEBUILD );
 		setIsHeaderEnabled( true );
 	}, [] );
+
+	useEffect( () => {
+		const updates = removeFromAllSteps( allSteps, [
+			stepSiteGenMigration,
+		] );
+		updateAllSteps( updates.allSteps );
+	}, [] );
+
+	const handleMigration = () => {
+		if ( canMigrateSite ) {
+			const updates = injectMigrationStep( allSteps, stepWelcome );
+			updateAllSteps( updates.allSteps );
+			navigate( stepSiteGenMigration.path );
+		} else {
+			window.open( migrationUrl, '_blank' );
+		}
+		trackOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_SITEGEN_FORK_OPTION_SELECTED,
+				'MIGRATE'
+			)
+		);
+	};
 
 	const content = getContents( brandName );
 
@@ -78,14 +120,14 @@ const StepWelcome = () => {
 						{ ( tab ) => <div>{ tab.content }</div> }
 					</TabPanelHover>
 					<div className="nfd-onboarding-overview__buttons">
-						{ migrationUrl && (
+						{ ( migrationUrl || canMigrateSite ) && (
 							<ButtonWhite
 								className="nfd-onboarding-overview__buttons--white"
 								text={ content.migrateButtonText }
 								icon={ external }
-								onClick={ () =>
-									window.open( migrationUrl, '_blank' )
-								}
+								onClick={ () => {
+									handleMigration( migrationUrl );
+								} }
 							/>
 						) }
 						<NavCardButton

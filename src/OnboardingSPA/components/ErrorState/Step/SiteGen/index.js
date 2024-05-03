@@ -6,15 +6,17 @@ import { Button, Fill } from '@wordpress/components';
 
 // Third-party
 import { useNavigate } from 'react-router-dom';
+import classNames from 'classnames';
 
 // Classes and functions
 import getContents from './contents';
-import { validateFlow } from '../../../../data/flows/utils';
+import { validateFlow, removeFromAllSteps } from '../../../../data/flows/utils';
 import { resolveGetDataForFlow } from '../../../../data/flows';
 
 // Components
 import CommonLayout from '../../../Layouts/Common';
 import OrbAnimation from '../../../OrbAnimation';
+import { stepSiteGenMigration } from '../../../../steps/SiteGen/Migration/step';
 
 // Misc
 import { store as nfdOnboardingStore } from '../../../../store';
@@ -55,13 +57,20 @@ const SiteGenStepErrorState = () => {
 		setSidebarActiveView( false );
 	}, [] );
 
-	const { brandConfig, currentData } = useSelect( ( select ) => {
-		return {
-			brandConfig: select( nfdOnboardingStore ).getNewfoldBrandConfig(),
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-		};
-	} );
+	const { brandConfig, currentData, currentStep, previousStep, allSteps } =
+		useSelect( ( select ) => {
+			return {
+				brandConfig:
+					select( nfdOnboardingStore ).getNewfoldBrandConfig(),
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+				previousStep: select( nfdOnboardingStore ).getPreviousStep(),
+				allSteps: select( nfdOnboardingStore ).getAllSteps(),
+			};
+		} );
+
+	const isMigrationStep = currentStep?.path === stepSiteGenMigration?.path;
 
 	const oldFlow = window.nfdOnboarding?.oldFlow
 		? window.nfdOnboarding.oldFlow
@@ -95,10 +104,26 @@ const SiteGenStepErrorState = () => {
 		updateSiteGenErrorStatus( false );
 	};
 
-	const content = getContents();
+	const handleGoBack = () => {
+		updateSiteGenErrorStatus( false );
+		const updates = removeFromAllSteps( allSteps, [
+			stepSiteGenMigration,
+		] );
+		updateAllSteps( updates.allSteps );
+		navigate( previousStep.path );
+	};
+
+	const content = ! isMigrationStep
+		? getContents( 'siteGenErrorContent' )
+		: getContents( 'siteMigrationErrorContent' );
 
 	return (
-		<CommonLayout className="nfd-onboarding-step--site-gen__error">
+		<CommonLayout
+			className={ classNames( 'nfd-onboarding-step--site-gen__error', {
+				'nfd-onboarding-step--site-gen__migrationerror':
+					isMigrationStep,
+			} ) }
+		>
 			<div className="nfd-onboarding-step--site-gen__error__container">
 				<div className="nfd-onboarding-step--site-gen__error__container__orb">
 					<OrbAnimation height={ `100px` } />
@@ -114,24 +139,26 @@ const SiteGenStepErrorState = () => {
 					</p>
 					<p className="nfd-onboarding-step--site-gen__error__container__sub-heading__message">
 						{ content.message }
-						<a
-							className="nfd-onboarding-step--site-gen__error__container__sub-heading__exit"
-							href={ pluginDashboardPage }
-						>
-							{ content.buttonExit }
-						</a>
+						{ ! isMigrationStep && (
+							<a
+								className="nfd-onboarding-step--site-gen__error__container__sub-heading__exit"
+								href={ pluginDashboardPage }
+							>
+								{ content.buttonExit }
+							</a>
+						) }
 					</p>
 				</div>
-				<div className="nfd-onboarding-step--site-gen__error__container__buttons">
-					<Button
-						className="nfd-onboarding-step--site-gen__error__container__buttons__skip"
-						onClick={ () => {
-							switchFlow( oldFlow );
-						} }
-					>
-						{ content.buttonSkip }
-					</Button>
-					{ isLargeViewport ? (
+				{ isMigrationStep ? (
+					<div className="nfd-onboarding-step--site-gen__error__container__buttons">
+						<Button
+							className="nfd-onboarding-step--site-gen__error__container__buttons__skip"
+							onClick={ () => {
+								handleGoBack();
+							} }
+						>
+							{ content.buttonExit }
+						</Button>
 						<Button
 							className="nfd-onboarding-step--site-gen__error__container__buttons__retry"
 							onClick={ () => {
@@ -142,8 +169,18 @@ const SiteGenStepErrorState = () => {
 								{ content.buttonText }
 							</p>
 						</Button>
-					) : (
-						<Fill name={ `${ FOOTER_SITEGEN }/${ FOOTER_END }` }>
+					</div>
+				) : (
+					<div className="nfd-onboarding-step--site-gen__error__container__buttons">
+						<Button
+							className="nfd-onboarding-step--site-gen__error__container__buttons__skip"
+							onClick={ () => {
+								switchFlow( oldFlow );
+							} }
+						>
+							{ content.buttonSkip }
+						</Button>
+						{ isLargeViewport ? (
 							<Button
 								className="nfd-onboarding-step--site-gen__error__container__buttons__retry"
 								onClick={ () => {
@@ -154,9 +191,24 @@ const SiteGenStepErrorState = () => {
 									{ content.buttonText }
 								</p>
 							</Button>
-						</Fill>
-					) }
-				</div>
+						) : (
+							<Fill
+								name={ `${ FOOTER_SITEGEN }/${ FOOTER_END }` }
+							>
+								<Button
+									className="nfd-onboarding-step--site-gen__error__container__buttons__retry"
+									onClick={ () => {
+										handleRetry();
+									} }
+								>
+									<p className="nfd-onboarding-button--site-gen-next--text">
+										{ content.buttonText }
+									</p>
+								</Button>
+							</Fill>
+						) }
+					</div>
+				) }
 			</div>
 		</CommonLayout>
 	);
