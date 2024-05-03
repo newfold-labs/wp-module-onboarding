@@ -1,5 +1,5 @@
 // <reference types="Cypress" />
-import { DrawerActivityForMenu, DrawerClose } from '../wp-module-support/drawer.cy';
+import { DrawerActivityForMenu } from '../wp-module-support/drawer.cy';
 import { CheckHeadingSubheading } from '../wp-module-support/header.cy';
 import { GetPluginId } from '../wp-module-support/pluginID.cy';
 import {
@@ -45,7 +45,6 @@ describe( 'Site Pages', function () {
 	}
 
 	it( 'Check if Site Pages Templates exist and are selectable', () => {
-		DrawerClose();
 		let previewCount = 0;
 		const className = '.site-pages__list__item';
 		const arr = cy.get( className );
@@ -56,7 +55,7 @@ describe( 'Site Pages', function () {
 				.scrollIntoView()
 				.find( '.components-checkbox-control' )
 				.find( 'label' )
-				.click();
+				.click({ force: true });
 			previewCount += 1;
 		} );
 	} );
