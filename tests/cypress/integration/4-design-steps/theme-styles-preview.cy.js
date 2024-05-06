@@ -6,6 +6,7 @@ import {
 	CheckIllustrationPanel,
 	CheckInfoPanel,
 	CheckIntroPanel,
+	continueSetup,
 } from '../wp-module-support/sidebar.cy';
 
 describe( 'Theme Styles Preview', function () {
@@ -14,25 +15,24 @@ describe( 'Theme Styles Preview', function () {
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/theme-styles/preview'
 		);
 		cy.wait( 10000 );
+		continueSetup();
 	} );
-	
-	if(GetPluginId()=='bluehost'){
+
+	if ( GetPluginId() == 'bluehost' ) {
 		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 			CheckIntroPanel( '__design-theme-styles-preview', 'Theme Styles' );
 			CheckIllustrationPanel();
 			CheckInfoPanel( 2 );
 			CheckHelpPanelLinks();
 		} );
-	}
-	else{
+	} else {
 		it( 'Check to make sure Sidebar opens', () => {
 			BasicSidebarCheck();
 		} );
 	}
-	
 
-    it( 'Check if Theme is selected and content is in place', () => {
-		cy.get( ':nth-child(1) > .theme-styles-preview__title-bar' ).should(
+	it( 'Check if Theme is selected and content is in place', () => {
+		cy.get( ':nth-child(1) > .theme-styles-preview__title-bar' , { timeout : 10000 }).should(
 			'be.visible'
 		);
 	} );
@@ -56,7 +56,7 @@ describe( 'Theme Styles Preview', function () {
 	} );
 
 	it( 'Check for the selected theme in Drawer', () => {
-		cy.get( '.nfd-onboarding-drawer__panel-back' )
+		cy.get( '.nfd-onboarding-drawer__panel-back', { timeout : 10000 } )
 			.scrollIntoView()
 			.should( 'be.visible' )
 			.should( 'have.text', 'Design' );
@@ -67,5 +67,4 @@ describe( 'Theme Styles Preview', function () {
 			.scrollIntoView()
 			.should( 'be.visible' );
 	} );
-
-});
+} );

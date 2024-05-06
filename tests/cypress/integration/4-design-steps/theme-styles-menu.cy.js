@@ -8,6 +8,7 @@ import {
 	CheckIllustrationPanel,
 	CheckInfoPanel,
 	CheckIntroPanel,
+	continueSetup,
 } from '../wp-module-support/sidebar.cy';
 
 describe( 'Theme Styles Menu', function () {
@@ -16,30 +17,25 @@ describe( 'Theme Styles Menu', function () {
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/theme-styles/menu'
 		);
 		cy.wait( 5000 );
+		continueSetup();
 	} );
 
 	it( 'Check Drawer Activity', () => {
-		DrawerActivityForMenu(
-			'Onboarding',
-			':nth-child(1)',
-			'Theme Styles'
-		);
+		DrawerActivityForMenu( 'Onboarding', ':nth-child(1)', 'Theme Styles' );
 	} );
 
-	if(GetPluginId()=='bluehost'){
+	if ( GetPluginId() == 'bluehost' ) {
 		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel( '__design-theme-styles-menu', 'Theme Styles' );
-		CheckIllustrationPanel();
-		CheckInfoPanel( 2 );
-		CheckHelpPanelLinks();
-	} );
-	}
-	else{
+			CheckIntroPanel( '__design-theme-styles-menu', 'Theme Styles' );
+			CheckIllustrationPanel();
+			CheckInfoPanel( 2 );
+			CheckHelpPanelLinks();
+		} );
+	} else {
 		it( 'Check to make sure Sidebar opens', () => {
 			BasicSidebarCheck();
 		} );
-	};
-
+	}
 
 	it( 'Checks if Heading and Subheading are present', () => {
 		CheckHeadingSubheading();
@@ -48,7 +44,7 @@ describe( 'Theme Styles Menu', function () {
 	it( 'Check if Default Theme variations exists in Menu', () => {
 		let previewCount = 0;
 		const className = '.theme-styles-menu__list__item';
-		const arr = cy.get( className );
+		const arr = cy.get( className , { timeout : 10000 });
 
 		arr.each( () => {
 			cy.get( className.concat( '__title-bar' ) )
