@@ -27,64 +27,75 @@ describe( 'Get Started Site Type Secondary', function () {
 		CheckCardHeadingSubheading( true );
 	} );
 
-	if(GetPluginId()=='bluehost'){
+	if ( GetPluginId() == 'bluehost' ) {
 		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 			CheckIntroPanel( '__get-started-site-type', 'Site Type' );
 			CheckIllustrationPanel();
 			CheckInfoPanel();
 			CheckHelpPanelLinks();
 		} );
-	}
-	else{
+	} else {
 		it( 'Check to make sure Sidebar opens', () => {
 			BasicSidebarCheck();
-		} )
-	};
+		} );
+	}
 
-	it( 'Check for Event API call being made when different sub-categories are selected', ()=>{
+	it( 'Check for Event API call being made when different sub-categories are selected', () => {
 		let SubcategoryCount = 0;
 		let num = 0;
 		const className = '.nfd-card-sec-category';
-		cy.get( className ).should( 'be.visible' );
+		cy.get( className ).should( 'be.visible', { timeout: 10000 } );
 		const arr = cy.get( className );
 		arr.each( () => {
 			cy.get( className )
 				.eq( SubcategoryCount )
 				.click()
-				.then(($element) => {
-					const dataSlugText = $element.attr('data-slug');
-					if(num>=2){
-						cy.wait(5000);
+				.then( ( $element ) => {
+					const dataSlugText = $element.attr( 'data-slug' );
+					if ( num >= 2 ) {
+						cy.wait( 5000 );
 					}
-					EventsAPI('secondary_type', dataSlugText, APIList.events_api_general_onb);
-					num+=1;
-				});
+					EventsAPI(
+						'secondary_type',
+						dataSlugText,
+						APIList.events_api_general_onb
+					);
+					num += 1;
+				} );
 			SubcategoryCount += 1;
 		} );
 	} );
 
-	it( 'Check for Event API call when we enter text in input box', ()=>{
+	it( 'Check for Event API call when we enter text in input box', () => {
 		cy.get( '.nfd-setup-primary-custom__tellus-input' )
 			.scrollIntoView()
 			.should( 'be.visible' )
 			.type( 'Test' );
-		EventsAPI('secondary_type', 'Test', APIList.events_api_general_onb);
+		EventsAPI( 'secondary_type', 'Test', APIList.events_api_general_onb );
 	} );
 
 	it( 'Check different categories exist using `<` and `>`', () => {
 		cy.get( '.nfd-setup-secondary-categories' ).should( 'be.visible' );
-		const category_selected = cy.get('.category-scrolling-wrapper__type-text');
+		const category_selected = cy.get(
+			'.category-scrolling-wrapper__type-text'
+		);
 		cy.get( '.category-scrolling-wrapper__left-btn' )
 			.scrollIntoView()
-			.should('be.visible')
+			.should( 'be.visible' )
 			.click();
-		cy.get( '.category-scrolling-wrapper__type-text' ).should('not.contain', category_selected);
+		cy.get( '.category-scrolling-wrapper__type-text' ).should(
+			'not.contain',
+			category_selected
+		);
 		cy.reload();
-		cy.get('.category-scrolling-wrapper__right-btn-icon')
-			.should('be.visible')
+		cy.get( '.category-scrolling-wrapper__right-btn-icon' )
+			.should( 'be.visible' )
 			.click();
-		cy.get( '.category-scrolling-wrapper__type-text' ).should('not.contain', category_selected);
-	});
+		cy.get( '.category-scrolling-wrapper__type-text' ).should(
+			'not.contain',
+			category_selected
+		);
+	} );
 
 	it( 'Check different subCategories exist and is selectable', () => {
 		let categoryCount = 0;

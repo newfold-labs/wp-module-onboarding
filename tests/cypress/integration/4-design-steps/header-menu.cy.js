@@ -7,6 +7,7 @@ import {
 	CheckIllustrationPanel,
 	CheckInfoPanel,
 	CheckIntroPanel,
+	continueSetup,
 } from '../wp-module-support/sidebar.cy';
 
 describe( 'Header menu Page', function () {
@@ -15,6 +16,7 @@ describe( 'Header menu Page', function () {
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/header-menu'
 		);
 		cy.wait( 10000 );
+		continueSetup();
 	} );
 
 	it( 'Check Drawer Activity', () => {
@@ -30,20 +32,18 @@ describe( 'Header menu Page', function () {
 		cy.contains( 'button', 'Design' ).should( 'be.visible' );
 	} );
 
-	if(GetPluginId()=='bluehost'){
+	if ( GetPluginId() == 'bluehost' ) {
 		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 			CheckIntroPanel( '__design-header-menu', 'Header & Menu' );
 			CheckIllustrationPanel();
 			CheckInfoPanel( 2 );
 			CheckHelpPanelLinks();
 		} );
-	}
-	else{
+	} else {
 		it( 'Check to make sure Sidebar opens', () => {
 			BasicSidebarCheck();
 		} );
 	}
-	
 
 	it( 'Check to make sure different design is selected', () => {
 		let previewCount = 0;
@@ -51,7 +51,7 @@ describe( 'Header menu Page', function () {
 		const arr = cy.get( classname );
 		arr.each( () => {
 			cy.get( classname ).eq( previewCount ).click();
-			cy.wait(3000);
+			cy.wait( 3000 );
 			cy.get( classname )
 				.eq( previewCount )
 				.find( classname.concat( '__title-bar--selected' ) )

@@ -74,3 +74,11 @@ export const BasicSidebarCheck = () => {
 	cy.get('.nfd-onboarding-sidebar-learn-more__menu-button')
 		.click();
 }
+
+export const continueSetup = () => {
+	cy.then(()=>{
+		if (Cypress.$('.components-modal__content').length) {
+			cy.get('.nfd-onboarding-etw__buttons .components-button.is-secondary').click();
+			}
+		})
+}

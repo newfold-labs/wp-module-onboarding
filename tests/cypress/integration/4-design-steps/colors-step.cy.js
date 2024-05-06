@@ -7,16 +7,18 @@ import {
 	CheckIllustrationPanel,
 	CheckInfoPanel,
 	CheckIntroPanel,
+	continueSetup,
 } from '../wp-module-support/sidebar.cy';
 
-describe( 'Colors Step Test', function () {
+describe.only( 'Colors Step Test', function () {
 	before( () => {
 		cy.exec('npx wp-env run cli wp theme activate yith-wonder');
-		cy.wait(5000);
+		cy.wait( 5000 );
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/colors'
 		);
-		cy.wait(6000);
+		cy.wait( 5000 );
+		continueSetup();
 	} );
 
 	it( 'Check Drawer Activity', () => {
@@ -28,20 +30,18 @@ describe( 'Colors Step Test', function () {
 		);
 	} );
 
-	if(GetPluginId()=='bluehost'){
+	if ( GetPluginId() == 'bluehost' ) {
 		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 			CheckIntroPanel( '__design-colors', 'Colors' );
 			CheckIllustrationPanel();
 			CheckInfoPanel();
 			CheckHelpPanelLinks();
 		} );
-	}
-	else{
+	} else {
 		it( 'Check to make sure Sidebar opens', () => {
 			BasicSidebarCheck();
 		} );
-	};
-	
+	}
 
 	it( 'Check if Default Color variations exists and are selectable', () => {
 		let previewCount = 0;
