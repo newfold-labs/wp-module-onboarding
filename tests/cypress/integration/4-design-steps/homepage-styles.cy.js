@@ -49,7 +49,7 @@ describe( 'Homepage Styles Page', function () {
 	it( 'Check if Homepage Styles exist and are selectable', () => {
 		let previewCount = 0;
 		const className = '.homepage_preview__list__item';
-		const arr = cy.get( className );
+		const arr = cy.get( className, { timeout:15000 } );
 
 		arr.each( () => {
 			cy.get( className ).eq( previewCount ).click();

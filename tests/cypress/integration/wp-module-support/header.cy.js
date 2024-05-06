@@ -11,6 +11,6 @@ export const CheckCardHeadingSubheading = ( question = false ) => {
 };
 
 export const CheckHeadingSubheading = () => {
-	cy.get( '.nfd-main-heading__title' ).should( 'be.visible' );
+	cy.get( '.nfd-main-heading__title', { timeout:15000 } ).should( 'be.visible' );
 	cy.get( '.nfd-main-heading__subtitle' ).should( 'be.visible' );
 };

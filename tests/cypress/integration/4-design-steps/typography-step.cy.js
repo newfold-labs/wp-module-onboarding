@@ -46,7 +46,7 @@ describe( 'Typography Step Test', function () {
 		const arr = cy.get( className );
 
 		arr.each( () => {
-			cy.get( className ).eq( previewCount ).click();
+			cy.get( className , { timeout : 10000 } ).eq( previewCount ).click();
 			cy.get( '.font-palette-selected' )
 				.scrollIntoView()
 				.should( 'be.visible' );

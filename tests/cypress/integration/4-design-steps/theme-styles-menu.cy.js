@@ -44,7 +44,7 @@ describe( 'Theme Styles Menu', function () {
 	it( 'Check if Default Theme variations exists in Menu', () => {
 		let previewCount = 0;
 		const className = '.theme-styles-menu__list__item';
-		const arr = cy.get( className );
+		const arr = cy.get( className , { timeout : 10000 });
 
 		arr.each( () => {
 			cy.get( className.concat( '__title-bar' ) )

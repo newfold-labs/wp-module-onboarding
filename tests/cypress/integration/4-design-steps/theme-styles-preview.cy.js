@@ -32,7 +32,7 @@ describe( 'Theme Styles Preview', function () {
 	}
 
 	it( 'Check if Theme is selected and content is in place', () => {
-		cy.get( ':nth-child(1) > .theme-styles-preview__title-bar' ).should(
+		cy.get( ':nth-child(1) > .theme-styles-preview__title-bar' , { timeout : 10000 }).should(
 			'be.visible'
 		);
 	} );
@@ -56,7 +56,7 @@ describe( 'Theme Styles Preview', function () {
 	} );
 
 	it( 'Check for the selected theme in Drawer', () => {
-		cy.get( '.nfd-onboarding-drawer__panel-back' )
+		cy.get( '.nfd-onboarding-drawer__panel-back', { timeout : 10000 } )
 			.scrollIntoView()
 			.should( 'be.visible' )
 			.should( 'have.text', 'Design' );

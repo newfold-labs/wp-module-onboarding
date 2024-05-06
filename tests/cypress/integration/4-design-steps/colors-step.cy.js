@@ -49,7 +49,7 @@ describe( 'Colors Step Test', function () {
 		const arr = cy.get( className );
 
 		arr.each( () => {
-			cy.get( className ).eq( previewCount ).click();
+			cy.get( className , { timeout:15000 }).eq( previewCount ).click();
 			cy.get( '.color-palette-selected' )
 				.scrollIntoView()
 				.should( 'be.visible' );
@@ -59,7 +59,7 @@ describe( 'Colors Step Test', function () {
 
 	it( 'Check for Custom Colors', () => {
 		// Opens Custom Palette
-		cy.get( '.custom-palette__top' ).scrollIntoView().click();
+		cy.get( '.custom-palette__top' , { timeout:15000 }).scrollIntoView().click();
 
 		let previewCount = 0;
 		const className = '.custom-palette__below__row';

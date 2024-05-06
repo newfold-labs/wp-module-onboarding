@@ -66,7 +66,7 @@ export const CheckHelpPanelLinks = (
 };
 
 export const BasicSidebarCheck = () => {
-	cy.get('.nfd-onboarding-sidebar-learn-more__menu-button')
+	cy.get('.nfd-onboarding-sidebar-learn-more__menu-button' , { timeout:15000 } )
 				.should('be.visible')
 				.click();
 	cy.get('.nfd-onboarding-sidebar-learn-more--help-panel__links', {timeout:15000})

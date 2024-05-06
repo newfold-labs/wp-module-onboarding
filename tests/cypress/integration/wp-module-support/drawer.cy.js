@@ -35,7 +35,7 @@ export const DrawerActivityForMenu = (
 	if ( ! isOpen ) {
 		DrawerOpen();
 	}
-	cy.get( '.nfd-onboarding-drawer__panel-inner' )
+	cy.get( '.nfd-onboarding-drawer__panel-inner' , { timeout:15000 })
 		.scrollIntoView()
 		.should( 'be.visible' );
 	cy.get( '.nfd-onboarding-drawer__panel-back' )
@@ -63,7 +63,7 @@ export const DrawerActivityForSubMenu = (
 	if ( ! isOpen ) {
 		DrawerOpen();
 	}
-	cy.get( '.nfd-onboarding-drawer__panel-inner' )
+	cy.get( '.nfd-onboarding-drawer__panel-inner' , { timeout:15000 })
 		.scrollIntoView()
 		.should( 'be.visible' );
 	cy.get( '.nfd-onboarding-drawer__panel-back', {

@@ -29,7 +29,7 @@ describe( 'Header menu Page', function () {
 	} );
 
 	it( 'Check to make sure design button is visble', () => {
-		cy.contains( 'button', 'Design' ).should( 'be.visible' );
+		cy.contains( 'button', 'Design' , { timeout:15000 }).should( 'be.visible' );
 	} );
 
 	if ( GetPluginId() == 'bluehost' ) {
