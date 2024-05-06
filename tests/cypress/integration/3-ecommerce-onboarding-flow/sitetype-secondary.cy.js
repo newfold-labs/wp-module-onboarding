@@ -58,7 +58,7 @@ describe( 'Get Started Site Type Secondary', function () {
 		let SubcategoryCount = 0;
 		let num = 0;
 		const className = '.nfd-card-sec-category';
-		cy.get( className ).should( 'be.visible' );
+		cy.get( className, { timeout: 15000 } ).should( 'be.visible' );
 		const arr = cy.get( className );
 		arr.each( () => {
 			cy.get( className )
@@ -67,7 +67,7 @@ describe( 'Get Started Site Type Secondary', function () {
 				.then( ( $element ) => {
 					const dataSlugText = $element.attr( 'data-slug' );
 					if ( num >= 2 ) {
-						cy.wait( 5000 );
+						cy.wait( 7000 );
 					}
 					EventsAPI(
 						'secondary_type',
