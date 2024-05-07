@@ -363,6 +363,17 @@ export function getMigrationUrl( state ) {
 }
 
 /**
+ * Checks if the site has migration access.
+ *
+ * @param {*} state
+ * @return {boolean} canMigrateSite
+ */
+export function canMigrateSite( state ) {
+	const migrationInfo = state.runtime.currentBrand.config;
+	return migrationInfo?.canMigrateSite;
+}
+
+/**
  * Gets the Plugin Install Hash for security
  *
  * @param {*} state

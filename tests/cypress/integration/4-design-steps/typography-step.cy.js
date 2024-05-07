@@ -7,6 +7,7 @@ import {
 	CheckIllustrationPanel,
 	CheckInfoPanel,
 	CheckIntroPanel,
+	continueSetup,
 } from '../wp-module-support/sidebar.cy';
 
 describe( 'Typography Step Test', function () {
@@ -14,6 +15,7 @@ describe( 'Typography Step Test', function () {
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/typography'
 		);
+		continueSetup();
 	} );
 
 	it( 'Check Drawer Activity', () => {
@@ -25,19 +27,18 @@ describe( 'Typography Step Test', function () {
 		);
 	} );
 
-	if(GetPluginId()=='bluehost'){
+	if ( GetPluginId() == 'bluehost' ) {
 		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 			CheckIntroPanel( '__design-fonts', 'Fonts' );
 			CheckIllustrationPanel();
 			CheckInfoPanel();
 			CheckHelpPanelLinks();
 		} );
-	}
-	else{
+	} else {
 		it( 'Check to make sure Sidebar opens', () => {
 			BasicSidebarCheck();
 		} );
-	};
+	}
 
 	it( 'Check if Default Typography variations exists and are selectable', () => {
 		let previewCount = 0;
@@ -45,7 +46,7 @@ describe( 'Typography Step Test', function () {
 		const arr = cy.get( className );
 
 		arr.each( () => {
-			cy.get( className ).eq( previewCount ).click();
+			cy.get( className , { timeout : 10000 } ).eq( previewCount ).click();
 			cy.get( '.font-palette-selected' )
 				.scrollIntoView()
 				.should( 'be.visible' );

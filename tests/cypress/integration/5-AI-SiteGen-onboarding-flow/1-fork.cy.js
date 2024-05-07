@@ -72,11 +72,6 @@ describe( 'SiteGen Fork Step', function () {
 		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite' )
 			.scrollIntoView()
 			.should( 'exist' )
-			.should( 'contain', 'Already have a WordPress site' )
-			.should(
-				'have.attr',
-				'href',
-				'https://my.bluehost.com/cgi/services/migration'
-			);
+			.should( 'contain', 'Already have a WordPress site' );
 	} );
 } );

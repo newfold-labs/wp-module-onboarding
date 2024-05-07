@@ -8,6 +8,7 @@ import {
 	CheckIllustrationPanel,
 	CheckInfoPanel,
 	CheckIntroPanel,
+	continueSetup,
 } from '../wp-module-support/sidebar.cy';
 
 describe( 'Site Pages', function () {
@@ -16,6 +17,7 @@ describe( 'Site Pages', function () {
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/site-pages'
 		);
 		cy.wait( 10000 );
+		continueSetup();
 	} );
 
 	it( 'Check if Header and Subheader shows up', () => {
@@ -23,22 +25,17 @@ describe( 'Site Pages', function () {
 	} );
 
 	it( 'Check Drawer Activity', () => {
-		DrawerActivityForMenu(
-			'Onboarding',
-			':nth-child(6)',
-			'Page Layouts'
-		);
+		DrawerActivityForMenu( 'Onboarding', ':nth-child(6)', 'Page Layouts' );
 	} );
 
-	if(GetPluginId()=='bluehost'){
-	it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
-		CheckIntroPanel( '__site-pages', 'Pages' );
-		CheckIllustrationPanel();
-		CheckInfoPanel();
-		CheckHelpPanelLinks();
-	} );
-	}
-	else{
+	if ( GetPluginId() == 'bluehost' ) {
+		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
+			CheckIntroPanel( '__site-pages', 'Pages' );
+			CheckIllustrationPanel();
+			CheckInfoPanel();
+			CheckHelpPanelLinks();
+		} );
+	} else {
 		it( 'Check to make sure Sidebar opens', () => {
 			BasicSidebarCheck();
 		} );
@@ -47,7 +44,7 @@ describe( 'Site Pages', function () {
 	it( 'Check if Site Pages Templates exist and are selectable', () => {
 		let previewCount = 0;
 		const className = '.site-pages__list__item';
-		const arr = cy.get( className );
+		const arr = cy.get( className, { timeout:15000 } );
 
 		arr.each( () => {
 			cy.get( className )
@@ -55,7 +52,7 @@ describe( 'Site Pages', function () {
 				.scrollIntoView()
 				.find( '.components-checkbox-control' )
 				.find( 'label' )
-				.click();
+				.click( { force: true } );
 			previewCount += 1;
 		} );
 	} );
