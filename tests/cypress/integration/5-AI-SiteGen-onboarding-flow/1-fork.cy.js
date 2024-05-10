@@ -100,6 +100,7 @@ describe( 'SiteGen Fork Step- Migration Screen', function () {
 			.scrollIntoView()
 			.should('exist')
 			.click();
+		cy.wait(10000)
 		cy.get( '.nfd-onboarding-step__heading__title' ).should( 'exist' );
 		cy.get(
 			'.nfd-onboarding-step--site-gen__migration--container__loader'
