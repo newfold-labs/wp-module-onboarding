@@ -111,7 +111,7 @@ describe( 'SiteGen Fork Step- Migration Screen', function () {
 		cy.wait( '@migrateCall' );
 	} );
 
-	it( 'Verify migrate connection is successful and redirection happened', () => {
+	it( 'Verify migration connection request is successful and redirection happens', () => {
 		cy.url().should( 'contain', 'app.instawp.io/migrate' );
 	} );
 } );
