@@ -61,7 +61,7 @@ describe( 'SiteGen Site Details Step', function () {
 		cy.get( '.nfd-sg-input-box__info-icon' )
 			.should( 'be.visible' )
 			.should( 'have.length', 3 );
-		cy.get( '.nfd-onboarding-button--site-gen-next--disabled' ).should(
+		cy.get( '.nfd-onboarding-button--site-gen-next' ).should(
 			'be.visible'
 		);
 		cy.get( '.nfd-sg-input-box__field' ).type(
