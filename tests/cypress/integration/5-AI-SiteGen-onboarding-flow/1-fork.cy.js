@@ -77,7 +77,6 @@ describe( 'SiteGen Fork Step', function () {
 	} );
 
 	it( 'Verify Import site leads to migration process initiation screen', () => {
-		cy.timeout( 20000 )
 		cy.intercept( apiList.migrateConnect, ( req ) => {
 			migrationConnection( req );
 		} ).as( 'migrateCall' );
@@ -87,7 +86,7 @@ describe( 'SiteGen Fork Step', function () {
 			.scrollIntoView()
 			.should('exist')
 			.click( { force: true} );
-		cy.get( '.nfd-onboarding-step__heading__title' ).should( 'exist' );
+		cy.get( '.nfd-onboarding-step__heading__title' , { timeout: 10000 }).should( 'exist' );
 		cy.get(
 			'.nfd-onboarding-step--site-gen__migration--container__loader'
 		).should( 'exist' );
