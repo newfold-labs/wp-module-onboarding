@@ -5,6 +5,7 @@ import {
 	DarkBGCheck,
 	LightBGCheck,
 } from '../wp-module-support/siteGen.cy';
+import { apiList, migrationConnection } from '../wp-module-support/MockApi.cy';
 
 describe( 'SiteGen Fork Step', function () {
 	before( () => {
@@ -73,5 +74,44 @@ describe( 'SiteGen Fork Step', function () {
 			.scrollIntoView()
 			.should( 'exist' )
 			.should( 'contain', 'Already have a WordPress site' );
+	} );
+} );
+
+describe( 'SiteGen Fork Step- Migration Screen', function () {
+	before( () => {
+		cy.exec(
+			`npx wp-env run cli wp option set _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true, "canMigrateSite": true}' --format=json`
+		);
+		cy.visit( 'wp-admin/?page=nfd-onboarding#/wp-setup/step/fork' );
+		cy.wait( 5000 );
+	} );
+
+	it( 'Verify Import site leads to migration process initiation screen', () => {
+		cy.intercept( apiList.migrateConnect, ( req ) => {
+			migrationConnection( req );
+		} ).as( 'migrateCall' );
+
+		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite', {
+			timeout: 20000,
+		} )
+			.scrollIntoView()
+			.should( 'exist' )
+			.click();
+		cy.get( '.nfd-onboarding-step__heading__title' ).should( 'exist' );
+		cy.get(
+			'.nfd-onboarding-step--site-gen__migration--container__loader'
+		).should( 'exist' );
+		cy.get(
+			'.nfd-onboarding-step--site-gen__migration--container__importtext'
+		).should( 'exist' );
+
+		AdminBarCheck();
+		DarkBGCheck();
+		LightBGCheck();
+		cy.wait( '@migrateCall' );
+	} );
+
+	it( 'Verify migrate connection is successful and redirection happened', () => {
+		cy.url().should( 'contain', 'app.instawp.io/migrate' );
 	} );
 } );

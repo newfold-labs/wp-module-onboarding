@@ -11,6 +11,7 @@ const homepages_mock = require( '../../fixtures/homepages.json' );
 const theme_style_mock = require( '../../fixtures/theme-style.json' );
 const customize_data_mock = require( '../../fixtures/customize-data.json' );
 const homepage_regenerate_mock = require( '../../fixtures/homepage-regenerate.json' );
+const migate_connect_mock = require( '../../fixtures/migrate-connect.json' );
 
 export const apiList = {
 	sitegen:
@@ -23,6 +24,8 @@ export const apiList = {
 		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fthemes%2Fvariations&variations=false&flow=sitegen&_locale=user',
 	customizedata:
 		'/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fsitegen%2Fcustomize-data&flow=sitegen&_locale=user',
+	migrateConnect:
+		'/index.php?rest_route=%2Fnewfold-migration%2Fv1%2Fmigrate%2Fconnect&_locale=user',
 };
 
 export const siteGenMockAll = ( req ) => {
@@ -89,5 +92,14 @@ export const homePagesRegenerate = ( req ) => {
 		headers: {
 			'content-type': 'application/json',
 		},
+	} );
+};
+
+export const migrationConnection = ( req ) => {
+	req.reply( {
+		method: 'GET',
+		statusCode: 200,
+		body: migate_connect_mock,
+		delay: 5000,
 	} );
 };
