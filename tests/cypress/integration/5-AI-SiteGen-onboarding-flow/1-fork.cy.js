@@ -13,7 +13,7 @@ describe( 'SiteGen Fork Step', function () {
 			'npx wp-env run cli wp option delete nfd_module_onboarding_flow'
 		);
 		cy.exec(
-			`npx wp-env run cli wp option set _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true}' --format=json`
+			`npx wp-env run cli wp option set _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true, "canMigrateSite": true}' --format=json`
 		);
 		cy.exec(
 			`npx wp-env run cli wp option set _transient_timeout_nfd_site_capabilities 4102444800`
@@ -75,19 +75,6 @@ describe( 'SiteGen Fork Step', function () {
 			.should( 'exist' )
 			.should( 'contain', 'Already have a WordPress site' );
 	} );
-} );
-
-describe( 'SiteGen Fork Step- Migration Screen', function () {
-	before( () => {
-		cy.exec(
-			'npx wp-env run cli wp option delete nfd_module_onboarding_flow'
-		);
-		cy.exec(
-			`npx wp-env run cli wp option update _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true, "canMigrateSite": true}' --format=json`
-		);
-		cy.visit( 'wp-admin/?page=nfd-onboarding#/wp-setup/step/fork' );
-		cy.wait( 5000 );
-	} );
 
 	it( 'Verify Import site leads to migration process initiation screen', () => {
 		cy.timeout( 20000 )
@@ -99,8 +86,7 @@ describe( 'SiteGen Fork Step- Migration Screen', function () {
 		} )
 			.scrollIntoView()
 			.should('exist')
-			.click();
-		cy.wait(10000)
+			.click( { force: true} );
 		cy.get( '.nfd-onboarding-step__heading__title' ).should( 'exist' );
 		cy.get(
 			'.nfd-onboarding-step--site-gen__migration--container__loader'
