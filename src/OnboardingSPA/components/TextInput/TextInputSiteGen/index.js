@@ -9,7 +9,6 @@ const TextInputSiteGen = ( {
 	children,
 	placeholder,
 	customerInput,
-	setIsValidInput,
 	setCustomerInput,
 	setCustomerInputStrength,
 	customChildren = false,
@@ -28,9 +27,8 @@ const TextInputSiteGen = ( {
 		const analysisResult = calculateAnalysisScore( customerInput?.trim() );
 		setAnalysisScore( analysisResult );
 		setCustomerInputStrength( analysisResult );
-		setIsValidInput( analysisResult >= 2 );
 		setRemainingCharacterCount(
-			Math.max( 200 - ( customerInput?.length ?? 0 ), 0 )
+			Math.max( 200 - ( customerInput?.trim()?.length ?? 0 ), 0 )
 		);
 	}, [ customerInput ] );
 

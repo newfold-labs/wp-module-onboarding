@@ -25,7 +25,7 @@ import { ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET } from '../../../utils/analytics
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenSiteDetails = () => {
-	const [ customerInput, setCustomerInput ] = useState();
+	const [ customerInput, setCustomerInput ] = useState( '' );
 	const [ customerInputStrength, setCustomerInputStrength ] = useState( 0 );
 	const [ isValidInput, setIsValidInput ] = useState( false );
 
@@ -67,7 +67,7 @@ const SiteGenSiteDetails = () => {
 	useEffect( () => {
 		if (
 			customerInput !== undefined &&
-			customerInput !== '' &&
+			customerInput?.trim() !== '' &&
 			customerInput !== currentData.sitegen.siteDetails.prompt
 		) {
 			currentData.sitegen.siteDetails.prompt = customerInput?.trim();
@@ -77,8 +77,12 @@ const SiteGenSiteDetails = () => {
 			currentData.sitegen.homepages.active = {};
 			currentData.sitegen.homepages.data = {};
 			setCurrentOnboardingData( currentData );
+			setIsValidInput( true );
+			setIsFooterNavAllowed( true );
+		} else {
+			setIsValidInput( false );
+			setIsFooterNavAllowed( false );
 		}
-		setIsFooterNavAllowed( isValidInput );
 	}, [ customerInput ] );
 
 	const trackPromptSetEvent = () => {
@@ -119,7 +123,6 @@ const SiteGenSiteDetails = () => {
 							hint={ content.inputHint }
 							height={ '40px' }
 							customerInput={ customerInput }
-							setIsValidInput={ setIsValidInput }
 							setCustomerInput={ setCustomerInput }
 							setCustomerInputStrength={
 								setCustomerInputStrength
