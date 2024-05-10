@@ -87,12 +87,12 @@ describe( 'SiteGen Fork Step- Migration Screen', function () {
 	} );
 
 	it( 'Verify Import site leads to migration process initiation screen', () => {
+		cy.timeout( 20000 )
 		cy.intercept( apiList.migrateConnect, ( req ) => {
 			migrationConnection( req );
 		} ).as( 'migrateCall' );
 
 		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite', {
-			timeout: 20000,
 		} )
 			.scrollIntoView()
 			.should( 'exist' )
