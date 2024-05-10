@@ -81,11 +81,14 @@ describe( 'SiteGen Fork Step', function () {
 			migrationConnection( req );
 		} ).as( 'migrateCall' );
 
+
 		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite', {
 		} )
 			.scrollIntoView()
 			.should('exist')
-			.click( { force: true} );
+			.click();
+		cy.wait( '@migrateCall' , {timeout: 20000});
+
 		cy.get( '.nfd-onboarding-step__heading__title' , { timeout: 10000 }).should( 'exist' );
 		cy.get(
 			'.nfd-onboarding-step--site-gen__migration--container__loader'
@@ -97,7 +100,7 @@ describe( 'SiteGen Fork Step', function () {
 		AdminBarCheck();
 		DarkBGCheck();
 		LightBGCheck();
-		cy.wait( '@migrateCall' );
+		// cy.wait( '@migrateCall' , {timeout: 10000});
 	} );
 
 	it( 'Verify migration connection request is successful and redirection happens', () => {
