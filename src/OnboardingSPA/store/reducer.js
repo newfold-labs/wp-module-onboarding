@@ -192,9 +192,9 @@ export function data( state = {}, action ) {
 							retryCount:
 								true === action.siteGenErrorStatus
 									? state.flowData.sitegen.siteGenErrorMeta
-											.retryCount + 1
+										.retryCount + 1
 									: state.flowData.sitegen.siteGenErrorMeta
-											.retryCount,
+										.retryCount,
 						},
 					},
 				},
