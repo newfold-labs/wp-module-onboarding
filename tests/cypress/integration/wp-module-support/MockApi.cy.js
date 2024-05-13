@@ -100,6 +100,6 @@ export const migrationConnection = ( req ) => {
 		method: 'GET',
 		statusCode: 200,
 		body: migate_connect_mock,
-		delay: 5000,
+		delay: 8000,
 	} );
 };

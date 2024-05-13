@@ -60,7 +60,7 @@ describe( 'SiteGen Fork Step', function () {
 		arr.each( ( $element ) => {
 			const dataSlugText = $element.attr( 'data-flow' );
 			if ( dataSlugText == 'sitegen' ) {
-				$element.click();
+				$element.trigger('click');
 				cy.url().should( 'include', 'sitegen/step/welcome', {
 					timeout: 10000,
 				} );
@@ -87,8 +87,6 @@ describe( 'SiteGen Fork Step', function () {
 			.scrollIntoView()
 			.should('exist')
 			.click();
-		cy.wait( '@migrateCall' , {timeout: 20000});
-
 		cy.get( '.nfd-onboarding-step__heading__title' , { timeout: 10000 }).should( 'exist' );
 		cy.get(
 			'.nfd-onboarding-step--site-gen__migration--container__loader'
@@ -100,7 +98,7 @@ describe( 'SiteGen Fork Step', function () {
 		AdminBarCheck();
 		DarkBGCheck();
 		LightBGCheck();
-		// cy.wait( '@migrateCall' , {timeout: 10000});
+		cy.wait( '@migrateCall' , {timeout: 10000});
 	} );
 
 	it( 'Verify migration connection request is successful and redirection happens', () => {
