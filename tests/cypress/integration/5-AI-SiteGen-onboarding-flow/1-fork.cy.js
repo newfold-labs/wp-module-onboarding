@@ -87,27 +87,13 @@ describe( 'SiteGen Fork Step', function () {
 
 		cy.get( '@windowOpen' ).should( 'be.called' );
 	} );
-} );
 
-describe( 'Verify Import WP when can migrate capability is set', function () {
-	before( () => {
+	it(' Verify Import site leads to migration process initiation screen when can migrate capability is set ', () => {
 		cy.exec(
-			'npx wp-env run cli wp option delete _transient_nfd_site_capabilities',
+			`npx wp-env run cli wp option update _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true, "canMigrateSite": true}' --format=json`,
 			{ timeout: 20000 }
 		);
-		cy.exec(
-			`npx wp-env run cli wp option set _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true, "canMigrateSite": true}' --format=json`,
-			{ timeout: 20000 }
-		);
-		cy.exec(
-			`npx wp-env run cli wp option set _transient_timeout_nfd_site_capabilities 4102444800`,
-			{ timeout: 20000 }
-		);
-		cy.wait( 10000 );
-		cy.visit( 'wp-admin/?page=nfd-onboarding#/wp-setup/step/fork' );
-	} );
-
-	it( 'Verify Import site leads to migration process initiation screen', () => {
+		cy.reload()
 		cy.intercept( apiList.migrateConnect, ( req ) => {
 			migrationConnection( req );
 		} ).as( 'migrateCall' );
