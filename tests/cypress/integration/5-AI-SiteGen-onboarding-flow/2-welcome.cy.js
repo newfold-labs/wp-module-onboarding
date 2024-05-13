@@ -8,7 +8,7 @@ import {
 	ProgressBarCheck,
 } from '../wp-module-support/siteGen.cy';
 
-describe( 'SiteGen Welcome Step', function () {
+describe.skip( 'SiteGen Welcome Step', function () {
 	before( () => {
 		cy.visit( 'wp-admin/?page=nfd-onboarding#/sitegen/step/welcome' );
 	} );

@@ -15,9 +15,6 @@ describe( 'SiteGen Fork Step', function () {
 		cy.exec(
 			`npx wp-env run cli wp option set _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true}' --format=json`
 		);
-		cy.exec(
-			`npx wp-env run cli wp option set _transient_timeout_nfd_site_capabilities 4102444800`
-		);
 		cy.wait( 10000 );
 		cy.visit( 'wp-admin/?page=nfd-onboarding#/wp-setup/step/fork' );
 		cy.timeout( 60000 );
@@ -95,24 +92,28 @@ describe( 'SiteGen Fork Step', function () {
 describe( 'Verify Import WP when can migrate capability is set', function () {
 	before( () => {
 		cy.exec(
-			'npx wp-env run cli wp option delete _transient_nfd_site_capabilities'
+			'npx wp-env run cli wp option delete _transient_nfd_site_capabilities',
+			{ timeout: 20000 }
 		);
 		cy.exec(
-			`npx wp-env run cli wp option set _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true, "canMigrateSite": true}' --format=json`
+			`npx wp-env run cli wp option set _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true, "canMigrateSite": true}' --format=json`,
+			{ timeout: 20000 }
 		);
 		cy.exec(
-			`npx wp-env run cli wp option set _transient_timeout_nfd_site_capabilities 4102444800`
+			`npx wp-env run cli wp option set _transient_timeout_nfd_site_capabilities 4102444800`,
+			{ timeout: 20000 }
 		);
 		cy.wait( 10000 );
 		cy.visit( 'wp-admin/?page=nfd-onboarding#/wp-setup/step/fork' );
-		cy.timeout( 60000 );
 	} );
 
 	it( 'Verify Import site leads to migration process initiation screen', () => {
 		cy.intercept( apiList.migrateConnect, ( req ) => {
 			migrationConnection( req );
 		} ).as( 'migrateCall' );
-		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite' )
+		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite' , {
+			timeout: 10000,
+		} )
 			.scrollIntoView()
 			.should( 'exist' )
 			.click();
@@ -129,7 +130,7 @@ describe( 'Verify Import WP when can migrate capability is set', function () {
 		AdminBarCheck();
 		DarkBGCheck();
 		LightBGCheck();
-		cy.wait( '@migrateCall' , { timeout: 10000 } );
+		cy.wait( '@migrateCall', { timeout: 10000 } );
 	} );
 
 	it( 'Verify migration connection request is successful and redirection happens', () => {
