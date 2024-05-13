@@ -13,7 +13,7 @@ describe( 'SiteGen Fork Step', function () {
 			'npx wp-env run cli wp option delete nfd_module_onboarding_flow'
 		);
 		cy.exec(
-			`npx wp-env run cli wp option set _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true, "canMigrateSite": true}' --format=json`
+			`npx wp-env run cli wp option set _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true}' --format=json`
 		);
 		cy.exec(
 			`npx wp-env run cli wp option set _transient_timeout_nfd_site_capabilities 4102444800`
@@ -60,7 +60,7 @@ describe( 'SiteGen Fork Step', function () {
 		arr.each( ( $element ) => {
 			const dataSlugText = $element.attr( 'data-flow' );
 			if ( dataSlugText == 'sitegen' ) {
-				$element.trigger('click');
+				$element.trigger( 'click' );
 				cy.url().should( 'include', 'sitegen/step/welcome', {
 					timeout: 10000,
 				} );
@@ -76,18 +76,49 @@ describe( 'SiteGen Fork Step', function () {
 			.should( 'contain', 'Already have a WordPress site' );
 	} );
 
+	it( ' Verify by default import your WP account leads to transfer site link ', () => {
+		cy.window().then( ( win ) => {
+			cy.spy( win, 'open', ( url ) => {
+				win.location.href =
+					'https://bluehost.com/my-account/hosting/details/sites/add/transfer';
+			} ).as( 'windowOpen' );
+		} );
+
+		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite' )
+			.scrollIntoView()
+			.click();
+
+		cy.get( '@windowOpen' ).should( 'be.called' );
+	} );
+} );
+
+describe( 'Verify Import WP when can migrate capability is set', function () {
+	before( () => {
+		cy.exec(
+			'npx wp-env run cli wp option delete _transient_nfd_site_capabilities'
+		);
+		cy.exec(
+			`npx wp-env run cli wp option set _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true, "canMigrateSite": true}' --format=json`
+		);
+		cy.exec(
+			`npx wp-env run cli wp option set _transient_timeout_nfd_site_capabilities 4102444800`
+		);
+		cy.wait( 10000 );
+		cy.visit( 'wp-admin/?page=nfd-onboarding#/wp-setup/step/fork' );
+		cy.timeout( 60000 );
+	} );
+
 	it( 'Verify Import site leads to migration process initiation screen', () => {
 		cy.intercept( apiList.migrateConnect, ( req ) => {
 			migrationConnection( req );
 		} ).as( 'migrateCall' );
-
-
-		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite', {
-		} )
+		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite' )
 			.scrollIntoView()
-			.should('exist')
+			.should( 'exist' )
 			.click();
-		cy.get( '.nfd-onboarding-step__heading__title' , { timeout: 10000 }).should( 'exist' );
+		cy.get( '.nfd-onboarding-step__heading__title', {
+			timeout: 10000,
+		} ).should( 'exist' );
 		cy.get(
 			'.nfd-onboarding-step--site-gen__migration--container__loader'
 		).should( 'exist' );
@@ -98,7 +129,7 @@ describe( 'SiteGen Fork Step', function () {
 		AdminBarCheck();
 		DarkBGCheck();
 		LightBGCheck();
-		cy.wait( '@migrateCall' , {timeout: 10000});
+		cy.wait( '@migrateCall' , { timeout: 10000 } );
 	} );
 
 	it( 'Verify migration connection request is successful and redirection happens', () => {
