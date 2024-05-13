@@ -15,6 +15,9 @@ describe( 'SiteGen Fork Step', function () {
 		cy.exec(
 			`npx wp-env run cli wp option set _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true}' --format=json`
 		);
+		cy.exec(
+			`npx wp-env run cli wp option set _transient_timeout_nfd_site_capabilities 4102444800`
+		);
 		cy.wait( 10000 );
 		cy.visit( 'wp-admin/?page=nfd-onboarding#/wp-setup/step/fork' );
 		cy.timeout( 60000 );
