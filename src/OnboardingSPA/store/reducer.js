@@ -187,7 +187,15 @@ export function data( state = {}, action ) {
 					...state.flowData,
 					sitegen: {
 						...state.flowData.sitegen,
-						siteGenErrorStatus: action.siteGenErrorStatus,
+						siteGenErrorMeta: {
+							status: action.siteGenErrorStatus,
+							retryCount:
+								true === action.siteGenErrorStatus
+									? state.flowData.sitegen.siteGenErrorMeta
+											.retryCount + 1
+									: state.flowData.sitegen.siteGenErrorMeta
+											.retryCount,
+						},
 					},
 				},
 			};
