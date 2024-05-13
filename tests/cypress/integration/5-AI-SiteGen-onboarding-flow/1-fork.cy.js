@@ -121,7 +121,7 @@ describe( 'Verify Import WP when can migrate capability is set', function () {
 			timeout: 10000,
 		} ).should( 'exist' );
 		cy.get(
-			'.nfd-onboarding-step--site-gen__migration--container__loader'
+			'.nfd-onboarding-step--site-gen__migration--container__loader', { timeout : 10000 }
 		).should( 'exist' );
 		cy.get(
 			'.nfd-onboarding-step--site-gen__migration--container__importtext'
