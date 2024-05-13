@@ -13,7 +13,7 @@ import {
 	homePagesMock,
 } from '../wp-module-support/MockApi.cy';
 
-describe.skip( 'SiteGen Experience & Site Building Step', function () {
+describe( 'SiteGen Experience & Site Building Step', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/index.php?page=nfd-onboarding#/sitegen/step/experience'

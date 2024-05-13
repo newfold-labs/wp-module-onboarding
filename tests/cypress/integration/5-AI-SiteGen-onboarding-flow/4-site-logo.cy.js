@@ -15,7 +15,7 @@ import {
 	homePagesMock,
 } from '../wp-module-support/MockApi.cy';
 
-describe.skip( 'SiteGen Site Logo Step', function () {
+describe( 'SiteGen Site Logo Step', function () {
 	before( () => {
 		cy.intercept( apiList.sitegen, ( req ) => {
 			siteGenMockAll( req );

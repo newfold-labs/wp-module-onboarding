@@ -73,7 +73,7 @@ describe( 'SiteGen Fork Step', function () {
 			.should( 'contain', 'Already have a WordPress site' );
 	} );
 
-	it( ' Verify by default import your WP account leads to transfer site link ', () => {
+	it( 'Verify by default import your WP account leads to transfer site link' , () => {
 		cy.window().then( ( win ) => {
 			cy.spy( win, 'open', ( url ) => {
 				win.location.href =
@@ -88,7 +88,7 @@ describe( 'SiteGen Fork Step', function () {
 		cy.get( '@windowOpen' ).should( 'be.called' );
 	} );
 
-	it(' Verify Import site leads to migration process initiation screen when can migrate capability is set ', () => {
+	it( 'Verify Import site leads to migration process initiation screen when can migrate capability is set' , () => {
 		cy.exec(
 			`npx wp-env run cli wp option update _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true, "canMigrateSite": true}' --format=json`,
 			{ timeout: 20000 }
@@ -119,7 +119,7 @@ describe( 'SiteGen Fork Step', function () {
 		cy.wait( '@migrateCall', { timeout: 10000 } );
 	} );
 
-	it( 'Verify migration connection request is successful and redirection happens', () => {
+	it( 'Verify migration connection request is successful and redirection happens' , () => {
 		cy.url().should( 'contain', 'app.instawp.io/migrate' );
 	} );
 } );
