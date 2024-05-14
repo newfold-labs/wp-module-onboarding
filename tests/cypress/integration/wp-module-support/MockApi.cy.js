@@ -11,7 +11,7 @@ const homepages_mock = require( '../../fixtures/homepages.json' );
 const theme_style_mock = require( '../../fixtures/theme-style.json' );
 const customize_data_mock = require( '../../fixtures/customize-data.json' );
 const homepage_regenerate_mock = require( '../../fixtures/homepage-regenerate.json' );
-const migate_connect_mock = require( '../../fixtures/migrate-connect.json' );
+const migrate_connect_mock = require( '../../fixtures/migrate-connect.json' );
 
 export const apiList = {
 	sitegen:
@@ -99,7 +99,7 @@ export const migrationConnection = ( req ) => {
 	req.reply( {
 		method: 'GET',
 		statusCode: 200,
-		body: migate_connect_mock,
+		body: migrate_connect_mock,
 		delay: 8000,
 	} );
 };
