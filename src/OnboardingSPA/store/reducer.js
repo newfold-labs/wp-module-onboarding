@@ -188,6 +188,7 @@ export function data( state = {}, action ) {
 					sitegen: {
 						...state.flowData.sitegen,
 						siteGenErrorMeta: {
+							...state.flowData.sitegen.siteGenErrorMeta,
 							status: action.siteGenErrorStatus,
 							retryCount:
 								true === action.siteGenErrorStatus

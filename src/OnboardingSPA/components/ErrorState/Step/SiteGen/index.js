@@ -1,6 +1,6 @@
 // WordPress
 import { useViewportMatch } from '@wordpress/compose';
-import { useEffect } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Button, Fill } from '@wordpress/components';
 
@@ -31,6 +31,7 @@ import {
 const SiteGenStepErrorState = () => {
 	const navigate = useNavigate();
 	const isLargeViewport = useViewportMatch( 'small' );
+	const [ disableRetry, setDisableRetry ] = useState( false );
 
 	const {
 		setIsHeaderEnabled,
@@ -55,6 +56,10 @@ const SiteGenStepErrorState = () => {
 		setIsHeaderNavigationEnabled( true );
 		setDrawerActiveView( false );
 		setSidebarActiveView( false );
+		setDisableRetry(
+			currentData.sitegen.siteGenErrorMeta.retryCount >=
+				currentData.sitegen.siteGenErrorMeta.maxRetryCount
+		);
 	}, [] );
 
 	const { brandConfig, currentData, currentStep, previousStep, allSteps } =
@@ -186,6 +191,7 @@ const SiteGenStepErrorState = () => {
 								onClick={ () => {
 									handleRetry();
 								} }
+								disabled={ true === disableRetry }
 							>
 								<p className="nfd-onboarding-button--site-gen-next--text">
 									{ content.buttonText }
