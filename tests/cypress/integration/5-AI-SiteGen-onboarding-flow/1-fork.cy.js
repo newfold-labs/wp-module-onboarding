@@ -5,6 +5,7 @@ import {
 	DarkBGCheck,
 	LightBGCheck,
 } from '../wp-module-support/siteGen.cy';
+import { apiList, migrationConnection } from '../wp-module-support/MockApi.cy';
 
 describe( 'SiteGen Fork Step', function () {
 	before( () => {
@@ -59,7 +60,7 @@ describe( 'SiteGen Fork Step', function () {
 		arr.each( ( $element ) => {
 			const dataSlugText = $element.attr( 'data-flow' );
 			if ( dataSlugText == 'sitegen' ) {
-				$element.click();
+				$element.trigger( 'click' );
 				cy.url().should( 'include', 'sitegen/step/welcome', {
 					timeout: 10000,
 				} );
@@ -73,5 +74,55 @@ describe( 'SiteGen Fork Step', function () {
 			.scrollIntoView()
 			.should( 'exist' )
 			.should( 'contain', 'Already have a WordPress site' );
+	} );
+
+	it( 'Verify by default import your WP account leads to transfer site link' , () => {
+		cy.window().then( ( win ) => {
+			cy.spy( win, 'open', ( url ) => {
+				win.location.href =
+					'https://bluehost.com/my-account/hosting/details/sites/add/transfer';
+			} ).as( 'windowOpen' );
+		} );
+
+		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite' )
+			.scrollIntoView()
+			.click();
+
+		cy.get( '@windowOpen' ).should( 'be.called' );
+	} );
+
+	it( 'Verify Import site leads to migration process initiation screen when can migrate capability is set' , () => {
+		cy.exec(
+			`npx wp-env run cli wp option update _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true, "canMigrateSite": true}' --format=json`,
+			{ timeout: 20000 }
+		);
+		cy.reload()
+		cy.intercept( apiList.migrateConnect, ( req ) => {
+			migrationConnection( req );
+		} ).as( 'migrateCall' );
+		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite' , {
+			timeout: 10000,
+		} )
+			.scrollIntoView()
+			.should( 'exist' )
+			.click();
+		cy.get( '.nfd-onboarding-step__heading__title', {
+			timeout: 10000,
+		} ).should( 'exist' );
+		cy.get(
+			'.nfd-onboarding-step--site-gen__migration--container__loader', { timeout : 10000 }
+		).should( 'exist' );
+		cy.get(
+			'.nfd-onboarding-step--site-gen__migration--container__importtext'
+		).should( 'exist' );
+
+		AdminBarCheck();
+		DarkBGCheck();
+		LightBGCheck();
+		cy.wait( '@migrateCall', { timeout: 10000 } );
+	} );
+
+	it( 'Verify migration connection request is successful and redirection happens' , () => {
+		cy.url().should( 'contain', 'app.instawp.io/migrate' );
 	} );
 } );
