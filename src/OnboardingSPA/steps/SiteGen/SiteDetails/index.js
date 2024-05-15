@@ -65,6 +65,7 @@ const SiteGenSiteDetails = () => {
 	}, [] );
 
 	useEffect( () => {
+		// When something new is added then only change in store.
 		if (
 			customerInput !== undefined &&
 			customerInput?.trim() !== '' &&
@@ -77,6 +78,9 @@ const SiteGenSiteDetails = () => {
 			currentData.sitegen.homepages.active = {};
 			currentData.sitegen.homepages.data = {};
 			setCurrentOnboardingData( currentData );
+		}
+
+		if ( customerInput !== undefined && customerInput?.trim() !== '' ) {
 			setIsValidInput( true );
 			setIsFooterNavAllowed( true );
 		} else {
