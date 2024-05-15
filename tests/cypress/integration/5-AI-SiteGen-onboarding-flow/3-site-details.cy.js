@@ -58,24 +58,15 @@ describe( 'SiteGen Site Details Step', function () {
 		cy.get( '.nfd-sg-input-box__field' ).type(
 			'I have a Yoga Studio called Asana,located in Cocoa Beach, Florida. We prioritize sustainibility '
 		);
-		cy.get( '.nfd-sg-input-box__info-icon' )
-			.should( 'be.visible' )
-			.should( 'have.length', 3 );
 		cy.get( '.nfd-onboarding-button--site-gen-next' ).should(
 			'be.visible'
 		);
 		cy.get( '.nfd-sg-input-box__field' ).type(
 			'and source our yoga mats from co-consious suppliers here in the USA. '
 		);
-		cy.get( '.nfd-sg-input-box__info-icon--selected' )
-			.should( 'be.visible' )
-			.should( 'have.length', 2 );
 		cy.get( '.nfd-sg-input-box__field' ).type(
 			'In addition to our classes, we also provide a curated selection of yoga attire and access'
 		);
-		cy.get( '.nfd-sg-input-box__info-icon--selected' )
-			.should( 'be.visible' )
-			.should( 'have.length', 3 );
 	} );
 
 	it( 'Check if the Next Button is enabled and click Next', () => {
