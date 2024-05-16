@@ -23,6 +23,7 @@ import {
 import {
 	OnboardingEvent,
 	sendOnboardingEvent,
+	trackOnboardingEvent,
 } from '../../utils/analytics/hiive';
 import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
 import { store as nfdOnboardingStore } from '../../store';
@@ -86,7 +87,7 @@ const TheFork = () => {
 		} else {
 			window.open( migrationUrl, '_blank' );
 		}
-		sendOnboardingEvent(
+		trackOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_SITEGEN_FORK_OPTION_SELECTED,
 				'MIGRATE'
