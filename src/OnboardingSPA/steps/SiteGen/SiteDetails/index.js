@@ -65,22 +65,18 @@ const SiteGenSiteDetails = () => {
 	}, [] );
 
 	useEffect( () => {
-		// When something new is added then only change in store.
-		if (
-			customerInput !== undefined &&
-			customerInput?.trim() !== '' &&
-			customerInput !== currentData.sitegen.siteDetails.prompt
-		) {
-			currentData.sitegen.siteDetails.prompt = customerInput?.trim();
-			currentData.sitegen.siteDetails.mode = 'simple';
-			currentData.sitegen.skipCache = true;
-			currentData.sitegen.sitemapPagesGenerated = false;
-			currentData.sitegen.homepages.active = {};
-			currentData.sitegen.homepages.data = {};
-			setCurrentOnboardingData( currentData );
-		}
-
-		if ( customerInput !== undefined && customerInput?.trim() !== '' ) {
+		if ( customerInput !== undefined && customerInput.trim() !== '' ) {
+			setCustomerInput( customerInput.trim() );
+			// When something new is added then only change in store.
+			if ( customerInput !== currentData.sitegen.siteDetails.prompt ) {
+				currentData.sitegen.siteDetails.prompt = customerInput?.trim();
+				currentData.sitegen.siteDetails.mode = 'simple';
+				currentData.sitegen.skipCache = true;
+				currentData.sitegen.sitemapPagesGenerated = false;
+				currentData.sitegen.homepages.active = {};
+				currentData.sitegen.homepages.data = {};
+				setCurrentOnboardingData( currentData );
+			}
 			setIsValidInput( true );
 			setIsFooterNavAllowed( true );
 		} else {
