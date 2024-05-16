@@ -87,7 +87,7 @@ const TheFork = () => {
 		} else {
 			window.open( migrationUrl, '_blank' );
 		}
-		trackOnboardingEvent(
+		sendOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_SITEGEN_FORK_OPTION_SELECTED,
 				'MIGRATE'
