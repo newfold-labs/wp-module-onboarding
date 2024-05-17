@@ -57,7 +57,7 @@ const SiteGenStepErrorState = () => {
 		setDrawerActiveView( false );
 		setSidebarActiveView( false );
 		setDisableRetry(
-			currentData.sitegen?.siteGenErrorMeta?.retryCount >=
+			currentData.sitegen?.siteGenErrorMeta?.retryCount >
 				currentData.sitegen?.siteGenErrorMeta?.maxRetryCount
 		);
 	}, [] );

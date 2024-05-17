@@ -181,6 +181,10 @@ export function data( state = {}, action ) {
 			};
 
 		case 'SET_SITEGEN_AI_ERROR_STATUS':
+			// Only update if the prev value was false and now there is an error else don't
+			const shouldUpdateRetryCount =
+				! state.flowData.sitegen.siteGenErrorMeta.status &&
+				action.siteGenErrorStatus;
 			return {
 				...state,
 				flowData: {
@@ -191,11 +195,11 @@ export function data( state = {}, action ) {
 							...state.flowData.sitegen.siteGenErrorMeta,
 							status: action.siteGenErrorStatus,
 							retryCount:
-								true === action.siteGenErrorStatus
+								shouldUpdateRetryCount === true
 									? state.flowData.sitegen.siteGenErrorMeta
-										.retryCount + 1
+											.retryCount + 1
 									: state.flowData.sitegen.siteGenErrorMeta
-										.retryCount,
+											.retryCount,
 						},
 					},
 				},
