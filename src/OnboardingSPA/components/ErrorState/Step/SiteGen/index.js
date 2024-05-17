@@ -27,6 +27,7 @@ import {
 	HEADER_SITEGEN,
 	pluginDashboardPage,
 } from '../../../../../constants';
+import { setFlow } from '../../../../utils/api/flow';
 
 const SiteGenStepErrorState = () => {
 	const navigate = useNavigate();
@@ -105,8 +106,9 @@ const SiteGenStepErrorState = () => {
 		navigate( data.steps[ 1 ].path );
 	};
 
-	const handleRetry = () => {
+	const handleRetry = async () => {
 		updateSiteGenErrorStatus( false );
+		await setFlow( currentData );
 	};
 
 	const handleGoBack = () => {
