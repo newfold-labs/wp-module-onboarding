@@ -206,6 +206,7 @@ const SiteGenStepErrorState = () => {
 									onClick={ () => {
 										handleRetry();
 									} }
+									disabled={ true === disableRetry }
 								>
 									<p className="nfd-onboarding-button--site-gen-next--text">
 										{ content.buttonText }
