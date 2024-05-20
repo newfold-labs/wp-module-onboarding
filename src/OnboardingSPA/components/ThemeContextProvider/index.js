@@ -17,16 +17,19 @@ const ThemeProvider = ( { children } ) => {
 	const [ theme, setTheme ] = useState( getPreferredColorScheme );
 
 	useEffect( () => {
-		const mediaQuery = window.matchMedia( '(prefers-color-scheme: dark)' );
+		const colorSchemeMediaQuery = window.matchMedia(
+			'(prefers-color-scheme: dark)'
+		);
 
 		const handleChange = ( event ) => {
+			console.log( 'Color matches', event );
 			setTheme( event.matches ? THEME_DARK : THEME_LIGHT );
 		};
 
-		mediaQuery.addEventListener( 'change', handleChange );
+		colorSchemeMediaQuery.addEventListener( 'change', handleChange );
 
 		return () => {
-			mediaQuery.removeEventListener( 'change', handleChange );
+			colorSchemeMediaQuery.removeEventListener( 'change', handleChange );
 		};
 	}, [] );
 
