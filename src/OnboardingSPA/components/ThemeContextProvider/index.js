@@ -22,7 +22,6 @@ const ThemeProvider = ( { children } ) => {
 		);
 
 		const handleChange = ( event ) => {
-			console.log( 'Color matches', event );
 			setTheme( event.matches ? THEME_DARK : THEME_LIGHT );
 		};
 
