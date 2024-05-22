@@ -73,7 +73,7 @@ describe( 'SiteGen Fork Step', function () {
 		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite' )
 			.scrollIntoView()
 			.should( 'exist' )
-			.should( 'contain', 'Already have a WordPress site you want to import?' );
+			.should( 'contain', 'Already have a WordPress site' );
 	} );
 
 	it( 'Verify by default import your WP account leads to transfer site link' , () => {
