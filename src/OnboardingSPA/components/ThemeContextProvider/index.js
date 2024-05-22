@@ -5,6 +5,7 @@ const ThemeContext = createContext();
 
 const ThemeProvider = ( { children } ) => {
 	const [ theme, setTheme ] = useState( 'dark' );
+	console.log("tests");
 
 	const toggleTheme = () => {
 		setTheme( ( prevTheme ) =>
