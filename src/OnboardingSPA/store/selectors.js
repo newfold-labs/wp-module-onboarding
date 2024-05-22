@@ -451,7 +451,7 @@ export function getCustomizeSidebarData( state ) {
 }
 
 export function getSiteGenErrorStatus( state ) {
-	return state.data.flowData.sitegen.siteGenErrorStatus;
+	return state.data.flowData.sitegen.siteGenErrorMeta.status;
 }
 
 export function getInteractionDisabled( state ) {
