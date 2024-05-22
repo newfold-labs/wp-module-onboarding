@@ -1,6 +1,6 @@
 // WordPress
 import { useViewportMatch } from '@wordpress/compose';
-import { useState, useEffect } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Button, Fill } from '@wordpress/components';
 
@@ -27,12 +27,10 @@ import {
 	HEADER_SITEGEN,
 	pluginDashboardPage,
 } from '../../../../../constants';
-import { setFlow } from '../../../../utils/api/flow';
 
 const SiteGenStepErrorState = () => {
 	const navigate = useNavigate();
 	const isLargeViewport = useViewportMatch( 'small' );
-	const [ disableRetry, setDisableRetry ] = useState( false );
 
 	const {
 		setIsHeaderEnabled,
@@ -57,10 +55,6 @@ const SiteGenStepErrorState = () => {
 		setIsHeaderNavigationEnabled( true );
 		setDrawerActiveView( false );
 		setSidebarActiveView( false );
-		setDisableRetry(
-			currentData.sitegen?.siteGenErrorMeta?.retryCount >
-				currentData.sitegen?.siteGenErrorMeta?.maxRetryCount
-		);
 	}, [] );
 
 	const { brandConfig, currentData, currentStep, previousStep, allSteps } =
@@ -106,9 +100,8 @@ const SiteGenStepErrorState = () => {
 		navigate( data.steps[ 1 ].path );
 	};
 
-	const handleRetry = async () => {
+	const handleRetry = () => {
 		updateSiteGenErrorStatus( false );
-		await setFlow( currentData );
 	};
 
 	const handleGoBack = () => {
@@ -193,7 +186,6 @@ const SiteGenStepErrorState = () => {
 								onClick={ () => {
 									handleRetry();
 								} }
-								disabled={ true === disableRetry }
 							>
 								<p className="nfd-onboarding-button--site-gen-next--text">
 									{ content.buttonText }
@@ -208,7 +200,6 @@ const SiteGenStepErrorState = () => {
 									onClick={ () => {
 										handleRetry();
 									} }
-									disabled={ true === disableRetry }
 								>
 									<p className="nfd-onboarding-button--site-gen-next--text">
 										{ content.buttonText }

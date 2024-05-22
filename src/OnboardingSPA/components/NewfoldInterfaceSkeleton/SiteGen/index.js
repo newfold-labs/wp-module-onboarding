@@ -261,15 +261,6 @@ const SiteGen = () => {
 			return;
 		}
 
-		// If retries are exhausted don't make requests
-		if (
-			currentData.sitegen?.siteGenErrorMeta?.retryCount >=
-			currentData.sitegen?.siteGenErrorMeta?.maxRetryCount
-		) {
-			updateSiteGenErrorStatus( true );
-			return;
-		}
-
 		setIsGeneratingSiteMeta( true );
 
 		if ( ! window.nfdOnboarding?.siteGenTimerInterval ) {
