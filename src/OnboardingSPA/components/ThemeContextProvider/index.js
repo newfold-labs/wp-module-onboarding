@@ -5,7 +5,8 @@ const ThemeContext = createContext();
 
 const ThemeProvider = ( { children } ) => {
 	const [ theme, setTheme ] = useState( 'dark' );
-	console.log("tests");
+	// eslint-disable-next-line no-console
+	console.log( 'tests' );
 
 	const toggleTheme = () => {
 		setTheme( ( prevTheme ) =>
