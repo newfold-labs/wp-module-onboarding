@@ -1,0 +1,8 @@
+{
+    "success": true,
+    "data": {
+        "message": "Connect plugin is installed and ready to start the migration.",
+        "response": true,
+        "redirect_url": "https:\/\/app.instawp.io\/migrate\/bluehost?d_id=1bb9623e-5208-40f7-9383-cd91df2fe58c"
+    }
+}

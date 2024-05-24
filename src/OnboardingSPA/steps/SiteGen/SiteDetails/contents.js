@@ -7,7 +7,7 @@ const getContents = () => {
 			'wp-module-onboarding'
 		),
 		inputPlaceholder: __(
-			'I want a site for my company that sells…',
+			'Bean There Café - A cozy, sustainable coffee shop in Asheville, North Carolina, focused on fair-trade coffee and local pastries. Their site will feature their menu, special events, and a blog on coffee culture.',
 			'wp-module-onboarding'
 		),
 		inputHint: __( 'The more detail the better', 'wp-module-onboarding' ),
