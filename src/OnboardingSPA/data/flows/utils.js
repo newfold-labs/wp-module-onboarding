@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { filter } from 'lodash';
 import { stepDesignThemeStylesPreview } from '../../steps/DesignThemeStyles/Preview/step';
+import { stepSiteGenMigration } from '../../steps/SiteGen/Migration/step';
 
 export const injectInAllSteps = ( allSteps, conditionalSteps ) => {
 	const updates = removeFromAllSteps( allSteps, conditionalSteps );
@@ -74,5 +75,11 @@ export const removeFromRoutes = ( routes, conditionalSteps ) => {
 			routes,
 			( route ) => ! conditionalStepsPaths.has( route.path )
 		),
+	};
+};
+
+export const injectMigrationStep = ( allSteps, targetStep ) => {
+	return {
+		allSteps: addAfter( allSteps, targetStep, [ stepSiteGenMigration ] ),
 	};
 };

@@ -285,7 +285,7 @@ const StepSiteGenEditorHeader = () => {
 		await setFlow( currentData );
 		await completeFlow();
 		sendOnboardingEvent(
-			new OnboardingEvent( ACTION_ONBOARDING_COMPLETE, {
+			new OnboardingEvent( ACTION_ONBOARDING_COMPLETE, undefined, {
 				source: SITEGEN_FLOW,
 			} )
 		);

@@ -1,4 +1,9 @@
-import { onboardingRestBase, wpRestBase, installerRestBase } from '../../../constants';
+import {
+	onboardingRestBase,
+	wpRestBase,
+	installerRestBase,
+	migrateRestBase,
+} from '../../../constants';
 
 export const onboardingRestURL = ( api ) => {
 	return (
@@ -10,9 +15,11 @@ export const onboardingRestURL = ( api ) => {
 };
 
 export const installerRestURL = ( api ) => {
-	return (
-		`${ installerRestBase }/${ api }`
-	);
+	return `${ installerRestBase }/${ api }`;
+};
+
+export const migrateRestURL = ( api ) => {
+	return `${ migrateRestBase }/${ api }`;
 };
 
 export const wpRestURL = ( api ) => {

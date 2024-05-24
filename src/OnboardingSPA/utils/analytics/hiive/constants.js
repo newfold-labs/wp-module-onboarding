@@ -20,9 +20,9 @@ export const ACTION_ONBOARDING_EXITED = 'onboarding_exited';
 export const ACTION_ONBOARDING_CHAPTER_STARTED = 'onboarding_chapter_started';
 export const ACTION_ONBOARDING_CHAPTER_COMPLETE = 'onboarding_chapter_complete';
 export const ACTION_SOCIAL_ADDED = 'social_added';
+export const ACTION_MIGRATION_INITIATED = 'migration_initiated';
 
 export const ACTION_SITEGEN_FORK_OPTION_SELECTED = 'fork_option_selected';
-export const ACTION_SITEGEN_FORK_AI_EXPERIMENT = 'exp_fork_ai';
 export const ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET = 'site_details_prompt_set';
 export const ACTION_SITEGEN_SOCIAL_CONNECTED = 'social_connected';
 export const ACTION_SITEGEN_SOCIAL_CONNECT_SKIPPED = 'social_connect_skipped';
@@ -57,7 +57,6 @@ export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_ONBOARDING_CHAPTER_COMPLETE ]: 'chapter',
 	[ ACTION_SOCIAL_ADDED ]: 'platform',
 	[ ACTION_SITEGEN_FORK_OPTION_SELECTED ]: 'flow',
-	[ ACTION_SITEGEN_FORK_AI_EXPERIMENT ]: 'label',
 	[ ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET ]: 'prompt',
 	[ ACTION_SITEGEN_SOCIAL_CONNECTED ]: 'platform',
 	[ ACTION_SITEGEN_HOMEPAGE_SELECTED ]: 'version',
@@ -66,4 +65,5 @@ export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_SITEGEN_SIDEBAR_OPENED ]: 'type',
 	[ ACTION_SITEGEN_HOMEPAGE_RENAMED ]: 'version',
 	[ ACTION_SITEGEN_SITE_GENERATION_TIME ]: 'time',
+	[ ACTION_MIGRATION_INITIATED ]: 'path',
 };

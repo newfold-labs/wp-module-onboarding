@@ -10,14 +10,6 @@ const getContents = () => {
 		),
 		options: [
 			{
-				title: __( 'Guided Configuration', 'wp-module-onboarding' ),
-				subtitle: __(
-					'Robust configuration guide to help you build your site',
-					'wp-module-onboarding'
-				),
-				flow: 'sitebuild',
-			},
-			{
 				title: __( ' Website Creator', 'wp-module-onboarding' ),
 				subtitle: __(
 					'Unique AI generated content & design curated for you.',
@@ -25,6 +17,14 @@ const getContents = () => {
 				),
 				span: __( 'AI', 'wp-module-onboarding' ),
 				flow: 'sitegen',
+			},
+			{
+				title: __( 'Guided Configuration', 'wp-module-onboarding' ),
+				subtitle: __(
+					'Robust configuration guide to help you build your site',
+					'wp-module-onboarding'
+				),
+				flow: 'sitebuild',
 			},
 			{
 				title: __( 'Hire a Pro', 'wp-module-onboarding' ),

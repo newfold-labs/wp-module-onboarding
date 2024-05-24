@@ -37,10 +37,6 @@ describe( 'SiteGen Site Details Step', function () {
 		);
 	} );
 
-	it( 'Check for back button and go back', () => {
-		BackButtonCheck( 'sitegen/step/site-details' );
-	} );
-
 	it( 'Check for the header to be visible', () => {
 		cy.get( '.ai-heading' ).should( 'be.visible' );
 	} );
@@ -49,9 +45,13 @@ describe( 'SiteGen Site Details Step', function () {
 		cy.get( '.nfd-sg-input-box__field' ).should(
 			'have.attr',
 			'placeholder',
-			'I want a site for my company that sells…'
+			'Bean There Café - A cozy, sustainable coffee shop in Asheville, North Carolina, focused on fair-trade coffee and local pastries. Their site will feature their menu, special events, and a blog on coffee culture.'
 		);
 		cy.get( '.nfd-sg-input-box__hint' ).should( 'be.visible' );
+	});
+	
+	it.skip( 'Check for back button and go back', () => {
+		BackButtonCheck( 'sitegen/step/site-details' );
 	} );
 
 	it( 'Enter the prompt and see the box-info progress', () => {

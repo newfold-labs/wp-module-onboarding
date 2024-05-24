@@ -10,9 +10,11 @@ export const wpRestURL = window.nfdOnboarding.restUrl;
 export const wpRestRoute = 'wp/v2';
 export const onboardingRestRoute = 'newfold-onboarding/v1';
 export const installerRestRoute = 'newfold-installer/v1';
+export const migrationRestRoute = 'newfold-migration/v1';
 export const wpRestBase = `${ wpRestURL }/${ wpRestRoute }`;
 export const onboardingRestBase = `${ wpRestURL }/${ onboardingRestRoute }`;
 export const installerRestBase = `${ wpRestURL }/${ installerRestRoute }`;
+export const migrateRestBase = `${ wpRestURL }/${ migrationRestRoute }`;
 export const wpAdminPage = addQueryArgs(
 	`${ wpAdminUrl }index.php`,
 	window.nfdOnboarding.currentBrand?.dashboardRedirectParams

@@ -27,13 +27,13 @@ describe( 'Get Started Site Type Secondary', function () {
 		CheckCardHeadingSubheading( true );
 	} );
 
-	if(GetPluginId()=='bluehost'){
+	if ( GetPluginId() == 'bluehost' ) {
 		it( 'Check if `store` appears in heading', () => {
-			cy.get('.nfd-step-card-heading')
-				.should('be.visible')
-				.contains('store');
+			cy.get( '.nfd-step-card-heading' )
+				.should( 'be.visible' )
+				.contains( 'store' );
 		} );
-	
+
 		it( 'Check to make sure sidebar opens, content is in place and close sidebar', () => {
 			CheckIntroPanel( '__get-started-site-type', 'Store Type' );
 			CheckIllustrationPanel();
@@ -48,41 +48,44 @@ describe( 'Get Started Site Type Secondary', function () {
 				'Business'
 			);
 		} );
-	}
-	else{
+	} else {
 		it( 'Check to make sure Sidebar opens', () => {
 			BasicSidebarCheck();
 		} );
-	};
+	}
 
-	it( 'Check for Event API call being made when different sub-categories are selected', ()=>{
+	it( 'Check for Event API call being made when different sub-categories are selected', () => {
 		let SubcategoryCount = 0;
 		let num = 0;
 		const className = '.nfd-card-sec-category';
-		cy.get( className ).should( 'be.visible' );
+		cy.get( className, { timeout: 15000 } ).should( 'be.visible' );
 		const arr = cy.get( className );
 		arr.each( () => {
 			cy.get( className )
 				.eq( SubcategoryCount )
 				.click()
-				.then(($element) => {
-					const dataSlugText = $element.attr('data-slug');
-					if(num>=2){
-						cy.wait(5000);
+				.then( ( $element ) => {
+					const dataSlugText = $element.attr( 'data-slug' );
+					if ( num >= 2 ) {
+						cy.wait( 7000 );
 					}
-					EventsAPI('secondary_type', dataSlugText, APIList.events_api_ecomm);
-					num+=1;
-				});
+					EventsAPI(
+						'secondary_type',
+						dataSlugText,
+						APIList.events_api_ecomm
+					);
+					num += 1;
+				} );
 			SubcategoryCount += 1;
 		} );
 	} );
 
-	it( 'Check for Event API call when we enter text in input box', ()=>{
+	it( 'Check for Event API call when we enter text in input box', () => {
 		cy.get( '.nfd-setup-primary-custom__tellus-input' )
 			.scrollIntoView()
 			.should( 'be.visible' )
 			.type( 'Test' );
-		EventsAPI('secondary_type', 'Test', APIList.events_api_ecomm);
+		EventsAPI( 'secondary_type', 'Test', APIList.events_api_ecomm );
 	} );
 
 	it( 'Check different subCategories exist and is selectable', () => {

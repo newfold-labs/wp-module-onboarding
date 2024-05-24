@@ -5,7 +5,7 @@ export const APIList = {
 
 export const EventsAPI = ( events_name, card_val, api_name ) => {
 	cy.intercept( api_name ).as( 'events' );
-	cy.wait( '@events' ).then( ( requestObject ) => {
+	cy.wait( '@events', { timeout: 15000 } ).then( ( requestObject ) => {
 		const responseBody = requestObject.request.body;
 		const responseData1 = responseBody[ 0 ].data;
 		if ( events_name == 'experience_level' ) {

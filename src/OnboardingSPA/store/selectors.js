@@ -363,6 +363,17 @@ export function getMigrationUrl( state ) {
 }
 
 /**
+ * Checks if the site has migration access.
+ *
+ * @param {*} state
+ * @return {boolean} canMigrateSite
+ */
+export function canMigrateSite( state ) {
+	const migrationInfo = state.runtime.currentBrand.config;
+	return migrationInfo?.canMigrateSite;
+}
+
+/**
  * Gets the Plugin Install Hash for security
  *
  * @param {*} state
@@ -440,9 +451,13 @@ export function getCustomizeSidebarData( state ) {
 }
 
 export function getSiteGenErrorStatus( state ) {
-	return state.data.flowData.sitegen.siteGenErrorStatus;
+	return state.data.flowData.sitegen.siteGenErrorMeta.status;
 }
 
 export function getInteractionDisabled( state ) {
 	return state.flow.interactionDisabled;
+}
+
+export function getIsFreshInstallation( state ) {
+	return state.runtime.isFreshInstallation;
 }
