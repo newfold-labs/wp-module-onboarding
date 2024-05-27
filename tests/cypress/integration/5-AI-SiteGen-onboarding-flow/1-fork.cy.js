@@ -7,6 +7,8 @@ import {
 } from '../wp-module-support/siteGen.cy';
 import { apiList, migrationConnection } from '../wp-module-support/MockApi.cy';
 
+const waitTime = 20000;
+
 describe( 'SiteGen Fork Step', function () {
 	before( () => {
 		cy.exec(
@@ -20,7 +22,6 @@ describe( 'SiteGen Fork Step', function () {
 		);
 		cy.wait( 10000 );
 		cy.visit( 'wp-admin/?page=nfd-onboarding#/wp-setup/step/fork' );
-		cy.timeout( 60000 );
 	} );
 
 	it( 'Check for the header admin bar', () => {
@@ -64,8 +65,8 @@ describe( 'SiteGen Fork Step', function () {
 				cy.url().should( 'include', 'sitegen/step/welcome', {
 					timeout: 10000,
 				} );
-				cy.get( '.nfd-onboarding-button--dark' ).click();
-				cy.get( className, { timeout: 20000 } )
+				cy.get( '.nfd-onboarding-button--dark' , { timeout : waitTime } ).click();
+				cy.get( className, { timeout: waitTime } )
 			}
 		} );
 	} );
