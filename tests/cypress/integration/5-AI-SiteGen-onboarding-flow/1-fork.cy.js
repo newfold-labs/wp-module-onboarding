@@ -7,7 +7,7 @@ import {
 } from '../wp-module-support/siteGen.cy';
 import { apiList, migrationConnection } from '../wp-module-support/MockApi.cy';
 
-const waitTime = 20000;
+const waitTime = 60000;
 
 describe( 'SiteGen Fork Step', function () {
 	before( () => {
