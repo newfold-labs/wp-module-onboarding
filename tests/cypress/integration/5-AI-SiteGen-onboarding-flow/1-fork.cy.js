@@ -64,7 +64,8 @@ describe( 'SiteGen Fork Step', function () {
 				cy.url().should( 'include', 'sitegen/step/welcome', {
 					timeout: 10000,
 				} );
-				cy.go( 'back' );
+				cy.get( '.nfd-onboarding-button--dark' ).click();
+				cy.get( className, { timeout: 20000 } )
 			}
 		} );
 	} );
