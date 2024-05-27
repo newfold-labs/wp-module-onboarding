@@ -25,7 +25,7 @@ import { ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET } from '../../../utils/analytics
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenSiteDetails = () => {
-	const [ customerInput, setCustomerInput ] = useState();
+	const [ customerInput, setCustomerInput ] = useState( '' );
 	const [ customerInputStrength, setCustomerInputStrength ] = useState( 0 );
 	const [ isValidInput, setIsValidInput ] = useState( false );
 
@@ -65,20 +65,31 @@ const SiteGenSiteDetails = () => {
 	}, [] );
 
 	useEffect( () => {
-		if (
-			customerInput !== undefined &&
-			customerInput !== '' &&
-			customerInput !== currentData.sitegen.siteDetails.prompt
-		) {
-			currentData.sitegen.siteDetails.prompt = customerInput?.trim();
-			currentData.sitegen.siteDetails.mode = 'simple';
-			currentData.sitegen.skipCache = true;
-			currentData.sitegen.sitemapPagesGenerated = false;
-			currentData.sitegen.homepages.active = {};
-			currentData.sitegen.homepages.data = {};
-			setCurrentOnboardingData( currentData );
+		if ( customerInput !== undefined ) {
+			const customerInputTrimmed = customerInput.trim();
+			if ( customerInputTrimmed !== '' ) {
+				// When something new is added then only change in store.
+				if (
+					customerInputTrimmed !==
+					currentData.sitegen.siteDetails.prompt
+				) {
+					currentData.sitegen.siteDetails.prompt =
+						customerInputTrimmed;
+					currentData.sitegen.siteDetails.mode = 'simple';
+					currentData.sitegen.skipCache = true;
+					currentData.sitegen.sitemapPagesGenerated = false;
+					currentData.sitegen.homepages.active = {};
+					currentData.sitegen.homepages.data = {};
+					setCurrentOnboardingData( currentData );
+				}
+				// Else just make sure the Next is enabled when prompt is present
+				setIsValidInput( true );
+				setIsFooterNavAllowed( true );
+			} else {
+				setIsValidInput( false );
+				setIsFooterNavAllowed( false );
+			}
 		}
-		setIsFooterNavAllowed( isValidInput );
 	}, [ customerInput ] );
 
 	const trackPromptSetEvent = () => {
@@ -119,7 +130,6 @@ const SiteGenSiteDetails = () => {
 							hint={ content.inputHint }
 							height={ '40px' }
 							customerInput={ customerInput }
-							setIsValidInput={ setIsValidInput }
 							setCustomerInput={ setCustomerInput }
 							setCustomerInputStrength={
 								setCustomerInputStrength

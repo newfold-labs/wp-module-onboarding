@@ -33,19 +33,6 @@ $selected-detail: #1de082;
 			}
 		}
 
-		&__count {
-			margin: 3px;
-			text-align: end;
-			font-size: 0.87rem;
-			animation: fadeIn 100ms ease-in;
-			color: var(--nfd-onboarding-primary);
-
-			@media (prefers-reduced-motion) {
-				animation: none !important;
-			}
-		}
-
-
 		&__hint {
 			font-weight: 300;
 			font-size: 0.87rem;
@@ -59,48 +46,8 @@ $selected-detail: #1de082;
 			}
 		}
 
-		&__info {
-			display: flex;
-			align-items: center;
-
-			&-text {
-				margin: 3px;
-				margin-right: 8px;
-				font-size: 0.87rem;
-				animation: fadeIn 100ms ease-in;
-				color: var(--nfd-onboarding-primary);
-
-				@media (prefers-reduced-motion) {
-					animation: none !important;
-				}
-			}
-
-			&-icon {
-				width: 12px;
-				height: 6.5px;
-				margin: 3px;
-				border-radius: 6px;
-				animation: fadeIn 100ms ease-in;
-				background-color: var(--nfd-onboarding-primary);
-
-				&--selected {
-					animation: fadeIn 400ms ease-in-out;
-					background-color: $selected-detail;
-
-					@media (prefers-reduced-motion) {
-						animation: none !important;
-					}
-				}
-
-				@media (prefers-reduced-motion) {
-					animation: none !important;
-				}
-			}
-		}
-
 		&_bottom {
 			display: flex;
-			margin-top: 30px;
 			flex-direction: row;
 			align-items: center;
 			justify-content: space-between;
