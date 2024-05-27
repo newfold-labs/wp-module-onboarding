@@ -103,16 +103,16 @@ describe( 'SiteGen Fork Step', function () {
 			migrationConnection( req );
 		} ).as( 'migrateCall' );
 		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite' , {
-			timeout: 10000,
+			timeout: waitTime,
 		} )
 			.scrollIntoView()
 			.should( 'exist' )
 			.click();
 		cy.get( '.nfd-onboarding-step__heading__title', {
-			timeout: 10000,
+			timeout: waitTime,
 		} ).should( 'exist' );
 		cy.get(
-			'.nfd-onboarding-step--site-gen__migration--container__loader', { timeout : 10000 }
+			'.nfd-onboarding-step--site-gen__migration--container__loader', { timeout : waitTime }
 		).should( 'exist' );
 		cy.get(
 			'.nfd-onboarding-step--site-gen__migration--container__importtext'
@@ -121,7 +121,7 @@ describe( 'SiteGen Fork Step', function () {
 		AdminBarCheck();
 		DarkBGCheck();
 		LightBGCheck();
-		cy.wait( '@migrateCall', { timeout: 10000 } );
+		cy.wait( '@migrateCall', { timeout: waitTime } );
 	} );
 
 	it( 'Verify migration connection request is successful and redirection happens' , () => {
