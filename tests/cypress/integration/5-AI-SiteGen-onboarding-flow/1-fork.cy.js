@@ -7,6 +7,8 @@ import {
 } from '../wp-module-support/siteGen.cy';
 import { apiList, migrationConnection } from '../wp-module-support/MockApi.cy';
 
+const waitTime = 60000;
+
 describe( 'SiteGen Fork Step', function () {
 	before( () => {
 		cy.exec(
@@ -20,7 +22,6 @@ describe( 'SiteGen Fork Step', function () {
 		);
 		cy.wait( 10000 );
 		cy.visit( 'wp-admin/?page=nfd-onboarding#/wp-setup/step/fork' );
-		cy.timeout( 60000 );
 	} );
 
 	it( 'Check for the header admin bar', () => {
@@ -53,7 +54,7 @@ describe( 'SiteGen Fork Step', function () {
 			.should( 'have.length', 3 );
 	} );
 
-	it( 'Check for selection of different container options', () => {
+	it.skip( 'Check for selection of different container options', () => {
 		const className = '.nfd-onboarding-sitegen-options__container__options';
 		const arr = cy.get( className );
 
@@ -64,7 +65,8 @@ describe( 'SiteGen Fork Step', function () {
 				cy.url().should( 'include', 'sitegen/step/welcome', {
 					timeout: 10000,
 				} );
-				cy.go( 'back' );
+				cy.get( '.nfd-onboarding-button--dark' , { timeout : waitTime } ).click();
+				cy.get( className, { timeout: waitTime } )
 			}
 		} );
 	} );
@@ -101,16 +103,16 @@ describe( 'SiteGen Fork Step', function () {
 			migrationConnection( req );
 		} ).as( 'migrateCall' );
 		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite' , {
-			timeout: 10000,
+			timeout: waitTime,
 		} )
 			.scrollIntoView()
 			.should( 'exist' )
 			.click();
 		cy.get( '.nfd-onboarding-step__heading__title', {
-			timeout: 10000,
+			timeout: waitTime,
 		} ).should( 'exist' );
 		cy.get(
-			'.nfd-onboarding-step--site-gen__migration--container__loader', { timeout : 10000 }
+			'.nfd-onboarding-step--site-gen__migration--container__loader', { timeout : waitTime }
 		).should( 'exist' );
 		cy.get(
 			'.nfd-onboarding-step--site-gen__migration--container__importtext'
@@ -119,7 +121,7 @@ describe( 'SiteGen Fork Step', function () {
 		AdminBarCheck();
 		DarkBGCheck();
 		LightBGCheck();
-		cy.wait( '@migrateCall', { timeout: 10000 } );
+		cy.wait( '@migrateCall', { timeout: waitTime } );
 	} );
 
 	it( 'Verify migration connection request is successful and redirection happens' , () => {

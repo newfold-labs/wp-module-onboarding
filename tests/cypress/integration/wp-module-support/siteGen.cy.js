@@ -1,7 +1,7 @@
 // <reference types="Cypress" />
 
 export const AdminBarCheck = () => {
-	cy.get( '.nfd-onboarding-header__admin-bar', { timeout: 120000 } ).should(
+	cy.get( '.nfd-onboarding-header__admin-bar', { timeout: 30000 } ).should(
 		'be.visible'
 	);
 };
