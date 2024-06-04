@@ -78,7 +78,11 @@ const SiteGenSiteSocialMedia = () => {
 		setConnected( true );
 	};
 
-	const handleFailure = () => {
+	const handleFailure = ( error ) => {
+		// This happens when a call is made to retrieve the facebook details when the button first renders.
+		if ( 404 === error?.data?.status ) {
+			return;
+		}
 		updateSiteGenErrorStatus( true );
 	};
 
