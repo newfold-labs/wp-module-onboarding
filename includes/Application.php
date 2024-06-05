@@ -76,10 +76,8 @@ final class Application {
 
 		if ( Permissions::is_authorized_admin() ) {
 			StatusService::track();
+			PluginService::configure_activation_transient();
 		}
-
-		// Adds a transient to activate plugins in all scenarios.
-		PluginService::configure_activation_transient();
 
 		\do_action( 'nfd_module_onboarding_post_init' );
 	}
