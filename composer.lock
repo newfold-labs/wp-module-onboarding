@@ -678,16 +678,16 @@
         },
         {
             "name": "newfold-labs/wp-module-onboarding-data",
-            "version": "1.1.10",
+            "version": "1.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-onboarding-data.git",
-                "reference": "32963151eda0eb2f93a77a9a0fa55d1ec8c9aed5"
+                "reference": "16b522291f29fad9d3067da1634a7362ad889953"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-onboarding-data/zipball/32963151eda0eb2f93a77a9a0fa55d1ec8c9aed5",
-                "reference": "32963151eda0eb2f93a77a9a0fa55d1ec8c9aed5",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-onboarding-data/zipball/16b522291f29fad9d3067da1634a7362ad889953",
+                "reference": "16b522291f29fad9d3067da1634a7362ad889953",
                 "shasum": ""
             },
             "require": {
@@ -722,10 +722,10 @@
             ],
             "description": "A non-toggleable module containing a standardized interface for interacting with Onboarding data.",
             "support": {
-                "source": "https://github.com/newfold-labs/wp-module-onboarding-data/tree/1.1.10",
+                "source": "https://github.com/newfold-labs/wp-module-onboarding-data/tree/1.1.11",
                 "issues": "https://github.com/newfold-labs/wp-module-onboarding-data/issues"
             },
-            "time": "2024-05-27T09:30:23+00:00"
+            "time": "2024-06-05T08:28:57+00:00"
         },
         {
             "name": "newfold-labs/wp-module-patterns",
