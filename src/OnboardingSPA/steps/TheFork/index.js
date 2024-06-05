@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 // Classes and functions
 import getContents from './contents';
 import { injectMigrationStep } from '../../data/flows/utils';
+import { init as initializePlugins } from '../../utils/api/plugins';
 
 // Components
 import StartOptions from '../../components/StartOptions';
@@ -30,7 +31,7 @@ import { store as nfdOnboardingStore } from '../../store';
 import { DEFAULT_FLOW } from '../../data/flows/constants';
 
 const TheFork = () => {
-	const { migrationUrl, canMigrateSite, allSteps } = useSelect(
+	const { migrationUrl, canMigrateSite, allSteps, pluginInstallHash } = useSelect(
 		( select ) => {
 			return {
 				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
@@ -38,6 +39,7 @@ const TheFork = () => {
 				allSteps: select( nfdOnboardingStore ).getAllSteps(),
 				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 				routes: select( nfdOnboardingStore ).getRoutes(),
+				pluginInstallHash: select( nfdOnboardingStore ).getPluginInstallHash(),
 			};
 		}
 	);
@@ -60,6 +62,7 @@ const TheFork = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setDrawerActiveView( false );
 		setFooterActiveView( FOOTER_SITEGEN );
+		initializePlugins( pluginInstallHash );
 	} );
 
 	const oldFlow = window.nfdOnboarding?.oldFlow
