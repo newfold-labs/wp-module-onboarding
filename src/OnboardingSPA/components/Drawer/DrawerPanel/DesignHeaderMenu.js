@@ -52,8 +52,9 @@ const DesignHeaderMenu = () => {
 		const pageContent = headerMenuPreviewResponse?.body.pageBody;
 
 		if (
-			! currentData.data.partHeader ||
-			currentData.data.partHeader === ''
+			( ! currentData.data.partHeader ||
+				currentData.data.partHeader === '' ) &&
+			headerMenuPatterns?.length > 0
 		) {
 			currentData.data.partHeader = headerMenuPatterns[ 0 ].slug;
 			setCurrentOnboardingData( currentData );
@@ -72,7 +73,7 @@ const DesignHeaderMenu = () => {
 
 		// read the header menu array to get the selected header pattern and combine it with body content
 		let [ headerContent, pagePreview ] = [ '', '' ];
-		headerMenuPatterns.forEach( ( headerMenu ) => {
+		headerMenuPatterns?.forEach( ( headerMenu ) => {
 			if ( headerMenu.slug === currentData.data.partHeader ) {
 				headerContent = headerMenu.content;
 			}
