@@ -8,6 +8,7 @@ import { VIEW_DESIGN_FONTS } from '../../../constants';
 const StepDesignFonts = lazy( () => import( './index' ) );
 
 export const stepDesignFonts = new Step( {
+	slug: 'design-typography',
 	path: '/wp-setup/step/design/typography',
 	title: __( 'Fonts', 'wp-module-onboarding' ),
 	Component: StepDesignFonts,

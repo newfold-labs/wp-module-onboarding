@@ -8,6 +8,7 @@ import { translations } from '../../../../utils/locales/translations';
 const StepPrimarySetup = lazy( () => import( './index' ) );
 
 export const stepPrimarySetup = new Step( {
+	slug: 'get-started-site-primary',
 	path: '/wp-setup/step/get-started/site-primary',
 	title: sprintf(
 		/* translators: %s: website or store */

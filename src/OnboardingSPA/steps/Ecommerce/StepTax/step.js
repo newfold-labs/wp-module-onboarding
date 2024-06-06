@@ -8,6 +8,7 @@ import { VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../../constants';
 const StepTax = lazy( () => import( './index' ) );
 
 export const stepTax = new Step( {
+	slug: 'ecommerce-tax',
 	path: '/ecommerce/step/tax',
 	title: __( 'Tax Info', 'wp-module-onboarding' ),
 	Component: StepTax,

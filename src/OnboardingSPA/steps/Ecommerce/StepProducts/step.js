@@ -8,6 +8,7 @@ import { VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../../constants';
 const StepProducts = lazy( () => import( './index' ) );
 
 export const stepProducts = new Step( {
+	slug: 'ecommerce-products',
 	path: '/ecommerce/step/products',
 	title: __( 'Product Info', 'wp-module-onboarding' ),
 	Component: StepProducts,

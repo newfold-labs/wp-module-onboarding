@@ -8,6 +8,7 @@ import { VIEW_NAV_DESIGN } from '../../../../constants';
 const StepDesignThemeStylesMenu = lazy( () => import( './index' ) );
 
 export const stepDesignThemeStylesMenu = new Step( {
+	slug: 'design-theme-styles-menu',
 	path: '/wp-setup/step/design/theme-styles/menu',
 	title: __( 'Theme Styles', 'wp-module-onboarding' ),
 	Component: StepDesignThemeStylesMenu,

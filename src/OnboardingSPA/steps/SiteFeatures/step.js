@@ -7,6 +7,7 @@ import LearnMore from './Sidebar/LearnMore';
 const StepSiteFeatures = lazy( () => import( './index' ) );
 
 export const stepSiteFeatures = new Step( {
+	slug: 'site-features',
 	path: '/wp-setup/step/site-features',
 	title: __( 'Features', 'wp-module-onboarding' ),
 	Component: StepSiteFeatures,

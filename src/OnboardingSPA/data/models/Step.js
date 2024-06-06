@@ -1,5 +1,6 @@
 export class Step {
 	constructor( {
+		slug,
 		path,
 		title,
 		Component,
@@ -10,6 +11,7 @@ export class Step {
 		data,
 		drawerNavigation,
 	} ) {
+		this.slug = slug;
 		this.path = path;
 		this.title = title;
 		this.Component = Component;

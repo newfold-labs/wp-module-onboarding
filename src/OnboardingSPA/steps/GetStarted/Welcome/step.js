@@ -8,6 +8,7 @@ import { VIEW_NAV_GET_STARTED } from '../../../../constants';
 const StepWelcome = lazy( () => import( './index' ) );
 
 export const stepWelcome = new Step( {
+	slug: 'get-started-welcome',
 	path: '/wp-setup/step/get-started/welcome',
 	title: __( 'Welcome', 'wp-module-onboarding' ),
 	Component: StepWelcome,

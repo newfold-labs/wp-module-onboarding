@@ -8,6 +8,7 @@ import { VIEW_NAV_DESIGN } from '../../../constants';
 const StepDesignHomepageMenu = lazy( () => import( './index' ) );
 
 export const stepDesignHomepageMenu = new Step( {
+	slug: 'design-homepage-menu',
 	path: '/wp-setup/step/design/homepage-menu',
 	title: __( 'Homepage Layouts', 'wp-module-onboarding' ),
 	Component: StepDesignHomepageMenu,

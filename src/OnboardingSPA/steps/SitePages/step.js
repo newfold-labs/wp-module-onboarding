@@ -7,6 +7,7 @@ import LearnMore from './Sidebar/LearnMore';
 const StepSitePages = lazy( () => import( './index' ) );
 
 export const stepSitePages = new Step( {
+	slug: 'design-site-pages',
 	path: '/wp-setup/step/design/site-pages',
 	title: __( 'Page Layouts', 'wp-module-onboarding' ),
 	Component: StepSitePages,
