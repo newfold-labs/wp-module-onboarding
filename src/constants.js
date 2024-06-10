@@ -121,4 +121,5 @@ export const API_REQUEST = {
  * ERROR code to skip for flow api
  */
 export const SKIP_FLOW_ERROR_CODE_20 = 20;
+export const SKIP_FLOW_ERROR_CODE_OFFLINE = 'fetch_error';
 export const SKIP_FLOW_ERROR_CODE_DATABASE = 'database_update_failed';

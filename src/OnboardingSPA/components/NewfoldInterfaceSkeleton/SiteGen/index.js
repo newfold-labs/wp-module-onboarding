@@ -36,6 +36,7 @@ import { ThemeProvider } from '../../ThemeContextProvider';
 import { store as nfdOnboardingStore } from '../../../store';
 import {
 	MAX_RETRIES_SITE_GEN,
+	SKIP_FLOW_ERROR_CODE_OFFLINE,
 	SKIP_FLOW_ERROR_CODE_DATABASE,
 	SKIP_FLOW_ERROR_CODE_20,
 } from '../../../../constants';
@@ -146,6 +147,7 @@ const SiteGen = () => {
 			}
 
 			switch ( result.error.code ) {
+				case SKIP_FLOW_ERROR_CODE_OFFLINE:
 				case SKIP_FLOW_ERROR_CODE_DATABASE:
 				case SKIP_FLOW_ERROR_CODE_20:
 					return true;
