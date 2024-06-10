@@ -1,5 +1,5 @@
 // Wordpress
-import { useEffect } from '@wordpress/element';
+import { useEffect, useCallback, memo } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { chevronRight, external } from '@wordpress/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -37,14 +37,12 @@ const StepWelcome = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const { brandName, migrationUrl, allSteps, canMigrateSite } = useSelect(
-		( select ) => {
-			return {
-				brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
-				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
-				allSteps: select( nfdOnboardingStore ).getAllSteps(),
-				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
-			};
-		},
+		( select ) => ( {
+			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+			migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+			allSteps: select( nfdOnboardingStore ).getAllSteps(),
+			canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
+		} ),
 		[ location.pathname ]
 	);
 	const {
@@ -73,10 +71,16 @@ const StepWelcome = () => {
 		updateAllSteps( updates.allSteps );
 	}, [] );
 
-	const handleMigration = () => {
+	const handleMigration = useCallback( () => {
 		if ( canMigrateSite ) {
-			const updates = injectMigrationStep( allSteps, stepWelcome );
-			updateAllSteps( updates.allSteps );
+			const migrationStepExists = allSteps.some(
+				( step ) => step.path === '/sitegen/step/migration'
+			);
+
+			if ( ! migrationStepExists ) {
+				const updates = injectMigrationStep( allSteps, stepWelcome );
+				updateAllSteps( updates.allSteps );
+			}
 			navigate( stepSiteGenMigration.path );
 		} else {
 			window.open( migrationUrl, '_blank' );
@@ -87,7 +91,7 @@ const StepWelcome = () => {
 				'MIGRATE'
 			)
 		);
-	};
+	}, [ allSteps, canMigrateSite, migrationUrl, navigate, updateAllSteps ] );
 
 	const content = getContents( brandName );
 
@@ -142,4 +146,4 @@ const StepWelcome = () => {
 	);
 };
 
-export default StepWelcome;
+export default memo( StepWelcome );

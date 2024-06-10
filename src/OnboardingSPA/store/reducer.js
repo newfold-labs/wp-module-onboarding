@@ -32,6 +32,7 @@ export function flow(
 				showDialog: false,
 				continuePath: '',
 			},
+			instaWpMigrationUrl: '',
 		},
 		chapter: undefined,
 		interactionDisabled: false,
@@ -131,6 +132,14 @@ export function flow(
 			return {
 				...state,
 				flow: action.continueWithoutAi,
+			};
+		case 'SET_INSTAWP_MIGRATION_URL':
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					instaWpMigrationUrl: action.instaWpMigrationUrl,
+				},
 			};
 	}
 

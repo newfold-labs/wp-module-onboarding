@@ -48,6 +48,7 @@ import { resolveGetDataForFlow, getInitialChapters } from '../../../data/flows';
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
+	sendOnboardingEvent,
 } from '../../../utils/analytics/hiive';
 import { injectInAllSteps } from '../../../data/flows/utils';
 import {
@@ -60,8 +61,10 @@ import {
 	ACTION_SOCIAL_ADDED,
 	ACTION_STARTER_PAGES_SELECTED,
 	ACTION_TAGLINE_SET,
+	ACTION_MIGRATION_INITIATED,
 	CATEGORY,
 } from '../../../utils/analytics/hiive/constants';
+
 import { socialMediaStoreToState } from '../../SocialMediaForm/utils';
 
 const SiteBuild = () => {
@@ -84,6 +87,7 @@ const SiteBuild = () => {
 		brandConfig,
 		initialize,
 		pluginInstallHash,
+		instaWpMigrationUrl,
 	} = useSelect(
 		( select ) => {
 			return {
@@ -107,6 +111,8 @@ const SiteBuild = () => {
 				initialize: select( nfdOnboardingStore ).getInitialize(),
 				pluginInstallHash:
 					select( nfdOnboardingStore ).getPluginInstallHash(),
+				instaWpMigrationUrl:
+					select( nfdOnboardingStore ).getinstaWpMigrationUrl(),
 			};
 		},
 		[ location.pathname ]
@@ -379,6 +385,19 @@ const SiteBuild = () => {
 	useEffect( () => {
 		trackChapters();
 	}, [ currentStep ] );
+
+	useEffect( () => {
+		if ( currentStep?.path === stepSiteGenMigration?.path ) {
+			if ( instaWpMigrationUrl ) {
+				sendOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_MIGRATION_INITIATED,
+						instaWpMigrationUrl
+					)
+				);
+			}
+		}
+	}, [ instaWpMigrationUrl, currentStep ] );
 
 	const prioritizeFlow = () => {
 		const currentFlow = window.nfdOnboarding.currentFlow;

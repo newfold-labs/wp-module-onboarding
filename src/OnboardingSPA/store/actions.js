@@ -100,6 +100,13 @@ export function setActiveChapter( chapter ) {
 	};
 }
 
+export function setinstaWpMigrationUrl( instaWpMigrationUrl ) {
+	return {
+		type: 'SET_INSTAWP_MIGRATION_URL',
+		instaWpMigrationUrl,
+	};
+}
+
 /**
  * Accepts a JSON to set the Flow Data.
  *

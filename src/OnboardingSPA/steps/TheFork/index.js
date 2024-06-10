@@ -1,11 +1,14 @@
 // WordPress
-import { useEffect } from '@wordpress/element';
+import { useEffect, useCallback, memo } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useNavigate } from 'react-router-dom';
 
 // Classes and functions
 import getContents from './contents';
-import { injectMigrationStep } from '../../data/flows/utils';
+import {
+	injectMigrationStep,
+	removeFromAllSteps,
+} from '../../data/flows/utils';
 import { init as initializePlugins } from '../../utils/api/plugins';
 
 // Components
@@ -31,18 +34,20 @@ import { store as nfdOnboardingStore } from '../../store';
 import { DEFAULT_FLOW } from '../../data/flows/constants';
 
 const TheFork = () => {
-	const { migrationUrl, canMigrateSite, allSteps, pluginInstallHash } = useSelect(
-		( select ) => {
-			return {
+	const { migrationUrl, canMigrateSite, allSteps, pluginInstallHash } =
+		useSelect(
+			( select ) => ( {
 				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
 				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
 				allSteps: select( nfdOnboardingStore ).getAllSteps(),
 				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 				routes: select( nfdOnboardingStore ).getRoutes(),
-				pluginInstallHash: select( nfdOnboardingStore ).getPluginInstallHash(),
-			};
-		}
-	);
+				pluginInstallHash:
+					select( nfdOnboardingStore ).getPluginInstallHash(),
+			} ),
+			[]
+		);
+
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -63,13 +68,22 @@ const TheFork = () => {
 		setDrawerActiveView( false );
 		setFooterActiveView( FOOTER_SITEGEN );
 		initializePlugins( pluginInstallHash );
+		const migrationStepExists = allSteps.some(
+			( step ) => step.path === '/sitegen/step/migration'
+		);
+		if ( migrationStepExists ) {
+			const updates = removeFromAllSteps( allSteps, [
+				stepSiteGenMigration,
+			] );
+			updateAllSteps( updates.allSteps );
+		}
 	} );
 
 	const oldFlow = window.nfdOnboarding?.oldFlow
 		? window.nfdOnboarding.oldFlow
 		: DEFAULT_FLOW;
 
-	const handleForkExit = () => {
+	const handleForkExit = useCallback( () => {
 		sendOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_SITEGEN_FORK_OPTION_SELECTED,
@@ -78,25 +92,32 @@ const TheFork = () => {
 		);
 
 		window.location.replace( pluginDashboardPage );
-	};
+	}, [] );
+
 	const content = getContents();
 	const navigate = useNavigate();
 
-	const handleMigration = () => {
+	const handleMigration = useCallback( () => {
 		if ( canMigrateSite ) {
-			const updates = injectMigrationStep( allSteps, stepTheFork );
-			updateAllSteps( updates.allSteps );
+			const migrationStepExists = allSteps.some(
+				( step ) => step.path === '/sitegen/step/migration'
+			);
+
+			if ( ! migrationStepExists ) {
+				const updates = injectMigrationStep( allSteps, stepTheFork );
+				updateAllSteps( updates.allSteps );
+			}
+			trackOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_SITEGEN_FORK_OPTION_SELECTED,
+					'MIGRATE'
+				)
+			);
 			navigate( stepSiteGenMigration.path );
 		} else {
 			window.open( migrationUrl, '_blank' );
 		}
-		trackOnboardingEvent(
-			new OnboardingEvent(
-				ACTION_SITEGEN_FORK_OPTION_SELECTED,
-				'MIGRATE'
-			)
-		);
-	};
+	}, [ canMigrateSite, allSteps, migrationUrl, navigate, updateAllSteps ] );
 
 	return (
 		<CommonLayout
@@ -145,4 +166,4 @@ const TheFork = () => {
 	);
 };
 
-export default TheFork;
+export default memo( TheFork );

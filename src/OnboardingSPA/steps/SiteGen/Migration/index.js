@@ -36,6 +36,7 @@ const StepSiteGenMigration = () => {
 		setHideFooterNav,
 		updateSiteGenErrorStatus,
 		updateAllSteps,
+		setinstaWpMigrationUrl,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { siteGenErrorStatus, allSteps, canMigrateSite, currentBrandName } =
@@ -56,12 +57,7 @@ const StepSiteGenMigration = () => {
 				const response = await getSiteMigrateUrl();
 				const migrateUrl = response?.body?.data?.redirect_url;
 				if ( migrateUrl ) {
-					sendOnboardingEvent(
-						new OnboardingEvent(
-							ACTION_MIGRATION_INITIATED,
-							migrateUrl
-						)
-					);
+					setinstaWpMigrationUrl( migrateUrl );
 					setTimeout( () => {
 						window.open( migrateUrl, '_self' );
 					}, 3000 );
