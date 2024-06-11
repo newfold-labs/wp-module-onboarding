@@ -146,17 +146,6 @@ const SiteGen = () => {
 				return true;
 			}
 
-			switch ( result.error.code ) {
-				case SKIP_FLOW_ERROR_CODE_OFFLINE:
-				case SKIP_FLOW_ERROR_CODE_DATABASE:
-				case SKIP_FLOW_ERROR_CODE_20:
-					return true;
-			}
-
-			if ( false === siteGenErrorStatus ) {
-				updateSiteGenErrorStatus( true );
-				return false;
-			}
 		}
 	}
 
