@@ -8,38 +8,38 @@ import {
 	ProgressBarCheck,
 } from '../wp-module-support/siteGen.cy';
 
-describe( 'SiteGen Welcome Step', function () {
+describe.skip( 'SiteGen Welcome Step', function () {
 	// before( () => {
 	// 	cy.visit( 'wp-admin/?page=nfd-onboarding#/sitegen/step/welcome' );
 	// } );
 
-	it.skip( 'Check for the header admin bar', () => {
+	it( 'Check for the header admin bar', () => {
 		AdminBarCheck();
 	} );
 
-	it.skip( 'Check for the existing dark background', () => {
+	it( 'Check for the existing dark background', () => {
 		DarkBGCheck();
 	} );
 
-	it.skip( 'Check for the light background', () => {
+	it( 'Check for the light background', () => {
 		LightBGCheck();
 	} );
 
-	it.skip( 'Check the Progress Bar Value', () => {
+	it( 'Check the Progress Bar Value', () => {
 		ProgressBarCheck( '0%' );
 	} );
 
-	it.skip( 'Check for back button and go back', () => {
+	it( 'Check for back button and go back', () => {
 		BackButtonCheck( 'sitegen/step/welcome' );
 	} );
 
-	it.skip( 'Check if the orb is visible', () => {
+	it( 'Check if the orb is visible', () => {
 		cy.get(
 			'.nfd-onboarding-step--site-gen__welcome__container__orb'
 		).should( 'be.visible' );
 	} );
 
-	it.skip( 'Check for the heading title', () => {
+	it( 'Check for the heading title', () => {
 		cy.get(
 			'.nfd-onboarding-step--site-gen__welcome__container__heading__text'
 		)
@@ -47,7 +47,7 @@ describe( 'SiteGen Welcome Step', function () {
 			.contains( 'WordPress' );
 	} );
 
-	it.skip( 'Check for the subheading title', () => {
+	it( 'Check for the subheading title', () => {
 		cy.get(
 			'.nfd-onboarding-step--site-gen__welcome__container__sub-heading'
 		).should( 'exist' );
@@ -58,7 +58,7 @@ describe( 'SiteGen Welcome Step', function () {
 			.contains( 'AI' );
 	} );
 
-	it.skip( 'Check the Get Started button', () => {
+	it( 'Check the Get Started button', () => {
 		cy.get( '.nfd-onboarding-button--site-gen-next' )
 			.should( 'be.visible' )
 			.should( 'have.text', 'Get Started' )
