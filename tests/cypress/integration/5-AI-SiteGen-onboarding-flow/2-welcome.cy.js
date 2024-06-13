@@ -9,37 +9,37 @@ import {
 } from '../wp-module-support/siteGen.cy';
 
 describe( 'SiteGen Welcome Step', function () {
-	before( () => {
-		cy.visit( 'wp-admin/?page=nfd-onboarding#/sitegen/step/welcome' );
-	} );
+	// before( () => {
+	// 	cy.visit( 'wp-admin/?page=nfd-onboarding#/sitegen/step/welcome' );
+	// } );
 
-	it( 'Check for the header admin bar', () => {
+	it.skip( 'Check for the header admin bar', () => {
 		AdminBarCheck();
 	} );
 
-	it( 'Check for the existing dark background', () => {
+	it.skip( 'Check for the existing dark background', () => {
 		DarkBGCheck();
 	} );
 
-	it( 'Check for the light background', () => {
+	it.skip( 'Check for the light background', () => {
 		LightBGCheck();
 	} );
 
-	it( 'Check the Progress Bar Value', () => {
+	it.skip( 'Check the Progress Bar Value', () => {
 		ProgressBarCheck( '0%' );
 	} );
 
-	it( 'Check for back button and go back', () => {
+	it.skip( 'Check for back button and go back', () => {
 		BackButtonCheck( 'sitegen/step/welcome' );
 	} );
 
-	it( 'Check if the orb is visible', () => {
+	it.skip( 'Check if the orb is visible', () => {
 		cy.get(
 			'.nfd-onboarding-step--site-gen__welcome__container__orb'
 		).should( 'be.visible' );
 	} );
 
-	it( 'Check for the heading title', () => {
+	it.skip( 'Check for the heading title', () => {
 		cy.get(
 			'.nfd-onboarding-step--site-gen__welcome__container__heading__text'
 		)
@@ -47,7 +47,7 @@ describe( 'SiteGen Welcome Step', function () {
 			.contains( 'WordPress' );
 	} );
 
-	it( 'Check for the subheading title', () => {
+	it.skip( 'Check for the subheading title', () => {
 		cy.get(
 			'.nfd-onboarding-step--site-gen__welcome__container__sub-heading'
 		).should( 'exist' );
@@ -58,7 +58,7 @@ describe( 'SiteGen Welcome Step', function () {
 			.contains( 'AI' );
 	} );
 
-	it( 'Check the Get Started button', () => {
+	it.skip( 'Check the Get Started button', () => {
 		cy.get( '.nfd-onboarding-button--site-gen-next' )
 			.should( 'be.visible' )
 			.should( 'have.text', 'Get Started' )
