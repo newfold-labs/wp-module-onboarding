@@ -62,7 +62,7 @@ describe( 'SiteGen Fork Step', function () {
 			const dataSlugText = $element.attr( 'data-flow' );
 			if ( dataSlugText == 'sitegen' ) {
 				$element.trigger( 'click' );
-				cy.url().should( 'include', 'sitegen/step/welcome', {
+				cy.url().should( 'include', 'sitegen/step/site-details', {
 					timeout: 10000,
 				} );
 				cy.get( '.nfd-onboarding-button--dark' , { timeout : waitTime } ).click();
