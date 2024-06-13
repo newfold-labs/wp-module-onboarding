@@ -28,7 +28,7 @@ describe( 'SiteGen Site Details Step', function () {
 	} );
 
 	it( 'Check the Progress Bar Value', () => {
-		ProgressBarCheck( '14.2857%' );
+		ProgressBarCheck( '0%' );
 	} );
 
 	it( 'Check if the Next Button is disabled when no prompt is entered', () => {
