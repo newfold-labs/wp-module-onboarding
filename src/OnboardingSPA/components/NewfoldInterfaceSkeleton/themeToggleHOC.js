@@ -10,6 +10,7 @@ const themeToggleHOC = (
 	isForkStep = true
 ) => {
 	return ( props ) => {
+		// console.log(props);
 		const { theme } = useContext( ThemeContext );
 		const isDarkMode = theme === THEME_DARK;
 		const shouldApply = isForkStep !== undefined ? isForkStep : true;
