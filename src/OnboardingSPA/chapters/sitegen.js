@@ -1,7 +1,6 @@
 import { CHAPTER_SITEGEN } from '../../constants';
 import { Chapter } from '../data/models/Chapter';
 import { __ } from '@wordpress/i18n';
-import { stepSiteGenWelcome } from '../steps/SiteGen/Welcome/step';
 import { stepSiteGenSiteDetails } from '../steps/SiteGen/SiteDetails/step';
 import { stepSiteGenSiteLogo } from '../steps/SiteGen/SiteLogo/step';
 import { stepSiteGenSocialMedia } from '../steps/SiteGen/SocialMedia/step';
@@ -10,7 +9,6 @@ import { stepSiteGenPreview } from '../steps/SiteGen/Preview/step';
 import { stepSiteGenEditor } from '../steps/SiteGen/Editor/step';
 
 const steps = [
-	stepSiteGenWelcome,
 	stepSiteGenSiteDetails,
 	stepSiteGenSocialMedia,
 	stepSiteGenSiteLogo,
