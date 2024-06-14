@@ -8,6 +8,7 @@ import { VIEW_NAV_ECOMMERCE_STORE_INFO } from '../../../../constants';
 const StepAddress = lazy( () => import( './index' ) );
 
 export const stepAddress = new Step( {
+	slug: 'ecommerce-address',
 	path: '/ecommerce/step/address',
 	title: __( 'Street Address', 'wp-module-onboarding' ),
 	Component: StepAddress,

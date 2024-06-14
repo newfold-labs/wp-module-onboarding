@@ -8,6 +8,7 @@ import { VIEW_DESIGN_COLORS } from '../../../constants';
 const StepDesignColors = lazy( () => import( './index' ) );
 
 export const stepDesignColors = new Step( {
+	slug: 'design-colors',
 	path: '/wp-setup/step/design/colors',
 	title: __( 'Colors', 'wp-module-onboarding' ),
 	Component: StepDesignColors,

@@ -8,6 +8,7 @@ import { VIEW_DESIGN_HEADER_MENU } from '../../../constants';
 const StepDesignHeaderMenu = lazy( () => import( './index' ) );
 
 export const stepDesignHeaderMenu = new Step( {
+	slug: 'design-header-menu',
 	path: '/wp-setup/step/design/header-menu',
 	title: __( 'Header & Menu', 'wp-module-onboarding' ),
 	Component: StepDesignHeaderMenu,

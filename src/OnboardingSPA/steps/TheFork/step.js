@@ -6,6 +6,7 @@ import { Step } from '../../data/models/Step';
 const StepTheFork = lazy( () => import( './index' ) );
 
 export const stepTheFork = new Step( {
+	slug: 'fork',
 	path: '/wp-setup/step/fork',
 	title: __( 'The Fork', 'wp-module-onboarding' ),
 	Component: StepTheFork,

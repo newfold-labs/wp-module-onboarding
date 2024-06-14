@@ -121,7 +121,7 @@ const StepTopPriority = () => {
 		trackOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_ONBOARDING_STEP_SKIPPED,
-				currentStep.title
+				currentStep.slug
 			)
 		);
 	};

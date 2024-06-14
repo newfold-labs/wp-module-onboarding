@@ -8,6 +8,7 @@ import { VIEW_DESIGN_THEME_STYLES_PREVIEW } from '../../../../constants';
 const StepDesignThemeStylesPreview = lazy( () => import( './index' ) );
 
 export const stepDesignThemeStylesPreview = new Step( {
+	slug: 'design-theme-styles-preview',
 	path: '/wp-setup/step/design/theme-styles/preview',
 	title: __( 'Theme Styles', 'wp-module-onboarding' ),
 	Component: StepDesignThemeStylesPreview,

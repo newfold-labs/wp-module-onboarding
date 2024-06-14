@@ -6,6 +6,7 @@ import { Step } from '../../../data/models/Step';
 const SiteGenSiteLogo = lazy( () => import( './index' ) );
 
 export const stepSiteGenSiteLogo = new Step( {
+	slug: 'sitegen-site-logo',
 	path: '/sitegen/step/site-logo',
 	title: __( 'Page Layouts', 'wp-module-onboarding' ),
 	Component: SiteGenSiteLogo,
