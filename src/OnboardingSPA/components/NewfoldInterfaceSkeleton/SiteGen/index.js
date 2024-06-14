@@ -34,11 +34,7 @@ import { ThemeProvider } from '../../ThemeContextProvider';
 
 // Misc
 import { store as nfdOnboardingStore } from '../../../store';
-import {
-	MAX_RETRIES_SITE_GEN,
-	SKIP_FLOW_ERROR_CODE_DATABASE,
-	SKIP_FLOW_ERROR_CODE_20,
-} from '../../../../constants';
+import { MAX_RETRIES_SITE_GEN } from '../../../../constants';
 import {
 	ACTION_ONBOARDING_CHAPTER_COMPLETE,
 	ACTION_ONBOARDING_CHAPTER_STARTED,
@@ -143,17 +139,6 @@ const SiteGen = () => {
 			const result = await setFlow( currentData );
 			if ( result.body !== null ) {
 				return true;
-			}
-
-			switch ( result.error.code ) {
-				case SKIP_FLOW_ERROR_CODE_DATABASE:
-				case SKIP_FLOW_ERROR_CODE_20:
-					return true;
-			}
-
-			if ( false === siteGenErrorStatus ) {
-				updateSiteGenErrorStatus( true );
-				return false;
 			}
 		}
 	}
