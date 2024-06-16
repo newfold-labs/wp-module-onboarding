@@ -9,6 +9,7 @@ import { VIEW_NAV_PRIMARY } from '../../../constants';
 const StepBasicInfo = lazy( () => import( './index' ) );
 
 export const stepBasicInfo = new Step( {
+	slug: 'basic-info',
 	path: '/wp-setup/step/basic-info',
 	title: __( 'Basic Info', 'wp-module-onboarding' ),
 	Component: StepBasicInfo,

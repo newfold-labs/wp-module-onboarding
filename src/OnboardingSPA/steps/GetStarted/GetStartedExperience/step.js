@@ -8,6 +8,7 @@ import { VIEW_NAV_GET_STARTED } from '../../../../constants';
 const GetStartedExperience = lazy( () => import( './index' ) );
 
 export const stepExperience = new Step( {
+	slug: 'get-started-experience',
 	path: '/wp-setup/step/get-started/experience',
 	title: __( 'WordPress Experience', 'wp-module-onboarding' ),
 	Component: GetStartedExperience,

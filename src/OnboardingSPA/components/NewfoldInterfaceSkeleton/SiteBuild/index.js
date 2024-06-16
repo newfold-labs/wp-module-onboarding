@@ -303,7 +303,7 @@ const SiteBuild = () => {
 				trackOnboardingEvent(
 					new OnboardingEvent(
 						ACTION_STARTER_PAGES_SELECTED,
-						sitePages.map( ( sitePage ) => sitePage.title ),
+						sitePages.map( ( sitePage ) => sitePage.key ),
 						{
 							count: sitePages.length,
 						},

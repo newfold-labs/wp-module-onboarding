@@ -7,6 +7,7 @@ import LearnMore from './Sidebar/LearnMore';
 const StepWhatNext = lazy( () => import( './index' ) );
 
 export const stepWhatNext = new Step( {
+	slug: 'what-next',
 	path: '/wp-setup/step/what-next',
 	title: __( 'What Next', 'wp-module-onboarding' ),
 	Component: StepWhatNext,

@@ -36,12 +36,4 @@ $background-color: var(--nfd-onboarding-card-background);
 		font-weight: 300;
 	}
 
-	&__right {
-		fill: var(--nfd-onboarding-primary);
-		transition: all 200ms ease-in-out;
-
-		&:hover {
-			transform: scale(1.1);
-		}
-	}
 }

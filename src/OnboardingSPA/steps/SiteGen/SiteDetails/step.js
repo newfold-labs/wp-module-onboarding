@@ -6,6 +6,7 @@ import { Step } from '../../../data/models/Step';
 const SiteGenSiteDetails = lazy( () => import( './index' ) );
 
 export const stepSiteGenSiteDetails = new Step( {
+	slug: 'sitegen-site-details',
 	path: '/sitegen/step/site-details',
 	title: __( 'Site Details', 'wp-module-onboarding' ),
 	Component: SiteGenSiteDetails,

@@ -6,6 +6,7 @@ import { Step } from '../../../data/models/Step';
 const SiteGenPreview = lazy( () => import( './index' ) );
 
 export const stepSiteGenPreview = new Step( {
+	slug: 'sitegen-preview',
 	path: '/sitegen/step/preview',
 	title: __( 'Page Layouts', 'wp-module-onboarding' ),
 	Component: SiteGenPreview,
