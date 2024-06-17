@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import { memo } from '@wordpress/element';
-import { Icon, chevronRight } from '@wordpress/icons';
 
 const OptionWithHeadingSubHeading = ( {
 	idx,
@@ -47,10 +46,6 @@ const OptionWithHeadingSubHeading = ( {
 						{ desc }
 					</div>
 				</div>
-				<Icon
-					className={ 'nfd__option_heading_subheading__right' }
-					icon={ chevronRight }
-				/>
 			</div>
 		</div>
 	);
