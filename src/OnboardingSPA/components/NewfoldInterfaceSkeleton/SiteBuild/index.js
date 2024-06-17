@@ -338,6 +338,7 @@ const SiteBuild = () => {
 	};
 
 	const trackChapters = () => {
+		trackInstaWpMigrationEvent();
 		if ( location.pathname === firstStep.path ) {
 			trackOnboardingEvent(
 				new OnboardingEvent( ACTION_ONBOARDING_STARTED )
@@ -382,11 +383,7 @@ const SiteBuild = () => {
 		}
 	};
 
-	useEffect( () => {
-		trackChapters();
-	}, [ currentStep ] );
-
-	useEffect( () => {
+	const trackInstaWpMigrationEvent = () => {
 		if ( currentStep?.path === stepSiteGenMigration?.path ) {
 			if ( instaWpMigrationUrl ) {
 				sendOnboardingEvent(
@@ -397,7 +394,16 @@ const SiteBuild = () => {
 				);
 			}
 		}
-	}, [ instaWpMigrationUrl, currentStep ] );
+	};
+
+	useEffect( () => {
+		trackChapters();
+	}, [ currentStep ] );
+
+	// Track Migration Initated Event in the Migration Step.
+	useEffect( () => {
+		trackInstaWpMigrationEvent();
+	}, [ instaWpMigrationUrl ] );
 
 	const prioritizeFlow = () => {
 		const currentFlow = window.nfdOnboarding.currentFlow;

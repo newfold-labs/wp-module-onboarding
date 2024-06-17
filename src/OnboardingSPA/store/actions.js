@@ -100,7 +100,7 @@ export function setActiveChapter( chapter ) {
 	};
 }
 
-export function setinstaWpMigrationUrl( instaWpMigrationUrl ) {
+export function setInstaWpMigrationUrl( instaWpMigrationUrl ) {
 	return {
 		type: 'SET_INSTAWP_MIGRATION_URL',
 		instaWpMigrationUrl,

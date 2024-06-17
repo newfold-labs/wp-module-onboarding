@@ -18,12 +18,7 @@ import { stepWelcome } from '../../GetStarted/Welcome/step';
 import { injectMigrationStep } from '../../../data/flows/utils';
 import { store as nfdOnboardingStore } from '../../../store';
 import { FOOTER_SITEGEN, HEADER_SITEGEN } from '../../../../constants';
-import {
-	OnboardingEvent,
-	sendOnboardingEvent,
-} from '../../../utils/analytics/hiive';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
-import { ACTION_MIGRATION_INITIATED } from '../../../utils/analytics/hiive/constants';
 
 const StepSiteGenMigration = () => {
 	const {
@@ -36,7 +31,7 @@ const StepSiteGenMigration = () => {
 		setHideFooterNav,
 		updateSiteGenErrorStatus,
 		updateAllSteps,
-		setinstaWpMigrationUrl,
+		setInstaWpMigrationUrl,
 	} = useDispatch( nfdOnboardingStore );
 
 	const { siteGenErrorStatus, allSteps, canMigrateSite, currentBrandName } =
@@ -57,9 +52,9 @@ const StepSiteGenMigration = () => {
 				const response = await getSiteMigrateUrl();
 				const migrateUrl = response?.body?.data?.redirect_url;
 				if ( migrateUrl ) {
-					setinstaWpMigrationUrl( migrateUrl );
+					setInstaWpMigrationUrl( migrateUrl );
 					setTimeout( () => {
-						window.open( migrateUrl, '_self' );
+						// window.open( migrateUrl, '_self' );
 					}, 3000 );
 				} else {
 					updateSiteGenErrorStatus( true );

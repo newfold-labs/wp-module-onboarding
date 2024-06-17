@@ -32,7 +32,6 @@ export function flow(
 				showDialog: false,
 				continuePath: '',
 			},
-			instaWpMigrationUrl: '',
 		},
 		chapter: undefined,
 		interactionDisabled: false,
@@ -133,14 +132,6 @@ export function flow(
 				...state,
 				flow: action.continueWithoutAi,
 			};
-		case 'SET_INSTAWP_MIGRATION_URL':
-			return {
-				...state,
-				steps: {
-					...state.steps,
-					instaWpMigrationUrl: action.instaWpMigrationUrl,
-				},
-			};
 	}
 
 	return state;
@@ -206,9 +197,9 @@ export function data( state = {}, action ) {
 							retryCount:
 								shouldUpdateRetryCount === true
 									? state.flowData.sitegen.siteGenErrorMeta
-										.retryCount + 1
+											.retryCount + 1
 									: state.flowData.sitegen.siteGenErrorMeta
-										.retryCount,
+											.retryCount,
 						},
 					},
 				},
@@ -302,6 +293,17 @@ export function runtime( state = {}, action ) {
 			return {
 				...state,
 				customizeSidebarData: action.customizeSidebarData,
+			};
+		case 'SET_INSTAWP_MIGRATION_URL':
+			return {
+				...state,
+				currentBrand: {
+					...state.currentBrand,
+					migrationInfo: {
+						...state.currentBrand.migrationInfo,
+						instaWpMigrationUrl: action.instaWpMigrationUrl,
+					},
+				},
 			};
 	}
 

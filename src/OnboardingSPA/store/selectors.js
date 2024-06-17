@@ -218,7 +218,7 @@ export function getCurrentStep( state ) {
  * @return {string} Migration URl
  */
 export function getinstaWpMigrationUrl( state ) {
-	return state.flow.steps.instaWpMigrationUrl;
+	return state.runtime.currentBrand.migrationInfo.instaWpMigrationUrl;
 }
 
 export function getCurrentChapter( state ) {
