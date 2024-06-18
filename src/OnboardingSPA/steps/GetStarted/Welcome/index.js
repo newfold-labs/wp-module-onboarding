@@ -76,7 +76,7 @@ const StepWelcome = () => {
 	const handleMigration = () => {
 		if ( canMigrateSite ) {
 			const migrationStepExists = allSteps.some(
-				( step ) => step.path === '/sitegen/step/migration'
+				( step ) => step.path === stepSiteGenMigration.path
 			);
 
 			if ( ! migrationStepExists ) {
