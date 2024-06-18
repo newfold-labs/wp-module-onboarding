@@ -37,12 +37,14 @@ const StepWelcome = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const { brandName, migrationUrl, allSteps, canMigrateSite } = useSelect(
-		( select ) => ( {
-			brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
-			migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
-			allSteps: select( nfdOnboardingStore ).getAllSteps(),
-			canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
-		} ),
+		( select ) => {
+			return {
+				brandName: select( nfdOnboardingStore ).getNewfoldBrandName(),
+				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+				allSteps: select( nfdOnboardingStore ).getAllSteps(),
+				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
+			};
+		},
 		[ location.pathname ]
 	);
 	const {
