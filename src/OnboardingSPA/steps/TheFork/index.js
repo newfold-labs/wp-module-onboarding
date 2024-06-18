@@ -83,7 +83,7 @@ const TheFork = () => {
 		? window.nfdOnboarding.oldFlow
 		: DEFAULT_FLOW;
 
-	const handleForkExit = useCallback( () => {
+	const handleForkExit = () => {
 		sendOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_SITEGEN_FORK_OPTION_SELECTED,
@@ -92,7 +92,7 @@ const TheFork = () => {
 		);
 
 		window.location.replace( pluginDashboardPage );
-	}, [] );
+	};
 
 	const content = getContents();
 	const navigate = useNavigate();
