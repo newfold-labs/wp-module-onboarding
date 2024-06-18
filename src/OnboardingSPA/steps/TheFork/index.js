@@ -67,7 +67,7 @@ const TheFork = () => {
 		setFooterActiveView( FOOTER_SITEGEN );
 		initializePlugins( pluginInstallHash );
 		const migrationStepExists = allSteps.some(
-			( step ) => step.path === '/sitegen/step/migration'
+			( step ) => step.path === stepSiteGenMigration.path
 		);
 		if ( migrationStepExists ) {
 			const updates = removeFromAllSteps( allSteps, [
@@ -98,7 +98,7 @@ const TheFork = () => {
 	const handleMigration = () => {
 		if ( canMigrateSite ) {
 			const migrationStepExists = allSteps.some(
-				( step ) => step.path === '/sitegen/step/migration'
+				( step ) => step.path === stepSiteGenMigration.path
 			);
 
 			if ( ! migrationStepExists ) {
