@@ -35,8 +35,8 @@ import { DEFAULT_FLOW } from '../../data/flows/constants';
 
 const TheFork = () => {
 	const { migrationUrl, canMigrateSite, allSteps, pluginInstallHash } =
-		useSelect(
-			( select ) => ( {
+		useSelect( ( select ) => {
+			return {
 				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
 				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
 				allSteps: select( nfdOnboardingStore ).getAllSteps(),
@@ -44,10 +44,8 @@ const TheFork = () => {
 				routes: select( nfdOnboardingStore ).getRoutes(),
 				pluginInstallHash:
 					select( nfdOnboardingStore ).getPluginInstallHash(),
-			} ),
-			[]
-		);
-
+			};
+		} );
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
