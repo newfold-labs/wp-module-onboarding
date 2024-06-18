@@ -1,5 +1,5 @@
 // Wordpress
-import { useEffect, useCallback, memo } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { chevronRight, external } from '@wordpress/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -71,7 +71,7 @@ const StepWelcome = () => {
 		updateAllSteps( updates.allSteps );
 	}, [] );
 
-	const handleMigration = useCallback( () => {
+	const handleMigration = () => {
 		if ( canMigrateSite ) {
 			const migrationStepExists = allSteps.some(
 				( step ) => step.path === '/sitegen/step/migration'
@@ -91,7 +91,7 @@ const StepWelcome = () => {
 				'MIGRATE'
 			)
 		);
-	}, [ allSteps, canMigrateSite, migrationUrl, navigate, updateAllSteps ] );
+	};
 
 	const content = getContents( brandName );
 
@@ -146,4 +146,4 @@ const StepWelcome = () => {
 	);
 };
 
-export default memo( StepWelcome );
+export default StepWelcome;

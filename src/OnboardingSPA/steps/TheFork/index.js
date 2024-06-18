@@ -1,5 +1,5 @@
 // WordPress
-import { useEffect, useCallback, memo } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useNavigate } from 'react-router-dom';
 
@@ -97,7 +97,7 @@ const TheFork = () => {
 	const content = getContents();
 	const navigate = useNavigate();
 
-	const handleMigration = useCallback( () => {
+	const handleMigration = () => {
 		if ( canMigrateSite ) {
 			const migrationStepExists = allSteps.some(
 				( step ) => step.path === '/sitegen/step/migration'
@@ -117,7 +117,7 @@ const TheFork = () => {
 		} else {
 			window.open( migrationUrl, '_blank' );
 		}
-	}, [ canMigrateSite, allSteps, migrationUrl, navigate, updateAllSteps ] );
+	};
 
 	return (
 		<CommonLayout
@@ -166,4 +166,4 @@ const TheFork = () => {
 	);
 };
 
-export default memo( TheFork );
+export default TheFork;
