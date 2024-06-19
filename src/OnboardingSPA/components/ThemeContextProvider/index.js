@@ -38,9 +38,6 @@ const ThemeProvider = ( { children } ) => {
 		};
 	}, [] );
 
-	/* const toggleTheme = () => {
-		setTheme( ( prevTheme ) => prevTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK );
-	}; */
 	const toggleTheme = () => {
 		setTheme( ( prevTheme ) => {
 			const newTheme =
