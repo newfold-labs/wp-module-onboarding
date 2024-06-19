@@ -4,6 +4,10 @@ import { THEME_DARK, THEME_LIGHT } from '../../../constants';
 const ThemeContext = createContext();
 
 function getPreferredColorScheme() {
+	const storedTheme = window.localStorage.getItem( 'nfd-sitegen-theme-mode' );
+	if ( storedTheme ) {
+		return storedTheme;
+	}
 	if (
 		window.matchMedia &&
 		window.matchMedia( '(prefers-color-scheme: dark)' ).matches
@@ -22,7 +26,9 @@ const ThemeProvider = ( { children } ) => {
 		);
 
 		const handleChange = ( event ) => {
-			setTheme( event.matches ? THEME_DARK : THEME_LIGHT );
+			const newTheme = event.matches ? THEME_DARK : THEME_LIGHT;
+			setTheme( newTheme );
+			window.localStorage.setItem( 'nfd-sitegen-theme-mode', newTheme );
 		};
 
 		colorSchemeMediaQuery.addEventListener( 'change', handleChange );
@@ -32,10 +38,16 @@ const ThemeProvider = ( { children } ) => {
 		};
 	}, [] );
 
+	/* const toggleTheme = () => {
+		setTheme( ( prevTheme ) => prevTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK );
+	}; */
 	const toggleTheme = () => {
-		setTheme( ( prevTheme ) =>
-			prevTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK
-		);
+		setTheme( ( prevTheme ) => {
+			const newTheme =
+				prevTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK;
+			window.localStorage.setItem( 'nfd-sitegen-theme-mode', newTheme );
+			return newTheme;
+		} );
 	};
 
 	return (
