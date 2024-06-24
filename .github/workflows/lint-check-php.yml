@@ -8,6 +8,7 @@ on:
     types: [opened, edited, reopened, ready_for_review]
     paths:
       - '**.php'
+      - '!build/**/*.php'
   workflow_dispatch:
 
 concurrency:

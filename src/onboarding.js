@@ -14,8 +14,8 @@ if ( runtimeDataExists ) {
 		HiiveAnalytics.initialize( {
 			namespace: CATEGORY,
 			urls: {
-				single: onboardingRestURL( 'events' ),
-				batch: onboardingRestURL( 'events/batch' ),
+				single: onboardingRestURL( 'events', false ),
+				batch: onboardingRestURL( 'events/batch', false ),
 			},
 			settings: {
 				debounce: {

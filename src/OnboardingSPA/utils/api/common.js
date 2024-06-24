@@ -5,10 +5,10 @@ import {
 	migrateRestBase,
 } from '../../../constants';
 
-export const onboardingRestURL = ( api ) => {
+export const onboardingRestURL = ( api, includeFlow = true ) => {
 	return (
 		`${ onboardingRestBase }/${ api }` +
-		( window.nfdOnboarding?.currentFlow
+		( includeFlow && window.nfdOnboarding?.currentFlow
 			? `&flow=${ window.nfdOnboarding.currentFlow }`
 			: '' )
 	);
