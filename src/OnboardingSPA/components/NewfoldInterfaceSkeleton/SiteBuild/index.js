@@ -62,6 +62,7 @@ import {
 	ACTION_STARTER_PAGES_SELECTED,
 	ACTION_TAGLINE_SET,
 	ACTION_MIGRATION_INITIATED,
+	ACTION_PAGEVIEW,
 	CATEGORY,
 } from '../../../utils/analytics/hiive/constants';
 
@@ -461,6 +462,10 @@ const SiteBuild = () => {
 		handlePreviousStepTracking();
 		handleConditionalDesignStepsRoutes();
 	}, [ location.pathname, onboardingFlow ] );
+
+	useEffect( () => {
+		sendOnboardingEvent( new OnboardingEvent( ACTION_PAGEVIEW ) );
+	}, [ location.pathname ] );
 
 	const isForkStep =
 		currentStep === stepTheFork ||
