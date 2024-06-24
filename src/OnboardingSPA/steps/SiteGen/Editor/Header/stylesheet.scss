@@ -155,6 +155,10 @@
 						border-bottom: 1.1em solid rgba(var(--nfd-onboarding-secondary-rgb), 0.2);
 						border-left: 1.1em solid var(--nfd-onboarding-secondary);
 					}
+
+					&__icon {
+						fill: var(--nfd-onboarding-secondary);
+					}
 				}
 			}
 		}

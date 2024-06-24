@@ -405,7 +405,9 @@ const StepSiteGenEditorHeader = () => {
 						) : (
 							<Icon
 								icon={ chevronRight }
-								className="nfd-onboarding-header--sitegen__editor__end__save-button__text"
+								className={
+									'nfd-onboarding-header--sitegen__editor__end__save-button__icon'
+								}
 							></Icon>
 						) }
 					</div>
