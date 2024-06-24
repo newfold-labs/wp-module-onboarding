@@ -25,15 +25,16 @@ import { ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET } from '../../../utils/analytics
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenSiteDetails = () => {
-	const [customerInput, setCustomerInput] = useState('');
-	const [customerInputStrength, setCustomerInputStrength] = useState(0);
-	const [isValidInput, setIsValidInput] = useState(false);
+	const [ customerInput, setCustomerInput ] = useState( '' );
+	const [ customerInputStrength, setCustomerInputStrength ] = useState( 0 );
+	const [ isValidInput, setIsValidInput ] = useState( false );
 
-	const { currentData } = useSelect((select) => {
+	const { currentData } = useSelect( ( select ) => {
 		return {
-			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
-	});
+	} );
 
 	const {
 		setIsFooterNavAllowed,
@@ -44,39 +45,39 @@ const SiteGenSiteDetails = () => {
 		setHideFooterNav,
 		setCurrentOnboardingData,
 		setIsHeaderNavigationEnabled,
-	} = useDispatch(nfdOnboardingStore);
+	} = useDispatch( nfdOnboardingStore );
 
-	const isLargeViewport = useViewportMatch('small');
+	const isLargeViewport = useViewportMatch( 'small' );
 
-	useEffect(() => {
-		setHideFooterNav(false);
-		setIsHeaderEnabled(true);
-		setSidebarActiveView(false);
-		setHeaderActiveView(HEADER_SITEGEN);
-		setIsHeaderNavigationEnabled(true);
-		setDrawerActiveView(false);
-		if (currentData.sitegen.siteDetails?.prompt !== '') {
+	useEffect( () => {
+		setHideFooterNav( false );
+		setIsHeaderEnabled( true );
+		setSidebarActiveView( false );
+		setHeaderActiveView( HEADER_SITEGEN );
+		setIsHeaderNavigationEnabled( true );
+		setDrawerActiveView( false );
+		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
 			if (
 				currentData.sitegen.siteDetails?.prompt.length <
 				currentData.sitegen.siteDetails?.minCharLimit
 			) {
-				setIsValidInput(false);
-				setIsFooterNavAllowed(false);
+				setIsValidInput( false );
+				setIsFooterNavAllowed( false );
 				currentData.sitegen.siteDetails.prompt = '';
-				setCurrentOnboardingData(currentData);
+				setCurrentOnboardingData( currentData );
 			} else {
-				setIsValidInput(true);
-				setIsFooterNavAllowed(true);
+				setIsValidInput( true );
+				setIsFooterNavAllowed( true );
 			}
-			return setCustomerInput(currentData.sitegen.siteDetails.prompt);
+			return setCustomerInput( currentData.sitegen.siteDetails.prompt );
 		}
-		setIsFooterNavAllowed(false);
-	}, []);
+		setIsFooterNavAllowed( false );
+	}, [] );
 
-	useEffect(() => {
-		if (customerInput !== undefined) {
+	useEffect( () => {
+		if ( customerInput !== undefined ) {
 			const customerInputTrimmed = customerInput.trim();
-			if (customerInputTrimmed !== '') {
+			if ( customerInputTrimmed !== '' ) {
 				// When something new is added then only change in store.
 				if (
 					customerInputTrimmed !==
@@ -89,21 +90,21 @@ const SiteGenSiteDetails = () => {
 					currentData.sitegen.sitemapPagesGenerated = false;
 					currentData.sitegen.homepages.active = {};
 					currentData.sitegen.homepages.data = {};
-					setCurrentOnboardingData(currentData);
+					setCurrentOnboardingData( currentData );
 				}
 				// Else just make sure the Next is enabled when prompt is present
-				setIsValidInput(true);
-				setIsFooterNavAllowed(true);
+				setIsValidInput( true );
+				setIsFooterNavAllowed( true );
 			} else {
-				setIsValidInput(false);
-				setIsFooterNavAllowed(false);
+				setIsValidInput( false );
+				setIsFooterNavAllowed( false );
 			}
 		}
-	}, [customerInput]);
+	}, [ customerInput ] );
 
 	const trackPromptSetEvent = () => {
 		let customerInputStrengthForEvent = false;
-		switch (customerInputStrength) {
+		switch ( customerInputStrength ) {
 			case 2:
 				customerInputStrengthForEvent = 'MEDIUM';
 				break;
@@ -112,7 +113,7 @@ const SiteGenSiteDetails = () => {
 				break;
 		}
 
-		if (customerInputStrengthForEvent) {
+		if ( customerInputStrengthForEvent ) {
 			trackOnboardingEvent(
 				new OnboardingEvent(
 					ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET,
@@ -131,32 +132,34 @@ const SiteGenSiteDetails = () => {
 	return (
 		<SiteGenStateHandler>
 			<CommonLayout isCentered>
-				<Animate type={'fade-in'}>
-					<div className={'nfd-sg-site-details'}>
-						<AIHeading title={content.heading} />
+				<Animate type={ 'fade-in' }>
+					<div className={ 'nfd-sg-site-details' }>
+						<AIHeading title={ content.heading } />
 						<TextInputSiteGen
-							placeholder={content.inputPlaceholder}
-							hint={content.inputHint}
-							height={'40px'}
-							customerInput={customerInput}
-							setCustomerInput={setCustomerInput}
-							setCustomerInputStrength={setCustomerInputStrength}
-							customChildren={true}
+							placeholder={ content.inputPlaceholder }
+							hint={ content.inputHint }
+							height={ '40px' }
+							customerInput={ customerInput }
+							setCustomerInput={ setCustomerInput }
+							setCustomerInputStrength={
+								setCustomerInputStrength
+							}
+							customChildren={ true }
 						>
-							{isLargeViewport && (
-								<div className={'nfd-sg-site-details-endrow'}>
+							{ isLargeViewport && (
+								<div className={ 'nfd-sg-site-details-endrow' }>
 									<NextButtonSiteGen
 										className={
 											'nfd-sg-site-details--next-btn'
 										}
-										callback={() => {
+										callback={ () => {
 											trackPromptSetEvent();
-										}}
-										text={content.buttonText}
-										disabled={!isValidInput}
+										} }
+										text={ content.buttonText }
+										disabled={ ! isValidInput }
 									/>
 								</div>
-							)}
+							) }
 						</TextInputSiteGen>
 					</div>
 				</Animate>
