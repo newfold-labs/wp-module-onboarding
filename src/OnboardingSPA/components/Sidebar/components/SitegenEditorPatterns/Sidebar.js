@@ -129,7 +129,7 @@ const SitegenEditorPatternsSidebar = () => {
 
 	useEffect( () => {
 		if ( ! ( activeTab?.home === 'favorites' ) ) {
-				setActiveTab( {
+			setActiveTab( {
 				name: 'all_versions',
 				title: (
 					<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab">
@@ -202,8 +202,8 @@ const SitegenEditorPatternsSidebar = () => {
 							</div>
 						);
 					} ),
-				} );
-	}
+			} );
+		}
 	}, [ homepages, activeHomepage, globalStyles ] );
 
 	return (
