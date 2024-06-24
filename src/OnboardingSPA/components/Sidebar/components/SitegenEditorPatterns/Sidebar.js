@@ -128,7 +128,7 @@ const SitegenEditorPatternsSidebar = () => {
 	}, [ currentData ] );
 
 	useEffect( () => {
-		setActiveTab( {
+		!( activeTab?.home === "favorites") && setActiveTab( {
 			name: 'all_versions',
 			title: (
 				<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab">
