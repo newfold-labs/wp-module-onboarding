@@ -17,7 +17,7 @@ if ( runtimeDataExists ) {
 	domReady( () => {
 		// Integrate Sentry to send errors and data for tracking
 		Sentry.init( {
-			dsn: 'https://cd5bd4c30b914e0d1d0f49413e600afa@o4506197201715200.ingest.us.sentry.io/4507383861805056',
+			dsn: window.nfdOnboarding.sentryInitDsnURL,
 			integrations: [ Sentry.browserTracingIntegration() ],
 			release: releaseVersion,
 			// Performance Monitoring
