@@ -35,6 +35,7 @@ export function flow(
 		},
 		chapter: undefined,
 		interactionDisabled: false,
+		sitegenThemeMode: '',
 	},
 	action
 ) {
@@ -131,6 +132,11 @@ export function flow(
 			return {
 				...state,
 				flow: action.continueWithoutAi,
+			};
+		case 'SET_SITEGEN_THEME_MODE':
+			return {
+				...state,
+				sitegenThemeMode: action.sitegenThemeMode,
 			};
 	}
 
