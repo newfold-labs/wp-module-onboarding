@@ -21,9 +21,10 @@ import { FOOTER_SITEGEN, HEADER_SITEGEN } from '../../../../constants';
 import {
 	OnboardingEvent,
 	sendOnboardingEvent,
+	trackOnboardingEvent,
 } from '../../../utils/analytics/hiive';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
-import { ACTION_MIGRATION_INITIATED } from '../../../utils/analytics/hiive/constants';
+import { ACTION_MIGRATION_INITIATED, ACTION_SITEGEN_ERROR_STATE_TRIGGERED } from '../../../utils/analytics/hiive/constants';
 
 const StepSiteGenMigration = () => {
 	const {
@@ -66,14 +67,41 @@ const StepSiteGenMigration = () => {
 						window.open( migrateUrl, '_self' );
 					}, 3000 );
 				} else {
+					trackOnboardingEvent(
+						new OnboardingEvent(
+							ACTION_SITEGEN_ERROR_STATE_TRIGGERED,
+							'migration',
+							{
+								source: SITEGEN_FLOW,
+							}
+						)
+					);
 					updateSiteGenErrorStatus( true );
 				}
 			} else {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_SITEGEN_ERROR_STATE_TRIGGERED,
+						'migration',
+						{
+							source: SITEGEN_FLOW,
+						}
+					)
+				);
 				updateSiteGenErrorStatus( true );
 			}
 		} catch ( error ) {
 			// eslint-disable-next-line no-console
 			console.error( 'Failed to fetch migration URL:', error );
+			trackOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_SITEGEN_ERROR_STATE_TRIGGERED,
+					'migration',
+					{
+						source: SITEGEN_FLOW,
+					}
+				)
+			);
 			updateSiteGenErrorStatus( true );
 		}
 	};

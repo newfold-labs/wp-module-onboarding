@@ -38,6 +38,7 @@ import { MAX_RETRIES_SITE_GEN } from '../../../../constants';
 import {
 	ACTION_ONBOARDING_CHAPTER_COMPLETE,
 	ACTION_ONBOARDING_CHAPTER_STARTED,
+	ACTION_SITEGEN_ERROR_STATE_TRIGGERED,
 } from '../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
 import { stepTheFork } from '../../../steps/TheFork/step';
@@ -176,6 +177,16 @@ const SiteGen = () => {
 				return prevState;
 			} );
 
+			trackOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_SITEGEN_ERROR_STATE_TRIGGERED,
+					identifier,
+					{
+						source: SITEGEN_FLOW,
+					}
+				)
+			);
+
 			if ( siteGenErrorStatus === false ) {
 				updateSiteGenErrorStatus( true );
 				setIsGeneratingSiteMeta( false );
@@ -214,6 +225,15 @@ const SiteGen = () => {
 			);
 
 			if ( response.error ) {
+				trackOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_SITEGEN_ERROR_STATE_TRIGGERED,
+						'homepages',
+						{
+							source: SITEGEN_FLOW,
+						}
+					)
+				);
 				updateSiteGenErrorStatus( true );
 				setIsGeneratingHomepages( false );
 				setCurrentOnboardingData( currentData );
