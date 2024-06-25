@@ -133,11 +133,6 @@ export function flow(
 				...state,
 				flow: action.continueWithoutAi,
 			};
-		case 'SET_SITEGEN_THEME_MODE':
-			return {
-				...state,
-				sitegenThemeMode: action.sitegenThemeMode,
-			};
 	}
 
 	return state;

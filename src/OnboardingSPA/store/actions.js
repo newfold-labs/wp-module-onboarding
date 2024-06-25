@@ -324,10 +324,3 @@ export function setContinueWithoutAi( continueWithoutAi ) {
 		continueWithoutAi,
 	};
 }
-
-export function setSitegenThemeMode( sitegenThemeMode ) {
-	return {
-		type: 'SET_SITEGEN_THEME_MODE',
-		sitegenThemeMode,
-	};
-}

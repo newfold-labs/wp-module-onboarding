@@ -1,20 +1,21 @@
 import { useState, useEffect, createContext } from '@wordpress/element';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../store';
+import { setFlow } from '../../utils/api/flow';
 import { THEME_DARK, THEME_LIGHT } from '../../../constants';
 
 const ThemeContext = createContext();
 
 function usePreferredColorScheme() {
-	const { sitegenThemeMode } = useSelect( ( select ) => {
+	const { currentData } = useSelect( ( select ) => {
 		return {
-			sitegenThemeMode:
-				select( nfdOnboardingStore ).getSitegenThemeMode(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	} );
 
-	if ( sitegenThemeMode ) {
-		return sitegenThemeMode;
+	if ( currentData.sitegenThemeMode ) {
+		return currentData.sitegenThemeMode;
 	}
 
 	if (
@@ -31,7 +32,12 @@ const ThemeProvider = ( { children } ) => {
 	const preferredColorScheme = usePreferredColorScheme();
 	const [ theme, setTheme ] = useState( preferredColorScheme );
 
-	const { setSitegenThemeMode } = useDispatch( nfdOnboardingStore );
+	const { currentData } = useSelect( ( select ) => {
+		return {
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+		};
+	} );
 
 	useEffect( () => {
 		const colorSchemeMediaQuery = window.matchMedia(
@@ -41,7 +47,8 @@ const ThemeProvider = ( { children } ) => {
 		const handleChange = ( event ) => {
 			const newTheme = event.matches ? THEME_DARK : THEME_LIGHT;
 			setTheme( newTheme );
-			setSitegenThemeMode( newTheme );
+			currentData.sitegenThemeMode = newTheme;
+			setFlow( currentData );
 		};
 
 		colorSchemeMediaQuery.addEventListener( 'change', handleChange );
@@ -49,18 +56,14 @@ const ThemeProvider = ( { children } ) => {
 		return () => {
 			colorSchemeMediaQuery.removeEventListener( 'change', handleChange );
 		};
-	}, [ setSitegenThemeMode ] );
-
-	useEffect( () => {
-		// This effect will only run once, after the initial render.
-		setSitegenThemeMode( preferredColorScheme );
-	}, [ preferredColorScheme, setSitegenThemeMode ] );
+	}, [] );
 
 	const toggleTheme = () => {
 		setTheme( ( prevTheme ) => {
 			const newTheme =
 				prevTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK;
-			setSitegenThemeMode( newTheme );
+			currentData.sitegenThemeMode = newTheme;
+			setFlow( currentData );
 			return newTheme;
 		} );
 	};
