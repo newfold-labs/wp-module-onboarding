@@ -128,7 +128,7 @@ const SitegenEditorPatternsSidebar = () => {
 	}, [ currentData ] );
 
 	useEffect( () => {
-		if ( ! ( activeTab?.home === 'favorites' ) ) {
+		if ( activeTab?.home !== 'favorites' ) {
 			setActiveTab( {
 				name: 'all_versions',
 				title: (
