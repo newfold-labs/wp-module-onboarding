@@ -66,15 +66,6 @@ const TheFork = () => {
 		setDrawerActiveView( false );
 		setFooterActiveView( FOOTER_SITEGEN );
 		initializePlugins( pluginInstallHash );
-		const migrationStepExists = allSteps.some(
-			( step ) => step.path === stepSiteGenMigration.path
-		);
-		if ( migrationStepExists ) {
-			const updates = removeFromAllSteps( allSteps, [
-				stepSiteGenMigration,
-			] );
-			updateAllSteps( updates.allSteps );
-		}
 	} );
 
 	const oldFlow = window.nfdOnboarding?.oldFlow
