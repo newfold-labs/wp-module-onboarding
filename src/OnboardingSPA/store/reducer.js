@@ -35,7 +35,6 @@ export function flow(
 		},
 		chapter: undefined,
 		interactionDisabled: false,
-		sitegenThemeMode: '',
 	},
 	action
 ) {

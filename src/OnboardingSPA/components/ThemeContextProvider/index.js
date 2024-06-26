@@ -1,19 +1,12 @@
 import { useState, useEffect, createContext } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../store';
 import { setFlow } from '../../utils/api/flow';
 import { THEME_DARK, THEME_LIGHT } from '../../../constants';
 
 const ThemeContext = createContext();
 
-function usePreferredColorScheme() {
-	const { currentData } = useSelect( ( select ) => {
-		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
-		};
-	} );
-
+function usePreferredColorScheme( currentData ) {
 	if ( currentData.sitegenThemeMode ) {
 		return currentData.sitegenThemeMode;
 	}
@@ -29,15 +22,16 @@ function usePreferredColorScheme() {
 }
 
 const ThemeProvider = ( { children } ) => {
-	const preferredColorScheme = usePreferredColorScheme();
-	const [ theme, setTheme ] = useState( preferredColorScheme );
-
 	const { currentData } = useSelect( ( select ) => {
 		return {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	} );
+
+	const preferredColorScheme = usePreferredColorScheme( currentData );
+	const [ theme, setTheme ] = useState( preferredColorScheme );
+	const { setCurrentOnboardingData } = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
 		const colorSchemeMediaQuery = window.matchMedia(
@@ -48,6 +42,7 @@ const ThemeProvider = ( { children } ) => {
 			const newTheme = event.matches ? THEME_DARK : THEME_LIGHT;
 			setTheme( newTheme );
 			currentData.sitegenThemeMode = newTheme;
+			setCurrentOnboardingData( currentData );
 			setFlow( currentData );
 		};
 
@@ -63,6 +58,7 @@ const ThemeProvider = ( { children } ) => {
 			const newTheme =
 				prevTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK;
 			currentData.sitegenThemeMode = newTheme;
+			setCurrentOnboardingData( currentData );
 			setFlow( currentData );
 			return newTheme;
 		} );
