@@ -356,6 +356,7 @@ const DesignFontsPanel = forwardRef(
 
 		const handleSelectYourOwnFonts = () => {
 			setShowCustomFonts( true );
+			setSelectedGroup( 'custom' );
 			if ( ! selectedCustomFont ) {
 				setIsEditingCustomFont( true );
 			}
@@ -366,7 +367,7 @@ const DesignFontsPanel = forwardRef(
 		};
 
 		const handleCancelCustomFonts = () => {
-			if ( ! selectedCustomFont ) {
+			if ( ! selectedCustomFont.heading || ! selectedCustomFont.body ) {
 				setShowCustomFonts( false );
 			} else {
 				setIsEditingCustomFont( false );
