@@ -5,10 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 // Classes and functions
 import getContents from './contents';
-import {
-	injectMigrationStep,
-	removeFromAllSteps,
-} from '../../data/flows/utils';
+import { injectMigrationStep } from '../../data/flows/utils';
 import { init as initializePlugins } from '../../utils/api/plugins';
 
 // Components
