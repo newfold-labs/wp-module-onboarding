@@ -48,6 +48,7 @@ import { resolveGetDataForFlow, getInitialChapters } from '../../../data/flows';
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
+	sendOnboardingEvent,
 } from '../../../utils/analytics/hiive';
 import { injectInAllSteps } from '../../../data/flows/utils';
 import {
@@ -60,8 +61,11 @@ import {
 	ACTION_SOCIAL_ADDED,
 	ACTION_STARTER_PAGES_SELECTED,
 	ACTION_TAGLINE_SET,
+	ACTION_MIGRATION_INITIATED,
+	ACTION_PAGEVIEW,
 	CATEGORY,
 } from '../../../utils/analytics/hiive/constants';
+
 import { socialMediaStoreToState } from '../../SocialMediaForm/utils';
 
 const SiteBuild = () => {
@@ -84,6 +88,7 @@ const SiteBuild = () => {
 		brandConfig,
 		initialize,
 		pluginInstallHash,
+		instaWpMigrationUrl,
 	} = useSelect(
 		( select ) => {
 			return {
@@ -107,6 +112,8 @@ const SiteBuild = () => {
 				initialize: select( nfdOnboardingStore ).getInitialize(),
 				pluginInstallHash:
 					select( nfdOnboardingStore ).getPluginInstallHash(),
+				instaWpMigrationUrl:
+					select( nfdOnboardingStore ).getinstaWpMigrationUrl(),
 			};
 		},
 		[ location.pathname ]
@@ -332,6 +339,7 @@ const SiteBuild = () => {
 	};
 
 	const trackChapters = () => {
+		trackInstaWpMigrationEvent();
 		if ( location.pathname === firstStep.path ) {
 			trackOnboardingEvent(
 				new OnboardingEvent( ACTION_ONBOARDING_STARTED )
@@ -376,9 +384,27 @@ const SiteBuild = () => {
 		}
 	};
 
+	const trackInstaWpMigrationEvent = () => {
+		if ( currentStep?.path === stepSiteGenMigration?.path ) {
+			if ( instaWpMigrationUrl ) {
+				sendOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_MIGRATION_INITIATED,
+						instaWpMigrationUrl
+					)
+				);
+			}
+		}
+	};
+
 	useEffect( () => {
 		trackChapters();
 	}, [ currentStep ] );
+
+	// Track Migration Initated Event in the Migration Step.
+	useEffect( () => {
+		trackInstaWpMigrationEvent();
+	}, [ instaWpMigrationUrl ] );
 
 	const prioritizeFlow = () => {
 		const currentFlow = window.nfdOnboarding.currentFlow;
@@ -436,6 +462,10 @@ const SiteBuild = () => {
 		handlePreviousStepTracking();
 		handleConditionalDesignStepsRoutes();
 	}, [ location.pathname, onboardingFlow ] );
+
+	useEffect( () => {
+		sendOnboardingEvent( new OnboardingEvent( ACTION_PAGEVIEW ) );
+	}, [ location.pathname ] );
 
 	const isForkStep =
 		currentStep === stepTheFork ||

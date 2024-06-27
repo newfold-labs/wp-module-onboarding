@@ -22,6 +22,7 @@ import { trigger as cronTrigger } from '../../../utils/api/cronTrigger';
 import {
 	OnboardingEvent,
 	trackOnboardingEvent,
+	sendOnboardingEvent,
 } from '../../../utils/analytics/hiive';
 
 // Components
@@ -38,6 +39,7 @@ import { MAX_RETRIES_SITE_GEN } from '../../../../constants';
 import {
 	ACTION_ONBOARDING_CHAPTER_COMPLETE,
 	ACTION_ONBOARDING_CHAPTER_STARTED,
+	ACTION_PAGEVIEW,
 } from '../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
 import { stepTheFork } from '../../../steps/TheFork/step';
@@ -120,6 +122,7 @@ const SiteGen = () => {
 		syncStoreToDB();
 		generateSiteGenData();
 		handlePreviousStepTracking();
+		sendOnboardingEvent( new OnboardingEvent( ACTION_PAGEVIEW ) );
 	}, [ location.pathname ] );
 
 	useEffect( () => {

@@ -75,8 +75,14 @@ const StepWelcome = () => {
 
 	const handleMigration = () => {
 		if ( canMigrateSite ) {
-			const updates = injectMigrationStep( allSteps, stepWelcome );
-			updateAllSteps( updates.allSteps );
+			const migrationStepExists = allSteps.some(
+				( step ) => step.path === stepSiteGenMigration.path
+			);
+
+			if ( ! migrationStepExists ) {
+				const updates = injectMigrationStep( allSteps, stepWelcome );
+				updateAllSteps( updates.allSteps );
+			}
 			navigate( stepSiteGenMigration.path );
 		} else {
 			window.open( migrationUrl, '_blank' );

@@ -294,6 +294,17 @@ export function runtime( state = {}, action ) {
 				...state,
 				customizeSidebarData: action.customizeSidebarData,
 			};
+		case 'SET_INSTAWP_MIGRATION_URL':
+			return {
+				...state,
+				currentBrand: {
+					...state.currentBrand,
+					migrationInfo: {
+						...state.currentBrand.migrationInfo,
+						instaWpMigrationUrl: action.instaWpMigrationUrl,
+					},
+				},
+			};
 	}
 
 	return state;

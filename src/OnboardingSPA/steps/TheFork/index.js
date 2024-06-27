@@ -31,18 +31,18 @@ import { store as nfdOnboardingStore } from '../../store';
 import { DEFAULT_FLOW } from '../../data/flows/constants';
 
 const TheFork = () => {
-	const { migrationUrl, canMigrateSite, allSteps, pluginInstallHash } = useSelect(
-		( select ) => {
+	const { migrationUrl, canMigrateSite, allSteps, pluginInstallHash } =
+		useSelect( ( select ) => {
 			return {
 				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
 				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
 				allSteps: select( nfdOnboardingStore ).getAllSteps(),
 				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 				routes: select( nfdOnboardingStore ).getRoutes(),
-				pluginInstallHash: select( nfdOnboardingStore ).getPluginInstallHash(),
+				pluginInstallHash:
+					select( nfdOnboardingStore ).getPluginInstallHash(),
 			};
-		}
-	);
+		} );
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -79,23 +79,30 @@ const TheFork = () => {
 
 		window.location.replace( pluginDashboardPage );
 	};
+
 	const content = getContents();
 	const navigate = useNavigate();
 
 	const handleMigration = () => {
 		if ( canMigrateSite ) {
-			const updates = injectMigrationStep( allSteps, stepTheFork );
-			updateAllSteps( updates.allSteps );
+			const migrationStepExists = allSteps.some(
+				( step ) => step.path === stepSiteGenMigration.path
+			);
+
+			if ( ! migrationStepExists ) {
+				const updates = injectMigrationStep( allSteps, stepTheFork );
+				updateAllSteps( updates.allSteps );
+			}
+			trackOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_SITEGEN_FORK_OPTION_SELECTED,
+					'MIGRATE'
+				)
+			);
 			navigate( stepSiteGenMigration.path );
 		} else {
 			window.open( migrationUrl, '_blank' );
 		}
-		trackOnboardingEvent(
-			new OnboardingEvent(
-				ACTION_SITEGEN_FORK_OPTION_SELECTED,
-				'MIGRATE'
-			)
-		);
 	};
 
 	return (
