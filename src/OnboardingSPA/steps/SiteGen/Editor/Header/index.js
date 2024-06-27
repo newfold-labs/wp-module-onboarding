@@ -391,9 +391,9 @@ const StepSiteGenEditorHeader = () => {
 						>
 							{ isLargeViewport
 								? __(
-										'Save & Continue',
-										'wp-module-onboarding'
-								  )
+									'Save & Continue',
+									'wp-module-onboarding'
+								)
 								: __( 'Next', 'wp-module-onboarding' ) }
 						</div>
 						{ isSaving ? (
@@ -405,7 +405,9 @@ const StepSiteGenEditorHeader = () => {
 						) : (
 							<Icon
 								icon={ chevronRight }
-								className="nfd-onboarding-header--sitegen__editor__end__save-button__text"
+								className={
+									'nfd-onboarding-header--sitegen__editor__end__save-button__icon'
+								}
 							></Icon>
 						) }
 					</div>
