@@ -128,80 +128,82 @@ const SitegenEditorPatternsSidebar = () => {
 	}, [ currentData ] );
 
 	useEffect( () => {
-		setActiveTab( {
-			name: 'all_versions',
-			title: (
-				<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab">
-					<p>{ __( 'All Versions', 'wp-module-onboarding' ) }</p>
-				</div>
-			),
-			content:
-				homepages &&
-				activeHomepage &&
-				globalStyles &&
-				Object.keys( homepages ).map( ( homepage, idx ) => {
-					const data = homepages[ homepage ];
-					const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
-					newPreviewSettings.settings.color.palette =
-						data.color.palette;
-					let blockGrammar = '';
-					[ 'header', 'content', 'footer' ].forEach( ( part ) => {
-						if ( part in data ) {
-							blockGrammar += data[ part ];
-						}
-					} );
-					return (
-						<div
-							className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container` }
-							key={ data.slug }
-						>
+		if ( activeTab?.name !== 'favorites' ) {
+			setActiveTab( {
+				name: 'all_versions',
+				title: (
+					<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab">
+						<p>{ __( 'All Versions', 'wp-module-onboarding' ) }</p>
+					</div>
+				),
+				content:
+					homepages &&
+					activeHomepage &&
+					globalStyles &&
+					Object.keys( homepages ).map( ( homepage, idx ) => {
+						const data = homepages[ homepage ];
+						const newPreviewSettings = cloneDeep( globalStyles[ 0 ] );
+						newPreviewSettings.settings.color.palette =
+							data.color.palette;
+						let blockGrammar = '';
+						[ 'header', 'content', 'footer' ].forEach( ( part ) => {
+							if ( part in data ) {
+								blockGrammar += data[ part ];
+							}
+						} );
+						return (
 							<div
-								className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__previews"
-								onClick={ () =>
-									handlePreview( data.slug, idx )
-								}
-								role="button"
-								tabIndex={ 0 }
-								onKeyDown={ () =>
-									handlePreview( data.slug, idx )
-								}
+								className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container` }
+								key={ data.slug }
 							>
-								<LivePreview
-									styling={
-										data.slug !== activeHomepage.slug
-											? 'custom'
-											: 'custom__highlighted'
-									}
-									blockGrammer={ blockGrammar }
-									viewportWidth={ 1300 }
-									previewSettings={ newPreviewSettings }
-									skeletonLoadingTime={ 0 }
-								/>
-							</div>
-
-							<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context">
 								<div
-									className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon ${
-										data.isFavorite &&
-										'nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon__fill'
-									}` }
+									className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__previews"
+									onClick={ () =>
+										handlePreview( data.slug, idx )
+									}
 									role="button"
 									tabIndex={ 0 }
-									onClick={ () =>
-										handleFavorite( data.slug, idx )
-									}
 									onKeyDown={ () =>
-										handleFavorite( data.slug, idx )
+										handlePreview( data.slug, idx )
 									}
-								></div>
-								<p className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__title">
-									{ data.title }
-								</p>
+								>
+									<LivePreview
+										styling={
+											data.slug !== activeHomepage.slug
+												? 'custom'
+												: 'custom__highlighted'
+										}
+										blockGrammer={ blockGrammar }
+										viewportWidth={ 1300 }
+										previewSettings={ newPreviewSettings }
+										skeletonLoadingTime={ 0 }
+									/>
+								</div>
+
+								<div className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context">
+									<div
+										className={ `nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon ${
+											data.isFavorite &&
+											'nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__icon__fill'
+										}` }
+										role="button"
+										tabIndex={ 0 }
+										onClick={ () =>
+											handleFavorite( data.slug, idx )
+										}
+										onKeyDown={ () =>
+											handleFavorite( data.slug, idx )
+										}
+									></div>
+									<p className="nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container__context__title">
+										{ data.title }
+									</p>
+								</div>
 							</div>
-						</div>
-					);
-				} ),
-		} );
+						);
+					} ),
+			} );
+		}
 	}, [ homepages, activeHomepage, globalStyles ] );
 
 	return (
