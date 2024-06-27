@@ -211,6 +211,16 @@ export function getCurrentStep( state ) {
 	return filtered[ 0 ];
 }
 
+/**
+ * Gets migration Url from store.
+ *
+ * @param {*} state
+ * @return {string} Migration URl
+ */
+export function getinstaWpMigrationUrl( state ) {
+	return state.runtime.currentBrand.migrationInfo.instaWpMigrationUrl;
+}
+
 export function getCurrentChapter( state ) {
 	return state.flow.chapter;
 }

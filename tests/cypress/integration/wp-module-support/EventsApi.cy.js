@@ -1,6 +1,6 @@
 export const APIList = {
-	events_api_general_onb: '/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fevents%2Fbatch&flow=wp-setup&_locale=user',
-	events_api_ecomm: '/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fevents%2Fbatch&flow=ecommerce&_locale=user'
+	events_api_general_onb: '/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fevents%2Fbatch&_locale=user',
+	events_api_ecomm: '/index.php?rest_route=%2Fnewfold-onboarding%2Fv1%2Fevents%2Fbatch&_locale=user'
 };
 
 export const EventsAPI = ( events_name, card_val, api_name ) => {

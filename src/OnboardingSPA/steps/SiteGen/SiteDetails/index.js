@@ -57,8 +57,18 @@ const SiteGenSiteDetails = () => {
 		setIsHeaderNavigationEnabled( true );
 		setDrawerActiveView( false );
 		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
-			setIsValidInput( true );
-			setIsFooterNavAllowed( true );
+			if (
+				currentData.sitegen.siteDetails?.prompt.length <
+				currentData.sitegen.siteDetails?.minCharLimit
+			) {
+				setIsValidInput( false );
+				setIsFooterNavAllowed( false );
+				currentData.sitegen.siteDetails.prompt = '';
+				setCurrentOnboardingData( currentData );
+			} else {
+				setIsValidInput( true );
+				setIsFooterNavAllowed( true );
+			}
 			return setCustomerInput( currentData.sitegen.siteDetails.prompt );
 		}
 		setIsFooterNavAllowed( false );
