@@ -23,6 +23,7 @@ import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
 import {
 	ACTION_LOGO_ADDED,
+	ACTION_SITEGEN_ERROR_STATE_TRIGGERED,
 	ACTION_SITEGEN_LOGO_SKIPPED,
 } from '../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
@@ -105,6 +106,15 @@ const SiteGenSiteLogo = () => {
 	};
 
 	const handleFailure = () => {
+		trackOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_SITEGEN_ERROR_STATE_TRIGGERED,
+				'site-logo',
+				{
+					source: SITEGEN_FLOW,
+				}
+			)
+		);
 		updateSiteGenErrorStatus( true );
 	};
 

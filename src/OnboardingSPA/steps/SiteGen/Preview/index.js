@@ -29,6 +29,7 @@ import {
 
 // Misc
 import {
+	ACTION_SITEGEN_ERROR_STATE_TRIGGERED,
 	ACTION_SITEGEN_HOMEPAGE_FAVORITED,
 	ACTION_SITEGEN_HOMEPAGE_REGENERATED,
 	ACTION_SITEGEN_HOMEPAGE_SELECTED,
@@ -112,6 +113,15 @@ const SiteGenPreview = () => {
 
 		if ( response.error ) {
 			setIsPreviewLoading( false );
+			trackOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_SITEGEN_ERROR_STATE_TRIGGERED,
+					'homepages',
+					{
+						source: SITEGEN_FLOW,
+					}
+				)
+			);
 			updateSiteGenErrorStatus( true );
 			return;
 		}

@@ -25,6 +25,7 @@ import { SiteGenStateHandler } from '../../../components/StateHandlers';
 import { store as nfdOnboardingStore } from '../../../store';
 import { HEADER_SITEGEN } from '../../../../constants';
 import {
+	ACTION_SITEGEN_ERROR_STATE_TRIGGERED,
 	ACTION_SITEGEN_SOCIAL_CONNECTED,
 	ACTION_SITEGEN_SOCIAL_CONNECT_SKIPPED,
 } from '../../../utils/analytics/hiive/constants';
@@ -83,6 +84,15 @@ const SiteGenSiteSocialMedia = () => {
 		if ( 404 === error?.data?.status ) {
 			return;
 		}
+		trackOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_SITEGEN_ERROR_STATE_TRIGGERED,
+				'social-media',
+				{
+					source: SITEGEN_FLOW,
+				}
+			)
+		);
 		updateSiteGenErrorStatus( true );
 	};
 
