@@ -30,21 +30,22 @@ import { SITEGEN_FLOW } from '../../../data/flows/constants';
 import { SiteGenStateHandler } from '../../../components/StateHandlers';
 
 const SiteGenSiteLogo = () => {
-	const [siteLogo, setSiteLogo] = useState();
+	const [ siteLogo, setSiteLogo ] = useState();
 
-	const isLargeViewport = useViewportMatch('small');
+	const isLargeViewport = useViewportMatch( 'small' );
 
-	const { currentData } = useSelect((select) => {
+	const { currentData } = useSelect( ( select ) => {
 		return {
-			currentData: select(nfdOnboardingStore).getCurrentOnboardingData(),
+			currentData:
+				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
-	});
+	} );
 
-	const { getEditedEntityRecord } = useSelect((select) => {
-		return select(coreStore);
-	}, []);
+	const { getEditedEntityRecord } = useSelect( ( select ) => {
+		return select( coreStore );
+	}, [] );
 
-	const { editEntityRecord } = useDispatch(coreStore);
+	const { editEntityRecord } = useDispatch( coreStore );
 
 	const {
 		setIsFooterNavAllowed,
@@ -56,22 +57,22 @@ const SiteGenSiteLogo = () => {
 		setCurrentOnboardingData,
 		setIsHeaderNavigationEnabled,
 		updateSiteGenErrorStatus,
-	} = useDispatch(nfdOnboardingStore);
+	} = useDispatch( nfdOnboardingStore );
 
-	useEffect(() => {
-		setHideFooterNav(false);
-		setIsHeaderEnabled(true);
-		setSidebarActiveView(false);
-		setIsHeaderNavigationEnabled(true);
-		setHeaderActiveView(HEADER_SITEGEN);
-		setDrawerActiveView(false);
-		if (currentData.sitegen.siteLogo?.id !== 0) {
-			setIsFooterNavAllowed(true);
-			return setSiteLogo(currentData.sitegen.siteLogo);
+	useEffect( () => {
+		setHideFooterNav( false );
+		setIsHeaderEnabled( true );
+		setSidebarActiveView( false );
+		setIsHeaderNavigationEnabled( true );
+		setHeaderActiveView( HEADER_SITEGEN );
+		setDrawerActiveView( false );
+		if ( currentData.sitegen.siteLogo?.id !== 0 ) {
+			setIsFooterNavAllowed( true );
+			return setSiteLogo( currentData.sitegen.siteLogo );
 		}
-		setIsFooterNavAllowed(false);
-		getEditedEntityRecord('root', 'site');
-	}, []);
+		setIsFooterNavAllowed( false );
+		getEditedEntityRecord( 'root', 'site' );
+	}, [] );
 
 	const resetSiteLogo = () => {
 		const currentDataCopy = { ...currentData };
@@ -81,28 +82,28 @@ const SiteGenSiteLogo = () => {
 			fileName: '',
 			fileSize: 0,
 		};
-		setCurrentOnboardingData(currentDataCopy);
-		setSiteLogo(undefined);
-		setIsFooterNavAllowed(false);
+		setCurrentOnboardingData( currentDataCopy );
+		setSiteLogo( undefined );
+		setIsFooterNavAllowed( false );
 		trackOnboardingEvent(
-			new OnboardingEvent(ACTION_SITEGEN_LOGO_SKIPPED, undefined, {
+			new OnboardingEvent( ACTION_SITEGEN_LOGO_SKIPPED, undefined, {
 				source: SITEGEN_FLOW,
-			})
+			} )
 		);
 	};
 
-	const handleSiteLogo = (siteLogoNew) => {
+	const handleSiteLogo = ( siteLogoNew ) => {
 		const currentDataCopy = { ...currentData };
 		currentDataCopy.sitegen.siteLogo.id = siteLogoNew.id;
 		currentDataCopy.sitegen.siteLogo.url = siteLogoNew.url;
 		currentDataCopy.sitegen.siteLogo.fileName = siteLogoNew.fileName;
 		currentDataCopy.sitegen.siteLogo.fileSize = siteLogoNew.fileSize;
-		setCurrentOnboardingData(currentDataCopy);
-		setIsFooterNavAllowed(siteLogoNew.id !== 0);
-		editEntityRecord('root', 'site', undefined, {
+		setCurrentOnboardingData( currentDataCopy );
+		setIsFooterNavAllowed( siteLogoNew.id !== 0 );
+		editEntityRecord( 'root', 'site', undefined, {
 			site_logo: siteLogoNew.id,
-		});
-		setSiteLogo(siteLogoNew);
+		} );
+		setSiteLogo( siteLogoNew );
 	};
 
 	const handleFailure = () => {
@@ -115,7 +116,7 @@ const SiteGenSiteLogo = () => {
 				}
 			)
 		);
-		updateSiteGenErrorStatus(true);
+		updateSiteGenErrorStatus( true );
 	};
 
 	const content = getContents();
@@ -127,22 +128,22 @@ const SiteGenSiteLogo = () => {
 				className="nfd-onboarding-step--site-gen__site-logo"
 			>
 				<div className="nfd-onboarding-step--site-gen__site-logo__container">
-					<AIHeading title={content.heading} />
+					<AIHeading title={ content.heading } />
 					<ImageUploaderWithText
-						image={siteLogo}
-						imageSetter={handleSiteLogo}
-						onFailure={handleFailure}
+						image={ siteLogo }
+						imageSetter={ handleSiteLogo }
+						onFailure={ handleFailure }
 					/>
 					<div className="nfd-onboarding-step--site-gen__site-logo__container__buttons">
 						<SkipButton
-							callback={() => resetSiteLogo()}
+							callback={ () => resetSiteLogo() }
 							className="nfd-onboarding-step--site-gen__site-logo__container__buttons__skip"
-							text={content.buttons.skip}
+							text={ content.buttons.skip }
 						/>
-						{isLargeViewport && (
+						{ isLargeViewport && (
 							<NextButtonSiteGen
-								callback={() => {
-									if (siteLogo) {
+								callback={ () => {
+									if ( siteLogo ) {
 										trackOnboardingEvent(
 											new OnboardingEvent(
 												ACTION_LOGO_ADDED,
@@ -153,15 +154,15 @@ const SiteGenSiteLogo = () => {
 											)
 										);
 									}
-								}}
-								text={content.buttons.next}
+								} }
+								text={ content.buttons.next }
 								disabled={
 									siteLogo === undefined || siteLogo?.id === 0
 										? true
 										: false
 								}
 							/>
-						)}
+						) }
 					</div>
 				</div>
 			</CommonLayout>
