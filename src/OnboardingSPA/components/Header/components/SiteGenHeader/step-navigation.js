@@ -11,8 +11,7 @@ import ButtonDark from '../../../Button/ButtonDark';
 
 // Misc
 import { store as nfdOnboardingStore } from '../../../../store';
-import { stepSiteGenPreview } from '../../../../steps/SiteGen/Preview/step';
-import { stepSiteGenSiteLogo } from '../../../../steps/SiteGen/SiteLogo/step';
+import { stepSiteGenEditor } from '../../../../steps/SiteGen/Editor/step';
 
 const Back = ( { path } ) => {
 	const { siteGenErrorStatus } = useSelect( ( select ) => {
@@ -51,20 +50,13 @@ const StepNavigation = () => {
 	}, [] );
 
 	const isFirstStep = null === previousStep || false === previousStep;
-	const isPreviewStep = currentStep?.path === stepSiteGenPreview?.path;
-
+	const isEditorStep = currentStep?.path === stepSiteGenEditor?.path;
 	return (
 		<div className="nfd-onboarding-header--sitegen__step-navigation">
-			{ isFirstStep ? (
+			{ isFirstStep || isEditorStep ? (
 				<></>
 			) : (
-				<Back
-					path={
-						isPreviewStep
-							? stepSiteGenSiteLogo.path
-							: previousStep.path
-					}
-				/>
+				<Back path={ previousStep.path } />
 			) }
 		</div>
 	);
