@@ -164,4 +164,4 @@ The Onboarding module is designed to streamline various tasks related to user on
  composer require newfold-labs/wp-module-onboarding
  ```
 
-[More on NewFold WordPress Modules](https://github.com/newfold-labs/wp-module-loader)
+[More on Newfold WordPress Modules](https://github.com/newfold-labs/wp-module-loader)
