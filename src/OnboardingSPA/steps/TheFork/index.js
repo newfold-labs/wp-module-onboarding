@@ -1,19 +1,15 @@
 // WordPress
 import { useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useNavigate } from 'react-router-dom';
 
 // Classes and functions
 import getContents from './contents';
-import { injectMigrationStep } from '../../data/flows/utils';
 import { init as initializePlugins } from '../../utils/api/plugins';
 
 // Components
 import StartOptions from '../../components/StartOptions';
 import CommonLayout from '../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../components/HeadingWithSubHeading/SiteGen/index';
-import { stepSiteGenMigration } from '../../steps/SiteGen/Migration/step';
-import { stepTheFork } from './step';
 
 // Misc
 import {
@@ -24,19 +20,17 @@ import {
 import {
 	OnboardingEvent,
 	sendOnboardingEvent,
-	trackOnboardingEvent,
 } from '../../utils/analytics/hiive';
 import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
 import { store as nfdOnboardingStore } from '../../store';
 import { DEFAULT_FLOW } from '../../data/flows/constants';
 
 const TheFork = () => {
-	const { migrationUrl, canMigrateSite, allSteps, pluginInstallHash } =
+	const { migrationUrl, canMigrateSite, pluginInstallHash } =
 		useSelect( ( select ) => {
 			return {
 				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
 				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
-				allSteps: select( nfdOnboardingStore ).getAllSteps(),
 				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
 				routes: select( nfdOnboardingStore ).getRoutes(),
 				pluginInstallHash:
@@ -51,7 +45,6 @@ const TheFork = () => {
 		setIsHeaderNavigationEnabled,
 		setFooterActiveView,
 		setHideFooterNav,
-		updateAllSteps,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -80,30 +73,7 @@ const TheFork = () => {
 		window.location.replace( pluginDashboardPage );
 	};
 
-	const content = getContents();
-	const navigate = useNavigate();
-
-	const handleMigration = () => {
-		if ( canMigrateSite ) {
-			const migrationStepExists = allSteps.some(
-				( step ) => step.path === stepSiteGenMigration.path
-			);
-
-			if ( ! migrationStepExists ) {
-				const updates = injectMigrationStep( allSteps, stepTheFork );
-				updateAllSteps( updates.allSteps );
-			}
-			trackOnboardingEvent(
-				new OnboardingEvent(
-					ACTION_SITEGEN_FORK_OPTION_SELECTED,
-					'MIGRATE'
-				)
-			);
-			navigate( stepSiteGenMigration.path );
-		} else {
-			window.open( migrationUrl, '_blank' );
-		}
-	};
+	const content = getContents( canMigrateSite, migrationUrl );
 
 	return (
 		<CommonLayout
@@ -117,28 +87,9 @@ const TheFork = () => {
 			<StartOptions
 				questionnaire={ content.questionnaire }
 				oldFlow={ oldFlow }
-				options={ content.options }
+				largeOption={ content.largerOption }
+				smallOptions={ content.smallerOptions }
 			/>
-			<br />
-			<br />
-			{ ( canMigrateSite || migrationUrl ) && (
-				<div
-					className="nfd-onboarding-step--site-gen__fork__importsite"
-					onClick={ () => {
-						handleMigration();
-					} }
-					onKeyUp={ ( event ) => {
-						if ( event.key === 'Enter' ) {
-							handleMigration();
-						}
-					} }
-					tabIndex={ 0 }
-					role="button"
-					aria-label="Trigger site migration"
-				>
-					{ content.importtext }
-				</div>
-			) }
 			<span
 				role="button"
 				tabIndex={ 0 }
