@@ -258,7 +258,7 @@ const StepSiteGenEditorHeader = () => {
 
 					const iframe = ele.querySelector(
 						`div > div[data-slug="nfd-onboarding-block-preview-${ slug }"] > div.block-editor-block-preview__container > div > div > .block-editor-iframe__scale-container > iframe`
-					) || `div > div[data-slug="nfd-onboarding-block-preview-${ slug }"] > .block-editor-block-preview__container > div > iframe`;
+					) || ele.querySelector( `div > div[data-slug="nfd-onboarding-block-preview-${ slug }"] > .block-editor-block-preview__container > div > iframe` );
 
 					const html = iframe.contentWindow.document.querySelector(
 						'.block-editor-block-preview__content-iframe'
