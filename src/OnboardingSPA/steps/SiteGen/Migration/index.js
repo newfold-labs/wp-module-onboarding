@@ -59,7 +59,7 @@ const StepSiteGenMigration = () => {
 				if ( migrateUrl ) {
 					setInstaWpMigrationUrl( migrateUrl );
 					setTimeout( () => {
-						window.open( migrateUrl, '_self' );
+						// window.open( migrateUrl, '_self' );
 					}, 3000 );
 				} else {
 					trackOnboardingEvent(

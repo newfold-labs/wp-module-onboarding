@@ -64,6 +64,7 @@ import {
 	ACTION_MIGRATION_INITIATED,
 	ACTION_PAGEVIEW,
 	CATEGORY,
+	ACTION_MFE_MIGRATION_INITIATED,
 } from '../../../utils/analytics/hiive/constants';
 
 import { socialMediaStoreToState } from '../../SocialMediaForm/utils';
@@ -122,6 +123,7 @@ const SiteBuild = () => {
 	const [ isRequestPlaced, setIsRequestPlaced ] = useState( false );
 	const [ didVisitBasicInfo, setDidVisitBasicInfo ] = useState( false );
 	const [ didVisitEcommerce, setDidVisitEcommerce ] = useState( false );
+	const [ isMfeMigrationInitiated, setIsMfeMigrationInitiated ] = useState( false );
 	const {
 		setActiveChapter,
 		flushQueue,
@@ -339,6 +341,7 @@ const SiteBuild = () => {
 	};
 
 	const trackChapters = () => {
+		console.count("tracking");
 		trackInstaWpMigrationEvent();
 		if ( location.pathname === firstStep.path ) {
 			trackOnboardingEvent(
@@ -389,7 +392,7 @@ const SiteBuild = () => {
 			if ( instaWpMigrationUrl ) {
 				sendOnboardingEvent(
 					new OnboardingEvent(
-						ACTION_MIGRATION_INITIATED,
+						isMfeMigrationInitiated ? ACTION_MFE_MIGRATION_INITIATED : ACTION_MIGRATION_INITIATED,
 						instaWpMigrationUrl
 					)
 				);
@@ -403,6 +406,7 @@ const SiteBuild = () => {
 
 	// Track Migration Initated Event in the Migration Step.
 	useEffect( () => {
+		getSettings().then(res => setIsMfeMigrationInitiated(res.nfd_migrate_site))
 		trackInstaWpMigrationEvent();
 	}, [ instaWpMigrationUrl ] );
 
