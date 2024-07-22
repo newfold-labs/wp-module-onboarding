@@ -6,7 +6,7 @@ import {
 } from '../wp-module-support/MockApi.cy';
 import {
 	AdminBarCheck,
-	DarkBGCheck,
+	LightBGCheck,
 	ProgressBarCheck,
 } from '../wp-module-support/siteGen.cy';
 
@@ -34,19 +34,19 @@ describe( 'SiteGen Site Editor Step', function () {
 		AdminBarCheck();
 	} );
 
-	it( 'Check for the existing dark background', () => {
-		DarkBGCheck();
+	it( 'Check for the existing light background', () => {
+		LightBGCheck();
 	} );
 
-	it( 'Check if we cannot change to light background', () => {
-		cy.get( '.nfd-onboarding-toggle__theme__button__dark' ).should(
+	it( 'Check if we cannot change to dark background', () => {
+		cy.get( '.nfd-onboarding-toggle__theme__button__light' ).should(
 			'not.exist'
 		);
-		cy.get( '.nfd-onboarding-sitegen-light' ).should( 'not.exist' );
+		cy.get( '.nfd-onboarding-sitegen-dark' ).should( 'not.exist' );
 	} );
 
 	it( 'Check the Progress Bar Value', () => {
-		ProgressBarCheck( '85.7143%' );
+		ProgressBarCheck( '83.3333%' );
 	} );
 
 	it( 'Check if the sidebar is closed upon landing', () => {

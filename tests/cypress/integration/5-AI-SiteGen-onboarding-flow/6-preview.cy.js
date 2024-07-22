@@ -50,7 +50,7 @@ describe( 'SiteGen Site Preview Step', function () {
 			.should( 'have.length', 3 );
 	} );
 
-	it.skip( 'Check for the favourited theme versions', () => {
+	it( 'Check for the favourited theme versions', () => {
 		cy.get( 'g[clip-path="url(#heart-filled_svg__a)"]' ).should(
 			'not.exist'
 		); // when no fav theme is selected
@@ -80,7 +80,7 @@ describe( 'SiteGen Site Preview Step', function () {
 		cy.get( '@fav' ).click();
 	} );
 
-	it.skip( 'Check for regenerating the new theme versions', () => {
+	it( 'Check for regenerating the new theme versions', () => {
 		cy.intercept( apiList.homepagesRegenerate, ( req ) => {
 			homePagesRegenerate( req );
         }).as('regenerate');
@@ -96,7 +96,7 @@ describe( 'SiteGen Site Preview Step', function () {
 			.should( 'have.length', 4 );
 	} );
 
-	it.skip( 'Check for the preview note at the bottom', () => {
+	it( 'Check for the preview note at the bottom', () => {
 		cy.get( '.nfd-onboarding-step--site-gen__preview__note' )
 			.scrollIntoView()
 			.should( 'be.visible' );
@@ -106,7 +106,7 @@ describe( 'SiteGen Site Preview Step', function () {
 			.contains( 'Favorite' );
 	} );
 
-	it.skip( 'Select any theme and go forward to the next step', () => {
+	it( 'Select any theme and go forward to the next step', () => {
 		cy.get(
 			'.live-preview-sitegen--selectable-card__live-preview-container__overlay',
 			{ timeout: 10000 }
