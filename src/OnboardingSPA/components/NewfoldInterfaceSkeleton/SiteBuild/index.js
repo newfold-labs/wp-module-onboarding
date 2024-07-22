@@ -71,8 +71,8 @@ import { socialMediaStoreToState } from '../../SocialMediaForm/utils';
 
 const SiteBuild = () => {
 	const location = useLocation();
-	const isLargeViewport = useViewportMatch('medium');
-	const pathname = kebabCase(location.pathname);
+	const isLargeViewport = useViewportMatch( 'medium' );
+	const pathname = kebabCase( location.pathname );
 
 	const {
 		isDrawerOpen,
@@ -91,38 +91,39 @@ const SiteBuild = () => {
 		pluginInstallHash,
 		instaWpMigrationUrl,
 	} = useSelect(
-		(select) => {
+		( select ) => {
 			return {
-				isDrawerOpen: select(nfdOnboardingStore).isDrawerOpened(),
-				newfoldBrand: select(nfdOnboardingStore).getNewfoldBrand(),
-				onboardingFlow: select(nfdOnboardingStore).getOnboardingFlow(),
+				isDrawerOpen: select( nfdOnboardingStore ).isDrawerOpened(),
+				newfoldBrand: select( nfdOnboardingStore ).getNewfoldBrand(),
+				onboardingFlow:
+					select( nfdOnboardingStore ).getOnboardingFlow(),
 				currentData:
-					select(nfdOnboardingStore).getCurrentOnboardingData(),
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				socialData:
-					select(nfdOnboardingStore).getOnboardingSocialData(),
-				firstStep: select(nfdOnboardingStore).getFirstStep(),
-				allSteps: select(nfdOnboardingStore).getAllSteps(),
-				topPriority: select(nfdOnboardingStore).getTopPriority(),
+					select( nfdOnboardingStore ).getOnboardingSocialData(),
+				firstStep: select( nfdOnboardingStore ).getFirstStep(),
+				allSteps: select( nfdOnboardingStore ).getAllSteps(),
+				topPriority: select( nfdOnboardingStore ).getTopPriority(),
 				experienceLevel:
-					select(nfdOnboardingStore).getExperienceLevel(),
-				currentStep: select(nfdOnboardingStore).getCurrentStep(),
-				lastChapter: select(nfdOnboardingStore).getCurrentChapter(),
-				brandConfig: select(nfdOnboardingStore).getNewfoldBrandConfig(),
-				initialize: select(nfdOnboardingStore).getInitialize(),
+					select( nfdOnboardingStore ).getExperienceLevel(),
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+				lastChapter: select( nfdOnboardingStore ).getCurrentChapter(),
+				brandConfig:
+					select( nfdOnboardingStore ).getNewfoldBrandConfig(),
+				initialize: select( nfdOnboardingStore ).getInitialize(),
 				pluginInstallHash:
-					select(nfdOnboardingStore).getPluginInstallHash(),
+					select( nfdOnboardingStore ).getPluginInstallHash(),
 				instaWpMigrationUrl:
-					select(nfdOnboardingStore).getinstaWpMigrationUrl(),
+					select( nfdOnboardingStore ).getinstaWpMigrationUrl(),
 			};
 		},
-		[location.pathname]
+		[ location.pathname ]
 	);
 
-	const [isRequestPlaced, setIsRequestPlaced] = useState(false);
-	const [didVisitBasicInfo, setDidVisitBasicInfo] = useState(false);
-	const [didVisitEcommerce, setDidVisitEcommerce] = useState(false);
-	const [isMfeMigrationInitiated, setIsMfeMigrationInitiated] =
-		useState(false);
+	const [ isRequestPlaced, setIsRequestPlaced ] = useState( false );
+	const [ didVisitBasicInfo, setDidVisitBasicInfo ] = useState( false );
+	const [ didVisitEcommerce, setDidVisitEcommerce ] = useState( false );
+	const [ isMfeMigrationInitiated, setIsMfeMigrationInitiated ] = useState( false );
 	const {
 		setActiveChapter,
 		flushQueue,
@@ -133,13 +134,13 @@ const SiteBuild = () => {
 		updateTopSteps,
 		updateDesignRoutes,
 		setCurrentOnboardingData,
-	} = useDispatch(nfdOnboardingStore);
+	} = useDispatch( nfdOnboardingStore );
 
 	async function syncSocialSettings() {
 		const initialData = await getSettings();
-		const result = await setSettings(socialData);
-		setDidVisitBasicInfo(false);
-		if (result?.error !== null) {
+		const result = await setSettings( socialData );
+		setDidVisitBasicInfo( false );
+		if ( result?.error !== null ) {
 			return initialData?.body;
 		}
 		return result?.body;
@@ -148,7 +149,7 @@ const SiteBuild = () => {
 	async function syncStoreDetails() {
 		const { address } = currentData.storeDetails;
 		let payload = {};
-		if (address !== undefined) {
+		if ( address !== undefined ) {
 			delete address.country;
 			delete address.state;
 			payload = address;
@@ -158,87 +159,87 @@ const SiteBuild = () => {
 		// 	delete tax.isStoreDetailsFilled;
 		// 	payload = { ...payload, ...tax };
 		// }
-		if (!isEmpty(payload)) {
-			await updateWPSettings(payload);
+		if ( ! isEmpty( payload ) ) {
+			await updateWPSettings( payload );
 		}
 		delete currentData.storeDetails.address;
 		delete currentData.storeDetails.tax;
-		setDidVisitEcommerce(false);
+		setDidVisitEcommerce( false );
 	}
 
 	async function syncStoreToDB() {
 		// The First Welcome Step doesn't have any Store changes
 		const isFirstStep = location?.pathname === firstStep?.path;
-		if (currentData && !isFirstStep) {
-			if (!isRequestPlaced) {
-				setIsRequestPlaced(true);
+		if ( currentData && ! isFirstStep ) {
+			if ( ! isRequestPlaced ) {
+				setIsRequestPlaced( true );
 
-				if (didVisitEcommerce) {
+				if ( didVisitEcommerce ) {
 					await syncStoreDetails();
 				}
 
 				// If Social Data is changed then sync it
-				if (didVisitBasicInfo) {
+				if ( didVisitBasicInfo ) {
 					const socialDataResp = await syncSocialSettings();
 
 					// If Social Data is changed then Sync that also to the store
-					if (socialDataResp) {
-						setOnboardingSocialData(socialDataResp);
+					if ( socialDataResp ) {
+						setOnboardingSocialData( socialDataResp );
 					}
 				}
 				flushQueue();
-				enqueueRequest(API_REQUEST.SET_FLOW, () =>
-					setFlow(currentData)
+				enqueueRequest( API_REQUEST.SET_FLOW, () =>
+					setFlow( currentData )
 				);
-				setIsRequestPlaced(false);
+				setIsRequestPlaced( false );
 			}
 		}
 
 		// Check if the Basic Info page was visited
-		if (location?.pathname.includes('basic-info')) {
-			setDidVisitBasicInfo(true);
+		if ( location?.pathname.includes( 'basic-info' ) ) {
+			setDidVisitBasicInfo( true );
 		}
-		if (location?.pathname.includes('ecommerce')) {
-			setDidVisitEcommerce(true);
+		if ( location?.pathname.includes( 'ecommerce' ) ) {
+			setDidVisitEcommerce( true );
 		}
 	}
 
 	function handleConditionalDesignStepsRoutes() {
 		if (
-			location?.pathname.includes('colors') ||
-			location?.pathname.includes('typography')
+			location?.pathname.includes( 'colors' ) ||
+			location?.pathname.includes( 'typography' )
 		) {
 			const updates = injectInAllSteps(
 				allSteps,
 				designChapter.conditionalSteps
 			);
-			updateAllSteps(updates.allSteps);
-			if (!currentData.data.customDesign) {
+			updateAllSteps( updates.allSteps );
+			if ( ! currentData.data.customDesign ) {
 				currentData.data.customDesign = true;
-				setCurrentOnboardingData(currentData);
+				setCurrentOnboardingData( currentData );
 			}
 		}
 	}
 
 	const handlePreviousStepTracking = () => {
 		const previousStep = window.nfdOnboarding?.previousStep;
-		if (typeof previousStep !== 'object') {
+		if ( typeof previousStep !== 'object' ) {
 			window.nfdOnboarding.previousStep = {
 				path: location.pathname,
 				url: window.location.href,
 			};
-			HiiveAnalytics.dispatchEvents(CATEGORY);
+			HiiveAnalytics.dispatchEvents( CATEGORY );
 			return;
 		}
 
 		const previousStepPath = previousStep.path;
 		const previousStepURL = previousStep.url;
 
-		if (previousStepPath.includes('basic-info')) {
+		if ( previousStepPath.includes( 'basic-info' ) ) {
 			const siteTitle = currentData.data.blogName;
 			const siteDescription = currentData.data.blogDescription;
 			const siteLogo = currentData.data.siteLogo.url;
-			if (siteTitle) {
+			if ( siteTitle ) {
 				trackOnboardingEvent(
 					new OnboardingEvent(
 						ACTION_SITE_TITLE_SET,
@@ -249,7 +250,7 @@ const SiteBuild = () => {
 				);
 			}
 
-			if (siteDescription) {
+			if ( siteDescription ) {
 				trackOnboardingEvent(
 					new OnboardingEvent(
 						ACTION_TAGLINE_SET,
@@ -260,7 +261,7 @@ const SiteBuild = () => {
 				);
 			}
 
-			if (siteLogo) {
+			if ( siteLogo ) {
 				trackOnboardingEvent(
 					new OnboardingEvent(
 						ACTION_LOGO_ADDED,
@@ -271,9 +272,11 @@ const SiteBuild = () => {
 				);
 			}
 
-			const platforms = Object.keys(socialMediaStoreToState(socialData));
-			if (platforms.length) {
-				platforms.forEach((platform) => {
+			const platforms = Object.keys(
+				socialMediaStoreToState( socialData )
+			);
+			if ( platforms.length ) {
+				platforms.forEach( ( platform ) => {
 					trackOnboardingEvent(
 						new OnboardingEvent(
 							ACTION_SOCIAL_ADDED,
@@ -282,13 +285,13 @@ const SiteBuild = () => {
 							previousStepURL
 						)
 					);
-				});
+				} );
 			}
 		}
 
-		if (previousStepPath.includes('site-pages')) {
+		if ( previousStepPath.includes( 'site-pages' ) ) {
 			const sitePages = currentData.data.sitePages?.other;
-			if (!sitePages || false === sitePages) {
+			if ( ! sitePages || false === sitePages ) {
 				trackOnboardingEvent(
 					new OnboardingEvent(
 						ACTION_STARTER_PAGES_SELECTED,
@@ -303,7 +306,7 @@ const SiteBuild = () => {
 				trackOnboardingEvent(
 					new OnboardingEvent(
 						ACTION_STARTER_PAGES_SELECTED,
-						sitePages.map((sitePage) => sitePage.key),
+						sitePages.map( ( sitePage ) => sitePage.key ),
 						{
 							count: sitePages.length,
 						},
@@ -313,10 +316,10 @@ const SiteBuild = () => {
 			}
 		}
 
-		if (previousStepPath.includes('site-features')) {
+		if ( previousStepPath.includes( 'site-features' ) ) {
 			const siteFeatures = currentData.data.siteFeatures;
-			for (const siteFeature in siteFeatures) {
-				if (false !== siteFeatures[siteFeature]) {
+			for ( const siteFeature in siteFeatures ) {
+				if ( false !== siteFeatures[ siteFeature ] ) {
 					trackOnboardingEvent(
 						new OnboardingEvent(
 							ACTION_FEATURE_ADDED,
@@ -334,24 +337,24 @@ const SiteBuild = () => {
 			url: window.location.href,
 		};
 
-		HiiveAnalytics.dispatchEvents(CATEGORY);
+		HiiveAnalytics.dispatchEvents( CATEGORY );
 	};
 
 	const trackChapters = () => {
-		console.count('tracking');
+		console.count("tracking");
 		trackInstaWpMigrationEvent();
-		if (location.pathname === firstStep.path) {
+		if ( location.pathname === firstStep.path ) {
 			trackOnboardingEvent(
-				new OnboardingEvent(ACTION_ONBOARDING_STARTED)
+				new OnboardingEvent( ACTION_ONBOARDING_STARTED )
 			);
 		}
 
 		const currentChapter = currentStep?.chapter;
 
-		if (lastChapter !== currentChapter) {
-			if (lastChapter) {
-				if (currentData.data.chapters[lastChapter]) {
-					currentData.data.chapters[lastChapter].completed = true;
+		if ( lastChapter !== currentChapter ) {
+			if ( lastChapter ) {
+				if ( currentData.data.chapters[ lastChapter ] ) {
+					currentData.data.chapters[ lastChapter ].completed = true;
 				}
 				trackOnboardingEvent(
 					new OnboardingEvent(
@@ -361,9 +364,11 @@ const SiteBuild = () => {
 				);
 			}
 
-			if (currentChapter) {
-				if (currentData.data.chapters[currentChapter]) {
-					currentData.data.chapters[currentChapter].completed = false;
+			if ( currentChapter ) {
+				if ( currentData.data.chapters[ currentChapter ] ) {
+					currentData.data.chapters[
+						currentChapter
+					].completed = false;
 				}
 				trackOnboardingEvent(
 					new OnboardingEvent(
@@ -373,23 +378,21 @@ const SiteBuild = () => {
 				);
 			}
 
-			setActiveChapter(currentChapter);
+			setActiveChapter( currentChapter );
 		}
 
-		if (currentChapter && currentData.data.chapters[currentChapter]) {
-			currentData.data.chapters[currentChapter].lastStep =
+		if ( currentChapter && currentData.data.chapters[ currentChapter ] ) {
+			currentData.data.chapters[ currentChapter ].lastStep =
 				currentStep?.path ?? '';
 		}
 	};
 
 	const trackInstaWpMigrationEvent = () => {
-		if (currentStep?.path === stepSiteGenMigration?.path) {
-			if (instaWpMigrationUrl) {
+		if ( currentStep?.path === stepSiteGenMigration?.path ) {
+			if ( instaWpMigrationUrl ) {
 				sendOnboardingEvent(
 					new OnboardingEvent(
-						isMfeMigrationInitiated
-							? ACTION_MFE_MIGRATION_INITIATED
-							: ACTION_MIGRATION_INITIATED,
+						isMfeMigrationInitiated ? ACTION_MFE_MIGRATION_INITIATED : ACTION_MIGRATION_INITIATED,
 						instaWpMigrationUrl
 					)
 				);
@@ -397,26 +400,24 @@ const SiteBuild = () => {
 		}
 	};
 
-	useEffect(() => {
+	useEffect( () => {
 		trackChapters();
-	}, [currentStep]);
+	}, [ currentStep ] );
 
 	// Track Migration Initated Event in the Migration Step.
-	useEffect(() => {
-		getSettings().then((res) =>
-			setIsMfeMigrationInitiated(res.nfd_migrate_site)
-		);
+	useEffect( () => {
+		getSettings().then(res => setIsMfeMigrationInitiated(res.nfd_migrate_site))
 		trackInstaWpMigrationEvent();
-	}, [instaWpMigrationUrl]);
+	}, [ instaWpMigrationUrl ] );
 
 	const prioritizeFlow = () => {
 		const currentFlow = window.nfdOnboarding.currentFlow;
-		const initialChapters = getInitialChapters(currentFlow);
-		const chapterQueryArg = getQueryParam('chapter');
+		const initialChapters = getInitialChapters( currentFlow );
+		const chapterQueryArg = getQueryParam( 'chapter' );
 
 		let chapters;
-		if (chapterQueryArg) {
-			chapters = getChapterFromId(chapterQueryArg);
+		if ( chapterQueryArg ) {
+			chapters = getChapterFromId( chapterQueryArg );
 		} else {
 			chapters = getChaptersFromTopPriorityAndExperienceLevel(
 				initialChapters,
@@ -425,8 +426,8 @@ const SiteBuild = () => {
 			);
 		}
 
-		const getData = resolveGetDataForFlow(currentFlow);
-		const data = getData(chapters, chapterQueryArg);
+		const getData = resolveGetDataForFlow( currentFlow );
+		const data = getData( chapters, chapterQueryArg );
 
 		currentData.data.chapters = stateToStore(
 			initialChapters,
@@ -434,41 +435,41 @@ const SiteBuild = () => {
 			currentStep
 		);
 
-		setCurrentOnboardingData(currentData);
-		updateAllSteps(data.steps);
-		updateTopSteps(data.topSteps);
-		updateRoutes(data.routes);
-		updateDesignRoutes(data.designRoutes);
+		setCurrentOnboardingData( currentData );
+		updateAllSteps( data.steps );
+		updateTopSteps( data.topSteps );
+		updateRoutes( data.routes );
+		updateDesignRoutes( data.designRoutes );
 	};
 
-	useEffect(() => {
-		if (initialize) {
-			initializePlugins(pluginInstallHash);
+	useEffect( () => {
+		if ( initialize ) {
+			initializePlugins( pluginInstallHash );
 			initializeThemes();
 			initializeSettings();
-			setInterval(cronTrigger, 45000);
+			setInterval( cronTrigger, 45000 );
 		}
-	}, [initialize]);
+	}, [ initialize ] );
 
-	useEffect(() => {
-		if (false !== brandConfig?.prioritization) {
+	useEffect( () => {
+		if ( false !== brandConfig?.prioritization ) {
 			return prioritizeFlow();
 		}
-	}, [experienceLevel, topPriority]);
+	}, [ experienceLevel, topPriority ] );
 
-	useEffect(() => {
-		document.body.classList.add(`nfd-brand-${newfoldBrand}`);
-	}, [newfoldBrand]);
+	useEffect( () => {
+		document.body.classList.add( `nfd-brand-${ newfoldBrand }` );
+	}, [ newfoldBrand ] );
 
-	useEffect(() => {
+	useEffect( () => {
 		syncStoreToDB();
 		handlePreviousStepTracking();
 		handleConditionalDesignStepsRoutes();
-	}, [location.pathname, onboardingFlow]);
+	}, [ location.pathname, onboardingFlow ] );
 
-	useEffect(() => {
-		sendOnboardingEvent(new OnboardingEvent(ACTION_PAGEVIEW));
-	}, [location.pathname]);
+	useEffect( () => {
+		sendOnboardingEvent( new OnboardingEvent( ACTION_PAGEVIEW ) );
+	}, [ location.pathname ] );
 
 	const isForkStep =
 		currentStep === stepTheFork ||
@@ -485,11 +486,11 @@ const SiteBuild = () => {
 	const commonSkeletonProps = {
 		className: classNames(
 			'nfd-onboarding-skeleton',
-			`brand-${newfoldBrand}`,
-			`path-${pathname}`,
+			`brand-${ newfoldBrand }`,
+			`path-${ pathname }`,
 			{ 'is-drawer-open': isDrawerOpen },
 			{ 'is-large-viewport': isLargeViewport },
-			{ 'is-small-viewport': !isLargeViewport },
+			{ 'is-small-viewport': ! isLargeViewport },
 			{ 'nfd-onboarding-skeleton--sitegen': isForkStep }
 		),
 		header: <Header />,
@@ -499,18 +500,18 @@ const SiteBuild = () => {
 		footer: isForkStep ? <Footer /> : null,
 	};
 
-	const renderSkeleton = (Component) =>
+	const renderSkeleton = ( Component ) =>
 		isForkStep ? (
 			<ThemeProvider>
-				<Component {...commonSkeletonProps} />
+				<Component { ...commonSkeletonProps } />
 			</ThemeProvider>
 		) : (
-			<Component {...commonSkeletonProps} />
+			<Component { ...commonSkeletonProps } />
 		);
 
 	return isForkStep
-		? renderSkeleton(ThemedNewfoldInterfaceSkeleton)
-		: renderSkeleton(NewfoldInterfaceSkeleton);
+		? renderSkeleton( ThemedNewfoldInterfaceSkeleton )
+		: renderSkeleton( NewfoldInterfaceSkeleton );
 };
 
 export default SiteBuild;
