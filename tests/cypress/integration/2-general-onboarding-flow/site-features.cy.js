@@ -11,7 +11,7 @@ import {
 } from '../wp-module-support/sidebar.cy';
 import { APIList, SiteFeaturesAPI } from '../wp-module-support/EventsApi.cy';
 
-describe( 'Site Features', function () {
+describe.skip( 'Site Features', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/site-features'

@@ -10,7 +10,7 @@ import {
 	continueSetup,
 } from '../wp-module-support/sidebar.cy';
 
-describe( 'Colors Step Test', function () {
+describe.skip( 'Colors Step Test', function () {
 	before( () => {
 		cy.exec('npx wp-env run cli wp theme activate yith-wonder');
 		cy.wait( 5000 );

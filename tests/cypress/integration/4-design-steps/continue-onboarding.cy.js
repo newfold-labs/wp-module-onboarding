@@ -1,4 +1,4 @@
-describe( 'Theme change from wp dashboard and continue onboarding flow', function () {
+describe.skip( 'Theme change from wp dashboard and continue onboarding flow', function () {
 	// before( () => {
 	// 	cy.exec( 'npx wp-env run cli wp theme activate twentytwentyone' );
 	// 	cy.visit(

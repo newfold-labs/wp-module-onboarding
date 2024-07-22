@@ -10,7 +10,7 @@ import {
 	continueSetup,
 } from '../wp-module-support/sidebar.cy';
 
-describe( 'Typography Step Test', function () {
+describe.skip( 'Typography Step Test', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/typography'

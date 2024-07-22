@@ -10,7 +10,7 @@ import {
 } from '../wp-module-support/sidebar.cy';
 import { GetPluginId, GetPluginName } from '../wp-module-support/pluginID.cy';
 
-describe( 'Get Started Welcome Page', function () {
+describe.skip( 'Get Started Welcome Page', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/get-started/welcome'

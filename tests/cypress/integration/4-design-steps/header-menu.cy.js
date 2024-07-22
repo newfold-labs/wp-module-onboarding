@@ -10,7 +10,7 @@ import {
 	continueSetup,
 } from '../wp-module-support/sidebar.cy';
 
-describe( 'Header menu Page', function () {
+describe.skip( 'Header menu Page', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/header-menu'

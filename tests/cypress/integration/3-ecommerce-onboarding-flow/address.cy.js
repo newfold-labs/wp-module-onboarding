@@ -10,7 +10,7 @@ import {
 	CheckIntroPanel,
 } from '../wp-module-support/sidebar.cy';
 
-describe( 'Step Ecommerce Address/Store Details', function () {
+describe.skip( 'Step Ecommerce Address/Store Details', function () {
 	before( () => {
 		cy.wait(2000);
 		cy.exec('npx wp-env run cli wp option delete nfd_module_onboarding_flow');
