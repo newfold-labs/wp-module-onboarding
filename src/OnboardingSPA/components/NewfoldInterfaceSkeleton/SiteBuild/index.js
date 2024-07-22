@@ -405,7 +405,7 @@ const SiteBuild = () => {
 
 	// Track Migration Initated Event in the Migration Step.
 	useEffect( () => {
-		fetchWPSettings().then( res => setIsMfeMigrationInitiated( res.nfd_migrate_site ) );
+		fetchWPSettings().then( ( res ) => ( setIsMfeMigrationInitiated( res.nfd_migrate_site ) ) );
 		trackInstaWpMigrationEvent();
 	}, [ instaWpMigrationUrl ] );
 
