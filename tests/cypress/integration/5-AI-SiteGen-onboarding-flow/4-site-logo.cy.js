@@ -44,7 +44,7 @@ describe( 'SiteGen Site Logo Step', function () {
 		ProgressBarCheck( '33.3333%' );
 	} );
 
-	it.skip( 'Check for back button and go back', () => {
+	it( 'Check for back button and go back', () => {
 		BackButtonCheck( 'sitegen/step/site-logo' );
 	} );
 
@@ -60,7 +60,7 @@ describe( 'SiteGen Site Logo Step', function () {
 		DisabledNextButton();
 	} );
 
-	it.skip( 'Check if Image gets uploaded', () => {
+	it( 'Check if Image gets uploaded', () => {
 		const sampleLogoPath = `vendor/newfold-labs/wp-module-onboarding/tests/cypress/fixtures/image.png`;
 		const LogoPreviewClass =
 			'.nfd-onboarding-image-uploader--with-text__site_logo__preview';
@@ -90,7 +90,7 @@ describe( 'SiteGen Site Logo Step', function () {
 		);
 	} );
 
-	it.skip( 'Check if the Next Button is enabled and go next', () => {
+	it( 'Check if the Next Button is enabled and go next', () => {
 		cy.get( '.nfd-onboarding-button--site-gen-next' )
 			.should( 'not.be.disabled' )
 			.click();

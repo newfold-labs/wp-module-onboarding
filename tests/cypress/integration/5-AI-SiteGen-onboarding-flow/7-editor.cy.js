@@ -103,7 +103,7 @@ describe( 'SiteGen Site Editor Step', function () {
 			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container'
 		)
 			.should( 'be.visible' )
-			.should( 'have.length', 3 ); // as we are not regenrating new themes
+			.should( 'have.length', 4 ); // Regenrating new themes
 	} );
 
 	it( 'Check for favoriting a theme and it appears everywhere', () => {
