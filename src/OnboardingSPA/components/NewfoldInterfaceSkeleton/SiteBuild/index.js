@@ -35,7 +35,7 @@ import {
 	setSettings,
 	initialize as initializeSettings,
 } from '../../../utils/api/settings';
-import { isEmpty, updateWPSettings } from '../../../utils/api/ecommerce';
+import { fetchWPSettings, isEmpty, updateWPSettings } from '../../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getQueryParam } from '../../../utils';
 import { API_REQUEST } from '../../../../constants';
@@ -341,7 +341,6 @@ const SiteBuild = () => {
 	};
 
 	const trackChapters = () => {
-		console.count("tracking");
 		trackInstaWpMigrationEvent();
 		if ( location.pathname === firstStep.path ) {
 			trackOnboardingEvent(
@@ -406,7 +405,7 @@ const SiteBuild = () => {
 
 	// Track Migration Initated Event in the Migration Step.
 	useEffect( () => {
-		getSettings().then(res => setIsMfeMigrationInitiated(res.nfd_migrate_site))
+		fetchWPSettings().then( res => setIsMfeMigrationInitiated( res.nfd_migrate_site ) );
 		trackInstaWpMigrationEvent();
 	}, [ instaWpMigrationUrl ] );
 
