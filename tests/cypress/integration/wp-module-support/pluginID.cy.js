@@ -14,3 +14,7 @@ export const GetPluginName = () => {
     cy.get( '.nfd-step-card-subheading', {timeout:20000} ).should( 'contain', 'Crazy Domains');
   };
 }
+
+export const getAppId = () => {
+  return Cypress.env('appId')
+}

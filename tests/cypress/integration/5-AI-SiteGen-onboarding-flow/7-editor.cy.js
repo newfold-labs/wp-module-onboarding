@@ -9,6 +9,7 @@ import {
 	LightBGCheck,
 	ProgressBarCheck,
 } from '../wp-module-support/siteGen.cy';
+import { getAppId } from '../wp-module-support/pluginID.cy';
 
 describe( 'SiteGen Site Editor Step', function () {
 	before( () => {
@@ -153,12 +154,6 @@ describe( 'SiteGen Site Editor Step', function () {
 			.should( 'be.visible' );
 	} );
 
-	it( 'Check existence of Save & Continue button', () => {
-		cy.get( '.nfd-onboarding-header--sitegen__editor__end__save-button' )
-			.scrollIntoView()
-			.should( 'exist' );
-	} );
-
 	it( 'Check changing the existing fonts from sidebar', () => {
 		cy.intercept( apiList.themestyle, ( req ) => {
 			themeStyleMock( req );
@@ -281,5 +276,14 @@ describe( 'SiteGen Site Editor Step', function () {
 		cy.get(
 			'.nfd-onboarding-sidebar--customize__design-colors-panel__custom__colors__container'
 		).should( 'not.exist' );
+	} );
+	
+	it( 'Check Save & Continue button functionality', () => {
+		cy.get('.nfd-onboarding-header--sitegen__editor__end__save-button')
+			.scrollIntoView()
+			.should(' exist ')
+			.click();
+		cy.get(`.${getAppId()}-app-container`, { timeout : 90000 } )
+		
 	} );
 } );
