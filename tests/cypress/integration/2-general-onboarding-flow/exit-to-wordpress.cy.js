@@ -2,7 +2,7 @@
 
 const { GetPluginId } = require("../wp-module-support/pluginID.cy");
 
-describe.skip( 'Exit to WordPress', function () {
+describe( 'Exit to WordPress', function () {
 	before( () => {
 		cy.visit( 'wp-admin/?page=nfd-onboarding#/wp-setup/step/basic-info' );
 	} );

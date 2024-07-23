@@ -9,7 +9,7 @@ import {
 	continueSetup,
 } from '../wp-module-support/sidebar.cy';
 
-describe.skip( 'Theme Styles Preview', function () {
+describe( 'Theme Styles Preview', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/theme-styles/preview'
