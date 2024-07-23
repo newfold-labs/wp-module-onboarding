@@ -36,7 +36,7 @@ const OptionWithHeadingSubHeading = ( {
 					<input
 						type="radio"
 						name="nfd__option_radio_button"
-						checked={isSelected}
+						checked={ isSelected }
 					/>
 				</div>
 				<div className={ 'nfd__option_heading_subheading__left' }>
