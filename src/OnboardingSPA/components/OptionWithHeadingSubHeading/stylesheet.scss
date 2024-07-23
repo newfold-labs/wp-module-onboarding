@@ -20,12 +20,12 @@ $background-color: var(--nfd-onboarding-card-background);
 		margin-left: 5px;
 		margin-right: 15px;
 
-		input[type="radio"] {
+		input[name="nfd__option_radio_button"] {
 
 			&:checked {
 
 				&::before {
-					background-color: #1d2327;
+					background-color: var(--nfd-onboarding-admin-bar-background);
 				}
 			}
 		}
