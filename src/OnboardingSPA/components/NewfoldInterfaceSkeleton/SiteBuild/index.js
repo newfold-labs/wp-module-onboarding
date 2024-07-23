@@ -394,7 +394,7 @@ const SiteBuild = () => {
 						res.nfd_migrate_site ? ACTION_MFE_MIGRATION_INITIATED : ACTION_MIGRATION_INITIATED,
 						instaWpMigrationUrl
 					)
-				) )
+				) );
 			}
 		}
 	};
