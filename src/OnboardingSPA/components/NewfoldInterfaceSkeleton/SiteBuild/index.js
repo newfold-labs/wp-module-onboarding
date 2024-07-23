@@ -19,6 +19,7 @@ import NewfoldInterfaceSkeleton from '../index';
 import { ThemeProvider } from '../../ThemeContextProvider';
 import { stepTheFork } from '../../../steps/TheFork/step';
 import { stepSiteGenMigration } from '../../../steps/SiteGen/Migration/step';
+import { useWPSettings } from '../../../steps/Ecommerce/useWPSettings';
 
 // classes
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
@@ -35,7 +36,7 @@ import {
 	setSettings,
 	initialize as initializeSettings,
 } from '../../../utils/api/settings';
-import { fetchWPSettings, isEmpty, updateWPSettings } from '../../../utils/api/ecommerce';
+import { isEmpty, updateWPSettings } from '../../../utils/api/ecommerce';
 import { store as nfdOnboardingStore } from '../../../store';
 import { getQueryParam } from '../../../utils';
 import { API_REQUEST } from '../../../../constants';
@@ -123,7 +124,6 @@ const SiteBuild = () => {
 	const [ isRequestPlaced, setIsRequestPlaced ] = useState( false );
 	const [ didVisitBasicInfo, setDidVisitBasicInfo ] = useState( false );
 	const [ didVisitEcommerce, setDidVisitEcommerce ] = useState( false );
-	const [ isMfeMigrationInitiated, setIsMfeMigrationInitiated ] = useState( false );
 	const {
 		setActiveChapter,
 		flushQueue,
@@ -389,12 +389,12 @@ const SiteBuild = () => {
 	const trackInstaWpMigrationEvent = () => {
 		if ( currentStep?.path === stepSiteGenMigration?.path ) {
 			if ( instaWpMigrationUrl ) {
-				sendOnboardingEvent(
+				useWPSettings().then( ( res ) => sendOnboardingEvent(
 					new OnboardingEvent(
-						isMfeMigrationInitiated ? ACTION_MFE_MIGRATION_INITIATED : ACTION_MIGRATION_INITIATED,
+						res.nfd_migrate_site ? ACTION_MFE_MIGRATION_INITIATED : ACTION_MIGRATION_INITIATED,
 						instaWpMigrationUrl
 					)
-				);
+				) )
 			}
 		}
 	};
@@ -405,7 +405,6 @@ const SiteBuild = () => {
 
 	// Track Migration Initated Event in the Migration Step.
 	useEffect( () => {
-		fetchWPSettings().then( ( res ) => ( setIsMfeMigrationInitiated( res.nfd_migrate_site ) ) );
 		trackInstaWpMigrationEvent();
 	}, [ instaWpMigrationUrl ] );
 
