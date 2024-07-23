@@ -19,7 +19,7 @@ import NewfoldInterfaceSkeleton from '../index';
 import { ThemeProvider } from '../../ThemeContextProvider';
 import { stepTheFork } from '../../../steps/TheFork/step';
 import { stepSiteGenMigration } from '../../../steps/SiteGen/Migration/step';
-import { useWPSettings } from '../../../steps/Ecommerce/useWPSettings';
+import { useWPSettings as getWPSettings } from '../../../steps/Ecommerce/useWPSettings';
 
 // classes
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
@@ -389,7 +389,7 @@ const SiteBuild = () => {
 	const trackInstaWpMigrationEvent = () => {
 		if ( currentStep?.path === stepSiteGenMigration?.path ) {
 			if ( instaWpMigrationUrl ) {
-				useWPSettings().then( ( res ) => sendOnboardingEvent(
+				getWPSettings().then( ( res ) => sendOnboardingEvent(
 					new OnboardingEvent(
 						res.nfd_migrate_site ? ACTION_MFE_MIGRATION_INITIATED : ACTION_MIGRATION_INITIATED,
 						instaWpMigrationUrl
