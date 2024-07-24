@@ -70,7 +70,6 @@ describe( 'SiteGen Fork Step', function() {
 					timeout: 10000,
 				} );
 				cy.go( 'back' );
-				cy.get( '.nfd-onboarding-button--dark', { timeout: waitTime } ).click();
 				cy.get( className, { timeout: waitTime } );
 			}
 		} );
