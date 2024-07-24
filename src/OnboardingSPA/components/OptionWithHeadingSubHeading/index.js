@@ -32,6 +32,13 @@ const OptionWithHeadingSubHeading = ( {
 						'nfd__option_heading_subheading__wrapper--selected'
 				) }
 			>
+				<div className={ 'nfd__option_heading_subheading__radio_button' }>
+					<input
+						type="radio"
+						name="nfd__option_radio_button"
+						checked={ isSelected }
+					/>
+				</div>
 				<div className={ 'nfd__option_heading_subheading__left' }>
 					<div
 						className={ 'nfd__option_heading_subheading__left_top' }
