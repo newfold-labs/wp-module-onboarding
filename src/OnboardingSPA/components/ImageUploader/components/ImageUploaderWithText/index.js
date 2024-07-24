@@ -21,6 +21,7 @@ import { THEME_LIGHT, THEME_DARK } from '../../../../../constants';
 const ImageUploaderWithText = ( { image, imageSetter, onFailure } ) => {
 	const inputRef = useRef( null );
 	const { theme } = useContext( ThemeContext );
+	const [ isValidType, setIsValidType ] = useState( true );
 	const [ isUploading, setIsUploading ] = useState( false );
 	const [ onDragActive, setOnDragActive ] = useState( false );
 	const [ pngLogoBgTheme, setPngLogoBgTheme ] = useState( '' );
@@ -84,6 +85,7 @@ const ImageUploaderWithText = ( { image, imageSetter, onFailure } ) => {
 	};
 
 	const removeSelectedImage = () => {
+		setIsValidType( true );
 		setPngLogoBgTheme( '' );
 		imageSetter( {
 			id: 0,
@@ -98,6 +100,7 @@ const ImageUploaderWithText = ( { image, imageSetter, onFailure } ) => {
 
 	const imageChange = ( e ) => {
 		if ( e?.target?.files && e?.target?.files.length > 0 ) {
+			setIsValidType( true );
 			updateItem( e?.target?.files[ 0 ] );
 		}
 	};
@@ -110,7 +113,10 @@ const ImageUploaderWithText = ( { image, imageSetter, onFailure } ) => {
 			if (
 				e?.dataTransfer?.files[ 0 ]?.type.split( '/' )[ 0 ] === 'image'
 			) {
+				setIsValidType( true );
 				updateItem( e?.dataTransfer?.files[ 0 ] );
+			} else {
+				setIsValidType( false );
 			}
 		}
 	};
@@ -132,99 +138,113 @@ const ImageUploaderWithText = ( { image, imageSetter, onFailure } ) => {
 	);
 
 	return (
-		<div
-			className={ logoContainerClassnames }
-			onDrop={ ( e ) => handleDrop( e ) }
-			onDragOver={ ( e ) => handleDragOver( e ) }
-			onDragEnter={ ( e ) => handleDragEnter( e ) }
-			onDragLeave={ ( e ) => handleDragLeave( e ) }
-		>
-			{ isUploading ? (
-				<Spinner />
-			) : (
-				<>
-					{ ! isImageUploaded && (
-						<>
-							<div className="nfd-onboarding-image-uploader--with-text__heading">
-								<div
-									className={ classNames(
-										'nfd-onboarding-image-uploader--with-text__heading__icon',
-										theme === THEME_LIGHT
-											? 'nfd-onboarding-image-uploader--with-text__heading__icon--light'
-											: null
-									) }
-								></div>
-								<p className="nfd-onboarding-image-uploader--with-text__heading__text">
-									<span className="nfd-onboarding-image-uploader--with-text__heading__text__drop">
+		<>
+			<div
+				className={ logoContainerClassnames }
+				onDrop={ ( e ) => handleDrop( e ) }
+				onDragOver={ ( e ) => handleDragOver( e ) }
+				onDragEnter={ ( e ) => handleDragEnter( e ) }
+				onDragLeave={ ( e ) => handleDragLeave( e ) }
+			>
+				{ isUploading ? (
+					<Spinner />
+				) : (
+					<>
+						{ ! isImageUploaded && (
+							<>
+								<div className="nfd-onboarding-image-uploader--with-text__heading">
+									<div
+										className={ classNames(
+											'nfd-onboarding-image-uploader--with-text__heading__icon',
+											theme === THEME_LIGHT
+												? 'nfd-onboarding-image-uploader--with-text__heading__icon--light'
+												: null
+										) }
+									></div>
+									<p className="nfd-onboarding-image-uploader--with-text__heading__text">
+										<span className="nfd-onboarding-image-uploader--with-text__heading__text__drop">
+											{ __(
+												'Drop your logo here, or ',
+												'wp-module-onboarding'
+											) }
+										</span>
+										<button
+											onClick={ handleClick }
+											className="nfd-onboarding-image-uploader--with-text__heading__text__modal"
+										>
+											{ __(
+												'browse',
+												'wp-module-onboarding'
+											) }
+										</button>
+										<input
+											className="nfd-onboarding-image-uploader--with-text__heading__text__input"
+											accept="image/*"
+											type="file"
+											ref={ inputRef }
+											onChange={ imageChange }
+										/>
+									</p>
+								</div>
+								<div className="nfd-onboarding-image-uploader--with-text__subheading">
+									<p className="nfd-onboarding-image-uploader--with-text__subheading__text">
 										{ __(
-											'Drop your logo here, or ',
+											'supports .jpg, .png, .gif',
 											'wp-module-onboarding'
 										) }
-									</span>
+									</p>
+								</div>
+							</>
+						) }
+						{ isImageUploaded && (
+							<div className="nfd-onboarding-image-uploader--with-text__site_logo__preview">
+								<div className="nfd-onboarding-image-uploader--with-text__site_logo__preview__wrapper">
+									<img
+										className="nfd-onboarding-image-uploader--with-text__site_logo__preview__image"
+										src={ image.url }
+										alt={ __(
+											'Site Logo Preview',
+											'wp-module-onboarding'
+										) }
+									/>
+								</div>
+								<div className="nfd-onboarding-image-uploader--with-text__site_logo__preview__details">
+									<p className="nfd-onboarding-image-uploader--with-text__site_logo__preview__details__filename">
+										{ image.fileName }
+									</p>
+									<p className="nfd-onboarding-image-uploader--with-text__site_logo__preview__details__filesize">
+										{ bytes( image.fileSize ) }
+									</p>
+								</div>
+								<div className="nfd-onboarding-image-uploader--with-text__site_logo__preview__reset">
 									<button
-										onClick={ handleClick }
-										className="nfd-onboarding-image-uploader--with-text__heading__text__modal"
+										className="nfd-onboarding-image-uploader--with-text__site_logo__preview__reset__button"
+										onClick={ removeSelectedImage }
 									>
-										{ __(
-											'browse',
-											'wp-module-onboarding'
-										) }
+										<Icon
+											className="nfd-onboarding-image-uploader--with-text__site_logo__preview__reset__button__icon"
+											icon={ closeSmall }
+										/>
 									</button>
-									<input
-										className="nfd-onboarding-image-uploader--with-text__heading__text__input"
-										accept="image/*"
-										type="file"
-										ref={ inputRef }
-										onChange={ imageChange }
-									/>
-								</p>
+								</div>
 							</div>
-							<div className="nfd-onboarding-image-uploader--with-text__subheading">
-								<p className="nfd-onboarding-image-uploader--with-text__subheading__text">
-									{ __(
-										'supports .jpg, .png, .gif',
-										'wp-module-onboarding'
-									) }
-								</p>
-							</div>
-						</>
+						) }
+					</>
+				) }
+			</div>
+			{ ! isValidType && (
+				<div
+					className={
+						'nfd-onboarding-image-uploader--with-text--invalid'
+					}
+				>
+					{ __(
+						'This is not a valid Image Type',
+						'wp-module-onboarding'
 					) }
-					{ isImageUploaded && (
-						<div className="nfd-onboarding-image-uploader--with-text__site_logo__preview">
-							<div className="nfd-onboarding-image-uploader--with-text__site_logo__preview__wrapper">
-								<img
-									className="nfd-onboarding-image-uploader--with-text__site_logo__preview__image"
-									src={ image.url }
-									alt={ __(
-										'Site Logo Preview',
-										'wp-module-onboarding'
-									) }
-								/>
-							</div>
-							<div className="nfd-onboarding-image-uploader--with-text__site_logo__preview__details">
-								<p className="nfd-onboarding-image-uploader--with-text__site_logo__preview__details__filename">
-									{ image.fileName }
-								</p>
-								<p className="nfd-onboarding-image-uploader--with-text__site_logo__preview__details__filesize">
-									{ bytes( image.fileSize ) }
-								</p>
-							</div>
-							<div className="nfd-onboarding-image-uploader--with-text__site_logo__preview__reset">
-								<button
-									className="nfd-onboarding-image-uploader--with-text__site_logo__preview__reset__button"
-									onClick={ removeSelectedImage }
-								>
-									<Icon
-										className="nfd-onboarding-image-uploader--with-text__site_logo__preview__reset__button__icon"
-										icon={ closeSmall }
-									/>
-								</button>
-							</div>
-						</div>
-					) }
-				</>
+				</div>
 			) }
-		</div>
+		</>
 	);
 };
 
