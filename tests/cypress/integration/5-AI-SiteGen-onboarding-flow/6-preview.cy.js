@@ -41,7 +41,7 @@ describe( 'SiteGen Site Preview Step', function () {
 	} );
 
 	it( 'Check the Progress Bar Value', () => {
-		ProgressBarCheck( '66.6667%' );
+		ProgressBarCheck( '60%' );
 	} );
 
 	it( 'Check for by default 3 versions should be there', () => {
