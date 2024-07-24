@@ -48,10 +48,6 @@ describe( 'SiteGen Fork Step', function() {
 		);
 	} );
 
-	it( 'Check if the large AI option is available or not.', () => {
-		cy.get( '.nfd-onboarding-sitegen-options__option--large' ).should( 'be.visible' );
-	} );
-
 	it( 'Check the number of container options available', () => {
 		cy.get( '.nfd-onboarding-sitegen-options__option' )
 			.should( 'be.visible' )
@@ -73,6 +69,14 @@ describe( 'SiteGen Fork Step', function() {
 				cy.get( className, { timeout: waitTime } );
 			}
 		} );
+	} );
+
+	it( 'Check the AI Sitegen flow.', () => {
+		cy.get( '.nfd-onboarding-sitegen-options__option--large' ).should( 'be.visible' ).trigger( 'click' );
+		cy.url().should( 'include', '#/sitegen/step/site-details', {
+			timeout: 10000,
+		} );
+		cy.go( 'back' );
 	} );
 
 	it( 'Verify by default import your WP account leads to transfer site link', () => {
