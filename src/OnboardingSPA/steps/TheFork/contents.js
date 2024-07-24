@@ -47,7 +47,7 @@ const getContents = ( canMigrateSite, migrationUrl ) => {
 			'wp-module-onboarding'
 		),
 		exitToWordPress: __(
-			'I’m following a tutorial, take me to the WP Admin Dashboard.',
+			'I’m following a tutorial, take me to the WP Admin Dashboard',
 			'wp-module-onboarding'
 		),
 	};
