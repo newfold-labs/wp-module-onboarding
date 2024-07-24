@@ -9,7 +9,7 @@ import { apiList, migrationConnection } from '../wp-module-support/MockApi.cy';
 
 const waitTime = 60000;
 
-describe( 'SiteGen Fork Step', function () {
+describe( 'SiteGen Fork Step', function() {
 	before( () => {
 		cy.exec(
 			'npx wp-env run cli wp option delete nfd_module_onboarding_flow'
@@ -49,36 +49,37 @@ describe( 'SiteGen Fork Step', function () {
 	} );
 
 	it( 'Check the number of container options available', () => {
-		cy.get( '.nfd-onboarding-sitegen-options__container__options' )
+		cy.get( '.nfd-onboarding-sitegen-options__option' )
 			.should( 'be.visible' )
 			.should( 'have.length', 3 );
 	} );
 
 	it( 'Check for selection of different container options', () => {
-		const className = '.nfd-onboarding-sitegen-options__container__options';
+		const className = '.nfd-onboarding-sitegen-options__option';
 		const arr = cy.get( className );
 
 		arr.each( ( $element ) => {
 			const dataSlugText = $element.attr( 'data-flow' );
-			if ( dataSlugText == 'sitegen' ) {
+			if ( dataSlugText == 'sitebuild' ) {
 				$element.trigger( 'click' );
-				cy.url().should( 'include', 'sitegen/step/site-details', {
+				cy.url().should( 'include', '#/wp-setup/step/get-started/welcome', {
 					timeout: 10000,
 				} );
-				cy.get( '.nfd-onboarding-button--dark' , { timeout : waitTime } ).click();
-				cy.get( className, { timeout: waitTime } )
+				cy.go( 'back' );
+				cy.get( className, { timeout: waitTime } );
 			}
 		} );
 	} );
 
-	it( 'Check for the import your WP account link at the bottom', () => {
-		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite' )
-			.scrollIntoView()
-			.should( 'exist' )
-			.should( 'contain', 'Already have a WordPress site' );
+	it( 'Check the AI Sitegen flow.', () => {
+		cy.get( '.nfd-onboarding-sitegen-options__option--large' ).should( 'be.visible' ).trigger( 'click' );
+		cy.url().should( 'include', '#/sitegen/step/site-details', {
+			timeout: 10000,
+		} );
+		cy.go( 'back' );
 	} );
 
-	it( 'Verify by default import your WP account leads to transfer site link' , () => {
+	it( 'Verify by default import your WP account leads to transfer site link', () => {
 		cy.window().then( ( win ) => {
 			cy.spy( win, 'open', ( url ) => {
 				win.location.href =
@@ -86,23 +87,23 @@ describe( 'SiteGen Fork Step', function () {
 			} ).as( 'windowOpen' );
 		} );
 
-		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite' )
+		cy.get( '[data-flow=migration]' )
 			.scrollIntoView()
 			.click();
 
 		cy.get( '@windowOpen' ).should( 'be.called' );
 	} );
 
-	it( 'Verify Import site leads to migration process initiation screen when can migrate capability is set' , () => {
+	it( 'Verify Import site leads to migration process initiation screen when can migrate capability is set', () => {
 		cy.exec(
 			`npx wp-env run cli wp option update _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true, "canMigrateSite": true}' --format=json`,
 			{ timeout: 20000 }
 		);
-		cy.reload()
+		cy.reload();
 		cy.intercept( apiList.migrateConnect, ( req ) => {
 			migrationConnection( req );
 		} ).as( 'migrateCall' );
-		cy.get( '.nfd-onboarding-step--site-gen__fork__importsite' , {
+		cy.get( '[data-flow=migration]', {
 			timeout: waitTime,
 		} )
 			.scrollIntoView()
@@ -112,7 +113,7 @@ describe( 'SiteGen Fork Step', function () {
 			timeout: waitTime,
 		} ).should( 'exist' );
 		cy.get(
-			'.nfd-onboarding-step--site-gen__migration--container__loader', { timeout : waitTime }
+			'.nfd-onboarding-step--site-gen__migration--container__loader', { timeout: waitTime }
 		).should( 'exist' );
 		cy.get(
 			'.nfd-onboarding-step--site-gen__migration--container__importtext'
@@ -124,7 +125,7 @@ describe( 'SiteGen Fork Step', function () {
 		cy.wait( '@migrateCall', { timeout: waitTime } );
 	} );
 
-	it( 'Verify migration connection request is successful and redirection happens' , () => {
+	it( 'Verify migration connection request is successful and redirection happens', () => {
 		cy.url().should( 'contain', 'app.instawp.io/migrate' );
 	} );
 } );
