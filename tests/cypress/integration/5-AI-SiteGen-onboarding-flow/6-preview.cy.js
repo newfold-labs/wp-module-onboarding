@@ -45,7 +45,7 @@ describe( 'SiteGen Site Preview Step', function () {
 	} );
 	
 	it( 'Check if Back button is not visible' , () => {
-		cy.get( '.nfd-onboarding-button--dark' ).should( 'not.be.visible' )
+		cy.get( '.nfd-onboarding-button--dark' ).should( 'not.exist' )
 	} );
 
 	it( 'Check for by default 3 versions should be there', () => {

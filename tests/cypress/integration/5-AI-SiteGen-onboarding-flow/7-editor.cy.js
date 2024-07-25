@@ -202,7 +202,7 @@ describe( 'SiteGen Site Editor Step', function () {
 		cy.get( '#headings' )
 			.scrollIntoView()
 			.should( 'be.visible' )
-			.select( 'poppins' );
+			.select( 'raleway' );
 		cy.get( '#body' )
 			.scrollIntoView()
 			.should( 'be.visible' )
