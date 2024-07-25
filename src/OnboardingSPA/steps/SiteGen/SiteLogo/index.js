@@ -27,6 +27,7 @@ import {
 	ACTION_SITEGEN_LOGO_SKIPPED,
 } from '../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
+import { SiteGenStateHandler } from '../../../components/StateHandlers';
 
 const SiteGenSiteLogo = () => {
 	const [ siteLogo, setSiteLogo ] = useState();
@@ -121,49 +122,51 @@ const SiteGenSiteLogo = () => {
 	const content = getContents();
 
 	return (
-		<CommonLayout
-			isCentered
-			className="nfd-onboarding-step--site-gen__site-logo"
-		>
-			<div className="nfd-onboarding-step--site-gen__site-logo__container">
-				<AIHeading title={ content.heading } />
-				<ImageUploaderWithText
-					image={ siteLogo }
-					imageSetter={ handleSiteLogo }
-					onFailure={ handleFailure }
-				/>
-				<div className="nfd-onboarding-step--site-gen__site-logo__container__buttons">
-					<SkipButton
-						callback={ () => resetSiteLogo() }
-						className="nfd-onboarding-step--site-gen__site-logo__container__buttons__skip"
-						text={ content.buttons.skip }
+		<SiteGenStateHandler>
+			<CommonLayout
+				isCentered
+				className="nfd-onboarding-step--site-gen__site-logo"
+			>
+				<div className="nfd-onboarding-step--site-gen__site-logo__container">
+					<AIHeading title={ content.heading } />
+					<ImageUploaderWithText
+						image={ siteLogo }
+						imageSetter={ handleSiteLogo }
+						onFailure={ handleFailure }
 					/>
-					{ isLargeViewport && (
-						<NextButtonSiteGen
-							callback={ () => {
-								if ( siteLogo ) {
-									trackOnboardingEvent(
-										new OnboardingEvent(
-											ACTION_LOGO_ADDED,
-											undefined,
-											{
-												source: SITEGEN_FLOW,
-											}
-										)
-									);
-								}
-							} }
-							text={ content.buttons.next }
-							disabled={
-								siteLogo === undefined || siteLogo?.id === 0
-									? true
-									: false
-							}
+					<div className="nfd-onboarding-step--site-gen__site-logo__container__buttons">
+						<SkipButton
+							callback={ () => resetSiteLogo() }
+							className="nfd-onboarding-step--site-gen__site-logo__container__buttons__skip"
+							text={ content.buttons.skip }
 						/>
-					) }
+						{ isLargeViewport && (
+							<NextButtonSiteGen
+								callback={ () => {
+									if ( siteLogo ) {
+										trackOnboardingEvent(
+											new OnboardingEvent(
+												ACTION_LOGO_ADDED,
+												undefined,
+												{
+													source: SITEGEN_FLOW,
+												}
+											)
+										);
+									}
+								} }
+								text={ content.buttons.next }
+								disabled={
+									siteLogo === undefined || siteLogo?.id === 0
+										? true
+										: false
+								}
+							/>
+						) }
+					</div>
 				</div>
-			</div>
-		</CommonLayout>
+			</CommonLayout>
+		</SiteGenStateHandler>
 	);
 };
 

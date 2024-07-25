@@ -21,6 +21,7 @@ export const ACTION_ONBOARDING_CHAPTER_STARTED = 'onboarding_chapter_started';
 export const ACTION_ONBOARDING_CHAPTER_COMPLETE = 'onboarding_chapter_complete';
 export const ACTION_SOCIAL_ADDED = 'social_added';
 export const ACTION_MIGRATION_INITIATED = 'migration_initiated';
+export const ACTION_MFE_MIGRATION_INITIATED = 'mfe_migration_initiated';
 
 export const ACTION_SITEGEN_FORK_OPTION_SELECTED = 'fork_option_selected';
 export const ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET = 'site_details_prompt_set';
@@ -66,5 +67,6 @@ export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_SITEGEN_HOMEPAGE_RENAMED ]: 'version',
 	[ ACTION_SITEGEN_SITE_GENERATION_TIME ]: 'time',
 	[ ACTION_MIGRATION_INITIATED ]: 'path',
+	[ ACTION_MFE_MIGRATION_INITIATED ]: 'path',
 	[ ACTION_SITEGEN_ERROR_STATE_TRIGGERED ]: 'identifier',
 };

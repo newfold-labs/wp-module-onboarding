@@ -187,5 +187,9 @@
 			}
 		}
 
+		&--invalid {
+			color: var(--nfd-onboarding-primary);
+		}
+
 	}
 }

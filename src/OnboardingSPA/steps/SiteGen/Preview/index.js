@@ -73,7 +73,7 @@ const SiteGenPreview = () => {
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
-		setIsHeaderEnabled( true );
+		setIsHeaderEnabled( false );
 		setHideFooterNav( true );
 		setSidebarActiveView( false );
 		setHeaderActiveView( HEADER_SITEGEN );

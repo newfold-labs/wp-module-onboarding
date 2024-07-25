@@ -41,7 +41,7 @@ describe( 'SiteGen Experience & Site Building Step', function () {
 	} );
 
 	it( 'Check the Progress Bar Value', () => {
-		ProgressBarCheck( '50%' );
+		ProgressBarCheck( '40%' );
 	} );
 
 	it( 'Check for the existence & the count of experience level cards', () => {

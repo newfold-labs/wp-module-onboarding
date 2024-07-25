@@ -41,7 +41,7 @@ describe( 'SiteGen Site Logo Step', function () {
 	} );
 
 	it( 'Check the Progress Bar Value', () => {
-		ProgressBarCheck( '33.3333%' );
+		ProgressBarCheck( '20%' );
 	} );
 
 	it( 'Check for back button and go back', () => {

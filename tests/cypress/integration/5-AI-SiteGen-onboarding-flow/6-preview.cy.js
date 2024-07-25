@@ -41,7 +41,7 @@ describe( 'SiteGen Site Preview Step', function () {
 	} );
 
 	it( 'Check the Progress Bar Value', () => {
-		ProgressBarCheck( '66.6667%' );
+		ProgressBarCheck( '60%' );
 	} );
 	
 	it( 'Check if Back button is not visible' , () => {
