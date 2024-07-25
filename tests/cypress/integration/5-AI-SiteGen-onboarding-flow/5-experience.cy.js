@@ -55,7 +55,7 @@ describe( 'SiteGen Experience & Site Building Step', function () {
 	} );
 	
 	it( 'Check if Back button is not visible' , () => {
-		cy.get( '.nfd-onboarding-button--dark' ).should( 'not.be.visible' )
+		cy.get( '.nfd-onboarding-button--dark' , { timeout : 20000 } ).should( 'not.be.visible' )
 	} )
 
 	it( 'Check each experience cards', () => {

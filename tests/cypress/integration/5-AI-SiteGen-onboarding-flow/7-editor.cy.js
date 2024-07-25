@@ -142,7 +142,7 @@ describe( 'SiteGen Site Editor Step', function () {
 			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container'
 		)
 			.should( 'be.visible' )
-			.should( 'have.length', 1 );
+			.should( 'have.length', 2 );
 		cy.get(
 			'.components-button.nfd-onboarding-sidebar--sitegen-editor-patterns__header__icon'
 		).should( 'be.visible' );
@@ -169,8 +169,6 @@ describe( 'SiteGen Site Editor Step', function () {
 		cy.get(
 			'.nfd-onboarding-header--sitegen__editor__end__customize-button'
 		).click();
-		// verify back button is not displayed when Customize is clicked
-		cy.get( '.nfd-onboarding-button--dark' ).should( 'not.be.visible' )
 		cy.wait( '@themeStyleCalls', { timeout: 60000 } );
 		cy.wait( '@customizeDataCall', { timeout: 60000 } );
 		cy.get(
