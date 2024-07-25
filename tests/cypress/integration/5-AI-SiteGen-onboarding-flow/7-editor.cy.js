@@ -47,7 +47,7 @@ describe( 'SiteGen Site Editor Step', function () {
 	} );
 
 	it( 'Check the Progress Bar Value', () => {
-		ProgressBarCheck( '83.3333%' );
+		ProgressBarCheck( '80%' );
 	} );
 
 	it( 'Check if the sidebar is closed upon landing', () => {
@@ -155,7 +155,7 @@ describe( 'SiteGen Site Editor Step', function () {
 	} );
 
 	it( 'Check if Back button is not visible', () => {
-		cy.get( '.nfd-onboarding-button--dark' ).should( 'not.be.visible' )
+		cy.get( '.nfd-onboarding-button--dark' ).should( 'not.exist' )
 	} );
 
 	it( 'Check changing the existing fonts from sidebar', () => {
