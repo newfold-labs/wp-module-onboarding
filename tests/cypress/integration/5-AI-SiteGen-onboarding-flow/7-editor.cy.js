@@ -206,7 +206,7 @@ describe( 'SiteGen Site Editor Step', function () {
 		cy.get( '#body' )
 			.scrollIntoView()
 			.should( 'be.visible' )
-			.select( 'oswald' );
+			.select( 'jost' );
 		cy.get( '.components-button.apply.is-primary' )
 			.scrollIntoView()
 			.should( 'be.visible' )
