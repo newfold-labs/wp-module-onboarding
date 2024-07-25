@@ -1,128 +1,133 @@
 {
     "design": {
-        "name": "Modern Foodie",
-        "style": {
-            "aesthetics": "modern",
-            "fonts_heading": "Arial",
-            "fonts_content": "Times New Roman",
-            "spacing": 6,
-            "radius": 4
-        },
-        "color_palette": {
-            "base": "#F0F0F0",
-            "contrast": "#333333",
-            "primary": "#09728C",
-            "secondary": "#C79E10",
-            "tertiary": "#F5EBB8",
-            "header_background": "#09728C",
-            "header_foreground": "#F5EBB8",
-            "header_titles": "#F5EBB8",
-            "secondary_background": "#09728C",
-            "secondary_foreground": "#F5EBB8"
-        }
+      "name": "Modern Foodie",
+      "style": {
+        "aesthetics": "modern",
+        "fonts_heading": "Arial",
+        "fonts_content": "Times New Roman",
+        "spacing": 6,
+        "radius": 4
+      },
+      "color_palette": {
+        "base": "#F0F0F0",
+        "contrast": "#333333",
+        "primary": "#09728C",
+        "secondary": "#C79E10",
+        "tertiary": "#F5EBB8",
+        "header_background": "#09728C",
+        "header_foreground": "#F5EBB8",
+        "header_titles": "#F5EBB8",
+        "secondary_background": "#09728C",
+        "secondary_foreground": "#F5EBB8"
+      }
     },
     "colorPalettes": [
-        {
-            "base": "#3D352A",
-            "contrast": "#F2E9E1",
-            "primary": "#8C6D5C",
-            "tertiary": "#D9C7B1",
-            "header_background": "#F2E9E1",
-            "header_foreground": "#3D352A",
-            "header_tiles": "#8C6D5C",
-            "secondary_background": "#D9C7B1",
-            "secondary_foreground": "#3D352A"
-        },
-        {
-            "base": "#2E383F",
-            "contrast": "#F2F2F2",
-            "primary": "#6D7D87",
-            "tertiary": "#B1C2CA",
-            "header_background": "#F2F2F2",
-            "header_foreground": "#2E383F",
-            "header_tiles": "#6D7D87",
-            "secondary_background": "#B1C2CA",
-            "secondary_foreground": "#2E383F"
-        },
-        {
-            "base": "#2A3D35",
-            "contrast": "#E1F2E9",
-            "primary": "#5C8C6D",
-            "tertiary": "#B1D9C7",
-            "header_background": "#E1F2E9",
-            "header_foreground": "#2A3D35",
-            "header_tiles": "#5C8C6D",
-            "secondary_background": "#B1D9C7",
-            "secondary_foreground": "#2A3D35"
-        },
-        {
-            "base": "#3F2E38",
-            "contrast": "#F2F2F2",
-            "primary": "#876D7D",
-            "tertiary": "#CAB1C2",
-            "header_background": "#F2F2F2",
-            "header_foreground": "#3F2E38",
-            "header_tiles": "#876D7D",
-            "secondary_background": "#CAB1C2",
-            "secondary_foreground": "#3F2E38"
-        },
-        {
-            "base": "#352A3D",
-            "contrast": "#E9E1F2",
-            "primary": "#6D5C8C",
-            "tertiary": "#C7B1D9",
-            "header_background": "#E9E1F2",
-            "header_foreground": "#352A3D",
-            "header_tiles": "#6D5C8C",
-            "secondary_background": "#C7B1D9",
-            "secondary_foreground": "#352A3D"
-        }
+      {
+        "base": "#2E7D32",
+        "contrast": "#FFFFFF",
+        "primary": "#4CAF50",
+        "secondary": "#81C784",
+        "tertiary": "#C8E6C9",
+        "header_background": "#2E7D32",
+        "header_foreground": "#FFFFFF",
+        "header_titles": "#FFFFFF",
+        "secondary_background": "#C8E6C9",
+        "secondary_foreground": "#000000"
+      },
+      {
+        "base": "#FF5722",
+        "contrast": "#FFFFFF",
+        "primary": "#FF7043",
+        "secondary": "#FF8A65",
+        "tertiary": "#FFAB91",
+        "header_background": "#FF5722",
+        "header_foreground": "#FFFFFF",
+        "header_titles": "#FFFFFF",
+        "secondary_background": "#FFAB91",
+        "secondary_foreground": "#000000"
+      },
+      {
+        "base": "#1976D2",
+        "contrast": "#FFFFFF",
+        "primary": "#2196F3",
+        "secondary": "#64B5F6",
+        "tertiary": "#BBDEFB",
+        "header_background": "#1976D2",
+        "header_foreground": "#FFFFFF",
+        "header_titles": "#FFFFFF",
+        "secondary_background": "#BBDEFB",
+        "secondary_foreground": "#000000"
+      },
+      {
+        "base": "#9C27B0",
+        "contrast": "#FFFFFF",
+        "primary": "#AB47BC",
+        "secondary": "#BA68C8",
+        "tertiary": "#E1BEE7",
+        "header_background": "#9C27B0",
+        "header_foreground": "#FFFFFF",
+        "header_titles": "#FFFFFF",
+        "secondary_background": "#E1BEE7",
+        "secondary_foreground": "#000000"
+      },
+      {
+        "base": "#FFC107",
+        "contrast": "#000000",
+        "primary": "#FFCA28",
+        "secondary": "#FFD54F",
+        "tertiary": "#FFE082",
+        "header_background": "#FFC107",
+        "header_foreground": "#000000",
+        "header_titles": "#000000",
+        "secondary_background": "#FFE082",
+        "secondary_foreground": "#000000"
+      }
     ],
     "designStyles": [
-        {
-            "aesthetics": "modern",
-            "font_heading": "poppins",
-            "font_content": "mulish",
-            "spacing": 2,
-            "radius": 5,
-            "font_heading_name": "Poppins",
-            "font_content_name": "Mulish"
-        },
-        {
-            "aesthetics": "vintage",
-            "font_heading": "playfair",
-            "font_content": "forum",
-            "spacing": 3,
-            "radius": 10,
-            "font_heading_name": "Playfair Display",
-            "font_content_name": "Forum"
-        },
-        {
-            "aesthetics": "retro",
-            "font_heading": "oswald",
-            "font_content": "roboto-slab",
-            "spacing": 4,
-            "radius": 8,
-            "font_heading_name": "Oswald",
-            "font_content_name": "Roboto Slab"
-        },
-        {
-            "aesthetics": "minimalist",
-            "font_heading": "raleway",
-            "font_content": "source-sans-pro",
-            "spacing": 2,
-            "radius": 5,
-            "font_heading_name": "Raleway",
-            "font_content_name": "Source Sans Pro"
-        },
-        {
-            "aesthetics": "typographic",
-            "font_heading": "jost",
-            "font_content": "merriweather",
-            "spacing": 3,
-            "radius": 10,
-            "font_heading_name": "Jost",
-            "font_content_name": "Merriweather"
-        }
+      {
+        "aesthetics": "modern",
+        "font_heading": "jost",
+        "font_content": "mulish",
+        "spacing": 2,
+        "radius": 4,
+        "font_heading_name": "Jost",
+        "font_content_name": "Mulish"
+      },
+      {
+        "aesthetics": "minimalist",
+        "font_heading": "raleway",
+        "font_content": "mulish",
+        "spacing": 1,
+        "radius": 2,
+        "font_heading_name": "Raleway",
+        "font_content_name": "Mulish"
+      },
+      {
+        "aesthetics": "vintage",
+        "font_heading": "playfair",
+        "font_content": "forum",
+        "spacing": 3,
+        "radius": 6,
+        "font_heading_name": "Playfair Display",
+        "font_content_name": "Forum"
+      },
+      {
+        "aesthetics": "flat",
+        "font_heading": "roboto-slab",
+        "font_content": "mulish",
+        "spacing": 2,
+        "radius": 4,
+        "font_heading_name": "Roboto Slab",
+        "font_content_name": "Mulish"
+      },
+      {
+        "aesthetics": "material",
+        "font_heading": "montserrat",
+        "font_content": "source-sans-pro",
+        "spacing": 2,
+        "radius": 4,
+        "font_heading_name": "Montserrat",
+        "font_content_name": "Source Sans Pro"
+      }
     ]
-}
+  }

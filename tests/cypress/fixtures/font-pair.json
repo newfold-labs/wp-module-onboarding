@@ -1,47 +1,47 @@
 [
     {
-        "aesthetics": "modern",
-        "font_heading": "jost",
-        "font_content": "mulish",
-        "spacing": 2,
-        "radius": 4,
-        "font_heading_name": "Jost",
-        "font_content_name": "Mulish"
+      "aesthetics": "modern",
+      "font_heading": "jost",
+      "font_content": "mulish",
+      "spacing": 2,
+      "radius": 4,
+      "font_heading_name": "Jost",
+      "font_content_name": "Mulish"
     },
     {
-        "aesthetics": "minimalist",
-        "font_heading": "poppins",
-        "font_content": "source-sans-pro",
-        "spacing": 1,
-        "radius": 2,
-        "font_heading_name": "Poppins",
-        "font_content_name": "Source Sans Pro"
+      "aesthetics": "minimalist",
+      "font_heading": "raleway",
+      "font_content": "mulish",
+      "spacing": 1,
+      "radius": 2,
+      "font_heading_name": "Raleway",
+      "font_content_name": "Mulish"
     },
     {
-        "aesthetics": "vintage",
-        "font_heading": "playfair",
-        "font_content": "forum",
-        "spacing": 3,
-        "radius": 6,
-        "font_heading_name": "Playfair Display",
-        "font_content_name": "Forum"
+      "aesthetics": "vintage",
+      "font_heading": "playfair",
+      "font_content": "forum",
+      "spacing": 3,
+      "radius": 6,
+      "font_heading_name": "Playfair Display",
+      "font_content_name": "Forum"
     },
     {
-        "aesthetics": "typographic",
-        "font_heading": "oswald",
-        "font_content": "merriweather",
-        "spacing": 2,
-        "radius": 4,
-        "font_heading_name": "Oswald",
-        "font_content_name": "Merriweather"
+      "aesthetics": "flat",
+      "font_heading": "roboto-slab",
+      "font_content": "mulish",
+      "spacing": 2,
+      "radius": 4,
+      "font_heading_name": "Roboto Slab",
+      "font_content_name": "Mulish"
     },
     {
-        "aesthetics": "retro",
-        "font_heading": "changa-one",
-        "font_content": "roboto-slab",
-        "spacing": 2,
-        "radius": 4,
-        "font_heading_name": "Changa One",
-        "font_content_name": "Roboto Slab"
+      "aesthetics": "material",
+      "font_heading": "montserrat",
+      "font_content": "source-sans-pro",
+      "spacing": 2,
+      "radius": 4,
+      "font_heading_name": "Montserrat",
+      "font_content_name": "Source Sans Pro"
     }
-]
+  ]

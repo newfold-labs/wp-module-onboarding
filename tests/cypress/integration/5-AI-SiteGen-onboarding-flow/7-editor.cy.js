@@ -104,7 +104,7 @@ describe( 'SiteGen Site Editor Step', function () {
 			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container'
 		)
 			.should( 'be.visible' )
-			.should( 'have.length', 4 ); // Regenrating new themes
+			.should( 'have.length', 4 ); // Regenerating new themes
 	} );
 
 	it( 'Check for favoriting a theme and it appears everywhere', () => {
@@ -154,6 +154,10 @@ describe( 'SiteGen Site Editor Step', function () {
 			.should( 'be.visible' );
 	} );
 
+	it( 'Check if Back button is not visible', () => {
+		cy.get( '.nfd-onboarding-button--dark' ).should( 'not.be.visible' )
+	} );
+
 	it( 'Check changing the existing fonts from sidebar', () => {
 		cy.intercept( apiList.themestyle, ( req ) => {
 			themeStyleMock( req );
@@ -165,6 +169,8 @@ describe( 'SiteGen Site Editor Step', function () {
 		cy.get(
 			'.nfd-onboarding-header--sitegen__editor__end__customize-button'
 		).click();
+		// verify back button is not displayed when Customize is clicked
+		cy.get( '.nfd-onboarding-button--dark' ).should( 'not.be.visible' )
 		cy.wait( '@themeStyleCalls', { timeout: 60000 } );
 		cy.wait( '@customizeDataCall', { timeout: 60000 } );
 		cy.get(

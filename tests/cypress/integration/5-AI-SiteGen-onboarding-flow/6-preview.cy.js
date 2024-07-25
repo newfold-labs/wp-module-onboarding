@@ -43,6 +43,10 @@ describe( 'SiteGen Site Preview Step', function () {
 	it( 'Check the Progress Bar Value', () => {
 		ProgressBarCheck( '66.6667%' );
 	} );
+	
+	it( 'Check if Back button is not visible' , () => {
+		cy.get( '.nfd-onboarding-button--dark' ).should( 'not.be.visible' )
+	} );
 
 	it( 'Check for by default 3 versions should be there', () => {
 		cy.get( '.live-preview-sitegen--selectable-card', { timeout: 60000 } )
