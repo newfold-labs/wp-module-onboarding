@@ -53,10 +53,12 @@ describe( 'SiteGen Experience & Site Building Step', function () {
 			3
 		);
 	} );
-	
-	it( 'Check if Back button is not visible' , () => {
-		cy.get( '.nfd-onboarding-button--dark' , { timeout : 20000 } ).should( 'not.exist' )
-	} )
+
+	it( 'Check if Back button is not visible', () => {
+		cy.get( '.nfd-onboarding-button--dark', { timeout: 20000 } ).should(
+			'not.exist'
+		);
+	} );
 
 	it( 'Check each experience cards', () => {
 		const className = '.nfd__option_heading_subheading__wrapper';

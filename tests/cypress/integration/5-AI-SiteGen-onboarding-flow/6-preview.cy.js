@@ -43,9 +43,9 @@ describe( 'SiteGen Site Preview Step', function () {
 	it( 'Check the Progress Bar Value', () => {
 		ProgressBarCheck( '60%' );
 	} );
-	
-	it( 'Check if Back button is not visible' , () => {
-		cy.get( '.nfd-onboarding-button--dark' ).should( 'not.exist' )
+
+	it( 'Check if Back button is not visible', () => {
+		cy.get( '.nfd-onboarding-button--dark' ).should( 'not.exist' );
 	} );
 
 	it( 'Check for by default 3 versions should be there', () => {
@@ -60,12 +60,12 @@ describe( 'SiteGen Site Preview Step', function () {
 		); // when no fav theme is selected
 		cy.get(
 			'.live-preview-sitegen--selectable-card__live-preview-container-buttons__button',
-			{ timeout : 20000 }
+			{ timeout: 20000 }
 		)
 			.eq( 0 )
 			.as( 'fav' )
 			.scrollIntoView()
-			.wait(2000)
+			.wait( 2000 )
 			.should( 'be.visible' )
 			.click();
 		cy.get( 'g[clip-path="url(#heart-filled_svg__a)"]', {
@@ -87,14 +87,14 @@ describe( 'SiteGen Site Preview Step', function () {
 	it( 'Check for regenerating the new theme versions', () => {
 		cy.intercept( apiList.homepagesRegenerate, ( req ) => {
 			homePagesRegenerate( req );
-        }).as('regenerate');
+		} ).as( 'regenerate' );
 
 		cy.get( '[aria-label="Regenerate Content"]', { timeout: 60000 } )
-			.eq(0)
+			.eq( 0 )
 			.scrollIntoView()
 			.wait( 2000 )
-			.click({ force: true });
-		cy.wait('@regenerate', {timeout: 60000})
+			.click( { force: true } );
+		cy.wait( '@regenerate', { timeout: 60000 } );
 		cy.get( '.live-preview-sitegen--selectable-card', { timeout: 20000 } )
 			.should( 'be.visible' )
 			.should( 'have.length', 4 );

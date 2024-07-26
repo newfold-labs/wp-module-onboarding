@@ -132,9 +132,11 @@ describe( 'SiteGen Site Editor Step', function () {
 
 	it( 'Check for favorite themes inside favorite tab', () => {
 		cy.get(
-			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__favorites-tab', {
-			timeout: 10000
-		} )
+			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__favorites-tab',
+			{
+				timeout: 10000,
+			}
+		)
 			.scrollIntoView()
 			.should( 'be.visible' )
 			.click();
@@ -155,7 +157,7 @@ describe( 'SiteGen Site Editor Step', function () {
 	} );
 
 	it( 'Check if Back button is not visible', () => {
-		cy.get( '.nfd-onboarding-button--dark' ).should( 'not.exist' )
+		cy.get( '.nfd-onboarding-button--dark' ).should( 'not.exist' );
 	} );
 
 	it( 'Check changing the existing fonts from sidebar', () => {
@@ -281,11 +283,12 @@ describe( 'SiteGen Site Editor Step', function () {
 			'.nfd-onboarding-sidebar--customize__design-colors-panel__custom__colors__container'
 		).should( 'not.exist' );
 	} );
-	
+
 	it( 'Check Save & Continue button functionality', () => {
-		cy.get('.nfd-onboarding-header--sitegen__editor__end__save-button__text', { timeout : 20000 } )
-			.click();
-		cy.get(`.${getAppId()}-app-container`, { timeout : 90000 } )
-		
+		cy.get(
+			'.nfd-onboarding-header--sitegen__editor__end__save-button__text',
+			{ timeout: 20000 }
+		).click();
+		cy.get( `.${ getAppId() }-app-container`, { timeout: 90000 } );
 	} );
 } );

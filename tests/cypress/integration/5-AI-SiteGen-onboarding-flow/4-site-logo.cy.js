@@ -59,16 +59,19 @@ describe( 'SiteGen Site Logo Step', function () {
 	it( 'Check if the Next Button is disabled when there is no logo', () => {
 		DisabledNextButton();
 	} );
-	
-	it('Verify Skip for now and go to next step', () => {
-		cy.get( '.nfd-onboarding-step--site-gen__site-logo__container__buttons__skip' )
+
+	it( 'Verify Skip for now and go to next step', () => {
+		cy.get(
+			'.nfd-onboarding-step--site-gen__site-logo__container__buttons__skip'
+		)
 			.should( 'not.be.disabled' )
 			.click();
 		cy.url().should( 'not.contain', 'sitegen/step/site-logo' );
 		// go back to site-logo step
-		cy.go( 'back' )
-		cy.get( '.nfd-onboarding-step--site-gen__site-logo__container' , { timeout: 10000 } )
-			.should( 'be.visible' )
+		cy.go( 'back' );
+		cy.get( '.nfd-onboarding-step--site-gen__site-logo__container', {
+			timeout: 10000,
+		} ).should( 'be.visible' );
 	} );
 
 	it.skip( 'Check if Image gets uploaded', () => {
