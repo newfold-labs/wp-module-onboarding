@@ -1,40 +1,41 @@
 {
     "content_structures": [
-        {
-            "structure": [
-                "header",
-                "hero",
-                "headings",
-                "team",
-                "features",
-                "gallery",
-                "call-to-action",
-                "footer"
-            ]
-        },
-        {
-            "structure": [
-                "header",
-                "hero",
-                "headings",
-                "team",
-                "faq",
-                "testimonials",
-                "blog",
-                "footer"
-            ]
-        },
-        {
-            "structure": [
-                "header",
-                "hero",
-                "headings",
-                "team",
-                "gallery",
-                "call-to-action",
-                "contact",
-                "footer"
-            ]
-        }
+      {
+        "structure": [
+          "header",
+          "hero",
+          "headings",
+          "team",
+          "features",
+          "gallery",
+          "call-to-action",
+          "footer"
+        ]
+      },
+      {
+        "structure": [
+          "header",
+          "hero",
+          "headings",
+          "team",
+          "gallery",
+          "call-to-action",
+          "faq",
+          "footer"
+        ]
+      },
+      {
+        "structure": [
+          "header",
+          "hero",
+          "headings",
+          "team",
+          "features",
+          "testimonials",
+          "blog",
+          "footer"
+        ]
+      }
     ]
-}
+  }
+  

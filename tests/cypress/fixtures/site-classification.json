@@ -1,23 +1,24 @@
 {
-    "primaryType": "business",
-    "slug": "shopping-retail",
-    "emoji": "\ud83c\udfec",
-    "wooType": "other",
-    "schema": "Store",
+    "primaryType": "health-wellness",
+    "slug": "gym",
+    "emoji": "💪",
+    "wooType": "health-beauty",
     "keywords": [
-        "commerce",
-        "brick-and-mortar",
-        "discounts",
-        "coupons",
-        "customer",
-        "product",
-        "loyalty",
-        "inventory",
-        "shipping",
-        "returns",
-        "cross-sell",
-        "upsell",
-        "gift cards"
+      "fitness",
+      "group",
+      "weight loss",
+      "muscle",
+      "cardio",
+      "strength",
+      "yoga",
+      "pilates",
+      "crossfit",
+      "bodybuilding",
+      "weight",
+      "treadmill",
+      "elliptical",
+      "interval"
     ],
-    "label": "Shopping & Retail"
-}
+    "label": "Gym"
+  }
+  

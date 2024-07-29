@@ -1,105 +1,43 @@
 {
     "requiredPlugins": [
-        {
-            "title": "Yoast SEO",
-            "description": "Yoast SEO is a comprehensive search engine optimization plugin for WordPress, which offers various features to optimize your site for maximum visibility in search engines.",
-            "slug": "wordpress-seo",
-            "path": "wordpress-seo\/wordpress-seo.php",
-            "download_url": "https:\/\/downloads.wordpress.org\/plugin\/wordpress-seo.zip",
-            "premium": false,
-            "requires": []
-        },
-        {
-            "title": "Jetpack",
-            "description": "Jetpack offers a suite of design, security, and marketing tools for WordPress sites, including real-time backups and easy-to-use performance enhancements.",
-            "slug": "jetpack",
-            "path": "jetpack\/jetpack.php",
-            "download_url": "https:\/\/downloads.wordpress.org\/plugin\/jetpack.zip",
-            "premium": false,
-            "requires": []
-        },
-        {
-            "title": "WooCommerce",
-            "description": "WooCommerce is a customizable, open-source eCommerce platform built on WordPress, allowing users to set up online stores with ease.",
-            "slug": "woocommerce",
-            "path": "woocommerce\/woocommerce.php",
-            "download_url": "https:\/\/downloads.wordpress.org\/plugin\/woocommerce.zip",
-            "premium": false,
-            "requires": []
-        }
+      {
+        "title": "WooCommerce",
+        "description": "WooCommerce is a customizable, open-source eCommerce platform built on WordPress, allowing users to set up online stores with ease.",
+        "slug": "woocommerce",
+        "path": "woocommerce/woocommerce.php",
+        "download_url": "https://downloads.wordpress.org/plugin/woocommerce.zip",
+        "premium": false,
+        "requires": []
+      },
+      {
+        "title": "Yoast SEO",
+        "description": "Yoast SEO is a comprehensive search engine optimization plugin for WordPress, which offers various features to optimize your site for maximum visibility in search engines.",
+        "slug": "wordpress-seo",
+        "path": "wordpress-seo/wordpress-seo.php",
+        "download_url": "https://downloads.wordpress.org/plugin/wordpress-seo.zip",
+        "premium": false,
+        "requires": []
+      },
+      {
+        "title": "Jetpack",
+        "description": "Jetpack offers a suite of design, security, and marketing tools for WordPress sites, including real-time backups and easy-to-use performance enhancements.",
+        "slug": "jetpack",
+        "path": "jetpack/jetpack.php",
+        "download_url": "https://downloads.wordpress.org/plugin/jetpack.zip",
+        "premium": false,
+        "requires": []
+      }
     ],
     "recommendedPlugins": [
-        {
-            "title": "Creative Mail",
-            "description": "Creative Mail is an email marketing plugin designed to seamlessly integrate with WordPress, offering intuitive tools for crafting and sending newsletters.",
-            "slug": "creative-mail-by-constant-contact",
-            "path": "creative-mail-by-constant-contact\/creative-mail-plugin.php",
-            "download_url": "https:\/\/downloads.wordpress.org\/plugin\/creative-mail-by-constant-contact.zip",
-            "premium": false,
-            "requires": []
-        },
-        {
-            "title": "MonsterInsights",
-            "description": "MonsterInsights provides a powerful Google Analytics plugin for WordPress, making it easy to connect and view website analytics directly from the dashboard.",
-            "slug": "google-analytics-for-wordpress",
-            "path": "google-analytics-for-wordpress\/googleanalytics.php",
-            "download_url": "https:\/\/downloads.wordpress.org\/plugin\/google-analytics-for-wordpress.zip",
-            "premium": false,
-            "requires": []
-        },
-        {
-            "title": "OptinMonster",
-            "description": "OptinMonster is a lead generation tool for WordPress, offering features like pop-ups, floating bars, and slide-ins to capture user information.",
-            "slug": "optinmonster",
-            "path": "optinmonster\/optin-monster-wp-api.php",
-            "download_url": "https:\/\/downloads.wordpress.org\/plugin\/optinmonster.zip",
-            "premium": false,
-            "requires": []
-        },
-        {
-            "title": "WPForms Lite",
-            "description": "WPForms Lite is a drag-and-drop form builder for WordPress, allowing users to create contact forms, surveys, and more without any coding.",
-            "slug": "wpforms-lite",
-            "path": "wpforms-lite\/wpforms.php",
-            "download_url": "https:\/\/downloads.wordpress.org\/plugin\/wpforms-lite.zip",
-            "premium": false,
-            "requires": []
-        },
-        {
-            "title": "YITH Product Search Extended Version",
-            "description": "An extended version of YITH's product search plugin for WooCommerce, enhancing search capabilities.",
-            "slug": "yith-product-search-extended",
-            "path": "yith-product-search-extended\/yith-product-search-extended.php",
-            "download_url": "https:\/\/downloads.wordpress.org\/plugin\/yith-product-search-extended.zip",
-            "premium": false,
-            "requires": []
-        },
-        {
-            "title": "YITH Product Filter Extended Version",
-            "description": "An extended version of YITH's product filter plugin for WooCommerce, enhancing product filtering capabilities.",
-            "slug": "nfd_slug_yith_woocommerce_ajax_product_filter",
-            "path": "yith-woocommerce-ajax-product-filter-extended\/init.php",
-            "download_url": "https:\/\/hiive.cloud\/workers\/plugin-downloads\/yith-woocommerce-ajax-product-filter",
-            "premium": false,
-            "requires": []
-        },
-        {
-            "title": "YITH Bookings Extended Version",
-            "description": "An extended version of YITH's booking plugin for WooCommerce, allowing users to book products or services.",
-            "slug": "nfd_slug_yith_woocommerce_booking",
-            "path": "yith-woocommerce-booking-extended\/init.php",
-            "download_url": "https:\/\/hiive.cloud\/workers\/plugin-downloads\/yith-woocommerce-booking",
-            "premium": false,
-            "requires": []
-        },
-        {
-            "title": "YITH Wishlist Extended Version",
-            "description": "An extended version of YITH's wishlist plugin for WooCommerce, allowing users to create and manage wishlists.",
-            "slug": "nfd_slug_yith_woocommerce_wishlist",
-            "path": "yith-woocommerce-wishlist-extended\/init.php",
-            "download_url": "https:\/\/hiive.cloud\/workers\/plugin-downloads\/yith-woocommerce-wishlist",
-            "premium": false,
-            "requires": []
-        }
+      {
+        "title": "MonsterInsights",
+        "description": "MonsterInsights provides a powerful Google Analytics plugin for WordPress, making it easy to connect and view website analytics directly from the dashboard.",
+        "slug": "google-analytics-for-wordpress",
+        "path": "google-analytics-for-wordpress/googleanalytics.php",
+        "download_url": "https://downloads.wordpress.org/plugin/google-analytics-for-wordpress.zip",
+        "premium": false,
+        "requires": []
+      }
     ]
-}
+  }
+  

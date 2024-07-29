@@ -44,24 +44,28 @@ describe( 'SiteGen Site Preview Step', function () {
 		ProgressBarCheck( '60%' );
 	} );
 
+	it( 'Check if Back button is not visible', () => {
+		cy.get( '.nfd-onboarding-button--dark' ).should( 'not.exist' );
+	} );
+
 	it( 'Check for by default 3 versions should be there', () => {
 		cy.get( '.live-preview-sitegen--selectable-card', { timeout: 60000 } )
 			.should( 'be.visible' )
 			.should( 'have.length', 3 );
 	} );
 
-	it.skip( 'Check for the favourited theme versions', () => {
+	it( 'Check for the favourited theme versions', () => {
 		cy.get( 'g[clip-path="url(#heart-filled_svg__a)"]' ).should(
 			'not.exist'
 		); // when no fav theme is selected
 		cy.get(
 			'.live-preview-sitegen--selectable-card__live-preview-container-buttons__button',
-			{ timeout : 20000 }
+			{ timeout: 20000 }
 		)
 			.eq( 0 )
 			.as( 'fav' )
 			.scrollIntoView()
-			.wait(2000)
+			.wait( 2000 )
 			.should( 'be.visible' )
 			.click();
 		cy.get( 'g[clip-path="url(#heart-filled_svg__a)"]', {
@@ -80,23 +84,23 @@ describe( 'SiteGen Site Preview Step', function () {
 		cy.get( '@fav' ).click();
 	} );
 
-	it.skip( 'Check for regenerating the new theme versions', () => {
+	it( 'Check for regenerating the new theme versions', () => {
 		cy.intercept( apiList.homepagesRegenerate, ( req ) => {
 			homePagesRegenerate( req );
-        }).as('regenerate');
+		} ).as( 'regenerate' );
 
 		cy.get( '[aria-label="Regenerate Content"]', { timeout: 60000 } )
-			.eq(0)
+			.eq( 0 )
 			.scrollIntoView()
 			.wait( 2000 )
-			.click({ force: true });
-		cy.wait('@regenerate', {timeout: 60000})
+			.click( { force: true } );
+		cy.wait( '@regenerate', { timeout: 60000 } );
 		cy.get( '.live-preview-sitegen--selectable-card', { timeout: 20000 } )
 			.should( 'be.visible' )
 			.should( 'have.length', 4 );
 	} );
 
-	it.skip( 'Check for the preview note at the bottom', () => {
+	it( 'Check for the preview note at the bottom', () => {
 		cy.get( '.nfd-onboarding-step--site-gen__preview__note' )
 			.scrollIntoView()
 			.should( 'be.visible' );
@@ -106,7 +110,7 @@ describe( 'SiteGen Site Preview Step', function () {
 			.contains( 'Favorite' );
 	} );
 
-	it.skip( 'Select any theme and go forward to the next step', () => {
+	it( 'Select any theme and go forward to the next step', () => {
 		cy.get(
 			'.live-preview-sitegen--selectable-card__live-preview-container__overlay',
 			{ timeout: 10000 }

@@ -6,11 +6,12 @@ import {
 } from '../wp-module-support/MockApi.cy';
 import {
 	AdminBarCheck,
-	DarkBGCheck,
+	LightBGCheck,
 	ProgressBarCheck,
 } from '../wp-module-support/siteGen.cy';
+import { getAppId } from '../wp-module-support/pluginID.cy';
 
-describe.skip( 'SiteGen Site Editor Step', function () {
+describe( 'SiteGen Site Editor Step', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/index.php?page=nfd-onboarding#/sitegen/step/preview'
@@ -34,19 +35,19 @@ describe.skip( 'SiteGen Site Editor Step', function () {
 		AdminBarCheck();
 	} );
 
-	it( 'Check for the existing dark background', () => {
-		DarkBGCheck();
+	it( 'Check for the existing light background', () => {
+		LightBGCheck();
 	} );
 
-	it( 'Check if we cannot change to light background', () => {
-		cy.get( '.nfd-onboarding-toggle__theme__button__dark' ).should(
+	it( 'Check if we cannot change to dark background', () => {
+		cy.get( '.nfd-onboarding-toggle__theme__button__light' ).should(
 			'not.exist'
 		);
-		cy.get( '.nfd-onboarding-sitegen-light' ).should( 'not.exist' );
+		cy.get( '.nfd-onboarding-sitegen-dark' ).should( 'not.exist' );
 	} );
 
 	it( 'Check the Progress Bar Value', () => {
-		ProgressBarCheck( '85.7143%' );
+		ProgressBarCheck( '80%' );
 	} );
 
 	it( 'Check if the sidebar is closed upon landing', () => {
@@ -103,7 +104,7 @@ describe.skip( 'SiteGen Site Editor Step', function () {
 			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container'
 		)
 			.should( 'be.visible' )
-			.should( 'have.length', 3 ); // as we are not regenrating new themes
+			.should( 'have.length', 4 ); // Regenerating new themes
 	} );
 
 	it( 'Check for favoriting a theme and it appears everywhere', () => {
@@ -131,9 +132,11 @@ describe.skip( 'SiteGen Site Editor Step', function () {
 
 	it( 'Check for favorite themes inside favorite tab', () => {
 		cy.get(
-			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__favorites-tab', {
-			timeout: 10000
-		} )
+			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__favorites-tab',
+			{
+				timeout: 10000,
+			}
+		)
 			.scrollIntoView()
 			.should( 'be.visible' )
 			.click();
@@ -141,7 +144,7 @@ describe.skip( 'SiteGen Site Editor Step', function () {
 			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container'
 		)
 			.should( 'be.visible' )
-			.should( 'have.length', 1 );
+			.should( 'have.length', 2 );
 		cy.get(
 			'.components-button.nfd-onboarding-sidebar--sitegen-editor-patterns__header__icon'
 		).should( 'be.visible' );
@@ -153,10 +156,8 @@ describe.skip( 'SiteGen Site Editor Step', function () {
 			.should( 'be.visible' );
 	} );
 
-	it( 'Check existence of Save & Continue button', () => {
-		cy.get( '.nfd-onboarding-header--sitegen__editor__end__save-button' )
-			.scrollIntoView()
-			.should( 'exist' );
+	it( 'Check if Back button is not visible', () => {
+		cy.get( '.nfd-onboarding-button--dark' ).should( 'not.exist' );
 	} );
 
 	it( 'Check changing the existing fonts from sidebar', () => {
@@ -203,11 +204,11 @@ describe.skip( 'SiteGen Site Editor Step', function () {
 		cy.get( '#headings' )
 			.scrollIntoView()
 			.should( 'be.visible' )
-			.select( 'poppins' );
+			.select( 'raleway' );
 		cy.get( '#body' )
 			.scrollIntoView()
 			.should( 'be.visible' )
-			.select( 'oswald' );
+			.select( 'jost' );
 		cy.get( '.components-button.apply.is-primary' )
 			.scrollIntoView()
 			.should( 'be.visible' )
@@ -281,5 +282,13 @@ describe.skip( 'SiteGen Site Editor Step', function () {
 		cy.get(
 			'.nfd-onboarding-sidebar--customize__design-colors-panel__custom__colors__container'
 		).should( 'not.exist' );
+	} );
+
+	it( 'Check Save & Continue button functionality', () => {
+		cy.get(
+			'.nfd-onboarding-header--sitegen__editor__end__save-button__text',
+			{ timeout: 20000 }
+		).click();
+		cy.get( `.${ getAppId() }-app-container`, { timeout: 90000 } );
 	} );
 } );

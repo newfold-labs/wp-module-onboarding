@@ -1,19 +1,20 @@
 {
     "location": "Cocoa Beach, Florida",
     "interests": [
-        "yoga",
-        "sustainability",
-        "eco-conscious living"
+      "yoga",
+      "sustainability",
+      "eco-consciousness"
     ],
     "age": {
-        "min": 18,
-        "max": 65
+      "min": 18,
+      "max": 65
     },
     "gender": "All",
     "income": {
-        "min": 0,
-        "max": 100000,
-        "currency": "USD"
+      "min": 0,
+      "max": 100000,
+      "currency": "USD"
     },
     "education": "All"
-}
+  }
+  
