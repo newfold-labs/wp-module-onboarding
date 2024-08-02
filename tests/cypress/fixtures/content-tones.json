@@ -1,1 +1,6 @@
-{"tone":"Professional","undertone":"Positive","verbosity":2,"reading_level":60}
+{
+    "tone": "Professional",
+    "undertone": "Positive",
+    "verbosity": 50,
+    "reading_level": 60
+}
