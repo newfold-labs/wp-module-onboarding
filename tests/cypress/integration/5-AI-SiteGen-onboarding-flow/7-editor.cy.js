@@ -34,15 +34,14 @@ describe.skip( 'SiteGen Site Editor Step', function () {
 		AdminBarCheck();
 	} );
 
-	it( 'Check for the existing dark background', () => {
-		DarkBGCheck();
+	it( 'Check for the default light background', () => {
+		LightBGCheck();
 	} );
 
-	it( 'Check if we cannot change to light background', () => {
+	it( 'Check if we cannot change to dark background', () => {
 		cy.get( '.nfd-onboarding-toggle__theme__button__dark' ).should(
 			'not.exist'
 		);
-		cy.get( '.nfd-onboarding-sitegen-light' ).should( 'not.exist' );
 	} );
 
 	it( 'Check the Progress Bar Value', () => {
