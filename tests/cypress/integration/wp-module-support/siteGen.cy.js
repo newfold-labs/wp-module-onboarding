@@ -16,11 +16,13 @@ export const DarkBGCheck = () => {
 	cy.get( '.nfd-onboarding-toggle__theme__button__light' )
 		.should( 'exist' )
 		.click();
+	cy.wait( 2000 );
 	cy.get( '.nfd-onboarding-sitegen-dark' ).should( 'be.visible' );
 	// Now changing the background back to light
 	cy.get( '.nfd-onboarding-toggle__theme__button__dark' )
 		.should( 'exist' )
 		.click();
+	cy.wait( 2000 );
 	cy.get( '.nfd-onboarding-sitegen-light' ).should( 'be.visible' );
 };
 

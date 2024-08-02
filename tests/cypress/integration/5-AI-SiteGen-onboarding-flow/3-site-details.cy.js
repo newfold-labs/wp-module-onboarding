@@ -19,12 +19,12 @@ describe( 'SiteGen Site Details Step', function () {
 		AdminBarCheck();
 	} );
 
-	it( 'Check for the existing dark background', () => {
-		DarkBGCheck();
+	it( 'Check for the default light background', () => {
+		LightBGCheck();
 	} );
 
-	it( 'Check for the light background', () => {
-		LightBGCheck();
+	it( 'Check for the dark background', () => {
+		DarkBGCheck();
 	} );
 
 	it( 'Check the Progress Bar Value', () => {

@@ -28,13 +28,14 @@ describe( 'SiteGen Fork Step', function() {
 		AdminBarCheck();
 	} );
 
-	it( 'Check for the existing dark background', () => {
+	it( 'Check for the default light background', () => {
+		LightBGCheck();
+	} );
+
+	it( 'Check for the dark background', () => {
 		DarkBGCheck();
 	} );
 
-	it( 'Check for the light background', () => {
-		LightBGCheck();
-	} );
 
 	it( 'Check for the heading and the title', () => {
 		cy.get( '.nfd-onboarding-step__heading__title' )
@@ -120,8 +121,8 @@ describe( 'SiteGen Fork Step', function() {
 		).should( 'exist' );
 
 		AdminBarCheck();
-		DarkBGCheck();
 		LightBGCheck();
+		DarkBGCheck();
 		cy.wait( '@migrateCall', { timeout: waitTime } );
 	} );
 

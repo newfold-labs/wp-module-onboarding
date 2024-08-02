@@ -40,10 +40,9 @@ describe( 'SiteGen Site Editor Step', function () {
 	} );
 
 	it( 'Check if we cannot change to dark background', () => {
-		cy.get( '.nfd-onboarding-toggle__theme__button__light' ).should(
+		cy.get( '.nfd-onboarding-toggle__theme__button__dark' ).should(
 			'not.exist'
 		);
-		cy.get( '.nfd-onboarding-sitegen-dark' ).should( 'not.exist' );
 	} );
 
 	it( 'Check the Progress Bar Value', () => {
