@@ -79,12 +79,7 @@ const StartOptions = ( { questionnaire, oldFlow, largeOption, smallOptions } ) =
 				const updates = injectMigrationStep( allSteps, stepTheFork );
 				updateAllSteps( updates.allSteps );
 			}
-			trackOnboardingEvent(
-				new OnboardingEvent(
-					ACTION_SITEGEN_FORK_OPTION_SELECTED,
-					'MIGRATE'
-				)
-			);
+
 			navigate( stepSiteGenMigration.path );
 		} else {
 			window.open( migrationUrl, '_blank' );
@@ -107,7 +102,7 @@ const StartOptions = ( { questionnaire, oldFlow, largeOption, smallOptions } ) =
 				window.open( hireProUrl, '_blank' );
 				break;
 			case 'migration':
-				flowForEvent = 'MIGRATION';
+				flowForEvent = 'MIGRATE';
 				handleMigration();
 				break;
 		}
