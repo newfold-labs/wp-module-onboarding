@@ -13,7 +13,7 @@ class Scan {
 	 * @var array
 	 */
 	public $default_config = array(
-		'min_wp' => '6.2',
+		'min_wp' => '6.5',
 	);
 
 	/**
