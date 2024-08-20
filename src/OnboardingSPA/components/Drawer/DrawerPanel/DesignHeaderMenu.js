@@ -61,8 +61,9 @@ const DesignHeaderMenu = () => {
 		}
 
 		if (
-			! currentData.data?.partFooter ||
-			currentData.data?.partFooter === ''
+			( ! currentData.data?.partFooter ||
+				currentData.data?.partFooter === '' ) &&
+			footerPattern?.length > 0
 		) {
 			currentData.data.partFooter = footerPattern.slug;
 			setCurrentOnboardingData( currentData );
