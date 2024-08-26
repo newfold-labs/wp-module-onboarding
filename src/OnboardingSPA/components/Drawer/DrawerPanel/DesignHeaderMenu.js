@@ -89,6 +89,36 @@ const DesignHeaderMenu = () => {
 		}
 	}, [ themeStatus ] );
 
+	useEffect( () => {
+		/* choose the first pattern if the fallback pattern is replaced with priamry/secondary type */
+		if (
+			patterns?.length > 0 &&
+			! patterns.some( ( pattern ) => pattern.slug === selectedPattern )
+		) {
+			const firstPattern = patterns[ 0 ];
+			updateSelectedPattern( firstPattern );
+		}
+	}, [ patterns, selectedPattern ] );
+
+	const updateSelectedPattern = ( pattern ) => {
+		setSelectedPattern( pattern.slug );
+		currentData.data.partHeader = pattern.slug;
+		setCurrentOnboardingData( currentData );
+
+		const newPagePattern = pattern.content + headerMenuPreviewData.pageBody;
+		setHeaderMenuData( newPagePattern );
+
+		setFlow( currentData ).then( ( result ) => {
+			if ( ! result?.error ) {
+				setCurrentOnboardingData( currentData );
+			}
+		} );
+
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_HEADER_SELECTED, pattern )
+		);
+	};
+
 	const handleClick = async ( idx ) => {
 		if ( document.getElementsByClassName( 'nfd-onboard-content' ) ) {
 			document
@@ -104,22 +134,7 @@ const DesignHeaderMenu = () => {
 			return true;
 		}
 
-		setSelectedPattern( chosenPattern.slug );
-		currentData.data.partHeader = chosenPattern.slug;
-		setCurrentOnboardingData( currentData );
-
-		const newPagePattern =
-			chosenPattern.content + headerMenuPreviewData.pageBody;
-		setHeaderMenuData( newPagePattern );
-
-		// API call to make sure the DB is in sync with the store for the selected header menu
-		const result = await setFlow( currentData );
-		if ( result?.error === null ) {
-			setCurrentOnboardingData( currentData );
-		}
-		trackOnboardingEvent(
-			new OnboardingEvent( ACTION_HEADER_SELECTED, chosenPattern.slug )
-		);
+		updateSelectedPattern( chosenPattern );
 	};
 
 	const buildPreviews = () => {
