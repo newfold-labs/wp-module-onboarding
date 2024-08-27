@@ -49,12 +49,17 @@ export async function initializeNFDOnboarding( id, runtime ) {
 		);
 	}
 
-	const currentData = await getFlow();
-	if ( currentData.error === null ) {
-		currentData.body = initializeFlowData( currentData.body );
-		dispatch( nfdOnboardingStore ).setCurrentOnboardingData(
-			currentData.body
-		);
+	try {
+		const currentData = await getFlow();
+		if ( currentData.error === null ) {
+			currentData.body = initializeFlowData( currentData.body );
+			dispatch( nfdOnboardingStore ).setCurrentOnboardingData(
+				currentData.body
+			);
+		}
+	} catch ( error ) {
+		// eslint-disable-next-line no-console
+		console.error( 'Failed to retrieve flow data', error );
 	}
 
 	if ( null !== DOM_TARGET && 'undefined' !== typeof render ) {
