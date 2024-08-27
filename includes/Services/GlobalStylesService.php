@@ -22,7 +22,7 @@ class GlobalStylesService {
 	 * @param array  $settings The settings to apply. Defaults to empty.
 	 * @return true|\WP_Error  Returns true on success, or a WP_Error on failure.
 	 */
-	public static function update_diy_global_style_variation( $id, $styles, $settings ) {
+	public static function update_diy_global_style_variation( $id, $styles = array(), $settings = array() ) {
 		// If both styles and settings are not empty, update directly.
 		if ( ! ( empty( $styles ) && empty( $settings ) ) ) {
 			return self::update_global_style_variation(

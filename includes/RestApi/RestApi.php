@@ -16,7 +16,6 @@ final class RestApi {
 	 */
 	protected $controllers = array(
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteImagesController',
-		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeGeneratorController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\PluginsController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeVariationsController',
 		'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ApprovedThemesController',
@@ -56,4 +55,4 @@ final class RestApi {
 			$instance->register_routes();
 		}
 	}
-} // END /NewfoldLabs/WP/Module/Onboarding/RestApi()
+}
