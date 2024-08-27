@@ -95,8 +95,7 @@ const DesignHeaderMenu = () => {
 			patterns?.length > 0 &&
 			! patterns.some( ( pattern ) => pattern.slug === selectedPattern )
 		) {
-			const firstPattern = patterns[ 0 ];
-			updateSelectedPattern( firstPattern );
+			updateSelectedPattern( patterns[ 0 ] );
 		}
 	}, [ patterns, selectedPattern ] );
 
@@ -113,10 +112,6 @@ const DesignHeaderMenu = () => {
 				setCurrentOnboardingData( currentData );
 			}
 		} );
-
-		trackOnboardingEvent(
-			new OnboardingEvent( ACTION_HEADER_SELECTED, pattern )
-		);
 	};
 
 	const handleClick = async ( idx ) => {
@@ -135,6 +130,9 @@ const DesignHeaderMenu = () => {
 		}
 
 		updateSelectedPattern( chosenPattern );
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_HEADER_SELECTED, chosenPattern )
+		);
 	};
 
 	const buildPreviews = () => {
