@@ -131,7 +131,7 @@ const DesignHeaderMenu = () => {
 
 		updateSelectedPattern( chosenPattern );
 		trackOnboardingEvent(
-			new OnboardingEvent( ACTION_HEADER_SELECTED, chosenPattern )
+			new OnboardingEvent( ACTION_HEADER_SELECTED, chosenPattern.slug )
 		);
 	};
 
