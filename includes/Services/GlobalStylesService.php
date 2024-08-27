@@ -25,6 +25,10 @@ class GlobalStylesService {
 	public static function update_diy_global_style_variation( $id, $styles = array(), $settings = array() ) {
 		// If both styles and settings are not empty, update directly.
 		if ( ! ( empty( $styles ) && empty( $settings ) ) ) {
+
+			// Remove inactive DIY flow fonts from the theme JSON settings, retaining only the fonts that are currently in use or selected
+			$settings = FontService::deselect_inactive_diy_fonts( $settings );
+
 			return self::update_global_style_variation(
 				$id,
 				$styles,
@@ -72,7 +76,9 @@ class GlobalStylesService {
 			$settings = $user_selected_theme_settings['settings'];
 		}
 
-		// Update the global style variation with the prepared styles and settings.
+		// Remove inactive DIY flow fonts from the theme JSON settings, retaining only the fonts that are currently in use or selected
+		$settings = FontService::deselect_inactive_diy_fonts( $settings );
+
 		return self::update_global_style_variation(
 			$id,
 			$styles,
