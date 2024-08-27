@@ -50,13 +50,18 @@ export async function initializeNFDOnboarding( id, runtime ) {
 	}
 
 	try {
-		const currentData = await getFlow();
-		if ( currentData.error === null ) {
-			currentData.body = initializeFlowData( currentData.body );
-			dispatch( nfdOnboardingStore ).setCurrentOnboardingData(
-				currentData.body
-			);
-		}
+		let count = 0;
+		do {
+			const currentData = await getFlow();
+			count++;
+			if ( currentData.error === null ) {
+				currentData.body = initializeFlowData( currentData.body );
+				dispatch( nfdOnboardingStore ).setCurrentOnboardingData(
+					currentData.body
+				);
+				break;
+			}
+		} while ( count < 2 );
 	} catch ( error ) {
 		// eslint-disable-next-line no-console
 		console.error( 'Failed to retrieve flow data', error );
