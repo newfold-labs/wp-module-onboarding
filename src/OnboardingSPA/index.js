@@ -61,7 +61,7 @@ export async function initializeNFDOnboarding( id, runtime ) {
 				);
 				break;
 			}
-		} while ( count < 2 );
+		} while ( count < 3 );
 	} catch ( error ) {
 		// eslint-disable-next-line no-console
 		console.error( 'Failed to retrieve flow data', error );
