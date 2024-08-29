@@ -9,6 +9,7 @@ import { dispatch } from '@wordpress/data';
 import { render } from '@wordpress/element';
 import { getInitialChapters } from './data/flows';
 import { stateToStore } from './chapters/utils';
+import { functionRetryHandler } from './utils/api/utils';
 
 /**
  * Component passed to wp.element.render().
@@ -49,22 +50,13 @@ export async function initializeNFDOnboarding( id, runtime ) {
 		);
 	}
 
-	try {
-		let count = 0;
-		do {
-			const currentData = await getFlow();
-			count++;
-			if ( currentData.error === null ) {
-				currentData.body = initializeFlowData( currentData.body );
-				dispatch( nfdOnboardingStore ).setCurrentOnboardingData(
-					currentData.body
-				);
-				break;
-			}
-		} while ( count < 3 );
-	} catch ( error ) {
-		// eslint-disable-next-line no-console
-		console.error( 'Failed to retrieve flow data', error );
+	const currentData = await functionRetryHandler( getFlow, 3 );
+
+	if ( currentData !== false ) {
+		currentData.body = initializeFlowData( currentData.body );
+		dispatch( nfdOnboardingStore ).setCurrentOnboardingData(
+			currentData.body
+		);
 	}
 
 	if ( null !== DOM_TARGET && 'undefined' !== typeof render ) {
