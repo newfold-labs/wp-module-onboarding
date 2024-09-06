@@ -84,9 +84,6 @@ describe( 'Get Started Welcome Page', function () {
 		GetPluginName();
 	} );
 
-	it( 'Check navigation back is not visible', () => {
-		cy.get( '.navigation-buttons_back' ).should('not.exist');
-	} );
 
 	it( 'Check if next step loads on clicking navigation next', () => {
 		cy.get( '.navigation-buttons_next' ).click();

@@ -50,6 +50,7 @@ export async function initializeNFDOnboarding( id, runtime ) {
 	}
 
 	const currentData = await getFlow();
+
 	if ( currentData.error === null ) {
 		currentData.body = initializeFlowData( currentData.body );
 		dispatch( nfdOnboardingStore ).setCurrentOnboardingData(
