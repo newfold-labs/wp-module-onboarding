@@ -16,17 +16,17 @@ describe( 'SiteGen Fork Step', function () {
 	before( () => {
 		// Clean up the option for onboarding flow
 		cy.exec(
-			'wp option delete nfd_module_onboarding_flow --path="/Users/arun.sh/Desktop/LocalWP Sites/cypress-testing/app/public"'
+			'npx wp-env run cli wp option delete nfd_module_onboarding_flow'
 		);
 
 		// Set the site capabilities to enable AI SiteGen and access to AI
 		cy.exec(
-			`wp option set _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true}' --format=json  --path="/Users/arun.sh/Desktop/LocalWP Sites/cypress-testing/app/public"`
+			`npx wp-env run cli wp option set _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true}' --format=json `
 		);
 
 		// Set a long timeout for the transient site capabilities
 		cy.exec(
-			`wp option set _transient_timeout_nfd_site_capabilities 4102444800 --path="/Users/arun.sh/Desktop/LocalWP Sites/cypress-testing/app/public"`
+			`npx wp-env run cli wp option set _transient_timeout_nfd_site_capabilities 4102444800`
 		);
 
 		// Wait for any background processes to complete
@@ -127,7 +127,7 @@ describe( 'SiteGen Fork Step', function () {
 	it( 'Verify Import site leads to migration process initiation screen when can migrate capability is set', () => {
 		// Update the site capabilities to allow migration
 		cy.exec(
-			`wp option update _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true, "canMigrateSite": true}' --format=json --path="/Users/arun.sh/Desktop/LocalWP Sites/cypress-testing/app/public"`,
+			`npx wp-env run cli wp option update _transient_nfd_site_capabilities '{"hasAISiteGen": true, "canAccessAI": true, "canMigrateSite": true}' --format=json`,
 			{ timeout: 20000 }
 		);
 
