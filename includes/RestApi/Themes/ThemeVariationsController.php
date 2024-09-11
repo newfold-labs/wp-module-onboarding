@@ -1,9 +1,9 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi\Themes;
 
-use NewfoldLabs\WP\Module\Onboarding\Data\Patterns;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
+use NewfoldLabs\WP\Module\Onboarding\Services\GlobalStylesService;
 
 /**
  * Class ThemeVariationsController
@@ -36,7 +36,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	 * Registers routes for ThemeVariationsController
 	 */
 	public function register_routes() {
-		\register_rest_route(
+		register_rest_route(
 			$this->namespace,
 			$this->rest_base . $this->rest_extended_base,
 			array(
@@ -50,6 +50,19 @@ class ThemeVariationsController extends \WP_REST_Controller {
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'args'                => $this->set_pattern_args(),
 					'callback'            => array( $this, 'set_theme_variation' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
+
+		register_rest_route(
+			$this->namespace,
+			$this->rest_base . $this->rest_extended_base . '/update',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'args'                => $this->get_update_diy_global_style_variation_args(),
+					'callback'            => array( $this, 'update_diy_global_style_variation' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -85,6 +98,31 @@ class ThemeVariationsController extends \WP_REST_Controller {
 			'settings' => array(
 				'type'     => 'object',
 				'required' => true,
+			),
+		);
+	}
+
+	/**
+	 * Gets the arguments for updating DIY global style variations.
+	 *
+	 * @return array An array of argument definitions for the REST API request.
+	 */
+	public function get_update_diy_global_style_variation_args() {
+		return array(
+			'id'       => array(
+				'description' => __( 'The id of a template', 'wp-module-onboarding' ),
+				'type'        => 'integer',
+				'default'     => GlobalStylesService::get_active_custom_global_styles_post_id(),
+			),
+			'styles'   => array(
+				'description' => __( 'The custom styles', 'wp-module-onboarding' ),
+				'default'     => array(),
+				'required'    => false,
+			),
+			'settings' => array(
+				'description' => __( 'The custom settings', 'wp-module-onboarding' ),
+				'default'     => array(),
+				'required'    => false,
 			),
 		);
 	}
@@ -140,9 +178,9 @@ class ThemeVariationsController extends \WP_REST_Controller {
 		$default = $request->get_param( 'variations' );
 
 		// If there exists an old Custom Theme then return that
-		if ( false === $default && false !== \get_option( Options::get_option_name( 'theme_settings' ) ) ) {
+		if ( false === $default && false !== Themes::get_selected_diy_theme_settings() ) {
 			return array(
-				\get_option( Options::get_option_name( 'theme_settings' ) ),
+				Themes::get_selected_diy_theme_settings(),
 			);
 		}
 
@@ -174,7 +212,7 @@ class ThemeVariationsController extends \WP_REST_Controller {
 		if ( $theme_data ) {
 
 			// Save the new Theme style into the db
-			\update_option( Options::get_option_name( 'theme_settings' ), $theme_data );
+			Themes::set_diy_theme_settings( $theme_data );
 
 			return new \WP_REST_Response(
 				$theme_data,
@@ -186,6 +224,33 @@ class ThemeVariationsController extends \WP_REST_Controller {
 			500,
 			'Missing important parameters',
 			'Settings parameter is found to be missing'
+		);
+	}
+
+	/**
+	 * Handles the update DIY global style variation request.
+	 *
+	 * @param \WP_REST_Request $request The REST API request object containing the parameters.
+	 *
+	 * @return \WP_REST_Response|\WP_Error Returns a WP_REST_Response on success, or a WP_Error on failure.
+	 */
+	public function update_diy_global_style_variation( \WP_REST_Request $request ) {
+		$request_data = $request->get_params();
+		$id           = $request_data['id'];
+		$styles       = $request_data['styles'];
+		$settings     = $request_data['settings'];
+
+		$status = GlobalStylesService::update_diy_global_style_variation( $id, $styles, $settings );
+
+		if ( is_wp_error( $status ) ) {
+			return $status;
+		}
+
+		return new \WP_REST_Response(
+			array(
+				'message' => __( 'Global style customization created.', 'wp-module-onboarding' ),
+			),
+			201
 		);
 	}
 }
