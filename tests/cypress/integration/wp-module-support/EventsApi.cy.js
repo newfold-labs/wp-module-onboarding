@@ -87,7 +87,7 @@ export const EventsAPI = (
 				responseBody.forEach( ( body ) => {
 					if (
 						body.data.hasOwnProperty( 'flow' ) &&
-						body.data.flow === 'MIGRATE'
+						body.data.flow === card_val
 					) {
 						actualEventsCount++;
 					}
