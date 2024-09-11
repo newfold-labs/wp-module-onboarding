@@ -19,3 +19,10 @@ export const convertObjectKeysToSnakeCase = ( object ) => {
 		result[ snakeCase( key ) ] = value;
 	} );
 };
+
+/**
+ * Checks if the code is running in a Cypress test environment.
+ */
+export const isEnvironmentCypress = () => {
+	return !! window.Cypress;
+};
