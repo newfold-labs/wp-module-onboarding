@@ -61,8 +61,9 @@ const DesignHeaderMenu = () => {
 		}
 
 		if (
-			! currentData.data?.partFooter ||
-			currentData.data?.partFooter === ''
+			( ! currentData.data?.partFooter ||
+				currentData.data?.partFooter === '' ) &&
+			footerPattern?.length > 0
 		) {
 			currentData.data.partFooter = footerPattern.slug;
 			setCurrentOnboardingData( currentData );
@@ -88,6 +89,31 @@ const DesignHeaderMenu = () => {
 		}
 	}, [ themeStatus ] );
 
+	useEffect( () => {
+		/* choose the first pattern if the fallback pattern is replaced with priamry/secondary type */
+		if (
+			patterns?.length > 0 &&
+			! patterns.some( ( pattern ) => pattern.slug === selectedPattern )
+		) {
+			updateSelectedPattern( patterns[ 0 ] );
+		}
+	}, [ patterns, selectedPattern ] );
+
+	const updateSelectedPattern = ( pattern ) => {
+		setSelectedPattern( pattern.slug );
+		currentData.data.partHeader = pattern.slug;
+		setCurrentOnboardingData( currentData );
+
+		const newPagePattern = pattern.content + headerMenuPreviewData.pageBody;
+		setHeaderMenuData( newPagePattern );
+
+		setFlow( currentData ).then( ( result ) => {
+			if ( ! result?.error ) {
+				setCurrentOnboardingData( currentData );
+			}
+		} );
+	};
+
 	const handleClick = async ( idx ) => {
 		if ( document.getElementsByClassName( 'nfd-onboard-content' ) ) {
 			document
@@ -103,19 +129,7 @@ const DesignHeaderMenu = () => {
 			return true;
 		}
 
-		setSelectedPattern( chosenPattern.slug );
-		currentData.data.partHeader = chosenPattern.slug;
-		setCurrentOnboardingData( currentData );
-
-		const newPagePattern =
-			chosenPattern.content + headerMenuPreviewData.pageBody;
-		setHeaderMenuData( newPagePattern );
-
-		// API call to make sure the DB is in sync with the store for the selected header menu
-		const result = await setFlow( currentData );
-		if ( result?.error === null ) {
-			setCurrentOnboardingData( currentData );
-		}
+		updateSelectedPattern( chosenPattern );
 		trackOnboardingEvent(
 			new OnboardingEvent( ACTION_HEADER_SELECTED, chosenPattern.slug )
 		);

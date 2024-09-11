@@ -7,7 +7,7 @@ import { THEME_DARK, THEME_LIGHT } from '../../../constants';
 const ThemeContext = createContext();
 
 function usePreferredColorScheme( currentData ) {
-	if ( currentData.sitegenThemeMode ) {
+	if ( currentData?.sitegenThemeMode ) {
 		return currentData.sitegenThemeMode;
 	}
 
