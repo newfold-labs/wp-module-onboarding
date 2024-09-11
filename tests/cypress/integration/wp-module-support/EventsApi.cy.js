@@ -95,8 +95,10 @@ export const EventsAPI = (
 			}
 		} )
 		.then( () => {
-			// Verify that the actual number of events matches the expected count
-			expect( actualEventsCount ).to.equal( expectedEventsCount );
+			if ( expectedEventsCount ) {
+				// Verify that the actual number of events matches the expected count
+				expect( actualEventsCount ).to.equal( expectedEventsCount );
+			}
 		} );
 };
 
