@@ -1,28 +1,35 @@
 import './webpack-public-path';
 
-import { NFD_ONBOARDING_ELEMENT_ID, runtimeDataExists } from './constants';
-
-import * as Sentry from '@sentry/react';
+// WordPress
 import domReady from '@wordpress/dom-ready';
-const version = require( '../package.json' ).version;
 import { registerCoreBlocks } from '@wordpress/block-library';
+
+// Classes and functions
 import initializeNFDOnboarding from './OnboardingSPA';
 import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
 import { onboardingRestURL } from './OnboardingSPA/utils/api/common';
+import { isEnvironmentCypress } from './OnboardingSPA/utils';
+import * as Sentry from '@sentry/react';
+
+// Misc
+import { NFD_ONBOARDING_ELEMENT_ID, runtimeDataExists } from './constants';
 import { CATEGORY } from './OnboardingSPA/utils/analytics/hiive/constants';
 
+const version = require( '../package.json' ).version;
 const releaseVersion = `wp-onboarding@${ version }`;
-
 if ( runtimeDataExists ) {
 	domReady( () => {
-		// Integrate Sentry to send errors and data for tracking
-		Sentry.init( {
-			dsn: window.nfdOnboarding.sentryInitDsnURL,
-			integrations: [ Sentry.browserTracingIntegration() ],
-			release: releaseVersion,
-			// Performance Monitoring
-			tracesSampleRate: 1.0, //  Capture 100% of the transactions
-		} );
+		// Only initialize Sentry if not running in Cypress
+		if ( ! isEnvironmentCypress() ) {
+			// Integrate Sentry to send errors and data for tracking
+			Sentry.init( {
+				dsn: window.nfdOnboarding.sentryInitDsnURL,
+				integrations: [ Sentry.browserTracingIntegration() ],
+				release: releaseVersion,
+				// Performance Monitoring
+				tracesSampleRate: 1.0, //  Capture 100% of the transactions
+			} );
+		}
 
 		HiiveAnalytics.initialize( {
 			namespace: CATEGORY,
