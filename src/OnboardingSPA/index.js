@@ -9,6 +9,7 @@ import { dispatch } from '@wordpress/data';
 import { render } from '@wordpress/element';
 import { getInitialChapters } from './data/flows';
 import { stateToStore } from './chapters/utils';
+import { functionRetryHandler } from './utils/api/utils';
 
 /**
  * Component passed to wp.element.render().
@@ -49,9 +50,9 @@ export async function initializeNFDOnboarding( id, runtime ) {
 		);
 	}
 
-	const currentData = await getFlow();
+	const currentData = await functionRetryHandler( getFlow, 3 );
 
-	if ( currentData.error === null ) {
+	if ( currentData !== false ) {
 		currentData.body = initializeFlowData( currentData.body );
 		dispatch( nfdOnboardingStore ).setCurrentOnboardingData(
 			currentData.body

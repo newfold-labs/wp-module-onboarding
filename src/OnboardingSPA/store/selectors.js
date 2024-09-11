@@ -434,11 +434,11 @@ export function getNavErrorPath( state ) {
 }
 
 export function getExperienceLevel( state ) {
-	return state.data.flowData.data.wpComfortLevel;
+	return state.data.flowData?.data.wpComfortLevel;
 }
 
 export function getTopPriority( state ) {
-	return state.data.flowData.data.topPriority.priority1;
+	return state.data.flowData?.data.topPriority.priority1;
 }
 
 /**
@@ -461,7 +461,7 @@ export function getCustomizeSidebarData( state ) {
 }
 
 export function getSiteGenErrorStatus( state ) {
-	return state.data.flowData.sitegen.siteGenErrorMeta.status;
+	return state.data.flowData?.sitegen.siteGenErrorMeta.status;
 }
 
 export function getInteractionDisabled( state ) {
