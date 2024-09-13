@@ -36,10 +36,11 @@ const BasicInfoForm = () => {
 		return select( coreStore );
 	}, [] );
 
-	const { currentData } = useSelect( ( select ) => {
+	const { currentData, getEntityRecord } = useSelect( ( select ) => {
 		return {
 			currentData:
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			getEntityRecord: select( coreStore ).getEntityRecord('root', 'site' , undefined),
 		};
 	}, [] );
 
@@ -101,6 +102,10 @@ const BasicInfoForm = () => {
 	}, [ siteTitle, siteDesc, siteLogo, socialData ] );
 
 	const updateCoreStore = ( siteLogoTemp, siteTitleTemp, siteDescTemp ) => {
+		// Check if the record trying to be edited exists
+		if( !getEntityRecord ){
+			return;
+		}
 		editEntityRecord( 'root', 'site', undefined, {
 			site_logo: siteLogoTemp?.id ? siteLogoTemp.id : null,
 			description: siteDescTemp,
