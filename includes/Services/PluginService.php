@@ -77,6 +77,14 @@ class PluginService {
 					)
 				);
 			}
+
+			if ( $init_plugin['activate'] && ! PluginInstaller::is_active( $init_plugin_path ) ) {
+				PluginActivationTaskManager::add_to_queue(
+					new PluginActivationTask(
+						$init_plugin['slug']
+					)
+				);
+			}
 		}
 
 		return true;
