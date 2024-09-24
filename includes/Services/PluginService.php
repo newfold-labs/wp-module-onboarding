@@ -28,6 +28,8 @@ class PluginService {
 
 		$init_plugins = array();
 
+		$is_entitlements_plugin_installed = self::install_entitlements_plugins();
+
 		$flow = Data::current_flow();
 		if ( 'sitegen' === $flow && SiteGenService::is_enabled() ) {
 			$init_plugins = Plugins::get_init();
@@ -154,6 +156,41 @@ class PluginService {
 			);
 		}
 
+		return true;
+	}
+
+	/**
+	 * Installs the entitlements plugin.
+	 * This function installs the required entitlements plugin if it's not already installed.
+	 *
+	 * @return bool True if the entitlements plugin is installed, false otherwise.
+	 */
+	public static function install_entitlements_plugins() {
+		// TO-DO Ensure a call is made to the endpoint and data is used.
+		$entitlements_plugins = array();
+		foreach ( $entitlements_plugins as $plugin ) {
+			// Checks if a plugin with the given slug and activation criteria already exists.
+			if ( PluginInstaller::is_plugin_installed( $plugin['basename'] ) ) {
+				// Add a new PluginInstallTask to the Plugin install queue.
+				PluginActivationTaskManager::add_to_queue(
+					new PluginActivationTask(
+						$plugin['slug']
+					)
+				);
+				continue;
+			}
+
+			PluginInstallTaskManager::add_to_queue(
+				new PluginInstallTask(
+					$plugin['slug'],
+					true,
+					0,
+					0,
+					true,
+					$plugin
+				)
+			);
+		}
 		return true;
 	}
 
