@@ -7,47 +7,45 @@ $light-grey : #a0a5aa;
 		background-color: var(--nfd-onboarding-admin-bar-background);
 		width: 100%;
 		color: var(--nfd-onboarding-admin-bar-color);
+		font-size: 13px;
+		font-weight: 400;
 		margin: 0;
-		padding: 5px;
+		padding: 5px 7px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		box-sizing: border-box;
 
 		&__wplogo {
-			color: var(--nfd-onboarding-white);
 			display: flex;
-			font-size: 16px;
-			font-weight: 510;
 			align-items: center;
 
-			svg {
-				color: $light-grey;
-				fill: $light-grey;
-			}
-
 			span {
-				margin-left: 15px;
+				margin-left: 7px;
+
+				&:first-of-type {
+					color: $light-grey;
+					margin-left: 0;
+				}
 			}
 		}
 
 		&__profile {
 			display: flex;
 			align-items: center;
+			margin-right: 2.5px;
 
 			&__greeting {
-				color: var(--nfd-onboarding-white);
-				font-size: 16px;
-				font-weight: 510;
-				margin-right: 5px;
+				margin-right: 6px;
 			}
 
 			&__avatar {
-				height: 20px;
-				width: 20px;
+				height: 16px;
+				width: 16px;
 				display: inline-block;
 
 				img {
+					border: 1px solid #8c8f94;
 					width: 100%;
 					height: 100%;
 					object-fit: contain;
