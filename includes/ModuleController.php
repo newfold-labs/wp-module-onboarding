@@ -18,6 +18,8 @@ class ModuleController {
 
 	/**
 	 * Initialize the Module Controller functionality.
+	 *
+	 * @used-by wp-module-onboarding/bootstrap.php
 	 */
 	public static function init() {
 		// Enable/Disable the module after_setup_theme.
@@ -26,6 +28,8 @@ class ModuleController {
 
 	/**
 	 * Enable/Disable Onboarding based on certain checks.
+	 *
+	 * @hooked after_setup_theme
 	 */
 	public static function module_switcher() {
 		$module_name = 'onboarding';
