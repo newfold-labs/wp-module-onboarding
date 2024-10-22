@@ -33,10 +33,12 @@ class ModuleController {
 	 */
 	public static function module_switcher() {
 		$module_name = 'onboarding';
-		// Set brand context for the module.
-		$current_brand = Brands::set_current_brand( container() );
 
-		$enable_onboarding = self::verify_onboarding_criteria( $current_brand );
+		$enable_onboarding =
+			current_user_can( 'manage_options' )
+			&& self::verify_onboarding_criteria(
+				Brands::set_current_brand( container() )
+			);
 
 		// Check if he is a Non-Ecommerce Customer and Disable Redirect and Module
 		if ( ! $enable_onboarding ) {
