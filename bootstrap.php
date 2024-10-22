@@ -14,6 +14,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	return;
 }
 
+// Onboarding is only relevant to admins. This code should not run on every pageload.
+if ( ! current_user_can( 'manage_options' ) ) {
+	return;
+}
+
 /**
  * Register Onboarding with Newfold Module Loader
  *
@@ -76,4 +81,3 @@ add_action(
 );
 // Handle Module Disable if Non-Ecommerce
 ModuleController::init();
-}
