@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { Icon, wordpress } from '@wordpress/icons';
+import { Dashicon } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { store as nfdOnboardingStore } from '../../../OnboardingSPA/store';
 
@@ -18,7 +18,7 @@ const AdminBar = () => {
 	return (
 		<div className="nfd-onboarding-header__admin-bar">
 			<div className="nfd-onboarding-header__admin-bar__wplogo">
-				<Icon icon={ wordpress } />
+				<Dashicon icon="wordpress" />
 				<span>{ __( 'WordPress', 'wp-module-onboarding' ) }</span>
 			</div>
 			<div className="nfd-onboarding-header__admin-bar__profile">
