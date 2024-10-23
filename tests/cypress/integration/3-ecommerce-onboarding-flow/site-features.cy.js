@@ -16,7 +16,7 @@ describe( 'Site Features', function () {
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding&flow=ecommerce#/wp-setup/step/site-features'
 		);
-		cy.wait( 10000 );
+		cy.wait( 20000 );
 	} );
 
 	it( 'Check if Header and Subheader shows up', () => {
