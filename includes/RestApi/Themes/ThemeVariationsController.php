@@ -135,7 +135,8 @@ class ThemeVariationsController extends \WP_REST_Controller {
 	 * @return string
 	 */
 	private static function translate( $theme_json, $domain = 'default' ) {
-			$i18n_schema = wp_json_file_decode( __DIR__ . '/theme-i18n.json' );
+		$path        = wp_normalize_path( realpath( ABSPATH . WPINC ) ) . '/theme-i18n.json';
+		$i18n_schema = wp_json_file_decode( $path );
 
 		return translate_settings_using_i18n_schema( $i18n_schema, $theme_json, $domain );
 	}
