@@ -29,16 +29,16 @@ jobs:
         with:
           node-version: 16.x
           cache: 'npm'
-      
+
       # Checks if node_modules exists in the cache.
       - name: Cache node_modules directory
         id: cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: ${{ runner.os }}-node-
-      
+
       - name: Setup Registry
         run: printf "@newfold-labs:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
         if: steps.cache.outputs.cache-hit != 'true'
