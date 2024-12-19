@@ -30,7 +30,7 @@ final class WP_Admin {
 	public function __construct() {
 		\add_action( 'init', array( __CLASS__, 'load_php_textdomain' ) );
 		\add_action( 'admin_menu', array( __CLASS__, 'register_page' ) );
-		\add_filter( 'admin_title', array( __CLASS__, 'page_title' ), 10, 1 );
+		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'page_title' ), 9, 1 );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'initialize' ) );
 		if ( 'sitegen' === Data::current_flow() ) {
 			\add_action( 'load-themes.php', array( __CLASS__, 'mark_sitegen_generated_themes' ) );
@@ -74,15 +74,13 @@ final class WP_Admin {
 	/**
 	 * Set the page title for the Onboarding page.
 	 *
-	 * @param string $admin_title The title of the admin page.
-	 * @return string
-	 */
-	public static function page_title( $admin_title ) {
+	 * @return void
+	 * */
+	public static function page_title() {
 		if ( isset( $_GET['page'] ) && \sanitize_text_field( wp_unslash( $_GET['page'] ) ) === self::$slug ) {
-			$admin_title = \__( 'Onboarding', 'wp-module-onboarding' ) . $admin_title;
+			global $title;
+			$title = \__( 'Onboarding', 'wp-module-onboarding' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		}
-
-		return $admin_title;
 	}
 
 	/**
