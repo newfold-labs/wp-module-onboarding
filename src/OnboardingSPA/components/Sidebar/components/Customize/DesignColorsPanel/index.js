@@ -104,6 +104,7 @@ const DesignColorsPanel = forwardRef(
 					}
 				} );
 				const paletteObj = {
+					base: palette?.base,
 					primary: palette?.primary,
 					secondary: palette?.secondary || palette?.base,
 					tertiary: palette?.tertiary || palette?.primary,
@@ -227,12 +228,10 @@ const DesignColorsPanel = forwardRef(
 			const colorPaletteIndex =
 				selectedPalette === 'custom' ? 0 : selectedPalette;
 			const selectedPaletteColors = colorPalettes[ colorPaletteIndex ];
-
 			selectedPaletteColors.primary = selectedColor.primary;
 			selectedPaletteColors.secondary = selectedColor.secondary;
-			selectedPaletteColors.base = selectedColor.secondary;
+			selectedPaletteColors.base = selectedColor.base;
 			selectedPaletteColors.tertiary = selectedColor.tertiary;
-
 			activeColor.palette = convertColorSchema( selectedPaletteColors );
 			currentData.sitegen.homepages.data[ slug ].color = activeColor;
 			setCurrentOnboardingData( currentData );
