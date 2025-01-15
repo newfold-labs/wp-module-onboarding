@@ -3,7 +3,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi\Themes;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
-use NewfoldLabs\WP\Module\Onboarding\Services\GlobalStylesService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\GlobalStylesService;
 
 /**
  * Class ThemeVariationsController
