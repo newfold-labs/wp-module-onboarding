@@ -1,0 +1,6 @@
+@import "@newfold/ui-component-library";
+
+/* Tailwind layers */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
