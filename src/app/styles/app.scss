@@ -6,18 +6,14 @@
 
 .nfd-onboarding-container {
 	display: flex;
-	background-color: var(--nfd-onboarding-white);
+	background-color: var(--nfd-onboarding-canvas);
 
 	@include break-small {
+		position: fixed;
 		bottom: 0;
 		left: 0;
-		min-height: calc(100vh - #{$admin-bar-height-big});
-		position: absolute;
 		right: 0;
 		top: 0;
-	}
-
-	@include break-medium {
-		min-height: calc(100vh - #{$admin-bar-height});
+		overflow-y: auto;
 	}
 }

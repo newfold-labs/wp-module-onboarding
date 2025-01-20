@@ -3,13 +3,14 @@ import './webpack-public-path';
 // WordPress
 import domReady from '@wordpress/dom-ready';
 import { createRoot } from 'react-dom/client';
-import App from './app';
+
+import App from '@';
 import { NFD_ONBOARDING_ELEMENT_ID, runtimeDataExists } from './constants';
 
 if ( runtimeDataExists ) {
 	domReady( () => {
-		const domRootId = document.getElementById( NFD_ONBOARDING_ELEMENT_ID );
-		const domRoot = createRoot( domRootId );
+		const domTarget = document.getElementById( NFD_ONBOARDING_ELEMENT_ID );
+		const domRoot = createRoot( domTarget );
 		domRoot.render( <App /> );
 	} );
 } else {

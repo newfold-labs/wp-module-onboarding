@@ -6,9 +6,9 @@ const restrictedImports = [
 	},
 	{
 		name: 'lodash',
-        // [TODO] Update this list as we start moving away from lodash.
+		// [TODO] Update this list as we start moving away from lodash.
 		importNames: [
-            'memoize'
+			'memoize',
 		],
 		message:
 			'This Lodash method is not recommended. Please use native functionality instead. If using `memoize`, please use `memize` instead.',
@@ -50,16 +50,26 @@ const restrictedImports = [
 ];
 
 module.exports = {
-    root: true,
-    extends: [
-		'plugin:@wordpress/eslint-plugin/recommended',
+	root: true,
+	extends: [
+		'plugin:@wordpress/eslint-plugin/recommended-with-formatting',
 	],
-    rules: {
-        'no-restricted-imports': [
+	settings: {
+		'import/resolver': {
+			alias: {
+				map: [
+					[ '@', './src/app' ],
+				],
+				extensions: [ '.js', '.jsx', '.json', '.css', '.scss' ],
+			},
+		},
+	},
+	rules: {
+		'no-restricted-imports': [
 			'error',
 			{
 				paths: restrictedImports,
 			},
 		],
-    }
-}
+	},
+};
