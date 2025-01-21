@@ -71,5 +71,16 @@ module.exports = {
 				paths: restrictedImports,
 			},
 		],
+		'jsdoc/check-param-names': 'off',
+		'jsdoc/no-undefined-types': [
+			'error',
+			{
+				definedTypes: [
+					'React',
+					'JSX',
+					'ReactNode',
+				],
+			},
+		],
 	},
 };
