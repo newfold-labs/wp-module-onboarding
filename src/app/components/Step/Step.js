@@ -1,11 +1,10 @@
 import { motion } from 'motion/react';
-import { useContext } from 'react';
-import { AnimateRoutesDirection } from '@/components/AnimateRoutes';
+import { useAnimateRouteDirection } from '@/utils/hooks';
 
 const slideVariant = {
 	enter: ( direction ) => {
 		return {
-			x: direction === 'forward' ? -300 : 300,
+			x: direction === 'forward' ? 300 : -300,
 			opacity: 0,
 		};
 	},
@@ -15,7 +14,7 @@ const slideVariant = {
 	},
 	exit: ( direction ) => {
 		return {
-			x: direction === 'forward' ? 300 : -300,
+			x: direction === 'forward' ? -300 : 300,
 			opacity: 0,
 		};
 	},
@@ -23,12 +22,11 @@ const slideVariant = {
 
 /**
  * Step component for onboarding steps (Animatable).
- * @param {import('react').ReactNode} children
+ * @param {ReactNode} children
  * @return {JSX.Element} Step component
  */
 const Step = ( { children } ) => {
-	const directionContext = useContext( AnimateRoutesDirection );
-	const direction = directionContext.get();
+	const direction = useAnimateRouteDirection();
 
 	return (
 		<motion.div

@@ -1,1 +1,1 @@
-export { default as AnimateRoutes, AnimateRoutesDirection } from './AnimateRoutes';
+export { default as AnimateRoutes } from './AnimateRoutes';

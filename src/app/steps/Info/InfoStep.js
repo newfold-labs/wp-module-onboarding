@@ -1,10 +1,9 @@
-import { Step } from '@/components';
+import { Navigate, Step } from '@/components';
 import { Button, Container } from '@newfold/ui-component-library';
-import { Link } from 'react-router-dom';
 
 const InfoStep = () => {
 	return (
-		<Step key={ 'info' }>
+		<Step>
 			<Container
 				className="nfd-onboarding-step-info nfd-max-w-3xl"
 			>
@@ -20,8 +19,8 @@ const InfoStep = () => {
 				</Container.Block>
 				<Container.Footer>
 					<div className="nfd-flex nfd-gap-3">
-						<Button>Next</Button>
-						<Link to="/" state={ { direction: 'backward' } }>Back</Link>
+						<Navigate toRoute="/design" direction="forward">Next</Navigate>
+						<Navigate toRoute="/" direction="backward" variant="secondary">Back</Navigate>
 					</div>
 				</Container.Footer>
 			</Container>
