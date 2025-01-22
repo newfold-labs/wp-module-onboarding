@@ -5,7 +5,7 @@ import { useViewportMatch } from '@wordpress/compose';
 
 // Third-party
 import { useNavigate } from 'react-router-dom';
-import { FacebookConnectButton } from '@newfold-labs/wp-module-facebook';
+import { FacebookConnectButton } from '@newfold/wp-module-facebook';
 
 // Classes and functions
 import getContents from './contents';
