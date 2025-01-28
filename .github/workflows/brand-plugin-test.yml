@@ -32,7 +32,7 @@ jobs:
       only-module-tests: true
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: "bluehost/bluehost-wordpress-plugin"
+      plugin-repo: "newfold-labs/wp-plugin-bluehost"
     secrets: inherit
 
   hostgator:
