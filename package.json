@@ -35,7 +35,7 @@
         "@heroicons/react": "^2.2.0",
         "@newfold-labs/js-utility-ui-analytics": "1.2.0",
         "@newfold-labs/wp-module-facebook": "^1.0.9",
-        "@newfold/ui-component-library": "^1.1.1",
+        "@newfold/ui-component-library": "file:.yalc/@newfold/ui-component-library",
         "@sentry/react": "^8.9.2",
         "@wordpress/interface": "^5.25.0",
         "@wordpress/style-engine": "^0.11.0",

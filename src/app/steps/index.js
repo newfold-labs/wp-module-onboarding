@@ -1,12 +1,12 @@
-import { WelcomeStep } from './Welcome';
+import { StartStep } from './Start';
 import { InfoStep } from './Info';
 import { DesignStep } from './Design';
 
 const STEPS = {
-	welcome: {
+	start: {
 		path: '/',
 		order: 1,
-		Component: WelcomeStep,
+		Component: StartStep,
 	},
 	info: {
 		path: '/info',
@@ -22,7 +22,7 @@ const STEPS = {
 
 export {
 	STEPS,
-	WelcomeStep,
+	StartStep,
 	InfoStep,
 	DesignStep,
 };

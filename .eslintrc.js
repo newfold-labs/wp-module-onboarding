@@ -64,6 +64,16 @@ module.exports = {
 			},
 		},
 	},
+	globals: {
+		__: true,
+		_n: true,
+		sprintf: true,
+		useContext: true,
+		useEffect: true,
+		useState: true,
+		useLocation: true,
+		useNavigate: true,
+	},
 	rules: {
 		'no-restricted-imports': [
 			'error',
