@@ -6,7 +6,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ThemeService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\FlowService;
-use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 use NewfoldLabs\WP\Module\Onboarding\Services\I18nService;
 
