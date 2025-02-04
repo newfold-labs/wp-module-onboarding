@@ -1,4 +1,5 @@
-import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
+import { HiiveAnalytics } from '@newfold/js-utility-ui-analytics';
+import data from "@wordpress/data"; // added to keep dependency for js-utility-ui-analytics
 import { ACTION_TO_LABEL_KEY_MAP } from './constants';
 
 export const trackOnboardingEvent = ( onboardingEvent ) => {

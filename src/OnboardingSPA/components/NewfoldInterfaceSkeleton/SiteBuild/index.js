@@ -22,7 +22,7 @@ import { stepSiteGenMigration } from '../../../steps/SiteGen/Migration/step';
 import { useWPSettings as getWPSettings } from '../../../steps/Ecommerce/useWPSettings';
 
 // classes
-import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
+import { HiiveAnalytics } from '@newfold/js-utility-ui-analytics';
 import themeToggleHOC from '../themeToggleHOC';
 import { init as initializePlugins } from '../../../utils/api/plugins';
 import { init as initializeThemes } from '../../../utils/api/themes';

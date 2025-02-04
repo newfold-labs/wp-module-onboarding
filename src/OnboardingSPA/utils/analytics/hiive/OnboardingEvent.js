@@ -1,4 +1,4 @@
-import { HiiveEvent } from '@newfold-labs/js-utility-ui-analytics';
+import { HiiveEvent } from '@newfold/js-utility-ui-analytics';
 import { getLabelKeyFromAction } from '.';
 import { CATEGORY } from './constants';
 
