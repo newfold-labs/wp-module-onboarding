@@ -389,12 +389,16 @@ const SiteBuild = () => {
 	const trackInstaWpMigrationEvent = () => {
 		if ( currentStep?.path === stepSiteGenMigration?.path ) {
 			if ( instaWpMigrationUrl ) {
-				getWPSettings().then( ( res ) => sendOnboardingEvent(
-					new OnboardingEvent(
-						res.nfd_migrate_site ? ACTION_MFE_MIGRATION_INITIATED : ACTION_MIGRATION_INITIATED,
-						instaWpMigrationUrl
+				getWPSettings().then( ( res ) =>
+					sendOnboardingEvent(
+						new OnboardingEvent(
+							res.nfd_migrate_site
+								? ACTION_MFE_MIGRATION_INITIATED
+								: ACTION_MIGRATION_INITIATED,
+							instaWpMigrationUrl
+						)
 					)
-				) );
+				);
 			}
 		}
 	};
