@@ -6,7 +6,7 @@ import { registerCoreBlocks } from '@wordpress/block-library';
 
 // Classes and functions
 import initializeNFDOnboarding from './OnboardingSPA';
-import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
+import { HiiveAnalytics } from '@newfold/js-utility-ui-analytics';
 import { onboardingRestURL } from './OnboardingSPA/utils/api/common';
 import { isEnvironmentCypress } from './OnboardingSPA/utils';
 import * as Sentry from '@sentry/react';

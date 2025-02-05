@@ -3,7 +3,7 @@ import { memo } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { HiiveAnalytics } from '@newfold-labs/js-utility-ui-analytics';
+import { HiiveAnalytics } from '@newfold/js-utility-ui-analytics';
 
 import { setFlow } from '../../utils/api/flow';
 import { store as nfdOnboardingStore } from '../../store';
