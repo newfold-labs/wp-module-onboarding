@@ -1,9 +1,8 @@
 import { Navigate, Step } from '@/components';
 import { Container } from '@newfold/ui-component-library';
-import { SiteTitleInput, AddressInput } from '.';
-import LogoUploadInput from './LogoUploadInput';
+import { SiteTitleInput, AddressInput, LogoUploadInput, SocialAccounts } from '.';
 
-const StartStep = () => {
+const IntakeStep = () => {
 	return (
 		<Step>
 			<Container
@@ -19,6 +18,7 @@ const StartStep = () => {
 						<SiteTitleInput />
 						<AddressInput />
 						<LogoUploadInput />
+						<SocialAccounts />
 					</div>
 				</Container.Block>
 				<Container.Footer>
@@ -31,4 +31,4 @@ const StartStep = () => {
 	);
 };
 
-export default StartStep;
+export default IntakeStep;
