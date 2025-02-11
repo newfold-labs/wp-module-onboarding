@@ -624,7 +624,7 @@ msgstr "Bean There Café - Una acogedora cafetería sostenible en Asheville, Car
 
 #: build/2.5.4/705.js:1
 msgid "The more detail the better"
-msgstr "Cuantos más detalles, mejor"
+msgstr "¿Para quién es este sitio? ¿Cuál es el diseño ideal?"
 
 #: build/2.5.4/705.js:1
 msgid "Not sure what to say? We can walk you through it."
