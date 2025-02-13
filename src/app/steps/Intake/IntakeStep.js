@@ -1,6 +1,6 @@
 import { Navigate, Step } from '@/components';
 import { Container } from '@newfold/ui-component-library';
-import { SiteTitleInput, AddressInput, LogoUploadInput, SocialAccounts } from '.';
+import { SiteTitleInput, LogoUploadInput, SocialAccounts } from '.';
 
 const IntakeStep = () => {
 	return (
@@ -16,14 +16,13 @@ const IntakeStep = () => {
 				<Container.Block separator={ false }>
 					<div className="nfd-flex nfd-flex-col nfd-gap-4">
 						<SiteTitleInput />
-						<AddressInput />
 						<LogoUploadInput />
 						<SocialAccounts />
 					</div>
 				</Container.Block>
 				<Container.Footer>
 					<div>
-						<Navigate toRoute="/info" direction="forward">Next</Navigate>
+						<Navigate toRoute="/decide" direction="forward">Next</Navigate>
 					</div>
 				</Container.Footer>
 			</Container>

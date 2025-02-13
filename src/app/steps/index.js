@@ -1,28 +1,35 @@
+import { IntroStep } from './Intro';
 import { IntakeStep } from './Intake';
-import { InfoStep } from './Info';
+import { DreamAndDecideStep } from './DreamAndDecide';
 import { DesignStep } from './Design';
 
 const STEPS = {
-	start: {
+	intro: {
 		path: '/',
 		order: 1,
+		Component: IntroStep,
+	},
+	intake: {
+		path: '/intake',
+		order: 2,
 		Component: IntakeStep,
 	},
-	info: {
-		path: '/info',
-		order: 2,
-		Component: InfoStep,
+	decide: {
+		path: '/decide',
+		order: 3,
+		Component: DreamAndDecideStep,
 	},
 	design: {
 		path: '/design',
-		order: 3,
+		order: 4,
 		Component: DesignStep,
 	},
 };
 
 export {
 	STEPS,
+	IntroStep,
 	IntakeStep,
-	InfoStep,
+	DreamAndDecideStep,
 	DesignStep,
 };

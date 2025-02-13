@@ -6,22 +6,14 @@ html.wp-toolbar {
 }
 
 body {
-
-	&:not(.is-fullscreen-mode) {
-		opacity: 0;
-	}
-
 	&.is-fullscreen-mode {
-		opacity: 1;
-		transition: opacity ease-in 500ms;
-
 		#wpadminbar {
 			display: none;
 		}
 	}
 
 	&.dashboard_page_nfd-onboarding {
-
+		overflow: hidden;
 		@include wp-admin-reset(".nfd-onboarding-container");
 	}
 

@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
+import { ErrorBoundary } from '@newfold/ui-component-library';
 import { STEPS } from '@/steps';
-import { AnimateRoutes } from '@/components';
+import { AnimateRoutes, ErrorBoundaryFallback } from '@/components';
 
 const AppBody = () => {
 	/**
@@ -22,11 +23,13 @@ const AppBody = () => {
 	return (
 		<div className="nfd-onboarding-body nfd-flex nfd-justify-center nfd-py-20">
 			<div className="nfd-onboarding-body-container">
-				<AnimateRoutes>
-					<Routes>
-						{ getRoutes() }
-					</Routes>
-				</AnimateRoutes>
+				<ErrorBoundary FallbackComponent={ ErrorBoundaryFallback }>
+					<AnimateRoutes>
+						<Routes>
+							{ getRoutes() }
+						</Routes>
+					</AnimateRoutes>
+				</ErrorBoundary>
 			</div>
 		</div>
 	);

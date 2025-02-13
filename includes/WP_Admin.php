@@ -83,6 +83,102 @@ final class WP_Admin {
 		}
 	}
 
+	public static function is_loading() {
+		ob_start();
+		?>
+		<style>
+			body.wp-admin {
+				overflow: hidden !important;
+			}
+			.nfd-onboarding-loading-app__skeleton {
+				position: relative;
+				overflow: hidden;
+				background-color: #DDE7F0;
+			}
+			.nfd-onboarding-loading-app__skeleton::after {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				transform: translateX(-100%);
+				background-image: linear-gradient(
+					90deg,
+					rgba(255, 255, 255, 0) 0,
+					rgba(255, 255, 255, 0.2) 20%,
+					rgba(255, 255, 255, 0.5) 60%,
+					rgba(255, 255, 255, 0)
+				);
+				animation: nfd-skeleton-animation 2.5s infinite;
+				content: "";
+			}
+			@keyframes nfd-skeleton-animation {
+				100% {
+					transform: translateX(100%);
+				}
+			}
+			#nfd-onboarding {
+				z-index: 100000;
+			}
+			.nfd-onboarding-loading-app {
+				background-color: #F1F5F9;
+				width: 100%;
+				opacity: 1;
+				transition: opacity 0.3s ease-in-out;
+			}
+			.nfd-onboarding-loading-app.fade-out {
+				opacity: 0;
+			}
+			.nfd-onboarding-loading-app__header {
+				background-color: #FFF;
+				border-bottom: 1px solid #ECEEFE;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 0 1.5rem;
+				min-height: 4rem;
+			}
+			.nfd-onboarding-loading-app__header__logo {
+				width: 135px;
+				height: 24px;
+				border-radius: 6px;
+			}
+			.nfd-onboarding-loading-app__header__exit {
+				width: 24px;
+				height: 24px;
+				border-radius: 6px;
+			}
+			.nfd-onboarding-loading-app__body {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.nfd-onboarding-loading-app__body__spinner {
+				width: 100px;
+				height: 100px;
+				margin-top: -65px;
+				border-radius: 12px;
+				opacity: 0.8;
+			}
+		</style>
+		<div class="nfd-onboarding-loading-app">
+			<header class="nfd-onboarding-loading-app__header">
+				<div class="nfd-onboarding-loading-app__header__logo nfd-onboarding-loading-app__skeleton"></div>
+				<div class="nfd-onboarding-loading-app__header__exit nfd-onboarding-loading-app__skeleton"></div>
+			</header>
+			<div class="nfd-onboarding-loading-app__body">
+				<div class="nfd-onboarding-loading-app__body__spinner nfd-onboarding-loading-app__skeleton"></div>
+			</div>
+		</div>
+		<?php
+		return ob_get_clean();
+	}
+
 	/**
 	 * Render DOM element for React SPA mount.
 	 *
@@ -92,7 +188,7 @@ final class WP_Admin {
 		echo PHP_EOL;
 		echo '<!-- NFD:ONBOARDING -->';
 		echo PHP_EOL;
-		echo '<div id="nfd-onboarding" class="nfd-onboarding-container"></div>';
+		echo '<div id="nfd-onboarding" class="nfd-onboarding-container">' . self::is_loading() . '</div>';
 		echo PHP_EOL;
 		echo '<!-- /NFD:ONBOARDING -->';
 		echo PHP_EOL;
