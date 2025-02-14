@@ -9,6 +9,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Services\FlowService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 use NewfoldLabs\WP\Module\Onboarding\Services\I18nService;
+use NewfoldLabs\WP\Module\Onboarding\Services\StatusService;
 
 /**
  * Register Admin Page, Assets & Admin functionality with WordPress.
@@ -32,6 +33,7 @@ final class WP_Admin {
 		\add_action( 'admin_menu', array( __CLASS__, 'register_page' ) );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'page_title' ), 9, 1 );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'initialize' ) );
+		\add_action( 'load-themes.php', array( __CLASS__, 'can_restart_onboarding' ) );
 		if ( 'sitegen' === Data::current_flow() ) {
 			\add_action( 'load-themes.php', array( __CLASS__, 'mark_sitegen_generated_themes' ) );
 			SiteGenService::pre_set_filter_wonder_blocks_transients();
@@ -223,4 +225,38 @@ final class WP_Admin {
 		\wp_enqueue_script( 'sitegen-theme-marker' );
 		\wp_enqueue_style( 'sitegen-theme-marker' );
 	}
+
+	/**
+	 * Enqueue scripts that adds a new button to Restart Onboarding in themes.php
+	 *
+	 * @return void
+	 */
+	public static function can_restart_onboarding() {
+		$can_restart = get_option( Options::get_option_name( 'can_restart' ), false );
+
+		// If the customer in ineligible for restart don't enqueue scripts
+		if ( ! $can_restart ) {
+			return;
+		}
+
+		\wp_register_script(
+			'onboarding-restart-button',
+			NFD_ONBOARDING_BUILD_URL . '/onboarding-restart-button.js',
+			array(),
+			'1.0.0',
+			true
+		);
+
+		\wp_register_style(
+			'onboarding-restart-button',
+			NFD_ONBOARDING_BUILD_URL . '/onboarding-restart-button.css.css',
+			array(),
+			'1.0.0',
+			'all'
+		);
+
+		\wp_enqueue_script( 'onboarding-restart-button' );
+		\wp_enqueue_style( 'onboarding-restart-button' );
+	}
+
 } // END /NewfoldLabs/WP/Module/Onboarding/Admin()
