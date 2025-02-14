@@ -210,6 +210,13 @@ const SiteGen = () => {
 			} );
 		}
 
+		if ( identifier === 'site_classification' ) {
+			currentData.data.siteType.primary.refers = 'slug';
+			currentData.data.siteType.primary.value = data.body.primaryType;
+			currentData.data.siteType.secondary.refers = 'slug';
+			currentData.data.siteType.secondary.value = data.body.slug;
+		}
+
 		// A Identifier request was successfully made with valid response
 		currentData.sitegen.siteGenMetaStatus.currentStatus += 1;
 
