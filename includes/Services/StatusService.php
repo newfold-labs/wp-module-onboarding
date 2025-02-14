@@ -22,6 +22,12 @@ class StatusService {
 		if ( 'started' !== get_option( Options::get_option_name( 'status' ) ) ) {
 			update_option( Options::get_option_name( 'status' ), 'started' );
 			do_action( 'newfold/onboarding/started' );
+			if ( self::is_onboarding_restart_eligible() ) {
+				// Set 'can_restart' to true for an eligible customer on their first attempt
+				// This ensures that even if the user closes the onboarding and visits the themes.php page or the Dashboard,
+				// they will still see the "Build with AI" option available.
+				update_option( Options::get_option_name( 'can_restart' ), true );
+			}
 		}
 	}
 
@@ -33,6 +39,7 @@ class StatusService {
 	public static function handle_completed() {
 		if ( 'started' === get_option( Options::get_option_name( 'status' ) ) ) {
 			update_option( Options::get_option_name( 'status' ), 'completed' );
+			self::update_onboarding_restart_status();
 			do_action( 'newfold/onboarding/completed' );
 		}
 	}
@@ -58,25 +65,38 @@ class StatusService {
 	}
 
 	/**
-	 * Determines if a user is eligible for Restarting Onboarding again.
-	 * Toggles a wp_option to reflect the user's eligibility status.
+	 * Checks if the user is eligible to restart onboarding based on brand configuration and AI SiteGen capability.
 	 *
-	 * @return void
+	 * @return bool True if eligible, false otherwise.
 	 */
-	public static function determine_onboarding_restart_eligibility() {
-
+	public static function is_onboarding_restart_eligible() {
 		// Check if the brand is eligible for Restarting Onboarding
 		$brand_config = Brands::get_brands()[ NFD_ONBOARDING_PLUGIN_BRAND ]['config'] ?? array();
 		if ( empty( $brand_config['canRestartOnboarding'] ) || ! $brand_config['canRestartOnboarding'] ) {
-			return;
+			return false;
 		}
 
 		// Check if AI SiteGen Hiive capability is active and the site was created in the last 9 months
 		if ( ! Config::has_ai_sitegen() || ! self::is_site_created_within_last_9_months() ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Handles the flow data and updates the restart eligibility status based on total onboarding tries.
+	 *
+	 * @return void
+	 */
+	public static function update_onboarding_restart_status() {
+
+		// Don't do anything if the customer is not eligible
+		if ( ! self::is_onboarding_restart_eligible() ) {
 			return;
 		}
 
-		// Get flow data and check if the total onboarding tries are less than or equal to 3
+		// Get flow data
 		$flow_data = get_option( Options::get_option_name( 'flow' ) );
 
 		if ( isset( $flow_data ) ) {
