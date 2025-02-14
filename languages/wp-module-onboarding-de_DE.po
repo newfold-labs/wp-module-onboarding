@@ -2,22 +2,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: Vara Prasad Maruboina <varaprasad.maruboina@newfold.com>\n"
+"Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-02-13T10:23:36+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-02-13 19:27+0530\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-module-onboarding\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: bootstrap.php:22
-#: includes/Compatibility/Safe_Mode.php:44
-#: includes/Compatibility/Safe_Mode.php:45
-#: includes/WP_Admin.php:65
-#: includes/WP_Admin.php:66
-#: includes/WP_Admin.php:82
+#: bootstrap.php:22 includes/Compatibility/Safe_Mode.php:44
+#: includes/Compatibility/Safe_Mode.php:45 includes/WP_Admin.php:65
+#: includes/WP_Admin.php:66 includes/WP_Admin.php:82
 msgid "Onboarding"
 msgstr ""
 
@@ -26,12 +25,15 @@ msgid "Please upgrade your WordPress"
 msgstr ""
 
 #: includes/Compatibility/Safe_Mode.php:185
-msgid "To take advantage of the latest WordPress has to offer, our WordPress Onboarding to setup your website requires the latest version of WordPress."
+msgid ""
+"To take advantage of the latest WordPress has to offer, our WordPress "
+"Onboarding to setup your website requires the latest version of WordPress."
 msgstr ""
 
 #. translators: 1: Current WP Version 2: Minimum Required version
 #: includes/Compatibility/Safe_Mode.php:191
-msgid "Your WordPress version %1$s does not meet our minimum requirements of %2$s."
+msgid ""
+"Your WordPress version %1$s does not meet our minimum requirements of %2$s."
 msgstr ""
 
 #: includes/Compatibility/Safe_Mode.php:207
@@ -156,8 +158,7 @@ msgid "Customize Website"
 msgstr ""
 
 #. translators: %s: website or store
-#: build/2.5.6/51.js:2
-#: src/OnboardingSPA/steps/GetStarted/Welcome/contents.js:9
+#: build/2.5.6/51.js:2 src/OnboardingSPA/steps/GetStarted/Welcome/contents.js:9
 msgid "Make your %s dreams a reality!"
 msgstr ""
 
@@ -172,8 +173,7 @@ msgstr ""
 msgid "Migrate a WordPress Site"
 msgstr ""
 
-#: build/2.5.6/51.js:3
-#: build/2.5.6/onboarding.js:54
+#: build/2.5.6/51.js:3 build/2.5.6/onboarding.js:54
 #: src/OnboardingSPA/steps/GetStarted/Welcome/contents.js:21
 #: src/OnboardingSPA/steps/GetStarted/Welcome/Sidebar/LearnMore/contents.js:14
 msgid "Start Setup"
@@ -192,7 +192,9 @@ msgstr ""
 #. translators: %s: site or store
 #: build/2.5.6/51.js:4
 #: src/OnboardingSPA/steps/GetStarted/Welcome/contents.js:32
-msgid "Build a beautiful %s using a visual builder. Block Patterns accelerate telling your story or tending your store with professional designs."
+msgid ""
+"Build a beautiful %s using a visual builder. Block Patterns accelerate "
+"telling your story or tending your store with professional designs."
 msgstr ""
 
 #: build/2.5.6/51.js:4
@@ -208,7 +210,9 @@ msgstr ""
 #. translators: 1: site or store 2: Brand
 #: build/2.5.6/51.js:5
 #: src/OnboardingSPA/steps/GetStarted/Welcome/contents.js:50
-msgid "Reach for your %1$s goals using proven WordPress Plugins & %2$s solutions. Send a newsletter, host a podcast, book clients, take payments and more."
+msgid ""
+"Reach for your %1$s goals using proven WordPress Plugins & %2$s solutions. "
+"Send a newsletter, host a podcast, book clients, take payments and more."
 msgstr ""
 
 #: build/2.5.6/51.js:5
@@ -224,7 +228,10 @@ msgstr ""
 #. translators: %s: site or store
 #: build/2.5.6/51.js:6
 #: src/OnboardingSPA/steps/GetStarted/Welcome/contents.js:69
-msgid "Establish your %s's unique design. Use the WordPress Editor to refine over time with professionally-designed patterns, parts, templates, colors and type."
+msgid ""
+"Establish your %s's unique design. Use the WordPress Editor to refine over "
+"time with professionally-designed patterns, parts, templates, colors and "
+"type."
 msgstr ""
 
 #: build/2.5.6/100.js:1
@@ -237,8 +244,7 @@ msgstr ""
 msgid "Custom"
 msgstr ""
 
-#: build/2.5.6/100.js:1
-#: build/2.5.6/396.js:1
+#: build/2.5.6/100.js:1 build/2.5.6/396.js:1
 #: src/OnboardingSPA/components/Sidebar/components/Customize/DesignColorsPanel/index.js:375
 #: src/OnboardingSPA/components/Sidebar/components/Customize/DesignFontsPanel/index.js:55
 msgid "Default"
@@ -255,15 +261,13 @@ msgstr ""
 msgid "CUSTOM COLORS"
 msgstr ""
 
-#: build/2.5.6/100.js:1
-#: build/2.5.6/396.js:1
+#: build/2.5.6/100.js:1 build/2.5.6/396.js:1
 #: src/OnboardingSPA/components/Sidebar/components/Customize/DesignColorsPanel/index.js:317
 #: src/OnboardingSPA/components/Sidebar/components/Customize/DesignFontsPanel/index.js:124
 msgid "Cancel"
 msgstr ""
 
-#: build/2.5.6/100.js:1
-#: build/2.5.6/396.js:1
+#: build/2.5.6/100.js:1 build/2.5.6/396.js:1
 #: src/OnboardingSPA/components/Sidebar/components/Customize/DesignColorsPanel/index.js:323
 #: src/OnboardingSPA/components/Sidebar/components/Customize/DesignFontsPanel/index.js:131
 msgid "Apply"
@@ -274,32 +278,30 @@ msgstr ""
 msgid "Edit colors"
 msgstr ""
 
-#: build/2.5.6/127.js:1
-#: src/OnboardingSPA/components/AdminBar/index.js:22
+#: build/2.5.6/127.js:1 src/OnboardingSPA/components/AdminBar/index.js:22
 msgid "WordPress"
 msgstr ""
 
-#: build/2.5.6/127.js:1
-#: src/OnboardingSPA/components/AdminBar/index.js:27
+#: build/2.5.6/127.js:1 src/OnboardingSPA/components/AdminBar/index.js:27
 msgid "Howdy! "
 msgstr ""
 
-#: build/2.5.6/127.js:1
-#: build/2.5.6/796.js:1
+#: build/2.5.6/127.js:1 build/2.5.6/796.js:1
 #: src/OnboardingSPA/components/Header/components/SiteBuildHeader/step-navigation.js:43
 #: src/OnboardingSPA/components/Header/components/SiteGenHeader/step-navigation.js:39
 msgid "Back"
 msgstr ""
 
 #. translators: %s: to replace Brand name
-#: build/2.5.6/218.js:2
-#: src/OnboardingSPA/steps/SiteGen/Migration/contents.js:7
+#: build/2.5.6/218.js:2 src/OnboardingSPA/steps/SiteGen/Migration/contents.js:7
 msgid "Let's migrate your existing site to %s"
 msgstr ""
 
 #: build/2.5.6/218.js:2
 #: src/OnboardingSPA/steps/SiteGen/Migration/contents.js:13
-msgid "Please wait a few seconds while we get your new account ready to import your existing WordPress site. "
+msgid ""
+"Please wait a few seconds while we get your new account ready to import your "
+"existing WordPress site. "
 msgstr ""
 
 #: build/2.5.6/218.js:2
@@ -308,22 +310,19 @@ msgid "Preparing your account"
 msgstr ""
 
 #. translators: 1: Brand 2: site or store
-#: build/2.5.6/270.js:2
-#: build/2.5.6/270.js:3
+#: build/2.5.6/270.js:2 build/2.5.6/270.js:3
 #: src/OnboardingSPA/steps/Complete/contents.js:10
 #: src/OnboardingSPA/steps/Complete/contents.js:25
 msgid "Hang tight, we’re building your %1$s %2$s"
 msgstr ""
 
-#: build/2.5.6/270.js:2
-#: build/2.5.6/270.js:3
+#: build/2.5.6/270.js:2 build/2.5.6/270.js:3
 #: src/OnboardingSPA/steps/Complete/contents.js:17
 #: src/OnboardingSPA/steps/Complete/contents.js:32
 msgid "We’re assembling your unique design and installing useful tools"
 msgstr ""
 
-#: build/2.5.6/270.js:3
-#: build/2.5.6/onboarding.js:33
+#: build/2.5.6/270.js:3 build/2.5.6/onboarding.js:33
 #: src/OnboardingSPA/components/StateHandlers/Design/contents.js:26
 #: src/OnboardingSPA/components/StateHandlers/SiteGen/contents.js:26
 #: src/OnboardingSPA/steps/Complete/contents.js:36
@@ -480,12 +479,8 @@ msgstr ""
 msgid "1000 +"
 msgstr ""
 
-#: build/2.5.6/325.js:1
-#: build/2.5.6/595.js:4
-#: build/2.5.6/627.js:4
-#: build/2.5.6/841.js:1
-#: build/2.5.6/871.js:2
-#: build/2.5.6/onboarding.js:31
+#: build/2.5.6/325.js:1 build/2.5.6/595.js:4 build/2.5.6/627.js:4
+#: build/2.5.6/841.js:1 build/2.5.6/871.js:2 build/2.5.6/onboarding.js:31
 #: src/OnboardingSPA/components/Loaders/Chapter/Interstitial/contents.js:46
 #: src/OnboardingSPA/steps/Ecommerce/StepAddress/contents.js:27
 #: src/OnboardingSPA/steps/Ecommerce/StepProducts/contents.js:79
@@ -495,122 +490,109 @@ msgstr ""
 msgid "Continue Setup"
 msgstr ""
 
-#: build/2.5.6/328.js:1
-#: build/2.5.6/340.js:1
-#: build/2.5.6/996.js:1
+#: build/2.5.6/328.js:1 build/2.5.6/340.js:1 build/2.5.6/996.js:1
 #: src/OnboardingSPA/components/SkipButton/index.js:76
 msgid "Skip this Step"
 msgstr ""
 
-#: build/2.5.6/328.js:1
-#: build/2.5.6/onboarding.js:14
+#: build/2.5.6/328.js:1 build/2.5.6/onboarding.js:14
 #: src/OnboardingSPA/steps/TopPriority/contents.js:5
 #: src/OnboardingSPA/steps/TopPriority/step.js:12
 msgid "Tell us your top priority"
 msgstr ""
 
-#: build/2.5.6/328.js:1
-#: src/OnboardingSPA/steps/TopPriority/contents.js:6
+#: build/2.5.6/328.js:1 src/OnboardingSPA/steps/TopPriority/contents.js:6
 msgid "We'll prioritize getting you there."
 msgstr ""
 
-#: build/2.5.6/328.js:1
-#: src/OnboardingSPA/steps/TopPriority/contents.js:13
+#: build/2.5.6/328.js:1 src/OnboardingSPA/steps/TopPriority/contents.js:13
 msgid "Publishing"
 msgstr ""
 
-#: build/2.5.6/328.js:1
-#: src/OnboardingSPA/steps/TopPriority/contents.js:14
-msgid "From blogs, to newsletters, to podcasts and videos, we help the web find your content."
+#: build/2.5.6/328.js:1 src/OnboardingSPA/steps/TopPriority/contents.js:14
+msgid ""
+"From blogs, to newsletters, to podcasts and videos, we help the web find "
+"your content."
 msgstr ""
 
-#: build/2.5.6/328.js:1
-#: src/OnboardingSPA/steps/TopPriority/contents.js:21
+#: build/2.5.6/328.js:1 src/OnboardingSPA/steps/TopPriority/contents.js:21
 msgid "Selling"
 msgstr ""
 
-#: build/2.5.6/328.js:1
-#: src/OnboardingSPA/steps/TopPriority/contents.js:22
-msgid "Startup or seasoned business, drop-shipping or downloads, we've got ecommerce covered."
+#: build/2.5.6/328.js:1 src/OnboardingSPA/steps/TopPriority/contents.js:22
+msgid ""
+"Startup or seasoned business, drop-shipping or downloads, we've got "
+"ecommerce covered."
 msgstr ""
 
-#: build/2.5.6/328.js:1
-#: src/OnboardingSPA/steps/TopPriority/contents.js:29
+#: build/2.5.6/328.js:1 src/OnboardingSPA/steps/TopPriority/contents.js:29
 msgid "Designing"
 msgstr ""
 
-#: build/2.5.6/328.js:1
-#: src/OnboardingSPA/steps/TopPriority/contents.js:30
-msgid "With smart style presets and powerful options, we help your site look and feel polished."
+#: build/2.5.6/328.js:1 src/OnboardingSPA/steps/TopPriority/contents.js:30
+msgid ""
+"With smart style presets and powerful options, we help your site look and "
+"feel polished."
 msgstr ""
 
-#: build/2.5.6/328.js:1
-#: src/OnboardingSPA/steps/TopPriority/index.js:144
-msgid "Where would you like to start? We'll start there and then move into next steps."
+#: build/2.5.6/328.js:1 src/OnboardingSPA/steps/TopPriority/index.js:144
+msgid ""
+"Where would you like to start? We'll start there and then move into next "
+"steps."
 msgstr ""
 
 #. translators: %s: website or store
-#: build/2.5.6/340.js:2
-#: build/2.5.6/onboarding.js:5
+#: build/2.5.6/340.js:2 build/2.5.6/onboarding.js:5
 #: src/OnboardingSPA/steps/BasicInfo/contents.js:9
 #: src/OnboardingSPA/steps/BasicInfo/step.js:26
 msgid "Introduce us to this %s"
 msgstr ""
 
-#: build/2.5.6/340.js:2
-#: src/OnboardingSPA/steps/BasicInfo/contents.js:12
+#: build/2.5.6/340.js:2 src/OnboardingSPA/steps/BasicInfo/contents.js:12
 msgid "So we can introduce it to the web"
 msgstr ""
 
 #. translators: %s: Site
-#: build/2.5.6/340.js:3
-#: src/OnboardingSPA/steps/BasicInfo/contents.js:19
+#: build/2.5.6/340.js:3 src/OnboardingSPA/steps/BasicInfo/contents.js:19
 msgid "%s Title"
 msgstr ""
 
 #. translators: %s: Site or Store
-#: build/2.5.6/340.js:4
-#: build/2.5.6/340.js:9
+#: build/2.5.6/340.js:4 build/2.5.6/340.js:9
 #: src/OnboardingSPA/components/MiniPreview/contents.js:10
 #: src/OnboardingSPA/steps/BasicInfo/contents.js:24
 msgid "WordPress %s"
 msgstr ""
 
-#: build/2.5.6/340.js:4
-#: src/OnboardingSPA/steps/BasicInfo/contents.js:27
+#: build/2.5.6/340.js:4 src/OnboardingSPA/steps/BasicInfo/contents.js:27
 msgid "Shown to visitors, search engine and social media posts."
 msgstr ""
 
-#: build/2.5.6/340.js:4
-#: src/OnboardingSPA/steps/BasicInfo/contents.js:31
+#: build/2.5.6/340.js:4 src/OnboardingSPA/steps/BasicInfo/contents.js:31
 msgid "80"
 msgstr ""
 
 #. translators: %s: Site or Store
-#: build/2.5.6/340.js:5
-#: src/OnboardingSPA/steps/BasicInfo/contents.js:36
+#: build/2.5.6/340.js:5 src/OnboardingSPA/steps/BasicInfo/contents.js:36
 msgid "%s Description"
 msgstr ""
 
 #. translators: %s: Site or Store
-#: build/2.5.6/340.js:6
-#: src/OnboardingSPA/steps/BasicInfo/contents.js:41
+#: build/2.5.6/340.js:6 src/OnboardingSPA/steps/BasicInfo/contents.js:41
 msgid "Just another WordPress %s."
 msgstr ""
 
 #. translators: %s: site or store
-#: build/2.5.6/340.js:7
-#: src/OnboardingSPA/steps/BasicInfo/contents.js:46
-msgid "Tell people who you are, what you sell and why they should visit your %s."
+#: build/2.5.6/340.js:7 src/OnboardingSPA/steps/BasicInfo/contents.js:46
+msgid ""
+"Tell people who you are, what you sell and why they should visit your %s."
 msgstr ""
 
-#: build/2.5.6/340.js:7
-#: src/OnboardingSPA/steps/BasicInfo/contents.js:52
+#: build/2.5.6/340.js:7 src/OnboardingSPA/steps/BasicInfo/contents.js:52
 msgid "160"
 msgstr ""
 
-#: build/2.5.6/340.js:7
-#: src/OnboardingSPA/steps/BasicInfo/contents.js:55
+#: build/2.5.6/340.js:7 src/OnboardingSPA/steps/BasicInfo/contents.js:55
 msgid "Error Saving Data, Try Again!"
 msgstr ""
 
@@ -669,7 +651,11 @@ msgstr ""
 
 #: build/2.5.6/340.js:10
 #: src/OnboardingSPA/components/SocialMediaForm/contents.js:12
-msgid "That's smart, but we encourage you to enter the standard URL for your social profiles to help search engines know this website is associated with your profile using Yoast's Open Graph support. You can always change the URLs used within your site to trackable in the future."
+msgid ""
+"That's smart, but we encourage you to enter the standard URL for your social "
+"profiles to help search engines know this website is associated with your "
+"profile using Yoast's Open Graph support. You can always change the URLs "
+"used within your site to trackable in the future."
 msgstr ""
 
 #: build/2.5.6/340.js:10
@@ -679,17 +665,26 @@ msgstr ""
 
 #: build/2.5.6/340.js:10
 #: src/OnboardingSPA/components/SocialMediaForm/contents.js:22
-msgid "We recommend using your official social URL to help search engines know this website is associated with your profile using Yoast's Open Graph support. You can always change the URLs used within your site in the future."
+msgid ""
+"We recommend using your official social URL to help search engines know this "
+"website is associated with your profile using Yoast's Open Graph support. "
+"You can always change the URLs used within your site in the future."
 msgstr ""
 
 #: build/2.5.6/340.js:10
 #: src/OnboardingSPA/components/SocialMediaForm/contents.js:29
-msgid "That's clever! Short URLs are a great way to track clicks. However, To help build your social graph, we need the full URLs to your social profiles. You can go into your menus and change your social icon links after setup."
+msgid ""
+"That's clever! Short URLs are a great way to track clicks. However, To help "
+"build your social graph, we need the full URLs to your social profiles. You "
+"can go into your menus and change your social icon links after setup."
 msgstr ""
 
 #: build/2.5.6/340.js:10
 #: src/OnboardingSPA/components/SocialMediaForm/contents.js:33
-msgid "To help build your social graph, we need the full URLs to your social profiles. Please check your URLs for typos and try copy & paste with the official URL if you continue to see this error."
+msgid ""
+"To help build your social graph, we need the full URLs to your social "
+"profiles. Please check your URLs for typos and try copy & paste with the "
+"official URL if you continue to see this error."
 msgstr ""
 
 #: build/2.5.6/340.js:10
@@ -732,47 +727,42 @@ msgstr ""
 msgid "Learn More"
 msgstr ""
 
-#: build/2.5.6/366.js:1
-#: build/2.5.6/onboarding.js:27
+#: build/2.5.6/366.js:1 build/2.5.6/onboarding.js:27
 #: src/OnboardingSPA/steps/SitePages/contents.js:5
 #: src/OnboardingSPA/steps/SitePages/step.js:21
 msgid "You have ideas, we have page templates"
 msgstr ""
 
-#: build/2.5.6/366.js:1
-#: src/OnboardingSPA/steps/SitePages/contents.js:9
+#: build/2.5.6/366.js:1 src/OnboardingSPA/steps/SitePages/contents.js:9
 msgid "Begin closer to the finish line than a blank canvas."
 msgstr ""
 
-#: build/2.5.6/367.js:1
-#: build/2.5.6/546.js:1
+#: build/2.5.6/367.js:1 build/2.5.6/546.js:1
 #: src/OnboardingSPA/steps/DesignThemeStyles/contents.js:5
 msgid "Lets tailor your theme for the perfect fit"
 msgstr ""
 
-#: build/2.5.6/367.js:1
-#: build/2.5.6/546.js:1
+#: build/2.5.6/367.js:1 build/2.5.6/546.js:1
 #: src/OnboardingSPA/steps/DesignThemeStyles/contents.js:9
 msgid "Start with a style preset or"
 msgstr ""
 
 #. translators: build a custom design is a link, this would be concatenated with "Start with a style preset or" making it "Start with a style preset or build a custom design."
-#: build/2.5.6/367.js:4
-#: build/2.5.6/546.js:4
+#: build/2.5.6/367.js:4 build/2.5.6/546.js:4
 #: src/OnboardingSPA/steps/DesignThemeStyles/contents.js:15
 msgid "build a custom design."
 msgstr ""
 
-#: build/2.5.6/367.js:4
-#: build/2.5.6/546.js:4
+#: build/2.5.6/367.js:4 build/2.5.6/546.js:4
 #: src/OnboardingSPA/steps/DesignThemeStyles/contents.js:16
 msgid "Customize Colors & Fonts?"
 msgstr ""
 
-#: build/2.5.6/367.js:4
-#: build/2.5.6/546.js:4
+#: build/2.5.6/367.js:4 build/2.5.6/546.js:4
 #: src/OnboardingSPA/steps/DesignThemeStyles/contents.js:20
-msgid "Check to customize in the next few steps (or leave empty and use the Site Editor later)"
+msgid ""
+"Check to customize in the next few steps (or leave empty and use the Site "
+"Editor later)"
 msgstr ""
 
 #: build/2.5.6/396.js:1
@@ -801,8 +791,7 @@ msgstr ""
 msgid "Edit fonts"
 msgstr ""
 
-#: build/2.5.6/396.js:1
-#: build/2.5.6/onboarding.js:17
+#: build/2.5.6/396.js:1 build/2.5.6/onboarding.js:17
 #: src/OnboardingSPA/components/Sidebar/components/Customize/DesignFontsPanel/index.js:446
 #: src/OnboardingSPA/steps/DesignFonts/Sidebar/LearnMore/contents.js:9
 #: src/OnboardingSPA/steps/DesignFonts/step.js:13
@@ -814,8 +803,7 @@ msgstr ""
 msgid "Select your own fonts"
 msgstr ""
 
-#: build/2.5.6/560.js:1
-#: build/2.5.6/onboarding.js:25
+#: build/2.5.6/560.js:1 build/2.5.6/onboarding.js:25
 #: src/OnboardingSPA/steps/DesignHomepageMenu/contents.js:5
 #: src/OnboardingSPA/steps/DesignHomepageMenu/step.js:24
 msgid "There’s no place like a great home page"
@@ -827,69 +815,60 @@ msgid "Pick a starter layout you can refine and remix with your content"
 msgstr ""
 
 #. translators: %s: website or store
-#: build/2.5.6/595.js:2
-#: build/2.5.6/627.js:2
-#: build/2.5.6/871.js:2
+#: build/2.5.6/595.js:2 build/2.5.6/627.js:2 build/2.5.6/871.js:2
 #: src/OnboardingSPA/steps/GetStarted/GetStartedExperience/contents.js:9
 #: src/OnboardingSPA/steps/GetStarted/SiteTypeSetup/contents.js:9
 msgid "Help us tailor this setup to your %s"
 msgstr ""
 
 #. translators: %s: SITE or STORE
-#: build/2.5.6/595.js:3
-#: build/2.5.6/627.js:3
+#: build/2.5.6/595.js:3 build/2.5.6/627.js:3
 #: src/OnboardingSPA/steps/GetStarted/SiteTypeSetup/contents.js:17
 msgid "ABOUT YOUR %s"
 msgstr ""
 
 #. translators: %s: site or store
-#: build/2.5.6/595.js:4
-#: build/2.5.6/627.js:4
+#: build/2.5.6/595.js:4 build/2.5.6/627.js:4
 #: src/OnboardingSPA/steps/GetStarted/SiteTypeSetup/contents.js:22
 msgid "What type of %s is it?"
 msgstr ""
 
 #. translators: %s: site or store
-#: build/2.5.6/595.js:5
-#: build/2.5.6/627.js:5
+#: build/2.5.6/595.js:5 build/2.5.6/627.js:5
 #: src/OnboardingSPA/steps/GetStarted/SiteTypeSetup/contents.js:28
 msgid "Enter to search your %s type"
 msgstr ""
 
-#: build/2.5.6/595.js:5
-#: build/2.5.6/627.js:5
+#: build/2.5.6/595.js:5 build/2.5.6/627.js:5
 #: src/OnboardingSPA/steps/GetStarted/SiteTypeSetup/contents.js:31
 msgid "or tell us here:"
 msgstr ""
 
-#: build/2.5.6/619.js:1
-#: build/2.5.6/onboarding.js:28
+#: build/2.5.6/619.js:1 build/2.5.6/onboarding.js:28
 #: src/OnboardingSPA/components/LivePreview/BlockPreview/index.js:98
 #: src/OnboardingSPA/steps/SiteGen/Preview/contents.js:15
 #: src/OnboardingSPA/steps/SiteGen/Preview/regeneratingCard.js:11
 msgid "Regenerating Site"
 msgstr ""
 
-#: build/2.5.6/619.js:1
-#: build/2.5.6/onboarding.js:28
+#: build/2.5.6/619.js:1 build/2.5.6/onboarding.js:28
 #: src/OnboardingSPA/components/LivePreview/BlockPreview/index.js:102
 #: src/OnboardingSPA/steps/SiteGen/Preview/contents.js:14
 #: src/OnboardingSPA/steps/SiteGen/Preview/regeneratingCard.js:12
 msgid "Generating Site"
 msgstr ""
 
-#: build/2.5.6/619.js:1
-#: src/OnboardingSPA/steps/SiteGen/Preview/contents.js:5
+#: build/2.5.6/619.js:1 src/OnboardingSPA/steps/SiteGen/Preview/contents.js:5
 msgid "Presto, here are 3 versions"
 msgstr ""
 
-#: build/2.5.6/619.js:1
-#: src/OnboardingSPA/steps/SiteGen/Preview/contents.js:6
-msgid "We've created 3 unique website designs for you to start with, preview click around or start over."
+#: build/2.5.6/619.js:1 src/OnboardingSPA/steps/SiteGen/Preview/contents.js:6
+msgid ""
+"We've created 3 unique website designs for you to start with, preview click "
+"around or start over."
 msgstr ""
 
-#: build/2.5.6/619.js:1
-#: src/OnboardingSPA/steps/SiteGen/Preview/contents.js:10
+#: build/2.5.6/619.js:1 src/OnboardingSPA/steps/SiteGen/Preview/contents.js:10
 msgid "Favorite a generated version to find and use again in the future."
 msgstr ""
 
@@ -900,7 +879,10 @@ msgstr ""
 
 #: build/2.5.6/705.js:1
 #: src/OnboardingSPA/steps/SiteGen/SiteDetails/contents.js:9
-msgid "Bean There Café - A cozy, sustainable coffee shop in Asheville, North Carolina, focused on fair-trade coffee and local pastries. Their site will feature their menu, special events, and a blog on coffee culture."
+msgid ""
+"Bean There Café - A cozy, sustainable coffee shop in Asheville, North "
+"Carolina, focused on fair-trade coffee and local pastries. Their site will "
+"feature their menu, special events, and a blog on coffee culture."
 msgstr ""
 
 #: build/2.5.6/705.js:1
@@ -908,11 +890,8 @@ msgstr ""
 msgid "The more detail the better"
 msgstr ""
 
-#: build/2.5.6/705.js:1
-#: build/2.5.6/796.js:1
-#: build/2.5.6/971.js:1
-#: build/2.5.6/996.js:1
-#: build/2.5.6/onboarding.js:59
+#: build/2.5.6/705.js:1 build/2.5.6/796.js:1 build/2.5.6/971.js:1
+#: build/2.5.6/996.js:1 build/2.5.6/onboarding.js:59
 #: src/OnboardingSPA/components/Button/ButtonNext/index.js:33
 #: src/OnboardingSPA/components/Footer/components/SiteGenFooter/index.js:38
 #: src/OnboardingSPA/components/Header/components/SiteBuildHeader/step-navigation.js:72
@@ -999,73 +978,59 @@ msgstr ""
 msgid "* required"
 msgstr ""
 
-#: build/2.5.6/866.js:1
-#: src/OnboardingSPA/steps/TheFork/contents.js:5
+#: build/2.5.6/866.js:1 src/OnboardingSPA/steps/TheFork/contents.js:5
 msgid "Welcome to WordPress"
 msgstr ""
 
-#: build/2.5.6/866.js:1
-#: src/OnboardingSPA/steps/TheFork/contents.js:6
+#: build/2.5.6/866.js:1 src/OnboardingSPA/steps/TheFork/contents.js:6
 msgid "powered by "
 msgstr ""
 
-#: build/2.5.6/866.js:1
-#: src/OnboardingSPA/steps/TheFork/contents.js:7
+#: build/2.5.6/866.js:1 src/OnboardingSPA/steps/TheFork/contents.js:7
 msgid "Where would you like to start?"
 msgstr ""
 
-#: build/2.5.6/866.js:1
-#: src/OnboardingSPA/steps/TheFork/contents.js:12
+#: build/2.5.6/866.js:1 src/OnboardingSPA/steps/TheFork/contents.js:12
 msgid "Site Creator"
 msgstr ""
 
-#: build/2.5.6/866.js:1
-#: src/OnboardingSPA/steps/TheFork/contents.js:13
+#: build/2.5.6/866.js:1 src/OnboardingSPA/steps/TheFork/contents.js:13
 msgid "Get a site created in seconds!"
 msgstr ""
 
-#: build/2.5.6/866.js:1
-#: src/OnboardingSPA/steps/TheFork/contents.js:14
+#: build/2.5.6/866.js:1 src/OnboardingSPA/steps/TheFork/contents.js:14
 msgid "Content & design generated by AI, customizable by you."
 msgstr ""
 
-#: build/2.5.6/866.js:1
-#: src/OnboardingSPA/steps/TheFork/contents.js:18
+#: build/2.5.6/866.js:1 src/OnboardingSPA/steps/TheFork/contents.js:18
 msgid "AI"
 msgstr ""
 
-#: build/2.5.6/866.js:1
-#: src/OnboardingSPA/steps/TheFork/contents.js:23
+#: build/2.5.6/866.js:1 src/OnboardingSPA/steps/TheFork/contents.js:23
 msgid "Guided Website Setup"
 msgstr ""
 
-#: build/2.5.6/866.js:1
-#: src/OnboardingSPA/steps/TheFork/contents.js:24
+#: build/2.5.6/866.js:1 src/OnboardingSPA/steps/TheFork/contents.js:24
 msgid "Follow a step-by-step guide."
 msgstr ""
 
-#: build/2.5.6/866.js:1
-#: src/OnboardingSPA/steps/TheFork/contents.js:32
+#: build/2.5.6/866.js:1 src/OnboardingSPA/steps/TheFork/contents.js:32
 msgid "Import a WordPress Site"
 msgstr ""
 
-#: build/2.5.6/866.js:1
-#: src/OnboardingSPA/steps/TheFork/contents.js:33
+#: build/2.5.6/866.js:1 src/OnboardingSPA/steps/TheFork/contents.js:33
 msgid "Use our free, automated import tool!"
 msgstr ""
 
-#: build/2.5.6/866.js:1
-#: src/OnboardingSPA/steps/TheFork/contents.js:41
+#: build/2.5.6/866.js:1 src/OnboardingSPA/steps/TheFork/contents.js:41
 msgid "Already have a WordPress site you want to import?"
 msgstr ""
 
-#: build/2.5.6/866.js:1
-#: src/OnboardingSPA/steps/TheFork/contents.js:45
+#: build/2.5.6/866.js:1 src/OnboardingSPA/steps/TheFork/contents.js:45
 msgid "https://my.bluehost.com/cgi/services/migration"
 msgstr ""
 
-#: build/2.5.6/866.js:1
-#: src/OnboardingSPA/steps/TheFork/contents.js:49
+#: build/2.5.6/866.js:1 src/OnboardingSPA/steps/TheFork/contents.js:49
 msgid "I’m following a tutorial, take me to the WP Admin Dashboard"
 msgstr ""
 
@@ -1094,118 +1059,107 @@ msgstr ""
 msgid "I'm an expert"
 msgstr ""
 
-#: build/2.5.6/910.js:1
-#: build/2.5.6/onboarding.js:59
+#: build/2.5.6/910.js:1 build/2.5.6/onboarding.js:59
 #: src/OnboardingSPA/components/Sidebar/components/Customize/Menu.js:52
 #: src/OnboardingSPA/steps/SiteGen/Editor/Header/center.js:32
 #: src/OnboardingSPA/steps/SiteGen/Editor/Header/index.js:381
 msgid "Customize"
 msgstr ""
 
-#: build/2.5.6/978.js:1
-#: src/OnboardingSPA/components/ComingSoon/contents.js:7
+#: build/2.5.6/978.js:1 src/OnboardingSPA/components/ComingSoon/contents.js:7
 msgid "Coming Soon"
 msgstr ""
 
 #. translators: %s: site or store
-#: build/2.5.6/978.js:2
-#: src/OnboardingSPA/components/ComingSoon/contents.js:10
+#: build/2.5.6/978.js:2 src/OnboardingSPA/components/ComingSoon/contents.js:10
 msgid "Keep your %s private until you click launch"
 msgstr ""
 
 #. translators: %s: site or store
-#: build/2.5.6/978.js:3
-#: src/OnboardingSPA/components/ComingSoon/contents.js:18
-msgid "We'll show a placeholder page to logged-out visitors while you build your %s."
+#: build/2.5.6/978.js:3 src/OnboardingSPA/components/ComingSoon/contents.js:18
+msgid ""
+"We'll show a placeholder page to logged-out visitors while you build your %s."
 msgstr ""
 
-#: build/2.5.6/978.js:3
-#: build/2.5.6/onboarding.js:21
+#: build/2.5.6/978.js:3 build/2.5.6/onboarding.js:21
 #: src/OnboardingSPA/steps/SiteFeatures/contents.js:5
 #: src/OnboardingSPA/steps/SiteFeatures/step.js:21
 msgid "Key features to supercharge your site"
 msgstr ""
 
-#: build/2.5.6/978.js:3
-#: src/OnboardingSPA/steps/SiteFeatures/contents.js:9
+#: build/2.5.6/978.js:3 src/OnboardingSPA/steps/SiteFeatures/contents.js:9
 msgid "Our toolbox of Plugins & Services is your toolbox."
 msgstr ""
 
-#: build/2.5.6/994.js:1
-#: src/OnboardingSPA/steps/WhatNext/contents.js:6
+#: build/2.5.6/994.js:1 src/OnboardingSPA/steps/WhatNext/contents.js:6
 msgid "Nice work: Your site is ready 🎉"
 msgstr ""
 
-#: build/2.5.6/994.js:1
-#: src/OnboardingSPA/steps/WhatNext/contents.js:10
+#: build/2.5.6/994.js:1 src/OnboardingSPA/steps/WhatNext/contents.js:10
 msgid "Move-in day begins! Let us know if you'd like a hand."
 msgstr ""
 
-#: build/2.5.6/994.js:1
-#: src/OnboardingSPA/steps/WhatNext/contents.js:14
+#: build/2.5.6/994.js:1 src/OnboardingSPA/steps/WhatNext/contents.js:14
 msgid "Complete Setup"
 msgstr ""
 
-#: build/2.5.6/994.js:1
-#: src/OnboardingSPA/steps/WhatNext/contents.js:18
+#: build/2.5.6/994.js:1 src/OnboardingSPA/steps/WhatNext/contents.js:18
 msgid "WHATS NEXT"
 msgstr ""
 
-#: build/2.5.6/994.js:1
-#: src/OnboardingSPA/steps/WhatNext/contents.js:19
+#: build/2.5.6/994.js:1 src/OnboardingSPA/steps/WhatNext/contents.js:19
 msgid "Add content, organize your menu and launch."
 msgstr ""
 
 #. translators: %s: Brand
-#: build/2.5.6/994.js:2
-#: src/OnboardingSPA/steps/WhatNext/contents.js:25
-msgid "✅ Theme created, features added and Coming Soon mode activated. Thank you for building your site with %s, we're always here to help!"
+#: build/2.5.6/994.js:2 src/OnboardingSPA/steps/WhatNext/contents.js:25
+msgid ""
+"✅ Theme created, features added and Coming Soon mode activated. Thank you "
+"for building your site with %s, we're always here to help!"
 msgstr ""
 
-#: build/2.5.6/994.js:2
-#: src/OnboardingSPA/steps/WhatNext/contents.js:36
+#: build/2.5.6/994.js:2 src/OnboardingSPA/steps/WhatNext/contents.js:36
 msgid "HELP & RESOURCES"
 msgstr ""
 
-#: build/2.5.6/994.js:2
-#: src/OnboardingSPA/steps/WhatNext/contents.js:37
+#: build/2.5.6/994.js:2 src/OnboardingSPA/steps/WhatNext/contents.js:37
 msgid "Next step or next level, we're your partner."
 msgstr ""
 
 #. translators: %s: Site
-#: build/2.5.6/994.js:3
-#: src/OnboardingSPA/steps/WhatNext/contents.js:43
-msgid "WordPress make it easy to grow your %s. Send a newsletter, broadcast a podcast, create courses and trainings. Dream it, build it."
+#: build/2.5.6/994.js:3 src/OnboardingSPA/steps/WhatNext/contents.js:43
+msgid ""
+"WordPress make it easy to grow your %s. Send a newsletter, broadcast a "
+"podcast, create courses and trainings. Dream it, build it."
 msgstr ""
 
-#: build/2.5.6/994.js:3
-#: src/OnboardingSPA/steps/WhatNext/contents.js:54
+#: build/2.5.6/994.js:3 src/OnboardingSPA/steps/WhatNext/contents.js:54
 msgid "HIRE OUR EXPERTS"
 msgstr ""
 
-#: build/2.5.6/994.js:3
-#: src/OnboardingSPA/steps/WhatNext/contents.js:55
+#: build/2.5.6/994.js:3 src/OnboardingSPA/steps/WhatNext/contents.js:55
 msgid "Make our great people your people."
 msgstr ""
 
-#: build/2.5.6/994.js:3
-#: src/OnboardingSPA/steps/WhatNext/contents.js:59
-msgid "Looking for personalized WordPress assistance, or someone to take-over from here? Go beyond support with our professional services."
+#: build/2.5.6/994.js:3 src/OnboardingSPA/steps/WhatNext/contents.js:59
+msgid ""
+"Looking for personalized WordPress assistance, or someone to take-over from "
+"here? Go beyond support with our professional services."
 msgstr ""
 
-#: build/2.5.6/994.js:3
-#: src/OnboardingSPA/steps/WhatNext/contents.js:71
+#: build/2.5.6/994.js:3 src/OnboardingSPA/steps/WhatNext/contents.js:71
 msgid "ALWAYS COUNT ON OUR TEAM"
 msgstr ""
 
-#: build/2.5.6/994.js:3
-#: src/OnboardingSPA/steps/WhatNext/contents.js:75
+#: build/2.5.6/994.js:3 src/OnboardingSPA/steps/WhatNext/contents.js:75
 msgid "24 hours a day / 7 days a week"
 msgstr ""
 
-#: build/2.5.6/994.js:3
-#: src/OnboardingSPA/steps/WhatNext/contents.js:79
-msgid "From beginner to advanced, you have a partner to trust. Our support works when you work. Also count on various help materials on YouTube, blog and Knowledge Base."
+#: build/2.5.6/994.js:3 src/OnboardingSPA/steps/WhatNext/contents.js:79
+msgid ""
+"From beginner to advanced, you have a partner to trust. Our support works "
+"when you work. Also count on various help materials on YouTube, blog and "
+"Knowledge Base."
 msgstr ""
 
 #: build/2.5.6/996.js:1
@@ -1233,24 +1187,20 @@ msgstr ""
 msgid "This is not a valid Image Type"
 msgstr ""
 
-#: build/2.5.6/996.js:1
-#: src/OnboardingSPA/steps/SiteGen/SiteLogo/contents.js:5
+#: build/2.5.6/996.js:1 src/OnboardingSPA/steps/SiteGen/SiteLogo/contents.js:5
 msgid "Do you have a logo you would like to use for this site?"
 msgstr ""
 
-#: build/2.5.6/996.js:1
-#: src/OnboardingSPA/steps/SiteGen/SiteLogo/contents.js:10
+#: build/2.5.6/996.js:1 src/OnboardingSPA/steps/SiteGen/SiteLogo/contents.js:10
 msgid "supports .jpg, .png, .svg"
 msgstr ""
 
-#: build/2.5.6/996.js:1
-#: src/OnboardingSPA/steps/SiteGen/SiteLogo/contents.js:16
+#: build/2.5.6/996.js:1 src/OnboardingSPA/steps/SiteGen/SiteLogo/contents.js:16
 #: src/OnboardingSPA/steps/SiteGen/SocialMedia/contents.js:19
 msgid "Skip for now"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:1
-#: build/2.5.6/onboarding.js:2
+#: build/2.5.6/onboarding.js:1 build/2.5.6/onboarding.js:2
 #: src/OnboardingSPA/steps/Ecommerce/StepAddress/Sidebar/LearnMore/contents.js:13
 #: src/OnboardingSPA/steps/Ecommerce/StepAddress/step.js:13
 #: src/OnboardingSPA/steps/Ecommerce/StepAddress/step.js:23
@@ -1259,34 +1209,33 @@ msgstr ""
 
 #: build/2.5.6/onboarding.js:1
 #: src/OnboardingSPA/steps/Ecommerce/StepAddress/Sidebar/LearnMore/contents.js:14
-msgid "Whether this is where the magic happens or the mail goes, tell us where your business is located."
+msgid ""
+"Whether this is where the magic happens or the mail goes, tell us where your "
+"business is located."
 msgstr ""
 
 #: build/2.5.6/onboarding.js:1
 #: src/OnboardingSPA/steps/Ecommerce/StepAddress/Sidebar/LearnMore/contents.js:26
-msgid "Whether it’s a storefront or a PO Box, we’re proud to help you connect your real-world and online businesses"
+msgid ""
+"Whether it’s a storefront or a PO Box, we’re proud to help you connect your "
+"real-world and online businesses"
 msgstr ""
 
 #. translators: 1: Brand 2: Site or Store
 #: build/2.5.6/onboarding.js:2
 #: src/OnboardingSPA/steps/Ecommerce/StepAddress/Sidebar/LearnMore/contents.js:32
-msgid "We use this address to setup WooCommerce, your payment provider, Contact Page and more so you can start stocking the shelves of your %1$s Online %2$s."
+msgid ""
+"We use this address to setup WooCommerce, your payment provider, Contact "
+"Page and more so you can start stocking the shelves of your %1$s Online %2$s."
 msgstr ""
 
-#: build/2.5.6/onboarding.js:2
-#: build/2.5.6/onboarding.js:3
-#: build/2.5.6/onboarding.js:4
-#: build/2.5.6/onboarding.js:6
-#: build/2.5.6/onboarding.js:10
-#: build/2.5.6/onboarding.js:14
-#: build/2.5.6/onboarding.js:15
-#: build/2.5.6/onboarding.js:17
-#: build/2.5.6/onboarding.js:18
-#: build/2.5.6/onboarding.js:21
-#: build/2.5.6/onboarding.js:24
-#: build/2.5.6/onboarding.js:25
-#: build/2.5.6/onboarding.js:27
-#: build/2.5.6/onboarding.js:52
+#: build/2.5.6/onboarding.js:2 build/2.5.6/onboarding.js:3
+#: build/2.5.6/onboarding.js:4 build/2.5.6/onboarding.js:6
+#: build/2.5.6/onboarding.js:10 build/2.5.6/onboarding.js:14
+#: build/2.5.6/onboarding.js:15 build/2.5.6/onboarding.js:17
+#: build/2.5.6/onboarding.js:18 build/2.5.6/onboarding.js:21
+#: build/2.5.6/onboarding.js:24 build/2.5.6/onboarding.js:25
+#: build/2.5.6/onboarding.js:27 build/2.5.6/onboarding.js:52
 #: build/2.5.6/onboarding.js:54
 #: src/OnboardingSPA/steps/BasicInfo/Sidebar/LearnMore/contents.js:43
 #: src/OnboardingSPA/steps/DesignColors/Sidebar/LearnMore/contents.js:39
@@ -1307,22 +1256,14 @@ msgstr ""
 msgid "Hire Our Full-Service Creative Studio"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:2
-#: build/2.5.6/onboarding.js:3
-#: build/2.5.6/onboarding.js:4
-#: build/2.5.6/onboarding.js:6
-#: build/2.5.6/onboarding.js:10
-#: build/2.5.6/onboarding.js:14
-#: build/2.5.6/onboarding.js:15
-#: build/2.5.6/onboarding.js:17
-#: build/2.5.6/onboarding.js:18
-#: build/2.5.6/onboarding.js:21
-#: build/2.5.6/onboarding.js:24
-#: build/2.5.6/onboarding.js:25
-#: build/2.5.6/onboarding.js:27
-#: build/2.5.6/onboarding.js:52
-#: build/2.5.6/onboarding.js:54
-#: build/2.5.6/onboarding.js:59
+#: build/2.5.6/onboarding.js:2 build/2.5.6/onboarding.js:3
+#: build/2.5.6/onboarding.js:4 build/2.5.6/onboarding.js:6
+#: build/2.5.6/onboarding.js:10 build/2.5.6/onboarding.js:14
+#: build/2.5.6/onboarding.js:15 build/2.5.6/onboarding.js:17
+#: build/2.5.6/onboarding.js:18 build/2.5.6/onboarding.js:21
+#: build/2.5.6/onboarding.js:24 build/2.5.6/onboarding.js:25
+#: build/2.5.6/onboarding.js:27 build/2.5.6/onboarding.js:52
+#: build/2.5.6/onboarding.js:54 build/2.5.6/onboarding.js:59
 #: src/OnboardingSPA/steps/BasicInfo/Sidebar/LearnMore/contents.js:50
 #: src/OnboardingSPA/steps/DesignColors/Sidebar/LearnMore/contents.js:46
 #: src/OnboardingSPA/steps/DesignFonts/Sidebar/LearnMore/contents.js:46
@@ -1343,8 +1284,7 @@ msgstr ""
 msgid "Technical Support"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:2
-#: build/2.5.6/onboarding.js:3
+#: build/2.5.6/onboarding.js:2 build/2.5.6/onboarding.js:3
 #: src/OnboardingSPA/steps/Ecommerce/StepProducts/step.js:13
 #: src/OnboardingSPA/steps/Ecommerce/StepProducts/step.js:23
 msgid "Product Info"
@@ -1357,22 +1297,27 @@ msgstr ""
 
 #: build/2.5.6/onboarding.js:2
 #: src/OnboardingSPA/steps/Ecommerce/StepProducts/Sidebar/LearnMore/contents.js:14
-msgid "We can offer free, exclusive solutions and apply our expert experience if we know how you sell."
+msgid ""
+"We can offer free, exclusive solutions and apply our expert experience if we "
+"know how you sell."
 msgstr ""
 
 #: build/2.5.6/onboarding.js:2
 #: src/OnboardingSPA/steps/Ecommerce/StepProducts/Sidebar/LearnMore/contents.js:26
-msgid "Go from multiple sizes to multiple locations to multiple online channels"
+msgid ""
+"Go from multiple sizes to multiple locations to multiple online channels"
 msgstr ""
 
 #. translators: 1: Brand 2: site or store
 #: build/2.5.6/onboarding.js:3
 #: src/OnboardingSPA/steps/Ecommerce/StepProducts/Sidebar/LearnMore/contents.js:32
-msgid "Tell us a little about how and what you’re planning to sell and we’ll bring the power of WooCommerce and unique %1$s %2$s solutions to elevate your business and enhance your capabilities."
+msgid ""
+"Tell us a little about how and what you’re planning to sell and we’ll bring "
+"the power of WooCommerce and unique %1$s %2$s solutions to elevate your "
+"business and enhance your capabilities."
 msgstr ""
 
-#: build/2.5.6/onboarding.js:3
-#: src/OnboardingSPA/chapters/commerce.js:20
+#: build/2.5.6/onboarding.js:3 src/OnboardingSPA/chapters/commerce.js:20
 msgid "Commerce"
 msgstr ""
 
@@ -1385,7 +1330,8 @@ msgstr ""
 #. translators: %s: site or store
 #: build/2.5.6/onboarding.js:4
 #: src/OnboardingSPA/steps/BasicInfo/Sidebar/LearnMore/contents.js:16
-msgid "Setup how your %s will present in visitors' browsers and search results."
+msgid ""
+"Setup how your %s will present in visitors' browsers and search results."
 msgstr ""
 
 #: build/2.5.6/onboarding.js:4
@@ -1395,7 +1341,9 @@ msgstr ""
 
 #: build/2.5.6/onboarding.js:4
 #: src/OnboardingSPA/steps/BasicInfo/Sidebar/LearnMore/contents.js:34
-msgid "Loading your site details, logo and social graph helps not just launch your site but have it found looking great in feeds."
+msgid ""
+"Loading your site details, logo and social graph helps not just launch your "
+"site but have it found looking great in feeds."
 msgstr ""
 
 #: build/2.5.6/onboarding.js:5
@@ -1406,11 +1354,12 @@ msgstr ""
 
 #: build/2.5.6/onboarding.js:5
 #: src/OnboardingSPA/steps/GetStarted/GetStartedExperience/Sidebar/LearnMore/contents.js:10
-msgid "We want to offer the best default settings and guidance for someone with your WordPress experience."
+msgid ""
+"We want to offer the best default settings and guidance for someone with "
+"your WordPress experience."
 msgstr ""
 
-#: build/2.5.6/onboarding.js:5
-#: build/2.5.6/onboarding.js:9
+#: build/2.5.6/onboarding.js:5 build/2.5.6/onboarding.js:9
 #: build/2.5.6/onboarding.js:13
 #: src/OnboardingSPA/steps/GetStarted/GetStartedExperience/Sidebar/LearnMore/contents.js:22
 #: src/OnboardingSPA/steps/GetStarted/SiteTypeSetup/PrimarySite/Sidebar/LearnMore/contents.js:30
@@ -1421,7 +1370,10 @@ msgstr ""
 #. translators: %s: site or store
 #: build/2.5.6/onboarding.js:6
 #: src/OnboardingSPA/steps/GetStarted/GetStartedExperience/Sidebar/LearnMore/contents.js:25
-msgid "We want to help everyone get the most out of their WordPress %s and this setup, so we use this to help optimize for a great experience and periodically when we offer tips, reminders and recommendations."
+msgid ""
+"We want to help everyone get the most out of their WordPress %s and this "
+"setup, so we use this to help optimize for a great experience and "
+"periodically when we offer tips, reminders and recommendations."
 msgstr ""
 
 #. translators: %s: website or store
@@ -1431,27 +1383,29 @@ msgid "Primary %s Setup"
 msgstr ""
 
 #. translators: %s: Site or Store
-#: build/2.5.6/onboarding.js:8
-#: build/2.5.6/onboarding.js:12
+#: build/2.5.6/onboarding.js:8 build/2.5.6/onboarding.js:12
 #: src/OnboardingSPA/steps/GetStarted/SiteTypeSetup/PrimarySite/Sidebar/LearnMore/contents.js:11
 #: src/OnboardingSPA/steps/GetStarted/SiteTypeSetup/SecondarySite/Sidebar/LearnMore/contents.js:11
 msgid "%s Type"
 msgstr ""
 
 #. translators: %s: site or store
-#: build/2.5.6/onboarding.js:9
-#: build/2.5.6/onboarding.js:13
+#: build/2.5.6/onboarding.js:9 build/2.5.6/onboarding.js:13
 #: src/OnboardingSPA/steps/GetStarted/SiteTypeSetup/PrimarySite/Sidebar/LearnMore/contents.js:16
 #: src/OnboardingSPA/steps/GetStarted/SiteTypeSetup/SecondarySite/Sidebar/LearnMore/contents.js:16
-msgid "We'll use this to provide our best-matching designs and features for %s like yours."
+msgid ""
+"We'll use this to provide our best-matching designs and features for %s like "
+"yours."
 msgstr ""
 
 #. translators: %s: site or store
-#: build/2.5.6/onboarding.js:10
-#: build/2.5.6/onboarding.js:14
+#: build/2.5.6/onboarding.js:10 build/2.5.6/onboarding.js:14
 #: src/OnboardingSPA/steps/GetStarted/SiteTypeSetup/PrimarySite/Sidebar/LearnMore/contents.js:33
 #: src/OnboardingSPA/steps/GetStarted/SiteTypeSetup/SecondarySite/Sidebar/LearnMore/contents.js:33
-msgid "We chose the templates, features and best configuration we can for sites. You’re always in full control of your WordPress %s and we ask so we can be a good website partner."
+msgid ""
+"We chose the templates, features and best configuration we can for sites. "
+"You’re always in full control of your WordPress %s and we ask so we can be a "
+"good website partner."
 msgstr ""
 
 #. translators: %s: website or store
@@ -1460,18 +1414,15 @@ msgstr ""
 msgid "Secondary %s Setup"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:14
-#: src/OnboardingSPA/steps/TopPriority/step.js:11
+#: build/2.5.6/onboarding.js:14 src/OnboardingSPA/steps/TopPriority/step.js:11
 msgid "Top Priority"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:14
-#: src/OnboardingSPA/chapters/demographic.js:29
+#: build/2.5.6/onboarding.js:14 src/OnboardingSPA/chapters/demographic.js:29
 msgid "Demographic"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:14
-#: build/2.5.6/onboarding.js:59
+#: build/2.5.6/onboarding.js:14 build/2.5.6/onboarding.js:59
 #: src/OnboardingSPA/steps/DesignColors/Sidebar/LearnMore/contents.js:9
 #: src/OnboardingSPA/steps/DesignColors/step.js:13
 #: src/OnboardingSPA/steps/SiteGen/Editor/Sidebar/Customize/contents.js:6
@@ -1481,26 +1432,31 @@ msgstr ""
 #. translators: %s: site or store
 #: build/2.5.6/onboarding.js:15
 #: src/OnboardingSPA/steps/DesignColors/Sidebar/LearnMore/contents.js:12
-msgid "Whether your brand is vibrant, understated, elegant or edgy use color to delight your %s visitors."
+msgid ""
+"Whether your brand is vibrant, understated, elegant or edgy use color to "
+"delight your %s visitors."
 msgstr ""
 
 #: build/2.5.6/onboarding.js:15
 #: src/OnboardingSPA/steps/DesignColors/Sidebar/LearnMore/contents.js:26
-msgid "Let a splash of color make a splash with your visitors with your Global Site Colors."
+msgid ""
+"Let a splash of color make a splash with your visitors with your Global Site "
+"Colors."
 msgstr ""
 
 #: build/2.5.6/onboarding.js:15
 #: src/OnboardingSPA/steps/DesignColors/Sidebar/LearnMore/contents.js:30
-msgid "We had our designers mix up some palettes for striking websites for you to chose additional presets, or you can chose your own colors using the color pickers."
+msgid ""
+"We had our designers mix up some palettes for striking websites for you to "
+"chose additional presets, or you can chose your own colors using the color "
+"pickers."
 msgstr ""
 
-#: build/2.5.6/onboarding.js:15
-#: src/OnboardingSPA/steps/DesignColors/step.js:23
+#: build/2.5.6/onboarding.js:15 src/OnboardingSPA/steps/DesignColors/step.js:23
 msgid "What's your color palette?"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:15
-#: build/2.5.6/onboarding.js:52
+#: build/2.5.6/onboarding.js:15 build/2.5.6/onboarding.js:52
 #: src/OnboardingSPA/steps/DesignThemeStyles/Menu/Sidebar/LearnMore/contents.js:13
 #: src/OnboardingSPA/steps/DesignThemeStyles/Menu/step.js:13
 #: src/OnboardingSPA/steps/DesignThemeStyles/Preview/Sidebar/LearnMore/contents.js:13
@@ -1508,39 +1464,43 @@ msgstr ""
 msgid "Theme Styles"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:15
-#: build/2.5.6/onboarding.js:52
+#: build/2.5.6/onboarding.js:15 build/2.5.6/onboarding.js:52
 #: src/OnboardingSPA/steps/DesignThemeStyles/Menu/Sidebar/LearnMore/contents.js:14
 #: src/OnboardingSPA/steps/DesignThemeStyles/Preview/Sidebar/LearnMore/contents.js:14
-msgid "Professionally-designed website templates ready for their public debut featuring your great ideas."
+msgid ""
+"Professionally-designed website templates ready for their public debut "
+"featuring your great ideas."
 msgstr ""
 
-#: build/2.5.6/onboarding.js:15
-#: build/2.5.6/onboarding.js:52
+#: build/2.5.6/onboarding.js:15 build/2.5.6/onboarding.js:52
 #: src/OnboardingSPA/steps/DesignThemeStyles/Menu/Sidebar/LearnMore/contents.js:26
 #: src/OnboardingSPA/steps/DesignThemeStyles/Preview/Sidebar/LearnMore/contents.js:26
 msgid "Show the web you have style with modern colors and elevated fonts"
 msgstr ""
 
 #. translators: 1: Brand 2: site or store
-#: build/2.5.6/onboarding.js:16
-#: build/2.5.6/onboarding.js:53
+#: build/2.5.6/onboarding.js:16 build/2.5.6/onboarding.js:53
 #: src/OnboardingSPA/steps/DesignThemeStyles/Menu/Sidebar/LearnMore/contents.js:32
 #: src/OnboardingSPA/steps/DesignThemeStyles/Preview/Sidebar/LearnMore/contents.js:32
-msgid "Pick one of these professionally-designed website styles to start your %1$s %2$s."
+msgid ""
+"Pick one of these professionally-designed website styles to start your %1$s "
+"%2$s."
 msgstr ""
 
 #. translators: %s: site or store
-#: build/2.5.6/onboarding.js:17
-#: build/2.5.6/onboarding.js:54
+#: build/2.5.6/onboarding.js:17 build/2.5.6/onboarding.js:54
 #: src/OnboardingSPA/steps/DesignThemeStyles/Menu/Sidebar/LearnMore/contents.js:43
 #: src/OnboardingSPA/steps/DesignThemeStyles/Preview/Sidebar/LearnMore/contents.js:43
-msgid "In the next steps and in the future, you can change the specific colors and fonts to fit your aesthetic vision for your %s."
+msgid ""
+"In the next steps and in the future, you can change the specific colors and "
+"fonts to fit your aesthetic vision for your %s."
 msgstr ""
 
 #: build/2.5.6/onboarding.js:17
 #: src/OnboardingSPA/steps/DesignFonts/Sidebar/LearnMore/contents.js:10
-msgid "Give tone and taste to your words using a curated set of great type treatments."
+msgid ""
+"Give tone and taste to your words using a curated set of great type "
+"treatments."
 msgstr ""
 
 #: build/2.5.6/onboarding.js:17
@@ -1551,25 +1511,24 @@ msgstr ""
 #. translators: %s: site or store
 #: build/2.5.6/onboarding.js:18
 #: src/OnboardingSPA/steps/DesignFonts/Sidebar/LearnMore/contents.js:28
-msgid "Fonts help our ideas look creative and compelling, astute and articulate, refined and regal, modern and much more. Great font combinations help set the perfect tone for your %s and your story jump off the screen."
+msgid ""
+"Fonts help our ideas look creative and compelling, astute and articulate, "
+"refined and regal, modern and much more. Great font combinations help set "
+"the perfect tone for your %s and your story jump off the screen."
 msgstr ""
 
-#: build/2.5.6/onboarding.js:18
-#: src/OnboardingSPA/steps/DesignFonts/step.js:23
+#: build/2.5.6/onboarding.js:18 src/OnboardingSPA/steps/DesignFonts/step.js:23
 msgid "What's your font style?"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:18
-#: build/2.5.6/onboarding.js:35
-#: build/2.5.6/onboarding.js:52
-#: src/OnboardingSPA/chapters/design.js:37
+#: build/2.5.6/onboarding.js:18 build/2.5.6/onboarding.js:35
+#: build/2.5.6/onboarding.js:52 src/OnboardingSPA/chapters/design.js:37
 #: src/OnboardingSPA/components/Drawer/DrawerPanel/WithDesignBack.js:21
 #: src/OnboardingSPA/data/flows/default.js:69
 msgid "Design"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:18
-#: build/2.5.6/onboarding.js:21
+#: build/2.5.6/onboarding.js:18 build/2.5.6/onboarding.js:21
 #: src/OnboardingSPA/chapters/features.js:11
 #: src/OnboardingSPA/steps/SiteFeatures/Sidebar/LearnMore/contents.js:13
 #: src/OnboardingSPA/steps/SiteFeatures/step.js:12
@@ -1579,7 +1538,9 @@ msgstr ""
 #. translators: 1: Brand 2: site or store
 #: build/2.5.6/onboarding.js:19
 #: src/OnboardingSPA/steps/SiteFeatures/Sidebar/LearnMore/contents.js:16
-msgid "Easy-to-use features from our partner's WordPress Plugins and unique %1$s solutions to put your %2$s to work."
+msgid ""
+"Easy-to-use features from our partner's WordPress Plugins and unique %1$s "
+"solutions to put your %2$s to work."
 msgstr ""
 
 #. translators: %s: site or store
@@ -1591,7 +1552,9 @@ msgstr ""
 #. translators: 1: Brand 2: Site or Store 3: Brand
 #: build/2.5.6/onboarding.js:21
 #: src/OnboardingSPA/steps/SiteFeatures/Sidebar/LearnMore/contents.js:41
-msgid "Put your %1$s %2$s to work for you using features that unlock the potential of WordPress with powerful solutions from %3$s and our partners."
+msgid ""
+"Put your %1$s %2$s to work for you using features that unlock the potential "
+"of WordPress with powerful solutions from %3$s and our partners."
 msgstr ""
 
 #: build/2.5.6/onboarding.js:21
@@ -1603,7 +1566,9 @@ msgstr ""
 #. translators: %s: site or store
 #: build/2.5.6/onboarding.js:22
 #: src/OnboardingSPA/steps/DesignHeaderMenu/Sidebar/LearnMore/contents.js:12
-msgid "Surface key content in your %s -- who you are, what your about and where to find things."
+msgid ""
+"Surface key content in your %s -- who you are, what your about and where to "
+"find things."
 msgstr ""
 
 #: build/2.5.6/onboarding.js:22
@@ -1614,13 +1579,19 @@ msgstr ""
 #. translators: 1: site or store 2: Site or Store
 #: build/2.5.6/onboarding.js:23
 #: src/OnboardingSPA/steps/DesignHeaderMenu/Sidebar/LearnMore/contents.js:32
-msgid "Just like a %1$s putting a map of departments at the front door, a great %2$s Header & Menu help point visitors at the places you most want them to visit."
+msgid ""
+"Just like a %1$s putting a map of departments at the front door, a great "
+"%2$s Header & Menu help point visitors at the places you most want them to "
+"visit."
 msgstr ""
 
 #. translators: %s: website
 #: build/2.5.6/onboarding.js:24
 #: src/OnboardingSPA/steps/DesignHeaderMenu/Sidebar/LearnMore/contents.js:43
-msgid "When picking a %s header, consider the number of menu items, character length of each item and how those will visually impact the Header Pattern design you choose."
+msgid ""
+"When picking a %s header, consider the number of menu items, character "
+"length of each item and how those will visually impact the Header Pattern "
+"design you choose."
 msgstr ""
 
 #: build/2.5.6/onboarding.js:24
@@ -1640,7 +1611,9 @@ msgstr ""
 
 #: build/2.5.6/onboarding.js:24
 #: src/OnboardingSPA/steps/DesignHomepageMenu/Sidebar/LearnMore/contents.js:10
-msgid "The home page is where you tell visitors your story. It helps users find what they came for."
+msgid ""
+"The home page is where you tell visitors your story. It helps users find "
+"what they came for."
 msgstr ""
 
 #: build/2.5.6/onboarding.js:24
@@ -1651,16 +1624,20 @@ msgstr ""
 #. translators: %s: site or store
 #: build/2.5.6/onboarding.js:25
 #: src/OnboardingSPA/steps/DesignHomepageMenu/Sidebar/LearnMore/contents.js:28
-msgid "Like good curb appeal, a great home page design helps get users excited about your %s. Mixing media, headings, text and more, you can bring your ideas to live and your products & services to the forefront for visitors."
+msgid ""
+"Like good curb appeal, a great home page design helps get users excited "
+"about your %s. Mixing media, headings, text and more, you can bring your "
+"ideas to live and your products & services to the forefront for visitors."
 msgstr ""
 
 #: build/2.5.6/onboarding.js:25
 #: src/OnboardingSPA/steps/DesignHomepageMenu/Sidebar/LearnMore/contents.js:36
-msgid "Look for a Home Page Pattern design you think will help organize and elevate your ideas."
+msgid ""
+"Look for a Home Page Pattern design you think will help organize and elevate "
+"your ideas."
 msgstr ""
 
-#: build/2.5.6/onboarding.js:25
-#: build/2.5.6/onboarding.js:52
+#: build/2.5.6/onboarding.js:25 build/2.5.6/onboarding.js:52
 #: build/2.5.6/onboarding.js:59
 #: src/OnboardingSPA/steps/SiteGen/Editor/step.js:13
 #: src/OnboardingSPA/steps/SiteGen/Experience/step.js:11
@@ -1679,7 +1656,9 @@ msgstr ""
 #. translators: %s: site or store
 #: build/2.5.6/onboarding.js:26
 #: src/OnboardingSPA/steps/SitePages/Sidebar/LearnMore/contents.js:12
-msgid "Use professionally-designed templates for common site pages to assemble a beautiful, high-quality %s."
+msgid ""
+"Use professionally-designed templates for common site pages to assemble a "
+"beautiful, high-quality %s."
 msgstr ""
 
 #: build/2.5.6/onboarding.js:26
@@ -1690,16 +1669,17 @@ msgstr ""
 #. translators: 1: site or store 2: site or store
 #: build/2.5.6/onboarding.js:27
 #: src/OnboardingSPA/steps/SitePages/Sidebar/LearnMore/contents.js:32
-msgid "We’ve baked everything we know about making great designs and content for common %1$s needs into ease-to-use templates. Pick templates and we’ll add them as Page drafts to your WordPress %2$s."
+msgid ""
+"We’ve baked everything we know about making great designs and content for "
+"common %1$s needs into ease-to-use templates. Pick templates and we’ll add "
+"them as Page drafts to your WordPress %2$s."
 msgstr ""
 
-#: build/2.5.6/onboarding.js:27
-#: src/OnboardingSPA/chapters/layoutContent.js:21
+#: build/2.5.6/onboarding.js:27 src/OnboardingSPA/chapters/layoutContent.js:21
 msgid "Layout & Content"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:27
-#: build/2.5.6/onboarding.js:33
+#: build/2.5.6/onboarding.js:27 build/2.5.6/onboarding.js:33
 #: src/OnboardingSPA/components/ExitToWordPress/index.js:32
 #: src/OnboardingSPA/components/StateHandlers/Design/contents.js:40
 msgid "Exit to WordPress"
@@ -1742,8 +1722,7 @@ msgstr ""
 msgid "Regenerate Content"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:28
-#: build/2.5.6/onboarding.js:59
+#: build/2.5.6/onboarding.js:28 build/2.5.6/onboarding.js:59
 #: src/OnboardingSPA/components/LivePreview/SiteGenCard/index.js:106
 #: src/OnboardingSPA/components/LivePreview/SiteGenPreviewSelectableCard/index.js:128
 #: src/OnboardingSPA/steps/SiteGen/Editor/Header/center.js:28
@@ -1766,12 +1745,16 @@ msgstr ""
 #. translators: site or store
 #: build/2.5.6/onboarding.js:30
 #: src/OnboardingSPA/components/Loaders/Chapter/Interstitial/contents.js:18
-msgid "Would you like to enter your WordPress Dashboard or continue setting up your %s?"
+msgid ""
+"Would you like to enter your WordPress Dashboard or continue setting up your "
+"%s?"
 msgstr ""
 
 #: build/2.5.6/onboarding.js:30
 #: src/OnboardingSPA/components/Loaders/Chapter/Interstitial/contents.js:24
-msgid "You've made great progress! Would you like to keep going with the setup or take it from here?"
+msgid ""
+"You've made great progress! Would you like to keep going with the setup or "
+"take it from here?"
 msgstr ""
 
 #. translators: Brand
@@ -1801,8 +1784,7 @@ msgid "Hire our Experts"
 msgstr ""
 
 #. translators: %s: Brand
-#: build/2.5.6/onboarding.js:32
-#: build/2.5.6/onboarding.js:33
+#: build/2.5.6/onboarding.js:32 build/2.5.6/onboarding.js:33
 #: src/OnboardingSPA/components/StateHandlers/Design/contents.js:8
 #: src/OnboardingSPA/components/StateHandlers/Design/contents.js:19
 #: src/OnboardingSPA/components/StateHandlers/SiteGen/contents.js:8
@@ -1810,8 +1792,7 @@ msgstr ""
 msgid "Preparing your %s design studio"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:32
-#: build/2.5.6/onboarding.js:33
+#: build/2.5.6/onboarding.js:32 build/2.5.6/onboarding.js:33
 #: src/OnboardingSPA/components/StateHandlers/Design/contents.js:11
 #: src/OnboardingSPA/components/StateHandlers/Design/contents.js:22
 #: src/OnboardingSPA/components/StateHandlers/SiteGen/contents.js:11
@@ -1826,7 +1807,9 @@ msgstr ""
 
 #: build/2.5.6/onboarding.js:33
 #: src/OnboardingSPA/components/StateHandlers/Design/contents.js:36
-msgid "Going through this setup will change your active theme, WordPress settings, add content – would you like to continue?"
+msgid ""
+"Going through this setup will change your active theme, WordPress settings, "
+"add content – would you like to continue?"
 msgstr ""
 
 #. translators: 1: Brand 2: Site or Store
@@ -1837,7 +1820,9 @@ msgstr ""
 
 #: build/2.5.6/onboarding.js:34
 #: src/OnboardingSPA/components/Loaders/Step/Ecommerce/contents.js:15
-msgid "We’re installing WooCommerce for you to fill with your amazing products & services!"
+msgid ""
+"We’re installing WooCommerce for you to fill with your amazing products & "
+"services!"
 msgstr ""
 
 #: build/2.5.6/onboarding.js:34
@@ -2023,7 +2008,9 @@ msgstr ""
 
 #: build/2.5.6/onboarding.js:49
 #: src/OnboardingSPA/components/ErrorState/Step/SiteGen/contents.js:15
-msgid "If you continue to get this error, you may either continue creating your site without using our AI assistant, or you can "
+msgid ""
+"If you continue to get this error, you may either continue creating your "
+"site without using our AI assistant, or you can "
 msgstr ""
 
 #: build/2.5.6/onboarding.js:49
@@ -2049,7 +2036,9 @@ msgstr ""
 
 #: build/2.5.6/onboarding.js:49
 #: src/OnboardingSPA/components/ErrorState/Step/SiteGen/contents.js:32
-msgid "If you continue to get this error, please contact our support team at 1-888-401-4678."
+msgid ""
+"If you continue to get this error, please contact our support team at "
+"1-888-401-4678."
 msgstr ""
 
 #: build/2.5.6/onboarding.js:49
@@ -2057,8 +2046,7 @@ msgstr ""
 msgid "Go back"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:49
-#: src/OnboardingSPA/steps/WhatNext/step.js:12
+#: build/2.5.6/onboarding.js:49 src/OnboardingSPA/steps/WhatNext/step.js:12
 msgid "What Next"
 msgstr ""
 
@@ -2070,7 +2058,9 @@ msgstr ""
 #. translators: 1: website or store 2: website or store
 #: build/2.5.6/onboarding.js:50
 #: src/OnboardingSPA/steps/WhatNext/Sidebar/LearnMore/contents.js:16
-msgid "The beginning of your %1$s journey is complete. We’re here to support your next steps and %2$s goals!"
+msgid ""
+"The beginning of your %1$s journey is complete. We’re here to support your "
+"next steps and %2$s goals!"
 msgstr ""
 
 #: build/2.5.6/onboarding.js:50
@@ -2081,45 +2071,44 @@ msgstr ""
 #. translators: 1: site or store 2: Brand 3: site or store
 #: build/2.5.6/onboarding.js:51
 #: src/OnboardingSPA/steps/WhatNext/Sidebar/LearnMore/contents.js:37
-msgid "Now that you’ve setup the basics, use WordPress to edit your pages, %1$s design and explore the unlimited destinations you can chart for your %2$s %3$s."
+msgid ""
+"Now that you’ve setup the basics, use WordPress to edit your pages, %1$s "
+"design and explore the unlimited destinations you can chart for your %2$s "
+"%3$s."
 msgstr ""
 
 #. translators: %s: website
 #: build/2.5.6/onboarding.js:52
 #: src/OnboardingSPA/steps/WhatNext/Sidebar/LearnMore/contents.js:49
-msgid "Our support team, %s experts and professional designers are always just a chat or call away if you ever need directions."
+msgid ""
+"Our support team, %s experts and professional designers are always just a "
+"chat or call away if you ever need directions."
 msgstr ""
 
-#: build/2.5.6/onboarding.js:52
-#: src/OnboardingSPA/steps/WhatNext/step.js:21
+#: build/2.5.6/onboarding.js:52 src/OnboardingSPA/steps/WhatNext/step.js:21
 msgid "How else can we help?"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:52
-#: src/OnboardingSPA/pages/ErrorPage/contents.js:5
+#: build/2.5.6/onboarding.js:52 src/OnboardingSPA/pages/ErrorPage/contents.js:5
 #: src/OnboardingSPA/pages/ErrorPage/page.js:8
 msgid "Error 404"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:52
-#: src/OnboardingSPA/pages/ErrorPage/contents.js:6
+#: build/2.5.6/onboarding.js:52 src/OnboardingSPA/pages/ErrorPage/contents.js:6
 msgid "Please Check Again!"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:52
-#: src/OnboardingSPA/data/flows/default.js:54
+#: build/2.5.6/onboarding.js:52 src/OnboardingSPA/data/flows/default.js:54
 #: src/OnboardingSPA/data/flows/default.js:58
 #: src/OnboardingSPA/steps/SiteGen/Welcome/contents.js:10
 msgid "Get Started"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:52
-#: src/OnboardingSPA/data/flows/ecommerce.js:72
+#: build/2.5.6/onboarding.js:52 src/OnboardingSPA/data/flows/ecommerce.js:72
 msgid "Store Info"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:52
-#: src/OnboardingSPA/chapters/siteGen/design.js:12
+#: build/2.5.6/onboarding.js:52 src/OnboardingSPA/chapters/siteGen/design.js:12
 msgid "Sitegen Design"
 msgstr ""
 
@@ -2133,13 +2122,11 @@ msgstr ""
 msgid "Site Details"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:52
-#: src/OnboardingSPA/chapters/siteGen/core.js:12
+#: build/2.5.6/onboarding.js:52 src/OnboardingSPA/chapters/siteGen/core.js:12
 msgid "Sitegen Core"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:54
-#: build/2.5.6/onboarding.js:59
+#: build/2.5.6/onboarding.js:54 build/2.5.6/onboarding.js:59
 #: src/OnboardingSPA/steps/GetStarted/Welcome/step.js:13
 #: src/OnboardingSPA/steps/GetStarted/Welcome/step.js:23
 #: src/OnboardingSPA/steps/SiteGen/Welcome/step.js:11
@@ -2149,7 +2136,9 @@ msgstr ""
 #. translators: 1: Brand 2: website or store
 #: build/2.5.6/onboarding.js:55
 #: src/OnboardingSPA/steps/GetStarted/Welcome/Sidebar/LearnMore/contents.js:17
-msgid "Lay the foundation for a successful %1$s %2$s using our WordPress Onboarding. "
+msgid ""
+"Lay the foundation for a successful %1$s %2$s using our WordPress "
+"Onboarding. "
 msgstr ""
 
 #. translators: %s: website or store
@@ -2161,7 +2150,10 @@ msgstr ""
 #. translators: 1: website or store 2: website or store
 #: build/2.5.6/onboarding.js:57
 #: src/OnboardingSPA/steps/GetStarted/Welcome/Sidebar/LearnMore/contents.js:42
-msgid "When you set up this new WordPress %1$s, you’re joining millions of website owners who publish their %2$s using the free, community-built software project we’re proud to support."
+msgid ""
+"When you set up this new WordPress %1$s, you’re joining millions of website "
+"owners who publish their %2$s using the free, community-built software "
+"project we’re proud to support."
 msgstr ""
 
 #. translators: 1: Brand 2: website or store
@@ -2173,7 +2165,10 @@ msgstr ""
 #. translators: 1: website or store 2: Brand 3. site or store
 #: build/2.5.6/onboarding.js:59
 #: src/OnboardingSPA/steps/GetStarted/Welcome/Sidebar/LearnMore/contents.js:63
-msgid "A WordPress %1$s hosted by %2$s has tons of unique and proven solutions to help you get farther, faster with your WordPress. We put our expertise, partnerships and solutions to work on your %3$s."
+msgid ""
+"A WordPress %1$s hosted by %2$s has tons of unique and proven solutions to "
+"help you get farther, faster with your WordPress. We put our expertise, "
+"partnerships and solutions to work on your %3$s."
 msgstr ""
 
 #: build/2.5.6/onboarding.js:59
@@ -2206,27 +2201,23 @@ msgstr ""
 msgid "Migration"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:59
-#: src/OnboardingSPA/steps/TheFork/step.js:11
+#: build/2.5.6/onboarding.js:59 src/OnboardingSPA/steps/TheFork/step.js:11
 msgid "The Fork"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:59
-#: src/OnboardingSPA/data/translations/index.js:7
+#: build/2.5.6/onboarding.js:59 src/OnboardingSPA/data/translations/index.js:7
 #: src/OnboardingSPA/data/translations/index.js:23
 msgctxt "noun"
 msgid "site"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:59
-#: src/OnboardingSPA/data/translations/index.js:10
+#: build/2.5.6/onboarding.js:59 src/OnboardingSPA/data/translations/index.js:10
 #: src/OnboardingSPA/data/translations/index.js:26
 msgctxt "noun"
 msgid "website"
 msgstr ""
 
-#: build/2.5.6/onboarding.js:59
-#: src/OnboardingSPA/data/translations/index.js:15
+#: build/2.5.6/onboarding.js:59 src/OnboardingSPA/data/translations/index.js:15
 #: src/OnboardingSPA/data/translations/index.js:18
 msgctxt "noun"
 msgid "store"
@@ -2267,12 +2258,17 @@ msgid "Tax Info"
 msgstr ""
 
 #: src/OnboardingSPA/steps/Ecommerce/StepTax/Sidebar/LearnMore/contents.js:29
-msgid "Let us crunch the tax rates and receipts, while you expand the business and the boldness"
+msgid ""
+"Let us crunch the tax rates and receipts, while you expand the business and "
+"the boldness"
 msgstr ""
 
 #. translators: %s: Site
 #: src/OnboardingSPA/steps/Ecommerce/StepTax/Sidebar/LearnMore/contents.js:35
-msgid "We can take the frustration out of calculating taxes for purchases your visitors make! Let us auto-calculate taxes and worry about the math, you focus on your %s’s mission."
+msgid ""
+"We can take the frustration out of calculating taxes for purchases your "
+"visitors make! Let us auto-calculate taxes and worry about the math, you "
+"focus on your %s’s mission."
 msgstr ""
 
 #: src/OnboardingSPA/steps/SiteGen/SocialMedia/contents.js:5
@@ -2284,7 +2280,9 @@ msgid "Connect a Facebook Account"
 msgstr ""
 
 #: src/OnboardingSPA/steps/SiteGen/SocialMedia/contents.js:13
-msgid "By connecting a Facebook profile, we can fetch relevant data to increase the accuracy of your AI generated site."
+msgid ""
+"By connecting a Facebook profile, we can fetch relevant data to increase the "
+"accuracy of your AI generated site."
 msgstr ""
 
 #: src/OnboardingSPA/steps/SiteGen/SocialMedia/contents.js:17
@@ -2296,5 +2294,7 @@ msgid "Website Creator for WordPress"
 msgstr ""
 
 #: src/OnboardingSPA/steps/SiteGen/Welcome/contents.js:6
-msgid "Tell our AI engine what kind of site you want to make and let it handle the content and design for you."
+msgid ""
+"Tell our AI engine what kind of site you want to make and let it handle the "
+"content and design for you."
 msgstr ""
