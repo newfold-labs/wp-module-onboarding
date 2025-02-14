@@ -252,7 +252,7 @@ final class WP_Admin {
 			'var nfdOnboardingRestartMeta =' . wp_json_encode(
 				array(
 					'buttonText' => \__( 'Build with AI', 'wp-module-onboarding' ),
-					'buttonHref' => \admin_url(),
+					'buttonHref' => \admin_url( 'index.php?page=' . self::$slug ),
 				)
 			) . ';',
 			'before'

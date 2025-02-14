@@ -10,13 +10,9 @@ window.onload = function () {
 
 		buildWithAIElement.style.height = `${themeDiv.offsetHeight}px`;
 
-		// Create an anchor (<a>) element
-		const newLink = document.createElement('a');
+		// Create an span (<span>) element
+		const newLink = document.createElement('span');
 		newLink.classList.add('build-with-ai__link');
-		newLink.setAttribute(
-			'href',
-			window.nfdOnboardingRestartMeta?.buttonHref
-		); // Set the href attribute
 
 		// Create the theme screenshot div
 		const themeScreenshot = document.createElement('div');
@@ -37,5 +33,10 @@ window.onload = function () {
 
 		// Add the new 'Build with AI' element before the 'Add New Theme' Button
 		themeDiv.parentNode.insertBefore(buildWithAIElement, themeDiv);
+
+		buildWithAIElement.addEventListener('click', () => {
+			window.location.href =
+				window.nfdOnboardingRestartMeta?.buttonHref + '&restart=theme';
+		});
 	}
 };
