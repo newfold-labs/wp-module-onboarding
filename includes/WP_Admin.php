@@ -247,6 +247,17 @@ final class WP_Admin {
 			true
 		);
 
+		\wp_add_inline_script(
+			'onboarding-restart-button',
+			'var nfdOnboardingRestartMeta =' . wp_json_encode(
+				array(
+					'buttonText' => \__( 'Build with AI', 'wp-module-onboarding' ),
+					'buttonHref' => \admin_url(),
+				)
+			) . ';',
+			'before'
+		);
+
 		\wp_register_style(
 			'onboarding-restart-button',
 			NFD_ONBOARDING_BUILD_URL . '/onboarding-restart-button.css.css',
