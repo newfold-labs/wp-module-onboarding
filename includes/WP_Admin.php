@@ -290,6 +290,4 @@ final class WP_Admin {
 		\wp_enqueue_script( 'onboarding-restart-button' );
 		\wp_enqueue_style( 'onboarding-restart-button' );
 	}
-
-} 
-// END /NewfoldLabs/WP/Module/Onboarding/Admin()
+} // END /NewfoldLabs/WP/Module/Onboarding/Admin()
