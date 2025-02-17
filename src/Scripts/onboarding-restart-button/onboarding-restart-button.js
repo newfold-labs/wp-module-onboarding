@@ -1,4 +1,4 @@
-window.addEventListener( 'load', function () {
+window.addEventListener( 'load', function ( ) {
 	// Find the Add New Theme button
 	const themeDiv = document.querySelector( '.add-new-theme' );
 
@@ -8,7 +8,7 @@ window.addEventListener( 'load', function () {
 		const buildWithAIElement = document.createElement( 'div' );
 		buildWithAIElement.classList.add( 'theme', 'build-with-ai' );
 
-		buildWithAIElement.style.height = `${themeDiv.offsetHeight}px`;
+		buildWithAIElement.style.height = `${ themeDiv.offsetHeight }px`;
 
 		// Create an span (<span>) element
 		const newLink = document.createElement( 'span' );
