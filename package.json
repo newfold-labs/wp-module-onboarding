@@ -20,9 +20,9 @@
         "webpack-merge": "^5.8.0"
     },
     "scripts": {
-        "build": "wp-scripts build ./src/onboarding.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.css",
+        "build": "wp-scripts build ./src/onboarding.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.css  ./src/Scripts/onboarding-restart-button/onboarding-restart-button.js ./src/Scripts/onboarding-restart-button/onboarding-restart-button.css",
         "format": "wp-scripts format ./src",
-        "start": "wp-scripts start ./src/onboarding.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.css",
+        "start": "wp-scripts start ./src/onboarding.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.css  ./src/Scripts/onboarding-restart-button/onboarding-restart-button.js ./src/Scripts/onboarding-restart-button/onboarding-restart-button.css",
         "lint:js": "wp-scripts lint-js ./src",
         "lint:js:fix": "wp-scripts lint-js ./src --fix",
         "test:e2e": "npx cypress run",

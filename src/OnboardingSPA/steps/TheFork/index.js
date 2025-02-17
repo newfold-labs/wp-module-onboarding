@@ -21,20 +21,23 @@ import {
 	OnboardingEvent,
 	sendOnboardingEvent,
 } from '../../utils/analytics/hiive';
-import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
+import {
+	ACTION_SITEGEN_FORK_OPTION_SELECTED,
+	ACTION_ONBOARDING_RESTARTED,
+} from '../../utils/analytics/hiive/constants';
 import { store as nfdOnboardingStore } from '../../store';
 import { DEFAULT_FLOW } from '../../data/flows/constants';
 
 const TheFork = () => {
 	const { migrationUrl, canMigrateSite, pluginInstallHash } = useSelect(
-		(select) => {
+		( select ) => {
 			return {
-				migrationUrl: select(nfdOnboardingStore).getMigrationUrl(),
-				canMigrateSite: select(nfdOnboardingStore).canMigrateSite(),
-				currentStep: select(nfdOnboardingStore).getCurrentStep(),
-				routes: select(nfdOnboardingStore).getRoutes(),
+				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
+				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
+				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
+				routes: select( nfdOnboardingStore ).getRoutes(),
 				pluginInstallHash:
-					select(nfdOnboardingStore).getPluginInstallHash(),
+					select( nfdOnboardingStore ).getPluginInstallHash(),
 			};
 		}
 	);
@@ -46,32 +49,34 @@ const TheFork = () => {
 		setIsHeaderNavigationEnabled,
 		setFooterActiveView,
 		setHideFooterNav,
-	} = useDispatch(nfdOnboardingStore);
+	} = useDispatch( nfdOnboardingStore );
 
-	useEffect(() => {
-		setHideFooterNav(true);
-		setIsHeaderEnabled(false);
-		setSidebarActiveView(false);
-		setIsHeaderNavigationEnabled(false);
-		setHeaderActiveView(HEADER_SITEGEN);
-		setDrawerActiveView(false);
-		setFooterActiveView(FOOTER_SITEGEN);
-		initializePlugins(pluginInstallHash);
-	});
+	useEffect( () => {
+		setHideFooterNav( true );
+		setIsHeaderEnabled( false );
+		setSidebarActiveView( false );
+		setIsHeaderNavigationEnabled( false );
+		setHeaderActiveView( HEADER_SITEGEN );
+		setDrawerActiveView( false );
+		setFooterActiveView( FOOTER_SITEGEN );
+		initializePlugins( pluginInstallHash );
+	} );
 
-	useEffect(() => {
-		const url = new URL(window.location);
-		const restartParam = url.searchParams.get('restart');
+	useEffect( () => {
+		const url = new URL( window.location );
+		const restartParam = url.searchParams.get( 'restart' );
 
-		if (restartParam) {
+		if ( restartParam ) {
 			// Remove the query parameter from the URL so it doesn't send events on refresh
-			url.searchParams.delete('restart');
+			url.searchParams.delete( 'restart' );
 
 			// Use the history API to update the URL without reloading the page
-			window.history.pushState({}, '', url.toString());
-			console.log('Sent Event', restartParam);
+			window.history.pushState( {}, '', url.toString() );
+			sendOnboardingEvent(
+				new OnboardingEvent( ACTION_ONBOARDING_RESTARTED, restartParam )
+			);
 		}
-	}, []);
+	}, [] );
 
 	const oldFlow = window.nfdOnboarding?.oldFlow
 		? window.nfdOnboarding.oldFlow
@@ -79,13 +84,16 @@ const TheFork = () => {
 
 	const handleForkExit = () => {
 		sendOnboardingEvent(
-			new OnboardingEvent(ACTION_SITEGEN_FORK_OPTION_SELECTED, 'TUTORIAL')
+			new OnboardingEvent(
+				ACTION_SITEGEN_FORK_OPTION_SELECTED,
+				'TUTORIAL'
+			)
 		);
 
-		window.location.replace(pluginDashboardPage);
+		window.location.replace( pluginDashboardPage );
 	};
 
-	const content = getContents(canMigrateSite, migrationUrl);
+	const content = getContents( canMigrateSite, migrationUrl );
 
 	return (
 		<CommonLayout
@@ -93,23 +101,23 @@ const TheFork = () => {
 			className="nfd-onboarding-step--site-gen__fork"
 		>
 			<HeadingWithSubHeading
-				title={content.heading}
-				subtitle={content.subheading}
+				title={ content.heading }
+				subtitle={ content.subheading }
 			/>
 			<StartOptions
-				questionnaire={content.questionnaire}
-				oldFlow={oldFlow}
-				largeOption={content.largerOption}
-				smallOptions={content.smallerOptions}
+				questionnaire={ content.questionnaire }
+				oldFlow={ oldFlow }
+				largeOption={ content.largerOption }
+				smallOptions={ content.smallerOptions }
 			/>
 			<span
 				role="button"
-				tabIndex={0}
+				tabIndex={ 0 }
 				className="nfd-onboarding-step--site-gen__fork__exit"
-				onClick={() => handleForkExit()}
-				onKeyDown={() => handleForkExit()}
+				onClick={ () => handleForkExit() }
+				onKeyDown={ () => handleForkExit() }
 			>
-				{content.exitToWordPress}
+				{ content.exitToWordPress }
 			</span>
 		</CommonLayout>
 	);

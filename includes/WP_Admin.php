@@ -181,6 +181,8 @@ final class WP_Admin {
 		FlowService::initialize_data();
 
 		self::register_assets();
+
+		self::set_onboarding_restart_option();
 	}
 
 	/**
@@ -224,6 +226,25 @@ final class WP_Admin {
 
 		\wp_enqueue_script( 'sitegen-theme-marker' );
 		\wp_enqueue_style( 'sitegen-theme-marker' );
+	}
+
+	/**
+	 * Sets the option in DB for the Initial Load of Onboarding
+	 *
+	 * @return void
+	 */
+	public static function set_onboarding_restart_option() {
+		// Check if the customer is eligible for onboarding restart
+		if ( StatusService::is_onboarding_restart_eligible() ) {
+			// Get the option name for 'can_restart'
+			$option_name = Options::get_option_name( 'can_restart' );
+
+			// Check if the option doesn't exist before adding it
+			if ( ! get_option( $option_name ) ) {
+				// Add the option if it doesn't exist
+				add_option( $option_name, true );
+			}
+		}
 	}
 
 	/**

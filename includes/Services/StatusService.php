@@ -22,12 +22,6 @@ class StatusService {
 		if ( 'started' !== get_option( Options::get_option_name( 'status' ) ) ) {
 			update_option( Options::get_option_name( 'status' ), 'started' );
 			do_action( 'newfold/onboarding/started' );
-			if ( self::is_onboarding_restart_eligible() ) {
-				// Set 'can_restart' to true for an eligible customer on their first attempt
-				// This ensures that even if the user closes the onboarding and visits the themes.php page or the Dashboard,
-				// they will still see the "Build with AI" option available.
-				update_option( Options::get_option_name( 'can_restart' ), true );
-			}
 		}
 	}
 
