@@ -101,11 +101,11 @@ class StatusService {
 			update_option( Options::get_option_name( 'flow' ), $flow_data );
 
 			// Determine eligibility for restarting onboarding
-			$currentRetryCount = $flow_data['onboardingRetries']['retryCount'];
-			$canRestart        = $currentRetryCount < $flow_data['onboardingRetries']['maxRetryCount'];
+			$current_retry_count = $flow_data['onboardingRetries']['retryCount'];
+			$can_restart        = $current_retry_count < $flow_data['onboardingRetries']['maxRetryCount'];
 
 			// Update the eligibility status in wp_option
-			update_option( Options::get_option_name( 'can_restart' ), $canRestart );
+			update_option( Options::get_option_name( 'can_restart' ), $can_restart );
 		}
 	}
 
