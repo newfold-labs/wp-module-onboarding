@@ -1,4 +1,4 @@
-window.addEventListener( 'load', function ( ) {
+window.addEventListener( 'load', function( ) {
 	// Find the Add New Theme button
 	const themeDiv = document.querySelector( '.add-new-theme' );
 
@@ -27,7 +27,7 @@ window.addEventListener( 'load', function ( ) {
 		svg.setAttribute( 'xmlns', 'http://www.w3.org/2000/svg' );
 		svg.setAttribute( 'viewBox', '0 0 384 512' );
 		svg.setAttribute( 'width', '50px' );
-		svg.setAttribute( 'height', '50px' ); 
+		svg.setAttribute( 'height', '50px' );
 
 		// Add the path element inside the SVG
 		const path = document.createElementNS(
