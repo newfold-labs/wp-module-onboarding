@@ -102,7 +102,7 @@ class StatusService {
 
 			// Determine eligibility for restarting onboarding
 			$currentRetryCount = $flow_data['onboardingRetries']['retryCount'];
-			$canRestart        = $currentRetryCount <= $flow_data['onboardingRetries']['maxRetryCount'];
+			$canRestart        = $currentRetryCount < $flow_data['onboardingRetries']['maxRetryCount'];
 
 			// Update the eligibility status in wp_option
 			update_option( Options::get_option_name( 'can_restart' ), $canRestart );
@@ -125,7 +125,7 @@ class StatusService {
 			case 'index.php':
 				// If the page is not nfd-onboarding.
 				//phpcs:ignore
-				if ( ! isset( $_GET['page'] ) || WP_Admin::$slug !== \sanitize_text_field( $_GET['page'] ) ) {
+				if ( isset( $_GET['page'] ) && WP_Admin::$slug !== \sanitize_text_field( $_GET['page'] ) ) {
 					self::handle_completed();
 				}
 				break;
