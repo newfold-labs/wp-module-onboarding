@@ -233,7 +233,7 @@ final class WP_Admin {
 	 *
 	 * @return void
 	 */
-	public static function set_onboarding_restart_option() {
+	public static function set_onboarding_restart_option(): void {
 		// Check if the customer is eligible for onboarding restart
 		if ( StatusService::is_onboarding_restart_eligible() ) {
 			// Get the option name for 'can_restart'
@@ -252,7 +252,7 @@ final class WP_Admin {
 	 *
 	 * @return void
 	 */
-	public static function can_restart_onboarding() {
+	public static function can_restart_onboarding(): void {
 		$can_restart = get_option( Options::get_option_name( 'can_restart' ), false );
 
 		// If the customer in ineligible for restart don't enqueue scripts

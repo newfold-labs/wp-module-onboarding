@@ -6,8 +6,6 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 use NewfoldLabs\WP\Module\Onboarding\Data\Config;
 
-use function NewfoldLabs\WP\ModuleLoader\container;
-
 /**
  * Tracks the Status of Onboarding.
  */
@@ -18,7 +16,7 @@ class StatusService {
 	 *
 	 * @return void
 	 */
-	public static function handle_started() {
+	public static function handle_started(): void {
 		if ( 'started' !== get_option( Options::get_option_name( 'status' ) ) ) {
 			update_option( Options::get_option_name( 'status' ), 'started' );
 			do_action( 'newfold/onboarding/started' );
@@ -30,7 +28,7 @@ class StatusService {
 	 *
 	 * @return void
 	 */
-	public static function handle_completed() {
+	public static function handle_completed(): void {
 		if ( 'started' === get_option( Options::get_option_name( 'status' ) ) ) {
 			update_option( Options::get_option_name( 'status' ), 'completed' );
 			self::update_onboarding_restart_status();
@@ -44,7 +42,7 @@ class StatusService {
 	 *
 	 * @return bool True if the site was created within the last 275 days, false otherwise.
 	 */
-	private static function is_site_created_within_last_9_months() {
+	private static function is_site_created_within_last_9_months(): bool {
 		$install_date_timestamp = get_option( Options::get_option_name( 'bluehost_plugin_install_date', false ) );
 
 		// If the option is not set or is invalid, return false
@@ -63,7 +61,7 @@ class StatusService {
 	 *
 	 * @return bool True if eligible, false otherwise.
 	 */
-	public static function is_onboarding_restart_eligible() {
+	public static function is_onboarding_restart_eligible(): bool {
 		// Check if the brand is eligible for Restarting Onboarding
 		$brand_config = Brands::get_brands()[ NFD_ONBOARDING_PLUGIN_BRAND ]['config'] ?? array();
 		if ( empty( $brand_config['canRestartOnboarding'] ) || ! $brand_config['canRestartOnboarding'] ) {
@@ -83,7 +81,7 @@ class StatusService {
 	 *
 	 * @return void
 	 */
-	public static function update_onboarding_restart_status() {
+	public static function update_onboarding_restart_status(): void {
 
 		// Don't do anything if the customer is not eligible
 		if ( ! self::is_onboarding_restart_eligible() ) {
@@ -93,7 +91,7 @@ class StatusService {
 		// Get flow data
 		$flow_data = get_option( Options::get_option_name( 'flow' ) );
 
-		if ( isset( $flow_data ) ) {
+		if ( isset( $flow_data['onboardingRetries'] ) && ! empty( $flow_data['onboardingRetries'] ) ) {
 			// Increment the total onboarding tries
 			$flow_data['onboardingRetries']['retryCount'] = ( $flow_data['onboardingRetries']['retryCount'] ?? 0 ) + 1;
 
@@ -102,7 +100,7 @@ class StatusService {
 
 			// Determine eligibility for restarting onboarding
 			$current_retry_count = $flow_data['onboardingRetries']['retryCount'];
-			$can_restart        = $current_retry_count < $flow_data['onboardingRetries']['maxRetryCount'];
+			$can_restart         = $current_retry_count < $flow_data['onboardingRetries']['maxRetryCount'];
 
 			// Update the eligibility status in wp_option
 			update_option( Options::get_option_name( 'can_restart' ), $can_restart );
@@ -114,7 +112,7 @@ class StatusService {
 	 *
 	 * @return void
 	 */
-	public static function track() {
+	public static function track(): void {
 		global $pagenow;
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
