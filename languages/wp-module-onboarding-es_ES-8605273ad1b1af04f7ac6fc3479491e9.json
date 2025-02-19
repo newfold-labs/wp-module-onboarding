@@ -1,0 +1,30 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/619.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "es_ES",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Regenerating Site": [
+                "Regenerando sitio"
+            ],
+            "Generating Site": [
+                "Generando sitio"
+            ],
+            "Presto, here are 3 versions": [
+                "Presto, aqu\u00ed hay 3 versiones"
+            ],
+            "We've created 3 unique website designs for you to start with, preview click around or start over.": [
+                "Hemos creado 3 dise\u00f1os de sitios web \u00fanicos para que usted empiece con la vista previa, haga clic alrededor o empiece de nuevo."
+            ],
+            "Favorite a generated version to find and use again in the future.": [
+                "Favorite una versi\u00f3n generada para encontrar y utilizar de nuevo en el futuro."
+            ]
+        }
+    }
+}

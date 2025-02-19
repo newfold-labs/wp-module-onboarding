@@ -1,0 +1,57 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/287.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "it_IT",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Building Website": [
+                "Sito Edificio"
+            ],
+            "Generating Website": [
+                "Generazione Sito Web"
+            ],
+            "Finding Font Pairings": [
+                "Trovare Abbinamenti Carattere"
+            ],
+            "Building Custom Color Palettes": [
+                "Costruire Tavolozze Colori Personalizzate"
+            ],
+            "Populating Images": [
+                "Immagini Popolanti"
+            ],
+            "Finalizing Previews": [
+                "Completamento Delle Anteprime"
+            ],
+            "Packaging Website": [
+                "Imballaggio Sito Web"
+            ],
+            "How familiar are you with using WordPress?": [
+                "Quanto si ha familiarit\u00e0 con l'utilizzo di WordPress?"
+            ],
+            "Beginner": [
+                "Principiante"
+            ],
+            "First time building a website using WordPress": [
+                "Prima volta che si costruisce un sito web utilizzando WordPress"
+            ],
+            "Intermediate": [
+                "Intermedio"
+            ],
+            "I\u2019ve built a few sites for myself or others": [
+                "Ho costruito alcuni siti per me o gli altri"
+            ],
+            "Expert": [
+                "Esperto"
+            ],
+            "I do this frequently": [
+                "Faccio questo frequentemente"
+            ]
+        }
+    }
+}

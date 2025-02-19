@@ -1,0 +1,24 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/270.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "nl_NL",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Hang tight, we\u2019re building your %1$s %2$s": [
+                "Hou strak, we bouwen je %1$s %2$s"
+            ],
+            "We\u2019re assembling your unique design and installing useful tools": [
+                "We monteren jouw unieke ontwerp en installeren van handige gereedschappen"
+            ],
+            "Uh-oh, something went wrong. Please contact support.": [
+                "Oh-oh, er is iets misgegaan. Neem contact op met support."
+            ]
+        }
+    }
+}

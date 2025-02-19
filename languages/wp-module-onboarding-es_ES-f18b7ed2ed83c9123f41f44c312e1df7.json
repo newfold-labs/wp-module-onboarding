@@ -1,0 +1,21 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/366.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "es_ES",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "You have ideas, we have page templates": [
+                "Tienes ideas, tenemos plantillas de p\u00e1gina"
+            ],
+            "Begin closer to the finish line than a blank canvas.": [
+                "Comience m\u00e1s cerca de la l\u00ednea de meta que de un lienzo en blanco."
+            ]
+        }
+    }
+}

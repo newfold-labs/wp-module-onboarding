@@ -1,0 +1,30 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/367.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "fr_FR",
+                "plural-forms": "nplurals=2; plural=(n > 1);"
+            },
+            "Lets tailor your theme for the perfect fit": [
+                "Permet d'adapter votre th\u00e8me \u00e0 la perfection"
+            ],
+            "Start with a style preset or": [
+                "Commencez par un pr\u00e9r\u00e9glage de style ou"
+            ],
+            "build a custom design.": [
+                "construire un design personnalis\u00e9."
+            ],
+            "Customize Colors & Fonts?": [
+                "Personnaliser les couleurs et les polices ?"
+            ],
+            "Check to customize in the next few steps (or leave empty and use the Site Editor later)": [
+                "Cocher pour personnaliser dans les prochaines \u00e9tapes (ou laisser vide et utiliser l'\u00e9diteur de site plus tard)"
+            ]
+        }
+    }
+}

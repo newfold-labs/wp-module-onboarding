@@ -1,0 +1,45 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/328.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "nl_NL",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Skip this Step": [
+                "Deze stap overslaan"
+            ],
+            "Tell us your top priority": [
+                "Vertel ons uw topprioriteit"
+            ],
+            "We'll prioritize getting you there.": [
+                "We geven prioriteit aan je daar."
+            ],
+            "Publishing": [
+                "Publiceren"
+            ],
+            "From blogs, to newsletters, to podcasts and videos, we help the web find your content.": [
+                "Van blogs, tot nieuwsbrieven, podcasts en video's, wij helpen het web om je content te vinden."
+            ],
+            "Selling": [
+                "Verkopen"
+            ],
+            "Startup or seasoned business, drop-shipping or downloads, we've got ecommerce covered.": [
+                "Starttp of doorgewinterde bedrijven, drop-shipping of downloads, wij hebben webwinkel gedekt."
+            ],
+            "Designing": [
+                "Ontwerp"
+            ],
+            "With smart style presets and powerful options, we help your site look and feel polished.": [
+                "Met slimme voorinstellingen en krachtige opties helpen wij uw site er goed uitzien en voelen wij ons gepolijst."
+            ],
+            "Where would you like to start? We'll start there and then move into next steps.": [
+                "Waar wil je beginnen? We beginnen er en gaan dan naar de volgende stappen."
+            ]
+        }
+    }
+}

@@ -1,0 +1,45 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/328.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "fr_FR",
+                "plural-forms": "nplurals=2; plural=(n > 1);"
+            },
+            "Skip this Step": [
+                "Ignorer cette \u00e9tape"
+            ],
+            "Tell us your top priority": [
+                "Dites-nous votre priorit\u00e9 absolue"
+            ],
+            "We'll prioritize getting you there.": [
+                "Nous vous donnerons la priorit\u00e9."
+            ],
+            "Publishing": [
+                "Publication en cours"
+            ],
+            "From blogs, to newsletters, to podcasts and videos, we help the web find your content.": [
+                "Des blogs, aux newsletters, aux podcasts et aux vid\u00e9os, nous aidons le web \u00e0 trouver votre contenu."
+            ],
+            "Selling": [
+                "Vente"
+            ],
+            "Startup or seasoned business, drop-shipping or downloads, we've got ecommerce covered.": [
+                "D\u00e9marrage de votre entreprise, exp\u00e9dition de d\u00e9p\u00f4t ou de t\u00e9l\u00e9chargement, nous avons la couverture du commerce \u00e9lectronique."
+            ],
+            "Designing": [
+                "Conception"
+            ],
+            "With smart style presets and powerful options, we help your site look and feel polished.": [
+                "Gr\u00e2ce \u00e0 des pr\u00e9r\u00e9glages de style intelligents et des options puissantes, nous aidons votre site \u00e0 se sentir poli."
+            ],
+            "Where would you like to start? We'll start there and then move into next steps.": [
+                "O\u00f9 souhaitez-vous commencer ? Nous allons y commencer et ensuite passer aux \u00e9tapes suivantes."
+            ]
+        }
+    }
+}

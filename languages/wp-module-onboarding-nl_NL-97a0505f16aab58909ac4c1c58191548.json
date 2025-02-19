@@ -1,0 +1,33 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/627.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "nl_NL",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Continue Setup": [
+                "Ga verder met Setup"
+            ],
+            "Help us tailor this setup to your %s": [
+                "Help ons deze configuratie aan te passen aan uw %s"
+            ],
+            "ABOUT YOUR %s": [
+                "OVER UW %s"
+            ],
+            "What type of %s is it?": [
+                "Wat voor type %s is het?"
+            ],
+            "Enter to search your %s type": [
+                "Voer in om te zoeken naar uw %s type"
+            ],
+            "or tell us here:": [
+                "of vertel het ons hier:"
+            ]
+        }
+    }
+}

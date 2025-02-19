@@ -1,0 +1,60 @@
+{
+    "translation-revision-date": "YEAR-MO-DA HO:MI+ZONE",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/994.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "es_MX",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Nice work: Your site is ready \ud83c\udf89": [
+                "Buen trabajo: Tu sitio est\u00e1 listo \ud83c\udf89"
+            ],
+            "Move-in day begins! Let us know if you'd like a hand.": [
+                "\u00a1Comienza el d\u00eda de la mudanza! Av\u00edsanos si necesitas ayuda."
+            ],
+            "Complete Setup": [
+                "Completar configuraci\u00f3n"
+            ],
+            "WHATS NEXT": [
+                "QU\u00c9 SIGUE"
+            ],
+            "Add content, organize your menu and launch.": [
+                "Agrega contenido, organiza tu men\u00fa y lanza."
+            ],
+            "\u2705 Theme created, features added and Coming Soon mode activated. Thank you for building your site with %s, we're always here to help!": [
+                "\u2705 Tema creado, caracter\u00edsticas a\u00f1adidas y modo Pr\u00f3ximamente activado. Gracias por construir tu sitio con %s, \u00a1siempre estamos aqu\u00ed para ayudarte!"
+            ],
+            "HELP & RESOURCES": [
+                "AYUDA Y RECURSOS"
+            ],
+            "Next step or next level, we're your partner.": [
+                "Pr\u00f3ximo paso o pr\u00f3ximo nivel, somos tu socio."
+            ],
+            "WordPress make it easy to grow your %s. Send a newsletter, broadcast a podcast, create courses and trainings. Dream it, build it.": [
+                "WordPress facilita el crecimiento de tu %s. Env\u00eda un bolet\u00edn, transmite un podcast, crea cursos y entrenamientos. Imag\u00ednalo, constr\u00fayelo."
+            ],
+            "HIRE OUR EXPERTS": [
+                "CONTRATA A NUESTROS EXPERTOS"
+            ],
+            "Make our great people your people.": [
+                "Haz que nuestra gran gente sea tu gente."
+            ],
+            "Looking for personalized WordPress assistance, or someone to take-over from here? Go beyond support with our professional services.": [
+                "\u00bfBuscas asistencia personalizada en WordPress o alguien que tome el control desde aqu\u00ed? Ve m\u00e1s all\u00e1 del soporte con nuestros servicios profesionales."
+            ],
+            "ALWAYS COUNT ON OUR TEAM": [
+                "SIEMPRE CUENTA CON NUESTRO EQUIPO"
+            ],
+            "24 hours a day \/ 7 days a week": [
+                "Soporte en horario comercial"
+            ],
+            "From beginner to advanced, you have a partner to trust. Our support works when you work. Also count on various help materials on YouTube, blog and Knowledge Base.": [
+                "Desde principiante hasta avanzado, tienes un socio en quien confiar. Nuestro soporte trabaja cuando t\u00fa trabajas. Tambi\u00e9n cuenta con varios materiales de ayuda en YouTube, blog y base de conocimientos."
+            ]
+        }
+    }
+}

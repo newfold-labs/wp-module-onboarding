@@ -1,0 +1,33 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/705.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "es_ES",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Tell me some details about the site you want created?": [
+                "Dime algunos detalles sobre el sitio que quieres crear?"
+            ],
+            "Bean There Caf\u00e9 - A cozy, sustainable coffee shop in Asheville, North Carolina, focused on fair-trade coffee and local pastries. Their site will feature their menu, special events, and a blog on coffee culture.": [
+                "Bean There Caf\u00e9 - Una cafeter\u00eda acogedora y sostenible en Asheville, Carolina del Norte, enfocada en el caf\u00e9 y pasteles locales. Su sitio incluir\u00e1 su men\u00fa, eventos especiales y un blog sobre la cultura del caf\u00e9."
+            ],
+            "Who is this site for? What's the ideal design?": [
+                "\u00bfCu\u00e1l es el dise\u00f1o ideal?"
+            ],
+            "Next": [
+                "Siguiente"
+            ],
+            "Not sure what to say? We can walk you through it.": [
+                "\u00bfNo est\u00e1s seguro de qu\u00e9 decir? Podemos guiarte por ella."
+            ],
+            "click here": [
+                "haz clic aqu\u00ed"
+            ]
+        }
+    }
+}

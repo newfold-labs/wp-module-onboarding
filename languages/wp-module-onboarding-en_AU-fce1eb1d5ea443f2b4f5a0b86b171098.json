@@ -1,0 +1,117 @@
+{
+    "translation-revision-date": "2025-02-13 19:27+0530",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/340.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "en_AU",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Skip this Step": [
+                "Skip this Step"
+            ],
+            "Introduce us to this %s": [
+                "Introduce us to this %s"
+            ],
+            "So we can introduce it to the web": [
+                "So we can introduce it to the web"
+            ],
+            "%s Title": [
+                "%s Title"
+            ],
+            "WordPress %s": [
+                "WordPress %s"
+            ],
+            "Shown to visitors, search engine and social media posts.": [
+                "Shown to visitors, search engine and social media posts."
+            ],
+            "80": [
+                "80"
+            ],
+            "%s Description": [
+                "%s Description"
+            ],
+            "Just another WordPress %s.": [
+                "Just another WordPress %s."
+            ],
+            "Tell people who you are, what you sell and why they should visit your %s.": [
+                "Tell people who you are, what you sell and why they should visit your %s."
+            ],
+            "160": [
+                "160"
+            ],
+            "Error Saving Data, Try Again!": [
+                "Error Saving Data, Try Again!"
+            ],
+            "(%d characters left)": [
+                "(%d characters left)"
+            ],
+            "Preview": [
+                "Preview"
+            ],
+            "Just another WordPress %s": [
+                "Just another WordPress %s"
+            ],
+            "Logo": [
+                "Logo"
+            ],
+            "RESET": [
+                "RESET"
+            ],
+            "UPLOAD": [
+                "UPLOAD"
+            ],
+            "Edit URLs": [
+                "Edit URLs"
+            ],
+            "Proceed Anyways": [
+                "Proceed Anyways"
+            ],
+            "Social Media": [
+                "Social Media"
+            ],
+            "It looks like you're using a URL shortener!": [
+                "It looks like you're using a URL shortener!"
+            ],
+            "That's smart, but we encourage you to enter the standard URL for your social profiles to help search engines know this website is associated with your profile using Yoast's Open Graph support. You can always change the URLs used within your site to trackable in the future.": [
+                "That's smart, but we encourage you to enter the standard URL for your social profiles to help search engines know this website is associated with your profile using Yoast's Open Graph support. You can always change the URLs used within your site to trackable in the future."
+            ],
+            "One of those URLs doesn't look like a social media URL.": [
+                "One of those URLs doesn't look like a social media URL."
+            ],
+            "We recommend using your official social URL to help search engines know this website is associated with your profile using Yoast's Open Graph support. You can always change the URLs used within your site in the future.": [
+                "We recommend using your official social URL to help search engines know this website is associated with your profile using Yoast's Open Graph support. You can always change the URLs used within your site in the future."
+            ],
+            "That's clever! Short URLs are a great way to track clicks. However, To help build your social graph, we need the full URLs to your social profiles. You can go into your menus and change your social icon links after setup.": [
+                "That's clever! Short URLs are a great way to track clicks. However, To help build your social graph, we need the full URLs to your social profiles. You can go into your menus and change your social icon links after setup."
+            ],
+            "To help build your social graph, we need the full URLs to your social profiles. Please check your URLs for typos and try copy & paste with the official URL if you continue to see this error.": [
+                "To help build your social graph, we need the full URLs to your social profiles. Please check your URLs for typos and try copy & paste with the official URL if you continue to see this error."
+            ],
+            "Facebook": [
+                "Facebook"
+            ],
+            "Twitter": [
+                "Twitter"
+            ],
+            "Instagram": [
+                "Instagram"
+            ],
+            "Youtube": [
+                "Youtube"
+            ],
+            "Linkedin": [
+                "Linkedin"
+            ],
+            "Yelp": [
+                "Yelp"
+            ],
+            "Tiktok": [
+                "Tiktok"
+            ]
+        }
+    }
+}

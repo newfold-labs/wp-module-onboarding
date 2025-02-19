@@ -1,0 +1,66 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/325.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "es_ES",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Tell us about your products": [
+                "Cu\u00e9ntanos sobre tus productos"
+            ],
+            "What type of products will you be selling?": [
+                "\u00bfQu\u00e9 tipo de productos vender\u00e1s?"
+            ],
+            "How many products will you be selling?": [
+                "\u00bfCu\u00e1ntos productos vender\u00e1s?"
+            ],
+            "Physical products": [
+                "Productos f\u00edsicos"
+            ],
+            "Digital \/ Downloadable products": [
+                "Productos digitales \/ Descargables"
+            ],
+            "Subscriptions": [
+                "Suscripciones"
+            ],
+            "Book rooms, houses or rent products": [
+                "Reservar salas, casas o productos de alquiler"
+            ],
+            "Membership": [
+                "Membres\u00eda"
+            ],
+            "Customizable products": [
+                "Productos personalizables"
+            ],
+            "Bundles of products": [
+                "Paquetes de productos"
+            ],
+            "Let your users ask a quote for your products": [
+                "Deja que tus usuarios soliciten un presupuesto para tus productos"
+            ],
+            "0": [
+                "0"
+            ],
+            "1 - 10": [
+                "1 - 10"
+            ],
+            "11 - 100": [
+                "11 - 100"
+            ],
+            "101 - 1000": [
+                "101 - 1000"
+            ],
+            "1000 +": [
+                "1000 +"
+            ],
+            "Continue Setup": [
+                "Continuar configuraci\u00f3n"
+            ]
+        }
+    }
+}

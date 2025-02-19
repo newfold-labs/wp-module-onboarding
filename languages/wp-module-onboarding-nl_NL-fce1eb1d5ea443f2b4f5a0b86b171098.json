@@ -1,0 +1,117 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/340.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "nl_NL",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Skip this Step": [
+                "Deze stap overslaan"
+            ],
+            "Introduce us to this %s": [
+                "Stel ons voor aan deze %s"
+            ],
+            "So we can introduce it to the web": [
+                "Dus we kunnen het op het web introduceren"
+            ],
+            "%s Title": [
+                "%s Titel"
+            ],
+            "WordPress %s": [
+                "WordPress %s"
+            ],
+            "Shown to visitors, search engine and social media posts.": [
+                "Wordt weergegeven voor bezoekers, zoekmachine en social media berichten."
+            ],
+            "80": [
+                "80"
+            ],
+            "%s Description": [
+                "%s beschrijving"
+            ],
+            "Just another WordPress %s.": [
+                "Een andere WordPress %s."
+            ],
+            "Tell people who you are, what you sell and why they should visit your %s.": [
+                "Vertel mensen wie je bent, wat je verkoopt en waarom ze je %s moeten bezoeken."
+            ],
+            "160": [
+                "160"
+            ],
+            "Error Saving Data, Try Again!": [
+                "Fout bij opslaan van gegevens, probeer het opnieuw!"
+            ],
+            "(%d characters left)": [
+                "(%d tekens resterend)"
+            ],
+            "Preview": [
+                "Voorvertoning"
+            ],
+            "Just another WordPress %s": [
+                "Nog een WordPress %s"
+            ],
+            "Logo": [
+                "Logo"
+            ],
+            "RESET": [
+                "RESET"
+            ],
+            "UPLOAD": [
+                "UPLOADEN"
+            ],
+            "Edit URLs": [
+                "URL's bewerken"
+            ],
+            "Proceed Anyways": [
+                "Toch doorgaan"
+            ],
+            "Social Media": [
+                "Sociale Media"
+            ],
+            "It looks like you're using a URL shortener!": [
+                "Het lijkt erop dat je een URL korter gebruikt!"
+            ],
+            "That's smart, but we encourage you to enter the standard URL for your social profiles to help search engines know this website is associated with your profile using Yoast's Open Graph support. You can always change the URLs used within your site to trackable in the future.": [
+                "Dat is slim, maar we raden u aan om de standaard URL in te voeren voor uw sociale profielen om zoekmachines te helpen weten dat deze website gekoppeld is aan uw profiel met behulp van Yoast's Open Graph ondersteuning. U kunt altijd de URL's wijzigen die binnen uw site worden gebruikt om in de toekomst te kunnen tracken."
+            ],
+            "One of those URLs doesn't look like a social media URL.": [
+                "Een van deze URL's lijkt niet op een social media URL."
+            ],
+            "We recommend using your official social URL to help search engines know this website is associated with your profile using Yoast's Open Graph support. You can always change the URLs used within your site in the future.": [
+                "We raden u aan uw offici\u00eble sociale URL te gebruiken om zoekmachines te helpen weten dat deze website gekoppeld is aan uw profiel door gebruik te maken van Yoast's Open Graph ondersteuning. U kunt in de toekomst altijd de URL's wijzigen die binnen uw site worden gebruikt."
+            ],
+            "That's clever! Short URLs are a great way to track clicks. However, To help build your social graph, we need the full URLs to your social profiles. You can go into your menus and change your social icon links after setup.": [
+                "Dat is slim! Korte URL's zijn een geweldige manier om klikken te volgen. Om te helpen uw sociale grafiek op te bouwen, hebben we de volledige URL's aan uw sociale profielen nodig. Je kunt naar de menu's gaan en je sociale pictogram links wijzigen na de installatie."
+            ],
+            "To help build your social graph, we need the full URLs to your social profiles. Please check your URLs for typos and try copy & paste with the official URL if you continue to see this error.": [
+                "Om te helpen uw sociale grafiek op te bouwen, hebben we de volledige URL's aan uw sociale profielen nodig. Controleer uw URL's op typos en probeer te kopi\u00ebren en plakken met de offici\u00eble URL als u deze fout blijft zien."
+            ],
+            "Facebook": [
+                "Facebook"
+            ],
+            "Twitter": [
+                "Twitter"
+            ],
+            "Instagram": [
+                "Instagram"
+            ],
+            "Youtube": [
+                "YouTube"
+            ],
+            "Linkedin": [
+                "Linkedin"
+            ],
+            "Yelp": [
+                "Yelp"
+            ],
+            "Tiktok": [
+                "Tiktok"
+            ]
+        }
+    }
+}

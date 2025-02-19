@@ -1,0 +1,45 @@
+{
+    "translation-revision-date": "2025-02-13 19:27+0530",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/396.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "en_AU",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Default": [
+                "Default"
+            ],
+            "Cancel": [
+                "Cancel"
+            ],
+            "Apply": [
+                "Apply"
+            ],
+            "CUSTOM FONTS": [
+                "CUSTOM FONTS"
+            ],
+            "Headings": [
+                "Headings"
+            ],
+            "Body": [
+                "Body"
+            ],
+            "select": [
+                "select"
+            ],
+            "Edit fonts": [
+                "Edit fonts"
+            ],
+            "Fonts": [
+                "Fonts"
+            ],
+            "Select your own fonts": [
+                "Select your own fonts"
+            ]
+        }
+    }
+}

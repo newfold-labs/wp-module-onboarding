@@ -1,0 +1,30 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/978.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "nl_NL",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Coming Soon": [
+                "Binnenkort beschikbaar"
+            ],
+            "Keep your %s private until you click launch": [
+                "Houd uw %s priv\u00e9 totdat u op lancering klikt"
+            ],
+            "We'll show a placeholder page to logged-out visitors while you build your %s.": [
+                "We zullen een tijdelijke pagina tonen om bezoekers uit te loggen tijdens het bouwen van uw %s."
+            ],
+            "Key features to supercharge your site": [
+                "Belangrijkste functies om uw site te vervangen"
+            ],
+            "Our toolbox of Plugins & Services is your toolbox.": [
+                "Onze gereedschapskist van Plugins & Services is je gereedschapskist."
+            ]
+        }
+    }
+}

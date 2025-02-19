@@ -20,6 +20,9 @@
 	"config": {
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true
+		},
+		"platform": {
+			"php": "7.3.0"
 		}
 	},
 	"repositories": [

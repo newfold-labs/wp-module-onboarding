@@ -1,0 +1,45 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/996.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "fr_FR",
+                "plural-forms": "nplurals=2; plural=(n > 1);"
+            },
+            "Skip this Step": [
+                "Ignorer cette \u00e9tape"
+            ],
+            "Next": [
+                "Suivant"
+            ],
+            "Drop your logo here, or ": [
+                "D\u00e9posez votre logo ici, ou "
+            ],
+            "browse": [
+                "Naviguer"
+            ],
+            "supports .jpg, .png, .gif": [
+                "supports .jpg, .png, .gif"
+            ],
+            "Site Logo Preview": [
+                "Aper\u00e7u du logo du site"
+            ],
+            "This is not a valid Image Type": [
+                "Ce n'est pas un type d'image valide"
+            ],
+            "Do you have a logo you would like to use for this site?": [
+                "Avez-vous un logo que vous souhaitez utiliser pour ce site ?"
+            ],
+            "supports .jpg, .png, .svg": [
+                "supporte .jpg, .png, .svg"
+            ],
+            "Skip for now": [
+                "Ignorer pour l'instant"
+            ]
+        }
+    }
+}

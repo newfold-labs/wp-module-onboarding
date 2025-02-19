@@ -1,0 +1,45 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/396.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "nl_NL",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Default": [
+                "Standaard"
+            ],
+            "Cancel": [
+                "annuleren"
+            ],
+            "Apply": [
+                "Toepassen"
+            ],
+            "CUSTOM FONTS": [
+                "AANGEPASTE FONTS"
+            ],
+            "Headings": [
+                "Koppen"
+            ],
+            "Body": [
+                "Lichaam"
+            ],
+            "select": [
+                "selecteren"
+            ],
+            "Edit fonts": [
+                "Lettertypen bewerken"
+            ],
+            "Fonts": [
+                "Lettertypen"
+            ],
+            "Select your own fonts": [
+                "Selecteer je eigen lettertypen"
+            ]
+        }
+    }
+}

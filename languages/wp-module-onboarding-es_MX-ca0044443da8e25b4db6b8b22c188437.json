@@ -1,0 +1,66 @@
+{
+    "translation-revision-date": "YEAR-MO-DA HO:MI+ZONE",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/325.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "es_MX",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Continue Setup": [
+                "Continuar configuraci\u00f3n"
+            ],
+            "Tell us about your products": [
+                "Cu\u00e9ntanos sobre tus productos"
+            ],
+            "What type of products will you be selling?": [
+                "\u00bfQu\u00e9 tipo de productos vender\u00e1s?"
+            ],
+            "How many products will you be selling?": [
+                "\u00bfCu\u00e1ntos productos vender\u00e1s?"
+            ],
+            "Physical products": [
+                "Productos f\u00edsicos"
+            ],
+            "Digital \/ Downloadable products": [
+                "Productos digitales \/ descargables"
+            ],
+            "Subscriptions": [
+                "Suscripciones"
+            ],
+            "Book rooms, houses or rent products": [
+                "Reservar habitaciones, casas o alquilar productos"
+            ],
+            "Membership": [
+                "Membres\u00edas"
+            ],
+            "Customizable products": [
+                "Productos personalizables"
+            ],
+            "Bundles of products": [
+                "Paquetes de productos"
+            ],
+            "Let your users ask a quote for your products": [
+                "Permite que tus usuarios soliciten una cotizaci\u00f3n para tus productos"
+            ],
+            "0": [
+                "0"
+            ],
+            "1 - 10": [
+                "1 - 10"
+            ],
+            "11 - 100": [
+                "11 - 100"
+            ],
+            "101 - 1000": [
+                "101 - 1000"
+            ],
+            "1000 +": [
+                "1000 +"
+            ]
+        }
+    }
+}

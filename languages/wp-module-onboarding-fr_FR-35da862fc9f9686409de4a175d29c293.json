@@ -1,0 +1,54 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/51.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "fr_FR",
+                "plural-forms": "nplurals=2; plural=(n > 1);"
+            },
+            "Make your %s dreams a reality!": [
+                "Faites de vos r\u00eaves %s une r\u00e9alit\u00e9!"
+            ],
+            "with WordPress and %s.": [
+                "avec WordPress et %s."
+            ],
+            "Migrate a WordPress Site": [
+                "Migrer un site WordPress"
+            ],
+            "Start Setup": [
+                "D\u00e9marrer la configuration"
+            ],
+            "YOUR CONTENT": [
+                "VOTRE CONTENU"
+            ],
+            "Publish boldly with WordPress Blocks.": [
+                "Publiez audacieusement avec les blocs WordPress."
+            ],
+            "Build a beautiful %s using a visual builder. Block Patterns accelerate telling your story or tending your store with professional designs.": [
+                "Construisez une magnifique %s en utilisant un constructeur visuel. Les motifs de bloc acc\u00e9l\u00e8rent votre histoire ou entretiennent votre boutique avec des designs professionnels."
+            ],
+            "POWERFUL FEATURES": [
+                "FONCTIONNALIT\u00c9S POWERFUL"
+            ],
+            "Proven, easy-to-use solutions.": [
+                "Des solutions faciles \u00e0 utiliser en Provence."
+            ],
+            "Reach for your %1$s goals using proven WordPress Plugins & %2$s solutions. Send a newsletter, host a podcast, book clients, take payments and more.": [
+                "Atteignez vos objectifs %1$s en utilisant des solutions \u00e9prouv\u00e9es pour WordPress Plugins & %2$s . Envoyez une newsletter, h\u00e9bergez un podcast, livrez des clients, prenez des paiements et plus encore."
+            ],
+            "MODERN DESIGN": [
+                "DESIGN DE MODERNE"
+            ],
+            "Paint trim. Move walls. No sweat.": [
+                "Peindre la garniture. D\u00e9placer les murs. Pas de sueur."
+            ],
+            "Establish your %s's unique design. Use the WordPress Editor to refine over time with professionally-designed patterns, parts, templates, colors and type.": [
+                "\u00c9tablissez le design unique de votre %s. Utilisez l'\u00e9diteur WordPress pour affiner au fil du temps avec des mod\u00e8les, des pi\u00e8ces, des mod\u00e8les, des couleurs et des types con\u00e7us professionnellement."
+            ]
+        }
+    }
+}

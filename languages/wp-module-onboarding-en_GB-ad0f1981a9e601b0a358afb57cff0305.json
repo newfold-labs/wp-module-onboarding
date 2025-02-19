@@ -1,0 +1,534 @@
+{
+    "translation-revision-date": "2025-02-13 19:26+0530",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/onboarding.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "en_GB",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Start Setup": [
+                "Start Setup"
+            ],
+            "Uh-oh, something went wrong. Please contact support.": [
+                "Uh-oh, something went wrong. Please contact support."
+            ],
+            "Continue Setup": [
+                "Continue Setup"
+            ],
+            "Tell us your top priority": [
+                "Tell us your top priority"
+            ],
+            "Introduce us to this %s": [
+                "Introduce us to this %s"
+            ],
+            "You have ideas, we have page templates": [
+                "You have ideas, we have page templates"
+            ],
+            "Fonts": [
+                "Fonts"
+            ],
+            "There\u2019s no place like a great home page": [
+                "There\u2019s no place like a great home page"
+            ],
+            "Regenerating Site": [
+                "Regenerating Site"
+            ],
+            "Generating Site": [
+                "Generating Site"
+            ],
+            "Next": [
+                "Next"
+            ],
+            "Customize": [
+                "Customize"
+            ],
+            "Key features to supercharge your site": [
+                "Key features to supercharge your site"
+            ],
+            "Street Address": [
+                "Street Address"
+            ],
+            "Whether this is where the magic happens or the mail goes, tell us where your business is located.": [
+                "Whether this is where the magic happens or the mail goes, tell us where your business is located."
+            ],
+            "Whether it\u2019s a storefront or a PO Box, we\u2019re proud to help you connect your real-world and online businesses": [
+                "Whether it\u2019s a storefront or a PO Box, we\u2019re proud to help you connect your real-world and online businesses"
+            ],
+            "We use this address to setup WooCommerce, your payment provider, Contact Page and more so you can start stocking the shelves of your %1$s Online %2$s.": [
+                "We use this address to setup WooCommerce, your payment provider, Contact Page and more so you can start stocking the shelves of your %1$s Online %2$s."
+            ],
+            "Hire Our Full-Service Creative Studio": [
+                "Hire Our Full-Service Creative Studio"
+            ],
+            "Technical Support": [
+                "Technical Support"
+            ],
+            "Product Info": [
+                "Product Info"
+            ],
+            "Products Info": [
+                "Products Info"
+            ],
+            "We can offer free, exclusive solutions and apply our expert experience if we know how you sell.": [
+                "We can offer free, exclusive solutions and apply our expert experience if we know how you sell."
+            ],
+            "Go from multiple sizes to multiple locations to multiple online channels": [
+                "Go from multiple sizes to multiple locations to multiple online channels"
+            ],
+            "Tell us a little about how and what you\u2019re planning to sell and we\u2019ll bring the power of WooCommerce and unique %1$s %2$s solutions to elevate your business and enhance your capabilities.": [
+                "Tell us a little about how and what you\u2019re planning to sell and we\u2019ll bring the power of WooCommerce and unique %1$s %2$s solutions to elevate your business and enhance your capabilities."
+            ],
+            "Commerce": [
+                "Commerce"
+            ],
+            "Basic Info": [
+                "Basic Info"
+            ],
+            "Setup how your %s will present in visitors' browsers and search results.": [
+                "Setup how your %s will present in visitors' browsers and search results."
+            ],
+            "Present in tip-top shape to web browsers and search engine results": [
+                "Present in tip-top shape to web browsers and search engine results"
+            ],
+            "Loading your site details, logo and social graph helps not just launch your site but have it found looking great in feeds.": [
+                "Loading your site details, logo and social graph helps not just launch your site but have it found looking great in feeds."
+            ],
+            "WordPress Experience": [
+                "WordPress Experience"
+            ],
+            "We want to offer the best default settings and guidance for someone with your WordPress experience.": [
+                "We want to offer the best default settings and guidance for someone with your WordPress experience."
+            ],
+            "Why we ask": [
+                "Why we ask"
+            ],
+            "We want to help everyone get the most out of their WordPress %s and this setup, so we use this to help optimize for a great experience and periodically when we offer tips, reminders and recommendations.": [
+                "We want to help everyone get the most out of their WordPress %s and this setup, so we use this to help optimize for a great experience and periodically when we offer tips, reminders and recommendations."
+            ],
+            "Primary %s Setup": [
+                "Primary %s Setup"
+            ],
+            "%s Type": [
+                "%s Type"
+            ],
+            "We'll use this to provide our best-matching designs and features for %s like yours.": [
+                "We'll use this to provide our best-matching designs and features for %s like yours."
+            ],
+            "We chose the templates, features and best configuration we can for sites. You\u2019re always in full control of your WordPress %s and we ask so we can be a good website partner.": [
+                "We chose the templates, features and best configuration we can for sites. You\u2019re always in full control of your WordPress %s and we ask so we can be a good website partner."
+            ],
+            "Secondary %s Setup": [
+                "Secondary %s Setup"
+            ],
+            "Top Priority": [
+                "Top Priority"
+            ],
+            "Demographic": [
+                "Demographic"
+            ],
+            "Colors": [
+                "Colors"
+            ],
+            "Whether your brand is vibrant, understated, elegant or edgy use color to delight your %s visitors.": [
+                "Whether your brand is vibrant, understated, elegant or edgy use color to delight your %s visitors."
+            ],
+            "Let a splash of color make a splash with your visitors with your Global Site Colors.": [
+                "Let a splash of color make a splash with your visitors with your Global Site Colors."
+            ],
+            "We had our designers mix up some palettes for striking websites for you to chose additional presets, or you can chose your own colors using the color pickers.": [
+                "We had our designers mix up some palettes for striking websites for you to chose additional presets, or you can chose your own colors using the color pickers."
+            ],
+            "What's your color palette?": [
+                "What's your color palette?"
+            ],
+            "Theme Styles": [
+                "Theme Styles"
+            ],
+            "Professionally-designed website templates ready for their public debut featuring your great ideas.": [
+                "Professionally-designed website templates ready for their public debut featuring your great ideas."
+            ],
+            "Show the web you have style with modern colors and elevated fonts": [
+                "Show the web you have style with modern colors and elevated fonts"
+            ],
+            "Pick one of these professionally-designed website styles to start your %1$s %2$s.": [
+                "Pick one of these professionally-designed website styles to start your %1$s %2$s."
+            ],
+            "In the next steps and in the future, you can change the specific colors and fonts to fit your aesthetic vision for your %s.": [
+                "In the next steps and in the future, you can change the specific colors and fonts to fit your aesthetic vision for your %s."
+            ],
+            "Give tone and taste to your words using a curated set of great type treatments.": [
+                "Give tone and taste to your words using a curated set of great type treatments."
+            ],
+            "Not just what we say, how we say it": [
+                "Not just what we say, how we say it"
+            ],
+            "Fonts help our ideas look creative and compelling, astute and articulate, refined and regal, modern and much more. Great font combinations help set the perfect tone for your %s and your story jump off the screen.": [
+                "Fonts help our ideas look creative and compelling, astute and articulate, refined and regal, modern and much more. Great font combinations help set the perfect tone for your %s and your story jump off the screen."
+            ],
+            "What's your font style?": [
+                "What's your font style?"
+            ],
+            "Design": [
+                "Design"
+            ],
+            "Features": [
+                "Features"
+            ],
+            "Easy-to-use features from our partner's WordPress Plugins and unique %1$s solutions to put your %2$s to work.": [
+                "Easy-to-use features from our partner's WordPress Plugins and unique %1$s solutions to put your %2$s to work."
+            ],
+            "We\u2019ve assembled the best building blocks for a successful %s": [
+                "We\u2019ve assembled the best building blocks for a successful %s"
+            ],
+            "Put your %1$s %2$s to work for you using features that unlock the potential of WordPress with powerful solutions from %3$s and our partners.": [
+                "Put your %1$s %2$s to work for you using features that unlock the potential of WordPress with powerful solutions from %3$s and our partners."
+            ],
+            "Header & Menu": [
+                "Header & Menu"
+            ],
+            "Surface key content in your %s -- who you are, what your about and where to find things.": [
+                "Surface key content in your %s -- who you are, what your about and where to find things."
+            ],
+            "Putting your best foot forward": [
+                "Putting your best foot forward"
+            ],
+            "Just like a %1$s putting a map of departments at the front door, a great %2$s Header & Menu help point visitors at the places you most want them to visit.": [
+                "Just like a %1$s putting a map of departments at the front door, a great %2$s Header & Menu help point visitors at the places you most want them to visit."
+            ],
+            "When picking a %s header, consider the number of menu items, character length of each item and how those will visually impact the Header Pattern design you choose.": [
+                "When picking a %s header, consider the number of menu items, character length of each item and how those will visually impact the Header Pattern design you choose."
+            ],
+            "Let's make the right things visible": [
+                "Let's make the right things visible"
+            ],
+            "Homepage Layouts": [
+                "Homepage Layouts"
+            ],
+            "Home Page": [
+                "Home Page"
+            ],
+            "The home page is where you tell visitors your story. It helps users find what they came for.": [
+                "The home page is where you tell visitors your story. It helps users find what they came for."
+            ],
+            "Welcome to your new home online": [
+                "Welcome to your new home online"
+            ],
+            "Like good curb appeal, a great home page design helps get users excited about your %s. Mixing media, headings, text and more, you can bring your ideas to live and your products & services to the forefront for visitors.": [
+                "Like good curb appeal, a great home page design helps get users excited about your %s. Mixing media, headings, text and more, you can bring your ideas to live and your products & services to the forefront for visitors."
+            ],
+            "Look for a Home Page Pattern design you think will help organize and elevate your ideas.": [
+                "Look for a Home Page Pattern design you think will help organize and elevate your ideas."
+            ],
+            "Page Layouts": [
+                "Page Layouts"
+            ],
+            "Pages": [
+                "Pages"
+            ],
+            "Use professionally-designed templates for common site pages to assemble a beautiful, high-quality %s.": [
+                "Use professionally-designed templates for common site pages to assemble a beautiful, high-quality %s."
+            ],
+            "Rapidly deliver ideas with templates primed for your content": [
+                "Rapidly deliver ideas with templates primed for your content"
+            ],
+            "We\u2019ve baked everything we know about making great designs and content for common %1$s needs into ease-to-use templates. Pick templates and we\u2019ll add them as Page drafts to your WordPress %2$s.": [
+                "We\u2019ve baked everything we know about making great designs and content for common %1$s needs into ease-to-use templates. Pick templates and we\u2019ll add them as Page drafts to your WordPress %2$s."
+            ],
+            "Layout & Content": [
+                "Layout & Content"
+            ],
+            "Exit to WordPress": [
+                "Exit to WordPress"
+            ],
+            "Exit without finishing?": [
+                "Exit without finishing?"
+            ],
+            "Continue": [
+                "Continue"
+            ],
+            "Exit": [
+                "Exit"
+            ],
+            "You can restart onboarding from your %s Settings page.": [
+                "You can restart onboarding from your %s Settings page."
+            ],
+            "Loading\u2026": [
+                "Loading\u2026"
+            ],
+            "Preview Version": [
+                "Preview Version"
+            ],
+            "Regenerate Content": [
+                "Regenerate Content"
+            ],
+            "Regenerate": [
+                "Regenerate"
+            ],
+            "A great foundation to build from": [
+                "A great foundation to build from"
+            ],
+            "with WordPress and %s": [
+                "with WordPress and %s"
+            ],
+            "Would you like to enter your WordPress Dashboard or continue setting up your %s?": [
+                "Would you like to enter your WordPress Dashboard or continue setting up your %s?"
+            ],
+            "You've made great progress! Would you like to keep going with the setup or take it from here?": [
+                "You've made great progress! Would you like to keep going with the setup or take it from here?"
+            ],
+            "You can continue from your %s home page in the Next steps list.": [
+                "You can continue from your %s home page in the Next steps list."
+            ],
+            "Taking you to WordPress in\u2026": [
+                "Taking you to WordPress in\u2026"
+            ],
+            "Enter WordPress": [
+                "Enter WordPress"
+            ],
+            "Need Help?": [
+                "Need Help?"
+            ],
+            "Hire our Experts": [
+                "Hire our Experts"
+            ],
+            "Preparing your %s design studio": [
+                "Preparing your %s design studio"
+            ],
+            "Hang tight while we show you some of the best WordPress has to offer!": [
+                "Hang tight while we show you some of the best WordPress has to offer!"
+            ],
+            "It looks like you may have an existing website": [
+                "It looks like you may have an existing website"
+            ],
+            "Going through this setup will change your active theme, WordPress settings, add content \u2013 would you like to continue?": [
+                "Going through this setup will change your active theme, WordPress settings, add content \u2013 would you like to continue?"
+            ],
+            "Making the keys to your %1$s Online %2$s": [
+                "Making the keys to your %1$s Online %2$s"
+            ],
+            "We\u2019re installing WooCommerce for you to fill with your amazing products & services!": [
+                "We\u2019re installing WooCommerce for you to fill with your amazing products & services!"
+            ],
+            "Color Palettes": [
+                "Color Palettes"
+            ],
+            "SELECT CUSTOM COLORS": [
+                "SELECT CUSTOM COLORS"
+            ],
+            "Background": [
+                "Background"
+            ],
+            "Primary": [
+                "Primary"
+            ],
+            "Secondary": [
+                "Secondary"
+            ],
+            "Tertiary": [
+                "Tertiary"
+            ],
+            "Reset": [
+                "Reset"
+            ],
+            "Pick a Homepage Design": [
+                "Pick a Homepage Design"
+            ],
+            "Panel will show a few Homepage Patterns.": [
+                "Panel will show a few Homepage Patterns."
+            ],
+            "Pick a Theme Style": [
+                "Pick a Theme Style"
+            ],
+            "No Style Selected": [
+                "No Style Selected"
+            ],
+            "Panel will show Theme details": [
+                "Panel will show Theme details"
+            ],
+            "With Style Selected": [
+                "With Style Selected"
+            ],
+            "Panel will show single-column of other Styles.": [
+                "Panel will show single-column of other Styles."
+            ],
+            "Pick a Theme": [
+                "Pick a Theme"
+            ],
+            "No Theme Selected": [
+                "No Theme Selected"
+            ],
+            "Panel will show contextual help": [
+                "Panel will show contextual help"
+            ],
+            "With Theme Selected": [
+                "With Theme Selected"
+            ],
+            "Panel will show single-column of other Themes.": [
+                "Panel will show single-column of other Themes."
+            ],
+            "Font Palettes": [
+                "Font Palettes"
+            ],
+            "Aa": [
+                "Aa"
+            ],
+            "Onboarding Menu": [
+                "Onboarding Menu"
+            ],
+            "Resume Onboarding": [
+                "Resume Onboarding"
+            ],
+            "WordPress Onboarding": [
+                "WordPress Onboarding"
+            ],
+            "Toggle Navigation": [
+                "Toggle Navigation"
+            ],
+            "Drawer": [
+                "Drawer"
+            ],
+            "Header": [
+                "Header"
+            ],
+            "Content": [
+                "Content"
+            ],
+            "Block Library": [
+                "Block Library"
+            ],
+            "Settings": [
+                "Settings"
+            ],
+            "Publish": [
+                "Publish"
+            ],
+            "Footer": [
+                "Footer"
+            ],
+            "Sorry, we're having trouble communicating with our AI service.": [
+                "Sorry, we're having trouble communicating with our AI service."
+            ],
+            "Do you keep getting this error?": [
+                "Do you keep getting this error?"
+            ],
+            "If you continue to get this error, you may either continue creating your site without using our AI assistant, or you can ": [
+                "If you continue to get this error, you may either continue creating your site without using our AI assistant, or you can "
+            ],
+            "Try again": [
+                "Try again"
+            ],
+            "Continue without AI": [
+                "Continue without AI"
+            ],
+            "exit to WordPress": [
+                "exit to WordPress"
+            ],
+            "Sorry, we're having trouble starting the site transfer process.": [
+                "Sorry, we're having trouble starting the site transfer process."
+            ],
+            "If you continue to get this error, please contact our support team at 1-888-401-4678.": [
+                "If you continue to get this error, please contact our support team at 1-888-401-4678."
+            ],
+            "Go back": [
+                "Go back"
+            ],
+            "What Next": [
+                "What Next"
+            ],
+            "What\u2019s Next": [
+                "What\u2019s Next"
+            ],
+            "The beginning of your %1$s journey is complete. We\u2019re here to support your next steps and %2$s goals!": [
+                "The beginning of your %1$s journey is complete. We\u2019re here to support your next steps and %2$s goals!"
+            ],
+            "Add, adjust and launch!": [
+                "Add, adjust and launch!"
+            ],
+            "Now that you\u2019ve setup the basics, use WordPress to edit your pages, %1$s design and explore the unlimited destinations you can chart for your %2$s %3$s.": [
+                "Now that you\u2019ve setup the basics, use WordPress to edit your pages, %1$s design and explore the unlimited destinations you can chart for your %2$s %3$s."
+            ],
+            "Our support team, %s experts and professional designers are always just a chat or call away if you ever need directions.": [
+                "Our support team, %s experts and professional designers are always just a chat or call away if you ever need directions."
+            ],
+            "How else can we help?": [
+                "How else can we help?"
+            ],
+            "Error 404": [
+                "Error 404"
+            ],
+            "Please Check Again!": [
+                "Please Check Again!"
+            ],
+            "Get Started": [
+                "Get Started"
+            ],
+            "Store Info": [
+                "Store Info"
+            ],
+            "Sitegen Design": [
+                "Sitegen Design"
+            ],
+            "Sitegen Features": [
+                "Sitegen Features"
+            ],
+            "Site Details": [
+                "Site Details"
+            ],
+            "Sitegen Core": [
+                "Sitegen Core"
+            ],
+            "Welcome": [
+                "Welcome"
+            ],
+            "Lay the foundation for a successful %1$s %2$s using our WordPress Onboarding. ": [
+                "Lay the foundation for a successful %1$s %2$s using our WordPress Onboarding. "
+            ],
+            "WordPress is free %s software": [
+                "WordPress is free %s software"
+            ],
+            "When you set up this new WordPress %1$s, you\u2019re joining millions of website owners who publish their %2$s using the free, community-built software project we\u2019re proud to support.": [
+                "When you set up this new WordPress %1$s, you\u2019re joining millions of website owners who publish their %2$s using the free, community-built software project we\u2019re proud to support."
+            ],
+            "%1$s is your %2$s partner": [
+                "%1$s is your %2$s partner"
+            ],
+            "A WordPress %1$s hosted by %2$s has tons of unique and proven solutions to help you get farther, faster with your WordPress. We put our expertise, partnerships and solutions to work on your %3$s.": [
+                "A WordPress %1$s hosted by %2$s has tons of unique and proven solutions to help you get farther, faster with your WordPress. We put our expertise, partnerships and solutions to work on your %3$s."
+            ],
+            "1-1 Expert Solutions & Coaching": [
+                "1-1 Expert Solutions & Coaching"
+            ],
+            "Hire Our Full-Service Creative Team": [
+                "Hire Our Full-Service Creative Team"
+            ],
+            "Rename": [
+                "Rename"
+            ],
+            "View All": [
+                "View All"
+            ],
+            "Save & Continue": [
+                "Save & Continue"
+            ],
+            "Migration": [
+                "Migration"
+            ],
+            "The Fork": [
+                "The Fork"
+            ],
+            "noun\u0004site": [
+                "site"
+            ],
+            "noun\u0004website": [
+                "website"
+            ],
+            "noun\u0004store": [
+                "store"
+            ]
+        }
+    }
+}

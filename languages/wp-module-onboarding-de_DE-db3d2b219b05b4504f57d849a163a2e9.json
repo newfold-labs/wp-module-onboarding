@@ -1,0 +1,45 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/328.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "de_DE",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Skip this Step": [
+                "Diesen Schritt \u00fcberspringen"
+            ],
+            "Tell us your top priority": [
+                "Sagen Sie uns Ihre oberste Priorit\u00e4t"
+            ],
+            "We'll prioritize getting you there.": [
+                "Wir werden dir Priorit\u00e4t geben, dich dorthin zu bringen."
+            ],
+            "Publishing": [
+                "Ver\u00f6ffentlichen"
+            ],
+            "From blogs, to newsletters, to podcasts and videos, we help the web find your content.": [
+                "Von Blogs, Newslettern, Podcasts und Videos helfen wir Ihnen beim Finden Ihrer Inhalte."
+            ],
+            "Selling": [
+                "Verkauf"
+            ],
+            "Startup or seasoned business, drop-shipping or downloads, we've got ecommerce covered.": [
+                "Startup oder erfahrenes Gesch\u00e4ft, Drop-Versand oder Downloads, wir haben E-Commerce abgedeckt."
+            ],
+            "Designing": [
+                "Entwerfen"
+            ],
+            "With smart style presets and powerful options, we help your site look and feel polished.": [
+                "Mit intelligenten Voreinstellungen und leistungsstarken Optionen helfen wir Ihnen, Ihre Website aussehen und f\u00fchlen sich poliert."
+            ],
+            "Where would you like to start? We'll start there and then move into next steps.": [
+                "Wo m\u00f6chtest du beginnen? Wir werden dort starten und in die n\u00e4chsten Schritte wechseln."
+            ]
+        }
+    }
+}

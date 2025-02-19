@@ -1,0 +1,45 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/996.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "nl_NL",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Skip this Step": [
+                "Deze stap overslaan"
+            ],
+            "Next": [
+                "Volgende"
+            ],
+            "Drop your logo here, or ": [
+                "Zet je logo hier neer of "
+            ],
+            "browse": [
+                "blader"
+            ],
+            "supports .jpg, .png, .gif": [
+                "supports .jpg, .png, .gif"
+            ],
+            "Site Logo Preview": [
+                "Website Logo Voorbeeld"
+            ],
+            "This is not a valid Image Type": [
+                "Dit is geen geldig afbeeldingstype"
+            ],
+            "Do you have a logo you would like to use for this site?": [
+                "Heeft u een logo dat u wilt gebruiken voor deze site?"
+            ],
+            "supports .jpg, .png, .svg": [
+                "ondersteunt .jpg, .png, .svg"
+            ],
+            "Skip for now": [
+                "Sla over voor nu"
+            ]
+        }
+    }
+}

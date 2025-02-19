@@ -1,0 +1,66 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/325.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "de_DE",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Tell us about your products": [
+                "Erz\u00e4hlen Sie uns \u00fcber Ihre Produkte"
+            ],
+            "What type of products will you be selling?": [
+                "Welche Art von Produkten werden Sie verkaufen?"
+            ],
+            "How many products will you be selling?": [
+                "Wie viele Produkte werden Sie verkaufen?"
+            ],
+            "Physical products": [
+                "K\u00f6rperliche Produkte"
+            ],
+            "Digital \/ Downloadable products": [
+                "Digitale \/ herunterladbare Produkte"
+            ],
+            "Subscriptions": [
+                "Abonnements"
+            ],
+            "Book rooms, houses or rent products": [
+                "Zimmer, H\u00e4user oder Mietprodukte buchen"
+            ],
+            "Membership": [
+                "Mitgliedschaft"
+            ],
+            "Customizable products": [
+                "Anpassbare Produkte"
+            ],
+            "Bundles of products": [
+                "Produktpakete"
+            ],
+            "Let your users ask a quote for your products": [
+                "Lassen Sie Ihre Benutzer einen Kostenvoranschlag f\u00fcr Ihre Produkte anfordern"
+            ],
+            "0": [
+                "0"
+            ],
+            "1 - 10": [
+                "1 - 10"
+            ],
+            "11 - 100": [
+                "11 - 100"
+            ],
+            "101 - 1000": [
+                "101 - 1000"
+            ],
+            "1000 +": [
+                "1000 +"
+            ],
+            "Continue Setup": [
+                "Setup fortsetzen"
+            ]
+        }
+    }
+}

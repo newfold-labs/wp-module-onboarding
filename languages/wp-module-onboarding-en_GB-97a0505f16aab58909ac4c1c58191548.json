@@ -1,0 +1,33 @@
+{
+    "translation-revision-date": "2025-02-13 19:26+0530",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/627.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "en_GB",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Continue Setup": [
+                "Continue Setup"
+            ],
+            "Help us tailor this setup to your %s": [
+                "Help us tailor this setup to your %s"
+            ],
+            "ABOUT YOUR %s": [
+                "ABOUT YOUR %s"
+            ],
+            "What type of %s is it?": [
+                "What type of %s is it?"
+            ],
+            "Enter to search your %s type": [
+                "Enter to search your %s type"
+            ],
+            "or tell us here:": [
+                "or tell us here:"
+            ]
+        }
+    }
+}

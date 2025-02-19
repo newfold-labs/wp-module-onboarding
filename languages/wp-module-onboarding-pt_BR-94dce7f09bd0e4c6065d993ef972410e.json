@@ -1,0 +1,30 @@
+{
+    "translation-revision-date": "2023-09-22 10:49-0300",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/978.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "pt_BR",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Key features to supercharge your site": [
+                "Principais recursos para turbinar seu site"
+            ],
+            "Our toolbox of Plugins & Services is your toolbox.": [
+                "Sua caixa de ferramentas dispon\u00edvel na nossa \u00e1rea de Plugins & Servi\u00e7os."
+            ],
+            "Coming Soon": [
+                "Em breve"
+            ],
+            "Keep your %s private until you click launch": [
+                "Mantenha seu %s privado at\u00e9 clicar em iniciar"
+            ],
+            "We'll show a placeholder page to logged-out visitors while you build your %s.": [
+                "Mostraremos uma p\u00e1gina de espa\u00e7o reservado para visitantes desconectados enquanto voc\u00ea cria seu %s."
+            ]
+        }
+    }
+}

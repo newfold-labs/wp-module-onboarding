@@ -1,0 +1,54 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/51.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "de_DE",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Make your %s dreams a reality!": [
+                "Lass deine %s Tr\u00e4ume wahr werden!"
+            ],
+            "with WordPress and %s.": [
+                "mit WordPress und %s."
+            ],
+            "Migrate a WordPress Site": [
+                "Eine WordPress-Seite migrieren"
+            ],
+            "Start Setup": [
+                "Setup starten"
+            ],
+            "YOUR CONTENT": [
+                "DEINE INHALTE"
+            ],
+            "Publish boldly with WordPress Blocks.": [
+                "Ver\u00f6ffentlichen Sie mutig mit WordPress-Blocks."
+            ],
+            "Build a beautiful %s using a visual builder. Block Patterns accelerate telling your story or tending your store with professional designs.": [
+                "Baue eine sch\u00f6ne %s mit einem visuellen Builder. Blockiere Muster beschleunigen deine Geschichte oder pflegen deinen Shop mit professionellen Designs."
+            ],
+            "POWERFUL FEATURES": [
+                "POWERFUL FEATUREN"
+            ],
+            "Proven, easy-to-use solutions.": [
+                "Provende, einfach zu bedienende L\u00f6sungen."
+            ],
+            "Reach for your %1$s goals using proven WordPress Plugins & %2$s solutions. Send a newsletter, host a podcast, book clients, take payments and more.": [
+                "Erreichen Sie Ihre %1$s Ziele mit bew\u00e4hrten WordPress-Plugins & %2$s -L\u00f6sungen. Senden Sie einen Newsletter, Hosten Sie einen Podcast, buchen Sie Kunden, nehmen Sie Zahlungen und vieles mehr."
+            ],
+            "MODERN DESIGN": [
+                "MODERN DESIGN"
+            ],
+            "Paint trim. Move walls. No sweat.": [
+                "Farbe schneiden. Bewege W\u00e4nde. Kein Schwei\u00df."
+            ],
+            "Establish your %s's unique design. Use the WordPress Editor to refine over time with professionally-designed patterns, parts, templates, colors and type.": [
+                "Legen Sie das einzigartige Design Ihres %sauf. Verwenden Sie den WordPress-Editor, um mit professionell gestalteten Mustern, Teilen, Vorlagen, Farben und Typen zu verfeinern."
+            ]
+        }
+    }
+}

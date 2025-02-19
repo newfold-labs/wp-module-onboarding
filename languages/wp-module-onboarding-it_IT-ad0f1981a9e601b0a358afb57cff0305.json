@@ -1,0 +1,534 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/onboarding.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "it_IT",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Start Setup": [
+                "Avvia Configurazione"
+            ],
+            "Uh-oh, something went wrong. Please contact support.": [
+                "Uh-oh, qualcosa \u00e8 andato storto. Contatta il supporto."
+            ],
+            "Continue Setup": [
+                "Continua La Configurazione"
+            ],
+            "Tell us your top priority": [
+                "Dicci la tua priorit\u00e0 assoluta"
+            ],
+            "Introduce us to this %s": [
+                "Introduci a questo %s"
+            ],
+            "You have ideas, we have page templates": [
+                "Hai idee, abbiamo modelli di pagina"
+            ],
+            "Fonts": [
+                "Caratteri"
+            ],
+            "There\u2019s no place like a great home page": [
+                "Non c'\u00e8 posto come una grande home page"
+            ],
+            "Regenerating Site": [
+                "Rigenerazione Del Sito"
+            ],
+            "Generating Site": [
+                "Generazione Sito"
+            ],
+            "Next": [
+                "Successivo"
+            ],
+            "Customize": [
+                "Personalizza"
+            ],
+            "Key features to supercharge your site": [
+                "Caratteristiche principali per ricaricare il tuo sito"
+            ],
+            "Street Address": [
+                "Indirizzo Via"
+            ],
+            "Whether this is where the magic happens or the mail goes, tell us where your business is located.": [
+                "Se questo \u00e8 dove avviene la magia o la posta va, dirci dove si trova la vostra azienda."
+            ],
+            "Whether it\u2019s a storefront or a PO Box, we\u2019re proud to help you connect your real-world and online businesses": [
+                "Che si tratti di un negozio o di un PO Box, siamo orgogliosi di aiutarti a collegare i tuoi business online e del mondo reale"
+            ],
+            "We use this address to setup WooCommerce, your payment provider, Contact Page and more so you can start stocking the shelves of your %1$s Online %2$s.": [
+                "Utilizziamo questo indirizzo per configurare WooCommerce, il tuo provider di pagamento, Pagina dei contatti e altro ancora, cos\u00ec potrai iniziare a rifornire gli scaffali del tuo %1$s Online %2$s."
+            ],
+            "Hire Our Full-Service Creative Studio": [
+                "Assumere Il Nostro Full-Service Creative Studio"
+            ],
+            "Technical Support": [
+                "Supporto Tecnico"
+            ],
+            "Product Info": [
+                "Informazioni Sul Prodotto"
+            ],
+            "Products Info": [
+                "Info Prodotti"
+            ],
+            "We can offer free, exclusive solutions and apply our expert experience if we know how you sell.": [
+                "Possiamo offrire soluzioni gratuite, esclusive e applicare la nostra esperienza esperta se sappiamo come vendi."
+            ],
+            "Go from multiple sizes to multiple locations to multiple online channels": [
+                "Passa da pi\u00f9 dimensioni a pi\u00f9 posizioni a pi\u00f9 canali online"
+            ],
+            "Tell us a little about how and what you\u2019re planning to sell and we\u2019ll bring the power of WooCommerce and unique %1$s %2$s solutions to elevate your business and enhance your capabilities.": [
+                "Raccontaci un po' di come e cosa hai intenzione di vendere e porteremo la potenza di WooCommerce e soluzioni %1$s %2$s uniche per aumentare la tua attivit\u00e0 e migliorare le tue capacit\u00e0."
+            ],
+            "Commerce": [
+                "Commercio"
+            ],
+            "Basic Info": [
+                "Informazioni Di Base"
+            ],
+            "Setup how your %s will present in visitors' browsers and search results.": [
+                "Imposta come il tuo %s presenter\u00e0 nei browser e nei risultati di ricerca dei visitatori."
+            ],
+            "Present in tip-top shape to web browsers and search engine results": [
+                "Presente in forma tip-top per browser web e risultati del motore di ricerca"
+            ],
+            "Loading your site details, logo and social graph helps not just launch your site but have it found looking great in feeds.": [
+                "Caricamento dei dettagli del sito, logo e grafico sociale aiuta non solo il lancio del tuo sito, ma hanno trovato che sembra grande nei feed."
+            ],
+            "WordPress Experience": [
+                "Esperienza WordPress"
+            ],
+            "We want to offer the best default settings and guidance for someone with your WordPress experience.": [
+                "Vogliamo offrire le migliori impostazioni di default e la guida per qualcuno con la vostra esperienza WordPress."
+            ],
+            "Why we ask": [
+                "Perch\u00e9 chiediamo"
+            ],
+            "We want to help everyone get the most out of their WordPress %s and this setup, so we use this to help optimize for a great experience and periodically when we offer tips, reminders and recommendations.": [
+                "Vogliamo aiutare tutti a ottenere il massimo dal loro WordPress %s e questa configurazione, cos\u00ec usiamo questo per aiutare ad ottimizzare per una grande esperienza e periodicamente quando offriamo consigli, promemoria e raccomandazioni."
+            ],
+            "Primary %s Setup": [
+                "Configurazione Primaria %s"
+            ],
+            "%s Type": [
+                "Tipo %s"
+            ],
+            "We'll use this to provide our best-matching designs and features for %s like yours.": [
+                "Utilizzeremo questo per fornire i nostri design e le funzionalit\u00e0 migliori per %s come i tuoi."
+            ],
+            "We chose the templates, features and best configuration we can for sites. You\u2019re always in full control of your WordPress %s and we ask so we can be a good website partner.": [
+                "Abbiamo scelto i modelli, le caratteristiche e la migliore configurazione che possiamo per i siti. Siete sempre in pieno controllo del vostro WordPress %s e chiediamo in modo da possiamo essere un buon partner sito web."
+            ],
+            "Secondary %s Setup": [
+                "Configurazione Secondaria %s"
+            ],
+            "Top Priority": [
+                "Priorit\u00e0 Principale"
+            ],
+            "Demographic": [
+                "Demografica"
+            ],
+            "Colors": [
+                "Colori"
+            ],
+            "Whether your brand is vibrant, understated, elegant or edgy use color to delight your %s visitors.": [
+                "Che il tuo marchio sia vibrante, sobrio, elegante o dal colore spigoloso per deliziare i tuoi visitatori %s."
+            ],
+            "Let a splash of color make a splash with your visitors with your Global Site Colors.": [
+                "Lasciate che uno spruzzo di colore faccia uno spruzzo con i vostri visitatori con i colori del sito globale."
+            ],
+            "We had our designers mix up some palettes for striking websites for you to chose additional presets, or you can chose your own colors using the color pickers.": [
+                "Abbiamo avuto i nostri designer mescolare alcune tavolozze per sorprendenti siti web per voi per scegliere ulteriori preset, o puoi scegliere i tuoi colori usando i selettore di colori."
+            ],
+            "What's your color palette?": [
+                "Qual \u00e8 la tua tavolozza di colori?"
+            ],
+            "Theme Styles": [
+                "Theme Styles"
+            ],
+            "Professionally-designed website templates ready for their public debut featuring your great ideas.": [
+                "Modelli di siti web progettati professionalmente pronti per il loro debutto pubblico con le vostre grandi idee."
+            ],
+            "Show the web you have style with modern colors and elevated fonts": [
+                "Mostra il web che hai stile con colori moderni e caratteri elevati"
+            ],
+            "Pick one of these professionally-designed website styles to start your %1$s %2$s.": [
+                "Scegli uno di questi stili di siti web progettati professionalmente per avviare il tuo %1$s %2$s."
+            ],
+            "In the next steps and in the future, you can change the specific colors and fonts to fit your aesthetic vision for your %s.": [
+                "Nei prossimi passi e in futuro, \u00e8 possibile modificare i colori e i caratteri specifici per adattarsi alla vostra visione estetica per il vostro %s."
+            ],
+            "Give tone and taste to your words using a curated set of great type treatments.": [
+                "Dai tono e gusto alle tue parole utilizzando un set curato di trattamenti di grande tipo."
+            ],
+            "Not just what we say, how we say it": [
+                "Non solo quello che diciamo, come lo diciamo"
+            ],
+            "Fonts help our ideas look creative and compelling, astute and articulate, refined and regal, modern and much more. Great font combinations help set the perfect tone for your %s and your story jump off the screen.": [
+                "Caratteri aiutano le nostre idee a guardare creativo e convincente, astuto e articolato, raffinato e regale, moderno e molto altro. Grandi combinazioni di caratteri aiutano a impostare il tono perfetto per il tuo %s e la tua storia saltare dallo schermo."
+            ],
+            "What's your font style?": [
+                "Qual \u00e8 il tuo stile di carattere?"
+            ],
+            "Design": [
+                "Design"
+            ],
+            "Features": [
+                "Caratteristiche"
+            ],
+            "Easy-to-use features from our partner's WordPress Plugins and unique %1$s solutions to put your %2$s to work.": [
+                "Funzioni facili da usare dai plugin WordPress del nostro partner e soluzioni %1$s uniche per mettere il vostro %2$s al lavoro."
+            ],
+            "We\u2019ve assembled the best building blocks for a successful %s": [
+                "Abbiamo assemblato i migliori mattoni per un successo %s"
+            ],
+            "Put your %1$s %2$s to work for you using features that unlock the potential of WordPress with powerful solutions from %3$s and our partners.": [
+                "Metti il tuo %1$s %2$s per funzionare per te utilizzando funzioni che sbloccano il potenziale di WordPress con potenti soluzioni di %3$s e i nostri partner."
+            ],
+            "Header & Menu": [
+                "Menu Intestazione"
+            ],
+            "Surface key content in your %s -- who you are, what your about and where to find things.": [
+                "Contenuto chiave della superficie nel tuo %s - chi siete, che cosa il vostro circa e dove trovare le cose."
+            ],
+            "Putting your best foot forward": [
+                "Mettendo in avanti il tuo piede migliore"
+            ],
+            "Just like a %1$s putting a map of departments at the front door, a great %2$s Header & Menu help point visitors at the places you most want them to visit.": [
+                "Proprio come un %1$s che mette una mappa di reparti alla porta d'ingresso, una grande intestazione %2$s & menu aiutare i visitatori nei luoghi che pi\u00f9 vuoi loro visitare."
+            ],
+            "When picking a %s header, consider the number of menu items, character length of each item and how those will visually impact the Header Pattern design you choose.": [
+                "Quando si sceglie un'intestazione %s , considerare il numero di voci di menu, lunghezza del carattere di ogni elemento e come quelli avranno un impatto visivo sul disegno del modello di intestazione che si sceglie."
+            ],
+            "Let's make the right things visible": [
+                "Rendiamo visibili le cose giuste"
+            ],
+            "Homepage Layouts": [
+                "Layout Homepage"
+            ],
+            "Home Page": [
+                "Pagina Iniziale"
+            ],
+            "The home page is where you tell visitors your story. It helps users find what they came for.": [
+                "La home page \u00e8 dove racconti ai visitatori la tua storia. Aiuta gli utenti a trovare quello che sono arrivati."
+            ],
+            "Welcome to your new home online": [
+                "Benvenuto nella tua nuova casa online"
+            ],
+            "Like good curb appeal, a great home page design helps get users excited about your %s. Mixing media, headings, text and more, you can bring your ideas to live and your products & services to the forefront for visitors.": [
+                "Come un buon appello freno, un grande design home page aiuta a ottenere gli utenti entusiasti del tuo %s. Miscelare media, intestazioni, testo e altro ancora, \u00e8 possibile portare le vostre idee per vivere e i vostri prodotti e servizi in prima linea per i visitatori."
+            ],
+            "Look for a Home Page Pattern design you think will help organize and elevate your ideas.": [
+                "Cerca una Home Page Modello di design che pensi aiuter\u00e0 ad organizzare ed elevare le tue idee."
+            ],
+            "Page Layouts": [
+                "Layout Della Pagina"
+            ],
+            "Pages": [
+                "Pagine"
+            ],
+            "Use professionally-designed templates for common site pages to assemble a beautiful, high-quality %s.": [
+                "Utilizzare modelli progettati professionalmente per le pagine comuni del sito per assemblare una bella %s di alta qualit\u00e0."
+            ],
+            "Rapidly deliver ideas with templates primed for your content": [
+                "Fornisci rapidamente idee con modelli primizzati per i tuoi contenuti"
+            ],
+            "We\u2019ve baked everything we know about making great designs and content for common %1$s needs into ease-to-use templates. Pick templates and we\u2019ll add them as Page drafts to your WordPress %2$s.": [
+                "Abbiamo cotto tutto quello che sappiamo di fare grandi disegni e contenuti per le esigenze comuni di %1$s in modelli facili da usare. Scegli i modelli e li aggiungeremo come bozze di pagina al tuo WordPress %2$s."
+            ],
+            "Layout & Content": [
+                "Layout & Contenuto"
+            ],
+            "Exit to WordPress": [
+                "Uscita su WordPress"
+            ],
+            "Exit without finishing?": [
+                "Esci senza finire?"
+            ],
+            "Continue": [
+                "Continua"
+            ],
+            "Exit": [
+                "Esci"
+            ],
+            "You can restart onboarding from your %s Settings page.": [
+                "Puoi riavviare l'onboarding dalla tua pagina Impostazioni %s."
+            ],
+            "Loading\u2026": [
+                "Caricamento\u2026"
+            ],
+            "Preview Version": [
+                "Anteprima Versione"
+            ],
+            "Regenerate Content": [
+                "Rigenera Contenuto"
+            ],
+            "Regenerate": [
+                "Rigenera"
+            ],
+            "A great foundation to build from": [
+                "Un grande fondamento da costruire da"
+            ],
+            "with WordPress and %s": [
+                "con WordPress e %s"
+            ],
+            "Would you like to enter your WordPress Dashboard or continue setting up your %s?": [
+                "Vuoi entrare nella Dashboard di WordPress o continuare a configurare il tuo %s?"
+            ],
+            "You've made great progress! Would you like to keep going with the setup or take it from here?": [
+                "Hai fatto grandi progressi! Vuoi continuare con la configurazione o prenderla da qui?"
+            ],
+            "You can continue from your %s home page in the Next steps list.": [
+                "Puoi continuare dalla tua home page %s nella lista dei passaggi successivi."
+            ],
+            "Taking you to WordPress in\u2026": [
+                "Portare a WordPress in\u2026"
+            ],
+            "Enter WordPress": [
+                "Inserisci WordPress"
+            ],
+            "Need Help?": [
+                "Bisogno Di Aiuto?"
+            ],
+            "Hire our Experts": [
+                "Assumi i nostri esperti"
+            ],
+            "Preparing your %s design studio": [
+                "Preparazione del tuo studio di progettazione %s"
+            ],
+            "Hang tight while we show you some of the best WordPress has to offer!": [
+                "Hang stretto mentre vi mostriamo alcuni dei migliori WordPress ha da offrire!"
+            ],
+            "It looks like you may have an existing website": [
+                "Sembra che tu possa avere un sito web esistente"
+            ],
+            "Going through this setup will change your active theme, WordPress settings, add content \u2013 would you like to continue?": [
+                "Passando attraverso questa configurazione cambier\u00e0 il vostro tema attivo, le impostazioni di WordPress, aggiungere contenuto \u2013 si desidera continuare?"
+            ],
+            "Making the keys to your %1$s Online %2$s": [
+                "Rendere le chiavi del tuo %1$s online %2$s"
+            ],
+            "We\u2019re installing WooCommerce for you to fill with your amazing products & services!": [
+                "Stiamo installando WooCommerce per riempire con i tuoi fantastici prodotti e servizi!"
+            ],
+            "Color Palettes": [
+                "Color Palettes"
+            ],
+            "SELECT CUSTOM COLORS": [
+                "SELEZIONA COLORI CLIENTI"
+            ],
+            "Background": [
+                "Sfondo"
+            ],
+            "Primary": [
+                "Principale"
+            ],
+            "Secondary": [
+                "Secondario"
+            ],
+            "Tertiary": [
+                "Terziario"
+            ],
+            "Reset": [
+                "Reset"
+            ],
+            "Pick a Homepage Design": [
+                "Scegli una Homepage Design"
+            ],
+            "Panel will show a few Homepage Patterns.": [
+                "Pannello mostrer\u00e0 alcuni motivi Homepage."
+            ],
+            "Pick a Theme Style": [
+                "Scegli uno stile tema"
+            ],
+            "No Style Selected": [
+                "Nessuno Stile Selezionato"
+            ],
+            "Panel will show Theme details": [
+                "Pannello mostrer\u00e0 dettagli tema"
+            ],
+            "With Style Selected": [
+                "Con Stile Selezionato"
+            ],
+            "Panel will show single-column of other Styles.": [
+                "Il pannello mostrer\u00e0 una singola colonna di altri stili."
+            ],
+            "Pick a Theme": [
+                "Scegli un tema"
+            ],
+            "No Theme Selected": [
+                "Nessun Tema Selezionato"
+            ],
+            "Panel will show contextual help": [
+                "Il pannello mostrer\u00e0 l'aiuto contestuale"
+            ],
+            "With Theme Selected": [
+                "Con Tema Selezionato"
+            ],
+            "Panel will show single-column of other Themes.": [
+                "Il pannello mostrer\u00e0 una singola colonna di altri temi."
+            ],
+            "Font Palettes": [
+                "Font Palettes"
+            ],
+            "Aa": [
+                "Aa"
+            ],
+            "Onboarding Menu": [
+                "Menu Onboarding"
+            ],
+            "Resume Onboarding": [
+                "Riprendi Onboarding"
+            ],
+            "WordPress Onboarding": [
+                "Onboarding WordPress"
+            ],
+            "Toggle Navigation": [
+                "Attiva\/Disattiva Navigazione"
+            ],
+            "Drawer": [
+                "Drawer"
+            ],
+            "Header": [
+                "Intestazione"
+            ],
+            "Content": [
+                "Contenuto"
+            ],
+            "Block Library": [
+                "Blocca Libreria"
+            ],
+            "Settings": [
+                "Impostazioni"
+            ],
+            "Publish": [
+                "Pubblica"
+            ],
+            "Footer": [
+                "Footer"
+            ],
+            "Sorry, we're having trouble communicating with our AI service.": [
+                "Siamo spiacenti, stiamo avendo problemi a comunicare con il nostro servizio IA."
+            ],
+            "Do you keep getting this error?": [
+                "Continuate a ricevere questo errore?"
+            ],
+            "If you continue to get this error, you may either continue creating your site without using our AI assistant, or you can ": [
+                "Se continui a ottenere questo errore, puoi continuare a creare il tuo sito senza usare il nostro assistente di intelligenza artificiale o puoi "
+            ],
+            "Try again": [
+                "Riprova"
+            ],
+            "Continue without AI": [
+                "Continua senza IA"
+            ],
+            "exit to WordPress": [
+                "esci da WordPress"
+            ],
+            "Sorry, we're having trouble starting the site transfer process.": [
+                "Siamo spiacenti, stiamo avendo problemi ad avviare il processo di trasferimento del sito."
+            ],
+            "If you continue to get this error, please contact our support team at 1-888-401-4678.": [
+                "Se continui a ricevere questo errore, contatta il nostro team di supporto al numero 1-888-401-4678."
+            ],
+            "Go back": [
+                "Torna indietro"
+            ],
+            "What Next": [
+                "Cosa Successivo"
+            ],
+            "What\u2019s Next": [
+                "Cosa \u00c8 Successivo"
+            ],
+            "The beginning of your %1$s journey is complete. We\u2019re here to support your next steps and %2$s goals!": [
+                "L'inizio del tuo viaggio %1$s \u00e8 completo. Siamo qui per supportare i tuoi prossimi passi e %2$s obiettivi!"
+            ],
+            "Add, adjust and launch!": [
+                "Aggiungi, regola e lancia!"
+            ],
+            "Now that you\u2019ve setup the basics, use WordPress to edit your pages, %1$s design and explore the unlimited destinations you can chart for your %2$s %3$s.": [
+                "Ora che hai configurato le basi, utilizzare WordPress per modificare le pagine, %1$s design ed esplorare le destinazioni illimitate che puoi tracciare per il tuo %2$s %3$s."
+            ],
+            "Our support team, %s experts and professional designers are always just a chat or call away if you ever need directions.": [
+                "Il nostro team di supporto, esperti %s e designer professionisti sono sempre solo una chat o chiamare via se avete bisogno di indicazioni."
+            ],
+            "How else can we help?": [
+                "Come possiamo aiutare?"
+            ],
+            "Error 404": [
+                "Errore 404"
+            ],
+            "Please Check Again!": [
+                "Controllare Di Nuovo!"
+            ],
+            "Get Started": [
+                "Per Iniziare"
+            ],
+            "Store Info": [
+                "Informazioni Negozio"
+            ],
+            "Sitegen Design": [
+                "Design Di Sitegen"
+            ],
+            "Sitegen Features": [
+                "Caratteristiche Del Sitegen"
+            ],
+            "Site Details": [
+                "Dettagli Sito"
+            ],
+            "Sitegen Core": [
+                "Sitegen Core"
+            ],
+            "Welcome": [
+                "Benvenuto"
+            ],
+            "Lay the foundation for a successful %1$s %2$s using our WordPress Onboarding. ": [
+                "Posiziona la base per un successo %1$s %2$s utilizzando il nostro WordPress Onboarding. "
+            ],
+            "WordPress is free %s software": [
+                "WordPress \u00e8 software %s gratuito"
+            ],
+            "When you set up this new WordPress %1$s, you\u2019re joining millions of website owners who publish their %2$s using the free, community-built software project we\u2019re proud to support.": [
+                "Quando si imposta questo nuovo WordPress %1$s, si sta unendo milioni di proprietari di siti web che pubblicano il loro %2$s utilizzando il gratis, progetto software costruito in comunit\u00e0 che siamo orgogliosi di supportare."
+            ],
+            "%1$s is your %2$s partner": [
+                "%1$s \u00e8 il tuo partner %2$s"
+            ],
+            "A WordPress %1$s hosted by %2$s has tons of unique and proven solutions to help you get farther, faster with your WordPress. We put our expertise, partnerships and solutions to work on your %3$s.": [
+                "Un WordPress %1$s ospitato da %2$s ha tonnellate di soluzioni uniche e comprovate per aiutarvi ad andare oltre, pi\u00f9 veloce con la tua WordPress. Mettiamo le nostre competenze, partnership e soluzioni per lavorare sul tuo %3$s."
+            ],
+            "1-1 Expert Solutions & Coaching": [
+                "1-1 Soluzioni Esperte & Coaching"
+            ],
+            "Hire Our Full-Service Creative Team": [
+                "Assumere Il Nostro Full-Service Team Creativo"
+            ],
+            "Rename": [
+                "Rinomina"
+            ],
+            "View All": [
+                "Visualizza Tutto"
+            ],
+            "Save & Continue": [
+                "Salva E Continua"
+            ],
+            "Migration": [
+                "Migrazione"
+            ],
+            "The Fork": [
+                "La Forchetta"
+            ],
+            "noun\u0004site": [
+                "sito"
+            ],
+            "noun\u0004website": [
+                "sito"
+            ],
+            "noun\u0004store": [
+                "negozio"
+            ]
+        }
+    }
+}

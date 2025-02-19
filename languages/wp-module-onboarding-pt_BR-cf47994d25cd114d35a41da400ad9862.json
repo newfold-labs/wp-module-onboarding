@@ -1,0 +1,24 @@
+{
+    "translation-revision-date": "2023-09-22 10:49-0300",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/218.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "pt_BR",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Let's migrate your existing site to %s": [
+                "Vamos migrar seu site existente para %s"
+            ],
+            "Please wait a few seconds while we get your new account ready to import your existing WordPress site. ": [
+                "Aguarde alguns segundos enquanto preparamos sua nova conta para importar seu site WordPress existente. "
+            ],
+            "Preparing your account": [
+                "Preparando sua conta"
+            ]
+        }
+    }
+}

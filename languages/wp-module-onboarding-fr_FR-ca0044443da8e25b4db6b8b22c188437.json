@@ -1,0 +1,66 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/325.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "fr_FR",
+                "plural-forms": "nplurals=2; plural=(n > 1);"
+            },
+            "Tell us about your products": [
+                "Parlez-nous de vos produits"
+            ],
+            "What type of products will you be selling?": [
+                "Quel type de produits vendez-vous?"
+            ],
+            "How many products will you be selling?": [
+                "Combien de produits vendez-vous ?"
+            ],
+            "Physical products": [
+                "Produits physiques"
+            ],
+            "Digital \/ Downloadable products": [
+                "Produits num\u00e9riques \/ t\u00e9l\u00e9chargeables"
+            ],
+            "Subscriptions": [
+                "Abonnements"
+            ],
+            "Book rooms, houses or rent products": [
+                "R\u00e9servez des pi\u00e8ces, des maisons ou louez des produits"
+            ],
+            "Membership": [
+                "Adh\u00e9sion"
+            ],
+            "Customizable products": [
+                "Produits personnalisables"
+            ],
+            "Bundles of products": [
+                "Lots de produits"
+            ],
+            "Let your users ask a quote for your products": [
+                "Laisser vos utilisateurs demander un devis pour vos produits"
+            ],
+            "0": [
+                "0"
+            ],
+            "1 - 10": [
+                "1 - 10"
+            ],
+            "11 - 100": [
+                "11 - 100"
+            ],
+            "101 - 1000": [
+                "101 - 1000"
+            ],
+            "1000 +": [
+                "1000 +"
+            ],
+            "Continue Setup": [
+                "Poursuivre la configuration"
+            ]
+        }
+    }
+}

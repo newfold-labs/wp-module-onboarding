@@ -1,0 +1,117 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/340.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "es_ES",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Skip this Step": [
+                "Saltar este paso"
+            ],
+            "Introduce us to this %s": [
+                "Pres\u00e9ntanos a este %s"
+            ],
+            "So we can introduce it to the web": [
+                "As\u00ed que podemos introducirlo en la web"
+            ],
+            "%s Title": [
+                "T\u00edtulo %s"
+            ],
+            "WordPress %s": [
+                "WordPress %s"
+            ],
+            "Shown to visitors, search engine and social media posts.": [
+                "Mostrar a los visitantes, motores de b\u00fasqueda y publicaciones de las redes sociales."
+            ],
+            "80": [
+                "80"
+            ],
+            "%s Description": [
+                "Descripci\u00f3n %s"
+            ],
+            "Just another WordPress %s.": [
+                "S\u00f3lo otro WordPress %s."
+            ],
+            "Tell people who you are, what you sell and why they should visit your %s.": [
+                "Dile a la gente qui\u00e9nes eres, qu\u00e9 vendes y por qu\u00e9 deber\u00edan visitar tu %s."
+            ],
+            "160": [
+                "160"
+            ],
+            "Error Saving Data, Try Again!": [
+                "Error al guardar los datos, \u00a1Int\u00e9ntalo de nuevo!"
+            ],
+            "(%d characters left)": [
+                "(%d caracteres restantes)"
+            ],
+            "Preview": [
+                "Vista previa"
+            ],
+            "Just another WordPress %s": [
+                "S\u00f3lo otro WordPress %s"
+            ],
+            "Logo": [
+                "Logo"
+            ],
+            "RESET": [
+                "RESET"
+            ],
+            "UPLOAD": [
+                "ACTUALIZAR"
+            ],
+            "Edit URLs": [
+                "Editar URLs"
+            ],
+            "Proceed Anyways": [
+                "Continuar de todos modos"
+            ],
+            "Social Media": [
+                "Redes Sociales"
+            ],
+            "It looks like you're using a URL shortener!": [
+                "Parece que est\u00e1s usando una URL m\u00e1s corta!"
+            ],
+            "That's smart, but we encourage you to enter the standard URL for your social profiles to help search engines know this website is associated with your profile using Yoast's Open Graph support. You can always change the URLs used within your site to trackable in the future.": [
+                "Eso es inteligente, pero te animamos a introducir la URL est\u00e1ndar para tus perfiles sociales para ayudar a los motores de b\u00fasqueda a saber que este sitio web est\u00e1 asociado con tu perfil usando el soporte Open Graph de Yoast. Siempre puede cambiar las URLs utilizadas dentro de su sitio para rastrear en el futuro."
+            ],
+            "One of those URLs doesn't look like a social media URL.": [
+                "Una de esas URLs no parece una URL de redes sociales."
+            ],
+            "We recommend using your official social URL to help search engines know this website is associated with your profile using Yoast's Open Graph support. You can always change the URLs used within your site in the future.": [
+                "Recomendamos usar tu URL social oficial para ayudar a los motores de b\u00fasqueda a saber que este sitio web est\u00e1 asociado con tu perfil usando el soporte de Yoast Open Graph. Siempre puede cambiar las URLs utilizadas dentro de su sitio en el futuro."
+            ],
+            "That's clever! Short URLs are a great way to track clicks. However, To help build your social graph, we need the full URLs to your social profiles. You can go into your menus and change your social icon links after setup.": [
+                "\u00a1Eso es inteligente! Las URL cortas son una gran manera de rastrear los clics. Sin embargo, para ayudar a construir tu gr\u00e1fica social, necesitamos las URLs completas a tus perfiles sociales. Puedes entrar en tus men\u00fas y cambiar los enlaces de tu icono social despu\u00e9s de la configuraci\u00f3n."
+            ],
+            "To help build your social graph, we need the full URLs to your social profiles. Please check your URLs for typos and try copy & paste with the official URL if you continue to see this error.": [
+                "Para ayudar a construir tu gr\u00e1fica social, necesitamos las URLs completas a tus perfiles sociales. Por favor, comprueba tus URL para errores tipogr\u00e1ficos e intenta copiar y pegar con la URL oficial si sigues viendo este error."
+            ],
+            "Facebook": [
+                "Facebook"
+            ],
+            "Twitter": [
+                "Twitter"
+            ],
+            "Instagram": [
+                "Instagrama"
+            ],
+            "Youtube": [
+                "Youtube"
+            ],
+            "Linkedin": [
+                "Linkedin"
+            ],
+            "Yelp": [
+                "Amarillo"
+            ],
+            "Tiktok": [
+                "Tiktok"
+            ]
+        }
+    }
+}

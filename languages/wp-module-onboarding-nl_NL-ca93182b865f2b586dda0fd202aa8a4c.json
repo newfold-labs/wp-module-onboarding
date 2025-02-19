@@ -1,0 +1,30 @@
+{
+    "translation-revision-date": "2025-02-19 15:20",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "build\/2.5.8\/367.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "nl_NL",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Lets tailor your theme for the perfect fit": [
+                "Laat uw thema passen voor de perfecte pasvorm"
+            ],
+            "Start with a style preset or": [
+                "Start met een voorinstelling stijl of"
+            ],
+            "build a custom design.": [
+                "maak een aangepast ontwerp."
+            ],
+            "Customize Colors & Fonts?": [
+                "Kleuren & lettertypen aanpassen?"
+            ],
+            "Check to customize in the next few steps (or leave empty and use the Site Editor later)": [
+                "Aanvinken om in de volgende stappen aan te passen (of leeg laten en later de Site-editor gebruiken)"
+            ]
+        }
+    }
+}
