@@ -1390,7 +1390,7 @@ msgstr "Conte-me alguns detalhes sobre o site que você quer criar?"
 
 #: build/2.5.4/705.js:1
 msgid "The more detail the better"
-msgstr "Quanto mais detalhes, melhor"
+msgstr "Para quem é este site? Qual é o design ideal?"
 
 #: build/2.5.4/705.js:1
 msgid "Not sure what to say? We can walk you through it."
