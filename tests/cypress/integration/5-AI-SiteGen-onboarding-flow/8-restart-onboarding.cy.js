@@ -5,11 +5,11 @@ const {
 } = require('../wp-module-support/single-events-track.cy');
 
 describe('Restart Onboarding', function () {
-	// Create the option for Restarting Onboarding
-	cy.exec(
-		`npx wp-env run cli wp option set nfd_module_onboarding_can_restart true`
-	);
 	before(() => {
+		// Create the option for Restarting Onboarding
+		cy.exec(
+			`npx wp-env run cli wp option set nfd_module_onboarding_can_restart true`
+		);
 		cy.visit('wp-admin/themes.php');
 		cy.wait(2000);
 	});
