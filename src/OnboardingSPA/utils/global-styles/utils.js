@@ -38,7 +38,7 @@ export const BACKGROUND_BLOCK_DEFAULT_VALUES = {
 
 export const PRESET_METADATA = [
 	{
-		path: ['color', 'palette'],
+		path: [ 'color', 'palette' ],
 		valueKey: 'color',
 		cssVarInfix: 'color',
 		classes: [
@@ -54,7 +54,7 @@ export const PRESET_METADATA = [
 		],
 	},
 	{
-		path: ['color', 'gradients'],
+		path: [ 'color', 'gradients' ],
 		valueKey: 'gradient',
 		cssVarInfix: 'gradient',
 		classes: [
@@ -65,30 +65,32 @@ export const PRESET_METADATA = [
 		],
 	},
 	{
-		path: ['color', 'duotone'],
+		path: [ 'color', 'duotone' ],
 		cssVarInfix: 'duotone',
-		valueFunc: ({ slug }) => `url( '#wp-duotone-${slug}' )`,
+		valueFunc: ( { slug } ) => `url( '#wp-duotone-${ slug }' )`,
 		classes: [],
 	},
 	{
-		path: ['typography', 'fontSizes'],
-		valueFunc: (preset, { typography: typographySettings }) =>
-			getTypographyFontSizeValue(preset, typographySettings),
+		path: [ 'typography', 'fontSizes' ],
+		valueFunc: ( preset, { typography: typographySettings } ) =>
+			getTypographyFontSizeValue( preset, typographySettings ),
 		valueKey: 'size',
 		cssVarInfix: 'font-size',
-		classes: [{ classSuffix: 'font-size', propertyName: 'font-size' }],
+		classes: [ { classSuffix: 'font-size', propertyName: 'font-size' } ],
 	},
 	{
-		path: ['typography', 'fontFamilies'],
+		path: [ 'typography', 'fontFamilies' ],
 		valueKey: 'fontFamily',
 		cssVarInfix: 'font-family',
-		classes: [{ classSuffix: 'font-family', propertyName: 'font-family' }],
+		classes: [
+			{ classSuffix: 'font-family', propertyName: 'font-family' },
+		],
 	},
 	{
-		path: ['spacing', 'spacingSizes'],
+		path: [ 'spacing', 'spacingSizes' ],
 		valueKey: 'size',
 		cssVarInfix: 'spacing',
-		valueFunc: ({ size }) => size,
+		valueFunc: ( { size } ) => size,
 		classes: [],
 	},
 ];
@@ -293,23 +295,24 @@ function findInPresetsBy(
 ) {
 	// Block presets take priority above root level presets.
 	const orderedPresetsByOrigin = [
-		get(features, ['blocks', blockName, ...presetPath]),
-		get(features, presetPath),
+		get( features, [ 'blocks', blockName, ...presetPath ] ),
+		get( features, presetPath ),
 	];
 
-	for (const presetByOrigin of orderedPresetsByOrigin) {
-		if (presetByOrigin) {
+	for ( const presetByOrigin of orderedPresetsByOrigin ) {
+		if ( presetByOrigin ) {
 			// Preset origins ordered by priority.
-			const origins = ['custom', 'theme', 'default'];
-			for (const origin of origins) {
-				const presets = presetByOrigin[origin];
-				if (presets) {
+			const origins = [ 'custom', 'theme', 'default' ];
+			for ( const origin of origins ) {
+				const presets = presetByOrigin[ origin ];
+				if ( presets ) {
 					const presetObject = find(
 						presets,
-						(preset) => preset[presetProperty] === presetValueValue
+						( preset ) =>
+							preset[ presetProperty ] === presetValueValue
 					);
-					if (presetObject) {
-						if (presetProperty === 'slug') {
+					if ( presetObject ) {
+						if ( presetProperty === 'slug' ) {
 							return presetObject;
 						}
 						// If there is a highest priority preset with the same slug but different value the preset we found was overwritten and should be ignored.
@@ -321,8 +324,9 @@ function findInPresetsBy(
 							presetObject.slug
 						);
 						if (
-							highestPresetObjectWithSameSlug[presetProperty] ===
-							presetObject[presetProperty]
+							highestPresetObjectWithSameSlug[
+								presetProperty
+							] === presetObject[ presetProperty ]
 						) {
 							return presetObject;
 						}
@@ -340,15 +344,15 @@ export function getPresetVariableFromValue(
 	variableStylePath,
 	presetPropertyValue
 ) {
-	if (!presetPropertyValue) {
+	if ( ! presetPropertyValue ) {
 		return presetPropertyValue;
 	}
 
-	const cssVarInfix = STYLE_PATH_TO_CSS_VAR_INFIX[variableStylePath];
+	const cssVarInfix = STYLE_PATH_TO_CSS_VAR_INFIX[ variableStylePath ];
 
-	const metadata = find(PRESET_METADATA, ['cssVarInfix', cssVarInfix]);
+	const metadata = find( PRESET_METADATA, [ 'cssVarInfix', cssVarInfix ] );
 
-	if (!metadata) {
+	if ( ! metadata ) {
 		// The property doesn't have preset data
 		// so the value should be returned as it is.
 		return presetPropertyValue;
@@ -363,23 +367,23 @@ export function getPresetVariableFromValue(
 		presetPropertyValue
 	);
 
-	if (!presetObject) {
+	if ( ! presetObject ) {
 		// Value wasn't found in the presets,
 		// so it must be a custom value.
 		return presetPropertyValue;
 	}
 
-	return `var:preset|${cssVarInfix}|${presetObject.slug}`;
+	return `var:preset|${ cssVarInfix }|${ presetObject.slug }`;
 }
 
 function getValueFromPresetVariable(
 	features,
 	blockName,
 	variable,
-	[presetType, slug]
+	[ presetType, slug ]
 ) {
-	const metadata = find(PRESET_METADATA, ['cssVarInfix', presetType]);
-	if (!metadata) {
+	const metadata = find( PRESET_METADATA, [ 'cssVarInfix', presetType ] );
+	if ( ! metadata ) {
 		return variable;
 	}
 
@@ -391,24 +395,24 @@ function getValueFromPresetVariable(
 		slug
 	);
 
-	if (presetObject) {
+	if ( presetObject ) {
 		const { valueKey } = metadata;
-		const result = presetObject[valueKey];
-		return getValueFromVariable(features, blockName, result);
+		const result = presetObject[ valueKey ];
+		return getValueFromVariable( features, blockName, result );
 	}
 
 	return variable;
 }
 
-function getValueFromCustomVariable(features, blockName, variable, path) {
+function getValueFromCustomVariable( features, blockName, variable, path ) {
 	const result =
-		get(features.settings, ['blocks', blockName, 'custom', ...path]) ??
-		get(features.settings, ['custom', ...path]);
-	if (!result) {
+		get( features.settings, [ 'blocks', blockName, 'custom', ...path ] ) ??
+		get( features.settings, [ 'custom', ...path ] );
+	if ( ! result ) {
 		return variable;
 	}
 	// A variable may reference another variable so we need recursion until we find the value.
-	return getValueFromVariable(features, blockName, result);
+	return getValueFromVariable( features, blockName, result );
 }
 
 /**
@@ -419,14 +423,14 @@ function getValueFromCustomVariable(features, blockName, variable, path) {
  * @param {string|*} variable  An incoming style value. A CSS var value is expected, but it could be any value.
  * @return {string|*|{ref}} The value of the CSS var, if found. If not found, the passed variable argument.
  */
-export function getValueFromVariable(features, blockName, variable) {
-	if (!variable || typeof variable !== 'string') {
-		if (variable?.ref && typeof variable?.ref === 'string') {
-			const refPath = variable.ref.split('.');
-			variable = get(features, refPath);
+export function getValueFromVariable( features, blockName, variable ) {
+	if ( ! variable || typeof variable !== 'string' ) {
+		if ( variable?.ref && typeof variable?.ref === 'string' ) {
+			const refPath = variable.ref.split( '.' );
+			variable = get( features, refPath );
 			// Presence of another ref indicates a reference to another dynamic value.
 			// Pointing to another dynamic value is not supported.
-			if (!variable || !!variable?.ref) {
+			if ( ! variable || !! variable?.ref ) {
 				return variable;
 			}
 		} else {
@@ -439,26 +443,36 @@ export function getValueFromVariable(features, blockName, variable) {
 
 	let parsedVar;
 
-	if (variable.startsWith(USER_VALUE_PREFIX)) {
-		parsedVar = variable.slice(USER_VALUE_PREFIX.length).split('|');
+	if ( variable.startsWith( USER_VALUE_PREFIX ) ) {
+		parsedVar = variable.slice( USER_VALUE_PREFIX.length ).split( '|' );
 	} else if (
-		variable.startsWith(THEME_VALUE_PREFIX) &&
-		variable.endsWith(THEME_VALUE_SUFFIX)
+		variable.startsWith( THEME_VALUE_PREFIX ) &&
+		variable.endsWith( THEME_VALUE_SUFFIX )
 	) {
 		parsedVar = variable
-			.slice(THEME_VALUE_PREFIX.length, -THEME_VALUE_SUFFIX.length)
-			.split('--');
+			.slice( THEME_VALUE_PREFIX.length, -THEME_VALUE_SUFFIX.length )
+			.split( '--' );
 	} else {
 		// We don't know how to parse the value: either is raw of uses complex CSS such as `calc(1px * var(--wp--variable) )`
 		return variable;
 	}
 
-	const [type, ...path] = parsedVar;
-	if (type === 'preset') {
-		return getValueFromPresetVariable(features, blockName, variable, path);
+	const [ type, ...path ] = parsedVar;
+	if ( type === 'preset' ) {
+		return getValueFromPresetVariable(
+			features,
+			blockName,
+			variable,
+			path
+		);
 	}
-	if (type === 'custom') {
-		return getValueFromCustomVariable(features, blockName, variable, path);
+	if ( type === 'custom' ) {
+		return getValueFromCustomVariable(
+			features,
+			blockName,
+			variable,
+			path
+		);
 	}
 	return variable;
 }
@@ -480,18 +494,18 @@ export function getValueFromVariable(features, blockName, variable) {
  *
  * @return {string} Scoped selector.
  */
-export function scopeSelector(scope, selector) {
-	const scopes = scope.split(',');
-	const selectors = selector.split(',');
+export function scopeSelector( scope, selector ) {
+	const scopes = scope.split( ',' );
+	const selectors = selector.split( ',' );
 
 	const selectorsScoped = [];
-	scopes.forEach((outer) => {
-		selectors.forEach((inner) => {
-			selectorsScoped.push(`${outer.trim()} ${inner.trim()}`);
-		});
-	});
+	scopes.forEach( ( outer ) => {
+		selectors.forEach( ( inner ) => {
+			selectorsScoped.push( `${ outer.trim() } ${ inner.trim() }` );
+		} );
+	} );
 
-	return selectorsScoped.join(', ');
+	return selectorsScoped.join( ', ' );
 }
 
 /**
@@ -516,44 +530,44 @@ export function scopeSelector(scope, selector) {
  *
  * @return {Object|undefined} Scoped collection of feature selectors.
  */
-export function scopeFeatureSelectors(scope, selectors) {
-	if (!scope || !selectors) {
+export function scopeFeatureSelectors( scope, selectors ) {
+	if ( ! scope || ! selectors ) {
 		return;
 	}
 
 	const featureSelectors = {};
 
-	Object.entries(selectors).forEach(([feature, selector]) => {
-		if (typeof selector === 'string') {
-			featureSelectors[feature] = scopeSelector(scope, selector);
+	Object.entries( selectors ).forEach( ( [ feature, selector ] ) => {
+		if ( typeof selector === 'string' ) {
+			featureSelectors[ feature ] = scopeSelector( scope, selector );
 		}
 
-		if (typeof selector === 'object') {
-			featureSelectors[feature] = {};
+		if ( typeof selector === 'object' ) {
+			featureSelectors[ feature ] = {};
 
-			Object.entries(selector).forEach(
-				([subfeature, subfeatureSelector]) => {
-					featureSelectors[feature][subfeature] = scopeSelector(
+			Object.entries( selector ).forEach(
+				( [ subfeature, subfeatureSelector ] ) => {
+					featureSelectors[ feature ][ subfeature ] = scopeSelector(
 						scope,
 						subfeatureSelector
 					);
 				}
 			);
 		}
-	});
+	} );
 
 	return featureSelectors;
 }
 
-export function setBackgroundStyleDefaults(backgroundStyle) {
-	if (!backgroundStyle || !backgroundStyle?.backgroundImage?.url) {
+export function setBackgroundStyleDefaults( backgroundStyle ) {
+	if ( ! backgroundStyle || ! backgroundStyle?.backgroundImage?.url ) {
 		return;
 	}
 
 	let backgroundStylesWithDefaults;
 
 	// Set block background defaults.
-	if (!backgroundStyle?.backgroundSize) {
+	if ( ! backgroundStyle?.backgroundSize ) {
 		backgroundStylesWithDefaults = {
 			backgroundSize: BACKGROUND_BLOCK_DEFAULT_VALUES.backgroundSize,
 		};
@@ -561,7 +575,7 @@ export function setBackgroundStyleDefaults(backgroundStyle) {
 
 	if (
 		'contain' === backgroundStyle?.backgroundSize &&
-		!backgroundStyle?.backgroundPosition
+		! backgroundStyle?.backgroundPosition
 	) {
 		backgroundStylesWithDefaults = {
 			backgroundPosition:
@@ -588,23 +602,23 @@ export function setBackgroundStyleDefaults(backgroundStyle) {
  *
  * @return {string} CSS selector for the block style variation.
  */
-export function getBlockStyleVariationSelector(variation, blockSelector) {
-	const variationClass = `.is-style-${variation}`;
+export function getBlockStyleVariationSelector( variation, blockSelector ) {
+	const variationClass = `.is-style-${ variation }`;
 
-	if (!blockSelector) {
+	if ( ! blockSelector ) {
 		return variationClass;
 	}
 
 	const ancestorRegex = /((?::\([^)]+\))?\s*)([^\s:]+)/;
-	const addVariationClass = (_match, group1, group2) => {
+	const addVariationClass = ( _match, group1, group2 ) => {
 		return group1 + group2 + variationClass;
 	};
 
 	const result = blockSelector
-		.split(',')
-		.map((part) => part.replace(ancestorRegex, addVariationClass));
+		.split( ',' )
+		.map( ( part ) => part.replace( ancestorRegex, addVariationClass ) );
 
-	return result.join(',');
+	return result.join( ',' );
 }
 
 /**
@@ -619,13 +633,13 @@ export function getBlockStyleVariationSelector(variation, blockSelector) {
  *
  * @return {string} The new selector.
  */
-export function appendToSelector(selector, toAppend) {
-	if (!selector.includes(',')) {
+export function appendToSelector( selector, toAppend ) {
+	if ( ! selector.includes( ',' ) ) {
 		return selector + toAppend;
 	}
-	const selectors = selector.split(',');
-	const newSelectors = selectors.map((sel) => sel + toAppend);
-	return newSelectors.join(',');
+	const selectors = selector.split( ',' );
+	const newSelectors = selectors.map( ( sel ) => sel + toAppend );
+	return newSelectors.join( ',' );
 }
 
 /**
@@ -640,12 +654,12 @@ export function appendToSelector(selector, toAppend) {
  * @param {*}            defaultValue Default value if the value at the specified path is nullish.
  * @return {*} Value of the object property at the specified path.
  */
-export const getValueFromObjectPath = (object, path, defaultValue) => {
-	const arrayPath = Array.isArray(path) ? path : path.split('.');
+export const getValueFromObjectPath = ( object, path, defaultValue ) => {
+	const arrayPath = Array.isArray( path ) ? path : path.split( '.' );
 	let value = object;
-	arrayPath.forEach((fieldName) => {
-		value = value?.[fieldName];
-	});
+	arrayPath.forEach( ( fieldName ) => {
+		value = value?.[ fieldName ];
+	} );
 	return value ?? defaultValue;
 };
 
@@ -659,23 +673,23 @@ export const getValueFromObjectPath = (object, path, defaultValue) => {
  * @param {*}                   value  New value to set.
  * @return {Object} Cloned object with the new value set.
  */
-export function setImmutably(object, path, value) {
+export function setImmutably( object, path, value ) {
 	// Normalize path
-	path = Array.isArray(path) ? [...path] : [path];
+	path = Array.isArray( path ) ? [ ...path ] : [ path ];
 
 	// Shallowly clone the base of the object
-	object = Array.isArray(object) ? [...object] : { ...object };
+	object = Array.isArray( object ) ? [ ...object ] : { ...object };
 
 	const leaf = path.pop();
 
 	// Traverse object from root to leaf, shallowly cloning at each level
 	let prev = object;
-	for (const key of path) {
-		const lvl = prev[key];
-		prev = prev[key] = Array.isArray(lvl) ? [...lvl] : { ...lvl };
+	for ( const key of path ) {
+		const lvl = prev[ key ];
+		prev = prev[ key ] = Array.isArray( lvl ) ? [ ...lvl ] : { ...lvl };
 	}
 
-	prev[leaf] = value;
+	prev[ leaf ] = value;
 
 	return object;
 }
@@ -687,8 +701,8 @@ export function setImmutably(object, path, value) {
  * @param {Object}        tree      A theme.json object.
  * @return {*} The resolved value or incoming ruleValue.
  */
-export function getResolvedRefValue(ruleValue, tree) {
-	if (!ruleValue || !tree) {
+export function getResolvedRefValue( ruleValue, tree ) {
+	if ( ! ruleValue || ! tree ) {
 		return ruleValue;
 	}
 
@@ -697,20 +711,20 @@ export function getResolvedRefValue(ruleValue, tree) {
 	 * to a path, this converts that path into the value at that path.
 	 * For example: { "ref": "style.color.background" } => "#fff".
 	 */
-	if (typeof ruleValue !== 'string' && ruleValue?.ref) {
+	if ( typeof ruleValue !== 'string' && ruleValue?.ref ) {
 		const resolvedRuleValue = getCSSValueFromRawStyle(
-			getValueFromObjectPath(tree, ruleValue.ref)
+			getValueFromObjectPath( tree, ruleValue.ref )
 		);
 
 		/*
 		 * Presence of another ref indicates a reference to another dynamic value.
 		 * Pointing to another dynamic value is not supported.
 		 */
-		if (resolvedRuleValue?.ref) {
+		if ( resolvedRuleValue?.ref ) {
 			return undefined;
 		}
 
-		if (resolvedRuleValue === undefined) {
+		if ( resolvedRuleValue === undefined ) {
 			return ruleValue;
 		}
 
@@ -726,16 +740,16 @@ export function getResolvedRefValue(ruleValue, tree) {
  * @param {Array<Object>} themeFileURIs A collection of absolute theme file URIs and their corresponding file paths.
  * @return {string} A resolved theme file URI, if one is found in the themeFileURIs collection.
  */
-export function getResolvedThemeFilePath(file, themeFileURIs) {
-	if (!file || !themeFileURIs || !Array.isArray(themeFileURIs)) {
+export function getResolvedThemeFilePath( file, themeFileURIs ) {
+	if ( ! file || ! themeFileURIs || ! Array.isArray( themeFileURIs ) ) {
 		return file;
 	}
 
 	const uri = themeFileURIs.find(
-		(themeFileUri) => themeFileUri?.name === file
+		( themeFileUri ) => themeFileUri?.name === file
 	);
 
-	if (!uri?.href) {
+	if ( ! uri?.href ) {
 		return file;
 	}
 
@@ -749,19 +763,19 @@ export function getResolvedThemeFilePath(file, themeFileURIs) {
  * @param {Object}        tree      A theme.json object.
  * @return {*} The resolved value or incoming ruleValue.
  */
-export function getResolvedValue(ruleValue, tree) {
-	if (!ruleValue || !tree) {
+export function getResolvedValue( ruleValue, tree ) {
+	if ( ! ruleValue || ! tree ) {
 		return ruleValue;
 	}
 
 	// Resolve ref values.
-	const resolvedValue = getResolvedRefValue(ruleValue, tree);
+	const resolvedValue = getResolvedRefValue( ruleValue, tree );
 
 	// Resolve relative paths.
-	if (resolvedValue?.url) {
+	if ( resolvedValue?.url ) {
 		resolvedValue.url = getResolvedThemeFilePath(
 			resolvedValue.url,
-			tree?._links?.['wp:theme-file']
+			tree?._links?.[ 'wp:theme-file' ]
 		);
 	}
 

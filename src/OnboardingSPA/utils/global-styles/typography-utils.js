@@ -20,10 +20,10 @@
  *
  * @return {string} An font-size value
  */
-export function getTypographyFontSizeValue(preset, typographySettings) {
+export function getTypographyFontSizeValue( preset, typographySettings ) {
 	const { size: defaultSize } = preset;
 
-	if (true !== typographySettings?.fluid) {
+	if ( true !== typographySettings?.fluid ) {
 		return defaultSize;
 	}
 
@@ -36,7 +36,7 @@ export function getTypographyFontSizeValue(preset, typographySettings) {
 
 	// Font sizes.
 	// A font size has explicitly bypassed fluid calculations.
-	if (false === preset?.fluid) {
+	if ( false === preset?.fluid ) {
 		return defaultSize;
 	}
 
@@ -45,35 +45,35 @@ export function getTypographyFontSizeValue(preset, typographySettings) {
 	// Try to grab explicit min and max fluid font sizes.
 	let minimumFontSizeRaw = fluidFontSizeSettings?.min;
 	let maximumFontSizeRaw = fluidFontSizeSettings?.max;
-	const preferredSize = getTypographyValueAndUnit(defaultSize);
+	const preferredSize = getTypographyValueAndUnit( defaultSize );
 
 	// Protect against unsupported units.
-	if (!preferredSize?.unit) {
+	if ( ! preferredSize?.unit ) {
 		return defaultSize;
 	}
 
 	// If no fluid min or max font sizes are available, create some using min/max font size factors.
-	if (!minimumFontSizeRaw) {
+	if ( ! minimumFontSizeRaw ) {
 		minimumFontSizeRaw =
 			preferredSize.value * DEFAULT_MINIMUM_FONT_SIZE_FACTOR +
 			preferredSize.unit;
 	}
 
-	if (!maximumFontSizeRaw) {
+	if ( ! maximumFontSizeRaw ) {
 		maximumFontSizeRaw =
 			preferredSize.value * DEFAULT_MAXIMUM_FONT_SIZE_FACTOR +
 			preferredSize.unit;
 	}
 
-	const fluidFontSizeValue = getComputedFluidTypographyValue({
+	const fluidFontSizeValue = getComputedFluidTypographyValue( {
 		maximumViewPortWidth: DEFAULT_MAXIMUM_VIEWPORT_WIDTH,
 		minimumViewPortWidth: DEFAULT_MINIMUM_VIEWPORT_WIDTH,
 		maximumFontSize: maximumFontSizeRaw,
 		minimumFontSize: minimumFontSizeRaw,
 		scaleFactor: DEFAULT_SCALE_FACTOR,
-	});
+	} );
 
-	if (!!fluidFontSizeValue) {
+	if ( !! fluidFontSizeValue ) {
 		return fluidFontSizeValue;
 	}
 
@@ -92,34 +92,34 @@ export function getTypographyFontSizeValue(preset, typographySettings) {
  *
  * @return {string|null} A font-size value using clamp().
  */
-export function getComputedFluidTypographyValue({
+export function getComputedFluidTypographyValue( {
 	maximumViewPortWidth,
 	minimumViewPortWidth,
 	maximumFontSize,
 	minimumFontSize,
 	scaleFactor,
-}) {
+} ) {
 	// Grab the minimum font size and normalize it in order to use the value for calculations.
-	const minimumFontSizeParsed = getTypographyValueAndUnit(minimumFontSize);
+	const minimumFontSizeParsed = getTypographyValueAndUnit( minimumFontSize );
 
 	// We get a 'preferred' unit to keep units consistent when calculating,
 	// otherwise the result will not be accurate.
 	const fontSizeUnit = minimumFontSizeParsed?.unit || 'rem';
 
 	// Grab the maximum font size and normalize it in order to use the value for calculations.
-	const maximumFontSizeParsed = getTypographyValueAndUnit(maximumFontSize, {
+	const maximumFontSizeParsed = getTypographyValueAndUnit( maximumFontSize, {
 		coerceTo: fontSizeUnit,
-	});
+	} );
 
 	// Protect against unsupported units.
-	if (!minimumFontSizeParsed || !maximumFontSizeParsed) {
+	if ( ! minimumFontSizeParsed || ! maximumFontSizeParsed ) {
 		return null;
 	}
 
 	// Use rem for accessible fluid target font scaling.
-	const minimumFontSizeRem = getTypographyValueAndUnit(minimumFontSize, {
+	const minimumFontSizeRem = getTypographyValueAndUnit( minimumFontSize, {
 		coerceTo: 'rem',
-	});
+	} );
 
 	// Viewport widths defined for fluid typography. Normalize units
 	const maximumViewPortWidthParsed = getTypographyValueAndUnit(
@@ -133,9 +133,9 @@ export function getComputedFluidTypographyValue({
 
 	// Protect against unsupported units.
 	if (
-		!maximumViewPortWidthParsed ||
-		!minumumViewPortWidthParsed ||
-		!minimumFontSizeRem
+		! maximumViewPortWidthParsed ||
+		! minumumViewPortWidthParsed ||
+		! minimumFontSizeRem
 	) {
 		return null;
 	}
@@ -150,14 +150,14 @@ export function getComputedFluidTypographyValue({
 	const viewPortWidthOffset = minViewPortWidthOffsetValue + fontSizeUnit;
 	let linearFactor =
 		100 *
-		((maximumFontSizeParsed.value - minimumFontSizeParsed.value) /
-			(maximumViewPortWidthParsed.value -
-				minumumViewPortWidthParsed.value));
-	linearFactor = roundToPrecision(linearFactor, 3) || 1;
+		( ( maximumFontSizeParsed.value - minimumFontSizeParsed.value ) /
+			( maximumViewPortWidthParsed.value -
+				minumumViewPortWidthParsed.value ) );
+	linearFactor = roundToPrecision( linearFactor, 3 ) || 1;
 	const linearFactorScaled = linearFactor * scaleFactor;
-	const fluidTargetFontSize = `${minimumFontSizeRem.value}${minimumFontSizeRem.unit} + ((1vw - ${viewPortWidthOffset}) * ${linearFactorScaled})`;
+	const fluidTargetFontSize = `${ minimumFontSizeRem.value }${ minimumFontSizeRem.unit } + ((1vw - ${ viewPortWidthOffset }) * ${ linearFactorScaled })`;
 
-	return `clamp(${minimumFontSize}, ${fluidTargetFontSize}, ${maximumFontSize})`;
+	return `clamp(${ minimumFontSize }, ${ fluidTargetFontSize }, ${ maximumFontSize })`;
 }
 
 /**
@@ -167,8 +167,8 @@ export function getComputedFluidTypographyValue({
  *
  * @return {{ unit: string, value: number }|null} An object consisting of `'value'` and `'unit'` properties.
  */
-export function getTypographyValueAndUnit(rawValue, options = {}) {
-	if (!rawValue) {
+export function getTypographyValueAndUnit( rawValue, options = {} ) {
+	if ( ! rawValue ) {
 		return null;
 	}
 
@@ -176,32 +176,32 @@ export function getTypographyValueAndUnit(rawValue, options = {}) {
 		coerceTo: '',
 		// Default browser font size. Later we could inject some JS to compute this `getComputedStyle( document.querySelector( "html" ) ).fontSize`.
 		rootSizeValue: 16,
-		acceptableUnits: ['rem', 'px', 'em'],
+		acceptableUnits: [ 'rem', 'px', 'em' ],
 		...options,
 	};
 
-	const acceptableUnitsGroup = acceptableUnits?.join('|');
+	const acceptableUnitsGroup = acceptableUnits?.join( '|' );
 	const regexUnits = new RegExp(
-		`^(\\d*\\.?\\d+)(${acceptableUnitsGroup}){1,1}$`
+		`^(\\d*\\.?\\d+)(${ acceptableUnitsGroup }){1,1}$`
 	);
 
-	const matches = rawValue.match(regexUnits);
+	const matches = rawValue.match( regexUnits );
 
 	// We need a number value and a unit.
-	if (!matches || matches.length < 3) {
+	if ( ! matches || matches.length < 3 ) {
 		return null;
 	}
 
-	let [, value, unit] = matches;
+	let [ , value, unit ] = matches;
 
-	let returnValue = parseFloat(value);
+	let returnValue = parseFloat( value );
 
-	if ('px' === coerceTo && ('em' === unit || 'rem' === unit)) {
+	if ( 'px' === coerceTo && ( 'em' === unit || 'rem' === unit ) ) {
 		returnValue = returnValue * rootSizeValue;
 		unit = coerceTo;
 	}
 
-	if ('px' === unit && ('em' === coerceTo || 'rem' === coerceTo)) {
+	if ( 'px' === unit && ( 'em' === coerceTo || 'rem' === coerceTo ) ) {
 		returnValue = returnValue / rootSizeValue;
 		unit = coerceTo;
 	}
@@ -221,8 +221,8 @@ export function getTypographyValueAndUnit(rawValue, options = {}) {
  *
  * @return {number|undefined} Value rounded to standard precision.
  */
-export function roundToPrecision(value, digits = 3) {
-	return Number.isFinite(value)
-		? parseFloat(value.toFixed(digits))
+export function roundToPrecision( value, digits = 3 ) {
+	return Number.isFinite( value )
+		? parseFloat( value.toFixed( digits ) )
 		: undefined;
 }
