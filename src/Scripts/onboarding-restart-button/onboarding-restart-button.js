@@ -87,6 +87,6 @@ function observeForThemeDiv() {
 }
 
 // Wait for the DOM to be fully loaded and then start observing
-window.addEventListener( 'DOMContentLoaded', function () {
+window.addEventListener( 'DOMContentLoaded', function() {
 	observeForThemeDiv();
 } );
