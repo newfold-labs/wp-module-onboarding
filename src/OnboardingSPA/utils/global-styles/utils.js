@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { get, find } from 'lodash';
 import { getCSSValueFromRawStyle } from '@wordpress/style-engine';
 
