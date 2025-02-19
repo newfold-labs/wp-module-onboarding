@@ -2,7 +2,6 @@
  * External dependencies
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { useMemo } from '@wordpress/element';
 import { get, kebabCase, reduce } from 'lodash';
 /**
  * WordPress dependencies
@@ -24,7 +23,19 @@ import {
 /**
  * Internal dependencies
  */
-import { getBlockStyleVariationSelector, getResolvedValue, getValueFromObjectPath, PRESET_METADATA, ROOT_BLOCK_SELECTOR, ROOT_CSS_PROPERTIES_SELECTOR, scopeSelector, setImmutably } from './utils';
+import {
+	appendToSelector,
+	getResolvedValue,
+	getValueFromObjectPath,
+	LAYOUT_DEFINITIONS,
+	PRESET_METADATA,
+	ROOT_BLOCK_SELECTOR,
+	ROOT_CSS_PROPERTIES_SELECTOR,
+	scopeFeatureSelectors,
+	scopeSelector,
+	setBackgroundStyleDefaults,
+	setImmutably,
+} from './utils';
 import { getTypographyFontSizeValue } from './typography-utils';
 import { getBlockCSSSelector } from './get-block-css-selector';
 
@@ -43,21 +54,6 @@ const BLOCK_SUPPORT_FEATURE_LEVEL_SELECTORS = {
 	typography: 'typography',
 };
 
-function compileStyleValue( uncompiledValue ) {
-	const VARIABLE_REFERENCE_PREFIX = 'var:';
-	const VARIABLE_PATH_SEPARATOR_TOKEN_ATTRIBUTE = '|';
-	const VARIABLE_PATH_SEPARATOR_TOKEN_STYLE = '--';
-
-	if ( uncompiledValue?.startsWith?.( VARIABLE_REFERENCE_PREFIX ) ) {
-		const variable = uncompiledValue
-			.slice( VARIABLE_REFERENCE_PREFIX.length )
-			.split( VARIABLE_PATH_SEPARATOR_TOKEN_ATTRIBUTE )
-			.join( VARIABLE_PATH_SEPARATOR_TOKEN_STYLE );
-		return `var(--wp--${ variable })`;
-	}
-	return uncompiledValue;
-}
-
 /**
  * Transform given preset tree into a set of style declarations.
  *
@@ -66,27 +62,27 @@ function compileStyleValue( uncompiledValue ) {
  *
  * @return {Array<Object>} An array of style declarations.
  */
-function getPresetsDeclarations( blockPresets = {}, mergedSettings ) {
+function getPresetsDeclarations(blockPresets = {}, mergedSettings) {
 	return reduce(
 		PRESET_METADATA,
-		( declarations, { path, valueKey, valueFunc, cssVarInfix } ) => {
-			const presetByOrigin = get( blockPresets, path, [] );
-			if ( presetByOrigin && Array.isArray( presetByOrigin ) ) {
-				presetByOrigin.forEach( ( value ) => {
-					if ( valueKey && ! valueFunc ) {
+		(declarations, { path, valueKey, valueFunc, cssVarInfix }) => {
+			const presetByOrigin = get(blockPresets, path, []);
+			if (presetByOrigin && Array.isArray(presetByOrigin)) {
+				presetByOrigin.forEach((value) => {
+					if (valueKey && !valueFunc) {
 						declarations.push(
-							`--wp--preset--${ cssVarInfix }--${ kebabCase(
+							`--wp--preset--${cssVarInfix}--${kebabCase(
 								value.slug
-							) }: ${ value[ valueKey ] }`
+							)}: ${value[valueKey]}`
 						);
-					} else if ( valueFunc && typeof valueFunc === 'function' ) {
+					} else if (valueFunc && typeof valueFunc === 'function') {
 						declarations.push(
-							`--wp--preset--${ cssVarInfix }--${ kebabCase(
+							`--wp--preset--${cssVarInfix}--${kebabCase(
 								value.slug
-							) }: ${ valueFunc( value, mergedSettings ) }`
+							)}: ${valueFunc(value, mergedSettings)}`
 						);
 					}
-				} );
+				});
 			}
 
 			return declarations;
@@ -291,7 +287,7 @@ const getFeatureDeclarations = (selectors, styles) => {
  *
  * @param {Object}  tree                A theme.json tree containing layout definitions.
  *
- * @param           disableRootPadding
+ * @param {boolean} disableRootPadding
  * @return {Array} An array of style declarations.
  */
 export function getStylesDeclarations(
@@ -304,7 +300,7 @@ export function getStylesDeclarations(
 	const isRoot = ROOT_BLOCK_SELECTOR === selector;
 	const output = reduce(
 		STYLE_PROPERTY,
-		( declarations, { value, properties, rootOnly }, key ) => {
+		(declarations, { value, properties, rootOnly }, key) => {
 			if (rootOnly && !isRoot) {
 				return declarations;
 			}
@@ -448,7 +444,6 @@ export function getStylesDeclarations(
  * @param {boolean} props.hasBlockGapSupport    Whether or not the theme opts-in to blockGap support.
  * @param {boolean} props.hasFallbackGapSupport Whether or not the theme allows fallback gap styles.
  * @param {?string} props.fallbackGapValue      An optional fallback gap value if no real gap value is available.
- * @param           props.layoutDefinitions
  * @return {string} Generated CSS rules for the layout styles.
  */
 export function getLayoutStyles({
@@ -759,7 +754,6 @@ export const getNodesWithStyles = (tree, blockSelectors) => {
 
 	return nodes;
 };
-
 
 export const getNodesWithSettings = (tree, blockSelectors) => {
 	const nodes = [];
@@ -1145,9 +1139,7 @@ const getSelectorsConfig = (blockType, rootSelector) => {
 	return config;
 };
 
-export const getBlockSelectors = (
-	blockTypes
-) => {
+export const getBlockSelectors = (blockTypes) => {
 	const result = {};
 	blockTypes.forEach((blockType) => {
 		const name = blockType.name;
@@ -1209,60 +1201,60 @@ export const getBlockSelectors = (
 	return result;
 };
 
-export function processCSSNesting( css, blockSelector ) {
+export function processCSSNesting(css, blockSelector) {
 	let processedCSS = '';
 
-	if ( ! css || css.trim() === '' ) {
+	if (!css || css.trim() === '') {
 		return processedCSS;
 	}
 
 	// Split CSS nested rules.
-	const parts = css.split( '&' );
-	parts.forEach( ( part ) => {
-		if ( ! part || part.trim() === '' ) {
+	const parts = css.split('&');
+	parts.forEach((part) => {
+		if (!part || part.trim() === '') {
 			return;
 		}
 
-		const isRootCss = ! part.includes( '{' );
-		if ( isRootCss ) {
+		const isRootCss = !part.includes('{');
+		if (isRootCss) {
 			// If the part doesn't contain braces, it applies to the root level.
-			processedCSS += `:root :where(${ blockSelector }){${ part.trim() }}`;
+			processedCSS += `:root :where(${blockSelector}){${part.trim()}}`;
 		} else {
 			// If the part contains braces, it's a nested CSS rule.
-			const splitPart = part.replace( '}', '' ).split( '{' );
-			if ( splitPart.length !== 2 ) {
+			const splitPart = part.replace('}', '').split('{');
+			if (splitPart.length !== 2) {
 				return;
 			}
 
-			const [ nestedSelector, cssValue ] = splitPart;
+			const [nestedSelector, cssValue] = splitPart;
 
 			// Handle pseudo elements such as ::before, ::after, etc. Regex will also
 			// capture any leading combinator such as >, +, or ~, as well as spaces.
 			// This allows pseudo elements as descendants e.g. `.parent ::before`.
-			const matches = nestedSelector.match( /([>+~\s]*::[a-zA-Z-]+)/ );
-			const pseudoPart = matches ? matches[ 1 ] : '';
+			const matches = nestedSelector.match(/([>+~\s]*::[a-zA-Z-]+)/);
+			const pseudoPart = matches ? matches[1] : '';
 			const withoutPseudoElement = matches
-				? nestedSelector.replace( pseudoPart, '' ).trim()
+				? nestedSelector.replace(pseudoPart, '').trim()
 				: nestedSelector.trim();
 
 			let combinedSelector;
-			if ( withoutPseudoElement === '' ) {
+			if (withoutPseudoElement === '') {
 				// Only contained a pseudo element to use the block selector to form
 				// the final `:root :where()` selector.
 				combinedSelector = blockSelector;
 			} else {
 				// If the nested selector is a descendant of the block scope it with the
 				// block selector. Otherwise append it to the block selector.
-				combinedSelector = nestedSelector.startsWith( ' ' )
-					? scopeSelector( blockSelector, withoutPseudoElement )
-					: appendToSelector( blockSelector, withoutPseudoElement );
+				combinedSelector = nestedSelector.startsWith(' ')
+					? scopeSelector(blockSelector, withoutPseudoElement)
+					: appendToSelector(blockSelector, withoutPseudoElement);
 			}
 
 			// Build final rule, re-adding any pseudo element outside the `:where()`
 			// to maintain valid CSS selector.
-			processedCSS += `:root :where(${ combinedSelector })${ pseudoPart }{${ cssValue.trim() }}`;
+			processedCSS += `:root :where(${combinedSelector})${pseudoPart}{${cssValue.trim()}}`;
 		}
-	} );
+	});
 	return processedCSS;
 }
 
@@ -1273,13 +1265,13 @@ export function processCSSNesting( css, blockSelector ) {
  * @param {Object} config Theme.json configuration file object.
  * @return {Object} configTheme.json configuration file object updated.
  */
-function updateConfigWithSeparator( config ) {
+function updateConfigWithSeparator(config) {
 	const needsSeparatorStyleUpdate =
-		config.styles?.blocks?.[ 'core/separator' ] &&
-		config.styles?.blocks?.[ 'core/separator' ].color?.background &&
-		! config.styles?.blocks?.[ 'core/separator' ].color?.text &&
-		! config.styles?.blocks?.[ 'core/separator' ].border?.color;
-	if ( needsSeparatorStyleUpdate ) {
+		config.styles?.blocks?.['core/separator'] &&
+		config.styles?.blocks?.['core/separator'].color?.background &&
+		!config.styles?.blocks?.['core/separator'].color?.text &&
+		!config.styles?.blocks?.['core/separator'].border?.color;
+	if (needsSeparatorStyleUpdate) {
 		return {
 			...config,
 			styles: {
@@ -1287,11 +1279,11 @@ function updateConfigWithSeparator( config ) {
 				blocks: {
 					...config.styles.blocks,
 					'core/separator': {
-						...config.styles.blocks[ 'core/separator' ],
+						...config.styles.blocks['core/separator'],
 						color: {
-							...config.styles.blocks[ 'core/separator' ].color,
-							text: config.styles?.blocks[ 'core/separator' ]
-								.color.background,
+							...config.styles.blocks['core/separator'].color,
+							text: config.styles?.blocks['core/separator'].color
+								.background,
 						},
 					},
 				},
@@ -1301,65 +1293,46 @@ function updateConfigWithSeparator( config ) {
 	return config;
 }
 
-/**
- * Returns the global styles output using a global styles configuration.
- * If wishing to generate global styles and settings based on the
- * global styles config loaded in the editor context, use `useGlobalStylesOutput()`.
- * The use case for a custom config is to generate bespoke styles
- * and settings for previews, or other out-of-editor experiences.
- *
- * @param {Object}  mergedConfig       Global styles configuration.
- * @param {boolean} disableRootPadding Disable root padding styles.
- *
- * @return {Array} Array of stylesheets and settings.
- */
-export function useGlobalStylesOutputWithConfig(
+export function generateStyles(
 	previewSettings,
-	storedPreviewSettings
+	storedPreviewSettings,
+	disableRootPadding,
+	hasBlockGapSupport,
+	hasFallbackGapSupport,
+	disableLayoutStyles
 ) {
-	const hasBlockGapSupport = storedPreviewSettings.settings.__experimentalFeatures.spacing.blockGap;
-	const hasFallbackGapSupport = ! hasBlockGapSupport; // This setting isn't useful yet: it exists as a placeholder for a future explicit fallback styles support.
-	const disableLayoutStyles = storedPreviewSettings.settings
-		?.disableLayoutStyles
-		? storedPreviewSettings.settings.disableLayoutStyles
-		: true;
+	if (
+		!previewSettings?.styles &&
+		!previewSettings?.settings &&
+		!previewSettings?.globalStyles
+	) {
+		return [];
+	}
 
-		if (
-			! previewSettings?.styles &&
-			! previewSettings?.settings &&
-			! previewSettings?.globalStyles
-		) {
-			return;
-		}
-		
-	const updatedConfig = updateConfigWithSeparator( previewSettings );
-	
-	const blockSelectors = getBlockSelectors(
-		getBlockTypes(),
-	);
+	const updatedConfig = updateConfigWithSeparator(previewSettings);
+	const blockSelectors = getBlockSelectors(getBlockTypes());
 
-	const customProperties = toCustomProperties(
-		updatedConfig,
-		blockSelectors
-	);
-
+	// Generate custom properties, global styles, and SVG filters
+	const customProperties = toCustomProperties(updatedConfig, blockSelectors);
 	const globalStyles = toStyles(
 		updatedConfig,
 		blockSelectors,
 		hasBlockGapSupport,
 		hasFallbackGapSupport,
 		disableLayoutStyles,
+		disableRootPadding
 	);
+	const svgs = toSvgFilters(updatedConfig, blockSelectors);
 
-	const svgs = toSvgFilters( updatedConfig, blockSelectors );
-
-	const result = storedPreviewSettings.settings.styles.filter( ( style ) => {
-		return ! (
-			style.hasOwnProperty( 'id' ) &&
-			( style.id === 'customProperty' || style.id === 'globalStyle' )
+	// Filter out existing styles that match certain criteria
+	const result = storedPreviewSettings.settings.styles.filter((style) => {
+		return !(
+			style.hasOwnProperty('id') &&
+			(style.id === 'customProperty' || style.id === 'globalStyle')
 		);
-	} );
+	});
 
+	// Construct the styles array
 	const styles = [
 		...result,
 		{
@@ -1372,7 +1345,6 @@ export function useGlobalStylesOutputWithConfig(
 			css: globalStyles,
 			isGlobalStyles: true,
 		},
-		// Load custom CSS in own stylesheet so that any invalid CSS entered in the input won't break all the global styles in the editor.
 		{
 			id: 'customCSS',
 			css: updatedConfig.styles.css ?? '',
@@ -1385,43 +1357,92 @@ export function useGlobalStylesOutputWithConfig(
 		},
 	];
 
-	// Loop through the blocks to check if there are custom CSS values.
-	// If there are, get the block selector and push the selector together with
-	// the CSS value to the 'stylesheets' array.
-	getBlockTypes().forEach( ( blockType ) => {
-		
-		if ( updatedConfig.styles.blocks[ blockType.name ]?.css ) {
-			const selector = blockSelectors[ blockType.name ].selector;
-			styles.push( {
+	// Add block-specific custom styles
+	getBlockTypes().forEach((blockType) => {
+		if (updatedConfig.styles.blocks[blockType.name]?.css) {
+			const selector = blockSelectors[blockType.name].selector;
+			styles.push({
 				css: processCSSNesting(
-					updatedConfig.styles.blocks[ blockType.name ]?.css,
+					updatedConfig.styles.blocks[blockType.name]?.css,
 					selector
 				),
 				isGlobalStyles: true,
-			} );
+			});
 		}
-	} );
-	
-	updatedConfig.settings.styles = styles;
-	previewSettings.settings = updatedConfig.settings;
-	previewSettings.settings.__unstableResolvedAssets =
-		storedPreviewSettings.settings.__unstableResolvedAssets;
-	previewSettings.settings.__experimentalFeatures =
-		storedPreviewSettings.settings.__experimentalFeatures;
-	
-	return previewSettings;
+	});
+
+	return styles;
+}
+
+/**
+ * Returns the global styles output using a global styles configuration.
+ * If wishing to generate global styles and settings based on the
+ * global styles config loaded in the editor context, use `useGlobalStylesOutput()`.
+ * The use case for a custom config is to generate bespoke styles
+ * and settings for previews, or other out-of-editor experiences.
+ *
+ * @param {Object}  previewSettings       New Global styles configuration.
+ * @param {Object}  storedPreviewSettings Global styles configuration.
+ * @param {boolean} disableRootPadding    Disable root padding styles.
+ *
+ * @return {Array} Array of stylesheets and settings.
+ */
+export function useGlobalStylesOutputWithConfig(
+	previewSettings,
+	storedPreviewSettings,
+	disableRootPadding
+) {
+	const hasBlockGapSupport =
+		storedPreviewSettings.settings.__experimentalFeatures.spacing.blockGap;
+	const hasFallbackGapSupport = !hasBlockGapSupport;
+	const disableLayoutStyles = storedPreviewSettings.settings
+		?.disableLayoutStyles
+		? storedPreviewSettings.settings.disableLayoutStyles
+		: true;
+
+	// Generate styles using the separate helper function
+	const styles = generateStyles(
+		previewSettings,
+		storedPreviewSettings,
+		disableRootPadding,
+		hasBlockGapSupport,
+		hasFallbackGapSupport,
+		disableLayoutStyles
+	);
+
+	// Update previewSettings with the new styles
+	const updatedPreviewSettings = {
+		...previewSettings,
+		settings: {
+			...previewSettings.settings,
+			styles,
+			__unstableResolvedAssets:
+				storedPreviewSettings.settings.__unstableResolvedAssets,
+			__experimentalFeatures:
+				storedPreviewSettings.settings.__experimentalFeatures,
+		},
+	};
+
+	return updatedPreviewSettings;
 }
 
 /**
  * Returns the global styles output based on the current state of global styles config loaded in the editor context.
  *
- * @param {boolean} disableRootPadding Disable root padding styles.
+ * @param {Object}  previewSettings       New Global styles configuration.
+ * @param {Object}  storedPreviewSettings Global styles configuration.
+ * @param {boolean} disableRootPadding    Disable root padding styles.
  *
  * @return {Array} Array of stylesheets and settings.
  */
-export function useGlobalStylesOutput( 
+export function useGlobalStylesOutput(
 	previewSettings,
 	storedPreviewSettings,
-	disableRootPadding = false ) {
-	return useGlobalStylesOutputWithConfig( previewSettings, storedPreviewSettings, disableRootPadding );
+	disableRootPadding = false
+) {
+	return useGlobalStylesOutputWithConfig(
+		previewSettings,
+		storedPreviewSettings,
+		disableRootPadding
+	);
 }
