@@ -57,20 +57,20 @@
 		"wp-cli/i18n-command": "^2.6.3"
 	},
 	"scripts": {
-		"lint": [
-			"vendor/bin/phpcs . --standard=Newfold"
-		],
-		"clean": [
-			"vendor/bin/phpcbf . --standard=Newfold"
+		"fix": [
+			"vendor/bin/phpcbf . --standard=phpcs.xml"
 		],
 		"i18n-pot": "vendor/bin/wp i18n make-pot . ./languages/wp-module-onboarding.pot --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/newfold-labs/wp-module-onboarding/issues\",\"POT-Creation-Date\":\"2024-11-18T07:59:34+00:00\"}' --exclude=assets,tests,src",
 		"i18n-po": "vendor/bin/wp i18n update-po ./languages/wp-module-onboarding.pot ./languages",
 		"i18n-mo": "vendor/bin/wp i18n make-mo ./languages",
 		"i18n-json": "rm -f languages/*.json && vendor/bin/wp i18n make-json ./languages --no-purge --pretty-print",
 		"i18n": [
-		  "@i18n-pot",
-		  "@i18n-po",
-		  "@i18n-mo"
+			"@i18n-pot",
+			"@i18n-po",
+			"@i18n-mo"
+		],
+		"lint": [
+			"vendor/bin/phpcs . --standard=phpcs.xml"
 		]
 	},
 	"scripts-descriptions": {
