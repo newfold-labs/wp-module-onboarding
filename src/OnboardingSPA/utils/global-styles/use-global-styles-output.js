@@ -19,12 +19,12 @@ import {
 	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalGetGapCSSValue as getGapCSSValue,
 } from '@wordpress/block-editor';
-
 /**
  * Internal dependencies
  */
 import {
 	appendToSelector,
+	getBlockStyleVariationSelector,
 	getResolvedValue,
 	getValueFromObjectPath,
 	LAYOUT_DEFINITIONS,
@@ -1202,7 +1202,7 @@ const getSelectorsConfig = ( blockType, rootSelector ) => {
 	return config;
 };
 
-export const getBlockSelectors = ( blockTypes ) => {
+export const getBlockSelectors = ( blockTypes, storedPreviewSettings ) => {
 	const result = {};
 	blockTypes.forEach( ( blockType ) => {
 		const name = blockType.name;
@@ -1231,20 +1231,31 @@ export const getBlockSelectors = ( blockTypes ) => {
 			blockType?.supports?.spacing?.blockGap?.__experimentalDefault;
 
 		// TO-DO Check this logic
-		// const blockStyleVariations = BLOCK_SUPPORT_FEATURE_LEVEL_SELECTORS;
-		// const styleVariationSelectors = {};
-		// blockStyleVariations?.forEach((variation) => {
-		// 	const variationSuffix = variationInstanceId
-		// 		? `-${variationInstanceId}`
-		// 		: '';
-		// 	const variationName = `${variation.name}${variationSuffix}`;
-		// 	const styleVariationSelector = getBlockStyleVariationSelector(
-		// 		variationName,
-		// 		selector
-		// 	);
+		const blockStyleVariation =
+			storedPreviewSettings.globalStyles.blocks[ name ]?.variations;
+		const blockStyleVariationArray = blockStyleVariation
+			? [ blockStyleVariation ]
+			: [];
+		const styleVariationSelectors = {};
 
-		// 	styleVariationSelectors[variationName] = styleVariationSelector;
-		// });
+		if ( blockStyleVariationArray.length !== 0 ) {
+			blockStyleVariationArray?.forEach( ( variation ) => {
+				Object.entries( variation ).forEach( ( [ key, value ] ) => {
+					const variationSuffix = blockType?.apiVersion
+						? `--${ blockType?.apiVersion }`
+						: '';
+					const variationName = `${ key }${ variationSuffix }`;
+					const styleVariationSelector =
+						getBlockStyleVariationSelector(
+							variationName,
+							selector
+						);
+
+					styleVariationSelectors[ variationName ] =
+						styleVariationSelector;
+				} );
+			} );
+		}
 
 		// For each block support feature add any custom selectors.
 		const featureSelectors = getSelectorsConfig( blockType, selector );
@@ -1258,9 +1269,9 @@ export const getBlockSelectors = ( blockTypes ) => {
 			hasLayoutSupport,
 			name,
 			selector,
-			// styleVariationSelectors: blockStyleVariations?.length
-			// 	? styleVariationSelectors
-			// 	: undefined,
+			styleVariationSelectors: blockStyleVariationArray?.length
+				? styleVariationSelectors
+				: undefined,
 		};
 	} );
 
@@ -1376,7 +1387,10 @@ export function generateStyles(
 	}
 
 	const updatedConfig = updateConfigWithSeparator( previewSettings );
-	const blockSelectors = getBlockSelectors( getBlockTypes() );
+	const blockSelectors = getBlockSelectors(
+		getBlockTypes(),
+		storedPreviewSettings
+	);
 
 	// Generate custom properties, global styles, and SVG filters
 	const customProperties = toCustomProperties(
