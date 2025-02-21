@@ -2,7 +2,7 @@
  * External dependencies
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { get, kebabCase, reduce } from 'lodash';
+import { kebabCase } from 'lodash';
 /**
  * WordPress dependencies
  */
@@ -15,8 +15,6 @@ import {
 import { getCSSRules, getCSSValueFromRawStyle } from '@wordpress/style-engine';
 import {
 	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
-	__unstablePresetDuotoneFilter as PresetDuotoneFilter,
-	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalGetGapCSSValue as getGapCSSValue,
 } from '@wordpress/block-editor';
 /**
@@ -25,6 +23,7 @@ import {
 import {
 	appendToSelector,
 	getBlockStyleVariationSelector,
+	getDuotoneFilter,
 	getResolvedValue,
 	getValueFromObjectPath,
 	LAYOUT_DEFINITIONS,
@@ -63,27 +62,35 @@ const BLOCK_SUPPORT_FEATURE_LEVEL_SELECTORS = {
  * @return {Array<Object>} An array of style declarations.
  */
 function getPresetsDeclarations( blockPresets = {}, mergedSettings ) {
-	return reduce(
-		PRESET_METADATA,
+	return PRESET_METADATA.reduce(
 		( declarations, { path, valueKey, valueFunc, cssVarInfix } ) => {
-			const presetByOrigin = get( blockPresets, path, [] );
-			if ( presetByOrigin && Array.isArray( presetByOrigin ) ) {
-				presetByOrigin.forEach( ( value ) => {
-					if ( valueKey && ! valueFunc ) {
-						declarations.push(
-							`--wp--preset--${ cssVarInfix }--${ kebabCase(
-								value.slug
-							) }: ${ value[ valueKey ] }`
-						);
-					} else if ( valueFunc && typeof valueFunc === 'function' ) {
-						declarations.push(
-							`--wp--preset--${ cssVarInfix }--${ kebabCase(
-								value.slug
-							) }: ${ valueFunc( value, mergedSettings ) }`
-						);
-					}
-				} );
-			}
+			const presetByOrigin = getValueFromObjectPath(
+				blockPresets,
+				path,
+				[]
+			);
+			[ 'default', 'theme', 'custom' ].forEach( ( origin ) => {
+				if ( presetByOrigin[ origin ] ) {
+					presetByOrigin[ origin ].forEach( ( value ) => {
+						if ( valueKey && ! valueFunc ) {
+							declarations.push(
+								`--wp--preset--${ cssVarInfix }--${ kebabCase(
+									value.slug
+								) }: ${ value[ valueKey ] }`
+							);
+						} else if (
+							valueFunc &&
+							typeof valueFunc === 'function'
+						) {
+							declarations.push(
+								`--wp--preset--${ cssVarInfix }--${ kebabCase(
+									value.slug
+								) }: ${ valueFunc( value, mergedSettings ) }`
+							);
+						}
+					} );
+				}
+			} );
 
 			return declarations;
 		},
@@ -98,7 +105,7 @@ function getPresetsDeclarations( blockPresets = {}, mergedSettings ) {
  * @param {Object} blockPresets
  * @return {string} CSS declarations for the preset classes.
  */
-function getPresetsClasses( blockSelector, blockPresets = {} ) {
+function getPresetsClasses( blockSelector = '*', blockPresets = {} ) {
 	return PRESET_METADATA.reduce(
 		( declarations, { path, cssVarInfix, classes } ) => {
 			if ( ! classes ) {
@@ -110,26 +117,28 @@ function getPresetsClasses( blockSelector, blockPresets = {} ) {
 				path,
 				[]
 			);
-			if ( presetByOrigin && Array.isArray( presetByOrigin ) ) {
-				presetByOrigin.forEach( ( { slug } ) => {
-					classes.forEach( ( { classSuffix, propertyName } ) => {
-						const classSelectorToUse = `.has-${ kebabCase(
-							slug
-						) }-${ classSuffix }`;
-						const selectorToUse = blockSelector
-							.split( ',' ) // Selector can be "h1, h2, h3"
-							.map(
-								( selector ) =>
-									`${ selector }${ classSelectorToUse }`
-							)
-							.join( ',' );
-						const value = `var(--wp--preset--${ cssVarInfix }--${ kebabCase(
-							slug
-						) })`;
-						declarations += `${ selectorToUse }{${ propertyName }: ${ value } !important;}`;
+			[ 'default', 'theme', 'custom' ].forEach( ( origin ) => {
+				if ( presetByOrigin[ origin ] ) {
+					presetByOrigin[ origin ].forEach( ( { slug } ) => {
+						classes.forEach( ( { classSuffix, propertyName } ) => {
+							const classSelectorToUse = `.has-${ kebabCase(
+								slug
+							) }-${ classSuffix }`;
+							const selectorToUse = blockSelector
+								.split( ',' ) // Selector can be "h1, h2, h3"
+								.map(
+									( selector ) =>
+										`${ selector }${ classSelectorToUse }`
+								)
+								.join( ',' );
+							const value = `var(--wp--preset--${ cssVarInfix }--${ kebabCase(
+								slug
+							) })`;
+							declarations += `${ selectorToUse }{${ propertyName }: ${ value } !important;}`;
+						} );
 					} );
-				} );
-			}
+				}
+			} );
 			return declarations;
 		},
 		''
@@ -149,13 +158,14 @@ function getPresetsSvgFilters( blockPresets = {} ) {
 		return [ 'default', 'theme' ]
 			.filter( ( origin ) => presetByOrigin[ origin ] )
 			.flatMap( ( origin ) =>
-				presetByOrigin[ origin ].map( ( preset ) => (
-					<PresetDuotoneFilter
-						preset={ preset }
-						key={ preset.slug }
-					/>
-				) )
-			);
+				presetByOrigin[ origin ].map( ( preset ) =>
+					getDuotoneFilter(
+						`wp-duotone-${ preset.slug }`,
+						preset.colors
+					)
+				)
+			)
+			.join( '' );
 	} );
 }
 
@@ -291,7 +301,7 @@ const getFeatureDeclarations = ( selectors, styles ) => {
  *
  * @param {Object}  tree                A theme.json tree containing layout definitions.
  *
- * @param {boolean} disableRootPadding
+ * @param {boolean} disableRootPadding  Whether to force disable the root padding styles.
  * @return {Array} An array of style declarations.
  */
 export function getStylesDeclarations(
@@ -302,16 +312,19 @@ export function getStylesDeclarations(
 	disableRootPadding = false
 ) {
 	const isRoot = ROOT_BLOCK_SELECTOR === selector;
-	const output = reduce(
-		STYLE_PROPERTY,
-		( declarations, { value, properties, rootOnly }, key ) => {
+	const output = Object.entries( STYLE_PROPERTY ).reduce(
+		(
+			declarations,
+			[ key, { value, properties, useEngine, rootOnly } ]
+		) => {
 			if ( rootOnly && ! isRoot ) {
 				return declarations;
 			}
 			const pathToValue = value;
-			if ( pathToValue[ 0 ] === 'elements' ) {
+			if ( pathToValue[ 0 ] === 'elements' || useEngine ) {
 				return declarations;
 			}
+
 			const styleValue = getValueFromObjectPath(
 				blockStyles,
 				pathToValue
@@ -449,7 +462,7 @@ export function getStylesDeclarations(
  * in theme.json, and outputting common layout styles, and specific blockGap values.
  *
  * @param {Object}  props
- * @param {Object}  props.layoutDefinitions     A theme.json tree containing layout definitions.
+ * @param {Object}  props.layoutDefinitions     Layout definitions, keyed by layout type.
  * @param {Object}  props.style                 A style object containing spacing values.
  * @param {string}  props.selector              Selector used to group together layout styling rules.
  * @param {boolean} props.hasBlockGapSupport    Whether or not the theme opts-in to blockGap support.
@@ -636,9 +649,9 @@ export const getNodesWithStyles = ( tree, blockSelectors ) => {
 	}
 
 	Object.entries( ELEMENTS ).forEach( ( [ name, selector ] ) => {
-		if ( tree.styles?.elements[ name ] ) {
+		if ( tree.styles?.elements?.[ name ] ) {
 			nodes.push( {
-				styles: tree.styles?.elements[ name ],
+				styles: tree.styles?.elements?.[ name ],
 				selector,
 				// Top level elements that don't use a class name should not receive the
 				// `:root :where()` wrapper to maintain backwards compatibility.
@@ -864,7 +877,7 @@ export const toCustomProperties = ( tree, blockSelectors ) => {
 		}
 
 		if ( declarations.length > 0 ) {
-			ruleset = ruleset + `${ selector }{${ declarations.join( ';' ) };}`;
+			ruleset += `${ selector }{${ declarations.join( ';' ) };}`;
 		}
 	} );
 
@@ -1240,6 +1253,7 @@ export const getBlockSelectors = ( blockTypes, storedPreviewSettings ) => {
 
 		if ( blockStyleVariationArray.length !== 0 ) {
 			blockStyleVariationArray?.forEach( ( variation ) => {
+				// eslint-disable-next-line no-unused-vars
 				Object.entries( variation ).forEach( ( [ key, value ] ) => {
 					const variationSuffix = blockType?.apiVersion
 						? `--${ blockType?.apiVersion }`
