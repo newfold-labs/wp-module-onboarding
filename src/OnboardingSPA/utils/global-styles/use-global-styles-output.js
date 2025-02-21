@@ -1235,33 +1235,33 @@ export const getBlockSelectors = ( blockTypes, storedPreviewSettings ) => {
 		const fallbackGapValue =
 			blockType?.supports?.spacing?.blockGap?.__experimentalDefault;
 
-		// TO-DO Check this logic
-		const blockStyleVariation =
-			storedPreviewSettings.globalStyles.blocks[ name ]?.variations;
-		const blockStyleVariationArray = blockStyleVariation
-			? [ blockStyleVariation ]
-			: [];
-		const styleVariationSelectors = {};
+		// Specific logic
+		// const blockStyleVariation =
+		// 	storedPreviewSettings.globalStyles.blocks[ name ]?.variations;
+		// const blockStyleVariationArray = blockStyleVariation
+		// 	? [ blockStyleVariation ]
+		// 	: [];
+		// const styleVariationSelectors = {};
 
-		if ( blockStyleVariationArray.length !== 0 ) {
-			blockStyleVariationArray?.forEach( ( variation ) => {
-				// eslint-disable-next-line no-unused-vars
-				Object.entries( variation ).forEach( ( [ key, value ] ) => {
-					const variationSuffix = blockType?.apiVersion
-						? `--${ blockType?.apiVersion }`
-						: '';
-					const variationName = `${ key }${ variationSuffix }`;
-					const styleVariationSelector =
-						getBlockStyleVariationSelector(
-							variationName,
-							selector
-						);
+		// if ( blockStyleVariationArray.length !== 0 ) {
+		// 	blockStyleVariationArray?.forEach( ( variation ) => {
+		// 		// eslint-disable-next-line no-unused-vars
+		// 		Object.entries( variation ).forEach( ( [ key, value ] ) => {
+		// 			const variationSuffix = blockType?.apiVersion
+		// 				? `--${ blockType?.apiVersion }`
+		// 				: '';
+		// 			const variationName = `${ key }${ variationSuffix }`;
+		// 			const styleVariationSelector =
+		// 				getBlockStyleVariationSelector(
+		// 					variationName,
+		// 					selector
+		// 				);
 
-					styleVariationSelectors[ variationName ] =
-						styleVariationSelector;
-				} );
-			} );
-		}
+		// 			styleVariationSelectors[ variationName ] =
+		// 				styleVariationSelector;
+		// 		} );
+		// 	} );
+		// }
 
 		// For each block support feature add any custom selectors.
 		const featureSelectors = getSelectorsConfig( blockType, selector );
@@ -1275,9 +1275,9 @@ export const getBlockSelectors = ( blockTypes, storedPreviewSettings ) => {
 			hasLayoutSupport,
 			name,
 			selector,
-			styleVariationSelectors: blockStyleVariationArray?.length
-				? styleVariationSelectors
-				: undefined,
+			// styleVariationSelectors: blockStyleVariationArray?.length
+			// 	? styleVariationSelectors
+			// 	: undefined,
 		};
 	} );
 
