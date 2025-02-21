@@ -22,7 +22,6 @@ import {
  */
 import {
 	appendToSelector,
-	getBlockStyleVariationSelector,
 	getDuotoneFilter,
 	getResolvedValue,
 	getValueFromObjectPath,
@@ -1207,7 +1206,7 @@ const getSelectorsConfig = ( blockType, rootSelector ) => {
 	return config;
 };
 
-export const getBlockSelectors = ( blockTypes, storedPreviewSettings ) => {
+export const getBlockSelectors = ( blockTypes ) => {
 	const result = {};
 	blockTypes.forEach( ( blockType ) => {
 		const name = blockType.name;
@@ -1393,10 +1392,7 @@ export function generateStyles(
 	}
 
 	const updatedConfig = updateConfigWithSeparator( previewSettings );
-	const blockSelectors = getBlockSelectors(
-		getBlockTypes(),
-		storedPreviewSettings
-	);
+	const blockSelectors = getBlockSelectors( getBlockTypes() );
 
 	// Generate custom properties, global styles, and SVG filters
 	const customProperties = toCustomProperties(
