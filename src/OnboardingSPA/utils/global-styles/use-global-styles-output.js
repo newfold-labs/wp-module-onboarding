@@ -901,7 +901,7 @@ export const toStyles = (
 		marginReset: true,
 		presets: true,
 		rootPadding: true,
-		variationStyles: false,
+		variationStyles: true,
 		...styleOptions,
 	};
 
@@ -1411,6 +1411,7 @@ export function generateStyles(
 		updatedConfig,
 		blockSelectors
 	);
+
 	const globalStyles = toStyles(
 		updatedConfig,
 		blockSelectors,
@@ -1428,6 +1429,31 @@ export function generateStyles(
 			( style.id === 'customProperty' || style.id === 'globalStyle' )
 		);
 	} );
+
+	//Add SpecialStyling for variations
+	const nodesWithStyles = getNodesWithStyles( updatedConfig, blockSelectors );
+	if ( nodesWithStyles ) {
+		nodesWithStyles.forEach( ( { selector, styleVariationSelectors } ) => {
+			// Include the button varirations manually
+			if (
+				selector.toLowerCase().includes( 'button' ) &&
+				styleVariationSelectors
+			) {
+				const firstEntry = Object.entries(
+					styleVariationSelectors
+				)[ 0 ];
+				const firstKey = firstEntry[ 0 ];
+				let firstValue = firstEntry[ 1 ];
+
+				// Remove the value of firstKey from firstValue (specifically after the -- part)
+				firstValue = firstValue.replace(
+					firstKey,
+					firstKey.replace( /--\d+/, '' )
+				);
+				updatedConfig.styles.css = `:root :where(${ firstValue }){ background: transparent none; }`;
+			}
+		} );
+	}
 
 	// Construct the styles array
 	const styles = [
