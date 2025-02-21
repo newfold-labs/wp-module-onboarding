@@ -523,7 +523,7 @@ msgstr "Erreur lors de l'enregistrement des données, réessayez !"
 #. translators: %d: Character count
 #: build/2.5.8/340.js:8
 msgid "(%d characters left)"
-msgstr ""
+msgstr "(%d caractères restants)"
 
 #: build/2.5.8/340.js:8
 msgid "Preview"

@@ -1366,7 +1366,7 @@ msgstr "U kunt onboarding herstarten vanaf uw %s Instellingenpagina."
 
 #: build/2.5.8/onboarding.js:28
 msgid "Loading…"
-msgstr ""
+msgstr "Laden…"
 
 #: build/2.5.8/onboarding.js:28
 msgid "Preview Version"

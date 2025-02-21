@@ -1749,4 +1749,4 @@ msgstr "store"
 
 #: build/2.5.8/705.js:1
 msgid "Who is this site for? What's the ideal design?"
-msgstr ""
+msgstr "Who is this site for? What’s the ideal design?"  
