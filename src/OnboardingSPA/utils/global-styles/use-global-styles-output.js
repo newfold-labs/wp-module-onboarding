@@ -2,7 +2,7 @@
  * External dependencies
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { kebabCase } from 'lodash';
+import { get, kebabCase, reduce } from 'lodash';
 /**
  * WordPress dependencies
  */
@@ -62,35 +62,27 @@ const BLOCK_SUPPORT_FEATURE_LEVEL_SELECTORS = {
  * @return {Array<Object>} An array of style declarations.
  */
 function getPresetsDeclarations( blockPresets = {}, mergedSettings ) {
-	return PRESET_METADATA.reduce(
+	return reduce(
+		PRESET_METADATA,
 		( declarations, { path, valueKey, valueFunc, cssVarInfix } ) => {
-			const presetByOrigin = getValueFromObjectPath(
-				blockPresets,
-				path,
-				[]
-			);
-			[ 'default', 'theme', 'custom' ].forEach( ( origin ) => {
-				if ( presetByOrigin[ origin ] ) {
-					presetByOrigin[ origin ].forEach( ( value ) => {
-						if ( valueKey && ! valueFunc ) {
-							declarations.push(
-								`--wp--preset--${ cssVarInfix }--${ kebabCase(
-									value.slug
-								) }: ${ value[ valueKey ] }`
-							);
-						} else if (
-							valueFunc &&
-							typeof valueFunc === 'function'
-						) {
-							declarations.push(
-								`--wp--preset--${ cssVarInfix }--${ kebabCase(
-									value.slug
-								) }: ${ valueFunc( value, mergedSettings ) }`
-							);
-						}
-					} );
-				}
-			} );
+			const presetByOrigin = get( blockPresets, path, [] );
+			if ( presetByOrigin && Array.isArray( presetByOrigin ) ) {
+				presetByOrigin.forEach( ( value ) => {
+					if ( valueKey && ! valueFunc ) {
+						declarations.push(
+							`--wp--preset--${ cssVarInfix }--${ kebabCase(
+								value.slug
+							) }: ${ value[ valueKey ] }`
+						);
+					} else if ( valueFunc && typeof valueFunc === 'function' ) {
+						declarations.push(
+							`--wp--preset--${ cssVarInfix }--${ kebabCase(
+								value.slug
+							) }: ${ valueFunc( value, mergedSettings ) }`
+						);
+					}
+				} );
+			}
 
 			return declarations;
 		},
