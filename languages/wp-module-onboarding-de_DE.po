@@ -9,6 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-11-18T07:59:34+00:00\n"
 "PO-Revision-Date: 2025-02-19 15:20\n"
+"Language: de_DE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-module-onboarding\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,7 +18,6 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: wp-module-onboarding.pot\n"
 "X-Crowdin-File-ID: 32\n"
-"Language: de_DE\n"
 
 #: bootstrap.php:22
 #: includes/Compatibility/Safe_Mode.php:44
@@ -1755,4 +1755,3 @@ msgstr "webseite"
 msgctxt "noun"
 msgid "store"
 msgstr "speichern"
-
