@@ -1,3 +1,7 @@
+# Instructions for Using the Translation Workflow:
+# Detailed guidelines for utilizing the translation workflow can be found in Section 5.12 
+# of our documentation: [How We Work](https://newfold-labs.github.io/how-we-work/).  
+
 name: Crowdin Upload Action
 
 on:
