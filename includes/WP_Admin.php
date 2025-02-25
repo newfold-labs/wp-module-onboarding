@@ -244,6 +244,12 @@ final class WP_Admin {
 				// Add the option if it doesn't exist
 				add_option( $option_name, true );
 			}
+		} else {
+			// Get the option name for 'can_restart'
+			$option_name = Options::get_option_name( 'can_restart' );
+
+			// Add the option if it doesn't exist
+			update_option( $option_name, false );
 		}
 	}
 
