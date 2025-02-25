@@ -10,7 +10,7 @@ on:
 
 jobs:
   call-crowdin-workflow:
-    uses: newfold-labs/workflows/.github/workflows/i18n-crowdin-download
+    uses: newfold-labs/workflows/.github/workflows/i18n-crowdin-download.yml@main
     with:
       base_branch: ${{ inputs.base_branch }}
     secrets:
