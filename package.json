@@ -17,12 +17,14 @@
         "axe-core": "^4.8.3",
         "cypress": "^13.6.1",
         "cypress-axe": "^1.5.0",
+        "node-fetch": "^3.3.2",
         "webpack-merge": "^5.8.0"
     },
     "scripts": {
         "build": "wp-scripts build ./src/onboarding.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.css",
         "format": "wp-scripts format ./src",
         "start": "wp-scripts start ./src/onboarding.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.css",
+        "set-version-bump": "node ./.github/scripts/set-version-bump.js && npm i && rm -rf ./build && npm run build && composer run i18n",
         "lint:js": "wp-scripts lint-js ./src",
         "lint:js:fix": "wp-scripts lint-js ./src --fix",
         "test:e2e": "npx cypress run",
