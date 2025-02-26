@@ -64,7 +64,7 @@
 		"i18n-po": "vendor/bin/wp i18n update-po ./languages/wp-module-onboarding.pot ./languages",
 		"i18n-mo": "vendor/bin/wp i18n make-mo ./languages",
 		"i18n-php": "vendor/bin/wp i18n make-php ./languages",
-		"i18n-json": "rm -f languages/*.json && vendor/bin/wp i18n make-json ./languages --no-purge --pretty-print",
+		"i18n-json": "find ./languages -type f -name \"*.po\" -print0 | xargs -0 -I {} sh -c 'name=$(basename \"$1\" .po); npx po2json languages/\"$name\".po languages/\"$name\"-nfd-onboarding.json -f jed1.x' -- {}",
 		"i18n": [
 			"@i18n-pot",
 			"@i18n-po",
