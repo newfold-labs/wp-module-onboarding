@@ -240,16 +240,16 @@
         },
         {
             "name": "newfold-labs/wp-module-ai",
-            "version": "1.1.14",
+            "version": "1.1.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-ai.git",
-                "reference": "b7cd30ce123c2809dc58fbaf2df683256f846b8e"
+                "reference": "aa9c8933316059736f49038a6a019cd245791f7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-ai/zipball/b7cd30ce123c2809dc58fbaf2df683256f846b8e",
-                "reference": "b7cd30ce123c2809dc58fbaf2df683256f846b8e",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-ai/zipball/aa9c8933316059736f49038a6a019cd245791f7e",
+                "reference": "aa9c8933316059736f49038a6a019cd245791f7e",
                 "shasum": ""
             },
             "require": {
@@ -279,10 +279,10 @@
             ],
             "description": "A module for providing artificial intelligence capabilities.",
             "support": {
-                "source": "https://github.com/newfold-labs/wp-module-ai/tree/1.1.14",
+                "source": "https://github.com/newfold-labs/wp-module-ai/tree/1.1.15",
                 "issues": "https://github.com/newfold-labs/wp-module-ai/issues"
             },
-            "time": "2025-02-13T13:21:23+00:00"
+            "time": "2025-02-19T18:53:57+00:00"
         },
         {
             "name": "newfold-labs/wp-module-context",
@@ -489,23 +489,24 @@
         },
         {
             "name": "newfold-labs/wp-module-features",
-            "version": "1.4.2",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-features.git",
-                "reference": "0424ca66ed275371a372b139d1c2f81652181b01"
+                "reference": "b46fa1abb1ccc1a1e699c6511afd1a74c197ac25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-features/zipball/0424ca66ed275371a372b139d1c2f81652181b01",
-                "reference": "0424ca66ed275371a372b139d1c2f81652181b01",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-features/zipball/b46fa1abb1ccc1a1e699c6511afd1a74c197ac25",
+                "reference": "b46fa1abb1ccc1a1e699c6511afd1a74c197ac25",
                 "shasum": ""
             },
             "require": {
                 "wp-forge/wp-options": "^1.1.1"
             },
             "require-dev": {
-                "newfold-labs/wp-php-standards": "^1.2.3"
+                "newfold-labs/wp-php-standards": "^1.2.3",
+                "wp-cli/i18n-command": "^2.6.3"
             },
             "type": "library",
             "autoload": {
@@ -522,6 +523,28 @@
                 ],
                 "lint": [
                     "vendor/bin/phpcs . --standard=phpcs.xml -s"
+                ],
+                "i18n-pot": [
+                    "vendor/bin/wp i18n make-pot . ./languages/wp-module-features.pot --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/newfold-labs/wp-module-features/issues\",\"POT-Creation-Date\":\"2025-02-13T09:55:55+00:00\"}'"
+                ],
+                "i18n-po": [
+                    "vendor/bin/wp i18n update-po ./languages/wp-module-features.pot ./languages"
+                ],
+                "i18n-mo": [
+                    "vendor/bin/wp i18n make-mo ./languages"
+                ],
+                "i18n-php": [
+                    "vendor/bin/wp i18n make-php ./languages"
+                ],
+                "i18n-json": [
+                    "rm -f languages/*.json && vendor/bin/wp i18n make-json ./languages --no-purge --pretty-print"
+                ],
+                "i18n": [
+                    "@i18n-pot",
+                    "@i18n-po",
+                    "@i18n-mo",
+                    "@i18n-php",
+                    "@i18n-json"
                 ]
             },
             "license": [
@@ -539,10 +562,10 @@
             ],
             "description": "A module for providing an interface for features.",
             "support": {
-                "source": "https://github.com/newfold-labs/wp-module-features/tree/1.4.2",
+                "source": "https://github.com/newfold-labs/wp-module-features/tree/1.5.0",
                 "issues": "https://github.com/newfold-labs/wp-module-features/issues"
             },
-            "time": "2024-06-20T19:10:03+00:00"
+            "time": "2025-02-25T22:55:26+00:00"
         },
         {
             "name": "newfold-labs/wp-module-install-checker",
@@ -585,23 +608,23 @@
         },
         {
             "name": "newfold-labs/wp-module-installer",
-            "version": "1.3.0",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-installer.git",
-                "reference": "e8dbc7a117c7f9ebeb2c9620ab6689c49ca1d3fe"
+                "reference": "0f7a86ac125016aa6b01c5eafd151d963053ab00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-installer/zipball/e8dbc7a117c7f9ebeb2c9620ab6689c49ca1d3fe",
-                "reference": "e8dbc7a117c7f9ebeb2c9620ab6689c49ca1d3fe",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-installer/zipball/0f7a86ac125016aa6b01c5eafd151d963053ab00",
+                "reference": "0f7a86ac125016aa6b01c5eafd151d963053ab00",
                 "shasum": ""
             },
             "require": {
                 "newfold-labs/wp-module-pls": "^1.0.1"
             },
             "require-dev": {
-                "newfold-labs/wp-php-standards": "^1.2",
+                "newfold-labs/wp-php-standards": "^1.2.4",
                 "wp-cli/wp-cli": "^2.11"
             },
             "type": "library",
@@ -624,10 +647,10 @@
             ],
             "description": "An installer for WordPress plugins and themes.",
             "support": {
-                "source": "https://github.com/newfold-labs/wp-module-installer/tree/1.3.0",
+                "source": "https://github.com/newfold-labs/wp-module-installer/tree/1.3.1",
                 "issues": "https://github.com/newfold-labs/wp-module-installer/issues"
             },
-            "time": "2025-01-16T16:51:53+00:00"
+            "time": "2025-02-24T18:53:13+00:00"
         },
         {
             "name": "newfold-labs/wp-module-loader",
