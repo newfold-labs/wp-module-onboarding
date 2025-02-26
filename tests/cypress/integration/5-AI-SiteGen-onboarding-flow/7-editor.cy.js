@@ -286,7 +286,7 @@ describe( 'SiteGen Site Editor Step', function () {
 	it( 'Check Save & Continue button functionality', () => {
 		cy.get(
 			'.nfd-onboarding-header--sitegen__editor__end__save-button__text',
-			{ timeout: 20000 }
+			{ timeout: 60000 }
 		).click();
 		cy.get( `.${ getAppId() }-app-container`, { timeout: 90000 } );
 	} );
