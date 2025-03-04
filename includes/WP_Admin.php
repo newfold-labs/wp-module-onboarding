@@ -262,7 +262,7 @@ final class WP_Admin {
 		$can_restart = get_option( Options::get_option_name( 'can_restart' ), false );
 
 		// If the customer in ineligible for restart don't enqueue scripts
-		if ( ! $can_restart || !StatusService::is_onboarding_restart_eligible()  ) {
+		if ( ! $can_restart || ! StatusService::is_onboarding_restart_eligible() ) {
 			return;
 		}
 
