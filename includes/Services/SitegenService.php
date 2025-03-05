@@ -1,6 +1,6 @@
 <?php
 
-namespace NewfoldLabs\WP\Module\Onboarding\Data\Services;
+namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\AI\SiteGen\SiteGen;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
