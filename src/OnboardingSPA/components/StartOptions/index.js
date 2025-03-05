@@ -14,12 +14,14 @@ import { stepTheFork } from '../../steps/TheFork/step';
 // Misc
 import {
 	OnboardingEvent,
+	sendOnboardingEvent,
 	trackOnboardingEvent,
 } from '../../utils/analytics/hiive';
 import { SITEGEN_FLOW } from '../../data/flows/constants';
 import { store as nfdOnboardingStore } from '../../store';
 import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
 import OrbAnimation from '../OrbAnimation';
+import { pluginDashboardPage } from '../../../constants';
 
 const StartOptions = ( { questionnaire, oldFlow, largeOption, smallOptions } ) => {
 	const navigate = useNavigate();
@@ -105,6 +107,15 @@ const StartOptions = ( { questionnaire, oldFlow, largeOption, smallOptions } ) =
 				flowForEvent = 'MIGRATE';
 				handleMigration();
 				break;
+			case 'tutorial':
+				sendOnboardingEvent(
+					new OnboardingEvent(
+						ACTION_SITEGEN_FORK_OPTION_SELECTED,
+						'TUTORIAL'
+					)
+				);
+				window.location.replace( pluginDashboardPage );
+				return;
 		}
 
 		if ( flowForEvent ) {

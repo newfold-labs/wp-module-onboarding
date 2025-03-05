@@ -19,15 +19,15 @@ const getContents = ( canMigrateSite, migrationUrl ) => {
 			flow: 'sitegen',
 		},
 		smallerOptions: [
-			{
-				title: __( 'Guided Website Setup', 'wp-module-onboarding' ),
-				subtitle: __(
-					'Follow a step-by-step guide.',
-					'wp-module-onboarding'
-				),
-				flow: 'sitebuild',
-				show: true,
-			},
+			// {
+			// 	title: __( 'Guided Website Setup', 'wp-module-onboarding' ),
+			// 	subtitle: __(
+			// 		'Follow a step-by-step guide.',
+			// 		'wp-module-onboarding'
+			// 	),
+			// 	flow: 'sitebuild',
+			// 	show: true,
+			// },
 			{
 				title: __( 'Import a WordPress Site', 'wp-module-onboarding' ),
 				subtitle: __(
@@ -35,6 +35,15 @@ const getContents = ( canMigrateSite, migrationUrl ) => {
 					'wp-module-onboarding'
 				),
 				flow: 'migration',
+				show: canMigrateSite || migrationUrl,
+			},
+			{
+				title: __( 'I’m following a tutorial', 'wp-module-onboarding' ),
+				subtitle: __(
+					'Take me to the WP Admin Dashboard',
+					'wp-module-onboarding'
+				),
+				flow: 'tutorial',
 				show: canMigrateSite || migrationUrl,
 			},
 		],

@@ -62,16 +62,16 @@ const TheFork = () => {
 		? window.nfdOnboarding.oldFlow
 		: DEFAULT_FLOW;
 
-	const handleForkExit = () => {
-		sendOnboardingEvent(
-			new OnboardingEvent(
-				ACTION_SITEGEN_FORK_OPTION_SELECTED,
-				'TUTORIAL'
-			)
-		);
+	// const handleForkExit = () => {
+	// 	sendOnboardingEvent(
+	// 		new OnboardingEvent(
+	// 			ACTION_SITEGEN_FORK_OPTION_SELECTED,
+	// 			'TUTORIAL'
+	// 		)
+	// 	);
 
-		window.location.replace( pluginDashboardPage );
-	};
+	// 	window.location.replace( pluginDashboardPage );
+	// };
 
 	const content = getContents( canMigrateSite, migrationUrl );
 
@@ -90,7 +90,7 @@ const TheFork = () => {
 				largeOption={ content.largerOption }
 				smallOptions={ content.smallerOptions }
 			/>
-			<span
+			{/* <span
 				role="button"
 				tabIndex={ 0 }
 				className="nfd-onboarding-step--site-gen__fork__exit"
@@ -98,7 +98,7 @@ const TheFork = () => {
 				onKeyDown={ () => handleForkExit() }
 			>
 				{ content.exitToWordPress }
-			</span>
+			</span> */}
 		</CommonLayout>
 	);
 };
