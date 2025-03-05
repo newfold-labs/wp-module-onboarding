@@ -1,0 +1,23 @@
+"project_id_env": "CROWDIN_PROJECT_ID"
+"api_token_env": "CROWDIN_PERSONAL_TOKEN"
+"base_path": "."
+
+"preserve_hierarchy": true
+
+"files": [
+  {
+    "source": "/languages/wp-module-onboarding.pot",
+    "translation": "/languages/wp-module-onboarding-%locale%.po",
+      "languages_mapping": {
+         "locale": {
+            "de": "de_DE",
+            "en-AU": "en_AU",
+            "en-GB": "en_GB",
+            "es-ES": "es_ES",
+            "fr": "fr_FR",
+            "it": "it_IT",
+            "nl": "nl_NL"
+         }
+      }
+  }
+]

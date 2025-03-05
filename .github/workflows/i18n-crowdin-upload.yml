@@ -1,0 +1,12 @@
+name: Crowdin Upload Action
+
+on:
+  workflow_dispatch:
+
+jobs:
+  call-crowdin-upload-workflow:
+    uses: newfold-labs/workflows/.github/workflows/i18n-crowdin-upload.yml@main
+    with:
+      CROWDIN_PROJECT_ID: ${{ vars.CROWDIN_PROJECT_ID }}
+    secrets:
+      CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}

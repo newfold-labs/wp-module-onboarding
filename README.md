@@ -93,17 +93,22 @@ The Onboarding module is designed to streamline various tasks related to user on
    - **Conduct thorough testing to ensure stability and functionality.**
    - Note any issues or concerns for further action.
 
-4. **Increment version following Semantic Versioning 2.0.0:**
-   - Update version in:
-     - `bootstrap.php`
-     - `package.json`
-     - `package-lock.json`
-   - Run:
-     ```bash
-     npm install
-     npm run build
-     ```
-   - Verify existence of `build/<new_version>` folder.
+4. **Increment Version via script**
+   - run `npm run set-version-bump`
+      - This will update the version number in required files, remove the old build, and create a fresh build.
+   - Alternatively, update versions and rebuild manually:
+      1. **Increment version following Semantic Versioning 2.0.0:**
+         - Update version in:
+         - `bootstrap.php`
+         - `package.json`
+         - `package-lock.json`
+         - Run:
+         ```bash
+         npm install
+         npm run build
+         ```
+         - Verify existence of `build/<new_version>` folder.
+         - Update language files. Run: `composer run i18n`.
 
 5. **Push changes to origin:**
    ```bash
