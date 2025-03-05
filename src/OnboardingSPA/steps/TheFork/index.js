@@ -21,13 +21,16 @@ import {
 	OnboardingEvent,
 	sendOnboardingEvent,
 } from '../../utils/analytics/hiive';
-import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
+import {
+	ACTION_SITEGEN_FORK_OPTION_SELECTED,
+	ACTION_ONBOARDING_RESTARTED,
+} from '../../utils/analytics/hiive/constants';
 import { store as nfdOnboardingStore } from '../../store';
 import { DEFAULT_FLOW } from '../../data/flows/constants';
 
 const TheFork = () => {
-	const { migrationUrl, canMigrateSite, pluginInstallHash } =
-		useSelect( ( select ) => {
+	const { migrationUrl, canMigrateSite, pluginInstallHash } = useSelect(
+		( select ) => {
 			return {
 				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
 				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
@@ -36,7 +39,8 @@ const TheFork = () => {
 				pluginInstallHash:
 					select( nfdOnboardingStore ).getPluginInstallHash(),
 			};
-		} );
+		}
+	);
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -57,6 +61,22 @@ const TheFork = () => {
 		setFooterActiveView( FOOTER_SITEGEN );
 		initializePlugins( pluginInstallHash );
 	} );
+
+	useEffect( () => {
+		const url = new URL( window.location );
+		const restartParam = url.searchParams.get( 'restart' );
+
+		if ( restartParam ) {
+			// Remove the query parameter from the URL so it doesn't send events on refresh
+			url.searchParams.delete( 'restart' );
+
+			// Use the history API to update the URL without reloading the page
+			window.history.pushState( {}, '', url.toString() );
+			sendOnboardingEvent(
+				new OnboardingEvent( ACTION_ONBOARDING_RESTARTED, restartParam )
+			);
+		}
+	}, [] );
 
 	const oldFlow = window.nfdOnboarding?.oldFlow
 		? window.nfdOnboarding.oldFlow
