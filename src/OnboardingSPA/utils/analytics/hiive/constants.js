@@ -1,5 +1,6 @@
 export const ACTION_ONBOARDING_STARTED = 'onboarding_started';
 export const ACTION_ONBOARDING_COMPLETE = 'onboarding_complete';
+export const ACTION_ONBOARDING_RESTARTED = 'onboarding_restarted';
 export const ACTION_PAGEVIEW = 'pageview';
 export const ACTION_ONBOARDING_TOP_PRIORITY_SET = 'onboarding_top_priority_set';
 export const ACTION_ONBOARDING_STEP_SKIPPED = 'onboarding_step_skipped';
@@ -69,4 +70,5 @@ export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_MIGRATION_INITIATED ]: 'path',
 	[ ACTION_MFE_MIGRATION_INITIATED ]: 'path',
 	[ ACTION_SITEGEN_ERROR_STATE_TRIGGERED ]: 'identifier',
+	[ ACTION_ONBOARDING_RESTARTED ]: 'location',
 };
