@@ -12,18 +12,12 @@ import CommonLayout from '../../components/Layouts/Common';
 import HeadingWithSubHeading from '../../components/HeadingWithSubHeading/SiteGen/index';
 
 // Misc
-import {
-	FOOTER_SITEGEN,
-	HEADER_SITEGEN,
-} from '../../../constants';
+import { FOOTER_SITEGEN, HEADER_SITEGEN } from '../../../constants';
 import {
 	OnboardingEvent,
 	sendOnboardingEvent,
 } from '../../utils/analytics/hiive';
-import {
-	ACTION_SITEGEN_FORK_OPTION_SELECTED,
-	ACTION_ONBOARDING_RESTARTED,
-} from '../../utils/analytics/hiive/constants';
+import { ACTION_ONBOARDING_RESTARTED } from '../../utils/analytics/hiive/constants';
 import { store as nfdOnboardingStore } from '../../store';
 import { DEFAULT_FLOW } from '../../data/flows/constants';
 
