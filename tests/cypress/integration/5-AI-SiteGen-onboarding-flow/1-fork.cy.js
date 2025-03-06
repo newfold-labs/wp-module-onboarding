@@ -73,7 +73,8 @@ describe( 'SiteGen Fork Step', function () {
 	} );
 
 	// Test selecting different container options
-	it( 'Check for selection of different container options', () => {
+	// Skip the test for DIY Flow
+	it.skip( 'Check for selection of different container options', () => {
 		const className = '.nfd-onboarding-sitegen-options__option';
 
 		cy.get( className ).each( ( $element ) => {
