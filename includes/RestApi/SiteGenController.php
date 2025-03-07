@@ -130,6 +130,10 @@ class SiteGenController {
 	 */
 	public function get_homepages_args() {
 		return array(
+			'site_id' => array(
+				'required' => true,
+				'type'     => 'string',
+			),
 			'site_description' => array(
 				'required'          => true,
 				'type'              => 'string',
@@ -236,6 +240,7 @@ class SiteGenController {
 		}
 
 		$homepages = SiteGenService::generate_homepages(
+			$site_id,
 			$site_description,
 			$content_style,
 			$target_audience
@@ -314,7 +319,7 @@ class SiteGenController {
 			return $sitemap;
 		}
 
-		SiteGenService::publish_sitemap_pages( $site_description, $content_style, $target_audience, $sitemap );
+		SiteGenService::publish_sitemap_pages( $site_id, $site_description, $content_style, $target_audience, $sitemap );
 
 		return new \WP_REST_Response( array(), 201 );
 	}
