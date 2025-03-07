@@ -34,6 +34,7 @@ describe( 'SiteGen Fork Step', function () {
 
 		// Visit the fork step of the onboarding page
 		cy.visit( 'wp-admin/?page=nfd-onboarding#/wp-setup/step/fork' );
+		cy.wait( 30000 );
 	} );
 
 	// Test the visibility of the header admin bar
