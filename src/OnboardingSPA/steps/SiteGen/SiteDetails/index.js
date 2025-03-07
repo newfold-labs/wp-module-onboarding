@@ -102,6 +102,14 @@ const SiteGenSiteDetails = () => {
 		}
 	}, [ customerInput ] );
 
+	const generateUniqueIdForSite = () => {
+		if ( ! currentData.sitegen.siteDetails.uuid ) {
+			const uuid = crypto.randomUUID();
+			currentData.sitegen.siteDetails.uuid = uuid;
+			setCurrentOnboardingData(currentData);
+		}
+	}
+
 	const trackPromptSetEvent = () => {
 		let customerInputStrengthForEvent = false;
 		switch ( customerInputStrength ) {
@@ -153,6 +161,7 @@ const SiteGenSiteDetails = () => {
 											'nfd-sg-site-details--next-btn'
 										}
 										callback={ () => {
+											generateUniqueIdForSite();
 											trackPromptSetEvent();
 										} }
 										text={ content.buttonText }

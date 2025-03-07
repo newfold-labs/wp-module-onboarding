@@ -31,13 +31,14 @@ export async function generateSiteGenMeta(
 	return data;
 }
 
-export async function getHomepages( siteDescription ) {
+export async function getHomepages( siteDescription, site_id ) {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/homepages' ),
 			method: 'POST',
 			data: {
 				site_description: siteDescription,
+				site_id: site_id
 			},
 		} ).then()
 	);
