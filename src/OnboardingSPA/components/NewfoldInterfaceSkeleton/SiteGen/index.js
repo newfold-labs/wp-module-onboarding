@@ -204,6 +204,9 @@ const SiteGen = () => {
 
 		// Sets the Site Title and Taglin in Live Preview
 		if ( identifier === 'site_config' ) {
+			// Set site title and subtitle in the flow data
+			currentData.data.blogName = data.body.site_title;
+			currentData.data.blogDescription = data.body.tagline;
 			editEntityRecord( 'root', 'site', undefined, {
 				title: data.body.site_title,
 				description: data.body.tagline,
