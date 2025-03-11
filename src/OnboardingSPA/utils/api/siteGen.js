@@ -1,5 +1,4 @@
 import apiFetch from '@wordpress/api-fetch';
-
 import { resolve } from './resolve.js';
 import { onboardingRestURL, migrateRestURL } from './common';
 
@@ -11,26 +10,21 @@ export async function getSiteGenIdentifiers() {
 	);
 }
 
-export async function refineSiteDescription( site_description, site_id ) {
-	const data = await resolve(
+export async function refineSiteDescription( siteDescription, siteId ) {
+	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/refine_description' ),
 			method: 'POST',
 			data: {
-				site_id: site_id,
-				site_description: site_description
-			}
+				site_id: siteId,
+				site_description: siteDescription,
+			},
 		} )
 	);
-	return data;
 }
 
-export async function generateSiteGenMeta(
-	siteInfo,
-	identifier,
-	skipCache = true
-) {
-	const data = await resolve(
+export async function generateSiteGenMeta( siteInfo, identifier, skipCache = true ) {
+	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/generate' ),
 			method: 'POST',
@@ -41,29 +35,22 @@ export async function generateSiteGenMeta(
 			},
 		} )
 	);
-
-	return data;
 }
 
-export async function getHomepages( siteDescription, site_id ) {
+export async function getHomepages( siteDescription, siteId ) {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/homepages' ),
 			method: 'POST',
 			data: {
 				site_description: siteDescription,
-				site_id: site_id
+				site_id: siteId,
 			},
 		} ).then()
 	);
 }
 
-export async function regenerateHomepage(
-	siteDescription,
-	slug,
-	palette,
-	isFavorite
-) {
+export async function regenerateHomepage( siteDescription, slug, palette, isFavorite ) {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/homepages/regenerate' ),

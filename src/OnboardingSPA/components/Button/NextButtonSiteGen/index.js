@@ -18,6 +18,7 @@ const NextButtonSiteGen = ( {
 			nextStep: select( nfdOnboardingStore ).getNextStep(),
 		};
 	} );
+
 	return (
 		<Button
 			className={ classNames(
@@ -30,23 +31,22 @@ const NextButtonSiteGen = ( {
 					return;
 				}
 				// Execute callback and check if it returns a Promise
-				const callbackResult = callback && typeof callback === 'function' ? callback() : null;
+				const callbackResult =
+					callback && typeof callback === 'function'
+						? callback()
+						: null;
 				if ( callbackResult instanceof Promise ) {
 					callbackResult.then( () => {
 						if ( nextStep ) {
 							navigate( nextStep.path );
 						}
 					} );
-				} else {
-					if ( nextStep ) {
-						navigate( nextStep.path );
-					}
+				} else if ( nextStep ) {
+					navigate( nextStep.path );
 				}
 			} }
 		>
-			<p className="nfd-onboarding-button--site-gen-next--text">
-				{ text }
-			</p>
+			<p className="nfd-onboarding-button--site-gen-next--text">{ text }</p>
 
 			{ showChevronRight && (
 				<Icon

@@ -109,7 +109,7 @@ const SiteGenPreview = () => {
 
 		const response = await getHomepages(
 			currentData.sitegen.siteDetails.prompt,
-			currentData.sitegen.siteDetails.uuid,
+			currentData.sitegen.siteDetails.uuid
 		);
 
 		if ( response.error ) {

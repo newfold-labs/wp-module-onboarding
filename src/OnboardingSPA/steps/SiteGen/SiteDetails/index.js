@@ -1,4 +1,3 @@
-// WordPress
 import { useViewportMatch } from '@wordpress/compose';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
@@ -32,8 +31,7 @@ const SiteGenSiteDetails = () => {
 
 	const { currentData } = useSelect( ( select ) => {
 		return {
-			currentData:
-				select( nfdOnboardingStore ).getCurrentOnboardingData(),
+			currentData: select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	} );
 
@@ -57,11 +55,9 @@ const SiteGenSiteDetails = () => {
 		setHeaderActiveView( HEADER_SITEGEN );
 		setIsHeaderNavigationEnabled( true );
 		setDrawerActiveView( false );
+
 		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
-			if (
-				currentData.sitegen.siteDetails?.prompt.length <
-				currentData.sitegen.siteDetails?.minCharLimit
-			) {
+			if ( currentData.sitegen.siteDetails?.prompt.length < currentData.sitegen.siteDetails?.minCharLimit ) {
 				setIsValidInput( false );
 				setIsFooterNavAllowed( false );
 				currentData.sitegen.siteDetails.prompt = '';
@@ -79,13 +75,8 @@ const SiteGenSiteDetails = () => {
 		if ( customerInput !== undefined ) {
 			const customerInputTrimmed = customerInput.trim();
 			if ( customerInputTrimmed !== '' ) {
-				// When something new is added then only change in store.
-				if (
-					customerInputTrimmed !==
-					currentData.sitegen.siteDetails.prompt
-				) {
-					currentData.sitegen.siteDetails.prompt =
-						customerInputTrimmed;
+				if ( customerInputTrimmed !== currentData.sitegen.siteDetails.prompt ) {
+					currentData.sitegen.siteDetails.prompt = customerInputTrimmed;
 					currentData.sitegen.siteDetails.mode = 'simple';
 					currentData.sitegen.skipCache = true;
 					currentData.sitegen.sitemapPagesGenerated = false;
@@ -93,7 +84,6 @@ const SiteGenSiteDetails = () => {
 					currentData.sitegen.homepages.data = {};
 					setCurrentOnboardingData( currentData );
 				}
-				// Else just make sure the Next is enabled when prompt is present
 				setIsValidInput( true );
 				setIsFooterNavAllowed( true );
 			} else {
@@ -104,20 +94,20 @@ const SiteGenSiteDetails = () => {
 	}, [ customerInput ] );
 
 	const generateUUID = () => {
-		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace( /[xy]/g, function ( c ) {
-			const r = Math.random() * 16 | 0; // Random number (0-15)
-			const v = c === 'x' ? r : ( r & 0x3 | 0x8 ); // Replace 'x' with random number, 'y' with (8, 9, A, or B)
-			return v.toString(16);
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace( /[xy]/g, ( c ) => {
+			const r = Math.random() * 16 | 0;
+			const v = ( c === 'x' ) ? r : ( ( r & 0x3 ) | 0x8 );
+			return v.toString( 16 );
 		} );
-	}
+	};
 
 	const generateUniqueIdForSite = () => {
 		if ( ! currentData.sitegen.siteDetails.uuid ) {
 			const uuid = generateUUID();
 			currentData.sitegen.siteDetails.uuid = uuid;
-			setCurrentOnboardingData(currentData);
+			setCurrentOnboardingData( currentData );
 		}
-	}
+	};
 
 	const trackPromptSetEvent = () => {
 		let customerInputStrengthForEvent = false;
@@ -131,16 +121,14 @@ const SiteGenSiteDetails = () => {
 		}
 
 		if ( customerInputStrengthForEvent ) {
-			trackOnboardingEvent(
-				new OnboardingEvent(
-					ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET,
-					customerInput,
-					{
-						strength: customerInputStrengthForEvent,
-						source: SITEGEN_FLOW,
-					}
-				)
-			);
+			trackOnboardingEvent( new OnboardingEvent(
+				ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET,
+				customerInput,
+				{
+					strength: customerInputStrengthForEvent,
+					source: SITEGEN_FLOW,
+				}
+			) );
 		}
 	};
 
@@ -158,28 +146,19 @@ const SiteGenSiteDetails = () => {
 							height={ '40px' }
 							customerInput={ customerInput }
 							setCustomerInput={ setCustomerInput }
-							setCustomerInputStrength={
-								setCustomerInputStrength
-							}
-							customChildren={ true }
+							setCustomerInputStrength={ setCustomerInputStrength }
+							customChildren
 						>
 							{ isLargeViewport && (
 								<div className={ 'nfd-sg-site-details-endrow' }>
 									<NextButtonSiteGen
-										className={
-											'nfd-sg-site-details--next-btn'
-										}
-										callback={() =>
-											new Promise(async (resolve) => {
-												generateUniqueIdForSite();
-												trackPromptSetEvent();
-												await refineSiteDescription(
-													currentData.sitegen.siteDetails.prompt,
-													currentData.sitegen.siteDetails.uuid
-												);
-												resolve(); // Ensure it resolves when done
-											})
-										}
+										className={ 'nfd-sg-site-details--next-btn' }
+										callback={ () => new Promise( async ( resolve ) => {
+											generateUniqueIdForSite();
+											trackPromptSetEvent();
+											await refineSiteDescription( currentData.sitegen.siteDetails.prompt, currentData.sitegen.siteDetails.uuid );
+											resolve();
+										} ) }
 										text={ content.buttonText }
 										disabled={ ! isValidInput }
 									/>

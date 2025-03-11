@@ -318,7 +318,6 @@ const SiteGen = () => {
 		const skipCache = currentData.sitegen?.skipCache;
 		// Iterate over Identifiers and fire Requests!
 		identifiers.forEach( ( identifier ) => {
-			console.log(`Sending the site info as ${JSON.stringify(siteInfo, null, 2)}`);
 			performSiteGenMetaGeneration( siteInfo, identifier, skipCache );
 		} );
 	}
