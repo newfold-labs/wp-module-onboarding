@@ -46,11 +46,13 @@ const NextButtonSiteGen = ( {
 				}
 			} }
 		>
-			<p className="nfd-onboarding-button--site-gen-next--text">{ text }</p>
+			<p className="nfd-onboarding-button--site-gen-next--text">
+				{ text }
+			</p>
 
 			{ showChevronRight && (
 				<Icon
-					className={ 'nfd-onboarding-button--site-gen-next--icon' }
+					className="nfd-onboarding-button--site-gen-next--icon"
 					icon={ chevronRight }
 				/>
 			) }

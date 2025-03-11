@@ -57,7 +57,10 @@ const SiteGenSiteDetails = () => {
 		setDrawerActiveView( false );
 
 		if ( currentData.sitegen.siteDetails?.prompt !== '' ) {
-			if ( currentData.sitegen.siteDetails?.prompt.length < currentData.sitegen.siteDetails?.minCharLimit ) {
+			if (
+				currentData.sitegen.siteDetails?.prompt.length <
+				currentData.sitegen.siteDetails?.minCharLimit
+			) {
 				setIsValidInput( false );
 				setIsFooterNavAllowed( false );
 				currentData.sitegen.siteDetails.prompt = '';
@@ -75,7 +78,10 @@ const SiteGenSiteDetails = () => {
 		if ( customerInput !== undefined ) {
 			const customerInputTrimmed = customerInput.trim();
 			if ( customerInputTrimmed !== '' ) {
-				if ( customerInputTrimmed !== currentData.sitegen.siteDetails.prompt ) {
+				if (
+					customerInputTrimmed !==
+					currentData.sitegen.siteDetails.prompt
+				) {
 					currentData.sitegen.siteDetails.prompt = customerInputTrimmed;
 					currentData.sitegen.siteDetails.mode = 'simple';
 					currentData.sitegen.skipCache = true;
@@ -95,8 +101,8 @@ const SiteGenSiteDetails = () => {
 
 	const generateUUID = () => {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace( /[xy]/g, ( c ) => {
-			const r = Math.random() * 16 | 0;
-			const v = ( c === 'x' ) ? r : ( ( r & 0x3 ) | 0x8 );
+			const r = ( Math.random() * 16 ) | 0;
+			const v = c === 'x' ? r : ( r & 0x3 ) | 0x8;
 			return v.toString( 16 );
 		} );
 	};
@@ -121,14 +127,12 @@ const SiteGenSiteDetails = () => {
 		}
 
 		if ( customerInputStrengthForEvent ) {
-			trackOnboardingEvent( new OnboardingEvent(
-				ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET,
-				customerInput,
-				{
+			trackOnboardingEvent(
+				new OnboardingEvent( ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET, customerInput, {
 					strength: customerInputStrengthForEvent,
 					source: SITEGEN_FLOW,
-				}
-			) );
+				} )
+			);
 		}
 	};
 
@@ -152,13 +156,20 @@ const SiteGenSiteDetails = () => {
 							{ isLargeViewport && (
 								<div className={ 'nfd-sg-site-details-endrow' }>
 									<NextButtonSiteGen
-										className={ 'nfd-sg-site-details--next-btn' }
-										callback={ () => new Promise( async ( resolve ) => {
-											generateUniqueIdForSite();
-											trackPromptSetEvent();
-											await refineSiteDescription( currentData.sitegen.siteDetails.prompt, currentData.sitegen.siteDetails.uuid );
-											resolve();
-										} ) }
+										className={
+											'nfd-sg-site-details--next-btn'
+										}
+										callback={ () =>
+											new Promise( async ( resolve ) => {
+												generateUniqueIdForSite();
+												trackPromptSetEvent();
+												await refineSiteDescription(
+													currentData.sitegen.siteDetails.prompt,
+													currentData.sitegen.siteDetails.uuid
+												);
+												resolve();
+											} )
+										}
 										text={ content.buttonText }
 										disabled={ ! isValidInput }
 									/>

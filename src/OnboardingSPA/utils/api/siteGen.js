@@ -23,7 +23,11 @@ export async function refineSiteDescription( siteDescription, siteId ) {
 	);
 }
 
-export async function generateSiteGenMeta( siteInfo, identifier, skipCache = true ) {
+export async function generateSiteGenMeta(
+	siteInfo,
+	identifier,
+	skipCache = true
+) {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/generate' ),
@@ -50,7 +54,12 @@ export async function getHomepages( siteDescription, siteId ) {
 	);
 }
 
-export async function regenerateHomepage( siteDescription, slug, palette, isFavorite ) {
+export async function regenerateHomepage(
+	siteDescription,
+	slug,
+	palette,
+	isFavorite
+) {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/homepages/regenerate' ),
