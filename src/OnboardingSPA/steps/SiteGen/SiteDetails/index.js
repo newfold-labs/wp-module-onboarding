@@ -23,6 +23,7 @@ import { HEADER_SITEGEN } from '../../../../constants';
 import { store as nfdOnboardingStore } from '../../../store';
 import { ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET } from '../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../data/flows/constants';
+import { refineSiteDescription } from '../../../utils/api/siteGen';
 
 const SiteGenSiteDetails = () => {
 	const [ customerInput, setCustomerInput ] = useState( '' );
@@ -102,9 +103,17 @@ const SiteGenSiteDetails = () => {
 		}
 	}, [ customerInput ] );
 
+	const generateUUID = () => {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace( /[xy]/g, function ( c ) {
+			const r = Math.random() * 16 | 0; // Random number (0-15)
+			const v = c === 'x' ? r : ( r & 0x3 | 0x8 ); // Replace 'x' with random number, 'y' with (8, 9, A, or B)
+			return v.toString(16);
+		} );
+	}
+
 	const generateUniqueIdForSite = () => {
 		if ( ! currentData.sitegen.siteDetails.uuid ) {
-			const uuid = crypto.randomUUID();
+			const uuid = generateUUID();
 			currentData.sitegen.siteDetails.uuid = uuid;
 			setCurrentOnboardingData(currentData);
 		}
@@ -160,10 +169,17 @@ const SiteGenSiteDetails = () => {
 										className={
 											'nfd-sg-site-details--next-btn'
 										}
-										callback={ () => {
-											generateUniqueIdForSite();
-											trackPromptSetEvent();
-										} }
+										callback={() =>
+											new Promise(async (resolve) => {
+												generateUniqueIdForSite();
+												trackPromptSetEvent();
+												await refineSiteDescription(
+													currentData.sitegen.siteDetails.prompt,
+													currentData.sitegen.siteDetails.uuid
+												);
+												resolve(); // Ensure it resolves when done
+											})
+										}
 										text={ content.buttonText }
 										disabled={ ! isValidInput }
 									/>

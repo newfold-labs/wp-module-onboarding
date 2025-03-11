@@ -29,11 +29,18 @@ const NextButtonSiteGen = ( {
 				if ( disabled ) {
 					return;
 				}
-				if ( callback && typeof callback === 'function' ) {
-					callback();
-				}
-				if ( nextStep ) {
-					navigate( nextStep.path );
+				// Execute callback and check if it returns a Promise
+				const callbackResult = callback && typeof callback === 'function' ? callback() : null;
+				if ( callbackResult instanceof Promise ) {
+					callbackResult.then( () => {
+						if ( nextStep ) {
+							navigate( nextStep.path );
+						}
+					} );
+				} else {
+					if ( nextStep ) {
+						navigate( nextStep.path );
+					}
 				}
 			} }
 		>

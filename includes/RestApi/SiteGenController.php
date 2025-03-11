@@ -42,6 +42,16 @@ class SiteGenController {
 		);
 		\register_rest_route(
 			$this->namespace,
+			$this->rest_base . '/refine_description',
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'refine_site_description' ),
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				'args'                => $this->refine_description_args(),
+			)
+		);
+		\register_rest_route(
+			$this->namespace,
 			$this->rest_base . '/generate',
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
@@ -124,6 +134,25 @@ class SiteGenController {
 	}
 
 	/**
+	 * Required Args for refining site description
+	 *
+	 * @return array
+	 */
+	public function refine_description_args() {
+		return array(
+			'site_id' => array(
+				'required' => true,
+				'type'     => 'string',
+			),
+			'site_description' => array(
+				'required'          => true,
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+		);
+	}
+
+	/**
 	 * Gets the arguments for the homepages endpoint.
 	 *
 	 * @return array The array of arguments.
@@ -191,6 +220,22 @@ class SiteGenController {
 	}
 
 	/**
+	 * Use the service to make a refine site description call.
+	 *
+	 * @param \WP_REST_Request $request Request model.
+	 * 
+	 * @return bool|WP_Error
+	 */
+	public function refine_site_description( \WP_REST_Request $request ) {
+		$site_id          = $request->get_param('site_id');
+		$site_description = $request->get_param('site_description');
+
+		SitegenService::refine_site_description( $site_id, $site_description );
+
+		return true;
+	}
+
+	/**
 	 * Generate Sitegen meta data.
 	 *
 	 * @param \WP_REST_Request $request Request model.
@@ -227,7 +272,8 @@ class SiteGenController {
 		}
 
 		$site_description = $request->get_param( 'site_description' );
-		$site_info        = array( 'site_description' => $site_description );
+		$site_id          = $request->get_param( 'site_id' );
+		$site_info        = array( 'site_description' => $site_description, 'site_id' => $site_id );
 
 		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience' );
 		if ( is_wp_error( $target_audience ) ) {
