@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { Fill } from '@wordpress/components';
 import { Icon, chevronRight } from '@wordpress/icons';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useEffect, useState, render } from '@wordpress/element';
+import { useEffect, useState, useContext, render } from '@wordpress/element';
 import { useViewportMatch } from '@wordpress/compose';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { cloneDeep } from 'lodash';
@@ -12,6 +12,7 @@ import {
 	HEADER_END,
 	HEADER_SITEGEN,
 	HEADER_START,
+	THEME_LIGHT,
 	SIDEBAR_SITEGEN_EDITOR_PATTERNS,
 	pluginDashboardPage,
 } from '../../../../../constants';
@@ -36,8 +37,11 @@ import {
 	ACTION_SITEGEN_SIDEBAR_OPENED,
 } from '../../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../../data/flows/constants';
+import { ThemeContext } from '../../../../components/ThemeContextProvider';
+import classNames from 'classnames';
 
 const StepSiteGenEditorHeader = () => {
+	const { theme } = useContext( ThemeContext );
 	const [ homepage, setHomepage ] = useState();
 	const [ isSaving, setIsSaving ] = useState( false );
 	const [ isRegenerating, setIsRegenerating ] = useState( false );
@@ -256,9 +260,13 @@ const StepSiteGenEditorHeader = () => {
 						return false;
 					}
 
-					const iframe = ele.querySelector(
-						`div > div[data-slug="nfd-onboarding-block-preview-${ slug }"] > div.block-editor-block-preview__container > div > div > .block-editor-iframe__scale-container > iframe`
-					) || ele.querySelector( `div > div[data-slug="nfd-onboarding-block-preview-${ slug }"] > .block-editor-block-preview__container > div > iframe` );
+					const iframe =
+						ele.querySelector(
+							`div > div[data-slug="nfd-onboarding-block-preview-${ slug }"] > div.block-editor-block-preview__container > div > div > .block-editor-iframe__scale-container > iframe`
+						) ||
+						ele.querySelector(
+							`div > div[data-slug="nfd-onboarding-block-preview-${ slug }"] > .block-editor-block-preview__container > div > iframe`
+						);
 
 					const html = iframe.contentWindow.document.querySelector(
 						'.block-editor-block-preview__content-iframe'
@@ -331,7 +339,12 @@ const StepSiteGenEditorHeader = () => {
 							onKeyDown={ handleRegenerate }
 						>
 							<div
-								className={ `nfd-onboarding-header--sitegen__editor__start__regenerate__icon` }
+								className={ classNames(
+									'nfd-onboarding-header--sitegen__editor__start__regenerate__icon',
+									theme === THEME_LIGHT
+										? 'nfd-onboarding-header--sitegen__editor__start__regenerate__icon--light'
+										: null
+								) }
 							></div>
 							<div
 								className={ `nfd-onboarding-header--sitegen__editor__start__regenerate__text` }
@@ -376,7 +389,14 @@ const StepSiteGenEditorHeader = () => {
 							onKeyDown={ handleCustomize }
 							role="presentation"
 						>
-							<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__icon"></div>
+							<div
+								className={ classNames(
+									'nfd-onboarding-header--sitegen__editor__end__customize-button__icon',
+									theme === THEME_LIGHT
+										? 'nfd-onboarding-header--sitegen__editor__end__customize-button__icon--light'
+										: null
+								) }
+							></div>
 							<div className="nfd-onboarding-header--sitegen__editor__end__customize-button__text">
 								{ __( 'Customize', 'wp-module-onboarding' ) }
 							</div>
@@ -392,9 +412,9 @@ const StepSiteGenEditorHeader = () => {
 						>
 							{ isLargeViewport
 								? __(
-									'Save & Continue',
-									'wp-module-onboarding'
-								)
+										'Save & Continue',
+										'wp-module-onboarding'
+								  )
 								: __( 'Next', 'wp-module-onboarding' ) }
 						</div>
 						{ isSaving ? (
