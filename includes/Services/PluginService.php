@@ -11,7 +11,7 @@ use NewfoldLabs\WP\Module\Installer\Tasks\PluginActivationTask;
 use NewfoldLabs\WP\Module\Installer\Tasks\PluginDeactivationTask;
 use NewfoldLabs\WP\Module\Installer\Tasks\PluginInstallTask;
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
-use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 use NewfoldLabs\WP\Module\Onboarding\Data\SiteFeatures;
 
