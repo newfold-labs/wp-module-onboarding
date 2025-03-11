@@ -1,5 +1,5 @@
 // WordPress
-import { useState, useEffect, memo } from '@wordpress/element';
+import { memo } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
 // Classes and functions
@@ -14,32 +14,16 @@ import { stepTheFork } from '../../steps/TheFork/step';
 // Misc
 import {
 	OnboardingEvent,
-	sendOnboardingEvent,
 	trackOnboardingEvent,
 } from '../../utils/analytics/hiive';
 import { SITEGEN_FLOW } from '../../data/flows/constants';
 import { store as nfdOnboardingStore } from '../../store';
 import { ACTION_SITEGEN_FORK_OPTION_SELECTED } from '../../utils/analytics/hiive/constants';
 import OrbAnimation from '../OrbAnimation';
-import { pluginDashboardPage } from '../../../constants';
 
-const StartOptions = ( {
-	questionnaire,
-	oldFlow,
-	largeOption,
-	smallOptions,
-	experimentVersion,
-} ) => {
+const StartOptions = ( { questionnaire, oldFlow, largeOption, smallOptions } ) => {
 	const navigate = useNavigate();
-	const [ forkOptions, setForkOptions ] = useState( [] );
-	const {
-		brandConfig,
-		hireProUrl,
-		currentData,
-		migrationUrl,
-		canMigrateSite,
-		allSteps,
-	} = useSelect( ( select ) => {
+	const { brandConfig, hireProUrl, currentData, migrationUrl, canMigrateSite, allSteps } = useSelect( ( select ) => {
 		return {
 			brandConfig: select( nfdOnboardingStore ).getNewfoldBrandConfig(),
 			hireProUrl:
@@ -59,18 +43,6 @@ const StartOptions = ( {
 		updateInitialize,
 		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
-
-	useEffect( () => {
-		if ( experimentVersion && experimentVersion === 1 ) {
-			// Remove Tutorial from Small Options incase of control
-			smallOptions.pop();
-		} else {
-			// Remove DIY from Small Options incase of hidden
-			smallOptions.shift();
-		}
-
-		setForkOptions( smallOptions );
-	}, [ experimentVersion ] );
 
 	const switchFlow = ( newFlow ) => {
 		if ( ! validateFlow( brandConfig, newFlow ) ) {
@@ -133,15 +105,6 @@ const StartOptions = ( {
 				flowForEvent = 'MIGRATE';
 				handleMigration();
 				break;
-			case 'tutorial':
-				sendOnboardingEvent(
-					new OnboardingEvent(
-						ACTION_SITEGEN_FORK_OPTION_SELECTED,
-						'TUTORIAL'
-					)
-				);
-				window.location.replace( pluginDashboardPage );
-				return;
 		}
 
 		if ( flowForEvent ) {
@@ -154,79 +117,74 @@ const StartOptions = ( {
 		}
 	};
 	return (
-		experimentVersion &&
-		forkOptions && (
-			<>
-				<p className="nfd-onboarding-sitegen-options__questionnaire">
-					{ questionnaire }
-				</p>
-				<div
-					className="nfd-onboarding-sitegen-options__option nfd-onboarding-sitegen-options__option--large"
-					role="button"
-					tabIndex={ 0 }
-					onClick={ () => {
+		<>
+			<p className="nfd-onboarding-sitegen-options__questionnaire">
+				{ questionnaire }
+			</p>
+			<div className="nfd-onboarding-sitegen-options__option nfd-onboarding-sitegen-options__option--large"
+				role="button"
+				tabIndex={ 0 }
+				onClick={ () => {
+					selectFlow( largeOption.flow );
+				} }
+				onKeyDown={ () => {
+					{
 						selectFlow( largeOption.flow );
-					} }
-					onKeyDown={ () => {
-						{
-							selectFlow( largeOption.flow );
-						}
-					} }
-					data-flow={ largeOption.flow }
-				>
-					<h3 className="nfd-onboarding-sitegen-options__option__heading__title nfd-onboarding-sitegen-options__option__heading__title--large">
-						<OrbAnimation height={ `80px` } />
-						{ largeOption.span && (
-							<span className="nfd-onboarding-sitegen-options__option__span">
-								{ largeOption.span }
-							</span>
-						) }
-						{ largeOption.title }
-					</h3>
-					<p className="nfd-onboarding-sitegen-options__option__heading__subtitle nfd-onboarding-sitegen-options__option__heading__subtitle--large">
-						{ largeOption.text1 }
-					</p>
-					<p className="nfd-onboarding-sitegen-options__option__heading__subtitle nfd-onboarding-sitegen-options__option__heading__subtitle--large">
-						{ largeOption.text2 }
-					</p>
-				</div>
-				<div className="nfd-onboarding-sitegen-options__container">
-					{ forkOptions.map( ( tab, idx ) => {
-						return tab.show ? (
-							<div
-								className="nfd-onboarding-sitegen-options__option"
-								key={ idx }
-								role="button"
-								tabIndex={ 0 }
-								onClick={ () => {
+					}
+				} }
+				data-flow={ largeOption.flow }>
+				<h3 className="nfd-onboarding-sitegen-options__option__heading__title nfd-onboarding-sitegen-options__option__heading__title--large">
+					<OrbAnimation height={ `80px` } />
+					{ largeOption.span && (
+						<span className="nfd-onboarding-sitegen-options__option__span">
+							{ largeOption.span }
+						</span>
+					) }
+					{ largeOption.title }
+				</h3>
+				<p className="nfd-onboarding-sitegen-options__option__heading__subtitle nfd-onboarding-sitegen-options__option__heading__subtitle--large">
+					{ largeOption.text1 }
+				</p>
+				<p className="nfd-onboarding-sitegen-options__option__heading__subtitle nfd-onboarding-sitegen-options__option__heading__subtitle--large">
+					{ largeOption.text2 }
+				</p>
+
+			</div>
+			<div className="nfd-onboarding-sitegen-options__container">
+
+				{ smallOptions.map( ( tab, idx ) => {
+					return tab.show ? (
+						<div
+							className="nfd-onboarding-sitegen-options__option"
+							key={ idx }
+							role="button"
+							tabIndex={ 0 }
+							onClick={ () => {
+								selectFlow( tab.flow );
+							} }
+							onKeyDown={ () => {
+								{
 									selectFlow( tab.flow );
-								} }
-								onKeyDown={ () => {
-									{
-										selectFlow( tab.flow );
-									}
-								} }
-								data-flow={ tab.flow }
-							>
-								<h3 className="nfd-onboarding-sitegen-options__option__heading__title">
-									{ tab.span && (
-										<span className="nfd-onboarding-sitegen-options__option__span">
-											{ tab.span }
-										</span>
-									) }
-									{ tab.title }
-								</h3>
-								<p className="nfd-onboarding-sitegen-options__option__heading__subtitle">
-									{ tab.subtitle }
-								</p>
-							</div>
-						) : (
-							<></>
-						);
-					} ) }
-				</div>
-			</>
-		)
+								}
+							} }
+							data-flow={ tab.flow }
+						>
+							<h3 className="nfd-onboarding-sitegen-options__option__heading__title">
+								{ tab.span && (
+									<span className="nfd-onboarding-sitegen-options__option__span">
+										{ tab.span }
+									</span>
+								) }
+								{ tab.title }
+							</h3>
+							<p className="nfd-onboarding-sitegen-options__option__heading__subtitle">
+								{ tab.subtitle }
+							</p>
+						</div>
+					) : <></>;
+				} ) }
+			</div>
+		</>
 	);
 };
 

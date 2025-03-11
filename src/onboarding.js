@@ -13,10 +13,7 @@ import * as Sentry from '@sentry/react';
 
 // Misc
 import { NFD_ONBOARDING_ELEMENT_ID, runtimeDataExists } from './constants';
-import {
-	CATEGORY,
-	CATEGORY_EXPERIMENT,
-} from './OnboardingSPA/utils/analytics/hiive/constants';
+import { CATEGORY } from './OnboardingSPA/utils/analytics/hiive/constants';
 
 const version = require( '../package.json' ).version;
 const releaseVersion = `wp-onboarding@${ version }`;
@@ -33,20 +30,6 @@ if ( runtimeDataExists ) {
 				tracesSampleRate: 1.0, //  Capture 100% of the transactions
 			} );
 		}
-
-		// The A/B Test Events
-		HiiveAnalytics.initialize( {
-			namespace: CATEGORY_EXPERIMENT,
-			urls: {
-				single: onboardingRestURL( 'events' ),
-				batch: onboardingRestURL( 'events/batch' ),
-			},
-			settings: {
-				debounce: {
-					time: 3000,
-				},
-			},
-		} );
 
 		HiiveAnalytics.initialize( {
 			namespace: CATEGORY,
