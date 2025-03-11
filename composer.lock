@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00a435dfd5e4a0ecc5c4703be259f8ef",
+    "content-hash": "a601db29687b808cd818cdd1342e55d9",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -754,16 +754,16 @@
         },
         {
             "name": "newfold-labs/wp-module-onboarding-data",
-            "version": "1.2.4",
+            "version": "1.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-onboarding-data.git",
-                "reference": "acec6b888bef5344fb89ca36700d551a1af4a3d0"
+                "reference": "db5197fad769687fbede5f92db7079a76b89eeae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-onboarding-data/zipball/acec6b888bef5344fb89ca36700d551a1af4a3d0",
-                "reference": "acec6b888bef5344fb89ca36700d551a1af4a3d0",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-onboarding-data/zipball/db5197fad769687fbede5f92db7079a76b89eeae",
+                "reference": "db5197fad769687fbede5f92db7079a76b89eeae",
                 "shasum": ""
             },
             "require": {
@@ -790,6 +790,36 @@
                     "includes/I18n.php"
                 ]
             },
+            "scripts": {
+                "fix": [
+                    "vendor/bin/phpcbf . --ignore=*/build/* --standard=phpcs.xml -d error_reporting=\"E_ALL&~E_DEPRECATED\""
+                ],
+                "i18n-pot": [
+                    "vendor/bin/wp i18n make-pot . ./languages/nfd-wonder-blocks.pot --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/newfold-labs/wp-module-patterns/issues\",\"POT-Creation-Date\":\"2025-02-13T09:55:55+00:00\"}'"
+                ],
+                "i18n-po": [
+                    "vendor/bin/wp i18n update-po ./languages/nfd-wonder-blocks.pot ./languages"
+                ],
+                "i18n-mo": [
+                    "vendor/bin/wp i18n make-mo ./languages"
+                ],
+                "i18n-php": [
+                    "vendor/bin/wp i18n make-php ./languages"
+                ],
+                "i18n-json": [
+                    "rm -f languages/*.json && vendor/bin/wp i18n make-json ./languages --no-purge --pretty-print"
+                ],
+                "i18n": [
+                    "@i18n-pot",
+                    "@i18n-po",
+                    "@i18n-mo",
+                    "@i18n-php",
+                    "@i18n-json"
+                ],
+                "lint": [
+                    "vendor/bin/phpcs . --ignore=*/build/* --standard=phpcs.xml -d error_reporting=\"E_ALL&~E_DEPRECATED\""
+                ]
+            },
             "authors": [
                 {
                     "name": "arunshenoy99",
@@ -798,10 +828,10 @@
             ],
             "description": "A non-toggleable module containing a standardized interface for interacting with Onboarding data.",
             "support": {
-                "source": "https://github.com/newfold-labs/wp-module-onboarding-data/tree/1.2.4",
+                "source": "https://github.com/newfold-labs/wp-module-onboarding-data/tree/1.2.6",
                 "issues": "https://github.com/newfold-labs/wp-module-onboarding-data/issues"
             },
-            "time": "2024-11-21T09:11:59+00:00"
+            "time": "2025-03-11T19:45:59+00:00"
         },
         {
             "name": "newfold-labs/wp-module-patterns",
