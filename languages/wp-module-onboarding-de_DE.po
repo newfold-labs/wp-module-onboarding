@@ -1759,11 +1759,3 @@ msgstr "speichern"
 #: includes/WP_Admin.php:305
 msgid "Build with AI"
 msgstr ""
-
-#: build/2.6.2/866.js:1
-msgid "I’m following a tutorial"
-msgstr ""
-
-#: build/2.6.2/866.js:1
-msgid "Take me to the WP Admin Dashboard"
-msgstr ""

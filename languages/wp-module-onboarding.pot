@@ -861,14 +861,6 @@ msgid "Use our free, automated import tool!"
 msgstr ""
 
 #: build/2.6.2/866.js:1
-msgid "I’m following a tutorial"
-msgstr ""
-
-#: build/2.6.2/866.js:1
-msgid "Take me to the WP Admin Dashboard"
-msgstr ""
-
-#: build/2.6.2/866.js:1
 msgid "Already have a WordPress site you want to import?"
 msgstr ""
 
