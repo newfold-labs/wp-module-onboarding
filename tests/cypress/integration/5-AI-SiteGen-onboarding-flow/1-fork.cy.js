@@ -34,7 +34,6 @@ describe( 'SiteGen Fork Step', function () {
 
 		// Visit the fork step of the onboarding page
 		cy.visit( 'wp-admin/?page=nfd-onboarding#/wp-setup/step/fork' );
-		cy.wait( 30000 );
 	} );
 
 	// Test the visibility of the header admin bar
@@ -74,8 +73,7 @@ describe( 'SiteGen Fork Step', function () {
 	} );
 
 	// Test selecting different container options
-	// Skip the test for DIY Flow
-	it.skip( 'Check for selection of different container options', () => {
+	it( 'Check for selection of different container options', () => {
 		const className = '.nfd-onboarding-sitegen-options__option';
 
 		cy.get( className ).each( ( $element ) => {
