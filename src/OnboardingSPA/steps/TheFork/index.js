@@ -1,9 +1,10 @@
 // WordPress
-import { useEffect } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
 // Classes and functions
 import getContents from './contents';
+import { setFlow } from '../../utils/api/flow';
 import { init as initializePlugins } from '../../utils/api/plugins';
 
 // Components
@@ -22,16 +23,21 @@ import {
 	sendOnboardingEvent,
 } from '../../utils/analytics/hiive';
 import {
+	ACTION_SITEGEN_FORK_AI_EXPERIMENT,
 	ACTION_SITEGEN_FORK_OPTION_SELECTED,
+	CATEGORY_EXPERIMENT,
 	ACTION_ONBOARDING_RESTARTED,
 } from '../../utils/analytics/hiive/constants';
 import { store as nfdOnboardingStore } from '../../store';
 import { DEFAULT_FLOW } from '../../data/flows/constants';
 
 const TheFork = () => {
-	const { migrationUrl, canMigrateSite, pluginInstallHash } = useSelect(
-		( select ) => {
+	const [ experimentVersion, setExperimentVersion ] = useState();
+	const { currentData, migrationUrl, canMigrateSite, pluginInstallHash } =
+		useSelect( ( select ) => {
 			return {
+				currentData:
+					select( nfdOnboardingStore ).getCurrentOnboardingData(),
 				migrationUrl: select( nfdOnboardingStore ).getMigrationUrl(),
 				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
 				currentStep: select( nfdOnboardingStore ).getCurrentStep(),
@@ -39,8 +45,7 @@ const TheFork = () => {
 				pluginInstallHash:
 					select( nfdOnboardingStore ).getPluginInstallHash(),
 			};
-		}
-	);
+		} );
 	const {
 		setIsHeaderEnabled,
 		setSidebarActiveView,
@@ -49,6 +54,7 @@ const TheFork = () => {
 		setIsHeaderNavigationEnabled,
 		setFooterActiveView,
 		setHideFooterNav,
+		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
 	useEffect( () => {
@@ -60,7 +66,45 @@ const TheFork = () => {
 		setDrawerActiveView( false );
 		setFooterActiveView( FOOTER_SITEGEN );
 		initializePlugins( pluginInstallHash );
+		handleExperimentVersion();
 	} );
+
+	const handleExperimentVersion = async () => {
+		let theForkExperimentVersion = 0;
+		if ( currentData.sitegen.theForkExperimentVersion !== 0 ) {
+			// Use an existing experiment version if it exists
+			setExperimentVersion(
+				currentData.sitegen.theForkExperimentVersion
+			);
+			theForkExperimentVersion =
+				currentData.sitegen.theForkExperimentVersion;
+		} else {
+			// Generate a random experiment version either 1 or 2
+			theForkExperimentVersion = Math.floor( Math.random() * 2 ) + 1;
+			setExperimentVersion( theForkExperimentVersion );
+
+			// Sync that to the store and DB for same version on refresh
+			currentData.sitegen.theForkExperimentVersion =
+				theForkExperimentVersion;
+			setCurrentOnboardingData( currentData );
+			await setFlow( currentData );
+			const experimentVersionNames = {
+				1: 'control',
+				2: 'hidden',
+			};
+
+			// Send an event for the experiment version shown to the user.
+			sendOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_SITEGEN_FORK_AI_EXPERIMENT,
+					experimentVersionNames[ theForkExperimentVersion ],
+					null,
+					null,
+					CATEGORY_EXPERIMENT
+				)
+			);
+		}
+	};
 
 	useEffect( () => {
 		const url = new URL( window.location );
@@ -109,16 +153,19 @@ const TheFork = () => {
 				oldFlow={ oldFlow }
 				largeOption={ content.largerOption }
 				smallOptions={ content.smallerOptions }
+				experimentVersion={ experimentVersion }
 			/>
-			<span
-				role="button"
-				tabIndex={ 0 }
-				className="nfd-onboarding-step--site-gen__fork__exit"
-				onClick={ () => handleForkExit() }
-				onKeyDown={ () => handleForkExit() }
-			>
-				{ content.exitToWordPress }
-			</span>
+			{ experimentVersion === 1 && (
+				<span
+					role="button"
+					tabIndex={ 0 }
+					className="nfd-onboarding-step--site-gen__fork__exit"
+					onClick={ () => handleForkExit() }
+					onKeyDown={ () => handleForkExit() }
+				>
+					{ content.exitToWordPress }
+				</span>
+			) }
 		</CommonLayout>
 	);
 };
