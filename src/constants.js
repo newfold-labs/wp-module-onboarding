@@ -1,118 +1,76 @@
-import { addQueryArgs } from '@wordpress/url';
+export const ACTION_ONBOARDING_STARTED = 'onboarding_started';
+export const ACTION_ONBOARDING_COMPLETE = 'onboarding_complete';
+export const ACTION_ONBOARDING_RESTARTED = 'onboarding_restarted';
+export const ACTION_PAGEVIEW = 'pageview';
+export const ACTION_ONBOARDING_TOP_PRIORITY_SET = 'onboarding_top_priority_set';
+export const ACTION_ONBOARDING_STEP_SKIPPED = 'onboarding_step_skipped';
+export const ACTION_PRIMARY_TYPE_SET = 'primary_type_set';
+export const ACTION_SECONDARY_TYPE_SET = 'secondary_type_set';
+export const ACTION_EXPERIENCE_LEVEL_SET = 'experience_level_set';
+export const ACTION_THEME_STYLE_SELECTED = 'theme_style_selected';
+export const ACTION_COLORS_SELECTED = 'colors_selected';
+export const ACTION_FONTS_SELECTED = 'fonts_selected';
+export const ACTION_HEADER_SELECTED = 'header_selected';
+export const ACTION_HOMEPAGE_LAYOUT_SELECTED = 'homepage_layout_selected';
+export const ACTION_STARTER_PAGES_SELECTED = 'starter_pages_selected';
+export const ACTION_FEATURE_ADDED = 'feature_added';
+export const ACTION_SITE_TITLE_SET = 'site_title_set';
+export const ACTION_TAGLINE_SET = 'tagline_set';
+export const ACTION_LOGO_ADDED = 'logo_added';
+export const ACTION_ONBOARDING_EXITED = 'onboarding_exited';
+export const ACTION_ONBOARDING_CHAPTER_STARTED = 'onboarding_chapter_started';
+export const ACTION_ONBOARDING_CHAPTER_COMPLETE = 'onboarding_chapter_complete';
+export const ACTION_SOCIAL_ADDED = 'social_added';
+export const ACTION_MIGRATION_INITIATED = 'migration_initiated';
+export const ACTION_MFE_MIGRATION_INITIATED = 'mfe_migration_initiated';
 
-export const NFD_ONBOARDING_ELEMENT_ID = 'nfd-onboarding';
-export const runtimeDataExists =
-	'object' === typeof window?.nfdOnboarding &&
-	'buildUrl' in window.nfdOnboarding;
-export const wpAdminUrl = window.nfdOnboarding.adminUrl;
-export const wpSiteUrl = window.nfdOnboarding.siteUrl;
-export const wpRestURL = window.nfdOnboarding.restUrl;
-export const wpRestRoute = 'wp/v2';
-export const onboardingRestRoute = 'newfold-onboarding/v1';
-export const installerRestRoute = 'newfold-installer/v1';
-export const migrationRestRoute = 'newfold-migration/v1';
-export const wpRestBase = `${ wpRestURL }/${ wpRestRoute }`;
-export const onboardingRestBase = `${ wpRestURL }/${ onboardingRestRoute }`;
-export const installerRestBase = `${ wpRestURL }/${ installerRestRoute }`;
-export const migrateRestBase = `${ wpRestURL }/${ migrationRestRoute }`;
-export const wpAdminPage = addQueryArgs(
-	`${ wpAdminUrl }index.php`,
-	window.nfdOnboarding.currentBrand?.dashboardRedirectParams
-);
-export const wpEditorPage = `${ wpAdminUrl }site-editor.php?canvas=edit`;
-export const pluginDashboardPage =
-	addQueryArgs(
-		window.nfdOnboarding.currentBrand?.pluginDashboardPage,
-		window.nfdOnboarding.currentBrand?.dashboardRedirectParams
-	) ?? wpAdminPage;
-export const NFD_ONBOARDING_EVENT_PREFIX = 'nfd-module-onboarding-event';
-export const VIEW_NAV_PRIMARY = 'nav-primary';
-export const VIEW_NAV_DESIGN = 'nav-design';
-export const VIEW_NAV_PAGE = 'nav-page';
-export const VIEW_DESIGN_THEMES = 'design-themes';
-export const VIEW_DESIGN_THEME_STYLES_MENU = 'design-theme-styles-menu';
-export const VIEW_DESIGN_THEME_STYLES_PREVIEW = 'design-theme-styles-preview';
-export const VIEW_DESIGN_COLORS = 'design-colors';
-export const VIEW_DESIGN_FONTS = 'design-fonts';
-export const VIEW_DESIGN_HEADER_MENU = 'design-header-menu';
-export const VIEW_DESIGN_HOMEPAGE_MENU = 'design-homepage-menu';
-export const VIEW_NAV_GET_STARTED = 'nav-get-started';
-export const VIEW_NAV_ECOMMERCE_STORE_INFO = 'nav-ecommerce-store-info';
-export const SIDEBAR_SLOTFILL_PREFIX = 'Sidebar';
-export const SIDEBAR_MENU_SLOTFILL_PREFIX = 'HeaderMenu';
-export const SIDEBAR_SITEGEN_EDITOR_PATTERNS = 'SitegenEditorPatterns';
-export const SIDEBAR_LEARN_MORE = 'LearnMore';
-export const SIDEBAR_CUSTOMIZE = 'Customize';
-export const HEADER_SITEBUILD = 'HeaderSiteBuild';
-export const HEADER_SITEGEN = 'HeaderSiteGen';
-export const FOOTER_SITEBUILD = 'FooterSiteBuild';
-export const FOOTER_SITEGEN = 'FooterSiteGen';
-export const HEADER_TOP = 'HeaderTop';
-export const HEADER_START = 'HeaderStart';
-export const HEADER_CENTER = 'HeaderCenter';
-export const HEADER_END = 'HeaderEnd';
-export const FOOTER_START = 'FooterStart';
-export const FOOTER_END = 'FooterEnd';
+export const ACTION_SITEGEN_FORK_AI_EXPERIMENT = 'exp_fork_diy_mar25';
+export const ACTION_SITEGEN_FORK_OPTION_SELECTED = 'fork_option_selected';
+export const ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET = 'site_details_prompt_set';
+export const ACTION_SITEGEN_SOCIAL_CONNECTED = 'social_connected';
+export const ACTION_SITEGEN_SOCIAL_CONNECT_SKIPPED = 'social_connect_skipped';
+export const ACTION_SITEGEN_LOGO_SKIPPED = 'logo_skipped';
+export const ACTION_SITEGEN_HOMEPAGE_SELECTED = 'homepage_selected';
+export const ACTION_SITEGEN_HOMEPAGE_REGENERATED = 'homepage_regenerated';
+export const ACTION_SITEGEN_HOMEPAGE_FAVORITED = 'homepage_favorited';
+export const ACTION_SITEGEN_HOMEPAGE_RENAMED = 'homepage_renamed';
+export const ACTION_SITEGEN_SIDEBAR_OPENED = 'sidebar_opened';
+export const ACTION_SITEGEN_SITE_GENERATION_TIME = 'site_generation_time';
+export const ACTION_SITEGEN_ERROR_STATE_TRIGGERED = 'error_state_triggered';
+export const CATEGORY = 'wonder_start';
+export const CATEGORY_EXPERIMENT = 'experiment';
 
-export const MAX_RETRIES_SITE_GEN = 2;
-export const MAX_RETRIES_API_QUEUER = 2;
-export const MAX_RETRIES_SETTINGS_INIT = 2;
-export const MAX_RETRIES_FLOW_SWITCH = 2;
-export const NFD_PLUGINS_QUERY_PARAM = 'nfd_plugins';
-export const NFD_THEMES_QUERY_PARAM = 'nfd_themes';
-
-// [TODO] Read the theme from flow data once we have the themes step.
-export const DESIGN_STEPS_THEME = 'nfd_slug_yith_wonder';
-export const THEME_STATUS_INIT = 'init';
-export const THEME_STATUS_NOT_ACTIVE = 'inactive';
-export const THEME_STATUS_INSTALLING = 'installing';
-export const THEME_STATUS_ACTIVE = 'activated';
-export const THEME_STATUS_FAILURE = 'failed';
-
-export const CHAPTER_DEMOGRAPHIC = 'demographic';
-export const CHAPTER_COMMERCE = 'commerce';
-export const CHAPTER_DESIGN = 'design';
-export const CHAPTER_LAYOUT_AND_CONTENT = 'layout_and_content';
-export const CHAPTER_FEATURES = 'features';
-export const CHAPTER_SITEGEN = 'sitegen';
-export const CHAPTER_SITEGEN_CORE = 'core';
-export const CHAPTER_SITEGEN_DESIGN = 'design';
-export const CHAPTER_SITEGEN_FEATURES = 'features';
-export const THEME_DARK = 'dark';
-export const THEME_LIGHT = 'light';
-
-/**
- * All views for the <Drawer /> component.
- */
-export const DRAWER_VIEWS = [
-	VIEW_NAV_PRIMARY,
-	VIEW_NAV_DESIGN,
-	VIEW_NAV_GET_STARTED,
-	VIEW_NAV_PAGE,
-	VIEW_NAV_ECOMMERCE_STORE_INFO,
-	VIEW_DESIGN_THEMES,
-	VIEW_DESIGN_THEME_STYLES_MENU,
-	VIEW_DESIGN_THEME_STYLES_PREVIEW,
-	VIEW_DESIGN_COLORS,
-	VIEW_DESIGN_FONTS,
-	VIEW_DESIGN_HEADER_MENU,
-];
-
-/**
- * All Navigation views for the <Drawer /> component.
- */
-export const DRAWER_NAV_VIEWS = [
-	VIEW_NAV_PRIMARY,
-	VIEW_NAV_DESIGN,
-	VIEW_NAV_GET_STARTED,
-	VIEW_NAV_PAGE,
-	VIEW_NAV_ECOMMERCE_STORE_INFO,
-];
-
-/**
- * All API Requests for Onboarding.
- */
-export const API_REQUEST = {
-	SET_FLOW: 'SET_FLOW',
-	SET_GLOBAL_STYLES: 'SET_GLOBAL_STYLES',
+export const ACTION_TO_LABEL_KEY_MAP = {
+	[ ACTION_ONBOARDING_TOP_PRIORITY_SET ]: 'top_priority',
+	[ ACTION_ONBOARDING_STEP_SKIPPED ]: 'step',
+	[ ACTION_PRIMARY_TYPE_SET ]: 'primary_type',
+	[ ACTION_SECONDARY_TYPE_SET ]: 'secondary_type',
+	[ ACTION_EXPERIENCE_LEVEL_SET ]: 'experience_level',
+	[ ACTION_THEME_STYLE_SELECTED ]: 'theme_style',
+	[ ACTION_COLORS_SELECTED ]: 'color_palette',
+	[ ACTION_FONTS_SELECTED ]: 'font_set',
+	[ ACTION_HEADER_SELECTED ]: 'header',
+	[ ACTION_HOMEPAGE_LAYOUT_SELECTED ]: 'layout',
+	[ ACTION_STARTER_PAGES_SELECTED ]: 'pages',
+	[ ACTION_FEATURE_ADDED ]: 'feature',
+	[ ACTION_SITE_TITLE_SET ]: 'title',
+	[ ACTION_TAGLINE_SET ]: 'tagline',
+	[ ACTION_ONBOARDING_EXITED ]: 'step',
+	[ ACTION_ONBOARDING_CHAPTER_STARTED ]: 'chapter',
+	[ ACTION_ONBOARDING_CHAPTER_COMPLETE ]: 'chapter',
+	[ ACTION_SOCIAL_ADDED ]: 'platform',
+	[ ACTION_SITEGEN_FORK_OPTION_SELECTED ]: 'flow',
+	[ ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET ]: 'prompt',
+	[ ACTION_SITEGEN_SOCIAL_CONNECTED ]: 'platform',
+	[ ACTION_SITEGEN_HOMEPAGE_SELECTED ]: 'version',
+	[ ACTION_SITEGEN_HOMEPAGE_REGENERATED ]: 'version',
+	[ ACTION_SITEGEN_HOMEPAGE_FAVORITED ]: 'version',
+	[ ACTION_SITEGEN_SIDEBAR_OPENED ]: 'type',
+	[ ACTION_SITEGEN_HOMEPAGE_RENAMED ]: 'version',
+	[ ACTION_SITEGEN_SITE_GENERATION_TIME ]: 'time',
+	[ ACTION_MIGRATION_INITIATED ]: 'path',
+	[ ACTION_MFE_MIGRATION_INITIATED ]: 'path',
+	[ ACTION_SITEGEN_ERROR_STATE_TRIGGERED ]: 'identifier',
+	[ ACTION_ONBOARDING_RESTARTED ]: 'location',
+	[ ACTION_SITEGEN_FORK_AI_EXPERIMENT ]: 'value',
 };
