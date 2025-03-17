@@ -116,10 +116,10 @@ class StatusService {
 
 				// Extra NFD-AI Options
 				$sitegen_identifiers = array(
+					'keywords',
 					'homepages',
 					'generatedpatterns',
 					'contentstructures',
-					'keywords',
 					'siteclassificationmapping',
 					'refinedsitedescription',
 				);
@@ -134,6 +134,7 @@ class StatusService {
 					'data'   => array(),
 				);
 				$flow_data['sitegen']['skipCache']                          = true;
+				$flow_data['sitegen']['siteDetails']['prompt']              = '';
 				$flow_data['sitegen']['sitemapPagesGenerated']              = false;
 
 				delete_option( Options::get_option_name( 'start_date' ) );
