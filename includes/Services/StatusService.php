@@ -92,6 +92,7 @@ class StatusService {
 
 		// Get flow data
 		$flow_data = get_option( Options::get_option_name( 'flow' ) );
+		$active_flow = $flow_data['activeFlow'];
 
 		if ( isset( $flow_data['onboardingRetries'] ) && ! empty( $flow_data['onboardingRetries'] ) ) {
 			// Increment the total onboarding tries
@@ -133,6 +134,7 @@ class StatusService {
 
 				delete_option( Options::get_option_name( 'flow' ) );
 				$flow_data_copy                                    = Flows::get_data();
+				$flow_data_copy['activeFlow']                      = $active_flow;
 				$flow_data_copy['onboardingRetries']['retryCount'] = $current_retry_count;
 
 				// Update the flow data with the incremented total onboarding tries count and add to db
