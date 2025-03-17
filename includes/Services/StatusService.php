@@ -5,6 +5,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Brands;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 use NewfoldLabs\WP\Module\Onboarding\Data\Config;
+use NewfoldLabs\WP\Module\Onboarding\Data\Flows\Flows;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
 
 /**
@@ -96,6 +97,9 @@ class StatusService {
 			// Increment the total onboarding tries
 			$flow_data['onboardingRetries']['retryCount'] = ( $flow_data['onboardingRetries']['retryCount'] ?? 0 ) + 1;
 
+			// Update the flow data with the incremented total onboarding tries count
+			update_option( Options::get_option_name( 'flow' ), $flow_data );
+
 			// Determine eligibility for restarting onboarding
 			$current_retry_count = $flow_data['onboardingRetries']['retryCount'];
 			$can_restart         = $current_retry_count < $flow_data['onboardingRetries']['maxRetryCount'];
@@ -127,23 +131,17 @@ class StatusService {
 					delete_option( $prefix . $identifier );
 				}
 
-				// Reset Flow Data for Restart
-				$flow_data['sitegen']['siteGenMetaStatus']['currentStatus'] = 0;
-				$flow_data['sitegen']['homepages']                          = array(
-					'active' => array(),
-					'data'   => array(),
-				);
-				$flow_data['sitegen']['skipCache']                          = true;
-				$flow_data['sitegen']['siteDetails']['prompt']              = '';
-				$flow_data['sitegen']['sitemapPagesGenerated']              = false;
+				delete_option( Options::get_option_name( 'flow' ) );
+				$flow_data_copy                                    = Flows::get_data();
+				$flow_data_copy['onboardingRetries']['retryCount'] = $current_retry_count;
+
+				// Update the flow data with the incremented total onboarding tries count and add to db
+				add_option( Options::get_option_name( 'flow' ), $flow_data_copy );
 
 				delete_option( Options::get_option_name( 'start_date' ) );
 				delete_option( Options::get_option_name( 'status' ) );
 				delete_option( Options::get_option_name( 'sitegen_regenerated_homepages' ) );
 			}
-
-			// Update the flow data with the incremented total onboarding tries count
-			update_option( Options::get_option_name( 'flow' ), $flow_data );
 		}
 	}
 
