@@ -1,6 +1,7 @@
 // <reference types="Cypress" />
 import {
 	apiList,
+	flowMock,
 	customizeDataMock,
 	themeStyleMock,
 } from '../wp-module-support/MockApi.cy';
@@ -16,6 +17,11 @@ describe( 'SiteGen Site Editor Step', function () {
 		cy.visit(
 			'wp-admin/index.php?page=nfd-onboarding#/sitegen/step/preview'
 		);
+		
+		cy.intercept( apiList.flow, ( req ) => {
+			flowMock( req );
+		} ).as( 'flowCall' );
+
 		cy.wait( 10000 );
 	} );
 

@@ -8,6 +8,7 @@ import {
 } from '../wp-module-support/siteGen.cy';
 import {
 	apiList,
+	flowMock,
 	siteGenMockAll,
 	homePagesMock,
 	homePagesRegenerate,
@@ -18,6 +19,10 @@ describe( 'SiteGen Site Preview Step', function () {
 		cy.visit(
 			'wp-admin/index.php?page=nfd-onboarding#/sitegen/step/preview'
 		);
+		cy.intercept( apiList.flow, ( req ) => {
+			flowMock( req );
+		} ).as( 'flowCall' );
+
 		cy.intercept( apiList.sitegen, ( req ) => {
 			siteGenMockAll( req );
 		} ).as( 'sitegenCalls' );
