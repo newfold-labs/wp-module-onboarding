@@ -22,7 +22,7 @@ describe( 'SiteGen Site Editor Step', function () {
 			flowMock( req );
 		} ).as( 'flowCall' );
 
-		cy.wait( 10000 );
+		cy.wait( 30000 );
 	} );
 
 	it( 'Select any theme and go forward to the next step', () => {

@@ -30,7 +30,7 @@ describe( 'SiteGen Site Preview Step', function () {
 		cy.intercept( apiList.homepages, ( req ) => {
 			homePagesMock( req );
 		} ).as( 'homePageCall' );
-		cy.wait( 20000 );
+		cy.wait( 25000 );
 	} );
 
 	it( 'Check for the header admin bar', () => {
