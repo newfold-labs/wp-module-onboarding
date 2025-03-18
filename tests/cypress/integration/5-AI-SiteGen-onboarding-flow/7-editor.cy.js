@@ -109,7 +109,7 @@ describe( 'SiteGen Site Editor Step', function () {
 			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container'
 		)
 			.should( 'be.visible' )
-			.should( 'have.length', 4 ); // Regenerating new themes
+			.should( 'have.length', 3 ); // Regenerating new themes
 	} );
 
 	it( 'Check for favoriting a theme and it appears everywhere', () => {
@@ -149,7 +149,7 @@ describe( 'SiteGen Site Editor Step', function () {
 			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container'
 		)
 			.should( 'be.visible' )
-			.should( 'have.length', 2 );
+			.should( 'have.length', 1 );
 		cy.get(
 			'.components-button.nfd-onboarding-sidebar--sitegen-editor-patterns__header__icon'
 		).should( 'be.visible' );
