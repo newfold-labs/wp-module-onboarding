@@ -1443,6 +1443,15 @@ export function generateStyles(
 		} );
 	}
 
+	// Add custom Button CSS
+	if ( undefined === updatedConfig.styles.css ) {
+		updatedConfig.styles.css =
+			'.wp-block-button.is-style-outline .wp-block-button__link:not(.has-background) { background: transparent none !important; }';
+	} else {
+		updatedConfig.styles.css +=
+			'.wp-block-button.is-style-outline .wp-block-button__link:not(.has-background) { background: transparent none !important; }';
+	}
+
 	// Construct the styles array
 	const styles = [
 		...result,
