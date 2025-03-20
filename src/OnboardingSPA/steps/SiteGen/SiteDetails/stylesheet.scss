@@ -36,6 +36,7 @@
 
 		&:hover {
 			transform: scale(1.03);
+			color: var(--nfd-onboarding-tertiary) !important;
 			box-shadow: 5px 5px rgba($color:  var(--nfd-onboarding-secondary), $alpha: 0.1);
 		}
 	}
