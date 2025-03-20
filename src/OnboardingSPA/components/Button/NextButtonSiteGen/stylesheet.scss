@@ -10,14 +10,14 @@
 		border-radius: 8px;
 		align-items: center;
 		justify-content: center;
-		transition: all 300ms ease-in-out;
+		transition: all 100ms ease-in-out;
 		color: var(--nfd-onboarding-secondary);
-		background-color: var(--nfd-onboarding-tertiary);
+		background-color: var(--nfd-onboarding-primary);
 		font-size: clamp(0.5rem, 0.3864rem + 0.5682vw, 1.75rem);
 
 		&:hover {
-			color: #000 !important;
 			transform: scale(1.03);
+			color: var(--nfd-onboarding-tertiary);
 		}
 
 		@media (min-width: 2600px ) {
@@ -30,7 +30,7 @@
 		}
 
 		&--disabled {
-			background-color: rgba(var(--nfd-onboarding-tertiary-rgb), 0.6) !important;
+			background-color: rgba(var(--nfd-onboarding-primary-rgb), 0.6) !important;
 
 			&:hover {
 				cursor: not-allowed;
