@@ -1,22 +1,21 @@
 {
-    "config": {
-        "WP_DEBUG": true,
-        "WP_DEBUG_LOG": true,
-        "WP_DEBUG_DISPLAY": true
-    },
-    "plugins": [
-        "."
-    ],
-    "port": 8880,
-    "testsPort": 8881,
-    "env": {
-        "tests": {
-            "config": {
-                "WP_TESTS_DOMAIN": "localhost:8881",
-                "WP_TESTS_EMAIL": "dave@bluehost.com",
-                "WP_TESTS_TITLE": "WordPress Tests",
-                "WP_TESTS_BINARY": "php"
-            }
-        }
+  "config": {
+    "WP_DEBUG": true,
+    "WP_DEBUG_LOG": true,
+    "WP_DEBUG_DISPLAY": true
+  },
+  "port": 8880,
+  "testsPort": 8881,
+  "env": {
+    "tests": {
+      "config": {
+        "WP_TESTS_DOMAIN": "localhost:8881",
+        "WP_TESTS_EMAIL": "dave@bluehost.com",
+        "WP_TESTS_TITLE": "WordPress Tests",
+        "WP_TESTS_BINARY": "php"
+      },
+      "mysqlPort": 33306
     }
+  },
+  "core": "https://wordpress.org/wordpress-6.1.7.zip"
 }
