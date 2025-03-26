@@ -10,9 +10,15 @@
 		border-radius: 8px;
 		align-items: center;
 		justify-content: center;
+		transition: all 100ms ease-in-out;
 		color: var(--nfd-onboarding-secondary);
 		background-color: var(--nfd-onboarding-primary);
 		font-size: clamp(0.5rem, 0.3864rem + 0.5682vw, 1.75rem);
+
+		&:hover {
+			transform: scale(1.03);
+			color: var(--nfd-onboarding-tertiary) !important;
+		}
 
 		@media (min-width: 2600px ) {
 			height: 76px;
