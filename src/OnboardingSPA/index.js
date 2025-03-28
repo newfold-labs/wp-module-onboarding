@@ -1,7 +1,6 @@
 import './styles/app.scss';
 import { store as nfdOnboardingStore } from './store'; /* must import prior to App! */
 import { getFlow } from './utils/api/flow';
-import { DESIGN_STEPS_THEME } from '../constants';
 
 import App from './components/App';
 import { HashRouter } from 'react-router-dom';
