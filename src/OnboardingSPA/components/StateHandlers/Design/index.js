@@ -15,6 +15,7 @@ import {
 	THEME_STATUS_NOT_ACTIVE,
 	THEME_STATUS_ACTIVE,
 	DESIGN_STEPS_THEME,
+	DESIGN_STEPS_THEME_SITEGEN,
 	THEME_STATUS_FAILURE,
 } from '../../../../constants';
 import { StepErrorState } from '../../ErrorState';
@@ -53,8 +54,14 @@ const DesignStateHandler = ( {
 		setCurrentOnboardingData,
 	} = useDispatch( nfdOnboardingStore );
 
+	const getThemeSlug = () => {
+		const isSiteGenFlow = window.nfdOnboarding.currentFlow === 'sitegen';
+		return isSiteGenFlow ? DESIGN_STEPS_THEME_SITEGEN : DESIGN_STEPS_THEME;
+	};
+
 	const checkThemeStatus = async () => {
-		const themeStatus = await getThemeStatus( DESIGN_STEPS_THEME );
+		const themeStatus = await getThemeStatus( getThemeSlug() );
+
 		if ( themeStatus?.error ) {
 			return THEME_STATUS_NOT_ACTIVE;
 		}
@@ -62,7 +69,7 @@ const DesignStateHandler = ( {
 	};
 
 	const expediteInstall = async () => {
-		const status = await expedite( DESIGN_STEPS_THEME );
+		const status = await expedite( getThemeSlug() );
 		if ( ! status.error && true === refresh ) {
 			window.location.reload();
 			return;
@@ -140,7 +147,7 @@ const DesignStateHandler = ( {
 	const installThemeManually = async () => {
 		updateThemeStatus( THEME_STATUS_INSTALLING );
 		const themeInstallStatus = await installTheme(
-			DESIGN_STEPS_THEME,
+			getThemeSlug(),
 			true,
 			false
 		);

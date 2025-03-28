@@ -63,6 +63,7 @@ export const NFD_THEMES_QUERY_PARAM = 'nfd_themes';
 
 // [TODO] Read the theme from flow data once we have the themes step.
 export const DESIGN_STEPS_THEME = 'nfd_slug_yith_wonder';
+export const DESIGN_STEPS_THEME_SITEGEN = 'nfd_slug_bluehost_blueprint';
 export const THEME_STATUS_INIT = 'init';
 export const THEME_STATUS_NOT_ACTIVE = 'inactive';
 export const THEME_STATUS_INSTALLING = 'installing';
