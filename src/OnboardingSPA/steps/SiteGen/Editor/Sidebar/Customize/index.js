@@ -6,6 +6,7 @@ import { lazy, useEffect, useState } from '@wordpress/element';
 import { store as nfdOnboardingStore } from '../../../../../store';
 import getContents from './contents';
 import { getCustomizeSidebarData } from '../../../../../utils/api/siteGen';
+import OrbAnimation from '../../../../../components/OrbAnimation';
 
 const DesignFontsPanel = lazy( () =>
 	import(
@@ -45,7 +46,11 @@ const Customize = forwardRef( ( props, ref ) => {
 	}, [] );
 
 	if ( loading ) {
-		return <div>...</div>;
+		return (
+			<div className="nfd-onboarding-sidebar-learn-more__loading">
+				<OrbAnimation height={ `60px` } />
+			</div>
+		);
 	}
 
 	const content = getContents();

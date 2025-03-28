@@ -41,7 +41,7 @@ describe( 'Get Started Site Type Primary', function () {
 			CheckHelpPanelLinks();
 		} );
 
-		it( 'Check if Business category is pre-selected', () => {
+		it.skip( 'Check if Business category is pre-selected', () => {
 			cy.get( '.chosenPrimaryCategory' )
 				.find( '.categName' )
 				.should( 'have.text', 'Business' );

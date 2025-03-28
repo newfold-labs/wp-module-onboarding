@@ -6,9 +6,9 @@ use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\FlowService;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
-use NewfoldLabs\WP\Module\Onboarding\Services\GlobalStylesService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\GlobalStylesService;
 use NewfoldLabs\WP\Module\Onboarding\Services\StatusService;
-use NewfoldLabs\WP\Module\Onboarding\Services\TemplatePartsService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\TemplatePartsService;
 
 /**
  * Class FlowController

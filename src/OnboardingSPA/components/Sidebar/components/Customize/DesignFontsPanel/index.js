@@ -307,8 +307,8 @@ const DesignFontsPanel = forwardRef(
 			let body;
 			const slug = currentData.sitegen?.homepages?.active?.slug;
 			if ( selectedGroup === 'custom' ) {
-				headings = `var(--wp--preset--font-family--${ customFont.headings })`;
-				body = `var(--wp--preset--font-family--${ customFont.body })`;
+				headings = `var(--wp--preset--font-family--${ customFont.headings?.toLowerCase() })`;
+				body = `var(--wp--preset--font-family--${ customFont.body?.toLowerCase() })`;
 				if ( slug ) {
 					currentData.sitegen.homepages.data[ slug ].customFont =
 						customFont;
@@ -316,8 +316,8 @@ const DesignFontsPanel = forwardRef(
 						customFont;
 				}
 			} else {
-				headings = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].headingsSlug })`;
-				body = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].bodySlug })`;
+				headings = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].headingsSlug?.toLowerCase() })`;
+				body = `var(--wp--preset--font-family--${ fontGroups[ selectedGroup ].bodySlug?.toLowerCase() })`;
 			}
 			currentData.sitegen.homepages.data[ slug ].selectedFontGroup =
 				selectedGroup;
