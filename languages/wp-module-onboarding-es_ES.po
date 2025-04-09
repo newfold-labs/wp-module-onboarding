@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: newfold-labswp-module-staging\n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-onboarding/issues\n"
 "POT-Creation-Date: 2024-11-18T07:59:34+00:00\n"
-"PO-Revision-Date: 2025-04-09 17:09+0100\n"
+"PO-Revision-Date: 2025-04-09 17:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1464,11 +1464,11 @@ msgstr "Menú integrante"
 
 #: build/2.6.3/onboarding.js:35
 msgid "Resume Onboarding"
-msgstr "Reanudar embarque"
+msgstr "Reanudar los primeros pasos"
 
 #: build/2.6.3/onboarding.js:35
 msgid "WordPress Onboarding"
-msgstr "Inserción de WordPress"
+msgstr "Primeros pasos"
 
 #: build/2.6.3/onboarding.js:35
 msgid "Toggle Navigation"
