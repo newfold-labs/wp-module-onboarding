@@ -75,8 +75,8 @@ if ( is_callable( 'add_action' ) ) {
 
 	// Clear site capabilities transient after onboarding is completed so CTBs are accessible right away
 	add_action(
-		'newfold/onboarding/completed', 
-		function() {
+		'newfold/onboarding/completed',
+		function () {
 			delete_transient( 'nfd_site_capabilities' );
 		}
 	);
