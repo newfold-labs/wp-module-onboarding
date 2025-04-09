@@ -72,4 +72,9 @@ if ( is_callable( 'add_action' ) ) {
 	);
 	// Handle Module Disable if Non-Ecommerce
 	ModuleController::init();
+
+	// Clear site capabilities transient after onboarding is completed
+	add_action('newfold/onboarding/completed', function() {
+		delete_transient( 'nfd_site_capabilities' );
+	});
 }
