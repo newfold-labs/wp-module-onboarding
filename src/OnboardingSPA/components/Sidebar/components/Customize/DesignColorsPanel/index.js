@@ -18,6 +18,12 @@ import {
 import { ACTION_COLORS_SELECTED } from '../../../../../utils/analytics/hiive/constants';
 import { SITEGEN_FLOW } from '../../../../../data/flows/constants';
 
+const blueprintThemeColorsMap = {
+	primary: 'accent_2',
+	secondary: 'accent_5',
+	tertiary: 'accent_4',
+};
+
 const DesignColorsPanel = forwardRef(
 	(
 		{
@@ -85,6 +91,10 @@ const DesignColorsPanel = forwardRef(
 			);
 		}
 
+		/**
+		 * Define the palettes previews
+		 * @returns {Array} Palettes previews
+		 */
 		const definePalettes = () => {
 			const palettes = [];
 			const defaultPalette =
@@ -93,8 +103,9 @@ const DesignColorsPanel = forwardRef(
 				currentData?.sitegen?.homepages?.active?.color?.palette;
 
 			colorPalettes.forEach( ( palette ) => {
+				// Determine if the palette is the default palette
 				let isDefault = true;
-				[ 'primary', 'base', 'tertiary' ].forEach( ( key ) => {
+				[ blueprintThemeColorsMap.primary, 'base', blueprintThemeColorsMap.tertiary ].forEach( ( key ) => {
 					const colorInPalette = palette[ key ];
 					const colorInDefault = defaultPalette.find(
 						( color ) => color.slug === key
@@ -103,11 +114,13 @@ const DesignColorsPanel = forwardRef(
 						isDefault = false;
 					}
 				} );
+
+				// Pallet preview colors
 				const paletteObj = {
 					base: palette?.base,
-					primary: palette?.primary,
-					secondary: palette?.secondary || palette?.base,
-					tertiary: palette?.tertiary || palette?.primary,
+					primary: palette?.accent_2,
+					secondary: palette?.accent_4 || palette?.base,
+					tertiary: palette?.accent_5 || palette?.accent_2,
 					isDefault,
 				};
 				if ( isDefault ) {
@@ -208,6 +221,7 @@ const DesignColorsPanel = forwardRef(
 					} );
 				}
 			}
+
 			return outputArray;
 		};
 
@@ -228,10 +242,11 @@ const DesignColorsPanel = forwardRef(
 			const colorPaletteIndex =
 				selectedPalette === 'custom' ? 0 : selectedPalette;
 			const selectedPaletteColors = colorPalettes[ colorPaletteIndex ];
-			selectedPaletteColors.primary = selectedColor.primary;
-			selectedPaletteColors.secondary = selectedColor.secondary;
+			selectedPaletteColors.accent_1 = selectedColor.primary;
+			selectedPaletteColors.accent_2 = selectedColor.primary;
+			selectedPaletteColors.accent_5 = selectedColor.secondary;
 			selectedPaletteColors.base = selectedColor.base;
-			selectedPaletteColors.tertiary = selectedColor.tertiary;
+			selectedPaletteColors.accent_4 = selectedColor.tertiary;
 			activeColor.palette = convertColorSchema( selectedPaletteColors );
 			currentData.sitegen.homepages.data[ slug ].color = activeColor;
 			setCurrentOnboardingData( currentData );
@@ -283,6 +298,7 @@ const DesignColorsPanel = forwardRef(
 		};
 
 		const renderCustomColorPicker = () => {
+			const selectedPaletteColors = colorPalettes[ selectedPalette ] || colorPalettes[ 0 ];
 			return (
 				<div
 					className={ `${ baseClassName }__custom__colors__container` }
@@ -291,13 +307,12 @@ const DesignColorsPanel = forwardRef(
 						{ __( 'CUSTOM COLORS', 'wp-module-onboarding' ) }
 					</h5>
 					<div>
-						{ [ 'primary', 'secondary', 'tertiary' ].map(
-							( colorType, index ) => (
-								<ColorPickerButton
-									key={ index }
-									isColorSelected={ selectedColor }
-									color={ selectedColor[ colorType ] }
-									slug={ colorType }
+						{ [ 'primary', 'secondary', 'tertiary' ].map( ( colorType, index ) => (
+							<ColorPickerButton
+								key={ index }
+								isColorSelected={ selectedColor }
+								color={ selectedPaletteColors[ blueprintThemeColorsMap[ colorType ] ] }
+								slug={ colorType }
 									name={
 										colorType.charAt( 0 ).toUpperCase() +
 										colorType.slice( 1 )
