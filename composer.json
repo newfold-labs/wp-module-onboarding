@@ -44,7 +44,7 @@
 	"require": {
 		"mustache/mustache": "^2.14.2",
 		"wp-cli/wp-config-transformer": "^1.4.1",
-		"newfold-labs/wp-module-onboarding-data": "^1.2.7",
+		"newfold-labs/wp-module-onboarding-data": "^1.2.8",
 		"newfold-labs/wp-module-patterns": "^2.9.2",
 		"newfold-labs/wp-module-facebook": "^1.0.9",
 		"newfold-labs/wp-module-migration": "^1.0.12",
