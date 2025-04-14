@@ -71,8 +71,10 @@ const LearnMore = () => {
 						<ButtonWhite
 							text={ content.help.fullService.text }
 							onClick={ () =>
-								( window.location.href =
-									content.help.fullService.link )
+								window.open(
+									content.help.fullService.link,
+									'_blank'
+								)
 							}
 						/>
 					) }
