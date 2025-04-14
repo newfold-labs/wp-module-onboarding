@@ -1,6 +1,6 @@
 {
     "name": "@newfold-labs/wp-module-onboarding",
-    "version": "2.6.6",
+    "version": "2.6.7",
     "description": "Next-generation WordPress Onboarding for WordPress sites at Newfold Digital.",
     "license": "GPL-2.0-or-later",
     "private": true,
@@ -24,7 +24,7 @@
         "build": "wp-scripts build ./src/onboarding.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.css  ./src/Scripts/onboarding-restart-button/onboarding-restart-button.js ./src/Scripts/onboarding-restart-button/onboarding-restart-button.css",
         "format": "wp-scripts format ./src",
         "start": "wp-scripts start ./src/onboarding.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.css  ./src/Scripts/onboarding-restart-button/onboarding-restart-button.js ./src/Scripts/onboarding-restart-button/onboarding-restart-button.css",
-        "set-version-bump": "node ./.github/scripts/set-version-bump.js && npm i && rm -rf ./build && npm run build && composer run i18n",
+        "set-version-bump": "node ./.github/scripts/set-version-bump.js && npm i && rm -rf ./build && npm run build && composer install && composer run i18n",
         "lint:js": "wp-scripts lint-js ./src",
         "lint:js:fix": "wp-scripts lint-js ./src --fix",
         "test:e2e": "npx cypress run",
