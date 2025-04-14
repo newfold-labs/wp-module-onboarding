@@ -64,7 +64,7 @@ class StatusService {
 	 * @return bool True if the page is a page refresh, false otherwise.
 	 */
 	private static function is_page_refresh(): bool {
-		if ( isset( $_SERVER['HTTP_CACHE_CONTROL'] ) && $_SERVER['HTTP_CACHE_CONTROL'] == 'max-age=0' ) {
+		if ( isset( $_SERVER['HTTP_CACHE_CONTROL'] ) && 'max-age=0' === $_SERVER['HTTP_CACHE_CONTROL'] ) {
 			return true;
 		}
 
