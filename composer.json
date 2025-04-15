@@ -52,7 +52,7 @@
 	},
 	"require-dev": {
 		"wp-phpunit/wp-phpunit": "^6.6.2",
-		"yoast/phpunit-polyfills": "^2.0.2",
+		"yoast/phpunit-polyfills": "^4.0.0",
 		"newfold-labs/wp-php-standards": "^1.2.4",
 		"wp-cli/i18n-command": "^2.6.3"
 	},
