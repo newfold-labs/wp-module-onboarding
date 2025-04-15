@@ -59,38 +59,11 @@ class StatusService {
 	}
 
 	/**
-	 * Checks if the request is a page refresh/reload.
-	 *
-	 * @return bool True if the page is a page refresh, false otherwise.
-	 */
-	private static function is_page_refresh(): bool {
-		if ( isset( $_SERVER['HTTP_CACHE_CONTROL'] ) && 'max-age=0' === $_SERVER['HTTP_CACHE_CONTROL'] ) {
-			return true;
-		}
-
-		if ( ! isset( $_SERVER['HTTP_REFERER'] ) ) {
-			return true;
-		}
-
-		$referer = wp_parse_url( $_SERVER['HTTP_REFERER'] );
-		if ( isset( $referer['query'] ) && strpos( $referer['query'], 'page=nfd-onboarding' ) !== false ) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * Checks if the user is eligible to restart onboarding based on brand configuration and AI SiteGen capability.
 	 *
 	 * @return bool True if eligible, false otherwise.
 	 */
 	public static function is_onboarding_restart_eligible(): bool {
-		// If request is a page refresh, we either installing the theme or a user-invoked page refresh
-		if ( self::is_page_refresh() ) {
-			return false;
-		}
-
 		// Check if the brand is eligible for Restarting Onboarding
 		$brand_config = Brands::get_brands()[ NFD_ONBOARDING_PLUGIN_BRAND ]['config'] ?? array();
 		if ( empty( $brand_config['canRestartOnboarding'] ) || ! $brand_config['canRestartOnboarding'] ) {
@@ -111,6 +84,9 @@ class StatusService {
 	 * @return void
 	 */
 	public static function update_onboarding_restart_status(): void {
+		if ( isset( $_GET['page'] ) && \sanitize_text_field( wp_unslash( $_GET['page'] ) ) === 'nfd-onboarding' ) {
+			return;
+		}
 
 		// Don't do anything if the customer is not eligible
 		if ( ! self::is_onboarding_restart_eligible() ) {
