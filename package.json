@@ -14,7 +14,7 @@
         "@wordpress/env": "^9.0.0",
         "@wordpress/icons": "^10.22.0",
         "@wordpress/scripts": "^26.10.0",
-        "axe-core": "^4.8.3",
+        "axe-core": "^4.10.3",
         "cypress": "^13.6.1",
         "cypress-axe": "^1.5.0",
         "node-fetch": "^3.3.2",
