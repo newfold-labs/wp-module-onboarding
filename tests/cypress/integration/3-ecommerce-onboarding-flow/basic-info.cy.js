@@ -25,6 +25,7 @@ describe( 'Basic Info Page', function () {
 
 	it( 'Check Drawer Activity', () => {
 		let href;
+		cy.wait( 3000 );
 		cy.get( '.nfd-onboarding-drawer__toggle' )
 			.as( 'drawerOpen' )
 			.invoke( 'attr', 'class' )
@@ -195,7 +196,7 @@ describe( 'Basic Info Page', function () {
 				cy.get( '.navigation-buttons_next' ).click();
 				cy.get( '.components-modal__content' ).should( 'be.visible' );
 			}
-			
+
 			cy.get( '.components-modal__header button' , { timeout: customCommandTimeout } ).click()
 			cy.wait(200);
 			cy.get(
@@ -277,15 +278,15 @@ describe( 'Basic Info Page', function () {
 		cy.get( socialTest ).should( 'exist' );
 		cy.get( socialTest ).clear();
 		cy.get( socialTest ).type( 'https://www.facebook.com/testfacebook' );
-		
+
 		cy.get( socialTest2 ).should( 'exist' );
 		cy.get( socialTest2 ).clear();
 		cy.get(socialTest2).type('@testTweet');
-			
+
 		cy.get( socialTest3 ).should( 'exist' );
 		cy.get( socialTest3 ).clear();
 		cy.get(socialTest3).type('@testInsta');
-		
+
 		cy.get( socialTest4 ).should( 'exist' );
 		cy.get( socialTest4 ).clear();
 		cy.get( socialTest4 ).type( '@testYouTube' );

@@ -84,6 +84,9 @@ class StatusService {
 	 * @return void
 	 */
 	public static function update_onboarding_restart_status(): void {
+		if ( isset( $_GET['page'] ) && \sanitize_text_field( wp_unslash( $_GET['page'] ) ) === 'nfd-onboarding' ) {
+			return;
+		}
 
 		// Don't do anything if the customer is not eligible
 		if ( ! self::is_onboarding_restart_eligible() ) {

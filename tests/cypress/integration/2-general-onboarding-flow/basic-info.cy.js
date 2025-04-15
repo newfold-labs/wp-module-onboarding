@@ -23,6 +23,7 @@ describe( 'Basic Info Page', function () {
 
 	it( 'Check Drawer Activity', () => {
 		let href;
+		cy.wait( 3000 );
 		cy.get( '.nfd-onboarding-drawer__toggle' )
 			.as( 'drawerOpen' )
 			.invoke( 'attr', 'class' )
@@ -194,9 +195,9 @@ describe( 'Basic Info Page', function () {
 			).should( 'have.css', 'opacity', '0.75' );
 			// The URL Checker runs on a debounce
 			// Shows the message to the User in case of Invalid URL
-			
+
 			// cy.get( '.components-modal__content' ).type( '{esc}' );
-			
+
 
 			socialTest.focus();
 			socialTest.clear();
@@ -269,15 +270,15 @@ describe( 'Basic Info Page', function () {
 					cy.get('@socialFormToggle').click();
 				}
 			});
-		
+
 		cy.get( socialTest ).should( 'exist' );
 		cy.get( socialTest ).clear();
 		cy.get( socialTest ).type( 'https://www.facebook.com/testfacebook' );
-	
+
 		cy.get( socialTest2 ).should( 'exist' );
 		cy.get( socialTest2 ).clear();
 		cy.get(socialTest2).type('@testTweet');
-		
+
 		cy.get( socialTest3 ).should( 'exist' );
 		cy.get( socialTest3 ).clear();
 		cy.get( socialTest3 ).type( '@testInsta' );
