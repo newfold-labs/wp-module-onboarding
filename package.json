@@ -33,7 +33,7 @@
     "dependencies": {
         "@newfold/js-utility-ui-analytics": "1.4.0",
         "@newfold/wp-module-facebook": "^1.1.2",
-        "@sentry/react": "^8.9.2",
+        "@sentry/react": "^9.12.0",
         "@wordpress/api-fetch": "^7.17.0",
         "@wordpress/data": "^10.17.0",
         "@wordpress/interface": "^5.25.0",
