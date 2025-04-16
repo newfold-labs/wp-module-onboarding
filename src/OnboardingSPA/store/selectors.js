@@ -290,7 +290,11 @@ export function getSettings( state ) {
 }
 
 export function getThemeStatus( state ) {
-	return state.settings.themeStatus;
+	const flow = state.runtime.currentFlow;
+
+	return Object.values(
+		state.runtime.previewSettings.settings.preRequisites[ flow ].themes
+	)[ 0 ];
 }
 
 export function getInitialize( state ) {

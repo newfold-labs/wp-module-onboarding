@@ -42,13 +42,6 @@ export async function initializeNFDOnboarding( id, runtime ) {
 	const DOM_TARGET = document.getElementById( id );
 	dispatch( nfdOnboardingStore ).setRuntime( runtime );
 
-	if ( runtime.previewSettings.settings.preRequisites?.themes ) {
-		const firstValue = Object.values(
-			runtime.previewSettings.settings.preRequisites.themes
-		)[ 0 ];
-		dispatch( nfdOnboardingStore ).updateThemeStatus( firstValue );
-	}
-
 	const currentData = await functionRetryHandler( getFlow, 3 );
 
 	if ( currentData !== false ) {

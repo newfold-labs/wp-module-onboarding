@@ -8,11 +8,11 @@ import getContents from './contents';
 import { getCustomizeSidebarData } from '../../../../../utils/api/siteGen';
 import OrbAnimation from '../../../../../components/OrbAnimation';
 
-const DesignFontsPanel = lazy( () =>
-	import(
-		'../../../../../components/Sidebar/components/Customize/DesignFontsPanel'
-	)
-);
+// const DesignFontsPanel = lazy( () =>
+// 	import(
+// 		'../../../../../components/Sidebar/components/Customize/DesignFontsPanel'
+// 	)
+// );
 const DesignColorsPanel = lazy( () =>
 	import(
 		'../../../../../components/Sidebar/components/Customize/DesignColorsPanel'
@@ -30,9 +30,9 @@ const Customize = forwardRef( ( props, ref ) => {
 	};
 
 	const designColorPanelRef = createRef();
-	const designFontsPanelRef = createRef();
+	// const designFontsPanelRef = createRef();
 	const resetCustomizationCallback = () => {
-		designFontsPanelRef.current.resetToDefaultFonts();
+		// designFontsPanelRef.current.resetToDefaultFonts();
 		designColorPanelRef.current.resetToDefaultColors();
 	};
 
@@ -60,7 +60,7 @@ const Customize = forwardRef( ( props, ref ) => {
 				heading={ content.introduction.heading }
 				ref={ designColorPanelRef }
 			/>
-			<DesignFontsPanel ref={ designFontsPanelRef } />
+			{/* <DesignFontsPanel ref={ designFontsPanelRef } /> */}
 		</div>
 	);
 } );
