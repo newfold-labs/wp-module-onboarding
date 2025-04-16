@@ -9,7 +9,7 @@
         "email": "dave@bluehost.com"
     },
     "devDependencies": {
-        "@testing-library/cypress": "^10.0.1",
+        "@testing-library/cypress": "^10.0.3",
         "@wordpress/base-styles": "^5.22.0",
         "@wordpress/env": "^9.0.0",
         "@wordpress/icons": "^10.22.0",
