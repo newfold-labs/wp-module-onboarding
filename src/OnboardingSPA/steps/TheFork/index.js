@@ -73,7 +73,9 @@ const TheFork = () => {
 		// setting the experiment version to 2 so that DIY onboarding is always hidden
 		const theForkExperimentVersion = 2;
 		setExperimentVersion( theForkExperimentVersion );
-		if ( ! currentData.sitegen.theForkExperimentVersion ) {
+
+		// the default value of theForkExperimentVersion while initialising the store is 0
+		if ( currentData.sitegen.theForkExperimentVersion === 0 ) {
 			// Sync that to the store and DB for same version on refresh
 			currentData.sitegen.theForkExperimentVersion = theForkExperimentVersion;
 			setCurrentOnboardingData( currentData );
