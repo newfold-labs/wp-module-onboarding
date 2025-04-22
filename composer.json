@@ -45,15 +45,15 @@
 		"mustache/mustache": "^2.14.2",
 		"wp-cli/wp-config-transformer": "^1.4.1",
 		"newfold-labs/wp-module-onboarding-data": "^1.2.8",
-		"newfold-labs/wp-module-patterns": "^2.6",
-		"newfold-labs/wp-module-facebook": "^1.0.9",
-		"newfold-labs/wp-module-migration": "^1.0.12",
+		"newfold-labs/wp-module-patterns": "^2.9.2",
+		"newfold-labs/wp-module-facebook": "^1.2.1",
+		"newfold-labs/wp-module-migration": "^1.3.0",
 		"wp-forge/helpers": "^2.0"
 	},
 	"require-dev": {
-		"wp-phpunit/wp-phpunit": "^6.6.2",
+		"wp-phpunit/wp-phpunit": "^6.7.2",
 		"yoast/phpunit-polyfills": "^4.0.0",
-		"newfold-labs/wp-php-standards": "^1.2.4",
+		"newfold-labs/wp-php-standards": "^1.2.5",
 		"wp-cli/i18n-command": "^2.6.3"
 	},
 	"scripts": {
