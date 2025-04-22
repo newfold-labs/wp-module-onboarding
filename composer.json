@@ -51,7 +51,7 @@
 		"wp-forge/helpers": "^2.0"
 	},
 	"require-dev": {
-		"wp-phpunit/wp-phpunit": "^6.7.2",
+		"wp-phpunit/wp-phpunit": "^6.8.0",
 		"yoast/phpunit-polyfills": "^4.0.0",
 		"newfold-labs/wp-php-standards": "^1.2.5",
 		"wp-cli/i18n-command": "^2.6.3"
