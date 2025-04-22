@@ -1,0 +1,15 @@
+.nfd-sg-language {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+
+    &__label {
+        font-size: 0.87rem;
+        margin-top: 2%;
+    }
+
+    &__select {
+        margin-top: 1%;
+        border-radius: 8px !important;
+    }
+}

@@ -116,6 +116,10 @@ class SiteGenController {
 				'required' => true,
 				'type'     => 'string',
 			),
+			'locale' => array(
+				'required' => true,
+				'type'     => 'string',
+			),
 			'skip_cache' => array(
 				'required' => false,
 				'type'     => 'boolean',
@@ -134,6 +138,10 @@ class SiteGenController {
 				'required'          => true,
 				'type'              => 'string',
 				'sanitize_callback' => 'sanitize_text_field',
+			),
+			'locale' => array(
+				'required' => true,
+				'type'     => 'string',
 			),
 		);
 	}
@@ -204,10 +212,13 @@ class SiteGenController {
 
 		$site_info  = $request->get_param( 'site_info' );
 		$identifier = $request->get_param( 'identifier' );
+		$locale     = $request->get_param( 'locale' );
 		$skip_cache = $request->get_param( 'skip_cache' );
 
 		// TODO Implement the main function and do computations if required.
-		return SiteGenService::instantiate_site_meta( $site_info, $identifier, $skip_cache );
+		return SiteGenService::instantiate_site_meta(
+			$site_info, $identifier, $locale, $skip_cache
+		);
 	}
 
 	/**
@@ -223,14 +234,15 @@ class SiteGenController {
 		}
 
 		$site_description = $request->get_param( 'site_description' );
+		$locale           = $request->get_param( 'locale' );
 		$site_info        = array( 'site_description' => $site_description );
 
-		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience' );
+		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', $locale );
 		if ( is_wp_error( $target_audience ) ) {
 			return $target_audience;
 		}
 
-		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones' );
+		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', $locale );
 		if ( is_wp_error( $content_style ) ) {
 			return $content_style;
 		}
@@ -238,7 +250,8 @@ class SiteGenController {
 		$homepages = SiteGenService::generate_homepages(
 			$site_description,
 			$content_style,
-			$target_audience
+			$target_audience,
+			$locale,
 		);
 
 		if ( is_wp_error( $homepages ) ) {

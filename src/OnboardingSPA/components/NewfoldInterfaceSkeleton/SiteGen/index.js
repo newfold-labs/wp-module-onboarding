@@ -151,11 +151,13 @@ const SiteGen = () => {
 		siteInfo,
 		identifier,
 		skipCache,
+		locale,
 		retryCount = 1
 	) {
 		const data = await generateSiteGenMeta(
 			siteInfo,
 			identifier,
+			locale,
 			skipCache
 		);
 
@@ -166,6 +168,7 @@ const SiteGen = () => {
 					siteInfo,
 					identifier,
 					skipCache,
+					locale,
 					retryCount + 1
 				);
 			}
@@ -234,7 +237,8 @@ const SiteGen = () => {
 			// Get the homepages and set that in flow
 			setIsGeneratingHomepages( true );
 			const response = await getHomepages(
-				currentData.sitegen.siteDetails.prompt
+				currentData.sitegen.siteDetails.prompt,
+				currentData.sitegen.siteDetails.locale,
 			);
 
 			if ( response.error ) {
@@ -316,10 +320,12 @@ const SiteGen = () => {
 			site_description: currentData.sitegen?.siteDetails?.prompt,
 		};
 
+		const locale = currentData.sitegen?.siteDetails?.locale;
+
 		const skipCache = currentData.sitegen?.skipCache;
 		// Iterate over Identifiers and fire Requests!
 		identifiers.forEach( ( identifier ) => {
-			performSiteGenMetaGeneration( siteInfo, identifier, skipCache );
+			performSiteGenMetaGeneration( siteInfo, identifier, skipCache, locale );
 		} );
 	}
 

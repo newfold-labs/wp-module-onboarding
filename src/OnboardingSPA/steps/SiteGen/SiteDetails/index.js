@@ -17,6 +17,7 @@ import CommonLayout from '../../../components/Layouts/Common';
 import TextInputSiteGen from '../../../components/TextInput/TextInputSiteGen';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 import { SiteGenStateHandler } from '../../../components/StateHandlers';
+import LanguageSelection from "../../../components/LanguageSelection";
 
 // Misc
 import { HEADER_SITEGEN } from '../../../../constants';
@@ -26,6 +27,7 @@ import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenSiteDetails = () => {
 	const [ customerInput, setCustomerInput ] = useState( '' );
+	const [ selectedLocale, setSelectedLocale ] = useState( '' );
 	const [ customerInputStrength, setCustomerInputStrength ] = useState( 0 );
 	const [ isValidInput, setIsValidInput ] = useState( false );
 
@@ -66,7 +68,9 @@ const SiteGenSiteDetails = () => {
 				currentData.sitegen.siteDetails.prompt = '';
 				setCurrentOnboardingData( currentData );
 			} else {
-				setIsValidInput( true );
+				if ( selectedLocale !== '' ) {
+					setIsValidInput( true );
+				}
 				setIsFooterNavAllowed( true );
 			}
 			return setCustomerInput( currentData.sitegen.siteDetails.prompt );
@@ -93,14 +97,20 @@ const SiteGenSiteDetails = () => {
 					setCurrentOnboardingData( currentData );
 				}
 				// Else just make sure the Next is enabled when prompt is present
-				setIsValidInput( true );
+				if ( selectedLocale !== '' ) {
+					setIsValidInput( true );
+				}
 				setIsFooterNavAllowed( true );
 			} else {
 				setIsValidInput( false );
 				setIsFooterNavAllowed( false );
 			}
+
+			if ( selectedLocale !== currentData.sitegen.siteDetails.locale ) {
+				currentData.sitegen.siteDetails.locale = selectedLocale;
+			}
 		}
-	}, [ customerInput ] );
+	}, [ customerInput, selectedLocale ] );
 
 	const trackPromptSetEvent = () => {
 		let customerInputStrengthForEvent = false;
@@ -146,6 +156,12 @@ const SiteGenSiteDetails = () => {
 							}
 							customChildren={ true }
 						>
+							<LanguageSelection
+								labgeageSelectionLabel={ content.languageSelectionLabel }
+								languageList={ content.languageList }
+								selectedLocale={selectedLocale}
+								setSelectedLocale={setSelectedLocale}
+							/>
 							{ isLargeViewport && (
 								<div className={ 'nfd-sg-site-details-endrow' }>
 									<NextButtonSiteGen

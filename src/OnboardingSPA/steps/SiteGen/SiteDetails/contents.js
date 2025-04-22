@@ -20,6 +20,14 @@ const getContents = () => {
 			'wp-module-onboarding'
 		),
 		walkThroughlink: __( 'click here', 'wp-module-onboarding' ),
+		languageList: [
+			[ __('English (US)', 'wp-module-onboarding'), 'en-US' ],
+			[ __('English (UK)', 'wp-module-onboarding'), 'en-UK' ],
+			[ __('Spanish', 'wp-module-onboarding'), 'es-ES' ],
+			[ __('French', 'wp-module-onboarding'), 'fr-FR' ],
+			[ __('Hindi', 'wp-module-onboarding'), 'hi-IN' ],
+		],
+		languageSelectionLabel: __( 'Choose your preferred site language:', 'wp-module-onboarding' )
 	};
 };
 

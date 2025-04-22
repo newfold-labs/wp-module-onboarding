@@ -108,7 +108,8 @@ const SiteGenPreview = () => {
 		}
 
 		const response = await getHomepages(
-			currentData.sitegen.siteDetails.prompt
+			currentData.sitegen.siteDetails.prompt,
+			currentData.sitegen.locale,
 		);
 
 		if ( response.error ) {
