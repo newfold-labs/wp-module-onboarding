@@ -11,7 +11,7 @@
     "devDependencies": {
         "@testing-library/cypress": "^10.0.3",
         "@wordpress/base-styles": "^5.22.0",
-        "@wordpress/env": "^9.0.0",
+        "@wordpress/env": "^10.22.0",
         "@wordpress/icons": "^10.22.0",
         "@wordpress/scripts": "^26.10.0",
         "axe-core": "^4.10.3",
