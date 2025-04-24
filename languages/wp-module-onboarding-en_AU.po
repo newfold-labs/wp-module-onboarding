@@ -1709,21 +1709,21 @@ msgstr "Who is this site for? What's the ideal design?"
 
 #: includes/WP_Admin.php:305
 msgid "Build with AI"
-msgstr ""
+msgstr "Build with AI"
 
 #: build/2.7.0/866.js:1
 msgid "I'm following a tutorial"
-msgstr ""
+msgstr "I'm following a tutorial"
 
 #: build/2.7.0/866.js:1
 msgid "Take me to the WP Admin Dashboard"
-msgstr ""
+msgstr "Take me to the WP Admin Dashboard"
 
 #. translators: 1: Brand 2: site or store
 #: build/2.7.0/270.js:2
 #: build/2.7.0/270.js:3
 msgid "Hang tight, we're building your %1$s %2$s"
-msgstr ""
+msgstr "Hang tight, we're building your %1$s %2$s"
 
 #: build/2.7.0/270.js:2
 #: build/2.7.0/270.js:3

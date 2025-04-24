@@ -1545,7 +1545,7 @@ msgstr "Zurück"
 
 #: build/2.7.0/onboarding.js:40
 msgid "What Next"
-msgstr "Was als nächstes"
+msgstr "Was kommt als Nächstes"
 
 #: build/2.7.0/onboarding.js:41
 msgid "Add, adjust and launch!"
@@ -1668,61 +1668,61 @@ msgstr "Mit KI erstellen"
 #: build/2.7.0/270.js:2
 #: build/2.7.0/270.js:3
 msgid "Hang tight, we're building your %1$s %2$s"
-msgstr ""
+msgstr "Einen Moment Geduld, wir erstellen Ihre %1$s %2$s"
 
 #: build/2.7.0/270.js:2
 #: build/2.7.0/270.js:3
 msgid "We're assembling your unique design and installing useful tools"
-msgstr ""
+msgstr "Wir erstellen Ihr einzigartiges Design und installieren nützliche Tools"
 
 #: build/2.7.0/287.js:1
 msgid "I've built a few sites for myself or others"
-msgstr ""
+msgstr "Ich habe bereits einige Websites für mich oder andere erstellt"
 
 #: build/2.7.0/560.js:1
 #: build/2.7.0/onboarding.js:47
 msgid "There's no place like a great home page"
-msgstr ""
+msgstr "Nichts geht über eine großartige Startseite"
 
 #: build/2.7.0/841.js:1
 msgid "We'll use this information to help you setup your online store"
-msgstr ""
+msgstr "Wir verwenden diese Informationen, um Ihnen bei der Einrichtung Ihres Online-Shops zu helfen"
 
 #: build/2.7.0/866.js:1
 msgid "I'm following a tutorial"
-msgstr ""
+msgstr "Ich folge einem Tutorial"
 
 #: build/2.7.0/866.js:1
 msgid "I'm following a tutorial, take me to the WP Admin Dashboard"
-msgstr ""
+msgstr "Ich folge einem Tutorial, bringen Sie mich zum WP Admin Dashboard"
 
 #: build/2.7.0/onboarding.js:1
 msgid "Whether it's a storefront or a PO Box, we're proud to help you connect your real-world and online businesses"
-msgstr ""
+msgstr "Ob Ladengeschäft oder Postfach, wir sind stolz darauf, Ihnen bei der Verbindung Ihres realen und Online-Geschäfts zu helfen"
 
 #. translators: 1: Brand 2: site or store
 #: build/2.7.0/onboarding.js:3
 msgid "Tell us a little about how and what you're planning to sell and we'll bring the power of WooCommerce and unique %1$s %2$s solutions to elevate your business and enhance your capabilities."
-msgstr ""
+msgstr "Erzählen Sie uns ein wenig darüber, wie und was Sie verkaufen möchten, und wir bringen die Leistungsfähigkeit von WooCommerce und einzigartige %1$s %2$s-Lösungen ein, um Ihr Geschäft zu fördern und Ihre Möglichkeiten zu erweitern."
 
 #. translators: 1: website or store 2: website or store
 #: build/2.7.0/onboarding.js:6
 msgid "When you set up this new WordPress %1$s, you're joining millions of website owners who publish their %2$s using the free, community-built software project we're proud to support."
-msgstr ""
+msgstr "Wenn Sie diese neue WordPress %1$s einrichten, schließen Sie sich Millionen von Website-Betreibern an, die ihre %2$s mit dem kostenlosen, von der Community entwickelten Software-Projekt veröffentlichen, das wir stolz unterstützen."
 
 #: build/2.7.0/onboarding.js:11
 msgid "We're installing WooCommerce for you to fill with your amazing products & services!"
-msgstr ""
+msgstr "Wir installieren WooCommerce für Sie, damit Sie es mit Ihren tollen Produkten & Dienstleistungen füllen können!"
 
 #. translators: %s: site or store
 #: build/2.7.0/onboarding.js:35
 #: build/2.7.0/onboarding.js:39
 msgid "We chose the templates, features and best configuration we can for sites. You're always in full control of your WordPress %s and we ask so we can be a good website partner."
-msgstr ""
+msgstr "Wir haben die bestmöglichen Vorlagen, Funktionen und Konfigurationen für Websites ausgewählt. Sie haben immer die volle Kontrolle über Ihre WordPress %s, und wir fragen nach, damit wir ein guter Website-Partner sein können."
 
 #: build/2.7.0/onboarding.js:40
 msgid "What's Next"
-msgstr ""
+msgstr "Was kommt als Nächstes"
 
 #. translators: 1: website or store 2: website or store
 #: build/2.7.0/onboarding.js:41
