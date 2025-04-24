@@ -1667,79 +1667,74 @@ msgstr "Bouwen met AI"
 #. translators: 1: Brand 2: site or store
 #: build/2.7.0/270.js:2
 #: build/2.7.0/270.js:3
-msgid "Hang tight, we’re building your %1$s %2$s"
-msgstr ""
+msgid "Hang tight, we're building your %1$s %2$s"
+msgstr "Even geduld, we bouwen uw %1$s %2$s"
 
 #: build/2.7.0/270.js:2
 #: build/2.7.0/270.js:3
-msgid "We’re assembling your unique design and installing useful tools"
-msgstr ""
+msgid "We're assembling your unique design and installing useful tools"
+msgstr "We stellen uw unieke ontwerp samen en installeren nuttige tools"
 
 #: build/2.7.0/287.js:1
-msgid "I’ve built a few sites for myself or others"
-msgstr ""
+msgid "I've built a few sites for myself or others"
+msgstr "Ik heb een paar sites voor mezelf of anderen gebouwd"
 
 #: build/2.7.0/560.js:1
 #: build/2.7.0/onboarding.js:47
-msgid "There’s no place like a great home page"
-msgstr ""
+msgid "There's no place like a great home page"
+msgstr "Er gaat niets boven een geweldige homepage"
 
 #: build/2.7.0/841.js:1
-msgid "We’ll use this information to help you setup your online store"
-msgstr ""
+msgid "We'll use this information to help you setup your online store"
+msgstr "We gebruiken deze informatie om u te helpen bij het opzetten van uw online winkel"
 
 #: build/2.7.0/866.js:1
-msgid "I’m following a tutorial"
-msgstr ""
+msgid "I'm following a tutorial"
+msgstr "Ik volg een handleiding"
 
 #: build/2.7.0/866.js:1
-msgid "I’m following a tutorial, take me to the WP Admin Dashboard"
-msgstr ""
+msgid "I'm following a tutorial, take me to the WP Admin Dashboard"
+msgstr "Ik volg een handleiding, breng me naar het WP Admin Dashboard"
 
 #: build/2.7.0/onboarding.js:1
-msgid "Whether it’s a storefront or a PO Box, we’re proud to help you connect your real-world and online businesses"
-msgstr ""
+msgid "Whether it's a storefront or a PO Box, we're proud to help you connect your real-world and online businesses"
+msgstr "Of het nu een winkel of een postbus is, we zijn er trots op dat we u helpen uw fysieke en online bedrijf te verbinden"
 
-#. translators: 1: Brand 2: site or store
+#. translators: 1: brand 2: site or store
 #: build/2.7.0/onboarding.js:3
-msgid "Tell us a little about how and what you’re planning to sell and we’ll bring the power of WooCommerce and unique %1$s %2$s solutions to elevate your business and enhance your capabilities."
-msgstr ""
+msgid "Tell us a little about how and what you're planning to sell and we'll bring the power of WooCommerce and unique %1$s %2$s solutions to elevate your business and enhance your capabilities."
+msgstr "Vertel ons een beetje over hoe en wat u van plan bent te verkopen en wij brengen de kracht van WooCommerce en unieke %1$s %2$s oplossingen om uw bedrijf te verbeteren en uw mogelijkheden te vergroten."
 
 #. translators: 1: website or store 2: website or store
 #: build/2.7.0/onboarding.js:6
-msgid "When you set up this new WordPress %1$s, you’re joining millions of website owners who publish their %2$s using the free, community-built software project we’re proud to support."
-msgstr ""
+msgid "When you set up this new WordPress %1$s, you're joining millions of website owners who publish their %2$s using the free, community-built software project we're proud to support."
+msgstr "Wanneer u deze nieuwe WordPress %1$s opzet, voegt u zich bij miljoenen website-eigenaren die hun %2$s publiceren met behulp van het gratis, door de community gebouwde softwareproject dat we met trots ondersteunen."
 
 #: build/2.7.0/onboarding.js:11
-msgid "We’re installing WooCommerce for you to fill with your amazing products & services!"
-msgstr ""
+msgid "We're installing WooCommerce for you to fill with your amazing products & services!"
+msgstr "We installeren WooCommerce voor u om te vullen met uw geweldige producten en diensten!"
 
 #. translators: %s: site or store
 #: build/2.7.0/onboarding.js:35
 #: build/2.7.0/onboarding.js:39
-msgid "We chose the templates, features and best configuration we can for sites. You’re always in full control of your WordPress %s and we ask so we can be a good website partner."
-msgstr ""
+msgid "We chose the templates, features and best configuration we can for sites. You're always in full control of your WordPress %s and we ask so we can be a good website partner."
+msgstr "We hebben de beste sjablonen, functies en configuratie gekozen die we kunnen voor sites. U heeft altijd volledige controle over uw WordPress %s en we vragen het zodat we een goede website partner kunnen zijn."
 
 #: build/2.7.0/onboarding.js:40
-msgid "What’s Next"
-msgstr ""
+msgid "What's Next"
+msgstr "Wat komt er nu"
 
 #. translators: 1: website or store 2: website or store
 #: build/2.7.0/onboarding.js:41
-msgid "The beginning of your %1$s journey is complete. We’re here to support your next steps and %2$s goals!"
-msgstr ""
+msgid "The beginning of your %1$s journey is complete. We're here to support your next steps and %2$s goals!"
+msgstr "Het begin van uw %1$s reis is voltooid. We zijn er om uw volgende stappen en %2$s doelen te ondersteunen!"
 
 #. translators: 1: site or store 2: Brand 3: site or store
 #: build/2.7.0/onboarding.js:42
-msgid "Now that you’ve setup the basics, use WordPress to edit your pages, %1$s design and explore the unlimited destinations you can chart for your %2$s %3$s."
-msgstr ""
-
-#. translators: 1: site or store 2: site or store
-#: build/2.7.0/onboarding.js:49
-msgid "We’ve baked everything we know about making great designs and content for common %1$s needs into ease-to-use templates. Pick templates and we’ll add them as Page drafts to your WordPress %2$s."
-msgstr ""
+msgid "Now that you've setup the basics, use WordPress to edit your pages, %1$s design and explore the unlimited destinations you can chart for your %2$s %3$s."
+msgstr "Nu u de basis heeft opgezet, gebruik WordPress om uw pagina's te bewerken, %1$s ontwerp en verken de onbeperkte bestemmingen die u kunt uitstippelen voor uw %2$s %3$s."
 
 #. translators: %s: site or store
 #: build/2.7.0/onboarding.js:58
-msgid "We’ve assembled the best building blocks for a successful %s"
-msgstr ""
+msgid "We've assembled the best building blocks for a successful %s"
+msgstr "We hebben de beste bouwstenen samengesteld voor een succesvolle %s"
