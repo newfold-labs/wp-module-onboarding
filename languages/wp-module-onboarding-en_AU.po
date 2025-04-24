@@ -254,13 +254,13 @@ msgstr "Preparing your account"
 #. translators: 1: Brand 2: site or store
 #: build/2.6.9/270.js:2
 #: build/2.6.9/270.js:3
-msgid "Hang tight, we’re building your %1$s %2$s"
-msgstr "Hang tight, we’re building your %1$s %2$s"
+msgid "Hang tight, we're building your %1$s %2$s"
+msgstr "Hang tight, we're building your %1$s %2$s"
 
 #: build/2.6.9/270.js:2
 #: build/2.6.9/270.js:3
-msgid "We’re assembling your unique design and installing useful tools"
-msgstr "We’re assembling your unique design and installing useful tools"
+msgid "We're assembling your unique design and installing useful tools"
+msgstr "We're assembling your unique design and installing useful tools"
 
 #: build/2.6.9/270.js:3
 #: build/2.6.9/onboarding.js:10
@@ -312,8 +312,8 @@ msgid "Intermediate"
 msgstr "Intermediate"
 
 #: build/2.6.9/287.js:1
-msgid "I’ve built a few sites for myself or others"
-msgstr "I’ve built a few sites for myself or others"
+msgid "I've built a few sites for myself or others"
+msgstr "I've built a few sites for myself or others"
 
 #: build/2.6.9/287.js:1
 msgid "Expert"
@@ -651,8 +651,8 @@ msgstr "Select your own fonts"
 
 #: build/2.6.9/560.js:1
 #: build/2.6.9/onboarding.js:47
-msgid "There’s no place like a great home page"
-msgstr "There’s no place like a great home page"
+msgid "There's no place like a great home page"
+msgstr "There's no place like a great home page"
 
 #: build/2.6.9/560.js:1
 msgid "Pick a starter layout you can refine and remix with your content"
