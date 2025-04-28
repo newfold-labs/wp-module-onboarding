@@ -1,0 +1,39 @@
+name: Newfold Prepare Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      level:
+        description: The level of release to be used.
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: 'patch'
+        required: true
+
+jobs:
+
+  # This job is used to extract the branch name from the pull request or branch.
+  setup:
+    name: Setup
+    runs-on: ubuntu-latest
+    outputs:
+      branch: ${{ steps.extract_branch.outputs.branch }}
+    steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+
+  # This job runs the newfold module-prep-release workflow for this module.
+  prep-release:
+    name: Prepare Release
+    needs: setup
+    uses: newfold-labs/workflows/.github/workflows/module-prep-release.yml@add/preprelease
+    with:
+      module-repo: ${{ github.repository }}
+      module-branch: ${{ needs.setup.outputs.branch }}
+      level: ${{ inputs.level }}
+    secrets: inherit
