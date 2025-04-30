@@ -174,7 +174,7 @@ class SitePagesController {
 		}
 
 		if ( $is_template_no_title ) {
-			$post['page_template'] = 'no-title';
+			$post['page_template'] = 'page-no-title';
 		}
 
 		return \wp_insert_post( $post );
