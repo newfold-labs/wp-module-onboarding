@@ -29,10 +29,9 @@ jobs:
     needs: setup
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
     with:
-      only-module-tests: true
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: "bluehost/bluehost-wordpress-plugin"
+      plugin-repo: "newfold-labs/wp-plugin-bluehost"
     secrets: inherit
 
   hostgator:
@@ -40,7 +39,6 @@ jobs:
     needs: setup
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
     with:
-      only-module-tests: true
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: "newfold-labs/wp-plugin-hostgator"
@@ -51,7 +49,6 @@ jobs:
     needs: setup
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
     with:
-      only-module-tests: true
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: "newfold-labs/wp-plugin-crazy-domains"

@@ -204,10 +204,20 @@ const SiteGen = () => {
 
 		// Sets the Site Title and Taglin in Live Preview
 		if ( identifier === 'site_config' ) {
+			// Set site title and subtitle in the flow data
+			currentData.data.blogName = data.body.site_title;
+			currentData.data.blogDescription = data.body.tagline;
 			editEntityRecord( 'root', 'site', undefined, {
 				title: data.body.site_title,
 				description: data.body.tagline,
 			} );
+		}
+
+		if ( identifier === 'site_classification' ) {
+			currentData.data.siteType.primary.refers = 'slug';
+			currentData.data.siteType.primary.value = data.body.primaryType;
+			currentData.data.siteType.secondary.refers = 'slug';
+			currentData.data.siteType.secondary.value = data.body.slug;
 		}
 
 		// A Identifier request was successfully made with valid response

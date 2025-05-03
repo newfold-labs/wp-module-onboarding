@@ -1,0 +1,22 @@
+name: Crowdin Download Action
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_branch:
+        description: 'Base branch for the pull request'
+        required: false
+        default: 'main'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  call-crowdin-workflow:
+    uses: newfold-labs/workflows/.github/workflows/i18n-crowdin-download.yml@main
+    with:
+      base_branch: ${{ inputs.base_branch }}
+      CROWDIN_PROJECT_ID: ${{ vars.CROWDIN_PROJECT_ID }}
+    secrets:
+      CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}

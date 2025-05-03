@@ -1,0 +1,1740 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: newfold-labswp-module-staging\n"
+"Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-onboarding/issues\n"
+"Last-Translator: \n"
+"Language-Team: Italian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-11-18T07:59:34+00:00\n"
+"PO-Revision-Date: 2025-02-19 15:20\n"
+"Language: it_IT\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: wp-module-onboarding\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: newfold-labswp-module-staging\n"
+"X-Crowdin-Project-ID: 764889\n"
+"X-Crowdin-Language: it\n"
+"X-Crowdin-File: wp-module-onboarding.pot\n"
+"X-Crowdin-File-ID: 32\n"
+
+#: bootstrap.php:22
+#: includes/Compatibility/Safe_Mode.php:44
+#: includes/Compatibility/Safe_Mode.php:45
+#: includes/WP_Admin.php:67
+#: includes/WP_Admin.php:68
+#: includes/WP_Admin.php:84
+msgid "Onboarding"
+msgstr "Onboarding"
+
+#: includes/Compatibility/Safe_Mode.php:184
+msgid "Please upgrade your WordPress"
+msgstr "Per favore aggiorna il tuo WordPress"
+
+#: includes/Compatibility/Safe_Mode.php:185
+msgid "To take advantage of the latest WordPress has to offer, our WordPress Onboarding to setup your website requires the latest version of WordPress."
+msgstr "Per sfruttare l'ultimo WordPress ha da offrire, il nostro WordPress Onboarding per configurare il tuo sito web richiede l'ultima versione di WordPress."
+
+#. translators: 1: Current WP Version 2: Minimum Required version
+#: includes/Compatibility/Safe_Mode.php:191
+msgid "Your WordPress version %1$s does not meet our minimum requirements of %2$s."
+msgstr "La tua versione WordPress %1$s non soddisfa i nostri requisiti minimi di %2$s."
+
+#: includes/Compatibility/Safe_Mode.php:207
+msgid "Upgrade WordPress"
+msgstr "Aggiorna WordPress"
+
+#: includes/Compatibility/Safe_Mode.php:211
+msgid "There was an error Upgrading WordPress."
+msgstr "Si è verificato un errore durante l'aggiornamento di WordPress."
+
+#: includes/RestApi/EventsController.php:68
+msgid "Event action"
+msgstr "Azione evento"
+
+#: includes/RestApi/EventsController.php:75
+msgid "Event category"
+msgstr "Categoria evento"
+
+#: includes/RestApi/EventsController.php:81
+msgid "Event data"
+msgstr "Dati evento"
+
+#: includes/RestApi/EventsController.php:108
+msgid "Request does not contain an array of events."
+msgstr "La richiesta non contiene un array di eventi."
+
+#: includes/RestApi/EventsController.php:129
+msgid "Some events failed."
+msgstr "Alcuni eventi sono falliti."
+
+#: includes/RestApi/FlowController.php:154
+msgid "Flow data does not exist to generate a child theme."
+msgstr "I dati di flusso non esistono per generare un tema figlio."
+
+#: includes/RestApi/FlowController.php:195
+msgid "Success."
+msgstr "Successo"
+
+#: includes/RestApi/SiteGenController.php:282
+msgid "Error at Regenerating home pages."
+msgstr "Errore nella rigenerazione delle home pages."
+
+#: includes/RestApi/SitePagesController.php:106
+msgid "Home"
+msgstr "Home"
+
+#: includes/RestApi/Themes/PatternsController.php:81
+msgid "Pattern identifier (slug) or step name (step) required."
+msgstr "Identificatore del modello (slug) o nome del passo (passo) richiesto."
+
+#: includes/RestApi/Themes/PatternsController.php:91
+msgid "No Patterns Found."
+msgstr "Nessun Motivo Trovato."
+
+#: includes/RestApi/Themes/PatternsController.php:105
+msgid "No Pattern Found."
+msgstr "Nessun Modello Trovato."
+
+#: includes/RestApi/Themes/ThemeVariationsController.php:113
+msgid "The id of a template"
+msgstr "L'id di un template"
+
+#: includes/RestApi/Themes/ThemeVariationsController.php:118
+msgid "The custom styles"
+msgstr "Gli stili personalizzati"
+
+#: includes/RestApi/Themes/ThemeVariationsController.php:123
+msgid "The custom settings"
+msgstr "Le impostazioni personalizzate"
+
+#: includes/RestApi/Themes/ThemeVariationsController.php:251
+msgid "Global style customization created."
+msgstr "Personalizzazione stile globale creata."
+
+#: includes/Services/EventService.php:23
+msgid "Bad event structure/value."
+msgstr "Struttura dell'evento/valore errato."
+
+#: includes/Services/Webfonts.php:118
+msgid "Webfont font family must be a non-empty string."
+msgstr "La famiglia di caratteri del carattere web deve essere una stringa non vuota."
+
+#: includes/Services/Webfonts.php:125
+msgid "Webfont src must be a non-empty string or an array of strings."
+msgstr "Webfont src deve essere una stringa non vuota o un array di stringhe."
+
+#: includes/Services/Webfonts.php:133
+msgid "Each webfont src must be a non-empty string."
+msgstr "Ogni webfont src deve essere una stringa non vuota."
+
+#: includes/Services/Webfonts.php:141
+msgid "Webfont font weight must be a properly formatted string or integer."
+msgstr "Il peso del carattere Webfont deve essere una stringa o un intero formattati correttamente."
+
+#: build/2.7.0/40.js:1
+msgid "Customize Website"
+msgstr "Personalizza Sito Web"
+
+#. translators: %s: website or store
+#: build/2.7.0/51.js:2
+msgid "Make your %s dreams a reality!"
+msgstr "Rendi i tuoi sogni %s una realtà!"
+
+#. translators: %s: Brand
+#: build/2.7.0/51.js:3
+msgid "with WordPress and %s."
+msgstr "con WordPress e %s."
+
+#: build/2.7.0/51.js:3
+msgid "Migrate a WordPress Site"
+msgstr "Migrare un sito WordPress"
+
+#: build/2.7.0/51.js:3
+#: build/2.7.0/onboarding.js:3
+msgid "Start Setup"
+msgstr "Avvia Configurazione"
+
+#: build/2.7.0/51.js:3
+msgid "YOUR CONTENT"
+msgstr "IL TUO CONTENUTO"
+
+#: build/2.7.0/51.js:3
+msgid "Publish boldly with WordPress Blocks."
+msgstr "Pubblica coraggiosamente con i blocchi WordPress."
+
+#. translators: %s: site or store
+#: build/2.7.0/51.js:4
+msgid "Build a beautiful %s using a visual builder. Block Patterns accelerate telling your story or tending your store with professional designs."
+msgstr "Costruisci una bella %s usando un costruttore visivo. Blocca i modelli accelera raccontando la tua storia o tendendo il tuo negozio con disegni professionali."
+
+#: build/2.7.0/51.js:4
+msgid "POWERFUL FEATURES"
+msgstr "CARATTERISTICHE POWERFUL"
+
+#: build/2.7.0/51.js:4
+msgid "Proven, easy-to-use solutions."
+msgstr "Soluzioni Provenienti, facili da usare."
+
+#. translators: 1: site or store 2: Brand
+#: build/2.7.0/51.js:5
+msgid "Reach for your %1$s goals using proven WordPress Plugins & %2$s solutions. Send a newsletter, host a podcast, book clients, take payments and more."
+msgstr "Raggiungi i tuoi obiettivi %1$s utilizzando le comprovate soluzioni WordPress e %2$s . Invia una newsletter, ospita un podcast, prenota clienti, prendi pagamenti e altro ancora."
+
+#: build/2.7.0/51.js:5
+msgid "MODERN DESIGN"
+msgstr "DESIGN MODERN"
+
+#: build/2.7.0/51.js:5
+msgid "Paint trim. Move walls. No sweat."
+msgstr "Taglio di vernice. Muovi pareti. Nessun sudore."
+
+#. translators: %s: site or store
+#: build/2.7.0/51.js:6
+msgid "Establish your %s's unique design. Use the WordPress Editor to refine over time with professionally-designed patterns, parts, templates, colors and type."
+msgstr "Stabilisci il design unico del tuo %s. Usa l'editor di WordPress per affinare nel tempo con modelli, parti, modelli, colori e tipi progettati professionalmente."
+
+#: build/2.7.0/100.js:1
+msgid "THEME"
+msgstr "TEMA"
+
+#: build/2.7.0/100.js:1
+msgid "Custom"
+msgstr "Personalizzato"
+
+#: build/2.7.0/100.js:1
+#: build/2.7.0/396.js:1
+msgid "Default"
+msgstr "Predefinito"
+
+#: build/2.7.0/100.js:1
+msgid "Pick your own colors"
+msgstr "Scegli i tuoi colori"
+
+#: build/2.7.0/100.js:1
+msgid "CUSTOM COLORS"
+msgstr "COLORI CLIENTI"
+
+#: build/2.7.0/100.js:1
+#: build/2.7.0/396.js:1
+msgid "Cancel"
+msgstr "Annulla"
+
+#: build/2.7.0/100.js:1
+#: build/2.7.0/396.js:1
+msgid "Apply"
+msgstr "Applica"
+
+#: build/2.7.0/100.js:1
+msgid "Edit colors"
+msgstr "Modifica colori"
+
+#: build/2.7.0/127.js:1
+msgid "WordPress"
+msgstr "WordPress"
+
+#: build/2.7.0/127.js:1
+msgid "Howdy! "
+msgstr "Howdy! "
+
+#: build/2.7.0/127.js:1
+#: build/2.7.0/796.js:1
+msgid "Back"
+msgstr "Indietro"
+
+#. translators: %s: to replace Brand name
+#: build/2.7.0/218.js:2
+msgid "Let's migrate your existing site to %s"
+msgstr "Migriamo il tuo sito esistente in %s"
+
+#: build/2.7.0/218.js:2
+msgid "Please wait a few seconds while we get your new account ready to import your existing WordPress site. "
+msgstr "Si prega di attendere alcuni secondi mentre otteniamo il tuo nuovo account pronto per importare il tuo sito WordPress esistente. "
+
+#: build/2.7.0/218.js:2
+msgid "Preparing your account"
+msgstr "Preparazione del tuo account"
+
+#: build/2.7.0/270.js:3
+#: build/2.7.0/onboarding.js:10
+msgid "Uh-oh, something went wrong. Please contact support."
+msgstr "Uh-oh, qualcosa è andato storto. Contatta il supporto."
+
+#: build/2.7.0/287.js:1
+msgid "Building Website"
+msgstr "Sito Edificio"
+
+#: build/2.7.0/287.js:1
+msgid "Generating Website"
+msgstr "Generazione Sito Web"
+
+#: build/2.7.0/287.js:1
+msgid "Finding Font Pairings"
+msgstr "Trovare Abbinamenti Carattere"
+
+#: build/2.7.0/287.js:1
+msgid "Building Custom Color Palettes"
+msgstr "Costruire Tavolozze Colori Personalizzate"
+
+#: build/2.7.0/287.js:1
+msgid "Populating Images"
+msgstr "Immagini Popolanti"
+
+#: build/2.7.0/287.js:1
+msgid "Finalizing Previews"
+msgstr "Completamento Delle Anteprime"
+
+#: build/2.7.0/287.js:1
+msgid "Packaging Website"
+msgstr "Imballaggio Sito Web"
+
+#: build/2.7.0/287.js:1
+msgid "How familiar are you with using WordPress?"
+msgstr "Quanto si ha familiarità con l'utilizzo di WordPress?"
+
+#: build/2.7.0/287.js:1
+msgid "Beginner"
+msgstr "Principiante"
+
+#: build/2.7.0/287.js:1
+msgid "First time building a website using WordPress"
+msgstr "Prima volta che si costruisce un sito web utilizzando WordPress"
+
+#: build/2.7.0/287.js:1
+msgid "Intermediate"
+msgstr "Intermedio"
+
+#: build/2.7.0/287.js:1
+msgid "Expert"
+msgstr "Esperto"
+
+#: build/2.7.0/287.js:1
+msgid "I do this frequently"
+msgstr "Faccio questo frequentemente"
+
+#: build/2.7.0/325.js:1
+msgid "Tell us about your products"
+msgstr "Raccontaci dei tuoi prodotti"
+
+#: build/2.7.0/325.js:1
+msgid "What type of products will you be selling?"
+msgstr "Che tipo di prodotti venderai?"
+
+#: build/2.7.0/325.js:1
+msgid "How many products will you be selling?"
+msgstr "Quanti prodotti venderai?"
+
+#: build/2.7.0/325.js:1
+msgid "Physical products"
+msgstr "Prodotti fisici"
+
+#: build/2.7.0/325.js:1
+msgid "Digital / Downloadable products"
+msgstr "Prodotti digitali / scaricabili"
+
+#: build/2.7.0/325.js:1
+msgid "Subscriptions"
+msgstr "Abbonamenti"
+
+#: build/2.7.0/325.js:1
+msgid "Book rooms, houses or rent products"
+msgstr "Prenotare camere, case o noleggiare prodotti"
+
+#: build/2.7.0/325.js:1
+msgid "Membership"
+msgstr "Adesione"
+
+#: build/2.7.0/325.js:1
+msgid "Customizable products"
+msgstr "Prodotti personalizzabili"
+
+#: build/2.7.0/325.js:1
+msgid "Bundles of products"
+msgstr "Pacchetti di prodotti"
+
+#: build/2.7.0/325.js:1
+msgid "Let your users ask a quote for your products"
+msgstr "Lascia che i tuoi utenti chiedano un preventivo per i tuoi prodotti"
+
+#: build/2.7.0/325.js:1
+msgid "0"
+msgstr "0"
+
+#: build/2.7.0/325.js:1
+msgid "1 - 10"
+msgstr "1 - 10"
+
+#: build/2.7.0/325.js:1
+msgid "11 - 100"
+msgstr "11 - 100"
+
+#: build/2.7.0/325.js:1
+msgid "101 - 1000"
+msgstr "101 - 1000"
+
+#: build/2.7.0/325.js:1
+msgid "1000 +"
+msgstr "1000 +"
+
+#: build/2.7.0/325.js:1
+#: build/2.7.0/595.js:4
+#: build/2.7.0/627.js:4
+#: build/2.7.0/841.js:1
+#: build/2.7.0/871.js:2
+#: build/2.7.0/onboarding.js:56
+msgid "Continue Setup"
+msgstr "Continua La Configurazione"
+
+#: build/2.7.0/328.js:1
+#: build/2.7.0/340.js:10
+#: build/2.7.0/996.js:1
+msgid "Skip this Step"
+msgstr "Salta questo passaggio"
+
+#: build/2.7.0/328.js:1
+#: build/2.7.0/onboarding.js:39
+msgid "Tell us your top priority"
+msgstr "Dicci la tua priorità assoluta"
+
+#: build/2.7.0/328.js:1
+msgid "We'll prioritize getting you there."
+msgstr "Noi daremo la priorità a farti lì."
+
+#: build/2.7.0/328.js:1
+msgid "Publishing"
+msgstr "Pubblicazione"
+
+#: build/2.7.0/328.js:1
+msgid "From blogs, to newsletters, to podcasts and videos, we help the web find your content."
+msgstr "Dai blog, alle newsletter, ai podcast e ai video, aiutiamo il web a trovare i tuoi contenuti."
+
+#: build/2.7.0/328.js:1
+msgid "Selling"
+msgstr "Vendere"
+
+#: build/2.7.0/328.js:1
+msgid "Startup or seasoned business, drop-shipping or downloads, we've got ecommerce covered."
+msgstr "Startup o business stagionato, drop-shipping o download, abbiamo coperto e-commerce."
+
+#: build/2.7.0/328.js:1
+msgid "Designing"
+msgstr "Progettazione"
+
+#: build/2.7.0/328.js:1
+msgid "With smart style presets and powerful options, we help your site look and feel polished."
+msgstr "Con preimpostazioni di stile intelligente e opzioni potenti, aiutiamo il vostro sito guardare e sentirsi lucido."
+
+#: build/2.7.0/328.js:1
+msgid "Where would you like to start? We'll start there and then move into next steps."
+msgstr "Dove ti piacerebbe iniziare? Partiremo lì e poi passeremo ai passi successivi."
+
+#. translators: %s: website or store
+#: build/2.7.0/340.js:2
+#: build/2.7.0/onboarding.js:30
+msgid "Introduce us to this %s"
+msgstr "Introduci a questo %s"
+
+#: build/2.7.0/340.js:2
+msgid "So we can introduce it to the web"
+msgstr "Così possiamo introdurlo al web"
+
+#. translators: %s: Site
+#: build/2.7.0/340.js:3
+msgid "%s Title"
+msgstr "Titolo %s"
+
+#. translators: %s: Site or Store
+#: build/2.7.0/340.js:4
+#: build/2.7.0/340.js:9
+msgid "WordPress %s"
+msgstr "WordPress %s"
+
+#: build/2.7.0/340.js:4
+msgid "Shown to visitors, search engine and social media posts."
+msgstr "Mostrato ai visitatori, motore di ricerca e post sui social media."
+
+#: build/2.7.0/340.js:4
+msgid "80"
+msgstr "80"
+
+#. translators: %s: Site or Store
+#: build/2.7.0/340.js:5
+msgid "%s Description"
+msgstr "Descrizione %s"
+
+#. translators: %s: Site or Store
+#: build/2.7.0/340.js:6
+msgid "Just another WordPress %s."
+msgstr "Solo un altro WordPress %s."
+
+#. translators: %s: site or store
+#: build/2.7.0/340.js:7
+msgid "Tell people who you are, what you sell and why they should visit your %s."
+msgstr "Dite alle persone che siete, che cosa vendete e perché dovrebbero visitare il vostro %s."
+
+#: build/2.7.0/340.js:7
+msgid "160"
+msgstr "160"
+
+#: build/2.7.0/340.js:7
+msgid "Error Saving Data, Try Again!"
+msgstr "Errore Salvando I Dati, Prova Nuovamente!"
+
+#. translators: %d: Character count
+#: build/2.7.0/340.js:8
+msgid "(%d characters left)"
+msgstr "(%d caratteri rimasti)"
+
+#: build/2.7.0/340.js:8
+msgid "Preview"
+msgstr "Anteprima"
+
+#. translators: %s: Site
+#: build/2.7.0/340.js:10
+msgid "Just another WordPress %s"
+msgstr "Solo un altro WordPress %s"
+
+#: build/2.7.0/340.js:10
+msgid "Logo"
+msgstr "Logo"
+
+#: build/2.7.0/340.js:10
+msgid "RESET"
+msgstr "RESET"
+
+#: build/2.7.0/340.js:10
+msgid "UPLOAD"
+msgstr "SPLOAD"
+
+#: build/2.7.0/340.js:10
+msgid "Edit URLs"
+msgstr "Modifica URL"
+
+#: build/2.7.0/340.js:10
+msgid "Proceed Anyways"
+msgstr "Procedi Comunque"
+
+#: build/2.7.0/340.js:10
+msgid "Social Media"
+msgstr "Social Media"
+
+#: build/2.7.0/340.js:10
+msgid "It looks like you're using a URL shortener!"
+msgstr "Sembra che tu stia usando un shortener URL!"
+
+#: build/2.7.0/340.js:10
+msgid "That's smart, but we encourage you to enter the standard URL for your social profiles to help search engines know this website is associated with your profile using Yoast's Open Graph support. You can always change the URLs used within your site to trackable in the future."
+msgstr "È intelligente, ma ti invitiamo a inserire l'URL standard per i tuoi profili sociali per aiutare i motori di ricerca a sapere che questo sito web è associato al tuo profilo utilizzando il supporto di Yoast Open Graph. È sempre possibile modificare gli URL utilizzati all'interno del proprio sito per essere tracciabili in futuro."
+
+#: build/2.7.0/340.js:10
+msgid "One of those URLs doesn't look like a social media URL."
+msgstr "Uno di questi URL non sembra un URL di social media."
+
+#: build/2.7.0/340.js:10
+msgid "We recommend using your official social URL to help search engines know this website is associated with your profile using Yoast's Open Graph support. You can always change the URLs used within your site in the future."
+msgstr "Si consiglia di utilizzare il tuo URL sociale ufficiale per aiutare i motori di ricerca a sapere che questo sito web è associato al tuo profilo utilizzando il supporto di Yoast Open Graph. È sempre possibile modificare gli URL utilizzati all'interno del tuo sito in futuro."
+
+#: build/2.7.0/340.js:10
+msgid "That's clever! Short URLs are a great way to track clicks. However, To help build your social graph, we need the full URLs to your social profiles. You can go into your menus and change your social icon links after setup."
+msgstr "Questo è intelligente! Gli URL corti sono un ottimo modo per tracciare i clic. Tuttavia, per aiutare a costruire il tuo grafico sociale, abbiamo bisogno degli URL completi per i tuoi profili sociali. Puoi accedere ai tuoi menu e cambiare i link delle icone sociali dopo la configurazione."
+
+#: build/2.7.0/340.js:10
+msgid "To help build your social graph, we need the full URLs to your social profiles. Please check your URLs for typos and try copy & paste with the official URL if you continue to see this error."
+msgstr "Per contribuire a costruire il tuo grafico sociale, abbiamo bisogno degli URL completi per i tuoi profili sociali. Controlla i tuoi URL per errori di battitura e prova a copiare e incollare con l'URL ufficiale se continui a vedere questo errore."
+
+#: build/2.7.0/340.js:10
+msgid "Facebook"
+msgstr "Facebook"
+
+#: build/2.7.0/340.js:10
+msgid "Twitter"
+msgstr "Twitter"
+
+#: build/2.7.0/340.js:10
+msgid "Instagram"
+msgstr "Instagram"
+
+#: build/2.7.0/340.js:10
+msgid "Youtube"
+msgstr "Youtube"
+
+#: build/2.7.0/340.js:10
+msgid "Linkedin"
+msgstr "Linkedin"
+
+#: build/2.7.0/340.js:10
+msgid "Yelp"
+msgstr "Yelp"
+
+#: build/2.7.0/340.js:10
+msgid "Tiktok"
+msgstr "Tiktok"
+
+#: build/2.7.0/356.js:1
+msgid "Learn More"
+msgstr "Scopri Di Più"
+
+#: build/2.7.0/366.js:1
+#: build/2.7.0/onboarding.js:49
+msgid "You have ideas, we have page templates"
+msgstr "Hai idee, abbiamo modelli di pagina"
+
+#: build/2.7.0/366.js:1
+msgid "Begin closer to the finish line than a blank canvas."
+msgstr "Inizia più vicino al traguardo di una tela vuota."
+
+#: build/2.7.0/367.js:1
+#: build/2.7.0/546.js:1
+msgid "Lets tailor your theme for the perfect fit"
+msgstr "Consente di personalizzare il tuo tema per la vestibilità perfetta"
+
+#: build/2.7.0/367.js:1
+#: build/2.7.0/546.js:1
+msgid "Start with a style preset or"
+msgstr "Inizia con un preset di stile o"
+
+#. translators: build a custom design is a link, this would be concatenated with "Start with a style preset or" making it "Start with a style preset or build a custom design."
+#: build/2.7.0/367.js:4
+#: build/2.7.0/546.js:4
+msgid "build a custom design."
+msgstr "costruire un design personalizzato."
+
+#: build/2.7.0/367.js:4
+#: build/2.7.0/546.js:4
+msgid "Customize Colors & Fonts?"
+msgstr "Personalizza Colori E Caratteri?"
+
+#: build/2.7.0/367.js:4
+#: build/2.7.0/546.js:4
+msgid "Check to customize in the next few steps (or leave empty and use the Site Editor later)"
+msgstr "Spunta la casella per personalizzare nei prossimi passi (o lasciare vuoto e utilizzare l'editor del sito in seguito)"
+
+#: build/2.7.0/396.js:1
+msgid "CUSTOM FONTS"
+msgstr "FONTI PERSONALI"
+
+#: build/2.7.0/396.js:1
+msgid "Headings"
+msgstr "Rubriche"
+
+#: build/2.7.0/396.js:1
+msgid "Body"
+msgstr "Corpo"
+
+#: build/2.7.0/396.js:1
+msgid "select"
+msgstr "seleziona"
+
+#: build/2.7.0/396.js:1
+msgid "Edit fonts"
+msgstr "Modifica caratteri"
+
+#: build/2.7.0/396.js:1
+#: build/2.7.0/onboarding.js:52
+msgid "Fonts"
+msgstr "Caratteri"
+
+#: build/2.7.0/396.js:1
+msgid "Select your own fonts"
+msgstr "Seleziona i tuoi caratteri"
+
+#: build/2.7.0/560.js:1
+msgid "Pick a starter layout you can refine and remix with your content"
+msgstr "Scegli un layout iniziale che puoi perfezionare e remixare con i tuoi contenuti"
+
+#. translators: %s: website or store
+#: build/2.7.0/595.js:2
+#: build/2.7.0/627.js:2
+#: build/2.7.0/871.js:2
+msgid "Help us tailor this setup to your %s"
+msgstr "Aiutaci a personalizzare questa configurazione per il tuo %s"
+
+#. translators: %s: SITE or STORE
+#: build/2.7.0/595.js:3
+#: build/2.7.0/627.js:3
+msgid "ABOUT YOUR %s"
+msgstr "SULLA TUA %s"
+
+#. translators: %s: site or store
+#: build/2.7.0/595.js:4
+#: build/2.7.0/627.js:4
+msgid "What type of %s is it?"
+msgstr "Che tipo di %s è?"
+
+#. translators: %s: site or store
+#: build/2.7.0/595.js:5
+#: build/2.7.0/627.js:5
+msgid "Enter to search your %s type"
+msgstr "Inserisci per cercare il tuo tipo %s"
+
+#: build/2.7.0/595.js:5
+#: build/2.7.0/627.js:5
+msgid "or tell us here:"
+msgstr "o dirci qui:"
+
+#: build/2.7.0/619.js:1
+#: build/2.7.0/onboarding.js:43
+msgid "Regenerating Site"
+msgstr "Rigenerazione Del Sito"
+
+#: build/2.7.0/619.js:1
+#: build/2.7.0/onboarding.js:43
+msgid "Generating Site"
+msgstr "Generazione Sito"
+
+#: build/2.7.0/619.js:1
+msgid "Presto, here are 3 versions"
+msgstr "Presto, ecco 3 versioni"
+
+#: build/2.7.0/619.js:1
+msgid "We've created 3 unique website designs for you to start with, preview click around or start over."
+msgstr "Abbiamo creato 3 design di siti web unici per iniziare con, anteprima fare clic intorno o ricominciare."
+
+#: build/2.7.0/619.js:1
+msgid "Favorite a generated version to find and use again in the future."
+msgstr "Preferisci una versione generata per trovare e utilizzare di nuovo in futuro."
+
+#: build/2.7.0/705.js:1
+msgid "Tell me some details about the site you want created?"
+msgstr "Mi dica alcuni dettagli sul sito che vuoi creare?"
+
+#: build/2.7.0/705.js:1
+msgid "Bean There Café - A cozy, sustainable coffee shop in Asheville, North Carolina, focused on fair-trade coffee and local pastries. Their site will feature their menu, special events, and a blog on coffee culture."
+msgstr "Bean There Cafe<unk> - Un accogliente negozio di caffè sostenibile a Asheville, North Carolina, focalizzato sul caffè fieristico e dolci locali. Il loro sito sarà caratterizzato da menu, eventi speciali e un blog sulla cultura del caffè."
+
+#: build/2.7.0/705.js:1
+msgid "Who is this site for? What's the ideal design?"
+msgstr "Per chi è questo sito? Qual è il design ideale?"
+
+#: build/2.7.0/705.js:1
+#: build/2.7.0/796.js:1
+#: build/2.7.0/971.js:1
+#: build/2.7.0/996.js:1
+#: build/2.7.0/onboarding.js:39
+msgid "Next"
+msgstr "Successivo"
+
+#: build/2.7.0/705.js:1
+msgid "Not sure what to say? We can walk you through it."
+msgstr "Non sei sicuro di cosa dire? Possiamo passarti attraverso di essa."
+
+#: build/2.7.0/705.js:1
+msgid "click here"
+msgstr "clicca qui"
+
+#: build/2.7.0/796.js:1
+msgid "Finish"
+msgstr "Termina"
+
+#: build/2.7.0/803.js:1
+msgid "All Versions"
+msgstr "Tutte Le Versioni"
+
+#: build/2.7.0/803.js:1
+msgid "Favorites"
+msgstr "Preferiti"
+
+#: build/2.7.0/841.js:1
+msgid "Confirm your business or store address"
+msgstr "Conferma il tuo indirizzo di business o negozio"
+
+#: build/2.7.0/841.js:1
+msgid "Where is your store based?"
+msgstr "Dov'è basato il tuo negozio?"
+
+#: build/2.7.0/841.js:1
+msgid "Address"
+msgstr "Indirizzo"
+
+#: build/2.7.0/841.js:1
+msgid "City"
+msgstr "Città"
+
+#: build/2.7.0/841.js:1
+msgid "State"
+msgstr "Stato"
+
+#: build/2.7.0/841.js:1
+msgid "Postal Code"
+msgstr "Codice Postale"
+
+#: build/2.7.0/841.js:1
+msgid "Email"
+msgstr "Email"
+
+#: build/2.7.0/841.js:1
+msgid "What currency do you want to display in your store?"
+msgstr "Quale valuta vuoi visualizzare nel tuo negozio?"
+
+#: build/2.7.0/841.js:1
+msgid "* required"
+msgstr "* richiesto"
+
+#: build/2.7.0/866.js:1
+msgid "Welcome to WordPress"
+msgstr "Benvenuto in WordPress"
+
+#: build/2.7.0/866.js:1
+msgid "powered by "
+msgstr "alimentato da "
+
+#: build/2.7.0/866.js:1
+msgid "Where would you like to start?"
+msgstr "Dove ti piacerebbe iniziare?"
+
+#: build/2.7.0/866.js:1
+msgid "Site Creator"
+msgstr "Creatore Del Sito"
+
+#: build/2.7.0/866.js:1
+msgid "Get a site created in seconds!"
+msgstr "Ottieni un sito creato in pochi secondi!"
+
+#: build/2.7.0/866.js:1
+msgid "Content & design generated by AI, customizable by you."
+msgstr "Contenuti e design generati da AI, personalizzabili da te."
+
+#: build/2.7.0/866.js:1
+msgid "AI"
+msgstr "AI"
+
+#: build/2.7.0/866.js:1
+msgid "Guided Website Setup"
+msgstr "Configurazione Sito Web Guidato"
+
+#: build/2.7.0/866.js:1
+msgid "Follow a step-by-step guide."
+msgstr "Seguire una guida passo-passo."
+
+#: build/2.7.0/866.js:1
+msgid "Import a WordPress Site"
+msgstr "Importa un sito WordPress"
+
+#: build/2.7.0/866.js:1
+msgid "Use our free, automated import tool!"
+msgstr "Usa il nostro strumento di importazione gratuito e automatizzato!"
+
+#: build/2.7.0/866.js:1
+msgid "Already have a WordPress site you want to import?"
+msgstr "Hai già un sito WordPress che vuoi importare?"
+
+#: build/2.7.0/866.js:1
+msgid "https://my.bluehost.com/cgi/services/migration"
+msgstr "https://my.bluehost.com/cgi/services/migration"
+
+#: build/2.7.0/866.js:1
+msgid "Take me to the WP Admin Dashboard"
+msgstr "Portami alla Dashboard di amministrazione WP"
+
+#: build/2.7.0/871.js:2
+msgid "ABOUT YOU"
+msgstr "CHI SIAMO"
+
+#: build/2.7.0/871.js:2
+msgid "What is your experience with WordPress?"
+msgstr "Qual è la tua esperienza con WordPress?"
+
+#: build/2.7.0/871.js:2
+msgid "Never used it"
+msgstr "Non usarlo mai"
+
+#: build/2.7.0/871.js:2
+msgid "Used it some"
+msgstr "Usato alcuni"
+
+#: build/2.7.0/871.js:2
+msgid "I'm an expert"
+msgstr "I'm an expert"
+
+#: build/2.7.0/910.js:1
+#: build/2.7.0/onboarding.js:39
+msgid "Customize"
+msgstr "Personalizza"
+
+#: build/2.7.0/978.js:1
+msgid "Coming Soon"
+msgstr "In Arrivo"
+
+#. translators: %s: site or store
+#: build/2.7.0/978.js:2
+msgid "Keep your %s private until you click launch"
+msgstr "Mantieni il tuo %s privato fino al lancio"
+
+#. translators: %s: site or store
+#: build/2.7.0/978.js:3
+msgid "We'll show a placeholder page to logged-out visitors while you build your %s."
+msgstr "Mostreremo una pagina segnaposto per i visitatori registrati mentre costruisci il tuo %s."
+
+#: build/2.7.0/978.js:3
+#: build/2.7.0/onboarding.js:59
+msgid "Key features to supercharge your site"
+msgstr "Caratteristiche principali per ricaricare il tuo sito"
+
+#: build/2.7.0/978.js:3
+msgid "Our toolbox of Plugins & Services is your toolbox."
+msgstr "Il nostro toolbox di Plugins & Services è il tuo toolbox."
+
+#: build/2.7.0/994.js:1
+msgid "Nice work: Your site is ready 🎉"
+msgstr "Bel lavoro: Il tuo sito è pronto 🎉"
+
+#: build/2.7.0/994.js:1
+msgid "Move-in day begins! Let us know if you'd like a hand."
+msgstr "Inizia la giornata! Facci sapere se ti piacerebbe una mano."
+
+#: build/2.7.0/994.js:1
+msgid "Complete Setup"
+msgstr "Completa L'Installazione"
+
+#: build/2.7.0/994.js:1
+msgid "WHATS NEXT"
+msgstr "PROSSIMO COSA"
+
+#: build/2.7.0/994.js:1
+msgid "Add content, organize your menu and launch."
+msgstr "Aggiungi contenuto, organizza il menu e lancia."
+
+#. translators: %s: Brand
+#: build/2.7.0/994.js:2
+msgid "✅ Theme created, features added and Coming Soon mode activated. Thank you for building your site with %s, we're always here to help!"
+msgstr "✅ Tema creato, funzionalità aggiunte e modalità a breve termine attivata. Grazie per aver costruito il tuo sito con %s, siamo sempre qui per aiutarti!"
+
+#: build/2.7.0/994.js:2
+msgid "HELP & RESOURCES"
+msgstr "AIUTO E RISORSE"
+
+#: build/2.7.0/994.js:2
+msgid "Next step or next level, we're your partner."
+msgstr "Prossimo passo o prossimo livello, siamo il tuo partner."
+
+#. translators: %s: Site
+#: build/2.7.0/994.js:3
+msgid "WordPress make it easy to grow your %s. Send a newsletter, broadcast a podcast, create courses and trainings. Dream it, build it."
+msgstr "WordPress rende facile per far crescere il tuo %s. Invia una newsletter, trasmette un podcast, crea corsi e addestramenti. Sognalo, costruisce."
+
+#: build/2.7.0/994.js:3
+msgid "HIRE OUR EXPERTS"
+msgstr "HIRE I NOSTRI ESPERTI"
+
+#: build/2.7.0/994.js:3
+msgid "Make our great people your people."
+msgstr "Rendi le nostre grandi persone il tuo popolo."
+
+#: build/2.7.0/994.js:3
+msgid "Looking for personalized WordPress assistance, or someone to take-over from here? Go beyond support with our professional services."
+msgstr "Cerchi assistenza personalizzata per WordPress o qualcuno da prendere in consegna da qui? Vai oltre il supporto con i nostri servizi professionali."
+
+#: build/2.7.0/994.js:3
+msgid "ALWAYS COUNT ON OUR TEAM"
+msgstr "SEMPRE CONTO SULLA NOSTRA SQUADRA"
+
+#: build/2.7.0/994.js:3
+msgid "24 hours a day / 7 days a week"
+msgstr "24 ore al giorno / 7 giorni alla settimana"
+
+#: build/2.7.0/994.js:3
+msgid "From beginner to advanced, you have a partner to trust. Our support works when you work. Also count on various help materials on YouTube, blog and Knowledge Base."
+msgstr "Dal principiante all'avanzato, hai un partner di cui fidarti. Il nostro supporto funziona quando lavori. Anche contare su vari materiali di aiuto su YouTube, blog e Knowledge Base."
+
+#: build/2.7.0/996.js:1
+msgid "Drop your logo here, or "
+msgstr "Lascia il tuo logo qui, o "
+
+#: build/2.7.0/996.js:1
+msgid "browse"
+msgstr "sfoglia"
+
+#: build/2.7.0/996.js:1
+msgid "supports .jpg, .png, .gif"
+msgstr "supports .jpg, .png, .gif"
+
+#: build/2.7.0/996.js:1
+msgid "Site Logo Preview"
+msgstr "Anteprima Logo Sito"
+
+#: build/2.7.0/996.js:1
+msgid "This is not a valid Image Type"
+msgstr "Questo non è un tipo di immagine valido"
+
+#: build/2.7.0/996.js:1
+msgid "Do you have a logo you would like to use for this site?"
+msgstr "Hai un logo che vuoi usare per questo sito?"
+
+#: build/2.7.0/996.js:1
+msgid "supports .jpg, .png, .svg"
+msgstr "supporta .jpg, .png, .svg"
+
+#: build/2.7.0/996.js:1
+msgid "Skip for now"
+msgstr "Salta per ora"
+
+#: build/2.7.0/onboarding.js:1
+#: build/2.7.0/onboarding.js:2
+msgid "Street Address"
+msgstr "Indirizzo Via"
+
+#: build/2.7.0/onboarding.js:1
+msgid "Whether this is where the magic happens or the mail goes, tell us where your business is located."
+msgstr "Se questo è dove avviene la magia o la posta va, dirci dove si trova la vostra azienda."
+
+#. translators: 1: Brand 2: Site or Store
+#: build/2.7.0/onboarding.js:2
+msgid "We use this address to setup WooCommerce, your payment provider, Contact Page and more so you can start stocking the shelves of your %1$s Online %2$s."
+msgstr "Utilizziamo questo indirizzo per configurare WooCommerce, il tuo provider di pagamento, Pagina dei contatti e altro ancora, così potrai iniziare a rifornire gli scaffali del tuo %1$s Online %2$s."
+
+#: build/2.7.0/onboarding.js:2
+#: build/2.7.0/onboarding.js:3
+#: build/2.7.0/onboarding.js:28
+#: build/2.7.0/onboarding.js:29
+#: build/2.7.0/onboarding.js:31
+#: build/2.7.0/onboarding.js:35
+#: build/2.7.0/onboarding.js:39
+#: build/2.7.0/onboarding.js:43
+#: build/2.7.0/onboarding.js:46
+#: build/2.7.0/onboarding.js:47
+#: build/2.7.0/onboarding.js:49
+#: build/2.7.0/onboarding.js:50
+#: build/2.7.0/onboarding.js:52
+#: build/2.7.0/onboarding.js:53
+#: build/2.7.0/onboarding.js:59
+msgid "Hire Our Full-Service Creative Studio"
+msgstr "Assumere Il Nostro Full-Service Creative Studio"
+
+#: build/2.7.0/onboarding.js:2
+#: build/2.7.0/onboarding.js:3
+#: build/2.7.0/onboarding.js:8
+#: build/2.7.0/onboarding.js:28
+#: build/2.7.0/onboarding.js:29
+#: build/2.7.0/onboarding.js:31
+#: build/2.7.0/onboarding.js:35
+#: build/2.7.0/onboarding.js:39
+#: build/2.7.0/onboarding.js:43
+#: build/2.7.0/onboarding.js:46
+#: build/2.7.0/onboarding.js:47
+#: build/2.7.0/onboarding.js:49
+#: build/2.7.0/onboarding.js:50
+#: build/2.7.0/onboarding.js:52
+#: build/2.7.0/onboarding.js:53
+#: build/2.7.0/onboarding.js:59
+msgid "Technical Support"
+msgstr "Supporto Tecnico"
+
+#: build/2.7.0/onboarding.js:2
+#: build/2.7.0/onboarding.js:3
+msgid "Product Info"
+msgstr "Informazioni Sul Prodotto"
+
+#: build/2.7.0/onboarding.js:2
+msgid "Products Info"
+msgstr "Info Prodotti"
+
+#: build/2.7.0/onboarding.js:2
+msgid "We can offer free, exclusive solutions and apply our expert experience if we know how you sell."
+msgstr "Possiamo offrire soluzioni gratuite, esclusive e applicare la nostra esperienza esperta se sappiamo come vendi."
+
+#: build/2.7.0/onboarding.js:2
+msgid "Go from multiple sizes to multiple locations to multiple online channels"
+msgstr "Passa da più dimensioni a più posizioni a più canali online"
+
+#: build/2.7.0/onboarding.js:3
+msgid "Commerce"
+msgstr "Commercio"
+
+#: build/2.7.0/onboarding.js:28
+msgid "Basic Info"
+msgstr "Informazioni Di Base"
+
+#. translators: %s: site or store
+#: build/2.7.0/onboarding.js:29
+msgid "Setup how your %s will present in visitors' browsers and search results."
+msgstr "Imposta come il tuo %s presenterà nei browser e nei risultati di ricerca dei visitatori."
+
+#: build/2.7.0/onboarding.js:29
+msgid "Present in tip-top shape to web browsers and search engine results"
+msgstr "Presente in forma tip-top per browser web e risultati del motore di ricerca"
+
+#: build/2.7.0/onboarding.js:29
+msgid "Loading your site details, logo and social graph helps not just launch your site but have it found looking great in feeds."
+msgstr "Caricamento dei dettagli del sito, logo e grafico sociale aiuta non solo il lancio del tuo sito, ma hanno trovato che sembra grande nei feed."
+
+#: build/2.7.0/onboarding.js:30
+msgid "WordPress Experience"
+msgstr "Esperienza WordPress"
+
+#: build/2.7.0/onboarding.js:30
+msgid "We want to offer the best default settings and guidance for someone with your WordPress experience."
+msgstr "Vogliamo offrire le migliori impostazioni di default e la guida per qualcuno con la vostra esperienza WordPress."
+
+#: build/2.7.0/onboarding.js:30
+#: build/2.7.0/onboarding.js:34
+#: build/2.7.0/onboarding.js:38
+msgid "Why we ask"
+msgstr "Perché chiediamo"
+
+#. translators: %s: site or store
+#: build/2.7.0/onboarding.js:31
+msgid "We want to help everyone get the most out of their WordPress %s and this setup, so we use this to help optimize for a great experience and periodically when we offer tips, reminders and recommendations."
+msgstr "Vogliamo aiutare tutti a ottenere il massimo dal loro WordPress %s e questa configurazione, così usiamo questo per aiutare ad ottimizzare per una grande esperienza e periodicamente quando offriamo consigli, promemoria e raccomandazioni."
+
+#. translators: %s: website or store
+#: build/2.7.0/onboarding.js:32
+msgid "Primary %s Setup"
+msgstr "Configurazione Primaria %s"
+
+#. translators: %s: Site or Store
+#: build/2.7.0/onboarding.js:33
+#: build/2.7.0/onboarding.js:37
+msgid "%s Type"
+msgstr "Tipo %s"
+
+#. translators: %s: site or store
+#: build/2.7.0/onboarding.js:34
+#: build/2.7.0/onboarding.js:38
+msgid "We'll use this to provide our best-matching designs and features for %s like yours."
+msgstr "Utilizzeremo questo per fornire i nostri design e le funzionalità migliori per %s come i tuoi."
+
+#. translators: %s: website or store
+#: build/2.7.0/onboarding.js:36
+msgid "Secondary %s Setup"
+msgstr "Configurazione Secondaria %s"
+
+#: build/2.7.0/onboarding.js:39
+msgid "Top Priority"
+msgstr "Priorità Principale"
+
+#: build/2.7.0/onboarding.js:39
+msgid "Demographic"
+msgstr "Demografica"
+
+#: build/2.7.0/onboarding.js:39
+#: build/2.7.0/onboarding.js:49
+msgid "Colors"
+msgstr "Colori"
+
+#. translators: %s: site or store
+#: build/2.7.0/onboarding.js:50
+msgid "Whether your brand is vibrant, understated, elegant or edgy use color to delight your %s visitors."
+msgstr "Che il tuo marchio sia vibrante, sobrio, elegante o dal colore spigoloso per deliziare i tuoi visitatori %s."
+
+#: build/2.7.0/onboarding.js:50
+msgid "Let a splash of color make a splash with your visitors with your Global Site Colors."
+msgstr "Lasciate che uno spruzzo di colore faccia uno spruzzo con i vostri visitatori con i colori del sito globale."
+
+#: build/2.7.0/onboarding.js:50
+msgid "We had our designers mix up some palettes for striking websites for you to chose additional presets, or you can chose your own colors using the color pickers."
+msgstr "Abbiamo avuto i nostri designer mescolare alcune tavolozze per sorprendenti siti web per voi per scegliere ulteriori preset, o puoi scegliere i tuoi colori usando i selettore di colori."
+
+#: build/2.7.0/onboarding.js:50
+msgid "What's your color palette?"
+msgstr "Qual è la tua tavolozza di colori?"
+
+#: build/2.7.0/onboarding.js:26
+#: build/2.7.0/onboarding.js:50
+msgid "Theme Styles"
+msgstr "Theme Styles"
+
+#: build/2.7.0/onboarding.js:26
+#: build/2.7.0/onboarding.js:50
+msgid "Professionally-designed website templates ready for their public debut featuring your great ideas."
+msgstr "Modelli di siti web progettati professionalmente pronti per il loro debutto pubblico con le vostre grandi idee."
+
+#: build/2.7.0/onboarding.js:26
+#: build/2.7.0/onboarding.js:50
+msgid "Show the web you have style with modern colors and elevated fonts"
+msgstr "Mostra il web che hai stile con colori moderni e caratteri elevati"
+
+#. translators: 1: Brand 2: site or store
+#: build/2.7.0/onboarding.js:27
+#: build/2.7.0/onboarding.js:51
+msgid "Pick one of these professionally-designed website styles to start your %1$s %2$s."
+msgstr "Scegli uno di questi stili di siti web progettati professionalmente per avviare il tuo %1$s %2$s."
+
+#. translators: %s: site or store
+#: build/2.7.0/onboarding.js:28
+#: build/2.7.0/onboarding.js:52
+msgid "In the next steps and in the future, you can change the specific colors and fonts to fit your aesthetic vision for your %s."
+msgstr "Nei prossimi passi e in futuro, è possibile modificare i colori e i caratteri specifici per adattarsi alla vostra visione estetica per il vostro %s."
+
+#: build/2.7.0/onboarding.js:52
+msgid "Give tone and taste to your words using a curated set of great type treatments."
+msgstr "Dai tono e gusto alle tue parole utilizzando un set curato di trattamenti di grande tipo."
+
+#: build/2.7.0/onboarding.js:52
+msgid "Not just what we say, how we say it"
+msgstr "Non solo quello che diciamo, come lo diciamo"
+
+#. translators: %s: site or store
+#: build/2.7.0/onboarding.js:53
+msgid "Fonts help our ideas look creative and compelling, astute and articulate, refined and regal, modern and much more. Great font combinations help set the perfect tone for your %s and your story jump off the screen."
+msgstr "Caratteri aiutano le nostre idee a guardare creativo e convincente, astuto e articolato, raffinato e regale, moderno e molto altro. Grandi combinazioni di caratteri aiutano a impostare il tono perfetto per il tuo %s e la tua storia saltare dallo schermo."
+
+#: build/2.7.0/onboarding.js:53
+msgid "What's your font style?"
+msgstr "Qual è il tuo stile di carattere?"
+
+#: build/2.7.0/onboarding.js:12
+#: build/2.7.0/onboarding.js:43
+#: build/2.7.0/onboarding.js:53
+msgid "Design"
+msgstr "Design"
+
+#: build/2.7.0/onboarding.js:56
+#: build/2.7.0/onboarding.js:59
+msgid "Features"
+msgstr "Caratteristiche"
+
+#. translators: 1: Brand 2: site or store
+#: build/2.7.0/onboarding.js:57
+msgid "Easy-to-use features from our partner's WordPress Plugins and unique %1$s solutions to put your %2$s to work."
+msgstr "Funzioni facili da usare dai plugin WordPress del nostro partner e soluzioni %1$s uniche per mettere il vostro %2$s al lavoro."
+
+#. translators: 1: Brand 2: Site or Store 3: Brand
+#: build/2.7.0/onboarding.js:59
+msgid "Put your %1$s %2$s to work for you using features that unlock the potential of WordPress with powerful solutions from %3$s and our partners."
+msgstr "Metti il tuo %1$s %2$s per funzionare per te utilizzando funzioni che sbloccano il potenziale di WordPress con potenti soluzioni di %3$s e i nostri partner."
+
+#: build/2.7.0/onboarding.js:43
+msgid "Header & Menu"
+msgstr "Menu Intestazione"
+
+#. translators: %s: site or store
+#: build/2.7.0/onboarding.js:44
+msgid "Surface key content in your %s -- who you are, what your about and where to find things."
+msgstr "Contenuto chiave della superficie nel tuo %s - chi siete, che cosa il vostro circa e dove trovare le cose."
+
+#: build/2.7.0/onboarding.js:44
+msgid "Putting your best foot forward"
+msgstr "Mettendo in avanti il tuo piede migliore"
+
+#. translators: 1: site or store 2: Site or Store
+#: build/2.7.0/onboarding.js:45
+msgid "Just like a %1$s putting a map of departments at the front door, a great %2$s Header & Menu help point visitors at the places you most want them to visit."
+msgstr "Proprio come un %1$s che mette una mappa di reparti alla porta d'ingresso, una grande intestazione %2$s & menu aiutare i visitatori nei luoghi che più vuoi loro visitare."
+
+#. translators: %s: website
+#: build/2.7.0/onboarding.js:46
+msgid "When picking a %s header, consider the number of menu items, character length of each item and how those will visually impact the Header Pattern design you choose."
+msgstr "Quando si sceglie un'intestazione %s , considerare il numero di voci di menu, lunghezza del carattere di ogni elemento e come quelli avranno un impatto visivo sul disegno del modello di intestazione che si sceglie."
+
+#: build/2.7.0/onboarding.js:46
+msgid "Let's make the right things visible"
+msgstr "Rendiamo visibili le cose giuste"
+
+#: build/2.7.0/onboarding.js:46
+msgid "Homepage Layouts"
+msgstr "Layout Homepage"
+
+#: build/2.7.0/onboarding.js:46
+msgid "Home Page"
+msgstr "Pagina Iniziale"
+
+#: build/2.7.0/onboarding.js:46
+msgid "The home page is where you tell visitors your story. It helps users find what they came for."
+msgstr "La home page è dove racconti ai visitatori la tua storia. Aiuta gli utenti a trovare quello che sono arrivati."
+
+#: build/2.7.0/onboarding.js:46
+msgid "Welcome to your new home online"
+msgstr "Benvenuto nella tua nuova casa online"
+
+#. translators: %s: site or store
+#: build/2.7.0/onboarding.js:47
+msgid "Like good curb appeal, a great home page design helps get users excited about your %s. Mixing media, headings, text and more, you can bring your ideas to live and your products & services to the forefront for visitors."
+msgstr "Come un buon appello freno, un grande design home page aiuta a ottenere gli utenti entusiasti del tuo %s. Miscelare media, intestazioni, testo e altro ancora, è possibile portare le vostre idee per vivere e i vostri prodotti e servizi in prima linea per i visitatori."
+
+#: build/2.7.0/onboarding.js:47
+msgid "Look for a Home Page Pattern design you think will help organize and elevate your ideas."
+msgstr "Cerca una Home Page Modello di design che pensi aiuterà ad organizzare ed elevare le tue idee."
+
+#: build/2.7.0/onboarding.js:39
+#: build/2.7.0/onboarding.js:43
+#: build/2.7.0/onboarding.js:47
+msgid "Page Layouts"
+msgstr "Layout Della Pagina"
+
+#: build/2.7.0/onboarding.js:47
+msgid "Pages"
+msgstr "Pagine"
+
+#. translators: %s: site or store
+#: build/2.7.0/onboarding.js:48
+msgid "Use professionally-designed templates for common site pages to assemble a beautiful, high-quality %s."
+msgstr "Utilizzare modelli progettati professionalmente per le pagine comuni del sito per assemblare una bella %s di alta qualità."
+
+#: build/2.7.0/onboarding.js:48
+msgid "Rapidly deliver ideas with templates primed for your content"
+msgstr "Fornisci rapidamente idee con modelli primizzati per i tuoi contenuti"
+
+#: build/2.7.0/onboarding.js:49
+msgid "Layout & Content"
+msgstr "Layout & Contenuto"
+
+#: build/2.7.0/onboarding.js:10
+#: build/2.7.0/onboarding.js:39
+msgid "Exit to WordPress"
+msgstr "Uscita su WordPress"
+
+#: build/2.7.0/onboarding.js:39
+msgid "Exit without finishing?"
+msgstr "Esci senza finire?"
+
+#: build/2.7.0/onboarding.js:39
+msgid "Continue"
+msgstr "Continua"
+
+#: build/2.7.0/onboarding.js:39
+msgid "Exit"
+msgstr "Esci"
+
+#. translators: %s: Brand
+#: build/2.7.0/onboarding.js:40
+msgid "You can restart onboarding from your %s Settings page."
+msgstr "Puoi riavviare l'onboarding dalla tua pagina Impostazioni %s."
+
+#: build/2.7.0/onboarding.js:53
+msgid "Loading…"
+msgstr "Caricamento…"
+
+#: build/2.7.0/onboarding.js:43
+msgid "Preview Version"
+msgstr "Anteprima Versione"
+
+#: build/2.7.0/onboarding.js:43
+msgid "Regenerate Content"
+msgstr "Rigenera Contenuto"
+
+#: build/2.7.0/onboarding.js:39
+#: build/2.7.0/onboarding.js:43
+msgid "Regenerate"
+msgstr "Rigenera"
+
+#: build/2.7.0/onboarding.js:53
+msgid "A great foundation to build from"
+msgstr "Un grande fondamento da costruire da"
+
+#. translators: Brand
+#: build/2.7.0/onboarding.js:54
+msgid "with WordPress and %s"
+msgstr "con WordPress e %s"
+
+#. translators: site or store
+#: build/2.7.0/onboarding.js:55
+msgid "Would you like to enter your WordPress Dashboard or continue setting up your %s?"
+msgstr "Vuoi entrare nella Dashboard di WordPress o continuare a configurare il tuo %s?"
+
+#: build/2.7.0/onboarding.js:55
+msgid "You've made great progress! Would you like to keep going with the setup or take it from here?"
+msgstr "Hai fatto grandi progressi! Vuoi continuare con la configurazione o prenderla da qui?"
+
+#. translators: Brand
+#: build/2.7.0/onboarding.js:56
+msgid "You can continue from your %s home page in the Next steps list."
+msgstr "Puoi continuare dalla tua home page %s nella lista dei passaggi successivi."
+
+#: build/2.7.0/onboarding.js:56
+msgid "Taking you to WordPress in…"
+msgstr "Portare a WordPress in…"
+
+#: build/2.7.0/onboarding.js:56
+msgid "Enter WordPress"
+msgstr "Inserisci WordPress"
+
+#: build/2.7.0/onboarding.js:59
+msgid "Need Help?"
+msgstr "Bisogno Di Aiuto?"
+
+#: build/2.7.0/onboarding.js:59
+msgid "Hire our Experts"
+msgstr "Assumi i nostri esperti"
+
+#. translators: %s: Brand
+#: build/2.7.0/onboarding.js:9
+#: build/2.7.0/onboarding.js:10
+msgid "Preparing your %s design studio"
+msgstr "Preparazione del tuo studio di progettazione %s"
+
+#: build/2.7.0/onboarding.js:9
+#: build/2.7.0/onboarding.js:10
+msgid "Hang tight while we show you some of the best WordPress has to offer!"
+msgstr "Hang stretto mentre vi mostriamo alcuni dei migliori WordPress ha da offrire!"
+
+#: build/2.7.0/onboarding.js:10
+msgid "It looks like you may have an existing website"
+msgstr "Sembra che tu possa avere un sito web esistente"
+
+#: build/2.7.0/onboarding.js:10
+msgid "Going through this setup will change your active theme, WordPress settings, add content – would you like to continue?"
+msgstr "Passando attraverso questa configurazione cambierà il vostro tema attivo, le impostazioni di WordPress, aggiungere contenuto – si desidera continuare?"
+
+#. translators: 1: Brand 2: Site or Store
+#: build/2.7.0/onboarding.js:11
+msgid "Making the keys to your %1$s Online %2$s"
+msgstr "Rendere le chiavi del tuo %1$s online %2$s"
+
+#: build/2.7.0/onboarding.js:11
+msgid "Color Palettes"
+msgstr "Color Palettes"
+
+#: build/2.7.0/onboarding.js:11
+msgid "SELECT CUSTOM COLORS"
+msgstr "SELEZIONA COLORI CLIENTI"
+
+#: build/2.7.0/onboarding.js:11
+msgid "Background"
+msgstr "Sfondo"
+
+#: build/2.7.0/onboarding.js:11
+msgid "Primary"
+msgstr "Principale"
+
+#: build/2.7.0/onboarding.js:11
+msgid "Secondary"
+msgstr "Secondario"
+
+#: build/2.7.0/onboarding.js:11
+msgid "Tertiary"
+msgstr "Terziario"
+
+#: build/2.7.0/onboarding.js:11
+msgid "Reset"
+msgstr "Reset"
+
+#: build/2.7.0/onboarding.js:11
+msgid "Pick a Homepage Design"
+msgstr "Scegli una Homepage Design"
+
+#: build/2.7.0/onboarding.js:11
+msgid "Panel will show a few Homepage Patterns."
+msgstr "Pannello mostrerà alcuni motivi Homepage."
+
+#: build/2.7.0/onboarding.js:11
+msgid "Pick a Theme Style"
+msgstr "Scegli uno stile tema"
+
+#: build/2.7.0/onboarding.js:11
+msgid "No Style Selected"
+msgstr "Nessuno Stile Selezionato"
+
+#: build/2.7.0/onboarding.js:11
+msgid "Panel will show Theme details"
+msgstr "Pannello mostrerà dettagli tema"
+
+#: build/2.7.0/onboarding.js:11
+msgid "With Style Selected"
+msgstr "Con Stile Selezionato"
+
+#: build/2.7.0/onboarding.js:11
+msgid "Panel will show single-column of other Styles."
+msgstr "Il pannello mostrerà una singola colonna di altri stili."
+
+#: build/2.7.0/onboarding.js:11
+msgid "Pick a Theme"
+msgstr "Scegli un tema"
+
+#: build/2.7.0/onboarding.js:11
+msgid "No Theme Selected"
+msgstr "Nessun Tema Selezionato"
+
+#: build/2.7.0/onboarding.js:11
+msgid "Panel will show contextual help"
+msgstr "Il pannello mostrerà l'aiuto contestuale"
+
+#: build/2.7.0/onboarding.js:11
+msgid "With Theme Selected"
+msgstr "Con Tema Selezionato"
+
+#: build/2.7.0/onboarding.js:11
+msgid "Panel will show single-column of other Themes."
+msgstr "Il pannello mostrerà una singola colonna di altri temi."
+
+#: build/2.7.0/onboarding.js:11
+msgid "Font Palettes"
+msgstr "Font Palettes"
+
+#. translators: text in each font selection pill representing the respective font
+#: build/2.7.0/onboarding.js:12
+msgid "Aa"
+msgstr "Aa"
+
+#: build/2.7.0/onboarding.js:12
+msgid "Onboarding Menu"
+msgstr "Menu Onboarding"
+
+#: build/2.7.0/onboarding.js:12
+msgid "Resume Onboarding"
+msgstr "Riprendi Onboarding"
+
+#: build/2.7.0/onboarding.js:12
+msgid "WordPress Onboarding"
+msgstr "Onboarding WordPress"
+
+#: build/2.7.0/onboarding.js:12
+msgid "Toggle Navigation"
+msgstr "Attiva/Disattiva Navigazione"
+
+#. translators: accessibility text for the nav bar landmark region.
+#: build/2.7.0/onboarding.js:14
+msgid "Drawer"
+msgstr "Drawer"
+
+#. translators: accessibility text for the top bar landmark region.
+#: build/2.7.0/onboarding.js:16
+msgid "Header"
+msgstr "Intestazione"
+
+#. translators: accessibility text for the content landmark region.
+#: build/2.7.0/onboarding.js:18
+msgid "Content"
+msgstr "Contenuto"
+
+#. translators: accessibility text for the secondary sidebar landmark region.
+#: build/2.7.0/onboarding.js:20
+msgid "Block Library"
+msgstr "Blocca Libreria"
+
+#. translators: accessibility text for the settings landmark region.
+#: build/2.7.0/onboarding.js:22
+msgid "Settings"
+msgstr "Impostazioni"
+
+#. translators: accessibility text for the publish landmark region.
+#: build/2.7.0/onboarding.js:24
+msgid "Publish"
+msgstr "Pubblica"
+
+#. translators: accessibility text for the footer landmark region.
+#: build/2.7.0/onboarding.js:26
+msgid "Footer"
+msgstr "Footer"
+
+#: build/2.7.0/onboarding.js:26
+msgid "Sorry, we're having trouble communicating with our AI service."
+msgstr "Siamo spiacenti, stiamo avendo problemi a comunicare con il nostro servizio IA."
+
+#: build/2.7.0/onboarding.js:26
+msgid "Do you keep getting this error?"
+msgstr "Continuate a ricevere questo errore?"
+
+#: build/2.7.0/onboarding.js:26
+msgid "If you continue to get this error, you may either continue creating your site without using our AI assistant, or you can "
+msgstr "Se continui a ottenere questo errore, puoi continuare a creare il tuo sito senza usare il nostro assistente di intelligenza artificiale o puoi "
+
+#: build/2.7.0/onboarding.js:26
+msgid "Try again"
+msgstr "Riprova"
+
+#: build/2.7.0/onboarding.js:26
+msgid "Continue without AI"
+msgstr "Continua senza IA"
+
+#: build/2.7.0/onboarding.js:26
+msgid "exit to WordPress"
+msgstr "esci da WordPress"
+
+#: build/2.7.0/onboarding.js:26
+msgid "Sorry, we're having trouble starting the site transfer process."
+msgstr "Siamo spiacenti, stiamo avendo problemi ad avviare il processo di trasferimento del sito."
+
+#: build/2.7.0/onboarding.js:26
+msgid "If you continue to get this error, please contact our support team at 1-888-401-4678."
+msgstr "Se continui a ricevere questo errore, contatta il nostro team di supporto al numero 1-888-401-4678."
+
+#: build/2.7.0/onboarding.js:26
+msgid "Go back"
+msgstr "Torna indietro"
+
+#: build/2.7.0/onboarding.js:40
+msgid "What Next"
+msgstr "Cosa Successivo"
+
+#: build/2.7.0/onboarding.js:41
+msgid "Add, adjust and launch!"
+msgstr "Aggiungi, regola e lancia!"
+
+#. translators: %s: website
+#: build/2.7.0/onboarding.js:43
+msgid "Our support team, %s experts and professional designers are always just a chat or call away if you ever need directions."
+msgstr "Il nostro team di supporto, esperti %s e designer professionisti sono sempre solo una chat o chiamare via se avete bisogno di indicazioni."
+
+#: build/2.7.0/onboarding.js:43
+msgid "How else can we help?"
+msgstr "Come possiamo aiutare?"
+
+#: build/2.7.0/onboarding.js:43
+msgid "Error 404"
+msgstr "Errore 404"
+
+#: build/2.7.0/onboarding.js:43
+msgid "Please Check Again!"
+msgstr "Controllare Di Nuovo!"
+
+#: build/2.7.0/onboarding.js:43
+msgid "Get Started"
+msgstr "Per Iniziare"
+
+#: build/2.7.0/onboarding.js:43
+msgid "Store Info"
+msgstr "Informazioni Negozio"
+
+#: build/2.7.0/onboarding.js:43
+msgid "Sitegen Design"
+msgstr "Design Di Sitegen"
+
+#: build/2.7.0/onboarding.js:43
+msgid "Sitegen Features"
+msgstr "Caratteristiche Del Sitegen"
+
+#: build/2.7.0/onboarding.js:43
+msgid "Site Details"
+msgstr "Dettagli Sito"
+
+#: build/2.7.0/onboarding.js:43
+msgid "Sitegen Core"
+msgstr "Sitegen Core"
+
+#: build/2.7.0/onboarding.js:3
+#: build/2.7.0/onboarding.js:8
+msgid "Welcome"
+msgstr "Benvenuto"
+
+#. translators: 1: Brand 2: website or store
+#: build/2.7.0/onboarding.js:4
+msgid "Lay the foundation for a successful %1$s %2$s using our WordPress Onboarding. "
+msgstr "Posiziona la base per un successo %1$s %2$s utilizzando il nostro WordPress Onboarding. "
+
+#. translators: %s: website or store
+#: build/2.7.0/onboarding.js:5
+msgid "WordPress is free %s software"
+msgstr "WordPress è software %s gratuito"
+
+#. translators: 1: Brand 2: website or store
+#: build/2.7.0/onboarding.js:7
+msgid "%1$s is your %2$s partner"
+msgstr "%1$s è il tuo partner %2$s"
+
+#. translators: 1: website or store 2: Brand 3. site or store
+#: build/2.7.0/onboarding.js:8
+msgid "A WordPress %1$s hosted by %2$s has tons of unique and proven solutions to help you get farther, faster with your WordPress. We put our expertise, partnerships and solutions to work on your %3$s."
+msgstr "Un WordPress %1$s ospitato da %2$s ha tonnellate di soluzioni uniche e comprovate per aiutarvi ad andare oltre, più veloce con la tua WordPress. Mettiamo le nostre competenze, partnership e soluzioni per lavorare sul tuo %3$s."
+
+#: build/2.7.0/onboarding.js:8
+msgid "1-1 Expert Solutions & Coaching"
+msgstr "1-1 Soluzioni Esperte & Coaching"
+
+#: build/2.7.0/onboarding.js:8
+msgid "Hire Our Full-Service Creative Team"
+msgstr "Assumere Il Nostro Full-Service Team Creativo"
+
+#: build/2.7.0/onboarding.js:39
+msgid "Rename"
+msgstr "Rinomina"
+
+#: build/2.7.0/onboarding.js:39
+msgid "View All"
+msgstr "Visualizza Tutto"
+
+#: build/2.7.0/onboarding.js:39
+msgid "Save & Continue"
+msgstr "Salva E Continua"
+
+#: build/2.7.0/onboarding.js:39
+msgid "Migration"
+msgstr "Migrazione"
+
+#: build/2.7.0/onboarding.js:53
+msgid "The Fork"
+msgstr "La Forchetta"
+
+#: build/2.7.0/onboarding.js:39
+msgctxt "noun"
+msgid "site"
+msgstr "sito"
+
+#: build/2.7.0/onboarding.js:39
+msgctxt "noun"
+msgid "website"
+msgstr "sito"
+
+#: build/2.7.0/onboarding.js:39
+msgctxt "noun"
+msgid "store"
+msgstr "negozio"
+
+#: includes/WP_Admin.php:305
+msgid "Build with AI"
+msgstr "Costruisci con l'IA"
+
+#. translators: 1: Brand 2: site or store
+#: build/2.7.0/270.js:2
+#: build/2.7.0/270.js:3
+msgid "Hang tight, we're building your %1$s %2$s"
+msgstr "Tieni duro, stiamo costruendo il tuo %1$s %2$s"
+
+#: build/2.7.0/270.js:2
+#: build/2.7.0/270.js:3
+msgid "We're assembling your unique design and installing useful tools"
+msgstr "Stiamo assemblando il tuo design unico e installando strumenti utili"
+
+#: build/2.7.0/287.js:1
+msgid "I've built a few sites for myself or others"
+msgstr "Ho costruito alcuni siti per me stesso o per altri"
+
+#: build/2.7.0/560.js:1
+#: build/2.7.0/onboarding.js:47
+msgid "There's no place like a great home page"
+msgstr "Non c'è niente come una grande homepage"
+
+#: build/2.7.0/841.js:1
+msgid "We'll use this information to help you setup your online store"
+msgstr "Useremo queste informazioni per aiutarti a configurare il tuo negozio online"
+
+#: build/2.7.0/866.js:1
+msgid "I'm following a tutorial"
+msgstr "Sto seguendo un tutorial"
+
+#: build/2.7.0/866.js:1
+msgid "I'm following a tutorial, take me to the WP Admin Dashboard"
+msgstr "Sto seguendo un tutorial, portami alla Dashboard di WP Admin"
+
+#: build/2.7.0/onboarding.js:1
+msgid "Whether it's a storefront or a PO Box, we're proud to help you connect your real-world and online businesses"
+msgstr "Che si tratti di un negozio o di una casella postale, siamo orgogliosi di aiutarti a connettere la tua attività reale e online"
+
+#. translators: 1: Brand 2: site or store
+#: build/2.7.0/onboarding.js:3
+msgid "Tell us a little about how and what you're planning to sell and we'll bring the power of WooCommerce and unique %1$s %2$s solutions to elevate your business and enhance your capabilities."
+msgstr "Raccontaci un po' di come e cosa hai intenzione di vendere e ti porteremo la potenza di WooCommerce e le soluzioni uniche %1$s %2$s per elevare il tuo business e migliorare le tue capacità."
+
+#. translators: 1: website or store 2: website or store
+#: build/2.7.0/onboarding.js:6
+msgid "When you set up this new WordPress %1$s, you're joining millions of website owners who publish their %2$s using the free, community-built software project we're proud to support."
+msgstr "Quando configuri questo nuovo WordPress %1$s, ti unisci a milioni di proprietari di siti web che pubblicano il loro %2$s utilizzando il progetto software gratuito costruito dalla community che siamo orgogliosi di supportare."
+
+#: build/2.7.0/onboarding.js:11
+msgid "We're installing WooCommerce for you to fill with your amazing products & services!"
+msgstr "Stiamo installando WooCommerce per te da riempire con i tuoi fantastici prodotti e servizi!"
+
+#. translators: %s: site or store
+#: build/2.7.0/onboarding.js:35
+#: build/2.7.0/onboarding.js:39
+msgid "We chose the templates, features and best configuration we can for sites. You're always in full control of your WordPress %s and we ask so we can be a good website partner."
+msgstr "Abbiamo scelto i migliori template, funzionalità e configurazione possibili per i siti. Hai sempre il pieno controllo del tuo WordPress %s e chiediamo così possiamo essere un buon partner per il sito web."
+
+#: build/2.7.0/onboarding.js:40
+msgid "What's Next"
+msgstr "Cosa c'è dopo"
+
+#. translators: 1: website or store 2: website or store
+#: build/2.7.0/onboarding.js:41
+msgid "The beginning of your %1$s journey is complete. We're here to support your next steps and %2$s goals!"
+msgstr "L'inizio del tuo viaggio %1$s è completo. Siamo qui per supportare i tuoi prossimi passi e gli obiettivi %2$s!"
+
+#. translators: 1: site or store 2: Brand 3: site or store
+#: build/2.7.0/onboarding.js:42
+msgid "Now that you've setup the basics, use WordPress to edit your pages, %1$s design and explore the unlimited destinations you can chart for your %2$s %3$s."
+msgstr "Ora che hai configurato le basi, usa WordPress per modificare le tue pagine, il design %1$s ed esplorare le destinazioni illimitate che puoi tracciare per il tuo %2$s %3$s."
+
+#. translators: %s: site or store
+#: build/2.7.0/onboarding.js:58
+msgid "We've assembled the best building blocks for a successful %s"
+msgstr "Abbiamo assemblato i migliori blocchi di costruzione per un %s di successo"

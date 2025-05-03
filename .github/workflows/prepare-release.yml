@@ -15,7 +15,7 @@ jobs:
     steps:
 
     - name: Checkout trunk
-      uses: actions/checkout@v4
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
     - name: Create Release Branch
       run: |
@@ -42,20 +42,20 @@ jobs:
         git commit -m "Update boostrap.php to $new_version"
 
     - name: Setup PHP
-      uses: shivammathur/setup-php@v2
+      uses: shivammathur/setup-php@cf4cade2721270509d5b1c766ab3549210a39a2a # v2.33.0
       with:
         php-version: '8.1'
         coverage: none
         tools: composer, cs2pr
 
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
       with:
         node-version: 16.x
 
     - name: Setup Registry
       run: printf "@newfold-labs:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
-    
+
     - name: Log Debug Information
       run: |
         php --version

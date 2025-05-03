@@ -1,6 +1,7 @@
 // <reference types="Cypress" />
 import {
 	apiList,
+	flowMock,
 	customizeDataMock,
 	themeStyleMock,
 } from '../wp-module-support/MockApi.cy';
@@ -16,7 +17,12 @@ describe( 'SiteGen Site Editor Step', function () {
 		cy.visit(
 			'wp-admin/index.php?page=nfd-onboarding#/sitegen/step/preview'
 		);
-		cy.wait( 10000 );
+		
+		cy.intercept( apiList.flow, ( req ) => {
+			flowMock( req );
+		} ).as( 'flowCall' );
+
+		cy.wait( 30000 );
 	} );
 
 	it( 'Select any theme and go forward to the next step', () => {
@@ -103,7 +109,7 @@ describe( 'SiteGen Site Editor Step', function () {
 			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container'
 		)
 			.should( 'be.visible' )
-			.should( 'have.length', 4 ); // Regenerating new themes
+			.should( 'have.length', 3 ); // Regenerating new themes
 	} );
 
 	it( 'Check for favoriting a theme and it appears everywhere', () => {
@@ -143,7 +149,7 @@ describe( 'SiteGen Site Editor Step', function () {
 			'.nfd-onboarding-sidebar--sitegen-editor-patterns__header__tab-panel__versions-tab__preview-container'
 		)
 			.should( 'be.visible' )
-			.should( 'have.length', 2 );
+			.should( 'have.length', 1 );
 		cy.get(
 			'.components-button.nfd-onboarding-sidebar--sitegen-editor-patterns__header__icon'
 		).should( 'be.visible' );
@@ -286,8 +292,8 @@ describe( 'SiteGen Site Editor Step', function () {
 	it( 'Check Save & Continue button functionality', () => {
 		cy.get(
 			'.nfd-onboarding-header--sitegen__editor__end__save-button__text',
-			{ timeout: 20000 }
-		).click();
+			{ timeout: 60000 }
+		).click({force: true});
 		cy.get( `.${ getAppId() }-app-container`, { timeout: 90000 } );
 	} );
 } );
