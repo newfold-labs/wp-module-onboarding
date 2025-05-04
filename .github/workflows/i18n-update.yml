@@ -1,0 +1,24 @@
+name: i18n Update Action
+
+on:
+  push:
+    branches:
+      - main  # Trigger when code is merged into main
+  workflow_dispatch:  # Allows manual trigger with a branch input
+    inputs:
+      base_branch:
+        description: "Base branch for the pull request"
+        required: false
+        default: "main"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  call-i18n-update:
+    uses: newfold-labs/workflows/.github/workflows/i18n-update.yml@main
+    with:
+      base_branch: ${{ inputs.base_branch }}
+    secrets:
+      NEWFOLD_ACCESS_TOKEN: ${{ secrets.NEWFOLD_ACCESS_TOKEN }}
