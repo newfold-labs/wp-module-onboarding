@@ -116,7 +116,7 @@ class SiteGenController {
 				'required' => true,
 				'type'     => 'string',
 			),
-			'locale' => array(
+			'locale'     => array(
 				'required' => true,
 				'type'     => 'string',
 			),
@@ -139,7 +139,7 @@ class SiteGenController {
 				'type'              => 'string',
 				'sanitize_callback' => 'sanitize_text_field',
 			),
-			'locale' => array(
+			'locale'           => array(
 				'required' => true,
 				'type'     => 'string',
 			),
@@ -215,9 +215,11 @@ class SiteGenController {
 		$locale     = $request->get_param( 'locale' );
 		$skip_cache = $request->get_param( 'skip_cache' );
 
-		// TODO Implement the main function and do computations if required.
 		return SiteGenService::instantiate_site_meta(
-			$site_info, $identifier, $locale, $skip_cache
+			$site_info,
+			$identifier,
+			$locale,
+			$skip_cache
 		);
 	}
 
@@ -315,7 +317,6 @@ class SiteGenController {
 		$site_info        = array( 'site_description' => $site_description );
 		$locale           = $request->get_param( 'locale' );
 		$skip_cache       = $request->get_param( 'skip_cache' );
-
 
 		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', $locale, $skip_cache );
 		if ( is_wp_error( $target_audience ) ) {
