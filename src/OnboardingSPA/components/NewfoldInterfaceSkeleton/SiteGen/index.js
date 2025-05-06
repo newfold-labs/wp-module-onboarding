@@ -150,8 +150,8 @@ const SiteGen = () => {
 	async function performSiteGenMetaGeneration(
 		siteInfo,
 		identifier,
-		skipCache,
 		locale,
+		skipCache,
 		retryCount = 1
 	) {
 		const data = await generateSiteGenMeta(
@@ -167,8 +167,8 @@ const SiteGen = () => {
 				return performSiteGenMetaGeneration(
 					siteInfo,
 					identifier,
-					skipCache,
 					locale,
+					skipCache,
 					retryCount + 1
 				);
 			}
@@ -325,7 +325,7 @@ const SiteGen = () => {
 		const skipCache = currentData.sitegen?.skipCache;
 		// Iterate over Identifiers and fire Requests!
 		identifiers.forEach( ( identifier ) => {
-			performSiteGenMetaGeneration( siteInfo, identifier, skipCache, locale );
+			performSiteGenMetaGeneration( siteInfo, identifier, locale, skipCache );
 		} );
 	}
 

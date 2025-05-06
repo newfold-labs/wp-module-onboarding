@@ -273,12 +273,14 @@ class SiteGenController {
 		$color_palette    = $request->get_param( 'palette' );
 		$is_favorite      = $request->get_param( 'isFavorite' );
 		$site_info        = array( 'site_description' => $site_description );
+		$locale           = $request->get_param( 'locale' );
+		$skip_cache       = $request->get_param( 'skip_cache' );
 
-		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience' );
+		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', $locale, $skip_cache );
 		if ( is_wp_error( $target_audience ) ) {
 			return $target_audience;
 		}
-		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones' );
+		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', $locale, $skip_cache );
 		if ( is_wp_error( $content_style ) ) {
 			return $content_style;
 		}
@@ -311,23 +313,26 @@ class SiteGenController {
 	public function publish_sitemap_pages( \WP_REST_Request $request ) {
 		$site_description = $request->get_param( 'site_description' );
 		$site_info        = array( 'site_description' => $site_description );
+		$locale           = $request->get_param( 'locale' );
+		$skip_cache       = $request->get_param( 'skip_cache' );
 
-		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience' );
+
+		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', $locale, $skip_cache );
 		if ( is_wp_error( $target_audience ) ) {
 			return $target_audience;
 		}
 
-		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones' );
+		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', $locale, $skip_cache );
 		if ( is_wp_error( $content_style ) ) {
 			return $content_style;
 		}
 
-		$sitemap = SiteGenService::instantiate_site_meta( $site_info, 'sitemap' );
+		$sitemap = SiteGenService::instantiate_site_meta( $site_info, 'sitemap', $locale, $skip_cache );
 		if ( is_wp_error( $sitemap ) ) {
 			return $sitemap;
 		}
 
-		SiteGenService::publish_sitemap_pages( $site_description, $content_style, $target_audience, $sitemap );
+		SiteGenService::publish_sitemap_pages( $site_description, $content_style, $target_audience, $sitemap, $locale );
 
 		return new \WP_REST_Response( array(), 201 );
 	}
