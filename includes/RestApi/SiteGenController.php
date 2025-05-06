@@ -290,7 +290,7 @@ class SiteGenController {
 		if ( $is_favorite ) {
 			$result = SiteGenService::regenerate_favorite_homepage( $slug, $color_palette );
 		} else {
-			$result = SiteGenService::regenerate_homepage( $site_description, $content_style, $target_audience );
+			$result = SiteGenService::regenerate_homepage( $site_description, $content_style, $target_audience, $locale );
 		}
 
 		if ( null === $result ) {
