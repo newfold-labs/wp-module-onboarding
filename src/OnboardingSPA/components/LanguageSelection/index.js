@@ -6,12 +6,12 @@ const LanguageSelection = ( {
 	selectedLocale,
 	setSelectedLocale,
 } ) => {
-	return <div className={'nfd-sg-language'}>
-		<label htmlFor={"nfd-site-output__languages"} className={'nfd-sg-language__label'}>{ labgeageSelectionLabel }</label>
+	return <div className={ 'nfd-sg-language' }>
+		<label htmlFor={ 'nfd-site-output__languages' } className={ 'nfd-sg-language__label' }>{ labgeageSelectionLabel }</label>
 		<select
-			className={"nfd-sg-language__select"} id={"nfd-site-output__languages"}
+			className={ 'nfd-sg-language__select' } id={ 'nfd-site-output__languages' }
 			onChange={ ( event ) => {
-				setSelectedLocale( event.target.value )
+				setSelectedLocale( event.target.value );
 			} }>
 			<option selected>Choose a language</option>
 			{ languageList.map( ( [ language, value ] ) => {
@@ -21,10 +21,10 @@ const LanguageSelection = ( {
 					value={ value }
 				>
 					{ language }
-				</option>
+				</option>;
 			} ) }
 		</select>
 	</div>;
-}
+};
 
 export default memo( LanguageSelection );
