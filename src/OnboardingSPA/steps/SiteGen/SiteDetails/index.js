@@ -17,7 +17,7 @@ import CommonLayout from '../../../components/Layouts/Common';
 import TextInputSiteGen from '../../../components/TextInput/TextInputSiteGen';
 import NextButtonSiteGen from '../../../components/Button/NextButtonSiteGen';
 import { SiteGenStateHandler } from '../../../components/StateHandlers';
-import LanguageSelection from "../../../components/LanguageSelection";
+import LanguageSelection from '../../../components/LanguageSelection';
 
 // Misc
 import { HEADER_SITEGEN } from '../../../../constants';
@@ -159,8 +159,8 @@ const SiteGenSiteDetails = () => {
 							<LanguageSelection
 								labgeageSelectionLabel={ content.languageSelectionLabel }
 								languageList={ content.languageList }
-								selectedLocale={selectedLocale}
-								setSelectedLocale={setSelectedLocale}
+								selectedLocale={ selectedLocale }
+								setSelectedLocale={ setSelectedLocale }
 							/>
 							{ isLargeViewport && (
 								<div className={ 'nfd-sg-site-details-endrow' }>

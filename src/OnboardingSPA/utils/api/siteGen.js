@@ -40,7 +40,7 @@ export async function getHomepages( siteDescription, locale ) {
 			method: 'POST',
 			data: {
 				site_description: siteDescription,
-				locale
+				locale,
 			},
 		} ).then()
 	);
