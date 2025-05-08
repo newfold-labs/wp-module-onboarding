@@ -1,17 +1,17 @@
 .nfd-sg-language {
-    width: 100% !important;
-    display: flex;
-    flex-direction: column;
+	width: 100% !important;
+	display: flex;
+	flex-direction: column;
 
-    &__label {
-        font-size: 0.87rem;
-        margin-top: 2%;
-        color: var(--nfd-onboarding-primary);
-        padding-left: 2px;
-    }
+	&__label {
+		font-size: 0.87rem;
+		margin-top: 2%;
+		color: var(--nfd-onboarding-primary);
+		padding-left: 2px;
+	}
 
-    &__select {
-        margin-top: 1%;
-        border-radius: 8px !important;
-    }
+	&__select {
+		margin-top: 1%;
+		border-radius: 8px !important;
+	}
 }
