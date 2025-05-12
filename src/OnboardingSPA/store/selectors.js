@@ -293,7 +293,7 @@ export function getThemeStatus( state ) {
 	const flow = state.runtime.currentFlow;
 	const isSiteGenFlow = flow === 'sitegen';
 	// If the flow is DIY, return the theme status from the settings
-	if ( !isSiteGenFlow ) {
+	if ( ! isSiteGenFlow ) {
 		return state.settings.themeStatus;
 	}
 	// If the flow is SiteGen, return the theme from the preRequisites
