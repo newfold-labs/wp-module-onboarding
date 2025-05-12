@@ -291,7 +291,7 @@ export function getSettings( state ) {
 
 export function getThemeStatus( state ) {
 	const flow = state.runtime.currentFlow;
-	const isSiteGenFlow = flow === "sitegen";
+	const isSiteGenFlow = flow === 'sitegen';
 	// If the flow is DIY, return the theme status from the settings
 	if ( !isSiteGenFlow ) {
 		return state.settings.themeStatus;
