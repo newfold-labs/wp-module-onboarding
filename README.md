@@ -77,7 +77,10 @@ The Onboarding module is designed to streamline various tasks related to user on
 - Generate screenshots tailored to the user's preferences and create a child theme using the provided name.
 
 ## Release Process
-### Local Release Preparation
+
+Run the `Newfold Prepare Release` github action to automatically bump the version (either patch, minor or major version), and update build and language files all at once. It will create a PR with changed files for review. Using this workflow, we can skip all the manual steps below.
+
+### Manual Release Preparation
 
 1. **Checkout the trunk branch locally:**
    ```bash
@@ -89,25 +92,28 @@ The Onboarding module is designed to streamline various tasks related to user on
    git pull origin trunk
    ```
 
+3. **Create release branch, where [x.y.z] is the new version (following Semantic Versioning):**
+   ```bash
+   git branch release/[x.y.z]
+   ```
+
 3. **Test for any breaking changes and highlight concerns:**
    - **Conduct thorough testing to ensure stability and functionality.**
    - Note any issues or concerns for further action.
 
 4. **Increment Version via script**
-   - run `npm run set-version-bump`
-      - This will update the version number in required files, remove the old build, and create a fresh build.
-   - Alternatively, update versions and rebuild manually:
-      1. **Increment version following Semantic Versioning 2.0.0:**
+   - Update versions and rebuild manually:
+      1. **Increment version [x.y.z]**
          - Update version in:
          - `bootstrap.php`
          - `package.json`
-         - `package-lock.json`
          - Run:
          ```bash
          npm install
          npm run build
          ```
          - Verify existence of `build/<new_version>` folder.
+         - Remove previous release build files: `build/<old_version>` folder.
          - Update language files. Run: `composer run i18n`.
 
 5. **Push changes to origin:**
