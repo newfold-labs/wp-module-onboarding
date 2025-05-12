@@ -93,7 +93,7 @@ const DesignColorsPanel = forwardRef(
 
 		/**
 		 * Define the palettes previews
-		 * @returns {Array} Palettes previews
+		 * @return {Array} Palettes previews
 		 */
 		const definePalettes = () => {
 			const palettes = [];
