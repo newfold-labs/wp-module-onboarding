@@ -54,12 +54,13 @@ const SiteGenSiteDetails = () => {
 
 	const isLargeViewport = useViewportMatch( 'small' );
 	const content = getContents();
-	
+
 	// Function to find English in language list or default to first language
 	const getDefaultLocale = () => {
-		const englishOption = content.languageList.find( ( [ language ] ) => 
+		const englishOption = content.languageList.find( ( [ language ] ) =>
 			language.toLowerCase().includes( 'english' ) );
-		return englishOption ? englishOption[1] : ( content.languageList[0] ? content.languageList[0][1] : '' );
+		const defaultOption = content.languageList[ 0 ] ? content.languageList[ 0 ][ 1 ] : '';
+		return englishOption ? englishOption[ 1 ] : defaultOption;
 	};
 
 	// Set English as default if no locale is selected
@@ -67,7 +68,7 @@ const SiteGenSiteDetails = () => {
 		if ( ! selectedLocale && content.languageList && content.languageList.length > 0 ) {
 			const defaultLocale = getDefaultLocale();
 			setSelectedLocale( defaultLocale );
-			
+
 			// Update the store with the default locale
 			if ( defaultLocale ) {
 				currentData.sitegen.siteDetails.locale = defaultLocale;
