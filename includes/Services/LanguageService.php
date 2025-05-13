@@ -37,7 +37,7 @@ class LanguageService {
 				'code'        => 'en_US',
 				'name'        => 'English (United States)',
 				'native_name' => 'English (United States)',
-            ),
+			),
 		);
 
 		// Add translated languages with proper format
