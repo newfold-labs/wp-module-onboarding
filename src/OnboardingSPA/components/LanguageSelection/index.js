@@ -1,22 +1,22 @@
 import { memo } from '@wordpress/element';
 
 const LanguageSelection = ( {
-	labgeageSelectionLabel,
+	languageSelectionLabel,
 	languageList,
 	selectedLocale,
 	setSelectedLocale,
 } ) => {
 	return <div className={ 'nfd-sg-language' }>
-		<label htmlFor={ 'nfd-site-output__languages' } className={ 'nfd-sg-language__label' }>{ labgeageSelectionLabel }</label>
+		<label htmlFor={ 'nfd-site-output__languages' } className={ 'nfd-sg-language__label' }>{ languageSelectionLabel }</label>
 		<select
 			className={ 'nfd-sg-language__select' } id={ 'nfd-site-output__languages' }
 			onChange={ ( event ) => {
 				setSelectedLocale( event.target.value );
-			} }>
-			<option selected>Choose a language</option>
+			} }
+			value={ selectedLocale || '' }>
+			<option value="">Choose a language</option>
 			{ languageList.map( ( [ language, value ] ) => {
 				return <option
-					selected={ selectedLocale === value }
 					key={ value }
 					value={ value }
 				>
