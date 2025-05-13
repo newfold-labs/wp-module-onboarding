@@ -4,7 +4,7 @@
  * @param {Promise} promise
  * @return {Object} resolved
  */
-export async function resolve( promise ) {
+async function resolve( promise ) {
 	const resolved = {
 		body: null,
 		error: null,
@@ -18,3 +18,5 @@ export async function resolve( promise ) {
 
 	return resolved;
 }
+
+export default resolve;

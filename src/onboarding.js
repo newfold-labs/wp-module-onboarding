@@ -1,14 +1,61 @@
-import './webpack-public-path';
-
-// WordPress
 import domReady from '@wordpress/dom-ready';
 import { createRoot } from 'react-dom/client';
-
+import { HiiveAnalytics } from '@newfold/js-utility-ui-analytics';
+import * as Sentry from '@sentry/react';
+import { onboardingRestURL } from '@/utils/api';
+import { CATEGORY } from '@/utils/analytics/hiive/constants';
+import { isCypress } from '@/utils/helpers';
+import './webpack-public-path';
 import App from '@';
-import { NFD_ONBOARDING_ELEMENT_ID, runtimeDataExists } from './constants';
 
-if ( runtimeDataExists ) {
+// Check if the runtime data object is mounted.
+const runtimeDataObjectIsMounted = () => {
+	return (
+		'object' === typeof window?.nfdOnboarding &&
+		'buildUrl' in window.nfdOnboarding
+	);
+};
+
+const initializeSentry = () => {
+	// Don't initialize Sentry in Cypress
+	if ( isCypress() ) {
+		return;
+	}
+
+	const version = require( '../package.json' ).version;
+	const releaseVersion = `wp-onboarding@${ version }`;
+
+	return Sentry.init( {
+		dsn: window.nfdOnboarding.sentryInitDsnURL,
+		integrations: [ Sentry.browserTracingIntegration() ],
+		release: releaseVersion,
+		// Performance Monitoring
+		tracesSampleRate: 1.0, //  Capture 100% of the transactions
+	} );
+};
+
+const initializeAnalytics = () => {
+	return HiiveAnalytics.initialize( {
+		namespace: CATEGORY,
+		urls: {
+			single: onboardingRestURL( 'events', false ),
+			batch: onboardingRestURL( 'events/batch', false ),
+		},
+		settings: {
+			debounce: {
+				time: 3000,
+			},
+		},
+	} );
+};
+
+// If window.nfdOnboarding is mounted, initialize the app.
+if ( runtimeDataObjectIsMounted() ) {
 	domReady( () => {
+		initializeSentry();
+		initializeAnalytics();
+
+		const NFD_ONBOARDING_ELEMENT_ID = 'nfd-onboarding';
 		const appTarget = document.getElementById( NFD_ONBOARDING_ELEMENT_ID );
 		/**
 		 * Temporarily elevate the container's z-index during transition.
