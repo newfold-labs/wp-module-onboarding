@@ -53,6 +53,28 @@ const SiteGenSiteDetails = () => {
 	} = useDispatch( nfdOnboardingStore );
 
 	const isLargeViewport = useViewportMatch( 'small' );
+	const content = getContents();
+	
+	// Function to find English in language list or default to first language
+	const getDefaultLocale = () => {
+		const englishOption = content.languageList.find( ( [ language ] ) => 
+			language.toLowerCase().includes( 'english' ) );
+		return englishOption ? englishOption[1] : ( content.languageList[0] ? content.languageList[0][1] : '' );
+	};
+
+	// Set English as default if no locale is selected
+	useEffect( () => {
+		if ( ! selectedLocale && content.languageList && content.languageList.length > 0 ) {
+			const defaultLocale = getDefaultLocale();
+			setSelectedLocale( defaultLocale );
+			
+			// Update the store with the default locale
+			if ( defaultLocale ) {
+				currentData.sitegen.siteDetails.locale = defaultLocale;
+				setCurrentOnboardingData( currentData );
+			}
+		}
+	}, [ content.languageList ] );
 
 	useEffect( () => {
 		setHideFooterNav( false );
@@ -140,8 +162,6 @@ const SiteGenSiteDetails = () => {
 			);
 		}
 	};
-
-	const content = getContents();
 
 	return (
 		<SiteGenStateHandler>
