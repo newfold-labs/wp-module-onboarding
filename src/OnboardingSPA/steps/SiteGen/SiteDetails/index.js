@@ -27,7 +27,6 @@ import { SITEGEN_FLOW } from '../../../data/flows/constants';
 
 const SiteGenSiteDetails = () => {
 	const [ customerInput, setCustomerInput ] = useState( '' );
-	const [ selectedLocale, setSelectedLocale ] = useState( '' );
 	const [ customerInputStrength, setCustomerInputStrength ] = useState( 0 );
 	const [ isValidInput, setIsValidInput ] = useState( false );
 
@@ -37,6 +36,10 @@ const SiteGenSiteDetails = () => {
 				select( nfdOnboardingStore ).getCurrentOnboardingData(),
 		};
 	} );
+
+	const [ selectedLocale, setSelectedLocale ] = useState(
+		currentData?.sitegen?.siteDetails?.locale || ''
+	);
 
 	const {
 		setIsFooterNavAllowed,
@@ -108,6 +111,7 @@ const SiteGenSiteDetails = () => {
 
 			if ( selectedLocale !== currentData.sitegen.siteDetails.locale ) {
 				currentData.sitegen.siteDetails.locale = selectedLocale;
+				setCurrentOnboardingData( currentData );
 			}
 		}
 	}, [ customerInput, selectedLocale ] );
@@ -157,7 +161,7 @@ const SiteGenSiteDetails = () => {
 							customChildren={ true }
 						>
 							<LanguageSelection
-								labgeageSelectionLabel={ content.languageSelectionLabel }
+								languageSelectionLabel={ content.languageSelectionLabel }
 								languageList={ content.languageList }
 								selectedLocale={ selectedLocale }
 								setSelectedLocale={ setSelectedLocale }
