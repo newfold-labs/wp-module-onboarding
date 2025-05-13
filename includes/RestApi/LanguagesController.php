@@ -49,7 +49,7 @@ class LanguagesController {
 	public function get_languages() {
 		// Use LanguageService to get languages
 		$languages = LanguageService::get_all_languages();
-		
+
 		return new \WP_REST_Response(
 			array(
 				'languages' => $languages,
@@ -57,4 +57,4 @@ class LanguagesController {
 			200
 		);
 	}
-} 
+}
