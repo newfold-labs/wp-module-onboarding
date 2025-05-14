@@ -89,7 +89,7 @@ export async function publishSitemapPages( siteDescription, locale ) {
 			method: 'POST',
 			data: {
 				site_description: siteDescription,
-				locale: locale
+				locale,
 			},
 		} ).then()
 	);
