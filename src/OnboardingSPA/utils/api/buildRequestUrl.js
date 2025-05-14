@@ -15,7 +15,7 @@ const buildRequestUrl = ( endpoint ) => {
 	const apiRoot = wpApiSettings.root || '/wp-json/';
 
 	// Build the full API URL
-	return `${apiRoot}newfold-onboarding/v1/${endpoint}`;
+	return `${ apiRoot }newfold-onboarding/v1/${ endpoint }`;
 };
 
 export default buildRequestUrl;
