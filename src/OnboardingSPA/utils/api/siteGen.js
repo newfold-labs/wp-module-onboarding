@@ -82,13 +82,14 @@ export async function getCustomizeSidebarData() {
 	);
 }
 
-export async function publishSitemapPages( siteDescription ) {
+export async function publishSitemapPages( siteDescription, locale ) {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/pages/sitemap' ),
 			method: 'POST',
 			data: {
 				site_description: siteDescription,
+				locale: locale
 			},
 		} ).then()
 	);
