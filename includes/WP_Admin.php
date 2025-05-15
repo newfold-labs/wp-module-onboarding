@@ -290,11 +290,11 @@ final class WP_Admin {
 	}
 
 	/**
-	 * Redirects to the brand plugin page or the WordPress admin.
+	 * Redirects to the brand plugin page or the WordPress admin dashboard.
 	 *
 	 * @return void
 	 */
-	public static function exit_to_wp_admin(): bool {
+	public static function exit_to_dashboard(): bool {
 		$runtime_data              = Data::runtime();
 		$brand_plugin_url          = '';
 		$dashboard_redirect_params = 'referrer=' . self::$slug;
@@ -332,7 +332,7 @@ final class WP_Admin {
 		// Install and activate the default theme.
 		$default_theme_installation_result = ThemeService::initialize();
 		if ( ! $default_theme_installation_result ) {
-			self::exit_to_wp_admin();
+			self::exit_to_dashboard();
 		}
 
 		FlowService::initialize_data();
