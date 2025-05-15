@@ -27,8 +27,8 @@ class ExternalRedirectInterceptor {
 	 * @param string $location The location to redirect to.
 	 */
 	public function wp_redirect( $location ): string {
-		$runtime_data           = Data::runtime();
-		$brand_plugin_url       = '';
+		$runtime_data     = Data::runtime();
+		$brand_plugin_url = '';
 
 		// Check if the location contains any whitelisted params.
 		$location_has_whitelisted_params = $this->url_has_whitelisted_params( $location );

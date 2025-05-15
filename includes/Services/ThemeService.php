@@ -36,11 +36,18 @@ class ThemeService {
 		$init_themes = Themes::get_init( skip_plan_check: true );
 		$sitegen_theme = $init_themes['sitegen']['default'][0];
 
-		// If the sitegen theme is NOT installed and activated...
+		// If the sitegen theme is NOT installed or activated...
 		if ( ! ThemeInstaller::exists( $sitegen_theme['slug'], $sitegen_theme['activate'] ) ) {
 			// Get the sitegen theme installer data.
 			$themes_installer_data = ThemeInstallerData::get()['nfd_slugs'];
 			$sitegen_theme_installer_data = $themes_installer_data[$sitegen_theme['slug']];
+
+			// If the sitegen theme is installed but not activated.
+			if ( ThemeInstaller::is_theme_installed( $sitegen_theme_installer_data['stylesheet'] ) ) {
+				// Activate the sitegen theme.
+				\switch_theme( $sitegen_theme_installer_data['stylesheet'] );
+				return true;
+			}
 
 			// Install and activate the sitegen theme.
 			$installer_response = ThemeInstaller::install_from_zip(
@@ -48,7 +55,7 @@ class ThemeService {
 				activate: true,
 				stylesheet: $sitegen_theme_installer_data['stylesheet']
 			);
-			
+
 			// If the installation fails, retry.
 			if ( is_wp_error( $installer_response ) ) {
 				return self::retry();
