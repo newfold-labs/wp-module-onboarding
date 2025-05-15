@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Title } from '@newfold/ui-component-library';
 import aiSiteGenIconUrl from '@/assets/ai-sitegen-icon.svg';
 import ActionCard from '@/components/ActionCard/ActionCard';
+import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
+import { ACTION_FORK_OPTION_SELECTED } from '@/utils/analytics/hiive/constants';
 
 const SiteCreatorCard = ( { initialFocus = false } ) => {
 	const cardRef = useRef( null );
@@ -19,11 +21,21 @@ const SiteCreatorCard = ( { initialFocus = false } ) => {
 		}
 	}, [ initialFocus ] );
 
+	const handleAction = () => {
+		navigate( '/intake' );
+
+		// Analytics: site creator fork option selected event
+		trackOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_FORK_OPTION_SELECTED,
+				'AI'
+			)
+		);
+	};
+
 	return (
 		<ActionCard
-			onClick={ () => {
-				navigate( '/intake' );
-			} }
+			onClick={ handleAction }
 			ref={ cardRef }
 		>
 			<div className="nfd-flex nfd-flex-col nfd-items-center nfd-justify-center nfd-text-center nfd-gap-5">

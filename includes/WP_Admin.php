@@ -85,6 +85,11 @@ final class WP_Admin {
 		}
 	}
 
+	/**
+	 * Render a loading screen.
+	 *
+	 * @return string
+	 */
 	public static function is_loading() {
 		ob_start();
 		?>
@@ -285,6 +290,36 @@ final class WP_Admin {
 	}
 
 	/**
+	 * Redirects to the brand plugin page or the WordPress admin.
+	 *
+	 * @return void
+	 */
+	public static function exit_to_wp_admin(): bool {
+		$runtime_data              = Data::runtime();
+		$brand_plugin_url          = '';
+		$dashboard_redirect_params = 'referrer=' . self::$slug;
+
+		// Get the brand plugin page URL from the runtime data.
+		if (
+			isset( $runtime_data['currentBrand'], $runtime_data['currentBrand']['pluginDashboardPage'] ) &&
+			is_string( $runtime_data['currentBrand']['pluginDashboardPage'] )
+			) {
+				// Set the brand plugin page URL.
+				$brand_plugin_url = $runtime_data['currentBrand']['pluginDashboardPage'];
+		}
+
+		// If the brand plugin page URL is not found in the runtime, redirect to the WordPress admin.
+		if ( empty( $brand_plugin_url ) ) {
+			wp_redirect( admin_url() . '?' . $dashboard_redirect_params );
+			exit;
+		}
+
+		// If the brand plugin page URL is found in the runtime, redirect to the brand plugin page.
+		wp_redirect( $brand_plugin_url . '&' . $dashboard_redirect_params );
+		exit;
+	}
+
+	/**
 	 * Initialize Plugins and Themes if necessary.
 	 *
 	 * @return void
@@ -294,8 +329,10 @@ final class WP_Admin {
 			PluginService::initialize();
 		}
 
-		if ( ! empty( $_GET['nfd_themes'] ) && 'true' === sanitize_text_field( $_GET['nfd_themes'] ) ) {
-			ThemeService::initialize();
+		// Install and activate the default theme.
+		$default_theme_installation_result = ThemeService::initialize();
+		if ( ! $default_theme_installation_result ) {
+			self::exit_to_wp_admin();
 		}
 
 		FlowService::initialize_data();
