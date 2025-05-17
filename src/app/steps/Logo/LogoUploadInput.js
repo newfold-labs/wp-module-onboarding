@@ -4,12 +4,14 @@ const LogoUploadInput = () => {
 	return (
 		<div className="nfd-onboarding-logo-upload nfd-flex nfd-flex-col nfd-gap-2">
 			<Label htmlFor="nfd-onboarding-logo-input">
-				{ __( 'Upload your logo' ) }
+				{ __( 'Site logo', 'wp-module-onboarding' ) }
 			</Label>
 			<ImageImport
 				id="nfd-onboarding-logo-input"
 				name="nfd-onboarding-logo-input"
-				buttonText={ __( 'Select Image' ) }
+				imageInputVariant="rounded"
+				dropLabel={ __( 'accepted file types: .png, .jpg, .gif', 'wp-module-onboarding' ) }
+				buttonText={ __( 'Browse', 'wp-module-onboarding' ) }
 			/>
 		</div>
 	);

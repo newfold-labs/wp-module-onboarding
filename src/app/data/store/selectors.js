@@ -35,3 +35,13 @@ export function canMigrateSite( state ) {
 	const migrationInfo = state.runtime.currentBrand.config;
 	return migrationInfo?.canMigrateSite;
 }
+
+/**
+ * Gets all available languages.
+ *
+ * @param {*} state
+ * @return {Array<{locale: string, name: string, native_name: string}>} languages
+ */
+export function getLanguages( state ) {
+	return Object.values( state.runtime.languages );
+}

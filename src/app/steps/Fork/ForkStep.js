@@ -4,6 +4,8 @@ import bluehostLogoUrl from '@/assets/bluehost-logo.svg';
 import { nfdOnboardingStore } from '@/data/store';
 import SiteCreatorCard from './SiteCreatorCard';
 import MigrationCard from './MigrationCard';
+import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
+import { ACTION_ONBOARDING_STARTED } from '@/utils/analytics/hiive/constants';
 
 const ForkStep = () => {
 	const { canMigrateSite, migrationFallbackUrl } = useSelect(
@@ -14,6 +16,13 @@ const ForkStep = () => {
 			};
 		}
 	);
+
+	useEffect( () => {
+		// Analytics: Onboarding started event
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_ONBOARDING_STARTED )
+		);
+	}, [] );
 
 	return (
 		<Container

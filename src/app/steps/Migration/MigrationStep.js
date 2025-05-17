@@ -46,6 +46,10 @@ const MigrationStep = () => {
 		);
 	};
 
+	useEffect( () => {
+		prepareMigration();
+	}, [ prepareMigration ] );
+
 	const prepareMigration = useCallback( async () => {
 		try {
 			if ( ! canMigrateSite ) {
@@ -84,10 +88,6 @@ const MigrationStep = () => {
 			);
 		}
 	}, [ canMigrateSite, setInstaWpMigrationUrl ] );
-
-	useEffect( () => {
-		prepareMigration();
-	}, [ prepareMigration ] );
 
 	/**
 	 * @return { string } The title content

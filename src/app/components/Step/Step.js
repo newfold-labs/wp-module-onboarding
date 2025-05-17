@@ -46,4 +46,19 @@ const Step = ( { children } ) => {
 	);
 };
 
+/**
+ * Actions container for the step component.
+ * @param {ReactNode} children
+ * @return {JSX.Element} Actions component
+ */
+const Actions = ( { children } ) => {
+	return (
+		<div className="nfd-w-full nfd-flex nfd-flex-row-reverse nfd-justify-between nfd-items-center nfd-flex-wrap nfd-gap-3">
+			{ children }
+		</div>
+	);
+};
+
+Step.Actions = Actions;
+
 export default Step;

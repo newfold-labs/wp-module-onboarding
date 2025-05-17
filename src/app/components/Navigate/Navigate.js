@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Link } from "@newfold/ui-component-library";
+import classNames from "classnames";
 
 /**
  * Navigate component.
@@ -46,6 +47,10 @@ const Navigate = ( {
 		<Button
 			variant={ variant }
 			onClick={ handleOnClick }
+			className={ classNames(
+				variant === 'primary' && 'nfd-py-[11px] nfd-px-[35px]',
+				variant === 'secondary' && 'nfd-bg-transparent nfd-text-primary-500 nfd-border-primary-500 nfd-py-[11px] nfd-px-[16px]',
+			) }
 			{ ...props }
 		>
 			{ children }
