@@ -1,6 +1,6 @@
 import { createReduxStore, register } from '@wordpress/data';
-import * as actions from './actions';
-import * as selectors from './selectors';
+import actions from './actions';
+import selectors from './selectors';
 import reducer from './reducer';
 
 const STORE_NAME = 'newfold/onboarding';

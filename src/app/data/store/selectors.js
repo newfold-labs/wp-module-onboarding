@@ -1,47 +1,9 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { addQueryArgs } from '@wordpress/url';
+import { selectors as runtimeSelectors } from './slices/runtime';
+import { selectors as inputSelectors } from './slices/input';
 
-/**
- * Gets current host brand name
- *
- * @param {*} state
- * @return {string} Brand name
- */
-export function getBrandName( state ) {
-	return state.runtime.currentBrand.name;
-}
+const selectors = {
+	...runtimeSelectors,
+	...inputSelectors,
+};
 
-/**
- * Gets the link to the migration service.
- *
- * @param {*} state
- * @return {string} migrationUrl
- */
-export function getMigrationFallbackUrl( state ) {
-	const migrationInfo = state.runtime.currentBrand.migrationInfo;
-	const migrationUrl =
-		addQueryArgs( migrationInfo?.defaultLink, migrationInfo?.queryParams ) +
-		( migrationInfo?.fragment || '' );
-	return migrationUrl;
-}
-
-/**
- * Checks if the site has migration access.
- *
- * @param {*} state
- * @return {boolean} canMigrateSite
- */
-export function canMigrateSite( state ) {
-	const migrationInfo = state.runtime.currentBrand.config;
-	return migrationInfo?.canMigrateSite;
-}
-
-/**
- * Gets all available languages.
- *
- * @param {*} state
- * @return {Array<{locale: string, name: string, native_name: string}>} languages
- */
-export function getLanguages( state ) {
-	return Object.values( state.runtime.languages );
-}
+export default selectors;
