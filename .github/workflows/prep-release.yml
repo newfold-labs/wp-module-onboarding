@@ -1,0 +1,98 @@
+name: Prepare Release
+# This workflow is manually dispatched. It:
+# - bumps the version as specified in the input
+# - prepares build artifacts
+# - creates a release branch
+# - commits the changes
+# - creates a pull request to the main branch
+# - TODO: consider skipping the PR, push to main, and create a release automatically
+
+on:
+  workflow_dispatch:
+    inputs:
+      level:
+        description: The level of release to be used.
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: 'patch'
+        required: true
+
+jobs:
+  prep-release:
+    name: Prepare Release
+    runs-on: ubuntu-latest
+    permissions:
+      # Give the default token permission to commit, push the changed files, and open a pull request.
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@cf4cade2721270509d5b1c766ab3549210a39a2a # v2.33.0
+        with:
+          php-version: '8.1'
+          coverage: none
+          tools: composer, cs2pr
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 20.x
+          cache: 'npm'
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache Composer vendor directory
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Show versions
+        run: |
+          php --version
+          composer --version
+          node --version
+          npm --version
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install Packages
+        run: npm install
+
+      - name: Run Update Version Script
+        id: version_bump
+        run: |
+          echo "Running version bump script..."
+          OUTPUT=$(node ./.github/scripts/set-version-bump.js ${{ inputs.level }})
+          echo ""
+          echo "====== Script Output ======"
+          echo "$OUTPUT"
+          echo "==========================="
+          echo ""
+          echo "new_version=$(echo "$OUTPUT" | jq -r '.newVersion')" >> $GITHUB_OUTPUT
+          echo "old_version=$(echo "$OUTPUT" | jq -r '.oldVersion')" >> $GITHUB_OUTPUT
+          echo "message=$(echo "$OUTPUT" | jq -r '.message')" >> $GITHUB_OUTPUT
+      
+      - name: Run Build and Update Language Files
+        run: npm run post-set-version
+
+      - name: Create Release Pull Request
+        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
+        with:
+          token: ${{ github.token }}
+          base: trunk
+          branch: release/${{ steps.version_bump.outputs.new_version }}
+          title: "Automated ${{ inputs.level }} Release ${{ steps.version_bump.outputs.new_version }} PR"
+          body: "This PR was created automatically by a GitHub Action."
+          commit-message: "🤖 prep release - ${{ steps.version_bump.outputs.message }}"

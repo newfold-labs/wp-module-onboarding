@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunknewfold_Onboarding=globalThis.webpackChunknewfold_Onboarding||[]).push([[993],{1993:(a,n,e)=>{e.r(n),e.d(n,{default:()=>s});var l=e(790);const s=({children:a,baseClassName:n="nfd-onboarding-sidebar-learn-more--help-panel"})=>(0,l.jsx)("div",{className:`${n}__links`,children:a})}}]);
