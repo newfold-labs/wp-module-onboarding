@@ -15,9 +15,6 @@ class LanguageService {
 	 * @return array List of language data
 	 */
 	public static function get_all_languages() {
-		// Get available languages
-		$languages = \get_available_languages();
-
 		// Load translation-install.php if the function doesn't exist
 		if ( ! function_exists( 'wp_get_available_translations' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/translation-install.php';
@@ -41,15 +38,12 @@ class LanguageService {
 		);
 
 		// Add translated languages with proper format
-		foreach ( $languages as $locale ) {
-			if ( isset( $translations[ $locale ] ) ) {
-				$translation           = $translations[ $locale ];
-				$formatted_languages[] = array(
-					'code'        => $locale,
-					'name'        => $translation['english_name'],
-					'native_name' => $translation['native_name'],
-				);
-			}
+		foreach ( $languages as $locale => $translation ) {
+			$formatted_languages[] = array(
+				'code'        => $locale,
+				'name'        => $translation['english_name'],
+				'native_name' => $translation['native_name'],
+			);
 		}
 
 		return $formatted_languages;
