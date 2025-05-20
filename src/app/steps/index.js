@@ -1,6 +1,7 @@
 import { ForkStep } from './Fork';
 import { IntakeStep } from './Intake';
 import { LogoStep } from './Logo';
+import { GeneratingStep } from './Generating';
 import { DesignStep } from './Design';
 import { MigrationStep } from './Migration';
 
@@ -23,15 +24,21 @@ const STEPS = {
 		isRequired: true,
 		Component: LogoStep,
 	},
+	generating: {
+		path: '/generating',
+		order: 50,
+		isRequired: true,
+		Component: GeneratingStep,
+	},
 	design: {
 		path: '/design',
-		order: 40,
+		order: 60,
 		isRequired: true,
 		Component: DesignStep,
 	},
 	migration: {
 		path: '/migration',
-		order: 50,
+		order: 70,
 		isRequired: false,
 		Component: MigrationStep,
 	},

@@ -25,9 +25,7 @@ const ForkStep = () => {
 	}, [] );
 
 	return (
-		<Container
-			className="nfd-onboarding-step-container nfd-onboarding-step-intro"
-		>
+		<Container className="nfd-onboarding-step-container nfd-onboarding-step-intro">
 			<Container.Block className="nfd-text-center nfd-p-0">
 				<style>
 					{ `

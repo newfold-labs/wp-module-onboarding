@@ -17,7 +17,7 @@ const LogoStep = () => {
 				<Container.Footer>
 					<Step.Actions>
 						<Navigate
-							toRoute="/design"
+							toRoute="/generating"
 							direction="forward"
 						>
 							{ __( 'Next', 'wp-module-onboarding' ) }

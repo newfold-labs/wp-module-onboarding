@@ -8,6 +8,12 @@
 /* Custom styles */
 @layer components {
 	.nfd-root {
+		p, span {
+			@apply
+			nfd-text-content-primary;
+		}
+
+		/* Onboarding step container */
 		.nfd-onboarding-step-container {
 			@apply
 			nfd-min-w-[600px]
@@ -43,12 +49,20 @@
 			}
 		}
 
+		/* Title */
+		.nfd-title {
+			@apply
+			nfd-text-content-primary;
+		}
+
+		/* Label */
 		.nfd-label {
 			@apply
 			nfd-text-content-primary
 			nfd-text-[15px];
 		}
 
+		/* Image import */
 		.nfd-image-import {
 			.nfd-drop-zone {
 				@apply
