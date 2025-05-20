@@ -38,7 +38,7 @@ class LanguageService {
 		);
 
 		// Add translated languages with proper format
-		foreach ( $languages as $locale => $translation ) {
+		foreach ( $translations as $locale => $translation ) {
 			$formatted_languages[] = array(
 				'code'        => $locale,
 				'name'        => $translation['english_name'],
