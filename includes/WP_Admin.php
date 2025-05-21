@@ -9,6 +9,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Services\FlowService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 use NewfoldLabs\WP\Module\Onboarding\Services\I18nService;
+use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
 use NewfoldLabs\WP\Module\Onboarding\Services\StatusService;
 
 /**
@@ -230,9 +231,13 @@ final class WP_Admin {
 				NFD_ONBOARDING_DIR . '/languages'
 			);
 
+			$nfdOnboardingData = array(
+				'runtime' => Data::runtime(),
+				'input'   => ReduxStateService::get( 'input' ),
+			);
 			\wp_add_inline_script(
 				self::$slug,
-				'var nfdOnboarding =' . wp_json_encode( Data::runtime() ) . ';',
+				'var nfdOnboarding =' . wp_json_encode( $nfdOnboardingData ) . ';',
 				'before'
 			);
 

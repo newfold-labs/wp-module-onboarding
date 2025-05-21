@@ -11,8 +11,8 @@ import App from '@';
 // Check if the runtime data object is mounted.
 const runtimeDataObjectIsMounted = () => {
 	return (
-		'object' === typeof window?.nfdOnboarding &&
-		'buildUrl' in window.nfdOnboarding
+		'object' === typeof window?.nfdOnboarding?.runtime &&
+		'buildUrl' in window.nfdOnboarding.runtime
 	);
 };
 

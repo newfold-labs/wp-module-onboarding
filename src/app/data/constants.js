@@ -1,8 +1,8 @@
 import { addQueryArgs } from '@wordpress/url';
 
-export const wpAdminUrl = window.nfdOnboarding.adminUrl;
-export const wpSiteUrl = window.nfdOnboarding.siteUrl;
-export const wpRestURL = window.nfdOnboarding.restUrl;
+export const wpAdminUrl = window.nfdOnboarding.runtime.adminUrl;
+export const wpSiteUrl = window.nfdOnboarding.runtime.siteUrl;
+export const wpRestURL = window.nfdOnboarding.runtime.restUrl;
 export const wpRestRoute = 'wp/v2';
 export const onboardingRestRoute = 'newfold-onboarding/v1';
 export const installerRestRoute = 'newfold-installer/v1';
@@ -13,13 +13,13 @@ export const installerRestBase = `${ wpRestURL }/${ installerRestRoute }`;
 export const migrateRestBase = `${ wpRestURL }/${ migrationRestRoute }`;
 export const wpAdminPage = addQueryArgs(
 	`${ wpAdminUrl }index.php`,
-	window.nfdOnboarding.currentBrand?.dashboardRedirectParams
+	window.nfdOnboarding.runtime.currentBrand?.dashboardRedirectParams
 );
 export const wpEditorPage = `${ wpAdminUrl }site-editor.php?canvas=edit`;
 export const pluginDashboardPage =
 	addQueryArgs(
-		window.nfdOnboarding.currentBrand?.pluginDashboardPage,
-		window.nfdOnboarding.currentBrand?.dashboardRedirectParams
+		window.nfdOnboarding.runtime.currentBrand?.pluginDashboardPage,
+		window.nfdOnboarding.runtime.currentBrand?.dashboardRedirectParams
 	) ?? wpAdminPage;
 export const NFD_ONBOARDING_EVENT_PREFIX = 'nfd-module-onboarding-event';
 export const VIEW_NAV_PRIMARY = 'nav-primary';

@@ -1,8 +1,11 @@
 import { Navigate, Step } from '@/components';
 import { Container } from '@newfold/ui-component-library';
 import { SiteTitleInput, PromptInput, LanguageSelector } from '.';
+import { dispatch } from '@wordpress/data';
+import { nfdOnboardingStore } from '@/data/store';
 
 const IntakeStep = () => {
+	dispatch( nfdOnboardingStore ).setSiteTitle( 'hello Site' );
 	return (
 		<Step>
 			<Container className="nfd-onboarding-step-container nfd-onboarding-step-site-details">

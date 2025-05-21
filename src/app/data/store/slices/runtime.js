@@ -36,7 +36,7 @@ export function runtime( state = {}, action ) {
  */
 export const actions = {
 	/**
-	 * Receives `window.nfdOnboarding` and sets migrated: true.
+	 * Receives `window.nfdOnboarding.runtime` and sets migrated: true.
 	 *
 	 * `url` is left to keep __webpack_public_path__ decoupled from store.
 	 *
@@ -44,7 +44,7 @@ export const actions = {
 	 * @return {Object} action object
 	 */
 	setRuntimeSlice( runtimeData ) {
-		window.nfdOnboarding = {
+		window.nfdOnboarding.runtime = {
 			buildUrl: runtimeData.buildUrl,
 			siteUrl: runtimeData.siteUrl,
 			migrated: true,

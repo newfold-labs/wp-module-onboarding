@@ -10,12 +10,15 @@ import { AppBody, ErrorBoundaryFallback, Header } from '@/components';
 
 // Data
 import { dispatch } from '@wordpress/data';
-import { nfdOnboardingStore } from '@/data/store';
+import { nfdOnboardingStore, initializeStoreDbSyncServices } from '@/data/store';
 
 const App = () => {
 	// Feed store data.
-	dispatch( nfdOnboardingStore ).setRuntimeSlice( window.nfdOnboarding );
-	dispatch( nfdOnboardingStore ).setInputSlice( {} );
+	dispatch( nfdOnboardingStore ).setRuntimeSlice( window.nfdOnboarding.runtime );
+	dispatch( nfdOnboardingStore ).setInputSlice( window.nfdOnboarding.input );
+
+	// Initialize the store-DB sync services.
+	initializeStoreDbSyncServices();
 
 	return (
 		<>

@@ -1,3 +1,7 @@
+import { select, subscribe } from '@wordpress/data';
+import { nfdOnboardingStore } from '@/data/store';
+import { updateOnboardingInputSlice } from '@/utils/api';
+
 const DEFAULT_STATE = {
 	onboardingStarted: false,
 	selectedForkOption: null,
@@ -64,10 +68,15 @@ export function input( state = DEFAULT_STATE, action ) {
  * Input Actions
  */
 export const actions = {
-	setInputSlice: ( inputSlice ) => ( {
-		type: 'SET_INPUT_SLICE',
-		inputSlice,
-	} ),
+	setInputSlice: ( inputSlice ) => {
+		window.nfdOnboarding.input = {
+			migrated: true,
+		};
+		return {
+			type: 'SET_INPUT_SLICE',
+			inputSlice,
+		};
+	},
 	setOnboardingStarted: ( onboardingStarted ) => ( {
 		type: 'SET_ONBOARDING_STARTED',
 		onboardingStarted,
@@ -111,3 +120,22 @@ export const selectors = {
 	getLogo: ( state ) => state.logo,
 	getExperienceLevel: ( state ) => state.experienceLevel,
 };
+
+/**
+ * A service function that subscribes to any changes to the slice data and syncs it to the database.
+ */
+export function dbSyncService() {
+	let previousInputSliceState = select( nfdOnboardingStore ).getInputSlice();
+
+	// Set up the subscription, but only trigger the callback when our specific data changes
+	subscribe( () => {
+		const updatedInputSliceState = select( nfdOnboardingStore ).getInputSlice();
+
+		// Only log if the data actually changed
+		if ( JSON.stringify( previousInputSliceState ) !== JSON.stringify( updatedInputSliceState ) ) {
+			previousInputSliceState = { ...updatedInputSliceState };
+
+			updateOnboardingInputSlice( updatedInputSliceState );
+		}
+	} );
+}
