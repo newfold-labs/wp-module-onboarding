@@ -5,6 +5,12 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 class ReduxStateService {
+
+	/**
+	 * Slices/States — database option names
+	 *
+	 * @var array
+	 */
 	private static $states = [
 		'input' => 'state_input',
 		'steps' => 'state_steps',
