@@ -77,6 +77,7 @@ class ReduxStateController {
 		if ( ! $result ) {
 			return new \WP_Error( 500, 'Failed to update input slice state' );
 		}
+
 		return new \WP_REST_Response(
 			$data,
 			200

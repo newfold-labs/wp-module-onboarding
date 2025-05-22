@@ -2,6 +2,8 @@ import { Routes, Route } from 'react-router-dom';
 import { ErrorBoundary } from '@newfold/ui-component-library';
 import { STEPS } from '@/steps';
 import { AnimateRoutes, ErrorBoundaryFallback } from '@/components';
+import { dispatch } from '@wordpress/data';
+import { nfdOnboardingStore } from '@/data/store';
 
 const AppBody = () => {
 	/**
@@ -19,6 +21,8 @@ const AppBody = () => {
 			);
 		} );
 	};
+
+	dispatch( nfdOnboardingStore ).setSiteTitle( 'hello Site' );
 
 	return (
 		<div className="nfd-onboarding-body nfd-flex nfd-justify-center nfd-py-20">
