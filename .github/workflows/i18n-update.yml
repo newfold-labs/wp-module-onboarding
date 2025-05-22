@@ -19,6 +19,6 @@ jobs:
   call-i18n-update:
     uses: newfold-labs/workflows/.github/workflows/i18n-update.yml@main
     with:
-      base_branch: ${{ inputs.base_branch }}
+      base_branch: ${{ inputs.base_branch || github.event.repository.default_branch || 'trunk' }}
     secrets:
       NEWFOLD_ACCESS_TOKEN: ${{ secrets.NEWFOLD_ACCESS_TOKEN }}
