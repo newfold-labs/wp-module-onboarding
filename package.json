@@ -40,7 +40,7 @@
     "@sentry/react": "^9.14.0",
     "@wordpress/api-fetch": "^7.17.0",
     "@wordpress/data": "^10.17.0",
-    "@wordpress/interface": "^9.7.0",
+    "@wordpress/interface": "^9.9.0",
     "@wordpress/style-engine": "^2.22.0",
     "bytes": "^3.1.2",
     "classnames": "^2.3.2",
