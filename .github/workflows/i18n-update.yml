@@ -3,7 +3,7 @@ name: i18n Update Action
 on:
   push:
     branches:
-      - trunk  # Trigger when code is merged into main
+      - trunk  # Trigger when code is merged into trunk
   workflow_dispatch:  # Allows manual trigger with a branch input
     inputs:
       base_branch:
