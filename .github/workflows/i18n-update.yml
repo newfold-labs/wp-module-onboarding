@@ -3,13 +3,13 @@ name: i18n Update Action
 on:
   push:
     branches:
-      - trunk  # Trigger when code is merged into trunk
+      - 'trunk'
   workflow_dispatch:  # Allows manual trigger with a branch input
     inputs:
       base_branch:
-        description: "Base branch for the pull request"
+        description: 'Base branch for the pull request'
         required: false
-        default: "trunk"
+        default: 'trunk'
 
 permissions:
   contents: write
