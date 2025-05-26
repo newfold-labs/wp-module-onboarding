@@ -38,7 +38,7 @@ const ForkStep = () => {
 					{ __( 'Welcome to WordPress', 'wp-module-onboarding' ) }
 				</Title>
 				<div className="nfd-flex nfd-items-center nfd-justify-center nfd-gap-2 nfd-mt-3.5">
-					<span className="!nfd-text-xl">
+					<span className="!nfd-text-xl nfd-text-content-primary">
 						{ __( 'Powered by', 'wp-module-onboarding' ) }
 					</span>
 					<img
@@ -60,7 +60,7 @@ const ForkStep = () => {
 
 					{ ( canMigrateSite || migrationFallbackUrl ) && (
 						<>
-							<span className="!nfd-text-lg nfd-text-black nfd-font-medium">
+							<span className="!nfd-text-lg nfd-text-content-primarynfd-font-medium">
 								{ __( 'Or', 'wp-module-onboarding' ) }
 							</span>
 							<MigrationCard

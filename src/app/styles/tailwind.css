@@ -8,11 +8,6 @@
 /* Custom styles */
 @layer components {
 	.nfd-root {
-		p, span {
-			@apply
-			nfd-text-content-primary;
-		}
-
 		/* Onboarding step container */
 		.nfd-onboarding-step-container {
 			@apply
@@ -49,6 +44,7 @@
 			}
 		}
 
+
 		/* Title */
 		.nfd-title {
 			@apply
@@ -60,23 +56,6 @@
 			@apply
 			nfd-text-content-primary
 			nfd-text-[15px];
-		}
-
-		/* Image import */
-		.nfd-image-import {
-			.nfd-drop-zone {
-				@apply
-				nfd-p-4
-				nfd-border
-				nfd-border-solid
-				nfd-rounded-lg;
-			}
-
-			.nfd-image-import__drop-label {
-				@apply
-				nfd-text-content-primary
-				nfd-text-[14px];
-			}
 		}
 	}
 }
