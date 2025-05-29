@@ -33,6 +33,7 @@ final class WP_Admin {
 		\add_action( 'admin_menu', array( __CLASS__, 'register_page' ) );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'page_title' ), 9, 1 );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'initialize' ) );
+		\add_action( 'load-toplevel_page_bluehost', array( __CLASS__, 'hide_onboarding_restart_card' ) );
 		\add_action( 'load-themes.php', array( __CLASS__, 'can_restart_onboarding' ) );
 		if ( 'sitegen' === Data::current_flow() ) {
 			\add_action( 'load-themes.php', array( __CLASS__, 'mark_sitegen_generated_themes' ) );
@@ -317,7 +318,38 @@ final class WP_Admin {
 			'all'
 		);
 
+		/**
+		 * Temporary: hide the build with ai button
+		 */
+		wp_add_inline_style(
+			'onboarding-restart-button',
+			'.themes .theme.build-with-ai {
+				display: none !important;
+			}'
+		);
+
 		\wp_enqueue_script( 'onboarding-restart-button' );
 		\wp_enqueue_style( 'onboarding-restart-button' );
+	}
+
+	/**
+	 * Temporary: Enqueue scripts that hides the build with ai button
+	 *
+	 * @return void
+	 */
+	public static function hide_onboarding_restart_card(): void {
+		\wp_register_style(
+			'hide-onboarding-restart-card',
+			false,
+		);
+
+		\wp_add_inline_style(
+			'hide-onboarding-restart-card',
+			'div[data-testid="restartOnboarding"] {
+				display: none !important;
+			}'
+		);
+
+		\wp_enqueue_style( 'hide-onboarding-restart-card' );
 	}
 } // END /NewfoldLabs/WP/Module/Onboarding/Admin()
