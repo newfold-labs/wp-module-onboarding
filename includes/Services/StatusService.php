@@ -5,6 +5,8 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Brands;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 use NewfoldLabs\WP\Module\Onboarding\Data\Config;
+use NewfoldLabs\WP\Module\Onboarding\Data\Flows\Flows;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
 
 /**
  * Tracks the Status of Onboarding.
@@ -82,6 +84,9 @@ class StatusService {
 	 * @return void
 	 */
 	public static function update_onboarding_restart_status(): void {
+		if ( isset( $_GET['page'] ) && \sanitize_text_field( wp_unslash( $_GET['page'] ) ) === 'nfd-onboarding' ) {
+			return;
+		}
 
 		// Don't do anything if the customer is not eligible
 		if ( ! self::is_onboarding_restart_eligible() ) {
@@ -90,6 +95,8 @@ class StatusService {
 
 		// Get flow data
 		$flow_data = get_option( Options::get_option_name( 'flow' ) );
+		$active_flow = $flow_data['activeFlow'];
+		$homepages = $flow_data['sitegen']['homepages'];
 
 		if ( isset( $flow_data['onboardingRetries'] ) && ! empty( $flow_data['onboardingRetries'] ) ) {
 			// Increment the total onboarding tries
@@ -104,6 +111,44 @@ class StatusService {
 
 			// Update the eligibility status in wp_option
 			update_option( Options::get_option_name( 'can_restart' ), $can_restart );
+
+			if ( $can_restart ) {
+				// Module AI prefix
+				$prefix = 'nfd-ai-site-gen-';
+				// Sitemeta Options
+				$enabled_identifiers = array_keys( array_filter( SiteGenService::enabled_identifiers() ) );
+
+				// Delete enabled identifiers options
+				foreach ( $enabled_identifiers as $identifier ) {
+					delete_option( $prefix . SiteGenService::get_identifier_name( $identifier ) );
+				}
+
+				// Extra NFD-AI Options
+				$sitegen_identifiers = array(
+					'keywords',
+					'homepages',
+					'generatedpatterns',
+					'contentstructures',
+					'siteclassificationmapping',
+					'refinedsitedescription',
+				);
+				foreach ( $sitegen_identifiers as $identifier ) {
+					delete_option( $prefix . $identifier );
+				}
+
+				delete_option( Options::get_option_name( 'flow' ) );
+				$flow_data_copy                                    = Flows::get_data();
+				$flow_data_copy['activeFlow']                      = $active_flow;
+				$flow_data_copy['sitegen']['homepages']            = $homepages;
+				$flow_data_copy['onboardingRetries']['retryCount'] = $current_retry_count;
+
+				// Update the flow data with the incremented total onboarding tries count and add to db
+				add_option( Options::get_option_name( 'flow' ), $flow_data_copy );
+
+				delete_option( Options::get_option_name( 'start_date' ) );
+				delete_option( Options::get_option_name( 'status' ) );
+				delete_option( Options::get_option_name( 'sitegen_regenerated_homepages' ) );
+			}
 		}
 	}
 

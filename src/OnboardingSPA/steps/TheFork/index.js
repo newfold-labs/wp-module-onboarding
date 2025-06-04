@@ -70,34 +70,22 @@ const TheFork = () => {
 	} );
 
 	const handleExperimentVersion = async () => {
-		let theForkExperimentVersion = 0;
-		if ( currentData.sitegen.theForkExperimentVersion !== 0 ) {
-			// Use an existing experiment version if it exists
-			setExperimentVersion(
-				currentData.sitegen.theForkExperimentVersion
-			);
-			theForkExperimentVersion =
-				currentData.sitegen.theForkExperimentVersion;
-		} else {
-			// Generate a random experiment version either 1 or 2
-			theForkExperimentVersion = Math.floor( Math.random() * 2 ) + 1;
-			setExperimentVersion( theForkExperimentVersion );
+		// setting the experiment version to 2 so that DIY onboarding is always hidden
+		const theForkExperimentVersion = 2;
+		setExperimentVersion( theForkExperimentVersion );
 
+		// the default value of theForkExperimentVersion while initialising the store is 0
+		if ( currentData.sitegen.theForkExperimentVersion === 0 ) {
 			// Sync that to the store and DB for same version on refresh
-			currentData.sitegen.theForkExperimentVersion =
-				theForkExperimentVersion;
+			currentData.sitegen.theForkExperimentVersion = theForkExperimentVersion;
 			setCurrentOnboardingData( currentData );
 			await setFlow( currentData );
-			const experimentVersionNames = {
-				1: 'control',
-				2: 'hidden',
-			};
 
 			// Send an event for the experiment version shown to the user.
 			sendOnboardingEvent(
 				new OnboardingEvent(
 					ACTION_SITEGEN_FORK_AI_EXPERIMENT,
-					experimentVersionNames[ theForkExperimentVersion ],
+					'hidden', // this event shows that the DIY onboarding was not shown
 					null,
 					null,
 					CATEGORY_EXPERIMENT

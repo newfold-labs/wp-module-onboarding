@@ -24,7 +24,7 @@ function nfd_wp_module_onboarding_register() {
 
 				// Set Global Constants
 				if ( ! defined( 'NFD_ONBOARDING_VERSION' ) ) {
-					define( 'NFD_ONBOARDING_VERSION', '2.6.3' );
+					define( 'NFD_ONBOARDING_VERSION', '2.7.2' );
 				}
 				if ( ! defined( 'NFD_ONBOARDING_DIR' ) ) {
 					define( 'NFD_ONBOARDING_DIR', __DIR__ );
@@ -72,4 +72,12 @@ if ( is_callable( 'add_action' ) ) {
 	);
 	// Handle Module Disable if Non-Ecommerce
 	ModuleController::init();
+
+	// Clear site capabilities transient after onboarding is completed so CTBs are accessible right away
+	add_action(
+		'newfold/onboarding/completed',
+		function () {
+			delete_transient( 'nfd_site_capabilities' );
+		}
+	);
 }
