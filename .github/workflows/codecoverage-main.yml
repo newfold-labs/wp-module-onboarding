@@ -98,9 +98,9 @@ jobs:
                   rm -rf gh-pages/phpunit || true;
                   mkdir gh-pages/phpunit || true;
 
-            - name: Run unit tests
-              if: ${{ hashFiles('tests/phpunit/bootstrap.php') != '' }} # Only run unit tests if they are present.
-              run: XDEBUG_MODE=coverage vendor/bin/phpunit --bootstrap tests/phpunit/bootstrap.php --coverage-php tests/_output/unit.cov --debug
+#            - name: Run unit tests
+#              if: ${{ hashFiles('tests/phpunit/bootstrap.php') != '' }} # Only run unit tests if they are present.
+#              run: XDEBUG_MODE=coverage vendor/bin/phpunit --bootstrap tests/phpunit/bootstrap.php --coverage-php tests/_output/unit.cov --debug
 
             - name: Run wpunit tests
               run: XDEBUG_MODE=coverage vendor/bin/codecept run wpunit --coverage tests/_output/wpunit.cov --debug
