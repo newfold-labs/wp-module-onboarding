@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1749114940">
-  <project timestamp="1749114940">
+<coverage generated="1749117721">
+  <project timestamp="1749117721">
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Application.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Application" namespace="global">
         <metrics complexity="8" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="0" elements="30" coveredelements="0"/>
@@ -708,6 +708,32 @@
       <line num="224" type="stmt" count="0"/>
       <metrics loc="227" ncloc="164" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="109" coveredstatements="0" elements="115" coveredelements="0"/>
     </file>
+    <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/RestApi/LanguagesController.php">
+      <class name="NewfoldLabs\WP\Module\Onboarding\RestApi\LanguagesController" namespace="global">
+        <metrics complexity="2" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="20" coveredelements="0"/>
+      </class>
+      <line num="30" type="method" name="register_routes" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="31" type="stmt" count="0"/>
+      <line num="32" type="stmt" count="0"/>
+      <line num="33" type="stmt" count="0"/>
+      <line num="34" type="stmt" count="0"/>
+      <line num="35" type="stmt" count="0"/>
+      <line num="36" type="stmt" count="0"/>
+      <line num="37" type="stmt" count="0"/>
+      <line num="38" type="stmt" count="0"/>
+      <line num="39" type="stmt" count="0"/>
+      <line num="40" type="stmt" count="0"/>
+      <line num="41" type="stmt" count="0"/>
+      <line num="49" type="method" name="get_languages" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="51" type="stmt" count="0"/>
+      <line num="53" type="stmt" count="0"/>
+      <line num="54" type="stmt" count="0"/>
+      <line num="55" type="stmt" count="0"/>
+      <line num="56" type="stmt" count="0"/>
+      <line num="57" type="stmt" count="0"/>
+      <line num="58" type="stmt" count="0"/>
+      <metrics loc="61" ncloc="39" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="20" coveredelements="0"/>
+    </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/RestApi/PluginsController.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\RestApi\PluginsController" namespace="global">
         <metrics complexity="6" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="52" coveredstatements="0" elements="56" coveredelements="0"/>
@@ -774,14 +800,14 @@
       <class name="NewfoldLabs\WP\Module\Onboarding\RestApi\RestApi" namespace="global">
         <metrics complexity="3" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="0" elements="7" coveredelements="0"/>
       </class>
-      <line num="38" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="39" type="stmt" count="0"/>
-      <line num="41" type="stmt" count="0"/>
-      <line num="47" type="method" name="register_routes" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="48" type="stmt" count="0"/>
-      <line num="54" type="stmt" count="0"/>
+      <line num="39" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="40" type="stmt" count="0"/>
+      <line num="42" type="stmt" count="0"/>
+      <line num="48" type="method" name="register_routes" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="49" type="stmt" count="0"/>
       <line num="55" type="stmt" count="0"/>
-      <metrics loc="59" ncloc="39" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="0" elements="7" coveredelements="0"/>
+      <line num="56" type="stmt" count="0"/>
+      <metrics loc="60" ncloc="40" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="0" elements="7" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/RestApi/RestApiFilter.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\RestApi\RestApiFilter" namespace="global">
@@ -1053,7 +1079,7 @@
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/RestApi/SiteGenController.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\RestApi\SiteGenController" namespace="global">
-        <metrics complexity="24" methods="12" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="179" coveredstatements="0" elements="191" coveredelements="0"/>
+        <metrics complexity="24" methods="12" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="199" coveredstatements="0" elements="211" coveredelements="0"/>
       </class>
       <line num="33" type="method" name="register_routes" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="34" type="stmt" count="0"/>
@@ -1138,31 +1164,31 @@
       <line num="121" type="stmt" count="0"/>
       <line num="122" type="stmt" count="0"/>
       <line num="123" type="stmt" count="0"/>
-      <line num="131" type="method" name="get_homepages_args" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="132" type="stmt" count="0"/>
-      <line num="133" type="stmt" count="0"/>
-      <line num="134" type="stmt" count="0"/>
-      <line num="135" type="stmt" count="0"/>
+      <line num="124" type="stmt" count="0"/>
+      <line num="125" type="stmt" count="0"/>
+      <line num="126" type="stmt" count="0"/>
+      <line num="127" type="stmt" count="0"/>
+      <line num="135" type="method" name="get_homepages_args" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="136" type="stmt" count="0"/>
       <line num="137" type="stmt" count="0"/>
       <line num="138" type="stmt" count="0"/>
-      <line num="146" type="method" name="get_publish_sitemap_pages_args" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="147" type="stmt" count="0"/>
-      <line num="148" type="stmt" count="0"/>
-      <line num="149" type="stmt" count="0"/>
-      <line num="150" type="stmt" count="0"/>
-      <line num="151" type="stmt" count="0"/>
-      <line num="152" type="stmt" count="0"/>
-      <line num="153" type="stmt" count="0"/>
-      <line num="161" type="method" name="get_regenerate_homepage_args" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="162" type="stmt" count="0"/>
-      <line num="163" type="stmt" count="0"/>
-      <line num="164" type="stmt" count="0"/>
-      <line num="165" type="stmt" count="0"/>
-      <line num="166" type="stmt" count="0"/>
-      <line num="167" type="stmt" count="0"/>
-      <line num="168" type="stmt" count="0"/>
-      <line num="169" type="stmt" count="0"/>
+      <line num="139" type="stmt" count="0"/>
+      <line num="140" type="stmt" count="0"/>
+      <line num="141" type="stmt" count="0"/>
+      <line num="142" type="stmt" count="0"/>
+      <line num="143" type="stmt" count="0"/>
+      <line num="144" type="stmt" count="0"/>
+      <line num="145" type="stmt" count="0"/>
+      <line num="146" type="stmt" count="0"/>
+      <line num="154" type="method" name="get_publish_sitemap_pages_args" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="155" type="stmt" count="0"/>
+      <line num="156" type="stmt" count="0"/>
+      <line num="157" type="stmt" count="0"/>
+      <line num="158" type="stmt" count="0"/>
+      <line num="159" type="stmt" count="0"/>
+      <line num="160" type="stmt" count="0"/>
+      <line num="161" type="stmt" count="0"/>
+      <line num="169" type="method" name="get_regenerate_homepage_args" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="170" type="stmt" count="0"/>
       <line num="171" type="stmt" count="0"/>
       <line num="172" type="stmt" count="0"/>
@@ -1171,82 +1197,102 @@
       <line num="175" type="stmt" count="0"/>
       <line num="176" type="stmt" count="0"/>
       <line num="177" type="stmt" count="0"/>
-      <line num="185" type="method" name="get_enabled_identifiers" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="186" type="stmt" count="0"/>
-      <line num="196" type="method" name="generate_sitegen_meta" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="197" type="stmt" count="0"/>
-      <line num="198" type="stmt" count="0"/>
-      <line num="199" type="stmt" count="0"/>
-      <line num="200" type="stmt" count="0"/>
-      <line num="201" type="stmt" count="0"/>
-      <line num="202" type="stmt" count="0"/>
+      <line num="178" type="stmt" count="0"/>
+      <line num="179" type="stmt" count="0"/>
+      <line num="180" type="stmt" count="0"/>
+      <line num="181" type="stmt" count="0"/>
+      <line num="182" type="stmt" count="0"/>
+      <line num="183" type="stmt" count="0"/>
+      <line num="184" type="stmt" count="0"/>
+      <line num="185" type="stmt" count="0"/>
+      <line num="193" type="method" name="get_enabled_identifiers" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="194" type="stmt" count="0"/>
+      <line num="204" type="method" name="generate_sitegen_meta" visibility="public" complexity="2" crap="6" count="0"/>
       <line num="205" type="stmt" count="0"/>
       <line num="206" type="stmt" count="0"/>
       <line num="207" type="stmt" count="0"/>
+      <line num="208" type="stmt" count="0"/>
+      <line num="209" type="stmt" count="0"/>
       <line num="210" type="stmt" count="0"/>
-      <line num="219" type="method" name="get_homepages" visibility="public" complexity="5" crap="30" count="0"/>
+      <line num="213" type="stmt" count="0"/>
+      <line num="214" type="stmt" count="0"/>
+      <line num="215" type="stmt" count="0"/>
+      <line num="216" type="stmt" count="0"/>
+      <line num="218" type="stmt" count="0"/>
+      <line num="219" type="stmt" count="0"/>
       <line num="220" type="stmt" count="0"/>
       <line num="221" type="stmt" count="0"/>
       <line num="222" type="stmt" count="0"/>
-      <line num="225" type="stmt" count="0"/>
-      <line num="226" type="stmt" count="0"/>
-      <line num="228" type="stmt" count="0"/>
-      <line num="229" type="stmt" count="0"/>
-      <line num="230" type="stmt" count="0"/>
+      <line num="223" type="stmt" count="0"/>
+      <line num="232" type="method" name="get_homepages" visibility="public" complexity="5" crap="30" count="0"/>
       <line num="233" type="stmt" count="0"/>
       <line num="234" type="stmt" count="0"/>
       <line num="235" type="stmt" count="0"/>
       <line num="238" type="stmt" count="0"/>
       <line num="239" type="stmt" count="0"/>
       <line num="240" type="stmt" count="0"/>
-      <line num="241" type="stmt" count="0"/>
       <line num="242" type="stmt" count="0"/>
+      <line num="243" type="stmt" count="0"/>
       <line num="244" type="stmt" count="0"/>
-      <line num="245" type="stmt" count="0"/>
+      <line num="247" type="stmt" count="0"/>
       <line num="248" type="stmt" count="0"/>
-      <line num="257" type="method" name="regenerate_homepage" visibility="public" complexity="5" crap="30" count="0"/>
-      <line num="258" type="stmt" count="0"/>
+      <line num="249" type="stmt" count="0"/>
+      <line num="252" type="stmt" count="0"/>
+      <line num="253" type="stmt" count="0"/>
+      <line num="254" type="stmt" count="0"/>
+      <line num="255" type="stmt" count="0"/>
+      <line num="256" type="stmt" count="0"/>
+      <line num="257" type="stmt" count="0"/>
       <line num="259" type="stmt" count="0"/>
       <line num="260" type="stmt" count="0"/>
-      <line num="261" type="stmt" count="0"/>
-      <line num="262" type="stmt" count="0"/>
-      <line num="264" type="stmt" count="0"/>
-      <line num="265" type="stmt" count="0"/>
-      <line num="266" type="stmt" count="0"/>
-      <line num="268" type="stmt" count="0"/>
-      <line num="269" type="stmt" count="0"/>
-      <line num="270" type="stmt" count="0"/>
+      <line num="263" type="stmt" count="0"/>
+      <line num="272" type="method" name="regenerate_homepage" visibility="public" complexity="5" crap="30" count="0"/>
       <line num="273" type="stmt" count="0"/>
       <line num="274" type="stmt" count="0"/>
+      <line num="275" type="stmt" count="0"/>
       <line num="276" type="stmt" count="0"/>
+      <line num="277" type="stmt" count="0"/>
+      <line num="278" type="stmt" count="0"/>
       <line num="279" type="stmt" count="0"/>
-      <line num="280" type="stmt" count="0"/>
       <line num="281" type="stmt" count="0"/>
       <line num="282" type="stmt" count="0"/>
       <line num="283" type="stmt" count="0"/>
-      <line num="284" type="stmt" count="0"/>
       <line num="285" type="stmt" count="0"/>
       <line num="286" type="stmt" count="0"/>
-      <line num="289" type="stmt" count="0"/>
-      <line num="298" type="method" name="publish_sitemap_pages" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="287" type="stmt" count="0"/>
+      <line num="290" type="stmt" count="0"/>
+      <line num="291" type="stmt" count="0"/>
+      <line num="293" type="stmt" count="0"/>
+      <line num="296" type="stmt" count="0"/>
+      <line num="297" type="stmt" count="0"/>
+      <line num="298" type="stmt" count="0"/>
       <line num="299" type="stmt" count="0"/>
       <line num="300" type="stmt" count="0"/>
+      <line num="301" type="stmt" count="0"/>
       <line num="302" type="stmt" count="0"/>
       <line num="303" type="stmt" count="0"/>
-      <line num="304" type="stmt" count="0"/>
-      <line num="307" type="stmt" count="0"/>
-      <line num="308" type="stmt" count="0"/>
-      <line num="309" type="stmt" count="0"/>
-      <line num="312" type="stmt" count="0"/>
-      <line num="313" type="stmt" count="0"/>
-      <line num="314" type="stmt" count="0"/>
+      <line num="306" type="stmt" count="0"/>
+      <line num="315" type="method" name="publish_sitemap_pages" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="316" type="stmt" count="0"/>
       <line num="317" type="stmt" count="0"/>
+      <line num="318" type="stmt" count="0"/>
       <line num="319" type="stmt" count="0"/>
-      <line num="327" type="method" name="get_site_details_meta" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="321" type="stmt" count="0"/>
+      <line num="322" type="stmt" count="0"/>
+      <line num="323" type="stmt" count="0"/>
+      <line num="326" type="stmt" count="0"/>
+      <line num="327" type="stmt" count="0"/>
       <line num="328" type="stmt" count="0"/>
-      <line num="336" type="method" name="get_customize_sidebar_data" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="337" type="stmt" count="0"/>
-      <metrics loc="340" ncloc="261" classes="1" methods="12" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="179" coveredstatements="0" elements="191" coveredelements="0"/>
+      <line num="331" type="stmt" count="0"/>
+      <line num="332" type="stmt" count="0"/>
+      <line num="333" type="stmt" count="0"/>
+      <line num="336" type="stmt" count="0"/>
+      <line num="338" type="stmt" count="0"/>
+      <line num="346" type="method" name="get_site_details_meta" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="347" type="stmt" count="0"/>
+      <line num="355" type="method" name="get_customize_sidebar_data" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="356" type="stmt" count="0"/>
+      <metrics loc="359" ncloc="281" classes="1" methods="12" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="199" coveredstatements="0" elements="211" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/RestApi/SiteImagesController.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\RestApi\SiteImagesController" namespace="global">
@@ -1764,6 +1810,64 @@
       <line num="40" type="stmt" count="0"/>
       <line num="41" type="stmt" count="0"/>
       <metrics loc="44" ncloc="23" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="12" coveredelements="0"/>
+    </file>
+    <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Services/LanguageService.php">
+      <class name="NewfoldLabs\WP\Module\Onboarding\Services\LanguageService" namespace="global">
+        <metrics complexity="7" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="49" coveredstatements="0" elements="52" coveredelements="0"/>
+      </class>
+      <line num="17" type="method" name="get_all_languages" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="19" type="stmt" count="0"/>
+      <line num="20" type="stmt" count="0"/>
+      <line num="24" type="stmt" count="0"/>
+      <line num="27" type="stmt" count="0"/>
+      <line num="28" type="stmt" count="0"/>
+      <line num="32" type="stmt" count="0"/>
+      <line num="33" type="stmt" count="0"/>
+      <line num="34" type="stmt" count="0"/>
+      <line num="35" type="stmt" count="0"/>
+      <line num="36" type="stmt" count="0"/>
+      <line num="37" type="stmt" count="0"/>
+      <line num="38" type="stmt" count="0"/>
+      <line num="41" type="stmt" count="0"/>
+      <line num="42" type="stmt" count="0"/>
+      <line num="43" type="stmt" count="0"/>
+      <line num="44" type="stmt" count="0"/>
+      <line num="45" type="stmt" count="0"/>
+      <line num="46" type="stmt" count="0"/>
+      <line num="49" type="stmt" count="0"/>
+      <line num="58" type="method" name="get_languages_for_selection" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="59" type="stmt" count="0"/>
+      <line num="60" type="stmt" count="0"/>
+      <line num="62" type="stmt" count="0"/>
+      <line num="63" type="stmt" count="0"/>
+      <line num="64" type="stmt" count="0"/>
+      <line num="65" type="stmt" count="0"/>
+      <line num="66" type="stmt" count="0"/>
+      <line num="69" type="stmt" count="0"/>
+      <line num="77" type="method" name="get_fallback_languages" visibility="private" complexity="1" crap="2" count="0"/>
+      <line num="78" type="stmt" count="0"/>
+      <line num="79" type="stmt" count="0"/>
+      <line num="80" type="stmt" count="0"/>
+      <line num="81" type="stmt" count="0"/>
+      <line num="82" type="stmt" count="0"/>
+      <line num="83" type="stmt" count="0"/>
+      <line num="84" type="stmt" count="0"/>
+      <line num="85" type="stmt" count="0"/>
+      <line num="86" type="stmt" count="0"/>
+      <line num="87" type="stmt" count="0"/>
+      <line num="88" type="stmt" count="0"/>
+      <line num="89" type="stmt" count="0"/>
+      <line num="90" type="stmt" count="0"/>
+      <line num="91" type="stmt" count="0"/>
+      <line num="92" type="stmt" count="0"/>
+      <line num="93" type="stmt" count="0"/>
+      <line num="94" type="stmt" count="0"/>
+      <line num="95" type="stmt" count="0"/>
+      <line num="96" type="stmt" count="0"/>
+      <line num="97" type="stmt" count="0"/>
+      <line num="98" type="stmt" count="0"/>
+      <line num="99" type="stmt" count="0"/>
+      <metrics loc="102" ncloc="76" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="49" coveredstatements="0" elements="52" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Services/PluginService.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Services\PluginService" namespace="global">
@@ -2371,6 +2475,6 @@
       <line num="55" type="stmt" count="0"/>
       <metrics loc="58" ncloc="24" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="8" coveredelements="0"/>
     </file>
-    <metrics files="37" loc="5091" ncloc="3634" classes="37" methods="169" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1981" coveredstatements="0" elements="2150" coveredelements="0"/>
+    <metrics files="39" loc="5274" ncloc="3770" classes="39" methods="174" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2068" coveredstatements="0" elements="2242" coveredelements="0"/>
   </project>
 </coverage>
