@@ -14,6 +14,7 @@ export async function getSiteGenIdentifiers() {
 export async function generateSiteGenMeta(
 	siteInfo,
 	identifier,
+	locale,
 	skipCache = true
 ) {
 	const data = await resolve(
@@ -23,6 +24,7 @@ export async function generateSiteGenMeta(
 			data: {
 				site_info: siteInfo,
 				identifier,
+				locale,
 				skip_cache: skipCache,
 			},
 		} )
@@ -31,13 +33,14 @@ export async function generateSiteGenMeta(
 	return data;
 }
 
-export async function getHomepages( siteDescription ) {
+export async function getHomepages( siteDescription, locale ) {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/homepages' ),
 			method: 'POST',
 			data: {
 				site_description: siteDescription,
+				locale,
 			},
 		} ).then()
 	);
@@ -79,13 +82,14 @@ export async function getCustomizeSidebarData() {
 	);
 }
 
-export async function publishSitemapPages( siteDescription ) {
+export async function publishSitemapPages( siteDescription, locale ) {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/pages/sitemap' ),
 			method: 'POST',
 			data: {
 				site_description: siteDescription,
+				locale,
 			},
 		} ).then()
 	);
