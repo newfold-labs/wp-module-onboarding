@@ -68,7 +68,7 @@ describe( 'SiteGen Site Details Step', function () {
 			'In addition to our classes, we also provide a curated selection of yoga attire and access'
 		);
 		// Select a language from the dropdown
-		cy.get('.nfd-sg-language__select').select('en-US');
+		cy.get('.nfd-sg-language__select').select('en_US');
 	} );
 
 	it( 'Check if the Next Button is enabled and click Next', () => {
