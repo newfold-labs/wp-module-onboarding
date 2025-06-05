@@ -179,6 +179,11 @@ export function data( state = {}, action ) {
 					...action.socialData,
 				},
 			};
+		case 'SET_LANGUAGES':
+			return {
+				...state,
+				languages: action.languages,
+			};
 
 		case 'SET_SITEGEN_AI_ERROR_STATUS':
 			// Only update if the prev value was false and now there is an error else don't
