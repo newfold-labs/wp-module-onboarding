@@ -34,10 +34,10 @@ class BlockRenderController {
 			$this->namespace,
 			$this->rest_base . '/screenshot',
 			array(
-				'methods'  => \WP_REST_Server::CREATABLE,
-				'callback' => array( $this, 'generate_screenshot' ),
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'generate_screenshot' ),
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				'args'     => $this->generate_screenshot_args(),
+				'args'                => $this->generate_screenshot_args(),
 			)
 		);
 	}

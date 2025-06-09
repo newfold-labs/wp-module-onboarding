@@ -26,12 +26,12 @@ final class WP_Admin {
 
 	/**
 	 * Array of allowed referrers
-	 * 
+	 *
 	 * @var array
 	 */
 	protected static $allowed_referrers = array(
 		'nfd-onboarding',
-		'nfd-plugin'
+		'nfd-plugin',
 	);
 
 	/**
@@ -472,50 +472,40 @@ final class WP_Admin {
 
 	/**
 	 * Enqueue site editor specific assets when coming from onboarding.
-	 * 
+	 *
 	 * @return void
 	 */
 	public static function enqueue_site_editor_assets() {
 		global $pagenow;
-		
+
 		// Only proceed if we're on site-editor.php and have the right referrer
-		if ( 'site-editor.php' === $pagenow && 
-			isset($_GET['referrer']) && 
-			in_array($_GET['referrer'], self::$allowed_referrers, true)
+		if ( 'site-editor.php' === $pagenow &&
+			isset( $_GET['referrer'] ) &&
+			in_array( $_GET['referrer'], self::$allowed_referrers, true )
 		) {
 
 			$asset_file = NFD_ONBOARDING_BUILD_DIR . '/onboarding-design-studio.asset.php';
-			
+
 			if ( is_readable( $asset_file ) ) {
 				$asset = include_once $asset_file;
-				
+
 				\wp_register_script(
 					'nfd-design-studio',
 					NFD_ONBOARDING_BUILD_URL . '/onboarding-design-studio.js',
-					$asset['dependencies'] ?? array('wp-editor', 'wp-blocks', 'wp-components'),
+					$asset['dependencies'] ?? array( 'wp-editor', 'wp-blocks', 'wp-components' ),
 					$asset['version'] ?? '1.0.0',
 					true
 				);
-				
+
 				\wp_register_style(
 					'nfd-design-studio',
 					NFD_ONBOARDING_BUILD_URL . '/onboarding-design-studio.css.css',
-					array('wp-components'),
+					array( 'wp-components' ),
 					$asset['version'] ?? '1.0.0'
 				);
 
-				\wp_enqueue_script('nfd-design-studio');
-				\wp_enqueue_style('nfd-design-studio');
-
-				\wp_localize_script(
-					'nfd-design-studio',
-					'nfdSiteEditorData',
-					array(
-						'fromOnboarding' => true,
-						'palettes' => get_option( 'nfd-ai-site-gen-colorpalette', array() ),
-						'fontpair' => get_option( 'nfd-ai-site-gen-fontpair', array() ),
-					)
-				);
+				\wp_enqueue_script( 'nfd-design-studio' );
+				\wp_enqueue_style( 'nfd-design-studio' );
 			}
 		}
 	}
