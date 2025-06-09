@@ -3,8 +3,6 @@ import { nfdOnboardingStore } from '@/data/store';
 import { updateOnboardingInputSlice } from '@/utils/api';
 
 const DEFAULT_STATE = {
-	onboardingStarted: false,
-	selectedForkOption: null,
 	siteTitle: '',
 	selectedLocale: '',
 	prompt: '',
@@ -25,16 +23,6 @@ export function input( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				...action.inputSlice,
-			};
-		case 'SET_ONBOARDING_STARTED':
-			return {
-				...state,
-				onboardingStarted: action.onboardingStarted,
-			};
-		case 'SET_SELECTED_FORK_OPTION':
-			return {
-				...state,
-				selectedForkOption: action.selectedForkOption,
 			};
 		case 'SET_SITE_TITLE':
 			return {
@@ -77,14 +65,6 @@ export const actions = {
 			inputSlice,
 		};
 	},
-	setOnboardingStarted: ( onboardingStarted ) => ( {
-		type: 'SET_ONBOARDING_STARTED',
-		onboardingStarted,
-	} ),
-	setSelectedForkOption: ( selectedForkOption ) => ( {
-		type: 'SET_SELECTED_FORK_OPTION',
-		selectedForkOption,
-	} ),
 	setSiteTitle: ( siteTitle ) => ( {
 		type: 'SET_SITE_TITLE',
 		siteTitle,
@@ -112,8 +92,6 @@ export const actions = {
  */
 export const selectors = {
 	getInputSlice: ( state ) => state.input,
-	getOnboardingStarted: ( state ) => state.onboardingStarted,
-	getSelectedForkOption: ( state ) => state.selectedForkOption,
 	getSiteTitle: ( state ) => state.siteTitle,
 	getSelectedLocale: ( state ) => state.selectedLocale,
 	getPrompt: ( state ) => state.prompt,

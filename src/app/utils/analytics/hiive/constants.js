@@ -26,10 +26,11 @@ export const ACTION_MFE_MIGRATION_INITIATED = 'mfe_migration_initiated';
 
 export const ACTION_SITEGEN_FORK_AI_EXPERIMENT = 'exp_fork_diy_mar25';
 export const ACTION_FORK_OPTION_SELECTED = 'fork_option_selected';
-export const ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET = 'site_details_prompt_set';
+export const ACTION_INTAKE_PROMPT_SET = 'site_details_prompt_set';
 export const ACTION_SITEGEN_SOCIAL_CONNECTED = 'social_connected';
 export const ACTION_SITEGEN_SOCIAL_CONNECT_SKIPPED = 'social_connect_skipped';
-export const ACTION_SITEGEN_LOGO_SKIPPED = 'logo_skipped';
+export const ACTION_LOGO_SKIPPED = 'logo_skipped';
+export const ACTION_LOGO_UPLOAD_FAILED = 'logo_upload_failed';
 export const ACTION_SITEGEN_HOMEPAGE_SELECTED = 'homepage_selected';
 export const ACTION_SITEGEN_HOMEPAGE_REGENERATED = 'homepage_regenerated';
 export const ACTION_SITEGEN_HOMEPAGE_FAVORITED = 'homepage_favorited';
@@ -60,7 +61,7 @@ export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_ONBOARDING_CHAPTER_COMPLETE ]: 'chapter',
 	[ ACTION_SOCIAL_ADDED ]: 'platform',
 	[ ACTION_FORK_OPTION_SELECTED ]: 'flow',
-	[ ACTION_SITEGEN_SITE_DETAILS_PROMPT_SET ]: 'prompt',
+	[ ACTION_INTAKE_PROMPT_SET ]: 'prompt',
 	[ ACTION_SITEGEN_SOCIAL_CONNECTED ]: 'platform',
 	[ ACTION_SITEGEN_HOMEPAGE_SELECTED ]: 'version',
 	[ ACTION_SITEGEN_HOMEPAGE_REGENERATED ]: 'version',

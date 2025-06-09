@@ -68,7 +68,7 @@ class ReduxStateService {
 		}
 
 		// Validate the data if it is provided
-		if ( null !== $data && empty($data) ) {
+		if ( null !== $data && empty( $data ) ) {
 			return false;
 		}
 
