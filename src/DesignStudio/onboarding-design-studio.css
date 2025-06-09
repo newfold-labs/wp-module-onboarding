@@ -186,3 +186,44 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+
+/* Style Preview Card */
+.nfd-design-studio-style-preview {
+	padding: 24px 48px;
+	min-height: 160px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	transition: all 0.2s ease;
+}
+
+.nfd-design-studio-style-preview:hover {
+	border-color: #c0c0c0;
+}
+
+.nfd-design-studio-style-preview-text h2 {
+	font-size: 64px;
+	font-weight: 500;
+	line-height: 1.2;
+	margin: 0;
+}
+
+.nfd-design-studio-style-preview-text p {
+	font-size: 16px;
+	margin: 4px 0 0 0;
+	opacity: 0.8;
+}
+
+.nfd-design-studio-style-preview-dots {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.nfd-design-studio-style-preview-dot {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	border: 2px solid rgba( 255, 255, 255, 0.8 );
+	box-shadow: 0 2px 4px rgba( 0, 0, 0, 0.1 );
+}

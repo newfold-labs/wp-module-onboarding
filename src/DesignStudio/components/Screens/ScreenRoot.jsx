@@ -7,6 +7,7 @@ import {
 	CardBody,
 	__experimentalVStack as VStack,
 	__experimentalItemGroup as ItemGroup,
+	CardMedia,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { color, typography, image } from '@wordpress/icons';
@@ -15,6 +16,7 @@ import { color, typography, image } from '@wordpress/icons';
  * Internal dependencies
  */
 import { NavigationButton } from '../ScreenHeader/NavigationButton';
+import StylePreviewCard from '../StylePreviewCard';
 
 /**
  * Root screen for the Design Studio sidebar
@@ -24,12 +26,11 @@ export default function ScreenRoot() {
 		<Card size="small" isBorderless className="nfd-design-studio-screen-root" isRounded={ false }>
 			<CardBody>
 				<VStack spacing={ 4 }>
-					{ /* <Card className="edit-site-global-styles-screen-root__active-style-tile">
+					<Card className="edit-site-global-styles-screen-root__active-style-tile">
 						<CardMedia className="edit-site-global-styles-screen-root__active-style-tile-preview">
-							<PreviewStyles />
+							<StylePreviewCard />
 						</CardMedia>
-					</Card> */ }
-
+					</Card>
 					<ItemGroup>
 						<NavigationButton icon={ image } path="/logo">
 							{ __( 'Logo', 'wp-plugin-bluehost' ) }
