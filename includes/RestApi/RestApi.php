@@ -31,6 +31,7 @@ final class RestApi {
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteClassificationController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteGenController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\BlockRenderController',
+		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\DesignController',
 	);
 
 	/**

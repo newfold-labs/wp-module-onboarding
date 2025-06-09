@@ -1,1 +1,30 @@
-.theme-name{align-items:center;display:flex;flex-direction:row;svg{margin-left:8px}}.nfd-onboarding-sitegen-theme-marker-filled{fill:#1d2327}.theme.active{.nfd-onboarding-sitegen-theme-marker-filled{fill:none}}.nfd-onboarding-sitegen-theme-marker-title{margin-left:8px;overflow:hidden;text-overflow:ellipsis;width:120px}
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.css ***!
+  \***************************************************************************************************************************************************************************************************************/
+.theme-name {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+	.theme-name svg {
+		margin-left: 8px;
+	}
+
+.nfd-onboarding-sitegen-theme-marker-filled {
+	fill: #1d2327;
+}
+
+.theme.active .nfd-onboarding-sitegen-theme-marker-filled {
+		fill: none;
+	}
+
+.nfd-onboarding-sitegen-theme-marker-title {
+	margin-left: 8px;
+	width: 120px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+
+/*# sourceMappingURL=sitegen-theme-marker.css.css.map*/
