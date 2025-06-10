@@ -14,6 +14,7 @@ class ReduxStateService {
 	private static $states = [
 		'input' => 'state_input',
 		'steps' => 'state_steps',
+		'sitegen' => 'state_sitegen',
 	];
 
 	/**

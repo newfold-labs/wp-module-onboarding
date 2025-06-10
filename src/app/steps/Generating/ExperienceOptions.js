@@ -1,7 +1,7 @@
 import { FeaturesSelect, Title } from '@newfold/ui-component-library';
 import classNames from 'classnames';
 
-const ExperienceOptions = () => {
+const ExperienceOptions = ( { selectedValue, onValueChange } ) => {
 	const experienceOptions = [
 		{
 			id: 'nfd-onboarding-experience-option-beginner',
@@ -74,6 +74,16 @@ const ExperienceOptions = () => {
 			</style>
 		);
 	};
+
+	const handleChange = ( event ) => {
+		const newValue = event.target.value;
+		// Validate the value is one of the options.
+		const allowedValues = experienceOptions.map( ( option ) => option.value );
+		if ( allowedValues.includes( newValue ) && newValue !== selectedValue ) {
+			onValueChange( newValue );
+		}
+	};
+
 	return (
 		<div className="nfd-onboarding-experience-options">
 			{ getCustomStyles() }
@@ -87,11 +97,10 @@ const ExperienceOptions = () => {
 						id={ option.id }
 						name={ option.name }
 						value={ option.value }
+						checked={ selectedValue === option.value }
 						screenReaderLabel={ option.label }
 						className="nfd-w-[30%] nfd-flex-grow [&>label]:nfd-h-full [&>label]:nfd-flex"
-						onChange={ ( event ) => {
-							console.log( event.target.value );
-						} }
+						onChange={ handleChange }
 					>
 						<div className="nfd-flex nfd-flex-col nfd-self-stretch nfd-gap-3 nfd-text-left">
 							<OptionLevelPill slots={ 3 } active={ option.level } />

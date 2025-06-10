@@ -22,7 +22,10 @@ const SiteCreatorCard = ( { initialFocus = false } ) => {
 	}, [ initialFocus ] );
 
 	const handleAction = () => {
-		navigate( '/intake' );
+		navigate( '/intake', {
+			state: { direction: 'forward' },
+			replace: false,
+		} );
 
 		// Analytics: site creator fork option selected event
 		trackOnboardingEvent(

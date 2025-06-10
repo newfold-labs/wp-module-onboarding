@@ -67,6 +67,10 @@ export const actions = {
  * Runtime Selectors
  */
 export const selectors = {
+	getRuntimeSlice( state ) {
+		return state.runtime;
+	},
+
 	/**
 	 * Gets current host brand name
 	 *
@@ -110,5 +114,15 @@ export const selectors = {
 	 */
 	getLanguages( state ) {
 		return Object.values( state.runtime.languages );
+	},
+
+	/**
+	 * Gets all available sitegen identifiers.
+	 *
+	 * @param {*} state
+	 * @return {Array<string>} identifiers
+	 */
+	getSiteGenIdentifiers( state ) {
+		return state.runtime.siteGen.identifiers;
 	},
 };

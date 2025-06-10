@@ -24,3 +24,61 @@ export const updateOnboardingInputSlice = async ( data ) => {
 		} ).then()
 	);
 };
+
+export const updateOnboardingSiteGenSlice = async ( data ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'redux-state/sitegen-slice' ),
+			method: 'POST',
+			body: JSON.stringify( data ),
+		} ).then()
+	);
+};
+
+/**
+ * Get the site meta for a given identifier.
+ *
+ * @param {string}  identifier
+ * @param {string}  prompt
+ * @param {boolean} skipCache
+ * @return {Promise<Object>} response
+ */
+export async function getSiteMetaForIdentifier(
+	identifier,
+	prompt,
+	skipCache = true
+) {
+	const response = await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/generate' ),
+			method: 'POST',
+			data: {
+				site_info: prompt,
+				identifier,
+				skip_cache: skipCache,
+			},
+		} )
+	);
+
+	return response;
+}
+
+/**
+ * Get the homepages.
+ *
+ * @param {string} prompt
+ * @return {Promise<Object>} response
+ */
+export async function getHomepages( prompt ) {
+	const response = await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/homepages' ),
+			method: 'POST',
+			data: {
+				site_description: prompt,
+			},
+		} )
+	);
+
+	return response;
+}

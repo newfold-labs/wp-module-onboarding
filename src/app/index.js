@@ -16,6 +16,7 @@ const App = () => {
 	// Feed store data.
 	dispatch( nfdOnboardingStore ).setRuntimeSlice( window.nfdOnboarding.runtime );
 	dispatch( nfdOnboardingStore ).setInputSlice( window.nfdOnboarding.input );
+	dispatch( nfdOnboardingStore ).setSiteGenSlice( window.nfdOnboarding.sitegen );
 
 	// Initialize the store-DB sync services.
 	initializeStoreDbSyncServices();

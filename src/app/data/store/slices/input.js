@@ -50,6 +50,8 @@ export function input( state = DEFAULT_STATE, action ) {
 				experienceLevel: action.experienceLevel,
 			};
 	}
+
+	return state;
 }
 
 /**
@@ -92,11 +94,11 @@ export const actions = {
  */
 export const selectors = {
 	getInputSlice: ( state ) => state.input,
-	getSiteTitle: ( state ) => state.siteTitle,
-	getSelectedLocale: ( state ) => state.selectedLocale,
-	getPrompt: ( state ) => state.prompt,
-	getLogo: ( state ) => state.logo,
-	getExperienceLevel: ( state ) => state.experienceLevel,
+	getSiteTitle: ( state ) => state.input.siteTitle,
+	getSelectedLocale: ( state ) => state.input.selectedLocale,
+	getPrompt: ( state ) => state.input.prompt,
+	getLogo: ( state ) => state.input.logo,
+	getExperienceLevel: ( state ) => state.input.experienceLevel,
 };
 
 /**
@@ -105,15 +107,14 @@ export const selectors = {
 export function dbSyncService() {
 	let previousInputSliceState = select( nfdOnboardingStore ).getInputSlice();
 
-	// Set up the subscription, but only trigger the callback when our specific data changes
 	subscribe( () => {
 		const updatedInputSliceState = select( nfdOnboardingStore ).getInputSlice();
 
-		// Only log if the data actually changed
+		// Only sync if the slice data actually changed.
 		if ( JSON.stringify( previousInputSliceState ) !== JSON.stringify( updatedInputSliceState ) ) {
 			previousInputSliceState = { ...updatedInputSliceState };
 
 			updateOnboardingInputSlice( updatedInputSliceState );
 		}
-	} );
+	}, nfdOnboardingStore );
 }
