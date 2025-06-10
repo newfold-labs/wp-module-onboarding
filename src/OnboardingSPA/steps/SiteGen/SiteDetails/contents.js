@@ -20,6 +20,13 @@ const getContents = () => {
 			'wp-module-onboarding'
 		),
 		walkThroughlink: __( 'click here', 'wp-module-onboarding' ),
+		languageList: [
+			[ __( 'English (United States)', 'wp-module-onboarding' ), 'en_US' ],
+		],
+		languageSelectionLabel: __(
+			'Choose your preferred site language:',
+			'wp-module-onboarding'
+		),
 	};
 };
 
