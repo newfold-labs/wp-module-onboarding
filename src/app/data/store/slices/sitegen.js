@@ -4,6 +4,7 @@ import { updateOnboardingSiteGenSlice } from '@/utils/api';
 
 const DEFAULT_STATE = {
 	homepages: [],
+	selectedHomepage: '',
 	retryMode: false,
 	hasFailed: false,
 	version: 0,
@@ -28,6 +29,12 @@ export function sitegen( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				homepages: action.homepages,
+				version: state.version + 1,
+			};
+		case 'SET_SELECTED_HOMEPAGE':
+			return {
+				...state,
+				selectedHomepage: action.selectedHomepage,
 				version: state.version + 1,
 			};
 		case 'SET_RETRY_MODE':
@@ -60,6 +67,12 @@ export const actions = {
 			homepages,
 		};
 	},
+	setSelectedHomepage: ( selectedHomepage ) => {
+		return {
+			type: 'SET_SELECTED_HOMEPAGE',
+			selectedHomepage,
+		};
+	},
 	setRetryMode: ( retryMode ) => {
 		return {
 			type: 'SET_RETRY_MODE',
@@ -77,6 +90,7 @@ export const actions = {
 export const selectors = {
 	getSiteGenSlice: ( state ) => state.sitegen,
 	getHomepages: ( state ) => state.sitegen.homepages,
+	getSelectedHomepage: ( state ) => state.sitegen.selectedHomepage,
 	getRetryMode: ( state ) => state.sitegen.retryMode,
 	getHasFailed: ( state ) => state.sitegen.hasFailed,
 	getVersion: ( state ) => state.sitegen.version,

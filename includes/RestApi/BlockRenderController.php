@@ -32,6 +32,16 @@ class BlockRenderController {
 	public function register_routes() {
 		\register_rest_route(
 			$this->namespace,
+			$this->rest_base . '/iframe-src',
+			array(
+				'methods'  => \WP_REST_Server::EDITABLE,
+				'callback' => array( $this, 'generate_renderable_content' ),
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				'args'     => $this->generate_renderable_content_args(),
+			)
+		);
+		\register_rest_route(
+			$this->namespace,
 			$this->rest_base . '/screenshot',
 			array(
 				'methods'  => \WP_REST_Server::CREATABLE,
@@ -39,6 +49,45 @@ class BlockRenderController {
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				'args'     => $this->generate_screenshot_args(),
 			)
+		);
+	}
+
+	/**
+	 * Args for Generating the renderable content.
+	 *
+	 * @return array
+	 */
+	public function generate_renderable_content_args() {
+		return array(
+			'content' => array(
+				'required' => true,
+				'type'     => 'string',
+			),
+			'slug' => array(
+				'required' => true,
+				'type'     => 'string',
+			),
+		);
+	}
+
+	/**
+	 * Generates a renderable content.
+	 *
+	 * @param \WP_REST_Request $request The incoming request.
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function generate_renderable_content( \WP_REST_Request $request ) {
+		$content = $request->get_param( 'content' );
+		$slug = $request->get_param( 'slug' );
+
+		$renderable_content = BlockRenderService::generate_renderable_content( $content, $slug );
+		if ( is_wp_error( $renderable_content ) ) {
+			return $renderable_content;
+		}
+		xr( $renderable_content );
+		return new \WP_REST_Response(
+			$renderable_content,
+			200
 		);
 	}
 

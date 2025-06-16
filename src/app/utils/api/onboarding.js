@@ -40,12 +40,14 @@ export const updateOnboardingSiteGenSlice = async ( data ) => {
  *
  * @param {string}  identifier
  * @param {string}  prompt
+ * @param {string}  locale
  * @param {boolean} skipCache
  * @return {Promise<Object>} response
  */
 export async function getSiteMetaForIdentifier(
 	identifier,
 	prompt,
+	locale,
 	skipCache = true
 ) {
 	const response = await resolve(
@@ -55,6 +57,7 @@ export async function getSiteMetaForIdentifier(
 			data: {
 				site_info: prompt,
 				identifier,
+				locale,
 				skip_cache: skipCache,
 			},
 		} )
@@ -67,15 +70,39 @@ export async function getSiteMetaForIdentifier(
  * Get the homepages.
  *
  * @param {string} prompt
+ * @param {string} locale
  * @return {Promise<Object>} response
  */
-export async function getHomepages( prompt ) {
+export async function getHomepages( prompt, locale ) {
 	const response = await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/homepages' ),
 			method: 'POST',
 			data: {
 				site_description: prompt,
+				locale,
+			},
+		} )
+	);
+
+	return response;
+}
+
+/**
+ * Get the iframe src for a preview.
+ *
+ * @param {string} content
+ * @param {string} slug
+ * @return {Promise<Object>} response
+ */
+export async function getPreviewIframeSrc( content, slug ) {
+	const response = await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'block-render/iframe-src' ),
+			method: 'POST',
+			data: {
+				content,
+				slug,
 			},
 		} )
 	);

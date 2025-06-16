@@ -6,15 +6,15 @@ import { getSiteMetaForIdentifier } from '@/utils/api/onboarding';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_ERROR_STATE_TRIGGERED } from '@/utils/analytics/hiive/constants';
 
-const handleFetch = async ( identifier, siteInfo ) => {
+const handleFetch = async ( identifier, siteInfo, locale ) => {
 	let retryCount = 0;
 	const maxRetries = 3;
 
-	const response = await getSiteMetaForIdentifier( identifier, siteInfo );
+	const response = await getSiteMetaForIdentifier( identifier, siteInfo, locale );
 	if ( response.error ) {
 		if ( retryCount < maxRetries ) {
 			retryCount++;
-			return handleFetch( identifier, siteInfo );
+			return handleFetch( identifier, siteInfo, locale );
 		}
 	}
 
@@ -42,6 +42,7 @@ const setSiteTagline = async ( tagline ) => {
 const generateSiteMeta = async () => {
 	const identifiers = select( nfdOnboardingStore ).getSiteGenIdentifiers();
 	const prompt = select( nfdOnboardingStore ).getPrompt();
+	const locale = select( nfdOnboardingStore ).getSelectedLocale();
 	/**
 	 * Todo: the site meta api expects an object, but the prompt is a string.
 	 * In the future, we should change the api to accept a string, but for now,
@@ -53,7 +54,7 @@ const generateSiteMeta = async () => {
 
 	try {
 		const siteMetaCalls = identifiers.map( async ( identifier ) => {
-			const response = await handleFetch( identifier, siteInfo );
+			const response = await handleFetch( identifier, siteInfo, locale );
 			if ( response.error ) {
 				trackOnboardingEvent(
 					new OnboardingEvent(
