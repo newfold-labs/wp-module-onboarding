@@ -1,7 +1,7 @@
 import { useSelect, dispatch } from '@wordpress/data';
 import { SiteGenPreviewCard } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
-import { getPreviewIframeSrc } from '@/utils/api';
+import { getSiteGenPreviewSnapshot } from '@/utils/api';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_HOMEPAGE_PREVIEW_FAILED } from '@/utils/analytics/hiive/constants';
 
@@ -11,6 +11,7 @@ const Preview = ( {
 } ) => {
 	const [ isLoading, setIsLoading ] = useState( true );
 	const [ isError, setIsError ] = useState( false );
+	const [ screenshot, setScreenshot ] = useState( null );
 	const [ iframeSrc, setIframeSrc ] = useState( null );
 
 	const homepages = useSelect( ( select ) => {
@@ -21,6 +22,7 @@ const Preview = ( {
 
 	/**
 	 * Parse the sitegen preview content to make it saveable by the backend.
+	 * @return {string} The preview content.
 	 */
 	const getPreviewContent = () => {
 		const previewData = preview;
@@ -36,33 +38,53 @@ const Preview = ( {
 		return previewContent;
 	};
 
-	const iframeSrcFetchRetries = {
+	/**
+	 * Custom css to inject into the preview.
+	 * @return {string} Custom styles.
+	 */
+	const getCustomStyles = () => {
+		let customStyles = ':root {';
+
+		// Map preview color palette to the custom styles.
+		const colorPalette = preview.color.palette;
+		if ( colorPalette instanceof Array ) {
+			colorPalette.forEach( ( color ) => {
+				customStyles += `--wp--preset--color--${ color.slug.replace( '_', '-' ) }: ${ color.color } !important;`;
+			} );
+		}
+
+		customStyles += '}';
+		return customStyles;
+	};
+
+	const snapshotFetchRetries = {
 		count: 0,
 		max: 2,
 	};
-	const getIframeSrc = async () => {
+	const getSnapshot = async () => {
 		/**
 		 * If we've reached the max number of retries, set the error state and return.
 		 */
-		if ( iframeSrcFetchRetries.count >= iframeSrcFetchRetries.max ) {
+		if ( snapshotFetchRetries.count >= snapshotFetchRetries.max ) {
 			setIsError( true );
 			setIsLoading( false );
 			return;
 		}
 
 		/**
-		 * If src is already in the store, use it.
+		 * If the screenshot is already in the store, use it.
 		 * This is useful in case we add a resume feature in the future or if the user refreshes the page.
 		 */
-		if ( homepages.homepages[ preview.slug ]?.iframeSrc ) {
-			setIframeSrc( homepages.homepages[ preview.slug ].iframeSrc );
-			return;
-		}
+		// if ( homepages.homepages[ preview.slug ]?.screenshot ) {
+		// 	setScreenshot( homepages.homepages[ preview.slug ].screenshot );
+		// 	setIsLoading( false );
+		// 	return;
+		// }
 
 		/**
 		 * Request the iframe src from the backend.
 		 */
-		const response = await getPreviewIframeSrc( getPreviewContent(), preview.slug );
+		const response = await getSiteGenPreviewSnapshot( getPreviewContent(), preview.slug, getCustomStyles() );
 		// If error or response doesn't contain a post_id or post_url.
 		if (
 			response.error ||
@@ -76,21 +98,29 @@ const Preview = ( {
 				} )
 			);
 			// Increment the retry count and try again.
-			iframeSrcFetchRetries.count++;
-			return getIframeSrc();
+			snapshotFetchRetries.count++;
+			return getSnapshot();
 		}
 
-		setIframeSrc( response.body.post_url );
+		// If we get a screenshot, use it.
+		if ( response.body.screenshot ) {
+			setScreenshot( response.body.screenshot );
+			setIsLoading( false );
+			homepages.homepages[ preview.slug ].screenshot = response.body.screenshot;
+		}
 
-		// Update the homepages in the store
+		// Iframe will be used as fallback if the screenshot fails.
+		setIframeSrc( response.body.post_url );
 		homepages.homepages[ preview.slug ].iframeSrc = response.body.post_url;
 		homepages.homepages[ preview.slug ].postId = response.body.post_id;
+
+		// Update the homepages in the store.
 		dispatch( nfdOnboardingStore ).setHomepages( homepages.homepages );
 	};
 
 	useEffect( () => {
 		if ( preview ) {
-			getIframeSrc();
+			getSnapshot();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ preview ] );
@@ -105,27 +135,17 @@ const Preview = ( {
 				// Remove the admin bar reserved space
 				iframeDoc.documentElement.style.setProperty( 'margin-top', '0px', 'important' );
 			}
-
-			// Inject color palette
-			const colorPalette = preview.color.palette;
-			if ( colorPalette && colorPalette instanceof Array ) {
-				const root = iframeDoc.querySelector( ':root' );
-				colorPalette.forEach( ( color ) => {
-					const colorSlug = color.slug.replace( '_', '-' );
-					const colorValue = color.color;
-					root.style.setProperty( `--wp--preset--color--${ colorSlug }`, colorValue );
-				} );
-			}
 		}
 
 		setTimeout( () => {
-			// Set 1 second delay to allow the styles above to apply.
+			// Set 500ms delay to allow the styles above to apply.
 			setIsLoading( false );
-		}, 1000 );
+		}, 500 );
 	};
 
 	return (
 		<SiteGenPreviewCard
+			screenshot={ screenshot }
 			frameName={ preview.slug }
 			frameSrc={ iframeSrc }
 			onFrameLoad={ iframeOnLoad }

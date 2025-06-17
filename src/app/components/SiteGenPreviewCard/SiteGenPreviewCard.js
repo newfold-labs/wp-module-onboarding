@@ -4,6 +4,7 @@ import { Iframe } from '@/components';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
 const SiteGenPreviewCard = ( {
+	screenshot,
 	frameName,
 	frameSrc,
 	onFrameLoad = () => {},
@@ -74,13 +75,16 @@ const SiteGenPreviewCard = ( {
 	return (
 		<div
 			className={ classNames(
-				'nfd-onboarding-sitegen-preview-card nfd-relative nfd-border nfd-border-slate-30 nfd-rounded nfd-overflow-hidden focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary',
+				'nfd-onboarding-sitegen-preview-card nfd-relative nfd-bg-cover nfd-bg-top nfd-bg-no-repeat nfd-border nfd-border-slate-30 nfd-rounded nfd-overflow-hidden focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary hover:nfd-bg-bottom nfd-transition-[background-position] nfd-duration-[1500ms] hover:nfd-duration-[5000ms]',
 				width && `nfd-min-w-[${ width }] nfd-max-w-[${ width }]`,
 				height && `nfd-min-h-[${ height }] nfd-max-h-[${ height }]`,
 				! isLoading && ! isError && 'nfd-cursor-pointer',
 				( isLoading || isError ) && 'nfd-cursor-default',
 				className,
 			) }
+			style={ {
+				backgroundImage: screenshot ? `url(${ screenshot })` : 'none',
+			} }
 			onClick={ handleOnPreview }
 			onKeyDown={ ( event ) => {
 				if ( event.key === 'Enter' ) {
@@ -93,7 +97,7 @@ const SiteGenPreviewCard = ( {
 		>
 			{ ( isLoading || isError ) && <StatusOverlay /> }
 			{ overlay && ! isLoading && ! isError && <ActionOverlay /> }
-			{ frameSrc && (
+			{ ! screenshot && frameSrc && (
 				<Iframe
 					title={ frameName }
 					name={ `nfd-onboarding-${ frameName }` }

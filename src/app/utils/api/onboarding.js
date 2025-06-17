@@ -89,20 +89,22 @@ export async function getHomepages( prompt, locale ) {
 }
 
 /**
- * Get the iframe src for a preview.
+ * Get the snapshot data for a preview.
  *
  * @param {string} content
  * @param {string} slug
+ * @param {string} customStyles
  * @return {Promise<Object>} response
  */
-export async function getPreviewIframeSrc( content, slug ) {
+export async function getSiteGenPreviewSnapshot( content, slug, customStyles = null ) {
 	const response = await resolve(
 		apiFetch( {
-			url: onboardingRestURL( 'block-render/iframe-src' ),
+			url: onboardingRestURL( 'previews/snapshot' ),
 			method: 'POST',
 			data: {
 				content,
 				slug,
+				custom_styles: customStyles,
 			},
 		} )
 	);
