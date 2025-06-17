@@ -75,11 +75,11 @@ const Preview = ( {
 		 * If the screenshot is already in the store, use it.
 		 * This is useful in case we add a resume feature in the future or if the user refreshes the page.
 		 */
-		// if ( homepages.homepages[ preview.slug ]?.screenshot ) {
-		// 	setScreenshot( homepages.homepages[ preview.slug ].screenshot );
-		// 	setIsLoading( false );
-		// 	return;
-		// }
+		if ( homepages.homepages[ preview.slug ]?.screenshot ) {
+			setScreenshot( homepages.homepages[ preview.slug ].screenshot );
+			setIsLoading( false );
+			return;
+		}
 
 		/**
 		 * Request the iframe src from the backend.
