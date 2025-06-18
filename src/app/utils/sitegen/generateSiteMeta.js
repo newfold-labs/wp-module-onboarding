@@ -7,15 +7,24 @@ import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_ERROR_STATE_TRIGGERED } from '@/utils/analytics/hiive/constants';
 
 const handleFetch = async ( identifier, siteInfo, locale ) => {
-	let retryCount = 0;
+	let response;
 	const maxRetries = 3;
+	let retryCount = 0;
 
-	const response = await getSiteMetaForIdentifier( identifier, siteInfo, locale );
-	if ( response.error ) {
-		if ( retryCount < maxRetries ) {
-			retryCount++;
-			return handleFetch( identifier, siteInfo, locale );
+	const delay = ( ms ) => new Promise( ( resolve ) => setTimeout( resolve, ms ) );
+
+	while ( retryCount < maxRetries ) {
+		retryCount++;
+
+		response = await getSiteMetaForIdentifier( identifier, siteInfo, locale );
+		if ( response.error ) {
+			// Exponential backoff
+			await delay( 500 * retryCount );
+			// Retry
+			continue;
 		}
+
+		break;
 	}
 
 	return response;

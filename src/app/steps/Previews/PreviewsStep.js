@@ -6,6 +6,7 @@ import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_HOMEPAGE_PREVIEW_SELECTED } from '@/utils/analytics/hiive/constants';
 import { Preview } from './';
+
 const PreviewsStep = () => {
 	const homepages = useSelect( ( select ) => {
 		return {
@@ -16,7 +17,6 @@ const PreviewsStep = () => {
 	const navigate = useNavigate();
 
 	const handleNext = () => {
-		console.log( 'handleNext' );
 		navigate( '/canvas', {
 			state: { direction: 'forward' },
 		} );
