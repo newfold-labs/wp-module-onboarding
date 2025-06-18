@@ -1,11 +1,11 @@
 import { dispatch, useSelect } from '@wordpress/data';
+import { useNavigate } from 'react-router-dom';
 import { Container } from '@newfold/ui-component-library';
 import { Step } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_HOMEPAGE_PREVIEW_SELECTED } from '@/utils/analytics/hiive/constants';
 import { Preview } from './';
-
 const PreviewsStep = () => {
 	const homepages = useSelect( ( select ) => {
 		return {
@@ -13,8 +13,13 @@ const PreviewsStep = () => {
 		};
 	} );
 
+	const navigate = useNavigate();
+
 	const handleNext = () => {
 		console.log( 'handleNext' );
+		navigate( '/canvas', {
+			state: { direction: 'forward' },
+		} );
 	};
 
 	const handlePreview = ( slug ) => {
@@ -42,7 +47,6 @@ const PreviewsStep = () => {
 		} );
 	};
 
-	// we need to loop through the homepages and render them
 	return (
 		<Step>
 			<Container className="nfd-onboarding-step-container nfd-onboarding-step-previews nfd-min-w-[948px] nfd-max-w-[948px]">

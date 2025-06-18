@@ -7,6 +7,7 @@ const DEFAULT_STATE = {
 	selectedHomepage: '',
 	retryMode: false,
 	hasFailed: false,
+	canvasSidebarIsOpen: true,
 	version: 0,
 };
 
@@ -49,6 +50,12 @@ export function sitegen( state = DEFAULT_STATE, action ) {
 				hasFailed: action.hasFailed,
 				version: state.version + 1,
 			};
+		case 'SET_CANVAS_SIDEBAR_IS_OPEN':
+			return {
+				...state,
+				canvasSidebarIsOpen: action.canvasSidebarIsOpen,
+				version: state.version + 1,
+			};
 	}
 
 	return state;
@@ -85,6 +92,12 @@ export const actions = {
 			hasFailed,
 		};
 	},
+	setCanvasSidebarIsOpen: ( canvasSidebarIsOpen ) => {
+		return {
+			type: 'SET_CANVAS_SIDEBAR_IS_OPEN',
+			canvasSidebarIsOpen,
+		};
+	},
 };
 
 export const selectors = {
@@ -93,6 +106,7 @@ export const selectors = {
 	getSelectedHomepage: ( state ) => state.sitegen.selectedHomepage,
 	getRetryMode: ( state ) => state.sitegen.retryMode,
 	getHasFailed: ( state ) => state.sitegen.hasFailed,
+	getCanvasSidebarIsOpen: ( state ) => state.sitegen.canvasSidebarIsOpen,
 	getVersion: ( state ) => state.sitegen.version,
 };
 

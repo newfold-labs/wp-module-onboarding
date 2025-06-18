@@ -8,7 +8,6 @@ const Iframe = ( {
 	viewportScale = 1,
 	viewportWidth = 1440,
 	viewportHeight = 1000,
-	interactive = false,
 	className,
 	...props
 } ) => {
@@ -16,16 +15,19 @@ const Iframe = ( {
 		<div
 			className={ classNames(
 				'nfd-onboarding-iframe nfd-relative nfd-flex nfd-flex-col nfd-overflow-hidden',
-				width && `nfd-min-w-[${ width }] nfd-max-w-[${ width }]`,
-				height && `nfd-min-h-[${ height }] nfd-max-h-[${ height }]`,
 			) }
+			style={ {
+				minWidth: width,
+				maxWidth: width,
+				minHeight: height,
+				maxHeight: height,
+			} }
 		>
 			<iframe
 				title={ title }
 				src={ src }
 				className={ classNames(
 					className,
-					! interactive && 'nfd-pointer-events-none',
 				) }
 				width={ viewportWidth }
 				height={ viewportHeight }

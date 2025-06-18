@@ -3,7 +3,7 @@ import { IntakeStep } from './Intake';
 import { LogoStep } from './Logo';
 import { GeneratingStep } from './Generating';
 import { PreviewsStep } from './Previews';
-import { DesignStep } from './Design';
+import { CanvasStep } from './Canvas';
 import { MigrationStep } from './Migration';
 
 const STEPS = {
@@ -38,10 +38,10 @@ const STEPS = {
 		Component: PreviewsStep,
 	},
 	design: {
-		path: '/design',
+		path: '/canvas',
 		order: 70,
 		isRequired: true,
-		Component: DesignStep,
+		Component: CanvasStep,
 	},
 	migration: {
 		path: '/migration',
@@ -58,6 +58,6 @@ export {
 	LogoStep,
 	GeneratingStep,
 	PreviewsStep,
-	DesignStep,
+	CanvasStep,
 	MigrationStep,
 };

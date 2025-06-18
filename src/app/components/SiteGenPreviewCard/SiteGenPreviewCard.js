@@ -16,6 +16,7 @@ const SiteGenPreviewCard = ( {
 	overlay = false,
 	isLoading = true,
 	isError = false,
+	tabIndex = 0,
 	onPreview,
 	className,
 	...props
@@ -30,7 +31,7 @@ const SiteGenPreviewCard = ( {
 
 	const StatusOverlay = () => {
 		return (
-			<div className="nfd-flex nfd-justify-center nfd-items-center nfd-w-full nfd-h-full nfd-bg-slate-100 nfd-z-30">
+			<div className="nfd-absolute nfd-inset-0 nfd-flex nfd-justify-center nfd-items-center nfd-w-full nfd-h-full nfd-bg-slate-100 nfd-z-30">
 				{ isError && (
 					<div className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-2 nfd-max-w-[80%] nfd-text-center">
 						<ExclamationTriangleIcon className="nfd-w-8 nfd-h-8 nfd-text-red-500" />
@@ -75,15 +76,17 @@ const SiteGenPreviewCard = ( {
 	return (
 		<div
 			className={ classNames(
-				'nfd-onboarding-sitegen-preview-card nfd-relative nfd-bg-cover nfd-bg-top nfd-bg-no-repeat nfd-border nfd-border-slate-30 nfd-rounded nfd-overflow-hidden focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary hover:nfd-bg-bottom nfd-transition-[background-position] nfd-duration-[1500ms] hover:nfd-duration-[5000ms]',
-				width && `nfd-min-w-[${ width }] nfd-max-w-[${ width }]`,
-				height && `nfd-min-h-[${ height }] nfd-max-h-[${ height }]`,
+				'nfd-onboarding-sitegen-preview-card nfd-relative nfd-bg-cover nfd-bg-top nfd-bg-no-repeat nfd-border nfd-border-slate-30 nfd-rounded nfd-overflow-hidden focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary focus:nfd-ring-offset-2 hover:nfd-bg-bottom nfd-transition-[background-position] nfd-duration-[1500ms] hover:nfd-duration-[5000ms]',
 				! isLoading && ! isError && 'nfd-cursor-pointer',
 				( isLoading || isError ) && 'nfd-cursor-default',
 				className,
 			) }
 			style={ {
 				backgroundImage: screenshot ? `url(${ screenshot })` : 'none',
+				minWidth: width,
+				maxWidth: width,
+				minHeight: height,
+				maxHeight: height,
 			} }
 			onClick={ handleOnPreview }
 			onKeyDown={ ( event ) => {
@@ -92,7 +95,7 @@ const SiteGenPreviewCard = ( {
 				}
 			} }
 			role="button"
-			tabIndex={ 0 }
+			tabIndex={ tabIndex }
 			{ ...props }
 		>
 			{ ( isLoading || isError ) && <StatusOverlay /> }

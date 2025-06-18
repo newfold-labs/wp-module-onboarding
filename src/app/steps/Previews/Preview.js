@@ -126,19 +126,8 @@ const Preview = ( {
 	}, [ preview ] );
 
 	const iframeOnLoad = () => {
-		const iframeDoc = window.frames[ `nfd-onboarding-${ preview.slug }` ]?.document;
-		if ( iframeDoc ) {
-			// Hide the admin bar
-			const adminBar = iframeDoc.getElementById( 'wpadminbar' );
-			if ( adminBar ) {
-				adminBar.style.display = 'none';
-				// Remove the admin bar reserved space
-				iframeDoc.documentElement.style.setProperty( 'margin-top', '0px', 'important' );
-			}
-		}
-
 		setTimeout( () => {
-			// Set 500ms delay to allow the styles above to apply.
+			// Set 500ms delay to allow the iframe to fully render.
 			setIsLoading( false );
 		}, 500 );
 	};
