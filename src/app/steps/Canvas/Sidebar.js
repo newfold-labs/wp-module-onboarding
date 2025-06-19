@@ -58,7 +58,7 @@ const Preview = ( { preview, tabIndex } ) => {
 			height={ 170 }
 			viewportWidth={ 1600 }
 			viewportHeight={ '540%' }
-			viewportScale={ 0.187 }
+			viewportScale={ 0.18 }
 			overlay={ true }
 			isLoading={ isLoading }
 			tabIndex={ tabIndex }
@@ -100,7 +100,7 @@ const Sidebar = () => {
 			aria-hidden={ ! canvasSidebarIsOpen }
 		>
 			<Header />
-			<div className="nfd-onboarding-canvas-sidebar-content nfd-flex nfd-flex-col nfd-gap-6 nfd-p-4">
+			<div className="nfd-onboarding-canvas-sidebar-content nfd-flex nfd-flex-col nfd-gap-6 nfd-p-4 nfd-overflow-y-auto">
 				{ renderPreviews() }
 			</div>
 		</div>
