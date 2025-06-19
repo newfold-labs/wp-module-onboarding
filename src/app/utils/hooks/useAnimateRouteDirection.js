@@ -1,10 +1,10 @@
-import { useLocation } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 /**
  * Custom hook to get the direction of the route transition.
  * @return {'forward' | 'backward'} The direction of the route transition.
  */
-const useAnimateRouteDirection = () => {
+function useAnimateRouteDirection() {
 	const incomingDirection = useLocation().state?.direction;
 	const allowedDirections = [ 'forward', 'backward' ];
 
@@ -15,6 +15,6 @@ const useAnimateRouteDirection = () => {
 
 	// Default direction.
 	return 'forward';
-};
+}
 
 export default useAnimateRouteDirection;

@@ -104,6 +104,7 @@ export const selectors = {
 	getSiteGenSlice: ( state ) => state.sitegen,
 	getHomepages: ( state ) => state.sitegen.homepages,
 	getSelectedHomepage: ( state ) => state.sitegen.selectedHomepage,
+	getSelectedColorPalette: ( state ) => state.sitegen.homepages[ state.sitegen.selectedHomepage ]?.color?.palette,
 	getRetryMode: ( state ) => state.sitegen.retryMode,
 	getHasFailed: ( state ) => state.sitegen.hasFailed,
 	getCanvasSidebarIsOpen: ( state ) => state.sitegen.canvasSidebarIsOpen,
