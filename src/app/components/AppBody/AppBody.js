@@ -1,7 +1,9 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { ErrorBoundary } from '@newfold/ui-component-library';
 import { STEPS } from '@/steps';
 import { AnimateRoutes, ErrorBoundaryFallback } from '@/components';
+import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
+import { ACTION_PAGEVIEW } from '@/utils/analytics/hiive/constants';
 
 const AppBody = () => {
 	/**
@@ -19,6 +21,12 @@ const AppBody = () => {
 			);
 		} );
 	};
+
+	// Analytics: Track pageview events.
+	const location = useLocation();
+	useEffect( () => {
+		sendOnboardingEvent( new OnboardingEvent( ACTION_PAGEVIEW ) );
+	}, [ location ] );
 
 	return (
 		<div className="nfd-onboarding-body nfd-flex nfd-justify-center nfd-py-20">
