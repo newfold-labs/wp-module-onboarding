@@ -132,6 +132,11 @@ const GeneratingStep = () => {
 		return () => clearTimeout( experienceTimer );
 	};
 
+	// When the timer is complete, attempt to advance to the next step.
+	useEffect( () => {
+		handleNext();
+	}, [ isTimerComplete ] );
+
 	// Delay the animation start to allow the component to mount first.
 	useEffect( () => {
 		initiateSiteGeneration();
