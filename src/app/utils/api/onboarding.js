@@ -35,6 +35,16 @@ export const updateOnboardingSiteGenSlice = async ( data ) => {
 	);
 };
 
+export const startOnboarding = async ( data = {} ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'app/start' ),
+			method: 'POST',
+			body: JSON.stringify( data ),
+		} ).then()
+	);
+};
+
 /**
  * Get the site meta for a given identifier.
  *

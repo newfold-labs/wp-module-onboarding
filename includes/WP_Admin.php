@@ -342,8 +342,6 @@ final class WP_Admin {
 			self::exit_to_dashboard();
 		}
 
-		FlowService::initialize_data();
-
 		self::register_assets();
 
 		self::set_onboarding_restart_option();
