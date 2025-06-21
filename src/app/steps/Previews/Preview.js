@@ -14,7 +14,7 @@ const Preview = ( {
 	const [ screenshot, setScreenshot ] = useState( null );
 	const [ iframeSrc, setIframeSrc ] = useState( null );
 
-	const homepages = useSelect( ( select ) => {
+	const { homepages } = useSelect( ( select ) => {
 		return {
 			homepages: select( nfdOnboardingStore ).getHomepages(),
 		};
@@ -72,11 +72,16 @@ const Preview = ( {
 		}
 
 		/**
-		 * If the screenshot is already in the store, use it.
+		 * If the screenshot or iframe src is already in the store, use it.
 		 * This is useful in case we add a resume feature in the future or if the user refreshes the page.
 		 */
-		if ( homepages.homepages[ preview.slug ]?.screenshot ) {
-			setScreenshot( homepages.homepages[ preview.slug ].screenshot );
+		if ( homepages[ preview.slug ]?.screenshot ) {
+			setScreenshot( homepages[ preview.slug ].screenshot );
+			setIsLoading( false );
+			return;
+		}
+		if ( homepages[ preview.slug ]?.iframeSrc ) {
+			setIframeSrc( homepages[ preview.slug ].iframeSrc );
 			setIsLoading( false );
 			return;
 		}
@@ -106,16 +111,16 @@ const Preview = ( {
 		if ( response.body.screenshot ) {
 			setScreenshot( response.body.screenshot );
 			setIsLoading( false );
-			homepages.homepages[ preview.slug ].screenshot = response.body.screenshot;
+			homepages[ preview.slug ].screenshot = response.body.screenshot;
 		}
 
 		// Iframe will be used as fallback if the screenshot fails.
 		setIframeSrc( response.body.post_url );
-		homepages.homepages[ preview.slug ].iframeSrc = response.body.post_url;
-		homepages.homepages[ preview.slug ].postId = response.body.post_id;
+		homepages[ preview.slug ].iframeSrc = response.body.post_url;
+		homepages[ preview.slug ].postId = response.body.post_id;
 
 		// Update the homepages in the store.
-		dispatch( nfdOnboardingStore ).setHomepages( homepages.homepages );
+		dispatch( nfdOnboardingStore ).setHomepages( homepages );
 	};
 
 	useEffect( () => {
