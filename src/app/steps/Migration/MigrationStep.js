@@ -25,7 +25,7 @@ const MigrationStep = () => {
 
 	/**
 	 * Track migration initiated event
-	 * 
+	 *
 	 * @param { string } instaWpMigrationUrl The migration url
 	 * @return { Promise<void> }
 	 */

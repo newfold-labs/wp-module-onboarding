@@ -3,7 +3,7 @@ import { nfdOnboardingStore } from '../../data/store';
 
 /**
  * Check if the required data is available for a specific step
- * 
+ *
  * @param {string} stepKey - The key of the step to validate
  * @return {boolean} - True if the step has required data, false otherwise
  */
@@ -52,7 +52,7 @@ export const hasRequiredDataForStep = ( stepKey ) => {
 
 /**
  * Check if a step should redirect due to missing data
- * 
+ *
  * @param {string} stepKey - The key of the step to check
  * @return {boolean} - True if should redirect, false otherwise
  */
