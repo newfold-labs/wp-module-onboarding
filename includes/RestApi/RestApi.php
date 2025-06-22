@@ -15,6 +15,7 @@ final class RestApi {
 	 * @var array
 	 */
 	protected $controllers = array(
+		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\AppController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteImagesController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\PluginsController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\ReduxStateController',

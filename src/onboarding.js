@@ -2,7 +2,7 @@ import domReady from '@wordpress/dom-ready';
 import { createRoot } from 'react-dom/client';
 import { HiiveAnalytics } from '@newfold/js-utility-ui-analytics';
 import * as Sentry from '@sentry/react';
-import { onboardingRestURL } from '@/utils/api';
+import { onboardingRestURL, startOnboarding } from '@/utils/api';
 import { CATEGORY } from '@/utils/analytics/hiive/constants';
 import { isCypress } from '@/utils/helpers';
 import './webpack-public-path';
@@ -54,6 +54,7 @@ if ( runtimeDataObjectIsMounted() ) {
 	domReady( () => {
 		initializeSentry();
 		initializeAnalytics();
+		startOnboarding();
 
 		const NFD_ONBOARDING_ELEMENT_ID = 'nfd-onboarding';
 		const appTarget = document.getElementById( NFD_ONBOARDING_ELEMENT_ID );

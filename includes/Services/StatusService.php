@@ -16,13 +16,15 @@ class StatusService {
 	/**
 	 * Handle Onboarding started event.
 	 *
-	 * @return void
+	 * @return bool True if the onboarding started was marked, false if it was already marked.
 	 */
-	public static function handle_started(): void {
+	public static function handle_started(): bool {
 		if ( 'started' !== get_option( Options::get_option_name( 'status' ) ) ) {
 			update_option( Options::get_option_name( 'status' ), 'started' );
 			do_action( 'newfold/onboarding/started' );
+			return true;
 		}
+		return false;
 	}
 
 	/**
