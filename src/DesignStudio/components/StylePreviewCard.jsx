@@ -43,8 +43,8 @@ export default function StylePreviewCard() {
 	// Get colors by slug
 	const baseColor = getColorBySlug( themePalette, 'base' ) || '#ffffff';
 	const contrastColor = getColorBySlug( themePalette, 'contrast' ) || '#000000';
-	const primaryColor = getColorBySlug( themePalette, 'accent-2' ) || '#1a4548';
-	const secondaryColor = getColorBySlug( themePalette, 'accent-5' ) || '#3e7276';
+	const primaryColor = getColorBySlug( themePalette, 'accent_2' ) || '#1a4548';
+	const secondaryColor = getColorBySlug( themePalette, 'accent_5' ) || '#3e7276';
 
 	// Get typography settings
 	const headingFontFamily = getFontFamilyValue(
