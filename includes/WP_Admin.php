@@ -44,8 +44,11 @@ final class WP_Admin {
 		\add_action( 'admin_menu', array( __CLASS__, 'register_page' ) );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'page_title' ), 9, 1 );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'initialize' ) );
+		/**
+		 * We're disabling the restart onboarding feature for now.
+		 */
 		\add_action( 'load-toplevel_page_bluehost', array( __CLASS__, 'hide_onboarding_restart_card' ) );
-		\add_action( 'load-themes.php', array( __CLASS__, 'can_restart_onboarding' ) );
+		// \add_action( 'load-themes.php', array( __CLASS__, 'can_restart_onboarding' ) );
 		\add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_site_editor_assets' ) );
 		if ( 'sitegen' === Data::current_flow() ) {
 			\add_action( 'load-themes.php', array( __CLASS__, 'mark_sitegen_generated_themes' ) );

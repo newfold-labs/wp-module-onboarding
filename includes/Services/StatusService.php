@@ -35,7 +35,10 @@ class StatusService {
 	public static function handle_completed(): void {
 		if ( 'started' === get_option( Options::get_option_name( 'status' ) ) ) {
 			update_option( Options::get_option_name( 'status' ), 'completed' );
-			self::update_onboarding_restart_status();
+			/**
+			 * We're disabling the restart onboarding feature for now.
+			 */
+			// self::update_onboarding_restart_status();
 			do_action( 'newfold/onboarding/completed' );
 		}
 	}
