@@ -1,5 +1,5 @@
 // WordPress
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 
 // Third-party
