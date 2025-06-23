@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { dispatch, useSelect } from '@wordpress/data';
 import { useNavigate } from 'react-router-dom';
 import { Container } from '@newfold/ui-component-library';
@@ -14,7 +15,24 @@ const PreviewsStep = () => {
 		};
 	} );
 
+	const hasFailed = useSelect( ( select ) => {
+		return select( nfdOnboardingStore ).getHasFailed();
+	} );
+
 	const navigate = useNavigate();
+
+	// Get fallback homepages from runtime data
+	const getFallbackHomepages = () => {
+		return window.nfdOnboarding?.runtime?.fallbackHomepages || {};
+	};
+
+	// Update store with static homepages when hasFailed is true
+	useEffect( () => {
+		if ( hasFailed ) {
+			const fallbackHomepages = getFallbackHomepages();
+			dispatch( nfdOnboardingStore ).setHomepages( fallbackHomepages );
+		}
+	}, [ hasFailed ] );
 
 	const handleNext = () => {
 		navigate( '/canvas', {
@@ -52,7 +70,10 @@ const PreviewsStep = () => {
 			<Container className="nfd-onboarding-step-container nfd-onboarding-step-previews nfd-min-w-[948px] nfd-max-w-[948px]">
 				<Container.Header
 					title={ __( 'Pick your website', 'wp-module-onboarding' ) }
-					description={ __( 'Here are three unique designs for you to start with. Pick your favorite to customize it!', 'wp-module-onboarding' ) }
+					description={ hasFailed 
+						? __( 'Here are three beautiful pre-designed templates for you to start with. Pick your favorite to customize it!', 'wp-module-onboarding' )
+						: __( 'Here are three unique designs for you to start with. Pick your favorite to customize it!', 'wp-module-onboarding' )
+					}
 					className="nfd-gap-2"
 				/>
 				<Container.Block>
