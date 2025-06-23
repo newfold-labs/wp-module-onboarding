@@ -45,6 +45,51 @@ export const startOnboarding = async ( data = {} ) => {
 	);
 };
 
+export const completeOnboarding = async ( data = {} ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'app/complete' ),
+			method: 'POST',
+			body: JSON.stringify( data ),
+		} ).then()
+	);
+};
+
+/**
+ * Set a color palette array of WordPress color objects.
+ *
+ * @param {Array} colorPalette The color palette to set.
+ * @return {Promise<Object>} response
+ *
+ * @example
+ * const colorPalette = [
+ *   {
+ *     name: 'Accent 1',
+ *     slug: 'accent-1',
+ *     color: '#196BDE'
+ *   },
+ *   {
+ *     name: 'Accent 2',
+ *     slug: 'accent-2',
+ *     color: '#FCD34D'
+ *   },
+ *   ...
+ * ];
+ *
+ * await globalStylesSetColorPalette( colorPalette );
+ */
+export const setGlobalStylesColorPalette = async ( colorPalette ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'global-styles/set-color-palette' ),
+			method: 'POST',
+			data: {
+				color_palette: colorPalette,
+			},
+		} ).then()
+	);
+};
+
 /**
  * Get the site meta for a given identifier.
  *
@@ -96,6 +141,26 @@ export async function getHomepages( prompt, locale ) {
 	);
 
 	return response;
+}
+
+/**
+ * Get the rest of the site pages (not the homepages).
+ *
+ * @param {string} prompt
+ * @param {string} locale
+ * @return {Promise<Object>} response
+ */
+export async function getSitePages( prompt, locale ) {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/pages/sitemap' ),
+			method: 'POST',
+			data: {
+				site_description: prompt,
+				locale,
+			},
+		} ).then()
+	);
 }
 
 /**
