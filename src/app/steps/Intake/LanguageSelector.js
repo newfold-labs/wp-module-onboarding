@@ -19,6 +19,7 @@ const LanguageSelector = ( { value, onChange } ) => {
 		}
 		if ( ! initialLanguage ) {
 			initialLanguage = languages.find( ( language ) => language.is_default );
+			onChange( initialLanguage.locale );
 		}
 		return initialLanguage;
 	};
