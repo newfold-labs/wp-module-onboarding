@@ -13,10 +13,11 @@ const GeneratingStep = () => {
 	const [ isTimerComplete, setIsTimerComplete ] = useState( false );
 	const [ isReadyToAnimate, setIsReadyToAnimate ] = useState( false );
 
-	const { selectedExperienceLevel, homepages } = useSelect( ( select ) => {
+	const { selectedExperienceLevel, homepages, retryMode } = useSelect( ( select ) => {
 		return {
 			experienceLevel: select( nfdOnboardingStore ).getExperienceLevel(),
 			homepages: select( nfdOnboardingStore ).getHomepages(),
+			retryMode: select( nfdOnboardingStore ).getRetryMode(),
 		};
 	} );
 
@@ -88,7 +89,6 @@ const GeneratingStep = () => {
 	 * @return {void}
 	 */
 	const handleFailedSiteGeneration = () => {
-		const retryMode = select( nfdOnboardingStore ).getRetryMode();
 		// If we're already in retry mode...
 		if ( retryMode ) {
 			// Mark Sitegen as failed.

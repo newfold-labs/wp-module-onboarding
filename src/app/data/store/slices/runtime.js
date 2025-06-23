@@ -48,6 +48,7 @@ export const actions = {
 			buildUrl: runtimeData.buildUrl,
 			siteUrl: runtimeData.siteUrl,
 			migrated: true,
+			fallbackHomepages: runtimeData.fallbackHomepages,
 		};
 		return {
 			type: 'SET_RUNTIME_SLICE',
