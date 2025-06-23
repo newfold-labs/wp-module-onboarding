@@ -17,14 +17,6 @@ const getContents = () => {
 				),
 			},
 			{
-				icon: '--nfd-selling-icon',
-				title: __( 'Selling', 'wp-module-onboarding' ),
-				desc: __(
-					"Startup or seasoned business, drop-shipping or downloads, we've got ecommerce covered.",
-					'wp-module-onboarding'
-				),
-			},
-			{
 				icon: '--nfd-design-icon',
 				title: __( 'Designing', 'wp-module-onboarding' ),
 				desc: __(

@@ -2,18 +2,16 @@
 import { filter } from 'lodash';
 
 import { addAfterChapter } from '../data/flows/utils';
-import { commerce } from './commerce';
 import { demographic } from './demographic';
 import { design } from './design';
 import { features } from './features';
 import { layoutContent } from './layoutContent';
 
-const chapters = [ demographic, commerce, design, layoutContent, features ];
+const chapters = [ demographic, design, layoutContent, features ];
 
 const getTopPriorityChapter = ( topPriority ) => {
 	const topPriorityToChapterMap = {
 		publishing: layoutContent,
-		selling: commerce,
 		designing: design,
 	};
 
