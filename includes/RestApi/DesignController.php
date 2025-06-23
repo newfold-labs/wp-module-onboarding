@@ -211,14 +211,14 @@ class DesignController extends WP_REST_Controller {
 						'slug'  => 'contrast',
 					),
 					array(
-						'color' => $palette['primary'],
+						'color' => $palette['accent_2'],
 						'name'  => 'Primary',
-						'slug'  => 'primary',
+						'slug'  => 'accent-2',
 					),
 					array(
-						'color' => $palette['secondary'],
+						'color' => $palette['accent_5'],
 						'name'  => 'Secondary',
-						'slug'  => 'secondary',
+						'slug'  => 'accent-5',
 					),
 				),
 				'palette'       => $formatted_palette,
