@@ -132,11 +132,21 @@ class DesignController extends WP_REST_Controller {
 
 		// Check if referer contains nfd-onboarding
 		if ( strpos( $referer, 'nfd-onboarding' ) !== false ) {
-			return $this->get_color_palettes_from_options( $page, $per_page );
+			$result = $this->get_color_palettes_from_options( $page, $per_page );
+			// If no palettes found in options, fallback to theme.json palettes
+			if ( is_wp_error( $result ) && $result->get_error_code() === 'no_color_palettes' ) {
+				return $this->get_color_palettes_from_theme_json( $page, $per_page );
+			}
+			return $result;
 		}
 
 		// For all other referers (including nfd-plugin), fetch from Hiive
-		return $this->get_color_palettes_from_hiive( $page, $per_page );
+		$result = $this->get_color_palettes_from_hiive( $page, $per_page );
+		// If hiive palettes are empty, fallback to theme.json palettes
+		if ( is_wp_error( $result ) || ( isset( $result->data['data'] ) && empty( $result->data['data'] ) ) ) {
+			return $this->get_color_palettes_from_theme_json( $page, $per_page );
+		}
+		return $result;
 	}
 
 	/**
@@ -277,6 +287,9 @@ class DesignController extends WP_REST_Controller {
 						return null;
 					}
 
+					
+
+					// Create standardized displayColors with specific slugs
 					$palette['displayColors'] = array(
 						$palette['palette'][0],
 						$palette['palette'][1],
@@ -373,6 +386,56 @@ class DesignController extends WP_REST_Controller {
 		set_transient( $cache_key, $data, DAY_IN_SECONDS );
 
 		return $data;
+	}
+
+	/**
+	 * Get color palettes from theme.json
+	 *
+	 * @param int $page The current page number
+	 * @param int $per_page Number of items per page
+	 * @return WP_REST_Response|WP_Error
+	 */
+	protected function get_color_palettes_from_theme_json( $page, $per_page ) {
+		$theme_palettes = array();
+
+		// Method 1: Using WP_Theme_JSON_Resolver to get style variations (includes styles/colors folder)
+		if ( class_exists( 'WP_Theme_JSON_Resolver' ) ) {
+			// Get all style variations from styles/ folder (includes colors/ subfolder)
+			$style_variations = \WP_Theme_JSON_Resolver::get_style_variations();
+
+			// Process each style variation (from styles/colors folder)
+			foreach ( $style_variations as $variation ) {
+				$variation_data = $variation['settings'] ?? array();
+
+				// Check if this variation has color palette
+				if ( isset( $variation_data['color']['palette'] ) && is_array( $variation_data['color']['palette'] ) ) {
+					$all_palette_sources = $variation['settings']['color']['palette'];
+					
+					foreach ( $all_palette_sources as $source_name => $colors ) {
+						if ( is_array( $colors ) && ! empty( $colors ) ) {
+							$formatted_colors = array();
+							$display_colors = array();
+
+							foreach ( $colors as $index => $color ) {
+								$formatted_colors[] = $color;
+
+								if ( in_array($color['slug'], array('base', 'contrast', 'accent-2', 'accent-5')) ) {
+									$display_colors[] = $color;
+								}
+							}
+
+							$theme_palettes[] = array(
+								'name'          => $variation['title'],
+								'displayColors' => $display_colors,
+								'palette'       => $formatted_colors,
+							);
+						}
+					}
+				}
+			}
+		}
+
+		return $this->paginate_response( $theme_palettes, $page, $per_page );
 	}
 
 	/**
