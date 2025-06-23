@@ -1,7 +1,7 @@
 import { Navigate, Step } from '@/components';
 import { Container } from '@newfold/ui-component-library';
 import { SiteTitleInput, PromptInput, LanguageSelector, calculatePromptStrength } from '.';
-import { select, dispatch } from '@wordpress/data';
+import { select, dispatch, useSelect } from '@wordpress/data';
 import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_INTAKE_PROMPT_SET } from '@/utils/analytics/hiive/constants';
@@ -14,6 +14,12 @@ const IntakeStep = () => {
 	const [ siteTitleValue, setSiteTitleValue ] = useState( siteTitle );
 	const [ selectedLocaleValue, setSelectedLocaleValue ] = useState( selectedLocale );
 	const [ promptValue, setPromptValue ] = useState( prompt );
+
+	const { retryMode } = useSelect( ( select ) => {
+		return {
+			retryMode: select( nfdOnboardingStore ).getRetryMode(),
+		};
+	} );
 
 	const handleNext = () => {
 		dispatch( nfdOnboardingStore ).setInputSlice( {
@@ -34,12 +40,26 @@ const IntakeStep = () => {
 		);
 	};
 
+	const getStepTitle = () => {
+		if ( retryMode ) {
+			return __( 'Sorry, let’s try that again.', 'wp-module-onboarding' );
+		}
+		return __( 'Tell us about your site', 'wp-module-onboarding' );
+	};
+
+	const getStepDescription = () => {
+		if ( retryMode ) {
+			return __( "We're sorry, but we ran into a problem. Just enter your info again and we'll try once more.", 'wp-module-onboarding' );
+		}
+		return __( 'Share your story! We will use your answer to build a wonderful website for you.', 'wp-module-onboarding' );
+	};
+
 	return (
 		<Step>
 			<Container className="nfd-onboarding-step-container nfd-onboarding-step-site-details">
 				<Container.Header
-					title={ __( 'Tell us about your site', 'wp-module-onboarding' ) }
-					description={ __( 'Share your story! We will use your answer to build a wonderful website for you.', 'wp-module-onboarding' ) }
+					title={ getStepTitle() }
+					description={ getStepDescription() }
 					className="nfd-gap-2"
 				/>
 				<Container.Block separator={ false }>
