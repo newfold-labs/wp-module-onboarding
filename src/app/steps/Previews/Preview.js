@@ -90,36 +90,22 @@ const Preview = ( {
 		 * Request the iframe src from the backend.
 		 */
 		const response = await getSiteGenPreviewSnapshot( getPreviewContent(), preview.slug, getCustomStyles() );
-		
-		// Check for various error conditions
-		if ( response.error ) {
+		if (
+			response.error ||
+			! response?.body.post_id ||
+			! response?.body.post_url
+		) {
+			// eslint-disable-next-line no-console
 			console.error( 'Preview generation error:', response.error );
 			// Analytics: Failed to generate preview.
 			trackOnboardingEvent(
 				new OnboardingEvent( ACTION_HOMEPAGE_PREVIEW_FAILED, preview.slug, {
 					source: 'quickstart',
-					error: response.error,
 				} )
 			);
 			// Increment the retry count and try again.
 			snapshotFetchRetries.count++;
-			setTimeout( () => getSnapshot(), 1000 ); // Wait 1 second before retrying
-			return;
-		}
-		
-		// Check if response doesn't contain required data
-		if ( ! response?.body?.post_id || ! response?.body?.post_url ) {
-			console.error( 'Invalid preview response:', response );
-			// Analytics: Failed to generate preview.
-			trackOnboardingEvent(
-				new OnboardingEvent( ACTION_HOMEPAGE_PREVIEW_FAILED, preview.slug, {
-					source: 'quickstart',
-					error: 'Invalid response data',
-				} )
-			);
-			// Increment the retry count and try again.
-			snapshotFetchRetries.count++;
-			setTimeout( () => getSnapshot(), 1000 ); // Wait 1 second before retrying
+			setTimeout( () => getSnapshot(), 500 );
 			return;
 		}
 

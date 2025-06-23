@@ -59,7 +59,6 @@ const Preview = () => {
 	};
 
 	const iframeOnLoad = () => {
-		console.log( preview.slug );
 		setIframeHeight( calculateIframeHeight() );
 
 		/**
@@ -67,7 +66,6 @@ const Preview = () => {
 		 */
 		const iframeDoc = document.getElementById( `nfd-onboarding-${ preview.slug }-selected` )?.contentWindow?.document;
 		if ( iframeDoc ) {
-			console.log( 'should add styles' );
 			// Preview margins and styles
 			// <html> styles
 			iframeDoc.documentElement.style.setProperty("padding", "40px 25px 110px", "important");

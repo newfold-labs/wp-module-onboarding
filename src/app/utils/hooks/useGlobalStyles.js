@@ -58,6 +58,10 @@ function useGlobalStyles() {
 				return;
 			}
 
+			if ( ! paletteArray ) {
+				return;
+			}
+
 			setConfig( {
 				color: {
 					palette: {

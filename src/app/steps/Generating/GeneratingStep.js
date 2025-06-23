@@ -92,7 +92,7 @@ const GeneratingStep = () => {
 		// If we're already in retry mode...
 		if ( retryMode ) {
 			// Mark Sitegen as failed.
-			dispatch( nfdOnboardingStore ).setHasFailed( true );
+			dispatch( nfdOnboardingStore ).setSitegenHasFailed( true );
 			// Navigate to the previews step to generate fallback pages.
 			navigate( '/previews', {
 				state: { direction: 'forward' },
