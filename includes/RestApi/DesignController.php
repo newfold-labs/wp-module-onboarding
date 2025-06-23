@@ -208,6 +208,7 @@ class DesignController extends WP_REST_Controller {
 			}
 
 			$formatted_palettes[] = array(
+				// translators: %d is the index of the palette
 				'name'          => sprintf( __( 'Palette %d', 'wp-module-onboarding' ), $index + 1 ),
 				'displayColors' => array(
 					array(
@@ -299,7 +300,7 @@ class DesignController extends WP_REST_Controller {
 				$color_palettes['data']
 			),
 			function ( $palette ) {
-				return $palette !== null;
+				return null !== $palette;
 			}
 		);
 
@@ -417,7 +418,7 @@ class DesignController extends WP_REST_Controller {
 							foreach ( $colors as $index => $color ) {
 								$formatted_colors[] = $color;
 
-								if ( in_array( $color['slug'], array( 'base', 'contrast', 'accent-2', 'accent-5' ) ) ) {
+								if ( in_array( $color['slug'], array( 'base', 'contrast', 'accent-2', 'accent-5' ), true ) ) {
 									$display_colors[] = $color;
 								}
 							}
