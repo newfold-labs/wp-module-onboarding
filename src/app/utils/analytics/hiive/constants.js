@@ -33,6 +33,7 @@ export const ACTION_LOGO_SKIPPED = 'logo_skipped';
 export const ACTION_LOGO_UPLOAD_FAILED = 'logo_upload_failed';
 export const ACTION_HOMEPAGE_PREVIEW_SELECTED = 'homepage_selected';
 export const ACTION_HOMEPAGE_PREVIEW_FAILED = 'homepage_preview_failed';
+export const ACTION_SITE_PAGES_GENERATION_FAILED = 'site_pages_generation_failed';
 export const ACTION_SITEGEN_HOMEPAGE_REGENERATED = 'homepage_regenerated';
 export const ACTION_SITEGEN_HOMEPAGE_FAVORITED = 'homepage_favorited';
 export const ACTION_SITEGEN_HOMEPAGE_RENAMED = 'homepage_renamed';
@@ -66,6 +67,7 @@ export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_SITEGEN_SOCIAL_CONNECTED ]: 'platform',
 	[ ACTION_HOMEPAGE_PREVIEW_SELECTED ]: 'version',
 	[ ACTION_HOMEPAGE_PREVIEW_FAILED ]: 'version',
+	[ ACTION_SITE_PAGES_GENERATION_FAILED ]: 'version',
 	[ ACTION_SITEGEN_HOMEPAGE_REGENERATED ]: 'version',
 	[ ACTION_SITEGEN_HOMEPAGE_FAVORITED ]: 'version',
 	[ ACTION_SITEGEN_SIDEBAR_OPENED ]: 'type',
