@@ -1,22 +1,60 @@
-import { nfdOnboardingStore } from '@/data/store';
+import { dispatch, useSelect } from '@wordpress/data';
+import { Button } from '@newfold/ui-component-library';
 import { AdjustmentsVerticalIcon, CloudArrowUpIcon, RectangleStackIcon as RectangleStackIconOutline } from '@heroicons/react/24/outline';
 import { RectangleStackIcon as RectangleStackIconSolid } from '@heroicons/react/24/solid'
-import { Button } from '@newfold/ui-component-library';
-import { dispatch, useSelect } from '@wordpress/data';
+import { InteractionBlockingOverlay } from '@/components';
+import { nfdOnboardingStore } from '@/data/store';
+import { usePublishSite } from '@/utils/hooks';
+import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
+import { ACTION_CANVAS_CUSTOMIZE_SELECTED, ACTION_CANVAS_PUBLISH_SELECTED } from '@/utils/analytics/hiive/constants';
 
 const HeaderActions = () => {
+	const [ isPublishing, setIsPublishing ] = useState( false );
+
 	const { canvasSidebarIsOpen } = useSelect( ( select ) => {
 		return {
 			canvasSidebarIsOpen: select( nfdOnboardingStore ).getCanvasSidebarIsOpen(),
 		};
 	} );
 
+	const { hasResolved: isReadyToPublish, publishSite } = usePublishSite();
+
 	const handleCanvasSidebarToggle = () => {
 		dispatch( nfdOnboardingStore ).setCanvasSidebarIsOpen( ! canvasSidebarIsOpen );
 	};
 
+	const handlePublishSite = async () => {
+		setIsPublishing( true );
+		const result = await publishSite();
+		setIsPublishing( false );
+
+		return result;
+	};
+
+	const handleSelectAndCustomize = async () => {
+		await handlePublishSite();
+
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_CANVAS_CUSTOMIZE_SELECTED )
+		);
+	};
+
+	const handleSaveAndPublish = async () => {
+		await handlePublishSite();
+
+		trackOnboardingEvent(
+			new OnboardingEvent( ACTION_CANVAS_PUBLISH_SELECTED )
+		);
+	};
+
 	return (
 		<div className="nfd-onboarding-canvas-header-actions nfd-flex nfd-gap-4">
+			{ isPublishing && (
+			<InteractionBlockingOverlay
+					hasLoadingSpinner={ true }
+					hasBackground={ isPublishing }
+				/>
+			) }
 			<button
 				type="button"
 				aria-label={ __( 'Close layouts sidebar', 'wp-module-onboarding' ) }
@@ -31,11 +69,21 @@ const HeaderActions = () => {
 					)
 				}
 			</button>
-			<Button variant="secondary" className="nfd-font-semibold">
+			<Button
+				variant="secondary"
+				className="nfd-font-semibold"
+				disabled={ ! isReadyToPublish || isPublishing }
+				onClick={ handleSelectAndCustomize }
+			>
 				<AdjustmentsVerticalIcon className="nfd-w-5 nfd-h-5 nfd-mr-2" />
 				{ __( 'Select & Customize', 'wp-module-onboarding' ) }
 			</Button>
-			<Button variant="primary" className="nfd-font-semibold">
+			<Button
+				variant="primary"
+				className="nfd-font-semibold"
+				onClick={ handleSaveAndPublish }
+				disabled={ ! isReadyToPublish || isPublishing }
+			>
 				<CloudArrowUpIcon className="nfd-w-5 nfd-h-5 nfd-mr-2" />
 				{ __( 'Save & Publish', 'wp-module-onboarding' ) }
 			</Button>
