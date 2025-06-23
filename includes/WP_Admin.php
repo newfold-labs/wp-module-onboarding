@@ -504,7 +504,8 @@ final class WP_Admin {
 		\wp_enqueue_style( 'hide-onboarding-restart-card' );
 	}
 
-	/* Enqueue site editor specific assets when coming from onboarding.
+	/*
+	Enqueue site editor specific assets when coming from onboarding.
 	 *
 	 * @return void
 	 */
@@ -539,6 +540,114 @@ final class WP_Admin {
 
 				\wp_enqueue_script( 'nfd-design-studio' );
 				\wp_enqueue_style( 'nfd-design-studio' );
+
+				// Enqueue fonts for preview
+				self::enqueue_preview_fonts();
+			}
+		}
+	}
+
+	/**
+	 * Enqueue all available fonts for preview in design studio
+	 *
+	 * @return void
+	 */
+	private static function enqueue_preview_fonts() {
+
+		$hiive_api_base = defined( 'NFD_DATA_WB_DEV_MODE' ) && NFD_DATA_WB_DEV_MODE
+			? 'http://patterns-platform.test/api/v1'
+			: 'https://paterns.hiive.cloud/api/v1';
+
+		$font_pairs   = get_option( 'nfd_module_onboarding_editor_fontpair' );
+		$unique_fonts = array();
+
+		if ( $font_pairs && is_array( $font_pairs ) ) {
+			foreach ( $font_pairs as $font_pair ) {
+				if ( isset( $font_pair['font_heading_name'] ) ) {
+					$unique_fonts[] = $font_pair['font_heading_name'];
+				}
+				if ( isset( $font_pair['font_content_name'] ) ) {
+					$unique_fonts[] = $font_pair['font_content_name'];
+				}
+			}
+		}
+
+		$unique_fonts = array_unique( $unique_fonts );
+
+		foreach ( $unique_fonts as $font_id ) {
+			if ( empty( $font_id ) ) {
+				continue;
+			}
+
+			// Check if font data is already cached
+			$cache_key = 'nfd_font_data_' . sanitize_key( $font_id );
+			$font_data = get_transient( $cache_key );
+
+			if ( false === $font_data ) {
+				// Fetch font data from Hiive API
+				$response = wp_remote_get(
+					$hiive_api_base . '/fonts/' . urlencode( sanitize_title( $font_id ) ),
+					array(
+						'timeout' => 10,
+						'headers' => array(
+							'Accept' => 'application/json',
+						),
+					)
+				);
+
+				if ( ! is_wp_error( $response ) && wp_remote_retrieve_response_code( $response ) === 200 ) {
+					$body      = wp_remote_retrieve_body( $response );
+					$font_data = json_decode( $body, true );
+
+					set_transient( $cache_key, $font_data, HOUR_IN_SECONDS );
+				}
+			}
+
+			// Enqueue the font if we have valid data
+			if ( $font_data &&
+				isset( $font_data['wp_json']['fontFace'][0]['src'][0] ) &&
+				isset( $font_data['wp_json']['name'] )
+			) {
+				$font_url    = $font_data['wp_json']['fontFace'][0]['src'][0];
+				$font_name   = $font_data['wp_json']['name'];
+				$font_handle = 'nfd-font-' . sanitize_title( $font_id );
+
+				// Create CSS for the font-face declaration
+				$font_css = '';
+				if ( isset( $font_data['wp_json']['fontFace'] ) && is_array( $font_data['wp_json']['fontFace'] ) ) {
+					foreach ( $font_data['wp_json']['fontFace'] as $font_face ) {
+						$font_css .= '@font-face {';
+						$font_css .= 'font-family: "' . esc_attr( $font_face['fontFamily'] ) . '";';
+
+						if ( isset( $font_face['fontWeight'] ) ) {
+							$font_css .= 'font-weight: ' . esc_attr( $font_face['fontWeight'] ) . ';';
+						}
+
+						if ( isset( $font_face['fontStyle'] ) ) {
+							$font_css .= 'font-style: ' . esc_attr( $font_face['fontStyle'] ) . ';';
+						}
+
+						if ( isset( $font_face['fontStretch'] ) ) {
+							$font_css .= 'font-stretch: ' . esc_attr( $font_face['fontStretch'] ) . ';';
+						}
+
+						if ( isset( $font_face['src'] ) && is_array( $font_face['src'] ) ) {
+							$src_declarations = array();
+							foreach ( $font_face['src'] as $src ) {
+								$src_declarations[] = 'url("' . esc_url( $src ) . '") format("woff2")';
+							}
+							$font_css .= 'src: ' . implode( ', ', $src_declarations ) . ';';
+						}
+
+						$font_css .= 'font-display: swap;';
+						$font_css .= '}';
+					}
+				}
+
+				// Register and enqueue the font style
+				\wp_register_style( $font_handle, false );
+				\wp_enqueue_style( $font_handle );
+				\wp_add_inline_style( $font_handle, $font_css );
 			}
 		}
 	}
