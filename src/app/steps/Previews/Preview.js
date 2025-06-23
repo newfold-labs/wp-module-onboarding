@@ -47,7 +47,7 @@ const Preview = ( {
 
 		// Map preview color palette to the custom styles.
 		const colorPalette = preview.color.palette;
-		if ( colorPalette instanceof Array ) {
+		if ( colorPalette instanceof Array && colorPalette.length > 0 ) {
 			colorPalette.forEach( ( color ) => {
 				customStyles += `--wp--preset--color--${ color.slug.replace( '_', '-' ) }: ${ color.color } !important;`;
 			} );
