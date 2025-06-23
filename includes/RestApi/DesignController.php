@@ -169,7 +169,7 @@ class DesignController extends WP_REST_Controller {
 		}
 
 		// Check if referer contains nfd-onboarding
-		if ( strpos( $referer, 'wp-module-onboarding' ) !== false ) {
+		if ( strpos( $referer, 'nfd-onboarding' ) !== false ) {
 			return $this->get_font_pairs_from_options( $page, $per_page );
 		}
 
