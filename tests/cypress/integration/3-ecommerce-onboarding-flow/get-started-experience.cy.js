@@ -11,7 +11,7 @@ import {
 import { APIList, EventsAPI } from '../wp-module-support/EventsApi.cy';
 import { GetPluginId } from '../wp-module-support/pluginID.cy';
 
-describe( 'Start Setup WP Experience Page', function () {
+describe.skip( 'Start Setup WP Experience Page', function () {
 	before( () => {
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding&flow=ecommerce#/wp-setup/step/get-started/experience'

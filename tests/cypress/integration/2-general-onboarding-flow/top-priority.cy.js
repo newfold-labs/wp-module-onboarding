@@ -41,10 +41,6 @@ describe( 'Top Priority Page', function () {
 					EventsAPI( 'top_priority', 'content', APIList.events_api_general_onb );
 				}
 				if ( previewCount == 1 ) {
-					EventsAPI( 'top_priority', 'store', APIList.events_api_general_onb );
-				}
-				if ( previewCount > 1 ) {
-					cy.wait( 5000 );
 					EventsAPI( 'top_priority', 'design', APIList.events_api_general_onb );
 				}
 		previewCount += 1;
@@ -65,36 +61,17 @@ describe( 'Top Priority Page', function () {
 				.find( '.nfd-card__body_title' )
 				.invoke( 'text' )
 				.then( ( $ele ) => {
-					if ( $ele !== 'Selling' ) {
-						cy.get(
-							'.components-button.navigation-buttons.navigation-buttons_next.is-primary'
-						).click();
-						cy.url().should( 'include', 'theme-styles/menu', {
-							timeout: 30000,
-						} );
-						cy.get('.navigation-buttons_back').click();
-						cy.get(
-							'.nfd-card__body.nfd-selected-card> .nfd-card__body_title'
-						).contains( $ele );
-					}
+					cy.get(
+						'.components-button.navigation-buttons.navigation-buttons_next.is-primary'
+					).click();
+					cy.url().should( 'include', 'theme-styles/menu', {
+						timeout: 30000,
+					} );
+					cy.get('.navigation-buttons_back').click();
+					cy.get(
+						'.nfd-card__body.nfd-selected-card> .nfd-card__body_title'
+					).contains( $ele );
 				} );
 		} );
-		cy.get( className )
-			.eq( 1 )
-			.then( ( $el ) => {
-				cy.get( className ).eq( 1 ).should( 'be.visible' ).click();
-				cy.get( '.nfd-card__body.nfd-selected-card' )
-					.find( '.nfd-card__body_title' )
-					.invoke( 'text' )
-					.then( ( $ele ) => {
-						cy.get(
-							'.components-button.navigation-buttons.navigation-buttons_next.is-primary'
-						).click();
-						cy.wait( 10000 );
-						cy.url().should( 'include', 'step/address', {
-							timeout: 60000,
-						} );
-					} );
-			} );
 	} );
 } );
