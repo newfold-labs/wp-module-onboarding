@@ -1,4 +1,4 @@
-import { dispatch, select } from '@wordpress/data';
+import { dispatch, useSelect } from '@wordpress/data';
 import { useNavigate } from 'react-router-dom';
 import { Container, Title } from '@newfold/ui-component-library';
 import { Motion, Orb, Step } from '@/components';
@@ -9,11 +9,17 @@ import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_EXPERIENCE_LEVEL_SET } from '@/utils/analytics/hiive/constants';
 
 const GeneratingStep = () => {
-	const experienceLevel = select( nfdOnboardingStore ).getExperienceLevel();
-	const [ selectedExperienceValue, setSelectedExperienceValue ] = useState( experienceLevel ?? null );
 	const [ isSiteGenerationComplete, setIsSiteGenerationComplete ] = useState( false );
 	const [ isTimerComplete, setIsTimerComplete ] = useState( false );
 	const [ isReadyToAnimate, setIsReadyToAnimate ] = useState( false );
+
+	const { selectedExperienceLevel, homepages, retryMode } = useSelect( ( select ) => {
+		return {
+			experienceLevel: select( nfdOnboardingStore ).getExperienceLevel(),
+			homepages: select( nfdOnboardingStore ).getHomepages(),
+			retryMode: select( nfdOnboardingStore ).getRetryMode(),
+		};
+	} );
 
 	const navigate = useNavigate();
 
@@ -43,35 +49,28 @@ const GeneratingStep = () => {
 	};
 
 	/**
-	 * Check if the user can advance to the next step.
+	 * Whether to render the component or navigate a different step.
+	 * @return {boolean} True if the component should render, false otherwise.
 	 */
-	const canAdvance = () => {
-		// If generation is complete and the user has selected an experience level, advance to the next step.
-		if ( isSiteGenerationComplete && selectedExperienceValue ) {
-			return true;
-		}
-		// If the timer is complete and the generation is complete, advance to the next step.
-		if ( isTimerComplete && isSiteGenerationComplete ) {
-			return true;
+	const shouldRender = () => {
+		// If Sitegen already generated 3 or more homepages, don't render this component.
+		const previews = Object.keys( homepages );
+		if ( previews.length >= 3 ) {
+			return false;
 		}
 
-		return false;
+		return true;
 	};
 
 	/**
 	 * Handle advancing to the next step.
 	 */
 	const handleNext = () => {
-		if ( ! canAdvance() ) {
-			return;
-		}
-		dispatch( nfdOnboardingStore ).setExperienceLevel( selectedExperienceValue );
-
 		// Analytics: Experience Level Set
 		trackOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_EXPERIENCE_LEVEL_SET,
-				selectedExperienceValue,
+				selectedExperienceLevel,
 				{
 					source: 'quickstart',
 				}
@@ -90,7 +89,6 @@ const GeneratingStep = () => {
 	 * @return {void}
 	 */
 	const handleFailedSiteGeneration = () => {
-		const retryMode = select( nfdOnboardingStore ).getRetryMode();
 		// If we're already in retry mode...
 		if ( retryMode ) {
 			// Mark Sitegen as failed.
@@ -116,7 +114,6 @@ const GeneratingStep = () => {
 		const result = await generateSite();
 		if ( result ) {
 			setIsSiteGenerationComplete( true );
-			handleNext();
 		} else {
 			handleFailedSiteGeneration();
 		}
@@ -132,30 +129,41 @@ const GeneratingStep = () => {
 		return () => clearTimeout( experienceTimer );
 	};
 
-	// When the timer is complete, attempt to advance to the next step.
+	// When Sitegen states update, advance to the next step if possible.
 	useEffect( () => {
-		handleNext();
-	}, [ isTimerComplete ] );
+		// If generation is complete and the user has selected an experience level, advance to the next step.
+		if ( isSiteGenerationComplete && selectedExperienceLevel ) {
+			handleNext();
+		}
+		// If the timer is complete and the generation is complete, advance to the next step.
+		if ( isTimerComplete && isSiteGenerationComplete ) {
+			handleNext();
+		}
+	}, [ isSiteGenerationComplete, selectedExperienceLevel, isTimerComplete ] );
 
-	// Delay the animation start to allow the component to mount first.
+	// On mount...
 	useEffect( () => {
+		if ( ! shouldRender() ) {
+			// Skip site generation and navigate to the previews step.
+			const forwardTimer = setTimeout( () => {
+				// Wait 4 seconds for subtle transition.
+				navigate( '/previews', {
+					state: { direction: 'forward' },
+				} );
+			}, 4000 );
+			return () => clearTimeout( forwardTimer );
+		}
+
 		initiateSiteGeneration();
 		startExperienceTimer();
 
+		// Delay the animation start to allow the component to mount first.
 		const animationStartTimer = setTimeout( () => {
 			window.requestAnimationFrame( () => setIsReadyToAnimate( true ) );
 		}, 1500 );
 		return () => clearTimeout( animationStartTimer );
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
-
-	/*
-	 * Handle the experience level selection change.
-	 */
-	const handleExperienceChange = ( value ) => {
-		setSelectedExperienceValue( value );
-		handleNext();
-	};
 
 	return (
 		<Step>
@@ -191,10 +199,7 @@ const GeneratingStep = () => {
 								</p>
 							</Motion>
 							<Motion variants={ itemVariants }>
-								<ExperienceOptions
-									selectedValue={ selectedExperienceValue }
-									onValueChange={ handleExperienceChange }
-								/>
+								<ExperienceOptions />
 							</Motion>
 						</Motion>
 					</div>

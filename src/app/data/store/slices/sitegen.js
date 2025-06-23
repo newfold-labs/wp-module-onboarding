@@ -5,6 +5,7 @@ import { updateOnboardingSiteGenSlice } from '@/utils/api';
 const DEFAULT_STATE = {
 	homepages: [],
 	selectedHomepage: '',
+	hasGeneratedSitePages: false,
 	retryMode: false,
 	hasFailed: false,
 	canvasSidebarIsOpen: true,
@@ -36,6 +37,12 @@ export function sitegen( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				selectedHomepage: action.selectedHomepage,
+				version: state.version + 1,
+			};
+		case 'SET_HAS_GENERATED_SITE_PAGES':
+			return {
+				...state,
+				hasGeneratedSitePages: action.hasGeneratedSitePages,
 				version: state.version + 1,
 			};
 		case 'SET_RETRY_MODE':
@@ -80,6 +87,12 @@ export const actions = {
 			selectedHomepage,
 		};
 	},
+	setHasGeneratedSitePages: ( hasGeneratedSitePages ) => {
+		return {
+			type: 'SET_HAS_GENERATED_SITE_PAGES',
+			hasGeneratedSitePages,
+		};
+	},
 	setRetryMode: ( retryMode ) => {
 		return {
 			type: 'SET_RETRY_MODE',
@@ -104,6 +117,7 @@ export const selectors = {
 	getSiteGenSlice: ( state ) => state.sitegen,
 	getHomepages: ( state ) => state.sitegen.homepages,
 	getSelectedHomepage: ( state ) => state.sitegen.selectedHomepage,
+	getHasGeneratedSitePages: ( state ) => state.sitegen.hasGeneratedSitePages,
 	getSelectedColorPalette: ( state ) => state.sitegen.homepages[ state.sitegen.selectedHomepage ]?.color?.palette,
 	getRetryMode: ( state ) => state.sitegen.retryMode,
 	getHasFailed: ( state ) => state.sitegen.hasFailed,

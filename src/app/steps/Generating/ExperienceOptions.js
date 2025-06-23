@@ -1,7 +1,16 @@
-import { FeaturesSelect, Title } from '@newfold/ui-component-library';
 import classNames from 'classnames';
+import { dispatch, useSelect } from '@wordpress/data';
+import { FeaturesSelect, Title } from '@newfold/ui-component-library';
+import { nfdOnboardingStore } from '@/data/store';
 
-const ExperienceOptions = ( { selectedValue, onValueChange } ) => {
+const ExperienceOptions = () => {
+
+	const { selectedExperienceLevel } = useSelect( ( select ) => {
+		return {
+			selectedExperienceLevel: select( nfdOnboardingStore ).getExperienceLevel(),
+		};
+	} );
+
 	const experienceOptions = [
 		{
 			id: 'nfd-onboarding-experience-option-beginner',
@@ -79,8 +88,8 @@ const ExperienceOptions = ( { selectedValue, onValueChange } ) => {
 		const newValue = event.target.value;
 		// Validate the value is one of the options.
 		const allowedValues = experienceOptions.map( ( option ) => option.value );
-		if ( allowedValues.includes( newValue ) && newValue !== selectedValue ) {
-			onValueChange( newValue );
+		if ( allowedValues.includes( newValue ) && newValue !== selectedExperienceLevel ) {
+			dispatch( nfdOnboardingStore ).setExperienceLevel( newValue );
 		}
 	};
 
@@ -97,7 +106,7 @@ const ExperienceOptions = ( { selectedValue, onValueChange } ) => {
 						id={ option.id }
 						name={ option.name }
 						value={ option.value }
-						checked={ selectedValue === option.value }
+						checked={ selectedExperienceLevel === option.value }
 						screenReaderLabel={ option.label }
 						className="nfd-w-[30%] nfd-flex-grow [&>label]:nfd-h-full [&>label]:nfd-flex"
 						onChange={ handleChange }

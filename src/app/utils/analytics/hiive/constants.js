@@ -36,6 +36,9 @@ export const ACTION_HOMEPAGE_PREVIEW_FAILED = 'homepage_preview_failed';
 export const ACTION_SITEGEN_HOMEPAGE_REGENERATED = 'homepage_regenerated';
 export const ACTION_SITEGEN_HOMEPAGE_FAVORITED = 'homepage_favorited';
 export const ACTION_SITEGEN_HOMEPAGE_RENAMED = 'homepage_renamed';
+export const ACTION_SITE_PAGES_GENERATION_FAILED = 'site_pages_generation_failed';
+export const ACTION_CANVAS_CUSTOMIZE_SELECTED = 'canvas_customize_selected';
+export const ACTION_CANVAS_PUBLISH_SELECTED = 'canvas_publish_selected';
 export const ACTION_SITEGEN_SIDEBAR_OPENED = 'sidebar_opened';
 export const ACTION_SITEGEN_SITE_GENERATION_TIME = 'site_generation_time';
 export const ACTION_ERROR_STATE_TRIGGERED = 'error_state_triggered';
@@ -68,6 +71,9 @@ export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_HOMEPAGE_PREVIEW_FAILED ]: 'version',
 	[ ACTION_SITEGEN_HOMEPAGE_REGENERATED ]: 'version',
 	[ ACTION_SITEGEN_HOMEPAGE_FAVORITED ]: 'version',
+	[ ACTION_SITE_PAGES_GENERATION_FAILED ]: 'version',
+	[ ACTION_CANVAS_CUSTOMIZE_SELECTED ]: 'version',
+	[ ACTION_CANVAS_PUBLISH_SELECTED ]: 'version',
 	[ ACTION_SITEGEN_SIDEBAR_OPENED ]: 'type',
 	[ ACTION_SITEGEN_HOMEPAGE_RENAMED ]: 'version',
 	[ ACTION_SITEGEN_SITE_GENERATION_TIME ]: 'time',
