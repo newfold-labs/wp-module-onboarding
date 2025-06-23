@@ -68,7 +68,7 @@ export default function ScreenLogo() {
 				title={ __( 'Logo' ) }
 				description={ __(
 					'Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format.',
-					'nfd-onboarding'
+					'wp-module-onboarding'
 				) }
 			/>
 

@@ -78,12 +78,12 @@ export default function StylePreviewCard() {
 				<div
 					className="nfd-design-studio-style-preview-dot"
 					style={ { backgroundColor: primaryColor } }
-					aria-label={ __( 'Primary color', 'nfd-onboarding' ) }
+					aria-label={ __( 'Primary color', 'wp-module-onboarding' ) }
 				/>
 				<div
 					className="nfd-design-studio-style-preview-dot"
 					style={ { backgroundColor: secondaryColor } }
-					aria-label={ __( 'Secondary color', 'nfd-onboarding' ) }
+					aria-label={ __( 'Secondary color', 'wp-module-onboarding' ) }
 				/>
 			</div>
 		</div>

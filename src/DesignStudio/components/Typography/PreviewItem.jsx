@@ -40,11 +40,11 @@ export default function TypographyPreviewItem( {
 			onKeyDown={ handleKeyDown }
 		>
 			<p className="nfd-typography-preview-heading" style={ { fontFamily: headingFontFamily } }>
-				{ __( 'Heading', 'nfd-onboarding' ) }
+				{ __( 'Heading', 'wp-module-onboardingg' ) }
 			</p>
 
 			<p className="nfd-typography-preview-body" style={ { fontFamily: bodyFontFamily } }>
-				{ __( 'Paragraph text in your chosen font.', 'nfd-onboarding' ) }
+				{ __( 'Paragraph text in your chosen font.', 'wp-module-onboarding' ) }
 			</p>
 
 			<div className="nfd-typography-preview-label">{ tooltipText }</div>

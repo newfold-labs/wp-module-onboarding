@@ -15,10 +15,10 @@ export default function LogoUploader( { onSelect, canUserEdit } ) {
 			<Placeholder
 				className="nfd-design-studio-logo-placeholder"
 				icon="admin-appearance"
-				label={ __( 'Logo', 'nfd-onboarding' ) }
+				label={ __( 'Logo', 'wp-module-onboarding	' ) }
 				instructions={ __(
 					"You don't have permission to change the site logo.",
-					'nfd-onboarding'
+					'wp-module-onboarding'
 				) }
 			/>
 		);
@@ -27,7 +27,7 @@ export default function LogoUploader( { onSelect, canUserEdit } ) {
 	return (
 		<Placeholder
 			className="nfd-design-studio-logo-placeholder"
-			instructions={ __( 'Upload a logo to represent your brand.', 'nfd-onboarding' ) }
+			instructions={ __( 'Upload a logo to represent your brand.', 'wp-module-onboarding' ) }
 			isColumnLayout
 		>
 			<MediaUploadCheck>
@@ -37,7 +37,7 @@ export default function LogoUploader( { onSelect, canUserEdit } ) {
 					accept={ ACCEPT_MEDIA_STRING }
 					render={ ( { open } ) => (
 						<Button variant="primary" onClick={ open } icon={ upload } __next40pxDefaultSize>
-							{ __( 'Upload Logo', 'nfd-onboarding' ) }
+							{ __( 'Upload Logo', 'wp-module-onboarding' ) }
 						</Button>
 					) }
 				/>

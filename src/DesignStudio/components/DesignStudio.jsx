@@ -55,13 +55,13 @@ const OnboardingDesignStudio = () => {
 	return (
 		<>
 			<PluginSidebarMoreMenuItem target="nfd-design-studio-sidebar" icon={ brush }>
-				{ __( 'Design Studio', 'nfd-onboarding' ) }
+				{ __( 'Design Studio', 'wp-module-onboarding' ) }
 			</PluginSidebarMoreMenuItem>
 
 			<PluginSidebar
 				identifier="nfd-design-studio"
 				name="nfd-design-studio-sidebar"
-				title={ __( 'Design Studio', 'nfd-onboarding' ) }
+				title={ __( 'Design Studio', 'wp-module-onboarding' ) }
 				icon={ brush }
 				className="nfd-design-studio-sidebar"
 			>

@@ -32,10 +32,10 @@ const defaultColors = {
 };
 
 export const customColorOptions = [
-	{ slug: 'base', label: __( 'Base', 'nfd-onboarding' ) },
-	{ slug: 'contrast', label: __( 'Contrast', 'nfd-onboarding' ) },
-	{ slug: 'primary', label: __( 'Primary', 'nfd-onboarding' ) },
-	{ slug: 'secondary', label: __( 'Secondary', 'nfd-onboarding' ) },
+	{ slug: 'base', label: __( 'Base', 'wp-module-onboarding' ) },
+	{ slug: 'contrast', label: __( 'Contrast', 'wp-module-onboarding' ) },
+	{ slug: 'primary', label: __( 'Primary', 'wp-module-onboarding' ) },
+	{ slug: 'secondary', label: __( 'Secondary', 'wp-module-onboarding' ) },
 ];
 
 export default function CustomColorPicker() {

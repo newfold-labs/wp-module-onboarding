@@ -29,7 +29,7 @@ export default function LogoPreview( {
 			<div className="nfd-design-studio-logo-container">
 				<img
 					src={ imgSrc }
-					alt={ alt || __( 'Site Logo', 'nfd-onboarding' ) }
+					alt={ alt || __( 'Site Logo', 'wp-module-onboarding' ) }
 					className="nfd-design-studio-logo-preview"
 				/>
 				{ isTransient && (
@@ -49,10 +49,10 @@ export default function LogoPreview( {
 									<Button
 										variant="primary"
 										onClick={ open }
-										label={ __( 'Replace logo', 'nfd-onboarding' ) }
+										label={ __( 'Replace logo', 'wp-module-onboarding' ) }
 										className="nfd-design-studio-logo-replace-button"
 									>
-										{ __( 'Replace', 'nfd-onboarding' ) }
+										{ __( 'Replace', 'wp-module-onboarding' ) }
 									</Button>
 								) }
 							/>
@@ -66,7 +66,7 @@ export default function LogoPreview( {
 					<Truncate numberOfLines={ 1 }>
 						{ logoMediaDetails?.sizes?.full?.file ||
 							mediaItemData?.filename ||
-							__( 'Current logo', 'nfd-onboarding' ) }
+							__( 'Current logo', 'wp-module-onboarding' ) }
 					</Truncate>
 					{ naturalWidth && naturalHeight && (
 						<span className="nfd-design-studio-logo-dimensions">
@@ -82,7 +82,7 @@ export default function LogoPreview( {
 						isDestructive
 						className="nfd-design-studio-logo-remove"
 					>
-						{ __( 'Remove', 'nfd-onboarding' ) }
+						{ __( 'Remove', 'wp-module-onboarding' ) }
 					</Button>
 				) }
 			</HStack>

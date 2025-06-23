@@ -3254,6 +3254,9 @@
 .nfd-z-40 {
 		z-index: 40 !important;
 }
+.nfd-z-50 {
+		z-index: 50 !important;
+}
 .nfd-col-span-1 {
 		grid-column: span 1 / span 1 !important;
 }
@@ -3407,6 +3410,9 @@
 .nfd-h-full {
 		height: 100% !important;
 }
+.\!nfd-h-12 {
+		height: 3rem !important;
+}
 .nfd-min-h-16 {
 		min-height: 4rem !important;
 }
@@ -3455,6 +3461,9 @@
 }
 .nfd-w-screen {
 		width: 100vw !important;
+}
+.\!nfd-w-12 {
+		width: 3rem !important;
 }
 .nfd-min-w-0 {
 		min-width: 0px !important;
@@ -3760,8 +3769,15 @@
 		--tw-bg-opacity: 1 !important;
 		background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1)) !important;
 }
+.nfd-bg-slate-800 {
+		--tw-bg-opacity: 1 !important;
+		background-color: rgb(30 41 59 / var(--tw-bg-opacity, 1)) !important;
+}
 .nfd-bg-opacity-75 {
 		--tw-bg-opacity: 0.75 !important;
+}
+.nfd-bg-opacity-85 {
+		--tw-bg-opacity: 0.85 !important;
 }
 .nfd-bg-cover {
 		background-size: cover !important;

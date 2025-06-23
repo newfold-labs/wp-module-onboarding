@@ -169,7 +169,7 @@ class DesignController extends WP_REST_Controller {
 		}
 
 		// Check if referer contains nfd-onboarding
-		if ( strpos( $referer, 'nfd-onboarding' ) !== false ) {
+		if ( strpos( $referer, 'wp-module-onboarding' ) !== false ) {
 			return $this->get_font_pairs_from_options( $page, $per_page );
 		}
 
@@ -208,7 +208,7 @@ class DesignController extends WP_REST_Controller {
 			}
 
 			$formatted_palettes[] = array(
-				'name'          => sprintf( __( 'Palette %d', 'nfd-onboarding' ), $index + 1 ),
+				'name'          => sprintf( __( 'Palette %d', 'wp-module-onboarding' ), $index + 1 ),
 				'displayColors' => array(
 					array(
 						'color' => $palette['base'],

@@ -26,17 +26,20 @@ export default function ScreenColors() {
 	return (
 		<>
 			<ScreenHeader
-				title={ __( 'Colors', 'nfd-onboarding' ) }
-				description={ __( 'Select a palette or customize individual colors.', 'nfd-onboarding' ) }
+				title={ __( 'Colors', 'wp-module-onboarding' ) }
+				description={ __(
+					'Select a palette or customize individual colors.',
+					'wp-module-onboarding'
+				) }
 			/>
 			<div className="nfd-design-studio-sidebar__content">
 				<div className="nfd-design-studio-sidebar__section">
-					<Heading level={ 3 }>{ __( 'Palette', 'nfd-onboarding' ) }</Heading>
+					<Heading level={ 3 }>{ __( 'Palette', 'wp-module-onboarding' ) }</Heading>
 					<ColorPalette onChange={ handlePaletteChange } globalStyles={ globalStyles } />
 				</div>
 				<div className="nfd-design-studio-sidebar__section">
 					<ToggleControl
-						label={ __( 'Pick custom colors', 'nfd-onboarding' ) }
+						label={ __( 'Pick custom colors', 'wp-module-onboarding' ) }
 						checked={ isUsingCustomPalette }
 						onChange={ ( isChecked ) => {
 							setIsUsingCustomPalette( isChecked );

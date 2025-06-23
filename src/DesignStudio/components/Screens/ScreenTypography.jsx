@@ -21,12 +21,12 @@ export default function ScreenTypography() {
 			<>
 				<ScreenHeader
 					title={ __( 'Typography' ) }
-					description={ __( 'Select a font style.', 'nfd-onboarding' ) }
+					description={ __( 'Select a font style.', 'wp-module-onboarding' ) }
 				/>
 				<div className="edit-site-global-styles-sidebar__content">
 					<div className="nfd-design-studio-sidebar__section">
-						<Heading level={ 3 }>{ __( 'Font Pairings', 'nfd-onboarding' ) }</Heading>
-						<p>{ __( 'No font pairings available.', 'nfd-onboarding' ) }</p>
+						<Heading level={ 3 }>{ __( 'Font Pairings', 'wp-module-onboarding' ) }</Heading>
+						<p>{ __( 'No font pairings available.', 'wp-module-onboarding' ) }</p>
 					</div>
 				</div>
 			</>
@@ -39,13 +39,13 @@ export default function ScreenTypography() {
 				title={ __( 'Typography' ) }
 				description={ __(
 					"Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site.",
-					'nfd-onboarding'
+					'wp-module-onboarding'
 				) }
 			/>
 
 			<div className="edit-site-global-styles-sidebar__content">
 				<div className="nfd-design-studio-sidebar__section">
-					<Heading level={ 3 }>{ __( 'Font Pairings', 'nfd-onboarding' ) }</Heading>
+					<Heading level={ 3 }>{ __( 'Font Pairings', 'wp-module-onboarding' ) }</Heading>
 					<FontPairings
 						fontPairings={ fontPairings }
 						selectedStyle={ selectedStyle }
