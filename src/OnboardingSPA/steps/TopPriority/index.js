@@ -18,18 +18,16 @@ import {
 	ACTION_ONBOARDING_TOP_PRIORITY_SET,
 } from '../../utils/analytics/hiive/constants';
 import { VIEW_NAV_PRIMARY } from '../../../constants';
-import { DEFAULT_FLOW, ECOMMERCE_FLOW } from '../../data/flows/constants';
+import { DEFAULT_FLOW } from '../../data/flows/constants';
 
 const StepTopPriority = () => {
 	const priorityTypes = {
 		0: 'publishing',
-		1: 'selling',
-		2: 'designing',
+		1: 'designing',
 	};
 
 	const priorityTypesToAnalyticsMap = {
 		publishing: 'content',
-		selling: 'store',
 		designing: 'design',
 	};
 
@@ -89,13 +87,6 @@ const StepTopPriority = () => {
 		}
 	}, [ isLoaded ] );
 
-	const handleSelling = () => {
-		if ( ECOMMERCE_FLOW !== window.nfdOnboarding.currentFlow ) {
-			window.nfdOnboarding.newFlow = ECOMMERCE_FLOW;
-			window.nfdOnboarding.currentFlow = ECOMMERCE_FLOW;
-		}
-	};
-
 	useEffect( () => {
 		const selectedPriorityType = priorityTypes[ selected ];
 		currentData.data.topPriority.priority1 = selectedPriorityType;
@@ -106,12 +97,8 @@ const StepTopPriority = () => {
 				priorityTypesToAnalyticsMap[ selectedPriorityType ]
 			)
 		);
-		if ( 'selling' === selectedPriorityType ) {
-			handleSelling();
-		} else {
-			window.nfdOnboarding.newFlow = undefined;
-			window.nfdOnboarding.currentFlow = DEFAULT_FLOW;
-		}
+		window.nfdOnboarding.newFlow = undefined;
+		window.nfdOnboarding.currentFlow = DEFAULT_FLOW;
 	}, [ selected ] );
 
 	const handleSkip = () => {
