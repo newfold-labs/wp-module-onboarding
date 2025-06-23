@@ -61,6 +61,24 @@ const Preview = () => {
 	const iframeOnLoad = () => {
 		setIframeHeight( calculateIframeHeight() );
 
+		/**
+		 * Custom styles to add spacing around the preview.
+		 */
+		const iframeDoc = document.getElementById( `nfd-onboarding-${ preview.slug }-selected` )?.contentWindow?.document;
+		if ( iframeDoc ) {
+			// Preview margins and styles
+			// <html> styles
+			iframeDoc.documentElement.style.setProperty("padding", "40px 25px 110px", "important");
+			iframeDoc.documentElement.style.setProperty("overflow", "overlay", "important");
+			iframeDoc.documentElement.style.setProperty("background-color", "#ECEDEE", "important");
+			// <body> styles
+			iframeDoc.body.style.setProperty("border-radius", "10px", "important");
+			iframeDoc.body.style.setProperty("overflow", "overlay", "important");
+			iframeDoc.body.style.setProperty("border", "1px solid #CBD5E1", "important");
+			iframeDoc.body.style.setProperty("box-shadow", "0 0 0px 2px #c5cbd4, 0 0 25px 7px rgba(64, 77, 96, 0.1)", "important");
+			// End: Preview styles
+		}
+
 		setTimeout( () => {
 			// Set 500ms delay to allow the iframe to fully render.
 			setIsLoading( false );
@@ -72,7 +90,7 @@ const Preview = () => {
 			<StatusOverlay />
 			{ preview && <Iframe
 				title={ preview.slug }
-				name={ `nfd-onboarding-${ preview.slug }-selected` }
+				id={ `nfd-onboarding-${ preview.slug }-selected` }
 				src={ preview.iframeSrc }
 				width="100%"
 				height="100vh"

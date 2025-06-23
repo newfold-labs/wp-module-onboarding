@@ -9,30 +9,22 @@ import { ACTION_HOMEPAGE_PREVIEW_SELECTED } from '@/utils/analytics/hiive/consta
 import { Preview } from './';
 
 const PreviewsStep = () => {
-	const homepages = useSelect( ( select ) => {
+	const { homepages, fallbackHomepages, sitegenHasFailed } = useSelect( ( select ) => {
 		return {
 			homepages: select( nfdOnboardingStore ).getHomepages(),
+			fallbackHomepages: select( nfdOnboardingStore ).getFallbackHomepages(),
+			sitegenHasFailed: select( nfdOnboardingStore ).getSitegenHasFailed(),
 		};
-	} );
-
-	const hasFailed = useSelect( ( select ) => {
-		return select( nfdOnboardingStore ).getHasFailed();
 	} );
 
 	const navigate = useNavigate();
 
-	// Get fallback homepages from runtime data
-	const getFallbackHomepages = () => {
-		return window.nfdOnboarding?.runtime?.fallbackHomepages || {};
-	};
-
-	// Update store with static homepages when hasFailed is true
+	// Update store with static homepages when sitegenHasFailed is true
 	useEffect( () => {
-		if ( hasFailed ) {
-			const fallbackHomepages = getFallbackHomepages();
+		if ( sitegenHasFailed ) {
 			dispatch( nfdOnboardingStore ).setHomepages( fallbackHomepages );
 		}
-	}, [ hasFailed ] );
+	}, [ sitegenHasFailed ] );
 
 	const handleNext = () => {
 		navigate( '/canvas', {
@@ -53,7 +45,7 @@ const PreviewsStep = () => {
 	};
 
 	const renderPreviews = () => {
-		const previews = homepages.homepages;
+		const previews = homepages;
 		return Object.keys( previews ).map( ( slug, idx ) => {
 			return (
 				<Preview
@@ -65,15 +57,26 @@ const PreviewsStep = () => {
 		} );
 	};
 
+	const getStepTitle = () => {
+		if ( sitegenHasFailed ) {
+			return __( "Sorry, let's try a different approach.", 'wp-module-onboarding' );
+		}
+		return __( 'Pick your website', 'wp-module-onboarding' );
+	};
+
+	const getStepDescription = () => {
+		if ( sitegenHasFailed ) {
+			return __( "We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favorite — we'll guide you through customizing it!", 'wp-module-onboarding' );
+		}
+		return __( 'Here are three unique designs for you to start with. Pick your favorite to customize it!', 'wp-module-onboarding' );
+	};
+
 	return (
 		<Step>
 			<Container className="nfd-onboarding-step-container nfd-onboarding-step-previews nfd-min-w-[948px] nfd-max-w-[948px]">
 				<Container.Header
-					title={ __( 'Pick your website', 'wp-module-onboarding' ) }
-					description={ hasFailed 
-						? __( 'Here are three beautiful pre-designed templates for you to start with. Pick your favorite to customize it!', 'wp-module-onboarding' )
-						: __( 'Here are three unique designs for you to start with. Pick your favorite to customize it!', 'wp-module-onboarding' )
-					}
+					title={ getStepTitle() }
+					description={ getStepDescription() }
 					className="nfd-gap-2"
 				/>
 				<Container.Block>

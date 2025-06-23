@@ -7,7 +7,7 @@ const DEFAULT_STATE = {
 	selectedHomepage: '',
 	hasGeneratedSitePages: false,
 	retryMode: false,
-	hasFailed: false,
+	sitegenHasFailed: false,
 	canvasSidebarIsOpen: true,
 	version: 0,
 };
@@ -51,10 +51,10 @@ export function sitegen( state = DEFAULT_STATE, action ) {
 				retryMode: action.retryMode,
 				version: state.version + 1,
 			};
-		case 'SET_HAS_FAILED':
+		case 'SET_SITEGEN_HAS_FAILED':
 			return {
 				...state,
-				hasFailed: action.hasFailed,
+				sitegenHasFailed: action.sitegenHasFailed,
 				version: state.version + 1,
 			};
 		case 'SET_CANVAS_SIDEBAR_IS_OPEN':
@@ -99,10 +99,10 @@ export const actions = {
 			retryMode,
 		};
 	},
-	setHasFailed: ( hasFailed ) => {
+	setSitegenHasFailed: ( sitegenHasFailed ) => {
 		return {
-			type: 'SET_HAS_FAILED',
-			hasFailed,
+			type: 'SET_SITEGEN_HAS_FAILED',
+			sitegenHasFailed,
 		};
 	},
 	setCanvasSidebarIsOpen: ( canvasSidebarIsOpen ) => {
@@ -120,7 +120,7 @@ export const selectors = {
 	getHasGeneratedSitePages: ( state ) => state.sitegen.hasGeneratedSitePages,
 	getSelectedColorPalette: ( state ) => state.sitegen.homepages[ state.sitegen.selectedHomepage ]?.color?.palette,
 	getRetryMode: ( state ) => state.sitegen.retryMode,
-	getHasFailed: ( state ) => state.sitegen.hasFailed,
+	getSitegenHasFailed: ( state ) => state.sitegen.sitegenHasFailed,
 	getCanvasSidebarIsOpen: ( state ) => state.sitegen.canvasSidebarIsOpen,
 	getVersion: ( state ) => state.sitegen.version,
 };

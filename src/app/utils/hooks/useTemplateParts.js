@@ -45,6 +45,10 @@ function useTemplateParts() {
 
 	const updateTemplatePart = useCallback(
 		async ( part, content ) => {
+			if ( ! part || ! content ) {
+				return;
+			}
+
 			if ( ! templateParts ) {
 				// eslint-disable-next-line no-console
 				console.error( 'updateTemplatePart dependency not yet ready. Use "hasResolved" state to check if the dependency is resolved.' );
