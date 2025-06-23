@@ -34,6 +34,18 @@ class AppController {
 				),
 			)
 		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/complete',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'complete' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
 	}
 
 	/**
@@ -43,13 +55,30 @@ class AppController {
 	 */
 	public function start(): \WP_REST_Response {
 		try {
-			AppService::initialize();
+			( new AppService() )->start();
 			return new \WP_REST_Response( array(), 202 );
 		} catch ( \Exception $e ) {
 			return new \WP_REST_Response(
 				array( 
-					'error' => 'Encountered an error while initializing the app service.',
+					'error' => 'Encountered an error while starting the app service.',
 				),
+				500
+			);
+		}
+	}
+
+	/**
+	 * Complete onboarding backend process.
+	 *
+	 * @return \WP_REST_Response The response object.
+	 */
+	public function complete(): \WP_REST_Response {
+		try {
+			( new AppService() )->complete();
+			return new \WP_REST_Response( array(), 200 );
+		} catch ( \Exception $e ) {
+			return new \WP_REST_Response(
+				array( 'error' => 'Encountered an error while completing the app service.' ),
 				500
 			);
 		}

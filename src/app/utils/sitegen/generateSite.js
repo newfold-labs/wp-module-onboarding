@@ -1,4 +1,4 @@
-import { generateSiteMeta, generateHomePages } from '.';
+import { generateSiteMeta, generateHomePages, generateSitePages } from '.';
 
 const generateSite = async () => {
 	// Generate site meta
@@ -12,6 +12,12 @@ const generateSite = async () => {
 	if ( ! homePages ) {
 		return false;
 	}
+
+	/**
+	 * Fire and forget: Generate the rest of the site pages.
+	 * This operation can take a while and it results don't impact the state of the application.
+	 */
+	generateSitePages().catch( () => {} );
 
 	return true;
 };
