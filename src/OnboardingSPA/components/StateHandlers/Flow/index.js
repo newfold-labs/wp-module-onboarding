@@ -1,11 +1,9 @@
 // WordPress
 import { useEffect, useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { getFragment } from '@wordpress/url';
 
 // Third-party
 import { useLocation } from 'react-router-dom';
-import { HiiveAnalytics } from '@newfold/js-utility-ui-analytics';
 
 // Classes and functions
 import {
@@ -22,15 +20,10 @@ import SiteGen from '../../NewfoldInterfaceSkeleton/SiteGen';
 
 // Misc
 import { store as nfdOnboardingStore } from '../../../store';
-import {
-	DEFAULT_FLOW,
-	SITEGEN_FLOW,
-} from '../../../data/flows/constants';
+import { DEFAULT_FLOW, SITEGEN_FLOW } from '../../../data/flows/constants';
 import { stepTheFork } from '../../../steps/TheFork/step';
 
 const FlowStateHandler = () => {
-	const [ newFlow, setNewFlow ] = useState( false );
-
 	const { brandConfig, onboardingFlow } = useSelect( ( select ) => {
 		return {
 			brandConfig: select( nfdOnboardingStore ).getNewfoldBrandConfig(),
@@ -57,7 +50,6 @@ const FlowStateHandler = () => {
 		if ( window.nfdOnboarding?.newFlow ) {
 			const flow = window.nfdOnboarding.newFlow;
 			disableNavigation();
-			setNewFlow( flow );
 			switchToNewFlow( flow );
 			window.nfdOnboarding.newFlow = undefined;
 		} else if ( location.pathname.includes( '/step' ) ) {
@@ -68,7 +60,7 @@ const FlowStateHandler = () => {
 
 	const switchToNewFlow = async ( flow ) => {
 		if ( ! validateFlow( brandConfig, flow ) ) {
-			return;
+			return Promise.resolve();
 		}
 	};
 
