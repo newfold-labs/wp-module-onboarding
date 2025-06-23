@@ -19,7 +19,6 @@ const PromptInput = ( { value, onChange } ) => {
 			</span>
 			<TextareaField
 				id="nfd-onboarding-prompt"
-				label={ __( 'Describe your site', 'wp-module-onboarding' ) }
 				placeholder={ inputPlaceholder }
 				className="[&_.nfd-textarea]:nfd-h-40"
 				value={ value }
