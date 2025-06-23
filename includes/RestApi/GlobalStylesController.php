@@ -39,7 +39,7 @@ class GlobalStylesController {
 	public function get_set_color_palette_args() {
 		return array(
 			'color_palette' => array(
-				'type' => 'object',
+				'type'     => 'object',
 				'required' => true,
 			),
 		);

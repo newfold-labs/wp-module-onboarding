@@ -9,7 +9,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
  * Class for providing theme related services.
  */
 class ThemeService {
-	private static $retries = 0;
+	private static $retries     = 0;
 	private static $max_retries = 3;
 
 	/**
@@ -18,7 +18,7 @@ class ThemeService {
 	 * @return bool True if the retry was successful, false otherwise.
 	 */
 	private static function retry(): bool {
-		self::$retries++;
+		++self::$retries;
 		if ( self::$retries < self::$max_retries ) {
 			return self::initialize();
 		}
@@ -33,14 +33,14 @@ class ThemeService {
 	 */
 	public static function initialize(): bool {
 		// Get the default sitegen theme to be installed.
-		$init_themes = Themes::get_init( skip_plan_check: true );
+		$init_themes   = Themes::get_init( skip_plan_check: true );
 		$sitegen_theme = $init_themes['sitegen']['default'][0];
 
 		// If the sitegen theme is NOT installed or activated...
 		if ( ! ThemeInstaller::exists( $sitegen_theme['slug'], $sitegen_theme['activate'] ) ) {
 			// Get the sitegen theme installer data.
-			$themes_installer_data = ThemeInstallerData::get()['nfd_slugs'];
-			$sitegen_theme_installer_data = $themes_installer_data[$sitegen_theme['slug']];
+			$themes_installer_data        = ThemeInstallerData::get()['nfd_slugs'];
+			$sitegen_theme_installer_data = $themes_installer_data[ $sitegen_theme['slug'] ];
 
 			// If the sitegen theme is installed but not activated.
 			if ( ThemeInstaller::is_theme_installed( $sitegen_theme_installer_data['stylesheet'] ) ) {

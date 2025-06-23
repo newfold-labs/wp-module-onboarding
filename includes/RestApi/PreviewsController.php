@@ -34,10 +34,10 @@ class PreviewsController {
 			$this->namespace,
 			$this->rest_base . '/snapshot',
 			array(
-				'methods'  => \WP_REST_Server::EDITABLE,
-				'callback' => array( $this, 'generate_snapshot' ),
+				'methods'             => \WP_REST_Server::EDITABLE,
+				'callback'            => array( $this, 'generate_snapshot' ),
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				'args'     => $this->generate_snapshot_args(),
+				'args'                => $this->generate_snapshot_args(),
 			)
 		);
 	}
@@ -49,11 +49,11 @@ class PreviewsController {
 	 */
 	public function generate_snapshot_args() {
 		return array(
-			'content' => array(
+			'content'       => array(
 				'required' => true,
 				'type'     => 'string',
 			),
-			'slug' => array(
+			'slug'          => array(
 				'required' => true,
 				'type'     => 'string',
 			),

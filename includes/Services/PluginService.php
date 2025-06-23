@@ -29,7 +29,7 @@ class PluginService {
 		$init_plugins = array();
 
 		$flow = Data::current_flow();
-		
+
 		if ( 'sitegen' === $flow && SiteGenService::is_enabled() ) {
 			$init_plugins = Plugins::get_init();
 
@@ -43,13 +43,13 @@ class PluginService {
 			// Get AI SiteGen plugin recommendations
 			// $default_plugins = SiteGenService::get_plugin_recommendations();
 			// if ( is_wp_error( $default_plugins ) ) {
-			// 	return $default_plugins;
+			// return $default_plugins;
 			// }
 			// Iterate and ensure no duplicates are added
 			// foreach ( $default_plugins as $default_plugin ) {
-			// 	if ( ! array_key_exists( $default_plugin['slug'], $plugin_slugs ) ) {
-			// 		$init_plugins[] = $default_plugin;
-			// 	}
+			// if ( ! array_key_exists( $default_plugin['slug'], $plugin_slugs ) ) {
+			// $init_plugins[] = $default_plugin;
+			// }
 			// }
 		} else {
 			// Get the initial list of plugins to be installed based on the plan.

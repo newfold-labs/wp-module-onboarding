@@ -59,7 +59,7 @@ class AppController {
 			return new \WP_REST_Response( array(), 202 );
 		} catch ( \Exception $e ) {
 			return new \WP_REST_Response(
-				array( 
+				array(
 					'error' => 'Encountered an error while starting the app service.',
 				),
 				500

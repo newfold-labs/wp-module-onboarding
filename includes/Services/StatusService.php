@@ -96,9 +96,9 @@ class StatusService {
 		}
 
 		// Get flow data
-		$flow_data = get_option( Options::get_option_name( 'flow' ) );
+		$flow_data   = get_option( Options::get_option_name( 'flow' ) );
 		$active_flow = $flow_data['activeFlow'];
-		$homepages = $flow_data['sitegen']['homepages'];
+		$homepages   = $flow_data['sitegen']['homepages'];
 
 		if ( isset( $flow_data['onboardingRetries'] ) && ! empty( $flow_data['onboardingRetries'] ) ) {
 			// Increment the total onboarding tries

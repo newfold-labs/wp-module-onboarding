@@ -26,8 +26,8 @@ class GlobalStylesService {
 	public function __construct() {
 		$user_global_styles = self::get_user_global_styles();
 		if ( $user_global_styles ) {
-			$this->global_styles      = json_decode( $user_global_styles['post_content'], true );
-			$this->global_styles_id   = $user_global_styles['ID'];
+			$this->global_styles    = json_decode( $user_global_styles['post_content'], true );
+			$this->global_styles_id = $user_global_styles['ID'];
 		}
 		return $this;
 	}
@@ -66,22 +66,22 @@ class GlobalStylesService {
 	 * @return array The processed color palette.
 	 */
 	public static function transform_color_palette( array $color_palette ) {
-		$result = [];
-		
+		$result = array();
+
 		foreach ( $color_palette as $color ) {
 			if ( ! isset( $color['slug'] ) || ! isset( $color['color'] ) ) {
 				continue;
 			}
 
-			$color_slug  = str_replace('_', '-', $color['slug']);
+			$color_slug  = str_replace( '_', '-', $color['slug'] );
 			$color_name  = $color['name'] ?? $color_slug;
 			$color_value = $color['color'];
 
-			$result[] = [
+			$result[] = array(
 				'slug'  => $color_slug,
 				'name'  => $color_name,
 				'color' => $color_value,
-			];
+			);
 		}
 
 		return $result;
@@ -99,7 +99,7 @@ class GlobalStylesService {
 	/**
 	 * Update global styles.
 	 *
-	 * @param int|null $post_id The global styles post id to update. If not provided, the active global styles will be updated.
+	 * @param int|null   $post_id The global styles post id to update. If not provided, the active global styles will be updated.
 	 * @param array|null $post_content array of global styles to inject into the post content. If not provided, the active global styles will be updated.
 	 * @return int|\WP_Error The updated post id on success, \WP_Error on failure.
 	 */
@@ -107,10 +107,13 @@ class GlobalStylesService {
 		$post_id      = $post_id ?? $this->global_styles_id;
 		$post_content = $post_content ?? $this->global_styles;
 
-		$result = wp_update_post( [
-			'ID'           => $post_id,
-			'post_content' => wp_json_encode( $post_content ),
-		], true );
+		$result = wp_update_post(
+			array(
+				'ID'           => $post_id,
+				'post_content' => wp_json_encode( $post_content ),
+			),
+			true
+		);
 
 		wp_clean_theme_json_cache();
 

@@ -287,8 +287,6 @@ class DesignController extends WP_REST_Controller {
 						return null;
 					}
 
-					
-
 					// Create standardized displayColors with specific slugs
 					$palette['displayColors'] = array(
 						$palette['palette'][0],
@@ -410,16 +408,16 @@ class DesignController extends WP_REST_Controller {
 				// Check if this variation has color palette
 				if ( isset( $variation_data['color']['palette'] ) && is_array( $variation_data['color']['palette'] ) ) {
 					$all_palette_sources = $variation['settings']['color']['palette'];
-					
+
 					foreach ( $all_palette_sources as $source_name => $colors ) {
 						if ( is_array( $colors ) && ! empty( $colors ) ) {
 							$formatted_colors = array();
-							$display_colors = array();
+							$display_colors   = array();
 
 							foreach ( $colors as $index => $color ) {
 								$formatted_colors[] = $color;
 
-								if ( in_array($color['slug'], array('base', 'contrast', 'accent-2', 'accent-5')) ) {
+								if ( in_array( $color['slug'], array( 'base', 'contrast', 'accent-2', 'accent-5' ) ) ) {
 									$display_colors[] = $color;
 								}
 							}
