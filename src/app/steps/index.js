@@ -5,49 +5,50 @@ import { GeneratingStep } from './Generating';
 import { PreviewsStep } from './Previews';
 import { CanvasStep } from './Canvas';
 import { MigrationStep } from './Migration';
+import { withStepValidation } from '../components/Step/StepValidationWrapper';
 
 const STEPS = {
 	fork: {
 		path: '/',
 		order: 10,
 		isRequired: true,
-		Component: ForkStep,
+		Component: withStepValidation( ForkStep, 'fork' ),
 	},
 	intake: {
 		path: '/intake',
 		order: 20,
 		isRequired: true,
-		Component: IntakeStep,
+		Component: withStepValidation( IntakeStep, 'intake' ),
 	},
 	logo: {
 		path: '/logo',
 		order: 30,
 		isRequired: true,
-		Component: LogoStep,
+		Component: withStepValidation( LogoStep, 'logo' ),
 	},
 	generating: {
 		path: '/generating',
 		order: 50,
 		isRequired: true,
-		Component: GeneratingStep,
+		Component: withStepValidation( GeneratingStep, 'generating' ),
 	},
 	previews: {
 		path: '/previews',
 		order: 60,
 		isRequired: true,
-		Component: PreviewsStep,
+		Component: withStepValidation( PreviewsStep, 'previews' ),
 	},
 	design: {
 		path: '/canvas',
 		order: 70,
 		isRequired: true,
-		Component: CanvasStep,
+		Component: withStepValidation( CanvasStep, 'design' ),
 	},
 	migration: {
 		path: '/migration',
 		order: 80,
 		isRequired: false,
-		Component: MigrationStep,
+		Component: withStepValidation( MigrationStep, 'migration' ),
 	},
 };
 
