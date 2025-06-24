@@ -331,3 +331,10 @@ export function setContinueWithoutAi( continueWithoutAi ) {
 		continueWithoutAi,
 	};
 }
+
+export function setStoreLanguages( languages ) {
+	return {
+		type: 'SET_LANGUAGES',
+		languages,
+	};
+}

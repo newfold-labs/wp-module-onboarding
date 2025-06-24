@@ -37,7 +37,8 @@ const StepSiteGenEditor = () => {
 	const handleSitemapPagesGeneration = async () => {
 		if ( false === currentData?.sitegen?.sitemapPagesGenerated ) {
 			const sitemapPagesPublished = await publishSitemapPages(
-				currentData.sitegen.siteDetails.prompt
+				currentData.sitegen.siteDetails.prompt,
+				currentData.sitegen.siteDetails.locale
 			);
 			if ( ! sitemapPagesPublished.error ) {
 				currentData.sitegen.sitemapPagesGenerated = true;
