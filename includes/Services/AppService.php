@@ -2,7 +2,13 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Events;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\PreviewsService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService as LegacySiteGenService;
+
+
+use function NewfoldLabs\WP\ModuleLoader\container;
 
 class AppService {
 
@@ -31,11 +37,35 @@ class AppService {
 		}
 	}
 
-	public function complete(): void {
-		// Publish the header.
-		// Publish the footer.
+	/**
+	 * Complete onboarding.
+	 *
+	 * @param string $selected_sitegen_homepage The selected sitegen homepage to publish.
+	 * @return void
+	 * @throws \Exception
+	 */
+	public function complete( string $selected_sitegen_homepage ): void {
 		// Publish selected homepage.
-		// Set the color palette.
-		// Trash preview posts.
+		$result = ( new SiteGenService() )->publish_homepage( $selected_sitegen_homepage );
+		if ( \is_wp_error( $result ) ) {
+			throw new \Exception( $result->get_error_message() );
+		}
+		// Trash sample page and preview posts.
+		LegacySiteGenService::trash_sample_page();
+		PreviewsService::trash_preview_pages();
+
+		// Purge all caches.
+		container()->get( 'cachePurger' )->purge_all();
+
+		// Create a survey to collect feedback.
+		container()->get( 'survey' )->create_toast_survey(
+			Events::get_category()[0] . '_sitegen_pulse',
+			'customer_satisfaction_survey',
+			array(
+				'label_key' => 'value',
+			),
+			__( 'Help us improve', 'wp-module-onboarding-data' ),
+			__( 'How satisfied were you with the ease of creating your website?', 'wp-module-onboarding-data' ),
+		);
 	}
 }

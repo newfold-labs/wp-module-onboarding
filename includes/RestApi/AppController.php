@@ -4,7 +4,6 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Services\AppService;
-use NewfoldLabs\WP\Module\Onboarding\Data\Config;
 
 class AppController {
 
@@ -70,11 +69,21 @@ class AppController {
 	/**
 	 * Complete onboarding backend process.
 	 *
+	 * @param \WP_REST_Request $request The request object.
 	 * @return \WP_REST_Response The response object.
 	 */
-	public function complete(): \WP_REST_Response {
+	public function complete( \WP_REST_Request $request ): \WP_REST_Response {
+		$data                      = json_decode( $request->get_body(), true );
+		$selected_sitegen_homepage = $data['selected_sitegen_homepage'];
+		if ( ! $selected_sitegen_homepage ) {
+			return new \WP_REST_Response(
+				array( 'error' => 'Selected sitegen homepage is required.' ),
+				400
+			);
+		}
+
 		try {
-			( new AppService() )->complete();
+			( new AppService() )->complete( $selected_sitegen_homepage );
 			return new \WP_REST_Response( array(), 200 );
 		} catch ( \Exception $e ) {
 			return new \WP_REST_Response(

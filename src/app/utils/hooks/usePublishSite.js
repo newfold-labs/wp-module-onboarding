@@ -1,6 +1,7 @@
 import { useCallback } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { nfdOnboardingStore } from '@/data/store';
+import { completeOnboarding } from '@/utils/api';
 import { useTemplateParts, useGlobalStyles } from '.';
 
 const usePublishSite = () => {
@@ -36,6 +37,7 @@ const usePublishSite = () => {
 				updateHeader( homepages[ selectedHomepage ].header ),
 				updateFooter( homepages[ selectedHomepage ].footer ),
 				setColorPalette( selectedColorPalette ),
+				completeOnboarding( selectedHomepage ),
 			] );
 
 			return true;

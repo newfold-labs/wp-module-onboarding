@@ -5,8 +5,9 @@ import { RectangleStackIcon as RectangleStackIconSolid } from '@heroicons/react/
 import { InteractionBlockingOverlay } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
 import { usePublishSite } from '@/utils/hooks';
-import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
-import { ACTION_CANVAS_CUSTOMIZE_SELECTED, ACTION_CANVAS_PUBLISH_SELECTED } from '@/utils/analytics/hiive/constants';
+import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
+import { ACTION_ONBOARDING_COMPLETE } from '@/utils/analytics/hiive/constants';
+import { pluginDashboardPage, wpEditorDesignStudio } from '@/data/constants';
 
 const HeaderActions = () => {
 	const [ isPublishing, setIsPublishing ] = useState( false );
@@ -34,23 +35,33 @@ const HeaderActions = () => {
 	const handleSelectAndCustomize = async () => {
 		await handlePublishSite();
 
-		trackOnboardingEvent(
-			new OnboardingEvent( ACTION_CANVAS_CUSTOMIZE_SELECTED )
+		sendOnboardingEvent(
+			new OnboardingEvent( ACTION_ONBOARDING_COMPLETE, 'select_and_customize', {
+				source: 'quickstart',
+			} )
 		);
+
+		// Send to the Design Studio.
+		window.location.replace( wpEditorDesignStudio );
 	};
 
 	const handleSaveAndPublish = async () => {
 		await handlePublishSite();
 
-		trackOnboardingEvent(
-			new OnboardingEvent( ACTION_CANVAS_PUBLISH_SELECTED )
+		sendOnboardingEvent(
+			new OnboardingEvent( ACTION_ONBOARDING_COMPLETE, 'save_and_publish', {
+				source: 'quickstart',
+			} )
 		);
+
+		// Send to the Plugin Dashboard.
+		window.location.replace( pluginDashboardPage );
 	};
 
 	return (
 		<div className="nfd-onboarding-canvas-header-actions nfd-flex nfd-gap-4">
 			{ isPublishing && (
-			<InteractionBlockingOverlay
+				<InteractionBlockingOverlay
 					hasLoadingSpinner={ true }
 					hasBackground={ isPublishing }
 				/>

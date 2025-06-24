@@ -16,6 +16,7 @@ export const wpAdminPage = addQueryArgs(
 	window.nfdOnboarding.runtime.currentBrand?.dashboardRedirectParams
 );
 export const wpEditorPage = `${ wpAdminUrl }site-editor.php?canvas=edit`;
+export const wpEditorDesignStudio = `${ wpAdminUrl }site-editor.php?referrer=nfd-onboarding&canvas=edit`;
 export const pluginDashboardPage =
 	addQueryArgs(
 		window.nfdOnboarding.runtime.currentBrand?.pluginDashboardPage,

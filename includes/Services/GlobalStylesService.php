@@ -55,7 +55,7 @@ class GlobalStylesService {
 
 			return $color_palette;
 		} catch ( \Exception $e ) {
-			return new \WP_Error( 'global_styles_error', $e->getMessage() );
+			return new \WP_Error( 'set_color_palette_error', $e->getMessage() );
 		}
 	}
 
@@ -107,13 +107,13 @@ class GlobalStylesService {
 		$post_id      = $post_id ?? $this->global_styles_id;
 		$post_content = $post_content ?? $this->global_styles;
 
-		$result = wp_update_post(
-			array(
-				'ID'           => $post_id,
-				'post_content' => wp_json_encode( $post_content ),
-			),
-			true
-		);
+		$result = wp_update_post( [
+			'ID'           => $post_id,
+			'post_content' => wp_json_encode( $post_content ),
+		], true );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
 
 		wp_clean_theme_json_cache();
 
