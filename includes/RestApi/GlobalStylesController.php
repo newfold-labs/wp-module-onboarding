@@ -49,15 +49,15 @@ class GlobalStylesController {
 	 * Set the color palette.
 	 *
 	 * @param \WP_REST_Request $request The request object.
-	 * @return \WP_REST_Response|\WP_Error
+	 * @return \WP_REST_Response
 	 */
-	public function set_color_palette( \WP_REST_Request $request ): \WP_REST_Response|\WP_Error {
+	public function set_color_palette( \WP_REST_Request $request ): \WP_REST_Response {
 		$data          = json_decode( $request->get_body(), true );
 		$color_palette = $data['color_palette'];
 		if ( ! is_array( $color_palette ) || empty( $color_palette ) ) {
-			return new \WP_Error(
-				400,
-				array( 'error' => 'Color palette is invalid.' ),
+			return new \WP_REST_Response(
+				'Color palette is invalid.',
+				400
 			);
 		}
 

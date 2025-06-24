@@ -85,15 +85,21 @@ class ReduxStateController {
 	 * @param \WP_REST_Request $request The request object.
 	 * @return \WP_REST_Response
 	 */
-	public function update_input_slice_state( \WP_REST_Request $request ) {
+	public function update_input_slice_state( \WP_REST_Request $request ): \WP_REST_Response {
 		$data = json_decode( $request->get_body(), true );
 		if ( ! $data ) {
-			return new \WP_Error( 400, 'Invalid data' );
+			return new \WP_REST_Response(
+				'Invalid data',
+				400
+			);
 		}
 
 		$result = ReduxStateService::update( 'input', $data );
 		if ( ! $result ) {
-			return new \WP_Error( 500, 'Failed to update input slice state' );
+			return new \WP_REST_Response(
+				'Failed to update input slice state',
+				500
+			);
 		}
 
 		return new \WP_REST_Response(
@@ -120,15 +126,21 @@ class ReduxStateController {
 	 * @param \WP_REST_Request $request The request object.
 	 * @return \WP_REST_Response
 	 */
-	public function update_sitegen_slice_state( \WP_REST_Request $request ) {
+	public function update_sitegen_slice_state( \WP_REST_Request $request ): \WP_REST_Response {
 		$data = json_decode( $request->get_body(), true );
 		if ( ! $data ) {
-			return new \WP_Error( 400, 'Invalid data' );
+			return new \WP_REST_Response(
+				'Invalid data',
+				400
+			);
 		}
 
 		$result = ReduxStateService::update( 'sitegen', $data );
 		if ( ! $result ) {
-			return new \WP_Error( 500, 'Failed to update sitegen slice state' );
+			return new \WP_REST_Response(
+				'Failed to update sitegen slice state',
+				500
+			);
 		}
 
 		return new \WP_REST_Response( $data, 200 );

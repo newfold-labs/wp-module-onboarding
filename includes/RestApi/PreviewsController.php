@@ -70,14 +70,17 @@ class PreviewsController {
 	 * @param \WP_REST_Request $request The incoming request.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
-	public function generate_snapshot( \WP_REST_Request $request ) {
+	public function generate_snapshot( \WP_REST_Request $request ): \WP_REST_Response {
 		$content       = $request->get_param( 'content' );
 		$slug          = $request->get_param( 'slug' );
 		$custom_styles = $request->get_param( 'custom_styles' );
 
 		$snapshot = PreviewsService::generate_snapshot( $content, $slug, $custom_styles );
 		if ( is_wp_error( $snapshot ) ) {
-			return $snapshot;
+			return new \WP_REST_Response(
+				$snapshot->get_error_message(),
+				500
+			);
 		}
 
 		return new \WP_REST_Response(
