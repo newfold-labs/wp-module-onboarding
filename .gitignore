@@ -2,8 +2,3 @@ node_modules
 vendor
 .DS_Store
 .vscode
-
-# Temp
-build
-yalc.lock
-.yalc
