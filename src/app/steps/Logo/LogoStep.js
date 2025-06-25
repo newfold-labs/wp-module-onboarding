@@ -5,28 +5,31 @@ import { Navigate, Step } from '@/components';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_LOGO_ADDED, ACTION_LOGO_SKIPPED } from '@/utils/analytics/hiive/constants';
 import { LogoUploadInput } from '.';
+import { nfdOnboardingStore } from '@/data/store';
 
 const LogoStep = () => {
-	const [ logoValue, setLogoValue ] = useState( {
-		id: null,
-		url: null,
-	} );
+	const [ isUploading, setIsUploading ] = useState( false );
 
 	const { editEntityRecord, saveEditedEntityRecord } = useDispatch( coreStore );
-	const { siteLogo } = useSelect( ( select ) => {
+	const { siteLogoId, storeLogoId } = useSelect( ( select ) => {
+		// Get the site logo from the core data store.
 		const { getEntityRecord } = select( coreStore );
 		const siteSettings = getEntityRecord( 'root', 'site' );
 		const logoId = siteSettings?.site_logo;
+
+		// Get the logo from the input slice.
+		const logo = select( nfdOnboardingStore ).getLogo();
 		return {
-			siteLogo: logoId,
+			siteLogoId: logoId,
+			storeLogoId: logo.id,
 		};
 	}, [] );
 
 	const handleNext = () => {
 		// If the logo is set.
-		if ( null !== logoValue.id && logoValue.id !== siteLogo ) {
+		if ( null !== storeLogoId && storeLogoId !== siteLogoId ) {
 			editEntityRecord( 'root', 'site', undefined, {
-				site_logo: logoValue.id,
+				site_logo: storeLogoId,
 			} );
 			saveEditedEntityRecord( 'root', 'site' );
 
@@ -51,7 +54,10 @@ const LogoStep = () => {
 					className="nfd-gap-2"
 				/>
 				<Container.Block separator={ false }>
-					<LogoUploadInput logo={ logoValue } setLogoValue={ setLogoValue } />
+					<LogoUploadInput
+						isUploading={ isUploading }
+						setIsUploading={ setIsUploading }
+					/>
 				</Container.Block>
 				<Container.Footer>
 					<Step.Actions>
@@ -59,6 +65,7 @@ const LogoStep = () => {
 							toRoute="/generating"
 							direction="forward"
 							callback={ handleNext }
+							disabled={ isUploading }
 						>
 							{ __( 'Next', 'wp-module-onboarding' ) }
 						</Navigate>
@@ -66,6 +73,7 @@ const LogoStep = () => {
 							toRoute="/intake"
 							direction="backward"
 							variant="secondary"
+							disabled={ isUploading }
 						>
 							{ __( 'Back', 'wp-module-onboarding' ) }
 						</Navigate>

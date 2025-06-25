@@ -1,4 +1,4 @@
-import { dispatch, select } from '@wordpress/data';
+import { dispatch, useSelect } from '@wordpress/data';
 import { uploadMedia, validateMimeType, validateFileSize } from '@wordpress/media-utils';
 import classNames from 'classnames';
 import { ImageImport, Label } from '@newfold/ui-component-library';
@@ -6,12 +6,13 @@ import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_LOGO_UPLOAD_FAILED } from '@/utils/analytics/hiive/constants';
 
-const LogoUploadInput = ( { logoValue, setLogoValue } ) => {
-	const [ isUploading, setIsUploading ] = useState( false );
+const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 	const [ error, setError ] = useState( {
 		status: false,
 		message: '',
 	} );
+
+	const logo = useSelect( ( select ) => select( nfdOnboardingStore ).getLogo(), [] );
 
 	const validateFile = ( file ) => {
 		const validationResult = {
@@ -60,21 +61,17 @@ const LogoUploadInput = ( { logoValue, setLogoValue } ) => {
 		 * Since we're only interested in the final uploaded object...
 		 * The isOptimisticUrl flag is used to track the first call and ignore the blob src.
 		 */
-		let isOptimisticUrl = false;
+		let isOptimisticUrl = true;
 		uploadMedia( {
 			multiple: false,
 			filesList: [ file ],
 			onFileChange: ( files ) => {
-				if ( ! isOptimisticUrl ) {
-					return isOptimisticUrl = true;
+				if ( isOptimisticUrl ) {
+					isOptimisticUrl = false;
+					return;
 				}
 				// Set the logo in the input slice
 				dispatch( nfdOnboardingStore ).setLogo( {
-					id: files[ 0 ].id,
-					url: files[ 0 ].url,
-				} );
-				// Set the logo in the step state
-				setLogoValue( {
 					id: files[ 0 ].id,
 					url: files[ 0 ].url,
 				} );
@@ -103,37 +100,7 @@ const LogoUploadInput = ( { logoValue, setLogoValue } ) => {
 			id: null,
 			url: null,
 		} );
-		// Reset the logo in the step state
-		setLogoValue( {
-			id: 0,
-			url: '',
-		} );
 	};
-
-	/**
-	 * Get the current site logo from the input slice
-	 * @return {object|null} The current site logo object or null if no logo is set
-	 */
-	const getCurrentSiteLogo = () => {
-		const { logo } = select( nfdOnboardingStore ).getInputSlice();
-		return logo?.url || null;
-	};
-
-	/**
-	 * On mount, set the parent logo state to the input slice.
-	 * Helpful in cases where the user navigate to another step then return to the Logo step or...
-	 * Refresh the app.
-	 */
-	useEffect( () => {
-		const { logo } = select( nfdOnboardingStore ).getInputSlice();
-		if ( logo?.url && logo?.id !== logoValue?.id ) {
-			setLogoValue( {
-				id: logo.id,
-				url: logo.url,
-			} );
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [] );
 
 	return (
 		<div className="nfd-onboarding-logo-upload nfd-flex nfd-flex-col nfd-gap-2">
@@ -141,14 +108,17 @@ const LogoUploadInput = ( { logoValue, setLogoValue } ) => {
 				{ __( 'Site logo', 'wp-module-onboarding' ) }
 			</Label>
 			<ImageImport
+				key={ logo?.url || 'no-logo' }
 				id="nfd-onboarding-logo-input"
 				name="nfd-onboarding-logo-input"
 				imageInputVariant="rounded"
-				previewImage={ getCurrentSiteLogo() }
+				previewImage={ logo?.url || null }
 				dropLabel={ __( 'accepted: .png, .jpg, .jpeg (5MB max)', 'wp-module-onboarding' ) }
 				buttonText={ __( 'Browse', 'wp-module-onboarding' ) }
 				onChange={ ( { file } ) => handleUpload( file ) }
-				onDrop={ handleUpload }
+				onDrop={ ( e ) => {
+					handleUpload( e.dataTransfer.files[ 0 ] );
+				} }
 				onReset={ handleReset }
 				disabled={ isUploading }
 				isLoading={ isUploading }
