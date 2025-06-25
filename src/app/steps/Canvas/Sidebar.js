@@ -1,6 +1,4 @@
 import { dispatch, useSelect } from '@wordpress/data';
-import { useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
 import { Title } from '@newfold/ui-component-library';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { SiteGenPreviewCard } from '@/components';
@@ -37,6 +35,17 @@ const Preview = ( { preview, tabIndex } ) => {
 		};
 	} );
 
+	const getScreenshot = () => {
+		if ( preview.screenshot ) {
+			// Set 500ms delay to avoid abrupt flickering.
+			setTimeout( () => {
+				setIsLoading( false );
+			}, 500 );
+			return preview.screenshot;
+		}
+		return null;
+	};
+
 	const iframeOnLoad = () => {
 		setTimeout( () => {
 			// Set 500ms delay to allow the iframe to fully render.
@@ -50,7 +59,7 @@ const Preview = ( { preview, tabIndex } ) => {
 
 	return (
 		<SiteGenPreviewCard
-			screenshot={ preview.screenshot }
+			screenshot={ getScreenshot() }
 			frameName={ preview.slug }
 			frameSrc={ preview.iframeSrc }
 			onFrameLoad={ iframeOnLoad }
@@ -90,11 +99,11 @@ const Sidebar = () => {
 
 	return (
 		<div
-			className={`nfd-onboarding-canvas-sidebar nfd-h-full nfd-bg-white nfd-border-l nfd-overflow-y-auto nfd-transition-all nfd-duration-300 nfd-ease-in-out ${
-				canvasSidebarIsOpen 
-					? 'nfd-min-w-[325px] nfd-max-w-[325px] nfd-opacity-100' 
+			className={ `nfd-onboarding-canvas-sidebar nfd-h-full nfd-bg-white nfd-border-l nfd-overflow-y-auto nfd-transition-all nfd-duration-300 nfd-ease-in-out ${
+				canvasSidebarIsOpen
+					? 'nfd-min-w-[325px] nfd-max-w-[325px] nfd-opacity-100'
 					: 'nfd-min-w-0 nfd-max-w-0 nfd-opacity-0 nfd-overflow-hidden'
-			}`}
+			}` }
 			role="region"
 			aria-label={ __( 'Layouts sidebar', 'wp-module-onboarding' ) }
 			aria-hidden={ ! canvasSidebarIsOpen }
