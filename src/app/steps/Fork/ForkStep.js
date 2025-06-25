@@ -6,6 +6,7 @@ import SiteCreatorCard from './SiteCreatorCard';
 import MigrationCard from './MigrationCard';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_ONBOARDING_STARTED } from '@/utils/analytics/hiive/constants';
+import { disableComingSoon } from '@/utils/api';
 
 const ForkStep = () => {
 	const { canMigrateSite, migrationFallbackUrl } = useSelect(
@@ -22,6 +23,17 @@ const ForkStep = () => {
 		trackOnboardingEvent(
 			new OnboardingEvent( ACTION_ONBOARDING_STARTED )
 		);
+		/**
+		 * Before unmounting: Disable the site coming soon page.
+		 * This is necessary for the Screenshot Service to be able to load the sitegen previews.
+		 * As a side effect (intentionally), this will also send the 'site_launched' event.
+		 * See coming soon module for more details.
+		 *
+		 * Analytics: Site launched event.
+		 */
+		return () => {
+			disableComingSoon();
+		};
 	}, [] );
 
 	return (

@@ -35,6 +35,7 @@ const HeaderActions = () => {
 	const handleSelectAndCustomize = async () => {
 		await handlePublishSite();
 
+		// Analytics: Onboarding complete event.
 		sendOnboardingEvent(
 			new OnboardingEvent( ACTION_ONBOARDING_COMPLETE, 'select_and_customize', {
 				source: 'quickstart',
@@ -48,6 +49,7 @@ const HeaderActions = () => {
 	const handleSaveAndPublish = async () => {
 		await handlePublishSite();
 
+		// Analytics: Onboarding complete event.
 		sendOnboardingEvent(
 			new OnboardingEvent( ACTION_ONBOARDING_COMPLETE, 'save_and_publish', {
 				source: 'quickstart',

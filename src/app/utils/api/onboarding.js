@@ -58,6 +58,24 @@ export const completeOnboarding = async ( selectedSitegenHomepage ) => {
 };
 
 /**
+ * Disable the site coming soon page.
+ *
+ * @return {Promise<boolean>} true if the coming soon page was disabled successfully, false otherwise
+ */
+export const disableComingSoon = async () => {
+	const comingSoon = window?.NewfoldRuntime.comingSoon;
+	if ( comingSoon ) {
+		const result = await comingSoon.disable();
+		if ( result?.success ) {
+			return true;
+		}
+		// eslint-disable-next-line no-console
+		console.error( 'Failed to disable coming soon' );
+		return false;
+	}
+};
+
+/**
  * Set a color palette array of WordPress color objects.
  *
  * @param {Array} colorPalette The color palette to set.

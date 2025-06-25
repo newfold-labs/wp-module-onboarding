@@ -4,7 +4,6 @@ import { FeaturesSelect, Title } from '@newfold/ui-component-library';
 import { nfdOnboardingStore } from '@/data/store';
 
 const ExperienceOptions = () => {
-
 	const { selectedExperienceLevel } = useSelect( ( select ) => {
 		return {
 			selectedExperienceLevel: select( nfdOnboardingStore ).getExperienceLevel(),
