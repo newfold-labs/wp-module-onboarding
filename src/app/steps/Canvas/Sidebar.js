@@ -16,6 +16,7 @@ const Header = () => {
 			</Title>
 			<button
 				type="button"
+				title={ __( 'Close layouts sidebar', 'wp-module-onboarding' ) }
 				aria-label={ __( 'Close layouts sidebar', 'wp-module-onboarding' ) }
 				className="nfd-onboarding-canvas-sidebar-header-close nfd-rounded-sm hover:nfd-text-primary focus:nfd-text-primary focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary focus:nfd-ring-offset-2"
 				onClick={ handleCanvasSidebarToggle }
