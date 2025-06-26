@@ -20,6 +20,7 @@ import ScreenColors from './Screens/ScreenColors';
 import ScreenLogo from './Screens/ScreenLogo';
 import ScreenRoot from './Screens/ScreenRoot';
 import ScreenTypography from './Screens/ScreenTypography';
+import DashboardButton from './DashboardButton/DashboardButton';
 
 /**
  * Main component that applies all customizations
@@ -85,6 +86,8 @@ const OnboardingDesignStudio = () => {
 					</Navigator>
 				</div>
 			</PluginSidebar>
+
+			<DashboardButton />
 		</>
 	);
 };
