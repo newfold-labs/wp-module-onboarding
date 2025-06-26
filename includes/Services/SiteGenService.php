@@ -2,7 +2,6 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
-use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SitePagesService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService as LegacySiteGenService;
 
@@ -47,14 +46,8 @@ class SiteGenService {
 		}
 
 		$selected_homepage = $this->sitegen_data['homepages'][ $selected_sitegen_homepage ];
-		// Always set the default homepage to a page.
-		$show_pages_on_front = \get_option( Options::get_option_name( 'show_on_front', false ) );
-		if ( 'posts' === $show_pages_on_front ) {
-			\update_option( Options::get_option_name( 'show_on_front', false ), 'page' );
-		}
-
-		$content = $selected_homepage['content'];
-		$title   = __( 'Home', 'wp-module-onboarding' );
+		$content           = $selected_homepage['content'];
+		$title             = __( 'Home', 'wp-module-onboarding' );
 
 		$post_id = SitePagesService::publish_page(
 			$title,
@@ -74,8 +67,13 @@ class SiteGenService {
 		// Add the homepage to the site navigation.
 		$this->add_page_to_navigation( $post_id, $title, get_permalink( $post_id ) );
 
+		// Change WordPress reading options to show static page as homepage.
+		$wp_reading_homepage_option = get_option( 'show_on_front' );
+		if ( 'page' !== $wp_reading_homepage_option ) {
+			update_option( 'show_on_front', 'page' );
+		}
 		// Set the homepage as the front page.
-		\update_option( Options::get_option_name( 'page_on_front', false ), $post_id );
+		update_option( 'page_on_front', $post_id );
 
 		return $post_id;
 	}
