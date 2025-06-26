@@ -31,6 +31,9 @@ class AppService {
 		update_option( Options::get_option_name( 'redirect' ), '0' );
 		// If Onboarding is running for the first time...
 		if ( StatusService::handle_started() ) {
+			// Trash sample page.
+			LegacySiteGenService::trash_sample_page();
+
 			// Initialize services.
 			SettingsService::initialize();
 			PluginService::initialize();
@@ -50,8 +53,7 @@ class AppService {
 		if ( \is_wp_error( $result ) ) {
 			throw new \Exception( $result->get_error_message() );
 		}
-		// Trash sample page and preview posts.
-		LegacySiteGenService::trash_sample_page();
+		// Trash Preview pages.
 		PreviewsService::trash_preview_pages();
 
 		// Purge all caches.
