@@ -47,6 +47,7 @@ export const actions = {
 		window.nfdOnboarding.runtime = {
 			buildUrl: runtimeData.buildUrl,
 			siteUrl: runtimeData.siteUrl,
+			status: runtimeData.status,
 			migrated: true,
 		};
 		return {

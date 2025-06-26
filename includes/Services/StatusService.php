@@ -19,7 +19,8 @@ class StatusService {
 	 * @return bool True if the onboarding started was marked, false if it was already marked.
 	 */
 	public static function handle_started(): bool {
-		if ( 'started' !== get_option( Options::get_option_name( 'status' ) ) ) {
+		$status = get_option( Options::get_option_name( 'status' ) );
+		if ( 'started' !== $status && 'completed' !== $status ) {
 			update_option( Options::get_option_name( 'status' ), 'started' );
 			do_action( 'newfold/onboarding/started' );
 			return true;

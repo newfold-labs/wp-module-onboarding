@@ -1,16 +1,11 @@
-// WordPress
-import { FullscreenMode } from '@wordpress/interface';
-import { Root, ErrorBoundary } from '@newfold/ui-component-library';
 import { HashRouter as Router } from 'react-router-dom';
-
-// App
+import { dispatch } from '@wordpress/data';
+import { FullscreenMode } from '@wordpress/interface';
+import { Root, ErrorBoundary as RootErrorBoundary } from '@newfold/ui-component-library';
+import { AppBody, ErrorBoundaryFallback, Header } from '@/components';
+import { nfdOnboardingStore, initializeStoreDbSyncServices } from '@/data/store';
 import '@/styles/tailwind.css';
 import '@/styles/app.scss';
-import { AppBody, ErrorBoundaryFallback, Header } from '@/components';
-
-// Data
-import { dispatch } from '@wordpress/data';
-import { nfdOnboardingStore, initializeStoreDbSyncServices } from '@/data/store';
 
 const App = () => {
 	// Feed store data.
@@ -25,12 +20,12 @@ const App = () => {
 		<>
 			<FullscreenMode isActive={ true } />
 			<Root style={ { width: '100%' } }>
-				<ErrorBoundary FallbackComponent={ ErrorBoundaryFallback }>
+				<RootErrorBoundary FallbackComponent={ ErrorBoundaryFallback }>
 					<Router>
 						<Header />
 						<AppBody />
 					</Router>
-				</ErrorBoundary>
+				</RootErrorBoundary>
 			</Root>
 		</>
 	);
