@@ -1,5 +1,5 @@
-import { useCallback } from 'react';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useCallback } from '@wordpress/element';
+import { dispatch, useSelect } from '@wordpress/data';
 import { Container, Title, Spinner } from '@newfold/ui-component-library';
 import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
 import { nfdOnboardingStore } from '@/data/store';
@@ -14,7 +14,6 @@ const MigrationStep = () => {
 		isLoading: true,
 		error: false,
 	} );
-	const setInstaWpMigrationUrl = useDispatch( nfdOnboardingStore ).setInstaWpMigrationUrl;
 
 	const { canMigrateSite, brandName } = useSelect( ( select ) => {
 		return {
@@ -46,10 +45,6 @@ const MigrationStep = () => {
 		);
 	};
 
-	useEffect( () => {
-		prepareMigration();
-	}, [ prepareMigration ] );
-
 	const prepareMigration = useCallback( async () => {
 		try {
 			if ( ! canMigrateSite ) {
@@ -62,7 +57,7 @@ const MigrationStep = () => {
 
 			// On success
 			if ( migrateUrl ) {
-				setInstaWpMigrationUrl( migrateUrl );
+				dispatch( nfdOnboardingStore ).setInstaWpMigrationUrl( migrateUrl );
 				await trackMigrationInitiatedEvent( migrateUrl );
 
 				// Open migration url (external)
@@ -87,18 +82,22 @@ const MigrationStep = () => {
 				)
 			);
 		}
-	}, [ canMigrateSite, setInstaWpMigrationUrl ] );
+	}, [ canMigrateSite ] );
+
+	useEffect( () => {
+		prepareMigration();
+	}, [ prepareMigration ] );
 
 	/**
 	 * @return { string } The title content
 	 */
-	const getTitleContent = () => {
+	const getTitleContent = useCallback( () => {
 		return sprintf(
 			/* translators: %s: to replace brand name */
 			__( "Let's migrate your existing site to %s", 'wp-module-onboarding' ),
 			brandName
 		);
-	};
+	}, [ brandName ] );
 
 	/**
 	 * Render the migration status
