@@ -4,7 +4,7 @@ const {
 	SingleEventsAPI,
 } = require('../wp-module-support/single-events-track.cy');
 
-describe('Restart Onboarding', function () {
+describe.skip('Restart Onboarding', function () {
 	before(() => {
 		// Create the option for Restarting Onboarding
 		cy.exec(

@@ -2,6 +2,7 @@
 import { useEffect, useState } from '@wordpress/element';
 import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
 
 // Third part
 import classNames from 'classnames';
@@ -52,6 +53,7 @@ import {
 	sendOnboardingEvent,
 } from '../../../utils/analytics/hiive';
 import { injectInAllSteps } from '../../../data/flows/utils';
+import { migrateRestURL } from '../../../utils/api/common';
 import {
 	ACTION_ONBOARDING_CHAPTER_COMPLETE,
 	ACTION_ONBOARDING_CHAPTER_STARTED,
@@ -389,16 +391,21 @@ const SiteBuild = () => {
 	const trackInstaWpMigrationEvent = () => {
 		if ( currentStep?.path === stepSiteGenMigration?.path ) {
 			if ( instaWpMigrationUrl ) {
-				getWPSettings().then( ( res ) =>
-					sendOnboardingEvent(
-						new OnboardingEvent(
-							res.nfd_migrate_site
+				getWPSettings().then( ( res ) => {
+					apiFetch( {
+						url: migrateRestURL( 'migrate/events' ),
+						method: 'POST',
+						data: {
+							key: res.nfd_migrate_site
 								? ACTION_MFE_MIGRATION_INITIATED
 								: ACTION_MIGRATION_INITIATED,
-							instaWpMigrationUrl
-						)
-					)
-				);
+							data: {
+								path: instaWpMigrationUrl,
+								page: window.location.href,
+							},
+						},
+					} );
+				} );
 			}
 		}
 	};

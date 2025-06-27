@@ -471,3 +471,7 @@ export function getInteractionDisabled( state ) {
 export function getIsFreshInstallation( state ) {
 	return state.runtime.isFreshInstallation;
 }
+
+export function getLanguages( state ) {
+	return state.data.languages;
+}
