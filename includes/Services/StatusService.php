@@ -29,6 +29,17 @@ class StatusService {
 	}
 
 	/**
+	 * Handles Onboarding abandoned event.
+	 *
+	 * @return void
+	 */
+	public static function handle_abandoned(): void {
+		if ( 'started' === get_option( Options::get_option_name( 'status' ) ) ) {
+			update_option( Options::get_option_name( 'status' ), 'abandoned' );
+		}
+	}
+
+	/**
 	 * Handles Onboarding completed event.
 	 *
 	 * @return void
@@ -164,22 +175,17 @@ class StatusService {
 	 * @return void
 	 */
 	public static function track(): void {
-		global $pagenow;
-
+		// Ignore if the request is an AJAX request.
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			return;
 		}
 
-		switch ( $pagenow ) {
-			case 'index.php':
-				// If the page is not nfd-onboarding.
-				//phpcs:ignore
-				if ( isset( $_GET['page'] ) && WP_Admin::$slug !== \sanitize_text_field( $_GET['page'] ) ) {
-					self::handle_completed();
-				}
-				break;
-			default:
-				self::handle_completed();
+		// Ignore if the request is not for the onboarding page.
+		if ( isset( $_GET['page'] ) && WP_Admin::$slug === \sanitize_text_field( $_GET['page'] ) ) {
+			return;
 		}
+
+		// Handle abandoned event.
+		self::handle_abandoned();
 	}
 }

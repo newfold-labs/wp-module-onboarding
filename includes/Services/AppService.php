@@ -56,6 +56,9 @@ class AppService {
 		// Trash Preview pages.
 		PreviewsService::trash_preview_pages();
 
+		// Mark onboarding as completed.
+		StatusService::handle_completed();
+
 		// Purge all caches.
 		container()->get( 'cachePurger' )->purge_all();
 
