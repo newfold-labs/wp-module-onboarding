@@ -1,6 +1,7 @@
 import classNames from 'classnames';
+import { forwardRef } from '@wordpress/element';
 
-const Iframe = ( {
+const Iframe = forwardRef( ( {
 	title,
 	src,
 	width = 400,
@@ -10,7 +11,7 @@ const Iframe = ( {
 	viewportHeight = 1000,
 	className,
 	...props
-} ) => {
+}, ref ) => {
 	return (
 		<div
 			className={ classNames(
@@ -35,9 +36,10 @@ const Iframe = ( {
 					transform: `scale(${ viewportScale })`,
 				} }
 				{ ...props }
+				ref={ ref }
 			/>
 		</div>
 	);
-};
+} );
 
 export default Iframe;
