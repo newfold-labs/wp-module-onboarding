@@ -70,6 +70,16 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 					isOptimisticUrl = false;
 					return;
 				}
+				// If the file id is not found, set the error state and return
+				if ( ! files[ 0 ]?.id ) {
+					setError( {
+						status: true,
+						message: __( "Failed to upload logo. Please try again.", 'wp-module-onboarding' ),
+					} );
+					setIsUploading( false );
+					return;
+				}
+				// Success...
 				// Set the logo in the input slice
 				dispatch( nfdOnboardingStore ).setLogo( {
 					id: files[ 0 ].id,
