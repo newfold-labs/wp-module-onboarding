@@ -29,23 +29,28 @@ class PluginService {
 		$init_plugins = array();
 
 		$flow = Data::current_flow();
+
 		if ( 'sitegen' === $flow && SiteGenService::is_enabled() ) {
 			$init_plugins = Plugins::get_init();
 
+			/**
+			 * We are disabling AI SiteGen plugin recommendations until we have a better way to handle it.
+			 * TODO: Evaluate and re-enable AI SiteGen plugin recommendations.
+			 */
 			// Convert { slug->slug } to hash for faster search
 			// As Php uses array as { [0] -> slug_name } and that won't work with array_key_exists
-			$plugin_slugs = array_column( $init_plugins, 'slug', 'slug' );
-
+			// $plugin_slugs = array_column( $init_plugins, 'slug', 'slug' );
+			// Get AI SiteGen plugin recommendations
+			// $default_plugins = SiteGenService::get_plugin_recommendations();
+			// if ( is_wp_error( $default_plugins ) ) {
+			// return $default_plugins;
+			// }
 			// Iterate and ensure no duplicates are added
-			$default_plugins = SiteGenService::get_plugin_recommendations();
-			if ( is_wp_error( $default_plugins ) ) {
-				return $default_plugins;
-			}
-			foreach ( $default_plugins as $default_plugin ) {
-				if ( ! array_key_exists( $default_plugin['slug'], $plugin_slugs ) ) {
-					$init_plugins[] = $default_plugin;
-				}
-			}
+			// foreach ( $default_plugins as $default_plugin ) {
+			// if ( ! array_key_exists( $default_plugin['slug'], $plugin_slugs ) ) {
+			// $init_plugins[] = $default_plugin;
+			// }
+			// }
 		} else {
 			// Get the initial list of plugins to be installed based on the plan.
 			$init_plugins = array_merge( Plugins::get_init(), SiteFeatures::get_init() );
