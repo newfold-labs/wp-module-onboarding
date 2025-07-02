@@ -25,7 +25,6 @@
 			"php": "7.3.0"
 		}
 	},
-	"minimum-stability": "dev",
 	"repositories": [
         {
           "type": "composer",
