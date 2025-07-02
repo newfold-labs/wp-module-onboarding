@@ -129,28 +129,23 @@ msgstr "Each webfont src must be a non-empty string."
 msgid "Webfont font weight must be a properly formatted string or integer."
 msgstr "Webfont font weight must be a properly formatted string or integer."
 
-#: build/2.7.4/onboarding.js:1
-#: build/3.0.0/onboarding.js:1
+#: build/3.0.1/onboarding.js:1
 msgid "Site Creator"
 msgstr "Site Creator"
 
-#: build/2.7.4/onboarding.js:1
-#: build/3.0.0/onboarding.js:1
+#: build/3.0.1/onboarding.js:1
 msgid "Get a site created in seconds!"
 msgstr "Get a site created in seconds!"
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Colors"
 msgstr "Colors"
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Primary"
 msgstr "Primary"
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Secondary"
 msgstr "Secondary"
 
@@ -163,127 +158,102 @@ msgstr "Build with AI"
 msgid "Palette %d"
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Base"
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Contrast"
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Select a palette or customize individual colors."
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Palette"
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Pick custom colors"
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Site Logo"
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Replace logo"
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Replace"
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Current logo"
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Remove"
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Upload a logo to represent your brand."
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Upload Logo"
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "You don't have permission to change the site logo."
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Primary color"
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Secondary color"
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Paragraph text in your chosen font."
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Select a font style."
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Font Pairings"
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "No font pairings available."
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
 msgstr ""
 
-#: build/2.7.4/onboarding-design-studio.js:1
-#: build/3.0.0/onboarding-design-studio.js:1
+#: build/3.0.1/onboarding-design-studio.js:1
 msgid "Design Studio"
 msgstr ""
 
-#: build/2.7.4/onboarding.js:1
-#: build/3.0.0/onboarding.js:1
+#: build/3.0.1/onboarding.js:1
 msgid "AI Site Generator"
 msgstr ""
 
-#: build/2.7.4/onboarding.js:1
-#: build/3.0.0/onboarding.js:1
+#: build/3.0.1/onboarding.js:1
 msgid "Content & design generated by AI,"
 msgstr ""
 
-#: build/2.7.4/onboarding.js:1
-#: build/3.0.0/onboarding.js:1
+#: build/3.0.1/onboarding.js:1
 msgid "fully customizable by you."
 msgstr ""
