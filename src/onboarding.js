@@ -9,7 +9,7 @@ import './webpack-public-path';
 import App from '@';
 
 // Check if the runtime data object is mounted.
-const runtimeDataObjectIsMounted = () => {
+export const runtimeDataObjectIsMounted = () => {
 	return (
 		'object' === typeof window?.nfdOnboarding?.runtime &&
 		'buildUrl' in window.nfdOnboarding.runtime
