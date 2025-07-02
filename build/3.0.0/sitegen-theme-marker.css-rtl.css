@@ -1,0 +1,25 @@
+.theme-name {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+	.theme-name svg {
+		margin-right: 8px;
+	}
+
+.nfd-onboarding-sitegen-theme-marker-filled {
+	fill: #1d2327;
+}
+
+.theme.active .nfd-onboarding-sitegen-theme-marker-filled {
+		fill: none;
+	}
+
+.nfd-onboarding-sitegen-theme-marker-title {
+	margin-right: 8px;
+	width: 120px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
