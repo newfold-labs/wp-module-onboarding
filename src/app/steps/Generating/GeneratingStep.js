@@ -182,7 +182,6 @@ const GeneratingStep = () => {
 								{ __( 'Hang tight while we create some wonderful options for you.', 'wp-module-onboarding' ) }
 							</p>
 						</div>
-
 						<div className="nfd-my-14">
 							<Orb height="90px" />
 						</div>
@@ -210,7 +209,6 @@ const GeneratingStep = () => {
 				</Container.Block>
 			</Container>
 		</Step>
-
 	);
 };
 
