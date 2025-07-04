@@ -53,7 +53,7 @@ const Step = ( { children } ) => {
  */
 const Actions = ( { children } ) => {
 	return (
-		<div className="nfd-w-full nfd-flex nfd-flex-row-reverse nfd-justify-between nfd-items-center nfd-flex-wrap nfd-gap-3">
+		<div className="nfd-w-full nfd-flex nfd-flex-row-reverse nfd-items-center nfd-flex-wrap nfd-gap-3 sm:nfd-justify-between nfd-justify-center">
 			{ children }
 		</div>
 	);
