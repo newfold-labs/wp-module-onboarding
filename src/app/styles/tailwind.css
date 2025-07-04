@@ -11,8 +11,8 @@
 		/* Onboarding step container */
 		.nfd-onboarding-step-container {
 			@apply
-			nfd-min-w-[600px]
-			nfd-max-w-[600px]
+			sm:nfd-min-w-[600px]
+			sm:nfd-max-w-[600px]
 			nfd-bg-transparent
 			nfd-shadow-none
 			nfd-rounded-none;
