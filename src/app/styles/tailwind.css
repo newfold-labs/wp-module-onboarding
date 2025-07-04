@@ -38,6 +38,8 @@
 
 			.nfd-container__footer {
 				@apply
+				nfd-pt-0         
+				sm:nfd-pt-4    
 				nfd-pb-0
 				nfd-px-0
 				nfd-border-t-0;
