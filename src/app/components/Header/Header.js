@@ -19,13 +19,18 @@ const Header = () => {
 	return (
 		<header
 			className={ classNames(
-				'nfd-onboarding-header nfd-top-0 nfd-z-20',
+				'nfd-onboarding-header nfd-top-0 nfd-z-20 nfd-w-full',
 				isCanvasStep && 'nfd-border-b nfd-bg-white'
 			) }
 		>
-			<div className="nfd-onboarding-header-container nfd-flex nfd-justify-between nfd-items-center nfd-min-h-16 nfd-px-6">
-				<BluehostLogo id="nfd-onboarding-header-logo" />
-				{ isCanvasStep && <CanvasStepHeaderActions /> }
+			<div className="nfd-onboarding-header-container nfd-flex nfd-flex-col sm:nfd-flex-row nfd-justify-between sm:nfd-items-center nfd-gap-2 nfd-px-4 nfd-py-3 sm:nfd-px-6 sm:nfd-py-0 nfd-min-h-16">
+				<BluehostLogo id="nfd-onboarding-header-logo" className="nfd-h-6 nfd-w-auto" />
+
+				{ isCanvasStep && (
+					<div className="nfd-w-full sm:nfd-w-auto sm:nfd-ml-4">
+						<CanvasStepHeaderActions />
+					</div>
+				) }
 			</div>
 		</header>
 	);
