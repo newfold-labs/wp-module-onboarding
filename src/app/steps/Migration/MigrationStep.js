@@ -1,13 +1,22 @@
 import { useCallback } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
+import { __, sprintf } from '@wordpress/i18n';
 import { Container, Title, Spinner } from '@newfold/ui-component-library';
 import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
 import { nfdOnboardingStore } from '@/data/store';
 import { Navigate, Step } from '@/components';
 import { getSiteMigrateUrl, getWpSettings } from '@/utils/api';
 import migrationFigureUrl from '@/assets/nfd-migration.png';
-import { OnboardingEvent, sendOnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
-import { ACTION_ERROR_STATE_TRIGGERED, ACTION_MFE_MIGRATION_INITIATED, ACTION_MIGRATION_INITIATED } from '@/utils/analytics/hiive/constants';
+import {
+	OnboardingEvent,
+	sendOnboardingEvent,
+	trackOnboardingEvent,
+} from '@/utils/analytics/hiive';
+import {
+	ACTION_ERROR_STATE_TRIGGERED,
+	ACTION_MFE_MIGRATION_INITIATED,
+	ACTION_MIGRATION_INITIATED,
+} from '@/utils/analytics/hiive/constants';
 
 const MigrationStep = () => {
 	const [ siteMigrationApiStatus, setSiteMigrationApiStatus ] = useState( {
@@ -24,6 +33,7 @@ const MigrationStep = () => {
 
 	/**
 	 * Track migration initiated event
+	 *
 	 * @param { string } instaWpMigrationUrl The migration url
 	 * @return { Promise<void> }
 	 */
@@ -38,10 +48,7 @@ const MigrationStep = () => {
 
 		// Analytics: migration initiated event
 		return sendOnboardingEvent(
-			new OnboardingEvent(
-				initiationSource,
-				instaWpMigrationUrl
-			)
+			new OnboardingEvent( initiationSource, instaWpMigrationUrl )
 		);
 	};
 
@@ -57,7 +64,9 @@ const MigrationStep = () => {
 
 			// On success
 			if ( migrateUrl ) {
-				dispatch( nfdOnboardingStore ).setInstaWpMigrationUrl( migrateUrl );
+				dispatch( nfdOnboardingStore ).setInstaWpMigrationUrl(
+					migrateUrl
+				);
 				await trackMigrationInitiatedEvent( migrateUrl );
 
 				// Open migration url (external)
@@ -76,10 +85,7 @@ const MigrationStep = () => {
 
 			// Analytics: migration error event
 			trackOnboardingEvent(
-				new OnboardingEvent(
-					ACTION_ERROR_STATE_TRIGGERED,
-					'migration',
-				)
+				new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'migration' )
 			);
 		}
 	}, [ canMigrateSite ] );
@@ -94,7 +100,10 @@ const MigrationStep = () => {
 	const getTitleContent = useCallback( () => {
 		return sprintf(
 			/* translators: %s: to replace brand name */
-			__( "Let's migrate your existing site to %s", 'wp-module-onboarding' ),
+			__(
+				"Let's migrate your existing site to %s",
+				'wp-module-onboarding'
+			),
 			brandName
 		);
 	}, [ brandName ] );
@@ -109,17 +118,26 @@ const MigrationStep = () => {
 		if ( siteMigrationApiStatus.error ) {
 			return (
 				<>
-					<ExclamationCircleIcon className="nfd-text-red-500 nfd-w-8 nfd-h-8" />
-					<Title as="h2" className="nfd-mt-4 nfd-mb-2">
-						{ __( 'Oops! Something went wrong', 'wp-module-onboarding' ) }
+					<ExclamationCircleIcon className="nfd-text-red-500 nfd-w-5 nfd-h-5 sm:nfd-w-6 sm:nfd-h-6 md:nfd-w-8 md:nfd-h-8" />
+					<Title
+						as="h2"
+						className="nfd-mt-4 nfd-mb-2 nfd-text-base sm:nfd-text-xl md:nfd-text-2xl nfd-font-semibold"
+					>
+						{ __(
+							'Oops! Something went wrong',
+							'wp-module-onboarding'
+						) }
 					</Title>
-					<p>
-						{ __( 'An error occurred while attempting to set up your migration account.', 'wp-module-onboarding' ) }
+					<p className="nfd-text-sm sm:nfd-text-base md:nfd-text-[17px] nfd-text-content-primary">
+						{ __(
+							'An error occurred while attempting to set up your migration account.',
+							'wp-module-onboarding'
+						) }
 					</p>
 					<Navigate
 						toRoute="/"
 						direction="backward"
-						className="nfd-mt-4"
+						className="nfd-mt-4 nfd-text-sm sm:nfd-text-base md:nfd-text-[17px]"
 					>
 						{ __( 'Try again', 'wp-module-onboarding' ) }
 					</Navigate>
@@ -130,12 +148,16 @@ const MigrationStep = () => {
 		// On loading
 		return (
 			<>
-				<Title as="h2" className="nfd-mt-4 nfd-mb-4">
+				<Title
+					as="h2"
+					className="nfd-mt-4 nfd-mb-4 nfd-text-base sm:nfd-text-xl md:nfd-text-2xl nfd-font-semibold"
+				>
 					{ __( 'Preparing your account', 'wp-module-onboarding' ) }
 				</Title>
+
 				<Spinner
 					variant="primary"
-					size="8"
+					className="nfd-w-5 nfd-h-5 sm:nfd-w-6 sm:nfd-h-6 md:nfd-w-8 md:nfd-h-8"
 				/>
 			</>
 		);
@@ -143,21 +165,37 @@ const MigrationStep = () => {
 
 	return (
 		<Step>
-			<Container
-				className="nfd-onboarding-step-container nfd-onboarding-step-migration"
-			>
+			<Container className="nfd-onboarding-step-container nfd-onboarding-step-migration nfd-flex nfd-flex-col nfd-items-center nfd-text-center nfd-px-4 sm:nfd-px-0 nfd-my-5 sm:nfd-my-0">
 				<Container.Header
-					title={ getTitleContent() }
-					description={ __( 'Please wait a few seconds while we get your new account ready to import your existing WordPress site.', 'wp-module-onboarding' ) }
+					title={
+						<Title
+							as="h2"
+							className="nfd-text-base sm:nfd-text-xl md:nfd-text-2xl nfd-font-semibold"
+						>
+							{ getTitleContent() }
+						</Title>
+					}
+					description={
+						<p className="nfd-text-sm sm:nfd-text-base md:nfd-text-[17px] nfd-text-content-primary nfd-mt-2">
+							{ __(
+								'Please wait a few seconds while we get your new account ready to import your existing WordPress site.',
+								'wp-module-onboarding'
+							) }
+						</p>
+					}
 				/>
+
 				<Container.Block>
-					<div className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-14 nfd-text-center nfd-text-content-primary">
+					<div className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-8 sm:nfd-gap-14 nfd-text-center nfd-text-content-primary nfd-px-4 sm:nfd-px-0">
 						<img
 							src={ migrationFigureUrl }
-							alt={ __( 'Migration Figure', 'wp-module-onboarding' ) }
-							width="325"
+							alt={ __(
+								'Migration Figure',
+								'wp-module-onboarding'
+							) }
+							className="nfd-w-52 sm:nfd-w-72 md:nfd-w-[325px] nfd-h-auto"
 						/>
-						<div className="nfd-flex nfd-flex-col nfd-items-center">
+						<div className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-3 sm:nfd-gap-6 nfd-text-sm sm:nfd-text-base md:nfd-text-[17px]">
 							{ renderMigrationStatus() }
 						</div>
 					</div>
