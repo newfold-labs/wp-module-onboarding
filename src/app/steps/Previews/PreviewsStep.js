@@ -73,14 +73,16 @@ const PreviewsStep = () => {
 
 	return (
 		<Step>
-			<Container className="nfd-onboarding-step-container nfd-onboarding-step-previews nfd-min-w-[948px] nfd-max-w-[948px]">
+			<Container
+				className="nfd-onboarding-step-container nfd-onboarding-step-previews nfd-w-full nfd-max-w-[948px] nfd-mx-auto nfd-px-4 sm:nfd-px-6"
+			>
 				<Container.Header
 					title={ getStepTitle() }
 					description={ getStepDescription() }
-					className="nfd-gap-2"
+					className="nfd-gap-2 nfd-text-center sm:nfd-text-left"
 				/>
 				<Container.Block>
-					<div className="nfd-grid nfd-grid-cols-3 nfd-gap-6">
+					<div className="nfd-grid nfd-grid-cols-1 sm:nfd-grid-cols-2 lg:nfd-grid-cols-3 nfd-gap-6 nfd-place-items-center sm:nfd-place-items-start">
 						{ renderPreviews() }
 					</div>
 				</Container.Block>
