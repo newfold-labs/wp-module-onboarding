@@ -69,6 +69,14 @@ const ExperienceOptions = () => {
 						border-radius: 8px !important;
 					}
 
+					/* Apply flex only on small screens (max-width: 00px) */
+					@media (max-width: 600px) {
+						.nfd-onboarding-experience-options .nfd-label {
+							display: flex !important;
+							flex-direction: column !important;
+						}
+					}
+
 					.nfd-onboarding-experience-options .nfd-features-select__feature-content {
 						padding: 1rem !important;
 						border-color: white !important;
@@ -97,7 +105,7 @@ const ExperienceOptions = () => {
 			{ getCustomStyles() }
 			<FeaturesSelect
 				behavior="radio"
-				className="nfd-flex"
+				className="nfd-flex nfd-flex-col sm:nfd-flex-row nfd-flex-wrap nfd-gap-4"
 			>
 				{ experienceOptions.map( ( option ) => (
 					<FeaturesSelect.Feature
@@ -107,13 +115,15 @@ const ExperienceOptions = () => {
 						value={ option.value }
 						checked={ selectedExperienceLevel === option.value }
 						screenReaderLabel={ option.label }
-						className="nfd-w-[30%] nfd-flex-grow [&>label]:nfd-h-full [&>label]:nfd-flex"
 						onChange={ handleChange }
+						className="nfd-basis-0 nfd-flex-1 nfd-min-w-0 [&>label]:nfd-w-full [&>label]:nfd-h-full [&>label]:nfd-flex"
 					>
-						<div className="nfd-flex nfd-flex-col nfd-self-stretch nfd-gap-3 nfd-text-left">
+						<div className="nfd-flex nfd-flex-col nfd-self-stretch nfd-w-full nfd-gap-3 nfd-text-left">
 							<OptionLevelPill slots={ 3 } active={ option.level } />
-							<Title as="h4" className="nfd-text-sm nfd-font-semibold">{ option.label }</Title>
-							<p className="nfd-text-sm">{ option.description }</p>
+							<Title as="h4" className="nfd-text-sm sm:nfd-text-base nfd-font-semibold">
+								{ option.label }
+							</Title>
+							<p className="nfd-text-xs sm:nfd-text-sm">{ option.description }</p>
 						</div>
 					</FeaturesSelect.Feature>
 				) ) }

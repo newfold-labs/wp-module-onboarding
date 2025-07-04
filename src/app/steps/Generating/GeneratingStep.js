@@ -167,7 +167,7 @@ const GeneratingStep = () => {
 
 	return (
 		<Step>
-			<Container className="nfd-onboarding-step-container nfd-onboarding-step-generating">
+			<Container className="nfd-onboarding-step-container nfd-onboarding-step-generating nfd-px-4 sm:nfd-px-0">
 				<Container.Block className="nfd-text-center nfd-p-0">
 					<Motion
 						initial={ { scale: 1.1, y: 100 } }
@@ -175,27 +175,31 @@ const GeneratingStep = () => {
 						transition={ { ease: 'easeOut', delay: 2.2, duration: 0.8 } }
 					>
 						<div className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-5">
-							<Title className="nfd-text-3xl">
+							<Title className="nfd-text-2xl sm:nfd-text-3xl">
 								{ __( 'Building your website…', 'wp-module-onboarding' ) }
 							</Title>
-							<p className="nfd-text-[15px] nfd-text-content-primary">
+							<p className="nfd-text-sm sm:nfd-text-[15px] nfd-text-content-primary">
 								{ __( 'Hang tight while we create some wonderful options for you.', 'wp-module-onboarding' ) }
 							</p>
 						</div>
+
 						<div className="nfd-my-14">
 							<Orb height="90px" />
 						</div>
 					</Motion>
 
-					<div className="nfd-flex nfd-flex-col nfd-max-w-[500px] nfd-mx-auto">
+					<div className="nfd-flex nfd-flex-col nfd-max-w-[500px] nfd-mx-auto nfd-px-2 sm:nfd-px-0">
 						<Motion
 							variants={ containerVariants }
 							initial="hidden"
 							animate={ isReadyToAnimate ? 'visible' : 'hidden' }
 						>
 							<Motion variants={ itemVariants }>
-								<p className="nfd-text-[14px] nfd-text-content-primary nfd-mb-8">
-									{ __( 'While we wait, let us know how familiar you are with WordPress, so we can tailor the experience to your needs:', 'wp-module-onboarding' ) }
+								<p className="nfd-text-xs sm:nfd-text-sm md:nfd-text-[14px] nfd-text-content-primary nfd-mb-8">
+									{ __(
+										'While we wait, let us know how familiar you are with WordPress, so we can tailor the experience to your needs:',
+										'wp-module-onboarding'
+									) }
 								</p>
 							</Motion>
 							<Motion variants={ itemVariants }>
@@ -206,6 +210,7 @@ const GeneratingStep = () => {
 				</Container.Block>
 			</Container>
 		</Step>
+
 	);
 };
 
