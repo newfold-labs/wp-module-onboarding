@@ -73,14 +73,14 @@ const PreviewsStep = () => {
 
 	return (
 		<Step>
-			<Container className="nfd-onboarding-step-container nfd-onboarding-step-previews nfd-min-w-[948px] nfd-max-w-[948px]">
+			<Container className="nfd-onboarding-step-container nfd-onboarding-step-previews nfd-min-w-[948px] nfd-max-w-[948px] tablet:nfd-min-w-[90%] tablet:nfd-max-w-[90%]">
 				<Container.Header
 					title={ getStepTitle() }
 					description={ getStepDescription() }
 					className="nfd-gap-2"
 				/>
-				<Container.Block className="mobile:nfd-w-screen">
-					<div className="nfd-grid nfd-grid-cols-3 nfd-gap-6 mobile:!nfd-grid-cols-[repeat(3,minmax(300px,1fr))] mobile:nfd-overflow-x-auto mobile:-nfd-ml-[5%] mobile:nfd-pl-[5%] mobile:nfd-mr-[5%] mobile:nfd-pr-[5%]">
+				<Container.Block className="tablet:nfd-w-screen">
+					<div className="nfd-grid nfd-grid-cols-3 nfd-gap-6 tablet:!nfd-grid-cols-[repeat(3,minmax(300px,1fr))] tablet:nfd-overflow-x-auto tablet:-nfd-ml-[5%] tablet:nfd-pl-[5%] tablet:nfd-mr-[5%] tablet:nfd-pr-[5%]">
 						{ renderPreviews() }
 					</div>
 				</Container.Block>
