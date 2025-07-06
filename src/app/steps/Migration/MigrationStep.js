@@ -1,12 +1,13 @@
 import { useCallback } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
 import { Container, Title, Spinner } from '@newfold/ui-component-library';
 import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
 import { nfdOnboardingStore } from '@/data/store';
 import { Navigate, Step } from '@/components';
-import { getSiteMigrateUrl, getWpSettings } from '@/utils/api';
+import { getSiteMigrateUrl, getWpSettings, migrateRestURL } from '@/utils/api';
 import migrationFigureUrl from '@/assets/nfd-migration.png';
-import { OnboardingEvent, sendOnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
+import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_ERROR_STATE_TRIGGERED, ACTION_MFE_MIGRATION_INITIATED, ACTION_MIGRATION_INITIATED } from '@/utils/analytics/hiive/constants';
 
 const MigrationStep = () => {
@@ -36,13 +37,21 @@ const MigrationStep = () => {
 			initiationSource = ACTION_MIGRATION_INITIATED;
 		}
 
-		// Analytics: migration initiated event
-		return sendOnboardingEvent(
-			new OnboardingEvent(
-				initiationSource,
-				instaWpMigrationUrl
-			)
-		);
+		/*
+		Send analytics event to custom migration endpoint. This uses the application endpoint (via the worker)
+		to ensure reliable event delivery The `await` ensures the request completes before navigation, preventing it from being cancelled on redirect.
+		*/
+		await apiFetch( {
+			url: migrateRestURL( 'migrate/events' ),
+			method: 'POST',
+			data: {
+				key: initiationSource,
+				data: {
+					path: instaWpMigrationUrl,
+					page: window.location.href,
+				},
+			},
+		} );
 	};
 
 	const prepareMigration = useCallback( async () => {
