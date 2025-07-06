@@ -100,7 +100,7 @@ const Sidebar = () => {
 
 	return (
 		<div
-			className={ `nfd-onboarding-canvas-sidebar nfd-h-full nfd-bg-white nfd-border-l nfd-overflow-y-auto nfd-transition-all nfd-duration-300 nfd-ease-in-out ${
+			className={ `nfd-onboarding-canvas-sidebar nfd-h-full nfd-bg-white nfd-border-l nfd-overflow-y-auto nfd-transition-all nfd-duration-300 nfd-ease-in-out mobile:nfd-hidden ${
 				canvasSidebarIsOpen
 					? 'nfd-min-w-[325px] nfd-max-w-[325px] nfd-opacity-100'
 					: 'nfd-min-w-0 nfd-max-w-0 nfd-opacity-0 nfd-overflow-hidden'

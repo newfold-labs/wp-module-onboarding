@@ -2,7 +2,7 @@ import { TextField } from '@newfold/ui-component-library';
 
 const SiteTitleInput = ( { value, onChange } ) => {
 	return (
-		<div className="nfd-w-[60%]">
+		<div className="nfd-w-[60%] mobile:nfd-w-full">
 			<TextField
 				label={ __( 'Site Title', 'wp-module-onboarding' ) }
 				id="nfd-onboarding-site-title"

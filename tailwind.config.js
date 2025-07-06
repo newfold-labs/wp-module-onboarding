@@ -29,6 +29,9 @@ module.exports = {
 					placeholder: '#B3BCC7',
 				},
 			},
+			screens: {
+				mobile: { max: '600px' },
+			},
 		},
 	},
 };

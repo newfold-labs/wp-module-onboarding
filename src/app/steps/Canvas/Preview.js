@@ -102,6 +102,7 @@ const Preview = () => {
 			{ minWidth: 1024, scale: 0.9 },
 			{ minWidth: 768, scale: 0.85 },
 			{ minWidth: 480, scale: 0.8 },
+			{ minWidth: 280, scale: 0.75 },
 		];
 
 		// Find the scale breakpoint that matches the container width.

@@ -175,10 +175,10 @@ const GeneratingStep = () => {
 						transition={ { ease: 'easeOut', delay: 2.2, duration: 0.8 } }
 					>
 						<div className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-5">
-							<Title className="nfd-text-3xl">
+							<Title className="nfd-text-3xl mobile:nfd-text-xl">
 								{ __( 'Building your website…', 'wp-module-onboarding' ) }
 							</Title>
-							<p className="nfd-text-[15px] nfd-text-content-primary">
+							<p className="nfd-text-[15px] nfd-text-content-primary mobile:nfd-text-tiny">
 								{ __( 'Hang tight while we create some wonderful options for you.', 'wp-module-onboarding' ) }
 							</p>
 						</div>

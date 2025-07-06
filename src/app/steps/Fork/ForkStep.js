@@ -46,23 +46,23 @@ const ForkStep = () => {
 					}
 					` }
 				</style>
-				<Title className="nfd-text-3xl">
+				<Title className="nfd-text-3xl mobile:nfd-text-2xl">
 					{ __( 'Welcome to WordPress', 'wp-module-onboarding' ) }
 				</Title>
-				<div className="nfd-flex nfd-items-center nfd-justify-center nfd-gap-2 nfd-mt-3.5">
-					<span className="!nfd-text-xl nfd-text-content-primary">
+				<div className="nfd-flex nfd-items-center nfd-justify-center nfd-gap-2 nfd-mt-3.5 mobile:nfd-mt-2">
+					<span className="nfd-text-xl nfd-text-content-primary mobile:nfd-text-base">
 						{ __( 'Powered by', 'wp-module-onboarding' ) }
 					</span>
 					<img
 						src={ bluehostLogoUrl }
 						alt="Bluehost"
-						className="nfd-w-[90px] nfd-h-auto"
+						className="nfd-w-[90px] nfd-h-auto mobile:nfd-w-[70px]"
 					/>
 				</div>
 
 				<Title
 					as="h3"
-					className="nfd-text-2xl nfd-mt-14 nfd-mb-10"
+					className="nfd-text-2xl nfd-mt-14 nfd-mb-10 mobile:nfd-text-xl mobile:nfd-mt-10 mobile:nfd-mb-6"
 				>
 					{ __( 'How would you like to start?', 'wp-module-onboarding' ) }
 				</Title>

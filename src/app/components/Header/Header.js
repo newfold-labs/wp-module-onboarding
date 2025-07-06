@@ -23,8 +23,13 @@ const Header = () => {
 				isCanvasStep && 'nfd-border-b nfd-bg-white'
 			) }
 		>
-			<div className="nfd-onboarding-header-container nfd-flex nfd-justify-between nfd-items-center nfd-min-h-16 nfd-px-6">
-				<BluehostLogo id="nfd-onboarding-header-logo" />
+			<div className="nfd-onboarding-header-container nfd-flex nfd-justify-between nfd-items-center nfd-min-h-16 nfd-px-6 mobile:nfd-px-0 mobile:nfd-max-w-[90%] mobile:nfd-mx-auto">
+				<BluehostLogo
+					id="nfd-onboarding-header-logo"
+					className={ classNames(
+						isCanvasStep && 'mobile:nfd-hidden'
+					) }
+				/>
 				{ isCanvasStep && <CanvasStepHeaderActions /> }
 			</div>
 		</header>

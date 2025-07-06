@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
 import { useNavigate } from 'react-router-dom';
 import { Container } from '@newfold/ui-component-library';
@@ -24,7 +24,7 @@ const PreviewsStep = () => {
 		if ( sitegenHasFailed ) {
 			dispatch( nfdOnboardingStore ).setHomepages( fallbackHomepages );
 		}
-	}, [ sitegenHasFailed ] );
+	}, [ sitegenHasFailed, fallbackHomepages ] );
 
 	const handleNext = () => {
 		navigate( '/canvas', {
@@ -79,8 +79,8 @@ const PreviewsStep = () => {
 					description={ getStepDescription() }
 					className="nfd-gap-2"
 				/>
-				<Container.Block>
-					<div className="nfd-grid nfd-grid-cols-3 nfd-gap-6">
+				<Container.Block className="mobile:nfd-w-screen">
+					<div className="nfd-grid nfd-grid-cols-3 nfd-gap-6 mobile:!nfd-grid-cols-[repeat(3,minmax(300px,1fr))] mobile:nfd-overflow-x-auto mobile:-nfd-ml-[5%] mobile:nfd-pl-[5%] mobile:nfd-mr-[5%] mobile:nfd-pr-[5%]">
 						{ renderPreviews() }
 					</div>
 				</Container.Block>

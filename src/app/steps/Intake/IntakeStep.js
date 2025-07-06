@@ -42,7 +42,7 @@ const IntakeStep = () => {
 
 	const getStepTitle = () => {
 		if ( retryMode ) {
-			return __( 'Sorry, let’s try that again.', 'wp-module-onboarding' );
+			return __( "Sorry, let's try that again.", 'wp-module-onboarding' );
 		}
 		return __( 'Tell us about your site', 'wp-module-onboarding' );
 	};
@@ -64,7 +64,7 @@ const IntakeStep = () => {
 				/>
 				<Container.Block separator={ false }>
 					<div className="nfd-flex nfd-flex-col nfd-gap-6">
-						<div className="nfd-flex nfd-gap-4 nfd-w-full">
+						<div className="nfd-flex nfd-gap-4 nfd-w-full mobile:nfd-flex-col">
 							<SiteTitleInput value={ siteTitleValue } onChange={ setSiteTitleValue } />
 							<LanguageSelector value={ selectedLocaleValue } onChange={ setSelectedLocaleValue } />
 						</div>

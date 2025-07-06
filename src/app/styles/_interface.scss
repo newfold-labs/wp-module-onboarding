@@ -7,6 +7,10 @@ html.wp-toolbar {
 
 body {
 	&.is-fullscreen-mode {
+		#wpbody {
+			padding-top: 0;
+		}
+
 		#wpadminbar {
 			display: none;
 		}

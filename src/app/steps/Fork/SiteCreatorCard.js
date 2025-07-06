@@ -55,7 +55,7 @@ const SiteCreatorCard = ( { initialFocus = false } ) => {
 				<div className="nfd-flex nfd-flex-col nfd-gap-2">
 					<Title
 						as="h3"
-						className="!nfd-text-xl nfd-font-medium nfd-text-content-primary"
+						className="nfd-text-xl nfd-font-medium nfd-text-content-primary mobile:nfd-text-lg"
 					>
 						{ __( 'Get a site created in seconds!', 'wp-module-onboarding' ) }
 					</Title>

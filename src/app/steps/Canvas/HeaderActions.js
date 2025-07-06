@@ -61,7 +61,7 @@ const HeaderActions = () => {
 	};
 
 	return (
-		<div className="nfd-onboarding-canvas-header-actions nfd-flex nfd-gap-4">
+		<div className="nfd-onboarding-canvas-header-actions nfd-flex nfd-gap-4 mobile:nfd-w-full mobile:nfd-justify-between">
 			{ isPublishing && (
 				<InteractionBlockingOverlay
 					hasLoadingSpinner={ true }
@@ -72,7 +72,7 @@ const HeaderActions = () => {
 				type="button"
 				title={ __( 'Toggle layouts sidebar', 'wp-module-onboarding' ) }
 				aria-label={ __( 'Toggle layouts sidebar', 'wp-module-onboarding' ) }
-				className="nfd-onboarding-canvas-sidebar-header-close nfd-mr-2 nfd-rounded-sm hover:nfd-text-primary focus:nfd-text-primary focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary focus:nfd-ring-offset-2"
+				className="nfd-onboarding-canvas-sidebar-header-close nfd-mr-2 nfd-rounded-sm hover:nfd-text-primary focus:nfd-text-primary focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary focus:nfd-ring-offset-2 mobile:nfd-hidden"
 				onClick={ handleCanvasSidebarToggle }
 			>
 				{
