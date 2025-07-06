@@ -38,7 +38,7 @@ const MigrationStep = () => {
 		}
 
 		/*
-		Send tracking event to custom migration endpoint. This uses the application endpoint (via the worker)
+		Send analytics event to custom migration endpoint. This uses the application endpoint (via the worker)
 		to ensure reliable event delivery The `await` ensures the request completes before navigation, preventing it from being cancelled on redirect.
 		*/
 		await apiFetch( {
