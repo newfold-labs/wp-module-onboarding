@@ -1,71 +1,81 @@
-import './webpack-public-path';
-
-// WordPress
 import domReady from '@wordpress/dom-ready';
-import { registerCoreBlocks } from '@wordpress/block-library';
-
-// Classes and functions
-import initializeNFDOnboarding from './OnboardingSPA';
+import { createRoot } from 'react-dom/client';
 import { HiiveAnalytics } from '@newfold/js-utility-ui-analytics';
-import { onboardingRestURL } from './OnboardingSPA/utils/api/common';
-import { isEnvironmentCypress } from './OnboardingSPA/utils';
 import * as Sentry from '@sentry/react';
+import { onboardingRestURL, startOnboarding } from '@/utils/api';
+import { CATEGORY } from '@/utils/analytics/hiive/constants';
+import { isCypress } from '@/utils/helpers';
+import './webpack-public-path';
+import App from '@';
 
-// Misc
-import { NFD_ONBOARDING_ELEMENT_ID, runtimeDataExists } from './constants';
-import {
-	CATEGORY,
-	CATEGORY_EXPERIMENT,
-} from './OnboardingSPA/utils/analytics/hiive/constants';
+// Check if the runtime data object is mounted.
+export const runtimeDataObjectIsMounted = () => {
+	return (
+		'object' === typeof window?.nfdOnboarding?.runtime &&
+		'buildUrl' in window.nfdOnboarding.runtime
+	);
+};
 
-const version = require( '../package.json' ).version;
-const releaseVersion = `wp-onboarding@${ version }`;
-if ( runtimeDataExists ) {
+const initializeSentry = () => {
+	// Don't initialize Sentry in Cypress
+	if ( isCypress() ) {
+		return;
+	}
+
+	const version = require( '../package.json' ).version;
+	const releaseVersion = `wp-onboarding@${ version }`;
+
+	return Sentry.init( {
+		dsn: window.nfdOnboarding.sentryInitDsnURL,
+		integrations: [ Sentry.browserTracingIntegration() ],
+		release: releaseVersion,
+		// Performance Monitoring
+		tracesSampleRate: 1.0, //  Capture 100% of the transactions
+	} );
+};
+
+const initializeAnalytics = () => {
+	return HiiveAnalytics.initialize( {
+		namespace: CATEGORY,
+		urls: {
+			single: onboardingRestURL( 'events', false ),
+			batch: onboardingRestURL( 'events/batch', false ),
+		},
+		settings: {
+			debounce: {
+				time: 3000,
+			},
+		},
+	} );
+};
+
+// If window.nfdOnboarding is mounted, initialize the app.
+if ( runtimeDataObjectIsMounted() ) {
 	domReady( () => {
-		// Only initialize Sentry if not running in Cypress
-		if ( ! isEnvironmentCypress() ) {
-			// Integrate Sentry to send errors and data for tracking
-			Sentry.init( {
-				dsn: window.nfdOnboarding.sentryInitDsnURL,
-				integrations: [ Sentry.browserTracingIntegration() ],
-				release: releaseVersion,
-				// Performance Monitoring
-				tracesSampleRate: 1.0, //  Capture 100% of the transactions
-			} );
-		}
+		initializeSentry();
+		initializeAnalytics();
+		startOnboarding();
 
-		// The A/B Test Events
-		HiiveAnalytics.initialize( {
-			namespace: CATEGORY_EXPERIMENT,
-			urls: {
-				single: onboardingRestURL( 'events' ),
-				batch: onboardingRestURL( 'events/batch' ),
-			},
-			settings: {
-				debounce: {
-					time: 3000,
-				},
-			},
-		} );
+		const NFD_ONBOARDING_ELEMENT_ID = 'nfd-onboarding';
+		const appTarget = document.getElementById( NFD_ONBOARDING_ELEMENT_ID );
+		/**
+		 * Temporarily elevate the container's z-index during transition.
+		 * This ensures proper layering while fading from loading screen to app.
+		 */
+		appTarget.style.zIndex = 100000;
+		setTimeout( () => {
+			appTarget.style.zIndex = 'initial';
+		}, 500 );
 
-		HiiveAnalytics.initialize( {
-			namespace: CATEGORY,
-			urls: {
-				single: onboardingRestURL( 'events', false ),
-				batch: onboardingRestURL( 'events/batch', false ),
-			},
-			settings: {
-				debounce: {
-					time: 3000,
-				},
-			},
-		} );
+		// Fade out the loading screen before rendering the app.
+		const loadingContainer = appTarget.querySelector( '.nfd-onboarding-loading-app' );
+		loadingContainer.classList.add( 'fade-out' );
 
-		initializeNFDOnboarding(
-			NFD_ONBOARDING_ELEMENT_ID,
-			window.nfdOnboarding
-		);
-		registerCoreBlocks();
+		// Render the app after the loading screen has faded out.
+		setTimeout( () => {
+			const appRoot = createRoot( appTarget );
+			appRoot.render( <App /> );
+		}, 300 );
 	} );
 } else {
 	/* eslint-disable no-console */
