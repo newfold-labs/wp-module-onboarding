@@ -15,7 +15,10 @@
 			nfd-max-w-[600px]
 			nfd-bg-transparent
 			nfd-shadow-none
-			nfd-rounded-none;
+			nfd-rounded-none
+			nfd-mx-auto
+			mobile:!nfd-min-w-[90%]
+			mobile:!nfd-max-w-[90%];
 
 			.nfd-container__header {
 				@apply
@@ -27,6 +30,7 @@
 				.nfd-title {
 					@apply
 					nfd-text-content-primary
+					mobile:!nfd-text-lg;
 				}
 			}
 
@@ -43,7 +47,6 @@
 				nfd-border-t-0;
 			}
 		}
-
 
 		/* Title */
 		.nfd-title {

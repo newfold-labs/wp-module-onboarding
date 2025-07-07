@@ -35,8 +35,8 @@ const MigrationCard = ( {
 			{ ...props }
 		>
 			<div className="nfd-flex nfd-items-center nfd-justify-center nfd-text-center nfd-gap-3">
-				<ArrowsRightLeftIcon className="nfd-w-6 nfd-h-6 nfd-text-content-primary" />
-				<span className="!nfd-text-xl nfd-font-medium nfd-text-content-primary">
+				<ArrowsRightLeftIcon className="nfd-w-6 nfd-h-6 nfd-text-content-primary mobile:nfd-hidden" />
+				<span className="nfd-text-xl nfd-font-medium nfd-text-content-primary mobile:nfd-text-lg">
 					{ __( 'Import an Existing WordPress Site', 'wp-module-onboarding' ) }
 				</span>
 			</div>

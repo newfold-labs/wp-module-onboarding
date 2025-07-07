@@ -41,7 +41,7 @@ const LanguageSelector = ( { value, onChange } ) => {
 	} );
 
 	return (
-		<div className="nfd-w-[40%]">
+		<div className="nfd-w-[40%] mobile:nfd-w-full">
 			<SelectField
 				id="nfd-onboarding-language-selector"
 				label={ __( 'Language', 'wp-module-onboarding' ) }

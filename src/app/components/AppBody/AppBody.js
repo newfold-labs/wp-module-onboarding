@@ -74,8 +74,8 @@ const AppBody = () => {
 	}, [ location ] );
 
 	return (
-		<div className="nfd-onboarding-body nfd-flex nfd-justify-center nfd-py-20">
-			<div className="nfd-onboarding-body-container">
+		<div className="nfd-onboarding-body nfd-flex nfd-justify-center nfd-py-20 mobile:nfd-py-10">
+			<div className="nfd-onboarding-body-container nfd-w-full">
 				<AppErrorBoundary FallbackComponent={ ErrorBoundaryFallback }>
 					{ boot() }
 				</AppErrorBoundary>

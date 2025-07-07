@@ -72,6 +72,7 @@ const ExperienceOptions = () => {
 					.nfd-onboarding-experience-options .nfd-features-select__feature-content {
 						padding: 1rem !important;
 						border-color: white !important;
+						width: 100% !important;
 					}
 
 					.nfd-onboarding-experience-options .nfd-features-select__feature .nfd-features-select__feature-input:checked:focus + .nfd-label .nfd-features-select__feature-content {
@@ -97,7 +98,7 @@ const ExperienceOptions = () => {
 			{ getCustomStyles() }
 			<FeaturesSelect
 				behavior="radio"
-				className="nfd-flex"
+				className="nfd-flex mobile:nfd-flex-col"
 			>
 				{ experienceOptions.map( ( option ) => (
 					<FeaturesSelect.Feature
@@ -107,7 +108,7 @@ const ExperienceOptions = () => {
 						value={ option.value }
 						checked={ selectedExperienceLevel === option.value }
 						screenReaderLabel={ option.label }
-						className="nfd-w-[30%] nfd-flex-grow [&>label]:nfd-h-full [&>label]:nfd-flex"
+						className="nfd-w-[30%] nfd-flex-grow [&>label]:nfd-h-full [&>label]:nfd-flex mobile:nfd-w-full"
 						onChange={ handleChange }
 					>
 						<div className="nfd-flex nfd-flex-col nfd-self-stretch nfd-gap-3 nfd-text-left">
