@@ -8,6 +8,7 @@ const DEFAULT_STATE = {
 	prompt: '',
 	logo: '',
 	experienceLevel: '',
+	siteType: '',
 };
 
 /**
@@ -49,6 +50,11 @@ export function input( state = DEFAULT_STATE, action ) {
 				...state,
 				experienceLevel: action.experienceLevel,
 			};
+		case 'SET_SITE_TYPE':
+			return {
+				...state,
+				siteType: action.siteType,
+			};
 	}
 
 	return state;
@@ -87,6 +93,10 @@ export const actions = {
 		type: 'SET_EXPERIENCE_LEVEL',
 		experienceLevel,
 	} ),
+	setSiteType: ( siteType ) => ( {
+		type: 'SET_SITE_TYPE',
+		siteType,
+	} ),
 };
 
 /**
@@ -99,6 +109,7 @@ export const selectors = {
 	getPrompt: ( state ) => state.input.prompt,
 	getLogo: ( state ) => state.input.logo,
 	getExperienceLevel: ( state ) => state.input.experienceLevel,
+	getSiteType: ( state ) => state.input.siteType,
 };
 
 /**
