@@ -1,7 +1,7 @@
 import { dispatch, useSelect } from '@wordpress/data';
 import { Button } from '@newfold/ui-component-library';
 import { AdjustmentsVerticalIcon, CloudArrowUpIcon, RectangleStackIcon as RectangleStackIconOutline } from '@heroicons/react/24/outline';
-import { RectangleStackIcon as RectangleStackIconSolid } from '@heroicons/react/24/solid'
+import { RectangleStackIcon as RectangleStackIconSolid } from '@heroicons/react/24/solid';
 import { InteractionBlockingOverlay } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
 import { usePublishSite } from '@/utils/hooks';
@@ -103,6 +103,6 @@ const HeaderActions = () => {
 			</Button>
 		</div>
 	);
-}
+};
 
 export default HeaderActions;

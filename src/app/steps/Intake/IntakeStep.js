@@ -1,28 +1,25 @@
 import { Navigate, Step } from '@/components';
 import { Container } from '@newfold/ui-component-library';
-import { SiteTitleInput, PromptInput, LanguageSelector, calculatePromptStrength } from '.';
-import { select, dispatch, useSelect } from '@wordpress/data';
+import { SiteTitleInput, PromptInput, LanguageSelector, calculatePromptStrength, SiteTypeSelector } from '.';
+import { select, dispatch } from '@wordpress/data';
 import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_INTAKE_PROMPT_SET } from '@/utils/analytics/hiive/constants';
 
 const IntakeStep = () => {
 	// Initiale state values.
-	const { siteTitle, selectedLocale, prompt } = select( nfdOnboardingStore ).getInputSlice();
+	const { siteType, siteTitle, selectedLocale, prompt } = select( nfdOnboardingStore ).getInputSlice();
+	const retryMode = select( nfdOnboardingStore ).getRetryMode();
 
 	// Step states.
+	const [ siteTypeValue, setSiteTypeValue ] = useState( siteType );
 	const [ siteTitleValue, setSiteTitleValue ] = useState( siteTitle );
 	const [ selectedLocaleValue, setSelectedLocaleValue ] = useState( selectedLocale );
 	const [ promptValue, setPromptValue ] = useState( prompt );
 
-	const { retryMode } = useSelect( ( select ) => {
-		return {
-			retryMode: select( nfdOnboardingStore ).getRetryMode(),
-		};
-	} );
-
 	const handleNext = () => {
 		dispatch( nfdOnboardingStore ).setInputSlice( {
+			siteType: siteTypeValue,
 			siteTitle: siteTitleValue.trim(),
 			selectedLocale: selectedLocaleValue,
 			prompt: promptValue.trim(),
@@ -64,6 +61,7 @@ const IntakeStep = () => {
 				/>
 				<Container.Block separator={ false }>
 					<div className="nfd-flex nfd-flex-col nfd-gap-6">
+						<SiteTypeSelector value={ siteTypeValue } onChange={ setSiteTypeValue } />
 						<div className="nfd-flex nfd-gap-4 nfd-w-full mobile:nfd-flex-col">
 							<SiteTitleInput value={ siteTitleValue } onChange={ setSiteTitleValue } />
 							<LanguageSelector value={ selectedLocaleValue } onChange={ setSelectedLocaleValue } />
@@ -76,7 +74,7 @@ const IntakeStep = () => {
 						<Navigate
 							toRoute="/logo"
 							direction="forward"
-							disabled={ ! promptValue }
+							disabled={ ! promptValue || ! siteTypeValue }
 							callback={ handleNext }
 						>
 							{ __( 'Next', 'wp-module-onboarding' ) }

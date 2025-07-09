@@ -7,8 +7,9 @@ import { ACTION_SITE_PAGES_GENERATION_FAILED } from '@/utils/analytics/hiive/con
 const generateSitePages = async () => {
 	const prompt = select( nfdOnboardingStore ).getPrompt();
 	const locale = select( nfdOnboardingStore ).getSelectedLocale();
+	const siteType = select( nfdOnboardingStore ).getSiteType();
 
-	const response = await getSitePages( prompt, locale );
+	const response = await getSitePages( prompt, siteType, locale );
 	if ( response.error ) {
 		trackOnboardingEvent(
 			new OnboardingEvent( ACTION_SITE_PAGES_GENERATION_FAILED )

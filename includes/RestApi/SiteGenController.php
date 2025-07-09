@@ -79,15 +79,6 @@ class SiteGenController {
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 			)
 		);
-		\register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/customize-data',
-			array(
-				'methods'             => \WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_customize_sidebar_data' ),
-				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-			)
-		);
 
 		\register_rest_route(
 			$this->namespace,
@@ -212,12 +203,14 @@ class SiteGenController {
 
 		$site_info  = $request->get_param( 'site_info' );
 		$identifier = $request->get_param( 'identifier' );
+		$site_type  = $request->get_param( 'site_type' );
 		$locale     = $request->get_param( 'locale' );
 		$skip_cache = $request->get_param( 'skip_cache' );
 
 		return SiteGenService::instantiate_site_meta(
 			$site_info,
 			$identifier,
+			$site_type,
 			$locale,
 			$skip_cache
 		);
@@ -236,21 +229,23 @@ class SiteGenController {
 		}
 
 		$site_description = $request->get_param( 'site_description' );
-		$locale           = $request->get_param( 'locale' );
 		$site_info        = array( 'site_description' => $site_description );
+		$site_type        = $request->get_param( 'site_type' );
+		$locale           = $request->get_param( 'locale' );
 
-		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', $locale );
+		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', $site_type, $locale );
 		if ( is_wp_error( $target_audience ) ) {
 			return $target_audience;
 		}
 
-		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', $locale );
+		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', $site_type, $locale );
 		if ( is_wp_error( $content_style ) ) {
 			return $content_style;
 		}
 
 		$homepages = SiteGenService::generate_homepages(
 			$site_description,
+			$site_type,
 			$content_style,
 			$target_audience,
 			$locale,
@@ -315,25 +310,26 @@ class SiteGenController {
 	public function publish_sitemap_pages( \WP_REST_Request $request ) {
 		$site_description = $request->get_param( 'site_description' );
 		$site_info        = array( 'site_description' => $site_description );
+		$site_type        = $request->get_param( 'site_type' );
 		$locale           = $request->get_param( 'locale' );
 		$skip_cache       = $request->get_param( 'skip_cache' );
 
-		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', $locale, $skip_cache );
+		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', $site_type, $locale, $skip_cache );
 		if ( is_wp_error( $target_audience ) ) {
 			return $target_audience;
 		}
 
-		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', $locale, $skip_cache );
+		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', $site_type, $locale, $skip_cache );
 		if ( is_wp_error( $content_style ) ) {
 			return $content_style;
 		}
 
-		$sitemap = SiteGenService::instantiate_site_meta( $site_info, 'sitemap', $locale, $skip_cache );
+		$sitemap = SiteGenService::instantiate_site_meta( $site_info, 'sitemap', $site_type, $locale, $skip_cache );
 		if ( is_wp_error( $sitemap ) ) {
 			return $sitemap;
 		}
 
-		SiteGenService::publish_sitemap_pages( $site_description, $content_style, $target_audience, $sitemap, $locale );
+		SiteGenService::publish_sitemap_pages( $site_description, $site_type, $content_style, $target_audience, $sitemap, $locale );
 
 		return new \WP_REST_Response( array(), 201 );
 	}
@@ -345,14 +341,5 @@ class SiteGenController {
 	 */
 	public function get_site_details_meta() {
 		return SiteGenData::get_site_details_questionnaire();
-	}
-
-	/**
-	 * Get Sitegen Customize sidebar data.
-	 *
-	 * @return array|WP_Error
-	 */
-	public function get_customize_sidebar_data() {
-		return SiteGenService::get_customize_sidebar_data();
 	}
 }

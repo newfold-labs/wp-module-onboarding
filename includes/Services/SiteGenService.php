@@ -87,11 +87,12 @@ class SiteGenService {
 	public function get_sitemap_page_title( string $slug ): string|false {
 		$prompt = $this->get_prompt();
 		$locale = $this->get_locale();
-		if ( ! $prompt || ! $locale ) {
+		$site_type = $this->get_site_type();
+		if ( ! $prompt || ! $locale || ! $site_type ) {
 			return false;
 		}
 
-		$sitemap = LegacySiteGenService::instantiate_site_meta( $prompt, 'sitemap', $locale );
+		$sitemap = LegacySiteGenService::instantiate_site_meta( $prompt, 'sitemap', $site_type, $locale );
 		if ( ! is_wp_error( $sitemap ) ) {
 			foreach ( $sitemap as $page ) {
 				if ( $slug === $page['slug'] ) {
@@ -141,6 +142,15 @@ class SiteGenService {
 	 */
 	public function get_prompt(): string|false {
 		return ! empty( $this->input_data['prompt'] ) ? $this->input_data['prompt'] : false;
+	}
+
+	/**
+	 * Get the site type entered during Onboarding.
+	 *
+	 * @return string
+	 */
+	public function get_site_type(): string {
+		return ! empty( $this->input_data['siteType'] ) ? $this->input_data['siteType'] : 'business';
 	}
 
 	/**
