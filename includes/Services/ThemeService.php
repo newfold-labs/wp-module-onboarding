@@ -9,7 +9,18 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
  * Class for providing theme related services.
  */
 class ThemeService {
-	private static $retries     = 0;
+	/**
+	 * Number of retry attempts made.
+	 *
+	 * @var int
+	 */
+	private static $retries = 0;
+
+	/**
+	 * Maximum number of retries allowed.
+	 *
+	 * @var int
+	 */
 	private static $max_retries = 3;
 
 	/**
