@@ -61,11 +61,11 @@ const IntakeStep = () => {
 				/>
 				<Container.Block separator={ false }>
 					<div className="nfd-flex nfd-flex-col nfd-gap-6">
-						<SiteTypeSelector value={ siteTypeValue } onChange={ setSiteTypeValue } />
-						<div className="nfd-flex nfd-gap-4 nfd-w-full mobile:nfd-flex-col">
-							<SiteTitleInput value={ siteTitleValue } onChange={ setSiteTitleValue } />
+						<div className="nfd-flex nfd-gap-4 nfd-w-full nfd-pb-7 nfd-border-b mobile:nfd-flex-col">
+							<SiteTypeSelector value={ siteTypeValue } onChange={ setSiteTypeValue } />
 							<LanguageSelector value={ selectedLocaleValue } onChange={ setSelectedLocaleValue } />
 						</div>
+						<SiteTitleInput value={ siteTitleValue } onChange={ setSiteTitleValue } />
 						<PromptInput value={ promptValue } onChange={ setPromptValue } />
 					</div>
 				</Container.Block>
