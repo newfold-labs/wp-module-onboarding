@@ -19,7 +19,7 @@ const SiteTypeSelector = ( { value: selectedSiteType, onChange } ) => {
 
 	const getSelectedLabel = ( value ) => {
 		const option = siteTypeOptions.find( ( o ) => o.value === value );
-		return option ? option.label : __( 'Site Type', 'wp-module-onboarding' );
+		return option ? option.label : __( 'Select Site Type', 'wp-module-onboarding' );
 	};
 
 	const handleChange = ( newValue ) => {
