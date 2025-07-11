@@ -7,19 +7,25 @@ import { generateSite } from '@/utils/sitegen';
 import { ExperienceOptions } from './';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_EXPERIENCE_LEVEL_SET } from '@/utils/analytics/hiive/constants';
+import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 const GeneratingStep = () => {
-	const [ isSiteGenerationComplete, setIsSiteGenerationComplete ] = useState( false );
+	const [ isSiteGenerationComplete, setIsSiteGenerationComplete ] =
+		useState( false );
 	const [ isTimerComplete, setIsTimerComplete ] = useState( false );
 	const [ isReadyToAnimate, setIsReadyToAnimate ] = useState( false );
 
-	const { selectedExperienceLevel, homepages, retryMode } = useSelect( ( select ) => {
-		return {
-			experienceLevel: select( nfdOnboardingStore ).getExperienceLevel(),
-			homepages: select( nfdOnboardingStore ).getHomepages(),
-			retryMode: select( nfdOnboardingStore ).getRetryMode(),
-		};
-	} );
+	const { selectedExperienceLevel, homepages, retryMode } = useSelect(
+		( select ) => {
+			return {
+				experienceLevel:
+					select( nfdOnboardingStore ).getExperienceLevel(),
+				homepages: select( nfdOnboardingStore ).getHomepages(),
+				retryMode: select( nfdOnboardingStore ).getRetryMode(),
+			};
+		}
+	);
 
 	const navigate = useNavigate();
 
@@ -50,6 +56,7 @@ const GeneratingStep = () => {
 
 	/**
 	 * Whether to render the component or navigate a different step.
+	 *
 	 * @return {boolean} True if the component should render, false otherwise.
 	 */
 	const shouldRender = () => {
@@ -86,6 +93,7 @@ const GeneratingStep = () => {
 	 * Logic:
 	 * - If Sitegen has failed for the first time, restart the generation process to try again.
 	 * - If Sitegen has failed for the second time, navigate to the previews step to generate fallback pages.
+	 *
 	 * @return {void}
 	 */
 	const handleFailedSiteGeneration = () => {
@@ -171,15 +179,29 @@ const GeneratingStep = () => {
 				<Container.Block className="nfd-text-center nfd-p-0">
 					<Motion
 						initial={ { scale: 1.1, y: 100 } }
-						animate={ isReadyToAnimate ? { scale: 1, y: 0 } : { scale: 1.1, y: 100 } }
-						transition={ { ease: 'easeOut', delay: 2.2, duration: 0.8 } }
+						animate={
+							isReadyToAnimate
+								? { scale: 1, y: 0 }
+								: { scale: 1.1, y: 100 }
+						}
+						transition={ {
+							ease: 'easeOut',
+							delay: 2.2,
+							duration: 0.8,
+						} }
 					>
 						<div className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-5">
 							<Title className="nfd-text-3xl mobile:nfd-text-xl">
-								{ __( 'Building your website…', 'wp-module-onboarding' ) }
+								{ __(
+									'Building your website…',
+									'wp-module-onboarding'
+								) }
 							</Title>
 							<p className="nfd-text-[15px] nfd-text-content-primary mobile:nfd-text-tiny">
-								{ __( 'Hang tight while we create some wonderful options for you.', 'wp-module-onboarding' ) }
+								{ __(
+									'Hang tight while we create some wonderful options for you.',
+									'wp-module-onboarding'
+								) }
 							</p>
 						</div>
 						<div className="nfd-my-14">
@@ -195,7 +217,10 @@ const GeneratingStep = () => {
 						>
 							<Motion variants={ itemVariants }>
 								<p className="nfd-text-[14px] nfd-text-content-primary nfd-mb-8">
-									{ __( 'While we wait, let us know how familiar you are with WordPress, so we can tailor the experience to your needs:', 'wp-module-onboarding' ) }
+									{ __(
+										'While we wait, let us know how familiar you are with WordPress, so we can tailor the experience to your needs:',
+										'wp-module-onboarding'
+									) }
 								</p>
 							</Motion>
 							<Motion variants={ itemVariants }>
