@@ -144,11 +144,12 @@ export async function getSiteMetaForIdentifier(
 /**
  * Get the homepages.
  *
- * @param {string} prompt
- * @param {string} locale
+ * @param {string}  prompt   - The site description prompt.
+ * @param {string}  locale   - The selected locale.
+ * @param {boolean} fallback - Whether to fetch fallback homepages.
  * @return {Promise<Object>} response
  */
-export async function getHomepages( prompt, locale ) {
+export async function getHomepages( prompt, locale, fallback = false ) {
 	const response = await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/homepages' ),
@@ -156,6 +157,7 @@ export async function getHomepages( prompt, locale ) {
 			data: {
 				site_description: prompt,
 				locale,
+				fallback,
 			},
 		} )
 	);

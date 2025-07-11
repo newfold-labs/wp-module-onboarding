@@ -1,14 +1,14 @@
 import { generateSiteMeta, generateHomePages, generateSitePages } from '.';
 
-const generateSite = async () => {
+const generateSite = async ( retryMode ) => {
 	// Generate site meta
 	const siteMeta = await generateSiteMeta();
-	if ( ! siteMeta ) {
+	if ( ! siteMeta && ! retryMode ) {
 		return false;
 	}
 
 	// Generate home pages
-	const homePages = await generateHomePages();
+	const homePages = await generateHomePages( true );
 	if ( ! homePages ) {
 		return false;
 	}

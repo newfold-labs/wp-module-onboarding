@@ -111,7 +111,7 @@ const GeneratingStep = () => {
 	 * This function will initiate the site generation process.
 	 */
 	const initiateSiteGeneration = async () => {
-		const result = await generateSite();
+		const result = await generateSite( retryMode );
 		if ( result ) {
 			setIsSiteGenerationComplete( true );
 		} else {

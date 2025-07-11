@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\WonderBlocksService;
 use NewfoldLabs\WP\Module\Onboarding\Data\SiteGen as SiteGenData;
 
 /**
@@ -143,6 +144,11 @@ class SiteGenController {
 				'required' => true,
 				'type'     => 'string',
 			),
+			'fallback'         => array(
+				'required' => false,
+				'type'     => 'boolean',
+				'default'  => false,
+			),
 		);
 	}
 
@@ -233,6 +239,11 @@ class SiteGenController {
 		$existing_homepages = SiteGenService::get_homepages();
 		if ( ! empty( $existing_homepages ) ) {
 			return new \WP_REST_Response( $existing_homepages, 200 );
+		}
+
+		$fallback = $request->get_param( 'fallback' );
+		if ( true === $fallback ) {
+			return WonderBlocksService::get_fallback_homepages();
 		}
 
 		$site_description = $request->get_param( 'site_description' );
