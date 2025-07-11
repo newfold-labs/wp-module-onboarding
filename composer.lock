@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b36a5cd87a6b9fa40c3c197e84dc1dae",
+    "content-hash": "95856e42e09ae9b37d15fd9afd19e0a6",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -202,16 +202,16 @@
         },
         {
             "name": "newfold-labs/container",
-            "version": "1.2.2",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/container.git",
-                "reference": "19bb75bb4a64a282f7d142fff9f3418177022851"
+                "reference": "0c16f8a70523159c1f3842a242e9c3b20f5729a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/container/zipball/19bb75bb4a64a282f7d142fff9f3418177022851",
-                "reference": "19bb75bb4a64a282f7d142fff9f3418177022851",
+                "url": "https://api.github.com/repos/newfold-labs/container/zipball/0c16f8a70523159c1f3842a242e9c3b20f5729a6",
+                "reference": "0c16f8a70523159c1f3842a242e9c3b20f5729a6",
                 "shasum": ""
             },
             "require": {
@@ -234,9 +234,9 @@
             ],
             "description": "A lightweight, PHP 7.0+ compatible, PSR-11 dependency injection container.",
             "support": {
-                "source": "https://github.com/newfold-labs/container/tree/1.2.2"
+                "source": "https://github.com/newfold-labs/container/tree/1.2.3"
             },
-            "time": "2022-08-26T17:23:54+00:00"
+            "time": "2025-05-06T18:14:40+00:00"
         },
         {
             "name": "newfold-labs/wp-module-ai",
@@ -915,16 +915,16 @@
         },
         {
             "name": "newfold-labs/wp-module-onboarding-data",
-            "version": "1.2.12",
+            "version": "1.2.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-onboarding-data.git",
-                "reference": "e714e4e62c0f0a9abe4dcc149c04dabc2eb4664b"
+                "reference": "a539c871b7c10c8e9c71bb62cd6052b255481429"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-onboarding-data/zipball/e714e4e62c0f0a9abe4dcc149c04dabc2eb4664b",
-                "reference": "e714e4e62c0f0a9abe4dcc149c04dabc2eb4664b",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-onboarding-data/zipball/a539c871b7c10c8e9c71bb62cd6052b255481429",
+                "reference": "a539c871b7c10c8e9c71bb62cd6052b255481429",
                 "shasum": ""
             },
             "require": {
@@ -1000,10 +1000,10 @@
             ],
             "description": "A non-toggleable module containing a standardized interface for interacting with Onboarding data.",
             "support": {
-                "source": "https://github.com/newfold-labs/wp-module-onboarding-data/tree/1.2.12",
+                "source": "https://github.com/newfold-labs/wp-module-onboarding-data/tree/1.2.13",
                 "issues": "https://github.com/newfold-labs/wp-module-onboarding-data/issues"
             },
-            "time": "2025-07-02T14:37:59+00:00"
+            "time": "2025-07-10T14:18:32+00:00"
         },
         {
             "name": "newfold-labs/wp-module-patterns",
@@ -1095,16 +1095,16 @@
         },
         {
             "name": "newfold-labs/wp-module-performance",
-            "version": "3.2.5",
+            "version": "3.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-performance.git",
-                "reference": "807e461563b588e0c519d2dd52b39d43026919c2"
+                "reference": "620f01f6577f91a70161d63b75252c63d8fdb7ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-performance/zipball/807e461563b588e0c519d2dd52b39d43026919c2",
-                "reference": "807e461563b588e0c519d2dd52b39d43026919c2",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-performance/zipball/620f01f6577f91a70161d63b75252c63d8fdb7ac",
+                "reference": "620f01f6577f91a70161d63b75252c63d8fdb7ac",
                 "shasum": ""
             },
             "require": {
@@ -1145,7 +1145,14 @@
                 "i18n": [
                     "@i18n-pot",
                     "@i18n-po",
-                    "@i18n-mo",
+                    "@i18n-json",
+                    "@i18n-php"
+                ],
+                "i18n-ci-pre": [
+                    "@i18n-pot",
+                    "@i18n-po"
+                ],
+                "i18n-ci-post": [
                     "@i18n-json",
                     "@i18n-php"
                 ],
@@ -1185,10 +1192,10 @@
             ],
             "description": "A module for managing caching functionality.",
             "support": {
-                "source": "https://github.com/newfold-labs/wp-module-performance/tree/3.2.5",
+                "source": "https://github.com/newfold-labs/wp-module-performance/tree/3.2.7",
                 "issues": "https://github.com/newfold-labs/wp-module-performance/issues"
             },
-            "time": "2025-07-01T10:25:27+00:00"
+            "time": "2025-07-10T07:17:39+00:00"
         },
         {
             "name": "newfold-labs/wp-module-pls",
@@ -4941,13 +4948,13 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
+    "platform": [],
+    "platform-dev": [],
     "platform-overrides": {
         "php": "7.3.0"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
