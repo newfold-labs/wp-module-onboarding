@@ -31,7 +31,9 @@ const generateHomePages = async ( fallback = false ) => {
 	}
 
 	const homepages = response.body;
-	if ( fallback ) {
+
+	// If backend returned a fallback flag, track it and handle accordingly
+	if ( homepages?.fallback ) {
 		trackOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_ERROR_STATE_TRIGGERED,
@@ -40,6 +42,7 @@ const generateHomePages = async ( fallback = false ) => {
 			)
 		);
 
+		delete homepages.fallback;
 		dispatch( nfdOnboardingStore ).setFallbackHomepages( homepages );
 		return false;
 	}

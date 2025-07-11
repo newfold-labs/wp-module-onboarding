@@ -252,12 +252,12 @@ class SiteGenController {
 
 		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', $locale );
 		if ( is_wp_error( $target_audience ) ) {
-			return $target_audience;
+			return WonderBlocksService::get_fallback_homepages();
 		}
 
 		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', $locale );
 		if ( is_wp_error( $content_style ) ) {
-			return $content_style;
+			return WonderBlocksService::get_fallback_homepages();
 		}
 
 		$homepages = SiteGenService::generate_homepages(
@@ -268,7 +268,7 @@ class SiteGenController {
 		);
 
 		if ( is_wp_error( $homepages ) ) {
-			return $homepages;
+			return WonderBlocksService::get_fallback_homepages();
 		}
 
 		return new \WP_REST_Response( $homepages, 201 );
