@@ -6,6 +6,7 @@ import { ACTION_ERROR_STATE_TRIGGERED } from '@/utils/analytics/hiive/constants'
 
 /**
  * Generate the home pages for the site.
+ *
  * @return {boolean} True if successful, false otherwise.
  */
 const generateHomePages = async () => {

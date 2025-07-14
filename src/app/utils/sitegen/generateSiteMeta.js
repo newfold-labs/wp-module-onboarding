@@ -46,6 +46,7 @@ const setSiteTagline = async ( tagline ) => {
 
 /**
  * Generate the site meta for the site.
+ *
  * @return {boolean} True if successful, false otherwise.
  */
 const generateSiteMeta = async () => {
