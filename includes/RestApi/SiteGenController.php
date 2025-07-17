@@ -3,8 +3,10 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService as LegacySiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Data\SiteGen as SiteGenData;
+use NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration\SitekitsContentGeneration;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenService;
 
 /**
  * Class SiteGenController
@@ -130,6 +132,10 @@ class SiteGenController {
 				'type'              => 'string',
 				'sanitize_callback' => 'sanitize_text_field',
 			),
+			'site_type'        => array(
+				'required' => true,
+				'type'     => 'string',
+			),
 			'locale'           => array(
 				'required' => true,
 				'type'     => 'string',
@@ -182,7 +188,7 @@ class SiteGenController {
 	 * @return array
 	 */
 	public function get_enabled_identifiers() {
-		return array_keys( array_filter( SiteGenService::enabled_identifiers() ) );
+		return array_keys( array_filter( LegacySiteGenService::enabled_identifiers() ) );
 	}
 
 	/**
@@ -193,7 +199,7 @@ class SiteGenController {
 	 * @return array|WP_Error
 	 */
 	public function generate_sitegen_meta( \WP_REST_Request $request ) {
-		if ( ! SiteGenService::is_enabled() ) {
+		if ( ! LegacySiteGenService::is_enabled() ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
 				'SiteGen is Disabled.',
@@ -207,7 +213,7 @@ class SiteGenController {
 		$locale     = $request->get_param( 'locale' );
 		$skip_cache = $request->get_param( 'skip_cache' );
 
-		return SiteGenService::instantiate_site_meta(
+		return LegacySiteGenService::instantiate_site_meta(
 			$site_info,
 			$identifier,
 			$site_type,
@@ -223,7 +229,7 @@ class SiteGenController {
 	 * @return array
 	 */
 	public function get_homepages( \WP_REST_Request $request ) {
-		$existing_homepages = SiteGenService::get_homepages();
+		$existing_homepages = LegacySiteGenService::get_homepages();
 		if ( ! empty( $existing_homepages ) ) {
 			return new \WP_REST_Response( $existing_homepages, 200 );
 		}
@@ -233,23 +239,34 @@ class SiteGenController {
 		$site_type        = $request->get_param( 'site_type' );
 		$locale           = $request->get_param( 'locale' );
 
-		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', $site_type, $locale );
-		if ( is_wp_error( $target_audience ) ) {
-			return $target_audience;
-		}
+		$homepages = [];
+		if ( SitekitsContentGeneration::site_type_supported( $site_type ) ) {
+			$siteGenService = new SiteGenService();
+			$homepages      = $siteGenService->get_sitekits(
+				$site_description,
+				$site_type,
+				$locale,
+				true
+			);
+		} else {
+			$target_audience = LegacySiteGenService::instantiate_site_meta( $site_info, 'target_audience', $site_type, $locale );
+			if ( is_wp_error( $target_audience ) ) {
+				return $target_audience;
+			}
 
-		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', $site_type, $locale );
-		if ( is_wp_error( $content_style ) ) {
-			return $content_style;
-		}
+			$content_style = LegacySiteGenService::instantiate_site_meta( $site_info, 'content_tones', $site_type, $locale );
+			if ( is_wp_error( $content_style ) ) {
+				return $content_style;
+			}
 
-		$homepages = SiteGenService::generate_homepages(
-			$site_description,
-			$site_type,
-			$content_style,
-			$target_audience,
-			$locale,
-		);
+			$homepages = LegacySiteGenService::generate_homepages(
+				$site_description,
+				$site_type,
+				$content_style,
+				$target_audience,
+				$locale,
+			);
+		}
 
 		if ( is_wp_error( $homepages ) ) {
 			return $homepages;
@@ -273,19 +290,19 @@ class SiteGenController {
 		$locale           = $request->get_param( 'locale' );
 		$skip_cache       = $request->get_param( 'skip_cache' );
 
-		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', $locale, $skip_cache );
+		$target_audience = LegacySiteGenService::instantiate_site_meta( $site_info, 'target_audience', $locale, $skip_cache );
 		if ( is_wp_error( $target_audience ) ) {
 			return $target_audience;
 		}
-		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', $locale, $skip_cache );
+		$content_style = LegacySiteGenService::instantiate_site_meta( $site_info, 'content_tones', $locale, $skip_cache );
 		if ( is_wp_error( $content_style ) ) {
 			return $content_style;
 		}
 
 		if ( $is_favorite ) {
-			$result = SiteGenService::regenerate_favorite_homepage( $slug, $color_palette );
+			$result = LegacySiteGenService::regenerate_favorite_homepage( $slug, $color_palette );
 		} else {
-			$result = SiteGenService::regenerate_homepage( $site_description, $content_style, $target_audience, $locale );
+			$result = LegacySiteGenService::regenerate_homepage( $site_description, $content_style, $target_audience, $locale );
 		}
 
 		if ( null === $result ) {
@@ -314,22 +331,22 @@ class SiteGenController {
 		$locale           = $request->get_param( 'locale' );
 		$skip_cache       = $request->get_param( 'skip_cache' );
 
-		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', $site_type, $locale, $skip_cache );
+		$target_audience = LegacySiteGenService::instantiate_site_meta( $site_info, 'target_audience', $site_type, $locale, $skip_cache );
 		if ( is_wp_error( $target_audience ) ) {
 			return $target_audience;
 		}
 
-		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', $site_type, $locale, $skip_cache );
+		$content_style = LegacySiteGenService::instantiate_site_meta( $site_info, 'content_tones', $site_type, $locale, $skip_cache );
 		if ( is_wp_error( $content_style ) ) {
 			return $content_style;
 		}
 
-		$sitemap = SiteGenService::instantiate_site_meta( $site_info, 'sitemap', $site_type, $locale, $skip_cache );
+		$sitemap = LegacySiteGenService::instantiate_site_meta( $site_info, 'sitemap', $site_type, $locale, $skip_cache );
 		if ( is_wp_error( $sitemap ) ) {
 			return $sitemap;
 		}
 
-		SiteGenService::publish_sitemap_pages( $site_description, $site_type, $content_style, $target_audience, $sitemap, $locale );
+		LegacySiteGenService::publish_sitemap_pages( $site_description, $site_type, $content_style, $target_audience, $sitemap, $locale );
 
 		return new \WP_REST_Response( array(), 201 );
 	}
