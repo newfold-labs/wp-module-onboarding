@@ -2,9 +2,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Installer\Services\ThemeInstaller;
-use NewfoldLabs\WP\Module\Installer\TaskManagers\ThemeInstallTaskManager;
-use NewfoldLabs\WP\Module\Installer\Tasks\ThemeInstallTask;
-use NewfoldLabs\WP\Module\Installer\Data\Options;
+use NewfoldLabs\WP\Module\Installer\Data\Themes as ThemeInstallerData;
 use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 
 /**
@@ -12,33 +10,66 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
  */
 class ThemeService {
 	/**
-	 * Retrieve status of init_list of plugins being queued.
+	 * Number of retry attempts made.
 	 *
-	 * @return boolean
+	 * @var int
 	 */
-	public static function initialize() {
+	private static $retries = 0;
 
-		// Checks if the init_list of themes have already been queued.
-		if ( \get_option( Options::get_option_name( 'theme_init_status' ), 'init' ) !== 'init' ) {
-			return true;
+	/**
+	 * Maximum number of retries allowed.
+	 *
+	 * @var int
+	 */
+	private static $max_retries = 3;
+
+	/**
+	 * Retry the theme installation.
+	 *
+	 * @return bool True if the retry was successful, false otherwise.
+	 */
+	private static function retry(): bool {
+		++self::$retries;
+		if ( self::$retries < self::$max_retries ) {
+			return self::initialize();
 		}
 
-		// Set option to installing to prevent re-queueing the init_list again on page load.
-		\update_option( Options::get_option_name( 'theme_init_status' ), 'installing' );
+		return false;
+	}
 
-		// Get the initial list of themes to be installed based on the plan.
-		$init_themes = Themes::get_init();
-		foreach ( $init_themes as $init_theme ) {
-			// Checks if a theme with the given slug and activation criteria already exists.
-			if ( ! ThemeInstaller::exists( $init_theme['slug'], $init_theme['activate'] ) ) {
-				// Add a new ThemeInstallTask to the theme install queue.
-				ThemeInstallTaskManager::add_to_queue(
-					new ThemeInstallTask(
-						$init_theme['slug'],
-						$init_theme['activate'],
-						$init_theme['priority']
-					)
-				);
+	/**
+	 * Initialize the theme installation.
+	 *
+	 * @return bool True if the installation was successful, false otherwise.
+	 */
+	public static function initialize(): bool {
+		// Get the default sitegen theme to be installed.
+		$init_themes   = Themes::get_init( true );
+		$sitegen_theme = $init_themes['sitegen']['default'][0];
+
+		// If the sitegen theme is NOT installed or activated...
+		if ( ! ThemeInstaller::exists( $sitegen_theme['slug'], $sitegen_theme['activate'] ) ) {
+			// Get the sitegen theme installer data.
+			$themes_installer_data        = ThemeInstallerData::get()['nfd_slugs'];
+			$sitegen_theme_installer_data = $themes_installer_data[ $sitegen_theme['slug'] ];
+
+			// If the sitegen theme is installed but not activated.
+			if ( ThemeInstaller::is_theme_installed( $sitegen_theme_installer_data['stylesheet'] ) ) {
+				// Activate the sitegen theme.
+				\switch_theme( $sitegen_theme_installer_data['stylesheet'] );
+				return true;
+			}
+
+			// Install and activate the sitegen theme.
+			$installer_response = ThemeInstaller::install_from_zip(
+				$sitegen_theme_installer_data['url'],
+				true,
+				$sitegen_theme_installer_data['stylesheet']
+			);
+
+			// If the installation fails, retry.
+			if ( is_wp_error( $installer_response ) ) {
+				return self::retry();
 			}
 		}
 

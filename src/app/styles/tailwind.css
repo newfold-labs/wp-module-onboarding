@@ -1,0 +1,64 @@
+@import "@newfold/ui-component-library";
+
+/* Tailwind layers */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+@layer components {
+	.nfd-root {
+		/* Onboarding step container */
+		.nfd-onboarding-step-container {
+			@apply
+			nfd-min-w-[600px]
+			nfd-max-w-[600px]
+			nfd-bg-transparent
+			nfd-shadow-none
+			nfd-rounded-none
+			nfd-mx-auto
+			mobile:!nfd-min-w-[90%]
+			mobile:!nfd-max-w-[90%];
+
+			.nfd-container__header {
+				@apply
+				nfd-text-content-primary
+				nfd-pt-0
+				nfd-px-0
+				nfd-border-b-0;
+
+				.nfd-title {
+					@apply
+					nfd-text-content-primary
+					mobile:!nfd-text-lg;
+				}
+			}
+
+			.nfd-container__block {
+				@apply
+				nfd-px-0
+				nfd-pt-0;
+			}
+
+			.nfd-container__footer {
+				@apply
+				nfd-pb-0
+				nfd-px-0
+				nfd-border-t-0;
+			}
+		}
+
+		/* Title */
+		.nfd-title {
+			@apply
+			nfd-text-content-primary;
+		}
+
+		/* Label */
+		.nfd-label {
+			@apply
+			nfd-text-content-primary
+			nfd-text-[15px];
+		}
+	}
+}

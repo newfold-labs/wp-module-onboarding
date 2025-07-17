@@ -16,12 +16,26 @@ class StatusService {
 	/**
 	 * Handle Onboarding started event.
 	 *
-	 * @return void
+	 * @return bool True if the onboarding started was marked, false if it was already marked.
 	 */
-	public static function handle_started(): void {
-		if ( 'started' !== get_option( Options::get_option_name( 'status' ) ) ) {
+	public static function handle_started(): bool {
+		$status = get_option( Options::get_option_name( 'status' ) );
+		if ( 'started' !== $status && 'completed' !== $status ) {
 			update_option( Options::get_option_name( 'status' ), 'started' );
 			do_action( 'newfold/onboarding/started' );
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Handles Onboarding abandoned event.
+	 *
+	 * @return void
+	 */
+	public static function handle_abandoned(): void {
+		if ( 'started' === get_option( Options::get_option_name( 'status' ) ) ) {
+			update_option( Options::get_option_name( 'status' ), 'abandoned' );
 		}
 	}
 
@@ -33,7 +47,10 @@ class StatusService {
 	public static function handle_completed(): void {
 		if ( 'started' === get_option( Options::get_option_name( 'status' ) ) ) {
 			update_option( Options::get_option_name( 'status' ), 'completed' );
-			self::update_onboarding_restart_status();
+			/**
+			 * We're disabling the restart onboarding feature for now.
+			 */
+			// self::update_onboarding_restart_status();
 			do_action( 'newfold/onboarding/completed' );
 		}
 	}
@@ -94,9 +111,9 @@ class StatusService {
 		}
 
 		// Get flow data
-		$flow_data = get_option( Options::get_option_name( 'flow' ) );
+		$flow_data   = get_option( Options::get_option_name( 'flow' ) );
 		$active_flow = $flow_data['activeFlow'];
-		$homepages = $flow_data['sitegen']['homepages'];
+		$homepages   = $flow_data['sitegen']['homepages'];
 
 		if ( isset( $flow_data['onboardingRetries'] ) && ! empty( $flow_data['onboardingRetries'] ) ) {
 			// Increment the total onboarding tries
@@ -158,22 +175,17 @@ class StatusService {
 	 * @return void
 	 */
 	public static function track(): void {
-		global $pagenow;
-
+		// Ignore if the request is an AJAX request.
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			return;
 		}
 
-		switch ( $pagenow ) {
-			case 'index.php':
-				// If the page is not nfd-onboarding.
-				//phpcs:ignore
-				if ( isset( $_GET['page'] ) && WP_Admin::$slug !== \sanitize_text_field( $_GET['page'] ) ) {
-					self::handle_completed();
-				}
-				break;
-			default:
-				self::handle_completed();
+		// Ignore if the request is not for the onboarding page.
+		if ( isset( $_GET['page'] ) && WP_Admin::$slug === \sanitize_text_field( $_GET['page'] ) ) {
+			return;
 		}
+
+		// Handle abandoned event.
+		self::handle_abandoned();
 	}
 }
