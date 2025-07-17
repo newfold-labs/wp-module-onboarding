@@ -9,7 +9,18 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
  * Class for providing theme related services.
  */
 class ThemeService {
-	private static $retries     = 0;
+	/**
+	 * Number of retry attempts made.
+	 *
+	 * @var int
+	 */
+	private static $retries = 0;
+
+	/**
+	 * Maximum number of retries allowed.
+	 *
+	 * @var int
+	 */
 	private static $max_retries = 3;
 
 	/**
@@ -33,7 +44,7 @@ class ThemeService {
 	 */
 	public static function initialize(): bool {
 		// Get the default sitegen theme to be installed.
-		$init_themes   = Themes::get_init( skip_plan_check: true );
+		$init_themes   = Themes::get_init( true );
 		$sitegen_theme = $init_themes['sitegen']['default'][0];
 
 		// If the sitegen theme is NOT installed or activated...
@@ -51,9 +62,9 @@ class ThemeService {
 
 			// Install and activate the sitegen theme.
 			$installer_response = ThemeInstaller::install_from_zip(
-				url: $sitegen_theme_installer_data['url'],
-				activate: true,
-				stylesheet: $sitegen_theme_installer_data['stylesheet']
+				$sitegen_theme_installer_data['url'],
+				true,
+				$sitegen_theme_installer_data['stylesheet']
 			);
 
 			// If the installation fails, retry.
