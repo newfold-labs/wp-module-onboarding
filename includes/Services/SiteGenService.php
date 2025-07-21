@@ -7,6 +7,15 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService as LegacySiteG
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\ThemeGeneratorService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
 
+/**
+ * Class SiteGenService
+ *
+ * Handles the onboarding SiteGen flow for generating, publishing, and managing AI-generated homepages and related content.
+ *
+ * This service is designed to work with the onboarding module's Redux state and integrates with other onboarding services.
+ *
+ * @package NewfoldLabs\WP\Module\Onboarding\Services
+ */
 class SiteGenService {
 
 	/**
@@ -14,15 +23,20 @@ class SiteGenService {
 	 *
 	 * @var array|null
 	 */
-	private ?array $input_data = null;
-	
+	private $input_data = null;
+
 	/**
 	 * The Redux sitegen object.
 	 *
 	 * @var array|null
 	 */
-	private ?array $sitegen_data = null;
+	private $sitegen_data = null;
 
+	/**
+	 * SiteGenService constructor.
+	 *
+	 * Initializes the service by loading the Redux input and sitegen data from the ReduxStateService.
+	 */
 	public function __construct() {
 		$this->input_data   = ReduxStateService::get( 'input' );
 		$this->sitegen_data = ReduxStateService::get( 'sitegen' );
@@ -34,7 +48,7 @@ class SiteGenService {
 	 * @param string $selected_sitegen_homepage The selected sitegen homepage to publish.
 	 * @return int|\WP_Error
 	 */
-	public function publish_homepage( string $selected_sitegen_homepage ): int | \WP_Error {
+	public function publish_homepage( string $selected_sitegen_homepage ): int|\WP_Error {
 		// Validate we have the selected homepage.
 		if (
 			! $this->sitegen_data ||
@@ -98,8 +112,8 @@ class SiteGenService {
 	 * @return string|false The page title, or false if not found.
 	 */
 	public function get_sitemap_page_title( string $slug ): string|false {
-		$prompt = $this->get_prompt();
-		$locale = $this->get_locale();
+		$prompt    = $this->get_prompt();
+		$locale    = $this->get_locale();
 		$site_type = $this->get_site_type();
 		if ( ! $prompt || ! $locale || ! $site_type ) {
 			return false;
@@ -121,7 +135,7 @@ class SiteGenService {
 	/**
 	 * Add a page to the site navigation.
 	 *
-	 * @param int $post_id The ID of the page to add to the navigation.
+	 * @param int    $post_id The ID of the page to add to the navigation.
 	 * @param string $page_title The title of the page.
 	 * @param string $permalink The permalink of the page.
 	 */
@@ -183,7 +197,7 @@ class SiteGenService {
 	 * of the newly uploaded images.
 	 *
 	 * @param array $image_urls An array of image URLs to upload.
-	 * @param int $post_id The post ID to attach the images to.
+	 * @param int   $post_id The post ID to attach the images to.
 	 * @return array|false An array of WordPress attachment URLs on success, false on failure.
 	 * @throws Exception If there is an error during the upload process.
 	 */
@@ -297,14 +311,14 @@ class SiteGenService {
 	 * with the new ones.
 	 *
 	 * @param string $content The content containing img tags with image URLs.
-	 * @param int $post_id The post ID to attach the images to.
+	 * @param int    $post_id The post ID to attach the images to.
 	 * @return string The updated content with new image URLs.
 	 */
 	public static function sideload_images_and_replace_grammar( $content, $post_id ) {
 		// Extract image URLs from img tags in the content
 		$image_urls = array();
 		preg_match_all( '/<img[^>]+src=["\']([^"\']+)["\'][^>]*>/i', $content, $matches );
-		
+
 		if ( ! empty( $matches[1] ) ) {
 			$image_urls = array_unique( $matches[1] );
 		}
