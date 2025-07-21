@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b36a5cd87a6b9fa40c3c197e84dc1dae",
+    "content-hash": "dc346467cfe2abd6144fa371497f4c09",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -107,7 +107,7 @@
             "version": "1.0.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/InstaWP/connect-helpers.git",
+                "url": "git@github.com:InstaWP/connect-helpers.git",
                 "reference": "702108c2e2a30b4cc8201f1e8cbbe40e489b95d4"
             },
             "dist": {
@@ -144,10 +144,6 @@
                 }
             ],
             "description": "CLI Package for InstaWP Remote Features",
-            "support": {
-                "source": "https://github.com/InstaWP/connect-helpers/tree/1.0.4",
-                "issues": "https://github.com/InstaWP/connect-helpers/issues"
-            },
             "time": "2025-06-20T08:26:17+00:00"
         },
         {
@@ -202,16 +198,16 @@
         },
         {
             "name": "newfold-labs/container",
-            "version": "1.2.2",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/container.git",
-                "reference": "19bb75bb4a64a282f7d142fff9f3418177022851"
+                "reference": "0c16f8a70523159c1f3842a242e9c3b20f5729a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/container/zipball/19bb75bb4a64a282f7d142fff9f3418177022851",
-                "reference": "19bb75bb4a64a282f7d142fff9f3418177022851",
+                "url": "https://api.github.com/repos/newfold-labs/container/zipball/0c16f8a70523159c1f3842a242e9c3b20f5729a6",
+                "reference": "0c16f8a70523159c1f3842a242e9c3b20f5729a6",
                 "shasum": ""
             },
             "require": {
@@ -234,9 +230,9 @@
             ],
             "description": "A lightweight, PHP 7.0+ compatible, PSR-11 dependency injection container.",
             "support": {
-                "source": "https://github.com/newfold-labs/container/tree/1.2.2"
+                "source": "https://github.com/newfold-labs/container/tree/1.2.3"
             },
-            "time": "2022-08-26T17:23:54+00:00"
+            "time": "2025-05-06T18:14:40+00:00"
         },
         {
             "name": "newfold-labs/wp-module-ai",
@@ -831,16 +827,16 @@
         },
         {
             "name": "newfold-labs/wp-module-migration",
-            "version": "1.5.6",
+            "version": "1.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-migration.git",
-                "reference": "f86c44230a1aedf3420dfa6f3886c98d71efad5c"
+                "reference": "d91ceb54336aa1e9fe4450c7e0602526ed19e0ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-migration/zipball/f86c44230a1aedf3420dfa6f3886c98d71efad5c",
-                "reference": "f86c44230a1aedf3420dfa6f3886c98d71efad5c",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-migration/zipball/d91ceb54336aa1e9fe4450c7e0602526ed19e0ef",
+                "reference": "d91ceb54336aa1e9fe4450c7e0602526ed19e0ef",
                 "shasum": ""
             },
             "require": {
@@ -872,6 +868,14 @@
                     "@i18n-po",
                     "@i18n-php",
                     "@i18n-json"
+                ],
+                "i18n-ci-pre": [
+                    "@i18n-pot",
+                    "@i18n-po"
+                ],
+                "i18n-ci-post": [
+                    "@i18n-json",
+                    "@i18n-php"
                 ],
                 "i18n-json": [
                     "rm -f languages/*.json && vendor/bin/wp i18n make-json ./languages --no-purge --pretty-print"
@@ -908,10 +912,10 @@
             ],
             "description": "Initiates the migration process",
             "support": {
-                "source": "https://github.com/newfold-labs/wp-module-migration/tree/1.5.6",
+                "source": "https://github.com/newfold-labs/wp-module-migration/tree/1.5.8",
                 "issues": "https://github.com/newfold-labs/wp-module-migration/issues"
             },
-            "time": "2025-06-26T12:34:12+00:00"
+            "time": "2025-07-16T11:29:03+00:00"
         },
         {
             "name": "newfold-labs/wp-module-onboarding-data",
