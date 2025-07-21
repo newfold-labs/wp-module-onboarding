@@ -48,7 +48,7 @@ class SiteGenService {
 	 * @param string $selected_sitegen_homepage The selected sitegen homepage to publish.
 	 * @return int|\WP_Error
 	 */
-	public function publish_homepage( string $selected_sitegen_homepage ): int|\WP_Error {
+	public function publish_homepage( string $selected_sitegen_homepage ) {
 		// Validate we have the selected homepage.
 		if (
 			! $this->sitegen_data ||
@@ -111,7 +111,7 @@ class SiteGenService {
 	 * @param string $slug The slug of the page to get the title for.
 	 * @return string|false The page title, or false if not found.
 	 */
-	public function get_sitemap_page_title( string $slug ): string|false {
+	public function get_sitemap_page_title( string $slug ) {
 		$prompt    = $this->get_prompt();
 		$locale    = $this->get_locale();
 		$site_type = $this->get_site_type();
@@ -167,7 +167,7 @@ class SiteGenService {
 	 *
 	 * @return string|false
 	 */
-	public function get_prompt(): string|false {
+	public function get_prompt() {
 		return ! empty( $this->input_data['prompt'] ) ? $this->input_data['prompt'] : false;
 	}
 
@@ -176,7 +176,7 @@ class SiteGenService {
 	 *
 	 * @return string
 	 */
-	public function get_site_type(): string {
+	public function get_site_type() {
 		return ! empty( $this->input_data['siteType'] ) ? $this->input_data['siteType'] : 'business';
 	}
 
@@ -185,7 +185,7 @@ class SiteGenService {
 	 *
 	 * @return string
 	 */
-	public function get_locale(): string {
+	public function get_locale() {
 		return ! empty( $this->input_data['locale'] ) ? $this->input_data['locale'] : 'en_US';
 	}
 
