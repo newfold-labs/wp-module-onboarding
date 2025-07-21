@@ -4,6 +4,8 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SitePagesService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService as LegacySiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\ThemeGeneratorService;
+use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
 
 class SiteGenService {
 
@@ -61,6 +63,17 @@ class SiteGenService {
 			return new \WP_Error(
 				'sitegen_homepage_publish_error',
 				'Error publishing homepage.',
+			);
+		}
+
+		// Process images by extracting URLs from img tags in the content and update the post
+		$updated_content = self::sideload_images_and_replace_grammar( $content, $post_id );
+		if ( $updated_content !== $content ) {
+			wp_update_post(
+				array(
+					'ID'           => $post_id,
+					'post_content' => $updated_content,
+				)
 			);
 		}
 
@@ -160,5 +173,164 @@ class SiteGenService {
 	 */
 	public function get_locale(): string {
 		return ! empty( $this->input_data['locale'] ) ? $this->input_data['locale'] : 'en_US';
+	}
+
+	/**
+	 * Uploads images to the WordPress media library as attachments.
+	 *
+	 * This function takes an array of image URLs, downloads them, and
+	 * uploads them to the WordPress media library, returning the URLs
+	 * of the newly uploaded images.
+	 *
+	 * @param array $image_urls An array of image URLs to upload.
+	 * @param int $post_id The post ID to attach the images to.
+	 * @return array|false An array of WordPress attachment URLs on success, false on failure.
+	 * @throws Exception If there is an error during the upload process.
+	 */
+	public static function upload_images_to_wp_media_library( $image_urls, $post_id ) {
+		require_once ABSPATH . 'wp-admin/includes/media.php';
+		require_once ABSPATH . 'wp-admin/includes/image.php';
+
+		global $wp_filesystem;
+		ThemeGeneratorService::connect_to_filesystem();
+
+		$uploaded_image_urls = array();
+		try {
+			foreach ( $image_urls as $image_url ) {
+				// Check if the URL is valid.
+				if ( ! filter_var( $image_url, FILTER_VALIDATE_URL ) ) {
+					continue;
+				}
+
+				// Fetch the image via remote get with timeout and a retry attempt.
+				$attempt      = 0;
+				$max_attempts = 2;
+				while ( $attempt < $max_attempts ) {
+					$response = wp_remote_get( $image_url, array( 'timeout' => 15 ) );
+					if ( ! is_wp_error( $response ) && 200 === wp_remote_retrieve_response_code( $response ) ) {
+						break;
+					}
+					++$attempt;
+				}
+				if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+					continue;
+				}
+				// Reading the headers from the image url to determine.
+				$headers      = wp_remote_retrieve_headers( $response );
+				$content_type = $headers['content-type'] ?? '';
+				$image_data   = wp_remote_retrieve_body( $response );
+				if ( empty( $content_type ) || empty( $image_data ) ) {
+					continue;
+				}
+				// Determine the file extension based on MIME type.
+				$file_extension = '';
+				switch ( $content_type ) {
+					case 'image/jpeg':
+						$file_extension = '.jpg';
+						break;
+					case 'image/png':
+						$file_extension = '.png';
+						break;
+					case 'image/gif':
+						$file_extension = '.gif';
+						break;
+					case 'image/webp':
+						$file_extension = '.webp';
+						break;
+				}
+
+				if ( '' === $file_extension ) {
+					continue;
+				}
+				// create upload directory.
+				$upload_dir = wp_upload_dir();
+				// xtract a filename from the URL.
+				$parsed_url = wp_parse_url( $image_url );
+				$path_parts = pathinfo( $parsed_url['path'] );
+				// filename to be added in directory.
+				$original_filename = $path_parts['filename'] . $file_extension;
+
+				// to ensure the filename is unique within the upload directory.
+				$filename = wp_unique_filename( $upload_dir['path'], $original_filename );
+				$filepath = $upload_dir['path'] . '/' . $filename;
+
+				$wp_filesystem->put_contents( $filepath, $image_data );
+
+				// Create an attachment post for the image, metadata needed for WordPress media library.
+				// guid -for url, post_title for cleaned up name, post content is empty as this is an attachment.
+				// post_status inherit is for visibility.
+				$attachment = array(
+					'guid'           => $upload_dir['url'] . '/' . $filename,
+					'post_mime_type' => $content_type,
+					'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
+					'post_content'   => '',
+					'post_status'    => 'inherit',
+					'post_parent'    => $post_id, // Attach to the specified post
+				);
+				$attach_id  = wp_insert_attachment( $attachment, $filepath );
+
+				// Generate and assign metadata for the attachment.
+				$attach_data = wp_generate_attachment_metadata( $attach_id, $filepath );
+				wp_update_attachment_metadata( $attach_id, $attach_data );
+
+				// Add the WordPress attachment URL to the list.
+				if ( $attach_id ) {
+					$attachment_url = wp_get_attachment_url( $attach_id );
+					if ( ! $attachment_url ) {
+						$attachment_url = null;
+					}
+					$uploaded_image_urls[ $image_url ] = $attachment_url;
+				}
+			}
+		} catch ( \Exception $e ) {
+			// Log error.
+		}
+
+		return $uploaded_image_urls;
+	}
+
+	/**
+	 * Extract image URLs from content and upload them to WordPress media library.
+	 *
+	 * This function extracts image URLs from img tags in the content, uploads the images
+	 * to the WordPress media library, and then replaces the old image URLs in the content
+	 * with the new ones.
+	 *
+	 * @param string $content The content containing img tags with image URLs.
+	 * @param int $post_id The post ID to attach the images to.
+	 * @return string The updated content with new image URLs.
+	 */
+	public static function sideload_images_and_replace_grammar( $content, $post_id ) {
+		// Extract image URLs from img tags in the content
+		$image_urls = array();
+		preg_match_all( '/<img[^>]+src=["\']([^"\']+)["\'][^>]*>/i', $content, $matches );
+		
+		if ( ! empty( $matches[1] ) ) {
+			$image_urls = array_unique( $matches[1] );
+		}
+
+		if ( empty( $image_urls ) ) {
+			return $content;
+		}
+
+		// Upload the images to WordPress media library.
+		$url_mapping = self::upload_images_to_wp_media_library( $image_urls, $post_id );
+
+		foreach ( $url_mapping as $old_url => $new_url ) {
+			if ( null === $new_url ) {
+				continue;
+			}
+			// escaping any special characters in the old URL to avoid breaking the regex.
+			$escaped_old_url = preg_quote( $old_url, '/' );
+
+			$escaped_old_url_regex_double_quote = '/"' . $escaped_old_url . '.*?"/m';
+			$content                            = preg_replace( $escaped_old_url_regex_double_quote, '"' . $new_url . '"', $content );
+
+			$escaped_old_url_regex_parenthesis = '/\(' . $escaped_old_url . '.*?\)/m';
+			$content                           = preg_replace( $escaped_old_url_regex_parenthesis, '(' . $new_url . ')', $content );
+		}
+
+		// Update the content with new image URLs.
+		return $content;
 	}
 }
