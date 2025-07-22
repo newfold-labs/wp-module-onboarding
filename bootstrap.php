@@ -80,4 +80,12 @@ if ( is_callable( 'add_action' ) ) {
 			delete_transient( 'nfd_site_capabilities' );
 		}
 	);
+
+	// Register AJAX handlers for image processing
+	add_action(
+		'init',
+		function () {
+			\NewfoldLabs\WP\Module\Onboarding\Services\ThemeGeneratorService::register_ajax_handlers();
+		}
+	);
 }
