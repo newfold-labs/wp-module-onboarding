@@ -40,6 +40,69 @@ class SiteGenService {
 	public function __construct() {
 		$this->input_data   = ReduxStateService::get( 'input' );
 		$this->sitegen_data = ReduxStateService::get( 'sitegen' );
+		
+		// Register AJAX handler for immediate async processing
+		add_action( 'wp_ajax_sitegen_process_images_async', array( $this, 'handle_ajax_image_processing' ) );
+		add_action( 'wp_ajax_nopriv_sitegen_process_images_async', array( $this, 'handle_ajax_image_processing' ) );
+	}
+
+	/**
+	 * Handle AJAX request for immediate async image processing.
+	 */
+	public function handle_ajax_image_processing() {
+		// Verify nonce for security
+		if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'sitegen_async_images' ) ) {
+			wp_die( 'Security check failed' );
+		}
+		
+		$post_id = intval( $_POST['post_id'] ?? 0 );
+		$content = sanitize_textarea_field( $_POST['content'] ?? '' );
+		
+		if ( ! $post_id || ! $content ) {
+			wp_die( 'Invalid parameters' );
+		}
+		
+		// Process images
+		$updated_content = self::sideload_images_and_replace_grammar( $content, $post_id );
+		if ( $updated_content !== $content ) {
+			wp_update_post(
+				array(
+					'ID'           => $post_id,
+					'post_content' => $updated_content,
+				)
+			);
+		}
+		
+		wp_die( 'Success' );
+	}
+
+
+
+	/**
+	 * Process homepage images immediately in background (alternative to cron).
+	 * This method dispatches an async request that doesn't block the main request.
+	 *
+	 * @param int    $post_id The post ID to process images for.
+	 * @param string $content The content containing images.
+	 */
+	public function process_homepage_images_immediate_async( $post_id, $content ) {
+		// Use wp_remote_post to make an async request to the same site
+		$admin_url = admin_url( 'admin-ajax.php' );
+		$nonce     = wp_create_nonce( 'sitegen_async_images' );
+		
+		wp_remote_post(
+			$admin_url,
+			array(
+				'timeout'   => 0.01, // Very short timeout to not block
+				'blocking'  => false, // Non-blocking request
+				'body'      => array(
+					'action'   => 'sitegen_process_images_async',
+					'post_id'  => $post_id,
+					'content'  => $content,
+					'nonce'    => $nonce,
+				),
+			)
+		);
 	}
 
 	/**
@@ -80,16 +143,8 @@ class SiteGenService {
 			);
 		}
 
-		// Process images by extracting URLs from img tags in the content and update the post
-		$updated_content = self::sideload_images_and_replace_grammar( $content, $post_id );
-		if ( $updated_content !== $content ) {
-			wp_update_post(
-				array(
-					'ID'           => $post_id,
-					'post_content' => $updated_content,
-				)
-			);
-		}
+		// Process images immediately in background (non-blocking)
+		$this->process_homepage_images_immediate_async( $post_id, $content );
 
 		// Add the homepage to the site navigation.
 		$this->add_page_to_navigation( $post_id, $title, get_permalink( $post_id ) );
