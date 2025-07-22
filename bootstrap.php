@@ -6,6 +6,7 @@ use NewfoldLabs\WP\Module\Onboarding\ModuleController;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Scan;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Safe_Mode;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Status;
+use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager;
 
 use function NewfoldLabs\WP\ModuleLoader\register;
 
@@ -81,11 +82,6 @@ if ( is_callable( 'add_action' ) ) {
 		}
 	);
 
-	// Register AJAX handlers for image processing
-	add_action(
-		'init',
-		function () {
-			\NewfoldLabs\WP\Module\Onboarding\Services\ThemeGeneratorService::register_ajax_handlers();
-		}
-	);
+	// Add action to process image sideload queue
+	add_action( 'nfd_process_image_sideload_queue', [ ImageSideloadTaskManager::class, 'process_queue' ] );
 }

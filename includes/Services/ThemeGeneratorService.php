@@ -2,6 +2,9 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
+use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager;
+use NewfoldLabs\WP\Module\Onboarding\Tasks\ImageSideloadTask;
+
 /**
  * ThemeGeneratorService for the onboarding module.
  * 
@@ -17,23 +20,21 @@ class ThemeGeneratorService {
 	 * @param string $content The content containing images.
 	 */
 	public static function process_homepage_images_immediate_async( $post_id, $content ) {
-		// Use wp_remote_post to make an async request to the same site
-		$admin_url = admin_url( 'admin-ajax.php' );
-		$nonce     = wp_create_nonce( 'sitegen_async_images' );
+		// Extract image URLs from content
+		preg_match_all( '/<img[^>]+src=["\']([^"\']+)["\']/i', $content, $matches );
+		$image_urls = isset( $matches[1] ) ? $matches[1] : array();
+		if ( empty( $image_urls ) ) {
+			return;
+		}
 		
-		wp_remote_post(
-			$admin_url,
-			array(
-				'timeout'   => 0.01, // Very short timeout to not block
-				'blocking'  => false, // Non-blocking request
-				'body'      => array(
-					'action'   => 'sitegen_process_images_async',
-					'post_id'  => $post_id,
-					'content'  => $content,
-					'nonce'    => $nonce,
-				),
-			)
-		);
+		// Create and add task to queue
+		$task = new ImageSideloadTask( $post_id, $image_urls );
+		ImageSideloadTaskManager::add_to_queue( $task );
+		
+		// Schedule a single event to process the queue (if not already scheduled)
+		if ( ! wp_next_scheduled( 'nfd_process_image_sideload_queue' ) ) {
+			wp_schedule_single_event( time(), 'nfd_process_image_sideload_queue' );
+		}
 	}
 
 	/**
@@ -148,90 +149,6 @@ class ThemeGeneratorService {
 		}
 
 		return $uploaded_image_urls;
-	}
-
-	/**
-	 * Extract image URLs from content and upload them to WordPress media library.
-	 *
-	 * This function extracts image URLs from img tags in the content, uploads the images
-	 * to the WordPress media library, and then replaces the old image URLs in the content
-	 * with the new ones.
-	 *
-	 * @param string $content The content containing img tags with image URLs.
-	 * @param int    $post_id The post ID to attach the images to.
-	 * @return string The updated content with new image URLs.
-	 */
-	public static function sideload_images_and_replace_grammar( $content, $post_id ) {
-		// Extract image URLs from img tags in the content
-		$image_urls = array();
-		preg_match_all( '/<img[^>]+src=["\']([^"\']+)["\'][^>]*>/i', $content, $matches );
-
-		if ( ! empty( $matches[1] ) ) {
-			$image_urls = array_unique( $matches[1] );
-		}
-
-		if ( empty( $image_urls ) ) {
-			return $content;
-		}
-
-		// Upload the images to WordPress media library.
-		$url_mapping = self::upload_images_to_wp_media_library( $image_urls, $post_id );
-
-		foreach ( $url_mapping as $old_url => $new_url ) {
-			if ( null === $new_url ) {
-				continue;
-			}
-			// escaping any special characters in the old URL to avoid breaking the regex.
-			$escaped_old_url = preg_quote( $old_url, '/' );
-
-			$escaped_old_url_regex_double_quote = '/"' . $escaped_old_url . '.*?"/m';
-			$content                            = preg_replace( $escaped_old_url_regex_double_quote, '"' . $new_url . '"', $content );
-
-			$escaped_old_url_regex_parenthesis = '/\(' . $escaped_old_url . '.*?\)/m';
-			$content                           = preg_replace( $escaped_old_url_regex_parenthesis, '(' . $new_url . ')', $content );
-		}
-
-		// Update the content with new image URLs.
-		return $content;
-	}
-
-	/**
-	 * Register AJAX handlers for image processing.
-	 * This should be called during plugin initialization.
-	 */
-	public static function register_ajax_handlers() {
-		add_action( 'wp_ajax_sitegen_process_images_async', array( __CLASS__, 'handle_ajax_image_processing' ) );
-		add_action( 'wp_ajax_nopriv_sitegen_process_images_async', array( __CLASS__, 'handle_ajax_image_processing' ) );
-	}
-
-	/**
-	 * Handle AJAX request for immediate async image processing.
-	 */
-	public static function handle_ajax_image_processing() {
-		// Verify nonce for security
-		if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'sitegen_async_images' ) ) {
-			wp_die( 'Security check failed' );
-		}
-		
-		$post_id = intval( $_POST['post_id'] ?? 0 );
-		$content = sanitize_textarea_field( $_POST['content'] ?? '' );
-		
-		if ( ! $post_id || ! $content ) {
-			wp_die( 'Invalid parameters' );
-		}
-		
-		// Process images
-		$updated_content = self::sideload_images_and_replace_grammar( $content, $post_id );
-		if ( $updated_content !== $content ) {
-			wp_update_post(
-				array(
-					'ID'           => $post_id,
-					'post_content' => $updated_content,
-				)
-			);
-		}
-		
-		wp_die( 'Success' );
 	}
 
 	/**
