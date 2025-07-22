@@ -287,13 +287,6 @@ final class WP_Admin {
 				);
 			}
 
-			$block_editor_context = new \WP_Block_Editor_Context();
-			wp_add_inline_script(
-				'wp-blocks',
-				sprintf( 'wp.blocks.setCategories( %s );', wp_json_encode( get_block_categories( $block_editor_context ) ) ),
-				'after'
-			);
-
 			\wp_enqueue_script( self::$slug );
 			\wp_enqueue_style( self::$slug );
 
