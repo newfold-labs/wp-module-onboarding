@@ -7,7 +7,7 @@ use NewfoldLabs\WP\Module\Onboarding\Tasks\ImageSideloadTask;
 
 /**
  * ThemeGeneratorService for the onboarding module.
- * 
+ *
  * Handles image processing and media library operations for the onboarding flow.
  */
 class ThemeGeneratorService {
@@ -26,11 +26,11 @@ class ThemeGeneratorService {
 		if ( empty( $image_urls ) ) {
 			return;
 		}
-		
+
 		// Create and add task to queue
 		$task = new ImageSideloadTask( $post_id, $image_urls );
 		ImageSideloadTaskManager::add_to_queue( $task );
-		
+
 		// Schedule a single event to process the queue (if not already scheduled)
 		if ( ! wp_next_scheduled( 'nfd_process_image_sideload_queue' ) ) {
 			wp_schedule_single_event( time(), 'nfd_process_image_sideload_queue' );
@@ -173,4 +173,4 @@ class ThemeGeneratorService {
 
 		return true;
 	}
-} 
+}

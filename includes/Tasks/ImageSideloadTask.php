@@ -43,7 +43,7 @@ class ImageSideloadTask {
 		try {
 			// Upload images to WordPress media library
 			$result = ThemeGeneratorService::upload_images_to_wp_media_library( $this->image_urls, $this->post_id );
-			
+
 			if ( is_wp_error( $result ) ) {
 				return $result;
 			}
@@ -78,6 +78,6 @@ class ImageSideloadTask {
 	 * @return string
 	 */
 	public function get_id() {
-		return 'image_sideload_' . $this->post_id . '_' . md5( serialize( $this->image_urls ) );
+		return 'image_sideload_' . $this->post_id . '_' . md5( maybe_serialize( $this->image_urls ) );
 	}
 }

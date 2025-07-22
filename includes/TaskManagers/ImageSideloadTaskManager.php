@@ -7,7 +7,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 /**
  * Task Manager for Image Sideloading
- * 
+ *
  * Manages a queue of ImageSideloadTask objects and processes them in FIFO order.
  */
 class ImageSideloadTaskManager {
@@ -34,7 +34,7 @@ class ImageSideloadTaskManager {
 	 */
 	public static function add_to_queue( ImageSideloadTask $task ) {
 		$queue = self::get_queue();
-		
+
 		// Check if task already exists
 		$task_id = $task->get_id();
 		foreach ( $queue as $existing_task ) {
@@ -45,11 +45,11 @@ class ImageSideloadTaskManager {
 
 		// Add task to queue (FIFO - add to end)
 		$queue[] = array(
-			'id'       => $task_id,
-			'post_id'  => $task->get_post_id(),
-			'urls'     => $task->get_image_urls(),
-			'status'   => 'pending',
-			'created'  => time(),
+			'id'      => $task_id,
+			'post_id' => $task->get_post_id(),
+			'urls'    => $task->get_image_urls(),
+			'status'  => 'pending',
+			'created' => time(),
 		);
 
 		self::set_queue( $queue );
@@ -105,7 +105,7 @@ class ImageSideloadTaskManager {
 	 */
 	public static function process_next_task() {
 		$queue = self::get_queue();
-		
+
 		if ( empty( $queue ) ) {
 			self::set_status( 'idle' );
 			return false;
@@ -113,37 +113,37 @@ class ImageSideloadTaskManager {
 
 		// Get the next task
 		$task_data = array_shift( $queue );
-		
+
 		// Mark as processing
-		$task_data['status'] = 'processing';
+		$task_data['status']  = 'processing';
 		$task_data['started'] = time();
-		
+
 		// Create task object and execute
-		$task = new ImageSideloadTask( $task_data['post_id'], $task_data['urls'] );
+		$task   = new ImageSideloadTask( $task_data['post_id'], $task_data['urls'] );
 		$result = $task->execute();
 
 		if ( is_wp_error( $result ) ) {
 			// Mark as failed
-			$task_data['status'] = 'failed';
-			$task_data['error'] = $result->get_error_message();
+			$task_data['status']    = 'failed';
+			$task_data['error']     = $result->get_error_message();
 			$task_data['completed'] = time();
-			
+
 			// Add back to queue for retry
 			$queue[] = $task_data;
-			
+
 			self::set_queue( $queue );
 			self::set_status( 'processing' );
-			
+
 			return $result;
 		}
 
 		// Mark as completed
-		$task_data['status'] = 'completed';
+		$task_data['status']    = 'completed';
 		$task_data['completed'] = time();
-		
+
 		self::set_queue( $queue );
 		self::set_status( 'processing' );
-		
+
 		return true;
 	}
 
@@ -154,31 +154,31 @@ class ImageSideloadTaskManager {
 	 * @return array Array with 'processed' and 'remaining' counts
 	 */
 	public static function process_queue( $max_tasks = 5 ) {
-		$processed = 0;
-		$queue = self::get_queue();
+		$processed     = 0;
+		$queue         = self::get_queue();
 		$initial_count = count( $queue );
 
 		self::set_status( 'processing' );
 
 		while ( $processed < $max_tasks && ! empty( $queue ) ) {
 			$result = self::process_next_task();
-			
-			if ( $result === false ) {
+	
+			if ( false ===$result ) {
 				break; // Queue is empty
 			}
-			
+
 			if ( is_wp_error( $result ) ) {
 				// Continue processing other tasks even if one fails
 				$processed++;
 				continue;
 			}
-			
+
 			$processed++;
 		}
 
 		$remaining = count( self::get_queue() );
-		
-		if ( $remaining === 0 ) {
+
+		if ( 0 === $remaining ) {
 			self::set_status( 'idle' );
 		}
 
