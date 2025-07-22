@@ -162,8 +162,8 @@ class ImageSideloadTaskManager {
 
 		while ( $processed < $max_tasks && ! empty( $queue ) ) {
 			$result = self::process_next_task();
-	
-			if ( false ===$result ) {
+
+			if ( false === $result ) {
 				break; // Queue is empty
 			}
 
