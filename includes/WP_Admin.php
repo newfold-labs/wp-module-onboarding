@@ -211,7 +211,7 @@ final class WP_Admin {
 		echo PHP_EOL;
 		echo '<!-- NFD:ONBOARDING -->';
 		echo PHP_EOL;
-		echo '<div id="nfd-onboarding" class="nfd-onboarding-container">' . self::is_loading() . '</div>';
+		echo '<div id="nfd-onboarding" class="nfd-onboarding-container">' . wp_kses_post( self::is_loading() ) . '</div>';
 		echo PHP_EOL;
 		echo '<!-- /NFD:ONBOARDING -->';
 		echo PHP_EOL;
@@ -246,14 +246,14 @@ final class WP_Admin {
 				NFD_ONBOARDING_DIR . '/languages'
 			);
 
-			$nfdOnboardingData = array(
+			$nfd_onboarding_data = array(
 				'runtime' => Data::runtime(),
 				'input'   => ReduxStateService::get( 'input' ),
 				'sitegen' => ReduxStateService::get( 'sitegen' ),
 			);
 			\wp_add_inline_script(
 				self::$slug,
-				'var nfdOnboarding =' . wp_json_encode( $nfdOnboardingData ) . ';',
+				'var nfdOnboarding =' . wp_json_encode( $nfd_onboarding_data ) . ';',
 				'before'
 			);
 
@@ -498,8 +498,8 @@ final class WP_Admin {
 		\wp_enqueue_style( 'hide-onboarding-restart-card' );
 	}
 
-	/*
-	Enqueue site editor specific assets when coming from onboarding.
+	/**
+	 * Enqueue site editor specific assets when coming from onboarding.
 	 *
 	 * @return void
 	 */
