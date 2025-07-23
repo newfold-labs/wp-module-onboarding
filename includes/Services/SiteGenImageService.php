@@ -58,7 +58,7 @@ class SiteGenImageService {
 
 		$uploaded_image_urls = array();
 		$total_images = count( $image_urls );
-		$successful_uploads = 0;
+		$successful_uploads  = 0;
 
 		try {
 			foreach ( $image_urls as $image_url ) {
@@ -168,8 +168,8 @@ class SiteGenImageService {
 			return false;
 		}
 
-		$content = $post->post_content;
-		$updated = false;
+		$content        = $post->post_content;
+		$updated        = false;
 		$replaced_count = 0;
 
 		// Replace each original URL with the new WordPress URL
@@ -187,10 +187,12 @@ class SiteGenImageService {
 
 		// Update the post if content changed
 		if ( $updated ) {
-			$update_result = wp_update_post( array(
-				'ID'           => $post_id,
-				'post_content' => $content,
-			) );
+			$update_result = wp_update_post(
+				array(
+					'ID'           => $post_id,
+					'post_content' => $content,
+				)
+			);
 
 			if ( is_wp_error( $update_result ) ) {
 				return false;
@@ -211,7 +213,7 @@ class SiteGenImageService {
 	public static function get_image_processing_status( $post_id ) {
 		$queue = \NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager::get_queue();
 		$stats = \NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager::get_stats();
-		
+
 		$post_tasks = array();
 		foreach ( $queue as $task ) {
 			if ( $task['post_id'] === $post_id ) {
@@ -220,10 +222,10 @@ class SiteGenImageService {
 		}
 
 		return array(
-			'post_id' => $post_id,
-			'queue_status' => \NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager::get_status(),
-			'queue_stats' => $stats,
-			'post_tasks' => $post_tasks,
+			'post_id'         => $post_id,
+			'queue_status'    => \NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager::get_status(),
+			'queue_stats'     => $stats,
+			'post_tasks'      => $post_tasks,
 			'post_task_count' => count( $post_tasks ),
 		);
 	}
