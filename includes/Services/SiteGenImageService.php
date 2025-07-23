@@ -6,11 +6,11 @@ use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager;
 use NewfoldLabs\WP\Module\Onboarding\Tasks\ImageSideloadTask;
 
 /**
- * ThemeGeneratorService for the onboarding module.
+ * SiteGenImageService for the onboarding module.
  *
  * Handles image processing and media library operations for the onboarding flow.
  */
-class ThemeGeneratorService {
+class SiteGenImageService {
 
 	/**
 	 * Process homepage images immediately in background (non-blocking).
@@ -57,6 +57,9 @@ class ThemeGeneratorService {
 		self::connect_to_filesystem();
 
 		$uploaded_image_urls = array();
+		$total_images = count( $image_urls );
+		$successful_uploads = 0;
+
 		try {
 			foreach ( $image_urls as $image_url ) {
 				// Check if the URL is valid.
@@ -142,13 +145,87 @@ class ThemeGeneratorService {
 						$attachment_url = null;
 					}
 					$uploaded_image_urls[ $image_url ] = $attachment_url;
+					$successful_uploads++;
 				}
 			}
 		} catch ( \Exception $e ) {
-			// Log error.
+			// Log error silently
+		}
+		return $uploaded_image_urls;
+	}
+
+	/**
+	 * Update post content by replacing original image URLs with WordPress media library URLs.
+	 *
+	 * @param int   $post_id The post ID to update.
+	 * @param array $url_mapping Array mapping original URLs to new WordPress URLs.
+	 * @return bool True on success, false on failure.
+	 */
+	public static function update_post_content_with_new_image_urls( $post_id, $url_mapping ) {
+		// Get the current post content
+		$post = get_post( $post_id );
+		if ( ! $post ) {
+			return false;
 		}
 
-		return $uploaded_image_urls;
+		$content = $post->post_content;
+		$updated = false;
+		$replaced_count = 0;
+
+		// Replace each original URL with the new WordPress URL
+		foreach ( $url_mapping as $original_url => $new_url ) {
+			if ( ! empty( $new_url ) ) {
+				// Use str_replace for exact URL replacement
+				$new_content = str_replace( $original_url, $new_url, $content );
+				if ( $new_content !== $content ) {
+					$content = $new_content;
+					$updated = true;
+					$replaced_count++;
+				}
+			}
+		}
+
+		// Update the post if content changed
+		if ( $updated ) {
+			$update_result = wp_update_post( array(
+				'ID'           => $post_id,
+				'post_content' => $content,
+			) );
+
+			if ( is_wp_error( $update_result ) ) {
+				return false;
+			}
+
+			return true;
+		}
+
+		return true; // No changes needed
+	}
+
+	/**
+	 * Get the current status of image processing for a post.
+	 *
+	 * @param int $post_id The post ID to check.
+	 * @return array Status information including processed images and pending tasks.
+	 */
+	public static function get_image_processing_status( $post_id ) {
+		$queue = \NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager::get_queue();
+		$stats = \NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager::get_stats();
+		
+		$post_tasks = array();
+		foreach ( $queue as $task ) {
+			if ( $task['post_id'] === $post_id ) {
+				$post_tasks[] = $task;
+			}
+		}
+
+		return array(
+			'post_id' => $post_id,
+			'queue_status' => \NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager::get_status(),
+			'queue_stats' => $stats,
+			'post_tasks' => $post_tasks,
+			'post_task_count' => count( $post_tasks ),
+		);
 	}
 
 	/**

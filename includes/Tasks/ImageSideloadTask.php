@@ -2,7 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Tasks;
 
-use NewfoldLabs\WP\Module\Onboarding\Services\ThemeGeneratorService;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenImageService;
 
 /**
  * Task for sideloading images to WordPress media library
@@ -42,10 +42,18 @@ class ImageSideloadTask {
 	public function execute() {
 		try {
 			// Upload images to WordPress media library
-			$result = ThemeGeneratorService::upload_images_to_wp_media_library( $this->image_urls, $this->post_id );
+			$result = SiteGenImageService::upload_images_to_wp_media_library( $this->image_urls, $this->post_id );
 
 			if ( is_wp_error( $result ) ) {
 				return $result;
+			}
+
+			// Update post content with new image URLs
+			if ( ! empty( $result ) ) {
+				$content_updated = SiteGenImageService::update_post_content_with_new_image_urls( $this->post_id, $result );
+				if ( ! $content_updated ) {
+					return new \WP_Error( 'content_update_failed', 'Failed to update post content with new image URLs' );
+				}
 			}
 
 			return true;

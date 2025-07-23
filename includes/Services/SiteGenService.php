@@ -4,7 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SitePagesService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService as LegacySiteGenService;
-use NewfoldLabs\WP\Module\Onboarding\Services\ThemeGeneratorService;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenImageService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
 
 /**
@@ -81,7 +81,7 @@ class SiteGenService {
 		}
 
 		// Process images immediately in background (non-blocking)
-		ThemeGeneratorService::process_homepage_images_immediate_async( $post_id, $content );
+		SiteGenImageService::process_homepage_images_immediate_async( $post_id, $content );
 
 		// Add the homepage to the site navigation.
 		$this->add_page_to_navigation( $post_id, $title, get_permalink( $post_id ) );
