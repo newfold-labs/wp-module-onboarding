@@ -205,32 +205,6 @@ class SiteGenImageService {
 	}
 
 	/**
-	 * Get the current status of image processing for a post.
-	 *
-	 * @param int $post_id The post ID to check.
-	 * @return array Status information including processed images and pending tasks.
-	 */
-	public static function get_image_processing_status( $post_id ) {
-		$queue = \NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager::get_queue();
-		$stats = \NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager::get_stats();
-
-		$post_tasks = array();
-		foreach ( $queue as $task ) {
-			if ( $task['post_id'] === $post_id ) {
-				$post_tasks[] = $task;
-			}
-		}
-
-		return array(
-			'post_id'         => $post_id,
-			'queue_status'    => \NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager::get_status(),
-			'queue_stats'     => $stats,
-			'post_tasks'      => $post_tasks,
-			'post_task_count' => count( $post_tasks ),
-		);
-	}
-
-	/**
 	 * Connect to the WordPress filesystem.
 	 *
 	 * @return boolean
