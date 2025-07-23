@@ -7,6 +7,7 @@ use NewfoldLabs\WP\Module\Onboarding\Compatibility\Scan;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Safe_Mode;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Status;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager;
+use NewfoldLabs\WP\Module\Onboarding\Tasks\ImageSideloadTask;
 
 use function NewfoldLabs\WP\ModuleLoader\register;
 

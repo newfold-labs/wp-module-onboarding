@@ -3,7 +3,6 @@
 namespace NewfoldLabs\WP\Module\Onboarding\TaskManagers;
 
 use NewfoldLabs\WP\Module\Onboarding\Tasks\ImageSideloadTask;
-use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 /**
  * Task Manager for Image Sideloading
@@ -17,14 +16,14 @@ class ImageSideloadTaskManager {
 	 *
 	 * @var string
 	 */
-	const QUEUE_OPTION = 'nfd_image_sideload_queue';
+	const QUEUE_OPTION = 'nfd_module_onboarding_image_sideload_queue';
 
 	/**
 	 * Option name for storing the processing status
 	 *
 	 * @var string
 	 */
-	const STATUS_OPTION = 'nfd_image_sideload_status';
+	const STATUS_OPTION = 'nfd_module_onboarding_image_sideload_status';
 
 	/**
 	 * Add a task to the queue
@@ -62,7 +61,7 @@ class ImageSideloadTaskManager {
 	 * @return array
 	 */
 	public static function get_queue() {
-		$queue = get_option( Options::get_option_name( self::QUEUE_OPTION ), array() );
+		$queue = get_option( self::QUEUE_OPTION, array() );
 		if ( ! is_array( $queue ) ) {
 			$queue = array();
 		}
@@ -76,7 +75,7 @@ class ImageSideloadTaskManager {
 	 * @return void
 	 */
 	public static function set_queue( $queue ) {
-		update_option( Options::get_option_name( self::QUEUE_OPTION ), $queue );
+		update_option( self::QUEUE_OPTION, $queue );
 	}
 
 	/**
@@ -85,7 +84,7 @@ class ImageSideloadTaskManager {
 	 * @return string
 	 */
 	public static function get_status() {
-		return get_option( Options::get_option_name( self::STATUS_OPTION ), 'idle' );
+		return get_option( self::STATUS_OPTION, 'idle' );
 	}
 
 	/**
@@ -95,7 +94,7 @@ class ImageSideloadTaskManager {
 	 * @return void
 	 */
 	public static function set_status( $status ) {
-		update_option( Options::get_option_name( self::STATUS_OPTION ), $status );
+		update_option( self::STATUS_OPTION, $status );
 	}
 
 	/**

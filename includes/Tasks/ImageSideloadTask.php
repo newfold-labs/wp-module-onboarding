@@ -48,6 +48,10 @@ class ImageSideloadTask {
 				return $result;
 			}
 
+			if ( false === $result ) {
+				return new \WP_Error( 'upload_failed', 'Image upload returned false' );
+			}
+
 			// Update post content with new image URLs
 			if ( ! empty( $result ) ) {
 				$content_updated = SiteGenImageService::update_post_content_with_new_image_urls( $this->post_id, $result );
