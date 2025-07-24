@@ -1,0 +1,24 @@
+actor: WpunitTester
+modules:
+    enabled:
+        - WPLoader
+        - \Helper\Wpunit
+    config:
+      WPLoader:
+        wpRootFolder: "%WP_ROOT_FOLDER%"
+
+        dbHost: "%TEST_DB_HOST%:%TEST_DB_PORT%"
+        dbUser: "%TEST_DB_USER%"
+        dbPassword: "%TEST_DB_PASSWORD%"
+
+        dbName: "%TEST_DB_NAME%"
+        tablePrefix: "%TEST_TABLE_PREFIX%"
+
+        domain: "%TEST_SITE_WP_DOMAIN%"
+        adminEmail: "%TEST_SITE_ADMIN_EMAIL%"
+        title: "wp-module-onboarding"
+        plugins: []
+        activatePlugins: []
+
+        WP_HTTP_BLOCK_EXTERNAL: true
+bootstrap: _bootstrap.php
