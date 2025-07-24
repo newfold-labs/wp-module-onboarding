@@ -6,6 +6,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Events;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\PreviewsService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService as LegacySiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\FlowService;
 
 
 use function NewfoldLabs\WP\ModuleLoader\container;
@@ -58,6 +59,9 @@ class AppService {
 
 		// Mark onboarding as completed.
 		StatusService::handle_completed();
+
+		// Save onboarding site information for other modules to access.
+		SiteInfoService::save_site_info();
 
 		// Purge all caches.
 		container()->get( 'cachePurger' )->purge_all();
