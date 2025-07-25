@@ -186,7 +186,7 @@ class StatusService {
 		}
 
 		// Ignore if the request is not for the onboarding page.
-		if ( isset( $_GET['page'] ) && WP_Admin::$slug === \sanitize_text_field( $_GET['page'] ) ) {
+		if ( isset( $_GET['page'] ) && \sanitize_text_field( $_GET['page'] ) === WP_Admin::$slug ) {
 			return;
 		}
 
@@ -201,7 +201,7 @@ class StatusService {
 	 */
 	public static function save_site_info(): void {
 		$site_info = array();
-		
+
 		// Get experience level and site type from ReduxStateService
 		$data = ReduxStateService::get( 'input' );
 		$site_info['experience_level'] = $data['experienceLevel'] ?? 3;
