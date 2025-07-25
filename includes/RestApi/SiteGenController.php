@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\WonderBlocksService;
 use NewfoldLabs\WP\Module\Onboarding\Data\SiteGen as SiteGenData;
 
 /**
@@ -143,6 +144,11 @@ class SiteGenController {
 				'required' => true,
 				'type'     => 'string',
 			),
+			'fallback'         => array(
+				'required' => false,
+				'type'     => 'boolean',
+				'default'  => false,
+			),
 		);
 	}
 
@@ -235,18 +241,23 @@ class SiteGenController {
 			return new \WP_REST_Response( $existing_homepages, 200 );
 		}
 
+		$fallback = $request->get_param( 'fallback' );
+		if ( true === $fallback ) {
+			return WonderBlocksService::get_fallback_homepages();
+		}
+
 		$site_description = $request->get_param( 'site_description' );
 		$locale           = $request->get_param( 'locale' );
 		$site_info        = array( 'site_description' => $site_description );
 
 		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', $locale );
 		if ( is_wp_error( $target_audience ) ) {
-			return $target_audience;
+			return WonderBlocksService::get_fallback_homepages();
 		}
 
 		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', $locale );
 		if ( is_wp_error( $content_style ) ) {
-			return $content_style;
+			return WonderBlocksService::get_fallback_homepages();
 		}
 
 		$homepages = SiteGenService::generate_homepages(
@@ -257,7 +268,7 @@ class SiteGenController {
 		);
 
 		if ( is_wp_error( $homepages ) ) {
-			return $homepages;
+			return WonderBlocksService::get_fallback_homepages();
 		}
 
 		return new \WP_REST_Response( $homepages, 201 );

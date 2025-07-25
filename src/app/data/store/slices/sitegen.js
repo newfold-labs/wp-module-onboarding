@@ -33,6 +33,12 @@ export function sitegen( state = DEFAULT_STATE, action ) {
 				homepages: action.homepages,
 				version: state.version + 1,
 			};
+		case 'SET_FALLBACK_HOMEPAGES':
+			return {
+				...state,
+				fallbackHomepages: action.fallbackHomepages,
+				version: state.version + 1,
+			};
 		case 'SET_SELECTED_HOMEPAGE':
 			return {
 				...state,
@@ -81,6 +87,12 @@ export const actions = {
 			homepages,
 		};
 	},
+	setFallbackHomepages: ( fallbackHomepages ) => {
+		return {
+			type: 'SET_FALLBACK_HOMEPAGES',
+			fallbackHomepages,
+		};
+	},
 	setSelectedHomepage: ( selectedHomepage ) => {
 		return {
 			type: 'SET_SELECTED_HOMEPAGE',
@@ -116,6 +128,7 @@ export const actions = {
 export const selectors = {
 	getSiteGenSlice: ( state ) => state.sitegen,
 	getHomepages: ( state ) => state.sitegen.homepages,
+	getFallbackHomepages: ( state ) => state.sitegen.fallbackHomepages,
 	getSelectedHomepage: ( state ) => state.sitegen.selectedHomepage,
 	getHasGeneratedSitePages: ( state ) => state.sitegen.hasGeneratedSitePages,
 	getSelectedColorPalette: ( state ) => state.sitegen.homepages[ state.sitegen.selectedHomepage ]?.color?.palette,

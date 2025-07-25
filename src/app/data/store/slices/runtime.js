@@ -126,14 +126,4 @@ export const selectors = {
 	getSiteGenIdentifiers( state ) {
 		return state.runtime.siteGen.identifiers;
 	},
-
-	/**
-	 * Gets the fallback homepages.
-	 *
-	 * @param {*} state
-	 * @return {Object} fallbackHomepages
-	 */
-	getFallbackHomepages( state ) {
-		return state.runtime.fallbackHomepages;
-	},
 };
