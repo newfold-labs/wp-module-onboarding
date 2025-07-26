@@ -109,7 +109,7 @@ class EventService {
 			case 'onboarding_complete':
 				// Add timestamp and ttl to onboarding_complete event
 				$event['data']['timestamp'] = $current_time;
-				
+
 				// Calculate ttl from stored start time
 				$start_time = get_option( Options::get_option_name( 'start_time' ) );
 				if ( $start_time ) {
