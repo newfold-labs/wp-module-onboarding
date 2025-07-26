@@ -22,10 +22,10 @@ class StatusService {
 		$status = get_option( Options::get_option_name( 'status' ) );
 		if ( 'started' !== $status && 'completed' !== $status ) {
 			update_option( Options::get_option_name( 'status' ), 'started' );
-			
+
 			// Store start time when onboarding begins
 			update_option( Options::get_option_name( 'start_time' ), time() );
-			
+
 			do_action( 'newfold/onboarding/started' );
 			return true;
 		}
@@ -40,7 +40,7 @@ class StatusService {
 	public static function handle_abandoned(): void {
 		if ( 'started' === get_option( Options::get_option_name( 'status' ) ) ) {
 			update_option( Options::get_option_name( 'status' ), 'abandoned' );
-			
+
 			// Clean up time tracking when onboarding is abandoned
 			delete_option( Options::get_option_name( 'start_time' ) );
 			delete_option( Options::get_option_name( 'completed_time' ) );
@@ -193,7 +193,7 @@ class StatusService {
 		}
 
 		// Ignore if the request is not for the onboarding page.
-		if ( isset( $_GET['page'] ) && WP_Admin::$slug === \sanitize_text_field( $_GET['page'] ) ) {
+		if ( isset( $_GET['page'] ) && \sanitize_text_field( $_GET['page'] ) === WP_Admin::$slug ) {
 			return;
 		}
 
