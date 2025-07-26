@@ -110,10 +110,19 @@ class EventService {
 				// Add timestamp and ttl to onboarding_complete event
 				$event['data']['timestamp'] = $current_time;
 
-				// Calculate ttl from stored start time
+				// Use the same completion time that was stored in handle_completed()
+				$completion_time = get_option( Options::get_option_name( 'completed_time' ) );
 				$start_time = get_option( Options::get_option_name( 'start_time' ) );
+
 				if ( $start_time ) {
-					$ttl_seconds = $current_time - $start_time;
+					if ( $completion_time ) {
+						// Use stored completion time
+						$ttl_seconds = $completion_time - $start_time;
+					} else {
+						// Fallback to current time if completion_time not found
+						$ttl_seconds = $current_time - $start_time;
+					}
+
 					if ( $ttl_seconds >= 0 ) {
 						$event['data']['ttl'] = $ttl_seconds;
 					}
