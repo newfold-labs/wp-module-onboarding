@@ -11,6 +11,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 use NewfoldLabs\WP\Module\Onboarding\Services\I18nService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
 use NewfoldLabs\WP\Module\Onboarding\Services\StatusService;
+use function NewfoldLabs\WP\Module\LinkTracker\Functions\build_link as buildLink;
 
 /**
  * Register Admin Page, Assets & Admin functionality with WordPress.
@@ -331,12 +332,12 @@ final class WP_Admin {
 
 		// If the brand plugin page URL is not found in the runtime, redirect to the WordPress admin.
 		if ( empty( $brand_plugin_url ) ) {
-			wp_redirect( admin_url() . '?' . $dashboard_redirect_params );
+			wp_redirect( buildLink( admin_url() . '?' . $dashboard_redirect_params ) );
 			exit;
 		}
 
 		// If the brand plugin page URL is found in the runtime, redirect to the brand plugin page.
-		wp_redirect( $brand_plugin_url . '&' . $dashboard_redirect_params );
+		wp_redirect( buildLink( $brand_plugin_url . '&' . $dashboard_redirect_params ) );
 		exit;
 	}
 
@@ -455,7 +456,7 @@ final class WP_Admin {
 			'var nfdOnboardingRestartMeta =' . wp_json_encode(
 				array(
 					'buttonText' => \__( 'Build with AI', 'wp-module-onboarding' ),
-					'buttonHref' => \admin_url( 'index.php?page=' . self::$slug ),
+					'buttonHref' => \buildLink( admin_url( 'index.php?page=' . self::$slug ) ),
 				)
 			) . ';',
 			'before'
