@@ -4,6 +4,11 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SitePagesService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService as LegacySiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration\ContentGenerationPrompt;
+use NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration\SitekitsContentGeneration;
+use NewfoldLabs\WP\Module\Onboarding\Types\Color;
+use NewfoldLabs\WP\Module\Onboarding\Types\ColorPalette;
+use NewfoldLabs\WP\Module\Onboarding\Types\SiteClassification;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenImageService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
 
@@ -17,6 +22,13 @@ use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
  * @package NewfoldLabs\WP\Module\Onboarding\Services
  */
 class SiteGenService {
+
+	/**
+	 * The singleton instance.
+	 *
+	 * @var SiteGenService|null
+	 */
+	private static $instance = null;
 
 	/**
 	 * The Redux input object.
@@ -40,6 +52,51 @@ class SiteGenService {
 	public function __construct() {
 		$this->input_data   = ReduxStateService::get( 'input' );
 		$this->sitegen_data = ReduxStateService::get( 'sitegen' );
+	}
+
+	/**
+	 * Get the singleton instance.
+	 *
+	 * @return SiteGenService
+	 */
+	public static function get_instance(): SiteGenService {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Generate the sitekits.
+	 *
+	 * @param string $site_description The site description.
+	 * @param string $site_type The site type.
+	 * @param string $locale The locale.
+	 * @param bool   $for_onboarding_preview Whether to return the sitekits as array for onboarding preview.
+	 * @return array|\WP_Error Array of Sitekit objects, array of sitekits for onboarding preview, or WP_Error if there is an error.
+	 */
+	public function get_sitekits( string $site_description, string $site_type, string $locale = 'en_US', bool $for_onboarding_preview = false ) {
+		$prompt              = new ContentGenerationPrompt( $site_description, $site_type, $locale );
+		$site_classification = $this->get_site_classification();
+
+		$sitekits = new SitekitsContentGeneration( $site_type, $locale, $prompt, $site_classification );
+		$sitekits = $sitekits->generate_sitekits();
+
+		// If there is an error, return it.
+		if ( is_wp_error( $sitekits ) ) {
+			return $sitekits;
+		}
+
+		// If we are generating sitekits for onboarding preview, return the sitekits as array.
+		if ( $for_onboarding_preview ) {
+			$previews = array();
+			foreach ( $sitekits as $sitekit ) {
+				$previews[ $sitekit->get_slug() ] = $sitekit->onboarding_preview_data();
+			}
+			$sitekits = $previews;
+		}
+
+		return $sitekits;
 	}
 
 	/**
@@ -122,6 +179,65 @@ class SiteGenService {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Get the site classification.
+	 *
+	 * @return SiteClassification
+	 */
+	public function get_site_classification(): SiteClassification {
+		$primary_type        = 'other';
+		$secondary_type      = 'other';
+		$site_classification = LegacySiteGenService::instantiate_site_meta(
+			$this->get_prompt(),
+			'site_classification',
+			$this->get_site_type(),
+			$this->get_locale()
+		);
+
+		if ( is_array( $site_classification ) ) {
+			$primary_type   = $site_classification['primaryType'] ?? $primary_type;
+			$secondary_type = $site_classification['slug'] ?? $secondary_type;
+		}
+
+		return new SiteClassification( $primary_type, $secondary_type );
+	}
+
+	/**
+	 * Get a palette from the color palettes generated during the sitemeta calls.
+	 *
+	 * @return ColorPalette|null The color palette, or null on error.
+	 */
+	public function get_color_palette() {
+		$color_palettes = LegacySiteGenService::instantiate_site_meta(
+			$this->get_prompt(),
+			'color_palette',
+			$this->get_site_type(),
+			$this->get_locale()
+		);
+
+		if ( ! is_array( $color_palettes ) ) {
+			return null;
+		}
+
+		// Select a random color palette from the sitemeta.
+		$selected_color_palette_index = array_rand( $color_palettes );
+		$selected_color_palette       = $color_palettes[ $selected_color_palette_index ];
+
+		$palette_slug   = 'palette_' . ( $selected_color_palette_index + 1 );
+		$palette_colors = array();
+
+		// Create a Color object for each color in the selected color palette.
+		foreach ( $selected_color_palette as $key => $value ) {
+			$slug  = $key;
+			$name  = ucfirst( str_replace( '_', ' ', $slug ) );
+			$color = $value;
+
+			$palette_colors[] = new Color( $name, $slug, $color );
+		}
+
+		return new ColorPalette( $palette_slug, $palette_colors );
 	}
 
 	/**
