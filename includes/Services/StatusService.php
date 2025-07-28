@@ -7,6 +7,7 @@ use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 use NewfoldLabs\WP\Module\Onboarding\Data\Config;
 use NewfoldLabs\WP\Module\Onboarding\Data\Flows\Flows;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
 
 /**
  * Tracks the Status of Onboarding.
@@ -47,6 +48,10 @@ class StatusService {
 	public static function handle_completed(): void {
 		if ( 'started' === get_option( Options::get_option_name( 'status' ) ) ) {
 			update_option( Options::get_option_name( 'status' ), 'completed' );
+
+			// Save onboarding site information to database option.
+			self::save_site_info();
+
 			/**
 			 * We're disabling the restart onboarding feature for now.
 			 */
@@ -181,11 +186,28 @@ class StatusService {
 		}
 
 		// Ignore if the request is not for the onboarding page.
-		if ( isset( $_GET['page'] ) && WP_Admin::$slug === \sanitize_text_field( $_GET['page'] ) ) {
+		if ( isset( $_GET['page'] ) && \sanitize_text_field( $_GET['page'] ) === WP_Admin::$slug ) {
 			return;
 		}
 
 		// Handle abandoned event.
 		self::handle_abandoned();
+	}
+
+	/**
+	 * Save onboarding site information to database option for other modules to access.
+	 *
+	 * @return void
+	 */
+	public static function save_site_info(): void {
+		$site_info = array();
+
+		// Get experience level and site type from ReduxStateService
+		$data = ReduxStateService::get( 'input' );
+		$site_info['experience_level'] = $data['experienceLevel'] ?? 'advanced';
+		$site_info['site_type'] = $data['siteType'] ?? 'business';
+
+		// Save to database option
+		update_option( Options::get_option_name( 'site_info' ), $site_info );
 	}
 }
