@@ -204,7 +204,7 @@ class StatusService {
 
 		// Get experience level and site type from ReduxStateService
 		$data = ReduxStateService::get( 'input' );
-		$site_info['experience_level'] = $data['experienceLevel'] ?? 3;
+		$site_info['experience_level'] = $data['experienceLevel'] ?? 'advanced';
 		$site_info['site_type'] = $data['siteType'] ?? 'business';
 
 		// Save to database option
