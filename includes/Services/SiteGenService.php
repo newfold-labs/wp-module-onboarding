@@ -9,7 +9,18 @@ use NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration\SitekitsConte
 use NewfoldLabs\WP\Module\Onboarding\Types\Color;
 use NewfoldLabs\WP\Module\Onboarding\Types\ColorPalette;
 use NewfoldLabs\WP\Module\Onboarding\Types\SiteClassification;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenImageService;
+use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
 
+/**
+ * Class SiteGenService
+ *
+ * Handles the onboarding SiteGen flow for generating, publishing, and managing AI-generated homepages and related content.
+ *
+ * This service is designed to work with the onboarding module's Redux state and integrates with other onboarding services.
+ *
+ * @package NewfoldLabs\WP\Module\Onboarding\Services
+ */
 class SiteGenService {
 
 	/**
@@ -24,17 +35,19 @@ class SiteGenService {
 	 *
 	 * @var array|null
 	 */
-	private ?array $input_data = null;
-	
+	private $input_data = null;
+
 	/**
 	 * The Redux sitegen object.
 	 *
 	 * @var array|null
 	 */
-	private ?array $sitegen_data = null;
+	private $sitegen_data = null;
 
 	/**
-	 * Constructor.
+	 * SiteGenService constructor.
+	 *
+	 * Initializes the service by loading the Redux input and sitegen data from the ReduxStateService.
 	 */
 	public function __construct() {
 		$this->input_data   = ReduxStateService::get( 'input' );
@@ -92,7 +105,7 @@ class SiteGenService {
 	 * @param string $selected_sitegen_homepage The selected sitegen homepage to publish.
 	 * @return int|\WP_Error
 	 */
-	public function publish_homepage( string $selected_sitegen_homepage ): int | \WP_Error {
+	public function publish_homepage( string $selected_sitegen_homepage ) {
 		// Validate we have the selected homepage.
 		if (
 			! $this->sitegen_data ||
@@ -124,6 +137,9 @@ class SiteGenService {
 			);
 		}
 
+		// Process images immediately in background (non-blocking)
+		SiteGenImageService::process_homepage_images_immediate_async( $post_id, $content );
+
 		// Add the homepage to the site navigation.
 		$this->add_page_to_navigation( $post_id, $title, get_permalink( $post_id ) );
 
@@ -144,9 +160,9 @@ class SiteGenService {
 	 * @param string $slug The slug of the page to get the title for.
 	 * @return string|false The page title, or false if not found.
 	 */
-	public function get_sitemap_page_title( string $slug ): string|false {
-		$prompt = $this->get_prompt();
-		$locale = $this->get_locale();
+	public function get_sitemap_page_title( string $slug ) {
+		$prompt    = $this->get_prompt();
+		$locale    = $this->get_locale();
 		$site_type = $this->get_site_type();
 		if ( ! $prompt || ! $locale || ! $site_type ) {
 			return false;
@@ -227,7 +243,7 @@ class SiteGenService {
 	/**
 	 * Add a page to the site navigation.
 	 *
-	 * @param int $post_id The ID of the page to add to the navigation.
+	 * @param int    $post_id The ID of the page to add to the navigation.
 	 * @param string $page_title The title of the page.
 	 * @param string $permalink The permalink of the page.
 	 */
@@ -259,7 +275,7 @@ class SiteGenService {
 	 *
 	 * @return string|false
 	 */
-	public function get_prompt(): string|false {
+	public function get_prompt() {
 		return ! empty( $this->input_data['prompt'] ) ? $this->input_data['prompt'] : false;
 	}
 
@@ -268,7 +284,7 @@ class SiteGenService {
 	 *
 	 * @return string
 	 */
-	public function get_site_type(): string {
+	public function get_site_type() {
 		return ! empty( $this->input_data['siteType'] ) ? $this->input_data['siteType'] : 'business';
 	}
 
@@ -277,7 +293,7 @@ class SiteGenService {
 	 *
 	 * @return string
 	 */
-	public function get_locale(): string {
+	public function get_locale() {
 		return ! empty( $this->input_data['locale'] ) ? $this->input_data['locale'] : 'en_US';
 	}
 }
