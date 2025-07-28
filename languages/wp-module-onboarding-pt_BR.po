@@ -80,7 +80,7 @@ msgstr "Padrões Não Encontrados."
 msgid "No Pattern Found."
 msgstr "Padrão Não Encontrado."
 
-#: includes/Services/EventService.php:23
+#: includes/Services/EventService.php:24
 msgid "Bad event structure/value."
 msgstr "Estrutura/valor do evento incorreto."
 

@@ -114,7 +114,7 @@ msgstr "Configuración personalizada"
 msgid "Global style customization created."
 msgstr "Personalización de estilo global creada."
 
-#: includes/Services/EventService.php:23
+#: includes/Services/EventService.php:24
 msgid "Bad event structure/value."
 msgstr "Estructura o valor de evento incorrectos."
 

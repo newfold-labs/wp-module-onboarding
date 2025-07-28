@@ -114,7 +114,7 @@ msgstr "Die benutzerdefinierten Einstellungen"
 msgid "Global style customization created."
 msgstr "Globale Anpassung erstellt."
 
-#: includes/Services/EventService.php:23
+#: includes/Services/EventService.php:24
 msgid "Bad event structure/value."
 msgstr "Fehlerhafte Ereignisstruktur/-wert."
 
