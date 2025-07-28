@@ -2,11 +2,16 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration;
 
+use NewfoldLabs\WP\Module\Onboarding\RestApi\ParallelRequestsController;
+use NewfoldLabs\WP\Module\Onboarding\Services\ParallelRequestsService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService;
 use NewfoldLabs\WP\Module\Onboarding\Types\Page;
 use NewfoldLabs\WP\Module\Onboarding\Types\Pages;
+use NewfoldLabs\WP\Module\Onboarding\Types\ParallelRequest;
 use NewfoldLabs\WP\Module\Onboarding\Types\SiteClassification;
 use NewfoldLabs\WP\Module\Onboarding\Types\Sitekit;
+use WpOrg\Requests\Requests;
 
 class SitekitsContentGeneration {
 
@@ -74,20 +79,30 @@ class SitekitsContentGeneration {
 			'secondaryType' => $this->site_classification->get_secondary_type(),
 		);
 
+		// Install sitekits pre-requisites plugins in background.
+		$this->install_pre_requisites_in_background();
+
+		// Generate sitekits.
 		$request = new ContentGenerationServiceRequest( 'sitekits/generate', $request_body );
 		$request->send();
-
 		// Success.
 		if (
 			$request->is_successful() &&
 			isset( $request->get_response_body()['sitekits'] )
 		) {
 			$response = array();
+
+			// Process the sitekits.
 			$sitekits = $request->get_response_body()['sitekits'];
 			foreach ( $sitekits as $sitekit ) {
-				$sitekit_type = $this->get_sitekit_object( $sitekit );
-				$response[]   = $sitekit_type;
+				$sitekit_object = $this->get_sitekit_object( $sitekit );
+				$response[]     = $sitekit_object;
 			}
+
+			// Publish site content.
+			$posts = $request->get_response_body()['posts'] ?? array();
+			$this->publish_content( $posts );
+
 			return $response;
 		}
 
@@ -165,6 +180,39 @@ class SitekitsContentGeneration {
 			$page_content .= $pattern['patternContent'];
 		}
 		return $page_content;
+	}
+
+	/**
+	 * Installs the pre-requisites in background.
+	 *
+	 * @return void
+	 */
+	private function install_pre_requisites_in_background(): void {
+		if ( $this->site_type === 'ecommerce' ) {
+			EcommerceSiteTypeService::install_ecommerce_plugins();
+		}
+	}
+
+	/**
+	 * Publishes the demo content.
+	 *
+	 * @param array $posts The posts.
+	 * @return void
+	 */
+	private function publish_content( array $posts = array() ): void {
+		// Publish WooCommerce products.
+		$products = $posts['products'] ?? array();
+		if ( ! empty( $products ) ) {
+			foreach ( $products as $index => $product ) {
+				EcommerceSiteTypeService::publish_woo_product(
+					$product['name'] ?? 'Product ' . $index + 1,
+					$product['description'] ?? 'Description for Product ' . $index + 1,
+					$product['price'] ?? '24.99',
+					$product['image'] ?? '',
+					$product['categories'] ?? array()
+				);
+			}
+		}
 	}
 
 	/**

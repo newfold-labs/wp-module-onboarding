@@ -1,6 +1,7 @@
 import apiFetch from '@wordpress/api-fetch';
 import { wpRestURL } from '@/data/constants';
 import { resolve } from '@/utils/helpers';
+import { fireWpCron } from './';
 
 export const onboardingRestRoute = 'newfold-onboarding/v1';
 export const onboardingRestBase = `${ wpRestURL }/${ onboardingRestRoute }`;
@@ -35,7 +36,14 @@ export const updateOnboardingSiteGenSlice = async ( data ) => {
 	);
 };
 
+export const continuouslyFireWpCron = () => {
+	setInterval( () => {
+		fireWpCron();
+	}, 30000 );
+};
+
 export const startOnboarding = async ( data = {} ) => {
+	continuouslyFireWpCron();
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'app/start' ),
