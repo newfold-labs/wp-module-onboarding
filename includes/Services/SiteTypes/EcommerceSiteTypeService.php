@@ -125,6 +125,42 @@ class EcommerceSiteTypeService {
 	}
 
 	/**
+	 * Sets up the WooCommerce pages.
+	 *
+	 * @return bool
+	 */
+	public static function setup_woo_pages(): bool {
+		if ( class_exists( '\WC_Install' ) ) {
+			\WC_Install::create_pages();
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Gets the WooCommerce shop page info.
+	 *
+	 * @return array The shop page info or an empty array if the shop page is not found.
+	 */
+	public static function get_woo_shop_page_info(): array {
+		if ( ! function_exists( '\wc_get_page_id' ) || ! function_exists( '\wc_get_page_permalink' ) ) {
+			return array();
+		}
+
+		$shop_page_id = \wc_get_page_id( 'shop' );
+		if ( $shop_page_id ) {
+			return array(
+				'id'        => $shop_page_id,
+				'title'     => \get_the_title( $shop_page_id ),
+				'permalink' => \get_permalink( $shop_page_id ),
+			);
+		}
+
+		return array();
+	}
+
+	/**
 	 * Gets the ecommerce plugins.
 	 *
 	 * @return array

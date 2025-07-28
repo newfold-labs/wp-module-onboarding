@@ -7,6 +7,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService as LegacySiteG
 use NewfoldLabs\WP\Module\Onboarding\Data\SiteGen as SiteGenData;
 use NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration\SitekitsContentGeneration;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteNavigationService;
 
 /**
  * Class SiteGenController
@@ -90,6 +91,17 @@ class SiteGenController {
 				'callback'            => array( $this, 'publish_sitemap_pages' ),
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				'args'                => $this->get_publish_sitemap_pages_args(),
+			)
+		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/setup-nav-menu',
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'setup_nav_menu' ),
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				'args'                => $this->get_setup_nav_menu_args(),
 			)
 		);
 	}
@@ -178,6 +190,20 @@ class SiteGenController {
 			),
 			'isFavorite'       => array(
 				'required' => true,
+			),
+		);
+	}
+
+	/**
+	 * Gets the arguments for the 'setup-nav-menu' endpoint.
+	 *
+	 * @return array The array of arguments.
+	 */
+	public function get_setup_nav_menu_args() {
+		return array(
+			'site_type' => array(
+				'required' => false,
+				'type'     => 'string',
 			),
 		);
 	}
@@ -358,5 +384,27 @@ class SiteGenController {
 	 */
 	public function get_site_details_meta() {
 		return SiteGenData::get_site_details_questionnaire();
+	}
+
+	/**
+	 * Setup the nav menu.
+	 *
+	 * @return array|WP_Error
+	 */
+	public function setup_nav_menu( \WP_REST_Request $request ) {
+		$site_type = $request->get_param( 'site_type' );
+
+		$siteGenService = new SiteNavigationService();
+		$result         = $siteGenService->setup_site_nav_menu( $site_type );
+
+		if ( ! $result ) {
+			return new \WP_Error(
+				'nfd_onboarding_error',
+				__( 'Error at Setting up the nav menu.', 'wp-module-onboarding' ),
+				array( 'status' => 500 )
+			);
+		}
+
+		return new \WP_REST_Response( array( 'success' => $result ), 200 );
 	}
 }

@@ -140,9 +140,6 @@ class SiteGenService {
 		// Process images immediately in background (non-blocking)
 		SiteGenImageService::process_homepage_images_immediate_async( $post_id, $content );
 
-		// Add the homepage to the site navigation.
-		$this->add_page_to_navigation( $post_id, $title, get_permalink( $post_id ) );
-
 		// Change WordPress reading options to show static page as homepage.
 		$wp_reading_homepage_option = get_option( 'show_on_front' );
 		if ( 'page' !== $wp_reading_homepage_option ) {
@@ -238,36 +235,6 @@ class SiteGenService {
 		}
 
 		return new ColorPalette( $palette_slug, $palette_colors );
-	}
-
-	/**
-	 * Add a page to the site navigation.
-	 *
-	 * @param int    $post_id The ID of the page to add to the navigation.
-	 * @param string $page_title The title of the page.
-	 * @param string $permalink The permalink of the page.
-	 */
-	public function add_page_to_navigation( int $post_id, string $page_title, string $permalink ): void {
-		$id    = $post_id;
-		$label = $page_title;
-		$url   = $permalink;
-
-		$nav_link_grammar = "<!-- wp:navigation-link {\"label\":\"$label\",\"type\":\"page\",\"id\":$id,\"url\":\"$url\",\"kind\":\"post-type\"} /-->";
-
-		$navigation = new \WP_Query(
-			array(
-				'name'      => 'navigation',
-				'post_type' => 'wp_navigation',
-			)
-		);
-		if ( ! empty( $navigation->posts ) ) {
-			wp_update_post(
-				array(
-					'ID'           => $navigation->posts[0]->ID,
-					'post_content' => $nav_link_grammar . $navigation->posts[0]->post_content,
-				)
-			);
-		}
 	}
 
 	/**

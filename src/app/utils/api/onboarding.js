@@ -198,6 +198,18 @@ export async function getSitePages( prompt, siteType, locale ) {
 	);
 }
 
+export async function setupSiteNavigationMenu( siteType = '' ) {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/setup-nav-menu' ),
+			method: 'POST',
+			data: {
+				site_type: siteType,
+			},
+		} ).then()
+	);
+}
+
 /**
  * Get the snapshot data for a preview.
  *
