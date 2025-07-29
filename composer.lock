@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fcd1475da71e169d0e3fa1c08f682ec3",
+    "content-hash": "32119418bdc1902369369481f044c6af",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -950,16 +950,16 @@
         },
         {
             "name": "newfold-labs/wp-module-onboarding-data",
-            "version": "dev-release/ecomm-sitegen-beta",
+            "version": "1.2.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-onboarding-data.git",
-                "reference": "e12a7fa14c3b1974e15ddb91dbfd5fc0dd9d548e"
+                "reference": "c09eca14c982e2d4f1bc27a602f4f173ea0b9bb0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-onboarding-data/zipball/e12a7fa14c3b1974e15ddb91dbfd5fc0dd9d548e",
-                "reference": "e12a7fa14c3b1974e15ddb91dbfd5fc0dd9d548e",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-onboarding-data/zipball/c09eca14c982e2d4f1bc27a602f4f173ea0b9bb0",
+                "reference": "c09eca14c982e2d4f1bc27a602f4f173ea0b9bb0",
                 "shasum": ""
             },
             "require": {
@@ -1035,10 +1035,10 @@
             ],
             "description": "A non-toggleable module containing a standardized interface for interacting with Onboarding data.",
             "support": {
-                "source": "https://github.com/newfold-labs/wp-module-onboarding-data/tree/release/ecomm-sitegen-beta",
+                "source": "https://github.com/newfold-labs/wp-module-onboarding-data/tree/1.2.14",
                 "issues": "https://github.com/newfold-labs/wp-module-onboarding-data/issues"
             },
-            "time": "2025-07-29T04:17:12+00:00"
+            "time": "2025-07-29T20:07:23+00:00"
         },
         {
             "name": "newfold-labs/wp-module-patterns",
@@ -8126,9 +8126,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "newfold-labs/wp-module-onboarding-data": 20
-    },
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {},
