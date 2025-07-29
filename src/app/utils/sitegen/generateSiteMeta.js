@@ -6,7 +6,7 @@ import { getSiteMetaForIdentifier } from '@/utils/api/onboarding';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_ERROR_STATE_TRIGGERED } from '@/utils/analytics/hiive/constants';
 
-const handleFetch = async ( identifier, siteInfo, locale ) => {
+const handleFetch = async ( identifier, siteInfo, siteType, locale ) => {
 	let response;
 	const maxRetries = 3;
 	let retryCount = 0;
@@ -16,7 +16,7 @@ const handleFetch = async ( identifier, siteInfo, locale ) => {
 	while ( retryCount < maxRetries ) {
 		retryCount++;
 
-		response = await getSiteMetaForIdentifier( identifier, siteInfo, locale );
+		response = await getSiteMetaForIdentifier( identifier, siteInfo, siteType, locale );
 		if ( response.error ) {
 			// Exponential backoff
 			await delay( 500 * retryCount );
@@ -46,12 +46,14 @@ const setSiteTagline = async ( tagline ) => {
 
 /**
  * Generate the site meta for the site.
+ *
  * @return {boolean} True if successful, false otherwise.
  */
 const generateSiteMeta = async () => {
 	const identifiers = select( nfdOnboardingStore ).getSiteGenIdentifiers();
 	const prompt = select( nfdOnboardingStore ).getPrompt();
 	const locale = select( nfdOnboardingStore ).getSelectedLocale();
+	const siteType = select( nfdOnboardingStore ).getSiteType();
 	/**
 	 * Todo: the site meta api expects an object, but the prompt is a string.
 	 * In the future, we should change the api to accept a string, but for now,
@@ -63,7 +65,7 @@ const generateSiteMeta = async () => {
 
 	try {
 		const siteMetaCalls = identifiers.map( async ( identifier ) => {
-			const response = await handleFetch( identifier, siteInfo, locale );
+			const response = await handleFetch( identifier, siteInfo, siteType, locale );
 			if ( response.error ) {
 				trackOnboardingEvent(
 					new OnboardingEvent(

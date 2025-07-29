@@ -3438,6 +3438,9 @@
 .nfd-w-0 {
 		width: 0px !important;
 }
+.nfd-w-1\/2 {
+		width: 50% !important;
+}
 .nfd-w-12 {
 		width: 3rem !important;
 }
@@ -3464,12 +3467,6 @@
 }
 .nfd-w-\[30\%\] {
 		width: 30% !important;
-}
-.nfd-w-\[40\%\] {
-		width: 40% !important;
-}
-.nfd-w-\[60\%\] {
-		width: 60% !important;
 }
 .nfd-w-\[90px\] {
 		width: 90px !important;
@@ -3859,6 +3856,9 @@
 }
 .nfd-pb-1 {
 		padding-bottom: 0.25rem !important;
+}
+.nfd-pb-7 {
+		padding-bottom: 1.75rem !important;
 }
 .nfd-pb-8 {
 		padding-bottom: 2rem !important;
@@ -4294,6 +4294,10 @@
 }
 .\[\&_\.nfd-textarea\]\:nfd-h-40 .nfd-textarea {
 		height: 10rem !important;
+}
+.\[\&_button\>span\]\:nfd-text-gray-500 button>span {
+		--tw-text-opacity: 1 !important;
+		color: rgb(107 114 128 / var(--tw-text-opacity, 1)) !important;
 }
 @media(min-width:601px) {
 		.\[\@media\(min-width\:601px\)\]\:nfd-hidden {
