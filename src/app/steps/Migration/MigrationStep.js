@@ -69,9 +69,9 @@ const MigrationStep = () => {
 				dispatch( nfdOnboardingStore ).setInstaWpMigrationUrl( migrateUrl );
 				await trackMigrationInitiatedEvent( migrateUrl );
 
-				await updateWpSettings({
-					'nfd_migrate_site': false
-				});
+				await updateWpSettings( {
+					nfd_migrate_site: false,
+				} );
 
 				// Open migration url (external)
 				window.open( migrateUrl, '_self' );
