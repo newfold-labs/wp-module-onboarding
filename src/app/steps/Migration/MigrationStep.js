@@ -5,7 +5,7 @@ import { Container, Title, Spinner } from '@newfold/ui-component-library';
 import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
 import { nfdOnboardingStore } from '@/data/store';
 import { Navigate, Step } from '@/components';
-import { getSiteMigrateUrl, getWpSettings, migrateRestURL } from '@/utils/api';
+import { getSiteMigrateUrl, getWpSettings, updateWpSettings, migrateRestURL } from '@/utils/api';
 import migrationFigureUrl from '@/assets/nfd-migration.png';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_ERROR_STATE_TRIGGERED, ACTION_MFE_MIGRATION_INITIATED, ACTION_MIGRATION_INITIATED } from '@/utils/analytics/hiive/constants';
@@ -68,6 +68,10 @@ const MigrationStep = () => {
 			if ( migrateUrl ) {
 				dispatch( nfdOnboardingStore ).setInstaWpMigrationUrl( migrateUrl );
 				await trackMigrationInitiatedEvent( migrateUrl );
+
+				await updateWpSettings({
+					'nfd_migrate_site': false
+				});
 
 				// Open migration url (external)
 				window.open( migrateUrl, '_self' );

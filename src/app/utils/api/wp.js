@@ -16,3 +16,13 @@ export async function getWpSettings() {
 		} ).then()
 	);
 }
+
+export async function updateWpSettings( data ) {
+	return await resolve(
+		apiFetch( {
+			url: wpRestURL( 'settings' ),
+			method: 'POST',
+			data,
+		} ).then()
+	);
+}
