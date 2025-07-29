@@ -21,7 +21,7 @@ class ContentGenerationServiceRequest {
 	 *
 	 * @var string
 	 */
-	private $url = 'https://patterns-stg.hiive.cloud/api/v1/content-generation/';
+	private $url = 'https://patterns.hiive.cloud/api/v1/content-generation/';
 
 	/**
 	 * API endpoint
