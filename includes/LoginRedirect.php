@@ -5,7 +5,6 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 use function WP_Forge\Helpers\dataGet;
-use function NewfoldLabs\WP\Module\LinkTracker\Functions\build_link as buildLink;
 
 /**
  * Contains functionalities that redirect users to onboarding upon logging into WordPress.
@@ -62,7 +61,7 @@ class LoginRedirect {
 		if ( '0' === $redirect_option ) {
 			return $original_redirect;
 		} elseif ( '1' === $redirect_option ) {
-			return buildLink( admin_url( '/index.php?page=' . WP_Admin::$slug ) );
+			return apply_filters( 'nfd_build_url', admin_url( '/index.php?page=' . WP_Admin::$slug ) );
 		}
 
 		// Don't redirect to onboarding if onboarding was exited or completed.
@@ -82,7 +81,7 @@ class LoginRedirect {
 		}
 
 		// Redirect to onboarding
-		return buildLink( admin_url( '/index.php?page=' . WP_Admin::$slug ) );
+		return apply_filters( 'nfd_build_url', admin_url( '/index.php?page=' . WP_Admin::$slug ) );
 	}
 
 	/**
