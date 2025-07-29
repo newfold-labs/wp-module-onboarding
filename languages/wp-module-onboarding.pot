@@ -12,7 +12,7 @@ msgstr ""
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-module-onboarding\n"
 
-#: bootstrap.php:22
+#: bootstrap.php:24
 #: includes/Compatibility/Safe_Mode.php:44
 #: includes/Compatibility/Safe_Mode.php:45
 #: includes/WP_Admin.php:83
@@ -75,12 +75,16 @@ msgstr ""
 msgid "Success."
 msgstr ""
 
-#: includes/RestApi/SiteGenController.php:299
+#: includes/RestApi/SiteGenController.php:337
 msgid "Error at Regenerating home pages."
 msgstr ""
 
+#: includes/RestApi/SiteGenController.php:403
+msgid "Error at Setting up the nav menu."
+msgstr ""
+
 #: includes/RestApi/SitePagesController.php:106
-#: includes/Services/SiteGenService.php:50
+#: includes/Services/SiteGenService.php:123
 msgid "Home"
 msgstr ""
 
@@ -112,7 +116,19 @@ msgstr ""
 msgid "Global style customization created."
 msgstr ""
 
-#: includes/Services/EventService.php:23
+#: includes/Services/Ai/ContentGeneration/SitekitsContentGeneration.php:112
+msgid "An unknown error occurred"
+msgstr ""
+
+#: includes/Services/AppService.php:78
+msgid "Help us improve"
+msgstr ""
+
+#: includes/Services/AppService.php:79
+msgid "How satisfied were you with the ease of creating your website?"
+msgstr ""
+
+#: includes/Services/EventService.php:24
 msgid "Bad event structure/value."
 msgstr ""
 
