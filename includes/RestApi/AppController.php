@@ -11,7 +11,6 @@ use NewfoldLabs\WP\Module\Onboarding\Services\AppService;
  * This controller manages the REST API routes and handlers for the onboarding
  * application functionality. It provides endpoints for starting and completing
  * the onboarding process.
- *
  */
 class AppController {
 
@@ -35,7 +34,6 @@ class AppController {
 	 * Registers two main endpoints:
 	 * - /app/start: Initiates the onboarding process
 	 * - /app/complete: Completes the onboarding process with selected homepage
-	 *
 	 */
 	public function register_routes() {
 		\register_rest_route(
