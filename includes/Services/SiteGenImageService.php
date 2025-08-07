@@ -21,8 +21,8 @@ class SiteGenImageService {
 	 */
 	public static function process_homepage_images_immediate_async( $post_id, $content ) {
 		// Extract image URLs from content
-		preg_match_all( '/<img[^>]+src=["\']([^"\']+)["\']/i', $content, $matches );
-		$image_urls = isset( $matches[1] ) ? $matches[1] : array();
+		$image_urls = self::extract_all_image_urls( $content );
+
 		if ( empty( $image_urls ) ) {
 			return;
 		}
@@ -35,6 +35,33 @@ class SiteGenImageService {
 		if ( ! wp_next_scheduled( 'nfd_process_image_sideload_queue' ) ) {
 			wp_schedule_single_event( time(), 'nfd_process_image_sideload_queue' );
 		}
+	}
+
+	/**
+	 * Extract all image URLs from content specifically targeting Unsplash and patterns.hiive.cloud domains.
+	 *
+	 * @param string $content The content to extract image URLs from.
+	 * @return array Array of unique image URLs.
+	 */
+	private static function extract_all_image_urls( $content ) {
+		$image_urls = array();
+
+		// Extract Unsplash images
+		preg_match_all( '/https?:\/\/([^\/]+\.)?unsplash\.com\/[^\s"\'<>]+/i', $content, $matches );
+		if ( isset( $matches[0] ) ) {
+			$image_urls = array_merge( $image_urls, $matches[0] );
+		}
+
+		// Extract patterns.hiive.cloud images
+		preg_match_all( '/https?:\/\/patterns\.hiive\.cloud\/[^\s"\'<>]+/i', $content, $matches );
+		if ( isset( $matches[0] ) ) {
+			$image_urls = array_merge( $image_urls, $matches[0] );
+		}
+
+		// Decode HTML entities in URLs to ensure proper replacement
+		$image_urls = array_map( 'html_entity_decode', $image_urls );
+
+		return array_values( array_unique( $image_urls ) );
 	}
 
 	/**
@@ -177,6 +204,19 @@ class SiteGenImageService {
 			if ( ! empty( $new_url ) ) {
 				// Use str_replace for exact URL replacement
 				$new_content = str_replace( $original_url, $new_url, $content );
+				
+				// If no replacement happened, try with HTML entity encoded version
+				if ( $new_content === $content ) {
+					$encoded_url = htmlspecialchars( $original_url, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+					$new_content = str_replace( $encoded_url, $new_url, $content );
+				}
+				
+				// If still no replacement, try with double-encoded version (common in WordPress)
+				if ( $new_content === $content ) {
+					$double_encoded_url = htmlspecialchars( htmlspecialchars( $original_url, ENT_QUOTES | ENT_HTML5, 'UTF-8' ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+					$new_content = str_replace( $double_encoded_url, $new_url, $content );
+				}
+				
 				if ( $new_content !== $content ) {
 					$content = $new_content;
 					$updated = true;
