@@ -84,7 +84,7 @@ class SiteGenImageService {
 		self::connect_to_filesystem();
 
 		$uploaded_image_urls = array();
-		$total_images = count( $image_urls );
+		$total_images        = count( $image_urls );
 		$successful_uploads  = 0;
 
 		try {
@@ -204,19 +204,19 @@ class SiteGenImageService {
 			if ( ! empty( $new_url ) ) {
 				// Use str_replace for exact URL replacement
 				$new_content = str_replace( $original_url, $new_url, $content );
-				
+
 				// If no replacement happened, try with HTML entity encoded version
 				if ( $new_content === $content ) {
 					$encoded_url = htmlspecialchars( $original_url, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
 					$new_content = str_replace( $encoded_url, $new_url, $content );
 				}
-				
+
 				// If still no replacement, try with double-encoded version (common in WordPress)
 				if ( $new_content === $content ) {
 					$double_encoded_url = htmlspecialchars( htmlspecialchars( $original_url, ENT_QUOTES | ENT_HTML5, 'UTF-8' ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
-					$new_content = str_replace( $double_encoded_url, $new_url, $content );
+					$new_content        = str_replace( $double_encoded_url, $new_url, $content );
 				}
-				
+
 				if ( $new_content !== $content ) {
 					$content = $new_content;
 					$updated = true;
