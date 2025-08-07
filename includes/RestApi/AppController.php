@@ -74,7 +74,7 @@ class AppController {
 	 */
 	public function complete( \WP_REST_Request $request ): \WP_REST_Response {
 		$data                      = json_decode( $request->get_body(), true );
-		$selected_sitegen_homepage = $data['selected_sitegen_homepage'];
+		$selected_sitegen_homepage = $data['selected_sitegen_homepage'] ?? false;
 		if ( ! $selected_sitegen_homepage ) {
 			return new \WP_REST_Response(
 				array( 'error' => 'Selected sitegen homepage is required.' ),
