@@ -6,6 +6,8 @@ use NewfoldLabs\WP\Module\Onboarding\ModuleController;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Scan;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Safe_Mode;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Status;
+use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager;
+use NewfoldLabs\WP\Module\Onboarding\Tasks\ImageSideloadTask;
 
 use function NewfoldLabs\WP\ModuleLoader\register;
 
@@ -24,7 +26,7 @@ function nfd_wp_module_onboarding_register() {
 
 				// Set Global Constants
 				if ( ! defined( 'NFD_ONBOARDING_VERSION' ) ) {
-					define( 'NFD_ONBOARDING_VERSION', '3.0.3' );
+					define( 'NFD_ONBOARDING_VERSION', '3.1.0' );
 				}
 				if ( ! defined( 'NFD_ONBOARDING_DIR' ) ) {
 					define( 'NFD_ONBOARDING_DIR', __DIR__ );
@@ -80,4 +82,7 @@ if ( is_callable( 'add_action' ) ) {
 			delete_transient( 'nfd_site_capabilities' );
 		}
 	);
+
+	// Add action to process image sideload queue
+	add_action( 'nfd_process_image_sideload_queue', array( ImageSideloadTaskManager::class, 'process_queue' ) );
 }

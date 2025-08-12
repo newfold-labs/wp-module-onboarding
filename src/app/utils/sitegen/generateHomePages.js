@@ -6,13 +6,15 @@ import { ACTION_ERROR_STATE_TRIGGERED } from '@/utils/analytics/hiive/constants'
 
 /**
  * Generate the home pages for the site.
+ *
  * @return {boolean} True if successful, false otherwise.
  */
 const generateHomePages = async () => {
 	const prompt = select( nfdOnboardingStore ).getPrompt();
 	const locale = select( nfdOnboardingStore ).getSelectedLocale();
+	const siteType = select( nfdOnboardingStore ).getSiteType();
 
-	const response = await getHomepages( prompt, locale );
+	const response = await getHomepages( prompt, siteType, locale );
 	if ( response.error ) {
 		trackOnboardingEvent(
 			new OnboardingEvent(
