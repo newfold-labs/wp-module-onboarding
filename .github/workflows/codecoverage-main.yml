@@ -34,7 +34,7 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
               with:
                   fetch-depth: 0 # attempting to get all branch names.
 
@@ -65,7 +65,7 @@ jobs:
             #          commit_message: "🤖 Creating gh-pages branch"
 
             - name: Checkout GitHub Pages branch for code coverage report
-              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
               with:
                   ref: gh-pages
                   path: gh-pages
