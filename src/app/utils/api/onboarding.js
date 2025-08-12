@@ -36,6 +36,16 @@ export const updateOnboardingSiteGenSlice = async ( data ) => {
 	);
 };
 
+export const updateOnboardingBlueprintsSlice = async ( data ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'redux-state/blueprints-slice' ),
+			method: 'POST',
+			body: JSON.stringify( data ),
+		} ).then()
+	);
+};
+
 export const continuouslyFireWpCron = () => {
 	setInterval( () => {
 		fireWpCron();
@@ -233,3 +243,17 @@ export async function getSiteGenPreviewSnapshot( content, slug, customStyles = n
 
 	return response;
 }
+
+/**
+ * Get the blueprints.
+ *
+ * @return {Promise<Object>} response
+ */
+export const getBlueprints = async () => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'blueprints/get-blueprints' ),
+			method: 'POST',
+		} ).then()
+	);
+};

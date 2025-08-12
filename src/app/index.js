@@ -12,6 +12,7 @@ const App = () => {
 	dispatch( nfdOnboardingStore ).setRuntimeSlice( window.nfdOnboarding.runtime );
 	dispatch( nfdOnboardingStore ).setInputSlice( window.nfdOnboarding.input );
 	dispatch( nfdOnboardingStore ).setSiteGenSlice( window.nfdOnboarding.sitegen );
+	dispatch( nfdOnboardingStore ).setBlueprintsSlice( window.nfdOnboarding.blueprints );
 
 	// Initialize the store-DB sync services.
 	initializeStoreDbSyncServices();
