@@ -4,6 +4,7 @@ import { LogoStep } from './Logo';
 import { GeneratingStep } from './Generating';
 import { PreviewsStep } from './Previews';
 import { CanvasStep } from './Canvas';
+import { BlueprintsStep } from './Blueprints';
 import { MigrationStep } from './Migration';
 
 const STEPS = {
@@ -27,21 +28,27 @@ const STEPS = {
 	},
 	generating: {
 		path: '/generating',
-		order: 50,
+		order: 40,
 		isRequired: true,
 		Component: GeneratingStep,
 	},
 	previews: {
 		path: '/previews',
-		order: 60,
+		order: 50,
 		isRequired: true,
 		Component: PreviewsStep,
 	},
 	design: {
 		path: '/canvas',
-		order: 70,
+		order: 60,
 		isRequired: true,
 		Component: CanvasStep,
+	},
+	blueprints: {
+		path: '/blueprints',
+		order: 70,
+		isRequired: false,
+		Component: BlueprintsStep,
 	},
 	migration: {
 		path: '/migration',
@@ -59,5 +66,6 @@ export {
 	GeneratingStep,
 	PreviewsStep,
 	CanvasStep,
+	BlueprintsStep,
 	MigrationStep,
 };

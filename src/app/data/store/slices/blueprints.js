@@ -5,6 +5,7 @@ import { updateOnboardingBlueprintsSlice } from '@/utils/api';
 const DEFAULT_STATE = {
 	blueprints: [],
 	selectedBlueprint: '',
+	activeTab: 'commerce',
 	version: 0,
 };
 
@@ -26,6 +27,12 @@ export function blueprints( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				blueprints: action.blueprints,
+				version: state.version + 1,
+			};
+		case 'SET_ACTIVE_TAB':
+			return {
+				...state,
+				activeTab: action.activeTab,
 				version: state.version + 1,
 			};
 		case 'SET_SELECTED_BLUEPRINT':
@@ -52,6 +59,10 @@ export const actions = {
 		type: 'SET_BLUEPRINTS',
 		blueprints,
 	} ),
+	setActiveTab: ( activeTab ) => ( {
+		type: 'SET_ACTIVE_TAB',
+		activeTab,
+	} ),
 	setSelectedBlueprint: ( selectedBlueprint ) => ( {
 		type: 'SET_SELECTED_BLUEPRINT',
 		selectedBlueprint,
@@ -65,6 +76,7 @@ export const selectors = {
 	getBlueprintsSlice: ( state ) => state.blueprints,
 	getBlueprints: ( state ) => state.blueprints.blueprints,
 	getSelectedBlueprint: ( state ) => state.blueprints.selectedBlueprint,
+	getActiveTab: ( state ) => state.blueprints.activeTab,
 	getVersion: ( state ) => state.blueprints.version,
 };
 
