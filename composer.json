@@ -70,7 +70,7 @@
 		"fix": [
 			"vendor/bin/phpcbf . --standard=phpcs.xml"
 		],
-		"i18n-pot": "vendor/bin/wp i18n make-pot . ./languages/wp-module-onboarding.pot --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/newfold-labs/wp-module-onboarding/issues\",\"POT-Creation-Date\":\"2024-11-18T07:59:34+00:00\"}' --exclude=assets,tests,src,wordpress",
+		"i18n-pot": "vendor/bin/wp i18n make-pot . ./languages/wp-module-onboarding.pot --domain=wp-module-onboarding --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/newfold-labs/wp-module-onboarding/issues\",\"POT-Creation-Date\":\"2024-11-18T07:59:34+00:00\"}' --exclude=assets,tests,src,wordpress",
 		"i18n-po": "vendor/bin/wp i18n update-po ./languages/wp-module-onboarding.pot ./languages",
 		"i18n-mo": "vendor/bin/wp i18n make-mo ./languages",
 		"i18n-php": "vendor/bin/wp i18n make-php ./languages",
