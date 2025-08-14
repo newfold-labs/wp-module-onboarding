@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1755142886">
-  <project timestamp="1755142886">
+<coverage generated="1755143950">
+  <project timestamp="1755143950">
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Application.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Application" namespace="global">
         <metrics complexity="8" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="0" elements="30" coveredelements="0"/>
