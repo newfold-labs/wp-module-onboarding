@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1755143950">
-  <project timestamp="1755143950">
+<coverage generated="1755176613">
+  <project timestamp="1755176613">
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Application.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Application" namespace="global">
         <metrics complexity="8" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="0" elements="30" coveredelements="0"/>
@@ -4316,7 +4316,7 @@
       <line num="648" type="stmt" count="0"/>
       <line num="649" type="stmt" count="0"/>
       <line num="650" type="stmt" count="0"/>
-      <metrics loc="655" ncloc="529" classes="1" methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="363" coveredstatements="0" elements="379" coveredelements="0"/>
+      <metrics loc="655" ncloc="528" classes="1" methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="363" coveredstatements="0" elements="379" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/WP_CLI.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\WP_CLI" namespace="global">
@@ -4340,6 +4340,6 @@
       <line num="55" type="stmt" count="0"/>
       <metrics loc="58" ncloc="24" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="8" coveredelements="0"/>
     </file>
-    <metrics files="62" loc="9737" ncloc="6687" classes="62" methods="340" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3634" coveredstatements="0" elements="3974" coveredelements="0"/>
+    <metrics files="62" loc="9737" ncloc="6686" classes="62" methods="340" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3634" coveredstatements="0" elements="3974" coveredelements="0"/>
   </project>
 </coverage>
