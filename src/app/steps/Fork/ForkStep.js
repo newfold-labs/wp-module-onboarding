@@ -25,6 +25,22 @@ const fetchBlueprints = async () => {
 			console.error( response.error );
 		} else {
 			dispatch( nfdOnboardingStore ).setBlueprints( response.body );
+
+			// Pre-download the preview images to avoid flickering.
+			const images = response.body.map( ( blueprint ) => {
+				return blueprint.screenshot_url;
+			} );
+			Promise.allSettled(
+				images.map( ( imageUrl ) => {
+					return new Promise( ( resolve, reject ) => {
+						// eslint-disable-next-line no-undef
+						const img = new Image();
+						img.onload = () => resolve( imageUrl );
+						img.onerror = () => reject( imageUrl );
+						img.src = imageUrl;
+					} );
+				} )
+			);
 		}
 	} );
 };
