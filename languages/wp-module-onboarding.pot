@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-11-18T07:59:34+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-module-onboarding\n"
 
 #: bootstrap.php:24
@@ -31,6 +31,7 @@ msgstr ""
 
 #. translators: 1: Current WP Version 2: Minimum Required version
 #: includes/Compatibility/Safe_Mode.php:191
+#, php-format
 msgid "Your WordPress version %1$s does not meet our minimum requirements of %2$s."
 msgstr ""
 
@@ -44,6 +45,7 @@ msgstr ""
 
 #. translators: %d is the index of the palette
 #: includes/RestApi/DesignController.php:212
+#, php-format
 msgid "Palette %d"
 msgstr ""
 
