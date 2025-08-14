@@ -58,7 +58,7 @@
 	},
 	"require-dev": {
 		"php": ">=7.3",
-		"wp-phpunit/wp-phpunit": "^6.8.0",
+		"wp-phpunit/wp-phpunit": "^6.8.2",
 		"yoast/phpunit-polyfills": "^4.0.0",
 		"newfold-labs/wp-php-standards": "^1.2.5",
 		"wp-cli/i18n-command": "^2.6.3",
