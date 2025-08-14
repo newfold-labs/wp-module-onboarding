@@ -38,6 +38,7 @@ msgstr "Per sfruttare l'ultimo WordPress ha da offrire, il nostro WordPress Onbo
 
 #. translators: 1: Current WP Version 2: Minimum Required version
 #: includes/Compatibility/Safe_Mode.php:191
+#, php-format
 msgid "Your WordPress version %1$s does not meet our minimum requirements of %2$s."
 msgstr "La tua versione WordPress %1$s non soddisfa i nostri requisiti minimi di %2$s."
 
@@ -160,6 +161,7 @@ msgstr "Costruisci con l'IA"
 
 #. translators: %d is the index of the palette
 #: includes/RestApi/DesignController.php:212
+#, php-format
 msgid "Palette %d"
 msgstr ""
 

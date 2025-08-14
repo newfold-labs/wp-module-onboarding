@@ -38,6 +38,7 @@ msgstr "Um die Vorteile der neuesten WordPress hat zu bieten, unsere WordPress-O
 
 #. translators: 1: Current WP Version 2: Minimum Required version
 #: includes/Compatibility/Safe_Mode.php:191
+#, php-format
 msgid "Your WordPress version %1$s does not meet our minimum requirements of %2$s."
 msgstr "Ihre WordPress-Version %1$s entspricht nicht unseren Mindestanforderungen an %2$s."
 
@@ -160,6 +161,7 @@ msgstr "Mit KI erstellen"
 
 #. translators: %d is the index of the palette
 #: includes/RestApi/DesignController.php:212
+#, php-format
 msgid "Palette %d"
 msgstr ""
 
