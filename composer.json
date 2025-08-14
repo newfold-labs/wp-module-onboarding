@@ -62,7 +62,7 @@
 		"yoast/phpunit-polyfills": "^4.0.0",
 		"newfold-labs/wp-php-standards": "^1.2.5",
 		"wp-cli/i18n-command": "^2.6.5",
-		"johnpbloch/wordpress": "6.1.7",
+		"johnpbloch/wordpress": "6.8.2",
 		"lucatume/wp-browser": "*",
 		"phpunit/phpcov": "*"
 	},
