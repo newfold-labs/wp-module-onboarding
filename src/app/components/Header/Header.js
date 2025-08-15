@@ -2,17 +2,24 @@ import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { ReactComponent as BluehostLogo } from '@/assets/bluehost-logo.svg';
 import { HeaderActions as CanvasStepHeaderActions } from '@/steps/Canvas';
+import { HeaderActions as BlueprintCanvasStepHeaderActions } from '@/steps/BlueprintCanvas';
 
 const Header = () => {
 	const [ isCanvasStep, setIsCanvasStep ] = useState( false );
+	const [ isBlueprintCanvasStep, setIsBlueprintCanvasStep ] = useState( false );
 	const location = useLocation();
 
 	// Show Canvas Step Header Actions on Canvas Step
 	useEffect( () => {
 		if ( location.pathname.includes( '/canvas' ) ) {
 			setIsCanvasStep( true );
+			setIsBlueprintCanvasStep( false );
+		} else if ( location.pathname.includes( '/blueprints-canvas' ) ) {
+			setIsBlueprintCanvasStep( true );
+			setIsCanvasStep( false );
 		} else {
 			setIsCanvasStep( false );
+			setIsBlueprintCanvasStep( false );
 		}
 	}, [ location ] );
 
@@ -20,7 +27,7 @@ const Header = () => {
 		<header
 			className={ classNames(
 				'nfd-onboarding-header nfd-top-0 nfd-z-20',
-				isCanvasStep && 'nfd-border-b nfd-bg-white'
+				( isCanvasStep || isBlueprintCanvasStep ) && 'nfd-border-b nfd-bg-white'
 			) }
 		>
 			<div className="nfd-onboarding-header-container nfd-flex nfd-justify-between nfd-items-center nfd-min-h-16 nfd-px-6 mobile:nfd-px-0 mobile:nfd-max-w-[90%] mobile:nfd-mx-auto">
@@ -31,6 +38,7 @@ const Header = () => {
 					) }
 				/>
 				{ isCanvasStep && <CanvasStepHeaderActions /> }
+				{ isBlueprintCanvasStep && <BlueprintCanvasStepHeaderActions /> }
 			</div>
 		</header>
 	);

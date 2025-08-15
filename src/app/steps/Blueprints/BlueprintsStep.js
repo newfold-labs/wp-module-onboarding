@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useMemo } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
 import classNames from 'classnames';
@@ -5,7 +6,6 @@ import { Container, Spinner, Title } from '@newfold/ui-component-library';
 import { SiteGenPreviewCard, Step, Navigate } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
 import missingResourceFigureUrl from '@/assets/nfd-missing-resource.png';
-
 /**
  * Tabs buttons component.
  *
@@ -61,6 +61,8 @@ const BlueprintsStep = () => {
 		return resolve;
 	}, [] );
 
+	const navigate = useNavigate();
+
 	const LoadingState = () => {
 		return (
 			<div className="nfd-flex nfd-justify-center nfd-items-center nfd-h-full">
@@ -87,8 +89,15 @@ const BlueprintsStep = () => {
 		);
 	};
 
+	const handleNext = () => {
+		navigate( '/blueprints-canvas', {
+			state: { direction: 'forward' },
+		} );
+	};
+
 	const handleOnPreview = ( slug ) => {
 		dispatch( nfdOnboardingStore ).setSelectedBlueprint( slug );
+		handleNext();
 	};
 
 	const renderBlueprints = useMemo( () => {
@@ -138,7 +147,7 @@ const BlueprintsStep = () => {
 				}
 			</div>
 		);
-	}, [ activeTab, blueprints ] );
+	}, [ activeTab, blueprints, handleOnPreview ] );
 
 	return (
 		<Step>
