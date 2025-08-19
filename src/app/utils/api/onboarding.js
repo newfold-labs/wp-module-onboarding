@@ -257,3 +257,39 @@ export const getBlueprints = async () => {
 		} ).then()
 	);
 };
+
+/**
+ * Install the required plugins for a blueprint.
+ *
+ * @param {string} selectedBlueprintSlug
+ * @return {Promise<Object>} response
+ */
+export const installBlueprintRequiredPlugins = async ( selectedBlueprintSlug ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'blueprints/install-required-plugins' ),
+			method: 'POST',
+			data: {
+				selected_blueprint_slug: selectedBlueprintSlug,
+			},
+		} ).then()
+	);
+};
+
+/**
+ * Import a blueprint.
+ *
+ * @param {string} selectedBlueprintSlug
+ * @return {Promise<Object>} response
+ */
+export const importBlueprint = async ( selectedBlueprintSlug ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'blueprints/import-blueprint' ),
+			method: 'POST',
+			data: {
+				selected_blueprint_slug: selectedBlueprintSlug,
+			},
+		} ).then()
+	);
+};

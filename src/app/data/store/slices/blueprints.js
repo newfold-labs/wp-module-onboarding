@@ -4,8 +4,8 @@ import { updateOnboardingBlueprintsSlice } from '@/utils/api';
 
 const DEFAULT_STATE = {
 	blueprints: [],
-	selectedBlueprint: '',
-	activeTab: 'commerce',
+	selectedBlueprint: null,
+	activeTab: null,
 	version: 0,
 };
 

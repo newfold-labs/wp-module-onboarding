@@ -54,7 +54,7 @@ const BlueprintsStep = () => {
 	const [ isLoading, setIsLoading ] = useState( true );
 	const { blueprints, activeTab } = useSelect( ( select ) => {
 		const resolve = {
-			blueprints: select( nfdOnboardingStore ).getBlueprints() || [],
+			blueprints: select( nfdOnboardingStore ).getBlueprints(),
 			activeTab: select( nfdOnboardingStore ).getActiveTab() || 'ecommerce',
 		};
 		setIsLoading( false );
@@ -147,7 +147,7 @@ const BlueprintsStep = () => {
 				}
 			</div>
 		);
-	}, [ activeTab, blueprints, handleOnPreview ] );
+	}, [ activeTab, blueprints ] );
 
 	return (
 		<Step>

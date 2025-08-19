@@ -1,12 +1,20 @@
-import { Button } from '@newfold/ui-component-library';
+import { useNavigate } from 'react-router-dom';
+import { Button, Title } from '@newfold/ui-component-library';
 import { ArrowLeftIcon, CheckIcon } from '@heroicons/react/24/outline';
 import { InteractionBlockingOverlay } from '@/components';
-import { useNavigate } from 'react-router-dom';
+import { usePublishBlueprintSite } from '@/utils/hooks';
 
 const HeaderActions = () => {
 	const [ isPublishing, setIsPublishing ] = useState( false );
 
 	const navigate = useNavigate();
+
+	const { status, publishBlueprintSite } = usePublishBlueprintSite();
+
+	const handlePublishBlueprintSite = async () => {
+		setIsPublishing( true );
+		await publishBlueprintSite();
+	};
 
 	const handleBackToTemplates = () => {
 		navigate( '/blueprints', {
@@ -20,12 +28,19 @@ const HeaderActions = () => {
 				<InteractionBlockingOverlay
 					hasLoadingSpinner={ true }
 					hasBackground={ isPublishing }
-				/>
+				>
+					{ status && (
+						<Title as="h2" size="2" className="nfd-text-white nfd-text-center nfd-font-semibold nfd-z-20">
+							{ status }
+						</Title>
+					) }
+				</InteractionBlockingOverlay>
 			) }
 			<Button
 				variant="secondary"
 				className="nfd-font-semibold"
 				onClick={ handleBackToTemplates }
+				disabled={ isPublishing }
 			>
 				<ArrowLeftIcon className="nfd-w-5 nfd-h-5 nfd-mr-2" />
 				{ __( 'Back to Templates', 'wp-module-onboarding' ) }
@@ -33,6 +48,8 @@ const HeaderActions = () => {
 			<Button
 				variant="primary"
 				className="nfd-font-semibold"
+				onClick={ handlePublishBlueprintSite }
+				disabled={ isPublishing }
 			>
 				<CheckIcon className="nfd-w-5 nfd-h-5 nfd-mr-2" />
 				{ __( 'Select Template', 'wp-module-onboarding' ) }
