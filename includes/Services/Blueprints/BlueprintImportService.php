@@ -63,11 +63,8 @@ class BlueprintImportService extends BlueprintsService {
 
 			return true;
 		} catch ( \Exception $e ) {
-			// Clean up the temporary directory.
 			$this->cleanup_temp_dir();
-			// Log the error.
 			error_log( 'Blueprint import error: ' . $e->getMessage() );
-			// Return the error.
 			return new \WP_Error( 'blueprint_import_error', 'Blueprint import failed' );
 		}
 	}
