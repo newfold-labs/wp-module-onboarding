@@ -60,10 +60,10 @@ class BlueprintsService {
 			return new \WP_Error( 'import_blueprint_error', 'Blueprint not found' );
 		}
 
-		$selected_blueprint_xml_url = $selected_blueprint['resources_url'];
+		$selected_blueprint_resources_url = $selected_blueprint['resources_url'];
 
 		$blueprint_import_service = new BlueprintImportService();
-		$import_result            = $blueprint_import_service->import( $selected_blueprint_xml_url );
+		$import_result            = $blueprint_import_service->import( $selected_blueprint_resources_url );
 
 		return $import_result;
 	}
@@ -77,7 +77,7 @@ class BlueprintsService {
 	public function install_required_plugins( string $selected_blueprint_slug ) {
 		$selected_blueprint = $this->get_blueprint_by_slug( $selected_blueprint_slug );
 		if ( empty( $selected_blueprint ) ) {
-			return new \WP_Error( 'blueprint_not_found', 'Blueprint not found' );
+			return new \WP_Error( 'install_blueprint_required_plugins_error', 'Blueprint not found' );
 		}
 
 		$selected_blueprint_type = $selected_blueprint['type'];
