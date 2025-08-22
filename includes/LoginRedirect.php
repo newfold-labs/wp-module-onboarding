@@ -61,7 +61,7 @@ class LoginRedirect {
 		if ( '0' === $redirect_option ) {
 			return $original_redirect;
 		} elseif ( '1' === $redirect_option ) {
-			return admin_url( '/index.php?page=' . WP_Admin::$slug );
+			return apply_filters( 'nfd_build_url', admin_url( '/index.php?page=' . WP_Admin::$slug ) );
 		}
 
 		// Don't redirect to onboarding if onboarding was exited or completed.
@@ -81,7 +81,7 @@ class LoginRedirect {
 		}
 
 		// Redirect to onboarding
-		return admin_url( '/index.php?page=' . WP_Admin::$slug );
+		return apply_filters( 'nfd_build_url', admin_url( '/index.php?page=' . WP_Admin::$slug ) );
 	}
 
 	/**

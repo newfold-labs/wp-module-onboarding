@@ -93,7 +93,7 @@ export const selectors = {
 		const migrationUrl =
 			addQueryArgs( migrationInfo?.defaultLink, migrationInfo?.queryParams ) +
 			( migrationInfo?.fragment || '' );
-		return migrationUrl;
+		return window?.NewfoldRuntime?.linkTracker?.addUtmParams( migrationUrl ) || migrationUrl;
 	},
 
 	/**

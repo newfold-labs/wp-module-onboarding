@@ -26,7 +26,7 @@ function nfd_wp_module_onboarding_register() {
 
 				// Set Global Constants
 				if ( ! defined( 'NFD_ONBOARDING_VERSION' ) ) {
-					define( 'NFD_ONBOARDING_VERSION', '3.1.0' );
+					define( 'NFD_ONBOARDING_VERSION', '3.1.1' );
 				}
 				if ( ! defined( 'NFD_ONBOARDING_DIR' ) ) {
 					define( 'NFD_ONBOARDING_DIR', __DIR__ );
@@ -41,7 +41,7 @@ function nfd_wp_module_onboarding_register() {
 					define( 'NFD_MODULE_DATA_EVENTS_API', '/newfold-data/v1/events' );
 				}
 				if ( ! defined( 'NFD_ONBOARDING_BUILD_URL' && defined( 'NFD_ONBOARDING_VERSION' ) ) ) {
-					define( 'NFD_ONBOARDING_BUILD_URL', $container->plugin()->url . '/vendor/newfold-labs/wp-module-onboarding/build/' . NFD_ONBOARDING_VERSION );
+					define( 'NFD_ONBOARDING_BUILD_URL', $container->plugin()->url . 'vendor/newfold-labs/wp-module-onboarding/build/' . NFD_ONBOARDING_VERSION );
 				}
 				if ( ! defined( 'NFD_ONBOARDING_PLUGIN_DIRNAME' ) ) {
 					define( 'NFD_ONBOARDING_PLUGIN_DIRNAME', dirname( $container->plugin()->basename ) );
