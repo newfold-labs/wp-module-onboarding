@@ -6,7 +6,7 @@ const DEFAULT_STATE = {
 	blueprints: [],
 	selectedBlueprint: null,
 	activeTab: null,
-	version: 0,
+	blueprintsSliceVersion: 0,
 };
 
 /**
@@ -22,24 +22,25 @@ export function blueprints( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				...action.blueprintsSlice,
+				blueprintsSliceVersion: state.blueprintsSliceVersion + 1,
 			};
 		case 'SET_BLUEPRINTS':
 			return {
 				...state,
 				blueprints: action.blueprints,
-				version: state.version + 1,
+				blueprintsSliceVersion: state.blueprintsSliceVersion + 1,
 			};
 		case 'SET_ACTIVE_TAB':
 			return {
 				...state,
 				activeTab: action.activeTab,
-				version: state.version + 1,
+				blueprintsSliceVersion: state.blueprintsSliceVersion + 1,
 			};
 		case 'SET_SELECTED_BLUEPRINT':
 			return {
 				...state,
 				selectedBlueprint: action.selectedBlueprint,
-				version: state.version + 1,
+				blueprintsSliceVersion: state.blueprintsSliceVersion + 1,
 			};
 	}
 
@@ -77,18 +78,18 @@ export const selectors = {
 	getBlueprints: ( state ) => state.blueprints.blueprints,
 	getSelectedBlueprint: ( state ) => state.blueprints.selectedBlueprint,
 	getActiveTab: ( state ) => state.blueprints.activeTab,
-	getVersion: ( state ) => state.blueprints.version,
+	getBlueprintsSliceVersion: ( state ) => state.blueprints.blueprintsSliceVersion,
 };
 
 /**
  * Blueprints DB Sync Service
  */
 export function dbSyncService() {
-	let previousBlueprintsSliceVersion = select( nfdOnboardingStore ).getVersion();
+	let previousBlueprintsSliceVersion = select( nfdOnboardingStore ).getBlueprintsSliceVersion();
 
 	subscribe( () => {
 		const updatedBlueprintsSliceState = select( nfdOnboardingStore ).getBlueprintsSlice();
-		const updatedBlueprintsSliceVersion = select( nfdOnboardingStore ).getVersion();
+		const updatedBlueprintsSliceVersion = select( nfdOnboardingStore ).getBlueprintsSliceVersion();
 
 		// Only sync if the slice data actually changed.
 		if ( previousBlueprintsSliceVersion !== updatedBlueprintsSliceVersion ) {
