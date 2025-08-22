@@ -506,7 +506,7 @@ final class WP_Admin {
 	}
 
 	/**
-	Enqueue site editor specific assets when coming from onboarding.
+	 * Enqueue site editor specific assets when coming from onboarding.
 	 *
 	 * @return void
 	 */
