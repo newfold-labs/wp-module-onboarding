@@ -43,8 +43,15 @@ const usePublishSite = () => {
 				hasError: false,
 				message: __( 'Publishing content…', 'wp-module-onboarding' ),
 			} );
-			// Set 2 seconds minimum message duration.
-			await new Promise( ( resolve ) => setTimeout( resolve, 2000 ) );
+			// Set 1 second minimum message duration.
+			await new Promise( ( resolve ) => setTimeout( resolve, 1000 ) );
+
+			setStatus( ( prev ) => ( {
+				...prev,
+				progress: 10,
+			} ) );
+			// Set 3 seconds minimum message duration.
+			await new Promise( ( resolve ) => setTimeout( resolve, 3000 ) );
 
 			setStatus( {
 				progress: 40,
