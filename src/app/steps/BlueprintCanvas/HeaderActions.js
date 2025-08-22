@@ -34,12 +34,12 @@ const HeaderActions = () => {
 
 	const renderBlueprintImportStatus = () => {
 		return (
-			<div className="nfd-flex nfd-flex-col nfd-items-center nfd-justify-center nfd-gap-5 nfd-min-w-[470px] nfd-max-w-[470px] nfd-mx-auto nfd-z-30">
+			<div className="nfd-flex nfd-flex-col nfd-items-center nfd-justify-center nfd-gap-5 nfd-min-w-[470px] nfd-max-w-[470px] nfd-mx-auto nfd-z-30 mobile:nfd-min-w-[90%] mobile:nfd-max-w-[90%]">
 				{ status.hasError && (
 					<ExclamationTriangleIcon className="nfd-w-9 nfd-h-9 nfd-text-white" />
 				) }
 				{ status.message && (
-					<Title as="h2" size="2" className="nfd-text-white nfd-text-center nfd-text-[22px] nfd-font-semibold nfd-max-w-[400px]">
+					<Title as="h2" size="2" className="nfd-text-white nfd-text-center nfd-text-[22px] nfd-font-semibold nfd-max-w-[400px] mobile:nfd-text-base">
 						{ status.message }
 					</Title>
 				) }

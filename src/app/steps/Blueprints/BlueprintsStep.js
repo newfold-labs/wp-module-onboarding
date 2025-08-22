@@ -129,7 +129,7 @@ const BlueprintsStep = () => {
 
 		// Render blueprints.
 		return (
-			<div className="nfd-grid nfd-grid-cols-3 nfd-gap-8">
+			<div className="nfd-grid nfd-grid-cols-3 nfd-gap-8 mobile:nfd-grid-cols-1 mobile:nfd-justify-items-center">
 				{ filteredBlueprints
 					.map( ( blueprint ) => (
 						<SiteGenPreviewCard

@@ -68,7 +68,7 @@ const ForkOptions = ( { onChange } ) => {
 			{ getCustomStyles() }
 			<FeaturesSelect
 				behavior="radio"
-				className="nfd-flex nfd-gap-8"
+				className="nfd-flex nfd-gap-8 mobile:nfd-flex-col"
 				onChange={ handleChange }
 			>
 				{ options.map( ( option ) => (

@@ -1,6 +1,7 @@
+import { useNavigate } from 'react-router-dom';
 import { dispatch, useSelect } from '@wordpress/data';
-import { Button } from '@newfold/ui-component-library';
-import { AdjustmentsVerticalIcon, CloudArrowUpIcon, RectangleStackIcon as RectangleStackIconOutline } from '@heroicons/react/24/outline';
+import { Button, Title, ProgressBar } from '@newfold/ui-component-library';
+import { AdjustmentsVerticalIcon, CloudArrowUpIcon, RectangleStackIcon as RectangleStackIconOutline, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { RectangleStackIcon as RectangleStackIconSolid } from '@heroicons/react/24/solid';
 import { InteractionBlockingOverlay } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
@@ -12,13 +13,15 @@ import { pluginDashboardPage, wpEditorDesignStudio } from '@/data/constants';
 const HeaderActions = () => {
 	const [ isPublishing, setIsPublishing ] = useState( false );
 
+	const navigate = useNavigate();
+
 	const { canvasSidebarIsOpen } = useSelect( ( select ) => {
 		return {
 			canvasSidebarIsOpen: select( nfdOnboardingStore ).getCanvasSidebarIsOpen(),
 		};
 	} );
 
-	const { hasResolved: isReadyToPublish, publishSite } = usePublishSite();
+	const { hasResolved: isReadyToPublish, publishSite, status } = usePublishSite();
 
 	const handleCanvasSidebarToggle = () => {
 		dispatch( nfdOnboardingStore ).setCanvasSidebarIsOpen( ! canvasSidebarIsOpen );
@@ -27,7 +30,6 @@ const HeaderActions = () => {
 	const handlePublishSite = async () => {
 		setIsPublishing( true );
 		const result = await publishSite();
-		setIsPublishing( false );
 
 		return result;
 	};
@@ -60,13 +62,64 @@ const HeaderActions = () => {
 		window.location.replace( pluginDashboardPage );
 	};
 
+	const handleTryAgain = () => {
+		navigate( '/previews', {
+			state: { direction: 'backward' },
+		} );
+	};
+
+	const renderPublishSiteStatus = () => {
+		return (
+			<div className="nfd-flex nfd-flex-col nfd-items-center nfd-justify-center nfd-gap-5 nfd-min-w-[470px] nfd-max-w-[470px] nfd-mx-auto nfd-z-30 mobile:nfd-min-w-[90%] mobile:nfd-max-w-[90%]">
+				{ status.hasError && (
+					<ExclamationTriangleIcon className="nfd-w-9 nfd-h-9 nfd-text-white" />
+				) }
+				{ status.message && (
+					<Title as="h2" size="2" className="nfd-text-white nfd-text-center nfd-text-[22px] nfd-font-semibold nfd-max-w-[400px] mobile:nfd-text-base">
+						{ status.message }
+					</Title>
+				) }
+				{ ! status.hasError && (
+					<>
+						<ProgressBar
+							max={ 100 }
+							min={ 0 }
+							progress={ status.progress }
+							className="nfd-bg-zinc-300/40 nfd-mt-3"
+						/>
+						<style>
+							{ `
+								.nfd-progress-bar .nfd-progress-bar__progress {
+									background-color: white;
+								}
+							` }
+						</style>
+					</>
+				) }
+				{ status.hasError && (
+					<div className="nfd-flex nfd-items-center nfd-gap-4 nfd-mt-3">
+						<Button
+							className="nfd-font-semibold"
+							onClick={ handleTryAgain }
+							size="large"
+						>
+							{ __( 'Try Again', 'wp-module-onboarding' ) }
+						</Button>
+					</div>
+				) }
+			</div>
+		);
+	};
+
 	return (
 		<div className="nfd-onboarding-canvas-header-actions nfd-flex nfd-gap-4 mobile:nfd-w-full mobile:nfd-justify-between">
 			{ isPublishing && (
 				<InteractionBlockingOverlay
-					hasLoadingSpinner={ true }
-					hasBackground={ isPublishing }
-				/>
+					hasLoadingSpinner={ status.hasError ? false : true }
+					hasBackground={ true }
+				>
+					{ renderPublishSiteStatus() }
+				</InteractionBlockingOverlay>
 			) }
 			<button
 				type="button"

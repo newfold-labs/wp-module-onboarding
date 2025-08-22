@@ -34,7 +34,7 @@ const Header = () => {
 				<BluehostLogo
 					id="nfd-onboarding-header-logo"
 					className={ classNames(
-						isCanvasStep && 'mobile:nfd-hidden'
+						( isCanvasStep || isBlueprintCanvasStep ) && 'mobile:nfd-hidden'
 					) }
 				/>
 				{ isCanvasStep && <CanvasStepHeaderActions /> }
