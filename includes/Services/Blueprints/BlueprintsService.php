@@ -9,6 +9,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services\Blueprints;
 
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
+use NewfoldLabs\WP\Module\Patterns\Services\PluginService as PatternsPluginService;
 
 /**
  * Blueprints Service
@@ -80,8 +81,11 @@ class BlueprintsService {
 			return new \WP_Error( 'install_blueprint_required_plugins_error', 'Blueprint not found' );
 		}
 
-		$selected_blueprint_type = $selected_blueprint['type'];
+		// Enable Jetpack Forms module.
+		PatternsPluginService::enable_jetpack_forms_module();
 
+		// Install WooCommerce plugins (background process).
+		$selected_blueprint_type = $selected_blueprint['type'];
 		if ( 'ecommerce' === $selected_blueprint_type ) {
 			// Install WooCommerce plugins (background process).
 			EcommerceSiteTypeService::install_ecommerce_plugins();
