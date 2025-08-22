@@ -121,6 +121,6 @@ class BlueprintsController {
 			return new \WP_REST_Response( $result->get_error_message(), 500 );
 		}
 
-		return new \WP_REST_Response( 'Imported blueprint', 202 );
+		return new \WP_REST_Response( 'Blueprint imported successfully', 200 );
 	}
 }

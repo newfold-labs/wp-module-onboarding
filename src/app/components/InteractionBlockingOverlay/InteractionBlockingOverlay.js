@@ -15,7 +15,7 @@ const InteractionBlockingOverlay = ( {
 				/>
 			) }
 			{ hasBackground && (
-				<div className="nfd-onboarding-ibo-background nfd-absolute nfd-inset-0 nfd-bg-slate-800 nfd-bg-opacity-85" />
+				<div className="nfd-onboarding-ibo-background nfd-absolute nfd-inset-0 nfd-bg-slate-800 nfd-bg-opacity-90" />
 			) }
 			{ children }
 		</div>
