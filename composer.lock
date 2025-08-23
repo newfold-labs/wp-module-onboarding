@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d43e150fad582a826ef15257b6ef3b7c",
+    "content-hash": "d14190337c172beebcea2c6befa693e4",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -900,16 +900,16 @@
         },
         {
             "name": "newfold-labs/wp-module-onboarding-data",
-            "version": "1.2.15",
+            "version": "1.2.16",
             "source": {
                 "type": "git",
-                "url": "https://github.com/newfold-labs/wp-module-onboarding-data.git",
-                "reference": "914a94bca14e2b2ef8485bf82ff8bc7bd06845b2"
+                "url": "git@github.com:newfold-labs/wp-module-onboarding-data.git",
+                "reference": "41b0c35f820ce2efb2fa1478c53d7ad6f25b6605"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-onboarding-data/zipball/914a94bca14e2b2ef8485bf82ff8bc7bd06845b2",
-                "reference": "914a94bca14e2b2ef8485bf82ff8bc7bd06845b2",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-onboarding-data/zipball/41b0c35f820ce2efb2fa1478c53d7ad6f25b6605",
+                "reference": "41b0c35f820ce2efb2fa1478c53d7ad6f25b6605",
                 "shasum": ""
             },
             "require": {
@@ -992,11 +992,7 @@
                 }
             ],
             "description": "A non-toggleable module containing a standardized interface for interacting with Onboarding data.",
-            "support": {
-                "source": "https://github.com/newfold-labs/wp-module-onboarding-data/tree/1.2.15",
-                "issues": "https://github.com/newfold-labs/wp-module-onboarding-data/issues"
-            },
-            "time": "2025-08-14T14:42:49+00:00"
+            "time": "2025-08-22T17:47:45+00:00"
         },
         {
             "name": "newfold-labs/wp-module-patterns",
