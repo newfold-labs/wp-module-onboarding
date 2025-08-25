@@ -1,9 +1,18 @@
 <?php
-
+/**
+ * A class to interact (get/set) with Onboarding Redux State.
+ *
+ * @package NewfoldLabs\WP\Module\Onboarding
+ */
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
+/**
+ * Redux State Service Class
+ *
+ * @package NewfoldLabs\WP\Module\Onboarding
+ */
 class ReduxStateService {
 
 	/**

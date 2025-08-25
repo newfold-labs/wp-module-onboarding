@@ -1,0 +1,197 @@
+name: Codecoverage-Main
+
+# Runs PHPUnit unit and Codeception wp-browser wpunit tests, merges the code coverage, commits the html report to
+# GitHub Pages, generates a README badge with the coverage percentage.
+
+on:
+    push:
+        branches:
+            - trunk
+    pull_request:
+        types: [ opened, reopened, ready_for_review, synchronize ]
+        branches:
+            - trunk
+    workflow_dispatch:
+
+jobs:
+
+    codecoverage:
+        runs-on: ubuntu-latest
+
+        services:
+            mysql:
+                image: mysql:5.7 # Password auth did not work on 8.0 on PHP 7.3, it did seem to work for PHP 7.4+
+                env: # These are the same username and password as the wp-env container defaults
+                    MYSQL_ROOT_PASSWORD: password
+                    MYSQL_DATABASE: tests-wordpress
+                ports: # This mapping matches the .wp-env.json configuration
+                    - 33306:3306
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+        strategy:
+            matrix: # Supported PHP versions
+                php: [ '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4' ]
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              with:
+                  fetch-depth: 0 # attempting to get all branch names.
+
+            # TODO: a DEPLOY_KEY is needed to enable gh-pages for the first time (the branch can be created and pushed but
+            # it will not be reachable as a website).
+            # Consider @see https://github.com/peaceiris/actions-gh-pages
+            #      - name: Check does gh-pages branch need to be created
+            #        run: |
+            #          git branch -l;
+            #          if [[ $(git branch -l gh-pages) == "" ]]; then
+            #            gh_pages_branch_needed=true;
+            #            echo "gh-pages branch is needed";
+            #          else
+            #            gh_pages_branch_needed=false
+            #            echo "gh-pages branch already exists";
+            #          fi
+            #          echo "GH_PAGES_BRANCH_NEEDED=$gh_pages_branch_needed" >> $GITHUB_ENV;
+            #          mkdir gh-pages
+            #
+            #      - name:  Maybe create gh-pages branch
+            #        if: ${{ env.GH_PAGES_BRANCH_NEEDED }}
+            #        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e # v4.0.0
+            #        with:
+            #          github_token: ${{ secrets.GITHUB_TOKEN }}
+            #          publish_dir: ./gh-pages
+            #          force_orphan: true
+            #          allow_empty_commit: true
+            #          commit_message: "🤖 Creating gh-pages branch"
+
+            - name: Checkout GitHub Pages branch for code coverage report
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              with:
+                  ref: gh-pages
+                  path: gh-pages
+
+            - name: Install PHP
+              uses: shivammathur/setup-php@20529878ed81ef8e78ddf08b480401e6101a850f # v2.35.3
+              with:
+                  php-version: ${{ matrix.php }}
+                  coverage: xdebug
+                  tools: composer, jaschilz/php-coverage-badger
+                  extensions: zip
+
+            - name: Read .env.testing
+              uses: c-py/action-dotenv-to-setenv@925b5d99a3f1e4bd7b4e9928be4e2491e29891d9 # v5
+              with:
+                  env-file: .env.testing
+
+            - name: Run composer install
+              continue-on-error: true
+              run: composer install -v
+
+            - name: Allow writing to wp-content
+              if: ${{ hashFiles('wp-content') != '' }} # TODO: This may be incorrect since it's a directory.
+              run: sudo chmod -R a+w wp-content
+
+            - name: Print refs
+              run: |
+                echo "ref: ${{ github.ref }}"
+                echo "head_ref: ${{ github.head_ref }}"
+                echo "base_ref: ${{ github.base_ref }}"
+
+          # On trunk, there will be a previous coverage report. On PRs we create a new directory using the commit SHA.
+            - name: Clear previous code coverage
+              if: ${{ (matrix.php == '7.3') && (github.ref == 'refs/heads/trunk') }}
+              run: |
+                  rm -rf gh-pages/phpunit || true;
+                  mkdir gh-pages/phpunit || true;
+
+#            - name: Run unit tests
+#              if: ${{ hashFiles('tests/phpunit/bootstrap.php') != '' }} # Only run unit tests if they are present.
+#              run: XDEBUG_MODE=coverage vendor/bin/phpunit --bootstrap tests/phpunit/bootstrap.php --coverage-php tests/_output/unit.cov --debug
+
+            - name: Run wpunit tests
+              run: XDEBUG_MODE=coverage vendor/bin/codecept run wpunit --coverage tests/_output/wpunit.cov --debug
+
+            # For PRs, we'll generate the coverage report on each pushed commit
+            - name: Merge code coverage for PR
+              if: ${{ matrix.php == '7.3' && github.event_name == 'pull_request' }}
+              run: |
+                  vendor/bin/phpcov merge --clover clover.xml tests/_output/;
+                  vendor/bin/phpcov merge --clover gh-pages/${{ github.event.pull_request.head.sha }}/phpunit/clover.xml --php gh-pages/${{ github.event.pull_request.head.sha }}/phpunit/phpunit.cov --html gh-pages/${{ github.event.pull_request.head.sha }}/phpunit/html/ tests/_output/;
+
+            # On main, we want it output to a different path
+            - name: Merge code coverage for main
+              if: ${{ (matrix.php == '7.3') && (github.ref == 'refs/heads/trunk') }}
+              run: |
+                  vendor/bin/phpcov merge --clover clover.xml tests/_output/;
+                  vendor/bin/phpcov merge --clover gh-pages/phpunit/clover.xml --php gh-pages/phpunit/phpunit.cov --html gh-pages/phpunit/html/ tests/_output/;
+
+            # This makes the coverage percentage available in `{{ steps.coverage-percentage.outputs.coverage-rounded }}`.
+            - name: Check test coverage
+              if: ${{ matrix.php == '7.3' }}
+              uses: johanvanhelden/gha-clover-test-coverage-check@2543c79a701f179bd63aa14c16c6938c509b2cec # v1
+              id: coverage-percentage
+              with:
+                  percentage: 25
+                  exit: false
+                  filename: clover.xml
+                  rounded-precision: "0"
+
+            # See: https://github.blog/2009-12-29-bypassing-jekyll-on-github-pages/
+            - name: Add `.nojekyll` file so code coverage report successfully deploys to gh-pages
+              if: ${{ (matrix.php == '7.3') }}
+              working-directory: gh-pages
+              run: |
+                  touch .nojekyll
+                  git add -- .nojekyll *
+
+            - name: Update README coverage badge
+              if: ${{ (matrix.php == '7.3') && (github.ref == 'refs/heads/trunk') }} # only commit on trunk, on the PHP version we're using in production.
+              run: php-coverage-badger clover.xml gh-pages/phpunit/coverage.svg
+
+            - name: Generate PR coverage badge
+              if: ${{ (matrix.php == '7.3') && github.event_name == 'pull_request' }}
+              run: php-coverage-badger clover.xml gh-pages/${{ github.event.pull_request.head.sha }}/phpunit/coverage.svg
+
+            - name: Commit code coverage to gh-pages
+              if: ${{ matrix.php == '7.3' }}
+              uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79 # v5.1.0
+              with:
+                  repository: gh-pages
+                  branch: gh-pages
+                  commit_message: ${{ format('🤖 Save code coverage report to gh-pages {0}%', steps.coverage-percentage.outputs.coverage-rounded) }}
+                  commit_options: ""
+              env:
+                  GITHUB_TOKEN: "${{ github.token }}"
+
+            - name: Add coverage badge to PR comment
+              if: ${{ matrix.php == '7.3' && github.event_name == 'pull_request' }}
+              run: |
+                  echo "[![Code Coverage ](https://newfold-labs.github.io/wp-module-onboarding/${{ github.event.pull_request.head.sha }}/phpunit/coverage.svg)](https://newfold-labs.github.io/wp-module-onboarding/${{ github.event.pull_request.head.sha }}/phpunit/html/)" >> coverage-comment.md
+                  echo "" >> coverage-comment.md
+                  echo "" >> coverage-comment.md
+
+            - name: Add coverage report link to PR comment
+              if: ${{ matrix.php == '7.3' && github.event_name == 'pull_request' }}
+              run: |
+                  echo "${{ format('[project coverage report {0}%](https://newfold-labs.github.io/wp-module-onboarding/{1}/phpunit/html/) @ {2}', steps.coverage-percentage.outputs.coverage-rounded, github.event.pull_request.head.sha, github.event.pull_request.head.sha) }}" >> coverage-comment.md
+                  echo "" >> coverage-comment.md
+                  echo "" >> coverage-comment.md
+
+            - name: Add phpcov uncovered lines report to PR comment
+              if: ${{ matrix.php == '7.3' && github.event_name == 'pull_request' }}
+              continue-on-error: true # phpcov can fail if there are no uncovered lines
+              run: |
+                  BRANCHED_COMMIT=$(git rev-list origin..HEAD | tail -n 1);
+                  echo "BRANCHED_COMMIT=$BRANCHED_COMMIT"
+                  git diff $BRANCHED_COMMIT...${{ github.event.pull_request.head.sha }} > branch.diff;
+                  cat branch.diff;
+                  OUTPUT=${vendor/bin/phpcov patch-coverage --path-prefix $(pwd) ./gh-pages/${{ github.event.pull_request.head.sha }}/phpunit/phpunit.cov branch.diff || true}
+                  echo $OUTPUT;
+                  echo "$OUTPUT" >> coverage-comment.md
+
+            - name: Add coverage PR comment
+              uses: mshick/add-pr-comment@b8f338c590a895d50bcbfa6c5859251edc8952fc # v2.8.2
+              if: ${{ matrix.php == '7.3' && github.event_name == 'pull_request' }}
+              with:
+                  message-id: coverage-report
+                  message-path: coverage-comment.md

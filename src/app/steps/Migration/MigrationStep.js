@@ -25,6 +25,7 @@ const MigrationStep = () => {
 
 	/**
 	 * Track migration initiated event
+	 *
 	 * @param { string } instaWpMigrationUrl The migration url
 	 * @return { Promise<void> }
 	 */
@@ -70,7 +71,7 @@ const MigrationStep = () => {
 				await trackMigrationInitiatedEvent( migrateUrl );
 
 				// Open migration url (external)
-				window.open( migrateUrl, '_self' );
+				window.open( window?.NewfoldRuntime?.linkTracker?.addUtmParams( migrateUrl ) || migrateUrl, '_self' );
 			} else {
 				throw new Error( 'Failed to fetch migration url' );
 			}

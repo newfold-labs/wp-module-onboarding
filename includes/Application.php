@@ -69,7 +69,7 @@ final class Application {
 		}
 
 		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
-			new RestAPI();
+			new RestApi();
 			new WP_Admin();
 			new ExternalRedirectInterceptor();
 		}

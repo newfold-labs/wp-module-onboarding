@@ -85,6 +85,7 @@ final class WP_Admin {
 			Permissions::ADMIN,
 			self::$slug,
 			array( __CLASS__, 'render' ),
+  
 			100
 		);
 	}
@@ -211,7 +212,7 @@ final class WP_Admin {
 		echo PHP_EOL;
 		echo '<!-- NFD:ONBOARDING -->';
 		echo PHP_EOL;
-		echo '<div id="nfd-onboarding" class="nfd-onboarding-container">' . wp_kses_post( self::is_loading() ) . '</div>';
+		echo '<div id="nfd-onboarding" class="nfd-onboarding-container">' . self::is_loading() . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo PHP_EOL;
 		echo '<!-- /NFD:ONBOARDING -->';
 		echo PHP_EOL;
@@ -325,12 +326,12 @@ final class WP_Admin {
 
 		// If the brand plugin page URL is not found in the runtime, redirect to the WordPress admin.
 		if ( empty( $brand_plugin_url ) ) {
-			wp_redirect( admin_url() . '?' . $dashboard_redirect_params );
+			wp_redirect( apply_filters( 'nfd_build_url', admin_url() . '?' . $dashboard_redirect_params ) );
 			exit;
 		}
 
 		// If the brand plugin page URL is found in the runtime, redirect to the brand plugin page.
-		wp_redirect( $brand_plugin_url . '&' . $dashboard_redirect_params );
+		wp_redirect( apply_filters( 'nfd_build_url', $brand_plugin_url . '&' . $dashboard_redirect_params ) );
 		exit;
 	}
 
@@ -449,7 +450,7 @@ final class WP_Admin {
 			'var nfdOnboardingRestartMeta =' . wp_json_encode(
 				array(
 					'buttonText' => \__( 'Build with AI', 'wp-module-onboarding' ),
-					'buttonHref' => \admin_url( 'index.php?page=' . self::$slug ),
+					'buttonHref' => \apply_filters( 'nfd_build_url', admin_url( 'index.php?page=' . self::$slug ) ),
 				)
 			) . ';',
 			'before'
