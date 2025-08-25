@@ -85,7 +85,6 @@ final class WP_Admin {
 			Permissions::ADMIN,
 			self::$slug,
 			array( __CLASS__, 'render' ),
-  
 			100
 		);
 	}
