@@ -121,7 +121,7 @@ class EventService {
 
 				// Use the same completion time that was stored in handle_completed()
 				$completion_time = get_option( Options::get_option_name( 'completed_time' ) );
-				$start_time = get_option( Options::get_option_name( 'start_time' ) );
+				$start_time      = get_option( Options::get_option_name( 'start_time' ) );
 
 				if ( $start_time ) {
 					if ( $completion_time ) {
@@ -177,14 +177,16 @@ class EventService {
 
 		// Check if site type actually changed
 		if ( $new_site_type !== $old_site_type && ! empty( $new_site_type ) ) {
-			self::send( array(
-				'action'   => 'site_type_set',
-				'category' => 'wonder_start',
-				'data'     => array(
-					'site_type' => $new_site_type,
-					'source'    => 'input_state_saved',
-				),
-			) );
+			self::send(
+				array(
+					'action'   => 'site_type_set',
+					'category' => 'wonder_start',
+					'data'     => array(
+						'site_type' => $new_site_type,
+						'source'    => 'input_state_saved',
+					),
+				)
+			);
 		}
 	}
 
@@ -202,26 +204,30 @@ class EventService {
 
 		// Track primary type
 		if ( self::is_primary_type_option( $option ) && isset( $new_value['slug'] ) ) {
-			self::send( array(
-				'action'   => 'primary_type_set',
-				'category' => 'wonder_start',
-				'data'     => array(
-					'primary_type' => $new_value['slug'],
-					'source'       => 'database_saved',
-				),
-			) );
+			self::send(
+				array(
+					'action'   => 'primary_type_set',
+					'category' => 'wonder_start',
+					'data'     => array(
+						'primary_type' => $new_value['slug'],
+						'source'       => 'database_saved',
+					),
+				)
+			);
 		}
 
 		// Track secondary type
 		if ( self::is_secondary_type_option( $option ) && isset( $new_value['slug'] ) ) {
-			self::send( array(
-				'action'   => 'secondary_type_set',
-				'category' => 'wonder_start',
-				'data'     => array(
-					'secondary_type' => $new_value['slug'],
-					'source'          => 'database_saved',
-				),
-			) );
+			self::send(
+				array(
+					'action'   => 'secondary_type_set',
+					'category' => 'wonder_start',
+					'data'     => array(
+						'secondary_type' => $new_value['slug'],
+						'source'         => 'database_saved',
+					),
+				)
+			);
 		}
 	}
 
