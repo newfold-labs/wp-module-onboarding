@@ -209,13 +209,13 @@ class EventService {
 		}
 
 		// Track primary type
-		if ( self::is_primary_type_option( $option ) && isset( $new_value['slug'] ) ) {
+		if ( self::is_primary_type_option( $option ) && isset( $new_value['value'] ) ) {
 			self::send(
 				array(
 					'action'   => 'primary_type_set',
 					'category' => 'wonder_start',
 					'data'     => array(
-						'primary_type' => $new_value['slug'],
+						'primary_type' => $new_value['value'],
 						'source'       => 'database_saved',
 					),
 				)
@@ -223,13 +223,13 @@ class EventService {
 		}
 
 		// Track secondary type
-		if ( self::is_secondary_type_option( $option ) && isset( $new_value['slug'] ) ) {
+		if ( self::is_secondary_type_option( $option ) && isset( $new_value['value'] ) ) {
 			self::send(
 				array(
 					'action'   => 'secondary_type_set',
 					'category' => 'wonder_start',
 					'data'     => array(
-						'secondary_type' => $new_value['slug'],
+						'secondary_type' => $new_value['value'],
 						'source'         => 'database_saved',
 					),
 				)
