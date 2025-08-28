@@ -7,6 +7,7 @@ import { useState, useEffect } from '@wordpress/element';
  * Internal dependencies
  */
 import { fetchDesignSettings } from '../utils/design-api';
+import { getCache, setCache, fontPairingsKey } from '../utils/simpleCache';
 import { useTypographyUpdate } from './useTypographyUpdate';
 
 // Helper function to format font family strings
@@ -67,11 +68,31 @@ export const useFontPairings = ( { page = 1, perPage = 10 } = {} ) => {
 			setIsLoading( true );
 			setError( null );
 
+			// Check cache first
+			const cacheKey = fontPairingsKey( page, perPage );
+			const cached = getCache( cacheKey );
+
+			if ( cached ) {
+				setFontPairings( formatFontPairings( cached.data ) );
+				setPagination( {
+					totalItems: cached.pagination.total_items,
+					totalPages: cached.pagination.total_pages,
+					currentPage: cached.pagination.current_page,
+					perPage: cached.pagination.per_page,
+				} );
+				setIsLoading( false );
+				return;
+			}
+
+			// Fetch from API
 			const response = await fetchDesignSettings( {
 				type: 'font-pairs',
 				page,
 				perPage,
 			} );
+
+			// Cache the response
+			setCache( cacheKey, response );
 
 			setFontPairings( formatFontPairings( response.data ) );
 			setPagination( {
