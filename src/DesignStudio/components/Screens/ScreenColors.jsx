@@ -45,11 +45,13 @@ export default function ScreenColors() {
 							<Spinner />
 						</div>
 					) }
-					<ColorPalette
-						onChange={ handlePaletteChange }
-						globalStyles={ globalStyles }
-						onLoadingChange={ handleLoadingChange }
-					/>
+					{ !isPalettesLoading && (
+						<ColorPalette
+							onChange={ handlePaletteChange }
+							globalStyles={ globalStyles }
+							onLoadingChange={ handleLoadingChange }
+						/>
+					) }
 				</div>
 				<div className="nfd-design-studio-sidebar__section">
 					<ToggleControl
