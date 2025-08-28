@@ -146,10 +146,16 @@ class EventService {
 	 * Handle option updates and track relevant events.
 	 *
 	 * @param string $option The option name.
-	 * @param mixed  $old_value The old option value.
-	 * @param mixed  $value The new option value.
+	 * @param mixed  $old_value The old option value for updated_option, or new value for added_option.
+	 * @param mixed  $value The new option value (only for updated_option).
 	 */
-	public static function handle_option_update( $option, $old_value, $value ) {
+	public static function handle_option_update( $option, $old_value, $value = null ) {
+		// Handle added_option hook (only 2 params: option name and value)
+		if ( null === $value ) {
+			$value     = $old_value;
+			$old_value = null;
+		}
+
 		// Track site type from input state (more reliable than flow data)
 		if ( Options::get_option_name( 'state_input' ) === $option ) {
 			self::track_site_type_from_input( $old_value, $value );
