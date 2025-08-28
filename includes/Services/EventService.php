@@ -11,6 +11,15 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 class EventService {
 
 	/**
+	 * Initialize event tracking hooks.
+	 */
+	public static function init() {
+		// Hook into option updates to track events when data is saved to database
+		add_action( 'updated_option', array( __CLASS__, 'handle_option_update' ), 10, 3 );
+		add_action( 'added_option', array( __CLASS__, 'handle_option_update' ), 10, 3 );
+	}
+
+	/**
 	 * Sends a Hiive Event to the data module API.
 	 *
 	 * @param array $event The event to send.
@@ -131,5 +140,118 @@ class EventService {
 		}
 
 		return $event;
+	}
+
+	/**
+	 * Handle option updates and track relevant events.
+	 *
+	 * @param string $option The option name.
+	 * @param mixed  $old_value The old option value.
+	 * @param mixed  $value The new option value.
+	 */
+	public static function handle_option_update( $option, $old_value, $value ) {
+		// Track site type from input state (more reliable than flow data)
+		if ( Options::get_option_name( 'state_input' ) === $option ) {
+			self::track_site_type_from_input( $old_value, $value );
+		}
+
+		// Track primary and secondary types from site classification
+		if ( self::is_site_classification_option( $option ) ) {
+			self::track_site_classification( $option, $old_value, $value );
+		}
+	}
+
+	/**
+	 * Track site type changes from input state data.
+	 *
+	 * @param mixed $old_value The old input state data.
+	 * @param mixed $new_value The new input state data.
+	 */
+	private static function track_site_type_from_input( $old_value, $new_value ) {
+		if ( ! is_array( $new_value ) ) {
+			return;
+		}
+
+		$new_site_type = $new_value['siteType'] ?? null;
+		$old_site_type = is_array( $old_value ) ? ( $old_value['siteType'] ?? null ) : null;
+
+		// Check if site type actually changed
+		if ( $new_site_type !== $old_site_type && ! empty( $new_site_type ) ) {
+			self::send( array(
+				'action'   => 'site_type_set',
+				'category' => 'wonder_start',
+				'data'     => array(
+					'site_type' => $new_site_type,
+					'source'    => 'input_state_saved',
+				),
+			) );
+		}
+	}
+
+	/**
+	 * Track site classification changes (primary/secondary types).
+	 *
+	 * @param string $option The option name.
+	 * @param mixed  $old_value The old option value.
+	 * @param mixed  $new_value The new option value.
+	 */
+	private static function track_site_classification( $option, $old_value, $new_value ) {
+		if ( ! is_array( $new_value ) || $new_value === $old_value ) {
+			return;
+		}
+
+		// Track primary type
+		if ( self::is_primary_type_option( $option ) && isset( $new_value['slug'] ) ) {
+			self::send( array(
+				'action'   => 'primary_type_set',
+				'category' => 'wonder_start',
+				'data'     => array(
+					'primary_type' => $new_value['slug'],
+					'source'       => 'database_saved',
+				),
+			) );
+		}
+
+		// Track secondary type
+		if ( self::is_secondary_type_option( $option ) && isset( $new_value['slug'] ) ) {
+			self::send( array(
+				'action'   => 'secondary_type_set',
+				'category' => 'wonder_start',
+				'data'     => array(
+					'secondary_type' => $new_value['slug'],
+					'source'          => 'database_saved',
+				),
+			) );
+		}
+	}
+
+	/**
+	 * Check if option is a site classification option.
+	 *
+	 * @param string $option The option name.
+	 * @return bool
+	 */
+	private static function is_site_classification_option( $option ) {
+		return self::is_primary_type_option( $option ) || self::is_secondary_type_option( $option );
+	}
+
+	/**
+	 * Check if option is a primary type option.
+	 *
+	 * @param string $option The option name.
+	 * @return bool
+	 */
+	private static function is_primary_type_option( $option ) {
+		return strpos( $option, 'nfd_data_site_classification_primary' ) !== false;
+	}
+
+	/**
+	 * Check if option is a secondary type option.
+	 *
+	 * @param string $option The option name.
+	 * @return bool
+	 */
+	private static function is_secondary_type_option( $option ) {
+		return strpos( $option, 'nfd_data_site_classification_secondary' ) !== false;
 	}
 }
