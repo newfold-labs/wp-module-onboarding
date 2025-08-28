@@ -18,11 +18,11 @@ export default function useColorPalettePagination() {
 	const loadPalettes = async ( page = 1 ) => {
 		try {
 			setIsLoading( true );
-			
+
 			// Check cache first
 			const cacheKey = colorPaletteKey( page, 10 );
 			const cached = getCache( cacheKey );
-			
+
 			if ( cached ) {
 				setColorPalettes( cached.data );
 				setTotalPages( cached.pagination.total_pages );
