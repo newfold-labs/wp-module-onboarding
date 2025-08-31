@@ -65,19 +65,29 @@ class BlueprintsController {
 		);
 	}
 
+	/**
+	 * Get the arguments for the install required plugins route.
+	 *
+	 * @return array The arguments.
+	 */
 	public function install_required_plugins_args() {
 		return array(
 			'selected_blueprint_slug' => array(
-				'type' => 'string',
+				'type'     => 'string',
 				'required' => true,
 			),
 		);
 	}
 
+	/**
+	 * Get the arguments for the import blueprint route.
+	 *
+	 * @return array The arguments.
+	 */
 	public function import_blueprint_args() {
 		return array(
 			'selected_blueprint_slug' => array(
-				'type' => 'string',
+				'type'     => 'string',
 				'required' => true,
 			),
 		);
@@ -114,6 +124,12 @@ class BlueprintsController {
 		return new \WP_REST_Response( 'Installed required plugins', 202 );
 	}
 
+	/**
+	 * Import a blueprint.
+	 *
+	 * @param \WP_REST_Request $request The request object.
+	 * @return \WP_REST_Response The response object.
+	 */
 	public function import_blueprint( \WP_REST_Request $request ): \WP_REST_Response {
 		$selected_blueprint_slug = $request->get_param( 'selected_blueprint_slug' );
 		$result = (new BlueprintsService())->import_blueprint( $selected_blueprint_slug );
