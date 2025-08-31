@@ -282,6 +282,17 @@ class BlueprintImportService extends BlueprintsService {
 		// Also handle URLs with trailing slashes
 		$sql_content = str_replace( $source_site_url . '/', $target_site_url . '/', $sql_content );
 
+		/**
+		 * Search and replace any non-secure urls with secure urls.
+		 */
+		$non_secure_source_site_url = parse_url( $source_site_url, PHP_URL_HOST );
+		$non_secure_source_site_url = 'http://' . $non_secure_source_site_url;
+
+		// Replace URLs in content
+		$sql_content = str_replace( $non_secure_source_site_url, $target_site_url, $sql_content );
+		// Also handle URLs with trailing slashes
+		$sql_content = str_replace( $non_secure_source_site_url . '/', $target_site_url . '/', $sql_content );
+
 		if ( empty( $sql_content ) ) {
 			return new \WP_Error( 'sql_search_replace_failed', 'SQL search and replace failed' );
 		}
