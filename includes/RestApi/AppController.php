@@ -96,7 +96,6 @@ class AppController {
 			( new AppService() )->complete( $selected_sitegen_homepage );
 			return new \WP_REST_Response( array(), 200 );
 		} catch ( \Exception $e ) {
-			error_log( 'Encountered an error while completing the app service: ' . $e->getMessage() );
 			return new \WP_REST_Response(
 				array( 'error' => 'Encountered an error while completing the app service.' ),
 				500
@@ -115,7 +114,6 @@ class AppController {
 			( new AppService() )->complete_blueprint();
 			return new \WP_REST_Response( array(), 200 );
 		} catch ( \Exception $e ) {
-			error_log( 'Encountered an error while completing the blueprint app service: ' . $e->getMessage() );
 			return new \WP_REST_Response(
 				array( 'error' => 'Encountered an error while completing the blueprint app service.' ),
 				500
