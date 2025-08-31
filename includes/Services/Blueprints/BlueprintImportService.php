@@ -64,7 +64,6 @@ class BlueprintImportService extends BlueprintsService {
 			return true;
 		} catch ( \Exception $e ) {
 			$this->cleanup_temp_dir();
-			error_log( 'Blueprint import error: ' . $e->getMessage() );
 			return new \WP_Error( 'blueprint_import_error', 'Blueprint import failed' );
 		}
 	}
@@ -205,7 +204,6 @@ class BlueprintImportService extends BlueprintsService {
 				}
 			}
 		} catch ( \Exception $e ) {
-			error_log( 'Blueprint media import error: ' . $e->getMessage() );
 			return new \WP_Error( 'blueprint_media_import_error', 'Media import failed: ' . $e->getMessage() );
 		}
 
@@ -337,7 +335,6 @@ class BlueprintImportService extends BlueprintsService {
 					'statement' => substr( $statement, 0, 100 ) . '...',
 					'error' => $wpdb->last_error
 				];
-				error_log( 'Blueprint import SQL error: ' . $wpdb->last_error . ' | Statement: ' . substr( $statement, 0, 200 ) );
 			} else {
 				$successful_count++;
 			}
@@ -354,11 +351,6 @@ class BlueprintImportService extends BlueprintsService {
 				sprintf( 'SQL import mostly failed. %d/%d statements succeeded.', $successful_count, $total_statements ),
 				$errors
 			);
-		}
-
-		// If there are errors, log and continue.
-		if ( ! empty( $errors ) ) {
-			error_log( sprintf( 'Blueprint import completed with some errors. %d/%d statements succeeded.', $successful_count, $total_statements ) );
 		}
 
 		return true;
