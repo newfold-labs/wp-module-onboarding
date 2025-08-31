@@ -47,7 +47,6 @@
 			]
 		}
 	},
-	"minimum-stability": "dev",
 	"require": {
 		"mustache/mustache": "^2.14.2",
 		"wp-cli/wp-config-transformer": "^1.4.1",
