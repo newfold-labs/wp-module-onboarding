@@ -21,7 +21,7 @@ class BlueprintsService {
 	 *
 	 * @var string
 	 */
-	private static $blueprints_service_url = 'https://patterns-stg.hiive.cloud/api/v1/blueprints/';
+	private static $blueprints_service_url = 'https://patterns.hiive.cloud/api/v1/blueprints/';
 
 	/**
 	 * The redux blueprints data.
