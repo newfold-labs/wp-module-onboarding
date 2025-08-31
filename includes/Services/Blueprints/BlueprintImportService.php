@@ -38,12 +38,12 @@ class BlueprintImportService extends BlueprintsService {
 	/**
 	 * Import a blueprint.
 	 *
-	 * @param string $blueprint_xml_url The XML source of the blueprint.
+	 * @param string $blueprint_resources_url The zip file source of the blueprint.
 	 * @return true|\WP_Error True if the blueprint is imported, WP_Error if there is an error.
 	 */
 	public function import( string $blueprint_resources_url ) {
 		$this->resources_url = $blueprint_resources_url;
-		// Validate the blueprint XML source.
+		// Validate the blueprint resources source.
 		if ( ! $this->validate_blueprint_resources_url() ) {
 			return new \WP_Error( 'invalid_blueprint_resources_url', 'Invalid blueprint resources URL' );
 		}
