@@ -154,63 +154,6 @@ class BlueprintImportService extends BlueprintsService {
 	}
 
 	/**
-	 * Process the media files.
-	 *
-	 * @return bool|\WP_Error True if the media files are processed, WP_Error if there is an error.
-	 */
-	private function process_media_files() {
-		$temp_uploads_dir = $this->temp_dir . 'uploads/';
-		if ( ! is_dir( $temp_uploads_dir ) ) {
-			// Return true if no uploads to import.
-			return true;
-		}
-
-		// Get wp-content/uploads directory.
-		$wp_uploads_dir = wp_upload_dir()['basedir'];
-		if ( ! is_dir( $wp_uploads_dir ) ) {
-			return new \WP_Error( 'uploads_dir_not_found', 'WordPress uploads directory not found' );
-		}
-
-		// Iterate through the uploads source and copy its contents to the wp-content/uploads directory.
-		$iterator = new \RecursiveIteratorIterator(
-			new \RecursiveDirectoryIterator( $temp_uploads_dir, \RecursiveDirectoryIterator::SKIP_DOTS ),
-			\RecursiveIteratorIterator::SELF_FIRST
-		);
-
-		try {
-			foreach ( $iterator as $file ) {
-				$source_path   = $file->getRealPath();
-				$relative_path = substr( $source_path, strlen( $temp_uploads_dir ) );
-				// Remove leading 'uploads/' if it exists in the relative path.
-				if ( strpos( $relative_path, 'uploads' . DIRECTORY_SEPARATOR ) === 0 ) {
-					$relative_path = substr( $relative_path, strlen( 'uploads' . DIRECTORY_SEPARATOR ) );
-				}
-				$destination_path = $wp_uploads_dir . DIRECTORY_SEPARATOR . $relative_path;
-
-				if ( $file->isDir() ) {
-					wp_mkdir_p( $destination_path );
-				} else {
-					// Ensure destination directory exists
-					$destination_file_dir = dirname( $destination_path );
-					if ( ! is_dir( $destination_file_dir ) ) {
-						wp_mkdir_p( $destination_file_dir );
-					}
-
-					// Copy the file (overwrite if it exists).
-					if ( file_exists( $destination_path ) ) {
-						unlink( $destination_path );
-					}
-					copy( $source_path, $destination_path );
-				}
-			}
-		} catch ( \Exception $e ) {
-			return new \WP_Error( 'blueprint_media_import_error', 'Media import failed: ' . $e->getMessage() );
-		}
-
-		return true;
-	}
-
-	/**
 	 * Process the SQL file.
 	 *
 	 * @return bool|\WP_Error True if the SQL file is processed, WP_Error if there is an error.
@@ -390,6 +333,63 @@ class BlueprintImportService extends BlueprintsService {
 		}
 
 		return $statements;
+	}
+
+	/**
+	 * Process the media files.
+	 *
+	 * @return bool|\WP_Error True if the media files are processed, WP_Error if there is an error.
+	 */
+	private function process_media_files() {
+		$temp_uploads_dir = $this->temp_dir . 'uploads/';
+		if ( ! is_dir( $temp_uploads_dir ) ) {
+			// Return true if no uploads to import.
+			return true;
+		}
+
+		// Get wp-content/uploads directory.
+		$wp_uploads_dir = wp_upload_dir()['basedir'];
+		if ( ! is_dir( $wp_uploads_dir ) ) {
+			return new \WP_Error( 'uploads_dir_not_found', 'WordPress uploads directory not found' );
+		}
+
+		// Iterate through the uploads source and copy its contents to the wp-content/uploads directory.
+		$iterator = new \RecursiveIteratorIterator(
+			new \RecursiveDirectoryIterator( $temp_uploads_dir, \RecursiveDirectoryIterator::SKIP_DOTS ),
+			\RecursiveIteratorIterator::SELF_FIRST
+		);
+
+		try {
+			foreach ( $iterator as $file ) {
+				$source_path   = $file->getRealPath();
+				$relative_path = substr( $source_path, strlen( $temp_uploads_dir ) );
+				// Remove leading 'uploads/' if it exists in the relative path.
+				if ( strpos( $relative_path, 'uploads' . DIRECTORY_SEPARATOR ) === 0 ) {
+					$relative_path = substr( $relative_path, strlen( 'uploads' . DIRECTORY_SEPARATOR ) );
+				}
+				$destination_path = $wp_uploads_dir . DIRECTORY_SEPARATOR . $relative_path;
+
+				if ( $file->isDir() ) {
+					wp_mkdir_p( $destination_path );
+				} else {
+					// Ensure destination directory exists
+					$destination_file_dir = dirname( $destination_path );
+					if ( ! is_dir( $destination_file_dir ) ) {
+						wp_mkdir_p( $destination_file_dir );
+					}
+
+					// Copy the file (overwrite if it exists).
+					if ( file_exists( $destination_path ) ) {
+						unlink( $destination_path );
+					}
+					copy( $source_path, $destination_path );
+				}
+			}
+		} catch ( \Exception $e ) {
+			return new \WP_Error( 'blueprint_media_import_error', 'Media import failed: ' . $e->getMessage() );
+		}
+
+		return true;
 	}
 
 	/**
