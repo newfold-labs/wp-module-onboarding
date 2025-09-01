@@ -5,6 +5,13 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Services\AppService;
 
+/**
+ * AppController class for handling onboarding application REST API endpoints.
+ *
+ * This controller manages the REST API routes and handlers for the onboarding
+ * application functionality. It provides endpoints for starting and completing
+ * the onboarding process.
+ */
 class AppController {
 
 	/**
@@ -21,6 +28,13 @@ class AppController {
 	 */
 	protected $rest_base = '/app';
 
+	/**
+	 * Register the REST API routes for the onboarding application.
+	 *
+	 * Registers two main endpoints:
+	 * - /app/start: Initiates the onboarding process
+	 * - /app/complete: Completes the onboarding process with selected homepage
+	 */
 	public function register_routes() {
 		\register_rest_route(
 			$this->namespace,
@@ -74,7 +88,7 @@ class AppController {
 	 */
 	public function complete( \WP_REST_Request $request ): \WP_REST_Response {
 		$data                      = json_decode( $request->get_body(), true );
-		$selected_sitegen_homepage = $data['selected_sitegen_homepage'];
+		$selected_sitegen_homepage = $data['selected_sitegen_homepage'] ?? false;
 		if ( ! $selected_sitegen_homepage ) {
 			return new \WP_REST_Response(
 				array( 'error' => 'Selected sitegen homepage is required.' ),
