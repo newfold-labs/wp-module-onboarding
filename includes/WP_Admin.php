@@ -287,12 +287,6 @@ final class WP_Admin {
 				);
 			}
 
-			wp_add_inline_script(
-				'wp-blocks',
-				sprintf( 'wp.blocks.setCategories( %s );', wp_json_encode( get_block_categories( $block_editor_context ) ) ),
-				'after'
-			);
-
 			\wp_enqueue_script( self::$slug );
 			\wp_enqueue_style( self::$slug );
 
@@ -505,7 +499,7 @@ final class WP_Admin {
 	}
 
 	/**
-	Enqueue site editor specific assets when coming from onboarding.
+	 * Enqueue site editor specific assets when coming from onboarding.
 	 *
 	 * @return void
 	 */

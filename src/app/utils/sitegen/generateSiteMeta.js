@@ -1,5 +1,5 @@
 /* eslint-disable jsdoc/require-returns-check */
-import { dispatch, select } from '@wordpress/data';
+import { dispatch, select, resolveSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { nfdOnboardingStore } from '@/data/store';
 import { getSiteMetaForIdentifier } from '@/utils/api/onboarding';
@@ -31,6 +31,15 @@ const handleFetch = async ( identifier, siteInfo, siteType, locale ) => {
 };
 
 const setSiteTitle = async ( title ) => {
+	// Skip if the user already has a site title during IntakeStep.
+	const siteTitleFromIntakeStep = select( nfdOnboardingStore ).getSiteTitle();
+	if ( siteTitleFromIntakeStep ) {
+		return;
+	}
+
+	// Ensure the site entity is loaded.
+	await resolveSelect( coreStore ).getEntityRecord( 'root', 'site' );
+	// Change site title.
 	dispatch( coreStore ).editEntityRecord( 'root', 'site', undefined, {
 		title,
 	} );
@@ -38,6 +47,9 @@ const setSiteTitle = async ( title ) => {
 };
 
 const setSiteTagline = async ( tagline ) => {
+	// Ensure the site entity is loaded.
+	await resolveSelect( coreStore ).getEntityRecord( 'root', 'site' );
+	// Change site tagline.
 	dispatch( coreStore ).editEntityRecord( 'root', 'site', undefined, {
 		description: tagline,
 	} );
