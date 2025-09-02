@@ -23,6 +23,5 @@ jobs:
     uses: newfold-labs/workflows/.github/workflows/reusable-translations.yml@main
     with:
       text_domain: 'wp-module-onboarding'
-      pr_branch_name: 'trunk'
     secrets:
       TRANSLATOR_API_KEY: ${{ secrets.TRANSLATOR_API_KEY }}
