@@ -149,7 +149,7 @@ msgstr "Cada fonte (src) do Webfont deve ser uma string não vazia."
 msgid "Webfont font weight must be a properly formatted string or integer."
 msgstr "O peso da fonte Webfont deve ser uma string ou número inteiro formatado corretamente."
 
-#: includes/WP_Admin.php:457
+#: includes/WP_Admin.php:451
 msgid "Build with AI"
 msgstr "Criar com IA"
 
