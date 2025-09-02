@@ -51,7 +51,7 @@
 		"mustache/mustache": "^2.14.2",
 		"wp-cli/wp-config-transformer": "^1.4.1",
 		"newfold-labs/wp-module-onboarding-data": "^1.2.16",
-		"newfold-labs/wp-module-patterns": "^2.10.2",
+		"newfold-labs/wp-module-patterns": "^2.10.3",
 		"newfold-labs/wp-module-facebook": "^1.2.1",
 		"newfold-labs/wp-module-migration": "^1.6.0",
 		"wp-forge/helpers": "^2.0"

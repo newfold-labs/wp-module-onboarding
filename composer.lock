@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d14190337c172beebcea2c6befa693e4",
+    "content-hash": "25ddd810f7fb2e49136d3a0a1022eb0a",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -996,16 +996,16 @@
         },
         {
             "name": "newfold-labs/wp-module-patterns",
-            "version": "2.10.2",
+            "version": "2.10.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-patterns.git",
-                "reference": "92ce0d0135f5dd3355eabc4330eca86cbc17919f"
+                "reference": "3cb911f8f82c5faa831f4f3445d9f7dde489e7b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-patterns/zipball/92ce0d0135f5dd3355eabc4330eca86cbc17919f",
-                "reference": "92ce0d0135f5dd3355eabc4330eca86cbc17919f",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-patterns/zipball/3cb911f8f82c5faa831f4f3445d9f7dde489e7b5",
+                "reference": "3cb911f8f82c5faa831f4f3445d9f7dde489e7b5",
                 "shasum": ""
             },
             "require": {
@@ -1037,7 +1037,7 @@
                     "vendor/bin/phpcbf . --ignore=*/build/* --standard=phpcs.xml -d error_reporting=\"E_ALL&~E_DEPRECATED\""
                 ],
                 "i18n-pot": [
-                    "vendor/bin/wp i18n make-pot . ./languages/nfd-wonder-blocks.pot --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/newfold-labs/wp-module-patterns/issues\",\"POT-Creation-Date\":\"2025-02-13T09:55:55+00:00\"}' --exclude=node_modules,tests,src,wordpress --domain=nfd-wonder-blocks"
+                    "vendor/bin/wp i18n make-pot . ./languages/nfd-wonder-blocks.pot --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/newfold-labs/wp-module-patterns/issues\",\"POT-Creation-Date\":\"2025-02-13T09:55:55+00:00\"}' --exclude=tests,src,wordpress --domain=nfd-wonder-blocks"
                 ],
                 "i18n-po": [
                     "vendor/bin/wp i18n update-po ./languages/nfd-wonder-blocks.pot ./languages"
@@ -1085,10 +1085,10 @@
             ],
             "description": "WordPress Cloud Patterns",
             "support": {
-                "source": "https://github.com/newfold-labs/wp-module-patterns/tree/2.10.2",
+                "source": "https://github.com/newfold-labs/wp-module-patterns/tree/2.10.3",
                 "issues": "https://github.com/newfold-labs/wp-module-patterns/issues"
             },
-            "time": "2025-08-06T16:07:49+00:00"
+            "time": "2025-09-02T17:02:38+00:00"
         },
         {
             "name": "newfold-labs/wp-module-performance",
