@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1756700328">
-  <project timestamp="1756700328">
+<coverage generated="1756822206">
+  <project timestamp="1756822206">
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Application.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Application" namespace="global">
         <metrics complexity="8" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="0" elements="30" coveredelements="0"/>
@@ -3950,7 +3950,7 @@
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/WP_Admin.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\WP_Admin" namespace="global">
-        <metrics complexity="62" methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="363" coveredstatements="0" elements="379" coveredelements="0"/>
+        <metrics complexity="62" methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="358" coveredstatements="0" elements="374" coveredelements="0"/>
       </class>
       <line num="42" type="method" name="__construct" visibility="public" complexity="2" crap="6" count="0"/>
       <line num="43" type="stmt" count="0"/>
@@ -4137,201 +4137,196 @@
       <line num="287" type="stmt" count="0"/>
       <line num="290" type="stmt" count="0"/>
       <line num="291" type="stmt" count="0"/>
-      <line num="292" type="stmt" count="0"/>
       <line num="293" type="stmt" count="0"/>
-      <line num="294" type="stmt" count="0"/>
-      <line num="296" type="stmt" count="0"/>
-      <line num="297" type="stmt" count="0"/>
-      <line num="299" type="stmt" count="0"/>
-      <line num="308" type="method" name="enqueue_block_assets" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="310" type="stmt" count="0"/>
-      <line num="318" type="method" name="exit_to_dashboard" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="302" type="method" name="enqueue_block_assets" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="304" type="stmt" count="0"/>
+      <line num="312" type="method" name="exit_to_dashboard" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="313" type="stmt" count="0"/>
+      <line num="314" type="stmt" count="0"/>
+      <line num="315" type="stmt" count="0"/>
       <line num="319" type="stmt" count="0"/>
       <line num="320" type="stmt" count="0"/>
-      <line num="321" type="stmt" count="0"/>
-      <line num="325" type="stmt" count="0"/>
-      <line num="326" type="stmt" count="0"/>
+      <line num="323" type="stmt" count="0"/>
+      <line num="327" type="stmt" count="0"/>
+      <line num="328" type="stmt" count="0"/>
       <line num="329" type="stmt" count="0"/>
       <line num="333" type="stmt" count="0"/>
       <line num="334" type="stmt" count="0"/>
-      <line num="335" type="stmt" count="0"/>
-      <line num="339" type="stmt" count="0"/>
-      <line num="340" type="stmt" count="0"/>
-      <line num="348" type="method" name="initialize" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="342" type="method" name="initialize" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="343" type="stmt" count="0"/>
+      <line num="344" type="stmt" count="0"/>
+      <line num="348" type="stmt" count="0"/>
       <line num="349" type="stmt" count="0"/>
       <line num="350" type="stmt" count="0"/>
-      <line num="354" type="stmt" count="0"/>
+      <line num="353" type="stmt" count="0"/>
       <line num="355" type="stmt" count="0"/>
-      <line num="356" type="stmt" count="0"/>
-      <line num="359" type="stmt" count="0"/>
-      <line num="361" type="stmt" count="0"/>
-      <line num="369" type="method" name="mark_sitegen_generated_themes" visibility="public" complexity="3" crap="12" count="0"/>
+      <line num="363" type="method" name="mark_sitegen_generated_themes" visibility="public" complexity="3" crap="12" count="0"/>
+      <line num="364" type="stmt" count="0"/>
+      <line num="366" type="stmt" count="0"/>
+      <line num="367" type="stmt" count="0"/>
       <line num="370" type="stmt" count="0"/>
+      <line num="371" type="stmt" count="0"/>
       <line num="372" type="stmt" count="0"/>
       <line num="373" type="stmt" count="0"/>
+      <line num="374" type="stmt" count="0"/>
+      <line num="375" type="stmt" count="0"/>
       <line num="376" type="stmt" count="0"/>
-      <line num="377" type="stmt" count="0"/>
       <line num="378" type="stmt" count="0"/>
       <line num="379" type="stmt" count="0"/>
       <line num="380" type="stmt" count="0"/>
       <line num="381" type="stmt" count="0"/>
       <line num="382" type="stmt" count="0"/>
+      <line num="383" type="stmt" count="0"/>
       <line num="384" type="stmt" count="0"/>
       <line num="385" type="stmt" count="0"/>
       <line num="386" type="stmt" count="0"/>
       <line num="387" type="stmt" count="0"/>
-      <line num="388" type="stmt" count="0"/>
       <line num="389" type="stmt" count="0"/>
       <line num="390" type="stmt" count="0"/>
       <line num="391" type="stmt" count="0"/>
       <line num="392" type="stmt" count="0"/>
       <line num="393" type="stmt" count="0"/>
+      <line num="394" type="stmt" count="0"/>
       <line num="395" type="stmt" count="0"/>
-      <line num="396" type="stmt" count="0"/>
       <line num="397" type="stmt" count="0"/>
       <line num="398" type="stmt" count="0"/>
-      <line num="399" type="stmt" count="0"/>
-      <line num="400" type="stmt" count="0"/>
-      <line num="401" type="stmt" count="0"/>
-      <line num="403" type="stmt" count="0"/>
-      <line num="404" type="stmt" count="0"/>
-      <line num="412" type="method" name="set_onboarding_restart_option" visibility="public" complexity="3" crap="12" count="0"/>
-      <line num="414" type="stmt" count="0"/>
-      <line num="416" type="stmt" count="0"/>
+      <line num="406" type="method" name="set_onboarding_restart_option" visibility="public" complexity="3" crap="12" count="0"/>
+      <line num="408" type="stmt" count="0"/>
+      <line num="410" type="stmt" count="0"/>
+      <line num="413" type="stmt" count="0"/>
+      <line num="415" type="stmt" count="0"/>
       <line num="419" type="stmt" count="0"/>
-      <line num="421" type="stmt" count="0"/>
-      <line num="425" type="stmt" count="0"/>
-      <line num="428" type="stmt" count="0"/>
-      <line num="437" type="method" name="can_restart_onboarding" visibility="public" complexity="3" crap="12" count="0"/>
-      <line num="438" type="stmt" count="0"/>
+      <line num="422" type="stmt" count="0"/>
+      <line num="431" type="method" name="can_restart_onboarding" visibility="public" complexity="3" crap="12" count="0"/>
+      <line num="432" type="stmt" count="0"/>
+      <line num="435" type="stmt" count="0"/>
+      <line num="436" type="stmt" count="0"/>
+      <line num="439" type="stmt" count="0"/>
+      <line num="440" type="stmt" count="0"/>
       <line num="441" type="stmt" count="0"/>
       <line num="442" type="stmt" count="0"/>
+      <line num="443" type="stmt" count="0"/>
+      <line num="444" type="stmt" count="0"/>
       <line num="445" type="stmt" count="0"/>
-      <line num="446" type="stmt" count="0"/>
       <line num="447" type="stmt" count="0"/>
       <line num="448" type="stmt" count="0"/>
       <line num="449" type="stmt" count="0"/>
       <line num="450" type="stmt" count="0"/>
       <line num="451" type="stmt" count="0"/>
+      <line num="452" type="stmt" count="0"/>
       <line num="453" type="stmt" count="0"/>
       <line num="454" type="stmt" count="0"/>
       <line num="455" type="stmt" count="0"/>
       <line num="456" type="stmt" count="0"/>
-      <line num="457" type="stmt" count="0"/>
       <line num="458" type="stmt" count="0"/>
       <line num="459" type="stmt" count="0"/>
       <line num="460" type="stmt" count="0"/>
       <line num="461" type="stmt" count="0"/>
       <line num="462" type="stmt" count="0"/>
+      <line num="463" type="stmt" count="0"/>
       <line num="464" type="stmt" count="0"/>
-      <line num="465" type="stmt" count="0"/>
-      <line num="466" type="stmt" count="0"/>
-      <line num="467" type="stmt" count="0"/>
-      <line num="468" type="stmt" count="0"/>
       <line num="469" type="stmt" count="0"/>
       <line num="470" type="stmt" count="0"/>
-      <line num="475" type="stmt" count="0"/>
+      <line num="471" type="stmt" count="0"/>
+      <line num="473" type="stmt" count="0"/>
+      <line num="474" type="stmt" count="0"/>
       <line num="476" type="stmt" count="0"/>
       <line num="477" type="stmt" count="0"/>
-      <line num="479" type="stmt" count="0"/>
-      <line num="480" type="stmt" count="0"/>
-      <line num="482" type="stmt" count="0"/>
-      <line num="483" type="stmt" count="0"/>
-      <line num="491" type="method" name="hide_onboarding_restart_card" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="485" type="method" name="hide_onboarding_restart_card" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="486" type="stmt" count="0"/>
+      <line num="487" type="stmt" count="0"/>
+      <line num="488" type="stmt" count="0"/>
+      <line num="489" type="stmt" count="0"/>
+      <line num="491" type="stmt" count="0"/>
       <line num="492" type="stmt" count="0"/>
       <line num="493" type="stmt" count="0"/>
-      <line num="494" type="stmt" count="0"/>
       <line num="495" type="stmt" count="0"/>
-      <line num="497" type="stmt" count="0"/>
+      <line num="496" type="stmt" count="0"/>
       <line num="498" type="stmt" count="0"/>
-      <line num="499" type="stmt" count="0"/>
-      <line num="501" type="stmt" count="0"/>
-      <line num="502" type="stmt" count="0"/>
-      <line num="504" type="stmt" count="0"/>
-      <line num="512" type="method" name="enqueue_site_editor_assets" visibility="public" complexity="5" crap="30" count="0"/>
-      <line num="513" type="stmt" count="0"/>
-      <line num="516" type="stmt" count="0"/>
+      <line num="506" type="method" name="enqueue_site_editor_assets" visibility="public" complexity="5" crap="30" count="0"/>
+      <line num="507" type="stmt" count="0"/>
+      <line num="510" type="stmt" count="0"/>
+      <line num="511" type="stmt" count="0"/>
+      <line num="512" type="stmt" count="0"/>
+      <line num="515" type="stmt" count="0"/>
       <line num="517" type="stmt" count="0"/>
       <line num="518" type="stmt" count="0"/>
+      <line num="520" type="stmt" count="0"/>
       <line num="521" type="stmt" count="0"/>
+      <line num="522" type="stmt" count="0"/>
       <line num="523" type="stmt" count="0"/>
       <line num="524" type="stmt" count="0"/>
+      <line num="525" type="stmt" count="0"/>
       <line num="526" type="stmt" count="0"/>
-      <line num="527" type="stmt" count="0"/>
       <line num="528" type="stmt" count="0"/>
       <line num="529" type="stmt" count="0"/>
       <line num="530" type="stmt" count="0"/>
       <line num="531" type="stmt" count="0"/>
       <line num="532" type="stmt" count="0"/>
-      <line num="534" type="stmt" count="0"/>
+      <line num="533" type="stmt" count="0"/>
       <line num="535" type="stmt" count="0"/>
       <line num="536" type="stmt" count="0"/>
-      <line num="537" type="stmt" count="0"/>
-      <line num="538" type="stmt" count="0"/>
       <line num="539" type="stmt" count="0"/>
-      <line num="541" type="stmt" count="0"/>
-      <line num="542" type="stmt" count="0"/>
-      <line num="545" type="stmt" count="0"/>
-      <line num="555" type="method" name="enqueue_preview_fonts" visibility="private" complexity="25" crap="650" count="0"/>
-      <line num="557" type="stmt" count="0"/>
+      <line num="549" type="method" name="enqueue_preview_fonts" visibility="private" complexity="25" crap="650" count="0"/>
+      <line num="551" type="stmt" count="0"/>
+      <line num="552" type="stmt" count="0"/>
+      <line num="553" type="stmt" count="0"/>
+      <line num="555" type="stmt" count="0"/>
+      <line num="556" type="stmt" count="0"/>
       <line num="558" type="stmt" count="0"/>
       <line num="559" type="stmt" count="0"/>
+      <line num="560" type="stmt" count="0"/>
       <line num="561" type="stmt" count="0"/>
-      <line num="562" type="stmt" count="0"/>
+      <line num="563" type="stmt" count="0"/>
       <line num="564" type="stmt" count="0"/>
-      <line num="565" type="stmt" count="0"/>
-      <line num="566" type="stmt" count="0"/>
-      <line num="567" type="stmt" count="0"/>
       <line num="569" type="stmt" count="0"/>
-      <line num="570" type="stmt" count="0"/>
-      <line num="575" type="stmt" count="0"/>
+      <line num="571" type="stmt" count="0"/>
+      <line num="572" type="stmt" count="0"/>
+      <line num="573" type="stmt" count="0"/>
       <line num="577" type="stmt" count="0"/>
       <line num="578" type="stmt" count="0"/>
-      <line num="579" type="stmt" count="0"/>
+      <line num="580" type="stmt" count="0"/>
+      <line num="582" type="stmt" count="0"/>
       <line num="583" type="stmt" count="0"/>
       <line num="584" type="stmt" count="0"/>
+      <line num="585" type="stmt" count="0"/>
       <line num="586" type="stmt" count="0"/>
+      <line num="587" type="stmt" count="0"/>
       <line num="588" type="stmt" count="0"/>
       <line num="589" type="stmt" count="0"/>
       <line num="590" type="stmt" count="0"/>
-      <line num="591" type="stmt" count="0"/>
       <line num="592" type="stmt" count="0"/>
       <line num="593" type="stmt" count="0"/>
       <line num="594" type="stmt" count="0"/>
-      <line num="595" type="stmt" count="0"/>
       <line num="596" type="stmt" count="0"/>
-      <line num="598" type="stmt" count="0"/>
-      <line num="599" type="stmt" count="0"/>
-      <line num="600" type="stmt" count="0"/>
+      <line num="601" type="stmt" count="0"/>
       <line num="602" type="stmt" count="0"/>
+      <line num="603" type="stmt" count="0"/>
+      <line num="605" type="stmt" count="0"/>
+      <line num="606" type="stmt" count="0"/>
       <line num="607" type="stmt" count="0"/>
-      <line num="608" type="stmt" count="0"/>
-      <line num="609" type="stmt" count="0"/>
+      <line num="610" type="stmt" count="0"/>
       <line num="611" type="stmt" count="0"/>
       <line num="612" type="stmt" count="0"/>
       <line num="613" type="stmt" count="0"/>
+      <line num="614" type="stmt" count="0"/>
       <line num="616" type="stmt" count="0"/>
       <line num="617" type="stmt" count="0"/>
-      <line num="618" type="stmt" count="0"/>
-      <line num="619" type="stmt" count="0"/>
       <line num="620" type="stmt" count="0"/>
-      <line num="622" type="stmt" count="0"/>
-      <line num="623" type="stmt" count="0"/>
-      <line num="626" type="stmt" count="0"/>
-      <line num="627" type="stmt" count="0"/>
+      <line num="621" type="stmt" count="0"/>
+      <line num="624" type="stmt" count="0"/>
+      <line num="625" type="stmt" count="0"/>
+      <line num="628" type="stmt" count="0"/>
+      <line num="629" type="stmt" count="0"/>
       <line num="630" type="stmt" count="0"/>
       <line num="631" type="stmt" count="0"/>
-      <line num="634" type="stmt" count="0"/>
-      <line num="635" type="stmt" count="0"/>
+      <line num="633" type="stmt" count="0"/>
       <line num="636" type="stmt" count="0"/>
       <line num="637" type="stmt" count="0"/>
-      <line num="639" type="stmt" count="0"/>
       <line num="642" type="stmt" count="0"/>
       <line num="643" type="stmt" count="0"/>
-      <line num="648" type="stmt" count="0"/>
-      <line num="649" type="stmt" count="0"/>
-      <line num="650" type="stmt" count="0"/>
-      <metrics loc="655" ncloc="528" classes="1" methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="363" coveredstatements="0" elements="379" coveredelements="0"/>
+      <line num="644" type="stmt" count="0"/>
+      <metrics loc="649" ncloc="522" classes="1" methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="358" coveredstatements="0" elements="374" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/WP_CLI.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\WP_CLI" namespace="global">
@@ -4355,6 +4350,6 @@
       <line num="55" type="stmt" count="0"/>
       <metrics loc="58" ncloc="24" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="8" coveredelements="0"/>
     </file>
-    <metrics files="62" loc="9791" ncloc="6715" classes="62" methods="341" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3648" coveredstatements="0" elements="3989" coveredelements="0"/>
+    <metrics files="62" loc="9785" ncloc="6709" classes="62" methods="341" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3643" coveredstatements="0" elements="3984" coveredelements="0"/>
   </project>
 </coverage>
