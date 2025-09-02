@@ -18,21 +18,6 @@ const IntakeStep = () => {
 	const [ selectedLocaleValue, setSelectedLocaleValue ] = useState( selectedLocale );
 	const [ promptValue, setPromptValue ] = useState( prompt );
 
-	const handleSiteTypeChange = ( newSiteType ) => {
-		if ( newSiteType && newSiteType !== siteTypeValue ) {
-			setSiteTypeValue( newSiteType );
-			trackOnboardingEvent(
-				new OnboardingEvent(
-					ACTION_SITE_TYPE_SET,
-					newSiteType,
-					{
-						source: 'intake_step',
-					}
-				)
-			);
-		}
-	};
-
 	const handleNext = () => {
 		dispatch( nfdOnboardingStore ).setInputSlice( {
 			siteType: siteTypeValue,
@@ -41,6 +26,20 @@ const IntakeStep = () => {
 			prompt: promptValue.trim(),
 		} );
 
+		// Track site type selection
+		if ( siteTypeValue && siteTypeValue !== siteType ) {
+			trackOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_SITE_TYPE_SET,
+					siteTypeValue,
+					{
+						source: 'intake_step',
+					}
+				)
+			);
+		}
+
+		// Track prompt input
 		trackOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_INTAKE_PROMPT_SET,
@@ -78,7 +77,7 @@ const IntakeStep = () => {
 				<Container.Block separator={ false }>
 					<div className="nfd-flex nfd-flex-col nfd-gap-6">
 						<div className="nfd-flex nfd-gap-4 nfd-w-full nfd-pb-7 nfd-border-b mobile:nfd-flex-col">
-							<SiteTypeSelector value={ siteTypeValue } onChange={ handleSiteTypeChange } />
+							<SiteTypeSelector value={ siteTypeValue } onChange={ setSiteTypeValue } />
 							<LanguageSelector value={ selectedLocaleValue } onChange={ setSelectedLocaleValue } />
 						</div>
 						<SiteTitleInput value={ siteTitleValue } onChange={ setSiteTitleValue } />
