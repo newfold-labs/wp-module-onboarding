@@ -113,6 +113,13 @@ const IntakeStep = () => {
 						>
 							{ __( 'Next', 'wp-module-onboarding' ) }
 						</Navigate>
+						<Navigate
+							toRoute="/"
+							direction="backward"
+							variant="secondary"
+						>
+							{ __( 'Back', 'wp-module-onboarding' ) }
+						</Navigate>
 					</Step.Actions>
 				</Container.Footer>
 			</Container>

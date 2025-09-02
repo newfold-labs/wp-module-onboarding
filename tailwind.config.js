@@ -25,6 +25,7 @@ module.exports = {
 					900: '#052455',
 				},
 				content: {
+					default: '#030303',
 					primary: '#1E1E1E',
 					placeholder: '#B3BCC7',
 				},

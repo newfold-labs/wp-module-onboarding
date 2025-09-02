@@ -247,9 +247,10 @@ final class WP_Admin {
 			);
 
 			$nfd_onboarding_data = array(
-				'runtime' => Data::runtime(),
-				'input'   => ReduxStateService::get( 'input' ),
-				'sitegen' => ReduxStateService::get( 'sitegen' ),
+				'runtime'    => Data::runtime(),
+				'input'      => ReduxStateService::get( 'input' ),
+				'sitegen'    => ReduxStateService::get( 'sitegen' ),
+				'blueprints' => ReduxStateService::get( 'blueprints' ),
 			);
 			\wp_add_inline_script(
 				self::$slug,

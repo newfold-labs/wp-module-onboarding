@@ -47,7 +47,6 @@ class AppController {
 				),
 			)
 		);
-
 		\register_rest_route(
 			$this->namespace,
 			$this->rest_base . '/complete',
@@ -55,6 +54,17 @@ class AppController {
 				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => array( $this, 'complete' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/complete-blueprint',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'complete_blueprint' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -102,6 +112,24 @@ class AppController {
 		} catch ( \Exception $e ) {
 			return new \WP_REST_Response(
 				array( 'error' => 'Encountered an error while completing the app service.' ),
+				500
+			);
+		}
+	}
+
+	/**
+	 * Complete blueprint onboarding backend process.
+	 *
+	 * @param \WP_REST_Request $request The request object.
+	 * @return \WP_REST_Response The response object.
+	 */
+	public function complete_blueprint( \WP_REST_Request $request ): \WP_REST_Response {
+		try {
+			( new AppService() )->complete_blueprint();
+			return new \WP_REST_Response( array(), 200 );
+		} catch ( \Exception $e ) {
+			return new \WP_REST_Response(
+				array( 'error' => 'Encountered an error while completing the blueprint app service.' ),
 				500
 			);
 		}

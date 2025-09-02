@@ -79,4 +79,28 @@ class AppService {
 			__( 'How satisfied were you with the ease of creating your website?', 'wp-module-onboarding' ),
 		);
 	}
+
+	/**
+	 * Complete blueprint onboarding.
+	 *
+	 * @return void
+	 */
+	public function complete_blueprint(): void {
+		// Mark onboarding as completed.
+		StatusService::handle_completed();
+
+		// Purge all caches.
+		container()->get( 'cachePurger' )->purge_all();
+
+		// Create a survey to collect feedback.
+		container()->get( 'survey' )->create_toast_survey(
+			Events::get_category()[0] . '_sitegen_pulse',
+			'customer_satisfaction_survey',
+			array(
+				'label_key' => 'value',
+			),
+			__( 'Help us improve', 'wp-module-onboarding' ),
+			__( 'How satisfied were you with the ease of creating your website?', 'wp-module-onboarding' ),
+		);
+	}
 }

@@ -36,6 +36,16 @@ export const updateOnboardingSiteGenSlice = async ( data ) => {
 	);
 };
 
+export const updateOnboardingBlueprintsSlice = async ( data ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'redux-state/blueprints-slice' ),
+			method: 'POST',
+			body: JSON.stringify( data ),
+		} ).then()
+	);
+};
+
 export const continuouslyFireWpCron = () => {
 	setInterval( () => {
 		fireWpCron();
@@ -61,6 +71,15 @@ export const completeOnboarding = async ( selectedSitegenHomepage ) => {
 			body: JSON.stringify( {
 				selected_sitegen_homepage: selectedSitegenHomepage,
 			} ),
+		} ).then()
+	);
+};
+
+export const completeBlueprintOnboarding = async () => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'app/complete-blueprint' ),
+			method: 'POST',
 		} ).then()
 	);
 };
@@ -233,3 +252,53 @@ export async function getSiteGenPreviewSnapshot( content, slug, customStyles = n
 
 	return response;
 }
+
+/**
+ * Get the blueprints.
+ *
+ * @return {Promise<Object>} response
+ */
+export const getBlueprints = async () => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'blueprints/get-blueprints' ),
+			method: 'POST',
+		} ).then()
+	);
+};
+
+/**
+ * Install the required plugins for a blueprint.
+ *
+ * @param {string} selectedBlueprintSlug
+ * @return {Promise<Object>} response
+ */
+export const installBlueprintRequiredPlugins = async ( selectedBlueprintSlug ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'blueprints/install-required-plugins' ),
+			method: 'POST',
+			data: {
+				selected_blueprint_slug: selectedBlueprintSlug,
+			},
+		} ).then()
+	);
+};
+
+/**
+ * Import a blueprint.
+ *
+ * @param {string} selectedBlueprintSlug
+ * @return {Promise<Object>} response
+ */
+export const importBlueprint = async ( selectedBlueprintSlug ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'blueprints/import-blueprint' ),
+			method: 'POST',
+			data: {
+				selected_blueprint_slug: selectedBlueprintSlug,
+			},
+		} ).then()
+	);
+};
