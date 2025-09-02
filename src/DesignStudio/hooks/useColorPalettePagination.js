@@ -7,7 +7,7 @@ import { useState } from '@wordpress/element';
  * Internal dependencies
  */
 import { fetchDesignSettings } from '../utils/design-api';
-import { getCache, setCache, colorPaletteKey } from '../utils/simpleCache';
+import { getCache, setCache, colorPaletteKey } from '../utils/simple-cache';
 
 export default function useColorPalettePagination() {
 	const [ colorPalettes, setColorPalettes ] = useState( [] );

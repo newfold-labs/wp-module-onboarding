@@ -7,7 +7,7 @@ import { useState, useEffect } from '@wordpress/element';
  * Internal dependencies
  */
 import { fetchDesignSettings } from '../utils/design-api';
-import { getCache, setCache, fontPairingsKey } from '../utils/simpleCache';
+import { getCache, setCache, fontPairingsKey } from '../utils/simple-cache';
 import { useTypographyUpdate } from './useTypographyUpdate';
 
 // Helper function to format font family strings
