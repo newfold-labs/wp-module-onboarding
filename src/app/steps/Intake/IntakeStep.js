@@ -43,7 +43,9 @@ const IntakeStep = () => {
 			prompt: promptValue.trim(),
 		} );
 
-		// Track site type selection
+		setSiteTitle();
+
+		// Analytics: Track site type selection
 		if ( siteTypeValue && siteTypeValue !== siteType ) {
 			trackOnboardingEvent(
 				new OnboardingEvent(
@@ -55,8 +57,6 @@ const IntakeStep = () => {
 				)
 			);
 		}
-
-		setSiteTitle();
 
 		// Analytics: Prompt set.
 		trackOnboardingEvent(
