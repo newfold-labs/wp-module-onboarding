@@ -155,44 +155,10 @@ class EventService {
 			$value     = $old_value;
 			$old_value = null;
 		}
-
-		// Track site type from input state (more reliable than flow data)
-		if ( Options::get_option_name( 'state_input' ) === $option ) {
-			self::track_site_type_from_input( $old_value, $value );
-		}
-
+		
 		// Track primary and secondary types from site classification
 		if ( self::is_site_classification_option( $option ) ) {
 			self::track_site_classification( $option, $old_value, $value );
-		}
-	}
-
-	/**
-	 * Track site type changes from input state data.
-	 *
-	 * @param mixed $old_value The old input state data.
-	 * @param mixed $new_value The new input state data.
-	 */
-	private static function track_site_type_from_input( $old_value, $new_value ) {
-		if ( ! is_array( $new_value ) ) {
-			return;
-		}
-
-		$new_site_type = $new_value['siteType'] ?? null;
-		$old_site_type = is_array( $old_value ) ? ( $old_value['siteType'] ?? null ) : null;
-
-		// Check if site type actually changed
-		if ( $new_site_type !== $old_site_type && ! empty( $new_site_type ) ) {
-			self::send(
-				array(
-					'action'   => 'site_type_set',
-					'category' => 'wonder_start',
-					'data'     => array(
-						'site_type' => $new_site_type,
-						'source'    => 'input_state_saved',
-					),
-				)
-			);
 		}
 	}
 
