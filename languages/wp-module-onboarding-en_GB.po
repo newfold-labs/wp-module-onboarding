@@ -150,7 +150,7 @@ msgstr "Primary"
 msgid "Secondary"
 msgstr "Secondary"
 
-#: includes/WP_Admin.php:457
+#: includes/WP_Admin.php:451
 msgid "Build with AI"
 msgstr "Build with AI"
 
