@@ -2,7 +2,7 @@
 /**
  * WordPress dependencies
  */
-import { __experimentalHeading as Heading, Spinner, ToggleControl } from '@wordpress/components';
+import { __experimentalHeading as Heading, ToggleControl } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -16,12 +16,8 @@ import ScreenHeader from '../ScreenHeader';
 
 export default function ScreenColors() {
 	const [ isUsingCustomPalette, setIsUsingCustomPalette ] = useState( false );
-	const [ isPalettesLoading, setIsPalettesLoading ] = useState( true );
-	const { settings, globalStyles, updatePalette, updateCustomColor } = useColorSettings();
 
-	const handleLoadingChange = ( loading ) => {
-		setIsPalettesLoading( loading );
-	};
+	const { settings, globalStyles, updatePalette, updateCustomColor } = useColorSettings();
 
 	const handlePaletteChange = ( paletteArray ) => {
 		updatePalette( paletteArray );
@@ -40,18 +36,7 @@ export default function ScreenColors() {
 			<div className="nfd-design-studio-sidebar__content">
 				<div className="nfd-design-studio-sidebar__section">
 					<Heading level={ 3 }>{ __( 'Palette', 'wp-module-onboarding' ) }</Heading>
-					{ isPalettesLoading && (
-						<div className="nfd-design-studio-color-palette-loading">
-							<Spinner />
-						</div>
-					) }
-					{ !isPalettesLoading && (
-						<ColorPalette
-							onChange={ handlePaletteChange }
-							globalStyles={ globalStyles }
-							onLoadingChange={ handleLoadingChange }
-						/>
-					) }
+					<ColorPalette onChange={ handlePaletteChange } globalStyles={ globalStyles } />
 				</div>
 				<div className="nfd-design-studio-sidebar__section">
 					<ToggleControl

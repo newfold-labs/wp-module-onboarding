@@ -2,7 +2,11 @@
 /**
  * WordPress dependencies
  */
-import { __experimentalGrid as Grid, __experimentalVStack as VStack } from '@wordpress/components';
+import {
+	__experimentalGrid as Grid,
+	__experimentalVStack as VStack,
+	Spinner,
+} from '@wordpress/components';
 import { useEffect } from '@wordpress/element';
 
 /**
@@ -13,7 +17,7 @@ import useColorPaletteSelection from '../../hooks/useColorPaletteSelection';
 import ColorPaletteItem from './ColorPaletteItem';
 import ColorPalettePagination from './ColorPalettePagination';
 
-export default function ColorPalette( { onChange, globalStyles, onLoadingChange } ) {
+export default function ColorPalette( { onChange, globalStyles } ) {
 	const { colorPalettes, isLoading, currentPage, totalPages, loadPalettes, handlePageChange } =
 		useColorPalettePagination();
 
@@ -28,14 +32,19 @@ export default function ColorPalette( { onChange, globalStyles, onLoadingChange 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
 
-	useEffect( () => {
-		if ( onLoadingChange ) {
-			onLoadingChange( isLoading );
-		}
-	}, [ isLoading, onLoadingChange ] );
+	// Show spinner when loading
+	if ( isLoading ) {
+		return (
+			<div className="nfd-design-studio-color-palette-wrapper">
+				<div className="nfd-design-studio-color-palette-loading">
+					<Spinner />
+				</div>
+			</div>
+		);
+	}
 
-	// Return empty div when loading or no palettes, but keep component mounted
-	if ( isLoading || colorPalettes.length === 0 ) {
+	// Return empty div when no palettes, but keep component mounted
+	if ( colorPalettes.length === 0 ) {
 		return <div className="nfd-design-studio-color-palette-wrapper" />;
 	}
 
