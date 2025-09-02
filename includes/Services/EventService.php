@@ -155,7 +155,7 @@ class EventService {
 			$value     = $old_value;
 			$old_value = null;
 		}
-		
+
 		// Track primary and secondary types from site classification
 		if ( self::is_site_classification_option( $option ) ) {
 			self::track_site_classification( $option, $old_value, $value );
