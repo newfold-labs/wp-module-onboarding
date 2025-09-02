@@ -115,7 +115,7 @@ msgstr "Die benutzerdefinierten Einstellungen"
 msgid "Global style customization created."
 msgstr "Globale Anpassung erstellt."
 
-#: includes/Services/EventService.php:24
+#: includes/Services/EventService.php:33
 msgid "Bad event structure/value."
 msgstr "Fehlerhafte Ereignisstruktur/-wert."
 
@@ -155,7 +155,7 @@ msgstr "Primär"
 msgid "Secondary"
 msgstr "Sekundär"
 
-#: includes/WP_Admin.php:457
+#: includes/WP_Admin.php:451
 msgid "Build with AI"
 msgstr "Mit KI erstellen"
 
