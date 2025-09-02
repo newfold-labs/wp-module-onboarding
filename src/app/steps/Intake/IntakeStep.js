@@ -1,10 +1,11 @@
+import { useState } from '@wordpress/element';
 import { Navigate, Step } from '@/components';
 import { Container } from '@newfold/ui-component-library';
 import { SiteTitleInput, PromptInput, LanguageSelector, calculatePromptStrength, SiteTypeSelector } from '.';
 import { select, dispatch } from '@wordpress/data';
 import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
-import { ACTION_INTAKE_PROMPT_SET } from '@/utils/analytics/hiive/constants';
+import { ACTION_INTAKE_PROMPT_SET, ACTION_SITE_TYPE_SET } from '@/utils/analytics/hiive/constants';
 
 const IntakeStep = () => {
 	// Initiale state values.
@@ -16,6 +17,21 @@ const IntakeStep = () => {
 	const [ siteTitleValue, setSiteTitleValue ] = useState( siteTitle );
 	const [ selectedLocaleValue, setSelectedLocaleValue ] = useState( selectedLocale );
 	const [ promptValue, setPromptValue ] = useState( prompt );
+
+	const handleSiteTypeChange = ( newSiteType ) => {
+		if ( newSiteType && newSiteType !== siteTypeValue ) {
+			setSiteTypeValue( newSiteType );
+			trackOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_SITE_TYPE_SET,
+					newSiteType,
+					{
+						source: 'intake_step',
+					}
+				)
+			);
+		}
+	};
 
 	const handleNext = () => {
 		dispatch( nfdOnboardingStore ).setInputSlice( {
@@ -62,7 +78,7 @@ const IntakeStep = () => {
 				<Container.Block separator={ false }>
 					<div className="nfd-flex nfd-flex-col nfd-gap-6">
 						<div className="nfd-flex nfd-gap-4 nfd-w-full nfd-pb-7 nfd-border-b mobile:nfd-flex-col">
-							<SiteTypeSelector value={ siteTypeValue } onChange={ setSiteTypeValue } />
+							<SiteTypeSelector value={ siteTypeValue } onChange={ handleSiteTypeChange } />
 							<LanguageSelector value={ selectedLocaleValue } onChange={ setSelectedLocaleValue } />
 						</div>
 						<SiteTitleInput value={ siteTitleValue } onChange={ setSiteTitleValue } />
