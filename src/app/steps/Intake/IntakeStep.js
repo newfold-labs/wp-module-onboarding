@@ -1,10 +1,11 @@
-import { Navigate, Step } from '@/components';
+import { select, dispatch, resolveSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import { Container } from '@newfold/ui-component-library';
-import { SiteTitleInput, PromptInput, LanguageSelector, calculatePromptStrength, SiteTypeSelector } from '.';
-import { select, dispatch } from '@wordpress/data';
+import { Navigate, Step } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_INTAKE_PROMPT_SET } from '@/utils/analytics/hiive/constants';
+import { SiteTitleInput, PromptInput, LanguageSelector, calculatePromptStrength, SiteTypeSelector } from '.';
 
 const IntakeStep = () => {
 	// Initiale state values.
@@ -17,6 +18,22 @@ const IntakeStep = () => {
 	const [ selectedLocaleValue, setSelectedLocaleValue ] = useState( selectedLocale );
 	const [ promptValue, setPromptValue ] = useState( prompt );
 
+	/**
+	 * Set WordPress site title.
+	 */
+	const setSiteTitle = async () => {
+		const title = siteTitleValue.trim();
+		if ( title ) {
+			// Force the site entity to be loaded.
+			await resolveSelect( coreStore ).getEntityRecord( 'root', 'site' );
+			// Change site title.
+			dispatch( coreStore ).editEntityRecord( 'root', 'site', undefined, {
+				title,
+			} );
+			dispatch( coreStore ).saveEditedEntityRecord( 'root', 'site' );
+		}
+	};
+
 	const handleNext = () => {
 		dispatch( nfdOnboardingStore ).setInputSlice( {
 			siteType: siteTypeValue,
@@ -25,6 +42,9 @@ const IntakeStep = () => {
 			prompt: promptValue.trim(),
 		} );
 
+		setSiteTitle();
+
+		// Analytics: Prompt set.
 		trackOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_INTAKE_PROMPT_SET,
