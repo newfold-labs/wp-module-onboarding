@@ -17,9 +17,9 @@ msgstr ""
 #: bootstrap.php:24
 #: includes/Compatibility/Safe_Mode.php:44
 #: includes/Compatibility/Safe_Mode.php:45
+#: includes/WP_Admin.php:82
 #: includes/WP_Admin.php:83
-#: includes/WP_Admin.php:84
-#: includes/WP_Admin.php:100
+#: includes/WP_Admin.php:99
 msgid "Onboarding"
 msgstr "Onboarding"
 
@@ -142,7 +142,7 @@ msgstr "Primary"
 msgid "Secondary"
 msgstr "Secondary"
 
-#: includes/WP_Admin.php:452
+#: includes/WP_Admin.php:451
 msgid "Build with AI"
 msgstr "Build with AI"
 
