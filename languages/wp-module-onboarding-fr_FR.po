@@ -1,16 +1,15 @@
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: newfold-labswp-module-staging\n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-onboarding/issues\n"
-"POT-Creation-Date: 2024-11-18T07:59:34+00:00\n"
-"PO-Revision-Date: 2025-02-19 15:20\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
-"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-11-18T07:59:34+00:00\n"
+"PO-Revision-Date: 2025-02-19 15:20\n"
+"Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Crowdin-File: wp-module-onboarding.pot\n"
 "X-Crowdin-File-ID: 32\n"
@@ -20,9 +19,12 @@ msgstr ""
 "X-Domain: wp-module-onboarding\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
-#: bootstrap.php:24 includes/Compatibility/Safe_Mode.php:44
-#: includes/Compatibility/Safe_Mode.php:45 includes/WP_Admin.php:82
-#: includes/WP_Admin.php:83 includes/WP_Admin.php:99
+#: bootstrap.php:24
+#: includes/Compatibility/Safe_Mode.php:44
+#: includes/Compatibility/Safe_Mode.php:45
+#: includes/WP_Admin.php:82
+#: includes/WP_Admin.php:83
+#: includes/WP_Admin.php:99
 msgid "Onboarding"
 msgstr "Embarquement"
 
@@ -31,22 +33,14 @@ msgid "Please upgrade your WordPress"
 msgstr "Veuillez mettre à jour votre WordPress"
 
 #: includes/Compatibility/Safe_Mode.php:185
-msgid ""
-"To take advantage of the latest WordPress has to offer, our WordPress "
-"Onboarding to setup your website requires the latest version of WordPress."
-msgstr ""
-"Pour profiter de la dernière version de WordPress a à offrir, notre "
-"intégration WordPress pour configurer votre site Web nécessite la dernière "
-"version de WordPress."
+msgid "To take advantage of the latest WordPress has to offer, our WordPress Onboarding to setup your website requires the latest version of WordPress."
+msgstr "Pour profiter de la dernière version de WordPress a à offrir, notre intégration WordPress pour configurer votre site Web nécessite la dernière version de WordPress."
 
 #. translators: 1: Current WP Version 2: Minimum Required version
 #: includes/Compatibility/Safe_Mode.php:191
 #, php-format
-msgid ""
-"Your WordPress version %1$s does not meet our minimum requirements of %2$s."
-msgstr ""
-"Votre version %1$s de WordPress ne répond pas à nos exigences minimales de "
-"%2$s."
+msgid "Your WordPress version %1$s does not meet our minimum requirements of %2$s."
+msgstr "Votre version %1$s de WordPress ne répond pas à nos exigences minimales de %2$s."
 
 #: includes/Compatibility/Safe_Mode.php:207
 msgid "Upgrade WordPress"
@@ -131,9 +125,7 @@ msgstr "La famille de police web doit être une chaîne de caractères non vide.
 
 #: includes/Services/Webfonts.php:125
 msgid "Webfont src must be a non-empty string or an array of strings."
-msgstr ""
-"Webfont src doit être une chaîne de caractères non vide ou un tableau de "
-"chaînes."
+msgstr "Webfont src doit être une chaîne de caractères non vide ou un tableau de chaînes."
 
 #: includes/Services/Webfonts.php:133
 msgid "Each webfont src must be a non-empty string."
@@ -141,9 +133,7 @@ msgstr "Chaque webfont src doit être une chaîne non vide."
 
 #: includes/Services/Webfonts.php:141
 msgid "Webfont font weight must be a properly formatted string or integer."
-msgstr ""
-"Le poids de la police Web doit être une chaîne ou un entier correctement "
-"formaté."
+msgstr "Le poids de la police Web doit être une chaîne ou un entier correctement formaté."
 
 #: build/3.2.1/onboarding-design-studio.js:1
 msgid "Colors"
@@ -220,13 +210,8 @@ msgid "You don't have permission to change the site logo."
 msgstr "Vous n’êtes pas autorisé à modifier le logo du site."
 
 #: build/3.2.1/onboarding-design-studio.js:1
-msgid ""
-"Your logo will appear in your site header. For best results, upload an image"
-" with a transparent background in PNG format."
-msgstr ""
-"Votre logo apparaîtra dans l’en-tête de votre site. Pour de meilleurs "
-"résultats, téléchargez une image avec un arrière-plan transparent au format "
-"PNG."
+msgid "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
+msgstr "Votre logo apparaîtra dans l’en-tête de votre site. Pour de meilleurs résultats, téléchargez une image avec un arrière-plan transparent au format PNG."
 
 #: build/3.2.1/onboarding-design-studio.js:1
 msgid "Primary color"
@@ -253,14 +238,8 @@ msgid "No font pairings available."
 msgstr "Aucune paire de polices n’est disponible."
 
 #: build/3.2.1/onboarding-design-studio.js:1
-msgid ""
-"Choose a font pairing that reflects your brand's personality. Each pairing "
-"is carefully selected to enhance readability and visual appeal across your "
-"site."
-msgstr ""
-"Choisissez une combinaison de polices qui reflète la personnalité de votre "
-"marque. Chaque appariement est soigneusement sélectionné pour améliorer la "
-"lisibilité et l’attrait visuel de votre site."
+msgid "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
+msgstr "Choisissez une combinaison de polices qui reflète la personnalité de votre marque. Chaque appariement est soigneusement sélectionné pour améliorer la lisibilité et l’attrait visuel de votre site."
 
 #: build/3.2.1/onboarding-design-studio.js:1
 msgid "Design Studio"
@@ -274,15 +253,15 @@ msgstr "Erreur lors de la configuration du menu de navigation."
 msgid "An unknown error occurred"
 msgstr "Une erreur inconnue s’est produite"
 
-#: includes/Services/AppService.php:78 includes/Services/AppService.php:102
+#: includes/Services/AppService.php:78
+#: includes/Services/AppService.php:102
 msgid "Help us improve"
 msgstr "Aidez-nous à nous améliorer"
 
-#: includes/Services/AppService.php:79 includes/Services/AppService.php:103
+#: includes/Services/AppService.php:79
+#: includes/Services/AppService.php:103
 msgid "How satisfied were you with the ease of creating your website?"
-msgstr ""
-"Dans quelle mesure avez-vous été satisfait de la facilité de création de "
-"votre site web ?"
+msgstr "Dans quelle mesure avez-vous été satisfait de la facilité de création de votre site web ?"
 
 #: build/3.2.1/onboarding.js:1
 msgid "Publishing content…"
