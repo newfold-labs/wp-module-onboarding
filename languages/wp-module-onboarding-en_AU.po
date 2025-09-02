@@ -110,7 +110,7 @@ msgstr "The custom settings"
 msgid "Global style customization created."
 msgstr "Global style customization created."
 
-#: includes/Services/EventService.php:24
+#: includes/Services/EventService.php:33
 msgid "Bad event structure/value."
 msgstr "Bad event structure/value."
 
@@ -150,7 +150,7 @@ msgstr "Primary"
 msgid "Secondary"
 msgstr "Secondary"
 
-#: includes/WP_Admin.php:457
+#: includes/WP_Admin.php:452
 msgid "Build with AI"
 msgstr "Build with AI"
 
@@ -269,9 +269,11 @@ msgid "An unknown error occurred"
 msgstr ""
 
 #: includes/Services/AppService.php:78
+#: includes/Services/AppService.php:102
 msgid "Help us improve"
 msgstr ""
 
 #: includes/Services/AppService.php:79
+#: includes/Services/AppService.php:103
 msgid "How satisfied were you with the ease of creating your website?"
 msgstr ""
