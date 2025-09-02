@@ -1,10 +1,11 @@
+import { useState } from '@wordpress/element';
 import { select, dispatch, resolveSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { Container } from '@newfold/ui-component-library';
 import { Navigate, Step } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
-import { ACTION_INTAKE_PROMPT_SET } from '@/utils/analytics/hiive/constants';
+import { ACTION_INTAKE_PROMPT_SET, ACTION_SITE_TYPE_SET } from '@/utils/analytics/hiive/constants';
 import { SiteTitleInput, PromptInput, LanguageSelector, calculatePromptStrength, SiteTypeSelector } from '.';
 
 const IntakeStep = () => {
@@ -41,6 +42,19 @@ const IntakeStep = () => {
 			selectedLocale: selectedLocaleValue,
 			prompt: promptValue.trim(),
 		} );
+
+		// Track site type selection
+		if ( siteTypeValue && siteTypeValue !== siteType ) {
+			trackOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_SITE_TYPE_SET,
+					siteTypeValue,
+					{
+						source: 'intake_step',
+					}
+				)
+			);
+		}
 
 		setSiteTitle();
 
