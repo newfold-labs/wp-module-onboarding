@@ -1,6 +1,8 @@
 import { dispatch, select as syncSelect, useSelect } from '@wordpress/data';
 import { nfdOnboardingStore } from '@/data/store';
 import { installBlueprintRequiredPlugins, importBlueprint, completeBlueprintOnboarding } from '@/utils/api';
+import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
+import { ACTION_ERROR_STATE_TRIGGERED, ACTION_BLUEPRINT_PUBLISHED, ACTION_SITE_TYPE_SET } from '@/utils/analytics/hiive/constants';
 
 const usePublishBlueprintSite = () => {
 	const [ status, setStatus ] = useState( {
@@ -45,6 +47,15 @@ const usePublishBlueprintSite = () => {
 				hasError: true,
 				message: __( 'Oh no! Template import failed.', 'wp-module-onboarding' ),
 			} );
+
+			// Analytics: Failed to publish blueprint.
+			sendOnboardingEvent(
+				new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'blueprint_publish_failed', {
+					blueprint_slug: selectedBlueprint,
+					source: 'quickstart',
+				} )
+			);
+
 			return false;
 		}
 		// Complete onboarding.
@@ -63,6 +74,14 @@ const usePublishBlueprintSite = () => {
 		} );
 		// Set 1 seconds minimum message duration.
 		await new Promise( ( resolve ) => setTimeout( resolve, 1000 ) );
+
+		// Analytics: Successfully published blueprint.
+		sendOnboardingEvent(
+			new OnboardingEvent( ACTION_BLUEPRINT_PUBLISHED, selectedBlueprint, {
+				source: 'quickstart',
+			} )
+		);
+
 		return true;
 	};
 
@@ -86,6 +105,17 @@ const usePublishBlueprintSite = () => {
 		if ( ! result ) {
 			return false;
 		}
+
+		// Analytics: site type set.
+		sendOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_SITE_TYPE_SET,
+				siteType,
+				{
+					source: 'quickstart',
+				}
+			)
+		);
 
 		return true;
 	};
