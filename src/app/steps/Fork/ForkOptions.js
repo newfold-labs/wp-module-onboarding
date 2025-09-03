@@ -6,7 +6,7 @@ const options = [
 	{
 		img: blueprintsImgUrl,
 		title: __( 'Build faster with a Starter Template', 'wp-module-onboarding' ),
-		description: __( 'Kickstart your store with one of our beautifully designed templates, crafted just for you. Then jump into WordPress and make it truly yours with a few easy customizations.', 'wp-module-onboarding' ),
+		description: __( 'Kickstart your website with one of our beautifully designed templates, crafted just for you. Then jump into WordPress and make it truly yours with a few easy customizations.', 'wp-module-onboarding' ),
 		value: 'blueprints',
 	},
 	{

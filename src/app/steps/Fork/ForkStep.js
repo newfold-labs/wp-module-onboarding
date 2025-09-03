@@ -1,6 +1,6 @@
 import { Container, Title } from '@newfold/ui-component-library';
 import { Navigate } from '@/components';
-import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
+import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_FORK_OPTION_SELECTED, ACTION_ONBOARDING_STARTED } from '@/utils/analytics/hiive/constants';
 import { disableComingSoon } from '@/utils/api';
 import { fetchBlueprints } from '@/utils/blueprints';
@@ -12,7 +12,7 @@ const ForkStep = () => {
 
 	useEffect( () => {
 		// Analytics: Onboarding started event
-		trackOnboardingEvent(
+		sendOnboardingEvent(
 			new OnboardingEvent( ACTION_ONBOARDING_STARTED )
 		);
 
@@ -45,7 +45,7 @@ const ForkStep = () => {
 		}
 
 		// Analytics: Fork option selected event.
-		trackOnboardingEvent(
+		sendOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_FORK_OPTION_SELECTED,
 				forkEventLabel

@@ -4,6 +4,8 @@ import { ArrowLeftIcon, CheckIcon, ExclamationTriangleIcon } from '@heroicons/re
 import { InteractionBlockingOverlay } from '@/components';
 import { usePublishBlueprintSite } from '@/utils/hooks';
 import { pluginDashboardPage } from '@/data/constants';
+import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
+import { ACTION_ONBOARDING_COMPLETE } from '@/utils/analytics/hiive/constants';
 
 const HeaderActions = () => {
 	const [ isPublishing, setIsPublishing ] = useState( false );
@@ -21,6 +23,13 @@ const HeaderActions = () => {
 			// Let renderBlueprintImportStatus handle the error UI.
 			return;
 		}
+
+		// Analytics: Onboarding complete event.
+		sendOnboardingEvent(
+			new OnboardingEvent( ACTION_ONBOARDING_COMPLETE, 'publish_blueprint', {
+				source: 'quickstart',
+			} )
+		);
 
 		// Send to the Plugin Dashboard.
 		window.location.replace( pluginDashboardPage );

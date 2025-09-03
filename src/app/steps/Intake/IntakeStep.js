@@ -52,7 +52,7 @@ const IntakeStep = () => {
 					ACTION_SITE_TYPE_SET,
 					siteTypeValue,
 					{
-						source: 'intake_step',
+						source: 'quickstart',
 					}
 				)
 			);
