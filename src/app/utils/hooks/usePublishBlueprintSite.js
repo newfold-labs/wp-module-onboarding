@@ -91,7 +91,7 @@ const usePublishBlueprintSite = () => {
 	 */
 	const publishBlueprintSite = async () => {
 		// Set the site type and experience level (needed for backend processing and reporting).
-		const siteType = syncSelect( nfdOnboardingStore ).getActiveTab();
+		const siteType = syncSelect( nfdOnboardingStore ).getActiveTab() || 'ecommerce';
 		dispatch( nfdOnboardingStore ).setInputSlice( {
 			siteType,
 			experienceLevel: 'advanced',
