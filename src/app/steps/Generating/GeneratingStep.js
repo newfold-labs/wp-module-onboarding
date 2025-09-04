@@ -135,6 +135,7 @@ const GeneratingStep = () => {
 
 	// When Sitegen states update, advance to the next step if possible.
 	useEffect( () => {
+		// If the site generation is complete and the user has selected an experience level or the timer has completed, advance to the next step.
 		if (
 			isSiteGenerationComplete &&
 			( selectedExperienceLevel || isTimerComplete )
