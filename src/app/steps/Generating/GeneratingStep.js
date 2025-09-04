@@ -1,3 +1,4 @@
+import { useCallback } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
 import { useNavigate } from 'react-router-dom';
 import { Container, Title } from '@newfold/ui-component-library';
@@ -5,7 +6,7 @@ import { Motion, Orb, Step } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
 import { generateSite } from '@/utils/sitegen';
 import { ExperienceOptions } from './';
-import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
+import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_EXPERIENCE_LEVEL_SET } from '@/utils/analytics/hiive/constants';
 
 const GeneratingStep = () => {
@@ -15,7 +16,7 @@ const GeneratingStep = () => {
 
 	const { selectedExperienceLevel, homepages, retryMode } = useSelect( ( select ) => {
 		return {
-			experienceLevel: select( nfdOnboardingStore ).getExperienceLevel(),
+			selectedExperienceLevel: select( nfdOnboardingStore ).getExperienceLevel(),
 			homepages: select( nfdOnboardingStore ).getHomepages(),
 			retryMode: select( nfdOnboardingStore ).getRetryMode(),
 		};
@@ -65,21 +66,24 @@ const GeneratingStep = () => {
 	/**
 	 * Handle advancing to the next step.
 	 */
-	const handleNext = () => {
-		// Analytics: Experience Level Set
-		trackOnboardingEvent(
-			new OnboardingEvent(
-				ACTION_EXPERIENCE_LEVEL_SET,
-				selectedExperienceLevel,
-				{
-					source: 'quickstart',
-				}
-			)
-		);
+	const handleNext = useCallback( () => {
+		if ( selectedExperienceLevel ) {
+			// Analytics: Experience Level Set
+			sendOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_EXPERIENCE_LEVEL_SET,
+					selectedExperienceLevel,
+					{
+						source: 'quickstart',
+					}
+				)
+			);
+		}
+
 		navigate( '/previews', {
 			state: { direction: 'forward' },
 		} );
-	};
+	}, [ navigate, selectedExperienceLevel ] );
 
 	/**
 	 * Handle failed site generation.
@@ -131,15 +135,18 @@ const GeneratingStep = () => {
 
 	// When Sitegen states update, advance to the next step if possible.
 	useEffect( () => {
-		// If generation is complete and the user has selected an experience level, advance to the next step.
-		if ( isSiteGenerationComplete && selectedExperienceLevel ) {
+		if (
+			isSiteGenerationComplete &&
+			( selectedExperienceLevel || isTimerComplete )
+		) {
 			handleNext();
 		}
-		// If the timer is complete and the generation is complete, advance to the next step.
-		if ( isTimerComplete && isSiteGenerationComplete ) {
-			handleNext();
-		}
-	}, [ isSiteGenerationComplete, selectedExperienceLevel, isTimerComplete ] );
+	}, [
+		isSiteGenerationComplete,
+		selectedExperienceLevel,
+		isTimerComplete,
+		handleNext,
+	] );
 
 	// On mount...
 	useEffect( () => {
