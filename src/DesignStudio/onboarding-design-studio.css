@@ -227,3 +227,11 @@
 	border: 2px solid rgba( 255, 255, 255, 0.8 );
 	box-shadow: 0 2px 4px rgba( 0, 0, 0, 0.1 );
 }
+
+.nfd-design-studio-color-palette-loading {
+	width: 100%;
+	height: 160px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

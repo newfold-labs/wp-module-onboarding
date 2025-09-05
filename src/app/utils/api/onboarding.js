@@ -1,6 +1,7 @@
 import apiFetch from '@wordpress/api-fetch';
 import { wpRestURL } from '@/data/constants';
 import { resolve } from '@/utils/helpers';
+import { fireWpCron } from './';
 
 export const onboardingRestRoute = 'newfold-onboarding/v1';
 export const onboardingRestBase = `${ wpRestURL }/${ onboardingRestRoute }`;
@@ -35,7 +36,24 @@ export const updateOnboardingSiteGenSlice = async ( data ) => {
 	);
 };
 
+export const updateOnboardingBlueprintsSlice = async ( data ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'redux-state/blueprints-slice' ),
+			method: 'POST',
+			body: JSON.stringify( data ),
+		} ).then()
+	);
+};
+
+export const continuouslyFireWpCron = () => {
+	setInterval( () => {
+		fireWpCron();
+	}, 30000 );
+};
+
 export const startOnboarding = async ( data = {} ) => {
+	continuouslyFireWpCron();
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'app/start' ),
@@ -53,6 +71,15 @@ export const completeOnboarding = async ( selectedSitegenHomepage ) => {
 			body: JSON.stringify( {
 				selected_sitegen_homepage: selectedSitegenHomepage,
 			} ),
+		} ).then()
+	);
+};
+
+export const completeBlueprintOnboarding = async () => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'app/complete-blueprint' ),
+			method: 'POST',
 		} ).then()
 	);
 };
@@ -115,6 +142,7 @@ export const setGlobalStylesColorPalette = async ( colorPalette ) => {
  *
  * @param {string}  identifier
  * @param {string}  prompt
+ * @param {string}  siteType
  * @param {string}  locale
  * @param {boolean} skipCache
  * @return {Promise<Object>} response
@@ -122,6 +150,7 @@ export const setGlobalStylesColorPalette = async ( colorPalette ) => {
 export async function getSiteMetaForIdentifier(
 	identifier,
 	prompt,
+	siteType,
 	locale,
 	skipCache = true
 ) {
@@ -132,6 +161,7 @@ export async function getSiteMetaForIdentifier(
 			data: {
 				site_info: prompt,
 				identifier,
+				site_type: siteType,
 				locale,
 				skip_cache: skipCache,
 			},
@@ -145,16 +175,18 @@ export async function getSiteMetaForIdentifier(
  * Get the homepages.
  *
  * @param {string} prompt
+ * @param {string} siteType
  * @param {string} locale
  * @return {Promise<Object>} response
  */
-export async function getHomepages( prompt, locale ) {
+export async function getHomepages( prompt, siteType, locale ) {
 	const response = await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/homepages' ),
 			method: 'POST',
 			data: {
 				site_description: prompt,
+				site_type: siteType,
 				locale,
 			},
 		} )
@@ -167,17 +199,31 @@ export async function getHomepages( prompt, locale ) {
  * Get the rest of the site pages (not the homepages).
  *
  * @param {string} prompt
+ * @param {string} siteType
  * @param {string} locale
  * @return {Promise<Object>} response
  */
-export async function getSitePages( prompt, locale ) {
+export async function getSitePages( prompt, siteType, locale ) {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/pages/sitemap' ),
 			method: 'POST',
 			data: {
 				site_description: prompt,
+				site_type: siteType,
 				locale,
+			},
+		} ).then()
+	);
+}
+
+export async function setupSiteNavigationMenu( siteType = '' ) {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/setup-nav-menu' ),
+			method: 'POST',
+			data: {
+				site_type: siteType,
 			},
 		} ).then()
 	);
@@ -206,3 +252,53 @@ export async function getSiteGenPreviewSnapshot( content, slug, customStyles = n
 
 	return response;
 }
+
+/**
+ * Get the blueprints.
+ *
+ * @return {Promise<Object>} response
+ */
+export const getBlueprints = async () => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'blueprints/get-blueprints' ),
+			method: 'POST',
+		} ).then()
+	);
+};
+
+/**
+ * Install the required plugins for a blueprint.
+ *
+ * @param {string} selectedBlueprintSlug
+ * @return {Promise<Object>} response
+ */
+export const installBlueprintRequiredPlugins = async ( selectedBlueprintSlug ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'blueprints/install-required-plugins' ),
+			method: 'POST',
+			data: {
+				selected_blueprint_slug: selectedBlueprintSlug,
+			},
+		} ).then()
+	);
+};
+
+/**
+ * Import a blueprint.
+ *
+ * @param {string} selectedBlueprintSlug
+ * @return {Promise<Object>} response
+ */
+export const importBlueprint = async ( selectedBlueprintSlug ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'blueprints/import-blueprint' ),
+			method: 'POST',
+			data: {
+				selected_blueprint_slug: selectedBlueprintSlug,
+			},
+		} ).then()
+	);
+};

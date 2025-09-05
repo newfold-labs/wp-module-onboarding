@@ -1,4 +1,4 @@
-import { generateSiteMeta, generateHomePages, generateSitePages } from '.';
+import { generateSiteMeta, generateHomePages, generateSitePages, generateSiteNavigationMenu } from '.';
 
 const generateSite = async () => {
 	// Generate site meta
@@ -15,6 +15,9 @@ const generateSite = async () => {
 
 	// Generate the rest of the site pages.
 	await generateSitePages();
+
+	// Generate the site navigation menu.
+	await generateSiteNavigationMenu();
 
 	return true;
 };

@@ -2,7 +2,11 @@
 /**
  * WordPress dependencies
  */
-import { __experimentalGrid as Grid, __experimentalVStack as VStack } from '@wordpress/components';
+import {
+	__experimentalGrid as Grid,
+	__experimentalVStack as VStack,
+	Spinner,
+} from '@wordpress/components';
 import { useEffect } from '@wordpress/element';
 
 /**
@@ -28,12 +32,20 @@ export default function ColorPalette( { onChange, globalStyles } ) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [] );
 
-	if ( isLoading && colorPalettes.length === 0 ) {
-		return null;
+	// Show spinner when loading
+	if ( isLoading ) {
+		return (
+			<div className="nfd-design-studio-color-palette-wrapper">
+				<div className="nfd-design-studio-color-palette-loading">
+					<Spinner />
+				</div>
+			</div>
+		);
 	}
 
+	// Return empty div when no palettes, but keep component mounted
 	if ( colorPalettes.length === 0 ) {
-		return null;
+		return <div className="nfd-design-studio-color-palette-wrapper" />;
 	}
 
 	return (

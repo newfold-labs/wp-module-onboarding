@@ -53,7 +53,6 @@ final class WP_Admin {
 		if ( 'sitegen' === Data::current_flow() ) {
 			\add_action( 'load-themes.php', array( __CLASS__, 'mark_sitegen_generated_themes' ) );
 			SiteGenService::pre_set_filter_wonder_blocks_transients();
-			SiteGenService::instantiate_sitegen_hooks();
 		}
 	}
 
@@ -211,7 +210,7 @@ final class WP_Admin {
 		echo PHP_EOL;
 		echo '<!-- NFD:ONBOARDING -->';
 		echo PHP_EOL;
-		echo '<div id="nfd-onboarding" class="nfd-onboarding-container">' . self::is_loading() . '</div>';
+		echo '<div id="nfd-onboarding" class="nfd-onboarding-container">' . self::is_loading() . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo PHP_EOL;
 		echo '<!-- /NFD:ONBOARDING -->';
 		echo PHP_EOL;
@@ -246,14 +245,15 @@ final class WP_Admin {
 				NFD_ONBOARDING_DIR . '/languages'
 			);
 
-			$nfdOnboardingData = array(
-				'runtime' => Data::runtime(),
-				'input'   => ReduxStateService::get( 'input' ),
-				'sitegen' => ReduxStateService::get( 'sitegen' ),
+			$nfd_onboarding_data = array(
+				'runtime'    => Data::runtime(),
+				'input'      => ReduxStateService::get( 'input' ),
+				'sitegen'    => ReduxStateService::get( 'sitegen' ),
+				'blueprints' => ReduxStateService::get( 'blueprints' ),
 			);
 			\wp_add_inline_script(
 				self::$slug,
-				'var nfdOnboarding =' . wp_json_encode( $nfdOnboardingData ) . ';',
+				'var nfdOnboarding =' . wp_json_encode( $nfd_onboarding_data ) . ';',
 				'before'
 			);
 
@@ -286,12 +286,6 @@ final class WP_Admin {
 					$script
 				);
 			}
-
-			wp_add_inline_script(
-				'wp-blocks',
-				sprintf( 'wp.blocks.setCategories( %s );', wp_json_encode( get_block_categories( $block_editor_context ) ) ),
-				'after'
-			);
 
 			\wp_enqueue_script( self::$slug );
 			\wp_enqueue_style( self::$slug );
@@ -331,12 +325,12 @@ final class WP_Admin {
 
 		// If the brand plugin page URL is not found in the runtime, redirect to the WordPress admin.
 		if ( empty( $brand_plugin_url ) ) {
-			wp_redirect( admin_url() . '?' . $dashboard_redirect_params );
+			wp_redirect( apply_filters( 'nfd_build_url', admin_url() . '?' . $dashboard_redirect_params ) );
 			exit;
 		}
 
 		// If the brand plugin page URL is found in the runtime, redirect to the brand plugin page.
-		wp_redirect( $brand_plugin_url . '&' . $dashboard_redirect_params );
+		wp_redirect( apply_filters( 'nfd_build_url', $brand_plugin_url . '&' . $dashboard_redirect_params ) );
 		exit;
 	}
 
@@ -455,7 +449,7 @@ final class WP_Admin {
 			'var nfdOnboardingRestartMeta =' . wp_json_encode(
 				array(
 					'buttonText' => \__( 'Build with AI', 'wp-module-onboarding' ),
-					'buttonHref' => \admin_url( 'index.php?page=' . self::$slug ),
+					'buttonHref' => \apply_filters( 'nfd_build_url', admin_url( 'index.php?page=' . self::$slug ) ),
 				)
 			) . ';',
 			'before'
@@ -504,8 +498,8 @@ final class WP_Admin {
 		\wp_enqueue_style( 'hide-onboarding-restart-card' );
 	}
 
-	/*
-	Enqueue site editor specific assets when coming from onboarding.
+	/**
+	 * Enqueue site editor specific assets when coming from onboarding.
 	 *
 	 * @return void
 	 */

@@ -1,0 +1,27 @@
+name: Check for Updates to Translations
+
+on:
+  push:
+    branches:
+      - 'trunk'
+  workflow_dispatch:
+
+# Cancels all previous workflow runs for the branch that have not completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name.
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  translate:
+    name: 'Check and update translations'
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: newfold-labs/workflows/.github/workflows/reusable-translations.yml@main
+    with:
+      text_domain: 'wp-module-onboarding'
+    secrets:
+      TRANSLATOR_API_KEY: ${{ secrets.TRANSLATOR_API_KEY }}

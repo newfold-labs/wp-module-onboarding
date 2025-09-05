@@ -16,6 +16,7 @@ import ScreenHeader from '../ScreenHeader';
 
 export default function ScreenColors() {
 	const [ isUsingCustomPalette, setIsUsingCustomPalette ] = useState( false );
+
 	const { settings, globalStyles, updatePalette, updateCustomColor } = useColorSettings();
 
 	const handlePaletteChange = ( paletteArray ) => {
