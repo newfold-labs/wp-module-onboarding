@@ -22,6 +22,7 @@ const Navigate = ( {
 	variant = 'primary',
 	callback,
 	children,
+	className,
 	...props
 } ) => {
 	const navigate = useNavigate(); // Router navigate.
@@ -56,6 +57,7 @@ const Navigate = ( {
 			className={ classNames(
 				variant === 'primary' && 'nfd-py-[11px] nfd-px-[35px]',
 				variant === 'secondary' && 'nfd-bg-transparent nfd-text-primary-500 nfd-border-primary-500 nfd-py-[11px] nfd-px-[16px]',
+				className,
 			) }
 			{ ...props }
 		>

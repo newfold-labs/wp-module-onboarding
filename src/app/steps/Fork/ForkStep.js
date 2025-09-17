@@ -92,24 +92,25 @@ const ForkStep = () => {
 			</Container.Header>
 
 			<Container.Block className="nfd-p-0">
-				<div className="nfd-flex nfd-flex-col nfd-gap-9">
+				<div className="nfd-flex nfd-flex-col nfd-gap-10">
 					<ForkOptions onChange={ setSelectedForkOption } />
-					<ForkLinks />
+
+					<div className="nfd-flex nfd-justify-between nfd-items-end nfd-gap-8">
+						<ForkLinks />
+						<div className="nfd-flex nfd-justify-end">
+							<Navigate
+								toRoute={ selectedForkOption === 'sitegen' ? '/intake' : '/blueprints' }
+								direction="forward"
+								disabled={ ! selectedForkOption }
+								callback={ handleNext }
+								className="nfd-mb-3"
+							>
+								{ __( 'Next', 'wp-module-onboarding' ) }
+							</Navigate>
+						</div>
+					</div>
 				</div>
 			</Container.Block>
-
-			<Container.Footer className="nfd-p-0">
-				<div className="nfd-flex nfd-justify-end nfd-border-t nfd-pt-8">
-					<Navigate
-						toRoute={ selectedForkOption === 'sitegen' ? '/intake' : '/blueprints' }
-						direction="forward"
-						disabled={ ! selectedForkOption }
-						callback={ handleNext }
-					>
-						{ __( 'Next', 'wp-module-onboarding' ) }
-					</Navigate>
-				</div>
-			</Container.Footer>
 		</Container>
 	);
 };
