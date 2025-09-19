@@ -5,6 +5,7 @@ import { ImageImport, Label } from '@newfold/ui-component-library';
 import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_LOGO_UPLOAD_FAILED } from '@/utils/analytics/hiive/constants';
+import AiLogoCreator from './AiLogoCreator';
 
 const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 	const [ error, setError ] = useState( {
@@ -12,7 +13,12 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 		message: '',
 	} );
 
-	const logo = useSelect( ( select ) => select( nfdOnboardingStore ).getLogo(), [] );
+	const { logo, selectedLocale } = useSelect( ( select ) => {
+		return {
+			logo: select( nfdOnboardingStore ).getLogo(),
+			selectedLocale: select( nfdOnboardingStore ).getSelectedLocale(),
+		};
+	}, [] );
 
 	const validateFile = ( file ) => {
 		const validationResult = {
@@ -74,7 +80,7 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 				if ( ! files[ 0 ]?.id ) {
 					setError( {
 						status: true,
-						message: __( "Failed to upload logo. Please try again.", 'wp-module-onboarding' ),
+						message: __( 'Failed to upload logo. Please try again.', 'wp-module-onboarding' ),
 					} );
 					setIsUploading( false );
 					return;
@@ -114,9 +120,14 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 
 	return (
 		<div className="nfd-onboarding-logo-upload nfd-flex nfd-flex-col nfd-gap-2">
-			<Label htmlFor="nfd-onboarding-logo-input">
-				{ __( 'Site logo', 'wp-module-onboarding' ) }
-			</Label>
+			<div className="nfd-flex nfd-items-center nfd-justify-between nfd-gap-6">
+				<Label htmlFor="nfd-onboarding-logo-input">
+					{ __( 'Site logo', 'wp-module-onboarding' ) }
+				</Label>
+				{ selectedLocale.startsWith( 'en_' ) && (
+					<AiLogoCreator />
+				) }
+			</div>
 			<ImageImport
 				key={ logo?.url || 'no-logo' }
 				id="nfd-onboarding-logo-input"

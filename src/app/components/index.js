@@ -4,6 +4,7 @@ export { AppBody as AppBody } from './AppBody';
 export { ErrorBoundaryFallback as ErrorBoundaryFallback } from './ErrorBoundaryFallback';
 export { Header as Header } from './Header';
 export { Iframe as Iframe } from './Iframe';
+export { InlineAction as InlineAction } from './InlineAction';
 export { InteractionBlockingOverlay as InteractionBlockingOverlay } from './InteractionBlockingOverlay';
 export { Motion as Motion } from './Motion';
 export { Navigate as Navigate } from './Navigate';
