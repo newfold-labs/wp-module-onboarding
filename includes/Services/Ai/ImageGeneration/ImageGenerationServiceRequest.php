@@ -1,32 +1,32 @@
 <?php
 /**
- * AI Content Generation Service Request class.
+ * AI Image Generation Service Request class.
  *
  * @package NewfoldLabs\WP\Module\Onboarding
  */
 
-namespace NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration;
+namespace NewfoldLabs\WP\Module\Onboarding\Services\Ai\ImageGeneration;
 
 use NewfoldLabs\WP\Module\Onboarding\Services\Ai\AiServiceRequest;
 
 /**
- * AI Content Generation Service Request Class
+ * AI Image Generation Service Request Class
  *
- * Handles HTTP requests to the AI Content Generation API endpoint.
+ * Handles HTTP requests to the AI Image Generation API endpoint.
  */
-class ContentGenerationServiceRequest extends AiServiceRequest {
+class ImageGenerationServiceRequest extends AiServiceRequest {
 
 	/**
-	 * The content generation endpoint.
+	 * The image generation endpoint.
 	 *
 	 * @var string
 	 */
-	protected $api_path = 'content-generation/';
+	protected $api_path = 'image-generation/';
 
 	/**
 	 * Constructor
 	 *
-	 * @param string $endpoint The content generation endpoint to use.
+	 * @param string $endpoint The image generation endpoint to use.
 	 * @param array $body    Request body data.
 	 * @param array $headers Additional headers to include in the request.
 	 * @param string|null $url The URL to send the request to (Not recommended to override this).

@@ -2,16 +2,12 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration;
 
-use NewfoldLabs\WP\Module\Onboarding\RestApi\ParallelRequestsController;
-use NewfoldLabs\WP\Module\Onboarding\Services\ParallelRequestsService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService;
 use NewfoldLabs\WP\Module\Onboarding\Types\Page;
 use NewfoldLabs\WP\Module\Onboarding\Types\Pages;
-use NewfoldLabs\WP\Module\Onboarding\Types\ParallelRequest;
 use NewfoldLabs\WP\Module\Onboarding\Types\SiteClassification;
 use NewfoldLabs\WP\Module\Onboarding\Types\Sitekit;
-use WpOrg\Requests\Requests;
 
 class SitekitsContentGeneration {
 
@@ -108,8 +104,7 @@ class SitekitsContentGeneration {
 
 		// Error.
 		$response_code = $request->get_response_code();
-		$response_body = $request->get_error_response_body();
-		$error_message = ( $response_body && isset( $response_body['message'] ) ) ? $response_body['message'] : __( 'An unknown error occurred', 'wp-module-onboarding' );
+		$error_message = $request->get_error_message();
 		$response = new \WP_Error(
 			'sitekits_generation_failed',
 			$error_message,
