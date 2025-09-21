@@ -36,6 +36,16 @@ export const updateOnboardingSiteGenSlice = async ( data ) => {
 	);
 };
 
+export const updateOnboardingLogogenSlice = async ( data ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'redux-state/logogen-slice' ),
+			method: 'POST',
+			body: JSON.stringify( data ),
+		} ).then()
+	);
+};
+
 export const updateOnboardingBlueprintsSlice = async ( data ) => {
 	return await resolve(
 		apiFetch( {
@@ -246,6 +256,30 @@ export async function getSiteGenPreviewSnapshot( content, slug, customStyles = n
 				content,
 				slug,
 				custom_styles: customStyles,
+			},
+		} )
+	);
+
+	return response;
+}
+
+/**
+ * Get a batch of logos.
+ *
+ * @param {string} siteTitle
+ * @param {string} prompt
+ * @param {string} locale
+ * @return {Promise<Object>} response
+ */
+export async function getLogos( siteTitle, prompt, locale ) {
+	const response = await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'logogen/generate' ),
+			method: 'POST',
+			data: {
+				site_title: siteTitle,
+				site_description: prompt,
+				locale,
 			},
 		} )
 	);
