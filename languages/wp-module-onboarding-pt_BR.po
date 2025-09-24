@@ -85,15 +85,15 @@ msgstr "Padrão Não Encontrado."
 msgid "Bad event structure/value."
 msgstr "Estrutura/valor do evento incorreto."
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Colors"
 msgstr "Cores"
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Primary"
 msgstr "Principal"
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Secondary"
 msgstr "Secundária"
 
@@ -151,91 +151,91 @@ msgstr "Criar com IA"
 msgid "Palette %d"
 msgstr "Paleta %d"
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Base"
 msgstr "Base"
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Contrast"
 msgstr "Contraste"
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Select a palette or customize individual colors."
 msgstr "Selecione uma paleta ou personalize cores individuais."
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Palette"
 msgstr "Paleta"
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Pick custom colors"
 msgstr "Escolha cores personalizadas"
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Site Logo"
 msgstr "Logotipo do site"
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Replace logo"
 msgstr "Substituir logotipo"
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Replace"
 msgstr "Substituir"
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Current logo"
 msgstr "Logotipo atual"
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Remove"
 msgstr "Retirar"
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Upload a logo to represent your brand."
 msgstr "Carregue um logotipo para representar sua marca."
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Upload Logo"
 msgstr "Carregar logotipo"
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "You don't have permission to change the site logo."
 msgstr "Você não tem permissão para alterar o logotipo do site."
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
 msgstr "Seu logotipo aparecerá no cabeçalho do seu site. Para obter melhores resultados, carregue uma imagem com fundo transparente no formato PNG."
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Primary color"
 msgstr "Cor primária"
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Secondary color"
 msgstr "Cor secundária"
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Paragraph text in your chosen font."
 msgstr "Texto do parágrafo na fonte escolhida."
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Select a font style."
 msgstr "Selecione um estilo de fonte."
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Font Pairings"
 msgstr "Emparelhamentos de fontes"
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "No font pairings available."
 msgstr "Não há pares de fontes disponíveis."
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
 msgstr "Escolha um par de fontes que reflita a personalidade da sua marca. Cada emparelhamento é cuidadosamente selecionado para melhorar a legibilidade e o apelo visual em todo o seu site."
 
-#: build/3.2.5/onboarding-design-studio.js:1
+#: build/3.2.6/onboarding-design-studio.js:1
 msgid "Design Studio"
 msgstr "Estúdio de Design"
 
@@ -247,24 +247,24 @@ msgstr "Erro ao configurar o menu de navegação."
 msgid "An unknown error occurred"
 msgstr "Ocorreu um erro desconhecido"
 
-#: includes/Services/AppService.php:78
-#: includes/Services/AppService.php:102
+#: includes/Services/AppService.php:76
+#: includes/Services/AppService.php:100
 msgid "Help us improve"
 msgstr "Ajude-nos a melhorar"
 
-#: includes/Services/AppService.php:79
-#: includes/Services/AppService.php:103
+#: includes/Services/AppService.php:77
+#: includes/Services/AppService.php:101
 msgid "How satisfied were you with the ease of creating your website?"
 msgstr "Quão satisfeito você ficou com a facilidade de criar seu site?"
 
-#: build/3.2.5/onboarding.js:1
+#: build/3.2.6/onboarding.js:1
 msgid "Publishing content…"
 msgstr "Publicação de conteúdo..."
 
-#: build/3.2.5/onboarding.js:1
+#: build/3.2.6/onboarding.js:1
 msgid "Preparing your new site…"
 msgstr "Preparando seu novo site..."
 
-#: build/3.2.5/onboarding.js:1
+#: build/3.2.6/onboarding.js:1
 msgid "Your new site is ready! Redirecting… 🚀"
 msgstr "Seu novo site está pronto! Redirecionando... 🚀"
