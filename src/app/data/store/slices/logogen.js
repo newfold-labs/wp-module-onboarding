@@ -6,6 +6,7 @@ const DEFAULT_STATE = {
 	logogenReferenceId: '',
 	logos: [],
 	selectedLogo: '',
+	logogenSurvey: null,
 	logoGenSliceVersion: 0,
 };
 
@@ -42,6 +43,12 @@ export function logogen( state = DEFAULT_STATE, action ) {
 				selectedLogo: action.selectedLogo,
 				logoGenSliceVersion: state.logoGenSliceVersion + 1,
 			};
+		case 'SET_LOGOGEN_SURVEY':
+			return {
+				...state,
+				logogenSurvey: action.logogenSurvey,
+				logoGenSliceVersion: state.logoGenSliceVersion + 1,
+			};
 	}
 
 	return state;
@@ -75,6 +82,12 @@ export const actions = {
 			selectedLogo,
 		};
 	},
+	setLogogenSurvey: ( logogenSurvey ) => {
+		return {
+			type: 'SET_LOGOGEN_SURVEY',
+			logogenSurvey,
+		};
+	},
 };
 
 /**
@@ -85,6 +98,7 @@ export const selectors = {
 	getLogogenReferenceId: ( state ) => state.logogen.logogenReferenceId,
 	getLogos: ( state ) => state.logogen.logos,
 	getSelectedLogo: ( state ) => state.logogen.selectedLogo,
+	getLogogenSurvey: ( state ) => state.logogen.logogenSurvey,
 	getLogogenSliceVersion: ( state ) => state.logogen.logoGenSliceVersion,
 };
 

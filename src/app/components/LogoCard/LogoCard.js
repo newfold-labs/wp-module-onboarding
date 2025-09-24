@@ -4,8 +4,6 @@ import { Button, Spinner } from '@newfold/ui-component-library';
 import { LOGOGEN_STATES, getUniqueGenerationStateAnimation } from '@/utils/logogen';
 import { ExclamationCircleIcon, EyeIcon as EyeIconOutline } from '@heroicons/react/24/outline';
 import { CheckCircleIcon, EyeIcon as EyeIconSolid } from '@heroicons/react/24/solid';
-import { dispatch } from '@wordpress/data';
-import { nfdOnboardingStore } from '@/data/store';
 
 const LoadingState = () => {
 	return (
@@ -107,7 +105,7 @@ const LogoCardSelector = ( { isSelected } ) => {
 	);
 };
 
-const LogoCardPreview = () => {
+const LogoCardPreview = ( { logoReferenceId } ) => {
 	const [ isHovered, setIsHovered ] = useState( false );
 
 	const handlePreview = ( e ) => {
@@ -144,23 +142,24 @@ const LogoCardPreview = () => {
 	);
 };
 
-const LogoCardActions = ( { referenceId, isSelected } ) => {
+const LogoCardActions = ( { logoReferenceId, isSelected } ) => {
 	return (
 		<>
 			<LogoCardSelector isSelected={ isSelected } />
-			<LogoCardPreview referenceId={ referenceId } />
+			<LogoCardPreview logoReferenceId={ logoReferenceId } />
 		</>
 	);
 };
 
 const LogoCard = ( {
 	status = LOGOGEN_STATES.RECEIVED,
-	referenceId,
+	logoReferenceId,
 	style,
 	src = null,
 	selectedSrc,
 	isSelected,
 	tabIndex = 0,
+	onSelect,
 	className,
 	...props
 } ) => {
@@ -173,7 +172,7 @@ const LogoCard = ( {
 		e.preventDefault();
 		e.stopPropagation();
 
-		dispatch( nfdOnboardingStore ).setSelectedLogo( referenceId );
+		onSelect( logoReferenceId );
 	};
 
 	return (
@@ -183,7 +182,7 @@ const LogoCard = ( {
 			className={ classNames(
 				'nfd-onboarding-logogen-logo-card nfd-w-full nfd-h-auto nfd-aspect-video nfd-relative nfd-bg-cover nfd-bg-center nfd-bg-no-repeat nfd-border nfd-border-slate nfd-rounded nfd-overflow-hidden focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary focus:nfd-ring-offset-2',
 				( status === LOGOGEN_STATES.COMPLETED ) ? 'nfd-cursor-pointer' : 'nfd-cursor-default nfd-pointer-events-none',
-				isSelected && 'nfd-border-primary nfd-shadow-md',
+				isSelected && 'nfd-border-slate-300 nfd-shadow-md',
 				className,
 			) }
 			style={ {
@@ -201,7 +200,7 @@ const LogoCard = ( {
 					? <StatusOverlay status={ status } />
 					: (
 						<LogoCardActions
-							referenceId={ referenceId }
+							logoReferenceId={ logoReferenceId }
 							isSelected={ isSelected }
 						/>
 					)

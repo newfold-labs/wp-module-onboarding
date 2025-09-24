@@ -7,7 +7,7 @@ const generateLogos = async () => {
 	// Prevent multiple logo generations batches.
 	const storedReferenceId = select( nfdOnboardingStore ).getLogogenReferenceId();
 	if ( storedReferenceId ) {
-		throw new Error( 'This action is not allowed' );
+		return true;
 	}
 
 	// Optimistically add the records to the store

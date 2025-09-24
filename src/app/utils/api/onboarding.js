@@ -288,6 +288,26 @@ export async function getLogos( siteTitle, prompt, locale ) {
 }
 
 /**
+ * Get more logos.
+ *
+ * @param {string} referenceId
+ * @return {Promise<Object>} response
+ */
+export async function getMoreLogos( referenceId ) {
+	const response = await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'logogen/generate/more' ),
+			method: 'POST',
+			data: {
+				reference_id: referenceId,
+			},
+		} )
+	);
+
+	return response;
+}
+
+/**
  * Get the status of a logogen batch.
  *
  * @param {string} referenceId

@@ -4,6 +4,7 @@ export {
 	RESOLVED_STATES as LOGOGEN_RESOLVED_STATES,
 } from './logogenStates';
 export { default as generateLogos } from './generateLogos';
+export { default as generateMoreLogos } from './generateMoreLogos';
 export { default as createLogoRecords } from './createLogoRecords';
 export {
 	prefetch as prefetchGenerationStateAnimations,

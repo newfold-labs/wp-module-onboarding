@@ -5,7 +5,7 @@ import { ImageImport, Label } from '@newfold/ui-component-library';
 import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_LOGO_UPLOAD_FAILED } from '@/utils/analytics/hiive/constants';
-import AiLogoCreator from './AiLogoCreator';
+import { AiLogoCreator } from './AiLogoCreator';
 
 const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 	const [ error, setError ] = useState( {
