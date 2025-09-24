@@ -33,8 +33,6 @@ class AppService {
 	 * @return void
 	 */
 	public function start(): void {
-		// Disable SSO redirect.
-		update_option( Options::get_option_name( 'redirect' ), '0' );
 		// If Onboarding is running for the first time...
 		if ( StatusService::handle_started() ) {
 			// Trash sample page.
