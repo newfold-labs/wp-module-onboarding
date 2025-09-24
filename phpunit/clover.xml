@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1758147382">
-  <project timestamp="1758147382">
+<coverage generated="1758732283">
+  <project timestamp="1758732283">
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Application.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Application" namespace="global">
         <metrics complexity="8" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="0" elements="31" coveredelements="0"/>
@@ -2537,23 +2537,24 @@
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Services/AppService.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Services\AppService" namespace="global">
-        <metrics complexity="6" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="0" elements="36" coveredelements="0"/>
+        <metrics complexity="6" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="31" coveredstatements="0" elements="35" coveredelements="0"/>
       </class>
       <line num="26" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="27" type="stmt" count="0"/>
       <line num="35" type="method" name="start" visibility="public" complexity="2" crap="6" count="0"/>
       <line num="37" type="stmt" count="0"/>
       <line num="39" type="stmt" count="0"/>
-      <line num="41" type="stmt" count="0"/>
-      <line num="44" type="stmt" count="0"/>
-      <line num="45" type="stmt" count="0"/>
-      <line num="56" type="method" name="complete" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="42" type="stmt" count="0"/>
+      <line num="43" type="stmt" count="0"/>
+      <line num="54" type="method" name="complete" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="56" type="stmt" count="0"/>
+      <line num="57" type="stmt" count="0"/>
       <line num="58" type="stmt" count="0"/>
-      <line num="59" type="stmt" count="0"/>
-      <line num="60" type="stmt" count="0"/>
-      <line num="63" type="stmt" count="0"/>
-      <line num="66" type="stmt" count="0"/>
-      <line num="69" type="stmt" count="0"/>
+      <line num="61" type="stmt" count="0"/>
+      <line num="64" type="stmt" count="0"/>
+      <line num="67" type="stmt" count="0"/>
+      <line num="70" type="stmt" count="0"/>
+      <line num="71" type="stmt" count="0"/>
       <line num="72" type="stmt" count="0"/>
       <line num="73" type="stmt" count="0"/>
       <line num="74" type="stmt" count="0"/>
@@ -2561,11 +2562,11 @@
       <line num="76" type="stmt" count="0"/>
       <line num="77" type="stmt" count="0"/>
       <line num="78" type="stmt" count="0"/>
-      <line num="79" type="stmt" count="0"/>
-      <line num="80" type="stmt" count="0"/>
-      <line num="88" type="method" name="complete_blueprint" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="90" type="stmt" count="0"/>
-      <line num="93" type="stmt" count="0"/>
+      <line num="86" type="method" name="complete_blueprint" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="88" type="stmt" count="0"/>
+      <line num="91" type="stmt" count="0"/>
+      <line num="94" type="stmt" count="0"/>
+      <line num="95" type="stmt" count="0"/>
       <line num="96" type="stmt" count="0"/>
       <line num="97" type="stmt" count="0"/>
       <line num="98" type="stmt" count="0"/>
@@ -2573,9 +2574,7 @@
       <line num="100" type="stmt" count="0"/>
       <line num="101" type="stmt" count="0"/>
       <line num="102" type="stmt" count="0"/>
-      <line num="103" type="stmt" count="0"/>
-      <line num="104" type="stmt" count="0"/>
-      <metrics loc="107" ncloc="66" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="0" elements="36" coveredelements="0"/>
+      <metrics loc="105" ncloc="65" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="31" coveredstatements="0" elements="35" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Services/Blueprints/BlueprintImportService.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Services\Blueprints\BlueprintImportService" namespace="global">
@@ -4762,6 +4761,6 @@
       <line num="55" type="stmt" count="0"/>
       <metrics loc="58" ncloc="24" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="8" coveredelements="0"/>
     </file>
-    <metrics files="65" loc="10752" ncloc="7354" classes="65" methods="376" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4002" coveredstatements="0" elements="4378" coveredelements="0"/>
+    <metrics files="65" loc="10750" ncloc="7353" classes="65" methods="376" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4001" coveredstatements="0" elements="4377" coveredelements="0"/>
   </project>
 </coverage>
