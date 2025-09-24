@@ -288,6 +288,26 @@ export async function getLogos( siteTitle, prompt, locale ) {
 }
 
 /**
+ * Get the status of a logogen batch.
+ *
+ * @param {string} referenceId
+ * @return {Promise<Object>} response
+ */
+export async function getLogogenStatus( referenceId ) {
+	const response = await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'logogen/generate/status' ),
+			method: 'POST',
+			data: {
+				reference_id: referenceId,
+			},
+		} )
+	);
+
+	return response;
+}
+
+/**
  * Get the blueprints.
  *
  * @return {Promise<Object>} response
