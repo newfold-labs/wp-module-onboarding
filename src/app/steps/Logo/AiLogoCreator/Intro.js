@@ -3,11 +3,21 @@ import { ReactComponent as LogoGenFigure } from '@/assets/logogen-figure.svg';
 import { generateLogos } from '@/utils/logogen';
 
 const Intro = () => {
-	const [ isGenerating, setIsGenerating ] = useState( false );
+	const [ isLoading, setIsLoading ] = useState( false );
+	const [ hasError, setHasError ] = useState( false );
 
 	const handleGenerate = async () => {
-		setIsGenerating( true );
-		generateLogos();
+		// Reset state.
+		setHasError( false );
+		setIsLoading( true );
+
+		// Start the generation.
+		const result = await generateLogos();
+		if ( ! result ) {
+			// Set error state.
+			setIsLoading( false );
+			setHasError( true );
+		}
 	};
 
 	return (
@@ -23,11 +33,16 @@ const Intro = () => {
 				<Button
 					className="nfd-mt-4 nfd-button--enhanced"
 					onClick={ handleGenerate }
-					isLoading={ isGenerating }
-					disabled={ isGenerating }
+					isLoading={ isLoading }
+					disabled={ isLoading }
 				>
 					{ __( 'Generate', 'wp-module-onboarding' ) }
 				</Button>
+				{ hasError && (
+					<p className="nfd-text-tiny nfd-text-red-500 nfd-bg-red-500/10 nfd-p-2 nfd-rounded-md nfd-mt-4">
+						{ __( 'Error connecting to the AI service. Please try again.', 'wp-module-onboarding' ) }
+					</p>
+				) }
 			</div>
 		</div>
 	);
