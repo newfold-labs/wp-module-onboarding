@@ -13,7 +13,7 @@ import {
 	HandThumbDownIcon as HandThumbDownIconSolid,
 } from '@heroicons/react/24/solid';
 import { useCallback } from '@wordpress/element';
-import { LOGOGEN_PENDING_STATES, generateMoreLogos } from '@/utils/logogen';
+import { LOGOGEN_PENDING_STATES, LOGOGEN_STATES, generateMoreLogos } from '@/utils/logogen';
 import classNames from 'classnames';
 
 const Header = () => {
@@ -30,8 +30,9 @@ const Header = () => {
 };
 
 const Survey = () => {
-	const { logogenSurvey } = useSelect( ( select ) => {
+	const { logos, logogenSurvey } = useSelect( ( select ) => {
 		return {
+			logos: select( nfdOnboardingStore ).getLogos(),
 			logogenSurvey: select( nfdOnboardingStore ).getLogogenSurvey(),
 		};
 	} );
@@ -54,21 +55,39 @@ const Survey = () => {
 		dispatch( nfdOnboardingStore ).setLogogenSurvey( value );
 	};
 
+	const shouldRender = useCallback( () => {
+		// False if there are no logos.
+		if ( logos.length === 0 ) {
+			return false;
+		}
+		// Show if there are logos in completed status.
+		if ( logos.some( ( logo ) => LOGOGEN_STATES.COMPLETED === logo.status ) ) {
+			return true;
+		}
+
+		// False otherwise.
+		return false;
+	}, [ logos ] );
+
 	return (
 		<div className="nfd-flex nfd-items-center nfd-gap-3 nfd-text-slate-500">
-			<p className="nfd-text-sm">
-				{ __( 'Do you like what you see?', 'wp-module-onboarding' ) }
-			</p>
-			<div className="nfd-flex nfd-items-center nfd-gap-2">
-				<InlineAction
-					icon={ logogenSurvey === 'like' ? <HandThumbUpIconSolid className="nfd-w-4 nfd-h-4" /> : <HandThumbUpIconOutline className="nfd-w-4 nfd-h-4" /> }
-					onClick={ () => handleSurvey( 'like' ) }
-				/>
-				<InlineAction
-					icon={ logogenSurvey === 'dislike' ? <HandThumbDownIconSolid className="nfd-w-4 nfd-h-4" /> : <HandThumbDownIconOutline className="nfd-w-4 nfd-h-4" /> }
-					onClick={ () => handleSurvey( 'dislike' ) }
-				/>
-			</div>
+			{ shouldRender() && (
+				<>
+					<p className="nfd-text-sm">
+						{ __( 'Do you like what you see?', 'wp-module-onboarding' ) }
+					</p>
+					<div className="nfd-flex nfd-items-center nfd-gap-2">
+						<InlineAction
+							icon={ logogenSurvey === 'like' ? <HandThumbUpIconSolid className="nfd-w-4 nfd-h-4" /> : <HandThumbUpIconOutline className="nfd-w-4 nfd-h-4" /> }
+							onClick={ () => handleSurvey( 'like' ) }
+						/>
+						<InlineAction
+							icon={ logogenSurvey === 'dislike' ? <HandThumbDownIconSolid className="nfd-w-4 nfd-h-4" /> : <HandThumbDownIconOutline className="nfd-w-4 nfd-h-4" /> }
+							onClick={ () => handleSurvey( 'dislike' ) }
+						/>
+					</div>
+				</>
+			) }
 		</div>
 	);
 };
@@ -92,6 +111,7 @@ const SetAsSiteLogoAction = () => {
 };
 
 const GenerateMoreLogosAction = () => {
+	const [ isLoading, setIsLoading ] = useState( false );
 	const { logos } = useSelect( ( select ) => {
 		return {
 			logos: select( nfdOnboardingStore ).getLogos(),
@@ -111,6 +131,11 @@ const GenerateMoreLogosAction = () => {
 	}, [ logos ] );
 
 	const shouldBeDisabled = useCallback( () => {
+		// True if we're in loading state.
+		if ( isLoading ) {
+			return true;
+		}
+
 		// True if we have any logos in pending status.
 		if ( logos.some( ( logo ) => LOGOGEN_PENDING_STATES.includes( logo.status ) ) ) {
 			return true;
@@ -123,7 +148,7 @@ const GenerateMoreLogosAction = () => {
 
 		// False otherwise.
 		return false;
-	}, [ logos ] );
+	}, [ logos, isLoading ] );
 
 	const shouldRender = useCallback( () => {
 		// False if there are no logos.
@@ -157,7 +182,9 @@ const GenerateMoreLogosAction = () => {
 	}, [ getBatchVersion ] );
 
 	const handleGenerateMoreLogos = async () => {
-		generateMoreLogos();
+		setIsLoading( true );
+		await generateMoreLogos();
+		setIsLoading( false );
 	};
 
 	if ( ! shouldRender() ) {
@@ -176,6 +203,7 @@ const GenerateMoreLogosAction = () => {
 				size="large"
 				disabled={ shouldBeDisabled() }
 				onClick={ handleGenerateMoreLogos }
+				isLoading={ isLoading }
 			>
 				<SquaresPlusIcon
 					className="nfd-w-5 nfd-h-5 nfd-mr-2"
@@ -230,7 +258,7 @@ const Logos = () => {
 	useEffect( () => {
 		// if any of the logos are generating, check status every 5 seconds
 		checkLogogenStatus();
-	}, [] );
+	}, [ logos.length ] );
 
 	const handleSelect = ( logoReferenceId ) => {
 		// Only update new values.

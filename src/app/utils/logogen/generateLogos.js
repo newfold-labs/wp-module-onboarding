@@ -13,25 +13,25 @@ const generateLogos = async () => {
 	// Optimistically add the records to the store
 	createLogoRecords( 3 );
 
-	// const siteTitle = select( nfdOnboardingStore ).getSiteTitle();
-	// const prompt = select( nfdOnboardingStore ).getPrompt();
-	// const locale = select( nfdOnboardingStore ).getSelectedLocale();
+	const siteTitle = select( nfdOnboardingStore ).getSiteTitle();
+	const prompt = select( nfdOnboardingStore ).getPrompt();
+	const locale = select( nfdOnboardingStore ).getSelectedLocale();
 
-	// // Generate the logos.
-	// const response = await getLogos( siteTitle, prompt, locale );
-	// if (
-	// 	response.error ||
-	// 	! response.body?.reference_id
-	// ) {
-	// 	// eslint-disable-next-line no-console
-	// 	console.error( 'Failed to generate logos' );
+	// Generate the logos.
+	const response = await getLogos( siteTitle, prompt, locale );
+	if (
+		response.error ||
+		! response.body?.reference_id
+	) {
+		// eslint-disable-next-line no-console
+		console.error( 'Failed to generate logos' );
 
-	// 	return false;
-	// }
+		return false;
+	}
 
-	// // Set the generation reference id in the store
-	// const generationReferenceId = response.body.reference_id;
-	dispatch( nfdOnboardingStore ).setLogogenReferenceId( 'wMJMJeC' );
+	// Set the generation reference id in the store
+	const generationReferenceId = response.body.reference_id;
+	dispatch( nfdOnboardingStore ).setLogogenReferenceId( generationReferenceId );
 
 	return true;
 };

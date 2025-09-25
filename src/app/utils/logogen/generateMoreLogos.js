@@ -14,7 +14,7 @@ const generateMoreLogos = async () => {
 	}
 
 	// Fire the API call to get more logos.
-	getMoreLogos( logogenReferenceId );
+	await getMoreLogos( logogenReferenceId );
 
 	// Optimistically add the records to the store
 	createLogoRecords( 3 );

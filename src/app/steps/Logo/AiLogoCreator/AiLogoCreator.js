@@ -50,7 +50,7 @@ const AiLogoCreator = () => {
 					setIsOpen( false );
 				} }
 			>
-				<Modal.Panel className="nfd-w-[768px] nfd-max-w-[90vw] nfd-h-[600px] nfd-max-h-[90vh]">
+				<Modal.Panel className="nfd-w-[768px] nfd-max-w-[90vw] nfd-min-h-[620px] nfd-h-[620px] nfd-max-h-[90vh] nfd-overflow-y-auto">
 					<AiLogoCreatorContent />
 				</Modal.Panel>
 			</Modal>

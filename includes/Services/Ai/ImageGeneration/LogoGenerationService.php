@@ -182,9 +182,10 @@ class LogoGenerationService {
 	 * Get the logos.
 	 *
 	 * @param bool $as_array Whether to return the logos as array of arrays instead of Logo objects.
+	 * @param bool $shuffle Whether to shuffle the logos.
 	 * @return array|WP_Error The logos as array of Logo objects or a WP_Error object if the response is malformed.
 	 */
-	public function get_logos( bool $as_array = false ) {
+	public function get_logos( bool $as_array = false, bool $shuffle = false ) {
 		$logos = array();
 		foreach ( $this->logos as $logo ) {
 			$reference_id = $logo['reference_id'] ?? null;
@@ -218,6 +219,10 @@ class LogoGenerationService {
 				'Malformed logos response',
 				array( 'status' => 404 )
 			);
+		}
+
+		if ( $shuffle ) {
+			shuffle( $logos );
 		}
 
 		return $logos;

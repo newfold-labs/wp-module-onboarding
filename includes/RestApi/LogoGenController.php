@@ -171,11 +171,10 @@ class LogoGenController {
 			return $response;
 		}
 
-		// If the generation is completed, return the logos as part of the response.
+		// If the generation is completed, add the logos to the response.
 		if ( $response['status'] === 'completed' ) {
-			$logos = $logogen_service->get_logos( true );
+			$logos = $logogen_service->get_logos( true, true );
 			$response['logos'] = $logos;
-			return new \WP_REST_Response( $response, 200 );
 		}
 
 		return new \WP_REST_Response( $response, 200 );
