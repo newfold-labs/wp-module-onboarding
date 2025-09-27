@@ -1,8 +1,7 @@
+import { useCallback, useContext } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
+import classNames from 'classnames';
 import { Title, Button } from '@newfold/ui-component-library';
-import { nfdOnboardingStore } from '@/data/store';
-import { InlineAction, LogoCard } from '@/components';
-import checkLogogenStatus from '@/utils/logogen/checkLogogenStatus';
 import {
 	HandThumbUpIcon as HandThumbUpIconOutline,
 	HandThumbDownIcon as HandThumbDownIconOutline,
@@ -12,9 +11,10 @@ import {
 	HandThumbUpIcon as HandThumbUpIconSolid,
 	HandThumbDownIcon as HandThumbDownIconSolid,
 } from '@heroicons/react/24/solid';
-import { useCallback } from '@wordpress/element';
-import { LOGOGEN_PENDING_STATES, LOGOGEN_STATES, generateMoreLogos } from '@/utils/logogen';
-import classNames from 'classnames';
+import { nfdOnboardingStore } from '@/data/store';
+import { InlineAction, LogoCard } from '@/components';
+import { LOGOGEN_PENDING_STATES, LOGOGEN_STATES, generateMoreLogos, checkLogogenStatus } from '@/utils/logogen';
+import { LogoGenSetSiteLogoHookContext } from '@/utils/hooks/useLogoGenSetSiteLogo';
 
 const Header = () => {
 	return (
@@ -92,21 +92,108 @@ const Survey = () => {
 	);
 };
 
+const SettingSiteLogoStatusOverlay = ( {
+	isSettingSiteLogo,
+} ) => {
+	if ( ! isSettingSiteLogo ) {
+		return null;
+	}
+
+	return (
+		<div className="nfd-absolute nfd-inset-0 nfd-bg-white nfd-bg-opacity-90 nfd-flex nfd-items-center nfd-justify-center nfd-z-40" />
+	);
+};
+
 const SetAsSiteLogoAction = () => {
-	const { logos, selectedLogo } = useSelect( ( select ) => {
+	const { logos, selectedLogo, siteLogo } = useSelect( ( select ) => {
 		return {
 			logos: select( nfdOnboardingStore ).getLogos(),
 			selectedLogo: select( nfdOnboardingStore ).getSelectedLogo(),
+			siteLogo: select( nfdOnboardingStore ).getLogo(),
 		};
 	} );
 
+	const { status, setSiteLogo } = useContext( LogoGenSetSiteLogoHookContext );
+
+	const isSelectedLogoTheSiteLogo = useCallback( () => {
+		const selectedLogoId = logos.find( ( logo ) => logo.reference_id === selectedLogo )?.attachment_data?.id;
+		return selectedLogoId === siteLogo?.id;
+	}, [ logos, selectedLogo, siteLogo ] );
+
+	const shouldBeDisabled = useCallback( () => {
+		// Disable if there are no logos.
+		if ( logos.length === 0 ) {
+			return true;
+		}
+
+		// Disable if no logo is selected.
+		if ( ! selectedLogo ) {
+			return true;
+		}
+
+		// Disable if we're already setting the site logo.
+		if ( status.isSettingSiteLogo ) {
+			return true;
+		}
+
+		// Disabled if the selected logo is actually the site logo.
+		if ( isSelectedLogoTheSiteLogo() && ! status.hasError ) {
+			return true;
+		}
+
+		return false;
+	}, [
+		logos,
+		selectedLogo,
+		status.isSettingSiteLogo,
+		status.hasError,
+		isSelectedLogoTheSiteLogo,
+	] );
+
+	const handleSetAsSiteLogo = () => {
+		setSiteLogo( {
+			logoReferenceId: selectedLogo,
+		} );
+	};
+
+	const getButtonText = useCallback( () => {
+		// Setting site logo.
+		if ( status.isSettingSiteLogo ) {
+			return __( 'Setting site logo…', 'wp-module-onboarding' );
+		}
+
+		// Error.
+		if ( status.hasError ) {
+			return __( 'Failed. Try again.', 'wp-module-onboarding' );
+		}
+
+		// Current site logo.
+		if ( isSelectedLogoTheSiteLogo() ) {
+			return __( 'Current site logo', 'wp-module-onboarding' );
+		}
+		return __( 'Set as site logo', 'wp-module-onboarding' );
+	}, [
+		isSelectedLogoTheSiteLogo,
+		status.isSettingSiteLogo,
+		status.hasError,
+	] );
+
 	return (
-		<Button
-			disabled={ ! selectedLogo || logos.length === 0 }
-			className="nfd-button--enhanced"
-		>
-			{ __( 'Set as site logo', 'wp-module-onboarding' ) }
-		</Button>
+		<>
+			<SettingSiteLogoStatusOverlay
+				isSettingSiteLogo={ status.isSettingSiteLogo }
+				message={ status.message }
+				hasError={ status.hasError }
+			/>
+			<Button
+				disabled={ shouldBeDisabled() }
+				className="nfd-button--enhanced nfd-z-50"
+				onClick={ handleSetAsSiteLogo }
+				isLoading={ status.isSettingSiteLogo }
+			>
+				{ getButtonText() }
+			</Button>
+		</>
 	);
 };
 
@@ -270,7 +357,7 @@ const Logos = () => {
 	};
 
 	return (
-		<div className="nfd-flex nfd-flex-col nfd-w-full nfd-gap-6 nfd-h-full">
+		<div className="nfd-onboarding-logogen-content-logos nfd-flex nfd-flex-col nfd-w-full nfd-gap-6 nfd-h-full">
 			<Header />
 			<div className="nfd-grid nfd-grid-cols-3 nfd-gap-8 nfd-w-full">
 				{ logos.map( ( logo, index ) => (
@@ -289,6 +376,7 @@ const Logos = () => {
 			<GenerateMoreLogosAction />
 			<Footer />
 			<LogoGenReferenceId referenceId={ logogenReferenceId } />
+
 		</div>
 	);
 };

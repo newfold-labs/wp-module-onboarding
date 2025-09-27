@@ -21,7 +21,7 @@ const Intro = () => {
 	};
 
 	return (
-		<div className="nfd-flex nfd-flex-col nfd-items-center nfd-justify-center nfd-gap-8 nfd-w-[390px] nfd-h-full nfd-py-12">
+		<div className="nfd-onboarding-logogen-content-intro nfd-flex nfd-flex-col nfd-items-center nfd-justify-center nfd-gap-8 nfd-w-[390px] nfd-h-full nfd-py-12">
 			<LogoGenFigure className="nfd-w-[170px] nfd-h-auto" />
 			<div className="nfd-flex nfd-flex-col nfd-items-center nfd-justify-center nfd-gap-3 nfd-text-center">
 				<Title as="h2" className="nfd-text-2xl nfd-text-content-default">

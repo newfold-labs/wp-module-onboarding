@@ -95,7 +95,7 @@ const StatusOverlay = ( { status = LOGOGEN_STATES.RECEIVED } ) => {
 
 const LogoCardSelector = ( { isSelected } ) => {
 	return (
-		<div className="nfd-absolute nfd-inset-0 nfd-z-20 nfd-transition-all nfd-duration-200 nfd-ease-in-out hover:nfd-bg-slate-500/50">
+		<div className="nfd-absolute nfd-inset-0 nfd-z-20 nfd-transition-all nfd-duration-200 nfd-ease-in-out hover:nfd-bg-slate-700/50">
 			{ isSelected && (
 				<div className="nfd-absolute nfd-bottom-1.5 nfd-right-1.5 nfd-flex nfd-items-center nfd-justify-center nfd-bg-white nfd-rounded-full nfd-border nfd-border-primary">
 					<CheckCircleIcon className="nfd-w-5 nfd-h-5 nfd-text-primary" />
@@ -180,7 +180,7 @@ const LogoCard = ( {
 			role="radio"
 			tabIndex={ ( src && status === LOGOGEN_STATES.COMPLETED ) ? tabIndex : -1 }
 			className={ classNames(
-				'nfd-onboarding-logogen-logo-card nfd-w-full nfd-h-auto nfd-aspect-video nfd-relative nfd-bg-cover nfd-bg-center nfd-bg-no-repeat nfd-border nfd-border-slate nfd-rounded nfd-overflow-hidden focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary focus:nfd-ring-offset-2',
+				'nfd-onboarding-logogen-logo-card nfd-w-full nfd-h-auto nfd-aspect-video nfd-relative nfd-bg-contain nfd-bg-center nfd-bg-no-repeat nfd-border nfd-border-slate nfd-rounded nfd-overflow-hidden focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary focus:nfd-ring-offset-2',
 				( status === LOGOGEN_STATES.COMPLETED ) ? 'nfd-cursor-pointer' : 'nfd-cursor-default nfd-pointer-events-none',
 				isSelected && 'nfd-border-slate-300 nfd-shadow-md',
 				className,

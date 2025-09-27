@@ -118,6 +118,21 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 		} );
 	};
 
+	const getCustomStyles = () => {
+		return (
+			<style>
+				{`
+					.nfd-onboarding-logo-upload .nfd-image-import__drop-label {
+						font-size: 14px !important;
+					}
+					.nfd-onboarding-logo-upload .nfd-image-input__preview-img {
+						object-fit: contain !important;
+					}
+				`}
+			</style>
+		);
+	};
+
 	return (
 		<div className="nfd-onboarding-logo-upload nfd-flex nfd-flex-col nfd-gap-2">
 			<div className="nfd-flex nfd-items-center nfd-justify-between nfd-gap-6">
@@ -125,9 +140,10 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 					{ __( 'Site logo', 'wp-module-onboarding' ) }
 				</Label>
 				{ selectedLocale.startsWith( 'en_' ) && (
-					<AiLogoCreator />
+					<AiLogoCreator onSetSiteLogo={ handleUpload } />
 				) }
 			</div>
+			{ getCustomStyles() }
 			<ImageImport
 				key={ logo?.url || 'no-logo' }
 				id="nfd-onboarding-logo-input"
@@ -149,7 +165,8 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 					'[&_.nfd-drop-zone]:nfd-rounded-lg',
 					'[&_.nfd-drop-zone]:nfd-p-4',
 					'[&_.nfd-image-import__drop-label]:nfd-text-content-primary',
-					'[&_.nfd-image-import__drop-label]:nfd-text-[14px]',
+					'[&_.nfd-image-import__drop-label]:!nfd-text-[14px]',
+					'[&_.nfd-image-input__preview_.nfd-image-input\_\_preview-img]:!nfd-object-contain',
 					{
 						'[&_.nfd-drop-zone]:nfd-border-red-500': error.status,
 						'[&_.nfd-drop-zone]:nfd-bg-red-50': error.status,

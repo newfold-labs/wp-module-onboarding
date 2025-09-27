@@ -328,6 +328,24 @@ export async function getLogogenStatus( referenceId ) {
 }
 
 /**
+ * Select a logo.
+ *
+ * @param {string} logoReferenceId
+ * @return {Promise<Object>} response
+ */
+export const selectLogo = async ( logoReferenceId ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'logogen/generate/select' ),
+			method: 'POST',
+			data: {
+				logo_reference_id: logoReferenceId,
+			},
+		} ).then()
+	);
+};
+
+/**
  * Get the blueprints.
  *
  * @return {Promise<Object>} response

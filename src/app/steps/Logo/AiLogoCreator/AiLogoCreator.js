@@ -3,6 +3,7 @@ import { Modal } from '@newfold/ui-component-library';
 import { nfdOnboardingStore } from '@/data/store';
 import { InlineAction } from '@/components';
 import { prefetchGenerationStateAnimations } from '@/utils/logogen';
+import { LogoGenSetSiteLogoHookContextProvider } from '@/utils/hooks/useLogoGenSetSiteLogo';
 import { ReactComponent as AiIcon } from '@/assets/ai-icon.svg';
 import Logos from './Logos';
 import Intro from './Intro';
@@ -15,13 +16,13 @@ const AiLogoCreatorContent = () => {
 	} );
 
 	return (
-		<div className="nfd-flex nfd-flex-col nfd-items-center nfd-h-full nfd-w-full">
+		<div className="nfd-onboarding-logogen-content nfd-flex nfd-flex-col nfd-items-center nfd-h-full nfd-w-full">
 			{ referenceId ? <Logos /> : <Intro /> }
 		</div>
 	);
 };
 
-const AiLogoCreator = () => {
+const AiLogoCreator = ( { onSetSiteLogo } ) => {
 	const [ isOpen, setIsOpen ] = useState( false );
 
 	/**
@@ -34,12 +35,25 @@ const AiLogoCreator = () => {
 		prefetchGenerationStateAnimations();
 	}, [] );
 
+	/**
+	 * Styles override for the modal.
+	 */
+	const getCustomStyles = () => {
+		return (
+			<style>{ `
+				.nfd-onboarding-logogen-modal .nfd-modal__overlay {
+					background-color: rgba(30, 41, 59, 0.9);
+				}
+			` }</style>
+		);
+	};
+
 	return (
 		<div>
 			<InlineAction
 				title={ __( 'Create with AI', 'wp-module-onboarding' ) }
 				icon={ <AiIcon className="nfd-fill-primary" /> }
-				className="nfd-text-primary"
+				className="nfd-onboarding-logogen-trigger nfd-text-primary"
 				onClick={ () => {
 					setIsOpen( true );
 				} }
@@ -49,9 +63,13 @@ const AiLogoCreator = () => {
 				onClose={ () => {
 					setIsOpen( false );
 				} }
+				className="nfd-onboarding-logogen-modal"
 			>
 				<Modal.Panel className="nfd-w-[768px] nfd-max-w-[90vw] nfd-min-h-[620px] nfd-h-[620px] nfd-max-h-[90vh] nfd-overflow-y-auto">
-					<AiLogoCreatorContent />
+					{ getCustomStyles() }
+					<LogoGenSetSiteLogoHookContextProvider uploadLogo={ onSetSiteLogo }>
+						<AiLogoCreatorContent />
+					</LogoGenSetSiteLogoHookContextProvider>
 				</Modal.Panel>
 			</Modal>
 		</div>

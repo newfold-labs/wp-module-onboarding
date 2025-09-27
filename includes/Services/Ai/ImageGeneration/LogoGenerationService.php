@@ -2,6 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Services\Ai\ImageGeneration;
 
+use NewfoldLabs\WP\Module\Onboarding\Services\MediaService;
 use NewfoldLabs\WP\Module\Onboarding\Types\Logo;
 
 /**
@@ -163,7 +164,18 @@ class LogoGenerationService {
 			isset( $request->get_response_body()['selected_logo_url'] )
 		) {
 			$selected_logo_url = $request->get_response_body()['selected_logo_url'];
-			return array( 'selected_logo_url' => $selected_logo_url );
+			$attachment_data = MediaService::import_image_from_url( $selected_logo_url );
+			if ( is_array( $attachment_data ) ) {
+				$id = $attachment_data['id'];
+				$url = $attachment_data['src'];
+				return array( 'selected_logo_id' => $id, 'selected_logo_url' => $url );
+			} else {
+				return new \WP_Error(
+					'logogen_select_logo_import_failed',
+					'Failed to import logo image',
+					array( 'status' => 500 )
+				);
+			}
 		}
 
 		// Error.

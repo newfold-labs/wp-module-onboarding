@@ -1,5 +1,5 @@
 export const LOGOGEN_STATES = {
-	RECEIVED: 'recieved',
+	RECEIVED: 'received',
 	DISCOVERY: 'discovery',
 	GENERATING: 'generation',
 	COMPLETED: 'completed',

@@ -10,9 +10,6 @@ const generateLogos = async () => {
 		return true;
 	}
 
-	// Optimistically add the records to the store
-	createLogoRecords( 3 );
-
 	const siteTitle = select( nfdOnboardingStore ).getSiteTitle();
 	const prompt = select( nfdOnboardingStore ).getPrompt();
 	const locale = select( nfdOnboardingStore ).getSelectedLocale();
@@ -28,6 +25,9 @@ const generateLogos = async () => {
 
 		return false;
 	}
+
+	// Optimistically add the records to the store
+	createLogoRecords( 3 );
 
 	// Set the generation reference id in the store
 	const generationReferenceId = response.body.reference_id;

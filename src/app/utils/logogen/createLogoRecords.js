@@ -14,7 +14,10 @@ const createLogoRecords = ( count = 3 ) => {
 		reference_id: null,
 		style: null,
 		src: null,
-		selected_src: null,
+		attachment_data: {
+			id: null,
+			url: null,
+		},
 	};
 
 	const records = [];
