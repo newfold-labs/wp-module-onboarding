@@ -1,4 +1,4 @@
-import { useCallback, useContext } from '@wordpress/element';
+import { useCallback, useContext, useState, useEffect } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
 import classNames from 'classnames';
 import { Title, Button } from '@newfold/ui-component-library';
@@ -12,9 +12,11 @@ import {
 	HandThumbDownIcon as HandThumbDownIconSolid,
 } from '@heroicons/react/24/solid';
 import { nfdOnboardingStore } from '@/data/store';
-import { InlineAction, LogoCard } from '@/components';
+import { InlineAction } from '@/components';
 import { LOGOGEN_PENDING_STATES, LOGOGEN_STATES, generateMoreLogos, checkLogogenStatus } from '@/utils/logogen';
 import { LogoGenSetSiteLogoHookContext } from '@/utils/hooks/useLogoGenSetSiteLogo';
+import LogoCard from './LogoCard';
+import PreviewLightbox from './PreviewLightbox';
 
 const Header = () => {
 	return (
@@ -187,7 +189,12 @@ const SetAsSiteLogoAction = () => {
 			/>
 			<Button
 				disabled={ shouldBeDisabled() }
-				className="nfd-button--enhanced nfd-z-50"
+				className={ classNames(
+					'nfd-button--enhanced nfd-z-50',
+					status.isSettingSiteLogo && 'nfd-bg-slate-600',
+					status.hasError && 'nfd-bg-red-600',
+					isSelectedLogoTheSiteLogo() && 'nfd-bg-green-600',
+				) }
 				onClick={ handleSetAsSiteLogo }
 				isLoading={ status.isSettingSiteLogo }
 			>
@@ -258,14 +265,14 @@ const GenerateMoreLogosAction = () => {
 
 	const getButtonText = useCallback( () => {
 		if ( getBatchVersion() === 1 ) {
-			return __( 'Generate more 1/3', 'wp-module-onboarding' );
+			return __( 'Generate more (3) 3/9', 'wp-module-onboarding' );
 		}
 
 		if ( getBatchVersion() === 2 ) {
-			return __( 'Generate more 2/3', 'wp-module-onboarding' );
+			return __( 'Generate more (3) 6/9', 'wp-module-onboarding' );
 		}
 
-		return __( 'Generate more 3/3', 'wp-module-onboarding' );
+		return __( 'Generate more (3) 9/9', 'wp-module-onboarding' );
 	}, [ getBatchVersion ] );
 
 	const handleGenerateMoreLogos = async () => {
@@ -334,6 +341,7 @@ const LogoGenReferenceId = ( { referenceId } ) => {
  * @return {React.ReactNode} The logos component.
  */
 const Logos = () => {
+	const [ previewLogoReferenceId, setPreviewLogoReferenceId ] = useState( null );
 	const { logos, selectedLogo, logogenReferenceId } = useSelect( ( select ) => {
 		return {
 			logos: select( nfdOnboardingStore ).getLogos(),
@@ -356,6 +364,14 @@ const Logos = () => {
 		dispatch( nfdOnboardingStore ).setSelectedLogo( logoReferenceId );
 	};
 
+	const handlePreview = ( logoReferenceId ) => {
+		setPreviewLogoReferenceId( logoReferenceId );
+	};
+
+	const handleClosePreview = () => {
+		setPreviewLogoReferenceId( null );
+	};
+
 	return (
 		<div className="nfd-onboarding-logogen-content-logos nfd-flex nfd-flex-col nfd-w-full nfd-gap-6 nfd-h-full">
 			<Header />
@@ -370,13 +386,18 @@ const Logos = () => {
 						selectedSrc={ logo.selected_src }
 						isSelected={ selectedLogo === ( logo?.reference_id || false ) }
 						onSelect={ handleSelect }
+						onPreview={ handlePreview }
 					/>
 				) ) }
 			</div>
 			<GenerateMoreLogosAction />
 			<Footer />
 			<LogoGenReferenceId referenceId={ logogenReferenceId } />
-
+			<PreviewLightbox
+				logos={ logos }
+				activeLogoReferenceId={ previewLogoReferenceId }
+				onClose={ handleClosePreview }
+			/>
 		</div>
 	);
 };

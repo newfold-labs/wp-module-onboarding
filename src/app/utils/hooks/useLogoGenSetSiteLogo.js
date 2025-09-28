@@ -1,5 +1,5 @@
 import { createContext } from '@wordpress/element';
-import { select, dispatch, useDispatch } from '@wordpress/data';
+import { select, dispatch, useDispatch, resolveSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { nfdOnboardingStore } from '@/data/store';
 import { selectLogo } from '@/utils/api';
@@ -69,8 +69,8 @@ const useLogoGenSetSiteLogo = () => {
 			if ( logo.reference_id === logoReferenceId ) {
 				// Only update the store if the attachment value has changed.
 				if (
-					logo?.attachment_data?.id !== attachmentId ||
-					logo?.attachment_data?.url !== attachmentUrl
+					logo.attachment_data?.id !== attachmentId ||
+					logo.attachment_data?.url !== attachmentUrl
 				) {
 					return { ...logo, attachment_data: { id: attachmentId, url: attachmentUrl } };
 				}
@@ -80,6 +80,8 @@ const useLogoGenSetSiteLogo = () => {
 		// Update the logos in the store
 		dispatch( nfdOnboardingStore ).setLogos( updatedLogos );
 
+		// Ensure core site data is loaded.
+		await resolveSelect( coreStore ).getEntityRecord( 'root', 'site' );
 		// Update the site logo in the core data store
 		editEntityRecord( 'root', 'site', undefined, {
 			site_logo: attachmentId,
@@ -134,13 +136,15 @@ const useLogoGenSetSiteLogo = () => {
 			! response.body?.selected_logo_id ||
 			! response.body?.selected_logo_url
 		) {
+			// eslint-disable-next-line no-console
+			console.error( 'Failed to get the selected logo', response );
 			reportError();
 			return false;
 		}
 
 		// Success.
 		const attachmentData = response.body;
-		const result = await SaveSiteLogo(
+		const result = SaveSiteLogo(
 			logoReferenceId,
 			attachmentData.selected_logo_id,
 			attachmentData.selected_logo_url,

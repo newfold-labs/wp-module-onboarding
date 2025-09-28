@@ -6,7 +6,6 @@ export { Header as Header } from './Header';
 export { Iframe as Iframe } from './Iframe';
 export { InlineAction as InlineAction } from './InlineAction';
 export { InteractionBlockingOverlay as InteractionBlockingOverlay } from './InteractionBlockingOverlay';
-export { LogoCard as LogoCard } from './LogoCard';
 export { Motion as Motion } from './Motion';
 export { Navigate as Navigate } from './Navigate';
 export { Orb as Orb } from './Orb';

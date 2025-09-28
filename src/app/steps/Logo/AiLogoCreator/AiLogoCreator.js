@@ -1,5 +1,5 @@
 import { useSelect } from '@wordpress/data';
-import { Modal } from '@newfold/ui-component-library';
+import { ErrorBoundary as AiLogoCreatorErrorBoundary, Modal } from '@newfold/ui-component-library';
 import { nfdOnboardingStore } from '@/data/store';
 import { InlineAction } from '@/components';
 import { prefetchGenerationStateAnimations } from '@/utils/logogen';
@@ -7,6 +7,7 @@ import { LogoGenSetSiteLogoHookContextProvider } from '@/utils/hooks/useLogoGenS
 import { ReactComponent as AiIcon } from '@/assets/ai-icon.svg';
 import Logos from './Logos';
 import Intro from './Intro';
+import AiLogoCreatorErrorBoundaryFallback from './AiLogoCreatorErrorBoundaryFallback';
 
 const AiLogoCreatorContent = () => {
 	const { referenceId } = useSelect( ( select ) => {
@@ -22,7 +23,7 @@ const AiLogoCreatorContent = () => {
 	);
 };
 
-const AiLogoCreator = ( { onSetSiteLogo } ) => {
+const AiLogoCreator = () => {
 	const [ isOpen, setIsOpen ] = useState( false );
 
 	/**
@@ -36,7 +37,7 @@ const AiLogoCreator = ( { onSetSiteLogo } ) => {
 	}, [] );
 
 	/**
-	 * Styles override for the modal.
+	 * Styles override for the modal not exposed by the modal component.
 	 */
 	const getCustomStyles = () => {
 		return (
@@ -67,9 +68,16 @@ const AiLogoCreator = ( { onSetSiteLogo } ) => {
 			>
 				<Modal.Panel className="nfd-w-[768px] nfd-max-w-[90vw] nfd-min-h-[620px] nfd-h-[620px] nfd-max-h-[90vh] nfd-overflow-y-auto">
 					{ getCustomStyles() }
-					<LogoGenSetSiteLogoHookContextProvider uploadLogo={ onSetSiteLogo }>
-						<AiLogoCreatorContent />
-					</LogoGenSetSiteLogoHookContextProvider>
+					<AiLogoCreatorErrorBoundary
+						FallbackComponent={ AiLogoCreatorErrorBoundaryFallback }
+						onReset={ () => {
+							setIsOpen( false );
+						} }
+					>
+						<LogoGenSetSiteLogoHookContextProvider>
+							<AiLogoCreatorContent />
+						</LogoGenSetSiteLogoHookContextProvider>
+					</AiLogoCreatorErrorBoundary>
 				</Modal.Panel>
 			</Modal>
 		</div>

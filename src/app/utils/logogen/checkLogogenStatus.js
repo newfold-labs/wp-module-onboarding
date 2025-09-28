@@ -74,11 +74,11 @@ const handleCompletedStatus = ( logos, generatedLogos ) => {
 				// Get the next generated logo
 				const generatedLogo = filteredGeneratedLogos.shift() ?? null;
 				return {
+					...logo,
 					status: generatedLogo ? LOGOGEN_STATES.COMPLETED : LOGOGEN_STATES.FAILED,
 					reference_id: generatedLogo ? generatedLogo.reference_id : null,
 					styles: generatedLogo ? generatedLogo.styles : null,
 					src: generatedLogo ? generatedLogo.url : null,
-					selected_src: null,
 				};
 			}
 

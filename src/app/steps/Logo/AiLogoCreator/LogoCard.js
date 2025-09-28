@@ -105,17 +105,8 @@ const LogoCardSelector = ( { isSelected } ) => {
 	);
 };
 
-const LogoCardPreview = ( { logoReferenceId } ) => {
+const LogoCardPreview = ( { onPreview } ) => {
 	const [ isHovered, setIsHovered ] = useState( false );
-
-	const handlePreview = ( e ) => {
-		// Only process if the event is click, space, or enter key.
-		if ( e.type !== 'click' && e.key !== ' ' && e.key !== 'Enter' ) {
-			return;
-		}
-		e.preventDefault();
-		e.stopPropagation();
-	};
 
 	return (
 		<div className="nfd-absolute nfd-top-1.5 nfd-left-1.5 nfd-z-30">
@@ -129,8 +120,8 @@ const LogoCardPreview = ( { logoReferenceId } ) => {
 				onMouseLeave={ () => {
 					setIsHovered( false );
 				} }
-				onClick={ handlePreview }
-				onKeyDown={ handlePreview }
+				onClick={ onPreview }
+				onKeyDown={ onPreview }
 			>
 				{
 					isHovered
@@ -142,11 +133,11 @@ const LogoCardPreview = ( { logoReferenceId } ) => {
 	);
 };
 
-const LogoCardActions = ( { logoReferenceId, isSelected } ) => {
+const LogoCardActions = ( { isSelected, onPreview } ) => {
 	return (
 		<>
 			<LogoCardSelector isSelected={ isSelected } />
-			<LogoCardPreview logoReferenceId={ logoReferenceId } />
+			<LogoCardPreview onPreview={ onPreview } />
 		</>
 	);
 };
@@ -160,6 +151,7 @@ const LogoCard = ( {
 	isSelected,
 	tabIndex = 0,
 	onSelect,
+	onPreview,
 	className,
 	...props
 } ) => {
@@ -173,6 +165,17 @@ const LogoCard = ( {
 		e.stopPropagation();
 
 		onSelect( logoReferenceId );
+	};
+
+	const handlePreview = ( e ) => {
+		// Only process if the event is click, space, or enter key.
+		if ( e.type !== 'click' && e.key !== ' ' && e.key !== 'Enter' ) {
+			return;
+		}
+		e.preventDefault();
+		e.stopPropagation();
+
+		onPreview( logoReferenceId );
 	};
 
 	return (
@@ -200,8 +203,8 @@ const LogoCard = ( {
 					? <StatusOverlay status={ status } />
 					: (
 						<LogoCardActions
-							logoReferenceId={ logoReferenceId }
 							isSelected={ isSelected }
+							onPreview={ handlePreview }
 						/>
 					)
 			}

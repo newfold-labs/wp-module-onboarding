@@ -140,7 +140,7 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 					{ __( 'Site logo', 'wp-module-onboarding' ) }
 				</Label>
 				{ selectedLocale.startsWith( 'en_' ) && (
-					<AiLogoCreator onSetSiteLogo={ handleUpload } />
+					<AiLogoCreator />
 				) }
 			</div>
 			{ getCustomStyles() }
