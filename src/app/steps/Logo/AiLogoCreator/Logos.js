@@ -118,7 +118,14 @@ const SetAsSiteLogoAction = () => {
 	const { status, setSiteLogo } = useContext( LogoGenSetSiteLogoHookContext );
 
 	const isSelectedLogoTheSiteLogo = useCallback( () => {
+		// False if there are no logos or no selected logo.
+		if ( logos.length === 0 || ! selectedLogo ) {
+			return false;
+		}
+
 		const selectedLogoId = logos.find( ( logo ) => logo.reference_id === selectedLogo )?.attachment_data?.id;
+
+		// Return true if the selected logo is the site logo.
 		return selectedLogoId === siteLogo?.id;
 	}, [ logos, selectedLogo, siteLogo ] );
 
