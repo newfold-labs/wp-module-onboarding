@@ -87,6 +87,7 @@ const PreviewLightbox = ( {
 				{ `
 					.nfd-onboarding-logogen-preview-lightbox {
 						--yarl__color_backdrop: rgba(2, 6, 23, 0.9);
+						--yarl__thumbnails_thumbnail_background: white;
 					}
 					.nfd-onboarding-logogen-preview-lightbox .yarl__slide_image {
 						background: white;
@@ -96,6 +97,9 @@ const PreviewLightbox = ( {
 					}
 					.nfd-onboarding-logogen-preview-lightbox .yarl__thumbnails_container {
 						backdrop-filter: blur(10px);
+					}
+					.nfd-onboarding-logogen-preview-lightbox .yarl__thumbnails_thumbnail {
+						background-clip: content-box !important;
 					}
 				` }
 			</style>

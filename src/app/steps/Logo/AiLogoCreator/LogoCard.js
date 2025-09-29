@@ -183,7 +183,7 @@ const LogoCard = ( {
 			role="radio"
 			tabIndex={ ( src && status === LOGOGEN_STATES.COMPLETED ) ? tabIndex : -1 }
 			className={ classNames(
-				'nfd-onboarding-logogen-logo-card nfd-w-full nfd-h-auto nfd-aspect-video nfd-relative nfd-bg-contain nfd-bg-center nfd-bg-no-repeat nfd-border nfd-border-slate nfd-rounded nfd-overflow-hidden focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary focus:nfd-ring-offset-2',
+				'nfd-onboarding-logogen-logo-card nfd-w-full nfd-h-auto nfd-aspect-video nfd-relative nfd-bg-[length:190px_auto] nfd-bg-center nfd-bg-no-repeat nfd-border nfd-border-slate nfd-rounded nfd-overflow-hidden focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary focus:nfd-ring-offset-2',
 				( status === LOGOGEN_STATES.COMPLETED ) ? 'nfd-cursor-pointer' : 'nfd-cursor-default nfd-pointer-events-none',
 				isSelected && 'nfd-border-slate-300 nfd-shadow-md',
 				className,
