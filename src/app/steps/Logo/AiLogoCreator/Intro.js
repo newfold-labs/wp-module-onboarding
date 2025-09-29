@@ -1,6 +1,18 @@
 import { Title, Button } from '@newfold/ui-component-library';
 import { ReactComponent as LogoGenFigure } from '@/assets/logogen-figure.svg';
 import { generateLogos } from '@/utils/logogen';
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+
+const BetaWarning = () => {
+	return (
+		<div className="nfd-onboarding-logogen-beta-models-warning nfd-absolute nfd-bottom-3 nfd-left-3 nfd-flex nfd-items-center nfd-gap-1.5 nfd-bg-amber-50 nfd-p-2 nfd-rounded-md nfd-border nfd-border-amber-200">
+			<ExclamationTriangleIcon className="nfd-w-5 nfd-h-5 nfd-text-amber-700" />
+			<p className="nfd-text-sm nfd-text-amber-700">
+				{ __( 'The AI Logo Creator is in beta. Mistakes may occur.', 'wp-module-onboarding' ) }
+			</p>
+		</div>
+	);
+};
 
 const Intro = () => {
 	const [ isLoading, setIsLoading ] = useState( false );
@@ -23,6 +35,7 @@ const Intro = () => {
 	return (
 		<div className="nfd-onboarding-logogen-content-intro nfd-flex nfd-flex-col nfd-items-center nfd-justify-center nfd-gap-8 nfd-w-[390px] nfd-h-full nfd-py-12">
 			<LogoGenFigure className="nfd-w-[170px] nfd-h-auto" />
+
 			<div className="nfd-flex nfd-flex-col nfd-items-center nfd-justify-center nfd-gap-3 nfd-text-center">
 				<Title as="h2" className="nfd-text-2xl nfd-text-content-default">
 					{ __( 'Create your logo with AI', 'wp-module-onboarding' ) }
@@ -44,6 +57,8 @@ const Intro = () => {
 					</p>
 				) }
 			</div>
+
+			<BetaWarning />
 		</div>
 	);
 };
