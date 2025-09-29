@@ -22,7 +22,7 @@ const Header = () => {
 	return (
 		<div className="nfd-flex nfd-flex-col nfd-gap-1">
 			<Title as="h2" className="nfd-text-xl nfd-text-content-default">
-				{ __( 'Pick Your Logo!', 'wp-module-onboarding' ) }
+				{ __( 'Pick your logo!', 'wp-module-onboarding' ) }
 			</Title>
 			<p className="nfd-text-content-default nfd-text-tiny">
 				{ __( 'Select the logo you like best for your new site.', 'wp-module-onboarding' ) }
