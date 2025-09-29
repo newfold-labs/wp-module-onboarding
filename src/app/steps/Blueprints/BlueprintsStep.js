@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
-import { useMemo } from '@wordpress/element';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useMemo, useState } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
 import classNames from 'classnames';
 import { Container, Spinner, Title } from '@newfold/ui-component-library';
@@ -62,6 +62,11 @@ const BlueprintsStep = () => {
 	}, [] );
 
 	const navigate = useNavigate();
+	const location = useLocation();
+
+	// Check if we came from sitegen failure
+	const sitegenFailed = location.state?.sitegenFailed;
+	const customMessage = location.state?.customMessage;
 
 	const LoadingState = () => {
 		return (
@@ -155,24 +160,44 @@ const BlueprintsStep = () => {
 				{ getCustomStyles() }
 				<Container.Header>
 					<div className="nfd-flex nfd-flex-col nfd-gap-3">
-						<Title
-							as="h3"
-							className="nfd-text-lg mobile:nfd-text-lg nfd-text-[#66A3D2] nfd-font-serif nfd-italic"
-						>
-							{ __( "It's up to you!", 'wp-module-onboarding' ) }
-						</Title>
-						<Title
-							as="h1"
-							className="nfd-text-3xl nfd-text-content-default mobile:nfd-text-2xl"
-						>
-							{ __( 'Pick the best Starter Template for your needs', 'wp-module-onboarding' ) }
-						</Title>
-						<p className="nfd-text-tiny nfd-text-content-default">
-							{ __(
-								"Choose a template based on your goals — whether you're launching a shop, blog, portfolio, or business site. We'll set up your WordPress site in no time — then it's your turn to make it truly yours with easy customizations.",
-								'wp-module-onboarding'
-							) }
-						</p>
+						{ sitegenFailed ? (
+							<>
+								<Title
+									as="h1"
+									className="nfd-text-3xl nfd-text-content-default mobile:nfd-text-2xl"
+								>
+									{ __( "Sorry, let's try a different approach.", 'wp-module-onboarding' ) }
+								</Title>
+								<p className="nfd-text-tiny nfd-text-content-default">
+									{ customMessage ||
+										__(
+											"We're sorry, our site generation tool isn't working right now. In the meantime, here are our beautifully designed starter templates to get you started. Choose your favorite — we'll guide you through customizing it!",
+											'wp-module-onboarding'
+										) }
+								</p>
+							</>
+						) : (
+							<>
+								<Title
+									as="h3"
+									className="nfd-text-lg mobile:nfd-text-lg nfd-text-[#66A3D2] nfd-font-serif nfd-italic"
+								>
+									{ __( "It's up to you!", 'wp-module-onboarding' ) }
+								</Title>
+								<Title
+									as="h1"
+									className="nfd-text-3xl nfd-text-content-default mobile:nfd-text-2xl"
+								>
+									{ __( 'Pick the best Starter Template for your needs', 'wp-module-onboarding' ) }
+								</Title>
+								<p className="nfd-text-tiny nfd-text-content-default">
+									{ __(
+										"Choose a template based on your goals — whether you're launching a shop, blog, portfolio, or business site. We'll set up your WordPress site in no time — then it's your turn to make it truly yours with easy customizations.",
+										'wp-module-onboarding'
+									) }
+								</p>
+							</>
+						) }
 					</div>
 				</Container.Header>
 
