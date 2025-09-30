@@ -3,9 +3,9 @@ import { Navigate, SiteGenPreviewCard, Step } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
 import { Container, Spinner, Title } from '@newfold/ui-component-library';
 import { dispatch, useSelect } from '@wordpress/data';
-import { useMemo, useState } from '@wordpress/element';
+import { useMemo, useState, useCallback } from '@wordpress/element';
 import classNames from 'classnames';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 /**
  * Tabs buttons component.
  *
@@ -88,16 +88,19 @@ const BlueprintsStep = () => {
 		);
 	};
 
-	const handleNext = () => {
+	const handleNext = useCallback( () => {
 		navigate( '/blueprints-canvas', {
 			state: { direction: 'forward' },
 		} );
-	};
+	}, [ navigate ] );
 
-	const handleOnPreview = ( slug ) => {
-		dispatch( nfdOnboardingStore ).setSelectedBlueprint( slug );
-		handleNext();
-	};
+	const handleOnPreview = useCallback(
+		( slug ) => {
+			dispatch( nfdOnboardingStore ).setSelectedBlueprint( slug );
+			handleNext();
+		},
+		[ handleNext ]
+	);
 
 	const renderBlueprints = useMemo( () => {
 		const filteredBlueprints = blueprints.filter( ( blueprint ) => blueprint.type === activeTab );
@@ -149,7 +152,7 @@ const BlueprintsStep = () => {
 				) ) }
 			</div>
 		);
-	}, [ activeTab, blueprints ] );
+	}, [ activeTab, blueprints, handleOnPreview ] );
 
 	return (
 		<Step>
