@@ -52,10 +52,11 @@ const Tabs = ( { activeTab } ) => {
 
 const BlueprintsStep = () => {
 	const [ isLoading, setIsLoading ] = useState( true );
-	const { blueprints, activeTab } = useSelect( ( select ) => {
+	const { blueprints, activeTab, sitegenHasFailed } = useSelect( ( select ) => {
 		const resolve = {
 			blueprints: select( nfdOnboardingStore ).getBlueprints(),
 			activeTab: select( nfdOnboardingStore ).getActiveTab() || 'ecommerce',
+			sitegenHasFailed: select( nfdOnboardingStore ).getSitegenHasFailed(),
 		};
 		setIsLoading( false );
 		return resolve;
@@ -63,10 +64,6 @@ const BlueprintsStep = () => {
 
 	const navigate = useNavigate();
 	const location = useLocation();
-
-	// Check if we came from sitegen failure
-	const sitegenFailed = location.state?.sitegenFailed;
-	const customMessage = location.state?.customMessage;
 
 	const LoadingState = () => {
 		return (
@@ -148,8 +145,7 @@ const BlueprintsStep = () => {
 							height="295px"
 							onPreview={ handleOnPreview }
 						/>
-					) )
-				}
+				) ) }
 			</div>
 		);
 	}, [ activeTab, blueprints ] );
@@ -160,7 +156,7 @@ const BlueprintsStep = () => {
 				{ getCustomStyles() }
 				<Container.Header>
 					<div className="nfd-flex nfd-flex-col nfd-gap-3">
-						{ sitegenFailed ? (
+						{ sitegenHasFailed ? (
 							<>
 								<Title
 									as="h1"
@@ -169,11 +165,10 @@ const BlueprintsStep = () => {
 									{ __( "Sorry, let's try a different approach.", 'wp-module-onboarding' ) }
 								</Title>
 								<p className="nfd-text-tiny nfd-text-content-default">
-									{ customMessage ||
-										__(
-											"We're sorry, our site generation tool isn't working right now. In the meantime, here are our beautifully designed starter templates to get you started. Choose your favorite — we'll guide you through customizing it!",
-											'wp-module-onboarding'
-										) }
+									{ __(
+										"We're sorry, our site generation tool isn't working right now. In the meantime, here are our beautifully designed starter templates to get you started. Choose your favorite — we'll guide you through customizing it!",
+										'wp-module-onboarding'
+									) }
 								</p>
 							</>
 						) : (

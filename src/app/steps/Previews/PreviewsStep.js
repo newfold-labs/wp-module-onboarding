@@ -25,11 +25,6 @@ const PreviewsStep = () => {
 			navigate( '/blueprints', {
 				state: {
 					direction: 'forward',
-					sitegenFailed: true,
-					customMessage: __(
-						"We're sorry, our site generation tool isn't working right now. In the meantime, here are our beautifully designed starter templates to get you started. Choose your favorite — we'll guide you through customizing it!",
-						'wp-module-onboarding'
-					),
 				},
 			} );
 		}
