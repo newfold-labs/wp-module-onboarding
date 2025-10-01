@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router-dom';
-import { useMemo } from '@wordpress/element';
-import { dispatch, useSelect } from '@wordpress/data';
-import classNames from 'classnames';
-import { Container, Spinner, Title } from '@newfold/ui-component-library';
-import { SiteGenPreviewCard, Step, Navigate } from '@/components';
-import { nfdOnboardingStore } from '@/data/store';
 import missingResourceFigureUrl from '@/assets/nfd-missing-resource.png';
+import { Navigate, SiteGenPreviewCard, Step } from '@/components';
+import { nfdOnboardingStore } from '@/data/store';
+import { Container, Spinner, Title } from '@newfold/ui-component-library';
+import { dispatch, useSelect } from '@wordpress/data';
+import { useMemo, useState, useCallback } from '@wordpress/element';
+import classNames from 'classnames';
+import { useNavigate } from 'react-router-dom';
 /**
  * Tabs buttons component.
  *
@@ -37,7 +37,8 @@ const Tabs = ( { activeTab } ) => {
 					className={ classNames(
 						'nfd-bg-transparent nfd-py-4 nfd-px-1 nfd-text-tiny nfd-font-medium nfd-relative',
 						activeTab === tab.value
-							? '!nfd-text-primary after:nfd-content-[""] after:nfd-absolute after:nfd-bottom-[-1px] after:nfd-left-0 after:nfd-w-full after:nfd-h-[2px] after:nfd-bg-primary' : 'nfd-text-[#4A5565]',
+							? '!nfd-text-primary after:nfd-content-[""] after:nfd-absolute after:nfd-bottom-[-1px] after:nfd-left-0 after:nfd-w-full after:nfd-h-[2px] after:nfd-bg-primary'
+							: 'nfd-text-[#4A5565]'
 					) }
 					onClick={ () => {
 						dispatch( nfdOnboardingStore ).setActiveTab( tab.value );
@@ -52,10 +53,11 @@ const Tabs = ( { activeTab } ) => {
 
 const BlueprintsStep = () => {
 	const [ isLoading, setIsLoading ] = useState( true );
-	const { blueprints, activeTab } = useSelect( ( select ) => {
+	const { blueprints, activeTab, sitegenHasFailed } = useSelect( ( select ) => {
 		const resolve = {
 			blueprints: select( nfdOnboardingStore ).getBlueprints(),
 			activeTab: select( nfdOnboardingStore ).getActiveTab() || 'ecommerce',
+			sitegenHasFailed: select( nfdOnboardingStore ).getSitegenHasFailed(),
 		};
 		setIsLoading( false );
 		return resolve;
@@ -66,10 +68,7 @@ const BlueprintsStep = () => {
 	const LoadingState = () => {
 		return (
 			<div className="nfd-flex nfd-justify-center nfd-items-center nfd-h-full">
-				<Spinner
-					size="8"
-					variant="primary"
-				/>
+				<Spinner size="8" variant="primary" />
 			</div>
 		);
 	};
@@ -89,16 +88,19 @@ const BlueprintsStep = () => {
 		);
 	};
 
-	const handleNext = () => {
+	const handleNext = useCallback( () => {
 		navigate( '/blueprints-canvas', {
 			state: { direction: 'forward' },
 		} );
-	};
+	}, [ navigate ] );
 
-	const handleOnPreview = ( slug ) => {
-		dispatch( nfdOnboardingStore ).setSelectedBlueprint( slug );
-		handleNext();
-	};
+	const handleOnPreview = useCallback(
+		( slug ) => {
+			dispatch( nfdOnboardingStore ).setSelectedBlueprint( slug );
+			handleNext();
+		},
+		[ handleNext ]
+	);
 
 	const renderBlueprints = useMemo( () => {
 		const filteredBlueprints = blueprints.filter( ( blueprint ) => blueprint.type === activeTab );
@@ -121,7 +123,12 @@ const BlueprintsStep = () => {
 						>
 							{ __( 'Oops! No templates found for this category.', 'wp-module-onboarding' ) }
 						</Title>
-						<p className="nfd-text-tiny nfd-text-content-default">{ __( 'This category is currently unavailable. Please try again later or select a different category.', 'wp-module-onboarding' ) }</p>
+						<p className="nfd-text-tiny nfd-text-content-default">
+							{ __(
+								'This category is currently unavailable. Please try again later or select a different category.',
+								'wp-module-onboarding'
+							) }
+						</p>
 					</div>
 				</div>
 			);
@@ -130,24 +137,22 @@ const BlueprintsStep = () => {
 		// Render blueprints.
 		return (
 			<div className="nfd-grid nfd-grid-cols-3 nfd-gap-8 mobile:nfd-grid-cols-1 mobile:nfd-justify-items-center">
-				{ filteredBlueprints
-					.map( ( blueprint ) => (
-						<SiteGenPreviewCard
-							key={ blueprint.id }
-							screenshot={ blueprint.screenshot_url }
-							frameName={ blueprint.slug }
-							frameSrc={ blueprint.preview_url }
-							isLoading={ false }
-							overlay={ true }
-							width="245px"
-							height="295px"
-							onPreview={ handleOnPreview }
-						/>
-					) )
-				}
+				{ filteredBlueprints.map( ( blueprint ) => (
+					<SiteGenPreviewCard
+						key={ blueprint.id }
+						screenshot={ blueprint.screenshot_url }
+						frameName={ blueprint.slug }
+						frameSrc={ blueprint.preview_url }
+						isLoading={ false }
+						overlay={ true }
+						width="245px"
+						height="295px"
+						onPreview={ handleOnPreview }
+					/>
+				) ) }
 			</div>
 		);
-	}, [ activeTab, blueprints ] );
+	}, [ activeTab, blueprints, handleOnPreview ] );
 
 	return (
 		<Step>
@@ -155,29 +160,50 @@ const BlueprintsStep = () => {
 				{ getCustomStyles() }
 				<Container.Header>
 					<div className="nfd-flex nfd-flex-col nfd-gap-3">
-						<Title
-							as="h3"
-							className="nfd-text-lg mobile:nfd-text-lg nfd-text-[#66A3D2] nfd-font-serif nfd-italic"
-						>
-							{ __( "It's up to you!", 'wp-module-onboarding' ) }
-						</Title>
-						<Title
-							as="h1"
-							className="nfd-text-3xl nfd-text-content-default mobile:nfd-text-2xl"
-						>
-							{ __( 'Pick the best Starter Template for your needs', 'wp-module-onboarding' ) }
-						</Title>
-						<p className="nfd-text-tiny nfd-text-content-default">
-							{ __(
-								"Choose a template based on your goals — whether you're launching a shop, blog, portfolio, or business site. We'll set up your WordPress site in no time — then it's your turn to make it truly yours with easy customizations.",
-								'wp-module-onboarding'
-							) }
-						</p>
+						{ sitegenHasFailed ? (
+							<>
+								<Title
+									as="h1"
+									className="nfd-text-3xl nfd-text-content-default mobile:nfd-text-2xl"
+								>
+									{ __( "Sorry, let's try a different approach.", 'wp-module-onboarding' ) }
+								</Title>
+								<p className="nfd-text-tiny nfd-text-content-default">
+									{ __(
+										"We're sorry, our site generation tool isn't working right now. In the meantime, here are our beautifully designed starter templates to get you started. Choose your favorite — we'll guide you through customizing it!",
+										'wp-module-onboarding'
+									) }
+								</p>
+							</>
+						) : (
+							<>
+								<Title
+									as="h3"
+									className="nfd-text-lg mobile:nfd-text-lg nfd-text-[#66A3D2] nfd-font-serif nfd-italic"
+								>
+									{ __( "It's up to you!", 'wp-module-onboarding' ) }
+								</Title>
+								<Title
+									as="h1"
+									className="nfd-text-3xl nfd-text-content-default mobile:nfd-text-2xl"
+								>
+									{ __( 'Pick the best Starter Template for your needs', 'wp-module-onboarding' ) }
+								</Title>
+								<p className="nfd-text-tiny nfd-text-content-default">
+									{ __(
+										"Choose a template based on your goals — whether you're launching a shop, blog, portfolio, or business site. We'll set up your WordPress site in no time — then it's your turn to make it truly yours with easy customizations.",
+										'wp-module-onboarding'
+									) }
+								</p>
+							</>
+						) }
 					</div>
 				</Container.Header>
 
 				<Container.Block className="nfd-p-0">
-					{ isLoading ? <LoadingState /> : (
+					{ isLoading ? (
+						<LoadingState />
+					) : (
 						<div className="nfd-flex nfd-flex-col nfd-gap-9">
 							<Tabs activeTab={ activeTab } />
 							{ renderBlueprints }
@@ -185,17 +211,15 @@ const BlueprintsStep = () => {
 					) }
 				</Container.Block>
 
-				<Container.Footer className="nfd-p-0">
-					<div className="nfd-flex nfd-justify-start nfd-border-t nfd-pt-8">
-						<Navigate
-							toRoute="/"
-							direction="backward"
-							variant="secondary"
-						>
-							{ __( 'Back', 'wp-module-onboarding' ) }
-						</Navigate>
-					</div>
-				</Container.Footer>
+				{ ! sitegenHasFailed && (
+					<Container.Footer className="nfd-p-0">
+						<div className="nfd-flex nfd-justify-start nfd-border-t nfd-pt-8">
+							<Navigate toRoute="/" direction="backward" variant="secondary">
+								{ __( 'Back', 'wp-module-onboarding' ) }
+							</Navigate>
+						</div>
+					</Container.Footer>
+				) }
 			</Container>
 		</Step>
 	);
