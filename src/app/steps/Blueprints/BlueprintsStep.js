@@ -211,13 +211,15 @@ const BlueprintsStep = () => {
 					) }
 				</Container.Block>
 
-				<Container.Footer className="nfd-p-0">
-					<div className="nfd-flex nfd-justify-start nfd-border-t nfd-pt-8">
-						<Navigate toRoute="/" direction="backward" variant="secondary">
-							{ __( 'Back', 'wp-module-onboarding' ) }
-						</Navigate>
-					</div>
-				</Container.Footer>
+				{ ! sitegenHasFailed && (
+					<Container.Footer className="nfd-p-0">
+						<div className="nfd-flex nfd-justify-start nfd-border-t nfd-pt-8">
+							<Navigate toRoute="/" direction="backward" variant="secondary">
+								{ __( 'Back', 'wp-module-onboarding' ) }
+							</Navigate>
+						</div>
+					</Container.Footer>
+				) }
 			</Container>
 		</Step>
 	);
