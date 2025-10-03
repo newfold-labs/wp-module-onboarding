@@ -5,6 +5,7 @@ import bluehostLogoUrl from '@/assets/bluehost-logo.svg';
 import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_ONBOARDING_STARTED } from '@/utils/analytics/hiive/constants';
 import { disableComingSoon } from '@/utils/api';
+import { fetchBlueprints } from '@/utils/blueprints';
 import SiteCreatorCard from './SiteCreatorCard';
 import MigrationCard from './MigrationCard';
 
@@ -17,6 +18,9 @@ const ForkStep = () => {
 			};
 		}
 	);
+
+	// Proactively fetch the blueprints.
+	fetchBlueprints();
 
 	useEffect( () => {
 		// Analytics: Onboarding started event
@@ -73,7 +77,7 @@ const ForkStep = () => {
 
 					{ ( canMigrateSite || migrationFallbackUrl ) && (
 						<>
-							<span className="!nfd-text-lg nfd-text-content-primarynfd-font-medium">
+							<span className="!nfd-text-lg nfd-text-content-primary nfd-font-medium">
 								{ __( 'Or', 'wp-module-onboarding' ) }
 							</span>
 							<MigrationCard
