@@ -1,15 +1,12 @@
 import { Container, Title } from '@newfold/ui-component-library';
-import { Navigate } from '@/components';
 import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
-import { ACTION_FORK_OPTION_SELECTED, ACTION_ONBOARDING_STARTED } from '@/utils/analytics/hiive/constants';
+import { ACTION_ONBOARDING_STARTED } from '@/utils/analytics/hiive/constants';
 import { disableComingSoon } from '@/utils/api';
 import { fetchBlueprints } from '@/utils/blueprints';
 import ForkOptions from './ForkOptions';
 import ForkLinks from './ForkLinks';
 
 const ForkStep = () => {
-	const [ selectedForkOption, setSelectedForkOption ] = useState( null );
-
 	useEffect( () => {
 		// Analytics: Onboarding started event
 		sendOnboardingEvent(
@@ -33,27 +30,6 @@ const ForkStep = () => {
 	}, [] );
 
 	/**
-	 * Handle the next button click.
-	 * This will track the fork option selected event.
-	 */
-	const handleNext = () => {
-		let forkEventLabel = '';
-		if ( selectedForkOption === 'sitegen' ) {
-			forkEventLabel = 'AI';
-		} else if ( selectedForkOption === 'blueprints' ) {
-			forkEventLabel = 'BLUEPRINTS';
-		}
-
-		// Analytics: Fork option selected event.
-		sendOnboardingEvent(
-			new OnboardingEvent(
-				ACTION_FORK_OPTION_SELECTED,
-				forkEventLabel
-			)
-		);
-	};
-
-	/**
 	 * Component styles override.
 	 */
 	const getCustomStyles = () => {
@@ -61,7 +37,7 @@ const ForkStep = () => {
 			<style>
 				{ `
 					.nfd-onboarding-body {
-						padding-top: 3rem !important;
+						padding-top: 2rem !important;
 					}
 				` }
 			</style>
@@ -69,46 +45,23 @@ const ForkStep = () => {
 	};
 
 	return (
-		<Container className="nfd-onboarding-step-container nfd-onboarding-step-intro nfd-min-w-[780px] nfd-max-w-[780px] tablet:nfd-min-w-[90%] tablet:nfd-max-w-[90%]">
+		<Container className="nfd-onboarding-step-container nfd-onboarding-step-intro nfd-min-w-[1200px] nfd-max-w-[1200px] small:nfd-min-w-[90%] small:nfd-max-w-[90%] small-only:nfd-scale-90">
 			{ getCustomStyles() }
 			<Container.Header>
 				<div className="nfd-flex nfd-flex-col nfd-gap-3">
 					<Title
-						as="h3"
-						className="nfd-text-lg mobile:nfd-text-lg nfd-text-[#66A3D2] nfd-font-serif nfd-italic"
-					>
-						{ __( "Let's start!", 'wp-module-onboarding' ) }
-					</Title>
-					<Title
 						as="h1"
-						className="nfd-text-3xl nfd-text-content-default mobile:nfd-text-2xl"
+						className="nfd-text-2xl nfd-text-content-default nfd-text-center"
 					>
-						{ __( 'What would you like to do?', 'wp-module-onboarding' ) }
+						{ __( 'Choose how you want to create your site', 'wp-module-onboarding' ) }
 					</Title>
-					<p className="nfd-text-tiny nfd-text-content-default">
-						{ __( 'Choose whether you want to select one of the available themes and quickly access the WordPress dashboard to customize your site, or continue with our AI-driven step-by-step flow.', 'wp-module-onboarding' ) }
-					</p>
 				</div>
 			</Container.Header>
 
 			<Container.Block className="nfd-p-0">
-				<div className="nfd-flex nfd-flex-col nfd-gap-10">
-					<ForkOptions onChange={ setSelectedForkOption } />
-
-					<div className="nfd-flex nfd-justify-between nfd-items-end nfd-gap-8">
-						<ForkLinks />
-						<div className="nfd-flex nfd-justify-end">
-							<Navigate
-								toRoute={ selectedForkOption === 'sitegen' ? '/intake' : '/blueprints' }
-								direction="forward"
-								disabled={ ! selectedForkOption }
-								callback={ handleNext }
-								className="nfd-mb-3"
-							>
-								{ __( 'Next', 'wp-module-onboarding' ) }
-							</Navigate>
-						</div>
-					</div>
+				<div className="nfd-flex nfd-flex-col nfd-gap-14">
+					<ForkOptions />
+					<ForkLinks />
 				</div>
 			</Container.Block>
 		</Container>

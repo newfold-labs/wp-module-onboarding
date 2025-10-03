@@ -1,10 +1,10 @@
 import { useSelect } from '@wordpress/data';
 import { useNavigate } from 'react-router-dom';
-import { Link } from '@newfold/ui-component-library';
 import { ArrowsRightLeftIcon } from '@heroicons/react/24/outline';
 import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_FORK_OPTION_SELECTED } from '@/utils/analytics/hiive/constants';
+import { ActionCard } from '@/components';
 
 const ForkLinks = () => {
 	const { canMigrateSite, migrationFallbackUrl } = useSelect(
@@ -39,25 +39,23 @@ const ForkLinks = () => {
 
 		if ( canMigrateSite || migrationFallbackUrl ) {
 			return (
-				<Link
+				<ActionCard
 					onClick={ handleClick }
 					href={ migrationFallbackUrl || '#' }
-					className="nfd-text-tiny nfd-text-content-default nfd-no-underline nfd-inline-flex nfd-gap-2 nfd-items-center focus:nfd-ring-primary nfd-cursor-pointer"
+					className="nfd-w-full nfd-max-w-[780px] nfd-flex nfd-items-center nfd-justify-center nfd-gap-2 nfd-text-center nfd-text-base nfd-text-content-default nfd-bg-transparent nfd-py-3 nfd-px-6 nfd-border nfd-border-primary nfd-rounded-xl hover:nfd-bg-primary-100"
 				>
-					<ArrowsRightLeftIcon className="nfd-w-4 nfd-h-4" />
+					<ArrowsRightLeftIcon className="nfd-w-[18px] nfd-h-[18px]" />
 					<span>
-						{ __( 'Migrate your site', 'wp-module-onboarding' ) }
+						{ __( 'Migrate an existing site', 'wp-module-onboarding' ) }
 					</span>
-				</Link>
+				</ActionCard>
 			);
 		}
 	};
 
 	return (
-		<div className="nfd-flex nfd-flex-col nfd-gap-2.5">
-			<ul>
-				<li><MigrationLink /></li>
-			</ul>
+		<div className="nfd-flex nfd-flex-col nfd-items-center">
+			<MigrationLink />
 		</div>
 	);
 };
