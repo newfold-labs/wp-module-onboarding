@@ -4,8 +4,6 @@ import { LogoStep } from './Logo';
 import { GeneratingStep } from './Generating';
 import { PreviewsStep } from './Previews';
 import { CanvasStep } from './Canvas';
-import { BlueprintsStep } from './Blueprints';
-import { BlueprintCanvasStep } from './BlueprintCanvas';
 import { MigrationStep } from './Migration';
 
 const STEPS = {
@@ -45,18 +43,6 @@ const STEPS = {
 		isRequired: true,
 		Component: CanvasStep,
 	},
-	blueprints: {
-		path: '/blueprints',
-		order: 70,
-		isRequired: false,
-		Component: BlueprintsStep,
-	},
-	blueprintCanvas: {
-		path: '/blueprints-canvas',
-		order: 80,
-		isRequired: false,
-		Component: BlueprintCanvasStep,
-	},
 	migration: {
 		path: '/migration',
 		order: 90,
@@ -73,7 +59,5 @@ export {
 	GeneratingStep,
 	PreviewsStep,
 	CanvasStep,
-	BlueprintsStep,
-	BlueprintCanvasStep,
 	MigrationStep,
 };
