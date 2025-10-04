@@ -295,8 +295,8 @@ const GenerateMoreLogosAction = () => {
 	return (
 		<div className={ classNames(
 			'nfd-w-full nfd-flex nfd-justify-center',
-			getBatchVersion() === 1 && 'nfd-pt-8',
-			getBatchVersion() === 2 && 'nfd-pt-5',
+			getBatchVersion() === 1 && 'nfd-pt-8 mobile:nfd-pt-0 mobile:nfd-pb-28',
+			getBatchVersion() === 2 && 'nfd-pt-5 mobile:nfd-pt-0 mobile:nfd-pb-28',
 			getBatchVersion() === 3 && 'nfd-p-0',
 		) }>
 			<Button
@@ -319,7 +319,7 @@ const GenerateMoreLogosAction = () => {
 
 const Footer = () => {
 	return (
-		<div className="nfd-flex nfd-items-center nfd-justify-between nfd-mt-auto">
+		<div className="nfd-flex nfd-items-center nfd-justify-between nfd-mt-auto mobile:nfd-bg-slate-100 mobile:nfd-border mobile:nfd-border-slate-200 mobile:nfd-flex-col mobile:nfd-gap-4 mobile:nfd-fixed mobile:nfd-bottom-2.5 mobile:nfd-left-0 mobile:nfd-right-0 mobile:nfd-w-[85vw] mobile:nfd-mx-auto mobile:nfd-p-4 mobile:nfd-rounded-lg mobile:nfd-shadow-lg mobile:nfd-z-50">
 			<Survey />
 			<SetAsSiteLogoAction />
 		</div>
@@ -382,7 +382,7 @@ const Logos = () => {
 	return (
 		<div className="nfd-onboarding-logogen-content-logos nfd-flex nfd-flex-col nfd-w-full nfd-gap-6 nfd-h-full">
 			<Header />
-			<div className="nfd-grid nfd-grid-cols-3 nfd-gap-8 nfd-w-full">
+			<div className="nfd-grid nfd-grid-cols-3 nfd-gap-8 nfd-w-full mobile:nfd-grid-cols-1 mobile:nfd-pb-24">
 				{ logos.map( ( logo, index ) => (
 					<LogoCard
 						key={ logo.reference_id || index }

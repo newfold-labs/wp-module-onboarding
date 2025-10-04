@@ -5,7 +5,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
 const BetaWarning = () => {
 	return (
-		<div className="nfd-onboarding-logogen-beta-models-warning nfd-absolute nfd-bottom-4 nfd-left-1/2 nfd-transform nfd-translate-x-[-50%] nfd-flex nfd-items-center nfd-gap-1.5 nfd-bg-amber-50 nfd-p-2 nfd-rounded-md nfd-border nfd-border-amber-200">
+		<div className="nfd-onboarding-logogen-beta-models-warning nfd-absolute nfd-bottom-4 nfd-left-1/2 nfd-transform nfd-translate-x-[-50%] nfd-flex nfd-items-center nfd-gap-1.5 nfd-bg-amber-50 nfd-p-2 nfd-rounded-md nfd-border nfd-border-amber-200 mobile:nfd-w-[325px]">
 			<ExclamationTriangleIcon className="nfd-w-5 nfd-h-5 nfd-text-amber-700" />
 			<p className="nfd-text-sm nfd-text-amber-700">
 				{ __( 'The AI Logo Creator is in beta. Mistakes may occur.', 'wp-module-onboarding' ) }
@@ -33,7 +33,7 @@ const Intro = () => {
 	};
 
 	return (
-		<div className="nfd-onboarding-logogen-content-intro nfd-flex nfd-flex-col nfd-items-center nfd-justify-center nfd-gap-8 nfd-w-[390px] nfd-h-full nfd-py-12">
+		<div className="nfd-onboarding-logogen-content-intro nfd-flex nfd-flex-col nfd-items-center nfd-justify-center nfd-gap-8 nfd-w-[390px] nfd-h-full nfd-py-12 mobile:nfd-max-w-[325px]">
 			<LogoGenFigure className="nfd-w-[170px] nfd-h-auto" />
 
 			<div className="nfd-flex nfd-flex-col nfd-items-center nfd-justify-center nfd-gap-3 nfd-text-center">
