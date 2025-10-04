@@ -17,6 +17,8 @@ import { LOGOGEN_PENDING_STATES, LOGOGEN_STATES, generateMoreLogos, checkLogogen
 import { LogoGenSetSiteLogoHookContext } from '@/utils/hooks/useLogoGenSetSiteLogo';
 import LogoCard from './LogoCard';
 import PreviewLightbox from './PreviewLightbox';
+import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
+import { ACTION_LOGOGEN_GENERATE_MORE_6, ACTION_LOGOGEN_GENERATE_MORE_9, ACTION_LOGOGEN_LOGO_SELECTED, ACTION_LOGOGEN_SURVEY } from '@/utils/analytics/hiive/constants';
 
 const Header = () => {
 	return (
@@ -54,7 +56,13 @@ const Survey = () => {
 			return;
 		}
 
+		// Update store value.
 		dispatch( nfdOnboardingStore ).setLogogenSurvey( value );
+
+		// Analytics: Logogen survey.
+		sendOnboardingEvent(
+			new OnboardingEvent( ACTION_LOGOGEN_SURVEY, value )
+		);
 	};
 
 	const shouldRender = useCallback( () => {
@@ -163,6 +171,11 @@ const SetAsSiteLogoAction = () => {
 		setSiteLogo( {
 			logoReferenceId: selectedLogo,
 		} );
+
+		// Analytics: Logogen logo selected.
+		sendOnboardingEvent(
+			new OnboardingEvent( ACTION_LOGOGEN_LOGO_SELECTED )
+		);
 	};
 
 	const getButtonText = useCallback( () => {
@@ -284,6 +297,13 @@ const GenerateMoreLogosAction = () => {
 
 	const handleGenerateMoreLogos = async () => {
 		setIsLoading( true );
+
+		// Analytics: Logogen generate more.
+		const action = getBatchVersion() === 1 ? ACTION_LOGOGEN_GENERATE_MORE_6 : ACTION_LOGOGEN_GENERATE_MORE_9;
+		sendOnboardingEvent(
+			new OnboardingEvent( action )
+		);
+
 		await generateMoreLogos();
 		setIsLoading( false );
 	};

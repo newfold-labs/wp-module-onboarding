@@ -2,6 +2,8 @@ import { Title, Button } from '@newfold/ui-component-library';
 import { ReactComponent as LogoGenFigure } from '@/assets/logogen-figure.svg';
 import { generateLogos } from '@/utils/logogen';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
+import { ACTION_LOGOGEN_GENERATE, ACTION_LOGOGEN_GENERATE_FAILED } from '@/utils/analytics/hiive/constants';
 
 const BetaWarning = () => {
 	return (
@@ -29,7 +31,17 @@ const Intro = () => {
 			// Set error state.
 			setIsLoading( false );
 			setHasError( true );
+
+			// Analytics: Logogen generate failed.
+			sendOnboardingEvent(
+				new OnboardingEvent( ACTION_LOGOGEN_GENERATE_FAILED )
+			);
 		}
+
+		// Analytics: Logogen generate.
+		sendOnboardingEvent(
+			new OnboardingEvent( ACTION_LOGOGEN_GENERATE )
+		);
 	};
 
 	return (

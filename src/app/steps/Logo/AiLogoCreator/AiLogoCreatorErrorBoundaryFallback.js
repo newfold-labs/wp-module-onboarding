@@ -1,9 +1,16 @@
 import { Title, Button } from '@newfold/ui-component-library';
 import { ReactComponent as LogoGenErrorFigure } from '@/assets/logogen-err-figure.svg';
+import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
+import { ACTION_LOGOGEN_ERROR_TRIGGERED } from '@/utils/analytics/hiive/constants';
 
 const AiLogoCreatorErrorBoundaryFallback = ( { error, resetErrorBoundary } ) => {
 	// eslint-disable-next-line no-console
 	console.error( error );
+
+	// Analytics: Logogen error triggered.
+	sendOnboardingEvent(
+		new OnboardingEvent( ACTION_LOGOGEN_ERROR_TRIGGERED )
+	);
 
 	return (
 		<div className="nfd-onboarding-logogen-error-boundary nfd-flex nfd-flex-col nfd-items-center nfd-h-full nfd-w-full">
