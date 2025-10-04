@@ -1,23 +1,32 @@
+import { useSelect } from '@wordpress/data';
 import { Container, Title } from '@newfold/ui-component-library';
-import { Navigate } from '@/components';
+import { nfdOnboardingStore } from '@/data/store';
+import bluehostLogoUrl from '@/assets/bluehost-logo.svg';
 import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
-import { ACTION_FORK_OPTION_SELECTED, ACTION_ONBOARDING_STARTED } from '@/utils/analytics/hiive/constants';
+import { ACTION_ONBOARDING_STARTED } from '@/utils/analytics/hiive/constants';
 import { disableComingSoon } from '@/utils/api';
 import { fetchBlueprints } from '@/utils/blueprints';
-import ForkOptions from './ForkOptions';
-import ForkLinks from './ForkLinks';
+import SiteCreatorCard from './SiteCreatorCard';
+import MigrationCard from './MigrationCard';
 
 const ForkStep = () => {
-	const [ selectedForkOption, setSelectedForkOption ] = useState( null );
+	const { canMigrateSite, migrationFallbackUrl } = useSelect(
+		( select ) => {
+			return {
+				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
+				migrationFallbackUrl: select( nfdOnboardingStore ).getMigrationFallbackUrl(),
+			};
+		}
+	);
+
+	// Proactively fetch the blueprints.
+	fetchBlueprints();
 
 	useEffect( () => {
 		// Analytics: Onboarding started event
 		sendOnboardingEvent(
 			new OnboardingEvent( ACTION_ONBOARDING_STARTED )
 		);
-
-		// Proactively fetch the blueprints.
-		fetchBlueprints();
 
 		/**
 		 * Before unmounting: Disable the site coming soon page.
@@ -32,83 +41,51 @@ const ForkStep = () => {
 		};
 	}, [] );
 
-	/**
-	 * Handle the next button click.
-	 * This will track the fork option selected event.
-	 */
-	const handleNext = () => {
-		let forkEventLabel = '';
-		if ( selectedForkOption === 'sitegen' ) {
-			forkEventLabel = 'AI';
-		} else if ( selectedForkOption === 'blueprints' ) {
-			forkEventLabel = 'BLUEPRINTS';
-		}
-
-		// Analytics: Fork option selected event.
-		sendOnboardingEvent(
-			new OnboardingEvent(
-				ACTION_FORK_OPTION_SELECTED,
-				forkEventLabel
-			)
-		);
-	};
-
-	/**
-	 * Component styles override.
-	 */
-	const getCustomStyles = () => {
-		return (
-			<style>
-				{ `
-					.nfd-onboarding-body {
-						padding-top: 3rem !important;
-					}
-				` }
-			</style>
-		);
-	};
-
 	return (
-		<Container className="nfd-onboarding-step-container nfd-onboarding-step-intro nfd-min-w-[780px] nfd-max-w-[780px] tablet:nfd-min-w-[90%] tablet:nfd-max-w-[90%]">
-			{ getCustomStyles() }
-			<Container.Header>
-				<div className="nfd-flex nfd-flex-col nfd-gap-3">
-					<Title
-						as="h3"
-						className="nfd-text-lg mobile:nfd-text-lg nfd-text-[#66A3D2] nfd-font-serif nfd-italic"
-					>
-						{ __( "Let's start!", 'wp-module-onboarding' ) }
-					</Title>
-					<Title
-						as="h1"
-						className="nfd-text-3xl nfd-text-content-default mobile:nfd-text-2xl"
-					>
-						{ __( 'What would you like to do?', 'wp-module-onboarding' ) }
-					</Title>
-					<p className="nfd-text-tiny nfd-text-content-default">
-						{ __( 'Choose whether you want to select one of the available themes and quickly access the WordPress dashboard to customize your site, or continue with our AI-driven step-by-step flow.', 'wp-module-onboarding' ) }
-					</p>
+		<Container className="nfd-onboarding-step-container nfd-onboarding-step-intro">
+			<Container.Block className="nfd-text-center nfd-p-0">
+				<style>
+					{ `
+					#nfd-onboarding-header-logo {
+						display: none;
+					}
+					` }
+				</style>
+				<Title className="nfd-text-3xl mobile:nfd-text-2xl">
+					{ __( 'Welcome to WordPress', 'wp-module-onboarding' ) }
+				</Title>
+				<div className="nfd-flex nfd-items-center nfd-justify-center nfd-gap-2 nfd-mt-3.5 mobile:nfd-mt-2">
+					<span className="nfd-text-xl nfd-text-content-primary mobile:nfd-text-base">
+						{ __( 'Powered by', 'wp-module-onboarding' ) }
+					</span>
+					<img
+						src={ bluehostLogoUrl }
+						alt="Bluehost"
+						className="nfd-w-[90px] nfd-h-auto mobile:nfd-w-[70px]"
+					/>
 				</div>
-			</Container.Header>
 
-			<Container.Block className="nfd-p-0">
-				<div className="nfd-flex nfd-flex-col nfd-gap-10">
-					<ForkOptions onChange={ setSelectedForkOption } />
+				<Title
+					as="h3"
+					className="nfd-text-2xl nfd-mt-14 nfd-mb-10 mobile:nfd-text-xl mobile:nfd-mt-10 mobile:nfd-mb-6"
+				>
+					{ __( 'How would you like to start?', 'wp-module-onboarding' ) }
+				</Title>
 
-					<div className="nfd-flex nfd-justify-between nfd-items-end nfd-gap-8">
-						<ForkLinks />
-						<div className="nfd-flex nfd-justify-end">
-							<Navigate
-								toRoute={ selectedForkOption === 'sitegen' ? '/intake' : '/blueprints' }
-								direction="forward"
-								disabled={ ! selectedForkOption }
-								callback={ handleNext }
-								className="nfd-mb-3"
-							>
-								{ __( 'Next', 'wp-module-onboarding' ) }
-							</Navigate>
-						</div>
-					</div>
+				<div className="nfd-flex nfd-flex-col nfd-gap-6">
+					<SiteCreatorCard initialFocus={ true } />
+
+					{ ( canMigrateSite || migrationFallbackUrl ) && (
+						<>
+							<span className="!nfd-text-lg nfd-text-content-primary nfd-font-medium">
+								{ __( 'Or', 'wp-module-onboarding' ) }
+							</span>
+							<MigrationCard
+								canMigrateSite={ canMigrateSite }
+								migrationFallbackUrl={ migrationFallbackUrl }
+							/>
+						</>
+					) }
 				</div>
 			</Container.Block>
 		</Container>

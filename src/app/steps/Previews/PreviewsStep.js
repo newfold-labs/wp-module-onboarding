@@ -1,5 +1,6 @@
 import { useEffect } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
 import { useNavigate } from 'react-router-dom';
 import { Container } from '@newfold/ui-component-library';
 import { Step } from '@/components';
@@ -9,22 +10,25 @@ import { ACTION_HOMEPAGE_PREVIEW_SELECTED } from '@/utils/analytics/hiive/consta
 import { Preview } from './';
 
 const PreviewsStep = () => {
-	const { homepages, fallbackHomepages, sitegenHasFailed } = useSelect( ( select ) => {
+	const { homepages, sitegenHasFailed } = useSelect( ( select ) => {
 		return {
 			homepages: select( nfdOnboardingStore ).getHomepages(),
-			fallbackHomepages: select( nfdOnboardingStore ).getFallbackHomepages(),
 			sitegenHasFailed: select( nfdOnboardingStore ).getSitegenHasFailed(),
 		};
 	} );
 
 	const navigate = useNavigate();
 
-	// Update store with static homepages when sitegenHasFailed is true
+	// Navigate to blueprints screen when sitegenHasFailed is true
 	useEffect( () => {
 		if ( sitegenHasFailed ) {
-			dispatch( nfdOnboardingStore ).setHomepages( fallbackHomepages );
+			navigate( '/blueprints', {
+				state: {
+					direction: 'forward',
+				},
+			} );
 		}
-	}, [ sitegenHasFailed, fallbackHomepages ] );
+	}, [ sitegenHasFailed, navigate ] );
 
 	const handleNext = () => {
 		navigate( '/canvas', {
@@ -47,13 +51,7 @@ const PreviewsStep = () => {
 	const renderPreviews = () => {
 		const previews = homepages;
 		return Object.keys( previews ).map( ( slug, idx ) => {
-			return (
-				<Preview
-					key={ idx }
-					preview={ previews[ slug ] }
-					onPreview={ handlePreview }
-				/>
-			);
+			return <Preview key={ idx } preview={ previews[ slug ] } onPreview={ handlePreview } />;
 		} );
 	};
 
@@ -66,9 +64,15 @@ const PreviewsStep = () => {
 
 	const getStepDescription = () => {
 		if ( sitegenHasFailed ) {
-			return __( "We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favorite — we'll guide you through customizing it!", 'wp-module-onboarding' );
+			return __(
+				"We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favorite — we'll guide you through customizing it!",
+				'wp-module-onboarding'
+			);
 		}
-		return __( 'Here are three unique designs for you to start with. Pick your favorite to customize it!', 'wp-module-onboarding' );
+		return __(
+			'Here are three unique designs for you to start with. Pick your favorite to customize it!',
+			'wp-module-onboarding'
+		);
 	};
 
 	return (
