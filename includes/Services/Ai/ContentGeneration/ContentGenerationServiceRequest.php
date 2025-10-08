@@ -17,11 +17,21 @@ use NewfoldLabs\WP\Module\Data\HiiveConnection;
 class ContentGenerationServiceRequest {
 
 	/**
+	 * Default production base URL
+	 */
+	const DEFAULT_PRODUCTION_BASE_URL = 'https://patterns.hiive.cloud';
+
+	/**
+	 * Default local base URL
+	 */
+	const DEFAULT_LOCAL_BASE_URL = 'http://localhost:8888';
+
+	/**
 	 * API URL
 	 *
 	 * @var string
 	 */
-	private $url = 'https://patterns.hiive.cloud/api/v1/content-generation/';
+	private $url;
 
 	/**
 	 * API endpoint
@@ -54,12 +64,14 @@ class ContentGenerationServiceRequest {
 	/**
 	 * Constructor
 	 *
-	 * @param array $body    Request body data.
-	 * @param array $headers Additional headers to include in the request.
+	 * @param string $endpoint API endpoint.
+	 * @param array  $body     Request body data.
+	 * @param array  $headers  Additional headers to include in the request.
 	 */
 	public function __construct( string $endpoint, array $body, array $headers = array() ) {
 		$this->endpoint = $endpoint;
 		$this->body = $body;
+		$this->url = $this->get_api_url();
 		$this->headers = array_merge(
 			array(
 				'Content-Type'  => 'application/json',
@@ -68,6 +80,23 @@ class ContentGenerationServiceRequest {
 			$headers
 		);
 
+	}
+
+	/**
+	 * Get the API URL based on configuration
+	 *
+	 * @return string The API URL to use.
+	 */
+	private function get_api_url(): string {
+		$base_url = '';
+		
+		if ( defined( 'NFD_WB_DEV_MODE' ) && NFD_WB_DEV_MODE ) {
+			$base_url = defined( 'NFD_WB_LOCAL_BASE_URL' ) ? NFD_WB_LOCAL_BASE_URL : self::DEFAULT_LOCAL_BASE_URL;
+		} else {
+			$base_url = defined( 'NFD_WB_PRODUCTION_BASE_URL' ) ? NFD_WB_PRODUCTION_BASE_URL : self::DEFAULT_PRODUCTION_BASE_URL;
+		}
+
+		return $base_url . '/api/v1/content-generation/';
 	}
 
 	/**
