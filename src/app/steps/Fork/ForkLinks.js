@@ -78,7 +78,7 @@ const ForkLinks = ( { variant } ) => {
 	return (
 		<div className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-4">
 			<MigrationLink />
-			<div className="nfd-flex nfd-items-center nfd-gap-4">
+			<div className="nfd-flex nfd-items-center nfd-gap-4 mobile:nfd-flex-col mobile:nfd-gap-2">
 				<span className="nfd-text-content-default">
 					{ __( "I'm an expert, ", 'wp-module-onboarding' ) }
 					<a
@@ -89,7 +89,7 @@ const ForkLinks = ( { variant } ) => {
 						{ __( 'take me to the WP Admin', 'wp-module-onboarding' ) }
 					</a>
 				</span>
-				<span className="nfd-text-content-default">|</span>
+				<span className="nfd-text-content-default mobile:nfd-hidden">|</span>
 				<span className="nfd-text-content-default">
 					{ __( 'Go to ', 'wp-module-onboarding' ) }
 					<a

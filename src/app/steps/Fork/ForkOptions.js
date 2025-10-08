@@ -56,7 +56,7 @@ const ForkOption = ( {
 } ) => {
 	return (
 		<div className={ classNames(
-			'nfd-onboarding-fork-option nfd-flex-1 nfd-flex nfd-flex-col nfd-justify-between nfd-text-center nfd-max-w-[500px]',
+			'nfd-onboarding-fork-option nfd-flex-1 nfd-flex nfd-flex-col nfd-justify-between nfd-text-center',
 			className
 		) }>
 			{ children }

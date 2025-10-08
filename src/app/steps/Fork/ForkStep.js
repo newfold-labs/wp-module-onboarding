@@ -11,6 +11,7 @@ import SiteCreatorCard from './SiteCreatorCard';
 import MigrationCard from './MigrationCard';
 import ForkOptions from './ForkOptions';
 import ForkLinks from './ForkLinks';
+import '@/styles/ForkStep.css';
 
 /**
  * Get or set the A/B test variant for the fork step.
@@ -127,33 +128,6 @@ const ForkStep = () => {
 	// Render Variant B (template layout with 3 options)
 	return (
 		<Container className="nfd-onboarding-step-container nfd-onboarding-step-intro nfd-max-w-[1200px] nfd-w-full nfd-px-4">
-			<style>
-				{ `
-				.nfd-onboarding-body {
-					padding-top: 2rem !important;
-				}
-				/* Responsive scaling for 900px - 1200px */
-				@media (min-width: 900px) and (max-width: 1200px) {
-					.nfd-onboarding-step-intro {
-						max-width: 95%;
-					}
-				}
-				/* Mobile layout below 900px */
-				@media (max-width: 899px) {
-					.nfd-onboarding-fork-options > div {
-						flex-direction: column !important;
-						gap: 2rem !important;
-						padding-top: 2rem !important;
-					}
-					.nfd-onboarding-fork-option {
-						max-width: 100% !important;
-					}
-					.nfd-onboarding-fork-options .nfd-w-px {
-						display: none !important;
-					}
-				}
-				` }
-			</style>
 			<Container.Header>
 				<div className="nfd-flex nfd-flex-col nfd-gap-3">
 					<Title
