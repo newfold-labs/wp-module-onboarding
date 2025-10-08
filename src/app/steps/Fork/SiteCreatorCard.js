@@ -6,7 +6,7 @@ import ActionCard from '@/components/ActionCard/ActionCard';
 import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_FORK_OPTION_SELECTED } from '@/utils/analytics/hiive/constants';
 
-const SiteCreatorCard = ( { initialFocus = false } ) => {
+const SiteCreatorCard = ( { initialFocus = false, variant = 'A' } ) => {
 	const cardRef = useRef( null );
 	const navigate = useNavigate();
 
@@ -27,11 +27,11 @@ const SiteCreatorCard = ( { initialFocus = false } ) => {
 			replace: false,
 		} );
 
-		// Analytics: site creator fork option selected event
+		// Analytics: site creator fork option selected event with variant info
 		sendOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_FORK_OPTION_SELECTED,
-				'AI'
+				`AI|variant_${ variant }`
 			)
 		);
 	};

@@ -7,6 +7,7 @@ import { ACTION_FORK_OPTION_SELECTED } from '@/utils/analytics/hiive/constants';
 const MigrationCard = ( {
 	canMigrateSite,
 	migrationFallbackUrl = '',
+	variant = 'A',
 	...props
 } ) => {
 	const navigate = useNavigate(); // Router navigate.
@@ -20,11 +21,11 @@ const MigrationCard = ( {
 		} else if ( migrationFallbackUrl ) {
 			window.open( migrationFallbackUrl, '_blank' );
 		}
-		// Analytics: migration fork option selected event
+		// Analytics: migration fork option selected event with variant info
 		sendOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_FORK_OPTION_SELECTED,
-				'MIGRATE'
+				`MIGRATE|variant_${ variant }`
 			)
 		);
 	};
