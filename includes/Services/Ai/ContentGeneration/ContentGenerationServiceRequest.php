@@ -70,16 +70,15 @@ class ContentGenerationServiceRequest {
 	 */
 	public function __construct( string $endpoint, array $body, array $headers = array() ) {
 		$this->endpoint = $endpoint;
-		$this->body = $body;
-		$this->url = $this->get_api_url();
-		$this->headers = array_merge(
+		$this->body     = $body;
+		$this->url      = $this->get_api_url();
+		$this->headers  = array_merge(
 			array(
 				'Content-Type'  => 'application/json',
 				'Authorization' => 'Bearer ' . HiiveConnection::get_auth_token(),
 			),
 			$headers
 		);
-
 	}
 
 	/**
@@ -89,7 +88,7 @@ class ContentGenerationServiceRequest {
 	 */
 	private function get_api_url(): string {
 		$base_url = '';
-		
+
 		if ( defined( 'NFD_WB_DEV_MODE' ) && NFD_WB_DEV_MODE ) {
 			$base_url = defined( 'NFD_WB_LOCAL_BASE_URL' ) ? NFD_WB_LOCAL_BASE_URL : self::DEFAULT_LOCAL_BASE_URL;
 		} else {
@@ -117,7 +116,7 @@ class ContentGenerationServiceRequest {
 		$this->response = $response;
 		return $this;
 	}
-	
+
 	/**
 	 * Check if the request was successful
 	 *
@@ -127,7 +126,7 @@ class ContentGenerationServiceRequest {
 		if ( ! $this->response || is_wp_error( $this->response ) ) {
 			return false;
 		}
-		
+
 		$code = wp_remote_retrieve_response_code( $this->response );
 		return $code >= 200 && $code < 300;
 	}
