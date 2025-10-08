@@ -87,7 +87,6 @@ class ContentGenerationServiceRequest {
 	 * @return string The API URL to use.
 	 */
 	private function get_api_url(): string {
-		$base_url = '';
 
 		if ( defined( 'NFD_WB_DEV_MODE' ) && NFD_WB_DEV_MODE ) {
 			$base_url = defined( 'NFD_WB_LOCAL_BASE_URL' ) ? NFD_WB_LOCAL_BASE_URL : self::DEFAULT_LOCAL_BASE_URL;
