@@ -26,7 +26,7 @@ export const ACTION_BLUEPRINT_PUBLISHED = 'blueprint_published';
 export const ACTION_MIGRATION_INITIATED = 'migration_initiated';
 export const ACTION_MFE_MIGRATION_INITIATED = 'mfe_migration_initiated';
 
-export const ACTION_SITEGEN_FORK_AI_EXPERIMENT = 'exp_fork_diy_mar25';
+export const ACTION_SITEGEN_FORK_AI_EXPERIMENT = 'exp_fork_push_to_publish_oct25';
 export const ACTION_FORK_OPTION_SELECTED = 'fork_option_selected';
 export const ACTION_INTAKE_PROMPT_SET = 'site_details_prompt_set';
 export const ACTION_SITEGEN_SOCIAL_CONNECTED = 'social_connected';
