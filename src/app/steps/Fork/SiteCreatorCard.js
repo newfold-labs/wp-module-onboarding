@@ -27,11 +27,11 @@ const SiteCreatorCard = ( { initialFocus = false, variant = 'A' } ) => {
 			replace: false,
 		} );
 
-		// Analytics: site creator fork option selected event with variant info
+		// Analytics: site creator fork option selected event
 		sendOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_FORK_OPTION_SELECTED,
-				`AI|variant_${ variant }`
+				'AI'
 			)
 		);
 	};

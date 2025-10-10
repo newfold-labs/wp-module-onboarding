@@ -24,11 +24,11 @@ const ForkOptionButton = ( {
 			forkEventLabel = 'BLUEPRINTS';
 		}
 
-		// Analytics: Fork option selected event with variant info
+		// Analytics: Fork option selected event
 		sendOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_FORK_OPTION_SELECTED,
-				`${ forkEventLabel }|variant_${ variant }`
+				forkEventLabel
 			)
 		);
 	};

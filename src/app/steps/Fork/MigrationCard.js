@@ -21,11 +21,11 @@ const MigrationCard = ( {
 		} else if ( migrationFallbackUrl ) {
 			window.open( migrationFallbackUrl, '_blank' );
 		}
-		// Analytics: migration fork option selected event with variant info
+		// Analytics: migration fork option selected event
 		sendOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_FORK_OPTION_SELECTED,
-				`MIGRATE|variant_${ variant }`
+				'MIGRATE'
 			)
 		);
 	};
