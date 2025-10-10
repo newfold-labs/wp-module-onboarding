@@ -1,5 +1,5 @@
 import { useSelect } from '@wordpress/data';
-import { useState, useEffect } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { Container, Title } from '@newfold/ui-component-library';
 import { nfdOnboardingStore } from '@/data/store';
 import bluehostLogoUrl from '@/assets/bluehost-logo.svg';
@@ -14,21 +14,13 @@ import ForkLinks from './ForkLinks';
 import '@/styles/ForkStep.css';
 
 /**
- * Get or set the A/B test variant for the fork step.
- * Stores in localStorage to persist across onboarding restarts.
+ * Get the A/B test variant for the fork step based on Hiive capability.
+ * If hasForkABExperiment capability exists and is true, show variant B.
+ * Otherwise, default to variant A.
  */
-const getOrSetVariant = () => {
-	const STORAGE_KEY = 'nfd_fork_ab_variant';
-	const existingVariant = window.localStorage.getItem( STORAGE_KEY );
-
-	if ( existingVariant === 'A' || existingVariant === 'B' ) {
-		return existingVariant;
-	}
-
-	// Random 90/10 selection for new users
-	const newVariant = Math.random() < 0.90 ? 'A' : 'B';
-	window.localStorage.setItem( STORAGE_KEY, newVariant );
-	return newVariant;
+const getVariant = () => {
+	const hasForkABExperiment = window.NewfoldRuntime?.capabilities?.hasForkABExperiment;
+	return hasForkABExperiment ? 'B' : 'A';
 };
 
 const ForkStep = () => {
@@ -41,8 +33,8 @@ const ForkStep = () => {
 		}
 	);
 
-	// A/B test variant selection - persists across onboarding restarts
-	const [ variant ] = useState( () => getOrSetVariant() );
+	// A/B test variant selection based on Hiive capability
+	const variant = getVariant();
 
 	// Proactively fetch the blueprints.
 	fetchBlueprints();
