@@ -6,7 +6,7 @@ import ActionCard from '@/components/ActionCard/ActionCard';
 import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_FORK_OPTION_SELECTED } from '@/utils/analytics/hiive/constants';
 
-const SiteCreatorCard = ( { initialFocus = false, variant = 'A' } ) => {
+const SiteCreatorCard = ( { initialFocus = false } ) => {
 	const cardRef = useRef( null );
 	const navigate = useNavigate();
 

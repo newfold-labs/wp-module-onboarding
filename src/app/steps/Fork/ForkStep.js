@@ -97,7 +97,7 @@ const ForkStep = () => {
 					</Title>
 
 					<div className="nfd-flex nfd-flex-col nfd-gap-6">
-						<SiteCreatorCard initialFocus={ true } variant={ variant } />
+						<SiteCreatorCard initialFocus={ true } />
 
 						{ ( canMigrateSite || migrationFallbackUrl ) && (
 							<>
@@ -107,7 +107,6 @@ const ForkStep = () => {
 								<MigrationCard
 									canMigrateSite={ canMigrateSite }
 									migrationFallbackUrl={ migrationFallbackUrl }
-									variant={ variant }
 								/>
 							</>
 						) }
@@ -133,7 +132,7 @@ const ForkStep = () => {
 
 			<Container.Block className="nfd-p-0">
 				<div className="nfd-flex nfd-flex-col nfd-gap-14">
-					<ForkOptions variant={ variant } />
+					<ForkOptions />
 					<ForkLinks variant={ variant } />
 				</div>
 			</Container.Block>

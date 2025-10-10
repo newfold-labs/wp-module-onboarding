@@ -12,7 +12,6 @@ const ForkOptionButton = ( {
 	label,
 	toRoute,
 	value,
-	variant,
 	className,
 	...props
 } ) => {
@@ -64,7 +63,7 @@ const ForkOption = ( {
 	);
 };
 
-const SiteGenOption = ( { variant } ) => {
+const SiteGenOption = () => {
 	const renderPopularBadge = () => {
 		return (
 			<div className="nfd-flex nfd-items-center nfd-gap-[5px] nfd-text-[#3239CB] nfd-bg-[#E8E9FF] nfd-px-[15px] nfd-py-1.5 nfd-rounded-full nfd-width-fit">
@@ -111,7 +110,6 @@ const SiteGenOption = ( { variant } ) => {
 						label={ __( 'Generate Website', 'wp-module-onboarding' ) }
 						toRoute="/intake"
 						value="sitegen"
-						variant={ variant }
 					/>
 				</div>
 			</div>
@@ -125,7 +123,7 @@ const OptionDivider = () => {
 	);
 };
 
-const BlueprintsOption = ( { variant } ) => {
+const BlueprintsOption = () => {
 	return (
 		<ForkOption className="nfd-onboarding-fork-option-blueprints">
 			<div
@@ -156,7 +154,6 @@ const BlueprintsOption = ( { variant } ) => {
 						label={ __( 'Select Template', 'wp-module-onboarding' ) }
 						toRoute="/blueprints"
 						value="blueprints"
-						variant={ variant }
 						className="nfd-bg-black hover:nfd-bg-black/80"
 					/>
 				</div>
@@ -165,13 +162,13 @@ const BlueprintsOption = ( { variant } ) => {
 	);
 };
 
-const ForkOptions = ( { variant } ) => {
+const ForkOptions = () => {
 	return (
 		<div className="nfd-onboarding-fork-options">
 			<div className="nfd-flex nfd-justify-between nfd-gap-8 nfd-h-full nfd-pt-8 nfd-pb-3 nfd-relative">
-				<SiteGenOption variant={ variant } />
+				<SiteGenOption />
 				<OptionDivider />
-				<BlueprintsOption variant={ variant } />
+				<BlueprintsOption />
 			</div>
 		</div>
 	);

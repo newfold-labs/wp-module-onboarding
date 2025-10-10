@@ -7,7 +7,6 @@ import { ACTION_FORK_OPTION_SELECTED } from '@/utils/analytics/hiive/constants';
 const MigrationCard = ( {
 	canMigrateSite,
 	migrationFallbackUrl = '',
-	variant = 'A',
 	...props
 } ) => {
 	const navigate = useNavigate(); // Router navigate.
