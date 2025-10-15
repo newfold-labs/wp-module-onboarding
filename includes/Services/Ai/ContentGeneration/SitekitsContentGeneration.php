@@ -6,6 +6,7 @@ use NewfoldLabs\WP\Module\Onboarding\RestApi\ParallelRequestsController;
 use NewfoldLabs\WP\Module\Onboarding\Services\ParallelRequestsService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\CommonSiteTypeService;
 use NewfoldLabs\WP\Module\Onboarding\Types\Page;
 use NewfoldLabs\WP\Module\Onboarding\Types\Pages;
 use NewfoldLabs\WP\Module\Onboarding\Types\ParallelRequest;
@@ -16,7 +17,7 @@ use WpOrg\Requests\Requests;
 class SitekitsContentGeneration {
 
 	private static $site_types_supported = [
-		'ecommerce',
+		'ecommerce', 'personal',
 	];
 
 	/**
@@ -210,6 +211,19 @@ class SitekitsContentGeneration {
 					$product['price'] ?? '24.99',
 					$product['image'] ?? '',
 					$product['categories'] ?? array()
+				);
+			}
+		}
+		$articles = $posts['articles']['posts'] ?? array();
+		error_log( print_r( $articles , true) );
+		if ( ! empty( $articles ) ) {
+			foreach ( $articles as $index => $article ) {
+				CommonSiteTypeService::publish_article(
+					$article['title'] ?? 'Article ' . $index + 1,
+					$article['excerpt'] ?? 'Excertpt for Article ' . $index + 1,
+					$article['content'] ?? 'Content for Article ' . $index + 1,
+					$article['image'] ?? '',
+					$article['categories'] ?? array()
 				);
 			}
 		}
