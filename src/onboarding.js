@@ -6,6 +6,7 @@ import { onboardingRestURL, startOnboarding } from '@/utils/api';
 import { CATEGORY } from '@/utils/analytics/hiive/constants';
 import { isCypress } from '@/utils/helpers';
 import './webpack-public-path';
+import { PostHogProvider } from 'posthog-js/react';
 import App from '@';
 
 // Check if the runtime data object is mounted.
@@ -74,7 +75,19 @@ if ( runtimeDataObjectIsMounted() ) {
 		// Render the app after the loading screen has faded out.
 		setTimeout( () => {
 			const appRoot = createRoot( appTarget );
-			appRoot.render( <App /> );
+			appRoot.render(
+				<PostHogProvider
+					apiKey={ process.env.POSTHOG_API_KEY }
+					options={{
+						api_host: process.env.POSTHOG_HOST,
+						defaults: '2025-05-24',
+						capture_exceptions: true,
+						debug: process.env.NODE_ENV === 'development',
+					}}
+				>
+					<App />
+				</PostHogProvider>
+			);
 		}, 300 );
 	} );
 } else {

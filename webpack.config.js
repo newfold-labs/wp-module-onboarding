@@ -1,8 +1,11 @@
 const path = require( 'path' );
 const { merge } = require( 'webpack-merge' );
 const wpScriptsConfig = require( '@wordpress/scripts/config/webpack.config' );
-const { ProvidePlugin } = require( 'webpack' );
+const { ProvidePlugin, DefinePlugin } = require( 'webpack' );
 const version = require( './package.json' ).version; // never require full config!
+
+// Load environment variables from .env file
+require( 'dotenv' ).config();
 
 /**
  * Aliases for resolving Brand imports
@@ -33,7 +36,13 @@ const nfdOnboardingWebpackConfig = {
 		libraryTarget: 'window',
 	},
 	resolve: { alias },
-	plugins: [ new ProvidePlugin( mostCommonImports ) ],
+	plugins: [
+		new ProvidePlugin( mostCommonImports ),
+		new DefinePlugin( {
+			'process.env.POSTHOG_API_KEY': JSON.stringify( process.env.POSTHOG_API_KEY || '' ),
+			'process.env.POSTHOG_HOST': JSON.stringify( process.env.POSTHOG_HOST || 'https://us.i.posthog.com' ),
+		} ),
+	],
 };
 
 module.exports = merge( wpScriptsConfig, nfdOnboardingWebpackConfig );
