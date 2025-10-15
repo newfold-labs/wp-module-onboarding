@@ -1,5 +1,5 @@
 import domReady from '@wordpress/dom-ready';
-import { createRoot } from 'react-dom/client';
+import { createRoot } from '@wordpress/element';
 import { HiiveAnalytics } from '@newfold/js-utility-ui-analytics';
 import * as Sentry from '@sentry/react';
 import { onboardingRestURL, startOnboarding } from '@/utils/api';
@@ -78,12 +78,12 @@ if ( runtimeDataObjectIsMounted() ) {
 			appRoot.render(
 				<PostHogProvider
 					apiKey={ process.env.POSTHOG_API_KEY }
-					options={{
+					options={ {
 						api_host: process.env.POSTHOG_HOST,
 						defaults: '2025-05-24',
 						capture_exceptions: true,
 						debug: process.env.NODE_ENV === 'development',
-					}}
+					} }
 				>
 					<App />
 				</PostHogProvider>
