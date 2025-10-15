@@ -77,9 +77,9 @@ if ( runtimeDataObjectIsMounted() ) {
 			const appRoot = createRoot( appTarget );
 			appRoot.render(
 				<PostHogProvider
-					apiKey={ process.env.POSTHOG_API_KEY }
+					apiKey={ process.env.POSTHOG_PUBLIC_API_KEY }
 					options={ {
-						api_host: process.env.POSTHOG_HOST,
+						api_host: process.env.POSTHOG_PUBLIC_HOST,
 						defaults: '2025-05-24',
 						capture_exceptions: true,
 						debug: process.env.NODE_ENV === 'development',

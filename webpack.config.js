@@ -39,8 +39,8 @@ const nfdOnboardingWebpackConfig = {
 	plugins: [
 		new ProvidePlugin( mostCommonImports ),
 		new DefinePlugin( {
-			'process.env.POSTHOG_API_KEY': JSON.stringify( process.env.POSTHOG_API_KEY || '' ),
-			'process.env.POSTHOG_HOST': JSON.stringify( process.env.POSTHOG_HOST || 'https://us.i.posthog.com' ),
+			'process.env.POSTHOG_PUBLIC_API_KEY': JSON.stringify( process.env.POSTHOG_PUBLIC_API_KEY || '' ),
+			'process.env.POSTHOG_PUBLIC_HOST': JSON.stringify( process.env.POSTHOG_PUBLIC_HOST || 'https://us.i.posthog.com' ),
 		} ),
 	],
 };
