@@ -55,7 +55,7 @@ const AppRender = () => {
 	if ( window.NewfoldRuntime?.capabilities?.hasPHSessionReplay ) {
 		return (
 			<PostHogProvider
-				// 
+				// public facing api key has write only access - this is not a sensitive key
 				apiKey={ POSTHOG_PUBLIC.PUBLIC_API_KEY }
 				options={ {
 					api_host: POSTHOG_PUBLIC.PUBLIC_HOST,
@@ -68,7 +68,7 @@ const AppRender = () => {
 			</PostHogProvider>
 		);
 	}
-	
+
 	return <App />;
 };
 
