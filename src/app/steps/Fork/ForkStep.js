@@ -9,9 +9,7 @@ import ForkLinks from './ForkLinks';
 const ForkStep = () => {
 	useEffect( () => {
 		// Analytics: Onboarding started event
-		sendOnboardingEvent(
-			new OnboardingEvent( ACTION_ONBOARDING_STARTED )
-		);
+		sendOnboardingEvent( new OnboardingEvent( ACTION_ONBOARDING_STARTED ) );
 
 		// Proactively fetch the blueprints.
 		fetchBlueprints();
@@ -38,6 +36,7 @@ const ForkStep = () => {
 				{ `
 					.nfd-onboarding-body {
 						padding-top: 2rem !important;
+						padding-bottom: 0 !important
 					}
 				` }
 			</style>
@@ -45,22 +44,24 @@ const ForkStep = () => {
 	};
 
 	return (
-		<Container className="nfd-onboarding-step-container nfd-onboarding-step-intro nfd-min-w-[1200px] nfd-max-w-[1200px] small:nfd-min-w-[90%] small:nfd-max-w-[90%] small-only:nfd-scale-90">
+		<Container className="nfd-onboarding-step-container nfd-onboarding-step-intro nfd-min-w-[1200px] desktop-md:nfd-max-w-[1440px] nfd-max-w-[1200px] small:nfd-min-w-[90%] small:nfd-max-w-[90%] nfd-flex nfd-flex-col nfd-h-full nfd-justify-between nfd-gap-[32px]">
 			{ getCustomStyles() }
-			<Container.Header>
+			<Container.Header className="nfd-flex-shrink-0">
 				<div className="nfd-flex nfd-flex-col nfd-gap-3">
-					<Title
-						as="h1"
-						className="nfd-text-2xl nfd-text-content-default nfd-text-center"
-					>
+					<Title as="h1" className="nfd-text-2xl nfd-text-content-default nfd-text-center">
 						{ __( 'Choose how you want to create your site', 'wp-module-onboarding' ) }
 					</Title>
 				</div>
 			</Container.Header>
 
-			<Container.Block className="nfd-p-0">
-				<div className="nfd-flex nfd-flex-col nfd-gap-14">
+			<Container.Block className="nfd-p-0 nfd-flex-1 nfd-flex nfd-items-center nfd-justify-center">
+				<div className="nfd-flex nfd-flex-col nfd-gap-14 nfd-w-full">
 					<ForkOptions />
+				</div>
+			</Container.Block>
+
+			<Container.Block className="nfd-p-0 nfd-flex-shrink-0">
+				<div className="nfd-flex nfd-flex-col nfd-gap-14">
 					<ForkLinks />
 				</div>
 			</Container.Block>

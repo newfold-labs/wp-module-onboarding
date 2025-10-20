@@ -1,1 +1,29 @@
-(()=>{"use strict";var e={};(e=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})})(e),((window.newfold=window.newfold||{}).Onboarding=window.newfold.Onboarding||{})["onboarding-restart-button.css"]=e})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	// The require scope
+/******/ 	var __webpack_require__ = {};
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+/*!*****************************************************************************!*\
+  !*** ./src/Scripts/onboarding-restart-button/onboarding-restart-button.css ***!
+  \*****************************************************************************/
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+((window.newfold = window.newfold || {}).Onboarding = window.newfold.Onboarding || {})["onboarding-restart-button.css"] = __webpack_exports__;
+/******/ })()
+;
+//# sourceMappingURL=onboarding-restart-button.css.js.map
