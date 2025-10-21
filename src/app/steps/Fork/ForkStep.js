@@ -36,7 +36,13 @@ const ForkStep = () => {
 				{ `
 					.nfd-onboarding-body {
 						padding-top: 2rem !important;
-						padding-bottom: 0 !important
+						padding-bottom: 0 !important;
+					}
+
+					@media (max-width: 1366px) {
+						.nfd-onboarding-body {
+							padding-top: 0 !important;
+						}
 					}
 				` }
 			</style>
@@ -44,7 +50,7 @@ const ForkStep = () => {
 	};
 
 	return (
-		<Container className="nfd-onboarding-step-container nfd-onboarding-step-intro nfd-min-w-[1200px] desktop-md:nfd-max-w-[1440px] nfd-max-w-[1200px] small:nfd-min-w-[90%] small:nfd-max-w-[90%] nfd-flex nfd-flex-col nfd-h-full nfd-justify-between nfd-gap-[32px]">
+		<Container className="nfd-onboarding-step-container nfd-onboarding-step-intro nfd-min-w-[1200px] desktop-md:nfd-max-w-[1440px] nfd-max-w-[1200px] small:nfd-min-w-[90%] small:nfd-max-w-[90%] nfd-flex nfd-flex-col nfd-h-full nfd-justify-between nfd-gap-[24px] desktop-md:nfd-gap-[32px] desktop-xl:nfd-gap-[40px]">
 			{ getCustomStyles() }
 			<Container.Header className="nfd-flex-shrink-0">
 				<div className="nfd-flex nfd-flex-col nfd-gap-3">

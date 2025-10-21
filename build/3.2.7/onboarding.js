@@ -59356,7 +59356,7 @@ const ForkLinks = () => {
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_components__WEBPACK_IMPORTED_MODULE_4__.ActionCard, {
         onClick: handleClick,
         href: migrationFallbackUrl || '#',
-        className: "nfd-flex nfd-items-center nfd-justify-center nfd-gap-2 nfd-text-center nfd-text-base nfd-text-content-default nfd-bg-transparent nfd-py-3 nfd-px-12 nfd-border nfd-border-primary nfd-rounded-md hover:nfd-bg-primary-100",
+        className: "nfd-flex nfd-items-center nfd-justify-center nfd-gap-2 nfd-text-center nfd-text-base nfd-text-content-default nfd-bg-transparent nfd-py-3 nfd-px-12 nfd-border-2 nfd-border-gray-800 nfd-rounded-md hover:nfd-bg-primary-100 nfd-font-semibold",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_7__["default"], {
           className: "nfd-w-[18px] nfd-h-[18px]"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
@@ -59447,7 +59447,7 @@ const ForkOption = ({
   children
 }) => {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()('nfd-onboarding-fork-option nfd-flex-1 nfd-flex nfd-flex-col nfd-justify-between nfd-text-center', className),
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()('nfd-onboarding-fork-option nfd-flex-1 nfd-flex nfd-flex-col nfd-justify-end nfd-text-center', className),
     children: children
   });
 };
@@ -59466,11 +59466,11 @@ const SiteGenOption = () => {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(ForkOption, {
     className: "nfd-onboarding-fork-option-sitegen",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-      className: "nfd-flex nfd-flex-col nfd-items-center nfd-gap-7 nfd-mb-2.5",
+      className: "nfd-flex nfd-flex-col nfd-items-center nfd-gap-7 nfd-mb-6",
       "data-block": "fork-option-sitegen-header",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_assets_sitegen_fork_figure_svg__WEBPACK_IMPORTED_MODULE_1__.ReactComponent, {
+      children: [renderPopularBadge(), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_assets_sitegen_fork_figure_svg__WEBPACK_IMPORTED_MODULE_1__.ReactComponent, {
         className: "nfd-w-auto nfd-h-[90px] nfd-stroke-[2px] desktop-md:nfd-h-[120px] desktop-xl:nfd-h-[144px] tablet:nfd-h-[70px]"
-      }), renderPopularBadge()]
+      })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
       className: "nfd-flex nfd-flex-col nfd-items-center nfd-gap-2.5",
       "data-block": "fork-option-sitegen-content",
@@ -59492,7 +59492,8 @@ const SiteGenOption = () => {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(ForkOptionButton, {
           label: __('Generate Website', 'wp-module-onboarding'),
           toRoute: "/intake",
-          value: "sitegen"
+          value: "sitegen",
+          className: "nfd-bg-black hover:nfd-bg-[#196bde]"
         })
       })]
     })]
@@ -59507,7 +59508,7 @@ const BlueprintsOption = () => {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(ForkOption, {
     className: "nfd-onboarding-fork-option-blueprints",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-      className: "nfd-flex nfd-flex-col nfd-items-center nfd-gap-7 nfd-mb-2.5",
+      className: "nfd-flex nfd-flex-col nfd-items-center nfd-gap-7 nfd-mb-6",
       "data-block": "fork-option-blueprints-header",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_assets_blueprints_fork_figure_svg__WEBPACK_IMPORTED_MODULE_2__.ReactComponent, {
         className: "nfd-w-auto nfd-h-[90px] nfd-stroke-[2px] desktop-md:nfd-h-[120px] desktop-xl:nfd-h-[144px] tablet:nfd-h-[70px]"
@@ -59529,7 +59530,7 @@ const BlueprintsOption = () => {
           label: __('Select Template', 'wp-module-onboarding'),
           toRoute: "/blueprints",
           value: "blueprints",
-          className: "nfd-bg-black hover:nfd-bg-black/80"
+          className: "nfd-bg-black hover:nfd-bg-[#196bde]"
         })
       })]
     })]
@@ -59608,13 +59609,19 @@ const ForkStep = () => {
       children: `
 					.nfd-onboarding-body {
 						padding-top: 2rem !important;
-						padding-bottom: 0 !important
+						padding-bottom: 0 !important;
+					}
+
+					@media (max-width: 1366px) {
+						.nfd-onboarding-body {
+							padding-top: 0 !important;
+						}
 					}
 				`
     });
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_newfold_ui_component_library__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    className: "nfd-onboarding-step-container nfd-onboarding-step-intro nfd-min-w-[1200px] desktop-md:nfd-max-w-[1440px] nfd-max-w-[1200px] small:nfd-min-w-[90%] small:nfd-max-w-[90%] nfd-flex nfd-flex-col nfd-h-full nfd-justify-between nfd-gap-[32px]",
+    className: "nfd-onboarding-step-container nfd-onboarding-step-intro nfd-min-w-[1200px] desktop-md:nfd-max-w-[1440px] nfd-max-w-[1200px] small:nfd-min-w-[90%] small:nfd-max-w-[90%] nfd-flex nfd-flex-col nfd-h-full nfd-justify-between nfd-gap-[24px] desktop-md:nfd-gap-[32px] desktop-xl:nfd-gap-[40px]",
     children: [getCustomStyles(), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_newfold_ui_component_library__WEBPACK_IMPORTED_MODULE_7__["default"].Header, {
       className: "nfd-flex-shrink-0",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {

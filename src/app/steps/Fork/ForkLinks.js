@@ -35,7 +35,7 @@ const ForkLinks = () => {
 				<ActionCard
 					onClick={ handleClick }
 					href={ migrationFallbackUrl || '#' }
-					className="nfd-flex nfd-items-center nfd-justify-center nfd-gap-2 nfd-text-center nfd-text-base nfd-text-content-default nfd-bg-transparent nfd-py-3 nfd-px-12 nfd-border nfd-border-primary nfd-rounded-md hover:nfd-bg-primary-100"
+					className="nfd-flex nfd-items-center nfd-justify-center nfd-gap-2 nfd-text-center nfd-text-base nfd-text-content-default nfd-bg-transparent nfd-py-3 nfd-px-12 nfd-border-2 nfd-border-gray-800 nfd-rounded-md hover:nfd-bg-primary-100 nfd-font-semibold"
 				>
 					<ArrowsRightLeftIcon className="nfd-w-[18px] nfd-h-[18px]" />
 					<span>{ __( 'Migrate an existing site', 'wp-module-onboarding' ) }</span>

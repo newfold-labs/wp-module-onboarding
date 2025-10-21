@@ -3584,6 +3584,9 @@ body.wnd-ai-logo-keydown .wnd-ai-logo.wnd-ai-logo {
 .nfd-mt-8 {
 		margin-top: 2rem !important;
 }
+.nfd-mb-6 {
+		margin-bottom: 1.5rem !important;
+}
 .nfd-block {
 		display: block !important;
 }
@@ -3893,6 +3896,9 @@ body.wnd-ai-logo-keydown .wnd-ai-logo.wnd-ai-logo {
 .nfd-justify-start {
 		justify-content: flex-start !important;
 }
+.nfd-justify-end {
+		justify-content: flex-end !important;
+}
 .nfd-justify-center {
 		justify-content: center !important;
 }
@@ -3943,6 +3949,9 @@ body.wnd-ai-logo-keydown .wnd-ai-logo.wnd-ai-logo {
 }
 .nfd-gap-\[32px\] {
 		gap: 32px !important;
+}
+.nfd-gap-\[24px\] {
+		gap: 24px !important;
 }
 .nfd-space-y-1 > :not([hidden]) ~ :not([hidden]) {
 		--tw-space-y-reverse: 0 !important;
@@ -4038,6 +4047,10 @@ body.wnd-ai-logo-keydown .wnd-ai-logo.wnd-ai-logo {
 .nfd-border-slate-200 {
 		--tw-border-opacity: 1 !important;
 		border-color: rgb(226 232 240 / var(--tw-border-opacity, 1)) !important;
+}
+.nfd-border-gray-800 {
+		--tw-border-opacity: 1 !important;
+		border-color: rgb(31 41 55 / var(--tw-border-opacity, 1)) !important;
 }
 .nfd-border-r-slate-200 {
 		--tw-border-opacity: 1 !important;
@@ -4514,6 +4527,10 @@ body.wnd-ai-logo-keydown .wnd-ai-logo.wnd-ai-logo {
 		--tw-bg-opacity: 1 !important;
 		background-color: rgb(248 250 252 / var(--tw-bg-opacity, 1)) !important;
 }
+.hover\:nfd-bg-\[\#196bde\]:hover {
+		--tw-bg-opacity: 1 !important;
+		background-color: rgb(25 107 222 / var(--tw-bg-opacity, 1)) !important;
+}
 .hover\:nfd-bg-bottom:hover {
 		background-position: bottom !important;
 }
@@ -4724,6 +4741,9 @@ body.wnd-ai-logo-keydown .wnd-ai-logo.wnd-ai-logo {
 		.desktop-md\:nfd-max-w-\[1440px\] {
 				max-width: 1440px !important;
 		}
+		.desktop-md\:nfd-gap-\[32px\] {
+				gap: 32px !important;
+		}
 		.desktop-md\:nfd-text-\[18px\] {
 				font-size: 18px !important;
 		}
@@ -4734,6 +4754,9 @@ body.wnd-ai-logo-keydown .wnd-ai-logo.wnd-ai-logo {
 @media (min-width: 1537px) {
 		.desktop-xl\:nfd-h-\[144px\] {
 				height: 144px !important;
+		}
+		.desktop-xl\:nfd-gap-\[40px\] {
+				gap: 40px !important;
 		}
 		.desktop-xl\:nfd-text-\[21px\] {
 				font-size: 21px !important;

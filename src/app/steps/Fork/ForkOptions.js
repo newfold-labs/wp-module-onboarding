@@ -43,7 +43,7 @@ const ForkOption = ( { className, children } ) => {
 	return (
 		<div
 			className={ classNames(
-				'nfd-onboarding-fork-option nfd-flex-1 nfd-flex nfd-flex-col nfd-justify-between nfd-text-center',
+				'nfd-onboarding-fork-option nfd-flex-1 nfd-flex nfd-flex-col nfd-justify-end nfd-text-center',
 				className
 			) }
 		>
@@ -65,11 +65,11 @@ const SiteGenOption = () => {
 	return (
 		<ForkOption className="nfd-onboarding-fork-option-sitegen">
 			<div
-				className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-7 nfd-mb-2.5"
+				className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-7 nfd-mb-6"
 				data-block="fork-option-sitegen-header"
 			>
-				<SitegenForkFigure className="nfd-w-auto nfd-h-[90px] nfd-stroke-[2px] desktop-md:nfd-h-[120px] desktop-xl:nfd-h-[144px] tablet:nfd-h-[70px]" />
 				{ renderPopularBadge() }
+				<SitegenForkFigure className="nfd-w-auto nfd-h-[90px] nfd-stroke-[2px] desktop-md:nfd-h-[120px] desktop-xl:nfd-h-[144px] tablet:nfd-h-[70px]" />
 			</div>
 
 			<div
@@ -100,6 +100,7 @@ const SiteGenOption = () => {
 						label={ __( 'Generate Website', 'wp-module-onboarding' ) }
 						toRoute="/intake"
 						value="sitegen"
+						className="nfd-bg-black hover:nfd-bg-[#196bde]"
 					/>
 				</div>
 			</div>
@@ -117,7 +118,7 @@ const BlueprintsOption = () => {
 	return (
 		<ForkOption className="nfd-onboarding-fork-option-blueprints">
 			<div
-				className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-7 nfd-mb-2.5"
+				className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-7 nfd-mb-6"
 				data-block="fork-option-blueprints-header"
 			>
 				<BlueprintsForkFigure className="nfd-w-auto nfd-h-[90px] nfd-stroke-[2px] desktop-md:nfd-h-[120px] desktop-xl:nfd-h-[144px] tablet:nfd-h-[70px]" />
@@ -148,7 +149,7 @@ const BlueprintsOption = () => {
 						label={ __( 'Select Template', 'wp-module-onboarding' ) }
 						toRoute="/blueprints"
 						value="blueprints"
-						className="nfd-bg-black hover:nfd-bg-black/80"
+						className="nfd-bg-black hover:nfd-bg-[#196bde]"
 					/>
 				</div>
 			</div>
