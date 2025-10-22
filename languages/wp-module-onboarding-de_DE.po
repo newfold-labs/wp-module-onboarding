@@ -135,15 +135,15 @@ msgstr "Jede Webfont src muss ein nicht-leerer String sein."
 msgid "Webfont font weight must be a properly formatted string or integer."
 msgstr "Das Gewicht der Webfont muss ein richtig formatierter String oder Integer sein."
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Colors"
 msgstr "Farben"
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Primary"
 msgstr "Primär"
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Secondary"
 msgstr "Sekundär"
 
@@ -157,91 +157,91 @@ msgstr "Mit KI erstellen"
 msgid "Palette %d"
 msgstr "Palette %d"
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Base"
 msgstr "Basis"
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Select a palette or customize individual colors."
 msgstr "Wählen Sie eine Palette aus oder passen Sie einzelne Farben an."
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Palette"
 msgstr "Palette"
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Pick custom colors"
 msgstr "Wählen Sie benutzerdefinierte Farben"
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Site Logo"
 msgstr "Logo der Website"
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Replace logo"
 msgstr "Logo ersetzen"
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Replace"
 msgstr "Ersetzen"
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Current logo"
 msgstr "Aktuelles Logo"
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Remove"
 msgstr "Entfernen"
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Upload a logo to represent your brand."
 msgstr "Laden Sie ein Logo hoch, um Ihre Marke zu repräsentieren."
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Upload Logo"
 msgstr "Logo hochladen"
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "You don't have permission to change the site logo."
 msgstr "Sie sind nicht berechtigt, das Websitelogo zu ändern."
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
 msgstr "Ihr Logo wird in der Kopfzeile Ihrer Website angezeigt. Die besten Ergebnisse erzielen Sie, wenn Sie ein Bild mit transparentem Hintergrund im PNG-Format hochladen."
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Primary color"
 msgstr "Primärfarbe"
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Secondary color"
 msgstr "Sekundäre Farbe"
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Paragraph text in your chosen font."
 msgstr "Absatztext in der von Ihnen gewählten Schriftart."
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Select a font style."
 msgstr "Wählen Sie einen Schriftstil aus."
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Font Pairings"
 msgstr "Schriftpaarungen"
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "No font pairings available."
 msgstr "Keine Schriftkombinationen verfügbar."
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
 msgstr "Wählen Sie eine Schriftkombination, die die Persönlichkeit Ihrer Marke widerspiegelt. Jede Kombination wird sorgfältig ausgewählt, um die Lesbarkeit und visuelle Attraktivität Ihrer Website zu verbessern."
 
-#: build/3.2.9/onboarding-design-studio.js:1
+#: build/3.2.10/onboarding-design-studio.js:1
 msgid "Design Studio"
 msgstr "Design-Studio"
 
@@ -263,30 +263,30 @@ msgstr "Helfen Sie uns, uns zu verbessern"
 msgid "How satisfied were you with the ease of creating your website?"
 msgstr "Wie zufrieden waren Sie mit der Leichtigkeit, mit der Sie Ihre Website erstellt haben?"
 
-#: build/3.2.9/onboarding.js:1
+#: build/3.2.10/onboarding.js:1
 msgid "Publishing content…"
 msgstr "Inhalte werden veröffentlicht..."
 
-#: build/3.2.9/onboarding.js:1
+#: build/3.2.10/onboarding.js:1
 msgid "Preparing your new site…"
 msgstr "Bereiten Sie Ihre neue Website vor..."
 
-#: build/3.2.9/onboarding.js:1
+#: build/3.2.10/onboarding.js:1
 msgid "Your new site is ready! Redirecting… 🚀"
 msgstr "Ihre neue Website ist fertig! Umadressierend... 🚀"
 
-#: build/3.2.9/onboarding.js:1
+#: build/3.2.10/onboarding.js:1
 msgid "Sorry, let's try a different approach."
 msgstr ""
 
-#: build/3.2.9/onboarding.js:1
+#: build/3.2.10/onboarding.js:1
 msgid "Pick your website"
 msgstr ""
 
-#: build/3.2.9/onboarding.js:1
+#: build/3.2.10/onboarding.js:1
 msgid "We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favorite — we'll guide you through customizing it!"
 msgstr ""
 
-#: build/3.2.9/onboarding.js:1
+#: build/3.2.10/onboarding.js:1
 msgid "Here are three unique designs for you to start with. Pick your favorite to customize it!"
 msgstr ""
