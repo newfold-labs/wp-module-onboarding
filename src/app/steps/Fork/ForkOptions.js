@@ -1,12 +1,14 @@
-import classNames from 'classnames';
-import { Title } from '@newfold/ui-component-library';
-import { SparklesIcon } from '@heroicons/react/24/outline';
-import { ArrowLongRightIcon, FireIcon } from '@heroicons/react/24/solid';
-import { ReactComponent as SitegenForkFigure } from '@/assets/sitegen-fork-figure.svg';
+import aiBuilderAnimation from '@/assets/ai-builder-animation.json';
 import { ReactComponent as BlueprintsForkFigure } from '@/assets/blueprints-fork-figure.svg';
 import { Navigate } from '@/components';
 import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_FORK_OPTION_SELECTED } from '@/utils/analytics/hiive/constants';
+import { SparklesIcon } from '@heroicons/react/24/outline';
+import { ArrowLongRightIcon, FireIcon } from '@heroicons/react/24/solid';
+import { Title } from '@newfold/ui-component-library';
+import classNames from 'classnames';
+import Lottie from 'lottie-react';
+import { useRef } from 'react';
 
 const ForkOptionButton = ( { label, toRoute, value, className, ...props } ) => {
 	const handleNext = ( selectedForkOption ) => {
@@ -53,6 +55,8 @@ const ForkOption = ( { className, children } ) => {
 };
 
 const SiteGenOption = () => {
+	const lottieRef = useRef();
+
 	const renderPopularBadge = () => {
 		return (
 			<div className="nfd-flex nfd-items-center nfd-gap-[5px] nfd-text-[#3239CB] nfd-bg-[#E8E9FF] nfd-px-[15px] nfd-py-1.5 nfd-rounded-full nfd-width-fit">
@@ -62,6 +66,12 @@ const SiteGenOption = () => {
 		);
 	};
 
+	const handleEnterFrame = ( event ) => {
+		if ( event.currentTime >= 35 ) {
+			lottieRef.current?.pause();
+		}
+	};
+
 	return (
 		<ForkOption className="nfd-onboarding-fork-option-sitegen">
 			<div
@@ -69,7 +79,14 @@ const SiteGenOption = () => {
 				data-block="fork-option-sitegen-header"
 			>
 				{ renderPopularBadge() }
-				<SitegenForkFigure className="nfd-w-auto nfd-h-[90px] nfd-stroke-[2px] desktop-md:nfd-h-[120px] desktop-xl:nfd-h-[144px] tablet:nfd-h-[70px]" />
+				<Lottie
+					lottieRef={ lottieRef }
+					animationData={ aiBuilderAnimation }
+					className="nfd-w-auto nfd-h-[110px] desktop-md:nfd-h-[140px] desktop-xl:nfd-h-[164px] tablet:nfd-h-[70px]"
+					loop={ false }
+					autoplay={ true }
+					onEnterFrame={ handleEnterFrame }
+				/>
 			</div>
 
 			<div
