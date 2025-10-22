@@ -23,6 +23,7 @@ const Preview = ( {
 
 	/**
 	 * Parse the sitegen preview content to make it saveable by the backend.
+	 *
 	 * @return {string} The preview content.
 	 */
 	const getPreviewContent = () => {
@@ -41,6 +42,7 @@ const Preview = ( {
 
 	/**
 	 * Custom css to inject into the preview.
+	 *
 	 * @return {string} Custom styles.
 	 */
 	const getCustomStyles = () => {

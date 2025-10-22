@@ -51,6 +51,7 @@ const GeneratingStep = () => {
 
 	/**
 	 * Whether to render the component or navigate a different step.
+	 *
 	 * @return {boolean} True if the component should render, false otherwise.
 	 */
 	const shouldRender = () => {
@@ -90,6 +91,7 @@ const GeneratingStep = () => {
 	 * Logic:
 	 * - If Sitegen has failed for the first time, restart the generation process to try again.
 	 * - If Sitegen has failed for the second time, navigate to the previews step to generate fallback pages.
+	 *
 	 * @return {void}
 	 */
 	const handleFailedSiteGeneration = () => {

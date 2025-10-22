@@ -8,6 +8,7 @@ import { ACTION_PAGEVIEW } from '@/utils/analytics/hiive/constants';
 const AppBody = () => {
 	/**
 	 * Check if any conditions prevent the onboarding from being accessed.
+	 *
 	 * @return {boolean} True if the onboarding can be accessed, false otherwise.
 	 */
 	const canAccessOnboarding = () => {
@@ -33,6 +34,7 @@ const AppBody = () => {
 
 	/**
 	 * Get the routes for the onboarding steps.
+	 *
 	 * @return {Array} Array of <Route> components.
 	 */
 	const getRoutes = () => {
@@ -49,6 +51,7 @@ const AppBody = () => {
 
 	/**
 	 * Boot the onboarding.
+	 *
 	 * @return {React.ReactNode} The onboarding routes.
 	 */
 	const boot = () => {
