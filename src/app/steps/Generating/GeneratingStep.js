@@ -1,8 +1,8 @@
-import { useCallback } from '@wordpress/element';
+import { useCallback, useState, useEffect } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
 import { useNavigate } from 'react-router-dom';
 import { Container, Title } from '@newfold/ui-component-library';
-import { Motion, Orb, Step } from '@/components';
+import { BrandLoader, Motion, Step } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
 import { generateSite } from '@/utils/sitegen';
 import { ExperienceOptions } from './';
@@ -138,12 +138,14 @@ const GeneratingStep = () => {
 		// If the site generation is complete and the user has selected an experience level or the timer has completed, advance to the next step.
 		if (
 			isSiteGenerationComplete &&
+			isReadyToAnimate &&
 			( selectedExperienceLevel || isTimerComplete )
 		) {
 			handleNext();
 		}
 	}, [
 		isSiteGenerationComplete,
+		isReadyToAnimate,
 		selectedExperienceLevel,
 		isTimerComplete,
 		handleNext,
@@ -182,16 +184,16 @@ const GeneratingStep = () => {
 						animate={ isReadyToAnimate ? { scale: 1, y: 0 } : { scale: 1.1, y: 100 } }
 						transition={ { ease: 'easeOut', delay: 2.2, duration: 0.8 } }
 					>
+						<div className="nfd-my-6 nfd-flex nfd-justify-center">
+							<BrandLoader />
+						</div>
 						<div className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-5">
-							<Title className="nfd-text-3xl mobile:nfd-text-xl">
+							<Title className="nfd-text-[2.5rem] mobile:nfd-text-xl">
 								{ __( 'Building your website…', 'wp-module-onboarding' ) }
 							</Title>
-							<p className="nfd-text-[15px] nfd-text-content-primary mobile:nfd-text-tiny">
+							<p className="nfd-text-[18px] nfd-text-content-primary mobile:nfd-text-tiny">
 								{ __( 'Hang tight while we create some wonderful options for you.', 'wp-module-onboarding' ) }
 							</p>
-						</div>
-						<div className="nfd-my-14">
-							<Orb height="90px" />
 						</div>
 					</Motion>
 

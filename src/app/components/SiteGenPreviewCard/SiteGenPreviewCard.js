@@ -2,14 +2,15 @@ import { Button, Spinner } from '@newfold/ui-component-library';
 import classNames from 'classnames';
 import { Iframe } from '@/components';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { useState } from '@wordpress/element';
 
 const SiteGenPreviewCard = ( {
 	screenshot,
 	frameName,
 	frameSrc,
 	onFrameLoad = () => {},
-	width = '300px',
-	height = '360px',
+	width = '280px',
+	height = '350px',
 	viewportScale = 0.2,
 	viewportWidth = 1500,
 	viewportHeight = 2500,
@@ -19,6 +20,8 @@ const SiteGenPreviewCard = ( {
 	tabIndex = 0,
 	onPreview,
 	className,
+	title = '',
+	isNew = false,
 	...props
 } ) => {
 	const handleOnPreview = () => {
@@ -74,47 +77,61 @@ const SiteGenPreviewCard = ( {
 	};
 
 	return (
-		<div
-			className={ classNames(
-				'nfd-onboarding-sitegen-preview-card nfd-relative nfd-bg-cover nfd-bg-top nfd-bg-no-repeat nfd-border nfd-border-slate-30 nfd-rounded nfd-overflow-hidden focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary focus:nfd-ring-offset-2 hover:nfd-bg-bottom nfd-transition-[background-position] nfd-duration-[1500ms] hover:nfd-duration-[5000ms]',
-				! isLoading && ! isError && 'nfd-cursor-pointer',
-				( isLoading || isError ) && 'nfd-cursor-default',
-				className,
-			) }
-			style={ {
-				backgroundImage: screenshot ? `url(${ screenshot })` : 'none',
-				minWidth: width,
-				maxWidth: width,
-				minHeight: height,
-				maxHeight: height,
-			} }
-			onClick={ handleOnPreview }
-			onKeyDown={ ( event ) => {
-				if ( event.key === 'Enter' ) {
-					handleOnPreview();
-				}
-			} }
-			role="button"
-			tabIndex={ tabIndex }
-			{ ...props }
-		>
-			{ ( isLoading || isError ) && <StatusOverlay /> }
-			{ overlay && ! isLoading && ! isError && <ActionOverlay /> }
-			{ ! screenshot && frameSrc && (
-				<Iframe
-					title={ frameName }
-					name={ `nfd-onboarding-${ frameName }` }
-					src={ frameSrc }
-					width={ width }
-					height={ height }
-					viewportWidth={ viewportWidth }
-					viewportHeight={ viewportHeight }
-					viewportScale={ viewportScale }
-					className="nfd-basis-full nfd-absolute nfd-origin-top-left nfd-z-10"
-					onLoad={ onFrameLoad }
-					tabIndex="-1"
-					inert
-				/>
+		<div className="nfd-flex nfd-flex-col nfd-gap-5 nfd-w-full">
+			<div
+				className={ classNames(
+					'nfd-onboarding-sitegen-preview-card nfd-relative nfd-bg-cover nfd-bg-top nfd-bg-no-repeat nfd-bg-white nfd-border nfd-border-[#E5E7EB] nfd-overflow-hidden nfd-shadow-sm focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary focus:nfd-ring-offset-2 hover:nfd-bg-bottom nfd-transition-[background-position] nfd-duration-[1500ms] hover:nfd-duration-[5000ms]',
+					! isLoading && ! isError && 'nfd-cursor-pointer hover:nfd-shadow-md',
+					( isLoading || isError ) && 'nfd-cursor-default',
+					className,
+				) }
+				style={ {
+					backgroundImage: screenshot ? `url(${ screenshot })` : 'none',
+					width: '100%',
+					minHeight: height,
+					maxHeight: height,
+					borderRadius: '15px',
+				} }
+				onClick={ handleOnPreview }
+				onKeyDown={ ( event ) => {
+					if ( event.key === 'Enter' ) {
+						handleOnPreview();
+					}
+				} }
+				role="button"
+				tabIndex={ tabIndex }
+				{ ...props }
+			>
+				{ ( isLoading || isError ) && <StatusOverlay /> }
+				{ overlay && ! isLoading && ! isError && <ActionOverlay /> }
+				{ ! screenshot && frameSrc && (
+					<Iframe
+						title={ frameName }
+						name={ `nfd-onboarding-${ frameName }` }
+						src={ frameSrc }
+						width={ width }
+						height={ height }
+						viewportWidth={ viewportWidth }
+						viewportHeight={ viewportHeight }
+						viewportScale={ viewportScale }
+						className="nfd-basis-full nfd-absolute nfd-origin-top-left nfd-z-10"
+						onLoad={ onFrameLoad }
+						tabIndex="-1"
+						inert
+					/>
+				) }
+			</div>
+			{ title && (
+				<div className="nfd-flex nfd-items-center nfd-gap-2">
+					<h3 className="nfd-text-base nfd-font-semibold nfd-text-[#111827]">
+						{ title }
+					</h3>
+					{ isNew && (
+						<span className="nfd-bg-[#3B82F6] nfd-text-white nfd-px-2.5 nfd-py-0.5 nfd-rounded-full nfd-text-[11px] nfd-font-medium nfd-uppercase nfd-tracking-wide nfd-leading-tight">
+							{ __( 'New', 'wp-module-onboarding' ) }
+						</span>
+					) }
+				</div>
 			) }
 		</div>
 	);

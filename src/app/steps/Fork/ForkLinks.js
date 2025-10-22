@@ -42,7 +42,7 @@ const ForkLinks = ( { variant } ) => {
 				<ActionCard
 					onClick={ handleClick }
 					href={ migrationFallbackUrl || '#' }
-					className="nfd-w-full nfd-max-w-[780px] nfd-flex nfd-items-center nfd-justify-center nfd-gap-2 nfd-text-center nfd-text-base nfd-text-content-default nfd-bg-transparent nfd-py-3 nfd-px-6 nfd-border nfd-border-primary nfd-rounded-xl hover:nfd-bg-primary-100"
+					className="nfd-w-full nfd-max-w-[340px] nfd-flex nfd-items-center nfd-justify-center nfd-gap-2 nfd-text-center nfd-text-base nfd-text-content-default nfd-bg-transparent nfd-py-3 nfd-px-6 nfd-border nfd-border-primary nfd-rounded-xl hover:nfd-bg-primary-100"
 				>
 					<ArrowsRightLeftIcon className="nfd-w-[18px] nfd-h-[18px]" />
 					<span>
@@ -53,7 +53,7 @@ const ForkLinks = ( { variant } ) => {
 		}
 	};
 
-	const handleWPAdmin = ( e ) => {
+	/* const handleWPAdmin = ( e ) => {
 		e.preventDefault();
 		sendOnboardingEvent(
 			new OnboardingEvent(
@@ -62,9 +62,9 @@ const ForkLinks = ( { variant } ) => {
 			)
 		);
 		window.location.href = window.nfdOnboarding?.adminUrl || '/wp-admin';
-	};
+	}; */
 
-	const handleHostingPanel = ( e ) => {
+	/* const handleHostingPanel = ( e ) => {
 		e.preventDefault();
 		sendOnboardingEvent(
 			new OnboardingEvent(
@@ -73,11 +73,12 @@ const ForkLinks = ( { variant } ) => {
 			)
 		);
 		window.open( window.nfdOnboarding?.hostingPanelUrl || 'https://my.bluehost.com', '_blank' );
-	};
+	}; */
 
 	return (
 		<div className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-4">
 			<MigrationLink />
+			{ /* Temporarily hidden - may be needed later.
 			<div className="nfd-flex nfd-items-center nfd-gap-4 mobile:nfd-flex-col mobile:nfd-gap-2">
 				<span className="nfd-text-content-default">
 					{ __( "I'm an expert, ", 'wp-module-onboarding' ) }
@@ -101,6 +102,7 @@ const ForkLinks = ( { variant } ) => {
 					</button>
 				</span>
 			</div>
+			*/ }
 		</div>
 	);
 };

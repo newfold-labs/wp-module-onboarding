@@ -38,7 +38,7 @@ const ForkOptionButton = ( {
 			direction="forward"
 			callback={ () => handleNext( value ) }
 			className={ classNames(
-				'nfd-group nfd-flex nfd-items-center nfd-gap-2.5 nfd-w-[60%] nfd-h-11 nfd-max-h-11 nfd-py-3 nfd-px-4 nfd-text-base nfd-font-semibold tablet:nfd-w-[90%]',
+				'nfd-group nfd-flex nfd-items-center nfd-gap-2.5 nfd-w-[60%] nfd-h-11 nfd-max-h-11 nfd-py-3 nfd-px-4 nfd-text-base nfd-font-semibold tablet:nfd-w-[90%] nfd-bg-black hover:nfd-bg-[#3858E9] nfd-transition-colors nfd-duration-300',
 				className
 			) }
 			{ ...props }
@@ -76,13 +76,13 @@ const SiteGenOption = () => {
 	return (
 		<ForkOption className="nfd-onboarding-fork-option-sitegen">
 			<div
-				className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-7 nfd-mb-2.5"
+				className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-3 nfd-min-h-[190px] tablet:nfd-min-h-[180px] mobile:nfd-min-h-[150px]"
 				data-block="fork-option-sitegen-header"
 			>
 				<img
 					src={ sitegenForkImageUrl }
 					alt="AI Builder"
-					className="nfd-w-auto nfd-h-[160px] tablet:nfd-h-[120px] mobile:nfd-h-[100px]"
+					className="nfd-w-auto nfd-h-[128px] tablet:nfd-h-[96px] mobile:nfd-h-[80px]"
 				/>
 				{ renderPopularBadge() }
 			</div>
@@ -99,7 +99,7 @@ const SiteGenOption = () => {
 						<SparklesIcon className="nfd-w-9 nfd-h-9 nfd-stroke-[1px] nfd-text-[#0F172A] nfd-absolute -nfd-top-0.5 -nfd-right-9 mobile:nfd-w-8 mobile:nfd-h-8 mobile:-nfd-top-2 mobile:-nfd-right-[28px]" />
 					</div>
 				</div>
-				<p className="nfd-text-base nfd-text-[#333333] tablet:nfd-text-tiny nfd-w-full tablet:nfd-w-[90%]">
+				<p className="nfd-text-lg nfd-text-[#333333] tablet:nfd-text-tiny nfd-w-full tablet:nfd-w-[90%] nfd-min-h-[72px] tablet:nfd-min-h-[60px] nfd-px-[30px]">
 					{ __( 'Answer a few simple questions and in just few minutes our AI Builder will create a beautiful customizable site tailored to your needs.', 'wp-module-onboarding' ) }
 				</p>
 
@@ -127,12 +127,12 @@ const BlueprintsOption = () => {
 	return (
 		<ForkOption className="nfd-onboarding-fork-option-blueprints">
 			<div
-				className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-7 nfd-mb-2.5"
+				className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-7 nfd-min-h-[190px] tablet:nfd-min-h-[180px] mobile:nfd-min-h-[150px]"
 				data-block="fork-option-blueprints-header">
 				<img
 					src={ blueprintsForkImageUrl }
 					alt="Templates"
-					className="nfd-w-auto nfd-h-[160px] tablet:nfd-h-[120px] mobile:nfd-h-[100px]"
+					className="nfd-w-auto nfd-h-[128px] tablet:nfd-h-[96px] mobile:nfd-h-[80px]"
 				/>
 			</div>
 
@@ -143,7 +143,7 @@ const BlueprintsOption = () => {
 				<Title as="h3" className="nfd-text-5xl nfd-font-semibold nfd-text-content-default tablet:nfd-text-3xl nfd-w-full tablet:nfd-w-[90%]">
 					{ __( 'With a Template', 'wp-module-onboarding' ) }
 				</Title>
-				<p className="nfd-text-base nfd-text-[#333333] tablet:nfd-text-tiny nfd-w-full tablet:nfd-w-[90%]">
+				<p className="nfd-text-lg nfd-text-[#333333] tablet:nfd-text-tiny nfd-w-full tablet:nfd-w-[90%] nfd-min-h-[72px] tablet:nfd-min-h-[60px] nfd-px-[30px]">
 					{ __( 'Pick a customizable template that best fits your needs and jump straight into your WordPress dashboard.', 'wp-module-onboarding' ) }
 				</p>
 
@@ -154,7 +154,6 @@ const BlueprintsOption = () => {
 						label={ __( 'Select Template', 'wp-module-onboarding' ) }
 						toRoute="/blueprints"
 						value="blueprints"
-						className="nfd-bg-black hover:nfd-bg-black/80"
 					/>
 				</div>
 			</div>
@@ -165,7 +164,7 @@ const BlueprintsOption = () => {
 const ForkOptions = () => {
 	return (
 		<div className="nfd-onboarding-fork-options">
-			<div className="nfd-flex nfd-justify-between nfd-gap-8 nfd-h-full nfd-pt-8 nfd-pb-3 nfd-relative">
+			<div className="nfd-flex nfd-justify-between nfd-gap-8 nfd-h-full nfd-pb-3 nfd-relative">
 				<SiteGenOption />
 				<OptionDivider />
 				<BlueprintsOption />

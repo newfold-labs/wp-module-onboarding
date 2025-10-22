@@ -30,15 +30,15 @@ const Tabs = ( { activeTab } ) => {
 	];
 
 	return (
-		<div className="nfd-flex nfd-gap-8 nfd-border-b nfd-border-[#EDEFF0]">
+		<div className="nfd-flex nfd-gap-8 nfd-border-b nfd-border-[#E5E7EB]">
 			{ tabs.map( ( tab ) => (
 				<button
 					key={ tab.value }
 					className={ classNames(
-						'nfd-bg-transparent nfd-py-4 nfd-px-1 nfd-text-tiny nfd-font-medium nfd-relative',
+						'nfd-bg-transparent nfd-py-3 nfd-px-0 nfd-text-base nfd-font-normal nfd-relative nfd-border-b-2 nfd-transition-colors',
 						activeTab === tab.value
-							? '!nfd-text-primary after:nfd-content-[""] after:nfd-absolute after:nfd-bottom-[-1px] after:nfd-left-0 after:nfd-w-full after:nfd-h-[2px] after:nfd-bg-primary'
-							: 'nfd-text-[#4A5565]'
+							? 'nfd-text-primary nfd-border-primary'
+							: 'nfd-text-[#6B7280] nfd-border-transparent hover:nfd-text-[#374151]'
 					) }
 					onClick={ () => {
 						dispatch( nfdOnboardingStore ).setActiveTab( tab.value );
@@ -81,7 +81,16 @@ const BlueprintsStep = () => {
 			<style>
 				{ `
 					.nfd-onboarding-body {
-						padding-top: 3rem !important;
+						padding-top: 2rem !important;
+						background-color: #F9FAFB !important;
+					}
+					
+					/* Responsive container adjustments */
+					@media (min-width: 1024px) and (max-width: 1350px) {
+						.nfd-onboarding-step-intro {
+							min-width: 90% !important;
+							max-width: 90% !important;
+						}
 					}
 				` }
 			</style>
@@ -134,10 +143,15 @@ const BlueprintsStep = () => {
 			);
 		}
 
+		// Sort blueprints by ID descending to show latest first
+		const sortedBlueprints = [ ...filteredBlueprints ].sort( ( a, b ) => {
+			return ( b.id || 0 ) - ( a.id || 0 );
+		} );
+
 		// Render blueprints.
 		return (
-			<div className="nfd-grid nfd-grid-cols-3 nfd-gap-8 mobile:nfd-grid-cols-1 mobile:nfd-justify-items-center">
-				{ filteredBlueprints.map( ( blueprint ) => (
+			<div className="nfd-grid nfd-grid-cols-4 nfd-gap-6 tablet:nfd-grid-cols-2 mobile:nfd-grid-cols-1 mobile:nfd-justify-items-center">
+				{ sortedBlueprints.map( ( blueprint, index ) => (
 					<SiteGenPreviewCard
 						key={ blueprint.id }
 						screenshot={ blueprint.screenshot_url }
@@ -145,9 +159,11 @@ const BlueprintsStep = () => {
 						frameSrc={ blueprint.preview_url }
 						isLoading={ false }
 						overlay={ true }
-						width="245px"
-						height="295px"
+						width="280px"
+						height="350px"
 						onPreview={ handleOnPreview }
+						title={ blueprint.title || blueprint.name || blueprint.slug }
+						isNew={ index < 3 }
 					/>
 				) ) }
 			</div>
@@ -156,19 +172,19 @@ const BlueprintsStep = () => {
 
 	return (
 		<Step>
-			<Container className="nfd-onboarding-step-container nfd-onboarding-step-intro nfd-min-w-[780px] nfd-max-w-[780px] tablet:nfd-min-w-[90%] tablet:nfd-max-w-[90%]">
+			<Container className="nfd-onboarding-step-container nfd-onboarding-step-intro nfd-w-[1440px] nfd-max-w-[90vw] tablet:nfd-w-full tablet:nfd-max-w-full tablet:nfd-px-6 mobile:nfd-px-4">
 				{ getCustomStyles() }
 				<Container.Header>
-					<div className="nfd-flex nfd-flex-col nfd-gap-3">
+					<div className="nfd-flex nfd-flex-col nfd-gap-4 nfd-items-center nfd-text-center nfd-mb-8">
 						{ sitegenHasFailed ? (
 							<>
 								<Title
 									as="h1"
-									className="nfd-text-3xl nfd-text-content-default mobile:nfd-text-2xl"
+									className="nfd-text-4xl nfd-text-[#111827] mobile:nfd-text-3xl nfd-font-bold nfd-leading-tight"
 								>
 									{ __( "Sorry, let's try a different approach.", 'wp-module-onboarding' ) }
 								</Title>
-								<p className="nfd-text-tiny nfd-text-content-default">
+								<p className="nfd-text-base nfd-text-[#6B7280] nfd-max-w-[600px]">
 									{ __(
 										"We're sorry, our site generation tool isn't working right now. In the meantime, here are our beautifully designed starter templates to get you started. Choose your favorite — we'll guide you through customizing it!",
 										'wp-module-onboarding'
@@ -178,20 +194,14 @@ const BlueprintsStep = () => {
 						) : (
 							<>
 								<Title
-									as="h3"
-									className="nfd-text-lg mobile:nfd-text-lg nfd-text-[#66A3D2] nfd-font-serif nfd-italic"
-								>
-									{ __( "It's up to you!", 'wp-module-onboarding' ) }
-								</Title>
-								<Title
 									as="h1"
-									className="nfd-text-3xl nfd-text-content-default mobile:nfd-text-2xl"
+									className="nfd-text-4xl nfd-text-[#111827] mobile:nfd-text-3xl nfd-font-bold nfd-leading-tight"
 								>
 									{ __( 'Pick the best Starter Template for your needs', 'wp-module-onboarding' ) }
 								</Title>
-								<p className="nfd-text-tiny nfd-text-content-default">
+								<p className="nfd-text-base nfd-text-[#6B7280] nfd-max-w-[680px]">
 									{ __(
-										"Choose a template based on your goals — whether you're launching a shop, blog, portfolio, or business site. We'll set up your WordPress site in no time — then it's your turn to make it truly yours with easy customizations.",
+										"We'll set up your WordPress site in no time — then it's your turn to make it truly yours with easy customizations.",
 										'wp-module-onboarding'
 									) }
 								</p>
@@ -204,7 +214,7 @@ const BlueprintsStep = () => {
 					{ isLoading ? (
 						<LoadingState />
 					) : (
-						<div className="nfd-flex nfd-flex-col nfd-gap-9">
+						<div className="nfd-flex nfd-flex-col nfd-gap-10">
 							<Tabs activeTab={ activeTab } />
 							{ renderBlueprints }
 						</div>
@@ -212,8 +222,8 @@ const BlueprintsStep = () => {
 				</Container.Block>
 
 				{ ! sitegenHasFailed && (
-					<Container.Footer className="nfd-p-0">
-						<div className="nfd-flex nfd-justify-start nfd-border-t nfd-pt-8">
+					<Container.Footer className="nfd-p-0 nfd-mt-8">
+						<div className="nfd-flex nfd-justify-start">
 							<Navigate toRoute="/" direction="backward" variant="secondary">
 								{ __( 'Back', 'wp-module-onboarding' ) }
 							</Navigate>

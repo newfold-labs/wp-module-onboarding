@@ -8,6 +8,7 @@ import { ACTION_HOMEPAGE_PREVIEW_FAILED } from '@/utils/analytics/hiive/constant
 const Preview = ( {
 	preview,
 	onPreview,
+	siteNumber,
 } ) => {
 	const [ isLoading, setIsLoading ] = useState( true );
 	const [ isError, setIsError ] = useState( false );
@@ -145,15 +146,16 @@ const Preview = ( {
 			frameName={ preview.slug }
 			frameSrc={ iframeSrc }
 			onFrameLoad={ iframeOnLoad }
-			width="300px"
-			height="360px"
-			viewportWidth={ 1600 }
+			width="100%"
+			height="454px"
+			viewportWidth={ 1400 }
 			viewportHeight={ '540%' }
-			viewportScale={ 0.187 }
+			viewportScale={ 0.28 }
 			overlay={ true }
 			isLoading={ isLoading }
 			isError={ isError }
 			onPreview={ onPreview }
+			title={ `Site #${ siteNumber }` }
 		/>
 	);
 };

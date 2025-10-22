@@ -50,10 +50,10 @@ const LogoStep = () => {
 			<Container className="nfd-onboarding-step-container nfd-onboarding-step-logo">
 				<Container.Header
 					title={ __( 'Do you have a logo you would like to use?', 'wp-module-onboarding' ) }
-					description={ __( 'Browse to upload your logo, or drag and drop it below.', 'wp-module-onboarding' ) }
-					className="nfd-gap-2"
+					description={ __( 'Browse to upload it or drag and drop it', 'wp-module-onboarding' ) }
+					className="nfd-gap-2 nfd-text-center"
 				/>
-				<Container.Block separator={ false }>
+				<Container.Block separator={ false } className="nfd-flex nfd-justify-center">
 					<LogoUploadInput
 						isUploading={ isUploading }
 						setIsUploading={ setIsUploading }

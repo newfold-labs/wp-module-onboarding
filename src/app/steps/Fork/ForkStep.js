@@ -131,7 +131,7 @@ const ForkStep = () => {
 			</Container.Header>
 
 			<Container.Block className="nfd-p-0">
-				<div className="nfd-flex nfd-flex-col nfd-gap-14">
+				<div className="nfd-flex nfd-flex-col nfd-gap-8">
 					<ForkOptions />
 					<ForkLinks variant={ variant } />
 				</div>

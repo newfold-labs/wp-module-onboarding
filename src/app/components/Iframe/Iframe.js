@@ -18,8 +18,7 @@ const Iframe = forwardRef( ( {
 				'nfd-onboarding-iframe nfd-relative nfd-flex nfd-flex-col nfd-overflow-hidden',
 			) }
 			style={ {
-				minWidth: width,
-				maxWidth: width,
+				width: '100%',
 				minHeight: height,
 				maxHeight: height,
 			} }
