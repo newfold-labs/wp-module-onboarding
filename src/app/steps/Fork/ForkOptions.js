@@ -6,9 +6,9 @@ import { ACTION_FORK_OPTION_SELECTED } from '@/utils/analytics/hiive/constants';
 import { SparklesIcon } from '@heroicons/react/24/outline';
 import { ArrowLongRightIcon, FireIcon } from '@heroicons/react/24/solid';
 import { Title } from '@newfold/ui-component-library';
+import { useRef } from '@wordpress/element';
 import classNames from 'classnames';
 import Lottie from 'lottie-react';
-import { useRef } from 'react';
 
 const ForkOptionButton = ( { label, toRoute, value, className, ...props } ) => {
 	const handleNext = ( selectedForkOption ) => {
