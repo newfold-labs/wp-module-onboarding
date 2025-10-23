@@ -3,6 +3,14 @@ import { useLocation } from 'react-router-dom';
 import { ReactComponent as BluehostLogo } from '@/assets/bluehost-logo.svg';
 import { HeaderActions as CanvasStepHeaderActions } from '@/steps/Canvas';
 import { HeaderActions as BlueprintCanvasStepHeaderActions } from '@/steps/BlueprintCanvas';
+import { BackButton } from '@/components';
+
+// Map of routes that should show a back button in the header
+const BACK_NAVIGATION_MAP = {
+	'/intake': '/',
+	'/logo': '/intake',
+	'/blueprints': '/',
+};
 
 const Header = () => {
 	const [ isCanvasStep, setIsCanvasStep ] = useState( false );
@@ -23,6 +31,10 @@ const Header = () => {
 		}
 	}, [ location ] );
 
+	// Determine if the current route should show a back button
+	const backRoute = BACK_NAVIGATION_MAP[ location.pathname ];
+	const showBackButton = !! backRoute;
+
 	return (
 		<header
 			className={ classNames(
@@ -31,12 +43,16 @@ const Header = () => {
 			) }
 		>
 			<div className="nfd-onboarding-header-container nfd-flex nfd-justify-between nfd-items-center nfd-min-h-16 nfd-px-6 mobile:nfd-px-0 mobile:nfd-max-w-[90%] mobile:nfd-mx-auto">
-				<BluehostLogo
-					id="nfd-onboarding-header-logo"
-					className={ classNames(
-						( isCanvasStep || isBlueprintCanvasStep ) && 'mobile:nfd-hidden'
-					) }
-				/>
+				{ showBackButton ? (
+					<BackButton toRoute={ backRoute } />
+				) : (
+					<BluehostLogo
+						id="nfd-onboarding-header-logo"
+						className={ classNames(
+							( isCanvasStep || isBlueprintCanvasStep ) && 'mobile:nfd-hidden'
+						) }
+					/>
+				) }
 				{ isCanvasStep && <CanvasStepHeaderActions /> }
 				{ isBlueprintCanvasStep && <BlueprintCanvasStepHeaderActions /> }
 			</div>

@@ -69,14 +69,6 @@ const LogoStep = () => {
 						>
 							{ __( 'Next', 'wp-module-onboarding' ) }
 						</Navigate>
-						<Navigate
-							toRoute="/intake"
-							direction="backward"
-							variant="secondary"
-							disabled={ isUploading }
-						>
-							{ __( 'Back', 'wp-module-onboarding' ) }
-						</Navigate>
 					</Step.Actions>
 				</Container.Footer>
 			</Container>

@@ -220,16 +220,6 @@ const BlueprintsStep = () => {
 						</div>
 					) }
 				</Container.Block>
-
-				{ ! sitegenHasFailed && (
-					<Container.Footer className="nfd-p-0 nfd-mt-8">
-						<div className="nfd-flex nfd-justify-start">
-							<Navigate toRoute="/" direction="backward" variant="secondary">
-								{ __( 'Back', 'wp-module-onboarding' ) }
-							</Navigate>
-						</div>
-					</Container.Footer>
-				) }
 			</Container>
 		</Step>
 	);
