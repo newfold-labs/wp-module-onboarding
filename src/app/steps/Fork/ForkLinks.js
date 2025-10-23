@@ -6,7 +6,7 @@ import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_FORK_OPTION_SELECTED } from '@/utils/analytics/hiive/constants';
 import { ActionCard } from '@/components';
 
-const ForkLinks = () => {
+const ForkLinks = ( { variant } ) => {
 	const { canMigrateSite, migrationFallbackUrl } = useSelect( ( select ) => {
 		return {
 			canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
@@ -26,8 +26,10 @@ const ForkLinks = () => {
 			} else if ( migrationFallbackUrl ) {
 				window.open( migrationFallbackUrl, '_blank' );
 			}
-			// Analytics: migration fork option selected event
-			sendOnboardingEvent( new OnboardingEvent( ACTION_FORK_OPTION_SELECTED, 'MIGRATE' ) );
+			// Analytics: migration fork option selected event with variant info
+			sendOnboardingEvent(
+				new OnboardingEvent( ACTION_FORK_OPTION_SELECTED, `MIGRATE|variant_${ variant }` )
+			);
 		};
 
 		if ( canMigrateSite || migrationFallbackUrl ) {
@@ -44,9 +46,48 @@ const ForkLinks = () => {
 		}
 	};
 
+	const handleWPAdmin = ( e ) => {
+		e.preventDefault();
+		sendOnboardingEvent(
+			new OnboardingEvent( ACTION_FORK_OPTION_SELECTED, `WP_ADMIN|variant_${ variant }` )
+		);
+		window.location.href = window.nfdOnboarding?.adminUrl || '/wp-admin';
+	};
+
+	const handleHostingPanel = ( e ) => {
+		e.preventDefault();
+		sendOnboardingEvent(
+			new OnboardingEvent( ACTION_FORK_OPTION_SELECTED, `HOSTING_PANEL|variant_${ variant }` )
+		);
+		window.open( window.nfdOnboarding?.hostingPanelUrl || 'https://my.bluehost.com', '_blank' );
+	};
+
 	return (
-		<div className="nfd-flex nfd-flex-col nfd-items-center">
+		<div className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-4">
 			<MigrationLink />
+			<div className="nfd-flex nfd-items-center nfd-gap-4 mobile:nfd-flex-col mobile:nfd-gap-2">
+				<span className="nfd-text-content-default">
+					{ __( "I'm an expert,", 'wp-module-onboarding' ) }{ ' ' }
+					<button
+						type="button"
+						onClick={ handleWPAdmin }
+						className="nfd-text-primary nfd-no-underline nfd-bg-transparent nfd-border-none nfd-p-0 nfd-cursor-pointer nfd-inline"
+					>
+						{ __( 'take me to the WP Admin', 'wp-module-onboarding' ) }
+					</button>
+				</span>
+				<span className="nfd-text-content-default mobile:nfd-hidden">|</span>
+				<span className="nfd-text-content-default">
+					{ __( 'Go to', 'wp-module-onboarding' ) }{ ' ' }
+					<button
+						type="button"
+						onClick={ handleHostingPanel }
+						className="nfd-text-primary nfd-no-underline nfd-bg-transparent nfd-border-none nfd-p-0 nfd-cursor-pointer nfd-inline"
+					>
+						{ __( 'Hosting Panel', 'wp-module-onboarding' ) }
+					</button>
+				</span>
+			</div>
 		</div>
 	);
 };

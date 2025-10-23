@@ -19,7 +19,7 @@ const ForkOptionButton = ( { label, toRoute, value, className, ...props } ) => {
 			forkEventLabel = 'BLUEPRINTS';
 		}
 
-		// Analytics: Fork option selected event.
+		// Analytics: Fork option selected event
 		sendOnboardingEvent( new OnboardingEvent( ACTION_FORK_OPTION_SELECTED, forkEventLabel ) );
 	};
 
