@@ -46,48 +46,9 @@ const ForkLinks = ( { variant } ) => {
 		}
 	};
 
-	const handleWPAdmin = ( e ) => {
-		e.preventDefault();
-		sendOnboardingEvent(
-			new OnboardingEvent( ACTION_FORK_OPTION_SELECTED, `WP_ADMIN|variant_${ variant }` )
-		);
-		window.location.href = window.nfdOnboarding?.adminUrl || '/wp-admin';
-	};
-
-	const handleHostingPanel = ( e ) => {
-		e.preventDefault();
-		sendOnboardingEvent(
-			new OnboardingEvent( ACTION_FORK_OPTION_SELECTED, `HOSTING_PANEL|variant_${ variant }` )
-		);
-		window.open( window.nfdOnboarding?.hostingPanelUrl || 'https://my.bluehost.com', '_blank' );
-	};
-
 	return (
 		<div className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-4">
 			<MigrationLink />
-			<div className="nfd-flex nfd-items-center nfd-gap-4 mobile:nfd-flex-col mobile:nfd-gap-2">
-				<span className="nfd-text-content-default">
-					{ __( "I'm an expert,", 'wp-module-onboarding' ) }{ ' ' }
-					<button
-						type="button"
-						onClick={ handleWPAdmin }
-						className="nfd-text-primary nfd-no-underline nfd-bg-transparent nfd-border-none nfd-p-0 nfd-cursor-pointer nfd-inline"
-					>
-						{ __( 'take me to the WP Admin', 'wp-module-onboarding' ) }
-					</button>
-				</span>
-				<span className="nfd-text-content-default mobile:nfd-hidden">|</span>
-				<span className="nfd-text-content-default">
-					{ __( 'Go to', 'wp-module-onboarding' ) }{ ' ' }
-					<button
-						type="button"
-						onClick={ handleHostingPanel }
-						className="nfd-text-primary nfd-no-underline nfd-bg-transparent nfd-border-none nfd-p-0 nfd-cursor-pointer nfd-inline"
-					>
-						{ __( 'Hosting Panel', 'wp-module-onboarding' ) }
-					</button>
-				</span>
-			</div>
 		</div>
 	);
 };
