@@ -1,5 +1,5 @@
 import missingResourceFigureUrl from '@/assets/nfd-missing-resource.png';
-import { Navigate, SiteGenPreviewCard, Step } from '@/components';
+import { SiteGenPreviewCard, Step } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
 import { Container, Spinner, Title } from '@newfold/ui-component-library';
 import { dispatch, useSelect } from '@wordpress/data';
