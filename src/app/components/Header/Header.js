@@ -9,6 +9,8 @@ import { BackButton } from '@/components';
 const BACK_NAVIGATION_MAP = {
 	'/intake': '/',
 	'/logo': '/intake',
+	'/generating': '/logo',
+	'/previews': '/logo',
 	'/blueprints': '/',
 };
 
