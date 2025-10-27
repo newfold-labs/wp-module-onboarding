@@ -14,7 +14,6 @@ import SiteCreatorCard from './SiteCreatorCard';
 import MigrationCard from './MigrationCard';
 import ForkOptions from './ForkOptions';
 import ForkLinks from './ForkLinks';
-import '@/styles/ForkStep.css';
 
 /**
  * Get the A/B test variant for the fork step based on Hiive capability.

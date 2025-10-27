@@ -125,12 +125,6 @@ const SiteGenOption = () => {
 	);
 };
 
-const OptionDivider = () => {
-	return (
-		<div className="nfd-w-px nfd-h-full nfd-bg-[#D8D8D8] nfd-absolute nfd-left-1/2 nfd-top-0 nfd-transform nfd-translate-x-[-50%] mobile:nfd-hidden" />
-	);
-};
-
 const BlueprintsOption = () => {
 	return (
 		<ForkOption className="nfd-onboarding-fork-option-blueprints">
@@ -179,7 +173,6 @@ const ForkOptions = () => {
 		<div className="nfd-onboarding-fork-options">
 			<div className="nfd-flex nfd-justify-between nfd-gap-16 nfd-h-full nfd-relative mobile:nfd-flex-col mobile:nfd-pt-4">
 				<SiteGenOption />
-				<OptionDivider />
 				<BlueprintsOption />
 			</div>
 		</div>
