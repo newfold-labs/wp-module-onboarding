@@ -4,14 +4,16 @@ import { Container, Title } from '@newfold/ui-component-library';
 import { nfdOnboardingStore } from '@/data/store';
 import bluehostLogoUrl from '@/assets/bluehost-logo.svg';
 import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
-import { ACTION_ONBOARDING_STARTED, ACTION_SITEGEN_FORK_AI_EXPERIMENT } from '@/utils/analytics/hiive/constants';
+import {
+	ACTION_ONBOARDING_STARTED,
+	ACTION_SITEGEN_FORK_AI_EXPERIMENT,
+} from '@/utils/analytics/hiive/constants';
 import { disableComingSoon } from '@/utils/api';
 import { fetchBlueprints } from '@/utils/blueprints';
 import SiteCreatorCard from './SiteCreatorCard';
 import MigrationCard from './MigrationCard';
 import ForkOptions from './ForkOptions';
 import ForkLinks from './ForkLinks';
-import '@/styles/ForkStep.css';
 
 /**
  * Get the A/B test variant for the fork step based on Hiive capability.
@@ -24,14 +26,12 @@ const getVariant = () => {
 };
 
 const ForkStep = () => {
-	const { canMigrateSite, migrationFallbackUrl } = useSelect(
-		( select ) => {
-			return {
-				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
-				migrationFallbackUrl: select( nfdOnboardingStore ).getMigrationFallbackUrl(),
-			};
-		}
-	);
+	const { canMigrateSite, migrationFallbackUrl } = useSelect( ( select ) => {
+		return {
+			canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
+			migrationFallbackUrl: select( nfdOnboardingStore ).getMigrationFallbackUrl(),
+		};
+	} );
 
 	// A/B test variant selection based on Hiive capability
 	const variant = getVariant();
@@ -41,14 +41,10 @@ const ForkStep = () => {
 
 	useEffect( () => {
 		// Analytics: Track which variant the user was assigned
-		sendOnboardingEvent(
-			new OnboardingEvent( ACTION_SITEGEN_FORK_AI_EXPERIMENT, variant )
-		);
+		sendOnboardingEvent( new OnboardingEvent( ACTION_SITEGEN_FORK_AI_EXPERIMENT, variant ) );
 
 		// Analytics: Onboarding started event
-		sendOnboardingEvent(
-			new OnboardingEvent( ACTION_ONBOARDING_STARTED )
-		);
+		sendOnboardingEvent( new OnboardingEvent( ACTION_ONBOARDING_STARTED ) );
 
 		/**
 		 * Before unmounting: Disable the site coming soon page.
@@ -63,6 +59,27 @@ const ForkStep = () => {
 		};
 	}, [ variant ] );
 
+	/**
+	 * Component styles override.
+	 */
+	const getCustomStyles = () => {
+		return (
+			<style>
+				{ `
+					.nfd-onboarding-body {
+						padding-top: 2rem !important;
+						padding-bottom: 0 !important;
+					}
+
+					@media (max-width: 1366px) {
+						.nfd-onboarding-body {
+							padding-top: 0 !important;
+						}
+					}
+				` }
+			</style>
+		);
+	};
 	// Render Variant A (current layout with 2 cards)
 	if ( variant === 'A' ) {
 		return (
@@ -118,22 +135,25 @@ const ForkStep = () => {
 
 	// Render Variant B (template layout with 3 options)
 	return (
-		<Container className="nfd-onboarding-step-container nfd-onboarding-step-intro nfd-max-w-[1200px] nfd-w-full nfd-px-4">
-			<Container.Header>
+		<Container className="nfd-onboarding-step-container nfd-onboarding-step-intro nfd-min-w-[1200px] desktop-md:nfd-max-w-[1440px] nfd-max-w-[1200px] small:nfd-min-w-[90%] small:nfd-max-w-[90%] nfd-flex nfd-flex-col nfd-h-full nfd-justify-between nfd-gap-[24px] desktop-md:nfd-gap-[32px] desktop-xl:nfd-gap-[40px]">
+			{ getCustomStyles() }
+			<Container.Header className="nfd-flex-shrink-0">
 				<div className="nfd-flex nfd-flex-col nfd-gap-3">
-					<Title
-						as="h1"
-						className="nfd-text-2xl nfd-text-content-default nfd-text-center"
-					>
+					<Title as="h1" className="nfd-text-2xl nfd-text-content-default nfd-text-center">
 						{ __( 'Choose how you want to create your site', 'wp-module-onboarding' ) }
 					</Title>
 				</div>
 			</Container.Header>
 
-			<Container.Block className="nfd-p-0">
-				<div className="nfd-flex nfd-flex-col nfd-gap-14">
+			<Container.Block className="nfd-p-0 nfd-flex-1 nfd-flex nfd-items-center nfd-justify-center">
+				<div className="nfd-flex nfd-flex-col nfd-gap-14 nfd-w-full">
 					<ForkOptions />
-					<ForkLinks variant={ variant } />
+				</div>
+			</Container.Block>
+
+			<Container.Block className="nfd-p-0 nfd-flex-shrink-0">
+				<div className="nfd-flex nfd-flex-col nfd-gap-14">
+					<ForkLinks />
 				</div>
 			</Container.Block>
 		</Container>
