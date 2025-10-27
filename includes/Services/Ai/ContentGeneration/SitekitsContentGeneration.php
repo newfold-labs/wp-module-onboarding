@@ -17,7 +17,7 @@ use WpOrg\Requests\Requests;
 class SitekitsContentGeneration {
 
 	private static $site_types_supported = [
-		'ecommerce', 'personal', 'business',
+		'ecommerce', 'personal', 'business', 'linkinbio'
 	];
 
 	/**
