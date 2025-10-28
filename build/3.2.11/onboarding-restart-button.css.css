@@ -1,0 +1,62 @@
+/* Container for Build with AI */
+.build-with-ai {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	height: auto;
+	border: none;
+	box-shadow: none;
+	transition: background 100ms ease-in-out;
+}
+/* Link inside the Build with AI container */
+.build-with-ai__link {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	text-decoration: none;
+	height: 100%;
+}
+/* Icon container */
+.build-with-ai__icon {
+	flex-grow: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+/* Icon span */
+.build-with-ai__icon-span {
+	width: 100px;
+	height: 100px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 25px;
+	margin-bottom: 10px;
+	border-radius: 50%;
+	color: #8c8f94;
+	font-size: 40px;
+	background-color: rgba(140, 143, 148, 0.1);
+	transition: background 100ms ease-in-out;
+}
+/* Text under the icon */
+.build-with-ai__text {
+	margin: 0;
+	color: #333;
+	font-weight: 400;
+	padding-bottom: 48px;
+	transition: color 100ms ease-in-out;
+}
+/* Hover states for the Build with AI component */
+.build-with-ai:hover {
+	background-color: #2271b1;
+}
+/* Hover effect on the icon span */
+.build-with-ai:hover .build-with-ai__icon-span {
+	background-color: #fff;
+}
+/* Hover effect on the text */
+.build-with-ai:hover .build-with-ai__text {
+	color: #fff;
+}
+
