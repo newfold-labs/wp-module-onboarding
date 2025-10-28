@@ -116,7 +116,6 @@ class SitekitsContentGeneration {
 			$error_message,
 			array( 'status' => $response_code )
 		);
-
 		return $response;
 	}
 
@@ -220,7 +219,7 @@ class SitekitsContentGeneration {
 			foreach ( $articles as $index => $article ) {
 				CommonSiteTypeService::publish_article(
 					$article['title'] ?? 'Article ' . $index + 1,
-					$article['excerpt'] ?? 'Excertpt for Article ' . $index + 1,
+					$article['excerpt'] ?? 'Excerpt for Article ' . $index + 1,
 					$article['content'] ?? 'Content for Article ' . $index + 1,
 					$article['image'] ?? '',
 					$article['categories'] ?? array()
