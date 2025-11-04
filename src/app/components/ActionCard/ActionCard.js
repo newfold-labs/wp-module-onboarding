@@ -1,4 +1,5 @@
-import { forwardRef } from 'react';
+import classNames from 'classnames';
+import { forwardRef } from '@wordpress/element';
 
 /**
  * ActionCardOverlay component
@@ -27,6 +28,7 @@ const ActionCardOverlay = () => {
 const ActionCard = forwardRef( ( {
 	onClick,
 	onKeyDown,
+	className,
 	children,
 	...props
 }, ref ) => {
@@ -42,7 +44,10 @@ const ActionCard = forwardRef( ( {
 
 	return (
 		<div
-			className="nfd-onboarding-action-card nfd-relative nfd-p-6 nfd-rounded-lg nfd-overflow-hidden nfd-bg-[#E7EFF8] hover:nfd-bg-[#E0EBF6] nfd-transition-colors nfd-duration-200 focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary"
+			className={ classNames(
+				'nfd-onboarding-action-card nfd-relative nfd-p-6 nfd-rounded-lg nfd-overflow-hidden nfd-bg-[#E7EFF8] hover:nfd-bg-[#E0EBF6] nfd-transition-colors nfd-duration-200 focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary',
+				className
+			) }
 			onClick={ onClick }
 			onKeyDown={ handleKeyDown }
 			role="button"

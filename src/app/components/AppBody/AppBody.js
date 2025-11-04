@@ -8,6 +8,7 @@ import { ACTION_PAGEVIEW } from '@/utils/analytics/hiive/constants';
 const AppBody = () => {
 	/**
 	 * Check if any conditions prevent the onboarding from being accessed.
+	 *
 	 * @return {boolean} True if the onboarding can be accessed, false otherwise.
 	 */
 	const canAccessOnboarding = () => {
@@ -33,22 +34,18 @@ const AppBody = () => {
 
 	/**
 	 * Get the routes for the onboarding steps.
+	 *
 	 * @return {Array} Array of <Route> components.
 	 */
 	const getRoutes = () => {
 		return Object.entries( STEPS ).map( ( [ key, Step ] ) => {
-			return (
-				<Route
-					key={ key }
-					path={ Step.path }
-					element={ <Step.Component /> }
-				/>
-			);
+			return <Route key={ key } path={ Step.path } element={ <Step.Component /> } />;
 		} );
 	};
 
 	/**
 	 * Boot the onboarding.
+	 *
 	 * @return {React.ReactNode} The onboarding routes.
 	 */
 	const boot = () => {
@@ -60,9 +57,7 @@ const AppBody = () => {
 
 		return (
 			<AnimateRoutes>
-				<Routes>
-					{ getRoutes() }
-				</Routes>
+				<Routes>{ getRoutes() }</Routes>
 			</AnimateRoutes>
 		);
 	};
@@ -74,11 +69,9 @@ const AppBody = () => {
 	}, [ location ] );
 
 	return (
-		<div className="nfd-onboarding-body nfd-flex nfd-justify-center nfd-py-20 mobile:nfd-py-10">
+		<div className="nfd-onboarding-body nfd-flex nfd-justify-center nfd-pt-8 nfd-pb-16">
 			<div className="nfd-onboarding-body-container nfd-w-full">
-				<AppErrorBoundary FallbackComponent={ ErrorBoundaryFallback }>
-					{ boot() }
-				</AppErrorBoundary>
+				<AppErrorBoundary FallbackComponent={ ErrorBoundaryFallback }>{ boot() }</AppErrorBoundary>
 			</div>
 		</div>
 	);
