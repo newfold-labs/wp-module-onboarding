@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1761658676">
-  <project timestamp="1761658676">
+<coverage generated="1762248871">
+  <project timestamp="1762248871">
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Application.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Application" namespace="global">
         <metrics complexity="8" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="0" elements="31" coveredelements="0"/>
@@ -1796,33 +1796,32 @@
       <line num="216" type="method" name="get_enabled_identifiers" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="217" type="stmt" count="0"/>
       <line num="227" type="method" name="generate_sitegen_meta" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="228" type="stmt" count="0"/>
       <line num="229" type="stmt" count="0"/>
       <line num="230" type="stmt" count="0"/>
       <line num="231" type="stmt" count="0"/>
       <line num="232" type="stmt" count="0"/>
       <line num="233" type="stmt" count="0"/>
-      <line num="236" type="stmt" count="0"/>
+      <line num="234" type="stmt" count="0"/>
       <line num="237" type="stmt" count="0"/>
       <line num="238" type="stmt" count="0"/>
       <line num="239" type="stmt" count="0"/>
       <line num="240" type="stmt" count="0"/>
-      <line num="242" type="stmt" count="0"/>
+      <line num="241" type="stmt" count="0"/>
       <line num="243" type="stmt" count="0"/>
       <line num="244" type="stmt" count="0"/>
       <line num="245" type="stmt" count="0"/>
       <line num="246" type="stmt" count="0"/>
       <line num="247" type="stmt" count="0"/>
       <line num="248" type="stmt" count="0"/>
-      <line num="257" type="method" name="get_homepages" visibility="public" complexity="6" crap="42" count="0"/>
-      <line num="258" type="stmt" count="0"/>
+      <line num="249" type="stmt" count="0"/>
+      <line num="258" type="method" name="get_homepages" visibility="public" complexity="6" crap="42" count="0"/>
       <line num="259" type="stmt" count="0"/>
       <line num="260" type="stmt" count="0"/>
-      <line num="263" type="stmt" count="0"/>
+      <line num="261" type="stmt" count="0"/>
       <line num="264" type="stmt" count="0"/>
       <line num="265" type="stmt" count="0"/>
       <line num="266" type="stmt" count="0"/>
-      <line num="268" type="stmt" count="0"/>
+      <line num="267" type="stmt" count="0"/>
       <line num="269" type="stmt" count="0"/>
       <line num="270" type="stmt" count="0"/>
       <line num="271" type="stmt" count="0"/>
@@ -1831,79 +1830,80 @@
       <line num="274" type="stmt" count="0"/>
       <line num="275" type="stmt" count="0"/>
       <line num="276" type="stmt" count="0"/>
-      <line num="278" type="stmt" count="0"/>
-      <line num="279" type="stmt" count="0"/>
+      <line num="277" type="stmt" count="0"/>
       <line num="280" type="stmt" count="0"/>
-      <line num="283" type="stmt" count="0"/>
-      <line num="284" type="stmt" count="0"/>
+      <line num="281" type="stmt" count="0"/>
+      <line num="282" type="stmt" count="0"/>
       <line num="285" type="stmt" count="0"/>
-      <line num="288" type="stmt" count="0"/>
-      <line num="289" type="stmt" count="0"/>
+      <line num="286" type="stmt" count="0"/>
+      <line num="287" type="stmt" count="0"/>
       <line num="290" type="stmt" count="0"/>
       <line num="291" type="stmt" count="0"/>
       <line num="292" type="stmt" count="0"/>
       <line num="293" type="stmt" count="0"/>
       <line num="294" type="stmt" count="0"/>
-      <line num="297" type="stmt" count="0"/>
-      <line num="298" type="stmt" count="0"/>
-      <line num="301" type="stmt" count="0"/>
-      <line num="310" type="method" name="regenerate_homepage" visibility="public" complexity="5" crap="30" count="0"/>
-      <line num="311" type="stmt" count="0"/>
-      <line num="312" type="stmt" count="0"/>
+      <line num="295" type="stmt" count="0"/>
+      <line num="296" type="stmt" count="0"/>
+      <line num="299" type="stmt" count="0"/>
+      <line num="300" type="stmt" count="0"/>
+      <line num="303" type="stmt" count="0"/>
+      <line num="312" type="method" name="regenerate_homepage" visibility="public" complexity="5" crap="30" count="0"/>
       <line num="313" type="stmt" count="0"/>
       <line num="314" type="stmt" count="0"/>
       <line num="315" type="stmt" count="0"/>
       <line num="316" type="stmt" count="0"/>
       <line num="317" type="stmt" count="0"/>
+      <line num="318" type="stmt" count="0"/>
       <line num="319" type="stmt" count="0"/>
-      <line num="320" type="stmt" count="0"/>
       <line num="321" type="stmt" count="0"/>
+      <line num="322" type="stmt" count="0"/>
       <line num="323" type="stmt" count="0"/>
-      <line num="324" type="stmt" count="0"/>
       <line num="325" type="stmt" count="0"/>
-      <line num="328" type="stmt" count="0"/>
-      <line num="329" type="stmt" count="0"/>
+      <line num="326" type="stmt" count="0"/>
+      <line num="327" type="stmt" count="0"/>
+      <line num="330" type="stmt" count="0"/>
       <line num="331" type="stmt" count="0"/>
-      <line num="334" type="stmt" count="0"/>
-      <line num="335" type="stmt" count="0"/>
+      <line num="333" type="stmt" count="0"/>
       <line num="336" type="stmt" count="0"/>
       <line num="337" type="stmt" count="0"/>
       <line num="338" type="stmt" count="0"/>
       <line num="339" type="stmt" count="0"/>
       <line num="340" type="stmt" count="0"/>
       <line num="341" type="stmt" count="0"/>
-      <line num="344" type="stmt" count="0"/>
-      <line num="353" type="method" name="publish_sitemap_pages" visibility="public" complexity="4" crap="20" count="0"/>
-      <line num="354" type="stmt" count="0"/>
-      <line num="355" type="stmt" count="0"/>
+      <line num="342" type="stmt" count="0"/>
+      <line num="343" type="stmt" count="0"/>
+      <line num="346" type="stmt" count="0"/>
+      <line num="355" type="method" name="publish_sitemap_pages" visibility="public" complexity="4" crap="20" count="0"/>
       <line num="356" type="stmt" count="0"/>
       <line num="357" type="stmt" count="0"/>
       <line num="358" type="stmt" count="0"/>
+      <line num="359" type="stmt" count="0"/>
       <line num="360" type="stmt" count="0"/>
-      <line num="361" type="stmt" count="0"/>
       <line num="362" type="stmt" count="0"/>
-      <line num="365" type="stmt" count="0"/>
-      <line num="366" type="stmt" count="0"/>
+      <line num="363" type="stmt" count="0"/>
+      <line num="364" type="stmt" count="0"/>
       <line num="367" type="stmt" count="0"/>
-      <line num="370" type="stmt" count="0"/>
-      <line num="371" type="stmt" count="0"/>
+      <line num="368" type="stmt" count="0"/>
+      <line num="369" type="stmt" count="0"/>
       <line num="372" type="stmt" count="0"/>
-      <line num="375" type="stmt" count="0"/>
+      <line num="373" type="stmt" count="0"/>
+      <line num="374" type="stmt" count="0"/>
       <line num="377" type="stmt" count="0"/>
-      <line num="385" type="method" name="get_site_details_meta" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="386" type="stmt" count="0"/>
-      <line num="394" type="method" name="setup_nav_menu" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="395" type="stmt" count="0"/>
+      <line num="379" type="stmt" count="0"/>
+      <line num="387" type="method" name="get_site_details_meta" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="388" type="stmt" count="0"/>
+      <line num="396" type="method" name="setup_nav_menu" visibility="public" complexity="2" crap="6" count="0"/>
       <line num="397" type="stmt" count="0"/>
-      <line num="398" type="stmt" count="0"/>
+      <line num="399" type="stmt" count="0"/>
       <line num="400" type="stmt" count="0"/>
-      <line num="401" type="stmt" count="0"/>
       <line num="402" type="stmt" count="0"/>
       <line num="403" type="stmt" count="0"/>
       <line num="404" type="stmt" count="0"/>
       <line num="405" type="stmt" count="0"/>
-      <line num="408" type="stmt" count="0"/>
-      <metrics loc="411" ncloc="328" classes="1" methods="13" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="233" coveredstatements="0" elements="246" coveredelements="0"/>
+      <line num="406" type="stmt" count="0"/>
+      <line num="407" type="stmt" count="0"/>
+      <line num="410" type="stmt" count="0"/>
+      <metrics loc="413" ncloc="330" classes="1" methods="13" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="233" coveredstatements="0" elements="246" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/RestApi/SiteImagesController.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\RestApi\SiteImagesController" namespace="global">
@@ -2453,15 +2453,14 @@
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Services/Ai/ContentGeneration/SitekitsContentGeneration.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration\SitekitsContentGeneration" namespace="global">
-        <metrics complexity="18" methods="8" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="77" coveredstatements="0" elements="85" coveredelements="0"/>
+        <metrics complexity="23" methods="9" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="94" coveredstatements="0" elements="103" coveredelements="0"/>
       </class>
-      <line num="58" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="59" type="stmt" count="0"/>
+      <line num="59" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="60" type="stmt" count="0"/>
       <line num="61" type="stmt" count="0"/>
       <line num="62" type="stmt" count="0"/>
-      <line num="71" type="method" name="generate_sitekits" visibility="public" complexity="6" crap="42" count="0"/>
-      <line num="72" type="stmt" count="0"/>
+      <line num="63" type="stmt" count="0"/>
+      <line num="72" type="method" name="generate_sitekits" visibility="public" complexity="6" crap="42" count="0"/>
       <line num="73" type="stmt" count="0"/>
       <line num="74" type="stmt" count="0"/>
       <line num="75" type="stmt" count="0"/>
@@ -2470,20 +2469,20 @@
       <line num="78" type="stmt" count="0"/>
       <line num="79" type="stmt" count="0"/>
       <line num="80" type="stmt" count="0"/>
-      <line num="83" type="stmt" count="0"/>
-      <line num="86" type="stmt" count="0"/>
+      <line num="81" type="stmt" count="0"/>
+      <line num="84" type="stmt" count="0"/>
       <line num="87" type="stmt" count="0"/>
-      <line num="90" type="stmt" count="0"/>
+      <line num="88" type="stmt" count="0"/>
       <line num="91" type="stmt" count="0"/>
-      <line num="93" type="stmt" count="0"/>
-      <line num="96" type="stmt" count="0"/>
+      <line num="92" type="stmt" count="0"/>
+      <line num="94" type="stmt" count="0"/>
       <line num="97" type="stmt" count="0"/>
       <line num="98" type="stmt" count="0"/>
       <line num="99" type="stmt" count="0"/>
-      <line num="103" type="stmt" count="0"/>
+      <line num="100" type="stmt" count="0"/>
       <line num="104" type="stmt" count="0"/>
-      <line num="106" type="stmt" count="0"/>
-      <line num="110" type="stmt" count="0"/>
+      <line num="105" type="stmt" count="0"/>
+      <line num="107" type="stmt" count="0"/>
       <line num="111" type="stmt" count="0"/>
       <line num="112" type="stmt" count="0"/>
       <line num="113" type="stmt" count="0"/>
@@ -2491,6 +2490,7 @@
       <line num="115" type="stmt" count="0"/>
       <line num="116" type="stmt" count="0"/>
       <line num="117" type="stmt" count="0"/>
+      <line num="118" type="stmt" count="0"/>
       <line num="119" type="stmt" count="0"/>
       <line num="128" type="method" name="get_sitekit_object" visibility="private" complexity="1" crap="2" count="0"/>
       <line num="129" type="stmt" count="0"/>
@@ -2526,7 +2526,7 @@
       <line num="190" type="method" name="install_pre_requisites_in_background" visibility="private" complexity="2" crap="6" count="0"/>
       <line num="191" type="stmt" count="0"/>
       <line num="192" type="stmt" count="0"/>
-      <line num="202" type="method" name="publish_content" visibility="private" complexity="3" crap="12" count="0"/>
+      <line num="202" type="method" name="publish_content" visibility="private" complexity="5" crap="30" count="0"/>
       <line num="204" type="stmt" count="0"/>
       <line num="205" type="stmt" count="0"/>
       <line num="206" type="stmt" count="0"/>
@@ -2537,9 +2537,27 @@
       <line num="211" type="stmt" count="0"/>
       <line num="212" type="stmt" count="0"/>
       <line num="213" type="stmt" count="0"/>
-      <line num="224" type="method" name="site_type_supported" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="216" type="stmt" count="0"/>
+      <line num="218" type="stmt" count="0"/>
+      <line num="219" type="stmt" count="0"/>
+      <line num="220" type="stmt" count="0"/>
+      <line num="221" type="stmt" count="0"/>
+      <line num="222" type="stmt" count="0"/>
+      <line num="223" type="stmt" count="0"/>
+      <line num="224" type="stmt" count="0"/>
       <line num="225" type="stmt" count="0"/>
-      <metrics loc="227" ncloc="150" classes="1" methods="8" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="77" coveredstatements="0" elements="85" coveredelements="0"/>
+      <line num="226" type="stmt" count="0"/>
+      <line num="237" type="method" name="site_type_supported" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="238" type="stmt" count="0"/>
+      <line num="247" type="method" name="check_custom_logo" visibility="private" complexity="3" crap="12" count="0"/>
+      <line num="248" type="stmt" count="0"/>
+      <line num="249" type="stmt" count="0"/>
+      <line num="250" type="stmt" count="0"/>
+      <line num="251" type="stmt" count="0"/>
+      <line num="252" type="stmt" count="0"/>
+      <line num="253" type="stmt" count="0"/>
+      <line num="256" type="stmt" count="0"/>
+      <metrics loc="258" ncloc="175" classes="1" methods="9" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="94" coveredstatements="0" elements="103" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Services/AppService.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Services\AppService" namespace="global">
@@ -2584,7 +2602,7 @@
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Services/Blueprints/BlueprintImportService.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Services\Blueprints\BlueprintImportService" namespace="global">
-        <metrics complexity="59" methods="12" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="165" coveredstatements="0" elements="177" coveredelements="0"/>
+        <metrics complexity="59" methods="12" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="166" coveredstatements="0" elements="178" coveredelements="0"/>
       </class>
       <line num="44" type="method" name="import" visibility="public" complexity="5" crap="30" count="0"/>
       <line num="45" type="stmt" count="0"/>
@@ -2660,110 +2678,111 @@
       <line num="219" type="stmt" count="0"/>
       <line num="222" type="stmt" count="0"/>
       <line num="224" type="stmt" count="0"/>
-      <line num="229" type="stmt" count="0"/>
-      <line num="230" type="stmt" count="0"/>
-      <line num="233" type="stmt" count="0"/>
+      <line num="226" type="stmt" count="0"/>
+      <line num="231" type="stmt" count="0"/>
+      <line num="232" type="stmt" count="0"/>
       <line num="235" type="stmt" count="0"/>
       <line num="237" type="stmt" count="0"/>
-      <line num="238" type="stmt" count="0"/>
-      <line num="241" type="stmt" count="0"/>
-      <line num="250" type="method" name="insert_sql" visibility="private" complexity="10" crap="110" count="0"/>
-      <line num="251" type="stmt" count="0"/>
-      <line num="254" type="stmt" count="0"/>
-      <line num="255" type="stmt" count="0"/>
+      <line num="239" type="stmt" count="0"/>
+      <line num="240" type="stmt" count="0"/>
+      <line num="243" type="stmt" count="0"/>
+      <line num="252" type="method" name="insert_sql" visibility="private" complexity="10" crap="110" count="0"/>
+      <line num="253" type="stmt" count="0"/>
       <line num="256" type="stmt" count="0"/>
-      <line num="260" type="stmt" count="0"/>
-      <line num="261" type="stmt" count="0"/>
+      <line num="257" type="stmt" count="0"/>
+      <line num="258" type="stmt" count="0"/>
       <line num="262" type="stmt" count="0"/>
-      <line num="265" type="stmt" count="0"/>
-      <line num="266" type="stmt" count="0"/>
+      <line num="263" type="stmt" count="0"/>
+      <line num="264" type="stmt" count="0"/>
+      <line num="267" type="stmt" count="0"/>
       <line num="268" type="stmt" count="0"/>
-      <line num="269" type="stmt" count="0"/>
-      <line num="272" type="stmt" count="0"/>
+      <line num="270" type="stmt" count="0"/>
+      <line num="271" type="stmt" count="0"/>
       <line num="274" type="stmt" count="0"/>
-      <line num="275" type="stmt" count="0"/>
+      <line num="276" type="stmt" count="0"/>
       <line num="277" type="stmt" count="0"/>
-      <line num="278" type="stmt" count="0"/>
       <line num="279" type="stmt" count="0"/>
       <line num="280" type="stmt" count="0"/>
+      <line num="281" type="stmt" count="0"/>
       <line num="282" type="stmt" count="0"/>
-      <line num="289" type="stmt" count="0"/>
-      <line num="292" type="stmt" count="0"/>
-      <line num="293" type="stmt" count="0"/>
+      <line num="284" type="stmt" count="0"/>
+      <line num="291" type="stmt" count="0"/>
       <line num="294" type="stmt" count="0"/>
       <line num="295" type="stmt" count="0"/>
       <line num="296" type="stmt" count="0"/>
-      <line num="299" type="stmt" count="0"/>
-      <line num="308" type="method" name="get_statements_from_sql" visibility="private" complexity="6" crap="42" count="0"/>
-      <line num="309" type="stmt" count="0"/>
-      <line num="310" type="stmt" count="0"/>
-      <line num="313" type="stmt" count="0"/>
-      <line num="316" type="stmt" count="0"/>
-      <line num="317" type="stmt" count="0"/>
-      <line num="320" type="stmt" count="0"/>
-      <line num="321" type="stmt" count="0"/>
-      <line num="325" type="stmt" count="0"/>
-      <line num="328" type="stmt" count="0"/>
-      <line num="329" type="stmt" count="0"/>
+      <line num="297" type="stmt" count="0"/>
+      <line num="298" type="stmt" count="0"/>
+      <line num="301" type="stmt" count="0"/>
+      <line num="310" type="method" name="get_statements_from_sql" visibility="private" complexity="6" crap="42" count="0"/>
+      <line num="311" type="stmt" count="0"/>
+      <line num="312" type="stmt" count="0"/>
+      <line num="315" type="stmt" count="0"/>
+      <line num="318" type="stmt" count="0"/>
+      <line num="319" type="stmt" count="0"/>
+      <line num="322" type="stmt" count="0"/>
+      <line num="323" type="stmt" count="0"/>
+      <line num="327" type="stmt" count="0"/>
+      <line num="330" type="stmt" count="0"/>
       <line num="331" type="stmt" count="0"/>
-      <line num="335" type="stmt" count="0"/>
-      <line num="343" type="method" name="process_media_files" visibility="private" complexity="9" crap="90" count="0"/>
-      <line num="344" type="stmt" count="0"/>
-      <line num="345" type="stmt" count="0"/>
+      <line num="333" type="stmt" count="0"/>
+      <line num="337" type="stmt" count="0"/>
+      <line num="345" type="method" name="process_media_files" visibility="private" complexity="9" crap="90" count="0"/>
+      <line num="346" type="stmt" count="0"/>
       <line num="347" type="stmt" count="0"/>
-      <line num="351" type="stmt" count="0"/>
-      <line num="352" type="stmt" count="0"/>
+      <line num="349" type="stmt" count="0"/>
       <line num="353" type="stmt" count="0"/>
-      <line num="357" type="stmt" count="0"/>
-      <line num="358" type="stmt" count="0"/>
+      <line num="354" type="stmt" count="0"/>
+      <line num="355" type="stmt" count="0"/>
       <line num="359" type="stmt" count="0"/>
       <line num="360" type="stmt" count="0"/>
-      <line num="363" type="stmt" count="0"/>
-      <line num="364" type="stmt" count="0"/>
+      <line num="361" type="stmt" count="0"/>
+      <line num="362" type="stmt" count="0"/>
       <line num="365" type="stmt" count="0"/>
+      <line num="366" type="stmt" count="0"/>
       <line num="367" type="stmt" count="0"/>
-      <line num="368" type="stmt" count="0"/>
+      <line num="369" type="stmt" count="0"/>
       <line num="370" type="stmt" count="0"/>
       <line num="372" type="stmt" count="0"/>
-      <line num="373" type="stmt" count="0"/>
-      <line num="376" type="stmt" count="0"/>
-      <line num="377" type="stmt" count="0"/>
+      <line num="374" type="stmt" count="0"/>
+      <line num="375" type="stmt" count="0"/>
       <line num="378" type="stmt" count="0"/>
-      <line num="382" type="stmt" count="0"/>
-      <line num="383" type="stmt" count="0"/>
+      <line num="379" type="stmt" count="0"/>
+      <line num="380" type="stmt" count="0"/>
+      <line num="384" type="stmt" count="0"/>
       <line num="385" type="stmt" count="0"/>
-      <line num="388" type="stmt" count="0"/>
-      <line num="389" type="stmt" count="0"/>
-      <line num="392" type="stmt" count="0"/>
-      <line num="400" type="method" name="map_user_posts" visibility="private" complexity="1" crap="2" count="0"/>
-      <line num="401" type="stmt" count="0"/>
-      <line num="402" type="stmt" count="0"/>
+      <line num="387" type="stmt" count="0"/>
+      <line num="390" type="stmt" count="0"/>
+      <line num="391" type="stmt" count="0"/>
+      <line num="394" type="stmt" count="0"/>
+      <line num="402" type="method" name="map_user_posts" visibility="private" complexity="1" crap="2" count="0"/>
+      <line num="403" type="stmt" count="0"/>
       <line num="404" type="stmt" count="0"/>
-      <line num="405" type="stmt" count="0"/>
       <line num="406" type="stmt" count="0"/>
       <line num="407" type="stmt" count="0"/>
-      <line num="415" type="method" name="cleanup_temp_dir" visibility="private" complexity="4" crap="20" count="0"/>
-      <line num="416" type="stmt" count="0"/>
-      <line num="417" type="stmt" count="0"/>
+      <line num="408" type="stmt" count="0"/>
+      <line num="409" type="stmt" count="0"/>
+      <line num="417" type="method" name="cleanup_temp_dir" visibility="private" complexity="4" crap="20" count="0"/>
       <line num="418" type="stmt" count="0"/>
-      <line num="422" type="stmt" count="0"/>
-      <line num="423" type="stmt" count="0"/>
+      <line num="419" type="stmt" count="0"/>
+      <line num="420" type="stmt" count="0"/>
       <line num="424" type="stmt" count="0"/>
       <line num="425" type="stmt" count="0"/>
       <line num="426" type="stmt" count="0"/>
+      <line num="427" type="stmt" count="0"/>
       <line num="428" type="stmt" count="0"/>
-      <line num="432" type="stmt" count="0"/>
-      <line num="441" type="method" name="remove_not_empty_directory" visibility="private" complexity="4" crap="20" count="0"/>
-      <line num="442" type="stmt" count="0"/>
-      <line num="443" type="stmt" count="0"/>
-      <line num="447" type="stmt" count="0"/>
-      <line num="448" type="stmt" count="0"/>
+      <line num="430" type="stmt" count="0"/>
+      <line num="434" type="stmt" count="0"/>
+      <line num="443" type="method" name="remove_not_empty_directory" visibility="private" complexity="4" crap="20" count="0"/>
+      <line num="444" type="stmt" count="0"/>
+      <line num="445" type="stmt" count="0"/>
       <line num="449" type="stmt" count="0"/>
       <line num="450" type="stmt" count="0"/>
       <line num="451" type="stmt" count="0"/>
+      <line num="452" type="stmt" count="0"/>
       <line num="453" type="stmt" count="0"/>
-      <line num="457" type="stmt" count="0"/>
-      <metrics loc="460" ncloc="309" classes="1" methods="12" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="165" coveredstatements="0" elements="177" coveredelements="0"/>
+      <line num="455" type="stmt" count="0"/>
+      <line num="459" type="stmt" count="0"/>
+      <metrics loc="462" ncloc="310" classes="1" methods="12" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="166" coveredstatements="0" elements="178" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Services/Blueprints/BlueprintsService.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Services\Blueprints\BlueprintsService" namespace="global">
@@ -3546,6 +3565,57 @@
       <line num="207" type="stmt" count="0"/>
       <line num="208" type="stmt" count="0"/>
       <metrics loc="211" ncloc="157" classes="1" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="105" coveredstatements="0" elements="110" coveredelements="0"/>
+    </file>
+    <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Services/SiteTypes/CommonSitetypeService.php">
+      <class name="NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\CommonSiteTypeService" namespace="global">
+        <metrics complexity="15" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="0" elements="46" coveredelements="0"/>
+      </class>
+      <line num="21" type="method" name="publish_article" visibility="public" complexity="7" crap="56" count="0"/>
+      <line num="23" type="stmt" count="0"/>
+      <line num="24" type="stmt" count="0"/>
+      <line num="26" type="stmt" count="0"/>
+      <line num="27" type="stmt" count="0"/>
+      <line num="28" type="stmt" count="0"/>
+      <line num="29" type="stmt" count="0"/>
+      <line num="30" type="stmt" count="0"/>
+      <line num="31" type="stmt" count="0"/>
+      <line num="32" type="stmt" count="0"/>
+      <line num="33" type="stmt" count="0"/>
+      <line num="35" type="stmt" count="0"/>
+      <line num="37" type="stmt" count="0"/>
+      <line num="38" type="stmt" count="0"/>
+      <line num="41" type="stmt" count="0"/>
+      <line num="42" type="stmt" count="0"/>
+      <line num="43" type="stmt" count="0"/>
+      <line num="44" type="stmt" count="0"/>
+      <line num="46" type="stmt" count="0"/>
+      <line num="49" type="stmt" count="0"/>
+      <line num="50" type="stmt" count="0"/>
+      <line num="53" type="stmt" count="0"/>
+      <line num="63" type="method" name="set_featured_image_from_url" visibility="private" complexity="2" crap="6" count="0"/>
+      <line num="64" type="stmt" count="0"/>
+      <line num="65" type="stmt" count="0"/>
+      <line num="66" type="stmt" count="0"/>
+      <line num="77" type="method" name="import_image_from_url" visibility="private" complexity="3" crap="12" count="0"/>
+      <line num="78" type="stmt" count="0"/>
+      <line num="79" type="stmt" count="0"/>
+      <line num="80" type="stmt" count="0"/>
+      <line num="81" type="stmt" count="0"/>
+      <line num="85" type="stmt" count="0"/>
+      <line num="86" type="stmt" count="0"/>
+      <line num="87" type="stmt" count="0"/>
+      <line num="88" type="stmt" count="0"/>
+      <line num="91" type="stmt" count="0"/>
+      <line num="100" type="method" name="create_blog_category" visibility="public" complexity="3" crap="12" count="0"/>
+      <line num="101" type="stmt" count="0"/>
+      <line num="102" type="stmt" count="0"/>
+      <line num="103" type="stmt" count="0"/>
+      <line num="104" type="stmt" count="0"/>
+      <line num="106" type="stmt" count="0"/>
+      <line num="107" type="stmt" count="0"/>
+      <line num="108" type="stmt" count="0"/>
+      <line num="110" type="stmt" count="0"/>
+      <metrics loc="113" ncloc="73" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="0" elements="46" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Services/SiteTypes/EcommerceSiteTypeService.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService" namespace="global">
@@ -4767,6 +4837,6 @@
       <line num="55" type="stmt" count="0"/>
       <metrics loc="58" ncloc="24" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="8" coveredelements="0"/>
     </file>
-    <metrics files="65" loc="10777" ncloc="7368" classes="65" methods="377" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4006" coveredstatements="0" elements="4383" coveredelements="0"/>
+    <metrics files="66" loc="10925" ncloc="7469" classes="66" methods="382" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4066" coveredstatements="0" elements="4448" coveredelements="0"/>
   </project>
 </coverage>
