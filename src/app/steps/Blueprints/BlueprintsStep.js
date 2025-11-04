@@ -27,6 +27,10 @@ const Tabs = ( { activeTab } ) => {
 			label: __( 'Blog', 'wp-module-onboarding' ),
 			value: 'personal',
 		},
+		{
+			label: __( 'Link in bio', 'wp-module-onboarding' ),
+			value: 'linkinbio',
+		},
 	];
 
 	return (

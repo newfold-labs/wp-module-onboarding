@@ -30,7 +30,7 @@ class ContentGenerationPrompt {
 	private $site_description;
 
 	/**
-	 * The type of site (e.g., 'business', 'blog', 'ecommerce').
+	 * The type of site (e.g., 'business', 'blog', 'ecommerce', 'linkinbio').
 	 *
 	 * @var string
 	 */
@@ -58,7 +58,7 @@ class ContentGenerationPrompt {
 	 * Constructor for ContentGenerationPrompt.
 	 *
 	 * @param string $site_description The user-provided site description.
-	 * @param string $site_type       The type of site (e.g., 'business', 'personal', 'ecommerce').
+	 * @param string $site_type       The type of site (e.g., 'business', 'personal', 'ecommerce', 'linkinbio').
 	 * @param string $locale          The locale/language code for the site.
 	 */
 	public function __construct( $site_description, $site_type, $locale ) {
