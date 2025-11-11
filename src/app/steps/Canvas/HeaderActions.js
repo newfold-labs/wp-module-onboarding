@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { dispatch, useSelect } from '@wordpress/data';
 import { Button, Title, ProgressBar } from '@newfold/ui-component-library';
-import { AdjustmentsVerticalIcon, CloudArrowUpIcon, RectangleStackIcon as RectangleStackIconOutline, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { AdjustmentsVerticalIcon, CloudArrowUpIcon, RectangleStackIcon as RectangleStackIconOutline, ExclamationTriangleIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import { RectangleStackIcon as RectangleStackIconSolid } from '@heroicons/react/24/solid';
 import { InteractionBlockingOverlay } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
 import { usePublishSite } from '@/utils/hooks';
 import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_ONBOARDING_COMPLETE } from '@/utils/analytics/hiive/constants';
-import { pluginDashboardPage, wpEditorDesignStudio } from '@/data/constants';
+import { pluginDashboardPage, wpEditorChat, wpEditorDesignStudio } from '@/data/constants';
 
 const HeaderActions = () => {
 	const [ isPublishing, setIsPublishing ] = useState( false );
@@ -32,6 +32,20 @@ const HeaderActions = () => {
 		const result = await publishSite();
 
 		return result;
+	};
+
+	const handleCustomizeWithAI = async () => {
+		await handlePublishSite();
+
+		// Analytics: Onboarding complete event.
+		sendOnboardingEvent(
+			new OnboardingEvent( ACTION_ONBOARDING_COMPLETE, 'customize_with_ai', {
+				source: 'quickstart',
+			} )
+		);
+
+		// Send to the Editor Chat.
+		window.location.replace( wpEditorChat );
 	};
 
 	const handleSelectAndCustomize = async () => {
@@ -111,6 +125,37 @@ const HeaderActions = () => {
 		);
 	};
 
+	const renderCustomizeButton = () => {
+		const hasBluMVP = window.NewfoldRuntime?.capabilities?.hasBluMVP;
+		// If the site has the Blu MVP capability, show the Customize with AI button.
+		if ( hasBluMVP ) {
+			return (
+				<Button
+					variant="secondary"
+					className="nfd-font-semibold"
+					disabled={ ! isReadyToPublish || isPublishing }
+					onClick={ handleCustomizeWithAI }
+				>
+					<SparklesIcon className="nfd-w-5 nfd-h-5 nfd-mr-2" />
+					{ __( 'Customize with AI', 'wp-module-onboarding' ) }
+				</Button>
+			);
+		}
+
+		// Otherwise, show the Select & Customize button.
+		return (
+			<Button
+				variant="secondary"
+				className="nfd-font-semibold"
+				disabled={ ! isReadyToPublish || isPublishing }
+				onClick={ handleSelectAndCustomize }
+			>
+				<AdjustmentsVerticalIcon className="nfd-w-5 nfd-h-5 nfd-mr-2" />
+				{ __( 'Select & Customize', 'wp-module-onboarding' ) }
+			</Button>
+		);
+	};
+
 	return (
 		<div className="nfd-onboarding-canvas-header-actions nfd-flex nfd-gap-4 mobile:nfd-w-full mobile:nfd-justify-between">
 			{ isPublishing && (
@@ -136,15 +181,7 @@ const HeaderActions = () => {
 					)
 				}
 			</button>
-			<Button
-				variant="secondary"
-				className="nfd-font-semibold"
-				disabled={ ! isReadyToPublish || isPublishing }
-				onClick={ handleSelectAndCustomize }
-			>
-				<AdjustmentsVerticalIcon className="nfd-w-5 nfd-h-5 nfd-mr-2" />
-				{ __( 'Select & Customize', 'wp-module-onboarding' ) }
-			</Button>
+			{ renderCustomizeButton() }
 			<Button
 				variant="primary"
 				className="nfd-font-semibold"
