@@ -126,7 +126,8 @@ const HeaderActions = () => {
 	};
 
 	const renderCustomizeButton = () => {
-		const hasBluMVP = window.NewfoldRuntime?.capabilities?.hasBluMVP;
+		// const hasBluMVP = window.NewfoldRuntime?.capabilities?.hasBluMVP; // Temporarily Enabled for testing.
+		const hasBluMVP = true;
 		// If the site has the Blu MVP capability, show the Customize with AI button.
 		if ( hasBluMVP ) {
 			return (
