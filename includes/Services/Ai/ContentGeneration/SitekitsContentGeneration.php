@@ -2,17 +2,13 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration;
 
-use NewfoldLabs\WP\Module\Onboarding\RestApi\ParallelRequestsController;
-use NewfoldLabs\WP\Module\Onboarding\Services\ParallelRequestsService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\CommonSiteTypeService;
 use NewfoldLabs\WP\Module\Onboarding\Types\Page;
 use NewfoldLabs\WP\Module\Onboarding\Types\Pages;
-use NewfoldLabs\WP\Module\Onboarding\Types\ParallelRequest;
 use NewfoldLabs\WP\Module\Onboarding\Types\SiteClassification;
 use NewfoldLabs\WP\Module\Onboarding\Types\Sitekit;
-use WpOrg\Requests\Requests;
 
 class SitekitsContentGeneration {
 
