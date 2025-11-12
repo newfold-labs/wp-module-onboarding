@@ -13,7 +13,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes;
 class CommonSiteTypeService {
 
 	/**
-	 * Publishes a blog post.
+	 * Publishes a blog post
 	 *
 	 * @param array $post The post.
 	 * @return int|WP_Error The post ID.
