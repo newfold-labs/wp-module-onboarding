@@ -1,4 +1,4 @@
-import { useSelect, select as wpSelect } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import { Container, Title } from '@newfold/ui-component-library';
 import { nfdOnboardingStore } from '@/data/store';
