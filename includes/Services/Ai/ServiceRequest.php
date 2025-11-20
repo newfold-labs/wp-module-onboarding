@@ -121,7 +121,7 @@ class ServiceRequest {
 	 * @return ServiceRequest The instance of the class.
 	 */
 	public function send(): ServiceRequest {
-		error_log( print_r( $this->url . $this->endpoint , true) );
+
 		$response = wp_remote_post(
 			$this->url . $this->endpoint,
 			array(
@@ -130,7 +130,7 @@ class ServiceRequest {
 				'timeout' => 60,
 			)
 		);
-		error_log( print_r( $response , true) );
+
 		$this->response = $response;
 		return $this;
 	}
