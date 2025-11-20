@@ -4,7 +4,6 @@ import { updateOnboardingInputSlice } from '@/utils/api';
 
 const DEFAULT_STATE = {
 	siteTitle: '',
-	selectedLocale: '',
 	prompt: '',
 	logo: '',
 	experienceLevel: '',
@@ -29,11 +28,6 @@ export function input( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				siteTitle: action.siteTitle,
-			};
-		case 'SET_SELECTED_LOCALE':
-			return {
-				...state,
-				selectedLocale: action.selectedLocale,
 			};
 		case 'SET_PROMPT':
 			return {
@@ -77,10 +71,6 @@ export const actions = {
 		type: 'SET_SITE_TITLE',
 		siteTitle,
 	} ),
-	setSelectedLocale: ( selectedLocale ) => ( {
-		type: 'SET_SELECTED_LOCALE',
-		selectedLocale,
-	} ),
 	setPrompt: ( prompt ) => ( {
 		type: 'SET_PROMPT',
 		prompt,
@@ -105,7 +95,6 @@ export const actions = {
 export const selectors = {
 	getInputSlice: ( state ) => state.input,
 	getSiteTitle: ( state ) => state.input.siteTitle,
-	getSelectedLocale: ( state ) => state.input.selectedLocale,
 	getPrompt: ( state ) => state.input.prompt,
 	getLogo: ( state ) => state.input.logo,
 	getExperienceLevel: ( state ) => state.input.experienceLevel,

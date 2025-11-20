@@ -13,6 +13,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration;
 
 use NewfoldLabs\WP\Module\AI\SiteGen\SiteGen;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService as LegacySiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Services\LanguageService;
 
 /**
  * Content Generation Prompt Class
@@ -37,13 +38,6 @@ class ContentGenerationPrompt {
 	private $site_type;
 
 	/**
-	 * The locale/language code for the site.
-	 *
-	 * @var string
-	 */
-	private $locale;
-
-	/**
 	 * The required site meta dependencies.
 	 *
 	 * @var array
@@ -59,14 +53,12 @@ class ContentGenerationPrompt {
 	 *
 	 * @param string $site_description The user-provided site description.
 	 * @param string $site_type       The type of site (e.g., 'business', 'personal', 'ecommerce', 'linkinbio').
-	 * @param string $locale          The locale/language code for the site.
 	 */
-	public function __construct( $site_description, $site_type, $locale ) {
-		$this->validate_input( $site_description, $site_type, $locale );
+	public function __construct( $site_description, $site_type ) {
+		$this->validate_input( $site_description, $site_type );
 
 		$this->site_description = trim( $site_description );
 		$this->site_type        = trim( $site_type );
-		$this->locale           = trim( $locale );
 	}
 
 	/**
@@ -74,21 +66,16 @@ class ContentGenerationPrompt {
 	 *
 	 * @param string $site_description The site description.
 	 * @param string $site_type        The site type.
-	 * @param string $locale           The locale.
 	 *
 	 * @throws \Exception If any parameter is empty.
 	 */
-	private function validate_input( $site_description, $site_type, $locale ) {
+	private function validate_input( $site_description, $site_type ) {
 		if ( empty( $site_description ) ) {
 			throw new \Exception( 'Site description cannot be empty' );
 		}
 
 		if ( empty( $site_type ) ) {
 			throw new \Exception( 'Site type cannot be empty' );
-		}
-
-		if ( empty( $locale ) ) {
-			throw new \Exception( 'Locale cannot be empty' );
 		}
 	}
 
@@ -113,7 +100,7 @@ class ContentGenerationPrompt {
 			$this->site_description,
 			$site_meta_dependency,
 			$this->site_type,
-			$this->locale
+			LanguageService::get_site_locale()
 		);
 
 		if ( is_wp_error( $response ) ) {
