@@ -1,27 +1,27 @@
 <?php
 /**
- * AI Content Generation Service Request class.
+ * AI Color Palettes Generation Service Request class.
  *
  * @package NewfoldLabs\WP\Module\Onboarding
  */
 
-namespace NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration;
+namespace NewfoldLabs\WP\Module\Onboarding\Services\Ai\ColorPalettesGeneration;
 
 use NewfoldLabs\WP\Module\Onboarding\Services\Ai\ServiceRequest;
 
 /**
- * AI Content Generation Service Request Class
+ * AI Color Palettes Generation Service Request Class
  *
  * Handles HTTP requests to the AI Content Generation API endpoint.
  */
-class ContentGenerationServiceRequest extends ServiceRequest {
+class ColorPalettesGenerationServiceRequest extends ServiceRequest {
 
 	/**
 	 * Service Endpoint
 	 *
 	 * @var string
 	 */
-	protected $service_endpoint = 'content-generation/';
+	protected $service_endpoint = 'colorpalettes/';
 
 	/**
 	 * Constructor
@@ -33,7 +33,5 @@ class ContentGenerationServiceRequest extends ServiceRequest {
 	public function __construct( string $endpoint, array $body, array $headers = array() ) {
 		parent::__construct( $endpoint, $body, $headers );
 	}
-
-
 
 }

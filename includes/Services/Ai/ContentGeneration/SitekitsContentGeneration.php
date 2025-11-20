@@ -2,9 +2,12 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration;
 
+use NewfoldLabs\WP\Module\Onboarding\Services\Ai\ColorPalettesGeneration\ColorPalettesGenerationServiceRequest;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\CommonSiteTypeService;
+use NewfoldLabs\WP\Module\Onboarding\Types\Color;
+use NewfoldLabs\WP\Module\Onboarding\Types\ColorPalette;
 use NewfoldLabs\WP\Module\Onboarding\Types\Page;
 use NewfoldLabs\WP\Module\Onboarding\Types\Pages;
 use NewfoldLabs\WP\Module\Onboarding\Types\SiteClassification;
@@ -47,10 +50,10 @@ class SitekitsContentGeneration {
 	/**
 	 * Constructor.
 	 *
-	 * @param string $site_type The site type.
-	 * @param string $locale The locale.
-	 * @param ContentGenerationPrompt $prompt The prompt.
-	 * @param SiteClassification $site_classification The site classification.
+	 * @param   string                   $site_type            The site type.
+	 * @param   string                   $locale               The locale.
+	 * @param   ContentGenerationPrompt  $prompt               The prompt.
+	 * @param   SiteClassification       $site_classification  The site classification.
 	 */
 	public function __construct( string $site_type, string $locale, ContentGenerationPrompt $prompt, SiteClassification $site_classification ) {
 		$this->site_type           = $site_type;
@@ -62,11 +65,12 @@ class SitekitsContentGeneration {
 	/**
 	 * Generates the sitekits.
 	 *
-	 * @param int $count The number of sitekits to generate.
+	 * @param   int  $count  The number of sitekits to generate.
+	 *
 	 * @return array|\WP_Error The sitekits - array of Sitekit objects or WP_Error on failure.
 	 */
 	public function generate_sitekits( int $count = 3 ) {
-		$prompt = $this->prompt->get_prompt();
+		$prompt       = $this->prompt->get_prompt();
 		$request_body = array(
 			'siteType'      => $this->site_type,
 			'count'         => $count,
@@ -107,18 +111,20 @@ class SitekitsContentGeneration {
 		$response_code = $request->get_response_code();
 		$response_body = $request->get_error_response_body();
 		$error_message = ( $response_body && isset( $response_body['message'] ) ) ? $response_body['message'] : __( 'An unknown error occurred', 'wp-module-onboarding' );
-		$response = new \WP_Error(
+		$response      = new \WP_Error(
 			'sitekits_generation_failed',
 			$error_message,
 			array( 'status' => $response_code )
 		);
+
 		return $response;
 	}
 
 	/**
 	 * Gets the sitekit object.
 	 *
-	 * @param array $sitekit The sitekit.
+	 * @param   array  $sitekit  The sitekit.
+	 *
 	 * @return Sitekit The sitekit object.
 	 */
 	private function get_sitekit_object( array $sitekit ): Sitekit {
@@ -139,7 +145,8 @@ class SitekitsContentGeneration {
 	/**
 	 * Processes and prepares a sitekit item from the response.
 	 *
-	 * @param array $sitekit_item The sitekit item.
+	 * @param   array  $sitekit_item  The sitekit item.
+	 *
 	 * @return array The processed sitekit item — ready to be converted to a Sitekit object.
 	 */
 	private function process_sitekit_item( array $sitekit_item ): array {
@@ -158,23 +165,74 @@ class SitekitsContentGeneration {
 		}
 		$result['pages'] = new Pages( $pages );
 
-		// Attach a color palette to the sitekit.
-		$result['color_palette'] = SiteGenService::get_instance()->get_color_palette();
+		$result['color_palette'] = $this->get_color_palette();
 
 		return $result;
 	}
 
 	/**
+	 * Return a list o color palette
+	 *
+	 * @return ColorPalette|null
+	 */
+	private function get_color_palette() {
+		$prompt       = $this->prompt->get_prompt();
+		$request_body = array(
+			'count'                   => 3,
+			'prompt'                  => $prompt,
+			'prompt.site_description' => $prompt['site_description'],
+			'locale'                  => $this->locale,
+			'primaryType'             => $this->site_classification->get_primary_type(),
+			'secondaryType'           => $this->site_classification->get_secondary_type(),
+		);
+
+		// Generate sitekits.
+		$request = new ColorPalettesGenerationServiceRequest( 'generate', $request_body );
+		$request->send();
+		// Success.
+		if ( $request->is_successful() ) {
+			$color_palettes = $request->get_response_body();
+			if ( ! is_array( $color_palettes ) ) {
+				return null;
+			}
+
+			// Select a random color palette
+			$selected_color_palette_index = array_rand( $color_palettes );
+			$selected_color_palette       = $color_palettes[ $selected_color_palette_index ];
+
+			$palette_slug   = 'palette_' . ( $selected_color_palette_index + 1 );
+			$palette_colors = array();
+
+			// Create a Color object for each color in the selected color palette.
+			foreach ( $selected_color_palette as $key => $value ) {
+				$slug  = $key;
+				$name  = ucfirst( str_replace( '_', ' ', $slug ) );
+				$color = $value;
+
+				$palette_colors[] = new Color( $name, $slug, $color );
+			}
+
+			return new ColorPalette( $palette_slug, $palette_colors );
+		}
+		return null;
+	}
+
+	/**
 	 * Gets the page content from the response patterns array.
 	 *
-	 * @param array $page_patterns The page patterns.
+	 * @param   array  $page_patterns  The page patterns.
+	 *
 	 * @return string The page content.
 	 */
-	private function get_page_content_from_patterns( array $page_patterns ): string {
+	private
+	function get_page_content_from_patterns(
+		array $page_patterns
+	): string {
 		$page_content = '';
 		foreach ( $page_patterns as $pattern ) {
 			$page_content .= $pattern['patternContent'];
 		}
+
 		return $page_content;
 	}
 
@@ -183,7 +241,8 @@ class SitekitsContentGeneration {
 	 *
 	 * @return void
 	 */
-	private function install_pre_requisites_in_background(): void {
+	private
+	function install_pre_requisites_in_background(): void {
 		if ( $this->site_type === 'ecommerce' ) {
 			EcommerceSiteTypeService::install_ecommerce_plugins();
 		}
@@ -192,10 +251,14 @@ class SitekitsContentGeneration {
 	/**
 	 * Publishes the demo content.
 	 *
-	 * @param array $posts The posts.
+	 * @param   array  $posts  The posts.
+	 *
 	 * @return void
 	 */
-	private function publish_content( array $posts = array() ): void {
+	private
+	function publish_content(
+		array $posts = array()
+	): void {
 		// Publish WooCommerce products.
 		$products = $posts['products'] ?? array();
 		if ( ! empty( $products ) ) {
@@ -227,21 +290,28 @@ class SitekitsContentGeneration {
 	/**
 	 * Checks if the site type supports sitekits`.
 	 *
-	 * @param string $site_type The site type.
+	 * @param   string  $site_type  The site type.
+	 *
 	 * @return bool
 	 */
-	public static function site_type_supported( string $site_type ): bool {
+	public
+	static function site_type_supported(
+		string $site_type
+	): bool {
 		return in_array( $site_type, self::$site_types_supported );
 	}
 
 	/**
 	 * Check if a custom logo exists; otherwise, replace the site logo block with the site title block.
 	 *
-	 * @var string $content Content to check.
 	 * @return string
+	 * @var string $content Content to check.
 	 */
-	private function check_custom_logo( string $content ): string {
-		if ( function_exists('has_custom_logo') && ! has_custom_logo() ) {
+	private
+	function check_custom_logo(
+		string $content
+	): string {
+		if ( function_exists( 'has_custom_logo' ) && ! has_custom_logo() ) {
 			$content = preg_replace(
 				'/<!--\s*wp:site-logo\s*\/-->/',
 				'<!-- wp:site-logo /--><!-- wp:site-title /-->',
