@@ -2,8 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration;
 
-use NewfoldLabs\WP\Module\Onboarding\Services\Ai\ColorPalettesGeneration\ColorPalettesGenerationServiceRequest;
-use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Services\Ai\ServiceRequest;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\CommonSiteTypeService;
 use NewfoldLabs\WP\Module\Onboarding\Types\Color;
@@ -84,7 +83,7 @@ class SitekitsContentGeneration {
 		$this->install_pre_requisites_in_background();
 
 		// Generate sitekits.
-		$request = new ContentGenerationServiceRequest( 'sitekits/generate', $request_body );
+		$request = new ServiceRequest( 'content-generation/sitekits/generate', $request_body );
 		$request->send();
 		// Success.
 		if (
@@ -187,7 +186,7 @@ class SitekitsContentGeneration {
 		);
 
 		// Generate sitekits.
-		$request = new ColorPalettesGenerationServiceRequest( 'generate', $request_body );
+		$request = new ServiceRequest( 'colorpalettes/generate', $request_body );
 		$request->send();
 		// Success.
 		if ( $request->is_successful() ) {
