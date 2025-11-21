@@ -47,6 +47,13 @@ class SitekitsContentGeneration {
 	private $site_classification;
 
 	/**
+	 * Cached color palettes response.
+	 *
+	 * @var array|null
+	 */
+	private $color_palettes = null;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param   string                   $site_type            The site type.
@@ -175,45 +182,54 @@ class SitekitsContentGeneration {
 	 * @return ColorPalette|null
 	 */
 	private function get_color_palette() {
-		$prompt       = $this->prompt->get_prompt();
-		$request_body = array(
-			'count'                   => 3,
-			'prompt'                  => $prompt,
-			'prompt.site_description' => $prompt['site_description'],
-			'locale'                  => $this->locale,
-			'primaryType'             => $this->site_classification->get_primary_type(),
-			'secondaryType'           => $this->site_classification->get_secondary_type(),
-		);
+		if ( null === $this->color_palettes ) {
+			$prompt       = $this->prompt->get_prompt();
+			$request_body = array(
+				'count'                   => 3,
+				'prompt'                  => $prompt,
+				'prompt.site_description' => $prompt['site_description'],
+				'locale'                  => $this->locale,
+				'primaryType'             => $this->site_classification->get_primary_type(),
+				'secondaryType'           => $this->site_classification->get_secondary_type(),
+			);
 
-		// Generate sitekits.
-		$request = new ServiceRequest( 'colorpalettes/generate', $request_body );
-		$request->send();
-		// Success.
-		if ( $request->is_successful() ) {
-			$color_palettes = $request->get_response_body();
-			if ( ! is_array( $color_palettes ) ) {
-				return null;
+			// Generate color palettes.
+			$request = new ServiceRequest( 'colorpalettes/generate', $request_body );
+			$request->send();
+
+			if ( $request->is_successful() ) {
+				$color_palettes = $request->get_response_body();
+				if ( is_array( $color_palettes ) ) {
+					$this->color_palettes = array_values( $color_palettes );
+				} else {
+					$this->color_palettes = array();
+				}
+			} else {
+				$this->color_palettes = array();
 			}
-
-			// Select a random color palette
-			$selected_color_palette_index = array_rand( $color_palettes );
-			$selected_color_palette       = $color_palettes[ $selected_color_palette_index ];
-
-			$palette_slug   = 'palette_' . ( $selected_color_palette_index + 1 );
-			$palette_colors = array();
-
-			// Create a Color object for each color in the selected color palette.
-			foreach ( $selected_color_palette as $key => $value ) {
-				$slug  = $key;
-				$name  = ucfirst( str_replace( '_', ' ', $slug ) );
-				$color = $value;
-
-				$palette_colors[] = new Color( $name, $slug, $color );
-			}
-
-			return new ColorPalette( $palette_slug, $palette_colors );
 		}
-		return null;
+
+		if ( empty( $this->color_palettes ) ) {
+			return null;
+		}
+
+		// Select a random color palette from cached list.
+		$selected_color_palette_index = array_rand( $this->color_palettes );
+		$selected_color_palette       = $this->color_palettes[ $selected_color_palette_index ];
+
+		$palette_slug   = 'palette_' . ( $selected_color_palette_index + 1 );
+		$palette_colors = array();
+
+		// Create a Color object for each color in the selected color palette.
+		foreach ( $selected_color_palette as $key => $value ) {
+			$slug  = $key;
+			$name  = ucfirst( str_replace( '_', ' ', $slug ) );
+			$color = $value;
+
+			$palette_colors[] = new Color( $name, $slug, $color );
+		}
+
+		return new ColorPalette( $palette_slug, $palette_colors );
 	}
 
 	/**
