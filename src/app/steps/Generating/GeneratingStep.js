@@ -71,13 +71,9 @@ const GeneratingStep = () => {
 		if ( selectedExperienceLevel ) {
 			// Analytics: Experience Level Set
 			sendOnboardingEvent(
-				new OnboardingEvent(
-					ACTION_EXPERIENCE_LEVEL_SET,
-					selectedExperienceLevel,
-					{
-						source: 'quickstart',
-					}
-				)
+				new OnboardingEvent( ACTION_EXPERIENCE_LEVEL_SET, selectedExperienceLevel, {
+					source: 'quickstart',
+				} )
 			);
 		}
 
@@ -194,11 +190,15 @@ const GeneratingStep = () => {
 								{ __( 'Building your website…', 'wp-module-onboarding' ) }
 							</Title>
 							<p className="nfd-text-[18px] nfd-text-content-primary mobile:nfd-text-tiny">
-								{ __( 'Hang tight while we create some wonderful options for you.', 'wp-module-onboarding' ) }
+								{ __(
+									'Hang tight while we create some wonderful options for you.',
+									'wp-module-onboarding'
+								) }
 							</p>
 						</div>
 					</Motion>
 
+					{ /* Temporarily hidden - may be needed later.
 					<div className="nfd-flex nfd-flex-col nfd-max-w-[500px] nfd-mx-auto">
 						<Motion
 							variants={ containerVariants }
@@ -214,7 +214,7 @@ const GeneratingStep = () => {
 								<ExperienceOptions />
 							</Motion>
 						</Motion>
-					</div>
+					</div> */ }
 				</Container.Block>
 			</Container>
 		</Step>

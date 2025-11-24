@@ -34,14 +34,10 @@ const LogoStep = () => {
 			saveEditedEntityRecord( 'root', 'site' );
 
 			// Analytics: track the logo added event
-			trackOnboardingEvent(
-				new OnboardingEvent( ACTION_LOGO_ADDED )
-			);
+			trackOnboardingEvent( new OnboardingEvent( ACTION_LOGO_ADDED ) );
 		} else {
 			// Analytics: track the logo skipped event
-			trackOnboardingEvent(
-				new OnboardingEvent( ACTION_LOGO_SKIPPED )
-			);
+			trackOnboardingEvent( new OnboardingEvent( ACTION_LOGO_SKIPPED ) );
 		}
 	};
 
@@ -51,13 +47,10 @@ const LogoStep = () => {
 				<Container.Header
 					title={ __( 'Do you have a logo you would like to use?', 'wp-module-onboarding' ) }
 					description={ __( 'Browse to upload it or drag and drop it', 'wp-module-onboarding' ) }
-					className="nfd-gap-2 nfd-text-center"
+					className="nfd-gap-2 nfd-text-center nfd-pb-16"
 				/>
 				<Container.Block separator={ false } className="nfd-flex nfd-justify-center">
-					<LogoUploadInput
-						isUploading={ isUploading }
-						setIsUploading={ setIsUploading }
-					/>
+					<LogoUploadInput isUploading={ isUploading } setIsUploading={ setIsUploading } />
 				</Container.Block>
 				<Container.Footer>
 					<Step.Actions>

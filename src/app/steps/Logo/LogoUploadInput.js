@@ -102,9 +102,7 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 				} );
 				setIsUploading( false );
 				// Analytics: track the logo upload failed event
-				trackOnboardingEvent(
-					new OnboardingEvent( ACTION_LOGO_UPLOAD_FAILED )
-				);
+				trackOnboardingEvent( new OnboardingEvent( ACTION_LOGO_UPLOAD_FAILED ) );
 			},
 		} );
 	};
@@ -152,9 +150,12 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 	};
 
 	return (
-		<div className="nfd-onboarding-logo-upload nfd-flex nfd-flex-col nfd-gap-4 nfd-w-full nfd-px-4 sm:nfd-w-[600px] sm:nfd-px-0 lg:nfd-w-[800px]">
+		<div className="nfd-onboarding-logo-upload nfd-flex nfd-flex-col nfd-gap-10 nfd-w-full nfd-px-4 sm:nfd-w-[600px] sm:nfd-px-0 lg:nfd-w-[800px]">
 			<div className="nfd-flex nfd-items-center nfd-justify-between">
-				<Label htmlFor="nfd-onboarding-logo-input" className="nfd-text-lg nfd-font-semibold nfd-text-content-primary nfd-m-0">
+				<Label
+					htmlFor="nfd-onboarding-logo-input"
+					className="nfd-text-base nfd-text-content-primary nfd-m-0"
+				>
 					{ __( 'Site Logo:', 'wp-module-onboarding' ) }
 				</Label>
 				<button
@@ -180,7 +181,11 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 			/>
 			{ logo?.url ? (
 				<div className="nfd-relative nfd-w-full nfd-min-h-[250px] nfd-flex nfd-items-center nfd-justify-center nfd-bg-white nfd-rounded-lg nfd-border-2 nfd-border-dashed nfd-border-[#D1D5DB] nfd-p-4">
-					<img src={ logo.url } alt="Logo" className="nfd-max-w-full nfd-max-h-[200px] nfd-object-contain" />
+					<img
+						src={ logo.url }
+						alt="Logo"
+						className="nfd-max-w-full nfd-max-h-[200px] nfd-object-contain"
+					/>
 					<button
 						type="button"
 						onClick={ handleReset }
@@ -240,9 +245,7 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 					) }
 				</div>
 			) }
-			{ error.status && (
-				<p className="nfd-text-red-500 nfd-text-sm nfd-mt-2">{ error.message }</p>
-			) }
+			{ error.status && <p className="nfd-text-red-500 nfd-text-sm nfd-mt-2">{ error.message }</p> }
 		</div>
 	);
 };

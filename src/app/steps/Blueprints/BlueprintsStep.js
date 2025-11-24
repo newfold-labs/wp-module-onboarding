@@ -39,7 +39,7 @@ const Tabs = ( { activeTab } ) => {
 				<button
 					key={ tab.value }
 					className={ classNames(
-						'nfd-bg-transparent nfd-py-3 nfd-px-0 nfd-text-base nfd-font-normal nfd-relative nfd-border-b-2 nfd-transition-colors',
+						'nfd-bg-transparent nfd-py-3 nfd-px-0 nfd-text-base nfd-font-semibold nfd-relative nfd-border-b-2 nfd-transition-colors',
 						activeTab === tab.value
 							? 'nfd-text-primary nfd-border-primary'
 							: 'nfd-text-[#6B7280] nfd-border-transparent hover:nfd-text-[#374151]'
@@ -203,7 +203,7 @@ const BlueprintsStep = () => {
 								>
 									{ __( 'Pick the best Starter Template for your needs', 'wp-module-onboarding' ) }
 								</Title>
-								<p className="nfd-text-base nfd-text-[#6B7280] nfd-max-w-[680px]">
+								<p className="nfd-text-base nfd-text-[#030303] nfd-max-w-[540px]">
 									{ __(
 										"We'll set up your WordPress site in no time — then it's your turn to make it truly yours with easy customizations.",
 										'wp-module-onboarding'

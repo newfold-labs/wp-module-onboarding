@@ -43,12 +43,7 @@ const SiteGenPreviewCard = ( {
 						</span>
 					</div>
 				) }
-				{ isLoading && (
-					<Spinner
-						variant="primary"
-						size="8"
-					/>
-				) }
+				{ isLoading && <Spinner variant="primary" size="8" /> }
 			</div>
 		);
 	};
@@ -66,7 +61,7 @@ const SiteGenPreviewCard = ( {
 					variant="primary"
 					className={ classNames(
 						'nfd-z-20 nfd-transition-opacity',
-						isHovered ? 'nfd-opacity-100' : 'nfd-opacity-0',
+						isHovered ? 'nfd-opacity-100' : 'nfd-opacity-0'
 					) }
 					tabIndex="-1"
 				>
@@ -83,7 +78,7 @@ const SiteGenPreviewCard = ( {
 					'nfd-onboarding-sitegen-preview-card nfd-relative nfd-bg-cover nfd-bg-top nfd-bg-no-repeat nfd-bg-white nfd-border nfd-border-[#E5E7EB] nfd-overflow-hidden nfd-shadow-sm focus:nfd-outline-none focus:nfd-ring-2 focus:nfd-ring-primary focus:nfd-ring-offset-2 hover:nfd-bg-bottom nfd-transition-[background-position] nfd-duration-[1500ms] hover:nfd-duration-[5000ms]',
 					! isLoading && ! isError && 'nfd-cursor-pointer hover:nfd-shadow-md',
 					( isLoading || isError ) && 'nfd-cursor-default',
-					className,
+					className
 				) }
 				style={ {
 					backgroundImage: screenshot ? `url(${ screenshot })` : 'none',
@@ -123,11 +118,9 @@ const SiteGenPreviewCard = ( {
 			</div>
 			{ title && (
 				<div className="nfd-flex nfd-items-center nfd-gap-2">
-					<h3 className="nfd-text-base nfd-font-semibold nfd-text-[#111827]">
-						{ title }
-					</h3>
+					<h3 className="nfd-text-base nfd-font-semibold nfd-text-[#111827]">{ title }</h3>
 					{ isNew && (
-						<span className="nfd-bg-[#3B82F6] nfd-text-white nfd-px-2.5 nfd-py-0.5 nfd-rounded-full nfd-text-[11px] nfd-font-medium nfd-uppercase nfd-tracking-wide nfd-leading-tight">
+						<span className="nfd-bg-[#E8E9FF] nfd-text-[#3239CB] nfd-px-3 nfd-py-1 nfd-rounded-full nfd-font-bold nfd-uppercase nfd-letter-spacing-tighter nfd-text-xxs">
 							{ __( 'New', 'wp-module-onboarding' ) }
 						</span>
 					) }
