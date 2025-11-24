@@ -39,13 +39,7 @@ const AppBody = () => {
 	 */
 	const getRoutes = () => {
 		return Object.entries( STEPS ).map( ( [ key, Step ] ) => {
-			return (
-				<Route
-					key={ key }
-					path={ Step.path }
-					element={ <Step.Component /> }
-				/>
-			);
+			return <Route key={ key } path={ Step.path } element={ <Step.Component /> } />;
 		} );
 	};
 
@@ -63,9 +57,7 @@ const AppBody = () => {
 
 		return (
 			<AnimateRoutes>
-				<Routes>
-					{ getRoutes() }
-				</Routes>
+				<Routes>{ getRoutes() }</Routes>
 			</AnimateRoutes>
 		);
 	};
@@ -79,9 +71,7 @@ const AppBody = () => {
 	return (
 		<div className="nfd-onboarding-body nfd-flex nfd-justify-center nfd-py-10 mobile:nfd-py-10">
 			<div className="nfd-onboarding-body-container nfd-w-full">
-				<AppErrorBoundary FallbackComponent={ ErrorBoundaryFallback }>
-					{ boot() }
-				</AppErrorBoundary>
+				<AppErrorBoundary FallbackComponent={ ErrorBoundaryFallback }>{ boot() }</AppErrorBoundary>
 			</div>
 		</div>
 	);

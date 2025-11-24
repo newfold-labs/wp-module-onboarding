@@ -2,21 +2,18 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration;
 
-use NewfoldLabs\WP\Module\Onboarding\RestApi\ParallelRequestsController;
-use NewfoldLabs\WP\Module\Onboarding\Services\ParallelRequestsService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\CommonSiteTypeService;
 use NewfoldLabs\WP\Module\Onboarding\Types\Page;
 use NewfoldLabs\WP\Module\Onboarding\Types\Pages;
-use NewfoldLabs\WP\Module\Onboarding\Types\ParallelRequest;
 use NewfoldLabs\WP\Module\Onboarding\Types\SiteClassification;
 use NewfoldLabs\WP\Module\Onboarding\Types\Sitekit;
-use WpOrg\Requests\Requests;
 
 class SitekitsContentGeneration {
 
 	private static $site_types_supported = [
-		'ecommerce',
+		'ecommerce', 'personal', 'business', 'linkinbio'
 	];
 
 	/**
@@ -115,7 +112,6 @@ class SitekitsContentGeneration {
 			$error_message,
 			array( 'status' => $response_code )
 		);
-
 		return $response;
 	}
 
@@ -150,9 +146,9 @@ class SitekitsContentGeneration {
 		$result           = array();
 		$result['slug']   = $sitekit_item['slug'];
 		$result['title']  = $sitekit_item['title'];
-		$result['header'] = $sitekit_item['header']['patternContent'];
-		$result['footer'] = $sitekit_item['footer']['patternContent'];
-		
+		$result['header'] = $this->check_custom_logo( $sitekit_item['header']['patternContent'] );
+		$result['footer'] = $this->check_custom_logo( $sitekit_item['footer']['patternContent'] );
+
 		$pages = array();
 		foreach ( $sitekit_item['pages'] as $page_slug => $page_patterns ) {
 			$page_title    = ucfirst( str_replace( '-', ' ', $page_slug ) );
@@ -213,6 +209,19 @@ class SitekitsContentGeneration {
 				);
 			}
 		}
+		$articles = $posts['articles']['posts'] ?? array();
+
+		if ( ! empty( $articles ) ) {
+			foreach ( $articles as $index => $article ) {
+				CommonSiteTypeService::publish_article(
+					$article['title'] ?? 'Article ' . $index + 1,
+					$article['excerpt'] ?? 'Excerpt for Article ' . $index + 1,
+					$article['content'] ?? 'Content for Article ' . $index + 1,
+					$article['image'] ?? '',
+					$article['categories'] ?? array()
+				);
+			}
+		}
 	}
 
 	/**
@@ -223,5 +232,23 @@ class SitekitsContentGeneration {
 	 */
 	public static function site_type_supported( string $site_type ): bool {
 		return in_array( $site_type, self::$site_types_supported );
+	}
+
+	/**
+	 * Check if a custom logo exists; otherwise, replace the site logo block with the site title block.
+	 *
+	 * @var string $content Content to check.
+	 * @return string
+	 */
+	private function check_custom_logo( string $content ): string {
+		if ( function_exists('has_custom_logo') && ! has_custom_logo() ) {
+			$content = preg_replace(
+				'/<!--\s*wp:site-logo\s*\/-->/',
+				'<!-- wp:site-logo /--><!-- wp:site-title /-->',
+				$content
+			);
+		}
+
+		return $content;
 	}
 }

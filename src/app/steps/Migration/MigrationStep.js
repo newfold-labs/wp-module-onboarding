@@ -7,8 +7,8 @@ import { nfdOnboardingStore } from '@/data/store';
 import { Navigate, Step } from '@/components';
 import { getSiteMigrateUrl, getWpSettings, migrateRestURL } from '@/utils/api';
 import migrationFigureUrl from '@/assets/nfd-migration.png';
-import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
-import { ACTION_ERROR_STATE_TRIGGERED, ACTION_MFE_MIGRATION_INITIATED, ACTION_MIGRATION_INITIATED } from '@/utils/analytics/hiive/constants';
+import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
+import { ACTION_FORK_OPTION_SELECTED, ACTION_ERROR_STATE_TRIGGERED, ACTION_MFE_MIGRATION_INITIATED, ACTION_MIGRATION_INITIATED } from '@/utils/analytics/hiive/constants';
 
 const MigrationStep = () => {
 	const [ siteMigrationApiStatus, setSiteMigrationApiStatus ] = useState( {
@@ -85,7 +85,7 @@ const MigrationStep = () => {
 			} );
 
 			// Analytics: migration error event
-			trackOnboardingEvent(
+			sendOnboardingEvent(
 				new OnboardingEvent(
 					ACTION_ERROR_STATE_TRIGGERED,
 					'migration',
@@ -95,6 +95,14 @@ const MigrationStep = () => {
 	}, [ canMigrateSite ] );
 
 	useEffect( () => {
+		// Analytics: migration fork option selected event
+		sendOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_FORK_OPTION_SELECTED,
+				'MIGRATE'
+			)
+		);
+
 		prepareMigration();
 	}, [ prepareMigration ] );
 

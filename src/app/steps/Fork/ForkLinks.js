@@ -7,14 +7,12 @@ import { ACTION_FORK_OPTION_SELECTED } from '@/utils/analytics/hiive/constants';
 import { ActionCard } from '@/components';
 
 const ForkLinks = ( { variant } ) => {
-	const { canMigrateSite, migrationFallbackUrl } = useSelect(
-		( select ) => {
-			return {
-				canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
-				migrationFallbackUrl: select( nfdOnboardingStore ).getMigrationFallbackUrl(),
-			};
-		}
-	);
+	const { canMigrateSite, migrationFallbackUrl } = useSelect( ( select ) => {
+		return {
+			canMigrateSite: select( nfdOnboardingStore ).canMigrateSite(),
+			migrationFallbackUrl: select( nfdOnboardingStore ).getMigrationFallbackUrl(),
+		};
+	} );
 	const navigate = useNavigate();
 
 	const MigrationLink = () => {
@@ -30,10 +28,7 @@ const ForkLinks = ( { variant } ) => {
 			}
 			// Analytics: migration fork option selected event with variant info
 			sendOnboardingEvent(
-				new OnboardingEvent(
-					ACTION_FORK_OPTION_SELECTED,
-					`MIGRATE|variant_${ variant }`
-				)
+				new OnboardingEvent( ACTION_FORK_OPTION_SELECTED, `MIGRATE|variant_${ variant }` )
 			);
 		};
 
@@ -42,12 +37,10 @@ const ForkLinks = ( { variant } ) => {
 				<ActionCard
 					onClick={ handleClick }
 					href={ migrationFallbackUrl || '#' }
-					className="nfd-w-full nfd-max-w-[340px] nfd-flex nfd-items-center nfd-justify-center nfd-gap-2 nfd-text-center nfd-text-base nfd-text-content-default nfd-bg-transparent nfd-py-3 nfd-px-6 nfd-border nfd-border-primary nfd-rounded-xl hover:nfd-bg-primary-100"
+					className="nfd-flex nfd-items-center nfd-justify-center nfd-gap-2 nfd-text-center nfd-text-base nfd-text-content-default nfd-bg-transparent nfd-py-3 nfd-px-12 nfd-border-2 nfd-border-gray-800 nfd-rounded-md hover:nfd-bg-transparent nfd-font-semibold hover:nfd-border-primary hover:nfd-text-primary"
 				>
 					<ArrowsRightLeftIcon className="nfd-w-[18px] nfd-h-[18px]" />
-					<span>
-						{ __( 'Migrate an existing site', 'wp-module-onboarding' ) }
-					</span>
+					<span>{ __( 'Migrate an existing site', 'wp-module-onboarding' ) }</span>
 				</ActionCard>
 			);
 		}

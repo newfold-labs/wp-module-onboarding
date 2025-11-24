@@ -55,7 +55,7 @@ class SiteGenController {
 		);
 		\register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/homepages',
+				$this->rest_base . '/homepages',
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'get_homepages' ),
@@ -225,6 +225,7 @@ class SiteGenController {
 	 * @return array|WP_Error
 	 */
 	public function generate_sitegen_meta( \WP_REST_Request $request ) {
+
 		if ( ! LegacySiteGenService::is_enabled() ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
@@ -234,7 +235,7 @@ class SiteGenController {
 		}
 
 		$site_info  = $request->get_param( 'site_info' );
-		$identifier = $request->get_param( 'identifier' );
+		$identifier  = $request->get_param( 'identifier' );
 		$site_type  = $request->get_param( 'site_type' );
 		$locale     = $request->get_param( 'locale' );
 		$skip_cache = $request->get_param( 'skip_cache' );
@@ -274,6 +275,7 @@ class SiteGenController {
 				$locale,
 				true
 			);
+
 		} else {
 			$target_audience = LegacySiteGenService::instantiate_site_meta( $site_info, 'target_audience', $site_type, $locale );
 			if ( is_wp_error( $target_audience ) ) {
