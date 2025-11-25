@@ -17,6 +17,11 @@ use NewfoldLabs\WP\Module\Onboarding\Types\Sitekit;
  */
 class SitekitsContentGeneration {
 
+	/**
+	 * List of supported site types for Sitekits generation.
+	 *
+	 * @var array
+	 */
 	private static $site_types_supported = array(
 		'ecommerce',
 		'personal',
@@ -62,10 +67,10 @@ class SitekitsContentGeneration {
 	/**
 	 * Constructor.
 	 *
-	 * @param   string                   $site_type            The site type.
-	 * @param   string                   $locale               The locale.
-	 * @param   ContentGenerationPrompt  $prompt               The prompt.
-	 * @param   SiteClassification       $site_classification  The site classification.
+	 * @param string                  $site_type           The site type.
+	 * @param string                  $locale              The locale.
+	 * @param ContentGenerationPrompt $prompt              The prompt.
+	 * @param SiteClassification      $site_classification The site classification.
 	 */
 	public function __construct( string $site_type, string $locale, ContentGenerationPrompt $prompt, SiteClassification $site_classification ) {
 		$this->site_type           = $site_type;
@@ -77,7 +82,7 @@ class SitekitsContentGeneration {
 	/**
 	 * Generates the sitekits.
 	 *
-	 * @param   int  $count  The number of sitekits to generate.
+	 * @param int $count The number of sitekits to generate.
 	 *
 	 * @return array|\WP_Error The sitekits - array of Sitekit objects or WP_Error on failure.
 	 */
@@ -135,7 +140,7 @@ class SitekitsContentGeneration {
 	/**
 	 * Gets the sitekit object.
 	 *
-	 * @param   array  $sitekit  The sitekit.
+	 * @param array $sitekit The sitekit.
 	 *
 	 * @return Sitekit The sitekit object.
 	 */
@@ -157,7 +162,7 @@ class SitekitsContentGeneration {
 	/**
 	 * Processes and prepares a sitekit item from the response.
 	 *
-	 * @param   array  $sitekit_item  The sitekit item.
+	 * @param array $sitekit_item The sitekit item.
 	 *
 	 * @return array The processed sitekit item — ready to be converted to a Sitekit object.
 	 */
@@ -241,7 +246,7 @@ class SitekitsContentGeneration {
 	/**
 	 * Gets the page content from the response patterns array.
 	 *
-	 * @param   array  $page_patterns  The page patterns.
+	 * @param array $page_patterns The page patterns.
 	 *
 	 * @return string The page content.
 	 */
@@ -268,7 +273,7 @@ class SitekitsContentGeneration {
 	/**
 	 * Publishes the demo content.
 	 *
-	 * @param   array  $posts  The posts.
+	 * @param array $posts The posts.
 	 *
 	 * @return void
 	 */
@@ -304,7 +309,7 @@ class SitekitsContentGeneration {
 	/**
 	 * Checks if the site type supports sitekits`.
 	 *
-	 * @param   string  $site_type  The site type.
+	 * @param string $site_type The site type.
 	 *
 	 * @return bool
 	 */
