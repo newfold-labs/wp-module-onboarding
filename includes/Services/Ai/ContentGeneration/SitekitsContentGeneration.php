@@ -12,11 +12,17 @@ use NewfoldLabs\WP\Module\Onboarding\Types\Pages;
 use NewfoldLabs\WP\Module\Onboarding\Types\SiteClassification;
 use NewfoldLabs\WP\Module\Onboarding\Types\Sitekit;
 
+/**
+ * Service responsible for generating Sitekits content via AI APIs.
+ */
 class SitekitsContentGeneration {
 
-	private static $site_types_supported = [
-		'ecommerce', 'personal', 'business', 'linkinbio'
-	];
+	private static $site_types_supported = array(
+		'ecommerce',
+		'personal',
+		'business',
+		'linkinbio',
+	);
 
 	/**
 	 * The site type.
@@ -166,7 +172,7 @@ class SitekitsContentGeneration {
 		foreach ( $sitekit_item['pages'] as $page_slug => $page_patterns ) {
 			$page_title    = ucfirst( str_replace( '-', ' ', $page_slug ) );
 			$page_content  = $this->get_page_content_from_patterns( $page_patterns );
-			$is_front_page = $page_slug === 'home';
+			$is_front_page = 'home' === $page_slug;
 			$pages[]       = new Page( $page_title, $page_slug, $page_content, $is_front_page );
 		}
 		$result['pages'] = new Pages( $pages );
@@ -239,10 +245,7 @@ class SitekitsContentGeneration {
 	 *
 	 * @return string The page content.
 	 */
-	private
-	function get_page_content_from_patterns(
-		array $page_patterns
-	): string {
+	private function get_page_content_from_patterns( array $page_patterns ): string {
 		$page_content = '';
 		foreach ( $page_patterns as $pattern ) {
 			$page_content .= $pattern['patternContent'];
@@ -256,9 +259,8 @@ class SitekitsContentGeneration {
 	 *
 	 * @return void
 	 */
-	private
-	function install_pre_requisites_in_background(): void {
-		if ( $this->site_type === 'ecommerce' ) {
+	private function install_pre_requisites_in_background(): void {
+		if ( 'ecommerce' === $this->site_type ) {
 			EcommerceSiteTypeService::install_ecommerce_plugins();
 		}
 	}
@@ -270,17 +272,14 @@ class SitekitsContentGeneration {
 	 *
 	 * @return void
 	 */
-	private
-	function publish_content(
-		array $posts = array()
-	): void {
+	private function publish_content( array $posts = array() ): void {
 		// Publish WooCommerce products.
 		$products = $posts['products'] ?? array();
 		if ( ! empty( $products ) ) {
 			foreach ( $products as $index => $product ) {
 				EcommerceSiteTypeService::publish_woo_product(
-					$product['name'] ?? 'Product ' . $index + 1,
-					$product['description'] ?? 'Description for Product ' . $index + 1,
+					$product['name'] ?? 'Product ' . ( $index + 1 ),
+					$product['description'] ?? 'Description for Product ' . ( $index + 1 ),
 					$product['price'] ?? '24.99',
 					$product['image'] ?? '',
 					$product['categories'] ?? array()
@@ -292,9 +291,9 @@ class SitekitsContentGeneration {
 		if ( ! empty( $articles ) ) {
 			foreach ( $articles as $index => $article ) {
 				CommonSiteTypeService::publish_article(
-					$article['title'] ?? 'Article ' . $index + 1,
-					$article['excerpt'] ?? 'Excerpt for Article ' . $index + 1,
-					$article['content'] ?? 'Content for Article ' . $index + 1,
+					$article['title'] ?? 'Article ' . ( $index + 1 ),
+					$article['excerpt'] ?? 'Excerpt for Article ' . ( $index + 1 ),
+					$article['content'] ?? 'Content for Article ' . ( $index + 1 ),
 					$article['image'] ?? '',
 					$article['categories'] ?? array()
 				);
@@ -309,23 +308,18 @@ class SitekitsContentGeneration {
 	 *
 	 * @return bool
 	 */
-	public
-	static function site_type_supported(
-		string $site_type
-	): bool {
-		return in_array( $site_type, self::$site_types_supported );
+	public static function site_type_supported( string $site_type ): bool {
+		return in_array( $site_type, self::$site_types_supported, true );
 	}
 
 	/**
 	 * Check if a custom logo exists; otherwise, replace the site logo block with the site title block.
 	 *
+	 * @param string $content Content to check.
+	 *
 	 * @return string
-	 * @var string $content Content to check.
 	 */
-	private
-	function check_custom_logo(
-		string $content
-	): string {
+	private function check_custom_logo( string $content ): string {
 		if ( function_exists( 'has_custom_logo' ) && ! has_custom_logo() ) {
 			$content = preg_replace(
 				'/<!--\s*wp:site-logo\s*\/-->/',
