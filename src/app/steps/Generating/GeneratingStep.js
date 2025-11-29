@@ -198,8 +198,7 @@ const GeneratingStep = () => {
 						</div>
 					</Motion>
 
-					{ /* Temporarily hidden - may be needed later.
-					<div className="nfd-flex nfd-flex-col nfd-max-w-[500px] nfd-mx-auto">
+					<div className="nfd-flex nfd-flex-col nfd-max-w-[500px] nfd-mx-auto nfd-mt-8">
 						<Motion
 							variants={ containerVariants }
 							initial="hidden"
@@ -207,14 +206,17 @@ const GeneratingStep = () => {
 						>
 							<Motion variants={ itemVariants }>
 								<p className="nfd-text-[14px] nfd-text-content-primary nfd-mb-8">
-									{ __( 'While we wait, let us know how familiar you are with WordPress, so we can tailor the experience to your needs:', 'wp-module-onboarding' ) }
+									{ __(
+										'While we wait, let us know how familiar you are with WordPress, so we can tailor the experience to your needs:',
+										'wp-module-onboarding'
+									) }
 								</p>
 							</Motion>
 							<Motion variants={ itemVariants }>
 								<ExperienceOptions />
 							</Motion>
 						</Motion>
-					</div> */ }
+					</div>
 				</Container.Block>
 			</Container>
 		</Step>
