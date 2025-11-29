@@ -158,6 +158,7 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 				>
 					{ __( 'Site Logo:', 'wp-module-onboarding' ) }
 				</Label>
+				{ /* Remove AI logo generation button for now until we implement the functionality
 				<button
 					type="button"
 					className="nfd-flex nfd-items-center nfd-gap-1.5 nfd-text-[#3B82F6] nfd-text-base nfd-font-semibold hover:nfd-underline nfd-bg-transparent nfd-border-0 nfd-p-0 nfd-cursor-pointer"
@@ -167,7 +168,7 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 				>
 					<SparklesIcon className="nfd-w-4 nfd-h-4 nfd-stroke-2" />
 					{ __( 'Create with AI', 'wp-module-onboarding' ) }
-				</button>
+				</button> */ }
 			</div>
 			<input
 				ref={ fileInputRef }
