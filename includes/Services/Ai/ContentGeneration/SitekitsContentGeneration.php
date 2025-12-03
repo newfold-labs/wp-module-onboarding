@@ -2,6 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration;
 
+use NewfoldLabs\WP\Module\Onboarding\Services\LanguageService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\CommonSiteTypeService;
@@ -24,13 +25,6 @@ class SitekitsContentGeneration {
 	private $site_type;
 
 	/**
-	 * The locale.
-	 *
-	 * @var string
-	 */
-	private $locale;
-
-	/**
 	 * The prompt.
 	 *
 	 * @var ContentGenerationPrompt
@@ -48,13 +42,11 @@ class SitekitsContentGeneration {
 	 * Constructor.
 	 *
 	 * @param string $site_type The site type.
-	 * @param string $locale The locale.
 	 * @param ContentGenerationPrompt $prompt The prompt.
 	 * @param SiteClassification $site_classification The site classification.
 	 */
-	public function __construct( string $site_type, string $locale, ContentGenerationPrompt $prompt, SiteClassification $site_classification ) {
+	public function __construct( string $site_type, ContentGenerationPrompt $prompt, SiteClassification $site_classification ) {
 		$this->site_type           = $site_type;
-		$this->locale              = $locale;
 		$this->prompt              = $prompt;
 		$this->site_classification = $site_classification;
 	}
@@ -71,7 +63,7 @@ class SitekitsContentGeneration {
 			'siteType'      => $this->site_type,
 			'count'         => $count,
 			'prompt'        => $prompt,
-			'locale'        => $this->locale,
+			'locale'        => LanguageService::get_site_locale(),
 			'primaryType'   => $this->site_classification->get_primary_type(),
 			'secondaryType' => $this->site_classification->get_secondary_type(),
 		);

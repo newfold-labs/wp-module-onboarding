@@ -118,6 +118,17 @@ export const selectors = {
 	},
 
 	/**
+	 * Gets the current locale.
+	 *
+	 * @param {*} state
+	 * @return {string} locale
+	 */
+	getLocale( state ) {
+		const languages = Object.values( state.runtime.languages );
+		return languages.find( ( language ) => language.is_default )?.locale || 'en_US';
+	},
+
+	/**
 	 * Gets all available sitegen identifiers.
 	 *
 	 * @param {*} state
