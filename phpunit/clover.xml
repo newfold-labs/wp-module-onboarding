@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1764874790">
-  <project timestamp="1764874790">
+<coverage generated="1764875413">
+  <project timestamp="1764875413">
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Application.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Application" namespace="global">
         <metrics complexity="8" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="0" elements="31" coveredelements="0"/>
@@ -293,7 +293,7 @@
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/LoginRedirect.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\LoginRedirect" namespace="global">
-        <metrics complexity="18" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="34" coveredstatements="0" elements="41" coveredelements="0"/>
+        <metrics complexity="20" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="0" elements="43" coveredelements="0"/>
       </class>
       <line num="19" type="method" name="sso" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="21" type="stmt" count="0"/>
@@ -326,17 +326,19 @@
       <line num="102" type="stmt" count="0"/>
       <line num="110" type="method" name="remove_handle_redirect_action" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="111" type="stmt" count="0"/>
-      <line num="119" type="method" name="handle_redirect_param" visibility="private" complexity="4" crap="20" count="0"/>
-      <line num="120" type="stmt" count="0"/>
+      <line num="119" type="method" name="handle_redirect_param" visibility="private" complexity="6" crap="42" count="0"/>
       <line num="121" type="stmt" count="0"/>
       <line num="122" type="stmt" count="0"/>
-      <line num="124" type="stmt" count="0"/>
       <line num="125" type="stmt" count="0"/>
       <line num="126" type="stmt" count="0"/>
       <line num="127" type="stmt" count="0"/>
-      <line num="128" type="stmt" count="0"/>
+      <line num="130" type="stmt" count="0"/>
       <line num="131" type="stmt" count="0"/>
-      <metrics loc="134" ncloc="80" classes="1" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="34" coveredstatements="0" elements="41" coveredelements="0"/>
+      <line num="132" type="stmt" count="0"/>
+      <line num="133" type="stmt" count="0"/>
+      <line num="134" type="stmt" count="0"/>
+      <line num="137" type="stmt" count="0"/>
+      <metrics loc="140" ncloc="86" classes="1" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="0" elements="43" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Models/Theme.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Models\Theme" namespace="global">
@@ -4775,6 +4777,6 @@
       <line num="55" type="stmt" count="0"/>
       <metrics loc="58" ncloc="24" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="8" coveredelements="0"/>
     </file>
-    <metrics files="66" loc="10807" ncloc="7385" classes="66" methods="379" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4007" coveredstatements="0" elements="4386" coveredelements="0"/>
+    <metrics files="66" loc="10813" ncloc="7391" classes="66" methods="379" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4009" coveredstatements="0" elements="4388" coveredelements="0"/>
   </project>
 </coverage>
