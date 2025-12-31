@@ -42,9 +42,9 @@ const initializeFlowData = ( currentData ) => {
 export async function initializeNFDOnboarding( id, runtime ) {
 	const DOM_TARGET = document.getElementById( id );
 	dispatch( nfdOnboardingStore ).setRuntime( runtime );
-	if ( runtime.previewSettings.settings.preRequisites?.themes ) {
+	if ( runtime.previewSettings?.settings?.preRequisites?.themes ) {
 		dispatch( nfdOnboardingStore ).updateThemeStatus(
-			runtime.previewSettings.settings.preRequisites?.themes[
+			runtime.previewSettings?.settings?.preRequisites?.themes[
 				DESIGN_STEPS_THEME
 			]
 		);
