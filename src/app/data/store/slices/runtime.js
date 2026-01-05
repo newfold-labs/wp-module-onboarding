@@ -107,7 +107,6 @@ export const selectors = {
 	 */
 	canMigrateSite( state ) {
 		const migrationInfo = state.runtime.currentBrand.config;
-		console.log( 'migrationInfo', state.runtime.currentBrand );
 		return migrationInfo?.canMigrateSite;
 	},
 
