@@ -13,7 +13,7 @@ import SiteCreatorCard from './SiteCreatorCard';
 import MigrationCard from './MigrationCard';
 import ForkOptions from './ForkOptions';
 import ForkLinks from './ForkLinks';
-import BrandLogo from './BrandLogo';
+import { BrandLoader } from '@/components';
 
 /**
  * Get the A/B test variant for the fork step based on Hiive capability.
@@ -99,7 +99,7 @@ const ForkStep = () => {
 						<span className="nfd-text-xl nfd-text-content-primary mobile:nfd-text-base">
 							{ __( 'Powered by', 'wp-module-onboarding' ) }
 						</span>
-						<BrandLogo />
+						<BrandLoader />
 					</div>
 
 					<Title
