@@ -3,7 +3,7 @@ import { nfdOnboardingStore } from '@/data/store';
 import bluehostLogo from '../../../Brands/bluehost/step-loader-logo.svg';
 import hostgatorLogo from '../../../Brands/hostgator/step-loader-logo.svg';
 import crazyDomainsLogo from '../../../Brands/crazy-domains/step-loader-logo.svg';
-import networksolutionsLogo from '../../../Brands/networksolutions/logo.svg';
+import networksolutionsLogo from '../../../Brands/networksolutions/step-loader-logo.svg';
 import wordpressLogo from '../../../Brands/wordpress/step-loader-logo.svg';
 import './BrandLoader.scss';
 

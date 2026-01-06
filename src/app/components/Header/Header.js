@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
-import { ReactComponent as BluehostLogo } from '@/assets/bluehost-logo.svg';
 import { HeaderActions as CanvasStepHeaderActions } from '@/steps/Canvas';
 import { HeaderActions as BlueprintCanvasStepHeaderActions } from '@/steps/BlueprintCanvas';
 import { BackButton } from '@/components';
+import { BrandLogo } from '../BrandLogo';
 
 // Map of routes that should show a back button in the header
 const BACK_NAVIGATION_MAP = {
@@ -48,12 +48,10 @@ const Header = () => {
 				{ showBackButton ? (
 					<BackButton toRoute={ backRoute } />
 				) : (
-					<BluehostLogo
-						id="nfd-onboarding-header-logo"
+					<BrandLogo id="nfd-onboarding-header-logo"
 						className={ classNames(
 							( isCanvasStep || isBlueprintCanvasStep ) && 'mobile:nfd-hidden'
-						) }
-					/>
+						) } />
 				) }
 				{ isCanvasStep && <CanvasStepHeaderActions /> }
 				{ isBlueprintCanvasStep && <BlueprintCanvasStepHeaderActions /> }

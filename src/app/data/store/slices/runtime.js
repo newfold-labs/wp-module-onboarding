@@ -83,6 +83,16 @@ export const selectors = {
 	},
 
 	/**
+	 * Gets current host brand
+	 *
+	 * @param {*} state
+	 * @return {string} Brand identifier
+	 */
+	getBrandId( state ) {
+		return state.runtime.currentBrand.brand;
+	},
+
+	/**
 	 * Gets the link to the migration service.
 	 *
 	 * @param {*} state
