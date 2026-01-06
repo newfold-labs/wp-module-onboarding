@@ -6,6 +6,7 @@ use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService as LegacySiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Data\SiteGen as SiteGenData;
 use NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration\SitekitsContentGeneration;
+use NewfoldLabs\WP\Module\Onboarding\Services\LanguageService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteNavigationService;
 
@@ -55,7 +56,7 @@ class SiteGenController {
 		);
 		\register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/homepages',
+				$this->rest_base . '/homepages',
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'get_homepages' ),
@@ -121,10 +122,6 @@ class SiteGenController {
 				'required' => true,
 				'type'     => 'string',
 			),
-			'locale'     => array(
-				'required' => true,
-				'type'     => 'string',
-			),
 			'skip_cache' => array(
 				'required' => false,
 				'type'     => 'boolean',
@@ -145,10 +142,6 @@ class SiteGenController {
 				'sanitize_callback' => 'sanitize_text_field',
 			),
 			'site_type'        => array(
-				'required' => true,
-				'type'     => 'string',
-			),
-			'locale'           => array(
 				'required' => true,
 				'type'     => 'string',
 			),
@@ -225,6 +218,7 @@ class SiteGenController {
 	 * @return array|WP_Error
 	 */
 	public function generate_sitegen_meta( \WP_REST_Request $request ) {
+
 		if ( ! LegacySiteGenService::is_enabled() ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
@@ -236,7 +230,7 @@ class SiteGenController {
 		$site_info  = $request->get_param( 'site_info' );
 		$identifier = $request->get_param( 'identifier' );
 		$site_type  = $request->get_param( 'site_type' );
-		$locale     = $request->get_param( 'locale' );
+		$locale     = LanguageService::get_site_locale();
 		$skip_cache = $request->get_param( 'skip_cache' );
 
 		return LegacySiteGenService::instantiate_site_meta(
@@ -263,7 +257,7 @@ class SiteGenController {
 		$site_description = $request->get_param( 'site_description' );
 		$site_info        = array( 'site_description' => $site_description );
 		$site_type        = $request->get_param( 'site_type' );
-		$locale           = $request->get_param( 'locale' );
+		$locale           = LanguageService::get_site_locale();
 
 		$homepages = [];
 		if ( SitekitsContentGeneration::site_type_supported( $site_type ) ) {
@@ -271,9 +265,9 @@ class SiteGenController {
 			$homepages      = $siteGenService->get_sitekits(
 				$site_description,
 				$site_type,
-				$locale,
 				true
 			);
+
 		} else {
 			$target_audience = LegacySiteGenService::instantiate_site_meta( $site_info, 'target_audience', $site_type, $locale );
 			if ( is_wp_error( $target_audience ) ) {
@@ -313,7 +307,7 @@ class SiteGenController {
 		$color_palette    = $request->get_param( 'palette' );
 		$is_favorite      = $request->get_param( 'isFavorite' );
 		$site_info        = array( 'site_description' => $site_description );
-		$locale           = $request->get_param( 'locale' );
+		$locale           = LanguageService::get_site_locale();
 		$skip_cache       = $request->get_param( 'skip_cache' );
 
 		$target_audience = LegacySiteGenService::instantiate_site_meta( $site_info, 'target_audience', $locale, $skip_cache );
@@ -354,7 +348,7 @@ class SiteGenController {
 		$site_description = $request->get_param( 'site_description' );
 		$site_info        = array( 'site_description' => $site_description );
 		$site_type        = $request->get_param( 'site_type' );
-		$locale           = $request->get_param( 'locale' );
+		$locale           = LanguageService::get_site_locale();
 		$skip_cache       = $request->get_param( 'skip_cache' );
 
 		$target_audience = LegacySiteGenService::instantiate_site_meta( $site_info, 'target_audience', $site_type, $locale, $skip_cache );

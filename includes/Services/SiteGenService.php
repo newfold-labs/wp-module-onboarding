@@ -71,15 +71,14 @@ class SiteGenService {
 	 *
 	 * @param string $site_description The site description.
 	 * @param string $site_type The site type.
-	 * @param string $locale The locale.
 	 * @param bool   $for_onboarding_preview Whether to return the sitekits as array for onboarding preview.
 	 * @return array|\WP_Error Array of Sitekit objects, array of sitekits for onboarding preview, or WP_Error if there is an error.
 	 */
-	public function get_sitekits( string $site_description, string $site_type, string $locale = 'en_US', bool $for_onboarding_preview = false ) {
-		$prompt              = new ContentGenerationPrompt( $site_description, $site_type, $locale );
+	public function get_sitekits( string $site_description, string $site_type, bool $for_onboarding_preview = false ) {
+		$prompt              = new ContentGenerationPrompt( $site_description, $site_type );
 		$site_classification = $this->get_site_classification();
 
-		$sitekits = new SitekitsContentGeneration( $site_type, $locale, $prompt, $site_classification );
+		$sitekits = new SitekitsContentGeneration( $site_type, $prompt, $site_classification );
 		$sitekits = $sitekits->generate_sitekits();
 
 		// If there is an error, return it.
@@ -159,7 +158,7 @@ class SiteGenService {
 	 */
 	public function get_sitemap_page_title( string $slug ) {
 		$prompt    = $this->get_prompt();
-		$locale    = $this->get_locale();
+		$locale    = LanguageService::get_site_locale();
 		$site_type = $this->get_site_type();
 		if ( ! $prompt || ! $locale || ! $site_type ) {
 			return false;
@@ -190,7 +189,7 @@ class SiteGenService {
 			$this->get_prompt(),
 			'site_classification',
 			$this->get_site_type(),
-			$this->get_locale()
+			LanguageService::get_site_locale()
 		);
 
 		if ( is_array( $site_classification ) ) {
@@ -211,7 +210,7 @@ class SiteGenService {
 			$this->get_prompt(),
 			'color_palette',
 			$this->get_site_type(),
-			$this->get_locale()
+			LanguageService::get_site_locale()
 		);
 
 		if ( ! is_array( $color_palettes ) ) {
@@ -253,14 +252,5 @@ class SiteGenService {
 	 */
 	public function get_site_type() {
 		return ! empty( $this->input_data['siteType'] ) ? $this->input_data['siteType'] : 'business';
-	}
-
-	/**
-	 * Get the locale entered during Onboarding.
-	 *
-	 * @return string
-	 */
-	public function get_locale() {
-		return ! empty( $this->input_data['locale'] ) ? $this->input_data['locale'] : 'en_US';
 	}
 }

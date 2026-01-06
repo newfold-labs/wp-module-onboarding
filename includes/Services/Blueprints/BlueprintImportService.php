@@ -220,6 +220,8 @@ class BlueprintImportService extends BlueprintsService {
 
 		// Replace URLs in content
 		$sql_content = str_replace( $source_site_url, $target_site_url, $sql_content );
+		// Replace uploads URLs also for multisite.
+		$sql_content = preg_replace( "/uploads\/sites\/[0-9]+/", 'uploads/', $sql_content );
 		// Also handle URLs with trailing slashes
 		$sql_content = str_replace( $source_site_url . '/', $target_site_url . '/', $sql_content );
 

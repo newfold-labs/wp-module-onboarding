@@ -45,7 +45,7 @@ class SiteNavigationService extends SiteGenService {
 			$this->get_prompt(),
 			'sitemap',
 			$site_type,
-			$this->get_locale()
+			LanguageService::get_site_locale()
 		);
 
 		$nav_items = array();

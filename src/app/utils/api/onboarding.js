@@ -153,7 +153,6 @@ export const setGlobalStylesColorPalette = async ( colorPalette ) => {
  * @param {string}  identifier
  * @param {string}  prompt
  * @param {string}  siteType
- * @param {string}  locale
  * @param {boolean} skipCache
  * @return {Promise<Object>} response
  */
@@ -161,7 +160,6 @@ export async function getSiteMetaForIdentifier(
 	identifier,
 	prompt,
 	siteType,
-	locale,
 	skipCache = true
 ) {
 	const response = await resolve(
@@ -172,7 +170,6 @@ export async function getSiteMetaForIdentifier(
 				site_info: prompt,
 				identifier,
 				site_type: siteType,
-				locale,
 				skip_cache: skipCache,
 			},
 		} )
@@ -186,10 +183,9 @@ export async function getSiteMetaForIdentifier(
  *
  * @param {string} prompt
  * @param {string} siteType
- * @param {string} locale
  * @return {Promise<Object>} response
  */
-export async function getHomepages( prompt, siteType, locale ) {
+export async function getHomepages( prompt, siteType ) {
 	const response = await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/homepages' ),
@@ -197,7 +193,6 @@ export async function getHomepages( prompt, siteType, locale ) {
 			data: {
 				site_description: prompt,
 				site_type: siteType,
-				locale,
 			},
 		} )
 	);
@@ -210,10 +205,9 @@ export async function getHomepages( prompt, siteType, locale ) {
  *
  * @param {string} prompt
  * @param {string} siteType
- * @param {string} locale
  * @return {Promise<Object>} response
  */
-export async function getSitePages( prompt, siteType, locale ) {
+export async function getSitePages( prompt, siteType ) {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/pages/sitemap' ),
@@ -221,7 +215,6 @@ export async function getSitePages( prompt, siteType, locale ) {
 			data: {
 				site_description: prompt,
 				site_type: siteType,
-				locale,
 			},
 		} ).then()
 	);

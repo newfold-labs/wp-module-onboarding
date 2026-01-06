@@ -117,10 +117,16 @@ class LoginRedirect {
 	 * @return boolean
 	 */
 	private static function handle_redirect_param() {
+
+		if ( defined( 'WP_ENVIRONMENT_TYPE' ) && 'staging' === WP_ENVIRONMENT_TYPE ) {
+			return self::disable_redirect();
+		}
+
 		$redirect_option_name = Options::get_option_name( 'redirect' );
 		if ( ! isset( $_GET[ $redirect_option_name ] ) ) {
 			return false;
 		}
+
 		switch ( $_GET[ $redirect_option_name ] ) {
 			case 'true':
 				return self::enable_redirect();

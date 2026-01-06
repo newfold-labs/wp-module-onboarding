@@ -31,8 +31,25 @@ module.exports = {
 				},
 			},
 			screens: {
+				// Mobile breakpoints
 				mobile: { max: '600px' },
+				'mobile-sm': { max: '480px' },
+
+				// Tablet breakpoints
 				tablet: { max: '1024px' },
+				'tablet-lg': { max: '1366px' },
+
+				// Desktop breakpoints based on uploaded image resolutions
+				'desktop-sm': { min: '1280px' },
+				'desktop-md': { min: '1367px' },
+				'desktop-lg': { min: '1441px' },
+				'desktop-xl': { min: '1537px' },
+				'desktop-2xl': { min: '1921px' },
+				'desktop-3xl': { min: '2561px' },
+
+				// Legacy breakpoints for backward compatibility
+				small: { max: '1280px' },
+				'small-only': { min: '1024px', max: '1280px' },
 			},
 		},
 	},

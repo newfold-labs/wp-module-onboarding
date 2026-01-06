@@ -51,7 +51,7 @@ const PreviewsStep = () => {
 	const renderPreviews = () => {
 		const previews = homepages;
 		return Object.keys( previews ).map( ( slug, idx ) => {
-			return <Preview key={ idx } preview={ previews[ slug ] } onPreview={ handlePreview } />;
+			return <Preview key={ idx } preview={ previews[ slug ] } onPreview={ handlePreview } siteNumber={ idx + 1 } />;
 		} );
 	};
 
@@ -70,18 +70,18 @@ const PreviewsStep = () => {
 			);
 		}
 		return __(
-			'Here are three unique designs for you to start with. Pick your favorite to customize it!',
+			'Here are 3 unique designs for you to start with. Pick your favorite to customize it!',
 			'wp-module-onboarding'
 		);
 	};
 
 	return (
 		<Step>
-			<Container className="nfd-onboarding-step-container nfd-onboarding-step-previews nfd-min-w-[948px] nfd-max-w-[948px] tablet:nfd-min-w-[90%] tablet:nfd-max-w-[90%]">
+			<Container className="nfd-onboarding-step-container nfd-onboarding-step-previews nfd-min-w-[1220px] nfd-max-w-[1220px] tablet:nfd-min-w-[90%] tablet:nfd-max-w-[90%]">
 				<Container.Header
 					title={ getStepTitle() }
 					description={ getStepDescription() }
-					className="nfd-gap-2"
+					className="nfd-gap-2 nfd-text-center"
 				/>
 				<Container.Block className="tablet:nfd-w-screen">
 					<div className="nfd-grid nfd-grid-cols-3 nfd-gap-6 tablet:!nfd-grid-cols-[repeat(3,minmax(300px,1fr))] tablet:nfd-overflow-x-auto tablet:-nfd-ml-[5%] tablet:nfd-pl-[5%] tablet:nfd-mr-[5%] tablet:nfd-pr-[5%]">

@@ -15,6 +15,10 @@ const SiteTypeSelector = ( { value: selectedSiteType, onChange } ) => {
 			value: 'ecommerce',
 			label: __( 'Online Store', 'wp-module-onboarding' ),
 		},
+		{
+			value: 'linkinbio',
+			label: __( 'Link in bio', 'wp-module-onboarding' ),
+		},
 	];
 
 	const getSelectedLabel = ( value ) => {
@@ -42,9 +46,7 @@ const SiteTypeSelector = ( { value: selectedSiteType, onChange } ) => {
 				onChange={ handleChange }
 				value={ selectedSiteType || '' }
 				selectedLabel={ getSelectedLabel( selectedSiteType ) }
-				className={ classNames(
-					! selectedSiteType && '[&_button>span]:nfd-text-gray-500',
-				) }
+				className={ classNames( ! selectedSiteType && '[&_button>span]:nfd-text-gray-500' ) }
 			/>
 		</div>
 	);
