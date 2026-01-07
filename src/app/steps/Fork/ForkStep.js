@@ -9,6 +9,7 @@ import {
 } from '@/utils/analytics/hiive/constants';
 import { disableComingSoon } from '@/utils/api';
 import { fetchBlueprints } from '@/utils/blueprints';
+import { canAccessBlueprints } from '@/utils/helpers';
 import SiteCreatorCard from './SiteCreatorCard';
 import MigrationCard from './MigrationCard';
 import ForkOptions from './ForkOptions';
@@ -37,8 +38,10 @@ const ForkStep = () => {
 	// A/B test variant selection based on Hiive capability
 	const variant = getVariant();
 
-	// Proactively fetch the blueprints.
-	fetchBlueprints();
+	// Proactively fetch the blueprints (only for brands with access).
+	if ( canAccessBlueprints() ) {
+		fetchBlueprints();
+	}
 
 	useEffect( () => {
 		// Analytics: Track which variant the user was assigned
