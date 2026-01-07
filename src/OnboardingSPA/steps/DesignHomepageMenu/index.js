@@ -149,7 +149,7 @@ const StepDesignHomepageMenu = () => {
 								<LivePreviewSkeleton
 									watch={ homepagePattern }
 									count={
-										themeVariations[
+										themeVariations && themeVariations[
 											currentStep?.data?.patternId
 										]?.previewCount
 									}

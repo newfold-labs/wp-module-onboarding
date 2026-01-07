@@ -144,7 +144,7 @@ const DesignThemeStylesPreview = () => {
 					className={ 'theme-styles-preview--drawer__list__item' }
 					watch={ globalStyles && pattern }
 					count={
-						themeVariations[ currentStep?.data?.patternId ]
+						themeVariations && themeVariations[ currentStep?.data?.patternId ]
 							?.previewCount
 					}
 					callback={ buildPreviews }

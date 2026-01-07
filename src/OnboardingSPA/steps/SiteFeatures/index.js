@@ -101,7 +101,7 @@ const StepSiteFeatures = () => {
 			{ ! customPluginsList && (
 				<CheckboxListSkeleton
 					count={
-						themeVariations[ currentStep?.data?.patternId ]
+						themeVariations && themeVariations[ currentStep?.data?.patternId ]
 							?.previewCount
 					}
 				/>

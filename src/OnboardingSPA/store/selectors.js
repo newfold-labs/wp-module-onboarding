@@ -282,7 +282,7 @@ export function getSidebars( state ) {
 }
 
 export function getPreviewSettings( state ) {
-	return state.runtime.previewSettings.settings;
+	return state.runtime.previewSettings?.settings;
 }
 
 export function getSettings( state ) {
@@ -298,7 +298,7 @@ export function getInitialize( state ) {
 }
 
 export function getStepPreviewData( state ) {
-	return state.runtime.previewSettings.stepPreviewData;
+	return state.runtime.previewSettings?.stepPreviewData;
 }
 
 /**
