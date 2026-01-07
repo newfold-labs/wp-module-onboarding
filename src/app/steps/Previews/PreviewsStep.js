@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Container } from '@newfold/ui-component-library';
 import { Step } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
+import { canAccessBlueprints } from '@/utils/helpers';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_HOMEPAGE_PREVIEW_SELECTED } from '@/utils/analytics/hiive/constants';
 import { Preview } from './';
@@ -19,14 +20,24 @@ const PreviewsStep = () => {
 
 	const navigate = useNavigate();
 
-	// Navigate to blueprints screen when sitegenHasFailed is true
+	// Navigate to blueprints screen when sitegenHasFailed is true (only for Bluehost brands)
 	useEffect( () => {
 		if ( sitegenHasFailed ) {
-			navigate( '/blueprints', {
-				state: {
-					direction: 'forward',
-				},
-			} );
+			if ( canAccessBlueprints() ) {
+				// Navigate to blueprints as fallback for Bluehost brands
+				navigate( '/blueprints', {
+					state: {
+						direction: 'forward',
+					},
+				} );
+			} else {
+				// For non-Bluehost brands, go back to fork page
+				navigate( '/', {
+					state: {
+						direction: 'backward',
+					},
+				} );
+			}
 		}
 	}, [ sitegenHasFailed, navigate ] );
 

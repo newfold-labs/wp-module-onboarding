@@ -3,6 +3,7 @@ import { ReactComponent as BlueprintsForkFigure } from '@/assets/blueprints-fork
 import { Navigate } from '@/components';
 import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_FORK_OPTION_SELECTED } from '@/utils/analytics/hiive/constants';
+import { canAccessBlueprints } from '@/utils/helpers';
 import { SparklesIcon } from '@heroicons/react/24/outline';
 import { ArrowLongRightIcon, FireIcon } from '@heroicons/react/24/solid';
 import { Title } from '@newfold/ui-component-library';
@@ -173,7 +174,7 @@ const ForkOptions = () => {
 		<div className="nfd-onboarding-fork-options">
 			<div className="nfd-flex nfd-justify-between nfd-gap-16 nfd-h-full nfd-relative mobile:nfd-flex-col mobile:nfd-pt-4">
 				<SiteGenOption />
-				<BlueprintsOption />
+				{ canAccessBlueprints() && <BlueprintsOption /> }
 			</div>
 		</div>
 	);

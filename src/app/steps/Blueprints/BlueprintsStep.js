@@ -1,9 +1,10 @@
 import missingResourceFigureUrl from '@/assets/nfd-missing-resource.png';
 import { SiteGenPreviewCard, Step } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
+import { canAccessBlueprints } from '@/utils/helpers';
 import { Container, Spinner, Title } from '@newfold/ui-component-library';
 import { dispatch, useSelect } from '@wordpress/data';
-import { useMemo, useState, useCallback } from '@wordpress/element';
+import { useMemo, useState, useCallback, useEffect } from '@wordpress/element';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 /**
@@ -56,6 +57,7 @@ const Tabs = ( { activeTab } ) => {
 };
 
 const BlueprintsStep = () => {
+	const navigate = useNavigate();
 	const [ isLoading, setIsLoading ] = useState( true );
 	const { blueprints, activeTab, sitegenHasFailed } = useSelect( ( select ) => {
 		const resolve = {
@@ -66,40 +68,6 @@ const BlueprintsStep = () => {
 		setIsLoading( false );
 		return resolve;
 	}, [] );
-
-	const navigate = useNavigate();
-
-	const LoadingState = () => {
-		return (
-			<div className="nfd-flex nfd-justify-center nfd-items-center nfd-h-full">
-				<Spinner size="8" variant="primary" />
-			</div>
-		);
-	};
-
-	/**
-	 * Component styles override.
-	 */
-	const getCustomStyles = () => {
-		return (
-			<style>
-				{ `
-					.nfd-onboarding-body {
-						padding-top: 2rem !important;
-						background-color: #F9FAFB !important;
-					}
-					
-					/* Responsive container adjustments */
-					@media (min-width: 1024px) and (max-width: 1350px) {
-						.nfd-onboarding-step-intro {
-							min-width: 90% !important;
-							max-width: 90% !important;
-						}
-					}
-				` }
-			</style>
-		);
-	};
 
 	const handleNext = useCallback( () => {
 		navigate( '/blueprints-canvas', {
@@ -173,6 +141,50 @@ const BlueprintsStep = () => {
 			</div>
 		);
 	}, [ activeTab, blueprints, handleOnPreview ] );
+
+	// Redirect to fork page if brand doesn't have access to blueprints
+	useEffect( () => {
+		if ( ! canAccessBlueprints() ) {
+			navigate( '/', { replace: true } );
+		}
+	}, [ navigate ] );
+
+	const LoadingState = () => {
+		return (
+			<div className="nfd-flex nfd-justify-center nfd-items-center nfd-h-full">
+				<Spinner size="8" variant="primary" />
+			</div>
+		);
+	};
+
+	/**
+	 * Component styles override.
+	 */
+	const getCustomStyles = () => {
+		return (
+			<style>
+				{ `
+					.nfd-onboarding-body {
+						padding-top: 2rem !important;
+						background-color: #F9FAFB !important;
+					}
+					
+					/* Responsive container adjustments */
+					@media (min-width: 1024px) and (max-width: 1350px) {
+						.nfd-onboarding-step-intro {
+							min-width: 90% !important;
+							max-width: 90% !important;
+						}
+					}
+				` }
+			</style>
+		);
+	};
+
+	// Don't render anything if brand doesn't have access
+	if ( ! canAccessBlueprints() ) {
+		return null;
+	}
 
 	return (
 		<Step>
