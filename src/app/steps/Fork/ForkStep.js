@@ -14,6 +14,7 @@ import MigrationCard from './MigrationCard';
 import ForkOptions from './ForkOptions';
 import ForkLinks from './ForkLinks';
 import { BrandLogo } from '@/components/BrandLogo';
+import { DashboardLink } from '@/utils/helpers/brandHelpers';
 
 /**
  * Get the A/B test variant for the fork step based on Hiive capability.
@@ -123,7 +124,9 @@ const ForkStep = () => {
 								/>
 							</>
 						) }
+						<DashboardLink />
 					</div>
+
 				</Container.Block>
 			</Container>
 		);

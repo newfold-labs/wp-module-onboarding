@@ -10,6 +10,7 @@ import { Title } from '@newfold/ui-component-library';
 import { useRef } from '@wordpress/element';
 import classNames from 'classnames';
 import Lottie from 'lottie-react';
+import { DashboardLink } from '@/utils/helpers/brandHelpers';
 
 const ForkOptionButton = ( { label, toRoute, value, className, ...props } ) => {
 	const handleNext = ( selectedForkOption ) => {
@@ -176,6 +177,7 @@ const ForkOptions = () => {
 				<SiteGenOption />
 				{ canAccessBlueprints() && <BlueprintsOption /> }
 			</div>
+			<DashboardLink />
 		</div>
 	);
 };

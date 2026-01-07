@@ -45,7 +45,7 @@ const BrandLogo = () => {
 		<img
 			src={ logoUrl }
 			alt={ `${ brandName } logo` }
-			className="nfd-h-10 nfd-w-auto nfd-max-w-[200px] nfd-object-contain"
+			className="nfd-h-7 nfd-w-auto nfd-max-w-[200px] nfd-object-contain"
 		/>
 	);
 };
