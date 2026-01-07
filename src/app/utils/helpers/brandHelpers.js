@@ -1,3 +1,6 @@
+import { select } from '@wordpress/data';
+import { nfdOnboardingStore } from '@/data/store';
+
 /**
  * Checks if the current brand has access to blueprints/templates feature.
  *
@@ -6,7 +9,7 @@
  * @return {boolean} True if the brand can access blueprints, false otherwise.
  */
 export const canAccessBlueprints = () => {
-	const brandId = window.nfdOnboarding?.runtime?.currentBrand?.brand;
+	const brandId = select( nfdOnboardingStore ).getBrandId();
 	return brandId === 'bluehost' || brandId === 'bluehost-india';
 };
 
@@ -16,6 +19,6 @@ export const canAccessBlueprints = () => {
  * @return {string|undefined} The brand identifier (e.g., 'bluehost', 'webcom', etc.)
  */
 export const getBrandId = () => {
-	return window.nfdOnboarding?.runtime?.currentBrand?.brand;
+	return select( nfdOnboardingStore ).getBrandId();
 };
 
