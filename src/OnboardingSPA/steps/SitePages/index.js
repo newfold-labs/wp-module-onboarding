@@ -170,7 +170,7 @@ const StepSitePages = () => {
 								<LivePreviewSkeleton
 									className={ 'site-pages__list__item' }
 									count={
-										themeVariations[
+										themeVariations && themeVariations[
 											currentStep?.data?.patternId
 										]?.previewCount
 									}
