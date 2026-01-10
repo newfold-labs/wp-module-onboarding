@@ -12,11 +12,23 @@ use NewfoldLabs\WP\Module\Data\HiiveConnection;
 class AiServiceRequest {
 
 	/**
+	 * Default production base URL.
+	 *
+	 * @var string
+	 */
+	const DEFAULT_PRODUCTION_BASE_URL = 'https://patterns.hiive.cloud';
+
+	/**
+	 * Default local base URL
+	 */
+	const DEFAULT_LOCAL_BASE_URL = 'http://localhost:8888';
+
+	/**
 	 * API URL
 	 *
 	 * @var string
 	 */
-	protected $url = 'https://patterns.hiive.cloud/api/v1/';
+	protected $url;
 
 	/**
 	 * API endpoint
@@ -55,7 +67,7 @@ class AiServiceRequest {
 	 * @param string|null $url The URL to send the request to (Not recommended to override this).
 	 */
 	public function __construct( string $endpoint, array $body, array $headers = array(), ?string $url = null ) {
-		$this->url = $url ?? $this->url;
+		$this->url = $url ?? $this->get_api_url();
 		$this->endpoint = $endpoint;
 		$this->body = $body;
 		$this->headers = array_merge(
@@ -65,6 +77,22 @@ class AiServiceRequest {
 			),
 			$headers
 		);
+	}
+
+	/**
+	 * Get the API URL based on configuration
+	 *
+	 * @return string The API URL to use.
+	 */
+	private function get_api_url(): string {
+
+		if ( defined( 'NFD_WB_DEV_MODE' ) && NFD_DATA_WB_DEV_MODE ) {
+			$base_url = defined( 'NFD_WB_LOCAL_BASE_URL' ) ? NFD_WB_LOCAL_BASE_URL : self::DEFAULT_LOCAL_BASE_URL;
+		} else {
+			$base_url = defined( 'NFD_WB_PRODUCTION_BASE_URL' ) ? NFD_WB_PRODUCTION_BASE_URL : self::DEFAULT_PRODUCTION_BASE_URL;
+		}
+
+		return $base_url . '/api/v1/';
 	}
 
 	/**

@@ -3,7 +3,7 @@ import { dispatch, useSelect } from '@wordpress/data';
 import { uploadMedia, validateMimeType, validateFileSize } from '@wordpress/media-utils';
 import classNames from 'classnames';
 import { Label, Spinner } from '@newfold/ui-component-library';
-import { SparklesIcon, CloudArrowUpIcon } from '@heroicons/react/24/outline';
+import { CloudArrowUpIcon } from '@heroicons/react/24/outline';
 import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_LOGO_UPLOAD_FAILED } from '@/utils/analytics/hiive/constants';
@@ -21,7 +21,7 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 	const { logo, selectedLocale } = useSelect( ( select ) => {
 		return {
 			logo: select( nfdOnboardingStore ).getLogo(),
-			selectedLocale: select( nfdOnboardingStore ).getSelectedLocale(),
+			selectedLocale: select( nfdOnboardingStore ).getLocale(),
 		};
 	}, [] );
 
@@ -155,34 +155,7 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 		fileInputRef.current?.click();
 	};
 
-	const getCustomStyles = () => {
-		return (
-			<style>
-				{`
-					.nfd-onboarding-logo-upload .nfd-image-import__drop-label {
-						font-size: 14px !important;
-					}
-					.nfd-onboarding-logo-upload .nfd-image-input__preview-img {
-						object-fit: contain !important;
-					}
-				`}
-			</style>
-		);
-	};
-
 	return (
-		<div className="nfd-onboarding-logo-upload nfd-flex nfd-flex-col nfd-gap-2">
-			<div className="nfd-flex nfd-items-center nfd-justify-between nfd-gap-6">
-				<Label htmlFor="nfd-onboarding-logo-input">
-					{ __( 'Site logo', 'wp-module-onboarding' ) }
-				</Label>
-				{ selectedLocale.startsWith( 'en_' ) && (
-					<AiLogoCreator />
-				) }
-			</div>
-			{ getCustomStyles() }
-			<ImageImport
-				key={ logo?.url || 'no-logo' }
 		<div className="nfd-onboarding-logo-upload nfd-flex nfd-flex-col nfd-gap-10 nfd-w-full nfd-px-4 sm:nfd-w-[600px] sm:nfd-px-0 lg:nfd-w-[800px]">
 			<div className="nfd-flex nfd-items-center nfd-justify-between">
 				<Label
@@ -191,17 +164,9 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 				>
 					{ __( 'Site Logo:', 'wp-module-onboarding' ) }
 				</Label>
-				{ /* Remove AI logo generation button for now until we implement the functionality
-				<button
-					type="button"
-					className="nfd-flex nfd-items-center nfd-gap-1.5 nfd-text-[#3B82F6] nfd-text-base nfd-font-semibold hover:nfd-underline nfd-bg-transparent nfd-border-0 nfd-p-0 nfd-cursor-pointer"
-					onClick={ () => {
-						// TODO: Implement AI logo generation
-					} }
-				>
-					<SparklesIcon className="nfd-w-4 nfd-h-4 nfd-stroke-2" />
-					{ __( 'Create with AI', 'wp-module-onboarding' ) }
-				</button> */ }
+				{ selectedLocale?.startsWith( 'en_' ) && (
+					<AiLogoCreator />
+				) }
 			</div>
 			<input
 				ref={ fileInputRef }
@@ -212,20 +177,6 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 				onChange={ handleFileChange }
 				className="nfd-hidden"
 				disabled={ isUploading }
-				isLoading={ isUploading }
-				className={ classNames(
-					'[&_.nfd-drop-zone]:nfd-border-solid',
-					'[&_.nfd-drop-zone]:nfd-border',
-					'[&_.nfd-drop-zone]:nfd-rounded-lg',
-					'[&_.nfd-drop-zone]:nfd-p-4',
-					'[&_.nfd-image-import__drop-label]:nfd-text-content-primary',
-					'[&_.nfd-image-import__drop-label]:!nfd-text-[14px]',
-					'[&_.nfd-image-input__preview_.nfd-image-input\_\_preview-img]:!nfd-object-contain',
-					{
-						'[&_.nfd-drop-zone]:nfd-border-red-500': error.status,
-						'[&_.nfd-drop-zone]:nfd-bg-red-50': error.status,
-					}
-				) }
 			/>
 			{ logo?.url ? (
 				<div className="nfd-relative nfd-w-full nfd-min-h-[250px] nfd-flex nfd-items-center nfd-justify-center nfd-bg-white nfd-rounded-lg nfd-border-2 nfd-border-dashed nfd-border-[#D1D5DB] nfd-p-4">
@@ -277,7 +228,7 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 								{ __( 'Choose a file or drag & drop it here', 'wp-module-onboarding' ) }
 							</p>
 							<p className="nfd-text-sm nfd-text-[#6B7280] nfd-text-center nfd-m-0">
-								{ __( 'JPG, PNG, JPEG & SVG formats, up to 5MB', 'wp-module-onboarding' ) }
+								{ __( 'JPG, JPEG & PNG formats, up to 5MB', 'wp-module-onboarding' ) }
 							</p>
 							<button
 								type="button"

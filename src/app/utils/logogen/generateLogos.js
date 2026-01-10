@@ -12,7 +12,7 @@ const generateLogos = async () => {
 
 	const siteTitle = select( nfdOnboardingStore ).getSiteTitle();
 	const prompt = select( nfdOnboardingStore ).getPrompt();
-	const locale = select( nfdOnboardingStore ).getSelectedLocale();
+	const locale = select( nfdOnboardingStore ).getLocale();
 
 	// Generate the logos.
 	const response = await getLogos( siteTitle, prompt, locale );

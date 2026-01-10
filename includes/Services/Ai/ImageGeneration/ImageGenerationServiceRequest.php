@@ -33,6 +33,7 @@ class ImageGenerationServiceRequest extends AiServiceRequest {
 	 */
 	public function __construct( string $endpoint, array $body, array $headers = array(), ?string $url = null ) {
 		$endpoint = $this->api_path . $endpoint;
+		$url = 'https://patterns-stg.hiive.cloud/api/v1/';
 		parent::__construct( $endpoint, $body, $headers, $url );
 	}
 }
