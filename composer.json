@@ -28,6 +28,13 @@
 		}
 	},
 	"repositories": {
+		"newfold-labs/wp-module-onboarding-data": {
+			"type": "vcs",
+			"url": "https://github.com/newfold-labs/wp-module-onboarding-data.git",
+			"only": [
+				"newfold-labs/wp-module-onboarding-data"
+			]
+		},
 		"outlandishideas/wpackagist": {
 			"type": "composer",
 			"url": "https://wpackagist.org"
@@ -50,7 +57,7 @@
 	"require": {
 		"mustache/mustache": "^2.14.2",
 		"wp-cli/wp-config-transformer": "^1.4.1",
-		"newfold-labs/wp-module-onboarding-data": "^1.2.16",
+		"newfold-labs/wp-module-onboarding-data": "*",
 		"newfold-labs/wp-module-patterns": "^2.10.3",
 		"newfold-labs/wp-module-facebook": "^1.2.1",
 		"newfold-labs/wp-module-migration": "^1.6.0",
