@@ -1,8 +1,7 @@
 import { useRef, useState, useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { nfdOnboardingStore } from '@/data/store';
-import { Iframe } from '@/components';
-import { Spinner } from '@newfold/ui-component-library';
+import { Iframe, BrandLoader } from '@/components';
 
 const Preview = () => {
 	const [ preview, setPreview ] = useState( null );
@@ -36,10 +35,7 @@ const Preview = () => {
 						height: `calc(100dvh - ${ appHeaderHeight }px)`,
 					} }
 				>
-					<Spinner
-						variant="primary"
-						size="8"
-					/>
+					<BrandLoader width="80px" height="80px" />
 				</div>
 			);
 		}

@@ -6,17 +6,16 @@ import { Navigate, Step } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_INTAKE_PROMPT_SET, ACTION_SITE_TYPE_SET } from '@/utils/analytics/hiive/constants';
-import { SiteTitleInput, PromptInput, LanguageSelector, calculatePromptStrength, SiteTypeSelector } from '.';
+import { SiteTitleInput, PromptInput, calculatePromptStrength, SiteTypeSelector } from '.';
 
 const IntakeStep = () => {
 	// Initiale state values.
-	const { siteType, siteTitle, selectedLocale, prompt } = select( nfdOnboardingStore ).getInputSlice();
+	const { siteType, siteTitle, prompt } = select( nfdOnboardingStore ).getInputSlice();
 	const retryMode = select( nfdOnboardingStore ).getRetryMode();
 
 	// Step states.
 	const [ siteTypeValue, setSiteTypeValue ] = useState( siteType );
 	const [ siteTitleValue, setSiteTitleValue ] = useState( siteTitle );
-	const [ selectedLocaleValue, setSelectedLocaleValue ] = useState( selectedLocale );
 	const [ promptValue, setPromptValue ] = useState( prompt );
 
 	/**
@@ -39,7 +38,6 @@ const IntakeStep = () => {
 		dispatch( nfdOnboardingStore ).setInputSlice( {
 			siteType: siteTypeValue,
 			siteTitle: siteTitleValue.trim(),
-			selectedLocale: selectedLocaleValue,
 			prompt: promptValue.trim(),
 		} );
 
@@ -96,10 +94,9 @@ const IntakeStep = () => {
 				<Container.Block separator={ false }>
 					<div className="nfd-flex nfd-flex-col nfd-gap-6">
 						<div className="nfd-flex nfd-gap-4 nfd-w-full nfd-pb-7 nfd-border-b mobile:nfd-flex-col">
+							<SiteTitleInput value={ siteTitleValue } onChange={ setSiteTitleValue } />
 							<SiteTypeSelector value={ siteTypeValue } onChange={ setSiteTypeValue } />
-							<LanguageSelector value={ selectedLocaleValue } onChange={ setSelectedLocaleValue } />
 						</div>
-						<SiteTitleInput value={ siteTitleValue } onChange={ setSiteTitleValue } />
 						<PromptInput value={ promptValue } onChange={ setPromptValue } />
 					</div>
 				</Container.Block>
@@ -112,13 +109,6 @@ const IntakeStep = () => {
 							callback={ handleNext }
 						>
 							{ __( 'Next', 'wp-module-onboarding' ) }
-						</Navigate>
-						<Navigate
-							toRoute="/"
-							direction="backward"
-							variant="secondary"
-						>
-							{ __( 'Back', 'wp-module-onboarding' ) }
 						</Navigate>
 					</Step.Actions>
 				</Container.Footer>

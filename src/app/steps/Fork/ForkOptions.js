@@ -29,7 +29,7 @@ const ForkOptionButton = ( { label, toRoute, value, className, ...props } ) => {
 			direction="forward"
 			callback={ () => handleNext( value ) }
 			className={ classNames(
-				'nfd-group nfd-flex nfd-items-center nfd-gap-2.5 nfd-w-[60%] nfd-py-4 nfd-px-8 nfd-text-base nfd-font-semibold tablet:nfd-w-[90%]',
+				'nfd-group nfd-flex nfd-items-center nfd-gap-2.5 nfd-w-[60%] nfd-h-11 nfd-max-h-11 nfd-py-3 nfd-px-4 nfd-text-base nfd-font-semibold tablet:nfd-w-[90%] nfd-bg-black hover:nfd-bg-[#3858E9] nfd-transition-colors nfd-duration-300',
 				className
 			) }
 			{ ...props }

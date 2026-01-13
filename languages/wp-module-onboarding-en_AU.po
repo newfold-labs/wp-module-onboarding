@@ -73,12 +73,12 @@ msgstr "Flow data does not exist to generate a child theme."
 msgid "Success."
 msgstr "Success."
 
-#: includes/RestApi/SiteGenController.php:339
+#: includes/RestApi/SiteGenController.php:331
 msgid "Error at Regenerating home pages."
 msgstr "Error at Regenerating home pages."
 
 #: includes/RestApi/SitePagesController.php:106
-#: includes/Services/SiteGenService.php:123
+#: includes/Services/SiteGenService.php:122
 msgid "Home"
 msgstr "Home"
 
@@ -130,15 +130,15 @@ msgstr "Each webfont src must be a non-empty string."
 msgid "Webfont font weight must be a properly formatted string or integer."
 msgstr "Webfont font weight must be a properly formatted string or integer."
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Colors"
 msgstr "Colors"
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Primary"
 msgstr "Primary"
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Secondary"
 msgstr "Secondary"
 
@@ -152,99 +152,99 @@ msgstr "Build with AI"
 msgid "Palette %d"
 msgstr "Palette %d"
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Base"
 msgstr "Base"
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Contrast"
 msgstr "Contrast"
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Select a palette or customize individual colors."
 msgstr "Select a palette or customize individual colors."
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Palette"
 msgstr "Palette"
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Pick custom colors"
 msgstr "Pick custom colors"
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Site Logo"
 msgstr "Site Logo"
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Replace logo"
 msgstr "Replace logo"
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Replace"
 msgstr "Replace"
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Current logo"
 msgstr "Current logo"
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Remove"
 msgstr "Remove"
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Upload a logo to represent your brand."
 msgstr "Upload a logo to represent your brand."
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Upload Logo"
 msgstr "Upload Logo"
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "You don't have permission to change the site logo."
 msgstr "You don't have permission to change the site logo."
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
 msgstr "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Primary color"
 msgstr "Primary color"
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Secondary color"
 msgstr "Secondary color"
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Paragraph text in your chosen font."
 msgstr "Paragraph text in your chosen font."
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Select a font style."
 msgstr "Select a font style."
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Font Pairings"
 msgstr "Font Pairings"
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "No font pairings available."
 msgstr "No font pairings available."
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
 msgstr "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
 
-#: build/3.2.14/onboarding-design-studio.js:1
+#: build/3.2.15/onboarding-design-studio.js:1
 msgid "Design Studio"
 msgstr "Design Studio"
 
-#: includes/RestApi/SiteGenController.php:405
+#: includes/RestApi/SiteGenController.php:397
 msgid "Error at Setting up the nav menu."
 msgstr "Error at Setting up the nav menu."
 
-#: includes/Services/Ai/ContentGeneration/SitekitsContentGeneration.php:109
+#: includes/Services/Ai/ContentGeneration/SitekitsContentGeneration.php:101
 msgid "An unknown error occurred"
 msgstr "An unknown error occurred"
 
@@ -258,30 +258,30 @@ msgstr "Help us improve"
 msgid "How satisfied were you with the ease of creating your website?"
 msgstr "How satisfied were you with the ease of creating your website?"
 
-#: build/3.2.14/onboarding.js:1
+#: build/3.2.15/onboarding.js:1
 msgid "Publishing content…"
 msgstr "Publishing content…"
 
-#: build/3.2.14/onboarding.js:1
+#: build/3.2.15/onboarding.js:1
 msgid "Preparing your new site…"
 msgstr "Preparing your new site…"
 
-#: build/3.2.14/onboarding.js:1
+#: build/3.2.15/onboarding.js:1
 msgid "Your new site is ready! Redirecting… 🚀"
 msgstr "Your new site is ready! Redirecting… 🚀"
 
-#: build/3.2.14/onboarding.js:1
+#: build/3.2.15/onboarding.js:1
 msgid "Sorry, let's try a different approach."
 msgstr ""
 
-#: build/3.2.14/onboarding.js:1
+#: build/3.2.15/onboarding.js:1
 msgid "Pick your website"
 msgstr ""
 
-#: build/3.2.14/onboarding.js:1
+#: build/3.2.15/onboarding.js:1
 msgid "We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favorite — we'll guide you through customizing it!"
 msgstr ""
 
-#: build/3.2.14/onboarding.js:1
-msgid "Here are three unique designs for you to start with. Pick your favorite to customize it!"
+#: build/3.2.15/onboarding.js:1
+msgid "Here are 3 unique designs for you to start with. Pick your favorite to customize it!"
 msgstr ""
