@@ -25,52 +25,34 @@ const shuffleOrder = ( array ) => {
 	return shuffled;
 };
 
-/**
- * Animation queue manager: provides unique animations between renders.
- *
- * @return { void }
- */
-const animationQueueManager = () => {
-	let shuffledAnimations = shuffleOrder( animations );
-	let currentIndex = 0;
-
-	return {
-		getNextAnimation: () => {
-			const animation = shuffledAnimations[ currentIndex ];
-			currentIndex = ( currentIndex + 1 ) % shuffledAnimations.length;
-
-			// Optional: Re-shuffle when we complete a cycle
-			if ( currentIndex === 0 ) {
-				shuffledAnimations = shuffleOrder( animations );
-			}
-
-			return animation;
-		},
-
-		// Reset and re-shuffle if needed
-		reset: () => {
-			shuffledAnimations = shuffleOrder( animations );
-			currentIndex = 0;
-		},
-	};
-};
+let shuffledAnimations = shuffleOrder( animations );
+let currentIndex = 0;
 
 /**
- * Get a unique animation from the animation queue manager.
+ * Get a unique animation from the animations array.
  *
  * @return { string } The animation URL.
  */
 export const getUniqueAnimation = () => {
-	return animationQueueManager().getNextAnimation();
+	const animation = shuffledAnimations[ currentIndex ];
+	currentIndex = ( currentIndex + 1 ) % shuffledAnimations.length;
+
+	// Re-shuffle when we complete a cycle
+	if ( currentIndex === 0 ) {
+		shuffledAnimations = shuffleOrder( animations );
+	}
+
+	return animation;
 };
 
 /**
- * Reset the animation queue manager.
+ * Reset the animations array.
  *
  * @return { void }
  */
 export const resetAnimationQueue = () => {
-	animationQueueManager().reset();
+	shuffledAnimations = shuffleOrder( animations );
+	currentIndex = 0;
 };
 
 /**

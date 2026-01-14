@@ -62,7 +62,7 @@ const useLogoGenSetSiteLogo = () => {
 	 * @param {string} attachmentUrl
 	 * @return {boolean} True if the store was updated successfully, false otherwise.
 	 */
-	const SaveSiteLogo = async ( logoReferenceId, attachmentId, attachmentUrl ) => {
+	const saveSiteLogo = async ( logoReferenceId, attachmentId, attachmentUrl ) => {
 		const logos = select( nfdOnboardingStore ).getLogos();
 		const updatedLogos = logos.map( ( logo ) => {
 			// Find the selected logo.
@@ -108,14 +108,14 @@ const useLogoGenSetSiteLogo = () => {
 		const selectedLogo = logos.find( ( logo ) => logo.reference_id === logoReferenceId );
 		// If the logo already has a attachment, update the store with the attachment data.
 		if ( selectedLogo.attachment_data?.id && selectedLogo.attachment_data?.url ) {
-			const result = await SaveSiteLogo(
+			const result = await saveSiteLogo(
 				logoReferenceId,
 				selectedLogo.attachment_data.id,
 				selectedLogo.attachment_data.url,
 			);
 
 			/**
-			 * Since we already have attachment data, the SaveSiteLogo operation can be very fast.
+			 * Since we already have attachment data, the saveSiteLogo operation can be very fast.
 			 * We need to add a minimum delay to ensure UI messaging and state updates are visible.
 			 */
 			await new Promise( ( resolve ) => setTimeout( resolve, 1300 ) );
@@ -144,7 +144,7 @@ const useLogoGenSetSiteLogo = () => {
 
 		// Success.
 		const attachmentData = response.body;
-		const result = SaveSiteLogo(
+		const result = await saveSiteLogo(
 			logoReferenceId,
 			attachmentData.selected_logo_id,
 			attachmentData.selected_logo_url,

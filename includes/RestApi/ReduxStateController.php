@@ -212,7 +212,7 @@ class ReduxStateController {
 		$result = ReduxStateService::update( 'logogen', $data );
 		if ( ! $result ) {
 			return new \WP_REST_Response(
-			'Failed to update logogen slice state',
+				'Failed to update logogen slice state',
 				500
 			);
 		}

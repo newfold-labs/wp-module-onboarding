@@ -88,7 +88,7 @@ const StatusOverlay = ( { status = LOGOGEN_STATES.RECEIVED } ) => {
 			{ status === LOGOGEN_STATES.RECEIVED && <LoadingState /> }
 			{ status === LOGOGEN_STATES.GENERATING && <GeneratingState /> }
 			{ status === LOGOGEN_STATES.FAILED && <FailedState /> }
-			{ renderMessage( status ) }
+			{ renderMessage() }
 		</div>
 	);
 };
