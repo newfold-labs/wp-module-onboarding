@@ -1,1 +1,206 @@
-{"domain":"messages","locale_data":{"messages":{"":{"domain":"messages","lang":"pt_BR"},"Onboarding":["Onboarding"],"Please upgrade your WordPress":["Atualize seu WordPress"],"To take advantage of the latest WordPress has to offer, our WordPress Onboarding to setup your website requires the latest version of WordPress.":["Para aproveitar tudo que o WordPress mais recente tem a oferecer, o onboarding de configuração do seu site requer a versão mais recente do WordPress."],"Your WordPress version %1$s does not meet our minimum requirements of %2$s.":["Seu WordPress versão %1$s não é compatível com os requisitos mínimos de %2$s."],"Upgrade WordPress":["Fazer Upgrade do WordPress"],"There was an error Upgrading WordPress.":["Ocorreu um erro no Upgrade do seu WordPress."],"Home":["Home"],"Event action":["Ação do Evento"],"Event category":["Categoria do Evento"],"Event data":["Dados do Evento"],"Request does not contain an array of events.":["A solicitação não contém uma matriz de eventos."],"Some events failed.":["Alguns eventos falharam."],"Pattern identifier (slug) or step name (step) required.":["Identificador de padrão ou nome da etapa obrigatório."],"No Patterns Found.":["Padrões Não Encontrados."],"No Pattern Found.":["Padrão Não Encontrado."],"Bad event structure/value.":["Estrutura/valor do evento incorreto."],"Colors":["Cores"],"Primary":["Principal"],"Secondary":["Secundária"],"Error at Regenerating home pages.":["Erro ao Regenerar páginas iniciais."],"Flow data does not exist to generate a child theme.":["Dados de fluxo não existem para gerar um tema filho."],"Success.":["Sucesso."],"The id of a template":["O id de um modelo"],"The custom styles":["Os estilos personalizados"],"The custom settings":["As configurações personalizadas"],"Global style customization created.":["Personalização de estilo global criada."],"Webfont font family must be a non-empty string.":["A família da fonte Webfont deve ser uma string não vazia."],"Webfont src must be a non-empty string or an array of strings.":["A fonte (src) do Webfont deve ser uma string não vazia ou uma matriz de strings."],"Each webfont src must be a non-empty string.":["Cada fonte (src) do Webfont deve ser uma string não vazia."],"Webfont font weight must be a properly formatted string or integer.":["O peso da fonte Webfont deve ser uma string ou número inteiro formatado corretamente."],"Build with AI":["Criar com IA"],"Palette %d":["Paleta %d"],"Base":["Base"],"Contrast":["Contraste"],"Select a palette or customize individual colors.":["Selecione uma paleta ou personalize cores individuais."],"Palette":["Paleta"],"Pick custom colors":["Escolha cores personalizadas"],"Site Logo":["Logotipo do site"],"Replace logo":["Substituir logotipo"],"Replace":["Substituir"],"Current logo":["Logotipo atual"],"Remove":["Retirar"],"Upload a logo to represent your brand.":["Carregue um logotipo para representar sua marca."],"Upload Logo":["Carregar logotipo"],"You don't have permission to change the site logo.":["Você não tem permissão para alterar o logotipo do site."],"Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format.":["Seu logotipo aparecerá no cabeçalho do seu site. Para obter melhores resultados, carregue uma imagem com fundo transparente no formato PNG."],"Primary color":["Cor primária"],"Secondary color":["Cor secundária"],"Paragraph text in your chosen font.":["Texto do parágrafo na fonte escolhida."],"Select a font style.":["Selecione um estilo de fonte."],"Font Pairings":["Emparelhamentos de fontes"],"No font pairings available.":["Não há pares de fontes disponíveis."],"Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site.":["Escolha um par de fontes que reflita a personalidade da sua marca. Cada emparelhamento é cuidadosamente selecionado para melhorar a legibilidade e o apelo visual em todo o seu site."],"Design Studio":["Estúdio de Design"],"Error at Setting up the nav menu.":["Erro ao configurar o menu de navegação."],"An unknown error occurred":["Ocorreu um erro desconhecido"],"Help us improve":["Ajude-nos a melhorar"],"How satisfied were you with the ease of creating your website?":["Quão satisfeito você ficou com a facilidade de criar seu site?"],"Publishing content…":["Publicação de conteúdo..."],"Preparing your new site…":["Preparando seu novo site..."],"Your new site is ready! Redirecting… 🚀":["Seu novo site está pronto! Redirecionando... 🚀"],"Sorry, let's try a different approach.":[""],"Pick your website":[""],"We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favorite — we'll guide you through customizing it!":[""],"Here are 3 unique designs for you to start with. Pick your favorite to customize it!":[""]}}}
+{
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "lang": "pt_BR"
+      },
+      "Onboarding": [
+        "Onboarding"
+      ],
+      "Please upgrade your WordPress": [
+        "Atualize seu WordPress"
+      ],
+      "To take advantage of the latest WordPress has to offer, our WordPress Onboarding to setup your website requires the latest version of WordPress.": [
+        "Para aproveitar tudo que o WordPress mais recente tem a oferecer, o onboarding de configuração do seu site requer a versão mais recente do WordPress."
+      ],
+      "Your WordPress version %1$s does not meet our minimum requirements of %2$s.": [
+        "Seu WordPress versão %1$s não é compatível com os requisitos mínimos de %2$s."
+      ],
+      "Upgrade WordPress": [
+        "Fazer Upgrade do WordPress"
+      ],
+      "There was an error Upgrading WordPress.": [
+        "Ocorreu um erro no Upgrade do seu WordPress."
+      ],
+      "Home": [
+        "Home"
+      ],
+      "Event action": [
+        "Ação do Evento"
+      ],
+      "Event category": [
+        "Categoria do Evento"
+      ],
+      "Event data": [
+        "Dados do Evento"
+      ],
+      "Request does not contain an array of events.": [
+        "A solicitação não contém uma matriz de eventos."
+      ],
+      "Some events failed.": [
+        "Alguns eventos falharam."
+      ],
+      "Pattern identifier (slug) or step name (step) required.": [
+        "Identificador de padrão ou nome da etapa obrigatório."
+      ],
+      "No Patterns Found.": [
+        "Padrões Não Encontrados."
+      ],
+      "No Pattern Found.": [
+        "Padrão Não Encontrado."
+      ],
+      "Bad event structure/value.": [
+        "Estrutura/valor do evento incorreto."
+      ],
+      "Colors": [
+        "Cores"
+      ],
+      "Primary": [
+        "Principal"
+      ],
+      "Secondary": [
+        "Secundária"
+      ],
+      "Error at Regenerating home pages.": [
+        "Erro ao Regenerar páginas iniciais."
+      ],
+      "Flow data does not exist to generate a child theme.": [
+        "Dados de fluxo não existem para gerar um tema filho."
+      ],
+      "Success.": [
+        "Sucesso."
+      ],
+      "The id of a template": [
+        "O id de um modelo"
+      ],
+      "The custom styles": [
+        "Os estilos personalizados"
+      ],
+      "The custom settings": [
+        "As configurações personalizadas"
+      ],
+      "Global style customization created.": [
+        "Personalização de estilo global criada."
+      ],
+      "Webfont font family must be a non-empty string.": [
+        "A família da fonte Webfont deve ser uma string não vazia."
+      ],
+      "Webfont src must be a non-empty string or an array of strings.": [
+        "A fonte (src) do Webfont deve ser uma string não vazia ou uma matriz de strings."
+      ],
+      "Each webfont src must be a non-empty string.": [
+        "Cada fonte (src) do Webfont deve ser uma string não vazia."
+      ],
+      "Webfont font weight must be a properly formatted string or integer.": [
+        "O peso da fonte Webfont deve ser uma string ou número inteiro formatado corretamente."
+      ],
+      "Build with AI": [
+        "Criar com IA"
+      ],
+      "Palette %d": [
+        "Paleta %d"
+      ],
+      "Base": [
+        "Base"
+      ],
+      "Contrast": [
+        "Contraste"
+      ],
+      "Select a palette or customize individual colors.": [
+        "Selecione uma paleta ou personalize cores individuais."
+      ],
+      "Palette": [
+        "Paleta"
+      ],
+      "Pick custom colors": [
+        "Escolha cores personalizadas"
+      ],
+      "Site Logo": [
+        "Logotipo do site"
+      ],
+      "Replace logo": [
+        "Substituir logotipo"
+      ],
+      "Replace": [
+        "Substituir"
+      ],
+      "Current logo": [
+        "Logotipo atual"
+      ],
+      "Remove": [
+        "Retirar"
+      ],
+      "Upload a logo to represent your brand.": [
+        "Carregue um logotipo para representar sua marca."
+      ],
+      "Upload Logo": [
+        "Carregar logotipo"
+      ],
+      "You don't have permission to change the site logo.": [
+        "Você não tem permissão para alterar o logotipo do site."
+      ],
+      "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format.": [
+        "Seu logotipo aparecerá no cabeçalho do seu site. Para obter melhores resultados, carregue uma imagem com fundo transparente no formato PNG."
+      ],
+      "Primary color": [
+        "Cor primária"
+      ],
+      "Secondary color": [
+        "Cor secundária"
+      ],
+      "Paragraph text in your chosen font.": [
+        "Texto do parágrafo na fonte escolhida."
+      ],
+      "Select a font style.": [
+        "Selecione um estilo de fonte."
+      ],
+      "Font Pairings": [
+        "Emparelhamentos de fontes"
+      ],
+      "No font pairings available.": [
+        "Não há pares de fontes disponíveis."
+      ],
+      "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site.": [
+        "Escolha um par de fontes que reflita a personalidade da sua marca. Cada emparelhamento é cuidadosamente selecionado para melhorar a legibilidade e o apelo visual em todo o seu site."
+      ],
+      "Design Studio": [
+        "Estúdio de Design"
+      ],
+      "Error at Setting up the nav menu.": [
+        "Erro ao configurar o menu de navegação."
+      ],
+      "An unknown error occurred": [
+        "Ocorreu um erro desconhecido"
+      ],
+      "Help us improve": [
+        "Ajude-nos a melhorar"
+      ],
+      "How satisfied were you with the ease of creating your website?": [
+        "Quão satisfeito você ficou com a facilidade de criar seu site?"
+      ],
+      "Publishing content…": [
+        "Publicação de conteúdo..."
+      ],
+      "Preparing your new site…": [
+        "Preparando seu novo site..."
+      ],
+      "Your new site is ready! Redirecting… 🚀": [
+        "Seu novo site está pronto! Redirecionando... 🚀"
+      ],
+      "Sorry, let's try a different approach.": [
+        "Desculpe, vamos tentar uma abordagem diferente."
+      ],
+      "Pick your website": [
+        "Escolha seu site"
+      ],
+      "We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favorite — we'll guide you through customizing it!": [
+        "Desculpe, nossa ferramenta de geração de sites não está funcionando no momento. Enquanto isso, aqui estão três modelos de site únicos para começar. Escolha seu favorito — vamos te orientar na personalização!"
+      ],
+      "Here are 3 unique designs for you to start with. Pick your favorite to customize it!": [
+        "Aqui estão 3 designs únicos para você começar. Escolha seu favorito para personalizar!"
+      ]
+    }
+  }
+}
