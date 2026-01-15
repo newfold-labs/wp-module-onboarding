@@ -154,7 +154,7 @@ jobs:
 
             - name: Commit code coverage to gh-pages
               if: ${{ matrix.php == '7.3' }}
-              uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79 # v5.1.0
+              uses: stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3 # v7.0.0
               with:
                   repository: gh-pages
                   branch: gh-pages
