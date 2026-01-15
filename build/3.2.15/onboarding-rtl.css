@@ -1043,6 +1043,8 @@
 }
 .nfd-root .nfd-autocomplete {
 		position: relative;
+		--tw-bg-opacity: 1;
+		background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
 }
 .nfd-root .nfd-autocomplete--error .nfd-autocomplete__button {
 		--tw-border-opacity: 1;
@@ -1928,7 +1930,7 @@
 		padding-top: 0.5rem;
 		padding-bottom: 0.5rem;
 		padding-right: 0.75rem;
-		padding-left: 0.75rem;
+		padding-left: 2.25rem;
 		text-align: right;
 		line-height: 1.5rem;
 		--tw-text-opacity: 1;
@@ -2219,16 +2221,7 @@
 		--tw-ring-opacity: 1;
 		--tw-ring-color: rgb(25 107 222 / var(--tw-ring-opacity, 1));
 }
-.nfd-root .nfd-text-input--disabled {
-		cursor: not-allowed;
-		opacity: 0.5;
-}
-.nfd-root .nfd-text-input--disabled:focus {
-		--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-		--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-		box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-}
-.nfd-root .nfd-text-input--read-only {
+.nfd-root .nfd-text-input--read-only, .nfd-root .nfd-text-input--disabled {
 		cursor: default;
 		--tw-border-opacity: 1;
 		border-color: rgb(226 232 240 / var(--tw-border-opacity, 1));
@@ -2239,6 +2232,14 @@
 		--tw-shadow: 0 0 #0000;
 		--tw-shadow-colored: 0 0 #0000;
 		box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.nfd-root .nfd-text-input--disabled {
+		cursor: not-allowed;
+}
+.nfd-root .nfd-text-input--disabled:focus {
+		--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+		--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+		box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 .nfd-root .nfd-textarea {
 		width: 100%;
@@ -2519,6 +2520,18 @@
 .nfd-root .nfd-validation-message--error {
 		--tw-text-opacity: 1;
 		color: rgb(220 38 38 / var(--tw-text-opacity, 1));
+}
+.nfd-root .nfd-mobile-navigation__top {
+		position: sticky;
+		top: 0px;
+		z-index: 50;
+		width: 100%;
+}
+.nfd-root .nfd-mobile-navigation__dialog {
+		position: fixed;
+		inset: 0px;
+		z-index: 50;
+		display: flex;
 }
 .nfd-root .nfd-autocomplete-field__description {
 		margin-top: 0.5rem;
@@ -2945,7 +2958,7 @@
 .nfd-root .nfd-modal {
 		position: fixed;
 		inset: 0px;
-		z-index: 10;
+		z-index: 50;
 		padding: 1rem;
 }
 @media (min-width: 640px) {
@@ -2975,9 +2988,6 @@
 		inset: 0px;
 		background-color: rgb(100 116 139 / var(--tw-bg-opacity, 1));
 		--tw-bg-opacity: 0.75;
-		transition-property: opacity;
-		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-		transition-duration: 150ms;
 }
 .nfd-root .nfd-modal__panel {
 		position: relative;
@@ -3072,6 +3082,25 @@
 		display: flex;
 		flex-direction: column;
 		gap: 2rem;
+}
+.nfd-root .nfd-price-field--disabled .nfd-price-field__label,
+			.nfd-root .nfd-price-field--disabled .nfd-price-field__description {
+		opacity: 0.5;
+}
+.nfd-root .nfd-price-field--disabled .nfd-price-field__label {
+		cursor: not-allowed;
+}
+.nfd-root .nfd-price-field--read-only .nfd-price-field__label {
+		cursor: default;
+}
+.nfd-root .nfd-price-field__description {
+		margin-top: 0.5rem;
+}
+.nfd-root .nfd-price-field__validation {
+		margin-top: 0.5rem;
+}
+.nfd-root .nfd-price-field__input.nfd-price-field--input-with-icon {
+		padding-left: calc(1.25rem + 24px);
 }
 .nfd-root .nfd-radio-group--inline-block .nfd-radio-group__options {
 		display: flex;
@@ -3307,6 +3336,9 @@
 .nfd-bottom-\[6\%\] {
 		bottom: 6% !important;
 }
+.nfd-left-0 {
+		right: 0px !important;
+}
 .nfd-left-1\.5 {
 		right: 0.375rem !important;
 }
@@ -3340,6 +3372,9 @@
 .nfd-top-2 {
 		top: 0.5rem !important;
 }
+.nfd-top-full {
+		top: 100% !important;
+}
 .nfd-z-10 {
 		z-index: 10 !important;
 }
@@ -3354,6 +3389,9 @@
 }
 .nfd-z-50 {
 		z-index: 50 !important;
+}
+.nfd-z-\[9999\] {
+		z-index: 9999 !important;
 }
 .nfd-col-span-1 {
 		grid-column: span 1 / span 1 !important;
@@ -3450,6 +3488,9 @@
 .nfd-mt-auto {
 		margin-top: auto !important;
 }
+.nfd-box-content {
+		box-sizing: content-box !important;
+}
 .nfd-block {
 		display: block !important;
 }
@@ -3524,6 +3565,9 @@
 }
 .nfd-h-\[620px\] {
 		height: 620px !important;
+}
+.nfd-h-\[64px\] {
+		height: 64px !important;
 }
 .nfd-h-\[90px\] {
 		height: 90px !important;
@@ -3608,6 +3652,9 @@
 }
 .nfd-w-\[30\%\] {
 		width: 30% !important;
+}
+.nfd-w-\[32px\] {
+		width: 32px !important;
 }
 .nfd-w-\[390px\] {
 		width: 390px !important;
@@ -3758,10 +3805,6 @@
 }
 .nfd-translate-y-0 {
 		--tw-translate-y: 0px !important;
-		transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
-}
-.nfd-translate-y-4 {
-		--tw-translate-y: 1rem !important;
 		transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
 }
 .nfd-translate-y-full {
@@ -4253,6 +4296,9 @@
 		padding-top: 11px !important;
 		padding-bottom: 11px !important;
 }
+.\!nfd-pl-0 {
+		padding-right: 0px !important;
+}
 .nfd-pb-1 {
 		padding-bottom: 0.25rem !important;
 }
@@ -4463,6 +4509,9 @@
 }
 .nfd-opacity-25 {
 		opacity: 0.25 !important;
+}
+.nfd-opacity-30 {
+		opacity: 0.3 !important;
 }
 .nfd-opacity-75 {
 		opacity: 0.75 !important;
@@ -4692,6 +4741,9 @@
 		--tw-ring-opacity: 1 !important;
 		--tw-ring-color: rgb(25 107 222 / var(--tw-ring-opacity, 1)) !important;
 }
+.focus\:nfd-ring-transparent:focus {
+		--tw-ring-color: transparent !important;
+}
 .focus\:nfd-ring-offset-1:focus {
 		--tw-ring-offset-width: 1px !important;
 }
@@ -4712,23 +4764,23 @@
 .nfd-group:hover .group-hover\:nfd-opacity-100 {
 		opacity: 1 !important;
 }
+.data-\[closed\]\:nfd-scale-95[data-closed] {
+		--tw-scale-x: .95 !important;
+		--tw-scale-y: .95 !important;
+		transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
+}
+.data-\[closed\]\:nfd-opacity-0[data-closed] {
+		opacity: 0 !important;
+}
+.data-\[enter\]\:nfd-duration-300[data-enter] {
+		transition-duration: 300ms !important;
+}
+.data-\[leave\]\:nfd-duration-200[data-leave] {
+		transition-duration: 200ms !important;
+}
 @media (min-width: 640px) {
 		.sm\:nfd-w-\[600px\] {
 				width: 600px !important;
-		}
-		.sm\:nfd-translate-y-0 {
-				--tw-translate-y: 0px !important;
-				transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
-		}
-		.sm\:nfd-scale-100 {
-				--tw-scale-x: 1 !important;
-				--tw-scale-y: 1 !important;
-				transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
-		}
-		.sm\:nfd-scale-95 {
-				--tw-scale-x: .95 !important;
-				--tw-scale-y: .95 !important;
-				transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
 		}
 		.sm\:nfd-px-0 {
 				padding-right: 0px !important;
