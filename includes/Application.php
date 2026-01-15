@@ -7,6 +7,7 @@ use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Services\StatusService;
+use NewfoldLabs\WP\Module\Onboarding\Services\EventService;
 
 use function NewfoldLabs\WP\ModuleLoader\container;
 
@@ -69,13 +70,15 @@ final class Application {
 		}
 
 		if ( Permissions::is_authorized_admin() || Permissions::rest_is_authorized_admin() ) {
-			new RestAPI();
+			new RestApi();
 			new WP_Admin();
 			new ExternalRedirectInterceptor();
 		}
 
 		if ( Permissions::is_authorized_admin() ) {
 			StatusService::track();
+			// Initialize event tracking for database option changes
+			EventService::init();
 		}
 
 		\do_action( 'nfd_module_onboarding_post_init' );

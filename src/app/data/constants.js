@@ -17,6 +17,7 @@ export const wpAdminPage = addQueryArgs(
 );
 export const wpEditorPage = `${ wpAdminUrl }site-editor.php?canvas=edit`;
 export const wpEditorDesignStudio = `${ wpAdminUrl }site-editor.php?referrer=nfd-onboarding&canvas=edit`;
+export const wpEditorChat = `${ wpAdminUrl }site-editor.php?referrer=nfd-editor-chat&canvas=edit`;
 export const pluginDashboardPage =
 	addQueryArgs(
 		window.nfdOnboarding.runtime.currentBrand?.pluginDashboardPage,
@@ -112,4 +113,23 @@ export const DRAWER_NAV_VIEWS = [
 export const API_REQUEST = {
 	SET_FLOW: 'SET_FLOW',
 	SET_GLOBAL_STYLES: 'SET_GLOBAL_STYLES',
+};
+
+/**
+ * PostHog constants
+ *
+ * This is not sensitive data and is exposed to the client.
+ * It's the equivalent of a Google Analytics property ID but they call it a public API key.
+ *
+ * For more details or to reset the key, see:
+ * https://us.posthog.com/project/234516/settings/project#snippet&selectedSetting=variables&setting=variables
+ * "Write-only means it can only create new events. It can't read events or
+ * any of your other data stored with PostHog, so it's safe to use in public apps."
+ */
+export const POSTHOG_PUBLIC = {
+	// public facing api key has write only access - this is not a sensitive key
+	PUBLIC_API_KEY: 'phc_6wQThygzyWKFpi6f5MItEjm4qVqcigezljk7orxhpUi',
+	PUBLIC_HOST: 'https://us.i.posthog.com',
+	DEFAULT_VERSION: '2025-05-24',
+	CAPTURE_EXCEPTIONS: true,
 };

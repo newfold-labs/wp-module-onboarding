@@ -1,9 +1,9 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from '@wordpress/element';
 import { useNavigate } from 'react-router-dom';
 import { Title } from '@newfold/ui-component-library';
 import aiSiteGenIconUrl from '@/assets/ai-sitegen-icon.svg';
 import ActionCard from '@/components/ActionCard/ActionCard';
-import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
+import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_FORK_OPTION_SELECTED } from '@/utils/analytics/hiive/constants';
 
 const SiteCreatorCard = ( { initialFocus = false } ) => {
@@ -28,7 +28,7 @@ const SiteCreatorCard = ( { initialFocus = false } ) => {
 		} );
 
 		// Analytics: site creator fork option selected event
-		trackOnboardingEvent(
+		sendOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_FORK_OPTION_SELECTED,
 				'AI'

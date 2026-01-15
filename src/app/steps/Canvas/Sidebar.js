@@ -30,20 +30,27 @@ const Header = () => {
 const Preview = ( { preview, tabIndex } ) => {
 	const [ isLoading, setIsLoading ] = useState( true );
 
-	const { selectedPreview } = useSelect( ( select ) => {
+	const { selectedPreview, screenshot, iframeSrc } = useSelect( ( select ) => {
+		const homepages = select( nfdOnboardingStore ).getHomepages();
+		const thisHomepage = homepages[ preview.slug ];
+
 		return {
 			selectedPreview: select( nfdOnboardingStore ).getSelectedHomepage(),
+			screenshot: thisHomepage?.screenshot,
+			iframeSrc: thisHomepage?.iframeSrc,
 		};
 	} );
 
 	const getScreenshot = () => {
-		if ( preview.screenshot ) {
+		if ( screenshot ) {
 			// Set 500ms delay to avoid abrupt flickering.
 			setTimeout( () => {
 				setIsLoading( false );
 			}, 500 );
-			return preview.screenshot;
+
+			return screenshot;
 		}
+
 		return null;
 	};
 
@@ -54,7 +61,7 @@ const Preview = ( { preview, tabIndex } ) => {
 		}, 500 );
 	};
 
-	const handlePreview = () => {
+	const handleOnPreview = () => {
 		dispatch( nfdOnboardingStore ).setSelectedHomepage( preview.slug );
 	};
 
@@ -62,7 +69,7 @@ const Preview = ( { preview, tabIndex } ) => {
 		<SiteGenPreviewCard
 			screenshot={ getScreenshot() }
 			frameName={ preview.slug }
-			frameSrc={ preview.iframeSrc }
+			frameSrc={ iframeSrc }
 			onFrameLoad={ iframeOnLoad }
 			width={ 280 }
 			height={ 170 }
@@ -72,7 +79,7 @@ const Preview = ( { preview, tabIndex } ) => {
 			overlay={ true }
 			isLoading={ isLoading }
 			tabIndex={ tabIndex }
-			onPreview={ handlePreview }
+			onPreview={ handleOnPreview }
 			className={ selectedPreview === preview.slug ? 'nfd-border-2 nfd-border-primary-400' : '' }
 		/>
 	);
@@ -87,10 +94,10 @@ const Sidebar = () => {
 	} );
 
 	const renderPreviews = () => {
-		return Object.keys( homepages ).map( ( slug, idx ) => {
+		return Object.keys( homepages ).map( ( slug ) => {
 			return (
 				<Preview
-					key={ idx }
+					key={ slug }
 					preview={ homepages[ slug ] }
 					tabIndex={ canvasSidebarIsOpen ? 0 : -1 }
 				/>

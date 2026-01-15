@@ -4,7 +4,7 @@ import { forwardRef } from '@wordpress/element';
 const Iframe = forwardRef( ( {
 	title,
 	src,
-	width = 400,
+	width = 400, // eslint-disable-line no-unused-vars
 	height = 400,
 	viewportScale = 1,
 	viewportWidth = 1440,
@@ -18,8 +18,7 @@ const Iframe = forwardRef( ( {
 				'nfd-onboarding-iframe nfd-relative nfd-flex nfd-flex-col nfd-overflow-hidden',
 			) }
 			style={ {
-				minWidth: width,
-				maxWidth: width,
+				width: '100%',
 				minHeight: height,
 				maxHeight: height,
 			} }

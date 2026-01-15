@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowsRightLeftIcon } from '@heroicons/react/24/outline';
 import ActionCard from '@/components/ActionCard/ActionCard';
-import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
+import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_FORK_OPTION_SELECTED } from '@/utils/analytics/hiive/constants';
 
 const MigrationCard = ( {
@@ -21,7 +21,7 @@ const MigrationCard = ( {
 			window.open( migrationFallbackUrl, '_blank' );
 		}
 		// Analytics: migration fork option selected event
-		trackOnboardingEvent(
+		sendOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_FORK_OPTION_SELECTED,
 				'MIGRATE'

@@ -4,6 +4,8 @@ import selectors from './selectors';
 import reducer from './reducer';
 import { dbSyncService as inputSliceDbSyncService } from './slices/input';
 import { dbSyncService as sitegenSliceDbSyncService } from './slices/sitegen';
+import { dbSyncService as logogenSliceDbSyncService } from './slices/logogen';
+import { dbSyncService as blueprintsSliceDbSyncService } from './slices/blueprints';
 
 const STORE_NAME = 'newfold/onboarding';
 const STORE_CONFIG = {
@@ -21,4 +23,6 @@ register( nfdOnboardingStore );
 export function initializeStoreDbSyncServices() {
 	inputSliceDbSyncService();
 	sitegenSliceDbSyncService();
+	logogenSliceDbSyncService();
+	blueprintsSliceDbSyncService();
 }

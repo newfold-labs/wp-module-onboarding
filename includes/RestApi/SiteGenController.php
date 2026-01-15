@@ -3,8 +3,12 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService as LegacySiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Data\SiteGen as SiteGenData;
+use NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration\SitekitsContentGeneration;
+use NewfoldLabs\WP\Module\Onboarding\Services\LanguageService;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenService;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteNavigationService;
 
 /**
  * Class SiteGenController
@@ -52,7 +56,7 @@ class SiteGenController {
 		);
 		\register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/homepages',
+				$this->rest_base . '/homepages',
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'get_homepages' ),
@@ -79,15 +83,6 @@ class SiteGenController {
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 			)
 		);
-		\register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/customize-data',
-			array(
-				'methods'             => \WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_customize_sidebar_data' ),
-				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-			)
-		);
 
 		\register_rest_route(
 			$this->namespace,
@@ -97,6 +92,17 @@ class SiteGenController {
 				'callback'            => array( $this, 'publish_sitemap_pages' ),
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				'args'                => $this->get_publish_sitemap_pages_args(),
+			)
+		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/setup-nav-menu',
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'setup_nav_menu' ),
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				'args'                => $this->get_setup_nav_menu_args(),
 			)
 		);
 	}
@@ -113,10 +119,6 @@ class SiteGenController {
 				'type'     => 'object',
 			),
 			'identifier' => array(
-				'required' => true,
-				'type'     => 'string',
-			),
-			'locale'     => array(
 				'required' => true,
 				'type'     => 'string',
 			),
@@ -139,7 +141,7 @@ class SiteGenController {
 				'type'              => 'string',
 				'sanitize_callback' => 'sanitize_text_field',
 			),
-			'locale'           => array(
+			'site_type'        => array(
 				'required' => true,
 				'type'     => 'string',
 			),
@@ -186,12 +188,26 @@ class SiteGenController {
 	}
 
 	/**
+	 * Gets the arguments for the 'setup-nav-menu' endpoint.
+	 *
+	 * @return array The array of arguments.
+	 */
+	public function get_setup_nav_menu_args() {
+		return array(
+			'site_type' => array(
+				'required' => false,
+				'type'     => 'string',
+			),
+		);
+	}
+
+	/**
 	 * Gets all the valid Identifiers
 	 *
 	 * @return array
 	 */
 	public function get_enabled_identifiers() {
-		return array_keys( array_filter( SiteGenService::enabled_identifiers() ) );
+		return array_keys( array_filter( LegacySiteGenService::enabled_identifiers() ) );
 	}
 
 	/**
@@ -202,7 +218,8 @@ class SiteGenController {
 	 * @return array|WP_Error
 	 */
 	public function generate_sitegen_meta( \WP_REST_Request $request ) {
-		if ( ! SiteGenService::is_enabled() ) {
+
+		if ( ! LegacySiteGenService::is_enabled() ) {
 			return new \WP_Error(
 				'nfd_onboarding_error',
 				'SiteGen is Disabled.',
@@ -212,12 +229,14 @@ class SiteGenController {
 
 		$site_info  = $request->get_param( 'site_info' );
 		$identifier = $request->get_param( 'identifier' );
-		$locale     = $request->get_param( 'locale' );
+		$site_type  = $request->get_param( 'site_type' );
+		$locale     = LanguageService::get_site_locale();
 		$skip_cache = $request->get_param( 'skip_cache' );
 
-		return SiteGenService::instantiate_site_meta(
+		return LegacySiteGenService::instantiate_site_meta(
 			$site_info,
 			$identifier,
+			$site_type,
 			$locale,
 			$skip_cache
 		);
@@ -230,31 +249,44 @@ class SiteGenController {
 	 * @return array
 	 */
 	public function get_homepages( \WP_REST_Request $request ) {
-		$existing_homepages = SiteGenService::get_homepages();
+		$existing_homepages = LegacySiteGenService::get_homepages();
 		if ( ! empty( $existing_homepages ) ) {
 			return new \WP_REST_Response( $existing_homepages, 200 );
 		}
 
 		$site_description = $request->get_param( 'site_description' );
-		$locale           = $request->get_param( 'locale' );
 		$site_info        = array( 'site_description' => $site_description );
+		$site_type        = $request->get_param( 'site_type' );
+		$locale           = LanguageService::get_site_locale();
 
-		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', $locale );
-		if ( is_wp_error( $target_audience ) ) {
-			return $target_audience;
+		$homepages = [];
+		if ( SitekitsContentGeneration::site_type_supported( $site_type ) ) {
+			$siteGenService = new SiteGenService();
+			$homepages      = $siteGenService->get_sitekits(
+				$site_description,
+				$site_type,
+				true
+			);
+
+		} else {
+			$target_audience = LegacySiteGenService::instantiate_site_meta( $site_info, 'target_audience', $site_type, $locale );
+			if ( is_wp_error( $target_audience ) ) {
+				return $target_audience;
+			}
+
+			$content_style = LegacySiteGenService::instantiate_site_meta( $site_info, 'content_tones', $site_type, $locale );
+			if ( is_wp_error( $content_style ) ) {
+				return $content_style;
+			}
+
+			$homepages = LegacySiteGenService::generate_homepages(
+				$site_description,
+				$site_type,
+				$content_style,
+				$target_audience,
+				$locale,
+			);
 		}
-
-		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', $locale );
-		if ( is_wp_error( $content_style ) ) {
-			return $content_style;
-		}
-
-		$homepages = SiteGenService::generate_homepages(
-			$site_description,
-			$content_style,
-			$target_audience,
-			$locale,
-		);
 
 		if ( is_wp_error( $homepages ) ) {
 			return $homepages;
@@ -275,22 +307,22 @@ class SiteGenController {
 		$color_palette    = $request->get_param( 'palette' );
 		$is_favorite      = $request->get_param( 'isFavorite' );
 		$site_info        = array( 'site_description' => $site_description );
-		$locale           = $request->get_param( 'locale' );
+		$locale           = LanguageService::get_site_locale();
 		$skip_cache       = $request->get_param( 'skip_cache' );
 
-		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', $locale, $skip_cache );
+		$target_audience = LegacySiteGenService::instantiate_site_meta( $site_info, 'target_audience', $locale, $skip_cache );
 		if ( is_wp_error( $target_audience ) ) {
 			return $target_audience;
 		}
-		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', $locale, $skip_cache );
+		$content_style = LegacySiteGenService::instantiate_site_meta( $site_info, 'content_tones', $locale, $skip_cache );
 		if ( is_wp_error( $content_style ) ) {
 			return $content_style;
 		}
 
 		if ( $is_favorite ) {
-			$result = SiteGenService::regenerate_favorite_homepage( $slug, $color_palette );
+			$result = LegacySiteGenService::regenerate_favorite_homepage( $slug, $color_palette );
 		} else {
-			$result = SiteGenService::regenerate_homepage( $site_description, $content_style, $target_audience, $locale );
+			$result = LegacySiteGenService::regenerate_homepage( $site_description, $content_style, $target_audience, $locale );
 		}
 
 		if ( null === $result ) {
@@ -315,25 +347,26 @@ class SiteGenController {
 	public function publish_sitemap_pages( \WP_REST_Request $request ) {
 		$site_description = $request->get_param( 'site_description' );
 		$site_info        = array( 'site_description' => $site_description );
-		$locale           = $request->get_param( 'locale' );
+		$site_type        = $request->get_param( 'site_type' );
+		$locale           = LanguageService::get_site_locale();
 		$skip_cache       = $request->get_param( 'skip_cache' );
 
-		$target_audience = SiteGenService::instantiate_site_meta( $site_info, 'target_audience', $locale, $skip_cache );
+		$target_audience = LegacySiteGenService::instantiate_site_meta( $site_info, 'target_audience', $site_type, $locale, $skip_cache );
 		if ( is_wp_error( $target_audience ) ) {
 			return $target_audience;
 		}
 
-		$content_style = SiteGenService::instantiate_site_meta( $site_info, 'content_tones', $locale, $skip_cache );
+		$content_style = LegacySiteGenService::instantiate_site_meta( $site_info, 'content_tones', $site_type, $locale, $skip_cache );
 		if ( is_wp_error( $content_style ) ) {
 			return $content_style;
 		}
 
-		$sitemap = SiteGenService::instantiate_site_meta( $site_info, 'sitemap', $locale, $skip_cache );
+		$sitemap = LegacySiteGenService::instantiate_site_meta( $site_info, 'sitemap', $site_type, $locale, $skip_cache );
 		if ( is_wp_error( $sitemap ) ) {
 			return $sitemap;
 		}
 
-		SiteGenService::publish_sitemap_pages( $site_description, $content_style, $target_audience, $sitemap, $locale );
+		LegacySiteGenService::publish_sitemap_pages( $site_description, $site_type, $content_style, $target_audience, $sitemap, $locale );
 
 		return new \WP_REST_Response( array(), 201 );
 	}
@@ -348,11 +381,24 @@ class SiteGenController {
 	}
 
 	/**
-	 * Get Sitegen Customize sidebar data.
+	 * Setup the nav menu.
 	 *
 	 * @return array|WP_Error
 	 */
-	public function get_customize_sidebar_data() {
-		return SiteGenService::get_customize_sidebar_data();
+	public function setup_nav_menu( \WP_REST_Request $request ) {
+		$site_type = $request->get_param( 'site_type' );
+
+		$siteGenService = new SiteNavigationService();
+		$result         = $siteGenService->setup_site_nav_menu( $site_type );
+
+		if ( ! $result ) {
+			return new \WP_Error(
+				'nfd_onboarding_error',
+				__( 'Error at Setting up the nav menu.', 'wp-module-onboarding' ),
+				array( 'status' => 500 )
+			);
+		}
+
+		return new \WP_REST_Response( array( 'success' => $result ), 200 );
 	}
 }

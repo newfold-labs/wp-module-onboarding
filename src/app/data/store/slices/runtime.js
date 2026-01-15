@@ -93,7 +93,7 @@ export const selectors = {
 		const migrationUrl =
 			addQueryArgs( migrationInfo?.defaultLink, migrationInfo?.queryParams ) +
 			( migrationInfo?.fragment || '' );
-		return migrationUrl;
+		return window?.NewfoldRuntime?.linkTracker?.addUtmParams( migrationUrl ) || migrationUrl;
 	},
 
 	/**
@@ -118,6 +118,17 @@ export const selectors = {
 	},
 
 	/**
+	 * Gets the current locale.
+	 *
+	 * @param {*} state
+	 * @return {string} locale
+	 */
+	getLocale( state ) {
+		const languages = Object.values( state.runtime.languages );
+		return languages.find( ( language ) => language.is_default )?.locale || 'en_US';
+	},
+
+	/**
 	 * Gets all available sitegen identifiers.
 	 *
 	 * @param {*} state
@@ -125,15 +136,5 @@ export const selectors = {
 	 */
 	getSiteGenIdentifiers( state ) {
 		return state.runtime.siteGen.identifiers;
-	},
-
-	/**
-	 * Gets the fallback homepages.
-	 *
-	 * @param {*} state
-	 * @return {Object} fallbackHomepages
-	 */
-	getFallbackHomepages( state ) {
-		return state.runtime.fallbackHomepages;
 	},
 };
