@@ -1,5 +1,5 @@
 import apiFetch from '@wordpress/api-fetch';
-import { wpRestURL as wpRestApiURL } from '@/data/constants';
+import { wpRestURL as wpRestApiURL, wpSiteUrl } from '@/data/constants';
 import { resolve } from '@/utils/helpers';
 
 export const wpRestRoute = 'wp/v2';
@@ -16,3 +16,14 @@ export async function getWpSettings() {
 		} ).then()
 	);
 }
+
+export const fireWpCron = () => {
+	apiFetch( {
+		url: `${ wpSiteUrl }/wp-cron.php`,
+		method: 'GET',
+		parse: false,
+	} ).catch( ( error ) => {
+		// eslint-disable-next-line no-console
+		console.error( error );
+	} );
+};

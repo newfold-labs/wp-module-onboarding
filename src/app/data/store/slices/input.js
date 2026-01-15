@@ -4,10 +4,10 @@ import { updateOnboardingInputSlice } from '@/utils/api';
 
 const DEFAULT_STATE = {
 	siteTitle: '',
-	selectedLocale: '',
 	prompt: '',
 	logo: '',
 	experienceLevel: '',
+	siteType: '',
 };
 
 /**
@@ -29,11 +29,6 @@ export function input( state = DEFAULT_STATE, action ) {
 				...state,
 				siteTitle: action.siteTitle,
 			};
-		case 'SET_SELECTED_LOCALE':
-			return {
-				...state,
-				selectedLocale: action.selectedLocale,
-			};
 		case 'SET_PROMPT':
 			return {
 				...state,
@@ -48,6 +43,11 @@ export function input( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				experienceLevel: action.experienceLevel,
+			};
+		case 'SET_SITE_TYPE':
+			return {
+				...state,
+				siteType: action.siteType,
 			};
 	}
 
@@ -71,10 +71,6 @@ export const actions = {
 		type: 'SET_SITE_TITLE',
 		siteTitle,
 	} ),
-	setSelectedLocale: ( selectedLocale ) => ( {
-		type: 'SET_SELECTED_LOCALE',
-		selectedLocale,
-	} ),
 	setPrompt: ( prompt ) => ( {
 		type: 'SET_PROMPT',
 		prompt,
@@ -87,6 +83,10 @@ export const actions = {
 		type: 'SET_EXPERIENCE_LEVEL',
 		experienceLevel,
 	} ),
+	setSiteType: ( siteType ) => ( {
+		type: 'SET_SITE_TYPE',
+		siteType,
+	} ),
 };
 
 /**
@@ -95,10 +95,10 @@ export const actions = {
 export const selectors = {
 	getInputSlice: ( state ) => state.input,
 	getSiteTitle: ( state ) => state.input.siteTitle,
-	getSelectedLocale: ( state ) => state.input.selectedLocale,
 	getPrompt: ( state ) => state.input.prompt,
 	getLogo: ( state ) => state.input.logo,
 	getExperienceLevel: ( state ) => state.input.experienceLevel,
+	getSiteType: ( state ) => state.input.siteType,
 };
 
 /**

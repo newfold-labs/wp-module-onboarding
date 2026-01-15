@@ -9,7 +9,7 @@ const DEFAULT_STATE = {
 	retryMode: false,
 	sitegenHasFailed: false,
 	canvasSidebarIsOpen: true,
-	version: 0,
+	sitegenSliceVersion: 0,
 };
 
 /**
@@ -25,43 +25,43 @@ export function sitegen( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				...action.siteGenSlice,
-				version: state.version + 1,
+				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
 		case 'SET_HOMEPAGES':
 			return {
 				...state,
 				homepages: action.homepages,
-				version: state.version + 1,
+				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
 		case 'SET_SELECTED_HOMEPAGE':
 			return {
 				...state,
 				selectedHomepage: action.selectedHomepage,
-				version: state.version + 1,
+				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
 		case 'SET_HAS_GENERATED_SITE_PAGES':
 			return {
 				...state,
 				hasGeneratedSitePages: action.hasGeneratedSitePages,
-				version: state.version + 1,
+				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
 		case 'SET_RETRY_MODE':
 			return {
 				...state,
 				retryMode: action.retryMode,
-				version: state.version + 1,
+				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
 		case 'SET_SITEGEN_HAS_FAILED':
 			return {
 				...state,
 				sitegenHasFailed: action.sitegenHasFailed,
-				version: state.version + 1,
+				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
 		case 'SET_CANVAS_SIDEBAR_IS_OPEN':
 			return {
 				...state,
 				canvasSidebarIsOpen: action.canvasSidebarIsOpen,
-				version: state.version + 1,
+				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
 	}
 
@@ -122,18 +122,18 @@ export const selectors = {
 	getRetryMode: ( state ) => state.sitegen.retryMode,
 	getSitegenHasFailed: ( state ) => state.sitegen.sitegenHasFailed,
 	getCanvasSidebarIsOpen: ( state ) => state.sitegen.canvasSidebarIsOpen,
-	getVersion: ( state ) => state.sitegen.version,
+	getSitegenSliceVersion: ( state ) => state.sitegen.sitegenSliceVersion,
 };
 
 /**
  * A service function that subscribes to any changes to the slice data and syncs it to the database.
  */
 export function dbSyncService() {
-	let previousSiteGenSliceVersion = select( nfdOnboardingStore ).getVersion();
+	let previousSiteGenSliceVersion = select( nfdOnboardingStore ).getSitegenSliceVersion();
 
 	subscribe( () => {
 		const updatedSiteGenSliceState = select( nfdOnboardingStore ).getSiteGenSlice();
-		const updatedSiteGenSliceVersion = select( nfdOnboardingStore ).getVersion();
+		const updatedSiteGenSliceVersion = select( nfdOnboardingStore ).getSitegenSliceVersion();
 
 		// Only sync if the slice data actually changed.
 		if ( previousSiteGenSliceVersion !== updatedSiteGenSliceVersion ) {

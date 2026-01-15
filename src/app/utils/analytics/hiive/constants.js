@@ -14,6 +14,7 @@ export const ACTION_HEADER_SELECTED = 'header_selected';
 export const ACTION_HOMEPAGE_LAYOUT_SELECTED = 'homepage_layout_selected';
 export const ACTION_STARTER_PAGES_SELECTED = 'starter_pages_selected';
 export const ACTION_FEATURE_ADDED = 'feature_added';
+export const ACTION_SITE_TYPE_SET = 'site_type_set';
 export const ACTION_SITE_TITLE_SET = 'site_title_set';
 export const ACTION_TAGLINE_SET = 'tagline_set';
 export const ACTION_LOGO_ADDED = 'logo_added';
@@ -21,10 +22,11 @@ export const ACTION_ONBOARDING_EXITED = 'onboarding_exited';
 export const ACTION_ONBOARDING_CHAPTER_STARTED = 'onboarding_chapter_started';
 export const ACTION_ONBOARDING_CHAPTER_COMPLETE = 'onboarding_chapter_complete';
 export const ACTION_SOCIAL_ADDED = 'social_added';
+export const ACTION_BLUEPRINT_PUBLISHED = 'blueprint_published';
 export const ACTION_MIGRATION_INITIATED = 'migration_initiated';
 export const ACTION_MFE_MIGRATION_INITIATED = 'mfe_migration_initiated';
 
-export const ACTION_SITEGEN_FORK_AI_EXPERIMENT = 'exp_fork_diy_mar25';
+export const ACTION_SITEGEN_FORK_AI_EXPERIMENT = 'exp_fork_push_to_publish_oct25';
 export const ACTION_FORK_OPTION_SELECTED = 'fork_option_selected';
 export const ACTION_INTAKE_PROMPT_SET = 'site_details_prompt_set';
 export const ACTION_SITEGEN_SOCIAL_CONNECTED = 'social_connected';
@@ -45,7 +47,17 @@ export const ACTION_ERROR_STATE_TRIGGERED = 'error_state_triggered';
 export const CATEGORY = 'wonder_start';
 export const CATEGORY_EXPERIMENT = 'experiment';
 
+// Logogen events.
+export const ACTION_LOGOGEN_GENERATE = 'logogen_generate';
+export const ACTION_LOGOGEN_GENERATE_FAILED = 'logogen_generate_failed';
+export const ACTION_LOGOGEN_GENERATE_MORE_6 = 'logogen_generate_more_6';
+export const ACTION_LOGOGEN_GENERATE_MORE_9 = 'logogen_generate_more_9';
+export const ACTION_LOGOGEN_LOGO_SELECTED = 'logogen_logo_selected';
+export const ACTION_LOGOGEN_SURVEY = 'logogen_survey';
+export const ACTION_LOGOGEN_ERROR_TRIGGERED = 'logogen_error_triggered';
+
 export const ACTION_TO_LABEL_KEY_MAP = {
+	[ ACTION_ONBOARDING_COMPLETE ]: 'complete_type',
 	[ ACTION_ONBOARDING_TOP_PRIORITY_SET ]: 'top_priority',
 	[ ACTION_ONBOARDING_STEP_SKIPPED ]: 'step',
 	[ ACTION_PRIMARY_TYPE_SET ]: 'primary_type',
@@ -58,6 +70,7 @@ export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_HOMEPAGE_LAYOUT_SELECTED ]: 'layout',
 	[ ACTION_STARTER_PAGES_SELECTED ]: 'pages',
 	[ ACTION_FEATURE_ADDED ]: 'feature',
+	[ ACTION_SITE_TYPE_SET ]: 'site_type',
 	[ ACTION_SITE_TITLE_SET ]: 'title',
 	[ ACTION_TAGLINE_SET ]: 'tagline',
 	[ ACTION_ONBOARDING_EXITED ]: 'step',
@@ -82,4 +95,6 @@ export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_ERROR_STATE_TRIGGERED ]: 'identifier',
 	[ ACTION_ONBOARDING_RESTARTED ]: 'location',
 	[ ACTION_SITEGEN_FORK_AI_EXPERIMENT ]: 'value',
+	[ ACTION_BLUEPRINT_PUBLISHED ]: 'blueprint_slug',
+	[ ACTION_LOGOGEN_SURVEY ]: 'impression',
 };

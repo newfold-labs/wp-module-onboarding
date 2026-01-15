@@ -5,6 +5,11 @@ import { completeOnboarding } from '@/utils/api';
 import { useTemplateParts, useGlobalStyles } from '.';
 
 const usePublishSite = () => {
+	const [ status, setStatus ] = useState( {
+		progress: 0,
+		hasError: false,
+		message: '',
+	} );
 	const [ hasResolved, setHasResolved ] = useState( false );
 
 	const { homepages, selectedHomepage, selectedColorPalette } = useSelect( ( select ) => {
@@ -33,12 +38,39 @@ const usePublishSite = () => {
 				return undefined;
 			}
 
+			setStatus( {
+				progress: 0,
+				hasError: false,
+				message: __( 'Publishing content…', 'wp-module-onboarding' ),
+			} );
+			// Set 1 second minimum message duration.
+			await new Promise( ( resolve ) => setTimeout( resolve, 1000 ) );
+
+			setStatus( ( prev ) => ( {
+				...prev,
+				progress: 10,
+			} ) );
+			// Set 3 seconds minimum message duration.
+			await new Promise( ( resolve ) => setTimeout( resolve, 3000 ) );
+
+			setStatus( {
+				progress: 40,
+				hasError: false,
+				message: __( 'Preparing your new site…', 'wp-module-onboarding' ),
+			} );
+
 			await Promise.all( [
 				updateHeader( homepages[ selectedHomepage ].header ),
 				updateFooter( homepages[ selectedHomepage ].footer ),
 				setColorPalette( selectedColorPalette ),
 				completeOnboarding( selectedHomepage ),
 			] );
+
+			setStatus( {
+				progress: 100,
+				hasError: false,
+				message: __( 'Your new site is ready! Redirecting… 🚀', 'wp-module-onboarding' ),
+			} );
 
 			return true;
 		},
@@ -56,6 +88,7 @@ const usePublishSite = () => {
 	return {
 		hasResolved,
 		publishSite,
+		status,
 	};
 };
 

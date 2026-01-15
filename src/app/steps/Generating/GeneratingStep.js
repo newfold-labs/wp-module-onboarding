@@ -1,11 +1,12 @@
+import { useCallback, useState, useEffect } from '@wordpress/element';
 import { dispatch, useSelect } from '@wordpress/data';
 import { useNavigate } from 'react-router-dom';
 import { Container, Title } from '@newfold/ui-component-library';
-import { Motion, Orb, Step } from '@/components';
+import { BrandLoader, Motion, Step } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
 import { generateSite } from '@/utils/sitegen';
 import { ExperienceOptions } from './';
-import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
+import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_EXPERIENCE_LEVEL_SET } from '@/utils/analytics/hiive/constants';
 
 const GeneratingStep = () => {
@@ -15,7 +16,7 @@ const GeneratingStep = () => {
 
 	const { selectedExperienceLevel, homepages, retryMode } = useSelect( ( select ) => {
 		return {
-			experienceLevel: select( nfdOnboardingStore ).getExperienceLevel(),
+			selectedExperienceLevel: select( nfdOnboardingStore ).getExperienceLevel(),
 			homepages: select( nfdOnboardingStore ).getHomepages(),
 			retryMode: select( nfdOnboardingStore ).getRetryMode(),
 		};
@@ -50,6 +51,7 @@ const GeneratingStep = () => {
 
 	/**
 	 * Whether to render the component or navigate a different step.
+	 *
 	 * @return {boolean} True if the component should render, false otherwise.
 	 */
 	const shouldRender = () => {
@@ -65,27 +67,27 @@ const GeneratingStep = () => {
 	/**
 	 * Handle advancing to the next step.
 	 */
-	const handleNext = () => {
-		// Analytics: Experience Level Set
-		trackOnboardingEvent(
-			new OnboardingEvent(
-				ACTION_EXPERIENCE_LEVEL_SET,
-				selectedExperienceLevel,
-				{
+	const handleNext = useCallback( () => {
+		if ( selectedExperienceLevel ) {
+			// Analytics: Experience Level Set
+			sendOnboardingEvent(
+				new OnboardingEvent( ACTION_EXPERIENCE_LEVEL_SET, selectedExperienceLevel, {
 					source: 'quickstart',
-				}
-			)
-		);
+				} )
+			);
+		}
+
 		navigate( '/previews', {
 			state: { direction: 'forward' },
 		} );
-	};
+	}, [ navigate, selectedExperienceLevel ] );
 
 	/**
 	 * Handle failed site generation.
 	 * Logic:
 	 * - If Sitegen has failed for the first time, restart the generation process to try again.
 	 * - If Sitegen has failed for the second time, navigate to the previews step to generate fallback pages.
+	 *
 	 * @return {void}
 	 */
 	const handleFailedSiteGeneration = () => {
@@ -131,15 +133,21 @@ const GeneratingStep = () => {
 
 	// When Sitegen states update, advance to the next step if possible.
 	useEffect( () => {
-		// If generation is complete and the user has selected an experience level, advance to the next step.
-		if ( isSiteGenerationComplete && selectedExperienceLevel ) {
+		// If the site generation is complete and the user has selected an experience level or the timer has completed, advance to the next step.
+		if (
+			isSiteGenerationComplete &&
+			isReadyToAnimate &&
+			( selectedExperienceLevel || isTimerComplete )
+		) {
 			handleNext();
 		}
-		// If the timer is complete and the generation is complete, advance to the next step.
-		if ( isTimerComplete && isSiteGenerationComplete ) {
-			handleNext();
-		}
-	}, [ isSiteGenerationComplete, selectedExperienceLevel, isTimerComplete ] );
+	}, [
+		isSiteGenerationComplete,
+		isReadyToAnimate,
+		selectedExperienceLevel,
+		isTimerComplete,
+		handleNext,
+	] );
 
 	// On mount...
 	useEffect( () => {
@@ -174,20 +182,23 @@ const GeneratingStep = () => {
 						animate={ isReadyToAnimate ? { scale: 1, y: 0 } : { scale: 1.1, y: 100 } }
 						transition={ { ease: 'easeOut', delay: 2.2, duration: 0.8 } }
 					>
+						<div className="nfd-my-6 nfd-flex nfd-justify-center">
+							<BrandLoader />
+						</div>
 						<div className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-5">
-							<Title className="nfd-text-3xl mobile:nfd-text-xl">
+							<Title className="nfd-text-[2.5rem] mobile:nfd-text-xl">
 								{ __( 'Building your website…', 'wp-module-onboarding' ) }
 							</Title>
-							<p className="nfd-text-[15px] nfd-text-content-primary mobile:nfd-text-tiny">
-								{ __( 'Hang tight while we create some wonderful options for you.', 'wp-module-onboarding' ) }
+							<p className="nfd-text-[18px] nfd-text-content-primary mobile:nfd-text-tiny">
+								{ __(
+									'Hang tight while we create some wonderful options for you.',
+									'wp-module-onboarding'
+								) }
 							</p>
-						</div>
-						<div className="nfd-my-14">
-							<Orb height="90px" />
 						</div>
 					</Motion>
 
-					<div className="nfd-flex nfd-flex-col nfd-max-w-[500px] nfd-mx-auto">
+					<div className="nfd-flex nfd-flex-col nfd-max-w-[500px] nfd-mx-auto nfd-mt-8">
 						<Motion
 							variants={ containerVariants }
 							initial="hidden"
@@ -195,7 +206,10 @@ const GeneratingStep = () => {
 						>
 							<Motion variants={ itemVariants }>
 								<p className="nfd-text-[14px] nfd-text-content-primary nfd-mb-8">
-									{ __( 'While we wait, let us know how familiar you are with WordPress, so we can tailor the experience to your needs:', 'wp-module-onboarding' ) }
+									{ __(
+										'While we wait, let us know how familiar you are with WordPress, so we can tailor the experience to your needs:',
+										'wp-module-onboarding'
+									) }
 								</p>
 							</Motion>
 							<Motion variants={ itemVariants }>

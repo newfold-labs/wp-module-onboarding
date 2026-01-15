@@ -1,33 +1,62 @@
-import { Navigate, Step } from '@/components';
+import { useState } from '@wordpress/element';
+import { select, dispatch, resolveSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import { Container } from '@newfold/ui-component-library';
-import { SiteTitleInput, PromptInput, LanguageSelector, calculatePromptStrength } from '.';
-import { select, dispatch, useSelect } from '@wordpress/data';
+import { Navigate, Step } from '@/components';
 import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
-import { ACTION_INTAKE_PROMPT_SET } from '@/utils/analytics/hiive/constants';
+import { ACTION_INTAKE_PROMPT_SET, ACTION_SITE_TYPE_SET } from '@/utils/analytics/hiive/constants';
+import { SiteTitleInput, PromptInput, calculatePromptStrength, SiteTypeSelector } from '.';
 
 const IntakeStep = () => {
 	// Initiale state values.
-	const { siteTitle, selectedLocale, prompt } = select( nfdOnboardingStore ).getInputSlice();
+	const { siteType, siteTitle, prompt } = select( nfdOnboardingStore ).getInputSlice();
+	const retryMode = select( nfdOnboardingStore ).getRetryMode();
 
 	// Step states.
+	const [ siteTypeValue, setSiteTypeValue ] = useState( siteType );
 	const [ siteTitleValue, setSiteTitleValue ] = useState( siteTitle );
-	const [ selectedLocaleValue, setSelectedLocaleValue ] = useState( selectedLocale );
 	const [ promptValue, setPromptValue ] = useState( prompt );
 
-	const { retryMode } = useSelect( ( select ) => {
-		return {
-			retryMode: select( nfdOnboardingStore ).getRetryMode(),
-		};
-	} );
+	/**
+	 * Set WordPress site title.
+	 */
+	const setSiteTitle = async () => {
+		const title = siteTitleValue.trim();
+		if ( title ) {
+			// Force the site entity to be loaded.
+			await resolveSelect( coreStore ).getEntityRecord( 'root', 'site' );
+			// Change site title.
+			dispatch( coreStore ).editEntityRecord( 'root', 'site', undefined, {
+				title,
+			} );
+			dispatch( coreStore ).saveEditedEntityRecord( 'root', 'site' );
+		}
+	};
 
 	const handleNext = () => {
 		dispatch( nfdOnboardingStore ).setInputSlice( {
+			siteType: siteTypeValue,
 			siteTitle: siteTitleValue.trim(),
-			selectedLocale: selectedLocaleValue,
 			prompt: promptValue.trim(),
 		} );
 
+		setSiteTitle();
+
+		// Analytics: Track site type selection
+		if ( siteTypeValue && siteTypeValue !== siteType ) {
+			trackOnboardingEvent(
+				new OnboardingEvent(
+					ACTION_SITE_TYPE_SET,
+					siteTypeValue,
+					{
+						source: 'quickstart',
+					}
+				)
+			);
+		}
+
+		// Analytics: Prompt set.
 		trackOnboardingEvent(
 			new OnboardingEvent(
 				ACTION_INTAKE_PROMPT_SET,
@@ -64,9 +93,9 @@ const IntakeStep = () => {
 				/>
 				<Container.Block separator={ false }>
 					<div className="nfd-flex nfd-flex-col nfd-gap-6">
-						<div className="nfd-flex nfd-gap-4 nfd-w-full mobile:nfd-flex-col">
+						<div className="nfd-flex nfd-gap-4 nfd-w-full nfd-pb-7 nfd-border-b mobile:nfd-flex-col">
 							<SiteTitleInput value={ siteTitleValue } onChange={ setSiteTitleValue } />
-							<LanguageSelector value={ selectedLocaleValue } onChange={ setSelectedLocaleValue } />
+							<SiteTypeSelector value={ siteTypeValue } onChange={ setSiteTypeValue } />
 						</div>
 						<PromptInput value={ promptValue } onChange={ setPromptValue } />
 					</div>
@@ -76,7 +105,7 @@ const IntakeStep = () => {
 						<Navigate
 							toRoute="/logo"
 							direction="forward"
-							disabled={ ! promptValue }
+							disabled={ ! siteTypeValue || ! siteTitleValue || ! promptValue }
 							callback={ handleNext }
 						>
 							{ __( 'Next', 'wp-module-onboarding' ) }

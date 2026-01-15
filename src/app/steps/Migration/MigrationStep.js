@@ -7,8 +7,8 @@ import { nfdOnboardingStore } from '@/data/store';
 import { Navigate, Step } from '@/components';
 import { getSiteMigrateUrl, getWpSettings, migrateRestURL } from '@/utils/api';
 import migrationFigureUrl from '@/assets/nfd-migration.png';
-import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
-import { ACTION_ERROR_STATE_TRIGGERED, ACTION_MFE_MIGRATION_INITIATED, ACTION_MIGRATION_INITIATED } from '@/utils/analytics/hiive/constants';
+import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
+import { ACTION_FORK_OPTION_SELECTED, ACTION_ERROR_STATE_TRIGGERED, ACTION_MFE_MIGRATION_INITIATED, ACTION_MIGRATION_INITIATED } from '@/utils/analytics/hiive/constants';
 
 const MigrationStep = () => {
 	const [ siteMigrationApiStatus, setSiteMigrationApiStatus ] = useState( {
@@ -25,6 +25,7 @@ const MigrationStep = () => {
 
 	/**
 	 * Track migration initiated event
+	 *
 	 * @param { string } instaWpMigrationUrl The migration url
 	 * @return { Promise<void> }
 	 */
@@ -70,7 +71,7 @@ const MigrationStep = () => {
 				await trackMigrationInitiatedEvent( migrateUrl );
 
 				// Open migration url (external)
-				window.open( migrateUrl, '_self' );
+				window.open( window?.NewfoldRuntime?.linkTracker?.addUtmParams( migrateUrl ) || migrateUrl, '_self' );
 			} else {
 				throw new Error( 'Failed to fetch migration url' );
 			}
@@ -84,7 +85,7 @@ const MigrationStep = () => {
 			} );
 
 			// Analytics: migration error event
-			trackOnboardingEvent(
+			sendOnboardingEvent(
 				new OnboardingEvent(
 					ACTION_ERROR_STATE_TRIGGERED,
 					'migration',
@@ -94,6 +95,14 @@ const MigrationStep = () => {
 	}, [ canMigrateSite ] );
 
 	useEffect( () => {
+		// Analytics: migration fork option selected event
+		sendOnboardingEvent(
+			new OnboardingEvent(
+				ACTION_FORK_OPTION_SELECTED,
+				'MIGRATE'
+			)
+		);
+
 		prepareMigration();
 	}, [ prepareMigration ] );
 

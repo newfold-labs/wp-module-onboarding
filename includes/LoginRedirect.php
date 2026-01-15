@@ -61,7 +61,7 @@ class LoginRedirect {
 		if ( '0' === $redirect_option ) {
 			return $original_redirect;
 		} elseif ( '1' === $redirect_option ) {
-			return admin_url( '/index.php?page=' . WP_Admin::$slug );
+			return apply_filters( 'nfd_build_url', admin_url( '/index.php?page=' . WP_Admin::$slug ) );
 		}
 
 		// Don't redirect to onboarding if onboarding was exited or completed.
@@ -81,7 +81,7 @@ class LoginRedirect {
 		}
 
 		// Redirect to onboarding
-		return admin_url( '/index.php?page=' . WP_Admin::$slug );
+		return apply_filters( 'nfd_build_url', admin_url( '/index.php?page=' . WP_Admin::$slug ) );
 	}
 
 	/**
@@ -117,10 +117,16 @@ class LoginRedirect {
 	 * @return boolean
 	 */
 	private static function handle_redirect_param() {
+
+		if ( defined( 'WP_ENVIRONMENT_TYPE' ) && 'staging' === WP_ENVIRONMENT_TYPE ) {
+			return self::disable_redirect();
+		}
+
 		$redirect_option_name = Options::get_option_name( 'redirect' );
 		if ( ! isset( $_GET[ $redirect_option_name ] ) ) {
 			return false;
 		}
+
 		switch ( $_GET[ $redirect_option_name ] ) {
 			case 'true':
 				return self::enable_redirect();
