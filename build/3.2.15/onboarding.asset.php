@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('lodash', 'react', 'react-jsx-runtime', 'wp-api-fetch', 'wp-core-data', 'wp-data', 'wp-deprecated', 'wp-dom-ready', 'wp-element', 'wp-i18n', 'wp-media-utils', 'wp-preferences', 'wp-url'), 'version' => 'd0130174b763d90da541');
+<?php return array('dependencies' => array('lodash', 'react', 'react-dom', 'react-jsx-runtime', 'wp-api-fetch', 'wp-core-data', 'wp-data', 'wp-deprecated', 'wp-dom-ready', 'wp-element', 'wp-i18n', 'wp-media-utils', 'wp-preferences', 'wp-url'), 'version' => '80472b4bb1fc12a06def');

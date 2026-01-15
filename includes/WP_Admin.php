@@ -249,6 +249,7 @@ final class WP_Admin {
 				'runtime'    => Data::runtime(),
 				'input'      => ReduxStateService::get( 'input' ),
 				'sitegen'    => ReduxStateService::get( 'sitegen' ),
+				'logogen'    => ReduxStateService::get( 'logogen' ),
 				'blueprints' => ReduxStateService::get( 'blueprints' ),
 			);
 			\wp_add_inline_script(

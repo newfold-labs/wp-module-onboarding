@@ -105,7 +105,7 @@ const IntakeStep = () => {
 						<Navigate
 							toRoute="/logo"
 							direction="forward"
-							disabled={ ! promptValue || ! siteTypeValue }
+							disabled={ ! siteTypeValue || ! siteTitleValue || ! promptValue }
 							callback={ handleNext }
 						>
 							{ __( 'Next', 'wp-module-onboarding' ) }
