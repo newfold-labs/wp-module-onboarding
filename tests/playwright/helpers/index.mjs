@@ -36,10 +36,11 @@ export const SELECTORS = {
   // Main containers
   onboardingApp: '#nfd-onboarding',
   onboardingContent: '.nfd-onboarding-content',
+  mainContent: '#nfd-onboarding main',
   
-  // Navigation
-  nextButton: '[data-testid="next-button"], .navigation-buttons .nfd-nav-button--primary',
-  backButton: '[data-testid="back-button"], .navigation-buttons .nfd-nav-button--secondary',
+  // Navigation buttons
+  nextButton: 'button:has-text("Next")',
+  backButton: 'button:has-text("Back")',
   skipButton: '[data-testid="skip-button"]',
   
   // Common elements
@@ -99,6 +100,17 @@ export async function setupAndNavigate(page) {
 export async function resetOnboardingState() {
   await wordpress.wpCli('option delete nfd_module_onboarding_flow', { failOnNonZeroExit: false });
   await wordpress.wpCli('option delete nfd_module_onboarding_status', { failOnNonZeroExit: false });
+}
+
+/**
+ * Reset htaccess module state to prevent corrupted rules
+ * Clears saved state, disables cache, and clears optimization options
+ */
+export async function resetHtaccessState() {
+  await wordpress.wpCli('option delete nfd_module_htaccess_saved_state', { failOnNonZeroExit: false });
+//   await wordpress.wpCli('option delete nfd_fonts_optimization', { failOnNonZeroExit: false });
+//   await wordpress.wpCli('option delete nfd_image_optimization', { failOnNonZeroExit: false });
+//   await wordpress.wpCli('option update newfold_cache_level 0', { failOnNonZeroExit: false });
 }
 
 /**
