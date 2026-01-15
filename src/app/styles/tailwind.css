@@ -63,5 +63,11 @@
 			nfd-text-[15px]
 			nfd-font-semibold;
 		}
+
+		.nfd-button--enhanced {
+			@apply
+			nfd-py-[11px]
+			nfd-px-[35px];
+		}
 	}
 }

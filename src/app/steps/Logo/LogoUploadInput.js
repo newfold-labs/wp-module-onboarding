@@ -3,10 +3,11 @@ import { dispatch, useSelect } from '@wordpress/data';
 import { uploadMedia, validateMimeType, validateFileSize } from '@wordpress/media-utils';
 import classNames from 'classnames';
 import { Label, Spinner } from '@newfold/ui-component-library';
-import { SparklesIcon, CloudArrowUpIcon } from '@heroicons/react/24/outline';
+import { CloudArrowUpIcon } from '@heroicons/react/24/outline';
 import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_LOGO_UPLOAD_FAILED } from '@/utils/analytics/hiive/constants';
+import { AiLogoCreator } from './AiLogoCreator';
 
 const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 	const fileInputRef = useRef( null );
@@ -17,7 +18,12 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 		message: '',
 	} );
 
-	const logo = useSelect( ( select ) => select( nfdOnboardingStore ).getLogo(), [] );
+	const { logo, selectedLocale } = useSelect( ( select ) => {
+		return {
+			logo: select( nfdOnboardingStore ).getLogo(),
+			selectedLocale: select( nfdOnboardingStore ).getLocale(),
+		};
+	}, [] );
 
 	const validateFile = ( file ) => {
 		const validationResult = {
@@ -158,17 +164,9 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 				>
 					{ __( 'Site Logo:', 'wp-module-onboarding' ) }
 				</Label>
-				{ /* Remove AI logo generation button for now until we implement the functionality
-				<button
-					type="button"
-					className="nfd-flex nfd-items-center nfd-gap-1.5 nfd-text-[#3B82F6] nfd-text-base nfd-font-semibold hover:nfd-underline nfd-bg-transparent nfd-border-0 nfd-p-0 nfd-cursor-pointer"
-					onClick={ () => {
-						// TODO: Implement AI logo generation
-					} }
-				>
-					<SparklesIcon className="nfd-w-4 nfd-h-4 nfd-stroke-2" />
-					{ __( 'Create with AI', 'wp-module-onboarding' ) }
-				</button> */ }
+				{ selectedLocale?.startsWith( 'en_' ) && (
+					<AiLogoCreator />
+				) }
 			</div>
 			<input
 				ref={ fileInputRef }
@@ -230,7 +228,7 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 								{ __( 'Choose a file or drag & drop it here', 'wp-module-onboarding' ) }
 							</p>
 							<p className="nfd-text-sm nfd-text-[#6B7280] nfd-text-center nfd-m-0">
-								{ __( 'JPG, PNG, JPEG & SVG formats, up to 5MB', 'wp-module-onboarding' ) }
+								{ __( 'JPG, JPEG & PNG formats, up to 5MB', 'wp-module-onboarding' ) }
 							</p>
 							<button
 								type="button"

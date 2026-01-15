@@ -47,6 +47,15 @@ export const ACTION_ERROR_STATE_TRIGGERED = 'error_state_triggered';
 export const CATEGORY = 'wonder_start';
 export const CATEGORY_EXPERIMENT = 'experiment';
 
+// Logogen events.
+export const ACTION_LOGOGEN_GENERATE = 'logogen_generate';
+export const ACTION_LOGOGEN_GENERATE_FAILED = 'logogen_generate_failed';
+export const ACTION_LOGOGEN_GENERATE_MORE_6 = 'logogen_generate_more_6';
+export const ACTION_LOGOGEN_GENERATE_MORE_9 = 'logogen_generate_more_9';
+export const ACTION_LOGOGEN_LOGO_SELECTED = 'logogen_logo_selected';
+export const ACTION_LOGOGEN_SURVEY = 'logogen_survey';
+export const ACTION_LOGOGEN_ERROR_TRIGGERED = 'logogen_error_triggered';
+
 export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_ONBOARDING_COMPLETE ]: 'complete_type',
 	[ ACTION_ONBOARDING_TOP_PRIORITY_SET ]: 'top_priority',
@@ -87,4 +96,5 @@ export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_ONBOARDING_RESTARTED ]: 'location',
 	[ ACTION_SITEGEN_FORK_AI_EXPERIMENT ]: 'value',
 	[ ACTION_BLUEPRINT_PUBLISHED ]: 'blueprint_slug',
+	[ ACTION_LOGOGEN_SURVEY ]: 'impression',
 };
