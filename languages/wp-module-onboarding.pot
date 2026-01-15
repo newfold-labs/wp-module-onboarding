@@ -118,7 +118,7 @@ msgstr ""
 msgid "Global style customization created."
 msgstr ""
 
-#: includes/Services/Ai/ContentGeneration/SitekitsContentGeneration.php:101
+#: includes/Services/Ai/AiServiceRequest.php:181
 msgid "An unknown error occurred"
 msgstr ""
 
@@ -152,7 +152,7 @@ msgstr ""
 msgid "Webfont font weight must be a properly formatted string or integer."
 msgstr ""
 
-#: includes/WP_Admin.php:451
+#: includes/WP_Admin.php:452
 msgid "Build with AI"
 msgstr ""
 
@@ -257,15 +257,15 @@ msgid "Design Studio"
 msgstr ""
 
 #: build/3.2.15/onboarding.js:1
-msgid "Publishing content…"
+msgid "Uh oh! Something went wrong. Please try again."
 msgstr ""
 
 #: build/3.2.15/onboarding.js:1
-msgid "Preparing your new site…"
+msgid "Your site logo has been set!"
 msgstr ""
 
 #: build/3.2.15/onboarding.js:1
-msgid "Your new site is ready! Redirecting… 🚀"
+msgid "Setting your site logo…"
 msgstr ""
 
 #: build/3.2.15/onboarding.js:1
