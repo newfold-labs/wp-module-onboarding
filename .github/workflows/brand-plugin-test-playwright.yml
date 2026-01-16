@@ -34,7 +34,7 @@ jobs:
     needs: setup
     permissions:
       contents: read
-    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
+    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@update/playwright-with-artifact-name-input
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
@@ -46,10 +46,11 @@ jobs:
     needs: setup
     permissions:
       contents: read
-    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
+    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@update/playwright-with-artifact-name-input
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: 'newfold-labs/wp-plugin-bluehost'
       plugin-branch: 'develop'
+      artifact-name: 'wp-plugin-bluehost-develop'
     secrets: inherit
