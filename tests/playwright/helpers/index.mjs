@@ -94,12 +94,72 @@ export async function setupAndNavigate(page) {
 // ============================================================================
 
 /**
- * Reset onboarding state to allow re-running onboarding
- * Clears the onboarding completion status
+ * Required capabilities for onboarding to function
+ * hasAISiteGen is required - without it, onboarding shows "wrong turn" error
+ */
+export const ONBOARDING_CAPABILITIES = {
+  hasAISiteGen: true,
+  canMigrateSite: true,
+};
+
+/**
+ * Reset onboarding state to allow re-running onboarding.
+ * Clears completion status, flow data, and related state options.
+ * Also ensures required capabilities are set.
+ * 
+ * Key options that affect onboarding access:
+ * - nfd_module_onboarding_status: If 'completed', blocks access with "wrong turn" error
+ * - nfd_module_onboarding_flow: Contains flow state including hasExited/isComplete flags
+ * - nfd_module_onboarding_settings_initialized: Tracks if settings were initialized
+ * - nfd_module_onboarding_state_*: Redux state persistence options
+ * - _transient_nfd_site_capabilities: Must include hasAISiteGen: true
  */
 export async function resetOnboardingState() {
-  await wordpress.wpCli('option delete nfd_module_onboarding_flow', { failOnNonZeroExit: false });
+  // Core status options - these directly affect access checks
   await wordpress.wpCli('option delete nfd_module_onboarding_status', { failOnNonZeroExit: false });
+  await wordpress.wpCli('option delete nfd_module_onboarding_flow', { failOnNonZeroExit: false });
+  
+  // Settings initialization flag - allows onboarding to re-initialize settings
+  await wordpress.wpCli('option delete nfd_module_onboarding_settings_initialized', { failOnNonZeroExit: false });
+  
+  // Redux state persistence - clears any saved UI state
+  await wordpress.wpCli('option delete nfd_module_onboarding_state_input', { failOnNonZeroExit: false });
+  await wordpress.wpCli('option delete nfd_module_onboarding_state_sitegen', { failOnNonZeroExit: false });
+  await wordpress.wpCli('option delete nfd_module_onboarding_state_logogen', { failOnNonZeroExit: false });
+  await wordpress.wpCli('option delete nfd_module_onboarding_state_blueprints', { failOnNonZeroExit: false });
+  
+  // Time tracking options
+  await wordpress.wpCli('option delete nfd_module_onboarding_start_time', { failOnNonZeroExit: false });
+  await wordpress.wpCli('option delete nfd_module_onboarding_completed_time', { failOnNonZeroExit: false });
+  await wordpress.wpCli('option delete nfd_module_onboarding_start_date', { failOnNonZeroExit: false });
+  
+  // Restart eligibility flag
+  await wordpress.wpCli('option delete nfd_module_onboarding_can_restart', { failOnNonZeroExit: false });
+  
+  // Redirect handling
+  await wordpress.wpCli('option delete nfd_module_onboarding_should_redirect', { failOnNonZeroExit: false });
+  
+  // Ensure required capabilities are set (hasAISiteGen is required for onboarding access)
+  await ensureOnboardingCapabilities();
+}
+
+/**
+ * Ensure the site has the required capabilities for onboarding.
+ * This sets hasAISiteGen which is checked by AppBody.js.
+ * Other tests (like performance) may overwrite capabilities, so this ensures
+ * onboarding can still function.
+ */
+export async function ensureOnboardingCapabilities() {
+  // Use PHP eval to set transient with proper array format
+  const phpArray = Object.entries(ONBOARDING_CAPABILITIES)
+    .map(([key, value]) => {
+      const phpValue = typeof value === 'boolean' ? value.toString() : `'${value}'`;
+      return `'${key}' => ${phpValue}`;
+    })
+    .join(', ');
+
+  const command = `eval "set_transient('nfd_site_capabilities', array(${phpArray}));"`;
+  await wordpress.wpCli(command, { failOnNonZeroExit: false });
 }
 
 /**
