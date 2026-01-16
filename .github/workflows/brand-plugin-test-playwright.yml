@@ -34,7 +34,7 @@ jobs:
     needs: setup
     permissions:
       contents: read
-    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@update/playwright-with-artifact-name-input
+    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
@@ -46,7 +46,7 @@ jobs:
     needs: setup
     permissions:
       contents: read
-    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@update/playwright-with-artifact-name-input
+    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
