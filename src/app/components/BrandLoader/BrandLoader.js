@@ -4,6 +4,7 @@ import bluehostLogo from '../../../Brands/bluehost/step-loader-logo.svg';
 import hostgatorLogo from '../../../Brands/hostgator/step-loader-logo.svg';
 import crazyDomainsLogo from '../../../Brands/crazy-domains/step-loader-logo.svg';
 import networksolutionsLogo from '../../../Brands/networksolutions/step-loader-logo.svg';
+import vodienLogo from '../../../Brands/vodien/step-loader-logo.svg';
 import wordpressLogo from '../../../Brands/wordpress/step-loader-logo.svg';
 import './BrandLoader.scss';
 
@@ -37,6 +38,7 @@ const BrandLoader = ( { width = '120px', height = '120px', alt = 'Loading animat
 		'crazy-domains': crazyDomainsLogo,
 		'network-solutions': networksolutionsLogo,
 		wordpress: wordpressLogo,
+		vodien: vodienLogo,
 	};
 
 	const logoUrl = brandLogoMap[ normalizedBrand ] || wordpressLogo;
