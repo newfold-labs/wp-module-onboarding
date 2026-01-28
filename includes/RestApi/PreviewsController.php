@@ -3,7 +3,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Onboarding\Data\Services\PreviewsService;
+use NewfoldLabs\WP\Module\Onboarding\Services\PreviewsService;
 
 /**
  * PreviewsController class.
