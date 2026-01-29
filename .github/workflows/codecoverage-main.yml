@@ -13,6 +13,9 @@ on:
       - trunk
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   get-repo-name:
     runs-on: ubuntu-latest
