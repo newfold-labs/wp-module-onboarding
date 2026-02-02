@@ -122,13 +122,13 @@ msgstr ""
 msgid "An unknown error occurred"
 msgstr ""
 
-#: includes/Services/AppService.php:76
-#: includes/Services/AppService.php:100
+#: includes/Services/AppService.php:75
+#: includes/Services/AppService.php:99
 msgid "Help us improve"
 msgstr ""
 
-#: includes/Services/AppService.php:77
-#: includes/Services/AppService.php:101
+#: includes/Services/AppService.php:76
+#: includes/Services/AppService.php:100
 msgid "How satisfied were you with the ease of creating your website?"
 msgstr ""
 
