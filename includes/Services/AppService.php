@@ -3,8 +3,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Events;
-use NewfoldLabs\WP\Module\Onboarding\Data\Options;
-use NewfoldLabs\WP\Module\Onboarding\Data\Services\PreviewsService;
+use NewfoldLabs\WP\Module\Onboarding\Services\PreviewsService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService as LegacySiteGenService;
 
 use function NewfoldLabs\WP\ModuleLoader\container;
