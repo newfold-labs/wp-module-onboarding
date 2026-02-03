@@ -31,7 +31,7 @@ class CompatibilityStatusWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestC
 	}
 
 	/**
-	 * get() returns default when no option is set.
+	 * Get() returns default when no option is set.
 	 *
 	 * @return void
 	 */
@@ -41,7 +41,7 @@ class CompatibilityStatusWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestC
 	}
 
 	/**
-	 * get('all') returns stored data (default string when unset).
+	 * Get('all') returns stored data (default string when unset).
 	 *
 	 * @return void
 	 */
@@ -52,12 +52,12 @@ class CompatibilityStatusWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestC
 	}
 
 	/**
-	 * reset() removes stored option.
+	 * Reset() removes stored option.
 	 *
 	 * @return void
 	 */
 	public function test_reset_clears_option() {
-		$scan = new \stdClass();
+		$scan         = new \stdClass();
 		$scan->result = 'compatible';
 		Status::set( $scan );
 		Status::reset();

@@ -12,7 +12,7 @@ use NewfoldLabs\WP\Module\Onboarding\RestApi\RestApi;
 class RestApiWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 
 	/**
-	 * rest_api_init registers newfold-onboarding REST routes.
+	 * Rest_api_init registers newfold-onboarding REST routes.
 	 *
 	 * @return void
 	 */

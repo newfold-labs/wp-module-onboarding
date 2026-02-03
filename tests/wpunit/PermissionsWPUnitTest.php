@@ -21,7 +21,7 @@ class PermissionsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	}
 
 	/**
-	 * rest_is_authorized_admin returns false when not logged in.
+	 * Rest_is_authorized_admin returns false when not logged in.
 	 *
 	 * @return void
 	 */
@@ -31,7 +31,7 @@ class PermissionsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	}
 
 	/**
-	 * rest_is_authorized_admin returns true for admin user.
+	 * Rest_is_authorized_admin returns true for admin user.
 	 *
 	 * @return void
 	 */
@@ -42,7 +42,7 @@ class PermissionsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	}
 
 	/**
-	 * custom_post_authorized_admin requires edit_posts and manage_options.
+	 * Custom_post_authorized_admin requires edit_posts and manage_options.
 	 *
 	 * @return void
 	 */
