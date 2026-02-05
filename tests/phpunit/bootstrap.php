@@ -1,9 +1,13 @@
 <?php
+/**
+ * Bootstrap for PHPUnit tests that do not require WordPress.
+ *
+ * Used by the PHPUnit test suite only. For WordPress-dependent tests use
+ * Codeception wpunit (codecept run wpunit) instead.
+ *
+ * @package NewfoldLabs\WP\Module\Onboarding
+ */
 
-// Load up Composer dependencies
-require dirname( dirname( __DIR__ ) ) . '/vendor/autoload.php';
+$module_root = dirname( dirname( __DIR__ ) );
 
-$wp_phpunit_dir = getenv( 'WP_PHPUNIT__DIR' );
-
-// Bootstrap tests
-require $wp_phpunit_dir . '/includes/bootstrap.php';
+require_once $module_root . '/vendor/autoload.php';
