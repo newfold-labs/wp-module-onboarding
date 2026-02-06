@@ -3524,6 +3524,9 @@
 .nfd-h-1 {
 		height: 0.25rem !important;
 }
+.nfd-h-10 {
+		height: 2.5rem !important;
+}
 .nfd-h-11 {
 		height: 2.75rem !important;
 }
@@ -3665,9 +3668,6 @@
 .nfd-w-\[768px\] {
 		width: 768px !important;
 }
-.nfd-w-\[90px\] {
-		width: 90px !important;
-}
 .nfd-w-\[9px\] {
 		width: 9px !important;
 }
@@ -3713,6 +3713,9 @@
 }
 .nfd-max-w-\[1220px\] {
 		max-width: 1220px !important;
+}
+.nfd-max-w-\[200px\] {
+		max-width: 200px !important;
 }
 .nfd-max-w-\[325px\] {
 		max-width: 325px !important;
@@ -4849,9 +4852,6 @@
 		}
 		.mobile\:nfd-w-\[325px\] {
 				width: 325px !important;
-		}
-		.mobile\:nfd-w-\[70px\] {
-				width: 70px !important;
 		}
 		.mobile\:nfd-w-\[85vw\] {
 				width: 85vw !important;
