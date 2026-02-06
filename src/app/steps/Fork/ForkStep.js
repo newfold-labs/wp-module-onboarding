@@ -2,7 +2,6 @@ import { useSelect } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import { Container, Title } from '@newfold/ui-component-library';
 import { nfdOnboardingStore } from '@/data/store';
-import bluehostLogoUrl from '@/assets/bluehost-logo.svg';
 import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
 import {
 	ACTION_ONBOARDING_STARTED,
@@ -14,6 +13,7 @@ import SiteCreatorCard from './SiteCreatorCard';
 import MigrationCard from './MigrationCard';
 import ForkOptions from './ForkOptions';
 import ForkLinks from './ForkLinks';
+import { BrandLogo } from '@/components/BrandLogo';
 
 /**
  * Get the A/B test variant for the fork step based on Hiive capability.
@@ -99,11 +99,7 @@ const ForkStep = () => {
 						<span className="nfd-text-xl nfd-text-content-primary mobile:nfd-text-base">
 							{ __( 'Powered by', 'wp-module-onboarding' ) }
 						</span>
-						<img
-							src={ bluehostLogoUrl }
-							alt="Bluehost"
-							className="nfd-w-[90px] nfd-h-auto mobile:nfd-w-[70px]"
-						/>
+						<BrandLogo />
 					</div>
 
 					<Title

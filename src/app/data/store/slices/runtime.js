@@ -83,6 +83,16 @@ export const selectors = {
 	},
 
 	/**
+	 * Gets current host brand
+	 *
+	 * @param {*} state
+	 * @return {string} Brand identifier
+	 */
+	getBrandId( state ) {
+		return state.runtime.currentBrand.brand;
+	},
+
+	/**
 	 * Gets the link to the migration service.
 	 *
 	 * @param {*} state
@@ -90,6 +100,9 @@ export const selectors = {
 	 */
 	getMigrationFallbackUrl( state ) {
 		const migrationInfo = state.runtime.currentBrand.migrationInfo;
+		if ( ! migrationInfo?.defaultLink ) {
+			return null;
+		}
 		const migrationUrl =
 			addQueryArgs( migrationInfo?.defaultLink, migrationInfo?.queryParams ) +
 			( migrationInfo?.fragment || '' );
