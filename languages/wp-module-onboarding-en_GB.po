@@ -130,15 +130,15 @@ msgstr "Each webfont src must be a non-empty string."
 msgid "Webfont font weight must be a properly formatted string or integer."
 msgstr "Webfont font weight must be a properly formatted string or integer."
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Colors"
 msgstr "Colors"
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Primary"
 msgstr "Primary"
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Secondary"
 msgstr "Secondary"
 
@@ -152,91 +152,91 @@ msgstr "Build with AI"
 msgid "Palette %d"
 msgstr "Palette %d"
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Base"
 msgstr "Base"
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Contrast"
 msgstr "Contrast"
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Select a palette or customize individual colors."
 msgstr "Select a palette or customise individual colours."
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Palette"
 msgstr "Palette"
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Pick custom colors"
 msgstr "Pick custom colours"
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Site Logo"
 msgstr "Site Logo"
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Replace logo"
 msgstr "Replace logo"
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Replace"
 msgstr "Replace"
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Current logo"
 msgstr "Current logo"
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Remove"
 msgstr "Remove"
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Upload a logo to represent your brand."
 msgstr "Upload a logo to represent your brand."
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Upload Logo"
 msgstr "Upload Logo"
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "You don't have permission to change the site logo."
 msgstr "You don't have permission to change the site logo."
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
 msgstr "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Primary color"
 msgstr "Primary colour"
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Secondary color"
 msgstr "Secondary colour"
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Paragraph text in your chosen font."
 msgstr "Paragraph text in your chosen font."
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Select a font style."
 msgstr "Select a font style."
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Font Pairings"
 msgstr "Font Pairings"
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "No font pairings available."
 msgstr "No font pairings available."
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
 msgstr "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
 
-#: build/3.3.2/onboarding-design-studio.js:1
+#: build/3.3.3/onboarding-design-studio.js:1
 msgid "Design Studio"
 msgstr "Design Studio"
 
@@ -258,30 +258,30 @@ msgstr "Help us improve"
 msgid "How satisfied were you with the ease of creating your website?"
 msgstr "How satisfied were you with the ease of creating your website?"
 
-#: build/3.3.2/onboarding.js:1
+#: build/3.3.3/onboarding.js:1
 msgid "Sorry, let's try a different approach."
 msgstr "Sorry, let's try a different approach."
 
-#: build/3.3.2/onboarding.js:1
+#: build/3.3.3/onboarding.js:1
 msgid "Pick your website"
 msgstr "Pick your website"
 
-#: build/3.3.2/onboarding.js:1
+#: build/3.3.3/onboarding.js:1
 msgid "We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favorite — we'll guide you through customizing it!"
 msgstr "We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favourite — we'll guide you through customising it!"
 
-#: build/3.3.2/onboarding.js:1
+#: build/3.3.3/onboarding.js:1
 msgid "Here are 3 unique designs for you to start with. Pick your favorite to customize it!"
 msgstr "Here are 3 unique designs for you to start with. Pick your favourite to customise it!"
 
-#: build/3.3.2/onboarding.js:1
+#: build/3.3.3/onboarding.js:1
 msgid "Uh oh! Something went wrong. Please try again."
 msgstr "Uh oh! Something went wrong. Please try again."
 
-#: build/3.3.2/onboarding.js:1
+#: build/3.3.3/onboarding.js:1
 msgid "Your site logo has been set!"
 msgstr "Your site logo has been set!"
 
-#: build/3.3.2/onboarding.js:1
+#: build/3.3.3/onboarding.js:1
 msgid "Setting your site logo…"
 msgstr "Setting your site logo..."
