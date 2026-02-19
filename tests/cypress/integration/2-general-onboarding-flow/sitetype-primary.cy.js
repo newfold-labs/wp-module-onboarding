@@ -42,33 +42,60 @@ describe( 'Get Started Site Type Primary', function () {
 	};
 	
 	it( 'Check for Event API call being made when different categories are selected', ()=>{
-		let categoryCount = 0;
-		let num = 0;
 		const className = '.nfd-card-pri-category';
 		cy.get( className ).should( 'be.visible' );
-		const arr = cy.get( className );
-		arr.each( () => {
-			cy.get( className )
-				.eq( categoryCount )
-				.click()
-				.then(($element) => {
-					const dataSlugText = $element.attr('data-slug');
-					if(num>=2){
-						cy.wait(4000);
+		
+		// Set up intercept once before any clicks
+		cy.intercept( APIList.events_api_general_onb ).as( 'events' );
+		
+		cy.get( className ).each( ($element, index) => {
+			const dataSlugText = $element.attr('data-slug');
+			
+			// Click the category
+			cy.wrap($element).click();
+			
+		// Wait for the corresponding API call and validate
+		cy.wait( '@events', { timeout: 5000 } ).then( ( requestObject ) => {
+				const responseBody = requestObject.request.body;
+				const responseData1 = responseBody[ 0 ].data;
+				
+				// Check if primary_type exists in the first or second response data
+				if ( 'primary_type' in responseData1 ) {
+					expect( responseData1.primary_type ).to.equal( dataSlugText );
+				} else if ( responseBody.length > 1 ) {
+					const responseData2 = responseBody[ 1 ].data;
+					if ( 'primary_type' in responseData2 ) {
+						expect( responseData2.primary_type ).to.equal( dataSlugText );
 					}
-					EventsAPI('primary_type', dataSlugText, APIList.events_api_general_onb);
-					num+=1;
-				});
-			categoryCount += 1;
+				}
+			} );
 		} );
 	} );
 
 	it( 'Check for Event API call when we enter text in input box', ()=>{
+		// Set up intercept before typing
+		cy.intercept( APIList.events_api_general_onb ).as( 'events' );
+		
 		cy.get( '.nfd-setup-primary-custom__tellus-input' )
 			.scrollIntoView()
 			.should( 'be.visible' )
 			.type( 'Test' );
-		EventsAPI('primary_type', 'Test', APIList.events_api_general_onb);
+		
+	// Wait for and validate the API call
+	cy.wait( '@events', { timeout: 5000 } ).then( ( requestObject ) => {
+			const responseBody = requestObject.request.body;
+			const responseData1 = responseBody[ 0 ].data;
+			
+			// Check if primary_type exists in the first or second response data
+			if ( 'primary_type' in responseData1 ) {
+				expect( responseData1.primary_type ).to.equal( 'Test' );
+			} else if ( responseBody.length > 1 ) {
+				const responseData2 = responseBody[ 1 ].data;
+				if ( 'primary_type' in responseData2 ) {
+					expect( responseData2.primary_type ).to.equal( 'Test' );
+				}
+			}
+		} );
 	} );
 
 	it( 'Check different Categories exist and is selectable', () => {

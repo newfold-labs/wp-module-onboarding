@@ -11,10 +11,13 @@ import {
 
 describe( 'Theme Styles Preview', function () {
 	before( () => {
+		// Ensure theme is activated before visiting the page
+		cy.exec('npx wp-env run cli wp theme activate yith-wonder', { failOnNonZeroExit: false });
+		cy.wait( 2000 );
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/theme-styles/preview'
 		);
-		cy.wait( 10000 );
+		cy.wait( 8000 ); // Reduced from 10s
 		continueSetup();
 	} );
 
@@ -32,7 +35,7 @@ describe( 'Theme Styles Preview', function () {
 	}
 
 	it( 'Check if Theme is selected and content is in place', () => {
-		cy.get( ':nth-child(1) > .theme-styles-preview__title-bar' , { timeout : 10000 }).should(
+		cy.get( ':nth-child(1) > .theme-styles-preview__title-bar' , { timeout : 5000 }).should(
 			'be.visible'
 		);
 	} );
@@ -40,6 +43,8 @@ describe( 'Theme Styles Preview', function () {
 	it( 'Check if Theme List is Visible in the Drawer', () => {
 		let previewCount = 0;
 		const className = '.theme-styles-preview--drawer__list__item';
+		// Wait for elements to be visible before iterating
+		cy.get( className, { timeout: 5000 } ).should('be.visible');
 		const arr = cy.get( className );
 
 		arr.each( () => {
@@ -56,7 +61,7 @@ describe( 'Theme Styles Preview', function () {
 	} );
 
 	it( 'Check for the selected theme in Drawer', () => {
-		cy.get( '.nfd-onboarding-drawer__panel-back', { timeout : 10000 } )
+		cy.get( '.nfd-onboarding-drawer__panel-back', { timeout : 5000 } )
 			.scrollIntoView()
 			.should( 'be.visible' )
 			.should( 'have.text', 'Design' );

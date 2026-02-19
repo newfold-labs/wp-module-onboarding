@@ -42,11 +42,13 @@ describe( 'Typography Step Test', function () {
 
 	it( 'Check if Default Typography variations exists and are selectable', () => {
 		let previewCount = 0;
-		const className = '.font-palette ';
+		const className = '.font-palette';
+		// Wait for elements to be visible before attempting to interact
+		cy.get( className, { timeout: 5000 } ).should('be.visible');
 		const arr = cy.get( className );
 
 		arr.each( () => {
-			cy.get( className , { timeout : 10000 } ).eq( previewCount ).click();
+			cy.get( className , { timeout : 5000 } ).eq( previewCount ).click();
 			cy.get( '.font-palette-selected' )
 				.scrollIntoView()
 				.should( 'be.visible' );
