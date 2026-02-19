@@ -32,7 +32,7 @@ describe( 'Theme change from wp dashboard and continue onboarding flow', functio
 	} );
 
 	it.skip( 'Change the theme from dashboard and then click on X to continue', () => {
-		cy.exec( 'npx wp-env run cli wp theme activate twentytwentyone', { failOnNonZeroExit: false } );
+		cy.exec( 'npx wp-env run cli wp theme activate twentytwentyone' );
 		cy.get( '.nfd-onboarding-drawer__panel-menu-link' ).eq( 2 ).click(); // to click on Home Page Menu Layout
 		cy.get( '.components-modal__content', { timeout: 40000 } ).should(
 			'be.visible'
@@ -48,7 +48,7 @@ describe( 'Theme change from wp dashboard and continue onboarding flow', functio
 	} );
 
 	it.skip( 'Change the theme from dashboard and then click on esc from keyboard to continue', () => {
-		cy.exec( 'npx wp-env run cli wp theme activate twentytwentyone', { failOnNonZeroExit: false } );
+		cy.exec( 'npx wp-env run cli wp theme activate twentytwentyone' );
 		cy.get( '.nfd-onboarding-drawer__panel-menu-link' ).eq( 3 ).click(); // to click on Page Layout
 		cy.get( '.components-modal__content', { timeout: 40000 } ).should(
 			'be.visible'
