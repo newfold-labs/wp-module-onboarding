@@ -14,10 +14,13 @@ import {
 
 describe( 'Homepage Styles Page', function () {
 	before( () => {
+		// Ensure theme is activated before visiting the page
+		cy.exec('npx wp-env run cli wp theme activate yith-wonder', { failOnNonZeroExit: false });
+		cy.wait( 2000 );
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/homepage-menu'
 		);
-		cy.wait( 15000 );
+		cy.wait( 8000 ); // Reduced from 15s but ensure page loads
 		continueSetup();
 	} );
 
@@ -49,7 +52,9 @@ describe( 'Homepage Styles Page', function () {
 	it( 'Check if Homepage Styles exist and are selectable', () => {
 		let previewCount = 0;
 		const className = '.homepage_preview__list__item';
-		const arr = cy.get( className, { timeout:15000 } );
+		// Wait for elements to be visible before iterating
+		cy.get( className, { timeout: 5000 } ).should('be.visible');
+		const arr = cy.get( className );
 
 		arr.each( () => {
 			cy.get( className ).eq( previewCount ).click();

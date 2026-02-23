@@ -13,10 +13,13 @@ import {
 
 describe( 'Theme Styles Menu', function () {
 	before( () => {
+		// Ensure theme is activated before visiting the page
+		cy.exec('npx wp-env run cli wp theme activate yith-wonder', { failOnNonZeroExit: false });
+		cy.wait( 2000 );
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/theme-styles/menu'
 		);
-		cy.wait( 5000 );
+		cy.wait( 8000 ); // Increased wait for page to fully load
 		continueSetup();
 	} );
 
@@ -44,7 +47,9 @@ describe( 'Theme Styles Menu', function () {
 	it( 'Check if Default Theme variations exists in Menu', () => {
 		let previewCount = 0;
 		const className = '.theme-styles-menu__list__item';
-		const arr = cy.get( className , { timeout : 10000 });
+		// Wait for elements to be visible before iterating
+		cy.get( className , { timeout : 5000 }).should('be.visible');
+		const arr = cy.get( className );
 
 		arr.each( () => {
 			cy.get( className.concat( '__title-bar' ) )

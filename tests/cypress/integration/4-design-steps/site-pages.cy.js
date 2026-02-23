@@ -13,10 +13,13 @@ import {
 
 describe( 'Site Pages', function () {
 	before( () => {
+		// Ensure theme is activated before visiting the page
+		cy.exec('npx wp-env run cli wp theme activate yith-wonder', { failOnNonZeroExit: false });
+		cy.wait( 2000 );
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/site-pages'
 		);
-		cy.wait( 10000 );
+		cy.wait( 8000 ); // Reduced from 10s
 		continueSetup();
 	} );
 
@@ -44,7 +47,9 @@ describe( 'Site Pages', function () {
 	it( 'Check if Site Pages Templates exist and are selectable', () => {
 		let previewCount = 0;
 		const className = '.site-pages__list__item';
-		const arr = cy.get( className, { timeout:15000 } );
+		// Wait for elements to be visible before iterating
+		cy.get( className, { timeout: 5000 } ).should('be.visible');
+		const arr = cy.get( className );
 
 		arr.each( () => {
 			cy.get( className )

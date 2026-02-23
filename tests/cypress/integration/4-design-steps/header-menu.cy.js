@@ -12,10 +12,13 @@ import {
 
 describe( 'Header menu Page', function () {
 	before( () => {
+		// Ensure theme is activated before visiting the page
+		cy.exec('npx wp-env run cli wp theme activate yith-wonder', { failOnNonZeroExit: false });
+		cy.wait( 2000 );
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/header-menu'
 		);
-		cy.wait( 10000 );
+		cy.wait( 8000 ); // Reduced from 10s
 		continueSetup();
 	} );
 
@@ -29,7 +32,7 @@ describe( 'Header menu Page', function () {
 	} );
 
 	it( 'Check to make sure design button is visble', () => {
-		cy.contains( 'button', 'Design' , { timeout:15000 }).should( 'be.visible' );
+		cy.contains( 'button', 'Design' , { timeout: 5000 }).should( 'be.visible' );
 	} );
 
 	if ( GetPluginId() == 'bluehost' ) {
@@ -48,10 +51,12 @@ describe( 'Header menu Page', function () {
 	it( 'Check to make sure different design is selected', () => {
 		let previewCount = 0;
 		const classname = '.theme-header-menu-preview--drawer__list__item';
+		// Wait for elements to be visible before iterating
+		cy.get( classname, { timeout: 5000 } ).should('be.visible');
 		const arr = cy.get( classname );
 		arr.each( () => {
 			cy.get( classname ).eq( previewCount ).click();
-			cy.wait( 3000 );
+			cy.wait( 1000 ); // Reduced from 3s
 			cy.get( classname )
 				.eq( previewCount )
 				.find( classname.concat( '__title-bar--selected' ) )

@@ -12,7 +12,8 @@ import {
 
 describe( 'Colors Step Test', function () {
 	before( () => {
-		cy.exec('npx wp-env run cli wp theme activate yith-wonder');
+		// Activate theme with failOnNonZeroExit: false to handle cases where theme is already active
+		cy.exec('npx wp-env run cli wp theme activate yith-wonder', { failOnNonZeroExit: false });
 		cy.wait( 5000 );
 		cy.visit(
 			'wp-admin/?page=nfd-onboarding#/wp-setup/step/design/colors'
