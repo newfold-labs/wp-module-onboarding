@@ -38,7 +38,7 @@
 		"@newfold/js-utility-ui-analytics": "^1.4.0",
 		"@newfold/ui-component-library": "^2.1.1",
 		"@sentry/react": "^10.39.0",
-		"@wordpress/api-fetch": "^7.17.0",
+		"@wordpress/api-fetch": "^7.40.0",
 		"@wordpress/data": "^10.40.0",
 		"@wordpress/element": "^6.17.0",
 		"@wordpress/interface": "^9.25.0",
