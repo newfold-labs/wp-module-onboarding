@@ -48,7 +48,7 @@
 		"classnames": "^2.3.2",
 		"colord": "^2.9.3",
 		"lottie-react": "^2.4.1",
-		"motion": "^12.34.2",
+		"motion": "^12.34.3",
 		"react-router-dom": "^7.13.0",
 		"yet-another-react-lightbox": "^3.29.1",
 		"posthog-js": "^1.351.4"
