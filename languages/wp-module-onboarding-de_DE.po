@@ -1,15 +1,16 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: newfold-labswp-module-staging\n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-onboarding/issues\n"
+"POT-Creation-Date: 2024-11-18T07:59:34+00:00\n"
+"PO-Revision-Date: 2025-02-19 15:20\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-18T07:59:34+00:00\n"
-"PO-Revision-Date: 2025-02-19 15:20\n"
-"Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: wp-module-onboarding.pot\n"
 "X-Crowdin-File-ID: 32\n"
@@ -19,12 +20,9 @@ msgstr ""
 "X-Domain: wp-module-onboarding\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
-#: bootstrap.php:24
-#: includes/Compatibility/Safe_Mode.php:44
-#: includes/Compatibility/Safe_Mode.php:45
-#: includes/WP_Admin.php:82
-#: includes/WP_Admin.php:83
-#: includes/WP_Admin.php:99
+#: bootstrap.php:24 includes/Compatibility/Safe_Mode.php:44
+#: includes/Compatibility/Safe_Mode.php:45 includes/WP_Admin.php:82
+#: includes/WP_Admin.php:83 includes/WP_Admin.php:99
 msgid "Onboarding"
 msgstr "Einbinden"
 
@@ -33,14 +31,22 @@ msgid "Please upgrade your WordPress"
 msgstr "Bitte aktualisieren Sie Ihr WordPress"
 
 #: includes/Compatibility/Safe_Mode.php:185
-msgid "To take advantage of the latest WordPress has to offer, our WordPress Onboarding to setup your website requires the latest version of WordPress."
-msgstr "Um die Vorteile der neuesten WordPress hat zu bieten, unsere WordPress-Onboarding, um Ihre Website einzurichten erfordert die neueste Version von WordPress."
+msgid ""
+"To take advantage of the latest WordPress has to offer, our WordPress "
+"Onboarding to setup your website requires the latest version of WordPress."
+msgstr ""
+"Um die Vorteile der neuesten WordPress hat zu bieten, unsere WordPress-"
+"Onboarding, um Ihre Website einzurichten erfordert die neueste Version von "
+"WordPress."
 
 #. translators: 1: Current WP Version 2: Minimum Required version
 #: includes/Compatibility/Safe_Mode.php:191
 #, php-format
-msgid "Your WordPress version %1$s does not meet our minimum requirements of %2$s."
-msgstr "Ihre WordPress-Version %1$s entspricht nicht unseren Mindestanforderungen an %2$s."
+msgid ""
+"Your WordPress version %1$s does not meet our minimum requirements of %2$s."
+msgstr ""
+"Ihre WordPress-Version %1$s entspricht nicht unseren Mindestanforderungen an"
+" %2$s."
 
 #: includes/Compatibility/Safe_Mode.php:207
 msgid "Upgrade WordPress"
@@ -72,7 +78,8 @@ msgstr "Einige Ereignisse sind fehlgeschlagen."
 
 #: includes/RestApi/FlowController.php:154
 msgid "Flow data does not exist to generate a child theme."
-msgstr "Flow Daten existieren nicht, um ein untergeordnetes Theme zu generieren."
+msgstr ""
+"Flow Daten existieren nicht, um ein untergeordnetes Theme zu generieren."
 
 #: includes/RestApi/FlowController.php:195
 msgid "Success."
@@ -125,7 +132,8 @@ msgstr "Webfont Schriftfamilie muss ein nicht-leerer String sein."
 
 #: includes/Services/Webfonts.php:125
 msgid "Webfont src must be a non-empty string or an array of strings."
-msgstr "Webfont src muss ein nicht-leerer String oder ein Array von Strings sein."
+msgstr ""
+"Webfont src muss ein nicht-leerer String oder ein Array von Strings sein."
 
 #: includes/Services/Webfonts.php:133
 msgid "Each webfont src must be a non-empty string."
@@ -133,7 +141,9 @@ msgstr "Jede Webfont src muss ein nicht-leerer String sein."
 
 #: includes/Services/Webfonts.php:141
 msgid "Webfont font weight must be a properly formatted string or integer."
-msgstr "Das Gewicht der Webfont muss ein richtig formatierter String oder Integer sein."
+msgstr ""
+"Das Gewicht der Webfont muss ein richtig formatierter String oder Integer "
+"sein."
 
 #: build/3.3.3/onboarding-design-studio.js:1
 msgid "Colors"
@@ -210,8 +220,13 @@ msgid "You don't have permission to change the site logo."
 msgstr "Sie sind nicht berechtigt, das Websitelogo zu ändern."
 
 #: build/3.3.3/onboarding-design-studio.js:1
-msgid "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
-msgstr "Ihr Logo wird in der Kopfzeile Ihrer Website angezeigt. Die besten Ergebnisse erzielen Sie, wenn Sie ein Bild mit transparentem Hintergrund im PNG-Format hochladen."
+msgid ""
+"Your logo will appear in your site header. For best results, upload an image"
+" with a transparent background in PNG format."
+msgstr ""
+"Ihr Logo wird in der Kopfzeile Ihrer Website angezeigt. Die besten "
+"Ergebnisse erzielen Sie, wenn Sie ein Bild mit transparentem Hintergrund im "
+"PNG-Format hochladen."
 
 #: build/3.3.3/onboarding-design-studio.js:1
 msgid "Primary color"
@@ -238,8 +253,14 @@ msgid "No font pairings available."
 msgstr "Keine Schriftkombinationen verfügbar."
 
 #: build/3.3.3/onboarding-design-studio.js:1
-msgid "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
-msgstr "Wählen Sie eine Schriftkombination, die die Persönlichkeit Ihrer Marke widerspiegelt. Jede Kombination wird sorgfältig ausgewählt, um die Lesbarkeit und visuelle Attraktivität Ihrer Website zu verbessern."
+msgid ""
+"Choose a font pairing that reflects your brand's personality. Each pairing "
+"is carefully selected to enhance readability and visual appeal across your "
+"site."
+msgstr ""
+"Wählen Sie eine Schriftkombination, die die Persönlichkeit Ihrer Marke "
+"widerspiegelt. Jede Kombination wird sorgfältig ausgewählt, um die "
+"Lesbarkeit und visuelle Attraktivität Ihrer Website zu verbessern."
 
 #: build/3.3.3/onboarding-design-studio.js:1
 msgid "Design Studio"
@@ -253,15 +274,15 @@ msgstr "Fehler beim Einrichten des Navigationsmenüs."
 msgid "An unknown error occurred"
 msgstr "Ein unbekannter Fehler ist aufgetreten"
 
-#: includes/Services/AppService.php:75
-#: includes/Services/AppService.php:99
+#: includes/Services/AppService.php:75 includes/Services/AppService.php:99
 msgid "Help us improve"
 msgstr "Helfen Sie uns, uns zu verbessern"
 
-#: includes/Services/AppService.php:76
-#: includes/Services/AppService.php:100
+#: includes/Services/AppService.php:76 includes/Services/AppService.php:100
 msgid "How satisfied were you with the ease of creating your website?"
-msgstr "Wie zufrieden waren Sie mit der Leichtigkeit, mit der Sie Ihre Website erstellt haben?"
+msgstr ""
+"Wie zufrieden waren Sie mit der Leichtigkeit, mit der Sie Ihre Website "
+"erstellt haben?"
 
 #: build/3.3.3/onboarding.js:1
 msgid "Sorry, let's try a different approach."
@@ -272,12 +293,23 @@ msgid "Pick your website"
 msgstr "Wählen Sie Ihre Website aus"
 
 #: build/3.3.3/onboarding.js:1
-msgid "We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favorite — we'll guide you through customizing it!"
-msgstr "Es tut uns leid, unser Seitengenerierungstool funktioniert momentan nicht. In der Zwischenzeit finden Sie hier drei einzigartige Seitenvorlagen, um Ihnen den Einstieg zu erleichtern. Wählen Sie Ihren Favoriten aus – wir führen Sie bei der individuellen Anpassung!"
+msgid ""
+"We're sorry, our site generation tool isn't working right now. In the "
+"meantime, here are three unique site templates to get you started. Choose "
+"your favorite — we'll guide you through customizing it!"
+msgstr ""
+"Es tut uns leid, unser Seitengenerierungstool funktioniert momentan nicht. "
+"In der Zwischenzeit finden Sie hier drei einzigartige Seitenvorlagen, um "
+"Ihnen den Einstieg zu erleichtern. Wählen Sie Ihren Favoriten aus – wir "
+"führen Sie bei der individuellen Anpassung!"
 
 #: build/3.3.3/onboarding.js:1
-msgid "Here are 3 unique designs for you to start with. Pick your favorite to customize it!"
-msgstr "Hier sind 3 einzigartige Designs, mit denen Sie anfangen können. Wähle deinen Favoriten aus, um ihn individuell zu gestalten!"
+msgid ""
+"Here are 3 unique designs for you to start with. Pick your favorite to "
+"customize it!"
+msgstr ""
+"Hier sind 3 einzigartige Designs, mit denen Sie anfangen können. Wähle "
+"deinen Favoriten aus, um ihn individuell zu gestalten!"
 
 #: build/3.3.3/onboarding.js:1
 msgid "Uh oh! Something went wrong. Please try again."
