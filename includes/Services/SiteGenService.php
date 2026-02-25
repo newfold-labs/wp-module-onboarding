@@ -45,6 +45,14 @@ class SiteGenService {
 	private $sitegen_data = null;
 
 	/**
+	 * Fallback site description for the current request (e.g. from REST body when Redux input is not yet synced).
+	 * Set during get_sitekits() so get_color_palette() and other meta calls receive valid site_info.
+	 *
+	 * @var string|null
+	 */
+	private $fallback_site_description = null;
+
+	/**
 	 * SiteGenService constructor.
 	 *
 	 * Initializes the service by loading the Redux input and sitegen data from the ReduxStateService.
@@ -75,11 +83,15 @@ class SiteGenService {
 	 * @return array|\WP_Error Array of Sitekit objects, array of sitekits for onboarding preview, or WP_Error if there is an error.
 	 */
 	public function get_sitekits( string $site_description, string $site_type, bool $for_onboarding_preview = false ) {
+		$this->fallback_site_description = $site_description;
+
 		$prompt              = new ContentGenerationPrompt( $site_description, $site_type );
-		$site_classification = $this->get_site_classification();
+		$site_classification = $this->get_site_classification( $site_description );
 
 		$sitekits = new SitekitsContentGeneration( $site_type, $prompt, $site_classification );
 		$sitekits = $sitekits->generate_sitekits();
+
+		$this->fallback_site_description = null;
 
 		// If there is an error, return it.
 		if ( is_wp_error( $sitekits ) ) {
@@ -180,13 +192,26 @@ class SiteGenService {
 	/**
 	 * Get the site classification.
 	 *
+	 * @param string|null $fallback_site_description Optional site description from the request (e.g. when Redux input is not yet synced, as in origin-prompt flow).
 	 * @return SiteClassification
 	 */
-	public function get_site_classification(): SiteClassification {
-		$primary_type        = 'other';
-		$secondary_type      = 'other';
+	public function get_site_classification( ?string $fallback_site_description = null ): SiteClassification {
+		$primary_type   = 'other';
+		$secondary_type = 'other';
+
+		$site_info = $this->get_prompt();
+		if ( false === $site_info && ! empty( $fallback_site_description ) ) {
+			$site_info = array( 'site_description' => $fallback_site_description );
+		}
+		if ( true === is_string( $site_info ) ) {
+			$site_info = array( 'site_description' => $site_info );
+		}
+		if ( empty( $site_info ) || ! is_array( $site_info ) ) {
+			return new SiteClassification( $primary_type, $secondary_type );
+		}
+
 		$site_classification = LegacySiteGenService::instantiate_site_meta(
-			$this->get_prompt(),
+			$site_info,
 			'site_classification',
 			$this->get_site_type(),
 			LanguageService::get_site_locale()
@@ -206,8 +231,19 @@ class SiteGenService {
 	 * @return ColorPalette|null The color palette, or null on error.
 	 */
 	public function get_color_palette() {
+		$site_info = $this->get_prompt();
+		if ( false === $site_info && ! empty( $this->fallback_site_description ) ) {
+			$site_info = array( 'site_description' => $this->fallback_site_description );
+		}
+		if ( true === is_string( $site_info ) ) {
+			$site_info = array( 'site_description' => $site_info );
+		}
+		if ( empty( $site_info ) || ! is_array( $site_info ) ) {
+			return null;
+		}
+
 		$color_palettes = LegacySiteGenService::instantiate_site_meta(
-			$this->get_prompt(),
+			$site_info,
 			'color_palette',
 			$this->get_site_type(),
 			LanguageService::get_site_locale()

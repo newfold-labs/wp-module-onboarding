@@ -180,4 +180,17 @@ class AiServiceRequest {
 
 		return $this->get_error_response_body()['message'] ?? __( 'An unknown error occurred', 'wp-module-onboarding' );
 	}
+
+	/**
+	 * Get the underlying WP_Error message when the request failed at the HTTP layer
+	 * (e.g. connection refused, timeout, SSL error). Null when response is not a WP_Error.
+	 *
+	 * @return string|null WP_Error message or null.
+	 */
+	public function get_wp_error_message(): ?string {
+		if ( ! $this->response || ! \is_wp_error( $this->response ) ) {
+			return null;
+		}
+		return $this->response->get_error_message();
+	}
 }

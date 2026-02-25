@@ -98,6 +98,20 @@ class SitekitsContentGeneration {
 		// Error.
 		$response_code = $request->get_response_code();
 		$error_message = $request->get_error_message();
+		$error_body    = $request->get_error_response_body();
+
+		if ( \defined( 'WP_DEBUG' ) && \WP_DEBUG && \defined( 'WP_DEBUG_LOG' ) && \WP_DEBUG_LOG ) {
+			\error_log( '[NFD Onboarding] Sitekits generation failed. Code: ' . ( $response_code ?? 'null' ) . ', Message: ' . $error_message );
+			$wp_err = $request->get_wp_error_message();
+			if ( $wp_err ) {
+				\error_log( '[NFD Onboarding] HTTP request failed: ' . $wp_err );
+			} elseif ( \is_array( $error_body ) && ! empty( $error_body ) ) {
+				\error_log( '[NFD Onboarding] API error response body: ' . \wp_json_encode( $error_body ) );
+			} else {
+				\error_log( '[NFD Onboarding] No error body (possible connection failure, timeout, or invalid API URL).' );
+			}
+		}
+
 		$response = new \WP_Error(
 			'sitekits_generation_failed',
 			$error_message,

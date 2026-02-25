@@ -150,4 +150,14 @@ export const selectors = {
 	getSiteGenIdentifiers( state ) {
 		return state.runtime.siteGen.identifiers;
 	},
+
+	/**
+	 * Whether the onboarding is in the origin-prompt alternate flow (skip prompt, logo, previews).
+	 *
+	 * @param {Object} state Store state.
+	 * @return {boolean} True if nfd_origin_prompt was set and we should use the alternate flow.
+	 */
+	getHasOriginPrompt( state ) {
+		return !! state.runtime.hasOriginPrompt;
+	},
 };

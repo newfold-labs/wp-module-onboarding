@@ -42,6 +42,7 @@ final class WP_Admin {
 	public function __construct() {
 		\add_action( 'init', array( __CLASS__, 'load_php_textdomain' ) );
 		\add_action( 'admin_menu', array( __CLASS__, 'register_page' ) );
+		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'maybe_reset_onboarding_for_testing' ), 5 );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'page_title' ), 9, 1 );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'initialize' ) );
 		/**
@@ -86,6 +87,26 @@ final class WP_Admin {
 			array( __CLASS__, 'render' ),
 			100
 		);
+	}
+
+	/**
+	 * Reset onboarding status when requested via URL (for local/testing only).
+	 * Allows re-entering onboarding after completion. Use: ?page=nfd-onboarding&nfd_reset_onboarding=1
+	 *
+	 * @return void
+	 */
+	public static function maybe_reset_onboarding_for_testing() {
+		if ( ! isset( $_GET['nfd_reset_onboarding'] ) || '1' !== $_GET['nfd_reset_onboarding'] ) {
+			return;
+		}
+		if ( ! ( \defined( 'WP_DEBUG' ) && \WP_DEBUG ) && ! \defined( 'NFD_ONBOARDING_ALLOW_RESET' ) ) {
+			return;
+		}
+		\delete_option( Options::get_option_name( 'status' ) );
+		\wp_safe_redirect(
+			\remove_query_arg( 'nfd_reset_onboarding', \wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) )
+		);
+		exit;
 	}
 
 	/**
@@ -245,9 +266,19 @@ final class WP_Admin {
 				NFD_ONBOARDING_DIR . '/languages'
 			);
 
+			$input_data = ReduxStateService::get( 'input' );
+			// Pre-fill input from origin prompt when present (alternate flow).
+			if ( Data::has_origin_prompt() ) {
+				$origin_prompt = \get_option( 'nfd_origin_prompt', '' );
+				$input_data['prompt'] = is_string( $origin_prompt ) ? $origin_prompt : '';
+				if ( empty( $input_data['siteType'] ) ) {
+					$input_data['siteType'] = 'business';
+				}
+			}
+
 			$nfd_onboarding_data = array(
 				'runtime'    => Data::runtime(),
-				'input'      => ReduxStateService::get( 'input' ),
+				'input'      => $input_data,
 				'sitegen'    => ReduxStateService::get( 'sitegen' ),
 				'logogen'    => ReduxStateService::get( 'logogen' ),
 				'blueprints' => ReduxStateService::get( 'blueprints' ),

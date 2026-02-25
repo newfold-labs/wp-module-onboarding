@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from '@wordpress/element';
 import { useNavigate } from 'react-router-dom';
 import { dispatch, useSelect } from '@wordpress/data';
 import { Button, Title, ProgressBar } from '@newfold/ui-component-library';
@@ -15,13 +16,22 @@ const HeaderActions = () => {
 
 	const navigate = useNavigate();
 
-	const { canvasSidebarIsOpen } = useSelect( ( select ) => {
-		return {
-			canvasSidebarIsOpen: select( nfdOnboardingStore ).getCanvasSidebarIsOpen(),
-		};
-	} );
+	const { canvasSidebarIsOpen, hasOriginPrompt } = useSelect( ( select ) => ( {
+		canvasSidebarIsOpen: select( nfdOnboardingStore ).getCanvasSidebarIsOpen(),
+		hasOriginPrompt: select( nfdOnboardingStore ).getHasOriginPrompt(),
+	} ), [] );
 
 	const { hasResolved: isReadyToPublish, publishSite, status } = usePublishSite();
+	const hasAutoRedirectedRef = useRef( false );
+
+	// Origin-prompt flow: auto-publish and send user to editor chat (same as "Customize with AI").
+	useEffect( () => {
+		if ( ! hasOriginPrompt || ! isReadyToPublish || hasAutoRedirectedRef.current ) {
+			return;
+		}
+		hasAutoRedirectedRef.current = true;
+		handleCustomizeWithAI();
+	}, [ hasOriginPrompt, isReadyToPublish ] );
 
 	const handleCanvasSidebarToggle = () => {
 		dispatch( nfdOnboardingStore ).setCanvasSidebarIsOpen( ! canvasSidebarIsOpen );

@@ -1,11 +1,21 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from '@wordpress/element';
+import { useSelect, dispatch } from '@wordpress/data';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { ErrorBoundary as AppErrorBoundary } from '@newfold/ui-component-library';
 import { STEPS } from '@/steps';
 import { AnimateRoutes, ErrorBoundaryFallback } from '@/components';
+import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_PAGEVIEW } from '@/utils/analytics/hiive/constants';
+import { disableComingSoon } from '@/utils/api';
 
 const AppBody = () => {
+	const navigate = useNavigate();
+	const location = useLocation();
+	const hasOriginPrompt = useSelect(
+		( select ) => select( nfdOnboardingStore ).getHasOriginPrompt(),
+		[]
+	);
 	/**
 	 * Check if any conditions prevent the onboarding from being accessed.
 	 *
@@ -62,8 +72,26 @@ const AppBody = () => {
 		);
 	};
 
+	// Origin-prompt alternate flow: skip Fork (prompt, logo, previews) and go straight to generating.
+	useEffect( () => {
+		if ( ! hasOriginPrompt ) {
+			return;
+		}
+		if ( location.pathname === '/' ) {
+			// Disable coming soon so sitegen previews can load (same as ForkStep cleanup).
+			disableComingSoon();
+			navigate( '/generating', { state: { direction: 'forward' }, replace: true } );
+			return;
+		}
+		// If we landed on /intake after a failed generation (retry flow), redirect back to generating
+		// so the user can retry without re-entering info they never entered in the origin flow.
+		if ( location.pathname === '/intake' ) {
+			dispatch( nfdOnboardingStore ).setRetryMode( false );
+			navigate( '/generating', { state: { direction: 'forward' }, replace: true } );
+		}
+	}, [ hasOriginPrompt, location.pathname, navigate ] );
+
 	// Analytics: Track pageview events.
-	const location = useLocation();
 	useEffect( () => {
 		sendOnboardingEvent( new OnboardingEvent( ACTION_PAGEVIEW ) );
 	}, [ location ] );

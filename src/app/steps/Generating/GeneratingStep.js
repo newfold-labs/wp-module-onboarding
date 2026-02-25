@@ -14,13 +14,15 @@ const GeneratingStep = () => {
 	const [ isTimerComplete, setIsTimerComplete ] = useState( false );
 	const [ isReadyToAnimate, setIsReadyToAnimate ] = useState( false );
 
-	const { selectedExperienceLevel, homepages, retryMode } = useSelect( ( select ) => {
-		return {
+	const { selectedExperienceLevel, homepages, retryMode, hasOriginPrompt } = useSelect(
+		( select ) => ( {
 			selectedExperienceLevel: select( nfdOnboardingStore ).getExperienceLevel(),
 			homepages: select( nfdOnboardingStore ).getHomepages(),
 			retryMode: select( nfdOnboardingStore ).getRetryMode(),
-		};
-	} );
+			hasOriginPrompt: select( nfdOnboardingStore ).getHasOriginPrompt(),
+		} ),
+		[]
+	);
 
 	const navigate = useNavigate();
 
@@ -66,6 +68,7 @@ const GeneratingStep = () => {
 
 	/**
 	 * Handle advancing to the next step.
+	 * When in origin-prompt flow: skip previews, pick first generated site, go to canvas.
 	 */
 	const handleNext = useCallback( () => {
 		if ( selectedExperienceLevel ) {
@@ -77,10 +80,22 @@ const GeneratingStep = () => {
 			);
 		}
 
+		// Origin-prompt alternate flow: skip preview screen, use first generated site, go to canvas.
+		if ( hasOriginPrompt && homepages && typeof homepages === 'object' ) {
+			const slugs = Object.keys( homepages );
+			if ( slugs.length > 0 ) {
+				dispatch( nfdOnboardingStore ).setSelectedHomepage( slugs[ 0 ] );
+				navigate( '/canvas', {
+					state: { direction: 'forward' },
+				} );
+				return;
+			}
+		}
+
 		navigate( '/previews', {
 			state: { direction: 'forward' },
 		} );
-	}, [ navigate, selectedExperienceLevel ] );
+	}, [ navigate, selectedExperienceLevel, hasOriginPrompt, homepages ] );
 
 	/**
 	 * Handle failed site generation.
@@ -133,8 +148,22 @@ const GeneratingStep = () => {
 
 	// When Sitegen states update, advance to the next step if possible.
 	useEffect( () => {
-		// If the site generation is complete and the user has selected an experience level or the timer has completed, advance to the next step.
+		// Origin-prompt flow: advance to canvas as soon as generation is complete (skip previews).
+		const canAdvanceOriginFlow =
+			hasOriginPrompt &&
+			isSiteGenerationComplete &&
+			isReadyToAnimate &&
+			homepages &&
+			Object.keys( homepages ).length > 0;
+		if ( canAdvanceOriginFlow ) {
+			handleNext();
+			return;
+		}
+
+		// Normal flow only when NOT in origin-prompt flow: wait for experience level or timer before going to previews.
+		// When hasOriginPrompt is true we must not advance here, or we'd go to previews before homepages are in the store.
 		if (
+			! hasOriginPrompt &&
 			isSiteGenerationComplete &&
 			isReadyToAnimate &&
 			( selectedExperienceLevel || isTimerComplete )
@@ -146,6 +175,8 @@ const GeneratingStep = () => {
 		isReadyToAnimate,
 		selectedExperienceLevel,
 		isTimerComplete,
+		hasOriginPrompt,
+		homepages,
 		handleNext,
 	] );
 
