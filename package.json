@@ -1,6 +1,6 @@
 {
 	"name": "@newfold-labs/wp-module-onboarding",
-	"version": "3.3.3",
+	"version": "3.3.5",
 	"description": "Next-generation WordPress Onboarding for WordPress sites at Newfold Digital.",
 	"license": "GPL-2.0-or-later",
 	"private": true,
@@ -51,6 +51,6 @@
 		"motion": "^12.34.3",
 		"react-router-dom": "^7.13.1",
 		"yet-another-react-lightbox": "^3.29.1",
-		"posthog-js": "^1.353.0"
+		"posthog-js": "^1.353.1"
 	}
 }

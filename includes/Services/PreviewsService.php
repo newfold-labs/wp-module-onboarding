@@ -23,7 +23,7 @@ class PreviewsService {
 	 * @param ?string $custom_styles The custom styles to apply to the page.
 	 * @return array|\WP_Error
 	 */
-	public static function generate_snapshot( string $content, string $slug, ?string $custom_styles = null ): array | \WP_Error {
+	public static function generate_snapshot( string $content, string $slug, ?string $custom_styles = null ) {
 		if ( ! self::validate( $content ) ) {
 			return new \WP_Error( 'invalid_pattern_content', 'Invalid pattern content.' );
 		}
@@ -161,7 +161,7 @@ class PreviewsService {
 	 * @param string $key cache key.
 	 * @return string|WP_Error
 	 */
-	public static function capture_screenshot( string $url, string $key ): string | \WP_Error {
+	public static function capture_screenshot( string $url, string $key ) {
 		$body = array(
 			'url'   => $url,
 			'key'  => $key,

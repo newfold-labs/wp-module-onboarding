@@ -135,15 +135,15 @@ msgstr "Elk weblettertype moet een niet-lege tekenreeks zijn."
 msgid "Webfont font weight must be a properly formatted string or integer."
 msgstr "Weblettertype lettertype moet een correct opgemaakt tekenreeks of geheel getal zijn."
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Colors"
 msgstr "Kleuren"
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Primary"
 msgstr "Primair"
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Secondary"
 msgstr "Secundaire"
 
@@ -157,91 +157,91 @@ msgstr "Bouwen met AI"
 msgid "Palette %d"
 msgstr "Palet %d"
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Base"
 msgstr "Base"
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Contrast"
 msgstr "Tegenstelling"
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Select a palette or customize individual colors."
 msgstr "Selecteer een palet of pas individuele kleuren aan."
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Palette"
 msgstr "Palet"
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Pick custom colors"
 msgstr "Kies aangepaste kleuren"
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Site Logo"
 msgstr "Site Logo"
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Replace logo"
 msgstr "Logo vervangen"
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Replace"
 msgstr "Vervangen"
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Current logo"
 msgstr "Huidig logo"
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Upload a logo to represent your brand."
 msgstr "Upload een logo om uw merk te vertegenwoordigen."
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Upload Logo"
 msgstr "Logo uploaden"
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "You don't have permission to change the site logo."
 msgstr "Je hebt geen toestemming om het sitelogo te wijzigen."
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
 msgstr "Uw logo wordt weergegeven in de koptekst van uw site. Upload voor het beste resultaat een afbeelding met een transparante achtergrond in PNG-indeling."
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Primary color"
 msgstr "Primaire kleur"
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Secondary color"
 msgstr "Secundaire kleur"
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Paragraph text in your chosen font."
 msgstr "Alineatekst in het door u gekozen lettertype."
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Select a font style."
 msgstr "Selecteer een lettertypestijl."
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Font Pairings"
 msgstr "Lettertype paren"
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "No font pairings available."
 msgstr "Er zijn geen lettertypeparen beschikbaar."
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
 msgstr "Kies een lettertypecombinatie die de persoonlijkheid van uw merk weerspiegelt. Elke koppeling wordt zorgvuldig geselecteerd om de leesbaarheid en visuele aantrekkingskracht op uw site te verbeteren."
 
-#: build/3.3.3/onboarding-design-studio.js:1
+#: build/3.3.5/onboarding-design-studio.js:1
 msgid "Design Studio"
 msgstr "Ontwerpstudio"
 
@@ -263,30 +263,30 @@ msgstr "Help ons te verbeteren"
 msgid "How satisfied were you with the ease of creating your website?"
 msgstr "Hoe tevreden was u met het gemak van het maken van uw website?"
 
-#: build/3.3.3/onboarding.js:1
+#: build/3.3.5/onboarding.js:1
 msgid "Sorry, let's try a different approach."
 msgstr "Sorry, laten we een andere aanpak proberen."
 
-#: build/3.3.3/onboarding.js:1
+#: build/3.3.5/onboarding.js:1
 msgid "Pick your website"
 msgstr "Kies je website"
 
-#: build/3.3.3/onboarding.js:1
+#: build/3.3.5/onboarding.js:1
 msgid "We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favorite — we'll guide you through customizing it!"
 msgstr "Het spijt ons, onze tool voor sitegeneratie werkt momenteel niet. In de tussentijd zijn hier drie unieke sitesjablonen om je op weg te helpen. Kies je favoriet — wij begeleiden je bij het aanpassen ervan!"
 
-#: build/3.3.3/onboarding.js:1
+#: build/3.3.5/onboarding.js:1
 msgid "Here are 3 unique designs for you to start with. Pick your favorite to customize it!"
 msgstr "Hier zijn 3 unieke ontwerpen om mee te beginnen. Kies je favoriet om het aan te passen!"
 
-#: build/3.3.3/onboarding.js:1
+#: build/3.3.5/onboarding.js:1
 msgid "Uh oh! Something went wrong. Please try again."
 msgstr "Oei! Er ging iets mis. Probeer het alsjeblieft opnieuw."
 
-#: build/3.3.3/onboarding.js:1
+#: build/3.3.5/onboarding.js:1
 msgid "Your site logo has been set!"
 msgstr "Je sitelogo is vastgesteld!"
 
-#: build/3.3.3/onboarding.js:1
+#: build/3.3.5/onboarding.js:1
 msgid "Setting your site logo…"
 msgstr "Je sitelogo instellen..."

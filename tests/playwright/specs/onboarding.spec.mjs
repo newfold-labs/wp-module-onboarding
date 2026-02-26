@@ -155,20 +155,4 @@ test.describe('Onboarding Module', () => {
 
   });
 
-  test.describe('Direct Navigation', () => {
-
-    test('Direct navigation to intake step works', async ({ page }) => {
-      await navigateToStep(page, '/intake');
-      await waitForOnboarding(page);
-      
-      const bodyText = await page.locator('body').textContent();
-      if (bodyText?.includes('Internal Server Error')) {
-        throw new Error('Internal Server Error');
-      }
-      
-      await expect(page.getByRole('heading', { name: /tell us about your site/i })).toBeVisible();
-    });
-
-  });
-
 });

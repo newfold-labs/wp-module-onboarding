@@ -38,7 +38,7 @@ class GlobalStylesService {
 	 * @param array $color_palette The color palette to set.
 	 * @return array The color palette on success, \WP_Error on failure.
 	 */
-	public function set_color_palette( array $color_palette ): array|\WP_Error {
+	public function set_color_palette( array $color_palette ) {
 		try {
 			$color_palette = self::transform_color_palette( $color_palette );
 			if ( empty( $color_palette ) ) {
@@ -103,7 +103,7 @@ class GlobalStylesService {
 	 * @param array|null $post_content array of global styles to inject into the post content. If not provided, the active global styles will be updated.
 	 * @return int|\WP_Error The updated post id on success, \WP_Error on failure.
 	 */
-	protected function update_active_global_styles( ?array $post_content = null, ?int $post_id = null ): int|\WP_Error {
+	protected function update_active_global_styles( ?array $post_content = null, ?int $post_id = null ) {
 		$post_id      = $post_id ?? $this->global_styles_id;
 		$post_content = $post_content ?? $this->global_styles;
 
