@@ -72,6 +72,10 @@ export const selectors = {
 		return state.runtime;
 	},
 
+	getSiteUrl( state ) {
+		return state.runtime.siteUrl;
+	},
+
 	/**
 	 * Gets current host brand name
 	 *
@@ -118,6 +122,15 @@ export const selectors = {
 	canMigrateSite( state ) {
 		const migrationInfo = state.runtime.currentBrand.config;
 		return migrationInfo?.canMigrateSite;
+	},
+
+	getBluPrompt( state ) {
+		const bluPrompt = state.runtime.bluPrompt;
+		if ( typeof bluPrompt === 'string' && bluPrompt.trim() !== '' ) {
+			return bluPrompt.trim();
+		}
+
+		return null;
 	},
 
 	/**

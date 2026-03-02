@@ -5,7 +5,6 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ThemeService;
-use NewfoldLabs\WP\Module\Onboarding\Data\Services\FlowService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 use NewfoldLabs\WP\Module\Onboarding\Services\I18nService;
@@ -249,8 +248,7 @@ final class WP_Admin {
 				'runtime'    => Data::runtime(),
 				'input'      => ReduxStateService::get( 'input' ),
 				'sitegen'    => ReduxStateService::get( 'sitegen' ),
-				'logogen'    => ReduxStateService::get( 'logogen' ),
-				'blueprints' => ReduxStateService::get( 'blueprints' ),
+				'app'        => ReduxStateService::get( 'app' ),
 			);
 			\wp_add_inline_script(
 				self::$slug,

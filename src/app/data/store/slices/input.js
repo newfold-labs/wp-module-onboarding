@@ -3,11 +3,8 @@ import { nfdOnboardingStore } from '@/data/store';
 import { updateOnboardingInputSlice } from '@/utils/api';
 
 const DEFAULT_STATE = {
-	siteTitle: '',
-	prompt: '',
-	logo: '',
-	experienceLevel: '',
-	siteType: '',
+	prompt: null,
+	inputSliceVersion: 0,
 };
 
 /**
@@ -23,31 +20,13 @@ export function input( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				...action.inputSlice,
-			};
-		case 'SET_SITE_TITLE':
-			return {
-				...state,
-				siteTitle: action.siteTitle,
+				inputSliceVersion: state.inputSliceVersion + 1,
 			};
 		case 'SET_PROMPT':
 			return {
 				...state,
 				prompt: action.prompt,
-			};
-		case 'SET_LOGO':
-			return {
-				...state,
-				logo: action.logo,
-			};
-		case 'SET_EXPERIENCE_LEVEL':
-			return {
-				...state,
-				experienceLevel: action.experienceLevel,
-			};
-		case 'SET_SITE_TYPE':
-			return {
-				...state,
-				siteType: action.siteType,
+				inputSliceVersion: state.inputSliceVersion + 1,
 			};
 	}
 
@@ -67,25 +46,9 @@ export const actions = {
 			inputSlice,
 		};
 	},
-	setSiteTitle: ( siteTitle ) => ( {
-		type: 'SET_SITE_TITLE',
-		siteTitle,
-	} ),
 	setPrompt: ( prompt ) => ( {
 		type: 'SET_PROMPT',
 		prompt,
-	} ),
-	setLogo: ( logo ) => ( {
-		type: 'SET_LOGO',
-		logo,
-	} ),
-	setExperienceLevel: ( experienceLevel ) => ( {
-		type: 'SET_EXPERIENCE_LEVEL',
-		experienceLevel,
-	} ),
-	setSiteType: ( siteType ) => ( {
-		type: 'SET_SITE_TYPE',
-		siteType,
 	} ),
 };
 
@@ -94,11 +57,7 @@ export const actions = {
  */
 export const selectors = {
 	getInputSlice: ( state ) => state.input,
-	getSiteTitle: ( state ) => state.input.siteTitle,
 	getPrompt: ( state ) => state.input.prompt,
-	getLogo: ( state ) => state.input.logo,
-	getExperienceLevel: ( state ) => state.input.experienceLevel,
-	getSiteType: ( state ) => state.input.siteType,
 };
 
 /**

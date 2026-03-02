@@ -36,20 +36,10 @@ export const updateOnboardingSiteGenSlice = async ( data ) => {
 	);
 };
 
-export const updateOnboardingLogogenSlice = async ( data ) => {
+export const updateOnboardingAppSlice = async ( data ) => {
 	return await resolve(
 		apiFetch( {
-			url: onboardingRestURL( 'redux-state/logogen-slice' ),
-			method: 'POST',
-			body: JSON.stringify( data ),
-		} ).then()
-	);
-};
-
-export const updateOnboardingBlueprintsSlice = async ( data ) => {
-	return await resolve(
-		apiFetch( {
-			url: onboardingRestURL( 'redux-state/blueprints-slice' ),
+			url: onboardingRestURL( 'redux-state/app-slice' ),
 			method: 'POST',
 			body: JSON.stringify( data ),
 		} ).then()
@@ -383,6 +373,30 @@ export const importBlueprint = async ( selectedBlueprintSlug ) => {
 			method: 'POST',
 			data: {
 				selected_blueprint_slug: selectedBlueprintSlug,
+			},
+		} ).then()
+	);
+};
+
+export const installSiteTypeRequiredPlugins = async ( siteType ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/install_site_type_required_plugins' ),
+			method: 'POST',
+			data: {
+				site_type: siteType,
+			},
+		} ).then()
+	);
+};
+
+export const setSiteLogo = async ( logoUrl ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/set_site_logo' ),
+			method: 'POST',
+			data: {
+				logo_url: logoUrl,
 			},
 		} ).then()
 	);

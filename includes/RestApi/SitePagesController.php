@@ -38,7 +38,22 @@ class SitePagesController {
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'publish_site_pages' ),
 				'permission_callback' => array( Permissions::class, 'custom_post_authorized_admin' ),
+				'args'                => $this->get_publish_site_pages_args(),
 			)
+		);
+	}
+
+	/**
+	 * Gets the arguments for the 'publish_site_pages' endpoint.
+	 *
+	 * @return array The array of arguments.
+	 */
+	public function get_publish_site_pages_args() {
+		return array(
+			'sitemap_pages' => array(
+				'required' => true,
+				'type'     => 'array',
+			),
 		);
 	}
 

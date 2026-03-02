@@ -1,15 +1,13 @@
 import { actions as runtimeActions } from './slices/runtime';
 import { actions as inputActions } from './slices/input';
 import { actions as sitegenActions } from './slices/sitegen';
-import { actions as logogenActions } from './slices/logogen';
-import { actions as blueprintsActions } from './slices/blueprints';
+import { actions as appActions } from './slices/app';
 
 export const actions = {
 	...runtimeActions,
 	...inputActions,
 	...sitegenActions,
-	...logogenActions,
-	...blueprintsActions,
+	...appActions,
 };
 
 export default actions;

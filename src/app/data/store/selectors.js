@@ -1,15 +1,13 @@
 import { selectors as runtimeSelectors } from './slices/runtime';
 import { selectors as inputSelectors } from './slices/input';
 import { selectors as sitegenSelectors } from './slices/sitegen';
-import { selectors as logogenSelectors } from './slices/logogen';
-import { selectors as blueprintsSelectors } from './slices/blueprints';
+import { selectors as appSelectors } from './slices/app';
 
 const selectors = {
 	...runtimeSelectors,
 	...inputSelectors,
 	...sitegenSelectors,
-	...logogenSelectors,
-	...blueprintsSelectors,
+	...appSelectors,
 };
 
 export default selectors;

@@ -18,6 +18,7 @@ const alias = {
 const mostCommonImports = {
 	useState: [ 'react', 'useState' ],
 	useEffect: [ 'react', 'useEffect' ],
+	useCallback: [ 'react', 'useCallback' ],
 	useContext: [ 'react', 'useContext' ],
 	useLocation: [ 'react-router-dom', 'useLocation' ],
 	useNavigate: [ 'react-router-dom', 'useNavigate' ],

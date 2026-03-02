@@ -71,6 +71,7 @@ module.exports = {
 		useContext: true,
 		useEffect: true,
 		useState: true,
+		useCallback: true,
 		useLocation: true,
 		useNavigate: true,
 	},

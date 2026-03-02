@@ -7,13 +7,16 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService as LegacySiteG
 use NewfoldLabs\WP\Module\Onboarding\Data\SiteGen as SiteGenData;
 use NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration\SitekitsContentGeneration;
 use NewfoldLabs\WP\Module\Onboarding\Services\LanguageService;
+use NewfoldLabs\WP\Module\Onboarding\Services\MediaService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteNavigationService;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService;
 
 /**
  * Class SiteGenController
  */
 class SiteGenController {
+	
 
 	/**
 	 * The namespace of this controller's route.
@@ -37,11 +40,22 @@ class SiteGenController {
 	public function register_routes() {
 		\register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/identifiers',
+			$this->rest_base . '/install_site_type_required_plugins',
 			array(
-				'methods'             => \WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_enabled_identifiers' ),
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'install_site_type_required_plugins' ),
 				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				'args'                => $this->get_site_type_required_plugins_args(),
+			)
+		);
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/set_site_logo',
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'set_site_logo' ),
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				'args'                => $this->get_set_site_logo_args(),
 			)
 		);
 		\register_rest_route(
@@ -105,6 +119,75 @@ class SiteGenController {
 				'args'                => $this->get_setup_nav_menu_args(),
 			)
 		);
+	}
+
+	/**
+	 * Gets the arguments for the 'install_site_type_prerequisites' endpoint.
+	 *
+	 * @return array The array of arguments.
+	 */
+	public function get_site_type_required_plugins_args() {
+		return array(
+			'site_type' => array(
+				'required' => true,
+				'type'     => 'string',
+			),
+		);
+	}
+
+	/**
+	 * Installs the site type prerequisites.
+	 *
+	 * @param \WP_REST_Request $request Request model.
+	 *
+	 * @return array|WP_Error
+	 */
+	public function install_site_type_required_plugins( \WP_REST_Request $request ) {
+		$site_type = $request->get_param( 'site_type' );
+		if ( $site_type === 'ecommerce' ) {
+			EcommerceSiteTypeService::install_ecommerce_plugins();
+		}
+
+		return new \WP_REST_Response( array( 'success' => true ), 200 );
+	}
+
+
+	/**
+	 * Gets the arguments for the 'set_site_logo' endpoint.
+	 *
+	 * @return array The array of arguments.
+	 */
+	public function get_set_site_logo_args() {
+		return array(
+			'logo_url' => array(
+				'required' => true,
+				'type'     => 'string',
+			),
+		);
+	}
+
+	/**
+	 * Sets the site logo.
+	 *
+	 * @param \WP_REST_Request $request Request model.
+	 *
+	 * @return array|WP_Error
+	 */
+	public function set_site_logo( \WP_REST_Request $request ) {
+		$logo_url = $request->get_param( 'logo_url' );
+		$attachment_data = MediaService::import_image_from_url( $logo_url );
+		if ( is_array( $attachment_data ) ) {
+			$id = $attachment_data['id'];
+			update_option( 'site_logo', $id );
+			$response = array( 'success' => true );
+		} else {
+			$response = new \WP_Error(
+				'logogen_select_logo_import_failed',
+				'Failed to import logo image',
+				array( 'status' => 500 )
+			);
+		}
+		return new \WP_REST_Response( $response, 200 );
 	}
 
 	/**

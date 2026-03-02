@@ -1,4 +1,4 @@
-import { ForkStep } from './Fork';
+import { StartStep } from './Start';
 import { IntakeStep } from './Intake';
 import { LogoStep } from './Logo';
 import { GeneratingStep } from './Generating';
@@ -13,7 +13,7 @@ const STEPS = {
 		path: '/',
 		order: 10,
 		isRequired: true,
-		Component: ForkStep,
+		Component: StartStep,
 	},
 	intake: {
 		path: '/intake',
@@ -67,7 +67,6 @@ const STEPS = {
 
 export {
 	STEPS,
-	ForkStep,
 	IntakeStep,
 	LogoStep,
 	GeneratingStep,

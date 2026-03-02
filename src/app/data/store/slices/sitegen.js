@@ -3,12 +3,14 @@ import { nfdOnboardingStore } from '@/data/store';
 import { updateOnboardingSiteGenSlice } from '@/utils/api';
 
 const DEFAULT_STATE = {
-	homepages: [],
-	selectedHomepage: '',
-	hasGeneratedSitePages: false,
-	retryMode: false,
-	sitegenHasFailed: false,
-	canvasSidebarIsOpen: true,
+	siteId: null,
+	SiteGenId: null,
+	siteType: null,
+	sitemap: [],
+	siteKit: [],
+	sitemapPages: [],
+	siteColors: [],
+	siteLogo: null,
 	sitegenSliceVersion: 0,
 };
 
@@ -27,40 +29,64 @@ export function sitegen( state = DEFAULT_STATE, action ) {
 				...action.siteGenSlice,
 				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
-		case 'SET_HOMEPAGES':
+		case 'SET_SITE_ID':
 			return {
 				...state,
-				homepages: action.homepages,
+				siteId: action.siteId,
 				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
-		case 'SET_SELECTED_HOMEPAGE':
+		case 'SET_SITEGEN_ID':
 			return {
 				...state,
-				selectedHomepage: action.selectedHomepage,
+				SiteGenId: action.SiteGenId,
 				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
-		case 'SET_HAS_GENERATED_SITE_PAGES':
+		case 'SET_SITE_TYPE':
 			return {
 				...state,
-				hasGeneratedSitePages: action.hasGeneratedSitePages,
+				siteType: action.siteType,
 				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
-		case 'SET_RETRY_MODE':
+		case 'SET_SITE_BRAND_IDENTITY':
 			return {
 				...state,
-				retryMode: action.retryMode,
+				siteBrandIdentity: action.siteBrandIdentity,
 				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
-		case 'SET_SITEGEN_HAS_FAILED':
+		case 'SET_SITE_CLASSIFICATION':
 			return {
 				...state,
-				sitegenHasFailed: action.sitegenHasFailed,
+				siteClassification: action.siteClassification,
 				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
-		case 'SET_CANVAS_SIDEBAR_IS_OPEN':
+		case 'SET_SITEMAP':
 			return {
 				...state,
-				canvasSidebarIsOpen: action.canvasSidebarIsOpen,
+				sitemap: action.sitemap,
+				sitegenSliceVersion: state.sitegenSliceVersion + 1,
+			};
+		case 'SET_SITE_KIT':
+			return {
+				...state,
+				siteKit: action.siteKit,
+				sitegenSliceVersion: state.sitegenSliceVersion + 1,
+			};
+		case 'SET_SITEMAP_PAGES':
+			return {
+				...state,
+				sitemapPages: action.sitemapPages,
+				sitegenSliceVersion: state.sitegenSliceVersion + 1,
+			};
+		case 'SET_SITE_COLORS':
+			return {
+				...state,
+				siteColors: action.siteColors,
+				sitegenSliceVersion: state.sitegenSliceVersion + 1,
+			};
+		case 'SET_SITE_LOGO':
+			return {
+				...state,
+				siteLogo: action.siteLogo,
 				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
 	}
@@ -75,53 +101,80 @@ export const actions = {
 			siteGenSlice,
 		};
 	},
-	setHomepages: ( homepages ) => {
+	setSiteId: ( siteId ) => {
 		return {
-			type: 'SET_HOMEPAGES',
-			homepages,
+			type: 'SET_SITE_ID',
+			siteId,
 		};
 	},
-	setSelectedHomepage: ( selectedHomepage ) => {
+	setSiteGenId: ( SiteGenId ) => {
 		return {
-			type: 'SET_SELECTED_HOMEPAGE',
-			selectedHomepage,
+			type: 'SET_SITEGEN_ID',
+			SiteGenId,
 		};
 	},
-	setHasGeneratedSitePages: ( hasGeneratedSitePages ) => {
+	setSiteType: ( siteType ) => {
 		return {
-			type: 'SET_HAS_GENERATED_SITE_PAGES',
-			hasGeneratedSitePages,
+			type: 'SET_SITE_TYPE',
+			siteType,
 		};
 	},
-	setRetryMode: ( retryMode ) => {
+	setSiteBrandIdentity: ( siteBrandIdentity ) => {
 		return {
-			type: 'SET_RETRY_MODE',
-			retryMode,
+			type: 'SET_SITE_BRAND_IDENTITY',
+			siteBrandIdentity,
 		};
 	},
-	setSitegenHasFailed: ( sitegenHasFailed ) => {
+	setSiteClassification: ( siteClassification ) => {
 		return {
-			type: 'SET_SITEGEN_HAS_FAILED',
-			sitegenHasFailed,
+			type: 'SET_SITE_CLASSIFICATION',
+			siteClassification,
 		};
 	},
-	setCanvasSidebarIsOpen: ( canvasSidebarIsOpen ) => {
+	setSitemap: ( sitemap ) => {
 		return {
-			type: 'SET_CANVAS_SIDEBAR_IS_OPEN',
-			canvasSidebarIsOpen,
+			type: 'SET_SITEMAP',
+			sitemap,
+		};
+	},
+	setSiteKit: ( siteKit ) => {
+		return {
+			type: 'SET_SITE_KIT',
+			siteKit,
+		};
+	},
+	setSitemapPages: ( sitemapPages ) => {
+		return {
+			type: 'SET_SITEMAP_PAGES',
+			sitemapPages,
+		};
+	},
+	setSiteColors: ( siteColors ) => {
+		return {
+			type: 'SET_SITE_COLORS',
+			siteColors,
+		};
+	},
+	setSiteLogo: ( siteLogo ) => {
+		return {
+			type: 'SET_SITE_LOGO',
+			siteLogo,
 		};
 	},
 };
 
 export const selectors = {
 	getSiteGenSlice: ( state ) => state.sitegen,
-	getHomepages: ( state ) => state.sitegen.homepages,
-	getSelectedHomepage: ( state ) => state.sitegen.selectedHomepage,
-	getHasGeneratedSitePages: ( state ) => state.sitegen.hasGeneratedSitePages,
-	getSelectedColorPalette: ( state ) => state.sitegen.homepages[ state.sitegen.selectedHomepage ]?.color?.palette,
-	getRetryMode: ( state ) => state.sitegen.retryMode,
-	getSitegenHasFailed: ( state ) => state.sitegen.sitegenHasFailed,
-	getCanvasSidebarIsOpen: ( state ) => state.sitegen.canvasSidebarIsOpen,
+	getSiteId: ( state ) => state.sitegen.siteId,
+	getSiteGenId: ( state ) => state.sitegen.SiteGenId,
+	getSiteType: ( state ) => state.sitegen.siteType,
+	getSiteBrandIdentity: ( state ) => state.sitegen.siteBrandIdentity,
+	getSiteClassification: ( state ) => state.sitegen.siteClassification,
+	getSitemap: ( state ) => state.sitegen.sitemap,
+	getSiteKit: ( state ) => state.sitegen.siteKit,
+	getSitemapPages: ( state ) => state.sitegen.sitemapPages,
+	getSiteColors: ( state ) => state.sitegen.siteColors,
+	getSiteLogo: ( state ) => state.sitegen.siteLogo,
 	getSitegenSliceVersion: ( state ) => state.sitegen.sitegenSliceVersion,
 };
 
