@@ -6,11 +6,11 @@ name: Codecoverage-Main
 on:
   push:
     branches:
-      - trunk
+      - main
   pull_request:
     types: [ opened, reopened, ready_for_review, synchronize ]
     branches:
-      - trunk
+      - main
   workflow_dispatch:
 
 permissions:

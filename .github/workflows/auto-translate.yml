@@ -3,7 +3,7 @@ name: Check for Updates to Translations
 on:
   push:
     branches:
-      - 'trunk'
+      - 'main'
   workflow_dispatch:
 
 # Cancels all previous workflow runs for the branch that have not completed.
