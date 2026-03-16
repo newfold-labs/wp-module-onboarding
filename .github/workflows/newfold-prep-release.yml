@@ -27,7 +27,7 @@ jobs:
     uses: newfold-labs/workflows/.github/workflows/reusable-module-prep-release.yml@main
     with:
       module-repo: ${{ github.repository }}
-      module-branch: 'trunk'
+      module-branch: 'main'
       level: ${{ inputs.level }}
       json-file: 'package.json'
       php-file: 'bootstrap.php'
