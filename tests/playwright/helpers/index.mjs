@@ -37,12 +37,12 @@ export const SELECTORS = {
   onboardingApp: '#nfd-onboarding',
   onboardingContent: '.nfd-onboarding-content',
   mainContent: '#nfd-onboarding main',
-  
+
   // Navigation buttons
   nextButton: 'button:has-text("Next")',
   backButton: 'button:has-text("Back")',
   skipButton: '[data-testid="skip-button"]',
-  
+
   // Common elements
   loadingSpinner: '.nfd-onboarding-loading',
   errorMessage: '.nfd-onboarding-error',
@@ -74,7 +74,6 @@ export async function navigateToStep(page, stepPath) {
  * @param {import('@playwright/test').Page} page
  */
 export async function waitForOnboarding(page) {
-  await page.waitForLoadState('networkidle');
   // Wait for the onboarding app container to be present
   await page.waitForSelector(SELECTORS.onboardingApp, { timeout: 15000 });
 }
@@ -118,27 +117,27 @@ export async function resetOnboardingState() {
   // Core status options - these directly affect access checks
   await wordpress.wpCli('option delete nfd_module_onboarding_status', { failOnNonZeroExit: false });
   await wordpress.wpCli('option delete nfd_module_onboarding_flow', { failOnNonZeroExit: false });
-  
+
   // Settings initialization flag - allows onboarding to re-initialize settings
   await wordpress.wpCli('option delete nfd_module_onboarding_settings_initialized', { failOnNonZeroExit: false });
-  
+
   // Redux state persistence - clears any saved UI state
   await wordpress.wpCli('option delete nfd_module_onboarding_state_input', { failOnNonZeroExit: false });
   await wordpress.wpCli('option delete nfd_module_onboarding_state_sitegen', { failOnNonZeroExit: false });
   await wordpress.wpCli('option delete nfd_module_onboarding_state_logogen', { failOnNonZeroExit: false });
   await wordpress.wpCli('option delete nfd_module_onboarding_state_blueprints', { failOnNonZeroExit: false });
-  
+
   // Time tracking options
   await wordpress.wpCli('option delete nfd_module_onboarding_start_time', { failOnNonZeroExit: false });
   await wordpress.wpCli('option delete nfd_module_onboarding_completed_time', { failOnNonZeroExit: false });
   await wordpress.wpCli('option delete nfd_module_onboarding_start_date', { failOnNonZeroExit: false });
-  
+
   // Restart eligibility flag
   await wordpress.wpCli('option delete nfd_module_onboarding_can_restart', { failOnNonZeroExit: false });
-  
+
   // Redirect handling
   await wordpress.wpCli('option delete nfd_module_onboarding_should_redirect', { failOnNonZeroExit: false });
-  
+
   // Ensure required capabilities are set (hasAISiteGen is required for onboarding access)
   await ensureOnboardingCapabilities();
 }
@@ -168,9 +167,9 @@ export async function ensureOnboardingCapabilities() {
  */
 export async function resetHtaccessState() {
   await wordpress.wpCli('option delete nfd_module_htaccess_saved_state', { failOnNonZeroExit: false });
-//   await wordpress.wpCli('option delete nfd_fonts_optimization', { failOnNonZeroExit: false });
-//   await wordpress.wpCli('option delete nfd_image_optimization', { failOnNonZeroExit: false });
-//   await wordpress.wpCli('option update newfold_cache_level 0', { failOnNonZeroExit: false });
+  //   await wordpress.wpCli('option delete nfd_fonts_optimization', { failOnNonZeroExit: false });
+  //   await wordpress.wpCli('option delete nfd_image_optimization', { failOnNonZeroExit: false });
+  //   await wordpress.wpCli('option update newfold_cache_level 0', { failOnNonZeroExit: false });
 }
 
 /**
@@ -199,8 +198,7 @@ export async function setSiteCapabilities(capabilities) {
  */
 export async function clickNext(page) {
   const nextButton = page.locator(SELECTORS.nextButton).first();
-  await nextButton.click();
-  await page.waitForLoadState('networkidle');
+  await nextButton.click({ timeout: 15000 });
 }
 
 /**
@@ -209,6 +207,5 @@ export async function clickNext(page) {
  */
 export async function clickBack(page) {
   const backButton = page.locator(SELECTORS.backButton).first();
-  await backButton.click();
-  await page.waitForLoadState('networkidle');
+  await backButton.click({ timeout: 15000 });
 }
