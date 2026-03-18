@@ -1,25 +1,23 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-13T10:23:36+00:00\n"
+"PO-Revision-Date: 2026-03-18T19:17:14+00:00\n"
 "Last-Translator: Vara Prasad Maruboina <varaprasad.maruboina@newfold.com>\n"
 "Language-Team: English (British) <(nothing)>\n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-13T10:23:36+00:00\n"
-"PO-Revision-Date: 2025-02-13 19:26+0530\n"
-"Language: en_GB\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: wp-module-onboarding\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
-#: bootstrap.php:24
-#: includes/Compatibility/Safe_Mode.php:44
-#: includes/Compatibility/Safe_Mode.php:45
-#: includes/WP_Admin.php:82
-#: includes/WP_Admin.php:83
-#: includes/WP_Admin.php:99
+#: bootstrap.php:24 includes/Compatibility/Safe_Mode.php:44
+#: includes/Compatibility/Safe_Mode.php:45 includes/WP_Admin.php:82
+#: includes/WP_Admin.php:83 includes/WP_Admin.php:99
 msgid "Onboarding"
 msgstr "Onboarding"
 
@@ -28,14 +26,20 @@ msgid "Please upgrade your WordPress"
 msgstr "Please upgrade your WordPress"
 
 #: includes/Compatibility/Safe_Mode.php:185
-msgid "To take advantage of the latest WordPress has to offer, our WordPress Onboarding to setup your website requires the latest version of WordPress."
-msgstr "To take advantage of the latest WordPress has to offer, our WordPress Onboarding to setup your website requires the latest version of WordPress."
+msgid ""
+"To take advantage of the latest WordPress has to offer, our WordPress "
+"Onboarding to setup your website requires the latest version of WordPress."
+msgstr ""
+"To take advantage of the latest WordPress has to offer, our WordPress "
+"Onboarding to setup your website requires the latest version of WordPress."
 
 #. translators: 1: Current WP Version 2: Minimum Required version
 #: includes/Compatibility/Safe_Mode.php:191
 #, php-format
-msgid "Your WordPress version %1$s does not meet our minimum requirements of %2$s."
-msgstr "Your WordPress version %1$s does not meet our minimum requirements of %2$s."
+msgid ""
+"Your WordPress version %1$s does not meet our minimum requirements of %2$s."
+msgstr ""
+"Your WordPress version %1$s does not meet our minimum requirements of %2$s."
 
 #: includes/Compatibility/Safe_Mode.php:207
 msgid "Upgrade WordPress"
@@ -44,6 +48,12 @@ msgstr "Upgrade WordPress"
 #: includes/Compatibility/Safe_Mode.php:211
 msgid "There was an error Upgrading WordPress."
 msgstr "There was an error Upgrading WordPress."
+
+#. translators: %d is the index of the palette
+#: includes/RestApi/DesignController.php:212
+#, php-format
+msgid "Palette %d"
+msgstr "Palette %d"
 
 #: includes/RestApi/EventsController.php:68
 msgid "Event action"
@@ -76,6 +86,10 @@ msgstr "Success."
 #: includes/RestApi/SiteGenController.php:331
 msgid "Error at Regenerating home pages."
 msgstr "Error at Regenerating home pages."
+
+#: includes/RestApi/SiteGenController.php:397
+msgid "Error at Setting up the nav menu."
+msgstr "Error at Setting up the nav menu."
 
 #: includes/RestApi/SitePagesController.php:106
 #: includes/Services/SiteGenService.php:122
@@ -110,6 +124,18 @@ msgstr "The custom settings"
 msgid "Global style customization created."
 msgstr "Global style customization created."
 
+#: includes/Services/Ai/AiServiceRequest.php:181
+msgid "An unknown error occurred"
+msgstr "An unknown error occurred"
+
+#: includes/Services/AppService.php:75 includes/Services/AppService.php:99
+msgid "Help us improve"
+msgstr "Help us improve"
+
+#: includes/Services/AppService.php:76 includes/Services/AppService.php:100
+msgid "How satisfied were you with the ease of creating your website?"
+msgstr "How satisfied were you with the ease of creating your website?"
+
 #: includes/Services/EventService.php:33
 msgid "Bad event structure/value."
 msgstr "Bad event structure/value."
@@ -130,9 +156,17 @@ msgstr "Each webfont src must be a non-empty string."
 msgid "Webfont font weight must be a properly formatted string or integer."
 msgstr "Webfont font weight must be a properly formatted string or integer."
 
+#: includes/WP_Admin.php:452
+msgid "Build with AI"
+msgstr "Build with AI"
+
 #: build/3.3.5/onboarding-design-studio.js:1
-msgid "Colors"
-msgstr "Colors"
+msgid "Base"
+msgstr "Base"
+
+#: build/3.3.5/onboarding-design-studio.js:1
+msgid "Contrast"
+msgstr "Contrast"
 
 #: build/3.3.5/onboarding-design-studio.js:1
 msgid "Primary"
@@ -142,23 +176,9 @@ msgstr "Primary"
 msgid "Secondary"
 msgstr "Secondary"
 
-#: includes/WP_Admin.php:452
-msgid "Build with AI"
-msgstr "Build with AI"
-
-#. translators: %d is the index of the palette
-#: includes/RestApi/DesignController.php:212
-#, php-format
-msgid "Palette %d"
-msgstr "Palette %d"
-
 #: build/3.3.5/onboarding-design-studio.js:1
-msgid "Base"
-msgstr "Base"
-
-#: build/3.3.5/onboarding-design-studio.js:1
-msgid "Contrast"
-msgstr "Contrast"
+msgid "Colors"
+msgstr "Colors"
 
 #: build/3.3.5/onboarding-design-studio.js:1
 msgid "Select a palette or customize individual colors."
@@ -205,8 +225,12 @@ msgid "You don't have permission to change the site logo."
 msgstr "You don't have permission to change the site logo."
 
 #: build/3.3.5/onboarding-design-studio.js:1
-msgid "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
-msgstr "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
+msgid ""
+"Your logo will appear in your site header. For best results, upload an image"
+" with a transparent background in PNG format."
+msgstr ""
+"Your logo will appear in your site header. For best results, upload an image"
+" with a transparent background in PNG format."
 
 #: build/3.3.5/onboarding-design-studio.js:1
 msgid "Primary color"
@@ -233,46 +257,18 @@ msgid "No font pairings available."
 msgstr "No font pairings available."
 
 #: build/3.3.5/onboarding-design-studio.js:1
-msgid "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
-msgstr "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
+msgid ""
+"Choose a font pairing that reflects your brand's personality. Each pairing "
+"is carefully selected to enhance readability and visual appeal across your "
+"site."
+msgstr ""
+"Choose a font pairing that reflects your brand's personality. Each pairing "
+"is carefully selected to enhance readability and visual appeal across your "
+"site."
 
 #: build/3.3.5/onboarding-design-studio.js:1
 msgid "Design Studio"
 msgstr "Design Studio"
-
-#: includes/RestApi/SiteGenController.php:397
-msgid "Error at Setting up the nav menu."
-msgstr "Error at Setting up the nav menu."
-
-#: includes/Services/Ai/AiServiceRequest.php:181
-msgid "An unknown error occurred"
-msgstr "An unknown error occurred"
-
-#: includes/Services/AppService.php:75
-#: includes/Services/AppService.php:99
-msgid "Help us improve"
-msgstr "Help us improve"
-
-#: includes/Services/AppService.php:76
-#: includes/Services/AppService.php:100
-msgid "How satisfied were you with the ease of creating your website?"
-msgstr "How satisfied were you with the ease of creating your website?"
-
-#: build/3.3.5/onboarding.js:1
-msgid "Sorry, let's try a different approach."
-msgstr "Sorry, let's try a different approach."
-
-#: build/3.3.5/onboarding.js:1
-msgid "Pick your website"
-msgstr "Pick your website"
-
-#: build/3.3.5/onboarding.js:1
-msgid "We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favorite — we'll guide you through customizing it!"
-msgstr "We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favourite — we'll guide you through customising it!"
-
-#: build/3.3.5/onboarding.js:1
-msgid "Here are 3 unique designs for you to start with. Pick your favorite to customize it!"
-msgstr "Here are 3 unique designs for you to start with. Pick your favourite to customise it!"
 
 #: build/3.3.5/onboarding.js:1
 msgid "Uh oh! Something went wrong. Please try again."
@@ -285,3 +281,29 @@ msgstr "Your site logo has been set!"
 #: build/3.3.5/onboarding.js:1
 msgid "Setting your site logo…"
 msgstr "Setting your site logo..."
+
+#: build/3.3.5/onboarding.js:1
+msgid "Sorry, let's try a different approach."
+msgstr "Sorry, let's try a different approach."
+
+#: build/3.3.5/onboarding.js:1
+msgid "Pick your website"
+msgstr "Pick your website"
+
+#: build/3.3.5/onboarding.js:1
+msgid ""
+"We're sorry, our site generation tool isn't working right now. In the "
+"meantime, here are three unique site templates to get you started. Choose "
+"your favorite — we'll guide you through customizing it!"
+msgstr ""
+"We're sorry, our site generation tool isn't working right now. In the "
+"meantime, here are three unique site templates to get you started. Choose "
+"your favourite — we'll guide you through customising it!"
+
+#: build/3.3.5/onboarding.js:1
+msgid ""
+"Here are 3 unique designs for you to start with. Pick your favorite to "
+"customize it!"
+msgstr ""
+"Here are 3 unique designs for you to start with. Pick your favourite to "
+"customise it!"
