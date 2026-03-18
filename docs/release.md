@@ -1,6 +1,21 @@
+---
+name: wp-module-onboarding
+title: Release process
+description: Release process and version bump.
+updated: 2025-03-18
+---
+
 # Release process
 
 This module follows the standard Newfold release process using a reusable workflow.
+
+## Build step required
+
+See `.github/workflows/newfold-prep-release.yml`: the workflow uses `json-file` and `php-file` inputs. If this module has a frontend (e.g. `package.json` has a `build` script), run `npm run build` before tagging; the workflow runs it automatically. Otherwise no build step is required.
+
+## Hardcoded versions to bump
+
+The workflow bumps the version in the files specified in `.github/workflows/newfold-prep-release.yml` (`json-file` and `php-file`—typically **bootstrap.php** for the PHP version constant (e.g. `NFD_*_MODULE_VERSION`) and **package.json** for the `version` field). If releasing manually, update those files, run any build and i18n commands, then tag and release.
 
 ## Prepare release (recommended)
 

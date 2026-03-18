@@ -36,4 +36,4 @@ composer run test
 
 ## Keeping documentation current
 
-When you change code, features, or workflows, update the docs. When adding or changing dependencies, update **docs/dependencies.md**. When cutting a release, update **docs/changelog.md**.
+When you change code, features, or workflows, update the docs. Keep **docs/index.md** current: when you add, remove, or rename doc files, update the table of contents (and quick links if present). When adding or changing dependencies, update **docs/dependencies.md**. When cutting a release, update **docs/changelog.md**.

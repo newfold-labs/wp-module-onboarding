@@ -1,3 +1,10 @@
+---
+name: wp-module-onboarding
+title: Documentation index
+description: Table of contents and quick links.
+updated: 2025-03-18
+---
+
 # wp-module-onboarding – Documentation index
 
 Documentation for wp-module-onboarding, for **humans** and **AI agents**. Start here.
