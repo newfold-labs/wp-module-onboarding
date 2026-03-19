@@ -16,7 +16,7 @@
 		"@tailwindcss/forms": "^0.5.11",
 		"@wordpress/base-styles": "^6.17.0",
 		"@wordpress/env": "^10.39.0",
-		"@wordpress/icons": "^11.8.0",
+		"@wordpress/icons": "^12.0.0",
 		"@wordpress/scripts": "^31.6.0",
 		"eslint-import-resolver-alias": "^1.1.2",
 		"node-fetch": "^3.3.2",
