@@ -34,9 +34,9 @@ export async function handshake( domain = wpSiteUrl ) {
  * Evaluate the user's prompt via the intake agent.
  * Returns { understanding, is_complete, questions }.
  *
- * @param {string}      siteId       The site_id from handshake.
- * @param {string}      prompt       The original user prompt.
- * @param {Array|null}  conversation Optional conversation history [{role, content}].
+ * @param {string}     siteId       The site_id from handshake.
+ * @param {string}     prompt       The original user prompt.
+ * @param {Array|null} conversation Optional conversation history [{role, content}].
  * @return {Promise<Object>} Intake result.
  */
 /**
@@ -76,9 +76,10 @@ export async function intake( siteId, prompt, conversation = null, signal ) {
  * Start site generation. Returns the raw Response so the caller can read
  * the SSE stream from response.body.
  *
- * @param {string} siteId  The site_id from handshake.
- * @param {string} prompt  The user's site prompt.
- * @param {AbortSignal} signal AbortController signal for cancellation.
+ * @param {string}      siteId       The site_id from handshake.
+ * @param {string}      prompt       The user's site prompt.
+ * @param {AbortSignal} signal       AbortController signal for cancellation.
+ * @param {Array|null}  conversation Optional conversation history [{role, content}].
  * @return {Promise<Response>} Raw fetch Response with readable SSE body.
  */
 export async function startGeneration( siteId, prompt, signal, conversation = null ) {
@@ -113,8 +114,8 @@ export async function startGeneration( siteId, prompt, signal, conversation = nu
  *   data: <payload>\n
  *   \n
  *
- * @param {Response}  response  A fetch Response whose body is an SSE stream.
- * @param {Function}  onEvent   Called with { event: string, data: string } for each event.
+ * @param {Response} response A fetch Response whose body is an SSE stream.
+ * @param {Function} onEvent  Called with { event: string, data: string } for each event.
  * @return {Promise<void>} Resolves when stream ends.
  */
 export async function streamSSE( response, onEvent ) {
@@ -165,5 +166,4 @@ export async function streamSSE( response, onEvent ) {
 
 	// Flush any remaining event that wasn't terminated by a blank line.
 	flush();
-
 }
