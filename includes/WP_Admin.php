@@ -108,18 +108,22 @@ final class WP_Admin {
 	 * @return void
 	 */
 	public static function hide_admin_chrome() {
-		\add_action( 'admin_head', static function () {
-			echo '<style>
-				#adminmenumain, #wpadminbar, #wpfooter,
-				.notice, .update-nag, #screen-meta { display: none !important; }
-				html.wp-toolbar { padding-top: 0 !important; }
-				#wpcontent, #wpbody-content { margin-left: 0 !important; padding: 0 !important; }
-				body.dashboard_page_nfd-onboarding {
-					overflow: hidden;
-					background: linear-gradient(180deg, #fff 0%, #f5f8ff 50%, #edf2ff 100%);
-				}
-			</style>';
-		}, 1 );
+		\add_action(
+			'admin_head',
+			static function () {
+				echo '<style>
+					#adminmenumain, #wpadminbar, #wpfooter,
+					.notice, .update-nag, #screen-meta { display: none !important; }
+					html.wp-toolbar { padding-top: 0 !important; }
+					#wpcontent, #wpbody-content { margin-left: 0 !important; padding: 0 !important; }
+					body.dashboard_page_nfd-onboarding {
+						overflow: hidden;
+						background: linear-gradient(180deg, #fff 0%, #f5f8ff 50%, #edf2ff 100%);
+					}
+				</style>';
+			},
+			1
+		);
 	}
 
 	/**
