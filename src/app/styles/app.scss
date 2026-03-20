@@ -1,17 +1,6 @@
-@import "wordpress";
-@import "interface";
-/* @import "icons"; */
-/* @import "branding"; */
-@import "utilities";
+@use 'shell';
+@use 'components';
 
-.nfd-onboarding-container {
-	display: flex;
-	background-color: var(--nfd-onboarding-canvas);
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	top: 0;
-	overflow-y: auto;
-	overflow-x: hidden;
-}
+@import url( 'https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap' );
+
+@import 'tailwind.css';

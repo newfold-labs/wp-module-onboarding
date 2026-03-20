@@ -3,6 +3,9 @@ import { addQueryArgs } from '@wordpress/url';
 export const wpAdminUrl = window.nfdOnboarding.runtime.adminUrl;
 export const wpSiteUrl = window.nfdOnboarding.runtime.siteUrl;
 export const wpRestURL = window.nfdOnboarding.runtime.restUrl;
+export const aiPlatformBase =
+	window.nfdOnboarding?.runtime?.aiPlatformUrl ||
+	'https://ai-platform.test';
 export const wpRestRoute = 'wp/v2';
 export const onboardingRestRoute = 'newfold-onboarding/v1';
 export const installerRestRoute = 'newfold-installer/v1';

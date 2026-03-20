@@ -2,9 +2,11 @@ import domReady from '@wordpress/dom-ready';
 import { createRoot } from '@wordpress/element';
 import { HiiveAnalytics } from '@newfold/js-utility-ui-analytics';
 import * as Sentry from '@sentry/react';
+import { dispatch } from '@wordpress/data';
 import { onboardingRestURL, startOnboarding } from '@/utils/api';
 import { CATEGORY } from '@/utils/analytics/hiive/constants';
 import { POSTHOG_PUBLIC } from '@/data/constants';
+import { nfdOnboardingStore, initializeStoreDbSyncServices } from '@/data/store';
 import { isCypress } from '@/utils/helpers';
 import './webpack-public-path';
 import { PostHogProvider } from 'posthog-js/react';
@@ -80,20 +82,20 @@ if ( runtimeDataObjectIsMounted() ) {
 		initializeAnalytics();
 		startOnboarding();
 
+		// Hydrate the Redux store with server-side runtime data.
+		dispatch( nfdOnboardingStore ).setRuntimeSlice(
+			window.nfdOnboarding.runtime
+		);
+		initializeStoreDbSyncServices();
+
 		const NFD_ONBOARDING_ELEMENT_ID = 'nfd-onboarding';
 		const appTarget = document.getElementById( NFD_ONBOARDING_ELEMENT_ID );
-		/**
-		 * Temporarily elevate the container's z-index during transition.
-		 * This ensures proper layering while fading from loading screen to app.
-		 */
-		appTarget.style.zIndex = 100000;
-		setTimeout( () => {
-			appTarget.style.zIndex = 'initial';
-		}, 500 );
 
 		// Fade out the loading screen before rendering the app.
-		const loadingContainer = appTarget.querySelector( '.nfd-onboarding-loading-app' );
-		loadingContainer.classList.add( 'fade-out' );
+		const loadingContainer = appTarget.querySelector( '.nfd-loading' );
+		if ( loadingContainer ) {
+			loadingContainer.classList.add( 'fade-out' );
+		}
 
 		// Render the app after the loading screen has faded out.
 		setTimeout( () => {

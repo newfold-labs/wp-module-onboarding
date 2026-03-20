@@ -44,6 +44,7 @@ final class WP_Admin {
 		\add_action( 'admin_menu', array( __CLASS__, 'register_page' ) );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'page_title' ), 9, 1 );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'initialize' ) );
+		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'hide_admin_chrome' ) );
 		/**
 		 * We're disabling the restart onboarding feature for now.
 		 */
@@ -101,103 +102,34 @@ final class WP_Admin {
 	}
 
 	/**
+	 * Hide WP admin chrome (sidebar, toolbar, notices) immediately via admin_head
+	 * so there is no flash before the onboarding overlay renders.
+	 *
+	 * @return void
+	 */
+	public static function hide_admin_chrome() {
+		\add_action( 'admin_head', static function () {
+			echo '<style>
+				#adminmenumain, #wpadminbar, #wpfooter,
+				.notice, .update-nag, #screen-meta { display: none !important; }
+				html.wp-toolbar { padding-top: 0 !important; }
+				#wpcontent, #wpbody-content { margin-left: 0 !important; padding: 0 !important; }
+				body.dashboard_page_nfd-onboarding {
+					overflow: hidden;
+					background: linear-gradient(180deg, #fff 0%, #f5f8ff 50%, #edf2ff 100%);
+				}
+			</style>';
+		}, 1 );
+	}
+
+	/**
 	 * Render a loading screen.
 	 *
 	 * @return string
 	 */
 	public static function is_loading() {
 		ob_start();
-		?>
-		<style>
-			body.wp-admin {
-				overflow: hidden !important;
-			}
-			.nfd-onboarding-loading-app__skeleton {
-				position: relative;
-				overflow: hidden;
-				background-color: #DDE7F0;
-			}
-			.nfd-onboarding-loading-app__skeleton::after {
-				position: absolute;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				left: 0;
-				transform: translateX(-100%);
-				background-image: linear-gradient(
-					90deg,
-					rgba(255, 255, 255, 0) 0,
-					rgba(255, 255, 255, 0.2) 20%,
-					rgba(255, 255, 255, 0.5) 60%,
-					rgba(255, 255, 255, 0)
-				);
-				animation: nfd-skeleton-animation 2.5s infinite;
-				content: "";
-			}
-			@keyframes nfd-skeleton-animation {
-				100% {
-					transform: translateX(100%);
-				}
-			}
-			#nfd-onboarding {
-				z-index: 100000;
-			}
-			.nfd-onboarding-loading-app {
-				background-color: #F1F5F9;
-				width: 100%;
-				opacity: 1;
-				transition: opacity 0.3s ease-in-out;
-			}
-			.nfd-onboarding-loading-app.fade-out {
-				opacity: 0;
-			}
-			.nfd-onboarding-loading-app__header {
-				background-color: #FFF;
-				border-bottom: 1px solid #ECEEFE;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: 0 1.5rem;
-				min-height: 4rem;
-			}
-			.nfd-onboarding-loading-app__header__logo {
-				width: 135px;
-				height: 24px;
-				border-radius: 6px;
-			}
-			.nfd-onboarding-loading-app__header__exit {
-				width: 24px;
-				height: 24px;
-				border-radius: 6px;
-			}
-			.nfd-onboarding-loading-app__body {
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
-			.nfd-onboarding-loading-app__body__spinner {
-				width: 100px;
-				height: 100px;
-				margin-top: -65px;
-				border-radius: 12px;
-				opacity: 0.8;
-			}
-		</style>
-		<div class="nfd-onboarding-loading-app">
-			<header class="nfd-onboarding-loading-app__header">
-				<div class="nfd-onboarding-loading-app__header__logo nfd-onboarding-loading-app__skeleton"></div>
-				<div class="nfd-onboarding-loading-app__header__exit nfd-onboarding-loading-app__skeleton"></div>
-			</header>
-			<div class="nfd-onboarding-loading-app__body">
-				<div class="nfd-onboarding-loading-app__body__spinner nfd-onboarding-loading-app__skeleton"></div>
-			</div>
-		</div>
-		<?php
+		include __DIR__ . '/Templates/loading-screen.php';
 		return ob_get_clean();
 	}
 

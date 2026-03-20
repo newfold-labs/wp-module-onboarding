@@ -1,34 +1,89 @@
-import { HashRouter as Router } from 'react-router-dom';
-import { dispatch } from '@wordpress/data';
+/**
+ * WordPress dependencies
+ */
 import { FullscreenMode } from '@wordpress/interface';
-import { Root, ErrorBoundary as RootErrorBoundary } from '@newfold/ui-component-library';
-import { AppBody, ErrorBoundaryFallback, Header } from '@/components';
-import { nfdOnboardingStore, initializeStoreDbSyncServices } from '@/data/store';
-import '@/styles/tailwind.css';
+import { useEffect } from '@wordpress/element';
+
+/**
+ * External dependencies
+ */
+import { AnimatePresence } from 'motion/react';
+
+/**
+ * Internal dependencies
+ */
 import '@/styles/app.scss';
+import bluehostLogo from '../Brands/bluehost/bluehost-logo.svg';
+import useChat from '@/hooks/useChat';
+import PromptView from '@/views/PromptView';
+import ChatView from '@/views/ChatView';
+import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
+import { ACTION_PAGEVIEW } from '@/utils/analytics/hiive/constants';
 
 const App = () => {
-	// Feed store data.
-	dispatch( nfdOnboardingStore ).setRuntimeSlice( window.nfdOnboarding.runtime );
-	dispatch( nfdOnboardingStore ).setInputSlice( window.nfdOnboarding.input );
-	dispatch( nfdOnboardingStore ).setSiteGenSlice( window.nfdOnboarding.sitegen );
-	dispatch( nfdOnboardingStore ).setLogogenSlice( window.nfdOnboarding.logogen );
-	dispatch( nfdOnboardingStore ).setBlueprintsSlice( window.nfdOnboarding.blueprints );
+	useEffect( () => {
+		sendOnboardingEvent( new OnboardingEvent( ACTION_PAGEVIEW ) );
+	}, [] );
 
-	// Initialize the store-DB sync services.
-	initializeStoreDbSyncServices();
+	const {
+		mode,
+		prompt,
+		setPrompt,
+		messages,
+		messagesEndRef,
+		chatInput,
+		setChatInput,
+		isWaiting,
+		inputEnabled,
+		handlePromptSubmit,
+		handleChatSubmit,
+		handleRetry,
+		handleRestart,
+	} = useChat();
 
 	return (
 		<>
 			<FullscreenMode isActive={ true } />
-			<Root style={ { width: '100%' } }>
-				<RootErrorBoundary FallbackComponent={ ErrorBoundaryFallback }>
-					<Router>
-						<Header />
-						<AppBody />
-					</Router>
-				</RootErrorBoundary>
-			</Root>
+			<div
+				className={ `nfd-onboarding-bg nfd-flex nfd-flex-col nfd-w-full nfd-box-border nfd-relative ${
+					mode === 'chat' ? 'nfd-h-screen nfd-overflow-hidden' : 'nfd-min-h-screen'
+				}` }
+			>
+				<div className="nfd-absolute nfd-top-6 nfd-left-8 nfd-z-10">
+					<a href="https://www.bluehost.com" target="_blank" rel="noopener noreferrer">
+						<img
+							src={ bluehostLogo }
+							alt={ __( 'Bluehost logo', 'wp-module-onboarding' ) }
+							className="nfd-h-7 nfd-w-auto"
+						/>
+					</a>
+				</div>
+
+				<AnimatePresence mode="wait">
+					{ mode === 'prompt' ? (
+						<PromptView prompt={ prompt } setPrompt={ setPrompt } onSubmit={ handlePromptSubmit } />
+					) : (
+						<ChatView
+							messages={ messages }
+							messagesEndRef={ messagesEndRef }
+							chatInput={ chatInput }
+							setChatInput={ setChatInput }
+							onSubmit={ handleChatSubmit }
+							isWaiting={ isWaiting }
+							inputEnabled={ inputEnabled }
+							onRetry={ handleRetry }
+							onRestart={ handleRestart }
+						/>
+					) }
+				</AnimatePresence>
+
+				<p className="nfd-text-xs nfd-text-balance nfd-font-normal nfd-leading-4 nfd-tracking-wide nfd-text-[rgb(68,71,70)] nfd-text-center [-webkit-font-smoothing:antialiased] nfd-absolute nfd-bottom-6 nfd-left-0 nfd-right-0 nfd-m-0 nfd-px-4 nfd-z-10">
+					{ __(
+						'AI-generated sites may need refinement. You can customize everything later.',
+						'wp-module-onboarding'
+					) }
+				</p>
+			</div>
 		</>
 	);
 };

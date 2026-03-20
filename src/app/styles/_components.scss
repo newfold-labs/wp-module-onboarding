@@ -1,0 +1,69 @@
+:root {
+	--nfd-blue: #3b82f6;
+}
+
+// Superellipse border radius (progressive enhancement)
+@supports ( corner-shape: superellipse( 1 ) ) {
+	.nfd-prompt-card,
+	.nfd-chat-message,
+	.nfd-task-progress,
+	.nfd-publishing-card {
+		corner-shape: superellipse( 1.8 );
+		border-radius: calc( 1rem * 1.6 ) !important;
+	}
+}
+
+// Scrollbar hiding
+.nfd-chat-messages,
+.nfd-task-progress__list,
+.nfd-prompt-card textarea {
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+// Thinking orb pulse animation
+.nfd-thinking-orb {
+	animation: nfd-orb-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes nfd-orb-pulse {
+	0%,
+	100% {
+		transform: scale( 1 );
+		opacity: 0.5;
+		box-shadow: 0 0 0 0 rgba( 23, 108, 223, 0.3 );
+	}
+	50% {
+		transform: scale( 1.3 );
+		opacity: 1;
+		box-shadow: 0 0 0 8px rgba( 23, 108, 223, 0 );
+	}
+}
+
+// Spinner border trick
+.nfd-spinner {
+	border: 1.5px solid transparent;
+	border-top-color: var( --nfd-blue );
+	border-right-color: var( --nfd-blue );
+}
+
+.nfd-task-progress__header {
+	&:focus-visible {
+		outline: none;
+		box-shadow: inset 0 0 0 2px rgba( 25, 107, 222, 0.3 );
+		border-radius: 16px;
+		corner-shape: superellipse( 1.8 );
+	}
+}
+
+// WP admin textarea focus/disabled overrides
+.nfd-prompt-card textarea:focus,
+.nfd-prompt-card textarea:disabled,
+.nfd-task-progress *:focus {
+	border: none !important;
+	box-shadow: none !important;
+	outline: none !important;
+}
