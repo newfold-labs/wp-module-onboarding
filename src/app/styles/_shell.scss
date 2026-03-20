@@ -12,28 +12,25 @@ body.dashboard_page_nfd-onboarding {
 	overflow-x: hidden;
 	-webkit-font-smoothing: antialiased;
 	font-family:
-		'Google Sans',
+		"Google Sans",
 		system-ui,
 		-apple-system,
-		'Segoe UI',
+		"Segoe UI",
 		Roboto,
 		Ubuntu,
 		Cantarell,
-		'Noto Sans',
+		"Noto Sans",
 		sans-serif;
 }
 
 // Subtle gradient background
 .nfd-onboarding-bg {
-	background: radial-gradient(
-			ellipse 80% 60% at 15% 20%,
-			rgba( 23, 108, 223, 0.1 ) 0%,
-			transparent 60%
-		),
-		radial-gradient( ellipse 70% 50% at 85% 75%, rgba( 67, 56, 202, 0.08 ) 0%, transparent 55% ),
-		radial-gradient( ellipse 50% 40% at 60% 40%, rgba( 100, 80, 220, 0.06 ) 0%, transparent 50% ),
-		radial-gradient( ellipse 60% 50% at 30% 80%, rgba( 56, 130, 240, 0.06 ) 0%, transparent 55% ),
-		radial-gradient( ellipse 40% 35% at 75% 15%, rgba( 120, 90, 255, 0.05 ) 0%, transparent 50% ),
-		linear-gradient( 180deg, #ffffff 0%, #f5f8ff 50%, #edf2ff 100% );
+	background:
+		radial-gradient(ellipse 80% 60% at 15% 20%, rgba(23, 108, 223, 0.1) 0%, transparent 60%),
+		radial-gradient(ellipse 70% 50% at 85% 75%, rgba(67, 56, 202, 0.08) 0%, transparent 55%),
+		radial-gradient(ellipse 50% 40% at 60% 40%, rgba(100, 80, 220, 0.06) 0%, transparent 50%),
+		radial-gradient(ellipse 60% 50% at 30% 80%, rgba(56, 130, 240, 0.06) 0%, transparent 55%),
+		radial-gradient(ellipse 40% 35% at 75% 15%, rgba(120, 90, 255, 0.05) 0%, transparent 50%),
+		linear-gradient(180deg, #fff 0%, #f5f8ff 50%, #edf2ff 100%);
 	background-attachment: fixed;
 }

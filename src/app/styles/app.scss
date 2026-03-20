@@ -1,6 +1,8 @@
-@use 'shell';
-@use 'components';
-
-@import url( 'https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap' );
-
-@import 'tailwind.css';
+@use "shell";
+@use "components";
+/* stylelint-disable function-url-quotes */
+/* stylelint-disable @stylistic/max-line-length */
+@import url("https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap");
+/* stylelint-enable @stylistic/max-line-length */
+/* stylelint-enable function-url-quotes */
+@import "tailwind.css";
