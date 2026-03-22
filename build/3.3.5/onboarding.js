@@ -48120,7 +48120,6 @@ if (runtimeDataObjectIsMounted()) {
 
     // Hydrate the Redux store with server-side runtime data.
     (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.dispatch)(_data_store__WEBPACK_IMPORTED_MODULE_7__.nfdOnboardingStore).setRuntimeSlice(window.nfdOnboarding.runtime);
-    (0,_data_store__WEBPACK_IMPORTED_MODULE_7__.initializeStoreDbSyncServices)();
     const NFD_ONBOARDING_ELEMENT_ID = 'nfd-onboarding';
     const appTarget = document.getElementById(NFD_ONBOARDING_ELEMENT_ID);
 

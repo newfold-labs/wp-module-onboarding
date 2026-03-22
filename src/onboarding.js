@@ -6,7 +6,7 @@ import { dispatch } from '@wordpress/data';
 import { onboardingRestURL, startOnboarding } from '@/utils/api';
 import { CATEGORY } from '@/utils/analytics/hiive/constants';
 import { POSTHOG_PUBLIC } from '@/data/constants';
-import { nfdOnboardingStore, initializeStoreDbSyncServices } from '@/data/store';
+import { nfdOnboardingStore } from '@/data/store';
 import { isCypress } from '@/utils/helpers';
 import './webpack-public-path';
 import { PostHogProvider } from 'posthog-js/react';
@@ -86,7 +86,6 @@ if ( runtimeDataObjectIsMounted() ) {
 		dispatch( nfdOnboardingStore ).setRuntimeSlice(
 			window.nfdOnboarding.runtime
 		);
-		initializeStoreDbSyncServices();
 
 		const NFD_ONBOARDING_ELEMENT_ID = 'nfd-onboarding';
 		const appTarget = document.getElementById( NFD_ONBOARDING_ELEMENT_ID );
