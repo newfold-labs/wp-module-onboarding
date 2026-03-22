@@ -174,13 +174,13 @@ final class Plugins {
 			$plan = 'ecommerce';
 		}
 		if ( $plan && isset( self::$init_list[ $plan ] ) ) {
-			// The Default plugins for a specific flow
+			// Default ecommerce plugins
 			if ( isset( self::$init_list[ $plan ]['default'] ) ) {
 				$init_list = array_merge( $init_list, self::$init_list[ $plan ]['default'] );
 			}
 
 			$current_brand = Bluehost::get_current_brand();
-			// The Default plugins for a certain flow and brand
+			// Brand specific ecommerce plugins
 			if ( isset( self::$init_list[ $plan ][ $current_brand ]['default'] ) ) {
 				$init_list = array_merge( $init_list, self::$init_list[ $plan ][ $current_brand ]['default'] );
 			}
