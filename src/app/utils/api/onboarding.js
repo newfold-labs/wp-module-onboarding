@@ -85,15 +85,6 @@ export const completeOnboarding = async ( selectedSitegenHomepage ) => {
 	);
 };
 
-export const completeBlueprintOnboarding = async () => {
-	return await resolve(
-		apiFetch( {
-			url: onboardingRestURL( 'app/complete-blueprint' ),
-			method: 'POST',
-		} ).then()
-	);
-};
-
 /**
  * Disable the site coming soon page.
  *

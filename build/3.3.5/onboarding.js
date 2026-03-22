@@ -45685,7 +45685,7 @@ async function runNavigation({
   return 'Skipped — no pages';
 }
 async function runFinalize() {
-  const result = await (0,_utils_api_onboarding__WEBPACK_IMPORTED_MODULE_1__.completeBlueprintOnboarding)();
+  const result = await (0,_utils_api_onboarding__WEBPACK_IMPORTED_MODULE_1__.completeOnboarding)();
   if (result?.error) {
     throw result.error;
   }
@@ -46925,7 +46925,6 @@ async function streamSSE(response, onEvent) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   completeBlueprintOnboarding: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.completeBlueprintOnboarding),
 /* harmony export */   completeOnboarding: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.completeOnboarding),
 /* harmony export */   continuouslyFireWpCron: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.continuouslyFireWpCron),
 /* harmony export */   disableComingSoon: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.disableComingSoon),
@@ -47013,7 +47012,6 @@ async function getSiteMigrateUrl() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   completeBlueprintOnboarding: () => (/* binding */ completeBlueprintOnboarding),
 /* harmony export */   completeOnboarding: () => (/* binding */ completeOnboarding),
 /* harmony export */   continuouslyFireWpCron: () => (/* binding */ continuouslyFireWpCron),
 /* harmony export */   disableComingSoon: () => (/* binding */ disableComingSoon),
@@ -47107,12 +47105,6 @@ const completeOnboarding = async selectedSitegenHomepage => {
     body: JSON.stringify({
       selected_sitegen_homepage: selectedSitegenHomepage
     })
-  }).then());
-};
-const completeBlueprintOnboarding = async () => {
-  return await (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_2__.resolve)(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
-    url: onboardingRestURL('app/complete-blueprint'),
-    method: 'POST'
   }).then());
 };
 

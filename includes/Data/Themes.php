@@ -25,7 +25,7 @@ class Themes {
 		$theme = self::get_data()['bluehostBlueprint'];
 
 		if ($with_installer_data) {
-			$theme['installer_data'] = ThemeInstallerData::get()[$theme['slug']];
+			$theme['installer_data'] = ThemeInstallerData::get()['nfd_slugs'][$theme['slug']];
 		}
 
 		return $theme;
