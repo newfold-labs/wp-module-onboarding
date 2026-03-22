@@ -2,8 +2,6 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
-use NewfoldLabs\WP\Module\Onboarding\RestApi\RestApiFilter;
-
 /**
  * Instantiate controllers and register routes.
  */
@@ -17,23 +15,11 @@ final class RestApi {
 	protected $controllers = array(
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\AppController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\BlueprintsController',
-		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteImagesController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\PluginsController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\ReduxStateController',
-		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeVariationsController',
-		'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ApprovedThemesController',
-		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\Themes\\PatternsController',
-		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\FlowController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SettingsController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\EventsController',
-		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SitePagesController',
-		'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeInstallerController',
-		'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeFontsController',
-		'NewfoldLabs\WP\\Module\\Onboarding\\RestApi\\Themes\\ThemeColorsController',
-		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteClassificationController',
-		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteGenController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\LogoGenController',
-		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\PreviewsController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\DesignController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\GlobalStylesController',
 	);
@@ -43,8 +29,6 @@ final class RestApi {
 	 */
 	public function __construct() {
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
-		// create an instance of the RestApiFilter to filter the responses for header menu navigation
-		new RestApiFilter();
 	}
 
 	/**

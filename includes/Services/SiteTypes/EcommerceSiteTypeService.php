@@ -12,7 +12,7 @@ use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginActivationTaskManager;
 use NewfoldLabs\WP\Module\Installer\TaskManagers\PluginInstallTaskManager;
 use NewfoldLabs\WP\Module\Installer\Tasks\PluginActivationTask;
 use NewfoldLabs\WP\Module\Installer\Tasks\PluginInstallTask;
-use NewfoldLabs\WP\Module\Onboarding\Data\Plugins as LegacyPlugins;
+use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
 
 /**
  * Ecommerce site type service.
@@ -166,7 +166,7 @@ class EcommerceSiteTypeService {
 	 * @return array
 	 */
 	public static function get_ecommerce_plugins(): array {
-		return LegacyPlugins::get_ecommerce_plugins();
+		return Plugins::get_ecommerce_plugins();
 	}
 
 	/**

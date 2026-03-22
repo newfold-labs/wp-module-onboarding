@@ -1,10 +1,8 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding;
 
-use NewfoldLabs\WP\Module\Onboarding\Data\Data;
+use NewfoldLabs\WP\Module\Onboarding\Data\Runtime;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
-
-use function WP_Forge\Helpers\dataGet;
 
 /**
  * Contains functionalities that redirect users to onboarding upon logging into WordPress.
@@ -64,19 +62,13 @@ class LoginRedirect {
 			return apply_filters( 'nfd_build_url', admin_url( '/index.php?page=' . WP_Admin::$slug ) );
 		}
 
-		// Don't redirect to onboarding if onboarding was exited or completed.
-		$flow_data = get_option( Options::get_option_name( 'flow' ), false );
-		if ( dataGet( $flow_data, 'hasExited' ) || dataGet( $flow_data, 'isComplete' ) ) {
-			return $original_redirect;
-		}
-
 		// Don't redirect to onboarding if the site is not a fresh installation.
-		if ( false === Data::is_fresh_installation() ) {
+		if ( false === Runtime::is_fresh_installation() ) {
 			return $original_redirect;
 		}
 
 		// Don't redirect to onboarding if the 'coming_soon' mode is off. The user has launched their site.
-		if ( ! Data::coming_soon() ) {
+		if ( ! Runtime::coming_soon() ) {
 			return $original_redirect;
 		}
 

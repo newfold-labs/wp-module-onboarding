@@ -1,8 +1,6 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
-use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Onboarding\Data\SiteFeatures;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 
@@ -42,30 +40,6 @@ class PluginsController {
 				),
 			)
 		);
-
-		\register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/initialize/activate',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'activate_init_plugins' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				),
-			)
-		);
-
-		\register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/site-features',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_site_features' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				),
-			)
-		);
 	}
 
 	/**
@@ -76,34 +50,6 @@ class PluginsController {
 	public function initialize() {
 
 		if ( PluginService::initialize() ) {
-			return new \WP_REST_Response(
-				array(),
-				202
-			);
-		}
-
-		return new \WP_REST_Response(
-			array(),
-			500
-		);
-	}
-
-	/**
-	 * Retrieves all the site features.
-	 *
-	 * @return array|\WP_Error
-	 */
-	public function get_site_features() {
-		return SiteFeatures::get_with_selections();
-	}
-
-	/**
-	 * Activate the initial set of installed plugins.
-	 *
-	 * @return \WP_REST_Response
-	 */
-	public function activate_init_plugins() {
-		if ( PluginService::activate_init_plugins() ) {
 			return new \WP_REST_Response(
 				array(),
 				202
