@@ -27,6 +27,11 @@ final class Plugins {
 				'priority' => 250,
 			),
 			array(
+				'slug'     => 'icon-block',
+				'activate' => true,
+				'priority' => 255,
+			),
+			array(
 				'slug'     => 'wordpress-seo',
 				'activate' => true,
 				'priority' => 260,
