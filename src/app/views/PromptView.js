@@ -18,7 +18,7 @@ const PromptView = ( { prompt, setPrompt, onSubmit } ) => {
 			initial={ { opacity: 1 } }
 			exit={ { opacity: 0, y: -30 } }
 			transition={ { duration: 0.35, ease: 'easeInOut' } }
-			className="nfd-flex nfd-flex-1 nfd-flex-col nfd-items-center nfd-justify-center nfd-px-6 nfd-pb-10"
+			className="nfd-flex nfd-flex-1 nfd-flex-col nfd-items-center nfd-pt-[10vh] md:nfd-pt-[22vh] nfd-px-6 nfd-pb-10"
 		>
 			<div className="nfd-flex nfd-flex-col nfd-items-center nfd-w-full nfd-max-w-[710px] nfd-gap-10">
 				<div className="nfd-text-center">
