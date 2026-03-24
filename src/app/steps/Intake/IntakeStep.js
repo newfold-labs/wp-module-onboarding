@@ -7,6 +7,8 @@ import { nfdOnboardingStore } from '@/data/store';
 import { OnboardingEvent, trackOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_INTAKE_PROMPT_SET, ACTION_SITE_TYPE_SET } from '@/utils/analytics/hiive/constants';
 import { SiteTitleInput, PromptInput, calculatePromptStrength, SiteTypeSelector } from '.';
+import { completeBlueprintOnboarding } from '@/utils/api/onboarding';
+import { wpAdminPage } from '@/data/constants';
 
 const IntakeStep = () => {
 	// Initiale state values.
@@ -35,6 +37,14 @@ const IntakeStep = () => {
 	};
 
 	const handleNext = () => {
+		// If prompt value is 'skip', skip the onboarding.
+		if ( promptValue.trim().toLowerCase() === 'skip' ) {
+			completeBlueprintOnboarding();
+			// redirect to wordpress dashboard
+			window.location.href = wpAdminPage;
+			return;
+		}
+
 		dispatch( nfdOnboardingStore ).setInputSlice( {
 			siteType: siteTypeValue,
 			siteTitle: siteTitleValue.trim(),
