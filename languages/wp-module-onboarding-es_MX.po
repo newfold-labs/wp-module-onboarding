@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-03-24T16:37:18+00:00\n"
 "Language: es_MX\n"
 "X-Domain: wp-module-onboarding\n"
 "X-Generator: WP-CLI 2.8.1\n"
@@ -44,6 +44,12 @@ msgstr "Actualizar WordPress"
 msgid "There was an error Upgrading WordPress."
 msgstr "Hubo un error al actualizar WordPress."
 
+#. translators: %d is the index of the palette
+#: includes/RestApi/DesignController.php:212
+#, php-format
+msgid "Palette %d"
+msgstr "Paleta %d"
+
 #: includes/RestApi/EventsController.php:68
 msgid "Event action"
 msgstr "Acción del evento"
@@ -64,9 +70,21 @@ msgstr "La solicitud no contiene un arreglo de eventos."
 msgid "Some events failed."
 msgstr "Algunos eventos fallaron."
 
+#: includes/RestApi/FlowController.php:154
+msgid "Flow data does not exist to generate a child theme."
+msgstr "Los datos de flujo no existen para generar un tema secundario."
+
+#: includes/RestApi/FlowController.php:195
+msgid "Success."
+msgstr "Éxito"
+
 #: includes/RestApi/SiteGenController.php:331
 msgid "Error at Regenerating home pages."
 msgstr "Error al regenerar las páginas de inicio."
+
+#: includes/RestApi/SiteGenController.php:397
+msgid "Error at Setting up the nav menu."
+msgstr "Error al configurar el menú de navegación."
 
 #: includes/RestApi/SitePagesController.php:106
 #: includes/Services/SiteGenService.php:122
@@ -85,30 +103,6 @@ msgstr "No se encontraron patrones."
 msgid "No Pattern Found."
 msgstr "No se encontró ningún patrón."
 
-#: includes/Services/EventService.php:33
-msgid "Bad event structure/value."
-msgstr "Estructura/valor de evento incorrecto."
-
-#: build/3.3.5/onboarding-design-studio.js:1
-msgid "Colors"
-msgstr "Colores"
-
-#: build/3.3.5/onboarding-design-studio.js:1
-msgid "Primary"
-msgstr "Primario"
-
-#: build/3.3.5/onboarding-design-studio.js:1
-msgid "Secondary"
-msgstr "Secundario"
-
-#: includes/RestApi/FlowController.php:154
-msgid "Flow data does not exist to generate a child theme."
-msgstr "Los datos de flujo no existen para generar un tema secundario."
-
-#: includes/RestApi/FlowController.php:195
-msgid "Success."
-msgstr "Éxito"
-
 #: includes/RestApi/Themes/ThemeVariationsController.php:113
 msgid "The id of a template"
 msgstr "El id de una plantilla"
@@ -124,6 +118,24 @@ msgstr "Los ajustes personalizados"
 #: includes/RestApi/Themes/ThemeVariationsController.php:251
 msgid "Global style customization created."
 msgstr "Personalización de estilo global creada."
+
+#: includes/Services/Ai/AiServiceRequest.php:181
+msgid "An unknown error occurred"
+msgstr "Se ha producido un error desconocido"
+
+#: includes/Services/AppService.php:75
+#: includes/Services/AppService.php:99
+msgid "Help us improve"
+msgstr "Ayúdanos a mejorar"
+
+#: includes/Services/AppService.php:76
+#: includes/Services/AppService.php:100
+msgid "How satisfied were you with the ease of creating your website?"
+msgstr "¿Qué tan satisfecho estabas con la facilidad de crear tu sitio web?"
+
+#: includes/Services/EventService.php:33
+msgid "Bad event structure/value."
+msgstr "Estructura/valor de evento incorrecto."
 
 #: includes/Services/Webfonts.php:118
 msgid "Webfont font family must be a non-empty string."
@@ -145,142 +157,130 @@ msgstr "El peso de la fuente web debe ser una cadena o un número entero con el 
 msgid "Build with AI"
 msgstr "Construir con IA"
 
-#. translators: %d is the index of the palette
-#: includes/RestApi/DesignController.php:212
-#, php-format
-msgid "Palette %d"
-msgstr "Paleta %d"
-
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Base"
 msgstr "Base"
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Contrast"
 msgstr "Contraste"
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
+msgid "Primary"
+msgstr "Primario"
+
+#: build/3.3.6/onboarding-design-studio.js:1
+msgid "Secondary"
+msgstr "Secundario"
+
+#: build/3.3.6/onboarding-design-studio.js:1
+msgid "Colors"
+msgstr "Colores"
+
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Select a palette or customize individual colors."
 msgstr "Seleccione una paleta o personalice colores individuales."
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Palette"
 msgstr "Paleta"
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Pick custom colors"
 msgstr "Elige colores personalizados"
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Site Logo"
 msgstr "Logotipo del sitio"
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Replace logo"
 msgstr "Reemplazar logotipo"
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Replace"
 msgstr "Reemplazar"
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Current logo"
 msgstr "Logotipo actual"
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Remove"
 msgstr "Eliminar"
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Upload a logo to represent your brand."
 msgstr "Sube un logotipo para representar tu marca."
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Upload Logo"
 msgstr "Subir logotipo"
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "You don't have permission to change the site logo."
 msgstr "No tienes permiso para cambiar el logotipo del sitio."
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
 msgstr "Tu logotipo aparecerá en el encabezado de tu sitio. Para obtener los mejores resultados, cargue una imagen con un fondo transparente en formato PNG."
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Primary color"
 msgstr "Color primario"
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Secondary color"
 msgstr "Color secundario"
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Paragraph text in your chosen font."
 msgstr "Texto de párrafo en la fuente elegida."
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Select a font style."
 msgstr "Seleccione un estilo de fuente."
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Font Pairings"
 msgstr "Combinaciones de fuentes"
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "No font pairings available."
 msgstr "No hay combinaciones de fuentes disponibles."
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
 msgstr "Elige una combinación de fuentes que refleje la personalidad de tu marca. Cada combinación se selecciona cuidadosamente para mejorar la legibilidad y el atractivo visual en todo su sitio."
 
-#: build/3.3.5/onboarding-design-studio.js:1
+#: build/3.3.6/onboarding-design-studio.js:1
 msgid "Design Studio"
 msgstr "Estudio de diseño"
 
-#: includes/RestApi/SiteGenController.php:397
-msgid "Error at Setting up the nav menu."
-msgstr "Error al configurar el menú de navegación."
-
-#: includes/Services/Ai/AiServiceRequest.php:181
-msgid "An unknown error occurred"
-msgstr "Se ha producido un error desconocido"
-
-#: includes/Services/AppService.php:75
-#: includes/Services/AppService.php:99
-msgid "Help us improve"
-msgstr "Ayúdanos a mejorar"
-
-#: includes/Services/AppService.php:76
-#: includes/Services/AppService.php:100
-msgid "How satisfied were you with the ease of creating your website?"
-msgstr "¿Qué tan satisfecho estabas con la facilidad de crear tu sitio web?"
-
-#: build/3.3.5/onboarding.js:1
-msgid "Sorry, let's try a different approach."
-msgstr "Perdón, probemos otro enfoque."
-
-#: build/3.3.5/onboarding.js:1
-msgid "Pick your website"
-msgstr "Elige tu página web"
-
-#: build/3.3.5/onboarding.js:1
-msgid "We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favorite — we'll guide you through customizing it!"
-msgstr "Lo sentimos, nuestra herramienta de generación de sitios no funciona ahora mismo. Mientras tanto, aquí tienes tres plantillas de sitios únicas para empezar. Elige tu favorito — ¡te guiaremos para personalizarlo!"
-
-#: build/3.3.5/onboarding.js:1
-msgid "Here are 3 unique designs for you to start with. Pick your favorite to customize it!"
-msgstr "Aquí tienes 3 diseños únicos para empezar. ¡Elige tu favorito para personalizarlo!"
-
-#: build/3.3.5/onboarding.js:1
+#: build/3.3.6/onboarding.js:1
 msgid "Uh oh! Something went wrong. Please try again."
 msgstr "¡Uy! Algo salió mal. Por favor, inténtalo de nuevo."
 
-#: build/3.3.5/onboarding.js:1
+#: build/3.3.6/onboarding.js:1
 msgid "Your site logo has been set!"
 msgstr "¡El logo de tu sitio ha sido fijado!"
 
-#: build/3.3.5/onboarding.js:1
+#: build/3.3.6/onboarding.js:1
 msgid "Setting your site logo…"
 msgstr "Configurar el logo de tu sitio..."
+
+#: build/3.3.6/onboarding.js:1
+msgid "Sorry, let's try a different approach."
+msgstr "Perdón, probemos otro enfoque."
+
+#: build/3.3.6/onboarding.js:1
+msgid "Pick your website"
+msgstr "Elige tu página web"
+
+#: build/3.3.6/onboarding.js:1
+msgid "We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favorite — we'll guide you through customizing it!"
+msgstr "Lo sentimos, nuestra herramienta de generación de sitios no funciona ahora mismo. Mientras tanto, aquí tienes tres plantillas de sitios únicas para empezar. Elige tu favorito — ¡te guiaremos para personalizarlo!"
+
+#: build/3.3.6/onboarding.js:1
+msgid "Here are 3 unique designs for you to start with. Pick your favorite to customize it!"
+msgstr "Aquí tienes 3 diseños únicos para empezar. ¡Elige tu favorito para personalizarlo!"
