@@ -6,10 +6,7 @@ import {
 	updateTemplatePart,
 	createNavigationMenu,
 } from '@/utils/api/wordpress';
-import {
-	setGlobalStylesColorPalette,
-	completeBlueprintOnboarding,
-} from '@/utils/api/onboarding';
+import { setGlobalStylesColorPalette, completeOnboarding } from '@/utils/api/onboarding';
 import { transformColorPalette } from '@/hooks/publish/tasks';
 
 /**
@@ -148,7 +145,7 @@ export async function runNavigation( { ctx } ) {
 }
 
 export async function runFinalize() {
-	const result = await completeBlueprintOnboarding();
+	const result = await completeOnboarding();
 	if ( result?.error ) {
 		throw result.error;
 	}
