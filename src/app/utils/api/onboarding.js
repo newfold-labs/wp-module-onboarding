@@ -73,14 +73,11 @@ export const startOnboarding = async ( data = {} ) => {
 	);
 };
 
-export const completeOnboarding = async ( selectedSitegenHomepage ) => {
+export const completeOnboarding = async () => {
 	return await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'app/complete' ),
 			method: 'POST',
-			body: JSON.stringify( {
-				selected_sitegen_homepage: selectedSitegenHomepage,
-			} ),
 		} ).then()
 	);
 };
