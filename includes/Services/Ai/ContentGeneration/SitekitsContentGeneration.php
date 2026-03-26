@@ -121,7 +121,9 @@ class SitekitsContentGeneration {
 			$processed_sitekit['header'],
 			$processed_sitekit['footer'],
 			$processed_sitekit['pages'],
-			$processed_sitekit['color_palette']
+			$processed_sitekit['color_palette'],
+			$processed_sitekit['global_styles'],
+			$processed_sitekit['font_pair']
 		);
 
 		return $sitekit;
@@ -151,6 +153,10 @@ class SitekitsContentGeneration {
 
 		// Attach a color palette to the sitekit.
 		$result['color_palette'] = SiteGenService::get_instance()->get_color_palette();
+
+		// Pass through global styles and font pair from the ai-platform response.
+		$result['global_styles'] = $sitekit_item['global_styles'] ?? null;
+		$result['font_pair']     = $sitekit_item['font_pair'] ?? null;
 
 		return $result;
 	}

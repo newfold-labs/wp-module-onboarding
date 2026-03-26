@@ -52,6 +52,20 @@ class Sitekit {
 	private $color_palette;
 
 	/**
+	 * Sitekit global styles.
+	 *
+	 * @var array|null
+	 */
+	private $global_styles;
+
+	/**
+	 * Sitekit font pair.
+	 *
+	 * @var array|null
+	 */
+	private $font_pair;
+
+	/**
 	 * Sitekit constructor.
 	 *
 	 * @param string           $slug Sitekit slug.
@@ -60,11 +74,13 @@ class Sitekit {
 	 * @param string           $footer Sitekit footer.
 	 * @param Pages            $pages Pages collection.
 	 * @param ColorPalette|null $color_palette Color palette (optional).
+	 * @param array|null       $global_styles Global styles (optional).
+	 * @param array|null       $font_pair Font pair data (optional).
 	 * @throws \InvalidArgumentException When parameters are invalid.
 	 */
-	public function __construct( string $slug, string $title, string $header, string $footer, Pages $pages, ColorPalette $color_palette = null ) {
+	public function __construct( string $slug, string $title, string $header, string $footer, Pages $pages, ColorPalette $color_palette = null, ?array $global_styles = null, ?array $font_pair = null ) {
 		$this->validate_parameters( $slug, $title, $header, $footer, $pages );
-		$this->set_properties( $slug, $title, $header, $footer, $pages, $color_palette );
+		$this->set_properties( $slug, $title, $header, $footer, $pages, $color_palette, $global_styles, $font_pair );
 	}
 
 	/**
@@ -109,14 +125,18 @@ class Sitekit {
 	 * @param string           $footer Sitekit footer.
 	 * @param Pages            $pages Pages collection.
 	 * @param ColorPalette|null $color_palette Color palette.
+	 * @param array|null       $global_styles Global styles.
+	 * @param array|null       $font_pair Font pair data.
 	 */
-	private function set_properties( string $slug, string $title, string $header, string $footer, Pages $pages, ColorPalette $color_palette = null ): void {
+	private function set_properties( string $slug, string $title, string $header, string $footer, Pages $pages, ColorPalette $color_palette = null, ?array $global_styles = null, ?array $font_pair = null ): void {
 		$this->slug          = trim( $slug );
 		$this->title         = trim( $title );
 		$this->header        = trim( $header );
 		$this->footer        = trim( $footer );
 		$this->pages         = $pages;
 		$this->color_palette = $color_palette;
+		$this->global_styles = $global_styles;
+		$this->font_pair     = $font_pair;
 	}
 
 	/**
@@ -174,6 +194,24 @@ class Sitekit {
 	}
 
 	/**
+	 * Get global styles.
+	 *
+	 * @return array|null
+	 */
+	public function get_global_styles(): ?array {
+		return $this->global_styles;
+	}
+
+	/**
+	 * Get font pair.
+	 *
+	 * @return array|null
+	 */
+	public function get_font_pair(): ?array {
+		return $this->font_pair;
+	}
+
+	/**
 	 * Get page content by page key.
 	 *
 	 * @param string $page_key The page key to retrieve content for.
@@ -190,12 +228,14 @@ class Sitekit {
 	 */
 	public function onboarding_preview_data(): array {
 		return array(
-			'slug'    => $this->slug,
-			'title'   => $this->title,
-			'header'  => $this->header,
-			'footer'  => $this->footer,
-			'content' => $this->pages->get_front_page()->get_content(),
-			'color'   => $this->color_palette ? $this->color_palette->to_array() : null,
+			'slug'          => $this->slug,
+			'title'         => $this->title,
+			'header'        => $this->header,
+			'footer'        => $this->footer,
+			'content'       => $this->pages->get_front_page()->get_content(),
+			'color'         => $this->color_palette ? $this->color_palette->to_array() : null,
+			'global_styles' => $this->global_styles,
+			'font_pair'     => $this->font_pair,
 		);
 	}
 
@@ -215,6 +255,14 @@ class Sitekit {
 
 		if ( null !== $this->color_palette ) {
 			$data['color_palette'] = $this->color_palette->to_array();
+		}
+
+		if ( null !== $this->global_styles ) {
+			$data['global_styles'] = $this->global_styles;
+		}
+
+		if ( null !== $this->font_pair ) {
+			$data['font_pair'] = $this->font_pair;
 		}
 
 		return $data;

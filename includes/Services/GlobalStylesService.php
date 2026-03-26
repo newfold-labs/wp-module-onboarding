@@ -9,14 +9,14 @@ class GlobalStylesService {
 	 *
 	 * @var array
 	 */
-	protected array $global_styles;
+	protected array $global_styles = [];
 
 	/**
 	 * Active global styles post ID.
 	 *
 	 * @var int
 	 */
-	protected int $global_styles_id;
+	protected int $global_styles_id = 0;
 
 	/**
 	 * Global Styles Service constructor.
@@ -26,7 +26,7 @@ class GlobalStylesService {
 	public function __construct() {
 		$user_global_styles = self::get_user_global_styles();
 		if ( $user_global_styles ) {
-			$this->global_styles    = json_decode( $user_global_styles['post_content'], true );
+			$this->global_styles    = json_decode( $user_global_styles['post_content'], true ) ?? [];
 			$this->global_styles_id = $user_global_styles['ID'];
 		}
 		return $this;
@@ -97,10 +97,43 @@ class GlobalStylesService {
 	}
 
 	/**
-	 * Update global styles.
+	 * Set the full global styles from a sitekit.
+	 * Writes the incoming data directly into the global styles post.
+	 * Everything in the incoming payload is applied as-is — nothing is skipped or filtered.
 	 *
-	 * @param int|null   $post_id The global styles post id to update. If not provided, the active global styles will be updated.
-	 * @param array|null $post_content array of global styles to inject into the post content. If not provided, the active global styles will be updated.
+	 * @param array $global_styles The global styles to apply.
+	 * @return true|\WP_Error True on success, WP_Error on failure.
+	 */
+	public function set_global_styles( array $global_styles ) {
+		try {
+			// Merge each top-level key from the incoming data into the existing global styles.
+			foreach ( $global_styles as $key => $value ) {
+				if ( is_array( $value ) && is_array( $this->global_styles[ $key ] ?? null ) ) {
+					$this->global_styles[ $key ] = array_replace_recursive(
+						$this->global_styles[ $key ],
+						$value
+					);
+				} else {
+					$this->global_styles[ $key ] = $value;
+				}
+			}
+
+			$result = $this->update_active_global_styles();
+			if ( is_wp_error( $result ) ) {
+				throw new \Exception( $result->get_error_message() );
+			}
+
+			return true;
+		} catch ( \Exception $e ) {
+			return new \WP_Error( 'set_global_styles_error', $e->getMessage() );
+		}
+	}
+
+	/**
+	 * Update global styles post.
+	 *
+	 * @param int|null   $post_id The global styles post id to update.
+	 * @param array|null $post_content array of global styles to inject into the post content.
 	 * @return int|\WP_Error The updated post id on success, \WP_Error on failure.
 	 */
 	protected function update_active_global_styles( ?array $post_content = null, ?int $post_id = null ) {
@@ -109,7 +142,7 @@ class GlobalStylesService {
 
 		$result = wp_update_post( [
 			'ID'           => $post_id,
-			'post_content' => wp_json_encode( $post_content ),
+			'post_content' => wp_slash( wp_json_encode( $post_content ) ),
 		], true );
 		if ( is_wp_error( $result ) ) {
 			return $result;
@@ -120,4 +153,3 @@ class GlobalStylesService {
 		return $result;
 	}
 }
-// $sitegen_state = \get_option( Options::get_option_name( 'state_sitegen' ) );
