@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Services\AppService;
+use NewfoldLabs\WP\Module\Installer\Data\Plugins;
 
 /**
  * AppController class for handling onboarding application REST API endpoints.
@@ -54,6 +55,17 @@ class AppController {
 				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => array( $this, 'complete' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/enable-jetpack-modules',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'enable_jetpack_modules' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -115,6 +127,26 @@ class AppController {
 				500
 			);
 		}
+	}
+
+	/**
+	 * Enable Jetpack Forms and Blocks modules.
+	 * Must be called before creating pages that contain Jetpack blocks.
+	 *
+	 * @return \WP_REST_Response The response object.
+	 */
+	public function enable_jetpack_modules(): \WP_REST_Response {
+		if ( ! class_exists( Plugins::class ) ) {
+			return new \WP_REST_Response( array( 'error' => 'Installer module not available.' ), 500 );
+		}
+
+		$forms  = Plugins::toggle_jetpack_module( 'contact-form', true );
+		$blocks = Plugins::toggle_jetpack_module( 'blocks', true );
+
+		return new \WP_REST_Response(
+			array( 'contact-form' => $forms, 'blocks' => $blocks ),
+			200
+		);
 	}
 
 	/**
