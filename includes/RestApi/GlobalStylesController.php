@@ -5,6 +5,11 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Services\GlobalStylesService;
 
+/**
+ * Class GlobalStylesController
+ *
+ * Handles REST API endpoints for managing global styles, fonts, and color palettes.
+ */
 class GlobalStylesController {
 
 	/**
@@ -21,6 +26,11 @@ class GlobalStylesController {
 	 */
 	protected $rest_base = '/global-styles';
 
+	/**
+	 * Registers rest routes for this controller class.
+	 *
+	 * @return void
+	 */
 	public function register_routes() {
 		\register_rest_route(
 			$this->namespace,
@@ -60,6 +70,11 @@ class GlobalStylesController {
 		);
 	}
 
+	/**
+	 * Get the arguments for the set color palette endpoint.
+	 *
+	 * @return array
+	 */
 	public function get_set_color_palette_args() {
 		return array(
 			'color_palette' => array(
@@ -119,7 +134,12 @@ class GlobalStylesController {
 		}
 
 		$results = array();
-		$fonts   = array_filter( [ $font_pair['primary'] ?? null, $font_pair['secondary'] ?? null ] );
+		$fonts   = array_filter(
+			array(
+				$font_pair['primary'] ?? null,
+				$font_pair['secondary'] ?? null,
+			)
+		);
 
 		foreach ( $fonts as $font ) {
 			$slug = $font['slug'] ?? '';
@@ -128,20 +148,27 @@ class GlobalStylesController {
 			}
 
 			// Check if already installed with working font files.
-			$existing = get_posts( array(
-				'post_type'   => 'wp_font_family',
-				'name'        => $slug,
-				'post_status' => 'publish',
-				'numberposts' => 1,
-			) );
+			$existing = get_posts(
+				array(
+					'post_type'   => 'wp_font_family',
+					'name'        => $slug,
+					'post_status' => 'publish',
+					'numberposts' => 1,
+				)
+			);
 			if ( ! empty( $existing ) ) {
-				$faces = get_children( array( 'post_parent' => $existing[0]->ID, 'post_type' => 'wp_font_face' ) );
+				$faces     = get_children(
+					array(
+						'post_parent' => $existing[0]->ID,
+						'post_type'   => 'wp_font_face',
+					)
+				);
 				$has_files = false;
 				if ( ! empty( $faces ) ) {
 					$font_dir_check = wp_get_font_dir();
 					foreach ( $faces as $face ) {
 						$face_data = json_decode( $face->post_content, true );
-						$src = $face_data['src'] ?? '';
+						$src       = $face_data['src'] ?? '';
 						if ( $src && file_exists( str_replace( $font_dir_check['url'], $font_dir_check['path'], $src ) ) ) {
 							$has_files = true;
 							break;
@@ -162,18 +189,23 @@ class GlobalStylesController {
 			}
 
 			// Create font family post.
-			$family_id = wp_insert_post( array(
-				'post_type'    => 'wp_font_family',
-				'post_title'   => $font['name'] ?? $slug,
-				'post_name'    => $slug,
-				'post_status'  => 'publish',
-				'post_content' => wp_json_encode( array(
-					'name'       => $font['name'] ?? $slug,
-					'slug'       => $slug,
-					'fontFamily' => $font['font_family'] ?? $slug,
-					'preview'    => '',
-				) ),
-			), true );
+			$family_id = wp_insert_post(
+				array(
+					'post_type'    => 'wp_font_family',
+					'post_title'   => $font['name'] ?? $slug,
+					'post_name'    => $slug,
+					'post_status'  => 'publish',
+					'post_content' => wp_json_encode(
+						array(
+							'name'       => $font['name'] ?? $slug,
+							'slug'       => $slug,
+							'fontFamily' => $font['font_family'] ?? $slug,
+							'preview'    => '',
+						)
+					),
+				),
+				true
+			);
 
 			if ( is_wp_error( $family_id ) ) {
 				$results[ $slug ] = $family_id->get_error_message();
@@ -206,17 +238,21 @@ class GlobalStylesController {
 
 					$local_url = $font_dir['url'] . '/' . $filename;
 
-					wp_insert_post( array(
-						'post_type'    => 'wp_font_face',
-						'post_parent'  => $family_id,
-						'post_status'  => 'publish',
-						'post_content' => wp_json_encode( array(
-							'fontFamily' => $font['name'] ?? $slug,
-							'fontWeight' => (string) $weight,
-							'fontStyle'  => $style,
-							'src'        => $local_url,
-						) ),
-					) );
+					wp_insert_post(
+						array(
+							'post_type'    => 'wp_font_face',
+							'post_parent'  => $family_id,
+							'post_status'  => 'publish',
+							'post_content' => wp_json_encode(
+								array(
+									'fontFamily' => $font['name'] ?? $slug,
+									'fontWeight' => (string) $weight,
+									'fontStyle'  => $style,
+									'src'        => $local_url,
+								)
+							),
+						)
+					);
 
 					$face_count++;
 				}
@@ -276,15 +312,17 @@ class GlobalStylesController {
 		}
 
 		$service = new GlobalStylesService();
-		$service->set_global_styles( array(
-			'settings' => array(
-				'typography' => array(
-					'fontFamilies' => array(
-						'custom' => $font_families,
+		$service->set_global_styles(
+			array(
+				'settings' => array(
+					'typography' => array(
+						'fontFamilies' => array(
+							'custom' => $font_families,
+						),
 					),
 				),
-			),
-		) );
+			)
+		);
 	}
 
 	/**

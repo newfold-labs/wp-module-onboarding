@@ -68,14 +68,14 @@ class Sitekit {
 	/**
 	 * Sitekit constructor.
 	 *
-	 * @param string           $slug Sitekit slug.
-	 * @param string           $title Sitekit title.
-	 * @param string           $header Sitekit header.
-	 * @param string           $footer Sitekit footer.
-	 * @param Pages            $pages Pages collection.
+	 * @param string            $slug          Sitekit slug.
+	 * @param string            $title         Sitekit title.
+	 * @param string            $header        Sitekit header.
+	 * @param string            $footer        Sitekit footer.
+	 * @param Pages             $pages         Pages collection.
 	 * @param ColorPalette|null $color_palette Color palette (optional).
-	 * @param array|null       $global_styles Global styles (optional).
-	 * @param array|null       $font_pair Font pair data (optional).
+	 * @param array|null        $global_styles Global styles (optional).
+	 * @param array|null        $font_pair     Font pair data (optional).
 	 * @throws \InvalidArgumentException When parameters are invalid.
 	 */
 	public function __construct( string $slug, string $title, string $header, string $footer, Pages $pages, ColorPalette $color_palette = null, ?array $global_styles = null, ?array $font_pair = null ) {
@@ -119,14 +119,14 @@ class Sitekit {
 	/**
 	 * Set properties from parameters.
 	 *
-	 * @param string           $slug Sitekit slug.
-	 * @param string           $title Sitekit title.
-	 * @param string           $header Sitekit header.
-	 * @param string           $footer Sitekit footer.
-	 * @param Pages            $pages Pages collection.
+	 * @param string            $slug          Sitekit slug.
+	 * @param string            $title         Sitekit title.
+	 * @param string            $header        Sitekit header.
+	 * @param string            $footer        Sitekit footer.
+	 * @param Pages             $pages         Pages collection.
 	 * @param ColorPalette|null $color_palette Color palette.
-	 * @param array|null       $global_styles Global styles.
-	 * @param array|null       $font_pair Font pair data.
+	 * @param array|null        $global_styles Global styles.
+	 * @param array|null        $font_pair     Font pair data.
 	 */
 	private function set_properties( string $slug, string $title, string $header, string $footer, Pages $pages, ColorPalette $color_palette = null, ?array $global_styles = null, ?array $font_pair = null ): void {
 		$this->slug          = trim( $slug );

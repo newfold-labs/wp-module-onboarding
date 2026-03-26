@@ -87,6 +87,7 @@ class AppController {
 	/**
 	 * Complete onboarding backend process.
 	 *
+	 * @param \WP_REST_Request $request The request object.
 	 * @return \WP_REST_Response The response object.
 	 */
 	public function complete( \WP_REST_Request $request ): \WP_REST_Response {
@@ -125,7 +126,10 @@ class AppController {
 		$blocks = Plugins::toggle_jetpack_module( 'blocks', true );
 
 		return new \WP_REST_Response(
-			array( 'contact-form' => $forms, 'blocks' => $blocks ),
+			array(
+				'contact-form' => $forms,
+				'blocks'       => $blocks,
+			),
 			200
 		);
 	}
