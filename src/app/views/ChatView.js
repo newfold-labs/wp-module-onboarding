@@ -1,16 +1,9 @@
-import { useState, useCallback } from '@wordpress/element';
 import { motion } from 'motion/react';
-import { WandSparkles } from 'lucide-react';
 import ChatMessage from '@/components/chat/ChatMessage.jsx';
 import ChatInput from '@/components/chat/ChatInput.jsx';
 import ActionButton from '@/components/chat/ActionButton.jsx';
 import TaskProgress from '@/components/progress/TaskProgress.jsx';
 import PublishProgress from '@/components/progress/PublishProgress.jsx';
-import { wpAdminUrl } from '@/data/constants';
-import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
-import { ACTION_ONBOARDING_EXITED } from '@/utils/analytics/hiive/constants';
-
-const EDITOR_REDIRECT_URL = `${ wpAdminUrl }site-editor.php?p=%2F&canvas=edit&referrer=nfd-editor-chat`;
 
 const ChatView = ( {
 	messages,
@@ -24,10 +17,6 @@ const ChatView = ( {
 	onRestart,
 } ) => {
 	const isDisabled = ! inputEnabled || isWaiting;
-	const [ publishComplete, setPublishComplete ] = useState( false );
-	const handlePublishComplete = useCallback( () => {
-		setPublishComplete( true );
-	}, [] );
 
 	return (
 		<motion.div
@@ -55,7 +44,6 @@ const ChatView = ( {
 								key={ msg.id }
 								generationData={ msg.generationData }
 								discoveryData={ msg.discoveryData }
-								onComplete={ handlePublishComplete }
 							/>
 						);
 					}
@@ -81,31 +69,6 @@ const ChatView = ( {
 
 					return <ChatMessage key={ msg.id } message={ msg } />;
 				} ) }
-
-				{ publishComplete && (
-					<motion.div
-						initial={ { opacity: 0, y: 10 } }
-						animate={ { opacity: 1, y: 0 } }
-						transition={ { duration: 0.4, delay: 0.2 } }
-						className="nfd-self-start nfd-p-1"
-					>
-						<motion.button
-							type="button"
-							className="nfd-font-normal nfd-flex nfd-items-center nfd-gap-2 nfd-pl-3.5 nfd-pr-5 nfd-py-2.5 nfd-rounded-full nfd-border-0 nfd-text-white nfd-bg-primary nfd-cursor-pointer"
-							whileHover={ { scale: 1.03 } }
-							whileTap={ { scale: 0.97 } }
-							onClick={ () => {
-								sendOnboardingEvent(
-									new OnboardingEvent( ACTION_ONBOARDING_EXITED, 'site_editor' )
-								);
-								window.location.href = EDITOR_REDIRECT_URL;
-							} }
-						>
-							<WandSparkles size={ 16 } />
-							<span>{ __( 'Customize your site', 'wp-module-onboarding' ) }</span>
-						</motion.button>
-					</motion.div>
-				) }
 
 				<div ref={ messagesEndRef } />
 			</div>

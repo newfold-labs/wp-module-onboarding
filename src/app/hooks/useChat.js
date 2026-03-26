@@ -158,9 +158,10 @@ const useChat = () => {
 					const genItemMatch = event.match( /^sitegen_content_generation_item(.+)_completed$/ );
 					if ( genItemMatch && generationMsgId ) {
 						const backendKey = genItemMatch[ 1 ];
-						const taskKey = GENERATION_ITEM_KEY_MAP[ backendKey ];
-						if ( taskKey ) {
-							completeTask( generationMsgId, taskKey, 'Done' );
+						const taskKeys = GENERATION_ITEM_KEY_MAP[ backendKey ];
+						if ( taskKeys ) {
+							const keys = Array.isArray( taskKeys ) ? taskKeys : [ taskKeys ];
+							keys.forEach( ( key ) => completeTask( generationMsgId, key, 'Done' ) );
 						}
 						return;
 					}

@@ -37,8 +37,13 @@ export const DISCOVERY_TASKS = [
 export const GENERATION_TASKS = [
 	{
 		key: 'template',
-		label: 'Selecting site template',
-		description: 'Choosing the best layout for your site type...',
+		label: 'Designing your website',
+		description: 'Designing the best layout for your site type...',
+	},
+	{
+		key: 'fonts',
+		label: 'Picking the right typography',
+		description: 'Selecting font pairings that fit your brand...',
 	},
 	{
 		key: 'colors',
@@ -86,7 +91,7 @@ export const EVENT_TO_TASK_KEY = DISCOVERY_TASKS.reduce( ( map, t ) => {
  * Backend emits: sitegen_content_generation_item{key}_completed
  */
 export const GENERATION_ITEM_KEY_MAP = {
-	sitekit: 'template',
+	sitekit: [ 'template', 'fonts' ],
 	site_colors: 'colors',
 	site_logo: 'logo',
 	post_types: 'post_types',
