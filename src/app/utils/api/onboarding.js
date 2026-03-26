@@ -85,6 +85,15 @@ export const completeOnboarding = async ( selectedSitegenHomepage ) => {
 	);
 };
 
+export const enableJetpackModules = async () => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'app/enable-jetpack-modules' ),
+			method: 'POST',
+		} ).then()
+	);
+};
+
 export const completeBlueprintOnboarding = async () => {
 	return await resolve(
 		apiFetch( {
@@ -135,6 +144,42 @@ export const disableComingSoon = async () => {
  *
  * await globalStylesSetColorPalette( colorPalette );
  */
+/**
+ * Set global styles (typography, font sizes, element styles) from a sitekit.
+ *
+ * @param {Object} globalStyles The global styles object with 'styles' and/or 'settings' keys.
+ * @return {Promise<Object>} response
+ */
+export const setGlobalStyles = async ( globalStyles ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'global-styles/set-global-styles' ),
+			method: 'POST',
+			data: {
+				global_styles: globalStyles,
+			},
+		} ).then()
+	);
+};
+
+/**
+ * Install fonts from a font pair via server-side download.
+ *
+ * @param {Object} fontPair The font pair data with primary and secondary fonts.
+ * @return {Promise<Object>} response
+ */
+export const installFonts = async ( fontPair ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'global-styles/install-fonts' ),
+			method: 'POST',
+			data: {
+				font_pair: fontPair,
+			},
+		} ).then()
+	);
+};
+
 export const setGlobalStylesColorPalette = async ( colorPalette ) => {
 	return await resolve(
 		apiFetch( {

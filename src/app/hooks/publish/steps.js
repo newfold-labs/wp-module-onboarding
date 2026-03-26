@@ -8,6 +8,9 @@ import {
 } from '@/utils/api/wordpress';
 import {
 	setGlobalStylesColorPalette,
+	setGlobalStyles,
+	installFonts,
+	enableJetpackModules,
 	completeBlueprintOnboarding,
 } from '@/utils/api/onboarding';
 import { transformColorPalette } from '@/hooks/publish/tasks';
@@ -23,6 +26,34 @@ export async function runIdentity( { discoveryData } ) {
 	const tagline = discoveryData?.brand_identity?.tagline || '';
 	await updateSiteSettings( { title, description: tagline } );
 	return 'Title and tagline set';
+}
+
+export async function runFonts( { generationData } ) {
+	const fontPair = generationData.sitekit?.font_pair;
+	if ( ! fontPair ) {
+		return 'Skipped — no font pair';
+	}
+
+	const result = await installFonts( fontPair );
+	if ( result?.error ) {
+		throw result.error;
+	}
+
+	return 'Fonts installed';
+}
+
+export async function runGlobalStyles( { generationData } ) {
+	const globalStyles = generationData.sitekit?.global_styles;
+	if ( ! globalStyles ) {
+		return 'Skipped — no global styles';
+	}
+
+	const result = await setGlobalStyles( globalStyles );
+	if ( result?.error ) {
+		throw result.error;
+	}
+
+	return 'Typography & styles applied';
 }
 
 export async function runColors( { generationData } ) {
@@ -54,6 +85,9 @@ export async function runLogo( { generationData } ) {
 }
 
 export async function runPages( { generationData, ctx } ) {
+	// Silently enable Jetpack Forms and Blocks modules before creating pages.
+	await enableJetpackModules();
+
 	const pages = generationData.sitekit?.pages || [];
 	let homepageId = null;
 	let count = 0;
@@ -160,6 +194,8 @@ export async function runFinalize() {
  */
 export const STEP_RUNNERS = [
 	[ 'identity', runIdentity ],
+	[ 'fonts', runFonts ],
+	[ 'global_styles', runGlobalStyles ],
 	[ 'colors', runColors ],
 	[ 'logo', runLogo ],
 	[ 'pages', runPages ],
