@@ -91,7 +91,8 @@ export const EVENT_TO_TASK_KEY = DISCOVERY_TASKS.reduce( ( map, t ) => {
  * Backend emits: sitegen_content_generation_item{key}_completed
  */
 export const GENERATION_ITEM_KEY_MAP = {
-	sitekit: [ 'template', 'fonts' ],
+	sitekit: 'template',
+	site_fonts: 'fonts',
 	site_colors: 'colors',
 	site_logo: 'logo',
 	post_types: 'post_types',
