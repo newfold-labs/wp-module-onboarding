@@ -11,7 +11,6 @@ import {
 	setGlobalStyles,
 	installFonts,
 	enableJetpackModules,
-	completeBlueprintOnboarding,
 } from '@/utils/api/onboarding';
 import { transformColorPalette } from '@/hooks/publish/tasks';
 
@@ -155,16 +154,9 @@ export async function runArticles( { generationData } ) {
 			}
 		}
 
-		await createPost(
-			article.title,
-			article.content,
-			article.excerpt || '',
-			{
-				...( featuredMediaId
-					? { featured_media: featuredMediaId }
-					: {} ),
-			}
-		);
+		await createPost( article.title, article.content, article.excerpt || '', {
+			...( featuredMediaId ? { featured_media: featuredMediaId } : {} ),
+		} );
 		articleCount++;
 	}
 
@@ -182,7 +174,7 @@ export async function runNavigation( { ctx } ) {
 }
 
 export async function runFinalize() {
-	const result = await completeBlueprintOnboarding();
+	const result = await completeOnboarding();
 	if ( result?.error ) {
 		throw result.error;
 	}

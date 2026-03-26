@@ -7,7 +7,6 @@ use NewfoldLabs\WP\Module\Onboarding\Compatibility\Scan;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Safe_Mode;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Status;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager;
-use NewfoldLabs\WP\Module\Onboarding\Tasks\ImageSideloadTask;
 
 use function NewfoldLabs\WP\ModuleLoader\register;
 
@@ -31,9 +30,6 @@ function nfd_wp_module_onboarding_register() {
 				if ( ! defined( 'NFD_ONBOARDING_DIR' ) ) {
 					define( 'NFD_ONBOARDING_DIR', __DIR__ );
 				}
-				if ( ! defined( 'NFD_ONBOARDING_SCRIPTS_URL' ) ) {
-					define( 'NFD_ONBOARDING_SCRIPTS_URL', $container->plugin()->url . 'vendor/newfold-labs/wp-module-onboarding/src/Scripts' );
-				}
 				if ( ! defined( 'NFD_ONBOARDING_BUILD_DIR' ) && defined( 'NFD_ONBOARDING_VERSION' ) ) {
 					define( 'NFD_ONBOARDING_BUILD_DIR', __DIR__ . '/build/' . NFD_ONBOARDING_VERSION );
 				}
@@ -45,6 +41,9 @@ function nfd_wp_module_onboarding_register() {
 				}
 				if ( ! defined( 'NFD_ONBOARDING_PLUGIN_DIRNAME' ) ) {
 					define( 'NFD_ONBOARDING_PLUGIN_DIRNAME', dirname( $container->plugin()->basename ) );
+				}
+				if ( ! defined( 'NFD_ONBOARDING_BLUEHOST_BRAND' ) ) {
+					define( 'NFD_ONBOARDING_BLUEHOST_BRAND', $container->plugin()->brand );
 				}
 
 				if ( 'compatible' !== Status::get() ) {

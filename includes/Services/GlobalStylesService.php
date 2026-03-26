@@ -7,16 +7,16 @@ class GlobalStylesService {
 	/**
 	 * Decoded global styles post content object.
 	 *
-	 * @var array
+	 * @var array|null
 	 */
-	protected array $global_styles = [];
+	protected ?array $global_styles = null;
 
 	/**
 	 * Active global styles post ID.
 	 *
-	 * @var int
+	 * @var int|null
 	 */
-	protected int $global_styles_id = 0;
+	protected ?int $global_styles_id = 0;
 
 	/**
 	 * Global Styles Service constructor.
@@ -40,6 +40,10 @@ class GlobalStylesService {
 	 */
 	public function set_color_palette( array $color_palette ) {
 		try {
+			if ( null === $this->global_styles || null === $this->global_styles_id ) {
+				throw new \Exception( 'Global styles not found. Please ensure a theme with global styles support is active.' );
+			}
+
 			$color_palette = self::transform_color_palette( $color_palette );
 			if ( empty( $color_palette ) ) {
 				throw new \Exception( 'Invalid color palette' );

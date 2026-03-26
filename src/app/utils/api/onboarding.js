@@ -94,15 +94,6 @@ export const enableJetpackModules = async () => {
 	);
 };
 
-export const completeBlueprintOnboarding = async () => {
-	return await resolve(
-		apiFetch( {
-			url: onboardingRestURL( 'app/complete-blueprint' ),
-			method: 'POST',
-		} ).then()
-	);
-};
-
 /**
  * Disable the site coming soon page.
  *
@@ -201,12 +192,7 @@ export const setGlobalStylesColorPalette = async ( colorPalette ) => {
  * @param {boolean} skipCache
  * @return {Promise<Object>} response
  */
-export async function getSiteMetaForIdentifier(
-	identifier,
-	prompt,
-	siteType,
-	skipCache = true
-) {
+export async function getSiteMetaForIdentifier( identifier, prompt, siteType, skipCache = true ) {
 	const response = await resolve(
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/generate' ),
