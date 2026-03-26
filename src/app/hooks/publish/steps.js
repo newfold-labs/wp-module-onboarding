@@ -11,6 +11,7 @@ import {
 	setGlobalStyles,
 	installFonts,
 	enableJetpackModules,
+	completeOnboarding,
 } from '@/utils/api/onboarding';
 import { transformColorPalette } from '@/hooks/publish/tasks';
 
