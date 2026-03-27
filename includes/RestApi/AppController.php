@@ -87,21 +87,11 @@ class AppController {
 	/**
 	 * Complete onboarding backend process.
 	 *
-	 * @param \WP_REST_Request $request The request object.
 	 * @return \WP_REST_Response The response object.
 	 */
-	public function complete( \WP_REST_Request $request ): \WP_REST_Response {
-		$data                      = json_decode( $request->get_body(), true );
-		$selected_sitegen_homepage = $data['selected_sitegen_homepage'] ?? false;
-		if ( ! $selected_sitegen_homepage ) {
-			return new \WP_REST_Response(
-				array( 'error' => 'Selected sitegen homepage is required.' ),
-				400
-			);
-		}
-
+	public function complete(): \WP_REST_Response {
 		try {
-			( new AppService() )->complete( $selected_sitegen_homepage );
+			AppService::complete();
 			return new \WP_REST_Response( array(), 200 );
 		} catch ( \Exception $e ) {
 			return new \WP_REST_Response(

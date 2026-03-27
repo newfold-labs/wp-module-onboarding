@@ -24,10 +24,12 @@ class GlobalStylesService {
 	 * @return GlobalStylesService
 	 */
 	public function __construct() {
-		$user_global_styles = self::get_user_global_styles();
-		if ( $user_global_styles ) {
-			$this->global_styles    = json_decode( $user_global_styles['post_content'], true ) ?? [];
-			$this->global_styles_id = $user_global_styles['ID'];
+		// Ensure the global styles post exists (creates it on fresh installs).
+		$post_id = \WP_Theme_JSON_Resolver::get_user_global_styles_post_id();
+		if ( $post_id ) {
+			$this->global_styles_id = $post_id;
+			$post = get_post( $post_id );
+			$this->global_styles = $post ? ( json_decode( $post->post_content, true ) ?? array() ) : array();
 		}
 		return $this;
 	}
@@ -89,15 +91,6 @@ class GlobalStylesService {
 		}
 
 		return $result;
-	}
-
-	/**
-	 * Get the user global styles.
-	 *
-	 * @return array The user global styles.
-	 */
-	public function get_user_global_styles(): array {
-		return \WP_Theme_JSON_Resolver::get_user_data_from_wp_global_styles( wp_get_theme() );
 	}
 
 	/**
