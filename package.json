@@ -51,6 +51,6 @@
 		"motion": "^12.38.0",
 		"react-router-dom": "^7.13.2",
 		"yet-another-react-lightbox": "^3.29.2",
-		"posthog-js": "^1.363.4"
+		"posthog-js": "^1.363.6"
 	}
 }
