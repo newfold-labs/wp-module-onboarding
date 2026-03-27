@@ -82,6 +82,30 @@ export async function createPost( title, content, excerpt = '', options = {} ) {
 }
 
 /**
+ * Create a published service.
+ *
+ * @param {string} title   Service title.
+ * @param {string} content Block HTML content.
+ * @param {string} excerpt Service excerpt.
+ * @param {Object} options Extra fields (featured_media, categories, etc.).
+ * @return {Promise<Object>} The created service object.
+ */
+export async function createService( title, content, excerpt = '', options = {} ) {
+	console.log('createService', title, content, excerpt, options);
+	return apiFetch( {
+		url: `${ wpRestBase }/nfd_service`,
+		method: 'POST',
+		data: {
+			title,
+			content,
+			excerpt,
+			status: 'publish',	
+			...options,
+		},
+	} );
+}
+
+/**
  * Update an existing template part by slug, or create one if not found.
  *
  * @param {string} slug    Template part slug (e.g. "header", "footer").

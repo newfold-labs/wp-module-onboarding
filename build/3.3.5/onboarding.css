@@ -3932,6 +3932,9 @@
 .nfd-pt-5{
 		padding-top: 1.25rem !important;
 }
+.nfd-pt-\[10vh\]{
+		padding-top: 10vh !important;
+}
 .nfd-text-left{
 		text-align: left !important;
 }
@@ -4355,6 +4358,11 @@ body.dashboard_page_nfd-onboarding {
 }
 .data-\[leave\]\:nfd-duration-200[data-leave]{
 		transition-duration: 200ms !important;
+}
+@media (min-width: 768px){
+		.md\:nfd-pt-\[22vh\]{
+				padding-top: 22vh !important;
+		}
 }
 @media (min-width: 1280px){
 		.xl\:nfd-col-span-2{

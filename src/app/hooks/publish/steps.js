@@ -5,6 +5,7 @@ import {
 	createPost,
 	updateTemplatePart,
 	createNavigationMenu,
+	createService,
 } from '@/utils/api/wordpress';
 import {
 	setGlobalStylesColorPalette,
@@ -166,6 +167,24 @@ export async function runArticles( { generationData } ) {
 		: 'No articles to publish';
 }
 
+export async function runServices( { generationData } ) {
+	const services = generationData.post_types?.services || [];
+	let serviceCount = 0;
+
+	for ( const service of services ) {
+		let featuredMediaURL = service.featured_image ?? null;
+	
+		await createService( service.title, service.content, service.excerpt || '', {
+			...( featuredMediaURL ? { meta: {nfd_service_image_url : featuredMediaURL} } : {} ),
+		} );
+		serviceCount++;
+	}
+
+	return serviceCount > 0
+		? `${ serviceCount } service${ serviceCount !== 1 ? 's' : '' } published`
+		: 'No services to publish';
+}
+
 export async function runNavigation( { ctx } ) {
 	if ( ctx.createdPages.length > 0 ) {
 		await createNavigationMenu( ctx.createdPages );
@@ -182,6 +201,7 @@ export async function runFinalize() {
 	return 'Site published';
 }
 
+
 /**
  * Ordered list of step entries: [ key, runFn ].
  */
@@ -194,6 +214,7 @@ export const STEP_RUNNERS = [
 	[ 'pages', runPages ],
 	[ 'template_parts', runTemplateParts ],
 	[ 'articles', runArticles ],
+	[ 'services', runServices ],
 	[ 'navigation', runNavigation ],
 	[ 'finalize', runFinalize ],
 ];

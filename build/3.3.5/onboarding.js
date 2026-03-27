@@ -43507,8 +43507,7 @@ var SvgBluehostLogo = function SvgBluehostLogo(props) {
     xmlns: "http://www.w3.org/2000/svg",
     width: 136,
     height: 24,
-    fill: "none",
-    viewBox: "0 0 136 24"
+    fill: "none"
   }, props), _path || (_path = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
     fill: "#196BDE",
     fillRule: "evenodd",
@@ -45544,10 +45543,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   runArticles: () => (/* binding */ runArticles),
 /* harmony export */   runColors: () => (/* binding */ runColors),
 /* harmony export */   runFinalize: () => (/* binding */ runFinalize),
+/* harmony export */   runFonts: () => (/* binding */ runFonts),
+/* harmony export */   runGlobalStyles: () => (/* binding */ runGlobalStyles),
 /* harmony export */   runIdentity: () => (/* binding */ runIdentity),
 /* harmony export */   runLogo: () => (/* binding */ runLogo),
 /* harmony export */   runNavigation: () => (/* binding */ runNavigation),
 /* harmony export */   runPages: () => (/* binding */ runPages),
+/* harmony export */   runServices: () => (/* binding */ runServices),
 /* harmony export */   runTemplateParts: () => (/* binding */ runTemplateParts)
 /* harmony export */ });
 /* harmony import */ var _utils_api_wordpress__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/utils/api/wordpress */ "./src/app/utils/api/wordpress.js");
@@ -45573,6 +45575,32 @@ async function runIdentity({
     description: tagline
   });
   return 'Title and tagline set';
+}
+async function runFonts({
+  generationData
+}) {
+  const fontPair = generationData.sitekit?.font_pair;
+  if (!fontPair) {
+    return 'Skipped — no font pair';
+  }
+  const result = await (0,_utils_api_onboarding__WEBPACK_IMPORTED_MODULE_1__.installFonts)(fontPair);
+  if (result?.error) {
+    throw result.error;
+  }
+  return 'Fonts installed';
+}
+async function runGlobalStyles({
+  generationData
+}) {
+  const globalStyles = generationData.sitekit?.global_styles;
+  if (!globalStyles) {
+    return 'Skipped — no global styles';
+  }
+  const result = await (0,_utils_api_onboarding__WEBPACK_IMPORTED_MODULE_1__.setGlobalStyles)(globalStyles);
+  if (result?.error) {
+    throw result.error;
+  }
+  return 'Typography & styles applied';
 }
 async function runColors({
   generationData
@@ -45608,6 +45636,8 @@ async function runPages({
   generationData,
   ctx
 }) {
+  // Silently enable Jetpack Forms and Blocks modules before creating pages.
+  await (0,_utils_api_onboarding__WEBPACK_IMPORTED_MODULE_1__.enableJetpackModules)();
   const pages = generationData.sitekit?.pages || [];
   let homepageId = null;
   let count = 0;
@@ -45675,6 +45705,24 @@ async function runArticles({
   }
   return articleCount > 0 ? `${articleCount} article${articleCount !== 1 ? 's' : ''} published` : 'No articles to publish';
 }
+async function runServices({
+  generationData
+}) {
+  const services = generationData.post_types?.services || [];
+  let serviceCount = 0;
+  for (const service of services) {
+    let featuredMediaURL = service.featured_image ?? null;
+    await (0,_utils_api_wordpress__WEBPACK_IMPORTED_MODULE_0__.createService)(service.title, service.content, service.excerpt || '', {
+      ...(featuredMediaURL ? {
+        meta: {
+          nfd_service_image_url: featuredMediaURL
+        }
+      } : {})
+    });
+    serviceCount++;
+  }
+  return serviceCount > 0 ? `${serviceCount} service${serviceCount !== 1 ? 's' : ''} published` : 'No services to publish';
+}
 async function runNavigation({
   ctx
 }) {
@@ -45695,7 +45743,7 @@ async function runFinalize() {
 /**
  * Ordered list of step entries: [ key, runFn ].
  */
-const STEP_RUNNERS = [['identity', runIdentity], ['colors', runColors], ['logo', runLogo], ['pages', runPages], ['template_parts', runTemplateParts], ['articles', runArticles], ['navigation', runNavigation], ['finalize', runFinalize]];
+const STEP_RUNNERS = [['identity', runIdentity], ['fonts', runFonts], ['global_styles', runGlobalStyles], ['colors', runColors], ['logo', runLogo], ['pages', runPages], ['template_parts', runTemplateParts], ['articles', runArticles], ['services', runServices], ['navigation', runNavigation], ['finalize', runFinalize]];
 
 /***/ }),
 
@@ -45721,9 +45769,17 @@ const COLOR_SLUG_MAP = {
     slug: 'base',
     name: 'Base'
   },
+  base_midtone: {
+    slug: 'base-midtone',
+    name: 'Base Midtone'
+  },
   contrast: {
     slug: 'contrast',
     name: 'Contrast'
+  },
+  contrast_midtone: {
+    slug: 'contrast-midtone',
+    name: 'Contrast Midtone'
   },
   accent_1: {
     slug: 'accent-1',
@@ -45744,6 +45800,10 @@ const COLOR_SLUG_MAP = {
   accent_5: {
     slug: 'accent-5',
     name: 'Accent 5'
+  },
+  accent_6: {
+    slug: 'accent-6',
+    name: 'Accent 6'
   }
 };
 
@@ -45763,6 +45823,12 @@ function transformColorPalette(palette) {
 const PUBLISH_STEPS = [{
   key: 'identity',
   label: 'Setting site identity'
+}, {
+  key: 'fonts',
+  label: 'Installing fonts'
+}, {
+  key: 'global_styles',
+  label: 'Applying typography & styles'
 }, {
   key: 'colors',
   label: 'Applying color palette'
@@ -46375,6 +46441,7 @@ const usePublish = (generationData, discoveryData) => {
       return;
     }
     hasStarted.current = true;
+    console.log('generationData', generationData);
     const run = async () => {
       const ctx = {
         createdPages: []
@@ -46928,6 +46995,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   completeOnboarding: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.completeOnboarding),
 /* harmony export */   continuouslyFireWpCron: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.continuouslyFireWpCron),
 /* harmony export */   disableComingSoon: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.disableComingSoon),
+/* harmony export */   enableJetpackModules: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.enableJetpackModules),
 /* harmony export */   fireWpCron: () => (/* reexport safe */ _wp__WEBPACK_IMPORTED_MODULE_2__.fireWpCron),
 /* harmony export */   getBlueprints: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.getBlueprints),
 /* harmony export */   getHomepages: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.getHomepages),
@@ -46942,6 +47010,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   getWpSettings: () => (/* reexport safe */ _wp__WEBPACK_IMPORTED_MODULE_2__.getWpSettings),
 /* harmony export */   importBlueprint: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.importBlueprint),
 /* harmony export */   installBlueprintRequiredPlugins: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.installBlueprintRequiredPlugins),
+/* harmony export */   installFonts: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.installFonts),
 /* harmony export */   migrateRestBase: () => (/* reexport safe */ _migration__WEBPACK_IMPORTED_MODULE_0__.migrateRestBase),
 /* harmony export */   migrateRestURL: () => (/* reexport safe */ _migration__WEBPACK_IMPORTED_MODULE_0__.migrateRestURL),
 /* harmony export */   migrationRestRoute: () => (/* reexport safe */ _migration__WEBPACK_IMPORTED_MODULE_0__.migrationRestRoute),
@@ -46949,6 +47018,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   onboardingRestRoute: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.onboardingRestRoute),
 /* harmony export */   onboardingRestURL: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.onboardingRestURL),
 /* harmony export */   selectLogo: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.selectLogo),
+/* harmony export */   setGlobalStyles: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.setGlobalStyles),
 /* harmony export */   setGlobalStylesColorPalette: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.setGlobalStylesColorPalette),
 /* harmony export */   setupSiteNavigationMenu: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.setupSiteNavigationMenu),
 /* harmony export */   startOnboarding: () => (/* reexport safe */ _onboarding__WEBPACK_IMPORTED_MODULE_1__.startOnboarding),
@@ -47015,6 +47085,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   completeOnboarding: () => (/* binding */ completeOnboarding),
 /* harmony export */   continuouslyFireWpCron: () => (/* binding */ continuouslyFireWpCron),
 /* harmony export */   disableComingSoon: () => (/* binding */ disableComingSoon),
+/* harmony export */   enableJetpackModules: () => (/* binding */ enableJetpackModules),
 /* harmony export */   getBlueprints: () => (/* binding */ getBlueprints),
 /* harmony export */   getHomepages: () => (/* binding */ getHomepages),
 /* harmony export */   getLogogenStatus: () => (/* binding */ getLogogenStatus),
@@ -47026,10 +47097,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   getSitePages: () => (/* binding */ getSitePages),
 /* harmony export */   importBlueprint: () => (/* binding */ importBlueprint),
 /* harmony export */   installBlueprintRequiredPlugins: () => (/* binding */ installBlueprintRequiredPlugins),
+/* harmony export */   installFonts: () => (/* binding */ installFonts),
 /* harmony export */   onboardingRestBase: () => (/* binding */ onboardingRestBase),
 /* harmony export */   onboardingRestRoute: () => (/* binding */ onboardingRestRoute),
 /* harmony export */   onboardingRestURL: () => (/* binding */ onboardingRestURL),
 /* harmony export */   selectLogo: () => (/* binding */ selectLogo),
+/* harmony export */   setGlobalStyles: () => (/* binding */ setGlobalStyles),
 /* harmony export */   setGlobalStylesColorPalette: () => (/* binding */ setGlobalStylesColorPalette),
 /* harmony export */   setupSiteNavigationMenu: () => (/* binding */ setupSiteNavigationMenu),
 /* harmony export */   startOnboarding: () => (/* binding */ startOnboarding),
@@ -47107,6 +47180,12 @@ const completeOnboarding = async selectedSitegenHomepage => {
     })
   }).then());
 };
+const enableJetpackModules = async () => {
+  return await (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_2__.resolve)(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+    url: onboardingRestURL('app/enable-jetpack-modules'),
+    method: 'POST'
+  }).then());
+};
 
 /**
  * Disable the site coming soon page.
@@ -47149,6 +47228,37 @@ const disableComingSoon = async () => {
  *
  * await globalStylesSetColorPalette( colorPalette );
  */
+/**
+ * Set global styles (typography, font sizes, element styles) from a sitekit.
+ *
+ * @param {Object} globalStyles The global styles object with 'styles' and/or 'settings' keys.
+ * @return {Promise<Object>} response
+ */
+const setGlobalStyles = async globalStyles => {
+  return await (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_2__.resolve)(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+    url: onboardingRestURL('global-styles/set-global-styles'),
+    method: 'POST',
+    data: {
+      global_styles: globalStyles
+    }
+  }).then());
+};
+
+/**
+ * Install fonts from a font pair via server-side download.
+ *
+ * @param {Object} fontPair The font pair data with primary and secondary fonts.
+ * @return {Promise<Object>} response
+ */
+const installFonts = async fontPair => {
+  return await (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_2__.resolve)(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+    url: onboardingRestURL('global-styles/install-fonts'),
+    method: 'POST',
+    data: {
+      font_pair: fontPair
+    }
+  }).then());
+};
 const setGlobalStylesColorPalette = async colorPalette => {
   return await (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_2__.resolve)(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
     url: onboardingRestURL('global-styles/set-color-palette'),
@@ -47378,6 +47488,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createNavigationMenu: () => (/* binding */ createNavigationMenu),
 /* harmony export */   createPage: () => (/* binding */ createPage),
 /* harmony export */   createPost: () => (/* binding */ createPost),
+/* harmony export */   createService: () => (/* binding */ createService),
 /* harmony export */   updateSiteSettings: () => (/* binding */ updateSiteSettings),
 /* harmony export */   updateTemplatePart: () => (/* binding */ updateTemplatePart),
 /* harmony export */   uploadMediaFromUrl: () => (/* binding */ uploadMediaFromUrl)
@@ -47457,6 +47568,30 @@ async function createPage(title, content, options = {}) {
 async function createPost(title, content, excerpt = '', options = {}) {
   return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
     url: `${_data_constants__WEBPACK_IMPORTED_MODULE_2__.wpRestBase}/posts`,
+    method: 'POST',
+    data: {
+      title,
+      content,
+      excerpt,
+      status: 'publish',
+      ...options
+    }
+  });
+}
+
+/**
+ * Create a published service.
+ *
+ * @param {string} title   Service title.
+ * @param {string} content Block HTML content.
+ * @param {string} excerpt Service excerpt.
+ * @param {Object} options Extra fields (featured_media, categories, etc.).
+ * @return {Promise<Object>} The created service object.
+ */
+async function createService(title, content, excerpt = '', options = {}) {
+  console.log('createService', title, content, excerpt, options);
+  return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()({
+    url: `${_data_constants__WEBPACK_IMPORTED_MODULE_2__.wpRestBase}/nfd_service`,
     method: 'POST',
     data: {
       title,
@@ -47985,7 +48120,7 @@ const PromptView = ({
       duration: 0.35,
       ease: 'easeInOut'
     },
-    className: "nfd-flex nfd-flex-1 nfd-flex-col nfd-items-center nfd-justify-center nfd-px-6 nfd-pb-10",
+    className: "nfd-flex nfd-flex-1 nfd-flex-col nfd-items-center nfd-pt-[10vh] md:nfd-pt-[22vh] nfd-px-6 nfd-pb-10",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
       className: "nfd-flex nfd-flex-col nfd-items-center nfd-w-full nfd-max-w-[710px] nfd-gap-10",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
