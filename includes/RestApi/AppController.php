@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Services\AppService;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService;
 use NewfoldLabs\WP\Module\Installer\Data\Plugins;
 
 /**
@@ -63,6 +64,18 @@ class AppController {
 
 		\register_rest_route(
 			$this->namespace,
+			$this->rest_base . '/setup-woocommerce',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'setup_woocommerce' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
+
+		\register_rest_route(
+			$this->namespace,
 			$this->rest_base . '/enable-jetpack-modules',
 			array(
 				array(
@@ -99,6 +112,32 @@ class AppController {
 				500
 			);
 		}
+	}
+
+	/**
+	 * Ensure WooCommerce is active before product creation.
+	 *
+	 * - Already active → {status: 'active'} 200
+	 * - Installed but inactive → activate synchronously → {status: 'active'} 200
+	 * - Not installed → trigger install queue → {status: 'installing'} 202
+	 *
+	 * @return \WP_REST_Response
+	 */
+	public function setup_woocommerce(): \WP_REST_Response {
+		if ( class_exists( 'WooCommerce' ) ) {
+			return new \WP_REST_Response( array( 'status' => 'active' ), 200 );
+		}
+
+		$plugin_file = 'woocommerce/woocommerce.php';
+		if ( file_exists( WP_PLUGIN_DIR . '/' . $plugin_file ) ) {
+			$result = activate_plugin( $plugin_file );
+			if ( ! is_wp_error( $result ) ) {
+				return new \WP_REST_Response( array( 'status' => 'active' ), 200 );
+			}
+		}
+
+		EcommerceSiteTypeService::install_ecommerce_plugins();
+		return new \WP_REST_Response( array( 'status' => 'installing' ), 202 );
 	}
 
 	/**
