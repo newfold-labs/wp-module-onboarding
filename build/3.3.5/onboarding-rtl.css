@@ -1,15 +1,4 @@
-/*!************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/app/styles/app.scss ***!
-  \************************************************************************************************************************************************************************************************************************************************/
 @import url(https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap);
-/*!****************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/app/styles/app.scss (1) ***!
-  \****************************************************************************************************************************************************************************************************************************************************/
-
-/* stylelint-disable function-url-quotes */
-/* stylelint-disable @stylistic/max-line-length */
-/* stylelint-enable @stylistic/max-line-length */
-/* stylelint-enable function-url-quotes */
 /**
  * Tailwind CSS preflight, but scoped to the Yoast root class.
  * This is added to the base layer by design.
@@ -3455,6 +3444,9 @@
 .nfd-w-0{
 		width: 0px !important;
 }
+.nfd-w-10{
+		width: 2.5rem !important;
+}
 .nfd-w-12{
 		width: 3rem !important;
 }
@@ -3684,6 +3676,9 @@
 .nfd-self-end{
 		align-self: flex-end !important;
 }
+.nfd-self-stretch{
+		align-self: stretch !important;
+}
 .nfd-overflow-hidden{
 		overflow: hidden !important;
 }
@@ -3725,6 +3720,9 @@
 }
 .nfd-rounded-none{
 		border-radius: 0px !important;
+}
+.nfd-rounded-xl{
+		border-radius: 0.75rem !important;
 }
 .nfd-border{
 		border-width: 1px !important;
@@ -3779,6 +3777,10 @@
 .nfd-bg-blue-200{
 		--tw-bg-opacity: 1 !important;
 		background-color: rgb(191 219 254 / var(--tw-bg-opacity, 1)) !important;
+}
+.nfd-bg-blue-50{
+		--tw-bg-opacity: 1 !important;
+		background-color: rgb(239 246 255 / var(--tw-bg-opacity, 1)) !important;
 }
 .nfd-bg-primary{
 		--tw-bg-opacity: 1 !important;
@@ -3881,6 +3883,10 @@
 		padding-top: 1.5rem !important;
 		padding-bottom: 1.5rem !important;
 }
+.nfd-py-8{
+		padding-top: 2rem !important;
+		padding-bottom: 2rem !important;
+}
 .\!nfd-pl-0{
 		padding-right: 0px !important;
 }
@@ -3911,14 +3917,17 @@
 .nfd-pl-3\.5{
 		padding-right: 0.875rem !important;
 }
+.nfd-pl-5{
+		padding-right: 1.25rem !important;
+}
 .nfd-pr-1{
 		padding-left: 0.25rem !important;
 }
+.nfd-pr-4{
+		padding-left: 1rem !important;
+}
 .nfd-pr-5{
 		padding-left: 1.25rem !important;
-}
-.nfd-pt-0{
-		padding-top: 0px !important;
 }
 .nfd-pt-1{
 		padding-top: 0.25rem !important;
@@ -3953,6 +3962,9 @@
 .nfd-text-\[0px\]{
 		font-size: 0px !important;
 }
+.nfd-text-\[13px\]{
+		font-size: 13px !important;
+}
 .nfd-text-\[14px\]{
 		font-size: 14px !important;
 }
@@ -3961,6 +3973,9 @@
 }
 .nfd-text-base{
 		font-size: 1rem !important;
+}
+.nfd-text-lg{
+		font-size: 1.125rem !important;
 }
 .nfd-text-sm{
 		font-size: .8125rem !important;
@@ -3998,6 +4013,9 @@
 .nfd-leading-\[44px\]{
 		line-height: 44px !important;
 }
+.nfd-leading-relaxed{
+		line-height: 1.625 !important;
+}
 .nfd-tracking-wide{
 		letter-spacing: 0.025em !important;
 }
@@ -4031,6 +4049,10 @@
 }
 .nfd-text-\[rgba\(0\,0\,0\,0\.45\)\]{
 		color: rgba(0,0,0,0.45) !important;
+}
+.nfd-text-blue-500{
+		--tw-text-opacity: 1 !important;
+		color: rgb(59 130 246 / var(--tw-text-opacity, 1)) !important;
 }
 .nfd-text-emerald-500{
 		--tw-text-opacity: 1 !important;
@@ -4205,77 +4227,18 @@
 .\[text-wrap\:pretty\]{
 		text-wrap: pretty !important;
 }
-body.dashboard_page_nfd-onboarding {
-  overflow: hidden;
-}
-#nfd-onboarding {
-  position: fixed;
-  inset: 0;
-  z-index: 100000;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  font-family: "Google Sans", system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif;
-}
-.nfd-onboarding-bg {
-  background: radial-gradient(ellipse 80% 60% at 15% 20%, rgba(23, 108, 223, 0.1) 0%, transparent 60%), radial-gradient(ellipse 70% 50% at 85% 75%, rgba(67, 56, 202, 0.08) 0%, transparent 55%), radial-gradient(ellipse 50% 40% at 60% 40%, rgba(100, 80, 220, 0.06) 0%, transparent 50%), radial-gradient(ellipse 60% 50% at 30% 80%, rgba(56, 130, 240, 0.06) 0%, transparent 55%), radial-gradient(ellipse 40% 35% at 75% 15%, rgba(120, 90, 255, 0.05) 0%, transparent 50%), linear-gradient(-180deg, #fff 0%, #f5f8ff 50%, #edf2ff 100%);
-  background-attachment: fixed;
-}
-:root {
-  --nfd-blue: #3b82f6;
-}
-@supports (corner-shape: superellipse(1)) {
-  .nfd-prompt-card,
-  .nfd-chat-message,
-  .nfd-task-progress,
-  .nfd-publishing-card {
-    corner-shape: superellipse(1.8);
-    border-radius: 1.6rem !important;
-  }
-}
-.nfd-chat-messages,
-.nfd-task-progress__list,
-.nfd-prompt-card textarea {
-  scrollbar-width: none;
-}
-.nfd-chat-messages::-webkit-scrollbar,
-.nfd-task-progress__list::-webkit-scrollbar,
-.nfd-prompt-card textarea::-webkit-scrollbar {
-  display: none;
-}
-.nfd-thinking-orb {
-  animation: nfd-orb-pulse 1.8s ease-in-out infinite;
-}
-@keyframes nfd-orb-pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.5;
-    box-shadow: 0 0 0 0 rgba(23, 108, 223, 0.3);
-  }
-  50% {
-    transform: scale(1.3);
-    opacity: 1;
-    box-shadow: 0 0 0 8px rgba(23, 108, 223, 0);
-  }
-}
-.nfd-spinner {
-  border: 1.5px solid transparent;
-  border-top-color: var(--nfd-blue);
-  border-left-color: var(--nfd-blue);
-}
-.nfd-task-progress__header:focus-visible {
-  outline: none;
-  box-shadow: inset 0 0 0 2px rgba(25, 107, 222, 0.3);
-  border-radius: 16px;
-  corner-shape: superellipse(1.8);
-}
-.nfd-prompt-card textarea:focus,
-.nfd-prompt-card textarea:disabled,
-.nfd-task-progress *:focus {
-  border: none !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
+body.dashboard_page_nfd-onboarding{overflow:hidden}
+#nfd-onboarding{position:fixed;inset:0;z-index:100000;overflow-y:auto;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-family:"Google Sans",system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,Cantarell,"Noto Sans",sans-serif}
+.nfd-onboarding-bg{background:radial-gradient(ellipse 80% 60% at 15% 20%, rgba(23, 108, 223, 0.1) 0%, transparent 60%),radial-gradient(ellipse 70% 50% at 85% 75%, rgba(67, 56, 202, 0.08) 0%, transparent 55%),radial-gradient(ellipse 50% 40% at 60% 40%, rgba(100, 80, 220, 0.06) 0%, transparent 50%),radial-gradient(ellipse 60% 50% at 30% 80%, rgba(56, 130, 240, 0.06) 0%, transparent 55%),radial-gradient(ellipse 40% 35% at 75% 15%, rgba(120, 90, 255, 0.05) 0%, transparent 50%),linear-gradient(-180deg, #fff 0%, #f5f8ff 50%, #edf2ff 100%);background-attachment:fixed}
+:root{--nfd-blue: #3b82f6}
+@supports(corner-shape: superellipse(1)){.nfd-prompt-card,.nfd-chat-message,.nfd-task-progress,.nfd-publishing-card{corner-shape:superellipse(1.8);border-radius:1.6rem !important}}
+.nfd-chat-messages,.nfd-task-progress__list,.nfd-prompt-card textarea{scrollbar-width:none}
+.nfd-chat-messages::-webkit-scrollbar,.nfd-task-progress__list::-webkit-scrollbar,.nfd-prompt-card textarea::-webkit-scrollbar{display:none}
+.nfd-thinking-orb{animation:nfd-orb-pulse 1.8s ease-in-out infinite}
+@keyframes nfd-orb-pulse{0%,100%{transform:scale(1);opacity:.5;box-shadow:0 0 0 0 rgba(23,108,223,.3)}50%{transform:scale(1.3);opacity:1;box-shadow:0 0 0 8px rgba(23,108,223,0)}}
+.nfd-spinner{border:1.5px solid rgba(0,0,0,0);border-top-color:var(--nfd-blue);border-left-color:var(--nfd-blue)}
+.nfd-task-progress__header:focus-visible{outline:none;box-shadow:inset 0 0 0 2px rgba(25,107,222,.3);border-radius:16px;corner-shape:superellipse(1.8)}
+.nfd-prompt-card textarea:focus,.nfd-prompt-card textarea:disabled,.nfd-task-progress *:focus{border:none !important;box-shadow:none !important;outline:none !important}
 .placeholder\:nfd-text-\[rgba\(0\2c 0\2c 0\2c 0\.15\)\]::-moz-placeholder{
 		color: rgba(0,0,0,0.15) !important;
 }

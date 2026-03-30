@@ -39,6 +39,7 @@ export const PUBLISH_STEPS = [
 	{ key: 'pages', label: 'Creating pages' },
 	{ key: 'template_parts', label: 'Setting up header & footer' },
 	{ key: 'articles', label: 'Publishing articles' },
+	{ key: 'services', label: 'Publishing services' },
 	{ key: 'navigation', label: 'Setting up navigation' },
 	{ key: 'finalize', label: 'Finalizing site' },
 ];

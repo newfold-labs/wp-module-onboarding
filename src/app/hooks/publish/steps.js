@@ -142,22 +142,13 @@ export async function runArticles( { generationData } ) {
 	let articleCount = 0;
 
 	for ( const article of articles ) {
-		let featuredMediaId = null;
-
-		if ( article.featured_image ) {
-			try {
-				const media = await uploadMediaFromUrl(
-					article.featured_image,
-					`article-${ articleCount }.jpg`
-				);
-				featuredMediaId = media?.id || null;
-			} catch {
-				// Continue without featured image.
-			}
-		}
+		let featuredMediaURL = article.featured_image ?? null;
 
 		await createPost( article.title, article.content, article.excerpt || '', {
-			...( featuredMediaId ? { featured_media: featuredMediaId } : {} ),
+			meta: {
+				nfd_onboarding_generated: '1',
+				...( featuredMediaURL ? { nfd_image_url: featuredMediaURL } : {} ),
+			},
 		} );
 		articleCount++;
 	}
@@ -175,7 +166,10 @@ export async function runServices( { generationData } ) {
 		let featuredMediaURL = service.featured_image ?? null;
 	
 		await createService( service.title, service.content, service.excerpt || '', {
-			...( featuredMediaURL ? { meta: {nfd_service_image_url : featuredMediaURL} } : {} ),
+			meta: {
+				nfd_onboarding_generated: '1',
+				...( featuredMediaURL ? { nfd_image_url: featuredMediaURL } : {} ),
+			},
 		} );
 		serviceCount++;
 	}
