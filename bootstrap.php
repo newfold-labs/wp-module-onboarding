@@ -86,6 +86,7 @@ if ( is_callable( 'add_action' ) ) {
 	// Add action to process image sideload queue
 	add_action( 'nfd_process_image_sideload_queue', array( ImageSideloadTaskManager::class, 'process_queue' ) );
 
+	
 	// Schedule pending-image sideload batches when onboarding completes.
 	add_action( 'newfold/onboarding/completed', array( MediaService::class, 'schedule_after_onboarding' ) );
 

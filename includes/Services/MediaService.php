@@ -51,7 +51,6 @@ class MediaService {
 	 * @return void
 	 */
 	public static function schedule_after_onboarding() {
-		error_log( 'Scheduling after onboarding' );
 		if ( ! wp_next_scheduled( self::CRON_HOOK ) ) {
 			wp_schedule_single_event( time(), self::CRON_HOOK );
 		}

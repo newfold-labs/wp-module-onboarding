@@ -6,6 +6,7 @@ import {
 	updateTemplatePart,
 	createNavigationMenu,
 	createService,
+	publishProducts,
 } from '@/utils/api/wordpress';
 import {
 	setGlobalStylesColorPalette,
@@ -14,7 +15,6 @@ import {
 	enableJetpackModules,
 	completeOnboarding,
 } from '@/utils/api/onboarding';
-import { setupWooCommerce, createProduct } from '@/utils/api/woocommerce';
 import { transformColorPalette } from '@/hooks/publish/tasks';
 
 /**
@@ -181,22 +181,15 @@ export async function runServices( { generationData } ) {
 }
 
 export async function runProducts( { generationData } ) {
-	const products = generationData.post_types?.products || [];
-	
-	const wc = await setupWooCommerce();
-	if ( wc?.status !== 'active' ) {
-		return 'Skipped — WooCommerce not yet active';
+	const products = generationData.post_types?.products ?? [];
+	if ( products.length === 0 ) {
+		return 'Skipped — no products';
 	}
 
-	let count = 0;
-	for ( const product of products ) {
-		await createProduct( product );
-		count++;
-	}
+	const result = await publishProducts( products );
+	const count = result?.created ?? 0;
 
-	return count > 0
-		? `${ count } product${ count !== 1 ? 's' : '' } published`
-		: 'No products to publish';
+	return `${ count } product${ count !== 1 ? 's' : '' } published`;
 }
 
 export async function runNavigation( { ctx } ) {

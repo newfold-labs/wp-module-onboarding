@@ -1,6 +1,6 @@
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import { wpRestBase } from '@/data/constants';
+import { wpRestBase, onboardingRestBase } from '@/data/constants';
 
 /**
  * Update WordPress site settings.
@@ -203,5 +203,24 @@ export async function updateTemplatePart( slug, content ) {
 			type: 'wp_template_part',
 			area: slug === 'header' ? 'header' : 'footer',
 		},
+	} );
+}
+
+/**
+ * Send all products to the backend for creation in a single request.
+ *
+ * The backend (EcommerceSiteTypeService::publish_products) handles:
+ *  - Category deduplication and creation
+ *  - Product creation via wp_insert_post
+ *  - Async image sideloading via nfd_image_url meta
+ *
+ * @param {Object[]} products Raw product objects from generationData.post_types.products.
+ * @return {Promise<{created: number}>}
+ */
+export async function publishProducts( products ) {
+	return apiFetch( {
+		url: `${ onboardingRestBase }/app/publish-products`,
+		method: 'POST',
+		data: { products },
 	} );
 }
