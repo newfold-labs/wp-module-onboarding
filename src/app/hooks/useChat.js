@@ -16,6 +16,7 @@ import {
 	ACTION_ERROR_STATE_TRIGGERED,
 } from '@/utils/analytics/hiive/constants';
 import { handshake, intake, startGeneration, streamSSE } from '@/utils/api/ai-platform';
+import { initializeEcommercePlugins } from '@/utils/api/wordpress';
 import formatTaskResult from '@/utils/helpers/formatTaskResult';
 import useMessages from '@/hooks/useMessages';
 import {
@@ -122,6 +123,9 @@ const useChat = () => {
 									typeof data === 'string' ? JSON.parse( data ) : data;
 							} catch {
 								discoveryDataRef.current[ discoveryTaskKey ] = data;
+							}
+							if ( discoveryTaskKey === 'site_type' && discoveryDataRef.current.site_type === 'eCommerce' ) {
+								initializeEcommercePlugins();
 							}
 						}
 

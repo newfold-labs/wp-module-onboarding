@@ -103,17 +103,21 @@ class PostTypeService {
      * Register image URL meta.
      */
     private function register_image_url_meta(): void {
-        foreach ( [ 'post', 'product', self::SERVICE_POST_TYPE ] as $post_type ) {
-            register_post_meta( $post_type, self::META_IMAGE_URL, [
-                'show_in_rest' => true,
-                'single'       => true,
-                'type'         => 'string',
-            ] );
+        foreach ( [ 'page', 'post', 'product', self::SERVICE_POST_TYPE ] as $post_type ) {
+            if ( $post_type !== 'page' ) {
+                register_post_meta( $post_type, self::META_IMAGE_URL, [
+                    'show_in_rest' => true,
+                    'single'       => true,
+                    'type'         => 'string',
+                ] );
+            }
+
             register_post_meta( $post_type, self::META_ONBOARDING_GENERATED, [
                 'show_in_rest' => true,
                 'single'       => true,
                 'type'         => 'string',
             ] );
         }
+      
     }
 }

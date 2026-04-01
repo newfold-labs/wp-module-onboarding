@@ -207,12 +207,20 @@ export async function updateTemplatePart( slug, content ) {
 }
 
 /**
- * Send all products to the backend for creation in a single request.
+ * Ensure WooCommerce and ecommerce plugins are installed and active.
+ * Call without awaiting when site_type is eCommerce.
  *
- * The backend (EcommerceSiteTypeService::publish_products) handles:
- *  - Category deduplication and creation
- *  - Product creation via wp_insert_post
- *  - Async image sideloading via nfd_image_url meta
+ * @return {Promise<{status: string}>}
+ */
+export async function initializeEcommercePlugins() {
+	return apiFetch( {
+		url: `${ onboardingRestBase }/plugins/initialize-ecommerce`,
+		method: 'POST',
+	} );
+}
+
+/**
+ * Publish products to the backend.
  *
  * @param {Object[]} products Raw product objects from generationData.post_types.products.
  * @return {Promise<{created: number}>}

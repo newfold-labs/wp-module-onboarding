@@ -43,7 +43,7 @@ class MediaService {
 	 *
 	 * @var string
 	 */
-	const CRON_HOOK = 'nfd_sideload_pending_images';
+	const CRON_HOOK = 'nfd_module_onboarding_sideload_pending_images';
 
 	/**
 	 * Schedule the first batch to run immediately after onboarding completes.
@@ -75,7 +75,7 @@ class MediaService {
 
 		$posts = get_posts(
 			array(
-				'post_type'      => array( PostTypeService::SERVICE_POST_TYPE, 'post', 'product' ),
+				'post_type'      => array( 'product', PostTypeService::SERVICE_POST_TYPE, 'post' ),
 				'meta_key'       => PostTypeService::META_IMAGE_URL,
 				'meta_compare'   => 'EXISTS',
 				'post_status'    => 'publish',
@@ -83,6 +83,8 @@ class MediaService {
 				'fields'         => 'all',
 			)
 		);
+
+		
 		if ( empty( $posts ) ) {
 			return;
 		}

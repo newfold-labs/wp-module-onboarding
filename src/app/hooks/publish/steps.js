@@ -99,6 +99,9 @@ export async function runPages( { generationData, ctx } ) {
 		const page = await createPage( entry.title, entry.content, {
 			template: 'page-no-title',
 			slug: entry.slug,
+			meta: {
+				nfd_onboarding_generated: '1',
+			},
 		} );
 		if ( page?.id ) {
 			ctx.createdPages.push( {
@@ -185,7 +188,7 @@ export async function runProducts( { generationData } ) {
 	if ( products.length === 0 ) {
 		return 'Skipped — no products';
 	}
-
+  
 	const result = await publishProducts( products );
 	const count = result?.created ?? 0;
 

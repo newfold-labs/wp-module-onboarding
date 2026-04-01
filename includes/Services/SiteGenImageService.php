@@ -13,6 +13,13 @@ use NewfoldLabs\WP\Module\Onboarding\Tasks\ImageSideloadTask;
 class SiteGenImageService {
 
 	/**
+	 * WP-Cron hook name for processing a batch of pending images.
+	 *
+	 * @var string
+	 */
+	const CRON_HOOK = 'nfd_process_image_sideload_queue';
+
+	/**
 	 * Process homepage images immediately in background (non-blocking).
 	 * This method dispatches an async request that doesn't block the main request.
 	 *
@@ -32,9 +39,54 @@ class SiteGenImageService {
 		ImageSideloadTaskManager::add_to_queue( $task );
 
 		// Schedule a single event to process the queue (if not already scheduled)
-		if ( ! wp_next_scheduled( 'nfd_process_image_sideload_queue' ) ) {
-			wp_schedule_single_event( time(), 'nfd_process_image_sideload_queue' );
+		if ( ! wp_next_scheduled( self::CRON_HOOK ) ) {
+			wp_schedule_single_event( time(), self::CRON_HOOK );
 		}
+	}
+
+	/**
+	 * Queue content image sideloading for all onboarding-generated pages.
+	 * Called on the newfold/onboarding/completed action — mirrors MediaService::schedule_after_onboarding().
+	 *
+	 * @return void
+	 */
+	public static function schedule_after_onboarding() {
+
+		self::schedule_content_images();
+		
+		self::schedule_cpt_images();
+	}
+
+	/**
+	 * Schedule content image sideloading for all onboarding-generated pages.
+	 *
+	 * @return void
+	 */
+	private static function schedule_content_images() {
+		$pages = get_posts(
+			array(
+				'post_type'      => 'page',
+				'post_status'    => 'publish',
+				'posts_per_page' => -1,
+				'fields'         => 'all',
+				'meta_key'       => 'nfd_onboarding_generated',
+				'meta_value'     => '1',
+			)
+		);
+
+		
+		foreach ( $pages as $page ) {
+			self::process_homepage_images_immediate_async( $page->ID, $page->post_content );
+		}
+	}
+
+	/**
+	 * Schedule CPT image sideloading for all onboarding-generated CPTs.
+	 *
+	 * @return void
+	 */
+	private static function schedule_cpt_images() {
+		MediaService::schedule_after_onboarding();
 	}
 
 	/**
@@ -52,8 +104,9 @@ class SiteGenImageService {
 			$image_urls = array_merge( $image_urls, $matches[0] );
 		}
 
-		// Extract patterns.hiive.cloud images
-		preg_match_all( '/https?:\/\/patterns\.hiive\.cloud\/[^\s"\'<>]+/i', $content, $matches );
+		// Extract any hiive.cloud images (covers patterns.hiive.cloud, ai-platform-sitegen-images.hiive.cloud,
+		// hiive.cloud/cdn-cgi/image/... Cloudflare-transformed URLs, etc.)
+		preg_match_all( '/https?:\/\/([^\/]+\.)?hiive\.cloud\/[^\s"\'<>]+/i', $content, $matches );
 		if ( isset( $matches[0] ) ) {
 			$image_urls = array_merge( $image_urls, $matches[0] );
 		}
