@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67525f5b0ceae8ad5dd30461d855876a",
+    "content-hash": "5eb8b941f86ea7cfebc948b8a08d31e9",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -1503,16 +1503,16 @@
         },
         {
             "name": "wp-cli/wp-config-transformer",
-            "version": "v1.4.4",
+            "version": "v1.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-config-transformer.git",
-                "reference": "b0fda07aac51317404f5e56dc8953ea899bc7bce"
+                "reference": "8f5e66c717a7371dfb6559086880bee528aee858"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-config-transformer/zipball/b0fda07aac51317404f5e56dc8953ea899bc7bce",
-                "reference": "b0fda07aac51317404f5e56dc8953ea899bc7bce",
+                "url": "https://api.github.com/repos/wp-cli/wp-config-transformer/zipball/8f5e66c717a7371dfb6559086880bee528aee858",
+                "reference": "8f5e66c717a7371dfb6559086880bee528aee858",
                 "shasum": ""
             },
             "require": {
@@ -1546,9 +1546,9 @@
             "homepage": "https://github.com/wp-cli/wp-config-transformer",
             "support": {
                 "issues": "https://github.com/wp-cli/wp-config-transformer/issues",
-                "source": "https://github.com/wp-cli/wp-config-transformer/tree/v1.4.4"
+                "source": "https://github.com/wp-cli/wp-config-transformer/tree/v1.4.5"
             },
-            "time": "2026-01-22T09:07:20+00:00"
+            "time": "2026-03-20T07:28:10+00:00"
         },
         {
             "name": "wp-forge/collection",
