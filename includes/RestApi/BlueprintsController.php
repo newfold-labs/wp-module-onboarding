@@ -104,7 +104,7 @@ class BlueprintsController {
 	 * @param \WP_REST_Request $request The request object.
 	 * @return \WP_REST_Response The response object.
 	 */
-	public function get_blueprints( \WP_REST_Request $request ): \WP_REST_Response {
+	public function get_blueprints( \WP_REST_Request $request ): \WP_REST_Response { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- REST callback signature.
 		$blueprints = BlueprintsService::fetch_blueprints();
 		if ( is_wp_error( $blueprints ) ) {
 			return new \WP_REST_Response( $blueprints->get_error_message(), 500 );

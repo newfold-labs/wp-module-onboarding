@@ -75,10 +75,10 @@ class ThumbnailService {
 	/**
 	 * Pending image URL from meta (only when no featured attachment; requires meta set).
 	 *
-	 * @param mixed $product Product or other value; must pass instanceof \WC_Product checks before use.
+	 * @param mixed $product Expected \WC_Product; other types yield an empty string.
 	 * @return string Non-empty esc_url_raw() value, or empty string.
 	 */
-	private function get_nfd_pending_image_url_for_wc_product( mixed $product ): string {
+	private function get_nfd_pending_image_url_for_wc_product( $product ): string {
 		if ( ! ( $product instanceof \WC_Product ) || ! $this->product_has_nfd_image_meta( $product ) ) {
 			return '';
 		}
@@ -97,7 +97,7 @@ class ThumbnailService {
 	 * @param mixed $url Raw URL or other value (validated with is_string before use).
 	 * @return bool
 	 */
-	private function is_usable_remote_image_url( mixed $url ): bool {
+	private function is_usable_remote_image_url( $url ): bool {
 		if ( '' === $url || ! is_string( $url ) ) {
 			return false;
 		}
@@ -115,7 +115,7 @@ class ThumbnailService {
 	 * @param mixed $outer_block  Parent block instance (unused; required by filter signature).
 	 * @return array
 	 */
-	public function push_post_id_for_product_image_placeholder( array $context, array $parsed_block, mixed $outer_block ): array { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
+	public function push_post_id_for_product_image_placeholder( array $context, array $parsed_block, $outer_block ): array { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		if ( empty( $parsed_block['blockName'] ) || 'woocommerce/product-image' !== $parsed_block['blockName'] ) {
 			return $context;
 		}
@@ -139,7 +139,7 @@ class ThumbnailService {
 	 * @param mixed  $block_instance  Block instance; checked with instanceof \WP_Block.
 	 * @return string
 	 */
-	public function pop_post_id_after_product_image_block( string $block_content, array $parsed_block, mixed $block_instance ): string {
+	public function pop_post_id_after_product_image_block( string $block_content, array $parsed_block, $block_instance ): string {
 		if ( ! $block_instance instanceof \WP_Block || empty( $block_instance->context['postId'] ) ) {
 			return $block_content;
 		}
@@ -265,7 +265,7 @@ class ThumbnailService {
 	 * @param mixed  $block_instance Block instance (has context e.g. postId); checked with instanceof \WP_Block.
 	 * @return string
 	 */
-	public function use_pending_image_url_for_product_image_block( string $block_content, array $parsed_block, mixed $block_instance = null ): string {
+	public function use_pending_image_url_for_product_image_block( string $block_content, array $parsed_block, $block_instance = null ): string {
 		if ( empty( $block_content ) || ! is_string( $block_content ) ) {
 			return $block_content;
 		}
@@ -342,7 +342,7 @@ class ThumbnailService {
 	 * @param mixed  $block_instance Block instance (context includes postId); checked with instanceof \WP_Block.
 	 * @return string
 	 */
-	public function use_pending_image_url_for_core_post_featured_block( string $block_content, array $parsed_block, mixed $block_instance ): string {
+	public function use_pending_image_url_for_core_post_featured_block( string $block_content, array $parsed_block, $block_instance ): string {
 		if ( ! $block_instance instanceof \WP_Block || ! isset( $block_instance->context['postId'] ) ) {
 			return $block_content;
 		}
@@ -441,7 +441,7 @@ class ThumbnailService {
 	 * @param mixed $request REST request; checked with instanceof \WP_REST_Request before use.
 	 * @return mixed
 	 */
-	public function maybe_inject_images_wc_store_api_products( mixed $result, mixed $server, mixed $request ): mixed { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
+	public function maybe_inject_images_wc_store_api_products( $result, $server, $request ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		if ( ! ( $result instanceof \WP_REST_Response ) || ! function_exists( 'wc_get_product' ) ) {
 			return $result;
 		}
@@ -529,7 +529,7 @@ class ThumbnailService {
 	 * @param string|array $unused_attr             Extra img attributes (unused).
 	 * @return string
 	 */
-	public function use_pending_image_url( string $html, int $post_id, int $unused_post_thumbnail_id, string|array $unused_size, string|array $unused_attr ): string { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
+	public function use_pending_image_url( string $html, int $post_id, int $unused_post_thumbnail_id, $unused_size, $unused_attr ): string { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		if ( '' !== $html && null !== $html ) {
 			return $html;
 		}

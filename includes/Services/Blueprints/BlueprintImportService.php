@@ -273,7 +273,7 @@ class BlueprintImportService extends BlueprintsService {
 
 			++$total_statements;
 
-			$result = $wpdb->query( $statement ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$result = $wpdb->query( $statement ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- The statement is a valid SQL statement.
 			if ( false === $result && ! empty( $wpdb->last_error ) ) {
 				// Record the error.
 				$errors[] = array(

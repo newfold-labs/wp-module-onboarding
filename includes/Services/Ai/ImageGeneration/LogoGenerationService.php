@@ -125,7 +125,7 @@ class LogoGenerationService {
 		) {
 			$status = $request->get_response_body()['status'];
 			// Store the logos if the generation is completed.
-			if ( $status === 'completed' ) {
+			if ( 'completed' === $status ) {
 				$this->logos = $request->get_response_body()['logos'];
 			}
 			return array( 'status' => $status );

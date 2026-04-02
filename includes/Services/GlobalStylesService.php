@@ -14,14 +14,14 @@ class GlobalStylesService {
 	 *
 	 * @var array|null
 	 */
-	protected ?array $global_styles = null;
+	protected $global_styles = null;
 
 	/**
 	 * Active global styles post ID.
 	 *
 	 * @var int|null
 	 */
-	protected ?int $global_styles_id = 0;
+	protected $global_styles_id = 0;
 
 	/**
 	 * Global Styles Service constructor.
@@ -43,7 +43,8 @@ class GlobalStylesService {
 	 * Set the color palette.
 	 *
 	 * @param array $color_palette The color palette to set.
-	 * @return array The color palette on success, \WP_Error on failure.
+	 * @return array|\WP_Error The color palette on success, \WP_Error on failure.
+	 * @throws \Exception Caught internally and converted to \WP_Error.
 	 */
 	public function set_color_palette( array $color_palette ) {
 		try {
@@ -104,7 +105,8 @@ class GlobalStylesService {
 	 * Everything in the incoming payload is applied as-is — nothing is skipped or filtered.
 	 *
 	 * @param array $global_styles The global styles to apply.
-	 * @return true|\WP_Error True on success, WP_Error on failure.
+	 * @return bool|\WP_Error True on success, WP_Error on failure.
+	 * @throws \Exception Caught internally and converted to \WP_Error.
 	 */
 	public function set_global_styles( array $global_styles ) {
 		try {
@@ -134,8 +136,8 @@ class GlobalStylesService {
 	/**
 	 * Update global styles post.
 	 *
-	 * @param int|null   $post_id The global styles post id to update.
-	 * @param array|null $post_content array of global styles to inject into the post content.
+	 * @param array|null $post_content Global styles payload to encode into post content.
+	 * @param int|null   $post_id The global styles post ID to update.
 	 * @return int|\WP_Error The updated post id on success, \WP_Error on failure.
 	 */
 	protected function update_active_global_styles( ?array $post_content = null, ?int $post_id = null ) {
