@@ -226,11 +226,12 @@ class ThumbnailService {
 	/**
 	 * Single product gallery (classic template) uses placeholder src without woocommerce-placeholder class.
 	 *
-	 * @param string $html              Gallery image HTML.
-	 * @param int    $post_thumbnail_id Featured attachment id (0 when missing).
+	 * @param string     $html              Gallery image HTML.
+	 * @param int|string $post_thumbnail_id Featured attachment id (0 or '' when missing; WC may pass a string).
 	 * @return string
 	 */
-	public function use_pending_image_url_for_single_product_gallery( string $html, int $post_thumbnail_id ): string {
+	public function use_pending_image_url_for_single_product_gallery( string $html, $post_thumbnail_id ): string {
+		$post_thumbnail_id = (int) $post_thumbnail_id;
 		if ( $post_thumbnail_id ) {
 			return $html;
 		}
