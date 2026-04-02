@@ -227,7 +227,7 @@ export async function initializeEcommercePlugins() {
  */
 export async function publishProducts( products ) {
 	return apiFetch( {
-		url: `${ onboardingRestBase }/app/publish-products`,
+		url: `${ onboardingRestBase }/site-content/publish-products`,
 		method: 'POST',
 		data: { products },
 	} );
