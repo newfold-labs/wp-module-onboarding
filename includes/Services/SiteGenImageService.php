@@ -26,7 +26,7 @@ class SiteGenImageService {
 	 * @param int    $post_id The post ID to process images for.
 	 * @param string $content The content containing images.
 	 */
-	public static function process_homepage_images_immediate_async( $post_id, $content ) {
+	public static function process_homepage_images_immediate_async( int $post_id, string $content ): void {
 		// Extract image URLs from content
 		$image_urls = self::extract_all_image_urls( $content );
 
@@ -53,7 +53,7 @@ class SiteGenImageService {
 	public static function schedule_after_onboarding() {
 
 		self::schedule_content_images();
-		
+
 		self::schedule_cpt_images();
 	}
 
@@ -74,7 +74,6 @@ class SiteGenImageService {
 			)
 		);
 
-		
 		foreach ( $pages as $page ) {
 			self::process_homepage_images_immediate_async( $page->ID, $page->post_content );
 		}
@@ -95,7 +94,7 @@ class SiteGenImageService {
 	 * @param string $content The content to extract image URLs from.
 	 * @return array Array of unique image URLs.
 	 */
-	private static function extract_all_image_urls( $content ) {
+	private static function extract_all_image_urls( string $content ): array {
 		$image_urls = array();
 
 		// Extract Unsplash images
@@ -225,7 +224,7 @@ class SiteGenImageService {
 						$attachment_url = null;
 					}
 					$uploaded_image_urls[ $image_url ] = $attachment_url;
-					$successful_uploads++;
+					++$successful_uploads;
 				}
 			}
 		} catch ( \Exception $e ) {
@@ -273,7 +272,7 @@ class SiteGenImageService {
 				if ( $new_content !== $content ) {
 					$content = $new_content;
 					$updated = true;
-					$replaced_count++;
+					++$replaced_count;
 				}
 			}
 		}

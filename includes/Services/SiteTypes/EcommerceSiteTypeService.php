@@ -80,7 +80,7 @@ class EcommerceSiteTypeService {
 	 * @param array $product The product.
 	 * @return int|WP_Error The product ID.
 	 */
-	public static function publish_woo_product( string $name, string $description, mixed $price, string $image_url = '', array $categories = array()) {
+	public static function publish_woo_product( string $name, string $description, mixed $price, string $image_url = '', array $categories = array() ): int|\WP_Error {
 		// Remove hooks that can slow down the operation.
 		remove_all_actions('woocommerce_new_product');
 		remove_all_actions('woocommerce_update_product');

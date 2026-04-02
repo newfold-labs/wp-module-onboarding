@@ -50,7 +50,7 @@ class MediaService {
 	 *
 	 * @return void
 	 */
-	public static function schedule_after_onboarding() {
+	public static function schedule_after_onboarding(): void {
 		if ( ! wp_next_scheduled( self::CRON_HOOK ) ) {
 			wp_schedule_single_event( time(), self::CRON_HOOK );
 		}
@@ -70,7 +70,7 @@ class MediaService {
 	 * @param int $per_page Number of posts to process per batch. Default 10.
 	 * @return void
 	 */
-	public static function sideload_pending_images( $per_page = 10 ) {
+	public static function sideload_pending_images( int $per_page = 10 ): void {
 		$per_page = max( 1, (int) $per_page );
 
 		$posts = get_posts(

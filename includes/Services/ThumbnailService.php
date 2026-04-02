@@ -1,6 +1,11 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
+/**
+ * Thumbnail Service Class
+ *
+ * Responsible for filtering the thumbnail HTML for all post types and WooCommerce product images.
+ */
 class ThumbnailService {
 
 	/**
@@ -40,7 +45,7 @@ class ThumbnailService {
 	 * @param \WC_Product $product Product object.
 	 * @return string Non-empty string or empty string.
 	 */
-	private function get_nfd_image_meta_raw_for_product( $product ) {
+	private function get_nfd_image_meta_raw_for_product( mixed $product ): string {
 		if ( ! ( $product instanceof \WC_Product ) ) {
 			return '';
 		}
@@ -60,7 +65,7 @@ class ThumbnailService {
 	 * @param \WC_Product $product Product.
 	 * @return bool
 	 */
-	private function product_has_nfd_image_meta( $product ) {
+	private function product_has_nfd_image_meta( mixed $product ): bool {
 		return '' !== $this->get_nfd_image_meta_raw_for_product( $product );
 	}
 
@@ -71,7 +76,7 @@ class ThumbnailService {
 	 * @param \WC_Product $product Product object.
 	 * @return string Non-empty esc_url_raw() value, or empty string.
 	 */
-	private function get_nfd_pending_image_url_for_wc_product( $product ) {
+	private function get_nfd_pending_image_url_for_wc_product( mixed $product ): string {
 		if ( ! ( $product instanceof \WC_Product ) || ! $this->product_has_nfd_image_meta( $product ) ) {
 			return '';
 		}
@@ -90,7 +95,7 @@ class ThumbnailService {
 	 * @param string $url Raw URL.
 	 * @return bool
 	 */
-	private function is_usable_remote_image_url( $url ) {
+	private function is_usable_remote_image_url( mixed $url ): bool {
 		if ( '' === $url || ! is_string( $url ) ) {
 			return false;
 		}
@@ -108,7 +113,7 @@ class ThumbnailService {
 	 * @param \WP_Block|null $parent      Parent block.
 	 * @return array
 	 */
-	public function push_post_id_for_product_image_placeholder( $context, $parsed_block, $parent ) {
+	public function push_post_id_for_product_image_placeholder( array $context, array $parsed_block, mixed $parent ): array {
 		if ( empty( $parsed_block['blockName'] ) || 'woocommerce/product-image' !== $parsed_block['blockName'] ) {
 			return $context;
 		}
@@ -132,7 +137,7 @@ class ThumbnailService {
 	 * @param \WP_Block $block_instance Instance.
 	 * @return string
 	 */
-	public function pop_post_id_after_product_image_block( $block_content, $parsed_block, $block_instance ) {
+	public function pop_post_id_after_product_image_block( string $block_content, array $parsed_block, mixed $block_instance ): string {
 		if ( ! $block_instance instanceof \WP_Block || empty( $block_instance->context['postId'] ) ) {
 			return $block_content;
 		}
@@ -157,7 +162,7 @@ class ThumbnailService {
 	 * @param array  $dimensions  Width/height.
 	 * @return string
 	 */
-	public function maybe_replace_wc_placeholder_img( $html, $size, $dimensions ) {
+	public function maybe_replace_wc_placeholder_img( string $html, string $size, array $dimensions ): string {
 		$product = null;
 		if ( ! empty( self::$product_image_placeholder_stack ) ) {
 			$post_id = (int) self::$product_image_placeholder_stack[ count( self::$product_image_placeholder_stack ) - 1 ];
@@ -192,7 +197,7 @@ class ThumbnailService {
 	/**
 	 * @return string[] Distinct placeholder image URLs for common WC sizes.
 	 */
-	private function get_wc_placeholder_src_urls() {
+	private function get_wc_placeholder_src_urls(): array {
 		static $urls = null;
 
 		if ( null !== $urls ) {
@@ -221,7 +226,7 @@ class ThumbnailService {
 	 * @param int    $post_thumbnail_id Featured attachment id (0 when missing).
 	 * @return string
 	 */
-	public function use_pending_image_url_for_single_product_gallery( $html, $post_thumbnail_id ) {
+	public function use_pending_image_url_for_single_product_gallery( string $html, int $post_thumbnail_id ): string {
 		if ( $post_thumbnail_id ) {
 			return $html;
 		}
@@ -256,7 +261,7 @@ class ThumbnailService {
 	 * @param \WP_Block $block_instance Block instance (has context e.g. postId).
 	 * @return string
 	 */
-	public function use_pending_image_url_for_product_image_block( $block_content, $parsed_block, $block_instance = null ) {
+	public function use_pending_image_url_for_product_image_block( string $block_content, array $parsed_block, mixed $block_instance = null ): string {
 		if ( empty( $block_content ) || ! is_string( $block_content ) ) {
 			return $block_content;
 		}
@@ -333,7 +338,7 @@ class ThumbnailService {
 	 * @param \WP_Block $block_instance Block instance (context includes postId).
 	 * @return string
 	 */
-	public function use_pending_image_url_for_core_post_featured_block( $block_content, $parsed_block, $block_instance ) {
+	public function use_pending_image_url_for_core_post_featured_block( string $block_content, array $parsed_block, mixed $block_instance ): string {
 		if ( ! $block_instance instanceof \WP_Block || ! isset( $block_instance->context['postId'] ) ) {
 			return $block_content;
 		}
@@ -380,7 +385,7 @@ class ThumbnailService {
 	 * @param string $route Request route from WP_REST_Request::get_route().
 	 * @return bool
 	 */
-	private function is_wc_store_products_rest_route( $route ) {
+	private function is_wc_store_products_rest_route( string $route ): bool {
 		if ( ! is_string( $route ) || '' === $route ) {
 			return false;
 		}
@@ -396,7 +401,7 @@ class ThumbnailService {
 	 * @param string $cart_item_key   Key.
 	 * @return array
 	 */
-	public function use_pending_image_url_for_cart_store_api( $product_images, $cart_item, $cart_item_key ) {
+	public function use_pending_image_url_for_cart_store_api( array $product_images, array $cart_item, string $cart_item_key ): array {
 		if ( ! empty( $product_images ) ) {
 			return $product_images;
 		}
@@ -432,7 +437,7 @@ class ThumbnailService {
 	 * @param \WP_REST_Request  $request Request.
 	 * @return \WP_REST_Response
 	 */
-	public function maybe_inject_images_wc_store_api_products( $result, $server, $request ) {
+	public function maybe_inject_images_wc_store_api_products( mixed $result, mixed $server, mixed $request ): mixed {
 		if ( ! ( $result instanceof \WP_REST_Response ) || ! function_exists( 'wc_get_product' ) ) {
 			return $result;
 		}
@@ -465,10 +470,12 @@ class ThumbnailService {
 	}
 
 	/**
+	 * Patch WC Store API product images.
+	 * 
 	 * @param array $item Product payload (associative).
 	 * @return array
 	 */
-	private function patch_wc_store_api_product_images( array $item ) {
+	private function patch_wc_store_api_product_images( array $item ): array {
 		if ( ! empty( $item['images'] ) ) {
 			return $item;
 		}
@@ -515,7 +522,7 @@ class ThumbnailService {
 	 * @return string
 	 */
 	
-	public function use_pending_image_url( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
+	public function use_pending_image_url( string $html, int $post_id, int $post_thumbnail_id, string|array $size, string|array $attr ): string {
 		if ( '' !== $html && null !== $html ) {
 			return $html;
 		}
