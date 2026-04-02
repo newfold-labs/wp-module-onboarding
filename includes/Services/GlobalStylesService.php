@@ -2,6 +2,11 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
+/**
+ * Global Styles Service Class
+ *
+ * Responsible for setting the global styles and color palette.
+ */
 class GlobalStylesService {
 
 	/**
@@ -28,8 +33,8 @@ class GlobalStylesService {
 		$post_id = \WP_Theme_JSON_Resolver::get_user_global_styles_post_id();
 		if ( $post_id ) {
 			$this->global_styles_id = $post_id;
-			$post = get_post( $post_id );
-			$this->global_styles = $post ? ( json_decode( $post->post_content, true ) ?? array() ) : array();
+			$post                   = get_post( $post_id );
+			$this->global_styles    = $post ? ( json_decode( $post->post_content, true ) ?? array() ) : array();
 		}
 		return $this;
 	}
@@ -137,10 +142,13 @@ class GlobalStylesService {
 		$post_id      = $post_id ?? $this->global_styles_id;
 		$post_content = $post_content ?? $this->global_styles;
 
-		$result = wp_update_post( [
-			'ID'           => $post_id,
-			'post_content' => wp_slash( wp_json_encode( $post_content ) ),
-		], true );
+		$result = wp_update_post(
+			array(
+				'ID'           => $post_id,
+				'post_content' => wp_slash( wp_json_encode( $post_content ) ),
+			),
+			true
+		);
 		if ( is_wp_error( $result ) ) {
 			return $result;
 		}

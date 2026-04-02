@@ -16,16 +16,18 @@ class ThumbnailService {
 	 */
 	private static $product_image_placeholder_stack = array();
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 
 		// for all post types
 		add_filter( 'post_thumbnail_html', array( $this, 'use_pending_image_url' ), 10, 5 );
-		
+
 		// for product images
 		add_filter( 'render_block_context', array( $this, 'push_post_id_for_product_image_placeholder' ), 9, 3 );
 		add_filter( 'woocommerce_placeholder_img', array( $this, 'maybe_replace_wc_placeholder_img' ), 10, 3 );
-		
-		
+
 		add_filter(
 			'woocommerce_single_product_image_thumbnail_html',
 			array( $this, 'use_pending_image_url_for_single_product_gallery' ),
@@ -45,7 +47,7 @@ class ThumbnailService {
 	 * @param \WC_Product $product Product object.
 	 * @return string Non-empty string or empty string.
 	 */
-	private function get_nfd_image_meta_raw_for_product( mixed $product ): string {
+	private function get_nfd_image_meta_raw_for_product( \WC_Product $product ): string {
 		if ( ! ( $product instanceof \WC_Product ) ) {
 			return '';
 		}
@@ -55,17 +57,17 @@ class ThumbnailService {
 		if ( is_string( $raw ) && '' !== trim( $raw ) ) {
 			return $raw;
 		}
-	
+
 		return '';
 	}
 
 	/**
 	 * Whether the product has NFD pending image meta.
-	 * 
+	 *
 	 * @param \WC_Product $product Product.
 	 * @return bool
 	 */
-	private function product_has_nfd_image_meta( mixed $product ): bool {
+	private function product_has_nfd_image_meta( \WC_Product $product ): bool {
 		return '' !== $this->get_nfd_image_meta_raw_for_product( $product );
 	}
 
@@ -73,7 +75,7 @@ class ThumbnailService {
 	/**
 	 * Pending image URL from meta (only when no featured attachment; requires meta set).
 	 *
-	 * @param \WC_Product $product Product object.
+	 * @param mixed $product Product or other value; must pass instanceof \WC_Product checks before use.
 	 * @return string Non-empty esc_url_raw() value, or empty string.
 	 */
 	private function get_nfd_pending_image_url_for_wc_product( mixed $product ): string {
@@ -92,7 +94,7 @@ class ThumbnailService {
 	/**
 	 * Remote URLs can fail PHP's FILTER_VALIDATE_URL; WordPress has a more permissive check.
 	 *
-	 * @param string $url Raw URL.
+	 * @param mixed $url Raw URL or other value (validated with is_string before use).
 	 * @return bool
 	 */
 	private function is_usable_remote_image_url( mixed $url ): bool {
@@ -107,13 +109,13 @@ class ThumbnailService {
 
 	/**
 	 * Push the post ID for the product image placeholder.
-	 * 
-	 * @param array         $context      Block context.
-	 * @param array         $parsed_block Parsed block.
-	 * @param \WP_Block|null $parent      Parent block.
+	 *
+	 * @param array $context      Block context.
+	 * @param array $parsed_block Parsed block.
+	 * @param mixed $outer_block  Parent block instance (unused; required by filter signature).
 	 * @return array
 	 */
-	public function push_post_id_for_product_image_placeholder( array $context, array $parsed_block, mixed $parent ): array {
+	public function push_post_id_for_product_image_placeholder( array $context, array $parsed_block, mixed $outer_block ): array { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		if ( empty( $parsed_block['blockName'] ) || 'woocommerce/product-image' !== $parsed_block['blockName'] ) {
 			return $context;
 		}
@@ -131,10 +133,10 @@ class ThumbnailService {
 
 	/**
 	 * Pop the post ID for the product image placeholder.
-	 * 
+	 *
 	 * @param string $block_content   Content.
 	 * @param array  $parsed_block    Parsed block.
-	 * @param \WP_Block $block_instance Instance.
+	 * @param mixed  $block_instance  Block instance; checked with instanceof \WP_Block.
 	 * @return string
 	 */
 	public function pop_post_id_after_product_image_block( string $block_content, array $parsed_block, mixed $block_instance ): string {
@@ -195,6 +197,8 @@ class ThumbnailService {
 	}
 
 	/**
+	 * Returns distinct placeholder image URLs for common WooCommerce image sizes.
+	 *
 	 * @return string[] Distinct placeholder image URLs for common WC sizes.
 	 */
 	private function get_wc_placeholder_src_urls(): array {
@@ -256,9 +260,9 @@ class ThumbnailService {
 	/**
 	 * WooCommerce Blocks: replace placeholder in server-rendered product image block.
 	 *
-	 * @param string    $block_content  Rendered block HTML.
-	 * @param array     $parsed_block   Parsed block (not a WP_Block instance).
-	 * @param \WP_Block $block_instance Block instance (has context e.g. postId).
+	 * @param string $block_content  Rendered block HTML.
+	 * @param array  $parsed_block   Parsed block (not a WP_Block instance).
+	 * @param mixed  $block_instance Block instance (has context e.g. postId); checked with instanceof \WP_Block.
 	 * @return string
 	 */
 	public function use_pending_image_url_for_product_image_block( string $block_content, array $parsed_block, mixed $block_instance = null ): string {
@@ -333,9 +337,9 @@ class ThumbnailService {
 	 * Shop/archive grids often use `core/post-featured-image` in a Query Loop.
 	 * Core returns no markup when there is no featured attachment; inject `nfd_image_url`.
 	 *
-	 * @param string    $block_content   Rendered block HTML (often empty).
-	 * @param array     $parsed_block    Parsed block.
-	 * @param \WP_Block $block_instance Block instance (context includes postId).
+	 * @param string $block_content   Rendered block HTML (often empty).
+	 * @param array  $parsed_block    Parsed block.
+	 * @param mixed  $block_instance Block instance (context includes postId); checked with instanceof \WP_Block.
 	 * @return string
 	 */
 	public function use_pending_image_url_for_core_post_featured_block( string $block_content, array $parsed_block, mixed $block_instance ): string {
@@ -396,12 +400,12 @@ class ThumbnailService {
 	/**
 	 * Cart / checkout blocks: inject image when Store API returns no attachments.
 	 *
-	 * @param array  $product_images  Image list from schema.
-	 * @param array  $cart_item       Cart row.
-	 * @param string $cart_item_key   Key.
+	 * @param array  $product_images      Image list from schema.
+	 * @param array  $cart_item           Cart row.
+	 * @param string $unused_cart_item_key Cart item key (unused; required by filter signature).
 	 * @return array
 	 */
-	public function use_pending_image_url_for_cart_store_api( array $product_images, array $cart_item, string $cart_item_key ): array {
+	public function use_pending_image_url_for_cart_store_api( array $product_images, array $cart_item, string $unused_cart_item_key ): array { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		if ( ! empty( $product_images ) ) {
 			return $product_images;
 		}
@@ -432,13 +436,17 @@ class ThumbnailService {
 	/**
 	 * Product grids that hydrate from Store API need `images` populated for JS-rendered blocks.
 	 *
-	 * @param \WP_REST_Response $result   Response.
-	 * @param \WP_REST_Server   $server   Server.
-	 * @param \WP_REST_Request  $request Request.
-	 * @return \WP_REST_Response
+	 * @param mixed $result  REST response; checked with instanceof \WP_REST_Response.
+	 * @param mixed $server  REST server (unused; required by filter signature).
+	 * @param mixed $request REST request; checked with instanceof \WP_REST_Request before use.
+	 * @return mixed
 	 */
-	public function maybe_inject_images_wc_store_api_products( mixed $result, mixed $server, mixed $request ): mixed {
+	public function maybe_inject_images_wc_store_api_products( mixed $result, mixed $server, mixed $request ): mixed { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		if ( ! ( $result instanceof \WP_REST_Response ) || ! function_exists( 'wc_get_product' ) ) {
+			return $result;
+		}
+
+		if ( ! ( $request instanceof \WP_REST_Request ) ) {
 			return $result;
 		}
 
@@ -471,7 +479,7 @@ class ThumbnailService {
 
 	/**
 	 * Patch WC Store API product images.
-	 * 
+	 *
 	 * @param array $item Product payload (associative).
 	 * @return array
 	 */
@@ -510,25 +518,24 @@ class ThumbnailService {
 		return $item;
 	}
 
-	
+
 	/**
 	 * Use pending image URL for all post types.
-	 * 
-	 * @param string $html              Thumbnail HTML.
-	 * @param int    $post_id           Post ID.
-	 * @param int    $post_thumbnail_id Attachment ID (0 when missing).
-	 * @param string|int[] $size             Registered size name or [w, h] array.
-	 * @param string|array $attr             Extra img attributes.
+	 *
+	 * @param string       $html                    Thumbnail HTML.
+	 * @param int          $post_id                 Post ID.
+	 * @param int          $unused_post_thumbnail_id Attachment ID (unused; required by filter signature).
+	 * @param string|int[] $unused_size             Registered size name or [w, h] array (unused).
+	 * @param string|array $unused_attr             Extra img attributes (unused).
 	 * @return string
 	 */
-	
-	public function use_pending_image_url( string $html, int $post_id, int $post_thumbnail_id, string|array $size, string|array $attr ): string {
+	public function use_pending_image_url( string $html, int $post_id, int $unused_post_thumbnail_id, string|array $unused_size, string|array $unused_attr ): string { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		if ( '' !== $html && null !== $html ) {
 			return $html;
 		}
 
-		$post_id = (int) $post_id;
-		$supported_post_types = array( PostTypeService::SERVICE_POST_TYPE, 'post');
+		$post_id              = (int) $post_id;
+		$supported_post_types = array( PostTypeService::SERVICE_POST_TYPE, 'post' );
 		if ( $post_id <= 0 || ! in_array( get_post_type( $post_id ), $supported_post_types, true ) ) {
 			return $html;
 		}

@@ -146,7 +146,7 @@ export async function runArticles( { generationData } ) {
 	let articleCount = 0;
 
 	for ( const article of articles ) {
-		let featuredMediaURL = article.featured_image ?? null;
+		const featuredMediaURL = article.featured_image ?? null;
 
 		await createPost( article.title, article.content, article.excerpt || '', {
 			meta: {
@@ -167,8 +167,8 @@ export async function runServices( { generationData } ) {
 	let serviceCount = 0;
 
 	for ( const service of services ) {
-		let featuredMediaURL = service.featured_image ?? null;
-	
+		const featuredMediaURL = service.featured_image ?? null;
+
 		await createService( service.title, service.content, service.excerpt || '', {
 			meta: {
 				nfd_onboarding_generated: '1',
@@ -188,7 +188,7 @@ export async function runProducts( { generationData } ) {
 	if ( products.length === 0 ) {
 		return 'Skipped — no products';
 	}
-  
+
 	const result = await publishProducts( products );
 	const count = result?.created ?? 0;
 
@@ -210,7 +210,6 @@ export async function runFinalize() {
 	}
 	return 'Site published';
 }
-
 
 /**
  * Ordered list of step entries: [ key, runFn ].

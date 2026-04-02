@@ -91,7 +91,6 @@ export async function createPost( title, content, excerpt = '', options = {} ) {
  * @return {Promise<Object>} The created service object.
  */
 export async function createService( title, content, excerpt = '', options = {} ) {
-	console.log('createService', title, content, excerpt, options);
 	return apiFetch( {
 		url: `${ wpRestBase }/nfd_service`,
 		method: 'POST',
@@ -99,7 +98,7 @@ export async function createService( title, content, excerpt = '', options = {} 
 			title,
 			content,
 			excerpt,
-			status: 'publish',	
+			status: 'publish',
 			...options,
 		},
 	} );
@@ -210,7 +209,7 @@ export async function updateTemplatePart( slug, content ) {
  * Ensure WooCommerce and ecommerce plugins are installed and active.
  * Call without awaiting when site_type is eCommerce.
  *
- * @return {Promise<{status: string}>}
+ * @return {Promise<{status: string}>} Response payload from the initialize-ecommerce endpoint.
  */
 export async function initializeEcommercePlugins() {
 	return apiFetch( {
@@ -223,7 +222,7 @@ export async function initializeEcommercePlugins() {
  * Publish products to the backend.
  *
  * @param {Object[]} products Raw product objects from generationData.post_types.products.
- * @return {Promise<{created: number}>}
+ * @return {Promise<{created: number}>} Result including how many products were created.
  */
 export async function publishProducts( products ) {
 	return apiFetch( {

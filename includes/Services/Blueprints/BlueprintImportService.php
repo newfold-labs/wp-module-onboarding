@@ -9,13 +9,13 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services\Blueprints;
 
 /**
  * Blueprint Import Service
- * 
+ *
  * This class handles the import of a blueprint package that is exported by...
  * https://github.com/newfold-labs/wp-plugin-blueprint-exporter.
- * 
+ *
  * The blueprint package is a zip file that contains a SQL file and a folder with
  * the media files.
- * 
+ *
  * The SQL file is processed to replace the source site URL with the target site URL.
  * The media files are copied to the wp-content/uploads directory.
  */
@@ -221,7 +221,7 @@ class BlueprintImportService extends BlueprintsService {
 		// Replace URLs in content
 		$sql_content = str_replace( $source_site_url, $target_site_url, $sql_content );
 		// Replace uploads URLs also for multisite.
-		$sql_content = preg_replace( "/uploads\/sites\/[0-9]+/", 'uploads/', $sql_content );
+		$sql_content = preg_replace( '/uploads\/sites\/[0-9]+/', 'uploads/', $sql_content );
 		// Also handle URLs with trailing slashes
 		$sql_content = str_replace( $source_site_url . '/', $target_site_url . '/', $sql_content );
 
@@ -259,7 +259,7 @@ class BlueprintImportService extends BlueprintsService {
 		}
 
 		// Status trackers.
-		$errors = [];
+		$errors           = array();
 		$successful_count = 0;
 		$total_statements = 0;
 
@@ -271,17 +271,17 @@ class BlueprintImportService extends BlueprintsService {
 				continue;
 			}
 
-			$total_statements++;
+			++$total_statements;
 
-			$result = $wpdb->query( $statement );
+			$result = $wpdb->query( $statement ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			if ( false === $result && ! empty( $wpdb->last_error ) ) {
 				// Record the error.
-				$errors[] = [
+				$errors[] = array(
 					'statement' => substr( $statement, 0, 100 ) . '...',
-					'error' => $wpdb->last_error
-				];
+					'error'     => $wpdb->last_error,
+				);
 			} else {
-				$successful_count++;
+				++$successful_count;
 			}
 		}
 
@@ -292,7 +292,8 @@ class BlueprintImportService extends BlueprintsService {
 
 		// If the success rate is less than 75%, return an error.
 		if ( $success_rate < 0.75 ) {
-			return new \WP_Error( 'sql_import_mostly_failed', 
+			return new \WP_Error(
+				'sql_import_mostly_failed',
 				sprintf( 'SQL import mostly failed. %d/%d statements succeeded.', $successful_count, $total_statements ),
 				$errors
 			);
@@ -308,9 +309,9 @@ class BlueprintImportService extends BlueprintsService {
 	 * @return array The statements.
 	 */
 	private function get_statements_from_sql( string $sql_content ): array {
-		$statements = [];
+		$statements        = array();
 		$current_statement = '';
-		
+
 		// Split the entire SQL dump into individual lines
 		$lines = explode( "\n", $sql_content );
 
@@ -403,15 +404,17 @@ class BlueprintImportService extends BlueprintsService {
 		global $wpdb;
 		$current_user_id = get_current_user_id();
 
-		$wpdb->query( $wpdb->prepare(
-			"UPDATE {$wpdb->posts} SET post_author = %d",
-			$current_user_id
-		) );
+		$wpdb->query(
+			$wpdb->prepare(
+				"UPDATE {$wpdb->posts} SET post_author = %d",
+				$current_user_id
+			)
+		);
 	}
 
 	/**
 	 * Clean up the temporary directory.
-	 * 
+	 *
 	 * @return bool True if the temporary directory is cleaned up, false otherwise.
 	 */
 	private function cleanup_temp_dir(): bool {

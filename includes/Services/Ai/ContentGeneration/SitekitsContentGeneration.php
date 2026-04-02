@@ -13,9 +13,12 @@ use NewfoldLabs\WP\Module\Onboarding\Types\Sitekit;
 
 class SitekitsContentGeneration {
 
-	private static $site_types_supported = [
-		'ecommerce', 'personal', 'business', 'linkinbio'
-	];
+	private static $site_types_supported = array(
+		'ecommerce',
+		'personal',
+		'business',
+		'linkinbio',
+	);
 
 	/**
 	 * The site type.
@@ -41,9 +44,9 @@ class SitekitsContentGeneration {
 	/**
 	 * Constructor.
 	 *
-	 * @param string $site_type The site type.
+	 * @param string                  $site_type The site type.
 	 * @param ContentGenerationPrompt $prompt The prompt.
-	 * @param SiteClassification $site_classification The site classification.
+	 * @param SiteClassification      $site_classification The site classification.
 	 */
 	public function __construct( string $site_type, ContentGenerationPrompt $prompt, SiteClassification $site_classification ) {
 		$this->site_type           = $site_type;
@@ -58,7 +61,7 @@ class SitekitsContentGeneration {
 	 * @return array|\WP_Error The sitekits - array of Sitekit objects or WP_Error on failure.
 	 */
 	public function generate_sitekits( int $count = 3 ) {
-		$prompt = $this->prompt->get_prompt();
+		$prompt       = $this->prompt->get_prompt();
 		$request_body = array(
 			'siteType'      => $this->site_type,
 			'count'         => $count,
@@ -98,7 +101,7 @@ class SitekitsContentGeneration {
 		// Error.
 		$response_code = $request->get_response_code();
 		$error_message = $request->get_error_message();
-		$response = new \WP_Error(
+		$response      = new \WP_Error(
 			'sitekits_generation_failed',
 			$error_message,
 			array( 'status' => $response_code )
@@ -238,7 +241,7 @@ class SitekitsContentGeneration {
 	 * @return string
 	 */
 	private function check_custom_logo( string $content ): string {
-		if ( function_exists('has_custom_logo') && ! has_custom_logo() ) {
+		if ( function_exists( 'has_custom_logo' ) && ! has_custom_logo() ) {
 			$content = preg_replace(
 				'/<!--\s*wp:site-logo\s*\/-->/',
 				'<!-- wp:site-logo /--><!-- wp:site-title /-->',

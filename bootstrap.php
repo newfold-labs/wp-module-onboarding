@@ -84,7 +84,6 @@ if ( is_callable( 'add_action' ) ) {
 		}
 	);
 
-	
 	// Queue content image sideloading for onboarding-generated pages when onboarding completes.
 	add_action( 'newfold/onboarding/completed', array( SiteGenImageService::class, 'schedule_after_onboarding' ) );
 	// Add action to process image sideload queue for onboarding-generated pages

@@ -96,7 +96,13 @@ class PluginsController {
 		if ( file_exists( \WP_PLUGIN_DIR . '/' . $plugin_file ) ) {
 			$result = \activate_plugin( $plugin_file );
 			if ( \is_wp_error( $result ) ) {
-				return new \WP_REST_Response( array( 'status' => 'error', 'message' => $result->get_error_message() ), 500 );
+				return new \WP_REST_Response(
+					array(
+						'status'  => 'error',
+						'message' => $result->get_error_message(),
+					),
+					500
+				);
 			}
 			return new \WP_REST_Response( array( 'status' => 'activated' ), 200 );
 		}

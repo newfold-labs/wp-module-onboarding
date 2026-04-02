@@ -254,7 +254,7 @@ class GlobalStylesController {
 						)
 					);
 
-					$face_count++;
+					++$face_count;
 				}
 			}
 
