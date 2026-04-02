@@ -76,7 +76,7 @@ class ReduxStateService {
 	private static function validate( string $state, ?array $data = null ): bool {
 		// Validate the state
 		$slices = array_keys( self::$states );
-		if ( ! in_array( $state, $slices ) ) {
+		if ( ! in_array( $state, $slices, true ) ) {
 			return false;
 		}
 

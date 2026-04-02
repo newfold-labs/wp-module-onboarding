@@ -273,7 +273,8 @@ class BlueprintImportService extends BlueprintsService {
 
 			++$total_statements;
 
-			$result = $wpdb->query( $statement ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- The statement is a valid SQL statement.
+			// Blueprint dump statements are executed as-is; $wpdb->prepare() only applies to parameterized query templates, not full imported DDL/DML.
+			$result = $wpdb->query( $statement ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.NotPrepared
 			if ( false === $result && ! empty( $wpdb->last_error ) ) {
 				// Record the error.
 				$errors[] = array(

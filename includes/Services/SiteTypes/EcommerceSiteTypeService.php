@@ -77,14 +77,14 @@ class EcommerceSiteTypeService {
 	/**
 	 * Publishes a WooCommerce product.
 	 *
-	 * @param string $name Product title.
-	 * @param string $description Product short description (excerpt).
-	 * @param mixed  $price Regular and sale price value for meta.
-	 * @param string $image_url Optional featured image URL (sideloaded later).
-	 * @param array  $categories Term IDs for product_cat.
-	 * @return int|\WP_Error The product ID.
+	 * @param string           $name Product title.
+	 * @param string           $description Product short description (excerpt).
+	 * @param string|int|float $price Regular and sale price value for meta.
+	 * @param string           $image_url Optional featured image URL (sideloaded later).
+	 * @param array            $categories Term IDs for product_cat.
+	 * @return int|\WP_Error The product ID or error.
 	 */
-	public static function publish_woo_product( string $name, string $description, mixed $price, string $image_url = '', array $categories = array() ): int|\WP_Error {
+	public static function publish_woo_product( string $name, string $description, $price, string $image_url = '', array $categories = array() ) {
 		// Remove hooks that can slow down the operation.
 		remove_all_actions( 'woocommerce_new_product' );
 		remove_all_actions( 'woocommerce_update_product' );
