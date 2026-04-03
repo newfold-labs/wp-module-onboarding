@@ -88,7 +88,7 @@ class PostTypeService {
 		$args = array(
 			'labels'             => $labels,
 			'public'             => true,
-			'has_archive'        => true,
+			'has_archive'        => false,
 			'show_in_rest'       => true,
 			'supports'           => array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
 			'menu_icon'          => 'dashicons-businessman',
