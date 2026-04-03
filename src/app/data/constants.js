@@ -5,7 +5,7 @@ export const wpSiteUrl = window.nfdOnboarding.runtime.siteUrl;
 export const wpRestURL = window.nfdOnboarding.runtime.restUrl;
 export const aiPlatformBase =
 	window.nfdOnboarding?.runtime?.aiPlatformUrl ||
-	'https://ai-platform.test';
+	'https://bluehost-ai-platform.on-forge.com';
 export const wpRestRoute = 'wp/v2';
 export const onboardingRestRoute = 'newfold-onboarding/v1';
 export const installerRestRoute = 'newfold-installer/v1';
