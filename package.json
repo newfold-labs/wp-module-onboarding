@@ -49,7 +49,7 @@
 		"colord": "^2.9.3",
 		"lottie-react": "^2.4.1",
 		"motion": "^12.38.0",
-		"react-router-dom": "^7.13.2",
+		"react-router-dom": "^7.14.0",
 		"yet-another-react-lightbox": "^3.30.1",
 		"posthog-js": "^1.364.5"
 	}
