@@ -24,9 +24,9 @@
 		"webpack-merge": "^6.0.1"
 	},
 	"scripts": {
-		"build": "wp-scripts build ./src/onboarding.js ./src/DesignStudio/onboarding-design-studio.js ./src/DesignStudio/onboarding-design-studio.css",
+		"build": "wp-scripts build ./src/onboarding.js ./src/DesignStudio/onboarding-design-studio.js ./src/DesignStudio/onboarding-design-studio.css ./src/onboarding-restart-button.js",
 		"format": "wp-scripts format ./src",
-		"start": "wp-scripts start ./src/onboarding.js ./src/DesignStudio/onboarding-design-studio.js ./src/DesignStudio/onboarding-design-studio.css",
+		"start": "wp-scripts start ./src/onboarding.js ./src/DesignStudio/onboarding-design-studio.js ./src/DesignStudio/onboarding-design-studio.css ./src/onboarding-restart-button.js",
 		"set-version-bump": "npm run set-version-patch",
 		"post-set-version": "rm -rf ./build",
 		"lint:js": "wp-scripts lint-js ./src",

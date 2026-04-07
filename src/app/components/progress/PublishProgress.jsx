@@ -138,6 +138,7 @@ const PublishProgress = ( { generationData, discoveryData, onComplete } ) => {
 								sendOnboardingEvent(
 									new OnboardingEvent( ACTION_ONBOARDING_EXITED, 'site_editor' )
 								);
+								sessionStorage.setItem( 'nfd_onboarding_complete', 'true' );
 								window.location.href = EDITOR_REDIRECT_URL;
 							} }
 						>

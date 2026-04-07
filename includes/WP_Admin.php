@@ -306,6 +306,28 @@ final class WP_Admin {
 				self::enqueue_preview_fonts();
 			}
 		}
+
+		// Enqueue restart button when coming from editor chat (post-onboarding)
+		if ( 'site-editor.php' === $pagenow &&
+			isset( $_GET['referrer'] ) &&
+			'nfd-editor-chat' === $_GET['referrer']
+		) {
+			$restart_asset_file = NFD_ONBOARDING_BUILD_DIR . '/onboarding-restart-button.asset.php';
+
+			if ( is_readable( $restart_asset_file ) ) {
+				$restart_asset = include_once $restart_asset_file;
+
+				\wp_register_script(
+					'nfd-onboarding-restart',
+					NFD_ONBOARDING_BUILD_URL . '/onboarding-restart-button.js',
+					$restart_asset['dependencies'] ?? array( 'wp-plugins', 'wp-components', 'wp-element' ),
+					$restart_asset['version'] ?? '1.0.0',
+					true
+				);
+
+				\wp_enqueue_script( 'nfd-onboarding-restart' );
+			}
+		}
 	}
 
 	/**
