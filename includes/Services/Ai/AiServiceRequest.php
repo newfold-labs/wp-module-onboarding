@@ -106,7 +106,7 @@ class AiServiceRequest {
 			array(
 				'headers' => $this->headers,
 				'body'    => wp_json_encode( $this->body ),
-				'timeout' => 60,
+				'timeout' => 180,
 			)
 		);
 

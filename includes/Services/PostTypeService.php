@@ -88,7 +88,7 @@ class PostTypeService {
 		$args = array(
 			'labels'             => $labels,
 			'public'             => true,
-			'has_archive'        => true,
+			'has_archive'        => false,
 			'show_in_rest'       => true,
 			'supports'           => array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
 			'menu_icon'          => 'dashicons-businessman',
@@ -112,7 +112,7 @@ class PostTypeService {
 	 */
 	private function register_image_url_meta(): void {
 		foreach ( array( 'page', 'post', 'product', 'wp_navigation', self::SERVICE_POST_TYPE ) as $post_type ) {
-			if ( !in_array( $post_type, array( 'page', 'wp_navigation'), true ) ) {
+			if ( ! in_array( $post_type, array( 'page', 'wp_navigation' ), true ) ) {
 				register_post_meta(
 					$post_type,
 					self::META_IMAGE_URL,
