@@ -10,6 +10,11 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Services\Blueprints\BlueprintsService;
 
+/**
+ * Blueprints Controller Class
+ *
+ * Responsible for registering the routes for the blueprints controller.
+ */
 class BlueprintsController {
 
 	/**
@@ -99,7 +104,7 @@ class BlueprintsController {
 	 * @param \WP_REST_Request $request The request object.
 	 * @return \WP_REST_Response The response object.
 	 */
-	public function get_blueprints( \WP_REST_Request $request ): \WP_REST_Response {
+	public function get_blueprints( \WP_REST_Request $request ): \WP_REST_Response { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- REST callback signature.
 		$blueprints = BlueprintsService::fetch_blueprints();
 		if ( is_wp_error( $blueprints ) ) {
 			return new \WP_REST_Response( $blueprints->get_error_message(), 500 );
@@ -116,7 +121,7 @@ class BlueprintsController {
 	 */
 	public function install_required_plugins( \WP_REST_Request $request ): \WP_REST_Response {
 		$selected_blueprint_slug = $request->get_param( 'selected_blueprint_slug' );
-		$result = (new BlueprintsService())->install_required_plugins( $selected_blueprint_slug );
+		$result                  = ( new BlueprintsService() )->install_required_plugins( $selected_blueprint_slug );
 		if ( is_wp_error( $result ) ) {
 			return new \WP_REST_Response( $result->get_error_message(), 500 );
 		}
@@ -132,7 +137,7 @@ class BlueprintsController {
 	 */
 	public function import_blueprint( \WP_REST_Request $request ): \WP_REST_Response {
 		$selected_blueprint_slug = $request->get_param( 'selected_blueprint_slug' );
-		$result = (new BlueprintsService())->import_blueprint( $selected_blueprint_slug );
+		$result                  = ( new BlueprintsService() )->import_blueprint( $selected_blueprint_slug );
 		if ( is_wp_error( $result ) ) {
 			return new \WP_REST_Response( $result->get_error_message(), 500 );
 		}

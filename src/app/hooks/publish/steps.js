@@ -5,6 +5,8 @@ import {
 	createPost,
 	updateTemplatePart,
 	createNavigationMenu,
+	createService,
+	publishProducts,
 } from '@/utils/api/wordpress';
 import {
 	setGlobalStylesColorPalette,
@@ -97,6 +99,9 @@ export async function runPages( { generationData, ctx } ) {
 		const page = await createPage( entry.title, entry.content, {
 			template: 'page-no-title',
 			slug: entry.slug,
+			meta: {
+				nfd_onboarding_generated: '1',
+			},
 		} );
 		if ( page?.id ) {
 			ctx.createdPages.push( {
@@ -141,22 +146,13 @@ export async function runArticles( { generationData } ) {
 	let articleCount = 0;
 
 	for ( const article of articles ) {
-		let featuredMediaId = null;
-
-		if ( article.featured_image ) {
-			try {
-				const media = await uploadMediaFromUrl(
-					article.featured_image,
-					`article-${ articleCount }.jpg`
-				);
-				featuredMediaId = media?.id || null;
-			} catch {
-				// Continue without featured image.
-			}
-		}
+		const featuredMediaURL = article.featured_image ?? null;
 
 		await createPost( article.title, article.content, article.excerpt || '', {
-			...( featuredMediaId ? { featured_media: featuredMediaId } : {} ),
+			meta: {
+				nfd_onboarding_generated: '1',
+				...( featuredMediaURL ? { nfd_image_url: featuredMediaURL } : {} ),
+			},
 		} );
 		articleCount++;
 	}
@@ -164,6 +160,39 @@ export async function runArticles( { generationData } ) {
 	return articleCount > 0
 		? `${ articleCount } article${ articleCount !== 1 ? 's' : '' } published`
 		: 'No articles to publish';
+}
+
+export async function runServices( { generationData } ) {
+	const services = generationData.post_types?.services || [];
+	let serviceCount = 0;
+
+	for ( const service of services ) {
+		const featuredMediaURL = service.featured_image ?? null;
+
+		await createService( service.title, service.content, service.excerpt || '', {
+			meta: {
+				nfd_onboarding_generated: '1',
+				...( featuredMediaURL ? { nfd_image_url: featuredMediaURL } : {} ),
+			},
+		} );
+		serviceCount++;
+	}
+
+	return serviceCount > 0
+		? `${ serviceCount } service${ serviceCount !== 1 ? 's' : '' } published`
+		: 'No services to publish';
+}
+
+export async function runProducts( { generationData } ) {
+	const products = generationData.post_types?.products ?? [];
+	if ( products.length === 0 ) {
+		return 'Skipped — no products';
+	}
+
+	const result = await publishProducts( products );
+	const count = result?.created ?? 0;
+
+	return `${ count } product${ count !== 1 ? 's' : '' } published`;
 }
 
 export async function runNavigation( { ctx } ) {
@@ -194,6 +223,8 @@ export const STEP_RUNNERS = [
 	[ 'pages', runPages ],
 	[ 'template_parts', runTemplateParts ],
 	[ 'articles', runArticles ],
+	[ 'services', runServices ],
+	[ 'products', runProducts ],
 	[ 'navigation', runNavigation ],
 	[ 'finalize', runFinalize ],
 ];

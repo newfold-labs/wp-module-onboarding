@@ -40,8 +40,8 @@ class LogoGenerationService {
 		$request = new ImageGenerationServiceRequest(
 			'logos/generate',
 			array(
-				'name' => $site_title,
-				'description' => $site_description
+				'name'        => $site_title,
+				'description' => $site_description,
 			)
 		);
 		$request->send();
@@ -58,7 +58,7 @@ class LogoGenerationService {
 		// Error.
 		$response_code = $request->get_response_code();
 		$error_message = $request->get_error_message();
-		$response = new \WP_Error(
+		$response      = new \WP_Error(
 			'logogen_generation_failed',
 			$error_message,
 			array( 'status' => $response_code )
@@ -77,7 +77,7 @@ class LogoGenerationService {
 		$request = new ImageGenerationServiceRequest(
 			'logos/generate/more',
 			array(
-				'reference_id' => $reference_id
+				'reference_id' => $reference_id,
 			)
 		);
 		$request->send();
@@ -94,7 +94,7 @@ class LogoGenerationService {
 		// Error.
 		$response_code = $request->get_response_code();
 		$error_message = $request->get_error_message();
-		$response = new \WP_Error(
+		$response      = new \WP_Error(
 			'logogen_generation_more_failed',
 			$error_message,
 			array( 'status' => $response_code )
@@ -113,7 +113,7 @@ class LogoGenerationService {
 		$request = new ImageGenerationServiceRequest(
 			'logos/generate/status',
 			array(
-				'reference_id' => $reference_id
+				'reference_id' => $reference_id,
 			)
 		);
 		$request->send();
@@ -125,7 +125,7 @@ class LogoGenerationService {
 		) {
 			$status = $request->get_response_body()['status'];
 			// Store the logos if the generation is completed.
-			if ( $status === 'completed' ) {
+			if ( 'completed' === $status ) {
 				$this->logos = $request->get_response_body()['logos'];
 			}
 			return array( 'status' => $status );
@@ -134,7 +134,7 @@ class LogoGenerationService {
 		// Error.
 		$response_code = $request->get_response_code();
 		$error_message = $request->get_error_message();
-		$response = new \WP_Error(
+		$response      = new \WP_Error(
 			'logogen_generation_status_check_failed',
 			$error_message,
 			array( 'status' => $response_code )
@@ -153,7 +153,7 @@ class LogoGenerationService {
 		$request = new ImageGenerationServiceRequest(
 			'logos/generate/select',
 			array(
-				'logo_reference_id' => $logo_reference_id
+				'logo_reference_id' => $logo_reference_id,
 			)
 		);
 		$request->send();
@@ -164,11 +164,14 @@ class LogoGenerationService {
 			isset( $request->get_response_body()['selected_logo_url'] )
 		) {
 			$selected_logo_url = $request->get_response_body()['selected_logo_url'];
-			$attachment_data = MediaService::import_image_from_url( $selected_logo_url );
+			$attachment_data   = MediaService::import_image_from_url( $selected_logo_url );
 			if ( is_array( $attachment_data ) ) {
-				$id = $attachment_data['id'];
+				$id  = $attachment_data['id'];
 				$url = $attachment_data['src'];
-				return array( 'selected_logo_id' => $id, 'selected_logo_url' => $url );
+				return array(
+					'selected_logo_id'  => $id,
+					'selected_logo_url' => $url,
+				);
 			} else {
 				return new \WP_Error(
 					'logogen_select_logo_import_failed',
@@ -181,7 +184,7 @@ class LogoGenerationService {
 		// Error.
 		$response_code = $request->get_response_code();
 		$error_message = $request->get_error_message();
-		$response = new \WP_Error(
+		$response      = new \WP_Error(
 			'logogen_select_logo_failed',
 			$error_message,
 			array( 'status' => $response_code )
@@ -201,8 +204,8 @@ class LogoGenerationService {
 		$logos = array();
 		foreach ( $this->logos as $logo ) {
 			$reference_id = $logo['reference_id'] ?? null;
-			$style = $logo['style'] ?? null;
-			$url = $logo['url'] ?? null;
+			$style        = $logo['style'] ?? null;
+			$url          = $logo['url'] ?? null;
 
 			// Ensure shape is not malformed.
 			if ( ! $reference_id || ! $style || ! $url ) {
@@ -212,8 +215,8 @@ class LogoGenerationService {
 			if ( $as_array ) {
 				$logos[] = array(
 					'reference_id' => $reference_id,
-					'style' => $style,
-					'url' => $url
+					'style'        => $style,
+					'url'          => $url,
 				);
 			} else {
 				$logos[] = new Logo(

@@ -22,6 +22,7 @@ final class RestApi {
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\LogoGenController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\DesignController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\GlobalStylesController',
+		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteContentController',
 	);
 
 	/**

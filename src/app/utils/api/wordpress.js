@@ -1,6 +1,6 @@
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import { wpRestBase } from '@/data/constants';
+import { wpRestBase, onboardingRestBase } from '@/data/constants';
 
 /**
  * Update WordPress site settings.
@@ -70,6 +70,29 @@ export async function createPage( title, content, options = {} ) {
 export async function createPost( title, content, excerpt = '', options = {} ) {
 	return apiFetch( {
 		url: `${ wpRestBase }/posts`,
+		method: 'POST',
+		data: {
+			title,
+			content,
+			excerpt,
+			status: 'publish',
+			...options,
+		},
+	} );
+}
+
+/**
+ * Create a published service.
+ *
+ * @param {string} title   Service title.
+ * @param {string} content Block HTML content.
+ * @param {string} excerpt Service excerpt.
+ * @param {Object} options Extra fields (featured_media, categories, etc.).
+ * @return {Promise<Object>} The created service object.
+ */
+export async function createService( title, content, excerpt = '', options = {} ) {
+	return apiFetch( {
+		url: `${ wpRestBase }/nfd_service`,
 		method: 'POST',
 		data: {
 			title,
@@ -179,5 +202,32 @@ export async function updateTemplatePart( slug, content ) {
 			type: 'wp_template_part',
 			area: slug === 'header' ? 'header' : 'footer',
 		},
+	} );
+}
+
+/**
+ * Ensure WooCommerce and ecommerce plugins are installed and active.
+ * Call without awaiting when site_type is eCommerce.
+ *
+ * @return {Promise<{status: string}>} Response payload from the initialize-ecommerce endpoint.
+ */
+export async function initializeEcommercePlugins() {
+	return apiFetch( {
+		url: `${ onboardingRestBase }/plugins/initialize-ecommerce`,
+		method: 'POST',
+	} );
+}
+
+/**
+ * Publish products to the backend.
+ *
+ * @param {Object[]} products Raw product objects from generationData.post_types.products.
+ * @return {Promise<{created: number}>} Result including how many products were created.
+ */
+export async function publishProducts( products ) {
+	return apiFetch( {
+		url: `${ onboardingRestBase }/site-content/publish-products`,
+		method: 'POST',
+		data: { products },
 	} );
 }

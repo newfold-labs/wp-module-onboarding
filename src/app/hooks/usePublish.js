@@ -37,7 +37,6 @@ const usePublish = ( generationData, discoveryData ) => {
 			return;
 		}
 		hasStarted.current = true;
-
 		const run = async () => {
 			const ctx = { createdPages: [] };
 
