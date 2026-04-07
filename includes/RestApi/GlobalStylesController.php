@@ -232,7 +232,7 @@ class GlobalStylesController {
 					$dest_path = $font_dir['path'] . '/' . $filename;
 					// phpcs:ignore WordPress.WP.AlternativeFunctions.rename_rename
 					if ( ! rename( $tmp_file, $dest_path ) ) {
-						@unlink( $tmp_file ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+						@unlink( $tmp_file ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- Unlink the temporary file.
 						continue;
 					}
 
@@ -254,7 +254,7 @@ class GlobalStylesController {
 						)
 					);
 
-					$face_count++;
+					++$face_count;
 				}
 			}
 

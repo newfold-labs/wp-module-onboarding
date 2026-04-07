@@ -61,16 +61,16 @@ class AiServiceRequest {
 	/**
 	 * Constructor
 	 *
-	 * @param string $endpoint The endpoint to send the request to.
-	 * @param array $body    Request body data.
-	 * @param array $headers Additional headers to include in the request.
+	 * @param string      $endpoint The endpoint to send the request to.
+	 * @param array       $body    Request body data.
+	 * @param array       $headers Additional headers to include in the request.
 	 * @param string|null $url The URL to send the request to (Not recommended to override this).
 	 */
 	public function __construct( string $endpoint, array $body, array $headers = array(), ?string $url = null ) {
-		$this->url = $url ?? $this->get_api_url();
+		$this->url      = $url ?? $this->get_api_url();
 		$this->endpoint = $endpoint;
-		$this->body = $body;
-		$this->headers = array_merge(
+		$this->body     = $body;
+		$this->headers  = array_merge(
 			array(
 				'Content-Type'  => 'application/json',
 				'Authorization' => 'Bearer ' . HiiveConnection::get_auth_token(),
@@ -113,7 +113,7 @@ class AiServiceRequest {
 		$this->response = $response;
 		return $this;
 	}
-	
+
 	/**
 	 * Check if the request was successful
 	 *
@@ -123,7 +123,7 @@ class AiServiceRequest {
 		if ( ! $this->response || is_wp_error( $this->response ) ) {
 			return false;
 		}
-		
+
 		$code = wp_remote_retrieve_response_code( $this->response );
 		return $code >= 200 && $code < 300;
 	}

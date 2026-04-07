@@ -1,10 +1,16 @@
 <?php
+
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
 
+/**
+ * Redux State Controller Class
+ *
+ * Responsible for registering the routes for the redux state controller.
+ */
 class ReduxStateController {
 
 	/**

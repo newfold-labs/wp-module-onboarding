@@ -104,7 +104,7 @@ const PublishProgress = ( { generationData, discoveryData, onComplete } ) => {
 						</span>
 
 						<span className="nfd-text-sm nfd-text-[rgba(0,0,0,0.45)]">
-							{ currentTask?.label || __( 'Preparing...', 'wp-module-onboarding' ) }
+							{ currentTask?.label || __( 'Preparing…', 'wp-module-onboarding' ) }
 						</span>
 					</motion.div>
 				) : (

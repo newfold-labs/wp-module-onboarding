@@ -7,6 +7,8 @@ use NewfoldLabs\WP\Module\Onboarding\Compatibility\Scan;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Safe_Mode;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Status;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager;
+use NewfoldLabs\WP\Module\Onboarding\Services\MediaService;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenImageService;
 
 use function NewfoldLabs\WP\ModuleLoader\register;
 
@@ -82,6 +84,10 @@ if ( is_callable( 'add_action' ) ) {
 		}
 	);
 
-	// Add action to process image sideload queue
-	add_action( 'nfd_process_image_sideload_queue', array( ImageSideloadTaskManager::class, 'process_queue' ) );
+	// Queue content image sideloading for onboarding-generated pages when onboarding completes.
+	add_action( 'newfold/onboarding/completed', array( SiteGenImageService::class, 'schedule_after_onboarding' ) );
+	// Add action to process image sideload queue for onboarding-generated pages
+	add_action( SiteGenImageService::CRON_HOOK, array( ImageSideloadTaskManager::class, 'process_queue' ) );
+	// Process a batch of pending images on each cron run for onboarding-generated CPTs.
+	add_action( MediaService::CRON_HOOK, array( MediaService::class, 'sideload_pending_images' ) );
 }

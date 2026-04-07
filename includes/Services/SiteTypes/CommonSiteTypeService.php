@@ -15,13 +15,22 @@ class CommonSiteTypeService {
 	/**
 	 * Publishes a blog post.
 	 *
-	 * @param array $post The post.
-	 * @return int|WP_Error The post ID.
+	 * @param string $title Post title.
+	 * @param string $excerpt Post excerpt.
+	 * @param string $content Post body.
+	 * @param string $image Optional featured image URL.
+	 * @param array  $categories Category names to assign.
+	 * @return int|\WP_Error The post ID.
 	 */
-	public static function publish_article( string $title, string $excerpt, string $content, string $image = '', array $categories = array()) {
+	public static function publish_article( string $title, string $excerpt, string $content, string $image = '', array $categories = array() ) {
 		// Remove hooks that can slow down the operation.
-		remove_all_actions('wp_insert_post');
-		remove_all_actions('save_post');
+		remove_all_actions( 'wp_insert_post' );
+		remove_all_actions( 'save_post' );
+
+		$post_author = get_current_user_id();
+		if ( ! $post_author ) {
+			$post_author = 1;
+		}
 
 		$post_data = array(
 			'post_title'   => $title,
@@ -29,12 +38,12 @@ class CommonSiteTypeService {
 			'post_excerpt' => $excerpt,
 			'post_status'  => 'publish',
 			'post_type'    => 'post',
-			'post_author'  => get_current_user_id() ?: 1,
+			'post_author'  => $post_author,
 		);
 		// Insert post.
 		$post_id = wp_insert_post( $post_data );
 		// Validate post was created successfully.
-		if ( is_wp_error( $post_id ) || !$post_id ) {
+		if ( is_wp_error( $post_id ) || ! $post_id ) {
 			return new \WP_Error( 'error_publishing_blog_post', 'Failed to create post' );
 		}
 		// Post categories.
@@ -57,7 +66,7 @@ class CommonSiteTypeService {
 	 * Sets the featured image for a blog post.
 	 *
 	 * @param string $image_url The URL of the image.
-	 * @param int $post_id The ID of the post.
+	 * @param int    $post_id The ID of the post.
 	 * @return void
 	 */
 	private static function set_featured_image_from_url( string $image_url, int $post_id ): void {
@@ -71,14 +80,14 @@ class CommonSiteTypeService {
 	 * Imports an image from a URL.
 	 *
 	 * @param string $image_url The URL of the image.
-	 * @param int $post_id The ID of the post.
+	 * @param int    $post_id The ID of the post.
 	 * @return int The ID of the attachment.
 	 */
 	private static function import_image_from_url( string $image_url, int $post_id ): int {
 		if ( ! function_exists( 'media_handle_sideload' ) ) {
-			require_once( ABSPATH . 'wp-admin/includes/media.php' );
-			require_once( ABSPATH . 'wp-admin/includes/file.php' );
-			require_once( ABSPATH . 'wp-admin/includes/image.php' );
+			require_once ABSPATH . 'wp-admin/includes/media.php';
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+			require_once ABSPATH . 'wp-admin/includes/image.php';
 		}
 
 		// Add an arbitrary extension to the image URL to trick media_sideload_image to download the image.
