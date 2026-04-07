@@ -34,6 +34,7 @@ const ChatView = ( {
 								key={ msg.id }
 								title={ msg.title }
 								tasks={ msg.tasks }
+								variant={ msg.role }
 							/>
 						);
 					}
