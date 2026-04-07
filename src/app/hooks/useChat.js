@@ -22,6 +22,7 @@ import {
 	MAX_RETRIES,
 	EVENT_TO_TASK_KEY,
 	GENERATION_ITEM_KEY_MAP,
+	GENERATION_TASK_KEYS,
 	createInitialTasks,
 	createGenerationTasks,
 } from '@/hooks/chat/tasks';
@@ -114,7 +115,6 @@ const useChat = () => {
 					if ( discoveryTaskKey ) {
 						if (
 							discoveryTaskKey === 'brand_identity' ||
-							discoveryTaskKey === 'sitemap' ||
 							discoveryTaskKey === 'site_type'
 						) {
 							try {
@@ -162,6 +162,12 @@ const useChat = () => {
 						if ( taskKey ) {
 							completeTask( generationMsgId, taskKey, 'Done' );
 						}
+						return;
+					}
+
+					const sitekitStepMatch = event.match( /^sitegen_sitekit_step_(.+)$/ );
+					if ( sitekitStepMatch && generationMsgId && GENERATION_TASK_KEYS.has( sitekitStepMatch[ 1 ] ) ) {
+						completeTask( generationMsgId, sitekitStepMatch[ 1 ], 'Done' );
 						return;
 					}
 

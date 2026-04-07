@@ -28,10 +28,11 @@ const STATUS_CLASS = {
  * @param {Object}  props                 - The component props.
  * @param {string}  props.title           - Title shown when expanded.
  * @param {Array}   props.tasks           - Array of { key, label, status, result } objects.
- * @param {boolean} props.defaultExpanded - Whether to start expanded (default: false).
+ * @param {boolean}                       props.defaultExpanded - Whether to start expanded (default: false).
+ * @param {'discovery'|'generation'} props.variant          - Render variant (default: 'discovery').
  * @return {JSX.Element} The TaskProgress component.
  */
-const TaskProgress = ( { title, tasks = [], defaultExpanded = false } ) => {
+const TaskProgress = ( { title, tasks = [], defaultExpanded = false, variant = 'discovery' } ) => {
 	const isActive = tasks.some( ( t ) => t.status === 'running' || t.status === 'pending' );
 	const allDone =
 		tasks.length > 0 && tasks.every( ( t ) => t.status === 'done' || t.status === 'skipped' );
@@ -101,19 +102,25 @@ const TaskProgress = ( { title, tasks = [], defaultExpanded = false } ) => {
 									}` }
 								>
 									<TaskStatusIcon status={ task.status } />
-									<div className="nfd-flex nfd-flex-col nfd-gap-1 nfd-min-w-0">
-										<span className="nfd-font-medium">{ task.label }</span>
-										{ task.status === 'running' && task.description && (
-											<span className="nfd-font-normal nfd-text-xs nfd-leading-5 nfd-text-[rgba(0,0,0,0.4)]">
-												{ task.description }
-											</span>
-										) }
-										{ task.status === 'done' && task.result && (
-											<span className="nfd-font-normal nfd-text-sm nfd-leading-5 nfd-text-[rgba(0,0,0,0.45)]">
-												{ task.result }
-											</span>
-										) }
-									</div>
+									{ variant === 'discovery' ? (
+										<div className="nfd-flex nfd-flex-col nfd-gap-1 nfd-min-w-0">
+											<span className="nfd-font-medium">{ task.label }</span>
+											{ task.status === 'done' && task.result && (
+												<span className="nfd-font-normal nfd-text-xs nfd-leading-5 nfd-text-[rgba(0,0,0,0.4)]">
+													{ task.result }
+												</span>
+											) }
+										</div>
+									) : (
+										<div className="nfd-flex nfd-items-baseline nfd-gap-1.5 nfd-min-w-0">
+											<span className="nfd-font-medium">{ task.label }</span>
+											{ task.status === 'running' && task.description && (
+												<span className="nfd-font-normal nfd-text-xs nfd-text-[rgba(0,0,0,0.4)]">
+													{ task.description }
+												</span>
+											) }
+										</div>
+									) }
 								</li>
 							) ) }
 						</ul>
