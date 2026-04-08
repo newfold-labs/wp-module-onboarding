@@ -157,6 +157,7 @@ export async function createNavigationMenu( pages ) {
 			title: 'Navigation',
 			content: links,
 			status: 'publish',
+			meta: { nfd_onboarding_generated: '1' },
 		},
 	} );
 }

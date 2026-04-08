@@ -4,7 +4,15 @@ namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
 use NewfoldLabs\WP\Module\Installer\Data\Themes as ThemeInstallerData;
 
+/**
+ * Themes data class.
+ */
 class Themes {
+	/**
+	 * Get the themes data.
+	 *
+	 * @return array The themes data.
+	 */
 	public static function get_data() {
 		return array(
 			'bluehostBlueprint' => array(
@@ -21,11 +29,11 @@ class Themes {
 	 * @param bool $with_installer_data Whether to include the installer data from the Installer Module.
 	 * @return array The bluehost blueprint theme data.
 	 */
-	public static function get_bluehost_blueprint_theme($with_installer_data = true) {
+	public static function get_bluehost_blueprint_theme( $with_installer_data = true ) {
 		$theme = self::get_data()['bluehostBlueprint'];
 
-		if ($with_installer_data) {
-			$theme['installer_data'] = ThemeInstallerData::get()['nfd_slugs'][$theme['slug']];
+		if ( $with_installer_data ) {
+			$theme['installer_data'] = ThemeInstallerData::get()['nfd_slugs'][ $theme['slug'] ];
 		}
 
 		return $theme;

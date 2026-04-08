@@ -43,7 +43,7 @@ final class WP_Admin {
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'initialize' ) );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'hide_admin_chrome' ) );
 		\add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_site_editor_assets' ) );
-		
+
 		self::pre_set_filter_wonder_blocks_transients();
 	}
 
@@ -172,7 +172,7 @@ final class WP_Admin {
 			);
 
 			$nfd_onboarding_data = array(
-				'runtime'    => Runtime::get_data(),
+				'runtime' => Runtime::get_data(),
 			);
 			\wp_add_inline_script(
 				self::$slug,
@@ -413,6 +413,11 @@ final class WP_Admin {
 		}
 	}
 
+	/**
+	 * Pre-set filter wonder blocks transients.
+	 *
+	 * @return void
+	 */
 	public static function pre_set_filter_wonder_blocks_transients() {
 		$args = wp_parse_args(
 			array(

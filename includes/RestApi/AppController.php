@@ -5,6 +5,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Services\AppService;
 use NewfoldLabs\WP\Module\Installer\Data\Plugins;
+use NewfoldLabs\WP\Module\Onboarding\Services\ResetService;
 
 /**
  * AppController class for handling onboarding application REST API endpoints.
@@ -72,6 +73,18 @@ class AppController {
 				),
 			)
 		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/restart',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'restart' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
 	}
 
 	/**
@@ -122,5 +135,15 @@ class AppController {
 			),
 			200
 		);
+	}
+
+	/**
+	 * Restart onboarding backend process.
+	 *
+	 * @return \WP_REST_Response The response object.
+	 */
+	public function restart(): \WP_REST_Response {
+		ResetService::reset();
+		return new \WP_REST_Response( array( 'success' => true ), 200 );
 	}
 }

@@ -111,8 +111,8 @@ class PostTypeService {
 	 * @return void
 	 */
 	private function register_image_url_meta(): void {
-		foreach ( array( 'page', 'post', 'product', self::SERVICE_POST_TYPE ) as $post_type ) {
-			if ( 'page' !== $post_type ) {
+		foreach ( array( 'page', 'post', 'product', 'wp_navigation', self::SERVICE_POST_TYPE ) as $post_type ) {
+			if ( ! in_array( $post_type, array( 'page', 'wp_navigation' ), true ) ) {
 				register_post_meta(
 					$post_type,
 					self::META_IMAGE_URL,

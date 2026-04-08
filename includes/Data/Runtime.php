@@ -6,6 +6,9 @@ use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
 
 use function NewfoldLabs\WP\ModuleLoader\container;
 
+/**
+ * Runtime data class.
+ */
 class Runtime {
 	/**
 	 * Runtime data for Onboarding application
@@ -26,10 +29,10 @@ class Runtime {
 	}
 
 		/**
-	 * Get the current WordPress admin user details.
-	 *
-	 * @return array
-	 */
+		 * Get the current WordPress admin user details.
+		 *
+		 * @return array
+		 */
 	public static function wp_current_user_details() {
 		$user = wp_get_current_user();
 		if ( $user->exists() ) {

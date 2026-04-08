@@ -101,7 +101,7 @@ final class Config {
 			}
 
 			return true;
-		} catch (\Throwable $th) {
+		} catch ( \Throwable $th ) {
 			return false;
 		}
 	}
