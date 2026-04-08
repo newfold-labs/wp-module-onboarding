@@ -27,6 +27,7 @@ import {
 	createInitialTasks,
 	createGenerationTasks,
 } from '@/hooks/chat/tasks';
+import { saveAiSitegenSiteId } from '@/utils/api/onboarding';
 
 /**
  * useChat hook
@@ -408,6 +409,7 @@ const useChat = () => {
 			try {
 				const { site_id: siteId } = await handshake();
 				siteIdRef.current = siteId;
+				saveAiSitegenSiteId( siteId );
 				await runIntake();
 			} catch ( err ) {
 				// eslint-disable-next-line no-console

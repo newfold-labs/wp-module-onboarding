@@ -14,9 +14,9 @@ import {
 	installFonts,
 	enableJetpackModules,
 	completeOnboarding,
+	reportSiteGenPublished,
 } from '@/utils/api/onboarding';
 import { transformColorPalette } from '@/hooks/publish/tasks';
-
 /**
  * Each step function receives { generationData, discoveryData, ctx } and returns
  * a result string. ctx is a shared context object for passing data between steps
@@ -208,6 +208,7 @@ export async function runFinalize() {
 	if ( result?.error ) {
 		throw result.error;
 	}
+	reportSiteGenPublished();
 	return 'Site published';
 }
 

@@ -415,3 +415,34 @@ export const importBlueprint = async ( selectedBlueprintSlug ) => {
 		} ).then()
 	);
 };
+
+
+/**
+ * Persist the AI sitegen site ID.
+ *
+ * @param {string} siteId The site ID.
+ * @return {Promise<Object>} response
+ */
+export const saveAiSitegenSiteId = async ( siteId ) => {
+    return await resolve(
+        apiFetch( {
+            url: onboardingRestURL( 'sitegen/ai-site-id' ),
+            method: 'POST',
+            data: { site_id: siteId },
+        } ).then()
+    );
+};
+
+/**
+ * Report the published site.
+ *
+ * @return {Promise<Object>} response
+ */
+export const reportSiteGenPublished = async () => {
+    return await resolve(
+        apiFetch( {
+            url: onboardingRestURL( 'sitegen/report-published' ),
+            method: 'POST',
+        } ).then()
+    );
+};
