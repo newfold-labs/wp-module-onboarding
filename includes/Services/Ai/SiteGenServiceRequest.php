@@ -66,6 +66,7 @@ class SiteGenServiceRequest {
 			array(
 				'headers'  => $this->headers,
 				'body'     => wp_json_encode( $this->body ),
+				'sslverify' => defined( 'NFD_AI_PLATFORM_SSL_VERIFY' ) ? NFD_AI_PLATFORM_SSL_VERIFY : true, //set to false in development environments.
 				'blocking' => false, // The request is fire and forget. No waiting for AI Platform response and no action is needed on the response.
 			)
 		);
