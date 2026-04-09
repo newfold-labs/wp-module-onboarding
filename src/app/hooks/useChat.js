@@ -23,11 +23,10 @@ import {
 	MAX_RETRIES,
 	EVENT_TO_TASK_KEY,
 	GENERATION_ITEM_KEY_MAP,
-	GENERATION_TASK_KEYS,
 	createInitialTasks,
 	createGenerationTasks,
 } from '@/hooks/chat/tasks';
-import { saveAiSitegenSiteId } from '@/utils/api/onboarding';
+import { saveSitegenOptions } from '@/utils/api/onboarding';
 
 /**
  * useChat hook
@@ -107,6 +106,11 @@ const useChat = () => {
 				);
 
 				await streamSSE( response, ( { event, data } ) => {
+					if ( event === 'sitegen_started' ) {
+						saveSitegenOptions( { sitegen_id: data } );
+						return;
+					}
+
 					// --- Discovery phase events ---
 					if ( event === 'sitegen_discovery_started' ) {
 						startAllTasks( discoveryMsgId );
@@ -117,6 +121,7 @@ const useChat = () => {
 					if ( discoveryTaskKey ) {
 						if (
 							discoveryTaskKey === 'brand_identity' ||
+							discoveryTaskKey === 'sitemap' ||
 							discoveryTaskKey === 'site_type'
 						) {
 							try {
@@ -167,12 +172,6 @@ const useChat = () => {
 						if ( taskKey ) {
 							completeTask( generationMsgId, taskKey, 'Done' );
 						}
-						return;
-					}
-
-					const sitekitStepMatch = event.match( /^sitegen_sitekit_step_(.+)$/ );
-					if ( sitekitStepMatch && generationMsgId && GENERATION_TASK_KEYS.has( sitekitStepMatch[ 1 ] ) ) {
-						completeTask( generationMsgId, sitekitStepMatch[ 1 ], 'Done' );
 						return;
 					}
 
@@ -409,7 +408,7 @@ const useChat = () => {
 			try {
 				const { site_id: siteId } = await handshake();
 				siteIdRef.current = siteId;
-				saveAiSitegenSiteId( siteId );
+				saveSitegenOptions( { sitegen_site_id: siteId } );
 				await runIntake();
 			} catch ( err ) {
 				// eslint-disable-next-line no-console

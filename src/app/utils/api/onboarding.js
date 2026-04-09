@@ -416,21 +416,20 @@ export const importBlueprint = async ( selectedBlueprintSlug ) => {
 	);
 };
 
-
 /**
- * Persist the AI sitegen site ID.
+ * Save the sitegen options.
  *
- * @param {string} siteId The site ID.
+ * @param {Object} options The options to save.
  * @return {Promise<Object>} response
  */
-export const saveAiSitegenSiteId = async ( siteId ) => {
-    return await resolve(
-        apiFetch( {
-            url: onboardingRestURL( 'sitegen/ai-site-id' ),
-            method: 'POST',
-            data: { site_id: siteId },
-        } ).then()
-    );
+export const saveSitegenOptions = async ( options ) => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/options' ),
+			method: 'POST',
+			data: { options },
+		} ).then()
+	);
 };
 
 /**
@@ -439,10 +438,10 @@ export const saveAiSitegenSiteId = async ( siteId ) => {
  * @return {Promise<Object>} response
  */
 export const reportSiteGenPublished = async () => {
-    return await resolve(
-        apiFetch( {
-            url: onboardingRestURL( 'sitegen/report-published' ),
-            method: 'POST',
-        } ).then()
-    );
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/report-published' ),
+			method: 'POST',
+		} ).then()
+	);
 };

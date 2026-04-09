@@ -68,7 +68,8 @@ final class Options {
 		'site_info'                     => 'site_info',
 		'start_time'                    => 'start_time',
 		'completed_time'                => 'completed_time',
-		'ai_sitegen_site_id'            => 'ai_sitegen_site_id',
+		'sitegen_site_id'               => 'sitegen_site_id',
+		'sitegen_id'                    => 'sitegen_id',
 	);
 
 	/**

@@ -1,10 +1,15 @@
 <?php
 /**
  * SiteGenServiceRequest class.
+ *
+ * @package NewfoldLabs\WP\Module\Onboarding
  */
+
 namespace NewfoldLabs\WP\Module\Onboarding\Services\Ai;
 
 use NewfoldLabs\WP\Module\Data\HiiveConnection;
+
+use function cli\err;
 
 /**
  * SiteGenServiceRequest class.
@@ -23,21 +28,21 @@ class SiteGenServiceRequest {
 	 *
 	 * @var string
 	 */
-	protected string $url;
+	protected $url;
 
 	/**
 	 * The headers.
 	 *
 	 * @var array
 	 */
-	protected array $headers;
+	protected $headers;
 
 	/**
 	 * The body.
 	 *
 	 * @var array
 	 */
-	protected array $body;
+	protected $body;
 
 	/**
 	 * Constructor.
@@ -64,10 +69,10 @@ class SiteGenServiceRequest {
 		wp_remote_post(
 			$this->url,
 			array(
-				'headers'  => $this->headers,
-				'body'     => wp_json_encode( $this->body ),
-				'sslverify' => defined( 'NFD_AI_PLATFORM_SSL_VERIFY' ) ? NFD_AI_PLATFORM_SSL_VERIFY : true, //set to false in development environments.
-				'blocking' => false, // The request is fire and forget. No waiting for AI Platform response and no action is needed on the response.
+				'headers'   => $this->headers,
+				'body'      => wp_json_encode( $this->body ),
+				'sslverify' => defined( 'NFD_AI_PLATFORM_SSL_VERIFY' ) ? NFD_AI_PLATFORM_SSL_VERIFY : true, // set to false in development environments.
+				'blocking'  => false, // The request is fire and forget. No waiting for AI Platform response and no action is needed on the response.
 			)
 		);
 	}
