@@ -72,7 +72,7 @@ class SiteGenAiController {
 		$options = $request->get_param( 'options' );
 		foreach ( $options as $key => $value ) {
 			$option_name = Options::get_option_name( $key );
-			
+
 			if ( false !== $option_name ) {
 				\update_option( $option_name, $value );
 			}
