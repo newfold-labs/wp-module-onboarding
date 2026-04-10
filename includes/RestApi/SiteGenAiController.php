@@ -2,7 +2,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
 use NewfoldLabs\WP\Module\Onboarding\Services\Ai\SiteGenServiceRequest;
 
 /**
@@ -32,18 +32,12 @@ class SiteGenAiController {
 
 		\register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/options',
+			$this->rest_base . '/handshake',
 			array(
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'save_sitegen_options' ),
+					'callback'            => array( $this, 'handshake' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-					'args'                => array(
-						'options' => array(
-							'type'     => 'object',
-							'required' => true,
-						),
-					),
 				),
 			)
 		);
@@ -62,22 +56,23 @@ class SiteGenAiController {
 	}
 
 	/**
-	 * Save the options.
-	 *
-	 * @param \WP_REST_Request $request The REST request object.
+	 * Handshake with the AI platform.
 	 *
 	 * @return \WP_REST_Response
 	 */
-	public function save_sitegen_options( \WP_REST_Request $request ): \WP_REST_Response {
-		$options = $request->get_param( 'options' );
-		foreach ( $options as $key => $value ) {
-			$option_name = Options::get_option_name( $key );
-
-			if ( false !== $option_name ) {
-				\update_option( $option_name, $value );
-			}
+	public function handshake(): \WP_REST_Response {
+		$request = new SiteGenServiceRequest(
+			'sitegen/handshake',
+			array( 'domain' => \home_url() )
+		);
+	
+		$response = $request->send();
+	
+		if ( ! $response || empty( $response['site_id'] ) ) {
+			return new \WP_REST_Response( array( 'error' => 'Handshake failed' ), 502 );
 		}
-		return new \WP_REST_Response( array( 'status' => 'ok' ), 200 );
+	
+		return new \WP_REST_Response( $response, 200 );
 	}
 
 	/**
@@ -86,8 +81,8 @@ class SiteGenAiController {
 	 * @return \WP_REST_Response
 	 */
 	public function report_published(): \WP_REST_Response {
-		$sitegen_id = \get_option( Options::get_option_name( 'sitegen_id' ) );
-
+		$state = ReduxStateService::get( 'sitegen' );
+		$sitegen_id = $state['siteGenId'] ?? null;
 		if ( ! $sitegen_id ) {
 			return new \WP_REST_Response( array( 'status' => 'no_site_id' ), 200 );
 		}

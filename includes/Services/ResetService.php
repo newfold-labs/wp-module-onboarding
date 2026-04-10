@@ -76,12 +76,14 @@ class ResetService {
 
 	/**
 	 * Delete all onboarding-related options from the database.
+	 * Some options (e.g. sitegen state) are preserved.
 	 *
 	 * @return void
 	 */
 	private static function reset_onboarding_options(): void {
 		global $wpdb;
 		$prefixes = array( 'nfd_module_onboarding_', 'nfd-ai-site-gen' );
+		$excluded   = array( 'nfd_module_onboarding_state_sitegen' );
 
 		foreach ( $prefixes as $prefix ) {
 			$options = $wpdb->get_col(
@@ -96,6 +98,9 @@ class ResetService {
 			}
 
 			foreach ( $options as $option_name ) {
+				if ( in_array( $option_name, $excluded, true ) ) {
+					continue;
+				}
 				delete_option( $option_name );
 			}
 		}

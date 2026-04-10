@@ -3,12 +3,8 @@ import { nfdOnboardingStore } from '@/data/store';
 import { updateOnboardingSiteGenSlice } from '@/utils/api';
 
 const DEFAULT_STATE = {
-	homepages: [],
-	selectedHomepage: '',
-	hasGeneratedSitePages: false,
-	retryMode: false,
-	sitegenHasFailed: false,
-	canvasSidebarIsOpen: true,
+	siteId: '',
+	siteGenId: '',
 	sitegenSliceVersion: 0,
 };
 
@@ -27,40 +23,16 @@ export function sitegen( state = DEFAULT_STATE, action ) {
 				...action.siteGenSlice,
 				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
-		case 'SET_HOMEPAGES':
+		case 'SET_SITE_ID':
 			return {
 				...state,
-				homepages: action.homepages,
+				siteId: action.siteId,
 				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
-		case 'SET_SELECTED_HOMEPAGE':
+		case 'SET_SITE_GEN_ID':
 			return {
 				...state,
-				selectedHomepage: action.selectedHomepage,
-				sitegenSliceVersion: state.sitegenSliceVersion + 1,
-			};
-		case 'SET_HAS_GENERATED_SITE_PAGES':
-			return {
-				...state,
-				hasGeneratedSitePages: action.hasGeneratedSitePages,
-				sitegenSliceVersion: state.sitegenSliceVersion + 1,
-			};
-		case 'SET_RETRY_MODE':
-			return {
-				...state,
-				retryMode: action.retryMode,
-				sitegenSliceVersion: state.sitegenSliceVersion + 1,
-			};
-		case 'SET_SITEGEN_HAS_FAILED':
-			return {
-				...state,
-				sitegenHasFailed: action.sitegenHasFailed,
-				sitegenSliceVersion: state.sitegenSliceVersion + 1,
-			};
-		case 'SET_CANVAS_SIDEBAR_IS_OPEN':
-			return {
-				...state,
-				canvasSidebarIsOpen: action.canvasSidebarIsOpen,
+				siteGenId: action.siteGenId,
 				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
 	}
@@ -75,53 +47,24 @@ export const actions = {
 			siteGenSlice,
 		};
 	},
-	setHomepages: ( homepages ) => {
+	setSiteId: ( siteId ) => {
 		return {
-			type: 'SET_HOMEPAGES',
-			homepages,
+			type: 'SET_SITE_ID',
+			siteId,
 		};
 	},
-	setSelectedHomepage: ( selectedHomepage ) => {
+	setSiteGenId: ( siteGenId ) => {
 		return {
-			type: 'SET_SELECTED_HOMEPAGE',
-			selectedHomepage,
-		};
-	},
-	setHasGeneratedSitePages: ( hasGeneratedSitePages ) => {
-		return {
-			type: 'SET_HAS_GENERATED_SITE_PAGES',
-			hasGeneratedSitePages,
-		};
-	},
-	setRetryMode: ( retryMode ) => {
-		return {
-			type: 'SET_RETRY_MODE',
-			retryMode,
-		};
-	},
-	setSitegenHasFailed: ( sitegenHasFailed ) => {
-		return {
-			type: 'SET_SITEGEN_HAS_FAILED',
-			sitegenHasFailed,
-		};
-	},
-	setCanvasSidebarIsOpen: ( canvasSidebarIsOpen ) => {
-		return {
-			type: 'SET_CANVAS_SIDEBAR_IS_OPEN',
-			canvasSidebarIsOpen,
+			type: 'SET_SITE_GEN_ID',
+			siteGenId,
 		};
 	},
 };
 
 export const selectors = {
 	getSiteGenSlice: ( state ) => state.sitegen,
-	getHomepages: ( state ) => state.sitegen.homepages,
-	getSelectedHomepage: ( state ) => state.sitegen.selectedHomepage,
-	getHasGeneratedSitePages: ( state ) => state.sitegen.hasGeneratedSitePages,
-	getSelectedColorPalette: ( state ) => state.sitegen.homepages[ state.sitegen.selectedHomepage ]?.color?.palette,
-	getRetryMode: ( state ) => state.sitegen.retryMode,
-	getSitegenHasFailed: ( state ) => state.sitegen.sitegenHasFailed,
-	getCanvasSidebarIsOpen: ( state ) => state.sitegen.canvasSidebarIsOpen,
+	getSiteId: ( state ) => state.sitegen.siteId,
+	getSiteGenId: ( state ) => state.sitegen.siteGenId,
 	getSitegenSliceVersion: ( state ) => state.sitegen.sitegenSliceVersion,
 };
 

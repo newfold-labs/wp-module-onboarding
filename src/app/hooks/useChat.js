@@ -2,6 +2,8 @@
  * WordPress dependencies
  */
 import { useCallback, useState, useRef, useEffect } from '@wordpress/element';
+import { dispatch, select } from '@wordpress/data';
+import { nfdOnboardingStore } from '@/data/store';
 
 /**
  * Internal dependencies
@@ -26,7 +28,6 @@ import {
 	createInitialTasks,
 	createGenerationTasks,
 } from '@/hooks/chat/tasks';
-import { saveSitegenOptions } from '@/utils/api/onboarding';
 
 /**
  * useChat hook
@@ -107,7 +108,7 @@ const useChat = () => {
 
 				await streamSSE( response, ( { event, data } ) => {
 					if ( event === 'sitegen_started' ) {
-						saveSitegenOptions( { sitegen_id: data } );
+						dispatch( nfdOnboardingStore ).setSiteGenId( data );
 						return;
 					}
 
@@ -406,9 +407,15 @@ const useChat = () => {
 		setIsWaiting( true );
 		( async () => {
 			try {
-				const { site_id: siteId } = await handshake();
+				let siteId = select( nfdOnboardingStore ).getSiteId();
+				if ( ! siteId ) {
+					const response = await handshake();
+					siteId = response.site_id;
+					dispatch( nfdOnboardingStore ).setSiteId( siteId );
+				}
+
 				siteIdRef.current = siteId;
-				saveSitegenOptions( { sitegen_site_id: siteId } );
+
 				await runIntake();
 			} catch ( err ) {
 				// eslint-disable-next-line no-console

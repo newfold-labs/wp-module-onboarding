@@ -417,22 +417,6 @@ export const importBlueprint = async ( selectedBlueprintSlug ) => {
 };
 
 /**
- * Save the sitegen options.
- *
- * @param {Object} options The options to save.
- * @return {Promise<Object>} response
- */
-export const saveSitegenOptions = async ( options ) => {
-	return await resolve(
-		apiFetch( {
-			url: onboardingRestURL( 'sitegen/options' ),
-			method: 'POST',
-			data: { options },
-		} ).then()
-	);
-};
-
-/**
  * Report the published site.
  *
  * @return {Promise<Object>} response

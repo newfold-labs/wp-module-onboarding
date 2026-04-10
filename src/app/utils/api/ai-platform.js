@@ -1,8 +1,10 @@
+import apiFetch from '@wordpress/api-fetch';
+
 /**
  * Internal dependencies
  */
-import { aiPlatformBase, wpSiteUrl } from '@/data/constants';
-
+import { aiPlatformBase } from '@/data/constants';
+import { onboardingRestURL } from '@/utils/api/onboarding';
 const SITEGEN_URL = `${ aiPlatformBase }/api/v1/sitegen`;
 
 const JSON_HEADERS = {
@@ -11,23 +13,22 @@ const JSON_HEADERS = {
 };
 
 /**
- * Perform a handshake with the AI platform to obtain a site_id.
+ * Perform an authenticated handshake with the AI platform to obtain a site_id.
  *
  * @param {string} domain The site domain.
  * @return {Promise<Object>} Response containing site_id.
  */
-export async function handshake( domain = wpSiteUrl ) {
-	const response = await fetch( `${ SITEGEN_URL }/handshake`, {
+export async function handshake() {
+	const response = await apiFetch( {
+		url: onboardingRestURL( 'sitegen/handshake' ),
 		method: 'POST',
-		headers: JSON_HEADERS,
-		body: JSON.stringify( { domain } ),
 	} );
 
-	if ( ! response.ok ) {
-		throw new Error( `Handshake failed: ${ response.status }` );
+	if ( ! response?.site_id ) {
+		throw new Error( `Handshake failed: ${ response?.error ?? 'Unknown error' }` );
 	}
 
-	return response.json();
+	return response;
 }
 
 /**

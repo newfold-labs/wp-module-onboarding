@@ -9,12 +9,11 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services\Ai;
 
 use NewfoldLabs\WP\Module\Data\HiiveConnection;
 
-use function cli\err;
-
 /**
  * SiteGenServiceRequest class.
  */
 class SiteGenServiceRequest {
+
 
 	/**
 	 * The default base URL.
@@ -45,19 +44,47 @@ class SiteGenServiceRequest {
 	protected $body;
 
 	/**
+	 * The SSL verify setting.
+	 *
+	 * @var bool
+	 */
+	protected $sslverify;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string $endpoint The endpoint.
 	 * @param array  $body The body.
 	 */
 	public function __construct( string $endpoint, array $body ) {
-		$base          = defined( 'NFD_AI_PLATFORM_BASE_URL' ) ? NFD_AI_PLATFORM_BASE_URL : self::DEFAULT_BASE_URL;
-		$this->url     = rtrim( $base, '/' ) . '/api/v1/' . $endpoint;
-		$this->body    = $body;
-		$this->headers = array(
+		$base            = defined( 'NFD_AI_PLATFORM_BASE_URL' ) ? NFD_AI_PLATFORM_BASE_URL : self::DEFAULT_BASE_URL;
+		$this->sslverify = defined( 'NFD_AI_PLATFORM_SSL_VERIFY' ) ? NFD_AI_PLATFORM_SSL_VERIFY : true;
+		$this->url       = rtrim( $base, '/' ) . '/api/v1/' . $endpoint;
+		$this->body      = $body;
+		$this->headers   = array(
 			'Content-Type'  => 'application/json',
 			'Authorization' => 'Bearer ' . HiiveConnection::get_auth_token(),
 		);
+	}
+
+	/**
+	 * Send the request and return the response body.
+	 *
+	 * @return array|null Decoded response body or null on failure.
+	 */
+	public function send(): ?array {
+		$response = wp_remote_post(
+			$this->url,
+			$this->get_request_args()
+		);
+
+		
+		if ( \is_wp_error( $response ) ) {
+			return null;
+		}
+
+		$body = wp_remote_retrieve_body( $response );
+		return json_decode( $body, true );
 	}
 
 	/**
@@ -68,12 +95,22 @@ class SiteGenServiceRequest {
 	public function send_async(): void {
 		wp_remote_post(
 			$this->url,
-			array(
-				'headers'   => $this->headers,
-				'body'      => wp_json_encode( $this->body ),
-				'sslverify' => defined( 'NFD_AI_PLATFORM_SSL_VERIFY' ) ? NFD_AI_PLATFORM_SSL_VERIFY : true, // set to false in development environments.
-				'blocking'  => false, // The request is fire and forget. No waiting for AI Platform response and no action is needed on the response.
-			)
+			$this->get_request_args( false )
+		);
+	}
+
+	/**
+	 * Get the request arguments.
+	 *
+	 * @param bool $blocking Whether the request is blocking.
+	 * @return array The request arguments.
+	 */
+	private function get_request_args( $blocking = true ): array {
+		return array(
+			'headers'   => $this->headers,
+			'body'      => wp_json_encode( $this->body ),
+			'sslverify' => $this->sslverify,
+			'blocking'  => $blocking,
 		);
 	}
 }

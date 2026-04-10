@@ -21,8 +21,8 @@ register( nfdOnboardingStore );
  * Initialize the store-db sync services.
  */
 export function initializeStoreDbSyncServices() {
-	inputSliceDbSyncService();
+	//inputSliceDbSyncService();
 	sitegenSliceDbSyncService();
-	logogenSliceDbSyncService();
-	blueprintsSliceDbSyncService();
+	//logogenSliceDbSyncService();
+	//blueprintsSliceDbSyncService();
 }
