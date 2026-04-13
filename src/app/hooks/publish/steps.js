@@ -95,7 +95,7 @@ export async function runPages( { generationData, ctx } ) {
 	let count = 0;
 
 	for ( const entry of pages ) {
-		const isHome = entry.slug === 'home' || entry.path === '/';
+		const isHome = entry.is_front_page || entry.slug === 'home' || entry.path === '/';
 		const page = await createPage( entry.title, entry.content, {
 			template: 'page-no-title',
 			slug: entry.slug,
