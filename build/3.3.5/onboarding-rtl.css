@@ -3620,6 +3620,9 @@
 .nfd-items-center{
 		align-items: center !important;
 }
+.nfd-items-baseline{
+		align-items: baseline !important;
+}
 .nfd-justify-end{
 		justify-content: flex-end !important;
 }
@@ -3631,6 +3634,9 @@
 }
 .nfd-gap-1{
 		gap: 0.25rem !important;
+}
+.nfd-gap-1\.5{
+		gap: 0.375rem !important;
 }
 .nfd-gap-10{
 		gap: 2.5rem !important;
