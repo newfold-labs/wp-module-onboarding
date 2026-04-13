@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
 use NewfoldLabs\WP\Module\Onboarding\Services\Ai\SiteGenServiceRequest;
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 /**
  * Class SiteGenAiController
@@ -81,14 +82,12 @@ class SiteGenAiController {
 	 * @return \WP_REST_Response
 	 */
 	public function report_published(): \WP_REST_Response {
-		$state      = ReduxStateService::get( 'sitegen' );
-		$sitegen_id = $state['siteGenId'] ?? null;
+		$sitegen_id = get_option( Options::get_option_name( 'sitegen_current_id' ), '' );
 		if ( ! $sitegen_id ) {
 			return new \WP_REST_Response( array( 'status' => 'no_site_id' ), 200 );
 		}
 
 		$ai_request = new SiteGenServiceRequest( 'sitegen/select', array( 'sitegen_id' => $sitegen_id ) );
-
 		$ai_request->send_async();
 
 		return new \WP_REST_Response( array( 'status' => 'reported' ), 200 );

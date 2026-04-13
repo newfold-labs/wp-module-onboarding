@@ -78,7 +78,6 @@ class SiteGenServiceRequest {
 			$this->get_request_args()
 		);
 
-		
 		if ( \is_wp_error( $response ) ) {
 			return null;
 		}

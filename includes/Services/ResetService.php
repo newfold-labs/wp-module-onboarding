@@ -83,7 +83,7 @@ class ResetService {
 	private static function reset_onboarding_options(): void {
 		global $wpdb;
 		$prefixes = array( 'nfd_module_onboarding_', 'nfd-ai-site-gen' );
-		$excluded = array( 'nfd_module_onboarding_state_sitegen' );
+		$excluded = array( 'nfd_module_onboarding_sitegen_site_id', 'nfd_module_onboarding_sitegen_previous_ids' );
 
 		foreach ( $prefixes as $prefix ) {
 			$options = $wpdb->get_col(

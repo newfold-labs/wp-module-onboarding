@@ -112,6 +112,16 @@ const useChat = () => {
 						return;
 					}
 
+					if ( event === 'sitegen_discovery_prompt_enhance_completed' ) {
+						dispatch( nfdOnboardingStore ).setEnhancedPrompt( data );
+						return;
+					}
+
+					if ( event === 'sitegen_discovery_site_type_completed' ) {
+						dispatch( nfdOnboardingStore ).setSiteType( data );
+						return;
+					}
+
 					// --- Discovery phase events ---
 					if ( event === 'sitegen_discovery_started' ) {
 						startAllTasks( discoveryMsgId );
@@ -142,6 +152,7 @@ const useChat = () => {
 
 					if ( event === 'sitegen_discovery_completed' ) {
 						finishAllTasks( discoveryMsgId );
+						dispatch( nfdOnboardingStore ).setDiscoveryData( data );
 
 						addMessage( {
 							role: 'assistant',
