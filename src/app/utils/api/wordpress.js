@@ -161,6 +161,38 @@ export async function createNavigationMenu( pages ) {
 	} );
 }
 
+/**
+ * Update a page template by slug.
+ *
+ * @param {string} slug    Template slug (e.g. "page-no-title").
+ * @param {string} content Block HTML content.
+ * @return {Promise<Object>} The updated template.
+ */
+export async function updateTemplate( slug, content ) {
+	const lookupUrl = addQueryArgs( `${ wpRestBase }/templates`, {
+		per_page: 100,
+	} );
+
+	const templates = await apiFetch( {
+		url: lookupUrl,
+		method: 'GET',
+	} );
+
+	const match = Array.isArray( templates )
+		? templates.find( ( t ) => t.slug === slug )
+		: null;
+
+	if ( match ) {
+		return apiFetch( {
+			url: `${ wpRestBase }/templates/${ match.id }`,
+			method: 'POST',
+			data: { content },
+		} );
+	}
+
+	return null;
+}
+
 export async function updateTemplatePart( slug, content ) {
 	// Look up existing template part by slug.
 	const lookupUrl = addQueryArgs( `${ wpRestBase }/template-parts`, {

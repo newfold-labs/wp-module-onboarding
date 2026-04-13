@@ -3,6 +3,7 @@ import {
 	uploadMediaFromUrl,
 	createPage,
 	createPost,
+	updateTemplate,
 	updateTemplatePart,
 	createNavigationMenu,
 	createService,
@@ -137,6 +138,17 @@ export async function runTemplateParts( { generationData } ) {
 	if ( footer ) {
 		await updateTemplatePart( 'footer', footer );
 	}
+
+	// Update the page-no-title template to fix spacing between header and content.
+	const pageNoTitleContent =
+		'<!-- wp:template-part {"slug":"header","theme":"bluehost-blueprint","area":"header"} /-->\n\n' +
+		'<!-- wp:group {"tagName":"main","align":"full","style":{"spacing":{"margin":{"top":"0"}}},"layout":{"type":"constrained"}} -->\n' +
+		'<main class="wp-block-group alignfull" style="margin-top:0">' +
+		'<!-- wp:post-content {"align":"full","layout":{"type":"constrained"}} /-->' +
+		'</main>\n' +
+		'<!-- /wp:group -->\n\n' +
+		'<!-- wp:template-part {"slug":"footer","theme":"bluehost-blueprint","area":"footer"} /-->';
+	await updateTemplate( 'page-no-title', pageNoTitleContent );
 
 	return 'Header and footer configured';
 }
