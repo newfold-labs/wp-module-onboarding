@@ -65,13 +65,13 @@ class SiteGenAiController {
 			'sitegen/handshake',
 			array( 'domain' => \home_url() )
 		);
-	
+
 		$response = $request->send();
-	
+
 		if ( ! $response || empty( $response['site_id'] ) ) {
 			return new \WP_REST_Response( array( 'error' => 'Handshake failed' ), 502 );
 		}
-	
+
 		return new \WP_REST_Response( $response, 200 );
 	}
 
@@ -81,7 +81,7 @@ class SiteGenAiController {
 	 * @return \WP_REST_Response
 	 */
 	public function report_published(): \WP_REST_Response {
-		$state = ReduxStateService::get( 'sitegen' );
+		$state      = ReduxStateService::get( 'sitegen' );
 		$sitegen_id = $state['siteGenId'] ?? null;
 		if ( ! $sitegen_id ) {
 			return new \WP_REST_Response( array( 'status' => 'no_site_id' ), 200 );
