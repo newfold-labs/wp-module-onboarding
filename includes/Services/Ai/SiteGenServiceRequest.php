@@ -20,7 +20,7 @@ class SiteGenServiceRequest {
 	 *
 	 * @var string
 	 */
-	const DEFAULT_BASE_URL = 'https://bluehost-ai-platform.on-forge.com';
+	const DEFAULT_BASE_URL = 'https://ai-platform.hiive.cloud.com';
 
 	/**
 	 * The URL.
