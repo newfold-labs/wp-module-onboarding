@@ -13,6 +13,11 @@ use function NewfoldLabs\WP\ModuleLoader\deactivate;
  */
 class ModuleController {
 
+	/**
+	 * The name of the module.
+	 *
+	 * @var string
+	 */
 	public static $module_name = 'onboarding';
 
 	/**
@@ -25,6 +30,8 @@ class ModuleController {
 
 	/**
 	 * Enable/Disable Onboarding based on certain checks.
+	 *
+	 * @return void
 	 */
 	public static function module_switcher() {
 		$current_brand         = Bluehost::get_current_brand();
@@ -44,7 +51,7 @@ class ModuleController {
 	/**
 	 * Check if the site is eligible for Onboarding.
 	 *
-	 * @param string $brand
+	 * @param string $brand The brand to check.
 	 * @return boolean
 	 */
 	public static function can_access_onboarding( $brand ): bool {
@@ -71,7 +78,7 @@ class ModuleController {
 	/**
 	 * Checks if a particular brand is eligible for Onboarding.
 	 *
-	 * @param string $brand
+	 * @param string $brand The brand to check.
 	 * @return boolean
 	 */
 	public static function is_brand_eligible( $brand ): bool {
