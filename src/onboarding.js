@@ -6,10 +6,11 @@ import { dispatch } from '@wordpress/data';
 import { onboardingRestURL, startOnboarding } from '@/utils/api';
 import { CATEGORY } from '@/utils/analytics/hiive/constants';
 import { POSTHOG_PUBLIC } from '@/data/constants';
-import { nfdOnboardingStore } from '@/data/store';
+import { nfdOnboardingStore, initializeStoreDbSyncServices } from '@/data/store';
 import { isCypress } from '@/utils/helpers';
 import './webpack-public-path';
 import { PostHogProvider } from 'posthog-js/react';
+
 import App from '@';
 
 // Check if the runtime data object is mounted.
@@ -82,10 +83,10 @@ if ( runtimeDataObjectIsMounted() ) {
 		initializeAnalytics();
 		startOnboarding();
 
-		// Hydrate the Redux store with server-side runtime data.
-		dispatch( nfdOnboardingStore ).setRuntimeSlice(
-			window.nfdOnboarding.runtime
-		);
+		// Hydrate the Redux store with server-side runtime and sitegen data.
+		dispatch( nfdOnboardingStore ).setRuntimeSlice( window.nfdOnboarding.runtime );
+		dispatch( nfdOnboardingStore ).setSiteGenSlice( window.nfdOnboarding.sitegen );
+		initializeStoreDbSyncServices();
 
 		const NFD_ONBOARDING_ELEMENT_ID = 'nfd-onboarding';
 		const appTarget = document.getElementById( NFD_ONBOARDING_ELEMENT_ID );

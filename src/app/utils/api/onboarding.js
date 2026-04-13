@@ -415,3 +415,17 @@ export const importBlueprint = async ( selectedBlueprintSlug ) => {
 		} ).then()
 	);
 };
+
+/**
+ * Report the published site.
+ *
+ * @return {Promise<Object>} response
+ */
+export const reportSiteGenPublished = async () => {
+	return await resolve(
+		apiFetch( {
+			url: onboardingRestURL( 'sitegen/report-published' ),
+			method: 'POST',
+		} ).then()
+	);
+};

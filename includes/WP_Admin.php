@@ -173,6 +173,7 @@ final class WP_Admin {
 
 			$nfd_onboarding_data = array(
 				'runtime' => Runtime::get_data(),
+				'sitegen' => ReduxStateService::get( 'sitegen' ),
 			);
 			\wp_add_inline_script(
 				self::$slug,

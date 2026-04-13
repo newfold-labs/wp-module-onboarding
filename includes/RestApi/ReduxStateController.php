@@ -149,15 +149,13 @@ class ReduxStateController {
 	/**
 	 * Get the sitegen slice state.
 	 *
+	 * Reconstructs the slice from individual dedicated options.
+	 * state_sitegen is no longer used as the primary storage.
+	 *
 	 * @return \WP_REST_Response
 	 */
-	public function get_sitegen_slice_state() {
-		$data = \get_option( Options::get_option_name( 'state_sitegen' ), false );
-		if ( ! $data ) {
-			$data = array();
-		}
-
-		return new \WP_REST_Response( $data, 200 );
+	public function get_sitegen_slice_state(): \WP_REST_Response {
+		return new \WP_REST_Response( ReduxStateService::get( 'sitegen' ), 200 );
 	}
 
 	/**
@@ -175,12 +173,37 @@ class ReduxStateController {
 			);
 		}
 
-		$result = ReduxStateService::update( 'sitegen', $data );
-		if ( ! $result ) {
-			return new \WP_REST_Response(
-				'Failed to update sitegen slice state',
-				500
-			);
+		if ( ! empty( $data['siteId'] ) ) {
+			update_option( Options::get_option_name( 'sitegen_site_id' ), $data['siteId'] );
+		}
+
+		if ( ! empty( $data['siteGenId'] ) ) {
+			$current = get_option( Options::get_option_name( 'sitegen_current_id' ), '' );
+			if ( $current && $current !== $data['siteGenId'] ) {
+				$previous = get_option( Options::get_option_name( 'sitegen_previous_ids' ), array() );
+				if ( ! is_array( $previous ) ) {
+					$previous = array();
+				}
+				if ( ! in_array( $current, $previous, true ) ) {
+					$previous[] = $current;
+				}
+				update_option( Options::get_option_name( 'sitegen_previous_ids' ), $previous );
+			}
+			update_option( Options::get_option_name( 'sitegen_current_id' ), $data['siteGenId'] );
+		}
+
+		// site_type
+		if ( ! empty( $data['siteType'] ) ) {
+			update_option( Options::get_option_name( 'sitegen_site_type' ), $data['siteType'] );
+		}
+
+		// enhanced_prompt
+		if ( ! empty( $data['enhancedPrompt'] ) ) {
+			update_option( Options::get_option_name( 'sitegen_enhanced_prompt' ), $data['enhancedPrompt'] );
+		}
+
+		if ( ! empty( $data['discoveryData'] ) ) {
+			update_option( Options::get_option_name( 'sitegen_discovery_data' ), $data['discoveryData'] );
 		}
 
 		return new \WP_REST_Response( $data, 200 );

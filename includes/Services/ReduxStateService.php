@@ -41,11 +41,35 @@ class ReduxStateService {
 			return $data;
 		}
 
-		$data = \get_option( Options::get_option_name( self::$states[ $state ] ), false );
+		$getter = 'get_' . self::$states[ $state ];
+
+		if ( is_callable( array( self::class, $getter ) ) ) {
+			$data = call_user_func( array( self::class, $getter ) );
+		} else {
+			$data = \get_option( Options::get_option_name( self::$states[ $state ] ), false );
+		}
+
 		if ( ! $data ) {
 			$data = array();
 		}
+
 		return $data;
+	}
+
+	/**
+	 * Get the sitegen slice reconstructed from individual dedicated options.
+	 *
+	 * @return array The sitegen slice data.
+	 */
+	public static function get_state_sitegen(): array {
+		return array(
+			'siteId'              => \get_option( Options::get_option_name( 'sitegen_site_id' ), '' ),
+			'siteGenId'           => \get_option( Options::get_option_name( 'sitegen_current_id' ), '' ),
+			'siteType'            => \get_option( Options::get_option_name( 'sitegen_site_type' ), '' ),
+			'enhancedPrompt'      => \get_option( Options::get_option_name( 'sitegen_enhanced_prompt' ), '' ),
+			'discoveryData'       => \get_option( Options::get_option_name( 'sitegen_discovery_data' ), array() ),
+			'sitegenSliceVersion' => 0,
+		);
 	}
 
 	/**

@@ -61,13 +61,18 @@ final class Options {
 		'wc_queue_flush_rewrite_rules'  => 'woocommerce_queue_flush_rewrite_rules',
 		'bluehost_plugin_install_date'  => 'bluehost_plugin_install_date',
 		'state_input'                   => 'state_input',
-		'state_sitegen'                 => 'state_sitegen',
 		'state_logogen'                 => 'state_logogen',
 		'state_blueprints'              => 'state_blueprints',
 		'sitegen_previews'              => 'sitegen_previews',
 		'site_info'                     => 'site_info',
 		'start_time'                    => 'start_time',
 		'completed_time'                => 'completed_time',
+		'sitegen_site_id'               => 'sitegen_site_id',
+		'sitegen_current_id'            => 'sitegen_current_id',
+		'sitegen_previous_ids'          => 'sitegen_previous_ids',
+		'sitegen_site_type'             => 'sitegen_site_type',
+		'sitegen_enhanced_prompt'       => 'sitegen_enhanced_prompt',
+		'sitegen_discovery_data'        => 'sitegen_discovery_data',
 	);
 
 	/**

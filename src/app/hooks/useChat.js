@@ -2,6 +2,8 @@
  * WordPress dependencies
  */
 import { useCallback, useState, useRef, useEffect } from '@wordpress/element';
+import { dispatch, select } from '@wordpress/data';
+import { nfdOnboardingStore } from '@/data/store';
 
 /**
  * Internal dependencies
@@ -23,7 +25,6 @@ import {
 	MAX_RETRIES,
 	EVENT_TO_TASK_KEY,
 	GENERATION_ITEM_KEY_MAP,
-	GENERATION_TASK_KEYS,
 	createInitialTasks,
 	createGenerationTasks,
 } from '@/hooks/chat/tasks';
@@ -106,6 +107,21 @@ const useChat = () => {
 				);
 
 				await streamSSE( response, ( { event, data } ) => {
+					if ( event === 'sitegen_started' ) {
+						dispatch( nfdOnboardingStore ).setSiteGenId( data );
+						return;
+					}
+
+					if ( event === 'sitegen_discovery_prompt_enhance_completed' ) {
+						dispatch( nfdOnboardingStore ).setEnhancedPrompt( data );
+						return;
+					}
+
+					if ( event === 'sitegen_discovery_site_type_completed' ) {
+						dispatch( nfdOnboardingStore ).setSiteType( data );
+						return;
+					}
+
 					// --- Discovery phase events ---
 					if ( event === 'sitegen_discovery_started' ) {
 						startAllTasks( discoveryMsgId );
@@ -116,6 +132,7 @@ const useChat = () => {
 					if ( discoveryTaskKey ) {
 						if (
 							discoveryTaskKey === 'brand_identity' ||
+							discoveryTaskKey === 'sitemap' ||
 							discoveryTaskKey === 'site_type'
 						) {
 							try {
@@ -135,6 +152,7 @@ const useChat = () => {
 
 					if ( event === 'sitegen_discovery_completed' ) {
 						finishAllTasks( discoveryMsgId );
+						dispatch( nfdOnboardingStore ).setDiscoveryData( data );
 
 						addMessage( {
 							role: 'assistant',
@@ -166,12 +184,6 @@ const useChat = () => {
 						if ( taskKey ) {
 							completeTask( generationMsgId, taskKey, 'Done' );
 						}
-						return;
-					}
-
-					const sitekitStepMatch = event.match( /^sitegen_sitekit_step_(.+)$/ );
-					if ( sitekitStepMatch && generationMsgId && GENERATION_TASK_KEYS.has( sitekitStepMatch[ 1 ] ) ) {
-						completeTask( generationMsgId, sitekitStepMatch[ 1 ], 'Done' );
 						return;
 					}
 
@@ -406,8 +418,15 @@ const useChat = () => {
 		setIsWaiting( true );
 		( async () => {
 			try {
-				const { site_id: siteId } = await handshake();
+				let siteId = select( nfdOnboardingStore ).getSiteId();
+				if ( ! siteId ) {
+					const response = await handshake();
+					siteId = response.site_id;
+					dispatch( nfdOnboardingStore ).setSiteId( siteId );
+				}
+
 				siteIdRef.current = siteId;
+
 				await runIntake();
 			} catch ( err ) {
 				// eslint-disable-next-line no-console
