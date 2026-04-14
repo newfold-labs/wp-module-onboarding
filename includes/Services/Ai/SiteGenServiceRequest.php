@@ -20,7 +20,7 @@ class SiteGenServiceRequest {
 	 *
 	 * @var string
 	 */
-	const DEFAULT_BASE_URL = 'https://ai-platform.hiive.cloud.com';
+	const DEFAULT_BASE_URL = 'https://ai-platform.hiive.cloud';
 
 	/**
 	 * The URL.
