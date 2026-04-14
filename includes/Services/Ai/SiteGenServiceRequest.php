@@ -57,9 +57,8 @@ class SiteGenServiceRequest {
 	 * @param array  $body The body.
 	 */
 	public function __construct( string $endpoint, array $body ) {
-		$base            = defined( 'NFD_AI_PLATFORM_BASE_URL' ) ? NFD_AI_PLATFORM_BASE_URL : self::DEFAULT_BASE_URL;
 		$this->sslverify = defined( 'NFD_AI_PLATFORM_SSL_VERIFY' ) ? NFD_AI_PLATFORM_SSL_VERIFY : true;
-		$this->url       = rtrim( $base, '/' ) . '/api/v1/' . $endpoint;
+		$this->url       = rtrim( self::get_base_url(), '/' ) . '/api/v1/' . $endpoint;
 		$this->body      = $body;
 		$this->headers   = array(
 			'Content-Type'  => 'application/json',
@@ -111,5 +110,14 @@ class SiteGenServiceRequest {
 			'sslverify' => $this->sslverify,
 			'blocking'  => $blocking,
 		);
+	}
+
+	/**
+	 * Get the AI Platform base URL.
+	 *
+	 * @return string The AI Platform base URL.
+	 */
+	public static function get_base_url(): string {
+		return defined( 'NFD_AI_PLATFORM_BASE_URL' ) ? NFD_AI_PLATFORM_BASE_URL : self::DEFAULT_BASE_URL;
 	}
 }

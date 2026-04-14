@@ -3,7 +3,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
-
+use NewfoldLabs\WP\Module\Onboarding\Services\Ai\SiteGenServiceRequest;
 use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
@@ -24,6 +24,7 @@ class Runtime {
 			'languages'           => Languages::get_all_languages(),
 			'currentUserDetails'  => self::wp_current_user_details(),
 			'isFreshInstallation' => self::is_fresh_installation(),
+			'aiPlatformUrl'       => SiteGenServiceRequest::get_base_url(),
 			'sentryInitDsnURL'    => 'https://cd5bd4c30b914e0d1d0f49413e600afa@o4506197201715200.ingest.us.sentry.io/4507383861805056',
 		);
 	}
