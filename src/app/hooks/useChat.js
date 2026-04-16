@@ -73,7 +73,6 @@ const useChat = () => {
 			abortRef.current?.abort();
 		};
 	}, [] );
-	 
 
 	const handleDiscoveryEvent = useCallback(
 		( msgId, event, data ) => {
@@ -278,7 +277,7 @@ const useChat = () => {
 		},
 		[ setMessages, startAllTasks, handleDiscoveryEvent, finishAllTasks, addMessage, completeTask, getNextId ]
 	);
-	
+
 	/**
 	 * Auto-start: when window.nfdOnboarding.origin.prompt is set, skip PromptView
 	 * and the intake conversation and jump straight to generation.
@@ -313,7 +312,6 @@ const useChat = () => {
 
 		runStream( discoveryId );
 	}, [ addMessage, getNextId, runStream ] );
-
 
 	useEffect( () => {
 		handleOriginStart();
