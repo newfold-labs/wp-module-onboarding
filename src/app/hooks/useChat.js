@@ -39,7 +39,9 @@ import {
  */
 const useChat = () => {
 	const [ prompt, setPrompt ] = useState( '' );
-	const [ mode, setMode ] = useState( 'prompt' );
+	const [ mode, setMode ] = useState( () =>
+		window.nfdOnboarding?.origin?.prompt ? 'chat' : 'prompt'
+	);
 	const [ chatInput, setChatInput ] = useState( '' );
 	const [ isWaiting, setIsWaiting ] = useState( false );
 	const [ inputEnabled, setInputEnabled ] = useState( false );
@@ -71,6 +73,7 @@ const useChat = () => {
 			abortRef.current?.abort();
 		};
 	}, [] );
+	 
 
 	const handleDiscoveryEvent = useCallback(
 		( msgId, event, data ) => {
@@ -275,6 +278,46 @@ const useChat = () => {
 		},
 		[ setMessages, startAllTasks, handleDiscoveryEvent, finishAllTasks, addMessage, completeTask, getNextId ]
 	);
+	
+	/**
+	 * Auto-start: when window.nfdOnboarding.origin.prompt is set, skip PromptView
+	 * and the intake conversation and jump straight to generation.
+	 * The handshake is handled PHP-side so siteId is already in the store.
+	 */
+	const handleOriginStart = useCallback( () => {
+		const originPrompt = window.nfdOnboarding?.origin?.prompt;
+		if ( ! originPrompt ) {
+			return;
+		}
+
+		const userPrompt = originPrompt.trim();
+		originalPromptRef.current = userPrompt;
+		conversationRef.current = [ { role: 'user', content: userPrompt } ];
+		siteIdRef.current = select( nfdOnboardingStore ).getSiteId();
+
+		addMessage( { role: 'user', content: userPrompt } );
+
+		startTimeRef.current = Date.now();
+		sendOnboardingEvent( new OnboardingEvent( ACTION_ONBOARDING_STARTED ) );
+		sendOnboardingEvent( new OnboardingEvent( ACTION_INTAKE_PROMPT_SET, userPrompt ) );
+
+		setIsWaiting( true );
+
+		const discoveryId = getNextId();
+		addMessage( {
+			id: discoveryId,
+			role: 'discovery',
+			title: 'Site discovery',
+			tasks: createInitialTasks(),
+		} );
+
+		runStream( discoveryId );
+	}, [ addMessage, getNextId, runStream ] );
+
+
+	useEffect( () => {
+		handleOriginStart();
+	}, [ handleOriginStart ] );
 
 	/**
 	 * Retry the generation stream with the same site_id and prompt.

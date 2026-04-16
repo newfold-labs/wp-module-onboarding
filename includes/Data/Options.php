@@ -13,6 +13,13 @@ final class Options {
 	protected static $prefix = 'nfd_module_onboarding_';
 
 	/**
+	 * Prefix for options in the module.
+	 *
+	 * @var string
+	 */
+	protected static $prefix_origin = 'nfd_origin_';
+
+	/**
 	 * List of all the options.
 	 *
 	 * @var array
@@ -73,6 +80,16 @@ final class Options {
 		'sitegen_site_type'             => 'sitegen_site_type',
 		'sitegen_enhanced_prompt'       => 'sitegen_enhanced_prompt',
 		'sitegen_discovery_data'        => 'sitegen_discovery_data',
+	);
+
+	/**
+	 * The option name for the prompt origin.
+	 *
+	 * @var string
+	 */
+	protected static $origin_options = array(
+		'origin_prompt' => 'prompt',
+		'origin_prompt_completed' => 'prompt_completed',
 	);
 
 	/**
@@ -184,4 +201,15 @@ final class Options {
 			),
 		);
 	}
+
+
+	/**
+	 * Get the prompt origin option name.
+	 *
+	 * @return string The option name for the prompt origin.
+	 */
+	public static function get_origin_option_name( $option_key ) {
+		return isset( self::$origin_options[ $option_key ] ) ? self::$prefix_origin . self::$origin_options[ $option_key ] : false;	
+	}
+
 }

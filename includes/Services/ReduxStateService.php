@@ -8,6 +8,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\RestApi\SiteGenAiController;
 
 /**
  * Redux State Service Class
@@ -70,6 +71,40 @@ class ReduxStateService {
 			'discoveryData'       => \get_option( Options::get_option_name( 'sitegen_discovery_data' ), array() ),
 			'sitegenSliceVersion' => 0,
 		);
+	}
+
+
+
+	/**
+	 * Ensure `sitegen_site_id` is stored: if missing, handshake and persist (same option as sitegen slice updates).
+	 *
+	 * @return string Existing or new site_id, or empty string if missing and handshake failed.
+	 */
+	public static function ensure_sitegen_site_id(): string {
+		$option_key = Options::get_option_name( 'sitegen_site_id' );
+		$existing   = \get_option( $option_key, '' );
+		if ( ! empty( $existing ) ) {
+			return $existing;
+		}
+
+		$rest_request = new \WP_REST_Request(
+			\WP_REST_Server::CREATABLE,
+			SiteGenAiController::REST_ROUTE_HANDSHAKE
+		);
+		$rest_response = \rest_do_request( $rest_request );
+
+		if ( $rest_response->is_error() || $rest_response->get_status() >= 400 ) {
+			return '';
+		}
+
+		$data = $rest_response->get_data();
+		if ( empty( $data['site_id'] ) ) {
+			return '';
+		}
+
+		\update_option( $option_key, $data['site_id'] );
+
+		return $data['site_id'];
 	}
 
 	/**
