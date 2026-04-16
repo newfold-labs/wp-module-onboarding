@@ -2,6 +2,8 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+
 /**
  * Reset Services
  *
@@ -19,6 +21,7 @@ class ResetService {
 		self::reset_site_identity();
 		self::reset_onboarding_options();
 		self::unschedule_cron_jobs();
+		self::reset_prompt_origin();
 	}
 
 	/**
@@ -114,5 +117,19 @@ class ResetService {
 	private static function unschedule_cron_jobs(): void {
 		wp_unschedule_hook( MediaService::CRON_HOOK );
 		wp_unschedule_hook( SiteGenImageService::CRON_HOOK );
+	}
+
+	/**
+	 * Reset the prompt origin and save it  in the prompt_completed option
+	 *
+	 * @return void
+	 */
+	private static function reset_prompt_origin(): void {
+		$origin_prompt = get_option( Options::get_origin_option_name( 'origin_prompt' ) );
+		if ( ! empty( $origin_prompt ) ) {
+			update_option( Options::get_origin_option_name( 'origin_prompt_completed' ), $origin_prompt );
+		}
+
+		delete_option( Options::get_origin_option_name( 'origin_prompt' ) );
 	}
 }

@@ -10,6 +10,15 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
  * Class SiteGenAiController
  */
 class SiteGenAiController {
+
+	/**
+	 * Full REST path for handshake (for WP_REST_Request / rest_do_request).
+	 * Must match namespace + rest_base + '/handshake' below.
+	 *
+	 * @var string
+	 */
+	public const REST_ROUTE_HANDSHAKE = '/newfold-onboarding/v1/sitegen/handshake';
+
 	/**
 	 * The namespace of this controller's route.
 	 *

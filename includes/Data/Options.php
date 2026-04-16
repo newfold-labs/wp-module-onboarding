@@ -13,6 +13,13 @@ final class Options {
 	protected static $prefix = 'nfd_module_onboarding_';
 
 	/**
+	 * Prefix for options in the module.
+	 *
+	 * @var string
+	 */
+	protected static $prefix_origin = 'nfd_origin_';
+
+	/**
 	 * List of all the options.
 	 *
 	 * @var array
@@ -76,6 +83,16 @@ final class Options {
 	);
 
 	/**
+	 * The option name for the prompt origin.
+	 *
+	 * @var string
+	 */
+	protected static $origin_options = array(
+		'origin_prompt'           => 'prompt',
+		'origin_prompt_completed' => 'prompt_completed',
+	);
+
+	/**
 	 * Contains all the options and their values to be initialized by onboarding.
 	 *
 	 * @var array
@@ -112,7 +129,7 @@ final class Options {
 	 *
 	 * @return array
 	 */
-	public static function get_all_options() {
+	public static function get_all_options(): array {
 		return self::$options;
 	}
 
@@ -121,7 +138,7 @@ final class Options {
 	 *
 	 * @return array
 	 */
-	public static function get_initialization_options() {
+	public static function get_initialization_options(): array {
 		return self::$initialization_options;
 	}
 
@@ -130,7 +147,7 @@ final class Options {
 	 *
 	 * @return array
 	 */
-	public static function get_wc_settings_options() {
+	public static function get_wc_settings_options(): array {
 		return array(
 			'wc_currency'          => array(
 				'show_in_rest' => true,
@@ -183,5 +200,16 @@ final class Options {
 				'description'  => __( 'Woocommerce Settings', 'wp-module-onboarding' ),
 			),
 		);
+	}
+
+
+	/**
+	 * Get the prompt origin option name.
+	 *
+	 * @param string $option_key Option key.
+	 * @return string The option name for the prompt origin.
+	 */
+	public static function get_origin_option_name( $option_key ): string {
+		return isset( self::$origin_options[ $option_key ] ) ? self::$prefix_origin . self::$origin_options[ $option_key ] : false;
 	}
 }

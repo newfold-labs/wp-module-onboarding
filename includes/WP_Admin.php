@@ -7,6 +7,7 @@ use NewfoldLabs\WP\Module\Onboarding\Services\ThemeService;
 use NewfoldLabs\WP\Module\Onboarding\Services\I18nService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Runtime;
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Patterns\SiteClassification as PatternsSiteClassification;
 
 /**
@@ -174,6 +175,7 @@ final class WP_Admin {
 			$nfd_onboarding_data = array(
 				'runtime' => Runtime::get_data(),
 				'sitegen' => ReduxStateService::get( 'sitegen' ),
+				'origin'  => array( 'prompt' => get_option( Options::get_origin_option_name( 'origin_prompt' ) ) ),
 			);
 			\wp_add_inline_script(
 				self::$slug,
@@ -262,6 +264,9 @@ final class WP_Admin {
 		if ( ! $default_theme_installation_result ) {
 			self::exit_to_dashboard();
 		}
+
+		// Ensure sitegen site id is set
+		ReduxStateService::ensure_sitegen_site_id();
 
 		self::register_assets();
 	}
