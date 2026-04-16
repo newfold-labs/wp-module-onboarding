@@ -87,7 +87,7 @@ class ReduxStateService {
 			return $existing;
 		}
 
-		$rest_request = new \WP_REST_Request(
+		$rest_request  = new \WP_REST_Request(
 			\WP_REST_Server::CREATABLE,
 			SiteGenAiController::REST_ROUTE_HANDSHAKE
 		);

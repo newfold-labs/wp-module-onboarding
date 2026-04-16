@@ -88,7 +88,7 @@ final class Options {
 	 * @var string
 	 */
 	protected static $origin_options = array(
-		'origin_prompt' => 'prompt',
+		'origin_prompt'           => 'prompt',
 		'origin_prompt_completed' => 'prompt_completed',
 	);
 
@@ -129,7 +129,7 @@ final class Options {
 	 *
 	 * @return array
 	 */
-	public static function get_all_options() {
+	public static function get_all_options(): array {
 		return self::$options;
 	}
 
@@ -138,7 +138,7 @@ final class Options {
 	 *
 	 * @return array
 	 */
-	public static function get_initialization_options() {
+	public static function get_initialization_options(): array {
 		return self::$initialization_options;
 	}
 
@@ -147,7 +147,7 @@ final class Options {
 	 *
 	 * @return array
 	 */
-	public static function get_wc_settings_options() {
+	public static function get_wc_settings_options(): array {
 		return array(
 			'wc_currency'          => array(
 				'show_in_rest' => true,
@@ -206,10 +206,10 @@ final class Options {
 	/**
 	 * Get the prompt origin option name.
 	 *
+	 * @param string $option_key Option key.
 	 * @return string The option name for the prompt origin.
 	 */
-	public static function get_origin_option_name( $option_key ) {
-		return isset( self::$origin_options[ $option_key ] ) ? self::$prefix_origin . self::$origin_options[ $option_key ] : false;	
+	public static function get_origin_option_name( $option_key ): string {
+		return isset( self::$origin_options[ $option_key ] ) ? self::$prefix_origin . self::$origin_options[ $option_key ] : false;
 	}
-
 }
