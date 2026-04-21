@@ -114,9 +114,10 @@ const useChat = () => {
 						return;
 					}
 
+					// Side-effect dispatches for these two events; fall through to the
+					// EVENT_TO_TASK_KEY block below so the corresponding task is also completed.
 					if ( event === 'sitegen_discovery_prompt_enhance_completed' ) {
 						dispatch( nfdOnboardingStore ).setEnhancedPrompt( data );
-						return;
 					}
 
 					if ( event === 'sitegen_discovery_site_type_completed' ) {
