@@ -188,11 +188,12 @@ const useChat = () => {
 					);
 					if ( taskEventMatch && generationMsgId ) {
 						const [ , genKey, stepKey ] = taskEventMatch;
-						const taskKey = genKey
-							? GENERATION_ITEM_KEY_MAP[ genKey ]
-							: GENERATION_TASK_KEYS.has( stepKey )
-								? stepKey
-								: null;
+						let taskKey = null;
+						if ( genKey ) {
+							taskKey = GENERATION_ITEM_KEY_MAP[ genKey ] ?? null;
+						} else if ( GENERATION_TASK_KEYS.has( stepKey ) ) {
+							taskKey = stepKey;
+						}
 						if ( taskKey ) {
 							completeTask( generationMsgId, taskKey, 'Done' );
 						}
