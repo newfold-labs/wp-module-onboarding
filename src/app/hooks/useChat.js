@@ -191,8 +191,8 @@ const useChat = () => {
 						const taskKey = genKey
 							? GENERATION_ITEM_KEY_MAP[ genKey ]
 							: GENERATION_TASK_KEYS.has( stepKey )
-							? stepKey
-							: null;
+								? stepKey
+								: null;
 						if ( taskKey ) {
 							completeTask( generationMsgId, taskKey, 'Done' );
 						}
