@@ -25,6 +25,7 @@ import {
 	MAX_RETRIES,
 	EVENT_TO_TASK_KEY,
 	GENERATION_ITEM_KEY_MAP,
+	GENERATION_TASK_KEYS,
 	createInitialTasks,
 	createGenerationTasks,
 } from '@/hooks/chat/tasks';
@@ -114,14 +115,14 @@ const useChat = () => {
 						return;
 					}
 
+					// Side-effect dispatches for these two events; fall through to the
+					// EVENT_TO_TASK_KEY block below so the corresponding task is also completed.
 					if ( event === 'sitegen_discovery_prompt_enhance_completed' ) {
 						dispatch( nfdOnboardingStore ).setEnhancedPrompt( data );
-						return;
 					}
 
 					if ( event === 'sitegen_discovery_site_type_completed' ) {
 						dispatch( nfdOnboardingStore ).setSiteType( data );
-						return;
 					}
 
 					// --- Discovery phase events ---
@@ -179,10 +180,20 @@ const useChat = () => {
 						return;
 					}
 
-					const genItemMatch = event.match( /^sitegen_content_generation_item(.+)_completed$/ );
-					if ( genItemMatch && generationMsgId ) {
-						const backendKey = genItemMatch[ 1 ];
-						const taskKey = GENERATION_ITEM_KEY_MAP[ backendKey ];
+					// Two backend event shapes complete a generation task:
+					//   sitegen_content_generation_item<key>_completed — needs key remap
+					//   sitegen_sitekit_step_<key>                     — suffix is already the task key
+					const taskEventMatch = event.match(
+						/^sitegen_content_generation_item(.+)_completed$|^sitegen_sitekit_step_(.+)$/
+					);
+					if ( taskEventMatch && generationMsgId ) {
+						const [ , genKey, stepKey ] = taskEventMatch;
+						let taskKey = null;
+						if ( genKey ) {
+							taskKey = GENERATION_ITEM_KEY_MAP[ genKey ] ?? null;
+						} else if ( GENERATION_TASK_KEYS.has( stepKey ) ) {
+							taskKey = stepKey;
+						}
 						if ( taskKey ) {
 							completeTask( generationMsgId, taskKey, 'Done' );
 						}
