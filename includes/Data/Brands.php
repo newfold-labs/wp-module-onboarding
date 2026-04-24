@@ -14,7 +14,7 @@ final class Brands {
 	public static function get_default_brand() {
 		$default_brand_data = array(
 			'brand'               => 'wordpress',
-			'name'                => __( 'your web host', 'wp-module-onboarding-data' ),
+			'name'                => __( 'your web host', 'wp-module-onboarding' ),
 			'pluginDashboardPage' => \admin_url(),
 			'hireExpertsInfo'     => array(
 				'defaultLink'     => apply_filters( 'nfd_build_url', 'https://www.bluehost.com/wp-live' ),
