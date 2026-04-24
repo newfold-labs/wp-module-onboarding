@@ -124,9 +124,7 @@ export async function resetOnboardingState() {
   // Redux state persistence - clears any saved UI state
   await wordpress.wpCli('option delete nfd_module_onboarding_state_input', { failOnNonZeroExit: false });
   await wordpress.wpCli('option delete nfd_module_onboarding_state_sitegen', { failOnNonZeroExit: false });
-  await wordpress.wpCli('option delete nfd_module_onboarding_state_logogen', { failOnNonZeroExit: false });
-  await wordpress.wpCli('option delete nfd_module_onboarding_state_blueprints', { failOnNonZeroExit: false });
-
+  
   // Time tracking options
   await wordpress.wpCli('option delete nfd_module_onboarding_start_time', { failOnNonZeroExit: false });
   await wordpress.wpCli('option delete nfd_module_onboarding_completed_time', { failOnNonZeroExit: false });

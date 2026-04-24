@@ -209,4 +209,4 @@ class ColorPalette {
 
 		return $palette;
 	}
-} 
+}

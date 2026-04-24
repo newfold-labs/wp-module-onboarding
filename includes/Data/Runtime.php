@@ -86,7 +86,7 @@ class Runtime {
 	 */
 	public static function current_brand() {
 		$brands = Brands::get_brands();
-		$brand = defined( 'NFD_ONBOARDING_PLUGIN_BRAND' ) ? NFD_ONBOARDING_PLUGIN_BRAND : 'bluehost';
+		$brand  = defined( 'NFD_ONBOARDING_PLUGIN_BRAND' ) ? NFD_ONBOARDING_PLUGIN_BRAND : 'bluehost';
 		return array_key_exists( $brand, $brands ) ?
 			$brands[ $brand ] :
 			Brands::get_default_brand();
