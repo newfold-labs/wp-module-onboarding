@@ -93,6 +93,7 @@ const MigrationView = ( { onBack } ) => {
 	}, [ prepareMigration ] );
 
 	const title = brandName
+		// translators: %s is the brand name (e.g., Bluehost, HostGator)
 		? __( "Let's migrate your existing site to %s", 'wp-module-onboarding' ).replace( '%s', brandName )
 		: __( "Let's migrate your existing site", 'wp-module-onboarding' );
 
