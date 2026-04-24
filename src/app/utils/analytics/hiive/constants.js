@@ -13,6 +13,11 @@ export const ACTION_INTAKE_PROMPT_SET = 'site_details_prompt_set';
 // Generation
 export const ACTION_SITEGEN_SITE_GENERATION_TIME = 'site_generation_time';
 
+// Migration
+export const ACTION_MIGRATION_INITIATED = 'migration_initiated';
+export const ACTION_MFE_MIGRATION_INITIATED = 'mfe_migration_initiated';
+export const ACTION_FORK_OPTION_SELECTED = 'fork_option_selected';
+
 // Errors
 export const ACTION_ERROR_STATE_TRIGGERED = 'error_state_triggered';
 
@@ -23,4 +28,5 @@ export const ACTION_TO_LABEL_KEY_MAP = {
 	[ ACTION_INTAKE_PROMPT_SET ]: 'prompt',
 	[ ACTION_SITEGEN_SITE_GENERATION_TIME ]: 'time',
 	[ ACTION_ERROR_STATE_TRIGGERED ]: 'identifier',
+	[ ACTION_FORK_OPTION_SELECTED ]: 'option',
 };

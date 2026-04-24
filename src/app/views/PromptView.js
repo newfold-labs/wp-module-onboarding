@@ -1,11 +1,24 @@
+/**
+ * WordPress dependencies
+ */
 import { useMemo } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+
+/**
+ * External dependencies
+ */
 import { motion } from 'motion/react';
+import { ArrowRightLeft } from 'lucide-react';
+
+/**
+ * Internal dependencies
+ */
 import PromptCard from '@/components/prompt/PromptCard.jsx';
 import { nfdOnboardingStore } from '@/data/store';
 import getGreeting from '@/utils/helpers/getGreeting';
 
-const PromptView = ( { prompt, setPrompt, onSubmit } ) => {
+const PromptView = ( { prompt, setPrompt, onSubmit, onMigrate, showMigration = false } ) => {
 	const displayName = useSelect(
 		( select ) => select( nfdOnboardingStore ).getCurrentUserDisplayName(),
 		[]
@@ -37,6 +50,23 @@ const PromptView = ( { prompt, setPrompt, onSubmit } ) => {
 						isSubmitting={ false }
 					/>
 				</div>
+
+				{ showMigration && (
+					<div className="nfd-flex nfd-flex-col nfd-items-center nfd-gap-4 nfd-w-full nfd-mt-12">
+						<span className="nfd-text-base nfd-font-medium nfd-text-[rgb(95,99,104)]">
+							{ __( 'Or', 'wp-module-onboarding' ) }
+						</span>
+						<button
+							onClick={ onMigrate }
+							className="nfd-flex nfd-items-center nfd-justify-center nfd-gap-3 nfd-w-full nfd-px-6 nfd-py-4 nfd-bg-[rgb(232,240,254)] nfd-border nfd-border-solid nfd-border-[rgb(232,240,254)] nfd-rounded-xl nfd-cursor-pointer nfd-transition-all hover:nfd-border-[rgba(23,108,223,0.35)] hover:nfd-shadow-[0_0_0_4px_rgba(23,108,223,0.08)]"
+						>
+							<ArrowRightLeft className="nfd-w-5 nfd-h-5 nfd-text-primary" />
+							<span className="nfd-text-lg nfd-font-medium nfd-text-primary">
+								{ __( 'Import an Existing WordPress Site', 'wp-module-onboarding' ) }
+							</span>
+						</button>
+					</div>
+				) }
 			</div>
 		</motion.div>
 	);

@@ -2,7 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Compatibility;
 
-use NewfoldLabs\WP\Module\Onboarding\Data\Data;
+use NewfoldLabs\WP\Module\Onboarding\Data\Runtime;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
@@ -243,7 +243,7 @@ class Safe_Mode {
 		// Get the post core update redirect URL.
 		$onboarding_referrer = \get_transient( Options::get_option_name( 'core_update_referrer' ) );
 		// Only redirect if the URL exists and the site is in coming soon mode.
-		if ( $onboarding_referrer && Data::coming_soon() ) {
+		if ( $onboarding_referrer && Runtime::coming_soon() ) {
 			\delete_transient( Options::get_option_name( 'core_update_referrer' ) );
 			// Ensure that it is a safe Onboarding URL before redirecting.
 			if ( ! preg_match( $valid_onboarding_referrer_regex, $onboarding_referrer ) ) {

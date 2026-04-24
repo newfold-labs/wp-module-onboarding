@@ -3,6 +3,7 @@
  */
 import { FullscreenMode } from '@wordpress/interface';
 import { useEffect } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -17,6 +18,7 @@ import bluehostLogo from '../Brands/bluehost/bluehost-logo.svg';
 import useChat from '@/hooks/useChat';
 import PromptView from '@/views/PromptView';
 import ChatView from '@/views/ChatView';
+import MigrationView from '@/views/MigrationView';
 import { OnboardingEvent, sendOnboardingEvent } from '@/utils/analytics/hiive';
 import { ACTION_PAGEVIEW } from '@/utils/analytics/hiive/constants';
 
@@ -35,10 +37,13 @@ const App = () => {
 		setChatInput,
 		isWaiting,
 		inputEnabled,
+		showMigration,
 		handlePromptSubmit,
 		handleChatSubmit,
 		handleRetry,
 		handleRestart,
+		handleMigrate,
+		handleMigrationBack,
 	} = useChat();
 
 	return (
@@ -60,9 +65,16 @@ const App = () => {
 				</div>
 
 				<AnimatePresence mode="wait">
-					{ mode === 'prompt' ? (
-						<PromptView prompt={ prompt } setPrompt={ setPrompt } onSubmit={ handlePromptSubmit } />
-					) : (
+					{ mode === 'prompt' && (
+						<PromptView
+							prompt={ prompt }
+							setPrompt={ setPrompt }
+							onSubmit={ handlePromptSubmit }
+							onMigrate={ handleMigrate }
+							showMigration={ showMigration }
+						/>
+					) }
+					{ mode === 'chat' && (
 						<ChatView
 							messages={ messages }
 							messagesEndRef={ messagesEndRef }
@@ -75,7 +87,12 @@ const App = () => {
 							onRestart={ handleRestart }
 						/>
 					) }
+					{ mode === 'migration' && (
+						<MigrationView onBack={ handleMigrationBack } />
+					) }
 				</AnimatePresence>
+
+				
 
 				<p className="nfd-text-xs nfd-text-balance nfd-font-normal nfd-leading-4 nfd-tracking-wide nfd-text-[rgb(68,71,70)] nfd-text-center [-webkit-font-smoothing:antialiased] nfd-absolute nfd-bottom-6 nfd-left-0 nfd-right-0 nfd-m-0 nfd-px-4 nfd-z-10">
 					{ __(
