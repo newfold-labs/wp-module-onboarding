@@ -26,6 +26,7 @@ class Runtime {
 			'isFreshInstallation' => self::is_fresh_installation(),
 			'aiPlatformUrl'       => SiteGenServiceRequest::get_base_url(),
 			'sentryInitDsnURL'    => 'https://cd5bd4c30b914e0d1d0f49413e600afa@o4506197201715200.ingest.us.sentry.io/4507383861805056',
+			'currentBrand'        => self::current_brand(),
 		);
 	}
 
@@ -75,5 +76,19 @@ class Runtime {
 
 		$coming_soon_service = container()->get( 'comingSoon' );
 		return $coming_soon_service->is_enabled();
+	}
+
+	/**
+	 * Get the current brand.
+	 *
+	 * @return array The configuration array of the current brand. If the specified brand is not found,
+	 *               returns the default brand configuration.
+	 */
+	public static function current_brand() {
+		$brands = Brands::get_brands();
+		$brand  = defined( 'NFD_ONBOARDING_PLUGIN_BRAND' ) ? NFD_ONBOARDING_PLUGIN_BRAND : 'bluehost';
+		return array_key_exists( $brand, $brands ) ?
+			$brands[ $brand ] :
+			Brands::get_default_brand();
 	}
 }

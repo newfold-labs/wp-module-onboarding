@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { useCallback, useState, useRef, useEffect } from '@wordpress/element';
-import { dispatch, select } from '@wordpress/data';
+import { dispatch, select, useSelect } from '@wordpress/data';
 import { nfdOnboardingStore } from '@/data/store';
 
 /**
@@ -16,6 +16,7 @@ import {
 	ACTION_INTAKE_PROMPT_SET,
 	ACTION_SITEGEN_SITE_GENERATION_TIME,
 	ACTION_ERROR_STATE_TRIGGERED,
+	ACTION_FORK_OPTION_SELECTED,
 } from '@/utils/analytics/hiive/constants';
 import { handshake, intake, startGeneration, streamSSE } from '@/utils/api/ai-platform';
 import { initializeEcommercePlugins } from '@/utils/api/wordpress';
@@ -54,6 +55,13 @@ const useChat = () => {
 	const discoveryDataRef = useRef( {} );
 	const retryCountRef = useRef( 0 );
 	const startTimeRef = useRef( null );
+
+	const { canMigrateSite, migrationFallbackUrl } = useSelect( ( selectFn ) => ( {
+		canMigrateSite: selectFn( nfdOnboardingStore ).canMigrateSite(),
+		migrationFallbackUrl: selectFn( nfdOnboardingStore ).getMigrationFallbackUrl(),
+	} ) );
+
+	const showMigration = canMigrateSite || migrationFallbackUrl;
 
 	const {
 		messages,
@@ -367,6 +375,28 @@ const useChat = () => {
 	}, [ resetMessages ] );
 
 	/**
+	 * Handle migration option selection.
+	 * If canMigrateSite is true, go to the migration view.
+	 * Otherwise, open the fallback URL in a new tab.
+	 */
+	const handleMigrate = useCallback( () => {
+		sendOnboardingEvent( new OnboardingEvent( ACTION_FORK_OPTION_SELECTED, 'MIGRATE' ) );
+
+		if ( canMigrateSite ) {
+			setMode( 'migration' );
+		} else if ( migrationFallbackUrl ) {
+			window.open( migrationFallbackUrl, '_blank' );
+		}
+	}, [ canMigrateSite, migrationFallbackUrl ] );
+
+	/**
+	 * Handle going back from migration view to prompt view.
+	 */
+	const handleMigrationBack = useCallback( () => {
+		setMode( 'prompt' );
+	}, [] );
+
+	/**
 	 * Run the intake agent. Shows understanding, then either asks a question
 	 * or starts discovery.
 	 */
@@ -524,10 +554,13 @@ const useChat = () => {
 		setChatInput,
 		isWaiting,
 		inputEnabled,
+		showMigration,
 		handlePromptSubmit,
 		handleChatSubmit,
 		handleRetry,
 		handleRestart,
+		handleMigrate,
+		handleMigrationBack,
 	};
 };
 
