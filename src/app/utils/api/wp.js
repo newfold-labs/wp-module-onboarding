@@ -17,6 +17,15 @@ export async function getWpSettings() {
 	);
 }
 
+export async function updateWpSettings( data ) {
+	return await resolve(
+		apiFetch( {
+			url: wpRestURL( 'settings' ),
+			method: 'POST',
+			data,
+		} ).then()
+	);
+}
 export const fireWpCron = () => {
 	apiFetch( {
 		url: `${ wpSiteUrl }/wp-cron.php`,
