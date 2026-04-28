@@ -176,5 +176,4 @@ class ReduxStateController {
 
 		return new \WP_REST_Response( $data, 200 );
 	}
-
 }
