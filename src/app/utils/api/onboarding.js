@@ -36,17 +36,6 @@ export const updateOnboardingSiteGenSlice = async ( data ) => {
 	);
 };
 
-export const updateOnboardingLogogenSlice = async ( data ) => {
-	return await resolve(
-		apiFetch( {
-			url: onboardingRestURL( 'redux-state/logogen-slice' ),
-			method: 'POST',
-			body: JSON.stringify( data ),
-		} ).then()
-	);
-};
-
-
 export const continuouslyFireWpCron = () => {
 	setInterval( () => {
 		fireWpCron();
