@@ -5,7 +5,7 @@ import { selectors as sitegenSelectors } from './slices/sitegen';
 const selectors = {
 	...runtimeSelectors,
 	...inputSelectors,
-	...sitegenSelectors
+	...sitegenSelectors,
 };
 
 export default selectors;

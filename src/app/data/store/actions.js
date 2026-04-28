@@ -5,7 +5,7 @@ import { actions as sitegenActions } from './slices/sitegen';
 export const actions = {
 	...runtimeActions,
 	...inputActions,
-	...sitegenActions
+	...sitegenActions,
 };
 
 export default actions;

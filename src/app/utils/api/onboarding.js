@@ -264,8 +264,6 @@ export async function getSiteGenPreviewSnapshot( content, slug, customStyles = n
 	return response;
 }
 
-
-
 /**
  * Report the published site.
  *
