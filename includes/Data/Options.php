@@ -68,8 +68,6 @@ final class Options {
 		'wc_queue_flush_rewrite_rules'  => 'woocommerce_queue_flush_rewrite_rules',
 		'bluehost_plugin_install_date'  => 'bluehost_plugin_install_date',
 		'state_input'                   => 'state_input',
-		'state_logogen'                 => 'state_logogen',
-		'state_blueprints'              => 'state_blueprints',
 		'sitegen_previews'              => 'sitegen_previews',
 		'site_info'                     => 'site_info',
 		'start_time'                    => 'start_time',

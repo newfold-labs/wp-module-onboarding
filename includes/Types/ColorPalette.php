@@ -59,7 +59,7 @@ class ColorPalette {
 		// Validate that all palette items are Color objects.
 		foreach ( $palette as $index => $color ) {
 			if ( ! $color instanceof Color ) {
-				throw new \InvalidArgumentException( "Palette item at index {$index} must be a Color object" );
+				throw new \InvalidArgumentException( sprintf( 'Palette item at index %d must be a Color object', (int) $index ) );
 			}
 		}
 	}
@@ -91,6 +91,7 @@ class ColorPalette {
 	 *
 	 * @param array $colors Array of Color objects.
 	 * @return ColorPalette
+	 * @throws \InvalidArgumentException When any item is not a Color object.
 	 */
 	public function add_colors( array $colors ): ColorPalette {
 		foreach ( $colors as $color ) {
@@ -193,6 +194,7 @@ class ColorPalette {
 	 *
 	 * @param array $data ColorPalette data array.
 	 * @return ColorPalette
+	 * @throws \InvalidArgumentException When array does not contain slug key.
 	 */
 	public static function from_array( array $data ): ColorPalette {
 		if ( ! isset( $data['slug'] ) ) {
@@ -209,4 +211,4 @@ class ColorPalette {
 
 		return $palette;
 	}
-} 
+}

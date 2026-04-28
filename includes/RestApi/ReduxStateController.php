@@ -65,38 +65,6 @@ class ReduxStateController {
 				),
 			)
 		);
-		\register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/logogen-slice',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_logogen_slice_state' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				),
-				array(
-					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => array( $this, 'update_logogen_slice_state' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				),
-			)
-		);
-		\register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/blueprints-slice',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_blueprints_slice_state' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				),
-				array(
-					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => array( $this, 'update_blueprints_slice_state' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				),
-			)
-		);
 	}
 
 
@@ -204,86 +172,6 @@ class ReduxStateController {
 
 		if ( ! empty( $data['discoveryData'] ) ) {
 			update_option( Options::get_option_name( 'sitegen_discovery_data' ), $data['discoveryData'] );
-		}
-
-		return new \WP_REST_Response( $data, 200 );
-	}
-
-	/**
-	 * Get the logogen slice state.
-	 *
-	 * @return \WP_REST_Response
-	 */
-	public function get_logogen_slice_state() {
-		$data = \get_option( Options::get_option_name( 'state_logogen' ), false );
-		if ( ! $data ) {
-			$data = array();
-		}
-
-		return new \WP_REST_Response( $data, 200 );
-	}
-
-	/**
-	 * Update the logogen slice state.
-	 *
-	 * @param \WP_REST_Request $request The request object.
-	 * @return \WP_REST_Response
-	 */
-	public function update_logogen_slice_state( \WP_REST_Request $request ): \WP_REST_Response {
-		$data = json_decode( $request->get_body(), true );
-		if ( ! $data ) {
-			return new \WP_REST_Response(
-				'Invalid data',
-				400
-			);
-		}
-
-		$result = ReduxStateService::update( 'logogen', $data );
-		if ( ! $result ) {
-			return new \WP_REST_Response(
-				'Failed to update logogen slice state',
-				500
-			);
-		}
-
-		return new \WP_REST_Response( $data, 200 );
-	}
-
-	/**
-	 * Get the blueprints slice state.
-	 *
-	 * @return \WP_REST_Response
-	 */
-	public function get_blueprints_slice_state() {
-		$data = \get_option( Options::get_option_name( 'state_blueprints' ), false );
-		if ( ! $data ) {
-			$data = array();
-		}
-
-		return new \WP_REST_Response( $data, 200 );
-	}
-
-	/**
-	 * Update the blueprints slice state.
-	 *
-	 * @param \WP_REST_Request $request The request object.
-	 * @return \WP_REST_Response
-	 */
-	public function update_blueprints_slice_state( \WP_REST_Request $request ): \WP_REST_Response {
-		$data = json_decode( $request->get_body(), true );
-		if ( ! $data ) {
-			return new \WP_REST_Response(
-				'Invalid data',
-				400
-			);
-		}
-
-		$result = ReduxStateService::update( 'blueprints', $data );
-		if ( ! $result ) {
-			return new \WP_REST_Response(
-				'Failed to update blueprints slice state',
-				500
-			);
 		}
 
 		return new \WP_REST_Response( $data, 200 );

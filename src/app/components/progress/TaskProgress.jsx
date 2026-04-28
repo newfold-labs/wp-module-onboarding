@@ -25,11 +25,11 @@ const STATUS_CLASS = {
 /**
  * TaskProgress — a collapsible panel showing task progress.
  *
- * @param {Object}  props                 - The component props.
- * @param {string}  props.title           - Title shown when expanded.
- * @param {Array}   props.tasks           - Array of { key, label, status, result } objects.
- * @param {boolean}                       props.defaultExpanded - Whether to start expanded (default: false).
- * @param {'discovery'|'generation'} props.variant          - Render variant (default: 'discovery').
+ * @param {Object}                   props                 - The component props.
+ * @param {string}                   props.title           - Title shown when expanded.
+ * @param {Array}                    props.tasks           - Array of { key, label, status, result } objects.
+ * @param {boolean}                  props.defaultExpanded - Whether to start expanded (default: false).
+ * @param {'discovery'|'generation'} props.variant         - Render variant (default: 'discovery').
  * @return {JSX.Element} The TaskProgress component.
  */
 const TaskProgress = ( { title, tasks = [], defaultExpanded = false, variant = 'discovery' } ) => {
