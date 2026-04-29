@@ -25,7 +25,6 @@ const BrandLoader = ( { width = '120px', height = '120px', alt = 'Loading animat
 	if ( ! brandName ) {
 		return null;
 	}
-console.log( 'BrandLoader brandName:', brandName );
 	const normalizedBrand = brandName.toLowerCase().replace( / /g, '-' );
 
 	// Map brand names to their imported logos
