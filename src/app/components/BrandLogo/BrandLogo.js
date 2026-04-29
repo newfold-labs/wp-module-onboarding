@@ -36,7 +36,6 @@ const BrandLogo = () => {
 		},
 		[]
 	);
-console.log( 'BrandLoader brandName:', brandName, brandId );
 
 	if ( ! brandId ) {
 		return null;
