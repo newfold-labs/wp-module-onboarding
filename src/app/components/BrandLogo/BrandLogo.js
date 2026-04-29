@@ -5,6 +5,7 @@ import hostgatorLogo from '../../../Brands/hostgator/logo.svg';
 import crazyDomainsLogo from '../../../Brands/crazy-domains/logo.svg';
 import networksolutionsLogo from '../../../Brands/networksolutions/logo.svg';
 import wordpressLogo from '../../../Brands/wordpress/logo.svg';
+import vodienLogo from '../../../Brands/vodien/logo.svg';
 
 // Map brand names to their imported logos
 const brandLogoMap = {
@@ -14,6 +15,7 @@ const brandLogoMap = {
 	'hostgator-us': hostgatorLogo,
 	'hostgator-br': hostgatorLogo,
 	'crazy-domains': crazyDomainsLogo,
+	vodien: vodienLogo,
 	webcom: networksolutionsLogo,
 	wordpress: wordpressLogo,
 };
@@ -34,6 +36,7 @@ const BrandLogo = () => {
 		},
 		[]
 	);
+console.log( 'BrandLoader brandName:', brandName, brandId );
 
 	if ( ! brandId ) {
 		return null;
