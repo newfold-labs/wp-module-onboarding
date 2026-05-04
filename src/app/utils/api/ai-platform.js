@@ -81,9 +81,10 @@ export async function intake( siteId, prompt, conversation = null, signal ) {
  * @param {string}      prompt       The user's site prompt.
  * @param {AbortSignal} signal       AbortController signal for cancellation.
  * @param {Array|null}  conversation Optional conversation history [{role, content}].
+ * @param {string|null} sitekit      Optional sitekit slug to force-select (dev only).
  * @return {Promise<Response>} Raw fetch Response with readable SSE body.
  */
-export async function startGeneration( siteId, prompt, signal, conversation = null ) {
+export async function startGeneration( siteId, prompt, signal, conversation = null, sitekit = null ) {
 	const body = {
 		site_id: siteId,
 		site_prompt: prompt,
@@ -91,6 +92,10 @@ export async function startGeneration( siteId, prompt, signal, conversation = nu
 
 	if ( conversation && conversation.length ) {
 		body.conversation = conversation;
+	}
+
+	if ( sitekit ) {
+		body.sitekit = sitekit;
 	}
 
 	const response = await fetch( `${ SITEGEN_URL }/generate`, {
