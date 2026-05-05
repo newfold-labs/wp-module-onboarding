@@ -18,7 +18,15 @@ import PromptCard from '@/components/prompt/PromptCard.jsx';
 import { nfdOnboardingStore } from '@/data/store';
 import getGreeting from '@/utils/helpers/getGreeting';
 
-const PromptView = ( { prompt, setPrompt, onSubmit, onMigrate, showMigration = false } ) => {
+const PromptView = ( {
+	prompt,
+	setPrompt,
+	onSubmit,
+	onMigrate,
+	showMigration = false,
+	devSitekitSlug = '',
+	setDevSitekitSlug,
+} ) => {
 	const displayName = useSelect(
 		( select ) => select( nfdOnboardingStore ).getCurrentUserDisplayName(),
 		[]
@@ -49,6 +57,24 @@ const PromptView = ( { prompt, setPrompt, onSubmit, onMigrate, showMigration = f
 						onSubmit={ onSubmit }
 						isSubmitting={ false }
 					/>
+					{ process.env.NODE_ENV === 'development' && (
+						<div className="nfd-mt-3 nfd-flex nfd-items-center nfd-gap-2 nfd-px-1">
+							<label
+								htmlFor="nfd-dev-sitekit-slug"
+								className="nfd-text-xs nfd-font-medium nfd-text-[rgb(95,99,104)] nfd-whitespace-nowrap"
+							>
+								{ __( 'Dev — sitekit slug:', 'wp-module-onboarding' ) }
+							</label>
+							<input
+								id="nfd-dev-sitekit-slug"
+								type="text"
+								value={ devSitekitSlug }
+								onChange={ ( e ) => setDevSitekitSlug( e.target.value ) }
+								placeholder={ __( 'leave empty for AI selection', 'wp-module-onboarding' ) }
+								className="nfd-flex-1 nfd-text-xs nfd-border nfd-border-solid nfd-border-[rgb(218,220,224)] nfd-rounded nfd-px-2 nfd-py-1 nfd-bg-transparent nfd-text-[rgb(31,31,31)] focus:nfd-outline-none focus:nfd-border-[rgb(23,108,223)]"
+							/>
+						</div>
+					) }
 				</div>
 
 				{ showMigration && (

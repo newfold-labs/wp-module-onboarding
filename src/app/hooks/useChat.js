@@ -47,6 +47,8 @@ const useChat = () => {
 	const [ chatInput, setChatInput ] = useState( '' );
 	const [ isWaiting, setIsWaiting ] = useState( false );
 	const [ inputEnabled, setInputEnabled ] = useState( false );
+	const [ devSitekitSlug, setDevSitekitSlugState ] = useState( '' );
+	const devSitekitSlugRef = useRef( '' );
 	const siteIdRef = useRef( null );
 	const abortRef = useRef( null );
 	const originalPromptRef = useRef( '' );
@@ -75,6 +77,11 @@ const useChat = () => {
 		finishAllTasks,
 		resetMessages,
 	} = useMessages();
+
+	const setDevSitekitSlug = useCallback( ( slug ) => {
+		devSitekitSlugRef.current = slug;
+		setDevSitekitSlugState( slug );
+	}, [] );
 
 	// Abort any in-flight stream on unmount.
 	useEffect( () => {
@@ -110,11 +117,16 @@ const useChat = () => {
 
 			try {
 				const validConversation = conversationRef.current.filter( ( msg ) => msg.content );
+				const devSitekit =
+					process.env.NODE_ENV === 'development' && devSitekitSlugRef.current
+						? devSitekitSlugRef.current.trim() || null
+						: null;
 				const response = await startGeneration(
 					siteIdRef.current,
 					originalPromptRef.current,
 					controller.signal,
-					validConversation.length ? validConversation : null
+					validConversation.length ? validConversation : null,
+					devSitekit
 				);
 
 				await streamSSE( response, ( { event, data } ) => {
@@ -555,6 +567,8 @@ const useChat = () => {
 		isWaiting,
 		inputEnabled,
 		showMigration,
+		devSitekitSlug,
+		setDevSitekitSlug,
 		handlePromptSubmit,
 		handleChatSubmit,
 		handleRetry,

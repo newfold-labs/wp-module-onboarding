@@ -38,6 +38,8 @@ const App = () => {
 		isWaiting,
 		inputEnabled,
 		showMigration,
+		devSitekitSlug,
+		setDevSitekitSlug,
 		handlePromptSubmit,
 		handleChatSubmit,
 		handleRetry,
@@ -72,6 +74,8 @@ const App = () => {
 							onSubmit={ handlePromptSubmit }
 							onMigrate={ handleMigrate }
 							showMigration={ showMigration }
+							devSitekitSlug={ devSitekitSlug }
+							setDevSitekitSlug={ setDevSitekitSlug }
 						/>
 					) }
 					{ mode === 'chat' && (
