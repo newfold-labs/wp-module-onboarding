@@ -90,7 +90,7 @@ class PostTypeService {
 			'public'             => true,
 			'has_archive'        => false,
 			'show_in_rest'       => true,
-			'supports'           => array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
+			'supports'           => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'excerpt' ),
 			'menu_icon'          => 'dashicons-businessman',
 			'rewrite'            => array( 'slug' => 'services' ),
 			'publicly_queryable' => true,
