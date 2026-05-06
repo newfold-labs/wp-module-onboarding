@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5eb8b941f86ea7cfebc948b8a08d31e9",
+    "content-hash": "3602fb3da807af3bf693ec1d973fb49c",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -920,16 +920,16 @@
         },
         {
             "name": "newfold-labs/wp-module-migration",
-            "version": "1.7.1",
+            "version": "1.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-migration.git",
-                "reference": "c8a3ed9a6cd81568f5f3d6a7da1ea085755902a6"
+                "reference": "bb84ce6630110301efe3477775307174c620bcb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-migration/zipball/c8a3ed9a6cd81568f5f3d6a7da1ea085755902a6",
-                "reference": "c8a3ed9a6cd81568f5f3d6a7da1ea085755902a6",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-migration/zipball/bb84ce6630110301efe3477775307174c620bcb5",
+                "reference": "bb84ce6630110301efe3477775307174c620bcb5",
                 "shasum": ""
             },
             "require": {
@@ -937,11 +937,11 @@
                 "newfold-labs/wp-module-loader": "^1.1.0"
             },
             "require-dev": {
-                "johnpbloch/wordpress": "6.9.1",
+                "johnpbloch/wordpress": "6.9.4",
                 "lucatume/wp-browser": "*",
                 "newfold-labs/wp-php-standards": "^1.2",
                 "phpunit/phpcov": "*",
-                "wp-cli/i18n-command": "^2.6.6"
+                "wp-cli/i18n-command": "^2.7.0"
             },
             "type": "library",
             "autoload": {
@@ -971,13 +971,10 @@
                     "@i18n-php"
                 ],
                 "i18n-json": [
-                    "rm -f languages/*.json && vendor/bin/wp i18n make-json ./languages --no-purge --pretty-print"
-                ],
-                "i18n-mo": [
-                    "vendor/bin/wp i18n make-mo ./languages"
+                    "rm -f languages/*.json && vendor/bin/wp i18n make-json ./languages --pretty-print"
                 ],
                 "i18n-php": [
-                    "vendor/bin/wp i18n make-php ./languages"
+                    "vendor/bin/wp i18n make-php ./languages --pretty-print"
                 ],
                 "i18n-po": [
                     "vendor/bin/wp i18n update-po ./languages/wp-module-migration.pot ./languages"
@@ -1005,10 +1002,10 @@
             ],
             "description": "Initiates the migration process",
             "support": {
-                "source": "https://github.com/newfold-labs/wp-module-migration/tree/1.7.1",
+                "source": "https://github.com/newfold-labs/wp-module-migration/tree/1.7.2",
                 "issues": "https://github.com/newfold-labs/wp-module-migration/issues"
             },
-            "time": "2026-02-11T07:18:57+00:00"
+            "time": "2026-05-05T14:11:58+00:00"
         },
         {
             "name": "newfold-labs/wp-module-onboarding-data",
@@ -1503,16 +1500,16 @@
         },
         {
             "name": "wp-cli/wp-config-transformer",
-            "version": "v1.4.5",
+            "version": "v1.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-config-transformer.git",
-                "reference": "8f5e66c717a7371dfb6559086880bee528aee858"
+                "reference": "1ef18784990b85b35202c2d68dbbc4a8fe6615b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-config-transformer/zipball/8f5e66c717a7371dfb6559086880bee528aee858",
-                "reference": "8f5e66c717a7371dfb6559086880bee528aee858",
+                "url": "https://api.github.com/repos/wp-cli/wp-config-transformer/zipball/1ef18784990b85b35202c2d68dbbc4a8fe6615b6",
+                "reference": "1ef18784990b85b35202c2d68dbbc4a8fe6615b6",
                 "shasum": ""
             },
             "require": {
@@ -1546,9 +1543,9 @@
             "homepage": "https://github.com/wp-cli/wp-config-transformer",
             "support": {
                 "issues": "https://github.com/wp-cli/wp-config-transformer/issues",
-                "source": "https://github.com/wp-cli/wp-config-transformer/tree/v1.4.5"
+                "source": "https://github.com/wp-cli/wp-config-transformer/tree/v1.4.6"
             },
-            "time": "2026-03-20T07:28:10+00:00"
+            "time": "2026-04-10T07:32:03+00:00"
         },
         {
             "name": "wp-forge/collection",
