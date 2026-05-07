@@ -14,7 +14,7 @@
 	},
 	"devDependencies": {
 		"@tailwindcss/forms": "^0.5.11",
-		"@wordpress/base-styles": "^6.17.0",
+		"@wordpress/base-styles": "^6.20.0",
 		"@wordpress/env": "^11.3.0",
 		"@wordpress/icons": "^12.0.0",
 		"@wordpress/scripts": "^31.8.0",
