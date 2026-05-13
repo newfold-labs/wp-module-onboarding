@@ -441,39 +441,59 @@ final class WP_Admin {
 	/**
 	 * Add SVG support to KSES.
 	 *
-	 * @param array $tags The tags to add support for.
+	 * @param array  $tags The tags to add support for.
 	 * @param string $context The context to add support for.
 	 * @return array The tags with support for SVG.
 	 */
 	public static function add_svg_support_to_kses( $tags, $context ): array {
-		
+
 		if ( 'post' !== $context ) {
 			return $tags;
 		}
-	
-		$tags['svg'] = array_merge(
+
+		$tags['svg']    = array_merge(
 			isset( $tags['svg'] ) ? $tags['svg'] : array(),
 			array(
-				'xmlns'       => true,
-				'width'       => true,
-				'height'      => true,
-				'viewbox'     => true,
-				'fill'        => true,
-				'stroke'      => true,
-				'stroke-width' => true,
-				'stroke-linecap' => true,
+				'xmlns'           => true,
+				'width'           => true,
+				'height'          => true,
+				'viewbox'         => true,
+				'fill'            => true,
+				'stroke'          => true,
+				'stroke-width'    => true,
+				'stroke-linecap'  => true,
 				'stroke-linejoin' => true,
-				'class'       => true,
-				'style'       => true,
-				'role'        => true,
-				'aria-hidden' => true,
-				'data-*'      => true,
+				'class'           => true,
+				'style'           => true,
+				'role'            => true,
+				'aria-hidden'     => true,
+				'data-*'          => true,
 			)
 		);
-		$tags['path']   = array( 'd' => true, 'fill' => true, 'stroke' => true, 'class' => true, 'style' => true );
-		$tags['rect']   = array( 'x' => true, 'y' => true, 'width' => true, 'height' => true, 'rx' => true, 'ry' => true, 'fill' => true, 'stroke' => true );
-		$tags['circle'] = array( 'cx' => true, 'cy' => true, 'r' => true, 'fill' => true, 'stroke' => true );
+		$tags['path']   = array(
+			'd'      => true,
+			'fill'   => true,
+			'stroke' => true,
+			'class'  => true,
+			'style'  => true,
+		);
+		$tags['rect']   = array(
+			'x'      => true,
+			'y'      => true,
+			'width'  => true,
+			'height' => true,
+			'rx'     => true,
+			'ry'     => true,
+			'fill'   => true,
+			'stroke' => true,
+		);
+		$tags['circle'] = array(
+			'cx'     => true,
+			'cy'     => true,
+			'r'      => true,
+			'fill'   => true,
+			'stroke' => true,
+		);
 		return $tags;
 	}
-	
 } // END /NewfoldLabs/WP/Module/Onboarding/Admin()
