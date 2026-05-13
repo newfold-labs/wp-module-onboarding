@@ -60,7 +60,7 @@
     "php": ">=7.4",
     "wp-phpunit/wp-phpunit": "^6.9.4",
     "yoast/phpunit-polyfills": "^4.0.0",
-    "newfold-labs/wp-php-standards": "^1.2.5",
+    "newfold-labs/wp-php-standards": "^1.2.6",
     "wp-cli/i18n-command": "^2.7.0",
     "johnpbloch/wordpress": "6.9.4",
     "lucatume/wp-browser": "*",
