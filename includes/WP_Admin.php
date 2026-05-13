@@ -450,7 +450,7 @@ final class WP_Admin {
 		if ( 'post' !== $context ) {
 			return $tags;
 		}
-		// Esempio minimale per icone tipo Lucide (estendi se ti servono altri tag).
+	
 		$tags['svg'] = array_merge(
 			isset( $tags['svg'] ) ? $tags['svg'] : array(),
 			array(
