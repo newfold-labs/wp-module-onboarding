@@ -1,5 +1,30 @@
 <?php
 
+// Eager-load Onboarding\Data\* before any autoloader can resolve them.
+//
+// wp-module-onboarding-data is still pulled in transitively by brand plugins
+// (e.g. wp-plugin-bluehost) and ships classes under the same
+// NewfoldLabs\WP\Module\Onboarding\Data\ namespace. Composer's PSR-4 routing
+// picks the longest matching prefix, so onboarding-data's `Data\` prefix
+// shadows our `Onboarding\` prefix for everything in this folder. Requiring
+// our files here binds the class symbols first; PHP then skips autoload for
+// them. Remove once brand plugins drop the onboarding-data dependency.
+foreach (
+	array(
+		'Brands',
+		'Plugins',
+		'Languages',
+		'Options',
+		'Config',
+		'Runtime',
+		'Events',
+		'Bluehost',
+	) as $nfd_onboarding_data_class
+) {
+	require_once __DIR__ . '/includes/Data/' . $nfd_onboarding_data_class . '.php';
+}
+unset( $nfd_onboarding_data_class );
+
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Onboarding\Application;
 use NewfoldLabs\WP\Module\Onboarding\ModuleController;
