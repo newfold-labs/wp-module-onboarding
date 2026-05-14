@@ -4,6 +4,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager;
 use NewfoldLabs\WP\Module\Onboarding\Tasks\ImageSideloadTask;
+use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 
 /**
  * SiteGenImageService for the onboarding module.
@@ -18,6 +19,13 @@ class SiteGenImageService {
 	 * @var string
 	 */
 	const CRON_HOOK = 'nfd_process_image_sideload_queue';
+
+	/**
+	 * WP-Cron hook name for the daily re-scan of onboarding pages.
+	 *
+	 * @var string
+	 */
+	const DAILY_CRON_HOOK = 'nfd_module_onboarding_daily_image_sync';
 
 	/**
 	 * Process homepage images immediately in background (non-blocking).
@@ -55,6 +63,30 @@ class SiteGenImageService {
 		self::schedule_content_images();
 
 		self::schedule_cpt_images();
+	}
+
+	/**
+	 * Schedule the daily images importer.
+	 *
+	 * @return void
+	 */
+	public static function schedule_daily_images_importer(): void {
+		if ( ! wp_next_scheduled( self::DAILY_CRON_HOOK ) ) {
+			wp_schedule_event( time(), 'daily', self::DAILY_CRON_HOOK );
+		}
+	}
+
+	/**
+	 * Daily re-scan of all onboarding-generated pages for external images.
+	 *
+	 * Picks up images that were replaced after onboarding completed and queues
+	 * them for sideloading. Tasks with unchanged URLs are deduplicated by the
+	 * task manager, so already-processed images are not re-uploaded.
+	 *
+	 * @return void
+	 */
+	public static function daily_sync(): void {
+		self::schedule_content_images();
 	}
 
 	/**
@@ -241,6 +273,9 @@ class SiteGenImageService {
 	 * @return bool True on success, false on failure.
 	 */
 	public static function update_post_content_with_new_image_urls( $post_id, $url_mapping ) {
+
+		\add_filter( 'wp_kses_allowed_html', array( WP_Admin::class, 'add_svg_support_to_kses' ), 10, 2 );
+
 		// Get the current post content
 		$post = get_post( $post_id );
 		if ( ! $post ) {
@@ -286,12 +321,16 @@ class SiteGenImageService {
 				)
 			);
 
+			\remove_filter( 'wp_kses_allowed_html', array( WP_Admin::class, 'add_svg_support_to_kses' ), 10 );
+
 			if ( is_wp_error( $update_result ) ) {
 				return false;
 			}
 
 			return true;
 		}
+
+		\remove_filter( 'wp_kses_allowed_html', array( WP_Admin::class, 'add_svg_support_to_kses' ), 10 );
 
 		return true; // No changes needed
 	}
