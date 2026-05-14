@@ -11,20 +11,40 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Bluehost;
  */
 class BluehostDataWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 
+	/**
+	 * Get brands returns known brands.
+	 *
+	 * @return void
+	 */
 	public function test_get_brands_returns_known_brands() {
 		$this->assertSame( array( 'bluehost', 'bluehost-india' ), Bluehost::get_brands() );
 	}
 
+	/**
+	 * Get dashboard redirect params.
+	 *
+	 * @return void
+	 */
 	public function test_get_dashboard_redirect_params() {
 		$this->assertSame( array( 'referrer' => 'nfd-onboarding' ), Bluehost::get_dashboard_redirect_params() );
 	}
 
+	/**
+	 * Get plugin dashboard page contains admin php.
+	 *
+	 * @return void
+	 */
 	public function test_get_plugin_dashboard_page_contains_admin_php() {
 		$page = Bluehost::get_plugin_dashboard_page();
 		$this->assertIsString( $page );
 		$this->assertStringContainsString( 'admin.php?page=bluehost', $page );
 	}
 
+	/**
+	 * Get data aggregates all keys.
+	 *
+	 * @return void
+	 */
 	public function test_get_data_aggregates_all_keys() {
 		$data = Bluehost::get_data();
 		$this->assertIsArray( $data );
@@ -34,6 +54,11 @@ class BluehostDataWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 		$this->assertSame( Bluehost::get_brands(), $data['brands'] );
 	}
 
+	/**
+	 * Get current brand defaults to bluehost when constant missing.
+	 *
+	 * @return void
+	 */
 	public function test_get_current_brand_defaults_to_bluehost_when_constant_missing() {
 		if ( defined( 'NFD_ONBOARDING_BLUEHOST_BRAND' ) ) {
 			$this->markTestSkipped( 'NFD_ONBOARDING_BLUEHOST_BRAND already defined; cannot exercise default path.' );

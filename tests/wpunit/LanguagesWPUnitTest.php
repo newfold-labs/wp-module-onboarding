@@ -11,19 +11,39 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Languages;
  */
 class LanguagesWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 
+	/**
+	 * Get default language returns locale.
+	 *
+	 * @return void
+	 */
 	public function test_get_default_language_returns_locale() {
 		$this->assertSame( \get_locale(), Languages::get_default_language() );
 	}
 
+	/**
+	 * Is default language true for current locale.
+	 *
+	 * @return void
+	 */
 	public function test_is_default_language_true_for_current_locale() {
 		$this->assertTrue( Languages::is_default_language( \get_locale() ) );
 	}
 
+	/**
+	 * Is default language false for other locale.
+	 *
+	 * @return void
+	 */
 	public function test_is_default_language_false_for_other_locale() {
 		$other = 'en_US' === \get_locale() ? 'fr_FR' : 'en_US';
 		$this->assertFalse( Languages::is_default_language( $other ) );
 	}
 
+	/**
+	 * Get all languages returns standardized shape.
+	 *
+	 * @return void
+	 */
 	public function test_get_all_languages_returns_standardized_shape() {
 		\add_filter(
 			'newfold/onboarding/filter/languages',
@@ -61,6 +81,11 @@ class LanguagesWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 		$this->assertSame( $sorted, $keys );
 	}
 
+	/**
+	 * Languages filter is applied.
+	 *
+	 * @return void
+	 */
 	public function test_languages_filter_is_applied() {
 		\add_filter(
 			'newfold/onboarding/filter/languages',
