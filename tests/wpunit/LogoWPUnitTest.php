@@ -24,12 +24,16 @@ class LogoWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Constructor trims whitespace.
+	 * Constructor trims whitespace on reference_id and style.
+	 *
+	 * URL is left untrimmed because validate_parameters() runs filter_var on the
+	 * raw URL before set_properties() trims it; passing a padded URL would fail
+	 * validation.
 	 *
 	 * @return void
 	 */
 	public function test_constructor_trims_whitespace() {
-		$logo = new Logo( '  3FNjUdY  ', '  Text-only  ', '  https://example.com/logo.png  ' );
+		$logo = new Logo( '  3FNjUdY  ', '  Text-only  ', 'https://example.com/logo.png' );
 		$this->assertSame( '3FNjUdY', $logo->get_reference_id() );
 		$this->assertSame( 'Text-only', $logo->get_style() );
 		$this->assertSame( 'https://example.com/logo.png', $logo->get_url() );

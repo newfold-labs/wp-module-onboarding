@@ -93,11 +93,14 @@ class OptionsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Get origin option name returns false for unknown key.
+	 * Get origin option name returns empty string for unknown key.
+	 *
+	 * The source declares a `: string` return type and falls back to `false`,
+	 * which PHP coerces to '' under non-strict types.
 	 *
 	 * @return void
 	 */
-	public function test_get_origin_option_name_returns_false_for_unknown_key() {
-		$this->assertFalse( Options::get_origin_option_name( 'does_not_exist' ) );
+	public function test_get_origin_option_name_returns_empty_for_unknown_key() {
+		$this->assertSame( '', Options::get_origin_option_name( 'does_not_exist' ) );
 	}
 }

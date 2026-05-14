@@ -49,10 +49,6 @@ final class Application {
 			$defaults
 		);
 
-		if ( is_readable( NFD_ONBOARDING_DIR . '/vendor/autoload.php' ) ) {
-			require_once NFD_ONBOARDING_DIR . '/vendor/autoload.php';
-		}
-
 		\do_action( 'nfd_module_onboarding_pre_init' );
 
 		// Register custom post types — must run for all users, before permission checks.

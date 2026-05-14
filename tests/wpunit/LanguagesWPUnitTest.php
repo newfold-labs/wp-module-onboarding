@@ -12,6 +12,26 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Languages;
 class LanguagesWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 
 	/**
+	 * Short-circuit translations_api so wp_get_available_translations() never hits the network.
+	 *
+	 * @return void
+	 */
+	public function setUp(): void {
+		parent::setUp();
+		\add_filter(
+			'translations_api',
+			static function ( $result, $type ) {
+				if ( 'core' === $type ) {
+					return array( 'translations' => array() );
+				}
+				return $result;
+			},
+			10,
+			2
+		);
+	}
+
+	/**
 	 * Get default language returns locale.
 	 *
 	 * @return void
@@ -45,13 +65,6 @@ class LanguagesWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	 * @return void
 	 */
 	public function test_get_all_languages_returns_standardized_shape() {
-		\add_filter(
-			'newfold/onboarding/filter/languages',
-			function ( $languages ) {
-				return $languages;
-			}
-		);
-
 		$languages = Languages::get_all_languages();
 		$this->assertIsArray( $languages );
 		$this->assertNotEmpty( $languages );
@@ -68,14 +81,14 @@ class LanguagesWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 		// Exactly one language is flagged as default.
 		$defaults = array_filter(
 			$languages,
-			function ( $language ) {
+			static function ( $language ) {
 				return ! empty( $language['is_default'] );
 			}
 		);
 		$this->assertCount( 1, $defaults );
 
 		// Sorted alphabetically by locale.
-		$keys = array_keys( $languages );
+		$keys   = array_keys( $languages );
 		$sorted = $keys;
 		sort( $sorted );
 		$this->assertSame( $sorted, $keys );
@@ -89,7 +102,7 @@ class LanguagesWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	public function test_languages_filter_is_applied() {
 		\add_filter(
 			'newfold/onboarding/filter/languages',
-			function ( $languages ) {
+			static function ( $languages ) {
 				$languages['xx_TEST'] = array(
 					'locale'      => 'xx_TEST',
 					'name'        => 'Test',
