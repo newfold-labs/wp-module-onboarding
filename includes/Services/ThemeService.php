@@ -1,13 +1,20 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
+use NewfoldLabs\WP\Module\Installer\Data\Themes as ThemeInstallerData;
 use NewfoldLabs\WP\Module\Installer\Services\ThemeInstaller;
-use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 
 /**
  * Class for providing theme related services.
  */
 class ThemeService {
+	/**
+	 * The Bluehost blueprint theme slug used by the installer module.
+	 *
+	 * @var string
+	 */
+	private const BLUEPRINT_THEME_SLUG = 'nfd_slug_bluehost_blueprint';
+
 	/**
 	 * Number of retry attempts made.
 	 *
@@ -42,21 +49,24 @@ class ThemeService {
 	 * @return bool True if the installation was successful, false otherwise.
 	 */
 	public static function initialize(): bool {
-		$bluehost_blueprint_theme = Themes::get_bluehost_blueprint_theme();
+		$installer_data = ThemeInstallerData::get()['nfd_slugs'][ self::BLUEPRINT_THEME_SLUG ] ?? null;
+		if ( ! $installer_data ) {
+			return false;
+		}
 
 		// If the theme is NOT installed OR activated...
-		if ( ! ThemeInstaller::exists( $bluehost_blueprint_theme['slug'], $bluehost_blueprint_theme['activate'] ) ) {
+		if ( ! ThemeInstaller::exists( self::BLUEPRINT_THEME_SLUG, true ) ) {
 			// If the theme is installed but not activated. Activate it.
-			if ( ThemeInstaller::is_theme_installed( $bluehost_blueprint_theme['installer_data']['stylesheet'] ) ) {
-				\switch_theme( $bluehost_blueprint_theme['installer_data']['stylesheet'] );
+			if ( ThemeInstaller::is_theme_installed( $installer_data['stylesheet'] ) ) {
+				\switch_theme( $installer_data['stylesheet'] );
 				return true;
 			}
 
 			// Install and activate the theme.
 			$installer_response = ThemeInstaller::install_from_zip(
-				$bluehost_blueprint_theme['installer_data']['url'],
+				$installer_data['url'],
 				true,
-				$bluehost_blueprint_theme['installer_data']['stylesheet']
+				$installer_data['stylesheet']
 			);
 
 			// If the installation fails, retry.
