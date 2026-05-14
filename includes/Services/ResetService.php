@@ -117,6 +117,7 @@ class ResetService {
 	private static function unschedule_cron_jobs(): void {
 		wp_unschedule_hook( MediaService::CRON_HOOK );
 		wp_unschedule_hook( SiteGenImageService::CRON_HOOK );
+		wp_unschedule_hook( SiteGenImageService::DAILY_CRON_HOOK );
 	}
 
 	/**

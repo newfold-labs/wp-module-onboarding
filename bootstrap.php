@@ -33,7 +33,6 @@ foreach (
 unset( $nfd_onboarding_data_class );
 
 use NewfoldLabs\WP\ModuleLoader\Container;
-use NewfoldLabs\WP\Module\Onboarding\Application;
 use NewfoldLabs\WP\Module\Onboarding\ModuleController;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Scan;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Safe_Mode;
@@ -41,6 +40,7 @@ use NewfoldLabs\WP\Module\Onboarding\Compatibility\Status;
 use NewfoldLabs\WP\Module\Onboarding\TaskManagers\ImageSideloadTaskManager;
 use NewfoldLabs\WP\Module\Onboarding\Services\MediaService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteGenImageService;
+use NewfoldLabs\WP\Module\Onboarding\Application;
 
 use function NewfoldLabs\WP\ModuleLoader\register;
 
@@ -115,11 +115,14 @@ if ( is_callable( 'add_action' ) ) {
 			delete_transient( 'nfd_site_capabilities' );
 		}
 	);
-
 	// Queue content image sideloading for onboarding-generated pages when onboarding completes.
 	add_action( 'newfold/onboarding/completed', array( SiteGenImageService::class, 'schedule_after_onboarding' ) );
 	// Add action to process image sideload queue for onboarding-generated pages
 	add_action( SiteGenImageService::CRON_HOOK, array( ImageSideloadTaskManager::class, 'process_queue' ) );
 	// Process a batch of pending images on each cron run for onboarding-generated CPTs.
 	add_action( MediaService::CRON_HOOK, array( MediaService::class, 'sideload_pending_images' ) );
+
+	// Daily re-scan of onboarding pages to sideload images replaced after onboarding.
+	add_action( SiteGenImageService::DAILY_CRON_HOOK, array( SiteGenImageService::class, 'daily_sync' ) );
+	add_action( 'init', array( SiteGenImageService::class, 'schedule_daily_images_importer' ) );
 }
