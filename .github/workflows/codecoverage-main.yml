@@ -24,6 +24,7 @@ jobs:
         permissions:
           contents: write      # Required for git-auto-commit-action to push coverage output to gh-pages with github.token.
           pull-requests: write # Required for mshick/add-pr-comment to post coverage comments on pull requests.
+        timeout-minutes: 90
 
         services:
             mysql:

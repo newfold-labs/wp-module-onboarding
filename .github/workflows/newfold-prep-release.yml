@@ -25,6 +25,7 @@ jobs:
     permissions:
       contents: write      # Required for the reusable workflow to push the release branch and version-bump commits with GITHUB_TOKEN.
       pull-requests: write # Required for the reusable workflow to create the draft release pull request with gh.
+    timeout-minutes: 30
     with:
       module-repo: ${{ github.repository }}
       module-branch: 'trunk'

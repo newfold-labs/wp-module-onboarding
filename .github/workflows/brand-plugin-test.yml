@@ -21,6 +21,7 @@ jobs:
     name: Setup
     runs-on: ubuntu-latest
     permissions: {} # No checkout or GitHub API calls; only derives the branch name from the event.
+    timeout-minutes: 30
     outputs:
       branch: ${{ steps.extract_branch.outputs.branch }}
     steps:
@@ -35,6 +36,7 @@ jobs:
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
     permissions:
       contents: read # Required for reusable module-plugin-test workflow to check out the plugin and module repositories.
+    timeout-minutes: 30
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
@@ -47,6 +49,7 @@ jobs:
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
     permissions:
       contents: read # Required for reusable module-plugin-test workflow to check out the plugin and module repositories.
+    timeout-minutes: 30
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
@@ -59,6 +62,7 @@ jobs:
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
     permissions:
       contents: read # Required for reusable module-plugin-test workflow to check out the plugin and module repositories.
+    timeout-minutes: 30
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}

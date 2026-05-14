@@ -17,6 +17,7 @@ jobs:
     uses: newfold-labs/workflows/.github/workflows/i18n-crowdin-download.yml@main
     permissions:
       contents: read # Required for the reusable Crowdin download workflow to clone the caller repository; Crowdin uses NEWFOLD_ACCESS_TOKEN for PRs.
+    timeout-minutes: 30
     with:
       base_branch: ${{ inputs.base_branch }}
       CROWDIN_PROJECT_ID: ${{ vars.CROWDIN_PROJECT_ID }}
