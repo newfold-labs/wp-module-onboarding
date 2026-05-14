@@ -13,9 +13,12 @@ use NewfoldLabs\WP\Module\Onboarding\Types\ColorPalette;
 class ColorPaletteWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 
 	/**
-	 * Color.
+	 * Build a Color for fixtures.
 	 *
-	 * @return void
+	 * @param string $slug Color slug.
+	 * @param string $name Color name.
+	 * @param string $hex  Hex value.
+	 * @return Color
 	 */
 	private function color( string $slug = 'accent_1', string $name = 'Accent 1', string $hex = '#F27121' ): Color {
 		return new Color( $name, $slug, $hex );

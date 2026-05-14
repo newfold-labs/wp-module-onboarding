@@ -12,7 +12,7 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Bluehost;
 class ExternalRedirectInterceptorWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 
 	/**
-	 * tearDown lifecycle hook.
+	 * Tear down lifecycle hook.
 	 *
 	 * @return void
 	 */

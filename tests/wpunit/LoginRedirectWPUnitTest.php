@@ -11,10 +11,15 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
  */
 class LoginRedirectWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 
+	/**
+	 * Original redirect URL used as the function input under test.
+	 *
+	 * @var string
+	 */
 	private $original_redirect = 'https://example.com/wp-admin/';
 
 	/**
-	 * tearDown lifecycle hook.
+	 * Tear down lifecycle hook.
 	 *
 	 * @return void
 	 */

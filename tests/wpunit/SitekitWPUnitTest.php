@@ -16,9 +16,10 @@ use NewfoldLabs\WP\Module\Onboarding\Types\Sitekit;
 class SitekitWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 
 	/**
-	 * Pages with home.
+	 * Build a Pages collection containing a home and about page.
 	 *
-	 * @return void
+	 * @param bool $front Whether the home page is flagged as the front page.
+	 * @return Pages
 	 */
 	private function pages_with_home( bool $front = true ): Pages {
 		return new Pages(
@@ -30,9 +31,9 @@ class SitekitWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Palette.
+	 * Build a single-color ColorPalette for fixtures.
 	 *
-	 * @return void
+	 * @return ColorPalette
 	 */
 	private function palette(): ColorPalette {
 		return new ColorPalette( 'palette_1', array( new Color( 'Accent 1', 'accent_1', '#F27121' ) ) );

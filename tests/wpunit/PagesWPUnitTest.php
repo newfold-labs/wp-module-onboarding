@@ -13,9 +13,12 @@ use NewfoldLabs\WP\Module\Onboarding\Types\Pages;
 class PagesWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 
 	/**
-	 * Page.
+	 * Build a Page for fixtures.
 	 *
-	 * @return void
+	 * @param string $slug  Page slug.
+	 * @param string $title Page title.
+	 * @param bool   $front Whether the page is the front page.
+	 * @return Page
 	 */
 	private function page( string $slug = 'home', string $title = 'Home', bool $front = false ): Page {
 		return new Page( $title, $slug, 'content for ' . $slug, $front );
