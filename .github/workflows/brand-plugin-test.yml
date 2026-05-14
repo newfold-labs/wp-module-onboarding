@@ -12,10 +12,15 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
   cancel-in-progress: true
 
+# Disable permissions for all available scopes by default.
+# Any needed permissions should be configured at the job level.
+permissions: {}
+
 jobs:
   setup:
     name: Setup
     runs-on: ubuntu-latest
+    permissions: {} # No checkout or GitHub API calls; only derives the branch name from the event.
     outputs:
       branch: ${{ steps.extract_branch.outputs.branch }}
     steps:
@@ -28,6 +33,8 @@ jobs:
     name: Bluehost Build and Test
     needs: setup
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
+    permissions:
+      contents: read # Required for reusable module-plugin-test workflow to check out the plugin and module repositories.
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
@@ -38,6 +45,8 @@ jobs:
     name: HostGator Build and Test
     needs: setup
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
+    permissions:
+      contents: read # Required for reusable module-plugin-test workflow to check out the plugin and module repositories.
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
@@ -48,6 +57,8 @@ jobs:
     name: Crazy Domains Build and Test
     needs: setup
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
+    permissions:
+      contents: read # Required for reusable module-plugin-test workflow to check out the plugin and module repositories.
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}

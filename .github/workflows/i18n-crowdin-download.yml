@@ -8,15 +8,18 @@ on:
         required: false
         default: 'main'
 
-permissions:
-  contents: write
-  pull-requests: write
+# Disable permissions for all available scopes by default.
+# Any needed permissions should be configured at the job level.
+permissions: {}
 
 jobs:
   call-crowdin-workflow:
     uses: newfold-labs/workflows/.github/workflows/i18n-crowdin-download.yml@main
+    permissions:
+      contents: read # Required for the reusable Crowdin download workflow to clone the caller repository; Crowdin uses NEWFOLD_ACCESS_TOKEN for PRs.
     with:
       base_branch: ${{ inputs.base_branch }}
       CROWDIN_PROJECT_ID: ${{ vars.CROWDIN_PROJECT_ID }}
     secrets:
       CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+      NEWFOLD_ACCESS_TOKEN: ${{ secrets.NEWFOLD_ACCESS_TOKEN }}

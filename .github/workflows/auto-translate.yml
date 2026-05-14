@@ -12,15 +12,17 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref_name }}
   cancel-in-progress: true
 
+# Disable permissions for all available scopes by default.
+# Any needed permissions should be configured at the job level.
 permissions: {}
 
 jobs:
   translate:
     name: 'Check and update translations'
-    permissions:
-      contents: write
-      pull-requests: write
     uses: newfold-labs/workflows/.github/workflows/reusable-translations.yml@main
+    permissions:
+      contents: write      # Required by reusable-translations jobs that push the auto-translate branch and commits.
+      pull-requests: write # Required for gh pr list, update-branch, and create in reusable-translations workflow.
     with:
       text_domain: 'wp-module-onboarding'
     secrets:
