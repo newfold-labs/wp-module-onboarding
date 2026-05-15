@@ -1,15 +1,16 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: newfold-labswp-module-staging\n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-onboarding/issues\n"
+"POT-Creation-Date: 2024-11-18T07:59:34+00:00\n"
+"PO-Revision-Date: 2026-05-15T17:01:32+00:00\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-18T07:59:34+00:00\n"
-"PO-Revision-Date: 2026-03-24T16:37:18+00:00\n"
-"Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: wp-module-onboarding.pot\n"
 "X-Crowdin-File-ID: 32\n"
@@ -19,42 +20,34 @@ msgstr ""
 "X-Domain: wp-module-onboarding\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
-#: bootstrap.php:24
-#: includes/Compatibility/Safe_Mode.php:44
-#: includes/Compatibility/Safe_Mode.php:45
-#: includes/WP_Admin.php:82
-#: includes/WP_Admin.php:83
-#: includes/WP_Admin.php:99
-msgid "Onboarding"
-msgstr "Einbinden"
+#: includes/Services/PostTypeService.php:54
+msgctxt "service"
+msgid "Add New"
+msgstr "Neu hinzufügen"
 
-#: includes/Compatibility/Safe_Mode.php:184
-msgid "Please upgrade your WordPress"
-msgstr "Bitte aktualisieren Sie Ihr WordPress"
+#: includes/Services/PostTypeService.php:55
+msgid "Add New Service"
+msgstr "Neuer Dienst hinzufügen"
 
-#: includes/Compatibility/Safe_Mode.php:185
-msgid "To take advantage of the latest WordPress has to offer, our WordPress Onboarding to setup your website requires the latest version of WordPress."
-msgstr "Um die Vorteile der neuesten WordPress hat zu bieten, unsere WordPress-Onboarding, um Ihre Website einzurichten erfordert die neueste Version von WordPress."
+#: includes/Services/PostTypeService.php:64
+msgid "All Services"
+msgstr "Alle Verbindungen"
 
-#. translators: 1: Current WP Version 2: Minimum Required version
-#: includes/Compatibility/Safe_Mode.php:191
-#, php-format
-msgid "Your WordPress version %1$s does not meet our minimum requirements of %2$s."
-msgstr "Ihre WordPress-Version %1$s entspricht nicht unseren Mindestanforderungen an %2$s."
+#: includes/Services/Ai/AiServiceRequest.php:181
+msgid "An unknown error occurred"
+msgstr "Ein unbekannter Fehler ist aufgetreten"
 
-#: includes/Compatibility/Safe_Mode.php:207
-msgid "Upgrade WordPress"
-msgstr "WordPress-Upgrade"
+#: includes/Services/EventService.php:33
+msgid "Bad event structure/value."
+msgstr "Fehlerhafte Ereignisstruktur/-wert."
 
-#: includes/Compatibility/Safe_Mode.php:211
-msgid "There was an error Upgrading WordPress."
-msgstr "Es gab einen Fehler beim Aktualisieren von WordPress."
+#: includes/Services/Webfonts.php:133
+msgid "Each webfont src must be a non-empty string."
+msgstr "Jede Webfont src muss ein nicht-leerer String sein."
 
-#. translators: %d is the index of the palette
-#: includes/RestApi/DesignController.php:212
-#, php-format
-msgid "Palette %d"
-msgstr "Palette %d"
+#: includes/Services/PostTypeService.php:56
+msgid "Edit Service"
+msgstr "Bearbeitungsdienst"
 
 #: includes/RestApi/EventsController.php:68
 msgid "Event action"
@@ -68,225 +61,192 @@ msgstr "Ereigniskategorie"
 msgid "Event data"
 msgstr "Ereignisdaten"
 
+#: includes/Services/PostTypeService.php:70
+msgid "Filter by date"
+msgstr "Nach Datum filtern"
+
+#: includes/Services/PostTypeService.php:69
+msgid "Filter services list"
+msgstr "Liste der Filterdienste"
+
+#: includes/Services/AppService.php:50
+msgid "Help us improve"
+msgstr "Helfen Sie uns, uns zu verbessern"
+
+#: includes/Services/AppService.php:51
+msgid "How satisfied were you with the ease of creating your website?"
+msgstr "Wie zufrieden waren Sie mit der Leichtigkeit, mit der Sie Ihre Website erstellt haben?"
+
+#: includes/Services/PostTypeService.php:67
+msgid "Insert into service"
+msgstr "Einsatz in den Dienst"
+
+#: includes/Services/PostTypeService.php:57
+msgid "New Service"
+msgstr "Neuer Dienst"
+
+#: includes/Services/PostTypeService.php:62
+msgid "No services found in Trash."
+msgstr "Keine Dienstleistungen im Müll gefunden."
+
+#: includes/Services/PostTypeService.php:61
+msgid "No services found."
+msgstr "Keine Dienste gefunden."
+
+#: bootstrap.php:57 includes/Compatibility/Safe_Mode.php:44 includes/Compatibility/Safe_Mode.php:45 includes/WP_Admin.php:74 includes/WP_Admin.php:75 includes/WP_Admin.php:91
+msgid "Onboarding"
+msgstr "Einbinden"
+
+#. translators: %d is the index of the palette
+#: includes/RestApi/DesignController.php:212
+#, php-format
+msgid "Palette %d"
+msgstr "Palette %d"
+
+#: includes/Services/PostTypeService.php:63
+msgid "Parent Service:"
+msgstr "Elterndienst:"
+
+#: includes/Compatibility/Safe_Mode.php:184
+msgid "Please upgrade your WordPress"
+msgstr "Bitte aktualisieren Sie Ihr WordPress"
+
+#: includes/Services/PostTypeService.php:84
+msgid "Remove service featured image"
+msgstr "Dienst-Feature-Bild entfernen"
+
 #: includes/RestApi/EventsController.php:108
 msgid "Request does not contain an array of events."
 msgstr "Anfrage enthält kein Array von Ereignissen."
+
+#: includes/Services/PostTypeService.php:60
+msgid "Search Services"
+msgstr "Suchdienste"
+
+#: includes/Services/PostTypeService.php:81
+msgid "Service"
+msgstr "Dienst"
+
+#: includes/Services/PostTypeService.php:53
+msgctxt "post type singular name"
+msgid "Service"
+msgstr "Service"
+
+#: includes/Services/PostTypeService.php:65
+msgid "Service Archives"
+msgstr "Dienstarchive"
+
+#: includes/Services/PostTypeService.php:66
+msgid "Service Attributes"
+msgstr "Dienstmerkmale"
+
+#: includes/Services/PostTypeService.php:82
+msgid "Service featured image"
+msgstr "Dienstbild"
+
+#: includes/Services/PostTypeService.php:74
+msgid "Service published privately."
+msgstr "Der Service wurde privat veröffentlicht."
+
+#: includes/Services/PostTypeService.php:73
+msgid "Service published."
+msgstr "Dienst veröffentlicht."
+
+#: includes/Services/PostTypeService.php:77
+msgid "Service restored from Trash."
+msgstr "Der Service wurde aus dem Müll wiederhergestellt."
+
+#: includes/Services/PostTypeService.php:75
+msgid "Service reverted to draft."
+msgstr "Der Dienst wurde wieder zum Wehrdienst zurückgeführt."
+
+#: includes/Services/PostTypeService.php:78
+msgid "Service scheduled."
+msgstr "Dienst angesetzt."
+
+#: includes/Services/PostTypeService.php:76
+msgid "Service trashed."
+msgstr "Service ruiniert."
+
+#: includes/Services/PostTypeService.php:79
+msgid "Service updated."
+msgstr "Service aktualisiert."
+
+#: includes/Services/PostTypeService.php:80
+msgid "Services"
+msgstr "Dienstleistungen"
+
+#: includes/Services/PostTypeService.php:52
+msgctxt "post type general name"
+msgid "Services"
+msgstr "Dienstleistungen"
+
+#: includes/Services/PostTypeService.php:72
+msgid "Services list"
+msgstr "Dienstliste"
+
+#: includes/Services/PostTypeService.php:71
+msgid "Services list navigation"
+msgstr "Navigation zur Dienstlistenliste"
+
+#: includes/Services/PostTypeService.php:83
+msgid "Set service featured image"
+msgstr "Feature-Bild des Set-Services"
 
 #: includes/RestApi/EventsController.php:129
 msgid "Some events failed."
 msgstr "Einige Ereignisse sind fehlgeschlagen."
 
-#: includes/RestApi/FlowController.php:154
-msgid "Flow data does not exist to generate a child theme."
-msgstr "Flow Daten existieren nicht, um ein untergeordnetes Theme zu generieren."
+#: includes/Compatibility/Safe_Mode.php:211
+msgid "There was an error Upgrading WordPress."
+msgstr "Es gab einen Fehler beim Aktualisieren von WordPress."
 
-#: includes/RestApi/FlowController.php:195
-msgid "Success."
-msgstr "Erfolgreich."
+#: includes/Compatibility/Safe_Mode.php:185
+msgid "To take advantage of the latest WordPress has to offer, our WordPress Onboarding to setup your website requires the latest version of WordPress."
+msgstr "Um die Vorteile der neuesten WordPress hat zu bieten, unsere WordPress-Onboarding, um Ihre Website einzurichten erfordert die neueste Version von WordPress."
 
-#: includes/RestApi/SiteGenController.php:331
-msgid "Error at Regenerating home pages."
-msgstr "Fehler beim Regenerieren der Homepage."
+#: includes/Compatibility/Safe_Mode.php:207
+msgid "Upgrade WordPress"
+msgstr "WordPress-Upgrade"
 
-#: includes/RestApi/SiteGenController.php:397
-msgid "Error at Setting up the nav menu."
-msgstr "Fehler beim Einrichten des Navigationsmenüs."
+#: includes/Services/PostTypeService.php:68
+msgid "Uploaded to this service"
+msgstr "Auf diesen Dienst hochgeladen"
 
-#: includes/RestApi/SitePagesController.php:106
-#: includes/Services/SiteGenService.php:122
-msgid "Home"
-msgstr "Zuhause"
+#: includes/Services/PostTypeService.php:85
+msgid "Use as service featured image"
+msgstr "Verwendung als Service-Feature-Bild"
 
-#: includes/RestApi/Themes/PatternsController.php:81
-msgid "Pattern identifier (slug) or step name (step) required."
-msgstr "Musterkennung (slug) oder Schrittname (Schritt) erforderlich."
+#: includes/Services/PostTypeService.php:58
+msgid "View Service"
+msgstr "Service ansehen"
 
-#: includes/RestApi/Themes/PatternsController.php:91
-msgid "No Patterns Found."
-msgstr "Keine Muster gefunden."
-
-#: includes/RestApi/Themes/PatternsController.php:105
-msgid "No Pattern Found."
-msgstr "Kein Muster gefunden."
-
-#: includes/RestApi/Themes/ThemeVariationsController.php:113
-msgid "The id of a template"
-msgstr "Die Id einer Vorlage"
-
-#: includes/RestApi/Themes/ThemeVariationsController.php:118
-msgid "The custom styles"
-msgstr "Die benutzerdefinierten Stile"
-
-#: includes/RestApi/Themes/ThemeVariationsController.php:123
-msgid "The custom settings"
-msgstr "Die benutzerdefinierten Einstellungen"
-
-#: includes/RestApi/Themes/ThemeVariationsController.php:251
-msgid "Global style customization created."
-msgstr "Globale Anpassung erstellt."
-
-#: includes/Services/Ai/AiServiceRequest.php:181
-msgid "An unknown error occurred"
-msgstr "Ein unbekannter Fehler ist aufgetreten"
-
-#: includes/Services/AppService.php:75
-#: includes/Services/AppService.php:99
-msgid "Help us improve"
-msgstr "Helfen Sie uns, uns zu verbessern"
-
-#: includes/Services/AppService.php:76
-#: includes/Services/AppService.php:100
-msgid "How satisfied were you with the ease of creating your website?"
-msgstr "Wie zufrieden waren Sie mit der Leichtigkeit, mit der Sie Ihre Website erstellt haben?"
-
-#: includes/Services/EventService.php:33
-msgid "Bad event structure/value."
-msgstr "Fehlerhafte Ereignisstruktur/-wert."
+#: includes/Services/PostTypeService.php:59
+msgid "View Services"
+msgstr "Dienstleistungen ansehen"
 
 #: includes/Services/Webfonts.php:118
 msgid "Webfont font family must be a non-empty string."
 msgstr "Webfont Schriftfamilie muss ein nicht-leerer String sein."
 
-#: includes/Services/Webfonts.php:125
-msgid "Webfont src must be a non-empty string or an array of strings."
-msgstr "Webfont src muss ein nicht-leerer String oder ein Array von Strings sein."
-
-#: includes/Services/Webfonts.php:133
-msgid "Each webfont src must be a non-empty string."
-msgstr "Jede Webfont src muss ein nicht-leerer String sein."
-
 #: includes/Services/Webfonts.php:141
 msgid "Webfont font weight must be a properly formatted string or integer."
 msgstr "Das Gewicht der Webfont muss ein richtig formatierter String oder Integer sein."
 
-#: includes/WP_Admin.php:452
-msgid "Build with AI"
-msgstr "Mit KI erstellen"
+#: includes/Services/Webfonts.php:125
+msgid "Webfont src must be a non-empty string or an array of strings."
+msgstr "Webfont src muss ein nicht-leerer String oder ein Array von Strings sein."
 
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Base"
-msgstr "Basis"
+#: includes/Data/Options.php:155 includes/Data/Options.php:160 includes/Data/Options.php:165 includes/Data/Options.php:170 includes/Data/Options.php:175 includes/Data/Options.php:180 includes/Data/Options.php:185 includes/Data/Options.php:190 includes/Data/Options.php:195 includes/Data/Options.php:200
+msgid "Woocommerce Settings"
+msgstr "WooCommerce-Einstellungen"
 
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Contrast"
-msgstr "Kontrast"
+#. translators: 1: Current WP Version 2: Minimum Required version
+#: includes/Compatibility/Safe_Mode.php:191
+#, php-format
+msgid "Your WordPress version %1$s does not meet our minimum requirements of %2$s."
+msgstr "Ihre WordPress-Version %1$s entspricht nicht unseren Mindestanforderungen an %2$s."
 
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Primary"
-msgstr "Primär"
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Secondary"
-msgstr "Sekundär"
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Colors"
-msgstr "Farben"
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Select a palette or customize individual colors."
-msgstr "Wählen Sie eine Palette aus oder passen Sie einzelne Farben an."
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Palette"
-msgstr "Palette"
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Pick custom colors"
-msgstr "Wählen Sie benutzerdefinierte Farben"
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Site Logo"
-msgstr "Logo der Website"
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Replace logo"
-msgstr "Logo ersetzen"
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Replace"
-msgstr "Ersetzen"
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Current logo"
-msgstr "Aktuelles Logo"
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Remove"
-msgstr "Entfernen"
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Upload a logo to represent your brand."
-msgstr "Laden Sie ein Logo hoch, um Ihre Marke zu repräsentieren."
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Upload Logo"
-msgstr "Logo hochladen"
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "You don't have permission to change the site logo."
-msgstr "Sie sind nicht berechtigt, das Websitelogo zu ändern."
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
-msgstr "Ihr Logo wird in der Kopfzeile Ihrer Website angezeigt. Die besten Ergebnisse erzielen Sie, wenn Sie ein Bild mit transparentem Hintergrund im PNG-Format hochladen."
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Primary color"
-msgstr "Primärfarbe"
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Secondary color"
-msgstr "Sekundäre Farbe"
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Paragraph text in your chosen font."
-msgstr "Absatztext in der von Ihnen gewählten Schriftart."
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Select a font style."
-msgstr "Wählen Sie einen Schriftstil aus."
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Font Pairings"
-msgstr "Schriftpaarungen"
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "No font pairings available."
-msgstr "Keine Schriftkombinationen verfügbar."
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
-msgstr "Wählen Sie eine Schriftkombination, die die Persönlichkeit Ihrer Marke widerspiegelt. Jede Kombination wird sorgfältig ausgewählt, um die Lesbarkeit und visuelle Attraktivität Ihrer Website zu verbessern."
-
-#: build/3.3.6/onboarding-design-studio.js:1
-msgid "Design Studio"
-msgstr "Design-Studio"
-
-#: build/3.3.6/onboarding.js:1
-msgid "Uh oh! Something went wrong. Please try again."
-msgstr "Uh oh! Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
-
-#: build/3.3.6/onboarding.js:1
-msgid "Your site logo has been set!"
-msgstr "Dein Seitenlogo ist festgelegt!"
-
-#: build/3.3.6/onboarding.js:1
-msgid "Setting your site logo…"
-msgstr "Das Logo deiner Seite setzen..."
-
-#: build/3.3.6/onboarding.js:1
-msgid "Sorry, let's try a different approach."
-msgstr "Entschuldigung, versuchen wir einen anderen Ansatz."
-
-#: build/3.3.6/onboarding.js:1
-msgid "Pick your website"
-msgstr "Wählen Sie Ihre Website aus"
-
-#: build/3.3.6/onboarding.js:1
-msgid "We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favorite — we'll guide you through customizing it!"
-msgstr "Es tut uns leid, unser Seitengenerierungstool funktioniert momentan nicht. In der Zwischenzeit finden Sie hier drei einzigartige Seitenvorlagen, um Ihnen den Einstieg zu erleichtern. Wählen Sie Ihren Favoriten aus – wir führen Sie bei der individuellen Anpassung!"
-
-#: build/3.3.6/onboarding.js:1
-msgid "Here are 3 unique designs for you to start with. Pick your favorite to customize it!"
-msgstr "Hier sind 3 einzigartige Designs, mit denen Sie anfangen können. Wähle deinen Favoriten aus, um ihn individuell zu gestalten!"
+#: includes/Data/Brands.php:17
+msgid "your web host"
+msgstr "Ihr Webhost"
