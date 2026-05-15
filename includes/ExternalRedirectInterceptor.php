@@ -1,7 +1,7 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding;
 
-use NewfoldLabs\WP\Module\Onboarding\Data\Data;
+use NewfoldLabs\WP\Module\Onboarding\Data\Bluehost;
 
 /**
  * Class to intercept redirect calls and filter them.
@@ -27,23 +27,13 @@ class ExternalRedirectInterceptor {
 	 * @param string $location The location to redirect to.
 	 */
 	public function wp_redirect( $location ): string {
-		$runtime_data     = Data::runtime();
-		$brand_plugin_url = '';
+		$brand_plugin_url = Bluehost::get_plugin_dashboard_page();
 
 		// Check if the location contains any whitelisted params.
 		$location_has_whitelisted_params = $this->url_has_whitelisted_params( $location );
 
-		// Get the brand plugin page URL from the runtime data.
-		if (
-			isset( $runtime_data['currentBrand'], $runtime_data['currentBrand']['pluginDashboardPage'] ) &&
-			is_string( $runtime_data['currentBrand']['pluginDashboardPage'] )
-			) {
-				// Set the brand plugin page URL.
-				$brand_plugin_url = $runtime_data['currentBrand']['pluginDashboardPage'];
-		}
-
-		// Allow the redirect if it has whitelisted params or the brand plugin page URL is empty.
-		if ( $location_has_whitelisted_params || empty( $brand_plugin_url ) ) {
+		// Allow the redirect if it has whitelisted params.
+		if ( $location_has_whitelisted_params ) {
 			return $location;
 		}
 

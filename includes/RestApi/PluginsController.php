@@ -1,10 +1,10 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
-use NewfoldLabs\WP\Module\Onboarding\Permissions;
-use NewfoldLabs\WP\Module\Onboarding\Data\SiteFeatures;
 use NewfoldLabs\WP\Module\Installer\Services\PluginInstaller;
+use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService;
 
 /**
  * Class PluginsController
@@ -45,23 +45,11 @@ class PluginsController {
 
 		\register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/initialize/activate',
+			$this->rest_base . '/initialize-ecommerce',
 			array(
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'activate_init_plugins' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				),
-			)
-		);
-
-		\register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/site-features',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_site_features' ),
+					'callback'            => array( $this, 'initialize_ecommerce' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -89,30 +77,37 @@ class PluginsController {
 	}
 
 	/**
-	 * Retrieves all the site features.
+	 * Ensure WooCommerce and ecommerce plugins are installed and active.
 	 *
-	 * @return array|\WP_Error
-	 */
-	public function get_site_features() {
-		return SiteFeatures::get_with_selections();
-	}
-
-	/**
-	 * Activate the initial set of installed plugins.
+	 * If WooCommerce is already active, returns immediately.
+	 * If installed but inactive, activates it synchronously.
+	 * If not installed, queues a background install+activation task.
 	 *
 	 * @return \WP_REST_Response
 	 */
-	public function activate_init_plugins() {
-		if ( PluginService::activate_init_plugins() ) {
-			return new \WP_REST_Response(
-				array(),
-				202
-			);
+	public function initialize_ecommerce(): \WP_REST_Response {
+
+		if ( class_exists( 'WooCommerce' ) ) {
+			return new \WP_REST_Response( array( 'status' => 'active' ), 200 );
 		}
 
-		return new \WP_REST_Response(
-			array(),
-			500
-		);
+		$plugin_file = 'woocommerce/woocommerce.php';
+
+		if ( file_exists( \WP_PLUGIN_DIR . '/' . $plugin_file ) ) {
+			$result = \activate_plugin( $plugin_file );
+			if ( \is_wp_error( $result ) ) {
+				return new \WP_REST_Response(
+					array(
+						'status'  => 'error',
+						'message' => $result->get_error_message(),
+					),
+					500
+				);
+			}
+			return new \WP_REST_Response( array( 'status' => 'activated' ), 200 );
+		}
+
+		EcommerceSiteTypeService::install_ecommerce_plugins();
+		return new \WP_REST_Response( array( 'status' => 'installing' ), 202 );
 	}
 }

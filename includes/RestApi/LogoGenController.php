@@ -34,11 +34,12 @@ class LogoGenController {
 			$this->namespace,
 			$this->rest_base . '/generate',
 			array(
-			'methods'             => \WP_REST_Server::CREATABLE,
-			'callback'            => array( $this, 'generate_logos' ),
-			'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-			'args'                => $this->get_generate_logos_args(),
-		) );
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'generate_logos' ),
+				'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				'args'                => $this->get_generate_logos_args(),
+			)
+		);
 		register_rest_route(
 			$this->namespace,
 			$this->rest_base . '/generate/status',
@@ -78,16 +79,16 @@ class LogoGenController {
 	 */
 	public function get_generate_logos_args(): array {
 		return array(
-			'site_title' => array(
-				'type' => 'string',
+			'site_title'       => array(
+				'type'     => 'string',
 				'required' => true,
 			),
 			'site_description' => array(
-				'type' => 'string',
+				'type'     => 'string',
 				'required' => true,
 			),
-			'locale' => array(
-				'type' => 'string',
+			'locale'           => array(
+				'type'     => 'string',
 				'required' => true,
 			),
 		);
@@ -101,7 +102,7 @@ class LogoGenController {
 	public function get_generation_status_args(): array {
 		return array(
 			'reference_id' => array(
-				'type' => 'string',
+				'type'     => 'string',
 				'required' => true,
 			),
 		);
@@ -115,7 +116,7 @@ class LogoGenController {
 	public function get_generate_more_logos_args(): array {
 		return array(
 			'reference_id' => array(
-				'type' => 'string',
+				'type'     => 'string',
 				'required' => true,
 			),
 		);
@@ -129,7 +130,7 @@ class LogoGenController {
 	public function get_select_logo_args(): array {
 		return array(
 			'logo_reference_id' => array(
-				'type' => 'string',
+				'type'     => 'string',
 				'required' => true,
 			),
 		);
@@ -142,12 +143,12 @@ class LogoGenController {
 	 * @return \WP_REST_Response
 	 */
 	public function generate_logos( \WP_REST_Request $request ) {
-		$site_title = $request->get_param( 'site_title' );
+		$site_title       = $request->get_param( 'site_title' );
 		$site_description = $request->get_param( 'site_description' );
-		$locale = $request->get_param( 'locale' );
+		$locale           = $request->get_param( 'locale' );
 
 		$logogen_service = new LogoGenerationService();
-		$response = $logogen_service->generate( $site_title, $site_description, $locale );
+		$response        = $logogen_service->generate( $site_title, $site_description, $locale );
 		if ( is_wp_error( $response ) ) {
 			return $response;
 		}
@@ -166,14 +167,14 @@ class LogoGenController {
 
 		// Check the generation status.
 		$logogen_service = new LogoGenerationService();
-		$response = $logogen_service->generation_status( $reference_id );
+		$response        = $logogen_service->generation_status( $reference_id );
 		if ( is_wp_error( $response ) ) {
 			return $response;
 		}
 
 		// If the generation is completed, add the logos to the response.
-		if ( $response['status'] === 'completed' ) {
-			$logos = $logogen_service->get_logos( true, true );
+		if ( 'completed' === $response['status'] ) {
+			$logos             = $logogen_service->get_logos( true, true );
 			$response['logos'] = $logos;
 		}
 
@@ -190,7 +191,7 @@ class LogoGenController {
 		$reference_id = $request->get_param( 'reference_id' );
 
 		$logogen_service = new LogoGenerationService();
-		$response = $logogen_service->generate_more( $reference_id );
+		$response        = $logogen_service->generate_more( $reference_id );
 		if ( is_wp_error( $response ) ) {
 			return $response;
 		}
@@ -208,7 +209,7 @@ class LogoGenController {
 		$logo_reference_id = $request->get_param( 'logo_reference_id' );
 
 		$logogen_service = new LogoGenerationService();
-		$response = $logogen_service->select( $logo_reference_id );
+		$response        = $logogen_service->select( $logo_reference_id );
 		if ( is_wp_error( $response ) ) {
 			return $response;
 		}

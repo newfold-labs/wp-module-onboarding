@@ -5,7 +5,7 @@ module.exports = {
 	presets: [ TAILWINDCSS_PRESET ],
 	content: [
 		...TAILWINDCSS_PRESET.content, // Newfold UI
-		'./src/**/*.js', // Onboarding
+		'./src/**/*.{js,jsx}', // Onboarding
 	],
 	// Override preset theme colors
 	theme: {

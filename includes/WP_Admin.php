@@ -1,16 +1,14 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding;
 
-use NewfoldLabs\WP\Module\Onboarding\Data\Data;
-use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Onboarding\Data\Bluehost;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ThemeService;
-use NewfoldLabs\WP\Module\Onboarding\Data\Services\FlowService;
-use NewfoldLabs\WP\Module\Onboarding\Data\Services\SiteGenService;
-use NewfoldLabs\WP\Module\Onboarding\Data\Themes;
 use NewfoldLabs\WP\Module\Onboarding\Services\I18nService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
-use NewfoldLabs\WP\Module\Onboarding\Services\StatusService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Runtime;
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+use NewfoldLabs\WP\Module\Patterns\SiteClassification as PatternsSiteClassification;
 
 /**
  * Register Admin Page, Assets & Admin functionality with WordPress.
@@ -44,16 +42,10 @@ final class WP_Admin {
 		\add_action( 'admin_menu', array( __CLASS__, 'register_page' ) );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'page_title' ), 9, 1 );
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'initialize' ) );
-		/**
-		 * We're disabling the restart onboarding feature for now.
-		 */
-		\add_action( 'load-toplevel_page_bluehost', array( __CLASS__, 'hide_onboarding_restart_card' ) );
-		// \add_action( 'load-themes.php', array( __CLASS__, 'can_restart_onboarding' ) );
+		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'hide_admin_chrome' ) );
 		\add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_site_editor_assets' ) );
-		if ( 'sitegen' === Data::current_flow() ) {
-			\add_action( 'load-themes.php', array( __CLASS__, 'mark_sitegen_generated_themes' ) );
-			SiteGenService::pre_set_filter_wonder_blocks_transients();
-		}
+		\add_filter( 'wp_kses_allowed_html', array( __CLASS__, 'add_svg_support_to_kses' ), 10, 2 );
+		self::pre_set_filter_wonder_blocks_transients();
 	}
 
 	/**
@@ -101,103 +93,38 @@ final class WP_Admin {
 	}
 
 	/**
+	 * Hide WP admin chrome (sidebar, toolbar, notices) immediately via admin_head
+	 * so there is no flash before the onboarding overlay renders.
+	 *
+	 * @return void
+	 */
+	public static function hide_admin_chrome() {
+		\add_action(
+			'admin_head',
+			static function () {
+				echo '<style>
+					#adminmenumain, #wpadminbar, #wpfooter,
+					.notice, .update-nag, #screen-meta { display: none !important; }
+					html.wp-toolbar { padding-top: 0 !important; }
+					#wpcontent, #wpbody-content { margin-left: 0 !important; padding: 0 !important; }
+					body.dashboard_page_nfd-onboarding {
+						overflow: hidden;
+						background: linear-gradient(180deg, #fff 0%, #f5f8ff 50%, #edf2ff 100%);
+					}
+				</style>';
+			},
+			1
+		);
+	}
+
+	/**
 	 * Render a loading screen.
 	 *
 	 * @return string
 	 */
 	public static function is_loading() {
 		ob_start();
-		?>
-		<style>
-			body.wp-admin {
-				overflow: hidden !important;
-			}
-			.nfd-onboarding-loading-app__skeleton {
-				position: relative;
-				overflow: hidden;
-				background-color: #DDE7F0;
-			}
-			.nfd-onboarding-loading-app__skeleton::after {
-				position: absolute;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				left: 0;
-				transform: translateX(-100%);
-				background-image: linear-gradient(
-					90deg,
-					rgba(255, 255, 255, 0) 0,
-					rgba(255, 255, 255, 0.2) 20%,
-					rgba(255, 255, 255, 0.5) 60%,
-					rgba(255, 255, 255, 0)
-				);
-				animation: nfd-skeleton-animation 2.5s infinite;
-				content: "";
-			}
-			@keyframes nfd-skeleton-animation {
-				100% {
-					transform: translateX(100%);
-				}
-			}
-			#nfd-onboarding {
-				z-index: 100000;
-			}
-			.nfd-onboarding-loading-app {
-				background-color: #F1F5F9;
-				width: 100%;
-				opacity: 1;
-				transition: opacity 0.3s ease-in-out;
-			}
-			.nfd-onboarding-loading-app.fade-out {
-				opacity: 0;
-			}
-			.nfd-onboarding-loading-app__header {
-				background-color: #FFF;
-				border-bottom: 1px solid #ECEEFE;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: 0 1.5rem;
-				min-height: 4rem;
-			}
-			.nfd-onboarding-loading-app__header__logo {
-				width: 135px;
-				height: 24px;
-				border-radius: 6px;
-			}
-			.nfd-onboarding-loading-app__header__exit {
-				width: 24px;
-				height: 24px;
-				border-radius: 6px;
-			}
-			.nfd-onboarding-loading-app__body {
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
-			.nfd-onboarding-loading-app__body__spinner {
-				width: 100px;
-				height: 100px;
-				margin-top: -65px;
-				border-radius: 12px;
-				opacity: 0.8;
-			}
-		</style>
-		<div class="nfd-onboarding-loading-app">
-			<header class="nfd-onboarding-loading-app__header">
-				<div class="nfd-onboarding-loading-app__header__logo nfd-onboarding-loading-app__skeleton"></div>
-				<div class="nfd-onboarding-loading-app__header__exit nfd-onboarding-loading-app__skeleton"></div>
-			</header>
-			<div class="nfd-onboarding-loading-app__body">
-				<div class="nfd-onboarding-loading-app__body__spinner nfd-onboarding-loading-app__skeleton"></div>
-			</div>
-		</div>
-		<?php
+		include __DIR__ . '/Templates/loading-screen.php';
 		return ob_get_clean();
 	}
 
@@ -246,11 +173,9 @@ final class WP_Admin {
 			);
 
 			$nfd_onboarding_data = array(
-				'runtime'    => Data::runtime(),
-				'input'      => ReduxStateService::get( 'input' ),
-				'sitegen'    => ReduxStateService::get( 'sitegen' ),
-				'logogen'    => ReduxStateService::get( 'logogen' ),
-				'blueprints' => ReduxStateService::get( 'blueprints' ),
+				'runtime' => Runtime::get_data(),
+				'sitegen' => ReduxStateService::get( 'sitegen' ),
+				'origin'  => array( 'prompt' => get_option( Options::get_origin_option_name( 'origin_prompt' ) ) ),
 			);
 			\wp_add_inline_script(
 				self::$slug,
@@ -306,32 +231,21 @@ final class WP_Admin {
 	}
 
 	/**
-	 * Redirects to the brand plugin page or the WordPress admin dashboard.
+	 * Redirects to the brand plugin page (WP Admin).
 	 *
 	 * @return void
 	 */
 	public static function exit_to_dashboard(): bool {
-		$runtime_data              = Data::runtime();
-		$brand_plugin_url          = '';
+		$brand_plugin_url          = Bluehost::get_plugin_dashboard_page();
 		$dashboard_redirect_params = 'referrer=' . self::$slug;
 
-		// Get the brand plugin page URL from the runtime data.
-		if (
-			isset( $runtime_data['currentBrand'], $runtime_data['currentBrand']['pluginDashboardPage'] ) &&
-			is_string( $runtime_data['currentBrand']['pluginDashboardPage'] )
-			) {
-				// Set the brand plugin page URL.
-				$brand_plugin_url = $runtime_data['currentBrand']['pluginDashboardPage'];
-		}
-
-		// If the brand plugin page URL is not found in the runtime, redirect to the WordPress admin.
-		if ( empty( $brand_plugin_url ) ) {
-			wp_redirect( apply_filters( 'nfd_build_url', admin_url() . '?' . $dashboard_redirect_params ) );
-			exit;
-		}
-
-		// If the brand plugin page URL is found in the runtime, redirect to the brand plugin page.
-		wp_redirect( apply_filters( 'nfd_build_url', $brand_plugin_url . '&' . $dashboard_redirect_params ) );
+		// Redirect to the brand plugin page.
+		wp_redirect(
+			apply_filters(
+				'nfd_build_url',
+				$brand_plugin_url . '&' . $dashboard_redirect_params
+			)
+		);
 		exit;
 	}
 
@@ -351,152 +265,10 @@ final class WP_Admin {
 			self::exit_to_dashboard();
 		}
 
+		// Ensure sitegen site id is set
+		ReduxStateService::ensure_sitegen_site_id();
+
 		self::register_assets();
-
-		self::set_onboarding_restart_option();
-	}
-
-	/**
-	 * Enqueue scripts that mark Sitegen flow generated themes.
-	 *
-	 * @return void
-	 */
-	public static function mark_sitegen_generated_themes() {
-		$flow_data = get_option( Options::get_option_name( 'flow' ), false );
-
-		if ( ! $flow_data || ! isset( $flow_data['sitegen']['homepages'] ) ) {
-			return;
-		}
-
-		\wp_register_script(
-			'sitegen-theme-marker',
-			NFD_ONBOARDING_BUILD_URL . '/sitegen-theme-marker.js',
-			array(),
-			'1.0.0',
-			true
-		);
-
-		\wp_add_inline_script(
-			'sitegen-theme-marker',
-			'var nfdOnboarding =' . wp_json_encode(
-				array(
-					'homepages' => $flow_data['sitegen']['homepages'],
-					'active'    => Themes::get_active_theme(),
-				)
-			) . ';',
-			'before'
-		);
-
-		\wp_register_style(
-			'sitegen-theme-marker',
-			NFD_ONBOARDING_BUILD_URL . '/sitegen-theme-marker.css.css',
-			array(),
-			'1.0.0',
-			'all'
-		);
-
-		\wp_enqueue_script( 'sitegen-theme-marker' );
-		\wp_enqueue_style( 'sitegen-theme-marker' );
-	}
-
-	/**
-	 * Sets the option in DB for the Initial Load of Onboarding
-	 *
-	 * @return void
-	 */
-	public static function set_onboarding_restart_option(): void {
-		// Check if the customer is eligible for onboarding restart
-		if ( StatusService::is_onboarding_restart_eligible() ) {
-			// Get the option name for 'can_restart'
-			$option_name = Options::get_option_name( 'can_restart' );
-
-			// Check if the option doesn't exist before adding it
-			if ( ! get_option( $option_name ) ) {
-				// Add the option if it doesn't exist
-				add_option( $option_name, true );
-			}
-		} else {
-			// Get the option name for 'can_restart'
-			$option_name = Options::get_option_name( 'can_restart' );
-
-			// Add the option if it doesn't exist
-			update_option( $option_name, false );
-		}
-	}
-
-	/**
-	 * Enqueue scripts that adds a new button to Restart Onboarding in themes.php
-	 *
-	 * @return void
-	 */
-	public static function can_restart_onboarding(): void {
-		$can_restart = get_option( Options::get_option_name( 'can_restart' ), false );
-
-		// If the customer in ineligible for restart don't enqueue scripts
-		if ( ! $can_restart || ! StatusService::is_onboarding_restart_eligible() ) {
-			return;
-		}
-
-		\wp_register_script(
-			'onboarding-restart-button',
-			NFD_ONBOARDING_BUILD_URL . '/onboarding-restart-button.js',
-			array(),
-			'1.0.0',
-			true
-		);
-
-		\wp_add_inline_script(
-			'onboarding-restart-button',
-			'var nfdOnboardingRestartMeta =' . wp_json_encode(
-				array(
-					'buttonText' => \__( 'Build with AI', 'wp-module-onboarding' ),
-					'buttonHref' => \apply_filters( 'nfd_build_url', admin_url( 'index.php?page=' . self::$slug ) ),
-				)
-			) . ';',
-			'before'
-		);
-
-		\wp_register_style(
-			'onboarding-restart-button',
-			NFD_ONBOARDING_BUILD_URL . '/onboarding-restart-button.css.css',
-			array(),
-			'1.0.0',
-			'all'
-		);
-
-		/**
-		 * Temporary: hide the build with ai button
-		 */
-		wp_add_inline_style(
-			'onboarding-restart-button',
-			'.themes .theme.build-with-ai {
-				display: none !important;
-			}'
-		);
-
-		\wp_enqueue_script( 'onboarding-restart-button' );
-		\wp_enqueue_style( 'onboarding-restart-button' );
-	}
-
-	/**
-	 * Temporary: Enqueue scripts that hides the build with ai button
-	 *
-	 * @return void
-	 */
-	public static function hide_onboarding_restart_card(): void {
-		\wp_register_style(
-			'hide-onboarding-restart-card',
-			false,
-		);
-
-		\wp_add_inline_style(
-			'hide-onboarding-restart-card',
-			'div[data-testid="restartOnboarding"] {
-				display: none !important;
-			}'
-		);
-
-		\wp_enqueue_style( 'hide-onboarding-restart-card' );
 	}
 
 	/**
@@ -645,5 +417,83 @@ final class WP_Admin {
 				\wp_add_inline_style( $font_handle, $font_css );
 			}
 		}
+	}
+
+	/**
+	 * Pre-set filter wonder blocks transients.
+	 *
+	 * @return void
+	 */
+	public static function pre_set_filter_wonder_blocks_transients() {
+		$args = wp_parse_args(
+			array(
+				'primary_type'   => PatternsSiteClassification::get_primary_type(),
+				'secondary_type' => PatternsSiteClassification::get_secondary_type(),
+			)
+		);
+		$id   = md5( serialize( $args ) );
+
+		\add_action( "pre_set_transient_wba_templates_{$id}", array( __CLASS__, 'filter_wonder_blocks_templates_transient' ), 10, 1 );
+		\add_action( 'pre_set_transient_wba_templates_categories', array( __CLASS__, 'filter_wonder_blocks_categories_transient' ), 10, 1 );
+	}
+
+
+	/**
+	 * Add SVG support to KSES.
+	 *
+	 * @param array  $tags The tags to add support for.
+	 * @param string $context The context to add support for.
+	 * @return array The tags with support for SVG.
+	 */
+	public static function add_svg_support_to_kses( $tags, $context ): array {
+
+		if ( 'post' !== $context ) {
+			return $tags;
+		}
+
+		$tags['svg']    = array_merge(
+			isset( $tags['svg'] ) ? $tags['svg'] : array(),
+			array(
+				'xmlns'           => true,
+				'width'           => true,
+				'height'          => true,
+				'viewbox'         => true,
+				'fill'            => true,
+				'stroke'          => true,
+				'stroke-width'    => true,
+				'stroke-linecap'  => true,
+				'stroke-linejoin' => true,
+				'class'           => true,
+				'style'           => true,
+				'role'            => true,
+				'aria-hidden'     => true,
+				'data-*'          => true,
+			)
+		);
+		$tags['path']   = array(
+			'd'      => true,
+			'fill'   => true,
+			'stroke' => true,
+			'class'  => true,
+			'style'  => true,
+		);
+		$tags['rect']   = array(
+			'x'      => true,
+			'y'      => true,
+			'width'  => true,
+			'height' => true,
+			'rx'     => true,
+			'ry'     => true,
+			'fill'   => true,
+			'stroke' => true,
+		);
+		$tags['circle'] = array(
+			'cx'     => true,
+			'cy'     => true,
+			'r'      => true,
+			'fill'   => true,
+			'stroke' => true,
+		);
+		return $tags;
 	}
 } // END /NewfoldLabs/WP/Module/Onboarding/Admin()

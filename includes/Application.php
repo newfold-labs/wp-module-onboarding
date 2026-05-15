@@ -3,12 +3,12 @@ namespace NewfoldLabs\WP\Module\Onboarding;
 
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Status;
 use NewfoldLabs\WP\Module\Onboarding\RestApi\RestApi;
-use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\Services\StatusService;
 use NewfoldLabs\WP\Module\Onboarding\Services\EventService;
-
+use NewfoldLabs\WP\Module\Onboarding\Services\PostTypeService;
+use NewfoldLabs\WP\Module\Onboarding\Services\ThumbnailService;
 use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
@@ -49,11 +49,11 @@ final class Application {
 			$defaults
 		);
 
-		if ( is_readable( NFD_ONBOARDING_DIR . '/vendor/autoload.php' ) ) {
-			require_once NFD_ONBOARDING_DIR . '/vendor/autoload.php';
-		}
-
 		\do_action( 'nfd_module_onboarding_pre_init' );
+
+		// Register custom post types — must run for all users, before permission checks.
+		new PostTypeService();
+		new ThumbnailService();
 
 		// Reset the stored Compatibility Status every time WP Core is updated.
 		\add_action( '_core_updated_successfully', array( Status::class, 'reset' ) );

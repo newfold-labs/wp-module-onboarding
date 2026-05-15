@@ -11,11 +11,24 @@ use NewfoldLabs\WP\Module\Onboarding\Types\Pages;
 use NewfoldLabs\WP\Module\Onboarding\Types\SiteClassification;
 use NewfoldLabs\WP\Module\Onboarding\Types\Sitekit;
 
+/**
+ * Orchestrates AI sitekit generation and publishing of related demo content.
+ *
+ * @package NewfoldLabs\WP\Module\Onboarding\Services\Ai\ContentGeneration
+ */
 class SitekitsContentGeneration {
 
-	private static $site_types_supported = [
-		'ecommerce', 'personal', 'business', 'linkinbio'
-	];
+	/**
+	 * Site type slugs that support sitekits generation.
+	 *
+	 * @var string[]
+	 */
+	private static $site_types_supported = array(
+		'ecommerce',
+		'personal',
+		'business',
+		'linkinbio',
+	);
 
 	/**
 	 * The site type.
@@ -41,9 +54,9 @@ class SitekitsContentGeneration {
 	/**
 	 * Constructor.
 	 *
-	 * @param string $site_type The site type.
+	 * @param string                  $site_type The site type.
 	 * @param ContentGenerationPrompt $prompt The prompt.
-	 * @param SiteClassification $site_classification The site classification.
+	 * @param SiteClassification      $site_classification The site classification.
 	 */
 	public function __construct( string $site_type, ContentGenerationPrompt $prompt, SiteClassification $site_classification ) {
 		$this->site_type           = $site_type;
@@ -58,7 +71,7 @@ class SitekitsContentGeneration {
 	 * @return array|\WP_Error The sitekits - array of Sitekit objects or WP_Error on failure.
 	 */
 	public function generate_sitekits( int $count = 3 ) {
-		$prompt = $this->prompt->get_prompt();
+		$prompt       = $this->prompt->get_prompt();
 		$request_body = array(
 			'siteType'      => $this->site_type,
 			'count'         => $count,
@@ -98,7 +111,7 @@ class SitekitsContentGeneration {
 		// Error.
 		$response_code = $request->get_response_code();
 		$error_message = $request->get_error_message();
-		$response = new \WP_Error(
+		$response      = new \WP_Error(
 			'sitekits_generation_failed',
 			$error_message,
 			array( 'status' => $response_code )
@@ -121,7 +134,9 @@ class SitekitsContentGeneration {
 			$processed_sitekit['header'],
 			$processed_sitekit['footer'],
 			$processed_sitekit['pages'],
-			$processed_sitekit['color_palette']
+			$processed_sitekit['color_palette'],
+			$processed_sitekit['global_styles'],
+			$processed_sitekit['font_pair']
 		);
 
 		return $sitekit;
@@ -144,13 +159,17 @@ class SitekitsContentGeneration {
 		foreach ( $sitekit_item['pages'] as $page_slug => $page_patterns ) {
 			$page_title    = ucfirst( str_replace( '-', ' ', $page_slug ) );
 			$page_content  = $this->get_page_content_from_patterns( $page_patterns );
-			$is_front_page = $page_slug === 'home';
+			$is_front_page = 'home' === $page_slug;
 			$pages[]       = new Page( $page_title, $page_slug, $page_content, $is_front_page );
 		}
 		$result['pages'] = new Pages( $pages );
 
 		// Attach a color palette to the sitekit.
 		$result['color_palette'] = SiteGenService::get_instance()->get_color_palette();
+
+		// Pass through global styles and font pair from the ai-platform response.
+		$result['global_styles'] = $sitekit_item['global_styles'] ?? null;
+		$result['font_pair']     = $sitekit_item['font_pair'] ?? null;
 
 		return $result;
 	}
@@ -175,7 +194,7 @@ class SitekitsContentGeneration {
 	 * @return void
 	 */
 	private function install_pre_requisites_in_background(): void {
-		if ( $this->site_type === 'ecommerce' ) {
+		if ( 'ecommerce' === $this->site_type ) {
 			EcommerceSiteTypeService::install_ecommerce_plugins();
 		}
 	}
@@ -192,8 +211,8 @@ class SitekitsContentGeneration {
 		if ( ! empty( $products ) ) {
 			foreach ( $products as $index => $product ) {
 				EcommerceSiteTypeService::publish_woo_product(
-					$product['name'] ?? 'Product ' . $index + 1,
-					$product['description'] ?? 'Description for Product ' . $index + 1,
+					$product['name'] ?? ( 'Product ' . ( $index + 1 ) ),
+					$product['description'] ?? ( 'Description for Product ' . ( $index + 1 ) ),
 					$product['price'] ?? '24.99',
 					$product['image'] ?? '',
 					$product['categories'] ?? array()
@@ -205,9 +224,9 @@ class SitekitsContentGeneration {
 		if ( ! empty( $articles ) ) {
 			foreach ( $articles as $index => $article ) {
 				CommonSiteTypeService::publish_article(
-					$article['title'] ?? 'Article ' . $index + 1,
-					$article['excerpt'] ?? 'Excerpt for Article ' . $index + 1,
-					$article['content'] ?? 'Content for Article ' . $index + 1,
+					$article['title'] ?? ( 'Article ' . ( $index + 1 ) ),
+					$article['excerpt'] ?? ( 'Excerpt for Article ' . ( $index + 1 ) ),
+					$article['content'] ?? ( 'Content for Article ' . ( $index + 1 ) ),
 					$article['image'] ?? '',
 					$article['categories'] ?? array()
 				);
@@ -216,23 +235,23 @@ class SitekitsContentGeneration {
 	}
 
 	/**
-	 * Checks if the site type supports sitekits`.
+	 * Checks if the site type supports sitekits.
 	 *
 	 * @param string $site_type The site type.
 	 * @return bool
 	 */
 	public static function site_type_supported( string $site_type ): bool {
-		return in_array( $site_type, self::$site_types_supported );
+		return in_array( $site_type, self::$site_types_supported, true );
 	}
 
 	/**
 	 * Check if a custom logo exists; otherwise, replace the site logo block with the site title block.
 	 *
-	 * @var string $content Content to check.
+	 * @param string $content Content to check.
 	 * @return string
 	 */
 	private function check_custom_logo( string $content ): string {
-		if ( function_exists('has_custom_logo') && ! has_custom_logo() ) {
+		if ( function_exists( 'has_custom_logo' ) && ! has_custom_logo() ) {
 			$content = preg_replace(
 				'/<!--\s*wp:site-logo\s*\/-->/',
 				'<!-- wp:site-logo /--><!-- wp:site-title /-->',

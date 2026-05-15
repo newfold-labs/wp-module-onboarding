@@ -150,4 +150,14 @@ export const selectors = {
 	getSiteGenIdentifiers( state ) {
 		return state.runtime.siteGen.identifiers;
 	},
+
+	/**
+	 * Gets the current user's display name.
+	 *
+	 * @param {*} state
+	 * @return {string} displayName
+	 */
+	getCurrentUserDisplayName( state ) {
+		return state.runtime.currentUserDetails?.displayName || '';
+	},
 };

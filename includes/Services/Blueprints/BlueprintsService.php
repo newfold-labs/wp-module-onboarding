@@ -30,6 +30,9 @@ class BlueprintsService {
 	 */
 	private $blueprints_data = array();
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 		$this->blueprints_data = ReduxStateService::get( 'blueprints' );
 	}
@@ -135,8 +138,8 @@ class BlueprintsService {
 
 		$target_blueprint = array_filter(
 			$blueprints,
-			function( $blueprint ) use ( $property, $value ) {
-				return $blueprint[$property] === $value;
+			function ( $blueprint ) use ( $property, $value ) {
+				return $blueprint[ $property ] === $value;
 			}
 		);
 		if ( empty( $target_blueprint ) ) {

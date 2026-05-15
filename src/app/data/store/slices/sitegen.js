@@ -3,12 +3,11 @@ import { nfdOnboardingStore } from '@/data/store';
 import { updateOnboardingSiteGenSlice } from '@/utils/api';
 
 const DEFAULT_STATE = {
-	homepages: [],
-	selectedHomepage: '',
-	hasGeneratedSitePages: false,
-	retryMode: false,
-	sitegenHasFailed: false,
-	canvasSidebarIsOpen: true,
+	siteId: '',
+	siteGenId: '',
+	siteType: '',
+	enhancedPrompt: '',
+	discoveryData: {},
 	sitegenSliceVersion: 0,
 };
 
@@ -27,40 +26,34 @@ export function sitegen( state = DEFAULT_STATE, action ) {
 				...action.siteGenSlice,
 				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
-		case 'SET_HOMEPAGES':
+		case 'SET_SITE_ID':
 			return {
 				...state,
-				homepages: action.homepages,
+				siteId: action.siteId,
 				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
-		case 'SET_SELECTED_HOMEPAGE':
+		case 'SET_SITE_GEN_ID':
 			return {
 				...state,
-				selectedHomepage: action.selectedHomepage,
+				siteGenId: action.siteGenId,
 				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
-		case 'SET_HAS_GENERATED_SITE_PAGES':
+		case 'SET_SITE_TYPE':
 			return {
 				...state,
-				hasGeneratedSitePages: action.hasGeneratedSitePages,
+				siteType: action.siteType,
 				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
-		case 'SET_RETRY_MODE':
+		case 'SET_ENHANCED_PROMPT':
 			return {
 				...state,
-				retryMode: action.retryMode,
+				enhancedPrompt: action.enhancedPrompt,
 				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
-		case 'SET_SITEGEN_HAS_FAILED':
+		case 'SET_DISCOVERY_DATA':
 			return {
 				...state,
-				sitegenHasFailed: action.sitegenHasFailed,
-				sitegenSliceVersion: state.sitegenSliceVersion + 1,
-			};
-		case 'SET_CANVAS_SIDEBAR_IS_OPEN':
-			return {
-				...state,
-				canvasSidebarIsOpen: action.canvasSidebarIsOpen,
+				discoveryData: action.discoveryData,
 				sitegenSliceVersion: state.sitegenSliceVersion + 1,
 			};
 	}
@@ -75,53 +68,46 @@ export const actions = {
 			siteGenSlice,
 		};
 	},
-	setHomepages: ( homepages ) => {
+	setSiteGenId: ( siteGenId ) => {
 		return {
-			type: 'SET_HOMEPAGES',
-			homepages,
+			type: 'SET_SITE_GEN_ID',
+			siteGenId,
 		};
 	},
-	setSelectedHomepage: ( selectedHomepage ) => {
+	setSiteId: ( siteId ) => {
 		return {
-			type: 'SET_SELECTED_HOMEPAGE',
-			selectedHomepage,
+			type: 'SET_SITE_ID',
+			siteId,
 		};
 	},
-	setHasGeneratedSitePages: ( hasGeneratedSitePages ) => {
+	setSiteType: ( siteType ) => {
 		return {
-			type: 'SET_HAS_GENERATED_SITE_PAGES',
-			hasGeneratedSitePages,
+			type: 'SET_SITE_TYPE',
+			siteType,
 		};
 	},
-	setRetryMode: ( retryMode ) => {
+	setEnhancedPrompt: ( enhancedPrompt ) => {
 		return {
-			type: 'SET_RETRY_MODE',
-			retryMode,
+			type: 'SET_ENHANCED_PROMPT',
+			enhancedPrompt,
 		};
 	},
-	setSitegenHasFailed: ( sitegenHasFailed ) => {
+	setDiscoveryData: ( discoveryData ) => {
 		return {
-			type: 'SET_SITEGEN_HAS_FAILED',
-			sitegenHasFailed,
+			type: 'SET_DISCOVERY_DATA',
+			discoveryData,
 		};
 	},
-	setCanvasSidebarIsOpen: ( canvasSidebarIsOpen ) => {
-		return {
-			type: 'SET_CANVAS_SIDEBAR_IS_OPEN',
-			canvasSidebarIsOpen,
-		};
-	},
+
 };
 
 export const selectors = {
 	getSiteGenSlice: ( state ) => state.sitegen,
-	getHomepages: ( state ) => state.sitegen.homepages,
-	getSelectedHomepage: ( state ) => state.sitegen.selectedHomepage,
-	getHasGeneratedSitePages: ( state ) => state.sitegen.hasGeneratedSitePages,
-	getSelectedColorPalette: ( state ) => state.sitegen.homepages[ state.sitegen.selectedHomepage ]?.color?.palette,
-	getRetryMode: ( state ) => state.sitegen.retryMode,
-	getSitegenHasFailed: ( state ) => state.sitegen.sitegenHasFailed,
-	getCanvasSidebarIsOpen: ( state ) => state.sitegen.canvasSidebarIsOpen,
+	getSiteId: ( state ) => state.sitegen.siteId,
+	getSiteGenId: ( state ) => state.sitegen.siteGenId,
+	getDiscoveryData: ( state ) => state.sitegen.discoveryData,
+	getSiteType: ( state ) => state.sitegen.siteType,
+	getEnhancedPrompt: ( state ) => state.sitegen.enhancedPrompt,
 	getSitegenSliceVersion: ( state ) => state.sitegen.sitegenSliceVersion,
 };
 

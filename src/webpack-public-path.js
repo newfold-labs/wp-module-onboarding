@@ -1,6 +1,6 @@
 /**
  * Set webpack's public path (default is root directory of URI resource) to Plugin's build directory.
- * This helps lazy-loading work correctly. This value is set in `/includes/Data.php` in Data::runtime().
+ * This helps lazy-loading work correctly. This value is set in `/includes/Data/Runtime.php` via `Runtime::get_data()`.
  */
 import { runtimeDataObjectIsMounted } from './onboarding';
 

@@ -26,9 +26,9 @@ class ImageGenerationServiceRequest extends AiServiceRequest {
 	/**
 	 * Constructor
 	 *
-	 * @param string $endpoint The image generation endpoint to use.
-	 * @param array $body    Request body data.
-	 * @param array $headers Additional headers to include in the request.
+	 * @param string      $endpoint The image generation endpoint to use.
+	 * @param array       $body    Request body data.
+	 * @param array       $headers Additional headers to include in the request.
 	 * @param string|null $url The URL to send the request to (Not recommended to override this).
 	 */
 	public function __construct( string $endpoint, array $body, array $headers = array(), ?string $url = null ) {

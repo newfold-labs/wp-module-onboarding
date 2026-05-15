@@ -24,9 +24,9 @@
 		"webpack-merge": "^6.0.1"
 	},
 	"scripts": {
-		"build": "wp-scripts build ./src/onboarding.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.css  ./src/Scripts/onboarding-restart-button/onboarding-restart-button.js ./src/Scripts/onboarding-restart-button/onboarding-restart-button.css ./src/DesignStudio/onboarding-design-studio.js ./src/DesignStudio/onboarding-design-studio.css",
+		"build": "wp-scripts build ./src/onboarding.js ./src/DesignStudio/onboarding-design-studio.js ./src/DesignStudio/onboarding-design-studio.css",
 		"format": "wp-scripts format ./src",
-		"start": "wp-scripts start ./src/onboarding.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.js ./src/Scripts/sitegen-theme-marker/sitegen-theme-marker.css  ./src/Scripts/onboarding-restart-button/onboarding-restart-button.js ./src/Scripts/onboarding-restart-button/onboarding-restart-button.css ./src/DesignStudio/onboarding-design-studio.js ./src/DesignStudio/onboarding-design-studio.css",
+		"start": "wp-scripts start ./src/onboarding.js ./src/DesignStudio/onboarding-design-studio.js ./src/DesignStudio/onboarding-design-studio.css",
 		"set-version-bump": "npm run set-version-patch",
 		"post-set-version": "rm -rf ./build",
 		"lint:js": "wp-scripts lint-js ./src",
@@ -44,13 +44,16 @@
 		"@wordpress/interface": "^9.30.0",
 		"@wordpress/media-utils": "^5.46.0",
 		"@wordpress/style-engine": "^2.44.0",
+		"@wordpress/url": "^4.42.0",
 		"bytes": "^3.1.2",
+		"canvas-confetti": "^1.9.4",
 		"classnames": "^2.3.2",
 		"colord": "^2.9.3",
 		"lottie-react": "^2.4.1",
+		"lucide-react": "^0.577.0",
 		"motion": "^12.38.0",
+		"posthog-js": "^1.373.4",
 		"react-router-dom": "^7.15.0",
-		"yet-another-react-lightbox": "^3.32.0",
-		"posthog-js": "^1.373.4"
+		"yet-another-react-lightbox": "^3.32.0"
 	}
 }

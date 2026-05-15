@@ -6,6 +6,11 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Config;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\Module\Onboarding\WP_Config;
 
+/**
+ * Settings Service Class
+ *
+ * Responsible for initializing the WordPress options, permalinks and configuration.
+ */
 class SettingsService {
 
 	/**
