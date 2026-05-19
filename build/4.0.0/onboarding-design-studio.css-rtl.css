@@ -1,0 +1,241 @@
+#nfd-design-studio .interface-complementary-area__pin-unpin-item {
+	display: none;
+}
+
+.nfd-design-studio-logo-wrapper:hover .nfd-design-studio-logo-overlay {
+	opacity: 1;
+}
+
+.nfd-design-studio-logo-overlay {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	background-color: rgba( 0, 0, 0, 0.5 );
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	opacity: 0;
+	transition: opacity 0.2s ease-in-out;
+	border-radius: 4px;
+}
+
+.nfd-design-studio-logo-container {
+	position: relative;
+	min-height: 120px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 20px;
+	margin-bottom: 16px;
+	background: #f0f0f0;
+}
+
+.nfd-design-studio-logo-preview {
+	max-width: 100%;
+	max-height: 200px;
+	display: block;
+}
+
+.nfd-design-studio-logo-info {
+	font-size: 12px;
+	color: #757575;
+}
+
+.nfd-design-studio-logo-dimensions {
+	color: #949494;
+}
+
+.components-placeholder.nfd-design-studio-logo-placeholder {
+	box-shadow: none;
+	padding: 0;
+}
+
+.nfd-design-studio-header-description {
+	font-size: 12px;
+	color: #757575;
+	padding: 0 16px;
+}
+
+.nfd-color-palette-wrapper {
+	padding: 8px 0;
+}
+
+.nfd-design-studio-sidebar__section {
+	border-top: 1px solid #e0e0e0;
+	padding: 16px 16px;
+}
+
+.nfd-design-studio-color-swatch {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	border: 1px solid #ccc;
+	padding: 0;
+	min-width: auto;
+	transition: transform 0.15s ease-in-out;
+}
+
+.nfd-design-studio-custom-palette-toggle {
+	margin-bottom: 1.5rem !important;
+}
+
+/* Color Palette Pagination */
+
+.nfd-design-studio-color-palette-pagination {
+	padding: 8px 0;
+}
+
+.nfd-design-studio-color-palette-nav-button {
+	min-width: 32px !important;
+	height: 32px !important;
+	padding: 0 !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	border: 1px solid var( --nfd-onboarding-border-color ) !important;
+	border-radius: 4px !important;
+}
+
+.nfd-design-studio-color-palette-nav-button:hover:not( :disabled ) {
+	border-color: var( --nfd-onboarding-primary ) !important;
+	color: var( --nfd-onboarding-primary ) !important;
+}
+
+.nfd-design-studio-color-palette-nav-button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.nfd-design-studio-color-palette-page-info {
+	min-width: 48px;
+	text-align: center;
+	font-size: 13px;
+	color: var( --nfd-onboarding-text );
+}
+
+/* Typography Preview Item */
+
+.nfd-typography-preview-item {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	cursor: pointer;
+	background-color: #fff;
+	padding: 20px 16px;
+	height: 160px;
+	position: relative;
+	width: 100%;
+	box-sizing: border-box;
+	transition: border-color 0.1s ease-in-out;
+}
+
+.nfd-typography-preview-item:hover {
+	border-color: var( --wp-components-color-accent, #999 );
+}
+
+.nfd-typography-preview-item:focus {
+	outline: none;
+	box-shadow: 0 0 0 1px var( --wp-components-color-accent, #007cba );
+}
+
+.nfd-typography-preview-item.is-selected {
+	border: 1px solid var( --wp-components-color-accent, #007cba ) !important;
+	outline: 2px solid var( --wp-components-color-accent, #007cba );
+	outline-offset: -1px;
+}
+
+.nfd-typography-selected-indicator {
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	width: 24px;
+	height: 24px;
+	background-color: var( --wp-components-color-accent, #007cba );
+	fill: #fff;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.nfd-typography-preview-heading {
+	font-size: 28px;
+	line-height: 1.2em;
+	color: #1e1e1e;
+	margin: 0 0 4px 0;
+}
+
+.nfd-typography-preview-body {
+	font-size: 16px;
+	line-height: 24px;
+	color: #1e1e1e;
+	margin: 0;
+	text-wrap: pretty;
+}
+
+.nfd-typography-preview-label {
+	position: absolute;
+	bottom: 8px;
+	right: 16px;
+	left: 16px;
+	font-size: 12px;
+	color: #757575;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* Style Preview Card */
+
+.nfd-design-studio-style-preview {
+	padding: 24px 48px;
+	min-height: 160px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	transition: all 0.2s ease;
+}
+
+.nfd-design-studio-style-preview:hover {
+	border-color: #c0c0c0;
+}
+
+.nfd-design-studio-style-preview-text h2 {
+	font-size: 64px;
+	font-weight: 500;
+	line-height: 1.2;
+	margin: 0;
+}
+
+.nfd-design-studio-style-preview-text p {
+	font-size: 16px;
+	margin: 4px 0 0 0;
+	opacity: 0.8;
+}
+
+.nfd-design-studio-style-preview-dots {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.nfd-design-studio-style-preview-dot {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	border: 2px solid rgba( 255, 255, 255, 0.8 );
+	box-shadow: 0 2px 4px rgba( 0, 0, 0, 0.1 );
+}
+
+.nfd-design-studio-color-palette-loading {
+	width: 100%;
+	height: 160px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
