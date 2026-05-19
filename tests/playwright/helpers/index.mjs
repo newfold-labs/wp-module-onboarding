@@ -38,6 +38,14 @@ export const SELECTORS = {
   onboardingContent: '.nfd-onboarding-content',
   mainContent: '#nfd-onboarding main',
 
+  onboardingPromptView: '[data-testid="onboarding-prompt-view"]',
+  onboardingChatView: '[data-testid="onboarding-chat-view"]',
+  onboardingMigrationView: '[data-testid="onboarding-migration-view"]',
+  onboardingPromptInput: '[data-testid="onboarding-prompt-input"]',
+  onboardingBuildNow: '[data-testid="onboarding-build-now"]',
+  onboardingImportSite: '[data-testid="onboarding-import-site"]',
+  onboardingMigrationTryAgain: '[data-testid="onboarding-migration-try-again"]',
+
   // Navigation buttons
   nextButton: 'button:has-text("Next")',
   backButton: 'button:has-text("Back")',
@@ -67,6 +75,40 @@ export async function navigateToOnboarding(page) {
  */
 export async function navigateToStep(page, stepPath) {
   await page.goto(`${ONBOARDING_BASE}#${stepPath}`);
+}
+
+/**
+ * Stub onboarding AI handshake + intake so E2E can exercise the prompt → chat
+ * transition without calling external services.
+ *
+ * @param {import('@playwright/test').Page} page
+ */
+export async function installOnboardingAiStubs(page) {
+  await page.route(/sitegen(?:\/|%2F)handshake/i, async (route) => {
+    if (route.request().method() !== 'POST') {
+      return route.continue();
+    }
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ site_id: 'playwright-site-id' }),
+    });
+  });
+
+  await page.route(/sitegen(?:\/|%2F)intake/i, async (route) => {
+    if (route.request().method() !== 'POST') {
+      return route.continue();
+    }
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        understanding: 'Sounds good.',
+        is_complete: false,
+        question: 'Which city should we highlight first?',
+      }),
+    });
+  });
 }
 
 /**
@@ -126,6 +168,8 @@ export async function resetOnboardingState() {
   await wordpress.wpCli('option delete nfd_module_onboarding_state_sitegen', { failOnNonZeroExit: false });
   await wordpress.wpCli('option delete nfd_module_onboarding_state_logogen', { failOnNonZeroExit: false });
   await wordpress.wpCli('option delete nfd_module_onboarding_state_blueprints', { failOnNonZeroExit: false });
+  await wordpress.wpCli('option delete nfd_module_onboarding_sitegen_site_id', { failOnNonZeroExit: false });
+  await wordpress.wpCli('option delete nfd_module_onboarding_sitegen_current_id', { failOnNonZeroExit: false });
 
   // Time tracking options
   await wordpress.wpCli('option delete nfd_module_onboarding_start_time', { failOnNonZeroExit: false });
