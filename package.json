@@ -41,7 +41,7 @@
 		"@wordpress/api-fetch": "^7.45.0",
 		"@wordpress/data": "^10.41.0",
 		"@wordpress/element": "^6.44.0",
-		"@wordpress/interface": "^9.30.0",
+		"@wordpress/interface": "^9.31.0",
 		"@wordpress/media-utils": "^5.46.0",
 		"@wordpress/style-engine": "^2.44.0",
 		"@wordpress/url": "^4.42.0",
