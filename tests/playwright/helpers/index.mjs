@@ -6,7 +6,7 @@
  * - Navigation Helpers
  * - Setup/Teardown Helpers
  */
-import { expect } from '@playwright/test';
+import { execSync } from 'child_process';
 import { join } from 'path';
 import { pathToFileURL } from 'url';
 
@@ -15,6 +15,20 @@ import { pathToFileURL } from 'url';
 // ============================================================================
 
 const pluginDir = process.env.PLUGIN_DIR || process.cwd();
+
+/**
+ * Run a bash snippet inside wp-env CLI (single container round-trip).
+ * Avoids spawning one slow `wp-env run cli wp …` exec per WP-CLI command.
+ *
+ * @param {string} bashScript Bash script lines (newline-separated).
+ */
+function runWpEnvBash(bashScript) {
+  execSync(`npx wp-env run cli bash -lc ${JSON.stringify(bashScript)}`, {
+    cwd: pluginDir,
+    encoding: 'utf8',
+    stdio: ['pipe', 'pipe', 'pipe'],
+  });
+}
 const finalHelpersPath = join(pluginDir, 'tests/playwright/helpers/index.mjs');
 const helpersUrl = pathToFileURL(finalHelpersPath).href;
 const pluginHelpers = await import(helpersUrl);
@@ -38,6 +52,14 @@ export const SELECTORS = {
   onboardingContent: '.nfd-onboarding-content',
   mainContent: '#nfd-onboarding main',
 
+  onboardingPromptView: '[data-testid="onboarding-prompt-view"]',
+  onboardingChatView: '[data-testid="onboarding-chat-view"]',
+  onboardingMigrationView: '[data-testid="onboarding-migration-view"]',
+  onboardingPromptInput: '[data-testid="onboarding-prompt-input"]',
+  onboardingBuildNow: '[data-testid="onboarding-build-now"]',
+  onboardingImportSite: '[data-testid="onboarding-import-site"]',
+  onboardingMigrationTryAgain: '[data-testid="onboarding-migration-try-again"]',
+
   // Navigation buttons
   nextButton: 'button:has-text("Next")',
   backButton: 'button:has-text("Back")',
@@ -57,7 +79,7 @@ export const SELECTORS = {
  * @param {import('@playwright/test').Page} page
  */
 export async function navigateToOnboarding(page) {
-  await page.goto(ONBOARDING_BASE);
+  await page.goto(ONBOARDING_BASE, { waitUntil: 'domcontentloaded' });
 }
 
 /**
@@ -70,22 +92,12 @@ export async function navigateToStep(page, stepPath) {
 }
 
 /**
- * Wait for onboarding app to be ready
- * @param {import('@playwright/test').Page} page
- */
-export async function waitForOnboarding(page) {
-  // Wait for the onboarding app container to be present
-  await page.waitForSelector(SELECTORS.onboardingApp, { timeout: 15000 });
-}
-
-/**
- * Combined setup: login, navigate to onboarding, and wait for it to load
+ * Combined setup: login and open onboarding.
  * @param {import('@playwright/test').Page} page
  */
 export async function setupAndNavigate(page) {
   await auth.loginToWordPress(page);
   await navigateToOnboarding(page);
-  await waitForOnboarding(page);
 }
 
 // ============================================================================
@@ -114,32 +126,33 @@ export const ONBOARDING_CAPABILITIES = {
  * - _transient_nfd_site_capabilities: Must include hasAISiteGen: true
  */
 export async function resetOnboardingState() {
-  // Core status options - these directly affect access checks
-  await wordpress.wpCli('option delete nfd_module_onboarding_status', { failOnNonZeroExit: false });
-  await wordpress.wpCli('option delete nfd_module_onboarding_flow', { failOnNonZeroExit: false });
+  utils.fancyLog('🔧 Batched onboarding test reset (WP-CLI)');
 
-  // Settings initialization flag - allows onboarding to re-initialize settings
-  await wordpress.wpCli('option delete nfd_module_onboarding_settings_initialized', { failOnNonZeroExit: false });
+  const optionsToClear = [
+    'nfd_module_htaccess_saved_state',
+    'nfd_module_onboarding_status',
+    'nfd_module_onboarding_flow',
+    'nfd_module_onboarding_settings_initialized',
+    'nfd_module_onboarding_state_input',
+    'nfd_module_onboarding_state_sitegen',
+    'nfd_module_onboarding_state_logogen',
+    'nfd_module_onboarding_state_blueprints',
+    'nfd_module_onboarding_sitegen_site_id',
+    'nfd_module_onboarding_sitegen_current_id',
+    'nfd_module_onboarding_start_time',
+    'nfd_module_onboarding_completed_time',
+    'nfd_module_onboarding_start_date',
+    'nfd_module_onboarding_can_restart',
+    'nfd_module_onboarding_should_redirect',
+  ];
 
-  // Redux state persistence - clears any saved UI state
-  await wordpress.wpCli('option delete nfd_module_onboarding_state_input', { failOnNonZeroExit: false });
-  await wordpress.wpCli('option delete nfd_module_onboarding_state_sitegen', { failOnNonZeroExit: false });
-  await wordpress.wpCli('option delete nfd_module_onboarding_state_logogen', { failOnNonZeroExit: false });
-  await wordpress.wpCli('option delete nfd_module_onboarding_state_blueprints', { failOnNonZeroExit: false });
+  const deletes = optionsToClear
+    .map((name) => `wp option delete ${name} >/dev/null 2>&1 || true`)
+    .join('; ');
 
-  // Time tracking options
-  await wordpress.wpCli('option delete nfd_module_onboarding_start_time', { failOnNonZeroExit: false });
-  await wordpress.wpCli('option delete nfd_module_onboarding_completed_time', { failOnNonZeroExit: false });
-  await wordpress.wpCli('option delete nfd_module_onboarding_start_date', { failOnNonZeroExit: false });
-
-  // Restart eligibility flag
-  await wordpress.wpCli('option delete nfd_module_onboarding_can_restart', { failOnNonZeroExit: false });
-
-  // Redirect handling
-  await wordpress.wpCli('option delete nfd_module_onboarding_should_redirect', { failOnNonZeroExit: false });
-
-  // Ensure required capabilities are set (hasAISiteGen is required for onboarding access)
-  await ensureOnboardingCapabilities();
+  runWpEnvBash(
+    `set +e; ${deletes}; wp eval "set_transient( 'nfd_site_capabilities', array( 'hasAISiteGen' => true, 'canMigrateSite' => true ) );"`
+  );
 }
 
 /**
@@ -149,16 +162,10 @@ export async function resetOnboardingState() {
  * onboarding can still function.
  */
 export async function ensureOnboardingCapabilities() {
-  // Use PHP eval to set transient with proper array format
-  const phpArray = Object.entries(ONBOARDING_CAPABILITIES)
-    .map(([key, value]) => {
-      const phpValue = typeof value === 'boolean' ? value.toString() : `'${value}'`;
-      return `'${key}' => ${phpValue}`;
-    })
-    .join(', ');
-
-  const command = `eval "set_transient('nfd_site_capabilities', array(${phpArray}));"`;
-  await wordpress.wpCli(command, { failOnNonZeroExit: false });
+  utils.fancyLog('🔧 Applying onboarding capability transient (batched)');
+  runWpEnvBash(
+    `wp eval "set_transient( 'nfd_site_capabilities', array( 'hasAISiteGen' => true, 'canMigrateSite' => true ) );"`
+  );
 }
 
 /**
@@ -166,7 +173,8 @@ export async function ensureOnboardingCapabilities() {
  * Clears saved state, disables cache, and clears optimization options
  */
 export async function resetHtaccessState() {
-  await wordpress.wpCli('option delete nfd_module_htaccess_saved_state', { failOnNonZeroExit: false });
+  utils.fancyLog('🔧 Clearing htaccess module saved state (batched)');
+  runWpEnvBash('wp option delete nfd_module_htaccess_saved_state >/dev/null 2>&1 || true');
   //   await wordpress.wpCli('option delete nfd_fonts_optimization', { failOnNonZeroExit: false });
   //   await wordpress.wpCli('option delete nfd_image_optimization', { failOnNonZeroExit: false });
   //   await wordpress.wpCli('option update newfold_cache_level 0', { failOnNonZeroExit: false });

@@ -36,6 +36,7 @@ const PromptView = ( {
 	return (
 		<motion.div
 			key="prompt"
+			data-testid="onboarding-prompt-view"
 			initial={ { opacity: 1 } }
 			exit={ { opacity: 0, y: -30 } }
 			transition={ { duration: 0.35, ease: 'easeInOut' } }
@@ -83,7 +84,9 @@ const PromptView = ( {
 							{ __( 'Or', 'wp-module-onboarding' ) }
 						</span>
 						<button
+							type="button"
 							onClick={ onMigrate }
+							data-testid="onboarding-import-site"
 							className="nfd-flex nfd-items-center nfd-justify-center nfd-gap-3 nfd-w-full nfd-px-6 nfd-py-4 nfd-bg-[rgb(232,240,254)] nfd-border nfd-border-solid nfd-border-[rgb(232,240,254)] nfd-rounded-xl nfd-cursor-pointer nfd-transition-all hover:nfd-border-[rgba(23,108,223,0.35)] hover:nfd-shadow-[0_0_0_4px_rgba(23,108,223,0.08)]"
 						>
 							<ArrowRightLeft className="nfd-w-5 nfd-h-5 nfd-text-primary" />
