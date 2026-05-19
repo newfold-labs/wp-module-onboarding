@@ -1,15 +1,16 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: newfold-labswp-module-staging\n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-onboarding/issues\n"
+"POT-Creation-Date: 2024-11-18T07:59:34+00:00\n"
+"PO-Revision-Date: 2026-05-19T18:40:20+00:00\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-18T07:59:34+00:00\n"
-"PO-Revision-Date: 2026-05-19T18:32:34+00:00\n"
-"Language: es_ES\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: wp-module-onboarding.pot\n"
 "X-Crowdin-File-ID: 32\n"
@@ -19,59 +20,74 @@ msgstr ""
 "X-Domain: wp-module-onboarding\n"
 "X-Generator: Poedit 3.6\n"
 
-#: bootstrap.php:57
-#: includes/Compatibility/Safe_Mode.php:44
-#: includes/Compatibility/Safe_Mode.php:45
-#: includes/WP_Admin.php:74
-#: includes/WP_Admin.php:75
-#: includes/WP_Admin.php:91
-msgid "Onboarding"
-msgstr "Primeros pasos"
+#: build/4.0.0/onboarding.js:3
+msgid "AI-generated sites may need refinement. You can customize everything later."
+msgstr "Los sitios generados por IA pueden necesitar un refinamiento. Puedes personalizar todo más adelante."
 
-#: includes/Compatibility/Safe_Mode.php:184
-msgid "Please upgrade your WordPress"
-msgstr "Por favor, actualiza tu WordPress"
+#: includes/Services/PostTypeService.php:54
+msgctxt "service"
+msgid "Add New"
+msgstr "Añadir Nuevo"
 
-#: includes/Compatibility/Safe_Mode.php:185
-msgid "To take advantage of the latest WordPress has to offer, our WordPress Onboarding to setup your website requires the latest version of WordPress."
-msgstr "Para aprovechar las ventajas de la última versión de WordPress, el proceso de puesta en marcha de tu sitio requiere la versión más reciente."
+#: includes/Services/PostTypeService.php:55
+msgid "Add New Service"
+msgstr "Añadir nuevo servicio"
 
-#. translators: 1: Current WP Version 2: Minimum Required version
-#: includes/Compatibility/Safe_Mode.php:191
-#, php-format
-msgid "Your WordPress version %1$s does not meet our minimum requirements of %2$s."
-msgstr "Tu versión de WordPress %1$s no cumple con nuestros requisitos mínimos de %2$s."
+#: includes/Services/PostTypeService.php:64
+msgid "All Services"
+msgstr "Todos los servicios"
 
-#: includes/Compatibility/Safe_Mode.php:207
-msgid "Upgrade WordPress"
-msgstr "Actualiza WordPress"
+#: build/4.0.0/onboarding.js:3
+msgid "An error occurred while attempting to set up your migration account."
+msgstr "Ocurrió un error al intentar configurar tu cuenta de migración."
 
-#: includes/Compatibility/Safe_Mode.php:211
-msgid "There was an error Upgrading WordPress."
-msgstr "Hubo un error al actualizar WordPress."
+#: includes/Services/Ai/AiServiceRequest.php:181
+msgid "An unknown error occurred"
+msgstr "Se ha producido un error desconocido"
 
-#: includes/Data/Brands.php:17
-msgid "your web host"
-msgstr "Tu alojamiento web"
+#: includes/Services/EventService.php:33
+msgid "Bad event structure/value."
+msgstr "Estructura o valor de evento incorrectos."
 
-#: includes/Data/Options.php:155
-#: includes/Data/Options.php:160
-#: includes/Data/Options.php:165
-#: includes/Data/Options.php:170
-#: includes/Data/Options.php:175
-#: includes/Data/Options.php:180
-#: includes/Data/Options.php:185
-#: includes/Data/Options.php:190
-#: includes/Data/Options.php:195
-#: includes/Data/Options.php:200
-msgid "Woocommerce Settings"
-msgstr "Entornos de Woocommerce"
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Base"
+msgstr "Base"
 
-#. translators: %d is the index of the palette
-#: includes/RestApi/DesignController.php:212
-#, php-format
-msgid "Palette %d"
-msgstr "Paleta %d"
+#: build/4.0.0/onboarding.js:3
+msgid "Bluehost logo"
+msgstr "Logotipo de Bluehost"
+
+#: build/4.0.0/onboarding.js:1
+msgid "Build now"
+msgstr "Construye ahora"
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
+msgstr "Elige una combinación de fuentes que refleje la personalidad de tu marca. Cada pareja se selecciona cuidadosamente para mejorar la legibilidad y el atractivo visual en tu sitio."
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Colors"
+msgstr "Colores"
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Contrast"
+msgstr "Contraste"
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Current logo"
+msgstr "Logotipo actual"
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Design Studio"
+msgstr "Estudio de Diseño"
+
+#: includes/Services/Webfonts.php:133
+msgid "Each webfont src must be a non-empty string."
+msgstr "Cada webfont src debe ser una cadena no vacía."
+
+#: includes/Services/PostTypeService.php:56
+msgid "Edit Service"
+msgstr "Servicio de edición"
 
 #: includes/RestApi/EventsController.php:68
 msgid "Event action"
@@ -85,17 +101,17 @@ msgstr "Categoría del evento"
 msgid "Event data"
 msgstr "Datos del evento"
 
-#: includes/RestApi/EventsController.php:108
-msgid "Request does not contain an array of events."
-msgstr "La solicitud no contiene una matriz de eventos."
+#: includes/Services/PostTypeService.php:70
+msgid "Filter by date"
+msgstr "Filtrar por fecha"
 
-#: includes/RestApi/EventsController.php:129
-msgid "Some events failed."
-msgstr "Algunos eventos fallaron."
+#: includes/Services/PostTypeService.php:69
+msgid "Filter services list"
+msgstr "Lista de servicios de filtrar"
 
-#: includes/Services/Ai/AiServiceRequest.php:181
-msgid "An unknown error occurred"
-msgstr "Se ha producido un error desconocido"
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Font Pairings"
+msgstr "Emparejamientos de fuentes"
 
 #: includes/Services/AppService.php:50
 msgid "Help us improve"
@@ -105,64 +121,149 @@ msgstr "Ayúdanos a mejorar"
 msgid "How satisfied were you with the ease of creating your website?"
 msgstr "¿Qué tan satisfecho estabas con la facilidad de crear tu sitio web?"
 
-#: includes/Services/EventService.php:33
-msgid "Bad event structure/value."
-msgstr "Estructura o valor de evento incorrectos."
+#: build/4.0.0/onboarding.js:1
+msgid "I want to build"
+msgstr "Quiero construir"
 
-#: includes/Services/PostTypeService.php:52
-msgctxt "post type general name"
-msgid "Services"
-msgstr "Servicios"
+#: build/4.0.0/onboarding.js:1
+msgid "Import an Existing WordPress Site"
+msgstr "Importar un sitio WordPress existente"
 
-#: includes/Services/PostTypeService.php:53
-msgctxt "post type singular name"
-msgid "Service"
-msgstr "Servicio"
+#: includes/Services/PostTypeService.php:67
+msgid "Insert into service"
+msgstr "Insertar en servicio"
 
-#: includes/Services/PostTypeService.php:54
-msgctxt "service"
-msgid "Add New"
-msgstr "Añadir Nuevo"
+#: build/4.0.0/onboarding.js:3
+msgid "Let's migrate your existing site"
+msgstr "Vamos a migrar tu sitio actual"
 
-#: includes/Services/PostTypeService.php:55
-msgid "Add New Service"
-msgstr "Añadir nuevo servicio"
-
-#: includes/Services/PostTypeService.php:56
-msgid "Edit Service"
-msgstr "Servicio de edición"
+#. translators: %s is the brand name (e.g., Bluehost, HostGator)
+#: build/4.0.0/onboarding.js:3
+msgid "Let's migrate your existing site to %s"
+msgstr "Vamos a migrar tu sitio actual a %s"
 
 #: includes/Services/PostTypeService.php:57
 msgid "New Service"
 msgstr "Nuevo servicio"
 
-#: includes/Services/PostTypeService.php:58
-msgid "View Service"
-msgstr "Ver servicio"
-
-#: includes/Services/PostTypeService.php:59
-msgid "View Services"
-msgstr "Ver servicios"
-
-#: includes/Services/PostTypeService.php:60
-msgid "Search Services"
-msgstr "Servicios de búsqueda"
-
-#: includes/Services/PostTypeService.php:61
-msgid "No services found."
-msgstr "No se han encontrado servicios."
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "No font pairings available."
+msgstr "No hay emparejamientos de fuentes disponibles."
 
 #: includes/Services/PostTypeService.php:62
 msgid "No services found in Trash."
 msgstr "No se encuentran servicios en Basura."
 
+#: includes/Services/PostTypeService.php:61
+msgid "No services found."
+msgstr "No se han encontrado servicios."
+
+#: bootstrap.php:57 includes/Compatibility/Safe_Mode.php:44 includes/Compatibility/Safe_Mode.php:45 includes/WP_Admin.php:74 includes/WP_Admin.php:75 includes/WP_Admin.php:91
+msgid "Onboarding"
+msgstr "Primeros pasos"
+
+#: build/4.0.0/onboarding.js:3
+msgid "Oops! Something went wrong"
+msgstr "¡Ups! Algo salió mal"
+
+#: build/4.0.0/onboarding.js:1
+msgid "Or"
+msgstr "O"
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Palette"
+msgstr "Paleta"
+
+#. translators: %d is the index of the palette
+#: includes/RestApi/DesignController.php:212
+#, php-format
+msgid "Palette %d"
+msgstr "Paleta %d"
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Paragraph text in your chosen font."
+msgstr "Texto de párrafo en la fuente que elijas."
+
 #: includes/Services/PostTypeService.php:63
 msgid "Parent Service:"
 msgstr "Servicio a los padres:"
 
-#: includes/Services/PostTypeService.php:64
-msgid "All Services"
-msgstr "Todos los servicios"
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Pick custom colors"
+msgstr "Elige colores personalizados"
+
+#: includes/Compatibility/Safe_Mode.php:184
+msgid "Please upgrade your WordPress"
+msgstr "Por favor, actualiza tu WordPress"
+
+#: build/4.0.0/onboarding.js:3
+msgid "Please wait a few seconds while we get your new account ready to import your existing WordPress site."
+msgstr "Por favor, espera unos segundos mientras preparamos tu nueva cuenta para importar tu sitio de WordPress existente."
+
+#: build/4.0.0/onboarding.js:3
+msgid "Preparing your account"
+msgstr "Preparando tu cuenta"
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Primary"
+msgstr "Primaria"
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Primary color"
+msgstr "Color primario"
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Remove"
+msgstr "Eliminar"
+
+#: includes/Services/PostTypeService.php:84
+msgid "Remove service featured image"
+msgstr "Eliminar imagen destacada del servicio"
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Replace"
+msgstr "Reemplazar"
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Replace logo"
+msgstr "Reemplazar logotipo"
+
+#: includes/RestApi/EventsController.php:108
+msgid "Request does not contain an array of events."
+msgstr "La solicitud no contiene una matriz de eventos."
+
+#: includes/Services/PostTypeService.php:60
+msgid "Search Services"
+msgstr "Servicios de búsqueda"
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Secondary"
+msgstr "Secundaria"
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Secondary color"
+msgstr "Color secundario"
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Select a font style."
+msgstr "Selecciona un estilo de fuente."
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Select a palette or customize individual colors."
+msgstr "Selecciona una paleta o personaliza colores individuales."
+
+#: build/4.0.0/onboarding.js:1
+msgid "Send message"
+msgstr "Enviar mensaje"
+
+#: includes/Services/PostTypeService.php:81
+msgid "Service"
+msgstr "Servicio"
+
+#: includes/Services/PostTypeService.php:53
+msgctxt "post type singular name"
+msgid "Service"
+msgstr "Servicio"
 
 #: includes/Services/PostTypeService.php:65
 msgid "Service Archives"
@@ -172,53 +273,33 @@ msgstr "Archivos de Servicio"
 msgid "Service Attributes"
 msgstr "Atributos de servicio"
 
-#: includes/Services/PostTypeService.php:67
-msgid "Insert into service"
-msgstr "Insertar en servicio"
-
-#: includes/Services/PostTypeService.php:68
-msgid "Uploaded to this service"
-msgstr "Subido a este servicio"
-
-#: includes/Services/PostTypeService.php:69
-msgid "Filter services list"
-msgstr "Lista de servicios de filtrar"
-
-#: includes/Services/PostTypeService.php:70
-msgid "Filter by date"
-msgstr "Filtrar por fecha"
-
-#: includes/Services/PostTypeService.php:71
-msgid "Services list navigation"
-msgstr "Navegación por la lista de servicios"
-
-#: includes/Services/PostTypeService.php:72
-msgid "Services list"
-msgstr "Lista de servicios"
-
-#: includes/Services/PostTypeService.php:73
-msgid "Service published."
-msgstr "Publicado por servicio."
+#: includes/Services/PostTypeService.php:82
+msgid "Service featured image"
+msgstr "Imagen destacada del servicio"
 
 #: includes/Services/PostTypeService.php:74
 msgid "Service published privately."
 msgstr "El servicio se publica de forma privada."
 
-#: includes/Services/PostTypeService.php:75
-msgid "Service reverted to draft."
-msgstr "El servicio volvió a ser reclutado."
-
-#: includes/Services/PostTypeService.php:76
-msgid "Service trashed."
-msgstr "El servicio está destrozado."
+#: includes/Services/PostTypeService.php:73
+msgid "Service published."
+msgstr "Publicado por servicio."
 
 #: includes/Services/PostTypeService.php:77
 msgid "Service restored from Trash."
 msgstr "Servicio restaurado de Trash."
 
+#: includes/Services/PostTypeService.php:75
+msgid "Service reverted to draft."
+msgstr "El servicio volvió a ser reclutado."
+
 #: includes/Services/PostTypeService.php:78
 msgid "Service scheduled."
 msgstr "Servicio programado."
+
+#: includes/Services/PostTypeService.php:76
+msgid "Service trashed."
+msgstr "El servicio está destrozado."
 
 #: includes/Services/PostTypeService.php:79
 msgid "Service updated."
@@ -228,220 +309,125 @@ msgstr "Servicio actualizado."
 msgid "Services"
 msgstr "Servicios"
 
-#: includes/Services/PostTypeService.php:81
-msgid "Service"
-msgstr "Servicio"
+#: includes/Services/PostTypeService.php:52
+msgctxt "post type general name"
+msgid "Services"
+msgstr "Servicios"
 
-#: includes/Services/PostTypeService.php:82
-msgid "Service featured image"
-msgstr "Imagen destacada del servicio"
+#: includes/Services/PostTypeService.php:72
+msgid "Services list"
+msgstr "Lista de servicios"
+
+#: includes/Services/PostTypeService.php:71
+msgid "Services list navigation"
+msgstr "Navegación por la lista de servicios"
 
 #: includes/Services/PostTypeService.php:83
 msgid "Set service featured image"
 msgstr "Imagen destacada del servicio del set"
 
-#: includes/Services/PostTypeService.php:84
-msgid "Remove service featured image"
-msgstr "Eliminar imagen destacada del servicio"
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Site Logo"
+msgstr "Logotipo del sitio"
+
+#: includes/RestApi/EventsController.php:129
+msgid "Some events failed."
+msgstr "Algunos eventos fallaron."
+
+#: build/4.0.0/onboarding.js:1
+msgid "Tell us what kind of website you want to build"
+msgstr "Cuéntanos qué tipo de página web quieres crear"
+
+#: includes/Compatibility/Safe_Mode.php:211
+msgid "There was an error Upgrading WordPress."
+msgstr "Hubo un error al actualizar WordPress."
+
+#: includes/Compatibility/Safe_Mode.php:185
+msgid "To take advantage of the latest WordPress has to offer, our WordPress Onboarding to setup your website requires the latest version of WordPress."
+msgstr "Para aprovechar las ventajas de la última versión de WordPress, el proceso de puesta en marcha de tu sitio requiere la versión más reciente."
+
+#: build/4.0.0/onboarding.js:3
+msgid "Try again"
+msgstr "Inténtalo de nuevo"
+
+#: includes/Compatibility/Safe_Mode.php:207
+msgid "Upgrade WordPress"
+msgstr "Actualiza WordPress"
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Upload Logo"
+msgstr "Logo de subida"
+
+#: build/4.0.0/onboarding-design-studio.js:1
+msgid "Upload a logo to represent your brand."
+msgstr "Sube un logo para representar tu marca."
+
+#: includes/Services/PostTypeService.php:68
+msgid "Uploaded to this service"
+msgstr "Subido a este servicio"
 
 #: includes/Services/PostTypeService.php:85
 msgid "Use as service featured image"
 msgstr "Imagen destacada de uso como servicio"
 
+#: includes/Services/PostTypeService.php:58
+msgid "View Service"
+msgstr "Ver servicio"
+
+#: includes/Services/PostTypeService.php:59
+msgid "View Services"
+msgstr "Ver servicios"
+
 #: includes/Services/Webfonts.php:118
 msgid "Webfont font family must be a non-empty string."
 msgstr "La familia de fuentes Webfont debe ser una cadena no vacía."
-
-#: includes/Services/Webfonts.php:125
-msgid "Webfont src must be a non-empty string or an array of strings."
-msgstr "Webfont src debe ser una cadena no vacía o un array de cadenas."
-
-#: includes/Services/Webfonts.php:133
-msgid "Each webfont src must be a non-empty string."
-msgstr "Cada webfont src debe ser una cadena no vacía."
 
 #: includes/Services/Webfonts.php:141
 msgid "Webfont font weight must be a properly formatted string or integer."
 msgstr "El peso de la fuente Webfont debe ser una cadena o entero con el formato apropiado."
 
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Base"
-msgstr ""
+#: includes/Services/Webfonts.php:125
+msgid "Webfont src must be a non-empty string or an array of strings."
+msgstr "Webfont src debe ser una cadena no vacía o un array de cadenas."
 
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Contrast"
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Primary"
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Secondary"
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Colors"
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Select a palette or customize individual colors."
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Palette"
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Pick custom colors"
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Site Logo"
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Replace logo"
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Replace"
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Current logo"
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Remove"
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Upload a logo to represent your brand."
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Upload Logo"
-msgstr ""
+#: includes/Data/Options.php:155 includes/Data/Options.php:160 includes/Data/Options.php:165 includes/Data/Options.php:170 includes/Data/Options.php:175 includes/Data/Options.php:180 includes/Data/Options.php:185 includes/Data/Options.php:190 includes/Data/Options.php:195 includes/Data/Options.php:200
+msgid "Woocommerce Settings"
+msgstr "Entornos de Woocommerce"
 
 #: build/4.0.0/onboarding-design-studio.js:1
 msgid "You don't have permission to change the site logo."
-msgstr ""
+msgstr "No tienes permiso para cambiar el logo del sitio."
+
+#. translators: 1: Current WP Version 2: Minimum Required version
+#: includes/Compatibility/Safe_Mode.php:191
+#, php-format
+msgid "Your WordPress version %1$s does not meet our minimum requirements of %2$s."
+msgstr "Tu versión de WordPress %1$s no cumple con nuestros requisitos mínimos de %2$s."
 
 #: build/4.0.0/onboarding-design-studio.js:1
 msgid "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Primary color"
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Secondary color"
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Paragraph text in your chosen font."
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Select a font style."
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Font Pairings"
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "No font pairings available."
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
-msgstr ""
-
-#: build/4.0.0/onboarding-design-studio.js:1
-msgid "Design Studio"
-msgstr ""
-
-#: build/4.0.0/onboarding.js:1
-msgid "I want to build"
-msgstr ""
-
-#: build/4.0.0/onboarding.js:1
-msgid "a photography portfolio with a booking page and gallery…"
-msgstr ""
-
-#: build/4.0.0/onboarding.js:1
-msgid "an online bakery with a menu and custom order form…"
-msgstr ""
-
-#: build/4.0.0/onboarding.js:1
-msgid "a travel blog with a newsletter signup…"
-msgstr ""
+msgstr "Tu logotipo aparecerá en la cabecera de tu sitio. Para obtener mejores resultados, sube una imagen con un fondo transparente en formato PNG."
 
 #: build/4.0.0/onboarding.js:1
 msgid "a fitness coaching site with class schedules and pricing…"
-msgstr ""
+msgstr "Un sitio de entrenamiento físico con horarios y precios..."
+
+#: build/4.0.0/onboarding.js:1
+msgid "a photography portfolio with a booking page and gallery…"
+msgstr "un portafolio fotográfico con una página de reservas y galería..."
 
 #: build/4.0.0/onboarding.js:1
 msgid "a restaurant site with an online menu and reservations…"
-msgstr ""
+msgstr "un sitio de restaurante con menú online y reservas..."
 
 #: build/4.0.0/onboarding.js:1
-msgid "Build now"
-msgstr ""
+msgid "a travel blog with a newsletter signup…"
+msgstr "un blog de viajes con suscripción a un boletín..."
 
 #: build/4.0.0/onboarding.js:1
-msgid "Tell us what kind of website you want to build"
-msgstr ""
+msgid "an online bakery with a menu and custom order form…"
+msgstr "una panadería online con menú y un formulario de pedido personalizado..."
 
-#: build/4.0.0/onboarding.js:1
-msgid "Or"
-msgstr ""
-
-#: build/4.0.0/onboarding.js:1
-msgid "Import an Existing WordPress Site"
-msgstr ""
-
-#: build/4.0.0/onboarding.js:1
-msgid "Send message"
-msgstr ""
-
-#. translators: %s is the brand name (e.g., Bluehost, HostGator)
-#: build/4.0.0/onboarding.js:3
-#, js-format
-msgid "Let's migrate your existing site to %s"
-msgstr ""
-
-#: build/4.0.0/onboarding.js:3
-msgid "Let's migrate your existing site"
-msgstr ""
-
-#: build/4.0.0/onboarding.js:3
-msgid "Please wait a few seconds while we get your new account ready to import your existing WordPress site."
-msgstr ""
-
-#: build/4.0.0/onboarding.js:3
-msgid "Oops! Something went wrong"
-msgstr ""
-
-#: build/4.0.0/onboarding.js:3
-msgid "An error occurred while attempting to set up your migration account."
-msgstr ""
-
-#: build/4.0.0/onboarding.js:3
-msgid "Try again"
-msgstr ""
-
-#: build/4.0.0/onboarding.js:3
-msgid "Preparing your account"
-msgstr ""
-
-#: build/4.0.0/onboarding.js:3
-msgid "Bluehost logo"
-msgstr ""
-
-#: build/4.0.0/onboarding.js:3
-msgid "AI-generated sites may need refinement. You can customize everything later."
-msgstr ""
+#: includes/Data/Brands.php:17
+msgid "your web host"
+msgstr "Tu alojamiento web"
