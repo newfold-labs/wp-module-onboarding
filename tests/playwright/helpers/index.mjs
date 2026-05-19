@@ -7,7 +7,6 @@
  * - Setup/Teardown Helpers
  */
 import { execSync } from 'child_process';
-import { expect } from '@playwright/test';
 import { join } from 'path';
 import { pathToFileURL } from 'url';
 
@@ -80,7 +79,7 @@ export const SELECTORS = {
  * @param {import('@playwright/test').Page} page
  */
 export async function navigateToOnboarding(page) {
-  await page.goto(ONBOARDING_BASE);
+  await page.goto(ONBOARDING_BASE, { waitUntil: 'domcontentloaded' });
 }
 
 /**
@@ -93,71 +92,12 @@ export async function navigateToStep(page, stepPath) {
 }
 
 /**
- * Stub onboarding AI handshake + intake so E2E can exercise the prompt → chat
- * transition without calling external services.
- *
- * @param {import('@playwright/test').Page} page
- */
-export async function installOnboardingAiStubs(page) {
-  await page.route(/sitegen(?:\/|%2F)handshake/i, async (route) => {
-    if (route.request().method() !== 'POST') {
-      return route.continue();
-    }
-    await route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify({ site_id: 'playwright-site-id' }),
-    });
-  });
-
-  await page.route(/sitegen(?:\/|%2F)intake/i, async (route) => {
-    if (route.request().method() !== 'POST') {
-      return route.continue();
-    }
-    await route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify({
-        understanding: 'Sounds good.',
-        is_complete: false,
-        question: 'Which city should we highlight first?',
-      }),
-    });
-  });
-}
-
-/**
- * Stub migration connect so tests do not wait on real external migration services.
- *
- * @param {import('@playwright/test').Page} page
- */
-export async function installMigrationConnectEmptyResponse(page) {
-  await page.route(/migrate(?:\/|%2F)connect/i, async (route) => {
-    await route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify({ body: {} }),
-    });
-  });
-}
-
-/**
- * Wait for onboarding app to be ready
- * @param {import('@playwright/test').Page} page
- */
-export async function waitForOnboarding(page) {
-  // Wait for the onboarding app container to be present
-  await page.waitForSelector(SELECTORS.onboardingApp, { timeout: 10000 });
-}
-
-/**
- * Combined setup: login, navigate to onboarding, and wait for it to load
+ * Combined setup: login and open onboarding.
  * @param {import('@playwright/test').Page} page
  */
 export async function setupAndNavigate(page) {
   await auth.loginToWordPress(page);
   await navigateToOnboarding(page);
-  await waitForOnboarding(page);
 }
 
 // ============================================================================
@@ -207,17 +147,12 @@ export async function resetOnboardingState() {
   ];
 
   const deletes = optionsToClear
-    .map(
-      (name) =>
-        `wp option delete ${name} >/dev/null 2>&1 || true`
-    )
-    .join('\n');
+    .map((name) => `wp option delete ${name} >/dev/null 2>&1 || true`)
+    .join('; ');
 
-  runWpEnvBash(`
-set +e
-${deletes}
-wp eval "set_transient( 'nfd_site_capabilities', array( 'hasAISiteGen' => true, 'canMigrateSite' => true ) );"
-`);
+  runWpEnvBash(
+    `set +e; ${deletes}; wp eval "set_transient( 'nfd_site_capabilities', array( 'hasAISiteGen' => true, 'canMigrateSite' => true ) );"`
+  );
 }
 
 /**
@@ -228,9 +163,9 @@ wp eval "set_transient( 'nfd_site_capabilities', array( 'hasAISiteGen' => true, 
  */
 export async function ensureOnboardingCapabilities() {
   utils.fancyLog('🔧 Applying onboarding capability transient (batched)');
-  runWpEnvBash(`
-wp eval "set_transient( 'nfd_site_capabilities', array( 'hasAISiteGen' => true, 'canMigrateSite' => true ) );"
-`);
+  runWpEnvBash(
+    `wp eval "set_transient( 'nfd_site_capabilities', array( 'hasAISiteGen' => true, 'canMigrateSite' => true ) );"`
+  );
 }
 
 /**
@@ -239,9 +174,7 @@ wp eval "set_transient( 'nfd_site_capabilities', array( 'hasAISiteGen' => true, 
  */
 export async function resetHtaccessState() {
   utils.fancyLog('🔧 Clearing htaccess module saved state (batched)');
-  runWpEnvBash(`
-wp option delete nfd_module_htaccess_saved_state >/dev/null 2>&1 || true
-`);
+  runWpEnvBash('wp option delete nfd_module_htaccess_saved_state >/dev/null 2>&1 || true');
   //   await wordpress.wpCli('option delete nfd_fonts_optimization', { failOnNonZeroExit: false });
   //   await wordpress.wpCli('option delete nfd_image_optimization', { failOnNonZeroExit: false });
   //   await wordpress.wpCli('option update newfold_cache_level 0', { failOnNonZeroExit: false });
