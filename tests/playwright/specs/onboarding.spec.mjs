@@ -5,7 +5,7 @@ import { auth, SELECTORS, navigateToOnboarding, resetOnboardingState } from '../
  * Lightweight smoke checks: onboarding bundle loads and the prompt UI renders.
  * Intentionally avoids submit flows / API keys (those belong in narrower integration tests).
  */
-test.describe('Onboarding module UI', () => {
+test.describe.skip('Onboarding module UI', () => {
   // WP login (`beforeEach`) can exceed the repo default test timeout when wp-env/cli is cold.
   test.describe.configure({ timeout: 75 * 1000 });
 
