@@ -5,15 +5,14 @@ import {
   navigateToOnboarding,
   waitForOnboarding,
   resetOnboardingState,
-  resetHtaccessState,
   installOnboardingAiStubs,
+  installMigrationConnectEmptyResponse,
 } from '../helpers/index.mjs';
 
 test.describe('Onboarding Module', () => {
-  test.describe.configure({ timeout: 120 * 1000 });
+  test.describe.configure({ timeout: 45 * 1000 });
 
   test.beforeAll(async () => {
-    await resetHtaccessState();
     await resetOnboardingState();
   });
 
@@ -64,35 +63,31 @@ test.describe('Onboarding Module', () => {
       await page.locator(SELECTORS.onboardingPromptInput).fill('A small cafe website.');
       await page.locator(SELECTORS.onboardingBuildNow).click();
 
-      await expect(page.locator(SELECTORS.onboardingChatView)).toBeVisible({ timeout: 15000 });
+      await expect(page.locator(SELECTORS.onboardingChatView)).toBeVisible({ timeout: 10000 });
       await expect(page.getByText('A small cafe website.')).toBeVisible();
       await expect(
         page.getByText(/Sounds good.|Which city should we highlight first/i)
-      ).toBeVisible({ timeout: 15000 });
+      ).toBeVisible({ timeout: 10000 });
     });
   });
 
   test.describe('Import / migration', () => {
     test('opening import shows migration view', async ({ page }) => {
+      await installMigrationConnectEmptyResponse(page);
+
       await navigateToOnboarding(page);
       await waitForOnboarding(page);
 
       await page.locator(SELECTORS.onboardingImportSite).click();
 
-      await expect(page.locator(SELECTORS.onboardingMigrationView)).toBeVisible({ timeout: 15000 });
+      await expect(page.locator(SELECTORS.onboardingMigrationView)).toBeVisible({ timeout: 10000 });
       await expect(
         page.getByRole('heading', { name: /migrate your existing site/i })
       ).toBeVisible();
     });
 
     test('migration shows error when connect omits redirect and Try again returns to prompt', async ({ page }) => {
-      await page.route(/migrate(?:\/|%2F)connect/i, async (route) => {
-        await route.fulfill({
-          status: 200,
-          contentType: 'application/json',
-          body: JSON.stringify({ body: {} }),
-        });
-      });
+      await installMigrationConnectEmptyResponse(page);
 
       await navigateToOnboarding(page);
       await waitForOnboarding(page);
@@ -100,13 +95,13 @@ test.describe('Onboarding Module', () => {
       await page.locator(SELECTORS.onboardingImportSite).click();
 
       await expect(page.locator(SELECTORS.onboardingMigrationTryAgain)).toBeVisible({
-        timeout: 15000,
+        timeout: 10000,
       });
       await expect(page.getByText(/Something went wrong/i)).toBeVisible();
 
       await page.locator(SELECTORS.onboardingMigrationTryAgain).click();
 
-      await expect(page.locator(SELECTORS.onboardingPromptView)).toBeVisible({ timeout: 15000 });
+      await expect(page.locator(SELECTORS.onboardingPromptView)).toBeVisible({ timeout: 10000 });
       await expect(page.locator(SELECTORS.onboardingMigrationView)).toBeHidden();
     });
   });
