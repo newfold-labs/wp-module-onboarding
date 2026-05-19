@@ -50,7 +50,7 @@
 		"classnames": "^2.3.2",
 		"colord": "^2.9.3",
 		"lottie-react": "^2.4.1",
-		"lucide-react": "^0.577.0",
+		"lucide-react": "^1.16.0",
 		"motion": "^12.38.0",
 		"posthog-js": "^1.373.5",
 		"react-router-dom": "^7.15.0",
