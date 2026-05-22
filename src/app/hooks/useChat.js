@@ -329,15 +329,17 @@ const useChat = () => {
 		const originPrompt = window.nfdOnboarding?.origin?.prompt;
 		const originChatHistory = window.nfdOnboarding?.origin?.chat_history;
 
-		let userPrompt = '';
+		const trimmedOriginPrompt = ( originPrompt || '' ).trim();
+		let userPrompt = trimmedOriginPrompt;
 		let conversation = [];
 
 		if ( originChatHistory ) {
-			userPrompt = ( originChatHistory.message || '' ).trim();
-			conversation = originChatHistory.nfd_origin_chat_history || [];
-		} else if ( originPrompt ) {
-			userPrompt = originPrompt.trim();
-			conversation = [ { role: 'user', content: userPrompt } ];
+			conversation = originChatHistory.chat_history || [];
+			if ( ! userPrompt ) {
+				userPrompt = ( originChatHistory.prompt || '' ).trim();
+			}
+		} else if ( trimmedOriginPrompt ) {
+			conversation = [ { role: 'user', content: trimmedOriginPrompt } ];
 		}
 
 		if ( ! userPrompt ) {
