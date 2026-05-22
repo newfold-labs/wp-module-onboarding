@@ -42,7 +42,7 @@ import {
 const useChat = () => {
 	const [ prompt, setPrompt ] = useState( '' );
 	const [ mode, setMode ] = useState( () =>
-		window.nfdOnboarding?.origin?.prompt ? 'chat' : 'prompt'
+		( window.nfdOnboarding?.origin?.prompt || window.nfdOnboarding?.origin?.chat_history ) ? 'chat' : 'prompt'
 	);
 	const [ chatInput, setChatInput ] = useState( '' );
 	const [ isWaiting, setIsWaiting ] = useState( false );
@@ -316,23 +316,29 @@ const useChat = () => {
 	 */
 	const handleOriginStart = useCallback( () => {
 		const originPrompt = window.nfdOnboarding?.origin?.prompt;
-		if ( ! originPrompt ) {
+		const originChatHistory = window.nfdOnboarding?.origin?.chat_history;
+
+		let userPrompt = '';
+		let conversation = [];
+		
+		if ( originChatHistory ) {
+			userPrompt = ( originChatHistory.message || '' ).trim();
+			conversation = originChatHistory.nfd_origin_chat_history || [];
+		} else if ( originPrompt ) {
+			userPrompt = originPrompt.trim();
+			conversation = [ { role: 'user', content: userPrompt } ];
+		}
+
+		if(!userPrompt) {
 			return;
 		}
 
-		const userPrompt = originPrompt.trim();
 		originalPromptRef.current = userPrompt;
-		conversationRef.current = [ { role: 'user', content: userPrompt } ];
+		conversationRef.current = conversation;
 		siteIdRef.current = select( nfdOnboardingStore ).getSiteId();
 
 		addMessage( { role: 'user', content: userPrompt } );
-
-		startTimeRef.current = Date.now();
-		sendOnboardingEvent( new OnboardingEvent( ACTION_ONBOARDING_STARTED ) );
-		sendOnboardingEvent( new OnboardingEvent( ACTION_INTAKE_PROMPT_SET, userPrompt ) );
-
-		setIsWaiting( true );
-
+		
 		const discoveryId = getNextId();
 		addMessage( {
 			id: discoveryId,

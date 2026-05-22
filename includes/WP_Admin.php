@@ -175,7 +175,10 @@ final class WP_Admin {
 			$nfd_onboarding_data = array(
 				'runtime' => Runtime::get_data(),
 				'sitegen' => ReduxStateService::get( 'sitegen' ),
-				'origin'  => array( 'prompt' => get_option( Options::get_origin_option_name( 'origin_prompt' ) ) ),
+				'origin'  => array( 
+					'prompt' => get_option( Options::get_origin_option_name( 'origin_prompt' ) ),
+					'chat_history' => json_decode( get_option( Options::get_origin_option_name( 'origin_chat_history' ) ) ?: '', true),
+				),
 			);
 			\wp_add_inline_script(
 				self::$slug,

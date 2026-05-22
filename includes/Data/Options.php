@@ -90,6 +90,7 @@ final class Options {
 	protected static $origin_options = array(
 		'origin_prompt'           => 'prompt',
 		'origin_prompt_completed' => 'prompt_completed',
+		'origin_chat_history'     => 'chat_history',
 	);
 
 	/**
