@@ -88,9 +88,10 @@ final class Options {
 	 * @var string
 	 */
 	protected static $origin_options = array(
-		'origin_prompt'           => 'prompt',
-		'origin_prompt_completed' => 'prompt_completed',
-		'origin_chat_history'     => 'chat_history',
+		'origin_prompt'           		=> 'prompt',
+		'origin_prompt_completed'		=> 'prompt_completed',
+		'origin_chat_history'     		=> 'chat_history',
+		'origin_chat_history_completed' => 'chat_history_completed',
 	);
 
 	/**
