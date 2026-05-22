@@ -51,7 +51,7 @@
        </div>
 </td>
        <td class="danger small"><div align="right">0.00%</div></td>
-       <td class="danger small"><div align="right">0&nbsp;/&nbsp;53</div></td>
+       <td class="danger small"><div align="right">0&nbsp;/&nbsp;57</div></td>
        <td class="danger big">       <div class="progress">
          <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="0.00" aria-valuemin="0" aria-valuemax="100" style="width: 0.00%">
            <span class="sr-only">0.00% covered (danger)</span>
@@ -80,7 +80,7 @@
        </div>
 </td>
        <td class="danger small"><div align="right">0.00%</div></td>
-       <td class="danger small"><div align="right">0&nbsp;/&nbsp;53</div></td>
+       <td class="danger small"><div align="right">0&nbsp;/&nbsp;57</div></td>
        <td class="danger big">       <div class="progress">
          <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="0.00" aria-valuemin="0" aria-valuemax="100" style="width: 0.00%">
            <span class="sr-only">0.00% covered (danger)</span>
@@ -89,7 +89,7 @@
 </td>
        <td class="danger small"><div align="right">0.00%</div></td>
        <td class="danger small"><div align="right">0&nbsp;/&nbsp;6</div></td>
-       <td class="danger small">240</td>
+       <td class="danger small">272</td>
        <td class="danger big">       <div class="progress">
          <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="0.00" aria-valuemin="0" aria-valuemax="100" style="width: 0.00%">
            <span class="sr-only">0.00% covered (danger)</span>
@@ -219,7 +219,7 @@
        </div>
 </td>
        <td class="danger small"><div align="right">0.00%</div></td>
-       <td class="danger small"><div align="right">0&nbsp;/&nbsp;4</div></td>
+       <td class="danger small"><div align="right">0&nbsp;/&nbsp;8</div></td>
        <td class="danger big">       <div class="progress">
          <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="0.00" aria-valuemin="0" aria-valuemax="100" style="width: 0.00%">
            <span class="sr-only">0.00% covered (danger)</span>
@@ -228,7 +228,7 @@
 </td>
        <td class="danger small"><div align="right">0.00%</div></td>
        <td class="danger small"><div align="right">0&nbsp;/&nbsp;1</div></td>
-       <td class="danger small">6</td>
+       <td class="danger small">12</td>
        <td class="danger" colspan="3"></td>
       </tr>
 
@@ -366,14 +366,19 @@
     <tr class=" d-flex"><td  class="col-1 text-right"><a id="126" href="#126">126</a></td><td class="col-11 codeLine"><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;void</span></td></tr>
     <tr class=" d-flex"><td  class="col-1 text-right"><a id="127" href="#127">127</a></td><td class="col-11 codeLine"><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span></td></tr>
     <tr class=" d-flex"><td  class="col-1 text-right"><a id="128" href="#128">128</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">private</span><span class="default">&nbsp;</span><span class="keyword">static</span><span class="default">&nbsp;</span><span class="keyword">function</span><span class="default">&nbsp;</span><span class="default">reset_prompt_origin</span><span class="keyword">(</span><span class="keyword">)</span><span class="keyword">:</span><span class="default">&nbsp;</span><span class="default">void</span><span class="default">&nbsp;</span><span class="keyword">{</span></td></tr>
-    <tr class="danger d-flex"><td  class="col-1 text-right"><a id="129" href="#129">129</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="default">$origin_prompt</span><span class="default">&nbsp;</span><span class="keyword">=</span><span class="default">&nbsp;</span><span class="default">get_option</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">Options</span><span class="default">::</span><span class="default">get_origin_option_name</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">'origin_prompt'</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="keyword">;</span></td></tr>
-    <tr class="danger d-flex"><td  class="col-1 text-right"><a id="130" href="#130">130</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">if</span><span class="default">&nbsp;</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="keyword">!</span><span class="default">&nbsp;</span><span class="keyword">empty</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">$origin_prompt</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">{</span></td></tr>
-    <tr class="danger d-flex"><td  class="col-1 text-right"><a id="131" href="#131">131</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="default">update_option</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">Options</span><span class="default">::</span><span class="default">get_origin_option_name</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">'origin_prompt_completed'</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="keyword">,</span><span class="default">&nbsp;</span><span class="default">$origin_prompt</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="keyword">;</span></td></tr>
-    <tr class=" d-flex"><td  class="col-1 text-right"><a id="132" href="#132">132</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">}</span></td></tr>
-    <tr class=" d-flex"><td  class="col-1 text-right"><a id="133" href="#133">133</a></td><td class="col-11 codeLine"></td></tr>
-    <tr class="danger d-flex"><td  class="col-1 text-right"><a id="134" href="#134">134</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="default">delete_option</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">Options</span><span class="default">::</span><span class="default">get_origin_option_name</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">'origin_prompt'</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="keyword">;</span></td></tr>
-    <tr class=" d-flex"><td  class="col-1 text-right"><a id="135" href="#135">135</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">}</span></td></tr>
-    <tr class=" d-flex"><td  class="col-1 text-right"><a id="136" href="#136">136</a></td><td class="col-11 codeLine"><span class="keyword">}</span></td></tr>
+    <tr class="danger d-flex"><td  class="col-1 text-right"><a id="129" href="#129">129</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="default">$origin_prompt</span><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">=</span><span class="default">&nbsp;</span><span class="default">get_option</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">Options</span><span class="default">::</span><span class="default">get_origin_option_name</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">'origin_prompt'</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="keyword">;</span></td></tr>
+    <tr class="danger d-flex"><td  class="col-1 text-right"><a id="130" href="#130">130</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="default">$origin_chat_history</span><span class="default">&nbsp;</span><span class="keyword">=</span><span class="default">&nbsp;</span><span class="default">get_option</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">Options</span><span class="default">::</span><span class="default">get_origin_option_name</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">'origin_chat_history'</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="keyword">;</span></td></tr>
+    <tr class="danger d-flex"><td  class="col-1 text-right"><a id="131" href="#131">131</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">if</span><span class="default">&nbsp;</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="keyword">!</span><span class="default">&nbsp;</span><span class="keyword">empty</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">$origin_prompt</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">{</span></td></tr>
+    <tr class="danger d-flex"><td  class="col-1 text-right"><a id="132" href="#132">132</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="default">update_option</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">Options</span><span class="default">::</span><span class="default">get_origin_option_name</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">'origin_prompt_completed'</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="keyword">,</span><span class="default">&nbsp;</span><span class="default">$origin_prompt</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="keyword">;</span></td></tr>
+    <tr class=" d-flex"><td  class="col-1 text-right"><a id="133" href="#133">133</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">}</span></td></tr>
+    <tr class="danger d-flex"><td  class="col-1 text-right"><a id="134" href="#134">134</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">if</span><span class="default">&nbsp;</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="keyword">!</span><span class="default">&nbsp;</span><span class="keyword">empty</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">$origin_chat_history</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">{</span></td></tr>
+    <tr class="danger d-flex"><td  class="col-1 text-right"><a id="135" href="#135">135</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="default">update_option</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">Options</span><span class="default">::</span><span class="default">get_origin_option_name</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">'origin_chat_history_completed'</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="keyword">,</span><span class="default">&nbsp;</span><span class="default">$origin_chat_history</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="keyword">;</span></td></tr>
+    <tr class=" d-flex"><td  class="col-1 text-right"><a id="136" href="#136">136</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">}</span></td></tr>
+    <tr class=" d-flex"><td  class="col-1 text-right"><a id="137" href="#137">137</a></td><td class="col-11 codeLine"></td></tr>
+    <tr class="danger d-flex"><td  class="col-1 text-right"><a id="138" href="#138">138</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="default">delete_option</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">Options</span><span class="default">::</span><span class="default">get_origin_option_name</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">'origin_prompt'</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="keyword">;</span></td></tr>
+    <tr class="danger d-flex"><td  class="col-1 text-right"><a id="139" href="#139">139</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="default">delete_option</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">Options</span><span class="default">::</span><span class="default">get_origin_option_name</span><span class="keyword">(</span><span class="default">&nbsp;</span><span class="default">'origin_chat_history'</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="default">&nbsp;</span><span class="keyword">)</span><span class="keyword">;</span></td></tr>
+    <tr class=" d-flex"><td  class="col-1 text-right"><a id="140" href="#140">140</a></td><td class="col-11 codeLine"><span class="default">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">}</span></td></tr>
+    <tr class=" d-flex"><td  class="col-1 text-right"><a id="141" href="#141">141</a></td><td class="col-11 codeLine"><span class="keyword">}</span></td></tr>
 
 </tbody>
 </table>
@@ -384,7 +389,7 @@
     <h4>Legend</h4>
     <p><span class="legend covered-by-small-tests">Covered by small (and larger) tests</span><span class="legend covered-by-medium-tests">Covered by medium (and large) tests</span><span class="legend covered-by-large-tests">Covered by large tests (and tests of unknown size)</span><span class="legend not-covered">Not covered</span><span class="legend not-coverable">Not coverable</span></p>
     <p>
-     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 9.2.32</a> using <a href="https://secure.php.net/" target="_top">PHP 7.4.33</a> at Thu May 21 17:49:17 UTC 2026.</small>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 9.2.32</a> using <a href="https://secure.php.net/" target="_top">PHP 7.4.33</a> at Fri May 22 20:40:09 UTC 2026.</small>
     </p>
     <a title="Back to the top" id="toplink" href="#">
         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill-rule="evenodd" d="M12 11L6 5l-6 6h12z"/></svg>
