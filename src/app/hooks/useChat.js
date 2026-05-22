@@ -42,7 +42,9 @@ import {
 const useChat = () => {
 	const [ prompt, setPrompt ] = useState( '' );
 	const [ mode, setMode ] = useState( () =>
-		( window.nfdOnboarding?.origin?.prompt || window.nfdOnboarding?.origin?.chat_history ) ? 'chat' : 'prompt'
+		window.nfdOnboarding?.origin?.prompt || window.nfdOnboarding?.origin?.chat_history
+			? 'chat'
+			: 'prompt'
 	);
 	const [ chatInput, setChatInput ] = useState( '' );
 	const [ isWaiting, setIsWaiting ] = useState( false );
@@ -164,7 +166,10 @@ const useChat = () => {
 							} catch {
 								discoveryDataRef.current[ discoveryTaskKey ] = data;
 							}
-							if ( discoveryTaskKey === 'site_type' && discoveryDataRef.current.site_type === 'eCommerce' ) {
+							if (
+								discoveryTaskKey === 'site_type' &&
+								discoveryDataRef.current.site_type === 'eCommerce'
+							) {
 								initializeEcommercePlugins();
 							}
 						}
@@ -282,9 +287,7 @@ const useChat = () => {
 				// eslint-disable-next-line no-console
 				console.error( '[SSE] stream error', err );
 
-				sendOnboardingEvent(
-					new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'stream_error' )
-				);
+				sendOnboardingEvent( new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'stream_error' ) );
 
 				retryCountRef.current++;
 
@@ -306,7 +309,15 @@ const useChat = () => {
 				abortRef.current = null;
 			}
 		},
-		[ setMessages, startAllTasks, handleDiscoveryEvent, finishAllTasks, addMessage, completeTask, getNextId ]
+		[
+			setMessages,
+			startAllTasks,
+			handleDiscoveryEvent,
+			finishAllTasks,
+			addMessage,
+			completeTask,
+			getNextId,
+		]
 	);
 
 	/**
@@ -320,7 +331,7 @@ const useChat = () => {
 
 		let userPrompt = '';
 		let conversation = [];
-		
+
 		if ( originChatHistory ) {
 			userPrompt = ( originChatHistory.message || '' ).trim();
 			conversation = originChatHistory.nfd_origin_chat_history || [];
@@ -329,7 +340,7 @@ const useChat = () => {
 			conversation = [ { role: 'user', content: userPrompt } ];
 		}
 
-		if(!userPrompt) {
+		if ( ! userPrompt ) {
 			return;
 		}
 
@@ -338,7 +349,7 @@ const useChat = () => {
 		siteIdRef.current = select( nfdOnboardingStore ).getSiteId();
 
 		addMessage( { role: 'user', content: userPrompt } );
-		
+
 		const discoveryId = getNextId();
 		addMessage( {
 			id: discoveryId,
@@ -484,9 +495,7 @@ const useChat = () => {
 			}
 			// eslint-disable-next-line no-console
 			console.error( '[Intake] error', err );
-			sendOnboardingEvent(
-				new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'intake_error' )
-			);
+			sendOnboardingEvent( new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'intake_error' ) );
 			patchMessage( typingId, {
 				content: 'Failed to connect to AI platform. Please try again.',
 				isTyping: false,
