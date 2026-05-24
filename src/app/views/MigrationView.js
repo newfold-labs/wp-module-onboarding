@@ -101,6 +101,7 @@ const MigrationView = ( { onBack } ) => {
 	return (
 		<motion.div
 			key="migration"
+			data-testid="onboarding-migration-view"
 			initial={ { opacity: 0, y: 0 } }
 			animate={ { opacity: 1, y: 0 } }
 			exit={ { opacity: 0, y: -20 } }
@@ -130,7 +131,9 @@ const MigrationView = ( { onBack } ) => {
 								</p>
 							</div>
 							<button
+								type="button"
 								onClick={ onBack }
+								data-testid="onboarding-migration-try-again"
 								className="nfd-flex nfd-items-center nfd-gap-2 nfd-mt-4 nfd-px-5 nfd-py-2.5 nfd-text-base nfd-font-medium nfd-text-primary nfd-bg-transparent nfd-border nfd-border-solid nfd-border-primary nfd-rounded-full nfd-cursor-pointer nfd-transition-colors hover:nfd-bg-blue-50"
 							>
 								<ArrowLeft size={ 18 } />
