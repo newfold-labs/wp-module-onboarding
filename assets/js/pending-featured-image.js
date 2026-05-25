@@ -50,6 +50,59 @@
 	};
 
 	/**
+	 * Build inline border-radius value from block `style.border.radius` attributes.
+	 *
+	 * @param {object} attrs Block attributes.
+	 * @return {string|null} CSS border-radius value or null.
+	 */
+	function getBorderRadiusValue( attrs ) {
+		var border = attrs && attrs.style && attrs.style.border;
+		if ( ! border || ! border.radius ) {
+			return null;
+		}
+
+		var radius = border.radius;
+
+		if ( 'string' === typeof radius ) {
+			return radius;
+		}
+
+		if ( 'object' === typeof radius ) {
+			return ( radius.topLeft || '0' ) + ' '
+				+ ( radius.topRight || '0' ) + ' '
+				+ ( radius.bottomRight || '0' ) + ' '
+				+ ( radius.bottomLeft || '0' );
+		}
+
+		return null;
+	}
+
+	/**
+	 * Merge layout and border styles so the editor preview matches frontend output.
+	 *
+	 * @param {object} attrs Block attributes.
+	 * @return {object} Style object for the pending `<img>`.
+	 */
+	function getPendingImageStyle( attrs ) {
+		attrs = attrs || {};
+
+		var style = {
+			width: '100%',
+			height: attrs.height || 'auto',
+			aspectRatio: attrs.aspectRatio || 'auto',
+			objectFit: attrs.scale || 'cover',
+			display: 'block',
+		};
+
+		var borderRadius = getBorderRadiusValue( attrs );
+		if ( borderRadius ) {
+			style.borderRadius = borderRadius;
+		}
+
+		return style;
+	}
+
+	/**
 	 * Resolve { url, hasFeatured } for the post this block instance refers to.
 	 *
 	 * - Inside a Query Loop the block receives a `context.postId` / `context.postType`
@@ -144,26 +197,21 @@
 				// Mirror the block's most common visual attributes so the preview
 				// matches what the frontend will render once the real image lands.
 				var attrs       = props.attributes || {};
-				var aspectRatio = attrs.aspectRatio || 'auto';
-				var height      = attrs.height || null;
+				var figureClass = [ baseClass, 'nfd-pending-featured-image', props.className ]
+					.filter( Boolean )
+					.join( ' ' );
 
 				return createElement(
 					'figure',
 					{
-						className: baseClass + ' nfd-pending-featured-image',
+						className: figureClass,
 						style: { margin: 0 },
 					},
 					createElement( 'img', {
 						src: data.url,
 						alt: '',
 						'data-nfd-pending-image': 'true',
-						style: {
-							width: '100%',
-							height: height || 'auto',
-							aspectRatio: aspectRatio,
-							objectFit: 'cover',
-							display: 'block',
-						},
+						style: getPendingImageStyle( attrs ),
 					} )
 				);
 			};
