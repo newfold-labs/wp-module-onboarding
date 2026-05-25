@@ -39,6 +39,36 @@ class ThumbnailService {
 		add_filter( 'render_block_core/post-featured-image', array( $this, 'use_pending_image_url_for_core_post_featured_block' ), 10, 3 );
 		add_filter( 'woocommerce_store_api_cart_item_images', array( $this, 'use_pending_image_url_for_cart_store_api' ), 10, 3 );
 		add_filter( 'rest_post_dispatch', array( $this, 'maybe_inject_images_wc_store_api_products' ), 10, 3 );
+
+		// Block editor preview: see enqueue_block_editor_assets() for context.
+		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+	}
+
+	/**
+	 * Enqueue the JS that mirrors `nfd_image_url` into the block editor canvas.
+	 *
+	 * PHP filters cannot replace what the editor shows for `core/post-featured-image`
+	 * because the block renders client-side from the post's `featured_media` field.
+	 * The companion script wraps the block's edit component and renders the meta
+	 * URL as a preview when no real attachment is set, so the editor matches the
+	 * frontend output without altering any saved data.
+	 *
+	 * @return void
+	 */
+	public function enqueue_block_editor_assets(): void {
+		if ( ! defined( 'NFD_ONBOARDING_PLUGIN_URL' ) ) {
+			return;
+		}
+
+		$version = defined( 'NFD_ONBOARDING_VERSION' ) ? NFD_ONBOARDING_VERSION : false;
+
+		wp_enqueue_script(
+			'nfd-onboarding-pending-featured-image',
+			NFD_ONBOARDING_PLUGIN_URL . '/assets/js/pending-featured-image.js',
+			array( 'wp-hooks', 'wp-data', 'wp-element', 'wp-compose', 'wp-blocks', 'wp-editor' ),
+			$version,
+			true
+		);
 	}
 
 	/**
@@ -82,13 +112,8 @@ class ThumbnailService {
 		if ( ! ( $product instanceof \WC_Product ) || ! $this->product_has_nfd_image_meta( $product ) ) {
 			return '';
 		}
-		if ( $product->get_image_id() ) {
-			return '';
-		}
 
-		$url = esc_url_raw( trim( $this->get_nfd_image_meta_raw_for_product( $product ) ) );
-
-		return $url ? $url : '';
+		return $this->get_nfd_pending_image_url_for_post( (int) $product->get_id() );
 	}
 
 	/**
@@ -298,19 +323,28 @@ class ThumbnailService {
 			if ( preg_match( $pattern, $block_content, $m ) ) {
 				$img_tag = $m[0];
 				$style   = '';
+				$class   = 'wp-post-image';
+
 				if ( preg_match( '/\sstyle=("|\')(.*?)\1/i', $img_tag, $sm ) ) {
 					$style = $sm[2];
 				}
+				if ( preg_match( '/\sclass=("|\')(.*?)\1/i', $img_tag, $cm ) ) {
+					$class = str_replace( 'woocommerce-placeholder', 'wp-post-image', $cm[2] );
+					$class = trim( preg_replace( '/\s+/', ' ', $class ) );
+				}
 
-				$new_img = '<img src="' . esc_url( $url ) . '"'
-					. ( '' !== $style ? ' style="' . esc_attr( $style ) . '"' : '' )
-					. ' class="wp-post-image"'
-					. ' alt="' . esc_attr( $product->get_name() ) . '"'
-					. ' decoding="async"'
-					. ' loading="lazy"'
-					. ' />';
+				$new_img = $this->build_pending_image_html(
+					$post_id,
+					array(
+						'style' => $style,
+						'class' => $class,
+						'alt'   => $product->get_name(),
+					)
+				);
 
-				return str_replace( $img_tag, $new_img, $block_content );
+				if ( '' !== $new_img ) {
+					return str_replace( $img_tag, $new_img, $block_content );
+				}
 			}
 		}
 
@@ -348,40 +382,26 @@ class ThumbnailService {
 			return $block_content;
 		}
 
-		$post_id = (int) $block_instance->context['postId'];
-		if ( $post_id <= 0 || '' === get_post_meta( $post_id, PostTypeService::META_IMAGE_URL, true ) ) {
-			return $block_content;
-		}
-
-		$post_type = get_post_type( $post_id );
-		if ( 'product' !== $post_type ) {
-			return $block_content;
-		}
-
-		if ( has_post_thumbnail( $post_id ) ) {
-			return $block_content;
-		}
-
 		if ( null !== $block_content && '' !== $block_content ) {
 			return $block_content;
 		}
 
-		$product = function_exists( 'wc_get_product' ) ? wc_get_product( $post_id ) : null;
-		if ( ! ( $product instanceof \WC_Product ) ) {
+		$post_id = (int) $block_instance->context['postId'];
+		if ( $post_id <= 0 || '' === $this->get_nfd_pending_image_url_for_post( $post_id ) ) {
 			return $block_content;
 		}
 
-		$url = $this->get_nfd_pending_image_url_for_wc_product( $product );
-		if ( '' === $url ) {
+		if ( ! function_exists( 'render_block_core_post_featured_image' ) ) {
 			return $block_content;
 		}
 
-		$title = get_the_title( $post_id );
-		$img   = '<img src="' . esc_url( $url ) . '" alt="' . esc_attr( $title ) . '" class="wp-post-image" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async" />';
-
-		$wrapper = get_block_wrapper_attributes( array( 'class' => 'wp-block-post-featured-image' ) );
-
-		return sprintf( '<figure %s>%s</figure>', $wrapper, $img );
+		// Re-run core rendering so block wrapper classes (e.g. nfd-rounded-t-lg) and img
+		// border styles from the pattern are preserved via `post_thumbnail_html`.
+		return render_block_core_post_featured_image(
+			$parsed_block['attrs'] ?? array(),
+			'',
+			$block_instance
+		);
 	}
 
 	/**
@@ -521,40 +541,109 @@ class ThumbnailService {
 
 
 	/**
+	 * Pending image URL from post meta when no featured attachment is set.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return string Non-empty esc_url_raw() value, or empty string.
+	 */
+	private function get_nfd_pending_image_url_for_post( int $post_id ): string {
+		if ( $post_id <= 0 || has_post_thumbnail( $post_id ) ) {
+			return '';
+		}
+
+		$raw = get_post_meta( $post_id, PostTypeService::META_IMAGE_URL, true );
+		if ( ! is_string( $raw ) || '' === trim( $raw ) ) {
+			return '';
+		}
+
+		$url = esc_url_raw( trim( $raw ) );
+
+		if ( ! $url || ! $this->is_usable_remote_image_url( $url ) ) {
+			return '';
+		}
+
+		return $url;
+	}
+
+	/**
+	 * Build a pending featured `<img>` tag, merging caller attributes (e.g. border-radius from blocks).
+	 *
+	 * @param int          $post_id Post ID.
+	 * @param string|array $attr    Attributes passed to `get_the_post_thumbnail()` / `wp_get_attachment_image()`.
+	 * @return string
+	 */
+	private function build_pending_image_html( int $post_id, $attr = array() ): string {
+		$url = $this->get_nfd_pending_image_url_for_post( $post_id );
+		if ( '' === $url ) {
+			return '';
+		}
+
+		if ( ! is_array( $attr ) ) {
+			$attr = array();
+		}
+
+		$title = get_the_title( $post_id );
+
+		$attr = wp_parse_args(
+			$attr,
+			array(
+				'src'   => $url,
+				'class' => 'wp-post-image',
+				'alt'   => is_string( $title ) ? trim( strip_tags( $title ) ) : '',
+			)
+		);
+
+		$attr['src'] = $url;
+
+		if ( function_exists( 'wp_get_loading_optimization_attributes' ) ) {
+			$attr = array_merge( $attr, wp_get_loading_optimization_attributes( 'img', $attr, 'nfd_pending_image' ) );
+		}
+
+		if ( empty( $attr['decoding'] ) ) {
+			$attr['decoding'] = 'async';
+		}
+
+		$attr['data-nfd-pending-image'] = 'true';
+
+		$width  = isset( $attr['width'] ) && is_numeric( $attr['width'] ) ? absint( $attr['width'] ) : 0;
+		$height = isset( $attr['height'] ) && is_numeric( $attr['height'] ) ? absint( $attr['height'] ) : 0;
+		unset( $attr['width'], $attr['height'] );
+
+		$hwstring = ( $width && $height ) ? image_hwstring( $width, $height ) : '';
+		$attr     = array_map( 'esc_attr', $attr );
+
+		$html = rtrim( '<img ' . $hwstring );
+
+		foreach ( $attr as $name => $value ) {
+			if ( '' === $value && 'alt' !== $name ) {
+				continue;
+			}
+			$html .= ' ' . $name . '="' . $value . '"';
+		}
+
+		return $html . ' />';
+	}
+
+	/**
 	 * Use pending image URL for all post types.
 	 *
 	 * @param string       $html                    Thumbnail HTML.
 	 * @param int          $post_id                 Post ID.
 	 * @param int          $unused_post_thumbnail_id Attachment ID (unused; required by filter signature).
 	 * @param string|int[] $unused_size             Registered size name or [w, h] array (unused).
-	 * @param string|array $unused_attr             Extra img attributes (unused).
+	 * @param string|array $attr                    Extra img attributes from the caller (border-radius, etc.).
 	 * @return string
 	 */
-	public function use_pending_image_url( string $html, int $post_id, int $unused_post_thumbnail_id, $unused_size, $unused_attr ): string { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
+	public function use_pending_image_url( string $html, int $post_id, int $unused_post_thumbnail_id, $unused_size, $attr ): string { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		if ( '' !== $html && null !== $html ) {
 			return $html;
 		}
 
-		$post_id              = (int) $post_id;
-		$supported_post_types = array( PostTypeService::SERVICE_POST_TYPE, 'post' );
-		if ( $post_id <= 0 || ! in_array( get_post_type( $post_id ), $supported_post_types, true ) ) {
-			return $html;
-		}
-		if ( '' === get_post_meta( $post_id, PostTypeService::META_IMAGE_URL, true ) ) {
+		$post_id = (int) $post_id;
+		if ( $post_id <= 0 || '' === get_post_meta( $post_id, PostTypeService::META_IMAGE_URL, true ) ) {
 			return $html;
 		}
 
-		$url = esc_url_raw( trim( (string) get_post_meta( $post_id, PostTypeService::META_IMAGE_URL, true ) ) );
-		if ( '' === $url ) {
-			return $html;
-		}
-
-		return '<img src="' . esc_url( $url ) . '"'
-			. ' style="width:100%;height:100%;object-fit:cover;"'
-			. ' class="wp-post-image"'
-			. ' alt="' . esc_attr( get_the_title( $post_id ) ) . '"'
-			. ' decoding="async"'
-			. ' loading="lazy"'
-			. ' />';
+		return $this->build_pending_image_html( $post_id, $attr );
 	}
 }
