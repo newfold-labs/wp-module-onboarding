@@ -39,6 +39,36 @@ class ThumbnailService {
 		add_filter( 'render_block_core/post-featured-image', array( $this, 'use_pending_image_url_for_core_post_featured_block' ), 10, 3 );
 		add_filter( 'woocommerce_store_api_cart_item_images', array( $this, 'use_pending_image_url_for_cart_store_api' ), 10, 3 );
 		add_filter( 'rest_post_dispatch', array( $this, 'maybe_inject_images_wc_store_api_products' ), 10, 3 );
+
+		// Block editor preview: see enqueue_block_editor_assets() for context.
+		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+	}
+
+	/**
+	 * Enqueue the JS that mirrors `nfd_image_url` into the block editor canvas.
+	 *
+	 * PHP filters cannot replace what the editor shows for `core/post-featured-image`
+	 * because the block renders client-side from the post's `featured_media` field.
+	 * The companion script wraps the block's edit component and renders the meta
+	 * URL as a preview when no real attachment is set, so the editor matches the
+	 * frontend output without altering any saved data.
+	 *
+	 * @return void
+	 */
+	public function enqueue_block_editor_assets(): void {
+		if ( ! defined( 'NFD_ONBOARDING_PLUGIN_URL' ) ) {
+			return;
+		}
+
+		$version = defined( 'NFD_ONBOARDING_VERSION' ) ? NFD_ONBOARDING_VERSION : false;
+
+		wp_enqueue_script(
+			'nfd-onboarding-pending-featured-image',
+			NFD_ONBOARDING_PLUGIN_URL . '/assets/js/pending-featured-image.js',
+			array( 'wp-hooks', 'wp-data', 'wp-element', 'wp-compose', 'wp-blocks', 'wp-editor' ),
+			$version,
+			true
+		);
 	}
 
 	/**
