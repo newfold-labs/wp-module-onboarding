@@ -16,8 +16,7 @@ import App from '@';
 // Check if the runtime data object is mounted.
 export const runtimeDataObjectIsMounted = () => {
 	return (
-		'object' === typeof window?.nfdOnboarding?.runtime &&
-		'buildUrl' in window.nfdOnboarding.runtime
+		'object' === typeof window?.nfdOnboarding?.runtime && 'buildUrl' in window.nfdOnboarding.runtime
 	);
 };
 
@@ -105,7 +104,5 @@ if ( runtimeDataObjectIsMounted() ) {
 	} );
 } else {
 	/* eslint-disable no-console */
-	console.log(
-		'Cannot find Newfold Onboarding runtime data to set __webpack_public_path__.'
-	);
+	console.log( 'Cannot find Newfold Onboarding runtime data to set __webpack_public_path__.' );
 }

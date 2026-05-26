@@ -212,10 +212,7 @@ export async function runNavigation( { discoveryData, ctx } ) {
 		return 'Skipped — no pages';
 	}
 
-	const result = await setupSiteNavigationMenu(
-		discoveryData?.site_type ?? '',
-		ctx.createdPages
-	);
+	const result = await setupSiteNavigationMenu( discoveryData?.site_type ?? '', ctx.createdPages );
 
 	if ( result?.error ) {
 		throw result.error;
