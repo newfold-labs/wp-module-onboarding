@@ -18,6 +18,8 @@ import {
 	reportSiteGenPublished,
 } from '@/utils/api/onboarding';
 import { transformColorPalette } from '@/hooks/publish/tasks';
+import { normalizeBlockContent } from '@/utils/helpers';
+
 /**
  * Each step function receives { generationData, discoveryData, ctx } and returns
  * a result string. ctx is a shared context object for passing data between steps
@@ -97,7 +99,8 @@ export async function runPages( { generationData, ctx } ) {
 
 	for ( const entry of pages ) {
 		const isHome = entry.is_front_page || entry.slug === 'home' || entry.path === '/';
-		const page = await createPage( entry.title, entry.content, {
+		const normalizedContent = normalizeBlockContent( entry.content );
+		const page = await createPage( entry.title, normalizedContent, {
 			template: 'page-no-title',
 			slug: entry.slug,
 			meta: {
@@ -133,10 +136,12 @@ export async function runTemplateParts( { generationData } ) {
 	const footer = generationData.sitekit?.footer;
 
 	if ( header ) {
-		await updateTemplatePart( 'header', header );
+		const normalizedHeader = normalizeBlockContent( header );
+		await updateTemplatePart( 'header', normalizedHeader );
 	}
 	if ( footer ) {
-		await updateTemplatePart( 'footer', footer );
+		const normalizedFooter = normalizeBlockContent( footer );
+		await updateTemplatePart( 'footer', normalizedFooter );
 	}
 
 	// Update the page-no-title template to fix spacing between header and content.
@@ -148,7 +153,8 @@ export async function runTemplateParts( { generationData } ) {
 		'</main>\n' +
 		'<!-- /wp:group -->\n\n' +
 		'<!-- wp:template-part {"slug":"footer","theme":"bluehost-blueprint","area":"footer"} /-->';
-	await updateTemplate( 'page-no-title', pageNoTitleContent );
+	const normalizedPageNoTitleContent = normalizeBlockContent( pageNoTitleContent );
+	await updateTemplate( 'page-no-title', normalizedPageNoTitleContent );
 
 	return 'Header and footer configured';
 }
@@ -160,7 +166,8 @@ export async function runArticles( { generationData } ) {
 	for ( const article of articles ) {
 		const featuredMediaURL = article.featured_image ?? null;
 
-		await createPost( article.title, article.content, article.excerpt || '', {
+		const normalizedContent = normalizeBlockContent( article.content );
+		await createPost( article.title, normalizedContent, article.excerpt || '', {
 			meta: {
 				nfd_onboarding_generated: '1',
 				...( featuredMediaURL ? { nfd_image_url: featuredMediaURL } : {} ),
@@ -181,7 +188,8 @@ export async function runServices( { generationData } ) {
 	for ( const service of services ) {
 		const featuredMediaURL = service.featured_image ?? null;
 
-		await createService( service.title, service.content, service.excerpt || '', {
+		const normalizedContent = normalizeBlockContent( service.content );
+		await createService( service.title, normalizedContent, service.excerpt || '', {
 			meta: {
 				nfd_onboarding_generated: '1',
 				...( featuredMediaURL ? { nfd_image_url: featuredMediaURL } : {} ),

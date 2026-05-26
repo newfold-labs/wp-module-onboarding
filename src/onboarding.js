@@ -10,6 +10,8 @@ import { nfdOnboardingStore, initializeStoreDbSyncServices } from '@/data/store'
 import { isCypress } from '@/utils/helpers';
 import './webpack-public-path';
 import { PostHogProvider } from 'posthog-js/react';
+import { registerCoreBlocks } from '@wordpress/block-library';
+import { getBlockTypes } from '@wordpress/blocks';
 
 import App from '@';
 
@@ -54,6 +56,18 @@ const initializeAnalytics = () => {
 	} );
 };
 
+/**
+ * Register core WordPress blocks so that `parse()` / `serialize()` from
+ * `@wordpress/blocks` can round-trip AI-generated block markup without
+ * dropping core block types. The guard is defensive in case another script
+ * registers core blocks first.
+ */
+const registerWpBlocks = () => {
+	if ( ! getBlockTypes().some( ( block ) => block.name.startsWith( 'core/' ) ) ) {
+		registerCoreBlocks();
+	}
+};
+
 const AppRender = () => {
 	// check session replay rollout capability flag
 	if ( window.NewfoldRuntime?.capabilities?.hasPHSessionReplay ) {
@@ -81,6 +95,7 @@ if ( runtimeDataObjectIsMounted() ) {
 	domReady( () => {
 		initializeSentry();
 		initializeAnalytics();
+		registerWpBlocks();
 		startOnboarding();
 
 		// Hydrate the Redux store with server-side runtime and sitegen data.
