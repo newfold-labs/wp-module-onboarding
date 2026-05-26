@@ -110,15 +110,29 @@ class EcommerceSiteTypeService {
 		if ( is_wp_error( $product_id ) || ! $product_id ) {
 			return new \WP_Error( 'error_publishing_woo_product', 'Failed to create product' );
 		}
-		// Product meta.
-		update_post_meta( $product_id, '_regular_price', $price );
-		update_post_meta( $product_id, '_price', $price );
-		update_post_meta( $product_id, '_stock_status', 'instock' );
-		update_post_meta( $product_id, '_manage_stock', 'no' );
-
 		// Product categories.
 		if ( ! empty( $categories ) ) {
 			wp_set_post_terms( $product_id, $categories, 'product_cat' );
+		}
+
+		// Register as a simple product and sync WC lookup tables so Shop / product
+		// blocks (WC_Product_Query) can find these products — not just category archives.
+		wp_set_object_terms( $product_id, 'simple', 'product_type', false );
+
+		if ( function_exists( 'wc_get_product' ) ) {
+			$product = wc_get_product( $product_id );
+			if ( $product ) {
+				$product->set_regular_price( (string) $price );
+				$product->set_price( (string) $price );
+				$product->set_stock_status( 'instock' );
+				$product->set_manage_stock( false );
+				$product->save();
+			}
+		} else {
+			update_post_meta( $product_id, '_regular_price', $price );
+			update_post_meta( $product_id, '_price', $price );
+			update_post_meta( $product_id, '_stock_status', 'instock' );
+			update_post_meta( $product_id, '_manage_stock', 'no' );
 		}
 
 		// Store the image URL as meta for async sideloading after onboarding completes.

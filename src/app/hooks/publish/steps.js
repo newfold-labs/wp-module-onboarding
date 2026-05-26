@@ -5,7 +5,6 @@ import {
 	createPost,
 	updateTemplate,
 	updateTemplatePart,
-	createNavigationMenu,
 	createService,
 	publishProducts,
 } from '@/utils/api/wordpress';
@@ -16,6 +15,7 @@ import {
 	enableJetpackModules,
 	completeOnboarding,
 	reportSiteGenPublished,
+	setupSiteNavigationMenu,
 } from '@/utils/api/onboarding';
 import { transformColorPalette } from '@/hooks/publish/tasks';
 /**
@@ -207,12 +207,21 @@ export async function runProducts( { generationData } ) {
 	return `${ count } product${ count !== 1 ? 's' : '' } published`;
 }
 
-export async function runNavigation( { ctx } ) {
-	if ( ctx.createdPages.length > 0 ) {
-		await createNavigationMenu( ctx.createdPages );
-		return 'Navigation menu created';
+export async function runNavigation( { discoveryData, ctx } ) {
+	if ( ctx.createdPages.length === 0 ) {
+		return 'Skipped — no pages';
 	}
-	return 'Skipped — no pages';
+
+	const result = await setupSiteNavigationMenu(
+		discoveryData?.site_type ?? '',
+		ctx.createdPages
+	);
+
+	if ( result?.error ) {
+		throw result.error;
+	}
+
+	return 'Navigation menu created';
 }
 
 export async function runFinalize() {

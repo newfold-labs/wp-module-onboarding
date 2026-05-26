@@ -8,6 +8,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteNavigationService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService;
 
 /**
@@ -46,6 +47,18 @@ class SiteContentController {
 				),
 			)
 		);
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/setup-nav-menu',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'setup_nav_menu' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+					'args'                => $this->get_setup_nav_menu_args(),
+				),
+			)
+		);
 	}
 
 	/**
@@ -64,25 +77,92 @@ class SiteContentController {
 			return new \WP_REST_Response( array( 'created' => 0 ), 200 );
 		}
 
-		// Ensure WooCommerce is active before creating products.
-		if ( ! class_exists( 'WooCommerce' ) ) {
-			$plugin_file = 'woocommerce/woocommerce.php';
-
-			if ( file_exists( WP_PLUGIN_DIR . '/' . $plugin_file ) ) {
-				// Installed but inactive — activate synchronously.
-				$result = activate_plugin( $plugin_file );
-				if ( is_wp_error( $result ) ) {
-					return new \WP_REST_Response( array( 'error' => 'WooCommerce could not be activated.' ), 500 );
-				}
-			} else {
-				// Not installed — trigger background install+activation queue.
-				EcommerceSiteTypeService::install_ecommerce_plugins();
-				return new \WP_REST_Response( array( 'status' => 'installing' ), 202 );
-			}
+		$wc_response = $this->ensure_woocommerce_active();
+		if ( null !== $wc_response ) {
+			return $wc_response;
 		}
 
 		$created_ids = EcommerceSiteTypeService::publish_products( $products );
 
 		return new \WP_REST_Response( array( 'created' => count( $created_ids ) ), 200 );
+	}
+
+	/**
+	 * Setup the navigation menu from publish pages, including WooCommerce Shop for ecommerce sites.
+	 *
+	 * @param \WP_REST_Request $request The REST request object.
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function setup_nav_menu( \WP_REST_Request $request ) {
+		$site_type = $request->get_param( 'site_type' ) ?? '';
+		$pages     = $request->get_param( 'pages' ) ?? array();
+
+		if ( empty( $pages ) ) {
+			return new \WP_REST_Response( array( 'error' => 'No pages provided.' ), 400 );
+		}
+
+		if ( 'ecommerce' === strtolower( $site_type ) ) {
+			$wc_response = $this->ensure_woocommerce_active();
+			if ( null !== $wc_response ) {
+				return $wc_response;
+			}
+		}
+
+		$navigation_service = new SiteNavigationService();
+		$result             = $navigation_service->setup_site_nav_menu( $site_type, $pages );
+
+		if ( ! $result ) {
+			return new \WP_Error(
+				'nfd_onboarding_error',
+				__( 'Error at Setting up the nav menu.', 'wp-module-onboarding' ),
+				array( 'status' => 500 )
+			);
+		}
+
+		return new \WP_REST_Response( array( 'success' => $result ), 200 );
+	}
+
+	/**
+	 * Gets the arguments for the 'setup-nav-menu' endpoint.
+	 *
+	 * @return array The array of arguments.
+	 */
+	public function get_setup_nav_menu_args() {
+		return array(
+			'site_type' => array(
+				'required' => false,
+				'type'     => 'string',
+			),
+			'pages'     => array(
+				'required' => true,
+				'type'     => 'array',
+			),
+		);
+	}
+
+	/**
+	 * Ensure WooCommerce is active before ecommerce operations.
+	 *
+	 * @return \WP_REST_Response|null Null when WooCommerce is ready, response when blocked.
+	 */
+	private function ensure_woocommerce_active(): ?\WP_REST_Response {
+		if ( class_exists( 'WooCommerce' ) ) {
+			return null;
+		}
+
+		$plugin_file = 'woocommerce/woocommerce.php';
+
+		if ( file_exists( WP_PLUGIN_DIR . '/' . $plugin_file ) ) {
+			$result = activate_plugin( $plugin_file );
+			if ( is_wp_error( $result ) ) {
+				return new \WP_REST_Response( array( 'error' => 'WooCommerce could not be activated.' ), 500 );
+			}
+
+			return null;
+		}
+
+		EcommerceSiteTypeService::install_ecommerce_plugins();
+
+		return new \WP_REST_Response( array( 'status' => 'installing' ), 202 );
 	}
 }

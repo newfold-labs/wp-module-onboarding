@@ -248,13 +248,14 @@ export async function getSitePages( prompt, siteType ) {
 	);
 }
 
-export async function setupSiteNavigationMenu( siteType = '' ) {
+export async function setupSiteNavigationMenu( siteType = '', pages = [] ) {
 	return await resolve(
 		apiFetch( {
-			url: onboardingRestURL( 'sitegen/setup-nav-menu' ),
+			url: onboardingRestURL( 'site-content/setup-nav-menu' ),
 			method: 'POST',
 			data: {
 				site_type: siteType,
+				pages,
 			},
 		} ).then()
 	);
