@@ -1,3 +1,15 @@
+'use strict';
+
+/**
+ * Resolve @wordpress/eslint-plugin from @wordpress/scripts without adding it
+ * as a separate project dependency.
+ */
+const { createRequire } = require( 'module' );
+const wpScriptsRequire = createRequire(
+	require.resolve( '@wordpress/scripts/package.json' )
+);
+const wpPlugin = wpScriptsRequire( '@wordpress/eslint-plugin' );
+
 const restrictedImports = [
 	{
 		name: 'framer-motion',
@@ -6,10 +18,7 @@ const restrictedImports = [
 	},
 	{
 		name: 'lodash',
-		// [TODO] Update this list as we start moving away from lodash.
-		importNames: [
-			'memoize',
-		],
+		importNames: [ 'memoize' ],
 		message:
 			'This Lodash method is not recommended. Please use native functionality instead. If using `memoize`, please use `memize` instead.',
 	},
@@ -21,7 +30,8 @@ const restrictedImports = [
 	{
 		name: 'redux',
 		importNames: [ 'combineReducers' ],
-		message: 'Please use `combineReducers` from `@wordpress/data` instead.',
+		message:
+			'Please use `combineReducers` from `@wordpress/data` instead.',
 	},
 	{
 		name: 'puppeteer-testing-library',
@@ -49,48 +59,46 @@ const restrictedImports = [
 	},
 ];
 
-module.exports = {
-	root: true,
-	extends: [
-		'plugin:@wordpress/eslint-plugin/recommended-with-formatting',
-	],
-	settings: {
-		'import/resolver': {
-			alias: {
-				map: [
-					[ '@', './src/app' ],
-				],
-				extensions: [ '.js', '.jsx', '.json', '.css', '.scss' ],
+module.exports = [
+	{
+		ignores: [ '**/build/**', '**/node_modules/**', '**/vendor/**' ],
+	},
+
+	...wpPlugin.configs[ 'recommended-with-formatting' ],
+
+	{
+		settings: {
+			'import/resolver': {
+				alias: {
+					map: [ [ '@', './src/app' ] ],
+					extensions: [ '.js', '.jsx', '.json', '.css', '.scss' ],
+				},
 			},
 		},
-	},
-	globals: {
-		__: true,
-		_n: true,
-		sprintf: true,
-		useContext: true,
-		useEffect: true,
-		useState: true,
-		useLocation: true,
-		useNavigate: true,
-	},
-	rules: {
-		'no-restricted-imports': [
-			'error',
-			{
-				paths: restrictedImports,
+		languageOptions: {
+			globals: {
+				__: 'readonly',
+				_n: 'readonly',
+				sprintf: 'readonly',
+				useContext: 'readonly',
+				useEffect: 'readonly',
+				useState: 'readonly',
+				useLocation: 'readonly',
+				useNavigate: 'readonly',
 			},
-		],
-		'jsdoc/check-param-names': 'off',
-		'jsdoc/no-undefined-types': [
-			'error',
-			{
-				definedTypes: [
-					'React',
-					'JSX',
-					'ReactNode',
-				],
-			},
-		],
+		},
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{ paths: restrictedImports },
+			],
+			'jsdoc/check-param-names': 'off',
+			'jsdoc/no-undefined-types': [
+				'error',
+				{
+					definedTypes: [ 'React', 'JSX', 'ReactNode' ],
+				},
+			],
+		},
 	},
-};
+];
