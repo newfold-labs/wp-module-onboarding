@@ -77,7 +77,7 @@ class SiteContentController {
 			return new \WP_REST_Response( array( 'created' => 0 ), 200 );
 		}
 
-		$wc_response = $this->ensure_woocommerce_active();
+		$wc_response = EcommerceSiteTypeService::ensure_woocommerce_active();
 		if ( null !== $wc_response ) {
 			return $wc_response;
 		}
@@ -102,7 +102,7 @@ class SiteContentController {
 		}
 
 		if ( 'ecommerce' === strtolower( $site_type ) ) {
-			$wc_response = $this->ensure_woocommerce_active();
+			$wc_response = EcommerceSiteTypeService::ensure_woocommerce_active();
 			if ( null !== $wc_response ) {
 				return $wc_response;
 			}
@@ -140,29 +140,5 @@ class SiteContentController {
 		);
 	}
 
-	/**
-	 * Ensure WooCommerce is active before ecommerce operations.
-	 *
-	 * @return \WP_REST_Response|null Null when WooCommerce is ready, response when blocked.
-	 */
-	private function ensure_woocommerce_active(): ?\WP_REST_Response {
-		if ( class_exists( 'WooCommerce' ) ) {
-			return null;
-		}
 
-		$plugin_file = 'woocommerce/woocommerce.php';
-
-		if ( file_exists( WP_PLUGIN_DIR . '/' . $plugin_file ) ) {
-			$result = activate_plugin( $plugin_file );
-			if ( is_wp_error( $result ) ) {
-				return new \WP_REST_Response( array( 'error' => 'WooCommerce could not be activated.' ), 500 );
-			}
-
-			return null;
-		}
-
-		EcommerceSiteTypeService::install_ecommerce_plugins();
-
-		return new \WP_REST_Response( array( 'status' => 'installing' ), 202 );
-	}
 }

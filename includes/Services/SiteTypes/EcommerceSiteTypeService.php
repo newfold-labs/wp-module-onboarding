@@ -285,4 +285,30 @@ class EcommerceSiteTypeService {
 			);
 		}
 	}
+
+	/**
+	 * Ensure WooCommerce is active before ecommerce operations.
+	 *
+	 * @return \WP_REST_Response|null Null when WooCommerce is ready, response when blocked.
+	 */
+	public static function ensure_woocommerce_active(): ?\WP_REST_Response {
+		if ( class_exists( 'WooCommerce' ) ) {
+			return null;
+		}
+
+		$plugin_file = 'woocommerce/woocommerce.php';
+
+		if ( file_exists( WP_PLUGIN_DIR . '/' . $plugin_file ) ) {
+			$result = activate_plugin( $plugin_file );
+			if ( is_wp_error( $result ) ) {
+				return new \WP_REST_Response( array( 'error' => 'WooCommerce could not be activated.' ), 500 );
+			}
+
+			return null;
+		}
+
+		self::install_ecommerce_plugins();
+
+		return new \WP_REST_Response( array( 'status' => 'installing' ), 202 );
+	}
 }
