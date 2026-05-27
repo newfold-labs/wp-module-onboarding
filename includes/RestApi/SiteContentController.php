@@ -139,6 +139,4 @@ class SiteContentController {
 			),
 		);
 	}
-
-
 }
