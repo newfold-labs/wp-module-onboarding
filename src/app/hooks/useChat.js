@@ -19,7 +19,7 @@ import {
 	ACTION_FORK_OPTION_SELECTED,
 } from '@/utils/analytics/hiive/constants';
 import { handshake, intake, startGeneration, streamSSE } from '@/utils/api/ai-platform';
-import { initializeEcommercePlugins } from '@/utils/api/wordpress';
+import { initializeEcommercePlugins, ensureCriticalPluginsInBackground } from '@/utils/api/wordpress';
 import formatTaskResult from '@/utils/helpers/formatTaskResult';
 import useMessages from '@/hooks/useMessages';
 import {
@@ -118,6 +118,10 @@ const useChat = () => {
 			let generationMsgId = null;
 
 			try {
+				// Fire-and-forget background retry loop for the emergency sync install of
+				// critical plugins (Jetpack, Icon Block). Never blocks generation.
+				ensureCriticalPluginsInBackground();
+
 				const validConversation = conversationRef.current.filter( ( msg ) => msg.content );
 				const devSitekit =
 					process.env.NODE_ENV === 'development' && devSitekitSlugRef.current
