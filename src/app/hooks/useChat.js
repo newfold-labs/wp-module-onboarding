@@ -19,7 +19,7 @@ import {
 	ACTION_FORK_OPTION_SELECTED,
 } from '@/utils/analytics/hiive/constants';
 import { handshake, intake, startGeneration, streamSSE } from '@/utils/api/ai-platform';
-import { initializeEcommercePlugins } from '@/utils/api/wordpress';
+import { initializeEcommercePlugins, clearOnboarding } from '@/utils/api/wordpress';
 import formatTaskResult from '@/utils/helpers/formatTaskResult';
 import useMessages from '@/hooks/useMessages';
 import {
@@ -30,7 +30,6 @@ import {
 	createInitialTasks,
 	createGenerationTasks,
 } from '@/hooks/chat/tasks';
-import { clearOnboarding } from '@/utils/api/wordpress';
 
 /**
  * useChat hook
