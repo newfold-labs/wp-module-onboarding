@@ -122,7 +122,7 @@ export async function createNavigationMenu( pages ) {
 	const links = pages
 		.map(
 			( page ) =>
-				`<!-- wp:navigation-link {"label":"${ page.title }","type":"page","id":${ page.id },"url":"${ page.link }","kind":"post-type"} /-->`
+				`<!-- wp:navigation-link {"label":"${ page.title }","type":"page","id":${ page.id },"url":"${ page.link }","kind":"post-type"} /-->`,
 		)
 		.join( '\n' );
 
@@ -262,5 +262,17 @@ export async function publishProducts( products ) {
 		url: `${ onboardingRestBase }/site-content/publish-products`,
 		method: 'POST',
 		data: { products },
+	} );
+}
+
+/**
+ * Clear the onboarding backend process.
+ *
+ * @return {Promise<{success: boolean}>} Response payload from the clear endpoint.
+ */
+export async function clearOnboarding() {
+	return apiFetch( {
+		url: `${ onboardingRestBase }/app/clear`,
+		method: 'POST',
 	} );
 }

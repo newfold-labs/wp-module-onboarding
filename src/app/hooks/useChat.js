@@ -30,6 +30,7 @@ import {
 	createInitialTasks,
 	createGenerationTasks,
 } from '@/hooks/chat/tasks';
+import { clearOnboarding } from '@/utils/api/wordpress';
 
 /**
  * useChat hook
@@ -44,7 +45,7 @@ const useChat = () => {
 	const [ mode, setMode ] = useState( () =>
 		window.nfdOnboarding?.origin?.prompt || window.nfdOnboarding?.origin?.chat_history
 			? 'chat'
-			: 'prompt'
+			: 'prompt',
 	);
 	const [ chatInput, setChatInput ] = useState( '' );
 	const [ isWaiting, setIsWaiting ] = useState( false );
@@ -104,7 +105,7 @@ const useChat = () => {
 				finishAllTasks( msgId );
 			}
 		},
-		[ completeTask, finishAllTasks ]
+		[ completeTask, finishAllTasks ],
 	);
 
 	/**
@@ -128,12 +129,15 @@ const useChat = () => {
 					originalPromptRef.current,
 					controller.signal,
 					validConversation.length ? validConversation : null,
-					devSitekit
+					devSitekit,
 				);
 
 				await streamSSE( response, ( { event, data } ) => {
 					if ( event === 'sitegen_started' ) {
 						dispatch( nfdOnboardingStore ).setSiteGenId( data );
+						if ( ! window.nfdOnboarding?.cleared_onboarding ) {
+							clearOnboarding();
+						}
 						return;
 					}
 
@@ -209,7 +213,7 @@ const useChat = () => {
 					//   sitegen_content_generation_item<key>_completed — needs key remap
 					//   sitegen_sitekit_step_<key>                     — suffix is already the task key
 					const taskEventMatch = event.match(
-						/^sitegen_content_generation_item(.+)_completed$|^sitegen_sitekit_step_(.+)$/
+						/^sitegen_content_generation_item(.+)_completed$|^sitegen_sitekit_step_(.+)$/,
 					);
 					if ( taskEventMatch && generationMsgId ) {
 						const [ , genKey, stepKey ] = taskEventMatch;
@@ -245,7 +249,7 @@ const useChat = () => {
 						if ( startTimeRef.current ) {
 							const elapsed = Math.round( ( Date.now() - startTimeRef.current ) / 1000 );
 							sendOnboardingEvent(
-								new OnboardingEvent( ACTION_SITEGEN_SITE_GENERATION_TIME, `${ elapsed }s` )
+								new OnboardingEvent( ACTION_SITEGEN_SITE_GENERATION_TIME, `${ elapsed }s` ),
 							);
 						}
 						sendOnboardingEvent( new OnboardingEvent( ACTION_ONBOARDING_COMPLETE, 'ai_chat' ) );
@@ -275,10 +279,10 @@ const useChat = () => {
 							...msg,
 							isTyping: false,
 							tasks: msg.tasks?.map( ( t ) =>
-								t.status === 'running' || t.status === 'pending' ? { ...t, status: 'skipped' } : t
+								t.status === 'running' || t.status === 'pending' ? { ...t, status: 'skipped' } : t,
 							),
 						};
-					} )
+					} ),
 				);
 			} catch ( err ) {
 				if ( err.name === 'AbortError' ) {
@@ -317,7 +321,7 @@ const useChat = () => {
 			addMessage,
 			completeTask,
 			getNextId,
-		]
+		],
 	);
 
 	/**
@@ -451,7 +455,7 @@ const useChat = () => {
 				siteIdRef.current,
 				originalPromptRef.current,
 				conversationRef.current.length ? conversationRef.current : null,
-				controller.signal
+				controller.signal,
 			);
 
 			const { understanding, is_complete: isComplete, question } = result;
@@ -543,7 +547,7 @@ const useChat = () => {
 				// eslint-disable-next-line no-console
 				console.error( '[Handshake] error', err );
 				sendOnboardingEvent(
-					new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'handshake_error' )
+					new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'handshake_error' ),
 				);
 				addMessage( {
 					role: 'assistant',
