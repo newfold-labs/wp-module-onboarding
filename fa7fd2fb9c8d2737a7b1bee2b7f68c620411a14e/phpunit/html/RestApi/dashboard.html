@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/RestApi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../_css/bootstrap.min.css?v=9.2.32" rel="stylesheet" type="text/css">
+  <link href="../_css/nv.d3.min.css?v=9.2.32" rel="stylesheet" type="text/css">
+  <link href="../_css/style.css?v=9.2.32" rel="stylesheet" type="text/css">
+  <link href="../_css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="../index.html">/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes</a></li>
+         <li class="breadcrumb-item"><a href="index.html">RestApi</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="GlobalStylesController.php.html#13">NewfoldLabs\WP\Module\Onboarding\RestApi\GlobalStylesController</a></td><td class="text-right">19%</td></tr>
+       <tr><td><a href="DesignController.php.html#19">NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController</a></td><td class="text-right">21%</td></tr>
+       <tr><td><a href="SettingsController.php.html#12">NewfoldLabs\WP\Module\Onboarding\RestApi\SettingsController</a></td><td class="text-right">23%</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#14">NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController</a></td><td class="text-right">43%</td></tr>
+       <tr><td><a href="SiteContentController.php.html#17">NewfoldLabs\WP\Module\Onboarding\RestApi\SiteContentController</a></td><td class="text-right">56%</td></tr>
+       <tr><td><a href="EventsController.php.html#11">NewfoldLabs\WP\Module\Onboarding\RestApi\EventsController</a></td><td class="text-right">58%</td></tr>
+       <tr><td><a href="SiteGenAiController.php.html#12">NewfoldLabs\WP\Module\Onboarding\RestApi\SiteGenAiController</a></td><td class="text-right">61%</td></tr>
+       <tr><td><a href="PluginsController.php.html#12">NewfoldLabs\WP\Module\Onboarding\RestApi\PluginsController</a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="AppController.php.html#18">NewfoldLabs\WP\Module\Onboarding\RestApi\AppController</a></td><td class="text-right">68%</td></tr>
+       <tr><td><a href="LogoGenController.php.html#11">NewfoldLabs\WP\Module\Onboarding\RestApi\LogoGenController</a></td><td class="text-right">71%</td></tr>
+       <tr><td><a href="BlueprintsController.php.html#18">NewfoldLabs\WP\Module\Onboarding\RestApi\BlueprintsController</a></td><td class="text-right">75%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="DesignController.php.html#19">NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController</a></td><td class="text-right">1309</td></tr>
+       <tr><td><a href="GlobalStylesController.php.html#13">NewfoldLabs\WP\Module\Onboarding\RestApi\GlobalStylesController</a></td><td class="text-right">711</td></tr>
+       <tr><td><a href="SettingsController.php.html#12">NewfoldLabs\WP\Module\Onboarding\RestApi\SettingsController</a></td><td class="text-right">583</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#14">NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController</a></td><td class="text-right">169</td></tr>
+       <tr><td><a href="LogoGenController.php.html#11">NewfoldLabs\WP\Module\Onboarding\RestApi\LogoGenController</a></td><td class="text-right">18</td></tr>
+       <tr><td><a href="SiteContentController.php.html#17">NewfoldLabs\WP\Module\Onboarding\RestApi\SiteContentController</a></td><td class="text-right">18</td></tr>
+       <tr><td><a href="EventsController.php.html#11">NewfoldLabs\WP\Module\Onboarding\RestApi\EventsController</a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="BlueprintsController.php.html#18">NewfoldLabs\WP\Module\Onboarding\RestApi\BlueprintsController</a></td><td class="text-right">10</td></tr>
+       <tr><td><a href="AppController.php.html#18">NewfoldLabs\WP\Module\Onboarding\RestApi\AppController</a></td><td class="text-right">9</td></tr>
+       <tr><td><a href="PluginsController.php.html#12">NewfoldLabs\WP\Module\Onboarding\RestApi\PluginsController</a></td><td class="text-right">8</td></tr>
+       <tr><td><a href="SiteGenAiController.php.html#12">NewfoldLabs\WP\Module\Onboarding\RestApi\SiteGenAiController</a></td><td class="text-right">8</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="AppController.php.html#108"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\AppController::start">start</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#232"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController::update_logogen_slice_state">update_logogen_slice_state</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="LogoGenController.php.html#208"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\LogoGenController::select_logo">select_logo</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PluginsController.php.html#76"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\PluginsController::initialize">initialize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PluginsController.php.html#102"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\PluginsController::initialize_ecommerce">initialize_ecommerce</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="PluginsController.php.html#117"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\PluginsController::ensure_critical">ensure_critical</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#108"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController::get_input_slice_state">get_input_slice_state</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#126"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController::update_input_slice_state">update_input_slice_state</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#157"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController::get_sitegen_slice_state">get_sitegen_slice_state</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#167"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController::update_sitegen_slice_state">update_sitegen_slice_state</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#217"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController::get_logogen_slice_state">get_logogen_slice_state</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#257"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController::get_blueprints_slice_state">get_blueprints_slice_state</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="LogoGenController.php.html#165"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\LogoGenController::get_generation_status">get_generation_status</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#272"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController::update_blueprints_slice_state">update_blueprints_slice_state</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SettingsController.php.html#122"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SettingsController::get_item">get_item</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SettingsController.php.html#133"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SettingsController::update_item">update_item</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SettingsController.php.html#207"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SettingsController::get_current_settings">get_current_settings</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SettingsController.php.html#247"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SettingsController::initialize">initialize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SettingsController.php.html#294"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SettingsController::validate_twitter_id">validate_twitter_id</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SiteContentController.php.html#73"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SiteContentController::publish_products">publish_products</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SiteContentController.php.html#96"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SiteContentController::setup_nav_menu">setup_nav_menu</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SiteGenAiController.php.html#73"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SiteGenAiController::handshake">handshake</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="LogoGenController.php.html#190"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\LogoGenController::generate_more_logos">generate_more_logos</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="LogoGenController.php.html#145"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\LogoGenController::generate_logos">generate_logos</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AppController.php.html#118"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\AppController::complete">complete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="GlobalStylesController.php.html#334"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\GlobalStylesController::set_global_styles">set_global_styles</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AppController.php.html#136"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\AppController::enable_jetpack_modules">enable_jetpack_modules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AppController.php.html#158"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\AppController::restart">restart</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="AppController.php.html#168"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\AppController::clear">clear</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BlueprintsController.php.html#107"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\BlueprintsController::get_blueprints">get_blueprints</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BlueprintsController.php.html#122"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\BlueprintsController::install_required_plugins">install_required_plugins</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BlueprintsController.php.html#138"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\BlueprintsController::import_blueprint">import_blueprint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DesignController.php.html#120"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::get_color_palettes">get_color_palettes</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DesignController.php.html#158"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::get_font_pairs">get_font_pairs</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DesignController.php.html#187"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::get_color_palettes_from_options">get_color_palettes_from_options</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DesignController.php.html#249"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::get_font_pairs_from_options">get_font_pairs_from_options</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DesignController.php.html#270"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::get_color_palettes_from_hiive">get_color_palettes_from_hiive</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DesignController.php.html#323"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::get_font_pairs_from_hiive">get_font_pairs_from_hiive</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DesignController.php.html#347"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::fetch_from_hiive">fetch_from_hiive</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DesignController.php.html#397"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::get_color_palettes_from_theme_json">get_color_palettes_from_theme_json</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DesignController.php.html#448"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::paginate_response">paginate_response</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="EventsController.php.html#93"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\EventsController::send">send</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="EventsController.php.html#103"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\EventsController::send_batch">send_batch</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="GlobalStylesController.php.html#93"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\GlobalStylesController::set_color_palette">set_color_palette</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="GlobalStylesController.php.html#124"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\GlobalStylesController::install_fonts">install_fonts</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="GlobalStylesController.php.html#275"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\GlobalStylesController::activate_installed_fonts">activate_installed_fonts</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="SiteGenAiController.php.html#93"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SiteGenAiController::report_published">report_published</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="DesignController.php.html#45"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::__construct">__construct</abbr></a></td><td class="text-right">66%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="GlobalStylesController.php.html#124"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\GlobalStylesController::install_fonts">install_fonts</abbr></a></td><td class="text-right">380</td></tr>
+       <tr><td><a href="SettingsController.php.html#133"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SettingsController::update_item">update_item</abbr></a></td><td class="text-right">272</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#167"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController::update_sitegen_slice_state">update_sitegen_slice_state</abbr></a></td><td class="text-right">132</td></tr>
+       <tr><td><a href="DesignController.php.html#397"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::get_color_palettes_from_theme_json">get_color_palettes_from_theme_json</abbr></a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="SettingsController.php.html#207"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SettingsController::get_current_settings">get_current_settings</abbr></a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="DesignController.php.html#120"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::get_color_palettes">get_color_palettes</abbr></a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="GlobalStylesController.php.html#275"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\GlobalStylesController::activate_installed_fonts">activate_installed_fonts</abbr></a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="DesignController.php.html#270"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::get_color_palettes_from_hiive">get_color_palettes_from_hiive</abbr></a></td><td class="text-right">42</td></tr>
+       <tr><td><a href="SettingsController.php.html#247"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SettingsController::initialize">initialize</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="EventsController.php.html#103"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\EventsController::send_batch">send_batch</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="SiteContentController.php.html#96"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SiteContentController::setup_nav_menu">setup_nav_menu</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="GlobalStylesController.php.html#93"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\GlobalStylesController::set_color_palette">set_color_palette</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="DesignController.php.html#187"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::get_color_palettes_from_options">get_color_palettes_from_options</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="DesignController.php.html#347"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::fetch_from_hiive">fetch_from_hiive</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="SettingsController.php.html#294"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SettingsController::validate_twitter_id">validate_twitter_id</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="GlobalStylesController.php.html#334"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\GlobalStylesController::set_global_styles">set_global_styles</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#232"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController::update_logogen_slice_state">update_logogen_slice_state</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#272"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController::update_blueprints_slice_state">update_blueprints_slice_state</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="SiteGenAiController.php.html#73"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SiteGenAiController::handshake">handshake</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="SiteContentController.php.html#73"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SiteContentController::publish_products">publish_products</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#126"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController::update_input_slice_state">update_input_slice_state</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="DesignController.php.html#323"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::get_font_pairs_from_hiive">get_font_pairs_from_hiive</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="DesignController.php.html#158"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::get_font_pairs">get_font_pairs</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="LogoGenController.php.html#165"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\LogoGenController::get_generation_status">get_generation_status</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#257"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController::get_blueprints_slice_state">get_blueprints_slice_state</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#217"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController::get_logogen_slice_state">get_logogen_slice_state</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="AppController.php.html#118"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\AppController::complete">complete</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="ReduxStateController.php.html#108"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\ReduxStateController::get_input_slice_state">get_input_slice_state</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="PluginsController.php.html#117"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\PluginsController::ensure_critical">ensure_critical</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="PluginsController.php.html#102"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\PluginsController::initialize_ecommerce">initialize_ecommerce</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="PluginsController.php.html#76"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\PluginsController::initialize">initialize</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="LogoGenController.php.html#208"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\LogoGenController::select_logo">select_logo</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="LogoGenController.php.html#190"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\LogoGenController::generate_more_logos">generate_more_logos</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="AppController.php.html#136"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\AppController::enable_jetpack_modules">enable_jetpack_modules</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="LogoGenController.php.html#145"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\LogoGenController::generate_logos">generate_logos</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="DesignController.php.html#249"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::get_font_pairs_from_options">get_font_pairs_from_options</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="BlueprintsController.php.html#138"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\BlueprintsController::import_blueprint">import_blueprint</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="BlueprintsController.php.html#122"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\BlueprintsController::install_required_plugins">install_required_plugins</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="BlueprintsController.php.html#107"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\BlueprintsController::get_blueprints">get_blueprints</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="SiteGenAiController.php.html#93"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\SiteGenAiController::report_published">report_published</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="DesignController.php.html#45"><abbr title="NewfoldLabs\WP\Module\Onboarding\RestApi\DesignController::__construct">__construct</abbr></a></td><td class="text-right">3</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 9.2.32</a> using <a href="https://secure.php.net/" target="_top">PHP 7.4.33</a> at Thu Jun 4 9:07:35 UTC 2026.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="../_js/jquery.min.js?v=9.2.32" type="text/javascript"></script>
+  <script src="../_js/d3.min.js?v=9.2.32" type="text/javascript"></script>
+  <script src="../_js/nv.d3.min.js?v=9.2.32" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([0,0,1,2,0,1,2,3,2,0,0,1], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([47,0,0,0,0,0,0,1,0,0,1,21], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[68.75,8,"<a href=\"AppController.php.html#18\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\AppController<\/a>"],[75.43859649122807,9,"<a href=\"BlueprintsController.php.html#18\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\BlueprintsController<\/a>"],[21.487603305785125,51,"<a href=\"DesignController.php.html#19\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\DesignController<\/a>"],[58.9041095890411,8,"<a href=\"EventsController.php.html#11\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\EventsController<\/a>"],[19.51219512195122,36,"<a href=\"GlobalStylesController.php.html#13\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\GlobalStylesController<\/a>"],[71.28712871287128,14,"<a href=\"LogoGenController.php.html#11\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\LogoGenController<\/a>"],[66,7,"<a href=\"PluginsController.php.html#12\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\PluginsController<\/a>"],[43.53741496598639,28,"<a href=\"ReduxStateController.php.html#14\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\ReduxStateController<\/a>"],[100,3,"<a href=\"RestApi.php.html#8\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\RestApi<\/a>"],[23.47826086956522,35,"<a href=\"SettingsController.php.html#12\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SettingsController<\/a>"],[56.896551724137936,10,"<a href=\"SiteContentController.php.html#17\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteContentController<\/a>"],[61.111111111111114,6,"<a href=\"SiteGenAiController.php.html#12\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteGenAiController<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[100,1,"<a href=\"AppController.php.html#41\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\AppController::register_routes<\/a>"],[0,1,"<a href=\"AppController.php.html#108\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\AppController::start<\/a>"],[0,2,"<a href=\"AppController.php.html#118\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\AppController::complete<\/a>"],[0,2,"<a href=\"AppController.php.html#136\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\AppController::enable_jetpack_modules<\/a>"],[0,1,"<a href=\"AppController.php.html#158\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\AppController::restart<\/a>"],[0,1,"<a href=\"AppController.php.html#168\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\AppController::clear<\/a>"],[100,1,"<a href=\"BlueprintsController.php.html#39\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\BlueprintsController::register_routes<\/a>"],[100,1,"<a href=\"BlueprintsController.php.html#78\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\BlueprintsController::install_required_plugins_args<\/a>"],[100,1,"<a href=\"BlueprintsController.php.html#92\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\BlueprintsController::import_blueprint_args<\/a>"],[0,2,"<a href=\"BlueprintsController.php.html#107\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\BlueprintsController::get_blueprints<\/a>"],[0,2,"<a href=\"BlueprintsController.php.html#122\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\BlueprintsController::install_required_plugins<\/a>"],[0,2,"<a href=\"BlueprintsController.php.html#138\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\BlueprintsController::import_blueprint<\/a>"],[66.66666666666666,3,"<a href=\"DesignController.php.html#45\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\DesignController::__construct<\/a>"],[92.5925925925926,7,"<a href=\"DesignController.php.html#54\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\DesignController::register_routes<\/a>"],[0,8,"<a href=\"DesignController.php.html#120\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\DesignController::get_color_palettes<\/a>"],[0,3,"<a href=\"DesignController.php.html#158\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\DesignController::get_font_pairs<\/a>"],[0,4,"<a href=\"DesignController.php.html#187\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\DesignController::get_color_palettes_from_options<\/a>"],[0,2,"<a href=\"DesignController.php.html#249\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\DesignController::get_font_pairs_from_options<\/a>"],[0,6,"<a href=\"DesignController.php.html#270\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\DesignController::get_color_palettes_from_hiive<\/a>"],[0,3,"<a href=\"DesignController.php.html#323\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\DesignController::get_font_pairs_from_hiive<\/a>"],[0,4,"<a href=\"DesignController.php.html#347\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\DesignController::fetch_from_hiive<\/a>"],[0,10,"<a href=\"DesignController.php.html#397\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\DesignController::get_color_palettes_from_theme_json<\/a>"],[0,1,"<a href=\"DesignController.php.html#448\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\DesignController::paginate_response<\/a>"],[100,1,"<a href=\"EventsController.php.html#32\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\EventsController::register_routes<\/a>"],[100,1,"<a href=\"EventsController.php.html#64\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\EventsController::get_send_args<\/a>"],[0,1,"<a href=\"EventsController.php.html#93\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\EventsController::send<\/a>"],[0,5,"<a href=\"EventsController.php.html#103\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\EventsController::send_batch<\/a>"],[100,1,"<a href=\"GlobalStylesController.php.html#34\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\GlobalStylesController::register_routes<\/a>"],[100,1,"<a href=\"GlobalStylesController.php.html#78\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\GlobalStylesController::get_set_color_palette_args<\/a>"],[0,4,"<a href=\"GlobalStylesController.php.html#93\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\GlobalStylesController::set_color_palette<\/a>"],[0,19,"<a href=\"GlobalStylesController.php.html#124\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\GlobalStylesController::install_fonts<\/a>"],[0,7,"<a href=\"GlobalStylesController.php.html#275\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\GlobalStylesController::activate_installed_fonts<\/a>"],[0,4,"<a href=\"GlobalStylesController.php.html#334\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\GlobalStylesController::set_global_styles<\/a>"],[100,1,"<a href=\"LogoGenController.php.html#32\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\LogoGenController::register_routes<\/a>"],[100,1,"<a href=\"LogoGenController.php.html#80\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\LogoGenController::get_generate_logos_args<\/a>"],[100,1,"<a href=\"LogoGenController.php.html#102\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\LogoGenController::get_generation_status_args<\/a>"],[100,1,"<a href=\"LogoGenController.php.html#116\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\LogoGenController::get_generate_more_logos_args<\/a>"],[100,1,"<a href=\"LogoGenController.php.html#130\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\LogoGenController::get_select_logo_args<\/a>"],[0,2,"<a href=\"LogoGenController.php.html#145\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\LogoGenController::generate_logos<\/a>"],[0,3,"<a href=\"LogoGenController.php.html#165\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\LogoGenController::get_generation_status<\/a>"],[0,2,"<a href=\"LogoGenController.php.html#190\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\LogoGenController::generate_more_logos<\/a>"],[0,2,"<a href=\"LogoGenController.php.html#208\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\LogoGenController::select_logo<\/a>"],[100,1,"<a href=\"PluginsController.php.html#32\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\PluginsController::register_routes<\/a>"],[0,2,"<a href=\"PluginsController.php.html#76\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\PluginsController::initialize<\/a>"],[0,2,"<a href=\"PluginsController.php.html#102\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\PluginsController::initialize_ecommerce<\/a>"],[0,2,"<a href=\"PluginsController.php.html#117\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\PluginsController::ensure_critical<\/a>"],[100,1,"<a href=\"ReduxStateController.php.html#35\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\ReduxStateController::register_routes<\/a>"],[0,2,"<a href=\"ReduxStateController.php.html#108\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\ReduxStateController::get_input_slice_state<\/a>"],[0,3,"<a href=\"ReduxStateController.php.html#126\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\ReduxStateController::update_input_slice_state<\/a>"],[0,1,"<a href=\"ReduxStateController.php.html#157\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\ReduxStateController::get_sitegen_slice_state<\/a>"],[0,11,"<a href=\"ReduxStateController.php.html#167\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\ReduxStateController::update_sitegen_slice_state<\/a>"],[0,2,"<a href=\"ReduxStateController.php.html#217\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\ReduxStateController::get_logogen_slice_state<\/a>"],[0,3,"<a href=\"ReduxStateController.php.html#232\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\ReduxStateController::update_logogen_slice_state<\/a>"],[0,2,"<a href=\"ReduxStateController.php.html#257\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\ReduxStateController::get_blueprints_slice_state<\/a>"],[0,3,"<a href=\"ReduxStateController.php.html#272\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\ReduxStateController::update_blueprints_slice_state<\/a>"],[100,1,"<a href=\"RestApi.php.html#32\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\RestApi::__construct<\/a>"],[100,2,"<a href=\"RestApi.php.html#39\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\RestApi::register_routes<\/a>"],[100,1,"<a href=\"SettingsController.php.html#86\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SettingsController::register_routes<\/a>"],[0,1,"<a href=\"SettingsController.php.html#122\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SettingsController::get_item<\/a>"],[0,16,"<a href=\"SettingsController.php.html#133\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SettingsController::update_item<\/a>"],[0,8,"<a href=\"SettingsController.php.html#207\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SettingsController::get_current_settings<\/a>"],[0,5,"<a href=\"SettingsController.php.html#247\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SettingsController::initialize<\/a>"],[0,4,"<a href=\"SettingsController.php.html#294\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SettingsController::validate_twitter_id<\/a>"],[100,1,"<a href=\"SiteContentController.php.html#38\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteContentController::register_routes<\/a>"],[0,3,"<a href=\"SiteContentController.php.html#73\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteContentController::publish_products<\/a>"],[0,5,"<a href=\"SiteContentController.php.html#96\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteContentController::setup_nav_menu<\/a>"],[100,1,"<a href=\"SiteContentController.php.html#130\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteContentController::get_setup_nav_menu_args<\/a>"],[100,1,"<a href=\"SiteGenAiController.php.html#41\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteGenAiController::register_routes<\/a>"],[0,3,"<a href=\"SiteGenAiController.php.html#73\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteGenAiController::handshake<\/a>"],[0,2,"<a href=\"SiteGenAiController.php.html#93\">NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteGenAiController::report_published<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>
