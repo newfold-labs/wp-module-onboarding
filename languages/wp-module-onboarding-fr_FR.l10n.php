@@ -5,7 +5,7 @@ return [
 	'language' => 'fr_FR',
 	'project-id-version' => 'newfold-labswp-module-staging',
 	'pot-creation-date' => '2024-11-18T07:59:34+00:00',
-	'po-revision-date' => '2026-05-27T15:04:37+00:00',
+	'po-revision-date' => '2026-06-04T09:04:52+00:00',
 	'x-generator' => 'WP-CLI 2.11.0',
 	'messages' => [
 		'Onboarding' => 'Embarquement',
