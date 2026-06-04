@@ -6,6 +6,7 @@ use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Services\AppService;
 use NewfoldLabs\WP\Module\Installer\Data\Plugins;
 use NewfoldLabs\WP\Module\Onboarding\Services\ResetService;
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
 /**
  * AppController class for handling onboarding application REST API endpoints.
@@ -69,6 +70,18 @@ class AppController {
 				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => array( $this, 'enable_jetpack_modules' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/clear',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'clear' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -144,6 +157,17 @@ class AppController {
 	 */
 	public function restart(): \WP_REST_Response {
 		ResetService::reset();
+		return new \WP_REST_Response( array( 'success' => true ), 200 );
+	}
+
+	/**
+	 * Clear onboarding backend process.
+	 *
+	 * @return \WP_REST_Response The response object.
+	 */
+	public function clear(): \WP_REST_Response {
+		ResetService::clear();
+		update_option( Options::get_option_name( 'cleared_onboarding' ), true );
 		return new \WP_REST_Response( array( 'success' => true ), 200 );
 	}
 }

@@ -138,4 +138,46 @@ class ResetService {
 		delete_option( Options::get_origin_option_name( 'origin_prompt' ) );
 		delete_option( Options::get_origin_option_name( 'origin_chat_history' ) );
 	}
+
+	/**
+	 * Delete all posts with meta nfd_onboarding_generated = '1' across post types: page, post, product, nfd_service
+	 *
+	 * @return void
+	 */
+	private static function delete_all_posts(): void {
+
+		$posts = get_posts(
+			array(
+				'post_type'      => array( 'page', 'post'),
+				'post_status'    => 'any',
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+			)
+		);
+
+		foreach ( $posts as $post_id ) {
+
+			$thumbnail_id = (int) get_post_thumbnail_id( $post_id );
+			if ( $thumbnail_id ) {
+				wp_delete_attachment( $thumbnail_id, true );
+			}
+
+			// remove all attached media of a page.
+			$children = get_attached_media( '', $post_id );
+			foreach ( $children as $child ) {
+				wp_delete_attachment( $child->ID, true );
+			}
+
+			wp_delete_post( $post_id, true );
+		}
+	}
+
+	/**
+	 * Clear the onboarding backend process.
+	 *
+	 * @return void
+	 */
+	public static function clear(): void {
+		self::delete_all_posts();
+	}
 }
