@@ -326,3 +326,17 @@ export async function clearOnboarding() {
 		method: 'POST',
 	} );
 }
+
+/**
+ * Publish articles to the backend.
+ *
+ * @param {Object[]} articles Raw article objects from generationData.post_types.articles.
+ * @return {Promise<{created: number}>} Result including how many articles were created.
+ */
+export async function publishArticles( articles ) {
+	return apiFetch( {
+		url: `${ onboardingRestBase }/site-content/publish-articles`,
+		method: 'POST',
+		data: { articles },
+	} );
+}

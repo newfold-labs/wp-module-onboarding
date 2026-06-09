@@ -10,6 +10,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\RestApi;
 use NewfoldLabs\WP\Module\Onboarding\Permissions;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteNavigationService;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\CommonSiteTypeService;
 
 /**
  * Handles REST API routes for publishing AI-generated site content.
@@ -43,6 +44,17 @@ class SiteContentController {
 				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => array( $this, 'publish_products' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/publish-articles',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'publish_articles' ),
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
@@ -138,5 +150,26 @@ class SiteContentController {
 				'type'     => 'array',
 			),
 		);
+	}
+
+	/**
+	 * Publish articles from the onboarding generation data.
+	 *
+	 * Expects a JSON body: { "articles": [ { title, excerpt, content, categories, featured_image }, ... ] }
+	 * Images are stored as nfd_image_url meta and sideloaded asynchronously after onboarding.
+	 *
+	 * @param \WP_REST_Request $request The REST request object.
+	 * @return \WP_REST_Response
+	 */
+	public function publish_articles( \WP_REST_Request $request ): \WP_REST_Response {
+		$articles = $request->get_json_params()['articles'] ?? array();
+
+		if ( empty( $articles ) ) {
+			return new \WP_REST_Response( array( 'created' => 0 ), 200 );
+		}
+
+		$created_ids = CommonSiteTypeService::publish_articles( $articles );
+
+		return new \WP_REST_Response( array( 'created' => count( $created_ids ) ), 200 );
 	}
 }

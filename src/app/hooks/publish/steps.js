@@ -2,11 +2,11 @@ import {
 	updateSiteSettings,
 	uploadMediaFromUrl,
 	createPage,
-	createPost,
 	updateTemplate,
 	updateTemplatePart,
 	createService,
 	publishProducts,
+	publishArticles,
 } from '@/utils/api/wordpress';
 import {
 	setGlobalStylesColorPalette,
@@ -161,20 +161,17 @@ export async function runTemplateParts( { generationData } ) {
 
 export async function runArticles( { generationData } ) {
 	const articles = generationData.post_types?.articles || [];
-	let articleCount = 0;
 
-	for ( const article of articles ) {
-		const featuredMediaURL = article.featured_image ?? null;
-
-		const normalizedContent = normalizeBlockContent( article.content );
-		await createPost( article.title, normalizedContent, article.excerpt || '', {
-			meta: {
-				nfd_onboarding_generated: '1',
-				...( featuredMediaURL ? { nfd_image_url: featuredMediaURL } : {} ),
-			},
-		} );
-		articleCount++;
+	if ( articles.length === 0 ) {
+		return 'Skipped — no articles';
 	}
+
+	const normalizedArticles = articles.map( ( article ) => ( {
+		...article,
+		content: normalizeBlockContent( article.content ),
+	} ) );
+	const result = await publishArticles( normalizedArticles );
+	const articleCount = result?.created ?? 0;
 
 	return articleCount > 0
 		? `${ articleCount } article${ articleCount !== 1 ? 's' : '' } published`
