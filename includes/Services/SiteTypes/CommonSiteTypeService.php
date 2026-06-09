@@ -13,13 +13,67 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes;
 class CommonSiteTypeService {
 
 	/**
+	 * Publishes a list of blog posts.
+	 *
+	 * @param array $articles The articles.
+	 * @return int[] List of successfully created article IDs.
+	 */
+	public static function publish_articles( array $articles ): array {
+		$category_map = self::build_category_map_from_articles( $articles );
+		$created_ids  = array();
+
+		foreach ( $articles as $article ) {
+			$category_ids = array();
+			foreach ( ( $article['categories'] ?? array() ) as $category ) {
+				if ( ! empty( $category_map[ $category ] ) ) {
+					$category_ids[] = $category_map[ $category ];
+				}
+			}
+
+			$article_id = self::publish_article(
+				$article['title'] ?? '',
+				$article['excerpt'] ?? '',
+				$article['content'] ?? '',
+				$article['featured_image'] ?? '',
+				$category_ids
+			);
+
+			if ( is_wp_error( $article_id ) ) {
+				continue;
+			}
+
+			$created_ids[] = $article_id;
+		}
+
+		return $created_ids;
+	}
+
+	/**
+	 * Builds a deduplicated category map: name → term_id.
+	 *
+	 * @param array $articles The articles.
+	 * @return array<string,int> The map of category name to term ID.
+	 */
+	private static function build_category_map_from_articles( array $articles ): array {
+		$category_map = array();
+		foreach ( $articles as $article ) {
+			foreach ( ( $article['categories'] ?? array() ) as $category ) {
+				if ( ! isset( $category_map[ $category ] ) ) {
+					$category_map[ $category ] = self::create_blog_category( $category );
+				}
+			}
+		}
+		return $category_map;
+	}
+
+	/**
 	 * Publishes a blog post.
 	 *
 	 * @param string $title Post title.
 	 * @param string $excerpt Post excerpt.
 	 * @param string $content Post body.
 	 * @param string $image Optional featured image URL.
-	 * @param array  $categories Category names to assign.
+	 * @param array  $categories Category term IDs to assign.
 	 * @return int|\WP_Error The post ID.
 	 */
 	public static function publish_article( string $title, string $excerpt, string $content, string $image = '', array $categories = array() ) {
@@ -46,58 +100,17 @@ class CommonSiteTypeService {
 		if ( is_wp_error( $post_id ) || ! $post_id ) {
 			return new \WP_Error( 'error_publishing_blog_post', 'Failed to create post' );
 		}
-		// Post categories.
+
 		if ( ! empty( $categories ) ) {
-			$category_ids = array();
-			foreach ( $categories as $category ) {
-				$category_ids[] = self::create_blog_category( $category );
-			}
-			wp_set_post_terms( $post_id, $category_ids, 'category' );
+			wp_set_post_terms( $post_id, $categories, 'category' );
 		}
-		// Featured image.
+
+		update_post_meta( $post_id, 'nfd_onboarding_generated', '1' );
 		if ( ! empty( $image ) ) {
-			self::set_featured_image_from_url( $image, $post_id );
+			update_post_meta( $post_id, 'nfd_image_url', esc_url_raw( $image ) );
 		}
 
 		return $post_id;
-	}
-
-	/**
-	 * Sets the featured image for a blog post.
-	 *
-	 * @param string $image_url The URL of the image.
-	 * @param int    $post_id The ID of the post.
-	 * @return void
-	 */
-	private static function set_featured_image_from_url( string $image_url, int $post_id ): void {
-		$image_id = self::import_image_from_url( $image_url, $post_id );
-		if ( $image_id ) {
-			update_post_meta( $post_id, '_thumbnail_id', $image_id );
-		}
-	}
-
-	/**
-	 * Imports an image from a URL.
-	 *
-	 * @param string $image_url The URL of the image.
-	 * @param int    $post_id The ID of the post.
-	 * @return int The ID of the attachment.
-	 */
-	private static function import_image_from_url( string $image_url, int $post_id ): int {
-		if ( ! function_exists( 'media_handle_sideload' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/media.php';
-			require_once ABSPATH . 'wp-admin/includes/file.php';
-			require_once ABSPATH . 'wp-admin/includes/image.php';
-		}
-
-		// Add an arbitrary extension to the image URL to trick media_sideload_image to download the image.
-		$image_url     = $image_url . '?ext=.jpeg';
-		$attachment_id = media_sideload_image( $image_url, $post_id, null, 'id' );
-		if ( is_wp_error( $attachment_id ) ) {
-			return 0;
-		}
-
-		return $attachment_id;
 	}
 
 	/**
