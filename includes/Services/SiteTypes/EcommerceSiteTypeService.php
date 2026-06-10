@@ -14,7 +14,7 @@ use NewfoldLabs\WP\Module\Installer\Tasks\PluginActivationTask;
 use NewfoldLabs\WP\Module\Installer\Tasks\PluginInstallTask;
 use NewfoldLabs\WP\Module\Installer\Data\Options as InstallerOptions;
 use NewfoldLabs\WP\Module\Onboarding\Data\Plugins;
-
+use NewfoldLabs\WP\Module\Onboarding\Services\PostTypeService;
 /**
  * Ecommerce site type service.
  */
@@ -209,6 +209,7 @@ class EcommerceSiteTypeService {
 		if ( is_wp_error( $category ) ) {
 			return 0;
 		}
+		update_term_meta( $category['term_id'], PostTypeService::META_ONBOARDING_GENERATED, '1' );
 		return $category['term_id'];
 	}
 

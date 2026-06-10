@@ -3,7 +3,6 @@
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
-
 /**
  * Reset Services
  *
@@ -12,35 +11,77 @@ use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 class ResetService {
 
 	/**
+	 * Taxonomies to clear
+	 *
+	 * @var array
+	 */
+	private static $taxonomies = array( 'category', 'product_cat' );
+
+	/**
+	 * Post types to clear
+	 *
+	 * @var array
+	 */
+	private static $post_types = array( 'page', 'post', 'product', PostTypeService::SERVICE_POST_TYPE, 'wp_navigation' );
+
+	/**
 	 * Reset the onboarding services.
 	 *
 	 * @return void
 	 */
 	public static function reset(): void {
-		self::delete_generated_posts();
+		self::delete_posts( true );
+		self::delete_terms( true );
 		self::reset_site_identity();
+		self::reset_template_part( 'header' );
+		self::reset_template_part( 'footer' );
+		self::reset_global_styles();
 		self::reset_onboarding_options();
 		self::unschedule_cron_jobs();
 		self::reset_prompt_origin();
 	}
 
 	/**
-	 * Delete all posts with meta nfd_onboarding_generated = '1' across post types: page, post, product, nfd_service
+	 * Clear the onboarding backend process.
 	 *
 	 * @return void
 	 */
-	private static function delete_generated_posts(): void {
+	public static function clear(): void {
+		self::delete_posts();
+		self::delete_terms();
+	}
 
-		$posts = get_posts(
-			array(
-				'post_type'      => array( 'page', 'post', 'product', 'wp_navigation', PostTypeService::SERVICE_POST_TYPE ),
-				'meta_key'       => PostTypeService::META_ONBOARDING_GENERATED,
-				'meta_value'     => '1',
-				'post_status'    => 'any',
-				'posts_per_page' => -1,
-				'fields'         => 'ids',
-			)
+	/**
+	 * Delete all posts onboarding generated across post types: page, post, product, service
+	 *
+	 * @param bool $generated_only If true, delete posts onboarding generated.
+	 *
+	 * @return void
+	 */
+	private static function delete_posts( $generated_only = false ): void {
+
+		$query = array(
+			'post_type'      => self::$post_types,
+			'post_status'    => 'any',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
 		);
+
+		if ( $generated_only ) {
+			$query = array_merge(
+				$query,
+				array(
+					'meta_key'   => PostTypeService::META_ONBOARDING_GENERATED,
+					'meta_value' => '1',
+				)
+			);
+		}
+
+		$posts = get_posts( $query );
+
+		if ( is_wp_error( $posts ) || empty( $posts ) ) {
+			return;
+		}
 
 		foreach ( $posts as $post_id ) {
 
@@ -58,7 +99,6 @@ class ResetService {
 			wp_delete_post( $post_id, true );
 		}
 	}
-
 
 	/**
 	 * Reset site identity
@@ -140,44 +180,114 @@ class ResetService {
 	}
 
 	/**
-	 * Delete all posts with meta nfd_onboarding_generated = '1' across post types: page, post, product, nfd_service
+	 * Remove default-term options so wp_delete_term() can delete Uncategorized.
 	 *
+	 * @param string $taxonomy Taxonomy slug.
 	 * @return void
 	 */
-	private static function delete_all_posts(): void {
+	private static function unset_default_term_option( string $taxonomy ): void {
+		if ( 'category' === $taxonomy ) {
+			delete_option( 'default_category' );
+			return;
+		}
 
-		$posts = get_posts(
-			array(
-				'post_type'      => array( 'page', 'post'),
-				'post_status'    => 'any',
-				'posts_per_page' => -1,
-				'fields'         => 'ids',
-			)
-		);
-
-		foreach ( $posts as $post_id ) {
-
-			$thumbnail_id = (int) get_post_thumbnail_id( $post_id );
-			if ( $thumbnail_id ) {
-				wp_delete_attachment( $thumbnail_id, true );
-			}
-
-			// remove all attached media of a page.
-			$children = get_attached_media( '', $post_id );
-			foreach ( $children as $child ) {
-				wp_delete_attachment( $child->ID, true );
-			}
-
-			wp_delete_post( $post_id, true );
+		if ( 'product_cat' === $taxonomy ) {
+			delete_option( 'default_product_cat' );
+			delete_option( 'default_term_product_cat' );
 		}
 	}
 
 	/**
-	 * Clear the onboarding backend process.
+	 * Delete terms
+	 *
+	 * @param bool $generated_only If true, delete terms onboarding generated.
 	 *
 	 * @return void
 	 */
-	public static function clear(): void {
-		self::delete_all_posts();
+	private static function delete_terms( $generated_only = false ): void {
+
+		foreach ( self::$taxonomies as $taxonomy ) {
+			if ( ! taxonomy_exists( $taxonomy ) ) {
+				continue;
+			}
+
+			if ( ! $generated_only ) {
+				self::unset_default_term_option( $taxonomy );
+			}
+
+			$query = array(
+				'taxonomy'   => $taxonomy,
+				'hide_empty' => false,
+				'fields'     => 'ids',
+			);
+
+			if ( $generated_only ) {
+				$query = array_merge(
+					$query,
+					array(
+						'meta_key'   => PostTypeService::META_ONBOARDING_GENERATED,
+						'meta_value' => '1',
+					)
+				);
+			}
+
+			$terms = get_terms( $query );
+
+			if ( is_wp_error( $terms ) || empty( $terms ) ) {
+				continue;
+			}
+			foreach ( $terms as $term_id ) {
+				wp_delete_term( (int) $term_id, $taxonomy );
+			}
+		}
+	}
+
+	/**
+	 * Reset the template part to the theme default
+	 *
+	 * @param string $slug
+	 * @return void
+	 */
+	private static function reset_template_part( string $slug ): void {
+		$custom_parts = get_posts(
+			array(
+				'post_type'      => 'wp_template_part',
+				'post_status'    => 'any',
+				'name'           => $slug,
+				'posts_per_page' => 1,
+				'tax_query'      => array(
+					array(
+						'taxonomy' => 'wp_theme',
+						'field'    => 'name',
+						'terms'    => get_stylesheet(),
+					),
+				),
+				'fields'         => 'ids',
+			)
+		);
+
+		foreach ( $custom_parts as $post_id ) {
+			wp_delete_post( (int) $post_id, true );
+		}
+	}
+
+	/**
+	 * Reset the global styles to the theme default
+	 *
+	 * @return void
+	 */
+	private static function reset_global_styles(): void {
+		$post_id = \WP_Theme_JSON_Resolver::get_user_global_styles_post_id();
+		if ( ! $post_id ) {
+			return;
+		}
+		wp_update_post(
+			array(
+				'ID'           => $post_id,
+				'post_content' => wp_slash( '{}' ),
+			)
+		);
+		wp_clean_theme_json_cache();
+		\WP_Theme_JSON_Resolver::clean_cached_data();
 	}
 }
