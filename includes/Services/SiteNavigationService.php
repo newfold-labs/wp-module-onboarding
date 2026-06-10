@@ -47,6 +47,8 @@ class SiteNavigationService {
 				)
 			);
 
+			update_post_meta( $$navigation->posts[0]->ID, PostTypeService::META_ONBOARDING_GENERATED, '1' );
+
 			return true;
 		}
 
@@ -63,7 +65,7 @@ class SiteNavigationService {
 			return false;
 		}
 
-		update_post_meta( $navigation_id, 'nfd_onboarding_generated', '1' );
+		update_post_meta( $navigation_id, PostTypeService::META_ONBOARDING_GENERATED, '1' );
 
 		return true;
 	}

@@ -101,7 +101,7 @@ class SiteGenImageService {
 				'post_status'    => 'publish',
 				'posts_per_page' => -1,
 				'fields'         => 'all',
-				'meta_key'       => 'nfd_onboarding_generated',
+				'meta_key'       => PostTypeService::META_ONBOARDING_GENERATED,
 				'meta_value'     => '1',
 			)
 		);

@@ -146,7 +146,7 @@ export async function createNavigationMenu( pages ) {
 		return apiFetch( {
 			url: `${ wpRestBase }/navigation/${ match.id }`,
 			method: 'POST',
-			data: { content: links },
+			data: { content: links, meta: { nfd_onboarding_generated: '1' } },
 		} );
 	}
 

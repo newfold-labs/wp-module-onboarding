@@ -245,7 +245,7 @@ class ResetService {
 	/**
 	 * Reset the template part to the theme default
 	 *
-	 * @param string $slug
+	 * @param string $slug Template part slug.
 	 * @return void
 	 */
 	private static function reset_template_part( string $slug ): void {

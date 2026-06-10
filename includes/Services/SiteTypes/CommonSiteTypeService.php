@@ -106,7 +106,7 @@ class CommonSiteTypeService {
 			wp_set_post_terms( $post_id, $categories, 'category' );
 		}
 
-		update_post_meta( $post_id, 'nfd_onboarding_generated', '1' );
+		update_post_meta( $post_id, PostTypeService::META_ONBOARDING_GENERATED, '1' );
 		if ( ! empty( $image ) ) {
 			update_post_meta( $post_id, 'nfd_image_url', esc_url_raw( $image ) );
 		}
