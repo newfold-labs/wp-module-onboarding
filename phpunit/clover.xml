@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1781640009">
-  <project timestamp="1781640009">
+<coverage generated="1782742762">
+  <project timestamp="1782742762">
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Application.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Application" namespace="global">
         <metrics complexity="7" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="0" elements="31" coveredelements="0"/>
@@ -1779,7 +1779,7 @@
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/RestApi/GlobalStylesController.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\RestApi\GlobalStylesController" namespace="global">
-        <metrics complexity="36" methods="6" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="205" coveredstatements="40" elements="211" coveredelements="42"/>
+        <metrics complexity="36" methods="6" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="203" coveredstatements="40" elements="209" coveredelements="42"/>
       </class>
       <line num="34" type="method" name="register_routes" visibility="public" complexity="1" crap="1" count="1"/>
       <line num="35" type="stmt" count="1"/>
@@ -1981,18 +1981,16 @@
       <line num="321" type="stmt" count="0"/>
       <line num="322" type="stmt" count="0"/>
       <line num="323" type="stmt" count="0"/>
-      <line num="324" type="stmt" count="0"/>
-      <line num="325" type="stmt" count="0"/>
-      <line num="334" type="method" name="set_global_styles" visibility="public" complexity="4" crap="20" count="0"/>
-      <line num="335" type="stmt" count="0"/>
+      <line num="332" type="method" name="set_global_styles" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="333" type="stmt" count="0"/>
+      <line num="334" type="stmt" count="0"/>
       <line num="336" type="stmt" count="0"/>
-      <line num="338" type="stmt" count="0"/>
-      <line num="339" type="stmt" count="0"/>
+      <line num="337" type="stmt" count="0"/>
+      <line num="340" type="stmt" count="0"/>
+      <line num="341" type="stmt" count="0"/>
       <line num="342" type="stmt" count="0"/>
-      <line num="343" type="stmt" count="0"/>
-      <line num="344" type="stmt" count="0"/>
-      <line num="347" type="stmt" count="0"/>
-      <metrics loc="350" ncloc="294" classes="1" methods="6" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="205" coveredstatements="40" elements="211" coveredelements="42"/>
+      <line num="345" type="stmt" count="0"/>
+      <metrics loc="348" ncloc="292" classes="1" methods="6" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="203" coveredstatements="40" elements="209" coveredelements="42"/>
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/RestApi/LogoGenController.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\RestApi\LogoGenController" namespace="global">
@@ -3311,7 +3309,7 @@
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Services/GlobalStylesService.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Services\GlobalStylesService" namespace="global">
-        <metrics complexity="21" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="57" coveredstatements="0" elements="62" coveredelements="0"/>
+        <metrics complexity="22" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="60" coveredstatements="0" elements="65" coveredelements="0"/>
       </class>
       <line num="31" type="method" name="__construct" visibility="public" complexity="3" crap="12" count="0"/>
       <line num="33" type="stmt" count="0"/>
@@ -3361,21 +3359,24 @@
       <line num="130" type="stmt" count="0"/>
       <line num="131" type="stmt" count="0"/>
       <line num="132" type="stmt" count="0"/>
-      <line num="143" type="method" name="update_active_global_styles" visibility="protected" complexity="2" crap="6" count="0"/>
+      <line num="143" type="method" name="update_active_global_styles" visibility="protected" complexity="3" crap="12" count="0"/>
       <line num="144" type="stmt" count="0"/>
       <line num="145" type="stmt" count="0"/>
       <line num="147" type="stmt" count="0"/>
       <line num="148" type="stmt" count="0"/>
       <line num="149" type="stmt" count="0"/>
-      <line num="150" type="stmt" count="0"/>
-      <line num="151" type="stmt" count="0"/>
       <line num="152" type="stmt" count="0"/>
       <line num="153" type="stmt" count="0"/>
       <line num="154" type="stmt" count="0"/>
       <line num="155" type="stmt" count="0"/>
+      <line num="156" type="stmt" count="0"/>
+      <line num="157" type="stmt" count="0"/>
       <line num="158" type="stmt" count="0"/>
+      <line num="159" type="stmt" count="0"/>
       <line num="160" type="stmt" count="0"/>
-      <metrics loc="163" ncloc="111" classes="1" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="57" coveredstatements="0" elements="62" coveredelements="0"/>
+      <line num="163" type="stmt" count="0"/>
+      <line num="165" type="stmt" count="0"/>
+      <metrics loc="168" ncloc="116" classes="1" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="60" coveredstatements="0" elements="65" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Services/I18nService.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Services\I18nService" namespace="global">
@@ -5714,6 +5715,6 @@
       <line num="55" type="stmt" count="0"/>
       <metrics loc="58" ncloc="24" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="8" coveredelements="0"/>
     </file>
-    <metrics files="67" loc="12520" ncloc="8817" classes="66" methods="412" coveredmethods="129" conditionals="0" coveredconditionals="0" statements="4908" coveredstatements="1563" elements="5320" coveredelements="1692"/>
+    <metrics files="67" loc="12523" ncloc="8820" classes="66" methods="412" coveredmethods="129" conditionals="0" coveredconditionals="0" statements="4909" coveredstatements="1563" elements="5321" coveredelements="1692"/>
   </project>
 </coverage>
