@@ -1,6 +1,6 @@
 <?php
 /**
- * Resolver for category-bound blog sections.
+ * Blog site type service.
  *
  * @package NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes
  */
@@ -8,22 +8,23 @@
 namespace NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes;
 
 /**
- * Assigns generated categories to category-bound blog sections across all pages.
+ * Blog-specific publish behaviour.
  *
- * A category-bound section is a query loop that carries a `categoryBinding`
- * marker in its block metadata but no real filter. Each one is given a distinct
- * category: the query gets a taxQuery so it filters, and the section heading and
+ * Resolves the category-bound blog sections across the generated pages: a
+ * category-bound section is a query loop that carries a `categoryBinding` marker
+ * in its block metadata but no real filter. Each one is given a distinct
+ * category — the query gets a taxQuery so it filters, and the section heading and
  * "More" link are rewritten to that category. Sections are filled in document
  * order; categories cycle when sections outnumber them.
  */
-class CategoryBoundSectionResolver {
+class BlogSiteTypeService {
 
 	/**
 	 * Resolve every category-bound section across the generated pages.
 	 *
 	 * @param array<int,array{name:string,term_id:int,url:string}> $categories Ordered categories.
 	 */
-	public static function resolve( array $categories ): void {
+	public static function resolve_category_bound_sections( array $categories ): void {
 		if ( empty( $categories ) ) {
 			return;
 		}

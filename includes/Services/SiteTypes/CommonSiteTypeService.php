@@ -48,7 +48,7 @@ class CommonSiteTypeService {
 
 		// Categories now exist and the pages were created earlier, so wire up the
 		// category-bound blog sections across all generated pages.
-		CategoryBoundSectionResolver::resolve(
+		BlogSiteTypeService::resolve_category_bound_sections(
 			self::ordered_generated_categories( $articles, $category_map )
 		);
 

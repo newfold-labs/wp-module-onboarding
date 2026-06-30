@@ -1,20 +1,20 @@
 <?php
 /**
- * Tests for the category-bound section resolver.
+ * Tests for the blog site type service.
  *
  * @package NewfoldLabs\WP\Module\Onboarding
  */
 
 namespace NewfoldLabs\WP\Module\Onboarding;
 
-use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\CategoryBoundSectionResolver;
+use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\BlogSiteTypeService;
 
 /**
- * CategoryBoundSectionResolver wpunit tests.
+ * BlogSiteTypeService wpunit tests.
  *
- * @coversDefaultClass \NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\CategoryBoundSectionResolver
+ * @coversDefaultClass \NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\BlogSiteTypeService
  */
-class CategoryBoundSectionResolverWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
+class BlogSiteTypeServiceWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 
 	/**
 	 * Build one category-bound section (a columns block holding a categoryBinding
@@ -65,7 +65,7 @@ class CategoryBoundSectionResolverWPUnitTest extends \lucatume\WPBrowser\TestCas
 			),
 		);
 
-		CategoryBoundSectionResolver::resolve( $categories );
+		BlogSiteTypeService::resolve_category_bound_sections( $categories );
 
 		$content = get_post( $page_id )->post_content;
 		$this->assertStringContainsString( '"taxQuery"', $content );
@@ -85,7 +85,7 @@ class CategoryBoundSectionResolverWPUnitTest extends \lucatume\WPBrowser\TestCas
 		$page_id = $this->page( '<!-- wp:paragraph --><p>Plain page.</p><!-- /wp:paragraph -->' );
 		$before  = get_post( $page_id )->post_content;
 
-		CategoryBoundSectionResolver::resolve(
+		BlogSiteTypeService::resolve_category_bound_sections(
 			array(
 				array(
 					'name'    => 'News',
@@ -107,7 +107,7 @@ class CategoryBoundSectionResolverWPUnitTest extends \lucatume\WPBrowser\TestCas
 		$page_id = $this->page( $this->section( 'Latest' ) );
 		$before  = get_post( $page_id )->post_content;
 
-		CategoryBoundSectionResolver::resolve( array() );
+		BlogSiteTypeService::resolve_category_bound_sections( array() );
 
 		$this->assertSame( $before, get_post( $page_id )->post_content );
 	}
@@ -129,7 +129,7 @@ class CategoryBoundSectionResolverWPUnitTest extends \lucatume\WPBrowser\TestCas
 			),
 		);
 
-		CategoryBoundSectionResolver::resolve( $categories );
+		BlogSiteTypeService::resolve_category_bound_sections( $categories );
 
 		$this->assertStringContainsString( '>News</h2>', get_post( $home_id )->post_content );
 		$this->assertStringContainsString( '>News</h2>', get_post( $about_id )->post_content );
@@ -157,7 +157,7 @@ class CategoryBoundSectionResolverWPUnitTest extends \lucatume\WPBrowser\TestCas
 			),
 		);
 
-		CategoryBoundSectionResolver::resolve( $categories );
+		BlogSiteTypeService::resolve_category_bound_sections( $categories );
 
 		$content = get_post( $page_id )->post_content;
 		$this->assertStringContainsString( '>News</h2>', $content );
