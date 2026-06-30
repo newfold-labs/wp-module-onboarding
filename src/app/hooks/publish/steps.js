@@ -113,6 +113,8 @@ export async function runPages( { generationData, ctx } ) {
 				title: entry.title,
 				slug: entry.slug,
 				link: page.link,
+				is_front_page: !! entry.is_front_page,
+				is_contact_page: !! entry.is_contact_page,
 			} );
 			if ( isHome ) {
 				homepageId = page.id;
@@ -155,6 +157,15 @@ export async function runTemplateParts( { generationData } ) {
 		'<!-- wp:template-part {"slug":"footer","theme":"bluehost-blueprint","area":"footer"} /-->';
 	const normalizedPageNoTitleContent = normalizeBlockContent( pageNoTitleContent );
 	await updateTemplate( 'page-no-title', normalizedPageNoTitleContent );
+
+	// Apply any WordPress block templates the sitekit ships (e.g. the category
+	// archive), each { slug, content }. No-op when none are sent.
+	const templates = generationData.sitekit?.templates ?? [];
+	for ( const tpl of templates ) {
+		if ( tpl?.slug && tpl?.content ) {
+			await updateTemplate( tpl.slug, normalizeBlockContent( tpl.content ) );
+		}
+	}
 
 	return 'Header and footer configured';
 }
@@ -212,12 +223,29 @@ export async function runProducts( { generationData } ) {
 	return `${ count } product${ count !== 1 ? 's' : '' } published`;
 }
 
-export async function runNavigation( { discoveryData, ctx } ) {
+export async function runNavigation( { generationData, discoveryData, ctx } ) {
 	if ( ctx.createdPages.length === 0 ) {
 		return 'Skipped — no pages';
 	}
 
-	const result = await setupSiteNavigationMenu( discoveryData?.site_type ?? '', ctx.createdPages );
+	// Blog-only nav tidy-up: drop the contact page when the header CTA already links
+	// to it, so the same destination isn't listed twice.
+	const isBlog = ( discoveryData?.site_type ?? '' ).toLowerCase() === 'blog';
+	const headerHtml = generationData?.sitekit?.header ?? '';
+	const pages = isBlog
+		? ctx.createdPages.filter( ( page ) => {
+			if ( ! page.is_contact_page ) {
+				return true;
+			}
+			const slug = ( page.slug || '' ).replace( /^\/+|\/+$/g, '' );
+			const headerLinksToContact =
+				!! slug &&
+				new RegExp( `href=["']/?${ slug }/?["']`, 'i' ).test( headerHtml );
+			return ! headerLinksToContact;
+		} )
+		: ctx.createdPages;
+
+	const result = await setupSiteNavigationMenu( discoveryData?.site_type ?? '', pages );
 
 	if ( result?.error ) {
 		throw result.error;

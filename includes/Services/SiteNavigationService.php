@@ -15,6 +15,11 @@ use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService
 class SiteNavigationService {
 
 	/**
+	 * Maximum number of items (pages + category links) in the generated primary nav.
+	 */
+	const MAX_NAV_ITEMS = 5;
+
+	/**
 	 * Setup the site navigation menu from client-created pages.
 	 *
 	 * @param string $site_type Site type from discovery (e.g. ecommerce, business).
@@ -22,7 +27,18 @@ class SiteNavigationService {
 	 * @return bool True if the navigation menu was setup, false otherwise.
 	 */
 	public function setup_site_nav_menu( string $site_type, array $pages ): bool {
-		$nav_items = $this->get_site_navigation_items( $site_type, $pages );
+		$page_items = $this->get_site_navigation_items( $site_type, $pages );
+
+		// Category links and the role-ordered cap are a blog-only feature, gated on
+		// the site type alone. Other types keep their full page menu in document
+		// order — even when they ship posts (e.g. a sitekit with includes_articles);
+		// generated categories alone do not make a site a blog.
+		if ( 'blog' === strtolower( $site_type ) ) {
+			$nav_items = $this->cap_nav_items( $page_items, $this->get_category_navigation_items() );
+		} else {
+			$nav_items = $page_items;
+		}
+
 		if ( empty( $nav_items ) ) {
 			return false;
 		}
@@ -47,7 +63,7 @@ class SiteNavigationService {
 				)
 			);
 
-			update_post_meta( $$navigation->posts[0]->ID, PostTypeService::META_ONBOARDING_GENERATED, '1' );
+			update_post_meta( $navigation->posts[0]->ID, PostTypeService::META_ONBOARDING_GENERATED, '1' );
 
 			return true;
 		}
@@ -93,6 +109,8 @@ class SiteNavigationService {
 				'post_id'       => $id,
 				'title'         => $title,
 				'permalink'     => $link,
+				'is_front'      => ! empty( $page['is_front_page'] ),
+				'is_contact'    => ! empty( $page['is_contact_page'] ),
 				'block_grammar' => self::get_nav_link_block_grammar( $id, $title, $link ),
 			);
 		}
@@ -156,6 +174,110 @@ class SiteNavigationService {
 		array_splice( $nav_items, $insert_at, 0, array( $shop_item ) );
 
 		return $nav_items;
+	}
+
+	/**
+	 * Compose the primary nav from page + category items, capped at MAX_NAV_ITEMS
+	 * and ordered by role: front page → category links → other pages → contact.
+	 * Truncation drops from the end, so contact is shed first and the category
+	 * links (a blog's primary IA) are preserved.
+	 *
+	 * @param array $page_items     Page navigation items (each with is_front/is_contact).
+	 * @param array $category_items Category navigation items.
+	 * @return array
+	 */
+	private function cap_nav_items( array $page_items, array $category_items ): array {
+		$page_items     = array_values( $page_items );
+		$category_items = array_values( $category_items );
+
+		$front   = array();
+		$contact = array();
+		$other   = array();
+
+		foreach ( $page_items as $item ) {
+			if ( ! empty( $item['is_front'] ) && empty( $front ) ) {
+				$front[] = $item;
+			} elseif ( ! empty( $item['is_contact'] ) ) {
+				$contact[] = $item;
+			} else {
+				$other[] = $item;
+			}
+		}
+
+		// No front page flagged: treat the first page as home.
+		if ( empty( $front ) && ! empty( $other ) ) {
+			$front[] = array_shift( $other );
+		}
+
+		$ordered = array_merge( $front, $category_items, $other, $contact );
+
+		return array_slice( $ordered, 0, self::MAX_NAV_ITEMS );
+	}
+
+	/**
+	 * Build taxonomy nav items for the top 3 onboarding-generated category archives,
+	 * most-populated first. Non-blog sites have no such terms, so they yield none.
+	 *
+	 * @return array Navigation items with block_grammar.
+	 */
+	private function get_category_navigation_items(): array {
+		$terms = get_terms(
+			array(
+				'taxonomy'   => 'category',
+				'hide_empty' => false,
+				'orderby'    => 'count',
+				'order'      => 'DESC',
+				'number'     => 3,
+				'meta_query' => array(
+					array(
+						'key'   => PostTypeService::META_ONBOARDING_GENERATED,
+						'value' => '1',
+					),
+				),
+			)
+		);
+
+		if ( is_wp_error( $terms ) || empty( $terms ) ) {
+			return array();
+		}
+
+		$items = array();
+		foreach ( $terms as $term ) {
+			$link = get_term_link( $term );
+			if ( is_wp_error( $link ) || ! $link ) {
+				continue;
+			}
+
+			$items[] = array(
+				'term_id'       => (int) $term->term_id,
+				'title'         => $term->name,
+				'permalink'     => $link,
+				'block_grammar' => self::get_nav_taxonomy_link_block_grammar( (int) $term->term_id, $term->name, $link ),
+			);
+		}
+
+		return $items;
+	}
+
+	/**
+	 * Get the navigation link block grammar for a category archive (taxonomy term).
+	 *
+	 * @param int    $term_id Category term ID.
+	 * @param string $label   Link label.
+	 * @param string $url     Category archive URL.
+	 * @return string Block markup.
+	 */
+	public static function get_nav_taxonomy_link_block_grammar( int $term_id, string $label, string $url ): string {
+		$id    = (int) $term_id;
+		$label = sanitize_text_field( $label );
+		$url   = esc_url_raw( $url );
+
+		return sprintf(
+			'<!-- wp:navigation-link {"label":"%s","type":"category","id":%d,"url":"%s","kind":"taxonomy"} /-->',
+			$label,
+			$id,
+			$url
+		);
 	}
 
 	/**

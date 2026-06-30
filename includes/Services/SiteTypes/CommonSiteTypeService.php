@@ -46,7 +46,46 @@ class CommonSiteTypeService {
 			$created_ids[] = $article_id;
 		}
 
+		// Categories now exist and the pages were created earlier, so wire up the
+		// category-bound blog sections across all generated pages.
+		BlogSiteTypeService::resolve_category_bound_sections(
+			self::ordered_generated_categories( $articles, $category_map )
+		);
+
 		return $created_ids;
+	}
+
+	/**
+	 * Build an ordered list of the generated categories, most-covered first.
+	 *
+	 * @param array             $articles     The articles.
+	 * @param array<string,int> $category_map name → term_id map from {@see build_category_map_from_articles()}.
+	 * @return array<int,array{name:string,term_id:int,url:string}>
+	 */
+	private static function ordered_generated_categories( array $articles, array $category_map ): array {
+		$counts = array();
+		foreach ( $articles as $article ) {
+			foreach ( ( $article['categories'] ?? array() ) as $name ) {
+				$counts[ $name ] = ( $counts[ $name ] ?? 0 ) + 1;
+			}
+		}
+		arsort( $counts );
+
+		$ordered = array();
+		foreach ( array_keys( $counts ) as $name ) {
+			$term_id = (int) ( $category_map[ $name ] ?? 0 );
+			if ( ! $term_id ) {
+				continue;
+			}
+			$url       = get_term_link( $term_id, 'category' );
+			$ordered[] = array(
+				'name'    => (string) $name,
+				'term_id' => $term_id,
+				'url'     => is_wp_error( $url ) ? '' : (string) $url,
+			);
+		}
+
+		return $ordered;
 	}
 
 	/**
