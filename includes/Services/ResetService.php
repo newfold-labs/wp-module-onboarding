@@ -32,6 +32,7 @@ class ResetService {
 	public static function reset(): void {
 		self::delete_posts( true );
 		self::delete_terms( true );
+		self::delete_font_posts();
 		self::reset_site_identity();
 		self::reset_template_part( 'header' );
 		self::reset_template_part( 'footer' );
@@ -97,6 +98,35 @@ class ResetService {
 			}
 
 			wp_delete_post( $post_id, true );
+		}
+	}
+
+	/**
+	 * Delete Font Library posts (wp_font_family / wp_font_face) so a regeneration
+	 * reinstalls fonts cleanly.
+	 *
+	 * @return void
+	 */
+	private static function delete_font_posts(): void {
+		if ( ! post_type_exists( 'wp_font_family' ) ) {
+			return;
+		}
+
+		$font_posts = get_posts(
+			array(
+				'post_type'      => array( 'wp_font_family', 'wp_font_face' ),
+				'post_status'    => 'any',
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+			)
+		);
+
+		if ( is_wp_error( $font_posts ) || empty( $font_posts ) ) {
+			return;
+		}
+
+		foreach ( $font_posts as $post_id ) {
+			wp_delete_post( (int) $post_id, true );
 		}
 	}
 
@@ -284,7 +314,7 @@ class ResetService {
 		wp_update_post(
 			array(
 				'ID'           => $post_id,
-				'post_content' => wp_slash( '{}' ),
+				'post_content' => wp_slash( '{"version": ' . \WP_Theme_JSON::LATEST_SCHEMA . ', "isGlobalStylesUserThemeJSON": true }' ),
 			)
 		);
 		wp_clean_theme_json_cache();
