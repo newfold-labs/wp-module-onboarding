@@ -1,11 +1,7 @@
 name: 'Lint Checker: PHP'
 on:
-  push:
-    paths:
-      - '**.php'
-      - '!build/**/*.php'
   pull_request:
-    types: [opened, edited, reopened, ready_for_review]
+    types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - '**.php'
       - '!build/**/*.php'
