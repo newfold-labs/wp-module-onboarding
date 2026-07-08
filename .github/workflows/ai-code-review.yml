@@ -21,7 +21,13 @@ permissions: {}
 
 jobs:
   review:
-    if: github.event.pull_request.draft == false && github.event.pull_request.head.repo.fork == false
+    # Skip Dependabot PRs: GitHub withholds repo secrets from Dependabot-context
+    # runs, so the AI gateway secrets are empty and the review would hard-fail.
+    # A skipped job counts as passing, so it never blocks Dependabot auto-merge.
+    if: >-
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.fork == false &&
+      github.actor != 'dependabot[bot]'
     name: Review PR diff
     uses: newfold-labs/workflows/.github/workflows/reusable-code-review.yml@main
     with:
