@@ -144,6 +144,11 @@ class GlobalStylesService {
 		$post_id      = $post_id ?? $this->global_styles_id;
 		$post_content = $post_content ?? $this->global_styles;
 
+		if ( is_array( $post_content ) ) {
+			$post_content['version']                      = \WP_Theme_JSON::LATEST_SCHEMA;
+			$post_content['isGlobalStylesUserThemeJSON'] = true;
+		}
+
 		$result = wp_update_post(
 			array(
 				'ID'           => $post_id,
