@@ -28,6 +28,13 @@ class EcommerceSiteTypeService {
 	private const WOOCOMMERCE_SLUG = 'woocommerce';
 
 	/**
+	 * YITH Wishlist plugin slug in the installer whitelist.
+	 *
+	 * @var string
+	 */
+	private const WISHLIST_SLUG = 'nfd_slug_yith_woocommerce_wishlist';
+
+	/**
 	 * Publishes a list of WooCommerce products.
 	 *
 	 * @param array $products The products.
@@ -534,12 +541,17 @@ HTML;
 	/**
 	 * Installs the ecommerce plugins (background task).
 	 *
+	 * @param array<string> $exclude_slugs Plugin slugs to skip (e.g. already installed synchronously).
 	 * @return void
 	 */
-	public static function install_ecommerce_plugins(): void {
+	public static function install_ecommerce_plugins( array $exclude_slugs = array() ): void {
 		$ecommerce_plugins = self::get_ecommerce_plugins();
 
 		foreach ( $ecommerce_plugins as $plugin ) {
+			if ( in_array( $plugin['slug'], $exclude_slugs, true ) ) {
+				continue;
+			}
+
 			$plugin_type = PluginInstaller::get_plugin_type( $plugin['slug'] );
 			$plugin_path = PluginInstaller::get_plugin_path( $plugin['slug'], $plugin_type );
 			if ( ! $plugin_path ) {
@@ -573,58 +585,74 @@ HTML;
 	}
 
 	/**
-	 * Ensure WooCommerce is active before ecommerce operations.
+	 * Ensure WooCommerce and YITH Wishlist are active before ecommerce operations.
 	 *
-	 * WooCommerce itself is installed/activated synchronously (blocking call). Any
-	 * other ecommerce plugins (YITH, brand-specific) are queued for background install.
+	 * WooCommerce and Wishlist are installed/activated synchronously (blocking calls).
+	 * Any other ecommerce plugins (YITH shipping/payments, brand-specific) are queued
+	 * for background install.
 	 *
-	 * @return \WP_REST_Response|null Null when WooCommerce is ready, response when blocked.
+	 * @return \WP_REST_Response|null Null when the sync stack is ready, response when blocked.
 	 */
 	public static function ensure_woocommerce_active(): ?\WP_REST_Response {
-		$plugin_path = self::get_woocommerce_plugin_path();
-		if ( ! $plugin_path ) {
-			return new \WP_REST_Response( array( 'error' => 'WooCommerce slug not whitelisted.' ), 500 );
+		$woo_response = self::ensure_sync_plugin_active( self::WOOCOMMERCE_SLUG, 'WooCommerce' );
+		if ( null !== $woo_response ) {
+			return self::queue_ecommerce_stack_and_respond( $woo_response );
 		}
 
-		if ( self::is_woocommerce_install_in_progress() ) {
-			return self::queue_ecommerce_stack_and_respond( self::woocommerce_installing_response() );
+		$wishlist_response = self::ensure_sync_plugin_active( self::WISHLIST_SLUG, 'YITH Wishlist' );
+		if ( null !== $wishlist_response ) {
+			return self::queue_ecommerce_stack_and_respond( $wishlist_response );
 		}
 
-		self::extend_install_time_limit();
-
-		if ( ! PluginInstaller::is_plugin_installed( $plugin_path ) ) {
-			$install_result = PluginInstaller::install( self::WOOCOMMERCE_SLUG, true );
-			if ( is_wp_error( $install_result ) ) {
-				return self::queue_ecommerce_stack_and_respond( self::woocommerce_installing_response() );
-			}
-		} elseif ( ! PluginInstaller::is_active( $plugin_path ) ) {
-			$result = PluginInstaller::activate( self::WOOCOMMERCE_SLUG );
-			if ( is_wp_error( $result ) || false === $result ) {
-				return new \WP_REST_Response( array( 'error' => 'WooCommerce could not be activated.' ), 500 );
-			}
-		}
+		self::ensure_wishlist_page();
 
 		return self::queue_ecommerce_stack_and_respond( null );
 	}
 
 	/**
-	 * Resolve the WooCommerce plugin header path from the installer whitelist.
+	 * Synchronously install and activate a single ecommerce plugin.
 	 *
-	 * @return string|false
+	 * @param string $slug  Installer whitelist slug.
+	 * @param string $label Human-readable label for error responses.
+	 * @return \WP_REST_Response|null Null when the plugin is ready.
 	 */
-	private static function get_woocommerce_plugin_path() {
-		$plugin_type = PluginInstaller::get_plugin_type( self::WOOCOMMERCE_SLUG );
-		return PluginInstaller::get_plugin_path( self::WOOCOMMERCE_SLUG, $plugin_type );
+	private static function ensure_sync_plugin_active( string $slug, string $label ): ?\WP_REST_Response {
+		$plugin_type = PluginInstaller::get_plugin_type( $slug );
+		$plugin_path = PluginInstaller::get_plugin_path( $slug, $plugin_type );
+		if ( ! $plugin_path ) {
+			return new \WP_REST_Response( array( 'error' => $label . ' slug not whitelisted.' ), 500 );
+		}
+
+		if ( self::is_plugin_install_in_progress( $slug ) ) {
+			return self::plugin_installing_response( $slug );
+		}
+
+		self::extend_install_time_limit();
+
+		if ( ! PluginInstaller::is_plugin_installed( $plugin_path ) ) {
+			$install_result = PluginInstaller::install( $slug, true );
+			if ( is_wp_error( $install_result ) ) {
+				return self::plugin_installing_response( $slug );
+			}
+		} elseif ( ! PluginInstaller::is_active( $plugin_path ) ) {
+			$result = PluginInstaller::activate( $slug );
+			if ( is_wp_error( $result ) || false === $result ) {
+				return new \WP_REST_Response( array( 'error' => $label . ' could not be activated.' ), 500 );
+			}
+		}
+
+		return null;
 	}
 
 	/**
-	 * Whether the background installer cron is currently processing WooCommerce.
+	 * Whether the background installer cron is currently processing a plugin slug.
 	 *
+	 * @param string $slug Installer whitelist slug.
 	 * @return bool
 	 */
-	private static function is_woocommerce_install_in_progress(): bool {
+	private static function is_plugin_install_in_progress( string $slug ): bool {
 		$cron_current = get_option( InstallerOptions::get_option_name( 'plugins_init_status' ) );
-		return self::WOOCOMMERCE_SLUG === $cron_current;
+		return $slug === $cron_current;
 	}
 
 	/**
@@ -639,28 +667,34 @@ HTML;
 	}
 
 	/**
-	 * REST response while WooCommerce is still being installed.
+	 * REST response while a sync ecommerce plugin is still being installed.
 	 *
+	 * @param string $slug Installer whitelist slug.
 	 * @return \WP_REST_Response
 	 */
-	private static function woocommerce_installing_response(): \WP_REST_Response {
+	private static function plugin_installing_response( string $slug ): \WP_REST_Response {
 		return new \WP_REST_Response(
 			array(
 				'status'  => 'installing',
-				'pending' => array( self::WOOCOMMERCE_SLUG ),
+				'pending' => array( $slug ),
 			),
 			202
 		);
 	}
 
 	/**
-	 * Queue non-Woo ecommerce plugins, then return the caller's response (null = ready).
+	 * Queue remaining ecommerce plugins, then return the caller's response (null = ready).
 	 *
 	 * @param \WP_REST_Response|null $response Response to return after queueing.
 	 * @return \WP_REST_Response|null
 	 */
 	private static function queue_ecommerce_stack_and_respond( ?\WP_REST_Response $response ): ?\WP_REST_Response {
-		self::install_ecommerce_plugins();
+		self::install_ecommerce_plugins(
+			array(
+				self::WOOCOMMERCE_SLUG,
+				self::WISHLIST_SLUG,
+			)
+		);
 		return $response;
 	}
 }
