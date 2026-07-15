@@ -20,6 +20,28 @@ class SiteNavigationService {
 	const MAX_NAV_ITEMS = 5;
 
 	/**
+	 * Known policy page slugs (en + common localized defaults from sitegen).
+	 *
+	 * @var list<string>
+	 */
+	private const POLICY_PAGE_SLUGS = array(
+		'shipping',
+		'envios',
+		'livraison',
+		'returns-refunds',
+		'devoluciones',
+		'retours',
+		'faq',
+		'preguntas-frecuentes',
+		'privacy-terms',
+		'privacidad-terminos',
+		'confidentialite-conditions',
+		'privacy',
+		'terms',
+		'refund-and-returns-policy',
+	);
+
+	/**
 	 * Setup the site navigation menu from client-created pages.
 	 *
 	 * @param string $site_type Site type from discovery (e.g. ecommerce, business).
@@ -97,6 +119,10 @@ class SiteNavigationService {
 		$nav_items = array();
 
 		foreach ( $pages as $page ) {
+			if ( self::is_policy_nav_page( $page ) ) {
+				continue;
+			}
+
 			$id    = (int) ( $page['id'] ?? 0 );
 			$title = $page['title'] ?? '';
 			$link  = $page['link'] ?? '';
@@ -160,7 +186,7 @@ class SiteNavigationService {
 		$insert_at = 1;
 
 		foreach ( $pages as $page ) {
-			if ( ( $page['slug'] ?? '' ) !== 'home' ) {
+			if ( empty( $page['is_front_page'] ) ) {
 				continue;
 			}
 
@@ -169,6 +195,22 @@ class SiteNavigationService {
 				if ( $item['post_id'] === $page_id ) {
 					$insert_at = $index + 1;
 					break 2;
+				}
+			}
+		}
+
+		if ( 1 === $insert_at ) {
+			foreach ( $pages as $page ) {
+				if ( ( $page['slug'] ?? '' ) !== 'home' ) {
+					continue;
+				}
+
+				$page_id = (int) ( $page['id'] ?? 0 );
+				foreach ( $nav_items as $index => $item ) {
+					if ( $item['post_id'] === $page_id ) {
+						$insert_at = $index + 1;
+						break 2;
+					}
 				}
 			}
 		}
@@ -280,6 +322,24 @@ class SiteNavigationService {
 			$id,
 			$url
 		);
+	}
+
+	/**
+	 * Whether a page is a policy/support page that belongs in the footer only.
+	 *
+	 * Contact pages are always kept in the header nav.
+	 *
+	 * @param array $page Publish page payload.
+	 * @return bool
+	 */
+	public static function is_policy_nav_page( array $page ): bool {
+		if ( ! empty( $page['is_contact_page'] ) ) {
+			return false;
+		}
+
+		$slug = strtolower( trim( (string) ( $page['slug'] ?? '' ), '/' ) );
+
+		return in_array( $slug, self::POLICY_PAGE_SLUGS, true );
 	}
 
 	/**

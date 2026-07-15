@@ -214,4 +214,89 @@ class SiteNavigationServiceWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTes
 		$this->assertSame( 6, substr_count( $nav[0]->post_content, 'wp:navigation-link' ) );
 		$this->assertStringNotContainsString( '"kind":"taxonomy"', $nav[0]->post_content );
 	}
+
+	/**
+	 * Ecommerce nav excludes policy/support pages but keeps contact.
+	 *
+	 * @return void
+	 */
+	public function test_setup_site_nav_menu_excludes_policy_pages_for_ecommerce() {
+		$pages = array(
+			array(
+				'id'            => (int) self::factory()->post->create( array( 'post_type' => 'page' ) ),
+				'title'         => 'Home',
+				'link'          => 'http://example.org/',
+				'slug'          => 'home',
+				'is_front_page' => true,
+			),
+			array(
+				'id'    => (int) self::factory()->post->create( array( 'post_type' => 'page' ) ),
+				'title' => 'About',
+				'link'  => 'http://example.org/about/',
+				'slug'  => 'about',
+			),
+			array(
+				'id'              => (int) self::factory()->post->create( array( 'post_type' => 'page' ) ),
+				'title'           => 'Contact',
+				'link'            => 'http://example.org/contact/',
+				'slug'            => 'contact',
+				'is_contact_page' => true,
+			),
+			array(
+				'id'    => (int) self::factory()->post->create( array( 'post_type' => 'page' ) ),
+				'title' => 'Shipping',
+				'link'  => 'http://example.org/shipping/',
+				'slug'  => 'shipping',
+			),
+			array(
+				'id'    => (int) self::factory()->post->create( array( 'post_type' => 'page' ) ),
+				'title' => 'FAQ',
+				'link'  => 'http://example.org/faq/',
+				'slug'  => 'faq',
+			),
+		);
+
+		( new SiteNavigationService() )->setup_site_nav_menu( 'ecommerce', $pages );
+
+		$nav = get_posts(
+			array(
+				'post_type'   => 'wp_navigation',
+				'numberposts' => 1,
+			)
+		);
+		$this->assertNotEmpty( $nav );
+		$this->assertStringContainsString( '"label":"Contact"', $nav[0]->post_content );
+		$this->assertStringNotContainsString( '"label":"Shipping"', $nav[0]->post_content );
+		$this->assertStringNotContainsString( '"label":"FAQ"', $nav[0]->post_content );
+	}
+
+	/**
+	 * Policy page detection keeps contact and flags support pages.
+	 *
+	 * @return void
+	 */
+	public function test_is_policy_nav_page() {
+		$this->assertTrue(
+			SiteNavigationService::is_policy_nav_page(
+				array(
+					'slug' => 'shipping',
+				)
+			)
+		);
+		$this->assertFalse(
+			SiteNavigationService::is_policy_nav_page(
+				array(
+					'slug'            => 'contact',
+					'is_contact_page' => true,
+				)
+			)
+		);
+		$this->assertFalse(
+			SiteNavigationService::is_policy_nav_page(
+				array(
+					'slug' => 'about',
+				)
+			)
+		);
+	}
 }
