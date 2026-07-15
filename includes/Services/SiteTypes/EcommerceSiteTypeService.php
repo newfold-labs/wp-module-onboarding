@@ -490,9 +490,12 @@ HTML;
 	/**
 	 * wc_create_page() lives in an admin include and is not loaded on the frontend.
 	 *
+	 * YITH Wishlist calls it from its own init hook; load it early so that install
+	 * does not fatal on frontend/cron requests during sitegen.
+	 *
 	 * @return void
 	 */
-	private static function load_wc_create_page_function(): void {
+	public static function load_wc_create_page_function(): void {
 		if ( function_exists( 'wc_create_page' ) ) {
 			return;
 		}

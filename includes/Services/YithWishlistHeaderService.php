@@ -18,8 +18,18 @@ class YithWishlistHeaderService {
 	 * Constructor.
 	 */
 	public function __construct() {
+		add_action( 'init', array( $this, 'ensure_wc_create_page_available' ), 1 );
 		add_action( 'init', array( $this, 'register' ) );
 		add_action( 'activated_plugin', array( $this, 'maybe_setup_wishlist_page' ), 10, 1 );
+	}
+
+	/**
+	 * Load wc_create_page() before YITH Wishlist install runs on init.
+	 *
+	 * @return void
+	 */
+	public function ensure_wc_create_page_available(): void {
+		EcommerceSiteTypeService::load_wc_create_page_function();
 	}
 
 	/**
