@@ -100,6 +100,8 @@ class SiteNavigationService {
 		}
 
 		EcommerceSiteTypeService::setup_woo_pages();
+		EcommerceSiteTypeService::ensure_wishlist_page();
+		EcommerceSiteTypeService::ensure_refund_returns_page_published();
 
 		$woo_shop_page = EcommerceSiteTypeService::get_woo_shop_page_info();
 		if ( empty( $woo_shop_page ) ) {

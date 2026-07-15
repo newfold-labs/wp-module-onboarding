@@ -83,7 +83,7 @@ final class Plugins {
 				),
 				array(
 					'slug'     => 'nfd_slug_yith_woocommerce_wishlist',
-					'activate' => false,
+					'activate' => true,
 					'priority' => 160,
 				),
 				array(
@@ -109,6 +109,11 @@ final class Plugins {
 					'slug'     => 'woocommerce',
 					'activate' => true,
 					'priority' => 300,
+				),
+				array(
+					'slug'     => 'nfd_slug_yith_woocommerce_wishlist',
+					'activate' => true,
+					'priority' => 160,
 				),
 			),
 			'bluehost'       => array(

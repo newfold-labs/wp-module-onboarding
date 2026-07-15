@@ -9,6 +9,7 @@ use NewfoldLabs\WP\Module\Onboarding\Services\StatusService;
 use NewfoldLabs\WP\Module\Onboarding\Services\EventService;
 use NewfoldLabs\WP\Module\Onboarding\Services\PostTypeService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ThumbnailService;
+use NewfoldLabs\WP\Module\Onboarding\Services\YithWishlistHeaderService;
 use function NewfoldLabs\WP\ModuleLoader\container;
 
 /**
@@ -54,6 +55,7 @@ final class Application {
 		// Register custom post types — must run for all users, before permission checks.
 		new PostTypeService();
 		new ThumbnailService();
+		new YithWishlistHeaderService();
 
 		// Reset the stored Compatibility Status every time WP Core is updated.
 		\add_action( '_core_updated_successfully', array( Status::class, 'reset' ) );

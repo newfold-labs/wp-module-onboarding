@@ -227,6 +227,279 @@ class EcommerceSiteTypeService {
 	}
 
 	/**
+	 * Publish WooCommerce's draft Refund and Returns Policy page and normalize its slug.
+	 *
+	 * WooCommerce creates this page as a draft during install. Sitegen policy pages
+	 * link to it instead of duplicating the full returns policy content.
+	 *
+	 * @return bool
+	 */
+	public static function ensure_refund_returns_page_published(): bool {
+		self::setup_woo_pages();
+
+		$page_id = (int) \get_option( 'woocommerce_refund_returns_page_id', 0 );
+		if ( $page_id <= 0 ) {
+			return false;
+		}
+
+		$page = \get_post( $page_id );
+		if ( ! $page instanceof \WP_Post || 'page' !== $page->post_type ) {
+			return false;
+		}
+
+		$updates = array(
+			'ID' => $page_id,
+		);
+
+		if ( 'publish' !== $page->post_status ) {
+			$updates['post_status'] = 'publish';
+		}
+
+		if ( 'refund-and-returns-policy' !== $page->post_name ) {
+			$updates['post_name'] = 'refund-and-returns-policy';
+		}
+
+		if ( count( $updates ) > 1 ) {
+			$result = \wp_update_post( $updates, true );
+			if ( \is_wp_error( $result ) ) {
+				return false;
+			}
+
+			$page = \get_post( $page_id );
+			if ( ! $page instanceof \WP_Post ) {
+				return false;
+			}
+		}
+
+		if ( ! self::normalize_refund_returns_page_layout( $page_id, $page ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Apply the same constrained policy-page layout used by Sitegen legal pages.
+	 *
+	 * @param int      $page_id Refund and returns page ID.
+	 * @param \WP_Post $page    Refund and returns page object.
+	 * @return bool
+	 */
+	private static function normalize_refund_returns_page_layout( int $page_id, \WP_Post $page ): bool {
+		$content    = is_string( $page->post_content ) ? $page->post_content : '';
+		$normalized = self::build_refund_returns_page_content( $content );
+
+		if ( $normalized !== $content ) {
+			$result = \wp_update_post(
+				array(
+					'ID'           => $page_id,
+					'post_content' => $normalized,
+				),
+				true
+			);
+
+			if ( \is_wp_error( $result ) ) {
+				return false;
+			}
+		}
+
+		\update_post_meta( $page_id, '_wp_page_template', 'page-no-title' );
+
+		return true;
+	}
+
+	/**
+	 * Build canonical refund page markup: legal disclaimer + 840px policy container.
+	 *
+	 * @param string $content Existing page block markup.
+	 * @return string
+	 */
+	private static function build_refund_returns_page_content( string $content ): string {
+		$body = self::strip_refund_returns_sample_intro(
+			self::extract_refund_returns_policy_body( $content )
+		);
+
+		return self::legal_policy_disclaimer_block_markup() . "\n\n" . self::wrap_refund_returns_policy_content( $body );
+	}
+
+	/**
+	 * Extract refund policy body blocks from previously normalized markup.
+	 *
+	 * @param string $content Page block markup.
+	 * @return string
+	 */
+	private static function extract_refund_returns_policy_body( string $content ): string {
+		$content = preg_replace(
+			'/<!-- wp:group \{"metadata":\{"name":"Legal Disclaimer"\}[\s\S]*?<!-- \/wp:group -->\s*/',
+			'',
+			$content
+		);
+
+		if ( ! is_string( $content ) ) {
+			return '';
+		}
+
+		$content = trim( $content );
+
+		if ( ! self::refund_returns_page_uses_policy_layout( $content ) ) {
+			return $content;
+		}
+
+		if ( preg_match(
+			'/<!-- wp:group \{"align":"full"[\s\S]*?"metadata":\{"name":"Refund Returns Policy"\}\} -->\s*<div[^>]*>\s*([\s\S]*?)\s*<\/div>\s*<!-- \/wp:group -->\s*$/',
+			$content,
+			$matches
+		) ) {
+			return trim( $matches[1] );
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Standard legal disclaimer prepended to auto-generated policy pages.
+	 *
+	 * @return string
+	 */
+	private static function legal_policy_disclaimer_block_markup(): string {
+		$locale = function_exists( '\get_locale' ) ? \get_locale() : 'en_US';
+		$text   = \esc_html( self::legal_policy_disclaimer_text_for_locale( $locale ) );
+
+		return <<<HTML
+<!-- wp:group {"metadata":{"name":"Legal Disclaimer"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|40"}}},"layout":{"type":"constrained","contentSize":"840px"}} -->
+<div class="wp-block-group">
+
+<!-- wp:paragraph {"textColor":"contrast-midtone","fontSize":"small","style":{"typography":{"lineHeight":"1.7"}}} -->
+<p class="has-contrast-midtone-color has-text-color has-small-font-size" style="line-height:1.7">{$text}</p>
+<!-- /wp:paragraph -->
+
+</div>
+<!-- /wp:group -->
+HTML;
+	}
+
+	/**
+	 * Localized disclaimer copy for policy pages.
+	 *
+	 * @param string $locale WordPress locale.
+	 * @return string
+	 */
+	private static function legal_policy_disclaimer_text_for_locale( string $locale ): string {
+		$localized = array(
+			'en_US' => 'This page was automatically generated as a starting template only. It does not constitute legal advice. Review and update all policies with a qualified professional before accepting orders.',
+			'en_GB' => 'This page was automatically generated as a starting template only. It does not constitute legal advice. Review and update all policies with a qualified professional before accepting orders.',
+			'es_ES' => 'Esta página se generó automáticamente solo como plantilla inicial. No constituye asesoramiento legal. Revise y actualice todas las políticas con un profesional cualificado antes de aceptar pedidos.',
+			'fr_FR' => 'Cette page a été générée automatiquement comme modèle de départ uniquement. Elle ne constitue pas un conseil juridique. Examinez et mettez à jour toutes les politiques avec un professionnel qualifié avant d\'accepter des commandes.',
+		);
+
+		return $localized[ $locale ] ?? $localized['en_US'];
+	}
+
+	/**
+	 * Whether refund page content is already wrapped in the shared policy container.
+	 *
+	 * @param string $content Page block markup.
+	 * @return bool
+	 */
+	private static function refund_returns_page_uses_policy_layout( string $content ): bool {
+		return str_contains( $content, '"metadata":{"name":"Refund Returns Policy"}' );
+	}
+
+	/**
+	 * Remove WooCommerce's placeholder intro from the default refund page.
+	 *
+	 * @param string $content Page block markup.
+	 * @return string
+	 */
+	private static function strip_refund_returns_sample_intro( string $content ): string {
+		$patterns = array(
+			'/<!-- wp:paragraph -->\s*<p><b>This is a sample page\.<\/b><\/p>\s*<!-- \/wp:paragraph -->\s*/i',
+			'/<!-- wp:paragraph -->\s*<p><strong>This is a sample page\.<\/strong><\/p>\s*<!-- \/wp:paragraph -->\s*/i',
+		);
+
+		foreach ( $patterns as $pattern ) {
+			$content = preg_replace( $pattern, '', $content );
+		}
+
+		return trim( $content );
+	}
+
+	/**
+	 * Wrap refund policy blocks in the same 840px container as Sitegen policy pages.
+	 *
+	 * @param string $inner_content Refund policy block markup.
+	 * @return string
+	 */
+	private static function wrap_refund_returns_policy_content( string $inner_content ): string {
+		$inner_content = trim( $inner_content );
+
+		return <<<HTML
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained","contentSize":"840px"},"metadata":{"name":"Refund Returns Policy"}} -->
+<div class="wp-block-group alignfull" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)">
+
+{$inner_content}
+
+</div>
+<!-- /wp:group -->
+HTML;
+	}
+
+	/**
+	 * Ensure the YITH wishlist page exists and is linked in plugin settings.
+	 *
+	 * YITH only auto-creates this page on first install. Sitegen may activate the
+	 * plugin after Woo pages are already in place, or the option can exist without
+	 * a valid page — both cases leave the header icon with an empty URL.
+	 *
+	 * @return bool
+	 */
+	public static function ensure_wishlist_page(): bool {
+		if ( ! defined( 'YITH_WCWL' ) ) {
+			return false;
+		}
+
+		self::load_wc_create_page_function();
+
+		if ( ! function_exists( 'wc_create_page' ) ) {
+			return false;
+		}
+
+		$page_id = (int) \get_option( 'yith_wcwl_wishlist_page_id', 0 );
+		if ( $page_id > 0 && 'publish' === \get_post_status( $page_id ) ) {
+			return true;
+		}
+
+		$page_id = \wc_create_page(
+			\sanitize_title_with_dashes( \_x( 'wishlist', 'page_slug', 'yith-woocommerce-wishlist' ) ),
+			'yith_wcwl_wishlist_page_id',
+			\__( 'Wishlist', 'yith-woocommerce-wishlist' ),
+			'<!-- wp:shortcode -->[yith_wcwl_wishlist]<!-- /wp:shortcode -->'
+		);
+
+		return is_numeric( $page_id ) && (int) $page_id > 0;
+	}
+
+	/**
+	 * wc_create_page() lives in an admin include and is not loaded on the frontend.
+	 *
+	 * @return void
+	 */
+	private static function load_wc_create_page_function(): void {
+		if ( function_exists( 'wc_create_page' ) ) {
+			return;
+		}
+
+		if ( defined( 'WC_ABSPATH' ) ) {
+			require_once WC_ABSPATH . 'includes/admin/wc-admin-functions.php';
+			return;
+		}
+
+		if ( function_exists( 'WC' ) && is_callable( array( WC(), 'plugin_path' ) ) ) {
+			require_once WC()->plugin_path() . '/includes/admin/wc-admin-functions.php';
+		}
+	}
+
+	/**
 	 * Gets the WooCommerce shop page info.
 	 *
 	 * @return array The shop page info or an empty array if the shop page is not found.
