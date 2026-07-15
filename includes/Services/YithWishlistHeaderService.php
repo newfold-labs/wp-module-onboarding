@@ -1,6 +1,6 @@
 <?php
 /**
- * YITH Wishlist header shortcode for ecommerce sitekit headers.
+ * YITH Wishlist header block and shortcode for ecommerce sitekit headers.
  *
  * @package NewfoldLabs\WP\Module\Onboarding\Services
  */
@@ -10,7 +10,7 @@ namespace NewfoldLabs\WP\Module\Onboarding\Services;
 use NewfoldLabs\WP\Module\Onboarding\Services\SiteTypes\EcommerceSiteTypeService;
 
 /**
- * Registers a header wishlist icon shortcode with live count updates.
+ * Registers the wishlist header block and legacy shortcode with live count updates.
  */
 class YithWishlistHeaderService {
 
@@ -47,7 +47,7 @@ class YithWishlistHeaderService {
 	}
 
 	/**
-	 * Register shortcode and AJAX handlers when YITH Wishlist is available.
+	 * Register the legacy shortcode and AJAX handlers when YITH Wishlist is available.
 	 *
 	 * @return void
 	 */
@@ -68,6 +68,19 @@ class YithWishlistHeaderService {
 	 * @return string
 	 */
 	public function render_items_count(): string {
+		return self::render_markup();
+	}
+
+	/**
+	 * Render the header wishlist link and item count.
+	 *
+	 * @return string
+	 */
+	public static function render_markup(): string {
+		if ( ! defined( 'YITH_WCWL' ) || ! function_exists( 'yith_wcwl_count_all_products' ) ) {
+			return '';
+		}
+
 		EcommerceSiteTypeService::ensure_wishlist_page();
 
 		$count        = (int) yith_wcwl_count_all_products();
@@ -85,14 +98,16 @@ class YithWishlistHeaderService {
 				href="<?php echo esc_url( $wishlist_url ); ?>"
 				aria-label="<?php echo esc_attr__( 'Wishlist', 'wp-module-onboarding' ); ?>"
 			>
-				<svg class="nfd-wishlist-header__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-					<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-				</svg>
-				<span
-					class="nfd-wishlist-header__count"
-					data-count="<?php echo esc_attr( (string) $count ); ?>"
-					<?php echo $count > 0 ? '' : ' hidden'; ?>
-				><?php echo esc_html( (string) $count ); ?></span>
+				<span class="nfd-wishlist-header__icon-wrap">
+					<svg class="nfd-wishlist-header__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+						<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+					</svg>
+					<span
+						class="nfd-wishlist-header__count"
+						data-count="<?php echo esc_attr( (string) $count ); ?>"
+						<?php echo $count > 0 ? '' : ' hidden'; ?>
+					><?php echo esc_html( (string) $count ); ?></span>
+				</span>
 			</a>
 		</div>
 		<?php
