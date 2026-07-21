@@ -350,5 +350,4 @@ class ResetService {
 
 		flush_rewrite_rules( false );
 	}
-
 }
