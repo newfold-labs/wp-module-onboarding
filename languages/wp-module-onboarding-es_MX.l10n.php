@@ -5,7 +5,7 @@ return [
 	'language' => 'es_MX',
 	'project-id-version' => '',
 	'pot-creation-date' => '',
-	'po-revision-date' => '2026-07-10T16:29:50+00:00',
+	'po-revision-date' => '2026-07-21T20:50:54+00:00',
 	'x-generator' => 'WP-CLI 2.8.1',
 	'messages' => [
 		'Onboarding' => 'Onboarding',
