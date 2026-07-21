@@ -3,6 +3,8 @@
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+
+use function NewfoldLabs\WP\ModuleLoader\container;
 /**
  * Reset Services
  *
@@ -40,6 +42,7 @@ class ResetService {
 		self::reset_onboarding_options();
 		self::unschedule_cron_jobs();
 		self::reset_prompt_origin();
+		self::purge_caches();
 	}
 
 	/**
@@ -320,4 +323,32 @@ class ResetService {
 		wp_clean_theme_json_cache();
 		\WP_Theme_JSON_Resolver::clean_cached_data();
 	}
+
+	/**
+	 * Purge hosting and onboarding caches after a full reset.
+	 *
+	 * @return void
+	 */
+	private static function purge_caches(): void {
+		try {
+			if ( function_exists( '\NewfoldLabs\WP\ModuleLoader\container' ) ) {
+				container()->get( 'cachePurger' )->purge_all();
+			}
+		} catch ( \Throwable $e ) {
+			error_log( '[NFD Onboarding] ResetService::purge_caches() - ' . $e->getMessage() );
+		}
+
+		if ( class_exists( '\Endurance_Page_Cache' ) ) {
+			$epc = \Endurance_Page_Cache::get_instance();
+			if ( $epc && method_exists( $epc, 'purge_all' ) ) {
+				$epc->purge_all();
+			}
+		}
+
+		delete_transient( 'nfd_hiive_color_palettes' );
+		delete_transient( 'nfd_hiive_font_pairs' );
+
+		flush_rewrite_rules( false );
+	}
+
 }
