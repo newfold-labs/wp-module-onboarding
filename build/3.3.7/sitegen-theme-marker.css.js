@@ -1,0 +1,1 @@
+(()=>{"use strict";let e={};(e=>{Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})})(e),((window.newfold=window.newfold||{}).Onboarding=window.newfold.Onboarding||{})["sitegen-theme-marker.css"]=e})();
