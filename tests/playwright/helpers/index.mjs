@@ -97,6 +97,7 @@ export async function setupAndNavigate(page) {
  * hasAISiteGen is required - without it, onboarding shows "wrong turn" error
  */
 export const ONBOARDING_CAPABILITIES = {
+  canAccessAI: true,
   hasAISiteGen: true,
   canMigrateSite: true,
 };
@@ -149,16 +150,7 @@ export async function resetOnboardingState() {
  * onboarding can still function.
  */
 export async function ensureOnboardingCapabilities() {
-  // Use PHP eval to set transient with proper array format
-  const phpArray = Object.entries(ONBOARDING_CAPABILITIES)
-    .map(([key, value]) => {
-      const phpValue = typeof value === 'boolean' ? value.toString() : `'${value}'`;
-      return `'${key}' => ${phpValue}`;
-    })
-    .join(', ');
-
-  const command = `eval "set_transient('nfd_site_capabilities', array(${phpArray}));"`;
-  await wordpress.wpCli(command, { failOnNonZeroExit: false });
+  await newfold.setCapability(ONBOARDING_CAPABILITIES);
 }
 
 /**
@@ -177,15 +169,6 @@ export async function resetHtaccessState() {
  */
 export async function markOnboardingComplete() {
   await wordpress.wpCli('option update nfd_module_onboarding_status "complete"');
-}
-
-/**
- * Set site capabilities for onboarding
- * @param {Object} capabilities - Capabilities object
- */
-export async function setSiteCapabilities(capabilities) {
-  const stringified = JSON.stringify(capabilities).replace(/"/g, '\\"');
-  await wordpress.wpCli(`option update _transient_nfd_site_capabilities "${stringified}" --format=json`);
 }
 
 // ============================================================================
