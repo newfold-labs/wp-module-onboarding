@@ -83,7 +83,7 @@ const MigrationView = ( { onBack } ) => {
 			setStatus( { isLoading: false, error: true } );
 
 			sendOnboardingEvent(
-				new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'migration' )
+				new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'migration' ),
 			);
 		}
 	}, [ canMigrateSite, trackMigrationInitiatedEvent ] );

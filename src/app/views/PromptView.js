@@ -29,7 +29,7 @@ const PromptView = ( {
 } ) => {
 	const displayName = useSelect(
 		( select ) => select( nfdOnboardingStore ).getCurrentUserDisplayName(),
-		[]
+		[],
 	);
 	const greeting = useMemo( () => getGreeting( displayName ), [ displayName ] );
 
