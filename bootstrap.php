@@ -59,7 +59,7 @@ function nfd_wp_module_onboarding_register() {
 
 				// Set Global Constants
 				if ( ! defined( 'NFD_ONBOARDING_VERSION' ) ) {
-					define( 'NFD_ONBOARDING_VERSION', '4.0.0' );
+					define( 'NFD_ONBOARDING_VERSION', '4.0.7' );
 				}
 				if ( ! defined( 'NFD_ONBOARDING_DIR' ) ) {
 					define( 'NFD_ONBOARDING_DIR', __DIR__ );
@@ -72,6 +72,9 @@ function nfd_wp_module_onboarding_register() {
 				}
 				if ( ! defined( 'NFD_ONBOARDING_BUILD_URL' ) && defined( 'NFD_ONBOARDING_VERSION' ) ) {
 					define( 'NFD_ONBOARDING_BUILD_URL', $container->plugin()->url . 'vendor/newfold-labs/wp-module-onboarding/build/' . NFD_ONBOARDING_VERSION );
+				}
+				if ( ! defined( 'NFD_ONBOARDING_PLUGIN_URL' ) ) {
+					define( 'NFD_ONBOARDING_PLUGIN_URL', $container->plugin()->url . 'vendor/newfold-labs/wp-module-onboarding' );
 				}
 				if ( ! defined( 'NFD_ONBOARDING_PLUGIN_DIRNAME' ) ) {
 					define( 'NFD_ONBOARDING_PLUGIN_DIRNAME', dirname( $container->plugin()->basename ) );
@@ -115,6 +118,8 @@ if ( is_callable( 'add_action' ) ) {
 			delete_transient( 'nfd_site_capabilities' );
 		}
 	);
+
+
 	// Queue content image sideloading for onboarding-generated pages when onboarding completes.
 	add_action( 'newfold/onboarding/completed', array( SiteGenImageService::class, 'schedule_after_onboarding' ) );
 	// Add action to process image sideload queue for onboarding-generated pages

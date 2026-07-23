@@ -122,7 +122,7 @@ export async function createNavigationMenu( pages ) {
 	const links = pages
 		.map(
 			( page ) =>
-				`<!-- wp:navigation-link {"label":"${ page.title }","type":"page","id":${ page.id },"url":"${ page.link }","kind":"post-type"} /-->`
+				`<!-- wp:navigation-link {"label":"${ page.title }","type":"page","id":${ page.id },"url":"${ page.link }","kind":"post-type"} /-->`,
 		)
 		.join( '\n' );
 
@@ -146,7 +146,7 @@ export async function createNavigationMenu( pages ) {
 		return apiFetch( {
 			url: `${ wpRestBase }/navigation/${ match.id }`,
 			method: 'POST',
-			data: { content: links },
+			data: { content: links, meta: { nfd_onboarding_generated: '1' } },
 		} );
 	}
 
@@ -252,6 +252,56 @@ export async function initializeEcommercePlugins() {
 }
 
 /**
+ * Emergency synchronous install/activate of critical plugins (Jetpack, Icon Block).
+ * Fire-and-forget call made at the start of content generation as a safety net,
+ * in case the background install queue has not yet caught up. Hopefully a no-op
+ * because the queue has already done the work; only does real work if not.
+ *
+ * @return {Promise<{status: string, pending?: string[], errors?: Object}>} Response payload.
+ */
+export async function ensureCriticalPlugins() {
+	return apiFetch( {
+		url: `${ onboardingRestBase }/plugins/ensure-critical`,
+		method: 'POST',
+	} );
+}
+
+/**
+ * Fire-and-forget background retry loop around ensureCriticalPlugins. Keeps trying
+ * on 'installing' status without ever blocking the caller — generation can proceed in
+ * parallel. Stops on 'ready', error, or after maxAttempts.
+ *
+ * @param {Object} [opts]
+ * @param {number} [opts.maxAttempts=3]    Max number of retries.
+ * @param {number} [opts.intervalMs=30000] Delay between retries (ms).
+ * @return {void}
+ */
+export function ensureCriticalPluginsInBackground( opts = {} ) {
+	const { maxAttempts = 3, intervalMs = 30000 } = opts;
+
+	( async () => {
+		for ( let attempt = 0; attempt < maxAttempts; attempt++ ) {
+			try {
+				const result = await ensureCriticalPlugins();
+				if ( result?.status !== 'installing' ) {
+					return;
+				}
+				// eslint-disable-next-line no-console
+				console.warn(
+					'[NFD Onboarding] critical plugins still pending',
+					result?.pending,
+				);
+				await new Promise( ( r ) => setTimeout( r, intervalMs ) );
+			} catch ( e ) {
+				// eslint-disable-next-line no-console
+				console.warn( '[NFD Onboarding] ensureCriticalPlugins failed', e );
+				return;
+			}
+		}
+	} )();
+}
+
+/**
  * Publish products to the backend.
  *
  * @param {Object[]} products Raw product objects from generationData.post_types.products.
@@ -262,5 +312,31 @@ export async function publishProducts( products ) {
 		url: `${ onboardingRestBase }/site-content/publish-products`,
 		method: 'POST',
 		data: { products },
+	} );
+}
+
+/**
+ * Clear the onboarding backend process.
+ *
+ * @return {Promise<{success: boolean}>} Response payload from the clear endpoint.
+ */
+export async function clearOnboarding() {
+	return apiFetch( {
+		url: `${ onboardingRestBase }/app/clear`,
+		method: 'POST',
+	} );
+}
+
+/**
+ * Publish articles to the backend.
+ *
+ * @param {Object[]} articles Raw article objects from generationData.post_types.articles.
+ * @return {Promise<{created: number}>} Result including how many articles were created.
+ */
+export async function publishArticles( articles ) {
+	return apiFetch( {
+		url: `${ onboardingRestBase }/site-content/publish-articles`,
+		method: 'POST',
+		data: { articles },
 	} );
 }

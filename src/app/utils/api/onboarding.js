@@ -22,7 +22,7 @@ export const updateOnboardingInputSlice = async ( data ) => {
 			url: onboardingRestURL( 'redux-state/input-slice' ),
 			method: 'POST',
 			body: JSON.stringify( data ),
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -32,7 +32,7 @@ export const updateOnboardingSiteGenSlice = async ( data ) => {
 			url: onboardingRestURL( 'redux-state/sitegen-slice' ),
 			method: 'POST',
 			body: JSON.stringify( data ),
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -42,7 +42,7 @@ export const updateOnboardingLogogenSlice = async ( data ) => {
 			url: onboardingRestURL( 'redux-state/logogen-slice' ),
 			method: 'POST',
 			body: JSON.stringify( data ),
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -52,7 +52,7 @@ export const updateOnboardingBlueprintsSlice = async ( data ) => {
 			url: onboardingRestURL( 'redux-state/blueprints-slice' ),
 			method: 'POST',
 			body: JSON.stringify( data ),
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -69,7 +69,7 @@ export const startOnboarding = async ( data = {} ) => {
 			url: onboardingRestURL( 'app/start' ),
 			method: 'POST',
 			body: JSON.stringify( data ),
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -78,7 +78,7 @@ export const completeOnboarding = async () => {
 		apiFetch( {
 			url: onboardingRestURL( 'app/complete' ),
 			method: 'POST',
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -87,7 +87,7 @@ export const enableJetpackModules = async () => {
 		apiFetch( {
 			url: onboardingRestURL( 'app/enable-jetpack-modules' ),
 			method: 'POST',
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -146,7 +146,7 @@ export const setGlobalStyles = async ( globalStyles ) => {
 			data: {
 				global_styles: globalStyles,
 			},
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -164,7 +164,7 @@ export const installFonts = async ( fontPair ) => {
 			data: {
 				font_pair: fontPair,
 			},
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -176,7 +176,7 @@ export const setGlobalStylesColorPalette = async ( colorPalette ) => {
 			data: {
 				color_palette: colorPalette,
 			},
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -200,7 +200,7 @@ export async function getSiteMetaForIdentifier( identifier, prompt, siteType, sk
 				site_type: siteType,
 				skip_cache: skipCache,
 			},
-		} )
+		} ),
 	);
 
 	return response;
@@ -222,7 +222,7 @@ export async function getHomepages( prompt, siteType ) {
 				site_description: prompt,
 				site_type: siteType,
 			},
-		} )
+		} ),
 	);
 
 	return response;
@@ -244,19 +244,20 @@ export async function getSitePages( prompt, siteType ) {
 				site_description: prompt,
 				site_type: siteType,
 			},
-		} ).then()
+		} ).then(),
 	);
 }
 
-export async function setupSiteNavigationMenu( siteType = '' ) {
+export async function setupSiteNavigationMenu( siteType = '', pages = [] ) {
 	return await resolve(
 		apiFetch( {
-			url: onboardingRestURL( 'sitegen/setup-nav-menu' ),
+			url: onboardingRestURL( 'site-content/setup-nav-menu' ),
 			method: 'POST',
 			data: {
 				site_type: siteType,
+				pages,
 			},
-		} ).then()
+		} ).then(),
 	);
 }
 
@@ -278,7 +279,7 @@ export async function getSiteGenPreviewSnapshot( content, slug, customStyles = n
 				slug,
 				custom_styles: customStyles,
 			},
-		} )
+		} ),
 	);
 
 	return response;
@@ -302,7 +303,7 @@ export async function getLogos( siteTitle, prompt, locale ) {
 				site_description: prompt,
 				locale,
 			},
-		} )
+		} ),
 	);
 
 	return response;
@@ -322,7 +323,7 @@ export async function getMoreLogos( referenceId ) {
 			data: {
 				reference_id: referenceId,
 			},
-		} )
+		} ),
 	);
 
 	return response;
@@ -342,7 +343,7 @@ export async function getLogogenStatus( referenceId ) {
 			data: {
 				reference_id: referenceId,
 			},
-		} )
+		} ),
 	);
 
 	return response;
@@ -362,7 +363,7 @@ export const selectLogo = async ( logoReferenceId ) => {
 			data: {
 				logo_reference_id: logoReferenceId,
 			},
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -376,7 +377,7 @@ export const getBlueprints = async () => {
 		apiFetch( {
 			url: onboardingRestURL( 'blueprints/get-blueprints' ),
 			method: 'POST',
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -394,7 +395,7 @@ export const installBlueprintRequiredPlugins = async ( selectedBlueprintSlug ) =
 			data: {
 				selected_blueprint_slug: selectedBlueprintSlug,
 			},
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -412,7 +413,7 @@ export const importBlueprint = async ( selectedBlueprintSlug ) => {
 			data: {
 				selected_blueprint_slug: selectedBlueprintSlug,
 			},
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -426,6 +427,6 @@ export const reportSiteGenPublished = async () => {
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/report-published' ),
 			method: 'POST',
-		} ).then()
+		} ).then(),
 	);
 };

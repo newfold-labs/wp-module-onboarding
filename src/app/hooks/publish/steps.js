@@ -2,12 +2,11 @@ import {
 	updateSiteSettings,
 	uploadMediaFromUrl,
 	createPage,
-	createPost,
 	updateTemplate,
 	updateTemplatePart,
-	createNavigationMenu,
 	createService,
 	publishProducts,
+	publishArticles,
 } from '@/utils/api/wordpress';
 import {
 	setGlobalStylesColorPalette,
@@ -16,8 +15,11 @@ import {
 	enableJetpackModules,
 	completeOnboarding,
 	reportSiteGenPublished,
+	setupSiteNavigationMenu,
 } from '@/utils/api/onboarding';
 import { transformColorPalette } from '@/hooks/publish/tasks';
+import { normalizeBlockContent } from '@/utils/helpers';
+
 /**
  * Each step function receives { generationData, discoveryData, ctx } and returns
  * a result string. ctx is a shared context object for passing data between steps
@@ -97,7 +99,8 @@ export async function runPages( { generationData, ctx } ) {
 
 	for ( const entry of pages ) {
 		const isHome = entry.is_front_page || entry.slug === 'home' || entry.path === '/';
-		const page = await createPage( entry.title, entry.content, {
+		const normalizedContent = normalizeBlockContent( entry.content );
+		const page = await createPage( entry.title, normalizedContent, {
 			template: 'page-no-title',
 			slug: entry.slug,
 			meta: {
@@ -110,6 +113,8 @@ export async function runPages( { generationData, ctx } ) {
 				title: entry.title,
 				slug: entry.slug,
 				link: page.link,
+				is_front_page: !! entry.is_front_page,
+				is_contact_page: !! entry.is_contact_page,
 			} );
 			if ( isHome ) {
 				homepageId = page.id;
@@ -133,10 +138,12 @@ export async function runTemplateParts( { generationData } ) {
 	const footer = generationData.sitekit?.footer;
 
 	if ( header ) {
-		await updateTemplatePart( 'header', header );
+		const normalizedHeader = normalizeBlockContent( header );
+		await updateTemplatePart( 'header', normalizedHeader );
 	}
 	if ( footer ) {
-		await updateTemplatePart( 'footer', footer );
+		const normalizedFooter = normalizeBlockContent( footer );
+		await updateTemplatePart( 'footer', normalizedFooter );
 	}
 
 	// Update the page-no-title template to fix spacing between header and content.
@@ -148,26 +155,34 @@ export async function runTemplateParts( { generationData } ) {
 		'</main>\n' +
 		'<!-- /wp:group -->\n\n' +
 		'<!-- wp:template-part {"slug":"footer","theme":"bluehost-blueprint","area":"footer"} /-->';
-	await updateTemplate( 'page-no-title', pageNoTitleContent );
+	const normalizedPageNoTitleContent = normalizeBlockContent( pageNoTitleContent );
+	await updateTemplate( 'page-no-title', normalizedPageNoTitleContent );
+
+	// Apply any WordPress block templates the sitekit ships (e.g. the category
+	// archive), each { slug, content }. No-op when none are sent.
+	const templates = generationData.sitekit?.templates ?? [];
+	for ( const tpl of templates ) {
+		if ( tpl?.slug && tpl?.content ) {
+			await updateTemplate( tpl.slug, normalizeBlockContent( tpl.content ) );
+		}
+	}
 
 	return 'Header and footer configured';
 }
 
 export async function runArticles( { generationData } ) {
 	const articles = generationData.post_types?.articles || [];
-	let articleCount = 0;
 
-	for ( const article of articles ) {
-		const featuredMediaURL = article.featured_image ?? null;
-
-		await createPost( article.title, article.content, article.excerpt || '', {
-			meta: {
-				nfd_onboarding_generated: '1',
-				...( featuredMediaURL ? { nfd_image_url: featuredMediaURL } : {} ),
-			},
-		} );
-		articleCount++;
+	if ( articles.length === 0 ) {
+		return 'Skipped — no articles';
 	}
+
+	const normalizedArticles = articles.map( ( article ) => ( {
+		...article,
+		content: normalizeBlockContent( article.content ),
+	} ) );
+	const result = await publishArticles( normalizedArticles );
+	const articleCount = result?.created ?? 0;
 
 	return articleCount > 0
 		? `${ articleCount } article${ articleCount !== 1 ? 's' : '' } published`
@@ -181,7 +196,8 @@ export async function runServices( { generationData } ) {
 	for ( const service of services ) {
 		const featuredMediaURL = service.featured_image ?? null;
 
-		await createService( service.title, service.content, service.excerpt || '', {
+		const normalizedContent = normalizeBlockContent( service.content );
+		await createService( service.title, normalizedContent, service.excerpt || '', {
 			meta: {
 				nfd_onboarding_generated: '1',
 				...( featuredMediaURL ? { nfd_image_url: featuredMediaURL } : {} ),
@@ -207,12 +223,35 @@ export async function runProducts( { generationData } ) {
 	return `${ count } product${ count !== 1 ? 's' : '' } published`;
 }
 
-export async function runNavigation( { ctx } ) {
-	if ( ctx.createdPages.length > 0 ) {
-		await createNavigationMenu( ctx.createdPages );
-		return 'Navigation menu created';
+export async function runNavigation( { generationData, discoveryData, ctx } ) {
+	if ( ctx.createdPages.length === 0 ) {
+		return 'Skipped — no pages';
 	}
-	return 'Skipped — no pages';
+
+	// Blog-only nav tidy-up: drop the contact page when the header CTA already links
+	// to it, so the same destination isn't listed twice.
+	const isBlog = ( discoveryData?.site_type ?? '' ).toLowerCase() === 'blog';
+	const headerHtml = generationData?.sitekit?.header ?? '';
+	const pages = isBlog
+		? ctx.createdPages.filter( ( page ) => {
+			if ( ! page.is_contact_page ) {
+				return true;
+			}
+			const slug = ( page.slug || '' ).replace( /^\/+|\/+$/g, '' );
+			const headerLinksToContact =
+				!! slug &&
+				new RegExp( `href=["']/?${ slug }/?["']`, 'i' ).test( headerHtml );
+			return ! headerLinksToContact;
+		} )
+		: ctx.createdPages;
+
+	const result = await setupSiteNavigationMenu( discoveryData?.site_type ?? '', pages );
+
+	if ( result?.error ) {
+		throw result.error;
+	}
+
+	return 'Navigation menu created';
 }
 
 export async function runFinalize() {

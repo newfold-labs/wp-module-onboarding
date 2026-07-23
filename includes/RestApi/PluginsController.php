@@ -54,6 +54,18 @@ class PluginsController {
 				),
 			)
 		);
+
+		\register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/ensure-critical',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'ensure_critical' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
 	}
 
 	/**
@@ -79,35 +91,34 @@ class PluginsController {
 	/**
 	 * Ensure WooCommerce and ecommerce plugins are installed and active.
 	 *
-	 * If WooCommerce is already active, returns immediately.
-	 * If installed but inactive, activates it synchronously.
-	 * If not installed, queues a background install+activation task.
+	 * Thin wrapper around EcommerceSiteTypeService::ensure_woocommerce_active(), which:
+	 *  - returns null when Woo is already active (mapped here to a 200 'ready' response);
+	 *  - installs/activates Woo synchronously when missing;
+	 *  - queues the rest of the ecommerce stack (YITH, brand-specific) for background install;
+	 *  - returns a 202/500 response when something is still pending or failed.
 	 *
 	 * @return \WP_REST_Response
 	 */
 	public function initialize_ecommerce(): \WP_REST_Response {
-
-		if ( class_exists( 'WooCommerce' ) ) {
-			return new \WP_REST_Response( array( 'status' => 'active' ), 200 );
+		$response = EcommerceSiteTypeService::ensure_woocommerce_active();
+		if ( null !== $response ) {
+			return $response;
 		}
+		return new \WP_REST_Response( array( 'status' => 'ready' ), 200 );
+	}
 
-		$plugin_file = 'woocommerce/woocommerce.php';
-
-		if ( file_exists( \WP_PLUGIN_DIR . '/' . $plugin_file ) ) {
-			$result = \activate_plugin( $plugin_file );
-			if ( \is_wp_error( $result ) ) {
-				return new \WP_REST_Response(
-					array(
-						'status'  => 'error',
-						'message' => $result->get_error_message(),
-					),
-					500
-				);
-			}
-			return new \WP_REST_Response( array( 'status' => 'activated' ), 200 );
+	/**
+	 * Synchronous install/activate of critical plugins (Jetpack, Icon Block).
+	 * Called by the frontend at the start of content generation as a safety net in case
+	 * the background install queue has not yet processed them.
+	 *
+	 * @return \WP_REST_Response 200 when ready, 202 with pending list otherwise.
+	 */
+	public function ensure_critical(): \WP_REST_Response {
+		$response = PluginService::ensure_critical_plugins_active();
+		if ( null !== $response ) {
+			return $response;
 		}
-
-		EcommerceSiteTypeService::install_ecommerce_plugins();
-		return new \WP_REST_Response( array( 'status' => 'installing' ), 202 );
+		return new \WP_REST_Response( array( 'status' => 'ready' ), 200 );
 	}
 }

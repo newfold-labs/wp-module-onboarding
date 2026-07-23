@@ -19,7 +19,7 @@ import {
 	ACTION_FORK_OPTION_SELECTED,
 } from '@/utils/analytics/hiive/constants';
 import { handshake, intake, startGeneration, streamSSE } from '@/utils/api/ai-platform';
-import { initializeEcommercePlugins } from '@/utils/api/wordpress';
+import { initializeEcommercePlugins, ensureCriticalPluginsInBackground, clearOnboarding } from '@/utils/api/wordpress';
 import formatTaskResult from '@/utils/helpers/formatTaskResult';
 import useMessages from '@/hooks/useMessages';
 import {
@@ -42,7 +42,9 @@ import {
 const useChat = () => {
 	const [ prompt, setPrompt ] = useState( '' );
 	const [ mode, setMode ] = useState( () =>
-		window.nfdOnboarding?.origin?.prompt ? 'chat' : 'prompt'
+		window.nfdOnboarding?.origin?.prompt || window.nfdOnboarding?.origin?.chat_history
+			? 'chat'
+			: 'prompt',
 	);
 	const [ chatInput, setChatInput ] = useState( '' );
 	const [ isWaiting, setIsWaiting ] = useState( false );
@@ -102,7 +104,7 @@ const useChat = () => {
 				finishAllTasks( msgId );
 			}
 		},
-		[ completeTask, finishAllTasks ]
+		[ completeTask, finishAllTasks ],
 	);
 
 	/**
@@ -116,6 +118,10 @@ const useChat = () => {
 			let generationMsgId = null;
 
 			try {
+				// Fire-and-forget background retry loop for the emergency sync install of
+				// critical plugins (Jetpack, Icon Block). Never blocks generation.
+				ensureCriticalPluginsInBackground();
+
 				const validConversation = conversationRef.current.filter( ( msg ) => msg.content );
 				const devSitekit =
 					process.env.NODE_ENV === 'development' && devSitekitSlugRef.current
@@ -126,12 +132,15 @@ const useChat = () => {
 					originalPromptRef.current,
 					controller.signal,
 					validConversation.length ? validConversation : null,
-					devSitekit
+					devSitekit,
 				);
 
 				await streamSSE( response, ( { event, data } ) => {
 					if ( event === 'sitegen_started' ) {
 						dispatch( nfdOnboardingStore ).setSiteGenId( data );
+						if ( ! window.nfdOnboarding?.cleared_onboarding ) {
+							clearOnboarding();
+						}
 						return;
 					}
 
@@ -164,7 +173,10 @@ const useChat = () => {
 							} catch {
 								discoveryDataRef.current[ discoveryTaskKey ] = data;
 							}
-							if ( discoveryTaskKey === 'site_type' && discoveryDataRef.current.site_type === 'eCommerce' ) {
+							if (
+								discoveryTaskKey === 'site_type' &&
+								discoveryDataRef.current.site_type === 'eCommerce'
+							) {
 								initializeEcommercePlugins();
 							}
 						}
@@ -204,7 +216,7 @@ const useChat = () => {
 					//   sitegen_content_generation_item<key>_completed — needs key remap
 					//   sitegen_sitekit_step_<key>                     — suffix is already the task key
 					const taskEventMatch = event.match(
-						/^sitegen_content_generation_item(.+)_completed$|^sitegen_sitekit_step_(.+)$/
+						/^sitegen_content_generation_item(.+)_completed$|^sitegen_sitekit_step_(.+)$/,
 					);
 					if ( taskEventMatch && generationMsgId ) {
 						const [ , genKey, stepKey ] = taskEventMatch;
@@ -240,7 +252,7 @@ const useChat = () => {
 						if ( startTimeRef.current ) {
 							const elapsed = Math.round( ( Date.now() - startTimeRef.current ) / 1000 );
 							sendOnboardingEvent(
-								new OnboardingEvent( ACTION_SITEGEN_SITE_GENERATION_TIME, `${ elapsed }s` )
+								new OnboardingEvent( ACTION_SITEGEN_SITE_GENERATION_TIME, `${ elapsed }s` ),
 							);
 						}
 						sendOnboardingEvent( new OnboardingEvent( ACTION_ONBOARDING_COMPLETE, 'ai_chat' ) );
@@ -270,10 +282,10 @@ const useChat = () => {
 							...msg,
 							isTyping: false,
 							tasks: msg.tasks?.map( ( t ) =>
-								t.status === 'running' || t.status === 'pending' ? { ...t, status: 'skipped' } : t
+								t.status === 'running' || t.status === 'pending' ? { ...t, status: 'skipped' } : t,
 							),
 						};
-					} )
+					} ),
 				);
 			} catch ( err ) {
 				if ( err.name === 'AbortError' ) {
@@ -282,9 +294,7 @@ const useChat = () => {
 				// eslint-disable-next-line no-console
 				console.error( '[SSE] stream error', err );
 
-				sendOnboardingEvent(
-					new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'stream_error' )
-				);
+				sendOnboardingEvent( new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'stream_error' ) );
 
 				retryCountRef.current++;
 
@@ -306,7 +316,15 @@ const useChat = () => {
 				abortRef.current = null;
 			}
 		},
-		[ setMessages, startAllTasks, handleDiscoveryEvent, finishAllTasks, addMessage, completeTask, getNextId ]
+		[
+			setMessages,
+			startAllTasks,
+			handleDiscoveryEvent,
+			finishAllTasks,
+			addMessage,
+			completeTask,
+			getNextId,
+		],
 	);
 
 	/**
@@ -316,22 +334,30 @@ const useChat = () => {
 	 */
 	const handleOriginStart = useCallback( () => {
 		const originPrompt = window.nfdOnboarding?.origin?.prompt;
-		if ( ! originPrompt ) {
+		const originChatHistory = window.nfdOnboarding?.origin?.chat_history;
+
+		const trimmedOriginPrompt = ( originPrompt || '' ).trim();
+		let userPrompt = trimmedOriginPrompt;
+		let conversation = [];
+
+		if ( originChatHistory ) {
+			conversation = originChatHistory.chat_history || [];
+			if ( ! userPrompt ) {
+				userPrompt = ( originChatHistory.prompt || '' ).trim();
+			}
+		} else if ( trimmedOriginPrompt ) {
+			conversation = [ { role: 'user', content: trimmedOriginPrompt } ];
+		}
+
+		if ( ! userPrompt ) {
 			return;
 		}
 
-		const userPrompt = originPrompt.trim();
 		originalPromptRef.current = userPrompt;
-		conversationRef.current = [ { role: 'user', content: userPrompt } ];
+		conversationRef.current = conversation;
 		siteIdRef.current = select( nfdOnboardingStore ).getSiteId();
 
 		addMessage( { role: 'user', content: userPrompt } );
-
-		startTimeRef.current = Date.now();
-		sendOnboardingEvent( new OnboardingEvent( ACTION_ONBOARDING_STARTED ) );
-		sendOnboardingEvent( new OnboardingEvent( ACTION_INTAKE_PROMPT_SET, userPrompt ) );
-
-		setIsWaiting( true );
 
 		const discoveryId = getNextId();
 		addMessage( {
@@ -432,7 +458,7 @@ const useChat = () => {
 				siteIdRef.current,
 				originalPromptRef.current,
 				conversationRef.current.length ? conversationRef.current : null,
-				controller.signal
+				controller.signal,
 			);
 
 			const { understanding, is_complete: isComplete, question } = result;
@@ -478,9 +504,7 @@ const useChat = () => {
 			}
 			// eslint-disable-next-line no-console
 			console.error( '[Intake] error', err );
-			sendOnboardingEvent(
-				new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'intake_error' )
-			);
+			sendOnboardingEvent( new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'intake_error' ) );
 			patchMessage( typingId, {
 				content: 'Failed to connect to AI platform. Please try again.',
 				isTyping: false,
@@ -526,7 +550,7 @@ const useChat = () => {
 				// eslint-disable-next-line no-console
 				console.error( '[Handshake] error', err );
 				sendOnboardingEvent(
-					new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'handshake_error' )
+					new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'handshake_error' ),
 				);
 				addMessage( {
 					role: 'assistant',

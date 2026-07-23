@@ -10,14 +10,15 @@ import { nfdOnboardingStore, initializeStoreDbSyncServices } from '@/data/store'
 import { isCypress } from '@/utils/helpers';
 import './webpack-public-path';
 import { PostHogProvider } from 'posthog-js/react';
+import { registerCoreBlocks } from '@wordpress/block-library';
+import { getBlockTypes } from '@wordpress/blocks';
 
 import App from '@';
 
 // Check if the runtime data object is mounted.
 export const runtimeDataObjectIsMounted = () => {
 	return (
-		'object' === typeof window?.nfdOnboarding?.runtime &&
-		'buildUrl' in window.nfdOnboarding.runtime
+		'object' === typeof window?.nfdOnboarding?.runtime && 'buildUrl' in window.nfdOnboarding.runtime
 	);
 };
 
@@ -54,6 +55,18 @@ const initializeAnalytics = () => {
 	} );
 };
 
+/**
+ * Register core WordPress blocks so that `parse()` / `serialize()` from
+ * `@wordpress/blocks` can round-trip AI-generated block markup without
+ * dropping core block types. The guard is defensive in case another script
+ * registers core blocks first.
+ */
+const registerWpBlocks = () => {
+	if ( ! getBlockTypes().some( ( block ) => block.name.startsWith( 'core/' ) ) ) {
+		registerCoreBlocks();
+	}
+};
+
 const AppRender = () => {
 	// check session replay rollout capability flag
 	if ( window.NewfoldRuntime?.capabilities?.hasPHSessionReplay ) {
@@ -81,6 +94,7 @@ if ( runtimeDataObjectIsMounted() ) {
 	domReady( () => {
 		initializeSentry();
 		initializeAnalytics();
+		registerWpBlocks();
 		startOnboarding();
 
 		// Hydrate the Redux store with server-side runtime and sitegen data.
@@ -105,7 +119,5 @@ if ( runtimeDataObjectIsMounted() ) {
 	} );
 } else {
 	/* eslint-disable no-console */
-	console.log(
-		'Cannot find Newfold Onboarding runtime data to set __webpack_public_path__.'
-	);
+	console.log( 'Cannot find Newfold Onboarding runtime data to set __webpack_public_path__.' );
 }
