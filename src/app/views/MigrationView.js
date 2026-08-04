@@ -82,9 +82,7 @@ const MigrationView = ( { onBack } ) => {
 			console.error( 'Migration error:', error.message );
 			setStatus( { isLoading: false, error: true } );
 
-			sendOnboardingEvent(
-				new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'migration' ),
-			);
+			sendOnboardingEvent( new OnboardingEvent( ACTION_ERROR_STATE_TRIGGERED, 'migration' ) );
 		}
 	}, [ canMigrateSite, trackMigrationInitiatedEvent ] );
 

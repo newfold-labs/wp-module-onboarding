@@ -27,10 +27,7 @@ const PromptView = ( {
 	devSitekitSlug = '',
 	setDevSitekitSlug,
 } ) => {
-	const displayName = useSelect(
-		( select ) => select( nfdOnboardingStore ).getCurrentUserDisplayName(),
-		[],
-	);
+	const displayName = useSelect( ( select ) => select( nfdOnboardingStore ).getCurrentUserDisplayName(), [] );
 	const greeting = useMemo( () => getGreeting( displayName ), [ displayName ] );
 
 	return (
