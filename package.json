@@ -58,7 +58,7 @@
 		"lucide-react": "^0.577.0",
 		"motion": "^12.38.0",
 		"posthog-js": "^1.373.5",
-		"react-router-dom": "^7.15.0",
+		"react-router-dom": "^7.15.1",
 		"yet-another-react-lightbox": "^3.32.0"
 	}
 }
