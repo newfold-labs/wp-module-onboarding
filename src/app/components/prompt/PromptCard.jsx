@@ -80,6 +80,7 @@ const PromptCard = ( { value, onChange, onSubmit, isSubmitting } ) => {
 			<div className="nfd-relative">
 				<textarea
 					ref={ textareaRef }
+					data-testid="onboarding-prompt-input"
 					value={ value }
 					onChange={ handleInput }
 					onKeyDown={ handleKeyDown }
@@ -99,6 +100,8 @@ const PromptCard = ( { value, onChange, onSubmit, isSubmitting } ) => {
 					whileTap={ hasValue ? { scale: 0.97 } : {} }
 				>
 					<button
+						type="button"
+						data-testid="onboarding-build-now"
 						onClick={ onSubmit }
 						disabled={ ! hasValue || isSubmitting }
 						className={ `nfd-font-medium nfd-relative nfd-z-[1] nfd-text-[15px] nfd-w-full nfd-flex nfd-items-center nfd-gap-2 nfd-pl-3.5 nfd-pr-5 nfd-py-2.5 nfd-rounded-full nfd-border-0 nfd-text-white nfd-transition-colors ${

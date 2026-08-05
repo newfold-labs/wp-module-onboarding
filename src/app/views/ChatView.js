@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n';
 import { motion } from 'motion/react';
 import ChatMessage from '@/components/chat/ChatMessage.jsx';
 import ChatInput from '@/components/chat/ChatInput.jsx';
@@ -21,6 +22,7 @@ const ChatView = ( {
 	return (
 		<motion.div
 			key="chat"
+			data-testid="onboarding-chat-view"
 			initial={ { opacity: 0, y: 30 } }
 			animate={ { opacity: 1, y: 0 } }
 			transition={ { duration: 0.4, ease: 'easeOut' } }
