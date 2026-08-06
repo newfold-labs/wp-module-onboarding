@@ -2,10 +2,14 @@ name: "Lint Checker: Onboarding SPA"
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main-networksolutions
     paths:
       - "src/**/*.js"
       - "src/**/*.scss"
   pull_request:
+    branches:
+      - main-networksolutions
     types: [opened, edited, reopened, ready_for_review]
     paths:
       - "src/**/*.js"
