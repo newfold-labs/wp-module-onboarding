@@ -1,16 +1,29 @@
 name: Codecoverage-Main
 
+# DISABLED for main-networksolutions (3.x NS line).
+# Code coverage continues to run on the `main` branch (4.x).
+#
+# Technical reasons automatic coverage is not enabled here:
+# 1. reusable-codecoverage.yml (newfold-labs/workflows) hardcodes `github.ref == 'refs/heads/main'`
+#    for gh-pages commits, README badge updates, and the PR baseline coverage percentage — so pushes
+#    to main-networksolutions would run tests but would not publish or compare coverage correctly.
+# 2. gh-pages is shared across the whole repo (e.g. gh-pages/phpunit/); enabling coverage on both
+#    main and main-networksolutions would produce conflicting reports and badge values.
+#
+# To re-enable for NS: coordinate an upstream fix in newfold-labs/workflows (e.g. a production-branch
+# input or separate gh-pages path), then uncomment the push/pull_request triggers below.
+
 # Runs PHPUnit unit and Codeception wp-browser wpunit tests, merges the code coverage, commits the html report to
 # GitHub Pages, generates a README badge with the coverage percentage.
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    types: [ opened, reopened, ready_for_review, synchronize ]
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main-networksolutions
+  # pull_request:
+  #   types: [ opened, reopened, ready_for_review, synchronize ]
+  #   branches:
+  #     - main-networksolutions
   workflow_dispatch:
 
 permissions:
