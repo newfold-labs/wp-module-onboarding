@@ -1,5 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { auth, SELECTORS, navigateToOnboarding, resetOnboardingState } from '../helpers/index.mjs';
+import {
+  auth,
+  clearInstallerQueues,
+  SELECTORS,
+  navigateToOnboarding,
+  resetOnboardingState,
+} from '../helpers/index.mjs';
 
 /**
  * Lightweight smoke checks: onboarding bundle loads and the prompt UI renders.
@@ -11,6 +17,10 @@ test.describe.skip('Onboarding module UI', () => {
 
   test.beforeAll(async () => {
     await resetOnboardingState();
+  });
+
+  test.afterAll(async () => {
+    await clearInstallerQueues();
   });
 
   test.beforeEach(async ({ page }) => {
