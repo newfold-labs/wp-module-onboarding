@@ -34,6 +34,7 @@ const helpersUrl = pathToFileURL(finalHelpersPath).href;
 const pluginHelpers = await import(helpersUrl);
 
 export const { auth, wordpress, newfold, a11y, utils } = pluginHelpers;
+export const clearInstallerQueues = newfold.clearInstallerQueues;
 
 // ============================================================================
 // CONSTANTS
