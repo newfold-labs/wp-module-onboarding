@@ -115,6 +115,9 @@ export async function runPages( { generationData, ctx } ) {
 				link: page.link,
 				is_front_page: !! entry.is_front_page,
 				is_contact_page: !! entry.is_contact_page,
+				// Policy/support pages are tagged by the platform; the nav step
+				// uses this to keep them out of the primary navigation.
+				page_purpose: entry.page_purpose ?? null,
 			} );
 			if ( isHome ) {
 				homepageId = page.id;

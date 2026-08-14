@@ -23,7 +23,7 @@ class SiteNavigationService {
 	 * Setup the site navigation menu from client-created pages.
 	 *
 	 * @param string $site_type Site type from discovery (e.g. ecommerce, business).
-	 * @param array  $pages     Pages from publish ctx.createdPages: id, title, link, slug.
+	 * @param array  $pages     Pages from publish ctx.createdPages: id, title, link, slug, page_purpose.
 	 * @return bool True if the navigation menu was setup, false otherwise.
 	 */
 	public function setup_site_nav_menu( string $site_type, array $pages ): bool {
@@ -97,6 +97,10 @@ class SiteNavigationService {
 		$nav_items = array();
 
 		foreach ( $pages as $page ) {
+			if ( self::is_policy_nav_page( $page ) ) {
+				continue;
+			}
+
 			$id    = (int) ( $page['id'] ?? 0 );
 			$title = $page['title'] ?? '';
 			$link  = $page['link'] ?? '';
@@ -257,6 +261,34 @@ class SiteNavigationService {
 		}
 
 		return $items;
+	}
+
+	/**
+	 * Whether a page is a policy/support page that belongs in the footer only.
+	 *
+	 * Legal and store-policy pages are linked from the footer, so listing them in
+	 * the primary nav duplicates the destination and crowds out the pages that
+	 * carry the site's information architecture.
+	 *
+	 * Decided solely on `page_purpose`, which the platform sends for every page it
+	 * generates (null when the page isn't a policy page). Matching on slug instead
+	 * would be fragile — the sitemap agent can name a policy page freely (e.g.
+	 * "shipping-info"), and slugs vary by site locale — so no slug fallback here.
+	 *
+	 * Contact pages are always kept: they are a primary destination, and the
+	 * platform never tags them with a purpose.
+	 *
+	 * @param array $page Publish page payload.
+	 * @return bool
+	 */
+	public static function is_policy_nav_page( array $page ): bool {
+		if ( ! empty( $page['is_contact_page'] ) ) {
+			return false;
+		}
+
+		$purpose = $page['page_purpose'] ?? null;
+
+		return is_string( $purpose ) && '' !== trim( $purpose );
 	}
 
 	/**

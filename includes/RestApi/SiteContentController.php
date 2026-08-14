@@ -102,6 +102,10 @@ class SiteContentController {
 	/**
 	 * Setup the navigation menu from publish pages, including WooCommerce Shop for ecommerce sites.
 	 *
+	 * Each page entry carries id, title, slug, link, is_front_page, is_contact_page and
+	 * an optional page_purpose. Pages with a purpose are policy/support pages and are
+	 * kept out of the primary nav — see SiteNavigationService::is_policy_nav_page().
+	 *
 	 * @param \WP_REST_Request $request The REST request object.
 	 * @return \WP_REST_Response|\WP_Error
 	 */
