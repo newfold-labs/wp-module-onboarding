@@ -37,7 +37,7 @@ const BrandLoader = ( { width = '120px', height = '120px', alt = 'Loading animat
 		'hostgator-br': hostgatorLogo,
 		'crazy-domains': crazyDomainsLogo,
 		'network-solutions': networksolutionsLogo,
-		'bigrock': bigrockLogo,
+		bigrock: bigrockLogo,
 		wordpress: wordpressLogo,
 	};
 

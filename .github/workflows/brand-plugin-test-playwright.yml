@@ -29,7 +29,7 @@ jobs:
         run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
         id: extract_branch
 
-  bluehost:
+  netsol:
     name: Bluehost Build and Test Playwright
     needs: setup
     permissions:
@@ -38,11 +38,11 @@ jobs:
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-bluehost'
+      plugin-repo: 'newfold-labs/wp-plugin-web'
     secrets: inherit
 
-  bluehost-dev:
-    name: Bluehost Dev Build and Test Playwright
+  netsol-dev:
+    name: Netsol Dev Build and Test Playwright
     needs: setup
     permissions:
       contents: read
@@ -50,7 +50,33 @@ jobs:
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-bluehost'
+      plugin-repo: 'newfold-labs/wp-plugin-web'
       plugin-branch: 'develop'
-      artifact-name: 'wp-plugin-bluehost-develop'
+      artifact-name: 'wp-plugin-web-develop'
+    secrets: inherit
+
+  bigrock:
+    name: Bigrock Build and Test Playwright
+    needs: setup
+    permissions:
+      contents: read
+    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
+    with:
+      module-repo: ${{ github.repository }}
+      module-branch: ${{ needs.setup.outputs.branch }}
+      plugin-repo: 'newfold-labs/wp-plugin-bigrock'
+    secrets: inherit
+
+  bigrock-dev:
+    name: Bigrock Dev Build and Test Playwright
+    needs: setup
+    permissions:
+      contents: read
+    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
+    with:
+      module-repo: ${{ github.repository }}
+      module-branch: ${{ needs.setup.outputs.branch }}
+      plugin-repo: 'newfold-labs/wp-plugin-bigrock'
+      plugin-branch: 'develop'
+      artifact-name: 'wp-plugin-bigrock-develop'
     secrets: inherit
