@@ -6,7 +6,7 @@ on:
       base_branch:
         description: 'Base branch for the pull request'
         required: false
-        default: 'main'
+        default: 'main-networksolutions'
 
 permissions:
   contents: write

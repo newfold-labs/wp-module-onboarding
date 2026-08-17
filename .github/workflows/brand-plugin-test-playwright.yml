@@ -3,7 +3,7 @@ on:
   pull_request:
     types: [ opened, reopened, ready_for_review, synchronize ]
     branches:
-      - main
+      - main-networksolutions
       - trunk
   workflow_dispatch:
 
@@ -30,7 +30,7 @@ jobs:
         id: extract_branch
 
   netsol:
-    name: Bluehost Build and Test Playwright
+    name: Netsol Build and Test Playwright
     needs: setup
     permissions:
       contents: read
