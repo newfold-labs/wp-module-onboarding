@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-02-13T10:23:36+00:00\n"
-"PO-Revision-Date: 2026-08-18T13:08:26+00:00\n"
+"PO-Revision-Date: 2026-08-18T20:15:14+00:00\n"
 "Language: en_AU\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: wp-module-onboarding\n"
@@ -263,189 +263,189 @@ msgstr "Each webfont src must be a non-empty string."
 msgid "Webfont font weight must be a properly formatted string or integer."
 msgstr "Webfont font weight must be a properly formatted string or integer."
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Base"
 msgstr "Base"
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Contrast"
 msgstr "Contrast"
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Primary"
 msgstr "Primary"
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Secondary"
 msgstr "Secondary"
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Colors"
 msgstr "Colors"
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Select a palette or customize individual colors."
 msgstr "Select a palette or customize individual colors."
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Palette"
 msgstr "Palette"
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Pick custom colors"
 msgstr "Pick custom colors"
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Site Logo"
 msgstr "Site Logo"
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Replace logo"
 msgstr "Replace logo"
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Replace"
 msgstr "Replace"
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Current logo"
 msgstr "Current logo"
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Remove"
 msgstr "Remove"
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Upload a logo to represent your brand."
 msgstr "Upload a logo to represent your brand."
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Upload Logo"
 msgstr "Upload Logo"
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "You don't have permission to change the site logo."
 msgstr "You don't have permission to change the site logo."
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
 msgstr "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Primary color"
 msgstr "Primary color"
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Secondary color"
 msgstr "Secondary color"
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Paragraph text in your chosen font."
 msgstr "Paragraph text in your chosen font."
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Select a font style."
 msgstr "Select a font style."
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Font Pairings"
 msgstr "Font Pairings"
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "No font pairings available."
 msgstr "No font pairings available."
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
 msgstr "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
 
-#: build/4.0.8/onboarding-design-studio.js:1
+#: build/4.0.9/onboarding-design-studio.js:1
 msgid "Design Studio"
 msgstr "Design Studio"
 
-#: build/4.0.8/onboarding.js:1
+#: build/4.0.9/onboarding.js:1
 msgid "I want to build"
 msgstr "I want to build"
 
-#: build/4.0.8/onboarding.js:1
+#: build/4.0.9/onboarding.js:1
 msgid "a photography portfolio with a booking page and gallery…"
 msgstr "a photography portfolio with a booking page and gallery…"
 
-#: build/4.0.8/onboarding.js:1
+#: build/4.0.9/onboarding.js:1
 msgid "an online bakery with a menu and custom order form…"
 msgstr "an online bakery with a menu and custom order form…"
 
-#: build/4.0.8/onboarding.js:1
+#: build/4.0.9/onboarding.js:1
 msgid "a travel blog with a newsletter signup…"
 msgstr "a travel blog with a newsletter signup…"
 
-#: build/4.0.8/onboarding.js:1
+#: build/4.0.9/onboarding.js:1
 msgid "a fitness coaching site with class schedules and pricing…"
 msgstr "a fitness coaching site with class schedules and pricing…"
 
-#: build/4.0.8/onboarding.js:1
+#: build/4.0.9/onboarding.js:1
 msgid "a restaurant site with an online menu and reservations…"
 msgstr "a restaurant site with an online menu and reservations…"
 
-#: build/4.0.8/onboarding.js:1
+#: build/4.0.9/onboarding.js:1
 msgid "Build now"
 msgstr "Build now"
 
-#: build/4.0.8/onboarding.js:1
+#: build/4.0.9/onboarding.js:1
 msgid "Tell us what kind of website you want to build"
 msgstr "Tell us what kind of website you want to build"
 
-#: build/4.0.8/onboarding.js:1
+#: build/4.0.9/onboarding.js:1
 msgid "Or"
 msgstr "Or"
 
-#: build/4.0.8/onboarding.js:1
+#: build/4.0.9/onboarding.js:1
 msgid "Import an Existing WordPress Site"
 msgstr "Import an Existing WordPress Site"
 
-#: build/4.0.8/onboarding.js:1
+#: build/4.0.9/onboarding.js:1
 msgid "Send message"
 msgstr "Send message"
 
-#: build/4.0.8/onboarding.js:1
-#: build/4.0.8/onboarding.js:3
+#: build/4.0.9/onboarding.js:1
+#: build/4.0.9/onboarding.js:3
 msgid "Try again"
 msgstr "Try again"
 
-#: build/4.0.8/onboarding.js:1
+#: build/4.0.9/onboarding.js:1
 msgid "Start over"
 msgstr ""
 
 #. translators: %s is the brand name (e.g., Bluehost, HostGator)
-#: build/4.0.8/onboarding.js:3
+#: build/4.0.9/onboarding.js:3
 #, js-format
 msgid "Let's migrate your existing site to %s"
 msgstr "Let's migrate your existing site to %s"
 
-#: build/4.0.8/onboarding.js:3
+#: build/4.0.9/onboarding.js:3
 msgid "Let's migrate your existing site"
 msgstr "Let's migrate your existing site"
 
-#: build/4.0.8/onboarding.js:3
+#: build/4.0.9/onboarding.js:3
 msgid "Please wait a few seconds while we get your new account ready to import your existing WordPress site."
 msgstr "Please wait a few seconds while we get your new account ready to import your existing WordPress site."
 
-#: build/4.0.8/onboarding.js:3
+#: build/4.0.9/onboarding.js:3
 msgid "Oops! Something went wrong"
 msgstr "Oops! Something went wrong"
 
-#: build/4.0.8/onboarding.js:3
+#: build/4.0.9/onboarding.js:3
 msgid "An error occurred while attempting to set up your migration account."
 msgstr "An error occurred while attempting to set up your migration account."
 
-#: build/4.0.8/onboarding.js:3
+#: build/4.0.9/onboarding.js:3
 msgid "Preparing your account"
 msgstr "Preparing your account"
 
-#: build/4.0.8/onboarding.js:3
+#: build/4.0.9/onboarding.js:3
 msgid "Bluehost logo"
 msgstr "Bluehost logo"
 
-#: build/4.0.8/onboarding.js:3
+#: build/4.0.9/onboarding.js:3
 msgid "AI-generated sites may need refinement. You can customize everything later."
 msgstr "AI-generated sites may need refinement. You can customize everything later."
