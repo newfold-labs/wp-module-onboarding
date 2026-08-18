@@ -5,7 +5,7 @@ return [
 	'language' => 'es_MX',
 	'project-id-version' => '',
 	'pot-creation-date' => '',
-	'po-revision-date' => '2026-07-21T20:50:54+00:00',
+	'po-revision-date' => '2026-08-18T13:08:26+00:00',
 	'x-generator' => 'WP-CLI 2.8.1',
 	'messages' => [
 		'Onboarding' => 'Onboarding',
@@ -22,6 +22,7 @@ return [
 		'Event data' => 'Datos del evento',
 		'Request does not contain an array of events.' => 'La solicitud no contiene un arreglo de eventos.',
 		'Some events failed.' => 'Algunos eventos fallaron.',
+		'Error at Setting up the nav menu.' => 'Error al configurar el menú de navegación.',
 		'An unknown error occurred' => 'Se ha producido un error desconocido',
 		'Help us improve' => 'Ayúdanos a mejorar',
 		'How satisfied were you with the ease of creating your website?' => '¿Qué tan satisfecho estabas con la facilidad de crear tu sitio web?',
