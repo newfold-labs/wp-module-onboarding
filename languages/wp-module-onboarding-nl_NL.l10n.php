@@ -5,7 +5,7 @@ return [
 	'language' => 'nl_NL',
 	'project-id-version' => 'newfold-labswp-module-staging',
 	'pot-creation-date' => '2024-11-18T07:59:34+00:00',
-	'po-revision-date' => '2026-07-21T20:50:54+00:00',
+	'po-revision-date' => '2026-08-18T13:08:26+00:00',
 	'x-generator' => 'WP-CLI 2.11.0',
 	'messages' => [
 		'Onboarding' => 'Introductie',
@@ -22,6 +22,7 @@ return [
 		'Event data' => 'Gebeurtenis gegevens',
 		'Request does not contain an array of events.' => 'De aanvraag bevat geen reeks gebeurtenissen.',
 		'Some events failed.' => 'Sommige gebeurtenissen zijn mislukt.',
+		'Error at Setting up the nav menu.' => 'Foutmelding bij het instellen van het navigatiemenu.',
 		'An unknown error occurred' => 'Er is een onbekende fout opgetreden',
 		'Help us improve' => 'Help ons te verbeteren',
 		'How satisfied were you with the ease of creating your website?' => 'Hoe tevreden was u met het gemak van het maken van uw website?',

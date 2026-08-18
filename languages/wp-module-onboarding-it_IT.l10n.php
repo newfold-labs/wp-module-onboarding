@@ -5,7 +5,7 @@ return [
 	'language' => 'it_IT',
 	'project-id-version' => 'newfold-labswp-module-staging',
 	'pot-creation-date' => '2024-11-18T07:59:34+00:00',
-	'po-revision-date' => '2026-07-21T20:50:54+00:00',
+	'po-revision-date' => '2026-08-18T13:08:26+00:00',
 	'x-generator' => 'WP-CLI 2.11.0',
 	'messages' => [
 		'Onboarding' => 'Onboarding',
@@ -22,6 +22,7 @@ return [
 		'Event data' => 'Dati evento',
 		'Request does not contain an array of events.' => 'La richiesta non contiene un array di eventi.',
 		'Some events failed.' => 'Alcuni eventi sono falliti.',
+		'Error at Setting up the nav menu.' => 'Errore nell\'impostazione del menu di navigazione.',
 		'An unknown error occurred' => 'Si è verificato un errore sconosciuto',
 		'Help us improve' => 'Aiutaci a migliorare',
 		'How satisfied were you with the ease of creating your website?' => 'Quanto sei rimasto soddisfatto della facilità di creazione del tuo sito web?',
