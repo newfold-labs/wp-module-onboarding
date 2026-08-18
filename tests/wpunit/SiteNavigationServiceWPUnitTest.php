@@ -214,4 +214,114 @@ class SiteNavigationServiceWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTes
 		$this->assertSame( 6, substr_count( $nav[0]->post_content, 'wp:navigation-link' ) );
 		$this->assertStringNotContainsString( '"kind":"taxonomy"', $nav[0]->post_content );
 	}
+
+	/**
+	 * A page_purpose tag marks a policy page, whatever its slug.
+	 *
+	 * @return void
+	 */
+	public function test_is_policy_nav_page_uses_page_purpose_over_slug() {
+		$this->assertTrue(
+			SiteNavigationService::is_policy_nav_page(
+				array(
+					'slug'         => 'shipping-info',
+					'page_purpose' => 'shipping',
+				)
+			)
+		);
+
+		$this->assertTrue(
+			SiteNavigationService::is_policy_nav_page(
+				array(
+					'slug'         => 'datenschutz-agb',
+					'page_purpose' => 'legal',
+				)
+			)
+		);
+	}
+
+	/**
+	 * Without page_purpose, a policy-looking slug is not enough — no slug guessing.
+	 *
+	 * @return void
+	 */
+	public function test_is_policy_nav_page_requires_page_purpose_not_slug_guessing() {
+		$this->assertFalse( SiteNavigationService::is_policy_nav_page( array( 'slug' => 'privacy-terms' ) ) );
+		$this->assertFalse( SiteNavigationService::is_policy_nav_page( array( 'slug' => 'returns-refunds' ) ) );
+		$this->assertFalse(
+			SiteNavigationService::is_policy_nav_page(
+				array(
+					'slug'         => 'privacy-terms',
+					'page_purpose' => '',
+				)
+			)
+		);
+	}
+
+	/**
+	 * Regular pages stay in the nav, and a contact page is never treated as policy.
+	 *
+	 * @return void
+	 */
+	public function test_is_policy_nav_page_keeps_regular_and_contact_pages() {
+		$this->assertFalse( SiteNavigationService::is_policy_nav_page( array( 'slug' => 'about' ) ) );
+		$this->assertFalse( SiteNavigationService::is_policy_nav_page( array( 'slug' => 'our-story' ) ) );
+		$this->assertFalse(
+			SiteNavigationService::is_policy_nav_page(
+				array(
+					'slug'            => 'contact',
+					'is_contact_page' => true,
+				)
+			)
+		);
+	}
+
+	/**
+	 * Policy pages never reach the generated primary nav, while the contact page does.
+	 *
+	 * @return void
+	 */
+	public function test_setup_site_nav_menu_excludes_policy_pages() {
+		$definitions = array(
+			array( 'Home', 'home', null, false ),
+			array( 'About', 'about', null, false ),
+			array( 'Contact', 'contact', null, true ),
+			array( 'Shipping Information', 'shipping-info', 'shipping', false ),
+			array( 'Privacy & Terms', 'privacy-terms', 'legal', false ),
+			array( 'Help Centre', 'help-centre', 'faq', false ),
+		);
+
+		$pages = array();
+		foreach ( $definitions as list( $title, $slug, $purpose, $is_contact ) ) {
+			$pages[] = array(
+				'id'              => (int) self::factory()->post->create( array( 'post_type' => 'page' ) ),
+				'title'           => $title,
+				'link'            => 'http://example.org/' . $slug . '/',
+				'slug'            => $slug,
+				'is_front_page'   => 'home' === $slug,
+				'is_contact_page' => $is_contact,
+				'page_purpose'    => $purpose,
+			);
+		}
+
+		( new SiteNavigationService() )->setup_site_nav_menu( 'business', $pages );
+
+		$nav = get_posts(
+			array(
+				'post_type'   => 'wp_navigation',
+				'numberposts' => 1,
+			)
+		);
+
+		$this->assertNotEmpty( $nav );
+		$content = $nav[0]->post_content;
+
+		$this->assertSame( 3, substr_count( $content, 'wp:navigation-link' ) );
+		$this->assertStringContainsString( '"label":"Home"', $content );
+		$this->assertStringContainsString( '"label":"About"', $content );
+		$this->assertStringContainsString( '"label":"Contact"', $content );
+		$this->assertStringNotContainsString( 'Shipping Information', $content );
+		$this->assertStringNotContainsString( 'Privacy', $content );
+		$this->assertStringNotContainsString( 'Help Centre', $content );
+	}
 }
