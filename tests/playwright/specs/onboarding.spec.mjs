@@ -25,9 +25,9 @@ test.describe('Onboarding Module', () => {
   test.describe('Welcome Screen', () => {
 
     test('Displays welcome page with expected elements', async ({ page }) => {
+      await resetOnboardingState();
       await navigateToOnboarding(page);
       await waitForOnboarding(page);
-
       // Verify the onboarding app container is present
       await expect(page.locator(SELECTORS.onboardingApp)).toBeVisible();
 

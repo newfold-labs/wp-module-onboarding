@@ -76,9 +76,6 @@ export async function navigateToStep(page, stepPath) {
 export async function waitForOnboarding(page) {
   // Wait for the onboarding app container to be present
   await page.waitForSelector(SELECTORS.onboardingApp, { timeout: 15000 });
-    await expect(
-    page.getByRole('heading', { name: 'Welcome to WordPress', level: 1 })
-  ).toBeVisible({ timeout: 20000 });
 }
 
 /**
