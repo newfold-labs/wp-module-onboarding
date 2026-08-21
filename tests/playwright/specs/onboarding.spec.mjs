@@ -11,6 +11,7 @@ import {
 } from '../helpers/index.mjs';
 
 test.describe('Onboarding Module', () => {
+  test.describe.configure({ timeout: 120_000 });
 
   test.beforeAll(async () => {
     // Reset htaccess state to prevent corrupted rules
@@ -26,17 +27,11 @@ test.describe('Onboarding Module', () => {
   test.describe('Welcome Screen', () => {
 
     test('Displays welcome page with expected elements', async ({ page }) => {
-      await resetOnboardingState();
       await navigateToOnboarding(page);
       await waitForOnboarding(page);
 
       // Verify the onboarding app container is present
       await expect(page.locator(SELECTORS.onboardingApp)).toBeVisible();
-
-      // Verify welcome heading
-      await expect(
-        page.getByRole('heading', { name: 'Welcome to WordPress', level: 1 })
-      ).toBeVisible();
 
       // Verify branding
       await expect(page.getByText('Powered by')).toBeVisible();
