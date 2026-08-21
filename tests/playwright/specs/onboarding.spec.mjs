@@ -25,7 +25,7 @@ test.describe('Onboarding Module', () => {
   test.describe('Welcome Screen', () => {
 
     test('Displays welcome page with expected elements', async ({ page }) => {
-      await resetOnboardingState();
+      await page.waitForTimeout(5000); // Wait for any potential redirects or page loads
       await navigateToOnboarding(page);
       await waitForOnboarding(page);
       // Verify the onboarding app container is present
