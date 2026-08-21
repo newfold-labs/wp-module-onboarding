@@ -64,7 +64,7 @@ export const SELECTORS = {
  * @param {import('@playwright/test').Page} page
  */
 export async function navigateToOnboarding(page) {
-  await page.goto(ONBOARDING_BASE);
+  await page.goto(ONBOARDING_BASE, { waitUntil: 'domcontentloaded' });
 }
 
 /**
@@ -73,7 +73,7 @@ export async function navigateToOnboarding(page) {
  * @param {string} stepPath - Step path (e.g., '/step/get-started', '/sitegen/step/welcome')
  */
 export async function navigateToStep(page, stepPath) {
-  await page.goto(`${ONBOARDING_BASE}#${stepPath}`);
+  await page.goto(`${ONBOARDING_BASE}#${stepPath}`, { waitUntil: 'domcontentloaded' });
 }
 
 /**
@@ -102,23 +102,27 @@ function getOnboardingStepFromUrl(url) {
  */
 export async function waitForOnboardingStep(page, step) {
   const heading = STEP_HEADINGS[step];
-  await expect(page.getByRole('heading', heading)).toBeVisible({ timeout: 20000 });
+  // CI can be slow to download and hydrate the onboarding bundle after the PHP shell appears.
+  await expect(page.getByRole('heading', heading)).toBeVisible({ timeout: 45000 });
 }
 
 /**
  * Wait for onboarding app to be ready.
- * Waits for the React shell, then for step-specific content inferred from the URL hash.
+ * Waits for the app container, then for step-specific content inferred from the URL hash.
  * @param {import('@playwright/test').Page} page
  */
 export async function waitForOnboarding(page) {
-  // PHP renders the container before React mounts.
+  // PHP renders #nfd-onboarding (with loading skeleton) before React mounts.
   await page.waitForSelector(SELECTORS.onboardingApp, { timeout: 15000 });
-  await page.waitForSelector(SELECTORS.onboardingBody, { timeout: 20000 });
 
   const step = getOnboardingStepFromUrl(page.url());
   if (step) {
     await waitForOnboardingStep(page, step);
+    return;
   }
+
+  // Fallback for routes without a mapped step heading (e.g. migration).
+  await page.waitForSelector(SELECTORS.onboardingBody, { timeout: 45000 });
 }
 
 /**
