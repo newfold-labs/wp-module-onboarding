@@ -25,14 +25,17 @@ test.describe('Onboarding Module', () => {
   test.describe('Welcome Screen', () => {
 
     test('Displays welcome page with expected elements', async ({ page }) => {
-      await page.waitForTimeout(5000); // Wait for any potential redirects or page loads
+      await resetOnboardingState();
       await navigateToOnboarding(page);
       await waitForOnboarding(page);
+
       // Verify the onboarding app container is present
       await expect(page.locator(SELECTORS.onboardingApp)).toBeVisible();
 
       // Verify welcome heading
-      await expect(page.getByRole('heading', { name: 'Welcome to WordPress', level: 1 })).toBeVisible();
+      await expect(
+        page.getByRole('heading', { name: 'Welcome to WordPress', level: 1 })
+      ).toBeVisible();
 
       // Verify branding
       await expect(page.getByText('Powered by')).toBeVisible();
