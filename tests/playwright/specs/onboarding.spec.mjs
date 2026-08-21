@@ -5,6 +5,7 @@ import {
   navigateToOnboarding,
   navigateToStep,
   waitForOnboarding,
+  waitForOnboardingStep,
   resetOnboardingState,
   resetHtaccessState,
 } from '../helpers/index.mjs';
@@ -109,7 +110,7 @@ test.describe('Onboarding Module', () => {
       await page.getByRole('button', { name: 'Back' }).click();
 
       // Should be back at welcome
-      await expect(page.getByRole('heading', { name: 'Welcome to WordPress', level: 1 }), { timeout: 15000 }).toBeVisible();
+      await waitForOnboardingStep(page, 'welcome');
     });
 
   });

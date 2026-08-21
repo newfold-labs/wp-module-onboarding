@@ -31,10 +31,17 @@ export const pluginId = process.env.PLUGIN_ID || 'bluehost';
 /** Onboarding page base URL */
 export const ONBOARDING_BASE = '/wp-admin/index.php?page=nfd-onboarding';
 
+/** Headings used to detect when a step has finished rendering */
+export const STEP_HEADINGS = {
+  welcome: { name: 'Welcome to WordPress', level: 1 },
+  intake: { name: /tell us about your site/i },
+};
+
 /** Common selectors for onboarding module */
 export const SELECTORS = {
   // Main containers
   onboardingApp: '#nfd-onboarding',
+  onboardingBody: '.nfd-onboarding-body',
   onboardingContent: '.nfd-onboarding-content',
   mainContent: '#nfd-onboarding main',
 
@@ -70,16 +77,48 @@ export async function navigateToStep(page, stepPath) {
 }
 
 /**
- * Wait for onboarding app to be ready
+ * Resolve which onboarding step the page URL points at.
+ * @param {string} url
+ * @returns {'welcome'|'intake'|null}
+ */
+function getOnboardingStepFromUrl(url) {
+  const hash = new URL(url).hash.replace(/^#\/?/, '');
+
+  if (!hash || hash === '/') {
+    return 'welcome';
+  }
+
+  if (hash.startsWith('intake')) {
+    return 'intake';
+  }
+
+  return null;
+}
+
+/**
+ * Wait for a specific onboarding step to finish rendering.
+ * @param {import('@playwright/test').Page} page
+ * @param {'welcome'|'intake'} step
+ */
+export async function waitForOnboardingStep(page, step) {
+  const heading = STEP_HEADINGS[step];
+  await expect(page.getByRole('heading', heading)).toBeVisible({ timeout: 20000 });
+}
+
+/**
+ * Wait for onboarding app to be ready.
+ * Waits for the React shell, then for step-specific content inferred from the URL hash.
  * @param {import('@playwright/test').Page} page
  */
 export async function waitForOnboarding(page) {
-  // Wait for the onboarding app container to be present
+  // PHP renders the container before React mounts.
   await page.waitForSelector(SELECTORS.onboardingApp, { timeout: 15000 });
-  // Wait for React to mount and render the welcome screen (container exists before content)
-  await expect(
-    page.getByRole('heading', { name: 'Welcome to WordPress', level: 1 })
-  ).toBeVisible({ timeout: 20000 });
+  await page.waitForSelector(SELECTORS.onboardingBody, { timeout: 20000 });
+
+  const step = getOnboardingStepFromUrl(page.url());
+  if (step) {
+    await waitForOnboardingStep(page, step);
+  }
 }
 
 /**
@@ -104,6 +143,7 @@ export const ONBOARDING_CAPABILITIES = {
   canAccessAI: true,
   hasAISiteGen: true,
   canMigrateSite: true,
+  hasForkABExperiment: false,
 };
 
 /**
