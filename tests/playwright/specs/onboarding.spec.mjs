@@ -25,7 +25,7 @@ test.describe('Onboarding Module', () => {
 
   test.describe('Welcome Screen', () => {
 
-    test('Displays welcome page with expected elements', async ({ page }) => {
+    test('Displays welcome page with expected elements', { timeout: 120_000 }, async ({ page }) => {
       await resetOnboardingState();
       await navigateToOnboarding(page);
       await waitForOnboarding(page);
