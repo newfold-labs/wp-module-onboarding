@@ -3,7 +3,7 @@ on:
   pull_request:
     types: [ opened, reopened, ready_for_review, synchronize ]
     branches:
-      - main
+      - main-networksolutions
       - trunk
   workflow_dispatch:
 
