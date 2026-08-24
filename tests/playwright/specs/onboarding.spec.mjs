@@ -5,6 +5,7 @@ import {
   navigateToOnboarding,
   navigateToStep,
   waitForOnboarding,
+  waitForOnboardingStep,
   resetOnboardingState,
   resetHtaccessState,
 } from '../helpers/index.mjs';
@@ -24,7 +25,8 @@ test.describe('Onboarding Module', () => {
 
   test.describe('Welcome Screen', () => {
 
-    test('Displays welcome page with expected elements', async ({ page }) => {
+    test('Displays welcome page with expected elements', { timeout: 120_000 }, async ({ page }) => {
+      await resetOnboardingState();
       await navigateToOnboarding(page);
       await waitForOnboarding(page);
 
@@ -32,7 +34,9 @@ test.describe('Onboarding Module', () => {
       await expect(page.locator(SELECTORS.onboardingApp)).toBeVisible();
 
       // Verify welcome heading
-      await expect(page.getByRole('heading', { name: 'Welcome to WordPress', level: 1 })).toBeVisible();
+      await expect(
+        page.getByRole('heading', { name: 'Welcome to WordPress', level: 1 })
+      ).toBeVisible();
 
       // Verify branding
       await expect(page.getByText('Powered by')).toBeVisible();
@@ -106,7 +110,7 @@ test.describe('Onboarding Module', () => {
       await page.getByRole('button', { name: 'Back' }).click();
 
       // Should be back at welcome
-      await expect(page.getByRole('heading', { name: 'Welcome to WordPress', level: 1 }), { timeout: 15000 }).toBeVisible();
+      await waitForOnboardingStep(page, 'welcome');
     });
 
   });

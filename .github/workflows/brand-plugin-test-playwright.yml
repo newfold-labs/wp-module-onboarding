@@ -1,7 +1,7 @@
 name: Build and Test Module Updates in Brand Plugins (Playwright tests)
 on:
   pull_request:
-    types: [ opened, reopened, ready_for_review, synchronize ]
+    types: [ opened, reopened, ready_for_review, synchronize, edited ]
     branches:
       - main-networksolutions
       - trunk
@@ -51,6 +51,32 @@ jobs:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: 'newfold-labs/wp-plugin-web'
-      plugin-branch: 'develop'
+      plugin-branch: 'fix/tests'
       artifact-name: 'wp-plugin-web-develop'
+    secrets: inherit
+
+  vodien:
+    name: Vodien Build and Test Playwright
+    needs: setup
+    permissions:
+      contents: read
+    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
+    with:
+      module-repo: ${{ github.repository }}
+      module-branch: ${{ needs.setup.outputs.branch }}
+      plugin-repo: 'newfold-labs/wp-plugin-vodien'
+    secrets: inherit
+
+  vodien-dev:
+    name: Vodien Dev Build and Test Playwright
+    needs: setup
+    permissions:
+      contents: read
+    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
+    with:
+      module-repo: ${{ github.repository }}
+      module-branch: ${{ needs.setup.outputs.branch }}
+      plugin-repo: 'newfold-labs/wp-plugin-vodien'
+      plugin-branch: 'dev/hostingdev/4647'
+      artifact-name: 'wp-plugin-vodien-develop'
     secrets: inherit
