@@ -4,6 +4,7 @@ import bluehostLogo from '../../../Brands/bluehost/bluehost-logo.svg';
 import hostgatorLogo from '../../../Brands/hostgator/logo.svg';
 import crazyDomainsLogo from '../../../Brands/crazy-domains/logo.svg';
 import networksolutionsLogo from '../../../Brands/networksolutions/logo.svg';
+import bigrockLogo from '../../../Brands/bigrock/logo.svg';
 import wordpressLogo from '../../../Brands/wordpress/logo.svg';
 import vodienLogo from '../../../Brands/vodien/logo.svg';
 
@@ -17,6 +18,7 @@ const brandLogoMap = {
 	'crazy-domains': crazyDomainsLogo,
 	vodien: vodienLogo,
 	webcom: networksolutionsLogo,
+	'bigrock-in': bigrockLogo,
 	wordpress: wordpressLogo,
 };
 
