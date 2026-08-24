@@ -7,6 +7,7 @@ import networksolutionsLogo from '../../../Brands/networksolutions/step-loader-l
 import bigrockLogo from '../../../Brands/bigrock/step-loader-logo.svg';
 import wordpressLogo from '../../../Brands/wordpress/step-loader-logo.svg';
 import './BrandLoader.scss';
+import vodienLogo from '../../../Brands/vodien/logo.svg';
 
 /**
  * BrandLoader component - displays brand-specific loading animation
@@ -25,7 +26,6 @@ const BrandLoader = ( { width = '120px', height = '120px', alt = 'Loading animat
 	if ( ! brandName ) {
 		return null;
 	}
-
 	const normalizedBrand = brandName.toLowerCase().replace( / /g, '-' );
 
 	// Map brand names to their imported logos
@@ -38,6 +38,7 @@ const BrandLoader = ( { width = '120px', height = '120px', alt = 'Loading animat
 		'crazy-domains': crazyDomainsLogo,
 		'network-solutions': networksolutionsLogo,
 		bigrock: bigrockLogo,
+		vodien: vodienLogo,
 		wordpress: wordpressLogo,
 	};
 
