@@ -1,7 +1,7 @@
 name: Build and Test Module Updates in Brand Plugins (Playwright tests)
 on:
   pull_request:
-    types: [ opened, reopened, ready_for_review, synchronize, edited ]
+    types: [ opened, reopened, ready_for_review, synchronize ]
     branches:
       - main-networksolutions
       - trunk
