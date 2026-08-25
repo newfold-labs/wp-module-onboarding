@@ -51,7 +51,7 @@ jobs:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: 'newfold-labs/wp-plugin-web'
-      plugin-branch: 'fix/tests'
+      plugin-branch: 'develop'
       artifact-name: 'wp-plugin-web-develop'
     secrets: inherit
 
@@ -77,7 +77,7 @@ jobs:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: 'newfold-labs/wp-plugin-bigrock'
-      plugin-branch: 'dev/HOSTINGDEV-5254-ai-onboarding'
+      plugin-branch: 'develop'
       artifact-name: 'wp-plugin-bigrock-develop'
     secrets: inherit
 
@@ -103,6 +103,6 @@ jobs:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
       plugin-repo: 'newfold-labs/wp-plugin-vodien'
-      plugin-branch: 'dev/hostingdev/4647'
+      plugin-branch: 'develop'
       artifact-name: 'wp-plugin-vodien-develop'
     secrets: inherit
