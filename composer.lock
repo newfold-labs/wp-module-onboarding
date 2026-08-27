@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a3ab7ccf5289c1c04c66c4ea8a994f04",
+    "content-hash": "4ae97b207c24e5a8a36b31dba5d0e0fd",
     "packages": [
         {
             "name": "colinmollenhour/credis",
@@ -1057,16 +1057,16 @@
         },
         {
             "name": "newfold-labs/wp-module-onboarding-data",
-            "version": "1.2.26+ns",
+            "version": "1.2.27+ns",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-onboarding-data.git",
-                "reference": "4253d22e4f67df46a3a1a68dcd744ac2a8fc6f88"
+                "reference": "6e527b7d19a6d2d89e7aaee3fd63d264b312c977"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-onboarding-data/zipball/4253d22e4f67df46a3a1a68dcd744ac2a8fc6f88",
-                "reference": "4253d22e4f67df46a3a1a68dcd744ac2a8fc6f88",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-onboarding-data/zipball/6e527b7d19a6d2d89e7aaee3fd63d264b312c977",
+                "reference": "6e527b7d19a6d2d89e7aaee3fd63d264b312c977",
                 "shasum": ""
             },
             "require": {
@@ -1149,7 +1149,7 @@
                 }
             ],
             "description": "A non-toggleable module containing a standardized interface for interacting with Onboarding data.",
-            "time": "2026-08-10T12:50:11+00:00"
+            "time": "2026-08-27T09:43:31+00:00"
         },
         {
             "name": "newfold-labs/wp-module-patterns",
