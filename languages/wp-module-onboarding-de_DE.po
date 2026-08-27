@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-11-18T07:59:34+00:00\n"
-"PO-Revision-Date: 2026-03-24T16:37:18+00:00\n"
+"PO-Revision-Date: 2026-08-27T22:06:55+00:00\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: wp-module-onboarding.pot\n"
@@ -163,130 +163,130 @@ msgstr "Das Gewicht der Webfont muss ein richtig formatierter String oder Intege
 msgid "Build with AI"
 msgstr "Mit KI erstellen"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Base"
 msgstr "Basis"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Primary"
 msgstr "Primär"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Secondary"
 msgstr "Sekundär"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Colors"
 msgstr "Farben"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Select a palette or customize individual colors."
 msgstr "Wählen Sie eine Palette aus oder passen Sie einzelne Farben an."
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Palette"
 msgstr "Palette"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Pick custom colors"
 msgstr "Wählen Sie benutzerdefinierte Farben"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Site Logo"
 msgstr "Logo der Website"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Replace logo"
 msgstr "Logo ersetzen"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Replace"
 msgstr "Ersetzen"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Current logo"
 msgstr "Aktuelles Logo"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Remove"
 msgstr "Entfernen"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Upload a logo to represent your brand."
 msgstr "Laden Sie ein Logo hoch, um Ihre Marke zu repräsentieren."
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Upload Logo"
 msgstr "Logo hochladen"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "You don't have permission to change the site logo."
 msgstr "Sie sind nicht berechtigt, das Websitelogo zu ändern."
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Your logo will appear in your site header. For best results, upload an image with a transparent background in PNG format."
 msgstr "Ihr Logo wird in der Kopfzeile Ihrer Website angezeigt. Die besten Ergebnisse erzielen Sie, wenn Sie ein Bild mit transparentem Hintergrund im PNG-Format hochladen."
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Primary color"
 msgstr "Primärfarbe"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Secondary color"
 msgstr "Sekundäre Farbe"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Paragraph text in your chosen font."
 msgstr "Absatztext in der von Ihnen gewählten Schriftart."
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Select a font style."
 msgstr "Wählen Sie einen Schriftstil aus."
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Font Pairings"
 msgstr "Schriftpaarungen"
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "No font pairings available."
 msgstr "Keine Schriftkombinationen verfügbar."
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Choose a font pairing that reflects your brand's personality. Each pairing is carefully selected to enhance readability and visual appeal across your site."
 msgstr "Wählen Sie eine Schriftkombination, die die Persönlichkeit Ihrer Marke widerspiegelt. Jede Kombination wird sorgfältig ausgewählt, um die Lesbarkeit und visuelle Attraktivität Ihrer Website zu verbessern."
 
-#: build/3.3.6/onboarding-design-studio.js:1
+#: build/3.3.8/onboarding-design-studio.js:1
 msgid "Design Studio"
 msgstr "Design-Studio"
 
-#: build/3.3.6/onboarding.js:1
+#: build/3.3.8/onboarding.js:1
 msgid "Uh oh! Something went wrong. Please try again."
 msgstr "Uh oh! Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
 
-#: build/3.3.6/onboarding.js:1
+#: build/3.3.8/onboarding.js:1
 msgid "Your site logo has been set!"
 msgstr "Dein Seitenlogo ist festgelegt!"
 
-#: build/3.3.6/onboarding.js:1
+#: build/3.3.8/onboarding.js:1
 msgid "Setting your site logo…"
 msgstr "Das Logo deiner Seite setzen..."
 
-#: build/3.3.6/onboarding.js:1
+#: build/3.3.8/onboarding.js:1
 msgid "Sorry, let's try a different approach."
 msgstr "Entschuldigung, versuchen wir einen anderen Ansatz."
 
-#: build/3.3.6/onboarding.js:1
+#: build/3.3.8/onboarding.js:1
 msgid "Pick your website"
 msgstr "Wählen Sie Ihre Website aus"
 
-#: build/3.3.6/onboarding.js:1
+#: build/3.3.8/onboarding.js:1
 msgid "We're sorry, our site generation tool isn't working right now. In the meantime, here are three unique site templates to get you started. Choose your favorite — we'll guide you through customizing it!"
 msgstr "Es tut uns leid, unser Seitengenerierungstool funktioniert momentan nicht. In der Zwischenzeit finden Sie hier drei einzigartige Seitenvorlagen, um Ihnen den Einstieg zu erleichtern. Wählen Sie Ihren Favoriten aus – wir führen Sie bei der individuellen Anpassung!"
 
-#: build/3.3.6/onboarding.js:1
+#: build/3.3.8/onboarding.js:1
 msgid "Here are 3 unique designs for you to start with. Pick your favorite to customize it!"
 msgstr "Hier sind 3 einzigartige Designs, mit denen Sie anfangen können. Wähle deinen Favoriten aus, um ihn individuell zu gestalten!"
