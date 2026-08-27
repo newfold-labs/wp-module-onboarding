@@ -84,6 +84,7 @@
 }
 
 /* Color Palette Pagination */
+
 .nfd-design-studio-color-palette-pagination {
 	padding: 8px 0;
 }
@@ -117,6 +118,7 @@
 }
 
 /* Typography Preview Item */
+
 .nfd-typography-preview-item {
 	border: 1px solid #ddd;
 	border-radius: 4px;
@@ -188,6 +190,7 @@
 }
 
 /* Style Preview Card */
+
 .nfd-design-studio-style-preview {
 	padding: 24px 48px;
 	min-height: 160px;
