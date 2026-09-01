@@ -67,36 +67,33 @@ const LogoUploadInput = ( { isUploading, setIsUploading } ) => {
 		// Process the upload
 		setIsUploading( true );
 		/**
-		 * The uploadMedia function first calls the onFileChange immediately with a blob src.
-		 * Then it calls onFileChange again with the final uploaded object.
-		 * Since we're only interested in the final uploaded object...
-		 * The isOptimisticUrl flag is used to track the first call and ignore the blob src.
+		 * uploadMedia() reports progress through onFileChange, which may fire
+		 * more than once for a single upload. With server-side processing it
+		 * fires first with an optimistic placeholder (a blob URL and no id),
+		 * then again with the finalized attachment (which carries an id).
+		 * Since WordPress 7.1 enabled client-side media processing by default
+		 * (in supporting browsers), the placeholder callback is skipped and
+		 * only the finalized attachment is emitted — see wp.mediaUtils
+		 * .uploadMedia, gated on window.__clientSideMediaProcessing.
+		 *
+		 * Detect completion by the presence of an id rather than by call
+		 * order, so a lone finalized callback is not mistaken for the
+		 * placeholder and left spinning forever. Failures come through onError.
 		 */
-		let isOptimisticUrl = true;
 		uploadMedia( {
 			multiple: false,
 			filesList: [ file ],
 			onFileChange: ( files ) => {
-				if ( isOptimisticUrl ) {
-					isOptimisticUrl = false;
+				const media = files?.[ 0 ];
+				// Ignore the optimistic placeholder (blob URL, no id yet).
+				if ( ! media?.id ) {
 					return;
 				}
-				// If the file id is not found, set the error state and return
-				if ( ! files[ 0 ]?.id ) {
-					setError( {
-						status: true,
-						message: __( 'Failed to upload logo. Please try again.', 'wp-module-onboarding' ),
-					} );
-					setIsUploading( false );
-					return;
-				}
-				// Success...
-				// Set the logo in the input slice
+				// Finalized attachment — store the logo and stop the spinner.
 				dispatch( nfdOnboardingStore ).setLogo( {
-					id: files[ 0 ].id,
-					url: files[ 0 ].url,
+					id: media.id,
+					url: media.url,
 				} );
-				// Reset the uploading state
 				setIsUploading( false );
 			},
 			onError: ( e ) => {
