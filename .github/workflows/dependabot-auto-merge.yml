@@ -1,0 +1,34 @@
+name: Dependabot Auto-Merge
+on:
+  schedule:
+    # Two sweeps a day so a freshly-green (or freshly-rebased) Dependabot PR is
+    # merged within hours instead of waiting a full day. The sweep is cheap.
+    - cron: "0 6 * * *"
+    - cron: "0 18 * * *"
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: Log what would be merged without merging.
+        type: boolean
+        default: false
+
+# Disable permissions for all scopes by default; grant only what the job needs.
+permissions: {}
+
+jobs:
+  # Delegates to the central reusable sweep in newfold-labs/workflows. It finds
+  # every open Dependabot PR and merges the eligible ones (not draft, mergeable,
+  # all check runs green, an opted-in bump type). Majors are left for a human.
+  auto-merge:
+    name: Auto-merge Dependabot PRs
+    uses: newfold-labs/workflows/.github/workflows/reusable-dependabot-auto-merge.yml@main
+    with:
+      merge-method: squash
+      update-types: patch,minor
+      dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run || false }}
+    # checks: read lets the reusable read check-run status via the Checks API.
+    # GITHUB_TOKEN reaches the called workflow automatically — no secrets: inherit.
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: read
