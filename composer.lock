@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9589198f89eda70d561ad3e4b7a32e5",
+    "content-hash": "f4fd2b5bb1559084be223ead028ce8e4",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -487,16 +487,16 @@
         },
         {
             "name": "newfold-labs/wp-module-install-checker",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/newfold-labs/wp-module-install-checker.git",
-                "reference": "43dae50be0ee6dbf03acd3daea5672fff98ed120"
+                "reference": "7ae3df8bc4a8a6992ceefbb34be5b26dd42af167"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/newfold-labs/wp-module-install-checker/zipball/43dae50be0ee6dbf03acd3daea5672fff98ed120",
-                "reference": "43dae50be0ee6dbf03acd3daea5672fff98ed120",
+                "url": "https://api.github.com/repos/newfold-labs/wp-module-install-checker/zipball/7ae3df8bc4a8a6992ceefbb34be5b26dd42af167",
+                "reference": "7ae3df8bc4a8a6992ceefbb34be5b26dd42af167",
                 "shasum": ""
             },
             "require-dev": {
@@ -504,6 +504,7 @@
                 "lucatume/wp-browser": "*",
                 "php": ">=7.3",
                 "phpunit/phpcov": "*",
+                "wp-cli/i18n-command": "^2.7.0",
                 "wpackagist-plugin/woocommerce": "@stable",
                 "wpackagist-theme/twentysixteen": "*"
             },
@@ -517,6 +518,32 @@
                 }
             },
             "scripts": {
+                "i18n-pot": [
+                    "vendor/bin/wp i18n make-pot . ./languages/wp-module-install-checker.pot --domain=wp-module-install-checker --headers='{\"Report-Msgid-Bugs-To\":\"https://github.com/newfold-labs/wp-module-install-checker/issues\",\"POT-Creation-Date\":\"2025-02-13T09:55:55+00:00\"}' --exclude=tests,vendor,wordpress,node_modules,wp-content"
+                ],
+                "i18n-po": [
+                    "vendor/bin/wp i18n update-po ./languages/wp-module-install-checker.pot ./languages"
+                ],
+                "i18n-php": [
+                    "vendor/bin/wp i18n make-php ./languages --pretty-print"
+                ],
+                "i18n-json": [
+                    "rm -f languages/*.json && vendor/bin/wp i18n make-json ./languages --pretty-print"
+                ],
+                "i18n": [
+                    "@i18n-pot",
+                    "@i18n-po",
+                    "@i18n-php",
+                    "@i18n-json"
+                ],
+                "i18n-ci-pre": [
+                    "@i18n-pot",
+                    "@i18n-po"
+                ],
+                "i18n-ci-post": [
+                    "@i18n-json",
+                    "@i18n-php"
+                ],
                 "test": [
                     "codecept run wpunit"
                 ],
@@ -536,11 +563,7 @@
                 }
             ],
             "description": "A module that handles checking a WordPress installation to see if it is a fresh install and to fetch the estimated installation date.",
-            "support": {
-                "source": "https://github.com/newfold-labs/wp-module-install-checker/tree/1.1.1",
-                "issues": "https://github.com/newfold-labs/wp-module-install-checker/issues"
-            },
-            "time": "2026-03-25T19:19:41+00:00"
+            "time": "2026-09-03T18:55:24+00:00"
         },
         {
             "name": "newfold-labs/wp-module-installer",
