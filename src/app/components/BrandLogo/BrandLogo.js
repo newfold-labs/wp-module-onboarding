@@ -7,6 +7,7 @@ import networksolutionsLogo from '../../../Brands/networksolutions/logo.svg';
 import bigrockLogo from '../../../Brands/bigrock/logo.svg';
 import wordpressLogo from '../../../Brands/wordpress/logo.svg';
 import vodienLogo from '../../../Brands/vodien/logo.svg';
+import webhostboxLogo from '../../../Brands/webhostbox/logo.svg';
 
 // Map brand names to their imported logos
 const brandLogoMap = {
@@ -20,6 +21,7 @@ const brandLogoMap = {
 	webcom: networksolutionsLogo,
 	'bigrock-in': bigrockLogo,
 	wordpress: wordpressLogo,
+	webhostbox: webhostboxLogo,
 };
 
 /**
