@@ -110,8 +110,8 @@ jobs:
           }
           "
 
-  webhostbox-dev:
-    name: WebHostBox Dev Build and Test Playwright
+  bigrock:
+    name: Bigrock Build and Test Playwright
     needs: setup
     permissions:
       contents: read
@@ -119,7 +119,19 @@ jobs:
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-webhostbox'
-      plugin-branch: 'dev/HOSTINGDEV-5588-include-onboarding'
-      artifact-name: 'wp-plugin-webhostbox-develop'
+      plugin-repo: 'newfold-labs/wp-plugin-bigrock'
+    secrets: inherit
+
+  bigrock-dev:
+    name: Bigrock Dev Build and Test Playwright
+    needs: setup
+    permissions:
+      contents: read
+    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
+    with:
+      module-repo: ${{ github.repository }}
+      module-branch: ${{ needs.setup.outputs.branch }}
+      plugin-repo: 'newfold-labs/wp-plugin-bigrock'
+      plugin-branch: 'develop'
+      artifact-name: 'wp-plugin-bigrock-develop'
     secrets: inherit
