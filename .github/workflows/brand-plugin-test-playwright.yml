@@ -29,95 +29,86 @@ jobs:
         run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
         id: extract_branch
 
-  netsol:
-    name: Netsol Build and Test Playwright
+  webhostbox-dev-debug:
+    name: Debug WebHostBox Playwright helper paths
     needs: setup
+    runs-on: ubuntu-latest
     permissions:
       contents: read
-    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
-    with:
-      module-repo: ${{ github.repository }}
-      module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-web'
-    secrets: inherit
+    env:
+      MODULE_REPO: ${{ github.repository }}
+      MODULE_BRANCH: ${{ needs.setup.outputs.branch }}
+    steps:
+      - name: Checkout plugin
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          repository: newfold-labs/wp-plugin-webhostbox
+          ref: dev/HOSTINGDEV-5588-include-onboarding
+          persist-credentials: false
 
-  netsol-dev:
-    name: Netsol Dev Build and Test Playwright
-    needs: setup
-    permissions:
-      contents: read
-    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
-    with:
-      module-repo: ${{ github.repository }}
-      module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-web'
-      plugin-branch: 'develop'
-      artifact-name: 'wp-plugin-web-develop'
-    secrets: inherit
+      - name: Set up Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: '22'
+          cache: npm
 
-  bigrock:
-    name: Bigrock Build and Test Playwright
-    needs: setup
-    permissions:
-      contents: read
-    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
-    with:
-      module-repo: ${{ github.repository }}
-      module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-bigrock'
-    secrets: inherit
+      - name: Setup PHP
+        uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # v2.37.0
+        with:
+          php-version: '8.2'
+          coverage: none
+          tools: composer
 
-  bigrock-dev:
-    name: Bigrock Dev Build and Test Playwright
-    needs: setup
-    permissions:
-      contents: read
-    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
-    with:
-      module-repo: ${{ github.repository }}
-      module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-bigrock'
-      plugin-branch: 'develop'
-      artifact-name: 'wp-plugin-bigrock-develop'
-    secrets: inherit
+      - name: Install plugin dependencies
+        run: |
+          composer install --no-progress --no-dev --optimize-autoloader --prefer-source
+          npm ci --legacy-peer-deps
 
-  vodien:
-    name: Vodien Build and Test Playwright
-    needs: setup
-    permissions:
-      contents: read
-    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
-    with:
-      module-repo: ${{ github.repository }}
-      module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-vodien'
-    secrets: inherit
+      - name: Install module into vendor (PR branch)
+        run: |
+          composer reinstall "${MODULE_REPO}" --prefer-source
+          cd "vendor/${MODULE_REPO}"
+          git fetch origin "${MODULE_BRANCH}"
+          git checkout --track "origin/${MODULE_BRANCH}" || git checkout "${MODULE_BRANCH}"
 
-  vodien-dev:
-    name: Vodien Dev Build and Test Playwright
-    needs: setup
-    permissions:
-      contents: read
-    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
-    with:
-      module-repo: ${{ github.repository }}
-      module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-vodien'
-      plugin-branch: 'develop'
-      artifact-name: 'wp-plugin-vodien-develop'
-    secrets: inherit
-
-  webhostbox:
-    name: WebHostBox Build and Test Playwright
-    needs: setup
-    permissions:
-      contents: read
-    uses: newfold-labs/workflows/.github/workflows/module-plugin-test-playwright.yml@main
-    with:
-      module-repo: ${{ github.repository }}
-      module-branch: ${{ needs.setup.outputs.branch }}
-      plugin-repo: 'newfold-labs/wp-plugin-webhostbox'
-    secrets: inherit
+      - name: Debug PLUGIN_DIR and helper paths
+        env:
+          PLUGIN_DIR: ${{ github.workspace }}
+        run: |
+          echo "PLUGIN_DIR=${PLUGIN_DIR}"
+          echo "cwd=$(pwd)"
+          node --input-type=module -e "
+          import { resolve } from 'path';
+          import { pathToFileURL } from 'url';
+          const pluginDir = process.env.PLUGIN_DIR || process.cwd();
+          const moduleRepo = process.env.MODULE_REPO;
+          const pluginIndex = pathToFileURL(resolve(pluginDir, 'tests/playwright/helpers/index.mjs')).href;
+          const pluginUtils = pathToFileURL(resolve(pluginDir, 'tests/playwright/helpers/utils.mjs')).href;
+          const moduleIndex = pathToFileURL(
+            resolve(pluginDir, 'vendor', moduleRepo, 'tests/playwright/helpers/index.mjs')
+          ).href;
+          console.log('plugin index', pluginIndex);
+          console.log('plugin utils', pluginUtils);
+          console.log('module index', moduleIndex);
+          try {
+            const indexMod = await import(pluginIndex);
+            console.log('plugin index keys', Object.keys(indexMod));
+          } catch (e) {
+            console.error('plugin index import failed:', e);
+          }
+          try {
+            const utilsMod = await import(pluginUtils);
+            console.log('utils default defined', utilsMod.default !== undefined);
+          } catch (e) {
+            console.error('plugin utils import failed:', e);
+          }
+          try {
+            const moduleMod = await import(moduleIndex);
+            console.log('module index keys', Object.keys(moduleMod));
+          } catch (e) {
+            console.error('module index import failed:', e);
+          }
+          "
 
   webhostbox-dev:
     name: WebHostBox Dev Build and Test Playwright
