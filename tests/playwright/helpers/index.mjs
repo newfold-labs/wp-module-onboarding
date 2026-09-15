@@ -1,22 +1,56 @@
 /**
  * Onboarding Module Test Helpers for Playwright
- * 
+ *
  * - Plugin Helpers (re-exported)
  * - Constants
  * - Navigation Helpers
  * - Setup/Teardown Helpers
  */
 import { expect } from '@playwright/test';
-import { join } from 'path';
-import { pathToFileURL } from 'url';
+import { existsSync } from 'fs';
+import { dirname, join, resolve } from 'path';
+import { fileURLToPath, pathToFileURL } from 'url';
 
 // ============================================================================
 // PLUGIN HELPERS (re-exported from plugin-level helpers)
 // ============================================================================
 
-const pluginDir = process.env.PLUGIN_DIR || process.cwd();
-const finalHelpersPath = join(pluginDir, 'tests/playwright/helpers/index.mjs');
-const helpersUrl = pathToFileURL(finalHelpersPath).href;
+const moduleHelpersPath = fileURLToPath(import.meta.url);
+
+/**
+ * Brand plugin root (where playwright.config.mjs lives).
+ * Playwright workers may not inherit PLUGIN_DIR from playwright.config.mjs; cwd may be under vendor/.
+ */
+function resolvePluginRoot() {
+  if (process.env.PLUGIN_DIR) {
+    return resolve(process.env.PLUGIN_DIR);
+  }
+  let dir = process.cwd();
+	while (true) {
+		if (existsSync(join(dir, 'playwright.config.mjs'))) {
+			return dir;
+		}
+		const parent = dirname(dir);
+		if (parent === dir) {
+			break;
+		}
+		dir = parent;
+	}
+  throw new Error(
+    'Could not resolve brand plugin root: set PLUGIN_DIR or run Playwright from the plugin repo (playwright.config.mjs not found).'
+  );
+}
+
+const pluginDir = resolvePluginRoot();
+const pluginHelpersPath = resolve(pluginDir, 'tests/playwright/helpers/index.mjs');
+
+if (pluginHelpersPath === moduleHelpersPath) {
+  throw new Error(
+    'Plugin helpers path matches module helpers. PLUGIN_DIR must point at the brand plugin root, not the module directory.'
+  );
+}
+
+const helpersUrl = pathToFileURL(pluginHelpersPath).href;
 const pluginHelpers = await import(helpersUrl);
 
 export const { auth, wordpress, newfold, a11y, utils } = pluginHelpers;
@@ -150,7 +184,7 @@ export const ONBOARDING_CAPABILITIES = {
  * Reset onboarding state to allow re-running onboarding.
  * Clears completion status, flow data, and related state options.
  * Also ensures required capabilities are set.
- * 
+ *
  * Key options that affect onboarding access:
  * - nfd_module_onboarding_status: If 'completed', blocks access with "wrong turn" error
  * - nfd_module_onboarding_flow: Contains flow state including hasExited/isComplete flags
