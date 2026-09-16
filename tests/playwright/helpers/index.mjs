@@ -130,23 +130,6 @@ function getOnboardingStepFromUrl(url) {
 }
 
 /**
- * Log onboarding boot gates (matches AppBody canAccessOnboarding checks).
- * Useful when CI shows the "Wrong Turn" error boundary.
- * @param {import('@playwright/test').Page} page
- */
-async function logOnboardingAccessState(page) {
-  const access = await page.evaluate(() => ({
-    status: window.nfdOnboarding?.runtime?.status ?? null,
-    hasAISiteGen: window.NewfoldRuntime?.capabilities?.hasAISiteGen ?? null,
-    hasRuntime: typeof window.NewfoldRuntime !== 'undefined',
-  }));
-
-  utils.fancyLog(
-    `🧭 Onboarding access: status=${access.status ?? '(none)'}, hasAISiteGen=${String(access.hasAISiteGen)}, NewfoldRuntime=${access.hasRuntime}`
-  );
-}
-
-/**
  * Wait for a specific onboarding step to finish rendering.
  * @param {import('@playwright/test').Page} page
  * @param {'welcome'|'intake'} step
@@ -167,7 +150,6 @@ export async function waitForOnboarding(page) {
   await page
     .waitForFunction(() => typeof window.nfdOnboarding !== 'undefined', { timeout: 15000 })
     .catch(() => {});
-  await logOnboardingAccessState(page);
   await page.waitForSelector(SELECTORS.onboardingBody, { timeout: 20000 });
 
   const step = getOnboardingStepFromUrl(page.url());
