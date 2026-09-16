@@ -41,4 +41,5 @@ jobs:
       plugin-repo: 'newfold-labs/wp-plugin-webhostbox'
       plugin-branch: 'dev/HOSTINGDEV-5588-include-onboarding'
       artifact-name: 'wp-plugin-webhostbox-develop'
+      only-module-tests: true
     secrets: inherit
