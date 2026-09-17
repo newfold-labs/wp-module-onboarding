@@ -6,8 +6,9 @@ import crazyDomainsLogo from '../../../Brands/crazy-domains/step-loader-logo.svg
 import networksolutionsLogo from '../../../Brands/networksolutions/step-loader-logo.svg';
 import bigrockLogo from '../../../Brands/bigrock/step-loader-logo.svg';
 import wordpressLogo from '../../../Brands/wordpress/step-loader-logo.svg';
-import './BrandLoader.scss';
 import vodienLogo from '../../../Brands/vodien/logo.svg';
+import webhostboxLogo from '../../../Brands/webhostbox/step-loader-logo.svg';
+import './BrandLoader.scss';
 
 /**
  * BrandLoader component - displays brand-specific loading animation
@@ -40,6 +41,7 @@ const BrandLoader = ( { width = '120px', height = '120px', alt = 'Loading animat
 		bigrock: bigrockLogo,
 		vodien: vodienLogo,
 		wordpress: wordpressLogo,
+		webhostbox: webhostboxLogo,
 	};
 
 	const logoUrl = brandLogoMap[ normalizedBrand ] || wordpressLogo;
