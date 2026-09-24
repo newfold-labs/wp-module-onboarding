@@ -29,7 +29,7 @@ function runWpEnvBash(bashScript) {
     stdio: ['pipe', 'pipe', 'pipe'],
   });
 }
-const finalHelpersPath = join(pluginDir, 'tests/playwright/helpers/index.mjs');
+const finalHelpersPath = join(pluginDir, 'tests/playwright/helpers/index.js');
 const helpersUrl = pathToFileURL(finalHelpersPath).href;
 const pluginHelpers = await import(helpersUrl);
 
