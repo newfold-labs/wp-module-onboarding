@@ -7,9 +7,8 @@
  * - Setup/Teardown Helpers
  */
 import { execSync } from 'child_process';
+import { createRequire } from 'module';
 import { join } from 'path';
-import { pathToFileURL } from 'url';
-
 // ============================================================================
 // PLUGIN HELPERS (re-exported from plugin-level helpers)
 // ============================================================================
@@ -29,9 +28,8 @@ function runWpEnvBash(bashScript) {
     stdio: ['pipe', 'pipe', 'pipe'],
   });
 }
-const finalHelpersPath = join(pluginDir, 'tests/playwright/helpers/index.js');
-const helpersUrl = pathToFileURL(finalHelpersPath).href;
-const pluginHelpers = await import(helpersUrl);
+const requireFromPlugin = createRequire(join(pluginDir, 'package.json'));
+const pluginHelpers = requireFromPlugin('./tests/playwright/helpers/index.js');
 
 export const { auth, wordpress, newfold, a11y, utils } = pluginHelpers;
 export const clearInstallerQueues = newfold.clearInstallerQueues;
