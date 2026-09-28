@@ -5,7 +5,7 @@ import {
   SELECTORS,
   navigateToOnboarding,
   resetOnboardingState,
-} from '../helpers/index.mjs';
+} from '../helpers/index.js';
 
 /**
  * Lightweight smoke checks: onboarding bundle loads and the prompt UI renders.
