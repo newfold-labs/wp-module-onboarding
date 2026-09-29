@@ -8,14 +8,14 @@
  */
 import { expect } from '@playwright/test';
 import { existsSync } from 'fs';
+import { createRequire } from 'module';
 import { dirname, join, resolve } from 'path';
-import { fileURLToPath, pathToFileURL } from 'url';
 
 // ============================================================================
 // PLUGIN HELPERS (re-exported from plugin-level helpers)
 // ============================================================================
 
-const moduleHelpersPath = fileURLToPath(import.meta.url);
+const moduleHelpersPath = join(__dirname, 'index.js');
 
 /**
  * Brand plugin root (where playwright.config.mjs lives).
@@ -42,7 +42,7 @@ function resolvePluginRoot() {
 }
 
 const pluginDir = resolvePluginRoot();
-const pluginHelpersPath = resolve(pluginDir, 'tests/playwright/helpers/index.mjs');
+const pluginHelpersPath = resolve(pluginDir, 'tests/playwright/helpers/index.js');
 
 if (pluginHelpersPath === moduleHelpersPath) {
   throw new Error(
@@ -50,8 +50,9 @@ if (pluginHelpersPath === moduleHelpersPath) {
   );
 }
 
-const helpersUrl = pathToFileURL(pluginHelpersPath).href;
-const pluginHelpers = await import(helpersUrl);
+// createRequire loads plugin helpers compiled as CJS (avoid import.meta / top-level await under Playwright).
+const requireFromPlugin = createRequire(join(pluginDir, 'package.json'));
+const pluginHelpers = requireFromPlugin('./tests/playwright/helpers/index.js');
 
 export const { auth, wordpress, newfold, a11y, utils } = pluginHelpers;
 
