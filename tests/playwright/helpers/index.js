@@ -73,8 +73,17 @@ export async function navigateToStep(page, stepPath) {
  * @param {import('@playwright/test').Page} page
  */
 export async function waitForOnboarding(page) {
-  // Wait for the onboarding app container to be present
   await page.waitForSelector(SELECTORS.onboardingApp, { timeout: 15000 });
+
+  const hash = new URL(page.url()).hash;
+  const onWelcomeRoute = hash === '' || hash === '#/' || hash === '#';
+
+  if (onWelcomeRoute) {
+    // Shell mounts before the fork step hydrates on cold CI runs.
+    await expect(
+      page.getByRole('heading', { name: 'Welcome to WordPress', level: 1 })
+    ).toBeVisible({ timeout: 15000 });
+  }
 }
 
 /**
@@ -99,6 +108,7 @@ export const ONBOARDING_CAPABILITIES = {
   canAccessAI: true,
   hasAISiteGen: true,
   canMigrateSite: true,
+  hasForkABExperiment: false,
 };
 
 /**
