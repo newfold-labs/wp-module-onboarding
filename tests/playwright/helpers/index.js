@@ -20,6 +20,9 @@ const pluginHelpers = requireFromPlugin('./tests/playwright/helpers/index.js');
 
 export const { auth, wordpress, newfold, a11y, utils } = pluginHelpers;
 
+/** @see newfold.clearInstallerQueues — shared plugin helper for cross-project cleanup */
+export const clearInstallerQueues = newfold.clearInstallerQueues;
+
 // ============================================================================
 // CONSTANTS
 // ============================================================================
@@ -215,6 +218,19 @@ export async function ensureOnboardingCapabilities() {
     }
   }
   throw new Error(`Unable to set onboarding capabilities: ${lastReason}`);
+}
+
+/**
+ * Clear installer work queued by onboarding app/start (PluginService::initialize).
+ * Onboarding resets status in beforeAll, so the first navigation re-seeds install/
+ * activation/deactivation queues; without cleanup those jobs leak into later projects
+ * (e.g. deactivation survey Skip/Submit on plugins.php).
+ */
+export async function clearOnboardingInstallerSideEffects() {
+  await clearInstallerQueues();
+  await wordpress.wpCli('option delete nfd_module_installer_plugin_deactivation_queue', {
+    failOnNonZeroExit: false,
+  });
 }
 
 /**

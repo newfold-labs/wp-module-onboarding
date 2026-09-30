@@ -8,6 +8,7 @@ import {
   resetOnboardingState,
   resetHtaccessState,
   ensureOnboardingCapabilities,
+  clearOnboardingInstallerSideEffects,
 } from '../helpers/index.js';
 
 test.describe('Onboarding Module', () => {
@@ -17,6 +18,10 @@ test.describe('Onboarding Module', () => {
     await resetHtaccessState();
     // Reset onboarding state to ensure fresh start
     await resetOnboardingState();
+  });
+
+  test.afterAll(async () => {
+    await clearOnboardingInstallerSideEffects();
   });
 
   test.beforeEach(async ({ page }) => {
