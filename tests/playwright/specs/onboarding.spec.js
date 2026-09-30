@@ -7,6 +7,7 @@ import {
   waitForOnboarding,
   resetOnboardingState,
   resetHtaccessState,
+  ensureOnboardingCapabilities,
 } from '../helpers/index.js';
 
 test.describe('Onboarding Module', () => {
@@ -20,6 +21,8 @@ test.describe('Onboarding Module', () => {
 
   test.beforeEach(async ({ page }) => {
     await auth.loginToWordPress(page);
+    // Admin bootstrap can refresh Hiive capabilities; re-apply before each test.
+    await ensureOnboardingCapabilities();
   });
 
   test.describe('Welcome Screen', () => {
