@@ -7,7 +7,7 @@ import {
   waitForOnboarding,
   resetOnboardingState,
   resetHtaccessState,
-} from '../helpers/index.mjs';
+} from '../helpers/index.js';
 
 test.describe('Onboarding Module', () => {
 
