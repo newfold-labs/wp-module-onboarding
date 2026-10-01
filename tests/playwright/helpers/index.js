@@ -19,12 +19,8 @@ const moduleHelperDir = __dirname;
 
 function pluginHelperRelativePath(pluginRoot) {
   const jsPath = join(pluginRoot, 'tests/playwright/helpers/index.js');
-  const mjsPath = join(pluginRoot, 'tests/playwright/helpers/index.mjs');
   if (existsSync(jsPath)) {
     return './tests/playwright/helpers/index.js';
-  }
-  if (existsSync(mjsPath)) {
-    return './tests/playwright/helpers/index.mjs';
   }
   return null;
 }
@@ -62,7 +58,7 @@ const pluginHelperModule = isBrandPluginRoot(pluginDir)
   : null;
 if (!pluginHelperModule) {
   throw new Error(
-    `Plugin Playwright helpers not found under ${pluginDir}. Expected tests/playwright/helpers/index.js (or .mjs). Set PLUGIN_DIR to the brand plugin root.`
+    `Plugin Playwright helpers not found under ${pluginDir}. Expected tests/playwright/helpers/index.js. Set PLUGIN_DIR to the brand plugin root.`
   );
 }
 
