@@ -5,7 +5,8 @@ on:
     branches:
       - v3
       - main
-      - trunk
+      - main-networksolutions
+      - v3
   workflow_dispatch:
 
 permissions:
