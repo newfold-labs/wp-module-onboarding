@@ -272,36 +272,6 @@ export async function ensureOnboardingCapabilities() {
 }
 
 /**
- * Clear installer work queued by onboarding app/start (PluginService::initialize).
- * Onboarding resets status in beforeAll, so the first navigation re-seeds install/
- * activation/deactivation queues; without cleanup those jobs leak into later projects
- * (e.g. deactivation survey Skip/Submit on plugins.php).
- */
-const INSTALLER_CRON_HOOKS = [
-  'nfd_module_installer_plugin_install_cron',
-  'nfd_module_installer_plugin_activation_event',
-  'nfd_module_installer_plugin_deactivation_event',
-  'nfd_module_installer_plugin_uninstall_cron',
-  'nfd_module_installer_theme_install_cron',
-];
-
-export async function clearOnboardingInstallerSideEffects() {
-  await clearInstallerQueues();
-  await wordpress.wpCli('option delete nfd_module_installer_plugin_deactivation_queue', {
-    failOnNonZeroExit: false,
-  });
-  await wordpress.wpCli('option delete nfd_module_installer_plugin_uninstall_queue', {
-    failOnNonZeroExit: false,
-  });
-
-  const encodedHooks = Buffer.from(JSON.stringify(INSTALLER_CRON_HOOKS), 'utf8').toString('base64');
-  await wordpress.wpCli(
-    `eval '$hooks = json_decode( base64_decode( "${encodedHooks}" ), true ); foreach ( $hooks as $hook ) { wp_clear_scheduled_hook( $hook ); }' --skip-plugins --skip-themes`,
-    { failOnNonZeroExit: false }
-  );
-}
-
-/**
  * Reset htaccess module state to prevent corrupted rules
  * Clears saved state, disables cache, and clears optimization options
  */
