@@ -241,6 +241,10 @@ export async function resetOnboardingState() {
   // Redirect handling
   await wordpress.wpCli('option delete nfd_module_onboarding_should_redirect', { failOnNonZeroExit: false });
 
+  // Treat onboarding as already started so app/start does not run PluginService::initialize()
+  // (first-time start queues installer tasks that race later Playwright projects on plugins.php).
+  await wordpress.wpCli('option update nfd_module_onboarding_status started', { failOnNonZeroExit: false });
+
   // Ensure required capabilities are set (hasAISiteGen is required for onboarding access)
   await ensureOnboardingCapabilities();
 }
@@ -273,11 +277,28 @@ export async function ensureOnboardingCapabilities() {
  * activation/deactivation queues; without cleanup those jobs leak into later projects
  * (e.g. deactivation survey Skip/Submit on plugins.php).
  */
+const INSTALLER_CRON_HOOKS = [
+  'nfd_module_installer_plugin_install_cron',
+  'nfd_module_installer_plugin_activation_event',
+  'nfd_module_installer_plugin_deactivation_event',
+  'nfd_module_installer_plugin_uninstall_cron',
+  'nfd_module_installer_theme_install_cron',
+];
+
 export async function clearOnboardingInstallerSideEffects() {
   await clearInstallerQueues();
   await wordpress.wpCli('option delete nfd_module_installer_plugin_deactivation_queue', {
     failOnNonZeroExit: false,
   });
+  await wordpress.wpCli('option delete nfd_module_installer_plugin_uninstall_queue', {
+    failOnNonZeroExit: false,
+  });
+
+  const encodedHooks = Buffer.from(JSON.stringify(INSTALLER_CRON_HOOKS), 'utf8').toString('base64');
+  await wordpress.wpCli(
+    `eval '$hooks = json_decode( base64_decode( "${encodedHooks}" ), true ); foreach ( $hooks as $hook ) { wp_clear_scheduled_hook( $hook ); }' --skip-plugins --skip-themes`,
+    { failOnNonZeroExit: false }
+  );
 }
 
 /**

@@ -24,6 +24,10 @@ test.describe('Onboarding Module', () => {
     await clearOnboardingInstallerSideEffects();
   });
 
+  test.afterEach(async () => {
+    await clearOnboardingInstallerSideEffects();
+  });
+
   test.beforeEach(async ({ page }) => {
     await auth.loginToWordPress(page);
     // Admin bootstrap can refresh Hiive capabilities; re-apply before each test.
