@@ -1,10 +1,11 @@
 import { test, expect } from '@playwright/test';
 import {
   auth,
-  clearInstallerQueues,
+  clearOnboardingInstallerSideEffects,
   SELECTORS,
   navigateToOnboarding,
   resetOnboardingState,
+  ensureOnboardingCapabilities,
 } from '../helpers/index.js';
 
 /**
@@ -20,11 +21,12 @@ test.describe.skip('Onboarding module UI', () => {
   });
 
   test.afterAll(async () => {
-    await clearInstallerQueues();
+    await clearOnboardingInstallerSideEffects();
   });
 
   test.beforeEach(async ({ page }) => {
     await auth.loginToWordPress(page);
+    await ensureOnboardingCapabilities();
   });
 
   test('loads the prompt screen shell', async ({ page }) => {
@@ -48,4 +50,14 @@ test.describe.skip('Onboarding module UI', () => {
     await expect(page.locator(SELECTORS.errorMessage)).toHaveCount(0);
     await expect(page.locator(SELECTORS.onboardingBuildNow)).toBeDisabled();
   });
+});
+
+/**
+ * Always runs in the onboarding Playwright project (even when UI smoke is skipped).
+ * Module CI runs this project before the full plugin suite; visiting onboarding queues
+ * installer work via app/start — clear any stale queues so deactivation/migration specs
+ * are not raced by cron on plugins.php.
+ */
+test('clears installer side effects for later Playwright projects', async () => {
+  await clearOnboardingInstallerSideEffects();
 });

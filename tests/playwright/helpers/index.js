@@ -79,6 +79,7 @@ export const SELECTORS = {
  */
 export async function navigateToOnboarding(page) {
   await page.goto(ONBOARDING_BASE, { waitUntil: 'domcontentloaded' });
+  await page.reload({ waitUntil: 'domcontentloaded' });
 }
 
 /**
@@ -111,7 +112,49 @@ export const ONBOARDING_CAPABILITIES = {
   canAccessAI: true,
   hasAISiteGen: true,
   canMigrateSite: true,
+  hasForkABExperiment: false,
 };
+
+const CAPABILITY_SETUP_RETRIES = 3;
+const CAPABILITY_RETRY_DELAY_MS = 250;
+
+function isWpCliError(output) {
+  if (typeof output !== 'string') {
+    return false;
+  }
+  return output.startsWith('Error:') || output.includes('Fatal error') || output.includes('Parse error');
+}
+
+async function readSiteCapabilitiesTransient() {
+  const raw = await wordpress.wpCli('option get _transient_nfd_site_capabilities --format=json', {
+    failOnNonZeroExit: false,
+  });
+  const output = typeof raw === 'string' ? raw : String(raw ?? '');
+  if (isWpCliError(output)) {
+    return { ok: false, reason: output, parsed: null };
+  }
+  try {
+    return { ok: true, reason: '', parsed: JSON.parse(output) };
+  } catch {
+    return { ok: false, reason: `invalid JSON: ${output}`, parsed: null };
+  }
+}
+
+async function verifyOnboardingCapabilities() {
+  const { ok, reason, parsed } = await readSiteCapabilitiesTransient();
+  if (!ok) {
+    return { ok: false, reason };
+  }
+  for (const [key, expected] of Object.entries(ONBOARDING_CAPABILITIES)) {
+    if (parsed?.[key] !== expected) {
+      return {
+        ok: false,
+        reason: `capability mismatch for ${key} (expected: ${String(expected)}, actual: ${String(parsed?.[key])})`,
+      };
+    }
+  }
+  return { ok: true, reason: '' };
+}
 
 /**
  * Reset onboarding state to allow re-running onboarding.
@@ -150,9 +193,9 @@ export async function resetOnboardingState() {
     .map((name) => `wp option delete ${name} >/dev/null 2>&1 || true`)
     .join('; ');
 
-  runWpEnvBash(
-    `set +e; ${deletes}; wp eval "set_transient( 'nfd_site_capabilities', array( 'hasAISiteGen' => true, 'canMigrateSite' => true ) );"`
-  );
+  runWpEnvBash(`set +e; ${deletes}`);
+
+  await ensureOnboardingCapabilities();
 }
 
 /**
@@ -162,7 +205,29 @@ export async function resetOnboardingState() {
  * onboarding can still function.
  */
 export async function ensureOnboardingCapabilities() {
-  await newfold.setCapability(ONBOARDING_CAPABILITIES);
+  let lastReason = '';
+  for (let attempt = 1; attempt <= CAPABILITY_SETUP_RETRIES; attempt += 1) {
+    await newfold.setCapability(ONBOARDING_CAPABILITIES);
+    const verify = await verifyOnboardingCapabilities();
+    if (verify.ok) {
+      return;
+    }
+    lastReason = verify.reason;
+    if (attempt < CAPABILITY_SETUP_RETRIES) {
+      await new Promise((resolve) => setTimeout(resolve, CAPABILITY_RETRY_DELAY_MS));
+    }
+  }
+  throw new Error(`Unable to set onboarding capabilities: ${lastReason}`);
+}
+
+/**
+ * Clear installer work queued by onboarding app/start (PluginService::initialize).
+ */
+export async function clearOnboardingInstallerSideEffects() {
+  await clearInstallerQueues();
+  await wordpress.wpCli('option delete nfd_module_installer_plugin_deactivation_queue', {
+    failOnNonZeroExit: false,
+  });
 }
 
 /**
