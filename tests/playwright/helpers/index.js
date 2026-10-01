@@ -240,7 +240,9 @@ export async function resetOnboardingState() {
     .map((name) => `wp option delete ${name} >/dev/null 2>&1 || true`)
     .join('; ');
 
-  runWpEnvBash(`set +e; ${deletes}`);
+  runWpEnvBash(
+    `set +e; ${deletes}; wp option update nfd_module_onboarding_status started >/dev/null 2>&1 || true`
+  );
 
   await ensureOnboardingCapabilities();
 }
@@ -270,11 +272,28 @@ export async function ensureOnboardingCapabilities() {
 /**
  * Clear installer work queued by onboarding app/start (PluginService::initialize).
  */
+const INSTALLER_CRON_HOOKS = [
+  'nfd_module_installer_plugin_install_cron',
+  'nfd_module_installer_plugin_activation_event',
+  'nfd_module_installer_plugin_deactivation_event',
+  'nfd_module_installer_plugin_uninstall_cron',
+  'nfd_module_installer_theme_install_cron',
+];
+
 export async function clearOnboardingInstallerSideEffects() {
   await clearInstallerQueues();
   await wordpress.wpCli('option delete nfd_module_installer_plugin_deactivation_queue', {
     failOnNonZeroExit: false,
   });
+  await wordpress.wpCli('option delete nfd_module_installer_plugin_uninstall_queue', {
+    failOnNonZeroExit: false,
+  });
+
+  const encodedHooks = Buffer.from(JSON.stringify(INSTALLER_CRON_HOOKS), 'utf8').toString('base64');
+  await wordpress.wpCli(
+    `eval '$hooks = json_decode( base64_decode( "${encodedHooks}" ), true ); foreach ( $hooks as $hook ) { wp_clear_scheduled_hook( $hook ); }' --skip-plugins --skip-themes`,
+    { failOnNonZeroExit: false }
+  );
 }
 
 /**

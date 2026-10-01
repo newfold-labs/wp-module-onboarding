@@ -24,6 +24,10 @@ test.describe.skip('Onboarding module UI', () => {
     await clearOnboardingInstallerSideEffects();
   });
 
+  test.afterEach(async () => {
+    await clearOnboardingInstallerSideEffects();
+  });
+
   test.beforeEach(async ({ page }) => {
     await auth.loginToWordPress(page);
     await ensureOnboardingCapabilities();
