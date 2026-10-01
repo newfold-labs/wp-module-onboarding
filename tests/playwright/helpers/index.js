@@ -18,12 +18,8 @@ const moduleHelperDir = __dirname;
 
 function pluginHelperRelativePath(pluginRoot) {
   const jsPath = join(pluginRoot, 'tests/playwright/helpers/index.js');
-  const mjsPath = join(pluginRoot, 'tests/playwright/helpers/index.mjs');
   if (existsSync(jsPath)) {
     return './tests/playwright/helpers/index.js';
-  }
-  if (existsSync(mjsPath)) {
-    return './tests/playwright/helpers/index.mjs';
   }
   return null;
 }
