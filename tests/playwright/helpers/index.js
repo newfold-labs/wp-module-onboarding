@@ -7,16 +7,67 @@
  * - Setup/Teardown Helpers
  */
 import { expect } from '@playwright/test';
+import { existsSync } from 'fs';
 import { createRequire } from 'module';
-import { join } from 'path';
+import { join, resolve } from 'path';
 
 // ============================================================================
 // PLUGIN HELPERS (re-exported from plugin-level helpers)
 // ============================================================================
 
-const pluginDir = process.env.PLUGIN_DIR || process.cwd();
+const moduleHelperDir = __dirname;
+
+function pluginHelperRelativePath(pluginRoot) {
+  const jsPath = join(pluginRoot, 'tests/playwright/helpers/index.js');
+  const mjsPath = join(pluginRoot, 'tests/playwright/helpers/index.mjs');
+  if (existsSync(jsPath)) {
+    return './tests/playwright/helpers/index.js';
+  }
+  if (existsSync(mjsPath)) {
+    return './tests/playwright/helpers/index.mjs';
+  }
+  return null;
+}
+
+function isBrandPluginRoot(dir) {
+  if (!pluginHelperRelativePath(dir)) {
+    return false;
+  }
+  return (
+    existsSync(join(dir, 'playwright.config.mjs')) ||
+    existsSync(join(dir, 'playwright.config.js'))
+  );
+}
+
+function resolvePluginDir() {
+  const candidates = [];
+  if (process.env.PLUGIN_DIR) {
+    candidates.push(process.env.PLUGIN_DIR);
+  }
+  candidates.push(resolve(moduleHelperDir, '../../../../../..'));
+  candidates.push(process.cwd());
+
+  for (const dir of candidates) {
+    if (isBrandPluginRoot(dir)) {
+      return dir;
+    }
+  }
+
+  return process.env.PLUGIN_DIR || process.cwd();
+}
+
+const pluginDir = resolvePluginDir();
+const pluginHelperModule = isBrandPluginRoot(pluginDir)
+  ? pluginHelperRelativePath(pluginDir)
+  : null;
+if (!pluginHelperModule) {
+  throw new Error(
+    `Plugin Playwright helpers not found under ${pluginDir}. Expected tests/playwright/helpers/index.js (or .mjs). Set PLUGIN_DIR to the brand plugin root.`
+  );
+}
+
 const requireFromPlugin = createRequire(join(pluginDir, 'package.json'));
-const pluginHelpers = requireFromPlugin('./tests/playwright/helpers/index.js');
+const pluginHelpers = requireFromPlugin(pluginHelperModule);
 
 export const { auth, wordpress, newfold, a11y, utils } = pluginHelpers;
 
