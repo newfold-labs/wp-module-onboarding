@@ -12,6 +12,17 @@ on:
           - 'major'
         default: 'patch'
         required: true
+      # Release line: v3 (LTS) or main (current/v4) or main-networksolutions (current for Networksolutions).
+      module-branch:
+        description: 'Branch to check out, bump, and open the release PR against (v3 for LTS, main for latest).'
+        type: choice
+        options:
+          - 'main'
+          - 'v3'
+          - 'main-networksolutions'
+        default: 'main'
+        required: true
+
 # Disable permissions for all available scopes by default.
 # Any needed permissions should be configured at the job level.
 permissions: {}
@@ -27,7 +38,7 @@ jobs:
     uses: newfold-labs/workflows/.github/workflows/reusable-module-prep-release.yml@main
     with:
       module-repo: ${{ github.repository }}
-      module-branch: 'main'
+      module-branch: ${{ inputs.module-branch }}
       level: ${{ inputs.level }}
       json-file: 'package.json'
       php-file: 'bootstrap.php'
