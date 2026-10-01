@@ -7,19 +7,68 @@
  * - Setup/Teardown Helpers
  */
 import { expect } from '@playwright/test';
-import { join } from 'path';
-import { pathToFileURL } from 'url';
+import { existsSync } from 'fs';
+import { createRequire } from 'module';
+import { join, resolve } from 'path';
 
 // ============================================================================
 // PLUGIN HELPERS (re-exported from plugin-level helpers)
 // ============================================================================
 
-const pluginDir = process.env.PLUGIN_DIR || process.cwd();
-const finalHelpersPath = join(pluginDir, 'tests/playwright/helpers/index.mjs');
-const helpersUrl = pathToFileURL(finalHelpersPath).href;
-const pluginHelpers = await import(helpersUrl);
+const moduleHelperDir = __dirname;
+
+function pluginHelperRelativePath(pluginRoot) {
+  const jsPath = join(pluginRoot, 'tests/playwright/helpers/index.js');
+  if (existsSync(jsPath)) {
+    return './tests/playwright/helpers/index.js';
+  }
+  return null;
+}
+
+function isBrandPluginRoot(dir) {
+  if (!pluginHelperRelativePath(dir)) {
+    return false;
+  }
+  return (
+    existsSync(join(dir, 'playwright.config.mjs')) ||
+    existsSync(join(dir, 'playwright.config.js'))
+  );
+}
+
+function resolvePluginDir() {
+  const candidates = [];
+  if (process.env.PLUGIN_DIR) {
+    candidates.push(process.env.PLUGIN_DIR);
+  }
+  candidates.push(resolve(moduleHelperDir, '../../../../../..'));
+  candidates.push(process.cwd());
+
+  for (const dir of candidates) {
+    if (isBrandPluginRoot(dir)) {
+      return dir;
+    }
+  }
+
+  return process.env.PLUGIN_DIR || process.cwd();
+}
+
+const pluginDir = resolvePluginDir();
+const pluginHelperModule = isBrandPluginRoot(pluginDir)
+  ? pluginHelperRelativePath(pluginDir)
+  : null;
+if (!pluginHelperModule) {
+  throw new Error(
+    `Plugin Playwright helpers not found under ${pluginDir}. Expected tests/playwright/helpers/index.js. Set PLUGIN_DIR to the brand plugin root.`
+  );
+}
+
+const requireFromPlugin = createRequire(join(pluginDir, 'package.json'));
+const pluginHelpers = requireFromPlugin(pluginHelperModule);
 
 export const { auth, wordpress, newfold, a11y, utils } = pluginHelpers;
+
+/** @see newfold.clearInstallerQueues — shared plugin helper for cross-project cleanup */
+export const clearInstallerQueues = newfold.clearInstallerQueues;
 
 // ============================================================================
 // CONSTANTS
@@ -57,7 +106,9 @@ export const SELECTORS = {
  * @param {import('@playwright/test').Page} page
  */
 export async function navigateToOnboarding(page) {
-  await page.goto(ONBOARDING_BASE);
+  await page.goto(ONBOARDING_BASE, { waitUntil: 'domcontentloaded' });
+  // NewfoldRuntime capabilities are rendered server-side; reload picks up CLI updates.
+  await page.reload({ waitUntil: 'domcontentloaded' });
 }
 
 /**
@@ -74,8 +125,17 @@ export async function navigateToStep(page, stepPath) {
  * @param {import('@playwright/test').Page} page
  */
 export async function waitForOnboarding(page) {
-  // Wait for the onboarding app container to be present
   await page.waitForSelector(SELECTORS.onboardingApp, { timeout: 15000 });
+
+  const hash = new URL(page.url()).hash;
+  const onWelcomeRoute = hash === '' || hash === '#/' || hash === '#';
+
+  if (onWelcomeRoute) {
+    // Fork step (variant A) — wait for an interactive control, not just the shell.
+    await expect(
+      page.getByRole('button', { name: /site creator/i })
+    ).toBeVisible({ timeout: 15000 });
+  }
 }
 
 /**
@@ -100,7 +160,49 @@ export const ONBOARDING_CAPABILITIES = {
   canAccessAI: true,
   hasAISiteGen: true,
   canMigrateSite: true,
+  hasForkABExperiment: false,
 };
+
+const CAPABILITY_SETUP_RETRIES = 3;
+const CAPABILITY_RETRY_DELAY_MS = 250;
+
+function isWpCliError(output) {
+  if (typeof output !== 'string') {
+    return false;
+  }
+  return output.startsWith('Error:') || output.includes('Fatal error') || output.includes('Parse error');
+}
+
+async function readSiteCapabilitiesTransient() {
+  const raw = await wordpress.wpCli('option get _transient_nfd_site_capabilities --format=json', {
+    failOnNonZeroExit: false,
+  });
+  const output = typeof raw === 'string' ? raw : String(raw ?? '');
+  if (isWpCliError(output)) {
+    return { ok: false, reason: output, parsed: null };
+  }
+  try {
+    return { ok: true, reason: '', parsed: JSON.parse(output) };
+  } catch {
+    return { ok: false, reason: `invalid JSON: ${output}`, parsed: null };
+  }
+}
+
+async function verifyOnboardingCapabilities() {
+  const { ok, reason, parsed } = await readSiteCapabilitiesTransient();
+  if (!ok) {
+    return { ok: false, reason };
+  }
+  for (const [key, expected] of Object.entries(ONBOARDING_CAPABILITIES)) {
+    if (parsed?.[key] !== expected) {
+      return {
+        ok: false,
+        reason: `capability mismatch for ${key} (expected: ${String(expected)}, actual: ${String(parsed?.[key])})`,
+      };
+    }
+  }
+  return { ok: true, reason: '' };
+}
 
 /**
  * Reset onboarding state to allow re-running onboarding.
@@ -139,6 +241,10 @@ export async function resetOnboardingState() {
   // Redirect handling
   await wordpress.wpCli('option delete nfd_module_onboarding_should_redirect', { failOnNonZeroExit: false });
 
+  // Treat onboarding as already started so app/start does not run PluginService::initialize()
+  // (first-time start queues installer tasks that race later Playwright projects on plugins.php).
+  await wordpress.wpCli('option update nfd_module_onboarding_status started', { failOnNonZeroExit: false });
+
   // Ensure required capabilities are set (hasAISiteGen is required for onboarding access)
   await ensureOnboardingCapabilities();
 }
@@ -150,7 +256,19 @@ export async function resetOnboardingState() {
  * onboarding can still function.
  */
 export async function ensureOnboardingCapabilities() {
-  await newfold.setCapability(ONBOARDING_CAPABILITIES);
+  let lastReason = '';
+  for (let attempt = 1; attempt <= CAPABILITY_SETUP_RETRIES; attempt += 1) {
+    await newfold.setCapability(ONBOARDING_CAPABILITIES);
+    const verify = await verifyOnboardingCapabilities();
+    if (verify.ok) {
+      return;
+    }
+    lastReason = verify.reason;
+    if (attempt < CAPABILITY_SETUP_RETRIES) {
+      await new Promise((resolve) => setTimeout(resolve, CAPABILITY_RETRY_DELAY_MS));
+    }
+  }
+  throw new Error(`Unable to set onboarding capabilities: ${lastReason}`);
 }
 
 /**

@@ -7,7 +7,9 @@ import {
   waitForOnboarding,
   resetOnboardingState,
   resetHtaccessState,
-} from '../helpers/index.mjs';
+  ensureOnboardingCapabilities,
+  clearInstallerQueues,
+} from '../helpers/index.js';
 
 test.describe('Onboarding Module', () => {
 
@@ -18,8 +20,18 @@ test.describe('Onboarding Module', () => {
     await resetOnboardingState();
   });
 
+  test.afterAll(async () => {
+    await clearInstallerQueues();
+  });
+
+  test.afterEach(async () => {
+    await clearInstallerQueues();
+  });
+
   test.beforeEach(async ({ page }) => {
     await auth.loginToWordPress(page);
+    // Admin bootstrap can refresh Hiive capabilities; re-apply before each test.
+    await ensureOnboardingCapabilities();
   });
 
   test.describe('Welcome Screen', () => {
@@ -31,8 +43,10 @@ test.describe('Onboarding Module', () => {
       // Verify the onboarding app container is present
       await expect(page.locator(SELECTORS.onboardingApp)).toBeVisible();
 
-      // Verify welcome heading
-      await expect(page.getByRole('heading', { name: 'Welcome to WordPress', level: 1 })).toBeVisible();
+      // Verify welcome heading (waitForOnboarding already waits; keep explicit assert for clarity)
+      await expect(
+        page.getByRole('heading', { name: 'Welcome to WordPress', level: 1 })
+      ).toBeVisible({ timeout: 15000 });
 
       // Verify branding
       await expect(page.getByText('Powered by')).toBeVisible();

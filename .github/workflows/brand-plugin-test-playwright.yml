@@ -3,6 +3,7 @@ on:
   pull_request:
     types: [ opened, reopened, ready_for_review, synchronize ]
     branches:
+      - v3
       - main
       - main-networksolutions
       - v3
