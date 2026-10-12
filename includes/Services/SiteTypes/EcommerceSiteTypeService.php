@@ -303,7 +303,8 @@ class EcommerceSiteTypeService {
 	 * Ensure WooCommerce is active before ecommerce operations.
 	 *
 	 * WooCommerce itself is installed/activated synchronously (blocking call). Any
-	 * other ecommerce plugins (YITH, brand-specific) are queued for background install.
+	 * other ecommerce plugins still listed for the brand are queued for background install.
+	 * Retired YITH extended plugins are not part of that list.
 	 *
 	 * @return \WP_REST_Response|null Null when WooCommerce is ready, response when blocked.
 	 */

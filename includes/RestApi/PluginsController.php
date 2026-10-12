@@ -94,7 +94,7 @@ class PluginsController {
 	 * Thin wrapper around EcommerceSiteTypeService::ensure_woocommerce_active(), which:
 	 *  - returns null when Woo is already active (mapped here to a 200 'ready' response);
 	 *  - installs/activates Woo synchronously when missing;
-	 *  - queues the rest of the ecommerce stack (YITH, brand-specific) for background install;
+	 *  - queues any remaining brand-specific ecommerce plugins for background install;
 	 *  - returns a 202/500 response when something is still pending or failed.
 	 *
 	 * @return \WP_REST_Response
