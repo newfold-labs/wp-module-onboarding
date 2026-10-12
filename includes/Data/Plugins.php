@@ -60,6 +60,12 @@ final class Plugins {
 					'priority' => 220,
 				),
 			),
+			/*
+			 * YITH extended plugins are retired and no longer maintained.
+			 * Do not install booking, gift cards, wishlist, customize my account,
+			 * or ajax product filter extended builds.
+			 * Free YITH Ajax Search and Wonder Cart are not extended builds.
+			 */
 			'hasYithExtended' => array(
 				array(
 					'slug'     => 'woocommerce',
@@ -67,34 +73,9 @@ final class Plugins {
 					'priority' => 300,
 				),
 				array(
-					'slug'     => 'nfd_slug_yith_woocommerce_booking',
-					'activate' => false,
-					'priority' => 100,
-				),
-				array(
 					'slug'     => 'yith-woocommerce-ajax-search',
 					'activate' => false,
 					'priority' => 120,
-				),
-				array(
-					'slug'     => 'nfd_slug_yith_woocommerce_gift_cards',
-					'activate' => false,
-					'priority' => 140,
-				),
-				array(
-					'slug'     => 'nfd_slug_yith_woocommerce_wishlist',
-					'activate' => false,
-					'priority' => 160,
-				),
-				array(
-					'slug'     => 'nfd_slug_yith_woocommerce_customize_myaccount_page',
-					'activate' => false,
-					'priority' => 180,
-				),
-				array(
-					'slug'     => 'nfd_slug_yith_woocommerce_ajax_product_filter',
-					'activate' => false,
-					'priority' => 200,
 				),
 				array(
 					'slug'     => 'nfd_slug_wonder_cart',
@@ -111,19 +92,11 @@ final class Plugins {
 					'priority' => 300,
 				),
 			),
+			/*
+			 * YITH Shippo and PayPal extended builds are retired and no longer maintained.
+			 */
 			'bluehost'       => array(
-				'default' => array(
-					array(
-						'slug'     => 'nfd_slug_yith_shippo_shippings_for_woocommerce',
-						'activate' => true,
-						'priority' => 60,
-					),
-					array(
-						'slug'     => 'nfd_slug_yith_paypal_payments_for_woocommerce',
-						'activate' => true,
-						'priority' => 80,
-					),
-				),
+				'default' => array(),
 			),
 			'bluehost-india' => array(
 				'default' => array(

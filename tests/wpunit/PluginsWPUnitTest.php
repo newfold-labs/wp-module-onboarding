@@ -56,6 +56,63 @@ class PluginsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	}
 
 	/**
+	 * Retired YITH extended plugins stay off the install list.
+	 *
+	 * @return void
+	 */
+	public function test_init_list_omits_retired_yith_extended_plugins() {
+		$property = new \ReflectionProperty( Plugins::class, 'init_list' );
+		$property->setAccessible( true );
+
+		$slugs = $this->collect_plugin_slugs( $property->getValue() );
+
+		$retired = array(
+			'nfd_slug_yith_woocommerce_booking',
+			'nfd_slug_yith_woocommerce_gift_cards',
+			'nfd_slug_yith_woocommerce_wishlist',
+			'nfd_slug_yith_woocommerce_customize_myaccount_page',
+			'nfd_slug_yith_woocommerce_ajax_product_filter',
+			'nfd_slug_yith_shippo_shippings_for_woocommerce',
+			'nfd_slug_yith_paypal_payments_for_woocommerce',
+		);
+
+		foreach ( $retired as $slug ) {
+			$this->assertNotContains( $slug, $slugs );
+		}
+
+		$this->assertContains( 'yith-woocommerce-ajax-search', $slugs );
+		$this->assertContains( 'nfd_slug_wonder_cart', $slugs );
+		$this->assertContains( 'woocommerce', $slugs );
+	}
+
+	/**
+	 * Flatten plugin entries to slugs.
+	 *
+	 * @param array $list Plugin list, possibly nested by capability and brand.
+	 * @return array<int, string>
+	 */
+	private function collect_plugin_slugs( array $list ): array {
+		$slugs = array();
+		$stack = array( $list );
+
+		while ( $stack ) {
+			$current = array_pop( $stack );
+			if ( isset( $current['slug'] ) && is_string( $current['slug'] ) ) {
+				$slugs[] = $current['slug'];
+				continue;
+			}
+
+			foreach ( $current as $item ) {
+				if ( is_array( $item ) ) {
+					$stack[] = $item;
+				}
+			}
+		}
+
+		return $slugs;
+	}
+
+	/**
 	 * Wc prevent redirect on activation clears transient.
 	 *
 	 * @return void
