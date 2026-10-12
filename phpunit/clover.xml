@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1790878927">
-  <project timestamp="1790878927">
+<coverage generated="1791841258">
+  <project timestamp="1791841258">
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Application.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Application" namespace="global">
         <metrics complexity="7" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="30" coveredstatements="0" elements="31" coveredelements="0"/>
@@ -1063,50 +1063,50 @@
       <class name="NewfoldLabs\WP\Module\Onboarding\Data\Plugins" namespace="global">
         <metrics complexity="23" methods="5" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="38" coveredstatements="23" elements="43" coveredelements="25"/>
       </class>
-      <line num="152" type="method" name="get_init" visibility="public" complexity="14" crap="29.43" count="2"/>
-      <line num="154" type="stmt" count="2"/>
-      <line num="157" type="stmt" count="2"/>
-      <line num="158" type="stmt" count="2"/>
-      <line num="160" type="stmt" count="2"/>
-      <line num="162" type="stmt" count="2"/>
-      <line num="163" type="stmt" count="2"/>
+      <line num="127" type="method" name="get_init" visibility="public" complexity="14" crap="29.43" count="2"/>
+      <line num="129" type="stmt" count="2"/>
+      <line num="132" type="stmt" count="2"/>
+      <line num="133" type="stmt" count="2"/>
+      <line num="135" type="stmt" count="2"/>
+      <line num="137" type="stmt" count="2"/>
+      <line num="138" type="stmt" count="2"/>
+      <line num="139" type="stmt" count="0"/>
+      <line num="142" type="stmt" count="2"/>
+      <line num="144" type="stmt" count="0"/>
+      <line num="145" type="stmt" count="0"/>
+      <line num="152" type="stmt" count="2"/>
+      <line num="153" type="stmt" count="2"/>
+      <line num="154" type="stmt" count="0"/>
+      <line num="156" type="stmt" count="2"/>
+      <line num="158" type="stmt" count="0"/>
+      <line num="159" type="stmt" count="0"/>
+      <line num="162" type="stmt" count="0"/>
       <line num="164" type="stmt" count="0"/>
-      <line num="167" type="stmt" count="2"/>
-      <line num="169" type="stmt" count="0"/>
-      <line num="170" type="stmt" count="0"/>
-      <line num="177" type="stmt" count="2"/>
-      <line num="178" type="stmt" count="2"/>
-      <line num="179" type="stmt" count="0"/>
-      <line num="181" type="stmt" count="2"/>
-      <line num="183" type="stmt" count="0"/>
-      <line num="184" type="stmt" count="0"/>
-      <line num="187" type="stmt" count="0"/>
-      <line num="189" type="stmt" count="0"/>
-      <line num="190" type="stmt" count="0"/>
-      <line num="194" type="stmt" count="2"/>
+      <line num="165" type="stmt" count="0"/>
+      <line num="169" type="stmt" count="2"/>
+      <line num="170" type="stmt" count="2"/>
+      <line num="178" type="method" name="get_ecommerce_plugins" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="179" type="stmt" count="1"/>
+      <line num="180" type="stmt" count="1"/>
+      <line num="181" type="stmt" count="1"/>
+      <line num="183" type="stmt" count="1"/>
+      <line num="192" type="method" name="remove_duplicates" visibility="private" complexity="5" crap="5.39" count="2"/>
+      <line num="193" type="stmt" count="2"/>
       <line num="195" type="stmt" count="2"/>
-      <line num="203" type="method" name="get_ecommerce_plugins" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="204" type="stmt" count="1"/>
-      <line num="205" type="stmt" count="1"/>
-      <line num="206" type="stmt" count="1"/>
-      <line num="208" type="stmt" count="1"/>
-      <line num="217" type="method" name="remove_duplicates" visibility="private" complexity="5" crap="5.39" count="2"/>
-      <line num="218" type="stmt" count="2"/>
-      <line num="220" type="stmt" count="2"/>
-      <line num="221" type="stmt" count="2"/>
-      <line num="224" type="stmt" count="2"/>
-      <line num="225" type="stmt" count="2"/>
+      <line num="196" type="stmt" count="2"/>
+      <line num="199" type="stmt" count="2"/>
+      <line num="200" type="stmt" count="2"/>
+      <line num="201" type="stmt" count="0"/>
+      <line num="203" type="stmt" count="0"/>
+      <line num="207" type="stmt" count="2"/>
+      <line num="215" type="method" name="wc_prevent_redirect_on_activation" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="216" type="stmt" count="1"/>
+      <line num="224" type="method" name="get_active_plugins_list" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="225" type="stmt" count="0"/>
       <line num="226" type="stmt" count="0"/>
+      <line num="227" type="stmt" count="0"/>
       <line num="228" type="stmt" count="0"/>
-      <line num="232" type="stmt" count="2"/>
-      <line num="240" type="method" name="wc_prevent_redirect_on_activation" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="241" type="stmt" count="1"/>
-      <line num="249" type="method" name="get_active_plugins_list" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="250" type="stmt" count="0"/>
-      <line num="251" type="stmt" count="0"/>
-      <line num="252" type="stmt" count="0"/>
-      <line num="253" type="stmt" count="0"/>
-      <metrics loc="256" ncloc="207" classes="1" methods="5" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="38" coveredstatements="23" elements="43" coveredelements="25"/>
+      <metrics loc="231" ncloc="173" classes="1" methods="5" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="38" coveredstatements="23" elements="43" coveredelements="25"/>
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Data/Runtime.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Data\Runtime" namespace="global">
@@ -4520,43 +4520,43 @@
       <line num="296" type="stmt" count="0"/>
       <line num="297" type="stmt" count="0"/>
       <line num="298" type="stmt" count="0"/>
-      <line num="310" type="method" name="ensure_woocommerce_active" visibility="public" complexity="8" crap="72" count="0"/>
-      <line num="311" type="stmt" count="0"/>
+      <line num="311" type="method" name="ensure_woocommerce_active" visibility="public" complexity="8" crap="72" count="0"/>
       <line num="312" type="stmt" count="0"/>
       <line num="313" type="stmt" count="0"/>
-      <line num="316" type="stmt" count="0"/>
+      <line num="314" type="stmt" count="0"/>
       <line num="317" type="stmt" count="0"/>
-      <line num="320" type="stmt" count="0"/>
-      <line num="322" type="stmt" count="0"/>
+      <line num="318" type="stmt" count="0"/>
+      <line num="321" type="stmt" count="0"/>
       <line num="323" type="stmt" count="0"/>
       <line num="324" type="stmt" count="0"/>
       <line num="325" type="stmt" count="0"/>
-      <line num="327" type="stmt" count="0"/>
+      <line num="326" type="stmt" count="0"/>
       <line num="328" type="stmt" count="0"/>
       <line num="329" type="stmt" count="0"/>
       <line num="330" type="stmt" count="0"/>
-      <line num="334" type="stmt" count="0"/>
-      <line num="342" type="method" name="get_woocommerce_plugin_path" visibility="private" complexity="1" crap="2" count="0"/>
-      <line num="343" type="stmt" count="0"/>
+      <line num="331" type="stmt" count="0"/>
+      <line num="335" type="stmt" count="0"/>
+      <line num="343" type="method" name="get_woocommerce_plugin_path" visibility="private" complexity="1" crap="2" count="0"/>
       <line num="344" type="stmt" count="0"/>
-      <line num="352" type="method" name="is_woocommerce_install_in_progress" visibility="private" complexity="1" crap="2" count="0"/>
-      <line num="353" type="stmt" count="0"/>
+      <line num="345" type="stmt" count="0"/>
+      <line num="353" type="method" name="is_woocommerce_install_in_progress" visibility="private" complexity="1" crap="2" count="0"/>
       <line num="354" type="stmt" count="0"/>
-      <line num="362" type="method" name="extend_install_time_limit" visibility="private" complexity="2" crap="6" count="0"/>
-      <line num="363" type="stmt" count="0"/>
+      <line num="355" type="stmt" count="0"/>
+      <line num="363" type="method" name="extend_install_time_limit" visibility="private" complexity="2" crap="6" count="0"/>
       <line num="364" type="stmt" count="0"/>
-      <line num="373" type="method" name="woocommerce_installing_response" visibility="private" complexity="1" crap="2" count="0"/>
-      <line num="374" type="stmt" count="0"/>
+      <line num="365" type="stmt" count="0"/>
+      <line num="374" type="method" name="woocommerce_installing_response" visibility="private" complexity="1" crap="2" count="0"/>
       <line num="375" type="stmt" count="0"/>
       <line num="376" type="stmt" count="0"/>
       <line num="377" type="stmt" count="0"/>
       <line num="378" type="stmt" count="0"/>
       <line num="379" type="stmt" count="0"/>
       <line num="380" type="stmt" count="0"/>
-      <line num="389" type="method" name="queue_ecommerce_stack_and_respond" visibility="private" complexity="1" crap="2" count="0"/>
-      <line num="390" type="stmt" count="0"/>
+      <line num="381" type="stmt" count="0"/>
+      <line num="390" type="method" name="queue_ecommerce_stack_and_respond" visibility="private" complexity="1" crap="2" count="0"/>
       <line num="391" type="stmt" count="0"/>
-      <metrics loc="394" ncloc="270" classes="1" methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="150" coveredstatements="0" elements="166" coveredelements="0"/>
+      <line num="392" type="stmt" count="0"/>
+      <metrics loc="395" ncloc="270" classes="1" methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="150" coveredstatements="0" elements="166" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/wp-module-onboarding/wp-module-onboarding/includes/Services/StatusService.php">
       <class name="NewfoldLabs\WP\Module\Onboarding\Services\StatusService" namespace="global">
@@ -5918,6 +5918,6 @@
       <line num="55" type="stmt" count="0"/>
       <metrics loc="58" ncloc="24" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="8" coveredelements="0"/>
     </file>
-    <metrics files="68" loc="12968" ncloc="9135" classes="67" methods="425" coveredmethods="138" conditionals="0" coveredconditionals="0" statements="5092" coveredstatements="1811" elements="5517" coveredelements="1949"/>
+    <metrics files="68" loc="12944" ncloc="9101" classes="67" methods="425" coveredmethods="138" conditionals="0" coveredconditionals="0" statements="5092" coveredstatements="1811" elements="5517" coveredelements="1949"/>
   </project>
 </coverage>
