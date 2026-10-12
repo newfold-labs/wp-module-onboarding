@@ -88,12 +88,12 @@ class PluginsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	/**
 	 * Flatten plugin entries to slugs.
 	 *
-	 * @param array $list Plugin list, possibly nested by capability and brand.
+	 * @param array $plugins Plugin list, possibly nested by capability and brand.
 	 * @return array<int, string>
 	 */
-	private function collect_plugin_slugs( array $list ): array {
+	private function collect_plugin_slugs( array $plugins ): array {
 		$slugs = array();
-		$stack = array( $list );
+		$stack = array( $plugins );
 
 		while ( $stack ) {
 			$current = array_pop( $stack );

@@ -60,6 +60,7 @@ final class Plugins {
 					'priority' => 220,
 				),
 			),
+
 			/*
 			 * YITH extended plugins are retired and no longer maintained.
 			 * Do not install booking, gift cards, wishlist, customize my account,
@@ -92,6 +93,7 @@ final class Plugins {
 					'priority' => 300,
 				),
 			),
+
 			/*
 			 * YITH Shippo and PayPal extended builds are retired and no longer maintained.
 			 */
