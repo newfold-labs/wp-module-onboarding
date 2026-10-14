@@ -329,7 +329,7 @@ final class WP_Admin {
 
 		$hiive_api_base = defined( 'NFD_DATA_WB_DEV_MODE' ) && NFD_DATA_WB_DEV_MODE
 			? 'http://patterns-platform.test/api/v1'
-			: 'https://paterns.hiive.cloud/api/v1';
+			: 'https://patterns.hiive.cloud/api/v1';
 
 		$font_pairs   = get_option( 'nfd_module_onboarding_editor_fontpair' );
 		$unique_fonts = array();

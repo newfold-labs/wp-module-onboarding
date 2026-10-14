@@ -45,7 +45,7 @@ class DesignController extends WP_REST_Controller {
 	public function __construct() {
 		$this->hiive_api_base = defined( 'NFD_DATA_WB_DEV_MODE' ) && NFD_DATA_WB_DEV_MODE
 			? 'http://patterns-platform.test/api/v1'
-			: 'https://paterns.hiive.cloud/api/v1';
+			: 'https://patterns.hiive.cloud/api/v1';
 	}
 
 	/**
