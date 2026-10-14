@@ -76,7 +76,7 @@ The option set to `0` (or `staging` `WP_ENVIRONMENT_TYPE`) disables redirecting.
 - **wp-module-patterns**: site classification and Wonder Blocks template transient filtering.
 - **wp-module-survey**: toast survey created on completion (`AppService::complete()`).
 - **AI platform** (`https://ai-platform.hiive.cloud` by default; override with `NFD_AI_PLATFORM_BASE_URL`; `NFD_AI_PLATFORM_SSL_VERIFY` toggles SSL verification): sitegen handshake/intake/generate (SSE) from the browser, plus logo generation via PHP.
-- **Hiive patterns API** (`paterns.hiive.cloud`, sic; `NFD_DATA_WB_DEV_MODE` switches to a local dev host): color palettes and font pairs (`DesignController`, Design Studio font previews).
+- **Hiive patterns API** (`patterns.hiive.cloud`, sic; `NFD_DATA_WB_DEV_MODE` switches to a local dev host): color palettes and font pairs (`DesignController`, Design Studio font previews).
 
 ## Hooks fired on completion
 
