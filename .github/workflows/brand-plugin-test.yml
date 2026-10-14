@@ -36,7 +36,6 @@ jobs:
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
     permissions:
       contents: read # Required for reusable module-plugin-test workflow to check out the plugin and module repositories.
-    timeout-minutes: 30
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
@@ -49,7 +48,6 @@ jobs:
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
     permissions:
       contents: read # Required for reusable module-plugin-test workflow to check out the plugin and module repositories.
-    timeout-minutes: 30
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
@@ -62,7 +60,6 @@ jobs:
     uses: newfold-labs/workflows/.github/workflows/module-plugin-test.yml@main
     permissions:
       contents: read # Required for reusable module-plugin-test workflow to check out the plugin and module repositories.
-    timeout-minutes: 30
     with:
       module-repo: ${{ github.repository }}
       module-branch: ${{ needs.setup.outputs.branch }}
