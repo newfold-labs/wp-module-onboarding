@@ -8,6 +8,7 @@
  */
 import { execSync } from 'child_process';
 import { createRequire } from 'module';
+import { existsSync } from 'fs';
 import { join } from 'path';
 // ============================================================================
 // PLUGIN HELPERS (re-exported from plugin-level helpers)
@@ -29,7 +30,10 @@ function runWpEnvBash(bashScript) {
   });
 }
 const requireFromPlugin = createRequire(join(pluginDir, 'package.json'));
-const pluginHelpers = requireFromPlugin('./tests/playwright/helpers/index.js');
+const helpersEntry = existsSync(join(pluginDir, 'tests/playwright/helpers/index.mjs'))
+  ? './tests/playwright/helpers/index.mjs'
+  : './tests/playwright/helpers/index.js';
+const pluginHelpers = requireFromPlugin(helpersEntry);
 
 export const { auth, wordpress, newfold, a11y, utils } = pluginHelpers;
 export const clearInstallerQueues = newfold.clearInstallerQueues;
