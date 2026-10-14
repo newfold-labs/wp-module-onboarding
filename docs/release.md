@@ -1,41 +1,55 @@
 ---
 name: wp-module-onboarding
 title: Release process
-description: Release process and version bump.
-updated: 2025-03-18
+description: Release lines, Prepare Release workflow, and version bump.
+updated: 2026-10-13
 ---
 
 # Release process
 
-This module follows the standard Newfold release process using a reusable workflow.
+This module follows the standard Newfold release process using a reusable workflow (`newfold-labs/workflows` `reusable-module-prep-release.yml`).
+
+## Release lines
+
+| Branch | Line |
+|--------|------|
+| `main` | Current (**v4**). Default for new releases. |
+| `v3` | v3 LTS. |
+| `main-networksolutions` | v4 line for Network Solutions. |
+
+Choose the line with the **module-branch** input when running the workflow.
 
 ## Build step required
 
-See `.github/workflows/newfold-prep-release.yml`: the workflow uses `json-file` and `php-file` inputs. If this module has a frontend (e.g. `package.json` has a `build` script), run `npm run build` before tagging; the workflow runs it automatically. Otherwise no build step is required.
+The module has a frontend. The workflow runs the build (`npm run build`) and the build output is committed under `build/<version>/`. If releasing manually, run `npm install && npm run build`, verify `build/<new_version>/` exists, and remove the previous version's build folder.
 
 ## Hardcoded versions to bump
 
-The workflow bumps the version in the files specified in `.github/workflows/newfold-prep-release.yml` (`json-file` and `php-file`—typically **bootstrap.php** for the PHP version constant (e.g. `NFD_*_MODULE_VERSION`) and **package.json** for the `version` field). If releasing manually, update those files, run any build and i18n commands, then tag and release.
+The workflow bumps versions in the files configured in `.github/workflows/newfold-prep-release.yml`:
+
+- `package.json` (`version`, the `json-file` input)
+- `bootstrap.php` (`NFD_ONBOARDING_VERSION`, the `php-file` input)
+
+These must match because the build folder name is derived from them.
 
 ## Prepare release (recommended)
 
 1. **Run the Newfold Prepare Release workflow**
    - In GitHub: **Actions** → **Newfold Prepare Release** → **Run workflow**.
-   - Choose the version **level**: `patch`, `minor`, or `major`.
-   - The workflow will:
-     - Bump the version to the chosen level (in the appropriate files, e.g. `composer.json`, plugin header, or `package.json`).
-     - Run a fresh build if the module has frontend assets.
-     - Update language files (i18n).
-     - Open a pull request with the changes.
+   - Choose the **level**: `patch`, `minor`, or `major`.
+   - Choose **module-branch**: `main`, `v3`, or `main-networksolutions`.
+   - The workflow bumps the version, runs a fresh build, updates language files, and opens a pull request with the changes.
 
-2. **Review and merge** the prep-release PR.
+2. **Review and merge** the prep-release PR. Pull requests to `main`, `main-networksolutions`, and `v3` also run the Playwright suite inside the Bluehost plugin.
 
-3. **Tag and publish** the release (e.g. create a GitHub release from the tag, or follow your team's process for Satis/packagist).
+3. **Tag and publish** a GitHub release (tag = new version, title `Version <tag>`, generated notes). Publishing triggers `satis-update.yml`, which updates Newfold Satis. Confirm the tag appears on GitHub and Satis.
+
+4. **Bump the brand plugin.** In the brand plugin (e.g. `bluehost-wordpress-plugin`), update `newfold-labs/wp-module-onboarding` in `composer.json` and `composer.lock` (`composer update newfold-labs/wp-module-onboarding`), open a PR, and confirm its tests pass. If tests fail, fix them in the module and re-release.
 
 ## Manual release (fallback)
 
-If the workflow is unavailable, bump the version manually in the same places the workflow would (see `.github/workflows/newfold-prep-release.yml` inputs for `json-file` and `php-file`), run any build and i18n commands, then tag and release. Prefer using the workflow when possible for consistency.
+Bump the version in `package.json` and `bootstrap.php`, run `npm install && npm run build`, run `composer run i18n`, then commit, tag, and release. Prefer the workflow for consistency.
 
 ## After each release
 
-- Update **docs/changelog.md** with the changes in the release.
+- Confirm the release notes on the GitHub release describe the changes. This repository does not keep a `docs/changelog.md`.
