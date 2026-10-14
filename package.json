@@ -59,7 +59,7 @@
 		"lottie-react": "^3.1.2",
 		"lucide-react": "^1.16.0",
 		"motion": "^14.1.0",
-		"posthog-js": "^1.373.5",
+		"posthog-js": "^1.438.7",
 		"react-router-dom": "^7.18.4",
 		"yet-another-react-lightbox": "^3.32.0"
 	}
