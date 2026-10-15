@@ -2,7 +2,7 @@
 name: wp-module-onboarding
 title: Data and options
 description: Options, runtime data, brands, plugin lists, events, and other static data in includes/Data.
-updated: 2026-10-13
+updated: 2026-10-15
 ---
 
 # Data and options
@@ -21,8 +21,8 @@ Notable keys:
 | `activate` / `activate_param` | `activate` | Query param and transient that force-enable the module. |
 | `status`, `start_time`, `completed_time` | same | Onboarding lifecycle (`started`, `completed`, `abandoned`). |
 | `compatibility_results`, `core_update_referrer` | same | Safe Mode / compatibility. |
-| `state_input`, `state_logogen`, `state_blueprints` | same | Persisted Redux slices. |
-| `sitegen_site_id`, `sitegen_current_id`, `sitegen_previous_ids`, `sitegen_site_type`, `sitegen_enhanced_prompt`, `sitegen_discovery_data`, `sitegen_previews`, `sitegen_regenerated_homepages` | same | Sitegen state. |
+| `sitegen_site_id`, `sitegen_current_id`, `sitegen_previous_ids`, `sitegen_site_type`, `sitegen_enhanced_prompt`, `sitegen_discovery_data`, `sitegen_previews`, `sitegen_regenerated_homepages` | same | Sitegen state (v4 `sitegen` Redux slice; synced via `redux-state/sitegen-slice`). |
+| `flow`, `flow_preset`, `theme_settings` | same | Legacy wizard options; not used by the v4 SPA. May remain in the database on upgraded sites. |
 | `cleared_onboarding` | same | Set once generated content has been cleared for this run. |
 | `site_info` | same | Snapshot saved when onboarding completes. |
 | `wc_*` | WooCommerce option names | Store address, currency, tax settings (registered with `show_in_rest`). |
