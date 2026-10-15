@@ -9,7 +9,7 @@ updated: 2026-10-13
 
 ## Linting
 
-- **PHP:** `composer run lint`, `composer run fix` (uses `phpcs.xml`: Newfold standard, PHP 7.3- compatibility, WP 6.5+, text domain `wp-module-onboarding`).
+- **PHP:** `composer run lint`, `composer run fix` (uses `phpcs.xml`: Newfold standard, PHP 7.4- compatibility, WP 6.9+, text domain `wp-module-onboarding`).
 - **JS:** `npm run lint:js`, `npm run lint:js:fix` (ESLint via `wp-scripts`, config in `eslint.config.js`), `npm run format`.
 - CI runs PHP and SPA lint (`lint-check-php.yml`, `lint-check-spa.yml`) on pull requests.
 

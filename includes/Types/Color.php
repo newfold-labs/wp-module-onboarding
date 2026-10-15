@@ -138,4 +138,4 @@ class Color {
 
 		return new self( $data['name'], $data['slug'], $data['color'] );
 	}
-} 
+}

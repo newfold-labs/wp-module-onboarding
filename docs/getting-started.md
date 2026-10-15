@@ -9,7 +9,7 @@ updated: 2026-10-13
 
 ## Prerequisites
 
-- **PHP** 7.4+ (`composer.json` platform is 7.4; PHPCS checks code against PHP 7.3-compatible syntax, see `phpcs.xml`).
+- **PHP** 7.4+ (`composer.json` platform is 7.4; PHPCS checks code against PHP 7.4-compatible syntax, see `phpcs.xml`).
 - **WordPress** 6.5+ (`Compatibility\Scan` puts the module in Safe Mode below this).
 - **Composer**.
 - **Node** >= 22.11 and **npm** >= 10.9 (see `engines` in `package.json`).

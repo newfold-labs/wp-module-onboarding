@@ -23,8 +23,8 @@ class ReduxStateService {
 	 * @var array
 	 */
 	private static $states = array(
-		'steps'      => 'state_steps',
-		'sitegen'    => 'state_sitegen'
+		'steps'   => 'state_steps',
+		'sitegen' => 'state_sitegen',
 	);
 
 	/**
