@@ -5,8 +5,8 @@
 	"license": "GPL-2.0-or-later",
 	"authors": [
 		{
-			"name": "Dave Ryan",
-			"email": "dave@bluehost.com"
+			"name": "Alani Abdulrahman",
+			"homepage": "https://alani.dev"
 		}
 	],
 	"autoload": {

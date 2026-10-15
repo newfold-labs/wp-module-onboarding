@@ -36,7 +36,7 @@ export default function useLogoManagement() {
 				isRequestingMediaItem: _isRequestingMediaItem,
 			};
 		},
-		[]
+		[],
 	);
 
 	// Get dispatch functions

@@ -110,6 +110,8 @@ export const useFontPairings = ( { page = 1, perPage = 10 } = {} ) => {
 
 	useEffect( () => {
 		fetchFontPairings();
+		// Re-fetch only when pagination changes; fetchFontPairings is recreated each render.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ page, perPage ] );
 
 	const handleSelectStyle = async ( fontPair ) => {
