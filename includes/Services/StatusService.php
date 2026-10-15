@@ -23,7 +23,7 @@ class StatusService {
 			// Store start time when onboarding begins
 			update_option( Options::get_option_name( 'start_time' ), time() );
 
-			do_action( 'newfold/onboarding/started' );
+			do_action( 'newfold/onboarding/started' ); // phpcs:ignore Newfold.NamingConventions.ValidHookName.InvalidStructure -- Public hook name used by other modules.
 			return true;
 		}
 		return false;
@@ -60,10 +60,9 @@ class StatusService {
 			update_option( Options::get_option_name( 'completed_time' ), time() );
 
 			/**
-			 * We're disabling the restart onboarding feature for now.
+			 * The restart onboarding feature is disabled for now.
 			 */
-			// self::update_onboarding_restart_status();
-			do_action( 'newfold/onboarding/completed' );
+			do_action( 'newfold/onboarding/completed' ); // phpcs:ignore Newfold.NamingConventions.ValidHookName.InvalidStructure -- Public hook name used by other modules.
 		}
 	}
 
@@ -79,7 +78,8 @@ class StatusService {
 		}
 
 		// Ignore if the request is not for the onboarding page.
-		if ( isset( $_GET['page'] ) && \sanitize_text_field( $_GET['page'] ) === WP_Admin::$slug ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only page check, no state change.
+		if ( isset( $_GET['page'] ) && \sanitize_text_field( \wp_unslash( $_GET['page'] ) ) === WP_Admin::$slug ) {
 			return;
 		}
 
@@ -114,7 +114,7 @@ class StatusService {
 	 * - `experience_level`: A fixed default. The v3 experience-level question no longer
 	 *   exists and nothing currently reads this key; it is kept only so the option keeps
 	 *   its previous shape for any external consumers. (advanced, intermediate, beginner)
-	 *   TODO: Remove this key once we confirm that the experience level is not used anywhere.
+	 *   Candidate for removal once we confirm that the experience level is not used anywhere.
 	 *
 	 * @return void
 	 */

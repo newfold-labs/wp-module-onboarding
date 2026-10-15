@@ -25,8 +25,6 @@ class GlobalStylesService {
 
 	/**
 	 * Global Styles Service constructor.
-	 *
-	 * @return GlobalStylesService
 	 */
 	public function __construct() {
 		// Ensure the global styles post exists (creates it on fresh installs).
@@ -36,7 +34,6 @@ class GlobalStylesService {
 			$post                   = get_post( $post_id );
 			$this->global_styles    = $post ? ( json_decode( $post->post_content, true ) ?? array() ) : array();
 		}
-		return $this;
 	}
 
 	/**

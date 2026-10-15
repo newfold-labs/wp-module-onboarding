@@ -130,6 +130,7 @@ class Color {
 	 *
 	 * @param array $data Color data array.
 	 * @return Color
+	 * @throws \InvalidArgumentException When name, slug or color keys are missing.
 	 */
 	public static function from_array( array $data ): Color {
 		if ( ! isset( $data['name'] ) || ! isset( $data['slug'] ) || ! isset( $data['color'] ) ) {
