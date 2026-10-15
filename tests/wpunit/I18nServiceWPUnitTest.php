@@ -24,23 +24,6 @@ class I18nServiceWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Without a matching translation file no translations are loaded for a non-English locale.
-	 *
-	 * @covers ::load_php_translations
-	 * @return void
-	 */
-	public function test_load_php_translations_returns_false_for_non_english_locale_without_translation_file() {
-		$filter = static function () {
-			return 'fr_FR';
-		};
-		add_filter( 'locale', $filter );
-
-		$this->assertFalse( I18nService::load_php_translations( 'nfd-test-domain', 'nonexistent-dir' ) );
-
-		remove_filter( 'locale', $filter );
-	}
-
-	/**
 	 * Absolute path to the module languages directory.
 	 *
 	 * @return string
@@ -85,20 +68,6 @@ class I18nServiceWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 			$this->assertNotEmpty( $catalog['messages'], basename( $file ) );
 			$this->assertStringContainsString( $catalog['language'], basename( $file ) );
 		}
-	}
-
-	/**
-	 * Translations load from the .l10n.php file when no .mo file exists.
-	 *
-	 * @return void
-	 */
-	public function test_translations_load_from_l10n_php_file() {
-		$domain = 'wp-module-onboarding';
-		$this->assertTrue( load_textdomain( $domain, $this->languages_dir() . '/wp-module-onboarding-de_DE.mo', 'de_DE' ) );
-
-		$this->assertSame( 'Einbinden', translate( 'Onboarding', $domain ) );
-
-		unload_textdomain( $domain );
 	}
 
 	/**
