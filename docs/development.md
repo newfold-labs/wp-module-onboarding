@@ -17,7 +17,7 @@ updated: 2026-10-13
 
 - **PHPUnit in wp-env:** `npm run test:unit` (runs `tests/phpunit` through `wp-env`; `.wp-env.json` sets the tests MySQL port 33306).
 - **Codeception wpunit:** `composer run test`, `composer run test-coverage`. Tests are in `tests/wpunit/` and need `.env.testing` (copy `.env.testing.example`).
-- **Playwright:** `tests/playwright/` holds the end-to-end smoke spec and helpers. The onboarding UI spec is currently `describe.skip`. In CI these run inside brand plugins through `brand-plugin-test-playwright.yml` (PRs to `main`, `main-networksolutions`, `v3`).
+- **Playwright:** `tests/playwright/` holds the end-to-end smoke spec and helpers. In CI these run inside brand plugins through `brand-plugin-test-playwright.yml` (PRs to `main`, `main-networksolutions`, `v3`).
 
 ## Build
 

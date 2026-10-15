@@ -46,11 +46,10 @@ The code also uses classes and container services that are not direct `require` 
 
 Key runtime packages (bundled into the SPA):
 
-- **React / WordPress**: `@wordpress/element`, `data`, `api-fetch`, `i18n`, `url`, `blocks`, `block-library`, `interface`, `media-utils`, `style-engine`, `dom-ready`.
-- **UI**: `@newfold/ui-component-library`, `@heroicons/react`, `lucide-react`, `motion`, `lottie-react`, `classnames`, `colord`, `canvas-confetti`, `yet-another-react-lightbox`.
-- **Routing**: `react-router-dom` (installed; the v4 shell switches views with local state rather than routes).
+- **React / WordPress**: `@wordpress/element`, `data`, `api-fetch`, `i18n`, `url`, `blocks`, `block-library`, `interface`, `dom-ready`, plus editor packages used by the Design Studio and SPA: `components`, `block-editor`, `core-data`, `editor`, `plugins`, `blob`. Install with `npm install --legacy-peer-deps` (eslint 10 peer conflicts with some WordPress lint plugins).
+- **UI**: `@newfold/ui-component-library`, `lucide-react`, `motion`, `canvas-confetti`.
 - **Telemetry**: `@newfold/js-utility-ui-analytics` (Hiive events), `@sentry/react`, `posthog-js`.
 
-Dev: `@wordpress/scripts`, `@wordpress/env`, `tailwindcss` + `@tailwindcss/forms`, `eslint`, `webpack-merge`, `zod`.
+Dev: `@wordpress/scripts`, `@wordpress/env`, `tailwindcss`, `eslint`, `eslint-import-resolver-alias`, `webpack-merge`.
 
 When adding or bumping dependencies, update this file.

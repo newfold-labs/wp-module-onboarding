@@ -28,12 +28,12 @@ const useMessages = () => {
 			setMessages( ( prev ) => [ ...prev, { ...msg, id } ] );
 			return id;
 		},
-		[ getNextId ]
+		[ getNextId ],
 	);
 
 	const patchMessage = useCallback( ( msgId, patch ) => {
 		setMessages( ( prev ) =>
-			prev.map( ( msg ) => ( msg.id === msgId ? { ...msg, ...patch } : msg ) )
+			prev.map( ( msg ) => ( msg.id === msgId ? { ...msg, ...patch } : msg ) ),
 		);
 	}, [] );
 
@@ -46,10 +46,10 @@ const useMessages = () => {
 				return {
 					...msg,
 					tasks: msg.tasks.map( ( t ) =>
-						t.key === taskKey ? { ...t, status: 'done', result } : t
+						t.key === taskKey ? { ...t, status: 'done', result } : t,
 					),
 				};
-			} )
+			} ),
 		);
 	}, [] );
 
@@ -66,7 +66,7 @@ const useMessages = () => {
 						status: t.status === 'pending' ? 'running' : t.status,
 					} ) ),
 				};
-			} )
+			} ),
 		);
 	}, [] );
 
@@ -81,7 +81,7 @@ const useMessages = () => {
 					isTyping: false,
 					tasks: msg.tasks.map( ( t ) => ( t.status !== 'done' ? { ...t, status: 'done' } : t ) ),
 				};
-			} )
+			} ),
 		);
 	}, [] );
 

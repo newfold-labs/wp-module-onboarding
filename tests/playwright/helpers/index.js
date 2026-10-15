@@ -1,6 +1,6 @@
 /**
  * Onboarding Module Test Helpers for Playwright
- * 
+ *
  * - Plugin Helpers (re-exported)
  * - Constants
  * - Navigation Helpers
@@ -22,18 +22,18 @@ const pluginDir = process.env.PLUGIN_DIR || process.cwd();
  *
  * @param {string} bashScript Bash script lines (newline-separated).
  */
-function runWpEnvBash(bashScript) {
-  execSync(`npx wp-env run cli bash -lc ${JSON.stringify(bashScript)}`, {
-    cwd: pluginDir,
-    encoding: 'utf8',
-    stdio: ['pipe', 'pipe', 'pipe'],
-  });
+function runWpEnvBash( bashScript ) {
+	execSync( `npx wp-env run cli bash -lc ${ JSON.stringify( bashScript ) }`, {
+		cwd: pluginDir,
+		encoding: 'utf8',
+		stdio: [ 'pipe', 'pipe', 'pipe' ],
+	} );
 }
-const requireFromPlugin = createRequire(join(pluginDir, 'package.json'));
-const helpersEntry = existsSync(join(pluginDir, 'tests/playwright/helpers/index.mjs'))
-  ? './tests/playwright/helpers/index.mjs'
-  : './tests/playwright/helpers/index.js';
-const pluginHelpers = requireFromPlugin(helpersEntry);
+const requireFromPlugin = createRequire( join( pluginDir, 'package.json' ) );
+const helpersEntry = existsSync( join( pluginDir, 'tests/playwright/helpers/index.mjs' ) )
+	? './tests/playwright/helpers/index.mjs'
+	: './tests/playwright/helpers/index.js';
+const pluginHelpers = requireFromPlugin( helpersEntry );
 
 export const { auth, wordpress, newfold, a11y, utils } = pluginHelpers;
 export const clearInstallerQueues = newfold.clearInstallerQueues;
@@ -50,27 +50,27 @@ export const ONBOARDING_BASE = '/wp-admin/index.php?page=nfd-onboarding';
 
 /** Common selectors for onboarding module */
 export const SELECTORS = {
-  // Main containers
-  onboardingApp: '#nfd-onboarding',
-  onboardingContent: '.nfd-onboarding-content',
-  mainContent: '#nfd-onboarding main',
+	// Main containers
+	onboardingApp: '#nfd-onboarding',
+	onboardingContent: '.nfd-onboarding-content',
+	mainContent: '#nfd-onboarding main',
 
-  onboardingPromptView: '[data-testid="onboarding-prompt-view"]',
-  onboardingChatView: '[data-testid="onboarding-chat-view"]',
-  onboardingMigrationView: '[data-testid="onboarding-migration-view"]',
-  onboardingPromptInput: '[data-testid="onboarding-prompt-input"]',
-  onboardingBuildNow: '[data-testid="onboarding-build-now"]',
-  onboardingImportSite: '[data-testid="onboarding-import-site"]',
-  onboardingMigrationTryAgain: '[data-testid="onboarding-migration-try-again"]',
+	onboardingPromptView: '[data-testid="onboarding-prompt-view"]',
+	onboardingChatView: '[data-testid="onboarding-chat-view"]',
+	onboardingMigrationView: '[data-testid="onboarding-migration-view"]',
+	onboardingPromptInput: '[data-testid="onboarding-prompt-input"]',
+	onboardingBuildNow: '[data-testid="onboarding-build-now"]',
+	onboardingImportSite: '[data-testid="onboarding-import-site"]',
+	onboardingMigrationTryAgain: '[data-testid="onboarding-migration-try-again"]',
 
-  // Navigation buttons
-  nextButton: 'button:has-text("Next")',
-  backButton: 'button:has-text("Back")',
-  skipButton: '[data-testid="skip-button"]',
+	// Navigation buttons
+	nextButton: 'button:has-text("Next")',
+	backButton: 'button:has-text("Back")',
+	skipButton: '[data-testid="skip-button"]',
 
-  // Common elements
-  loadingSpinner: '.nfd-onboarding-loading',
-  errorMessage: '.nfd-onboarding-error',
+	// Common elements
+	loadingSpinner: '.nfd-onboarding-loading',
+	errorMessage: '.nfd-onboarding-error',
 };
 
 // ============================================================================
@@ -81,8 +81,8 @@ export const SELECTORS = {
  * Navigate to onboarding start page
  * @param {import('@playwright/test').Page} page
  */
-export async function navigateToOnboarding(page) {
-  await page.goto(ONBOARDING_BASE, { waitUntil: 'domcontentloaded' });
+export async function navigateToOnboarding( page ) {
+	await page.goto( ONBOARDING_BASE, { waitUntil: 'domcontentloaded' } );
 }
 
 /**
@@ -90,17 +90,17 @@ export async function navigateToOnboarding(page) {
  * @param {import('@playwright/test').Page} page
  * @param {string} stepPath - Step path (e.g., '/step/get-started', '/sitegen/step/welcome')
  */
-export async function navigateToStep(page, stepPath) {
-  await page.goto(`${ONBOARDING_BASE}#${stepPath}`);
+export async function navigateToStep( page, stepPath ) {
+	await page.goto( `${ ONBOARDING_BASE }#${ stepPath }` );
 }
 
 /**
  * Combined setup: login and open onboarding.
  * @param {import('@playwright/test').Page} page
  */
-export async function setupAndNavigate(page) {
-  await auth.loginToWordPress(page);
-  await navigateToOnboarding(page);
+export async function setupAndNavigate( page ) {
+	await auth.loginToWordPress( page );
+	await navigateToOnboarding( page );
 }
 
 // ============================================================================
@@ -112,16 +112,16 @@ export async function setupAndNavigate(page) {
  * hasAISiteGen is required - without it, onboarding shows "wrong turn" error
  */
 export const ONBOARDING_CAPABILITIES = {
-  canAccessAI: true,
-  hasAISiteGen: true,
-  canMigrateSite: true,
+	canAccessAI: true,
+	hasAISiteGen: true,
+	canMigrateSite: true,
 };
 
 /**
  * Reset onboarding state to allow re-running onboarding.
  * Clears completion status, flow data, and related state options.
  * Also ensures required capabilities are set.
- * 
+ *
  * Key options that affect onboarding access:
  * - nfd_module_onboarding_status: If 'completed', blocks access with "wrong turn" error
  * - nfd_module_onboarding_flow: Contains flow state including hasExited/isComplete flags
@@ -130,33 +130,30 @@ export const ONBOARDING_CAPABILITIES = {
  * - _transient_nfd_site_capabilities: Must include hasAISiteGen: true
  */
 export async function resetOnboardingState() {
-  utils.fancyLog('🔧 Batched onboarding test reset (WP-CLI)');
+	utils.fancyLog( '🔧 Batched onboarding test reset (WP-CLI)' );
 
-  const optionsToClear = [
-    'nfd_module_htaccess_saved_state',
-    'nfd_module_onboarding_status',
-    'nfd_module_onboarding_flow',
-    'nfd_module_onboarding_settings_initialized',
-    'nfd_module_onboarding_state_input',
-    'nfd_module_onboarding_state_sitegen',
-    'nfd_module_onboarding_state_logogen',
-    'nfd_module_onboarding_state_blueprints',
-    'nfd_module_onboarding_sitegen_site_id',
-    'nfd_module_onboarding_sitegen_current_id',
-    'nfd_module_onboarding_start_time',
-    'nfd_module_onboarding_completed_time',
-    'nfd_module_onboarding_start_date',
-    'nfd_module_onboarding_can_restart',
-    'nfd_module_onboarding_should_redirect',
-  ];
+	const optionsToClear = [
+		'nfd_module_htaccess_saved_state',
+		'nfd_module_onboarding_status',
+		'nfd_module_onboarding_flow',
+		'nfd_module_onboarding_settings_initialized',
+		'nfd_module_onboarding_state_sitegen',
+		'nfd_module_onboarding_sitegen_site_id',
+		'nfd_module_onboarding_sitegen_current_id',
+		'nfd_module_onboarding_start_time',
+		'nfd_module_onboarding_completed_time',
+		'nfd_module_onboarding_start_date',
+		'nfd_module_onboarding_can_restart',
+		'nfd_module_onboarding_should_redirect',
+	];
 
-  const deletes = optionsToClear
-    .map((name) => `wp option delete ${name} >/dev/null 2>&1 || true`)
-    .join('; ');
+	const deletes = optionsToClear
+		.map( ( name ) => `wp option delete ${ name } >/dev/null 2>&1 || true` )
+		.join( '; ' );
 
-  runWpEnvBash(
-    `set +e; ${deletes}; wp eval "set_transient( 'nfd_site_capabilities', array( 'hasAISiteGen' => true, 'canMigrateSite' => true ) );"`
-  );
+	runWpEnvBash(
+		`set +e; ${ deletes }; wp eval "set_transient( 'nfd_site_capabilities', array( 'hasAISiteGen' => true, 'canMigrateSite' => true ) );"`
+	);
 }
 
 /**
@@ -166,7 +163,7 @@ export async function resetOnboardingState() {
  * onboarding can still function.
  */
 export async function ensureOnboardingCapabilities() {
-  await newfold.setCapability(ONBOARDING_CAPABILITIES);
+	await newfold.setCapability( ONBOARDING_CAPABILITIES );
 }
 
 /**
@@ -174,18 +171,18 @@ export async function ensureOnboardingCapabilities() {
  * Clears saved state, disables cache, and clears optimization options
  */
 export async function resetHtaccessState() {
-  utils.fancyLog('🔧 Clearing htaccess module saved state (batched)');
-  runWpEnvBash('wp option delete nfd_module_htaccess_saved_state >/dev/null 2>&1 || true');
-  //   await wordpress.wpCli('option delete nfd_fonts_optimization', { failOnNonZeroExit: false });
-  //   await wordpress.wpCli('option delete nfd_image_optimization', { failOnNonZeroExit: false });
-  //   await wordpress.wpCli('option update newfold_cache_level 0', { failOnNonZeroExit: false });
+	utils.fancyLog( '🔧 Clearing htaccess module saved state (batched)' );
+	runWpEnvBash( 'wp option delete nfd_module_htaccess_saved_state >/dev/null 2>&1 || true' );
+	//   await wordpress.wpCli('option delete nfd_fonts_optimization', { failOnNonZeroExit: false });
+	//   await wordpress.wpCli('option delete nfd_image_optimization', { failOnNonZeroExit: false });
+	//   await wordpress.wpCli('option update newfold_cache_level 0', { failOnNonZeroExit: false });
 }
 
 /**
  * Set onboarding as completed
  */
 export async function markOnboardingComplete() {
-  await wordpress.wpCli('option update nfd_module_onboarding_status "complete"');
+	await wordpress.wpCli( 'option update nfd_module_onboarding_status "complete"' );
 }
 
 // ============================================================================
@@ -196,16 +193,16 @@ export async function markOnboardingComplete() {
  * Click the next/continue button in onboarding
  * @param {import('@playwright/test').Page} page
  */
-export async function clickNext(page) {
-  const nextButton = page.locator(SELECTORS.nextButton).first();
-  await nextButton.click({ timeout: 15000 });
+export async function clickNext( page ) {
+	const nextButton = page.locator( SELECTORS.nextButton ).first();
+	await nextButton.click( { timeout: 15000 } );
 }
 
 /**
  * Click the back button in onboarding
  * @param {import('@playwright/test').Page} page
  */
-export async function clickBack(page) {
-  const backButton = page.locator(SELECTORS.backButton).first();
-  await backButton.click({ timeout: 15000 });
+export async function clickBack( page ) {
+	const backButton = page.locator( SELECTORS.backButton ).first();
+	await backButton.click( { timeout: 15000 } );
 }

@@ -99,7 +99,7 @@ const App = () => {
 				<p className="nfd-text-xs nfd-text-balance nfd-font-normal nfd-leading-4 nfd-tracking-wide nfd-text-[rgb(68,71,70)] nfd-text-center [-webkit-font-smoothing:antialiased] nfd-absolute nfd-bottom-6 nfd-left-0 nfd-right-0 nfd-m-0 nfd-px-4 nfd-z-10">
 					{ __(
 						'AI-generated sites may need refinement. You can customize everything later.',
-						'wp-module-onboarding'
+						'wp-module-onboarding',
 					) }
 				</p>
 			</div>

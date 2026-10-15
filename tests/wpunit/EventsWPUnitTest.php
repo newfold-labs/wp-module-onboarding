@@ -38,7 +38,7 @@ class EventsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	 */
 	public function test_known_valid_actions_are_true() {
 		$actions = Events::get_valid_actions();
-		foreach ( array( 'pageview', 'onboarding_started', 'onboarding_complete', 'migration_initiated', 'logo_added' ) as $expected ) {
+		foreach ( array( 'pageview', 'onboarding_started', 'onboarding_complete', 'migration_initiated', 'fork_option_selected' ) as $expected ) {
 			$this->assertArrayHasKey( $expected, $actions );
 			$this->assertTrue( $actions[ $expected ] );
 		}

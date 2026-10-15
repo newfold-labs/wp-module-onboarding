@@ -59,7 +59,8 @@ class ColorPalette {
 		// Validate that all palette items are Color objects.
 		foreach ( $palette as $index => $color ) {
 			if ( ! $color instanceof Color ) {
-				throw new \InvalidArgumentException( "Palette item at index {$index} must be a Color object" );
+				// Exception messages are developer-facing, not HTML output.
+				throw new \InvalidArgumentException( "Palette item at index {$index} must be a Color object" ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 			}
 		}
 	}
@@ -91,6 +92,7 @@ class ColorPalette {
 	 *
 	 * @param array $colors Array of Color objects.
 	 * @return ColorPalette
+	 * @throws \InvalidArgumentException When an item is not a Color object.
 	 */
 	public function add_colors( array $colors ): ColorPalette {
 		foreach ( $colors as $color ) {
@@ -193,6 +195,7 @@ class ColorPalette {
 	 *
 	 * @param array $data ColorPalette data array.
 	 * @return ColorPalette
+	 * @throws \InvalidArgumentException When the slug key is missing or a color is invalid.
 	 */
 	public static function from_array( array $data ): ColorPalette {
 		if ( ! isset( $data['slug'] ) ) {
@@ -209,4 +212,4 @@ class ColorPalette {
 
 		return $palette;
 	}
-} 
+}

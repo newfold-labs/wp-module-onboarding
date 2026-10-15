@@ -1,12 +1,28 @@
 <?xml version="1.0"?>
 <ruleset name="Project Rules">
 	<rule ref="Newfold"/>
-    <config name="testVersion" value="7.3-"/>
-    <config name="minimum_supported_wp_version" value="6.5"/>
+	<config name="testVersion" value="7.4-"/>
+	<config name="minimum_supported_wp_version" value="6.9"/>
 
-	    <rule ref="WordPress.WP.I18n">
-        <properties>
-            <property name="text_domain" type="array" value="wp-module-onboarding" />
-        </properties>
-    </rule>
+	<!-- Only scan our own PHP. CLI paths override these, so scripts omit "." -->
+	<file>bootstrap.php</file>
+	<file>includes</file>
+
+	<arg name="extensions" value="php"/>
+	<arg name="basepath" value="."/>
+	<arg name="parallel" value="8"/>
+
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/wordpress/*</exclude-pattern>
+	<exclude-pattern>*/build/*</exclude-pattern>
+	<exclude-pattern>*/tests/*</exclude-pattern>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="wp-module-onboarding"/>
+			</property>
+		</properties>
+	</rule>
 </ruleset>

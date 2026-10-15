@@ -2,7 +2,7 @@
 name: wp-module-onboarding
 title: Architecture
 description: v4 end-to-end flow, PHP layout, frontend layout, and state.
-updated: 2026-10-13
+updated: 2026-10-15
 ---
 
 # Architecture
@@ -32,11 +32,10 @@ Restart/reset: `POST app/restart` runs `ResetService::reset()` (deletes generate
 | `Data/` | Static data: `Options`, `Runtime`, `Config`, `Brands`, `Bluehost`, `Plugins`, `Events`, `Languages`. See [data-and-options.md](data-and-options.md). |
 | `RestApi/` | Controllers registered by `RestApi.php`. See [rest-api.md](rest-api.md). |
 | `Services/` | Business logic (app/status/reset, plugins, theme, settings, global styles, navigation, media, thumbnails, post types, redux state, events, i18n). |
-| `Services/Ai/` | AI platform clients: `SiteGenServiceRequest`, `AiServiceRequest`, logo generation, sitekit content generation. |
-| `Services/Blueprints/` | Blueprint fetch/import (REST routes remain; the v4 SPA does not call them). |
-| `Services/SiteTypes/` | `Common`, `Blog`, `Ecommerce` site type helpers (e.g. WooCommerce setup). |
+| `Services/Ai/` | AI platform HTTP clients: `SiteGenServiceRequest` (handshake, report published), `AiServiceRequest` (shared base). |
+| `Services/SiteTypes/` | `CommonSiteTypeService`, `BlogSiteTypeService`, `EcommerceSiteTypeService` (articles, categories, WooCommerce setup). |
 | `TaskManagers/`, `Tasks/` | Image sideload queue (`ImageSideloadTaskManager`, `ImageSideloadTask`). |
-| `Types/` | Value objects: `Color`, `ColorPalette`, `Logo`, `Page`, `Pages`, `SiteClassification`, `Sitekit`. |
+| `Types/` | Value objects: `Color`, `ColorPalette`. |
 | `Templates/loading-screen.php` | Loading markup rendered inside the mount node. |
 | `WP_CLI.php` | Placeholder; no commands registered. |
 
@@ -55,7 +54,7 @@ Restart/reset: `POST app/restart` runs `ResetService::reset()` (deletes generate
 | `src/app/views/` | `PromptView`, `ChatView`, `MigrationView`. |
 | `src/app/hooks/` | `useChat` (intake → discovery → generation), `usePublish` + `hooks/publish/{steps,tasks}.js`, `useMessages`, `useTypewriter`, `hooks/chat/tasks.js`. |
 | `src/app/components/` | Chat, prompt, and progress UI. |
-| `src/app/data/store/` | `@wordpress/data` store `newfold/onboarding` with slices `input`, `sitegen`, `logogen`, `blueprints`, `runtime`. The `sitegen` slice syncs to the database via `redux-state/sitegen-slice`. |
+| `src/app/data/store/` | `@wordpress/data` store `newfold/onboarding` with slices `runtime` and `sitegen`. The `sitegen` slice syncs to WordPress via `POST redux-state/sitegen-slice` (`dbSyncService` in `slices/sitegen.js`). Initial slice data is hydrated from `window.nfdOnboarding.sitegen` on load. |
 | `src/app/utils/api/` | `ai-platform.js` (handshake, intake, generate, SSE reader), `onboarding.js`, `wordpress.js`, `wp.js`, `migration.js`. |
 | `src/app/utils/analytics/hiive/` | Hiive event wrapper; actions must be present in `Data\Events::$valid_actions`. |
 | `src/DesignStudio/` | Site Editor sidebar plugin: `components/Screens/*`, `hooks/*`, `utils/*`. |
@@ -67,4 +66,8 @@ Telemetry: Sentry (DSN provided from `Runtime::get_data()`), Hiive analytics eve
 
 ## State persisted in WordPress
 
-Redux slices are persisted as options via `ReduxStateService` (`state_input`, `state_logogen`, `state_blueprints`, plus individual sitegen options). Onboarding status and timings live in `nfd_module_onboarding_status`, `start_time`, `completed_time`. See [data-and-options.md](data-and-options.md).
+The SPA `sitegen` slice is stored as dedicated options (`sitegen_site_id`, `sitegen_current_id`, `sitegen_previous_ids`, `sitegen_site_type`, `sitegen_enhanced_prompt`, `sitegen_discovery_data`), not a single monolithic `state_sitegen` blob. `ReduxStateService::get( 'sitegen' )` reconstructs the slice for `WP_Admin` and the GET `redux-state/sitegen-slice` route.
+
+Onboarding lifecycle uses `nfd_module_onboarding_status`, `start_time`, and `completed_time`. Origin prompt/chat options (`nfd_origin_*`) control resume-in-chat behavior. See [data-and-options.md](data-and-options.md).
+
+Legacy wizard options (`flow`, `flow_preset`, `theme_settings`) may still exist on older sites; the v4 SPA does not read them. `ResetService` can clear options matching the `nfd_module_onboarding_` prefix when onboarding is reset.

@@ -15,7 +15,7 @@ This module follows the standard Newfold release process using a reusable workfl
 |--------|------|
 | `main` | Current (**v4**). Default for new releases. |
 | `v3` | v3 LTS. |
-| `main-networksolutions` | v4 line for Network Solutions. |
+| `main-networksolutions` | v3 line for Network Solutions. |
 
 Choose the line with the **module-branch** input when running the workflow.
 
@@ -30,7 +30,7 @@ The workflow bumps versions in the files configured in `.github/workflows/newfol
 - `package.json` (`version`, the `json-file` input)
 - `bootstrap.php` (`NFD_ONBOARDING_VERSION`, the `php-file` input)
 
-These must match because the build folder name is derived from them.
+These must match because the build folder path/name is derived from the version constant.
 
 ## Prepare release (recommended)
 
