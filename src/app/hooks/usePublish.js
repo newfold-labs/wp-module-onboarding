@@ -27,8 +27,8 @@ const usePublish = ( generationData, discoveryData ) => {
 	const updateTask = useCallback( ( key, status, result = null ) => {
 		setTasks( ( prev ) =>
 			prev.map( ( t ) =>
-				t.key === key ? { ...t, status, result } : t
-			)
+				t.key === key ? { ...t, status, result } : t,
+			),
 		);
 	}, [] );
 

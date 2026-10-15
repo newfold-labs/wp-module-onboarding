@@ -6,7 +6,7 @@ This file gives AI agents a quick orientation to the repo. For full detail, see 
 
 - **wp-module-onboarding** (v4, `main`) – AI-driven WordPress onboarding for Newfold Digital (Bluehost) sites. A user writes a prompt, chats through intake, and the module generates and publishes a full site, then sends them to the Site Editor. Registers with the Newfold Module Loader. Maintained by Newfold Labs.
 
-- **Stack:** PHP 7.4+ backend (REST API, admin page, services) and a React SPA built with `@wordpress/scripts`. WordPress 6.5+. See docs/dependencies.md.
+- **Stack:** PHP 7.4+ backend (REST API, admin page, services) and a React SPA built with `@wordpress/scripts`. WordPress 6.9+. See docs/dependencies.md.
 
 - **Architecture:** `bootstrap.php` registers the module; `Application` boots REST/admin for admins; the SPA (`src/app/`) drives the prompt → chat → generate → publish flow against the AI platform and this module's `newfold-onboarding/v1` routes; `src/DesignStudio/` is a Site Editor sidebar plugin. See docs/architecture.md and docs/integration.md.
 

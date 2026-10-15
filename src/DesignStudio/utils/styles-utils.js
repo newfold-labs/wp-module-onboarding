@@ -8,7 +8,7 @@ export const removeGlobalStyles = () => {
 			const stylesButtons = document?.querySelectorAll(
 				'button[aria-label="Styles"], ' +
 					'.edit-site-header-edit-mode button[aria-label="Styles"], ' +
-					'.interface-pinned-items button[aria-label="Styles"]'
+					'.interface-pinned-items button[aria-label="Styles"]',
 			);
 
 			stylesButtons.forEach( ( button ) => {

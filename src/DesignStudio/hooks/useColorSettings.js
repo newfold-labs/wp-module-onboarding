@@ -30,7 +30,7 @@ export default function useColorSettings() {
 				palette: themePalette,
 			},
 		} ),
-		[ themePalette ]
+		[ themePalette ],
 	);
 
 	const setConfig = useCallback(
@@ -46,7 +46,7 @@ export default function useColorSettings() {
 				},
 			} );
 		},
-		[ editEntityRecord, globalStylesId, settings ]
+		[ editEntityRecord, globalStylesId, settings ],
 	);
 
 	const updatePalette = useCallback(
@@ -64,7 +64,7 @@ export default function useColorSettings() {
 				},
 			} );
 		},
-		[ globalStylesId, settings, setConfig ]
+		[ globalStylesId, settings, setConfig ],
 	);
 
 	const updateCustomColor = useCallback(
@@ -74,7 +74,7 @@ export default function useColorSettings() {
 			}
 
 			const updatedPalette = themePalette.map( ( color ) =>
-				color.slug === slug ? { ...color, color: newColor } : color
+				color.slug === slug ? { ...color, color: newColor } : color,
 			);
 
 			setConfig( {
@@ -86,7 +86,7 @@ export default function useColorSettings() {
 				},
 			} );
 		},
-		[ globalStylesId, settings, themePalette, setConfig ]
+		[ globalStylesId, settings, themePalette, setConfig ],
 	);
 
 	return {

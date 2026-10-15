@@ -13,7 +13,7 @@ export async function getWpSettings() {
 	return await resolve(
 		apiFetch( {
 			url: wpRestURL( 'settings' ),
-		} ).then()
+		} ).then(),
 	);
 }
 

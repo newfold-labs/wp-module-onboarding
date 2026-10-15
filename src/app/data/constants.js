@@ -10,12 +10,12 @@ export const wpRestBase = `${ wpRestURL }/${ wpRestRoute }`;
 export const onboardingRestBase = `${ wpRestURL }/${ onboardingRestRoute }`;
 export const wpAdminPage = addQueryArgs(
 	`${ wpAdminUrl }index.php`,
-	window.nfdOnboarding.runtime.currentBrand?.dashboardRedirectParams
+	window.nfdOnboarding.runtime.currentBrand?.dashboardRedirectParams,
 );
 export const pluginDashboardPage =
 	addQueryArgs(
 		window.nfdOnboarding.runtime.currentBrand?.pluginDashboardPage,
-		window.nfdOnboarding.runtime.currentBrand?.dashboardRedirectParams
+		window.nfdOnboarding.runtime.currentBrand?.dashboardRedirectParams,
 	) ?? wpAdminPage;
 
 /**

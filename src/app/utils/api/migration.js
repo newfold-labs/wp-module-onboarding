@@ -13,6 +13,6 @@ export async function getSiteMigrateUrl() {
 	return await resolve(
 		apiFetch( {
 			url: migrateRestURL( 'migrate/connect' ),
-		} ).then()
+		} ).then(),
 	);
 }

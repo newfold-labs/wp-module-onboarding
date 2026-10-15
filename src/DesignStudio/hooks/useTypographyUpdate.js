@@ -34,7 +34,7 @@ export function useTypographyUpdate() {
 				elements: record?.styles?.elements || {},
 			},
 		} ),
-		[ record?.settings?.typography?.fontFamilies, record?.styles?.elements ]
+		[ record?.settings?.typography?.fontFamilies, record?.styles?.elements ],
 	);
 
 	const updateTypography = async ( headingFontFamily, bodyFontFamily ) => {
@@ -73,7 +73,7 @@ export function useTypographyUpdate() {
 				},
 			} );
 			return true;
-		} catch ( error ) {
+		} catch {
 			return false;
 		}
 	};

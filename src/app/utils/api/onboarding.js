@@ -16,7 +16,7 @@ export const updateOnboardingSiteGenSlice = async ( data ) => {
 			url: onboardingRestURL( 'redux-state/sitegen-slice' ),
 			method: 'POST',
 			body: JSON.stringify( data ),
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -33,7 +33,7 @@ export const startOnboarding = async ( data = {} ) => {
 			url: onboardingRestURL( 'app/start' ),
 			method: 'POST',
 			body: JSON.stringify( data ),
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -42,7 +42,7 @@ export const completeOnboarding = async () => {
 		apiFetch( {
 			url: onboardingRestURL( 'app/complete' ),
 			method: 'POST',
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -51,7 +51,7 @@ export const enableJetpackModules = async () => {
 		apiFetch( {
 			url: onboardingRestURL( 'app/enable-jetpack-modules' ),
 			method: 'POST',
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -69,7 +69,7 @@ export const setGlobalStyles = async ( globalStyles ) => {
 			data: {
 				global_styles: globalStyles,
 			},
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -87,7 +87,7 @@ export const installFonts = async ( fontPair ) => {
 			data: {
 				font_pair: fontPair,
 			},
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -99,7 +99,7 @@ export const setGlobalStylesColorPalette = async ( colorPalette ) => {
 			data: {
 				color_palette: colorPalette,
 			},
-		} ).then()
+		} ).then(),
 	);
 };
 
@@ -112,7 +112,7 @@ export async function setupSiteNavigationMenu( siteType = '', pages = [] ) {
 				site_type: siteType,
 				pages,
 			},
-		} ).then()
+		} ).then(),
 	);
 }
 
@@ -126,6 +126,6 @@ export const reportSiteGenPublished = async () => {
 		apiFetch( {
 			url: onboardingRestURL( 'sitegen/report-published' ),
 			method: 'POST',
-		} ).then()
+		} ).then(),
 	);
 };

@@ -168,11 +168,11 @@ class ImageSideloadTaskManager {
 
 			if ( is_wp_error( $result ) ) {
 				// Continue processing other tasks even if one fails
-				$processed++;
+				++$processed;
 				continue;
 			}
 
-			$processed++;
+			++$processed;
 		}
 
 		$remaining = count( self::get_queue() );
@@ -216,7 +216,7 @@ class ImageSideloadTaskManager {
 		foreach ( $queue as $task ) {
 			$status = $task['status'] ?? 'pending';
 			if ( isset( $stats[ $status ] ) ) {
-				$stats[ $status ]++;
+				++$stats[ $status ];
 			}
 		}
 
