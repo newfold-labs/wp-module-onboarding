@@ -88,16 +88,45 @@ class StatusService {
 	}
 
 	/**
-	 * Save onboarding site information to database option for other modules to access.
+	 * Maps the AI-discovered site type (sitegen `siteType`) to the site_type
+	 * values consumed by other modules: personal, business or ecommerce.
+	 *
+	 * The match is case-insensitive. Unknown or empty values fall back to business.
+	 *
+	 * @var array
+	 */
+	private const SITE_TYPE_MAP = array(
+		'ecommerce' => 'ecommerce',
+		'blog'      => 'personal',
+		'personal'  => 'personal',
+		'business'  => 'business',
+	);
+
+	/**
+	 * Save onboarding site information to a database option for other modules to access.
+	 *
+	 * Stored in the `nfd_module_onboarding_site_info` option (via Options 'site_info') as:
+	 *
+	 * - `site_type`: One of `personal`, `business` or `ecommerce`, derived from the
+	 *   sitegen `sitegen_site_type` option (the type the AI discovery step chose).
+	 *   `wp-module-next-steps` (PlanFactory::determine_site_type) reads this to pick the
+	 *   default plan: personal => blog, business => corporate, ecommerce => ecommerce.
+	 * - `experience_level`: A fixed default. The v3 experience-level question no longer
+	 *   exists and nothing currently reads this key; it is kept only so the option keeps
+	 *   its previous shape for any external consumers. (advanced, intermediate, beginner)
+	 *   TODO: Remove this key once we confirm that the experience level is not used anywhere.
 	 *
 	 * @return void
 	 */
 	public static function save_site_info(): void {
-		$site_info                     = array();
-		$site_info['experience_level'] = $data['experienceLevel'] ?? 'advanced';
-		$site_info['site_type']        = $data['siteType'] ?? 'business';
+		$sitegen   = ReduxStateService::get( 'sitegen' );
+		$site_type = strtolower( trim( (string) ( $sitegen['siteType'] ?? '' ), " \t\n\r\0\x0B\"'" ) );
 
-		// Save to database option
+		$site_info = array(
+			'experience_level' => 'advanced',
+			'site_type'        => self::SITE_TYPE_MAP[ $site_type ] ?? 'business',
+		);
+
 		update_option( Options::get_option_name( 'site_info' ), $site_info );
 	}
 }

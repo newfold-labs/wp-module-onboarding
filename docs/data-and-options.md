@@ -24,7 +24,7 @@ Notable keys:
 | `sitegen_site_id`, `sitegen_current_id`, `sitegen_previous_ids`, `sitegen_site_type`, `sitegen_enhanced_prompt`, `sitegen_discovery_data`, `sitegen_previews`, `sitegen_regenerated_homepages` | same | Sitegen state (v4 `sitegen` Redux slice; synced via `redux-state/sitegen-slice`). |
 | `flow`, `flow_preset`, `theme_settings` | same | Legacy wizard options; not used by the v4 SPA. May remain in the database on upgraded sites. |
 | `cleared_onboarding` | same | Set once generated content has been cleared for this run. |
-| `site_info` | same | Snapshot saved when onboarding completes. |
+| `site_info` | same | Snapshot saved when onboarding completes: `site_type` (`personal`, `business` or `ecommerce`, mapped from `sitegen_site_type`; read by `wp-module-next-steps` to pick the default plan) and `experience_level` (fixed default, unused). |
 | `wc_*` | WooCommerce option names | Store address, currency, tax settings (registered with `show_in_rest`). |
 
 Origin options: `nfd_origin_prompt`, `nfd_origin_prompt_completed`, `nfd_origin_chat_history`, `nfd_origin_chat_history_completed`. If present on load, the SPA starts directly in chat mode; `ResetService` clears them.
