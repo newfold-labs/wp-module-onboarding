@@ -24,9 +24,7 @@ class ReduxStateService {
 	 */
 	private static $states = array(
 		'steps'      => 'state_steps',
-		'sitegen'    => 'state_sitegen',
-		'logogen'    => 'state_logogen',
-		'blueprints' => 'state_blueprints',
+		'sitegen'    => 'state_sitegen'
 	);
 
 	/**
