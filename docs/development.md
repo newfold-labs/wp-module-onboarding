@@ -9,7 +9,7 @@ updated: 2026-10-13
 
 ## Linting
 
-- **PHP:** `composer run lint`, `composer run fix` (uses `phpcs.xml`: Newfold standard, PHP 7.4- compatibility, WP 6.9+, text domain `wp-module-onboarding`).
+- **PHP:** `composer run lint`, `composer run fix` (uses `phpcs.xml`: Newfold standard, PHP 7.3- compatibility, WP 6.5+, text domain `wp-module-onboarding`).
 - **JS:** `npm run lint:js`, `npm run lint:js:fix` (ESLint via `wp-scripts`, config in `eslint.config.js`), `npm run format`.
 - CI runs PHP and SPA lint (`lint-check-php.yml`, `lint-check-spa.yml`) on pull requests.
 
@@ -17,7 +17,7 @@ updated: 2026-10-13
 
 - **PHPUnit in wp-env:** `npm run test:unit` (runs `tests/phpunit` through `wp-env`; `.wp-env.json` sets the tests MySQL port 33306).
 - **Codeception wpunit:** `composer run test`, `composer run test-coverage`. Tests are in `tests/wpunit/` and need `.env.testing` (copy `.env.testing.example`).
-- **Playwright:** `tests/playwright/` holds the end-to-end smoke spec and helpers. The onboarding UI spec is currently `describe.skip`. In CI these run inside brand plugins through `brand-plugin-test-playwright.yml` (PRs to `main`, `main-networksolutions`, `v3`).
+- **Playwright:** `tests/playwright/` holds the end-to-end smoke spec and helpers. In CI these run inside brand plugins through `brand-plugin-test-playwright.yml` (PRs to `main`, `main-networksolutions`, `v3`).
 
 ## Build
 

@@ -9,7 +9,7 @@ updated: 2026-10-13
 
 ## What the module does
 
-**wp-module-onboarding** (v4, current `main`) provides the AI-driven onboarding experience for new Bluehost WordPress sites. A user describes their site in a prompt; the module runs a short chat intake, then generates and publishes a complete site (identity, fonts, colors, logo, pages, header/footer, articles, services, products, navigation) and finally hands the user off to the Site Editor.
+**wp-module-onboarding** (v4, current `main`) provides the AI-driven onboarding experience for new Bluehost WordPress sites. A user describes their site in a prompt; the module runs a short chat intake, then generates and publishes a complete site (identity, fonts, colors, logo, pages, header/footer, articles, services, products, navigation) and finally hands the user off to the Site Editor (see `wp-module-editor-chat` module).
 
 The module is a Composer library loaded through the Newfold Module Loader. It ships:
 
