@@ -14,12 +14,10 @@ final class RestApi {
 	 */
 	protected $controllers = array(
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\AppController',
-		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\BlueprintsController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\PluginsController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\ReduxStateController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SettingsController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\EventsController',
-		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\LogoGenController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\DesignController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\GlobalStylesController',
 		'NewfoldLabs\\WP\\Module\\Onboarding\\RestApi\\SiteContentController',
