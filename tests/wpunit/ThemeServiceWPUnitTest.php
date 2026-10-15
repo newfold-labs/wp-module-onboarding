@@ -148,7 +148,17 @@ class ThemeServiceWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 			}
 		);
 
-		$this->assertFalse( ThemeService::initialize() );
+		// The upgrader can leave output buffers open when it fails; keep ours balanced.
+		$buffer_level = ob_get_level();
+		try {
+			$result = ThemeService::initialize();
+		} finally {
+			while ( ob_get_level() > $buffer_level ) {
+				ob_end_clean();
+			}
+		}
+
+		$this->assertFalse( $result );
 		$this->assertGreaterThanOrEqual( 1, $attempts );
 	}
 }

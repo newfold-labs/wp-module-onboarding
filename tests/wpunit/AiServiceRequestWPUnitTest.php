@@ -88,7 +88,9 @@ class AiServiceRequestWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 		}
 
 		$request = new AiServiceRequest( 'endpoint', array() );
-		$url     = ( new \ReflectionProperty( $request, 'url' ) )->getValue( $request );
+		$property = new \ReflectionProperty( $request, 'url' );
+		$property->setAccessible( true );
+		$url = $property->getValue( $request );
 
 		$this->assertSame( AiServiceRequest::DEFAULT_PRODUCTION_BASE_URL . '/api/v1/', $url );
 	}

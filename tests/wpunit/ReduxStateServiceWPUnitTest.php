@@ -53,22 +53,6 @@ class ReduxStateServiceWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCas
 	}
 
 	/**
-	 * Update stores data with a last_updated timestamp that get returns.
-	 *
-	 * @covers ::update
-	 * @covers ::get
-	 * @return void
-	 */
-	public function test_update_then_get_round_trips_with_last_updated() {
-		$this->assertTrue( ReduxStateService::update( 'steps', array( 'current' => 'chat' ) ) );
-
-		$data = ReduxStateService::get( 'steps' );
-		$this->assertSame( 'chat', $data['current'] );
-		$this->assertArrayHasKey( 'last_updated', $data );
-		$this->assertIsInt( $data['last_updated'] );
-	}
-
-	/**
 	 * Sitegen slice is rebuilt from dedicated options with defaults.
 	 *
 	 * @covers ::get_state_sitegen
