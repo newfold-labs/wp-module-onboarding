@@ -10,16 +10,6 @@ export const onboardingRestURL = ( api ) => {
 	return `${ onboardingRestBase }/${ api }`;
 };
 
-export const updateOnboardingInputSlice = async ( data ) => {
-	return await resolve(
-		apiFetch( {
-			url: onboardingRestURL( 'redux-state/input-slice' ),
-			method: 'POST',
-			body: JSON.stringify( data ),
-		} ).then()
-	);
-};
-
 export const updateOnboardingSiteGenSlice = async ( data ) => {
 	return await resolve(
 		apiFetch( {

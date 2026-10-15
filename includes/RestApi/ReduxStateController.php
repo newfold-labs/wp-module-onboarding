@@ -35,22 +35,6 @@ class ReduxStateController {
 	public function register_routes() {
 		\register_rest_route(
 			$this->namespace,
-			$this->rest_base . '/input-slice',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_input_slice_state' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				),
-				array(
-					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => array( $this, 'update_input_slice_state' ),
-					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
-				),
-			)
-		);
-		\register_rest_route(
-			$this->namespace,
 			$this->rest_base . '/sitegen-slice',
 			array(
 				array(
@@ -96,53 +80,6 @@ class ReduxStateController {
 					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
 				),
 			)
-		);
-	}
-
-
-	/**
-	 * Get the input slice state.
-	 *
-	 * @return \WP_REST_Response
-	 */
-	public function get_input_slice_state() {
-		$data = \get_option( Options::get_option_name( 'state_input' ), false );
-		if ( ! $data ) {
-			$data = array();
-		}
-
-		return new \WP_REST_Response(
-			$data,
-			200
-		);
-	}
-
-	/**
-	 * Update the input slice state.
-	 *
-	 * @param \WP_REST_Request $request The request object.
-	 * @return \WP_REST_Response
-	 */
-	public function update_input_slice_state( \WP_REST_Request $request ): \WP_REST_Response {
-		$data = json_decode( $request->get_body(), true );
-		if ( ! $data ) {
-			return new \WP_REST_Response(
-				'Invalid data',
-				400
-			);
-		}
-
-		$result = ReduxStateService::update( 'input', $data );
-		if ( ! $result ) {
-			return new \WP_REST_Response(
-				'Failed to update input slice state',
-				500
-			);
-		}
-
-		return new \WP_REST_Response(
-			$data,
-			200
 		);
 	}
 
