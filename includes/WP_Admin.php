@@ -241,7 +241,7 @@ final class WP_Admin {
 	 *
 	 * @return void
 	 */
-	public static function exit_to_dashboard(): bool {
+	public static function exit_to_dashboard(): void {
 		$brand_plugin_url = BrandConfig::get_plugin_dashboard_page();
 		$redirect_url     = add_query_arg(
 			BrandConfig::get_dashboard_redirect_params(),

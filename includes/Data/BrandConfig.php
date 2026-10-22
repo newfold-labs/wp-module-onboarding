@@ -38,7 +38,7 @@ final class BrandConfig {
 	public static function get_plugin_dashboard_page(): string {
 		$current = Runtime::current_brand();
 
-		return isset( $current['pluginDashboardPage'] ) ? $current['pluginDashboardPage'] : \admin_url();
+		return isset( $current['pluginDashboardPage'] ) ? $current['pluginDashboardPage'] : \admin_url( 'admin.php' );
 	}
 
 	/**

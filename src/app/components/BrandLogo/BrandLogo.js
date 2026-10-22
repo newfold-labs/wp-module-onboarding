@@ -8,7 +8,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { nfdOnboardingStore } from '@/data/store';
-import { logoSrcForBrand } from './brandAssets';
+import { brandSlugFromRuntime, logoSrcForBrand } from './brandAssets';
 
 /**
  * Header brand logo and link for the current host brand.
@@ -24,7 +24,7 @@ export default function BrandLogo() {
 		return {
 			name: currentBrand.name ?? '',
 			url: currentBrand.url ?? '#',
-			brand: currentBrand.brand ?? 'bluehost',
+			brand: brandSlugFromRuntime( currentBrand ),
 		};
 	}, [] );
 

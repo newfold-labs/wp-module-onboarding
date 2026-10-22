@@ -18,6 +18,25 @@ export const LOGOS_BY_DIR = {
 };
 
 /**
+ * Resolve brand slug for logo assets from runtime / host plugin.
+ *
+ * @param {Record<string, string>} currentBrand Localized currentBrand payload.
+ * @return {string} Registry-style brand slug.
+ */
+export function brandSlugFromRuntime( currentBrand = {} ) {
+	if ( currentBrand.brand ) {
+		return currentBrand.brand;
+	}
+
+	const hostBrand = window.NewfoldRuntime?.plugin?.brand;
+	if ( typeof hostBrand === 'string' && hostBrand.length > 0 ) {
+		return hostBrand;
+	}
+
+	return 'wordpress';
+}
+
+/**
  * Brand slug → asset directory under src/Brands/.
  *
  * @param {string} brandSlug Brand registry slug from runtime.
