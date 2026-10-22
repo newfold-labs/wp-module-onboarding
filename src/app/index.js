@@ -14,7 +14,7 @@ import { AnimatePresence } from 'motion/react';
  * Internal dependencies
  */
 import '@/styles/app.scss';
-import bluehostLogo from '../Brands/bluehost/bluehost-logo.svg';
+import BrandLogo from '@/components/BrandLogo';
 import useChat from '@/hooks/useChat';
 import PromptView from '@/views/PromptView';
 import ChatView from '@/views/ChatView';
@@ -57,13 +57,7 @@ const App = () => {
 				}` }
 			>
 				<div className="nfd-absolute nfd-top-6 nfd-left-8 nfd-z-10">
-					<a href="https://www.bluehost.com" target="_blank" rel="noopener noreferrer">
-						<img
-							src={ bluehostLogo }
-							alt={ __( 'Bluehost logo', 'wp-module-onboarding' ) }
-							className="nfd-h-7 nfd-w-auto"
-						/>
-					</a>
+					<BrandLogo />
 				</div>
 
 				<AnimatePresence mode="wait">

@@ -25,13 +25,14 @@ foreach (
 		'Config',
 		'Runtime',
 		'Events',
-		'Bluehost',
+		'BrandConfig',
 	) as $nfd_onboarding_data_class
 ) {
 	require_once __DIR__ . '/includes/Data/' . $nfd_onboarding_data_class . '.php';
 }
 unset( $nfd_onboarding_data_class );
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Brands;
 use NewfoldLabs\WP\ModuleLoader\Container;
 use NewfoldLabs\WP\Module\Onboarding\ModuleController;
 use NewfoldLabs\WP\Module\Onboarding\Compatibility\Scan;
@@ -79,6 +80,10 @@ function nfd_wp_module_onboarding_register() {
 				if ( ! defined( 'NFD_ONBOARDING_PLUGIN_DIRNAME' ) ) {
 					define( 'NFD_ONBOARDING_PLUGIN_DIRNAME', dirname( $container->plugin()->basename ) );
 				}
+
+				Brands::set_current_brand( $container );
+
+				// Backward compatibility for integrations that read the raw container brand.
 				if ( ! defined( 'NFD_ONBOARDING_BLUEHOST_BRAND' ) ) {
 					define( 'NFD_ONBOARDING_BLUEHOST_BRAND', $container->plugin()->brand );
 				}

@@ -1,7 +1,7 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding;
 
-use NewfoldLabs\WP\Module\Onboarding\Data\Bluehost;
+use NewfoldLabs\WP\Module\Onboarding\Data\BrandConfig;
 use NewfoldLabs\WP\Module\Onboarding\Services\PluginService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ThemeService;
 use NewfoldLabs\WP\Module\Onboarding\Services\I18nService;
@@ -242,7 +242,7 @@ final class WP_Admin {
 	 * @return void
 	 */
 	public static function exit_to_dashboard(): bool {
-		$brand_plugin_url          = Bluehost::get_plugin_dashboard_page();
+		$brand_plugin_url          = BrandConfig::get_plugin_dashboard_page();
 		$dashboard_redirect_params = 'referrer=' . self::$slug;
 
 		// Redirect to the brand plugin page.

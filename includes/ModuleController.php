@@ -1,7 +1,8 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding;
 
-use NewfoldLabs\WP\Module\Onboarding\Data\Bluehost;
+use NewfoldLabs\WP\Module\Onboarding\Data\BrandConfig;
+use NewfoldLabs\WP\Module\Onboarding\Data\Brands;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\ModuleLoader\ModuleRegistry;
 use function NewfoldLabs\WP\ModuleLoader\activate;
@@ -34,7 +35,7 @@ class ModuleController {
 	 * @return void
 	 */
 	public static function module_switcher() {
-		$current_brand         = Bluehost::get_current_brand();
+		$current_brand         = BrandConfig::get_brand_slug();
 		$module_exists         = ModuleRegistry::get( self::$module_name );
 		$can_access_onboarding = self::can_access_onboarding( $current_brand );
 
@@ -82,6 +83,6 @@ class ModuleController {
 	 * @return boolean
 	 */
 	public static function is_brand_eligible( $brand ): bool {
-		return in_array( $brand, Bluehost::get_brands() );
+		return BrandConfig::is_known_brand( $brand );
 	}
 }
