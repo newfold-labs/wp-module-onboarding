@@ -20,8 +20,8 @@ export const LOGOS_BY_DIR = {
 /**
  * Brand slug → asset directory under src/Brands/.
  *
- * @param {string} brandSlug
- * @return {string}
+ * @param {string} brandSlug Brand registry slug from runtime.
+ * @return {string} Directory name under src/Brands/ for static assets.
  */
 export function assetDirForBrand( brandSlug ) {
 	if ( ! brandSlug ) {
@@ -43,8 +43,8 @@ export function assetDirForBrand( brandSlug ) {
 }
 
 /**
- * @param {string} brandSlug
- * @return {string}
+ * @param {string} brandSlug Brand registry slug from runtime.
+ * @return {string} Bundled logo URL for webpack.
  */
 export function logoSrcForBrand( brandSlug ) {
 	const dir = assetDirForBrand( brandSlug );

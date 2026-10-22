@@ -2,7 +2,6 @@
 namespace NewfoldLabs\WP\Module\Onboarding;
 
 use NewfoldLabs\WP\Module\Onboarding\Data\BrandConfig;
-use NewfoldLabs\WP\Module\Onboarding\Data\Brands;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 use NewfoldLabs\WP\ModuleLoader\ModuleRegistry;
 use function NewfoldLabs\WP\ModuleLoader\activate;

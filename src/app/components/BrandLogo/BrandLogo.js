@@ -13,7 +13,7 @@ import { logoSrcForBrand } from './brandAssets';
 /**
  * Header brand logo and link for the current host brand.
  *
- * @return {JSX.Element|null}
+ * @return {JSX.Element|null} Brand logo link, or null when brand name is missing.
  */
 export default function BrandLogo() {
 	const { name, url, brand } = useSelect( ( select ) => {

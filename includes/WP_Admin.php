@@ -242,14 +242,17 @@ final class WP_Admin {
 	 * @return void
 	 */
 	public static function exit_to_dashboard(): bool {
-		$brand_plugin_url          = BrandConfig::get_plugin_dashboard_page();
-		$dashboard_redirect_params = 'referrer=' . self::$slug;
+		$brand_plugin_url = BrandConfig::get_plugin_dashboard_page();
+		$redirect_url     = add_query_arg(
+			BrandConfig::get_dashboard_redirect_params(),
+			$brand_plugin_url
+		);
 
 		// Redirect to the brand plugin page.
 		wp_redirect(
 			apply_filters(
 				'nfd_build_url',
-				$brand_plugin_url . '&' . $dashboard_redirect_params
+				$redirect_url
 			)
 		);
 		exit;

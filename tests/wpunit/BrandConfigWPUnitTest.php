@@ -12,11 +12,14 @@ use NewfoldLabs\WP\Module\Onboarding\ModuleController;
 class BrandConfigWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 
 	/**
-	 * Known brands include bluehost and hostgator-us.
+	 * Known brands are every key in the Brands registry.
 	 */
 	public function test_is_known_brand_accepts_configured_brands() {
-		$this->assertTrue( BrandConfig::is_known_brand( 'bluehost' ) );
-		$this->assertTrue( BrandConfig::is_known_brand( 'hostgator-us' ) );
+		$brand_slugs = array_keys( Brands::get_brands() );
+		$this->assertNotEmpty( $brand_slugs );
+		foreach ( $brand_slugs as $slug ) {
+			$this->assertTrue( BrandConfig::is_known_brand( $slug ) );
+		}
 		$this->assertFalse( BrandConfig::is_known_brand( 'not-a-real-brand' ) );
 	}
 
