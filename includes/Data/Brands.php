@@ -57,6 +57,8 @@ final class Brands {
 				'accountUrl'                  => apply_filters( 'nfd_build_url', 'https://my.bluehost.com' ),
 				'domainsUrl'                  => apply_filters( 'nfd_build_url', 'https://my.bluehost.com/hosting/app?lil=1#/domains' ),
 				'emailUrl'                    => apply_filters( 'nfd_build_url', 'https://my.bluehost.com/hosting/app?lil=1#/email-office' ),
+				'billingUrl'                  => apply_filters( 'nfd_build_url', 'https://www.bluehost.com/my-account/billing-center-v2' ),
+				'editorChatBrandId'           => 'bluehost',
 				'pluginDashboardPage'         => \admin_url( 'admin.php?page=bluehost' ),
 				'dashboardRedirectParams'     => array(
 					'referrer' => 'nfd-onboarding',
@@ -140,6 +142,8 @@ final class Brands {
 				'accountUrl'                  => apply_filters( 'nfd_build_url', 'https://my.bluehost.in' ),
 				'domainsUrl'                  => apply_filters( 'nfd_build_url', 'https://my.bluehost.in/hosting/app?lil=1#/domains' ),
 				'emailUrl'                    => apply_filters( 'nfd_build_url', 'https://my.bluehost.in/hosting/app?lil=1#/email-office' ),
+				'billingUrl'                  => apply_filters( 'nfd_build_url', 'https://www.bluehost.com/my-account/billing-center-v2' ),
+				'editorChatBrandId'           => 'bluehost',
 				'pluginDashboardPage'         => \admin_url( 'admin.php?page=bluehost' ),
 				'dashboardRedirectParams'     => array(
 					'referrer' => 'nfd-onboarding',
@@ -224,6 +228,8 @@ final class Brands {
 				'accountUrl'                  => apply_filters( 'nfd_build_url', 'https://www.web.com/my-account' ),
 				'domainsUrl'                  => apply_filters( 'nfd_build_url', 'https://www.web.com/domains' ),
 				'emailUrl'                    => apply_filters( 'nfd_build_url', 'https://www.web.com/email-service' ),
+				'billingUrl'                  => apply_filters( 'nfd_build_url', 'https://www.web.com/my-account' ),
+				'editorChatBrandId'           => 'web',
 				'phoneNumbers'                => array(
 					'sales'   => '866-923-8821',
 					'support' => '866-923-8821',
@@ -293,6 +299,8 @@ final class Brands {
 				'accountUrl'                  => apply_filters( 'nfd_build_url', 'https://www.crazydomains.com/my-account/home/' ),
 				'domainsUrl'                  => '',
 				'emailUrl'                    => apply_filters( 'nfd_build_url', 'https://www.crazydomains.com/contact/' ),
+				'billingUrl'                  => apply_filters( 'nfd_build_url', 'https://www.crazydomains.com/my-account/home/' ),
+				'editorChatBrandId'           => 'crazydomains',
 				'pluginDashboardPage'         => \admin_url( 'admin.php?page=crazy-domains' ),
 				'phoneNumbers'                => array(
 					'support' => '2135592459',
@@ -388,6 +396,8 @@ final class Brands {
 				'accountUrl'                  => apply_filters( 'nfd_build_url', 'https://financeiro.hostgator.com.br/' ),
 				'domainsUrl'                  => apply_filters( 'nfd_build_url', 'https://cliente.hostgator.com.br/dominios' ),
 				'emailUrl'                    => apply_filters( 'nfd_build_url', 'https://cliente.hostgator.com.br/emails-list' ),
+				'billingUrl'                  => apply_filters( 'nfd_build_url', 'https://financeiro.hostgator.com.br/' ),
+				'editorChatBrandId'           => 'hostgator',
 				'pluginDashboardPage'         => \admin_url( 'admin.php?page=hostgator' ),
 				'phoneNumbers'                => array(
 					'support' => '',
@@ -494,6 +504,8 @@ final class Brands {
 				'accountUrl'                  => apply_filters( 'nfd_build_url', 'https://www.hostgator.com/my-account/login' ),
 				'domainsUrl'                  => apply_filters( 'nfd_build_url', 'https://www.hostgator.com/my-account/domain-center/domain-list' ),
 				'emailUrl'                    => apply_filters( 'nfd_build_url', 'https://www.hostgator.com/my-account/hosting/details/email' ),
+				'billingUrl'                  => apply_filters( 'nfd_build_url', 'https://www.hostgator.com/my-account/login' ),
+				'editorChatBrandId'           => 'hostgator',
 				'pluginDashboardPage'         => \admin_url( 'admin.php?page=hostgator' ),
 				'phoneNumbers'                => array(
 					'support' => '866-964-2867',

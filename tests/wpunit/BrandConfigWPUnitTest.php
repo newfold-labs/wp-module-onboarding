@@ -50,4 +50,27 @@ class BrandConfigWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 		}
 		$this->assertFalse( ModuleController::is_brand_eligible( 'unknown-brand-slug' ) );
 	}
+
+	/**
+	 * Editor-chat JS brand payload includes expected keys.
+	 */
+	public function test_get_brand_for_editor_chat_js_has_expected_keys() {
+		$brand = BrandConfig::get_brand_for_editor_chat_js();
+		$this->assertArrayHasKey( 'id', $brand );
+		$this->assertArrayHasKey( 'name', $brand );
+		$this->assertArrayHasKey( 'accountUrl', $brand );
+		$this->assertArrayHasKey( 'emailUrl', $brand );
+		$this->assertArrayHasKey( 'billingUrl', $brand );
+		$this->assertArrayHasKey( 'adminUrl', $brand );
+	}
+
+	/**
+	 * Editor-chat worker brand id is a non-empty string for bluehost.
+	 */
+	public function test_get_editor_chat_brand_id_returns_string() {
+		$id = BrandConfig::get_editor_chat_brand_id();
+		$this->assertIsString( $id );
+		$this->assertNotSame( '', $id );
+		$this->assertSame( 'bluehost', $id );
+	}
 }
