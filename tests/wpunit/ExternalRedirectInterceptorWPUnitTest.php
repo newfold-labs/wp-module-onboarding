@@ -2,7 +2,7 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding;
 
-use NewfoldLabs\WP\Module\Onboarding\Data\Bluehost;
+use NewfoldLabs\WP\Module\Onboarding\Data\BrandConfig;
 
 /**
  * ExternalRedirectInterceptor wpunit tests.
@@ -28,7 +28,7 @@ class ExternalRedirectInterceptorWPUnitTest extends \lucatume\WPBrowser\TestCase
 	 */
 	public function test_wp_redirect_allows_brand_plugin_url() {
 		$interceptor = new ExternalRedirectInterceptor();
-		$brand_url   = Bluehost::get_plugin_dashboard_page();
+		$brand_url   = BrandConfig::get_plugin_dashboard_page();
 		$this->assertSame( $brand_url, $interceptor->wp_redirect( $brand_url ) );
 	}
 

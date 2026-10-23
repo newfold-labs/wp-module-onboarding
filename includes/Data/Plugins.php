@@ -159,7 +159,7 @@ final class Plugins {
 				$init_list = array_merge( $init_list, self::$init_list[ $plan ]['default'] );
 			}
 
-			$current_brand = Bluehost::get_current_brand();
+			$current_brand = BrandConfig::get_brand_slug();
 			// Brand specific ecommerce plugins
 			if ( isset( self::$init_list[ $plan ][ $current_brand ]['default'] ) ) {
 				$init_list = array_merge( $init_list, self::$init_list[ $plan ][ $current_brand ]['default'] );
@@ -176,9 +176,11 @@ final class Plugins {
 	 * @return array
 	 */
 	public static function get_ecommerce_plugins(): array {
-		$current_brand             = Bluehost::get_current_brand();
+		$current_brand             = BrandConfig::get_brand_slug();
 		$default_ecommerce_plugins = self::$init_list['ecommerce']['default'];
-		$brand_ecommerce_plugins   = self::$init_list['ecommerce'][ $current_brand ]['default'];
+		$brand_ecommerce_plugins   = isset( self::$init_list['ecommerce'][ $current_brand ]['default'] )
+			? self::$init_list['ecommerce'][ $current_brand ]['default']
+			: array();
 
 		return array_merge( $default_ecommerce_plugins, $brand_ecommerce_plugins );
 	}
