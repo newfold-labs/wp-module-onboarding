@@ -46,7 +46,7 @@
 		"@wordpress/dom-ready": "^4.46.0",
 		"@wordpress/editor": "^15.2.0",
 		"@wordpress/element": "^9.0.0",
-		"@wordpress/i18n": "^6.24.0",
+		"@wordpress/i18n": "^7.0.0",
 		"@wordpress/interface": "^10.3.0",
 		"@wordpress/plugins": "^8.0.0",
 		"@wordpress/url": "^5.0.0",
