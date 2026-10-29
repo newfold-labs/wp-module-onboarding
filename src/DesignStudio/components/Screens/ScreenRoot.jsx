@@ -33,15 +33,15 @@ export default function ScreenRoot() {
 					</Card>
 					<ItemGroup>
 						<NavigationButton icon={ image } path="/logo">
-							{ __( 'Logo', 'wp-plugin-bluehost' ) }
+							{ __( 'Logo', 'wp-module-onboarding' ) }
 						</NavigationButton>
 
 						<NavigationButton icon={ color } path="/colors">
-							{ __( 'Colors', 'wp-plugin-bluehost' ) }
+							{ __( 'Colors', 'wp-module-onboarding' ) }
 						</NavigationButton>
 
 						<NavigationButton icon={ typography } path="/typography">
-							{ __( 'Typography', 'wp-plugin-bluehost' ) }
+							{ __( 'Typography', 'wp-module-onboarding' ) }
 						</NavigationButton>
 					</ItemGroup>
 				</VStack>

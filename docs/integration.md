@@ -11,7 +11,7 @@ updated: 2026-10-13
 
 `bootstrap.php` (autoloaded via Composer `files`):
 
-1. Eager-loads `includes/Data/{Brands,Plugins,Languages,Options,Config,Runtime,Events,Bluehost}.php`. Brand plugins may still pull in the legacy `wp-module-onboarding-data` package, which uses the same `NewfoldLabs\WP\Module\Onboarding\Data\` namespace; requiring our files first makes our classes win. Remove once brand plugins drop that dependency.
+1. Eager-loads `includes/Data/{Brands,Plugins,Languages,Options,Config,Runtime,Events,BrandConfig}.php`. Brand plugins may still pull in the legacy `wp-module-onboarding-data` package, which uses the same `NewfoldLabs\WP\Module\Onboarding\Data\` namespace; requiring our files first makes our classes win. Remove once brand plugins drop that dependency.
 2. Hooks `nfd_wp_module_onboarding_register()` on `plugins_loaded`, which calls the loader's `register()` with `name => onboarding`, `isActive => true`, `isHidden => true`.
 3. In the module callback it defines constants, runs the compatibility scan, then instantiates `Application`.
 4. Calls `ModuleController::init()` and registers completion/cron hooks (below).
@@ -24,15 +24,26 @@ updated: 2026-10-13
 | `NFD_ONBOARDING_DIR` | Module directory. |
 | `NFD_ONBOARDING_BUILD_DIR` / `NFD_ONBOARDING_BUILD_URL` | Built asset path/URL (URL assumes `vendor/newfold-labs/wp-module-onboarding` inside the host plugin). |
 | `NFD_ONBOARDING_PLUGIN_URL`, `NFD_ONBOARDING_PLUGIN_DIRNAME` | Host plugin URL / folder name (used for language file loading). |
-| `NFD_ONBOARDING_BLUEHOST_BRAND` | Brand from the loader container (`$container->plugin()->brand`). |
+| `NFD_ONBOARDING_PLUGIN_BRAND` | Normalized brand slug from `Brands::set_current_brand( $container )` (e.g. `bluehost`, `hostgator-us`). |
+| `NFD_ONBOARDING_BLUEHOST_BRAND` | Legacy: raw `$container->plugin()->brand` for backward compatibility. |
 | `NFD_MODULE_DATA_EVENTS_API` | `/newfold-data/v1/events`, the data module events endpoint. |
+
+## Multi-brand behavior
+
+On registration the module calls `Brands::set_current_brand( $container )` (same pattern as `wp-module-help-center`). That defines `NFD_ONBOARDING_PLUGIN_BRAND` using the host plugin container (`plugin->brand`, with HostGator region suffixes when applicable).
+
+`Data\BrandConfig` is the PHP entry point for the active brand slug and dashboard URLs. `Data\Runtime::current_brand()` merges the matching row from `Brands::get_brands()` and is exposed to the SPA as `window.nfdOnboarding.runtime.currentBrand` (name, url, `pluginDashboardPage`, migration links, and per-brand `config`).
+
+On registration, onboarding also sets **`editor_chat_brand`** on the module loader container (from `BrandConfig::get_brand_for_editor_chat_js()`, filterable via `newfold/container/editor_chat_brand`). Sibling modules such as **wp-module-editor-chat** read that key — they do not import onboarding PHP classes. Registry rows include `billingUrl` and `editorChatBrandId` for the worker and header menu.
+
+The React shell uses `BrandLogo` to render the correct logo from `src/Brands/<asset-dir>/` and link to `currentBrand.url`. Do not hardcode a single host name in UI strings; use `currentBrand.name` or translated `sprintf` patterns.
 
 ## Gating: who gets onboarding
 
 `ModuleController::module_switcher()` runs on `after_setup_theme` and activates or deactivates the module:
 
 - Active if the `nfd_module_onboarding_activate` query param was passed by an admin (stored as a 30-day transient), or
-- Active if the current brand is eligible: `Data\Bluehost::get_brands()` returns `bluehost` and `bluehost-india`.
+- Active if the current brand slug exists in `Brands::get_brands()` (`BrandConfig::is_known_brand()`).
 
 Otherwise the module is deactivated in the loader registry.
 
