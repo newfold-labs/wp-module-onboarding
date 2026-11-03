@@ -184,12 +184,14 @@ class ThumbnailService {
 	 * Replace WC placeholder markup when the real context is a product with `nfd_image_url`
 	 * (covers shop grids: `woocommerce/product-image` uses this instead of `get_image()`).
 	 *
-	 * @param string $html        Placeholder HTML.
-	 * @param string $size        Image size name.
-	 * @param array  $dimensions  Width/height.
+	 * @param string       $html        Placeholder HTML.
+	 * @param string|array $size        Image size: a registered size name, or a `[ width, height ]` array.
+	 *                                  WooCommerce passes an array from the order-email/placeholder path, so this
+	 *                                  must not be type-hinted `string` (would fatal). Unused here; kept for the filter signature.
+	 * @param array        $dimensions  Width/height.
 	 * @return string
 	 */
-	public function maybe_replace_wc_placeholder_img( string $html, string $size, array $dimensions ): string {
+	public function maybe_replace_wc_placeholder_img( string $html, $size, array $dimensions ): string {
 		$product = null;
 		if ( ! empty( self::$product_image_placeholder_stack ) ) {
 			$post_id = (int) self::$product_image_placeholder_stack[ count( self::$product_image_placeholder_stack ) - 1 ];
