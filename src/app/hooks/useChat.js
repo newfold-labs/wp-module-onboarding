@@ -21,6 +21,7 @@ import {
 import { handshake, intake, startGeneration, streamSSE } from '@/utils/api/ai-platform';
 import { initializeEcommercePlugins, ensureCriticalPluginsInBackground, clearOnboarding } from '@/utils/api/wordpress';
 import formatTaskResult from '@/utils/helpers/formatTaskResult';
+import { isMigrationDeepLink } from '@/utils/helpers/migrationEntry';
 import useMessages from '@/hooks/useMessages';
 import {
 	MAX_RETRIES,
@@ -373,6 +374,25 @@ const useChat = () => {
 	useEffect( () => {
 		handleOriginStart();
 	}, [ handleOriginStart ] );
+
+	// SSO / Account Manager may land on onboarding with a migration hash or query param.
+	useEffect( () => {
+		if ( window.nfdOnboarding?.origin?.prompt || window.nfdOnboarding?.origin?.chat_history ) {
+			return;
+		}
+
+		if ( ! isMigrationDeepLink() ) {
+			return;
+		}
+
+		sendOnboardingEvent( new OnboardingEvent( ACTION_FORK_OPTION_SELECTED, 'MIGRATE' ) );
+
+		if ( canMigrateSite ) {
+			setMode( 'migration' );
+		} else if ( migrationFallbackUrl ) {
+			window.open( migrationFallbackUrl, '_blank' );
+		}
+	}, [ canMigrateSite, migrationFallbackUrl ] );
 
 	/**
 	 * Retry the generation stream with the same site_id and prompt.
