@@ -13,7 +13,7 @@
 		"npm": ">=10.9.0"
 	},
 	"devDependencies": {
-		"@wordpress/env": "^11.17.0",
+		"@wordpress/env": "^12.0.0",
 		"@wordpress/icons": "^19.0.0",
 		"@wordpress/scripts": "^37.0.0",
 		"eslint": "^10.14.0",
