@@ -53,6 +53,6 @@
 		"canvas-confetti": "^1.9.4",
 		"lucide-react": "^1.66.0",
 		"motion": "^14.9.0",
-		"posthog-js": "^1.438.21"
+		"posthog-js": "^1.444.0"
 	}
 }
