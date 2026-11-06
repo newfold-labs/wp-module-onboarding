@@ -149,19 +149,174 @@ class PostTypeServiceWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase 
 	}
 
 	/**
-	 * Regression guard: with the post type enabled, the same child page 404s.
+	 * With the post type enabled, a child page of the site's Services page still resolves
+	 * because the page wins when no service has that slug.
 	 *
-	 * Documents why the post type must stay off on sites that do not use it.
-	 *
+	 * @covers ::yield_to_page
 	 * @return void
 	 */
-	public function test_services_child_page_404s_when_enabled() {
+	public function test_services_child_page_resolves_when_enabled() {
 		$child_id = $this->create_services_child_page();
 		PostTypeService::set_services_enabled( true );
 
 		$this->go_to( get_permalink( $child_id ) );
 
+		$this->assertFalse( is_404() );
+		$this->assertTrue( is_page() );
+		$this->assertSame( $child_id, get_queried_object()->ID );
+	}
+
+	/**
+	 * A published service with the same slug as a child page keeps its URL.
+	 *
+	 * @covers ::yield_to_page
+	 * @return void
+	 */
+	public function test_service_wins_over_page_with_same_slug() {
+		$child_id = $this->create_services_child_page();
+		PostTypeService::set_services_enabled( true );
+		$service_id = self::factory()->post->create(
+			array(
+				'post_type'  => PostTypeService::SERVICE_POST_TYPE,
+				'post_name'  => 'certification-and-courses',
+				'post_title' => 'Certification service',
+			)
+		);
+
+		$this->go_to( get_permalink( $service_id ) );
+
+		$this->assertFalse( is_404() );
+		$this->assertSame( $service_id, get_queried_object()->ID );
+		$this->assertNotSame( $child_id, get_queried_object()->ID );
+	}
+
+	/**
+	 * A draft service does not block a page at the same path.
+	 *
+	 * @covers ::yield_to_page
+	 * @return void
+	 */
+	public function test_draft_service_does_not_block_page() {
+		$child_id = $this->create_services_child_page();
+		PostTypeService::set_services_enabled( true );
+		self::factory()->post->create(
+			array(
+				'post_type'   => PostTypeService::SERVICE_POST_TYPE,
+				'post_status' => 'draft',
+				'post_name'   => 'certification-and-courses',
+			)
+		);
+
+		$this->go_to( get_permalink( $child_id ) );
+
+		$this->assertFalse( is_404() );
+		$this->assertSame( $child_id, get_queried_object()->ID );
+	}
+
+	/**
+	 * With no service and no page at the path, the request still 404s.
+	 *
+	 * @covers ::yield_to_page
+	 * @return void
+	 */
+	public function test_unknown_services_path_404s() {
+		$this->create_services_child_page();
+		PostTypeService::set_services_enabled( true );
+
+		$this->go_to( home_url( '/services/does-not-exist/' ) );
+
 		$this->assertTrue( is_404() );
+	}
+
+	/**
+	 * The filter can keep the post type unregistered even when the option is on.
+	 *
+	 * @covers ::should_register_service_post_type
+	 * @covers ::register
+	 * @return void
+	 */
+	public function test_register_filter_can_disable_post_type() {
+		update_option( PostTypeService::get_services_option_name(), '1' );
+		add_filter( 'newfold/onboarding/filter/registerServicePostType', '__return_false' );
+
+		( new PostTypeService() )->register();
+
+		$this->assertFalse( post_type_exists( PostTypeService::SERVICE_POST_TYPE ) );
+	}
+
+	/**
+	 * The filter can force the post type on when the option is off.
+	 *
+	 * @covers ::should_register_service_post_type
+	 * @return void
+	 */
+	public function test_register_filter_can_enable_post_type() {
+		add_filter( 'newfold/onboarding/filter/registerServicePostType', '__return_true' );
+
+		( new PostTypeService() )->register();
+
+		$this->assertTrue( post_type_exists( PostTypeService::SERVICE_POST_TYPE ) );
+	}
+
+	/**
+	 * The default rewrite slug is `services`.
+	 *
+	 * @covers ::get_rewrite_slug
+	 * @return void
+	 */
+	public function test_default_rewrite_slug() {
+		PostTypeService::set_services_enabled( true );
+
+		$this->assertSame( 'services', PostTypeService::get_rewrite_slug() );
+		$this->assertSame( 'services', get_post_type_object( PostTypeService::SERVICE_POST_TYPE )->rewrite['slug'] );
+	}
+
+	/**
+	 * The slug filter changes the URL base, and bad values fall back to the default.
+	 *
+	 * @covers ::get_rewrite_slug
+	 * @return void
+	 */
+	public function test_rewrite_slug_filter() {
+		add_filter(
+			'newfold/onboarding/filter/serviceRewriteSlug',
+			function () {
+				return 'Our Services/';
+			}
+		);
+		$this->assertSame( 'our-services', PostTypeService::get_rewrite_slug() );
+
+		remove_all_filters( 'newfold/onboarding/filter/serviceRewriteSlug' );
+		add_filter( 'newfold/onboarding/filter/serviceRewriteSlug', '__return_empty_string' );
+		$this->assertSame( 'services', PostTypeService::get_rewrite_slug() );
+
+		remove_all_filters( 'newfold/onboarding/filter/serviceRewriteSlug' );
+		add_filter( 'newfold/onboarding/filter/serviceRewriteSlug', '__return_false' );
+		$this->assertSame( 'services', PostTypeService::get_rewrite_slug() );
+	}
+
+	/**
+	 * A filtered slug is used when the post type is registered and pages are untouched.
+	 *
+	 * @covers ::get_rewrite_slug
+	 * @covers ::register
+	 * @return void
+	 */
+	public function test_registered_with_filtered_slug() {
+		add_filter(
+			'newfold/onboarding/filter/serviceRewriteSlug',
+			function () {
+				return 'nfd-services';
+			}
+		);
+		$child_id = $this->create_services_child_page();
+		PostTypeService::set_services_enabled( true );
+		flush_rewrite_rules( false );
+
+		$this->assertSame( 'nfd-services', get_post_type_object( PostTypeService::SERVICE_POST_TYPE )->rewrite['slug'] );
+
+		$this->go_to( get_permalink( $child_id ) );
+		$this->assertSame( $child_id, get_queried_object()->ID );
 	}
 
 	/**
