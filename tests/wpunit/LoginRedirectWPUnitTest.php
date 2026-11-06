@@ -78,6 +78,20 @@ class LoginRedirectWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	}
 
 	/**
+	 * Filter redirect preserves onboarding URL fragment when redirect option enabled.
+	 *
+	 * @return void
+	 */
+	public function test_filter_redirect_preserves_onboarding_url_with_fragment_when_redirect_option_enabled() {
+		LoginRedirect::enable_redirect();
+		$user_id = self::factory()->user->create( array( 'role' => 'administrator' ) );
+		$user    = \get_user_by( 'id', $user_id );
+		$target  = \admin_url( 'index.php?page=' . WP_Admin::$slug . '#migration' );
+		$result  = LoginRedirect::filter_redirect( $target, $user );
+		$this->assertSame( $target, $result );
+	}
+
+	/**
 	 * Filter redirect returns original when not fresh install.
 	 *
 	 * @return void
