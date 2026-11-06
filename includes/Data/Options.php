@@ -78,6 +78,8 @@ final class Options {
 		'sitegen_enhanced_prompt'       => 'sitegen_enhanced_prompt',
 		'sitegen_discovery_data'        => 'sitegen_discovery_data',
 		'cleared_onboarding'            => 'cleared_onboarding',
+		'module_version'                => 'module_version',
+		'services_post_type_enabled'    => 'services_post_type_enabled',
 	);
 
 	/**

@@ -4,9 +4,9 @@ import {
 	createPage,
 	updateTemplate,
 	updateTemplatePart,
-	createService,
 	publishProducts,
 	publishArticles,
+	publishServices,
 } from '@/utils/api/wordpress';
 import {
 	setGlobalStylesColorPalette,
@@ -194,20 +194,19 @@ export async function runArticles( { generationData } ) {
 
 export async function runServices( { generationData } ) {
 	const services = generationData.post_types?.services || [];
-	let serviceCount = 0;
 
-	for ( const service of services ) {
-		const featuredMediaURL = service.featured_image ?? null;
-
-		const normalizedContent = normalizeBlockContent( service.content );
-		await createService( service.title, normalizedContent, service.excerpt || '', {
-			meta: {
-				nfd_onboarding_generated: '1',
-				...( featuredMediaURL ? { nfd_image_url: featuredMediaURL } : {} ),
-			},
-		} );
-		serviceCount++;
+	if ( services.length === 0 ) {
+		return 'Skipped — no services';
 	}
+
+	const normalizedServices = services.map( ( service ) => ( {
+		title: service.title,
+		excerpt: service.excerpt || '',
+		content: normalizeBlockContent( service.content ),
+		featured_image: service.featured_image ?? '',
+	} ) );
+	const result = await publishServices( normalizedServices );
+	const serviceCount = result?.created ?? 0;
 
 	return serviceCount > 0
 		? `${ serviceCount } service${ serviceCount !== 1 ? 's' : '' } published`

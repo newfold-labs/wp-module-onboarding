@@ -82,29 +82,6 @@ export async function createPost( title, content, excerpt = '', options = {} ) {
 }
 
 /**
- * Create a published service.
- *
- * @param {string} title   Service title.
- * @param {string} content Block HTML content.
- * @param {string} excerpt Service excerpt.
- * @param {Object} options Extra fields (featured_media, categories, etc.).
- * @return {Promise<Object>} The created service object.
- */
-export async function createService( title, content, excerpt = '', options = {} ) {
-	return apiFetch( {
-		url: `${ wpRestBase }/nfd_service`,
-		method: 'POST',
-		data: {
-			title,
-			content,
-			excerpt,
-			status: 'publish',
-			...options,
-		},
-	} );
-}
-
-/**
  * Update an existing template part by slug, or create one if not found.
  *
  * @param {string} slug    Template part slug (e.g. "header", "footer").
@@ -338,5 +315,22 @@ export async function publishArticles( articles ) {
 		url: `${ onboardingRestBase }/site-content/publish-articles`,
 		method: 'POST',
 		data: { articles },
+	} );
+}
+
+/**
+ * Publish services to the backend.
+ *
+ * The backend enables the `nfd_service` post type before inserting, since it is
+ * not registered on sites that have never had services.
+ *
+ * @param {Array} services Array of { title, excerpt, content, featured_image }.
+ * @return {Promise<{created: number}>} Number of services created.
+ */
+export async function publishServices( services ) {
+	return apiFetch( {
+		url: `${ onboardingRestBase }/site-content/publish-services`,
+		method: 'POST',
+		data: { services },
 	} );
 }

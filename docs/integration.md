@@ -51,7 +51,7 @@ Otherwise the module is deactivated in the loader registry.
 
 ## What `Application` wires up
 
-Always: `PostTypeService` (registers `nfd_service` CPT and image meta), `ThumbnailService`, login redirect filters, compatibility reset on core update, and `WP_CLI` (currently an empty stub).
+Always: `PostTypeService` (registers image meta, and the `nfd_service` CPT when `services_post_type_enabled` is true), `UpgradeService::maybe_upgrade()` (runs `upgrades/` routines), `ThumbnailService`, login redirect filters, compatibility reset on core update, and `WP_CLI` (currently an empty stub).
 
 Only for authorized admins (`manage_options`, in wp-admin or REST): `RestApi`, `WP_Admin`, `ExternalRedirectInterceptor`. In wp-admin also `StatusService::track()` and `EventService::init()`.
 

@@ -54,7 +54,8 @@
 		"newfold-labs/wp-module-migration": "^1.8.1",
 		"wp-forge/helpers": "^2.0",
 		"newfold-labs/wp-module-install-checker": "^1.1.2",
-		"newfold-labs/wp-module-survey": "^1.1.1"
+		"newfold-labs/wp-module-survey": "^1.1.1",
+		"wp-forge/wp-upgrade-handler": "^1.0"
 	},
 	"require-dev": {
 		"php": ">=7.4",
