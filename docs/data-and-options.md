@@ -33,6 +33,12 @@ Origin options: `nfd_origin_prompt`, `nfd_origin_prompt_completed`, `nfd_origin_
 
 `Options::get_initialization_options()` provides defaults applied by `SettingsService::initialize()` (comment limits, auto-updates, `/%postname%/` permalinks).
 
+### Service post type filters and URL conflicts
+
+- `newfold/onboarding/filter/registerServicePostType` (bool, default = the `services_post_type_enabled` option): force the `nfd_service` post type on or off.
+- `newfold/onboarding/filter/serviceRewriteSlug` (string, default `services`): URL base for service single pages. Sanitized; empty falls back to `services`. Flush rewrite rules (re-save Settings > Permalinks) after changing it.
+- Pages win: `PostTypeService::yield_to_page()` (on `request`) hands `/services/<slug>` to a page at the same path when no published service has that slug, so child pages of a site's own "Services" page do not 404. A published service with the same slug still wins; previews are skipped.
+
 ## `Runtime`
 
 `Runtime::get_data()` builds `window.nfdOnboarding.runtime`: `buildUrl`, `siteUrl`, `restUrl`, `adminUrl`, `status`, `pluginInstallHash`, `languages`, `currentUserDetails`, `isFreshInstallation`, `aiPlatformUrl`, `sentryInitDsnURL`, `currentBrand`. It also exposes helpers `is_fresh_installation()` and `coming_soon()` (both read container services).
