@@ -31,6 +31,13 @@ Origin options: `nfd_origin_prompt`, `nfd_origin_prompt_completed`, `nfd_origin_
 
 `Options::get_initialization_options()` provides defaults applied by `SettingsService::initialize()` (comment limits, auto-updates, `/%postname%/` permalinks).
 
+### Service post type rewrite slug
+
+`PostTypeService` registers the `nfd_service` post type under the `services` rewrite slug by default. When the site already has its own top-level page at `/services/`, the post type steps aside to the `nfd-services` slug (with `with_front` disabled) so its `/services/<child>` rewrite rules do not shadow that page's child pages (DEVSUP-154525). Two standalone options support this:
+
+- `nfd_onboarding_service_rewrite_slug` — caches the effective slug (`services` or `nfd-services`) so the post type registers without a database query on every request. It is cleared when a page is created, updated, deleted, trashed, or restored, which recomputes the slug on the next request.
+- `nfd_onboarding_service_rewrite_flushed` — records the slug the rewrite rules were last flushed for, so the rules are soft-flushed exactly once when the registered slug changes: on upgrade for sites that already collide, and again when a conflicting `/services/` page is added or removed. The flush is skipped on sites using plain permalinks.
+
 ## `Runtime`
 
 `Runtime::get_data()` builds `window.nfdOnboarding.runtime`: `buildUrl`, `siteUrl`, `restUrl`, `adminUrl`, `status`, `pluginInstallHash`, `languages`, `currentUserDetails`, `isFreshInstallation`, `aiPlatformUrl`, `sentryInitDsnURL`, `currentBrand`. It also exposes helpers `is_fresh_installation()` and `coming_soon()` (both read container services).
