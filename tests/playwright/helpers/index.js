@@ -127,7 +127,7 @@ export const ONBOARDING_CAPABILITIES = {
  * - nfd_module_onboarding_flow: Contains flow state including hasExited/isComplete flags
  * - nfd_module_onboarding_settings_initialized: Tracks if settings were initialized
  * - nfd_module_onboarding_state_*: Redux state persistence options
- * - _transient_nfd_site_capabilities: Must include hasAISiteGen: true
+ * - _transient_nfd_site_capabilities: Must include hasAISiteGen: true (set via newfold.setCapability)
  */
 export async function resetOnboardingState() {
 	utils.fancyLog( '🔧 Batched onboarding test reset (WP-CLI)' );
@@ -151,9 +151,10 @@ export async function resetOnboardingState() {
 		.map( ( name ) => `wp option delete ${ name } >/dev/null 2>&1 || true` )
 		.join( '; ' );
 
-	runWpEnvBash(
-		`set +e; ${ deletes }; wp eval "set_transient( 'nfd_site_capabilities', array( 'hasAISiteGen' => true, 'canMigrateSite' => true ) );"`
-	);
+	runWpEnvBash( `set +e; ${ deletes }` );
+
+	// Use the plugin helper to set/reset the required capabilities
+	await ensureOnboardingCapabilities();
 }
 
 /**
