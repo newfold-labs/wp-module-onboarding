@@ -10,6 +10,8 @@ const wpScriptsRequire = createRequire(
 );
 const wpPlugin = wpScriptsRequire( '@wordpress/eslint-plugin' );
 
+const packageRoot = __dirname;
+
 const restrictedImports = [
 	{
 		name: 'framer-motion',
@@ -88,6 +90,19 @@ module.exports = [
 			},
 		},
 		rules: {
+			'import/no-extraneous-dependencies': [
+				'error',
+				{
+					packageDir: packageRoot,
+					peerDependencies: true,
+					includeTypes: true,
+					devDependencies: [
+						'**/*.test.js',
+						'**/*.spec.js',
+						'tests/**',
+					],
+				},
+			],
 			'no-restricted-imports': [
 				'error',
 				{ paths: restrictedImports },

@@ -13,6 +13,9 @@
 		"npm": ">=10.9.0"
 	},
 	"devDependencies": {
+		"@playwright/test": "^1.64.0",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
 		"@wordpress/env": "^11.17.0",
 		"@wordpress/icons": "^19.0.0",
 		"@wordpress/scripts": "^36.1.0",

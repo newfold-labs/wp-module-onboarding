@@ -60,6 +60,7 @@ const useChat = () => {
 	const discoveryDataRef = useRef( {} );
 	const retryCountRef = useRef( 0 );
 	const startTimeRef = useRef( null );
+	const migrationDeepLinkHandledRef = useRef( false );
 
 	const { canMigrateSite, migrationFallbackUrl } = useSelect( ( selectFn ) => ( {
 		canMigrateSite: selectFn( nfdOnboardingStore ).canMigrateSite(),
@@ -377,6 +378,10 @@ const useChat = () => {
 
 	// SSO / Account Manager may land on onboarding with a migration hash or query param.
 	useEffect( () => {
+		if ( migrationDeepLinkHandledRef.current ) {
+			return;
+		}
+
 		if ( window.nfdOnboarding?.origin?.prompt || window.nfdOnboarding?.origin?.chat_history ) {
 			return;
 		}
@@ -385,11 +390,16 @@ const useChat = () => {
 			return;
 		}
 
-		sendOnboardingEvent( new OnboardingEvent( ACTION_FORK_OPTION_SELECTED, 'MIGRATE' ) );
-
 		if ( canMigrateSite ) {
+			migrationDeepLinkHandledRef.current = true;
+			sendOnboardingEvent( new OnboardingEvent( ACTION_FORK_OPTION_SELECTED, 'MIGRATE' ) );
 			setMode( 'migration' );
-		} else if ( migrationFallbackUrl ) {
+			return;
+		}
+
+		if ( migrationFallbackUrl ) {
+			migrationDeepLinkHandledRef.current = true;
+			sendOnboardingEvent( new OnboardingEvent( ACTION_FORK_OPTION_SELECTED, 'MIGRATE' ) );
 			window.open( migrationFallbackUrl, '_blank' );
 		}
 	}, [ canMigrateSite, migrationFallbackUrl ] );
