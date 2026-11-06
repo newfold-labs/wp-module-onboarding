@@ -177,13 +177,15 @@ class CommonSiteTypeService {
 		$created_ids = array();
 		foreach ( $services as $service ) {
 			$post_id = wp_insert_post(
-				array(
-					'post_title'   => (string) ( $service['title'] ?? '' ),
-					'post_content' => (string) ( $service['content'] ?? '' ),
-					'post_excerpt' => (string) ( $service['excerpt'] ?? '' ),
-					'post_status'  => 'publish',
-					'post_type'    => PostTypeService::SERVICE_POST_TYPE,
-					'post_author'  => $post_author,
+				wp_slash(
+					array(
+						'post_title'   => (string) ( $service['title'] ?? '' ),
+						'post_content' => (string) ( $service['content'] ?? '' ),
+						'post_excerpt' => (string) ( $service['excerpt'] ?? '' ),
+						'post_status'  => 'publish',
+						'post_type'    => PostTypeService::SERVICE_POST_TYPE,
+						'post_author'  => $post_author,
+					)
 				)
 			);
 
