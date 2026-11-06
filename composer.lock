@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee47bd9a50653b1ef40b78890f7d622a",
+    "content-hash": "ffe5be62be260369bad674d1b422ea3b",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -1321,7 +1321,8 @@
                 "issues": "https://github.com/wp-forge/wp-upgrade-handler/issues",
                 "source": "https://github.com/wp-forge/wp-upgrade-handler/tree/1.0"
             },
-            "time": "2020-05-21T00:04:44+00:00"
+            "time": "2020-05-21T00:04:44+00:00",
+            "published-time": "2020-05-21T00:07:29+00:00"
         },
         {
             "name": "wpscholar/url",
@@ -7892,5 +7893,5 @@
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }

@@ -154,6 +154,55 @@ class CommonSiteTypeService {
 	}
 
 	/**
+	 * Publishes a list of services as `nfd_service` posts.
+	 *
+	 * Enables the service post type first; it is not registered on sites that
+	 * have never had services (see PostTypeService).
+	 *
+	 * @param array $services The services: [ { title, excerpt, content, featured_image }, ... ].
+	 * @return int[] List of successfully created service IDs.
+	 */
+	public static function publish_services( array $services ): array {
+		if ( empty( $services ) ) {
+			return array();
+		}
+
+		PostTypeService::set_services_enabled( true );
+
+		$post_author = get_current_user_id();
+		if ( ! $post_author ) {
+			$post_author = 1;
+		}
+
+		$created_ids = array();
+		foreach ( $services as $service ) {
+			$post_id = wp_insert_post(
+				array(
+					'post_title'   => (string) ( $service['title'] ?? '' ),
+					'post_content' => (string) ( $service['content'] ?? '' ),
+					'post_excerpt' => (string) ( $service['excerpt'] ?? '' ),
+					'post_status'  => 'publish',
+					'post_type'    => PostTypeService::SERVICE_POST_TYPE,
+					'post_author'  => $post_author,
+				)
+			);
+
+			if ( is_wp_error( $post_id ) || ! $post_id ) {
+				continue;
+			}
+
+			update_post_meta( $post_id, PostTypeService::META_ONBOARDING_GENERATED, '1' );
+			if ( ! empty( $service['featured_image'] ) ) {
+				update_post_meta( $post_id, PostTypeService::META_IMAGE_URL, esc_url_raw( $service['featured_image'] ) );
+			}
+
+			$created_ids[] = $post_id;
+		}
+
+		return $created_ids;
+	}
+
+	/**
 	 * Creates or gets a blog category.
 	 *
 	 * @param string $name The name of the category.

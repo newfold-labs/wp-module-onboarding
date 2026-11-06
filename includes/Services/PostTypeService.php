@@ -7,10 +7,18 @@
 
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Options;
+
 /**
  * Post Type Service Class
  *
  * Responsible for registering the post types and meta fields for the onboarding-generated content.
+ *
+ * The `nfd_service` post type claims the `/services/` URL space, which collides with
+ * existing "Services" pages and their children on sites that never used onboarding.
+ * It is therefore only registered when the autoloaded services option is true. The
+ * option is seeded by the 4.0.11 upgrade routine and enabled when onboarding
+ * publishes services. Changing the option re-syncs registration and rewrite rules.
  */
 class PostTypeService {
 
@@ -34,20 +42,125 @@ class PostTypeService {
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'register' ) );
+
+		$option = self::get_services_option_name();
+		add_action( "add_option_{$option}", array( __CLASS__, 'sync_service_post_type' ) );
+		add_action( "update_option_{$option}", array( __CLASS__, 'sync_service_post_type' ) );
+		add_action( "delete_option_{$option}", array( __CLASS__, 'handle_services_option_deleted' ) );
 	}
 
 	/**
 	 * Register post types.
 	 */
 	public function register(): void {
-		$this->register_service_post_type();
+		if ( self::is_services_enabled() ) {
+			self::register_service_post_type();
+		}
 		$this->register_image_url_meta();
+	}
+
+	/**
+	 * Name of the autoloaded option that gates the service post type.
+	 *
+	 * @return string
+	 */
+	public static function get_services_option_name(): string {
+		return (string) Options::get_option_name( 'services_post_type_enabled' );
+	}
+
+	/**
+	 * Whether the service post type should be registered.
+	 *
+	 * @return bool
+	 */
+	public static function is_services_enabled(): bool {
+		return wp_validate_boolean( get_option( self::get_services_option_name(), false ) );
+	}
+
+	/**
+	 * Enable or disable the service post type.
+	 *
+	 * Stored as '1' / '0' with autoload so the check on every request is free.
+	 * Registration and rewrite rules are synced by the option hooks.
+	 *
+	 * @param bool $enabled Whether the post type should be registered.
+	 * @return void
+	 */
+	public static function set_services_enabled( bool $enabled ): void {
+		update_option( self::get_services_option_name(), $enabled ? '1' : '0', true );
+	}
+
+	/**
+	 * Whether any `nfd_service` posts exist in the database.
+	 *
+	 * Queries the table directly so it works even when the post type is not registered.
+	 *
+	 * @return bool
+	 */
+	public static function has_service_posts(): bool {
+		global $wpdb;
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- one-off check; post type may be unregistered.
+		$found = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT ID FROM {$wpdb->posts} WHERE post_type = %s AND post_status <> 'auto-draft' LIMIT 1",
+				self::SERVICE_POST_TYPE
+			)
+		);
+
+		return ! empty( $found );
+	}
+
+	/**
+	 * Sync post type registration with the option, then flush rewrite rules.
+	 *
+	 * Hooked to the option's add/update actions.
+	 *
+	 * @return void
+	 */
+	public static function sync_service_post_type(): void {
+		self::apply_service_post_type_state( self::is_services_enabled() );
+	}
+
+	/**
+	 * Treat deleting the option as disabling the post type.
+	 *
+	 * @return void
+	 */
+	public static function handle_services_option_deleted(): void {
+		self::apply_service_post_type_state( false );
+	}
+
+	/**
+	 * Register or unregister the post type for the current request and flush rewrite rules.
+	 *
+	 * Rewrite rules are flushed by clearing the stored rules rather than calling
+	 * flush_rewrite_rules(). WordPress rebuilds them on the next request, once every
+	 * post type is registered. Regenerating them in this request is unsafe: before
+	 * `init` other post types are not registered yet, and after a post type is
+	 * unregistered its rules linger in WP_Rewrite::$extra_rules_top for the rest of
+	 * the request, so they would be saved again.
+	 *
+	 * @param bool $enabled Whether the post type should be registered.
+	 * @return void
+	 */
+	private static function apply_service_post_type_state( bool $enabled ): void {
+		if ( did_action( 'init' ) ) {
+			$registered = post_type_exists( self::SERVICE_POST_TYPE );
+			if ( $enabled && ! $registered ) {
+				self::register_service_post_type();
+			} elseif ( ! $enabled && $registered ) {
+				unregister_post_type( self::SERVICE_POST_TYPE );
+			}
+		}
+
+		delete_option( 'rewrite_rules' );
 	}
 
 	/**
 	 * Register service post type.
 	 */
-	private function register_service_post_type(): void {
+	private static function register_service_post_type(): void {
 		$labels = array(
 			'name'                     => _x( 'Services', 'post type general name', 'wp-module-onboarding' ),
 			'singular_name'            => _x( 'Service', 'post type singular name', 'wp-module-onboarding' ),

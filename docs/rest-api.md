@@ -36,6 +36,7 @@ Controllers registered in `RestApi.php`: `AppController`, `PluginsController`, `
 | | `/design/font-pairs` | READABLE | Paginated font pairs from the Hiive patterns API (cached). |
 | `SiteContentController` | `/site-content/publish-products` | EDITABLE | Create WooCommerce products. |
 | | `/site-content/publish-articles` | EDITABLE | Create blog posts. |
+| | `/site-content/publish-services` | EDITABLE | Enable the `nfd_service` post type and create services (`{ services: [ { title, excerpt, content, featured_image } ] }`). |
 | | `/site-content/setup-nav-menu` | CREATABLE | Build the primary navigation via `SiteNavigationService`. |
 | `ReduxStateController` | `/redux-state/sitegen-slice` | READABLE, EDITABLE | Read/update the `sitegen` Redux slice. GET reconstructs from `sitegen_*` options; POST writes `sitegen_site_id`, `sitegen_current_id`, `sitegen_previous_ids`, `sitegen_site_type`, `sitegen_enhanced_prompt`, `sitegen_discovery_data`. |
 | `EventsController` | `/events` | CREATABLE | Send an analytics event to the data module (validated against `Data\Events`). |
@@ -43,7 +44,7 @@ Controllers registered in `RestApi.php`: `AppController`, `PluginsController`, `
 
 ## Core WordPress endpoints used by the SPA
 
-`src/app/utils/api/wordpress.js` calls `wp/v2` for settings, `media`, `pages`, `posts`, `nfd_service`, `navigation`, `templates`, and `template-parts`. Pages are created with the `page-no-title` template and `nfd_onboarding_generated` meta.
+`src/app/utils/api/wordpress.js` calls `wp/v2` for settings, `media`, `pages`, `posts`, `navigation`, `templates`, and `template-parts`. Pages are created with the `page-no-title` template and `nfd_onboarding_generated` meta.
 
 Module helpers in `src/app/utils/api/onboarding.js` call the routes above for app lifecycle, global styles, sitegen slice sync, navigation setup, and `sitegen/report-published`.
 
