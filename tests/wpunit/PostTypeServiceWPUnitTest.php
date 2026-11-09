@@ -236,8 +236,9 @@ class PostTypeServiceWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase 
 	 * @return void
 	 */
 	public function test_register_filter_can_disable_post_type() {
-		update_option( PostTypeService::get_services_option_name(), '1' );
+		// Add the filter first: updating the option syncs registration immediately.
 		add_filter( 'newfold/onboarding/filter/registerServicePostType', '__return_false' );
+		update_option( PostTypeService::get_services_option_name(), '1' );
 
 		( new PostTypeService() )->register();
 
