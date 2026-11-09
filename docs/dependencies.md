@@ -18,6 +18,7 @@ updated: 2026-10-13
 | **newfold-labs/wp-module-install-checker** | Fresh-installation detection. |
 | **newfold-labs/wp-module-survey** | Completion toast survey. |
 | **wp-forge/helpers** | Helper utilities. |
+| **wp-forge/wp-upgrade-handler** | Runs versioned upgrade routines from `upgrades/` (`UpgradeService`). |
 
 Removed since v3: `newfold-labs/wp-module-onboarding-data` (now in-module under `includes/Data/`) and `newfold-labs/wp-module-facebook`.
 

@@ -20,6 +20,7 @@ This file gives AI agents a quick orientation to the repo. For full detail, see 
 | PHP backend | `includes/` (`RestApi/`, `Services/`, `Data/`, `Compatibility/`) |
 | Onboarding SPA | `src/app/` (entry `src/onboarding.js`) |
 | Design Studio | `src/DesignStudio/` |
+| Upgrade routines | `upgrades/<version>.php` (run by `Services/UpgradeService`) |
 | Built assets | `build/<version>/` (version from `package.json` / `bootstrap.php`) |
 | PHP tests | `tests/wpunit/`, `tests/phpunit/` |
 | E2E tests | `tests/playwright/` |

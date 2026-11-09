@@ -61,6 +61,17 @@ class SiteContentController {
 		);
 		\register_rest_route(
 			$this->namespace,
+			$this->rest_base . '/publish-services',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'publish_services' ),
+					'permission_callback' => array( Permissions::class, 'rest_is_authorized_admin' ),
+				),
+			)
+		);
+		\register_rest_route(
+			$this->namespace,
 			$this->rest_base . '/setup-nav-menu',
 			array(
 				array(
@@ -173,6 +184,28 @@ class SiteContentController {
 		}
 
 		$created_ids = CommonSiteTypeService::publish_articles( $articles );
+
+		return new \WP_REST_Response( array( 'created' => count( $created_ids ) ), 200 );
+	}
+
+	/**
+	 * Publish services from the onboarding generation data.
+	 *
+	 * Expects a JSON body: { "services": [ { title, excerpt, content, featured_image }, ... ] }
+	 * Enables the `nfd_service` post type, which is not registered until a site has services.
+	 * Images are stored as nfd_image_url meta and sideloaded asynchronously after onboarding.
+	 *
+	 * @param \WP_REST_Request $request The REST request object.
+	 * @return \WP_REST_Response
+	 */
+	public function publish_services( \WP_REST_Request $request ): \WP_REST_Response {
+		$services = $request->get_json_params()['services'] ?? array();
+
+		if ( empty( $services ) || ! is_array( $services ) ) {
+			return new \WP_REST_Response( array( 'created' => 0 ), 200 );
+		}
+
+		$created_ids = CommonSiteTypeService::publish_services( $services );
 
 		return new \WP_REST_Response( array( 'created' => count( $created_ids ) ), 200 );
 	}

@@ -41,7 +41,8 @@ Restart/reset: `POST app/restart` runs `ResetService::reset()` (deletes generate
 
 ### Generated-content conventions
 
-- Custom post type `nfd_service` (slug `services`) is registered for all users (`PostTypeService`).
+- Custom post type `nfd_service` (slug `services`) is registered by `PostTypeService` only when the autoloaded option `nfd_module_onboarding_services_post_type_enabled` is true. Left on everywhere, it would take over `/services/<child>/` URLs on sites with a "Services" page. `site-content/publish-services` enables it; changing the option registers or unregisters the post type and clears stored rewrite rules so WordPress rebuilds them on the next request.
+- Versioned upgrade routines live in `upgrades/<version>.php` and are run by `UpgradeService` (via `wp-forge/wp-upgrade-handler`) when `nfd_module_onboarding_module_version` is older than `NFD_ONBOARDING_VERSION`. `4.0.11.php` seeds the services option from whether any `nfd_service` posts exist.
 - Content created by onboarding carries post meta `nfd_onboarding_generated`; image URLs not yet in the media library are kept in `nfd_image_url` and rendered by `ThumbnailService` until sideloaded by `MediaService` / `SiteGenImageService` cron jobs.
 - `ResetService` uses these markers to delete only generated content.
 

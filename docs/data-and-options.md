@@ -24,12 +24,20 @@ Notable keys:
 | `sitegen_site_id`, `sitegen_current_id`, `sitegen_previous_ids`, `sitegen_site_type`, `sitegen_enhanced_prompt`, `sitegen_discovery_data`, `sitegen_previews`, `sitegen_regenerated_homepages` | same | Sitegen state (v4 `sitegen` Redux slice; synced via `redux-state/sitegen-slice`). |
 | `flow`, `flow_preset`, `theme_settings` | same | Legacy wizard options; not used by the v4 SPA. May remain in the database on upgraded sites. |
 | `cleared_onboarding` | same | Set once generated content has been cleared for this run. |
+| `services_post_type_enabled` | same | Autoloaded `'1'` / `'0'`. Gates registration of the `nfd_service` post type. Seeded by the 4.0.11 upgrade routine (true only if `nfd_service` posts exist); set true by `site-content/publish-services`. |
+| `module_version` | same | Last module version whose upgrade routines ran (`UpgradeService`). |
 | `site_info` | same | Snapshot saved when onboarding completes: `site_type` (`personal`, `business` or `ecommerce`, mapped from `sitegen_site_type`; read by `wp-module-next-steps` to pick the default plan) and `experience_level` (fixed default, unused). |
 | `wc_*` | WooCommerce option names | Store address, currency, tax settings (registered with `show_in_rest`). |
 
 Origin options: `nfd_origin_prompt`, `nfd_origin_prompt_completed`, `nfd_origin_chat_history`, `nfd_origin_chat_history_completed`. If present on load, the SPA starts directly in chat mode; `ResetService` clears them.
 
 `Options::get_initialization_options()` provides defaults applied by `SettingsService::initialize()` (comment limits, auto-updates, `/%postname%/` permalinks).
+
+### Service post type filters and URL conflicts
+
+- `newfold/onboarding/filter/registerServicePostType` (bool, default = the `services_post_type_enabled` option): force the `nfd_service` post type on or off.
+- `newfold/onboarding/filter/serviceRewriteSlug` (string, default `services`): URL base for service single pages. Sanitized; empty falls back to `services`. Flush rewrite rules (re-save Settings > Permalinks) after changing it.
+- Pages win: `PostTypeService::yield_to_page()` (on `request`) hands `/services/<slug>` to a page at the same path when no published service has that slug, so child pages of a site's own "Services" page do not 404. A published service with the same slug still wins; previews are skipped.
 
 ## `Runtime`
 
