@@ -64,4 +64,14 @@ class ConfigWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 		$url = \home_url( '/wp-admin/admin.php' );
 		$this->assertFalse( Config::is_onboarding_request( $url ) );
 	}
+
+	/**
+	 * Is onboarding request true when page param is not first in the query string.
+	 *
+	 * @return void
+	 */
+	public function test_is_onboarding_request_true_when_page_not_first_query_param() {
+		$url = \home_url( '/wp-admin/index.php?flow=migration&page=nfd-onboarding' );
+		$this->assertTrue( Config::is_onboarding_request( $url ) );
+	}
 }

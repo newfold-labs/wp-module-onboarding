@@ -400,7 +400,8 @@ const useChat = () => {
 		if ( migrationFallbackUrl ) {
 			migrationDeepLinkHandledRef.current = true;
 			sendOnboardingEvent( new OnboardingEvent( ACTION_FORK_OPTION_SELECTED, 'MIGRATE' ) );
-			window.open( migrationFallbackUrl, '_blank' );
+			// Same-tab navigation: auto window.open is treated as a popup without a user gesture.
+			window.location.assign( migrationFallbackUrl );
 		}
 	}, [ canMigrateSite, migrationFallbackUrl ] );
 
