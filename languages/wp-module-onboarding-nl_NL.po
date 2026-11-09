@@ -1,15 +1,16 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: newfold-labswp-module-staging\n"
 "Report-Msgid-Bugs-To: https://github.com/newfold-labs/wp-module-onboarding/issues\n"
+"POT-Creation-Date: 2024-11-18T07:59:34+00:00\n"
+"PO-Revision-Date: 2026-11-06T17:50:01+00:00\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
+"Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-18T07:59:34+00:00\n"
-"PO-Revision-Date: 2026-10-15T18:42:40+00:00\n"
-"Language: nl_NL\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: wp-module-onboarding.pot\n"
 "X-Crowdin-File-ID: 32\n"
@@ -19,59 +20,54 @@ msgstr ""
 "X-Domain: wp-module-onboarding\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
-#: bootstrap.php:57
-#: includes/Compatibility/Safe_Mode.php:44
-#: includes/Compatibility/Safe_Mode.php:45
-#: includes/WP_Admin.php:74
-#: includes/WP_Admin.php:75
-#: includes/WP_Admin.php:91
-msgid "Onboarding"
-msgstr "Introductie"
+#: build/4.0.11/onboarding.js:1
+msgid "%s logo"
+msgstr "%s logo"
 
-#: includes/Compatibility/Safe_Mode.php:184
-msgid "Please upgrade your WordPress"
-msgstr "Upgrade uw WordPress"
+#: build/4.0.11/onboarding.js:5
+msgid "AI-generated sites may need refinement. You can customize everything later."
+msgstr "AI-gegenereerde sites moeten mogelijk verfijnd worden. Je kunt alles later aanpassen."
 
-#: includes/Compatibility/Safe_Mode.php:185
-msgid "To take advantage of the latest WordPress has to offer, our WordPress Onboarding to setup your website requires the latest version of WordPress."
-msgstr "Om te profiteren van de nieuwste WordPress moet u ons WordPress Onboarding aanbieden om uw website in te stellen vereist de nieuwste versie van WordPress."
+#: includes/Services/PostTypeService.php:54
+msgctxt "service"
+msgid "Add New"
+msgstr "Voeg Nieuw toe"
 
-#. translators: 1: Current WP Version 2: Minimum Required version
-#: includes/Compatibility/Safe_Mode.php:191
-#, php-format
-msgid "Your WordPress version %1$s does not meet our minimum requirements of %2$s."
-msgstr "Uw WordPress versie %1$s voldoet niet aan onze minimum eisen van %2$s."
+#: includes/Services/PostTypeService.php:55
+msgid "Add New Service"
+msgstr "Voeg nieuwe dienst toe"
 
-#: includes/Compatibility/Safe_Mode.php:207
-msgid "Upgrade WordPress"
-msgstr "WordPress upgraden"
+#: includes/Services/PostTypeService.php:64
+msgid "All Services"
+msgstr "Alle diensten"
 
-#: includes/Compatibility/Safe_Mode.php:211
-msgid "There was an error Upgrading WordPress."
-msgstr "Er is een fout opgetreden bij het upgraden van WordPress."
+#: build/4.0.11/onboarding.js:5
+msgid "An error occurred while attempting to set up your migration account."
+msgstr "Er deed zich een fout op tijdens het instellen van je migratieaccount."
 
-#: includes/Data/Brands.php:17
-msgid "your web host"
-msgstr "Je webhost"
+#: includes/Services/Ai/AiServiceRequest.php:181
+msgid "An unknown error occurred"
+msgstr "Er is een onbekende fout opgetreden"
 
-#: includes/Data/Options.php:155
-#: includes/Data/Options.php:160
-#: includes/Data/Options.php:165
-#: includes/Data/Options.php:170
-#: includes/Data/Options.php:175
-#: includes/Data/Options.php:180
-#: includes/Data/Options.php:185
-#: includes/Data/Options.php:190
-#: includes/Data/Options.php:195
-#: includes/Data/Options.php:200
-msgid "Woocommerce Settings"
-msgstr "Woocommerce-instellingen"
+#: includes/Services/EventService.php:33
+msgid "Bad event structure/value."
+msgstr "Slechte event structuur/waarde."
 
-#. translators: %d is the index of the palette
-#: includes/RestApi/DesignController.php:212
-#, php-format
-msgid "Palette %d"
-msgstr "Palet %d"
+#: build/4.0.11/onboarding.js:3
+msgid "Build now"
+msgstr "Bouw nu"
+
+#: includes/Services/Webfonts.php:133
+msgid "Each webfont src must be a non-empty string."
+msgstr "Elk weblettertype moet een niet-lege tekenreeks zijn."
+
+#: includes/Services/PostTypeService.php:56
+msgid "Edit Service"
+msgstr "Bewerkingsdienst"
+
+#: includes/RestApi/SiteContentController.php:133
+msgid "Error at Setting up the nav menu."
+msgstr "Foutmelding bij het instellen van het navigatiemenu."
 
 #: includes/RestApi/EventsController.php:68
 msgid "Event action"
@@ -85,21 +81,13 @@ msgstr "Event categorie"
 msgid "Event data"
 msgstr "Gebeurtenis gegevens"
 
-#: includes/RestApi/EventsController.php:108
-msgid "Request does not contain an array of events."
-msgstr "De aanvraag bevat geen reeks gebeurtenissen."
+#: includes/Services/PostTypeService.php:70
+msgid "Filter by date"
+msgstr "Filter op datum"
 
-#: includes/RestApi/EventsController.php:129
-msgid "Some events failed."
-msgstr "Sommige gebeurtenissen zijn mislukt."
-
-#: includes/RestApi/SiteContentController.php:133
-msgid "Error at Setting up the nav menu."
-msgstr "Foutmelding bij het instellen van het navigatiemenu."
-
-#: includes/Services/Ai/AiServiceRequest.php:181
-msgid "An unknown error occurred"
-msgstr "Er is een onbekende fout opgetreden"
+#: includes/Services/PostTypeService.php:69
+msgid "Filter services list"
+msgstr "Lijst van filterdiensten"
 
 #: includes/Services/AppService.php:50
 msgid "Help us improve"
@@ -109,64 +97,98 @@ msgstr "Help ons te verbeteren"
 msgid "How satisfied were you with the ease of creating your website?"
 msgstr "Hoe tevreden was u met het gemak van het maken van uw website?"
 
-#: includes/Services/EventService.php:33
-msgid "Bad event structure/value."
-msgstr "Slechte event structuur/waarde."
+#. translators: %s is the brand display name (e.g. Bluehost, HostGator).
+#: build/4.0.11/onboarding.js:3
+msgid "I want to build"
+msgstr "Ik wil bouwen"
 
-#: includes/Services/PostTypeService.php:52
-msgctxt "post type general name"
-msgid "Services"
-msgstr "Diensten"
+#: build/4.0.11/onboarding.js:3
+msgid "Import an Existing WordPress Site"
+msgstr "Importeer een bestaande WordPress-site"
 
-#: includes/Services/PostTypeService.php:53
-msgctxt "post type singular name"
-msgid "Service"
-msgstr "Service"
+#: includes/Services/PostTypeService.php:67
+msgid "Insert into service"
+msgstr "In gebruik nemen"
 
-#: includes/Services/PostTypeService.php:54
-msgctxt "service"
-msgid "Add New"
-msgstr "Voeg Nieuw toe"
+#: build/4.0.11/onboarding.js:5
+msgid "Let's migrate your existing site"
+msgstr "Laten we je bestaande site migreren"
 
-#: includes/Services/PostTypeService.php:55
-msgid "Add New Service"
-msgstr "Voeg nieuwe dienst toe"
-
-#: includes/Services/PostTypeService.php:56
-msgid "Edit Service"
-msgstr "Bewerkingsdienst"
+#. translators: %s is the brand name (e.g., Bluehost, HostGator)
+#: build/4.0.11/onboarding.js:5
+msgid "Let's migrate your existing site to %s"
+msgstr "Laten we je bestaande site migreren naar %s"
 
 #: includes/Services/PostTypeService.php:57
 msgid "New Service"
 msgstr "Nieuwe dienst"
 
-#: includes/Services/PostTypeService.php:58
-msgid "View Service"
-msgstr "Bekijk de dienst"
-
-#: includes/Services/PostTypeService.php:59
-msgid "View Services"
-msgstr "Bekijk diensten"
-
-#: includes/Services/PostTypeService.php:60
-msgid "Search Services"
-msgstr "Zoekdiensten"
+#: includes/Services/PostTypeService.php:62
+msgid "No services found in Trash."
+msgstr "Geen diensten gevonden in het afval."
 
 #: includes/Services/PostTypeService.php:61
 msgid "No services found."
 msgstr "Geen diensten gevonden."
 
-#: includes/Services/PostTypeService.php:62
-msgid "No services found in Trash."
-msgstr "Geen diensten gevonden in het afval."
+#: bootstrap.php:59 includes/Compatibility/Safe_Mode.php:44 includes/Compatibility/Safe_Mode.php:45 includes/WP_Admin.php:74 includes/WP_Admin.php:75 includes/WP_Admin.php:91
+msgid "Onboarding"
+msgstr "Introductie"
+
+#: build/4.0.11/onboarding.js:5
+msgid "Oops! Something went wrong"
+msgstr "Oeps! Er ging iets mis"
+
+#: build/4.0.11/onboarding.js:3
+msgid "Or"
+msgstr "Of"
+
+#. translators: %d is the index of the palette
+#: includes/RestApi/DesignController.php:212
+#, php-format
+msgid "Palette %d"
+msgstr "Palet %d"
 
 #: includes/Services/PostTypeService.php:63
 msgid "Parent Service:"
 msgstr "Ouderdienst:"
 
-#: includes/Services/PostTypeService.php:64
-msgid "All Services"
-msgstr "Alle diensten"
+#: includes/Compatibility/Safe_Mode.php:184
+msgid "Please upgrade your WordPress"
+msgstr "Upgrade uw WordPress"
+
+#: build/4.0.11/onboarding.js:5
+msgid "Please wait a few seconds while we get your new account ready to import your existing WordPress site."
+msgstr "Wacht alstublieft een paar seconden terwijl we uw nieuwe account klaarmaken om uw bestaande WordPress-site te importeren."
+
+#: build/4.0.11/onboarding.js:5
+msgid "Preparing your account"
+msgstr "Je account voorbereiden"
+
+#: includes/Services/PostTypeService.php:84
+msgid "Remove service featured image"
+msgstr "Verwijder de uitgelichte afbeelding van de dienst"
+
+#: includes/RestApi/EventsController.php:108
+msgid "Request does not contain an array of events."
+msgstr "De aanvraag bevat geen reeks gebeurtenissen."
+
+#: includes/Services/PostTypeService.php:60
+msgid "Search Services"
+msgstr "Zoekdiensten"
+
+#: build/4.0.11/onboarding.js:3
+msgid "Send message"
+msgstr "Bericht verzenden"
+
+#: includes/Services/PostTypeService.php:81
+msgid "Service"
+msgstr "Dienst"
+
+#: includes/Services/PostTypeService.php:53
+msgctxt "post type singular name"
+msgid "Service"
+msgstr "Service"
 
 #: includes/Services/PostTypeService.php:65
 msgid "Service Archives"
@@ -176,53 +198,33 @@ msgstr "Dienstarchieven"
 msgid "Service Attributes"
 msgstr "Dienstkenmerken"
 
-#: includes/Services/PostTypeService.php:67
-msgid "Insert into service"
-msgstr "In gebruik nemen"
-
-#: includes/Services/PostTypeService.php:68
-msgid "Uploaded to this service"
-msgstr "Geüpload naar deze dienst"
-
-#: includes/Services/PostTypeService.php:69
-msgid "Filter services list"
-msgstr "Lijst van filterdiensten"
-
-#: includes/Services/PostTypeService.php:70
-msgid "Filter by date"
-msgstr "Filter op datum"
-
-#: includes/Services/PostTypeService.php:71
-msgid "Services list navigation"
-msgstr "Navigatie in de dienstenlijst"
-
-#: includes/Services/PostTypeService.php:72
-msgid "Services list"
-msgstr "Dienstenlijst"
-
-#: includes/Services/PostTypeService.php:73
-msgid "Service published."
-msgstr "Dienst gepubliceerd."
+#: includes/Services/PostTypeService.php:82
+msgid "Service featured image"
+msgstr "Dienstafbeelding"
 
 #: includes/Services/PostTypeService.php:74
 msgid "Service published privately."
 msgstr "Dienst gepubliceerd privé."
 
-#: includes/Services/PostTypeService.php:75
-msgid "Service reverted to draft."
-msgstr "Dienst keerde terug naar de dienstplicht."
-
-#: includes/Services/PostTypeService.php:76
-msgid "Service trashed."
-msgstr "Service verpest."
+#: includes/Services/PostTypeService.php:73
+msgid "Service published."
+msgstr "Dienst gepubliceerd."
 
 #: includes/Services/PostTypeService.php:77
 msgid "Service restored from Trash."
 msgstr "Dienst hersteld uit Trash."
 
+#: includes/Services/PostTypeService.php:75
+msgid "Service reverted to draft."
+msgstr "Dienst keerde terug naar de dienstplicht."
+
 #: includes/Services/PostTypeService.php:78
 msgid "Service scheduled."
 msgstr "Service gepland."
+
+#: includes/Services/PostTypeService.php:76
+msgid "Service trashed."
+msgstr "Service verpest."
 
 #: includes/Services/PostTypeService.php:79
 msgid "Service updated."
@@ -232,125 +234,109 @@ msgstr "Dienst bijgewerkt."
 msgid "Services"
 msgstr "Diensten"
 
-#: includes/Services/PostTypeService.php:81
-msgid "Service"
-msgstr "Dienst"
+#: includes/Services/PostTypeService.php:52
+msgctxt "post type general name"
+msgid "Services"
+msgstr "Diensten"
 
-#: includes/Services/PostTypeService.php:82
-msgid "Service featured image"
-msgstr "Dienstafbeelding"
+#: includes/Services/PostTypeService.php:72
+msgid "Services list"
+msgstr "Dienstenlijst"
+
+#: includes/Services/PostTypeService.php:71
+msgid "Services list navigation"
+msgstr "Navigatie in de dienstenlijst"
 
 #: includes/Services/PostTypeService.php:83
 msgid "Set service featured image"
 msgstr "Uitgelichte afbeelding van de dienstverlening"
 
-#: includes/Services/PostTypeService.php:84
-msgid "Remove service featured image"
-msgstr "Verwijder de uitgelichte afbeelding van de dienst"
+#: includes/RestApi/EventsController.php:129
+msgid "Some events failed."
+msgstr "Sommige gebeurtenissen zijn mislukt."
+
+#: build/4.0.11/onboarding.js:3
+msgid "Start over"
+msgstr "Opnieuw beginnen"
+
+#: build/4.0.11/onboarding.js:3
+msgid "Tell us what kind of website you want to build"
+msgstr "Vertel ons wat voor soort website je wilt bouwen"
+
+#: includes/Compatibility/Safe_Mode.php:211
+msgid "There was an error Upgrading WordPress."
+msgstr "Er is een fout opgetreden bij het upgraden van WordPress."
+
+#: includes/Compatibility/Safe_Mode.php:185
+msgid "To take advantage of the latest WordPress has to offer, our WordPress Onboarding to setup your website requires the latest version of WordPress."
+msgstr "Om te profiteren van de nieuwste WordPress moet u ons WordPress Onboarding aanbieden om uw website in te stellen vereist de nieuwste versie van WordPress."
+
+#: build/4.0.11/onboarding.js:3 build/4.0.11/onboarding.js:5
+msgid "Try again"
+msgstr "Probeer het nog eens"
+
+#: includes/Compatibility/Safe_Mode.php:207
+msgid "Upgrade WordPress"
+msgstr "WordPress upgraden"
+
+#: includes/Services/PostTypeService.php:68
+msgid "Uploaded to this service"
+msgstr "Geüpload naar deze dienst"
 
 #: includes/Services/PostTypeService.php:85
 msgid "Use as service featured image"
 msgstr "Gebruik als service-featureafbeelding"
 
+#: includes/Services/PostTypeService.php:58
+msgid "View Service"
+msgstr "Bekijk de dienst"
+
+#: includes/Services/PostTypeService.php:59
+msgid "View Services"
+msgstr "Bekijk diensten"
+
 #: includes/Services/Webfonts.php:118
 msgid "Webfont font family must be a non-empty string."
 msgstr "Weblettertype moet een niet-lege tekenreeks zijn."
-
-#: includes/Services/Webfonts.php:125
-msgid "Webfont src must be a non-empty string or an array of strings."
-msgstr "Webfont src moet een niet-lege tekenreeks of een array van tekenreeksen zijn."
-
-#: includes/Services/Webfonts.php:133
-msgid "Each webfont src must be a non-empty string."
-msgstr "Elk weblettertype moet een niet-lege tekenreeks zijn."
 
 #: includes/Services/Webfonts.php:141
 msgid "Webfont font weight must be a properly formatted string or integer."
 msgstr "Weblettertype lettertype moet een correct opgemaakt tekenreeks of geheel getal zijn."
 
-#: build/4.0.10/onboarding.js:1
-msgid "I want to build"
-msgstr "Ik wil bouwen"
+#: includes/Services/Webfonts.php:125
+msgid "Webfont src must be a non-empty string or an array of strings."
+msgstr "Webfont src moet een niet-lege tekenreeks of een array van tekenreeksen zijn."
 
-#: build/4.0.10/onboarding.js:1
-msgid "a photography portfolio with a booking page and gallery…"
-msgstr "een fotografieportfolio met een boekingspagina en galerij..."
+#: includes/Data/Options.php:155 includes/Data/Options.php:160 includes/Data/Options.php:165 includes/Data/Options.php:170 includes/Data/Options.php:175 includes/Data/Options.php:180 includes/Data/Options.php:185 includes/Data/Options.php:190 includes/Data/Options.php:195 includes/Data/Options.php:200
+msgid "Woocommerce Settings"
+msgstr "Woocommerce-instellingen"
 
-#: build/4.0.10/onboarding.js:1
-msgid "an online bakery with a menu and custom order form…"
-msgstr "een online bakkerij met een menu en een bestelformulier..."
+#. translators: 1: Current WP Version 2: Minimum Required version
+#: includes/Compatibility/Safe_Mode.php:191
+#, php-format
+msgid "Your WordPress version %1$s does not meet our minimum requirements of %2$s."
+msgstr "Uw WordPress versie %1$s voldoet niet aan onze minimum eisen van %2$s."
 
-#: build/4.0.10/onboarding.js:1
-msgid "a travel blog with a newsletter signup…"
-msgstr "een reisblog met een nieuwsbriefinschrijving..."
-
-#: build/4.0.10/onboarding.js:1
+#: build/4.0.11/onboarding.js:3
 msgid "a fitness coaching site with class schedules and pricing…"
 msgstr "een fitnesscoachingsite met lesroosters en prijzen..."
 
-#: build/4.0.10/onboarding.js:1
+#: build/4.0.11/onboarding.js:3
+msgid "a photography portfolio with a booking page and gallery…"
+msgstr "een fotografieportfolio met een boekingspagina en galerij..."
+
+#: build/4.0.11/onboarding.js:3
 msgid "a restaurant site with an online menu and reservations…"
 msgstr "een restaurantsite met een online menu en reserveringen..."
 
-#: build/4.0.10/onboarding.js:1
-msgid "Build now"
-msgstr "Bouw nu"
+#: build/4.0.11/onboarding.js:3
+msgid "a travel blog with a newsletter signup…"
+msgstr "een reisblog met een nieuwsbriefinschrijving..."
 
-#: build/4.0.10/onboarding.js:1
-msgid "Tell us what kind of website you want to build"
-msgstr "Vertel ons wat voor soort website je wilt bouwen"
+#: build/4.0.11/onboarding.js:3
+msgid "an online bakery with a menu and custom order form…"
+msgstr "een online bakkerij met een menu en een bestelformulier..."
 
-#: build/4.0.10/onboarding.js:1
-msgid "Or"
-msgstr "Of"
-
-#: build/4.0.10/onboarding.js:1
-msgid "Import an Existing WordPress Site"
-msgstr "Importeer een bestaande WordPress-site"
-
-#: build/4.0.10/onboarding.js:1
-msgid "Send message"
-msgstr "Bericht verzenden"
-
-#: build/4.0.10/onboarding.js:1
-#: build/4.0.10/onboarding.js:3
-msgid "Try again"
-msgstr "Probeer het nog eens"
-
-#: build/4.0.10/onboarding.js:1
-msgid "Start over"
-msgstr "Opnieuw beginnen"
-
-#. translators: %s is the brand name (e.g., Bluehost, HostGator)
-#: build/4.0.10/onboarding.js:3
-#, js-format
-msgid "Let's migrate your existing site to %s"
-msgstr "Laten we je bestaande site migreren naar %s"
-
-#: build/4.0.10/onboarding.js:3
-msgid "Let's migrate your existing site"
-msgstr "Laten we je bestaande site migreren"
-
-#: build/4.0.10/onboarding.js:3
-msgid "Please wait a few seconds while we get your new account ready to import your existing WordPress site."
-msgstr "Wacht alstublieft een paar seconden terwijl we uw nieuwe account klaarmaken om uw bestaande WordPress-site te importeren."
-
-#: build/4.0.10/onboarding.js:3
-msgid "Oops! Something went wrong"
-msgstr "Oeps! Er ging iets mis"
-
-#: build/4.0.10/onboarding.js:3
-msgid "An error occurred while attempting to set up your migration account."
-msgstr "Er deed zich een fout op tijdens het instellen van je migratieaccount."
-
-#: build/4.0.10/onboarding.js:3
-msgid "Preparing your account"
-msgstr "Je account voorbereiden"
-
-#: build/4.0.10/onboarding.js:3
-msgid "Bluehost logo"
-msgstr "Bluehost-logo"
-
-#: build/4.0.10/onboarding.js:3
-msgid "AI-generated sites may need refinement. You can customize everything later."
-msgstr "AI-gegenereerde sites moeten mogelijk verfijnd worden. Je kunt alles later aanpassen."
+#: includes/Data/Brands.php:17
+msgid "your web host"
+msgstr "Je webhost"

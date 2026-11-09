@@ -44,15 +44,17 @@ export const actions = {
 	 * @return {Object} action object
 	 */
 	setRuntimeSlice( runtimeData ) {
+		// Keep full server runtime (brand, REST URLs, etc.); do not strip currentBrand.
 		window.nfdOnboarding.runtime = {
-			buildUrl: runtimeData.buildUrl,
-			siteUrl: runtimeData.siteUrl,
-			status: runtimeData.status,
+			...runtimeData,
 			migrated: true,
 		};
 		return {
 			type: 'SET_RUNTIME_SLICE',
-			runtime: runtimeData,
+			runtime: {
+				...runtimeData,
+				migrated: true,
+			},
 		};
 	},
 
