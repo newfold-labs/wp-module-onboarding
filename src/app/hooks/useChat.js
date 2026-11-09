@@ -21,6 +21,7 @@ import {
 import { handshake, intake, startGeneration, streamSSE } from '@/utils/api/ai-platform';
 import { initializeEcommercePlugins, ensureCriticalPluginsInBackground, clearOnboarding } from '@/utils/api/wordpress';
 import formatTaskResult from '@/utils/helpers/formatTaskResult';
+import { isMigrationDeepLink } from '@/utils/helpers/migrationEntry';
 import useMessages from '@/hooks/useMessages';
 import {
 	MAX_RETRIES,
@@ -59,6 +60,7 @@ const useChat = () => {
 	const discoveryDataRef = useRef( {} );
 	const retryCountRef = useRef( 0 );
 	const startTimeRef = useRef( null );
+	const migrationDeepLinkHandledRef = useRef( false );
 
 	const { canMigrateSite, migrationFallbackUrl } = useSelect( ( selectFn ) => ( {
 		canMigrateSite: selectFn( nfdOnboardingStore ).canMigrateSite(),
@@ -373,6 +375,35 @@ const useChat = () => {
 	useEffect( () => {
 		handleOriginStart();
 	}, [ handleOriginStart ] );
+
+	// SSO / Account Manager may land on onboarding with a migration hash or query param.
+	useEffect( () => {
+		if ( migrationDeepLinkHandledRef.current ) {
+			return;
+		}
+
+		if ( window.nfdOnboarding?.origin?.prompt || window.nfdOnboarding?.origin?.chat_history ) {
+			return;
+		}
+
+		if ( ! isMigrationDeepLink() ) {
+			return;
+		}
+
+		if ( canMigrateSite ) {
+			migrationDeepLinkHandledRef.current = true;
+			sendOnboardingEvent( new OnboardingEvent( ACTION_FORK_OPTION_SELECTED, 'MIGRATE' ) );
+			setMode( 'migration' );
+			return;
+		}
+
+		if ( migrationFallbackUrl ) {
+			migrationDeepLinkHandledRef.current = true;
+			sendOnboardingEvent( new OnboardingEvent( ACTION_FORK_OPTION_SELECTED, 'MIGRATE' ) );
+			// Same-tab navigation: auto window.open is treated as a popup without a user gesture.
+			window.location.assign( migrationFallbackUrl );
+		}
+	}, [ canMigrateSite, migrationFallbackUrl ] );
 
 	/**
 	 * Retry the generation stream with the same site_id and prompt.

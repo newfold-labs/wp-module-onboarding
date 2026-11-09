@@ -2,6 +2,7 @@
 namespace NewfoldLabs\WP\Module\Onboarding\Data;
 
 use NewfoldLabs\WP\Module\Data\SiteCapabilities;
+use NewfoldLabs\WP\Module\Onboarding\WP_Admin;
 
 /**
  * WordPress and Onboarding configuration data.
@@ -92,11 +93,14 @@ final class Config {
 				return false;
 			}
 
-			// Fail if request is not coming from the onboarding page
-			if (
-				! isset( $request_url['query'] ) ||
-				0 !== strpos( $request_url['query'], 'page=nfd-onboarding' )
-			) {
+			$query_args = array();
+			if ( isset( $request_url['query'] ) ) {
+				parse_str( $request_url['query'], $query_args );
+			}
+
+			$page = isset( $query_args['page'] ) ? $query_args['page'] : '';
+
+			if ( WP_Admin::$slug !== $page ) {
 				return false;
 			}
 
