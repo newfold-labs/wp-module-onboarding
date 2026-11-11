@@ -51,7 +51,7 @@
 		"@wordpress/element": "^10.0.0",
 		"@wordpress/i18n": "^7.1.0",
 		"@wordpress/interface": "^11.0.0",
-		"@wordpress/plugins": "^8.0.0",
+		"@wordpress/plugins": "^8.1.0",
 		"@wordpress/url": "^5.0.0",
 		"canvas-confetti": "^1.9.4",
 		"lucide-react": "^1.69.0",
