@@ -2,7 +2,7 @@
 name: wp-module-onboarding
 title: main-networksolutions release line
 description: Branch ownership, comparison with main, maintenance, backports, and checklists for NS and regional host brands.
-updated: 2026-11-04
+updated: 2026-11-12
 ---
 
 # `main` vs `main-networksolutions`
@@ -283,3 +283,135 @@ git log --oneline main..main-networksolutions --no-merges
 - [release.md](release.md) — release lines and Prepare Release `module-branch`
 - [overview.md](overview.md) — v4 vs v3 (v4 sections describe **`main`** only)
 - [dependencies.md](dependencies.md) — **`main`** Composer/npm graph
+- [ns-v3-runbook.md](ns-v3-runbook.md) — Track A operations (wizard + `+ns` data)
+- [track-a-phase0-inventory.md](track-a-phase0-inventory.md) — SHAs, host pins, CI list
+
+---
+
+## Execution plan
+
+**Purpose:** Turn this document into an ordered, verifiable program of work. **Do not start implementation until product/engineering signs off on [Track selection](#track-selection)** (checkbox below).
+
+**Working branch (this effort):** `update/main-networksolutions-with-main` → target merge into **`main-networksolutions`**, not **`main`**.
+
+**Baseline (from doc):** merge base `bd901d8e`; module **3.3.7** on NS line vs **4.0.10** on `main`; NS composer pin `^1.2.27+ns`; four host plugins in Playwright matrix.
+
+### Track selection (approval gate)
+
+| Track | Outcome | When to choose |
+|-------|---------|----------------|
+| **A — 3.3.x maintenance** | Stay on wizard + onboarding-data `+ns`; cherry-picks only | No NS v4 product decision |
+| **B — NS v4 upgrade** | One-time bring `main` onto `main-networksolutions`, re-apply NS brands/data/tests | Product wants chat/sitegen for NS/regional brands |
+
+- [x] **Approved track:** **A** (3.3.x maintenance)  
+- [x] **Approved by:** engineering — 2026-11-12  
+- [x] **Implementation started:** yes — branch `update/main-networksolutions-with-main`
+
+---
+
+### Phase 0 — Inventory and alignment (all tracks)
+
+**Goal:** Confirm repos, versions, and gaps before any code merge.
+
+| Step | Repo / area | Action | Done |
+|------|-------------|--------|------|
+| 0.1 | `wp-module-onboarding` | `git fetch`; record `main` / `main-networksolutions` SHAs; run [Reference commands](#reference-commands) | [x] |
+| 0.2 | `wp-module-onboarding-data` | Confirm `main-networksolutions` Satis `+ns` tag vs module constraint | [ ] *data repo / Satis* |
+| 0.3 | Host plugins | List composer pins for module + data per `web`, `bigrock`, `vodien`, `webhostbox` | [x] partial — see [track-a-phase0-inventory.md](track-a-phase0-inventory.md) |
+| 0.4 | CI | Diff `.github/workflows/*` between branches; list NS-only jobs that must survive any merge | [x] |
+| 0.5 | Product | Confirm slug map ([Brand slug map](#brand-slug-map)) still matches runtime in each host plugin | [ ] *host runtime audit* |
+
+**Exit criteria:** Written inventory (versions, SHAs, workflow list) attached to the upgrade PR or a linked doc; no code changes required.
+
+---
+
+### Track A — 3.3.x maintenance execution
+
+**Goal:** Execute [Maintenance backlog](#maintenance-backlog) without merging `main`.
+
+| Phase | Priority | Work | Verification |
+|-------|----------|------|--------------|
+| A1 | P0 | Green Playwright matrix on PRs to **`main-networksolutions`** | All four brand jobs + dev variants pass |
+| A2 | P0 | Brand/config changes in **onboarding-data `main-networksolutions`**, then bump module `^1.2.x+ns` | Host `composer update`; matrix green |
+| A3 | P1 | Cherry-pick workflow hardening from `main` ([Backports](#backports-from-main)) without dropping NS jobs | Diff workflows; matrix green |
+| A4 | P1 | Document pinned module + data versions in each host plugin README or composer comments | Review in host PRs |
+| A5 | P2 | **3.3.8+** via Prepare Release (`module-branch: main-networksolutions`) for wizard-only fixes | `build/3.3.x/` committed; Satis tag |
+| A6 | P3 | Extend docs: v3 NS runbook (wizard + onboarding-data) in `overview.md` or new doc | Peer review |
+
+**Ongoing rules:** No wholesale `git merge main`; no NS brand PRs to `main`; use [NS brand or config change](#ns-brand-or-config-change-default-path) checklist per change.
+
+---
+
+### Track B — NS v4 upgrade execution
+
+**Goal:** Deliberate adoption of v4 from `main` on **`main-networksolutions` only**, preserving NS/regional brands and release mechanics.
+
+#### B1 — Program setup
+
+| Step | Action | Done |
+|------|--------|------|
+| B1.1 | Open epic/PR series label: `ns-v4-upgrade` | [ ] |
+| B1.2 | Freeze routine NS feature work except P0 fixes until B4 merge window | [ ] |
+| B1.3 | Agree rollback: tag pre-merge `main-networksolutions` (e.g. `3.3.7-pre-v4-merge`) | [ ] |
+| B1.4 | Agree target NS module version line post-upgrade (e.g. **4.1.x** on `main-networksolutions`) | [ ] |
+
+#### B2 — Pre-merge spike (no production merge yet)
+
+| Step | Area | Action | Done |
+|------|------|--------|------|
+| B2.1 | Module | Trial merge/rebase `main` into feature branch; **do not push** to `main-networksolutions` until conflicts triaged | [ ] |
+| B2.2 | Conflicts | Triage using [Merge conflict hotspots](#merge-conflict-hotspots-if-upgrading-ns-branch-to-v4); document resolutions in PR description | [ ] |
+| B2.3 | NS SPA | Re-apply / port `src/Brands/{bigrock,vodien,webhostbox,networksolutions}/*` into v4 `brandAssets` (or equivalent on `main`) | [ ] |
+| B2.4 | `BrandLoader` / shell | Resolve NS vs v4 shell per conflict list | [ ] |
+| B2.5 | `composer.json` | **Do not** copy `main` deps blindly: decide onboarding-data fate ([Future: v4 for NS brands](#future-v4-for-ns-brands-still-on-main-networksolutions-not-main)) | [ ] |
+| B2.6 | Workflows | Merge workflow changes but **retain** NS Playwright matrix (`brand-plugin-test-playwright.yml`, `module-branch: main-networksolutions`) | [ ] |
+| B2.7 | Build | `npm ci && npm run build` → `build/<new-version>/`; remove wrong-line artifacts (no `3.3.x` mixed with `4.x`) | [ ] |
+
+#### B3 — Onboarding-data and host plugins (parallel)
+
+| Step | Repo | Action | Done |
+|------|------|--------|------|
+| B3.1 | onboarding-data | Plan: keep `+ns` for transition vs migrate NS rows into module `includes/Data/*` on NS branch only | [ ] |
+| B3.2 | onboarding-data | Implement chosen plan; publish Satis from **`main-networksolutions`** if versions change | [ ] |
+| B3.3 | Each host plugin | Branch + composer bump; capability/slug smoke | [ ] |
+| B3.4 | Facebook / Blueprints / removed v3 modules | Product sign-off per [dependency contrast](#dependency-contrast) | [ ] |
+
+#### B4 — Integration merge and CI
+
+| Step | Action | Done |
+|------|--------|------|
+| B4.1 | Merge approved feature branch → **`main-networksolutions`** (single merge commit or documented rebase policy) | [ ] |
+| B4.2 | PHP + SPA lint workflows on NS branch | [ ] |
+| B4.3 | Full Playwright matrix: netsol, bigrock, vodien, webhostbox (stable + dev) | [ ] |
+| B4.4 | Manual smoke per [Verification](#verification) adapted for v4 flows (logo/upload equivalent, loader/header per slug) | [ ] |
+| B4.5 | Prepare Release with `module-branch: main-networksolutions`; tag; Satis | [ ] |
+
+#### B5 — Post-release and doc debt
+
+| Step | Action | Done |
+|------|--------|------|
+| B5.1 | Update this doc: module version row, architecture row, “what lives only on NS” for v4 paths | [ ] |
+| B5.2 | Rewrite Playwright specs for chat/sitegen if wizard specs were removed | [ ] |
+| B5.3 | Host plugin rollout order (recommend: internal/dev → staged brand → all four) | [ ] |
+
+**Track B abort criteria:** If B2.1 shows onboarding-data migration blocked or matrix cannot be rewritten within agreed timeline, stop, tag spike branch, revert to Track A.
+
+---
+
+### Suggested implementation order (after approval)
+
+1. Complete **Phase 0** (both tracks).  
+2. If **Track A:** A1 → A2 → A3 → A5 as needed.  
+3. If **Track B:** Phase 0 → **B1** → **B2** (spike PR for review) → **B3** in parallel with B2 close-out → **B4** → **B5**.
+
+### Agent / contributor handoff
+
+When implementation is approved, start with:
+
+```text
+1. Confirm track A or B in this section (checkboxes above).
+2. Phase 0 steps 0.1–0.4 in wp-module-onboarding (current repo).
+3. Post inventory summary in PR / chat before first merge or cherry-pick.
+```
+
+**Status (Track A):** In progress 2026-11-12 — Phase 0 documented; A3 workflow hardening in PR branch; A6 runbook published; A1/A2/A5 pending CI and product/data sign-off.

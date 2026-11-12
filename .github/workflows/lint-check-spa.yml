@@ -10,7 +10,7 @@ on:
   pull_request:
     branches:
       - main-networksolutions
-    types: [opened, edited, reopened, ready_for_review]
+    types: [opened, edited, synchronize, reopened, ready_for_review]
     paths:
       - "src/**/*.js"
       - "src/**/*.scss"
@@ -19,17 +19,25 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
   cancel-in-progress: true
 
+# Disable permissions for all available scopes by default.
+# Any needed permissions should be configured at the job level.
+permissions: {}
+
 jobs:
   lint-check-spa:
     name: Run Lint Checks
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    timeout-minutes: 30
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       # Install Node and npm
       - name: Setup Node.js
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
@@ -37,15 +45,15 @@ jobs:
       # Checks if node_modules exists in the cache.
       - name: Cache node_modules directory
         id: cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: ${{ runner.os }}-node-
 
-      # Installs @wordpress/scripts for lint checks if it does not exist in the cache.
+      # Install dependencies from package-lock if not in cache.
       - name: Install dependencies
-        run: npm i @wordpress/scripts@26.10.0 --legacy-peer-deps
+        run: npm ci --legacy-peer-deps
         if: steps.cache.outputs.cache-hit != 'true'
 
       # Gets the files changed wrt to main and filters out the js files.

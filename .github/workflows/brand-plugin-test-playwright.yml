@@ -4,11 +4,11 @@ on:
     types: [ opened, reopened, ready_for_review, synchronize ]
     branches:
       - main-networksolutions
-      - trunk
   workflow_dispatch:
 
-permissions:
-  contents: read
+# Disable permissions for all available scopes by default.
+# Any needed permissions should be configured at the job level.
+permissions: {}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}

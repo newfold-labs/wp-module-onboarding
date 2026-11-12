@@ -32,6 +32,8 @@ v4 replaced the multi-step wizard with a chat/sitegen flow. Anything described f
 
 The `v3` branch still exists as an LTS line. Docs on `main` describe v4 only.
 
+**Network Solutions / regional brands (`main-networksolutions`):** still on the v3 wizard and `wp-module-onboarding-data` **`+ns`**. See [ns-v3-runbook.md](ns-v3-runbook.md) and [main-networksolutions-merge-plan.md](main-networksolutions-merge-plan.md).
+
 ## Who maintains it
 
 - **Newfold Labs** (Newfold Digital). Distributed via Newfold Satis.
