@@ -17,7 +17,7 @@
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"@wordpress/env": "^12.1.0",
-		"@wordpress/icons": "^19.0.0",
+		"@wordpress/icons": "^20.0.0",
 		"@wordpress/scripts": "^37.1.0",
 		"eslint": "^10.14.0",
 		"eslint-import-resolver-alias": "^1.1.2",
