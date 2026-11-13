@@ -8,7 +8,7 @@
  */
 import { execSync } from 'child_process';
 import { expect } from '@playwright/test';
-import { existsSync, writeFileSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { createRequire } from 'module';
 import { dirname, join, resolve } from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
@@ -61,28 +61,46 @@ if (pluginHelpersPath === moduleHelpersPath) {
  * - bigrock / vodien / webhostbox (Playwright 1.60): require() fails with
  *   "Cannot use import statement outside a module", but import() works.
  *
- * require() is tried first because a failed require() is evicted from the CJS
- * cache, whereas a failed import() can poison the ESM module cache.
+ * Try-and-fall-back does NOT work: a failed attempt leaves Playwright's transform
+ * cache holding the wrong flavour of the plugin's .mjs files (a failed require()
+ * makes the later import() see CJS code: "exports is not defined in ES module scope").
+ * So pick the strategy up front from the plugin's installed Playwright version.
  */
-let pluginHelpersLoadedViaRequire = false;
+const REQUIRE_MIN_PLAYWRIGHT = [1, 63];
+
+/**
+ * Installed @playwright/test version in the brand plugin, as [major, minor], or null.
+ */
+function getPluginPlaywrightVersion() {
+  try {
+    const pkgPath = join(pluginDir, 'node_modules/@playwright/test/package.json');
+    const { version } = JSON.parse(readFileSync(pkgPath, 'utf8'));
+    const [major, minor] = String(version).split('.').map(Number);
+    return Number.isFinite(major) && Number.isFinite(minor) ? [major, minor] : null;
+  } catch {
+    return null;
+  }
+}
+
+function shouldLoadViaRequire() {
+  const version = getPluginPlaywrightVersion();
+  if (!version) {
+    // Unknown version: keep the historical import() behaviour.
+    return false;
+  }
+  const [major, minor] = version;
+  const [minMajor, minMinor] = REQUIRE_MIN_PLAYWRIGHT;
+  return major > minMajor || (major === minMajor && minor >= minMinor);
+}
+
+const pluginHelpersLoadedViaRequire = shouldLoadViaRequire();
 
 async function loadPluginHelpers() {
-  let requireError;
-  try {
+  if (pluginHelpersLoadedViaRequire) {
     const requireFromPlugin = createRequire(join(pluginDir, 'package.json'));
-    const helpers = requireFromPlugin(pluginHelpersPath);
-    pluginHelpersLoadedViaRequire = true;
-    return helpers;
-  } catch (error) {
-    requireError = error;
+    return requireFromPlugin(pluginHelpersPath);
   }
-
-  try {
-    return await import(pathToFileURL(pluginHelpersPath).href);
-  } catch (importError) {
-    importError.message += `\n(require() fallback also failed: ${requireError.message})`;
-    throw importError;
-  }
+  return import(pathToFileURL(pluginHelpersPath).href);
 }
 
 const pluginHelpers = await loadPluginHelpers();
