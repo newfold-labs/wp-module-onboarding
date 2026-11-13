@@ -55,7 +55,7 @@
 		"@wordpress/url": "^5.0.0",
 		"canvas-confetti": "^1.9.4",
 		"lucide-react": "^1.70.0",
-		"motion": "^14.10.1",
+		"motion": "^14.11.1",
 		"posthog-js": "^1.447.6"
 	}
 }
