@@ -7,6 +7,8 @@
  * `newfold.isWooCommerceActive` and `newfold.clearInstallerQueues`. These are ported
  * from wp-plugin-bluehost `main` (tests/playwright/helpers/newfold.js) and are only
  * used when the brand plugin does not provide its own implementation.
+ * `newfold.setCapability` is wrapped to add the canAccessAI marker that
+ * wp-module-data requires (used by performance tests), matching Bluehost main.
  *
  * Works with both wpCli() styles:
  * - Bluehost: wpCli(command, { failOnNonZeroExit }) may throw.
@@ -178,7 +180,7 @@ export function withNewfoldCompat(newfold = {}, wordpress, utils) {
     }
   }
 
-  return {
+  const compat = {
     installWooCommerce,
     isWooCommerceActive,
     uninstallWooCommerce,
@@ -186,4 +188,24 @@ export function withNewfoldCompat(newfold = {}, wordpress, utils) {
     clearInstallerQueues,
     ...newfold,
   };
+
+  if (typeof newfold.setCapability === 'function') {
+    const pluginSetCapability = newfold.setCapability;
+    /**
+     * Default canAccessAI only when omitted (callers can pass false to simulate no
+     * AI access). Without this key wp-module-data discards the capabilities
+     * (newfold-labs/wp-module-data#285), so e.g. performance tests restricting
+     * Link Prefetch see defaults instead. Bluehost main already does this; older
+     * brand plugin helpers (e.g. wp-plugin-web) do not. Idempotent either way.
+     */
+    compat.setCapability = (capabilities, ...rest) => {
+      const withMarker = { ...capabilities };
+      if (withMarker.canAccessAI === undefined) {
+        withMarker.canAccessAI = true;
+      }
+      return pluginSetCapability.call(newfold, withMarker, ...rest);
+    };
+  }
+
+  return compat;
 }
