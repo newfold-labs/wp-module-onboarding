@@ -8,10 +8,10 @@
  */
 import { execSync } from 'child_process';
 import { expect } from '@playwright/test';
-import { existsSync, readFileSync, writeFileSync } from 'fs';
-import { createRequire } from 'module';
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'fs';
 import { dirname, join, resolve } from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
+import { withNewfoldCompat } from './plugin-compat.mjs';
 
 // ============================================================================
 // PLUGIN HELPERS (re-exported from plugin-level helpers)
@@ -55,52 +55,58 @@ if (pluginHelpersPath === moduleHelpersPath) {
 /**
  * Backward-compatible loader for the brand plugin's ESM helpers.
  *
- * Brand plugins disagree on which loading strategy works (all on Node 20):
- * - wp-plugin-web (Playwright >=1.63): import() fails with
- *   "./utils.mjs does not provide an export named 'default'", but require() works.
- * - bigrock / vodien / webhostbox (Playwright 1.60): require() fails with
- *   "Cannot use import statement outside a module", but import() works.
+ * Observed in CI (all Node 20):
+ * - bigrock (PW 1.61), vodien (PW 1.62), webhostbox (PW 1.63): import() works;
+ *   require() fails ("Cannot use import statement outside a module").
+ * - wp-plugin-web (PW 1.63/1.65): import() fails with
+ *   "./utils.mjs does not provide an export named 'default'". The plugin's global
+ *   setup already loaded those helper files, and the conflicting cached copy breaks
+ *   a second load. It is not a Playwright-version issue (webhostbox is also 1.63).
  *
- * Try-and-fall-back does NOT work: a failed attempt leaves Playwright's transform
- * cache holding the wrong flavour of the plugin's .mjs files (a failed require()
- * makes the later import() see CJS code: "exports is not defined in ES module scope").
- * So pick the strategy up front from the plugin's installed Playwright version.
+ * require() is never used: a failed require() poisons Playwright's transform cache
+ * for the plugin's .mjs files ("exports is not defined in ES module scope").
+ * Instead, if import() of the plugin helpers fails, import a fresh copy of the
+ * helpers directory at a different path, which nothing has loaded yet.
  */
-const REQUIRE_MIN_PLAYWRIGHT = [1, 63];
+let pluginHelpersNeededFreshCopy = false;
 
 /**
- * Installed @playwright/test version in the brand plugin, as [major, minor], or null.
+ * Copy the plugin helpers dir to a sibling dir (same depth, so relative imports like
+ * '../x' and bare package imports resolve exactly as from the original).
+ * Files are only rewritten when their content changed.
+ *
+ * @returns {string} Path to index.mjs inside the copy.
  */
-function getPluginPlaywrightVersion() {
-  try {
-    const pkgPath = join(pluginDir, 'node_modules/@playwright/test/package.json');
-    const { version } = JSON.parse(readFileSync(pkgPath, 'utf8'));
-    const [major, minor] = String(version).split('.').map(Number);
-    return Number.isFinite(major) && Number.isFinite(minor) ? [major, minor] : null;
-  } catch {
-    return null;
+function createFreshPluginHelpersCopy() {
+  const srcDir = dirname(pluginHelpersPath);
+  const destDir = resolve(dirname(srcDir), '.helpers-onboarding-esm');
+  mkdirSync(destDir, { recursive: true });
+  for (const name of readdirSync(srcDir)) {
+    const src = join(srcDir, name);
+    if (!statSync(src).isFile()) {
+      continue;
+    }
+    const dest = join(destDir, name);
+    const content = readFileSync(src);
+    if (!existsSync(dest) || !readFileSync(dest).equals(content)) {
+      writeFileSync(dest, content);
+    }
   }
+  return join(destDir, 'index.mjs');
 }
-
-function shouldLoadViaRequire() {
-  const version = getPluginPlaywrightVersion();
-  if (!version) {
-    // Unknown version: keep the historical import() behaviour.
-    return false;
-  }
-  const [major, minor] = version;
-  const [minMajor, minMinor] = REQUIRE_MIN_PLAYWRIGHT;
-  return major > minMajor || (major === minMajor && minor >= minMinor);
-}
-
-const pluginHelpersLoadedViaRequire = shouldLoadViaRequire();
 
 async function loadPluginHelpers() {
-  if (pluginHelpersLoadedViaRequire) {
-    const requireFromPlugin = createRequire(join(pluginDir, 'package.json'));
-    return requireFromPlugin(pluginHelpersPath);
+  try {
+    return await import(pathToFileURL(pluginHelpersPath).href);
+  } catch (importError) {
+    pluginHelpersNeededFreshCopy = true;
+    try {
+      return await import(pathToFileURL(createFreshPluginHelpersCopy()).href);
+    } catch (copyError) {
+      copyError.message += `\n(direct import() also failed: ${importError.message})`;
+      throw copyError;
+    }
   }
-  return import(pathToFileURL(pluginHelpersPath).href);
 }
 
 const pluginHelpers = await loadPluginHelpers();
@@ -113,28 +119,39 @@ const pluginHelpers = await loadPluginHelpers();
  * but ESM-only brand plugins (e.g. wp-plugin-web) ship only index.mjs, so the full
  * plugin suite ("Run All Playwright Tests") fails with "Cannot find module".
  * The module tests run first in the same checkout, so writing a re-export shim here
- * makes it available to the later full run. Never overwrites an existing file.
- * Only written when require() of the plugin's .mjs helpers worked, since the shim
- * depends on the same mechanism (it would fail on Playwright 1.60 brands).
+ * makes it available to the later full run. The shim also fills in shared newfold
+ * helpers the plugin lacks (installWooCommerce, uninstallWooCommerce,
+ * clearInstallerQueues, ...; see plugin-compat.mjs).
+ * Never overwrites a real plugin file: an existing index.js is only replaced if it
+ * was generated by this function.
+ * Only written on plugins that needed the fresh-copy fallback (wp-plugin-web), the
+ * only place the shim has been seen to work; elsewhere require() of .mjs fails.
  */
+const SHIM_MARKER = '// Auto-generated by wp-module-onboarding Playwright helpers (CI only).';
+
 function ensurePluginHelpersCjsShim() {
-  if (!process.env.CI || !pluginHelpersLoadedViaRequire) {
+  if (!process.env.CI || !pluginHelpersNeededFreshCopy) {
     return;
   }
   const shimPath = resolve(pluginDir, 'tests/playwright/helpers/index.js');
-  if (existsSync(shimPath)) {
+  if (existsSync(shimPath) && !readFileSync(shimPath, 'utf8').startsWith(SHIM_MARKER)) {
     return;
   }
+  const compatPath = join(dirname(moduleHelpersPath), 'plugin-compat.mjs');
+  const content = [
+    SHIM_MARKER,
+    "// Compatibility shim for modules that require('./tests/playwright/helpers/index.js').",
+    "import * as plugin from './index.mjs';",
+    `import { withNewfoldCompat } from ${JSON.stringify(compatPath)};`,
+    '',
+    'export const { auth, wordpress, a11y, utils } = plugin;',
+    'export const newfold = withNewfoldCompat(plugin.newfold, plugin.wordpress, plugin.utils);',
+    '',
+  ].join('\n');
   try {
-    writeFileSync(
-      shimPath,
-      [
-        '// Auto-generated by wp-module-onboarding Playwright helpers (CI only).',
-        "// Compatibility shim for modules that require('./tests/playwright/helpers/index.js').",
-        "export { auth, wordpress, newfold, a11y, utils } from './index.mjs';",
-        '',
-      ].join('\n')
-    );
+    if (!existsSync(shimPath) || readFileSync(shimPath, 'utf8') !== content) {
+      writeFileSync(shimPath, content);
+    }
   } catch (error) {
     console.warn(`Could not write plugin helpers shim at ${shimPath}: ${error.message}`);
   }
@@ -142,7 +159,8 @@ function ensurePluginHelpersCjsShim() {
 
 ensurePluginHelpersCjsShim();
 
-export const { auth, wordpress, newfold, a11y, utils } = pluginHelpers;
+export const { auth, wordpress, a11y, utils } = pluginHelpers;
+export const newfold = withNewfoldCompat(pluginHelpers.newfold, wordpress, utils);
 export const clearInstallerQueues = newfold.clearInstallerQueues;
 
 /**
