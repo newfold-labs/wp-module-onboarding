@@ -133,7 +133,37 @@ export function withNewfoldCompat(newfold = {}, wordpress, utils) {
     }
   }
 
+  /**
+   * Match wp-plugin-bluehost's .wp-env.json (WP_MEMORY_LIMIT / WP_MAX_MEMORY_LIMIT
+   * = 512M). Brand plugins without it run at PHP's 128M default, and with
+   * WooCommerce active every request fatals with "Allowed memory size ... exhausted",
+   * which cascades into every later test. wp-env's cli container shares
+   * wp-config.php, and WordPress raises memory_limit to WP_MEMORY_LIMIT per request.
+   * Runs once per process; failures are logged, not thrown.
+   */
+  let memoryLimitPromise;
+  function ensureWooMemoryLimit() {
+    if (!memoryLimitPromise) {
+      memoryLimitPromise = (async () => {
+        for (const constant of ['WP_MEMORY_LIMIT', 'WP_MAX_MEMORY_LIMIT']) {
+          try {
+            const result = await wordpress.wpCli(
+              `config set ${constant} 512M --type=constant ${WP_CLI_SKIP_STACK}`
+            );
+            if (isWpCliFailure(result)) {
+              log(`Could not set ${constant}: ${result}`);
+            }
+          } catch (error) {
+            log(`Could not set ${constant}: ${error.message}`);
+          }
+        }
+      })();
+    }
+    return memoryLimitPromise;
+  }
+
   async function installWooCommerce() {
+    await ensureWooMemoryLimit();
     try {
       const result = await wordpress.wpCli('plugin install woocommerce --activate');
       if (isWpCliFailure(result)) {
