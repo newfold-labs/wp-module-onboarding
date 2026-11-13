@@ -316,7 +316,7 @@ class GlobalStylesController {
 			array(
 				'settings' => array(
 					'typography' => array(
-						'fontFamilies' => $font_families,
+						'fontFamilies' => array( 'custom' => $font_families ),
 					),
 				),
 			)

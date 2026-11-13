@@ -107,6 +107,22 @@ class GlobalStylesService {
 	 */
 	public function set_global_styles( array $global_styles ) {
 		try {
+			// Font families are origin-keyed preset lists (custom/theme/default). A plain
+			// array_replace_recursive would merge them by index and turn a flat incoming list
+			// into numeric keys next to `custom`, which crashes the Site Editor. Merge them
+			// separately (by slug, per origin) and also heal any previously corrupted data.
+			$existing_fonts = $this->global_styles['settings']['typography']['fontFamilies'] ?? null;
+			$font_families  = null;
+			if ( isset( $global_styles['settings']['typography']['fontFamilies'] ) ) {
+				$font_families = self::merge_font_families(
+					$existing_fonts,
+					$global_styles['settings']['typography']['fontFamilies']
+				);
+				unset( $global_styles['settings']['typography']['fontFamilies'] );
+			} elseif ( is_array( $existing_fonts ) ) {
+				$font_families = self::normalize_font_families( $existing_fonts );
+			}
+
 			// Merge each top-level key from the incoming data into the existing global styles.
 			foreach ( $global_styles as $key => $value ) {
 				if ( is_array( $value ) && is_array( $this->global_styles[ $key ] ?? null ) ) {
@@ -119,6 +135,10 @@ class GlobalStylesService {
 				}
 			}
 
+			if ( null !== $font_families ) {
+				$this->global_styles['settings']['typography']['fontFamilies'] = $font_families;
+			}
+
 			$result = $this->update_active_global_styles();
 			if ( is_wp_error( $result ) ) {
 				throw new \Exception( $result->get_error_message() );
@@ -128,6 +148,90 @@ class GlobalStylesService {
 		} catch ( \Exception $e ) {
 			return new \WP_Error( 'set_global_styles_error', $e->getMessage() );
 		}
+	}
+
+	/**
+	 * Origins a typography.fontFamilies preset list can be keyed by.
+	 *
+	 * @var string[]
+	 */
+	const FONT_FAMILY_ORIGINS = array( 'default', 'theme', 'custom' );
+
+	/**
+	 * Normalize a settings.typography.fontFamilies value to its origin-keyed shape.
+	 *
+	 * Font presets found under numeric keys (a flat list, or numeric keys left next to an
+	 * origin by an earlier bad merge) are moved into the `custom` origin.
+	 *
+	 * @param mixed $font_families Raw fontFamilies value.
+	 * @return array Origin-keyed font families, each origin holding a sequential list.
+	 */
+	public static function normalize_font_families( $font_families ): array {
+		$normalized = array();
+		$loose      = array();
+
+		if ( ! is_array( $font_families ) ) {
+			return $normalized;
+		}
+
+		foreach ( $font_families as $key => $value ) {
+			if ( ! is_array( $value ) ) {
+				continue;
+			}
+			if ( in_array( $key, self::FONT_FAMILY_ORIGINS, true ) ) {
+				$normalized[ $key ] = array_values( $value );
+			} elseif ( is_int( $key ) || ctype_digit( (string) $key ) ) {
+				$loose[] = $value;
+			}
+		}
+
+		if ( ! empty( $loose ) ) {
+			$normalized['custom'] = array_merge( $normalized['custom'] ?? array(), $loose );
+		}
+
+		return $normalized;
+	}
+
+	/**
+	 * Merge incoming font families into the existing ones, per origin and by slug.
+	 *
+	 * A font with the same slug replaces the existing one; new fonts are appended.
+	 * A flat incoming list is treated as `custom`.
+	 *
+	 * @param mixed $existing Existing fontFamilies value.
+	 * @param mixed $incoming Incoming fontFamilies value.
+	 * @return array Merged, origin-keyed font families.
+	 */
+	public static function merge_font_families( $existing, $incoming ): array {
+		$merged = self::normalize_font_families( $existing );
+
+		foreach ( self::normalize_font_families( $incoming ) as $origin => $fonts ) {
+			$list = $merged[ $origin ] ?? array();
+
+			foreach ( $fonts as $font ) {
+				$slug  = is_array( $font ) ? ( $font['slug'] ?? null ) : null;
+				$index = null;
+
+				if ( null !== $slug ) {
+					foreach ( $list as $i => $current ) {
+						if ( is_array( $current ) && ( $current['slug'] ?? null ) === $slug ) {
+							$index = $i;
+							break;
+						}
+					}
+				}
+
+				if ( null === $index ) {
+					$list[] = $font;
+				} else {
+					$list[ $index ] = $font;
+				}
+			}
+
+			$merged[ $origin ] = array_values( $list );
+		}
+
+		return $merged;
 	}
 
 	/**
