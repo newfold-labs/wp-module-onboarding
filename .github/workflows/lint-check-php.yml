@@ -36,11 +36,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      # User PHP 7.4 here for compatibility with the WordPress codesniffer rules.
+      # Use PHP 7.4 here for compatibility with the WordPress codesniffer rules.
       - name: Setup PHP
         uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2.40.0
         with:
-          php-version: '7.3'
+          php-version: '7.4'
           coverage: none
           tools: composer, cs2pr
 
