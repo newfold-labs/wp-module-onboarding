@@ -34,7 +34,7 @@ On registration the module calls `Brands::set_current_brand( $container )` (same
 
 `Data\BrandConfig` is the PHP entry point for the active brand slug and dashboard URLs. `Data\Runtime::current_brand()` merges the matching row from `Brands::get_brands()` and is exposed to the SPA as `window.nfdOnboarding.runtime.currentBrand` (name, url, `pluginDashboardPage`, migration links, and per-brand `config`).
 
-On registration, onboarding also sets **`editor_chat_brand`** on the module loader container (from `BrandConfig::get_brand_for_editor_chat_js()`, filterable via `newfold/container/editor_chat_brand`). Sibling modules such as **wp-module-editor-chat** read that key — they do not import onboarding PHP classes. Registry rows include `billingUrl` and `editorChatBrandId` for the worker and header menu.
+Onboarding does **not** set `editor_chat_brand` (or any other editor-chat brand data) on the module loader container. Host plugins own that payload (`id`, `name`, `accountUrl`, `emailUrl`, `billingUrl`, `adminUrl`, optional `icons`) and set it on the container themselves; **wp-module-editor-chat** reads it and falls back to its own defaults when it is absent. The registry in `Data\Brands` only holds what onboarding's own UI needs.
 
 The React shell uses `BrandLogo` to render the correct logo from `src/Brands/<asset-dir>/` and link to `currentBrand.url`. Do not hardcode a single host name in UI strings; use `currentBrand.name` or translated `sprintf` patterns.
 
