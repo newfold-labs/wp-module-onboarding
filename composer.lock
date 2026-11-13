@@ -1288,17 +1288,23 @@
         },
         {
             "name": "wp-forge/wp-upgrade-handler",
-            "version": "1.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-forge/wp-upgrade-handler.git",
-                "reference": "b0a7f4c66710f95b4c5702fea3af505ea72fb215"
+                "reference": "2dc2eb56d95950cb570bc4aaf017469dbf21daf6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-forge/wp-upgrade-handler/zipball/b0a7f4c66710f95b4c5702fea3af505ea72fb215",
-                "reference": "b0a7f4c66710f95b4c5702fea3af505ea72fb215",
+                "url": "https://api.github.com/repos/wp-forge/wp-upgrade-handler/zipball/2dc2eb56d95950cb570bc4aaf017469dbf21daf6",
+                "reference": "2dc2eb56d95950cb570bc4aaf017469dbf21daf6",
                 "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.6"
             },
             "type": "library",
             "autoload": {
@@ -1319,10 +1325,9 @@
             "description": "A drop-in library for handling upgrade routines in WordPress plugins and themes.",
             "support": {
                 "issues": "https://github.com/wp-forge/wp-upgrade-handler/issues",
-                "source": "https://github.com/wp-forge/wp-upgrade-handler/tree/1.0"
+                "source": "https://github.com/wp-forge/wp-upgrade-handler/tree/1.0.1"
             },
-            "time": "2020-05-21T00:04:44+00:00",
-            "published-time": "2020-05-21T00:07:29+00:00"
+            "time": "2026-11-06T19:06:07+00:00"
         },
         {
             "name": "wpscholar/url",
@@ -7893,5 +7898,5 @@
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "2.11.0"
+    "plugin-api-version": "2.9.0"
 }
