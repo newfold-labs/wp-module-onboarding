@@ -9,8 +9,9 @@
 import { execSync } from 'child_process';
 import { expect } from '@playwright/test';
 import { existsSync } from 'fs';
+import { createRequire } from 'module';
 import { dirname, join, resolve } from 'path';
-import { fileURLToPath, pathToFileURL } from 'url';
+import { fileURLToPath } from 'url';
 
 // ============================================================================
 // PLUGIN HELPERS (re-exported from plugin-level helpers)
@@ -51,8 +52,11 @@ if (pluginHelpersPath === moduleHelpersPath) {
   );
 }
 
-const helpersUrl = pathToFileURL(pluginHelpersPath).href;
-const pluginHelpers = await import(helpersUrl);
+// Load via require (same as main): a top-level dynamic import() of the plugin's
+// .mjs helpers breaks under Playwright's loader ("./utils.mjs does not provide
+// an export named 'default'").
+const requireFromPlugin = createRequire(join(pluginDir, 'package.json'));
+const pluginHelpers = requireFromPlugin(pluginHelpersPath);
 
 export const { auth, wordpress, newfold, a11y, utils } = pluginHelpers;
 export const clearInstallerQueues = newfold.clearInstallerQueues;
