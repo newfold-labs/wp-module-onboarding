@@ -340,6 +340,8 @@ git log --oneline main..main-networksolutions --no-merges
 
 **Ongoing rules:** No wholesale `git merge main`; no NS brand PRs to `main`; use [NS brand or config change](#ns-brand-or-config-change-default-path) checklist per change.
 
+**Drift sync (Track A):** When aligning `composer.json` / `package.json` with `main`, only **raise** minimum constraints or add new packages—**never lower** a version floor. Refresh lockfiles with upgrades only; skip a bump if it would force transitive downgrades.
+
 ---
 
 ### Track B — NS v4 upgrade execution

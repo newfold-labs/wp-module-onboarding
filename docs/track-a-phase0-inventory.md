@@ -72,7 +72,12 @@ Captured **2026-11-12** from machines with sibling repos; **re-verify on each ho
 | Phase | Status |
 |-------|--------|
 | Phase 0 | Documented (this file) |
-| A3 workflow hardening | In progress on `update/main-networksolutions-with-main` |
+| A3 workflow hardening | Done |
+| Drift: composer patterns/migration | Bumped toward `main` (NS data + facebook retained) |
+| Drift: npm `@wordpress/*` | **Upgrade-only** bumps vs prior `package.json`/lock (no version floor reductions) |
+| Drift: phpcs + composer scripts | Aligned with `main` |
+| Drift: shared `includes/` | `LoginRedirect`, `GlobalStylesService`, `I18nService` synced |
+| Drift: Playwright helpers | Batched wp-env reset helpers (wizard matrix unchanged) |
 | A6 NS v3 runbook | See [ns-v3-runbook.md](ns-v3-runbook.md) |
 | A1 Playwright green | Gated on PR CI after workflow PR merges |
 | A2 brand/data bumps | No pending brand change in module repo |

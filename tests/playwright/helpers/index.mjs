@@ -6,6 +6,7 @@
  * - Navigation Helpers
  * - Setup/Teardown Helpers
  */
+import { execSync } from 'child_process';
 import { expect } from '@playwright/test';
 import { existsSync } from 'fs';
 import { dirname, join, resolve } from 'path';
@@ -54,6 +55,20 @@ const helpersUrl = pathToFileURL(pluginHelpersPath).href;
 const pluginHelpers = await import(helpersUrl);
 
 export const { auth, wordpress, newfold, a11y, utils } = pluginHelpers;
+export const clearInstallerQueues = newfold.clearInstallerQueues;
+
+/**
+ * Run a bash snippet inside wp-env CLI (single container round-trip).
+ *
+ * @param {string} bashScript Bash script lines (newline-separated).
+ */
+function runWpEnvBash(bashScript) {
+  execSync(`npx wp-env run cli bash -lc ${JSON.stringify(bashScript)}`, {
+    cwd: pluginDir,
+    encoding: 'utf8',
+    stdio: ['pipe', 'pipe', 'pipe'],
+  });
+}
 
 // ============================================================================
 // CONSTANTS
@@ -196,31 +211,34 @@ export const ONBOARDING_CAPABILITIES = {
  * - _transient_nfd_site_capabilities: Must include hasAISiteGen: true
  */
 export async function resetOnboardingState() {
-  // Core status options - these directly affect access checks
-  await wordpress.wpCli('option delete nfd_module_onboarding_status', { failOnNonZeroExit: false });
-  await wordpress.wpCli('option delete nfd_module_onboarding_flow', { failOnNonZeroExit: false });
+  if (utils?.fancyLog) {
+    utils.fancyLog('Batched onboarding test reset (WP-CLI)');
+  }
 
-  // Settings initialization flag - allows onboarding to re-initialize settings
-  await wordpress.wpCli('option delete nfd_module_onboarding_settings_initialized', { failOnNonZeroExit: false });
+  const optionsToClear = [
+    'nfd_module_htaccess_saved_state',
+    'nfd_module_onboarding_status',
+    'nfd_module_onboarding_flow',
+    'nfd_module_onboarding_settings_initialized',
+    'nfd_module_onboarding_state_input',
+    'nfd_module_onboarding_state_sitegen',
+    'nfd_module_onboarding_state_logogen',
+    'nfd_module_onboarding_state_blueprints',
+    'nfd_module_onboarding_sitegen_site_id',
+    'nfd_module_onboarding_sitegen_current_id',
+    'nfd_module_onboarding_start_time',
+    'nfd_module_onboarding_completed_time',
+    'nfd_module_onboarding_start_date',
+    'nfd_module_onboarding_can_restart',
+    'nfd_module_onboarding_should_redirect',
+  ];
 
-  // Redux state persistence - clears any saved UI state
-  await wordpress.wpCli('option delete nfd_module_onboarding_state_input', { failOnNonZeroExit: false });
-  await wordpress.wpCli('option delete nfd_module_onboarding_state_sitegen', { failOnNonZeroExit: false });
-  await wordpress.wpCli('option delete nfd_module_onboarding_state_logogen', { failOnNonZeroExit: false });
-  await wordpress.wpCli('option delete nfd_module_onboarding_state_blueprints', { failOnNonZeroExit: false });
+  const deletes = optionsToClear
+    .map((name) => `wp option delete ${name} >/dev/null 2>&1 || true`)
+    .join('; ');
 
-  // Time tracking options
-  await wordpress.wpCli('option delete nfd_module_onboarding_start_time', { failOnNonZeroExit: false });
-  await wordpress.wpCli('option delete nfd_module_onboarding_completed_time', { failOnNonZeroExit: false });
-  await wordpress.wpCli('option delete nfd_module_onboarding_start_date', { failOnNonZeroExit: false });
+  runWpEnvBash(`set +e; ${deletes}`);
 
-  // Restart eligibility flag
-  await wordpress.wpCli('option delete nfd_module_onboarding_can_restart', { failOnNonZeroExit: false });
-
-  // Redirect handling
-  await wordpress.wpCli('option delete nfd_module_onboarding_should_redirect', { failOnNonZeroExit: false });
-
-  // Ensure required capabilities are set (hasAISiteGen is required for onboarding access)
   await ensureOnboardingCapabilities();
 }
 
@@ -239,7 +257,12 @@ export async function ensureOnboardingCapabilities() {
  * Clears saved state, disables cache, and clears optimization options
  */
 export async function resetHtaccessState() {
-  await wordpress.wpCli('option delete nfd_module_htaccess_saved_state', { failOnNonZeroExit: false });
+  if (utils?.fancyLog) {
+    utils.fancyLog('Clearing htaccess module saved state (batched)');
+  }
+  runWpEnvBash(
+    'wp option delete nfd_module_htaccess_saved_state >/dev/null 2>&1 || true'
+  );
   //   await wordpress.wpCli('option delete nfd_fonts_optimization', { failOnNonZeroExit: false });
   //   await wordpress.wpCli('option delete nfd_image_optimization', { failOnNonZeroExit: false });
   //   await wordpress.wpCli('option update newfold_cache_level 0', { failOnNonZeroExit: false });
