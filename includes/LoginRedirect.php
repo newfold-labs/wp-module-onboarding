@@ -1,6 +1,7 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding;
 
+use NewfoldLabs\WP\Module\Onboarding\Data\Config;
 use NewfoldLabs\WP\Module\Onboarding\Data\Data;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
 
@@ -61,7 +62,7 @@ class LoginRedirect {
 		if ( '0' === $redirect_option ) {
 			return $original_redirect;
 		} elseif ( '1' === $redirect_option ) {
-			return apply_filters( 'nfd_build_url', admin_url( '/index.php?page=' . WP_Admin::$slug ) );
+			return self::resolve_onboarding_redirect_url( $original_redirect );
 		}
 
 		// Don't redirect to onboarding if onboarding was exited or completed.
@@ -81,7 +82,35 @@ class LoginRedirect {
 		}
 
 		// Redirect to onboarding
+		return self::resolve_onboarding_redirect_url( $original_redirect );
+	}
+
+	/**
+	 * Resolve the onboarding admin URL, preserving SSO deep links when present.
+	 *
+	 * @param string $original_redirect The requested redirect URL.
+	 * @return string
+	 */
+	private static function resolve_onboarding_redirect_url( $original_redirect ) {
+		if ( self::is_onboarding_admin_redirect( $original_redirect ) ) {
+			return apply_filters( 'nfd_build_url', $original_redirect );
+		}
+
 		return apply_filters( 'nfd_build_url', admin_url( '/index.php?page=' . WP_Admin::$slug ) );
+	}
+
+	/**
+	 * Whether the redirect URL already targets the onboarding admin screen.
+	 *
+	 * @param string $url Redirect URL.
+	 * @return bool
+	 */
+	private static function is_onboarding_admin_redirect( $url ) {
+		if ( ! is_string( $url ) || '' === $url ) {
+			return false;
+		}
+
+		return Config::is_onboarding_request( $url );
 	}
 
 	/**

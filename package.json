@@ -15,8 +15,8 @@
 	"devDependencies": {
 		"@tailwindcss/forms": "^0.5.11",
 		"@wordpress/base-styles": "^6.17.0",
-		"@wordpress/env": "^11.2.0",
-		"@wordpress/icons": "^12.0.0",
+		"@wordpress/env": "^12.1.0",
+		"@wordpress/icons": "^13.0.0",
 		"@wordpress/scripts": "^31.7.0",
 		"eslint-import-resolver-alias": "^1.1.2",
 		"node-fetch": "^3.3.2",
@@ -41,6 +41,7 @@
 		"@wordpress/api-fetch": "^7.41.0",
 		"@wordpress/data": "^10.41.0",
 		"@wordpress/element": "^6.41.0",
+		"@wordpress/i18n": "^6.30.0",
 		"@wordpress/interface": "^9.27.0",
 		"@wordpress/media-utils": "^5.42.0",
 		"@wordpress/style-engine": "^2.41.0",
