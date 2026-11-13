@@ -105,6 +105,25 @@ final class Brands {
 	}
 
 	/**
+	 * Normalize a host plugin brand (and HostGator region) into an onboarding brand slug.
+	 *
+	 * @param string $brand  Raw plugin brand (e.g. `Bluehost_India`, `HostGator`).
+	 * @param string $region Plugin region (used for HostGator, e.g. `US`, `BR`).
+	 * @return string Brand slug (e.g. `bluehost-india`, `hostgator-br`).
+	 */
+	public static function get_brand_slug_for( $brand, $region = '' ): string {
+		if ( empty( $brand ) ) {
+			$brand = 'WordPress';
+		}
+
+		if ( false !== stripos( $brand, 'hostgator' ) ) {
+			$brand = 'hostgator-' . strtolower( (string) $region );
+		}
+
+		return sanitize_title_with_dashes( str_replace( '_', '-', $brand ) );
+	}
+
+	/**
 	 * Sets the hosting brand for which Onboarding is active.
 	 *
 	 * @param object $container The brand plugin container.
@@ -112,17 +131,8 @@ final class Brands {
 	 */
 	public static function set_current_brand( $container ) {
 		if ( ! defined( 'NFD_ONBOARDING_PLUGIN_BRAND' ) ) {
-			$brand = $container->plugin()->brand;
-			if ( empty( $brand ) ) {
-				$brand = 'WordPress';
-			}
-
-			if ( false !== stripos( $brand, 'hostgator' ) ) {
-				$region = strtolower( $container->plugin()->region );
-				$brand  = "hostgator-{$region}";
-			}
-
-			$brand = sanitize_title_with_dashes( str_replace( '_', '-', $brand ) );
+			$plugin = $container->plugin();
+			$brand  = self::get_brand_slug_for( $plugin->brand, isset( $plugin->region ) ? $plugin->region : '' );
 			define( 'NFD_ONBOARDING_PLUGIN_BRAND', $brand );
 
 			return $brand;
