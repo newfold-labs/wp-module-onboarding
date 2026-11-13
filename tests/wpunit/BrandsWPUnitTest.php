@@ -36,8 +36,9 @@ class BrandsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 		$bluehost = Brands::get_brands()['bluehost'];
 		$this->assertSame( 'Bluehost', $bluehost['name'] );
 		$this->assertArrayHasKey( 'config', $bluehost );
-		$this->assertArrayHasKey( 'enabled_flows', $bluehost['config'] );
-		$this->assertArrayHasKey( 'phoneNumbers', $bluehost );
+		$this->assertArrayHasKey( 'canMigrateSite', $bluehost['config'] );
+		$this->assertArrayHasKey( 'url', $bluehost );
+		$this->assertArrayHasKey( 'pluginDashboardPage', $bluehost );
 		$this->assertSame( 'nfd-onboarding', $bluehost['dashboardRedirectParams']['referrer'] );
 	}
 
@@ -53,6 +54,6 @@ class BrandsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 		$this->assertSame( 'your web host', $default['name'] );
 		// The override merges over the bluehost brand, so unmodified bluehost keys should still be present.
 		$this->assertArrayHasKey( 'config', $default );
-		$this->assertArrayHasKey( 'phoneNumbers', $default );
+		$this->assertArrayHasKey( 'dashboardRedirectParams', $default );
 	}
 }

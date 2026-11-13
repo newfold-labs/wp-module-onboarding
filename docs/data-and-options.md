@@ -52,7 +52,7 @@ Origin options: `nfd_origin_prompt`, `nfd_origin_prompt_completed`, `nfd_origin_
 ## `Brands` and `Bluehost`
 
 - `Bluehost` – eligible brands (`bluehost`, `bluehost-india`), the brand plugin dashboard URL (`admin.php?page=bluehost`), and dashboard redirect params (`referrer=nfd-onboarding`). Used for gating and exit redirects.
-- `Brands` – per-brand display and config data (names, URLs, social links, `config` feature flags such as `enabled_flows`, `canMigrateSite`) for `bluehost`, `bluehost-india`, `webcom`, `crazy-domains`, `hostgator-br`, `hostgator-us`. Only the Bluehost brands are eligible for onboarding in v4; the others are retained data. The selected brand comes from `NFD_ONBOARDING_PLUGIN_BRAND`, falling back to `bluehost`, and `Brands::get_default_brand()` for unknown values.
+- `Brands` – per-brand data onboarding itself reads (`brand`, `name`, `url`, `pluginDashboardPage`, `dashboardRedirectParams`, `migrationInfo`, `config.canMigrateSite`; brand plugins own other brand data such as portal links, icons, social links and phone numbers via the module container) for `bluehost`, `bluehost-india`, `webcom`, `crazy-domains`, `hostgator-br`, `hostgator-us`. Only the Bluehost brands are eligible for onboarding in v4; the others are retained data. The selected brand comes from `NFD_ONBOARDING_PLUGIN_BRAND`, falling back to `bluehost`, and `Brands::get_default_brand()` for unknown values.
 
 ## `Plugins`
 
