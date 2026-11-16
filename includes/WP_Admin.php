@@ -8,7 +8,6 @@ use NewfoldLabs\WP\Module\Onboarding\Services\I18nService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Runtime;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
-use NewfoldLabs\WP\Module\Patterns\SiteClassification as PatternsSiteClassification;
 
 /**
  * Register Admin Page, Assets & Admin functionality with WordPress.
@@ -45,7 +44,6 @@ final class WP_Admin {
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'hide_admin_chrome' ) );
 		\add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_site_editor_assets' ) );
 		\add_filter( 'wp_kses_allowed_html', array( __CLASS__, 'add_svg_support_to_kses' ), 10, 2 );
-		self::pre_set_filter_wonder_blocks_transients();
 	}
 
 	/**
@@ -86,7 +84,7 @@ final class WP_Admin {
 	 * @return void
 	 * */
 	public static function page_title() {
-		if ( isset( $_GET['page'] ) && \sanitize_text_field( wp_unslash( $_GET['page'] ) ) === self::$slug ) {
+		if ( isset( $_GET['page'] ) && \sanitize_text_field( wp_unslash( $_GET['page'] ) ) === self::$slug ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only routing/referrer checks, no state is changed.
 			global $title;
 			$title = \__( 'Onboarding', 'wp-module-onboarding' ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		}
@@ -233,7 +231,7 @@ final class WP_Admin {
 	 */
 	public static function enqueue_block_assets() {
 		// This hook exists in the patterns module.
-		\do_action( 'enqueue_nfd_wonder_blocks_utilities' );
+		\do_action( 'enqueue_nfd_wonder_blocks_utilities' ); // phpcs:ignore Newfold.NamingConventions.ValidHookName.MissingVendorPrefix, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Hook defined by wp-module-patterns.
 	}
 
 	/**
@@ -249,9 +247,10 @@ final class WP_Admin {
 		);
 
 		// Redirect to the brand plugin page.
+		// phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect -- Brand plugin dashboard URL; may be on another host, followed by exit.
 		wp_redirect(
 			apply_filters(
-				'nfd_build_url',
+				'nfd_build_url', // phpcs:ignore Newfold.NamingConventions.ValidHookName.MissingVendorPrefix -- Filter provided by wp-module-link-tracker.
 				$redirect_url
 			)
 		);
@@ -264,7 +263,7 @@ final class WP_Admin {
 	 * @return void
 	 */
 	public static function initialize() {
-		if ( ! empty( $_GET['nfd_plugins'] ) && 'true' === sanitize_text_field( $_GET['nfd_plugins'] ) ) {
+		if ( ! empty( $_GET['nfd_plugins'] ) && 'true' === sanitize_text_field( wp_unslash( $_GET['nfd_plugins'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only routing/referrer checks, no state is changed.
 			PluginService::initialize();
 		}
 
@@ -289,10 +288,12 @@ final class WP_Admin {
 		global $pagenow;
 
 		// Only proceed if we're on site-editor.php and have the right referrer
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Read-only referrer check, no state is changed.
 		if ( 'site-editor.php' === $pagenow &&
 			isset( $_GET['referrer'] ) &&
 			in_array( $_GET['referrer'], self::$allowed_referrers, true )
 		) {
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 			$asset_file = NFD_ONBOARDING_BUILD_DIR . '/onboarding-design-studio.asset.php';
 
@@ -362,7 +363,7 @@ final class WP_Admin {
 			if ( false === $font_data ) {
 				// Fetch font data from Hiive API
 				$response = wp_remote_get(
-					$hiive_api_base . '/fonts/' . urlencode( sanitize_title( $font_id ) ),
+					$hiive_api_base . '/fonts/' . rawurlencode( sanitize_title( $font_id ) ),
 					array(
 						'timeout' => 10,
 						'headers' => array(
@@ -421,31 +422,12 @@ final class WP_Admin {
 				}
 
 				// Register and enqueue the font style
-				\wp_register_style( $font_handle, false );
+				\wp_register_style( $font_handle, false, array(), defined( 'NFD_ONBOARDING_VERSION' ) ? NFD_ONBOARDING_VERSION : false );
 				\wp_enqueue_style( $font_handle );
 				\wp_add_inline_style( $font_handle, $font_css );
 			}
 		}
 	}
-
-	/**
-	 * Pre-set filter wonder blocks transients.
-	 *
-	 * @return void
-	 */
-	public static function pre_set_filter_wonder_blocks_transients() {
-		$args = wp_parse_args(
-			array(
-				'primary_type'   => PatternsSiteClassification::get_primary_type(),
-				'secondary_type' => PatternsSiteClassification::get_secondary_type(),
-			)
-		);
-		$id   = md5( serialize( $args ) );
-
-		\add_action( "pre_set_transient_wba_templates_{$id}", array( __CLASS__, 'filter_wonder_blocks_templates_transient' ), 10, 1 );
-		\add_action( 'pre_set_transient_wba_templates_categories', array( __CLASS__, 'filter_wonder_blocks_categories_transient' ), 10, 1 );
-	}
-
 
 	/**
 	 * Add SVG support to KSES.

@@ -84,19 +84,6 @@ function nfd_wp_module_onboarding_register() {
 
 				Brands::set_current_brand( $container );
 
-				/**
-				 * Editor-chat and other modules read brand portal data from the container.
-				 *
-				 * @param array<string, string> $brand_payload Keys: id, name, accountUrl, emailUrl, billingUrl, adminUrl.
-				 * @param Container             $container     Host plugin container.
-				 */
-				$editor_chat_brand = apply_filters(
-					'newfold/container/editor_chat_brand',
-					BrandConfig::get_brand_for_editor_chat_js(),
-					$container
-				);
-				$container->set( 'editor_chat_brand', $editor_chat_brand );
-
 				// Backward compatibility for integrations that read the raw container brand.
 				if ( ! defined( 'NFD_ONBOARDING_BLUEHOST_BRAND' ) ) {
 					define( 'NFD_ONBOARDING_BLUEHOST_BRAND', $container->plugin()->brand );
