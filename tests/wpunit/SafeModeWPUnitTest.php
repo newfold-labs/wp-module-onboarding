@@ -117,7 +117,8 @@ class SafeModeWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 
 		$this->assertStringContainsString( 'safe-mode', $output );
 		$this->assertStringContainsString( 'name="upgrade"', $output );
-		$this->assertStringContainsString( 'upgrade-core', $output );
+		$this->assertStringContainsString( 'update-core.php?action=do-core-upgrade', $output );
+		$this->assertStringContainsString( 'name="_wpnonce"', $output );
 		$this->assertStringContainsString( 'value="99.0"', $output );
 		$this->assertNotFalse( get_transient( Options::get_option_name( 'core_update_referrer' ) ) );
 	}
