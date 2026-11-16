@@ -1,7 +1,18 @@
 <?php
 namespace NewfoldLabs\WP\Module\Onboarding\Services;
 
+/**
+ * Collects webfonts declared in theme.json (including style variations) and compiles them to @font-face CSS.
+ *
+ * Adapted from WordPress core's webfont handling.
+ */
 class Webfonts {
+
+	/**
+	 * Get all webfont (fontFace) definitions from the merged theme.json settings and style variations.
+	 *
+	 * @return array List of raw fontFace definitions.
+	 */
 	public static function get_webfonts_from_theme_json() {
 		// Get settings from theme.json.
 		$settings = \WP_Theme_JSON_Resolver::get_merged_data()->get_settings();
@@ -60,6 +71,12 @@ class Webfonts {
 		return $webfonts;
 	}
 
+	/**
+	 * Rewrites theme-relative `file:./` sources into full theme file URIs.
+	 *
+	 * @param array $src Font sources.
+	 * @return array Sources with theme-relative paths resolved.
+	 */
 	private static function transform_src_into_uri( array $src ) {
 		foreach ( $src as $key => $url ) {
 			// Tweak the URL to be relative to the theme root.
@@ -115,14 +132,14 @@ class Webfonts {
 
 		// Check the font-family.
 		if ( empty( $webfont['font-family'] ) || ! is_string( $webfont['font-family'] ) ) {
-			trigger_error( __( 'Webfont font family must be a non-empty string.', 'wp-module-onboarding' ) );
+			trigger_error( esc_html__( 'Webfont font family must be a non-empty string.', 'wp-module-onboarding' ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error -- Developer-facing validation notice, mirrors WordPress core.
 
 			return false;
 		}
 
 		// Check that the `src` property is defined and a valid type.
 		if ( empty( $webfont['src'] ) || ( ! is_string( $webfont['src'] ) && ! is_array( $webfont['src'] ) ) ) {
-			trigger_error( __( 'Webfont src must be a non-empty string or an array of strings.', 'wp-module-onboarding' ) );
+			trigger_error( esc_html__( 'Webfont src must be a non-empty string or an array of strings.', 'wp-module-onboarding' ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error -- Developer-facing validation notice, mirrors WordPress core.
 
 			return false;
 		}
@@ -130,7 +147,7 @@ class Webfonts {
 		// Validate the `src` property.
 		foreach ( (array) $webfont['src'] as $src ) {
 			if ( ! is_string( $src ) || '' === trim( $src ) ) {
-				trigger_error( __( 'Each webfont src must be a non-empty string.', 'wp-module-onboarding' ) );
+				trigger_error( esc_html__( 'Each webfont src must be a non-empty string.', 'wp-module-onboarding' ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error -- Developer-facing validation notice, mirrors WordPress core.
 
 				return false;
 			}
@@ -138,7 +155,7 @@ class Webfonts {
 
 		// Check the font-weight.
 		if ( ! is_string( $webfont['font-weight'] ) && ! is_int( $webfont['font-weight'] ) ) {
-			trigger_error( __( 'Webfont font weight must be a properly formatted string or integer.', 'wp-module-onboarding' ) );
+			trigger_error( esc_html__( 'Webfont font weight must be a properly formatted string or integer.', 'wp-module-onboarding' ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error -- Developer-facing validation notice, mirrors WordPress core.
 
 			return false;
 		}
@@ -174,6 +191,13 @@ class Webfonts {
 		return $webfont;
 	}
 
+	/**
+	 * Get the validated, normalized webfonts from theme.json.
+	 *
+	 * Invalid webfonts are skipped.
+	 *
+	 * @return array List of webfonts with kebab-case properties and resolved sources.
+	 */
 	public static function get_registered_webfonts_from_theme_json() {
 		$registered_webfonts = array();
 
@@ -199,6 +223,12 @@ class Webfonts {
 		return $registered_webfonts;
 	}
 
+	/**
+	 * Orders a webfont's sources for browser support: data URIs first, then woff2, woff, ttf, eot, otf.
+	 *
+	 * @param array $webfont Webfont with a `src` list of URLs.
+	 * @return array Webfont whose `src` is a list of `url`/`format` pairs.
+	 */
 	private static function order_src( array $webfont ) {
 		$src         = array();
 		$src_ordered = array();
@@ -260,6 +290,13 @@ class Webfonts {
 		return $webfont;
 	}
 
+	/**
+	 * Compiles ordered sources into a CSS `src` value, making same-site URLs relative.
+	 *
+	 * @param string $font_family Font family name.
+	 * @param array  $value       Ordered `url`/`format` pairs.
+	 * @return string The CSS `src` value.
+	 */
 	private static function compile_src( $font_family, array $value ) {
 		$src = "local($font_family)";
 
@@ -298,6 +335,12 @@ class Webfonts {
 		return $variations;
 	}
 
+	/**
+	 * Builds the declarations for a single @font-face rule.
+	 *
+	 * @param array $webfont Webfont with ordered sources.
+	 * @return string CSS declarations (without the surrounding @font-face block).
+	 */
 	private static function build_font_face_css( array $webfont ) {
 		$css = '';
 
@@ -337,6 +380,12 @@ class Webfonts {
 		return $css;
 	}
 
+	/**
+	 * Compiles registered webfonts into @font-face CSS.
+	 *
+	 * @param array $registered_webfonts Validated webfonts.
+	 * @return string The CSS, or an empty string when there are no webfonts.
+	 */
 	private static function get_css_from_webfonts( $registered_webfonts ) {
 		$css = '';
 
@@ -351,6 +400,11 @@ class Webfonts {
 		return $css;
 	}
 
+	/**
+	 * Get the @font-face CSS for all webfonts declared in theme.json.
+	 *
+	 * @return string|false The CSS, or false when there are none.
+	 */
 	public static function get_wp_theme_json_webfonts_css() {
 
 		$styles = self::get_css_from_webfonts( self::get_registered_webfonts_from_theme_json() );

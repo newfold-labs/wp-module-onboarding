@@ -37,13 +37,13 @@ final class Brands {
 			'bluehost'       => array(
 				'brand'                   => 'bluehost',
 				'name'                    => 'Bluehost',
-				'url'                     => apply_filters( 'nfd_build_url', 'https://bluehost.com' ),
+				'url'                     => self::build_url( 'https://bluehost.com' ),
 				'pluginDashboardPage'     => \admin_url( 'admin.php?page=bluehost' ),
 				'dashboardRedirectParams' => array(
 					'referrer' => 'nfd-onboarding',
 				),
 				'migrationInfo'           => array(
-					'defaultLink' => apply_filters( 'nfd_build_url', 'https://www.bluehost.com/my-account/hosting/details/sites/add/transfer' ),
+					'defaultLink' => self::build_url( 'https://www.bluehost.com/my-account/hosting/details/sites/add/transfer' ),
 				),
 				'config'                  => array(
 					'canMigrateSite' => $can_migrate_site,
@@ -52,7 +52,7 @@ final class Brands {
 			'bluehost-india' => array(
 				'brand'                   => 'bluehost-india',
 				'name'                    => 'Bluehost',
-				'url'                     => apply_filters( 'nfd_build_url', 'https://bluehost.in' ),
+				'url'                     => self::build_url( 'https://bluehost.in' ),
 				'pluginDashboardPage'     => \admin_url( 'admin.php?page=bluehost' ),
 				'dashboardRedirectParams' => array(
 					'referrer' => 'nfd-onboarding',
@@ -65,7 +65,7 @@ final class Brands {
 			'webcom'         => array(
 				'brand'         => 'webcom',
 				'name'          => 'Web.com',
-				'url'           => apply_filters( 'nfd_build_url', 'https://web.com' ),
+				'url'           => self::build_url( 'https://web.com' ),
 				'migrationInfo' => array(),
 				'config'        => array(
 					'canMigrateSite' => $can_migrate_site,
@@ -74,7 +74,7 @@ final class Brands {
 			'crazy-domains'  => array(
 				'brand'               => 'crazy-domains',
 				'name'                => 'Crazy Domains',
-				'url'                 => apply_filters( 'nfd_build_url', 'https://www.crazydomains.com' ),
+				'url'                 => self::build_url( 'https://www.crazydomains.com' ),
 				'pluginDashboardPage' => \admin_url( 'admin.php?page=crazy-domains' ),
 				'migrationInfo'       => array(),
 				'config'              => array(
@@ -84,7 +84,7 @@ final class Brands {
 			'hostgator-br'   => array(
 				'brand'               => 'hostgator-br',
 				'name'                => 'HostGator',
-				'url'                 => apply_filters( 'nfd_build_url', 'https://www.hostgator.com.br' ),
+				'url'                 => self::build_url( 'https://www.hostgator.com.br' ),
 				'pluginDashboardPage' => \admin_url( 'admin.php?page=hostgator' ),
 				'migrationInfo'       => array(),
 				'config'              => array(
@@ -94,7 +94,7 @@ final class Brands {
 			'hostgator-us'   => array(
 				'brand'               => 'hostgator-us',
 				'name'                => 'HostGator',
-				'url'                 => apply_filters( 'nfd_build_url', 'https://www.hostgator.com' ),
+				'url'                 => self::build_url( 'https://www.hostgator.com' ),
 				'pluginDashboardPage' => \admin_url( 'admin.php?page=hostgator' ),
 				'migrationInfo'       => array(),
 				'config'              => array(
@@ -137,5 +137,17 @@ final class Brands {
 
 			return $brand;
 		}
+	}
+
+	/**
+	 * Run a URL through the link tracker's `nfd_build_url` filter.
+	 *
+	 * The filter name is owned by the link tracker module, so it cannot carry the `newfold/` prefix.
+	 *
+	 * @param string $url URL to decorate.
+	 * @return string
+	 */
+	private static function build_url( string $url ): string {
+		return (string) apply_filters( 'nfd_build_url', $url ); // phpcs:ignore Newfold.NamingConventions.ValidHookName.MissingVendorPrefix -- Filter provided by wp-module-link-tracker.
 	}
 }
