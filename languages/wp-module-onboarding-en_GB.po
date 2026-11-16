@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-02-13T10:23:36+00:00\n"
-"PO-Revision-Date: 2026-11-09T15:55:52+00:00\n"
+"PO-Revision-Date: 2026-11-16T18:36:56+00:00\n"
 "Language: en_GB\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: wp-module-onboarding\n"
@@ -17,9 +17,9 @@ msgstr ""
 #: bootstrap.php:59
 #: includes/Compatibility/Safe_Mode.php:44
 #: includes/Compatibility/Safe_Mode.php:45
-#: includes/WP_Admin.php:74
-#: includes/WP_Admin.php:75
-#: includes/WP_Admin.php:91
+#: includes/WP_Admin.php:72
+#: includes/WP_Admin.php:73
+#: includes/WP_Admin.php:89
 msgid "Onboarding"
 msgstr "Onboarding"
 
@@ -247,107 +247,103 @@ msgstr "Remove service featured image"
 msgid "Use as service featured image"
 msgstr "Use as service featured image"
 
-#: includes/Services/Webfonts.php:118
+#: includes/Services/Webfonts.php:135
 msgid "Webfont font family must be a non-empty string."
 msgstr "Webfont font family must be a non-empty string."
 
-#: includes/Services/Webfonts.php:125
+#: includes/Services/Webfonts.php:142
 msgid "Webfont src must be a non-empty string or an array of strings."
 msgstr "Webfont src must be a non-empty string or an array of strings."
 
-#: includes/Services/Webfonts.php:133
+#: includes/Services/Webfonts.php:150
 msgid "Each webfont src must be a non-empty string."
 msgstr "Each webfont src must be a non-empty string."
 
-#: includes/Services/Webfonts.php:141
+#: includes/Services/Webfonts.php:158
 msgid "Webfont font weight must be a properly formatted string or integer."
 msgstr "Webfont font weight must be a properly formatted string or integer."
 
-#: build/4.0.12/onboarding.js:1
+#: build/4.1.0/onboarding.js:1
 #, js-format
 msgid "%s logo"
 msgstr "%s logo"
 
 #. translators: %s is the brand display name (e.g. Bluehost, HostGator).
-#: build/4.0.12/onboarding.js:3
+#: build/4.1.0/onboarding.js:3
 msgid "I want to build"
 msgstr "I want to build"
 
-#: build/4.0.12/onboarding.js:3
+#: build/4.1.0/onboarding.js:3
 msgid "a photography portfolio with a booking page and gallery…"
 msgstr "a photography portfolio with a booking page and gallery..."
 
-#: build/4.0.12/onboarding.js:3
+#: build/4.1.0/onboarding.js:3
 msgid "an online bakery with a menu and custom order form…"
 msgstr "an online bakery with a menu and custom order form..."
 
-#: build/4.0.12/onboarding.js:3
+#: build/4.1.0/onboarding.js:3
 msgid "a travel blog with a newsletter signup…"
 msgstr "a travel blog with a newsletter signup..."
 
-#: build/4.0.12/onboarding.js:3
+#: build/4.1.0/onboarding.js:3
 msgid "a fitness coaching site with class schedules and pricing…"
 msgstr "a fitness coaching site with class schedules and pricing..."
 
-#: build/4.0.12/onboarding.js:3
+#: build/4.1.0/onboarding.js:3
 msgid "a restaurant site with an online menu and reservations…"
 msgstr "a restaurant site with an online menu and reservations..."
 
-#: build/4.0.12/onboarding.js:3
+#: build/4.1.0/onboarding.js:3
 msgid "Build now"
 msgstr "Build now"
 
-#: build/4.0.12/onboarding.js:3
+#: build/4.1.0/onboarding.js:3
 msgid "Tell us what kind of website you want to build"
 msgstr "Tell us what kind of website you want to build"
 
-#: build/4.0.12/onboarding.js:3
+#: build/4.1.0/onboarding.js:3
 msgid "Or"
 msgstr "Or"
 
-#: build/4.0.12/onboarding.js:3
+#: build/4.1.0/onboarding.js:3
 msgid "Import an Existing WordPress Site"
 msgstr "Import an Existing WordPress Site"
 
-#: build/4.0.12/onboarding.js:3
-msgid "Send message"
-msgstr "Send message"
-
-#: build/4.0.12/onboarding.js:3
-#: build/4.0.12/onboarding.js:5
+#: build/4.1.0/onboarding.js:3
+#: build/4.1.0/onboarding.js:5
 msgid "Try again"
 msgstr "Try again"
 
-#: build/4.0.12/onboarding.js:3
+#: build/4.1.0/onboarding.js:3
 msgid "Start over"
 msgstr "Start over"
 
 #. translators: %s is the brand name (e.g., Bluehost, HostGator)
-#: build/4.0.12/onboarding.js:5
+#: build/4.1.0/onboarding.js:5
 #, js-format
 msgid "Let's migrate your existing site to %s"
 msgstr "Let's migrate your existing site to %s"
 
-#: build/4.0.12/onboarding.js:5
+#: build/4.1.0/onboarding.js:5
 msgid "Let's migrate your existing site"
 msgstr "Let's migrate your existing site"
 
-#: build/4.0.12/onboarding.js:5
+#: build/4.1.0/onboarding.js:5
 msgid "Please wait a few seconds while we get your new account ready to import your existing WordPress site."
 msgstr "Please wait a few seconds while we get your new account ready to import your existing WordPress site."
 
-#: build/4.0.12/onboarding.js:5
+#: build/4.1.0/onboarding.js:5
 msgid "Oops! Something went wrong"
 msgstr "Oops! Something went wrong"
 
-#: build/4.0.12/onboarding.js:5
+#: build/4.1.0/onboarding.js:5
 msgid "An error occurred while attempting to set up your migration account."
 msgstr "An error occurred while attempting to set up your migration account."
 
-#: build/4.0.12/onboarding.js:5
+#: build/4.1.0/onboarding.js:5
 msgid "Preparing your account"
 msgstr "Preparing your account"
 
-#: build/4.0.12/onboarding.js:5
+#: build/4.1.0/onboarding.js:5
 msgid "AI-generated sites may need refinement. You can customize everything later."
 msgstr "AI-generated sites may need refinement. You can customise everything later."
