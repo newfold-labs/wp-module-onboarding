@@ -71,6 +71,17 @@ class WPAdminWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	}
 
 	/**
+	 * No transient hooks are registered that point at callbacks which do not exist.
+	 */
+	public function test_constructor_registers_no_dangling_transient_hooks() {
+		new WP_Admin();
+
+		$this->assertFalse( has_action( 'pre_set_transient_wba_templates_categories' ) );
+		$this->assertFalse( method_exists( WP_Admin::class, 'filter_wonder_blocks_categories_transient' ) );
+		$this->assertFalse( method_exists( WP_Admin::class, 'pre_set_filter_wonder_blocks_transients' ) );
+	}
+
+	/**
 	 * The page slug is stable.
 	 */
 	public function test_slug() {
@@ -206,19 +217,55 @@ class WPAdminWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	}
 
 	/**
-	 * Site editor assets are enqueued for a valid referrer when the build exists.
+	 * Site editor assets are enqueued for an allowed referrer on the site editor.
+	 *
+	 * The built asset manifest is not guaranteed to exist (CI does not build), so a minimal
+	 * one is written to the configured build dir (or a temp dir when the constants are unset)
+	 * for the duration of the test.
 	 */
-	public function test_enqueue_site_editor_assets_enqueues_design_studio_when_built() {
-		if ( ! defined( 'NFD_ONBOARDING_BUILD_DIR' ) || ! is_readable( NFD_ONBOARDING_BUILD_DIR . '/onboarding-design-studio.asset.php' ) ) {
-			$this->markTestSkipped( 'Design studio build not available.' );
+	public function test_enqueue_site_editor_assets_enqueues_design_studio_for_allowed_referrer() {
+		if ( ! defined( 'NFD_ONBOARDING_BUILD_DIR' ) ) {
+			define( 'NFD_ONBOARDING_BUILD_DIR', sys_get_temp_dir() . '/nfd-onboarding-test-build' );
 		}
-		global $pagenow;
-		$pagenow          = 'site-editor.php'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-		$_GET['referrer'] = 'nfd-plugin';
+		if ( ! defined( 'NFD_ONBOARDING_BUILD_URL' ) ) {
+			define( 'NFD_ONBOARDING_BUILD_URL', 'http://example.org/build' );
+		}
 
-		WP_Admin::enqueue_site_editor_assets();
+		$dir_created  = false;
+		$file_created = false;
+		$asset_file   = NFD_ONBOARDING_BUILD_DIR . '/onboarding-design-studio.asset.php';
 
-		$this->assertTrue( wp_script_is( 'nfd-design-studio', 'enqueued' ) );
+		if ( ! is_dir( NFD_ONBOARDING_BUILD_DIR ) ) {
+			$dir_created = wp_mkdir_p( NFD_ONBOARDING_BUILD_DIR );
+		}
+		if ( ! is_readable( $asset_file ) ) {
+			$file_created = false !== @file_put_contents( $asset_file, "<?php return array( 'dependencies' => array(), 'version' => 'test' );" ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
+		}
+		if ( ! is_readable( $asset_file ) ) {
+			$this->markTestSkipped( 'Cannot create a design studio asset manifest.' );
+		}
+
+		try {
+			global $pagenow;
+			$pagenow          = 'site-editor.php'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			$_GET['referrer'] = 'nfd-plugin';
+
+			WP_Admin::enqueue_site_editor_assets();
+
+			$this->assertTrue( wp_script_is( 'nfd-design-studio', 'enqueued' ) );
+			$this->assertTrue( wp_style_is( 'nfd-design-studio', 'enqueued' ) );
+		} finally {
+			wp_dequeue_script( 'nfd-design-studio' );
+			wp_deregister_script( 'nfd-design-studio' );
+			wp_dequeue_style( 'nfd-design-studio' );
+			wp_deregister_style( 'nfd-design-studio' );
+			if ( $file_created ) {
+				@unlink( $asset_file ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.WP.AlternativeFunctions.unlink_unlink
+			}
+			if ( $dir_created ) {
+				@rmdir( NFD_ONBOARDING_BUILD_DIR ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.WP.AlternativeFunctions.rmdir_rmdir
+			}
+		}
 	}
 
 	/**

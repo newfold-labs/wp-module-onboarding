@@ -321,4 +321,56 @@ class WebfontsWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 		$css = Webfonts::get_wp_theme_json_webfonts_css();
 		$this->assertTrue( false === $css || ( is_string( $css ) && '' !== $css ) );
 	}
+
+	/**
+	 * Invalid webfonts are dropped from the registered list rather than registered as junk.
+	 */
+	public function test_get_registered_webfonts_skips_invalid_webfonts() {
+		$inject = static function ( $theme_json ) {
+			return $theme_json->update_with(
+				array(
+					'version'  => \WP_Theme_JSON::LATEST_SCHEMA,
+					'settings' => array(
+						'typography' => array(
+							'fontFamilies' => array(
+								array(
+									'fontFamily' => 'Inter, sans-serif',
+									'name'       => 'Inter',
+									'slug'       => 'inter',
+									'fontFace'   => array(
+										array(
+											'fontFamily' => 'Inter',
+											'fontWeight' => '400',
+											'src'        => array( 'https://cdn.example.com/inter.woff2' ),
+										),
+										array(
+											'fontFamily' => '',
+											'src'        => array( 'https://cdn.example.com/broken.woff2' ),
+										),
+									),
+								),
+							),
+						),
+					),
+				)
+			);
+		};
+		add_filter( 'wp_theme_json_data_theme', $inject );
+		\WP_Theme_JSON_Resolver::clean_cached_data();
+
+		$out = $this->capture_errors(
+			static function () {
+				return Webfonts::get_registered_webfonts_from_theme_json();
+			}
+		);
+
+		remove_filter( 'wp_theme_json_data_theme', $inject );
+		\WP_Theme_JSON_Resolver::clean_cached_data();
+
+		$families = wp_list_pluck( $out['result'], 'font-family' );
+		$this->assertContains( 'Inter', $families );
+		foreach ( $out['result'] as $webfont ) {
+			$this->assertNotEmpty( $webfont['font-family'], 'Invalid webfonts must not be registered' );
+		}
+	}
 }

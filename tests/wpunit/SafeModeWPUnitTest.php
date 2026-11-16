@@ -45,6 +45,7 @@ class SafeModeWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 		Status::reset();
 		remove_all_actions( '_core_updated_successfully' );
 		remove_all_actions( 'load-about.php' );
+		remove_all_filters( 'pre_site_transient_update_core' );
 		parent::tearDown();
 	}
 
@@ -91,6 +92,22 @@ class SafeModeWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 	 */
 	public function test_render_sets_referrer_transient_and_outputs_upgrade_ui() {
 		require_once ABSPATH . 'wp-admin/includes/update.php';
+		// render() reads the preferred core update; with no update data WordPress returns false.
+		$update_core = (object) array(
+			'updates' => array(
+				(object) array(
+					'response' => 'upgrade',
+					'current'  => '99.0',
+					'locale'   => 'en_US',
+				),
+			),
+		);
+		add_filter(
+			'pre_site_transient_update_core',
+			static function () use ( $update_core ) {
+				return $update_core;
+			}
+		);
 		$_SERVER['REQUEST_URI'] = '/wp-admin/index.php?page=nfd-onboarding';
 		$safe_mode              = new Safe_Mode( $this->scan() );
 
@@ -101,6 +118,7 @@ class SafeModeWPUnitTest extends \lucatume\WPBrowser\TestCase\WPTestCase {
 		$this->assertStringContainsString( 'safe-mode', $output );
 		$this->assertStringContainsString( 'name="upgrade"', $output );
 		$this->assertStringContainsString( 'upgrade-core', $output );
+		$this->assertStringContainsString( 'value="99.0"', $output );
 		$this->assertNotFalse( get_transient( Options::get_option_name( 'core_update_referrer' ) ) );
 	}
 

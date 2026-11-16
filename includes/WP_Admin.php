@@ -8,7 +8,6 @@ use NewfoldLabs\WP\Module\Onboarding\Services\I18nService;
 use NewfoldLabs\WP\Module\Onboarding\Services\ReduxStateService;
 use NewfoldLabs\WP\Module\Onboarding\Data\Runtime;
 use NewfoldLabs\WP\Module\Onboarding\Data\Options;
-use NewfoldLabs\WP\Module\Patterns\SiteClassification as PatternsSiteClassification;
 
 /**
  * Register Admin Page, Assets & Admin functionality with WordPress.
@@ -45,7 +44,6 @@ final class WP_Admin {
 		\add_action( 'load-dashboard_page_' . self::$slug, array( __CLASS__, 'hide_admin_chrome' ) );
 		\add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_site_editor_assets' ) );
 		\add_filter( 'wp_kses_allowed_html', array( __CLASS__, 'add_svg_support_to_kses' ), 10, 2 );
-		self::pre_set_filter_wonder_blocks_transients();
 	}
 
 	/**
@@ -427,25 +425,6 @@ final class WP_Admin {
 			}
 		}
 	}
-
-	/**
-	 * Pre-set filter wonder blocks transients.
-	 *
-	 * @return void
-	 */
-	public static function pre_set_filter_wonder_blocks_transients() {
-		$args = wp_parse_args(
-			array(
-				'primary_type'   => PatternsSiteClassification::get_primary_type(),
-				'secondary_type' => PatternsSiteClassification::get_secondary_type(),
-			)
-		);
-		$id   = md5( serialize( $args ) );
-
-		\add_action( "pre_set_transient_wba_templates_{$id}", array( __CLASS__, 'filter_wonder_blocks_templates_transient' ), 10, 1 );
-		\add_action( 'pre_set_transient_wba_templates_categories', array( __CLASS__, 'filter_wonder_blocks_categories_transient' ), 10, 1 );
-	}
-
 
 	/**
 	 * Add SVG support to KSES.

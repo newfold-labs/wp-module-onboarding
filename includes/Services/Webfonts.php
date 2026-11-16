@@ -186,12 +186,12 @@ class Webfonts {
 
 			$webfont = self::validate_webfont( $webfont );
 
-			$webfont['src'] = self::transform_src_into_uri( (array) $webfont['src'] );
-
 			// Skip if not valid.
 			if ( empty( $webfont ) ) {
 				continue;
 			}
+
+			$webfont['src'] = self::transform_src_into_uri( (array) $webfont['src'] );
 
 			$registered_webfonts[] = $webfont;
 		}
