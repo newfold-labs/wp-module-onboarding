@@ -54,7 +54,7 @@
 		"@wordpress/plugins": "^8.2.0",
 		"@wordpress/url": "^5.0.0",
 		"canvas-confetti": "^1.9.4",
-		"lucide-react": "^1.73.0",
+		"lucide-react": "^1.77.0",
 		"motion": "^14.14.0",
 		"posthog-js": "^1.453.2"
 	}
